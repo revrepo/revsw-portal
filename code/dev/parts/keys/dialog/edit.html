@@ -89,7 +89,7 @@
                    ng-model="key.domains"
                    style="width: 100%;">
           <ui-select-match placeholder="Select domains">{{$item.domain_name}}</ui-select-match>
-          <ui-select-choices repeat="item.id as item in selectedDomains | filter: {name: $select.search}">
+          <ui-select-choices repeat="item.id as item in selectedDomains | filter: {domain_name: $select.search}">
             <small>{{item.domain_name}}</small>
           </ui-select-choices>
         </ui-select>
