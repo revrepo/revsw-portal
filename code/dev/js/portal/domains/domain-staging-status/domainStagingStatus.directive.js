@@ -23,9 +23,10 @@
         $scope.tooltipStaging = 'Staging status';
         $scope.iconGlobal = 'glyphicon-refresh spin';
         $scope.tooltipGlobal = 'Global status';
+        $scope.shouldRefresh = true;
 
         $scope.startRefresh = function() {
-          if (!domainId) {
+          if (!domainId || !$scope.shouldRefresh) {
             return;
           }
           intervalPromise = $timeout($scope.fetchStatus, $config.DOMAIN_STATUS_REFRESH_INTERVAL);
@@ -35,6 +36,7 @@
           if (angular.isDefined(intervalPromise)) {
             $timeout.cancel(intervalPromise);
             intervalPromise = undefined;
+            $scope.shouldRefresh = false;
           }
         };
 
@@ -83,6 +85,7 @@
             return;
           }
           domainId = newValue;
+          $scope.shouldRefresh = true;
           $scope.fetchStatus(newValue);
         });
       }
