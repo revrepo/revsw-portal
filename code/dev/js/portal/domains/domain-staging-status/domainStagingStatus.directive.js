@@ -6,7 +6,7 @@
     .directive('domainStagingStatus', domainStagingStatus);
 
   /*@ngInject*/
-  function domainStagingStatus(DomainsConfig, $config, $timeout) {
+  function domainStagingStatus(DomainsConfig, $config, $timeout, $rootScope) {
     return {
       template: '<i class="glyphicon" ng-class="iconStaging" tooltip="{{tooltipStaging}}"></i>' +
                 '&nbsp;&nbsp;&nbsp;' +
@@ -71,6 +71,10 @@
         };
 
         $scope.$on('$destroy', function () {
+          $scope.stopRefresh();
+        });
+
+        $rootScope.$on('$stateChangeStart', function (event) {
           $scope.stopRefresh();
         });
 
