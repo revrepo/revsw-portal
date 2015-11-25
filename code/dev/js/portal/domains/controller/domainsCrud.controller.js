@@ -3,7 +3,7 @@
 
   angular
     .module('revapm.Portal.Domains')
-    .controller('_DomainsCrudController', DomainsCrudController);
+    .controller('DomainsCrudController', DomainsCrudController);
 
   /*@ngInject*/
   function DomainsCrudController($scope,
@@ -21,7 +21,7 @@
     $injector.invoke(CRUDController, this, {$scope: $scope, $stateParams: $stateParams});
 
     //Set state (ui.router)
-    $scope.setState('index.webApp._domains');
+    $scope.setState('index.webApp.domains');
 
     $scope.setResource(DomainsConfig);
 

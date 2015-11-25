@@ -3,86 +3,11 @@
 
   angular
     .module('revapm.Portal.Domains')
-    .controller('DomainsConfigureAdvancedController', DomainsConfigureAdvancedController)
-    .controller('_DomainsConfigureAdvancedController', _DomainsConfigureAdvancedController);
+    .controller('DomainsConfigureAdvancedController', DomainsConfigureAdvancedController);
+
 
   /*@ngInject*/
-  function DomainsConfigureAdvancedController($scope, User, $config, Domains, $timeout, AlertService, $stateParams) {
-
-    $scope.id = $stateParams.id;
-
-    $scope.domain = Domains.get({
-      id: $scope.id
-    });
-
-    $scope._loading = false;
-
-    $scope.obj = {
-      data: {},
-      options: {
-        mode: 'code',
-        modes: ['code', 'view'], // allowed modes['code', 'form', 'text', 'tree', 'view']
-        error: function(err) {
-          alert(err.toString());
-        }
-      }
-    };
-
-    $timeout(function() {
-      $scope.obj.options.mode = 'code';
-    }, 10);
-
-    $scope.update = function() {
-      if (!$scope.id) {
-        AlertService.danger('Please select domain first');
-        return;
-      }
-      $scope._loading = true;
-      Domains.detailsUpdate({
-          id: $scope.id
-        }, $scope.obj.data)
-        .$promise
-        .then(function(data) {
-          if (data.message) {
-            AlertService.success(data.message, 5000);
-          }
-        })
-        .catch(function(err) {
-          if (err.data && err.data.message) {
-            AlertService.danger(err.data.message);
-          } else {
-            AlertService.danger('Something wrong');
-          }
-        })
-        .finally(function() {
-          $scope._loading = false;
-        });
-    };
-
-    $scope.load = function() {
-      if (!$scope.id) {
-        return;
-      }
-      $scope._loading = true;
-      Domains
-        .details({
-          id: $scope.id
-        })
-        .$promise
-        .then(function(data) {
-          console.log(data);
-          $scope.obj.data = data.toJSON();
-        })
-        .finally(function() {
-          $scope._loading = false;
-        });
-    };
-
-    $scope.load();
-  }
-
-  /*@ngInject*/
-  function _DomainsConfigureAdvancedController($scope, User, $config, DomainsConfig, $timeout, AlertService, $stateParams) {
+  function DomainsConfigureAdvancedController($scope, User, $config, DomainsConfig, $timeout, AlertService, $stateParams) {
 
     $scope.id = $stateParams.id;
 

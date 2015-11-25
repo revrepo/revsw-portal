@@ -84,7 +84,7 @@ table tbody tr.disabled > th {
 }
 table tbody tr.disabled > td .spin,
 table tbody tr.disabled > th .spin {
-  color: #2e2f2f;
+  color: #2E2F2F;
 }
 table tbody tr.loading > td,
 table tbody tr.loadingth {
@@ -187,7 +187,7 @@ table tbody tr td {
   left: 30%;
 }
 section[drawer] {
-  background-color: #2e2f2f;
+  background-color: #2E2F2F;
 }
 section[drawer] #logo {
   background-color: #606363;
