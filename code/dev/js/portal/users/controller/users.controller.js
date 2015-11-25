@@ -21,6 +21,11 @@
     $scope.setResource(Users);
 
     $scope.roles = ['user', 'admin'];
+    // Adding additional user roles for RevAdmin
+    if ($scope.auth.isRevadmin()) {
+      $scope.roles.push('reseller');
+      $scope.roles.push('revadmin');
+    }
 
     $scope.companies = Companies.query();
 
