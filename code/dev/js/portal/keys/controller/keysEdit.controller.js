@@ -58,7 +58,7 @@
         return;
       }
       angular.forEach($scope.domains, function (domain) {
-        if (domain.account_id == accountId) {
+        if (domain.account_id === accountId) {
           $scope.selectedDomains.push(domain);
         }
       });
