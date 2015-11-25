@@ -1,4 +1,4 @@
-<a href="#/companies" class="side-menu-item" ng-if="userService.isReseller()">
+<a href="#/companies" class="side-menu-item" ng-if="userService.isReseller() || userService.isRevadmin()">
   <i class="glyphicon glyphicon-briefcase"></i>
   Companies
 </a>

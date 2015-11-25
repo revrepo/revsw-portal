@@ -2,7 +2,7 @@
   <i class="glyphicon glyphicon-user"></i>
   Users
 </a>
-<a ui-sref-active="active" ui-sref="index.accountSettings.companies" class="side-menu-item" ng-if="userService.isReseller()">
+<a ui-sref-active="active" ui-sref="index.accountSettings.companies" class="side-menu-item" ng-if="userService.isReseller() || userService.isRevadmin()">
   <i class="glyphicon glyphicon-briefcase"></i>
   Companies
 </a>

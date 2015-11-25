@@ -120,7 +120,8 @@
                 // Check roles
                 if (res.role != $config.ROLE.USER &&
                   res.role !== $config.ROLE.ADMIN &&
-                  res.role !== $config.ROLE.RESELLER) {
+                  res.role !== $config.ROLE.RESELLER &&
+                  res.role !== $config.ROLE.REVADMIN) {
                   // do not have permission
                   throw new Error('You do not have permission');
                 }
@@ -181,6 +182,17 @@
     function isReseller() {
       var user = getUser();
       return Boolean(isAuthed() && user && user.role === $config.ROLE.RESELLER);
+    }
+
+
+    /**
+     * Check if user is revadmin
+     *
+     * @returns {boolean}
+     */
+    function isRevadmin() {
+      var user = getUser();
+      return Boolean(isAuthed() && user && user.role === $config.ROLE.REVADMIN);
     }
 
     /**
@@ -328,6 +340,8 @@
       isAdmin: isAdmin,
 
       isReseller: isReseller,
+
+      isRevadmin: isRevadmin,
 
       isUser: isUser,
 

@@ -33,7 +33,8 @@
       ROLE: {
         USER: 'user',
         RESELLER: 'reseller',
-        ADMIN: 'admin'
+        ADMIN: 'admin',
+        REVADMIN: 'revadmin',
       },
 
       /**

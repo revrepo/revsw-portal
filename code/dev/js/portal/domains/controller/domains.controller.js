@@ -52,7 +52,7 @@
       });
     };
 
-    if ($scope.auth.isReseller()) {
+    if ($scope.auth.isReseller() || $scope.auth.isRevadmin()) {
       // Loading list of companies
       Companies.query(function (list) {
         $scope.companies = list;
