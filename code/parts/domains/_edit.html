@@ -65,7 +65,7 @@
                      placeholder="Domain CNAME">
             </div>
           </div>
-          <div class="form-group" ng-if="auth.isReseller()">
+          <div class="form-group" ng-if="auth.isReseller() || auth.isRevadmin()">
             <label for="account_id"
                    popover-append-to-body="{{true}}"
                    class="col-sm-2 control-label"
