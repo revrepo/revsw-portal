@@ -107,7 +107,7 @@
             <tr
               ng-repeat="item in records | filter:quickFilter | orderBy:filter.predicate:filter.reverse | limitTo:filter.limit:filter.skip track by $index">
               <td>{{item.domain_name}}</td>
-              <td>{{item.cname}}</td>
+              <td class="uppercase">{{item.cname}}</td>
               <td>{{item.updated_at | date : 'MMM dd, yyyy H:mm:ss a'}}</td>
               <td>
                 <div domain-staging-status ng-id="item.id"></div>
