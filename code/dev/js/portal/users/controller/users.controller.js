@@ -6,7 +6,7 @@
     .controller('UsersCrudController', UsersCrudController);
 
   // @ngInject
-  function UsersCrudController($scope, CRUDController, Users, $injector, $stateParams, Companies, Domains, $state) {
+  function UsersCrudController($scope, CRUDController, Users, $injector, $stateParams, Companies, DomainsConfig, $state) {
 
     //Invoking crud actions
     $injector.invoke(CRUDController, this, {$scope: $scope, $stateParams: $stateParams});
@@ -29,7 +29,7 @@
 
     $scope.companies = Companies.query();
 
-    $scope.domains = Domains.query();
+    $scope.domains = DomainsConfig.query();
 
     if (!$scope.model) {
       $scope.model = {
