@@ -20,6 +20,7 @@
       if (model.domain_name) {
         delete model.domain_name;
       }
+      delete model.cname;
       delete model.origin_protocol;
       delete model.id;
       return model;
