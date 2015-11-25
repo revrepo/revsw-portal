@@ -14,9 +14,7 @@ if [ -z "$BUILD_NUMBER" ]; then
 	exit 1
 fi
 
-VERSION=4.0.$BUILD_NUMBER
-
-echo $VERSION > $WORKSPACE/version.txt
+VERSION=5.0.$BUILD_NUMBER
 
 PACKAGEDIR=packages
 
@@ -28,6 +26,8 @@ if [ ! -d $PACKAGEDIR ]; then
                 exit 1
         fi
 fi
+
+echo $VERSION > $PACKAGEDIR/version.txt
 
 PACKAGENAME=revsw-portal
 
@@ -57,31 +57,27 @@ Version: $PackageVersion
 Architecture: amd64
 Maintainer: $MaintainerName <$MaintainerEmail>
 Installed-Size: 26
-Depends: apache2
-Recommends: apache2
+Depends: nginx
+Recommends: nginx
 Section: unknown
 Priority: extra
 Homepage: www.revsw.com
-Description: Rev Customer Portal Server Side Application" >> $foldername/DEBIAN/control
+Description: Rev Customer Portal UI Component" >> $foldername/DEBIAN/control
 
-mkdir -p $foldername/etc/init.d  $foldername/etc/logrotate.d
-
-cp -rp $WORKSPACE/scripts/init.d_revsw-portal  $foldername/etc/init.d/revsw-portal 
-
-cp -rp $WORKSPACE/scripts/logrotate_revsw-portal $foldername/etc/logrotate.d/revsw-portal
-
-mkdir -p $foldername/opt/$PackageName $foldername/opt/$PackageName/log/ $foldername/opt/$PackageName/bin/
-
-for DIR in www version.txt package.json server.js app config node_modules config docs db json; do
-  cp -rf  $WORKSPACE/$DIR  $foldername/opt/$PackageName/
-done
+echo "/opt/revsw-portal/config.js" > $foldername/DEBIAN/conffiles
 
 
+mkdir -p $foldername/opt/$PackageName 
 
-# sed -i 's/"package_no":"3.1"/"package_no":"'$VERSION'"/g' $foldername/opt/$PackageName/www/$PackageName/version.js
+
+cp -rf  $WORKSPACE/code/* $foldername/opt/$PackageName/
+rm -r $foldername/opt/$PackageName/dev
+rm -r $foldername/opt/$PackageName/node_modules
+rm  $foldername/opt/$PackageName/package.json
+rm  $foldername/opt/$PackageName/gulpfile.js
+rm  $foldername/opt/$PackageName/bower.json
 
 sudo chown -R root:root $foldername/opt
-sudo chown -R root:root $foldername/etc
 
 dpkg -b $foldername $WORKSPACE/$PACKAGEDIR/$foldername.deb
 
