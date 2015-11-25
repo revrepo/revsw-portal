@@ -6,7 +6,7 @@
     .controller('CachePurgeController', CachePurgeController);
 
   /*@ngInject*/
-  function CachePurgeController($scope, Cache, Domains, AlertService, $timeout) {
+  function CachePurgeController($scope, Cache, DomainsConfig, AlertService, $timeout) {
 
     $scope._loading = true;
 
@@ -34,7 +34,7 @@
       }
     };
 
-    Domains
+    DomainsConfig
       .query()
       .$promise
       .then(function (data) {

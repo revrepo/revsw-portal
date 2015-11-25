@@ -6,7 +6,7 @@
     .factory('User', User);
 
   /*@ngInject*/
-  function User($localStorage, $http, $config, $q, Domains) {
+  function User($localStorage, $http, $config, $q, DomainsConfig) {
 
     /**
      * List of Users domains
@@ -118,7 +118,7 @@
                 // Success
                 var res = data.data;
                 // Check roles
-                if (res.role != $config.ROLE.USER &&
+                if (res.role !== $config.ROLE.USER &&
                   res.role !== $config.ROLE.ADMIN &&
                   res.role !== $config.ROLE.RESELLER &&
                   res.role !== $config.ROLE.REVADMIN) {
@@ -293,7 +293,7 @@
         if (domains && domains.length > 0 && !reload) {
           return resolve(domains);
         }
-        Domains.query()
+        DomainsConfig.query()
           .$promise
           .then(function (data) {
             domains = data;

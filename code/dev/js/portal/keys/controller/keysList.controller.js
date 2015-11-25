@@ -6,7 +6,7 @@
     .controller('KeysListController', KeysListController);
 
   // @ngInject
-  function KeysListController($scope, CRUDController, ApiKeys, $injector, $stateParams, Companies, Domains, $state, $modal) {
+  function KeysListController($scope, CRUDController, ApiKeys, $injector, $stateParams, Companies, DomainsConfig, $state, $modal) {
 
     //Invoking crud actions
     $injector.invoke(CRUDController, this, {$scope: $scope, $stateParams: $stateParams});
@@ -36,7 +36,7 @@
         }
       });
 
-    $scope.domains = Domains.query();
+    $scope.domains = DomainsConfig.query();
 
     /**
      * Delete API key from system
