@@ -41,7 +41,7 @@
         return;
       }
       var json = angular.copy($scope.json);
-      json.domainName = $scope.domain.name;
+      json.domainName = $scope.domain.domain_name;
       $scope._loading = true;
       Cache.purge({}, json)
         .$promise
@@ -61,7 +61,7 @@
         return;
       }
       var json = {
-        domainName: $scope.domain.name,
+        domainName: $scope.domain.domain_name,
         purges: []
       };
       var list = $scope.text.split('\n');
