@@ -6,7 +6,7 @@
     .directive('domainSelect', domainSelectDirective);
 
   /*@ngInject*/
-  function domainSelectDirective(User, $localStorage) {
+  function domainSelectDirective(User, $localStorage, AlertService) {
 
     return {
       restrict: 'AE',
@@ -35,11 +35,11 @@
           .then(function (domains) {
             $scope.domains = domains;
             // Select domain if it's only one
-            if (domains.length == 1 && $scope.selectOne) {
+            if (domains.length === 1 && $scope.selectOne) {
               $scope.onModelSelect($scope.domains[0]);
               $scope.ngDomain = $scope.domains[0];
             }
-            if($localStorage.selectedDomain.id) {
+            if($localStorage.selectedDomain && $localStorage.selectedDomain.id) {
               var ind = _.findIndex(domains, function(d){
                 return d.id === $localStorage.selectedDomain.id;
               });

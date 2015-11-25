@@ -88,9 +88,9 @@
                    ng-disabled="_loading"
                    ng-model="key.domains"
                    style="width: 100%;">
-          <ui-select-match placeholder="Select domains">{{$item.name}}</ui-select-match>
+          <ui-select-match placeholder="Select domains">{{$item.domain_name}}</ui-select-match>
           <ui-select-choices repeat="item.id as item in selectedDomains | filter: {name: $select.search}">
-            <small>{{item.name}}</small>
+            <small>{{item.domain_name}}</small>
           </ui-select-choices>
         </ui-select>
       </div>

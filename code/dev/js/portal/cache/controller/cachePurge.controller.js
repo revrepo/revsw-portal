@@ -8,9 +8,10 @@
   /*@ngInject*/
   function CachePurgeController($scope, Cache, DomainsConfig, AlertService, $timeout) {
 
-    $scope._loading = true;
+    $scope._loading = false;
 
     $scope.domain;
+
     $scope.json = {
       "purges": [
         {
@@ -24,8 +25,6 @@
 
     $scope.text = '';
 
-    $scope.domains = [];
-
     $scope.options = {
       mode: 'code',
       modes: ['code','view'], // allowed modes['code', 'form', 'text', 'tree', 'view']
@@ -33,16 +32,6 @@
         alert(err.toString());
       }
     };
-
-    DomainsConfig
-      .query()
-      .$promise
-      .then(function (data) {
-        $scope.domains = data;
-      })
-      .finally(function () {
-        $scope._loading = false;
-      });
 
     /**
      * Purge cache using JSON
