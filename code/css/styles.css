@@ -108,6 +108,16 @@ table tbody tr td {
 table tbody tr td.uppercase {
   text-transform: uppercase;
 }
+alert-list {
+  position: absolute;
+  z-index: 999;
+  left: 50%;
+}
+alert-list alert {
+  position: relative;
+  left: -50%;
+  min-width: 200px;
+}
 .main_img_container {
   left: 50%;
   position: absolute;
