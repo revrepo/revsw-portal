@@ -112,6 +112,7 @@ alert-list {
   position: absolute;
   z-index: 999;
   left: 50%;
+  top: 70px;
 }
 alert-list alert {
   position: relative;
