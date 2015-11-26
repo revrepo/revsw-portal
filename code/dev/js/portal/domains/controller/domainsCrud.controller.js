@@ -77,6 +77,9 @@
       // Loading list of companies
       Companies.query(function (list) {
         $scope.companies = list;
+        if ($scope.companies.length === 1) {
+          $scope.model.account_id = $scope.companies[0].id;
+        }
       });
     } else if (!angular.isArray($scope.auth.getUser().companyId)) {
       $scope.model.account_id = $scope.auth.getUser().companyId;
@@ -97,9 +100,16 @@
 
     $scope.deleteDomain = function(model) {
       $scope.confirm('confirmModal.html', model).then(function () {
-        $scope.delete(model).then(function (data) {
-          $scope.list();
-        });
+        var domainName = model.domain_name;
+        $scope
+          .delete(model)
+          .then(function (data) {
+            $scope.alertService.success('Domain ' + domainName + ' deleted.');
+            $scope.list();
+          })
+          .catch(function (err) {
+            $scope.alertService.danger(err);
+          });
       });
     };
 
