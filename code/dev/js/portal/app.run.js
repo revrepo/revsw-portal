@@ -7,6 +7,7 @@
 
   /*@ngInject*/
   function runApp($rootScope, AlertService) {
+    $rootScope.alertService = AlertService;
     $rootScope.$on('$stateChangeStart',
       function(event){
         // Clear alerts when routes change
