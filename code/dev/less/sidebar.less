@@ -1,6 +1,6 @@
 section[drawer] {
   background-color: @app-side-menu-background;
-
+  z-index: 999;
   #logo {
     background-color: @app-side-menu-background-logo;
     height: @app-top-menu-height;
@@ -26,6 +26,10 @@ section[drawer] {
 
       &.selected {
         background-color: @app-side-menu-background-selected;
+      }
+
+      &.active {
+        border-right: 2px solid @app-side-menu-text-color;
       }
 
       i {
