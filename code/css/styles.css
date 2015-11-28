@@ -200,9 +200,11 @@ alert-list alert {
   width: 40%;
   left: 30%;
 }
+#drawer {
+  z-index: 999;
+}
 section[drawer] {
   background-color: #2E2F2F;
-  z-index: 999;
 }
 section[drawer] #logo {
   background-color: #606363;
