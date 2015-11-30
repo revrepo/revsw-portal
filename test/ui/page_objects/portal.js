@@ -36,6 +36,7 @@ var UserEditPage = require('./user/editPage');
 var UserAddPage = require('./user/addPage');
 var SecuritySettingsPage = require('./user/securitySettingsPage');
 var UpdatePasswordPage = require('./user/updatePasswordPage');
+var AddDomainPage = require('./domain/addPage');
 
 // This `Portal` Page Object is the entry point to use all other Page Objects
 // that abstract all components from the Portal App.
@@ -57,6 +58,7 @@ var Portal = {
   addUserPage: UserAddPage,
   securitySettingsPage: SecuritySettingsPage,
   updatePasswordPage: UpdatePasswordPage,
+  addDomainPage: AddDomainPage,
 
   // ## Authentication Helper methods
 
@@ -202,7 +204,7 @@ var Portal = {
   // ## User Helper methods
 
   /**
-   * ### Portal.deleteUser()
+   * ### Portal.createUser()
    *
    * Helper method that executes all steps required to create a new User from
    * Portal app.
@@ -254,7 +256,27 @@ var Portal = {
         }
       });
     });
-  }
+  },
+
+  // ## Domain Helper methods
+
+  /**
+   * ### Portal.createDomain()
+   *
+   * Helper method that executes all steps required to create a new Domain from
+   * Portal app.
+   *
+   * @param {domain} domain, data applying the schema defined in
+   * `DataProvider.generateDomainUser()`
+   *
+   * @returns {Promise}
+   */
+   createDomain: function(domain) {
+     var me = this;
+     me.getPage(Constants.hashFragments.domains.new);
+     me.addDomainPage.fillForm(domain);
+     me.addDomainPage.clickCreateDomain();
+   }
 };
 
 module.exports = Portal;

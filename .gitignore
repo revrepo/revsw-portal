@@ -1,3 +1,4 @@
 .idea
-node_modules
+test/ui/node_modules
+test/ui/results
 .tmp

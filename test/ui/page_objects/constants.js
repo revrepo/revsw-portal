@@ -27,6 +27,10 @@
 var Constants = {
   hashFragments: {
     users: '#/users',
+    domains: {
+      list: '#/domains',
+      new: '#/domains/new'
+    },
     profile: '#/profile'
   },
   header: {
@@ -51,6 +55,19 @@ var Constants = {
     }
   },
   user: {
+    roles: {
+      ADMIN: 'admin',
+      USER: 'user'
+    },
+    accessControls: {
+      DASHBOARD: 'Dashboard',
+      REPORTS: 'Reports',
+      CONFIGURE: 'Configure',
+      TEST: 'Test',
+      READ_ONLY: 'Read only'
+    }
+  },
+  domain: {
     roles: {
       ADMIN: 'admin',
       USER: 'user'

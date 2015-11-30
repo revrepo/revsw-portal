@@ -8,11 +8,12 @@ exports.config = {
     browserName: 'firefox'
   },
   specs: [
-     '../suites/smoke/*Spec.js',
-     '../suites/negative/*Spec.js',
-     '../suites/boundary/*Spec.js',
-     '../suites/functional/*Spec.js',
-     '../suites/workflow/*Spec.js'
+    //  '../suites/smoke/*Spec.js',
+    //  '../suites/negative/*Spec.js',
+    //  '../suites/boundary/*Spec.js',
+    //  '../suites/functional/*Spec.js',
+    //  '../suites/workflow/*Spec.js'
+     '../suites/negative/domains/*Spec.js'
   ],
   getPageTimeout: 60000,
   allScriptsTimeout: 70000,

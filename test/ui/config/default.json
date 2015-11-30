@@ -4,9 +4,9 @@
   },
   "portal": {
     "host": {
-      "protocol": "http",
-      "name": "localhost",
-      "port": 3000,
+      "protocol": "https",
+      "name": "testsjc20-portal01.revsw.net",
+      "port": null,
       "path": null// "portal/www/revsw-portal"
     },
     "users": {
