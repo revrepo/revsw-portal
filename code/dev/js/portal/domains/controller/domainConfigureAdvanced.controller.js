@@ -12,16 +12,8 @@
     $scope.id = $stateParams.id;
 
     $scope.clearDomain = function(model) {
-      if (model.rev_component_bp) {
-        delete model.rev_component_bp.cache_opt_choice;
-        delete model.rev_component_bp.certificate_urls;
-        delete model.rev_component_bp.ssl_certificates;
-      }
-      if (model.domain_name) {
-        delete model.domain_name;
-      }
+      delete model.domain_name;
       delete model.cname;
-      delete model.origin_protocol;
       delete model.id;
       return model;
     };
@@ -71,7 +63,7 @@
         }, $scope.obj.data)
         .$promise
         .then(function(data) {
-          $scope.alertService.success('Domain configuration is correct', 5000);
+          $scope.alertService.success('The domain configuration is correct', 5000);
         })
         .catch(function(err) {
           AlertService.danger(err);
