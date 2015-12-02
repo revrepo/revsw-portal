@@ -157,7 +157,7 @@
         options: 'verify_only'
       }, model)
         .then(function (data) {
-          $scope.alertService.success('Domain configuration is correct', 5000);
+          $scope.alertService.success('The domain configuration is correct', 5000);
         })
         .catch(function (err) {
           $scope.alertService.danger(err.data.message || 'Oops something ment wrong', 5000);

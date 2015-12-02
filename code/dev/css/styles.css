@@ -13,7 +13,6 @@ body {
 }
 .page-inner {
   padding-top: 20px;
-  min-height: 1080px;
   background-color: #eeeeee;
 }
 .layout {
@@ -24,6 +23,7 @@ body {
 }
 section[main] {
   overflow: auto;
+  background-color: #eeeeee;
 }
 .max-height-pre {
   max-height: 400px;
@@ -200,12 +200,15 @@ alert-list alert {
   width: 40%;
   left: 30%;
 }
+#drawer {
+  z-index: 999;
+}
 section[drawer] {
   background-color: #2E2F2F;
 }
 section[drawer] #logo {
   background-color: #606363;
-  height: 50px;
+  height: 52px;
 }
 section[drawer] #logo img {
   margin: 8px 5px;
@@ -226,12 +229,18 @@ section[drawer] .side-menu .side-menu-item {
 section[drawer] .side-menu .side-menu-item.selected {
   background-color: #151515;
 }
+section[drawer] .side-menu .side-menu-item.active {
+  border-right: 2px solid #f7941e;
+}
 section[drawer] .side-menu .side-menu-item i {
   margin: 0 10px;
 }
 .navbar {
   margin: 0;
   border: none;
+}
+.navbar .navbar-inner li.active {
+  border-bottom: 2px solid #66b2bf;
 }
 .navbar .navbar-inner div[paper-drawer-toggle] {
   display: inline-block;
