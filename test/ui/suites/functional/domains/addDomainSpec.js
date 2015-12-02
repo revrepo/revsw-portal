@@ -40,11 +40,28 @@ describe('Functional', function () {
       Portal.signOut();
     });
 
-    it('should display a successful message when creating domain', function () {
+    it('should display a successful message when creating domain',
+      function () {
+        var emptyDomain = {
+          name: 'mydomain.com',
+          originServer: 'originservername.com',
+          originHostHeader: 'originhostheader.com',
+          originLocation: 'HQ Test Lab'
+        };
+        Portal.createDomain(emptyDomain);
     });
 
-    it('should create a new domain with valid values in required fields',
-      function () {
+    it('should not create duplicated domains', function () {
+      var emptyDomain = {
+        name: 'mydomain.com',
+        originServer: 'originservername.com',
+        originHostHeader: 'originhostheader.com',
+        originLocation: 'HQ Test Lab'
+      };
+      Portal.createDomain(emptyDomain);
+      var alert = Portal.alerts.getFirst();
+      var expectedMsg = 'The domain name is already registered in the system';
+      expect(alert.getText()).toEqual(expectedMsg);
     });
   });
 });

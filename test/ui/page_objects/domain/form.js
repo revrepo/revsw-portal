@@ -52,7 +52,7 @@ var DomainForm = {
   // Element)
 
   /**
-   * ### DomainForm.getEmailTxtIn()
+   * ### DomainForm.getDomainNameTxtIn()
    *
    * Returns the reference to the `Domain Name` text field (Selenium WebDriver
    * Element)
@@ -150,9 +150,7 @@ var DomainForm = {
    */
   getDomainOriginLocation: function () {
     return this
-      .getDomainOriginLocationDDown()
-      .$('option:checked')
-      .getText();
+      .getDomainOriginLocationDDown();
   },
 
   /**
