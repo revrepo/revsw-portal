@@ -97,7 +97,10 @@
                 <a href="" ng-click="order('cname')">CNAME</a>
                 <span class="sortorder" ng-show="filter.predicate === 'cname'" ng-class="{reverse: filter.reverse}"></span>
               </th>
-              <th>Last updated</th>
+              <th>
+                <a href="" ng-click="order('updated_at')">Last updated</a>
+                <span class="sortorder" ng-show="filter.predicate === 'updated_at'" ng-class="{reverse: filter.reverse}"></span>
+              </th>
               <th>Staging/Global Status</th>
               <th></th>
             </tr>
