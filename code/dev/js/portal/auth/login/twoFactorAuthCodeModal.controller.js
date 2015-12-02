@@ -45,5 +45,7 @@
         $scope.data.loading = false;
       }
     };
+
+
   }
 })();
