@@ -39,11 +39,11 @@ describe('Negative', function () {
       Portal.signOut();
     });
 
-    it('should not create domain when a required field is filled with blank ' +
-      'space chars',
+    it('should not create domain when all required fields are filled with' +
+      'blank space chars',
       function () {
-        var emptyDomain = {};
-        Portal.createDomain(emptyDomain);
+        var domain = {};
+        Portal.createDomain(domain);
         var alert = Portal.alerts.getFirst();
         var expectedMsg = 'child "domain_name" fails because ["domain_name" ' +
           'is required]';
@@ -53,36 +53,81 @@ describe('Negative', function () {
     it('should not create a domain without blank space chars in domain name ' +
       'field',
       function () {
+        var domain = {
+          name: ' ',
+          originServer: 'originservername.com',
+          originHostHeader: 'originhostheader.com',
+          originLocation: 'HQ Test Lab'
+        };
+        Portal.createDomain(domain);
+        var alert = Portal.alerts.getFirst();
+        var expectedMsg = 'child "domain_name" fails because ["domain_name" ' +
+          'is not allowed to be empty]';
+        expect(alert.getText()).toEqual(expectedMsg);
       });
 
     it('should not create a domain without blank space chars in origin ' +
       'server name ip field',
       function () {
+        var domain = {
+          name: 'mydomain.com',
+          originServer: ' ',
+          originHostHeader: 'originhostheader.com',
+          originLocation: 'HQ Test Lab'
+        };
+        Portal.createDomain(domain);
+        var alert = Portal.alerts.getFirst();
+        var expectedMsg = 'child "origin_server" fails because ' +
+          '["origin_server" is not allowed to be empty]'
+        expect(alert.getText()).toEqual(expectedMsg);
       });
 
     it('should not create a domain without blank space chars in origin host ' +
       'header field',
       function () {
+        var domain = {
+          name: 'mydomain.com',
+          originServer: 'originservername.com',
+          originHostHeader: ' ',
+          originLocation: 'HQ Test Lab'
+        };
+        Portal.createDomain(domain);
+        var alert = Portal.alerts.getFirst();
+        var expectedMsg = 'child "origin_host_header" fails because ' +
+          '["origin_host_header" is not allowed to be empty]'
+        expect(alert.getText()).toEqual(expectedMsg);
       });
 
-    it('should not create a domain without blank space chars in domain ' +
-      'origin location field',
+    it('should not create a domain without location selected in domain ' +
+      'origin location list option',
       function () {
+        var domain = {
+          name: 'mydomain.com',
+          originServer: 'originservername.com',
+          originHostHeader: 'originhostheader.com',
+          originLocation: '--- Select location ---'
+        };
+        Portal.createDomain(domain);
+        var alert = Portal.alerts.getFirst();
+        var expectedMsg = 'child "origin_server_location_id" fails because ' +
+          '["origin_server_location_id" is required]'
+        expect(alert.getText()).toEqual(expectedMsg);
       });
 
-    // it('should not create duplicated domains',
-    //   function () {
-    //     var emptyDomain = {
-    //       name: 'mydomain.com',
-    //       originServer: 'originservername.com',
-    //       originHostHeader: 'originhostheader.com',
-    //       originLocation: 'HQ Test Lab'
-    //     };
-    //     Portal.createDomain(emptyDomain);
-    //     var alert = Portal.alerts.getFirst();
-    //     var expectedMsg =
-    //                  'The domain name is already registered in the system';
-    //     expect(alert.getText()).toEqual(expectedMsg);
-    //   });
+      // it('should not create a domain without blank space chars in domain ' +
+      //   'origin location field',
+      //   function () {
+      //     var domain = {
+      //       name: 'mydomain.com',
+      //       originServer: 'originservername.com',
+      //       originHostHeader: 'originhostheader.com',
+      //       originLocation: ' '
+      //     };
+      //     Portal.createDomain(domain);
+      //     var alert = Portal.alerts.getFirst();
+      //     var expectedMsg = 'child "origin_server_location_id" fails because ' +
+      //       '["origin_server_location_id" must be a string]'
+      //     expect(alert.getText()).toEqual(expectedMsg);
+      //   });
   });
 });
