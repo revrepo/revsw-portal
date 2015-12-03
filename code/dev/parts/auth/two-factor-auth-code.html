@@ -3,7 +3,7 @@
 </div>
 <div class="modal-body">
   <alert-list></alert-list>
-  <form class="form-horizontal">
+  <form class="form-horizontal" ng-submit="login()">
     <div class="form-group">
       <div class="col-sm-8 col-sm-offset-2">
         <input type="text"
@@ -12,7 +12,8 @@
                id="code"
                placeholder="Enter your Code here"
                ng-disabled="data.loading"
-               required>
+               required
+               autofocus>
       </div>
     </div>
   </form>
