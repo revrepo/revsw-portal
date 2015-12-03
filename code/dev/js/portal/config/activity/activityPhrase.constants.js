@@ -29,6 +29,8 @@
         'domain': 'Domain',
         'purge': 'Cache',
         'apikey': 'API Key',
+        'team': 'Team',
+        'app': 'App',
         'object': 'Object'
       }
     });
