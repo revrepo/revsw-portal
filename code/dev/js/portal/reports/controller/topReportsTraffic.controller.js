@@ -347,10 +347,12 @@
         if (data.data && data.data.length > 0) {
           var newData = [];
           angular.forEach(data.data, function (val) {
-            newData.push({
-              name: val.key,
-              y: val.count
-            });
+            if ( val.key !== '' ) {
+              newData.push({
+                name: val.key.toUpperCase(),
+                y: val.count
+              });
+            }
           });
           $scope.http2 = newData;
         }
