@@ -31,12 +31,19 @@ var Dialog = require('./common/dialog');
 
 // Requiring page objects
 var LoginPage = require('./loginPage');
-var UserListPage = require('./user/listPage');
-var UserEditPage = require('./user/editPage');
-var UserAddPage = require('./user/addPage');
+
+var ListUsersPage = require('./user/listPage');
+var EditUserPage = require('./user/editPage');
+var AddUserPage = require('./user/addPage');
+
 var SecuritySettingsPage = require('./user/securitySettingsPage');
 var UpdatePasswordPage = require('./user/updatePasswordPage');
+
 var AddDomainPage = require('./domain/addPage');
+var ConfigureDomainPage = require('./domain/configurePage');
+var DomainVersionsPage = require('./domain/versionsPage');
+var EditDomainPage = require('./domain/editPage');
+var ListDomainsPage = require('./domain/listPage');
 
 // This `Portal` Page Object is the entry point to use all other Page Objects
 // that abstract all components from the Portal App.
@@ -53,12 +60,19 @@ var Portal = {
 
   // Pages that compound this Portal app/site
   loginPage: LoginPage,
-  userListPage: UserListPage,
-  editUserPage: UserEditPage,
-  addUserPage: UserAddPage,
+  userListPage: ListUsersPage,
+  editUserPage: EditUserPage,
+  addUserPage: AddUserPage,
   securitySettingsPage: SecuritySettingsPage,
   updatePasswordPage: UpdatePasswordPage,
-  addDomainPage: AddDomainPage,
+  addDomainPage: AddDomainPage, // TODO: DEPRECATED, please remove
+  domains: {
+    addPage: AddDomainPage,
+    configurePage: ConfigureDomainPage,
+    editPage: EditDomainPage,
+    listPage: ListDomainsPage,
+    versionsPage: DomainVersionsPage
+  },
 
   // ## Authentication Helper methods
 
@@ -124,6 +138,10 @@ var Portal = {
       }
       return browser.get(Utils.getBaseUrl() + location);
     });
+  },
+
+  getDomainsPage: function () {
+    return this.getPage(Constants.hashFragments.domains.list);
   },
 
   /**

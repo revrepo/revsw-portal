@@ -25,7 +25,7 @@ var Searcher = require('./../common/searcher');
 
 // This `Domain List` Page Object abstracts all operations or actions that a
 // common user could do in the Domain List page from the Portal app/site.
-var domainList = {
+var DomainList = {
 
   // ## Properties
 
@@ -46,7 +46,7 @@ var domainList = {
   // `Domain List` Page is compound mainly by a table, pagination and filter
   // components. Following properties make reference to the Page Objects of
   // those components.
-  domainTbl: DomainTable,
+  domainsTbl: DomainTable,
   pager: Pager,
   searcher: Searcher,
 
@@ -135,7 +135,7 @@ var domainList = {
   searchAndGetFirstRow: function (criteria) {
     this.searcher.clearSearchCriteria();
     this.searcher.setSearchCriteria(criteria);
-    return this.domainTbl
+    return this.domainsTbl
       .getFirstRow();
   },
 

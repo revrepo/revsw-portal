@@ -137,15 +137,15 @@ var TableRow = function (rowEl, locators) {
 
   if (this.locators.actions && this.locators.actions.buttons.cog) {
 
-    this.getSettingsBtn = function () {
+    this.getConfigureBtn = function () {
       return this.rowEl
         .element(by.css(this.locators.actions.css))
         .element(by.className(this.locators.actions.buttons.cog.className));
     };
 
-    this.clickSettings = function () {
+    this.clickConfigure = function () {
       return this
-        .getSettingsBtn()
+        .getConfigureBtn()
         .click();
     };
   }
@@ -168,30 +168,30 @@ var TableRow = function (rowEl, locators) {
 
   if (this.locators.actions && this.locators.actions.buttons.stats) {
 
-    this.getStatisticsBtn = function () {
+    this.getStatsBtn = function () {
       return this.rowEl
         .element(by.css(this.locators.actions.css))
         .element(by.className(this.locators.actions.buttons.stats.className));
     };
 
-    this.clickStatistics = function () {
+    this.clickStats = function () {
       return this
-        .getStatisticsBtn()
+        .getStatsBtn()
         .click();
     };
   }
 
   if (this.locators.actions && this.locators.actions.buttons.book) {
 
-    this.getHistoricalBtn = function () {
+    this.getVersionsBtn = function () {
       return this.rowEl
         .element(by.css(this.locators.actions.css))
         .element(by.className(this.locators.actions.buttons.book.className));
     };
 
-    this.clickStatistics = function () {
+    this.clickVersions = function () {
       return this
-        .getHistoricalBtn()
+        .getVersionsBtn()
         .click();
     };
   }
