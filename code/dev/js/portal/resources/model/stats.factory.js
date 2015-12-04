@@ -101,6 +101,14 @@
         }
       },
 
+      http2: {
+        method: 'GET',
+        url: $config.API_URL + '/stats/top/:domainId',
+        params: {
+          report_type: 'http2'
+        }
+      },
+
       traffic: {
         method: 'GET'
       },
