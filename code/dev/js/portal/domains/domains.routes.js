@@ -43,6 +43,15 @@
             controller: 'DomainsCrudController'
           }
         }
+      })
+      .state('index.webApp.domains.versions', {
+        url: '/versions/:id',
+        views: {
+          page: {
+            controller: 'DomainVersionsController',
+            templateUrl: 'parts/domains/versions.html'
+          }
+        }
       });
   }
 })();
