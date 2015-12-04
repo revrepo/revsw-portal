@@ -29,9 +29,19 @@
 
           <form class="form-horizontal" ng-show="id">
 
-            <!--<div class="form-group">-->
-              <!--<select name="versions" id="versions" ng-options="v for v in versions"></select>-->
-            <!--</div>-->
+            <div class="form-group">
+              <div class="col-sm-4">
+                <select name="versions"
+                        id="versions"
+                        class="form-control"
+                        ng-disabled="_loading"
+                        ng-model="currentVersion"
+                        ng-change="onChangeVersion()"
+                        ng-options="ver.last_published_domain_version for ver in versions">
+                  <option value="">--- Please select domain version ---</option>
+                </select>
+              </div>
+            </div>
 
             <div class="form-group">
               <div class="col-md-12">

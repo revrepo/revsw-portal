@@ -13,6 +13,7 @@
 
     $scope.domain = DomainsConfig.get({id: $stateParams.id});
     $scope.versions = [];
+    $scope.currentVersion = {};
 
     $scope.obj = {
       data: {},
@@ -25,12 +26,15 @@
       }
     };
 
+    $scope.onChangeVersion = function() {
+      $scope.obj.data = $scope.currentVersion;
+    };
+
     DomainsConfig
       .versions({id: $stateParams.id})
       .$promise
       .then(function (data) {
         if (angular.isArray(data)) {
-          $scope.obj.data = data[0];
           $scope.versions = data;
         }
       })
