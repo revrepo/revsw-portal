@@ -13,6 +13,11 @@
         url: $config.API_URL + '/domain_configs/:id/config_status',
         method: 'GET',
         isArray: false
+      },
+      versions: {
+        url: $config.API_URL + '/domain_configs/:id/versions',
+        method: 'GET',
+        isArray: true
       }
     });
   }

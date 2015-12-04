@@ -1,0 +1,63 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12">
+      <h2 class="pull-left page-title">
+        Domain versions: <strong ng-if="domain">{{domain.domain_name}}</strong>
+      </h2>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="pull-left">
+                <a ui-sref="index.webApp.domains"
+                   ng-disabled="_loading"
+                   class="btn btn-default">
+                  <i class="glyphicon glyphicon-arrow-left"></i>&nbsp;
+                  Back to List
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="panel-body">
+          <alert type="danger" ng-if="!id">Please select domain</alert>
+
+          <form class="form-horizontal" ng-show="id">
+
+            <!--<div class="form-group">-->
+              <!--<select name="versions" id="versions" ng-options="v for v in versions"></select>-->
+            <!--</div>-->
+
+            <div class="form-group">
+              <div class="col-md-12">
+                <div name="json"
+                     class="col-md-12"
+                     id="json"
+                     ng-model="obj.data"
+                     options="obj.options"
+                     ng-jsoneditor
+                     style="height: 550px"
+                     disabled></div>
+
+                <div class="col-sm-12" style="margin-top: 15px">
+                  <a ui-sref="index.webApp.domains"
+                     ng-disabled="_loading"
+                     class="btn btn-default">
+                    <i class="glyphicon glyphicon-remove"></i>&nbsp;
+                    Cancel
+                  </a>
+                </div>
+              </div>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
