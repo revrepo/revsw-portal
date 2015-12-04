@@ -39,8 +39,8 @@
                         ng-disabled="_loading"
                         ng-model="currentVersion"
                         ng-change="onChangeVersion()"
-                        ng-options="ver.last_published_domain_version for ver in versions">
-                  <option value="">--- Please select domain version ---</option>
+                        ng-options="ver.last_published_domain_version as ver.last_published_domain_version for ver in versions">
+                  <option value="">--- Please select domain configuration version ---</option>
                 </select>
               </div>
             </div>

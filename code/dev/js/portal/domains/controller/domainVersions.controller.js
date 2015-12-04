@@ -27,7 +27,23 @@
     };
 
     $scope.onChangeVersion = function() {
-      $scope.obj.data = $scope.currentVersion;
+      if (!$scope.currentVersion) {
+        $scope.obj.data = {};
+        return;
+      }
+      $scope._loading = true;
+      DomainsConfig
+        .get({id: $stateParams.id, version: $scope.currentVersion})
+        .$promise
+        .then(function (data) {
+          $scope.obj.data = data;
+        })
+        .catch(function (err) {
+          AlertService.danger(err);
+        })
+        .finally(function () {
+          $scope._loading = false;
+        });
     };
 
     DomainsConfig
