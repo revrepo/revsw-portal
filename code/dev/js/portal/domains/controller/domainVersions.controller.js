@@ -1,12 +1,14 @@
 (function () {
   'use strict';
 
+  /* jshint maxlen: false */
+
   angular
     .module('revapm.Portal.Domains')
     .controller('DomainVersionsController', DomainVersionsController);
 
   /*@ngInject*/
-  function DomainVersionsController($scope, DomainsConfig, $stateParams, AlertService, $timeout) {
+  function DomainVersionsController($scope, DomainsConfig, $stateParams, AlertService, $timeout, $window, $filter) {
 
     $scope._loading = true;
     $scope.id = $stateParams.id;
@@ -21,9 +23,18 @@
         mode: 'code',
         modes: ['code', 'view'], // allowed modes['code', 'form', 'text', 'tree', 'view']
         error: function (err) {
-          alert(err.toString());
+          $window.alert(err.toString());
         }
       }
+    };
+
+    /**
+     * Format options for select box
+     * @param  {Object} item
+     * @return {string}
+     */
+    $scope.format = function(item) {
+      return item.last_published_domain_version + ' - ' + $filter('date')(new Date(item.updated_at), 'MMM dd, yyyy H:mm:ss a');
     };
 
     $scope.onChangeVersion = function() {
