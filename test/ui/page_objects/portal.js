@@ -65,7 +65,6 @@ var Portal = {
   addUserPage: AddUserPage,
   securitySettingsPage: SecuritySettingsPage,
   updatePasswordPage: UpdatePasswordPage,
-  addDomainPage: AddDomainPage, // TODO: DEPRECATED, please remove
   domains: {
     addPage: AddDomainPage,
     configurePage: ConfigureDomainPage,
@@ -274,27 +273,7 @@ var Portal = {
         }
       });
     });
-  },
-
-  // ## Domain Helper methods
-
-  /**
-   * ### Portal.createDomain()
-   *
-   * Helper method that executes all steps required to create a new Domain from
-   * Portal app.
-   *
-   * @param {domain} domain, data applying the schema defined in
-   * `DataProvider.generateDomainUser()`
-   *
-   * @returns {Promise}
-   */
-   createDomain: function(domain) {
-     var me = this;
-     me.getPage(Constants.hashFragments.domains.new);
-     me.addDomainPage.fillForm(domain);
-     me.addDomainPage.clickCreateDomain();
-   }
+  }
 };
 
 module.exports = Portal;

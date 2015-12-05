@@ -188,7 +188,24 @@ var AddDomain = {
    */
    fillForm: function(domain) {
      return this.domainForm.fill(domain);
-   }
+   },
+
+   /**
+    * ### AddDomain.createDomain()
+    *
+    * Helper method that executes all steps required to create a new Domain from
+    * AddDomain app.
+    *
+    * @param {domain} domain, data applying the schema defined in
+    * `DataProvider.generateDomainUser()`
+    *
+    * @returns {Promise}
+    */
+    createDomain: function(domain) {
+      var me = this;
+      me.fillForm(domain);
+      me.clickCreateDomain();
+    }
 };
 
 module.exports = AddDomain;

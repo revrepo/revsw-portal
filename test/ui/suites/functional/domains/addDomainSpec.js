@@ -34,6 +34,7 @@ describe('Functional', function () {
 
     beforeEach(function () {
       Portal.signIn(adminUser);
+      Portal.getPage(Constants.hashFragments.domains.new);
     });
 
     afterEach(function () {
@@ -42,23 +43,13 @@ describe('Functional', function () {
 
     it('should display a successful message when creating domain',
       function () {
-        var emptyDomain = {
-          name: 'mydomain.com',
-          originServer: 'originservername.com',
-          originHostHeader: 'originhostheader.com',
-          originLocation: 'HQ Test Lab'
-        };
-        Portal.createDomain(emptyDomain);
+        var myDomain = DataProvider.generateDomain('mydomain');
+        Portal.domains.addPage.createDomain(myDomain);
     });
 
     it('should not create duplicated domains', function () {
-      var emptyDomain = {
-        name: 'mydomain.com',
-        originServer: 'originservername.com',
-        originHostHeader: 'originhostheader.com',
-        originLocation: 'HQ Test Lab'
-      };
-      Portal.createDomain(emptyDomain);
+      var myDomain = DataProvider.generateDomain('mydomain');
+      Portal.domains.addPage.createDomain(myDomain);
       var alert = Portal.alerts.getFirst();
       var expectedMsg = 'The domain name is already registered in the system';
       expect(alert.getText()).toEqual(expectedMsg);

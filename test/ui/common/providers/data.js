@@ -58,6 +58,36 @@ var DataProvider = {
       password: 'password1',
       passwordConfirm: 'password1'
     };
+  },
+
+  /**
+   * ### DataProvider.generateDomain()
+   *
+   * Generates domain data object based on the unique para that it requires.
+   *
+   * @param {string} prefix, the prefix value to use in all domain data fields
+   *
+   * @returns {Object}, generate domain data with the following schema:
+   *
+   *     {
+   *         name: string,
+   *         originServer: string,
+   *         originHostHeader: string,
+   *         originLocation: string
+   *     }
+   */
+  generateDomain: function (prefix) {
+    if (!prefix) {
+      return {};
+    }
+    var newPrefix = prefix.toLowerCase().replace(' ', '_');
+    var timestamp = (new Date()).getTime();
+    return {
+      name: newPrefix + '.com',
+      originServer: newPrefix + '.originserver.com',
+      originHostHeader: newPrefix + '.originhostheader.com',
+      originLocation: 'HQ Test Lab'
+    };
   }
 };
 
