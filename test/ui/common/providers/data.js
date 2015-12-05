@@ -77,17 +77,23 @@ var DataProvider = {
    *     }
    */
   generateDomain: function (prefix) {
-    if (!prefix) {
-      return {};
+    if (prefix) {
+      var newPrefix = prefix.toLowerCase().replace(' ', '_');
+      var timestamp = (new Date()).getTime();
+      return {
+        name: newPrefix + '.com',
+        originServer: newPrefix + '.originserver.com',
+        originHostHeader: newPrefix + '.originhostheader.com',
+        originLocation: 'HQ Test Lab'
+      };
+    } else {
+      return {
+        name: '',
+        originServer: '',
+        originHostHeader: '',
+        originLocation: '--- Select location ---'
+      };
     }
-    var newPrefix = prefix.toLowerCase().replace(' ', '_');
-    var timestamp = (new Date()).getTime();
-    return {
-      name: newPrefix + '.com',
-      originServer: newPrefix + '.originserver.com',
-      originHostHeader: newPrefix + '.originhostheader.com',
-      originLocation: 'HQ Test Lab'
-    };
   }
 };
 
