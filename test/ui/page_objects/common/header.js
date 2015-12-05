@@ -35,7 +35,21 @@ var Header = {
       }
     },
     menu: {
-      app: {},
+      navbar: {
+        css: '.paper-header.animate',
+        web: {
+          linkText: Constants.header.appMenu.WEB
+        },
+        analytics: {
+          linkText: Constants.header.appMenu.ANALYTICS
+        },
+        accountSettings: {
+          linkText: Constants.header.appMenu.ACCOUNT_SETTINGS
+        },
+        helpSupport: {
+          linkText: Constants.header.appMenu.HELP_SUPPORT
+        }
+      },
       user: {
         css: 'ul.user ul.dropdown-menu',
         updatePassword: {
@@ -52,6 +66,18 @@ var Header = {
   },
 
   // ## Methods
+
+  /**
+   * ### Header.getNavBar()
+   *
+   * Return the reference to the `Nav Menu` container (Selenium WebDriver
+   * Element) from the Portal app
+   *
+   * @returns {Selenium WebDriver Element}
+   */
+  getNavBar: function () {
+    return element(by.css(this.locators.menu.navbar.css));
+  },
 
   /**
    * ### Header.getUserInfoEl()
@@ -123,6 +149,20 @@ var Header = {
       .click();
     return this
       .getLogoutEl()
+      .click();
+  },
+
+  /**
+   * ### Header.clickWebNavbar()
+   *
+   * Triggers a click on the specified navebar `Web option`.
+   *
+   * @returns {Promise}
+   */
+  clickWebNavbar: function() {
+    return this
+      .getNavBar()
+      .element(by.linkText(this.locators.menu.navbar.web))
       .click();
   }
 };
