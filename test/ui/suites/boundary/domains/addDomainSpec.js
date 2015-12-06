@@ -25,6 +25,7 @@ describe('Functional', function () {
   describe('Add domain', function () {
 
     var adminUser = config.get('portal.users.admin');
+    var lengthString100 = new Array(100).join('x');
 
     beforeAll(function () {
     });
@@ -34,17 +35,58 @@ describe('Functional', function () {
 
     beforeEach(function () {
       Portal.signIn(adminUser);
-      Portal.header.clickWebNavbar();
     });
 
     afterEach(function () {
       Portal.signOut();
     });
 
-    it('should display a successful message when creating domain',
+    it('should not create a domain with long value in domain name field',
       function () {
         var myDomain = DataProvider.generateDomain('mydomain');
-        //Portal.domains.addPage.createDomain(myDomain);
+        myDomain.name = lengthString100;
+        Portal.getDomainsPage();
+        Portal.domains.listPage.clickAddNewDomain();
+        Portal.domains.addPage.createDomain(myDomain);
+
+        var alert = Portal.alerts.getFirst();
+        var expectedMsg1 = 'child "domain_name" fails because ["domain_name"';
+        var expectedMsg2 = 'fails to match the required pattern:';
+        expect(alert.getText()).toContain(expectedMsg1);
+        expect(alert.getText()).toContain(expectedMsg2);
+        expect(alert.getText()).toContain(myDomain.name);
     });
+
+    it('should not create a domain with long value in origin host header field',
+      function () {
+        var myDomain = DataProvider.generateDomain('mydomain');
+        myDomain.originHostHeader = lengthString100;
+        Portal.getDomainsPage();
+        Portal.domains.listPage.clickAddNewDomain();
+        Portal.domains.addPage.createDomain(myDomain);
+
+        var alert = Portal.alerts.getFirst();
+        var expectedMsg1 = 'child "origin_host_header" fails because ["origin_';
+        var expectedMsg2 = 'fails to match the required pattern:';
+        expect(alert.getText()).toContain(expectedMsg1);
+        expect(alert.getText()).toContain(expectedMsg2);
+        expect(alert.getText()).toContain(myDomain.originHostHeader);
+    });
+
+  // it('should not create a domain with long value in origin server field',
+  //   function () {
+  //     var myDomain = DataProvider.generateDomain('mydomain2');
+  //     myDomain.originServer = lengthString100;
+  //     Portal.getDomainsPage();
+  //     Portal.domains.listPage.clickAddNewDomain();
+  //     Portal.domains.addPage.createDomain(myDomain);
+  //
+  //     var alert = Portal.alerts.getFirst();
+  //     var expectedMsg1 = 'child "origin_server" fails because ["origin_serv';
+  //     var expectedMsg2 = 'fails to match the required pattern:';
+  //     //expect(alert.getText()).toContain(expectedMsg1);
+  //     //expect(alert.getText()).toContain(expectedMsg2);
+  //     expect(alert.getText()).toContain(myDomain.originServer);
+  // });
   });
 });

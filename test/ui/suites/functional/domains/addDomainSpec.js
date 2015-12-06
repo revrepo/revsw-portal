@@ -34,22 +34,28 @@ describe('Functional', function () {
 
     beforeEach(function () {
       Portal.signIn(adminUser);
-      Portal.getPage(Constants.hashFragments.domains.new);
     });
 
     afterEach(function () {
       Portal.signOut();
     });
 
-    it('should display a successful message when creating domain',
+    it('should create a domain and display a successful message',
       function () {
         var myDomain = DataProvider.generateDomain('mydomain');
+        Portal.getDomainsPage();
+        Portal.domains.listPage.clickAddNewDomain();
         Portal.domains.addPage.createDomain(myDomain);
+
+        // var alert = Portal.alerts.getFirst();
+        // var expectedMsg = 'Domain created';
+        // expect(alert.getText()).toEqual(expectedMsg);
     });
 
-    it('should not create duplicated domains', function () {
+    it('should not create a domain with duplicate values', function () {
       var myDomain = DataProvider.generateDomain('mydomain');
       Portal.domains.addPage.createDomain(myDomain);
+
       var alert = Portal.alerts.getFirst();
       var expectedMsg = 'The domain name is already registered in the system';
       expect(alert.getText()).toEqual(expectedMsg);

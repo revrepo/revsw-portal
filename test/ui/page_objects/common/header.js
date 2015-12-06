@@ -36,7 +36,7 @@ var Header = {
     },
     menu: {
       navbar: {
-        css: '.paper-header.animate',
+        css: '.collapse.navbar-collapse .nav.navbar-nav',
         web: {
           linkText: Constants.header.appMenu.WEB
         },
@@ -76,7 +76,7 @@ var Header = {
    * @returns {Selenium WebDriver Element}
    */
   getNavBar: function () {
-    return element(by.css(this.locators.menu.navbar.css));
+    return element.all(by.css(this.locators.menu.navbar.css)).first();
   },
 
   /**
@@ -153,16 +153,58 @@ var Header = {
   },
 
   /**
-   * ### Header.clickWebNavbar()
+   * ### Header.clickWeb()
    *
-   * Triggers a click on the specified navebar `Web option`.
+   * Triggers a click on the specified navbar `Web option`.
    *
    * @returns {Promise}
    */
-  clickWebNavbar: function() {
+  clickWeb: function() {
     return this
       .getNavBar()
-      .element(by.linkText(this.locators.menu.navbar.web))
+      .element(by.linkText(this.locators.menu.navbar.web.linkText))
+      .click();
+  },
+
+  /**
+   * ### Header.clickAnalytics()
+   *
+   * Triggers a click on the specified navbar `Analytics option`.
+   *
+   * @returns {Promise}
+   */
+  clickAnalytics: function() {
+    return this
+      .getNavBar()
+      .element(by.linkText(this.locators.menu.navbar.Analytics.linkText))
+      .click();
+  },
+
+  /**
+   * ### Header.clickAccountSettings()
+   *
+   * Triggers a click on the specified navbar `Account Settings option`.
+   *
+   * @returns {Promise}
+   */
+  clickAccountSettings: function() {
+    return this
+      .getNavBar()
+      .element(by.linkText(this.locators.menu.navbar.accountSettings.linkText))
+      .click();
+  },
+
+  /**
+   * ### Header.clickHelpSupport()
+   *
+   * Triggers a click on the specified navbar `Help Support option`.
+   *
+   * @returns {Promise}
+   */
+  clickHelpSupport: function() {
+    return this
+      .getNavBar()
+      .element(by.linkText(this.locators.menu.navbar.helpSupport.linkText))
       .click();
   }
 };
