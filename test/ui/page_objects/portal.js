@@ -273,6 +273,61 @@ var Portal = {
         }
       });
     });
+  },
+
+  /**
+   * ### Portal.createDomain()
+   *
+   * Helper method that executes all steps required to create a new Domain from
+   * Portal app.
+   *
+   * @param {user} newDomain, data applying the schema defined in
+   * `DataProvider.generateDomain()`
+   *
+   * @returns {Promise}
+   */
+  createDomain: function (newDomain) {
+    var me = this;
+    return browser.getCurrentUrl().then(function (initialUrl) {
+      me.getDomainsPage();
+      me.domains.listPage.clickAddNewDomain();
+      me.domains.addPage.createDomain(newDomain);
+      me.domains.addPage.clickBackToList();
+      browser.getCurrentUrl().then(function (currentUrl) {
+        if (initialUrl !== currentUrl) {
+          browser.get(initialUrl);
+        }
+      });
+    });
+  },
+
+  /**
+   * ### Portal.deleteDomain()
+   *
+   * Helper method that executes all steps required to delete a Domain from
+   * Portal app.
+   *
+   * @param {user} domain, data applying the schema defined in
+   * `DataProvider.generateDomain()`
+   *
+   * @returns {Promise}
+   */
+  deleteDomain: function (domain) {
+    var me = this;
+    return browser.getCurrentUrl().then(function (initialUrl) {
+      me.getDomainsPage();
+      me.domains.listPage.searcher.clearSearchCriteria();
+      me.domains.listPage.searcher.setSearchCriteria(domain.name);
+      me.domains.listPage.domainsTbl
+        .getFirstRow()
+        .clickDelete();
+      me.dialog.clickOk();
+      browser.getCurrentUrl().then(function (currentUrl) {
+        if (initialUrl !== currentUrl) {
+          browser.get(initialUrl);
+        }
+      });
+    });
   }
 };
 

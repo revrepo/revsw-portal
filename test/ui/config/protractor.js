@@ -15,7 +15,7 @@ exports.config = {
      '../suites/workflow/**/*Spec.js'
   ],
   getPageTimeout: 60000,
-  allScriptsTimeout: 70000,
+  allScriptsTimeout: 300000,
   framework: 'jasmine2',
   jasmineNodeOpts: {
     defaultTimeoutInterval: 360000,

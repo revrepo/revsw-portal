@@ -45,7 +45,7 @@ var DataProvider = {
    *     }
    */
   generateUser: function (prefix) {
-    var prefixEmail= prefix.toLowerCase().replace(' ', '_');
+    var prefixEmail = prefix.toLowerCase().replace(' ', '_');
     var names = prefix.split(' ');
     var prefixFirstName = names[0];
     var prefixLastName = names[0] || names[1];
@@ -79,21 +79,20 @@ var DataProvider = {
   generateDomain: function (prefix) {
     if (prefix) {
       var newPrefix = prefix.toLowerCase().replace(' ', '_');
-      var timestamp = (new Date()).getTime();
+      var timestamp = Date.now();
       return {
-        name: newPrefix + '.com',
-        originServer: newPrefix + '.originserver.com',
-        originHostHeader: newPrefix + '.originhostheader.com',
+        name: newPrefix + '-' + timestamp + '-portal-ui-test.com',
+        originServer: newPrefix + '-portal-ui-test.originserver.com',
+        originHostHeader: newPrefix + '-portal-ui-test.originhostheader.com',
         originLocation: 'HQ Test Lab'
       };
-    } else {
-      return {
-        name: '',
-        originServer: '',
-        originHostHeader: '',
-        originLocation: '--- Select location ---'
-      };
     }
+    return {
+      name: '',
+      originServer: '',
+      originHostHeader: '',
+      originLocation: '--- Select location ---'
+    };
   }
 };
 
