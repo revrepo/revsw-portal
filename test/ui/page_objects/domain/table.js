@@ -8,7 +8,7 @@ var tableHeaderLocators = {
   lastUpdated: {
     css: 'th:nth-of-type(3)'
   },
-  stagingGlobalStatus: {
+  status: {
     css: 'th:nth-of-type(4)'
   }
 };
@@ -92,12 +92,20 @@ var TableRow = function (rowEl, locators) {
     return this.rowEl.element(by.css(this.locators.lastUpdated.css));
   };
 
-  this.getStagingStatusCell = function () {
-    return this.rowEl.element(by.css(this.locators.status.icons.staging.css));
+  this.getStatusCell = function () {
+    return this.rowEl.element(by.css(this.locators.status.css));
   };
 
-  this.getGlobalStatusCell = function () {
-    return this.rowEl.element(by.css(this.locators.status.icons.global.css));
+  this.getStagingStatusIcon = function () {
+    return this
+      .getStatusCell()
+      .element(by.css(this.locators.status.icons.staging.css));
+  };
+
+  this.getGlobalStatusIcon = function () {
+    return this
+      .getStatusCell()
+      .element(by.css(this.locators.status.icons.global.css));
   };
 
   this.getName = function () {
