@@ -217,7 +217,7 @@ var DomainForm = {
   /**
    * ### DomainForm.clearDomainName()
    *
-   * Clears the current value set in the `Domain Name` text field.
+   * Clears the current value set in the `Domain Name` text field
    *
    * @returns {Promise}
    */
@@ -270,6 +270,26 @@ var DomainForm = {
         var backspaces = new Array(len + 1).join(protractor.Key.BACK_SPACE);
         me
           .getOriginHostHeaderTxtIn()
+          .sendKeys(backspaces);
+      });
+  },
+
+  /**
+   * ### DomainForm.clearDomainOriginLocation()
+   *
+   * Clears the current value set in the `Domain Origin Location` drop down.
+   *
+   * @returns {Promise}
+   */
+  clearDomainOriginLocation: function () {
+    var me = this;
+    return this
+      .getDomainOriginLocationDDown()
+      .getAttribute('value').then(function (text) {
+        var len = text.length;
+        var backspaces = new Array(len + 1).join(protractor.Key.BACK_SPACE);
+        me
+          .getDomainOriginLocationDDown()
           .sendKeys(backspaces);
       });
   },
