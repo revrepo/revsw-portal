@@ -71,41 +71,5 @@ describe('Functional', function () {
         // Delete domain
         Portal.deleteDomain(myDomain);
       });
-
-    // TODO: PeEnding, need to fix the validation
-    xit('should display `In Progress` staging status right after creating a ' +
-      'domain',
-      function () {
-        var myDomain = DataProvider.generateDomain('my-domain');
-        // Create domain
-        Portal.createDomain(myDomain);
-        // Check domain is in list
-        Portal.domains.listPage
-          .searchAndGetFirstRow(myDomain.name)
-          .getStagingStatusIcon()
-          .getAttribute('tooltip')
-          .then(function (isDisplayed) {
-            console.log('STAGING', isDisplayed);
-            Portal.deleteDomain(myDomain);
-          });
-      });
-
-    // TODO: PeEnding, need to fix the validation and also create domain fails
-    xit('should display `In Progress` global status right after creating a ' +
-      'domain',
-      function () {
-        var myDomain = DataProvider.generateDomain('my-domain');
-        // Create domain
-        Portal.createDomain(myDomain);
-        // Check domain is in list
-        Portal.domains.listPage
-          .searchAndGetFirstRow(myDomain.name)
-          .getStagingStatusIcon()
-          .getAttribute('tooltip')
-          .then(function (isDisplayed) {
-            console.log('STAGING', isDisplayed);
-            Portal.deleteDomain(myDomain);
-          });
-      });
   });
 });

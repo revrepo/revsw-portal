@@ -292,7 +292,34 @@ var Portal = {
       me.getDomainsPage();
       me.domains.listPage.clickAddNewDomain();
       me.domains.addPage.createDomain(newDomain);
+      browser.sleep(10000);
       me.domains.addPage.clickBackToList();
+      browser.getCurrentUrl().then(function (currentUrl) {
+        if (initialUrl !== currentUrl) {
+          browser.get(initialUrl);
+        }
+      });
+    });
+  },
+
+  /**
+   * ### Portal.updateDomain()
+   *
+   * Helper method that executes all steps required to update an existing
+   * domain for Portal app.
+   *
+   * @param {domain object} domain, data applying the schema defined in
+   * `DataProvider.generateDomain()`
+   *
+   * @returns {Promise}
+   */
+  updateDomain: function (domain) {
+    var me = this;
+    return browser.getCurrentUrl().then(function (initialUrl) {
+      me.getDomainsPage();
+      me.domains.listPage.searchAndClickEdit(domain.name);
+      delete domain.name;
+      me.domains.editPage.updateDomain(domain);
       browser.getCurrentUrl().then(function (currentUrl) {
         if (initialUrl !== currentUrl) {
           browser.get(initialUrl);

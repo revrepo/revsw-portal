@@ -234,7 +234,7 @@ var EditDomain = {
   },
 
   /**
-   * ### EditDomain.createDomain()
+   * ### EditDomain.updateDomain()
    *
    * Updates the domain using the given data by filling it in the form and
    * clicking on the `Update Domain` button from the Edit Domain page.
@@ -244,7 +244,7 @@ var EditDomain = {
    *
    * @returns {Promise}
    */
-  fillForm: function (domain) {
+  updateDomain: function (domain) {
     this.domainForm.fill(domain);
     return this.clickUpdateDomain();
   }
