@@ -316,6 +316,19 @@ var DomainForm = {
   },
 
   /**
+   * ### DomainForm.clearForm()
+   *
+   * Clean the Domain Form in the UI.
+   *
+   * @returns {Promise}
+   */
+  clearForm: function() {
+    this.clearDomainName();
+    this.clearOriginServer();
+    this.clearOriginHostHeader();
+  },
+
+  /**
    * ### DomainForm.fill()
    *
    * Helper method that fills the Domain Form given specified Domain data object

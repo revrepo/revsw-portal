@@ -17,12 +17,11 @@
  */
 
 var config = require('config');
-var Portal = require('./../../page_objects/portal');
-var DataProvider = require('./../../common/providers/data');
+var Portal = require('./../../../page_objects/portal');
+var DataProvider = require('./../../../common/providers/data');
 
 describe('Smoke', function () {
   describe('Add domain', function () {
-
     var adminUser = config.get('portal.users.admin');
 
     beforeAll(function () {
@@ -39,27 +38,26 @@ describe('Smoke', function () {
 
     it('should display "Add domain" form', function () {
       Portal.domains.listPage.clickAddNewDomain();
-      expect(Portal.addDomainPage.isDisplayed()).toBeTruthy();
-      expect(Portal.addDomainPage.domainForm.isDisplayed()).toBeTruthy();
+      expect(Portal.domains.addPage.isDisplayed()).toBeTruthy();
+      expect(Portal.domains.addPage.domainForm.isDisplayed()).toBeTruthy();
     });
 
     it('should allow to cancel a domain edition in domain form', function () {
       Portal.domains.listPage.clickAddNewDomain();
-      Portal.addDomainPage.domainForm.setDomainName('smoke.test.com');
-      Portal.addDomainPage.clickCancel();
+      Portal.domains.addPage.domainForm.clearForm();
+      Portal.domains.addPage.domainForm.setDomainName('smoke.test.com');
+      Portal.domains.addPage.clickCancel();
       expect(Portal.domains.listPage.isDisplayed()).toBeTruthy();
     });
 
     it('should create a domain successfully when filling all required data',
       function () {
-        // Create domain
         var smoketest = DataProvider.generateDomain('smoketest');
         Portal.domains.listPage.clickAddNewDomain();
-        Portal.addDomainPage.createDomain(smoketest);
-        // Check App alert notifications
+        Portal.domains.addPage.domainForm.clearForm();
+        Portal.domains.addPage.createDomain(smoketest);
         expect(Portal.alerts.getAll().count()).toEqual(1);
         expect(Portal.alerts.getFirst().getText()).toEqual('Domain created');
-        // Delete created domain
         Portal.deleteDomain(smoketest);
       });
   });
