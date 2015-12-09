@@ -101,6 +101,22 @@
         }
       },
 
+      http2: {
+        method: 'GET',
+        url: $config.API_URL + '/stats/top/:domainId',
+        params: {
+          report_type: 'http2'
+        }
+      },
+
+      top5xx: {
+        method: 'GET',
+        url: $config.API_URL + '/stats/top/:domainId',
+        params: {
+          report_type: 'top5xx'
+        }
+      },
+
       traffic: {
         method: 'GET'
       },

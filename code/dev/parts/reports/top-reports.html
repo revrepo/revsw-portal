@@ -189,7 +189,26 @@
                 <div style="min-width: 500px; min-height: 350px" pie-chart ng-data="quic"></div>
               </div>
             </div>
-            <!-- right col is empty yet -->
+            <div class="col-md-6">
+              <h3>H2/H2C/Non-HTTP2 Ratio</h3>
+
+              <!--<div class="alert alert-info" ng-if="!http2.data || !http2.data.length">-->
+              <div class="alert alert-info" ng-if="!http2 || !http2.length">
+                No data to display
+              </div>
+              <!--<div ng-hide="!http2.data || !http2.data.length">-->
+              <div ng-hide="!http2 || !http2.length">
+                <!--<canvas id="pie"-->
+                        <!--class="chart chart-pie"-->
+                        <!--chart-data="http2.data"-->
+                        <!--chart-legend="true"-->
+                        <!--chart-labels="http2.labels">-->
+                <!--</canvas>-->
+                <div style="min-width: 500px; min-height: 350px" pie-chart ng-data="http2"></div>
+              </div>
+            </div>
+
+
           </div>
 
 

@@ -336,6 +336,29 @@
     };
 
     /**
+     * H2/H2C HTTP2 requests distribution
+     *
+     * @param {string|number} domainId
+     */
+    $scope.reloadHTTP2 = function (domainId) {
+
+      $scope.http2 = [];
+      Stats.http2({domainId: domainId}).$promise.then(function (data) {
+        if (data.data && data.data.length > 0) {
+          var http2 = [];
+          angular.forEach(data.data, function (val) {
+            http2.push({
+              name: ( val.key === '' ? 'Non-HTTP2' : val.key.toUpperCase() ),
+              // name: val.key.toUpperCase(),
+              y: val.count
+            });
+          });
+          $scope.http2 = http2;
+        }
+      });
+    };
+
+    /**
      * List of country
      *
      * @param {string|number} domainId
@@ -381,6 +404,7 @@
       $scope.reloadContentType($scope.domain.id);
       $scope.reloadCacheStatus($scope.domain.id);
       $scope.reloadQUIC($scope.domain.id);
+      $scope.reloadHTTP2($scope.domain.id);
 
     };
 
