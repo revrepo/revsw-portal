@@ -151,7 +151,7 @@
         .catch(function (err) {
           $scope
           .alertService
-          .danger(err.data.message || 'Oops something ment wrong', 5000);
+          .danger(err.data.message || 'Oops something went wrong', 5000);
         });
     };
     $scope.verify = function(model) {
