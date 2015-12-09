@@ -59,6 +59,61 @@ describe('Functional', function () {
           });
       });
 
+    it('should display a `edit` icon for the domain',
+      function () {
+        Portal.domains.listPage.domainsTbl
+          .getRow(0)
+          .getEditBtn()
+          .isDisplayed()
+          .then(function (isDisplayed) {
+            expect(isDisplayed).toBeTruthy();
+          });
+      });
+
+    it('should display a `configure` icon for the domain',
+      function () {
+        Portal.domains.listPage.domainsTbl
+          .getRow(0)
+          .getConfigureBtn()
+          .isDisplayed()
+          .then(function (isDisplayed) {
+            expect(isDisplayed).toBeTruthy();
+          });
+      });
+
+    it('should display a `delete` icon for the domain',
+      function () {
+        Portal.domains.listPage.domainsTbl
+          .getRow(0)
+          .getDeleteBtn()
+          .isDisplayed()
+          .then(function (isDisplayed) {
+            expect(isDisplayed).toBeTruthy();
+          });
+      });
+
+    it('should display a `stats` icon for the domain',
+      function () {
+        Portal.domains.listPage.domainsTbl
+          .getRow(0)
+          .getStatsBtn()
+          .isDisplayed()
+          .then(function (isDisplayed) {
+            expect(isDisplayed).toBeTruthy();
+          });
+      });
+
+    it('should display a `versions` icon for the domain',
+      function () {
+        Portal.domains.listPage.domainsTbl
+          .getRow(0)
+          .getVersionsBtn()
+          .isDisplayed()
+          .then(function (isDisplayed) {
+            expect(isDisplayed).toBeTruthy();
+          });
+      });
+
     it('should display a new domain created',
       function () {
         var myDomain = DataProvider.generateDomain('my-domain');
@@ -74,6 +129,11 @@ describe('Functional', function () {
 
     it('should not list domain-config right after deleting it',
       function () {
+        // TODO: Once below issue about creating 2 domains, we should remove the
+        // sign-in and sign-out for every test/script (following 3 lines)
+        Portal.signOut();
+        Portal.signIn(user);
+        Portal.getDomainsPage();
         var myDomain = DataProvider.generateDomain('other-domain');
         // Create domain
         Portal.createDomain(myDomain);
