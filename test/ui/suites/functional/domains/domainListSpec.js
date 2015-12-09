@@ -37,7 +37,7 @@ describe('Functional', function () {
       Portal.getDomainsPage();
     });
 
-    xit('should display domain with a Staging Status',
+    it('should display domain with a Staging Status',
       function () {
         Portal.domains.listPage.domainsTbl
           .getRow(0)
@@ -48,7 +48,7 @@ describe('Functional', function () {
           });
       });
 
-    xit('should display domain with a Global Status',
+    it('should display domain with a Global Status',
       function () {
         Portal.domains.listPage.domainsTbl
           .getRow(0)
@@ -59,7 +59,7 @@ describe('Functional', function () {
           });
       });
 
-    xit('should display a new domain created',
+    it('should display a new domain created',
       function () {
         var myDomain = DataProvider.generateDomain('my-domain');
         // Create domain
