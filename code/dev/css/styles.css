@@ -122,6 +122,10 @@ alert-list alert {
   left: -50%;
   min-width: 200px;
 }
+.list-input {
+  border: none;
+  background-color: transparent;
+}
 .main_img_container {
   left: 50%;
   position: absolute;

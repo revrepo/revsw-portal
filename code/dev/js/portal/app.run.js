@@ -13,5 +13,6 @@
         // Clear alerts when routes change
         AlertService.clear();
       });
+    $rootScope.$on("$stateChangeError", console.log.bind(console));
   };
 })();
