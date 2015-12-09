@@ -1,4 +1,4 @@
-<h3>Top Most Requested Objects</h3>
+<h3>Top Response Codes</h3>
 <div filter-top-objects
      ng-hide="!ngDomain"
      fl-os="flOs"
@@ -18,14 +18,14 @@
     <table class="table">
       <thead>
       <tr>
-        <th>Path</th>
+        <th>Response code</th>
         <th>Requests</th>
       </tr>
       </thead>
       <tbody>
       <tr ng-repeat="item in items">
         <td>
-          <a target="_blank" ng-href="http://{{ngDomain.domain_name}}{{item.path}}">{{item.path}}</a>
+          <a target="_blank" ng-href="http://{{ngDomain.name}}{{item.path}}">{{item.path}}</a>
         </td>
         <td>{{item.count}}</td>
       </tr>
