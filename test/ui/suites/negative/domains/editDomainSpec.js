@@ -74,7 +74,7 @@ describe('Negative', function () {
     //     Portal.domains.editPage.clickUpdateDomain();
     //   });
     //
-    // it('should display an error message when trying to edit domain without ' +
+    // it('should display an error message when trying to edit domain without '+
     //   '"Domain Origin Location"',
     //   function () {
     //     Portal.userListPage.searchAndClickEdit(myDomain.email);

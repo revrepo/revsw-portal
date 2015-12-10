@@ -25,6 +25,7 @@ describe('Functional', function () {
   describe('Add domain', function () {
 
     var adminUser = config.get('portal.users.admin');
+    var myDomain = DataProvider.generateDomain('mydomain');
 
     beforeAll(function () {
     });
@@ -42,18 +43,18 @@ describe('Functional', function () {
 
     it('should create a domain and display a successful message',
       function () {
-        var myDomain = DataProvider.generateDomain('mydomain');
         Portal.getDomainsPage();
         Portal.domains.listPage.clickAddNewDomain();
         Portal.domains.addPage.createDomain(myDomain);
 
-        // var alert = Portal.alerts.getFirst();
-        // var expectedMsg = 'Domain created';
-        // expect(alert.getText()).toEqual(expectedMsg);
+        var alert = Portal.alerts.getFirst();
+        var expectedMsg = 'Domain created';
+        expect(alert.getText()).toEqual(expectedMsg);
     });
 
     it('should not create a domain with duplicate values', function () {
-      var myDomain = DataProvider.generateDomain('mydomain');
+      Portal.getDomainsPage();
+      Portal.domains.listPage.clickAddNewDomain();
       Portal.domains.addPage.createDomain(myDomain);
 
       var alert = Portal.alerts.getFirst();
