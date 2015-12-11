@@ -45,7 +45,7 @@ var EditDomain = {
         css: '[ng-click="updateDomain(model)"]'
       },
       publishDomain: {
-        css: 'ng-click="publishDomain(model)"'
+        css: '[ng-click="publishDomain(model)"]'
       },
       cancel: {
         linkText: 'Cancel'
