@@ -10,6 +10,7 @@
     'revapm.Portal.Cache',
     'revapm.Portal.Reports',
     'revapm.Portal.Keys',
+    'revapm.Portal.Apps',
     'ui.router',
     'ui.bootstrap.tpls',
     'ui.bootstrap.tooltip',

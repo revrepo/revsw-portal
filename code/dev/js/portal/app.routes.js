@@ -28,6 +28,31 @@
           }
         }
       })
+      .state('index.apps', {
+        url: '/apps',
+        views: {
+          menu: {
+            controller: function ($scope, $state) {
+              $scope.apps = ''
+              $scope.account = '';
+              $scope.webapp = '';
+              $scope.reports = '';
+              $scope.help = '';
+              if ($state.includes('index.apps')) {
+                $scope.apps = 'active';
+              }
+            },
+            templateUrl: 'parts/cadmin-top-menu.html'
+          },
+          sideMenu: {
+            templateUrl: 'parts/menu/apps-side.html'
+          },
+          page: {
+            controller: function () {},
+            templateUrl: 'parts/layout/page.html',
+          }
+        }
+      })
       .state('index.webApp', {
         url: '',
         views: {
