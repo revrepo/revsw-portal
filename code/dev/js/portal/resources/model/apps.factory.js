@@ -12,6 +12,15 @@
         url: $config.API_URL + '/apps/:id/config_status',
         method: 'GET',
         isArray: false
+      },
+      sdkReleases: {
+        url: $config.API_URL + '/apps/sdk_releases',
+        method: 'GET'
+      },
+      versions: {
+        url: $config.API_URL + '/apps/:id/versions',
+        method: 'GET',
+        isArray: true
       }
     });
   }

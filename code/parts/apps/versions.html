@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-sm-12">
       <h2 class="pull-left page-title">
-        Domain versions: <strong ng-if="domain">{{domain.domain_name}}</strong>
+        Domain versions: <strong>{{model.app_name}}</strong>
       </h2>
     </div>
   </div>
@@ -14,7 +14,7 @@
           <div class="row">
             <div class="col-md-12">
               <div class="pull-left">
-                <a ui-sref="index.webApp.domains"
+                <a ui-sref="^"
                    ng-disabled="_loading"
                    class="btn btn-default">
                   <i class="glyphicon glyphicon-arrow-left"></i>&nbsp;
@@ -39,8 +39,8 @@
                         ng-disabled="_loading"
                         ng-model="currentVersion"
                         ng-change="onChangeVersion()"
-                        ng-options="ver.last_published_domain_version as format(ver) for ver in versions">
-                  <option value="">--- Please select domain configuration version ---</option>
+                        ng-options="ver.updated_at as format(ver) for ver in versions">
+                  <option value="">--- Please select app configuration version ---</option>
                 </select>
               </div>
             </div>
@@ -52,7 +52,7 @@
                      disabled>{{obj.data}}</pre>
 
                 <div class="col-sm-12" style="margin-top: 15px">
-                  <a ui-sref="index.webApp.domains"
+                  <a ui-sref="^"
                      ng-disabled="_loading"
                      class="btn btn-default">
                     <i class="glyphicon glyphicon-remove"></i>&nbsp;
