@@ -8,6 +8,11 @@
   /*@ngInject*/
   function UsersResource(Resource, $config) {
 
-    return Resource($config.API_URL + '/users/:id', {id: '@user_id'});
+    return Resource($config.API_URL + '/users/:id', {id: '@user_id'}, {
+      myself: {
+        url: $config.API_URL + '/users/myself',
+        method: 'GET'
+      }
+    });
   };
 })();
