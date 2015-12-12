@@ -6,7 +6,7 @@
     .directive('domainStagingStatus', domainStagingStatus);
 
   /*@ngInject*/
-  function domainStagingStatus(DomainsConfig, $config, $interval, $rootScope) {
+  function domainStagingStatus(DomainsConfig, $config, $interval, $rootScope, $state) {
     return {
       template: '<i class="glyphicon" ng-class="iconStaging" tooltip="{{tooltipStaging}}"></i>' +
                 '&nbsp;&nbsp;&nbsp;' +
@@ -26,7 +26,11 @@
         $scope.shouldRefresh = true;
 
         $scope.startRefresh = function() {
-          if (!domainId || !$scope.shouldRefresh) {
+          if (!domainId || !$scope.shouldRefresh ||
+            $state.includes('index.webApps.domains.*.new') ||
+            $state.includes('index.webApps.domains.*.edit') ||
+            $state.includes('index.webApps.domains.*.configure') ||
+            $state.includes('index.webApps.domains.*.versions')) {
             return;
           }
           intervalPromise = $interval($scope.fetchStatus, $config.DOMAIN_STATUS_REFRESH_INTERVAL, 1);
