@@ -18,7 +18,7 @@
     $scope.currentVersion = {};
 
     $scope.obj = {
-      data: {},
+      data: "Configuration will appear here",
       options: {
         mode: 'code',
         modes: ['code', 'view'], // allowed modes['code', 'form', 'text', 'tree', 'view']
@@ -39,7 +39,7 @@
 
     $scope.onChangeVersion = function() {
       if (!$scope.currentVersion) {
-        $scope.obj.data = {};
+        $scope.obj.data = "";
         return;
       }
       $scope._loading = true;

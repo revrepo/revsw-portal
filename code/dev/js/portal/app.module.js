@@ -14,7 +14,8 @@
     'ui.router',
     'ui.bootstrap.tpls',
     'ui.bootstrap.tooltip',
-    'ui.bootstrap.popover'
+    'ui.bootstrap.popover',
+    'hljs'
   ]);
 
 })();
