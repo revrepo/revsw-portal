@@ -6,7 +6,7 @@
     .directive('appStagingStatus', appStagingStatus);
 
   /*@ngInject*/
-  function appStagingStatus(Apps, $config, $interval, $rootScope) {
+  function appStagingStatus(Apps, $config, $interval, $rootScope, $state) {
     return {
       template: '<i class="glyphicon" ng-class="iconStaging" tooltip="{{tooltipStaging}}"></i>' +
       '&nbsp;&nbsp;&nbsp;' +
@@ -23,12 +23,19 @@
         $scope.tooltipStaging = 'Staging status';
         $scope.iconGlobal = 'glyphicon-refresh spin';
         $scope.tooltipGlobal = 'Global status';
+
         $scope.shouldRefresh = true;
 
         $scope.startRefresh = function() {
-          if (!appId || !$scope.shouldRefresh) {
+          if (!appId ||
+            !$scope.shouldRefresh ||
+            $state.includes('index.apps.*.new') ||
+            $state.includes('index.apps.*.edit') ||
+            $state.includes('index.apps.*.configure') ||
+            $state.includes('index.apps.*.versions')) {
             return;
           }
+          console.log($state.current);
           intervalPromise = $interval($scope.fetchStatus,
              $config.DOMAIN_STATUS_REFRESH_INTERVAL, 1);
         };

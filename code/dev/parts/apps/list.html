@@ -85,7 +85,7 @@
             Loading...
           </div>
           <crud-pagination></crud-pagination>
-          <table class="table">
+          <table class="table table-condensed">
             <thead>
             <tr>
               <th>
@@ -141,7 +141,7 @@
                 <a href="#/reports/proxy" ng-if="!item.loading" ng-click="storeToStorage(item)" tooltip="Stats">
                   <i class="glyphicon glyphicon-stats"></i>
                 </a>
-                <a ui-href="" ng-if="!item.loading" tooltip="Historical versions">
+                <a href="" ui-sref=".versions({id: item.id})" ng-if="!item.loading" tooltip="Historical versions">
                   <i class="glyphicon glyphicon-book"></i>
                 </a>
               </td>
