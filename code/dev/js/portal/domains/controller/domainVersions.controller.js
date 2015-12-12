@@ -34,7 +34,7 @@
      * @return {string}
      */
     $scope.format = function(item) {
-      return item.last_published_domain_version + ' - ' + $filter('date')(new Date(item.updated_at), 'MMM dd, yyyy H:mm:ss a');
+      return 'Ver.' + item.last_published_domain_version + ' created by ' + item.created_by + ' at ' + $filter('date')(new Date(item.updated_at), 'MMM dd, yyyy H:mm:ss a');
     };
 
     $scope.onChangeVersion = function() {
@@ -47,7 +47,7 @@
         .get({id: $stateParams.id, version: $scope.currentVersion})
         .$promise
         .then(function (data) {
-          $scope.obj.data = data;
+          $scope.obj.data = JSON.stringify(data, null, 2);;
         })
         .catch(function (err) {
           AlertService.danger(err);

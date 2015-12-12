@@ -47,14 +47,9 @@
 
             <div class="form-group">
               <div class="col-md-12">
-                <div name="json"
-                     class="col-md-12"
+                <pre class="col-md-12"
                      id="json"
-                     ng-model="obj.data"
-                     options="obj.options"
-                     ng-jsoneditor
-                     style="height: 550px"
-                     disabled></div>
+                     disabled>{{obj.data}}</pre>
 
                 <div class="col-sm-12" style="margin-top: 15px">
                   <a ui-sref="index.webApp.domains"
