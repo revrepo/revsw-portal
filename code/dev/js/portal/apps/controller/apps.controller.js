@@ -111,19 +111,21 @@
     };
 
     $scope.cleanModel = function (model) {
-      var modelCopy = _.clone(model);
-      var params = {id: model.id};
-      delete modelCopy.$promise;
-      delete modelCopy.$resolved;
-      delete modelCopy.id;
-      delete modelCopy.app_name;
-      delete modelCopy.account_id;
-      delete modelCopy.app_platform;
-      delete modelCopy.sdk_key;
-      delete modelCopy.created_at;
-      delete modelCopy.updated_at;
+        var modelCopy = _.clone(model);
+        var params = {id: model.id};
 
-      return modelCopy;
+        delete modelCopy.$promise;
+        delete modelCopy.$resolved;
+        delete modelCopy.id;
+        delete modelCopy.app_name;
+        delete modelCopy.account_id;
+        delete modelCopy.app_platform;
+        delete modelCopy.sdk_key;
+        delete modelCopy.created_at;
+        delete modelCopy.updated_at;
+        delete modelCopy.updated_by;
+        
+        return modelCopy;
     };
 
 

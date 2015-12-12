@@ -17,8 +17,11 @@
     $scope.versions = [];
     $scope.currentVersion = {};
 
-    $scope.obj = {
-      data: {},
+
+
+    $scope.initVersions = function(){
+          $scope.obj = {
+      data: "Configuration will appear here",
       options: {
         mode: 'code',
         modes: ['code', 'view'], // allowed modes['code', 'form', 'text', 'tree', 'view']
@@ -27,6 +30,7 @@
         }
       }
     };
+    };
 
     /**
      * Format options for select box
@@ -34,12 +38,15 @@
      * @return {string}
      */
     $scope.format = function(item) {
-      return  ' - ' + $filter('date')(new Date(item.updated_at), 'MMM dd, yyyy H:mm:ss a');
+      var updated_by = (item.updated_by) ?
+       'Updated by ' + item.updated_by :
+       'Updated';
+      return  updated_by + ' at ' + $filter('date')(new Date(item.updated_at), 'MMM dd, yyyy H:mm:ss a');
     };
 
     $scope.onChangeVersion = function() {
       if (!$scope.currentVersion) {
-        $scope.obj.data = {};
+        $scope.obj.data = "{}";
         return;
       }
       var idx = _.findIndex($scope.versions, {updated_at: $scope.currentVersion});

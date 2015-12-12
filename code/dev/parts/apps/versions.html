@@ -7,7 +7,7 @@
     </div>
   </div>
 
-  <div class="row">
+  <div class="row" ng-init="initVersions()">
     <div class="col-md-12">
       <div class="panel panel-default">
         <div class="panel-heading">
@@ -46,10 +46,12 @@
             </div>
 
             <div class="form-group">
-              <div class="col-md-12">
-                <pre class="col-md-12"
-                     id="json"
-                     disabled>{{obj.data}}</pre>
+              <div  class="col-md-12">
+               <pre 
+                hljs
+                hljs-source = "obj.data"
+                class="col-md-12">
+               </pre>
 
                 <div class="col-sm-12" style="margin-top: 15px">
                   <a ui-sref="^"
