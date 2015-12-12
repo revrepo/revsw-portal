@@ -14,13 +14,13 @@
           <div class="row">
             <div class="col-md-12">
               <div class="pull-left">
-                <a ui-sref="index.apps.ios"
+                <a ui-sref="^"
                    ng-disabled="_loading"
                    class="btn btn-default">
                   <i class="glyphicon glyphicon-arrow-left"></i>&nbsp;
                   Back to List
                 </a>
-                <a ui-sref="index.apps.edit({id: id})"
+                <a ui-sref="^.edit({id: model.id})"
                    ng-disabled="_loading"
                    class="btn btn-info">
 
@@ -40,7 +40,7 @@
                 <div name="json"
                      class="col-md-12"
                      id="json"
-                     ng-model="model.configs[0]"
+                     ng-model="model.configs"
                      options="obj.options"
                      ng-jsoneditor
                      style="height: 550px"></div>
@@ -67,7 +67,7 @@
                     <i class="glyphicon glyphicon-ok" ng-if="!_loading"></i>&nbsp;
                     Publish
                   </button>
-                  <a ui-sref="index.apps.ios"
+                  <a ui-sref="^"
                      ng-disabled="_loading"
                      class="btn btn-default">
                     <i class="glyphicon glyphicon-remove"></i>&nbsp;
