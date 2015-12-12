@@ -45,6 +45,7 @@
 
 
     $scope.initEdit = function (id) {
+      $scope._loading = true;
       $scope.get(id)
         .then(function () {
           $scope.configuration = $scope.model.configs[0];
@@ -59,7 +60,6 @@
               $scope.availableSDKVersions = _.xor(data[$state.current.data.platform],
                 $scope.SDKVersionsInConfigs);
             });
-
           $scope.selectedSDKVersion = $scope.SDKVersionsInConfigs[0];
           $scope.fieldsToShow = _.keys($scope.model.configs[0]);
         })
@@ -70,6 +70,7 @@
           $scope.$watch('selectedSDKVersion', function () {
             onSelectedSDKVersionChange();
           });
+          $scope._loading = false;
         });
     };
 
@@ -192,13 +193,13 @@
       delete modelCopy.$promise;
       delete modelCopy.$resolved;
       delete modelCopy.id;
-      delete modelCopy.app_name;
       delete modelCopy.account_id;
       delete modelCopy.app_platform;
       delete modelCopy.sdk_key;
       delete modelCopy.created_at;
       delete modelCopy.updated_at;
-
+      delete modelCopy.updated_by;
+      
       return modelCopy;
     };
   }
