@@ -24,7 +24,7 @@
   //  $scope.setState('index.apps');
 
     $scope.setResource(Apps);
-
+    $scope.$state = $state;
     // Fetch list of records
     $scope.$on('$stateChangeSuccess', function (state) {
       if($state.current.data.list){
@@ -56,16 +56,18 @@
       }
     };
 
+
+
     $scope.model.account_id = $scope.auth.getUser().companyId[0];
-    $scope.model.configs.domains_while_list = [];
-    $scope.model.configs.domains_black_list = [];
+
     User.getUserDomains(true)
       .then(function (domains) {
         $scope.domainList = domains.map(function (d) {
           return d.domain_name;
         });
       });
-    $scope.protocols = ['standard', 'quic', 'rmp'];
+
+
     $scope.switch = function (item){
       if(item.show === true ){
         item.show = false;
@@ -76,10 +78,8 @@
     $scope.initEdit = function (id) {
       $scope.get(id)
         .catch(function (err) {
-          $scope.alertService.danger('Could not load domain details');
+          $scope.alertService.danger('Could not load app details');
         });
-      $scope.versions = [1];
-
     };
 
     $scope.initNew = function () {
@@ -88,27 +88,9 @@
         {name: 'Android', disabled: false},
         {name: 'Windows Mobile', disabled: true}
       ];
-      $scope.model.app_platform = $scope.platforms[0];
-    };
-
-    $scope.toggleProtocolSelection = function (protocol) {
-      var idx = $scope.model.configs[0]
-      .allowed_transport_protocols
-      .indexOf(protocol);
-
-      // is currently selected
-      if (idx > -1) {
-        $scope.model.configs[0]
-        .allowed_transport_protocols
-        .splice(idx, 1);
-      }
-
-      // is newly selected
-      else {
-        $scope.model.configs[0]
-        .allowed_transport_protocols
-        .push(protocol);
-      }
+      var idx = _.findIndex($scope.platforms,
+        {name: $state.current.data.platform});
+      $scope.model.app_platform = $scope.platforms[idx];
     };
 
     $scope.getApp = function(id) {
@@ -127,6 +109,7 @@
           $scope.alertService.success('App registered', 5000);
         });
     };
+
     $scope.cleanModel = function (model) {
       var modelCopy = _.clone(model);
       var params = {id: model.id};
@@ -141,7 +124,9 @@
       delete modelCopy.updated_at;
 
       return modelCopy;
-    }
+    };
+
+
     $scope.updateApp = function (model) {
       var params = {id: model.id};
       $scope.update(params, $scope.cleanModel(model))
