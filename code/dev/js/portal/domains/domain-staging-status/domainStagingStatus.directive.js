@@ -29,7 +29,7 @@
           if (!domainId || !$scope.shouldRefresh ||
             $state.includes('index.webApps.domains.*.new') ||
             $state.includes('index.webApps.domains.*.edit') ||
-            $state.includes('index.webApps.domains.*.configure') ||
+            $state.includes('index.webApps.domains.*.advanced') ||
             $state.includes('index.webApps.domains.*.versions')) {
             return;
           }

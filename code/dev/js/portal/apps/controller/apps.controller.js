@@ -8,6 +8,7 @@
   /*@ngInject*/
   function AppsController($scope,
                           User,
+                                 Companies,
                                  Apps,
                                  CRUDController,
                                  $injector,
@@ -35,16 +36,11 @@
       }
     });
 
-
-   // $scope.list().then(function (data) {
-    //  $scope.apps = filterFilter(data,
-    //   {app_platform: $state.current.data.platform}, true);
-   // });
-
+    $scope.companies = [];
     $scope.model = {
       configs: [{}]
     };
-
+    $scope.copyForEditor = {};
     $scope.obj = {
       data: {},
       options: {
@@ -67,6 +63,15 @@
         });
       });
 
+    $scope.fetchCompanies = function(companyIds) {
+      var promises = [];
+      companyIds.forEach(function (id) {
+        promises.push(Companies.get({id: id}).$promise);
+      });
+      $q.all(promises).then(function (data) {
+        $scope.companies = data;
+      });
+    };
 
     $scope.switch = function (item){
       if(item.show === true ){
@@ -77,6 +82,19 @@
     };
     $scope.initEdit = function (id) {
       $scope.get(id)
+        .then(function () {
+          $scope.copyForEditor = _.clone($scope.model);
+          delete $scope.copyForEditor.$promise;
+          delete $scope.copyForEditor.$resolved;
+          delete $scope.copyForEditor.id;
+          delete $scope.copyForEditor.account_id;
+          delete $scope.copyForEditor.app_platform;
+          delete $scope.copyForEditor.sdk_key;
+          delete $scope.copyForEditor.created_at;
+          delete $scope.copyForEditor.updated_at;
+          delete $scope.copyForEditor.updated_by;
+          delete $scope.copyForEditor.created_by;
+        })
         .catch(function (err) {
           $scope.alertService.danger('Could not load app details');
         });
@@ -92,6 +110,22 @@
         {name: $state.current.data.platform});
       $scope.model.app_platform = $scope.platforms[idx];
     };
+
+    if ($scope.auth.isReseller() || $scope.auth.isRevadmin()) {
+      // Loading list of companies
+      Companies.query(function (list) {
+        $scope.companies = list;
+        if ($scope.companies.length === 1) {
+          $scope.model.account_id = $scope.companies[0].id;
+        }
+      });
+    } else if (!angular.isArray($scope.auth.getUser().companyId)) {
+      $scope.model.account_id = $scope.auth.getUser().companyId;
+    } else if ($scope.auth.getUser().companyId.length === 1) {
+      $scope.model.account_id = $scope.auth.getUser().companyId[0];
+    } else {
+      $scope.fetchCompanies($scope.auth.getUser().companyId);
+    }
 
     $scope.getApp = function(id) {
       $scope.get(id)
@@ -124,22 +158,33 @@
         delete modelCopy.created_at;
         delete modelCopy.updated_at;
         delete modelCopy.updated_by;
-        
+        delete modelCopy.created_by;
+
         return modelCopy;
     };
 
 
     $scope.updateApp = function (model) {
-      var params = {id: model.id};
-      $scope.update(params, $scope.cleanModel(model))
-        .then(function () {
-          $scope.alertService.success('App updated', 5000);
-        })
-        .catch(function (err) {
-          $scope
-          .alertService
-          .danger(err.data.message || 'Oops something went wrong', 5000);
-        });
+      $scope.confirm('confirmUpdateModal.html', model).then(function () {
+        $scope._loading = true;
+        var params = {id: $scope.model.id};
+        $scope.update(params, $scope.cleanModel(model))
+          .then(function () {
+            $scope.alertService.success('App updated', 5000);
+          })
+          .catch(function (err) {
+            $scope
+              .alertService
+              .danger(err.data.message || 'Oops something went wrong', 5000);
+          })
+          .finally(function () {
+            delete model.$promise;
+            delete model.$resolved;
+            delete model.$rejected;
+            _.assign($scope.model, model);
+            $scope._loading = false;
+          });
+      });
     };
     $scope.verify = function(model) {
       if (!model.id) {
@@ -148,7 +193,7 @@
       }
       $scope._loading = true;
       Apps.update({
-          id: model.id,
+          id: $scope.model.id,
           options: 'verify_only'
         }, $scope.cleanModel(model))
         .$promise
@@ -164,14 +209,14 @@
     };
 
     $scope.publish = function(model) {
-      if (!model.id) {
+      if (!$scope.model.id) {
         AlertService.danger('Please select app first');
         return;
       }
       $scope.confirm('confirmPublishModal.html', model).then(function () {
         $scope._loading = true;
         Apps.update({
-            id: model.id,
+            id: $scope.model.id,
             options: 'publish'
           }, $scope.cleanModel(model))
           .$promise
@@ -184,6 +229,7 @@
             AlertService.danger(err);
           })
           .finally(function() {
+            _.assign($scope.model, model);
             $scope._loading = false;
           });
       });

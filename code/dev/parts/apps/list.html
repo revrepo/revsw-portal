@@ -44,7 +44,7 @@
   <div class="row">
     <div class="col-sm-12">
       <h2 class="pull-left page-title">
-        Apps List
+       {{$state.current.data.platform}} Apps List
       </h2>
     </div>
   </div>
@@ -97,15 +97,15 @@
                 <span class="sortorder" ng-show="filter.predicate === 'app_platform'" ng-class="{reverse: filter.reverse}"></span>
               </th>
               <th>
-                <a href="" ng-click="order('app_published_version')">Last published config</a>
+                <a href="" ng-click="order('app_published_version')">Last published<br> config</a>
                 <span class="sortorder" ng-show="filter.predicate === 'app_published_version'" ng-class="{reverse: filter.reverse}"></span>
               </th>
               <th>
-                <a href="" ng-click="order('updated_at')">Updated at</a>
+                <a href="" ng-click="order('updated_at')">Last updated at</a>
                 <span class="sortorder" ng-show="filter.predicate === 'updated_at'" ng-class="{reverse: filter.reverse}"></span>
               </th>
               <th>SDK key</th>
-              <th>Staging/Production Status</th>
+              <th>Staging/Production<br> Status</th>
               <th></th>
             </tr>
             </thead>
