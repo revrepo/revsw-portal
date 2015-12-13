@@ -21,8 +21,8 @@ var Portal = require('./../../../page_objects/portal');
 var DataProvider = require('./../../../common/providers/data');
 var Constants = require('./../../../page_objects/constants');
 
-describe('Functional', function () {
-  describe('Edit domain', function () {
+describe('Smoke', function () {
+  describe('Edit advanced domain', function () {
 
     var adminUser = config.get('portal.users.admin');
     var myDomain = DataProvider.generateDomain('mydomain');
@@ -38,37 +38,27 @@ describe('Functional', function () {
     });
 
     beforeEach(function () {
-      Portal.header.clickWeb();
+      Portal.header.goTo(Constants.header.appMenu.WEB);
     });
 
-    afterEach(function () {
+    it('should display "Advanced Edit" domain page', function () {
+      Portal.domains.listPage.searchAndClickEdit(myDomain.name);
+      Portal.domains.editPage.clickAdvancedMode();
+      expect(Portal.domains.editPage.isDisplayed()).toBeTruthy();
     });
 
-    it('should edit a domain and validate the domain successfully',
-      function () {
-        Portal.domains.listPage.searchAndClickEdit(myDomain.name);
-        Portal.domains.editPage.clickValidateDomain();
-        var alert = Portal.alerts.getFirst();
-        expect(alert.getText()).toEqual('The domain configuration is correct');
-      });
+    it('should display "Back To List" domain button', function () {
+      Portal.domains.listPage.searchAndClickEdit(myDomain.name);
+      Portal.domains.editPage.clickAdvancedMode();
+      var backToListButton = Portal.domains.editPage.getBackToListBtn();
+      expect(backToListButton.isPresent()).toBeTruthy();
+    });
 
-    it('should edit a domain and update the domain successfully',
-      function () {
-        Portal.domains.listPage.searchAndClickEdit(myDomain.name);
-        Portal.domains.editPage.domainForm.setOriginHostHeader(' ');
-        Portal.domains.editPage.clickUpdateDomain();
-        Portal.dialog.clickOk();
-        var alert = Portal.alerts.getFirst();
-        expect(alert.getText()).toEqual('Domain updated');
-      });
-
-    it('should edit a domain and publish the domain successfully',
-      function () {
-        Portal.domains.listPage.searchAndClickEdit(myDomain.name);
-        Portal.domains.editPage.clickPublishDomain();
-        Portal.dialog.clickOk();
-        var alert = Portal.alerts.getFirst();
-        expect(alert.getText()).toEqual('Domain configuration published');
-      });
+    it('should display "Cancel" domain button', function () {
+      Portal.domains.listPage.searchAndClickEdit(myDomain.name);
+      Portal.domains.editPage.clickAdvancedMode();
+      var cancelButton = Portal.domains.editPage.getCancelBtn();
+      expect(cancelButton.isPresent()).toBeTruthy();
+    });
   });
 });

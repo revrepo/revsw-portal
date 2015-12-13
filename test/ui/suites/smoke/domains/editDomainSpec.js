@@ -19,6 +19,7 @@
 var config = require('config');
 var Portal = require('./../../../page_objects/portal');
 var DataProvider = require('./../../../common/providers/data');
+var Constants = require('./../../../page_objects/constants');
 
 describe('Smoke', function () {
   describe('Edit domain', function () {
@@ -36,7 +37,7 @@ describe('Smoke', function () {
     });
 
     beforeEach(function () {
-      Portal.header.clickWeb();
+      Portal.header.goTo(Constants.header.appMenu.WEB);
     });
 
     it('should display "Edit" domain page', function () {

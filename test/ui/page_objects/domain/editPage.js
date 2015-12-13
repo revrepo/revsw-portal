@@ -38,6 +38,12 @@ var EditDomain = {
       backToList: {
         linkText: 'Back to List'
       },
+      advancedMode: {
+        linkText: 'Advanced mode'
+      },
+      basicMode: {
+        linkText: 'Basic mode'
+      },
       validateDomain: {
         css: '[ng-click="validateDomain(model)"]'
       },
@@ -83,6 +89,32 @@ var EditDomain = {
   getBackToListBtn: function () {
     return element(
       by.partialLinkText(this.locators.buttons.backToList.linkText));
+  },
+
+  /**
+   * ### EditDomain.getAdvancedModeBtn()
+   *
+   * Returns the reference to the `Advanced mode` button (Selenium WebDriver
+   * Element) from the Edit Advanced Domain page from the Portal app.
+   *
+   * @returns {Selenium WebDriver Element}
+   */
+  getAdvancedModeBtn: function () {
+    return element(
+      by.partialLinkText(this.locators.buttons.advancedMode.linkText));
+  },
+
+  /**
+   * ### EditDomain.getBasicModeBtn()
+   *
+   * Returns the reference to the `Basic mode` button (Selenium WebDriver
+   * Element) from the Edit Basic Domain page from the Portal app.
+   *
+   * @returns {Selenium WebDriver Element}
+   */
+  getBasicModeBtn: function () {
+    return element(
+      by.partialLinkText(this.locators.buttons.basicMode.linkText));
   },
 
   /**
@@ -134,6 +166,34 @@ var EditDomain = {
   },
 
   // ## Methods to interact with the Edit Domain Page components
+
+  /**
+   * ### EditDomain.clickAdvancedMode()
+   *
+   * Triggers a click on the `Advanced mode` button from the Edit Domain page
+   * from the Portal app.
+   *
+   * @returns {Promise}
+   */
+  clickAdvancedMode: function () {
+    return this
+      .getAdvancedModeBtn()
+      .click();
+  },
+
+  /**
+   * ### EditDomain.clickBasicMode()
+   *
+   * Triggers a click on the `Basic mode` button from the Edit Domain page
+   * from the Portal app.
+   *
+   * @returns {Promise}
+   */
+  clickBasicMode: function () {
+    return this
+      .getBasicModeBtn()
+      .click();
+  },
 
   /**
    * ### EditDomain.clickBackToList()

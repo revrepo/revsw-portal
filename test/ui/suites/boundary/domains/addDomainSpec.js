@@ -41,7 +41,7 @@ describe('Functional', function () {
       Portal.signOut();
     });
 
-    it('should not create a domain with long value in domain name field',
+    it('should not create domain with long value in domain name field (100)',
       function () {
         var myDomain = DataProvider.generateDomain('mydomain');
         myDomain.name = lengthString100;
@@ -55,6 +55,22 @@ describe('Functional', function () {
         expect(alert.getText()).toContain(expectedMsg1);
         expect(alert.getText()).toContain(expectedMsg2);
         expect(alert.getText()).toContain(myDomain.name);
+    });
+
+    it('should not create domain with long value in origin server field (100)',
+      function () {
+        var myDomain = DataProvider.generateDomain('mydomain2');
+        myDomain.originServer = lengthString100;
+        Portal.getDomainsPage();
+        Portal.domains.listPage.clickAddNewDomain();
+        Portal.domains.addPage.createDomain(myDomain);
+    
+        var alert = Portal.alerts.getFirst();
+        var expectedMsg1 = 'child "origin_server" fails because ["origin_serv';
+        var expectedMsg2 = 'fails to match the required pattern:';
+        expect(alert.getText()).toContain(expectedMsg1);
+        expect(alert.getText()).toContain(expectedMsg2);
+        expect(alert.getText()).toContain(myDomain.originServer);
     });
 
     it('should not create a domain with long value in origin host header field',
@@ -72,21 +88,5 @@ describe('Functional', function () {
         expect(alert.getText()).toContain(expectedMsg2);
         expect(alert.getText()).toContain(myDomain.originHostHeader);
     });
-
-  // it('should not create a domain with long value in origin server field',
-  //   function () {
-  //     var myDomain = DataProvider.generateDomain('mydomain2');
-  //     myDomain.originServer = lengthString100;
-  //     Portal.getDomainsPage();
-  //     Portal.domains.listPage.clickAddNewDomain();
-  //     Portal.domains.addPage.createDomain(myDomain);
-  //
-  //     var alert = Portal.alerts.getFirst();
-  //     var expectedMsg1 = 'child "origin_server" fails because ["origin_serv';
-  //     var expectedMsg2 = 'fails to match the required pattern:';
-  //     //expect(alert.getText()).toContain(expectedMsg1);
-  //     //expect(alert.getText()).toContain(expectedMsg2);
-  //     expect(alert.getText()).toContain(myDomain.originServer);
-  // });
   });
 });
