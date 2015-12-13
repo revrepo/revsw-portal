@@ -41,7 +41,7 @@
       var updated_by = (item.updated_by) ?
        ' Updated by ' + item.updated_by :
        ' Updated ';
-      return 'Version ' + item.app_published_version + updated_by + ' at ' + $filter('date')(new Date(item.updated_at), 'MMM dd, yyyy H:mm:ss a');
+      return 'Version ' + item.app_published_version + ' Last updated at ' + $filter('date')(new Date(item.updated_at), 'MMM dd, yyyy H:mm:ss a');
     };
 
     $scope.onChangeVersion = function() {

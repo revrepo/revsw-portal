@@ -27,10 +27,10 @@
 
         $scope.startRefresh = function() {
           if (!domainId || !$scope.shouldRefresh ||
-            $state.includes('index.webApps.domains.*.new') ||
-            $state.includes('index.webApps.domains.*.edit') ||
-            $state.includes('index.webApps.domains.*.advanced') ||
-            $state.includes('index.webApps.domains.*.versions')) {
+            $state.includes('index.webApp.domains.new') ||
+            $state.includes('index.webApp.domains.edit') ||
+            $state.includes('index.webApp.domains.advanced') ||
+            $state.includes('index.webApp.domains.versions')) {
             return;
           }
           intervalPromise = $interval($scope.fetchStatus, $config.DOMAIN_STATUS_REFRESH_INTERVAL, 1);

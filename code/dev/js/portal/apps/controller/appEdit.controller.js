@@ -29,7 +29,7 @@
 
 
     $scope.configuration = {};
-
+    $scope.domainsListPlaceholder = "Add domains";
     $scope.fieldsToShow = [];
 
     $scope.model.configs.domains_while_list = [];
@@ -37,12 +37,6 @@
 
 
 
-    User.getUserDomains(true)
-      .then(function (domains) {
-        $scope.domainList = domains.map(function (d) {
-          return d.domain_name;
-        });
-      });
 
     $scope.protocols = ['standard', 'quic', 'rmp'];
 
@@ -75,8 +69,18 @@
                 });
                 $scope.domainList = _.uniq(domainList);
               });
+          }else{
+            User.getUserDomains(true)
+              .then(function (domains) {
+                $scope.domainList = domains.map(function (d) {
+                  return d.domain_name;
+                });
+              });
           }
-
+        })
+        .then(function () {
+          $scope.domainsListPlaceholder = ($scope.domainList.length) ?
+            "Please provision a domain first..." : "Add domains...";
         })
         .catch(function (err) {
           $scope.alertService.danger('Could not load app details');
