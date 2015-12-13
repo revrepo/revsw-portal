@@ -34,7 +34,7 @@
      * @return {string}
      */
     $scope.format = function(item) {
-      return 'Ver.' + item.last_published_domain_version + ' created by ' + item.created_by + ' at ' + $filter('date')(new Date(item.updated_at), 'MMM dd, yyyy H:mm:ss a');
+      return 'Version' + item.last_published_domain_version + ' Last updated at ' + $filter('date')(new Date(item.updated_at), 'MMM dd, yyyy H:mm:ss a');
     };
 
     $scope.onChangeVersion = function() {

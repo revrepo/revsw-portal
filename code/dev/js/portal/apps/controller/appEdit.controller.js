@@ -34,6 +34,9 @@
 
     $scope.model.configs.domains_while_list = [];
     $scope.model.configs.domains_black_list = [];
+
+
+
     User.getUserDomains(true)
       .then(function (domains) {
         $scope.domainList = domains.map(function (d) {
@@ -62,6 +65,18 @@
             });
           $scope.selectedSDKVersion = $scope.SDKVersionsInConfigs[0];
           $scope.fieldsToShow = _.keys($scope.model.configs[0]);
+
+          if ($scope.auth.isReseller() || $scope.auth.isRevadmin()) {
+            User.getUserDomains(true)
+              .then(function (domains) {
+                var domainList = _.filter(domains,
+                  {account_id: $scope.model.account_id}).map(function (d) {
+                  return d.domain_name;
+                });
+                $scope.domainList = _.uniq(domainList);
+              });
+          }
+
         })
         .catch(function (err) {
           $scope.alertService.danger('Could not load app details');
@@ -78,6 +93,16 @@
       var idx = _.findIndex($scope.model.configs,
         {sdk_release_version: $scope.selectedSDKVersion});
       $scope.configuration = $scope.model.configs[idx];
+      if(!$scope.configuration.allowed_transport_protocols) {
+        $scope.configuration.allowed_transport_protocols = []
+      }
+      if(!$scope.configuration.domains_while_list){
+        $scope.configuration.domains_while_list = [];
+      }
+      if(!$scope.configuration.domains_black_list){
+        $scope.configuration.domains_black_list = [];
+      }
+
       $scope.fieldsToShow = _.keys($scope.model.configs[idx]);
     };
 
@@ -111,27 +136,34 @@
       model.configs.push({sdk_release_version: version});
       $scope.SDKVersionsInConfigs.push(version);
       $scope.selectedSDKVersion = version;
-      $scope.configuration = {sdk_release_version: version};
+      $scope.configuration = {
+        sdk_release_version: version,
+        allowed_transport_protocols: [],
+        domains_while_list: [],
+        domains_black_list: []
+      };
     };
 
 
 
 
     $scope.updateConfig = function (model, config) {
-      var idx = _.findIndex(model.configs,
-        {sdk_release_version: config.sdk_release_version});
+      $scope.confirm('confirmUpdateModal.html', model).then(function () {
+        var idx = _.findIndex(model.configs,
+          {sdk_release_version: config.sdk_release_version});
 
-      model.configs[idx] = config;
+        model.configs[idx] = config;
 
-      $scope.update({id: model.id}, $scope.cleanModel(model))
-        .then(function () {
-          $scope.alertService.success('App updated', 5000);
-        })
-        .catch(function (err) {
-          $scope
-            .alertService
-            .danger(err.data.message || 'Oops something went wrong', 5000);
-        });
+        $scope.update({id: model.id}, $scope.cleanModel(model))
+          .then(function () {
+            $scope.alertService.success('App updated', 5000);
+          })
+          .catch(function (err) {
+            $scope
+              .alertService
+              .danger(err.data.message || 'Oops something went wrong', 5000);
+          });
+      });
     };
 
     $scope.verify = function(model, config) {
@@ -199,7 +231,8 @@
       delete modelCopy.created_at;
       delete modelCopy.updated_at;
       delete modelCopy.updated_by;
-      
+      delete modelCopy.created_by;
+
       return modelCopy;
     };
   }

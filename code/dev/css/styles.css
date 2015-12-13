@@ -78,6 +78,9 @@ section[main] {
   margin-top: 1em;
   margin-bottom: 1em;
 }
+table th {
+  width: 150px;
+}
 table th.actions {
   width: 120px;
 }

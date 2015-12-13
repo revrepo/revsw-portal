@@ -35,7 +35,6 @@
             $state.includes('index.apps.*.versions')) {
             return;
           }
-          console.log($state.current);
           intervalPromise = $interval($scope.fetchStatus,
              $config.DOMAIN_STATUS_REFRESH_INTERVAL, 1);
         };
@@ -74,7 +73,6 @@
               $scope.startRefresh();
             })
             .catch(function (err) {
-              console.log(err);
               $scope.iconStaging = 'glyphicon-remove text-danger';
               $scope.tooltipStaging = 'Staging status: Error';
               $scope.iconGlobal = 'glyphicon-remove text-danger';

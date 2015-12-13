@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-sm-12">
       <h2 class="pull-left page-title">
-        Domain versions: <strong>{{model.app_name}}</strong>
+        App versions: <strong>{{model.app_name}}</strong>
       </h2>
     </div>
   </div>
@@ -25,16 +25,15 @@
           </div>
         </div>
         <div class="panel-body">
-          <alert type="danger" ng-if="!id">Please select domain</alert>
+          <alert type="danger" ng-if="!id">Please select an app</alert>
 
           <form class="form-horizontal" ng-show="id">
 
             <div class="form-group">
 
-              <div class="col-sm-4">
+              <div class="col-md-12">
                 <select name="versions"
                         id="versions"
-                        style="margin-left: 15px"
                         class="form-control"
                         ng-disabled="_loading"
                         ng-model="currentVersion"
@@ -47,7 +46,7 @@
 
             <div class="form-group">
               <div  class="col-md-12">
-               <pre 
+               <pre
                 hljs
                 hljs-source = "obj.data"
                 class="col-md-12">
