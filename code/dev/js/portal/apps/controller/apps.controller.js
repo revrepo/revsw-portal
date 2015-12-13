@@ -187,7 +187,7 @@
       });
     };
     $scope.verify = function(model) {
-      if (!model.id) {
+      if (!$scope.model.id) {
         AlertService.danger('Please select app first');
         return;
       }

@@ -326,15 +326,24 @@
               <ui-select multiple
                          tagging-tokens="SPACE|,"
                          theme="bootstrap" class="form-control"
+                         ng-if = "domainList.length"
                          ng-disabled="_loading"
                          ng-model="configuration.domains_provisioned_list "
                          id="domains_provisioned_list ">
-                <ui-select-match placeholder="Add domains...">{{$item}}</ui-select-match>
+                <ui-select-match  placeholder="{{domainsListPlaceholder}}">{{$item}}</ui-select-match>
                 <ui-select-choices repeat="domain in domainList">
                   {{domain}}
                 </ui-select-choices>
               </ui-select>
+
+              <input
+                type="text"
+                class="form-control"
+                placeholder="{{domainsListPlaceholder}}"
+                ng-if="!domainList.length"
+                disabled>
             </div>
+
           </div>
 
           <div class="form-group"
