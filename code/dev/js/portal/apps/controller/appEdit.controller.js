@@ -29,7 +29,7 @@
 
 
     $scope.configuration = {};
-    $scope.domainsListPlaceholder = "Add domains";
+    $scope.domainsListPlaceholder = "Add domains...";
     $scope.fieldsToShow = [];
 
     $scope.model.configs.domains_while_list = [];
@@ -77,10 +77,6 @@
                 });
               });
           }
-        })
-        .then(function () {
-          $scope.domainsListPlaceholder = ($scope.domainList.length) ?
-            "Please provision a domain first..." : "Add domains...";
         })
         .catch(function (err) {
           $scope.alertService.danger('Could not load app details');

@@ -92,11 +92,11 @@
                 <a href="" ng-click="order('app_name')">Name</a>
                 <span class="sortorder" ng-show="filter.predicate === 'app_name'" ng-class="{reverse: filter.reverse}"></span>
               </th>
-              <th>
+              <th class="thin">
                 <a href="" ng-click="order('app_platform')">Platform</a>
                 <span class="sortorder" ng-show="filter.predicate === 'app_platform'" ng-class="{reverse: filter.reverse}"></span>
               </th>
-              <th>
+              <th class="thin">
                 <a href="" ng-click="order('app_published_version')">Version</a>
                 <span class="sortorder" ng-show="filter.predicate === 'app_published_version'" ng-class="{reverse: filter.reverse}"></span>
               </th>
@@ -105,13 +105,13 @@
                 <span class="sortorder" ng-show="filter.predicate === 'updated_at'" ng-class="{reverse: filter.reverse}"></span>
               </th>
               <th>SDK key</th>
-              <th>Status</th>
+              <th class="thin">Status</th>
               <th></th>
             </tr>
             </thead>
             <tbody>
             <tr
-              ng-repeat="item in apps | filter:quickFilter | orderBy:filter.predicate:filter.reverse | limitTo:filter.limit:filter.skip track by $index">
+              ng-repeat="item in records | filter:quickFilter | orderBy:filter.predicate:filter.reverse | limitTo:filter.limit:filter.skip track by $index">
               <td>{{item.app_name}}</td>
               <td>{{item.app_platform}}</td>
               <td>{{item.last_app_published_version}}</td>

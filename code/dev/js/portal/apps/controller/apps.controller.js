@@ -28,12 +28,7 @@
     $scope.$state = $state;
     // Fetch list of records
     $scope.$on('$stateChangeSuccess', function (state) {
-      if($state.current.data.list){
-        $scope.list().then(function (data) {
-          $scope.apps = filterFilter(data,
-            {app_platform: $state.current.data.platform}, true);
-        });
-      }
+      $scope.initList();
     });
 
     $scope.companies = [];
@@ -62,6 +57,21 @@
           return d.domain_name;
         });
       });
+
+    $scope.initList = function () {
+      if($state.current.data.list){
+        $scope.list().then(function (data) {
+            $scope.records = filterFilter(data,
+              {app_platform: $state.current.data.platform}, true);
+          })
+          .finally(function () {
+            $scope._checkPagination();
+            if($scope.page.current > $scope.page.pages.length){
+              $scope.prevPage();
+            }
+          });
+      }
+    }
 
     $scope.fetchCompanies = function(companyIds) {
       var promises = [];
@@ -140,6 +150,7 @@
       modelCopy.app_platform = model.app_platform.name;
       $scope.create(modelCopy)
         .then(function () {
+          model.app_name = "";
           $scope.alertService.success('App registered', 5000);
         });
     };
@@ -242,13 +253,17 @@
           .delete(model)
           .then(function (data) {
             $scope.alertService.success('App ' + appName + ' deleted.');
-            $scope.list().then(function (data) {
-              $scope.apps = filterFilter(data,
-                {app_platform: $state.current.data.platform}, true);
-            });
+            $scope.initList();
+            console.log($scope.page.current);
+            console.log($scope.page.pages);
           })
           .catch(function (err) {
             $scope.alertService.danger(err);
+          })
+          .finally(function () {
+            if($scope.page.current > $scope.page.pages.length){
+              $scope.prevPage();
+            }
           });
       });
     };
