@@ -8,7 +8,7 @@
 <div class="row">
   <div class="col-sm-12">
     <h3 class="pull-left page-title">
-      Name:  <strong>{{model.app_name}}</strong><br>SDK release version: <strong>{{model.configs[0].sdk_release_version}}</strong>
+      Name:  <strong>{{model.app_name}}</strong>
     </h3>
   </div>
 </div>
@@ -18,39 +18,92 @@
       <div class="panel-heading">
 
         <div class="row">
-          <div class="col-md-12">
+          <div class="col-sm-4">
             <div class="pull-left">
-              <a ui-sref="index.apps.ios"
+              <a ui-sref="^"
                  ng-disabled="_loading"
-                 class="btn btn-info">
+                 class="btn btn-default">
                 <i class="glyphicon glyphicon-arrow-left"></i>&nbsp;
                 Back to List
               </a>
+              <a ui-sref="^.configure({id: model.id})"
+                 ng-disabled="_loading"
+                 class="btn btn-info">
+                <i class="glyphicon glyphicon-cog"></i>&nbsp;
+                Andavanced Mode
+              </a>
             </div>
+          </div>
+
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label for="sdk_release_version"
+                     class="col-sm-2 control-label"
+              >SDK release version</label>
+
+              <div class="col-sm-10">
+                <select class="form-control"
+                        ng-disabled="_loading"
+                        ng-model="selectedSDKVersion"
+                        id="sdk_release_version"
+                        ng-options="version for version in SDKVersionsInConfigs"
+                >
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="btn-group pull-left">
+              <button type="button"
+                      class="btn btn-primary"
+                      ng-class="{'disabled': !availableSDKVersions.length}">
+                Add new version
+              </button>
+              <button
+                type="button"
+                class="btn btn-primary dropdown-toggle"
+                ng-class="{'disabled': !availableSDKVersions.length}"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+                ng-disabled="disabled">
+               <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" role="menu" aria-labelledby="single-button">
+                <li role="menuitem" ng-repeat="version in availableSDKVersions">
+                  <a ng-disabled="disabled" ng-click="addNewSDKConfig(version, model)">{{version}}</a>
+                </li>
+              </ul>
+            </div>
+
           </div>
         </div>
 
       </div>
+
+
       <div class="panel-body">
         <form name="editForm" class="form-horizontal">
-          <div class="form-group">
-          <label for="sdk_release_version"
-                 popover-append-to-body="{{true}}"
-                 class="col-sm-2 control-label"
-                 popover-trigger="mouseenter"
-                 popover="List of Rev-approved SDK release version."
-          >SDK release version</label>
+          <div class="form-group"
+               ng-class="{ 'has-error': editForm.app_name.$invalid &&
+                editForm.app_name.$dirty }">
+            <label for="app_name"
+                   popover-append-to-body="{{true}}"
+                   class="col-sm-2 control-label"
+                   popover-trigger="mouseenter"
+                   popover="App configuration refresh interval in seconds "
+            >Name</label>
 
-          <div class="col-sm-10">
-            <select class="form-control"
-                    ng-disabled="_loading"
-                    ng-model="model.configs[0].sdk_release_version"
-                    id="sdk_release_version"
-                    ng-options="version for version in versions"
-            >
-            </select>
+            <div class="col-sm-10">
+              <input type="text" class="form-control"
+                     name="app_name"
+                     ng-disabled="_loading"
+                     ng-model="model.app_name"
+                     ng-maxlength="50"
+                     id="app_name">
+              </input>
+            </div>
           </div>
-        </div>
           <div class="form-group">
             <label for="operation_mode"
                    popover-append-to-body="{{true}}"
@@ -62,7 +115,7 @@
             <div class="col-sm-10">
               <select class="form-control"
                       ng-disabled="_loading"
-                      ng-model="model.configs[0].operation_mode"
+                      ng-model="configuration.operation_mode"
                       id="operation_mode">
                 <option value="transfer_and_report">Transfer and report</option>
                 <option value="transfer_only">Transfer only</option>
@@ -76,23 +129,23 @@
 
             <div class="col-sm-10">
               <label>
-                <input type="radio" ng-model="model.configs[0].logging_level" value="debug">
+                <input type="radio" ng-model="configuration.logging_level" value="debug">
                 Debug
               </label>
               <label>
-                <input type="radio" ng-model="model.configs[0].logging_level" value="info">
+                <input type="radio" ng-model="configuration.logging_level" value="info">
                 Info
               </label>
               <label>
-                <input type="radio" ng-model="model.configs[0].logging_level" value="warning">
+                <input type="radio" ng-model="configuration.logging_level" value="warning">
                 Warning
               </label>
               <label>
-                <input type="radio" ng-model="model.configs[0].logging_level" value="error">
+                <input type="radio" ng-model="configuration.logging_level" value="error">
                 Error
               </label>
               <label>
-                <input type="radio" ng-model="model.configs[0].logging_level" value="critical">
+                <input type="radio" ng-model="configuration.logging_level" value="critical">
                 Critical
               </label>
 
@@ -112,7 +165,7 @@
               <input type="number" class="form-control"
                      name="refresh_interval"
                      ng-disabled="_loading"
-                     ng-model="model.configs[0].configuration_refresh_interval_sec"
+                     ng-model="configuration.configuration_refresh_interval_sec"
                      id="configuration_refresh_interval_sec">
               </input>
             </div>
@@ -131,7 +184,7 @@
               <input type="number" class="form-control"
                      name="stale_timeout"
                       ng-disabled="_loading"
-                      ng-model="model.configs[0].configuration_stale_timeout_sec"
+                      ng-model="configuration.configuration_stale_timeout_sec"
                       id="configuration_stale_timeout_sec">
               </input>
             </div>
@@ -149,8 +202,8 @@
               <input
                 type="checkbox"
                 value="{{protocol}}"
-                ng-checked="model.configs[0].allowed_transport_protocols.indexOf(protocol) > -1"
-                ng-click="toggleProtocolSelection(protocol)"
+                ng-checked="configuration.allowed_transport_protocols.indexOf(protocol) > -1"
+                ng-click="toggleProtocolSelection(protocol, configuration)"
               >
             </span>
               </div>
@@ -166,7 +219,7 @@
             <div class="col-sm-10">
               <select class="form-control"
                       ng-disabled="_loading"
-                      ng-model="model.configs[0].initial_transport_protocol"
+                      ng-model="configuration.initial_transport_protocol"
                       id="initial_transport_protocol">
                 <option value="standard">Standard</option>
                 <option value="quic">QUIC</option>
@@ -185,7 +238,7 @@
             <div class="col-sm-10">
               <select class="form-control"
                       ng-disabled="_loading"
-                      ng-model="model.configs[0].stats_reporting_level"
+                      ng-model="configuration.stats_reporting_level"
                       id="stats_reporting_level">
                 <option value="info">Info</option>
                 <option value="debug">Debug</option>
@@ -207,7 +260,7 @@
               <input type="number" class="form-control"
                      name="reporting_interval"
                      ng-disabled="_loading"
-                     ng-model="model.configs[0].stats_reporting_interval_sec"
+                     ng-model="configuration.stats_reporting_interval_sec"
                      id="stats_reporting_interval_sec">
               </input>
             </div>
@@ -228,10 +281,10 @@
                          theme="bootstrap"
                          class="form-control"
                          ng-disabled="_loading"
-                         ng-model="model.configs[0].domains_while_list"
+                         ng-model="configuration.domains_while_list"
                          id="domains_while_list">
                 <ui-select-match placeholder="Add domains...">{{$item}}</ui-select-match>
-                <ui-select-choices repeat="domain in model.configs[0].domains_while_list">
+                <ui-select-choices repeat="domain in configuration.domains_while_list">
                   {{domain}}
                 </ui-select-choices>
                 </ui-select>
@@ -252,10 +305,10 @@
                          tagging-tokens="SPACE|,"
                          theme="bootstrap" class="form-control"
                          ng-disabled="_loading"
-                         ng-model="model.configs[0].domains_black_list"
+                         ng-model="configuration.domains_black_list"
                          id="domains_black_list">
                 <ui-select-match placeholder="Add domains...">{{$item}}</ui-select-match>
-                <ui-select-choices repeat="domain in model.configs[0].domains_black_list">
+                <ui-select-choices repeat="domain in configuration.domains_black_list">
                   {{domain}}
                 </ui-select-choices>
                 </ui-select>
@@ -273,15 +326,24 @@
               <ui-select multiple
                          tagging-tokens="SPACE|,"
                          theme="bootstrap" class="form-control"
+                         ng-if = "domainList.length"
                          ng-disabled="_loading"
-                         ng-model="model.configs[0].domains_provisioned_list "
+                         ng-model="configuration.domains_provisioned_list "
                          id="domains_provisioned_list ">
-                <ui-select-match placeholder="Add domains...">{{$item}}</ui-select-match>
+                <ui-select-match  placeholder="{{domainsListPlaceholder}}">{{$item}}</ui-select-match>
                 <ui-select-choices repeat="domain in domainList">
                   {{domain}}
                 </ui-select-choices>
               </ui-select>
+
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Please provision a domain first..."
+                ng-if="!domainList.length"
+                disabled>
             </div>
+
           </div>
 
           <div class="form-group"
@@ -301,7 +363,7 @@
                      class="form-control"
                      name="ratio"
                      ng-disabled="_loading"
-                     ng-model="model.configs[0].a_b_testing_origin_offload_ratio"
+                     ng-model="configuration.a_b_testing_origin_offload_ratio"
                      id="a_b_testing_origin_offload_ratio">
               </input>
             </div>
@@ -313,27 +375,27 @@
 
           <div class="col-sm-12" style="margin-top: 15px">
             <button class="btn btn-info"
-                    ng-disabled="_loading"
-                    ng-click="verify(model)">
+                    ng-disabled="_loading || editForm.$invalid"
+                    ng-click="verify(model, configuration)">
               <i class="glyphicon glyphicon-refresh spin" ng-if="_loading"></i>
               <i class="glyphicon glyphicon-ok" ng-if="!_loading"></i>&nbsp;
               Verify
             </button>
             <button class="btn btn-success"
-                    ng-disabled="_loading"
-                    ng-click="updateApp(model)">
+                    ng-disabled="_loading || editForm.$invalid"
+                    ng-click="updateConfig(model, configuration)">
               <i class="glyphicon glyphicon-refresh spin" ng-if="_loading"></i>
               <i class="glyphicon glyphicon-ok" ng-if="!_loading"></i>&nbsp;
               Update
             </button>
             <button class="btn btn-success"
-                    ng-disabled="_loading"
-                    ng-click="publish(model)">
+                    ng-disabled="_loading || editForm.$invalid"
+                    ng-click="publish(model, configuration)">
               <i class="glyphicon glyphicon-refresh spin" ng-if="_loading"></i>
               <i class="glyphicon glyphicon-ok" ng-if="!_loading"></i>&nbsp;
               Publish
             </button>
-            <a ui-sref="index.apps.ios"
+            <a ui-sref="^"
                ng-disabled="_loading"
                class="btn btn-default">
               <i class="glyphicon glyphicon-remove"></i>&nbsp;

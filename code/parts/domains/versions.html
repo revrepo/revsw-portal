@@ -31,10 +31,9 @@
 
             <div class="form-group">
 
-              <div class="col-sm-4">
+              <div class="col-md-12">
                 <select name="versions"
                         id="versions"
-                        style="margin-left: 15px"
                         class="form-control"
                         ng-disabled="_loading"
                         ng-model="currentVersion"
@@ -47,14 +46,9 @@
 
             <div class="form-group">
               <div class="col-md-12">
-                <div name="json"
-                     class="col-md-12"
-                     id="json"
-                     ng-model="obj.data"
-                     options="obj.options"
-                     ng-jsoneditor
-                     style="height: 550px"
-                     disabled></div>
+                <pre class="col-md-12"
+                hljs
+                hljs-source = "obj.data"></pre>
 
                 <div class="col-sm-12" style="margin-top: 15px">
                   <a ui-sref="index.webApp.domains"

@@ -79,7 +79,7 @@
         </div>
         <div class="panel-body">
           <div class="alert alert-info" ng-if="records.length == 0 && !_loading">
-            Currently there are not domains registered in the system
+            Currently there are no domains registered in the system
           </div>
           <div class="alert alert-info" ng-if="_loading">
             <i class="glyphicon glyphicon-refresh spin" ng-if="item.loading"></i>&nbsp;
@@ -101,7 +101,7 @@
                 <a href="" ng-click="order('updated_at')">Last updated</a>
                 <span class="sortorder" ng-show="filter.predicate === 'updated_at'" ng-class="{reverse: filter.reverse}"></span>
               </th>
-              <th>Staging/Global Status</th>
+              <th class="thin">Status</th>
               <th></th>
             </tr>
             </thead>

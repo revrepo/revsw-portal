@@ -61,7 +61,16 @@
         views: {
           page: {
             templateUrl: 'parts/apps/edit.html',
-            controller: 'AppsController'
+            controller: 'AppEditController'
+          }
+        }
+      })
+      .state('index.apps.ios.versions', {
+        url: '/versions/:id/',
+        views: {
+          page: {
+            templateUrl: 'parts/apps/versions.html',
+            controller: 'AppVersionsController'
           }
         }
       })
@@ -88,7 +97,16 @@
         views: {
           page: {
             templateUrl: 'parts/apps/edit.html',
-            controller: 'AppsController'
+            controller: 'AppEditController'
+          }
+        }
+      })
+      .state('index.apps.android.versions', {
+        url: '/versions/:id/',
+        views: {
+          page: {
+            templateUrl: 'parts/apps/versions.html',
+            controller: 'AppVersionsController'
           }
         }
       })
@@ -115,7 +133,16 @@
         views: {
           page: {
             templateUrl: 'parts/apps/edit.html',
-            controller: 'AppsController'
+            controller: 'AppEditController'
+          }
+        }
+      })
+      .state('index.apps.wm.versions', {
+        url: '/versions/:id/',
+        views: {
+          page: {
+            templateUrl: 'parts/apps/versions.html',
+            controller: 'AppVersionsController'
           }
         }
       });
