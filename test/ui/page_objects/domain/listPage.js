@@ -16,16 +16,16 @@
  * from Rev Software, Inc.
  */
 
-// # User List Page Object
+// # Domain List Page Object
 
-// Requiring other Page Objects that compound the User List Page one
-var UserTable = require('./table');
+// Requiring other Page Objects that compound the Domain List Page one
+var DomainTable = require('./table');
 var Pager = require('./../common/pager');
 var Searcher = require('./../common/searcher');
 
-// This `User List` Page Object abstracts all operations or actions that a
-// common user could do in the User List page from the Portal app/site.
-var UserList = {
+// This `Domain List` Page Object abstracts all operations or actions that a
+// common user could do in the Domain List page from the Portal app/site.
+var DomainList = {
 
   // ## Properties
 
@@ -37,16 +37,16 @@ var UserList = {
       }
     },
     buttons: {
-      addNewUser: {
-        linkText: 'Add new User'
+      addNewDomain: {
+        linkText: 'Add new Domain'
       }
     }
   },
 
-  // `User List` Page is compound mainly by a table, pagination and filter
+  // `Domain List` Page is compound mainly by a table, pagination and filter
   // components. Following properties make reference to the Page Objects of
   // those components.
-  userTbl: UserTable,
+  domainsTbl: DomainTable,
   pager: Pager,
   searcher: Searcher,
 
@@ -54,10 +54,10 @@ var UserList = {
   // Element)
 
   /**
-   * ### UserList.getTitleLbl()
+   * ### DomainList.getTitleLbl()
    *
    * Returns the reference to the `Title` label element (Selenium WebDriver
-   * Element) from the User List page from the Portal app.
+   * Element) from the Domain List page from the Portal app.
    *
    * @returns {Selenium WebDriver Element}
    */
@@ -66,38 +66,38 @@ var UserList = {
   },
 
   /**
-   * ### UserList.getAddNewUserBtn()
+   * ### DomainList.getAddNewDomainBtn()
    *
-   * Returns the reference to the `Add New User` button (Selenium WebDriver
-   * Element) from the User List page from the Portal app.
+   * Returns the reference to the `Add New Domain` button (Selenium WebDriver
+   * Element) from the Domain List page from the Portal app.
    *
    * @returns {Selenium WebDriver Element}
    */
-  getAddNewUserBtn: function () {
+  getAddNewDomainBtn: function () {
     return element(
-      by.partialLinkText(this.locators.buttons.addNewUser.linkText));
+      by.partialLinkText(this.locators.buttons.addNewDomain.linkText));
   },
 
-  // ## Methods to interact with the User List Page components
+  // ## Methods to interact with the Domain List Page components
 
   /**
-   * ### UserList.clickAddNewUser()
+   * ### DomainList.clickAddNewDomain()
    *
-   * Triggers a click to the `Add New User` button from the User List page
+   * Triggers a click to the `Add New Domain` button from the Domain List page
    * from the Portal app
    *
    * @returns {Promise}
    */
-  clickAddNewUser: function () {
+  clickAddNewDomain: function () {
     return this
-      .getAddNewUserBtn()
+      .getAddNewDomainBtn()
       .click();
   },
 
   /**
-   * ### UserList.getTitle()
+   * ### DomainList.getTitle()
    *
-   * Gets the `Title` label from the User List page
+   * Gets the `Title` label from the Domain List page
    *
    * @returns {Promise}
    */
@@ -110,9 +110,9 @@ var UserList = {
   // ## Helper Methods
 
   /**
-   * ### UserList.isDisplayed()
+   * ### DomainList.isDisplayed()
    *
-   * Checks whether the User List page is being displayed in the UI or not.
+   * Checks whether the Domain List page is being displayed in the UI or not.
    *
    * @returns {Promise}
    */
@@ -123,9 +123,9 @@ var UserList = {
   },
 
   /**
-   * ### UserList.searchAndGetFirstRow()
+   * ### DomainList.searchAndGetFirstRow()
    *
-   * Filters the User List table by the given criteria and returns the first
+   * Filters the Domain List table by the given criteria and returns the first
    * result of the table.
    *
    * @param {String} criteria, to filter
@@ -135,14 +135,14 @@ var UserList = {
   searchAndGetFirstRow: function (criteria) {
     this.searcher.clearSearchCriteria();
     this.searcher.setSearchCriteria(criteria);
-    return this.userTbl
+    return this.domainsTbl
       .getFirstRow();
   },
 
   /**
-   * ### UserList.searchAndClickDelete()
+   * ### DomainList.searchAndClickDelete()
    *
-   * Filters the User List table by the given criteria and triggers a click on
+   * Filters the Domain List table by the given criteria and triggers a click on
    * the `Delete` button of the first result of the table.
    *
    * @param {String} criteria, to filter
@@ -156,9 +156,9 @@ var UserList = {
   },
 
   /**
-   * ### UserList.searchAndClickEdit()
+   * ### DomainList.searchAndClickEdit()
    *
-   * Filters the User List table by the given criteria and triggers a click on
+   * Filters the Domain List table by the given criteria and triggers a click on
    * the `Edit` button of the first result of the table.
    *
    * @param {String} criteria, to filter
@@ -172,4 +172,4 @@ var UserList = {
   }
 };
 
-module.exports = UserList;
+module.exports = DomainList;

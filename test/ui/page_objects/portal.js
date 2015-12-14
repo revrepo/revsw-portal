@@ -31,11 +31,19 @@ var Dialog = require('./common/dialog');
 
 // Requiring page objects
 var LoginPage = require('./loginPage');
-var UserListPage = require('./user/listPage');
-var UserEditPage = require('./user/editPage');
-var UserAddPage = require('./user/addPage');
+
+var ListUsersPage = require('./user/listPage');
+var EditUserPage = require('./user/editPage');
+var AddUserPage = require('./user/addPage');
+
 var SecuritySettingsPage = require('./user/securitySettingsPage');
 var UpdatePasswordPage = require('./user/updatePasswordPage');
+
+var AddDomainPage = require('./domain/addPage');
+var ConfigureDomainPage = require('./domain/configurePage');
+var DomainVersionsPage = require('./domain/versionsPage');
+var EditDomainPage = require('./domain/editPage');
+var ListDomainsPage = require('./domain/listPage');
 
 // This `Portal` Page Object is the entry point to use all other Page Objects
 // that abstract all components from the Portal App.
@@ -52,11 +60,18 @@ var Portal = {
 
   // Pages that compound this Portal app/site
   loginPage: LoginPage,
-  userListPage: UserListPage,
-  editUserPage: UserEditPage,
-  addUserPage: UserAddPage,
+  userListPage: ListUsersPage,
+  editUserPage: EditUserPage,
+  addUserPage: AddUserPage,
   securitySettingsPage: SecuritySettingsPage,
   updatePasswordPage: UpdatePasswordPage,
+  domains: {
+    addPage: AddDomainPage,
+    configurePage: ConfigureDomainPage,
+    editPage: EditDomainPage,
+    listPage: ListDomainsPage,
+    versionsPage: DomainVersionsPage
+  },
 
   // ## Authentication Helper methods
 
@@ -122,6 +137,10 @@ var Portal = {
       }
       return browser.get(Utils.getBaseUrl() + location);
     });
+  },
+
+  getDomainsPage: function () {
+    return this.getPage(Constants.hashFragments.domains.list);
   },
 
   /**
@@ -202,7 +221,7 @@ var Portal = {
   // ## User Helper methods
 
   /**
-   * ### Portal.deleteUser()
+   * ### Portal.createUser()
    *
    * Helper method that executes all steps required to create a new User from
    * Portal app.
@@ -245,6 +264,88 @@ var Portal = {
       me.userListPage.searcher.clearSearchCriteria();
       me.userListPage.searcher.setSearchCriteria(user.email);
       me.userListPage.userTbl
+        .getFirstRow()
+        .clickDelete();
+      me.dialog.clickOk();
+      browser.getCurrentUrl().then(function (currentUrl) {
+        if (initialUrl !== currentUrl) {
+          browser.get(initialUrl);
+        }
+      });
+    });
+  },
+
+  /**
+   * ### Portal.createDomain()
+   *
+   * Helper method that executes all steps required to create a new Domain from
+   * Portal app.
+   *
+   * @param {user} newDomain, data applying the schema defined in
+   * `DataProvider.generateDomain()`
+   *
+   * @returns {Promise}
+   */
+  createDomain: function (newDomain) {
+    var me = this;
+    return browser.getCurrentUrl().then(function (initialUrl) {
+      me.getDomainsPage();
+      me.domains.listPage.clickAddNewDomain();
+      me.domains.addPage.createDomain(newDomain);
+      browser.sleep(10000);
+      me.domains.addPage.clickBackToList();
+      browser.getCurrentUrl().then(function (currentUrl) {
+        if (initialUrl !== currentUrl) {
+          browser.get(initialUrl);
+        }
+      });
+    });
+  },
+
+  /**
+   * ### Portal.updateDomain()
+   *
+   * Helper method that executes all steps required to update an existing
+   * domain for Portal app.
+   *
+   * @param {domain object} domain, data applying the schema defined in
+   * `DataProvider.generateDomain()`
+   *
+   * @returns {Promise}
+   */
+  updateDomain: function (domain) {
+    var me = this;
+    return browser.getCurrentUrl().then(function (initialUrl) {
+      me.getDomainsPage();
+      me.domains.listPage.searchAndClickEdit(domain.name);
+      delete domain.name;
+      me.domains.editPage.updateDomain(domain);
+      browser.getCurrentUrl().then(function (currentUrl) {
+        if (initialUrl !== currentUrl) {
+          browser.get(initialUrl);
+        }
+      });
+    });
+  },
+
+  /**
+   * ### Portal.deleteDomain()
+   *
+   * Helper method that executes all steps required to delete a Domain from
+   * Portal app.
+   *
+   * @param {user} domain, data applying the schema defined in
+   * `DataProvider.generateDomain()`
+   *
+   * @returns {Promise}
+   */
+  deleteDomain: function (domain) {
+    var me = this;
+    return browser.getCurrentUrl().then(function (initialUrl) {
+      me.getDomainsPage();
+      me.domains.listPage.searcher.clearSearchCriteria();
+      me.domains.listPage.searcher.setSearchCriteria(domain.name);
+      me.domains.listPage.domainsTbl
         .getFirstRow()
         .clickDelete();
       me.dialog.clickOk();
