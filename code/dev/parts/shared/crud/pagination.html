@@ -1,4 +1,4 @@
- <nav  ng-hide="page.current == 1 && page.current == page.pages.length">
+ <nav  ng-hide="page.current == 1 && page.current == page.pages.length || !page.pages.length">
       <ul class="pagination">
                 <li class="first">
           <a href="" ng-click="goToPage(1)">
