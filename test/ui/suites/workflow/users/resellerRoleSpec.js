@@ -17,9 +17,9 @@
  */
 
 var config = require('config');
-var Portal = require('./../../page_objects/portal');
-var DataProvider = require('./../../common/providers/data');
-var Constants = require('./../../page_objects/constants');
+var Portal = require('./../../../page_objects/portal');
+var DataProvider = require('./../../../common/providers/data');
+var Constants = require('./../../../page_objects/constants');
 
 describe('Workflow', function () {
   describe('Reseller role user', function () {

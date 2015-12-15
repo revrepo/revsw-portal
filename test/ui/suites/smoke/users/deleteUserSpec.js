@@ -21,11 +21,11 @@ var config = require('config');
 
 // Requiring the main Page Object, the entry point to handle all other page
 // objects that our specs are goint to need.
-var Portal = require('./../../page_objects/portal');
+var Portal = require('./../../../page_objects/portal');
 
 // Requiring Data Provider to generate test data. In this case we need it to
 // generate test user data
-var DataProvider = require('./../../common/providers/data');
+var DataProvider = require('./../../../common/providers/data');
 
 // Defining smoke suite
 describe('Smoke', function () {
