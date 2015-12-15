@@ -17,7 +17,7 @@
  */
 
 var config = require('config');
-var Portal = require('./../../page_objects/portal');
+var Portal = require('./../../../page_objects/portal');
 
 describe('Negative', function () {
   describe('User pagination', function () {

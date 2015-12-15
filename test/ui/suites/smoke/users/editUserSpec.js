@@ -17,8 +17,8 @@
  */
 
 var config = require('config');
-var Portal = require('./../../page_objects/portal');
-var DataProvider = require('./../../common/providers/data');
+var Portal = require('./../../../page_objects/portal');
+var DataProvider = require('./../../../common/providers/data');
 
 describe('Smoke', function () {
   describe('Edit user', function () {
