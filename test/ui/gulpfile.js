@@ -19,8 +19,12 @@ gulp.task('lint', function () {
     .pipe(jshint.reporter('jshint-stylish'));
 });
 
-gulp.task('test', shell.task([
-  'node node_modules/.bin/protractor config/protractor.js'
+gulp.task('smokeTest', shell.task([
+  'node node_modules/.bin/protractor config/smoke.js'
+]));
+
+gulp.task('regressionTest', shell.task([
+  'node node_modules/.bin/protractor config/regression.js'
 ]));
 
 gulp.task('doc', shell.task([
@@ -29,6 +33,8 @@ gulp.task('doc', shell.task([
   'node node_modules/.bin/docker -o results/doc -i page_objects -n'
 ]));
 
-gulp.task('all', ['clean', 'lint', 'test', 'doc']);
+gulp.task('all', ['clean', 'lint', 'smokeTest', 'regressionTest', 'doc']);
+
+gulp.task('test', ['smokeTest', 'regressionTest']);
 
 gulp.task('default', ['all']);
