@@ -148,7 +148,7 @@ var UserTable = {
       css: 'table thead tr'
     },
     rows: {
-      repeater: 'user in records'
+      repeater: 'user in filteredRecords'
     }
   },
 

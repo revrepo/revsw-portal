@@ -213,7 +213,7 @@ var DomainTable = {
       css: 'table thead tr'
     },
     rows: {
-      repeater: 'item in records'
+      repeater: 'item in filteredRecords'
     }
   },
 
