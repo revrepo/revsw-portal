@@ -95,7 +95,7 @@
             </thead>
             <tbody>
             <tr
-              ng-repeat="log in records | filter:quickFilter | orderBy:filter.predicate:filter.reverse | limitTo:filter.limit:filter.skip track by $index">
+              ng-repeat="log in filteredRecords | limitTo:filter.limit:filter.skip track by $index">
               <td>{{log.datetime | date : 'MMM dd, yyyy H:mm:ss a'}}</td>
               <td>
                 <i class="glyphicon glyphicon-user"></i>&nbsp;

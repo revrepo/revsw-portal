@@ -22,7 +22,7 @@ var Portal = require('./../../../page_objects/portal');
 describe('Negative', function () {
   describe('User pagination', function () {
 
-    var adminUser = config.get('portal.users.admin');
+    var adminUser = config.get('portal.users.revAdmin');
 
     beforeAll(function () {
       Portal.signIn(adminUser);

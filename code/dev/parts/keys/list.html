@@ -74,7 +74,7 @@
             </thead>
             <tbody>
             <tr
-              ng-repeat="item in records | filter:quickFilter | orderBy:filter.predicate:filter.reverse | limitTo:filter.limit:filter.skip track by $index">
+              ng-repeat="item in filteredRecords | limitTo:filter.limit:filter.skip track by $index">
               <td>{{item.key_name}}</td>
               <td>{{item.key}}</td>
               <td>
