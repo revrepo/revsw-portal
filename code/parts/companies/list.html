@@ -41,10 +41,10 @@
                 <form class="form-inline">
                   <div class="form-group">
                     <label for="search">Search:&nbsp;</label>
-                    <input type="text" class="form-control" id="search" placeholder="" ng-model="quickFilter.companyName"
+                    <input type="text" class="form-control" id="search" placeholder="" ng-model="filter.filter.companyName"
                            ng-change="checkFilterPage()">&nbsp;&nbsp;
-                    <i class="glyphicon glyphicon-remove" ng-show="quickFilter != ''"
-                       ng-click="quickFilter = ''"></i>
+                    <i class="glyphicon glyphicon-remove" ng-show="filter.filter != ''"
+                       ng-click="filter.filter = ''"></i>
                   </div>
                 </form>
               </div>
@@ -80,7 +80,7 @@
             </thead>
             <tbody>
             <tr
-              ng-repeat="item in records | filter:quickFilter | orderBy:filter.predicate:filter.reverse | limitTo:filter.limit:filter.skip track by $index">
+              ng-repeat="item in filteredRecords | limitTo:filter.limit:filter.skip track by $index">
               <td>{{item.companyName}}</td>
               <td>{{item.createdBy}}</td>
               <td>{{item.created_at}}</td>
