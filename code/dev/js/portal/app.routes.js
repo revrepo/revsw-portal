@@ -49,9 +49,7 @@
             templateUrl: 'parts/menu/apps-side.html'
           },
           page: {
-            controller: function () {
-            },
-            templateUrl: 'parts/layout/page.html',
+            templateUrl: 'parts/layout/page.html'
           }
         }
       })
@@ -66,9 +64,7 @@
             templateUrl: 'parts/menu/domains-side.html'
           },
           page: {
-            controller: function () {
-            },
-            templateUrl: 'parts/layout/page.html',
+            templateUrl: 'parts/layout/page.html'
           }
         }
       })
@@ -83,8 +79,6 @@
             templateUrl: 'parts/menu/accounts-side.html'
           },
           page: {
-            controller: function () {
-            },
             templateUrl: 'parts/layout/page.html'
           }
         }
@@ -100,8 +94,6 @@
             templateUrl: 'parts/menu/analitycs-side.html'
           },
           page: {
-            controller: function () {
-            },
             templateUrl: 'parts/layout/page.html'
           }
         }
@@ -117,8 +109,6 @@
             templateUrl: 'parts/menu/help-side.html'
           },
           page: {
-            controller: function () {
-            },
             templateUrl: 'parts/help/contactus.html'
           }
         }
