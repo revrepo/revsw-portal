@@ -5,3 +5,4 @@ test/ui/results
 .tmp
 *sublime*
 sftp-config.json
+local.js
