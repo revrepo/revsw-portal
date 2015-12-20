@@ -6,7 +6,7 @@
     .factory('CRUDController', CRUDController);
 
   /*@ngInject*/
-  function CRUDController($window, $config, AlertService, $q, User, $anchorScroll, $modal) {
+  function CRUDController($config, AlertService, $q, User, $anchorScroll, $modal, $filter, $timeout) {
 
     function CRUDControllerImpl($scope, $stateParams) {
 
@@ -55,6 +55,13 @@
       $scope.records = [];
 
       /**
+       * List of loaded records with applyed filter
+       *
+       * @type {Array}
+       */
+      $scope.filteredRecords = [];
+
+      /**
        * Selected model
        * @type {object|null}
        */
@@ -90,6 +97,7 @@
        * @type {object}
        */
       $scope.filter = {
+        filter: '',
         limit: 25,
         skip: 0,
         predicate: '',
@@ -101,11 +109,54 @@
        **************************************************************************************/
 
       /***************************************************************************************
+       *****                              FILTER APPLY SECTION
+       **************************************************************************************/
+
+      $scope._delayTimeout = null;
+
+      /**
+       * Apply filter for list
+       *
+       * @private
+       */
+      $scope._applyFilter = function() {
+        var filtered = $filter('filter')($scope.records, $scope.filter.filter);
+        $scope.filteredRecords = $filter('orderBy')(filtered, $scope.filter.predicate, $scope.filter.reverse);
+        $scope._checkPagination();
+      };
+
+      /**
+       * Manually filter list of records with 300ms delay
+       *
+       * Delay added for UX. Without it function might be called on every letter in filter field.
+       * So it will be invokd lot of times and might break output.
+       */
+      $scope.filterList = function() {
+        if ($scope._delayTimeout) {
+          $timeout.cancel($scope._delayTimeout);
+          $scope._delayTimeout = null;
+        }
+        $scope._delayTimeout = $timeout($scope._applyFilter, 300);
+      };
+
+      /**
+       * Will watch filter to be able to apply it
+       */
+      $scope.$watch('filter.filter', function (val) {
+        // Apply filters here
+        $scope.filterList();
+      }, true);
+
+      /***************************************************************************************
+       *****                            END FILTER APPLY SECTION
+       **************************************************************************************/
+
+      /***************************************************************************************
        *****                       MODAL INITIALIZATION SECTION
        **************************************************************************************/
 
       /**
-       * onfirmation dialog
+       * Confirmation dialog
        *
        * @param {string=} [template]
        * @param {Object=} [resolve]
@@ -194,6 +245,7 @@
        */
       $scope.clearList = function () {
         $scope.records.splice(0, $scope.records.length);
+        $scope.filteredRecords.splice(0, $scope.filteredRecords.length);
       };
 
       /**
@@ -253,7 +305,7 @@
        * @private
        */
       $scope._checkPagination = function () {
-        if ($scope.records.length < ($scope.filter.limit + $scope.filter.skip)) {
+        if ($scope.filteredRecords.length < ($scope.filter.limit + $scope.filter.skip)) {
           $scope.page.hasNextPage = false;
         } else {
           $scope.page.hasNextPage = true;
@@ -263,7 +315,7 @@
         } else {
           $scope.page.hasPrevPage = false;
         }
-        var pages = Math.ceil($scope.records.length / $scope.filter.limit);
+        var pages = Math.ceil($scope.filteredRecords.length / $scope.filter.limit);
         $scope.page.pages.splice(0, $scope.page.pages.length);
         for (var i = 1; i <= pages; i++) {
           $scope.page.pages.push(i);
@@ -342,6 +394,7 @@
         return $scope.resource
           .query(function (data) {
             $scope.records = data;
+            $scope.filteredRecords = data;
             $scope._checkPagination();
             return data; // Send data to future promise
           }).$promise
@@ -371,6 +424,10 @@
             var idx = $scope.records.indexOf(model);
             if (data.statusCode == $config.STATUS.OK) {
               $scope.records.splice(idx, 1);
+            }
+            idx = $scope.filteredRecords.indexOf(model);
+            if (data.statusCode == $config.STATUS.OK) {
+              $scope.filteredRecords.splice(idx, 1);
             }
             return data;
           })

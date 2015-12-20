@@ -77,7 +77,7 @@ describe('Negative', function () {
         Portal.domains.addPage.createDomain(myDomain);
         var alert = Portal.alerts.getFirst();
         var expectedMsg = 'child "origin_server" fails because ' +
-          '["origin_server" is not allowed to be empty]';
+          '["origin_server" is not allowed to be empty, "origin_server" is not allowed to be empty]';
         expect(alert.getText()).toEqual(expectedMsg);
       });
 
