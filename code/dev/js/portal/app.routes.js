@@ -9,19 +9,29 @@
   function routesConfig($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/users');
 
+    /**
+     * Controller for top menu
+     * @param {Object} $scope
+     * @param {Object} $state
+     */
+    var menuController = function ($scope, $state) {
+      $scope.$state = $state;
+    };
+
+
     $stateProvider
-      // Base 3 layout
+    // Base 3 layout
       .state('index', {
         url: '',
         views: {
           layout: {
             templateUrl: 'parts/layout.html',
             /*@ngInject*/
-            controller: function($scope, $state, User) {
+            controller: function ($scope, $state, User) {
               $scope.userService = User;
               if (!User.isAuthed() && $state.current.name != 'index.restore') {
                 $state.go('login');
-              } else if($state.current.name == 'index') {
+              } else if ($state.current.name == 'index') {
                 $state.go('index.reports.proxy');
               }
             }
@@ -32,23 +42,15 @@
         url: '/apps',
         views: {
           menu: {
-            controller: function ($scope, $state) {
-              $scope.apps = ''
-              $scope.account = '';
-              $scope.webapp = '';
-              $scope.reports = '';
-              $scope.help = '';
-              if ($state.includes('index.apps')) {
-                $scope.apps = 'active';
-              }
-            },
+            controller: menuController,
             templateUrl: 'parts/cadmin-top-menu.html'
           },
           sideMenu: {
             templateUrl: 'parts/menu/apps-side.html'
           },
           page: {
-            controller: function () {},
+            controller: function () {
+            },
             templateUrl: 'parts/layout/page.html',
           }
         }
@@ -57,22 +59,15 @@
         url: '',
         views: {
           menu: {
-            controller: function ($scope, $state) {
-              $scope.account = '';
-              $scope.webapp = '';
-              $scope.reports = '';
-              $scope.help = '';
-              if ($state.includes('index.webApp')) {
-                $scope.webapp = 'active';
-              }
-            },
+            controller: menuController,
             templateUrl: 'parts/cadmin-top-menu.html'
           },
           sideMenu: {
             templateUrl: 'parts/menu/domains-side.html'
           },
           page: {
-            controller: function () {},
+            controller: function () {
+            },
             templateUrl: 'parts/layout/page.html',
           }
         }
@@ -81,22 +76,15 @@
         url: '',
         views: {
           menu: {
-            controller: function ($scope, $state) {
-              $scope.account = '';
-              $scope.webapp = '';
-              $scope.reports = '';
-              $scope.help = '';
-              if($state.includes('index.accountSettings')){
-                $scope.account = 'active';
-              }
-            },
+            controller: menuController,
             templateUrl: 'parts/cadmin-top-menu.html'
           },
           sideMenu: {
             templateUrl: 'parts/menu/accounts-side.html'
           },
           page: {
-            controller: function () {},
+            controller: function () {
+            },
             templateUrl: 'parts/layout/page.html'
           }
         }
@@ -105,22 +93,15 @@
         url: '',
         views: {
           menu: {
-            controller: function ($scope, $state) {
-              $scope.account = '';
-              $scope.webapp = '';
-              $scope.reports = '';
-              $scope.help = '';
-              if($state.includes('index.reports')){
-                $scope.reports = 'active';
-              }
-            },
+            controller: menuController,
             templateUrl: 'parts/cadmin-top-menu.html'
           },
           sideMenu: {
             templateUrl: 'parts/menu/analitycs-side.html'
           },
           page: {
-            controller: function () {},
+            controller: function () {
+            },
             templateUrl: 'parts/layout/page.html'
           }
         }
@@ -129,22 +110,15 @@
         url: '/help',
         views: {
           menu: {
-            controller: function ($scope, $state) {
-              $scope.account = '';
-              $scope.webapp = '';
-              $scope.reports = '';
-              $scope.help = '';
-              if($state.includes('index.help')){
-                $scope.help = 'active';
-              }
-            },
+            controller: menuController,
             templateUrl: 'parts/cadmin-top-menu.html'
           },
           sideMenu: {
             templateUrl: 'parts/menu/help-side.html'
           },
           page: {
-            controller: function () {},
+            controller: function () {
+            },
             templateUrl: 'parts/help/contactus.html'
           }
         }
