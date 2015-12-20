@@ -95,7 +95,7 @@ var UserList = {
   },
 
   /**
-   * ### EditUser.getTitle()
+   * ### UserList.getTitle()
    *
    * Gets the `Title` label from the User List page
    *

@@ -345,16 +345,15 @@
       $scope.http2 = [];
       Stats.http2({domainId: domainId}).$promise.then(function (data) {
         if (data.data && data.data.length > 0) {
-          var newData = [];
+          var http2 = [];
           angular.forEach(data.data, function (val) {
-            if ( val.key !== '' ) {
-              newData.push({
-                name: val.key.toUpperCase(),
-                y: val.count
-              });
-            }
+            http2.push({
+              name: ( val.key === '' ? 'Non-HTTP2' : val.key.toUpperCase() ),
+              // name: val.key.toUpperCase(),
+              y: val.count
+            });
           });
-          $scope.http2 = newData;
+          $scope.http2 = http2;
         }
       });
     };

@@ -45,7 +45,7 @@ var DataProvider = {
    *     }
    */
   generateUser: function (prefix) {
-    var prefixEmail= prefix.toLowerCase().replace(' ', '_');
+    var prefixEmail = prefix.toLowerCase().replace(' ', '_');
     var names = prefix.split(' ');
     var prefixFirstName = names[0];
     var prefixLastName = names[0] || names[1];
@@ -57,6 +57,41 @@ var DataProvider = {
       role: Constants.user.roles.USER,
       password: 'password1',
       passwordConfirm: 'password1'
+    };
+  },
+
+  /**
+   * ### DataProvider.generateDomain()
+   *
+   * Generates domain data object based on the unique para that it requires.
+   *
+   * @param {string} prefix, the prefix value to use in all domain data fields
+   *
+   * @returns {Object}, generate domain data with the following schema:
+   *
+   *     {
+   *         name: string,
+   *         originServer: string,
+   *         originHostHeader: string,
+   *         originLocation: string
+   *     }
+   */
+  generateDomain: function (prefix) {
+    if (prefix) {
+      var newPrefix = prefix.toLowerCase().replace(' ', '_');
+      var timestamp = Date.now();
+      return {
+        name: newPrefix + '-' + timestamp + '-portal-ui-test.com',
+        originServer: newPrefix + '-portal-ui-test.originserver.com',
+        originHostHeader: newPrefix + '-portal-ui-test.originhostheader.com',
+        originLocation: 'HQ Test Lab'
+      };
+    }
+    return {
+      name: '',
+      originServer: '',
+      originHostHeader: '',
+      originLocation: '--- Select location ---'
     };
   }
 };

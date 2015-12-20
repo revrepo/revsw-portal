@@ -18,7 +18,7 @@
     $scope.currentVersion = {};
 
     $scope.obj = {
-      data: {},
+      data: "Configuration will appear here",
       options: {
         mode: 'code',
         modes: ['code', 'view'], // allowed modes['code', 'form', 'text', 'tree', 'view']
@@ -34,12 +34,12 @@
      * @return {string}
      */
     $scope.format = function(item) {
-      return item.last_published_domain_version + ' - ' + $filter('date')(new Date(item.updated_at), 'MMM dd, yyyy H:mm:ss a');
+      return 'Version ' + item.last_published_domain_version + ' Last updated at ' + $filter('date')(new Date(item.updated_at), 'MMM dd, yyyy H:mm:ss a');
     };
 
     $scope.onChangeVersion = function() {
       if (!$scope.currentVersion) {
-        $scope.obj.data = {};
+        $scope.obj.data = "";
         return;
       }
       $scope._loading = true;
@@ -47,7 +47,7 @@
         .get({id: $stateParams.id, version: $scope.currentVersion})
         .$promise
         .then(function (data) {
-          $scope.obj.data = data;
+          $scope.obj.data = JSON.stringify(data, null, 2);;
         })
         .catch(function (err) {
           AlertService.danger(err);

@@ -109,6 +109,14 @@
         }
       },
 
+      top5xx: {
+        method: 'GET',
+        url: $config.API_URL + '/stats/top/:domainId',
+        params: {
+          report_type: 'top5xx'
+        }
+      },
+
       traffic: {
         method: 'GET'
       },

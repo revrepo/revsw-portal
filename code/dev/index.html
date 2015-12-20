@@ -12,9 +12,11 @@
   <link href="bower_components/jsoneditor/dist/jsoneditor.css" rel="stylesheet">
   <link href="bower_components/angular-chart.js/dist/angular-chart.min.css" rel="stylesheet">
   <link href="bower_components/ui-select/dist/select.min.css" rel="stylesheet">
+  <link href="bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet">
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/select2/3.4.5/select2.css">
   <link rel="stylesheet" href="//fk.github.io/select2-bootstrap-css/css/select2-bootstrap.css">
-
+<!-- highlight.js -->
+ <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/github.min.css">
   <!-- Angular -->
   <link href="bower_components/angular/angular-csp.css" rel="stylesheet">
 
@@ -58,6 +60,9 @@
 <script type="text/javascript" src="bower_components/angular-chart.js/dist/angular-chart.min.js"></script>
 <script type="text/javascript" src="bower_components/ui-select/dist/select.min.js"></script>
 
+<script type="text/javascript" src="bower_components/highlightjs/highlight.pack.js"></script>
+<script type="text/javascript" src="bower_components/angular-highlightjs/src/angular-highlightjs.js"></script>
+
 <script src="config.js"></script>
 
 <!-- build:js scripts/compiled.js -->
@@ -88,6 +93,7 @@
 <script type="text/javascript" src="js/portal/resources/model/activity.factory.js"></script>
 <script type="text/javascript" src="js/portal/resources/model/2fa.factory.js"></script>
 <script type="text/javascript" src="js/portal/resources/model/keys.factory.js"></script>
+<script type="text/javascript" src="js/portal/resources/model/apps.factory.js"></script>
 
 <script type="text/javascript" src="js/portal/auth/auth.module.js"></script>
 <script type="text/javascript" src="js/portal/auth/auth.config.js"></script>
@@ -114,6 +120,13 @@
 <script type="text/javascript" src="js/portal/users/users.routes.js"></script>
 
 <script type="text/javascript" src="js/portal/users/controller/users.controller.js"></script>
+
+<script type="text/javascript" src="js/portal/apps/apps.module.js"></script>
+<script type="text/javascript" src="js/portal/apps/apps.routes.js"></script>
+<script type="text/javascript" src="js/portal/apps/controller/apps.controller.js"></script>
+<script type="text/javascript" src="js/portal/apps/controller/appVersions.controller.js"></script>
+<script type="text/javascript" src="js/portal/apps/controller/appEdit.controller.js"></script>
+<script type="text/javascript" src="js/portal/apps/app-staging-status/appStagingStatus.directive.js"></script>
 
 <script type="text/javascript" src="js/portal/domains/domains.module.js"></script>
 <script type="text/javascript" src="js/portal/domains/domains.routes.js"></script>
@@ -155,6 +168,7 @@
 <script type="text/javascript" src="js/portal/reports/top/topCacheMiss.directive.js"></script>
 <script type="text/javascript" src="js/portal/reports/top/top404.directive.js"></script>
 <script type="text/javascript" src="js/portal/reports/top/topReferer.directive.js"></script>
+<script type="text/javascript" src="js/portal/reports/top/top5xx.directive.js"></script>
 <script type="text/javascript" src="js/portal/reports/heatmaps/heatmaps.config.js"></script>
 <script type="text/javascript" src="js/portal/reports/heatmaps/heatmaps.factory.js"></script>
 <script type="text/javascript" src="js/portal/reports/controller/reportsProxyTraffic.controller.js"></script>
