@@ -35,6 +35,15 @@
           }
         }
       })
+      .state('index.reports.fbt', {
+        url: '/reports/fbt',
+        views: {
+          main: {
+            controller: 'FBTReportsController',
+            templateUrl: 'parts/reports/fbt.html'
+          }
+        }
+      })
       .state('index.reports.heatmaps', {
         url: '/reports/heatmaps',
         views: {
