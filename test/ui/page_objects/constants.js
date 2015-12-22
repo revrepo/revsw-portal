@@ -79,7 +79,17 @@ var Constants = {
       TEST: 'Test',
       READ_ONLY: 'Read only'
     }
-  }
+  },
+  proxyReport: {
+    TITLE: 'Proxy Traffic Reports',
+    BANDWIDTH_USAGE: 'Bandwidth Usage',
+    TOTAL_REQUESTS: 'Total Requests',
+    HTTP_HTTPS_HITS: 'HTTP/HTTPS Hits',
+    HTTP_STATUS_CODE_HITS: 'HTTP Status Code Hits',
+    REQUEST_STATUS: 'Success/Failure Request Status',
+    EDGE_CACHE_EFFICIENCY_HITS: 'Edge Cache Efficiency Hits'
+  },
+  topReports: {}
 };
 
 module.exports = Constants;
