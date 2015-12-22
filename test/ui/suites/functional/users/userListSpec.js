@@ -42,7 +42,7 @@ describe('Functional', function () {
       function () {
         var expectedUsersPerPage = 25;
         var tableRows = Portal.userListPage.userTbl.getRows();
-        expect(tableRows.count()).toEqual(expectedUsersPerPage);
+        expect(tableRows.count()).not.toBeGreaterThan(expectedUsersPerPage);
       });
 
     it('should display a new user created', function () {

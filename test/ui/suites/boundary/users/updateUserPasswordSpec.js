@@ -94,7 +94,7 @@ describe('Boundary', function () {
         Portal.updatePasswordPage.clickUpdatePassword();
         var alert = Portal.alerts.getFirst();
         // TODO: Change message once update password with only spaces is fixed
-        expect(alert.getText()).toEqual('Invalid password');
+        expect(alert.getText()).toEqual('Please fill all fields. (New password should be at least 8 charecters length)');
         Portal.signOut();
         Portal.signIn(adminUser);
         Portal.deleteUser(carol);
