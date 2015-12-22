@@ -7,7 +7,7 @@ module.exports = {
   capabilities: {
     browserName: 'firefox'
   },
-  getPageTimeout: 60000,
+  getPageTimeout: 120000,
   allScriptsTimeout: 300000,
   framework: 'jasmine2',
   jasmineNodeOpts: {
