@@ -68,7 +68,9 @@
           var opts = {
               domainId: $scope.ngDomain.id,
               from_timestamp: moment().subtract( $scope.delay, 'hours').valueOf(),
-              to_timestamp: Date.now()
+              to_timestamp: Date.now(),
+              interval_ms: 50,
+              limit_ms: 10000
             };
           if ( $scope.country !== '' ) {
             opts.country = $scope.country;
