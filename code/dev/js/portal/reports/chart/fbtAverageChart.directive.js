@@ -73,7 +73,7 @@
               }];
               if (data.data && data.data.length > 0) {
                 var labels = [];
-                // $scope.delay = data.metadata.interval_sec || 1800;
+                // console.log( data );
                 angular.forEach(data.data, function (data) {
                   labels.push(moment(data.time).format('MMM Do YY h:mm'));
                   series[0].data.push( data.avg_fbt );

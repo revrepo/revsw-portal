@@ -185,12 +185,13 @@
           .style("fill", function (d) {
             if (valueHash[d.properties.name]) {
               var c = quantize((valueHash[d.properties.name]));
-              var color = colors[c].getColors();
-              return "rgb(" + color.r + "," + color.g +
-                "," + color.b + ")";
-            } else {
-              return COLOR_ZERO;
+              if ( c !== undefined ) {
+                var color = colors[c].getColors();
+                return "rgb(" + color.r + "," + color.g + "," + color.b + ")";
+              }
+              return COLOR_LAST;
             }
+            return COLOR_ZERO;
           })
           .on("mousemove", function (d) {
             var html = "";

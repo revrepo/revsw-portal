@@ -61,6 +61,11 @@
         url: $config.API_URL + '/stats/fbt/distribution/:domainId',
         params: {}
       },
+      fbt_heatmap: {
+        method: 'GET',
+        url: $config.API_URL + '/stats/fbt/heatmap/:domainId',
+        params: {}
+      },
       protocol: {
         method: 'GET',
         url: $config.API_URL + '/stats/top/:domainId',

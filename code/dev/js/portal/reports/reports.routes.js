@@ -44,6 +44,15 @@
           }
         }
       })
+      // .state('index.reports.fbt_heatmaps', {
+      //   url: '/reports/fbt_heatmaps',
+      //   views: {
+      //     main: {
+      //       controller: 'FBTHeatmapsController',
+      //       templateUrl: 'parts/reports/fbt-heatmaps.html'
+      //     }
+      //   }
+      // })
       .state('index.reports.heatmaps', {
         url: '/reports/heatmaps',
         views: {
