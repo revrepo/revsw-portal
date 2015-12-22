@@ -63,9 +63,6 @@
       $scope._loading = true;
       // Clear old data
       $scope.countryLMRTTData = {};
-
-      console.log($scope.delay);
-
       // Loading new data
       return Stats.lm_rtt_country({
           domainId: domainId,
