@@ -33,7 +33,7 @@
             },
             labels: {
               formatter: function() {
-                return this.value;
+                return Math.round( this.value / 1000 );
               }
             }
           },
