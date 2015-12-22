@@ -12,15 +12,24 @@
       restrict: 'AE',
       templateUrl: 'parts/reports/charts/fbt-distribution.html',
       scope: {
+        flCountry: '=',
+        flOs: '=',
+        flDevice: '=',
         ngDomain: '='
       },
       /*@ngInject*/
       controller: function ($scope, Stats, Util) {
 
         $scope.delay = '6';
+        $scope.os = '';
+        $scope.country = '';
+        $scope.device = '';
         $scope._ims = 300;
         $scope._loading = false;
         $scope.chartOptions = {
+          chart: {
+            type: 'column'
+          },
           yAxis: {
             title: {
               text: 'Requests'
@@ -36,19 +45,43 @@
               return '<strong>'+ this.x + '÷' + ( this.x + $scope._ims ) +
                 '</strong> ms<br/>' + 'Count: <strong>' + this.y + '</strong>';
             }
-          }
+          },
+          plotOptions: {
+            column: {
+              minPointLength: 2,
+              dataLabels: {
+                enabled: true,
+                // color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white',
+                // style: {
+                //   textShadow: '0 0 3px black'
+                // }
+              }
+            }
+          },
         };
 
         $scope.reloadTrafficStats = function () {
           if (!$scope.ngDomain || !$scope.ngDomain.id) {
             return;
           }
-          $scope._loading = true;
-          Stats.fbt_distribution({
+
+          var opts = {
               domainId: $scope.ngDomain.id,
               from_timestamp: moment().subtract( $scope.delay, 'hours').valueOf(),
               to_timestamp: Date.now()
-            })
+            };
+          if ( $scope.country !== '' ) {
+            opts.country = $scope.country;
+          }
+          if ( $scope.device !== '' ) {
+            opts.device = $scope.device;
+          }
+          if ( $scope.os !== '' ) {
+            opts.os = $scope.os;
+          }
+
+          $scope._loading = true;
+          Stats.fbt_distribution( opts )
             .$promise
             .then(function (data) {
               var series = [{

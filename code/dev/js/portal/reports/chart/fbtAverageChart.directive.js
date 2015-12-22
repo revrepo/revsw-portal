@@ -12,13 +12,20 @@
       restrict: 'AE',
       templateUrl: 'parts/reports/charts/fbt-average.html',
       scope: {
+        flCountry: '=',
+        flOs: '=',
+        flDevice: '=',
         ngDomain: '='
       },
       /*@ngInject*/
       controller: function ($scope, Stats, Util) {
 
         $scope.delay = '1';
+        $scope.os = '';
+        $scope.country = '';
+        $scope.device = '';
         $scope._loading = false;
+
         $scope.chartOptions = {
           yAxis: {
             title: {
@@ -43,11 +50,21 @@
             return;
           }
           $scope._loading = true;
-          Stats.fbt_average({
+          var opts = {
               domainId: $scope.ngDomain.id,
               from_timestamp: moment().subtract( $scope.delay, 'days').valueOf(),
-              to_timestamp: Date.now()
-            })
+              to_timestamp: Date.now(),
+            };
+          if ( $scope.country !== '' ) {
+            opts.country = $scope.country;
+          }
+          if ( $scope.device !== '' ) {
+            opts.device = $scope.device;
+          }
+          if ( $scope.os !== '' ) {
+            opts.os = $scope.os;
+          }
+          Stats.fbt_average( opts )
             .$promise
             .then(function (data) {
               var series = [{

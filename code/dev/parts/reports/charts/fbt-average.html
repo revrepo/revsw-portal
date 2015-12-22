@@ -1,7 +1,5 @@
+<h3 style="margin-top: 0;">Average FBT</h3>
 <div class="clearfix" style="margin-bottom: 8px;">
-
-  <div class="pull-left"><h3 style="margin-top: 0;">Average FBT</h3></div>
-
   <div class="pull-right">
 
     <form class="form-inline">
@@ -12,6 +10,31 @@
           <option value="7">Last 7 days</option>
         </select>
       </div>
+
+      <div class="form-group">
+        <select class="form-control fixed"
+                ng-options="key as item for (key, item) in flCountry"
+                ng-model="country">
+          <option value="">All Countries</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <select class="form-control fixed"
+                ng-options="item for item in flOs"
+                ng-model="os">
+          <option value="">All OS</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <select class="form-control fixed"
+                ng-model="device"
+                ng-options="item for item in flDevice">
+          <option value="">All Devices</option>
+        </select>
+      </div>
+
       <div class="form-group">
         <button class="btn btn-info" ng-click="reloadTrafficStats()">
           <i class="glyphicon glyphicon-refresh"></i>&nbsp;
@@ -32,12 +55,5 @@
   Loading
 </div>
 <div ng-hide="!traffic.labels || !traffic.labels.length">
-  <!--<canvas class="chart chart-line"-->
-          <!--chart-options="chartOptions"-->
-          <!--chart-data="traffic.data"-->
-          <!--chart-labels="traffic.labels"-->
-          <!--chart-legend="true"-->
-          <!--chart-series="traffic.series">-->
-  <!--</canvas>-->
   <div style="min-width: 500px; min-height: 350px" line-chart ng-data="traffic" ng-chart-options="chartOptions"></div>
 </div>
