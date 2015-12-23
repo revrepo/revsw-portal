@@ -29,18 +29,18 @@
         $scope.chartOptions = {
           yAxis: {
             title: {
-              text: 'Time, ms'
+              text: 'First Byte Time, ms'
             },
             labels: {
               formatter: function() {
-                return Math.round( this.value / 1000 );
+                return Util.formatNumber( Math.round( this.value / 1000 ) );
               }
             }
           },
           tooltip: {
             formatter: function() {
               return '<strong>'+ this.x +'</strong><br/>'+
-              this.series.name + ': <strong>' + this.y.toFixed(1) + '</strong>';
+              this.series.name + ': <strong>' + Util.formatNumber( this.y / 1000, 2 ) + '</strong> ms';
             }
           }
         };
