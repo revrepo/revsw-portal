@@ -32,9 +32,6 @@ var ProxyTraffic = {
     reports: {
       css: '.container-fluid .row'
     },
-    chartsTable: {
-      css: '.panel-body'
-    },
     labels: {
       title: {
         linkText: 'Proxy Traffic Reports'
@@ -221,26 +218,6 @@ var ProxyTraffic = {
     me.clickSelectDomain();
     me.clickSelectSearchDomain();
     me.setSelectSearchDomain(domain.name);
-  },
-
- /**
-  * ### ProxyTraffic.getProxyTrafficReport()
-  *
-  * Selects a `Report` in the Proxy Traffic page.
-  *
-  * @param {String} indexChart of proxy Traffic report panel.
-  * @param {String} indexForm of Proxy Traffic report panel.
-  *
-  * @returns {Promise}
-  */
-  getProxyTrafficReport: function (indexChart, indexForm) {
-    return this
-      .getChartsTableObj()
-      .all(by.css('.row .col-lg-6'))
-      .get(indexChart)
-      .all(by.css('.form-group'))
-      .get(indexForm)
-      .click();
   },
 
  /**

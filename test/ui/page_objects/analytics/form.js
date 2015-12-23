@@ -31,39 +31,8 @@ var Report = {
     },
     chartsTable: {
       css: '.panel-body'
-    },
-    labels: {
-      title: {
-        linkText: 'Proxy Traffic Reports'
-      }
-    },
-    dropDown: {
-      css: '[ng-click="$select.toggle($event)"]'
-    },
-    selectSearch: {
-      textBox: '$select.search'
-    },
-    buttons: {
-      createReport: {
-        css: '[ng-click="updateFilters()"]'
-      }
     }
   },
-
- /**
-  * ### ProxyTraffic.reports()
-  *
-  * Returns the reference to the `Title` label element (Selenium WebDriver
-  * Element) from the Proxy Traffic page from the Portal app.
-  *
-  * @returns {Selenium WebDriver Element}
-  */
-  getReportsObj: function () {
-    return element.all(by.css(this.locators.reports.css));
-  },
-
-  // ## Methods to retrieve references to UI elements (Selenium WebDriver
-  // Element)
 
   /**
    * ### ProxyTraffic.getChartsTableObj()
@@ -75,160 +44,6 @@ var Report = {
    */
   getChartsTableObj: function () {
     return element.all(by.css(this.locators.chartsTable.css));
-  },
-
-  /**
-   * ### ProxyTraffic.getCreateReportBtn()
-   *
-   * Returns the reference to the `Create report` button (Selenium WebDriver
-   * Element) from the Proxy Traffic page the Portal app.
-   *
-   * @returns {Selenium WebDriver Element}
-   */
-  getCreateReportBtn: function () {
-    return element(
-      by.partialLinkText(this.locators.buttons));
-  },
-
-  /**
-   * ### ProxyTraffic.getSelectDomainDDown()
-   *
-   * Returns the reference to the `Select domain` button (Selenium WebDriver
-   * Element) from the Proxy Traffic page the Portal app.
-   *
-   * @returns {Selenium WebDriver Element}
-   */
-  getSelectDomainDDown: function () {
-    return element(
-      by.css(this.locators.dropDown.css));
-  },
-
-  /**
-   * ### ProxyTraffic.getSelectSearchInput()
-   *
-   * Returns the reference to the `Select Search` Input (Selenium WebDriver
-   * Element) from the Proxy Traffic page the Portal app.
-   *
-   * @returns {Selenium WebDriver Element}
-   */
-  getSelectSearchInput: function () {
-    return element(
-      by.model(this.locators.selectSearch.textBox));
-  },
-
-  // ## Methods to interact with the Proxy Traffic Page components
-
-  /**
-   * ### ProxyTraffic.clickSelectDomain()
-   *
-   * Triggers a click on the `Select domain` drop down from the Portal app.
-   *
-   * @returns {Promise}
-   */
-  clickSelectDomain: function () {
-    return this
-      .getSelectDomainDDown()
-      .click();
-  },
-
-  /**
-   * ### ProxyTraffic.clickSelectSearchDomain()
-   *
-   * Triggers a click on the `Select Search Domain` from the Portal app.
-   *
-   * @returns {Promise}
-   */
-  clickSelectSearchDomain: function () {
-    return this
-      .getSelectSearchInput()
-      .click();
-  },
-
-  /**
-   * ### ProxyTraffic.setSelectSearchDomain()
-   *
-   * Triggers a set on the `Select Search Domain` from the Portal app.
-   *
-   * @returns {Promise}
-   */
-  setSelectSearchDomain: function (domainName) {
-    return this
-      .getSelectSearchInput()
-      .sendKeys(domainName)
-      .sendKeys(protractor.Key.ENTER);
-  },
-
-  // ## Helper Methods
-
-  /**
-   * ### ProxyTraffic.isDisplayed()
-   *
-   * Checks whether the Proxy Traffic page is being displayed in the UI or not.
-   *
-   * @returns {Promise}
-   */
-  isDisplayed: function () {
-    return this
-      .getTitleLbl()
-      .isPresent();
-  },
-
-  /**
-   * ### ProxyTraffic.getTitle()
-   *
-   * Gets the `Title` label from the Proxy Traffic page.
-   *
-   * @returns {Promise}
-   */
-  getTitle: function () {
-    return this
-      .getReportsObj()
-      .get(0)
-      .getText();
-  },
-
- /**
-  * ### ProxyTraffic.getChartTitle()
-  *
-  * Gets the `Title` label from the Chart report from Proxy Traffic page.
-  *
-  * @returns {Promise}
-  */
-  getChartTitle: function () {
-    return this
-      .getReportsObj()
-      .get(1)
-      .getText();
-  },
-
- /**
-  * ### ProxyTraffic.getSelectedDomain()
-  *
-  * Gets the current `Selected Domain` text from the Select Domain Drop Down
-  * element in the Proxy Traffic page.
-  *
-  * @returns {Promise}
-  */
-  getSelectedDomain: function () {
-    return this
-      .getSelectDomainDDown()
-      .getText();
-  },
-
- /**
-  * ### ProxyTraffic.selectDomain()
-  *
-  * Selects an existing `Domain` in the Proxy Traffic page.
-  *
-  * @param {Object} domain
-  *
-  * @returns {Promise}
-  */
-  selectDomain: function (domain) {
-    var me = this;
-    me.clickSelectDomain();
-    me.clickSelectSearchDomain();
-    me.setSelectSearchDomain(domain.name);
   },
 
  /**
@@ -250,6 +65,17 @@ var Report = {
       .get(indexForm);
   },
 
+  /**
+   * ### ProxyTraffic.setDelay()
+   *
+   * Sets value for `Delay` text field
+   *
+   * @param {String} indexChart of proxy Traffic report panel.
+   * @param {String} indexForm of Proxy Traffic report panel.
+   * @param {String} value of Proxy Traffic report panel.
+   *
+   * @returns {Promise}
+   */
   setDelay: function (indexChart, indexForm, value) {
     return this
       .getProxyTrafficReport(indexChart, indexForm) // (0, 0)
@@ -257,6 +83,17 @@ var Report = {
       .sendKeys(value); // 'Last 1 day'
   },
 
+  /**
+   * ### ProxyTraffic.setCountry()
+   *
+   * Sets value for `Country` text field
+   *
+   * @param {String} indexChart of proxy Traffic report panel.
+   * @param {String} indexForm of Proxy Traffic report panel.
+   * @param {String} value of Proxy Traffic report panel.
+   *
+   * @returns {Promise}
+   */
   setCountry: function (indexChart, indexForm, value) {
     return this
       .getProxyTrafficReport(indexChart, indexForm) // (0, 1)
@@ -264,6 +101,17 @@ var Report = {
       .sendKeys(value);
   },
 
+  /**
+   * ### ProxyTraffic.setOS()
+   *
+   * Sets value for `OS` text field
+   *
+   * @param {String} indexChart of proxy Traffic report panel.
+   * @param {String} indexForm of Proxy Traffic report panel.
+   * @param {String} value of Proxy Traffic report panel.
+   *
+   * @returns {Promise}
+   */
   setOS: function (indexChart, indexForm, value) {
     return this
       .getProxyTrafficReport(indexChart, indexForm) // (0, 2)
@@ -271,6 +119,17 @@ var Report = {
       .sendKeys(value);
   },
 
+  /**
+   * ### ProxyTraffic.setDevice()
+   *
+   * Sets value for `Device` text field
+   *
+   * @param {String} indexChart of proxy Traffic report panel.
+   * @param {String} indexForm of Proxy Traffic report panel.
+   * @param {String} value of Proxy Traffic report panel.
+   *
+   * @returns {Promise}
+   */
   setDevice: function (indexChart, indexForm, value) {
     return this
       .getProxyTrafficReport(indexChart, indexForm) // (0, 3)
@@ -278,12 +137,29 @@ var Report = {
       .sendKeys(value);
   },
 
+  /**
+   * ### ProxyTraffic.clickCreateReport()
+   *
+   * Clicks on `Create Report` button in report forms.
+   *
+   * @param {String} indexChart of proxy Traffic report panel.
+   * @param {String} indexForm of Proxy Traffic report panel.
+   *
+   * @returns {Promise}
+   */
   clickCreateReport: function (indexChart, indexForm) {
     return this
       .getProxyTrafficReport(indexChart, indexForm) // (0, 4)
       .click();
   },
 
+  /**
+   * ### ProxyTraffic.getDelay()
+   *
+   * Gets the value from `Delay` bombo box.
+   *
+   * @returns {Promise}
+   */
   getDelay: function (indexChart, indexForm) {
     return this
       .getProxyTrafficReport(indexChart, indexForm)
@@ -291,6 +167,13 @@ var Report = {
       .getText();
   },
 
+  /**
+   * ### ProxyTraffic.getCountry()
+   *
+   * Gets the value from `Country` bombo box.
+   *
+   * @returns {Promise}
+   */
   getCountry: function (indexChart, indexForm) {
     return this
       .getProxyTrafficReport(indexChart, indexForm)
@@ -298,6 +181,13 @@ var Report = {
       .getText();
   },
 
+  /**
+   * ### ProxyTraffic.getOS()
+   *
+   * Gets the value from `OS` bombo box.
+   *
+   * @returns {Promise}
+   */
   getOS: function (indexChart, indexForm) {
     return this
       .getProxyTrafficReport(indexChart, indexForm)
@@ -305,6 +195,13 @@ var Report = {
       .getText();
   },
 
+  /**
+   * ### ProxyTraffic.getDevice()
+   *
+   * Gets the value from `Device` bombo box.
+   *
+   * @returns {Promise}
+   */
   getDevice: function (indexChart, indexForm) {
     return this
       .getProxyTrafficReport(indexChart, indexForm)
