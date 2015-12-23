@@ -80,7 +80,7 @@ var Constants = {
       READ_ONLY: 'Read only'
     }
   },
-  proxyReport: {
+  proxyTraffic: {
     TITLE: 'Proxy Traffic Reports',
     BANDWIDTH_USAGE: 'Bandwidth Usage',
     TOTAL_REQUESTS: 'Total Requests',

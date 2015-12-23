@@ -40,35 +40,35 @@ describe('Smoke', function () {
 
     it('should display "Proxy Traffic Reports" in the portal',
       function () {
-        var titleReport = Constants.proxyReport.TITLE;
+        var titleReport = Constants.proxyTraffic.TITLE;
         expect(Portal.proxyTrafficPage.getSelectedDomain()).toEqual(noDomain);
         expect(Portal.proxyTrafficPage.getTitle()).toEqual(titleReport);
     });
 
     it('should display the default "Bandwidth Usage" report with empty data',
       function () {
-        var titleChart = Constants.proxyReport.BANDWIDTH_USAGE;
+        var titleChart = Constants.proxyTraffic.BANDWIDTH_USAGE;
         expect(Portal.proxyTrafficPage.getSelectedDomain()).toEqual(noDomain);
         expect(Portal.proxyTrafficPage.getChartTitle()).toContain(titleChart);
     });
 
     it('should display the default "Total Requests" report with empty data',
       function () {
-        var titleChart = Constants.proxyReport.TOTAL_REQUESTS;
+        var titleChart = Constants.proxyTraffic.TOTAL_REQUESTS;
         expect(Portal.proxyTrafficPage.getSelectedDomain()).toEqual(noDomain);
         expect(Portal.proxyTrafficPage.getChartTitle()).toContain(titleChart);
     });
 
     it('should display the default "HTTP/HTTPS Hits" report with empty data',
       function () {
-        var titleChart = Constants.proxyReport.HTTP_HTTPS_HITS;
+        var titleChart = Constants.proxyTraffic.HTTP_HTTPS_HITS;
         expect(Portal.proxyTrafficPage.getSelectedDomain()).toEqual(noDomain);
         expect(Portal.proxyTrafficPage.getChartTitle()).toContain(titleChart);
     });
 
     it('should display default "HTTP Status Code Hits" report with empty data',
       function () {
-        var titleChart = Constants.proxyReport.HTTP_STATUS_CODE_HITS;
+        var titleChart = Constants.proxyTraffic.HTTP_STATUS_CODE_HITS;
         expect(Portal.proxyTrafficPage.getSelectedDomain()).toEqual(noDomain);
         expect(Portal.proxyTrafficPage.getChartTitle()).toContain(titleChart);
     });
@@ -76,7 +76,7 @@ describe('Smoke', function () {
     it('should display the default "Success/Failure Request Status" report ' +
       'with empty data',
       function () {
-        var titleChart = Constants.proxyReport.REQUEST_STATUS;
+        var titleChart = Constants.proxyTraffic.REQUEST_STATUS;
         expect(Portal.proxyTrafficPage.getSelectedDomain()).toEqual(noDomain);
         expect(Portal.proxyTrafficPage.getChartTitle()).toContain(titleChart);
     });
@@ -84,7 +84,7 @@ describe('Smoke', function () {
     it('should display the default "Edge Cache Efficiency Hits" report with ' +
       'empty data',
       function () {
-        var titleChart = Constants.proxyReport.EDGE_CACHE_EFFICIENCY_HITS;
+        var titleChart = Constants.proxyTraffic.EDGE_CACHE_EFFICIENCY_HITS;
         expect(Portal.proxyTrafficPage.getSelectedDomain()).toEqual(noDomain);
         expect(Portal.proxyTrafficPage.getChartTitle()).toContain(titleChart);
     });
