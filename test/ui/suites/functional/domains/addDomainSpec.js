@@ -28,17 +28,18 @@ describe('Functional', function () {
     var myDomain = DataProvider.generateDomain('mydomain');
 
     beforeAll(function () {
-    });
-
-    afterAll(function () {
-    });
-
-    beforeEach(function () {
       Portal.signIn(adminUser);
     });
 
-    afterEach(function () {
+    afterAll(function () {
+      Portal.deleteDomain(myDomain);
       Portal.signOut();
+    });
+
+    beforeEach(function () {
+    });
+
+    afterEach(function () {
     });
 
     it('should create a domain and display a successful message',
