@@ -85,11 +85,11 @@
                   name: 'Outgoing bandwidth',
                   data: []
                 }];
-                var labels = [];
                 $scope.delay = data.metadata.interval_sec || 1800;
+                var labels = [],
+                  offset = $scope.delay * 1000;
                 angular.forEach(data.data, function (data) {
-                  labels.push(moment(data.time).format('MMM Do YY h:mm'));
-                  //$scope.traffic.labels.push(data.time);
+                  labels.push(moment(data.time + offset/*to show the _end_ of interval instead of begin*/).format('MMM Do YY h:mm'));
                   series[0].data.push(Util.toBps(data.received_bytes, $scope.delay, true));
                   series[1].data.push(Util.toBps(data.sent_bytes, $scope.delay, true));
                 });

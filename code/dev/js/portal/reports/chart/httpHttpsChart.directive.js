@@ -70,6 +70,7 @@
             ])
             .then(function (data) {
               $scope.delay = data[0].metadata.interval_sec || 1800;
+              var offset = $scope.delay * 1000;
               var labels = [];
               var series = [{
                 name: 'HTTP',
@@ -80,15 +81,12 @@
               }];
               if (data[0].data && data[0].data.length > 0) {
                 angular.forEach(data[0].data, function (data) {
-                  labels.push(moment(data.time).format('MMM Do YY h:mm'));
-                  //$scope.traffic.labels.push(data.time);
+                  labels.push(moment(data.time + offset/*to show the _end_ of interval instead of begin*/).format('MMM Do YY h:mm'));
                   series[0].data.push(Util.toRPS(data.requests, $scope.delay, true));
                 });
               }
               if (data[1].data && data[1].data.length > 0) {
                 angular.forEach(data[1].data, function (data) {
-                  //$scope.traffic.labels.push(moment(data.time).format('MMM Do YY h:mm'));
-                  //$scope.traffic.labels.push(data.time);
                   series[1].data.push(Util.toRPS(data.requests, $scope.delay, true));
                 });
               }
