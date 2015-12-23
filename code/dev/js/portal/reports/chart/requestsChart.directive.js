@@ -41,9 +41,6 @@
           },
           tooltip: {
             formatter: function() {
-
-              console.log(this);
-
               return '<b>'+ this.x +'</b><br/>'+
                 this.series.name + ': ' + Util.convertTraffic(this.y);
             }
