@@ -53,14 +53,14 @@
             .then(function (data) {
               if (data.data && data.data.length > 0) {
                 $scope.delay = data.metadata.interval_sec || 1800;
+                var offset = $scope.delay * 1000;
                 var series = [{
                   name: 'Total',
                   data: []
                 }];
                 var labels = [];
                 angular.forEach(data.data, function (data) {
-                  labels.push(moment(data.time).format('MMM Do YY h:mm'));
-                  //$scope.traffic.labels.push(data.time);
+                  labels.push(moment(data.time + offset/*to show the _end_ of interval instead of begin*/).format('MMM Do YY h:mm'));
                   series[0].data.push(Util.toRPS(data.requests, $scope.delay, true));
                 });
                 $scope.traffic = {

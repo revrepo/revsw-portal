@@ -1,9 +1,9 @@
-(function () {
+( function() {
   'use strict';
 
   angular
-    .module('revapm.Portal.Reports')
-    .directive('fbtAverageChart', fbtAverageChartDirective);
+    .module( 'revapm.Portal.Reports' )
+    .directive( 'fbtAverageChart', fbtAverageChartDirective );
 
   /*@ngInject*/
   function fbtAverageChartDirective() {
@@ -18,7 +18,7 @@
         ngDomain: '='
       },
       /*@ngInject*/
-      controller: function ($scope, Stats, Util) {
+      controller: function( $scope, Stats, Util ) {
 
         $scope.delay = '1';
         $scope.os = '';
@@ -39,22 +39,22 @@
           },
           tooltip: {
             formatter: function() {
-              return '<strong>'+ this.x +'</strong><br/>'+
-              this.series.name + ': <strong>' + Util.formatNumber( this.y / 1000, 2 ) + '</strong> ms';
+              return '<strong>' + this.x + '</strong><br/>' +
+                this.series.name + ': <strong>' + Util.formatNumber( this.y / 1000, 2 ) + '</strong> ms';
             }
           }
         };
 
-        $scope.reloadTrafficStats = function () {
-          if (!$scope.ngDomain || !$scope.ngDomain.id) {
+        $scope.reloadTrafficStats = function() {
+          if ( !$scope.ngDomain || !$scope.ngDomain.id ) {
             return;
           }
           $scope._loading = true;
           var opts = {
-              domainId: $scope.ngDomain.id,
-              from_timestamp: moment().subtract( $scope.delay, 'days').valueOf(),
-              to_timestamp: Date.now(),
-            };
+            domainId: $scope.ngDomain.id,
+            from_timestamp: moment().subtract( $scope.delay, 'days' ).valueOf(),
+            to_timestamp: Date.now(),
+          };
           if ( $scope.country !== '' ) {
             opts.country = $scope.country;
           }
@@ -66,18 +66,19 @@
           }
           Stats.fbt_average( opts )
             .$promise
-            .then(function (data) {
-              var series = [{
+            .then( function( data ) {
+              var series = [ {
                 name: 'Average FBT',
                 data: []
-              }];
-              if (data.data && data.data.length > 0) {
+              } ];
+              if ( data.data && data.data.length > 0 ) {
                 var labels = [];
+                var offset = ( data.metadata.interval_sec || 1800 ) * 1000;
                 // console.log( data );
-                angular.forEach(data.data, function (data) {
-                  labels.push(moment(data.time).format('MMM Do YY h:mm'));
-                  series[0].data.push( data.avg_fbt );
-                });
+                angular.forEach( data.data, function( data ) {
+                  labels.push( moment( data.time + offset /*to show the _end_ of interval instead of begin*/ ).format( 'MMM Do YY h:mm' ) );
+                  series[ 0 ].data.push( data.avg_fbt );
+                } );
                 $scope.traffic = {
                   labels: labels,
                   series: series
@@ -88,19 +89,20 @@
                   series: series
                 };
               }
-            })
-            .finally(function () {
+            } )
+            .finally( function() {
               $scope._loading = false;
-            });
+            } );
         };
 
-        $scope.$watch('ngDomain', function () {
-          if (!$scope.ngDomain) {
+        $scope.$watch( 'ngDomain', function() {
+          if ( !$scope.ngDomain ) {
             return;
           }
           $scope.reloadTrafficStats();
-        });
+        } );
       }
     };
   }
-})();
+} )();
+
