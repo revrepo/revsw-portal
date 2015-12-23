@@ -20,7 +20,7 @@
 
 // This `Proxy Traffic` Page Object abstracts all operations or actions that a
 // common proxy traffic could do in the Portal app/site.
-var Report = {
+var ProxyTrafficForm = {
 
   // ## Properties
 
@@ -31,6 +31,12 @@ var Report = {
     },
     chartsTable: {
       css: '.panel-body'
+    },
+    models: {
+      delay: 'delay',
+      country: 'ngFilters.country',
+      os: 'ngFilters.os',
+      device: 'ngFilters.device'
     }
   },
 
@@ -79,7 +85,7 @@ var Report = {
   setDelay: function (indexChart, indexForm, value) {
     return this
       .getProxyTrafficReport(indexChart, indexForm) // (0, 0)
-      .element(by.model('delay'))
+      .element(by.model(this.locators.models.delay))
       .sendKeys(value); // 'Last 1 day'
   },
 
@@ -97,7 +103,7 @@ var Report = {
   setCountry: function (indexChart, indexForm, value) {
     return this
       .getProxyTrafficReport(indexChart, indexForm) // (0, 1)
-      .element(by.model('ngFilters.country'))
+      .element(by.model(this.locators.models.country))
       .sendKeys(value);
   },
 
@@ -115,7 +121,7 @@ var Report = {
   setOS: function (indexChart, indexForm, value) {
     return this
       .getProxyTrafficReport(indexChart, indexForm) // (0, 2)
-      .element(by.model('ngFilters.os'))
+      .element(by.model(this.locators.models.os))
       .sendKeys(value);
   },
 
@@ -133,7 +139,7 @@ var Report = {
   setDevice: function (indexChart, indexForm, value) {
     return this
       .getProxyTrafficReport(indexChart, indexForm) // (0, 3)
-      .element(by.model('ngFilters.device'))
+      .element(by.model(this.locators.models.device))
       .sendKeys(value);
   },
 
@@ -156,58 +162,58 @@ var Report = {
   /**
    * ### ProxyTraffic.getDelay()
    *
-   * Gets the value from `Delay` bombo box.
+   * Gets the value from `Delay` combo box.
    *
    * @returns {Promise}
    */
   getDelay: function (indexChart, indexForm) {
     return this
       .getProxyTrafficReport(indexChart, indexForm)
-      .element(by.model('delay'))
+      .element(by.model(this.locators.models.delay))
       .getText();
   },
 
   /**
    * ### ProxyTraffic.getCountry()
    *
-   * Gets the value from `Country` bombo box.
+   * Gets the value from `Country` combo box.
    *
    * @returns {Promise}
    */
   getCountry: function (indexChart, indexForm) {
     return this
       .getProxyTrafficReport(indexChart, indexForm)
-      .element(by.model('ngFilters.country'))
+      .element(by.model(this.locators.models.country))
       .getText();
   },
 
   /**
    * ### ProxyTraffic.getOS()
    *
-   * Gets the value from `OS` bombo box.
+   * Gets the value from `OS` combo box.
    *
    * @returns {Promise}
    */
   getOS: function (indexChart, indexForm) {
     return this
       .getProxyTrafficReport(indexChart, indexForm)
-      .element(by.model('ngFilters.os'))
+      .element(by.model(this.locators.models.os))
       .getText();
   },
 
   /**
    * ### ProxyTraffic.getDevice()
    *
-   * Gets the value from `Device` bombo box.
+   * Gets the value from `Device` combo box.
    *
    * @returns {Promise}
    */
   getDevice: function (indexChart, indexForm) {
     return this
       .getProxyTrafficReport(indexChart, indexForm)
-      .element(by.model('ngFilters.device'))
+      .element(by.model(this.locators.models.device))
       .getText();
   }
 };
 
-module.exports = Report;
+module.exports = ProxyTrafficForm;

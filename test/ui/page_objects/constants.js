@@ -89,7 +89,19 @@ var Constants = {
     REQUEST_STATUS: 'Success/Failure Request Status',
     EDGE_CACHE_EFFICIENCY_HITS: 'Edge Cache Efficiency Hits'
   },
-  topReports: {}
+  topReports: {
+    TITLE: '',
+    EDGE_CACHE_RATIO: 'Edge Cache Hit/Miss Ratio',
+    HTTP_STATUS_CODES_RATIO: 'HTTP Status Codes Ratio',
+    HTTP_REQUESTS_RATIO: 'HTTP/HTTPS Requests Ratio',
+    TOP_10_COUNTRIES: 'Top 10 Countries',
+    HTTP_METHODS: 'HTTP Methods',
+    TOP_10_CONTENT_TYPES: 'Top 10 HTTP Content Types',
+    TOP_10_OS: 'Top 10 OS',
+    TOP_10_DEVICES: 'Top 10 Devices',
+    QUIC_RATIO: 'QUIC/Non-QUIC Ratio',
+    HTTP2_RATIO: 'H2/H2C/Non-HTTP2 Ratio'
+  }
 };
 
 module.exports = Constants;

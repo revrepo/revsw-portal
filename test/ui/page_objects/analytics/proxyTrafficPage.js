@@ -19,7 +19,7 @@
 // # Proxy Traffic Page Object
 
 // Requiring `Proxy Traffic form` component page object.
-var Form = require('./form');
+var ProxyTrafficForm = require('./proxyTrafficForm');
 
 // This `Proxy Traffic` Page Object abstracts all operations or actions that a
 // common proxy traffic could do in the Portal app/site.
@@ -31,11 +31,6 @@ var ProxyTraffic = {
   locators: {
     reports: {
       css: '.container-fluid .row'
-    },
-    labels: {
-      title: {
-        linkText: 'Proxy Traffic Reports'
-      }
     },
     dropDown: {
       css: '[ng-click="$select.toggle($event)"]'
@@ -50,12 +45,12 @@ var ProxyTraffic = {
     }
   },
 
-  form: Form,
+  form: ProxyTrafficForm,
 
  /**
-  * ### ProxyTraffic.reports()
+  * ### ProxyTraffic.getReportsObj()
   *
-  * Returns the reference to the `Title` label element (Selenium WebDriver
+  * Returns the reference to the `Reports` label element (Selenium WebDriver
   * Element) from the Proxy Traffic page from the Portal app.
   *
   * @returns {Selenium WebDriver Element}

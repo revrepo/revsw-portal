@@ -45,6 +45,7 @@ var DomainVersionsPage = require('./domain/versionsPage');
 var EditDomainPage = require('./domain/editPage');
 var ListDomainsPage = require('./domain/listPage');
 var ProxyTrafficPage = require('./analytics/proxyTrafficPage');
+var TopReportsPage = require('./analytics/topReportsPage');
 
 // This `Portal` Page Object is the entry point to use all other Page Objects
 // that abstract all components from the Portal App.
@@ -74,6 +75,7 @@ var Portal = {
     versionsPage: DomainVersionsPage
   },
   proxyTrafficPage: ProxyTrafficPage,
+  topReportsPage: TopReportsPage,
 
   // ## Authentication Helper methods
 
