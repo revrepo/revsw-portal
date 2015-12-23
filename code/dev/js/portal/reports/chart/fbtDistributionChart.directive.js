@@ -36,14 +36,14 @@
             },
             labels: {
               formatter: function() {
-                return this.value;
+                return Util.formatNumber( this.value );
               }
             }
           },
           tooltip: {
             formatter: function() {
               return '<strong>'+ this.x + '÷' + ( this.x + $scope._ims ) +
-                '</strong> ms<br/>' + 'Count: <strong>' + this.y + '</strong>';
+                '</strong> ms<br/>' + 'Count: <strong>' + Util.formatNumber( this.y ) + '</strong>';
             }
           },
           plotOptions: {

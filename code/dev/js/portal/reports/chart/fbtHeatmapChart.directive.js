@@ -45,8 +45,9 @@
                   var name = $scope.flCountry[ item.key.toUpperCase() ] || item.key;
                   cdata[ name ] = {
                     value: item.fbt_avg_ms,
-                    tooltip: ( 'Avg: <strong>' + item.fbt_avg_ms + '</strong> Min: <strong>' +
-                      item.fbt_min_ms + '</strong> Max: <strong>' + item.fbt_max_ms +
+                    tooltip: ( 'Avg: <strong>' + Util.formatNumber( item.fbt_avg_ms ) +
+                      '</strong> Min: <strong>' + Util.formatNumber( item.fbt_min_ms ) +
+                      '</strong> Max: <strong>' + Util.formatNumber( item.fbt_max_ms ) +
                       '</strong> ms' )
                   };
                 } );
