@@ -59,21 +59,19 @@
               labels = [];
               $scope.delay = 1800;
               angular.forEach(data, function (val, idx) {
-                var results = [];
                 if (data[idx].metadata.interval_sec) {
                   $scope.delay = data[idx].metadata.interval_sec;
                 }
+                var offset = $scope.delay * 1000;
+                var results = [];
                 if (data[idx].data && data[idx].data.length > 0) {
                   angular.forEach(data[idx].data, function (res) {
                     if (!timeSet) {
-                      labels.push(moment(res.time).format('MMM Do YY h:mm'));
+                      labels.push(moment(res.time + offset/*to show the _end_ of interval instead of begin*/).format('MMM Do YY h:mm'));
                     }
-                    //$scope.traffic.labels.push(data.time);
                     results.push(Util.toRPS(res.requests, $scope.delay, true));
-                    //series[idx].data.push(res.requests);
                   });
                   timeSet = true;
-
                 }
                 series.push({
                   name: idx,

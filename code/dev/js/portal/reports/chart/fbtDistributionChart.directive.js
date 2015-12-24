@@ -36,14 +36,14 @@
             },
             labels: {
               formatter: function() {
-                return this.value;
+                return Util.formatNumber( this.value );
               }
             }
           },
           tooltip: {
             formatter: function() {
               return '<strong>'+ this.x + '÷' + ( this.x + $scope._ims ) +
-                '</strong> ms<br/>' + 'Count: <strong>' + this.y + '</strong>';
+                '</strong> ms<br/>' + 'Count: <strong>' + Util.formatNumber( this.y ) + '</strong>';
             }
           },
           plotOptions: {
@@ -68,7 +68,9 @@
           var opts = {
               domainId: $scope.ngDomain.id,
               from_timestamp: moment().subtract( $scope.delay, 'hours').valueOf(),
-              to_timestamp: Date.now()
+              to_timestamp: Date.now(),
+              interval_ms: 50,
+              limit_ms: 10000
             };
           if ( $scope.country !== '' ) {
             opts.country = $scope.country;
