@@ -73,7 +73,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="user in records | filter:quickFilter | orderBy:filter.predicate:filter.reverse | limitTo:filter.limit:filter.skip track by $index">
+            <tr ng-repeat="user in filteredRecords | limitTo:filter.limit:filter.skip track by $index">
               <td>{{user.firstname}}</td>
               <td>{{user.lastname}}</td>
               <td>{{user.email}}</td>

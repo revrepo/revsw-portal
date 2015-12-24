@@ -1,10 +1,10 @@
 <ul class="nav navbar-nav">
   <!--<li><a href="#">Dashboard</a></li>-->
   <!--<li><a href="#">DNS</a></li>-->
-  <li class="{{apps}}"><a ui-sref="index.apps.ios">Apps</a></li>
-  <li class="{{webapp}}"><a ui-sref="index.webApp.domains">Web</a></li>
-  <li class="{{reports}}"><a ui-sref="index.reports.proxy">Analytics</a></li>
-  <li class="{{account}}"><a ui-sref="index.accountSettings.users">Account Settings</a></li>
-  <li class="{{help}}"><a ui-sref="index.help">Help/Support</a></li>
+  <li ng-class="{active: $state.includes('index.apps')}"><a ui-sref="index.apps.ios">Apps</a></li>
+  <li ng-class="{active: $state.includes('index.webApp')}"><a ui-sref="index.webApp.domains">Web</a></li>
+  <li ng-class="{active: $state.includes('index.reports')}"><a ui-sref="index.reports.proxy">Analytics</a></li>
+  <li ng-class="{active: $state.includes('index.accountSettings')}"><a ui-sref="index.accountSettings.users">Account Settings</a></li>
+  <li ng-class="{active: $state.includes('index.help')}"><a ui-sref="index.help">Help/Support</a></li>
 </ul>
 <div user-login-logout></div>

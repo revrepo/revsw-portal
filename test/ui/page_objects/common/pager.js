@@ -224,6 +224,17 @@ var Pager = {
       .getAttribute('class').then(function (classes) {
         return classes.split(' ').indexOf(me.classNames.disabled) !== -1;
       });
+  },
+
+  /**
+   * Is next page element displayed on the page
+   *
+   * @returns {Promise}
+   */
+  isDisplayed: function () {
+    return this
+      .getNextBtn()
+      .isDisplayed();
   }
 };
 

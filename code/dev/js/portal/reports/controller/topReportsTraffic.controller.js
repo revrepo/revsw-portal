@@ -13,12 +13,6 @@
     // Domain that selected
     $scope.domain = null;
     $scope.domains = [];
-
-    $scope.filters = {
-      from_timestamp: moment().subtract(1, 'days').valueOf(),
-      to_timestamp: Date.now()
-    };
-
     $scope.pieOpts = {
       scaleOverride: true
     };
@@ -27,45 +21,33 @@
     $scope.device = [];
     $scope.country = [];
     $scope.statusCode = [];
-    //$scope.statusCode = {
-    //  labels: [],
-    //  data: []
-    //};
 
     $scope.countries = Countries.query();
-
+    $scope.delay = '1';
+    $scope.country_filter = '';
 
     /**
      * Reload list of OS
      *
      * @param {string|number} domainId
      */
-    $scope.reloadOS = function (domainId) {
-      //$scope.os = {
-      //  labels: [],
-      //  data: []
-      //};
-      //Stats.os({domainId: domainId}).$promise.then(function (data) {
-      //  if (data.data && data.data.length > 0) {
-      //    angular.forEach(data.data, function (os) {
-      //      $scope.os.labels.push(os.key);
-      //      $scope.os.data.push(os.count);
-      //    });
-      //  }
-      //});
+    $scope.reloadOS = function ( filters ) {
+
       $scope.os = [];
-      Stats.os({domainId: domainId}).$promise.then(function (data) {
-        if (data.data && data.data.length > 0) {
-          var newData = [];
-          angular.forEach(data.data, function (val) {
-            newData.push({
-              name: val.key,
-              y: val.count
+      Stats.os( filters )
+        .$promise
+        .then(function (data) {
+          if (data.data && data.data.length > 0) {
+            var newData = [];
+            angular.forEach(data.data, function (val) {
+              newData.push({
+                name: val.key,
+                y: val.count
+              });
             });
-          });
-          $scope.os = newData;
-        }
-      });
+            $scope.os = newData;
+          }
+        });
     };
 
     /**
@@ -73,32 +55,22 @@
      *
      * @param {string|number} domainId
      */
-    $scope.reloadDevice = function (domainId) {
-      //$scope.device = {
-      //  labels: [],
-      //  data: []
-      //};
-      //Stats.device({domainId: domainId}).$promise.then(function (data) {
-      //  if (data.data && data.data.length > 0) {
-      //    angular.forEach(data.data, function (os) {
-      //      $scope.device.labels.push(os.key);
-      //      $scope.device.data.push(os.count);
-      //    });
-      //  }
-      //});
+    $scope.reloadDevice = function ( filters ) {
       $scope.device = [];
-      Stats.device({domainId: domainId}).$promise.then(function (data) {
-        if (data.data && data.data.length > 0) {
-          var newData = [];
-          angular.forEach(data.data, function (val) {
-            newData.push({
-              name: val.key,
-              y: val.count
+      Stats.device( filters )
+        .$promise
+        .then(function (data) {
+          if (data.data && data.data.length > 0) {
+            var newData = [];
+            angular.forEach(data.data, function (val) {
+              newData.push({
+                name: val.key,
+                y: val.count
+              });
             });
-          });
-          $scope.device = newData;
-        }
-      });
+            $scope.device = newData;
+          }
+        });
     };
 
     /**
@@ -106,46 +78,29 @@
      *
      * @param {string|number} domainId
      */
-    $scope.reloadProtocol = function (domainId) {
-      //$scope.protocol = {
-      //  labels: [],
-      //  data: []
-      //};
-      //Stats.protocol({domainId: domainId}).$promise.then(function (data) {
-      //  if (data.data && data.data.length > 0) {
-      //    angular.forEach(data.data, function (os) {
-      //      var protocol = 'Unknows';
-      //      if (os.key == 80) {
-      //        protocol = 'HTTP';
-      //      }
-      //      if (os.key == 443) {
-      //        protocol = 'HTTPS';
-      //      }
-      //      $scope.protocol.labels.push(protocol);
-      //      $scope.protocol.data.push(os.count);
-      //    });
-      //  }
-      //});
+    $scope.reloadProtocol = function ( filters ) {
       $scope.protocol = [];
-      Stats.protocol({domainId: domainId}).$promise.then(function (data) {
-        if (data.data && data.data.length > 0) {
-          var newData = [];
-          angular.forEach(data.data, function (val) {
-            var protocol = 'Unknows';
-            if (val.key == 80) {
-              protocol = 'HTTP';
-            }
-            if (val.key == 443) {
-              protocol = 'HTTPS';
-            }
-            newData.push({
-              name: protocol,
-              y: val.count
+      Stats.protocol( filters )
+        .$promise
+        .then(function (data) {
+          if (data.data && data.data.length > 0) {
+            var newData = [];
+            angular.forEach(data.data, function (val) {
+              var protocol = 'Unknows';
+              if (val.key == 80) {
+                protocol = 'HTTP';
+              }
+              if (val.key == 443) {
+                protocol = 'HTTPS';
+              }
+              newData.push({
+                name: protocol,
+                y: val.count
+              });
             });
-          });
-          $scope.protocol = newData;
-        }
-      });
+            $scope.protocol = newData;
+          }
+        });
     };
 
     /**
@@ -153,32 +108,22 @@
      *
      * @param {string|number} domainId
      */
-    $scope.reloadHttpMethod = function (domainId) {
-      //$scope.httpMethod = {
-      //  labels: [],
-      //  data: []
-      //};
-      //Stats.httpMethod({domainId: domainId}).$promise.then(function (data) {
-      //  if (data.data && data.data.length > 0) {
-      //    angular.forEach(data.data, function (os) {
-      //      $scope.httpMethod.labels.push(os.key);
-      //      $scope.httpMethod.data.push(os.count);
-      //    });
-      //  }
-      //});
+    $scope.reloadHttpMethod = function ( filters ) {
       $scope.httpMethod = [];
-      Stats.httpMethod({domainId: domainId}).$promise.then(function (data) {
-        if (data.data && data.data.length > 0) {
-          var newData = [];
-          angular.forEach(data.data, function (val) {
-            newData.push({
-              name: val.key,
-              y: val.count
+      Stats.httpMethod( filters )
+        .$promise
+        .then(function (data) {
+          if (data.data && data.data.length > 0) {
+            var newData = [];
+            angular.forEach(data.data, function (val) {
+              newData.push({
+                name: val.key,
+                y: val.count
+              });
             });
-          });
-          $scope.httpMethod = newData;
-        }
-      });
+            $scope.httpMethod = newData;
+          }
+        });
     };
 
     /**
@@ -186,32 +131,22 @@
      *
      * @param {string|number} domainId
      */
-    $scope.reloadHttpProtocol = function (domainId) {
-      //$scope.httpProtocol = {
-      //  labels: [],
-      //  data: []
-      //};
-      //Stats.httpProtocol({domainId: domainId}).$promise.then(function (data) {
-      //  if (data.data && data.data.length > 0) {
-      //    angular.forEach(data.data, function (os) {
-      //      $scope.httpProtocol.labels.push(os.key);
-      //      $scope.httpProtocol.data.push(os.count);
-      //    });
-      //  }
-      //});
+    $scope.reloadHttpProtocol = function ( filters ) {
       $scope.httpProtocol = [];
-      Stats.httpProtocol({domainId: domainId}).$promise.then(function (data) {
-        if (data.data && data.data.length > 0) {
-          var newData = [];
-          angular.forEach(data.data, function (val) {
-            newData.push({
-              name: val.key,
-              y: val.count
+      Stats.httpProtocol( filters )
+        .$promise
+        .then(function (data) {
+          if (data.data && data.data.length > 0) {
+            var newData = [];
+            angular.forEach(data.data, function (val) {
+              newData.push({
+                name: val.key,
+                y: val.count
+              });
             });
-          });
-          $scope.httpProtocol = newData;
-        }
-      });
+            $scope.httpProtocol = newData;
+          }
+        });
     };
 
     /**
@@ -219,32 +154,22 @@
      *
      * @param {string|number} domainId
      */
-    $scope.reloadStatusCode = function (domainId) {
-      //$scope.statusCode = {
-      //  labels: [],
-      //  data: []
-      //};
-      //Stats.statusCode({domainId: domainId}).$promise.then(function (data) {
-      //  if (data.data && data.data.length > 0) {
-      //    angular.forEach(data.data, function (os) {
-      //      $scope.statusCode.labels.push(os.key);
-      //      $scope.statusCode.data.push(os.count);
-      //    });
-      //  }
-      //});
+    $scope.reloadStatusCode = function ( filters ) {
       $scope.statusCode = [];
-      Stats.statusCode({domainId: domainId}).$promise.then(function (data) {
-        var newData = [];
-        if (data.data && data.data.length > 0) {
-          angular.forEach(data.data, function (os) {
-            newData.push({
-              name: os.key,
-              y: os.count
+      Stats.statusCode( filters )
+        .$promise
+        .then(function (data) {
+          var newData = [];
+          if (data.data && data.data.length > 0) {
+            angular.forEach(data.data, function (os) {
+              newData.push({
+                name: os.key,
+                y: os.count
+              });
             });
-          });
-          $scope.statusCode = newData;
-        }
-      });
+            $scope.statusCode = newData;
+          }
+        });
     };
 
     /**
@@ -252,32 +177,22 @@
      *
      * @param {string|number} domainId
      */
-    $scope.reloadContentType = function (domainId) {
-      //$scope.contentType = {
-      //  labels: [],
-      //  data: []
-      //};
-      //Stats.contentType({domainId: domainId}).$promise.then(function (data) {
-      //  if (data.data && data.data.length > 0) {
-      //    angular.forEach(data.data, function (os) {
-      //      $scope.contentType.labels.push(os.key);
-      //      $scope.contentType.data.push(os.count);
-      //    });
-      //  }
-      //});
+    $scope.reloadContentType = function ( filters ) {
       $scope.contentType = [];
-      Stats.contentType({domainId: domainId}).$promise.then(function (data) {
-        if (data.data && data.data.length > 0) {
-          var newData = [];
-          angular.forEach(data.data, function (val) {
-            newData.push({
-              name: val.key,
-              y: val.count
+      Stats.contentType( filters )
+        .$promise
+        .then(function (data) {
+          if (data.data && data.data.length > 0) {
+            var newData = [];
+            angular.forEach(data.data, function (val) {
+              newData.push({
+                name: val.key,
+                y: val.count
+              });
             });
-          });
-          $scope.contentType = newData;
-        }
-      });
+            $scope.contentType = newData;
+          }
+        });
     };
 
     /**
@@ -285,32 +200,22 @@
      *
      * @param {string|number} domainId
      */
-    $scope.reloadCacheStatus = function (domainId) {
-      //$scope.cacheStatus = {
-      //  labels: [],
-      //  data: []
-      //};
-      //Stats.cacheStatus({domainId: domainId}).$promise.then(function (data) {
-      //  if (data.data && data.data.length > 0) {
-      //    angular.forEach(data.data, function (os) {
-      //      $scope.cacheStatus.labels.push(os.key);
-      //      $scope.cacheStatus.data.push(os.count);
-      //    });
-      //  }
-      //});
+    $scope.reloadCacheStatus = function ( filters ) {
       $scope.cacheStatus = [];
-      Stats.cacheStatus({domainId: domainId}).$promise.then(function (data) {
-        if (data.data && data.data.length > 0) {
-          var newData = [];
-          angular.forEach(data.data, function (val) {
-            newData.push({
-              name: val.key,
-              y: val.count
+      Stats.cacheStatus( filters )
+        .$promise
+        .then(function (data) {
+          if (data.data && data.data.length > 0) {
+            var newData = [];
+            angular.forEach(data.data, function (val) {
+              newData.push({
+                name: val.key,
+                y: val.count
+              });
             });
-          });
-          $scope.cacheStatus = newData;
-        }
-      });
+            $scope.cacheStatus = newData;
+          }
+        });
     };
 
     /**
@@ -318,21 +223,23 @@
      *
      * @param {string|number} domainId
      */
-    $scope.reloadQUIC = function (domainId) {
+    $scope.reloadQUIC = function ( filters ) {
 
       $scope.quic = [];
-      Stats.quic({domainId: domainId}).$promise.then(function (data) {
-        if (data.data && data.data.length > 0) {
-          var newData = [];
-          angular.forEach(data.data, function (val) {
-            newData.push({
-              name: ( val.key === '-' ? 'Non-QUIC' : val.key ),
-              y: val.count
+      Stats.quic( filters )
+        .$promise
+        .then(function (data) {
+          if (data.data && data.data.length > 0) {
+            var newData = [];
+            angular.forEach(data.data, function (val) {
+              newData.push({
+                name: ( val.key === '-' ? 'Non-QUIC' : val.key ),
+                y: val.count
+              });
             });
-          });
-          $scope.quic = newData;
-        }
-      });
+            $scope.quic = newData;
+          }
+        });
     };
 
     /**
@@ -340,22 +247,24 @@
      *
      * @param {string|number} domainId
      */
-    $scope.reloadHTTP2 = function (domainId) {
+    $scope.reloadHTTP2 = function ( filters ) {
 
       $scope.http2 = [];
-      Stats.http2({domainId: domainId}).$promise.then(function (data) {
-        if (data.data && data.data.length > 0) {
-          var http2 = [];
-          angular.forEach(data.data, function (val) {
-            http2.push({
-              name: ( val.key === '' ? 'Non-HTTP2' : val.key.toUpperCase() ),
-              // name: val.key.toUpperCase(),
-              y: val.count
+      Stats.http2( filters )
+        .$promise
+        .then(function (data) {
+          if (data.data && data.data.length > 0) {
+            var http2 = [];
+            angular.forEach(data.data, function (val) {
+              http2.push({
+                name: ( val.key === '' ? 'Non-HTTP2' : val.key.toUpperCase() ),
+                // name: val.key.toUpperCase(),
+                y: val.count
+              });
             });
-          });
-          $scope.http2 = http2;
-        }
-      });
+            $scope.http2 = http2;
+          }
+        });
     };
 
     /**
@@ -363,49 +272,47 @@
      *
      * @param {string|number} domainId
      */
-    $scope.reloadCountry = function (domainId) {
-      //$scope.country = {
-      //  labels: [],
-      //  data: []
-      //};
-      //Stats.country({domainId: domainId}).$promise.then(function (data) {
-      //  if (data.data && data.data.length > 0) {
-      //    angular.forEach(data.data, function (os) {
-      //      var name = $scope.countries[os.key.toUpperCase()] || os.key;
-      //      $scope.country.labels.push(name);
-      //      $scope.country.data.push(os.count);
-      //    });
-      //  }
-      //});
+    $scope.reloadCountry = function ( filters ) {
       $scope.country = [];
-      Stats.country({domainId: domainId}).$promise.then(function (data) {
-        if (data.data && data.data.length > 0) {
-          var newData = [];
-          angular.forEach(data.data, function (val) {
-            var name = $scope.countries[val.key.toUpperCase()] || val.key;
-            newData.push({
-              name: name,
-              y: val.count
+      Stats.country( filters )
+        .$promise
+        .then(function (data) {
+          if (data.data && data.data.length > 0) {
+            var newData = [];
+            angular.forEach(data.data, function (val) {
+              var name = $scope.countries[val.key.toUpperCase()] || val.key;
+              newData.push({
+                name: name,
+                y: val.count
+              });
             });
-          });
-          $scope.country = newData;
-        }
-      });
+            $scope.country = newData;
+          }
+        });
     };
 
     $scope.reload = function() {
-      $scope.reloadOS($scope.domain.id);
-      $scope.reloadDevice($scope.domain.id);
-      $scope.reloadCountry($scope.domain.id);
-      $scope.reloadProtocol($scope.domain.id);
-      $scope.reloadHttpMethod($scope.domain.id);
-      $scope.reloadHttpProtocol($scope.domain.id);
-      $scope.reloadStatusCode($scope.domain.id);
-      $scope.reloadContentType($scope.domain.id);
-      $scope.reloadCacheStatus($scope.domain.id);
-      $scope.reloadQUIC($scope.domain.id);
-      $scope.reloadHTTP2($scope.domain.id);
 
+      var filters = {
+        domainId: $scope.domain.id,
+        from_timestamp: moment().subtract( $scope.delay, 'hours' ).valueOf(),
+        to_timestamp: Date.now()
+      };
+      if ( $scope.country_filter ) {
+        filters.country = $scope.country_filter
+      }
+
+      $scope.reloadOS( filters );
+      $scope.reloadDevice( filters );
+      $scope.reloadCountry( filters );
+      $scope.reloadProtocol( filters );
+      $scope.reloadHttpMethod( filters );
+      $scope.reloadHttpProtocol( filters );
+      $scope.reloadStatusCode( filters );
+      $scope.reloadContentType( filters );
+      $scope.reloadCacheStatus( filters );
+      $scope.reloadQUIC( filters );
+      $scope.reloadHTTP2( filters );
     };
 
     // Load user domains
@@ -424,6 +331,8 @@
       if (!$scope.domain || !$scope.domain.id) {
         return;
       }
+
+      console.log( $scope );
       $scope.reload();
     };
   }

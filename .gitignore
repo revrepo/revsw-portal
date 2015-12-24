@@ -1,6 +1,8 @@
 .idea
+node_modules
 test/ui/node_modules
 test/ui/results
 .tmp
 *sublime*
 sftp-config.json
+local.js

@@ -57,6 +57,17 @@
       return result || '';
     }
 
+    /**
+     * 1234567890.456 --> 1'234'567'890.456
+     * 1234567890.456 --> 1'234'567'890.5 when fixed == 1
+     *
+     * @returns {string}
+     */
+    function formatNumber( num, fixed ) {
+      return ( fixed ? num.toFixed( fixed ) : num.toString() )
+        .replace( /\B(?=(\d{3})+(?!\d))/g, "'" );
+    }
+
     return {
 
       /**
@@ -72,7 +83,12 @@
       /**
        * @inheritDoc
        */
-      toRPS: toRPS
+      toRPS: toRPS,
+
+      /**
+       * @inheritDoc
+       */
+      formatNumber: formatNumber
     };
   }
 })();
