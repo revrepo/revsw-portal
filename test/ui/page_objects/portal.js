@@ -41,6 +41,7 @@ var UpdatePasswordPage = require('./user/updatePasswordPage');
 
 var AddDomainPage = require('./domain/addPage');
 var ConfigureDomainPage = require('./domain/configurePage');
+var DomainStatsPage= require('./domain/statsPage');
 var DomainVersionsPage = require('./domain/versionsPage');
 var EditDomainPage = require('./domain/editPage');
 var ListDomainsPage = require('./domain/listPage');
@@ -72,6 +73,7 @@ var Portal = {
     configurePage: ConfigureDomainPage,
     editPage: EditDomainPage,
     listPage: ListDomainsPage,
+    statsPage: DomainStatsPage,
     versionsPage: DomainVersionsPage
   },
   proxyTrafficPage: ProxyTrafficPage,
