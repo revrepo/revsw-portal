@@ -44,7 +44,7 @@ describe('Functional', function () {
     afterEach(function () {
     });
 
-    xit('should edit a domain and validate the domain successfully',
+    it('should edit a domain and validate the domain successfully',
       function () {
         Portal.domains.listPage.searchAndClickEdit(myDomain.name);
         Portal.domains.editPage.clickValidateDomain();
@@ -52,7 +52,7 @@ describe('Functional', function () {
         expect(alert.getText()).toEqual('The domain configuration is correct');
       });
 
-    xit('should edit a domain and update the domain successfully',
+    it('should edit a domain and update the domain successfully',
       function () {
         Portal.domains.listPage.searchAndClickEdit(myDomain.name);
         Portal.domains.editPage.domainForm.setOriginHostHeader(' ');
