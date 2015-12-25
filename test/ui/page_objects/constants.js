@@ -52,6 +52,14 @@ var Constants = {
       UPDATE_PASSWORD: 'Update Password',
       SECURITY_SETTINGS: 'Security Settings',
       ACTIVITY_LOG: 'Activity Log'
+    },
+    analytics: {
+      PROXY_TRAFFIC: 'Proxy Traffic',
+      TOP_REPORTS: 'Top Reports',
+      TOP_OBJECTS: 'Top Objects',
+      FBT_REPORTS: 'FBT Reports',
+      TRAFFIC_HEATMAPS: 'Traffic Heatmaps',
+      RTT_HEATMAPS: 'RTT Heatmaps'
     }
   },
   user: {
@@ -90,7 +98,7 @@ var Constants = {
     EDGE_CACHE_EFFICIENCY_HITS: 'Edge Cache Efficiency Hits'
   },
   topReports: {
-    TITLE: '',
+    TITLE: 'Top Proxy Traffic Reports',
     EDGE_CACHE_RATIO: 'Edge Cache Hit/Miss Ratio',
     HTTP_STATUS_CODES_RATIO: 'HTTP Status Codes Ratio',
     HTTP_REQUESTS_RATIO: 'HTTP/HTTPS Requests Ratio',

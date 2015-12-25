@@ -29,6 +29,7 @@ describe('Smoke', function () {
     beforeAll(function () {
       Portal.signIn(adminUser);
       Portal.header.goTo(Constants.header.appMenu.ANALYTICS);
+      Portal.header.goTo(Constants.sideBar.analytics.TOP_REPORTS);
     });
 
     afterAll(function () {
