@@ -109,6 +109,14 @@ var Constants = {
     TOP_10_DEVICES: 'Top 10 Devices',
     QUIC_RATIO: 'QUIC/Non-QUIC Ratio',
     HTTP2_RATIO: 'H2/H2C/Non-HTTP2 Ratio'
+  },
+  topObjects: {
+    TITLE: 'Top Objects Reports',
+    TOP_MOST_REQUESTED_OBJECTS: 'Top Most Requested Objects',
+    TOP_REFERERS: 'Top Referers',
+    TOP_EDGE_CACHE_MISSES: 'Top Edge Cache Misses',
+    TOP_404_NOT_FOUND_OBJECTS: 'Top \'404 Not Found\' Objects',
+    TOP_OBJECTS_WITH_5XX_ERROR_CODES: 'Top Objects with 5XX Error Codes'
   }
 };
 
