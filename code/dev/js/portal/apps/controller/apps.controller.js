@@ -61,7 +61,7 @@
     $scope.initList = function () {
       if($state.current.data.list){
         $scope.list().then(function (data) {
-            $scope.records = filterFilter(data,
+            $scope.filteredRecords = filterFilter(data,
               {app_platform: $state.current.data.platform}, true);
           })
           .finally(function () {
