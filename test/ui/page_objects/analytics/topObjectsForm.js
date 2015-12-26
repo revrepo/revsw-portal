@@ -16,11 +16,11 @@
  * from Rev Software, Inc.
  */
 
-// # Proxy Traffic Page Object
+// # Top Objects Page Object
 
-// This `Proxy Traffic` Page Object abstracts all operations or actions that a
-// common proxy traffic could do in the Portal app/site.
-var ProxyTrafficForm = {
+// This `Top Objects` Page Object abstracts all operations or actions that a
+// common top objects could do in the Portal app/site.
+var TopObjectsForm = {
 
   // ## Properties
 
@@ -33,15 +33,16 @@ var ProxyTrafficForm = {
       delay: 'delay',
       country: 'ngFilters.country',
       os: 'ngFilters.os',
-      device: 'ngFilters.device'
+      device: 'ngFilters.device',
+      count: 'ngFilters.count'
     }
   },
 
   /**
-   * ### ProxyTraffic.getChartsTableObj()
+   * ### TopObjectsForm.getChartsTableObj().
    *
    * Returns the reference to the `Reports` charts table object (Selenium
-   * WebDriver Element) from the Proxy Traffic page from the Portal app.
+   * WebDriver Element) from the Top Reports page from the Portal app.
    *
    * @returns {Selenium WebDriver Element}
    */
@@ -50,114 +51,132 @@ var ProxyTrafficForm = {
   },
 
  /**
-  * ### ProxyTraffic.getProxyTrafficReport()
+  * ### TopObjectsForm.getTopObjects().
   *
-  * Selects a `Report` in the Proxy Traffic page.
+  * Selects a `Report` in the Top Objects page.
   *
-  * @param {String} indexChart of proxy Traffic report panel.
-  * @param {String} indexForm of Proxy Traffic report panel.
+  * @param {String} indexChart of Top Objects report panel.
+  * @param {String} indexForm of Top Objects report panel.
   *
   * @returns {Promise}
   */
-  getProxyTrafficReport: function (indexChart, indexForm) {
+  getTopObjects: function (indexChart, indexForm) {
     return this
       .getChartsTableObj()
-      .all(by.css('.row .col-lg-6'))
+      .all(by.css('.row .col-md-12'))
       .get(indexChart)
       .all(by.css('.form-group'))
       .get(indexForm);
   },
 
   /**
-   * ### ProxyTraffic.setDelay()
+   * ### TopObjectsForm.setDelay().
    *
-   * Sets value for `Delay` text field
+   * Sets value for `Delay` text field.
    *
-   * @param {String} indexChart of proxy Traffic report panel.
-   * @param {String} indexForm of Proxy Traffic report panel.
-   * @param {String} value of Proxy Traffic report panel.
+   * @param {String} indexChart of Top Objects report panel.
+   * @param {String} indexForm of Top Objects report panel.
+   * @param {String} value of Top Objects report panel.
    *
    * @returns {Promise}
    */
   setDelay: function (indexChart, indexForm, value) {
     return this
-      .getProxyTrafficReport(indexChart, indexForm) // (0, 0)
+      .getTopObjects(indexChart, indexForm) // (0, 0)
       .element(by.model(this.locators.models.delay))
       .sendKeys(value); // 'Last 1 day'
   },
 
   /**
-   * ### ProxyTraffic.setCountry()
+   * ### TopObjectsForm.setCountry()
    *
-   * Sets value for `Country` text field
+   * Sets value for `Country` text field.
    *
-   * @param {String} indexChart of proxy Traffic report panel.
-   * @param {String} indexForm of Proxy Traffic report panel.
-   * @param {String} value of Proxy Traffic report panel.
+   * @param {String} indexChart of Top Objects report panel.
+   * @param {String} indexForm of Top Objects report panel.
+   * @param {String} value of Top Objects report panel.
    *
    * @returns {Promise}
    */
   setCountry: function (indexChart, indexForm, value) {
     return this
-      .getProxyTrafficReport(indexChart, indexForm) // (0, 1)
+      .getTopObjects(indexChart, indexForm) // (0, 1)
       .element(by.model(this.locators.models.country))
       .sendKeys(value);
   },
 
   /**
-   * ### ProxyTraffic.setOS()
+   * ### TopObjectsForm.setOS()
    *
    * Sets value for `OS` text field
    *
-   * @param {String} indexChart of proxy Traffic report panel.
-   * @param {String} indexForm of Proxy Traffic report panel.
-   * @param {String} value of Proxy Traffic report panel.
+   * @param {String} indexChart of Top Objects report panel.
+   * @param {String} indexForm of Top Objects report panel.
+   * @param {String} value of Top Objects report panel.
    *
    * @returns {Promise}
    */
   setOS: function (indexChart, indexForm, value) {
     return this
-      .getProxyTrafficReport(indexChart, indexForm) // (0, 2)
+      .getTopObjects(indexChart, indexForm) // (0, 2)
       .element(by.model(this.locators.models.os))
       .sendKeys(value);
   },
 
   /**
-   * ### ProxyTraffic.setDevice()
+   * ### TopObjectsForm.setDevice()
    *
    * Sets value for `Device` text field
    *
-   * @param {String} indexChart of proxy Traffic report panel.
-   * @param {String} indexForm of Proxy Traffic report panel.
-   * @param {String} value of Proxy Traffic report panel.
+   * @param {String} indexChart of Top Objects report panel.
+   * @param {String} indexForm of Top Objects report panel.
+   * @param {String} value of Top Objects report panel.
    *
    * @returns {Promise}
    */
   setDevice: function (indexChart, indexForm, value) {
     return this
-      .getProxyTrafficReport(indexChart, indexForm) // (0, 3)
+      .getTopObjects(indexChart, indexForm) // (0, 3)
       .element(by.model(this.locators.models.device))
       .sendKeys(value);
   },
 
   /**
-   * ### ProxyTraffic.clickCreateReport()
+   * ### TopObjectsForm.setCount()
+   *
+   * Sets value for `Count` text field
+   *
+   * @param {String} indexChart of Top Objects report panel.
+   * @param {String} indexForm of Top Objects report panel.
+   * @param {String} value of Top Objects report panel.
+   *
+   * @returns {Promise}
+   */
+  setCount: function (indexChart, indexForm, value) {
+    return this
+      .getTopObjects(indexChart, indexForm) // (0, 4)
+      .element(by.model(this.locators.models.count))
+      .sendKeys(value);
+  },
+
+  /**
+   * ### TopObjectsForm.clickCreateReport().
    *
    * Clicks on `Create Report` button in report forms.
    *
-   * @param {String} indexChart of proxy Traffic report panel.
-   * @param {String} indexForm of Proxy Traffic report panel.
+   * @param {String} indexChart of Top Objects report panel.
+   * @param {String} indexForm of Top Objects report panel.
    *
    * @returns {Promise}
    */
   clickCreateReport: function (indexChart, indexForm) {
     return this
-      .getProxyTrafficReport(indexChart, indexForm) // (0, 4)
+      .getTopObjects(indexChart, indexForm) // (0, 4)
       .click();
   },
 
   /**
-   * ### ProxyTraffic.getDelay()
+   * ### TopObjectsForm.getDelay().
    *
    * Gets the value from `Delay` combo box.
    *
@@ -165,13 +184,13 @@ var ProxyTrafficForm = {
    */
   getDelay: function (indexChart, indexForm) {
     return this
-      .getProxyTrafficReport(indexChart, indexForm)
+      .getTopObjects(indexChart, indexForm)
       .element(by.model(this.locators.models.delay))
       .getText();
   },
 
   /**
-   * ### ProxyTraffic.getCountry()
+   * ### TopObjectsForm.getCountry()
    *
    * Gets the value from `Country` combo box.
    *
@@ -179,13 +198,13 @@ var ProxyTrafficForm = {
    */
   getCountry: function (indexChart, indexForm) {
     return this
-      .getProxyTrafficReport(indexChart, indexForm)
+      .getTopObjects(indexChart, indexForm)
       .element(by.model(this.locators.models.country))
       .getText();
   },
 
   /**
-   * ### ProxyTraffic.getOS()
+   * ### TopObjectsForm.getOS()
    *
    * Gets the value from `OS` combo box.
    *
@@ -193,13 +212,13 @@ var ProxyTrafficForm = {
    */
   getOS: function (indexChart, indexForm) {
     return this
-      .getProxyTrafficReport(indexChart, indexForm)
+      .getTopObjects(indexChart, indexForm)
       .element(by.model(this.locators.models.os))
       .getText();
   },
 
   /**
-   * ### ProxyTraffic.getDevice()
+   * ### TopObjectsForm.getDevice()
    *
    * Gets the value from `Device` combo box.
    *
@@ -207,10 +226,24 @@ var ProxyTrafficForm = {
    */
   getDevice: function (indexChart, indexForm) {
     return this
-      .getProxyTrafficReport(indexChart, indexForm)
+      .getTopObjects(indexChart, indexForm)
       .element(by.model(this.locators.models.device))
+      .getText();
+  },
+
+  /**
+   * ### TopObjectsForm.getCount()
+   *
+   * Gets the value from `Count` combo box.
+   *
+   * @returns {Promise}
+   */
+  getCount: function (indexChart, indexForm) {
+    return this
+      .getTopObjects(indexChart, indexForm)
+      .element(by.model(this.locators.models.count))
       .getText();
   }
 };
 
-module.exports = ProxyTrafficForm;
+module.exports = TopObjectsForm;

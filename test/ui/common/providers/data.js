@@ -109,22 +109,25 @@ var DataProvider = {
    *         country: string,
    *         os: string,
    *         device: string
+   *         count: string
    *     }
    */
-  generateProxyTrafficReport: function (dataReport) {
+  generateAnalyticsInfo: function (dataReport) {
     if (dataReport) {
       return {
         delay: dataReport.day,
         country: dataReport.country,
         os: dataReport.os,
-        device: dataReport.device
+        device: dataReport.device,
+        count: dataReport.count
       };
     }
     return {
       delay: 'Last 1 day',
       country: 'All Countries',
       os: 'All OS',
-      device: 'All Devices'
+      device: 'All Devices',
+      count: 'Top 20 Records'
     };
   }
 };

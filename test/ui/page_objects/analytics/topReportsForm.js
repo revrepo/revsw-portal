@@ -26,9 +26,6 @@ var TopReportsForm = {
 
   // Locators specific to HTML elements from this page object
   locators: {
-    reports: {
-      css: '.container-fluid .row'
-    },
     chartsTable: {
       css: '.panel-body'
     },
