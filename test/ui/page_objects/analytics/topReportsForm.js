@@ -32,11 +32,13 @@ var TopReportsForm = {
       pullLeft: '.row .col-md-12 .pull-left',
       pullRight: '.row .col-md-12 .pull-right'
     },
-    models: {
-      domain: 'domain',
-      delay: 'delay',
-      country: 'country_filter',
-      searchDomain: '$select.search'
+    dropDown: {
+      css: '[ng-click="$select.toggle($event)"]',
+      models: {
+        delay: 'delay',
+        country: 'country_filter',
+        searchDomain: '$select.search'
+      }
     },
     button: {
       updateReports: '[ng-click="onDomainSelected()"]'
@@ -95,8 +97,8 @@ var TopReportsForm = {
    */
   getDomainDDown: function () {
     return this
-      .getPullLeftElem();
-      //.element(by.model(this.locators.models.domain));
+      .getPullLeftElem()
+      .element(by.css(this.locators.dropDown.css));
   },
 
   /**
@@ -109,7 +111,7 @@ var TopReportsForm = {
   getDelayDDown: function () {
     return this
       .getPullRightElem()
-      .element(by.model(this.locators.models.delay));
+      .element(by.model(this.locators.dropDown.models.delay));
   },
 
   /**
@@ -122,7 +124,7 @@ var TopReportsForm = {
   getCountryDDown: function () {
     return this
       .getPullRightElem()
-      .element(by.model(this.locators.models.country));
+      .element(by.model(this.locators.dropDown.models.country));
   },
 
   /**
@@ -146,7 +148,7 @@ var TopReportsForm = {
    * @returns {Promise}
    */
   getSearchDomainTxtIn: function () {
-    return element(by.model(this.locators.models.searchDomain));
+    return element(by.model(this.locators.dropDown.models.searchDomain));
   },
 
   /**

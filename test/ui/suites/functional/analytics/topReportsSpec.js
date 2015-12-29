@@ -49,8 +49,20 @@ describe('Functional', function () {
         Portal.topReportsPage.selectDomain(myDomain);
         Portal.topReportsPage.createReport(dataReport);
 
-        // var getData = Portal.topReportsPage.getReportInfo();
-        // expect(getData.delay).toContain(dataReport.delay);
+        var getData = Portal.topReportsPage.getReportInfo();
+        expect(getData.delay).toContain(dataReport.delay);
+    });
+
+    it('should create a Top Proxy Traffic Report with custom values',
+      function () {
+        var dataReport = DataProvider.generateAnalyticsInfo();
+        dataReport.delay = 'Last 24 hours';
+        dataReport.country = 'Russian Federation';
+        Portal.topReportsPage.selectDomain(myDomain);
+        Portal.topReportsPage.createReport(dataReport);
+
+        var getData = Portal.topReportsPage.getReportInfo();
+        expect(getData.delay).toContain(dataReport.delay);
     });
   });
 });
