@@ -44,9 +44,10 @@ describe('Negative', function () {
         Portal.userListPage.searcher.clearSearchCriteria();
       });
 
-    // TODO: spec fails due to bug: pagination not showing if there is only one page
-    xit('should not show only the first page button when the search criteria does' +
-      'not match with any word in the "User List"',
+    // TODO: spec fails due to bug: 
+    // pagination not showing if there is only one page
+    xit('should not show only the first page button when the search criteria ' +
+      'does not match with any word in the "User List"',
       function () {
         var uniqueString = 'unique_string_' + (new Date()).getTime();
         var availablePages = Portal.userListPage.pager

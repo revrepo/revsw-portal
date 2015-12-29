@@ -26,190 +26,237 @@ var TopReportsForm = {
 
   // Locators specific to HTML elements from this page object
   locators: {
-    chartsTable: {
-      css: '.panel-body'
+    reports: {
+      container: '.container-fluid .row',
+      panelHeading: '.col-md-12 .panel .panel-heading',
+      pullLeft: '.row .col-md-12 .pull-left',
+      pullRight: '.row .col-md-12 .pull-right'
     },
     models: {
+      domain: 'domain',
       delay: 'delay',
-      country: 'ngFilters.country',
-      os: 'ngFilters.os',
-      device: 'ngFilters.device'
+      country: 'country_filter',
+      searchDomain: '$select.search'
+    },
+    button: {
+      updateReports: '[ng-click="onDomainSelected()"]'
     }
   },
 
   /**
-   * ### TopReportsForm.getChartsTableObj()
+   * ### TopReportsForm.getPanelHeadingElem()
    *
-   * Returns the reference to the `Reports` charts table object (Selenium
+   * Returns the reference to the `Panel Heading` element (Selenium
    * WebDriver Element) from the Top Reports page from the Portal app.
    *
    * @returns {Selenium WebDriver Element}
    */
-  getChartsTableObj: function () {
-    return element.all(by.css(this.locators.chartsTable.css));
+  getPanelHeadingElem: function () {
+    return element
+      .all(by.css(this.locators.reports.container))
+      .get(1)
+      .element(by.css(this.locators.reports.panelHeading));
   },
 
- /**
-  * ### TopReportsForm.getTopReports()
-  *
-  * Selects a `Report` in the Top Reports page.
-  *
-  * @param {String} indexChart of Top Reports report panel.
-  * @param {String} indexForm of Top Reports report panel.
-  *
-  * @returns {Promise}
-  */
-  getTopReports: function (indexChart, indexForm) {
+  /**
+   * ### TopReportsForm.getPullLeftElem()
+   *
+   * Returns the reference to the `Pull Left` element (Selenium
+   * WebDriver Element) from the Top Reports page from the Portal app.
+   *
+   * @returns {Selenium WebDriver Element}
+   */
+  getPullLeftElem: function () {
     return this
-      .getChartsTableObj()
-      .all(by.css('.row .col-lg-6'))
-      .get(indexChart)
-      .all(by.css('.form-group'))
-      .get(indexForm);
+      .getPanelHeadingElem()
+      .element(by.css(this.locators.reports.pullLeft));
+  },
+
+  /**
+   * ### TopReportsForm.getPullRightElem()
+   *
+   * Returns the reference to the `Form` element to fill settings values
+   * (Selenium WebDriver Element) from the Top Reports from the Portal app.
+   *
+   * @returns {Selenium WebDriver Element}
+   */
+  getPullRightElem: function () {
+    return this
+      .getPanelHeadingElem()
+      .element(by.css(this.locators.reports.pullRight));
+  },
+
+  /**
+   * ### TopReportsForm.getDelayDDown()
+   *
+   * Gets the reference from `Delay` drop down element.
+   *
+   * @returns {Promise}
+   */
+  getDomainDDown: function () {
+    return this
+      .getPullLeftElem();
+      //.element(by.model(this.locators.models.domain));
+  },
+
+  /**
+   * ### TopReportsForm.getDelayDDown()
+   *
+   * Gets the reference from `Delay` drop down element.
+   *
+   * @returns {Promise}
+   */
+  getDelayDDown: function () {
+    return this
+      .getPullRightElem()
+      .element(by.model(this.locators.models.delay));
+  },
+
+  /**
+   * ### TopReportsForm.getCountryDDown()
+   *
+   * Gets the reference from `Country` drop down element.
+   *
+   * @returns {Promise}
+   */
+  getCountryDDown: function () {
+    return this
+      .getPullRightElem()
+      .element(by.model(this.locators.models.country));
+  },
+
+  /**
+   * ### TopReportsForm.getUpdateReportsBtn()
+   *
+   * Gets the reference from `Update Reports` button element.
+   *
+   * @returns {Promise}
+   */
+  getUpdateReportsBtn: function () {
+    return this
+      .getPullRightElem()
+      .element(by.css(this.locators.button.updateReports));
+  },
+
+  /**
+   * ### TopReportsForm.getSearchDomainTxtIn()
+   *
+   * Gets the reference from `Search Domain` textbox element.
+   *
+   * @returns {Promise}
+   */
+  getSearchDomainTxtIn: function () {
+    return element(by.model(this.locators.models.searchDomain));
   },
 
   /**
    * ### TopReportsForm.setDelay()
    *
-   * Sets value for `Delay` text field
+   * Sets the value from `Delay` combo box.
    *
-   * @param {String} indexChart of Top Reports report panel.
-   * @param {String} indexForm of Top Reports report panel.
-   * @param {String} value of Top Reports report panel.
+   * @param {String} Value to select in the Delay drop down in Top Reports page.
    *
    * @returns {Promise}
    */
-  setDelay: function (indexChart, indexForm, value) {
+  setDelay: function (value) {
     return this
-      .getTopReports(indexChart, indexForm) // (0, 0)
-      .element(by.model(this.locators.models.delay))
-      .sendKeys(value); // 'Last 1 day'
+      .getDelayDDown()
+      .sendKeys(value);
   },
 
   /**
    * ### TopReportsForm.setCountry()
    *
-   * Sets value for `Country` text field
+   * Sets the value from `Country` combo box.
    *
-   * @param {String} indexChart of Top Reports report panel.
-   * @param {String} indexForm of Top Reports report panel.
-   * @param {String} value of Top Reports report panel.
+   * @param {String} Value to select in Country drop down in Top Reports page.
    *
    * @returns {Promise}
    */
-  setCountry: function (indexChart, indexForm, value) {
+  setCountry: function (value) {
     return this
-      .getTopReports(indexChart, indexForm) // (0, 1)
-      .element(by.model(this.locators.models.country))
+      .getCountryDDown()
       .sendKeys(value);
   },
 
   /**
-   * ### TopReportsForm.setOS()
+   * ### TopReportsForm.setSearchDomain()
    *
-   * Sets value for `OS` text field
+   * Sets the value from `Search Domain` combo box.
    *
-   * @param {String} indexChart of Top Reports report panel.
-   * @param {String} indexForm of Top Reports report panel.
-   * @param {String} value of Top Reports report panel.
+   * @param {String} Value for Search Domain text box in Top Reports page.
    *
    * @returns {Promise}
    */
-  setOS: function (indexChart, indexForm, value) {
+  setSearchDomain: function (value) {
     return this
-      .getTopReports(indexChart, indexForm) // (0, 2)
-      .element(by.model(this.locators.models.os))
+      .getSearchDomainTxtIn()
       .sendKeys(value);
   },
 
   /**
-   * ### TopReportsForm.setDevice()
+   * ### TopReportsForm.getDomain()
    *
-   * Sets value for `Device` text field
-   *
-   * @param {String} indexChart of Top Reports report panel.
-   * @param {String} indexForm of Top Reports report panel.
-   * @param {String} value of Top Reports report panel.
+   * Gets the value from `Domain` drop down.
    *
    * @returns {Promise}
    */
-  setDevice: function (indexChart, indexForm, value) {
+  getDomain: function () {
     return this
-      .getTopReports(indexChart, indexForm) // (0, 3)
-      .element(by.model(this.locators.models.device))
-      .sendKeys(value);
-  },
-
-  /**
-   * ### TopReportsForm.clickCreateReport()
-   *
-   * Clicks on `Create Report` button in report forms.
-   *
-   * @param {String} indexChart of Top Reports report panel.
-   * @param {String} indexForm of Top Reports report panel.
-   *
-   * @returns {Promise}
-   */
-  clickCreateReport: function (indexChart, indexForm) {
-    return this
-      .getTopReports(indexChart, indexForm) // (0, 4)
-      .click();
+      .getDomainDDown()
+      .getText();
   },
 
   /**
    * ### TopReportsForm.getDelay()
    *
-   * Gets the value from `Delay` combo box.
+   * Gets the value from `Delay` drop down.
    *
    * @returns {Promise}
    */
-  getDelay: function (indexChart, indexForm) {
+  getDelay: function () {
     return this
-      .getTopReports(indexChart, indexForm)
-      .element(by.model(this.locators.models.delay))
+      .getDelayDDown()
       .getText();
   },
 
   /**
    * ### TopReportsForm.getCountry()
    *
-   * Gets the value from `Country` combo box.
+   * Gets the value from `Country` drop down.
    *
    * @returns {Promise}
    */
-  getCountry: function (indexChart, indexForm) {
+  getCountry: function () {
     return this
-      .getTopReports(indexChart, indexForm)
-      .element(by.model(this.locators.models.country))
+      .getCountryDDown()
       .getText();
   },
 
   /**
-   * ### TopReportsForm.getOS()
+   * ### TopReportsForm.clickDomain()
    *
-   * Gets the value from `OS` combo box.
+   * Clicks the `Domain` drop down element.
    *
    * @returns {Promise}
    */
-  getOS: function (indexChart, indexForm) {
+  clickDomain: function () {
     return this
-      .getTopReports(indexChart, indexForm)
-      .element(by.model(this.locators.models.os))
-      .getText();
+      .getDomainDDown()
+      .click();
   },
 
   /**
-   * ### TopReportsForm.getDevice()
+   * ### TopReportsForm.clickUpdateReports()
    *
-   * Gets the value from `Device` combo box.
+   * Clicks on the "Update Reports" button.
    *
    * @returns {Promise}
    */
-  getDevice: function (indexChart, indexForm) {
+  clickUpdateReports: function () {
     return this
-      .getTopReports(indexChart, indexForm)
-      .element(by.model(this.locators.models.device))
-      .getText();
+      .getUpdateReportsBtn()
+      .click();
   }
 };
 

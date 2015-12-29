@@ -54,7 +54,7 @@ describe('Functional', function () {
       function () {
         var firstDomainName = Portal.domains.listPage.domainsTbl
           .getFirstRow()
-          .getName()
+          .getName();
         Portal.domains.listPage.pager.clickNext();
         var nextDomainName = Portal.domains.listPage.domainsTbl
           .getFirstRow()
