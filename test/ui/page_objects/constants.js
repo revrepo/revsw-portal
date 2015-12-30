@@ -131,6 +131,9 @@ var Constants = {
     TITLE: 'Global Traffic Heatmaps',
     HITS_HEATMAP: 'Hits Heatmap',
     GBT_HEATMAP: 'GBT Heatmap'
+  },
+  rttHeatmaps: {
+    TITLE: 'Global Last Mile RTT Heatmap'
   }
 };
 

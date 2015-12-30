@@ -22,7 +22,7 @@ var DataProvider = require('./../../../common/providers/data');
 var Constants = require('./../../../page_objects/constants');
 
 describe('Functional', function () {
-  describe('Traffic Heatmaps', function () {
+  describe('RTT Heatmaps', function () {
 
     var adminUser = config.get('portal.users.admin');
     var myDomain = Constants.domain.qa.NAME;
@@ -30,8 +30,8 @@ describe('Functional', function () {
     beforeAll(function () {
       Portal.signIn(adminUser);
       Portal.header.goTo(Constants.header.appMenu.ANALYTICS);
-      Portal.header.goTo(Constants.sideBar.analytics.TRAFFIC_HEATMAPS);
-      Portal.trafficHeatmapsPage.selectDomain(myDomain);
+      Portal.header.goTo(Constants.sideBar.analytics.RTT_HEATMAPS);
+      Portal.rttHeatmapsPage.selectDomain(myDomain);
     });
 
     afterAll(function () {
@@ -45,30 +45,26 @@ describe('Functional', function () {
       function () {
         var dataReport = DataProvider.generateAnalyticsInfo();
         dataReport.delay = 'Last 6 hours';
-        Portal.trafficHeatmapsPage.createTrafficHeatmaps(dataReport);
+        Portal.rttHeatmapsPage.createRTTHeatmaps(dataReport);
         
-        var hitsHeatmapImg = Portal.trafficHeatmapsPage.existHitsHeatmapImage();
-        //var gbtHeatmapImg = Portal.trafficHeatmapsPage.existGBTHeatmapImage();
-        var getData = Portal.trafficHeatmapsPage.getInfoTrafficHeatmaps();
+        var existRttImage = Portal.rttHeatmapsPage.existRTTHeatmapImage();
+        var getData = Portal.rttHeatmapsPage.getInfoRTTHeatmap();
         
         expect(getData.delay).toContain(dataReport.delay);
-        expect(hitsHeatmapImg).toBe(true);
-        //expect(gbtHeatmapImg).toBe(true);
+        expect(existRttImage).toBe(true);
     });
 
     it('should create a GBT Heatmap report with custom values',
       function () {
         var dataReport = DataProvider.generateAnalyticsInfo();
         dataReport.delay = 'Last 24 hours';
-        Portal.trafficHeatmapsPage.createTrafficHeatmaps(dataReport);
+        Portal.rttHeatmapsPage.createRTTHeatmaps(dataReport);
 
-        var hitsHeatmapImg = Portal.trafficHeatmapsPage.existHitsHeatmapImage();
-        //var gbtHeatmapImg = Portal.trafficHeatmapsPage.existGBTHeatmapImage();
-        var getData = Portal.trafficHeatmapsPage.getInfoTrafficHeatmaps();
+        var existRttImage = Portal.rttHeatmapsPage.existRTTHeatmapImage();
+        var getData = Portal.rttHeatmapsPage.getInfoRTTHeatmap();
         
         expect(getData.delay).toContain(dataReport.delay);
-        expect(hitsHeatmapImg).toBe(true);
-        //expect(gbtHeatmapImg).toBe(true);
+        expect(existRttImage).toBe(true);
     });
   });
 });

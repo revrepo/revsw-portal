@@ -118,7 +118,7 @@ var TrafficHeatmaps = {
   },
 
   /**
-   * ### TrafficHeatmaps.createGlobalTrafficHeatmaps()
+   * ### TrafficHeatmaps.createTrafficHeatmaps()
    *
    * Creates the `Traffic Heatmaps` form in the Global Traffic Heatmaps page.
    *
@@ -126,22 +126,44 @@ var TrafficHeatmaps = {
    *
    * @returns {Promise}
    */
-  createGlobalTrafficHeatmaps: function (dataReport) {
+  createTrafficHeatmaps: function (dataReport) {
     this.form.setDelay(dataReport.delay);
     this.form.clickUpdateReport();
   },
 
   /**
-   * ### TrafficHeatmaps.getInfoGlobalTrafficHeatmaps()
+   * ### TrafficHeatmaps.getInfoTrafficHeatmaps()
    *
    * Gets the `Traffic Heatmaps` values from the Global Traffic Heatmaps page.
    *
    * @returns {dataReport}
    */
-  getInfoGlobalTrafficHeatmaps: function () {
+  getInfoTrafficHeatmaps: function () {
     var dataReport = {};
     dataReport.delay = this.form.getDelay();
     return dataReport;
+  },
+
+  /**
+   * ### TrafficHeatmaps.existHitsHeatmapImage()
+   *
+   * Checks if `Traffic Heatmaps` Image exists in Global Traffic Heatmaps page.
+   *
+   * @returns {dataReport}
+   */
+  existHitsHeatmapImage: function () {
+    return this.form.isPresenttHitsHeatmap();
+  },
+
+  /**
+   * ### TrafficHeatmaps.existGBTHeatmapImage()
+   *
+   * Checks if `Traffic Heatmaps` Image exists in Global Traffic Heatmaps page.
+   *
+   * @returns {dataReport}
+   */
+  existGBTHeatmapImage: function () {
+    return this.form.isPresentGBTHeatmap();
   }
 };
 

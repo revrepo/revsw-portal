@@ -266,26 +266,26 @@ var TrafficHeatmapsForm = {
   },
 
   /**
-   * ### TrafficHeatmapsForm.existHitsHeatmap()
+   * ### TrafficHeatmapsForm.isPresenttHitsHeatmap()
    *
    * Checks if `Hits Heatmap` exist in Global Traffic Heatmaps page.
    *
    * @returns {Promise}
    */
-  existHitsHeatmap: function () {
+  isPresenttHitsHeatmap: function () {
     return this
       .getHitsHeatmapImg()
       .isPresent();
   },
 
   /**
-   * ### TrafficHeatmapsForm.existGBTHeatmap()
+   * ### TrafficHeatmapsForm.isPresentGBTHeatmap()
    *
    * Checks if `GBT Heatmap` exist in Global Traffic Heatmaps page.
    *
    * @returns {Promise}
    */
-  existGBTHeatmap: function () {
+  isPresentGBTHeatmap: function () {
     return this
       .getGBTHeatmapImg()
       .isPresent();
