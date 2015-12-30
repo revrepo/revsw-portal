@@ -88,7 +88,7 @@ describe('Smoke', function () {
         expect(Portal.topReportsPage.getSelectedDomain()).toEqual(noDomain);
         expect(Portal.topReportsPage.getChartTitle()).toContain(titleChart);
     });
-    //***********
+    
     it('should display the default "Top 10 OS" report with empty data',
       function () {
         var titleChart = Constants.topReports.TOP_10_OS;

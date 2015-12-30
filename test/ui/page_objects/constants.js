@@ -117,6 +117,12 @@ var Constants = {
     TOP_EDGE_CACHE_MISSES: 'Top Edge Cache Misses',
     TOP_404_NOT_FOUND_OBJECTS: 'Top \'404 Not Found\' Objects',
     TOP_OBJECTS_WITH_5XX_ERROR_CODES: 'Top Objects with 5XX Error Codes'
+  },
+  fbtReports: {
+    TITLE: 'First Byte Time Reports',
+    AVERAGE_FBT: 'Average FBT',
+    FBT_VALUES_DISTRIBUTION: 'FBT values distribution',
+    FBT_HEATMAP: 'FBT heatmap'
   }
 };
 

@@ -32,6 +32,7 @@ describe('Functional', function () {
       Portal.createDomain(myDomain);
       Portal.header.goTo(Constants.header.appMenu.ANALYTICS);
       Portal.header.goTo(Constants.sideBar.analytics.TOP_REPORTS);
+      Portal.topReportsPage.selectDomain(myDomain);
     });
 
     afterAll(function () {
@@ -46,7 +47,6 @@ describe('Functional', function () {
       function () {
         var dataReport = DataProvider.generateAnalyticsInfo();
         dataReport.delay = 'Last 1 hour';
-        Portal.topReportsPage.selectDomain(myDomain);
         Portal.topReportsPage.createReport(dataReport);
 
         var getData = Portal.topReportsPage.getReportInfo();
@@ -58,7 +58,6 @@ describe('Functional', function () {
         var dataReport = DataProvider.generateAnalyticsInfo();
         dataReport.delay = 'Last 24 hours';
         dataReport.country = 'Russian Federation';
-        Portal.topReportsPage.selectDomain(myDomain);
         Portal.topReportsPage.createReport(dataReport);
 
         var getData = Portal.topReportsPage.getReportInfo();

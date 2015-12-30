@@ -118,7 +118,7 @@ var TopReports = {
   },
 
  /**
-  * ### TopReports.fillForm()
+  * ### TopReports.createReport()
   *
   * Fills the `Top Proxy Traffic Reports` form in the Top Reports page.
   *
@@ -133,7 +133,7 @@ var TopReports = {
   },
 
   /**
-  * ### TopReports.getFormInfo()
+  * ### TopReports.getReportInfo()
   *
   * Gets the `Top Proxy Traffic Reports` form values from the Top Reports page.
   *

@@ -89,9 +89,9 @@ var TopReportsForm = {
   },
 
   /**
-   * ### TopReportsForm.getDelayDDown()
+   * ### TopReportsForm.getDomainDDown()
    *
-   * Gets the reference from `Delay` drop down element.
+   * Gets the reference from `Domain` drop down element.
    *
    * @returns {Promise}
    */

@@ -48,6 +48,7 @@ var ListDomainsPage = require('./domain/listPage');
 var ProxyTrafficPage = require('./analytics/proxyTrafficPage');
 var TopReportsPage = require('./analytics/topReportsPage');
 var TopObjectsPage = require('./analytics/topObjectsPage');
+var FBTReportsPage = require('./analytics/fbtReportsPage');
 
 // This `Portal` Page Object is the entry point to use all other Page Objects
 // that abstract all components from the Portal App.
@@ -80,6 +81,7 @@ var Portal = {
   proxyTrafficPage: ProxyTrafficPage,
   topReportsPage: TopReportsPage,
   topObjectsPage: TopObjectsPage,
+  fbtReportsPage: FBTReportsPage,
 
   // ## Authentication Helper methods
 
