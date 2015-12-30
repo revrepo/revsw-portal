@@ -22,7 +22,7 @@
 var FBTReportsForm = require('./fbtReportsForm');
 
 // This `FBT Reports` Page Object abstracts all operations or actions that a
-// common top reports could do in the Portal app/site.
+// common FBT Reports could do in the Portal app/site.
 var FBTReports = {
 
   // ## Properties
@@ -40,7 +40,7 @@ var FBTReports = {
    * ### FBTReports.getContainerFluidElem()
    *
    * Returns the reference to the `Container Fluid` element (Selenium WebDriver
-   * Element) from the Top Reports page from the Portal app.
+   * Element) from the FBT Reports page from the Portal app.
    *
    * @returns {Selenium WebDriver Element}
    */
@@ -52,7 +52,7 @@ var FBTReports = {
    * ### FBTReports.getTitle()
    *
    * Returns the reference to the `Title` label element (Selenium WebDriver
-   * Element) from the Top Reports page from the Portal app.
+   * Element) from the FBT Reports page from the Portal app.
    *
    * @returns {Selenium WebDriver Element}
    */
@@ -68,7 +68,7 @@ var FBTReports = {
   /**
    * ### FBTReports.isDisplayed()
    *
-   * Checks whether the Top Reports page is being displayed in the UI or not.
+   * Checks whether the FBT Reports page is being displayed in the UI or not.
    *
    * @returns {Promise}
    */
@@ -81,7 +81,7 @@ var FBTReports = {
   /**
    * ### FBTReports.getChartTitle()
    *
-   * Gets the `Title` label from the Chart report from Top Reports page.
+   * Gets the `Title` label from the Chart report from FBT Reports page.
    *
    * @returns {Promise}
    */
@@ -95,9 +95,9 @@ var FBTReports = {
   /**
    * ### FBTReports.selectDomain()
    *
-   * Selects the `Domain` name in Drop Down element from Top Reports page.
+   * Selects the `Domain` name in Drop Down element from FBT Reports page.
    *
-   * @param {String} domain object to select the domain in Top Reports page.
+   * @param {String} domain object to select the domain in FBT Reports page.
    *
    * @returns {Promise}
    */
@@ -109,7 +109,7 @@ var FBTReports = {
   /**
    * ### FBTReports.getSelectedDomain()
    *
-   * Gets the `Selected Domain` name from Drop Down in Top Reports page.
+   * Gets the `Selected Domain` name from Drop Down in FBT Reports page.
    *
    * @returns {Promise}
    */

@@ -21,7 +21,7 @@ var Portal = require('./../../../page_objects/portal');
 var Constants = require('./../../../page_objects/constants');
 
 describe('Smoke', function () {
-  describe('Top Reports', function () {
+  describe('FBT Reports', function () {
 
     var adminUser = config.get('portal.users.admin');
     var noDomain = 'Select domain';
@@ -39,28 +39,28 @@ describe('Smoke', function () {
     beforeEach(function () {
     });
 
-    xit('should display "First Byte Time Reports" in the portal',
+    it('should display "First Byte Time Reports" in the portal',
       function () {
         var titleReport = Constants.fbtReports.TITLE;
         expect(Portal.fbtReportsPage.getSelectedDomain()).toEqual(noDomain);
         expect(Portal.fbtReportsPage.getTitle()).toEqual(titleReport);
     });
 
-    xit('should display default "Average FBT" report with empty data',
+    it('should display default "Average FBT" report with empty data',
       function () {
         var titleChart = Constants.fbtReports.AVERAGE_FBT;
         expect(Portal.fbtReportsPage.getSelectedDomain()).toEqual(noDomain);
         expect(Portal.fbtReportsPage.getChartTitle()).toContain(titleChart);
     });
 
-    xit('should show default "FBT values distribution" report with empty data',
+    it('should show default "FBT values distribution" report with empty data',
       function () {
         var titleChart = Constants.fbtReports.FBT_VALUES_DISTRIBUTION;
         expect(Portal.fbtReportsPage.getSelectedDomain()).toEqual(noDomain);
         expect(Portal.fbtReportsPage.getChartTitle()).toContain(titleChart);
     });
 
-    xit('should display default "FBT heatmap" report with empty data',
+    it('should display default "FBT heatmap" report with empty data',
       function () {
         var titleChart = Constants.fbtReports.FBT_HEATMAP;
         expect(Portal.fbtReportsPage.getSelectedDomain()).toEqual(noDomain);
