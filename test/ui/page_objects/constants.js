@@ -76,6 +76,9 @@ var Constants = {
     }
   },
   domain: {
+    qa: {
+      NAME: 'qa-api-test-domain.revsw.net'
+    },
     roles: {
       ADMIN: 'admin',
       USER: 'user'
@@ -123,6 +126,11 @@ var Constants = {
     AVERAGE_FBT: 'Average FBT',
     FBT_VALUES_DISTRIBUTION: 'FBT values distribution',
     FBT_HEATMAP: 'FBT heatmap'
+  },
+  trafficHeatmaps: {
+    TITLE: 'Global Traffic Heatmaps',
+    HITS_HEATMAP: 'Hits Heatmap',
+    GBT_HEATMAP: 'GBT Heatmap'
   }
 };
 

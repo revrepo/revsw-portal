@@ -49,6 +49,7 @@ var ProxyTrafficPage = require('./analytics/proxyTrafficPage');
 var TopReportsPage = require('./analytics/topReportsPage');
 var TopObjectsPage = require('./analytics/topObjectsPage');
 var FBTReportsPage = require('./analytics/fbtReportsPage');
+var TrafficHeatmapsPage = require('./analytics/trafficHeatmapsPage');
 
 // This `Portal` Page Object is the entry point to use all other Page Objects
 // that abstract all components from the Portal App.
@@ -82,6 +83,7 @@ var Portal = {
   topReportsPage: TopReportsPage,
   topObjectsPage: TopObjectsPage,
   fbtReportsPage: FBTReportsPage,
+  trafficHeatmapsPage: TrafficHeatmapsPage,
 
   // ## Authentication Helper methods
 

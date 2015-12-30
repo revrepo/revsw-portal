@@ -80,7 +80,7 @@ var FBTReportsForm = {
   /**
    * ### FBTReportsForm.getDomainDDown()
    *
-   * Gets the reference from `Domain` drop down element.
+   * Gets the reference to `Domain` drop down element.
    *
    * @returns {Promise}
    */
@@ -91,9 +91,9 @@ var FBTReportsForm = {
   },
 
   /**
-   * ### FBTReportsForm.getReportFormElem()
+   * ### FBTReportsForm.getDelayDDown()
    *
-   * Gets the value from `Delay` element.
+   * Gets the reference to `Delay` drop down element.
    *
    * @param {String} indexForm to select the report based on index 0 or 1.
    * @Example: Average FBT (0) or FBT values distribution (1).
@@ -110,7 +110,7 @@ var FBTReportsForm = {
   /**
    * ### FBTReportsForm.getCountryDDown()
    *
-   * Gets the reference from `Country` drop down element.
+   * Gets the reference to `Country` drop down element.
    *
    * @param {String} indexForm to select the report based on index 0 or 1.
    * @Example: Average FBT (0) or FBT values distribution (1).
@@ -127,7 +127,7 @@ var FBTReportsForm = {
   /**
    * ### FBTReportsForm.getOSDDown()
    *
-   * Gets the reference from `OS` drop down element.
+   * Gets the reference to `OS` drop down element.
    *
    * @param {String} indexForm to select the report based on index 0 or 1.
    * @Example: Average FBT (0) or FBT values distribution (1).
@@ -144,7 +144,7 @@ var FBTReportsForm = {
   /**
    * ### FBTReportsForm.getDeviceDDown()
    *
-   * Gets the reference from `Device` drop down element.
+   * Gets the reference to `Device` drop down element.
    *
    * @param {String} indexForm to select the report based on index 0 or 1.
    * @Example: Average FBT (0) or FBT values distribution (1).
@@ -161,7 +161,7 @@ var FBTReportsForm = {
   /**
    * ### FBTReportsForm.getReloadTrafficStatsBtn()
    *
-   * Gets the value from `Report Form` element.
+   * Gets the reference to `Report update` drop down element.
    *
    * @param {String} indexForm to select the report based on index 0 or 1.
    * @Example: Average FBT (0) or FBT values distribution (1).
@@ -178,7 +178,7 @@ var FBTReportsForm = {
   /**
    * ### FBTReportsForm.getReloadFBTStatsBtn()
    *
-   * Gets the value from `Report Form` element.
+   * Gets the reference to `Report Form` button element.
    *
    * @returns {Promise}
    */
@@ -192,7 +192,7 @@ var FBTReportsForm = {
   /**
    * ### FBTReportsForm.getSearchDomainTxtIn()
    *
-   * Gets the reference from `Search Domain` textbox element.
+   * Gets the reference to `Search Domain` textbox element.
    *
    * @returns {Promise}
    */
@@ -201,9 +201,9 @@ var FBTReportsForm = {
   },
   
   /**
-   * ### FBTReportsForm.averageFBT.setDelay()
+   * ### FBTReportsForm.setDelay()
    *
-   * Sets the value from `Delay` combo box.
+   * Sets the value to `Delay` drop down element.
    *
    * @param {String} indexForm to pick a report in First Byte Time Reports page.
    * @param {String} Value of Delay drop down in First Byte Time Reports page.
@@ -217,9 +217,9 @@ var FBTReportsForm = {
   },
 
   /**
-   * ### FBTReportsForm.averageFBT.setCountry()
+   * ### FBTReportsForm.setCountry()
    *
-   * Sets the value from `Country` combo box.
+   * Sets value to `Country` drop down element.
    *
    * @param {String} indexForm to pick a report in First Byte Time Reports page.
    * @param {String} Value in Country drop down in First Byte Time Reports page.
@@ -233,9 +233,9 @@ var FBTReportsForm = {
   },
 
   /**
-   * ### FBTReportsForm.averageFBT.setOS()
+   * ### FBTReportsForm.setOS()
    *
-   * Sets the value from `OS` combo box.
+   * Sets value to `OS` drop down element.
    *
    * @param {String} indexForm to pick a report in First Byte Time Reports page.
    * @param {String} Value to set in OS drop down First Byte Time Reports page.
@@ -249,9 +249,9 @@ var FBTReportsForm = {
   },
 
   /**
-   * ### FBTReportsForm.averageFBT.setDevice()
+   * ### FBTReportsForm.setDevice()
    *
-   * Sets the value from `Device` combo box.
+   * Sets the value to `Device` drop down element.
    *
    * @param {String} Value to se in Device drop down of First Byte Time Reports.
    *
@@ -264,7 +264,7 @@ var FBTReportsForm = {
   },
 
   /**
-   * ### FBTReportsForm.averageFBT.clickUpdateReport()
+   * ### FBTReportsForm.clickUpdateReport()
    *
    * Clicks on the "Update Reports" button.
    *
@@ -279,7 +279,7 @@ var FBTReportsForm = {
   },
 
   /**
-   * ### FBTReportsForm.averageFBT.clickReloadFBTStats()
+   * ### FBTReportsForm.clickReloadFBTStats()
    *
    * Clicks on the "Update Reports" button for FBT heatmap report.
    *
@@ -292,9 +292,9 @@ var FBTReportsForm = {
   },
 
   /**
-   * ### FBTReportsForm.averageFBT.getDelay()
+   * ### FBTReportsForm.getDelay()
    *
-   * Gets the value from `Delay` drop down.
+   * Gets the value from `Delay` drop down element.
    *
    * @param {String} indexForm to pick a report in First Byte Time Reports page.
    *
@@ -307,9 +307,9 @@ var FBTReportsForm = {
   },
 
   /**
-   * ### FBTReportsForm.averageFBT.getCountry()
+   * ### FBTReportsForm.getCountry()
    *
-   * Gets the value from `Country` drop down.
+   * Gets the value from `Country` drop down element.
    *
    * @param {String} indexForm to pick a report in First Byte Time Reports page.
    *
@@ -322,9 +322,9 @@ var FBTReportsForm = {
   },
 
   /**
-   * ### FBTReportsForm.averageFBT.getOS()
+   * ### FBTReportsForm.getOS()
    *
-   * Gets the value from `OS` drop down.
+   * Gets the value from `OS` drop down element.
    *
    * @param {String} indexForm to pick a report in First Byte Time Reports page.
    *
@@ -337,9 +337,9 @@ var FBTReportsForm = {
   },
 
   /**
-   * ### FBTReportsForm.averageFBT.getDevice()
+   * ### FBTReportsForm.getDevice()
    *
-   * Gets the value from `Device` drop down.
+   * Gets the value from `Device` drop down element.
    *
    * @param {String} indexForm to pick a report in First Byte Time Reports page.
    *
@@ -354,7 +354,7 @@ var FBTReportsForm = {
   /**
    * ### FBTReportsForm.setSearchDomain()
    *
-   * Sets the value from `Search Domain` combo box.
+   * Sets the value from `Search Domain` drop down element.
    *
    * @param {String} Value to Search Domain in First Byte Time Reports page.
    *
@@ -369,7 +369,7 @@ var FBTReportsForm = {
   /**
    * ### FBTReportsForm.getDomain()
    *
-   * Gets the value from `Domain` drop down.
+   * Gets the value from `Domain` drop down element.
    *
    * @returns {Promise}
    */

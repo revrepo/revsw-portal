@@ -120,7 +120,7 @@ var FBTReports = {
   /**
    * ### FBTReports.createAverageFBT()
    *
-   * Fills the `Average FBT` form in the First Byte Time Reports page.
+   * Creates the `Average FBT` form in the First Byte Time Reports page.
    *
    * @param {String} dataReport of values to fill report.
    *
@@ -137,7 +137,7 @@ var FBTReports = {
   /**
    * ### FBTReports.createFBTValuesDistribution()
    *
-   * Fills the `FBT values distribution` form First Byte Time Reports page.
+   * Creates the `FBT values distribution` form First Byte Time Reports page.
    *
    * @param {String} dataReport of values to fill report.
    *
@@ -154,7 +154,7 @@ var FBTReports = {
   /**
    * ### FBTReports.createFBTHeatmap()
    *
-   * Fills the `FBT heatmap` form in First Byte Time Reports page.
+   * Creates the `FBT heatmap` form in First Byte Time Reports page.
    *
    * @param {String} dataReport of values to fill report.
    *
