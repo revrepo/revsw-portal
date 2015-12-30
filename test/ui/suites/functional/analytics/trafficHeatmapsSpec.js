@@ -25,7 +25,7 @@ describe('Functional', function () {
   describe('Traffic Heatmaps', function () {
 
     var adminUser = config.get('portal.users.admin');
-    var myDomain = Constants.domain.qa.NAME;
+    var myDomain = Constants.domain;
 
     beforeAll(function () {
       Portal.signIn(adminUser);
@@ -48,12 +48,12 @@ describe('Functional', function () {
         Portal.trafficHeatmapsPage.createTrafficHeatmaps(dataReport);
         
         var hitsHeatmapImg = Portal.trafficHeatmapsPage.existHitsHeatmapImage();
-        //var gbtHeatmapImg = Portal.trafficHeatmapsPage.existGBTHeatmapImage();
+        var gbtHeatmapImg = Portal.trafficHeatmapsPage.existGBTHeatmapImage();
         var getData = Portal.trafficHeatmapsPage.getInfoTrafficHeatmaps();
         
         expect(getData.delay).toContain(dataReport.delay);
         expect(hitsHeatmapImg).toBe(true);
-        //expect(gbtHeatmapImg).toBe(true);
+        expect(gbtHeatmapImg).toBe(true);
     });
 
     it('should create a GBT Heatmap report with custom values',
@@ -63,12 +63,12 @@ describe('Functional', function () {
         Portal.trafficHeatmapsPage.createTrafficHeatmaps(dataReport);
 
         var hitsHeatmapImg = Portal.trafficHeatmapsPage.existHitsHeatmapImage();
-        //var gbtHeatmapImg = Portal.trafficHeatmapsPage.existGBTHeatmapImage();
+        var gbtHeatmapImg = Portal.trafficHeatmapsPage.existGBTHeatmapImage();
         var getData = Portal.trafficHeatmapsPage.getInfoTrafficHeatmaps();
         
         expect(getData.delay).toContain(dataReport.delay);
         expect(hitsHeatmapImg).toBe(true);
-        //expect(gbtHeatmapImg).toBe(true);
+        expect(gbtHeatmapImg).toBe(true);
     });
   });
 });

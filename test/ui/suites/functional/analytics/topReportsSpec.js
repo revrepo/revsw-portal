@@ -25,18 +25,16 @@ describe('Functional', function () {
   describe('Top Reports', function () {
 
     var adminUser = config.get('portal.users.admin');
-    var myDomain = DataProvider.generateDomain('mydomain');
+    var myDomain = Constants.domain;
 
     beforeAll(function () {
       Portal.signIn(adminUser);
-      Portal.createDomain(myDomain);
       Portal.header.goTo(Constants.header.appMenu.ANALYTICS);
       Portal.header.goTo(Constants.sideBar.analytics.TOP_REPORTS);
       Portal.topReportsPage.selectDomain(myDomain);
     });
 
     afterAll(function () {
-      Portal.deleteDomain(myDomain);
       Portal.signOut();
     });
 

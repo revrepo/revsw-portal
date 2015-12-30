@@ -25,7 +25,7 @@ describe('Functional', function () {
   describe('RTT Heatmaps', function () {
 
     var adminUser = config.get('portal.users.admin');
-    var myDomain = Constants.domain.qa.NAME;
+    var myDomain = Constants.domain;
 
     beforeAll(function () {
       Portal.signIn(adminUser);
