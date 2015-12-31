@@ -67,6 +67,7 @@ describe('Functional', function () {
         Portal.domains.listPage.searchAndClickEdit(myDomain.name);
         Portal.domains.editPage.clickPublishDomain();
         Portal.dialog.clickOk();
+        browser.sleep(3000);
         var alert = Portal.alerts.getFirst();
         expect(alert.getText()).toEqual('Domain configuration published');
       });

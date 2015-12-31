@@ -8,7 +8,7 @@
   /*@ngInject*/
   function StatsResource(Resource, $config) {
     return Resource($config.API_URL + '/stats/:domainId', {
-      domainId: ''
+      // domainId: ''
     }, {
       // Actions
       os: {
@@ -64,6 +64,11 @@
       fbt_heatmap: {
         method: 'GET',
         url: $config.API_URL + '/stats/fbt/heatmap/:domainId',
+        params: {}
+      },
+      sdk_hits: {
+        method: 'GET',
+        url: $config.API_URL + '/stats/sdk/hits/:accountId',
         params: {}
       },
       protocol: {
