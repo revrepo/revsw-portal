@@ -331,8 +331,6 @@
       if (!$scope.domain || !$scope.domain.id) {
         return;
       }
-
-      console.log( $scope );
       $scope.reload();
     };
   }
