@@ -44,6 +44,15 @@
           }
         }
       })
+      .state('index.reports.mob', {
+        url: '/reports/mobile',
+        views: {
+          main: {
+            controller: 'MobileReportsController',
+            templateUrl: 'parts/reports/mobile.html'
+          }
+        }
+      })
       .state('index.reports.heatmaps', {
         url: '/reports/heatmaps',
         views: {

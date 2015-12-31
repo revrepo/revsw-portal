@@ -15,6 +15,12 @@
     var domains = [];
 
     /**
+     * List of Users applications
+     * @type {Array}
+     */
+    var apps = [];
+
+    /**
      * Domain that should be selected
      *
      * @type {object|null}
@@ -323,6 +329,35 @@
       return domainSelected;
     }
 
+    /**
+     * Load user applications
+     * @param {boolean} reload
+     * @returns {Promise}
+     */
+    function getUserApps(reload) {
+      return $q(function (resolve, reject) {
+        if (apps && apps.length > 0 && !reload) {
+          return resolve(apps);
+        }
+        $http.get($config.API_URL + '/apps')
+          .then( function (data) {
+            if (data && data.status === $config.STATUS.OK) {
+              apps = data.data.map( function( item ) {
+                return {
+                  app_name: item.app_name,
+                  app_id: item.id,
+                  sdk_key: item.sdk_key
+                };
+              });
+              resolve( apps );
+            } else {
+              reject( new Error(data.response) );
+            }
+          });
+      });
+    }
+
+
     return {
 
       getToken: getToken,
@@ -357,7 +392,9 @@
 
       selectDomain: selectDomain,
 
-      getSelectedDomain: getSelectedDomain
+      getSelectedDomain: getSelectedDomain,
+
+      getUserApps: getUserApps
     };
   }
 })();
