@@ -93,6 +93,42 @@ var DataProvider = {
       originHostHeader: '',
       originLocation: '--- Select location ---'
     };
+  },
+
+  /**
+   * ### DataProvider.generateProxyTrafficReport()
+   *
+   * Generates data for to fill Proxy Traffic reports.
+   *
+   * @param {string} dataReport, this value is use in all reports.
+   *
+   * @returns {Object}, generate data with the following schema:
+   *
+   *     {
+   *         delay: string,
+   *         country: string,
+   *         os: string,
+   *         device: string
+   *         count: string
+   *     }
+   */
+  generateAnalyticsInfo: function (dataReport) {
+    if (dataReport) {
+      return {
+        delay: dataReport.day,
+        country: dataReport.country,
+        os: dataReport.os,
+        device: dataReport.device,
+        count: dataReport.count
+      };
+    }
+    return {
+      delay: 'Last 1 day',
+      country: 'All Countries',
+      os: 'All OS',
+      device: 'All Devices',
+      count: 'Top 20 Records'
+    };
   }
 };
 

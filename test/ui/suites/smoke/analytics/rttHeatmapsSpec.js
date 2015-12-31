@@ -18,49 +18,34 @@
 
 var config = require('config');
 var Portal = require('./../../../page_objects/portal');
-var DataProvider = require('./../../../common/providers/data');
 var Constants = require('./../../../page_objects/constants');
 
-describe('Functional', function () {
-  describe('Add domain', function () {
+describe('Smoke', function () {
+  describe('RTT Heatmaps', function () {
 
     var adminUser = config.get('portal.users.admin');
-    var myDomain = DataProvider.generateDomain('mydomain');
+    var noDomain = 'Select domain';
 
     beforeAll(function () {
       Portal.signIn(adminUser);
+      Portal.header.goTo(Constants.header.appMenu.ANALYTICS);
+      Portal.header.goTo(Constants.sideBar.analytics.RTT_HEATMAPS);
     });
 
     afterAll(function () {
-      Portal.deleteDomain(myDomain);
       Portal.signOut();
     });
 
     beforeEach(function () {
     });
 
-    afterEach(function () {
-    });
-
-    it('should create a domain and display a successful message',
+    it('should display "Global Last Mile RTT Heatmap" in the portal',
       function () {
-        Portal.getDomainsPage();
-        Portal.domains.listPage.clickAddNewDomain();
-        Portal.domains.addPage.createDomain(myDomain);
-
-        var alert = Portal.alerts.getFirst();
-        var expectedMsg = 'Domain created';
-        expect(alert.getText()).toEqual(expectedMsg);
-    });
-
-    it('should not create a domain with duplicate values', function () {
-      Portal.getDomainsPage();
-      Portal.domains.listPage.clickAddNewDomain();
-      Portal.domains.addPage.createDomain(myDomain);
-
-      var alert = Portal.alerts.getFirst();
-      var expectedMsg = 'The domain name is already registered in the system';
-      expect(alert.getText()).toEqual(expectedMsg);
+        var titleReport = Constants.rttHeatmaps.TITLE;
+        var domain = Portal.rttHeatmapsPage.getSelectedDomain();
+        var title = Portal.rttHeatmapsPage.getTitle();
+        expect(domain).toEqual(noDomain);
+        expect(title).toEqual(titleReport);
     });
   });
 });

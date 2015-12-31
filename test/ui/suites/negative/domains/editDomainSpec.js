@@ -63,7 +63,8 @@ describe('Negative', function () {
         Portal.dialog.clickOk();
         var alert = Portal.alerts.getFirst();
         var expectedMessage = 'child "origin_server" fails because ' +
-          '["origin_server" is not allowed to be empty, "origin_server" is not allowed to be empty]';
+          '["origin_server" is not allowed to be empty, "origin_server" ' +
+          'is not allowed to be empty]';
         expect(alert.getText()).toEqual(expectedMessage);
       });
 

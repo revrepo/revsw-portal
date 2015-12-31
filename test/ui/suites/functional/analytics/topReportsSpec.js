@@ -22,45 +22,44 @@ var DataProvider = require('./../../../common/providers/data');
 var Constants = require('./../../../page_objects/constants');
 
 describe('Functional', function () {
-  describe('Add domain', function () {
+  describe('Top Reports', function () {
 
     var adminUser = config.get('portal.users.admin');
-    var myDomain = DataProvider.generateDomain('mydomain');
+    var myDomain = Constants.domain;
 
     beforeAll(function () {
       Portal.signIn(adminUser);
+      Portal.header.goTo(Constants.header.appMenu.ANALYTICS);
+      Portal.header.goTo(Constants.sideBar.analytics.TOP_REPORTS);
+      Portal.topReportsPage.selectDomain(myDomain);
     });
 
     afterAll(function () {
-      Portal.deleteDomain(myDomain);
       Portal.signOut();
     });
 
     beforeEach(function () {
     });
 
-    afterEach(function () {
-    });
-
-    it('should create a domain and display a successful message',
+    it('should create a Top Proxy Traffic Report with default values',
       function () {
-        Portal.getDomainsPage();
-        Portal.domains.listPage.clickAddNewDomain();
-        Portal.domains.addPage.createDomain(myDomain);
+        var dataReport = DataProvider.generateAnalyticsInfo();
+        dataReport.delay = 'Last 1 hour';
+        Portal.topReportsPage.createReport(dataReport);
 
-        var alert = Portal.alerts.getFirst();
-        var expectedMsg = 'Domain created';
-        expect(alert.getText()).toEqual(expectedMsg);
+        var getData = Portal.topReportsPage.getReportInfo();
+        expect(getData.delay).toContain(dataReport.delay);
     });
 
-    it('should not create a domain with duplicate values', function () {
-      Portal.getDomainsPage();
-      Portal.domains.listPage.clickAddNewDomain();
-      Portal.domains.addPage.createDomain(myDomain);
+    it('should create a Top Proxy Traffic Report with custom values',
+      function () {
+        var dataReport = DataProvider.generateAnalyticsInfo();
+        dataReport.delay = 'Last 24 hours';
+        dataReport.country = 'Russian Federation';
+        Portal.topReportsPage.createReport(dataReport);
 
-      var alert = Portal.alerts.getFirst();
-      var expectedMsg = 'The domain name is already registered in the system';
-      expect(alert.getText()).toEqual(expectedMsg);
+        var getData = Portal.topReportsPage.getReportInfo();
+        expect(getData.delay).toContain(dataReport.delay);
     });
   });
 });

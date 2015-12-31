@@ -20,7 +20,7 @@ var config = require('config');
 var Portal = require('./../../../page_objects/portal');
 
 describe('Negative', function () {
-  describe('User pagination', function () {
+  describe('Domain pagination', function () {
 
     var adminUser = config.get('portal.users.admin');
 
@@ -33,53 +33,50 @@ describe('Negative', function () {
     });
 
     beforeEach(function () {
-      Portal.getUsersPage();
+      Portal.getDomainsPage();
     });
 
-    it('should not display pagination when there is not any user to show',
+    it('should not display pagination when there is not any domain to show',
       function () {
         var uniqueString = 'unique_string_' + (new Date()).getTime();
-        Portal.userListPage.searcher.setSearchCriteria(uniqueString);
-        expect(Portal.userListPage.pager.isDisplayed()).toBe(false);
-        Portal.userListPage.searcher.clearSearchCriteria();
+        Portal.domains.listPage.searcher.setSearchCriteria(uniqueString);
+        expect(Portal.domains.listPage.pager.isDisplayed()).toBe(false);
+        Portal.domains.listPage.searcher.clearSearchCriteria();
       });
 
-    // TODO: spec fails due to bug: 
-    // pagination not showing if there is only one page
-    xit('should not show only the first page button when the search criteria ' +
-      'does not match with any word in the "User List"',
+    it('should not show pagination buttons when the search criteria does' +
+      'not match with any word in the "Domain List"',
       function () {
         var uniqueString = 'unique_string_' + (new Date()).getTime();
-        var availablePages = Portal.userListPage.pager
+        var availablePages = Portal.domains.listPage.pager
           .getAllPageIndexButtons()
           .count();
-        Portal.userListPage.searcher.setSearchCriteria(uniqueString);
-        var filteredPages = Portal.userListPage.pager
+        Portal.domains.listPage.searcher.setSearchCriteria(uniqueString);
+        var filteredPages = Portal.domains.listPage.pager
           .getAllPageIndexButtons()
           .count();
-        expect(availablePages).toEqual(1);
+        expect(availablePages).toBeGreaterThan(1);
         expect(filteredPages).toEqual(0);
         expect(availablePages).toBeGreaterThan(filteredPages);
-        Portal.userListPage.searcher.clearSearchCriteria();
+        Portal.domains.listPage.searcher.clearSearchCriteria();
       });
 
     it('should display the "Previous Page" disabled after filtering does not ' +
-      'return any users in the "User List"',
+      'return any domains in the "Domain List"',
       function () {
         var uniqueString = 'unique_string_' + (new Date()).getTime();
-        Portal.userListPage.searcher.setSearchCriteria(uniqueString);
-        expect(Portal.userListPage.pager.isDisplayed()).toBe(false);
-        Portal.userListPage.searcher.clearSearchCriteria();
+        Portal.domains.listPage.searcher.setSearchCriteria(uniqueString);
+        expect(Portal.domains.listPage.pager.isDisplayed()).toBe(false);
+        Portal.domains.listPage.searcher.clearSearchCriteria();
       });
 
-    // TODO: Spec fails due to the bug: Next button is enabled in empty list
     it('should not display the "Next Page" after filtering does not ' +
-      'return any users in the "User List"',
+      'return any domains in the "Domain List"',
       function () {
         var uniqueString = 'unique_string_' + (new Date()).getTime();
-        Portal.userListPage.searcher.setSearchCriteria(uniqueString);
-        expect(Portal.userListPage.pager.isDisplayed()).toBe(false);
-        Portal.userListPage.searcher.clearSearchCriteria();
+        Portal.domains.listPage.searcher.setSearchCriteria(uniqueString);
+        expect(Portal.domains.listPage.pager.isDisplayed()).toBe(false);
+        Portal.domains.listPage.searcher.clearSearchCriteria();
       });
   });
 });

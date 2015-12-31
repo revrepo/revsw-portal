@@ -41,9 +41,16 @@ var UpdatePasswordPage = require('./user/updatePasswordPage');
 
 var AddDomainPage = require('./domain/addPage');
 var ConfigureDomainPage = require('./domain/configurePage');
+var DomainStatsPage= require('./domain/statsPage');
 var DomainVersionsPage = require('./domain/versionsPage');
 var EditDomainPage = require('./domain/editPage');
 var ListDomainsPage = require('./domain/listPage');
+var ProxyTrafficPage = require('./analytics/proxyTrafficPage');
+var TopReportsPage = require('./analytics/topReportsPage');
+var TopObjectsPage = require('./analytics/topObjectsPage');
+var FBTReportsPage = require('./analytics/fbtReportsPage');
+var TrafficHeatmapsPage = require('./analytics/trafficHeatmapsPage');
+var RTTHeatmapsPage = require('./analytics/rttHeatmapsPage');
 
 // This `Portal` Page Object is the entry point to use all other Page Objects
 // that abstract all components from the Portal App.
@@ -70,8 +77,15 @@ var Portal = {
     configurePage: ConfigureDomainPage,
     editPage: EditDomainPage,
     listPage: ListDomainsPage,
+    statsPage: DomainStatsPage,
     versionsPage: DomainVersionsPage
   },
+  proxyTrafficPage: ProxyTrafficPage,
+  topReportsPage: TopReportsPage,
+  topObjectsPage: TopObjectsPage,
+  fbtReportsPage: FBTReportsPage,
+  trafficHeatmapsPage: TrafficHeatmapsPage,
+  rttHeatmapsPage: RTTHeatmapsPage,
 
   // ## Authentication Helper methods
 
