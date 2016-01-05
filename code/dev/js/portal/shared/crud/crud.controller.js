@@ -403,6 +403,24 @@
           });
       };
 
+      $scope.getPreFilteredList = function (filterObj) {
+        if (!$scope.resource) {
+          throw new Error('No resource provided.');
+        }
+        $scope.loading(true);
+        //fetching data
+        return $scope.resource
+          .query(function (data) {
+            $scope.records = data;
+            $scope.filteredRecords = $filter('filter')(data, filterObj, true);
+            $scope._checkPagination();
+            return data; // Send data to future promise
+          }).$promise
+          .finally(function () {
+            $scope.loading(false);
+          });
+      }
+
       /**
        * Delete a model from list
        *
