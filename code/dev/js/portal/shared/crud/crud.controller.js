@@ -411,7 +411,7 @@
         //fetching data
         return $scope.resource
           .query(function (data) {
-            $scope.records = data;
+            $scope.records = $filter('filter')(data, filterObj, true);
             $scope.filteredRecords = $filter('filter')(data, filterObj, true);
             $scope._checkPagination();
             return data; // Send data to future promise
