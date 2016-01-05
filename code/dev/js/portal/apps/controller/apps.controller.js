@@ -60,10 +60,7 @@
 
     $scope.initList = function () {
       if($state.current.data.list){
-        $scope.list().then(function (data) {
-            $scope.filteredRecords = filterFilter(data,
-              {app_platform: $state.current.data.platform}, true);
-          })
+          $scope.getPreFilteredList({app_platform: $state.current.data.platform})
           .finally(function () {
             $scope._checkPagination();
             if($scope.page.current > $scope.page.pages.length){
