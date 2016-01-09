@@ -334,6 +334,7 @@ var Portal = {
       me.domains.listPage.searchAndClickEdit(domain.name);
       delete domain.name;
       me.domains.editPage.updateDomain(domain);
+      me.dialog.clickOk();
       browser.getCurrentUrl().then(function (currentUrl) {
         if (initialUrl !== currentUrl) {
           browser.get(initialUrl);

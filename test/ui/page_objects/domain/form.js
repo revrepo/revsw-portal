@@ -344,12 +344,15 @@ var DomainForm = {
    */
   fill: function (domain) {
     if (domain.name !== undefined) {
+      this.clearDomainName();
       this.setDomainName(domain.name);
     }
     if (domain.originServer !== undefined) {
+      this.clearOriginServer();
       this.setOriginServer(domain.originServer);
     }
     if (domain.originHostHeader !== undefined) {
+      this.clearOriginHostHeader();
       this.setOriginHostHeader(domain.originHostHeader);
     }
     if (domain.originLocation !== undefined) {

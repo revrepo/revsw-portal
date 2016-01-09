@@ -44,7 +44,7 @@ describe('Workflow', function () {
 
     // TODO: BUG: Cannot create a domain after creating other.
     // For the second domain accountId is not sent
-    xit('[BUG: Cannot create a domain after creating other] ' +
+    it('[BUG: Cannot create a domain after creating other] ' +
       'should allow to create a domain right after creating other domain',
       function () {
         var firstDomain = DataProvider.generateDomain('first-domain');
@@ -154,7 +154,7 @@ describe('Workflow', function () {
           });
       });
 
-    xit('should display `Modified` global status some period of time after ' +
+    it('should display `Modified` global status some period of time after ' +
       'modifying a domain',
       function () {
         var myDomain = DataProvider.generateDomain('my-domain');
