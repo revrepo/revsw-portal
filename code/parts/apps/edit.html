@@ -91,7 +91,7 @@
                    popover-append-to-body="{{true}}"
                    class="col-sm-2 control-label"
                    popover-trigger="mouseenter"
-                   popover="App configuration refresh interval in seconds "
+                   popover="Internal application name"
             >Name</label>
 
             <div class="col-sm-10">
@@ -109,8 +109,8 @@
                    popover-append-to-body="{{true}}"
                    class="col-sm-2 control-label"
                    popover-trigger="mouseenter"
-                   popover="Rev SDK operations mode"
-            >Operations mode</label>
+                   popover="Rev SDK operation mode"
+            >SDK operation mode</label>
 
             <div class="col-sm-10">
               <select class="form-control"
@@ -125,7 +125,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label">Logging level</label>
+            <label class="col-sm-2 control-label">SDK events logging level</label>
 
             <div class="col-sm-10">
               <label>
@@ -158,8 +158,8 @@
                    popover-append-to-body="{{true}}"
                    class="col-sm-2 control-label"
                    popover-trigger="mouseenter"
-                   popover="App configuration refresh interval in seconds "
-            >Refresh interval</label>
+                   popover="SDK configuration refresh interval in seconds"
+            >Configuration refresh interval</label>
 
             <div class="col-sm-10">
               <input type="number" class="form-control"
@@ -177,8 +177,8 @@
                    popover-append-to-body="{{true}}"
                    class="col-sm-2 control-label"
                    popover-trigger="mouseenter"
-                   popover="App configuration stale timeout in seconds"
-            >Stale timeout</label>
+                   popover="SDK configuration stale timeout in seconds"
+            >Configuration stale timeout</label>
 
             <div class="col-sm-10" >
               <input type="number" class="form-control"
@@ -194,7 +194,7 @@
                    popover-append-to-body="{{true}}"
                    class="col-sm-2 control-label"
                    popover-trigger="mouseenter"
-                   popover="Rev SDK allowed transport protocol"
+                   popover="Rev SDK allowed last mile transport protocols"
             >Allowed transport protocols</label>
             <div class="col-sm-10" id="allowed_transport_protocols">
             <span ng-repeat="protocol in protocols">
@@ -213,7 +213,7 @@
                    popover-append-to-body="{{true}}"
                    class="col-sm-2 control-label"
                    popover-trigger="mouseenter"
-                   popover="Rev SDK initial transport protocol"
+                   popover="Rev SDK initial last mile transport protocol"
             >Initial transport protocol</label>
 
             <div class="col-sm-10">
@@ -232,7 +232,7 @@
                    popover-append-to-body="{{true}}"
                    class="col-sm-2 control-label"
                    popover-trigger="mouseenter"
-                   popover="App analytics reporting level"
+                   popover="SDK analytics reporting level"
             >Reporting level</label>
 
             <div class="col-sm-10">
@@ -253,7 +253,7 @@
                    popover-append-to-body="{{true}}"
                    class="col-sm-2 control-label"
                    popover-trigger="mouseenter"
-                   popover="App analytics reporting interval in seconds "
+                   popover="SDK analytics reporting interval in seconds"
             >Reporting interval</label>
 
             <div class="col-sm-10">
@@ -266,11 +266,11 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="domains_while_list"
+            <label for="domains_white_list"
                    popover-append-to-body="{{true}}"
                    class="col-sm-2 control-label"
                    popover-trigger="mouseenter"
-                   popover="Domains white list"
+                   popover="'White list' of domains which should be served via RevAPM edge service"
             >Domains white list</label>
 
             <div class="col-sm-10">
@@ -281,10 +281,10 @@
                          theme="bootstrap"
                          class="form-control"
                          ng-disabled="_loading"
-                         ng-model="configuration.domains_while_list"
-                         id="domains_while_list">
+                         ng-model="configuration.domains_white_list"
+                         id="domains_white_list">
                 <ui-select-match placeholder="Add domains...">{{$item}}</ui-select-match>
-                <ui-select-choices repeat="domain in configuration.domains_while_list">
+                <ui-select-choices repeat="domain in configuration.domains_white_list">
                   {{domain}}
                 </ui-select-choices>
                 </ui-select>
@@ -295,7 +295,7 @@
                    popover-append-to-body="{{true}}"
                    class="col-sm-2 control-label"
                    popover-trigger="mouseenter"
-                   popover="Domains black list"
+                   popover="'Black list' of domains which should be always served directly from domain origin servers"
             >Domains black list</label>
 
             <div class="col-sm-10">
@@ -319,7 +319,7 @@
                    popover-append-to-body="{{true}}"
                    class="col-sm-2 control-label"
                    popover-trigger="mouseenter"
-                   popover="Domains black list"
+                   popover="'Provisioned' domains which are registered in the 'Web' section of the portal and provide full middle-mile acceleration"
             >Domains provisioned list</label>
 
             <div class="col-sm-10">

@@ -60,10 +60,7 @@
 
     $scope.initList = function () {
       if($state.current.data.list){
-        $scope.list().then(function (data) {
-            $scope.filteredRecords = filterFilter(data,
-              {app_platform: $state.current.data.platform}, true);
-          })
+          $scope.getPreFilteredList({app_platform: $state.current.data.platform})
           .finally(function () {
             $scope._checkPagination();
             if($scope.page.current > $scope.page.pages.length){
@@ -162,7 +159,6 @@
         delete modelCopy.$promise;
         delete modelCopy.$resolved;
         delete modelCopy.id;
-        delete modelCopy.app_name;
         delete modelCopy.account_id;
         delete modelCopy.app_platform;
         delete modelCopy.sdk_key;
@@ -234,7 +230,7 @@
           .then(function(data) {
             $scope
             .alertService
-            .success('Domain configuration is published', 5000);
+            .success('App configuration is published', 5000);
           })
           .catch(function(err) {
             AlertService.danger(err);
