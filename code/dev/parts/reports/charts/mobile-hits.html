@@ -1,4 +1,3 @@
-<h3 style="margin-top: 0;">Hits</h3>
 <div class="clearfix" style="margin-bottom: 8px;">
   <div class="pull-right">
 
@@ -20,8 +19,8 @@
     </form>
 
   </div>
-
 </div>
+<h3 style="margin-top: 0;">Hits</h3>
 
 <div class="alert alert-info" ng-if="!_loading && !traffic.labels.length">
   No data to display
@@ -31,5 +30,5 @@
   Loading
 </div>
 <div ng-hide="!traffic.labels || !traffic.labels.length">
-  <div style="min-width: 500px; min-height: 350px" line-chart ng-data="traffic" ng-chart-options="chartOptions"></div>
+  <div style="min-width: 500px; min-height: 350px" line-chart ng-data="traffic" ng-chart-options="hitsChartOptions"></div>
 </div>

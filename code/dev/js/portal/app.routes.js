@@ -91,7 +91,22 @@
             templateUrl: 'parts/cadmin-top-menu.html'
           },
           sideMenu: {
-            templateUrl: 'parts/menu/analitycs-side.html'
+            templateUrl: 'parts/menu/web-analitycs-side.html'
+          },
+          page: {
+            templateUrl: 'parts/layout/page.html'
+          }
+        }
+      })
+      .state('index.mobile', {
+        url: '',
+        views: {
+          menu: {
+            controller: menuController,
+            templateUrl: 'parts/cadmin-top-menu.html'
+          },
+          sideMenu: {
+            templateUrl: 'parts/menu/mobile-analitycs-side.html'
           },
           page: {
             templateUrl: 'parts/layout/page.html'

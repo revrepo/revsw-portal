@@ -9,6 +9,7 @@
     'revapm.Portal.Companies',
     'revapm.Portal.Cache',
     'revapm.Portal.Reports',
+    'revapm.Portal.Mobile',
     'revapm.Portal.Keys',
     'revapm.Portal.Apps',
     'ui.router',
