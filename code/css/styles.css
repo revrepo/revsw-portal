@@ -271,23 +271,15 @@ section[drawer] .side-menu .side-menu-item i {
   text-align: right;
   margin-top: 6px;
 }
-
 .nav > li {
   text-align: center;
   height: 50px;
-  /*vertical-align: middle;*/
-  /*display: inline-block;*/
 }
-/*.navbar-nav > li {
-  float: none;
-}*/
 .navbar-nav > li > a {
   padding-top: 10px;
   padding-bottom: 10px;
   line-height: 16px;
 }
-
-
 .top-menu {
   padding: 20px;
   margin-top: 10px;
