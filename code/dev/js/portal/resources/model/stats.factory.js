@@ -66,9 +66,9 @@
         url: $config.API_URL + '/stats/fbt/heatmap/:domainId',
         params: {}
       },
-      sdk_hits: {
+      sdk_flow: {
         method: 'GET',
-        url: $config.API_URL + '/stats/sdk/hits/:accountId',
+        url: $config.API_URL + '/stats/sdk/flow/:accountId',
         params: {}
       },
       protocol: {

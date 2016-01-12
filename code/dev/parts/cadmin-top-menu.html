@@ -2,9 +2,9 @@
   <!--<li><a href="#">Dashboard</a></li>-->
   <!--<li><a href="#">DNS</a></li>-->
   <li ng-class="{active: $state.includes('index.apps')}"><a ui-sref="index.apps.ios">Mobile<br>Apps</a></li>
-  <li ng-class="{active: $state.includes('index.reports')}"><a ui-sref="index.reports.proxy">Mobile<br>Analytics</a></li>
+  <li ng-class="{active: $state.includes('index.mobile')}"><a ui-sref="index.mobile.traffic">Mobile<br>Analytics</a></li>
   <li ng-class="{active: $state.includes('index.webApp')}"><a ui-sref="index.webApp.domains">Web</a></li>
-  <li><a>Web<br>Analytics</a></li>
+  <li ng-class="{active: $state.includes('index.reports')}"><a ui-sref="index.reports.proxy">Web<br>Analytics</a></li>
   <li ng-class="{active: $state.includes('index.accountSettings')}"><a ui-sref="index.accountSettings.users">Account<br>Settings</a></li>
   <li ng-class="{active: $state.includes('index.help')}"><a ui-sref="index.help">Help/Support</a></li>
 </ul>

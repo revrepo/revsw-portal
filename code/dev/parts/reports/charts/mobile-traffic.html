@@ -20,15 +20,26 @@
 
   </div>
 </div>
-<h3 style="margin-top: 0;">Hits</h3>
 
-<div class="alert alert-info" ng-if="!_loading && !traffic.labels.length">
+<h3 style="margin-top: 0;">Hits</h3>
+<div class="alert alert-info" ng-if="!_loading && !hits.labels.length">
   No data to display
 </div>
 <div class="alert alert-info" ng-if="_loading">
   <i class="glyphicon glyphicon-refresh spin"></i>&nbsp;
   Loading
 </div>
+
+<div ng-hide="!hits.labels || !hits.labels.length">
+  <div style="min-width: 500px; min-height: 350px" line-chart ng-data="hits" ng-chart-options="hitsChartOptions"></div>
+</div>
+
+<hr>
+
+<h3 style="margin-top: 10px;">Volume</h3>
+<div class="alert alert-info" ng-if="!_loading && !traffic.labels.length">
+  No data to display
+</div>
 <div ng-hide="!traffic.labels || !traffic.labels.length">
-  <div style="min-width: 500px; min-height: 350px" line-chart ng-data="traffic" ng-chart-options="hitsChartOptions"></div>
+  <div style="min-width: 500px; min-height: 350px" line-chart ng-data="traffic" ng-chart-options="trafficChartOptions"></div>
 </div>

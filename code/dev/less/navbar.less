@@ -17,16 +17,17 @@
 
     .user {
       margin-right: 20px;
+      height: 50px;
 
       img {
         max-height: @app-top-menu-user-avatar-height;
       }
 
       li.fit {
-        margin-right: 10px;
         text-align: right;
+        margin-top: 6px;
+        // margin-right: 10px;
         //height: @app-top-menu-height;
-
       }
 
       .user-info {
@@ -44,12 +45,16 @@
   }
 }
 
-//#bs-example-navbar-collapse-1 {
-//  width: 50em;
-//  position: fixed;
-//  z-index: 999;
-//  background-color: white;
-//}
+.nav > li {
+  text-align: center;
+  height: 50px;
+}
+
+.navbar-nav > li > a {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  line-height: 16px;
+}
 
 .top-menu {
   padding: 20px;
