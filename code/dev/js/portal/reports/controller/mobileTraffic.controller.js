@@ -6,13 +6,17 @@
     .controller('MobileTrafficController', MobileTrafficController);
 
   /*@ngInject*/
-  function MobileTrafficController($scope, User, AlertService, Stats, Countries, $q) {
+  function MobileTrafficController($scope, $rootScope, User, AlertService, Stats, Countries, $q) {
 
     $scope._loading = true;
     $scope.apps = [];
     $scope.application = '';
     var u = User.getUser();
     $scope.account = u.companyId[0] || null;
+
+    // $scope.domain = $rootScope.domain;
+    console.log( $rootScope );
+
 
     User.getUserApps(true)
       .then(function ( data ) {

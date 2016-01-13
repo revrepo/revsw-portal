@@ -63,8 +63,26 @@
         $scope.reloadTrafficStats = function() {
 
           $scope._loading = true;
+          $scope.hits = {
+            labels: [],
+            series: [{
+              name: 'Hits',
+              data: []
+            }]
+          };
+          $scope.traffic = {
+            labels: [],
+            series: [{
+              name: 'Incoming',
+              data: []
+            }, {
+              name: 'Outgoing',
+              data: []
+            }]
+          };
+
           Stats.sdk_flow({
-              accountId: $scope.ngAccount,
+              account_id: $scope.ngAccount,
               app_id: ( $scope.ngApp || null ),
               from_timestamp: moment().subtract( $scope.span, 'days' ).valueOf(),
               to_timestamp: Date.now()
@@ -77,43 +95,29 @@
                 data: []
               } ];
               var traffic_series = [ {
-                name: 'Received',
+                name: 'Incoming',
                 data: []
               }, {
-                name: 'Sent',
+                name: 'Outgoing',
                 data: []
               }, ];
 
               if ( data.data && data.data.length > 0 ) {
-                var hits_labels = [];
-                var traffic_labels = [];
+                var labels = [];
                 var offset = ( data.metadata.interval_sec || 1800 ) * 1000;
                 // console.log( data );
                 angular.forEach( data.data, function( item ) {
-
-                  var lbl = moment( item.time + offset /*to show the _end_ of interval instead of begin*/ ).format( 'MMM Do YY h:mm' );
-                  traffic_labels.push( lbl );
-                  hits_labels.push( lbl );
-
+                  labels.push( moment( item.time + offset /*to show the _end_ of interval instead of begin*/ ).format( 'MMM Do YY h:mm' ) );
                   hits_series[ 0 ].data.push( item.hits );
                   traffic_series[ 0 ].data.push( item.received_bytes );
                   traffic_series[ 1 ].data.push( item.sent_bytes );
                 } );
                 $scope.hits = {
-                  labels: hits_labels,
+                  labels: labels,
                   series: hits_series
                 };
                 $scope.traffic = {
-                  labels: traffic_labels,
-                  series: traffic_series
-                };
-              } else {
-                $scope.hits = {
-                  labels: [],
-                  series: hits_series
-                };
-                $scope.traffic = {
-                  labels: [],
+                  labels: labels,
                   series: traffic_series
                 };
               }
