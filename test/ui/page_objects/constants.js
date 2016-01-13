@@ -35,8 +35,8 @@ var Constants = {
   },
   header: {
     appMenu: {
-      ACCOUNT_SETTINGS: 'Account Settings',
-      ANALYTICS: 'Analytics',
+      ACCOUNT_SETTINGS: 'Account\nSettings',
+      WEB_ANALYTICS: 'Web\nAnalytics',
       HELP_SUPPORT: 'Help/Support',
       WEB: 'Web'
     },
