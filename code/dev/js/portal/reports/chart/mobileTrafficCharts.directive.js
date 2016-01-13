@@ -53,7 +53,7 @@
           },
           tooltip: {
             formatter: function() {
-              console.log( this.series );
+              // console.log( this.series );
               return '<strong>' + this.x + '</strong><br/>' +
                 this.series.name + ': <strong>' + Util.formatNumber( this.y ) + '</strong>';
             }
@@ -65,7 +65,7 @@
           $scope._loading = true;
           Stats.sdk_flow({
               accountId: $scope.ngAccount,
-              app_id: $scope.ngApp,
+              app_id: ( $scope.ngApp || null ),
               from_timestamp: moment().subtract( $scope.span, 'days' ).valueOf(),
               to_timestamp: Date.now()
             })
@@ -124,8 +124,10 @@
         };
 
         $scope.$watch( 'ngApp', function() {
-          $scope.reloadTrafficStats();
-        } );
+          if ( $scope.ngAccount || $scope.ngApp ) {
+            $scope.reloadTrafficStats();
+          }
+        });
       }
     };
   }
