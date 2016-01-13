@@ -17,6 +17,15 @@
           }
         }
       })
+      .state('index.mobile.tops', {
+        url: '/mobile/tops',
+        views: {
+          main: {
+            controller: 'MobileTopsController',
+            templateUrl: 'parts/reports/mobile-tops.html'
+          }
+        }
+      })
       // .state('index.reports.topreports', {
       //   url: '/reports/topreports',
       //   views: {

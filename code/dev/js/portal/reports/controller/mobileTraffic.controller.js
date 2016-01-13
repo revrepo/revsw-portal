@@ -14,10 +14,6 @@
     var u = User.getUser();
     $scope.account = u.companyId[0] || null;
 
-    // $scope.domain = $rootScope.domain;
-    console.log( $rootScope );
-
-
     User.getUserApps(true)
       .then(function ( data ) {
         // console.log( data );
