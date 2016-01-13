@@ -68,7 +68,7 @@
       },
       sdk_flow: {
         method: 'GET',
-        url: $config.API_URL + '/stats/sdk/flow/:accountId',
+        url: $config.API_URL + '/stats/sdk/flow',
         params: {}
       },
       protocol: {
