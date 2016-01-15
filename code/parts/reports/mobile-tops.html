@@ -65,7 +65,7 @@
                 <i class="glyphicon glyphicon-refresh spin"></i>&nbsp; Loading
               </div>
               <div ng-hide="_loading || !country_hits.length">
-                <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="country_hits"></div>
+                <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="country_hits" ng-chart-options="hitsChartOpts"></div>
               </div>
             </div>
             <div class="col-md-6">
@@ -77,7 +77,7 @@
                 <i class="glyphicon glyphicon-refresh spin"></i>&nbsp; Loading
               </div>
               <div ng-hide="_loading || !country_users.length">
-                <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="country_users"></div>
+                <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="country_users" ng-chart-options="usersChartOpts"></div>
               </div>
             </div>
           </div>
@@ -94,7 +94,7 @@
                 <i class="glyphicon glyphicon-refresh spin"></i>&nbsp; Loading
               </div>
               <div ng-hide="_loading || !country_gbt.length">
-                <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="country_gbt"></div>
+                <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="country_gbt" ng-chart-options="gbtChartOpts"></div>
               </div>
             </div>
             <div class="col-md-6">
@@ -106,7 +106,7 @@
                 <i class="glyphicon glyphicon-refresh spin"></i>&nbsp; Loading
               </div>
               <div ng-hide="_loading || !os_hits.length">
-                <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="os_hits"></div>
+                <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="os_hits" ng-chart-options="hitsChartOpts"></div>
               </div>
             </div>
           </div>
@@ -122,7 +122,7 @@
                 <i class="glyphicon glyphicon-refresh spin"></i>&nbsp; Loading
               </div>
               <div ng-hide="_loading || !os_users.length">
-                <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="os_users"></div>
+                <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="os_users" ng-chart-options="usersChartOpts"></div>
               </div>
             </div>
             <div class="col-md-6">
@@ -134,7 +134,7 @@
                 <i class="glyphicon glyphicon-refresh spin"></i>&nbsp; Loading
               </div>
               <div ng-hide="_loading || !os_gbt.length">
-                <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="os_gbt"></div>
+                <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="os_gbt" ng-chart-options="gbtChartOpts"></div>
               </div>
             </div>
           </div>
@@ -150,7 +150,7 @@
                 <i class="glyphicon glyphicon-refresh spin"></i>&nbsp; Loading
               </div>
               <div ng-hide="_loading || !device_hits.length">
-                <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="device_hits"></div>
+                <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="device_hits" ng-chart-options="hitsChartOpts"></div>
               </div>
             </div>
             <div class="col-md-6">
@@ -162,7 +162,7 @@
                 <i class="glyphicon glyphicon-refresh spin"></i>&nbsp; Loading
               </div>
               <div ng-hide="_loading || !device_users.length">
-                <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="device_users"></div>
+                <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="device_users" ng-chart-options="usersChartOpts"></div>
               </div>
             </div>
           </div>
@@ -178,7 +178,7 @@
                 <i class="glyphicon glyphicon-refresh spin"></i>&nbsp; Loading
               </div>
               <div ng-hide="_loading || !device_gbt.length">
-                <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="device_gbt"></div>
+                <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="device_gbt" ng-chart-options="gbtChartOpts"></div>
               </div>
             </div>
             <div class="col-md-6">
@@ -190,7 +190,7 @@
                 <i class="glyphicon glyphicon-refresh spin"></i>&nbsp; Loading
               </div>
               <div ng-hide="_loading || !operator_hits.length">
-                <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="operator_hits"></div>
+                <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="operator_hits" ng-chart-options="hitsChartOpts"></div>
               </div>
             </div>
           </div>
@@ -206,7 +206,7 @@
                 <i class="glyphicon glyphicon-refresh spin"></i>&nbsp; Loading
               </div>
               <div ng-hide="_loading || !operator_users.length">
-                <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="operator_users"></div>
+                <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="operator_users" ng-chart-options="usersChartOpts"></div>
               </div>
             </div>
             <div class="col-md-6">
@@ -218,7 +218,7 @@
                 <i class="glyphicon glyphicon-refresh spin"></i>&nbsp; Loading
               </div>
               <div ng-hide="_loading || !operator_gbt.length">
-                <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="operator_gbt"></div>
+                <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="operator_gbt" ng-chart-options="gbtChartOpts"></div>
               </div>
             </div>
           </div>
@@ -234,7 +234,7 @@
                 <i class="glyphicon glyphicon-refresh spin"></i>&nbsp; Loading
               </div>
               <div ng-hide="_loading || !network_hits.length">
-                <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="network_hits"></div>
+                <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="network_hits" ng-chart-options="hitsChartOpts"></div>
               </div>
             </div>
             <div class="col-md-6">
@@ -246,7 +246,7 @@
                 <i class="glyphicon glyphicon-refresh spin"></i>&nbsp; Loading
               </div>
               <div ng-hide="_loading || !network_users.length">
-                <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="network_users"></div>
+                <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="network_users" ng-chart-options="usersChartOpts"></div>
               </div>
             </div>
           </div>
@@ -262,7 +262,7 @@
                 <i class="glyphicon glyphicon-refresh spin"></i>&nbsp; Loading
               </div>
               <div ng-hide="_loading || !network_gbt.length">
-                <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="network_gbt"></div>
+                <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="network_gbt" ng-chart-options="gbtChartOpts"></div>
               </div>
             </div>
           </div>
