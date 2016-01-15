@@ -21,7 +21,6 @@
 
         title: false,
         tooltip: {
-          //pointFormat: '{point.name}: <b>{point.percentage:.1f}% ({point.y} requests)</b>',
           formatter: function() {
             return '<b>'+ this.point.name +': </b>'+
               Highcharts.numberFormat(this.point.percentage, 0) + '% (' + Highcharts.numberFormat(this.y, 0, ".", ",") + ' requests)';
