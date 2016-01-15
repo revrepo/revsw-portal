@@ -43,11 +43,11 @@
         $scope.trafficChartOptions = {
           yAxis: {
             title: {
-              text: 'Traffic Volume'
+              text: 'Bandwidth'
             },
             labels: {
               formatter: function() {
-                return Util.formatNumber( this.value );
+                return Util.convertTraffic( this.value );
               }
             }
           },
@@ -55,7 +55,7 @@
             formatter: function() {
               // console.log( this.series );
               return '<strong>' + this.x + '</strong><br/>' +
-                this.series.name + ': <strong>' + Util.formatNumber( this.y ) + '</strong>';
+                this.series.name + ': <strong>' + Util.convertTraffic( this.y ) + '</strong>';
             }
           }
         };
@@ -73,10 +73,10 @@
           $scope.traffic = {
             labels: [],
             series: [{
-              name: 'Incoming',
+              name: 'Incoming bandwidth',
               data: []
             }, {
-              name: 'Outgoing',
+              name: 'Outgoing bandwidth',
               data: []
             }]
           };
@@ -95,22 +95,23 @@
                 data: []
               } ];
               var traffic_series = [ {
-                name: 'Incoming',
+                name: 'Incoming bandwidth',
                 data: []
               }, {
-                name: 'Outgoing',
+                name: 'Outgoing bandwidth',
                 data: []
               }, ];
 
               if ( data.data && data.data.length > 0 ) {
                 var labels = [];
-                var offset = ( data.metadata.interval_sec || 1800 ) * 1000;
+                var interval = data.metadata.interval_sec || 1800;
+                var offset = interval * 1000;
                 // console.log( data );
                 angular.forEach( data.data, function( item ) {
                   labels.push( moment( item.time + offset /*to show the _end_ of interval instead of begin*/ ).format( 'MMM Do YY h:mm' ) );
                   hits_series[ 0 ].data.push( item.hits );
-                  traffic_series[ 0 ].data.push( item.received_bytes );
-                  traffic_series[ 1 ].data.push( item.sent_bytes );
+                  traffic_series[ 0 ].data.push( Math.round( item.received_bytes / interval ) );
+                  traffic_series[ 1 ].data.push( Math.round( item.sent_bytes / interval ) );
                 } );
                 $scope.hits = {
                   labels: labels,
