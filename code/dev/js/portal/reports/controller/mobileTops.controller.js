@@ -6,13 +6,14 @@
     .controller('MobileTopsController', MobileTopsController);
 
   /*@ngInject*/
-  function MobileTopsController($scope, $q, User, AlertService, Stats, Countries, Util) {
+  function MobileTopsController($scope, $q, User, AlertService, Stats, Countries, Util, $localStorage) {
 
     $scope._loading = true;
     $scope.apps = [];
-    $scope.application = '';
+    $scope.application = $localStorage.selectedApplicationID === undefined ? '' : $localStorage.selectedApplicationID;
     var u = User.getUser();
     $scope.account = u.companyId[0] || null;
+    $scope.countries = Countries.query();
 
     $scope.country_hits = [];
     $scope.country_users = [];
@@ -69,6 +70,10 @@
           if (data.data && data.data.length > 0) {
             var newData = [];
             angular.forEach(data.data, function (item) {
+
+              if ( name === 'country' ) {
+                item.key = $scope.countries[item.key.toUpperCase()] || item.key;
+              }
               newData.push({
                 name: item.key,
                 y: ( type === 'gbt' ? item.received_bytes : item.count )
@@ -81,6 +86,12 @@
 
     //  ---------------------------------
     $scope.reload = function() {
+
+      if ( $scope._loading ||
+          $scope.apps.length === 0 ||
+          ( !$scope.account && !$scope.application ) ) {
+        return;
+      }
 
       var filters = {
         account_id: $scope.account,
@@ -110,22 +121,12 @@
         .finally(function () {
           $scope._loading = false;
         });
-
     };
 
     //  ---------------------------------
-    $scope.onAppSelected = function () {
-
-      // console.log( 'onAppSelected: ', $scope.application );
-      if ( !$scope._loading && ( $scope.account || $scope.application ) ) {
-        // console.log( 'reload' );
-        $scope.reload();
-      }
-    };
-
     $scope.$watch( 'application', function() {
-      // console.log( 'watch', $scope.application );
-      $scope.onAppSelected();
+      $localStorage.selectedApplicationID = $scope.application;
+      $scope.reload();
     });
 
     //  ---------------------------------
@@ -140,8 +141,13 @@
           });
         }
         $scope.apps = data;
+
         if ( data.length ) {
-          $scope.application = data[0].app_id;
+          if($localStorage.selectedApplicationID === undefined ) {
+            $scope.application = data[0].app_id;
+          }
+        } else {
+          $scope.application = '';
         }
       })
       .catch(function () {
@@ -149,7 +155,7 @@
       })
       .finally(function () {
         $scope._loading = false;
-        $scope.onAppSelected();
+        $scope.reload();
       });
 
   }
