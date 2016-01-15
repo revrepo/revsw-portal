@@ -6,11 +6,11 @@
     .controller('MobileTrafficController', MobileTrafficController);
 
   /*@ngInject*/
-  function MobileTrafficController($scope, $rootScope, User, AlertService, Stats, Countries, $q) {
+  function MobileTrafficController($scope, User, AlertService, Stats, Countries, $q, $localStorage) {
 
     $scope._loading = true;
     $scope.apps = [];
-    $scope.application = '';
+    $scope.application = $localStorage.selectedApplicationID === undefined ? '' : $localStorage.selectedApplicationID;
     var u = User.getUser();
     $scope.account = u.companyId[0] || null;
 
@@ -25,7 +25,11 @@
         }
         $scope.apps = data;
         if ( data.length ) {
-          $scope.application = data[0].app_id;
+          if($localStorage.selectedApplicationID === undefined ) {
+            $scope.application = data[0].app_id;
+          }
+        } else {
+          $scope.application = '';
         }
       })
       .catch(function () {
@@ -35,15 +39,9 @@
         $scope._loading = false;
       });
 
-    $scope.reload = function () {
-      // if ( !$scope.apps.length === 0 ) {
-      //   return;
-      // }
-    };
+    $scope.$watch( 'application', function() {
+      $localStorage.selectedApplicationID = $scope.application;
+    });
 
-    $scope.onAppSelected = function () {
-      // console.log( $scope.application );
-      // $scope.reload();
-    };
   }
 })();

@@ -6,11 +6,11 @@
     .controller('MobileDistributionsController', MobileDistributionsController);
 
   /*@ngInject*/
-  function MobileDistributionsController($scope, $q, User, AlertService, Stats, Countries, Util) {
+  function MobileDistributionsController($scope, $q, User, AlertService, Stats, Util, $localStorage) {
 
     $scope._loading = true;
     $scope.apps = [];
-    $scope.application = '';
+    $scope.application = $localStorage.selectedApplicationID === undefined ? '' : $localStorage.selectedApplicationID;
     var u = User.getUser();
     $scope.account = u.companyId[0] || null;
 
@@ -69,7 +69,6 @@
         });
     };
 
-
     //  ---------------------------------
     $scope.reload = function() {
 
@@ -96,15 +95,13 @@
     //  ---------------------------------
     $scope.onAppSelected = function () {
 
-      // console.log( 'onAppSelected: ', $scope.application );
       if ( !$scope._loading && ( $scope.account || $scope.application ) ) {
-        // console.log( 'reload' );
         $scope.reload();
       }
     };
 
     $scope.$watch( 'application', function() {
-      // console.log( 'watch', $scope.application );
+      $localStorage.selectedApplicationID = $scope.application;
       $scope.onAppSelected();
     });
 
@@ -121,7 +118,11 @@
         }
         $scope.apps = data;
         if ( data.length ) {
-          $scope.application = data[0].app_id;
+          if($localStorage.selectedApplicationID === undefined ) {
+            $scope.application = data[0].app_id;
+          }
+        } else {
+          $scope.application = '';
         }
       })
       .catch(function () {
