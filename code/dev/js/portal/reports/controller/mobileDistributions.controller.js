@@ -72,6 +72,12 @@
     //  ---------------------------------
     $scope.reload = function() {
 
+      if ( $scope._loading ||
+          $scope.apps.length === 0 ||
+          ( !$scope.account && !$scope.application ) ) {
+        return;
+      }
+
       var filters = {
         account_id: $scope.account,
         app_id: ( $scope.application || null ),
@@ -89,20 +95,12 @@
         .finally(function () {
           $scope._loading = false;
         });
-
     };
 
     //  ---------------------------------
-    $scope.onAppSelected = function () {
-
-      if ( !$scope._loading && ( $scope.account || $scope.application ) ) {
-        $scope.reload();
-      }
-    };
-
     $scope.$watch( 'application', function() {
       $localStorage.selectedApplicationID = $scope.application;
-      $scope.onAppSelected();
+      $scope.reload();
     });
 
     //  ---------------------------------
@@ -130,7 +128,7 @@
       })
       .finally(function () {
         $scope._loading = false;
-        $scope.onAppSelected();
+        $scope.reload();
       });
 
   }
