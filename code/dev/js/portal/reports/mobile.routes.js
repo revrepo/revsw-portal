@@ -26,6 +26,15 @@
           }
         }
       })
+      .state('index.mobile.distributions', {
+        url: '/mobile/distributions',
+        views: {
+          main: {
+            controller: 'MobileDistributionsController',
+            templateUrl: 'parts/reports/mobile-distributions.html'
+          }
+        }
+      })
       // .state('index.reports.topreports', {
       //   url: '/reports/topreports',
       //   views: {
