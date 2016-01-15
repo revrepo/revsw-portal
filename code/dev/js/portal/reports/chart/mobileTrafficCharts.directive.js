@@ -106,9 +106,7 @@
                 var labels = [];
                 var interval = data.metadata.interval_sec || 1800;
                 var offset = interval * 1000;
-
-                console.log( data );
-
+                // console.log( data );
                 angular.forEach( data.data, function( item ) {
                   labels.push( moment( item.time + offset /*to show the _end_ of interval instead of begin*/ ).format( 'MMM Do YY h:mm' ) );
                   hits_series[ 0 ].data.push( Math.round( item.hits / interval ) );
