@@ -43,9 +43,6 @@
       return Stats.sdk_top_hits( filters )
         .$promise
         .then(function (data) {
-
-          console.log( 'countryHits data ', data );
-
           if (data.data && data.data.length > 0) {
             var newData = [];
             angular.forEach(data.data, function (item) {
@@ -68,9 +65,6 @@
       return Stats.sdk_top_users( filters )
         .$promise
         .then(function (data) {
-
-          console.log( 'countryUsers data ', data );
-
           if (data.data && data.data.length > 0) {
             var newData = [];
             angular.forEach(data.data, function (item) {

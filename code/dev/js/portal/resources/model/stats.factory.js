@@ -168,6 +168,11 @@
         method: 'GET',
         url: $config.API_URL + '/stats/sdk/top_gbt',
         params: {}
+      },
+      sdk_distributions: {
+        method: 'GET',
+        url: $config.API_URL + '/stats/sdk/distributions',
+        params: {}
       }
 
 
