@@ -13,6 +13,7 @@
     $scope.application = '';
     var u = User.getUser();
     $scope.account = u.companyId[0] || null;
+    $scope.countries = Countries.query();
 
     $scope.country_hits = [];
     $scope.country_users = [];
@@ -69,6 +70,10 @@
           if (data.data && data.data.length > 0) {
             var newData = [];
             angular.forEach(data.data, function (item) {
+
+              if ( name === 'country' ) {
+                item.key = $scope.countries[item.key.toUpperCase()] || item.key;
+              }
               newData.push({
                 name: item.key,
                 y: ( type === 'gbt' ? item.received_bytes : item.count )
