@@ -18,7 +18,7 @@
       /*@ngInject*/
       controller: function( $scope, Stats, HeatmapsDrawer, Util ) {
 
-        $scope.delay = '6';
+        $scope.delay = '24';
         $scope._loading = false;
         $scope.fbtCountryData = {};
 
