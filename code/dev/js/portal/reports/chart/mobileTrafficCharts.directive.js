@@ -24,7 +24,7 @@
         $scope.hitsChartOptions = {
           yAxis: {
             title: {
-              text: 'Requests per second'
+              text: 'Requests Per Second'
             },
             labels: {
               formatter: function() {
@@ -73,10 +73,10 @@
           $scope.traffic = {
             labels: [],
             series: [{
-              name: 'Incoming bandwidth',
+              name: 'Incoming Bandwidth',
               data: []
             }, {
-              name: 'Outgoing bandwidth',
+              name: 'Outgoing Bandwidth',
               data: []
             }]
           };
@@ -95,10 +95,10 @@
                 data: []
               } ];
               var traffic_series = [ {
-                name: 'Incoming bandwidth',
+                name: 'Incoming Bandwidth',
                 data: []
               }, {
-                name: 'Outgoing bandwidth',
+                name: 'Outgoing Bandwidth',
                 data: []
               }, ];
 

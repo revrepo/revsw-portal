@@ -20,7 +20,7 @@
       /*@ngInject*/
       controller: function ($scope, Stats, Util) {
 
-        $scope.delay = '6';
+        $scope.delay = '24';
         $scope.os = '';
         $scope.country = '';
         $scope.device = '';
