@@ -6,7 +6,7 @@
     .controller('MobileDistributionsController', MobileDistributionsController);
 
   /*@ngInject*/
-  function MobileDistributionsController($scope, $q, User, AlertService, Stats, Countries) {
+  function MobileDistributionsController($scope, $q, User, AlertService, Stats, Countries, Util) {
 
     $scope._loading = true;
     $scope.apps = [];
@@ -24,8 +24,22 @@
     $scope.cache_gbt = [];
 
     $scope.span = '24';
-
-    var lock = 8;
+    $scope.gbtChartOpts = {
+      tooltip: {
+        formatter: function() {
+          return '<b>'+ this.point.name +': </b>'+
+            Highcharts.numberFormat(this.point.percentage, 1) + '% (' + Util.humanFileSize(this.y, 2) + ')';
+        }
+      },
+    };
+    $scope.hitsChartOpts = {
+      tooltip: {
+        formatter: function() {
+          return '<b>'+ this.point.name +': </b>'+
+            Highcharts.numberFormat(this.point.percentage, 1) + '% (' + Highcharts.numberFormat(this.y, 0, ".", "'") + ' hits)';
+        }
+      },
+    };
 
     //  ---------------------------------
     $scope.destinationReload = function ( filters ) {

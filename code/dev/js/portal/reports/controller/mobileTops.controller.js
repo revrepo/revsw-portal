@@ -32,8 +32,6 @@
 
     $scope.span = '24';
 
-    var lock = 8;
-
     //  ---------------------------------
     $scope.countryHits = function ( filters ) {
 
