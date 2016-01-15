@@ -68,6 +68,16 @@
         .replace( /\B(?=(\d{3})+(?!\d))/g, "'" );
     }
 
+    /**
+     * 1234567890 --> 1.15 GB
+     *
+     * @returns {string}
+     */
+    function humanFileSize(size, pr) {
+      var i = Math.floor( Math.log(size) / Math.log(1024) );
+      return ( size / Math.pow(1024, i) ).toFixed((pr||2)) * 1 + ' ' + ['B', 'kB', 'MB', 'GB', 'TB'][i];
+    };
+
     return {
 
       /**
@@ -88,7 +98,12 @@
       /**
        * @inheritDoc
        */
-      formatNumber: formatNumber
+      formatNumber: formatNumber,
+
+      /**
+       * @inheritDoc
+       */
+      humanFileSize: humanFileSize
     };
   }
 })();

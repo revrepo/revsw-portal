@@ -1,7 +1,7 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-12">
-      <h2>Mobile Top Reports</h2>
+      <h2>Mobile Traffic Distributions</h2>
     </div>
   </div>
 
@@ -64,7 +64,7 @@
                 <i class="glyphicon glyphicon-refresh spin"></i>&nbsp; Loading
               </div>
               <div ng-hide="_loading || !destination_hits.length">
-                <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="destination_hits"></div>
+                <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="destination_hits" ng-chart-options="hitsChartOpts"></div>
               </div>
             </div>
             <div class="col-md-6">
@@ -76,7 +76,7 @@
                 <i class="glyphicon glyphicon-refresh spin"></i>&nbsp; Loading
               </div>
               <div ng-hide="_loading || !destination_gbt.length">
-                <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="destination_gbt"></div>
+                <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="destination_gbt" ng-chart-options="gbtChartOpts"></div>
               </div>
             </div>
           </div>
@@ -92,7 +92,7 @@
                 <i class="glyphicon glyphicon-refresh spin"></i>&nbsp; Loading
               </div>
               <div ng-hide="_loading || !transport_hits.length">
-                <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="transport_hits"></div>
+                <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="transport_hits" ng-chart-options="hitsChartOpts"></div>
               </div>
             </div>
             <div class="col-md-6">
@@ -104,7 +104,7 @@
                 <i class="glyphicon glyphicon-refresh spin"></i>&nbsp; Loading
               </div>
               <div ng-hide="_loading || !transport_gbt.length">
-                <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="transport_gbt"></div>
+                <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="transport_gbt" ng-chart-options="gbtChartOpts"></div>
               </div>
             </div>
           </div>
@@ -120,7 +120,7 @@
                 <i class="glyphicon glyphicon-refresh spin"></i>&nbsp; Loading
               </div>
               <div ng-hide="_loading || !status_hits.length">
-                <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="status_hits"></div>
+                <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="status_hits" ng-chart-options="hitsChartOpts"></div>
               </div>
             </div>
             <div class="col-md-6">
@@ -132,7 +132,7 @@
                 <i class="glyphicon glyphicon-refresh spin"></i>&nbsp; Loading
               </div>
               <div ng-hide="_loading || !status_gbt.length">
-                <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="status_gbt"></div>
+                <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="status_gbt" ng-chart-options="gbtChartOpts"></div>
               </div>
             </div>
           </div>
@@ -148,7 +148,7 @@
                 <i class="glyphicon glyphicon-refresh spin"></i>&nbsp; Loading
               </div>
               <div ng-hide="_loading || !cache_hits.length">
-                <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="cache_hits"></div>
+                <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="cache_hits" ng-chart-options="hitsChartOpts"></div>
               </div>
             </div>
             <div class="col-md-6">
@@ -160,7 +160,7 @@
                 <i class="glyphicon glyphicon-refresh spin"></i>&nbsp; Loading
               </div>
               <div ng-hide="_loading || !cache_gbt.length">
-                <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="cache_gbt"></div>
+                <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="cache_gbt" ng-chart-options="gbtChartOpts"></div>
               </div>
             </div>
           </div>

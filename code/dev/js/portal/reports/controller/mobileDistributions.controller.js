@@ -6,7 +6,7 @@
     .controller('MobileDistributionsController', MobileDistributionsController);
 
   /*@ngInject*/
-  function MobileDistributionsController($scope, $q, User, AlertService, Stats, Countries) {
+  function MobileDistributionsController($scope, $q, User, AlertService, Stats, Countries, Util) {
 
     $scope._loading = true;
     $scope.apps = [];
@@ -24,43 +24,29 @@
     $scope.cache_gbt = [];
 
     $scope.span = '24';
-
-    var lock = 8;
-
-    //  ---------------------------------
-    $scope.destinationReload = function ( filters ) {
-
-      $scope.destination_hits = [];
-      $scope.destination_gbt = [];
-      filters.report_type = 'destination';
-      return Stats.sdk_distributions( filters )
-        .$promise
-        .then(function (data) {
-          if (data.data && data.data.length > 0) {
-            var hits = [];
-            var gbt = [];
-            angular.forEach(data.data, function (item) {
-              hits.push({
-                name: item.key,
-                y: item.count
-              });
-              gbt.push({
-                name: item.key,
-                y: item.received_bytes
-              });
-            });
-            $scope.destination_hits = hits;
-            $scope.destination_gbt = gbt;
-          }
-        });
+    $scope.gbtChartOpts = {
+      tooltip: {
+        formatter: function() {
+          return '<b>'+ this.point.name +': </b>'+
+            Highcharts.numberFormat(this.point.percentage, 1) + '% (' + Util.humanFileSize(this.y, 2) + ')';
+        }
+      },
+    };
+    $scope.hitsChartOpts = {
+      tooltip: {
+        formatter: function() {
+          return '<b>'+ this.point.name +': </b>'+
+            Highcharts.numberFormat(this.point.percentage, 1) + '% (' + Highcharts.numberFormat(this.y, 0, ".", "'") + ' hits)';
+        }
+      },
     };
 
     //  ---------------------------------
-    $scope.transportReload = function ( filters ) {
+    $scope.reloadOne = function ( name, filters ) {
 
-      $scope.transport_hits = [];
-      $scope.transport_gbt = [];
-      filters.report_type = 'transport';
+      $scope[name + '_hits'] = [];
+      $scope[name + '_gbt'] = [];
+      filters.report_type = name;
       return Stats.sdk_distributions( filters )
         .$promise
         .then(function (data) {
@@ -77,64 +63,8 @@
                 y: item.received_bytes
               });
             });
-            $scope.transport_hits = hits;
-            $scope.transport_gbt = gbt;
-          }
-        });
-    };
-
-    //  ---------------------------------
-    $scope.statusReload = function ( filters ) {
-
-      $scope.status_hits = [];
-      $scope.status_gbt = [];
-      filters.report_type = 'status';
-      return Stats.sdk_distributions( filters )
-        .$promise
-        .then(function (data) {
-          if (data.data && data.data.length > 0) {
-            var hits = [];
-            var gbt = [];
-            angular.forEach(data.data, function (item) {
-              hits.push({
-                name: item.key,
-                y: item.count
-              });
-              gbt.push({
-                name: item.key,
-                y: item.received_bytes
-              });
-            });
-            $scope.status_hits = hits;
-            $scope.status_gbt = gbt;
-          }
-        });
-    };
-
-    //  ---------------------------------
-    $scope.cacheReload = function ( filters ) {
-
-      $scope.cache_hits = [];
-      $scope.cache_gbt = [];
-      filters.report_type = 'cache';
-      return Stats.sdk_distributions( filters )
-        .$promise
-        .then(function (data) {
-          if (data.data && data.data.length > 0) {
-            var hits = [];
-            var gbt = [];
-            angular.forEach(data.data, function (item) {
-              hits.push({
-                name: item.key,
-                y: item.count
-              });
-              gbt.push({
-                name: item.key,
-                y: item.received_bytes
-              });
-            });
-            $scope.cache_hits = hits;
-            $scope.cache_gbt = gbt;
+            $scope[name + '_hits'] = hits;
+            $scope[name + '_gbt'] = gbt;
           }
         });
     };
@@ -152,10 +82,10 @@
 
       $scope._loading = true;
       $q.all([
-          $scope.destinationReload( filters ),
-          $scope.transportReload( filters ),
-          $scope.statusReload( filters ),
-          $scope.cacheReload( filters )
+          $scope.reloadOne( 'destination', filters ),
+          $scope.reloadOne( 'transport', filters ),
+          $scope.reloadOne( 'status', filters ),
+          $scope.reloadOne( 'cache', filters )
         ])
         .finally(function () {
           $scope._loading = false;

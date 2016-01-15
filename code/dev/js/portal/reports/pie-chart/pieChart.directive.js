@@ -10,8 +10,7 @@
 
     function link($scope, element, attrs) {
       var el = element[0];
-
-      var chart = new Highcharts.Chart({
+      var chartOpts = {
         chart: {
           renderTo: el,
           plotBackgroundColor: null,
@@ -20,12 +19,8 @@
           type: 'pie'
         },
 
-        title: {
-          text: ''
-        },
-
+        title: false,
         tooltip: {
-          //pointFormat: '{point.name}: <b>{point.percentage:.1f}% ({point.y} requests)</b>',
           formatter: function() {
             return '<b>'+ this.point.name +': </b>'+
               Highcharts.numberFormat(this.point.percentage, 0) + '% (' + Highcharts.numberFormat(this.y, 0, ".", ",") + ' requests)';
@@ -49,7 +44,9 @@
         series: [{
           data: []
         }]
-      });
+      };
+
+      var chart = new Highcharts.Chart( angular.merge(chartOpts, ($scope.ngChartOptions || {})));
 
       $scope.$watch('ngData', function (value) {
         if (!value || !_.isArray(value)) {
@@ -62,6 +59,7 @@
 
     return {
       scope: {
+        ngChartOptions: '=',
         ngData: '='
       },
       link: link
