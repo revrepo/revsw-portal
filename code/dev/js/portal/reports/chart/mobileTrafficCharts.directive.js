@@ -24,7 +24,7 @@
         $scope.hitsChartOptions = {
           yAxis: {
             title: {
-              text: 'Hits Num'
+              text: 'Requests per second'
             },
             labels: {
               formatter: function() {
@@ -35,7 +35,7 @@
           tooltip: {
             formatter: function() {
               return '<strong>' + this.x + '</strong><br/>' +
-                this.series.name + ': <strong>' + Util.formatNumber( this.y ) + '</strong>';
+                this.series.name + ': <strong>' + Util.formatNumber( this.y, 2 ) + '</strong>';
             }
           }
         };
@@ -66,7 +66,7 @@
           $scope.hits = {
             labels: [],
             series: [{
-              name: 'Hits',
+              name: 'RPS',
               data: []
             }]
           };
@@ -91,7 +91,7 @@
             .then( function( data ) {
 
               var hits_series = [ {
-                name: 'Hits',
+                name: 'RPS',
                 data: []
               } ];
               var traffic_series = [ {
@@ -109,7 +109,7 @@
                 // console.log( data );
                 angular.forEach( data.data, function( item ) {
                   labels.push( moment( item.time + offset /*to show the _end_ of interval instead of begin*/ ).format( 'MMM Do YY h:mm' ) );
-                  hits_series[ 0 ].data.push( item.hits );
+                  hits_series[ 0 ].data.push( Math.round( item.hits / interval ) );
                   traffic_series[ 0 ].data.push( Math.round( item.received_bytes / interval ) );
                   traffic_series[ 1 ].data.push( Math.round( item.sent_bytes / interval ) );
                 } );
