@@ -20,7 +20,7 @@
       },
       /*@ngInject*/
       controller: function ($scope) {
-        $scope.delay = '1';
+        $scope.delay = '24';
         if (!$scope.ngFilters) {
           $scope.ngFilters = {};
         }

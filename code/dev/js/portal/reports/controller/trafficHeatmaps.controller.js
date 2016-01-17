@@ -29,7 +29,7 @@
      *
      * @type {string|number}
      */
-    $scope.delay = '6';
+    $scope.delay = '24';
 
     /**
      * Object with information about countries and hits.

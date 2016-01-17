@@ -23,7 +23,7 @@
     $scope.statusCode = [];
 
     $scope.countries = Countries.query();
-    $scope.delay = '1';
+    $scope.delay = '24';
     $scope.country_filter = '';
 
     /**

@@ -8,15 +8,15 @@
   /*@ngInject*/
   function AppsController($scope,
                           User,
-                                 Companies,
-                                 Apps,
-                                 CRUDController,
-                                 $injector,
-                                 $state,
-                                 $stateParams,
-                                 filterFilter,
-                                 AlertService
-  ) {
+                          Companies,
+                          Apps,
+                          CRUDController,
+                          $injector,
+                          $state,
+                          $stateParams,
+                          filterFilter,
+                          AlertService,
+                          $localStorage ) {
     //Invoking crud actions
     $injector.invoke(CRUDController,
        this, {$scope: $scope, $stateParams: $stateParams});
@@ -263,6 +263,11 @@
           });
       });
     };
+
+    $scope.storeToStorage = function (app) {
+      $localStorage.selectedApplicationID = app.id;
+    };
+
 
   }
 })();
