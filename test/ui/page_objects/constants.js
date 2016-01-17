@@ -76,7 +76,7 @@ var Constants = {
     }
   },
   domain: {
-    name: 'qa-api-test-domain.revsw.net',
+    name: 'qa-30-portal-ui-test.com',
     roles: {
       ADMIN: 'admin',
       USER: 'user'
