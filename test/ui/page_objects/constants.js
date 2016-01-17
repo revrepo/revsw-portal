@@ -122,7 +122,7 @@ var Constants = {
   fbtReports: {
     TITLE: 'First Byte Time Reports',
     AVERAGE_FBT: 'Average FBT',
-    FBT_VALUES_DISTRIBUTION: 'FBT values distribution',
+    FBT_VALUES_DISTRIBUTION: 'FBT Values Distribution Histogram',
     FBT_HEATMAP: 'FBT heatmap'
   },
   trafficHeatmaps: {

@@ -50,21 +50,22 @@ describe('Smoke', function () {
       function () {
         var titleChart = Constants.fbtReports.AVERAGE_FBT;
         expect(Portal.fbtReportsPage.getSelectedDomain()).toEqual(noDomain);
-        expect(Portal.fbtReportsPage.getChartTitle()).toContain(titleChart);
+        expect(Portal.fbtReportsPage.getAverageFBTTitle()).toEqual(titleChart);
     });
 
     it('should show default "FBT values distribution" report with empty data',
       function () {
         var titleChart = Constants.fbtReports.FBT_VALUES_DISTRIBUTION;
         expect(Portal.fbtReportsPage.getSelectedDomain()).toEqual(noDomain);
-        expect(Portal.fbtReportsPage.getChartTitle()).toContain(titleChart);
+        expect(Portal.fbtReportsPage.getDistributionHistogramTitle())
+          .toEqual(titleChart);
     });
 
     it('should display default "FBT heatmap" report with empty data',
       function () {
         var titleChart = Constants.fbtReports.FBT_HEATMAP;
         expect(Portal.fbtReportsPage.getSelectedDomain()).toEqual(noDomain);
-        expect(Portal.fbtReportsPage.getChartTitle()).toContain(titleChart);
+        expect(Portal.fbtReportsPage.getFBTHeatmapTitle()).toEqual(titleChart);
     });
   });
 });
