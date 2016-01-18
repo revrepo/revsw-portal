@@ -130,30 +130,6 @@ describe('Workflow', function () {
           });
       });
 
-    it('should display `InProgress` global status right after modifying a ' +
-      'domain',
-      function () {
-        var myDomain = DataProvider.generateDomain('my-domain');
-        var updatedDomain = {
-          name: myDomain.name,
-          originServer: 'UPDATED' + myDomain.originServer,
-          originHostHeader: 'UPDATED' + myDomain.originHostHeader
-        };
-        // Create domain
-        Portal.createDomain(myDomain);
-        // Update domain
-        Portal.updateDomain(updatedDomain);
-        // Verify updated domain is in list
-        Portal.domains.listPage
-          .searchAndGetFirstRow(myDomain.name)
-          .getGlobalStatusIcon()
-          .getAttribute('tooltip')
-          .then(function (tooltip) {
-            expect(tooltip).toEqual('Global status: InProgress');
-            Portal.deleteDomain(myDomain);
-          });
-      });
-
     it('should display `Modified` global status some period of time after ' +
       'modifying a domain',
       function () {

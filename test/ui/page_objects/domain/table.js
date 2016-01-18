@@ -34,6 +34,9 @@ var tableRowLocators = {
           },
           error:{
             css: 'i:nth-of-type(1).glyphicon-remove'
+          },
+          inProgress: {
+            css: 'i:nth-of-type(1).glyphicon-refresh'
           }
         }
       },
@@ -45,6 +48,9 @@ var tableRowLocators = {
           },
           error:{
             css: 'i:nth-of-type(2).glyphicon-remove'
+          },
+          inProgress: {
+            css: 'i:nth-of-type(2).glyphicon-refresh'
           }
         }
       }
