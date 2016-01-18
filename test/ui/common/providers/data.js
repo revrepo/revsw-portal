@@ -51,7 +51,7 @@ var DataProvider = {
     var prefixLastName = names[0] || names[1];
     var timestamp = (new Date()).getTime();
     return {
-      email: prefixEmail + '_' + timestamp + '@ui-test-email.com',
+      email: prefixEmail + '_' + timestamp + '@portal-ui-test-email.com',
       firstName: prefixFirstName + ' Fname',
       lastName: prefixLastName + ' Lname',
       role: Constants.user.roles.USER,
