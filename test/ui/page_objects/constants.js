@@ -35,8 +35,8 @@ var Constants = {
   },
   header: {
     appMenu: {
-      ACCOUNT_SETTINGS: 'Account Settings',
-      ANALYTICS: 'Analytics',
+      ACCOUNT_SETTINGS: 'Account\nSettings',
+      WEB_ANALYTICS: 'Web\nAnalytics',
       HELP_SUPPORT: 'Help/Support',
       WEB: 'Web'
     },
@@ -76,7 +76,7 @@ var Constants = {
     }
   },
   domain: {
-    name: 'qa-api-test-domain.revsw.net',
+    name: 'qa-30-portal-ui-test.com',
     roles: {
       ADMIN: 'admin',
       USER: 'user'
@@ -122,7 +122,7 @@ var Constants = {
   fbtReports: {
     TITLE: 'First Byte Time Reports',
     AVERAGE_FBT: 'Average FBT',
-    FBT_VALUES_DISTRIBUTION: 'FBT values distribution',
+    FBT_VALUES_DISTRIBUTION: 'FBT Values Distribution Histogram',
     FBT_HEATMAP: 'FBT heatmap'
   },
   trafficHeatmaps: {

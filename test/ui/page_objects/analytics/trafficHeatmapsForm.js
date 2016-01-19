@@ -44,7 +44,12 @@ var TrafficHeatmapsForm = {
       updateReport: '[ng-click="onDomainSelect()"]'
     },
     images: {
-      id: 'canvas-svg-hits'
+      hits: {
+        id: 'canvas-svg-hits'
+      },
+      gbt: {
+        id: 'canvas-svg-gbt'
+      }
     }
   },
 
@@ -144,7 +149,7 @@ var TrafficHeatmapsForm = {
   getHitsHeatmapImg: function () {
     return this
       .getPanelBodyElem(0)
-      .element(by.id(this.locators.images.id));
+      .element(by.id(this.locators.images.hits.id));
   },
 
   /**
@@ -169,7 +174,7 @@ var TrafficHeatmapsForm = {
   getGBTHeatmapImg: function () {
     return this
       .getPanelBodyElem(1)
-      .element(by.id(this.locators.images.id));
+      .element(by.id(this.locators.images.gbt.id));
   },
 
   /**

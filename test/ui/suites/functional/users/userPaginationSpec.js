@@ -75,8 +75,7 @@ describe('Functional', function () {
         expect(newFirstUserEmail).toEqual(firstUserEmail);
       });
 
-    //TODO: Check this. because Protractor do not click on element.
-    xit('should display a set of user when clicking an specific page',
+    it('should display a set of user when clicking an specific page',
       function () {
         var firstUserEmail = Portal.userListPage.userTbl
           .getFirstRow()
@@ -94,8 +93,7 @@ describe('Functional', function () {
         expect(Portal.userListPage.pager.isPreviousBtnDisabled()).toBeTruthy();
       });
 
-    //TODO: Check protractor do not click on element properly.
-    xit('should display the "Next Page" button disabled when the last page ' +
+    it('should display the "Next Page" button disabled when the last page ' +
       'is displayed',
       function () {
         Portal.userListPage.pager
