@@ -39,6 +39,10 @@
         $scope._loading = false;
       });
 
+    $scope.reload = function() {
+
+    }
+
     $scope.$watch( 'application', function() {
       $localStorage.selectedApplicationID = $scope.application;
     });

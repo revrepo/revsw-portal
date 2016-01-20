@@ -13,7 +13,7 @@
       templateUrl: 'parts/reports/charts/mobile-traffic.html',
       scope: {
         ngAccount: '=',
-        ngApp: '='
+        ngApp: '=',
       },
       /*@ngInject*/
       controller: function( $scope, Stats, Util ) {
@@ -21,6 +21,18 @@
         $scope.span = '1';
         $scope._loading = false;
 
+        $scope.oses = [];
+        $scope.os = null;
+        $scope.devices = [];
+        $scope.device = null;
+        $scope.countries = [];
+        $scope.country = null;
+        $scope.operators = [];
+        $scope.operator = null;
+        $scope.networks = ['Mobile','WiFi'];
+        $scope.network = null;
+
+        //  ---------------------------------
         $scope.hitsChartOptions = {
           yAxis: {
             title: {
@@ -60,6 +72,7 @@
           }
         };
 
+        //  ---------------------------------
         $scope.reloadTrafficStats = function() {
 
           $scope._loading = true;
@@ -81,11 +94,16 @@
             }]
           };
 
-          Stats.sdk_flow({
+          return Stats.sdk_flow({
               account_id: $scope.ngAccount,
               app_id: ( $scope.ngApp || null ),
               from_timestamp: moment().subtract( $scope.span, 'days' ).valueOf(),
-              to_timestamp: Date.now()
+              to_timestamp: Date.now(),
+              os: $scope.os,
+              device: $scope.device,
+              country: $scope.country,
+              operator: $scope.operator,
+              network: $scope.network
             })
             .$promise
             .then( function( data ) {
@@ -128,9 +146,45 @@
             } );
         };
 
+        //  ---------------------------------
+        $scope.reload = function() {
+
+          $scope._loading = true;
+          $scope.oses = [];
+          $scope.devices = [];
+          $scope.countries = [];
+          $scope.operators = [];
+          $scope.os = null;
+          $scope.device = null;
+          $scope.country = null;
+          $scope.operator = null;
+          $scope.network = null;
+
+          Stats.sdk_dirs({
+              account_id: $scope.ngAccount,
+              app_id: ( $scope.ngApp || null ),
+              from_timestamp: moment().subtract( 7, 'days' ).valueOf(),
+              to_timestamp: Date.now()
+            })
+            .$promise
+            .then( function( data ) {
+              console.log( data );
+              if ( data.data ) {
+                $scope.oses = data.data.oses;
+                $scope.devices = data.data.devices;
+                $scope.countries = data.data.countries;
+                $scope.operators = data.data.operators;
+              }
+              return $scope.reloadTrafficStats();
+            })
+            .finally( function() {
+              $scope._loading = false;
+            });
+        };
+
         $scope.$watch( 'ngApp', function() {
           if ( $scope.ngAccount || $scope.ngApp ) {
-            $scope.reloadTrafficStats();
+            $scope.reload();
           }
         });
       }

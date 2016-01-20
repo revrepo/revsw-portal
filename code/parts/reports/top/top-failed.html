@@ -1,4 +1,4 @@
-<h3>Top Referers</h3>
+<h3>Top Most Failed Objects</h3>
 <div filter-top-objects
      ng-hide="!ngDomain"
      fl-os="flOs"
@@ -25,7 +25,7 @@
       <tbody>
       <tr ng-repeat="item in items">
         <td>
-          <a target="_blank" ng-href="{{item.key}}">{{item.key}}</a>
+          <a target="_blank" ng-href="http://{{ngDomain.domain_name}}{{item.path}}">{{item.path}}</a>
         </td>
         <td class="text-right">{{item.count}}</td>
       </tr>
