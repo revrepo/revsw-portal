@@ -156,6 +156,11 @@
         params: {}
       },
 
+      sdk_dirs: {
+        method: 'GET',
+        url: $config.API_URL + '/stats/sdk/dirs',
+        params: {}
+      },
       sdk_flow: {
         method: 'GET',
         url: $config.API_URL + '/stats/sdk/flow',
