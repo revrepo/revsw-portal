@@ -62,8 +62,7 @@ describe('Functional', function () {
         expect(firstDomainName).not.toEqual(nextDomainName);
       });
 
-    // TODO: Test hangs, need to investigate, probably to $timeout usage in APP
-    xit('should display the previous page with previous domains when ' +
+    it('should display the previous page with previous domains when ' +
       'clicking "Previous page"',
       function () {
         var firstDomainName = Portal.domains.listPage.domainsTbl

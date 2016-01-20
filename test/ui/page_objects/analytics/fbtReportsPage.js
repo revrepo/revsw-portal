@@ -31,6 +31,9 @@ var FBTReports = {
   locators: {
     reports: {
       css: '.container-fluid .row'
+    },
+    titles: {
+      css: 'h3'
     }
   },
 
@@ -46,6 +49,18 @@ var FBTReports = {
    */
   getContainerFluidElem: function () {
     return element.all(by.css(this.locators.reports.css));
+  },
+
+  /**
+   * ### FBTReports.getDistributionHistogramChartTitleElem()
+   *
+   * Returns the reference to the `Container Fluid` element (Selenium WebDriver
+   * Element) from the FBT Reports page from the Portal app.
+   *
+   * @returns {Selenium WebDriver Element}
+   */
+  getDistributionHistogramChartTitleElements: function () {
+    return element.all(by.css(this.locators.titles.css));
   },
 
   /**
@@ -89,6 +104,48 @@ var FBTReports = {
     return this
       .getContainerFluidElem()
       .get(1)
+      .getText();
+  },
+
+  /**
+   * ### FBTReports.getAverageFBTTitle()
+   *
+   * Gets the `Title` from Average FBT report from FBT Reports page.
+   *
+   * @returns {Promise}
+   */
+  getAverageFBTTitle: function () {
+    return this
+      .getDistributionHistogramChartTitleElements()
+      .get(0)
+      .getText();
+  },
+
+  /**
+   * ### FBTReports.getDistributionHistogramTitle()
+   *
+   * Gets the `Title` from Distribution Histogram report from FBT Reports page.
+   *
+   * @returns {Promise}
+   */
+  getDistributionHistogramTitle: function () {
+    return this
+      .getDistributionHistogramChartTitleElements()
+      .get(1)
+      .getText();
+  },
+
+  /**
+   * ### FBTReports.getFBTHeatmapTitle()
+   *
+   * Gets the `Title` from FBT Heatmap report from FBT Reports page.
+   *
+   * @returns {Promise}
+   */
+  getFBTHeatmapTitle: function () {
+    return this
+      .getDistributionHistogramChartTitleElements()
+      .get(2)
       .getText();
   },
 
