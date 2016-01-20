@@ -45,6 +45,7 @@ var DomainStatsPage= require('./domain/statsPage');
 var DomainVersionsPage = require('./domain/versionsPage');
 var EditDomainPage = require('./domain/editPage');
 var ListDomainsPage = require('./domain/listPage');
+var PurgeCacheBasicPage = require('./domain/purgeCacheBasicPage');
 var ProxyTrafficPage = require('./analytics/proxyTrafficPage');
 var TopReportsPage = require('./analytics/topReportsPage');
 var TopObjectsPage = require('./analytics/topObjectsPage');
@@ -86,6 +87,7 @@ var Portal = {
   fbtReportsPage: FBTReportsPage,
   trafficHeatmapsPage: TrafficHeatmapsPage,
   rttHeatmapsPage: RTTHeatmapsPage,
+  purgeCacheBasicPage: PurgeCacheBasicPage,
 
   // ## Authentication Helper methods
 

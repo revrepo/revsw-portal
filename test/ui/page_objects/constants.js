@@ -53,6 +53,10 @@ var Constants = {
       SECURITY_SETTINGS: 'Security Settings',
       ACTIVITY_LOG: 'Activity Log'
     },
+    web: {
+      DOMAINS: 'Domains',
+      PURGE_CACHE: 'Purge Cache'
+    },
     analytics: {
       PROXY_TRAFFIC: 'Proxy Traffic',
       TOP_REPORTS: 'Top Reports',

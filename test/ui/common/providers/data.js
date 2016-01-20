@@ -129,6 +129,32 @@ var DataProvider = {
       device: 'All Devices',
       count: 'Top 20 Records'
     };
+  },
+
+  /**
+   * ### DataProvider.generatePurgeCachedInfo()
+   *
+   * Generates data to fill Purge Cached Objects.
+   *
+   * @param {string} purgeUrl, this value is use in Purge Cached Objects page.
+   *
+   * @returns {Object}, generate data with the following schema:
+   *
+   *     {
+   *         textArea: string
+   *     }
+   */
+  generatePurgeCachedInfo: function (purgeUrl) {
+    if (purgeUrl) {
+      return {
+        textArea: purgeUrl.textArea
+      };
+    }
+    return {
+      textArea: '\/images1\/*.png\\n\/images2\/*.png\\n\/images3\/*.png\\n' +
+                '\/images4\/*.png\\n\/images5\/*.png\\n\/images6\/*.png\\n' +
+                '\/images7\/*.png\\n\/images8\/*.png\\n\/images9\/*.png\\n'
+    };
   }
 };
 
