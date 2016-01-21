@@ -69,9 +69,7 @@
         .then(function (data) {
           $scope.alertService.success('User updated', 5000);
         })
-        .catch(function (err) {
-          $scope.alertService.danger(err.data.message || 'Oops something ment wrong', 5000);
-        });
+        .catch($scope.alertService.danger);
     };
 
     $scope.createUser = function (model) {
