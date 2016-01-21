@@ -166,6 +166,11 @@
         url: $config.API_URL + '/stats/sdk/flow',
         params: {}
       },
+      sdk_agg_flow: {
+        method: 'GET',
+        url: $config.API_URL + '/stats/sdk/agg_flow',
+        params: {}
+      },
       sdk_top_hits: {
         method: 'GET',
         url: $config.API_URL + '/stats/sdk/top_requests',
