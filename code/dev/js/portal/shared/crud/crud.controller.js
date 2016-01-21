@@ -142,7 +142,7 @@
       /**
        * Will watch filter to be able to apply it
        */
-      $scope.$watch('filter.filter', function (val) {
+      $scope.$watch('filter', function () {
         // Apply filters here
         $scope.filterList();
       }, true);
@@ -419,7 +419,7 @@
           .finally(function () {
             $scope.loading(false);
           });
-      }
+      };
 
       /**
        * Delete a model from list
