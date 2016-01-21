@@ -14,6 +14,11 @@
       scope: {
         ngAccount: '=',
         ngApp: '=',
+        flOses: '=',
+        flDevices: '=',
+        flCountries: '=',
+        flOperators: '=',
+        flNetworks: '='
       },
       /*@ngInject*/
       controller: function( $scope, Stats, Util ) {
@@ -21,15 +26,10 @@
         $scope.span = '1';
         $scope._loading = false;
 
-        $scope.oses = [];
         $scope.os = null;
-        $scope.devices = [];
         $scope.device = null;
-        $scope.countries = [];
         $scope.country = null;
-        $scope.operators = [];
         $scope.operator = null;
-        $scope.networks = ['Mobile','WiFi'];
         $scope.network = null;
 
         //  ---------------------------------
@@ -73,7 +73,7 @@
         };
 
         //  ---------------------------------
-        $scope.reloadTrafficStats = function() {
+        $scope.reload = function() {
 
           $scope._loading = true;
           $scope.hits = {
@@ -147,7 +147,7 @@
         };
 
         //  ---------------------------------
-        $scope.reload = function() {
+        $scope._reload = function() {
 
           $scope._loading = true;
           $scope.oses = [];
