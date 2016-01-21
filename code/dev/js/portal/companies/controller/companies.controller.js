@@ -53,9 +53,7 @@
         .then(function () {
           $scope.alertService.success('Company updated', 5000);
         })
-        .catch(function (err) {
-          $scope.alertService.danger(err.data.message || 'Oops something ment wrong', 5000);
-        });
+        .catch($scope.alertService.danger);
     };
   };
 
