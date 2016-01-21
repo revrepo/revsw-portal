@@ -71,9 +71,7 @@
           $scope.list();
           return data
         })
-        .catch(function (err) {
-          $scope.alertService.danger(err);
-        })
+        .catch($scope.alertService.danger)
         .finally(function () {
           $scope._loading = false;
         });
@@ -168,9 +166,7 @@
         .then(function (data) {
           return data;
         })
-        .catch(function (err) {
-          $scope.alertService.danger(err);
-        })
+        .catch($scope.alertService.danger)
         .finally(function () {
           key.loading = false;
         });

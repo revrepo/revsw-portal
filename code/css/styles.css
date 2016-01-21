@@ -252,6 +252,9 @@ section[drawer] .side-menu .side-menu-item i {
   margin: 0;
   border: none;
 }
+.navbar .navbar-inner a.two-line {
+  line-height: 30px;
+}
 .navbar .navbar-inner li.active {
   border-bottom: 2px solid #66b2bf;
 }
