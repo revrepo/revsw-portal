@@ -27,7 +27,9 @@
     $scope.$state = $state;
     //// Fetch list of records
     $scope._baseFilter = {app_platform: $state.current.data.platform};
-    $scope.list();
+    $scope.$on('$stateChangeSuccess', function (state) {
+      $scope.list();
+    });
 
     $scope.companies = [];
     $scope.model = {
@@ -233,9 +235,6 @@
           .delete(model)
           .then(function (data) {
             $scope.alertService.success('App ' + appName + ' deleted.');
-            $scope.initList();
-            console.log($scope.page.current);
-            console.log($scope.page.pages);
           })
           .catch(function (err) {
             $scope.alertService.danger(err);
