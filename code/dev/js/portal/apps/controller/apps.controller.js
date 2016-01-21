@@ -14,7 +14,6 @@
                           $injector,
                           $state,
                           $stateParams,
-                          filterFilter,
                           AlertService,
                           $localStorage ) {
     //Invoking crud actions
@@ -26,10 +25,9 @@
 
     $scope.setResource(Apps);
     $scope.$state = $state;
-    // Fetch list of records
-    $scope.$on('$stateChangeSuccess', function (state) {
-      $scope.initList();
-    });
+    //// Fetch list of records
+    $scope._baseFilter = {app_platform: $state.current.data.platform};
+    $scope.list();
 
     $scope.companies = [];
     $scope.model = {
@@ -47,8 +45,6 @@
       }
     };
 
-
-
     $scope.model.account_id = $scope.auth.getUser().companyId[0];
 
     User.getUserDomains(true)
@@ -57,18 +53,6 @@
           return d.domain_name;
         });
       });
-
-    $scope.initList = function () {
-      if($state.current.data.list){
-          $scope.getPreFilteredList({app_platform: $state.current.data.platform})
-          .finally(function () {
-            $scope._checkPagination();
-            if($scope.page.current > $scope.page.pages.length){
-              $scope.prevPage();
-            }
-          });
-      }
-    }
 
     $scope.fetchCompanies = function(companyIds) {
       var promises = [];
@@ -83,7 +67,7 @@
     $scope.switch = function (item){
       if(item.show === true ){
         item.show = false;
-      }else{
+      } else {
         item.show = true;
       }
     };

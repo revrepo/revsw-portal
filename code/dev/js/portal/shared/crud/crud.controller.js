@@ -80,6 +80,17 @@
       $scope.deniedFields = [];
 
       /**
+       * Base filter for loaded records.
+       * This filter will be applied before any others.
+       * Result of this filter will be stored in {@link $scope.records}
+       * If `false` will be ignored
+       *
+       * @type {Object|boolean}
+       * @private
+       */
+      $scope._baseFilter = false;
+
+      /**
        * Page settings
        *
        * @type {object}
@@ -393,26 +404,12 @@
         //fetching data
         return $scope.resource
           .query(function (data) {
-            $scope.records = data;
-            $scope.filteredRecords = data;
-            $scope._checkPagination();
-            return data; // Send data to future promise
-          }).$promise
-          .finally(function () {
-            $scope.loading(false);
-          });
-      };
-
-      $scope.getPreFilteredList = function (filterObj) {
-        if (!$scope.resource) {
-          throw new Error('No resource provided.');
-        }
-        $scope.loading(true);
-        //fetching data
-        return $scope.resource
-          .query(function (data) {
-            $scope.records = $filter('filter')(data, filterObj, true);
-            $scope.filteredRecords = $filter('filter')(data, filterObj, true);
+            if (!$scope._baseFilter) {
+              $scope.records = data;
+            } else {
+              $scope.records = $filter('filter')(data, $scope._baseFilter, true);
+            }
+            $scope.filterList(); // Apply filters
             $scope._checkPagination();
             return data; // Send data to future promise
           }).$promise
