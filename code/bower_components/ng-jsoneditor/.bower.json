@@ -22,11 +22,12 @@
     "test",
     "tests"
   ],
-  "_release": "f707386a1a",
+  "version": "1.0.0",
+  "_release": "1.0.0",
   "_resolution": {
-    "type": "branch",
-    "branch": "master",
-    "commit": "f707386a1a881dadbda4f6ac98202325951ea49a"
+    "type": "version",
+    "tag": "v1.0.0",
+    "commit": "37d95e77b174c4a1d7771152ea6a8d158fb085e6"
   },
   "_source": "git://github.com/angular-tools/ng-jsoneditor.git",
   "_target": "*",
