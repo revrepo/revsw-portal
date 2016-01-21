@@ -41,7 +41,7 @@ var Header = {
           linkText: Constants.header.appMenu.WEB
         },
         analytics: {
-          linkText: Constants.header.appMenu.ANALYTICS
+          linkText: Constants.header.appMenu.WEB_ANALYTICS
         },
         accountSettings: {
           linkText: Constants.header.appMenu.ACCOUNT_SETTINGS

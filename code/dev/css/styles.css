@@ -262,13 +262,23 @@ section[drawer] .side-menu .side-menu-item i {
 }
 .navbar .navbar-inner .user {
   margin-right: 20px;
+  height: 50px;
 }
 .navbar .navbar-inner .user img {
   max-height: 40px;
 }
 .navbar .navbar-inner .user li.fit {
-  margin-right: 10px;
   text-align: right;
+  margin-top: 6px;
+}
+.nav > li {
+  text-align: center;
+  height: 50px;
+}
+.navbar-nav > li > a {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  line-height: 16px;
 }
 .top-menu {
   padding: 20px;

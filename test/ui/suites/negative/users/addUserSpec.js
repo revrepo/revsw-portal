@@ -82,7 +82,8 @@ describe('Negative', function () {
       });
 
     it('should not create user when the email is not filled', function () {
-      var andrew = DataProvider.generateUser('Andrew');
+      var now = Date.now();
+      var andrew = DataProvider.generateUser('Andrew' + now);
       andrew.email = '';
       Portal.createUser(andrew);
       Portal.userListPage.searcher.setSearchCriteria(andrew.firstName);

@@ -55,7 +55,8 @@ describe('Functional', function () {
       });
 
     // TODO: BUG: Search is not working for CName
-    xit('should filter domain-configs according to cname search criteria',
+    it('[BUG: Search is not working for CName] ' +
+      'should filter domain-configs according to cname search criteria',
       function () {
         var cNameToSearch = Portal.domains.listPage.domainsTbl
           .getFirstRow()

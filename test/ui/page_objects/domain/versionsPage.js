@@ -27,18 +27,35 @@ var DomainVersions = {
   locators: {
     labels: {
       title: {
-        className: 'page-title'
+        css: 'h2'
       }
     },
     buttons: {
       backToList: {
         linkText: 'Back to List'
       }
+    },
+    dropDowns: {
+      domainConfigVersion: {
+        model: 'currentVersion'
+      }
     }
   },
 
   // ## Methods to retrieve references to UI elements (Selenium WebDriver
   // Element)
+
+  /**
+   * ### DomainStats.getTitleLbl()
+   *
+   * Returns the reference to the `Title` label element (Selenium WebDriver
+   * Element) from the Domain Versions page from the Portal app.
+   *
+   * @returns {Selenium WebDriver Element}
+   */
+  getTitleLbl: function () {
+    return element(by.css(this.locators.labels.title.css));
+  },
 
   /**
    * ### DomainVersions.getBackToListBtn()
@@ -51,6 +68,17 @@ var DomainVersions = {
   getBackToListBtn: function () {
     return element(
       by.partialLinkText(this.locators.buttons.backToList.linkText));
+  },
+
+  /**
+   * ### DomainVersions.getDomainConfigVersionDDown()
+   *
+   * Returns the reference to the 'Domain Config Version' drop-down
+   *
+   * @returns {Selenium WebDriver Element}
+   */
+  getDomainConfigVersionDDown: function () {
+    return element(by.model(this.locators.dropDowns.domainConfigVersion.model));
   },
 
   // ## Methods to interact with the Edit Domain Page components
@@ -67,10 +95,36 @@ var DomainVersions = {
     return this
       .getBackToListBtn()
       .click();
-  }
+  },
 
   // ## Helper Methods
 
+  /**
+   * ### DomainVersions.isDisplayed()
+   *
+   * Checks whether the Versions Domain page is being displayed in the UI or
+   * not.
+   *
+   * @returns {Promise}
+   */
+  isDisplayed: function () {
+    return this
+      .getDomainConfigVersionDDown()
+      .isPresent();
+  },
+
+  /**
+   * ### DomainVersions.getTitle()
+   *
+   * Gets the `Title` label from the Domain Versions page
+   *
+   * @returns {Promise}
+   */
+  getTitle: function () {
+    return this
+      .getTitleLbl()
+      .getText();
+  }
 };
 
 module.exports = DomainVersions;

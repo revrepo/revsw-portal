@@ -44,9 +44,8 @@ describe('Negative', function () {
         Portal.userListPage.searcher.clearSearchCriteria();
       });
 
-    // TODO: spec fails due to bug: pagination not showing if there is only one page
-    xit('should not show only the first page button when the search criteria does' +
-      'not match with any word in the "User List"',
+    it('should not show only the first page button when the search criteria ' +
+      'does not match with any word in the "User List"',
       function () {
         var uniqueString = 'unique_string_' + (new Date()).getTime();
         var availablePages = Portal.userListPage.pager
@@ -56,7 +55,7 @@ describe('Negative', function () {
         var filteredPages = Portal.userListPage.pager
           .getAllPageIndexButtons()
           .count();
-        expect(availablePages).toEqual(1);
+        expect(availablePages).toBeGreaterThan(1);
         expect(filteredPages).toEqual(0);
         expect(availablePages).toBeGreaterThan(filteredPages);
         Portal.userListPage.searcher.clearSearchCriteria();
@@ -71,7 +70,6 @@ describe('Negative', function () {
         Portal.userListPage.searcher.clearSearchCriteria();
       });
 
-    // TODO: Spec fails due to the bug: Next button is enabled in empty list
     it('should not display the "Next Page" after filtering does not ' +
       'return any users in the "User List"',
       function () {

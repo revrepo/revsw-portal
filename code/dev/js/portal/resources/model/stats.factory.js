@@ -8,7 +8,7 @@
   /*@ngInject*/
   function StatsResource(Resource, $config) {
     return Resource($config.API_URL + '/stats/:domainId', {
-      domainId: ''
+      // domainId: ''
     }, {
       // Actions
       os: {
@@ -34,37 +34,6 @@
           report_type: 'country',
           count: 10
         }
-      },
-      lm_rtt_country: {
-        method: 'GET',
-        url: $config.API_URL + '/stats/lastmile_rtt/:domainId',
-        params: {
-          report_type: 'country',
-          count: 10
-        }
-      },
-      gbt_country: {
-        method: 'GET',
-        url: $config.API_URL + '/stats/gbt/:domainId',
-        params: {
-          report_type: 'country',
-          count: 10
-        }
-      },
-      fbt_average: {
-        method: 'GET',
-        url: $config.API_URL + '/stats/fbt/average/:domainId',
-        params: {}
-      },
-      fbt_distribution: {
-        method: 'GET',
-        url: $config.API_URL + '/stats/fbt/distribution/:domainId',
-        params: {}
-      },
-      fbt_heatmap: {
-        method: 'GET',
-        url: $config.API_URL + '/stats/fbt/heatmap/:domainId',
-        params: {}
       },
       protocol: {
         method: 'GET',
@@ -108,6 +77,13 @@
           report_type: 'cache_status'
         }
       },
+      requestStatus: {
+        method: 'GET',
+        url: $config.API_URL + '/stats/top/:domainId',
+        params: {
+          report_type: 'request_status'
+        }
+      },
       quic: {
         method: 'GET',
         url: $config.API_URL + '/stats/top/:domainId',
@@ -115,7 +91,6 @@
           report_type: 'QUIC'
         }
       },
-
       http2: {
         method: 'GET',
         url: $config.API_URL + '/stats/top/:domainId',
@@ -123,7 +98,6 @@
           report_type: 'http2'
         }
       },
-
       top5xx: {
         method: 'GET',
         url: $config.API_URL + '/stats/top/:domainId',
@@ -131,11 +105,9 @@
           report_type: 'top5xx'
         }
       },
-
       traffic: {
         method: 'GET'
       },
-
       referer: {
         url: $config.API_URL + '/stats/top/:domainId',
         params: {
@@ -149,7 +121,73 @@
         params: {
 
         }
+      },
+
+      lm_rtt_country: {
+        method: 'GET',
+        url: $config.API_URL + '/stats/lastmile_rtt/:domainId',
+        params: {
+          report_type: 'country',
+          count: 10
+        }
+      },
+      gbt_country: {
+        method: 'GET',
+        url: $config.API_URL + '/stats/gbt/:domainId',
+        params: {
+          report_type: 'country',
+          count: 10
+        }
+      },
+
+      fbt_average: {
+        method: 'GET',
+        url: $config.API_URL + '/stats/fbt/average/:domainId',
+        params: {}
+      },
+      fbt_distribution: {
+        method: 'GET',
+        url: $config.API_URL + '/stats/fbt/distribution/:domainId',
+        params: {}
+      },
+      fbt_heatmap: {
+        method: 'GET',
+        url: $config.API_URL + '/stats/fbt/heatmap/:domainId',
+        params: {}
+      },
+
+      sdk_dirs: {
+        method: 'GET',
+        url: $config.API_URL + '/stats/sdk/dirs',
+        params: {}
+      },
+      sdk_flow: {
+        method: 'GET',
+        url: $config.API_URL + '/stats/sdk/flow',
+        params: {}
+      },
+      sdk_top_hits: {
+        method: 'GET',
+        url: $config.API_URL + '/stats/sdk/top_requests',
+        params: {}
+      },
+      sdk_top_users: {
+        method: 'GET',
+        url: $config.API_URL + '/stats/sdk/top_users',
+        params: {}
+      },
+      sdk_top_gbt: {
+        method: 'GET',
+        url: $config.API_URL + '/stats/sdk/top_gbt',
+        params: {}
+      },
+      sdk_distributions: {
+        method: 'GET',
+        url: $config.API_URL + '/stats/sdk/distributions',
+        params: {}
       }
+
+
     });
   }
 })();

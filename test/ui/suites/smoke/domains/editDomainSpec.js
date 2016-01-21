@@ -33,6 +33,7 @@ describe('Smoke', function () {
     });
 
     afterAll(function () {
+      Portal.deleteDomain(myDomain);
       Portal.signOut();
     });
 
