@@ -26,20 +26,26 @@
     };
 
     $scope.deleteCompany = function(model) {
-      $scope.confirm('confirmModal.html', model).then(function () {
-        $scope.delete(model);
-      });
+      $scope
+        .confirm('confirmModal.html', model)
+        .then(function () {
+          return $scope
+            .delete(model);
+        })
+        .catch($scope.alertService.danger);
     };
 
     $scope.createCompany = function (model) {
       if (!model) {
         return;
       }
-      $scope.create(model)
+      $scope
+        .create(model)
         .then(function () {
           $scope.alertService.success('Company created', 5000);
           $scope.auth.reloadUser();
-        });
+        })
+        .catch($scope.alertService.danger);
     };
 
     $scope.updateCompany = function (model) {
