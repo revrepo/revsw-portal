@@ -33,7 +33,7 @@
 
           <div class="row">
             <div class="col-lg-12">
-              <div mobile-traffic-charts
+              <div mobile-rps-chart
                    ng-account="account"
                    ng-app="application"
                    fl-oses="oses"
@@ -43,8 +43,22 @@
                    fl-networks="networks"></div>
             </div>
           </div>
-
           <hr>
+
+          <div class="row">
+            <div class="col-lg-12">
+              <div mobile-bw-chart
+                   ng-account="account"
+                   ng-app="application"
+                   fl-oses="oses"
+                   fl-devices="devices"
+                   fl-countries="countries"
+                   fl-operators="operators"
+                   fl-networks="networks"></div>
+            </div>
+          </div>
+          <hr>
+
           <div class="row">
             <div class="col-lg-12">
               <div mobile-http-codes-chart
