@@ -105,6 +105,9 @@ table tbody .actions a {
 select.form-control.fixed {
   width: 150px;
 }
+select.form-control.fixed135 {
+  width: 135px;
+}
 .popover {
   z-index: 999;
 }

@@ -85,13 +85,17 @@
                 var labels_filled_up = false;
 
                 angular.forEach( data.data, function( code ) {
-                  var s = { name: (''+code.key), data: [] };
+                  var s = { name: (''+code.key), data: [], visible: false };
                   for ( var i = 0, len = code.flow.length; i < len; ++i ) {
                     var item = code.flow[i];
                     if ( !labels_filled_up ) {
                       labels.push( moment( item.time + offset /*to show the _end_ of interval instead of begin*/ ).format( 'MMM Do YY h:mm' ) );
                     }
-                    s.data.push( Math.round( item.hits / interval ) );
+                    var rps = Math.round( item.hits / interval );
+                    s.data.push( rps );
+                    if ( rps > 0.009 ) {
+                      s.visible = true;
+                    }
                   };
                   hits_series.push( s );
                   labels_filled_up = true;

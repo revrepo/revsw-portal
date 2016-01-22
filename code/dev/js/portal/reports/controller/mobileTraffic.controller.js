@@ -35,7 +35,7 @@
         })
         .$promise
         .then( function( data ) {
-          console.log( data );
+          // console.log( data );
           if ( data.data ) {
             $scope.oses = data.data.oses;
             $scope.devices = data.data.devices;
