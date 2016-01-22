@@ -16,11 +16,11 @@
  * from Rev Software, Inc.
  */
 
-// # Purge Cache Form Page Object
+// # Purge Cache Page Object
 
 // This `Purge Cache` Page Object abstracts all operations or actions that
 // a common Purge Cached Objects could do in the Portal app/site.
-var PurgeCacheBasic = {
+var PurgeCacheAdvanced = {
 
   // ## Properties
 
@@ -35,23 +35,32 @@ var PurgeCacheBasic = {
         searchDomain: '$select.search'
       }
     },
-    textArea: {
-      models: {
-        text: 'text'
+    jsonEditor: {
+      aceEditor: {
+        css: '.ace_editor'
+      },
+      aceContent: {
+        css: '.ace_content'
+      },
+      jsonExamples: {
+        css: '.col-md-4 .form-group'
       }
     },
     buttons: {
       advancedMode: {
         linkText: 'Advanced mode'
       },
+      basicMode: {
+        linkText: 'Basic mode'
+      },
       purge: {
-        css: '[ng-click="purgeText()"]'
+        css: '[ng-click="purge()"]'
       }
     }
   },
 
   /**
-   * ### PurgeCacheBasic.getTitleLbl()
+   * ### PurgeCacheAdvanced.getTitleLbl()
    *
    * Returns the reference to the `Container Fluid` element (Selenium WebDriver
    * Element) from the Purge Cached Objects page from the Portal app.
@@ -65,7 +74,7 @@ var PurgeCacheBasic = {
   },
 
   /**
-   * ### PurgeCacheBasic.getPanelHeadingElem()
+   * ### PurgeCacheAdvanced.getPanelHeadingElem()
    *
    * Returns the reference to the `Panel Heading` element (Selenium WebDriver
    * Element) from the Purge Cached Objects page in the Portal app.
@@ -80,7 +89,7 @@ var PurgeCacheBasic = {
   },
 
   /**
-   * ### PurgeCacheBasic.getPanelBodyElem()
+   * ### PurgeCacheAdvanced.getPanelBodyElem()
    *
    * Returns the reference to the `Panel Body` element (Selenium WebDriver
    * Element) from the Purge Cached Objects page in the Portal app.
@@ -95,7 +104,7 @@ var PurgeCacheBasic = {
   },
 
   /**
-   * ### PurgeCacheBasic.getAdvancedModeBtn()
+   * ### PurgeCacheAdvanced.getAdvancedModeBtn()
    *
    * Gets the reference to `Advanced Mode` button element.
    *
@@ -108,33 +117,20 @@ var PurgeCacheBasic = {
   },
 
   /**
-   * ### PurgeCacheBasic.getDomainDDown()
+   * ### PurgeCacheAdvanced.getBasicModeBtn()
    *
-   * Gets the reference to `Domain` drop down element.
-   *
-   * @returns {Promise}
-   */
-  getDomainDDown: function () {
-    return this
-      .getPanelBodyElem()
-      .element(by.css(this.locators.dropDown.domain));
-  },
-
-  /**
-   * ### PurgeCacheBasic.getTextAreaTxt()
-   *
-   * Gets the reference to `Text` text area element.
+   * Gets the reference to `Basic Mode` button element.
    *
    * @returns {Promise}
    */
-  getTextAreaTxt: function () {
+  getBasicModeBtn: function () {
     return this
-      .getPanelBodyElem()
-      .element(by.tagName('textarea'));
+      .getPanelHeadingElem()
+      .element(by.partialLinkText(this.locators.buttons.basicMode.linkText));
   },
 
   /**
-   * ### PurgeCacheBasic.getPurgeBtn()
+   * ### PurgeCacheAdvanced.getPurgeBtn()
    *
    * Gets the reference to `Purge` button element.
    *
@@ -147,7 +143,20 @@ var PurgeCacheBasic = {
   },
 
   /**
-   * ### PurgeCacheBasic.getSearchDomainTxtIn()
+   * ### PurgeCacheAdvanced.getDomainDDown()
+   *
+   * Gets the reference to `Domain` drop down element.
+   *
+   * @returns {Promise}
+   */
+  getDomainDDown: function () {
+    return this
+      .getPanelBodyElem()
+      .element(by.css(this.locators.dropDown.domain));
+  },
+
+  /**
+   * ### PurgeCacheAdvanced.getSearchDomainTxtIn()
    *
    * Gets the reference to `Search Domain` textbox element.
    *
@@ -158,7 +167,73 @@ var PurgeCacheBasic = {
   },
 
   /**
-   * ### PurgeCacheBasic.setSearchDomain()
+   * ### PurgeCacheAdvanced.getAceEditorElem()
+   *
+   * Gets the reference to `Ace Editor` element.
+   *
+   * @returns {Promise}
+   */
+  getAceEditorElem: function () {
+    return this
+      .getPanelBodyElem()
+      .element(by.css(this.locators.jsonEditor.aceEditor.css));
+  },
+
+  /**
+   * ### PurgeCacheAdvanced.getAceContentElem()
+   *
+   * Gets the reference to `Ace Content` textarea element.
+   *
+   * @returns {Promise}
+   */
+  getAceContentElem: function () {
+    return this
+      .getPanelBodyElem()
+      .element(by.css(this.locators.jsonEditor.aceContent));
+  },
+
+  clickEditorViewList: function (indexList) {
+    return this
+      .getPanelBodyElem()
+      .element(by.css('.jsoneditor .menu .modes'))
+      .click();
+  },
+
+  selectViewList: function (indexList) {
+    var view = element.all(by.css('.jsoneditor-contextmenu .menu .type-modes'));
+    return view
+      .get(indexList)
+      .click();
+  },
+
+  changeToView: function () {
+    this.clickEditorViewList();
+    this.selectViewList(1);
+  },
+
+  changeToCode: function () {
+    this.clickEditorViewList();
+    this.selectViewList(1);
+  },
+
+  /**
+   * ### PurgeCacheAdvanced.getJsonExampleElem()
+   *
+   * Gets the reference to `Json Example` text elements.
+   *
+   * @param {String} indexForm to find an example in Purge Cached Objects page.
+   *
+   * @returns {Promise}
+   */
+  getJsonExampleElem: function (indexForm) {
+    return this
+      .getPanelBodyElem()
+      .all(by.css(this.locators.jsonEditor.jsonExamples.css))
+      .get(indexForm);
+  },
+
+  /**
+   * ### PurgeCacheAdvanced.setSearchDomain()
    *
    * Sets value from `Search Domain` textbox element.
    *
@@ -172,22 +247,22 @@ var PurgeCacheBasic = {
   },
 
   /**
-   * ### PurgeCacheBasic.setTextArea()
+   * ### PurgeCacheAdvanced.setAceContent()
    *
-   * Sets value in `Text Area` text area element.
+   * Sets value in `Ace Content` from Ace Editor element.
    *
    * @param {String} Value to Text Area in Purge Cached Objects page.
    *
    * @returns {Promise}
    */
-  setTextArea: function (value) {
+  setAceContent: function (value) {
     return this
-      .getTextAreaTxt()
+      .getAceContentElem()
       .sendKeys(value);
   },
 
   /**
-   * ### PurgeCacheBasic.getTitle()
+   * ### PurgeCacheAdvanced.getTitle()
    *
    * Returns the reference to the `Title` label element (Selenium WebDriver
    * Element) from the Purge Cached Objects page from the Portal app.
@@ -201,7 +276,7 @@ var PurgeCacheBasic = {
   },
 
   /**
-   * ### PurgeCacheBasic.getDomain()
+   * ### PurgeCacheAdvanced.getDomain()
    *
    * Gets the value from `Domain` drop down.
    *
@@ -214,33 +289,35 @@ var PurgeCacheBasic = {
   },
 
   /**
-   * ### PurgeCacheBasic.getTextArea()
+   * ### PurgeCacheAdvanced.getAceContent()
    *
-   * Gets the value from `Text Area` text area element.
+   * Gets the value from `Ace Content` from Ace Editor element.
    *
    * @returns {Promise}
    */
-  getTextArea: function () {
+  getAceContent: function () {
     return this
-      .getTextAreaTxt()
+      .getAceContentElem()
       .getText();
   },
 
   /**
-   * ### PurgeCacheBasic.getExampleText()
+   * ### PurgeCacheAdvanced.getJsonExample()
    *
-   * Gets the value from `Panel Body` area page.
+   * Gets the value from `Json Examples` areas.
+   *
+   * @param {String} indexForm to find an example in Purge Cached Objects page.
    *
    * @returns {Promise}
    */
-  getExampleText: function () {
+  getJsonExample: function (indexForm) {
     return this
-      .getPanelBodyElem()
+      .getJsonExampleElem(indexForm)
       .getText();
   },
 
   /**
-   * ### PurgeCacheBasic.clickAdvancedMode()
+   * ### PurgeCacheAdvanced.clickAdvancedMode()
    *
    * Clicks on the "Advanced Mode" button element.
    *
@@ -253,7 +330,20 @@ var PurgeCacheBasic = {
   },
 
   /**
-   * ### PurgeCacheBasic.clickDomain()
+   * ### PurgeCacheAdvanced.clickBasicMode()
+   *
+   * Clicks on the "Basic Mode" button element.
+   *
+   * @returns {Promise}
+   */
+  clickBasicMode: function () {
+    return this
+      .getBasicModeBtn()
+      .click();
+  },
+
+  /**
+   * ### PurgeCacheAdvanced.clickDomain()
    *
    * Clicks on the `Domain` drop down element.
    *
@@ -266,7 +356,7 @@ var PurgeCacheBasic = {
   },
 
   /**
-   * ### PurgeCacheBasic.clickPurge()
+   * ### PurgeCacheAdvanced.clickPurge()
    *
    * Clicks on the `Purge` button element.
    *
@@ -281,20 +371,21 @@ var PurgeCacheBasic = {
   // ## Helper Methods
 
   /**
-   * ### PurgeCacheBasic.isDisplayed()
+   * ### PurgeCacheAdvanced.isDisplayed()
    *
    * Checks whether the Purge Cached Objects page is displayed in the UI or not.
    *
    * @returns {Promise}
    */
   isDisplayed: function () {
-    return this
-      .getTitle()
-      .isPresent();
+    var title = this.getTitle().isPresent();
+    var aceEditor = this.getAceEditorElem().isPresent();
+    var purgeButton = this.getPurgeBtn().isPresent();
+    return (title && aceEditor && purgeButton);
   },
 
   /**
-   * ### PurgeCacheBasic.selectDomain()
+   * ### PurgeCacheAdvanced.selectDomain()
    *
    * Selects `Domain` name in Drop Down element in Purge Cached Objects page.
    *
@@ -308,4 +399,4 @@ var PurgeCacheBasic = {
   }
 };
 
-module.exports = PurgeCacheBasic;
+module.exports = PurgeCacheAdvanced;
