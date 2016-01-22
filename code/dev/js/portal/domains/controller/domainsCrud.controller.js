@@ -73,22 +73,25 @@
       return model;
     };
 
-    if ($scope.auth.isReseller() || $scope.auth.isRevadmin()) {
-      // Loading list of companies
-      Companies.query(function (list) {
-        $scope.companies = list;
-        if ($scope.companies.length === 1) {
-          $scope.model.account_id = $scope.companies[0].id;
-        }
-      });
-    } else if (!angular.isArray($scope.auth.getUser().companyId)) {
-      $scope.model.account_id = $scope.auth.getUser().companyId;
-    } else if ($scope.auth.getUser().companyId.length === 1) {
-      $scope.model.account_id = $scope.auth.getUser().companyId[0];
-    } else {
-      $scope.fetchCompanies($scope.auth.getUser().companyId);
-    }
+    $scope.setAccountId = function() {
+      if ($scope.auth.isReseller() || $scope.auth.isRevadmin()) {
+        // Loading list of companies
+        Companies.query(function (list) {
+          $scope.companies = list;
+          if ($scope.companies.length === 1) {
+            $scope.model.account_id = $scope.companies[0].id;
+          }
+        });
+      } else if (!angular.isArray($scope.auth.getUser().companyId)) {
+        $scope.model.account_id = $scope.auth.getUser().companyId;
+      } else if ($scope.auth.getUser().companyId.length === 1) {
+        $scope.model.account_id = $scope.auth.getUser().companyId[0];
+      } else {
+        $scope.fetchCompanies($scope.auth.getUser().companyId);
+      }
+    };
 
+    $scope.setAccountId();
     $scope.fetchLocations();
 
     $scope.getDomain = function(id) {
@@ -117,6 +120,7 @@
       $scope.create(model)
         .then(function () {
           $scope.alertService.success('Domain created', 5000);
+          $scope.setAccountId();
         });
     };
 
