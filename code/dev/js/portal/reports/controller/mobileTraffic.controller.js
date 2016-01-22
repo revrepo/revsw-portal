@@ -18,9 +18,9 @@
     $scope.devices = [];
     $scope.countries = [];
     $scope.operators = [];
-    $scope.networks = ['Mobile','WiFi'];
+    $scope.networks = ['Cellular','WiFi'];
 
-    $scope.reload = function() {
+    $scope.reloadDirs = function() {
       $scope._loading = true;
       $scope.oses = [];
       $scope.devices = [];
@@ -35,7 +35,7 @@
         })
         .$promise
         .then( function( data ) {
-          console.log( data );
+          // console.log( data );
           if ( data.data ) {
             $scope.oses = data.data.oses;
             $scope.devices = data.data.devices;
@@ -50,7 +50,7 @@
 
     $scope.$watch( 'application', function() {
       $localStorage.selectedApplicationID = $scope.application;
-      $scope.reload();
+      $scope.reloadDirs();
     });
 
 
@@ -72,7 +72,7 @@
         } else {
           $scope.application = '';
         }
-        return $scope.reload();
+        return $scope.reloadDirs();
       })
       .catch(function () {
         AlertService.danger('Oops! Some shit just happened');
