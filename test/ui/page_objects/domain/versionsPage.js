@@ -32,7 +32,7 @@ var DomainVersions = {
     },
     buttons: {
       backToList: {
-        linkText: 'Back to List'
+        linkText: 'Back To List'
       }
     },
     dropDowns: {

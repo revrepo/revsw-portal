@@ -36,7 +36,7 @@ var EditUser = {
     },
     buttons: {
       backToList: {
-        linkText: 'Back to List'
+        linkText: 'Back To List'
       },
       updateUser: {
         css: 'button.btn-success .glyphicon-ok'
