@@ -64,6 +64,12 @@ var Constants = {
       FBT_REPORTS: 'FBT Reports',
       TRAFFIC_HEATMAPS: 'Traffic Heatmaps',
       RTT_HEATMAPS: 'RTT Heatmaps'
+    },
+    helpSupport: {
+      CUSTOMER_SUPPORT: 'Customer Support',
+      API_DOCUMENTATION: 'API Documentation',
+      KNOWLEDGE_BASE: 'Knowledge Base',
+      NETWORK_STATUS: 'Network Status'
     }
   },
   user: {
