@@ -20,9 +20,9 @@
         var appId;
 
         $scope.iconStaging = 'glyphicon-refresh spin';
-        $scope.tooltipStaging = 'Staging status';
+        $scope.tooltipStaging = 'Staging Status';
         $scope.iconGlobal = 'glyphicon-refresh spin';
-        $scope.tooltipGlobal = 'Global status';
+        $scope.tooltipGlobal = 'Global Status';
 
         $scope.shouldRefresh = true;
 
@@ -64,19 +64,19 @@
                 .iconStaging = $config.DOMAIN_STATUS_ICONS[data.staging_status];
               }
               $scope
-              .tooltipStaging = 'Staging status: ' + data.staging_status;
+              .tooltipStaging = 'Staging Status: ' + data.staging_status;
               if ($config.DOMAIN_STATUS_ICONS[data.global_status]) {
                 $scope
                 .iconGlobal = $config.DOMAIN_STATUS_ICONS[data.global_status];
               }
-              $scope.tooltipGlobal = 'Global status: ' + data.global_status;
+              $scope.tooltipGlobal = 'Global Status: ' + data.global_status;
               $scope.startRefresh();
             })
             .catch(function (err) {
               $scope.iconStaging = 'glyphicon-remove text-danger';
-              $scope.tooltipStaging = 'Staging status: Error';
+              $scope.tooltipStaging = 'Staging Status: Error';
               $scope.iconGlobal = 'glyphicon-remove text-danger';
-              $scope.tooltipGlobal = 'Global status: Error';
+              $scope.tooltipGlobal = 'Global Status: Error';
               $scope.stopRefresh();
             });
         };

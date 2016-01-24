@@ -70,7 +70,7 @@ describe('Workflow', function () {
           .getStagingStatusIcon()
           .getAttribute('tooltip')
           .then(function (tooltip) {
-            expect(tooltip).toEqual('Staging status: InProgress');
+            expect(tooltip).toEqual('Staging Status: InProgress');
             Portal.deleteDomain(myDomain);
           });
       });
@@ -87,7 +87,7 @@ describe('Workflow', function () {
           .getGlobalStatusIcon()
           .getAttribute('tooltip')
           .then(function (tooltip) {
-            expect(tooltip).toEqual('Global status: InProgress');
+            expect(tooltip).toEqual('Global Status: InProgress');
             Portal.deleteDomain(myDomain);
           });
       });
@@ -106,7 +106,7 @@ describe('Workflow', function () {
           .getStagingStatusIcon()
           .getAttribute('tooltip')
           .then(function (tooltip) {
-            expect(tooltip).toEqual('Staging status: Published');
+            expect(tooltip).toEqual('Staging Status: Published');
             Portal.deleteDomain(myDomain);
           });
       });
@@ -125,7 +125,7 @@ describe('Workflow', function () {
           .getGlobalStatusIcon()
           .getAttribute('tooltip')
           .then(function (tooltip) {
-            expect(tooltip).toEqual('Global status: Published');
+            expect(tooltip).toEqual('Global Status: Published');
             Portal.deleteDomain(myDomain);
           });
       });
@@ -151,7 +151,7 @@ describe('Workflow', function () {
           .getGlobalStatusIcon()
           .getAttribute('tooltip')
           .then(function (tooltip) {
-            expect(tooltip).toEqual('Global status: Modified');
+            expect(tooltip).toEqual('Global Status: Modified');
             Portal.deleteDomain(myDomain);
           });
       });
