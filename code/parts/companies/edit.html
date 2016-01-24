@@ -14,9 +14,9 @@
         <div class="row">
           <div class="col-md-12">
             <div class="pull-left">
-              <a ui-sref="{{state}}" class="btn btn-info">
+              <a ui-sref="^" class="btn btn-info">
                 <i class="glyphicon glyphicon-arrow-left"></i>&nbsp;
-                Back to List
+                Back To List
               </a>
             </div>
           </div>
@@ -26,14 +26,14 @@
       <div class="panel-body">
         <form class="form-horizontal" ng-submit="updateCompany(model)">
           <div class="form-group">
-            <label for="name" class="col-sm-2 control-label">Company name</label>
+            <label for="name" class="col-sm-2 control-label">Company Name</label>
             <div class="col-sm-10">
               <input type="text"
                      class="form-control"
                      ng-disabled="_loading"
                      ng-model="model.companyName"
                      id="name"
-                     placeholder="Company name"
+                     placeholder="Company Name"
                      autofocus>
             </div>
           </div>
@@ -43,9 +43,9 @@
             <div class="col-sm-offset-2 col-sm-10">
               <button class="btn btn-success" ng-disabled="_loading">
                 <i class="glyphicon glyphicon-ok"></i>&nbsp;
-                Update company
+                Update Company
               </button>
-              <a ui-sref="{{state}}" class="btn btn-default">
+              <a ui-sref="^" class="btn btn-default">
                 <i class="glyphicon glyphicon-remove"></i>&nbsp;
                 Cancel
               </a>
