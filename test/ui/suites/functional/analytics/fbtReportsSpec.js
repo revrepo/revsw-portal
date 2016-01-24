@@ -56,7 +56,7 @@ describe('Functional', function () {
     it('should create an Average FBT report with custom values',
       function () {
         var dataReport = DataProvider.generateAnalyticsInfo();
-        dataReport.delay = 'Last 7 days';
+        dataReport.delay = 'Last 7 Days';
         dataReport.country = 'Turkey';
         Portal.fbtReportsPage.createAverageFBT(dataReport);
 
@@ -70,7 +70,7 @@ describe('Functional', function () {
     it('should create a FBT values distribution report with default values',
       function () {
         var dataReport = DataProvider.generateAnalyticsInfo();
-        dataReport.delay = 'Last 6 hours';
+        dataReport.delay = 'Last 6 Hours';
         Portal.fbtReportsPage.createFBTValuesDistribution(dataReport);
 
         var getData = Portal.fbtReportsPage.getInfoFBTValuesDistribution();
@@ -83,7 +83,7 @@ describe('Functional', function () {
     it('should create a FBT values distribution report with custom values',
       function () {
         var dataReport = DataProvider.generateAnalyticsInfo();
-        dataReport.delay = 'Last 24 hours';
+        dataReport.delay = 'Last 24 Hours';
         dataReport.country = 'Antigua and Barbuda';
         Portal.fbtReportsPage.createFBTValuesDistribution(dataReport);
 
@@ -97,7 +97,7 @@ describe('Functional', function () {
     it('should create a FBT Heatmap report with default values',
       function () {
         var dataReport = DataProvider.generateAnalyticsInfo();
-        dataReport.delay = 'Last 6 hours';
+        dataReport.delay = 'Last 6 Hours';
         Portal.fbtReportsPage.createFBTHeatmap(dataReport);
 
         var getData = Portal.fbtReportsPage.getInfoFBTHeatmap();
@@ -107,7 +107,7 @@ describe('Functional', function () {
     it('should create a FBT Heatmap report with custom values',
       function () {
         var dataReport = DataProvider.generateAnalyticsInfo();
-        dataReport.delay = 'Last 24 hours';
+        dataReport.delay = 'Last 24 Hours';
         Portal.fbtReportsPage.createFBTHeatmap(dataReport);
 
         var getData = Portal.fbtReportsPage.getInfoFBTHeatmap();

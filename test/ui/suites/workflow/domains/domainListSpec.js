@@ -42,10 +42,7 @@ describe('Workflow', function () {
       Portal.signOut();
     });
 
-    // TODO: BUG: Cannot create a domain after creating other.
-    // For the second domain accountId is not sent
-    it('[BUG: Cannot create a domain after creating other] ' +
-      'should allow to create a domain right after creating other domain',
+    it('should allow to create a domain right after creating other domain',
       function () {
         var firstDomain = DataProvider.generateDomain('first-domain');
         var secondDomain = DataProvider.generateDomain('second-domain');

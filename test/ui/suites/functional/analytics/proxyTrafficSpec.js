@@ -98,7 +98,7 @@ describe('Functional', function () {
     it('should create a custom proxy traffic report for Bandwidth Usage',
       function () {
         var dataReport = DataProvider.generateAnalyticsInfo();
-        dataReport.delay = 'Last 7 day';
+        dataReport.delay = 'Last 7 Day';
         dataReport.country = 'Mexico';
         Portal.proxyTrafficPage.createBandwidthUsageReport(dataReport);
 
@@ -109,7 +109,7 @@ describe('Functional', function () {
     it('should create a custom proxy traffic report for Total Requests',
       function () {
         var dataReport = DataProvider.generateAnalyticsInfo();
-        dataReport.delay = 'Last 7 day';
+        dataReport.delay = 'Last 7 Day';
         dataReport.country = 'France';
         Portal.proxyTrafficPage.createTotalRequestsReport(dataReport);
 
@@ -120,7 +120,7 @@ describe('Functional', function () {
     it('should create a custom proxy traffic report for HTTP HTTPS Hits',
       function () {
         var dataReport = DataProvider.generateAnalyticsInfo();
-        dataReport.delay = 'Last 7 day';
+        dataReport.delay = 'Last 7 Day';
         dataReport.country = 'India';
         Portal.proxyTrafficPage.createHttpHttpsHitsReport(dataReport);
 
@@ -131,7 +131,7 @@ describe('Functional', function () {
     it('should create a custom proxy traffic report for HTTP Status Code',
       function () {
         var dataReport = DataProvider.generateAnalyticsInfo();
-        dataReport.delay = 'Last 7 day';
+        dataReport.delay = 'Last 7 Day';
         dataReport.country = 'Bolivia';
         Portal.proxyTrafficPage.createHttpStatusCodeHitsReport(dataReport);
 
@@ -142,7 +142,7 @@ describe('Functional', function () {
     it('should create a custom proxy traffic report for Request Status',
       function () {
         var dataReport = DataProvider.generateAnalyticsInfo();
-        dataReport.delay = 'Last 7 day';
+        dataReport.delay = 'Last 7 Day';
         dataReport.country = 'Angola';
         Portal.proxyTrafficPage.createRequestStatusReport(dataReport);
 
@@ -153,7 +153,7 @@ describe('Functional', function () {
     it('should create a custom proxy traffic report for Edge Cache Hits',
       function () {
         var dataReport = DataProvider.generateAnalyticsInfo();
-        dataReport.delay = 'Last 7 day';
+        dataReport.delay = 'Last 7 Day';
         dataReport.country = 'Germany';
         Portal.proxyTrafficPage.createEdgeCacheEfficiencyHitsReport(dataReport);
 

@@ -44,7 +44,7 @@ describe('Functional', function () {
     it('should create a Hits Heatmap report with default values',
       function () {
         var dataReport = DataProvider.generateAnalyticsInfo();
-        dataReport.delay = 'Last 6 hours';
+        dataReport.delay = 'Last 6 Hours';
         Portal.trafficHeatmapsPage.createTrafficHeatmaps(dataReport);
         
         var hitsHeatmapImg = Portal.trafficHeatmapsPage.existHitsHeatmapImage();
@@ -59,7 +59,7 @@ describe('Functional', function () {
     it('should create a GBT Heatmap report with custom values',
       function () {
         var dataReport = DataProvider.generateAnalyticsInfo();
-        dataReport.delay = 'Last 24 hours';
+        dataReport.delay = 'Last 24 Hours';
         Portal.trafficHeatmapsPage.createTrafficHeatmaps(dataReport);
 
         var hitsHeatmapImg = Portal.trafficHeatmapsPage.existHitsHeatmapImage();
