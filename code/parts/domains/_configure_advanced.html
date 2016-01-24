@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-sm-12">
       <h2 class="pull-left page-title">
-        Configure domain <strong ng-if="domain">{{domain.domain_name}}</strong>
+        Configure Domain <strong ng-if="domain">{{domain.domain_name}}</strong>
       </h2>
     </div>
   </div>
@@ -14,25 +14,25 @@
           <div class="row">
             <div class="col-md-12">
               <div class="pull-left">
-                <a ui-sref="index.webApp.domains"
+                <a ui-sref="^"
                    ng-disabled="_loading"
                    class="btn btn-default">
                   <i class="glyphicon glyphicon-arrow-left"></i>&nbsp;
-                  Back to List
+                  Back To List
                 </a>
-                <a ui-sref="index.webApp.domains.edit({id: id})"
+                <a ui-sref="^.edit({id: id})"
                    ng-disabled="_loading"
                    class="btn btn-info">
 
                   <i class="glyphicon glyphicon-pencil"></i>&nbsp;
-                  Basic mode
+                  Basic Mode
                 </a>
               </div>
             </div>
           </div>
         </div>
         <div class="panel-body">
-          <alert type="danger" ng-if="!id">Please select domain</alert>
+          <alert type="danger" ng-if="!id">Please Select Domain</alert>
 
           <form class="form-horizontal" ng-show="id">
 
@@ -68,7 +68,7 @@
                     <i class="glyphicon glyphicon-ok" ng-if="!_loading"></i>&nbsp;
                     Publish
                   </button>
-                  <a ui-sref="index.webApp.domains"
+                  <a ui-sref="^"
                      ng-disabled="_loading"
                      class="btn btn-default">
                     <i class="glyphicon glyphicon-remove"></i>&nbsp;

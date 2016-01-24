@@ -53,7 +53,9 @@
 
     $scope.deleteUser = function (model) {
       $scope.confirm('confirmModal.html', model).then(function () {
-        $scope.delete(model);
+        $scope
+          .delete(model)
+          .catch($scope.alertService.danger);
       });
     };
 
@@ -86,7 +88,8 @@
       $scope.create(model)
         .then(function (data) {
           $scope.alertService.success('User created', 5000);
-        });
+        })
+        .catch($scope.alertService.danger);
     };
     // Fetch list of users
     $scope.list();
