@@ -128,10 +128,12 @@
       /**
        * Handle ok button on create
        */
-      modalInstance.result.then(function (account) {
-        $scope.alertService.success('API Key updated.', 5000);
-        $scope.list();
-      });
+      modalInstance.result
+        .then(function (account) {
+          $scope.alertService.success('API Key updated.', 5000);
+          $scope.list();
+        })
+        .catch($scope.alertService.danger);
     };
 
     /**

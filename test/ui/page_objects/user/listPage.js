@@ -38,7 +38,7 @@ var UserList = {
     },
     buttons: {
       addNewUser: {
-        linkText: 'Add new User'
+        linkText: 'Add New User'
       }
     }
   },

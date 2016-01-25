@@ -14,9 +14,9 @@
         <div class="row">
           <div class="col-md-12">
             <div class="pull-left">
-              <a ui-sref="{{state}}" class="btn btn-info">
+              <a ui-sref="^" class="btn btn-info">
                 <i class="glyphicon glyphicon-arrow-left"></i>&nbsp;
-                Back to List
+                Back To List
               </a>
             </div>
           </div>
@@ -61,7 +61,7 @@
             <label for="lastName"
                    class="col-sm-2 control-label"
                    popover-trigger="mouseenter"
-                   popover="Last name">Last name</label>
+                   popover="Last name">Last Name</label>
 
             <div class="col-sm-10">
               <input type="text"
@@ -86,7 +86,7 @@
                       ng-model="model.role"
                       ng-disabled="_loading"
                       ng-options="role for role in roles">
-                <option value="">--- Select role ---</option>
+                <option value="">--- Select Role ---</option>
               </select>
             </div>
           </div>
@@ -147,7 +147,7 @@
                 <input type="checkbox" ng-model="model.access_control_list.test"> Test
               </div>
               <div>
-                <input type="checkbox" ng-model="model.access_control_list.readOnly"> Read only
+                <input type="checkbox" ng-model="model.access_control_list.readOnly"> Read Only
               </div>
             </div>
           </div>
@@ -190,7 +190,7 @@
                       ng-disabled="_loading"
                       ng-click="createUser(model)">
                 <i class="glyphicon glyphicon-ok"></i>&nbsp;
-                Create user
+                Create User
               </button>
               <a ui-sref="{{state}}" class="btn btn-default">
                 <i class="glyphicon glyphicon-remove"></i>&nbsp;

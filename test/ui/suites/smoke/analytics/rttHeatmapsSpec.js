@@ -24,7 +24,7 @@ describe('Smoke', function () {
   describe('RTT Heatmaps', function () {
 
     var adminUser = config.get('portal.users.admin');
-    var noDomain = 'Select domain';
+    var noDomain = 'Select Domain';
 
     beforeAll(function () {
       Portal.signIn(adminUser);

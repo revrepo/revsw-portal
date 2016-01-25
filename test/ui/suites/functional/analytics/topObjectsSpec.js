@@ -44,7 +44,7 @@ describe('Functional', function () {
     it('should create a default report for Top Most Requested Objects report',
       function () {
         var dataReport = DataProvider.generateAnalyticsInfo();
-        dataReport.delay = 'Last 1 hour';
+        dataReport.delay = 'Last 1 Hour';
         Portal.topObjectsPage.createTopMostRequestedObjects(dataReport);
 
         var getData = Portal.topObjectsPage.getTopMostRequestedObjects();
@@ -54,7 +54,7 @@ describe('Functional', function () {
     it('should create a default report for Top Referers report',
       function () {
         var dataReport = DataProvider.generateAnalyticsInfo();
-        dataReport.delay = 'Last 1 hour';
+        dataReport.delay = 'Last 1 Hour';
         Portal.topObjectsPage.createTopReferers(dataReport);
 
         var getData = Portal.topObjectsPage.getTopReferers();
@@ -64,7 +64,7 @@ describe('Functional', function () {
     it('should create a default report for Top Edge Cache Misses report',
       function () {
         var dataReport = DataProvider.generateAnalyticsInfo();
-        dataReport.delay = 'Last 1 hour';
+        dataReport.delay = 'Last 1 Hour';
         Portal.topObjectsPage.createTopEdgeCacheMisses(dataReport);
 
         var getData = Portal.topObjectsPage.getTopEdgeCacheMisses();
@@ -74,7 +74,7 @@ describe('Functional', function () {
     it('should create a default report for Top 404 Not Found Objects report',
       function () {
         var dataReport = DataProvider.generateAnalyticsInfo();
-        dataReport.delay = 'Last 1 hour';
+        dataReport.delay = 'Last 1 Hour';
         Portal.topObjectsPage.createTop404NotFoundObjects(dataReport);
 
         var getData = Portal.topObjectsPage.getTop404NotFoundObjects();
@@ -84,7 +84,7 @@ describe('Functional', function () {
     it('should create a default report for Top Objects with 5XX Error Codes',
       function () {
         var dataReport = DataProvider.generateAnalyticsInfo();
-        dataReport.delay = 'Last 1 hour';
+        dataReport.delay = 'Last 1 Hour';
         Portal.topObjectsPage.createTopObjects5XXErrorCodes(dataReport);
 
         var getData = Portal.topObjectsPage.getTopObjects5XXErrorCodes();
@@ -94,7 +94,7 @@ describe('Functional', function () {
     it('should create a custom report for Top Most Requested Objects',
       function () {
         var dataReport = DataProvider.generateAnalyticsInfo();
-        dataReport.delay = 'Last 12 hours';
+        dataReport.delay = 'Last 12 Hours';
         dataReport.country = 'Mexico';
         dataReport.count = 'Top 5 Records';
         Portal.topObjectsPage.createTopMostRequestedObjects(dataReport);
@@ -106,7 +106,7 @@ describe('Functional', function () {
     it('should create a custom report for Top Referers',
       function () {
         var dataReport = DataProvider.generateAnalyticsInfo();
-        dataReport.delay = 'Last 24 hours';
+        dataReport.delay = 'Last 24 Hours';
         dataReport.country = 'France';
         dataReport.count = 'Top 10 Records';
         Portal.topObjectsPage.createTopReferers(dataReport);
@@ -118,7 +118,7 @@ describe('Functional', function () {
     it('should create a custom report for Top Edge Cache Misses',
       function () {
         var dataReport = DataProvider.generateAnalyticsInfo();
-        dataReport.delay = 'Last 12 hours';
+        dataReport.delay = 'Last 12 Hours';
         dataReport.country = 'India';
         dataReport.count = 'Top 50 Records';
         Portal.topObjectsPage.createTopEdgeCacheMisses(dataReport);
@@ -130,7 +130,7 @@ describe('Functional', function () {
     it('should create a custom report for Top 404 Not Found Objects',
       function () {
         var dataReport = DataProvider.generateAnalyticsInfo();
-        dataReport.delay = 'Last 24 hours';
+        dataReport.delay = 'Last 24 Hours';
         dataReport.country = 'Bolivia';
         dataReport.count = 'Top 100 Records';
         Portal.topObjectsPage.createTop404NotFoundObjects(dataReport);
@@ -142,7 +142,7 @@ describe('Functional', function () {
     it('should create a custom report for Top Objects with 5XX Error Codes',
       function () {
         var dataReport = DataProvider.generateAnalyticsInfo();
-        dataReport.delay = 'Last 12 hours';
+        dataReport.delay = 'Last 12 Hours';
         dataReport.country = 'Angola';
         dataReport.count = 'Top 250 Records';
         Portal.topObjectsPage.createTopObjects5XXErrorCodes(dataReport);

@@ -36,7 +36,7 @@ var AddDomain = {
     },
     buttons: {
       backToList: {
-        linkText: 'Back to List'
+        linkText: 'Back To List'
       },
       createDomain: {
         css: '.btn.btn-success'

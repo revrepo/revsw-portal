@@ -81,7 +81,7 @@ describe('Negative', function () {
       '"Role"',
       function () {
         Portal.userListPage.searchAndClickEdit(carl.email);
-        Portal.editUserPage.userForm.setRole('--- Select role ---');
+        Portal.editUserPage.userForm.setRole('--- Select Role ---');
         Portal.editUserPage.clickUpdateUser();
         var alert = Portal.alerts.getFirst();
         var expectedMessage = 'child "role" fails because ["role" must be ' +
