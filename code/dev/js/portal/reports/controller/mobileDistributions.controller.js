@@ -107,7 +107,7 @@
         app_id: ( $scope.application || null ),
         from_timestamp: moment().subtract( $scope.span, 'hours' ).valueOf(),
         to_timestamp: Date.now(),
-        count: 8
+        count: 10
       };
 
       $scope._loading = true;
