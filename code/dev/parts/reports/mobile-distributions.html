@@ -164,6 +164,52 @@
               </div>
             </div>
           </div>
+          <hr>
+
+          <div class="row">
+            <div class="col-md-12">
+              <h3>Domain Ratio By Requests</h3>
+              <div class="alert alert-info" ng-hide="_loading || domain_hits.length">
+                No data to display
+              </div>
+              <div class="alert alert-info" ng-hide="!_loading">
+                <i class="glyphicon glyphicon-refresh spin"></i>&nbsp; Loading
+              </div>
+              <div ng-hide="_loading || !domain_hits.length">
+                <div style="min-width: 600px; min-height: 400px" pie-chart ng-data="domain_hits" ng-chart-options="hitsChartOpts"></div>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-md-12">
+              <h3>Domain Ratio By Traffic</h3>
+              <div class="alert alert-info" ng-hide="_loading || domain_gbt.length">
+                No data to display
+              </div>
+              <div class="alert alert-info" ng-hide="!_loading">
+                <i class="glyphicon glyphicon-refresh spin"></i>&nbsp; Loading
+              </div>
+              <div ng-hide="_loading || !domain_gbt.length">
+                <div style="min-width: 600px; min-height: 400px" pie-chart ng-data="domain_gbt" ng-chart-options="gbtChartOpts"></div>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-md-12">
+              <h3>HTTP Status Codes By Requests</h3>
+              <div class="alert alert-info" ng-hide="_loading || status_code_hits.length">
+                No data to display
+              </div>
+              <div class="alert alert-info" ng-hide="!_loading">
+                <i class="glyphicon glyphicon-refresh spin"></i>&nbsp; Loading
+              </div>
+              <div ng-hide="_loading || !status_code_hits.length">
+                <div style="min-width: 600px; min-height: 400px" pie-chart ng-data="status_code_hits" ng-chart-options="hitsChartOpts"></div>
+              </div>
+            </div>
+          </div>
 
         </div>
 

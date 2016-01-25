@@ -22,6 +22,9 @@
     $scope.status_gbt = [];
     $scope.cache_hits = [];
     $scope.cache_gbt = [];
+    $scope.domain_hits = [];
+    $scope.domain_gbt = [];
+    $scope.status_code_hits = [];
 
     $scope.span = '24';
     $scope.gbtChartOpts = {
@@ -42,7 +45,7 @@
     };
 
     //  ---------------------------------
-    $scope.reloadOne = function ( name, filters ) {
+    $scope.reloadTwo = function ( name, filters ) {
 
       $scope[name + '_hits'] = [];
       $scope[name + '_gbt'] = [];
@@ -70,6 +73,27 @@
     };
 
     //  ---------------------------------
+    $scope.reloadOne = function ( name, filters ) {
+
+      $scope[name + '_hits'] = [];
+      filters.report_type = name;
+      return Stats.sdk_distributions( filters )
+        .$promise
+        .then(function (data) {
+          if (data.data && data.data.length > 0) {
+            var hits = [];
+            angular.forEach(data.data, function (item) {
+              hits.push({
+                name: item.key,
+                y: item.count
+              });
+            });
+            $scope[name + '_hits'] = hits;
+          }
+        });
+    };
+
+    //  ---------------------------------
     $scope.reload = function() {
 
       if ( $scope._loading ||
@@ -82,15 +106,18 @@
         account_id: $scope.account,
         app_id: ( $scope.application || null ),
         from_timestamp: moment().subtract( $scope.span, 'hours' ).valueOf(),
-        to_timestamp: Date.now()
+        to_timestamp: Date.now(),
+        count: 8
       };
 
       $scope._loading = true;
       $q.all([
-          $scope.reloadOne( 'destination', filters ),
-          $scope.reloadOne( 'transport', filters ),
-          $scope.reloadOne( 'status', filters ),
-          $scope.reloadOne( 'cache', filters )
+          $scope.reloadTwo( 'destination', filters ),
+          $scope.reloadTwo( 'transport', filters ),
+          $scope.reloadTwo( 'status', filters ),
+          $scope.reloadTwo( 'cache', filters ),
+          $scope.reloadTwo( 'domain', filters ),
+          $scope.reloadOne( 'status_code', filters )
         ])
         .finally(function () {
           $scope._loading = false;
