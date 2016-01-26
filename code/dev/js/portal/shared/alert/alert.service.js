@@ -16,12 +16,21 @@
      * @param {number=} [timeout]
      */
     function add(alert, timeout) {
-      alerts.push(alert);
+      // Will check existing same message
+      var exists = false;
+      angular.forEach(alerts, function (record) {
+        if (record.message === alert.message && record.type === alert.type) {
+          exists = true;
+        }
+      });
+      if (!exists) {
+        alerts.push(alert);
 
-      if (timeout) {
-        $interval(remove.bind(this, alert), timeout, 1);
+        if (timeout) {
+          $interval(remove.bind(this, alert), timeout, 1);
+        }
       }
-    };
+    }
 
     /**
      * Add a success alert
@@ -37,7 +46,7 @@
         type: 'success',
         message: msg || ''
       }, timeout);
-    };
+    }
 
     /**
      * Add a danger alert
@@ -63,7 +72,7 @@
         type: 'danger',
         message: msg || ''
       }, timeout);
-    };
+    }
 
     function remove(alert) {
       var idx = alerts.indexOf(alert);
@@ -71,14 +80,14 @@
         return;
       }
       alerts.splice(idx, 1);
-    };
+    }
 
     /**
      * Clear all alerts
      */
     function clear() {
       alerts.splice(0, alerts.length);
-    };
+    }
 
     return {
       alerts: alerts,
@@ -93,5 +102,5 @@
 
       clear: clear
     };
-  };
+  }
 })();
