@@ -61,7 +61,7 @@
       // Check if err obj passed from `.catch()`
       if (angular.isObject(msg)) {
         if (msg.status === 403) {
-          msg = 'Access denied. Do you have a read-only user account ?';
+          msg = 'Access denied. Do you have a read-only user account?';
         } else if (msg && msg.data && msg.data.message) {
           msg = msg.data.message;
         } else {
