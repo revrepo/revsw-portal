@@ -73,27 +73,6 @@
     };
 
     //  ---------------------------------
-    $scope.reloadOne = function ( name, filters ) {
-
-      $scope[name + '_hits'] = [];
-      filters.report_type = name;
-      return Stats.sdk_distributions( filters )
-        .$promise
-        .then(function (data) {
-          if (data.data && data.data.length > 0) {
-            var hits = [];
-            angular.forEach(data.data, function (item) {
-              hits.push({
-                name: item.key,
-                y: item.count
-              });
-            });
-            $scope[name + '_hits'] = hits;
-          }
-        });
-    };
-
-    //  ---------------------------------
     $scope.reload = function() {
 
       if ( $scope._loading ||
@@ -116,8 +95,6 @@
           $scope.reloadTwo( 'transport', filters ),
           $scope.reloadTwo( 'status', filters ),
           $scope.reloadTwo( 'cache', filters ),
-          $scope.reloadTwo( 'domain', filters ),
-          $scope.reloadOne( 'status_code', filters )
         ])
         .finally(function () {
           $scope._loading = false;
