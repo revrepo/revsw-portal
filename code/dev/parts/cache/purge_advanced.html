@@ -16,6 +16,9 @@
           <div class="row">
             <div class="col-md-12">
               <div class="pull-left">
+                <div domain-select ng-model="domain" on-select="onDomainSelected()"></div>
+              </div>
+              <div class="pull-right">
                 <a ui-sref="^.cache" class="btn btn-info">
                   <i class="glyphicon glyphicon-arrow-left"></i>&nbsp;
                   Basic Mode
@@ -29,15 +32,7 @@
           <form class="form-horizontal">
 
             <div class="form-group">
-              <label for="domain" class="col-sm-2 control-label">Domain</label>
-
-              <div class="col-sm-10">
-                <div domain-select ng-model="domain" on-select="onDomainSelected()"></div>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <div class="col-md-5 col-md-offset-2 no-left-padding">
+              <div class="col-md-7 no-left-padding">
                 <div name="json"
                      class="col-md-12"
                      id="json"
