@@ -31,6 +31,10 @@
     $scope.network_users = [];
     $scope.network_gbt = [];
 
+    $scope.domain_hits = [];
+    $scope.domain_gbt = [];
+    $scope.status_code_hits = [];
+
     $scope.span = '24';
 
     $scope.gbtChartOpts = {
@@ -85,6 +89,28 @@
     };
 
     //  ---------------------------------
+    $scope.reloadOther = function ( type, name, count, filters ) {
+
+      $scope[name + '_' + type] = [];
+      filters.report_type = name;
+      filters.count = count;
+      return Stats.sdk_distributions( filters )
+        .$promise
+        .then(function (data) {
+          if (data.data && data.data.length > 0) {
+            var newData = [];
+            angular.forEach(data.data, function (item) {
+              newData.push({
+                name: item.key,
+                y: ( type === 'gbt' ? item.received_bytes : item.count )
+              });
+            });
+            $scope[name + '_' + type] = newData;
+          }
+        });
+    };
+
+    //  ---------------------------------
     $scope.reload = function() {
 
       if ( $scope._loading ||
@@ -116,7 +142,10 @@
           $scope.reloadOne( 'gbt', 'operator', 20, filters ),
           $scope.reloadOne( 'hits', 'network', 2, filters ),
           $scope.reloadOne( 'users', 'network', 2, filters ),
-          $scope.reloadOne( 'gbt', 'network', 2, filters )
+          $scope.reloadOne( 'gbt', 'network', 2, filters ),
+          $scope.reloadOther( 'gbt', 'domain', 10, filters ),
+          $scope.reloadOther( 'hits', 'domain', 10, filters ),
+          $scope.reloadOther( 'hits', 'status_code', 10, filters )
         ])
         .finally(function () {
           $scope._loading = false;
