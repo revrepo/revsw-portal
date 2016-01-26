@@ -14,18 +14,18 @@
         <div class="row">
           <div class="col-md-12">
             <div class="pull-left">
-              <a ui-sref="{{state}}"
+              <a ui-sref="^"
                  ng-disabled="_loading"
                  class="btn btn-default">
                 <i class="glyphicon glyphicon-arrow-left"></i>&nbsp;
-                Back to List
+                Back To List
               </a>
-              <a ui-sref="index.webApp.domains.advanced({id: params.id})"
+              <a ui-sref="^.advanced({id: params.id})"
                  ng-disabled="_loading"
                  class="btn btn-info">
 
                 <i class="glyphicon glyphicon-cog"></i>&nbsp;
-                Advanced mode
+                Advanced Mode
               </a>
             </div>
           </div>
@@ -38,7 +38,7 @@
             <label for="domain_name"
                    class="col-sm-2 control-label"
                    popover-trigger="mouseenter"
-                   >Domain name</label>
+                   >Domain Name</label>
 
             <div class="col-sm-10">
               <input type="text"
@@ -47,7 +47,7 @@
                      autofocus
                      ng-model="model.domain_name"
                      id="domain_name"
-                     placeholder="Domain name">
+                     placeholder="Domain Name">
             </div>
           </div>
           <div class="form-group">
@@ -78,7 +78,7 @@
                       ng-model="model.account_id"
                       id="account_id"
                       ng-options="obj.id as obj.companyName for obj in companies">
-                <option value="">--- Select company ---</option>
+                <option value="">--- Select Company ---</option>
               </select>
             </div>
           </div>
@@ -95,7 +95,7 @@
                      ng-disabled="_loading"
                      ng-model="model.origin_server"
                      id="origin_server"
-                     placeholder="Origin Server name">
+                     placeholder="Origin Server Name">
             </div>
           </div>
           <div class="form-group">
@@ -127,7 +127,7 @@
                       ng-model="model.origin_server_location_id"
                       id="origin_server_location_id"
                       ng-options="obj.id as obj.locationName for obj in locations">
-                <option value="">--- Select location ---</option>
+                <option value="">--- Select Location ---</option>
               </select>
             </div>
           </div>
@@ -157,23 +157,23 @@
                       ng-click="validateDomain(model)">
                 <i class="glyphicon glyphicon-refresh spin" ng-if="_loading"></i>
                 <i class="glyphicon glyphicon-ok" ng-if="!_loading"></i>&nbsp;
-                Validate domain
+                Validate Domain
               </button>
               <button class="btn btn-success"
                       ng-disabled="_loading"
                       ng-click="updateDomain(model)">
                 <i class="glyphicon glyphicon-refresh spin" ng-if="_loading"></i>
                 <i class="glyphicon glyphicon-ok" ng-if="!_loading"></i>&nbsp;
-                Update domain
+                Update Domain
               </button>
               <button class="btn btn-success"
                       ng-disabled="_loading"
                       ng-click="publishDomain(model)">
                 <i class="glyphicon glyphicon-refresh spin" ng-if="_loading"></i>
                 <i class="glyphicon glyphicon-ok" ng-if="!_loading"></i>&nbsp;
-                Publish domain
+                Publish Domain
               </button>
-              <a ui-sref="{{state}}" class="btn btn-default">
+              <a ui-sref="^" class="btn btn-default">
                 <i class="glyphicon glyphicon-remove"></i>&nbsp;
                 Cancel
               </a>

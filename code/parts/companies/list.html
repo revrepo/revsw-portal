@@ -33,7 +33,7 @@
                    ui-sref=".new"
                    class="btn btn-success">
                   <i class="glyphicon glyphicon-plus"></i>&nbsp;
-                  Add new Company
+                  Add New Company
                 </a>
               </div>
 
@@ -72,7 +72,7 @@
                 <span class="sortorder" ng-show="filter.predicate === 'createdBy'" ng-class="{reverse: filter.reverse}"></span>
               </th>
               <th>
-                <a href="" ng-click="order('created_at')">Created at</a>
+                <a href="" ng-click="order('created_at')">Created At</a>
                 <span class="sortorder" ng-show="filter.predicate === 'created_at'" ng-class="{reverse: filter.reverse}"></span>
               </th>
               <th></th>
@@ -86,10 +86,10 @@
               <td>{{item.created_at}}</td>
               <td class="actions">
                 <i class="glyphicon glyphicon-refresh spin" ng-if="item.loading"></i>
-                <a ui-sref=".edit({id: item.id})" ng-if="!item.loading" tooltip="Edit company">
+                <a ui-sref=".edit({id: item.id})" ng-if="!item.loading" tooltip="Edit Company">
                   <i class="glyphicon glyphicon-pencil"></i>
                 </a>
-                <a href="" ng-if="!item.loading" ng-click="deleteCompany(item)" tooltip="Delete company">
+                <a href="" ng-if="!item.loading" ng-click="deleteCompany(item)" tooltip="Delete Company">
                   <i class="glyphicon glyphicon-trash"></i>
                 </a>
               </td>

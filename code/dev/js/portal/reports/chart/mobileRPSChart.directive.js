@@ -3,25 +3,47 @@
 
   angular
     .module( 'revapm.Portal.Mobile' )
-    .directive( 'mobileTrafficCharts', mobileTrafficChartsDirective );
+    .directive( 'mobileRpsChart', mobileRpsChartDirective );
 
   /*@ngInject*/
-  function mobileTrafficChartsDirective() {
+  function mobileRpsChartDirective() {
 
     return {
       restrict: 'AE',
-      templateUrl: 'parts/reports/charts/mobile-traffic.html',
+      templateUrl: 'parts/reports/charts/mobile-base-traffic.html',
       scope: {
         ngAccount: '=',
-        ngApp: '='
+        ngApp: '=',
+        flOses: '=',
+        flDevices: '=',
+        flCountries: '=',
+        flOperators: '=',
+        flNetworks: '='
       },
       /*@ngInject*/
       controller: function( $scope, Stats, Util ) {
 
+        $scope.heading = 'Requests Per Second Graph';
         $scope.span = '1';
         $scope._loading = false;
 
-        $scope.hitsChartOptions = {
+        $scope.hits = {
+          labels: [],
+          series: []
+        };
+
+        $scope.filters = {
+          from_timestamp: moment().subtract(1, 'days').valueOf(),
+          to_timestamp: Date.now(),
+          os: null,
+          device: null,
+          country: null,
+          operator: null,
+          network: null
+        };
+
+        //  ---------------------------------
+        $scope.chartOptions = {
           yAxis: {
             title: {
               text: 'Requests Per Second'
@@ -40,27 +62,8 @@
           }
         };
 
-        $scope.trafficChartOptions = {
-          yAxis: {
-            title: {
-              text: 'Bandwidth'
-            },
-            labels: {
-              formatter: function() {
-                return Util.convertTraffic( this.value );
-              }
-            }
-          },
-          tooltip: {
-            formatter: function() {
-              // console.log( this.series );
-              return '<strong>' + this.x + '</strong><br/>' +
-                this.series.name + ': <strong>' + Util.convertTraffic( this.y ) + '</strong>';
-            }
-          }
-        };
-
-        $scope.reloadTrafficStats = function() {
+        //  ---------------------------------
+        $scope.reload = function() {
 
           $scope._loading = true;
           $scope.hits = {
@@ -70,23 +73,10 @@
               data: []
             }]
           };
-          $scope.traffic = {
-            labels: [],
-            series: [{
-              name: 'Incoming Bandwidth',
-              data: []
-            }, {
-              name: 'Outgoing Bandwidth',
-              data: []
-            }]
-          };
 
-          Stats.sdk_flow({
-              account_id: $scope.ngAccount,
-              app_id: ( $scope.ngApp || null ),
-              from_timestamp: moment().subtract( $scope.span, 'days' ).valueOf(),
-              to_timestamp: Date.now()
-            })
+          $scope.filters.account_id = $scope.ngAccount;
+          $scope.filters.app_id = ( $scope.ngApp || null );
+          return Stats.sdk_flow( $scope.filters )
             .$promise
             .then( function( data ) {
 
@@ -94,13 +84,6 @@
                 name: 'RPS',
                 data: []
               } ];
-              var traffic_series = [ {
-                name: 'Incoming Bandwidth',
-                data: []
-              }, {
-                name: 'Outgoing Bandwidth',
-                data: []
-              }, ];
 
               if ( data.data && data.data.length > 0 ) {
                 var labels = [];
@@ -110,16 +93,10 @@
                 angular.forEach( data.data, function( item ) {
                   labels.push( moment( item.time + offset /*to show the _end_ of interval instead of begin*/ ).format( 'MMM Do YY h:mm' ) );
                   hits_series[ 0 ].data.push( Math.round( item.hits / interval ) );
-                  traffic_series[ 0 ].data.push( Math.round( item.received_bytes / interval ) );
-                  traffic_series[ 1 ].data.push( Math.round( item.sent_bytes / interval ) );
                 } );
                 $scope.hits = {
                   labels: labels,
                   series: hits_series
-                };
-                $scope.traffic = {
-                  labels: labels,
-                  series: traffic_series
                 };
               }
             })
@@ -128,9 +105,10 @@
             } );
         };
 
+        //  ---------------------------------
         $scope.$watch( 'ngApp', function() {
           if ( $scope.ngAccount || $scope.ngApp ) {
-            $scope.reloadTrafficStats();
+            $scope.reload();
           }
         });
       }

@@ -21,6 +21,7 @@
     $scope.device = [];
     $scope.country = [];
     $scope.statusCode = [];
+    $scope.requestStatus = [];
 
     $scope.countries = Countries.query();
     $scope.delay = '24';
@@ -29,7 +30,7 @@
     /**
      * Reload list of OS
      *
-     * @param {string|number} domainId
+     * @param {object} common parameters(domainId, from, to)
      */
     $scope.reloadOS = function ( filters ) {
 
@@ -53,7 +54,7 @@
     /**
      * List of devices
      *
-     * @param {string|number} domainId
+     * @param {object} common parameters(domainId, from, to)
      */
     $scope.reloadDevice = function ( filters ) {
       $scope.device = [];
@@ -76,7 +77,7 @@
     /**
      * List of devices
      *
-     * @param {string|number} domainId
+     * @param {object} common parameters(domainId, from, to)
      */
     $scope.reloadProtocol = function ( filters ) {
       $scope.protocol = [];
@@ -106,7 +107,7 @@
     /**
      * List of devices
      *
-     * @param {string|number} domainId
+     * @param {object} common parameters(domainId, from, to)
      */
     $scope.reloadHttpMethod = function ( filters ) {
       $scope.httpMethod = [];
@@ -129,7 +130,7 @@
     /**
      * List of devices
      *
-     * @param {string|number} domainId
+     * @param {object} common parameters(domainId, from, to)
      */
     $scope.reloadHttpProtocol = function ( filters ) {
       $scope.httpProtocol = [];
@@ -152,7 +153,7 @@
     /**
      * List of devices
      *
-     * @param {string|number} domainId
+     * @param {object} common parameters(domainId, from, to)
      */
     $scope.reloadStatusCode = function ( filters ) {
       $scope.statusCode = [];
@@ -175,7 +176,7 @@
     /**
      * List of devices
      *
-     * @param {string|number} domainId
+     * @param {object} common parameters(domainId, from, to)
      */
     $scope.reloadContentType = function ( filters ) {
       $scope.contentType = [];
@@ -198,7 +199,7 @@
     /**
      * List of devices
      *
-     * @param {string|number} domainId
+     * @param {object} common parameters(domainId, from, to)
      */
     $scope.reloadCacheStatus = function ( filters ) {
       $scope.cacheStatus = [];
@@ -221,7 +222,7 @@
     /**
      * QUIC/non-QUIC requests distribution
      *
-     * @param {string|number} domainId
+     * @param {object} common parameters(domainId, from, to)
      */
     $scope.reloadQUIC = function ( filters ) {
 
@@ -245,7 +246,7 @@
     /**
      * H2/H2C HTTP2 requests distribution
      *
-     * @param {string|number} domainId
+     * @param {object} common parameters(domainId, from, to)
      */
     $scope.reloadHTTP2 = function ( filters ) {
 
@@ -270,7 +271,7 @@
     /**
      * List of country
      *
-     * @param {string|number} domainId
+     * @param {object} common parameters(domainId, from, to)
      */
     $scope.reloadCountry = function ( filters ) {
       $scope.country = [];
@@ -287,6 +288,39 @@
               });
             });
             $scope.country = newData;
+          }
+        });
+    };
+
+    /**
+     * success/failed requests distribution
+     *
+     * @param {object} common parameters(domainId, from, to)
+     */
+    $scope.reloadRequestStatus = function ( filters ) {
+
+      $scope.requestStatus = [];
+      Stats.requestStatus( filters )
+        .$promise
+        .then(function (data) {
+          if (data.data && data.data.length > 0) {
+
+            var st = [{
+              name: 'Successfull',
+              y: 0
+            },{
+              name: 'Failed',
+              y: 0
+            }];
+
+            angular.forEach(data.data, function (item) {
+              if ( item.key === 'OK' ) {
+                st[0].y = item.count;
+              } else {
+                st[1].y += item.count;
+              }
+            });
+            $scope.requestStatus = st;
           }
         });
     };
@@ -313,6 +347,7 @@
       $scope.reloadCacheStatus( filters );
       $scope.reloadQUIC( filters );
       $scope.reloadHTTP2( filters );
+      $scope.reloadRequestStatus( filters );
     };
 
     // Load user domains

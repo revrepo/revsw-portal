@@ -91,7 +91,7 @@ var DataProvider = {
       name: '',
       originServer: '',
       originHostHeader: '',
-      originLocation: '--- Select location ---'
+      originLocation: '--- Select Location ---'
     };
   },
 
@@ -123,7 +123,7 @@ var DataProvider = {
       };
     }
     return {
-      delay: 'Last 1 day',
+      delay: 'Last 1 Day',
       country: 'All Countries',
       os: 'All OS',
       device: 'All Devices',

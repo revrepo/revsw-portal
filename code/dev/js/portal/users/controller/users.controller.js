@@ -53,7 +53,9 @@
 
     $scope.deleteUser = function (model) {
       $scope.confirm('confirmModal.html', model).then(function () {
-        $scope.delete(model);
+        $scope
+          .delete(model)
+          .catch($scope.alertService.danger);
       });
     };
 
@@ -69,9 +71,7 @@
         .then(function (data) {
           $scope.alertService.success('User updated', 5000);
         })
-        .catch(function (err) {
-          $scope.alertService.danger(err.data.message || 'Oops something ment wrong', 5000);
-        });
+        .catch($scope.alertService.danger);
     };
 
     $scope.createUser = function (model) {
@@ -88,7 +88,8 @@
       $scope.create(model)
         .then(function (data) {
           $scope.alertService.success('User created', 5000);
-        });
+        })
+        .catch($scope.alertService.danger);
     };
     // Fetch list of users
     $scope.list();

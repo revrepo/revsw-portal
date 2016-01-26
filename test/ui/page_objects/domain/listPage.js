@@ -38,7 +38,7 @@ var DomainList = {
     },
     buttons: {
       addNewDomain: {
-        linkText: 'Add new Domain'
+        linkText: 'Add New Domain'
       }
     }
   },

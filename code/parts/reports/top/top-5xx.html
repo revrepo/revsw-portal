@@ -1,5 +1,5 @@
 
-<h3>Top Objects with 5XX Error Codes</h3>
+<h3>Top Objects With 5XX Error Codes</h3>
 <div filter-top-objects
      ng-hide="!ngDomain"
      fl-os="flOs"
@@ -22,7 +22,7 @@
       <thead>
       <tr>
         <th>Request</th>
-        <th>Count</th>
+        <th style="width: 10%;">Count</th>
       </tr>
       </thead>
       <tbody>
@@ -30,7 +30,7 @@
           <td>
             <a target="_blank" ng-href="http://{{ngDomain.domain_name}}{{req.request}}">{{req.request}}</a>
           </td>
-          <td>{{req.count}}</td>
+          <td class="text-right">{{req.count}}</td>
         </tr>
       </tbody>
     </table>

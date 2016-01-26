@@ -36,7 +36,7 @@ var AddUser = {
     },
     buttons: {
       backToList: {
-        linkText: 'Back to List'
+        linkText: 'Back To List'
       },
       createUser: {
         css: '.btn-success .glyphicon-ok'

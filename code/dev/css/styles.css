@@ -15,7 +15,6 @@ body {
   min-height: 100%;
 }
 .page-inner {
-  padding-top: 20px;
   background-color: #eeeeee;
 }
 .layout {
@@ -104,6 +103,9 @@ table tbody .actions a {
 }
 select.form-control.fixed {
   width: 150px;
+}
+select.form-control.fixed135 {
+  width: 135px;
 }
 .popover {
   z-index: 999;
@@ -251,6 +253,9 @@ section[drawer] .side-menu .side-menu-item i {
 .navbar {
   margin: 0;
   border: none;
+}
+.navbar .navbar-inner a.two-line {
+  line-height: 30px;
 }
 .navbar .navbar-inner li.active {
   border-bottom: 2px solid #66b2bf;

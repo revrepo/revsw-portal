@@ -77,6 +77,13 @@
           report_type: 'cache_status'
         }
       },
+      requestStatus: {
+        method: 'GET',
+        url: $config.API_URL + '/stats/top/:domainId',
+        params: {
+          report_type: 'request_status'
+        }
+      },
       quic: {
         method: 'GET',
         url: $config.API_URL + '/stats/top/:domainId',
@@ -149,9 +156,19 @@
         params: {}
       },
 
+      sdk_dirs: {
+        method: 'GET',
+        url: $config.API_URL + '/stats/sdk/dirs',
+        params: {}
+      },
       sdk_flow: {
         method: 'GET',
         url: $config.API_URL + '/stats/sdk/flow',
+        params: {}
+      },
+      sdk_agg_flow: {
+        method: 'GET',
+        url: $config.API_URL + '/stats/sdk/agg_flow',
         params: {}
       },
       sdk_top_hits: {

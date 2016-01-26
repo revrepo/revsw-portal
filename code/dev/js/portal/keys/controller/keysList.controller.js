@@ -71,9 +71,7 @@
           $scope.list();
           return data
         })
-        .catch(function (err) {
-          $scope.alertService.danger(err);
-        })
+        .catch($scope.alertService.danger)
         .finally(function () {
           $scope._loading = false;
         });
@@ -130,10 +128,12 @@
       /**
        * Handle ok button on create
        */
-      modalInstance.result.then(function (account) {
-        $scope.alertService.success('API Key updated.', 5000);
-        $scope.list();
-      });
+      modalInstance.result
+        .then(function (account) {
+          $scope.alertService.success('API Key updated.', 5000);
+          $scope.list();
+        })
+        .catch($scope.alertService.danger);
     };
 
     /**
@@ -168,9 +168,7 @@
         .then(function (data) {
           return data;
         })
-        .catch(function (err) {
-          $scope.alertService.danger(err);
-        })
+        .catch($scope.alertService.danger)
         .finally(function () {
           key.loading = false;
         });

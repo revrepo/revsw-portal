@@ -72,7 +72,7 @@ describe('Functional', function () {
 
     it('should not update domain with value in origin server location field',
       function () {
-        var location = '--- Select location ---';
+        var location = '--- Select Location ---';
         Portal.domains.listPage.searchAndClickEdit(myDomain.name);
         Portal.domains.editPage.domainForm.setDomainOriginLocation(location);
         Portal.domains.editPage.clickUpdateDomain();
@@ -99,7 +99,7 @@ describe('Functional', function () {
 
     it('should validate the length value in domain origin location select',
       function () {
-        var location = '--- Select location ---';
+        var location = '--- Select Location ---';
         Portal.domains.listPage.searchAndClickEdit(myDomain.name);
         Portal.domains.editPage.domainForm.setDomainOriginLocation(location);
         Portal.domains.editPage.clickValidateDomain();
@@ -126,7 +126,7 @@ describe('Functional', function () {
 
     it('should not publish domain with value in origin server location field',
       function () {
-        var location = '--- Select location ---';
+        var location = '--- Select Location ---';
         Portal.domains.listPage.searchAndClickEdit(myDomain.name);
         Portal.domains.editPage.domainForm.setDomainOriginLocation(location);
         Portal.domains.editPage.clickPublishDomain();

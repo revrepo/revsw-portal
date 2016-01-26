@@ -1,4 +1,4 @@
-<div class="container-fluid" style="margin-top: -40px;">
+<div class="container-fluid">
   <div class="row">
     <div class="col-md-12">
       <h2>Traffic Levels</h2>
@@ -33,9 +33,42 @@
 
           <div class="row">
             <div class="col-lg-12">
-              <div mobile-traffic-charts
+              <div mobile-rps-chart
                    ng-account="account"
-                   ng-app="application"></div>
+                   ng-app="application"
+                   fl-oses="oses"
+                   fl-devices="devices"
+                   fl-countries="countries"
+                   fl-operators="operators"
+                   fl-networks="networks"></div>
+            </div>
+          </div>
+          <hr>
+
+          <div class="row">
+            <div class="col-lg-12">
+              <div mobile-bw-chart
+                   ng-account="account"
+                   ng-app="application"
+                   fl-oses="oses"
+                   fl-devices="devices"
+                   fl-countries="countries"
+                   fl-operators="operators"
+                   fl-networks="networks"></div>
+            </div>
+          </div>
+          <hr>
+
+          <div class="row">
+            <div class="col-lg-12">
+              <div mobile-http-codes-chart
+                   ng-account="account"
+                   ng-app="application"
+                   fl-oses="oses"
+                   fl-devices="devices"
+                   fl-countries="countries"
+                   fl-operators="operators"
+                   fl-networks="networks"></div>
             </div>
           </div>
 
