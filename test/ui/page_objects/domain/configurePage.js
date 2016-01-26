@@ -34,7 +34,7 @@ var ConfigureDomain = {
     },
     buttons: {
       backToList: {
-        linkText: 'Back to List'
+        linkText: 'Back To List'
       }
     }
   },

@@ -98,7 +98,7 @@ describe('Negative', function () {
     it('should not create a domain, if location list option is not selected ',
       function () {
         var myDomain = DataProvider.generateDomain('mydomain');
-        myDomain.originLocation = '--- Select location ---';
+        myDomain.originLocation = '--- Select Location ---';
         Portal.getDomainsPage();
         Portal.domains.listPage.clickAddNewDomain();
         Portal.domains.addPage.createDomain(myDomain);

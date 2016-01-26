@@ -1,3 +1,5 @@
+<h3 style="margin-top: 0;">{{ heading }}</h3>
+
 <div class="clearfix" style="margin-bottom: 8px;">
   <div class="pull-right">
 
@@ -20,7 +22,6 @@
 </div>
 
 <div ng-if="!_loading">
-  <h3 style="margin-top: 0;">{{ heading }}</h3>
   <div class="alert alert-info" ng-if="!_loading && !hits.labels.length">
     No data to display
   </div>

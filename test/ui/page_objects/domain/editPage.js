@@ -36,13 +36,13 @@ var EditDomain = {
     },
     buttons: {
       backToList: {
-        linkText: 'Back to List'
+        linkText: 'Back To List'
       },
       advancedMode: {
-        linkText: 'Advanced mode'
+        linkText: 'Advanced Mode'
       },
       basicMode: {
-        linkText: 'Basic mode'
+        linkText: 'Basic Mode'
       },
       validateDomain: {
         css: '[ng-click="validateDomain(model)"]'

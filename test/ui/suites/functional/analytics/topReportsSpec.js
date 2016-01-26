@@ -44,7 +44,7 @@ describe('Functional', function () {
     it('should create a Top Proxy Traffic Report with default values',
       function () {
         var dataReport = DataProvider.generateAnalyticsInfo();
-        dataReport.delay = 'Last 1 hour';
+        dataReport.delay = 'Last 1 Hour';
         Portal.topReportsPage.createReport(dataReport);
 
         var getData = Portal.topReportsPage.getReportInfo();
@@ -54,7 +54,7 @@ describe('Functional', function () {
     it('should create a Top Proxy Traffic Report with custom values',
       function () {
         var dataReport = DataProvider.generateAnalyticsInfo();
-        dataReport.delay = 'Last 24 hours';
+        dataReport.delay = 'Last 24 Hours';
         dataReport.country = 'Russian Federation';
         Portal.topReportsPage.createReport(dataReport);
 

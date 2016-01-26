@@ -42,10 +42,7 @@ describe('Workflow', function () {
       Portal.signOut();
     });
 
-    // TODO: BUG: Cannot create a domain after creating other.
-    // For the second domain accountId is not sent
-    it('[BUG: Cannot create a domain after creating other] ' +
-      'should allow to create a domain right after creating other domain',
+    it('should allow to create a domain right after creating other domain',
       function () {
         var firstDomain = DataProvider.generateDomain('first-domain');
         var secondDomain = DataProvider.generateDomain('second-domain');
@@ -70,7 +67,7 @@ describe('Workflow', function () {
           .getStagingStatusIcon()
           .getAttribute('tooltip')
           .then(function (tooltip) {
-            expect(tooltip).toEqual('Staging status: InProgress');
+            expect(tooltip).toEqual('Staging Status: InProgress');
             Portal.deleteDomain(myDomain);
           });
       });
@@ -87,7 +84,7 @@ describe('Workflow', function () {
           .getGlobalStatusIcon()
           .getAttribute('tooltip')
           .then(function (tooltip) {
-            expect(tooltip).toEqual('Global status: InProgress');
+            expect(tooltip).toEqual('Global Status: InProgress');
             Portal.deleteDomain(myDomain);
           });
       });
@@ -106,7 +103,7 @@ describe('Workflow', function () {
           .getStagingStatusIcon()
           .getAttribute('tooltip')
           .then(function (tooltip) {
-            expect(tooltip).toEqual('Staging status: Published');
+            expect(tooltip).toEqual('Staging Status: Published');
             Portal.deleteDomain(myDomain);
           });
       });
@@ -125,7 +122,7 @@ describe('Workflow', function () {
           .getGlobalStatusIcon()
           .getAttribute('tooltip')
           .then(function (tooltip) {
-            expect(tooltip).toEqual('Global status: Published');
+            expect(tooltip).toEqual('Global Status: Published');
             Portal.deleteDomain(myDomain);
           });
       });
@@ -151,7 +148,7 @@ describe('Workflow', function () {
           .getGlobalStatusIcon()
           .getAttribute('tooltip')
           .then(function (tooltip) {
-            expect(tooltip).toEqual('Global status: Modified');
+            expect(tooltip).toEqual('Global Status: Modified');
             Portal.deleteDomain(myDomain);
           });
       });
