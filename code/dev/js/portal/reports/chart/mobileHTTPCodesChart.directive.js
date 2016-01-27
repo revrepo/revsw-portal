@@ -23,7 +23,7 @@
       /*@ngInject*/
       controller: function( $scope, Stats, Util ) {
 
-        $scope.heading = 'HTTP Codes Graph';
+        $scope.heading = 'HTTP Status Codes Graph';
         $scope.span = '1';
         $scope._loading = false;
         $scope.hits = {
