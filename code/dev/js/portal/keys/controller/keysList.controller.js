@@ -45,7 +45,9 @@
      */
     $scope.deleteKey = function (model) {
       $scope.confirm('confirmModal.html', model).then(function () {
-        $scope.delete(model);
+        $scope
+          .delete(model)
+          .catch($scope.alertService.danger);
       });
     };
 

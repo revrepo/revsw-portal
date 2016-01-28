@@ -117,11 +117,13 @@
     };
 
     $scope.createDomain = function (model) {
-      $scope.create(model)
+      $scope
+        .create(model)
         .then(function () {
           $scope.alertService.success('Domain created', 5000);
           $scope.setAccountId();
-        });
+        })
+        .catch($scope.alertService.danger);
     };
 
     $scope.publishDomain = function(model) {
