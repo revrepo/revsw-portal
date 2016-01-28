@@ -128,7 +128,7 @@
         }
       })
       .catch(function () {
-        AlertService.danger('Oops! Some shit just happened');
+        AlertService.danger('Oops something went wrong');
       })
       .finally(function () {
         $scope._loading = false;
