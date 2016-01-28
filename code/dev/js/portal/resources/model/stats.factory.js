@@ -190,6 +190,21 @@
         method: 'GET',
         url: $config.API_URL + '/stats/sdk/distributions',
         params: {}
+      },
+      sdk_top_objects: {
+        method: 'GET',
+        url: $config.API_URL + '/stats/sdk/top_objects',
+        params: {}
+      },
+      sdk_top_objects_time: {
+        method: 'GET',
+        url: $config.API_URL + '/stats/sdk/top_objects/slowest',
+        params: {}
+      },
+      sdk_top_objects_5xx: {
+        method: 'GET',
+        url: $config.API_URL + '/stats/sdk/top_objects/5xx',
+        params: {}
       }
 
 

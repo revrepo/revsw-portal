@@ -3,10 +3,10 @@
 
   angular
     .module('revapm.Portal.Mobile')
-    .controller('MobileTrafficController', MobileTrafficController);
+    .controller('MobileTopObjectsController', MobileTopObjectsController);
 
   /*@ngInject*/
-  function MobileTrafficController($scope, User, AlertService, Stats, Countries, $q, $localStorage) {
+  function MobileTopObjectsController($scope, $q, User, AlertService, Stats, Countries, Util, $localStorage) {
 
     $scope._loading = true;
     $scope.apps = [];
@@ -30,7 +30,7 @@
       Stats.sdk_dirs({
           account_id: $scope.account,
           app_id: ( $scope.application || null ),
-          from_timestamp: moment().subtract( 7, 'days' ).valueOf(),
+          from_timestamp: moment().subtract( 1, 'days' ).valueOf(),
           to_timestamp: Date.now()
         })
         .$promise
