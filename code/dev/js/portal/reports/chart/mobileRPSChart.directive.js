@@ -87,17 +87,21 @@
 
               if ( data.data && data.data.length > 0 ) {
                 var labels = [];
+                var hits_total = 0;
                 var interval = data.metadata.interval_sec || 1800;
                 var offset = interval * 1000;
                 // console.log( data );
                 angular.forEach( data.data, function( item ) {
                   labels.push( moment( item.time + offset /*to show the _end_ of interval instead of begin*/ ).format( 'MMM Do YY h:mm' ) );
                   hits_series[ 0 ].data.push( Math.round( 1000 * item.hits / interval ) / 1000 );
+                  hits_total += item.hits;
                 } );
-                $scope.hits = {
-                  labels: labels,
-                  series: hits_series
-                };
+                if ( hits_total ) {
+                  $scope.hits = {
+                    labels: labels,
+                    series: hits_series
+                  };
+                }
               }
             })
             .finally( function() {

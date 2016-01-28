@@ -22,7 +22,7 @@
         heading: '@'
       },
       /*@ngInject*/
-      controller: function ($scope, Stats) {
+      controller: function ($scope, Stats, Util) {
 
         $scope.span = '24';
         $scope._loading = false;
@@ -52,7 +52,7 @@
             .$promise
             .then( function( data ) {
               for ( var i = 0, len = data.data.length; i < len; ++i ) {
-                data.data[i].val = Math.round( data.data[i].val );
+                data.data[i].val = Util.formatNumber( data.data[i].val, 0 );
               };
               $scope.items = data.data;
               // console.log( data );
