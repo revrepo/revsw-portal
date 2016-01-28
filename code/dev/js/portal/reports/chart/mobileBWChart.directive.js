@@ -99,13 +99,14 @@
                 // console.log( data );
                 angular.forEach( data.data, function( item ) {
                   labels.push( moment( item.time + offset /*to show the _end_ of interval instead of begin*/ ).format( 'MMM Do YY h:mm' ) );
-                  hits_series[ 0 ].data.push( Math.round( item.received_bytes / interval ) );
-                  hits_series[ 1 ].data.push( Math.round( item.sent_bytes / interval ) );
+                  hits_series[ 0 ].data.push( Math.round( item.received_bytes * 1000 / interval ) / 1000 );
+                  hits_series[ 1 ].data.push( Math.round( item.sent_bytes * 1000 / interval ) / 1000 );
                 } );
                 $scope.hits = {
                   labels: labels,
                   series: hits_series
                 };
+                console.log( hits_series );
               }
             })
             .finally( function() {
