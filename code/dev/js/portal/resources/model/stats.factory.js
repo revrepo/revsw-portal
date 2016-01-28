@@ -200,6 +200,11 @@
         method: 'GET',
         url: $config.API_URL + '/stats/sdk/top_objects/slowest',
         params: {}
+      },
+      sdk_top_objects_5xx: {
+        method: 'GET',
+        url: $config.API_URL + '/stats/sdk/top_objects/5xx',
+        params: {}
       }
 
 

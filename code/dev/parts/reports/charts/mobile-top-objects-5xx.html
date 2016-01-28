@@ -27,22 +27,21 @@
 
   <div ng-hide="!items.length">
 
-    <div class="col-md-12">
+    <div ng-repeat="item in items" class="col-md-12">
+      <h4>{{ item.key }} (Total: {{item.count}})</h4>
       <table class="table">
         <thead>
         <tr>
           <th>URL</th>
-          <th style="width: 10%;">Time(ms)</th>
           <th style="width: 10%;">Requests</th>
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="item in items">
+        <tr ng-repeat="subitem in item.items">
           <td>
-            <a target="_blank" ng-href="{{item.key}}">{{item.key}}</a>
+            <a target="_blank" ng-href="{{item.key}}">{{subitem.key}}</a>
           </td>
-          <td class="text-right">{{item.val}}</td>
-          <td class="text-right">{{item.count}}</td>
+          <td class="text-right">{{subitem.doc_count}}</td>
         </tr>
         </tbody>
       </table>
@@ -50,4 +49,3 @@
 
   </div>
 </div>
-

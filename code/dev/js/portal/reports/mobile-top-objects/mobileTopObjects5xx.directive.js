@@ -3,13 +3,13 @@
 
   angular
     .module('revapm.Portal.Reports')
-    .directive('mobileTopObjects', mobileTopObjectsDirective);
+    .directive('mobileTopObjects5xx', mobileTopObjects5xxDirective);
 
   /*@ngInject*/
-  function mobileTopObjectsDirective() {
+  function mobileTopObjects5xxDirective() {
     return {
       restrict: 'AE',
-      templateUrl: 'parts/reports/charts/mobile-base-top-objects.html',
+      templateUrl: 'parts/reports/charts/mobile-top-objects-5xx.html',
       scope: {
         ngAccount: '=',
         ngApp: '=',
@@ -18,7 +18,6 @@
         flCountries: '=',
         flOperators: '=',
         flNetworks: '=',
-        reportType: '@',
         heading: '@'
       },
       /*@ngInject*/
@@ -26,8 +25,21 @@
 
         $scope.span = '24';
         $scope._loading = false;
-        $scope.items = [];
+        var http_codes = {
+          '500': 'Internal Server Error',
+          '501': 'Not Implemented',
+          '502': 'Bad Gateway',
+          '503': 'Service Unavailable',
+          '504': 'Gateway Timeout',
+          '505': 'HTTP Version Not Supported',
+          '506': 'Variant Also Negotiates',
+          '507': 'Insufficient Storage',
+          '508': 'Loop Detected',
+          '510': 'Not Extended',
+          '511': 'Network Authentication Required'
+        };
 
+        $scope.items = [];
         $scope.filters = {
           from_timestamp: moment().subtract(1, 'days').valueOf(),
           to_timestamp: Date.now(),
@@ -38,9 +50,6 @@
           network: null,
           count: 10
         };
-        if ( $scope.reportType ) {
-          $scope.filters.report_type = $scope.reportType;
-        }
 
         //  ---------------------------------
         $scope.reload = function() {
@@ -50,11 +59,19 @@
           $scope.filters.app_id = ( $scope.ngApp || null );
           $scope.items = [];
 
-          return Stats.sdk_top_objects( $scope.filters )
+          return Stats.sdk_top_objects_5xx( $scope.filters )
             .$promise
             .then( function( data ) {
-              $scope.items = data.data;
-              // console.log( data );
+              var items = [];
+              for ( var i = 0, len = data.data.length; i < len; ++i ) {
+                var item = data.data[i];
+                items.push({
+                  key: item.key + ( http_codes[item.key] ? ' (' + http_codes[item.key] + ')' : '' ),
+                  count: item.count,
+                  items: item.items
+                });
+              }
+              $scope.items = items;
             })
             .finally( function() {
               $scope._loading = false;

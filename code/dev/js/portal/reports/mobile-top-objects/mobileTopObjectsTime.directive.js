@@ -24,7 +24,6 @@
       /*@ngInject*/
       controller: function ($scope, Stats) {
 
-        // $scope.heading = 'Top Most Requested Objects';
         $scope.span = '24';
         $scope._loading = false;
         $scope.items = [];
@@ -56,7 +55,7 @@
                 data.data[i].val = Math.round( data.data[i].val );
               };
               $scope.items = data.data;
-              console.log( data );
+              // console.log( data );
             })
             .finally( function() {
               $scope._loading = false;
