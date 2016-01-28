@@ -69,7 +69,7 @@
      * @returns {string}
      */
     function formatNumber( num, fixed ) {
-      return ( fixed ? num.toFixed( fixed ) : num.toString() )
+      return ( fixed !== undefined ? num.toFixed( fixed ) : num.toString() )
         .replace( /\B(?=(\d{3})+(?!\d))/g, "'" );
     }
 
