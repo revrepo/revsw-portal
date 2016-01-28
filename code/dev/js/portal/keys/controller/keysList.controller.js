@@ -128,14 +128,13 @@
       });
 
       /**
-       * Handle ok button on create
+       * Handle ok button on update
        */
       modalInstance.result
         .then(function (account) {
           $scope.alertService.success('API Key updated.', 5000);
           $scope.list();
-        })
-        .catch($scope.alertService.danger);
+        });
     };
 
     /**
