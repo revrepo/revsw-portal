@@ -58,6 +58,7 @@ var CustomerSupportPage = require('./helpSupport/customerSupportPage');
 var ApiDocumentationPage = require('./helpSupport/apiDocumentationPage');
 var KnowledgeBasePage = require('./helpSupport/knowledgeBasePage');
 var NetworkStatusPage = require('./helpSupport/networkStatusPage');
+var HelpPage = require('./help/helpPage');
 
 // This `Portal` Page Object is the entry point to use all other Page Objects
 // that abstract all components from the Portal App.
@@ -100,6 +101,7 @@ var Portal = {
   apiDocumentationPage: ApiDocumentationPage,
   knowledgeBasePage: KnowledgeBasePage,
   networkStatusPage: NetworkStatusPage,
+  helpPage: HelpPage,
 
   // ## Authentication Helper methods
 
@@ -107,8 +109,8 @@ var Portal = {
    * ### Portal.signIn()
    *
    * Signs in the specified user into the Portal app
-   *
    * @param {user} user, object with the following schema
+   *
    *     {
    *         email: String,
    *         password: String
