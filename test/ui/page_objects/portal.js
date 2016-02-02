@@ -54,10 +54,6 @@ var FBTReportsPage = require('./analytics/fbtReportsPage');
 var TrafficHeatmapsPage = require('./analytics/trafficHeatmapsPage');
 var RTTHeatmapsPage = require('./analytics/rttHeatmapsPage');
 var HelpSupportPage = require('./helpSupport/helpSupportPage');
-var CustomerSupportPage = require('./helpSupport/customerSupportPage');
-var ApiDocumentationPage = require('./helpSupport/apiDocumentationPage');
-var KnowledgeBasePage = require('./helpSupport/knowledgeBasePage');
-var NetworkStatusPage = require('./helpSupport/networkStatusPage');
 var HelpPage = require('./help/helpPage');
 
 // This `Portal` Page Object is the entry point to use all other Page Objects
@@ -97,10 +93,6 @@ var Portal = {
   purgeCacheBasicPage: PurgeCacheBasicPage,
   purgeCacheAdvancedPage: PurgeCacheAdvancedPage,
   helpSupportPage: HelpSupportPage,
-  customerSupportPage: CustomerSupportPage,
-  apiDocumentationPage: ApiDocumentationPage,
-  knowledgeBasePage: KnowledgeBasePage,
-  networkStatusPage: NetworkStatusPage,
   helpPage: HelpPage,
 
   // ## Authentication Helper methods
