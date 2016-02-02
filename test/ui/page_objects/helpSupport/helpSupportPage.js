@@ -103,7 +103,7 @@ var HelpAndSupport = {
   },
 
   /**
-   * ### HelpAndSupport.getUrl()
+   * ### HelpAndSupport.openUrl()
    *
    * Gets the url from link text in the 'Help and Support' page.
    *
