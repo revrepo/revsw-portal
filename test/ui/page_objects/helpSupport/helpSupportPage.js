@@ -93,11 +93,31 @@ var HelpAndSupport = {
    *
    * Checks whether the link exists in the Help and Support page or not.
    *
+   * @param String linkText, link text specified in the 'Help And Support page'.
+   *
    * @returns {Promise}
    */
-  existLink: function (link) {
-    var exist = element(by.linkText(link));
+  existLink: function (linkText) {
+    var exist = element(by.linkText(linkText));
     return exist.isPresent();
+  },
+
+  /**
+   * ### HelpAndSupport.getUrl()
+   *
+   * Gets the url from link text in the 'Help and Support' page.
+   *
+   * @param String linkText, link text specified in the 'Help And Support page'.
+   *
+   * @returns {Promise}
+   */
+  openUrl: function(linkText) {
+    if (this.existLink(linkText)) {
+      element(by.linkText(linkText)).click();
+      return element(by.linkText(linkText)).getAttribute('href');
+    } else {
+      return null;
+    }
   }
 };
 
