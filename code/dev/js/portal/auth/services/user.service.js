@@ -336,19 +336,22 @@
      */
     function getUserApps(reload) {
       return $q(function (resolve, reject) {
-        if (apps && apps.length > 0 && !reload) {
+        if (apps.length > 0 && !reload) {
           return resolve(apps);
         }
         $http.get($config.API_URL + '/apps')
           .then( function (data) {
             if (data && data.status === $config.STATUS.OK) {
               apps = data.data.map( function( item ) {
-                return {
-                  app_name: item.app_name,
-                  app_id: item.id,
-                  sdk_key: item.sdk_key
-                };
-              });
+                  return {
+                    app_name: item.app_name,
+                    app_id: item.id,
+                    sdk_key: item.sdk_key
+                  };
+                })
+                .sort( function( lhs, rhs ) {
+                  return lhs.app_name.localeCompare( rhs.app_name );
+                });
               resolve( apps );
             } else {
               reject( new Error(data.response) );
