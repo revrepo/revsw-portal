@@ -20,42 +20,61 @@ var config = require('config');
 var Portal = require('./../../../page_objects/portal');
 
 describe('Smoke', function () {
-  describe('User list', function () {
 
-    var adminUser = config.get('portal.users.admin');
+  // Defining set of users for which all below tests will be run
+  var users = [
+    {
+      type: 'Admin',
+      data: config.get('portal.users.admin')
+    }, {
+      type: 'Rev Admin',
+      data: config.get('portal.users.revAdmin')
+    }
+  ];
 
-    beforeAll(function () {
-      Portal.signIn(adminUser);
-    });
+  users.forEach(function (user) {
 
-    afterAll(function () {
-      Portal.signOut();
-    });
+    describe('With user: ' + user.type, function () {
 
-    beforeEach(function () {
-      Portal.getUsersPage();
-    });
+      describe('User list', function () {
 
-    it('should be displayed when clicking "Users" from sidebar', function () {
-      expect(Portal.userListPage.isDisplayed()).toBeTruthy();
-    });
+        var currentUser = user.data;
 
-    it('should be displayed when "Back to list" button is clicked from "Edit ' +
-      'User" page',
-      function () {
-        Portal.userListPage.userTbl
-          .getFirstRow()
-          .clickEdit();
-        Portal.addUserPage.clickBackToList();
-        expect(Portal.userListPage.isDisplayed()).toBeTruthy();
+        beforeAll(function () {
+          Portal.signIn(currentUser);
+        });
+
+        afterAll(function () {
+          Portal.signOut();
+        });
+
+        beforeEach(function () {
+          Portal.getUsersPage();
+        });
+
+        it('should be displayed when clicking "Users" from sidebar',
+          function () {
+            expect(Portal.userListPage.isDisplayed()).toBeTruthy();
+          });
+
+        it('should be displayed when "Back to list" button is clicked ' +
+          'from "Edit User" page',
+          function () {
+            Portal.userListPage.userTbl
+              .getFirstRow()
+              .clickEdit();
+            Portal.addUserPage.clickBackToList();
+            expect(Portal.userListPage.isDisplayed()).toBeTruthy();
+          });
+
+        it('should be displayed when "Back to list" button is clicked from ' +
+          '"Create User" page',
+          function () {
+            Portal.userListPage.clickAddNewUser();
+            Portal.addUserPage.clickBackToList();
+            expect(Portal.userListPage.isDisplayed()).toBeTruthy();
+          });
       });
-
-    it('should be displayed when "Back to list" button is clicked from ' +
-      '"Create User" page',
-      function () {
-        Portal.userListPage.clickAddNewUser();
-        Portal.addUserPage.clickBackToList();
-        expect(Portal.userListPage.isDisplayed()).toBeTruthy();
-      });
+    });
   });
 });

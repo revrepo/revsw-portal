@@ -20,25 +20,44 @@ var config = require('config');
 var Portal = require('./../../../page_objects/portal');
 
 describe('Smoke', function () {
-  describe('User security settings', function () {
 
-    var adminUser = config.get('portal.users.admin');
+  // Defining set of users for which all below tests will be run
+  var users = [
+    {
+      type: 'Admin',
+      data: config.get('portal.users.admin')
+    }, {
+      type: 'Rev Admin',
+      data: config.get('portal.users.revAdmin')
+    }
+  ];
 
-    beforeAll(function () {
-      Portal.signIn(adminUser);
-    });
+  users.forEach(function (user) {
 
-    afterAll(function () {
-      Portal.signOut();
-    });
+    describe('With user: ' + user.type, function () {
 
-    beforeEach(function () {
-      Portal.goToSecuritySettings();
-    });
+      describe('User security settings', function () {
 
-    it('should display "Security Settings" by selecting option from sidebar',
-      function () {
-        expect(Portal.securitySettingsPage.isDisplayed()).toBeTruthy();
+        var currentUser = user.data;
+
+        beforeAll(function () {
+          Portal.signIn(currentUser);
+        });
+
+        afterAll(function () {
+          Portal.signOut();
+        });
+
+        beforeEach(function () {
+          Portal.goToSecuritySettings();
+        });
+
+        it('should display "Security Settings" by selecting option from ' +
+          'sidebar',
+          function () {
+            expect(Portal.securitySettingsPage.isDisplayed()).toBeTruthy();
+          });
       });
+    });
   });
 });
