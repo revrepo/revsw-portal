@@ -30,10 +30,15 @@
      * @returns {string}
      */
     function convertTraffic(bps) {
+      if (!bps) {
+        return '0 Bps';
+      }
+      if ( bps < 1 ) {
+        return bps.toFixed(2) + ' Bps';
+      }
       var sizes = ['Bps', 'Kbps', 'Mbps', 'Gbps', 'Tbps'];
-      if (bps == 0 || !bps) return '0 Bps';
-      var i = parseInt(Math.floor(Math.log(bps) / Math.log(1024)));
-      var result = Math.round(bps / Math.pow(1024, i), 2) + ' ' + (sizes[i] || '');
+      var i = Math.floor(Math.log(bps) / Math.log(1024));
+      var result = ( Math.round(100 * bps / Math.pow(1024, i)) / 100 ) + ' ' + (sizes[i] || '');
       return result || '';
     }
 
@@ -64,7 +69,7 @@
      * @returns {string}
      */
     function formatNumber( num, fixed ) {
-      return ( fixed ? num.toFixed( fixed ) : num.toString() )
+      return ( fixed !== undefined ? num.toFixed( fixed ) : num.toString() )
         .replace( /\B(?=(\d{3})+(?!\d))/g, "'" );
     }
 

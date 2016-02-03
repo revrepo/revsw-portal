@@ -28,7 +28,8 @@
       'images/bg/yosemite_valley.jpg',
     ];
 
-    $scope.randomImage = images[Math.floor(Math.random()*images.length)];;
+    $scope.randomImage = images[Math.floor(Math.random()*images.length)];
+    $scope.randomImageStyle = {'background-image': 'url(' + $scope.randomImage + ')'};
 
     $scope.login = function(email, pass) {
       AlertService.clear();

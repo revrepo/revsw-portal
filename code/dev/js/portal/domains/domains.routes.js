@@ -13,7 +13,7 @@
         views: {
           main: {
             controller: 'DomainsCrudController',
-            templateUrl: 'parts/domains/_list.html'
+            templateUrl: 'parts/domains/list.html'
           }
         }
       })
@@ -22,7 +22,7 @@
         views: {
           page: {
             controller: 'DomainsConfigureAdvancedController',
-            templateUrl: 'parts/domains/_configure_advanced.html'
+            templateUrl: 'parts/domains/configure_advanced.html'
           }
         }
       })
@@ -30,7 +30,7 @@
         url: '/new',
         views: {
           page: {
-            templateUrl: 'parts/domains/_new.html'
+            templateUrl: 'parts/domains/new.html'
             //controller: 'DomainsNewController'
           }
         }
@@ -39,7 +39,7 @@
         url: '/edit/:id',
         views: {
           page: {
-            templateUrl: 'parts/domains/_edit.html',
+            templateUrl: 'parts/domains/edit.html',
             controller: 'DomainsCrudController'
           }
         }

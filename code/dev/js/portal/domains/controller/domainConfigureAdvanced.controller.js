@@ -7,7 +7,7 @@
 
 
   /*@ngInject*/
-  function DomainsConfigureAdvancedController($scope, User, $config, DomainsConfig, $timeout, AlertService, $stateParams) {
+  function DomainsConfigureAdvancedController($scope, DomainsConfig, $timeout, AlertService, $stateParams) {
 
     $scope.id = $stateParams.id;
 
@@ -17,22 +17,6 @@
       delete model.id;
       return model;
     };
-
-    DomainsConfig
-      .get({
-        id: $scope.id
-      })
-      .$promise
-      .then(function(data) {
-        $scope.domain = data;
-        $scope.obj.data = $scope.clearDomain(data.toJSON());
-      })
-      .catch(function(err) {
-        AlertService.danger(err);
-      })
-      .finally(function() {
-        $scope._loading = false;
-      });
 
     $scope._loading = false;
 
@@ -47,9 +31,31 @@
       }
     };
 
-    $timeout(function() {
-      $scope.obj.options.mode = 'code';
-    }, 10);
+    $scope.loadDomainDetails = function() {
+      DomainsConfig
+        .get({
+          id: $scope.id
+        })
+        .$promise
+        .then(function(data) {
+          $scope.domain = data;
+          $scope.obj.data = $scope.clearDomain(data.toJSON());
+        })
+        .catch(function(err) {
+          AlertService.danger(err);
+        })
+        .finally(function() {
+          $scope._loading = false;
+        });
+    };
+
+    $scope.$on('$stateChangeSuccess', function (state) {
+      $scope.loadDomainDetails();
+    });
+
+    //$timeout(function() {
+    //  $scope.obj.options.mode = 'code';
+    //}, 10);
 
     $scope.verify = function() {
       if (!$scope.id) {

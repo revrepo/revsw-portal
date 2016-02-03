@@ -23,7 +23,7 @@
       /*@ngInject*/
       controller: function( $scope, Stats, Util ) {
 
-        $scope.heading = 'HTTP Codes Graph';
+        $scope.heading = 'HTTP Status Codes Graph';
         $scope.span = '1';
         $scope._loading = false;
         $scope.hits = {
@@ -57,7 +57,7 @@
           tooltip: {
             formatter: function() {
               return '<strong>' + this.x + '</strong><br/>' +
-                this.series.name + ': <strong>' + Util.formatNumber( this.y, 2 ) + '</strong>';
+                this.series.name + ': <strong>' + Util.formatNumber( this.y, 3 ) + '</strong>';
             }
           }
         };
@@ -91,9 +91,9 @@
                     if ( !labels_filled_up ) {
                       labels.push( moment( item.time + offset /*to show the _end_ of interval instead of begin*/ ).format( 'MMM Do YY h:mm' ) );
                     }
-                    var rps = Math.round( item.hits / interval );
+                    var rps = Math.round( item.hits * 1000 / interval ) / 1000;
                     s.data.push( rps );
-                    if ( rps > 0.009 ) {
+                    if ( rps > 0.01 ) {
                       s.visible = true;
                     }
                   };
@@ -101,6 +101,7 @@
                   labels_filled_up = true;
                 });
 
+                hits_series[0].visible = true;
                 $scope.hits = {
                   labels: labels,
                   series: hits_series
