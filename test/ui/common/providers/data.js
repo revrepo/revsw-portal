@@ -66,6 +66,8 @@ var DataProvider = {
    * Generates domain data object based on the unique para that it requires.
    *
    * @param {string} prefix, the prefix value to use in all domain data fields
+   * @param {Boolean} skipTimestamp, defaults to FALSE. If timestamp should be
+   * used in domain data or not.
    *
    * @returns {Object}, generate domain data with the following schema:
    *
@@ -76,22 +78,25 @@ var DataProvider = {
    *         originLocation: string
    *     }
    */
-  generateDomain: function (prefix) {
-    if (prefix) {
-      var newPrefix = prefix.toLowerCase().replace(' ', '_');
-      var timestamp = Date.now();
+  generateDomain: function (prefix, skipTimestamp) {
+    var timestamp = '';
+    if (skipTimestamp === undefined || skipTimestamp === false) {
+      timestamp = '-' + Date.now();
+    }
+    if (prefix === undefined) {
       return {
-        name: newPrefix + '-' + timestamp + '-portal-ui-test.com',
-        originServer: newPrefix + '-portal-ui-test.originserver.com',
-        originHostHeader: newPrefix + '-portal-ui-test.originhostheader.com',
-        originLocation: 'HQ Test Lab'
+        name: '',
+        originServer: '',
+        originHostHeader: '',
+        originLocation: '--- Select Location ---'
       };
     }
+    prefix = prefix.toLowerCase().replace(/\W+/g, '-');
     return {
-      name: '',
-      originServer: '',
-      originHostHeader: '',
-      originLocation: '--- Select Location ---'
+      name: prefix + timestamp + '-portal-ui-test.com',
+      originServer: prefix + '-portal-ui-test.origin-server.com',
+      originHostHeader: prefix + '-portal-ui-test.origin-host-header.com',
+      originLocation: 'HQ Test Lab'
     };
   },
 

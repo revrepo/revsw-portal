@@ -303,7 +303,7 @@ var Portal = {
    * Helper method that executes all steps required to create a new Domain from
    * Portal app.
    *
-   * @param {user} newDomain, data applying the schema defined in
+   * @param {Domain} newDomain, data applying the schema defined in
    * `DataProvider.generateDomain()`
    *
    * @returns {Promise}
@@ -321,6 +321,41 @@ var Portal = {
           browser.get(initialUrl);
         }
       });
+    });
+  },
+
+  /**
+   * ### Portal.createDomain()
+   *
+   * Helper method that executes all steps required to create a new Domain from
+   * Portal app. This method creates the domain only if it does not exist (it
+   * validates the existence by doing a search by the domain name).
+   *
+   * @param {Domain} domain, data applying the schema defined in
+   * `DataProvider.generateDomain()`
+   *
+   * @returns {Promise}
+   */
+  createDomainIfNotExist: function (domain) {
+    var me = this;
+    return browser.getCurrentUrl().then(function (initialUrl) {
+      me.getDomainsPage();
+      me.domains.listPage.searcher.setSearchCriteria(domain.name);
+      me.domains.listPage.domainsTbl
+        .getRows()
+        .count()
+        .then(function (totalResults) {
+          if (totalResults === 0) {
+            me.domains.listPage.clickAddNewDomain();
+            me.domains.addPage.createDomain(domain);
+            me.domains.addPage.clickBackToList();
+          }
+          browser.getCurrentUrl().then(function (currentUrl) {
+            if (initialUrl !== currentUrl) {
+              browser.get(initialUrl);
+            }
+          });
+        });
     });
   },
 
