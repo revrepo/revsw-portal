@@ -47,7 +47,7 @@ describe('Functional', function () {
         Portal.purgeCacheAdvancedPage.clickPurge();
 
         var alert = Portal.alerts.getFirst();
-        var expectedMsg = 'The request has been successfully submitted';
+        var expectedMsg = 'Oops something went wrong';
         expect(alert.getText()).toEqual(expectedMsg);
     });
 
@@ -59,8 +59,18 @@ describe('Functional', function () {
         Portal.purgeCacheAdvancedPage.clickPurge();
 
         var alert = Portal.alerts.getFirst();
-        var expectedMsg = 'The request has been successfully submitted';
+        var expectedMsg = 'Oops something went wrong';
         expect(alert.getText()).toEqual(expectedMsg);
+    });
+
+    it('should cancel in "Ace Editor" go to "List Domains" Page',
+      function () {
+        Portal.purgeCacheAdvancedPage.clickAdvancedMode();
+        Portal.purgeCacheAdvancedPage.selectDomain(myDomain);
+        Portal.purgeCacheAdvancedPage.clickCancel();
+
+        var title = 'Domains List';
+        expect(Portal.domains.listPage.getTitle()).toEqual(title);
     });
   });
 });

@@ -40,7 +40,7 @@ describe('Functional', function () {
     beforeEach(function () {
     });
 
-    it('should purge a Purge Cached Objects',
+    it('should purge a Purge Cached Objects after click "Purge" button',
       function () {
         var dataPurge = DataProvider.generatePurgeCachedInfo();
         Portal.purgeCacheBasicPage.selectDomain(myDomain);
@@ -50,6 +50,32 @@ describe('Functional', function () {
         var alert = Portal.alerts.getFirst();
         var expectedMsg = 'The request has been successfully submitted';
         expect(alert.getText()).toEqual(expectedMsg);
+    });
+
+    it('should navigate between Advanced and Basic pages in Purge Cached pages',
+      function () {
+        var dataPurge = DataProvider.generatePurgeCachedInfo();
+        Portal.purgeCacheBasicPage.selectDomain(myDomain);
+        Portal.purgeCacheBasicPage.setTextArea(dataPurge.textArea);
+        Portal.purgeCacheBasicPage.clickAdvancedMode();
+        Portal.purgeCacheBasicPage.clickBasicMode();
+        Portal.purgeCacheBasicPage.setTextArea(dataPurge.textArea);
+        Portal.purgeCacheBasicPage.clickPurge();
+
+        var alert = Portal.alerts.getFirst();
+        var expectedMsg = 'The request has been successfully submitted';
+        expect(alert.getText()).toEqual(expectedMsg);
+    });
+
+    it('should cancel the Purge Cached Objects after click "Cancel" button',
+      function () {
+        var dataPurge = DataProvider.generatePurgeCachedInfo();
+        Portal.purgeCacheBasicPage.selectDomain(myDomain);
+        Portal.purgeCacheBasicPage.setTextArea(dataPurge.textArea);
+        Portal.purgeCacheBasicPage.clickCancel();
+
+        var title = 'Domains List';
+        expect(Portal.domains.listPage.getTitle()).toEqual(title);
     });
   });
 });

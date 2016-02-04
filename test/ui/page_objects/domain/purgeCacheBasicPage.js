@@ -29,6 +29,8 @@ var PurgeCacheBasic = {
     container: '.container-fluid .row',
     panelHeading: '.col-md-12 .panel .panel-heading',
     panelBody: '.col-md-12 .panel .panel-body',
+    pullLeft: '.pull-left',
+    pullRight: '.pull-right',
     dropDown: {
       domain: '[ng-click="$select.toggle($event)"]',
       models: {
@@ -42,10 +44,16 @@ var PurgeCacheBasic = {
     },
     buttons: {
       advancedMode: {
-        linkText: 'Advanced mode'
+        linkText: 'Advanced Mode'
+      },
+      basicMode: {
+        linkText: 'Basic Mode'
       },
       purge: {
         css: '[ng-click="purgeText()"]'
+      },
+      cancel: {
+        linkText: 'Cancel'
       }
     }
   },
@@ -104,7 +112,22 @@ var PurgeCacheBasic = {
   getAdvancedModeBtn: function () {
     return this
       .getPanelHeadingElem()
+      .element(by.css(this.locators.pullRight))
       .element(by.partialLinkText(this.locators.buttons.advancedMode.linkText));
+  },
+
+  /**
+   * ### PurgeCacheBasic.getBasicModeBtn()
+   *
+   * Gets the reference to `Basic Mode` button element.
+   *
+   * @returns {Promise}
+   */
+  getBasicModeBtn: function () {
+    return this
+      .getPanelHeadingElem()
+      .element(by.css(this.locators.pullRight))
+      .element(by.partialLinkText(this.locators.buttons.basicMode.linkText));
   },
 
   /**
@@ -116,7 +139,8 @@ var PurgeCacheBasic = {
    */
   getDomainDDown: function () {
     return this
-      .getPanelBodyElem()
+      .getPanelHeadingElem()
+      .element(by.css(this.locators.pullLeft))
       .element(by.css(this.locators.dropDown.domain));
   },
 
@@ -144,6 +168,19 @@ var PurgeCacheBasic = {
     return this
       .getPanelBodyElem()
       .element(by.css(this.locators.buttons.purge.css));
+  },
+
+  /**
+   * ### PurgeCacheBasic.getCancelBtn()
+   *
+   * Gets the reference to `Cancel` button element.
+   *
+   * @returns {Promise}
+   */
+  getCancelBtn: function () {
+    return this
+      .getPanelBodyElem()
+      .element(by.partialLinkText(this.locators.buttons.cancel.linkText));
   },
 
   /**
@@ -239,6 +276,8 @@ var PurgeCacheBasic = {
       .getText();
   },
 
+  // ## Helper Methods
+
   /**
    * ### PurgeCacheBasic.clickAdvancedMode()
    *
@@ -249,6 +288,19 @@ var PurgeCacheBasic = {
   clickAdvancedMode: function () {
     return this
       .getAdvancedModeBtn()
+      .click();
+  },
+
+  /**
+   * ### PurgeCacheBasic.clickBasicMode()
+   *
+   * Clicks on the "Basic Mode" button element.
+   *
+   * @returns {Promise}
+   */
+  clickBasicMode: function () {
+    return this
+      .getBasicModeBtn()
       .click();
   },
 
@@ -278,7 +330,18 @@ var PurgeCacheBasic = {
       .click();
   },
 
-  // ## Helper Methods
+  /**
+   * ### PurgeCacheBasic.clickCancel()
+   *
+   * Clicks on the `Cancel` button element.
+   *
+   * @returns {Promise}
+   */
+  clickCancel: function () {
+    return this
+      .getCancelBtn()
+      .click();
+  },
 
   /**
    * ### PurgeCacheBasic.isDisplayed()
