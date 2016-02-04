@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('revapm.Portal.Apps',['ngSanitize'])
+    .module('revapm.Portal.Apps')// ,['ngSanitize']
     .directive('appSelect', appSelectDirective);
 
   /*@ngInject*/
