@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('revapm.Portal.Domains')
+    .module('revapm.Portal.Domains',['ngSanitize'])
     .directive('domainSelect', domainSelectDirective);
 
   /*@ngInject*/

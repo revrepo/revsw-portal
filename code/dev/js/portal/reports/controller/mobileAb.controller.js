@@ -3,10 +3,10 @@
 
   angular
     .module('revapm.Portal.Mobile')
-    .controller('MobileTrafficController', MobileTrafficController);
+    .controller('MobileAbController', MobileAbController);
 
   /*@ngInject*/
-  function MobileTrafficController($scope, User, AlertService, Stats) {
+  function MobileAbController($scope, User, AlertService, Stats) {
 
     $scope._loading = true;
     $scope.application = false;

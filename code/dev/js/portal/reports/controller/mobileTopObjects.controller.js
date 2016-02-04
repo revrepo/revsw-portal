@@ -6,11 +6,10 @@
     .controller('MobileTopObjectsController', MobileTopObjectsController);
 
   /*@ngInject*/
-  function MobileTopObjectsController($scope, $q, User, AlertService, Stats, Countries, Util, $localStorage) {
+  function MobileTopObjectsController($scope, User, AlertService, Stats, Util) {
 
     $scope._loading = true;
-    $scope.apps = [];
-    $scope.application = $localStorage.selectedApplicationID === undefined ? '' : $localStorage.selectedApplicationID;
+    $scope.application = false;
     var u = User.getUser();
     $scope.account = u.companyId[0] || null;
 
@@ -20,7 +19,14 @@
     $scope.operators = [];
     $scope.networks = ['Cellular','WiFi'];
 
+    //  ---------------------------------
     $scope.reloadDirs = function() {
+
+      if ( !$scope.account &&
+          ( !$scope.application || !$scope.application.app_id ) ) {
+        return;
+      }
+
       $scope._loading = true;
       $scope.oses = [];
       $scope.devices = [];
@@ -29,7 +35,7 @@
 
       Stats.sdk_dirs({
           account_id: $scope.account,
-          app_id: ( $scope.application || null ),
+          app_id: ( $scope.application.app_id || null ),
           from_timestamp: moment().subtract( 1, 'days' ).valueOf(),
           to_timestamp: Date.now()
         })
@@ -43,43 +49,14 @@
             $scope.operators = data.data.operators;
           }
         })
+        .catch( function( err ) {
+          AlertService.danger('Oops! Something went wrong');
+          console.log( err );
+        })
         .finally( function() {
           $scope._loading = false;
         });
     }
-
-    $scope.$watch( 'application', function() {
-      $localStorage.selectedApplicationID = $scope.application;
-      $scope.reloadDirs();
-    });
-
-
-    //  ---------------------------------
-    User.getUserApps(true)
-      .then(function ( data ) {
-        // console.log( data );
-        if ( $scope.account ) {
-          data.unshift({
-            app_id: "",
-            app_name: "All Applications"
-          });
-        }
-        $scope.apps = data;
-        if ( data.length ) {
-          if($localStorage.selectedApplicationID === undefined ) {
-            $scope.application = data[0].app_id;
-          }
-        } else {
-          $scope.application = '';
-        }
-        return $scope.reloadDirs();
-      })
-      .catch(function () {
-        AlertService.danger('Oops something went wrong');
-      })
-      .finally(function () {
-        $scope._loading = false;
-      });
 
   }
 })();

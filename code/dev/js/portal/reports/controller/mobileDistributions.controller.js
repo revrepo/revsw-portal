@@ -6,11 +6,10 @@
     .controller('MobileDistributionsController', MobileDistributionsController);
 
   /*@ngInject*/
-  function MobileDistributionsController($scope, $q, User, AlertService, Stats, Util, $localStorage) {
+  function MobileDistributionsController($scope, $q, User, AlertService, Stats, Util) {
 
     $scope._loading = true;
-    $scope.apps = [];
-    $scope.application = $localStorage.selectedApplicationID === undefined ? '' : $localStorage.selectedApplicationID;
+    $scope.application = false;
     var u = User.getUser();
     $scope.account = u.companyId[0] || null;
 
@@ -75,15 +74,14 @@
     //  ---------------------------------
     $scope.reload = function() {
 
-      if ( $scope._loading ||
-          $scope.apps.length === 0 ||
-          ( !$scope.account && !$scope.application ) ) {
+      if ( !$scope.account &&
+          ( !$scope.application || !$scope.application.app_id ) ) {
         return;
       }
 
       var filters = {
         account_id: $scope.account,
-        app_id: ( $scope.application || null ),
+        app_id: ( $scope.application.app_id || null ),
         from_timestamp: moment().subtract( $scope.span, 'hours' ).valueOf(),
         to_timestamp: Date.now(),
         count: 10
@@ -96,44 +94,14 @@
           $scope.reloadTwo( 'status', filters ),
           $scope.reloadTwo( 'cache', filters ),
         ])
+        .catch( function( err ) {
+          AlertService.danger('Oops! Something went wrong');
+          console.log( err );
+        })
         .finally(function () {
           $scope._loading = false;
         });
     };
-
-    //  ---------------------------------
-    $scope.$watch( 'application', function() {
-      $localStorage.selectedApplicationID = $scope.application;
-      $scope.reload();
-    });
-
-    //  ---------------------------------
-    User.getUserApps(true)
-      .then(function ( data ) {
-
-        // console.log( 'apps: ', data );
-        if ( $scope.account ) {
-          data.unshift({
-            app_id: "",
-            app_name: "All Applications"
-          });
-        }
-        $scope.apps = data;
-        if ( data.length ) {
-          if($localStorage.selectedApplicationID === undefined ) {
-            $scope.application = data[0].app_id;
-          }
-        } else {
-          $scope.application = '';
-        }
-      })
-      .catch(function () {
-        AlertService.danger('Oops something went wrong');
-      })
-      .finally(function () {
-        $scope._loading = false;
-        $scope.reload();
-      });
 
   }
 })();
