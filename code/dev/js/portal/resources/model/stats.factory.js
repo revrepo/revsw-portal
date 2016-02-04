@@ -205,6 +205,11 @@
         method: 'GET',
         url: $config.API_URL + '/stats/sdk/top_objects/5xx',
         params: {}
+      },
+      sdk_ab_fbt: {
+        method: 'GET',
+        url: $config.API_URL + '/stats/sdk/ab/fbt',
+        params: {}
       }
 
 
