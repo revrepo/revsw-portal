@@ -22,26 +22,19 @@ var DataProvider = require('./../../../common/providers/data');
 
 describe('Smoke', function () {
 
+  // Defining set of users for which all below tests will be run
   var users = [
-    {
-      type: 'Admin',
-      data: config.get('portal.users.admin')
-    }, {
-      type: 'Rev Admin',
-      data: config.get('portal.users.revAdmin')
-    }
+    config.get('portal.users.admin'),
+    config.get('portal.users.revAdmin')
   ];
 
   users.forEach(function (user) {
 
-    // Setting `current user` to run below tests
-    var currentUser = user.data;
-
-    describe('With user: ' + user.type, function () {
+    describe('With user: ' + user.role, function () {
       describe('Add user', function () {
 
         beforeAll(function () {
-          Portal.signIn(currentUser);
+          Portal.signIn(user);
         });
 
         afterAll(function () {

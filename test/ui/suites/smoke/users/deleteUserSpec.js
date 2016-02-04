@@ -32,21 +32,13 @@ describe('Smoke', function () {
 
   // Defining set of users for which all below tests will be run
   var users = [
-    {
-      type: 'Admin',
-      data: config.get('portal.users.admin')
-    }, {
-      type: 'Rev Admin',
-      data: config.get('portal.users.revAdmin')
-    }
+    config.get('portal.users.admin'),
+    config.get('portal.users.revAdmin')
   ];
 
   users.forEach(function (user) {
 
-    // Setting `current user` to run below tests
-    var currentUser = user.data;
-
-    describe('With user: ' + user.type, function () {
+    describe('With user: ' + user.role, function () {
 
       // Defining suite for deleting a user
       describe('Delete user', function () {
@@ -65,7 +57,7 @@ describe('Smoke', function () {
           // checkbox is fixed.
 
           // Login into portal app as admin user
-          Portal.signIn(currentUser);
+          Portal.signIn(user);
 
           // Load in the browser URL the Users page
           Portal.getUsersPage();

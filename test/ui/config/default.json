@@ -12,23 +12,28 @@
     "users": {
       "revAdmin": {
         "email": "qa_user_with_rev-admin_perm@revsw.com",
-        "password": "password1"
+        "password": "password1",
+        "role": "Rev Admin"
       },
       "reseller": {
         "email": "api_qa_user_with_reseller_perm@revsw.com",
-        "password": "password1"
+        "password": "password1",
+        "role": "Reseller"
       },
       "secondReseller": {
         "email": "api_qa_user_2_with_reseller_perm@revsw.com",
-        "password": "password1"
+        "password": "password1",
+        "role": "Reseller"
       },
       "admin": {
         "email": "api_qa_user_with_admin_perm@revsw.com",
-        "password": "password1"
+        "password": "password1",
+        "role": "Admin"
       },
       "user": {
         "email": "qa_user_with_user_perm@revsw.com",
-        "password": "password1"
+        "password": "password1",
+        "role": "Normal User"
       }
     }
   }

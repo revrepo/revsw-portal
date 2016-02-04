@@ -2,7 +2,7 @@
  *
  * REV SOFTWARE CONFIDENTIAL
  *
- * [2013] - [2015] Rev Software, Inc.
+ * [2013] - [2016] Rev Software, Inc.
  * All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains
@@ -23,25 +23,18 @@ describe('Smoke', function () {
 
   // Defining set of users for which all below tests will be run
   var users = [
-    {
-      type: 'Admin',
-      data: config.get('portal.users.admin')
-    }, {
-      type: 'Rev Admin',
-      data: config.get('portal.users.revAdmin')
-    }
+    config.get('portal.users.admin'),
+    config.get('portal.users.revAdmin')
   ];
 
   users.forEach(function (user) {
 
-    describe('With user: ' + user.type, function () {
+    describe('With user: ' + user.role, function () {
 
       describe('User list', function () {
 
-        var currentUser = user.data;
-
         beforeAll(function () {
-          Portal.signIn(currentUser);
+          Portal.signIn(user);
         });
 
         afterAll(function () {

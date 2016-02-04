@@ -23,25 +23,19 @@ describe('Smoke', function () {
 
   // Defining set of users for which all below tests will be run
   var users = [
-    {
-      type: 'Admin',
-      data: config.get('portal.users.admin')
-    }, {
-      type: 'Rev Admin',
-      data: config.get('portal.users.revAdmin')
-    }
+    config.get('portal.users.admin'),
+    config.get('portal.users.revAdmin'),
+    config.get('portal.users.reseller')
   ];
 
   users.forEach(function (user) {
 
-    describe('With user: ' + user.type, function () {
+    describe('With user: ' + user.role, function () {
 
       describe('Domain Search', function () {
 
-        var currentUser = user.data;
-
         beforeAll(function () {
-          Portal.signIn(currentUser);
+          Portal.signIn(user);
         });
 
         afterAll(function () {

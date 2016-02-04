@@ -24,22 +24,16 @@ describe('Smoke', function () {
 
   // Defining set of users for which all below tests will be run
   var users = [
-    {
-      type: 'Admin',
-      data: config.get('portal.users.admin')
-    }, {
-      type: 'Rev Admin',
-      data: config.get('portal.users.revAdmin')
-    }
+    config.get('portal.users.admin'),
+    config.get('portal.users.revAdmin'),
+    config.get('portal.users.reseller')
   ];
 
   users.forEach(function (user) {
 
-    describe('With user: ' + user.type, function () {
+    describe('With user: ' + user.role, function () {
 
       describe('Delete domain', function () {
-
-        var currentUser = user.data;
 
         beforeAll(function () {
         });
@@ -50,7 +44,7 @@ describe('Smoke', function () {
         beforeEach(function () {
           // TODO: Move signIn and signOut calls to beforeAll and afterAll once
           // bug about creating consecutive domains is fixed
-          Portal.signIn(currentUser);
+          Portal.signIn(user);
           Portal.getDomainsPage();
         });
 
