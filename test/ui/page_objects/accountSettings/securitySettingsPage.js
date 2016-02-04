@@ -30,10 +30,16 @@ var SecuritySettings = {
       container: '.container-fluid .row',
       panelHeading: '.col-md-12 .panel .panel-heading',
       panelBody: '.col-md-12 .panel .panel-body',
-      factorAuth: '.row .col-md-6'
+      factorAuth: '.row .col-md-6',
+      QRCode: '.col-md-6.text-center'
     },
     buttons: {
-      auth: '[ng-click="init()"]'
+      auth: '[ng-click="init()"]',
+      enable2FA: '[ng-click="enable(oneTimePassword)"]',
+      cancel: '[ng-click="clearCodes()"]'
+    },
+    inputs: {
+      text: 'one-time-password'
     }
   },
 
@@ -108,6 +114,45 @@ var SecuritySettings = {
   },
 
   /**
+   * ### SecuritySettings.getOneTimePasswordTxt()
+   *
+   * Gets the reference to `One-Time Password` input text element.
+   *
+   * @returns {Promise}
+   */
+  getOneTimePasswordTxt: function () {
+    return this
+      .getPanelBodyElem()
+      .element(by.css(this.locators.inputs.text));
+  },
+
+  /**
+   * ### SecuritySettings.getEnable2FABtn()
+   *
+   * Gets the reference to `Enable 2FA` button element.
+   *
+   * @returns {Promise}
+   */
+  getEnable2FABtn: function () {
+    return this
+      .getPanelBodyElem()
+      .element(by.css(this.locators.buttons.enable2FA));
+  },
+
+  /**
+   * ### SecuritySettings.getCancelBtn()
+   *
+   * Gets the reference to `Cancel` button element.
+   *
+   * @returns {Promise}
+   */
+  getCancelBtn: function () {
+    return this
+      .getPanelBodyElem()
+      .element(by.css(this.locators.buttons.cancel));
+  },
+
+  /**
    * ### SecuritySettings.getGoogleAuthLnk()
    *
    * Gets the reference to `Google Authenticator` link element.
@@ -120,6 +165,19 @@ var SecuritySettings = {
       .all(by.css(this.locators.views.factorAuth))
       .get(0)
       .element(by.linkText(linkText));
+  },
+
+  /**
+   * ### SecuritySettings.getGoogleAuthLnk()
+   *
+   * Gets the reference to `Google Authenticator` link element.
+   *
+   * @returns {Promise}
+   */
+  getQRCodeElem: function () {
+    return this
+      .getPanelBodyElem()
+      .element(by.css(this.locators.views.QRCode));
   },
 
   // ## Helper Methods
