@@ -2,7 +2,7 @@
  *
  * REV SOFTWARE CONFIDENTIAL
  *
- * [2013] - [2015] Rev Software, Inc.
+ * [2013] - [2016] Rev Software, Inc.
  * All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains
@@ -20,28 +20,47 @@ var config = require('config');
 var Portal = require('./../../../page_objects/portal');
 
 describe('Smoke', function () {
-  describe('Domain Versions', function () {
 
-    var user = config.get('portal.users.admin');
+  // Defining set of users for which all below tests will be run
+  var users = [
+    {
+      type: 'Admin',
+      data: config.get('portal.users.admin')
+    }, {
+      type: 'Rev Admin',
+      data: config.get('portal.users.revAdmin')
+    }
+  ];
 
-    beforeAll(function () {
-      Portal.signIn(user);
-    });
+  users.forEach(function (user) {
 
-    afterAll(function () {
-      Portal.signOut();
-    });
+    describe('With user: ' + user.type, function () {
 
-    beforeEach(function () {
-      Portal.getDomainsPage();
-    });
+      describe('Domain Versions', function () {
 
-    it('should be displayed when clicking "Versions" icon for specific domain',
-      function () {
-        Portal.domains.listPage.domainsTbl
-          .getFirstRow()
-          .clickVersions();
-        expect(Portal.domains.versionsPage.isDisplayed()).toBeTruthy();
+        var currentUser = user.data;
+
+        beforeAll(function () {
+          Portal.signIn(currentUser);
+        });
+
+        afterAll(function () {
+          Portal.signOut();
+        });
+
+        beforeEach(function () {
+          Portal.getDomainsPage();
+        });
+
+        it('should be displayed when clicking "Versions" icon for specific ' +
+          'domain',
+          function () {
+            Portal.domains.listPage.domainsTbl
+              .getFirstRow()
+              .clickVersions();
+            expect(Portal.domains.versionsPage.isDisplayed()).toBeTruthy();
+          });
       });
+    });
   });
 });
