@@ -29,6 +29,8 @@ var PurgeCacheAdvanced = {
     container: '.container-fluid .row',
     panelHeading: '.col-md-12 .panel .panel-heading',
     panelBody: '.col-md-12 .panel .panel-body',
+    pullLeft: '.pull-left',
+    pullRight: '.pull-right',
     dropDown: {
       domain: '[ng-click="$select.toggle($event)"]',
       models: {
@@ -48,13 +50,16 @@ var PurgeCacheAdvanced = {
     },
     buttons: {
       advancedMode: {
-        linkText: 'Advanced mode'
+        linkText: 'Advanced Mode'
       },
       basicMode: {
-        linkText: 'Basic mode'
+        linkText: 'Basic Mode'
       },
       purge: {
         css: '[ng-click="purge()"]'
+      },
+      cancel: {
+        linkText: 'Cancel'
       }
     }
   },
@@ -113,6 +118,7 @@ var PurgeCacheAdvanced = {
   getAdvancedModeBtn: function () {
     return this
       .getPanelHeadingElem()
+      .element(by.css(this.locators.pullRight))
       .element(by.partialLinkText(this.locators.buttons.advancedMode.linkText));
   },
 
@@ -126,6 +132,7 @@ var PurgeCacheAdvanced = {
   getBasicModeBtn: function () {
     return this
       .getPanelHeadingElem()
+      .element(by.css(this.locators.pullRight))
       .element(by.partialLinkText(this.locators.buttons.basicMode.linkText));
   },
 
@@ -143,6 +150,19 @@ var PurgeCacheAdvanced = {
   },
 
   /**
+   * ### PurgeCacheAdvanced.getCancelBtn()
+   *
+   * Gets the reference to `Cancel` button element.
+   *
+   * @returns {Promise}
+   */
+  getCancelBtn: function () {
+    return this
+      .getPanelBodyElem()
+      .element(by.partialLinkText(this.locators.buttons.cancel.linkText));
+  },
+
+  /**
    * ### PurgeCacheAdvanced.getDomainDDown()
    *
    * Gets the reference to `Domain` drop down element.
@@ -151,7 +171,8 @@ var PurgeCacheAdvanced = {
    */
   getDomainDDown: function () {
     return this
-      .getPanelBodyElem()
+      .getPanelHeadingElem()
+      .element(by.css(this.locators.pullLeft))
       .element(by.css(this.locators.dropDown.domain));
   },
 
@@ -368,6 +389,19 @@ var PurgeCacheAdvanced = {
       .click();
   },
 
+  /**
+   * ### PurgeCacheAdvanced.clickCancel()
+   *
+   * Clicks on the `Cancel` button element.
+   *
+   * @returns {Promise}
+   */
+  clickCancel: function () {
+    return this
+      .getCancelBtn()
+      .click();
+  },
+
   // ## Helper Methods
 
   /**
@@ -381,7 +415,8 @@ var PurgeCacheAdvanced = {
     var title = this.getTitle().isPresent();
     var aceEditor = this.getAceEditorElem().isPresent();
     var purgeButton = this.getPurgeBtn().isPresent();
-    return (title && aceEditor && purgeButton);
+    var cancelButton = this.getCancelBtn().isPresent();
+    return (title && aceEditor && purgeButton && cancelButton);
   },
 
   /**

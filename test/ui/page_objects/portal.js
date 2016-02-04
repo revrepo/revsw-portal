@@ -55,6 +55,7 @@ var TrafficHeatmapsPage = require('./analytics/trafficHeatmapsPage');
 var RTTHeatmapsPage = require('./analytics/rttHeatmapsPage');
 var HelpSupportPage = require('./helpSupport/helpSupportPage');
 var HelpPage = require('./help/helpPage');
+var SecSettingsPage = require('./accountSettings/securitySettingsPage');
 
 // This `Portal` Page Object is the entry point to use all other Page Objects
 // that abstract all components from the Portal App.
@@ -94,6 +95,7 @@ var Portal = {
   purgeCacheAdvancedPage: PurgeCacheAdvancedPage,
   helpSupportPage: HelpSupportPage,
   helpPage: HelpPage,
+  secSettingsPage: SecSettingsPage,
 
   // ## Authentication Helper methods
 

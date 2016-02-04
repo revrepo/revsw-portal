@@ -43,6 +43,7 @@ describe('Smoke', function () {
     it('should display Purge Cached Objects page',
       function () {
         Portal.purgeCacheAdvancedPage.clickAdvancedMode();
+        Portal.purgeCacheAdvancedPage.selectDomain(myDomain);
         var isDisplayed = Portal.purgeCacheAdvancedPage.isDisplayed();
         expect(isDisplayed).toBe(true);
     });

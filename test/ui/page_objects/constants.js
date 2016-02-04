@@ -65,6 +65,10 @@ var Constants = {
       TRAFFIC_HEATMAPS: 'Traffic Heatmaps',
       RTT_HEATMAPS: 'RTT Heatmaps'
     },
+    accountSettings: {
+      TITLE: 'Two-Factor Authentication',
+      SECURITY_SETTINGS: 'Security Settings'
+    },
     helpSupport: {
       CUSTOMER_SUPPORT: 'Customer Support',
       API_DOCUMENTATION: 'API Documentation',
