@@ -3,10 +3,10 @@
 
   angular
     .module( 'revapm.Portal.Mobile' )
-    .directive( 'mobileAbFbtChart', mobileAbFbtChartDirective );
+    .directive( 'mobileAbErrorsChart', mobileAbErrorsChartDirective );
 
   /*@ngInject*/
-  function mobileAbFbtChartDirective() {
+  function mobileAbErrorsChartDirective() {
 
     return {
       restrict: 'AE',
@@ -23,21 +23,19 @@
       /*@ngInject*/
       controller: function( $scope, Stats, Util ) {
 
-        $scope.heading = 'First Byte Time Graph';
+        $scope.heading = 'SDK Failed Requests Graph';
         $scope.span = '1';
         $scope._loading = false;
 
         //  ---------------------------------
         $scope.chartOptions = {
           yAxis: {
-            // type: 'logarithmic',
-            // minorTickInterval: 2,
             title: {
-              text: 'FBT ms'
+              text: 'Erros Count'
             },
             labels: {
               formatter: function() {
-                return Util.formatNumber( this.value, 1 );
+                return Util.formatNumber( this.value, 0 );
               }
             }
           },
@@ -50,7 +48,7 @@
           tooltip: {
             formatter: function() {
               return '<strong>' + this.x + '</strong><br/>' +
-                this.series.name + ': <strong>' + Util.formatNumber( this.y, 1 ) + '</strong>';
+                this.series.name + ': <strong>' + Util.formatNumber( this.y, 0 ) + '</strong>';
             }
           }
         };
@@ -58,39 +56,15 @@
         $scope.hits = {
           labels: [],
           series: [{
-            name: 'Origin, Avg',
+            name: 'Origin',
             data: [],
-            color: '#3c65ac',
+            color: Highcharts.getOptions().colors[0],
             marker: { radius: 4, symbol: 'circle' }
           }, {
-            name: 'Origin, Min',
+            name: 'RevEdge',
             data: [],
-            color: '#7cb5ec',
-            marker: { radius: 2, symbol: 'circle' },
-            visible: false
-          }, {
-            name: 'Origin, Max',
-            data: [],
-            color: '#7cb5ec',
-            marker: { radius: 2, symbol: 'circle' },
-            visible: false
-          }, {
-            name: 'RevEdge, Avg',
-            data: [],
-            color: '#000000',
+            color: Highcharts.getOptions().colors[1],
             marker: { radius: 4, symbol: 'diamond' }
-          }, {
-            name: 'RevEdge, Min',
-            data: [],
-            color: '#808080',
-            marker: { radius: 2, symbol: 'diamond' },
-            visible: false
-          }, {
-            name: 'RevEdge, Max',
-            data: [],
-            color: '#808080',
-            marker: { radius: 2, symbol: 'diamond' },
-            visible: false
           }]
         };
 
@@ -112,30 +86,18 @@
           $scope.hits.labels = [];
           $scope.hits.series[0].data = [];
           $scope.hits.series[1].data = [];
-          $scope.hits.series[2].data = [];
-          $scope.hits.series[3].data = [];
-          $scope.hits.series[4].data = [];
-          $scope.hits.series[5].data = [];
 
           $scope.filters.account_id = $scope.ngAccount;
           $scope.filters.app_id = ( $scope.ngApp || null );
-          return Stats.sdk_ab_fbt( $scope.filters )
+          return Stats.sdk_ab_errors( $scope.filters )
             .$promise
             .then( function( data ) {
 
               if ( data.data && data.data.length > 0 ) {
                 var labels = [];
                 var hits = {
-                  rev_edge: {
-                    min: [],
-                    max: [],
-                    avg: []
-                  },
-                  origin: {
-                    min: [],
-                    max: [],
-                    avg: []
-                  },
+                  rev_edge: [],
+                  origin: []
                 };
                 var interval = data.metadata.interval_sec || 1800;
                 var offset = interval * 1000;
@@ -146,19 +108,19 @@
                     if ( !labels_filled ) {
                       labels.push( moment( item.key + offset /*to show the _end_ of interval instead of begin*/ ).format( 'MMM Do YY h:mm' ) );
                     }
-                    hits[dest.key].max.push( item.fbt_max );
-                    hits[dest.key].min.push( item.fbt_min );
-                    hits[dest.key].avg.push( item.fbt_average );
+                    hits[dest.key].push( item.count );
                   });
                   labels_filled = true;
-                } );
+                });
                 $scope.hits.labels = labels;
-                $scope.hits.series[0].data = hits.origin.avg;
-                $scope.hits.series[1].data = hits.origin.min;
-                $scope.hits.series[2].data = hits.origin.max;
-                $scope.hits.series[3].data = hits.rev_edge.avg;
-                $scope.hits.series[4].data = hits.rev_edge.min;
-                $scope.hits.series[5].data = hits.rev_edge.max;
+                $scope.hits.series[0].data = hits.origin;
+                $scope.hits.series[1].data = hits.rev_edge;
+                if ( hits.origin.length === 0 ) {
+                  $scope.hits.series[0].visible = false;
+                }
+                if ( hits.rev_edge.length === 0 ) {
+                  $scope.hits.series[1].visible = false;
+                }
               }
             })
             .finally( function() {
