@@ -85,6 +85,12 @@
                 var labels_filled_up = false;
 
                 angular.forEach( data.data, function( code ) {
+
+                  if ( code.key === 0 ) {
+                    //  pass it over
+                    return;
+                  }
+
                   var s = { name: (''+code.key), data: [], visible: false };
                   for ( var i = 0, len = code.flow.length; i < len; ++i ) {
                     var item = code.flow[i];
