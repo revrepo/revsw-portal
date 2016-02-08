@@ -37,7 +37,7 @@
             },
             labels: {
               formatter: function() {
-                return Util.formatNumber( this.value );
+                return Util.formatNumber( this.value, 1 );
               }
             }
           },
@@ -163,7 +163,7 @@
             })
             .finally( function() {
               $scope._loading = false;
-            } );
+            });
         };
 
         //  ---------------------------------

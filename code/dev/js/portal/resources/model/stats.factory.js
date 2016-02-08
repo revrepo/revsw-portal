@@ -210,6 +210,11 @@
         method: 'GET',
         url: $config.API_URL + '/stats/sdk/ab/fbt',
         params: {}
+      },
+      sdk_ab_fbt_distribution: {
+        method: 'GET',
+        url: $config.API_URL + '/stats/sdk/ab/fbt_distribution',
+        params: {}
       }
 
 
