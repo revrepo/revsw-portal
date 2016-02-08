@@ -75,18 +75,18 @@
             marker: { radius: 2, symbol: 'circle' },
             visible: false
           }, {
-            name: 'RevEdge, Avg',
+            name: 'RevAPM, Avg',
             data: [],
             color: '#000000',
             marker: { radius: 4, symbol: 'diamond' }
           }, {
-            name: 'RevEdge, Min',
+            name: 'RevAPM, Min',
             data: [],
             color: '#808080',
             marker: { radius: 2, symbol: 'diamond' },
             visible: false
           }, {
-            name: 'RevEdge, Max',
+            name: 'RevAPM, Max',
             data: [],
             color: '#808080',
             marker: { radius: 2, symbol: 'diamond' },

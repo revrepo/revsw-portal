@@ -63,7 +63,7 @@
             color: Highcharts.getOptions().colors[0],
             marker: { radius: 4, symbol: 'circle' }
           }, {
-            name: 'RevEdge',
+            name: 'RevAPM',
             data: [],
             color: Highcharts.getOptions().colors[1],
             marker: { radius: 4, symbol: 'diamond' }
