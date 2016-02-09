@@ -108,7 +108,7 @@
                     if ( !labels_filled ) {
                       labels.push( moment( item.key + offset /*to show the _end_ of interval instead of begin*/ ).format( 'MMM Do YY h:mm' ) );
                     }
-                    hits[dest.key].push( ( item.count ? ( item.received_bytes * 1000 / item.time_spent ) : null ) );
+                    hits[dest.key].push( ( item.count ? ( item.received_bytes * 1000 / item.time_spent_ms ) : null ) );
                   });
                   labels_filled = true;
                 } );
