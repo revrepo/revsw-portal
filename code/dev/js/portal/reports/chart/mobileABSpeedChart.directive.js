@@ -3,10 +3,10 @@
 
   angular
     .module( 'revapm.Portal.Mobile' )
-    .directive( 'mobileAbFbtDistributionChart', mobileAbFbtDistributionChartDirective );
+    .directive( 'mobileAbSpeedChart', mobileAbSpeedChartDirective );
 
   /*@ngInject*/
-  function mobileAbFbtDistributionChartDirective() {
+  function mobileAbSpeedChartDirective() {
 
     return {
       restrict: 'AE',
@@ -18,48 +18,37 @@
         flDevices: '=',
         flCountries: '=',
         flOperators: '=',
-        flNetworks: '=',
-        flInterval: '@',
-        flLimit: '@'
+        flNetworks: '='
       },
       /*@ngInject*/
       controller: function( $scope, Stats, Util ) {
 
-        var _interval = parseInt( ( $scope.flInterval || 100 ) );
-        var _limit = parseInt( ( $scope.flLimit || 5000 ) );
-
-        $scope.heading = 'First Byte Time Values Distribution Graph';
+        $scope.heading = 'Processing Speed Graph';
         $scope.span = '1';
         $scope._loading = false;
 
         //  ---------------------------------
         $scope.chartOptions = {
-          chart: {
-            type: 'column'
-          },
           yAxis: {
             title: {
-              text: 'Hits'
+              text: 'Speed Kb/s'
             },
             labels: {
               formatter: function() {
-                return Util.formatNumber( this.value, 0 );
+                return Util.formatNumber( this.value / 1024, 0 );
               }
             }
           },
           xAxis: {
-            title: {
-              text: 'FBT ms',
-              align: 'low'
+            crosshair: {
+              width: 1,
+              color: '#000000'
             }
-          },
-          legend: {
-            margin: 0
           },
           tooltip: {
             formatter: function() {
-              return '<strong>'+ this.x + '÷' + ( this.x + _interval ) + '</strong> ms<br/>' +
-                this.series.name + ': <strong>' + Util.formatNumber( this.y, 0 ) + '</strong> hits';
+              return '<strong>' + this.x + '</strong><br/>' +
+                this.series.name + ': <strong>' + Util.convertTraffic( this.y ) + '</strong>';
             }
           }
         };
@@ -87,9 +76,7 @@
           device: null,
           country: null,
           operator: null,
-          network: null,
-          interval_ms: _interval,
-          limit_ms: _limit
+          network: null
         };
 
         //  ---------------------------------
@@ -102,7 +89,7 @@
 
           $scope.filters.account_id = $scope.ngAccount;
           $scope.filters.app_id = ( $scope.ngApp || null );
-          return Stats.sdk_ab_fbt_distribution( $scope.filters )
+          return Stats.sdk_ab_speed( $scope.filters )
             .$promise
             .then( function( data ) {
 
@@ -112,17 +99,19 @@
                   rev_edge: [],
                   origin: [],
                 };
+                var interval = data.metadata.interval_sec || 1800;
+                var offset = interval * 1000;
                 var labels_filled = false;
                 // console.log( data );
                 angular.forEach( data.data, function( dest ) {
                   angular.forEach( dest.items, function( item ) {
                     if ( !labels_filled ) {
-                      labels.push( item.key );
+                      labels.push( moment( item.key + offset /*to show the _end_ of interval instead of begin*/ ).format( 'MMM Do YY h:mm' ) );
                     }
-                    hits[dest.key].push( item.count );
+                    hits[dest.key].push( ( item.count ? ( item.received_bytes * 1000 / item.time_spent ) : null ) );
                   });
                   labels_filled = true;
-                });
+                } );
                 $scope.hits.labels = labels;
                 $scope.hits.series[0].data = hits.origin;
                 $scope.hits.series[1].data = hits.rev_edge;
