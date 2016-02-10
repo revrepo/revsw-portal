@@ -66,8 +66,9 @@ var Constants = {
       RTT_HEATMAPS: 'RTT Heatmaps'
     },
     accountSettings: {
-      TITLE: 'Two-Factor Authentication',
-      SECURITY_SETTINGS: 'Security Settings'
+      SECURITY_SETTINGS: 'Security Settings',
+      API_KEYS: 'API Keys',
+      ACTIVITY_LOG: 'Activity Log'
     },
     helpSupport: {
       CUSTOMER_SUPPORT: 'Customer Support',
