@@ -220,6 +220,11 @@
         method: 'GET',
         url: $config.API_URL + '/stats/sdk/ab/errors',
         params: {}
+      },
+      sdk_ab_speed: {
+        method: 'GET',
+        url: $config.API_URL + '/stats/sdk/ab/speed',
+        params: {}
       }
 
 
