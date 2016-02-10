@@ -19,6 +19,7 @@
      * @type {Array}
      */
     var apps = [];
+    var appSelected = null;
 
     /**
      * Domain that should be selected
@@ -136,6 +137,13 @@
                 $localStorage.isCAdmin = true;
                 //$localStorage.isAdmin = res.is_admin;
                 $localStorage.user = res;
+                domains = [];
+                if ( $localStorage.last_user_id !== res.user_id ) {
+                  //  user changed - applications list and stored application are not valid
+                  apps = [];
+                  selectApplication( null );
+                  $localStorage.last_user_id = res.user_id;
+                }
               } else {
                 // Something went wrong
                 throw new Error(data.response);
@@ -352,6 +360,14 @@
                 .sort( function( lhs, rhs ) {
                   return lhs.app_name.localeCompare( rhs.app_name );
                 });
+
+              var user = getUser();
+              if ( apps.length && user && user.companyId[0] ) {
+                apps.unshift({
+                  app_id: "",
+                  app_name: "All Applications"
+                });
+              }
               resolve( apps );
             } else {
               reject( new Error(data.response) );
@@ -359,6 +375,16 @@
           });
       });
     }
+
+    function selectApplication( app ) {
+      $localStorage.selectedApplication = app;
+      appSelected = app;
+    }
+
+    function getSelectedApplication() {
+      return appSelected || $localStorage.selectedApplication;
+    }
+
 
 
     return {
@@ -397,7 +423,11 @@
 
       getSelectedDomain: getSelectedDomain,
 
-      getUserApps: getUserApps
+      getUserApps: getUserApps,
+
+      selectApplication: selectApplication,
+
+      getSelectedApplication: getSelectedApplication
     };
   }
 })();

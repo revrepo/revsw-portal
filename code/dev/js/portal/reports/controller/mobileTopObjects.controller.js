@@ -9,7 +9,7 @@
   function MobileTopObjectsController($scope, User, AlertService, Stats, Util) {
 
     $scope._loading = true;
-    $scope.application = false;
+    $scope.application = null;
     var u = User.getUser();
     $scope.account = u.companyId[0] || null;
 
@@ -35,7 +35,7 @@
 
       Stats.sdk_dirs({
           account_id: $scope.account,
-          app_id: ( $scope.application.app_id || null ),
+          app_id: ( ( $scope.application && $scope.application.app_id ) || null ),
           from_timestamp: moment().subtract( 1, 'days' ).valueOf(),
           to_timestamp: Date.now()
         })

@@ -23,7 +23,7 @@
       /*@ngInject*/
       controller: function( $scope, Stats, Util ) {
 
-        $scope.heading = 'Processing Speed Graph';
+        $scope.heading = 'Average Request Speed Graph';
         $scope.span = '1';
         $scope._loading = false;
 
@@ -61,7 +61,7 @@
             color: Highcharts.getOptions().colors[0],
             marker: { radius: 4, symbol: 'circle' }
           }, {
-            name: 'RevEdge',
+            name: 'RevAPM',
             data: [],
             color: Highcharts.getOptions().colors[1],
             marker: { radius: 4, symbol: 'diamond' }
