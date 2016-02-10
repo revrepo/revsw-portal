@@ -9,7 +9,7 @@
   function MobileTopsController($scope, $q, User, AlertService, Stats, Countries, Util) {
 
     $scope._loading = false;
-    $scope.application = false;
+    $scope.application = null;
     var u = User.getUser();
     $scope.account = u.companyId[0] || null;
     $scope.countries = Countries.query();
@@ -119,7 +119,7 @@
 
       var filters = {
         account_id: $scope.account,
-        app_id: ( $scope.application.app_id || null ),
+        app_id: ( ( $scope.application && $scope.application.app_id ) || null ),
         from_timestamp: moment().subtract( $scope.span, 'hours' ).valueOf(),
         to_timestamp: Date.now()
       };

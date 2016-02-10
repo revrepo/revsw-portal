@@ -1,6 +1,6 @@
 <ui-select ng-model="ngModel"
            theme="select2"
-           ng-disabled="_loading||_disabled"
+           ng-disabled="_loading"
            on-select="onAppSelect($model)"
            style="min-width: 300px;" >
   <ui-select-match placeholder="Select Application">{{$select.selected.app_name}}</ui-select-match>

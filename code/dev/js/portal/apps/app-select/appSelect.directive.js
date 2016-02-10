@@ -6,7 +6,7 @@
     .directive('appSelect', appSelectDirective);
 
   /*@ngInject*/
-  function appSelectDirective(User, $localStorage, AlertService) {
+  function appSelectDirective(User, AlertService) {
 
     return {
       restrict: 'AE',
@@ -19,34 +19,20 @@
       controller: function ($scope) {
         $scope.apps = [];
         $scope._loading = true;
-        $scope._disabled = false;
         $scope.onAppSelect = function ( app ) {
           $scope.ngModel = app;
-          $localStorage.selectedApplication = app;
+          User.selectApplication( app );
         };
 
-        var u = User.getUser();
-        var account = u.companyId[0] || null;
-
-        if ( !$scope.ngModel && $localStorage.selectedApplication !== undefined ) {
-          $scope.onAppSelect( $localStorage.selectedApplication );
+        if ( !$scope.ngModel && User.getSelectedApplication() ) {
+          $scope.ngModel = User.getSelectedApplication();
         }
 
         //  ---------------------------------
         // Load user applications
         User.getUserApps()
-          .then(function ( data ) {
-            // console.log( data );
-            if ( account ) {
-              data.unshift({
-                app_id: "",
-                app_name: "All Applications"
-              });
-            } else if ( u.role !== 'revadmin' ) {
-              $scope._disabled = true;
-              data = [];
-            }
-            $scope.apps = data;
+          .then(function ( apps ) {
+            $scope.apps = apps;
           })
           .catch(function () {
             AlertService.danger('Oops! Something went wrong');
