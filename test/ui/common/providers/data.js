@@ -86,6 +86,7 @@ var DataProvider = {
     if (prefix === undefined) {
       return {
         name: '',
+        companyName: '--- Select Company ---',
         originServer: '',
         originHostHeader: '',
         originLocation: '--- Select Location ---'
@@ -94,6 +95,7 @@ var DataProvider = {
     prefix = prefix.toLowerCase().replace(/\W+/g, '-');
     return {
       name: prefix + timestamp + '-portal-ui-test.com',
+      companyName: 'API QA Reseller Company',
       originServer: prefix + '-portal-ui-test.origin-server.com',
       originHostHeader: prefix + '-portal-ui-test.origin-host-header.com',
       originLocation: 'HQ Test Lab'
