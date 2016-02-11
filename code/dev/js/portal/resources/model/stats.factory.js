@@ -205,6 +205,26 @@
         method: 'GET',
         url: $config.API_URL + '/stats/sdk/top_objects/5xx',
         params: {}
+      },
+      sdk_ab_fbt: {
+        method: 'GET',
+        url: $config.API_URL + '/stats/sdk/ab/fbt',
+        params: {}
+      },
+      sdk_ab_fbt_distribution: {
+        method: 'GET',
+        url: $config.API_URL + '/stats/sdk/ab/fbt_distribution',
+        params: {}
+      },
+      sdk_ab_errors: {
+        method: 'GET',
+        url: $config.API_URL + '/stats/sdk/ab/errors',
+        params: {}
+      },
+      sdk_ab_speed: {
+        method: 'GET',
+        url: $config.API_URL + '/stats/sdk/ab/speed',
+        params: {}
       }
 
 

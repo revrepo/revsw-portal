@@ -43,6 +43,15 @@
             templateUrl: 'parts/reports/mobile-distributions.html'
           }
         }
+      })
+      .state('index.mobile.ab', {
+        url: '/mobile/ab',
+        views: {
+          main: {
+            controller: 'MobileAbController',
+            templateUrl: 'parts/reports/mobile-ab.html'
+          }
+        }
       });
   }
 })();

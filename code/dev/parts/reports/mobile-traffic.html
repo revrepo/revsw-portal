@@ -15,14 +15,8 @@
 
                 <form class="form-inline">
                   <div class="form-group">
-                    <select class="form-control"
-                            ng-options="item.app_id as item.app_name for item in apps"
-                            ng-model="application"
-                            ng-selected="onAppSelected()"
-                            >
-                    </select>
+                    <div app-select ng-model="application" on-select="reloadDirs()"></div>
                   </div>
-
                 </form>
 
               </div>
@@ -35,7 +29,7 @@
             <div class="col-lg-12">
               <div mobile-rps-chart
                    ng-account="account"
-                   ng-app="application"
+                   ng-app="application.app_id"
                    fl-oses="oses"
                    fl-devices="devices"
                    fl-countries="countries"
@@ -49,7 +43,7 @@
             <div class="col-lg-12">
               <div mobile-bw-chart
                    ng-account="account"
-                   ng-app="application"
+                   ng-app="application.app_id"
                    fl-oses="oses"
                    fl-devices="devices"
                    fl-countries="countries"
@@ -63,7 +57,7 @@
             <div class="col-lg-12">
               <div mobile-http-codes-chart
                    ng-account="account"
-                   ng-app="application"
+                   ng-app="application.app_id"
                    fl-oses="oses"
                    fl-devices="devices"
                    fl-countries="countries"

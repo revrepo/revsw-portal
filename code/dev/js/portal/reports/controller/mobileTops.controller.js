@@ -6,11 +6,10 @@
     .controller('MobileTopsController', MobileTopsController);
 
   /*@ngInject*/
-  function MobileTopsController($scope, $q, User, AlertService, Stats, Countries, Util, $localStorage) {
+  function MobileTopsController($scope, $q, User, AlertService, Stats, Countries, Util) {
 
-    $scope._loading = true;
-    $scope.apps = [];
-    $scope.application = $localStorage.selectedApplicationID === undefined ? '' : $localStorage.selectedApplicationID;
+    $scope._loading = false;
+    $scope.application = null;
     var u = User.getUser();
     $scope.account = u.companyId[0] || null;
     $scope.countries = Countries.query();
@@ -113,21 +112,20 @@
     //  ---------------------------------
     $scope.reload = function() {
 
-      if ( $scope._loading ||
-          $scope.apps.length === 0 ||
-          ( !$scope.account && !$scope.application ) ) {
+      if ( !$scope.account &&
+          ( !$scope.application || !$scope.application.app_id ) ) {
         return;
       }
 
       var filters = {
         account_id: $scope.account,
-        app_id: ( $scope.application || null ),
+        app_id: ( ( $scope.application && $scope.application.app_id ) || null ),
         from_timestamp: moment().subtract( $scope.span, 'hours' ).valueOf(),
         to_timestamp: Date.now()
       };
 
       $scope._loading = true;
-      $q.all([
+      return $q.all([
           $scope.reloadOne( 'hits', 'country', 20, filters ),
           $scope.reloadOne( 'users', 'country', 20, filters ),
           $scope.reloadOne( 'gbt', 'country', 20, filters ),
@@ -147,45 +145,14 @@
           $scope.reloadOther( 'hits', 'domain', 10, filters ),
           $scope.reloadOther( 'hits', 'status_code', 10, filters )
         ])
+        .catch( function( err ) {
+          AlertService.danger('Oops! Something went wrong');
+          console.log( err );
+        })
         .finally(function () {
           $scope._loading = false;
         });
     };
-
-    //  ---------------------------------
-    $scope.$watch( 'application', function() {
-      $localStorage.selectedApplicationID = $scope.application;
-      $scope.reload();
-    });
-
-    //  ---------------------------------
-    User.getUserApps(true)
-      .then(function ( data ) {
-
-        // console.log( 'apps: ', data );
-        if ( $scope.account ) {
-          data.unshift({
-            app_id: "",
-            app_name: "All Applications"
-          });
-        }
-        $scope.apps = data;
-
-        if ( data.length ) {
-          if($localStorage.selectedApplicationID === undefined ) {
-            $scope.application = data[0].app_id;
-          }
-        } else {
-          $scope.application = '';
-        }
-      })
-      .catch(function () {
-        AlertService.danger('Oops something went wrong');
-      })
-      .finally(function () {
-        $scope._loading = false;
-        $scope.reload();
-      });
 
   }
 })();

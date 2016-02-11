@@ -15,11 +15,7 @@
 
                 <form class="form-inline">
                   <div class="form-group">
-                    <select class="form-control"
-                            ng-options="item.app_id as item.app_name for item in apps"
-                            ng-model="application"
-                            >
-                    </select>
+                    <div app-select ng-model="application" on-select="reload()"></div>
                   </div>
                 </form>
 

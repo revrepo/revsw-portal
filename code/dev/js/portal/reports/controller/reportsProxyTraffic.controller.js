@@ -12,12 +12,12 @@
      AlertService,
      Stats,
      Countries) {
-       
+
     $scope.userService = User;
     $scope._loading = true;
     // Domain that selected
     $scope.domain = $rootScope.domain;
-    $scope.domains = [];
+    // $scope.domains = [];
 
     $scope.filters = {
       from_timestamp: moment().subtract(1, 'days').valueOf(),
@@ -253,16 +253,16 @@
     };
 
     // Load user domains
-    User.getUserDomains(true)
-      .then(function (domains) {
-        $scope.domains = domains;
-      })
-      .catch(function () {
-        AlertService.danger('Oops something wrong');
-      })
-      .finally(function () {
-        $scope._loading = false;
-      });
+    // User.getUserDomains(true)
+    //   .then(function (domains) {
+    //     $scope.domains = domains;
+    //   })
+    //   .catch(function () {
+    //     AlertService.danger('Oops something wrong');
+    //   })
+    //   .finally(function () {
+    //     $scope._loading = false;
+    //   });
 
     $scope.onDomainSelected = function () {
       if (!$scope.domain || !$scope.domain.id) {
