@@ -316,7 +316,6 @@ var Portal = {
       me.getDomainsPage();
       me.domains.listPage.clickAddNewDomain();
       me.domains.addPage.createDomain(newDomain);
-      browser.sleep(10000);
       me.domains.addPage.clickBackToList();
       browser.getCurrentUrl().then(function (currentUrl) {
         if (initialUrl !== currentUrl) {

@@ -37,14 +37,14 @@ var Utils = {
     var hostName = config.get('portal.host.name');
     var hostPort = config.get('portal.host.port');
     var basePath = config.get('portal.host.path');
-    var baseUrl = protocol + '://' + hostName + ':';
+    var baseUrl = protocol + '://' + hostName;
     if (hostPort) {
-      baseUrl += hostPort + '/';
+      baseUrl += ':' + hostPort;
     }
     if (basePath) {
-      baseUrl += basePath + '/';
+      baseUrl += basePath;
     }
-    return baseUrl;
+    return baseUrl + '/';
   }
 };
 
