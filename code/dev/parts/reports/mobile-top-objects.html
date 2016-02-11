@@ -15,12 +15,7 @@
 
                 <form class="form-inline">
                   <div class="form-group">
-                    <select class="form-control"
-                            ng-options="item.app_id as item.app_name for item in apps"
-                            ng-model="application"
-                            ng-selected="onAppSelected()"
-                            >
-                    </select>
+                    <div app-select ng-model="application" on-select="reloadDirs()"></div>
                   </div>
 
                 </form>
@@ -35,7 +30,7 @@
             <div class="col-lg-12">
               <div mobile-top-objects
                    ng-account="account"
-                   ng-app="application"
+                   ng-app="application.app_id"
                    fl-oses="oses"
                    fl-devices="devices"
                    fl-countries="countries"
@@ -50,7 +45,7 @@
             <div class="col-lg-12">
               <div mobile-top-objects-time
                    ng-account="account"
-                   ng-app="application"
+                   ng-app="application.app_id"
                    fl-oses="oses"
                    fl-devices="devices"
                    fl-countries="countries"
@@ -66,7 +61,7 @@
             <div class="col-lg-12">
               <div mobile-top-objects-time
                    ng-account="account"
-                   ng-app="application"
+                   ng-app="application.app_id"
                    fl-oses="oses"
                    fl-devices="devices"
                    fl-countries="countries"
@@ -82,7 +77,7 @@
             <div class="col-lg-12">
               <div mobile-top-objects
                    ng-account="account"
-                   ng-app="application"
+                   ng-app="application.app_id"
                    fl-oses="oses"
                    fl-devices="devices"
                    fl-countries="countries"
@@ -98,7 +93,7 @@
             <div class="col-lg-12">
               <div mobile-top-objects
                    ng-account="account"
-                   ng-app="application"
+                   ng-app="application.app_id"
                    fl-oses="oses"
                    fl-devices="devices"
                    fl-countries="countries"
@@ -114,7 +109,7 @@
             <div class="col-lg-12">
               <div mobile-top-objects
                    ng-account="account"
-                   ng-app="application"
+                   ng-app="application.app_id"
                    fl-oses="oses"
                    fl-devices="devices"
                    fl-countries="countries"
@@ -130,7 +125,7 @@
             <div class="col-lg-12">
               <div mobile-top-objects-5xx
                    ng-account="account"
-                   ng-app="application"
+                   ng-app="application.app_id"
                    fl-oses="oses"
                    fl-devices="devices"
                    fl-countries="countries"

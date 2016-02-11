@@ -3,10 +3,10 @@
 
   angular
     .module('revapm.Portal.Mobile')
-    .controller('MobileTopObjectsController', MobileTopObjectsController);
+    .controller('MobileAbController', MobileAbController);
 
   /*@ngInject*/
-  function MobileTopObjectsController($scope, User, AlertService, Stats, Util) {
+  function MobileAbController($scope, User, AlertService, Stats) {
 
     $scope._loading = true;
     $scope.application = null;
@@ -19,8 +19,11 @@
     $scope.operators = [];
     $scope.networks = ['Cellular','WiFi'];
 
-    //  ---------------------------------
     $scope.reloadDirs = function() {
+      $scope.oses = [];
+      $scope.devices = [];
+      $scope.countries = [];
+      $scope.operators = [];
 
       if ( !$scope.account &&
           ( !$scope.application || !$scope.application.app_id ) ) {
@@ -28,15 +31,10 @@
       }
 
       $scope._loading = true;
-      $scope.oses = [];
-      $scope.devices = [];
-      $scope.countries = [];
-      $scope.operators = [];
-
       Stats.sdk_dirs({
           account_id: $scope.account,
           app_id: ( ( $scope.application && $scope.application.app_id ) || null ),
-          from_timestamp: moment().subtract( 1, 'days' ).valueOf(),
+          from_timestamp: moment().subtract( 7, 'days' ).valueOf(),
           to_timestamp: Date.now()
         })
         .$promise

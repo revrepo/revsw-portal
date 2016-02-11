@@ -8,7 +8,8 @@
     'revapm.Portal.Resources',
     'ui.router',
     'ui.select',
-    'ng.jsoneditor'
+    'ng.jsoneditor',
+    'ngSanitize'
   ]);
 })();
 
