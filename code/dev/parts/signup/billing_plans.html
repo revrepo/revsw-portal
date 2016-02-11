@@ -1,0 +1,52 @@
+<div class="container" ui-view="page">
+    <div class="row">
+        <div class="col-sm-12">
+
+        </div>
+    </div>
+
+    <div class="row" ng-init="initBillingPlans()">
+        <div class="col-md-12">
+            <div class="panel panel-default center-block text-center">
+                <div id="logo">
+                    <img src="images/logo_color.png" alt="Logo"/>
+                </div>
+                <div class="panel-heading">
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="pull-left">
+                                <h2 class="">
+                                    Billing Plans
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="panel-body">
+<!--                    <div class="container-fluid">
+                        <div class="row">-->
+                            <div class="col-md-3 bg-info thumbnail text-center billing-plan" ng-repeat="item in records | orderBy: 'monthly_fee'">
+                                <h2>
+                                    {{item.name}}
+                                </h2>
+                                <h1>
+                                    ${{item.monthly_fee}}/mon
+                                </h1>
+                                <hr>
+                                <div>{{item.description}}</div>
+                                <div ng-repeat="service in item.services">
+                                    <div>${{service.cost}} per {{service.measure_unit}}</div>
+                                </div>
+                                <hr>
+                                <a href="{{item.hosted_page + queryString}}"
+                                   class="btn btn-primary center-block">Subscribe</a>
+                            </div>
+<!--                        </div>
+                    </div>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
