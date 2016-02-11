@@ -29,7 +29,10 @@
             /*@ngInject*/
             controller: function ($scope, $state, User) {
               $scope.userService = User;
-              if (!User.isAuthed() && $state.current.name != 'index.restore') {
+              if (!User.isAuthed() &&
+                $state.current.name != 'index.restore' &&
+                $state.current.name != 'signup'
+              ){
                 $state.go('login');
               } else if ($state.current.name == 'index') {
                 $state.go('index.reports.proxy');
