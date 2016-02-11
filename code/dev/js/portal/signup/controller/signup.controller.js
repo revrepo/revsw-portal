@@ -6,7 +6,7 @@
     .controller('SignupController', SignupController);
 
   /*@ngInject*/
-  function SignupController($scope, Users, User, BillingPlans, CRUDController, Countries, $state, AlertService, $config, $modal, $injector) {
+  function SignupController($scope, Users, User, Companies, BillingPlans, CRUDController, Countries, $state, AlertService, $config, $modal, $injector) {
 
     //Invoking crud actions
     $injector.invoke(CRUDController,
@@ -28,17 +28,19 @@
     $scope.countries = Countries.query();
 
     $scope.getQueryString = function (model) {
+     var company = Companies.get({id: model.companyId}, function () {
+          });
       var q = '?first_name=' + encodeURIComponent(model.firstname) +
         '&last_name=' + encodeURIComponent(model.lastname) +
         '&email=' + encodeURIComponent(model.email) +
-        '&phone=' + encodeURIComponent(model.phone_number) +
+        '&phone=' + encodeURIComponent(company.phone_number) +
         '&reference=' + encodeURIComponent(model.user_id) +
         '&organization=' + encodeURIComponent(model.company_name) +
-        '&billing_address=' + encodeURIComponent(model.address1) +
-        '&billing_address2=' + encodeURIComponent(model.address2) +
-        '&billing_city=' +  encodeURIComponent(model.city) +
-        '&billing_zip=' + encodeURIComponent(model.zipcode) +
-        '&billing_country=' + encodeURIComponent(model.country);
+        '&billing_address=' + encodeURIComponent(company.address1) +
+        '&billing_address2=' + encodeURIComponent(company.address2) +
+        '&billing_city=' +  encodeURIComponent(company.city) +
+        '&billing_zip=' + encodeURIComponent(company.zipcode) +
+        '&billing_country=' + encodeURIComponent(company.country);
       return q;
     };
 
