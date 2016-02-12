@@ -17,43 +17,47 @@
  */
 
 var config = require('config');
-var Portal = require('./../../../page_objects/portal');
+var Portal = require('./../../page_objects/portal');
+var DataProvider = require('./../../common/providers/data');
 
-describe('Smoke', function () {
+describe('Setup', function () {
 
   // Defining set of users for which all below tests will be run
   var users = [
-    config.get('portal.users.admin'),
+    config.get('portal.users.reseller'),
     config.get('portal.users.revAdmin'),
-    config.get('portal.users.reseller')
+    config.get('portal.users.admin')
   ];
 
   users.forEach(function (user) {
 
     describe('With user: ' + user.role, function () {
 
-      describe('Domain Versions', function () {
-
-        beforeAll(function () {
-          Portal.signIn(user);
-        });
-
-        afterAll(function () {
-          Portal.signOut();
-        });
+      describe('Domains', function () {
 
         beforeEach(function () {
+          Portal.signIn(user);
           Portal.getDomainsPage();
         });
 
-        it('should be displayed when clicking "Versions" icon for specific ' +
-          'domain',
-          function () {
-            Portal.domains.listPage.domainsTbl
-              .getFirstRow()
-              .clickVersions();
-            expect(Portal.domains.versionsPage.isDisplayed()).toBeTruthy();
-          });
+        afterEach(function () {
+          Portal.signOut();
+        });
+
+        var domains = [];
+        var prefix;
+
+        for (var i = 10; i < 40; i++) {
+          prefix = 'qa-' + user.role.toLowerCase().replace(/\W/g, '-') + '-';
+          domains.push(DataProvider.generateDomain(prefix + i, true));
+        }
+
+        domains.forEach(function (domain) {
+          it('should check/create domain `' + domain.name + '` for pagination.',
+            function () {
+              Portal.createDomainIfNotExist(domain);
+            });
+        });
       });
     });
   });

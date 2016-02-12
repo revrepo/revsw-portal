@@ -2,7 +2,7 @@
  *
  * REV SOFTWARE CONFIDENTIAL
  *
- * [2013] - [2015] Rev Software, Inc.
+ * [2013] - [2016] Rev Software, Inc.
  * All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains
@@ -22,43 +22,59 @@ var DataProvider = require('./../../../common/providers/data');
 var Constants = require('./../../../page_objects/constants');
 
 describe('Smoke', function () {
-  describe('Edit advanced domain', function () {
 
-    var adminUser = config.get('portal.users.admin');
-    var myDomain = DataProvider.generateDomain('mydomain');
+  // Defining set of users for which all below tests will be run
+  var users = [
+    config.get('portal.users.admin'),
+    config.get('portal.users.revAdmin'),
+    config.get('portal.users.reseller')
+  ];
 
-    beforeAll(function () {
-      Portal.signIn(adminUser);
-      Portal.createDomain(myDomain);
-    });
+  users.forEach(function (user) {
 
-    afterAll(function () {
-      Portal.deleteDomain(myDomain);
-      Portal.signOut();
-    });
+    describe('With user: ' + user.role, function () {
 
-    beforeEach(function () {
-      Portal.header.goTo(Constants.header.appMenu.WEB);
-    });
+      describe('Edit advanced domain', function () {
 
-    it('should display "Advanced Edit" domain page', function () {
-      Portal.domains.listPage.searchAndClickEdit(myDomain.name);
-      Portal.domains.editPage.clickAdvancedMode();
-      expect(Portal.domains.editPage.isDisplayed()).toBeTruthy();
-    });
+        var myDomain = DataProvider.generateDomain('mydomain');
 
-    it('should display "Back To List" domain button', function () {
-      Portal.domains.listPage.searchAndClickEdit(myDomain.name);
-      Portal.domains.editPage.clickAdvancedMode();
-      var backToListButton = Portal.domains.editPage.getBackToListBtn();
-      expect(backToListButton.isPresent()).toBeTruthy();
-    });
+        beforeAll(function () {
+          Portal.signIn(user);
+          Portal.createDomain(myDomain);
+        });
 
-    it('should display "Cancel" domain button', function () {
-      Portal.domains.listPage.searchAndClickEdit(myDomain.name);
-      Portal.domains.editPage.clickAdvancedMode();
-      var cancelButton = Portal.domains.editPage.getCancelBtn();
-      expect(cancelButton.isPresent()).toBeTruthy();
+        afterAll(function () {
+          Portal.deleteDomain(myDomain);
+          Portal.signOut();
+        });
+
+        beforeEach(function () {
+          Portal.header.goTo(Constants.header.appMenu.WEB);
+        });
+
+        it('should display "Advanced Edit" domain page',
+          function () {
+            Portal.domains.listPage.searchAndClickEdit(myDomain.name);
+            Portal.domains.editPage.clickAdvancedMode();
+            expect(Portal.domains.editPage.isDisplayed()).toBeTruthy();
+          });
+
+        it('should display "Back To List" domain button',
+          function () {
+            Portal.domains.listPage.searchAndClickEdit(myDomain.name);
+            Portal.domains.editPage.clickAdvancedMode();
+            var backToListButton = Portal.domains.editPage.getBackToListBtn();
+            expect(backToListButton.isPresent()).toBeTruthy();
+          });
+
+        it('should display "Cancel" domain button',
+          function () {
+            Portal.domains.listPage.searchAndClickEdit(myDomain.name);
+            Portal.domains.editPage.clickAdvancedMode();
+            var cancelButton = Portal.domains.editPage.getCancelBtn();
+            expect(cancelButton.isPresent()).toBeTruthy();
+          });
+      });
     });
   });
 });

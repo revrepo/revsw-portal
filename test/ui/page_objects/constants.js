@@ -53,6 +53,10 @@ var Constants = {
       SECURITY_SETTINGS: 'Security Settings',
       ACTIVITY_LOG: 'Activity Log'
     },
+    web: {
+      DOMAINS: 'Domains',
+      PURGE_CACHE: 'Purge Cache'
+    },
     analytics: {
       PROXY_TRAFFIC: 'Proxy Traffic',
       TOP_REPORTS: 'Top Reports',
@@ -60,6 +64,17 @@ var Constants = {
       FBT_REPORTS: 'FBT Reports',
       TRAFFIC_HEATMAPS: 'Traffic Heatmaps',
       RTT_HEATMAPS: 'RTT Heatmaps'
+    },
+    accountSettings: {
+      SECURITY_SETTINGS: 'Security Settings',
+      API_KEYS: 'API Keys',
+      ACTIVITY_LOG: 'Activity Log'
+    },
+    helpSupport: {
+      CUSTOMER_SUPPORT: 'Customer Support',
+      API_DOCUMENTATION: 'API Documentation',
+      KNOWLEDGE_BASE: 'Knowledge Base',
+      NETWORK_STATUS: 'Network Status'
     }
   },
   user: {

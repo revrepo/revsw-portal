@@ -2,7 +2,7 @@
  *
  * REV SOFTWARE CONFIDENTIAL
  *
- * [2013] - [2015] Rev Software, Inc.
+ * [2013] - [2016] Rev Software, Inc.
  * All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains
@@ -20,62 +20,75 @@ var config = require('config');
 var Portal = require('./../../../page_objects/portal');
 
 describe('Smoke', function () {
-  describe('Domain list', function () {
 
-    var user = config.get('portal.users.admin');
+  // Defining set of users for which all below tests will be run
+  var users = [
+    config.get('portal.users.admin'),
+    config.get('portal.users.revAdmin'),
+    config.get('portal.users.reseller')
+  ];
 
-    beforeAll(function () {
-      Portal.signIn(user);
-    });
+  users.forEach(function (user) {
 
-    afterAll(function () {
-      Portal.signOut();
-    });
+    describe('With user: ' + user.role, function () {
 
-    beforeEach(function () {
-      Portal.getDomainsPage();
-    });
+      describe('Domain list', function () {
 
-    it('should be displayed when clicking "Domains" from sidebar', function () {
-      expect(Portal.domains.listPage.isDisplayed()).toBeTruthy();
-    });
+        beforeAll(function () {
+          Portal.signIn(user);
+        });
 
-    it('should be displayed when "Back to list" button is clicked from ' +
-      '"Create Domain" page',
-      function () {
-        Portal.domains.listPage.clickAddNewDomain();
-        Portal.domains.addPage.clickBackToList();
-        expect(Portal.domains.listPage.isDisplayed()).toBeTruthy();
+        afterAll(function () {
+          Portal.signOut();
+        });
+
+        beforeEach(function () {
+          Portal.getDomainsPage();
+        });
+
+        it('should be displayed when clicking "Domains" from sidebar',
+          function () {
+            expect(Portal.domains.listPage.isDisplayed()).toBeTruthy();
+          });
+
+        it('should be displayed when "Back to list" button is clicked from ' +
+          '"Create Domain" page',
+          function () {
+            Portal.domains.listPage.clickAddNewDomain();
+            Portal.domains.addPage.clickBackToList();
+            expect(Portal.domains.listPage.isDisplayed()).toBeTruthy();
+          });
+
+        it('should be displayed when "Back to list" button is clicked from ' +
+          '"Edit Domain" page',
+          function () {
+            Portal.domains.listPage.domainsTbl
+              .getFirstRow()
+              .clickEdit();
+            Portal.domains.editPage.clickBackToList();
+            expect(Portal.domains.listPage.isDisplayed()).toBeTruthy();
+          });
+
+        it('should be displayed when "Back to list" button is clicked from ' +
+          '"Configure Domain" page',
+          function () {
+            Portal.domains.listPage.domainsTbl
+              .getFirstRow()
+              .clickConfigure();
+            Portal.domains.configurePage.clickBackToList();
+            expect(Portal.domains.listPage.isDisplayed()).toBeTruthy();
+          });
+
+        it('should be displayed when "Back to list" button is clicked from ' +
+          '"Domain versions" page',
+          function () {
+            Portal.domains.listPage.domainsTbl
+              .getFirstRow()
+              .clickVersions();
+            Portal.domains.versionsPage.clickBackToList();
+            expect(Portal.domains.listPage.isDisplayed()).toBeTruthy();
+          });
       });
-
-    it('should be displayed when "Back to list" button is clicked from ' +
-      '"Edit Domain" page',
-      function () {
-        Portal.domains.listPage.domainsTbl
-          .getFirstRow()
-          .clickEdit();
-        Portal.domains.editPage.clickBackToList();
-        expect(Portal.domains.listPage.isDisplayed()).toBeTruthy();
-      });
-
-    it('should be displayed when "Back to list" button is clicked from ' +
-      '"Configure Domain" page',
-      function () {
-        Portal.domains.listPage.domainsTbl
-          .getFirstRow()
-          .clickConfigure();
-        Portal.domains.configurePage.clickBackToList();
-        expect(Portal.domains.listPage.isDisplayed()).toBeTruthy();
-      });
-
-    it('should be displayed when "Back to list" button is clicked from ' +
-      '"Domain versions" page',
-      function () {
-        Portal.domains.listPage.domainsTbl
-          .getFirstRow()
-          .clickVersions();
-        Portal.domains.versionsPage.clickBackToList();
-        expect(Portal.domains.listPage.isDisplayed()).toBeTruthy();
-      });
+    });
   });
 });

@@ -19,6 +19,7 @@
     "jasmine-spec-reporter": "^2.4.0",
     "jshint-stylish": "^2.0.1",
     "protractor": "^2.5.1",
-    "protractor-jasmine2-html-reporter": "0.0.5"
+    "protractor-jasmine2-html-reporter": "0.0.5",
+    "validator": "^4.7.1"
   }
 }

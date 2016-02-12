@@ -45,12 +45,18 @@ var DomainStatsPage= require('./domain/statsPage');
 var DomainVersionsPage = require('./domain/versionsPage');
 var EditDomainPage = require('./domain/editPage');
 var ListDomainsPage = require('./domain/listPage');
+var PurgeCacheBasicPage = require('./domain/purgeCacheBasicPage');
+var PurgeCacheAdvancedPage = require('./domain/purgeCacheAdvancedPage');
 var ProxyTrafficPage = require('./analytics/proxyTrafficPage');
 var TopReportsPage = require('./analytics/topReportsPage');
 var TopObjectsPage = require('./analytics/topObjectsPage');
 var FBTReportsPage = require('./analytics/fbtReportsPage');
 var TrafficHeatmapsPage = require('./analytics/trafficHeatmapsPage');
 var RTTHeatmapsPage = require('./analytics/rttHeatmapsPage');
+var HelpSupportPage = require('./helpSupport/helpSupportPage');
+var HelpPage = require('./help/helpPage');
+var SecSettingsPage = require('./accountSettings/securitySettingsPage');
+var ApiKeysListPage = require('./accountSettings/apiKeysListPage.js');
 
 // This `Portal` Page Object is the entry point to use all other Page Objects
 // that abstract all components from the Portal App.
@@ -86,6 +92,14 @@ var Portal = {
   fbtReportsPage: FBTReportsPage,
   trafficHeatmapsPage: TrafficHeatmapsPage,
   rttHeatmapsPage: RTTHeatmapsPage,
+  purgeCacheBasicPage: PurgeCacheBasicPage,
+  purgeCacheAdvancedPage: PurgeCacheAdvancedPage,
+  helpSupportPage: HelpSupportPage,
+  helpPage: HelpPage,
+  secSettingsPage: SecSettingsPage,
+  apiKeys: {
+    listPage: ApiKeysListPage
+  },
 
   // ## Authentication Helper methods
 
@@ -93,8 +107,8 @@ var Portal = {
    * ### Portal.signIn()
    *
    * Signs in the specified user into the Portal app
-   *
    * @param {user} user, object with the following schema
+   *
    *     {
    *         email: String,
    *         password: String
@@ -261,6 +275,41 @@ var Portal = {
   },
 
   /**
+   * ### Portal.createUserIfNotExist()
+   *
+   * Helper method that executes all steps required to create a new User from
+   * Portal app. This method creates the user only if it does not exist (it
+   * validates the existence by doing a search by the user email).
+   *
+   * @param {User} user, data applying the schema defined in
+   * `DataProvider.generateUser()`
+   *
+   * @returns {Promise}
+   */
+  createUserIfNotExist: function (user) {
+    var me = this;
+    return browser.getCurrentUrl().then(function (initialUrl) {
+      me.getUsersPage();
+      me.userListPage.searcher.setSearchCriteria(user.email);
+      me.userListPage.userTbl
+        .getRows()
+        .count()
+        .then(function (totalResults) {
+          if (totalResults === 0) {
+            me.userListPage.clickAddNewUser();
+            me.addUserPage.createUser(user);
+            me.addUserPage.clickBackToList();
+          }
+          browser.getCurrentUrl().then(function (currentUrl) {
+            if (initialUrl !== currentUrl) {
+              browser.get(initialUrl);
+            }
+          });
+        });
+    });
+  },
+
+  /**
    * ### Portal.deleteUser()
    *
    * Helper method that executes all steps required to delete a User from
@@ -295,7 +344,7 @@ var Portal = {
    * Helper method that executes all steps required to create a new Domain from
    * Portal app.
    *
-   * @param {user} newDomain, data applying the schema defined in
+   * @param {Domain} newDomain, data applying the schema defined in
    * `DataProvider.generateDomain()`
    *
    * @returns {Promise}
@@ -306,13 +355,47 @@ var Portal = {
       me.getDomainsPage();
       me.domains.listPage.clickAddNewDomain();
       me.domains.addPage.createDomain(newDomain);
-      browser.sleep(10000);
       me.domains.addPage.clickBackToList();
       browser.getCurrentUrl().then(function (currentUrl) {
         if (initialUrl !== currentUrl) {
           browser.get(initialUrl);
         }
       });
+    });
+  },
+
+  /**
+   * ### Portal.createDomain()
+   *
+   * Helper method that executes all steps required to create a new Domain from
+   * Portal app. This method creates the domain only if it does not exist (it
+   * validates the existence by doing a search by the domain name).
+   *
+   * @param {Domain} domain, data applying the schema defined in
+   * `DataProvider.generateDomain()`
+   *
+   * @returns {Promise}
+   */
+  createDomainIfNotExist: function (domain) {
+    var me = this;
+    return browser.getCurrentUrl().then(function (initialUrl) {
+      me.getDomainsPage();
+      me.domains.listPage.searcher.setSearchCriteria(domain.name);
+      me.domains.listPage.domainsTbl
+        .getRows()
+        .count()
+        .then(function (totalResults) {
+          if (totalResults === 0) {
+            me.domains.listPage.clickAddNewDomain();
+            me.domains.addPage.createDomain(domain);
+            me.domains.addPage.clickBackToList();
+          }
+          browser.getCurrentUrl().then(function (currentUrl) {
+            if (initialUrl !== currentUrl) {
+              browser.get(initialUrl);
+            }
+          });
+        });
     });
   },
 

@@ -2,7 +2,7 @@
  *
  * REV SOFTWARE CONFIDENTIAL
  *
- * [2013] - [2015] Rev Software, Inc.
+ * [2013] - [2016] Rev Software, Inc.
  * All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains
@@ -21,42 +21,53 @@ var Portal = require('./../../../page_objects/portal');
 var DataProvider = require('./../../../common/providers/data');
 
 describe('Smoke', function () {
-  describe('Update user password', function () {
 
-    var adminUser = config.get('portal.users.admin');
+  // Defining set of users for which all below tests will be run
+  var users = [
+    config.get('portal.users.admin'),
+    config.get('portal.users.revAdmin')
+  ];
 
-    beforeAll(function () {
-      Portal.signIn(adminUser);
-    });
+  users.forEach(function (user) {
 
-    afterAll(function () {
-      Portal.signOut();
-    });
+    describe('With user: ' + user.role, function () {
 
-    beforeEach(function () {
-      Portal.goToUpdatePassword();
-    });
+      describe('Update user password', function () {
 
-    it('should display updated password form', function () {
-      expect(Portal.updatePasswordPage.isDisplayed()).toBeTruthy();
-    });
+        beforeAll(function () {
+          Portal.signIn(user);
+        });
 
-    it('should update password successfully', function () {
-      var carl = DataProvider.generateUser('Carl');
-      var newPassword = 'password2';
-      Portal.createUser(carl);
-      Portal.signOut();
-      Portal.signIn(carl);
-      Portal.goToUpdatePassword();
-      Portal.updatePasswordPage.setCurrentPassword(carl.password);
-      Portal.updatePasswordPage.setNewPassword(newPassword);
-      Portal.updatePasswordPage.setPasswordConfirm(newPassword);
-      Portal.updatePasswordPage.clickUpdatePassword();
-      var alert = Portal.alerts.getFirst();
-      expect(alert.getText()).toEqual('Your password updated');
-      Portal.signOut();
-      Portal.signIn(adminUser);
-      Portal.deleteUser(carl);
+        afterAll(function () {
+          Portal.signOut();
+        });
+
+        beforeEach(function () {
+          Portal.goToUpdatePassword();
+        });
+
+        it('should display updated password form', function () {
+          expect(Portal.updatePasswordPage.isDisplayed()).toBeTruthy();
+        });
+
+        it('should update password successfully', function () {
+          var carl = DataProvider.generateUser('Carl');
+          var newPassword = 'password2';
+          Portal.createUser(carl);
+          Portal.signOut();
+          Portal.signIn(carl);
+          Portal.goToUpdatePassword();
+          Portal.updatePasswordPage.setCurrentPassword(carl.password);
+          Portal.updatePasswordPage.setNewPassword(newPassword);
+          Portal.updatePasswordPage.setPasswordConfirm(newPassword);
+          Portal.updatePasswordPage.clickUpdatePassword();
+          var alert = Portal.alerts.getFirst();
+          expect(alert.getText()).toEqual('Your password updated');
+          Portal.signOut();
+          Portal.signIn(user);
+          Portal.deleteUser(carl);
+        });
+      });
     });
   });
 });
