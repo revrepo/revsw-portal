@@ -100,6 +100,18 @@ describe('Smoke', function () {
             expect(domainForm).toBeTruthy();
           });
 
+        it('should display "Edit Domain" form after clicking on domain name',
+          function () {
+            Portal.domains.listPage.searcher.clearSearchCriteria();
+            Portal.domains.listPage.searcher.setSearchCriteria(myDomain.name);
+            Portal.domains.listPage.domainsTbl
+              .getFirstRow()
+              .getNameLink()
+              .click();
+            var domainForm = Portal.domains.editPage.domainForm.isDisplayed();
+            expect(domainForm).toBeTruthy();
+          });
+
         it('should allow to cancel an domain edition',
           function () {
             Portal.domains.listPage.searchAndClickEdit(myDomain.name);
