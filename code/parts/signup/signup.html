@@ -1,0 +1,249 @@
+<div class="container">
+<div class="row">
+    <div class="col-sm-12">
+
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default text-center" >
+            <div id="logo">
+                <img src="images/logo_color.png" alt="Logo"/>
+            </div>
+            <div class="panel-heading">
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="pull-left">
+                            <h2 class="">
+                                Sign Up
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="panel-body">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label for="email"
+                               popover-append-to-body="{{true}}"
+                               class="col-sm-2 control-label"
+                               popover-trigger="mouseenter"
+                               popover="New user's email address - the address should be unique across the system">Email</label>
+
+                        <div class="col-sm-10">
+                            <input type="email"
+                                   autofocus
+                                   class="form-control"
+                                   id="email"
+                                   placeholder="Email"
+                                   ng-model="model.email"
+                                   ng-disabled="_loading">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="password"
+                               class="col-sm-2 control-label"
+                               popover-trigger="mouseenter"
+                        >Password</label>
+
+                        <div class="col-sm-10">
+                            <input type="password"
+                                   class="form-control"
+                                   id="password"
+                                   ng-model="model.password"
+                                   ng-disabled="_loading"
+                                   required="">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="passwordConfirm"
+                               class="col-sm-2 control-label"
+                               popover-trigger="mouseenter"
+                        >Confirm Password</label>
+
+                        <div class="col-sm-10">
+                            <input type="password"
+                                   class="form-control"
+                                   id="passwordConfirm"
+                                   ng-model="model.passwordConfirm"
+                                   ng-disabled="_loading">
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="form-group">
+                        <label for="firstname"
+                               class="col-sm-2 control-label"
+                               popover-trigger="mouseenter"
+                               popover="First name">First Name</label>
+
+                        <div class="col-sm-10">
+                            <input type="text"
+                                   class="form-control"
+                                   id="firstname"
+                                   placeholder="First Name"
+                                   ng-model="model.firstname"
+                                   ng-disabled="_loading">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName"
+                               class="col-sm-2 control-label"
+                               popover-trigger="mouseenter"
+                               popover="Last name">Last Name</label>
+
+                        <div class="col-sm-10">
+                            <input type="text"
+                                   class="form-control"
+                                   id="lastName"
+                                   placeholder="Last Name"
+                                   ng-model="model.lastname"
+                                   ng-disabled="_loading">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="phoneNumber"
+                               class="col-sm-2 control-label"
+                               popover-trigger="mouseenter"
+                               popover="Phone number">Phone Number</label>
+
+                        <div class="col-sm-10">
+                            <input type="text"
+                                   class="form-control"
+                                   id="phoneNumber"
+                                   placeholder="Phone Number"
+                                   ng-model="model.phone_number"
+                                   ng-disabled="_loading">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="companyName"
+                               class="col-sm-2 control-label"
+                               popover-trigger="mouseenter"
+                               popover="Company name">Company Name</label>
+
+                        <div class="col-sm-10">
+                            <input type="text"
+                                   class="form-control"
+                                   id="companyName"
+                                   placeholder="Company Name"
+                                   ng-model="model.company_name"
+                                   ng-disabled="_loading">
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="form-group">
+                        <label for="address1"
+                               class="col-sm-2 control-label"
+                               popover-trigger="mouseenter"
+                               popover="Address 1">Address 1</label>
+
+                        <div class="col-sm-10">
+                            <input type="text"
+                                   class="form-control"
+                                   id="address1"
+                                   placeholder="Address 1"
+                                   ng-model="model.address1"
+                                   ng-disabled="_loading">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="address2"
+                               class="col-sm-2 control-label"
+                               popover-trigger="mouseenter"
+                               popover="Address 2">Address 2</label>
+
+                        <div class="col-sm-10">
+                            <input type="text"
+                                   class="form-control"
+                                   id="address2"
+                                   placeholder="Address 2"
+                                   ng-model="model.address2"
+                                   ng-disabled="_loading">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Country"
+                               class="col-sm-2 control-label"
+                               popover-trigger="mouseenter"
+                               popover="Country">Country</label>
+
+                        <div class="col-sm-10">
+                            <select type="text"
+                                   class="form-control"
+                                   id="Country"
+                                   placeholder="Country"
+                                   ng-model="model.country"
+                                   ng-options="key as value for (key , value) in countries"
+                                   ng-disabled="_loading">
+                                </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="state"
+                               class="col-sm-2 control-label"
+                               popover-trigger="mouseenter"
+                               popover="state">State</label>
+
+                        <div class="col-sm-10">
+                            <input type="text"
+                                   class="form-control"
+                                   id="state"
+                                   placeholder="State"
+                                   ng-model="model.state"
+                                   ng-disabled="_loading">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="City"
+                               class="col-sm-2 control-label"
+                               popover-trigger="mouseenter"
+                               popover="City">City</label>
+
+                        <div class="col-sm-10">
+                            <input type="text"
+                                   class="form-control"
+                                   id="City"
+                                   placeholder="City"
+                                   ng-model="model.city"
+                                   ng-disabled="_loading">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Zipcode"
+                               class="col-sm-2 control-label"
+                               popover-trigger="mouseenter"
+                               popover="Zip Code">Zip Code</label>
+
+                        <div class="col-sm-10">
+                            <input type="text"
+                                   class="form-control"
+                                   id="Zipcode"
+                                   placeholder="Zip Code"
+                                   ng-model="model.zipcode"
+                                   ng-disabled="_loading">
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <a ui-sref="^" class="btn btn-default">
+                                <i class="glyphicon glyphicon-remove"></i>&nbsp;
+                                Cancel
+                            </a>
+                            <button class="btn btn-success"
+                                    ng-disabled="_loading"
+                                    ng-click="createUser(model)">
+                                Verify Email
+                            </button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

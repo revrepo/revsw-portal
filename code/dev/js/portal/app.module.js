@@ -12,6 +12,7 @@
     'revapm.Portal.Mobile',
     'revapm.Portal.Keys',
     'revapm.Portal.Apps',
+    'revapm.Portal.Signup',
     'ui.router',
     'ui.bootstrap.tpls',
     'ui.bootstrap.tooltip',
