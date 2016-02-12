@@ -44,16 +44,21 @@ var DataProvider = {
    *         passwordConfirm: string
    *     }
    */
-  generateUser: function (prefix) {
+  generateUser: function (prefix, skipTimestamp) {
     var prefixEmail = prefix.toLowerCase().replace(' ', '_');
     var names = prefix.split(' ');
     var prefixFirstName = names[0];
-    var prefixLastName = names[0] || names[1];
-    var timestamp = (new Date()).getTime();
+    var prefixLastName = names[1] || names[0];
+    var timestamp = '';
+    if (skipTimestamp === undefined || skipTimestamp === false) {
+      prefixFirstName = 'FName' + prefix;
+      prefixLastName = 'LName' + prefix;
+      timestamp = '-' + Date.now();
+    }
     return {
-      email: prefixEmail + '_' + timestamp + '@portal-ui-test-email.com',
-      firstName: prefixFirstName + ' Fname',
-      lastName: prefixLastName + ' Lname',
+      email: prefixEmail + timestamp + '@portal-ui-test-email.com',
+      firstName: prefixFirstName + ' FName',
+      lastName: prefixLastName + ' LName',
       role: Constants.user.roles.USER,
       password: 'password1',
       passwordConfirm: 'password1'

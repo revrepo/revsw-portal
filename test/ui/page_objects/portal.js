@@ -275,6 +275,41 @@ var Portal = {
   },
 
   /**
+   * ### Portal.createUserIfNotExist()
+   *
+   * Helper method that executes all steps required to create a new User from
+   * Portal app. This method creates the user only if it does not exist (it
+   * validates the existence by doing a search by the user email).
+   *
+   * @param {User} user, data applying the schema defined in
+   * `DataProvider.generateUser()`
+   *
+   * @returns {Promise}
+   */
+  createUserIfNotExist: function (user) {
+    var me = this;
+    return browser.getCurrentUrl().then(function (initialUrl) {
+      me.getUsersPage();
+      me.userListPage.searcher.setSearchCriteria(user.email);
+      me.userListPage.userTbl
+        .getRows()
+        .count()
+        .then(function (totalResults) {
+          if (totalResults === 0) {
+            me.userListPage.clickAddNewUser();
+            me.addUserPage.createUser(user);
+            me.addUserPage.clickBackToList();
+          }
+          browser.getCurrentUrl().then(function (currentUrl) {
+            if (initialUrl !== currentUrl) {
+              browser.get(initialUrl);
+            }
+          });
+        });
+    });
+  },
+
+  /**
    * ### Portal.deleteUser()
    *
    * Helper method that executes all steps required to delete a User from
