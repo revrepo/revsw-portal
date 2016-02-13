@@ -26,13 +26,13 @@ module.exports = {
       takeScreenshotsOnlyOnFailures: true,
       consolidate: true,
       consolidateAll: true
-    })
+    });
     jasmine.getEnv().addReporter(htmlReporter);
 
     // add jasmine spec reporter
     var specReporter = new JasmineSpecReporter({
       displayStacktrace: 'summary'
-    })
+    });
     jasmine.getEnv().addReporter(specReporter);
   }
 };

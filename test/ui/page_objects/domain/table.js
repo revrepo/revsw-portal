@@ -15,7 +15,10 @@ var tableHeaderLocators = {
 
 var tableRowLocators = {
   name: {
-    css: 'td:nth-of-type(1)'
+    css: 'td:nth-of-type(1)',
+    links: {
+      css: 'a'
+    }
   },
   cName: {
     css: 'td:nth-of-type(2)'
@@ -26,13 +29,13 @@ var tableRowLocators = {
   status: {
     css: 'td:nth-of-type(4)',
     icons: {
-      staging:{
+      staging: {
         css: 'i:nth-of-type(1)',
         type: {
-          published:{
+          published: {
             css: 'i:nth-of-type(1).glyphicon-ok-circle'
           },
-          error:{
+          error: {
             css: 'i:nth-of-type(1).glyphicon-remove'
           },
           inProgress: {
@@ -40,13 +43,13 @@ var tableRowLocators = {
           }
         }
       },
-      global:{
+      global: {
         css: 'i:nth-of-type(2)',
         type: {
-          published:{
+          published: {
             css: 'i:nth-of-type(2).glyphicon-ok-circle'
           },
-          error:{
+          error: {
             css: 'i:nth-of-type(2).glyphicon-remove'
           },
           inProgress: {
@@ -90,6 +93,10 @@ var TableRow = function (rowEl, locators) {
     return this.rowEl.element(by.css(this.locators.name.css));
   };
 
+  this.getNameLink = function () {
+    return this.getNameCell().element(by.css(this.locators.name.links.css));
+  };
+
   this.getCNameCell = function () {
     return this.rowEl.element(by.css(this.locators.cName.css));
   };
@@ -131,7 +138,6 @@ var TableRow = function (rowEl, locators) {
       .getLastUpdatedCell()
       .getText();
   };
-
 
 
   if (this.locators.actions && this.locators.actions.buttons.pencil) {

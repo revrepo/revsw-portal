@@ -2,7 +2,7 @@
  *
  * REV SOFTWARE CONFIDENTIAL
  *
- * [2013] - [2015] Rev Software, Inc.
+ * [2013] - [2016] Rev Software, Inc.
  * All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains
@@ -21,61 +21,75 @@ var Portal = require('./../../../page_objects/portal');
 var DataProvider = require('./../../../common/providers/data');
 
 describe('Smoke', function () {
-  describe('Delete domain', function () {
 
-    var admin = config.get('portal.users.admin');
+  // Defining set of users for which all below tests will be run
+  var users = [
+    config.get('portal.users.admin'),
+    config.get('portal.users.revAdmin'),
+    config.get('portal.users.reseller')
+  ];
 
-    beforeAll(function () {
-    });
+  users.forEach(function (user) {
 
-    afterAll(function () {
-    });
+    describe('With user: ' + user.role, function () {
 
-    beforeEach(function () {
-      // TODO: Move signIn and signOut calls to beforeAll and afterAll once bug
-      // about creating consecutive domains is fixed
-      Portal.signIn(admin);
-      Portal.getDomainsPage();
-    });
+      describe('Delete domain', function () {
 
-    afterEach(function () {
-      Portal.signOut();
-    });
+        beforeAll(function () {
+        });
 
-    it('should display delete domain button', function () {
-      var deleteButton = Portal.domains.listPage.domainsTbl
-        .getFirstRow()
-        .getDeleteBtn();
-      expect(deleteButton.isDisplayed()).toBeTruthy();
-    });
+        afterAll(function () {
+        });
 
-    it('should allow to delete domain', function () {
-      var domain = DataProvider.generateDomain('domain-01');
-      // Create domain
-      Portal.createDomain(domain);
-      Portal.domains.listPage.searchAndClickDelete(domain.name);
-      Portal.dialog.clickOk();
-      Portal.domains.listPage.searcher.setSearchCriteria(domain.name);
-      // Gets reference to all rows from the list
-      var tableRows = Portal.domains.listPage.domainsTbl.getRows();
-      // Validates the size of all rows
-      expect(tableRows.count()).toEqual(0);
-    });
+        beforeEach(function () {
+          // TODO: Move signIn and signOut calls to beforeAll and afterAll once
+          // bug about creating consecutive domains is fixed
+          Portal.signIn(user);
+          Portal.getDomainsPage();
+        });
 
-    // Our last spec
-    it('should display a confirmation message when deleting a domain',
-      function () {
-        var domain = DataProvider.generateDomain('domain-02');
-        // Create domain
-        Portal.createDomain(domain);
-        Portal.domains.listPage.searcher.setSearchCriteria(domain.name);
-        Portal.domains.listPage.domainsTbl
-          .getFirstRow()
-          .clickDelete();
-        // Validate `modal dialog` is displayed
-        expect(Portal.dialog.isDisplayed()).toBeTruthy();
-        // Confirm deletion
-        Portal.dialog.clickOk();
+        afterEach(function () {
+          Portal.signOut();
+        });
+
+        it('should display delete domain button',
+          function () {
+            var deleteButton = Portal.domains.listPage.domainsTbl
+              .getFirstRow()
+              .getDeleteBtn();
+            expect(deleteButton.isDisplayed()).toBeTruthy();
+          });
+
+        it('should allow to delete domain',
+          function () {
+            var domain = DataProvider.generateDomain('domain-01');
+            // Create domain
+            Portal.createDomain(domain);
+            Portal.domains.listPage.searchAndClickDelete(domain.name);
+            Portal.dialog.clickOk();
+            Portal.domains.listPage.searcher.setSearchCriteria(domain.name);
+            // Gets reference to all rows from the list
+            var tableRows = Portal.domains.listPage.domainsTbl.getRows();
+            // Validates the size of all rows
+            expect(tableRows.count()).toEqual(0);
+          });
+
+        // Our last spec
+        it('should display a confirmation message when deleting a domain',
+          function () {
+            var domain = DataProvider.generateDomain('domain-02');
+            // Create domain
+            Portal.createDomain(domain);
+            Portal.domains.listPage.searcher.setSearchCriteria(domain.name);
+            Portal.domains.listPage.domainsTbl
+              .getFirstRow()
+              .clickDelete();
+            // Validate `modal dialog` is displayed
+            expect(Portal.dialog.isDisplayed()).toBeTruthy();
+            // Confirm deletion
+            Portal.dialog.clickOk();
+          });
       });
+    });
   });
 });

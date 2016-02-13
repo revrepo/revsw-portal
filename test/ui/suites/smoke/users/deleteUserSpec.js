@@ -2,7 +2,7 @@
  *
  * REV SOFTWARE CONFIDENTIAL
  *
- * [2013] - [2015] Rev Software, Inc.
+ * [2013] - [2016] Rev Software, Inc.
  * All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains
@@ -29,108 +29,120 @@ var DataProvider = require('./../../../common/providers/data');
 
 // Defining smoke suite
 describe('Smoke', function () {
-  // Defining suite for deleting a user
-  describe('Delete user', function () {
 
-    // Getting information about user/password to use in our specs
-    var adminUser = config.get('portal.users.admin');
+  // Defining set of users for which all below tests will be run
+  var users = [
+    config.get('portal.users.admin'),
+    config.get('portal.users.revAdmin')
+  ];
 
-    // Use this block to run some code before all specs are run
-    beforeAll(function () {
-    });
+  users.forEach(function (user) {
 
-    // Use this block to run some code after all specs are run
-    afterAll(function () {
-    });
+    describe('With user: ' + user.role, function () {
 
-    // Use this block to run some code before each spec is run
-    beforeEach(function () {
-      // TODO: Move sign-in to afterAll callback once issue about dashboard
-      // checkbox is fixed.
+      // Defining suite for deleting a user
+      describe('Delete user', function () {
 
-      // Login into portal app as admin user
-      Portal.signIn(adminUser);
+        // Use this block to run some code before all specs are run
+        beforeAll(function () {
+        });
 
-      // Load in the browser URL the Users page
-      Portal.getUsersPage();
-    });
+        // Use this block to run some code after all specs are run
+        afterAll(function () {
+        });
 
-    // Use this block to run some code after each spec is run
-    afterEach(function () {
-      // TODO: Move sign-in to afterAll callback once issue about dashboard
-      // checkbox is fixed.
+        // Use this block to run some code before each spec is run
+        beforeEach(function () {
+          // TODO: Move sign-in to afterAll callback once issue about dashboard
+          // checkbox is fixed.
 
-      // sign the user out from the portal app
-      Portal.signOut();
-    });
+          // Login into portal app as admin user
+          Portal.signIn(user);
 
-    // This is an spec
-    it('should display delete user button', function () {
-      // Getting reference to the delete button of the first user from the list
-      var deleteButton = Portal.userListPage.userTbl
-        .getFirstRow()
-        .getDeleteBtn();
+          // Load in the browser URL the Users page
+          Portal.getUsersPage();
+        });
 
-      // Validate delete button is displayed
-      expect(deleteButton.isDisplayed()).toBeTruthy();
-    });
+        // Use this block to run some code after each spec is run
+        afterEach(function () {
+          // TODO: Move sign-in to afterAll callback once issue about dashboard
+          // checkbox is fixed.
 
-    // This is another spec
-    it('should allow to delete user', function () {
-      // Generate 'Tom' user data
-      var tom = DataProvider.generateUser('Tom');
+          // sign the user out from the portal app
+          Portal.signOut();
+        });
 
-      // Create user Tom in portal app.
-      // This is a Helper method that internally executes some other steps
-      // required to create a user in portal app using the given user
-      // information.
-      Portal.createUser(tom);
+        // This is an spec
+        it('should display delete user button', function () {
+          // Getting reference to the delete button of the first user from the
+          // list
+          var deleteButton = Portal.userListPage.userTbl
+            .getFirstRow()
+            .getDeleteBtn();
 
-      // Another helper method to search/filter the list by the provided filter
-      // criteria (in this case an email) and then licks on the delete button
-      // of the first user displayed after the filter is applied.
-      Portal.userListPage.searchAndClickDelete(tom.email);
+          // Validate delete button is displayed
+          expect(deleteButton.isDisplayed()).toBeTruthy();
+        });
 
-      // Clicks on OK button from the displayed modal dialog
-      Portal.dialog.clickOk();
+        // This is another spec
+        it('should allow to delete user', function () {
+          // Generate 'Tom' user data
+          var tom = DataProvider.generateUser('Tom');
 
-      // Applies another search criteria to the list by filling the search
-      // text input field
-      Portal.userListPage.searcher.setSearchCriteria(tom.email);
+          // Create user Tom in portal app.
+          // This is a Helper method that internally executes some other steps
+          // required to create a user in portal app using the given user
+          // information.
+          Portal.createUser(tom);
 
-      // Gets reference to all rows from the list
-      var tableRows = Portal.userListPage.userTbl.getRows();
+          // Another helper method to search/filter the list by the provided
+          // filter criteria (in this case an email) and then licks on the
+          // delete button of the first user displayed after the filter is
+          // applied.
+          Portal.userListPage.searchAndClickDelete(tom.email);
 
-      // Validates the size of all rows
-      expect(tableRows.count()).toEqual(0);
-    });
+          // Clicks on OK button from the displayed modal dialog
+          Portal.dialog.clickOk();
 
-    // Our last spec
-    it('should display a confirmation message when deleting a user',
-      function () {
-        // Generate user data using 'Chris' as prefix
-        var chris = DataProvider.generateUser('Chris');
+          // Applies another search criteria to the list by filling the search
+          // text input field
+          Portal.userListPage.searcher.setSearchCriteria(tom.email);
 
-        // Using helper method to create the user Chris
-        Portal.createUser(chris);
+          // Gets reference to all rows from the list
+          var tableRows = Portal.userListPage.userTbl.getRows();
 
-        // Apply Chris' email as filter criteria in the search component
-        Portal.userListPage.searcher.setSearchCriteria(chris.email);
+          // Validates the size of all rows
+          expect(tableRows.count()).toEqual(0);
+        });
 
-        // Click on `delete` button of the first row from the list
-        Portal.userListPage.userTbl
-          .getFirstRow()
-          .clickDelete();
+        // Our last spec
+        it('should display a confirmation message when deleting a user',
+          function () {
+            // Generate user data using 'Chris' as prefix
+            var chris = DataProvider.generateUser('Chris');
 
-        // Validate `modal dialog` is displayed after the click on `delete`
-        // button
-        expect(Portal.dialog.isDisplayed()).toBeTruthy();
+            // Using helper method to create the user Chris
+            Portal.createUser(chris);
 
-        // Confirm the deletion. Note that this is a post action. It is always
-        // important to leave the test environment as it was before the
-        // test/spec started. Since this test/spec created a user, then it
-        // should delete it once all validations were made.
-        Portal.dialog.clickOk();
+            // Apply Chris' email as filter criteria in the search component
+            Portal.userListPage.searcher.setSearchCriteria(chris.email);
+
+            // Click on `delete` button of the first row from the list
+            Portal.userListPage.userTbl
+              .getFirstRow()
+              .clickDelete();
+
+            // Validate `modal dialog` is displayed after the click on `delete`
+            // button
+            expect(Portal.dialog.isDisplayed()).toBeTruthy();
+
+            // Confirm the deletion. Note that this is a post action. It is
+            // always important to leave the test environment as it was before
+            // the test/spec started. Since this test/spec created a user, then
+            // it should delete it once all validations were made.
+            Portal.dialog.clickOk();
+          });
       });
+    });
   });
 });

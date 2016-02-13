@@ -42,6 +42,9 @@ var DomainForm = {
       }
     },
     dropDowns: {
+      companyName: {
+        model: 'model.account_id'
+      },
       originServerLocation: {
         model: 'model.origin_server_location_id'
       }
@@ -61,6 +64,18 @@ var DomainForm = {
    */
   getDomainNameTxtIn: function () {
     return element(by.model(this.locators.textInputs.domainName.model));
+  },
+
+  /**
+   * ### DomainForm.getCompanyNameDDown()
+   *
+   * Returns the reference to the `Company Name` drop-down (Selenium WebDriver
+   * Element)
+   *
+   * @returns {Selenium WebDriver Element}
+   */
+  getCompanyNameDDown: function () {
+    return element(by.model(this.locators.dropDowns.companyName.model));
   },
 
   /**
@@ -166,6 +181,22 @@ var DomainForm = {
     return this
       .getDomainNameTxtIn()
       .sendKeys(domainName);
+  },
+
+  /**
+   * ### DomainForm.setCompanyName()
+   *
+   * Sets a new value for `Company Name` drop-down
+   *
+   * @param {String} companyName
+   *
+   * @returns {Promise}
+   */
+  setCompanyName: function (companyName) {
+    return this
+      .getCompanyNameDDown()
+      .element(by.cssContainingText('option', companyName))
+      .click();
   },
 
   /**
@@ -322,7 +353,7 @@ var DomainForm = {
    *
    * @returns {Promise}
    */
-  clearForm: function() {
+  clearForm: function () {
     this.clearDomainName();
     this.clearOriginServer();
     this.clearOriginHostHeader();
@@ -347,6 +378,14 @@ var DomainForm = {
       this.clearDomainName();
       this.setDomainName(domain.name);
     }
+    // Fill Company name if data provided and if element is visible/available
+    var me = this;
+    element.all(by.model(this.locators.dropDowns.companyName.model))
+      .then(function (elements) {
+        if (domain.companyName !== undefined && elements.length > 0) {
+          me.setCompanyName(domain.companyName);
+        }
+      });
     if (domain.originServer !== undefined) {
       this.clearOriginServer();
       this.setOriginServer(domain.originServer);

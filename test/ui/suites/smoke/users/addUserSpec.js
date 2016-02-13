@@ -2,7 +2,7 @@
  *
  * REV SOFTWARE CONFIDENTIAL
  *
- * [2013] - [2015] Rev Software, Inc.
+ * [2013] - [2016] Rev Software, Inc.
  * All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains
@@ -21,46 +21,56 @@ var Portal = require('./../../../page_objects/portal');
 var DataProvider = require('./../../../common/providers/data');
 
 describe('Smoke', function () {
-  describe('Add user', function () {
 
-    var adminUser = config.get('portal.users.admin');
+  // Defining set of users for which all below tests will be run
+  var users = [
+    config.get('portal.users.admin'),
+    config.get('portal.users.revAdmin')
+  ];
 
-    beforeAll(function () {
-      Portal.signIn(adminUser);
-    });
+  users.forEach(function (user) {
 
-    afterAll(function () {
-      Portal.signOut();
-    });
+    describe('With user: ' + user.role, function () {
+      describe('Add user', function () {
 
-    beforeEach(function () {
-      Portal.getUsersPage();
-    });
+        beforeAll(function () {
+          Portal.signIn(user);
+        });
 
-    it('should display "Add user" form', function () {
-      Portal.userListPage.clickAddNewUser();
-      expect(Portal.addUserPage.isDisplayed()).toBeTruthy();
-      expect(Portal.addUserPage.userForm.isDisplayed()).toBeTruthy();
-    });
+        afterAll(function () {
+          Portal.signOut();
+        });
 
-    it('should allow to cancel an user edition', function () {
-      Portal.userListPage.clickAddNewUser();
-      Portal.addUserPage.userForm.setEmail('something');
-      Portal.addUserPage.clickCancel();
-      expect(Portal.userListPage.isDisplayed()).toBeTruthy();
-    });
+        beforeEach(function () {
+          Portal.getUsersPage();
+        });
 
-    it('should create an user successfully when filling all required data',
-      function () {
-        // Create user
-        var bruce = DataProvider.generateUser('Bruce');
-        Portal.userListPage.clickAddNewUser();
-        Portal.addUserPage.createUser(bruce);
-        // Check App alert notifications
-        expect(Portal.alerts.getAll().count()).toEqual(1);
-        expect(Portal.alerts.getFirst().getText()).toEqual('User created');
-        // Delete created user
-        Portal.deleteUser(bruce);
+        it('should display "Add user" form', function () {
+          Portal.userListPage.clickAddNewUser();
+          expect(Portal.addUserPage.isDisplayed()).toBeTruthy();
+          expect(Portal.addUserPage.userForm.isDisplayed()).toBeTruthy();
+        });
+
+        it('should allow to cancel an user edition', function () {
+          Portal.userListPage.clickAddNewUser();
+          Portal.addUserPage.userForm.setEmail('something');
+          Portal.addUserPage.clickCancel();
+          expect(Portal.userListPage.isDisplayed()).toBeTruthy();
+        });
+
+        it('should create an user successfully when filling all required data',
+          function () {
+            // Create user
+            var bruce = DataProvider.generateUser('Bruce');
+            Portal.userListPage.clickAddNewUser();
+            Portal.addUserPage.createUser(bruce);
+            // Check App alert notifications
+            expect(Portal.alerts.getAll().count()).toEqual(1);
+            expect(Portal.alerts.getFirst().getText()).toEqual('User created');
+            // Delete created user
+            Portal.deleteUser(bruce);
+          });
       });
+    });
   });
 });

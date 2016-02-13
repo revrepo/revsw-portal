@@ -44,16 +44,21 @@ var DataProvider = {
    *         passwordConfirm: string
    *     }
    */
-  generateUser: function (prefix) {
+  generateUser: function (prefix, skipTimestamp) {
     var prefixEmail = prefix.toLowerCase().replace(' ', '_');
     var names = prefix.split(' ');
     var prefixFirstName = names[0];
-    var prefixLastName = names[0] || names[1];
-    var timestamp = (new Date()).getTime();
+    var prefixLastName = names[1] || names[0];
+    var timestamp = '';
+    if (skipTimestamp === undefined || skipTimestamp === false) {
+      prefixFirstName = 'FName' + prefix;
+      prefixLastName = 'LName' + prefix;
+      timestamp = '-' + Date.now();
+    }
     return {
-      email: prefixEmail + '_' + timestamp + '@portal-ui-test-email.com',
-      firstName: prefixFirstName + ' Fname',
-      lastName: prefixLastName + ' Lname',
+      email: prefixEmail + timestamp + '@portal-ui-test-email.com',
+      firstName: prefixFirstName + ' FName',
+      lastName: prefixLastName + ' LName',
       role: Constants.user.roles.USER,
       password: 'password1',
       passwordConfirm: 'password1'
@@ -66,6 +71,8 @@ var DataProvider = {
    * Generates domain data object based on the unique para that it requires.
    *
    * @param {string} prefix, the prefix value to use in all domain data fields
+   * @param {Boolean} skipTimestamp, defaults to FALSE. If timestamp should be
+   * used in domain data or not.
    *
    * @returns {Object}, generate domain data with the following schema:
    *
@@ -76,22 +83,27 @@ var DataProvider = {
    *         originLocation: string
    *     }
    */
-  generateDomain: function (prefix) {
-    if (prefix) {
-      var newPrefix = prefix.toLowerCase().replace(' ', '_');
-      var timestamp = Date.now();
+  generateDomain: function (prefix, skipTimestamp) {
+    var timestamp = '';
+    if (skipTimestamp === undefined || skipTimestamp === false) {
+      timestamp = '-' + Date.now();
+    }
+    if (prefix === undefined) {
       return {
-        name: newPrefix + '-' + timestamp + '-portal-ui-test.com',
-        originServer: newPrefix + '-portal-ui-test.originserver.com',
-        originHostHeader: newPrefix + '-portal-ui-test.originhostheader.com',
-        originLocation: 'HQ Test Lab'
+        name: '',
+        companyName: '--- Select Company ---',
+        originServer: '',
+        originHostHeader: '',
+        originLocation: '--- Select Location ---'
       };
     }
+    prefix = prefix.toLowerCase().replace(/\W+/g, '-');
     return {
-      name: '',
-      originServer: '',
-      originHostHeader: '',
-      originLocation: '--- Select Location ---'
+      name: prefix + timestamp + '-portal-ui-test.com',
+      companyName: 'API QA Reseller Company',
+      originServer: prefix + '-portal-ui-test.origin-server.com',
+      originHostHeader: prefix + '-portal-ui-test.origin-host-header.com',
+      originLocation: 'HQ Test Lab'
     };
   },
 
@@ -128,6 +140,32 @@ var DataProvider = {
       os: 'All OS',
       device: 'All Devices',
       count: 'Top 20 Records'
+    };
+  },
+
+  /**
+   * ### DataProvider.generatePurgeCachedInfo()
+   *
+   * Generates data to fill Purge Cached Objects.
+   *
+   * @param {string} purgeUrl, this value is use in Purge Cached Objects page.
+   *
+   * @returns {Object}, generate data with the following schema:
+   *
+   *     {
+   *         textArea: string
+   *     }
+   */
+  generatePurgeCachedInfo: function (purgeUrl) {
+    if (purgeUrl) {
+      return {
+        textArea: purgeUrl.textArea
+      };
+    }
+    return {
+      textArea: '\/images1\/*.png\\n\/images2\/*.png\\n\/images3\/*.png\\n' +
+                '\/images4\/*.png\\n\/images5\/*.png\\n\/images6\/*.png\\n' +
+                '\/images7\/*.png\\n\/images8\/*.png\\n\/images9\/*.png\\n'
     };
   }
 };
