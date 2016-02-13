@@ -25,9 +25,8 @@
 
                 </div>
                 <div class="panel-body">
-<!--                    <div class="container-fluid">
-                        <div class="row">-->
-                            <div class="col-md-3 bg-info thumbnail text-center billing-plan" ng-repeat="item in records | orderBy: 'monthly_fee'">
+                        <div class="row">
+                            <div class="col-md-4  text-center " ng-repeat="item in records | orderBy: 'monthly_fee'">
                                 <h2>
                                     {{item.name}}
                                 </h2>
@@ -40,11 +39,10 @@
                                     <div>${{service.cost}} per {{service.measure_unit}}</div>
                                 </div>
                                 <hr>
-                                <a href="{{item.hosted_page + queryString}}"
-                                   class="btn btn-primary center-block">Subscribe</a>
+                                <a href="{{item.hosted_page + query}}"
+                                   class="btn btn-primary btn-lg">Subscribe</a>
                             </div>
-<!--                        </div>
-                    </div>-->
+                      </div>
                 </div>
             </div>
         </div>

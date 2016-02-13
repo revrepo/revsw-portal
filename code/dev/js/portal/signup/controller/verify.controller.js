@@ -8,6 +8,14 @@
   /*@ngInject*/
   function VerifyController($scope, Users, User, $stateParams, $state, AlertService) {
     $scope.user = User.getUser();
+
+    $scope.logIn = function (model) {
+      User.login(model.email, model.password)
+        .then(function () {
+          $state.go('billing_plans');
+        });
+    }
+
     $scope.resendToken = function (email) {
       Users.resend({email: email})
         .$promise
@@ -16,14 +24,16 @@
         })
         .catch(AlertService.danger);
     }
+
     if($stateParams.token){
       Users.verify({token: $stateParams.token})
         .$promise
         .then(function () {
-            $state.go('billing_plans');
+            $state.go('resend_token');
         })
         .catch(function () {
-            $state.go('resend_token');
+
+
         })
     }
   };
