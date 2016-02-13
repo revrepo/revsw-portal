@@ -29,11 +29,10 @@
       Users.verify({token: $stateParams.token})
         .$promise
         .then(function () {
-            $state.go('resend_token');
+
         })
         .catch(function () {
-
-
+          $state.go('resend_token');
         })
     }
   };
