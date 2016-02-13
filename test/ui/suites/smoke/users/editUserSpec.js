@@ -69,8 +69,7 @@ describe('Smoke', function () {
           expect(Portal.userListPage.isDisplayed()).toBeTruthy();
         });
 
-        xit('[BUG: Getting `User not found` when editing with RevAdmin user]' +
-          'should update user when filling all required data', function () {
+        it('should update user when filling all required data', function () {
           var joe = DataProvider.generateUser('Joe');
           Portal.createUser(joe);
           // Edit user name and last name
