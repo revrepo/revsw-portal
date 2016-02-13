@@ -1,9 +1,9 @@
 <div class="container" ui-view="page">
     <div class="row">
         <div class="col-sm-12">
-            <h2 class="pull-left page-title">
-                Sign Up
-            </h2>
+            <div id="logo">
+                <img src="images/logo_color.png" alt="Logo"/>
+            </div>
         </div>
     </div>
 
@@ -12,24 +12,23 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
 
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="pull-left">
-                                <h1>Please verify your email address</h1>
+                </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="pull-left">
+                                    <h1>Please verify your email address</h1>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="panel-body">
-                        <div class="container">
                             <div class="row">
                                 <div class="col-md-12">
                                     <p>
                                         An error occurred during verification process.
-                                        <a href="#" ng-click="resendToken(user.email)"></a>
+                                        <a href="#" class="text-primary" ng-click="resendToken(user.email)">Resend verification link</a>
                                     </p>
                                 </div>
                             </div>
-                        </div>
                     </div>
                 </div>
             </div>
