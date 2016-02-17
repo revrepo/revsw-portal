@@ -10,12 +10,13 @@
 
     $stateProvider
       .state('signup', {
-        url: '/signup',
+        url: '/signup/contact_info',
         views: {
           layout: {
             controller: 'SignupController',
             templateUrl: 'parts/signup/signup.html'
-          }
+          },
+        params: {'billing_plan': null}
         }
       })
       .state('billing_plans', {

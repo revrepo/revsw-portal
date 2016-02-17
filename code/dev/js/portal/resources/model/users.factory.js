@@ -18,7 +18,7 @@
         method: 'POST'
       },
       verify: {
-        url: $config.API_URL + '/v1/signup/verify/:token',
+        url: $config.API_URL + '/signup/verify/:token',
         method: 'GET'
       }
     });

@@ -6,46 +6,65 @@
     .controller('SignupController', SignupController);
 
   /*@ngInject*/
-  function SignupController($scope, Users, $q, User, Companies, BillingPlans, CRUDController, Countries, $state, AlertService, $config, $modal, $injector) {
+  function SignupController($scope,
+                            Users,
+                            $localStorage,
+                            User,
+                            Companies,
+                            BillingPlans,
+                            CRUDController,
+                            Countries,
+                            $state,
+                            AlertService,
+                            $injector) {
 
     //Invoking crud actions
     $injector.invoke(CRUDController,
       this, {$scope: $scope});
 
-    $scope.setResource(BillingPlans);
-
     $scope.$on('$stateChangeSuccess', function (state) {
-    });
-    $scope.user = User.getUser();
-    $scope.initBillingPlans = function () {
-      $scope.list();
-      if($scope.user != null) {
-        $scope.queryString = $scope.getQueryString($scope.user);
+      if ($state.is('signup')){
+        $scope.model = User.getUser();
+        if(!$scope.model.billing_plan){
+          $state.go('billing_plans');
+        }
       }
 
+
+    });
+
+
+    //$scope.user = User.getUser();
+
+
+    $scope.chooseBillingPlan = function (id, name) {
+      $localStorage.user = {billing_plan: id};
+      $state.transitionTo('signup');
+    };
+
+
+
+    $scope.initBillingPlans = function () {
+      $scope.newUser = {};
+      $scope.setResource(BillingPlans);
+      $scope.list();
     };
 
     $scope.countries = Countries.query();
 
     $scope.getQueryString = function (model) {
-    // var company = Companies.get({id: model.companyId});
-     // console.log(company);
-      Companies.get({id: model.companyId}).$promise.then(function (res) {
-        console.log(res);
         var q = '?first_name=' + encodeURIComponent(model.firstname ? model.firstname : '') +
           '&last_name=' + encodeURIComponent(model.lastname ? model.lastname : '') +
           '&email=' + encodeURIComponent(model.email ? model.email : '') +
-          '&phone=' + encodeURIComponent(res.phone_number ? res.phone_number : '') +
+          '&phone=' + encodeURIComponent(model.phone_number ? model.phone_number : '') +
           '&reference=' + encodeURIComponent(model.user_id ? model.user_id : '') +
-          '&organization=' + encodeURIComponent(res.companyName ? res.companyName : '') +
-          '&billing_address=' + encodeURIComponent(res.address1 ? res.address1 : '') +
-          '&billing_address_2=' + encodeURIComponent(res.address2 ? res.address2 : '') +
-          '&billing_city=' +  encodeURIComponent(res.city ? res.city : '') +
-          '&billing_zip=' + encodeURIComponent(res.zipcode ? res.zipcode : '') +
-          '&billing_country=' + encodeURIComponent(res.country ? res.country : '');
+          '&organization=' + encodeURIComponent(model.companyName ? model.companyName : '') +
+          '&billing_address=' + encodeURIComponent(model.address1 ? model.address1 : '') +
+          '&billing_address_2=' + encodeURIComponent(model.address2 ? model.address2 : '') +
+          '&billing_city=' +  encodeURIComponent(model.city ? model.city : '') +
+          '&billing_zip=' + encodeURIComponent(model.zipcode ? model.zipcode : '') +
+          '&billing_country=' + encodeURIComponent(model.country ? model.country : '');
         $scope.query = q;
-      })
-
     };
 
 
@@ -69,12 +88,7 @@
       Users.signup(model)
         .$promise
         .then(function (data) {
-          User.login(model.email, model.password)
-            .$promise
-            .then(function () {
-            $state.go('email_sent');
-          });
-
+          $state.go('email_sent');
         })
         .catch(function (err) {
           AlertService.danger(err, 5000);
