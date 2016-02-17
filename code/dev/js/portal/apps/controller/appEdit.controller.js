@@ -208,7 +208,7 @@
           .then(function(data) {
             $scope
               .alertService
-              .success('Domain configuration is published', 5000);
+              .success('App configuration is published', 5000);
           })
           .catch(function(err) {
             AlertService.danger(err);

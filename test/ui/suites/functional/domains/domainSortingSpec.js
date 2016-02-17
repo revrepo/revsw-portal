@@ -110,8 +110,7 @@ describe('Functional', function () {
         expect(firstRow.getNameCell().getText()).toContain(prefix + '1');
       });
 
-    xit('[BUG: `descendant` sorting by `last updated` do not work] ' +
-      'should apply `descendant` sorting by `last updated` column',
+    it('should apply `descendant` sorting by `last updated` column',
       function () {
         expect(Portal.domains.listPage.domainsTbl.getRows().count()).toEqual(2);
         Portal.domains.listPage.domainsTbl

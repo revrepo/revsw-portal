@@ -6,7 +6,7 @@ var tableHeaderLocators = {
     css: 'th:nth-of-type(2) a'
   },
   lastUpdated: {
-    css: 'th:nth-of-type(3)'
+    css: 'th:nth-of-type(3) a'
   },
   status: {
     css: 'th:nth-of-type(4)'

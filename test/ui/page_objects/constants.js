@@ -35,9 +35,9 @@ var Constants = {
   },
   header: {
     appMenu: {
-      ACCOUNT_SETTINGS: 'Account\nSettings',
-      WEB_ANALYTICS: 'Web\nAnalytics',
-      HELP_SUPPORT: 'Help/Support',
+      ACCOUNT_SETTINGS: 'Admin',
+      WEB_ANALYTICS: 'Web Analytics',
+      HELP_SUPPORT: 'Support',
       WEB: 'Web'
     },
     userMenu: {
@@ -71,7 +71,7 @@ var Constants = {
       ACTIVITY_LOG: 'Activity Log'
     },
     helpSupport: {
-      CUSTOMER_SUPPORT: 'Customer Support',
+      CUSTOMER_SUPPORT: 'Open Ticket',
       API_DOCUMENTATION: 'API Documentation',
       KNOWLEDGE_BASE: 'Knowledge Base',
       NETWORK_STATUS: 'Network Status'

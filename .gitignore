@@ -2,6 +2,7 @@
 node_modules
 test/ui/node_modules
 test/ui/results
+test/ui/config/local.json
 .tmp
 *sublime*
 sftp-config.json
