@@ -38,7 +38,7 @@ describe('Functional', function () {
 
     it('should get "Customer Support" url and open the page',
       function () {
-        var customerSupport = 'Customer Support';
+        var customerSupport = 'Open Ticket';
         var url = 'https://revapm.zendesk.com/hc/en-us/requests/new';
         expect(Portal.helpSupportPage.openUrl(customerSupport)).toEqual(url);
     });
