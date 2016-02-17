@@ -39,8 +39,8 @@
                                     <div>${{service.cost}} per {{service.measure_unit}}</div>
                                 </div>
                                 <hr>
-                                <a href="{{item.hosted_page + query}}"
-                                   class="btn btn-primary btn-lg">Subscribe</a>
+                                <button  ng-click="chooseBillingPlan(item.id, item.name)"
+                                   class="btn btn-primary btn-lg">Subscribe</button>
                             </div>
                       </div>
                 </div>

@@ -31,7 +31,8 @@
               $scope.userService = User;
               if (!User.isAuthed() &&
                 $state.current.name != 'index.restore' &&
-                $state.current.name != 'signup'
+                $state.current.name != 'signup' &&
+                $state.current.name != 'billing_plans'
               ){
                 $state.go('login');
               } else if ($state.current.name == 'index') {
