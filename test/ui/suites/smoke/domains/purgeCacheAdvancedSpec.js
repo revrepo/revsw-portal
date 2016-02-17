@@ -74,42 +74,12 @@ describe('Smoke', function () {
         expect(jsonExample).toContain(expectedMsg3);
     });
 
-    it('should display the second example textarea with json example',
+    it('should display the 2nd example textarea with json example',
       function () {
         Portal.purgeCacheAdvancedPage.clickAdvancedMode();
         Portal.purgeCacheAdvancedPage.selectDomain(myDomain);
 
         var jsonExample = Portal.purgeCacheAdvancedPage.getJsonExample(1);
-        var expectedMsg1 = 'Purge all PNG files under /images, non-recursive';
-        var expectedMsg2 = 'is_wildcard';
-        var expectedMsg3 = 'expression';
-
-        expect(jsonExample).toContain(expectedMsg1);
-        expect(jsonExample).toContain(expectedMsg2);
-        expect(jsonExample).toContain(expectedMsg3);
-    });
-
-    it('should display the third example textarea with json example',
-      function () {
-        Portal.purgeCacheAdvancedPage.clickAdvancedMode();
-        Portal.purgeCacheAdvancedPage.selectDomain(myDomain);
-
-        var jsonExample = Portal.purgeCacheAdvancedPage.getJsonExample(2);
-        var expectedMsg1 = 'Purge all PNG files under /images, non-recursive';
-        var expectedMsg2 = 'is_wildcard';
-        var expectedMsg3 = 'expression';
-
-        expect(jsonExample).toContain(expectedMsg1);
-        expect(jsonExample).toContain(expectedMsg2);
-        expect(jsonExample).toContain(expectedMsg3);
-    });
-
-    it('should display the forth example textarea with json example',
-      function () {
-        Portal.purgeCacheAdvancedPage.clickAdvancedMode();
-        Portal.purgeCacheAdvancedPage.selectDomain(myDomain);
-
-        var jsonExample = Portal.purgeCacheAdvancedPage.getJsonExample(3);
         var expectedMsg1 = 'Purge all PNG files under /images, recursive';
         var expectedMsg2 = 'is_wildcard';
         var expectedMsg3 = 'expression';
@@ -119,12 +89,12 @@ describe('Smoke', function () {
         expect(jsonExample).toContain(expectedMsg3);
     });
 
-    it('should display the fifth example textarea with json example',
+    it('should display the 3rd example textarea with json example',
       function () {
         Portal.purgeCacheAdvancedPage.clickAdvancedMode();
         Portal.purgeCacheAdvancedPage.selectDomain(myDomain);
 
-        var jsonExample = Portal.purgeCacheAdvancedPage.getJsonExample(4);
+        var jsonExample = Portal.purgeCacheAdvancedPage.getJsonExample(2);
         var expectedMsg1 = 'Purge everything, recursively, for current domain';
         var expectedMsg2 = 'is_wildcard';
         var expectedMsg3 = 'expression';
@@ -134,19 +104,5 @@ describe('Smoke', function () {
         expect(jsonExample).toContain(expectedMsg3);
     });
 
-    it('should display the sixth example textarea with json example',
-      function () {
-        Portal.purgeCacheAdvancedPage.clickAdvancedMode();
-        Portal.purgeCacheAdvancedPage.selectDomain(myDomain);
-
-        var jsonExample = Portal.purgeCacheAdvancedPage.getJsonExample(5);
-        var expectedMsg1 = 'Empty the whole cache, for all domains';
-        var expectedMsg2 = 'is_wildcard';
-        var expectedMsg3 = 'expression';
-
-        expect(jsonExample).toContain(expectedMsg1);
-        expect(jsonExample).toContain(expectedMsg2);
-        expect(jsonExample).toContain(expectedMsg3);
-    });
   });
 });
