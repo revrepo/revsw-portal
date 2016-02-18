@@ -65,7 +65,7 @@ var Constants = {
       TRAFFIC_HEATMAPS: 'Traffic Heatmaps',
       RTT_HEATMAPS: 'RTT Heatmaps'
     },
-    accountSettings: {
+    admin: {
       SECURITY_SETTINGS: 'Security Settings',
       API_KEYS: 'API Keys',
       ACTIVITY_LOG: 'Activity Log'
