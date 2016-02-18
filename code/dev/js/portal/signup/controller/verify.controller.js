@@ -16,11 +16,11 @@
                             $window) {
     $scope.user = User.getUser();
 
-    $scope.resendToken = function (email) {
-      Users.resend({email: email})
+      $scope.resendToken = function (model) {
+      Users.resend({email: model.email})
         .$promise
         .then(function () {
-          AlertService.success('Verification link is sent to ' + email, 5000);
+          AlertService.success('Verification link is sent to ' + model.email, 5000);
         })
         .catch(AlertService.danger);
     }
@@ -34,7 +34,9 @@
         '&organization=' + encodeURIComponent(model.companyName ? model.companyName : '') +
         '&billing_address=' + encodeURIComponent(model.address1 ? model.address1 : '') +
         '&billing_address_2=' + encodeURIComponent(model.address2 ? model.address2 : '') +
-        '&billing_city=' +  encodeURIComponent(model.city ? model.city : '') +
+        '&billing_city=' + encodeURIComponent(model.city ? model.city : '') +
+        '&billing_state=' + encodeURIComponent((model.state && model.country === 'US') ?
+          model.state : '') +
         '&billing_zip=' + encodeURIComponent(model.zipcode ? model.zipcode : '') +
         '&billing_country=' + encodeURIComponent(model.country ? model.country : '');
       return q;

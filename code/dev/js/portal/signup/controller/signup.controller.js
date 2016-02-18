@@ -88,6 +88,7 @@
       Users.signup(model)
         .$promise
         .then(function (data) {
+          $localStorage.user.email = model.email;
           $state.go('email_sent');
         })
         .catch(function (err) {
