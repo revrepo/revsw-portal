@@ -47,7 +47,6 @@
         .$promise
         .then(function (res) {
           $localStorage.user = {email: res.email};
-          console.log(res);
           var q = $scope.getQueryString(res);
           $window.location.href = res.hosted_page + q;
         })
