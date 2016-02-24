@@ -123,6 +123,10 @@ table tbody tr td.uppercase {
   margin-right: 5px;
   margin-bottom: 5px;
 }
+h1.signup {
+  margin-top: auto;
+  color: #A1A2A5;
+}
 alert-list {
   position: absolute;
   z-index: 999;
