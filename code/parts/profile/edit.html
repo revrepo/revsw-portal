@@ -97,6 +97,15 @@
             <hr>
             <div class="form-group">
               <div class="col-sm-offset-2 col-sm-10">
+
+                <a ng-disabled="_loading"
+                   ui-sref="index.accountSettings.users"
+                   class="btn btn-default">
+                  <i class="glyphicon glyphicon-remove"></i>&nbsp;
+                  Cancel
+                </a>
+
+              </button>
                 <button class="btn btn-success" ng-disabled="_loading">
                   <i class="glyphicon glyphicon-ok"></i>&nbsp;
                   Update Password
