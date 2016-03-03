@@ -15,6 +15,7 @@
         'modify': 'Modified',
         'delete': 'Deleted',
         'publish': 'Published',
+        'login': 'Logged In',
         'purge': 'Purged'
       },
 
