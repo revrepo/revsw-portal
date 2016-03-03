@@ -69,6 +69,14 @@
                 <a href="" ng-click="order('role')">Role</a>
                 <span class="sortorder" ng-show="filter.predicate === 'role'" ng-class="{reverse: filter.reverse}"></span>
               </th>
+              <th>
+                <a href="" ng-click="order('updated_at')">Last Update</a>
+                <span class="sortorder" ng-show="filter.predicate === 'updated_at'" ng-class="{reverse: filter.reverse}"></span>
+              </th>
+              <th>
+                <a href="" ng-click="order('last_login_at')">Last Login</a>
+                <span class="sortorder" ng-show="filter.predicate === 'last_login_at'" ng-class="{reverse: filter.reverse}"></span>
+              </th>
               <th>Actions</th>
             </tr>
             </thead>
@@ -78,6 +86,8 @@
               <td>{{user.lastname}}</td>
               <td>{{user.email}}</td>
               <td>{{user.role}}</td>
+              <td>{{user.updated_at | date : 'MMM dd, yyyy H:mm:ss a'}}</td>
+              <td>{{user.last_login_at | date : 'MMM dd, yyyy H:mm:ss a'}}</td>
               <td class="actions">
                 <a ui-sref=".edit({id: user.user_id})" tooltip="Edit User">
                   <i class="glyphicon glyphicon-pencil"></i>
