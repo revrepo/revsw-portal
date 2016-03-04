@@ -117,6 +117,21 @@
           }
         }
       })
+      .state('index.usage', {
+        url: '',
+        views: {
+          menu: {
+            controller: menuController,
+            templateUrl: 'parts/cadmin-top-menu.html'
+          },
+          sideMenu: {
+            templateUrl: 'parts/menu/accounts-side.html'
+          },
+          page: {
+            templateUrl: 'parts/layout/page.html'
+          }
+        }
+      })
       .state('index.help', {
         url: '/help',
         views: {
