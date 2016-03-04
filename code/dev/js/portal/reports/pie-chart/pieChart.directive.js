@@ -13,10 +13,16 @@
       var chartOpts = {
         chart: {
           renderTo: el,
-          plotBackgroundColor: null,
-          plotBorderWidth: null,
-          plotShadow: false,
-          type: 'pie'
+//          plotBackgroundColor: null,
+//          plotBorderWidth: null,
+//          plotShadow: false,
+          type: 'pie',
+
+options3d: {
+                enabled: true,
+                alpha: 45
+            }
+
         },
 
         title: false,
@@ -37,8 +43,14 @@
               style: {
                 color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
               }
-            }
+            },
+                innerSize: 100,
+                depth: 45
           }
+        },
+
+        credits: {
+          enabled: false
         },
 
         series: [{

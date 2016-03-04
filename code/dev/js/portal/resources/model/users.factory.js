@@ -8,7 +8,7 @@
   /*@ngInject*/
   function UsersResource(Resource, $config) {
 
-    return Resource($config.API_URL + '/users/:id', {id: '@user_id', token: '@token'}, {
+    return Resource($config.API_URL + '/users/:id', {id: '@user_id', token: '@token', email: '@email'}, {
       myself: {
         url: $config.API_URL + '/users/myself',
         method: 'GET'
@@ -19,6 +19,10 @@
       },
       verify: {
         url: $config.API_URL + '/signup/verify/:token',
+        method: 'GET'
+      },
+      resend: {
+        url: $config.API_URL + '/signup/resend/:email',
         method: 'GET'
       }
     });

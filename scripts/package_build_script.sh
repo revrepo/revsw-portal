@@ -71,6 +71,7 @@ mkdir -p $foldername/opt/$PackageName
 
 
 cp -rf  $WORKSPACE/code/* $foldername/opt/$PackageName/
+echo $VERSION > $foldername/opt/$PackageName/version.txt
 rm -r $foldername/opt/$PackageName/dev
 rm -r $foldername/opt/$PackageName/node_modules
 rm  $foldername/opt/$PackageName/package.json

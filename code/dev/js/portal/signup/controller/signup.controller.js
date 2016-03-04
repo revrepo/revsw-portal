@@ -24,7 +24,8 @@
 
     $scope.$on('$stateChangeSuccess', function (state) {
       if ($state.is('signup')){
-        $scope.model = User.getUser();
+        $scope.model = _.clone(User.getUser());
+        $scope.model.country = 'US';
         if(!$scope.model.billing_plan){
           $state.go('billing_plans');
         }
@@ -50,6 +51,12 @@
       $scope.list();
     };
 
+    $scope.initLoginRedirect = function () {
+      setTimeout(function () {
+          $state.go('login');
+      }, 10000);
+    };
+
     $scope.countries = Countries.query();
 
     $scope.getQueryString = function (model) {
@@ -67,7 +74,8 @@
         $scope.query = q;
     };
 
-
+    $scope.zipRegex = '[0-9]{1,10}';
+    $scope.phoneRegex = '[0-9, \\s, \\+, \\-, \\(, \\)]{1,20}';
 
 
 
@@ -88,6 +96,7 @@
       Users.signup(model)
         .$promise
         .then(function (data) {
+          $localStorage.user.email = model.email;
           $state.go('email_sent');
         })
         .catch(function (err) {

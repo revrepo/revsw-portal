@@ -13,7 +13,8 @@
 
       var chartOptions = {
         chart: {
-          renderTo: el
+          renderTo: el,
+          type: 'areaspline'
         },
 
         title: {
@@ -41,6 +42,18 @@
           //align: 'bottom',
           //verticalAlign: 'middle',
           borderWidth: 0
+        },
+
+        plotOptions: {
+          areaspline: {
+            marker: {
+              enabled: false
+            }
+          }
+        },
+
+        credits: {
+          enabled: false
         },
 
         series: []

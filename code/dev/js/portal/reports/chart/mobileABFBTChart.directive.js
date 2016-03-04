@@ -29,6 +29,11 @@
 
         //  ---------------------------------
         $scope.chartOptions = {
+
+          chart: {
+            type: 'column'
+          },
+
           yAxis: {
             // type: 'logarithmic',
             // minorTickInterval: 2,

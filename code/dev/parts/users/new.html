@@ -186,16 +186,16 @@
           <hr>
           <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
+              <a ui-sref="{{state}}" class="btn btn-default">
+                <i class="glyphicon glyphicon-remove"></i>&nbsp;
+                Cancel
+              </a>
               <button class="btn btn-success"
                       ng-disabled="_loading"
                       ng-click="createUser(model)">
                 <i class="glyphicon glyphicon-ok"></i>&nbsp;
                 Create User
               </button>
-              <a ui-sref="{{state}}" class="btn btn-default">
-                <i class="glyphicon glyphicon-remove"></i>&nbsp;
-                Cancel
-              </a>
             </div>
           </div>
 

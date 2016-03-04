@@ -1,31 +1,30 @@
 <div class="container" ui-view="page">
     <div class="row">
         <div class="col-sm-12">
-            <div id="logo">
-                <img src="images/logo_color.png" alt="Logo"/>
-            </div>
+
         </div>
     </div>
 
-    <div class="row">
+    <div class="row" ng-init="initLoginRedirect()">
         <div class="col-md-12">
             <div class="panel panel-default">
-                <div class="panel-heading">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="text-center col-md-4">
+                            <img class="img-responsive" src="images/logo_color.png" alt="Logo"/>
+                        </div>
+                        <div class="col-md-4 text-center "><h1 class="signup">Sign Up</h1></div>
+                    </div>
 
+                </div>
+                <div class="panel-heading">
+                    <h4>Signup process is complete</h4>
                 </div>
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="pull-left">
-                                <h1>Signup process is complete</h1>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <p>
-                                You can now proceed with configuring your
-                                <a href="#" ui-sref="index.webApp">first domain</a>
+                            <p class="lead">
+                                Thank you for completing the sign-up process. In a few seconds you will be redirected to our customer portal login page where you can log in using your freshly created username (email) and password.
                             </p>
                         </div>
                     </div>

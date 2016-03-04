@@ -41,7 +41,7 @@
         url: '/signup/email',
         views: {
           layout: {
-            controller: 'SignupController',
+            controller: 'VerifyController',
             templateUrl: 'parts/signup/email_sent.html'
           }
         }
