@@ -42,6 +42,11 @@
                      style="height: 400px"></div>
 
                 <div class="col-sm-12" style="margin-top: 15px">
+                  <a ui-sref="^.domains" class="btn btn-default">
+                    <i class="glyphicon glyphicon-remove"></i>&nbsp;
+                    Cancel
+                  </a>
+                  &nbsp;
                   <button class="btn btn-danger"
                           ng-disabled="_loading || !domain"
                           ng-click="purge()">
@@ -49,11 +54,6 @@
                     <i class="glyphicon glyphicon-trash" ng-if="!_loading"></i>&nbsp;
                     Purge
                   </button>
-                  &nbsp;
-                  <a ui-sref="^.domains" class="btn btn-default">
-                    <i class="glyphicon glyphicon-remove"></i>&nbsp;
-                    Cancel
-                  </a>
                 </div>
               </div>
 

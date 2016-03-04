@@ -8,8 +8,8 @@
     <strong>{{model.companyName}}</strong> ?
   </div>
   <div class="modal-footer">
-    <button class="btn btn-danger" type="button" ng-click="ok()">OK</button>
     <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+    <button class="btn btn-danger" type="button" ng-click="ok()">OK</button>
   </div>
 </script>
 
@@ -72,8 +72,8 @@
                 <span class="sortorder" ng-show="filter.predicate === 'createdBy'" ng-class="{reverse: filter.reverse}"></span>
               </th>
               <th>
-                <a href="" ng-click="order('created_at')">Created At</a>
-                <span class="sortorder" ng-show="filter.predicate === 'created_at'" ng-class="{reverse: filter.reverse}"></span>
+                <a href="" ng-click="order('updated_at')">Last Update</a>
+                <span class="sortorder" ng-show="filter.predicate === 'updated_at'" ng-class="{reverse: filter.reverse}"></span>
               </th>
               <th>Actions</th>
             </tr>
@@ -83,7 +83,7 @@
               ng-repeat="item in filteredRecords | limitTo:filter.limit:filter.skip track by $index">
               <td>{{item.companyName}}</td>
               <td>{{item.createdBy}}</td>
-              <td>{{item.created_at}}</td>
+              <td>{{item.updated_at | date : 'MMM dd, yyyy H:mm:ss a'}}</td>
               <td class="actions">
                 <i class="glyphicon glyphicon-refresh spin" ng-if="item.loading"></i>
                 <a ui-sref=".edit({id: item.id})" ng-if="!item.loading" tooltip="Edit Company">

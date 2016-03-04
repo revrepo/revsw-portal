@@ -3,10 +3,10 @@
 
   angular
     .module('revapm.Portal.Reports')
-    .directive('pieChart', pieChartDirective);
+    .directive('barChart', barChartDirective);
 
   /*@ngInject*/
-  function pieChartDirective() {
+  function barChartDirective() {
 
     function link($scope, element, attrs) {
       var el = element[0];
@@ -16,12 +16,7 @@
 //          plotBackgroundColor: null,
 //          plotBorderWidth: null,
 //          plotShadow: false,
-          type: 'pie',
-
-//options3d: {
-//                enabled: true,
-//                alpha: 45
-//            }
+          type: 'bar',
 
         },
 
@@ -34,7 +29,7 @@
         },
 
         plotOptions: {
-          pie: {
+          bar: {
             allowPointSelect: true,
             cursor: 'pointer',
             dataLabels: {

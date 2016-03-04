@@ -10,6 +10,12 @@ var tableHeaderLocators = {
   },
   role: {
     css: 'th:nth-of-type(4) a'
+  },
+  updatedAt: {
+    css: 'th:nth-of-type(5) a'
+  },
+  lastLoginAt: {
+    css: 'th:nth-of-type(6) a'
   }
 };
 
@@ -26,8 +32,14 @@ var tableRowLocators = {
   role: {
     css: 'td:nth-of-type(4)'
   },
+  updatedAt: {
+    css: 'th:nth-of-type(5)'
+  },
+  lastLoginAt: {
+    css: 'th:nth-of-type(6)'
+  },
   actions: {
-    css: 'td:nth-of-type(5)',
+    css: 'td:nth-of-type(7)',
     buttons: {
       pencil: {
         className: 'glyphicon-pencil'
@@ -60,6 +72,14 @@ var TableRow = function (rowEl, locators) {
 
   this.getRoleCell = function () {
     return this.rowEl.element(by.css(this.locators.role.css));
+  };
+
+  this.getLastUpdateCell = function () {
+    return this.rowEl.element(by.css(this.locators.updatedAt.css));
+  };
+
+  this.getLastLoginCell = function () {
+    return this.rowEl.element(by.css(this.locators.lastLoginAt.css));
   };
 
   this.getFirstName = function () {
@@ -107,6 +127,18 @@ var TableRow = function (rowEl, locators) {
   this.clickRole = function () {
     return this
       .getRoleCell()
+      .click();
+  };
+
+  this.clickLastUpdate = function () {
+    return this
+      .getLastUpdateCell()
+      .click();
+  };
+
+  this.clickLastLogin = function () {
+    return this
+      .getLastLoginCell()
       .click();
   };
 

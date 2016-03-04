@@ -8,66 +8,90 @@
 <div class="row">
     <div class="col-md-12">
         <div class="panel panel-default text-center" >
-            <div id="logo">
-                <img src="images/logo_color.png" alt="Logo"/>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="text-center col-md-4">
+                        <img class="img-responsive" src="images/logo_color.png" alt="Logo"/>
+                    </div>
+                    <div class="col-md-4 text-center "><h1 class="signup">Sign Up</h1></div>
+                </div>
+
             </div>
             <div class="panel-heading">
 
                 <div class="row">
                     <div class="col-md-12">
                         <div class="pull-left">
-                            <h2 class="">
-                                Sign Up
-                            </h2>
+                            <h4 class="">
+                                Please fill in your contact info. Fields marked with asterisk (*) are required.
+                            </h4>
                         </div>
                     </div>
                 </div>
 
             </div>
             <div class="panel-body">
-                <form class="form-horizontal" name="newUser">
-                    <div class="form-group">
+                <form class="form-horizontal" name="newUser" novalidate>
+                    <div class="form-group"
+                         ng-class="{ 'has-error': newUser.email.$invalid &&
+                                newUser.email.$dirty }">
                         <label for="email"
                                popover-append-to-body="{{true}}"
                                class="col-sm-2 control-label"
                                popover-trigger="mouseenter"
-                               popover="New user's email address - the address should be unique across the system">Email</label>
+                               popover="New user's email address - the address should be unique across the system">
+                            Email *</label>
 
                         <div class="col-sm-10">
                             <input type="email"
                                    autofocus
                                    class="form-control"
                                    id="email"
+                                   name="email"
                                    placeholder="Email"
                                    ng-model="model.email"
+                                   required
                                    ng-disabled="_loading">
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group"
+                         ng-class="{ 'has-error': newUser.password.$invalid &&
+                            newUser.password.$dirty }">
                         <label for="password"
+                               popover-append-to-body="{{true}}"
                                class="col-sm-2 control-label"
                                popover-trigger="mouseenter"
-                        >Password</label>
+                               popover="At least six symbols"
+                        >Password *</label>
 
                         <div class="col-sm-10">
                             <input type="password"
                                    class="form-control"
                                    id="password"
+                                   name="password"
                                    ng-model="model.password"
+                                   minlength="6"
+                                   required
                                    ng-disabled="_loading"
-                                   required="">
+                                   >
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group"
+                         ng-class="{ 'has-error':
+                         (model.password != model.passwordConfirm ||
+                          newUser.passwordConfirm.$invalid) &&
+                            newUser.passwordConfirm.$dirty }">
                         <label for="passwordConfirm"
                                class="col-sm-2 control-label"
                                popover-trigger="mouseenter"
-                        >Confirm Password</label>
+                        >Confirm Password *</label>
 
                         <div class="col-sm-10">
                             <input type="password"
                                    class="form-control"
                                    id="passwordConfirm"
+                                   name="passwordConfirm"
+                                   required
                                    ng-model="model.passwordConfirm"
                                    ng-disabled="_loading">
                         </div>
@@ -77,13 +101,14 @@
                         <label for="firstname"
                                class="col-sm-2 control-label"
                                popover-trigger="mouseenter"
-                               popover="First name">First Name</label>
+                               popover="First name">First Name *</label>
 
                         <div class="col-sm-10">
                             <input type="text"
                                    class="form-control"
                                    id="firstname"
                                    placeholder="First Name"
+                                   ng-required
                                    ng-model="model.firstname"
                                    ng-disabled="_loading">
                         </div>
@@ -92,7 +117,7 @@
                         <label for="lastName"
                                class="col-sm-2 control-label"
                                popover-trigger="mouseenter"
-                               popover="Last name">Last Name</label>
+                               popover="Last name">Last Name *</label>
 
                         <div class="col-sm-10">
                             <input type="text"
@@ -100,35 +125,46 @@
                                    id="lastName"
                                    placeholder="Last Name"
                                    ng-model="model.lastname"
+                                   ng-required
                                    ng-disabled="_loading">
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group"
+                         ng-class="{ 'has-error': newUser.phoneNumber.$invalid &&
+                            newUser.phoneNumber.$dirty }">
                         <label for="phoneNumber"
                                class="col-sm-2 control-label"
                                popover-trigger="mouseenter"
-                               popover="Phone number">Phone Number</label>
+                               popover="Contact phone number">Phone Number *</label>
 
                         <div class="col-sm-10">
                             <input type="text"
+                                   ng-pattern="phoneRegex"
                                    class="form-control"
+                                   required
                                    id="phoneNumber"
+                                   name="phoneNumber"
                                    placeholder="Phone Number"
                                    ng-model="model.phone_number"
                                    ng-disabled="_loading">
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group"
+                         ng-class="{ 'has-error': newUser.companyName.$invalid &&
+                            newUser.companyName.$dirty }">
                         <label for="companyName"
                                class="col-sm-2 control-label"
                                popover-trigger="mouseenter"
-                               popover="Company name">Company Name</label>
+                               popover="Should be unique across the system. Will be generated from your first and last name if left empty.">
+                            Company Name &nbsp;</label>
 
                         <div class="col-sm-10">
                             <input type="text"
                                    class="form-control"
                                    id="companyName"
+                                   name="companyName"
                                    placeholder="Company Name"
+                                   maxlength="250"
                                    ng-model="model.company_name"
                                    ng-disabled="_loading">
                         </div>
@@ -138,13 +174,14 @@
                         <label for="address1"
                                class="col-sm-2 control-label"
                                popover-trigger="mouseenter"
-                               popover="Address 1">Address 1</label>
+                               popover="Could be used as a billing address later.">Address *</label>
 
                         <div class="col-sm-10">
                             <input type="text"
                                    class="form-control"
+                                   required
                                    id="address1"
-                                   placeholder="Address 1"
+                                   placeholder="Address"
                                    ng-model="model.address1"
                                    ng-disabled="_loading">
                         </div>
@@ -153,13 +190,13 @@
                         <label for="address2"
                                class="col-sm-2 control-label"
                                popover-trigger="mouseenter"
-                               popover="Address 2">Address 2</label>
+                               popover="Could be used as a billing address later.">Address (Line 2) &nbsp;</label>
 
                         <div class="col-sm-10">
                             <input type="text"
                                    class="form-control"
                                    id="address2"
-                                   placeholder="Address 2"
+                                   placeholder="Address (Line 2)"
                                    ng-model="model.address2"
                                    ng-disabled="_loading">
                         </div>
@@ -168,13 +205,14 @@
                         <label for="Country"
                                class="col-sm-2 control-label"
                                popover-trigger="mouseenter"
-                               popover="Country">Country</label>
+                               popover="Could be used in a billing address later.">Country *</label>
 
                         <div class="col-sm-10">
                             <select type="text"
                                    class="form-control"
                                    id="Country"
                                    placeholder="Country"
+                                   required
                                    ng-model="model.country"
                                    ng-options="key as value for (key , value) in countries"
                                    ng-disabled="_loading">
@@ -185,12 +223,13 @@
                         <label for="state"
                                class="col-sm-2 control-label"
                                popover-trigger="mouseenter"
-                               popover="state">State</label>
+                               popover="Could be used in a billing address later.">State *</label>
 
                         <div class="col-sm-10">
                             <input type="text"
                                    class="form-control"
                                    id="state"
+                                   required
                                    placeholder="State"
                                    ng-model="model.state"
                                    ng-disabled="_loading">
@@ -200,27 +239,34 @@
                         <label for="City"
                                class="col-sm-2 control-label"
                                popover-trigger="mouseenter"
-                               popover="City">City</label>
+                               popover="Could be used in a billing address later.">City *</label>
 
                         <div class="col-sm-10">
                             <input type="text"
                                    class="form-control"
                                    id="City"
+                                   required
                                    placeholder="City"
                                    ng-model="model.city"
                                    ng-disabled="_loading">
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group"
+                         ng-class="{ 'has-error': newUser.Zipcode.$invalid &&
+                            newUser.Zipcode.$dirty }">
                         <label for="Zipcode"
                                class="col-sm-2 control-label"
                                popover-trigger="mouseenter"
-                               popover="Zip Code">Zip Code</label>
+                               popover="Could be used in a billing address later.">Zip Code *</label>
 
                         <div class="col-sm-10">
                             <input type="text"
+                                   ng-pattern="zipRegex"
                                    class="form-control"
                                    id="Zipcode"
+                                   name="Zipcode"
+                                   maxlength="10"
+                                   required
                                    placeholder="Zip Code"
                                    ng-model="model.zipcode"
                                    ng-disabled="_loading">
@@ -234,7 +280,7 @@
                                 Cancel
                             </a>
                             <button class="btn btn-success"
-                                    ng-disabled="_loading"
+                                    ng-disabled="_loading || newUser.$invalid"
                                     ng-click="createUser(model)">
                                 Verify Email
                             </button>

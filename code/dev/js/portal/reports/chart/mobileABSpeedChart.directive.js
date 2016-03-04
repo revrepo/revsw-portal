@@ -29,6 +29,11 @@
 
         //  ---------------------------------
         $scope.chartOptions = {
+
+          chart: {
+            type: 'column'
+          },
+
           yAxis: {
             title: {
               text: 'Speed Kb/s'
