@@ -41,6 +41,10 @@
           }
         },
 
+        credits: {
+          enabled: false
+        },
+
         series: [{
           data: []
         }]
