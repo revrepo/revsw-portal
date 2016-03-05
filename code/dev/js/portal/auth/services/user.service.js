@@ -364,6 +364,7 @@
                   return {
                     app_name: item.app_name,
                     app_id: item.id,
+                    id: item.id,
                     sdk_key: item.sdk_key
                   };
                 })
@@ -392,7 +393,8 @@
     }
 
     function getSelectedApplication() {
-      return appSelected || $localStorage.selectedApplication;
+      // return appSelected || $localStorage.selectedApplication;
+      return $localStorage.selectedApplication || appSelected;
     }
 
     /**

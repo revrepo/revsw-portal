@@ -133,7 +133,7 @@
       modelCopy.app_platform = model.app_platform.name;
       $scope.create(modelCopy)
         .then(function () {
-          model.app_name = "";
+          model.app_name = '';
           $scope.alertService.success('App registered', 5000);
         });
     };
@@ -248,7 +248,13 @@
     };
 
     $scope.storeToStorage = function (app) {
-      $localStorage.selectedApplicationID = app.id;
+      var newApp = {
+        app_id: app.id,
+        id: app.id,
+        app_name: app.app_name,
+        sdk_key: app.sdk_key
+      };
+      $localStorage.selectedApplication = newApp;
     };
 
 

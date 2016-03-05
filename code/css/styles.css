@@ -101,11 +101,21 @@ table tbody tr.loadingth {
 table tbody .actions a {
   margin-right: 10px;
 }
+.ui-select-multiple.ui-select-bootstrap,
+input.ui-select-search {
+  max-width: 550px;
+}
+select.form-control {
+  max-width: 550px;
+}
 select.form-control.fixed {
   width: 150px;
 }
 select.form-control.fixed135 {
   width: 135px;
+}
+input.form-control {
+  max-width: 550px;
 }
 .popover {
   z-index: 999;
@@ -141,6 +151,10 @@ alert-list alert {
 .list-input {
   border: none;
   background-color: transparent;
+}
+/* To hide "Powered by Ace" label in the JSON editor */
+a.poweredBy {
+  display: none;
 }
 .main_img_container {
   left: 50%;
@@ -253,7 +267,7 @@ section[drawer] .side-menu .side-menu-item.selected {
   background-color: #151515;
 }
 section[drawer] .side-menu .side-menu-item.active {
-  border-right: 2px solid #f7941e;
+  border-right: 4px solid #f7941e;
 }
 section[drawer] .side-menu .side-menu-item i {
   margin: 0 10px;
@@ -266,7 +280,7 @@ section[drawer] .side-menu .side-menu-item i {
   line-height: 30px;
 }
 .navbar .navbar-inner li.active {
-  border-bottom: 2px solid #66b2bf;
+  border-bottom: 4px solid #66b2bf;
 }
 .navbar .navbar-inner div[paper-drawer-toggle] {
   display: inline-block;
