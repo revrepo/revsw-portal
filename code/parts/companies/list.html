@@ -81,7 +81,11 @@
             <tbody>
             <tr
               ng-repeat="item in filteredRecords | limitTo:filter.limit:filter.skip track by $index">
-              <td>{{item.companyName}}</td>
+              <td>
+                <a ui-sref=".edit({id: item.id})" ng-if="!item.loading" tooltip="Edit Company">
+                  {{item.companyName}}
+                </a>
+              </td>
               <td>{{item.createdBy}}</td>
               <td>{{item.updated_at | date : 'MMM dd, yyyy H:mm:ss a'}}</td>
               <td class="actions">

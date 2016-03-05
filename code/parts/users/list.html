@@ -82,14 +82,22 @@
             </thead>
             <tbody>
             <tr ng-repeat="user in filteredRecords | limitTo:filter.limit:filter.skip track by $index">
-              <td>{{user.firstname}}</td>
-              <td>{{user.lastname}}</td>
+              <td>
+                <a ui-sref=".edit({id: user.user_id})" ng-if="!item.loading" tooltip="Edit User Profile">
+                  {{user.firstname}}
+                </a>
+              </td>
+              <td>
+                <a ui-sref=".edit({id: user.user_id})" ng-if="!item.loading" tooltip="Edit User Profile">
+                  {{user.lastname}}
+                </a>
+              </td>
               <td>{{user.email}}</td>
               <td>{{user.role}}</td>
               <td>{{user.updated_at | date : 'MMM dd, yyyy H:mm:ss a'}}</td>
               <td>{{user.last_login_at | date : 'MMM dd, yyyy H:mm:ss a'}}</td>
               <td class="actions">
-                <a ui-sref=".edit({id: user.user_id})" tooltip="Edit User">
+                <a ui-sref=".edit({id: user.user_id})" tooltip="Edit User Profile">
                   <i class="glyphicon glyphicon-pencil"></i>
                 </a>
                 <a href="" ng-click="deleteUser(user)" tooltip="Delete User">

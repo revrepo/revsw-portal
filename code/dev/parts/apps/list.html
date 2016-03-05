@@ -3,7 +3,7 @@
     <h3 class="modal-title">Confirm</h3>
   </div>
   <div class="modal-body">
-    Are you sure you want to delete this app
+    Are you sure you want to delete app
     <strong>{{model.app_name}}</strong>?
   </div>
   <div class="modal-footer">
@@ -145,7 +145,7 @@
                 <a href="#/mobile/traffic" ng-if="!item.loading" ng-click="storeToStorage(item)" tooltip="Stats">
                   <i class="glyphicon glyphicon-stats"></i>
                 </a>
-                <a href="" ui-sref=".versions({id: item.id})" ng-if="!item.loading" tooltip="Historical Versions">
+                <a href="" ui-sref=".versions({id: item.id})" ng-if="!item.loading" tooltip="Previous Versions">
                   <i class="glyphicon glyphicon-book"></i>
                 </a>
               </td>
