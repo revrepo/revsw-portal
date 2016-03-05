@@ -98,5 +98,9 @@
       return modalInstance.result;
     };
 
+    $scope.getRelativeDate = function (datetime) {
+      return moment.utc(datetime).fromNow();
+    };
+
   }
 })();

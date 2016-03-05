@@ -25,6 +25,10 @@
         });
     };
 
+    $scope.getRelativeDate = function (datetime) {
+      return moment.utc(datetime).fromNow();
+    };
+
     $scope.deleteCompany = function(model) {
       $scope
         .confirm('confirmModal.html', model)

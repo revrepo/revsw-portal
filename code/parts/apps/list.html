@@ -119,7 +119,7 @@
               </td>
               <td>{{item.app_platform}}</td>
               <td>{{item.last_app_published_version}}</td>
-              <td>{{item.updated_at | date : 'MMM dd, yyyy H:mm:ss a'}}</td>
+              <td>{{ getRelativeDate(item.updated_at) }}</td>
               <td>
                 <input class="list-input" disabled ng-hide="item.show" type="password" value="{{item.sdk_key}}" />
                 <input class=""  ng-show="item.show" type="text" value="{{item.sdk_key}}"  />

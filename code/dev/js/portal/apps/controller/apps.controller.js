@@ -47,6 +47,11 @@
       }
     };
 
+
+    $scope.getRelativeDate = function (datetime) {
+      return moment.utc(datetime).fromNow();
+    };
+
     $scope.model.account_id = $scope.auth.getUser().companyId[0];
 
     User.getUserDomains(true)

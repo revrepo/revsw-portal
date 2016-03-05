@@ -21,7 +21,7 @@
                                theme="select2"
                                ng-disabled="_loading"
                                on-select="onAccountSelect($model)"
-                               style="min-width: 500px;" >
+                               style="min-width: 300px;" >
                       <ui-select-match placeholder="Select Account">{{$select.selected.acc_name}}</ui-select-match>
                       <ui-select-choices repeat="item in accounts | filter: {acc_name: $select.search}">
                         <div ng-bind-html="item.acc_name|highlight: $select.search"></div>
@@ -33,7 +33,7 @@
 
               </div>
 
-              <div class="pull-right">
+              <div>
 
                 <form class="form-inline">
 
@@ -75,37 +75,6 @@
 
             <div class="col-md-4">
 
-              <h4>API Keys</h4>
-
-              <form class="form-horizontal">
-
-                <div class="form-group">
-                  <label class="col-sm-6 control-label" >Active</label>
-                  <div class="col-sm-6">
-                    <div class="form-control text-right">{{ report.api_keys.active }}</div>
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label class="col-sm-6 control-label" >Inactive</label>
-                  <div class="col-sm-6">
-                    <div class="form-control text-right">{{ report.api_keys.inactive }}</div>
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label class="col-sm-6 control-label">Total</label>
-                  <div class="col-sm-6">
-                    <div class="form-control text-right">{{ report.api_keys.total }}</div>
-                  </div>
-                </div>
-
-              </form>
-
-            </div>
-
-            <div class="col-md-4">
-
               <h4>Domains</h4>
 
               <form class="form-horizontal">
@@ -144,7 +113,7 @@
 
             <div class="col-md-4">
 
-              <h4>Applications</h4>
+              <h4>Mobile Apps</h4>
 
               <form class="form-horizontal">
 
@@ -172,6 +141,38 @@
               </form>
 
             </div>
+
+            <div class="col-md-4">
+
+              <h4>API Keys</h4>
+
+              <form class="form-horizontal">
+
+                <div class="form-group">
+                  <label class="col-sm-6 control-label" >Active</label>
+                  <div class="col-sm-6">
+                    <div class="form-control text-right">{{ report.api_keys.active }}</div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-sm-6 control-label" >Inactive</label>
+                  <div class="col-sm-6">
+                    <div class="form-control text-right">{{ report.api_keys.inactive }}</div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-sm-6 control-label">Total</label>
+                  <div class="col-sm-6">
+                    <div class="form-control text-right">{{ report.api_keys.total }}</div>
+                  </div>
+                </div>
+
+              </form>
+
+            </div>
+
           </div>
           <hr>
 
@@ -179,7 +180,7 @@
 
             <div class="col-md-4">
 
-              <h4>Traffic total</h4>
+              <h4>Traffic Total</h4>
 
               <form class="form-horizontal">
 
@@ -210,7 +211,7 @@
 
             <div class="col-md-4">
 
-              <h4>Cache hits</h4>
+              <h4>Edge Cache Usage</h4>
 
               <form class="form-horizontal">
 
@@ -234,12 +235,12 @@
 
             <div class="col-md-4">
 
-              <h4>Port hits</h4>
+              <h4>HTTP/HTTPS Requests</h4>
 
               <form class="form-horizontal">
 
                 <div class="form-group" ng-repeat="( port, hits ) in report.port_hits">
-                  <label class="col-sm-6 control-label" >{{ port }}</label>
+                  <label class="col-sm-6 control-label" >{{ port === '80' ? 'HTTP' : 'HTTPS' }}</label>
                   <div class="col-sm-6">
                     <div class="form-control text-right">{{ hits }}</div>
                   </div>
@@ -253,7 +254,7 @@
           <div ng-if="report.count !== '0'">
 
             <hr>
-            <h4>Traffic per Billing Zone</h4>
+            <h4>Traffic Per Billing Zone</h4>
             <div class="row" ng-repeat="( zone, traffic ) in report.traffic_per_billing_zone">
 
               <div class="col-md-5">
@@ -274,7 +275,7 @@
                 <form class="form-horizontal">
 
                   <div class="form-group">
-                    <label class="col-sm-5 control-label" >Sent</label>
+                    <label class="col-sm-5 control-label" >Traffic Sent</label>
                     <div class="col-sm-7">
                       <div class="form-control text-right">{{ traffic.sent_bytes }}</div>
                     </div>
@@ -287,7 +288,7 @@
                 <form class="form-horizontal">
 
                   <div class="form-group">
-                    <label class="col-sm-6 control-label">Received</label>
+                    <label class="col-sm-6 control-label">Traffic Received</label>
                     <div class="col-sm-6">
                       <div class="form-control text-right">{{ traffic.received_bytes }}</div>
                     </div>

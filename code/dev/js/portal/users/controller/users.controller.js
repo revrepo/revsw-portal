@@ -74,6 +74,10 @@
         .catch($scope.alertService.danger);
     };
 
+    $scope.getRelativeDate = function (datetime) {
+      return moment.utc(datetime).fromNow();
+    };
+
     $scope.createUser = function (model) {
       if (!model) {
         return;

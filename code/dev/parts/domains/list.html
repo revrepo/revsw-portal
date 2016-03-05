@@ -114,7 +114,7 @@
                 </a>
               </td>
               <td>{{item.cname}}</td>
-              <td>{{item.updated_at | date : 'MMM dd, yyyy H:mm:ss a'}}</td>
+              <td>{{ getRelativeDate(item.updated_at) }}</td>
               <td>
                 <div domain-staging-status ng-id="item.id"></div>
               </td>

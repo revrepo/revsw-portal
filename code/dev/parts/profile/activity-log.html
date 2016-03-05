@@ -21,6 +21,10 @@
       <div class="col-md-9">{{model.user_type}}</div>
     </div>
     <div class="row">
+      <div class="col-md-3 strong">Target ID</div>
+      <div class="col-md-9">{{model.target_id}}</div>
+    </div>
+    <div class="row">
       <div class="col-md-3 strong">Activity</div>
       <div class="col-md-9">{{model.activity}}</div>
     </div>
@@ -96,7 +100,7 @@
             <tbody>
             <tr
               ng-repeat="log in filteredRecords | limitTo:filter.limit:filter.skip track by $index">
-              <td>{{log.datetime | date : 'MMM dd, yyyy H:mm:ss a'}}</td>
+              <td>{{ getRelativeDate(log.datetime) }}</td>
               <td>
                 <i class="glyphicon glyphicon-user"></i>&nbsp;
                 {{log.user_name}}

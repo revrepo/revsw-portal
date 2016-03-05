@@ -193,5 +193,11 @@
     $scope.storeToStorage = function (model) {
       $localStorage.selectedDomain = model;
     };
+
+
+    $scope.getRelativeDate = function (datetime) {
+      return moment.utc(datetime).fromNow();
+    };
+
   }
 })();

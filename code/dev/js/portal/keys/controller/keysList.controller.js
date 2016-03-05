@@ -178,5 +178,9 @@
     // Fetch list of users
     $scope.list();
 
+    $scope.getRelativeDate = function (datetime) {
+      return moment.utc(datetime).fromNow();
+    };
+
   }
 })();

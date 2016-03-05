@@ -85,7 +85,7 @@
                 </a>
               </td>
               <td>{{item.key}}</td>
-              <td>{{item.updated_at | date : 'MMM dd, yyyy H:mm:ss a'}}</td>
+              <td>{{ getRelativeDate(item.updated_at) }}</td>
               <td>
                 <i class="glyphicon pointer" tooltip="Toggle active status" ng-hide="item.loading" ng-click="toggleProperty(item, 'read_only_status')" ng-class="item.read_only_status && 'glyphicon-check' || 'glyphicon-unchecked'"></i>
               </td>
