@@ -17,6 +17,7 @@
 
     $scope.onAccountSelect = function ( acc ) {
       User.selectAccount( acc );
+      $scope.account = acc;
     };
 
     $scope.onTimeSet = function( newDate ) {
@@ -33,13 +34,17 @@
       }
 
       $scope._loading = true;
-      Stats.usage_web({
-          account_id: $scope.account.acc_id,
-          from: moment($scope.month_year).utc().startOf( 'month' ).toISOString().slice( 0, 10 ),
-          to: moment($scope.month_year).utc().endOf( 'month' ).toISOString().slice( 0, 10 )
-        })
+      var q = {
+        from: moment($scope.month_year).utc().startOf( 'month' ).toISOString().slice( 0, 10 ),
+        to: moment($scope.month_year).utc().endOf( 'month' ).toISOString().slice( 0, 10 )
+      };
+      if ( $scope.account.acc_id ) {
+        q.account_id = $scope.account.acc_id;
+      }
+      Stats.usage_web( q )
         .$promise
         .then( function( data ) {
+
           // console.log( data );
           var d = data.data[data.data.length - 1/*summary*/];
           //  let's format something
@@ -49,12 +54,12 @@
           for ( var port in d.port_hits ) {
             d.port_hits[port] = Util.formatNumber( d.port_hits[port] );
           }
-          d.received_bytes = Util.humanFileSize( d.received_bytes );
-          d.sent_bytes = Util.humanFileSize( d.sent_bytes );
+          d.received_bytes = Util.humanFileSizeInGB( d.received_bytes );
+          d.sent_bytes = Util.humanFileSizeInGB( d.sent_bytes );
           for ( var zone in d.traffic_per_billing_zone ) {
             d.traffic_per_billing_zone[zone].count = Util.formatNumber( d.traffic_per_billing_zone[zone].count );
-            d.traffic_per_billing_zone[zone].received_bytes = Util.humanFileSize( d.traffic_per_billing_zone[zone].received_bytes );
-            d.traffic_per_billing_zone[zone].sent_bytes = Util.humanFileSize( d.traffic_per_billing_zone[zone].sent_bytes );
+            d.traffic_per_billing_zone[zone].received_bytes = Util.humanFileSizeInGB( d.traffic_per_billing_zone[zone].received_bytes );
+            d.traffic_per_billing_zone[zone].sent_bytes = Util.humanFileSizeInGB( d.traffic_per_billing_zone[zone].sent_bytes );
           }
 
           $scope.report = d;

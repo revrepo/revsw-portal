@@ -229,7 +229,7 @@
 
       usage_web: {
         method: 'GET',
-        url: $config.API_URL + '/usage_reports/:account_id',
+        url: $config.API_URL + '/usage_reports/web',
         params: {}
       }
 

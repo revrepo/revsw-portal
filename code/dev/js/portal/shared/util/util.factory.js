@@ -75,12 +75,25 @@
 
     /**
      * 1234567890 --> 1.15 GB
-     *
      * @returns {string}
      */
     function humanFileSize(size, pr) {
+      if ( !size ) {
+        return '0 B'
+      }
       var i = Math.floor( Math.log(size) / Math.log(1024) );
       return ( size / Math.pow(1024, i) ).toFixed((pr||2)) * 1 + ' ' + ['B', 'kB', 'MB', 'GB', 'TB'][i];
+    };
+
+    /**
+     * same as above, fixed to GB
+     * @returns {string}
+     */
+    function humanFileSizeInGB(size, pr) {
+      if ( !size ) {
+        return '0 GB'
+      }
+      return ( size / 1073741824/*1024^3*/ ).toFixed((pr||2)) * 1 + ' GB';
     };
 
     return {
@@ -108,7 +121,12 @@
       /**
        * @inheritDoc
        */
-      humanFileSize: humanFileSize
+      humanFileSize: humanFileSize,
+
+      /**
+       * @inheritDoc
+       */
+      humanFileSizeInGB: humanFileSizeInGB
     };
   }
 })();
