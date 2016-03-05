@@ -152,6 +152,10 @@ alert-list alert {
   border: none;
   background-color: transparent;
 }
+/* To hide "Powered by Ace" label in the JSON editor */
+a.poweredBy {
+  display: none;
+}
 .main_img_container {
   left: 50%;
   position: absolute;

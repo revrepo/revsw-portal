@@ -91,7 +91,7 @@ var Constants = {
     }
   },
   domain: {
-    name: 'qa-30-portal-ui-test.com',
+    name: 'qa-admin-10-portal-ui-test.com',
     roles: {
       ADMIN: 'admin',
       USER: 'user'
