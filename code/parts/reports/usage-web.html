@@ -249,54 +249,56 @@
 
             </div>
           </div>
-          <hr>
 
-          <h3>Traffic per Billing Zone</h3>
-          <div class="row" ng-repeat="( zone, traffic ) in report.traffic_per_billing_zone">
+          <div ng-if="report.count !== '0'">
 
-            <div class="col-md-5">
+            <hr>
+            <h4>Traffic per Billing Zone</h4>
+            <div class="row" ng-repeat="( zone, traffic ) in report.traffic_per_billing_zone">
 
-              <form class="form-horizontal">
+              <div class="col-md-5">
 
-                <div class="form-group">
-                  <label class="col-sm-7 control-label" >{{zone}}, Hits</label>
-                  <div class="col-sm-5">
-                    <div class="form-control text-right">{{ traffic.count }}</div>
+                <form class="form-horizontal">
+
+                  <div class="form-group">
+                    <label class="col-sm-7 control-label" >{{zone}}, Hits</label>
+                    <div class="col-sm-5">
+                      <div class="form-control text-right">{{ traffic.count }}</div>
+                    </div>
                   </div>
-                </div>
 
-              </form>
-            </div>
-            <div class="col-md-3">
+                </form>
+              </div>
+              <div class="col-md-3">
 
-              <form class="form-horizontal">
+                <form class="form-horizontal">
 
-                <div class="form-group">
-                  <label class="col-sm-5 control-label" >Sent</label>
-                  <div class="col-sm-7">
-                    <div class="form-control text-right">{{ traffic.sent_bytes }}</div>
+                  <div class="form-group">
+                    <label class="col-sm-5 control-label" >Sent</label>
+                    <div class="col-sm-7">
+                      <div class="form-control text-right">{{ traffic.sent_bytes }}</div>
+                    </div>
                   </div>
-                </div>
 
-              </form>
-            </div>
-            <div class="col-md-4">
+                </form>
+              </div>
+              <div class="col-md-4">
 
-              <form class="form-horizontal">
+                <form class="form-horizontal">
 
-                <div class="form-group">
-                  <label class="col-sm-6 control-label">Received</label>
-                  <div class="col-sm-6">
-                    <div class="form-control text-right">{{ traffic.received_bytes }}</div>
+                  <div class="form-group">
+                    <label class="col-sm-6 control-label">Received</label>
+                    <div class="col-sm-6">
+                      <div class="form-control text-right">{{ traffic.received_bytes }}</div>
+                    </div>
                   </div>
-                </div>
 
-              </form>
+                </form>
+              </div>
+
             </div>
 
           </div>
-
-
 
         </div>
 
