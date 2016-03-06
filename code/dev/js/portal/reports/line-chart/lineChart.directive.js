@@ -23,7 +23,11 @@
 
         xAxis: {
           categories: [],
-          tickInterval: 4
+          tickInterval: 4,
+          crosshair: {
+            width: 1,
+            color: '#000000'
+          },
         },
 
         yAxis: {
