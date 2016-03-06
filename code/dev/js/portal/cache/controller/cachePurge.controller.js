@@ -47,8 +47,14 @@
         .then(function (data) {
           AlertService.success('The request has been successfully submitted', 5000);
         })
-        .catch(function () {
-          AlertService.danger('Oops something went wrong', 5000);
+        .catch(function (err) {
+          // set default error message
+          var message = 'Oops something went wrong';
+
+          // if response contains message then show it
+          if(err && err.data && err.data.message) message = err.data.message;
+
+          AlertService.danger(message, 5000);
         })
         .finally(function () {
           $scope._loading = false;
