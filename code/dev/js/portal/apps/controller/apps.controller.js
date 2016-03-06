@@ -58,6 +58,8 @@
       }
     };
 
+    $scope.filterKeys = ['app_name', 'app_platform', 'last_app_published_version', 'updated_at'];
+
 
     $scope.getRelativeDate = function (datetime) {
       return moment.utc(datetime).fromNow();
