@@ -40,6 +40,11 @@
               }
             }
           }
+        },
+        resolve: {
+          isUserActive: function(User){
+            return User.reloadUser();
+          }
         }
       })
       .state('index.apps', {

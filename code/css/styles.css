@@ -363,3 +363,6 @@ polyline {
 .slice {
   stroke: #fff;
 }
+.invisible-chart-wrapper {
+  min-height: 350px;
+}
