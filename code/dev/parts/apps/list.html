@@ -110,7 +110,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr
+            <tr id="anchor{{::$index}}"
               ng-repeat="item in filteredRecords | limitTo:filter.limit:filter.skip track by $index">
               <td>
                 <a ui-sref=".edit({id: item.id})" ng-if="!item.loading" tooltip="Edit App">
@@ -133,7 +133,7 @@
               </td>
               <td class="actions">
                 <i class="glyphicon glyphicon-refresh spin" ng-if="item.loading"></i>
-                <a ui-sref=".edit({id: item.id})" ng-if="!item.loading" tooltip="Edit App">
+                <a ng-click="saveAnchorScrollIndex($index)" ui-sref=".edit({id: item.id})" ng-if="!item.loading" tooltip="Edit App">
                   <i class="glyphicon glyphicon-pencil"></i>
                 </a>
                 <a ui-sref=".configure({id: item.id})" ng-if="!item.loading" tooltip="Advanced Edit App">

@@ -7,6 +7,7 @@
 
   /*@ngInject*/
   function AppsController($scope,
+                          $anchorScroll,
                           User,
                           Companies,
                           Apps,
@@ -27,8 +28,18 @@
     $scope.$state = $state;
     //// Fetch list of records
     $scope._baseFilter = {app_platform: $state.current.data.platform};
+
     $scope.$on('$stateChangeSuccess', function (state) {
-      $scope.list();
+      $scope
+        .list()
+        .then(function(){
+          if ($scope.elementIndexForAnchorScroll) {
+            setTimeout(function(){
+              $anchorScroll('anchor' + $scope.elementIndexForAnchorScroll);
+              $scope.$digest();
+            },500);
+          }
+        });
     });
 
     $scope.companies = [];

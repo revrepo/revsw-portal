@@ -1,4 +1,4 @@
-(function () {
+(function (angular, empty) {
   'use strict';
 
   angular
@@ -555,8 +555,28 @@
        *****                             END BASE ACTIONS SECTION
        **************************************************************************************/
 
+      /***************************************************************************************
+       *****                                  SCROLL ANCHOR POSITION SECTION
+       **************************************************************************************/
+
+       $scope.saveAnchorScrollIndex = saveAnchorScrollIndex;
+       $scope.elementIndexForAnchorScroll = empty;
+
+       /**
+       * Save anchor index
+       * 
+       * @param {Number} index of the clicked element
+       */
+       function saveAnchorScrollIndex($index) {
+        $scope.elementIndexForAnchorScroll = $index;
+       }
+
+      /***************************************************************************************
+       *****                             END SCROLL POSITION HANDLER SECTION
+       **************************************************************************************/
+
     };
 
     return CRUDControllerImpl;
   };
-})();
+})(angular);
