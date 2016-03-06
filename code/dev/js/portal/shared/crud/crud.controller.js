@@ -158,7 +158,7 @@
                 //formats as date obj
                 compareValue = new Date(compareValue);
               }
-              res = (compareValue.toString().indexOf($scope.filter.filter) !== -1);
+              res = (compareValue.toString().toLowerCase().indexOf($scope.filter.filter.toLowerCase()) !== -1);
 
               if (res) {
                 return res;
