@@ -156,6 +156,12 @@ alert-list alert {
 a.poweredBy {
   display: none;
 }
+input[type="radio"] {
+  margin-left: 20px;
+}
+input[type="checkbox"] {
+  margin-left: 20px;
+}
 .main_img_container {
   left: 50%;
   position: absolute;

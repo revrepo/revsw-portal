@@ -59,15 +59,15 @@
             .status({id: id})
             .$promise
             .then(function (data) {
-              if ($config.DOMAIN_STATUS_ICONS[data.staging_status]) {
+              if ($config.DOMAIN_STAGING_STATUS_ICONS[data.staging_status]) {
                 $scope
-                .iconStaging = $config.DOMAIN_STATUS_ICONS[data.staging_status];
+                .iconStaging = $config.DOMAIN_STAGING_STATUS_ICONS[data.staging_status];
               }
               $scope
               .tooltipStaging = 'Staging Status: ' + data.staging_status;
-              if ($config.DOMAIN_STATUS_ICONS[data.global_status]) {
+              if ($config.DOMAIN_PRODUCTION_STATUS_ICONS[data.global_status]) {
                 $scope
-                .iconGlobal = $config.DOMAIN_STATUS_ICONS[data.global_status];
+                .iconGlobal = $config.DOMAIN_PRODUCTION_STATUS_ICONS[data.global_status];
               }
               $scope.tooltipGlobal = 'Global Status: ' + data.global_status;
               $scope.startRefresh();
