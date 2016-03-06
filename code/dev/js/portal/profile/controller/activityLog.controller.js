@@ -23,10 +23,8 @@
       //fetching data
       return $scope.resource
         .query(function (data) {
-
-// console.log('Got the following data = ', data);
-
           $scope.records = data.data;
+          $scope.filterList();
           $scope._checkPagination();
           return data; // Send data to future promise
         }).$promise
