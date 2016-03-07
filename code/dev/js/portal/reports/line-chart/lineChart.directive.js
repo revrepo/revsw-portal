@@ -12,6 +12,7 @@
       var el = element[0];
 
       var chartOptions = {
+
         chart: {
           renderTo: el,
           type: 'areaspline'
