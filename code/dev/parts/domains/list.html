@@ -110,7 +110,7 @@
               ng-repeat="item in filteredRecords | limitTo:filter.limit:filter.skip track by $index">
               <td>
                 <a ui-sref=".edit({id: item.id})" ng-if="!item.loading" tooltip="Edit Domain">
-                  {{item.domain_name}}{{elementIndexForAnchorScroll}}
+                  {{item.domain_name}}
                 </a>
               </td>
               <td>{{item.cname}}</td>
