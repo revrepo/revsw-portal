@@ -106,11 +106,11 @@
             </tr>
             </thead>
             <tbody>
-            <tr
+            <tr id="anchor{{::$index}}" ng-click="saveAnchorScrollIndex($index)"
               ng-repeat="item in filteredRecords | limitTo:filter.limit:filter.skip track by $index">
               <td>
                 <a ui-sref=".edit({id: item.id})" ng-if="!item.loading" tooltip="Edit Domain">
-                  {{item.domain_name}}
+                  {{item.domain_name}}{{elementIndexForAnchorScroll}}
                 </a>
               </td>
               <td>{{item.cname}}</td>
