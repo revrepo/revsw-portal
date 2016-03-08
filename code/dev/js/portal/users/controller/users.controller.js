@@ -30,6 +30,8 @@
       $scope.roles.push('revadmin');
     }
 
+    // $scope.filterKeys = ['firstname', 'lastname', 'email', 'role', 'updated_at', 'last_login_at'];
+
     $scope.companies = Companies.query();
 
     $scope.domains = DomainsConfig.query();
