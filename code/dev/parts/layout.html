@@ -44,6 +44,7 @@
                 <a ui-sref-active="active" ui-sref="index.accountSettings.profile" class="side-menu-sub-item">Update Password</a>
                 <a ui-sref-active="active" ui-sref="index.accountSettings.2fa" class="side-menu-sub-item">Security Settings</a>
                 <a ui-sref-active="active" ui-sref="index.accountSettings.activitylog" class="side-menu-sub-item">Activity Log</a>
+                <a ui-sref-active="active" ui-sref="index.accountSettings.usage" class="side-menu-sub-item" ng-if="!userService.isUser()">Usage Report</a>
             </li>
             <li ui-sref-active='active-side-menu-item'>
                 <a ui-sref="index.help" class="side-menu-item">Support</a>
@@ -51,9 +52,6 @@
                 <a href="https://revapm.zendesk.com/hc/en-us" class="side-menu-sub-item" target="_blank">Knowledge Base</a>
                 <a href="https://revapm.zendesk.com/hc/en-us/requests/new" class="side-menu-sub-item" target="_blank">Open Ticket</a>
                 <a href="http://status.revapm.net/" class="side-menu-sub-item" target="_blank">Network Status</a>
-            </li>
-            <li>
-              <a ui-sref="index.usage.web" class="side-menu-item hide-caret" ng-if="!userService.isUser()">Usage Report</a>
             </li>
         </div>
     </section>

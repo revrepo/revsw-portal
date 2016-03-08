@@ -8,8 +8,8 @@
   /*@ngInject*/
   function UsageRoutes($stateProvider) {
     $stateProvider
-      .state('index.usage.web', {
-        url: '/usage/web',
+      .state('index.accountSettings.usage', {
+        url: '/usage',
         views: {
           main: {
             controller: 'UsageWebController',

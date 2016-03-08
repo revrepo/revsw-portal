@@ -92,17 +92,6 @@
           }
         }
       })
-      .state('index.usage', {
-        url: '',
-        views: {
-          menu: {
-            templateUrl: 'parts/cadmin-top-menu.html'
-          },
-          page: {
-            templateUrl: 'parts/layout/page.html'
-          }
-        }
-      })
       .state('index.help', {
         url: '/help',
         views: {
