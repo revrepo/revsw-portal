@@ -40,9 +40,6 @@
       .state('index.apps', {
         url: '/apps',
         views: {
-          menu: {
-            templateUrl: 'parts/cadmin-top-menu.html'
-          },
           page: {
             templateUrl: 'parts/layout/page.html'
           }
@@ -51,9 +48,6 @@
       .state('index.webApp', {
         url: '',
         views: {
-          menu: {
-            templateUrl: 'parts/cadmin-top-menu.html'
-          },
           page: {
             templateUrl: 'parts/layout/page.html'
           }
@@ -62,9 +56,6 @@
       .state('index.accountSettings', {
         url: '',
         views: {
-          menu: {
-            templateUrl: 'parts/cadmin-top-menu.html'
-          },
           page: {
             templateUrl: 'parts/layout/page.html'
           }
@@ -73,9 +64,6 @@
       .state('index.reports', {
         url: '',
         views: {
-          menu: {
-            templateUrl: 'parts/cadmin-top-menu.html'
-          },
           page: {
             templateUrl: 'parts/layout/page.html'
           }
@@ -84,9 +72,6 @@
       .state('index.mobile', {
         url: '',
         views: {
-          menu: {
-            templateUrl: 'parts/cadmin-top-menu.html'
-          },
           page: {
             templateUrl: 'parts/layout/page.html'
           }
@@ -95,9 +80,6 @@
       .state('index.help', {
         url: '/help',
         views: {
-          menu: {
-            templateUrl: 'parts/cadmin-top-menu.html'
-          },
           page: {
             templateUrl: 'parts/help/contactus.html'
           }
