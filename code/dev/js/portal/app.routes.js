@@ -9,16 +9,6 @@
   function routesConfig($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/users');
 
-    /**
-     * Controller for top menu
-     * @param {Object} $scope
-     * @param {Object} $state
-     */
-    var menuController = function ($scope, $state) {
-      $scope.$state = $state;
-    };
-
-
     $stateProvider
     // Base 3 layout
       .state('index', {
@@ -51,11 +41,7 @@
         url: '/apps',
         views: {
           menu: {
-            controller: menuController,
             templateUrl: 'parts/cadmin-top-menu.html'
-          },
-          sideMenu: {
-            templateUrl: 'parts/menu/apps-side.html'
           },
           page: {
             templateUrl: 'parts/layout/page.html'
@@ -66,11 +52,7 @@
         url: '',
         views: {
           menu: {
-            controller: menuController,
             templateUrl: 'parts/cadmin-top-menu.html'
-          },
-          sideMenu: {
-            templateUrl: 'parts/menu/domains-side.html'
           },
           page: {
             templateUrl: 'parts/layout/page.html'
@@ -81,11 +63,7 @@
         url: '',
         views: {
           menu: {
-            controller: menuController,
             templateUrl: 'parts/cadmin-top-menu.html'
-          },
-          sideMenu: {
-            templateUrl: 'parts/menu/accounts-side.html'
           },
           page: {
             templateUrl: 'parts/layout/page.html'
@@ -96,11 +74,7 @@
         url: '',
         views: {
           menu: {
-            controller: menuController,
             templateUrl: 'parts/cadmin-top-menu.html'
-          },
-          sideMenu: {
-            templateUrl: 'parts/menu/web-analitycs-side.html'
           },
           page: {
             templateUrl: 'parts/layout/page.html'
@@ -111,11 +85,7 @@
         url: '',
         views: {
           menu: {
-            controller: menuController,
             templateUrl: 'parts/cadmin-top-menu.html'
-          },
-          sideMenu: {
-            templateUrl: 'parts/menu/mobile-analitycs-side.html'
           },
           page: {
             templateUrl: 'parts/layout/page.html'
@@ -126,11 +96,7 @@
         url: '',
         views: {
           menu: {
-            controller: menuController,
             templateUrl: 'parts/cadmin-top-menu.html'
-          },
-          sideMenu: {
-            templateUrl: 'parts/menu/accounts-side.html'
           },
           page: {
             templateUrl: 'parts/layout/page.html'
@@ -141,16 +107,12 @@
         url: '/help',
         views: {
           menu: {
-            controller: menuController,
             templateUrl: 'parts/cadmin-top-menu.html'
-          },
-          sideMenu: {
-            templateUrl: 'parts/menu/help-side.html'
           },
           page: {
             templateUrl: 'parts/help/contactus.html'
           }
         }
       });
-  };
+  }
 })();
