@@ -41,7 +41,8 @@
        * List of application events
        */
       EVENTS: {
-        DOMAIN_CHANGED: 'domain_changed'
+        DOMAIN_CHANGED: 'domain_changed',
+        FILTER_CHANGED: 'filter_changed'
       },
 
       /**
