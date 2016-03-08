@@ -1,28 +1,80 @@
 <paper-drawer-panel responsive-width="980px" drawer-width="210px">
-  <section drawer>
-    <div id="logo">
-      <img src="images/logo_color.png" alt="Logo"/>
-    </div>
-    <div ui-view="sideMenu" class="side-menu"></div>
-  </section>
-  <section main>
-    <paper-header-panel>
-      <div class="paper-header">
-        <nav class="navbar">
-          <div class="navbar-inner">
-            <div class="navbar-header">
-              <div paper-drawer-toggle>
-                <span class="glyphicon glyphicon-menu-hamburger" paper-drawer-toggle></span>
-              </div>
+    <section drawer>
+        <div id="logo">
+            <img src="images/logo_color.png" alt="Logo" />
+        </div>
+        <div class="side-menu">
+            <li ui-sref-active-if="{class: 'active-side-menu-item', state: 'index.apps'}">
+                <a ui-sref="index.apps.ios" class="side-menu-item">Mobile Apps</a>
+                <a ui-sref-active="active" ui-sref="index.apps.ios" class="side-menu-sub-item">iOS</a>
+                <a ui-sref-active="active" ui-sref="index.apps.android" class="side-menu-sub-item">Android</a>
+                <a ui-sref-active="active" ui-sref="index.apps.wm" class="side-menu-sub-item">Windows Mobile</a>
+            </li>
+            <li ui-sref-active-if="{class: 'active-side-menu-item', state: 'index.mobile'}">
+                <a ui-sref="index.mobile.traffic" class="side-menu-item">Mobile Analytics</a>
+                <a ui-sref-active="active" ui-sref="index.mobile.traffic" class="side-menu-sub-item">Traffic Levels</a>
+                <a ui-sref-active="active" ui-sref="index.mobile.tops" class="side-menu-sub-item">Top Reports</a>
+                <a ui-sref-active="active" ui-sref="index.mobile.objects" class="side-menu-sub-item">Top Objects</a>
+                <a ui-sref-active="active" ui-sref="index.mobile.distributions" class="side-menu-sub-item">Traffic Distributions</a>
+                <a ui-sref-active="active" ui-sref="index.mobile.ab" class="side-menu-sub-item">A/B Reports</a>
+            </li>
+            <li ui-sref-active-if="{class: 'active-side-menu-item', state: 'index.webApp'}">
+                <a ui-sref="index.webApp.domains" class="side-menu-item">Web</a>
+                <a ui-sref-active="active" ui-sref="index.webApp.domains" class="side-menu-sub-item">Domains</a>
+                <a ui-sref-active="active" ui-sref="index.webApp.cache" class="side-menu-sub-item">Purge Cache</a>
+                <!--<a ui-sref="index.webApp.domainConfig" class="side-menu-item">-->
+                <!--<i class="glyphicon glyphicon-wrench"></i>-->
+                <!--Domains Advanced-->
+                <!--</a>-->
+            </li>
+            <li ui-sref-active-if="{class: 'active-side-menu-item', state: 'index.reports'}">
+                <a ui-sref="index.reports.proxy" class="side-menu-item">Web Analytics</a>
+                <a ui-sref-active="active" ui-sref="index.reports.proxy" class="side-menu-sub-item">Proxy Traffic</a>
+                <a ui-sref-active="active" ui-sref="index.reports.topreports" class="side-menu-sub-item">Top Reports</a>
+                <a ui-sref-active="active" ui-sref="index.reports.top" class="side-menu-sub-item">Top Objects</a>
+                <a ui-sref-active="active" ui-sref="index.reports.fbt" class="side-menu-sub-item">FBT Reports</a>
+                <a ui-sref-active="active" ui-sref="index.reports.heatmaps" class="side-menu-sub-item">Traffic Heatmaps</a>
+                <a ui-sref-active="active" ui-sref="index.reports.lm_rtt_heatmaps" class="side-menu-sub-item">RTT Heatmaps</a>
+            </li>
+            <li ui-sref-active-if="{class: 'active-side-menu-item', state: 'index.accountSettings'}">
+                <a ui-sref="index.accountSettings.users" class="side-menu-item">Admin</a>
+                <a ui-sref-active="active" ui-sref="index.accountSettings.users" class="side-menu-sub-item" ng-if="!userService.isUser()">Users</a>
+                <a ui-sref-active="active" ui-sref="index.accountSettings.companies" class="side-menu-sub-item" ng-if="userService.isReseller() || userService.isRevadmin()">Companies</a>
+                <a ui-sref-active="active" ui-sref="index.accountSettings.keys" class="side-menu-sub-item" ng-if="!userService.isUser()">API Keys</a>
+                <a ui-sref-active="active" ui-sref="index.accountSettings.profile" class="side-menu-sub-item">Update Password</a>
+                <a ui-sref-active="active" ui-sref="index.accountSettings.2fa" class="side-menu-sub-item">Security Settings</a>
+                <a ui-sref-active="active" ui-sref="index.accountSettings.activitylog" class="side-menu-sub-item">Activity Log</a>
+                <a ui-sref-active="active" ui-sref="index.accountSettings.usage" class="side-menu-sub-item" ng-if="!userService.isUser()">Usage Report</a>
+            </li>
+            <li ui-sref-active='active-side-menu-item'>
+                <a ui-sref="index.help" class="side-menu-item">Support</a>
+                <a href="https://api.revapm.net/" class="side-menu-sub-item" target="_blank">API Documentation</a>
+                <a href="https://revapm.zendesk.com/hc/en-us" class="side-menu-sub-item" target="_blank">Knowledge Base</a>
+                <a href="https://revapm.zendesk.com/hc/en-us/requests/new" class="side-menu-sub-item" target="_blank">Open Ticket</a>
+                <a href="http://status.revapm.net/" class="side-menu-sub-item" target="_blank">Network Status</a>
+            </li>
+        </div>
+    </section>
+    <section main>
+        <paper-header-panel>
+            <div class="paper-header">
+                <nav class="navbar">
+                    <div class="navbar-inner">
+                        <div class="navbar-header">
+                            <div paper-drawer-toggle>
+                                <span class="glyphicon glyphicon-menu-hamburger" paper-drawer-toggle></span>
+                            </div>
+                        </div>
+                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                            <div user-login-logout></div>
+                        </div>
+                    </div>
+                </nav>
             </div>
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" ui-view="menu"></div>
-          </div>
-        </nav>
-      </div>
-      <div class="fit main-layout">
-        <div id="top"></div>
-        <div class="page-inner" ui-view="page"></div>
-      </div>
-    </paper-header-panel>
-  </section>
+            <div class="fit main-layout">
+                <div id="top"></div>
+                <div class="page-inner" ui-view="page"></div>
+            </div>
+        </paper-header-panel>
+    </section>
 </paper-drawer-panel>
