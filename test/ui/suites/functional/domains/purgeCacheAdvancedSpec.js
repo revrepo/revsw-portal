@@ -40,18 +40,40 @@ describe('Functional', function () {
       Portal.header.goTo(Constants.sideBar.web.PURGE_CACHE);
     });
 
-    it('should purge a default json data in Ace Editor in Code mode',
+    it('should have the "Purge" button disabled when there is empty JSON specified',
       function () {
         Portal.purgeCacheAdvancedPage.clickAdvancedMode();
         Portal.purgeCacheAdvancedPage.selectDomain(myDomain);
+        var purgeBtn = Portal.purgeCacheAdvancedPage.getPurgeBtn();
+        expect(purgeBtn.isEnabled()).toBeFalsy();
+    });
+
+    xit('should purge an object in Code mode',
+      function () {
+   
+
+var object = {
+"purges": [
+  {
+    "url": {
+      "is_wildcard": true,
+      "expression": "/images/*.png"
+    }
+  }
+]
+};
+
+        Portal.purgeCacheAdvancedPage.clickAdvancedMode();
+        Portal.purgeCacheAdvancedPage.selectDomain(myDomain);
+        Portal.purgeCacheAdvancedPage.setAceContent('{}');
         Portal.purgeCacheAdvancedPage.clickPurge();
 
         var alert = Portal.alerts.getFirst();
-        var expectedMsg = 'Oops something went wrong';
+        var expectedMsg = 'The request has been successfully submitted';
         expect(alert.getText()).toEqual(expectedMsg);
     });
 
-    it('should purge a default json data in Ace Editor in View mode',
+    xit('should purge a default json data in Ace Editor in View mode',
       function () {
         Portal.purgeCacheAdvancedPage.clickAdvancedMode();
         Portal.purgeCacheAdvancedPage.selectDomain(myDomain);
