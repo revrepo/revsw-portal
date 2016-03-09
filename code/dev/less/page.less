@@ -109,7 +109,7 @@ table {
     width: 70px;
   }
   th.actions {
-    width: 120px;
+    width: 70px;
   }
 
   tbody {
@@ -209,4 +209,35 @@ input[type="radio"]{
 
 input[type="checkbox"]{
   margin-left: 20px;
+}
+
+.title-actions {
+  display: inline-block;
+  float: right;
+  margin: 20px 0 24px 0;
+}
+.copyCell {
+  position: relative;
+  &:hover>.copyKey {
+    display: block;
+  }
+}
+
+.copyKey {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  border: none;
+  background: white;
+  display: none;
+  &:hover {
+    color: #838bc5;
+  }
+  &:focus{
+    outline: none;
+  }
+  &:active{
+    outline: none;
+  }
 }
