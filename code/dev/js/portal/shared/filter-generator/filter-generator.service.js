@@ -4,7 +4,6 @@
  * @name filterGeneratorService
  * @module 'revapm.Portal.Shared'
  * @desc filter generator
- * @example <filter-generator></filter-generator>
  */
 (function(angular) {
   'use strict';
@@ -38,7 +37,7 @@
      * @params {Array} Array of the new values
      */
     function broadcastFilterChangeEvent(values) {
-    	$rootScope.$emit($config.EVENTS.DOMAIN_CHANGED, {data: values});
+      $rootScope.$emit($config.EVENTS.FILTER_CHANGED, { data: values });
     }
 
     /**
@@ -46,9 +45,14 @@
      * @desc subscribes on the filter change event and clears the event on the scope destroy
      * @kind function
      * @params {Object} $Scope of the controller
+     * @params {Function} callback to trigger on the event
      */
-    function subscribeOnFilterChangeEvent($scope) {
-    	
+    function subscribeOnFilterChangeEvent($scope, callback) {
+      var event = $rootScope.$on($config.EVENTS.FILTER_CHANGED, callback);
+      
+      $scope.$on('$destroy', function() {
+        event();
+      });
     }
   }
 })(angular);
