@@ -18,6 +18,10 @@
   /*@ngInject*/
   function GeneralCtrl() {
     var vm = this;
-
+    
+    //ui data model
+    vm.model = {
+    	filtersList: []
+    };
   }
 })();
