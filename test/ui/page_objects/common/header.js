@@ -37,6 +37,7 @@ var Header = {
     menu: {
       navbar: {
         css: '.collapse.navbar-collapse .nav.navbar-nav',
+        // css: 'section[drawer] .side-menu .side-menu-item',
         web: {
           linkText: Constants.header.appMenu.WEB
         },

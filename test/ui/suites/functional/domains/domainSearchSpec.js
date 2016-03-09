@@ -54,9 +54,7 @@ describe('Functional', function () {
         expect(domainNameDisplayed).toEqual(domainNameToSearch);
       });
 
-    // TODO: BUG: Search is not working for CName - will not fix for now
-    xit('[BUG: Search is not working for CName] ' +
-      'should filter domain-configs according to cname search criteria',
+    it('should filter domain-configs according to cname search criteria',
       function () {
         var cNameToSearch = Portal.domains.listPage.domainsTbl
           .getFirstRow()

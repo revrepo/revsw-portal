@@ -33,6 +33,8 @@
       }
     });
 
+    $scope.filterKeys = ['companyName', 'createdBy', 'updated_at'];
+
     $scope.getCompany = function(id) {
       $scope.get(id)
         .catch(function(err) {
