@@ -84,7 +84,7 @@ gulp.task('serve', function() {
   });
 
   gulp.watch([devFolder + '**/*.html'], reload);
-  gulp.watch([devFolder + 'less/*.less'], ['less', reload]);
+  gulp.watch([devFolder + 'less/**/*.less'], ['less', reload]);
   gulp.watch([devFolder + 'polymer/**/*.html', '!./polymer/dist/*'], ['vulcanize', reload]);
   gulp.watch([devFolder + 'js/**/*.js'], reload);
   gulp.watch([devFolder + 'js/**/*.html'], reload);
