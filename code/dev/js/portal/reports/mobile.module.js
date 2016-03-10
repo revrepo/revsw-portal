@@ -8,5 +8,5 @@
       'revapm.Portal.Resources',
       'ui.router',
       'chart.js'
-    ])
+    ]);
 })();

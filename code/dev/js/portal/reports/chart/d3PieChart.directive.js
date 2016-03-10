@@ -21,7 +21,7 @@
         var redraw = PieChartHelper.drawPieChart(element[0], []);
 
         scope.$watch('ngData', function() {
-          if (!scope.ngData || scope.ngData.length == 0) {
+          if (!scope.ngData || scope.ngData.length === 0) {
             redraw([]);
             return;
           }

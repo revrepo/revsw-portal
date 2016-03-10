@@ -406,7 +406,7 @@
        * @param {number} page
        */
       $scope.goToPage = function(page) {
-        if ($scope.page.current == page) {
+        if ($scope.page.current === page) {
           return;
         }
         $scope.page.current = page;
@@ -473,11 +473,11 @@
         return model.$remove()
           .then(function (data) {
             var idx = $scope.records.indexOf(model);
-            if (data.statusCode == $config.STATUS.OK) {
+            if (data.statusCode === $config.STATUS.OK) {
               $scope.records.splice(idx, 1);
             }
             idx = $scope.filteredRecords.indexOf(model);
-            if (data.statusCode == $config.STATUS.OK) {
+            if (data.statusCode === $config.STATUS.OK) {
               $scope.filteredRecords.splice(idx, 1);
             }
             return data;
@@ -508,7 +508,7 @@
             return data; // Send data next to promise handlers
           })
           .catch(function (data) {
-            if (data.status == $config.STATUS.BAD_REQUEST) {
+            if (data.status === $config.STATUS.BAD_REQUEST) {
               if (data.data && data.data.message) {
                 $scope.alertService.danger(data.data.message, 5000);
               }
@@ -611,8 +611,8 @@
        *****                             END SCROLL POSITION HANDLER SECTION
        **************************************************************************************/
 
-    };
+    }
 
     return CRUDControllerImpl;
-  };
+  }
 })(angular);

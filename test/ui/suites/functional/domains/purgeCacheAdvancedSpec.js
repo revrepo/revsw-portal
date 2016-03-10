@@ -40,7 +40,8 @@ describe('Functional', function () {
       Portal.header.goTo(Constants.sideBar.web.PURGE_CACHE);
     });
 
-    it('should have the "Purge" button disabled when there is empty JSON specified',
+    it('should have the "Purge" button disabled when there is empty JSON ' +
+      'specified',
       function () {
         Portal.purgeCacheAdvancedPage.clickAdvancedMode();
         Portal.purgeCacheAdvancedPage.selectDomain(myDomain);
@@ -53,11 +54,11 @@ describe('Functional', function () {
    
 
 var object = {
-"purges": [
+purges: [
   {
-    "url": {
-      "is_wildcard": true,
-      "expression": "/images/*.png"
+    url: {
+      is_wildcard: true,   // jshint ignore:line
+      expression: '/images/*.png'
     }
   }
 ]

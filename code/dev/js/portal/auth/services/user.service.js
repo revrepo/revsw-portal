@@ -98,7 +98,7 @@
      */
     function clearAuthHeaderForAPI() {
       $localStorage.Authorization = undefined;
-      delete $http.defaults.headers.common['Authorization'];
+      delete $http.defaults.headers.common.Authorization;
     }
 
     /**
@@ -375,8 +375,8 @@
               var user = getUser();
               if ( apps.length && user && user.companyId[0] ) {
                 apps.unshift({
-                  app_id: "",
-                  app_name: "All Applications"
+                  app_id: '',
+                  app_name: 'All Applications'
                 });
               }
               resolve( apps );
@@ -424,8 +424,8 @@
               var user = getUser();
               if ( accounts.length > 1 && user ) {
                 accounts.unshift({
-                  acc_id: "",
-                  acc_name: "All Accounts"
+                  acc_id: '',
+                  acc_name: 'All Accounts'
                 });
               }
               resolve( accounts );

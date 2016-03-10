@@ -53,7 +53,7 @@
             .then( function( data ) {
               for ( var i = 0, len = data.data.length; i < len; ++i ) {
                 data.data[i].val = Util.formatNumber( data.data[i].val, 0 );
-              };
+              }
               $scope.items = data.data;
               // console.log( data );
             })

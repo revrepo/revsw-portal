@@ -24,5 +24,5 @@
     return {
       createSvgElement: createSvgElement
     };
-  };
+  }
 })();

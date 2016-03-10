@@ -40,5 +40,5 @@
         //$modalInstance.close();
       }
     };
-  };
+  }
 })();

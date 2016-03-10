@@ -65,7 +65,7 @@
             .$promise
             .then(function (data) {
               $scope.twoFactorAuthEnabled = Boolean(data.two_factor_auth_enabled);
-              $scope.isMyUser = Boolean($scope.ngUserId == data.user_id);
+              $scope.isMyUser = Boolean($scope.ngUserId === data.user_id);
             })
             .catch(function (err) {
               AlertService.danger(err);
@@ -112,7 +112,7 @@
             }, data)
             .$promise
             .then(function (data) {
-              if ($scope.currentUser.user_id == $scope.ngUserId) {
+              if ($scope.currentUser.user_id === $scope.ngUserId) {
                 User.reloadUser();
               }
               AlertService.success(data.message);
@@ -165,6 +165,6 @@
           $scope.loadUserDetails();
         });
       }
-    }
+    };
   }
 })();

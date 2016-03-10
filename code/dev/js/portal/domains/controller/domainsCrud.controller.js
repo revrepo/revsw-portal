@@ -55,7 +55,7 @@
       $http
         .get($config.API_URL + '/locations/firstmile')
         .then(function(data) {
-          if (data.status == $config.STATUS.OK) {
+          if (data.status === $config.STATUS.OK) {
             $scope.locations = data.data;
           }
         });

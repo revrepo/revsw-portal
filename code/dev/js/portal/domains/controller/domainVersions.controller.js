@@ -18,7 +18,7 @@
     $scope.currentVersion = {};
 
     $scope.obj = {
-      data: "Configuration will appear here",
+      data: 'Configuration will appear here',
       options: {
         mode: 'code',
         modes: ['code', 'view'], // allowed modes['code', 'form', 'text', 'tree', 'view']
@@ -39,7 +39,7 @@
 
     $scope.onChangeVersion = function() {
       if (!$scope.currentVersion) {
-        $scope.obj.data = "";
+        $scope.obj.data = '';
         return;
       }
       $scope._loading = true;
@@ -47,7 +47,7 @@
         .get({id: $stateParams.id, version: $scope.currentVersion})
         .$promise
         .then(function (data) {
-          $scope.obj.data = JSON.stringify(data, null, 2);;
+          $scope.obj.data = JSON.stringify(data, null, 2);
         })
         .catch(function (err) {
           AlertService.danger(err);

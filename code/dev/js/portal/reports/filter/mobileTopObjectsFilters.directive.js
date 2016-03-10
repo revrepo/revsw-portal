@@ -34,8 +34,8 @@
           $scope.ngFilters.from_timestamp = moment().subtract( $scope.span, 'hours' ).valueOf();
           $scope.ngFilters.to_timestamp = Date.now();
           $scope.onFilter();
-        }
+        };
       }
-    }
+    };
   }
 })();

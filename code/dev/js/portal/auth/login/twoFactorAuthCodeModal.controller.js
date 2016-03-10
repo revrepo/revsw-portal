@@ -27,10 +27,10 @@
       try {
         User.login(auth.email, auth.password, $scope.data.code)
           .then(function(data) {
-            $modalInstance.close(data)
+            $modalInstance.close(data);
           })
           .catch(function (err) {
-            if (err.status == $config.STATUS.UNAUTHORIZED) {
+            if (err.status === $config.STATUS.UNAUTHORIZED) {
               AlertService.danger('Wrong one Time Password', 5000);
             }
             if (err.data.message) {

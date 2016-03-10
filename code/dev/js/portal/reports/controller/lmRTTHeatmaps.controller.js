@@ -77,7 +77,8 @@
               var name = $scope.countries[item.key.toUpperCase()] || item.key;
               $scope.countryLMRTTData[name] = {
                 value: item.lm_rtt_avg_ms,
-                tooltip: ( 'Avg: <strong>' + item.lm_rtt_avg_ms + '</strong> Min: <strong>' + item.lm_rtt_min_ms + '</strong> Max: <strong>' + item.lm_rtt_max_ms + '</strong> ms' )
+                tooltip: ( 'Avg: <strong>' + item.lm_rtt_avg_ms + '</strong> Min: <strong>' +
+                  item.lm_rtt_min_ms + '</strong> Max: <strong>' + item.lm_rtt_max_ms + '</strong> ms' )
               };
             });
           }
@@ -102,11 +103,11 @@
         .reloadCountry($scope.domain.id)
         .then(function () {
           // Redraw a new map using received data
-          HeatmapsDrawer.drawMap("#canvas-svg", "#tooltip-container", $scope.countryLMRTTData);
+          HeatmapsDrawer.drawMap('#canvas-svg', '#tooltip-container', $scope.countryLMRTTData);
         });
 
     };
     // Draw a empty world map
-    HeatmapsDrawer.drawMap("#canvas-svg", "#tooltip-container", {});
+    HeatmapsDrawer.drawMap('#canvas-svg', '#tooltip-container', {});
   }
 })();
