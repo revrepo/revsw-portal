@@ -96,7 +96,7 @@
                     if ( rps > 0.01 ) {
                       s.visible = true;
                     }
-                  };
+                  }
                   hits_series.push( s );
                   labels_filled_up = true;
                 });

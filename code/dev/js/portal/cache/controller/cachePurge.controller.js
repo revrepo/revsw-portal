@@ -10,14 +10,14 @@
 
     $scope._loading = false;
 
-    $scope.domain;
+    // $scope.domain;
 
     $scope.json = {
-      "purges": [
+      purges: [
         {
-          "url": {
-            "is_wildcard": true,
-            "expression": "/images/*.png"
+          url: {
+            is_wildcard: true,
+            expression: '/images/*.png'
           }
         }
       ]
@@ -53,7 +53,9 @@
           var message = 'Oops something went wrong';
 
           // if response contains message then show it
-          if(err && err.data && err.data.message) message = err.data.message;
+          if(err && err.data && err.data.message) {
+            message = err.data.message;
+          }
 
           AlertService.danger(message, 5000);
         })
@@ -73,9 +75,9 @@
       var list = $scope.text.split('\n');
       list.forEach(function(val) {
         json.purges.push({
-          "url": {
-            "is_wildcard": true,
-            "expression": val
+          url: {
+            is_wildcard: true,
+            expression: val
           }
         });
       });
@@ -91,7 +93,9 @@
           var message = 'Oops something went wrong';
 
           // if response contains message then show it
-          if(err && err.data && err.data.message) message = err.data.message;
+          if(err && err.data && err.data.message) {
+            message = err.data.message;
+          }
 
           AlertService.danger(message, 5000);
         })
@@ -112,7 +116,9 @@
      */
     $scope.$watch('jsonEditorInstance.getText()', function(val){
       // if editor text is empty just return
-      if(!val) return;
+      if(!val) {
+        return;
+      }
 
       // try to parse editor text as valid json and check if at least one item exists, if yes then enable Purge button
       try {
@@ -123,6 +129,5 @@
         $scope.jsonIsInvalid = true;
       }
     });
-
-  };
+  }
 })();

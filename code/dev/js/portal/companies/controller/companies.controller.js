@@ -23,7 +23,7 @@
       if ($state.is($scope.state)) {
         $scope.list()
           .then(function() {
-            if ($scope.elementIndexForAnchorScroll != undefined) {
+            if ($scope.elementIndexForAnchorScroll !== undefined) {
               setTimeout(function() {
                 $anchorScroll('anchor' + $scope.elementIndexForAnchorScroll);
                 $scope.$digest();
@@ -76,6 +76,6 @@
         })
         .catch($scope.alertService.danger);
     };
-  };
+  }
 
 })();
