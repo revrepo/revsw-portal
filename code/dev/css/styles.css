@@ -427,6 +427,7 @@ polyline {
   padding: 5px;
   position: fixed;
   margin-left: 20px;
+  z-index: 1;
 }
 .fg-add-filter-menu .dd-element {
   padding: 5px;
