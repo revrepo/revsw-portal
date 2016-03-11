@@ -68,6 +68,10 @@
                 <span class="sortorder" ng-show="filter.predicate === 'companyName'" ng-class="{reverse: filter.reverse}"></span>
               </th>
               <th>
+                <a href="" ng-click="order('comment')">Comment</a>
+                <span class="sortorder" ng-show="filter.predicate === 'comment'" ng-class="{reverse: filter.reverse}"></span>
+              </th>
+              <th>
                 <a href="" ng-click="order('createdBy')">Created By</a>
                 <span class="sortorder" ng-show="filter.predicate === 'createdBy'" ng-class="{reverse: filter.reverse}"></span>
               </th>
@@ -86,6 +90,7 @@
                   {{item.companyName}}
                 </a>
               </td>
+              <td>{{item.comment}}</td>
               <td>{{item.createdBy}}</td>
               <td>{{getRelativeDate(item.updated_at)}}</td>
               <td class="actions">
