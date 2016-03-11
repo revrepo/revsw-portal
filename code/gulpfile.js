@@ -10,15 +10,15 @@ var vulcanize = require('gulp-vulcanize');
 var browserSync = require('browser-sync');
 var reload = browserSync.reload;
 var ngAnnotate = require('gulp-ng-annotate');
-var htmlv = require('gulp-html-validator');
+var htmlhint = require('gulp-htmlhint');
 
 var devFolder = 'dev/';
 var destFolder = './';
 
 gulp.task('valid', function () {
-  gulp.src(devFolder + 'parts/**/*.html')
-    .pipe(htmlv())
-    .pipe(gulp.dest('./out'));
+  return gulp.src(devFolder + 'parts/**/*.html')
+  .pipe(htmlhint('.htmlhintrc'))
+    .pipe(htmlhint.failReporter());
 });
 
 gulp.task('less', function () {
