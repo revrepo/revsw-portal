@@ -31,8 +31,8 @@
           $scope.ngFilters.from_timestamp = moment().subtract( $scope.span, 'days' ).valueOf();
           $scope.ngFilters.to_timestamp = Date.now();
           $scope.onFilter();
-        }
+        };
       }
-    }
+    };
   }
 })();

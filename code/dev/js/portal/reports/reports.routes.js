@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
 
   angular
@@ -8,6 +8,15 @@
   /*@ngInject*/
   function ReportsRoutes($stateProvider) {
     $stateProvider
+      .state('index.reports.general', {
+        url: '/reports/general',
+        views: {
+          main: {
+            controller: 'ReportsProxyTrafficController',
+            templateUrl: 'parts/reports/general.html'
+          }
+        }
+      })
       .state('index.reports.proxy', {
         url: '/reports/proxy',
         views: {

@@ -150,8 +150,8 @@
         $scope.reloadGBTCountry($scope.domain.id)
       ]).then(function () {
         // Redraw maps using received data
-        HeatmapsDrawer.drawMap("#canvas-svg-hits", "#tooltip-container-hits", $scope.countryHitsData);
-        HeatmapsDrawer.drawMap("#canvas-svg-gbt", "#tooltip-container-gbt", $scope.countryGBTData);
+        HeatmapsDrawer.drawMap('#canvas-svg-hits', '#tooltip-container-hits', $scope.countryHitsData);
+        HeatmapsDrawer.drawMap('#canvas-svg-gbt', '#tooltip-container-gbt', $scope.countryGBTData);
       }).finally(function () {
         $scope._loading = false;
       });
@@ -159,7 +159,7 @@
     };
 
     // Draw a empty world map
-    HeatmapsDrawer.drawMap("#canvas-svg-hits", "#tooltip-container-hits", {});
-    HeatmapsDrawer.drawMap("#canvas-svg-gbt", "#tooltip-container-gbt", {});
+    HeatmapsDrawer.drawMap('#canvas-svg-hits', '#tooltip-container-hits', {});
+    HeatmapsDrawer.drawMap('#canvas-svg-gbt', '#tooltip-container-gbt', {});
   }
 })();

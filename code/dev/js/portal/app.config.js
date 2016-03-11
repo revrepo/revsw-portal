@@ -10,5 +10,5 @@
 
     // All configuration except routing should be placed here
 
-  };
+  }
 })();

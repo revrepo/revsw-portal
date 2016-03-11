@@ -17,9 +17,9 @@
       function(event){
         // Clear alerts when routes change
         setTimeout(function() {
-          $("[autofocus]").focus();
+          $('[autofocus]').focus();
         }, 0);
       });
-    $rootScope.$on("$stateChangeError", console.log.bind(console));
-  };
+    $rootScope.$on('$stateChangeError', console.log.bind(console));
+  }
 })();

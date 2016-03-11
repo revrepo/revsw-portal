@@ -34,7 +34,7 @@
         AlertService.danger('Please fill all fields. (New password should be at least 8 charecters length)', 5000);
         return;
       }
-      if ($scope.pass.new_password != $scope.pass.confirm_password) {
+      if ($scope.pass.new_password !== $scope.pass.confirm_password) {
         AlertService.danger('Passwords did not match', 5000);
         return;
       }

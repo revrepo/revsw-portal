@@ -20,6 +20,17 @@
 
     $scope._loading = false;
 
+    // watcher for $scope.obj.data for changes
+    // if we have received the data and the new Value is missing const values
+    // may be a 'blank object bug' from ng-jsoneditor
+    $scope.$watch(function(){
+      return $scope.obj.data;
+    }, function(newValue, oldValue){
+      if ($scope.domain && !newValue.origin_host_header) {
+        $scope.obj.data = oldValue;  
+      }
+    });
+
     $scope.obj = {
       data: {},
       options: {

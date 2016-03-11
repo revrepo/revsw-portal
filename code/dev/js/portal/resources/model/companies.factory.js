@@ -9,6 +9,5 @@
   function CompaniesResource(Resource, $config) {
 
     return Resource($config.API_URL + '/accounts/:id', {id: '@id'});
-  };
-
+  }
 })();

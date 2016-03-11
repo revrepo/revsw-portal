@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
 
   angular
@@ -7,18 +7,22 @@
 
   /*@ngInject*/
   function DomainsCrudController($scope,
-     $localStorage,
-     CRUDController,
-     DomainsConfig,
-     $injector,
-     $stateParams,
-     $config,
-     Companies,
-     $http,
-     $q,
-     $state) {
+    $localStorage,
+    CRUDController,
+    DomainsConfig,
+    $injector,
+    $stateParams,
+    $config,
+    Companies,
+    $http,
+    $q,
+    $state,
+    $anchorScroll) {
     //Invoking crud actions
-    $injector.invoke(CRUDController, this, {$scope: $scope, $stateParams: $stateParams});
+    $injector.invoke(CRUDController, this, {
+      $scope: $scope,
+      $stateParams: $stateParams
+    });
 
     //Set state (ui.router)
     $scope.setState('index.webApp.domains');
@@ -26,11 +30,21 @@
     $scope.setResource(DomainsConfig);
 
     // Fetch list of records
-    $scope.$on('$stateChangeSuccess', function (state) {
+    $scope.$on('$stateChangeSuccess', function(state) {
       if ($state.is($scope.state)) {
-        $scope.list();
+        $scope.list()
+          .then(function() {
+            if ($scope.elementIndexForAnchorScroll) {
+              setTimeout(function() {
+                $anchorScroll('anchor' + $scope.elementIndexForAnchorScroll);
+                $scope.$digest();
+              }, 500);
+            }
+          });
       }
     });
+
+    $scope.filterKeys = ['domain_name', 'cname', 'updated_at'];
 
     $scope.locations = [];
     $scope.companies = [];
@@ -40,8 +54,8 @@
     $scope.fetchLocations = function() {
       $http
         .get($config.API_URL + '/locations/firstmile')
-        .then(function (data) {
-          if (data.status == $config.STATUS.OK) {
+        .then(function(data) {
+          if (data.status === $config.STATUS.OK) {
             $scope.locations = data.data;
           }
         });
@@ -49,10 +63,12 @@
 
     $scope.fetchCompanies = function(companyIds) {
       var promises = [];
-      companyIds.forEach(function (id) {
-        promises.push(Companies.get({id: id}).$promise);
+      companyIds.forEach(function(id) {
+        promises.push(Companies.get({
+          id: id
+        }).$promise);
       });
-      $q.all(promises).then(function (data) {
+      $q.all(promises).then(function(data) {
         $scope.companies = data;
       });
     };
@@ -76,7 +92,7 @@
     $scope.setAccountId = function() {
       if ($scope.auth.isReseller() || $scope.auth.isRevadmin()) {
         // Loading list of companies
-        Companies.query(function (list) {
+        Companies.query(function(list) {
           $scope.companies = list;
           if ($scope.companies.length === 1) {
             $scope.model.account_id = $scope.companies[0].id;
@@ -96,30 +112,30 @@
 
     $scope.getDomain = function(id) {
       $scope.get(id)
-        .catch(function (err) {
+        .catch(function(err) {
           $scope.alertService.danger('Could not load domain details');
         });
     };
 
     $scope.deleteDomain = function(model) {
-      $scope.confirm('confirmModal.html', model).then(function () {
+      $scope.confirm('confirmModal.html', model).then(function() {
         var domainName = model.domain_name;
         $scope
           .delete(model)
-          .then(function (data) {
+          .then(function(data) {
             $scope.alertService.success('Domain ' + domainName + ' deleted.');
             $scope.list();
           })
-          .catch(function (err) {
+          .catch(function(err) {
             $scope.alertService.danger(err);
           });
       });
     };
 
-    $scope.createDomain = function (model) {
+    $scope.createDomain = function(model) {
       $scope
         .create(model)
-        .then(function () {
+        .then(function() {
           $scope.alertService.success('Domain created', 5000);
           $scope.setAccountId();
         })
@@ -134,16 +150,16 @@
         model.id = $stateParams.id;
       }
       var modelId = model.id;
-      $scope.confirm('confirmPublishModal.html', model).then(function () {
+      $scope.confirm('confirmPublishModal.html', model).then(function() {
         model = $scope.prepareSimpleDomainUpdate(model);
         $scope.update({
-          id: modelId,
-          options: 'publish'
-        }, model)
-          .then(function (data) {
+            id: modelId,
+            options: 'publish'
+          }, model)
+          .then(function(data) {
             $scope.alertService.success('Domain configuration published', 5000);
           })
-          .catch(function (err) {
+          .catch(function(err) {
             $scope.alertService.danger(err);
           });
       });
@@ -159,18 +175,18 @@
       var modelId = model.id;
       model = $scope.prepareSimpleDomainUpdate(model);
       $scope.update({
-        id: modelId,
-        options: 'verify_only'
-      }, model)
-        .then(function (data) {
+          id: modelId,
+          options: 'verify_only'
+        }, model)
+        .then(function(data) {
           $scope.alertService.success('The domain configuration is correct', 5000);
         })
-        .catch(function (err) {
+        .catch(function(err) {
           $scope.alertService.danger(err.data.message || 'Oops something ment wrong', 5000);
         });
     };
 
-    $scope.updateDomain = function (model) {
+    $scope.updateDomain = function(model) {
       if (!model) {
         return;
       }
@@ -178,24 +194,26 @@
         model.id = $stateParams.id;
       }
       var modelId = model.id;
-      $scope.confirm('confirmUpdateModal.html', model).then(function () {
+      $scope.confirm('confirmUpdateModal.html', model).then(function() {
         model = $scope.prepareSimpleDomainUpdate(model);
-        $scope.update({id: modelId}, model)
-          .then(function () {
+        $scope.update({
+            id: modelId
+          }, model)
+          .then(function() {
             $scope.alertService.success('Domain updated', 5000);
           })
-          .catch(function (err) {
+          .catch(function(err) {
             $scope.alertService.danger(err.data.message || 'Oops something ment wrong', 5000);
           });
       });
     };
 
-    $scope.storeToStorage = function (model) {
+    $scope.storeToStorage = function(model) {
       $localStorage.selectedDomain = model;
     };
 
 
-    $scope.getRelativeDate = function (datetime) {
+    $scope.getRelativeDate = function(datetime) {
       return moment.utc(datetime).fromNow();
     };
 

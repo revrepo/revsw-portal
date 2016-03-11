@@ -29,7 +29,7 @@
         tooltip: {
           formatter: function() {
             return '<b>'+ this.point.name +': </b>'+
-              Highcharts.numberFormat(this.point.percentage, 0) + '% (' + Highcharts.numberFormat(this.y, 0, ".", ",") + ' requests)';
+              Highcharts.numberFormat(this.point.percentage, 0) + '% (' + Highcharts.numberFormat(this.y, 0, '.', ',') + ' requests)';
           }
         },
 
@@ -76,6 +76,5 @@
       },
       link: link
     };
-  };
-
+  }
 })();

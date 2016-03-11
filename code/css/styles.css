@@ -261,12 +261,11 @@ section[drawer] #logo img {
 section[drawer] .side-menu .side-menu-item {
   cursor: pointer;
   display: block;
-  height: 60px;
-  line-height: 40px;
+  height: 40px;
+  line-height: 20px;
   padding: 10px;
   font-size: 16px;
   color: #f7941e;
-  border-bottom: 1px solid #3b3c3c;
   text-decoration: none;
 }
 section[drawer] .side-menu .side-menu-item.selected {
@@ -277,6 +276,36 @@ section[drawer] .side-menu .side-menu-item.active {
 }
 section[drawer] .side-menu .side-menu-item i {
   margin: 0 10px;
+}
+section[drawer] .side-menu .side-menu-item:after {
+  font-family: FontAwesome;
+  content: "\f0d8";
+  float: right;
+}
+section[drawer] .side-menu .side-menu-item.hide-caret:after {
+  content: "";
+}
+section[drawer] .side-menu .side-menu-sub-item {
+  display: block;
+  border-bottom: 1px solid gray;
+  padding-bottom: 5px;
+  margin-bottom: 5px;
+  margin-right: 10px;
+  margin-left: 40px;
+  color: #f7941e;
+  text-decoration: none;
+}
+section[drawer] .side-menu .side-menu-sub-item.active {
+  color: white;
+}
+section[drawer] .side-menu .side-menu-sub-item {
+  display: none;
+}
+section[drawer] .side-menu .active-side-menu-item .side-menu-item:after {
+  content: "\f0d7";
+}
+section[drawer] .side-menu .active-side-menu-item .side-menu-sub-item {
+  display: block;
 }
 .navbar {
   margin: 0;
@@ -362,4 +391,7 @@ polyline {
 }
 .slice {
   stroke: #fff;
+}
+.invisible-chart-wrapper {
+  min-height: 350px;
 }
