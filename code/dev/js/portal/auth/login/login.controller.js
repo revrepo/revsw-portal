@@ -43,10 +43,10 @@
             if (!err.status) {
               AlertService.danger('Something get wrong', 5000);
             }
-            if (err.status == $config.STATUS.TWO_FACTOR_AUTH_REQUIRED) {
+            if (err.status === $config.STATUS.TWO_FACTOR_AUTH_REQUIRED) {
               $scope.enter2faCode(email, pass);
             }
-            if (err.status == $config.STATUS.UNAUTHORIZED) {
+            if (err.status === $config.STATUS.UNAUTHORIZED) {
               AlertService.danger('Wrong username or password', 5000);
             }
             if (err.data.message) {
@@ -102,6 +102,5 @@
         AlertService.success(message, 5000);
       });
     };
-
-  };
+  }
 })();

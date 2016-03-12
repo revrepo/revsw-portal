@@ -9,5 +9,5 @@
   function ResourceConfig($httpProvider) {
 
     $httpProvider.interceptors.push('revAPIHttpInterceptor');
-  };
+  }
 })();

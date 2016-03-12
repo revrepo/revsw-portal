@@ -10,9 +10,16 @@ var vulcanize = require('gulp-vulcanize');
 var browserSync = require('browser-sync');
 var reload = browserSync.reload;
 var ngAnnotate = require('gulp-ng-annotate');
+var htmlhint = require('gulp-htmlhint');
 
 var devFolder = 'dev/';
 var destFolder = './';
+
+gulp.task('valid', function () {
+  return gulp.src(devFolder + 'parts/**/*.html')
+  .pipe(htmlhint('.htmlhintrc'))
+    .pipe(htmlhint.failReporter());
+});
 
 gulp.task('less', function () {
   return gulp.src(devFolder + 'less/styles.less')
@@ -75,7 +82,7 @@ gulp.task('dist', function () {
 gulp.task('serve', function() {
   browserSync({
     server: {
-      baseDir: "./dev",
+      baseDir: './dev',
       routes: {
         '/bower_components': 'bower_components',
         '/portal' : '/'
@@ -85,7 +92,8 @@ gulp.task('serve', function() {
 
   gulp.watch([devFolder + '**/*.html'], reload);
   gulp.watch([devFolder + 'less/*.less'], ['less', reload]);
-  gulp.watch([devFolder + 'polymer/**/*.html', '!./polymer/dist/*'], ['vulcanize', reload]);
+  gulp.watch([devFolder + 'polymer/**/*.html', '!./polymer/dist/*'],
+    ['vulcanize', reload]);
   gulp.watch([devFolder + 'js/**/*.js'], reload);
   gulp.watch([devFolder + 'js/**/*.html'], reload);
   gulp.watch([devFolder + 'images/**/*'], reload);

@@ -20,12 +20,12 @@
             controller: function ($scope, $state, User) {
               $scope.userService = User;
               if (!User.isAuthed() &&
-                $state.current.name != 'index.restore' &&
-                $state.current.name != 'signup' &&
-                $state.current.name != 'billing_plans'
+                $state.current.name !== 'index.restore' &&
+                $state.current.name !== 'signup' &&
+                $state.current.name !== 'billing_plans'
               ){
                 $state.go('login');
-              } else if ($state.current.name == 'index') {
+              } else if ($state.current.name === 'index') {
                 $state.go('index.reports.proxy');
               }
             }
