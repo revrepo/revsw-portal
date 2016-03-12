@@ -44,7 +44,7 @@
                 color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
               }
             },
-                innerSize: 100,
+                // innerSize: 100,
                 depth: 45
           }
         },

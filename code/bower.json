@@ -39,7 +39,10 @@
     "angular-highlightjs": "~0.5.1",
     "highlightjs": "~9.0.0",
     "angular-bootstrap-datetimepicker": "git@github.com:dalelotts/angular-bootstrap-datetimepicker.git#~1.0.1",
-    "angular-moment": "^0.10.3"
+    "angular-moment": "^0.10.3",
+    "highcharts": "highcharts-release#^4.2.3",
+    "highcharts-export-clientside": "^1.1.4",
+    "highcharts-export-csv": "export-csv#*"
   },
   "resolutions": {
     "moment": "~2.10.6"
