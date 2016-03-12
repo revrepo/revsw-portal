@@ -1,17 +1,24 @@
 <div class="filter-generator">
-    <input 
-        date-range-picker=""
-        ng-model="datePicker.date"
-        ng-change="actions.filterChange()"
-        options="::datePicker.options"
-        class="form-control pull-left date-picker select2"
-        type="text"
-        />
+    <div class="date-picker-wrapper pull-left">
+        <input 
+            date-range-picker=""
+            ng-model="datePicker.date"
+            ng-change="handlers.filterChange()"
+            options="::datePicker.options"
+            class="form-control date-picker select2"
+            type="text"
+            />
+        <input
+            ng-show="datePicker.overlay.show"
+            ng-focus="handlers.overlayClickHandler()"
+            ng-model="datePicker.overlay.val"
+            class="over form-control select2"/>
+    </div>
     <select 
         ng-repeat-start="filter in filters"
         ng-model="filter.selected"
         ng-options="::value.count as ::value.key for value in ::filter.vals")
-        ng-change="actions.filterChange()"
+        ng-change="handlers.filterChange()"
         class="form-control"
         >
     	<option

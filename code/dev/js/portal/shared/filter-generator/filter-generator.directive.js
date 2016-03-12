@@ -4,7 +4,7 @@
  * 
  * @module 'revapm.Portal.Shared'
  * @desc filter generator directive
- * @example <filter-generator></filter-generator>
+ * @example <filter-generator ng-model="data"></filter-generator>
  */
 (function(angular, moment, _) {
   'use strict';
@@ -25,7 +25,9 @@
       restrict: 'E',
       scope: {},
       templateUrl: 'parts/shared/filter-generator/filter-generator.html',
-      link: link
+      link: {
+        post: link
+      }
     };
 
     return directive;
@@ -36,7 +38,8 @@
      * @kind function
      */
     function link(scope, elem, attr, ngModel) {
-      var FILTER_EVENT_TIMEOUT = 2000;
+      var FILTER_EVENT_TIMEOUT = 2000,
+        DATE_PICKER_SELECTOR = '.date-picker';
 
       ngModel = [{
         name: 'OS',
@@ -70,6 +73,10 @@
 
       //date picker params
       scope.datePicker = {
+        overlay: {
+          show: true,
+          val: ''
+        },
         options: {
           timePicker: true,
           timePickerIncrement: 30,
@@ -89,8 +96,14 @@
         showMenu: showMenu,
         addFilter: addFilter,
         removeShownFilter: removeShownFilter,
-        hideMenu: hideMenu,
-        filterChange: filterChange
+        hideMenu: hideMenu
+      };
+
+      //ui handlers
+      scope.handlers = {
+        filterChange: filterChange,
+        overlayClickHandler: overlayClickHandler,
+        daterangepickerBlur: daterangepickerBlur
       };
 
       //add menu filter data
@@ -98,6 +111,19 @@
         show: false,
         filters: getFiltersToAdd
       };
+
+      init();
+
+      ////////////////////
+
+      /*
+       * @name init
+       * @desc logic init
+       * @kind function
+       */
+      function init() {
+        updateOverlayValue();
+      }
 
       /*
        * @name addFilter
@@ -197,6 +223,73 @@
        */
       function sendFilterChangeEvent() {
         filterGeneratorService.broadcastFilterChangeEvent('hello world');
+      }
+
+      /*
+       * @name overlayClickHandler
+       * @desc handler when user clicks on the date range picker overlay input.
+       *       Hides overlay and focus on the daterangepicker
+       *
+       * @kind function
+       */
+      function overlayClickHandler() {
+        var datePicker = elem.querySelectorAll(DATE_PICKER_SELECTOR)[0];
+        scope.datePicker.overlay.show = false;
+        datePicker.focus();
+        subscribeOnDatePickerHide();
+      }
+
+      /*
+       * @name daterangepickerBlur
+       * @desc blur handler for the date picker. Shows overlay
+       * @kind function
+       * @params {Object} - datePicker object
+       */
+      function daterangepickerBlur(datePicker) {
+        updateOverlayValue(datePicker);
+      }
+
+      /*
+       * @name subscribeOnDatePickerHide
+       * @desc subscribes on the datePicker hide. 
+       *       Shows overlay when date picker is hidden
+       *
+       * @kind function
+       */
+      function subscribeOnDatePickerHide() {
+        var datePicker = elem.querySelectorAll(DATE_PICKER_SELECTOR);
+
+        datePicker.bind('hide.daterangepicker', function() {
+          datePicker.unbind('hide.daterangepicker');
+          daterangepickerBlur(datePicker);
+          scope.$digest();
+        });
+      }
+
+      /*
+       * @name updateOverlayValue
+       * @desc updates overlay value to match the date rangepicker value
+       * @kind function
+       * @params {Object} - datePicker object
+       */
+      function updateOverlayValue(datePicker) {
+        var key = _.findKey(ranges, function(obj) {
+          //range date
+          var objStartDate = obj[0].toDate().getTime(),
+            objEndDate = obj[1].toDate().getTime(),
+            // selected date
+            selStartDate = scope.datePicker.date.startDate.toDate().getTime(),
+            selEndDate = scope.datePicker.date.endDate.toDate().getTime();
+
+          return (objStartDate === selStartDate) && (objEndDate === selEndDate);
+        });
+
+        if (!key) {
+          key = datePicker.val();
+        }
+
+        scope.datePicker.overlay.val = key;
+        scope.datePicker.overlay.show = true;
       }
     }
   }
