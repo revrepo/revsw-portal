@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
 
   angular
@@ -6,10 +6,13 @@
     .controller('UsersCrudController', UsersCrudController);
 
   // @ngInject
-  function UsersCrudController($scope, CRUDController, Users, $injector, $stateParams, Companies, DomainsConfig, $state) {
+  function UsersCrudController($scope, CRUDController, Users, $injector, $stateParams, Companies, DomainsConfig, $state, $anchorScroll) {
 
     //Invoking crud actions
-    $injector.invoke(CRUDController, this, {$scope: $scope, $stateParams: $stateParams});
+    $injector.invoke(CRUDController, this, {
+      $scope: $scope,
+      $stateParams: $stateParams
+    });
 
     if ($scope.auth.isUser()) {
       $state.go('index.accountSettings.profile');
@@ -26,6 +29,8 @@
       $scope.roles.push('reseller');
       $scope.roles.push('revadmin');
     }
+
+    // $scope.filterKeys = ['firstname', 'lastname', 'email', 'role', 'updated_at', 'last_login_at'];
 
     $scope.companies = Companies.query();
 
@@ -44,22 +49,22 @@
       };
     }
 
-    $scope.getUser = function (id) {
+    $scope.getUser = function(id) {
       $scope.get(id)
-        .catch(function (err) {
-          $scope.alertService.danger('Could not load domain details');
+        .catch(function(err) {
+          $scope.alertService.danger('Could not load user details');
         });
     };
 
-    $scope.deleteUser = function (model) {
-      $scope.confirm('confirmModal.html', model).then(function () {
+    $scope.deleteUser = function(model) {
+      $scope.confirm('confirmModal.html', model).then(function() {
         $scope
           .delete(model)
           .catch($scope.alertService.danger);
       });
     };
 
-    $scope.updateUser = function (model) {
+    $scope.updateUser = function(model) {
       if (!model) {
         return;
       }
@@ -68,17 +73,17 @@
       model.id = model.user_id;
       $scope
         .update(model)
-        .then(function (data) {
+        .then(function(data) {
           $scope.alertService.success('User updated', 5000);
         })
         .catch($scope.alertService.danger);
     };
 
-    $scope.getRelativeDate = function (datetime) {
+    $scope.getRelativeDate = function(datetime) {
       return moment.utc(datetime).fromNow();
     };
 
-    $scope.createUser = function (model) {
+    $scope.createUser = function(model) {
       if (!model) {
         return;
       }
@@ -90,13 +95,24 @@
       delete model.passwordConfirm;
       model.access_control_list.dashBoard = true;
       $scope.create(model)
-        .then(function (data) {
+        .then(function(data) {
           $scope.alertService.success('User created', 5000);
         })
         .catch($scope.alertService.danger);
     };
-    // Fetch list of users
-    $scope.list();
 
+    // Fetch list of users
+    $scope.$on('$stateChangeSuccess', function(state) {
+      $scope
+        .list()
+        .then(function() {
+          if ($scope.elementIndexForAnchorScroll) {
+            setTimeout(function() {
+              $anchorScroll('anchor' + $scope.elementIndexForAnchorScroll);
+              $scope.$digest();
+            }, 500);
+          }
+        });
+    });
   }
 })();

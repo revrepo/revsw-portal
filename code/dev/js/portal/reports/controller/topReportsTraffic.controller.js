@@ -88,10 +88,10 @@
             var newData = [];
             angular.forEach(data.data, function (val) {
               var protocol = 'Unknows';
-              if (val.key == 80) {
+              if (val.key === 80) {
                 protocol = 'HTTP';
               }
-              if (val.key == 443) {
+              if (val.key === 443) {
                 protocol = 'HTTPS';
               }
               newData.push({
@@ -333,7 +333,7 @@
         to_timestamp: Date.now()
       };
       if ( $scope.country_filter ) {
-        filters.country = $scope.country_filter
+        filters.country = $scope.country_filter;
       }
 
       $scope.reloadOS( filters );

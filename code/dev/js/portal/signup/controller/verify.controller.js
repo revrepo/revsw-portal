@@ -23,7 +23,7 @@
           AlertService.success('Verification link is sent to ' + model.email, 5000);
         })
         .catch(AlertService.danger);
-    }
+    };
 
     $scope.getQueryString = function (model) {
       var q = '?first_name=' + encodeURIComponent(model.firstname ? model.firstname : '') +
@@ -52,7 +52,7 @@
         })
         .catch(function () {
           $state.go('resend_token');
-        })
+        });
     }
-  };
+  }
 })();

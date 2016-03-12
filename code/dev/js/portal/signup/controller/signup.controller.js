@@ -104,5 +104,5 @@
         });
     };
     $scope._loading = false;
-  };
+  }
 })();

@@ -41,7 +41,7 @@
                 <form class="form-inline">
                   <div class="form-group">
                     <label for="search">Search:&nbsp;</label>
-                    <input type="text" class="form-control" id="search" placeholder="" ng-model="filter.filter.companyName"
+                    <input type="text" class="form-control" id="search" placeholder="" ng-model="filter.filter"
                            ng-change="checkFilterPage()">&nbsp;&nbsp;
                     <i class="glyphicon glyphicon-remove" ng-show="filter.filter != ''"
                        ng-click="filter.filter = ''"></i>
@@ -79,7 +79,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr
+            <tr id="anchor{{::$index}}" ng-click="saveAnchorScrollIndex($index)"
               ng-repeat="item in filteredRecords | limitTo:filter.limit:filter.skip track by $index">
               <td>
                 <a ui-sref=".edit({id: item.id})" ng-if="!item.loading" tooltip="Edit Company">

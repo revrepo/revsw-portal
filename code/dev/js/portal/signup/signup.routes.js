@@ -5,7 +5,7 @@
     .module('revapm.Portal.Signup')
     .config(routesConfig);
 
-  /!*@ngInject*!/
+  /* @ngInject */
   function routesConfig($stateProvider) {
 
     $stateProvider

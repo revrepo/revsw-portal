@@ -67,7 +67,7 @@
                 <form class="form-inline">
                   <div class="form-group">
                     <label for="search">Search:&nbsp;</label>
-                    <input type="text" class="form-control" id="search" placeholder="" ng-model="filter.filter.domain_name"
+                    <input type="text" class="form-control" id="search" placeholder="" ng-model="filter.filter"
                            ng-change="checkFilterPage()">&nbsp;&nbsp;
                     <i class="glyphicon glyphicon-remove" ng-show="filter.filter != ''"
                        ng-click="filter.filter = ''"></i>
@@ -79,7 +79,7 @@
         </div>
         <div class="panel-body">
           <div class="alert alert-info" ng-if="records.length == 0 && !_loading">
-            Currently there are no domains registered in the system
+            Currently you don't have any web domains registered in the system. You can click on "Add New Domain" button above to add a domain.
           </div>
           <div class="alert alert-info" ng-if="_loading">
             <i class="glyphicon glyphicon-refresh spin" ng-if="item.loading"></i>&nbsp;
@@ -106,7 +106,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr
+            <tr id="anchor{{::$index}}" ng-click="saveAnchorScrollIndex($index)"
               ng-repeat="item in filteredRecords | limitTo:filter.limit:filter.skip track by $index">
               <td>
                 <a ui-sref=".edit({id: item.id})" ng-if="!item.loading" tooltip="Edit Domain">

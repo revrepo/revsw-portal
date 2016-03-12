@@ -33,8 +33,8 @@
           $scope.ngFilters.to_timestamp = Date.now();
 
           $scope.onFilter();
-        }
+        };
       }
-    }
+    };
   }
 })();

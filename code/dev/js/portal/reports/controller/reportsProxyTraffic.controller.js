@@ -102,10 +102,10 @@
         if (data.data && data.data.length > 0) {
           angular.forEach(data.data, function (os) {
             var protocol = 'Unknows';
-            if (os.key == 80) {
+            if (os.key === 80) {
               protocol = 'HTTP';
             }
-            if (os.key == 443) {
+            if (os.key === 443) {
               protocol = 'HTTPS';
             }
             $scope.protocol.labels.push(protocol);

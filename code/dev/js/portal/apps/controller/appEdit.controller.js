@@ -29,7 +29,7 @@
 
 
     $scope.configuration = {};
-    $scope.domainsListPlaceholder = "Add domains...";
+    $scope.domainsListPlaceholder = 'Add domains...';
     $scope.fieldsToShow = [];
 
     $scope.model.configs.domains_white_list = [];
@@ -94,7 +94,7 @@
         {sdk_release_version: $scope.selectedSDKVersion});
       $scope.configuration = $scope.model.configs[idx];
       if(!$scope.configuration.allowed_transport_protocols) {
-        $scope.configuration.allowed_transport_protocols = []
+        $scope.configuration.allowed_transport_protocols = [];
       }
       if(!$scope.configuration.domains_white_list){
         $scope.configuration.domains_white_list = [];

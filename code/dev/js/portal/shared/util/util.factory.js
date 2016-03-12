@@ -70,7 +70,7 @@
      */
     function formatNumber( num, fixed ) {
       return ( fixed !== undefined ? num.toFixed( fixed ) : num.toString() )
-        .replace( /\B(?=(\d{3})+(?!\d))/g, "'" );
+        .replace( /\B(?=(\d{3})+(?!\d))/g, '\'' );
     }
 
     /**
@@ -79,11 +79,11 @@
      */
     function humanFileSize(size, pr) {
       if ( !size ) {
-        return '0 B'
+        return '0 B';
       }
       var i = Math.floor( Math.log(size) / Math.log(1024) );
       return ( size / Math.pow(1024, i) ).toFixed((pr||2)) * 1 + ' ' + ['B', 'kB', 'MB', 'GB', 'TB'][i];
-    };
+    }
 
     /**
      * same as above, fixed to GB
@@ -91,10 +91,10 @@
      */
     function humanFileSizeInGB(size, pr) {
       if ( !size ) {
-        return '0 GB'
+        return '0 GB';
       }
       return ( size / 1073741824/*1024^3*/ ).toFixed((pr||2)) * 1 + ' GB';
-    };
+    }
 
     return {
 

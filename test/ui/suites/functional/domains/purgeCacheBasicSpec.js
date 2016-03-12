@@ -40,11 +40,22 @@ describe('Functional', function () {
     beforeEach(function () {
     });
 
+    it('should verify that "Purge" button is disabled if the input text area is empty',
+      function () {
+        var dataPurge = DataProvider.generatePurgeCachedInfo();
+        Portal.purgeCacheBasicPage.selectDomain(myDomain);
+        var purgeBtn = Portal.purgeCacheBasicPage.getPurgeBtn();
+        expect(purgeBtn.isEnabled()).toBeFalsy();
+    });
+
+
     it('should purge a Purge Cached Objects after click "Purge" button',
       function () {
         var dataPurge = DataProvider.generatePurgeCachedInfo();
         Portal.purgeCacheBasicPage.selectDomain(myDomain);
         Portal.purgeCacheBasicPage.setTextArea(dataPurge.textArea);
+        var purgeBtn = Portal.purgeCacheBasicPage.getPurgeBtn();
+        expect(purgeBtn.isEnabled()).toBeTruthy();
         Portal.purgeCacheBasicPage.clickPurge();
 
         var alert = Portal.alerts.getFirst();

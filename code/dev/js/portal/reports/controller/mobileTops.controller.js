@@ -48,7 +48,7 @@
       tooltip: {
         formatter: function() {
           return '<b>'+ this.point.name +': </b>'+
-            Highcharts.numberFormat(this.point.percentage, 1) + '% (' + Highcharts.numberFormat(this.y, 0, ".", "'") + ' hits)';
+            Highcharts.numberFormat(this.point.percentage, 1) + '% (' + Highcharts.numberFormat(this.y, 0, '.', '\'') + ' hits)';
         }
       },
     };
@@ -56,7 +56,7 @@
       tooltip: {
         formatter: function() {
           return '<b>'+ this.point.name +': </b>'+
-            Highcharts.numberFormat(this.point.percentage, 1) + '% (' + Highcharts.numberFormat(this.y, 0, ".", "'") + ' users)';
+            Highcharts.numberFormat(this.point.percentage, 1) + '% (' + Highcharts.numberFormat(this.y, 0, '.', '\'') + ' users)';
         }
       },
     };

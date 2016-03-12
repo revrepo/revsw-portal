@@ -17,7 +17,7 @@
 
     $scope.reset = function() {
       AlertService.clear();
-      if (!$scope.password || !$scope.passwordRepeat || $scope.password != $scope.passwordRepeat) {
+      if (!$scope.password || !$scope.passwordRepeat || $scope.password !== $scope.passwordRepeat) {
         AlertService.danger('Passwords did not match', 5000);
         return;
       }
@@ -41,6 +41,5 @@
           $scope.loading = false;
         });
     };
-
-  };
+  }
 })();

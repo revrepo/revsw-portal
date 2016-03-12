@@ -27,6 +27,9 @@
         $scope._loading = false;
 
         $scope.chartOptions = {
+          chart: {
+            type: 'column'
+          },
           yAxis: {
             title: {
               text: 'First Byte Time, ms'

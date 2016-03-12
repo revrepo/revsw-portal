@@ -101,7 +101,6 @@
                      ng-model="model.app_name"
                      ng-maxlength="50"
                      id="app_name">
-              </input>
             </div>
           </div>
           <div class="form-group">
@@ -167,7 +166,6 @@
                      ng-disabled="_loading"
                      ng-model="configuration.configuration_refresh_interval_sec"
                      id="configuration_refresh_interval_sec">
-              </input>
             </div>
           </div>
           <div class="form-group"
@@ -186,7 +184,6 @@
                       ng-disabled="_loading"
                       ng-model="configuration.configuration_stale_timeout_sec"
                       id="configuration_stale_timeout_sec">
-              </input>
             </div>
           </div>
           <div class="form-group">
@@ -196,7 +193,7 @@
                    popover-trigger="mouseenter"
                    popover="Rev SDK allowed last mile transport protocols"
             >Allowed Transport Protocols</label>
-            <div class="col-sm-10" id="allowed_transport_protocols">
+            <div class="col-sm-10" id="allowed-transport-protocols">
             <span ng-repeat="protocol in protocols">
               <input
                 type="checkbox"
@@ -262,7 +259,6 @@
                      ng-disabled="_loading"
                      ng-model="configuration.stats_reporting_interval_sec"
                      id="stats_reporting_interval_sec">
-              </input>
             </div>
           </div>
           <div class="form-group">
@@ -365,7 +361,6 @@
                      ng-disabled="_loading"
                      ng-model="configuration.a_b_testing_origin_offload_ratio"
                      id="a_b_testing_origin_offload_ratio">
-              </input>
             </div>
           </div>
 
@@ -373,7 +368,7 @@
 
           <hr>
 
-          <div class="col-sm-12" style="margin-top: 15px">
+          <div class="col-sm-12">
             <a ui-sref="^"
                ng-disabled="_loading"
                class="btn btn-default">

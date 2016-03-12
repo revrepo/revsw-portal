@@ -7,6 +7,7 @@
 
   /*@ngInject*/
   function AppsController($scope,
+                          $anchorScroll,
                           User,
                           Companies,
                           Apps,
@@ -27,8 +28,18 @@
     $scope.$state = $state;
     //// Fetch list of records
     $scope._baseFilter = {app_platform: $state.current.data.platform};
+
     $scope.$on('$stateChangeSuccess', function (state) {
-      $scope.list();
+      $scope
+        .list()
+        .then(function(){
+          if ($scope.elementIndexForAnchorScroll) {
+            setTimeout(function(){
+              $anchorScroll('anchor' + $scope.elementIndexForAnchorScroll);
+              $scope.$digest();
+            },500);
+          }
+        });
     });
 
     $scope.companies = [];
@@ -46,6 +57,8 @@
         }
       }
     };
+
+    $scope.filterKeys = ['app_name', 'app_platform', 'last_app_published_version', 'updated_at'];
 
 
     $scope.getRelativeDate = function (datetime) {
@@ -128,7 +141,7 @@
     $scope.getApp = function(id) {
       $scope.get(id)
         .catch(function (err) {
-          $scope.alertService.danger('Could not load domain details');
+          $scope.alertService.danger('Could not load app details');
         });
     };
 
@@ -161,7 +174,6 @@
         return modelCopy;
     };
 
-
     $scope.updateApp = function (model) {
       $scope.confirm('confirmUpdateModal.html', model).then(function () {
         $scope._loading = true;
@@ -184,6 +196,7 @@
           });
       });
     };
+
     $scope.verify = function(model) {
       if (!$scope.model.id) {
         AlertService.danger('Please select app first');
@@ -261,7 +274,5 @@
       };
       $localStorage.selectedApplication = newApp;
     };
-
-
   }
 })();
