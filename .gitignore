@@ -7,3 +7,4 @@ test/ui/config/local.json
 *sublime*
 sftp-config.json
 local.js
+code/bower_components/
