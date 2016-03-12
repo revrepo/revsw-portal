@@ -19,6 +19,12 @@
       <h2 class="pull-left page-title">
         API Keys List
       </h2>
+      <div class="title-actions">
+        <button ng-click="openCreateDialog()" class="btn btn-success pull-right" ng-disabled="_loading">
+          <i class="glyphicon glyphicon-plus"></i>&nbsp;
+          Add New API Key
+        </button>
+      </div>
     </div>
   </div>
 
@@ -28,13 +34,6 @@
         <div class="panel-heading">
           <div class="row">
             <div class="col-md-12">
-              <div class="pull-left">
-                <button ng-click="openCreateDialog()" class="btn btn-success" ng-disabled="_loading">
-                  <i class="glyphicon glyphicon-plus"></i>&nbsp;
-                  Add New API Key
-                </button>
-              </div>
-
               <div class="pull-right">
                 <list-filter></list-filter>
               </div>
@@ -69,22 +68,20 @@
                 <a href="" ng-click="order('read_only_status')">Read Only</a>
                 <span class="sortorder" ng-show="filter.predicate === 'read_only_status'" ng-class="{reverse: filter.read_only_status}"></span>
               </th>
-              <th>
-                <a class="thin" href="" ng-click="order('active')">Active</a>
+              <th class="thin">
+                <a href="" ng-click="order('active')">Active</a>
                 <span class="sortorder" ng-show="filter.predicate === 'active'" ng-class="{reverse: filter.active}"></span>
               </th>
-              <th class="actions">Actions</th>
+              <th class="actions"></th>
             </tr>
             </thead>
-            <tbody>
+            <tbody copy-container>
             <tr
               ng-repeat="item in filteredRecords | limitTo:filter.limit:filter.skip track by $index">
               <td>
-                <a ng-click="openUpdateDialogFor(item.id)" ng-if="!item.loading" tooltip="Edit API Key">
-                  {{item.key_name}}
-                </a>
+                <edit-inline ng-if="!item.loading" tooltip="Edit API Key" item="item" value="key_name" callback="changeName"></edit-inline>
               </td>
-              <td>{{item.key}}</td>
+              <td class="copyCell">{{item.key}}<button class="copyKey" data-clipboard-text="{{item.key}}"><i class="fa fa-clone"></i></button></td>
               <td>{{ getRelativeDate(item.updated_at) }}</td>
               <td>
                 <i class="glyphicon pointer" tooltip="Toggle active status" ng-hide="item.loading" ng-click="toggleProperty(item, 'read_only_status')" ng-class="item.read_only_status && 'glyphicon-check' || 'glyphicon-unchecked'"></i>
@@ -94,10 +91,10 @@
               </td>
               <td class="actions">
                 <i class="glyphicon glyphicon-refresh spin" ng-if="item.loading"></i>
-                <a ng-click="openUpdateDialogFor(item.id)" ng-if="!item.loading" tooltip="Edit API Key">
+                <a ng-click="openUpdateDialogFor(item.id)" ng-if="!item.loading">
                   <i class="glyphicon glyphicon-pencil"></i>
                 </a>
-                <a href="" ng-if="!item.loading" ng-click="deleteKey(item)" tooltip="Delete API Key">
+                <a href="" ng-if="!item.loading" ng-click="deleteKey(item)">
                   <i class="glyphicon glyphicon-trash"></i>
                 </a>
               </td>

@@ -175,6 +175,34 @@
         });
     };
 
+    /**
+     * Toggle active state for given key
+     *
+     * @param {Object} key
+     * @param {string} name
+     * @returns {Promise}
+     */
+    $scope.changeName = function (key, name) {
+      if (!key || !key.id || key.loading) {
+        return;
+      }
+      if(!name || !name.length){
+        return;
+      }
+      key.key_name = name;
+      key.loading = true;
+      return ApiKeys
+      .update({id: key.id}, clearUpdateData(key))
+      .$promise
+      .then(function (data) {
+        return data;
+      })
+      .catch($scope.alertService.danger)
+      .finally(function () {
+        key.loading = false;
+      });
+    };
+
     // Fetch list of users
     $scope.list();
 
