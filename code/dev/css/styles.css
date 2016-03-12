@@ -420,6 +420,17 @@ polyline {
 .filter-generator button {
   margin-left: 10px;
 }
+.filter-generator .date-picker-wrapper {
+  position: relative;
+}
+.filter-generator .date-picker-wrapper .over {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+}
 .daterangepicker th {
   width: 40px;
 }

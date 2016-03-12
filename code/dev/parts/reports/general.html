@@ -1,15 +1,42 @@
 <div class="container-fluid">
-  <div class="row">
-    <div class="col-md-12">
-      <h2>General</h2>
+    <div class="row">
+        <div class="col-md-12">
+            <h2>General</h2>
+        </div>
     </div>
-  </div>
+    <div class="row text-center">
+        <div class="col-lg-2 col-sm-4 col-xs-6">
+            <h3 ng-bind="vm.model.total.traficThisMonth + ' GB'"></h2>
+          <small>Trafic This Month</small>
+        </div>
 
-  <div class="row">
-    <div class="col-md-12">
-    	
-    </div>
-  </div>
+        <div class="col-lg-2 col-sm-4 col-xs-6">
+          <h3 ng-bind="vm.model.total.cacheHitRate + ' %'"></h2>
+          <small>Cache Hit Rate</small>
+        </div>
+
+        <div class="col-lg-2 col-sm-4 col-xs-6">
+          <h3 ng-bind="vm.model.total.failedRequests + ' %'"></h2>
+          <small>Failed Requests</small>
+        </div>
+
+        <div class="col-lg-2 col-sm-4 col-xs-6">
+          <h3 ng-bind="vm.model.total.ajaxHttpResponses + ' %'"></h2>
+          <small>Ajax HTTP Responses</small>
+        </div>
+
+        <div class="col-lg-2 col-sm-4 col-xs-6">
+          <h3 ng-bind="(vm.model.total.averageResponseTime | number:0) + ' ms'"></h2>
+          <small>Average Response Time For Last One Hour</small>
+        </div>
+
+        <div class="col-lg-2 col-sm-4 col-xs-6">
+          <h3 ng-bind="vm.model.total.averageTTFBTime + ' ms'"></h2>
+          <small>Average TTFB Time For Last One Hour</small>
+        </div>
+
+      </div>
+  <hr/>
 
   <div class="row">
     <div class="col-md-12">
@@ -33,14 +60,15 @@
         <div class="panel-body">
 
           <div class="row">
-            <div class="col-lg-6">
+            <div class="col-md-6">
               <div requests-chart
                    fl-os="os.labels"
                    fl-device="device.labels"
                    fl-country="countries"
                    ng-domain="vm.model.domain"></div>
             </div>
-            <div class="col-lg-6">
+
+            <div class="col-md-6">
               <div proxy-traffic-chart
                    status-codes="statusCode.labels"
                    fl-os="os.labels"
@@ -49,9 +77,38 @@
                    ng-domain="vm.model.domain"></div>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
-  </div>
 
+          <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+              <h3>Edge Cache Hit/Miss Ratio</h3>
+            	<div class="alert alert-info" ng-if="!cacheStatus || !cacheStatus.length">
+                No data to display
+            	</div>
+            	<div ng-hide="!cacheStatus || !cacheStatus.length">
+                <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="cacheStatus"></div>
+            	</div>
+        		</div>
+        		<div class="col-md-4">
+            	<h3>HTTP Methods</h3>
+            	<div class="alert alert-info" ng-if="!httpMethod || !httpMethod.length">
+                	No data to display
+            	</div>
+            	<div ng-hide="!httpMethod || !httpMethod.length">
+                <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="httpMethod"></div>
+            	</div>
+        		</div>
+    			</div>
+    			<div class="row">
+        		<div class="col-md-6">
+            	<div top-requests fl-os="os" fl-device="devices" fl-country="countries" ng-domain="domain"></div>
+        		</div>
+        		<div class="col-md-6">
+            	<div top-referer fl-os="os" fl-device="devices" fl-country="countries" ng-domain="domain"></div>
+        		</div>
+    			</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
