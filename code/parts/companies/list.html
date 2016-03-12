@@ -63,19 +63,23 @@
           <table class="table">
             <thead>
             <tr>
-              <th>
+              <th class="col-lg-4">
                 <a href="" ng-click="order('companyName')">Company Name</a>
                 <span class="sortorder" ng-show="filter.predicate === 'companyName'" ng-class="{reverse: filter.reverse}"></span>
               </th>
-              <th>
+              <th class="col-lg-4">
+                <a href="" ng-click="order('comment')">Comment</a>
+                <span class="sortorder" ng-show="filter.predicate === 'comment'" ng-class="{reverse: filter.reverse}"></span>
+              </th>
+              <th class="col-lg-2">
                 <a href="" ng-click="order('createdBy')">Created By</a>
                 <span class="sortorder" ng-show="filter.predicate === 'createdBy'" ng-class="{reverse: filter.reverse}"></span>
               </th>
-              <th>
+              <th class="col-lg-1">
                 <a href="" ng-click="order('updated_at')">Last Update</a>
                 <span class="sortorder" ng-show="filter.predicate === 'updated_at'" ng-class="{reverse: filter.reverse}"></span>
               </th>
-              <th>Actions</th>
+              <th class="col-lg-1 text-right">Actions</th>
             </tr>
             </thead>
             <tbody>
@@ -86,9 +90,10 @@
                   {{item.companyName}}
                 </a>
               </td>
+              <td>{{item.comment}}</td>
               <td>{{item.createdBy}}</td>
               <td>{{getRelativeDate(item.updated_at)}}</td>
-              <td class="actions">
+              <td class="actions text-right">
                 <i class="glyphicon glyphicon-refresh spin" ng-if="item.loading"></i>
                 <a ui-sref=".edit({id: item.id})" ng-if="!item.loading" tooltip="Edit Company">
                   <i class="glyphicon glyphicon-pencil"></i>
