@@ -230,7 +230,11 @@
       usage_web: {
         method: 'GET',
         url: $config.API_URL + '/usage_reports/web',
-        params: {}
+        params: {
+          only_summary: true,
+          extended: false,
+          bandwidth: true
+        }
       }
 
     });

@@ -27,6 +27,31 @@
       $scope.month_year_symbol = newDate.toISOString().slice( 0, 7 );
     };
 
+    $scope.showTraffic = function() {
+      return $scope.report && $scope.report.count !== '0';
+    };
+
+    var format_ = function( data ) {
+      data.count = Util.formatNumber( data.count );
+      data.cache_hits.MISS = Util.formatNumber( data.cache_hits.MISS );
+      data.cache_hits.HIT = Util.formatNumber( data.cache_hits.HIT );
+      for ( var port in data.port_hits ) {
+        data.port_hits[port] = Util.formatNumber( data.port_hits[port] );
+      }
+      data.received_bytes = Util.humanFileSizeInGB( data.received_bytes );
+      data.sent_bytes = Util.humanFileSizeInGB( data.sent_bytes );
+      for ( var zone in data.traffic_per_billing_zone ) {
+        data.traffic_per_billing_zone[zone].count = Util.formatNumber( data.traffic_per_billing_zone[zone].count );
+        data.traffic_per_billing_zone[zone].received_bytes = Util.humanFileSizeInGB( data.traffic_per_billing_zone[zone].received_bytes );
+        data.traffic_per_billing_zone[zone].sent_bytes = Util.humanFileSizeInGB( data.traffic_per_billing_zone[zone].sent_bytes );
+
+        if ( data.traffic_per_billing_zone[zone].billable_received_bps !== undefined ) {
+          data.traffic_per_billing_zone[zone].billable_received_bps = Util.convertTraffic( data.traffic_per_billing_zone[zone].billable_received_bps );
+          data.traffic_per_billing_zone[zone].billable_sent_bps = Util.convertTraffic( data.traffic_per_billing_zone[zone].billable_sent_bps );
+        }
+      }
+    }
+
     $scope.onUpdate = function () {
 
       if ( $scope.accounts.length === 0 || !$scope.account ) {
@@ -45,21 +70,16 @@
         .$promise
         .then( function( data ) {
 
+          // debug
           // console.log( data );
+          // debug
+
           var d = data.data[data.data.length - 1/*summary*/];
+
           //  let's format something
-          d.count = Util.formatNumber( d.count );
-          d.cache_hits.MISS = Util.formatNumber( d.cache_hits.MISS );
-          d.cache_hits.HIT = Util.formatNumber( d.cache_hits.HIT );
-          for ( var port in d.port_hits ) {
-            d.port_hits[port] = Util.formatNumber( d.port_hits[port] );
-          }
-          d.received_bytes = Util.humanFileSizeInGB( d.received_bytes );
-          d.sent_bytes = Util.humanFileSizeInGB( d.sent_bytes );
-          for ( var zone in d.traffic_per_billing_zone ) {
-            d.traffic_per_billing_zone[zone].count = Util.formatNumber( d.traffic_per_billing_zone[zone].count );
-            d.traffic_per_billing_zone[zone].received_bytes = Util.humanFileSizeInGB( d.traffic_per_billing_zone[zone].received_bytes );
-            d.traffic_per_billing_zone[zone].sent_bytes = Util.humanFileSizeInGB( d.traffic_per_billing_zone[zone].sent_bytes );
+          format_( d );
+          for ( var domain in d.domains_usage ) {
+            format_( d.domains_usage[domain] );
           }
 
           $scope.report = d;
@@ -92,47 +112,8 @@
         $scope._loading = false;
       });
 
-
-
   }
 })();
-
-
-// account_id: "ACCOUNTS_SUMMARY"
-// api_keys: Object
-//   active: 1
-//   inactive: 1
-//   total: 2
-// applications: Object
-//   active: 10
-//   deleted: 66
-//   total: 76
-// domains: Object
-//   active: 21
-//   deleted: 3
-//   ssl_enabled: 24
-//   total: 24
-// count: 493665
-// cache_hits: Object
-//   HIT: 60000
-//   MISS: 433665
-// port_hits: Object
-//   80: 433665
-//   443: 60000
-// received_bytes: 154782750
-// sent_bytes: 493713375
-// traffic_per_billing_zone: Object
-//   Unknown(IAD02): Object
-//     billing_samples: null
-//     count: 120000
-//     received_bytes: 24000000
-//     sent_bytes: 240000000
-//   Unknown(TESTSJC20): Object
-//     billing_samples: null
-//     count: 373665
-//     received_bytes: 130782750
-//     sent_bytes: 253713375
-
 
 
 // console.log( user );
