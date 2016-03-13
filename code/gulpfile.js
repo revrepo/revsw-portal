@@ -85,7 +85,8 @@ gulp.task('serve', function() {
       baseDir: './dev',
       routes: {
         '/bower_components': 'bower_components',
-        '/portal' : '/'
+        '/portal' : '/',
+        '/widgets' : 'widgets',
       }
     }
   });
