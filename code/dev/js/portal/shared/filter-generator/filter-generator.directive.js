@@ -96,7 +96,8 @@
         showMenu: showMenu,
         addFilter: addFilter,
         removeShownFilter: removeShownFilter,
-        hideMenu: hideMenu
+        hideMenu: hideMenu,
+        refreshFilter: refreshFilter
       };
 
       //ui handlers
@@ -222,7 +223,10 @@
        * @kind function
        */
       function sendFilterChangeEvent() {
-        filterGeneratorService.broadcastFilterChangeEvent('hello world');
+        filterGeneratorService.broadcastFilterChangeEvent({
+          from_timestamp: scope.datePicker.date.startDate.toDate().getTime(),
+          to_timestamp: scope.datePicker.date.endDate.toDate().getTime()
+        });
       }
 
       /*
@@ -243,7 +247,7 @@
        * @name daterangepickerBlur
        * @desc blur handler for the date picker. Shows overlay
        * @kind function
-       * @params {Object} - datePicker object
+       * @param {Object} - datePicker object
        */
       function daterangepickerBlur(datePicker) {
         updateOverlayValue(datePicker);
@@ -270,7 +274,7 @@
        * @name updateOverlayValue
        * @desc updates overlay value to match the date rangepicker value
        * @kind function
-       * @params {Object} - datePicker object
+       * @param {Object} - datePicker object
        */
       function updateOverlayValue(datePicker) {
         var key = _.findKey(ranges, function(obj) {
@@ -290,6 +294,16 @@
 
         scope.datePicker.overlay.val = key;
         scope.datePicker.overlay.show = true;
+      }
+
+      /*
+       * @name refreshFilter
+       * @desc sends filter data
+       * @kind function
+       * @param {Object} - datePicker object
+       */
+      function refreshFilter() {
+        sendFilterChangeEvent();
       }
     }
   }

@@ -5,7 +5,7 @@
  * @module 'revapm.Portal.Reports'
  * @desc controller for the Web Analytics/General view
  */
-(function(angular, empty) {
+(function(angular, _, empty) {
   'use strict';
 
   angular
@@ -38,6 +38,8 @@
     vm.actions = {
       onDomainChange: onDomainChange
     };
+
+    $scope.reloadProtocol = reloadProtocol;
 
     init();
 
@@ -82,8 +84,11 @@
           $scope.device = deviceData;
         });
 
-      reloadCacheStatus();
-      reloadHttpMethod();
+      var filter = { domainId: '568525ec6f641ea7285c4221', from_timestamp: 1457697412757, to_timestamp: 1457783812757 };
+
+      reloadCacheStatus(filter);
+      reloadHttpMethod(filter);
+      reloadProtocol(filter);
       getTotal();
     }
 
@@ -95,7 +100,8 @@
     function reloadCacheStatus(filters) {
       filters = filters || { domainId: '568525ec6f641ea7285c4221', from_timestamp: 1457697412757, to_timestamp: 1457783812757 };
       $scope.cacheStatus = [];
-      Stats.cacheStatus(filters)
+      Stats
+        .cacheStatus(filters)
         .$promise
         .then(function(data) {
           if (data.data && data.data.length > 0) {
@@ -119,18 +125,50 @@
     function reloadHttpMethod(filters) {
       filters = filters || { domainId: '568525ec6f641ea7285c4221', from_timestamp: 1457697412757, to_timestamp: 1457783812757 };
       $scope.httpMethod = [];
-      Stats.httpMethod( filters )
+      Stats
+        .httpMethod(filters)
         .$promise
-        .then(function (data) {
+        .then(function(data) {
           if (data.data && data.data.length > 0) {
             var newData = [];
-            _.forEach(data.data, function (val) {
+            _.forEach(data.data, function(val) {
               newData.push({
                 name: val.key,
                 y: val.count
               });
             });
             $scope.httpMethod = newData;
+          }
+        });
+    }
+
+    /**
+     * @name reloadProtocol
+     * @desc reloads protocols chart data
+     * @kind function
+     */
+    function reloadProtocol(filters) {
+      $scope.protocol = [];
+      Stats
+        .protocol(filters)
+        .$promise
+        .then(function(data) {
+          if (data.data && data.data.length > 0) {
+            var newData = [];
+            _.forEach(data.data, function(val) {
+              var protocol = 'Unknows';
+              if (val.key === 80) {
+                protocol = 'HTTP';
+              }
+              if (val.key === 443) {
+                protocol = 'HTTPS';
+              }
+              newData.push({
+                name: protocol,
+                y: val.count
+              });
+            });
+            $scope.protocol = newData;
           }
         });
     }
@@ -151,4 +189,4 @@
       };
     }
   }
-})(angular);
+})(angular, _);
