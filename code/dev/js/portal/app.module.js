@@ -18,7 +18,9 @@
     'ui.bootstrap.tpls',
     'ui.bootstrap.tooltip',
     'ui.bootstrap.popover',
-    'hljs'
+    'hljs',
+    'oc.lazyLoad',
+    'revapm.Portal.Dashboard',
   ]);
 
 })();
