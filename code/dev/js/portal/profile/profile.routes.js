@@ -17,6 +17,42 @@
           }
         }
       })
+      .state('index.accountSettings.company', {
+        url: '/profile/company',
+        views: {
+          main: {
+            controller: 'CompanyProfileEditController',
+            templateUrl: 'parts/profile/edit-company.html'
+          }
+        }
+      })
+      .state('index.accountSettings.billing', {
+        url: '/profile/billing',
+        views: {
+          main: {
+            controller: 'BillingController',
+            templateUrl: 'parts/profile/billing.html'
+          }
+        }
+      })
+      .state('index.accountSettings.invoices', {
+        url: '/profile/invoices',
+        views: {
+          main: {
+            controller: 'InvoicesController',
+            templateUrl: 'parts/profile/invoices.html'
+          }
+        }
+      })
+      .state('index.accountSettings.invoice', {
+        url: '/profile/invoices/:id',
+        views: {
+          main: {
+            controller: 'InvoicesController',
+            templateUrl: 'parts/profile/invoice.html'
+          }
+        }
+      })
       .state('index.accountSettings.activitylog', {
         url: '/activitylog',
         views: {
