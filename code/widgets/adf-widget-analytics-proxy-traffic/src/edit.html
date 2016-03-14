@@ -1,10 +1,24 @@
 <form role="form">
   <div class="form-group">
-    <label for="sample">Sample</label>
-    <input type="text" class="form-control" id="sample" ng-model="config.sample" placeholder="Enter sample">
-  </div>
-  <div class="form-group">
     <label for="domain">domain</label>
     <div domain-select id="domain" ng-model="config.domain" on-select="onDomainSelected()" select-one="true"></div>
+  </div>
+  <div class="form-group">
+    <label for="country">Country</label>
+    <select id="country" class="form-control fixed" ng-options="key as item for (key, item) in flCountries" ng-model="config.filters.country">
+      <option value="">All Countries</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="os">OS</label>
+    <select id="os" class="form-control fixed" ng-options="item for item in flOs" ng-model="config.filters.os">
+      <option value="">All OS</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="device">Device</label>
+    <select id="device" class="form-control fixed" ng-options="item for item in flDevice" ng-model="config.filters.device" >
+      <option value="">All Devices</option>
+    </select>
   </div>
 </form>

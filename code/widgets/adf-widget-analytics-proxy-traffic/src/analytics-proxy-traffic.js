@@ -9,13 +9,48 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
       controller: 'ReportsProxyTrafficController',
       edit: {
         templateUrl: '{widgetsPath}/analytics-proxy-traffic/src/edit.html',
-        controller: ['$scope', 'Stats', 'Countries', 'User', 'AlertService', function($scope, Stats, Countries, User, AlertService) {
-          $scope.countries = Countries.query();
+        controller: ['$scope', '$q', 'Stats', 'Countries', 'User', 'AlertService', function($scope, $q, Stats, Countries, User, AlertService) {
+          $scope.flCountries = Countries.query();
+          $scope.flDevice = [];
+          $scope.flOs = [];
+
+          $scope.filters = {
+            os: null,
+            device: null,
+            country: null,
+          };
           // Load user domains
-          User.getUserDomains(true)
+          User.getUserDomains(true);
+          /**
+           * @name updateFlLists
+           * @description Update data
+           * @return {Promise}
+           */
+          var updateFlLists = function() {
+            var promises = [
+              Stats.os({
+                domainId: $scope.config.domain.id
+              }).$promise,
+              Stats.device({
+                domainId: $scope.config.domain.id
+              }).$promise
+            ];
+            return $q.all(promises)
+              .then(
+                function(res) {
+                  $scope.flDevice = res[0];
+                  $scope.flOs = [1];
+                })
+          }
+
+          $scope.$watch('config.domain', function(newVal, oldVAl) {
+            // TODO: get data for lists or use filter-generator
+            // if (!!newVal) updateFlLists()
+          }, true)
         }],
       }
-    }
+    };
+
     dashboardProvider
       .widget('analytics-proxy-traffic-bandwidth-usage', angular.extend(_widget, {
         title: 'Bandwidth Usage',
