@@ -42,7 +42,8 @@
     "angular-moment": "^0.10.3",
     "highcharts": "highcharts-release#^4.2.3",
     "highcharts-export-clientside": "^1.1.4",
-    "highcharts-export-csv": "export-csv#*"
+    "highcharts-export-csv": "export-csv#*",
+    "angular-datatables": "~0.5.3"
   },
   "resolutions": {
     "moment": "~2.10.6"
