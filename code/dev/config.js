@@ -1,4 +1,3 @@
-
 window.API_URL = 'https://testsjc20-api01.revsw.net/v1';
 
 //  local debug
