@@ -7,6 +7,7 @@
 
   /*@ngInject*/
   function AppsController($scope,
+                          $anchorScroll,
                           User,
                           Companies,
                           Apps,
@@ -27,8 +28,18 @@
     $scope.$state = $state;
     //// Fetch list of records
     $scope._baseFilter = {app_platform: $state.current.data.platform};
+
     $scope.$on('$stateChangeSuccess', function (state) {
-      $scope.list();
+      $scope
+        .list()
+        .then(function(){
+          if ($scope.elementIndexForAnchorScroll) {
+            setTimeout(function(){
+              $anchorScroll('anchor' + $scope.elementIndexForAnchorScroll);
+              $scope.$digest();
+            },500);
+          }
+        });
     });
 
     $scope.companies = [];
@@ -45,6 +56,13 @@
           alert(err.toString());
         }
       }
+    };
+
+    $scope.filterKeys = ['app_name', 'app_platform', 'last_app_published_version', 'updated_at'];
+
+
+    $scope.getRelativeDate = function (datetime) {
+      return moment.utc(datetime).fromNow();
     };
 
     $scope.model.account_id = $scope.auth.getUser().companyId[0];
@@ -123,7 +141,7 @@
     $scope.getApp = function(id) {
       $scope.get(id)
         .catch(function (err) {
-          $scope.alertService.danger('Could not load domain details');
+          $scope.alertService.danger('Could not load app details');
         });
     };
 
@@ -133,7 +151,7 @@
       modelCopy.app_platform = model.app_platform.name;
       $scope.create(modelCopy)
         .then(function () {
-          model.app_name = "";
+          model.app_name = '';
           $scope.alertService.success('App registered', 5000);
         });
     };
@@ -155,7 +173,6 @@
 
         return modelCopy;
     };
-
 
     $scope.updateApp = function (model) {
       $scope.confirm('confirmUpdateModal.html', model).then(function () {
@@ -179,6 +196,7 @@
           });
       });
     };
+
     $scope.verify = function(model) {
       if (!$scope.model.id) {
         AlertService.danger('Please select app first');
@@ -248,9 +266,13 @@
     };
 
     $scope.storeToStorage = function (app) {
-      $localStorage.selectedApplicationID = app.id;
+      var newApp = {
+        app_id: app.id,
+        id: app.id,
+        app_name: app.app_name,
+        sdk_key: app.sdk_key
+      };
+      $localStorage.selectedApplication = newApp;
     };
-
-
   }
 })();

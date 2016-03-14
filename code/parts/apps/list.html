@@ -3,7 +3,7 @@
     <h3 class="modal-title">Confirm</h3>
   </div>
   <div class="modal-body">
-    Are you sure you want to delete this app
+    Are you sure you want to delete app
     <strong>{{model.app_name}}</strong>?
   </div>
   <div class="modal-footer">
@@ -66,7 +66,7 @@
                 <form class="form-inline">
                   <div class="form-group">
                     <label for="search">Search:&nbsp;</label>
-                    <input type="text" class="form-control" id="search" placeholder="" ng-model="filter.filter.app_name"
+                    <input type="text" class="form-control" id="search" placeholder="" ng-model="filter.filter"
                            ng-change="checkFilterPage()">&nbsp;&nbsp;
                     <i class="glyphicon glyphicon-remove" ng-show="filter.filter != ''"
                        ng-click="filter.filter = ''"></i>
@@ -78,7 +78,7 @@
         </div>
         <div class="panel-body">
           <div class="alert alert-info" ng-if="records.length == 0 && !_loading">
-            Currently there are no apps registered in the system
+            Currently you don't have any apps registered in the system. You can click on "Add New App" button above to add an app.
           </div>
           <div class="alert alert-info" ng-if="_loading">
             <i class="glyphicon glyphicon-refresh spin" ng-if="item.loading"></i>&nbsp;
@@ -110,7 +110,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr
+            <tr id="anchor{{::$index}}" ng-click="saveAnchorScrollIndex($index)"
               ng-repeat="item in filteredRecords | limitTo:filter.limit:filter.skip track by $index">
               <td>
                 <a ui-sref=".edit({id: item.id})" ng-if="!item.loading" tooltip="Edit App">
@@ -119,7 +119,7 @@
               </td>
               <td>{{item.app_platform}}</td>
               <td>{{item.last_app_published_version}}</td>
-              <td>{{item.updated_at | date : 'MMM dd, yyyy H:mm:ss a'}}</td>
+              <td>{{ getRelativeDate(item.updated_at) }}</td>
               <td>
                 <input class="list-input" disabled ng-hide="item.show" type="password" value="{{item.sdk_key}}" />
                 <input class=""  ng-show="item.show" type="text" value="{{item.sdk_key}}"  />
@@ -145,7 +145,7 @@
                 <a href="#/mobile/traffic" ng-if="!item.loading" ng-click="storeToStorage(item)" tooltip="Stats">
                   <i class="glyphicon glyphicon-stats"></i>
                 </a>
-                <a href="" ui-sref=".versions({id: item.id})" ng-if="!item.loading" tooltip="Historical Versions">
+                <a href="" ui-sref=".versions({id: item.id})" ng-if="!item.loading" tooltip="Previous Versions">
                   <i class="glyphicon glyphicon-book"></i>
                 </a>
               </td>

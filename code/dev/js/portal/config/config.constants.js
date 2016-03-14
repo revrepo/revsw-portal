@@ -47,7 +47,12 @@
       /**
        * List of icon classes for domain statuses
        */
-      DOMAIN_STATUS_ICONS : {
+      DOMAIN_STAGING_STATUS_ICONS : {
+        InProgress: 'glyphicon-refresh spin',
+        Published: 'glyphicon-ok-sign text-success',
+        Modified: 'glyphicon-ok-sign text-primary'
+      },
+      DOMAIN_PRODUCTION_STATUS_ICONS : {
         InProgress: 'glyphicon-refresh spin',
         Published: 'glyphicon-ok-circle text-success',
         Modified: 'glyphicon-ok-circle text-primary'

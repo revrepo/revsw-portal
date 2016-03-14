@@ -21,7 +21,7 @@
 
     $scope.initVersions = function(){
           $scope.obj = {
-      data: "Configuration will appear here",
+      data: 'Configuration will appear here',
       options: {
         mode: 'code',
         modes: ['code', 'view'], // allowed modes['code', 'form', 'text', 'tree', 'view']
@@ -46,7 +46,7 @@
 
     $scope.onChangeVersion = function() {
       if (!$scope.currentVersion) {
-        $scope.obj.data = "{}";
+        $scope.obj.data = '{}';
         return;
       }
       var idx = _.findIndex($scope.versions, {updated_at: $scope.currentVersion});

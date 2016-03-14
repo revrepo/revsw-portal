@@ -101,11 +101,24 @@ table tbody tr.loadingth {
 table tbody .actions a {
   margin-right: 10px;
 }
+.ui-select-multiple.ui-select-bootstrap,
+input.ui-select-search {
+  max-width: 550px;
+}
+.select2-container {
+  min-width: 300px;
+}
+select.form-control {
+  max-width: 550px;
+}
 select.form-control.fixed {
   width: 150px;
 }
 select.form-control.fixed135 {
   width: 135px;
+}
+input.form-control {
+  max-width: 550px;
 }
 .popover {
   z-index: 999;
@@ -141,6 +154,16 @@ alert-list alert {
 .list-input {
   border: none;
   background-color: transparent;
+}
+/* To hide "Powered by Ace" label in the JSON editor */
+a.poweredBy {
+  display: none;
+}
+input[type="radio"] {
+  margin-left: 20px;
+}
+input[type="checkbox"] {
+  margin-left: 20px;
 }
 .main_img_container {
   left: 50%;
@@ -241,22 +264,51 @@ section[drawer] #logo img {
 section[drawer] .side-menu .side-menu-item {
   cursor: pointer;
   display: block;
-  height: 60px;
-  line-height: 40px;
+  height: 40px;
+  line-height: 20px;
   padding: 10px;
   font-size: 16px;
   color: #f7941e;
-  border-bottom: 1px solid #3b3c3c;
   text-decoration: none;
 }
 section[drawer] .side-menu .side-menu-item.selected {
   background-color: #151515;
 }
 section[drawer] .side-menu .side-menu-item.active {
-  border-right: 2px solid #f7941e;
+  border-right: 4px solid #f7941e;
 }
 section[drawer] .side-menu .side-menu-item i {
   margin: 0 10px;
+}
+section[drawer] .side-menu .side-menu-item:after {
+  font-family: FontAwesome;
+  content: "\f0d8";
+  float: right;
+}
+section[drawer] .side-menu .side-menu-item.hide-caret:after {
+  content: "";
+}
+section[drawer] .side-menu .side-menu-sub-item {
+  display: block;
+  border-bottom: 1px solid gray;
+  padding-bottom: 5px;
+  margin-bottom: 5px;
+  margin-right: 10px;
+  margin-left: 40px;
+  color: #f7941e;
+  text-decoration: none;
+}
+section[drawer] .side-menu .side-menu-sub-item.active {
+  color: white;
+}
+section[drawer] .side-menu .side-menu-sub-item {
+  display: none;
+}
+section[drawer] .side-menu .active-side-menu-item .side-menu-item:after {
+  content: "\f0d7";
+}
+section[drawer] .side-menu .active-side-menu-item .side-menu-sub-item {
+  display: block;
 }
 .navbar {
   margin: 0;
@@ -266,7 +318,7 @@ section[drawer] .side-menu .side-menu-item i {
   line-height: 30px;
 }
 .navbar .navbar-inner li.active {
-  border-bottom: 2px solid #66b2bf;
+  border-bottom: 4px solid #66b2bf;
 }
 .navbar .navbar-inner div[paper-drawer-toggle] {
   display: inline-block;
@@ -342,4 +394,7 @@ polyline {
 }
 .slice {
   stroke: #fff;
+}
+.invisible-chart-wrapper {
+  min-height: 350px;
 }

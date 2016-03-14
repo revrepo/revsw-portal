@@ -27,7 +27,7 @@
         $scope.companies = data;
       })
       .catch(function (err) {
-        if (err.status == 403) {
+        if (err.status === 403) {
           // Fetch id
           var user = $scope.auth.getUser();
           $scope.companies = [{
@@ -71,7 +71,7 @@
         .then(function (data) {
           $scope.alertService.success('API Key created.', 5000);
           $scope.list();
-          return data
+          return data;
         })
         .catch($scope.alertService.danger)
         .finally(function () {
@@ -177,6 +177,10 @@
 
     // Fetch list of users
     $scope.list();
+
+    $scope.getRelativeDate = function (datetime) {
+      return moment.utc(datetime).fromNow();
+    };
 
   }
 })();

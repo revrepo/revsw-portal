@@ -20,7 +20,7 @@ var config = require('config');
 var Portal = require('./../../page_objects/portal');
 var DataProvider = require('./../../common/providers/data');
 
-describe('Setup', function () {
+xdescribe('Setup', function () { // jshint ignore:line
 
   // Defining set of users for which all below tests will be run
   var users = [

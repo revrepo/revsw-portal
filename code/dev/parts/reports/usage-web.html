@@ -1,0 +1,310 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <h2>Usage Report</h2>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="pull-left">
+
+                <form class="form-inline">
+                  <div class="form-group">
+
+                    <!-- <div app-select ng-model="application" on-select="reloadDirs()"></div> -->
+                    <ui-select ng-model="account"
+                               theme="select2"
+                               ng-disabled="_loading"
+                               on-select="onAccountSelect($model)"
+                               style="min-width: 300px;" >
+                      <ui-select-match placeholder="Select Account">{{$select.selected.acc_name}}</ui-select-match>
+                      <ui-select-choices repeat="item in accounts | filter: {acc_name: $select.search}">
+                        <div ng-bind-html="item.acc_name|highlight: $select.search"></div>
+                      </ui-select-choices>
+                    </ui-select>
+
+                  </div>
+                </form>
+
+              </div>
+
+              <div>
+
+                <form class="form-inline">
+
+                  <div class="form-group">
+                    <div class="dropdown">
+                      <a class="dropdown-toggle" id="month-dd" role="button" data-toggle="dropdown" >
+                        <div class="input-group">
+                          <input type="text" class="form-control" data-ng-model="month_year_symbol">
+                          <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                        </div>
+                      </a>
+                      <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                        <datetimepicker
+                          data-ng-model="month_year"
+                          data-datetimepicker-config="{ dropdownSelector: '#month-dd', startView: 'month', minView: 'month', modelType: 'milliseconds' }"
+                          data-on-set-time="onTimeSet(newDate)"
+                          />
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <button class="btn btn-info" ng-click="onUpdate()">
+                      <i class="glyphicon glyphicon-refresh"></i>&nbsp;
+                      Update Report
+                    </button>
+                  </div>
+                </form>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="panel-body" style="min-height: 500px;">
+
+          <div class="row">
+
+            <div class="col-md-4">
+
+              <h4>Domains</h4>
+
+              <form class="form-horizontal">
+
+                <div class="form-group">
+                  <label class="col-sm-6 control-label" >Active</label>
+                  <div class="col-sm-6">
+                    <div class="form-control text-right">{{ report.domains.active }}</div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-sm-6 control-label" >Deleted</label>
+                  <div class="col-sm-6">
+                    <div class="form-control text-right">{{ report.domains.deleted }}</div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-sm-6 control-label" >SSL Enabled</label>
+                  <div class="col-sm-6">
+                    <div class="form-control text-right">{{ report.domains.ssl_enabled }}</div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-sm-6 control-label">Total</label>
+                  <div class="col-sm-6">
+                    <div class="form-control text-right">{{ report.domains.total }}</div>
+                  </div>
+                </div>
+
+              </form>
+
+            </div>
+
+            <div class="col-md-4">
+
+              <h4>Mobile Apps</h4>
+
+              <form class="form-horizontal">
+
+                <div class="form-group">
+                  <label class="col-sm-6 control-label" >Active</label>
+                  <div class="col-sm-6">
+                    <div class="form-control text-right">{{ report.applications.active }}</div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-sm-6 control-label" >Deleted</label>
+                  <div class="col-sm-6">
+                    <div class="form-control text-right">{{ report.applications.deleted }}</div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-sm-6 control-label">Total</label>
+                  <div class="col-sm-6">
+                    <div class="form-control text-right">{{ report.applications.total }}</div>
+                  </div>
+                </div>
+
+              </form>
+
+            </div>
+
+            <div class="col-md-4">
+
+              <h4>API Keys</h4>
+
+              <form class="form-horizontal">
+
+                <div class="form-group">
+                  <label class="col-sm-6 control-label" >Active</label>
+                  <div class="col-sm-6">
+                    <div class="form-control text-right">{{ report.api_keys.active }}</div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-sm-6 control-label" >Inactive</label>
+                  <div class="col-sm-6">
+                    <div class="form-control text-right">{{ report.api_keys.inactive }}</div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-sm-6 control-label">Total</label>
+                  <div class="col-sm-6">
+                    <div class="form-control text-right">{{ report.api_keys.total }}</div>
+                  </div>
+                </div>
+
+              </form>
+
+            </div>
+
+          </div>
+          <hr>
+
+          <div class="row">
+
+            <div class="col-md-4">
+
+              <h4>Traffic Total</h4>
+
+              <form class="form-horizontal">
+
+                <div class="form-group">
+                  <label class="col-sm-6 control-label" >Hits</label>
+                  <div class="col-sm-6">
+                    <div class="form-control text-right">{{ report.count }}</div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-sm-6 control-label" >Sent</label>
+                  <div class="col-sm-6">
+                    <div class="form-control text-right">{{ report.sent_bytes }}</div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-sm-6 control-label">Received</label>
+                  <div class="col-sm-6">
+                    <div class="form-control text-right">{{ report.received_bytes }}</div>
+                  </div>
+                </div>
+
+              </form>
+
+            </div>
+
+            <div class="col-md-4">
+
+              <h4>Edge Cache Usage</h4>
+
+              <form class="form-horizontal">
+
+                <div class="form-group">
+                  <label class="col-sm-6 control-label" >HIT</label>
+                  <div class="col-sm-6">
+                    <div class="form-control text-right">{{ report.cache_hits.HIT }}</div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-sm-6 control-label" >MISS</label>
+                  <div class="col-sm-6">
+                    <div class="form-control text-right">{{ report.cache_hits.MISS }}</div>
+                  </div>
+                </div>
+
+              </form>
+
+            </div>
+
+            <div class="col-md-4">
+
+              <h4>HTTP/HTTPS Requests</h4>
+
+              <form class="form-horizontal">
+
+                <div class="form-group" ng-repeat="( port, hits ) in report.port_hits">
+                  <label class="col-sm-6 control-label" >{{ port === '80' ? 'HTTP' : 'HTTPS' }}</label>
+                  <div class="col-sm-6">
+                    <div class="form-control text-right">{{ hits }}</div>
+                  </div>
+                </div>
+
+              </form>
+
+            </div>
+          </div>
+
+          <div ng-if="report.count !== '0'">
+
+            <hr>
+            <h4>Traffic Per Billing Zone</h4>
+            <div class="row" ng-repeat="( zone, traffic ) in report.traffic_per_billing_zone">
+
+              <div class="col-md-5">
+
+                <form class="form-horizontal">
+
+                  <div class="form-group">
+                    <label class="col-sm-7 control-label" >{{zone}}, Hits</label>
+                    <div class="col-sm-5">
+                      <div class="form-control text-right">{{ traffic.count }}</div>
+                    </div>
+                  </div>
+
+                </form>
+              </div>
+              <div class="col-md-3">
+
+                <form class="form-horizontal">
+
+                  <div class="form-group">
+                    <label class="col-sm-5 control-label" >Traffic Sent</label>
+                    <div class="col-sm-7">
+                      <div class="form-control text-right">{{ traffic.sent_bytes }}</div>
+                    </div>
+                  </div>
+
+                </form>
+              </div>
+              <div class="col-md-4">
+
+                <form class="form-horizontal">
+
+                  <div class="form-group">
+                    <label class="col-sm-6 control-label">Traffic Received</label>
+                    <div class="col-sm-6">
+                      <div class="form-control text-right">{{ traffic.received_bytes }}</div>
+                    </div>
+                  </div>
+
+                </form>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -15,6 +15,13 @@
     var domains = [];
 
     /**
+     * Domain that should be selected
+     *
+     * @type {object|null}
+     */
+    var domainSelected = null;
+
+    /**
      * List of Users applications
      * @type {Array}
      */
@@ -22,11 +29,12 @@
     var appSelected = null;
 
     /**
-     * Domain that should be selected
-     *
-     * @type {object|null}
+     * List of Users accounts
+     * @type {Array}
      */
-    var domainSelected = null;
+    var accounts = [];
+    var accSelected = null;
+
 
     /**
      * Clear all details from localstorage
@@ -90,7 +98,7 @@
      */
     function clearAuthHeaderForAPI() {
       $localStorage.Authorization = undefined;
-      delete $http.defaults.headers.common['Authorization'];
+      delete $http.defaults.headers.common.Authorization;
     }
 
     /**
@@ -142,6 +150,8 @@
                   //  user changed - applications list and stored application are not valid
                   apps = [];
                   selectApplication( null );
+                  accounts = [];
+                  selectAccount( null );
                   $localStorage.last_user_id = res.user_id;
                 }
               } else {
@@ -354,6 +364,7 @@
                   return {
                     app_name: item.app_name,
                     app_id: item.id,
+                    id: item.id,
                     sdk_key: item.sdk_key
                   };
                 })
@@ -364,8 +375,8 @@
               var user = getUser();
               if ( apps.length && user && user.companyId[0] ) {
                 apps.unshift({
-                  app_id: "",
-                  app_name: "All Applications"
+                  app_id: '',
+                  app_name: 'All Applications'
                 });
               }
               resolve( apps );
@@ -382,7 +393,59 @@
     }
 
     function getSelectedApplication() {
-      return appSelected || $localStorage.selectedApplication;
+      // return appSelected || $localStorage.selectedApplication;
+      return $localStorage.selectedApplication || appSelected;
+    }
+
+    /**
+     * Load user Companies/Accounts
+     * @param {boolean} reload
+     * @returns {Promise}
+     */
+    function getUserAccounts(reload) {
+      return $q(function (resolve, reject) {
+        if (accounts.length > 0 && !reload) {
+          return resolve(accounts);
+        }
+        $http.get($config.API_URL + '/accounts')
+          .then( function (data) {
+
+            if (data && data.status === $config.STATUS.OK) {
+              accounts = data.data.map( function( item ) {
+                  return {
+                    acc_name: item.companyName,
+                    acc_id: item.id
+                  };
+                })
+                .sort( function( lhs, rhs ) {
+                  return lhs.acc_name.localeCompare( rhs.acc_name );
+                });
+
+              var user = getUser();
+              if ( accounts.length > 1 && user ) {
+                accounts.unshift({
+                  acc_id: '',
+                  acc_name: 'All Accounts'
+                });
+              }
+              resolve( accounts );
+            } else {
+              reject( new Error(data.response) );
+            }
+          })
+          .catch( function( err ) {
+            console.log( err );
+          });
+      });
+    }
+
+    function selectAccount( acc ) {
+      $localStorage.selectedAccount = acc;
+      accSelected = acc;
+    }
+
+    function getSelectedAccount() {
+      return accSelected || $localStorage.selectedAccount;
     }
 
 
@@ -427,7 +490,13 @@
 
       selectApplication: selectApplication,
 
-      getSelectedApplication: getSelectedApplication
+      getSelectedApplication: getSelectedApplication,
+
+      getUserAccounts: getUserAccounts,
+
+      selectAccount: selectAccount,
+
+      getSelectedAccount: getSelectedAccount
     };
   }
 })();

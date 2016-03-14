@@ -10,6 +10,7 @@
     'revapm.Portal.Cache',
     'revapm.Portal.Reports',
     'revapm.Portal.Mobile',
+    'revapm.Portal.Usage',
     'revapm.Portal.Keys',
     'revapm.Portal.Apps',
     'revapm.Portal.Signup',

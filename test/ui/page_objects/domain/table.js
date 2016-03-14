@@ -33,7 +33,7 @@ var tableRowLocators = {
         css: 'i:nth-of-type(1)',
         type: {
           published: {
-            css: 'i:nth-of-type(1).glyphicon-ok-circle'
+            css: 'i:nth-of-type(1).glyphicon-ok-sign'
           },
           error: {
             css: 'i:nth-of-type(1).glyphicon-remove'

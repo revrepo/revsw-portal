@@ -225,8 +225,13 @@
         method: 'GET',
         url: $config.API_URL + '/stats/sdk/ab/speed',
         params: {}
-      }
+      },
 
+      usage_web: {
+        method: 'GET',
+        url: $config.API_URL + '/usage_reports/web',
+        params: {}
+      }
 
     });
   }

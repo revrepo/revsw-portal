@@ -24,6 +24,7 @@
       return $scope.resource
         .query(function (data) {
           $scope.records = data.data;
+          $scope.filterList();
           $scope._checkPagination();
           return data; // Send data to future promise
         }).$promise
@@ -32,7 +33,7 @@
         });
     };
 
-    // Fetch list of users
+    // Fetch a list of activity records
     $scope.list();
 
     /**
@@ -75,10 +76,10 @@
      */
     $scope.showDetails = function(log) {
       // Need to clone object here not to overwrite defaults
-      var log = angular.copy(log);
-      log.target_object = JSON.stringify(log.target_object, null, '    ');
-      log.activity = $scope.getActivityType(log.activity_type);
-      log.activity += ' ' + $scope.getActivityTarget(log);
+      var log2 = angular.copy(log);
+      log2.target_object = JSON.stringify(log2.target_object, null, '    ');
+      log2.activity = $scope.getActivityType(log2.activity_type);
+      log2.activity += ' ' + $scope.getActivityTarget(log2);
 
       // Uses ConfirmModalInstanceCtrl. This controller has all needed methods
       // So no need to create a new one.
@@ -88,11 +89,15 @@
         controller: 'ConfirmModalInstanceCtrl',
         size: 'md',
         resolve: {
-          model: log
+          model: log2
         }
       });
 
       return modalInstance.result;
+    };
+
+    $scope.getRelativeDate = function (datetime) {
+      return moment.utc(datetime).fromNow();
     };
 
   }

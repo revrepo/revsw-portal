@@ -18,10 +18,10 @@
 //          plotShadow: false,
           type: 'pie',
 
-options3d: {
-                enabled: true,
-                alpha: 45
-            }
+//options3d: {
+//                enabled: true,
+//                alpha: 45
+//            }
 
         },
 
@@ -29,7 +29,7 @@ options3d: {
         tooltip: {
           formatter: function() {
             return '<b>'+ this.point.name +': </b>'+
-              Highcharts.numberFormat(this.point.percentage, 0) + '% (' + Highcharts.numberFormat(this.y, 0, ".", ",") + ' requests)';
+              Highcharts.numberFormat(this.point.percentage, 0) + '% (' + Highcharts.numberFormat(this.y, 0, '.', ',') + ' requests)';
           }
         },
 
@@ -44,7 +44,7 @@ options3d: {
                 color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
               }
             },
-                innerSize: 100,
+                // innerSize: 100,
                 depth: 45
           }
         },
@@ -76,6 +76,5 @@ options3d: {
       },
       link: link
     };
-  };
-
+  }
 })();

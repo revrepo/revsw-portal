@@ -54,7 +54,6 @@
         .finally( function() {
           $scope._loading = false;
         });
-    }
-
+    };
   }
 })();

@@ -39,12 +39,6 @@
               }
             }
           },
-          xAxis: {
-            crosshair: {
-              width: 1,
-              color: '#000000'
-            }
-          },
           tooltip: {
             formatter: function() {
               return '<strong>' + this.x + '</strong><br/>' +

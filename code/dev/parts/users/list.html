@@ -43,7 +43,7 @@
         </div>
         <div class="panel-body">
           <div class="alert alert-info" ng-if="records.length == 0 && !_loading">
-            Currently there are not users registered in the system
+            Currently you don't have any users registered in the system. You can click on "Add New User" button above to add a user.
           </div>
           <div class="alert alert-info" ng-if="_loading">
             <i class="glyphicon glyphicon-refresh spin" ng-if="item.loading"></i>&nbsp;
@@ -81,15 +81,23 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="user in filteredRecords | limitTo:filter.limit:filter.skip track by $index">
-              <td>{{user.firstname}}</td>
-              <td>{{user.lastname}}</td>
+            <tr ng-repeat="user in filteredRecords | limitTo:filter.limit:filter.skip track by $index" id="anchor{{::$index}}" ng-click="saveAnchorScrollIndex($index)">
+              <td>
+                <a ui-sref=".edit({id: user.user_id})" ng-if="!item.loading" tooltip="Edit User Profile">
+                  {{user.firstname}}
+                </a>
+              </td>
+              <td>
+                <a ui-sref=".edit({id: user.user_id})" ng-if="!item.loading" tooltip="Edit User Profile">
+                  {{user.lastname}}
+                </a>
+              </td>
               <td>{{user.email}}</td>
               <td>{{user.role}}</td>
-              <td>{{user.updated_at | date : 'MMM dd, yyyy H:mm:ss a'}}</td>
-              <td>{{user.last_login_at | date : 'MMM dd, yyyy H:mm:ss a'}}</td>
+              <td>{{ getRelativeDate(user.updated_at) }}</td>
+              <td>{{ user.last_login_at ? getRelativeDate(user.last_login_at) : 'Never' }}</td>
               <td class="actions">
-                <a ui-sref=".edit({id: user.user_id})" tooltip="Edit User">
+                <a ui-sref=".edit({id: user.user_id})" tooltip="Edit User Profile">
                   <i class="glyphicon glyphicon-pencil"></i>
                 </a>
                 <a href="" ng-click="deleteUser(user)" tooltip="Delete User">

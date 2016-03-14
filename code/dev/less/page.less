@@ -138,12 +138,26 @@ table {
   }
 }
 
+.ui-select-multiple.ui-select-bootstrap, input.ui-select-search {
+  max-width: 550px;
+}
 
+.select2-container {
+  min-width: 300px;
+}
+
+select.form-control {
+  max-width: 550px;
+}
 select.form-control.fixed {
   width: 150px;
 }
 select.form-control.fixed135 {
   width: 135px;
+}
+
+input.form-control {
+  max-width: 550px;
 }
 
 .popover {
@@ -186,4 +200,17 @@ alert-list {
 .list-input {
   border: none;
   background-color: transparent;
+}
+
+/* To hide "Powered by Ace" label in the JSON editor */
+a.poweredBy {
+  display: none;
+}
+
+input[type="radio"]{
+  margin-left: 20px;
+}
+
+input[type="checkbox"]{
+  margin-left: 20px;
 }

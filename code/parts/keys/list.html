@@ -43,7 +43,7 @@
         </div>
         <div class="panel-body">
           <div class="alert alert-info" ng-if="records.length == 0 && !_loading">
-            Currently there are no API keys registered in the system
+            Currently you don't have any API keys registered in the system. You can click on "Add New API Key" button above to add an API key.
           </div>
           <div class="alert alert-info" ng-if="_loading">
             <i class="glyphicon glyphicon-refresh spin" ng-if="item.loading"></i>&nbsp;
@@ -62,16 +62,16 @@
                 <span class="sortorder" ng-show="filter.predicate === 'key'" ng-class="{reverse: filter.key}"></span>
               </th>
               <th>
+                <a href="" ng-click="order('updated_at')">Last Update</a>
+                <span class="sortorder" ng-show="filter.predicate === 'updated_at'" ng-class="{reverse: filter.updated_at}"></span>
+              </th>
+              <th class="thin">
                 <a href="" ng-click="order('read_only_status')">Read Only</a>
                 <span class="sortorder" ng-show="filter.predicate === 'read_only_status'" ng-class="{reverse: filter.read_only_status}"></span>
               </th>
               <th>
-                <a href="" ng-click="order('active')">Active</a>
+                <a class="thin" href="" ng-click="order('active')">Active</a>
                 <span class="sortorder" ng-show="filter.predicate === 'active'" ng-class="{reverse: filter.active}"></span>
-              </th>
-              <th>
-                <a href="" ng-click="order('updated_at')">Last Update</a>
-                <span class="sortorder" ng-show="filter.predicate === 'updated_at'" ng-class="{reverse: filter.updated_at}"></span>
               </th>
               <th class="actions">Actions</th>
             </tr>
@@ -79,15 +79,19 @@
             <tbody>
             <tr
               ng-repeat="item in filteredRecords | limitTo:filter.limit:filter.skip track by $index">
-              <td>{{item.key_name}}</td>
+              <td>
+                <a ng-click="openUpdateDialogFor(item.id)" ng-if="!item.loading" tooltip="Edit API Key">
+                  {{item.key_name}}
+                </a>
+              </td>
               <td>{{item.key}}</td>
+              <td>{{ getRelativeDate(item.updated_at) }}</td>
               <td>
                 <i class="glyphicon pointer" tooltip="Toggle active status" ng-hide="item.loading" ng-click="toggleProperty(item, 'read_only_status')" ng-class="item.read_only_status && 'glyphicon-check' || 'glyphicon-unchecked'"></i>
               </td>
               <td>
                 <i class="glyphicon pointer" tooltip="Toggle active status" ng-hide="item.loading" ng-click="toggleProperty(item, 'active')" ng-class="item.active && 'glyphicon-check' || 'glyphicon-unchecked'"></i>
               </td>
-              <td>{{item.updated_at | date : 'MMM dd, yyyy H:mm:ss a'}}</td>
               <td class="actions">
                 <i class="glyphicon glyphicon-refresh spin" ng-if="item.loading"></i>
                 <a ng-click="openUpdateDialogFor(item.id)" ng-if="!item.loading" tooltip="Edit API Key">

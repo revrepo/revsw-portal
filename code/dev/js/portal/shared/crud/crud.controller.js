@@ -1,4 +1,4 @@
-(function () {
+(function (angular, empty) {
   'use strict';
 
   angular
@@ -115,6 +115,13 @@
         reverse: false
       };
 
+      /**
+       * Filters keys for the filter
+       *
+       * @type {array}
+       */
+      $scope.filterKeys = [];
+
       /***************************************************************************************
        *****                       END VARIABLES INITIALIZATION SECTION
        **************************************************************************************/
@@ -131,7 +138,36 @@
        * @private
        */
       $scope._applyFilter = function() {
-        var filtered = $filter('filter')($scope.records, $scope.filter.filter);
+        var filtered,
+          i,
+          res,
+          compareValue;
+
+        // pay attention to the $scope.filter.filter - should be a string;
+        // checks if filter value is string and not blank + checks the length of filterKeys to be not empty
+        if (_.isString($scope.filter.filter) && $scope.filter.filter.length > 0 && $scope.filterKeys.length > 0) {
+          // filters over the array
+          filtered = _.filter($scope.records, function(record){
+            //checks for each key
+            //if value is found returns true 
+            for(i = 0; i < $scope.filterKeys.length; i++) {
+              compareValue = record[$scope.filterKeys[i]];
+
+              //checks if date
+              if (moment(compareValue, moment.ISO_8601).isValid()) {
+                //formats as date obj
+                compareValue = new Date(compareValue);
+              }
+              res = (compareValue.toString().toLowerCase().indexOf($scope.filter.filter.toLowerCase()) !== -1);
+
+              if (res) {
+                return res;
+              }
+            }
+          });
+        } else {
+          filtered = $filter('filter')($scope.records, $scope.filter.filter);
+        }
         $scope.filteredRecords = $filter('orderBy')(filtered, $scope.filter.predicate, $scope.filter.reverse);
         $scope._checkPagination();
       };
@@ -370,7 +406,7 @@
        * @param {number} page
        */
       $scope.goToPage = function(page) {
-        if ($scope.page.current == page) {
+        if ($scope.page.current === page) {
           return;
         }
         $scope.page.current = page;
@@ -437,11 +473,11 @@
         return model.$remove()
           .then(function (data) {
             var idx = $scope.records.indexOf(model);
-            if (data.statusCode == $config.STATUS.OK) {
+            if (data.statusCode === $config.STATUS.OK) {
               $scope.records.splice(idx, 1);
             }
             idx = $scope.filteredRecords.indexOf(model);
-            if (data.statusCode == $config.STATUS.OK) {
+            if (data.statusCode === $config.STATUS.OK) {
               $scope.filteredRecords.splice(idx, 1);
             }
             return data;
@@ -472,7 +508,7 @@
             return data; // Send data next to promise handlers
           })
           .catch(function (data) {
-            if (data.status == $config.STATUS.BAD_REQUEST) {
+            if (data.status === $config.STATUS.BAD_REQUEST) {
               if (data.data && data.data.message) {
                 $scope.alertService.danger(data.data.message, 5000);
               }
@@ -555,8 +591,28 @@
        *****                             END BASE ACTIONS SECTION
        **************************************************************************************/
 
-    };
+      /***************************************************************************************
+       *****                                  SCROLL ANCHOR POSITION SECTION
+       **************************************************************************************/
+
+       $scope.saveAnchorScrollIndex = saveAnchorScrollIndex;
+       $scope.elementIndexForAnchorScroll = empty;
+
+       /**
+       * Save anchor index
+       * 
+       * @param {Number} index of the clicked element
+       */
+       function saveAnchorScrollIndex($index) {
+        $scope.elementIndexForAnchorScroll = $index;
+       }
+
+      /***************************************************************************************
+       *****                             END SCROLL POSITION HANDLER SECTION
+       **************************************************************************************/
+
+    }
 
     return CRUDControllerImpl;
-  };
-})();
+  }
+})(angular);

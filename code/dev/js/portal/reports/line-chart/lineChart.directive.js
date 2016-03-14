@@ -12,6 +12,7 @@
       var el = element[0];
 
       var chartOptions = {
+
         chart: {
           renderTo: el,
           type: 'areaspline'
@@ -23,7 +24,11 @@
 
         xAxis: {
           categories: [],
-          tickInterval: 4
+          tickInterval: 4,
+          crosshair: {
+            width: 1,
+            color: '#000000'
+          },
         },
 
         yAxis: {
@@ -88,7 +93,7 @@
         $scope.clearChart();
         // update labels
         if (_.isArray(value.labels)) {
-          if (value.labels.length == 0) {
+          if (value.labels.length === 0) {
             return;
           }
           // Set new data
@@ -96,7 +101,7 @@
         }
         // Update series
         if (_.isArray(value.series)) {
-          if (value.series.length == 0) {
+          if (value.series.length === 0) {
             return;
           }
           // Set new data
@@ -111,7 +116,7 @@
         if (!value || !_.isArray(value)) {
           return;
         }
-        if (value.length == 0) {
+        if (value.length === 0) {
           $scope.clearChart();
           return;
         }
@@ -126,6 +131,6 @@
       },
       link: link
     };
-  };
+  }
 
 })();
