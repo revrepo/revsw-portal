@@ -453,3 +453,6 @@ polyline {
 .widget {
   width: 100%;
 }
+.widget .filter-time-period {
+  display: none;
+}
