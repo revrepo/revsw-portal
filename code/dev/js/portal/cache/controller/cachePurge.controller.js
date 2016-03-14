@@ -7,7 +7,6 @@
 
   /*@ngInject*/
   function CachePurgeController($scope, Cache, DomainsConfig, AlertService, $timeout) {
-
     $scope._loading = false;
 
     // $scope.domain;
@@ -53,6 +52,7 @@
           var message = 'Oops something went wrong';
 
           // if response contains message then show it
+
           if(err && err.data && err.data.message) {
             message = err.data.message;
           }
@@ -106,7 +106,7 @@
 
     /**
      * Get editor instance
-    */
+     */
     $scope.jsonEditorEvent = function(instance){
       $scope.jsonEditorInstance = instance;
     };

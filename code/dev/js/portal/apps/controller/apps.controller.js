@@ -141,7 +141,7 @@
     $scope.getApp = function(id) {
       $scope.get(id)
         .catch(function (err) {
-          $scope.alertService.danger('Could not load domain details');
+          $scope.alertService.danger('Could not load app details');
         });
     };
 
@@ -174,7 +174,6 @@
         return modelCopy;
     };
 
-
     $scope.updateApp = function (model) {
       $scope.confirm('confirmUpdateModal.html', model).then(function () {
         $scope._loading = true;
@@ -197,6 +196,7 @@
           });
       });
     };
+
     $scope.verify = function(model) {
       if (!$scope.model.id) {
         AlertService.danger('Please select app first');
@@ -274,7 +274,5 @@
       };
       $localStorage.selectedApplication = newApp;
     };
-
-
   }
 })();

@@ -52,7 +52,7 @@
     $scope.getUser = function(id) {
       $scope.get(id)
         .catch(function(err) {
-          $scope.alertService.danger('Could not load domain details');
+          $scope.alertService.danger('Could not load user details');
         });
     };
 
@@ -100,6 +100,7 @@
         })
         .catch($scope.alertService.danger);
     };
+
     // Fetch list of users
     $scope.$on('$stateChangeSuccess', function(state) {
       $scope

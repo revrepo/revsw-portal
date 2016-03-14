@@ -105,6 +105,9 @@ table tbody .actions a {
 input.ui-select-search {
   max-width: 550px;
 }
+.select2-container {
+  min-width: 300px;
+}
 select.form-control {
   max-width: 550px;
 }
