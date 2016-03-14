@@ -10,14 +10,23 @@
 
     $scope._loading = true;
     $scope.accounts = [];
-    $scope.account = null;
+    $scope.selected = { val: null };
     $scope.month_year = new Date();
     $scope.month_year_symbol = $scope.month_year.toISOString().slice( 0, 7 );
     $scope.report = null;
 
     $scope.onAccountSelect = function ( acc ) {
+      // console.log( 'onAccountSelect', acc );
       User.selectAccount( acc );
-      $scope.account = acc;
+      $scope.selected.val = acc;
+    };
+    $scope.onAccountClick = function ( acc_id ) {
+      var acc = $scope.accounts.find( function( a ) {
+        return a.acc_id === acc_id;
+      });
+      $scope.selected.val = acc;
+      User.selectAccount( acc );
+      $scope.onUpdate();
     };
 
     $scope.onTimeSet = function( newDate ) {
@@ -28,7 +37,13 @@
     };
 
     $scope.showTraffic = function() {
-      return $scope.report && $scope.report.count !== '0';
+      return !$scope._loading && $scope.report && $scope.report.count !== '0';
+    };
+    $scope.showDomainsUsage = function() {
+      return $scope.report && $scope.report.domains_usage;
+    };
+    $scope.showAccounts = function() {
+      return $scope.report && $scope.report.accounts;
     };
 
     var format_ = function( data ) {
@@ -52,9 +67,45 @@
       }
     }
 
+    var collectAccounts_ = function( accounts ) {
+
+      //  assuming that last record is overall summary, others are accounts' summaries
+      var overall = accounts[accounts.length - 1];
+      overall.accounts = [];
+      for ( var i = 1/*skip 'All accounts'*/, len = $scope.accounts.length; i < len; ++i ) {
+        var a = $scope.accounts[i];
+        var acc = accounts.find( function( item ) {
+          return item.account_id === a.acc_id + '_SUMMARY';
+        });
+        if ( acc ) {
+          overall.accounts.push({
+            acc_id: a.acc_id,
+            acc_name: a.acc_name,
+            raw_count: acc.count,
+            count: Util.formatNumber( acc.count ),
+            received_bytes: Util.humanFileSizeInGB( acc.received_bytes ),
+            sent_bytes: Util.humanFileSizeInGB( acc.sent_bytes )
+          });
+        } else {
+          overall.accounts.push({
+            acc_id: a.acc_id,
+            acc_name: a.acc_name,
+            raw_count: 0,
+            count: '0',
+            received_bytes: '0 GB',
+            sent_bytes: '0 GB'
+          });
+        }
+      }
+      overall.accounts.sort( function( lhs, rhs ) {
+        return rhs.raw_count - lhs.raw_count/*descending*/;
+      });
+    };
+
     $scope.onUpdate = function () {
 
-      if ( $scope.accounts.length === 0 || !$scope.account ) {
+      if ( $scope.accounts.length === 0 || !$scope.selected.val ) {
+        $scope._loading = false;
         return;
       }
 
@@ -63,8 +114,9 @@
         from: moment($scope.month_year).utc().startOf( 'month' ).toISOString().slice( 0, 10 ),
         to: moment($scope.month_year).utc().endOf( 'month' ).toISOString().slice( 0, 10 )
       };
-      if ( $scope.account.acc_id ) {
-        q.account_id = $scope.account.acc_id;
+      //  not 'All Accounts'
+      if ( $scope.selected.val.acc_id ) {
+        q.account_id = $scope.selected.val.acc_id;
       }
       Stats.usage_web( q )
         .$promise
@@ -74,15 +126,17 @@
           // console.log( data );
           // debug
 
-          var d = data.data[data.data.length - 1/*summary*/];
-
-          //  let's format something
-          format_( d );
-          for ( var domain in d.domains_usage ) {
-            format_( d.domains_usage[domain] );
+          //  in case of 'All Accounts'
+          if ( !q.account_id ) {
+            collectAccounts_( data.data );
+          }
+          var overall = data.data[data.data.length - 1/*overall summary*/];
+          format_( overall );
+          for ( var domain in overall.domains_usage ) {
+            format_( overall.domains_usage[domain] );
           }
 
-          $scope.report = d;
+          $scope.report = overall;
         })
         .catch( function( err ) {
           AlertService.danger('Oops! Something went wrong');
@@ -94,21 +148,19 @@
     };
 
     if ( User.getSelectedAccount() ) {
-      $scope.account = User.getSelectedAccount();
+      $scope.selected.val = User.getSelectedAccount();
     }
 
     User.getUserAccounts()
       .then(function ( accs ) {
         $scope.accounts = accs;
         if ( accs.length === 1 ) {
-          $scope.account = accs[0];
+          $scope.selected.val = accs[0];
         }
         $scope.onUpdate();
       })
       .catch(function ( err ) {
         AlertService.danger('Oops! Something went wrong');
-      })
-      .finally(function () {
         $scope._loading = false;
       });
 
