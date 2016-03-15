@@ -12,7 +12,8 @@
         url: '/reports/general',
         views: {
           main: {
-            controller: 'ReportsProxyTrafficController',
+            controller: 'GeneralCtrl',
+            controllerAs: 'vm',
             templateUrl: 'parts/reports/general.html'
           }
         }
