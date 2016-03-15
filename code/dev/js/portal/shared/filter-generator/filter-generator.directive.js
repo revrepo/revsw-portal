@@ -45,22 +45,26 @@
      */
     function link(scope, elem, attr, ngModel) {
       var FILTER_EVENT_TIMEOUT = 2000,
-        DATE_PICKER_SELECTOR = '.date-picker';
+        DATE_PICKER_SELECTOR = '.date-picker',
+        LAST_DAY = 'Last 1 Day',
+        LAST_WEEK = 'Last 7 Days ',
+        LAST_MONTH = 'Last 30 Days';
 
       //datepicker ranges
       var ranges = {},
         filtersAddMenu = [],
         filterChangeTimeout;
 
-      ranges['Last 1 Day'] = [moment().subtract(1, 'days'), moment()];
-      ranges['Last 7 Days '] = [moment().subtract(7, 'days'), moment()];
-      ranges['Last 30 Days '] = [moment().subtract(30, 'days'), moment()];
+      //Default valuew is Last 1 Day!
+      ranges[LAST_DAY] = [moment().subtract(1, 'days'), moment()];
+      ranges[LAST_WEEK] = [moment().subtract(7, 'days'), moment()];
+      ranges[LAST_MONTH] = [moment().subtract(30, 'days'), moment()];
 
       //date picker params
       scope.datePicker = {
         overlay: {
           show: true,
-          val: ''
+          val: LAST_DAY
         },
         options: {
           timePicker: true,
@@ -68,8 +72,8 @@
           ranges: ranges
         },
         date: {
-          startDate: moment().subtract(1, 'days'),
-          endDate: moment()
+          startDate: ranges[LAST_DAY][0],
+          endDate: ranges[LAST_DAY][1]
         }
       };
 
@@ -121,8 +125,6 @@
             clearTimeout(filterChangeTimeout);
           }
         });
-
-        updateOverlayValue(elem.querySelectorAll(DATE_PICKER_SELECTOR));
       }
 
       /*
@@ -320,7 +322,6 @@
             // selected date
             selStartDate = scope.datePicker.date.startDate.toDate().getTime(),
             selEndDate = scope.datePicker.date.endDate.toDate().getTime();
-
           return (objStartDate === selStartDate) && (objEndDate === selEndDate);
         });
 
@@ -328,7 +329,7 @@
           key = datePicker.val();
         }
 
-        if (scope.datePicker.overlay.val != '' ) {
+        if (scope.datePicker.overlay.val != '') {
           filterChange();
         }
         scope.datePicker.overlay.val = key;
