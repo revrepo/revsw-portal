@@ -5,7 +5,7 @@
  * @module 'revapm.Portal.Reports'
  * @desc controller for the Web Analytics/General view
  */
-(function(angular, empty) {
+(function(angular, _, empty) {
   'use strict';
 
   angular
@@ -16,22 +16,32 @@
   GeneralCtrl.$inject = [
     '$scope',
     'Stats',
-    'reportsFilterService'
+    'filterGeneratorConst',
+    'Countries',
+    'filterGeneratorService'
   ];
 
   /*@ngInject*/
   function GeneralCtrl(
     $scope,
     Stats,
-    reportsFilterService
+    filterGeneratorConst,
+    Countries,
+    filterGeneratorService
   ) {
-    var vm = this;
+    var PIE_CHART_FILTERS_FIELDS = ['domainId', 'from_timestamp', 'to_timestamp', 'country'];
+
+    var vm = this,
+      filter = {
+        from_timestamp: moment().subtract(1, 'days').valueOf(),
+        to_timestamp: Date.now()
+      };
 
     //ui data model
     vm.model = {
       total: {},
       domain: empty,
-      filtersList: []
+      filtersList: [filterGeneratorConst.COUNTRIES, filterGeneratorConst.OS, filterGeneratorConst.DEVICES]
     };
 
     //ui actions
@@ -50,6 +60,21 @@
      */
     function init() {
       //{domainId: "568525ec6f641ea7285c4221", from_timestamp: 1457697412757, to_timestamp: 1457783812757}
+      filterGeneratorService.subscribeOnFilterChangeEvent($scope, function($event, filterData) {
+        _.forEach(PIE_CHART_FILTERS_FIELDS, function(objKey) {
+          if (filterData.data[objKey]) {
+            filter[objKey] = filterData.data[objKey];
+          }
+        });
+
+        if (filter.from_timestamp < moment().subtract(1, 'days').valueOf()) {
+          filter.from_timestamp = moment().subtract(1, 'days').valueOf();
+        }
+        if (filter.to_timestamp > Date.now()) {
+          filter.to_timestamp = Date.now();
+        }
+        getFilterData();
+      });
     }
 
     /**
@@ -59,8 +84,8 @@
      */
     function onDomainChange() {
       if (vm.model.domain) {
-        var domainId = vm.model.domain.id;
-        getFilterData(domainId);
+        filter.domainId = vm.model.domain.id;
+        getFilterData();
       }
     }
 
@@ -69,21 +94,10 @@
      * @desc get Filter data
      * @kind function
      */
-    function getFilterData(domainId) {
-      reportsFilterService
-        .getOs(domainId)
-        .then(function(osData) {
-          $scope.os = osData;
-        });
-
-      reportsFilterService
-        .getDevices(domainId)
-        .then(function(deviceData) {
-          $scope.device = deviceData;
-        });
-
-      reloadCacheStatus();
-      reloadHttpMethod();
+    function getFilterData() {
+      reloadCacheStatus(filter);
+      reloadHttpMethod(filter);
+      reloadProtocol(filter);
       getTotal();
     }
 
@@ -93,9 +107,10 @@
      * @kind function
      */
     function reloadCacheStatus(filters) {
-      filters = filters || { domainId: '568525ec6f641ea7285c4221', from_timestamp: 1457697412757, to_timestamp: 1457783812757 };
+      filters = filters;
       $scope.cacheStatus = [];
-      Stats.cacheStatus(filters)
+      Stats
+        .cacheStatus(filters)
         .$promise
         .then(function(data) {
           if (data.data && data.data.length > 0) {
@@ -117,20 +132,52 @@
      * @kind function
      */
     function reloadHttpMethod(filters) {
-      filters = filters || { domainId: '568525ec6f641ea7285c4221', from_timestamp: 1457697412757, to_timestamp: 1457783812757 };
+      filters = filters;
       $scope.httpMethod = [];
-      Stats.httpMethod( filters )
+      Stats
+        .httpMethod(filters)
         .$promise
-        .then(function (data) {
+        .then(function(data) {
           if (data.data && data.data.length > 0) {
             var newData = [];
-            _.forEach(data.data, function (val) {
+            _.forEach(data.data, function(val) {
               newData.push({
                 name: val.key,
                 y: val.count
               });
             });
             $scope.httpMethod = newData;
+          }
+        });
+    }
+
+    /**
+     * @name reloadProtocol
+     * @desc reloads protocols chart data
+     * @kind function
+     */
+    function reloadProtocol(filters) {
+      $scope.protocol = [];
+      Stats
+        .protocol(filters)
+        .$promise
+        .then(function(data) {
+          if (data.data && data.data.length > 0) {
+            var newData = [];
+            _.forEach(data.data, function(val) {
+              var protocol = 'Unknows';
+              if (val.key === 80) {
+                protocol = 'HTTP';
+              }
+              if (val.key === 443) {
+                protocol = 'HTTPS';
+              }
+              newData.push({
+                name: protocol,
+                y: val.count
+              });
+            });
+            $scope.protocol = newData;
           }
         });
     }
@@ -151,4 +198,4 @@
       };
     }
   }
-})(angular);
+})(angular, _);

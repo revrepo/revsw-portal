@@ -47,7 +47,7 @@
     "ui-select": "angular-ui-select#~0.13.1",
     "angular-moment": "^0.10.3",
     "angular-daterangepicker": "~0.2.2",
-    "bootstrap-daterangepicker": "~2.1.18"
+    "bootstrap-daterangepicker": "~2.1.18",
   },
   "resolutions": {
     "moment": "~2.10.6"

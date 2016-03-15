@@ -225,6 +225,7 @@
      * @param {string|number} domainId
      */
     $scope.reloadCountry = function (domainId) {
+      //TODO: unused $scope.country variable
       $scope.country = {
         labels: [],
         data: []
