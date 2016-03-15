@@ -59,7 +59,6 @@
      * @kind function
      */
     function init() {
-      //{domainId: "568525ec6f641ea7285c4221", from_timestamp: 1457697412757, to_timestamp: 1457783812757}
       filterGeneratorService.subscribeOnFilterChangeEvent($scope, function($event, filterData) {
         _.forEach(PIE_CHART_FILTERS_FIELDS, function(objKey) {
           if (filterData.data[objKey]) {
