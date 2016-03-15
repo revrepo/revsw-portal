@@ -329,7 +329,7 @@
           key = datePicker.val();
         }
 
-        if (scope.datePicker.overlay.val != '') {
+        if (scope.datePicker.overlay.val !== '') {
           filterChange();
         }
         scope.datePicker.overlay.val = key;
