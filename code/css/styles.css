@@ -446,9 +446,9 @@ polyline {
   width: 190px;
 }
 .filter-generator select {
-  max-width: 300px;
+  max-width: 150px;
   margin: 10px;
-  margin-right: 5px;
+  margin-right: 0;
 }
 .filter-generator .remove-active-filter {
   cursor: pointer;
