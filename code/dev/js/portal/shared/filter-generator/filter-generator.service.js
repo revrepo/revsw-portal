@@ -79,7 +79,8 @@
       var filters = {};
 
       filters[filterGeneratorConst.COUNTRIES] = {
-        name: 'Countries',
+        name: 'Country',
+        allTitle: 'Countries',
         vals: Countries.query(),
         //key for the filter in the chart, used for the request params
         key: 'country'
@@ -87,6 +88,7 @@
 
       filters[filterGeneratorConst.OS] = {
         name: 'OS',
+        allTitle: 'OS',
         get: getOs,
         vals: [],
         //key for the filter in the chart, used for the request params
@@ -94,7 +96,8 @@
       };
 
       filters[filterGeneratorConst.DEVICES] = {
-        name: 'Devices',
+        name: 'Device',
+        allTitle: 'Devices',
         get: getDevices,
         vals: [],
         //key for the filter in the chart, used for the request params
