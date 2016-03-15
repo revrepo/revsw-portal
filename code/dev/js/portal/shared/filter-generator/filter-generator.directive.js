@@ -4,7 +4,10 @@
  * 
  * @module 'revapm.Portal.Shared'
  * @desc filter generator directive
- * @example <filter-generator ng-model="data"></filter-generator>
+ * @example <filter-generator domain="domain" ng-model="data"></filter-generator>
+ * 
+ *  DOMAIN AND NG-MODEL ARE REQUIRED!
+ *
  */
 (function(angular, moment, _) {
   'use strict';
@@ -23,7 +26,10 @@
     var directive = {
       require: 'ngModel',
       restrict: 'E',
-      scope: {},
+      scope: {
+        ngModel: '=',
+        domain: '='
+      },
       templateUrl: 'parts/shared/filter-generator/filter-generator.html',
       link: {
         post: link
@@ -41,35 +47,14 @@
       var FILTER_EVENT_TIMEOUT = 2000,
         DATE_PICKER_SELECTOR = '.date-picker';
 
-      ngModel = [{
-        name: 'OS',
-        vals: [{
-          count: 62,
-          key: 'Windows 7'
-        }, {
-          count: 63,
-          key: 'Windows 8'
-        }]
-      }, {
-        name: 'Devices',
-        vals: [{
-          count: 1,
-          key: 'IOS'
-        }, {
-          count: 2,
-          key: 'Android'
-        }, {
-          count: 3,
-          key: 'Windows Phone'
-        }]
-      }];
-
       //datepicker ranges
       var ranges = {},
-        filtersAddMenu = angular.copy(ngModel),
+        filtersAddMenu = [],
         filterChangeTimeout;
 
-      ranges['Last one day'] = [moment(), moment()];
+      ranges['Last 1 Day'] = [moment().subtract(1, 'days'), moment()];
+      ranges['Last 7 Days '] = [moment().subtract(7, 'days'), moment()];
+      ranges['Last 30 Days '] = [moment().subtract(30, 'days'), moment()];
 
       //date picker params
       scope.datePicker = {
@@ -83,7 +68,7 @@
           ranges: ranges
         },
         date: {
-          startDate: moment(),
+          startDate: moment().subtract(1, 'days'),
           endDate: moment()
         }
       };
@@ -123,7 +108,21 @@
        * @kind function
        */
       function init() {
-        updateOverlayValue();
+        scope.$watch('ngModel', function() {
+          generateFilterListMenu();
+        });
+
+        scope.$watch('domain', function() {
+          generateFilterListMenu();
+        });
+
+        scope.$on('$destroy', function() {
+          if (filterChangeTimeout) {
+            clearTimeout(filterChangeTimeout);
+          }
+        });
+
+        updateOverlayValue(elem.querySelectorAll(DATE_PICKER_SELECTOR));
       }
 
       /*
@@ -136,6 +135,34 @@
         toggleFilterShownState(filter);
         scope.filters.push(filter);
         hideMenu();
+      }
+
+      /*
+       * @name generateFilterListMenu
+       * @desc generates filter list for the menu
+       * @kind function
+       */
+      function generateFilterListMenu() {
+        var domainId = scope.domain.id;
+
+        filtersAddMenu = [];
+        scope.filters = [];
+
+        if (filterChangeTimeout) {
+          clearTimeout(filterChangeTimeout);
+        }
+
+        _.forEach(ngModel.$modelValue, function(filterKey) {
+          var filter = filterGeneratorService.getFilterByFilterKey(filterKey);
+          if (filter.get) {
+            filter
+              .get(domainId)
+              .then(function(data) {
+                filter.vals = data.labels;
+              });
+          }
+          filtersAddMenu.push(filter);
+        });
       }
 
       /*
@@ -189,6 +216,7 @@
         filter.selected = '';
         toggleFilterShownState(filter);
         scope.filters.splice($index, 1);
+        filterChange();
       }
 
       /*
@@ -223,10 +251,18 @@
        * @kind function
        */
       function sendFilterChangeEvent() {
-        filterGeneratorService.broadcastFilterChangeEvent({
+        var filterSelected = {
           from_timestamp: scope.datePicker.date.startDate.toDate().getTime(),
           to_timestamp: scope.datePicker.date.endDate.toDate().getTime()
+        };
+
+        _.forEach(scope.filters, function(filter) {
+          if (filter.selected) {
+            filterSelected[filter.key] = filter.selected;
+          }
         });
+
+        filterGeneratorService.broadcastFilterChangeEvent(filterSelected);
       }
 
       /*
@@ -292,6 +328,9 @@
           key = datePicker.val();
         }
 
+        if (scope.datePicker.overlay.val != "" && scope.datePicker.overlay.val !== key) {
+          filterChange();
+        }
         scope.datePicker.overlay.val = key;
         scope.datePicker.overlay.show = true;
       }
@@ -303,6 +342,9 @@
        * @param {Object} - datePicker object
        */
       function refreshFilter() {
+        if (filterChangeTimeout) {
+          clearTimeout(filterChangeTimeout);
+        }
         sendFilterChangeEvent();
       }
     }

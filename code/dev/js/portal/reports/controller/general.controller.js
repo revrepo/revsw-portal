@@ -16,30 +16,38 @@
   GeneralCtrl.$inject = [
     '$scope',
     'Stats',
-    'reportsFilterService'
+    'filterGeneratorConst',
+    'Countries',
+    'filterGeneratorService'
   ];
 
   /*@ngInject*/
   function GeneralCtrl(
     $scope,
     Stats,
-    reportsFilterService
+    filterGeneratorConst,
+    Countries,
+    filterGeneratorService
   ) {
-    var vm = this;
+    var PIE_CHART_FILTERS_FIELDS = ['domainId', 'from_timestamp', 'to_timestamp', 'country'];
+
+    var vm = this,
+      filter = {
+        from_timestamp: moment().subtract(1, 'days').valueOf(),
+        to_timestamp: Date.now()
+      };
 
     //ui data model
     vm.model = {
       total: {},
       domain: empty,
-      filtersList: []
+      filtersList: [filterGeneratorConst.COUNTRIES, filterGeneratorConst.OS, filterGeneratorConst.DEVICES]
     };
 
     //ui actions
     vm.actions = {
       onDomainChange: onDomainChange
     };
-
-    $scope.reloadProtocol = reloadProtocol;
 
     init();
 
@@ -52,6 +60,21 @@
      */
     function init() {
       //{domainId: "568525ec6f641ea7285c4221", from_timestamp: 1457697412757, to_timestamp: 1457783812757}
+      filterGeneratorService.subscribeOnFilterChangeEvent($scope, function($event, filterData) {
+        _.forEach(PIE_CHART_FILTERS_FIELDS, function(objKey) {
+          if (filterData.data[objKey]) {
+            filter[objKey] = filterData.data[objKey];
+          }
+        });
+
+        if (filter.from_timestamp < moment().subtract(1, 'days').valueOf()) {
+          filter.from_timestamp = moment().subtract(1, 'days').valueOf();
+        }
+        if (filter.to_timestamp > Date.now()) {
+          filter.to_timestamp = Date.now();
+        }
+        getFilterData();
+      });
     }
 
     /**
@@ -61,8 +84,8 @@
      */
     function onDomainChange() {
       if (vm.model.domain) {
-        var domainId = vm.model.domain.id;
-        getFilterData(domainId);
+        filter.domainId = vm.model.domain.id;
+        getFilterData();
       }
     }
 
@@ -71,21 +94,7 @@
      * @desc get Filter data
      * @kind function
      */
-    function getFilterData(domainId) {
-      reportsFilterService
-        .getOs(domainId)
-        .then(function(osData) {
-          $scope.os = osData;
-        });
-
-      reportsFilterService
-        .getDevices(domainId)
-        .then(function(deviceData) {
-          $scope.device = deviceData;
-        });
-
-      var filter = { domainId: '568525ec6f641ea7285c4221', from_timestamp: 1457697412757, to_timestamp: 1457783812757 };
-
+    function getFilterData() {
       reloadCacheStatus(filter);
       reloadHttpMethod(filter);
       reloadProtocol(filter);
@@ -98,7 +107,7 @@
      * @kind function
      */
     function reloadCacheStatus(filters) {
-      filters = filters || { domainId: '568525ec6f641ea7285c4221', from_timestamp: 1457697412757, to_timestamp: 1457783812757 };
+      filters = filters;
       $scope.cacheStatus = [];
       Stats
         .cacheStatus(filters)
@@ -123,7 +132,7 @@
      * @kind function
      */
     function reloadHttpMethod(filters) {
-      filters = filters || { domainId: '568525ec6f641ea7285c4221', from_timestamp: 1457697412757, to_timestamp: 1457783812757 };
+      filters = filters;
       $scope.httpMethod = [];
       Stats
         .httpMethod(filters)

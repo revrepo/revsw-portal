@@ -46,8 +46,25 @@
      * @params {Object} Event object
      * @params {Object} Data passed with event
      */
-    function callbackOnGlobalFilterChange($event, data) {
-      $scope.updateFilters();
+    function callbackOnGlobalFilterChange($event, eventDataObject) {
+      //$scope.updateFilters();
+      if (!$scope.ngFilters) {
+        $scope.ngFilters = {};
+      }
+
+      _.forIn(eventDataObject.data, function(value, key){
+        $scope.ngFilters[key] = value;
+      })
+
+      //clear all empty fields in the filter object
+      _.forIn($scope.ngFilters, function(value, key) {
+        if (!eventDataObject.data[key]) {
+          delete $scope.ngFilters[key];
+        }
+      });
+      
+
+      $scope.onFilter();
     }
 
     /**
