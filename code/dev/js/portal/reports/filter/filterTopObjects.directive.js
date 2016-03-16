@@ -45,7 +45,7 @@
 
           _.forIn(eventDataObject.data, function(value, key) {
             $scope.ngFilters[key] = value;
-          })
+          });
 
           //clear all empty fields in the filter object
           _.forIn($scope.ngFilters, function(value, key) {
