@@ -10,6 +10,8 @@
     $scope.countries = Countries.query();
     $scope.zipRegex = '[0-9]{1,10}';
     $scope.phoneRegex = '[0-9, \\s, \\+, \\-, \\(, \\)]{1,20}';
+    $scope.user = User.getUser();
+    $scope._disabled = ($scope.user.access_control_list.readOnly) ? $scope.user.access_control_list.readOnly : false;
     $injector.invoke(CRUDController, this, {$scope: $scope, $stateParams: $stateParams});
     $scope.setResource(Companies);
     $scope.getCompany = function(id) {
@@ -20,10 +22,14 @@
     };
 
     $scope.initEditCompany = function () {
-      $scope.user = User.getUser();
-      $scope.getCompany($scope.user.companyId);
-      console.log($scope.model);
-      
+      if($stateParams.id){
+        $scope.getCompany($stateParams.id);
+      }
+      else{
+        $scope.getCompany($scope.user.companyId);
+      }
+
+
     };
 
     $scope.updateCompany = function (company) {

@@ -35,21 +35,21 @@
           }
         }
       })
-      .state('index.accountSettings.invoices', {
-        url: '/profile/invoices',
+      .state('index.accountSettings.statements', {
+        url: '/profile/statements',
         views: {
           main: {
-            controller: 'InvoicesController',
-            templateUrl: 'parts/profile/invoices.html'
+            controller: 'StatementsController',
+            templateUrl: 'parts/profile/statements.html'
           }
         }
       })
-      .state('index.accountSettings.invoice', {
-        url: '/profile/invoices/:id',
+      .state('index.accountSettings.statement', {
+        url: '/profile/statements/:id',
         views: {
           main: {
-            controller: 'InvoicesController',
-            templateUrl: 'parts/profile/invoice.html'
+            controller: 'StatementsController',
+            templateUrl: 'parts/profile/statement.html'
           }
         }
       })

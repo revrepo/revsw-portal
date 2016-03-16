@@ -89,11 +89,11 @@
                                 </p>
                                 <button ng-disabled="_loading" ng-show="item.id !== account.plan_id" ng-click="chooseBillingPlan(item, account)"
                                         class="btn btn-primary btn-sm">
-                                    <i class="glyphicon glyphicon-refresh spin" ng-if="_loading"></i>Subscribe
+                                    <i class="glyphicon glyphicon-refresh spin" ng-if="_loading"></i> Subscribe
                                 </button>
                                 <button  ng-show="item.id === account.plan_id" ng-click="chooseBillingPlan(item.id, account)"
                                         class="btn btn-info btn-sm" disabled>
-                                    <i class="glyphicon glyphicon-refresh spin" ng-if="_loading"></i>Current
+                                    <i class="glyphicon glyphicon-refresh spin" ng-if="_loading"></i> Current
                                 </button>
                             </td>
                         </tr>

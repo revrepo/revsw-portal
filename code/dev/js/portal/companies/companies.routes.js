@@ -30,8 +30,8 @@
         url: '/edit/:id',
         views: {
           page: {
-            templateUrl: 'parts/companies/edit.html',
-            controller: 'CompaniesCrudController'
+            templateUrl: 'parts/profile/edit-company.html',
+            controller: 'CompanyProfileEditController'
           }
         }
       });

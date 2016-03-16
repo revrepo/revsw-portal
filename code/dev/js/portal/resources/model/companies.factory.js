@@ -8,19 +8,19 @@
   /*@ngInject*/
   function CompaniesResource(Resource, $config) {
 
-    return Resource($config.API_URL + '/accounts/:id', {id: '@id', invoice: '@invoice'},{
-      invoices: {
-        url: $config.API_URL + '/accounts/:id/invoices',
+    return Resource($config.API_URL + '/accounts/:id', {id: '@id', statement: '@statement'},{
+      statements: {
+        url: $config.API_URL + '/accounts/:id/statements',
         method: 'GET',
         isArray: true
       },
-      invoice: {
-        url: $config.API_URL + '/accounts/:id/invoices/:invoice',
+      statement: {
+        url: $config.API_URL + '/accounts/:id/statements/:statement',
         method: 'GET',
         isArray: false
       },
       getPdfStatement: {
-        url: $config.API_URL + '/accounts/:id/invoices/:invoice/pdf',
+        url: $config.API_URL + '/accounts/:id/statements/:statement/pdf',
         method: 'GET',
         headers: {
           accept: 'application/pdf'

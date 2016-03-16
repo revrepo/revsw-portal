@@ -6,20 +6,31 @@
     .controller('BillingController', BillingController);
 
   /*@ngInject*/
-  function BillingController($scope, User, Companies, BillingPlans, CRUDController, $injector, $stateParams, AlertService) {
+  function BillingController($scope, $state, User, Companies, BillingPlans, CRUDController, $injector, $stateParams, AlertService) {
 
     $injector.invoke(CRUDController, this, {$scope: $scope, $stateParams: $stateParams});
 
     $scope.accounts = [];
-    $scope.account = null;
+    $scope.account = User.getSelectedAccount();
+
+    $scope.onAccountSelect = function ( acc ) {
+      $scope._loading = true;
+      User.selectAccount( acc );
+      $scope.account = acc;
+
+      $scope.account = User.getSelectedAccount();
+      $state.reload();
+    };
 
     $scope.initBillingInfo = function () {
       User.getUserAccounts()
         .then(function ( accs ) {
           $scope._loading = true;
-          $scope.accounts = accs;
-          if ( accs.length === 1 ) {
-            $scope.account = accs[0];
+
+          $scope.accounts = accs.length > 1 ? accs.slice(1) : accs;
+
+          if(!$scope.account || !$scope.account.acc_id){
+            $scope.account = $scope.accounts[0];
           }
           $scope.user = User.getUser();
           $scope.setResource(BillingPlans);
@@ -38,11 +49,6 @@
       return ($scope.account.plan_id === id);
     };
 
-    $scope.onAccountSelect = function ( acc ) {
-      User.selectAccount( acc );
-      $scope.account = acc;
-    };
-
     $scope.chooseBillingPlan = function (plan, account) {
       $scope.confirm('confirmModal.html', plan)
         .then(function () {
@@ -56,12 +62,14 @@
             .then(function () {
               User.getUserAccounts(true)
                 .then(function (accs) {
-                  AlertService.success('Successfully changed billing plan');
+                  
+                  AlertService.success('Successfully changed billing plan', 5000);
                   accs.forEach(function (acc) {
-                    if(acc.id === account.ac_id){
-                      $scope.onAccountSelect(acc);
+                    if(acc.acc_id === account.acc_id){
+                      User.selectAccount( acc );
+                      $scope.account = User.getSelectedAccount();
                     }
-                  })
+                  });
                 });
             })
             .catch(function (err) {
@@ -71,7 +79,7 @@
               $scope._loading = false;
             });
         });
-    }
+    };
 
 
   }
