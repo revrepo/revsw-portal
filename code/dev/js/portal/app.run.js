@@ -15,7 +15,7 @@
       });
     $rootScope.$on('$stateChangeSuccess',
       function(event){
-        // Clear alerts when routes change
+        // Clear alerts when routes change //TODO:check comment
         setTimeout(function() {
           $('[autofocus]').focus();
         }, 0);

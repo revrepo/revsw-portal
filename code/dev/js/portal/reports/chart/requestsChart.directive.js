@@ -1,14 +1,15 @@
-(function () {
+(function() {
   'use strict';
 
   angular
     .module('revapm.Portal.Reports')
     .directive('requestsChart', requestsChartDirective);
 
+  requestsChartDirective.$inject = [];
+
   /*@ngInject*/
   function requestsChartDirective() {
-
-    return {
+    var directive = {
       restrict: 'AE',
       templateUrl: 'parts/reports/charts/requests.html',
       scope: {
@@ -18,100 +19,121 @@
         flDevice: '='
       },
       /*@ngInject*/
-      controller: function ($scope, Stats, Util) {
+      controller: RequestsChartCtrl
+    };
 
-        $scope.delay = 1800;
+    return directive;
+  }
 
-        $scope._loading = false;
-        $scope.filters = {
-          from_timestamp: moment().subtract(1, 'days').valueOf(),
-          to_timestamp: Date.now()
-        };
+  RequestsChartCtrl.$inject = [
+    '$scope',
+    'Stats',
+    'Util'
+  ];
 
-        $scope.chartOptions = {
-          yAxis: {
-            title: {
-              text: 'Bandwidth'
-            },
-            labels: {
-              formatter: function() {
-                return Util.convertTraffic(this.value);
-              }
-            }
-          },
-          tooltip: {
-            formatter: function() {
-              return '<b>'+ this.x +'</b><br/>'+
-                this.series.name + ': ' + Util.convertTraffic(this.y);
-            }
+  function RequestsChartCtrl(
+    $scope,
+    Stats,
+    Util
+  ) {
+    $scope.delay = 1800;
+    $scope._loading = false;
+    $scope.reloadTrafficStats = reloadTrafficStats;
+
+    $scope.filters = {
+      from_timestamp: moment().subtract(1, 'days').valueOf(),
+      to_timestamp: Date.now()
+    };
+
+    $scope.chartOptions = {
+      yAxis: {
+        title: {
+          text: 'Bandwidth'
+        },
+        labels: {
+          formatter: function() {
+            return Util.convertTraffic(this.value);
           }
-        };
+        }
+      },
+      tooltip: {
+        formatter: function() {
+          return '<b>' + this.x + '</b><br/>' +
+            this.series.name + ': ' + Util.convertTraffic(this.y);
+        }
+      }
+    };
 
-        $scope.traffic = {
-          labels: [],
-          series: [{
-            name: 'Incoming bandwidth',
-            data: []
-          }, {
-            name: 'Outgoing bandwidth',
-            data: []
-          }]
-        };
+    $scope.traffic = {
+      labels: [],
+      series: [{
+        name: 'Incoming bandwidth',
+        data: []
+      }, {
+        name: 'Outgoing bandwidth',
+        data: []
+      }]
+    };
 
-        $scope.reloadTrafficStats = function () {
-          if (!$scope.ngDomain || !$scope.ngDomain.id) {
-            return;
-          }
-          $scope._loading = true;
-          $scope.traffic = {
-            labels: [],
-            series: [{
+    $scope.$watch('ngDomain', function() {
+      if (!$scope.ngDomain) {
+        return;
+      }
+      reloadTrafficStats();
+    });
+
+    //////////////////
+
+    /**
+     * @name reloadTrafficStats
+     * @desc reload traffic stats
+     * @kind function
+     */
+    function reloadTrafficStats() {
+      if (!$scope.ngDomain || !$scope.ngDomain.id) {
+        return;
+      }
+      $scope._loading = true;
+      $scope.traffic = {
+        labels: [],
+        series: [{
+          name: 'Incoming bandwidth',
+          data: []
+        }, {
+          name: 'Outgoing bandwidth',
+          data: []
+        }]
+      };
+
+      Stats.traffic(angular.merge({ domainId: $scope.ngDomain.id }, $scope.filters))
+        .$promise
+        .then(function(data) {
+          if (data.data && data.data.length > 0) {
+            var series = [{
               name: 'Incoming bandwidth',
               data: []
             }, {
               name: 'Outgoing bandwidth',
               data: []
-            }]
-          };
-
-          Stats.traffic(angular.merge({domainId: $scope.ngDomain.id}, $scope.filters))
-            .$promise
-            .then(function (data) {
-              if (data.data && data.data.length > 0) {
-                var series = [{
-                  name: 'Incoming bandwidth',
-                  data: []
-                }, {
-                  name: 'Outgoing bandwidth',
-                  data: []
-                }];
-                $scope.delay = data.metadata.interval_sec || 1800;
-                var labels = [],
-                  offset = $scope.delay * 1000;
-                angular.forEach(data.data, function (data) {
-                  labels.push(moment(data.time + offset/*to show the _end_ of interval instead of begin*/).format('MMM Do YY h:mm'));
-                  series[0].data.push(Util.toBps(data.received_bytes, $scope.delay, true));
-                  series[1].data.push(Util.toBps(data.sent_bytes, $scope.delay, true));
-                });
-                // model better to update once
-                $scope.traffic = {
-                  labels: labels,
-                  series: series
-                };
-              }
-            })
-            .finally(function () {
-              $scope._loading = false;
+            }];
+            $scope.delay = data.metadata.interval_sec || 1800;
+            var labels = [],
+              offset = $scope.delay * 1000;
+            angular.forEach(data.data, function(data) {
+              labels.push(moment(data.time + offset /*to show the _end_ of interval instead of begin*/ ).format('MMM Do YY h:mm'));
+              series[0].data.push(Util.toBps(data.received_bytes, $scope.delay, true));
+              series[1].data.push(Util.toBps(data.sent_bytes, $scope.delay, true));
             });
-        };
-
-        $scope.$watch('ngDomain', function () {
-          if (!$scope.ngDomain) {
-            return;
+            // model better to update once
+            $scope.traffic = {
+              labels: labels,
+              series: series
+            };
           }
-          $scope.reloadTrafficStats();
+        })
+        .finally(function() {
+          $scope._loading = false;
         });
-      }
-    };
+    }
   }
 })();
