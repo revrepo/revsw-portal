@@ -18,7 +18,10 @@
     'ui.bootstrap.tpls',
     'ui.bootstrap.tooltip',
     'ui.bootstrap.popover',
-    'hljs'
+    'hljs',
+    'datatables',
+    'datatables.bootstrap',
+    'ngFileSaver'
   ]);
 
 })();
