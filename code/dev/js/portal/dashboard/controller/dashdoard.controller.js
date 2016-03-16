@@ -5,32 +5,37 @@
      .module('revapm.Portal.Dashboard')
      .controller('DashdoardController', DashdoardController);
 
-   function DashdoardController($scope, $localStorage) {
+   function DashdoardController($scope, $localStorage, DashboardSrv) {
      'ngInject';
+     var vm = this;
+     // TODO: get dashboardId from $stateParams or User profile
+     vm.dashboardId = "Dashboard";
 
-     this.name = "Dashboard";
-
-     var data = $localStorage[this.name];
-     if (!data) {
-       data = {
-         "title": "Dashboard",
-         "structure": "6-6",
-         "rows": [{
-           "columns": [{
-             "styleClass": "col-md-6",
-             "widgets": []
-           }, {
-             "styleClass": "col-md-6",
-             "widgets": []
-           }]
-         }]
-       };
-     }
-
-     this.model = data;
-
-     $scope.$on('adfDashboardChanged', function(event, name, model) {
-       $localStorage[name] = model;
+     DashboardSrv
+       .get(this.dashboardId)
+       .then(function(data) {
+           if (!data) {
+             data = {
+               "title": "Dashboard",
+               "structure": "6-6",
+               "rows": [{
+                 "columns": [{
+                   "styleClass": "col-md-6",
+                   "widgets": []
+                 }, {
+                   "styleClass": "col-md-6",
+                   "widgets": []
+                 }]
+               }]
+             };
+           }
+           vm.model = data;
+         },
+         function() {
+            // TODO: create new dashdoard
+         })
+     $scope.$on('adfDashboardChanged', function(event, dashboardId, model) {
+       DashboardSrv.set(dashboardId, model);
      });
    }
 
