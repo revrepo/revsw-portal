@@ -1,5 +1,6 @@
 <div class="col-lg-12">
   <h4>{{config.domain.domain_name}}</h4>
-  <div hits-cache-chart ng-filters="config.filters" fl-os="config.os.labels" fl-device="config.device.labels" fl-country="config.countries" ng-domain="config.domain"></div>
+    <div class="row" ng-include="'{widgetsPath}/analytics-proxy-traffic/src/views/parts/panel-filter-settings.tpl.html'" ></div>
+  <div hits-cache-chart filters-sets="config.filters" ng-domain="config.domain"></div>
 </div>
 

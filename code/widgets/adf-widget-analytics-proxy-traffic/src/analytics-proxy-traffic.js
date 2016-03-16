@@ -2,52 +2,162 @@
 
 angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
   .config(function(dashboardProvider) {
+
+    dashboardProvider
+      .structure('6-6', {
+        rows: [{
+          columns: [{
+            styleClass: 'col-md-6'
+          }, {
+            styleClass: 'col-md-6'
+          }]
+        }]
+      })
+  })
+  .config(function(dashboardProvider) {
     var _widget = {
       title: 'Proxy Traffic',
       description: 'Web Alalytics Proxy Traffic',
       templateUrl: '{widgetsPath}/analytics-proxy-traffic/src/view.html',
-      controller: 'ReportsProxyTrafficController',
+      controller: ['$scope', function($scope) {
+
+      }],
       edit: {
         templateUrl: '{widgetsPath}/analytics-proxy-traffic/src/edit.html',
-        controller: ['$scope', '$q', 'Stats', 'Countries', 'User', 'AlertService', function($scope, $q, Stats, Countries, User, AlertService) {
-          $scope.flCountries = Countries.query();
-          $scope.flDevice = [];
-          $scope.flOs = [];
+        controller: ['$scope', '$q', 'Stats', 'Countries', 'User', 'AlertService', 'filterGeneratorConst',
+          function($scope, $q, Stats, Countries, User, AlertService, filterGeneratorConst) {
+            var curConfig = angular.copy($scope.config);
+            $scope.panel_filter_info = '{widgetsPath}/analytics-proxy-traffic/src/views/parts/panel-filter-settings.tpl.html';
+            $scope.onDomainSelected = function() {
+              console.log($scope.domain);
+              if (!$scope.domain || !$scope.domain.id) {
+                return;
+              }
+              $scope.reload();
 
-          $scope.filters = {
-            os: null,
-            device: null,
-            country: null,
-          };
-          // Load user domains
-          User.getUserDomains(true);
-          /**
-           * @name updateFlLists
-           * @description Update data
-           * @return {Promise}
-           */
-          var updateFlLists = function() {
-            var promises = [
+            };
+
+            $scope.reload = function() {
+              angular.extend($scope.config, {
+                domain: angular.copy($scope.domain)
+              });
+              $scope.reloadCountry($scope.domain.id);
+              $scope.reloadOS($scope.domain.id);
+              $scope.reloadDevice($scope.domain.id);
+              $scope.reloadStatusCode($scope.domain.id);
+            }
+
+            $scope.flCountry = {};
+            /**
+             * List of country
+             *
+             * @param {string|number} domainId
+             */
+            $scope.reloadCountry = function(domainId) {
+              $scope.flCountry = Countries.query();
+              // Stats.country({
+              //   domainId: domainId
+              // }).$promise.then(function(data) {
+              //   if (data.data && data.data.length > 0) {
+              //     angular.forEach(data.data, function(os) {
+              //       $scope.country.labels.push(os.key);
+              //       $scope.country.data.push(os.count);
+              //     });
+              //   }
+              // });
+            };
+
+            /**
+             * @name  flOs
+             * @description list OS for select in configuration
+             * @type {Object}
+             */
+            $scope.flOs = {
+              labels: [],
+              data: []
+            };
+            /**
+             * Reload list of OS
+             *
+             * @param {string|number} domainId
+             */
+            $scope.reloadOS = function(domainId) {
               Stats.os({
-                domainId: $scope.config.domain.id
-              }).$promise,
-              Stats.device({
-                domainId: $scope.config.domain.id
-              }).$promise
-            ];
-            return $q.all(promises)
-              .then(
-                function(res) {
-                  $scope.flDevice = res[0];
-                  $scope.flOs = [1];
-                })
-          }
+                domainId: domainId
+              }).$promise.then(function(data) {
+                $scope.flOs.labels.length = 0;
+                $scope.flOs.data.length = 0;
+                if (data.data && data.data.length > 0) {
+                  angular.forEach(data.data, function(item) {
+                    $scope.flOs.labels.push(item.key);
+                    $scope.flOs.data.push(item.count);
+                  });
+                }
+              });
+            };
 
-          $scope.$watch('config.domain', function(newVal, oldVAl) {
-            // TODO: get data for lists or use filter-generator
-            // if (!!newVal) updateFlLists()
-          }, true)
-        }],
+            /**
+             * @name flDdevice
+             * @description List devices for selected domain
+             * @type {Object}
+             */
+            $scope.flDevice = {
+              labels: [],
+              data: []
+            };
+
+            /**
+             * @name reloadDevice
+             * @description Reload list of devices for domain
+             * @param   {string|number}  domainId
+             */
+            $scope.reloadDevice = function(domainId) {
+
+              Stats.device({
+                domainId: domainId
+              }).$promise.then(function(data) {
+                $scope.flDevice.labels.length = 0;
+                $scope.flDevice.data.length = 0;
+                if (data.data && data.data.length > 0) {
+                  angular.forEach(data.data, function(item) {
+                    $scope.flDevice.labels.push(item.key);
+                    $scope.flDevice.data.push(item.count);
+                  });
+                }
+              });
+            };
+
+            $scope.statusCode = {
+              labels: [],
+              data: []
+            };
+            /**
+             * List of devices
+             *
+             * @param {string|number} domainId
+             */
+            $scope.reloadStatusCode = function(domainId) {
+              return Stats.statusCode({
+                domainId: domainId
+              }).$promise.then(function(data) {
+                $scope.statusCode.labels.length = 0;
+                $scope.statusCode.data.length = 0;
+                if (data.data && data.data.length > 0) {
+                  angular.forEach(data.data, function(item) {
+                    $scope.statusCode.labels.push(item.key);
+                    $scope.statusCode.data.push(item.count);
+                  });
+                  $scope.config.statusCode = $scope.statusCode.labels;
+                }
+              });
+            };
+
+            //==================
+            // Load user domains
+            User.getUserDomains(true);
+
+          }
+        ],
       }
     };
 
@@ -57,7 +167,7 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
         description: 'Display the Bandwidth Usage (requests-chart)',
         templateUrl: '{widgetsPath}/analytics-proxy-traffic/src/views/view-requests-chart.tpl.html',
       }))
-      .widget('analytics-proxy-traffic', angular.extend(_widget, {
+      .widget('analytics-proxy-traffic-chart', angular.extend(_widget, {
         title: 'Total Requests',
         description: 'Display the Total Requests (proxy-traffic-chart)',
         templateUrl: '{widgetsPath}/analytics-proxy-traffic/src/views/view-proxy-traffic-chart.tpl.html',
