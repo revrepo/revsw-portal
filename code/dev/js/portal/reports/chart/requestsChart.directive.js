@@ -16,7 +16,8 @@
         ngDomain: '=',
         flCountry: '=',
         flOs: '=',
-        flDevice: '='
+        flDevice: '=',
+        filtersSets: '='
       },
       /*@ngInject*/
       controller: RequestsChartCtrl
@@ -25,12 +26,7 @@
     return directive;
   }
 
-  RequestsChartCtrl.$inject = [
-    '$scope',
-    'Stats',
-    'Util'
-  ];
-
+  /*ngInject*/
   function RequestsChartCtrl(
     $scope,
     Stats,
@@ -44,6 +40,9 @@
       from_timestamp: moment().subtract(1, 'days').valueOf(),
       to_timestamp: Date.now()
     };
+
+    if ($scope.filtersSets)
+      _.extend($scope.filters, $scope.filtersSets)
 
     $scope.chartOptions = {
       yAxis: {
@@ -105,7 +104,9 @@
         }]
       };
 
-      Stats.traffic(angular.merge({ domainId: $scope.ngDomain.id }, $scope.filters))
+      Stats.traffic(angular.merge({
+          domainId: $scope.ngDomain.id
+        }, $scope.filters))
         .$promise
         .then(function(data) {
           if (data.data && data.data.length > 0) {

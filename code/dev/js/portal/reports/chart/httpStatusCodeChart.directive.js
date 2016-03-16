@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
 
   angular
@@ -16,10 +16,11 @@
         statusCodes: '=',
         flCountry: '=',
         flOs: '=',
-        flDevice: '='
+        flDevice: '=',
+        filtersSets: '='
       },
       /*@ngInject*/
-      controller: function ($scope, Stats, $q, Util) {
+      controller: function($scope, Stats, $q, Util) {
         $scope._loading = false;
         $scope.delay = 1800;
 
@@ -27,13 +28,14 @@
           from_timestamp: moment().subtract(1, 'days').valueOf(),
           to_timestamp: Date.now()
         };
-
+        if ($scope.filtersSets)
+          _.extend($scope.filters, $scope.filtersSets)
         $scope.traffic = {
           labels: [],
           series: []
         };
 
-        $scope.reload = function () {
+        $scope.reload = function() {
           if (!$scope.ngDomain || !$scope.ngDomain.id || !$scope.statusCodes || !$scope.statusCodes.length) {
             return;
           }
@@ -44,30 +46,32 @@
           var promises = {};
           var series = [];
           var labels = [];
-          $scope.statusCodes.forEach(function (code) {
+          $scope.statusCodes.forEach(function(code) {
             if (!code) {
               return;
             }
-            promises[code] = Stats.traffic(angular.merge({domainId: $scope.ngDomain.id}, $scope.filters, {
+            promises[code] = Stats.traffic(angular.merge({
+              domainId: $scope.ngDomain.id
+            }, $scope.filters, {
               status_code: code
             })).$promise;
           });
           $scope._loading = true;
           var timeSet = false;
           $q.all(promises)
-            .then(function (data) {
+            .then(function(data) {
               labels = [];
               $scope.delay = 1800;
-              angular.forEach(data, function (val, idx) {
+              angular.forEach(data, function(val, idx) {
                 if (data[idx].metadata.interval_sec) {
                   $scope.delay = data[idx].metadata.interval_sec;
                 }
                 var offset = $scope.delay * 1000;
                 var results = [];
                 if (data[idx].data && data[idx].data.length > 0) {
-                  angular.forEach(data[idx].data, function (res) {
+                  angular.forEach(data[idx].data, function(res) {
                     if (!timeSet) {
-                      labels.push(moment(res.time + offset/*to show the _end_ of interval instead of begin*/).format('MMM Do YY h:mm'));
+                      labels.push(moment(res.time + offset /*to show the _end_ of interval instead of begin*/ ).format('MMM Do YY h:mm'));
                     }
                     results.push(Util.toRPS(res.requests, $scope.delay, true));
                   });
@@ -83,15 +87,15 @@
                 series: series
               };
             })
-            .finally(function () {
+            .finally(function() {
               $scope._loading = false;
             });
         };
 
-        $scope.$watch('ngDomain', function () {
+        $scope.$watch('ngDomain', function() {
           $scope.reload();
         });
-        $scope.$watch('statusCodes', function () {
+        $scope.$watch('statusCodes', function() {
           $scope.reload();
         });
       }
