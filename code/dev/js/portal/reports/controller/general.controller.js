@@ -29,7 +29,7 @@
     Countries,
     filterGeneratorService
   ) {
-    var PIE_CHART_FILTERS_FIELDS = ['domainId', 'from_timestamp', 'to_timestamp', 'country'];
+    var PIE_CHART_FILTERS_FIELDS = ['from_timestamp', 'to_timestamp', 'country'];
 
     var vm = this,
       filter = {
@@ -63,6 +63,8 @@
         _.forEach(PIE_CHART_FILTERS_FIELDS, function(objKey) {
           if (filterData.data[objKey]) {
             filter[objKey] = filterData.data[objKey];
+          } else {
+            delete filter[objKey];
           }
         });
 
