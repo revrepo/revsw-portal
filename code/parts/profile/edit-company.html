@@ -4,7 +4,7 @@
     </div>
     <div class="modal-body">
         Are you sure you want to update
-        <strong>{{model.name}}</strong> company profile?
+        <strong>{{model.companyName}}</strong> company profile?
     </div>
     <div class="modal-footer">
         <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
@@ -17,7 +17,7 @@
     </div>
     <div class="modal-body">
         Are you sure you want to delete company profile
-        <strong>{{model.name}}</strong>?
+        <strong>{{model.companyName}}</strong>?
     </div>
     <div class="modal-footer">
         <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
@@ -84,7 +84,7 @@
                             <label for="address1"
                                    class="col-sm-2 control-label"
                                    popover-trigger="mouseenter"
-                                   popover="Could be used as a billing address later.">Address 1 *</label>
+                                   popover="Could be used as a billing address later.">Address *</label>
 
                             <div class="col-sm-10">
                                 <input type="text"
@@ -235,12 +235,16 @@
                                 <input type="submit" class="btn btn-success"
                                        ng-disabled="_loading || _disabled"
                                        value="Update Company Profile">
+
+                                <!-- TODO: Need to disable "Edit Billing Profile" button if the billing profile is not active
+                                // TODO: in Chargify  -->
                                 <a href="{{model.billing_portal_link.url}}"
                                 class="btn btn-primary"
                                 target="_blank"
                                 ng-disabled="_loading || _disabled">
                                     <i class="glyphicon glyphicon-lock"></i>
                                     Edit Billing Profile</a>
+
                                 <button ng-click="deleteCompanyProfile(model.id)"
                                         class="btn btn-danger pull-right"
                                         ng-disabled="true || _loading || _disabled">

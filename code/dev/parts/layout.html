@@ -42,8 +42,8 @@
                 <a ui-sref-active="active" ui-sref="index.accountSettings.companies" class="side-menu-sub-item" ng-if="userService.isReseller() || userService.isRevadmin()">Companies</a>
                 <a ui-sref-active="active" ui-sref="index.accountSettings.keys" class="side-menu-sub-item" ng-if="!userService.isUser()">API Keys</a>
                 <a ui-sref-active="active" ui-sref="index.accountSettings.company" class="side-menu-sub-item" ng-if="userService.isAdmin()">Account Profile</a>
-                <a ui-sref-active="active" ui-sref="index.accountSettings.billing" class="side-menu-sub-item" ng-if="userService.isAdmin() || userService.isReseller() || userService.isRevadmin()">Billing Plans</a>
-                <a ui-sref-active="active" ui-sref="index.accountSettings.statements" class="side-menu-sub-item" ng-if="userService.isAdmin() || userService.isReseller() || userService.isRevadmin()">Statements & Transactions</a>
+                <a ui-sref-active="active" ui-sref="index.accountSettings.billing" class="side-menu-sub-item" ng-if="userService.isAdmin() || userService.isReseller() || userService.isRevadmin()">Change Billing Plan</a>
+                <a ui-sref-active="active" ui-sref="index.accountSettings.statements" class="side-menu-sub-item" ng-if="userService.isAdmin() || userService.isReseller() || userService.isRevadmin()">Billing Statements</a>
                 <a ui-sref-active="active" ui-sref="index.accountSettings.profile" class="side-menu-sub-item">Update Password</a>
                 <a ui-sref-active="active" ui-sref="index.accountSettings.2fa" class="side-menu-sub-item">Security Settings</a>
                 <a ui-sref-active="active" ui-sref="index.accountSettings.activitylog" class="side-menu-sub-item">Activity Log</a>
