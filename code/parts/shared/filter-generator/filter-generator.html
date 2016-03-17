@@ -15,9 +15,9 @@
 	</div>
 	<div class="pull-left" ng-repeat="filter in filters">
   <select
-			ng-if="filter.name == 'Countries'"
+			ng-if="filter.name == constants.country"
 			ng-model="filter.selected"
-			ng-options="::key as ::item for (key, item) in ::filter.vals")
+			ng-options="::key as ::item for (key, item) in filter.vals")
 			ng-change="handlers.filterChange()"
 			class="form-control"
 			>
@@ -28,9 +28,9 @@
 			</option>
 		</select>
 		<select 
-			ng-if="filter.name != 'Countries'"
+			ng-if="filter.name != constants.country"
 			ng-model="filter.selected"
-			ng-options="::item for item in ::filter.vals")
+			ng-options="::item for item in filter.vals")
 			ng-change="handlers.filterChange()"
 			class="form-control">
 			<option
