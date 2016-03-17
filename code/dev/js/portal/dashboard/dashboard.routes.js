@@ -14,7 +14,7 @@
     $stateProvider
       .state('index.dashboard', {
         url: '/dashboard',
-        abstract: true,
+        abstract: false,
         views: {
           page: {
             template: '<div class="container-fluid" ui-view="page"></div>'
@@ -37,6 +37,16 @@
         views: {
           page: {
             templateUrl: 'parts/dashboard/dashboard.tpl.html',
+            controller: "DashdoardController",
+            controllerAs: "dashboard"
+          }
+        }
+      })
+     .state('index.dashboard.details', {
+        url: '/:dashboardId',
+        views: {
+          'page': {
+            template:"<h1>TODO Detail Dashboard panel</h1>",
             controller: "DashdoardController",
             controllerAs: "dashboard"
           }
