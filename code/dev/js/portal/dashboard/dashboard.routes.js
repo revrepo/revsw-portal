@@ -42,11 +42,13 @@
           }
         }
       })
-     .state('index.dashboard.details', {
+      .state('index.dashboard.details', {
         url: '/:dashboardId',
         views: {
           'page': {
-            template:"<h1>TODO Detail Dashboard panel</h1>",
+            template: '<div class="row"><div class="col-md-12">' +
+              '<adf-dashboard name="{{dashboard.name}}" structure="dashboard.structure" adf-model="dashboard.model" />' +
+              '</div></div>',
             controller: "DashdoardController",
             controllerAs: "dashboard"
           }

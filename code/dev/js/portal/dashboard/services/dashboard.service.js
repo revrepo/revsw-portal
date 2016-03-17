@@ -66,6 +66,7 @@
        * @return {Promise}
        */
       get: function(id) {
+        var deferred = $q.defer();
         return $q.when($localStorage[id]);
         // var deferred = $q.defer();
         // TODO:
@@ -87,14 +88,14 @@
        */
       set: function(id, data) {
         var deferred = $q.defer();
-        $http.post($config.API_URL + '/v1/dashboards/' + id, data)
-          .success(function(data) {
-            deferred.resolve();
-          })
-          .error(function() {
-            deferred.reject();
-          });
-        $localStorage[name] = model;
+        // $http.post($config.API_URL + '/dashboards/' + id, data)
+        //   .success(function(data) {
+        //     deferred.resolve();
+        //   })
+        //   .error(function() {
+        //     deferred.reject();
+        //   });
+        $localStorage[id] = data;
         deferred.resolve(data)
         return deferred.promise;
       },
