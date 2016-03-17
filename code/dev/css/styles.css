@@ -495,3 +495,6 @@ polyline {
 .widget .filter-time-period {
   display: none;
 }
+.widget .reports_charts_title {
+  display: none;
+}
