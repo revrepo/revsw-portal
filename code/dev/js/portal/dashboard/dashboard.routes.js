@@ -14,7 +14,7 @@
     $stateProvider
       .state('index.dashboard', {
         url: '/dashboard',
-        abstract: true,
+        abstract: false,
         views: {
           page: {
             template: '<div class="container-fluid" ui-view="page"></div>'
@@ -37,6 +37,18 @@
         views: {
           page: {
             templateUrl: 'parts/dashboard/dashboard.tpl.html',
+            controller: "DashdoardController",
+            controllerAs: "dashboard"
+          }
+        }
+      })
+      .state('index.dashboard.details', {
+        url: '/:dashboardId',
+        views: {
+          'page': {
+            template: '<div class="row"><div class="col-md-12">' +
+              '<adf-dashboard name="{{dashboard.name}}" structure="dashboard.structure" adf-model="dashboard.model" />' +
+              '</div></div>',
             controller: "DashdoardController",
             controllerAs: "dashboard"
           }
