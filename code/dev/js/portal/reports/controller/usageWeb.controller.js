@@ -48,7 +48,7 @@
     };
 
     //  ---------------------------------
-    var sub_format_ = function( data ) {
+    var subFormat_ = function( data ) {
       if ( data.count !== undefined ) {
         data.count = Util.formatNumber( data.count );
         data.received_bytes = Util.humanFileSizeInGB( data.received_bytes );
@@ -68,21 +68,23 @@
     };
 
     var format_ = function( data ) {
-      sub_format_( data );
-      sub_format_( data.traffic );
+      subFormat_( data );
       for ( var zone in data.traffic_per_billing_zone ) {
-        sub_format_( data.traffic_per_billing_zone[zone] );
+        subFormat_( data.traffic_per_billing_zone[zone] );
       }
       for ( var d in data.domains_usage ) {
         var dmn = data.domains_usage[d];
-        sub_format_( dmn );
+        subFormat_( dmn );
         for ( var t in dmn.traffic_per_billing_zone ) {
-          sub_format_( dmn.traffic_per_billing_zone[t] );
+          subFormat_( dmn.traffic_per_billing_zone[t] );
         }
+      }
+      if ( data.traffic ) {
+        subFormat_( data.traffic );
       }
       if ( data.accounts ) {
         for ( var i = 0, len = data.accounts.length; i < len; ++i ) {
-          sub_format_( data.accounts[i] );
+          subFormat_( data.accounts[i] );
         }
       }
     };
