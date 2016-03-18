@@ -15,6 +15,7 @@
     $scope.month_year_symbol = $scope.month_year.toISOString().slice( 0, 7 );
     $scope.report = null;
 
+    //  ---------------------------------
     $scope.onAccountSelect = function ( acc ) {
       // console.log( 'onAccountSelect', acc );
       User.selectAccount( acc );
@@ -37,7 +38,7 @@
     };
 
     $scope.showTraffic = function() {
-      return !$scope._loading && $scope.report && $scope.report.count !== '0';
+      return !$scope._loading && $scope.report && $scope.report.traffic.count !== '0';
     };
     $scope.showDomainsUsage = function() {
       return $scope.report && $scope.report.domains_usage;
@@ -46,60 +47,44 @@
       return $scope.report && $scope.report.accounts;
     };
 
+    //  ---------------------------------
+    var sub_format_ = function( data ) {
+      if ( data.count !== undefined ) {
+        data.count = Util.formatNumber( data.count );
+        data.received_bytes = Util.humanFileSizeInGB( data.received_bytes );
+        data.sent_bytes = Util.humanFileSizeInGB( data.sent_bytes );
+      }
+      if ( data.billable_received_bps !== undefined ) {
+        data.billable_received_bps = Util.convertTraffic( data.billable_received_bps );
+        data.billable_sent_bps = Util.convertTraffic( data.billable_sent_bps );
+      }
+      if ( data.cache_hits !== undefined ) {
+        data.cache_hits.MISS = Util.formatNumber( data.cache_hits.MISS );
+        data.cache_hits.HIT = Util.formatNumber( data.cache_hits.HIT );
+        for ( var port in data.port_hits ) {
+          data.port_hits[port] = Util.formatNumber( data.port_hits[port] );
+        }
+      }
+    };
+
     var format_ = function( data ) {
-      data.count = Util.formatNumber( data.count );
-      data.cache_hits.MISS = Util.formatNumber( data.cache_hits.MISS );
-      data.cache_hits.HIT = Util.formatNumber( data.cache_hits.HIT );
-      for ( var port in data.port_hits ) {
-        data.port_hits[port] = Util.formatNumber( data.port_hits[port] );
-      }
-      data.received_bytes = Util.humanFileSizeInGB( data.received_bytes );
-      data.sent_bytes = Util.humanFileSizeInGB( data.sent_bytes );
+      sub_format_( data );
+      sub_format_( data.traffic );
       for ( var zone in data.traffic_per_billing_zone ) {
-        data.traffic_per_billing_zone[zone].count = Util.formatNumber( data.traffic_per_billing_zone[zone].count );
-        data.traffic_per_billing_zone[zone].received_bytes = Util.humanFileSizeInGB( data.traffic_per_billing_zone[zone].received_bytes );
-        data.traffic_per_billing_zone[zone].sent_bytes = Util.humanFileSizeInGB( data.traffic_per_billing_zone[zone].sent_bytes );
-
-        if ( data.traffic_per_billing_zone[zone].billable_received_bps !== undefined ) {
-          data.traffic_per_billing_zone[zone].billable_received_bps = Util.convertTraffic( data.traffic_per_billing_zone[zone].billable_received_bps );
-          data.traffic_per_billing_zone[zone].billable_sent_bps = Util.convertTraffic( data.traffic_per_billing_zone[zone].billable_sent_bps );
+        sub_format_( data.traffic_per_billing_zone[zone] );
+      }
+      for ( var d in data.domains_usage ) {
+        var dmn = data.domains_usage[d];
+        sub_format_( dmn );
+        for ( var t in dmn.traffic_per_billing_zone ) {
+          sub_format_( dmn.traffic_per_billing_zone[t] );
         }
       }
-    }
-
-    var collectAccounts_ = function( accounts ) {
-
-      //  assuming that last record is overall summary, others are accounts' summaries
-      var overall = accounts[accounts.length - 1];
-      overall.accounts = [];
-      for ( var i = 1/*skip 'All accounts'*/, len = $scope.accounts.length; i < len; ++i ) {
-        var a = $scope.accounts[i];
-        var acc = accounts.find( function( item ) {
-          return item.account_id === a.acc_id + '_SUMMARY';
-        });
-        if ( acc ) {
-          overall.accounts.push({
-            acc_id: a.acc_id,
-            acc_name: a.acc_name,
-            raw_count: acc.count,
-            count: Util.formatNumber( acc.count ),
-            received_bytes: Util.humanFileSizeInGB( acc.received_bytes ),
-            sent_bytes: Util.humanFileSizeInGB( acc.sent_bytes )
-          });
-        } else {
-          overall.accounts.push({
-            acc_id: a.acc_id,
-            acc_name: a.acc_name,
-            raw_count: 0,
-            count: '0',
-            received_bytes: '0 GB',
-            sent_bytes: '0 GB'
-          });
+      if ( data.accounts ) {
+        for ( var i = 0, len = data.accounts.length; i < len; ++i ) {
+          sub_format_( data.accounts[i] );
         }
       }
-      overall.accounts.sort( function( lhs, rhs ) {
-        return rhs.raw_count - lhs.raw_count/*descending*/;
-      });
     };
 
     $scope.onUpdate = function () {
@@ -123,19 +108,11 @@
         .then( function( data ) {
 
           // debug
-          // console.log( data );
+          console.log( data );
           // debug
 
-          //  in case of 'All Accounts'
-          if ( !q.account_id ) {
-            collectAccounts_( data.data );
-          }
           var overall = data.data[data.data.length - 1/*overall summary*/];
           format_( overall );
-          for ( var domain in overall.domains_usage ) {
-            format_( overall.domains_usage[domain] );
-          }
-
           $scope.report = overall;
         })
         .catch( function( err ) {
@@ -147,6 +124,7 @@
         });
     };
 
+    //  ---------------------------------
     if ( User.getSelectedAccount() ) {
       $scope.selected.val = User.getSelectedAccount();
     }

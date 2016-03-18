@@ -231,12 +231,10 @@
         method: 'GET',
         url: $config.API_URL + '/usage_reports/web',
         params: {
-          only_summary: true,
-          extended: false,
-          bandwidth: true
+          only_overall: true,
+          keep_samples: false,
         }
       }
-
     });
   }
 })();
