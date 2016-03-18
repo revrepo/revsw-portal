@@ -230,6 +230,16 @@
     }
 
     /**
+     * Check if user account have set billing plan
+     *
+     * @returns {boolean}
+     */
+    function hasBillingPlan() {
+      var account = getSelectedAccount();
+      return Boolean(account.plan_id);
+    }
+
+    /**
      * Reload user details
      * @returns {*}
      */
@@ -414,7 +424,8 @@
               accounts = data.data.map( function( item ) {
                   return {
                     acc_name: item.companyName,
-                    acc_id: item.id
+                    acc_id: item.id,
+                    plan_id: item.billing_plan
                   };
                 })
                 .sort( function( lhs, rhs ) {
@@ -496,7 +507,9 @@
 
       selectAccount: selectAccount,
 
-      getSelectedAccount: getSelectedAccount
+      getSelectedAccount: getSelectedAccount,
+
+      hasBillingPlan: hasBillingPlan
     };
   }
 })();
