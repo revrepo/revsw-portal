@@ -33,7 +33,9 @@ describe('Smoke', function () {
   // Defining set of users for which all below tests will be run
   var users = [
     config.get('portal.users.admin'),
-    config.get('portal.users.revAdmin')
+    config.get('portal.users.reseller'),
+//    config.get('portal.users.revAdmin') // TODO: For revadmin need to fix the user
+//  creation process to specify an account
   ];
 
   users.forEach(function (user) {

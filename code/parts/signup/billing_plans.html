@@ -42,8 +42,12 @@
                                 </h1>
                                 <hr>
                                 <div>{{item.description}}</div>
+                                <hr>
+                                <h4>
+                                    Overage Charges
+                                </h4>
                                 <div ng-repeat="service in item.services">
-                                    <div>${{service.cost}} per {{service.measure_unit}}</div>
+                                    <div>${{service.cost}} per {{service.measurement_unit}}</div>
                                 </div>
                                 <hr>
                                 <button  ng-click="chooseBillingPlan(item.id, item.name)"

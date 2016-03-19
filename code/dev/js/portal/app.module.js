@@ -22,6 +22,9 @@
     'oc.lazyLoad',
     'adf',
     'revapm.Portal.Dashboard',
+    'datatables',
+    'datatables.bootstrap',
+    'ngFileSaver'
   ]);
 
 })();
