@@ -20,6 +20,7 @@
     'ui.bootstrap.popover',
     'hljs',
     'oc.lazyLoad',
+    'adf',
     'revapm.Portal.Dashboard',
   ]);
 

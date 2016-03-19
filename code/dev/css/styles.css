@@ -498,3 +498,12 @@ polyline {
 .widget .reports_charts_title {
   display: none;
 }
+ul.dashboard_menu {
+  list-style-type: none;
+  margin: 0;
+  padding-left: 10px;
+  color: #f7941e;
+}
+ul.dashboard_menu a {
+  color: #f7941e;
+}

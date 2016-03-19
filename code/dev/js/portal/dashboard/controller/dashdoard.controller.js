@@ -8,39 +8,25 @@
    function DashdoardController($scope, $localStorage, DashboardSrv, $stateParams) {
      'ngInject';
      var vm = this;
-     // TODO: get dashboardId from $stateParams or User profile
      vm.dashboardId = $stateParams.dashboardId;
+     vm.model = {};
 
      DashboardSrv
        .get(vm.dashboardId)
        .then(function(data) {
-           if (!data) {
-             data = {
-               "title": "Dashboard",
-               "structure": "6-6",
-               "rows": [{
-                 "columns": [{
-                   "styleClass": "col-md-6",
-                   "widgets": []
-                 }, {
-                   "styleClass": "col-md-6",
-                   "widgets": []
-                 }]
-               }]
-             };
-           }
            vm.model = data;
-           // TODO: delete after release future create dashoboard
-           DashboardSrv.set(vm.dashboardId,data )
+           // TODO: set type dashboard settings
+           vm.model.editTemplateUrl = 'parts/dashboard/modals/dashboard-edit-with-options.tpl.html'
          },
          function() {
-           // TODO: create new dashdoard
+           // TODO: alert message and go to
 
          })
+       .finally();
      $scope.$on('adfDashboardChanged', function(event, dashboardId, model) {
        console.log(vm.dashboardId)
-       DashboardSrv.set(dashboardId, model);
+       DashboardSrv.set(vm.dashboardId, model);
      });
-   }
 
+   }
  })();

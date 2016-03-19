@@ -23,22 +23,23 @@
         resolve: {
           loadModules: ['$ocLazyLoad', function($ocLazyLoad) {
             return $ocLazyLoad.load([
-              'bower_components/Sortable/Sortable.min.js',
-              'bower_components/Sortable/ng-sortable.js',
-              'bower_components/angular-dashboard-framework/dist/angular-dashboard-framework.min.js',
-              'bower_components/angular-dashboard-framework/dist/angular-dashboard-framework.min.css',
+              // 'bower_components/Sortable/Sortable.min.js',
+              // 'bower_components/Sortable/ng-sortable.js',
+              // 'bower_components/angular-dashboard-framework/dist/angular-dashboard-framework.min.js',
+              // 'bower_components/angular-dashboard-framework/dist/angular-dashboard-framework.min.css',
               'widgets/adf-widget-analytics-proxy-traffic/dist/adf-widget-analytics-proxy-traffic.js',
             ]);
           }]
         }
       })
       .state('index.dashboard.main', {
-        url: '',
+        url: '/test',
         views: {
           page: {
-            templateUrl: 'parts/dashboard/dashboard.tpl.html',
-            controller: "DashdoardController",
-            controllerAs: "dashboard"
+            templateUrl: 'parts/dashboard/dashboard_test.tpl.html',
+            // controller:
+            // controller: "DashdoardsController",
+            // controllerAs: "dashboard"
           }
         }
       })
@@ -46,9 +47,10 @@
         url: '/:dashboardId',
         views: {
           'page': {
-            template: '<div class="row"><div class="col-md-12">' +
-              '<adf-dashboard name="{{dashboard.name}}" structure="dashboard.structure" adf-model="dashboard.model" />' +
-              '</div></div>',
+             templateUrl: 'parts/dashboard/dashboard.tpl.html',
+            // template: '<div class="row"><div class="col-md-12" ng-if="dashboard.model"> <pre>{{vm}}</pre><pre>{{dashboard}}</pre>' +
+            //   '<adf-dashboard name="{{dashboard.name}}" structure="dashboard.model.structure" adf-model="dashboard.model" />' +
+            //   '</div></div>',
             controller: "DashdoardController",
             controllerAs: "dashboard"
           }
