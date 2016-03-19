@@ -1,6 +1,6 @@
 <h3 class=panel-title>{{definition.title}}
   <span ng-if="!!definition.config.domain">
-      <span> {{definition.config.domain.domain_name}}</span>
+      (<strong> {{definition.config.domain.domain_name}}</strong>)
   </span>
  <span class=pull-right>
 <a href title="reload widget content" ng-if=widget.reload ng-click=reload()>
@@ -22,7 +22,7 @@
         </a>
        </span>
 </h3>
-<span ng-show="!!definition.config.filters[index.key]" class=" " ng-repeat="index in [{key:'os',title:'OS'},{key:'country',title:'Сountry'},{key:'device',title:'Device'}]">
+<span class="widget_filters_info" ng-show="!!definition.config.filters[index.key]" ng-repeat="index in [{key:'os',title:'OS'},{key:'country',title:'Сountry'},{key:'device',title:'Device'}]">
   <span ng-if="!!definition.config.filters[index.key]"> {{index.title}}: {{definition.config.filters[index.key]}}
      </span>
 </span>
