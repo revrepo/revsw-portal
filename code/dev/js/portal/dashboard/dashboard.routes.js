@@ -51,7 +51,6 @@
             controllerAs: 'dashboard'
           }
         }
-      })
+      });
   }
-
 })();
