@@ -46,11 +46,16 @@
     "ngstorage": "~0.3.9",
     "oclazyload": "~1.0.9",
     "paper-drawer-panel": "PolymerElements/paper-drawer-panel#~1.0.3",
+    "moment": "~2.12.0",
     "paper-header-panel": "PolymerElements/paper-header-panel#~1.0.5",
     "topojson": "~1.6.24",
     "ui-select": "angular-ui-select#~0.13.1"
+    "angular-bootstrap-datetimepicker": "https://github.com/dalelotts/angular-bootstrap-datetimepicker.git#~1.0.1",
+    "highcharts-export-csv": "export-csv#*",
+    "angular-datatables": "~0.5.3",
+    "angular-file-saver": "~1.1.0"
   },
   "resolutions": {
-    "moment": "~2.10.6"
+    "moment": "~2.12.0"
   }
 }

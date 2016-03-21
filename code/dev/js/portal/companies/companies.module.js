@@ -6,6 +6,7 @@
       'ui.router',
       'revapm.Portal.Shared',
       'revapm.Portal.Config',
-      'revapm.Portal.Resources'
+      'revapm.Portal.Resources',
+      'revapm.Portal.Profile'
     ]);
 })();

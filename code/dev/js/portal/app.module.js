@@ -21,6 +21,9 @@
     'hljs',
     'oc.lazyLoad',
     'revapm.Portal.Dashboard',
+    'datatables',
+    'datatables.bootstrap',
+    'ngFileSaver'
   ]);
 
 })();

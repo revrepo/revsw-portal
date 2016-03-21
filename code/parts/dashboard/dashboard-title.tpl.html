@@ -1,0 +1,43 @@
+<div class="row">
+  <div class="col-md-6">
+    <h2 class "pull-left page-title">
+
+<span style="font-size: 16px" class="pull-left">
+
+  <dashboard-btn-new ng-if="!editMode"></dashboard-btn-new>
+  </span>
+   {{model.title}}
+
+  <span style="font-size: 16px" class="pull-right">
+    <a href="" ng-if="editMode" title="add new widget" class="btn btn-link" ng-click="addWidgetDialog()">
+      <i class="glyphicon glyphicon-plus-sign"></i>
+    </a>
+    <a href="" ng-if="editMode" title="edit dashboard" class="btn btn-link"  ng-click="editDashboardDialog()">
+      <i class="glyphicon glyphicon-cog"></i>
+    </a>
+    <a href="" ng-if="options.editable" class="btn btn-link" title="{{editMode ? 'save changes' : 'enable edit mode'}}" ng-click="toggleEditMode()">
+      <i class="glyphicon" x-ng-class="{'glyphicon-edit' : !editMode, 'glyphicon-save' : editMode}"></i>
+    </a>
+    <a href="" ng-if="editMode" class="btn btn-link"  title="undo changes" ng-click="cancelEditMode()">
+      <i class="glyphicon glyphicon-repeat adf-flip"></i>
+    </a>
+  </span>
+</h2>
+  </div>
+  <div class='col-md-6'>
+    <div class="row h2 form-inline clearfix">
+      <!-- TODO: make directive autorefresh-time-period -->
+      <div class="form-group">
+        <select class="select2 form-control fixed " ng-model="model.options.autorefresh">
+          <option value="5">Each 5 Minutes</option>
+          <option value="15">Each 15 Minutes</option>
+          <option value="30">Each 30 Minutes</option>
+          <option value="60">Each 1 Hour</option>
+          <option value="">No auto-refresh</option>
+        </select>
+        <button class="btn btn-info " ng-click="dashboard.reload()">
+          <i class="glyphicon glyphicon-refresh"></i> Refresh now
+        </button>
+      </div>
+    </div>
+  </div>

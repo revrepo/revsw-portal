@@ -230,9 +230,11 @@
       usage_web: {
         method: 'GET',
         url: $config.API_URL + '/usage_reports/web',
-        params: {}
+        params: {
+          only_overall: true,
+          keep_samples: false,
+        }
       }
-
     });
   }
 })();

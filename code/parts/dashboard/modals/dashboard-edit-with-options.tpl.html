@@ -1,0 +1,36 @@
+<div class="modal-header">
+  <button type="button" class="close" ng-click="closeDialog()" aria-hidden="true">&times;</button>
+  <h4 class="modal-title">Edit Dashboard</h4>
+</div>
+<div class="modal-body">
+  <form role="form" name="editDashboardForm">
+    <div class="form-group">
+      <label for="dashboardTitle">Title</label>
+      <input type="text" class="form-control" id="dashboardTitle" ng-model="copy.title" required="">
+    </div>
+    <div class="form-group">
+      <label>Structure</label>
+      <div class="radio" ng-repeat="(key, structure) in structures">
+        <label>
+          <input type="radio" value="{{key}}" ng-model="model.structure" ng-change="changeStructure(key, structure)"> {{key}}
+        </label>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Auto-Refresh</label>
+      <select class="select2 form-control fixed " ng-model="model.options.autorefresh">
+        <option value="5">Each 5 Minutes</option>
+        <option value="15">Each 15 Minutes</option>
+        <option value="30">Each 30 Minutes</option>
+        <option value="60">Each 1 Hour</option>
+        <option value="">No auto-refresh</option>
+      </select>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-danger pull-left" ng-click="onDashboarDelete()"> Delete this dashboard</button>
+  <!-- <button type="button" class="btn btn-primary" ng-click="closeDialog()">Close</button>  -->
+  <button type=button class="btn btn-default" ng-disabled="_isLoading" ng-click=closeDialog()>Cancel</button>
+  <button type=button class="btn btn-primary" ng-disabled="editDashboardForm.$invalid || _isLoading" ng-click=applyDialog(model)>Save</button>
+</div>

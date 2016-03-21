@@ -32,6 +32,19 @@
     Stats,
     Util
   ) {
+
+    var _filters_field_list = ['from_timestamp', 'to_timestamp', 'country', 'device', 'os'];
+
+    $scope.getFilterParams = function(filters) {
+      var params = {}
+      _.forEach(filters, function(val, key) {
+        console.log(_filters_field_list, key, val, _.indexOf(_filters_field_list, key));
+        if (_.indexOf(_filters_field_list, key) != -1) {
+          params[key] = val;
+        }
+      });
+      return params;
+    }
     $scope.delay = 1800;
     $scope._loading = false;
     $scope.reloadTrafficStats = reloadTrafficStats;
@@ -82,7 +95,6 @@
     });
 
     //////////////////
-
     /**
      * @name reloadTrafficStats
      * @desc reload traffic stats
@@ -106,7 +118,7 @@
 
       Stats.traffic(angular.merge({
           domainId: $scope.ngDomain.id
-        }, $scope.filters))
+        }, $scope.getFilterParams($scope.filters)))
         .$promise
         .then(function(data) {
           if (data.data && data.data.length > 0) {

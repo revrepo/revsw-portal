@@ -17,11 +17,13 @@
     .directive('filterGenerator', filterGenerator);
 
   filterGenerator.$inject = [
-    'filterGeneratorService'
+    'filterGeneratorService',
+    'filterGeneratorConst'
   ];
 
   function filterGenerator(
-    filterGeneratorService
+    filterGeneratorService,
+    filterGeneratorConst
   ) {
     var directive = {
       require: 'ngModel',
@@ -53,6 +55,7 @@
       //datepicker ranges
       var ranges = {},
         filtersAddMenu = [],
+        countryFilterObject = filterGeneratorService.getFilterByFilterKey(filterGeneratorConst.COUNTRIES),
         filterChangeTimeout;
 
       //Default valuew is Last 1 Day!
@@ -75,6 +78,11 @@
           startDate: ranges[LAST_DAY][0],
           endDate: ranges[LAST_DAY][1]
         }
+      };
+
+      //sets country name constant
+      scope.constants = {
+        country: countryFilterObject.name
       };
 
       //selected filters by user

@@ -14,7 +14,7 @@
     $stateProvider
       .state('index.dashboard', {
         url: '/dashboard',
-        abstract: true,
+        abstract: false,
         views: {
           page: {
             template: '<div class="container-fluid" ui-view="page"></div>'
@@ -23,19 +23,29 @@
         resolve: {
           loadModules: ['$ocLazyLoad', function($ocLazyLoad) {
             return $ocLazyLoad.load([
-              'bower_components/Sortable/Sortable.min.js',
-              'bower_components/Sortable/ng-sortable.js',
-              'bower_components/angular-dashboard-framework/dist/angular-dashboard-framework.min.js',
-              'bower_components/angular-dashboard-framework/dist/angular-dashboard-framework.min.css',
+              // 'bower_components/Sortable/Sortable.min.js',
+              // 'bower_components/Sortable/ng-sortable.js',
+              // 'bower_components/angular-dashboard-framework/dist/angular-dashboard-framework.min.js',
+              // 'bower_components/angular-dashboard-framework/dist/angular-dashboard-framework.min.css',
               'widgets/adf-widget-analytics-proxy-traffic/dist/adf-widget-analytics-proxy-traffic.js',
             ]);
           }]
         }
       })
       .state('index.dashboard.main', {
-        url: '',
+        url: '/',
         views: {
           page: {
+            templateUrl: 'parts/dashboard/dashboard_main.tpl.html',
+            // controller: "DashdoardsController",
+            // controllerAs: "dashboard"
+          }
+        }
+      })
+      .state('index.dashboard.details', {
+        url: '/:dashboardId',
+        views: {
+          'page': {
             templateUrl: 'parts/dashboard/dashboard.tpl.html',
             controller: "DashdoardController",
             controllerAs: "dashboard"
