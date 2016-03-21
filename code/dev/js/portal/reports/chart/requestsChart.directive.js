@@ -38,7 +38,6 @@
     $scope.getFilterParams = function(filters) {
       var params = {}
       _.forEach(filters, function(val, key) {
-        console.log(_filters_field_list, key, val, _.indexOf(_filters_field_list, key));
         if (_.indexOf(_filters_field_list, key) != -1) {
           params[key] = val;
         }

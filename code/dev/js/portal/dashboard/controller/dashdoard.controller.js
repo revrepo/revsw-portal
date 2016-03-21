@@ -15,7 +15,7 @@
 
      function onResize() {
        if (resizing) {
-         $timeout.cancel(resizing)
+         $timeout.cancel(resizing);
        }
        resizing = $timeout(function() {
          var event = new Event('resize');
@@ -29,7 +29,7 @@
        .then(function(data) {
            vm.model = data;
            // TODO: set type dashboard settings
-           vm.model.editTemplateUrl = 'parts/dashboard/modals/dashboard-edit-with-options.tpl.html'
+           vm.model.editTemplateUrl = 'parts/dashboard/modals/dashboard-edit-with-options.tpl.html';
          },
          function() {
            // TODO: alert message and go to
@@ -48,7 +48,7 @@
 
      $scope.$watch(
        function() {
-         return vm.model.options
+         return vm.model.options;
        },
        function(newVal, oldVal) {
          if (!!newVal && !!oldVal && newVal.autorefresh !== oldVal.autorefresh)
@@ -57,7 +57,7 @@
 
      $scope.$watch(
        function() {
-         return vm.model.refreshNow
+         return vm.model.refreshNow;
        },
        function(newVal, oldVal) {
          if (newVal !== oldVal) {

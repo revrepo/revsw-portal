@@ -28,12 +28,11 @@
         'igInject';
         var vm = this;
 
-        this.dashboardsList = [];
+        this.dashboardsList = DashboardSrv.dashboardsList;
         this.structures = dashboard.structures;
-        // TODO: activate after fix problems with auth jwt
-        // DashboardSrv.getAll().then(function(){
-        //   this.dashboardsList = DashboardSrv.dashboardsList;
-        // });
+        DashboardSrv.getAll().then(function(){
+
+        });
 
         // TODO: change structure
         this.changeStructure = function(name, structure) {

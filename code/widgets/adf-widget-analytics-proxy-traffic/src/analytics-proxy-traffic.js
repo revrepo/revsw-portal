@@ -23,11 +23,7 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
       editTemplateUrl: '{widgetsPath}/analytics-proxy-traffic/src/widget-edit.html',
       styleClass: 'rev-widget',
       controller: ['$scope', '$window', function($scope, $window, $timeout) {
-
-        console.log($scope)
         $window.dispatchEvent(new Event('resize'));
-
-
       }],
       config: {
         // filters: {
@@ -49,7 +45,6 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
             ];
 
             $scope.onDomainSelected = function() {
-              console.log($scope.domain);
               if (!$scope.domain || !$scope.domain.id) {
                 return;
               }
@@ -80,16 +75,6 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
              */
             $scope.reloadCountry = function(domainId) {
               $scope.flCountry = Countries.query();
-              // Stats.country({
-              //   domainId: domainId
-              // }).$promise.then(function(data) {
-              //   if (data.data && data.data.length > 0) {
-              //     angular.forEach(data.data, function(os) {
-              //       $scope.country.labels.push(os.key);
-              //       $scope.country.data.push(os.count);
-              //     });
-              //   }
-              // });
             };
 
             /**
@@ -112,8 +97,8 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
               Stats.os({
                 domainId: domainId
               }).$promise.then(function(data) {
-                console.log(data);
-                 $scope.flOs = data.data;
+                $scope.flOs = data.data;
+                // TODO: fix
                 // $scope.flOs.labels.length = 0;
                 // $scope.flOs.data.length = 0;
                 // if (data.data && data.data.length > 0) {

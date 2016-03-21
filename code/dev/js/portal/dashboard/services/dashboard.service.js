@@ -10,7 +10,7 @@
 
   function DashboardSrv($q, $http, $localStorage, $config) {
     'ngInject';
-    // var API_URL  = $config.API_URL;
+    var API_URL  = $config.API_URL;
     // var API_URL = 'http://localhost:3003/v1';
     var API_URL = 'https://127.0.0.1:8000/v1';
     var dashboardsList = [];
@@ -68,17 +68,17 @@
       create: function(data) {
         var deferred = $q.defer();
         var model = {
-          "title": "New Dashboard ",
-          "titleTemplateUrl": "parts/dashboard/dashboard-title.tpl.html",
-          // "editTemplateUrl": 'parts/dashboard/dashboard-title.tpl.html',
-          "structure": "6-6",
-          "rows": [{
-            "columns": [{
-              "styleClass": "col-md-6",
-              "widgets": []
+          'title': 'New Dashboard ',
+          'titleTemplateUrl': 'parts/dashboard/dash"board-title.tpl.html',
+          // TODO: set custom edit template 'editTemplateUrl': 'parts/dashboard/dashboard-title.tpl.html',
+          'structure': '6-6',
+          'rows': [{
+            'columns': [{
+              'styleClass': 'col-md-6',
+              'widgets': []
             }, {
-              "styleClass": "col-md-6",
-              "widgets": []
+              'styleClass': 'col-md-6',
+              'widgets': []
             }]
           }]
         };
@@ -123,7 +123,7 @@
         $http.delete(API_URL + '/dashboards/' + id)
           .success(function(data) {
             deferred.resolve(data);
-            getAll()
+            getAll();
           })
           .error(function() {
             deferred.reject();
