@@ -5,14 +5,12 @@
     .module('revapm.Portal.Dashboard')
     .factory('DashboardSrv', DashboardSrv)
     .run( /*ngInject*/ function(DashboardSrv) {
-     //DashboardSrv.getAll();
+      //DashboardSrv.getAll();
     });
 
   function DashboardSrv($q, $http, $localStorage, $config) {
     'ngInject';
-    var API_URL  = $config.API_URL;
-    // var API_URL = 'http://localhost:3003/v1';
-    var API_URL = 'https://127.0.0.1:8000/v1';
+    var API_URL = $config.API_URL;
     var dashboardsList = [];
     /**
      * @name getAll
@@ -26,7 +24,7 @@
         .success(function(data) {
           angular.forEach(data, function(item) {
             dashboardsList.push(item);
-          })
+          });
           deferred.resolve(dashboardsList);
         })
         .error(function() {
@@ -50,7 +48,7 @@
         //TODO:
         $http.get(API_URL + '/dashboards/' + id)
           .success(function(data) {
-            data["titleTemplateUrl"] = "parts/dashboard/dashboard-title.tpl.html";
+            data.titleTemplateUrl = 'parts/dashboard/dashboard-title.tpl.html';
             deferred.resolve(data);
           })
           .error(function() {
@@ -83,7 +81,7 @@
           }]
         };
         angular.extend(model, data);
-        var dashboardsList = this.dashboardsList
+        var dashboardsList = this.dashboardsList;
         $http.post(API_URL + '/dashboards', model)
           .success(function(data) {
             model.id = data.object_id;

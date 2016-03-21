@@ -36,10 +36,11 @@
     var _filters_field_list = ['from_timestamp', 'to_timestamp', 'country', 'device', 'os'];
 
     $scope.getFilterParams = function(filters) {
-      var params = {}
+      var params = {};
       _.forEach(filters, function(val, key) {
-        if (_.indexOf(_filters_field_list, key) != -1) {
+        if (_.indexOf(_filters_field_list, key) !== -1) {
           params[key] = val;
+
         }
       });
       return params;
@@ -53,9 +54,9 @@
       to_timestamp: Date.now()
     };
 
-    if ($scope.filtersSets)
-      _.extend($scope.filters, $scope.filtersSets)
-
+    if ($scope.filtersSets) {
+      _.extend($scope.filters, $scope.filtersSets);
+    }
     $scope.chartOptions = {
       yAxis: {
         title: {

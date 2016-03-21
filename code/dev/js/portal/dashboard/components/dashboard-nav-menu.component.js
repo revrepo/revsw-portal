@@ -18,7 +18,7 @@
         '  <a ng-if="!vm.dashboardsList.length>0" class="side-menu-item">Dashboards</a>' +
         '  <dashboard-btn-new ng-if="!vm.dashboardsList.length>0"></dashboard-btn-new>' +
         '</span><span ng-if="vm.dashboardsList.length==0"  class="side-menu-item">' +
-          ' Dashboards <dashboard-btn-new></dashboard-btn-new>' +
+        ' Dashboards <dashboard-btn-new></dashboard-btn-new>' +
         '</span>' +
         '<li ng-repeat="dash in vm.dashboardsList" class="side-menu-sub-item">' +
         '<a ui-sref-active="active" ui-sref="index.dashboard.details({dashboardId:dash.id})">{{dash.title}}</a>' +
@@ -30,14 +30,14 @@
 
         this.dashboardsList = DashboardSrv.dashboardsList;
         this.structures = dashboard.structures;
-        DashboardSrv.getAll().then(function(){
+        DashboardSrv.getAll().then(function() {
 
         });
 
         // TODO: change structure
         this.changeStructure = function(name, structure) {
-          console.log(name, structure)
-        }
+          //console.log(name, structure);
+        };
 
         /**
          * @name  onCreateDashboard
@@ -50,10 +50,10 @@
           newDashboardScope._isLoading = false;
           newDashboardScope.structures = dashboard.structures;
           newDashboardScope.model = {
-              title: "Dashboard",
-              structure: "6-6"
-            }
-            // TODO: create modal
+            title: 'Dashboard',
+            structure: '6-6'
+          };
+
           var instance = $uibModal.open({
             scope: newDashboardScope,
             templateUrl: 'parts/dashboard/modals/dashboard-new.modal.tpl.html', // adfEditTemplatePath,
@@ -84,7 +84,7 @@
               .create(model)
               .then(function(data) {
                 newDashboardScope.closeDialog();
-                $state.go("index.dashboard.details", {
+                $state.go('index.dashboard.details', {
                   dashboardId: data.id
                 });
               }, function(err) {
@@ -93,8 +93,8 @@
               .finally(function() {
                 newDashboardScope._isLoading = false;
               });
-          }
-        }
+          };
+        };
       },
       controllerAs: 'vm',
       controllerBind: true

@@ -21,7 +21,7 @@
          var event = new Event('resize');
          window.dispatchEvent(event);
          onResize();
-       }, 1000)
+       }, 1000);
      }
      onResize();
      DashboardSrv
@@ -51,8 +51,9 @@
          return vm.model.options;
        },
        function(newVal, oldVal) {
-         if (!!newVal && !!oldVal && newVal.autorefresh !== oldVal.autorefresh)
+         if (!!newVal && !!oldVal && newVal.autorefresh !== oldVal.autorefresh) {
            $scope.autoRefresh(newVal);
+         }
        }, true);
 
      $scope.$watch(
@@ -75,21 +76,21 @@
          timeReload = $timeout(
            function() {
              $scope.$broadcast('widgetReload');
-             $scope.autoRefresh(option)
-           }, option.autorefresh * 60 * 1000)
+             $scope.autoRefresh(option);
+           }, option.autorefresh * 60 * 1000);
        }
-     }
+     };
 
      $scope.refreshWidgets = function() {
        if (!!timeReload) {
          $timeout.cancel(timeReload);
        }
        if (!!vm.model.option && vm.model.option.autorefresh !== '') {
-         $scope.autoRefresh()
+         $scope.autoRefresh();
        } else {
          $scope.$broadcast('widgetReload');
        }
-     }
+     };
 
      /**
       * @description
@@ -100,7 +101,7 @@
          $timeout.cancel(timeReload);
        }
        if (!!resizing) {
-         $timeout.cancel(resizing)
+         $timeout.cancel(resizing);
        }
      });
    }
