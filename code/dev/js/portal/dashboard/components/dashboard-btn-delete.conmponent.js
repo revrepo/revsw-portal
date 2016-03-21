@@ -30,11 +30,11 @@
           deleteDashboardScope.model = angular.copy($scope.model);
           var instance = $uibModal.open({
             scope: deleteDashboardScope,
-            templateUrl: 'parts/dashboard/modals/dashboard-delete.modal.tpl.html', // adfEditTemplatePath,
+            templateUrl: 'parts/dashboard/modals/dashboard-delete.modal.tpl.html',
             backdrop: 'static'
           });
           // deleteDashboardScope.changeStructure = function(name, structure){
-          //   $log.info('change structure to ' + name);
+          //   TODO:
           //   changeStructure(model, structure);
           // };
           deleteDashboardScope.closeDialog = function() {
@@ -56,16 +56,15 @@
               .delete(model.id)
               .then(function(data) {
                 deleteDashboardScope.closeDialog();
-                $state.go("index.dashboard.main");
+                $state.go('index.dashboard.main');
               }, function(err) {
                 //TODO: add AlertService
               })
               .finally(function() {
                 deleteDashboardScope._isLoading = false;
               });
-
-          }
-        }
+          };
+        };
       },
       controllerAs: 'vm',
       controllerBind: true

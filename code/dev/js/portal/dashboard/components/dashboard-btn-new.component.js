@@ -19,8 +19,8 @@
         var vm = this;
         this.structures = dashboard.structures;
         this.changeStructure = function(name, structure) {
-          console.log(name, structure)
-        }
+          // TODO: console.log(name, structure);
+        };
 
         /**
          * @name  onCreateDashboard
@@ -33,9 +33,9 @@
           newDashboardScope._isLoading = false;
           newDashboardScope.structures = dashboard.structures;
           newDashboardScope.model = {
-              title: "Dashboard",
-              structure: "6-6"
-            }
+              title: 'Dashboard',
+              structure: '6-6'
+            };
 
           var instance = $uibModal.open({
             scope: newDashboardScope,
@@ -63,7 +63,7 @@
               .then(function(data) {
                 newDashboardScope.closeDialog();
                 console.log(data);
-                $state.go("index.dashboard.details", {
+                $state.go('index.dashboard.details', {
                   dashboardId: data.id
                 });
               }, function(err) {
@@ -72,9 +72,8 @@
               .finally(function() {
                 newDashboardScope._isLoading = false;
               });
-
-          }
-        }
+          };
+        };
       },
       controllerAs: 'vm',
       controllerBind: true

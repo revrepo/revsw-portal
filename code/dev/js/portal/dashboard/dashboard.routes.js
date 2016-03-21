@@ -37,8 +37,8 @@
         views: {
           page: {
             templateUrl: 'parts/dashboard/dashboard_main.tpl.html',
-            // controller: "DashdoardsController",
-            // controllerAs: "dashboard"
+            // controller: 'DashdoardsController',
+            // controllerAs: 'dashboard'
           }
         }
       })
@@ -47,8 +47,8 @@
         views: {
           'page': {
             templateUrl: 'parts/dashboard/dashboard.tpl.html',
-            controller: "DashdoardController",
-            controllerAs: "dashboard"
+            controller: 'DashdoardController',
+            controllerAs: 'dashboard'
           }
         }
       })
