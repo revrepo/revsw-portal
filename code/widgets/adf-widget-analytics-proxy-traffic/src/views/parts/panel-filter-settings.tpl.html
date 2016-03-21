@@ -1,4 +1,4 @@
 <div ng-show="!!config.filters[index.key]" class="col-md-3" ng-repeat="index in [{key:'os',title:'OS'},{key:'country',title:'Сountry'},{key:'device',title:'Device'}]">
-  <span ng-if="!!config.filters[index.key]"> {{index.title}}: {{config.filters[index.key]}}
-     </span>
+  <small> {{index.title}}: {{config.filters[index.key]}}
+     </small>
 </div>

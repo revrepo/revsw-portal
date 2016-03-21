@@ -29,8 +29,9 @@
   </form>
 </div>
 <div class="modal-footer">
-  <button class="btn btn-danger pull-left" ng-click="onDashboarDelete()"> Delete this dashboard</button>
+  <dashboard-btn-delete model="model" class="pull-left"></dashboard-btn-delete>
+  <!-- <button class="btn btn-danger pull-left" ng-click="onDashboarDelete()"> Delete this dashboard</button> -->
   <!-- <button type="button" class="btn btn-primary" ng-click="closeDialog()">Close</button>  -->
-  <button type=button class="btn btn-default" ng-disabled="_isLoading" ng-click=closeDialog()>Cancel</button>
-  <button type=button class="btn btn-primary" ng-disabled="editDashboardForm.$invalid || _isLoading" ng-click=applyDialog(model)>Save</button>
+  <button type=button class="btn btn-default" ng-disabled="_isLoading" ng-click="closeDialog()">Cancel</button>
+  <button type=button class="btn btn-primary" ng-disabled="editDashboardForm.$invalid || _isLoading" ng-click="toggleEditMode(model); closeDialog()">Save</button>
 </div>

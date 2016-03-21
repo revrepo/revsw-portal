@@ -3,71 +3,40 @@
   //http://www.slideshare.net/RajthilakMCA/awesome-dash-angular-js-42552385
   angular
     .module('revapm.Portal.Dashboard')
-    .service('DashboardSrv', DashboardSrv)
+    .factory('DashboardSrv', DashboardSrv)
     .run( /*ngInject*/ function(DashboardSrv) {
-      DashboardSrv.getAll();
+     //DashboardSrv.getAll();
     });
 
   function DashboardSrv($q, $http, $localStorage, $config) {
     'ngInject';
-    var API_URL = 'http://localhost:3003/v1';
-    var dashboardsList = [],
-      _del = [{
-        "id": "00001",
-        "title": "Dashboard 1",
-        "structure": "6-6",
-        "rows": [{
-          "columns": [{
-            "styleClass": "col-md-6",
-            "widgets": [],
-            "cid": "1458098751084-1"
-          }, {
-            "styleClass": "col-md-6",
-            "widgets": [],
-            "cid": "1458098751088-2"
-          }]
-        }],
-        "titleTemplateUrl": "parts/dashboard/dashboard-title.tpl.html"
-      }, {
-        "id": "000002",
-        "title": "Dashboard 2",
-        "structure": "6-6",
-        "rows": [{
-          "columns": [{
-            "styleClass": "col-md-6",
-            "widgets": [],
-            "cid": "1458098751084-1"
-          }, {
-            "styleClass": "col-md-6",
-            "widgets": [],
-            "cid": "1458098751088-2"
-          }]
-        }],
-        "titleTemplateUrl": "parts/dashboard/dashboard-title.tpl.html"
-      }];
-
+    // var API_URL  = $config.API_URL;
+    // var API_URL = 'http://localhost:3003/v1';
+    var API_URL = 'https://127.0.0.1:8000/v1';
+    var dashboardsList = [];
+    /**
+     * @name getAll
+     * @description get all user`s dashboards
+     * @return {Promise}
+     */
+    function getAll() {
+      var deferred = $q.defer();
+      dashboardsList.length = 0;
+      $http.get(API_URL + '/dashboards')
+        .success(function(data) {
+          angular.forEach(data, function(item) {
+            dashboardsList.push(item);
+          })
+          deferred.resolve(dashboardsList);
+        })
+        .error(function() {
+          deferred.reject();
+        });
+      return deferred.promise;
+    }
     return {
       dashboardsList: dashboardsList,
-      /**
-       * @name getAll
-       * @description get all user`s dashboards
-       * @return {Promise}
-       */
-      getAll: function() {
-        var deferred = $q.defer();
-        $http.get(API_URL + '/dashboards')
-          .success(function(data) {
-            angular.forEach(data.dashboards, function(item) {
-              dashboardsList.push(item)
-            })
-            deferred.resolve(data.dashboards);
-          })
-          .error(function() {
-            deferred.reject();
-          });
-        deferred.resolve(dashboardsList)
-        return deferred.promise;
-      },
+      getAll: getAll,
       /**
        * @name get
        * @description
@@ -81,6 +50,7 @@
         //TODO:
         $http.get(API_URL + '/dashboards/' + id)
           .success(function(data) {
+            data["titleTemplateUrl"] = "parts/dashboard/dashboard-title.tpl.html";
             deferred.resolve(data);
           })
           .error(function() {
@@ -89,6 +59,12 @@
         return deferred.promise;
 
       },
+      /**
+       * @name create
+       * @description Create new dashboard
+       * @param  {[type]} data [description]
+       * @return {[type]}      [description]
+       */
       create: function(data) {
         var deferred = $q.defer();
         var model = {
@@ -106,17 +82,12 @@
             }]
           }]
         };
-        // data.editTemplateUrl='parts/dashboard/dashboard-title.tpl.html';
-        console.log(data)
-        angular.extend(model, data)
-          // this.dashboardsList.push(model);
-          // console.log(this.dashboardsList)
+        angular.extend(model, data);
         var dashboardsList = this.dashboardsList
-        $http.post(API_URL + '/dashboards/', model)
+        $http.post(API_URL + '/dashboards', model)
           .success(function(data) {
-            console.log('create', data)
-            model.id = data.id
-            dashboardsList.push(model);
+            model.id = data.object_id;
+            getAll();
             deferred.resolve(model);
           })
           .error(function() {
@@ -132,7 +103,7 @@
        */
       set: function(id, data) {
         var deferred = $q.defer();
-        $http.post(API_URL + '/dashboards/' + id, data)
+        $http.put(API_URL + '/dashboards/' + id, data)
           .success(function(data) {
             deferred.resolve();
           })
@@ -149,9 +120,10 @@
        */
       delete: function(id) {
         var deferred = $q.defer();
-        $http.delete($config.API_URL + '/v1/dashboards/' + id)
+        $http.delete(API_URL + '/dashboards/' + id)
           .success(function(data) {
             deferred.resolve(data);
+            getAll()
           })
           .error(function() {
             deferred.reject();

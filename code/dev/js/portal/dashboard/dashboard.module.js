@@ -8,8 +8,8 @@
       'revapm.Portal.Resources',
       'ui.router',
       'ngSanitize',
-      'adf',
-      'adf.provider'
+      // 'adf', // TODO: add after fix conflict with directive "alert"
+      'adf.provider',
     ])
     .config(function(dashboardProvider) {
 

@@ -33,11 +33,10 @@
         }
       })
       .state('index.dashboard.main', {
-        url: '/test',
+        url: '/',
         views: {
           page: {
-            templateUrl: 'parts/dashboard/dashboard_test.tpl.html',
-            // controller:
+            templateUrl: 'parts/dashboard/dashboard_main.tpl.html',
             // controller: "DashdoardsController",
             // controllerAs: "dashboard"
           }
@@ -47,10 +46,7 @@
         url: '/:dashboardId',
         views: {
           'page': {
-             templateUrl: 'parts/dashboard/dashboard.tpl.html',
-            // template: '<div class="row"><div class="col-md-12" ng-if="dashboard.model"> <pre>{{vm}}</pre><pre>{{dashboard}}</pre>' +
-            //   '<adf-dashboard name="{{dashboard.name}}" structure="dashboard.model.structure" adf-model="dashboard.model" />' +
-            //   '</div></div>',
+            templateUrl: 'parts/dashboard/dashboard.tpl.html',
             controller: "DashdoardController",
             controllerAs: "dashboard"
           }

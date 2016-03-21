@@ -22,7 +22,11 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
       templateUrl: '{widgetsPath}/analytics-proxy-traffic/src/view.html',
       editTemplateUrl: '{widgetsPath}/analytics-proxy-traffic/src/widget-edit.html',
       styleClass: 'rev-widget',
-      controller: ['$scope', function($scope) {
+      controller: ['$scope', '$window', function($scope, $window, $timeout) {
+
+        console.log($scope)
+        $window.dispatchEvent(new Event('resize'));
+
 
       }],
       config: {
@@ -43,8 +47,6 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
               filterGeneratorConst.OS,
               filterGeneratorConst.DEVICES
             ];
-
-
 
             $scope.onDomainSelected = function() {
               console.log($scope.domain);
@@ -110,14 +112,16 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
               Stats.os({
                 domainId: domainId
               }).$promise.then(function(data) {
-                $scope.flOs.labels.length = 0;
-                $scope.flOs.data.length = 0;
-                if (data.data && data.data.length > 0) {
-                  angular.forEach(data.data, function(item) {
-                    $scope.flOs.labels.push(item.key);
-                    $scope.flOs.data.push(item.count);
-                  });
-                }
+                console.log(data);
+                 $scope.flOs = data.data;
+                // $scope.flOs.labels.length = 0;
+                // $scope.flOs.data.length = 0;
+                // if (data.data && data.data.length > 0) {
+                //   angular.forEach(data.data, function(item) {
+                //     $scope.flOs.labels.push(item.key);
+                //     $scope.flOs.data.push(item.count);
+                //   });
+                // }
               });
             };
 
@@ -141,6 +145,8 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
               Stats.device({
                 domainId: domainId
               }).$promise.then(function(data) {
+                // $scope.flDevice = data.data;
+                //$scope.flDevice.push("")
                 $scope.flDevice.labels.length = 0;
                 $scope.flDevice.data.length = 0;
                 if (data.data && data.data.length > 0) {
@@ -181,6 +187,35 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
             // Load user domains
             User.getUserDomains(true);
 
+            //datepicker ranges
+            var ranges = {};
+            var FILTER_EVENT_TIMEOUT = 2000,
+              DATE_PICKER_SELECTOR = '.date-picker',
+              LAST_DAY = 'Last 1 Day',
+              LAST_WEEK = 'Last 7 Days ',
+              LAST_MONTH = 'Last 30 Days';
+
+            //Default valuew is Last 1 Day!
+            ranges[LAST_DAY] = [moment().subtract(1, 'days'), moment()];
+            ranges[LAST_WEEK] = [moment().subtract(7, 'days'), moment()];
+            ranges[LAST_MONTH] = [moment().subtract(30, 'days'), moment()];
+
+            //date picker params
+            $scope.datePicker = {
+              overlay: {
+                show: true,
+                val: LAST_DAY
+              },
+              options: {
+                timePicker: true,
+                timePickerIncrement: 30,
+                ranges: ranges
+              },
+              date: {
+                startDate: ranges[LAST_DAY][0],
+                endDate: ranges[LAST_DAY][1]
+              }
+            };
           }
         ],
       }
