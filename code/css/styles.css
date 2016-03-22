@@ -450,6 +450,9 @@ polyline {
 .invisible-chart-wrapper {
   min-height: 350px;
 }
+.auto-scroll {
+  overflow-y: auto;
+}
 .filter-generator .form-control {
   display: inline-block;
   width: inherit;
@@ -514,12 +517,9 @@ polyline {
 .widget .reports_charts_title {
   display: none;
 }
-ul.dashboard_menu {
-  list-style-type: none;
-  margin: 0;
-  padding-left: 10px;
+section[drawer] .side-menu .dashboard_menu .side-menu-item.item-title a {
   color: #f7941e;
 }
-ul.dashboard_menu a {
-  color: #f7941e;
+.dashboard__title .btn-link {
+  font-size: 30px;
 }
