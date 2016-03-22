@@ -2,19 +2,6 @@
 
 angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
   .config(function(dashboardProvider) {
-
-    dashboardProvider
-      .structure('6-6', {
-        rows: [{
-          columns: [{
-            styleClass: 'col-md-6'
-          }, {
-            styleClass: 'col-md-6'
-          }]
-        }]
-      })
-  })
-  .config(function(dashboardProvider) {
     var _widget = {
       title: 'Proxy Traffic',
       titleTemplateUrl: '{widgetsPath}/analytics-proxy-traffic/src/widget-title-with-params.html',

@@ -12,17 +12,14 @@
       replace: true,
       template:
       // TODO: make template as file
-        '<ul class="dashboard_menu list"  ui-sref-active-if="{class: \'active-side-menu-item\', state: \'index.dashboard\'}">' +
-        '<span ng-if="vm.dashboardsList.length>0" class="side-menu-item">' +
-        '  <a ng-if="vm.dashboardsList.length>0" ui-sref="index.dashboard.details({dashboardId:vm.dashboardsList[0].id})" >Dashboards</a>' +
-        '  <a ng-if="!vm.dashboardsList.length>0" class="side-menu-item">Dashboards</a>' +
-        '  <dashboard-btn-new ng-if="!vm.dashboardsList.length>0"></dashboard-btn-new>' +
-        '</span><span ng-if="vm.dashboardsList.length==0"  class="side-menu-item">' +
+        '<li class="dashboard_menu list"  ui-sref-active-if="{class: \'active-side-menu-item\', state: \'index.dashboard\'}">' +
+        '  <a  class="side-menu-item" ng-if="vm.dashboardsList.length>0" ui-sref="index.dashboard.details({dashboardId:vm.dashboardsList[0].id})" >Dashboards</a>' +
+        '<span ng-if="vm.dashboardsList.length==0"  class="side-menu-item item-title">' +
         ' Dashboards <dashboard-btn-new></dashboard-btn-new>' +
         '</span>' +
-        '<li ng-repeat="dash in vm.dashboardsList" class="side-menu-sub-item">' +
-        '<a ui-sref-active="active" ui-sref="index.dashboard.details({dashboardId:dash.id})">{{dash.title}}</a>' +
-        '</li></ul>',
+        '  <a  ng-if="vm.dashboardsList.length>0"  ng-repeat="dash in vm.dashboardsList" ' +
+        '      ui-sref-active="active" class="side-menu-sub-item" ui-sref="index.dashboard.details({dashboardId:dash.id})">{{dash.title}}</a>' +
+        '</li>',
       scope: false,
       controller: function($scope, $state, $uibModal, DashboardSrv, dashboard) {
         'igInject';
