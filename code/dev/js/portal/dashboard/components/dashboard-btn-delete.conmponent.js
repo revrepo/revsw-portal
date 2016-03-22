@@ -11,7 +11,7 @@
       replace: true,
       template:
       // TODO: make template as file
-        '<a ng-click="vm.onDeleteDashboard($event)" class="btn btn-danger" title="delete bashboard"> <i class="glyphicon glyphicon-remove"></i> Delete dashboard </a>',
+        '<a ng-click="vm.onDeleteDashboard($event)" class="btn btn-danger" title="delete bashboard"> <i class="glyphicon glyphicon-remove"></i> Delete Dashboard </a>',
       scope: {
         model: '='
       },

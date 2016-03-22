@@ -44,7 +44,7 @@
         }
       });
       return params;
-    }
+    };
     $scope.delay = 1800;
     $scope._loading = false;
     $scope.reloadTrafficStats = reloadTrafficStats;

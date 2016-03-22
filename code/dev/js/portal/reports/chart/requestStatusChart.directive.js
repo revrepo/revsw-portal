@@ -27,8 +27,9 @@
           from_timestamp: moment().subtract(1, 'days').valueOf(),
           to_timestamp: Date.now()
         };
-        if ($scope.filtersSets)
-          _.extend($scope.filters, $scope.filtersSets)
+        if ($scope.filtersSets) {
+          _.extend($scope.filters, $scope.filtersSets);
+        }
         $scope.traffic = {
           labels: [],
           series: [{

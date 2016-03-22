@@ -12,7 +12,7 @@
       replace: true,
       template:
       // TODO: make template as file
-        '<a ng-click="vm.onCreateDashboard($event)" class="btn btn-link" title="create new bashboard"> <i class="glyphicon glyphicon-plus"></i></a>',
+        '<a ng-click="vm.onCreateDashboard($event)" class="btn btn-link" title="Add New Dashboard"> <i class="glyphicon glyphicon-plus"></i></a>',
       scope: false,
       controller: function($scope, $state, $uibModal, DashboardSrv, dashboard) {
         'igInject';

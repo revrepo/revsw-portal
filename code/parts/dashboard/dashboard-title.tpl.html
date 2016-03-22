@@ -8,16 +8,16 @@
    {{model.title}}
 
   <span style="font-size: 16px" class="pull-right">
-    <a href="" ng-if="editMode" title="add new widget" class="btn btn-link" ng-click="addWidgetDialog()">
+    <a href="" ng-if="editMode" title="Add New Widget" class="btn btn-link" ng-click="addWidgetDialog()">
       <i class="glyphicon glyphicon-plus-sign"></i>
     </a>
-    <a href="" ng-if="editMode" title="edit dashboard" class="btn btn-link"  ng-click="editDashboardDialog()">
+    <a href="" ng-if="editMode" title="Edit Dashboard Properties" class="btn btn-link"  ng-click="editDashboardDialog()">
       <i class="glyphicon glyphicon-cog"></i>
     </a>
-    <a href="" ng-if="options.editable" class="btn btn-link" title="{{editMode ? 'save changes' : 'enable edit mode'}}" ng-click="toggleEditMode()">
+    <a href="" ng-if="options.editable" class="btn btn-link" title="{{editMode ? 'Save Changes' : 'Enable Edit Mode'}}" ng-click="toggleEditMode()">
       <i class="glyphicon" x-ng-class="{'glyphicon-edit' : !editMode, 'glyphicon-save' : editMode}"></i>
     </a>
-    <a href="" ng-if="editMode" class="btn btn-link"  title="undo changes" ng-click="cancelEditMode()">
+    <a href="" ng-if="editMode" class="btn btn-link"  title="Undo Changes" ng-click="cancelEditMode()">
       <i class="glyphicon glyphicon-repeat adf-flip"></i>
     </a>
   </span>
@@ -32,10 +32,10 @@
           <option value="15">Each 15 Minutes</option>
           <option value="30">Each 30 Minutes</option>
           <option value="60">Each 1 Hour</option>
-          <option value="">No auto-refresh</option>
+          <option value="">No Auto-Refresh</option>
         </select>
         <button class="btn btn-info " ng-click="model.refreshNow= true">
-          <i class="glyphicon glyphicon-refresh"></i> Refresh now
+          <i class="glyphicon glyphicon-refresh"></i> Refresh Now
         </button>
       </div>
     </div>
