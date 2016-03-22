@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
 
   angular
@@ -15,7 +15,9 @@
         ngDomain: '=',
         flCountry: '=',
         flOs: '=',
-        flDevice: '='
+        flDevice: '=',
+        filtersSets: '=',
+        hideFilters: '='
       },
       /*@ngInject*/
       controller: function ($scope, Stats, $q, Util, filterGeneratorService) {
@@ -24,7 +26,9 @@
           from_timestamp: moment().subtract(1, 'days').valueOf(),
           to_timestamp: Date.now()
         };
-
+        if ($scope.filtersSets){
+          _.extend($scope.filters, $scope.filtersSets);
+        }
         $scope.delay = 1800;
         $scope.traffic = {
           labels: [],
@@ -74,18 +78,22 @@
         }
 
         $scope.loadHit = function() {
-          return Stats.traffic(angular.merge({domainId: $scope.ngDomain.id}, $scope.filters, {
+          return Stats.traffic(angular.merge({
+            domainId: $scope.ngDomain.id
+          }, $scope.filters, {
             cache_code: 'HIT'
           })).$promise;
         };
 
         $scope.loadMiss = function() {
-          return Stats.traffic(angular.merge({domainId: $scope.ngDomain.id}, $scope.filters, {
+          return Stats.traffic(angular.merge({
+            domainId: $scope.ngDomain.id
+          }, $scope.filters, {
             cache_code: 'MISS'
           })).$promise;
         };
 
-        $scope.reload = function () {
+        $scope.reload = function() {
           if (!$scope.ngDomain || !$scope.ngDomain.id) {
             return;
           }
@@ -104,8 +112,8 @@
           $q.all([
               $scope.loadHit(),
               $scope.loadMiss()
-          ])
-            .then(function (data) {
+            ])
+            .then(function(data) {
               $scope.delay = data[0].metadata.interval_sec || 1800;
               var offset = $scope.delay * 1000;
               var labels = [];
@@ -118,13 +126,13 @@
               }];
 
               if (data[0].data && data[0].data.length > 0) {
-                angular.forEach(data[0].data, function (data) {
-                  labels.push(moment(data.time + offset/*to show the _end_ of interval instead of begin*/).format('MMM Do YY h:mm'));
+                angular.forEach(data[0].data, function(data) {
+                  labels.push(moment(data.time + offset /*to show the _end_ of interval instead of begin*/ ).format('MMM Do YY h:mm'));
                   series[0].data.push(Util.toRPS(data.requests, $scope.delay, true));
                 });
               }
               if (data[1].data && data[1].data.length > 0) {
-                angular.forEach(data[1].data, function (data) {
+                angular.forEach(data[1].data, function(data) {
                   series[1].data.push(Util.toRPS(data.requests, $scope.delay, true));
                 });
               }
@@ -133,12 +141,12 @@
                 series: series
               };
             })
-            .finally(function () {
+            .finally(function() {
               $scope._loading = false;
             });
         };
 
-        $scope.$watch('ngDomain', function () {
+        $scope.$watch('ngDomain', function() {
           if (!$scope.ngDomain) {
             return;
           }

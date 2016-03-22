@@ -19,8 +19,9 @@
   <link rel="stylesheet" href="//fk.github.io/select2-bootstrap-css/css/select2-bootstrap.css">
 
   <link rel="stylesheet" href="bower_components/bootstrap-daterangepicker/daterangepicker.css"/>
+  <link rel="stylesheet" href='bower_components/angular-dashboard-framework/dist/angular-dashboard-framework.min.css' rel="stylesheet">
 <!-- highlight.js -->
- <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/github.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/github.min.css">
   <!-- Angular -->
   <link href="bower_components/angular/angular-csp.css" rel="stylesheet">
 
@@ -62,9 +63,16 @@
 <script type="text/javascript" src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
 <script type="text/javascript" src="bower_components/angular-touch/angular-touch.min.js"></script>
 <script type="text/javascript" src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+
+<script type="text/javascript" src='bower_components/Sortable/Sortable.min.js'></script>
+<script type="text/javascript" src='bower_components/Sortable/ng-sortable.js'></script>
+<script type="text/javascript" src='bower_components/angular-dashboard-framework/dist/angular-dashboard-framework.min.js'></script>
+
+
 <script type="text/javascript" src="bower_components/ngstorage/ngStorage.min.js"></script>
 <script type="text/javascript" src="bower_components/angular-base64/angular-base64.min.js"></script>
 <script type="text/javascript" src="bower_components/ng-jsoneditor/ng-jsoneditor.min.js"></script>
+<script type="text/javascript" src="bower_components/angular-bootstrap/ui-bootstrap.js"></script>
 <script type="text/javascript" src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 <script type="text/javascript" src="bower_components/angular-chart.js/dist/angular-chart.min.js"></script>
 <script type="text/javascript" src="bower_components/ui-select/dist/select.min.js"></script>
@@ -77,9 +85,9 @@
 <script type="text/javascript" src="bower_components/angular-bootstrap-datetimepicker/src/js/datetimepicker.js"></script>
 <script type="text/javascript" src="bower_components/angular-bootstrap-datetimepicker/src/js/datetimepicker.templates.js"></script>
 <script type="text/javascript" src="bower_components/angular-moment/angular-moment.min.js"></script>
+<script type="text/javascript" src="bower_components/oclazyload/dist/ocLazyLoad.min.js"></script>
 <script type="text/javascript" src="bower_components/angular-datatables/dist/angular-datatables.min.js"></script>
 <script type="text/javascript" src="bower_components/angular-datatables/dist/plugins/bootstrap/angular-datatables.bootstrap.min.js"></script>
-
 <script src="bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
 <script src="bower_components/angular-daterangepicker/js/angular-daterangepicker.js"></script>
 
@@ -184,6 +192,7 @@
 <script type="text/javascript" src="js/portal/reports/service/d3ChartHelper.factory.js"></script>
 <script type="text/javascript" src="js/portal/reports/service/chartColorService.factory.js"></script>
 <script type="text/javascript" src="js/portal/reports/service/pieChartHelper.factory.js"></script>
+<script type="text/javascript" src="js/portal/reports/service/reports-filter.service.js"></script>
 <script type="text/javascript" src="js/portal/reports/filter/timePeriods.directive.js"></script>
 <script type="text/javascript" src="js/portal/reports/filter/filterTopObjects.directive.js"></script>
 <script type="text/javascript" src="js/portal/reports/filter/mobileTrafficFilters.directive.js"></script>
@@ -249,6 +258,14 @@
 <script type="text/javascript" src="js/portal/keys/controller/keysList.controller.js"></script>
 <script type="text/javascript" src="js/portal/keys/controller/keysCreate.controller.js"></script>
 <script type="text/javascript" src="js/portal/keys/controller/keysEdit.controller.js"></script>
+
+<script type="text/javascript" src="js/portal/dashboard/dashboard.module.js"></script>
+<script type="text/javascript" src="js/portal/dashboard/dashboard.routes.js"></script>
+<script type="text/javascript" src="js/portal/dashboard/services/dashboard.service.js"></script>
+<script type="text/javascript" src="js/portal/dashboard/controller/dashdoard.controller.js"></script>
+<script type="text/javascript" src="js/portal/dashboard/components/dashboard-nav-menu.component.js"></script>
+<script type="text/javascript" src="js/portal/dashboard/components/dashboard-btn-new.component.js"></script>
+<script type="text/javascript" src="js/portal/dashboard/components/dashboard-btn-delete.conmponent.js"></script>
 
 <script type="text/javascript" src="js/portal/app.module.js"></script>
 <script type="text/javascript" src="js/portal/app.config.js"></script>

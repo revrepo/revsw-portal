@@ -405,11 +405,11 @@
                           <tbody ng-repeat="( zone, traffic ) in usage.traffic_per_billing_zone">
                             <tr>
                               <td>{{zone}}</td>
-                              <td class="text-right">{{usage.count}}</td>
-                              <td class="text-right">{{usage.sent_bytes}}</td>
-                              <td class="text-right">{{usage.received_bytes}}</td>
-                              <td class="text-right">{{usage.billable_sent_bps}}</td>
-                              <td class="text-right">{{usage.billable_received_bps}}</td>
+                              <td class="text-right">{{traffic.count}}</td>
+                              <td class="text-right">{{traffic.sent_bytes}}</td>
+                              <td class="text-right">{{traffic.received_bytes}}</td>
+                              <td class="text-right">{{traffic.billable_sent_bps}}</td>
+                              <td class="text-right">{{traffic.billable_received_bps}}</td>
                             </tr>
                           </tbody>
                         </table>

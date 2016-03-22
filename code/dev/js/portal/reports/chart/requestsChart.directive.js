@@ -16,7 +16,8 @@
         ngDomain: '=',
         flCountry: '=',
         flOs: '=',
-        flDevice: '='
+        flDevice: '=',
+        filtersSets: '='
       },
       /*@ngInject*/
       controller: RequestsChartCtrl
@@ -25,17 +26,25 @@
     return directive;
   }
 
-  RequestsChartCtrl.$inject = [
-    '$scope',
-    'Stats',
-    'Util'
-  ];
-
+  /*ngInject*/
   function RequestsChartCtrl(
     $scope,
     Stats,
     Util
   ) {
+
+    var _filters_field_list = ['from_timestamp', 'to_timestamp', 'country', 'device', 'os'];
+
+    $scope.getFilterParams = function(filters) {
+      var params = {};
+      _.forEach(filters, function(val, key) {
+        if (_.indexOf(_filters_field_list, key) !== -1) {
+          params[key] = val;
+
+        }
+      });
+      return params;
+    };
     $scope.delay = 1800;
     $scope._loading = false;
     $scope.reloadTrafficStats = reloadTrafficStats;
@@ -45,6 +54,9 @@
       to_timestamp: Date.now()
     };
 
+    if ($scope.filtersSets) {
+      _.extend($scope.filters, $scope.filtersSets);
+    }
     $scope.chartOptions = {
       yAxis: {
         title: {
@@ -83,7 +95,6 @@
     });
 
     //////////////////
-
     /**
      * @name reloadTrafficStats
      * @desc reload traffic stats
@@ -105,7 +116,9 @@
         }]
       };
 
-      Stats.traffic(angular.merge({ domainId: $scope.ngDomain.id }, $scope.filters))
+      Stats.traffic(angular.merge({
+          domainId: $scope.ngDomain.id
+        }, $scope.getFilterParams($scope.filters)))
         .$promise
         .then(function(data) {
           if (data.data && data.data.length > 0) {
