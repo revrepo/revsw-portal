@@ -18,7 +18,7 @@
         flDevice: '='
       },
       /*@ngInject*/
-      controller: function ($scope, Stats, $q, Util) {
+      controller: function ($scope, Stats, $q, Util, filterGeneratorService) {
         $scope._loading = false;
         $scope.filters = {
           from_timestamp: moment().subtract(1, 'days').valueOf(),
@@ -26,7 +26,6 @@
         };
 
         $scope.delay = 1800;
-
         $scope.traffic = {
           labels: [],
           series: [{
@@ -37,6 +36,42 @@
             data: []
           }]
         };
+
+        /**
+         * @name Subscribe for filters change
+         * @kind call function
+         * @params {Object} scope
+         * @params {function} callback function
+         */
+        filterGeneratorService.subscribeOnFilterChangeEvent($scope, callbackOnGlobalFilterChange);
+
+        /**
+         * @name callbackOnGlobalFilterChange
+         * @desc triggers when global filter changes
+         * @kind function
+         * @params {Object} Event object
+         * @params {Object} Data passed with event
+         */
+        function callbackOnGlobalFilterChange($event, eventDataObject) {
+          //$scope.updateFilters();
+          if (!$scope.filters) {
+            $scope.filters = {};
+          }
+
+          _.forIn(eventDataObject.data, function(value, key){
+            $scope.filters[key] = value;
+          });
+
+          //clear all empty fields in the filter object
+          _.forIn($scope.filters, function(value, key) {
+            if (!eventDataObject.data[key]) {
+              delete $scope.filters[key];
+            }
+          });
+
+
+          $scope.reload();
+        }
 
         $scope.loadHit = function() {
           return Stats.traffic(angular.merge({domainId: $scope.ngDomain.id}, $scope.filters, {
@@ -54,6 +89,7 @@
           if (!$scope.ngDomain || !$scope.ngDomain.id) {
             return;
           }
+
           $scope._loading = true;
           $scope.traffic = {
             labels: [],
