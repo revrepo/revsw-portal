@@ -1,6 +1,6 @@
 <div class="row dashboard__title">
   <div class="col-md-12">
-
+    <dashboard-btn-new class="h4 pull-left btn btn-link" ng-if="!editMode && !!model"></dashboard-btn-new>
     <h2 class "h2 pull-left page-title">
    {{model.title}}
     <span class="h5 form-inline pull-right">
@@ -19,7 +19,6 @@
       </div>
     </span>
     <span class="pull-right">
-        <dashboard-btn-new class="pull-left btn btn-link" ng-if="!editMode && !!model"></dashboard-btn-new>
         <a href="" ng-if="editMode" title="Add New Widget" class="btn btn-link" ng-click="addWidgetDialog()">
           <i class="glyphicon glyphicon-plus-sign"></i>
         </a>
@@ -35,4 +34,9 @@
   </span>
 </h2>
   </div>
+<div class="col-md-12" ng-if="model.rows[0]['columns'][0]['widgets'].length == 0 && model.rows[0]['columns'][1]['widgets'].length == 0">
+  <!-- TODO: add to model information about count added widgets-->
+  <strong class="alert alert-attention"> Click on <i class="glyphicon glyphicon-edit"></i> icon in the top right corner to add graphs to the dashboard</strong>
+</div>
+
 
