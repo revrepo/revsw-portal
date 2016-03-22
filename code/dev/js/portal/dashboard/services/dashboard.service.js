@@ -32,6 +32,22 @@
         });
       return deferred.promise;
     }
+
+    /**
+     * @name  updateDashboardsListItem
+     * @description Update title of dashboard in menu
+     * @param  {Object} item [description]
+     * @return
+     */
+    function updateDashboardsListItem(item) {
+      var index = _.find(dashboardsList, {
+        id: item.id
+      });
+      if (index !== -1) {
+        index.title = item.title;
+      }
+    }
+
     return {
       dashboardsList: dashboardsList,
       getAll: getAll,
@@ -43,9 +59,6 @@
        */
       get: function(id) {
         var deferred = $q.defer();
-        // return $q.when($localStorage[id]);
-        // var deferred = $q.defer();
-        //TODO:
         $http.get(API_URL + '/dashboards/' + id)
           .success(function(data) {
             data.titleTemplateUrl = 'parts/dashboard/dashboard-title.tpl.html';
@@ -55,8 +68,8 @@
             deferred.reject();
           });
         return deferred.promise;
-
       },
+
       /**
        * @name create
        * @description Create new dashboard
@@ -81,7 +94,6 @@
           }]
         };
         angular.extend(model, data);
-        var dashboardsList = this.dashboardsList;
         $http.post(API_URL + '/dashboards', model)
           .success(function(data) {
             model.id = data.object_id;
@@ -102,7 +114,8 @@
       set: function(id, data) {
         var deferred = $q.defer();
         $http.put(API_URL + '/dashboards/' + id, data)
-          .success(function(data) {
+          .success(function(res) {
+            updateDashboardsListItem(data);
             deferred.resolve();
           })
           .error(function() {
