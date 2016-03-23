@@ -15,7 +15,7 @@
     </div>
     <div class="form-group">
       <label>Auto-Refresh</label>
-      <select class="select2 form-control fixed " ng-model="model.options.autorefresh">
+      <select class="select2 form-control" ng-model="model.options.autorefresh">
         <option value="5">Each 5 Minutes</option>
         <option value="15">Each 15 Minutes</option>
         <option value="30">Each 30 Minutes</option>
@@ -28,5 +28,4 @@
 <div class=modal-footer>
   <button type=button class="btn btn-default" ng-disabled="_isLoading" ng-click=closeDialog()>Cancel</button>
   <button type=button class="btn btn-primary" ng-disabled="newDashboardForm.$invalid || _isLoading" ng-click="applyDialog(model)">Create</button>
-  <!-- <input type=submit class="btn btn-primary" ng-disabled=newDashboardForm.$invalid value="Apply" > </div> -->
 </div>

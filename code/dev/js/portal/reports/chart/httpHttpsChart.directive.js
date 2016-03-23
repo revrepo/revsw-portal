@@ -20,6 +20,7 @@
       },
       /*@ngInject*/
       controller: function($scope, Stats, $q, Util) {
+        var _filters_field_list = ['from_timestamp', 'to_timestamp', 'country', 'device', 'os'];
         $scope._loading = false;
         $scope.delay = 1800;
         $scope.filters = {
@@ -27,9 +28,32 @@
           to_timestamp: Date.now()
         };
 
-        if ($scope.filtersSets){
+        function generateFilterParams(filters) {
+          var params = {
+            from_timestamp: moment().subtract(1, 'days').valueOf(),
+            to_timestamp: Date.now()
+          };
+          _.forEach(filters, function(val, key) {
+            if (_.indexOf(_filters_field_list, key) !== -1) {
+              if (val !== '-' && val !== '') {
+                params[key] = val;
+              }
+            } else {
+              if (key === 'count_last_day') {
+                params.from_timestamp = moment().subtract(val, 'days').valueOf();
+                params.to_timestamp = Date.now();
+                delete params.count_last_day;
+              }
+            }
+          });
+          return params;
+        }
+
+        if ($scope.filtersSets) {
           _.extend($scope.filters, $scope.filtersSets);
         }
+
+
         $scope.traffic = {
           labels: [],
           series: [{
@@ -44,7 +68,7 @@
         $scope.loadHttp = function() {
           return Stats.traffic(angular.merge({
             domainId: $scope.ngDomain.id
-          }, $scope.filters, {
+          }, generateFilterParams($scope.filters), {
             protocol: 'HTTP'
           })).$promise;
         };
@@ -52,7 +76,7 @@
         $scope.loadHttps = function() {
           return Stats.traffic(angular.merge({
             domainId: $scope.ngDomain.id
-          }, $scope.filters, {
+          }, generateFilterParams($scope.filters), {
             protocol: 'HTTPS'
           })).$promise;
         };
