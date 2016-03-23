@@ -41,6 +41,18 @@
             }]
           }]
         })
+        .structure('4-4-4', {
+          title: '(Three Columns of Equal Width)',
+          rows: [{
+            columns: [{
+              styleClass: 'col-md-4'
+            }, {
+              styleClass: 'col-md-4'
+            }, {
+              styleClass: 'col-md-4'
+            }]
+          }]
+        })
         .structure('3-3-3-3', {
           title: '(Four Columns Of Equal Width)',
           rows: [{
@@ -55,7 +67,5 @@
             }]
           }]
         });
-
-
     });
 })();
