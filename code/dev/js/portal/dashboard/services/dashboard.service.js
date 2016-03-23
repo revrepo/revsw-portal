@@ -12,6 +12,7 @@
     'ngInject';
     var API_URL = $config.API_URL;
     var dashboardsList = [];
+    var requestAllDashboards = [];
     /**
      * @name getAll
      * @description get all user`s dashboards
@@ -19,9 +20,9 @@
      */
     function getAll() {
       var deferred = $q.defer();
-      dashboardsList.length = 0;
       $http.get(API_URL + '/dashboards')
         .success(function(data) {
+          dashboardsList.length = 0;
           angular.forEach(data, function(item) {
             dashboardsList.push(item);
           });
@@ -30,6 +31,7 @@
         .error(function() {
           deferred.reject();
         });
+
       return deferred.promise;
     }
 
