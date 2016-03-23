@@ -67,7 +67,6 @@
 
     if ($scope.filtersSets) {
       _.extend($scope.filters, $scope.filtersSets);
-      console.log($scope.filters);
     }
 
     $scope.chartOptions = {
