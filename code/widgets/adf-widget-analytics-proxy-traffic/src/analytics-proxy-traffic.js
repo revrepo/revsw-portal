@@ -12,6 +12,15 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
       styleClass: 'rev-widget',
       controller: ['$scope', '$window', function($scope, $window, $timeout) {
         $window.dispatchEvent(new Event('resize'));
+        var _defaultConfig = {
+          filters: {
+            country: '-',
+            os: '-',
+            device: '-',
+            count_last_day: '1'
+          }
+        };
+        _.defaultsDeep($scope.config, _defaultConfig);
       }],
       edit: {
         // templateUrl: '{widgetsPath}/analytics-proxy-traffic/src/edit.html',
@@ -473,7 +482,6 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
           .then(function(data) {
             $scope.country.lenght = 0;
             if (data.data && data.data.length > 0) {
-              // console.log($scope.countries)
               angular.forEach(data.data, function(val) {
                 var name = $scope.countries[val.key.toUpperCase()] || val.key;
                 $scope.country.push({
