@@ -11,7 +11,8 @@
       replace: true,
       template:
       // TODO: make template as file
-        '<a ng-click="vm.onDeleteDashboard($event)" class="btn btn-danger" title="delete bashboard"> <i class="glyphicon glyphicon-remove"></i> Delete Dashboard </a>',
+        '<button type="button" ng-click="vm.onDeleteDashboard($event)" ng-disabled="model.isLast" class="btn btn-danger" title="Delete Dashboard">'+
+        ' <i class="glyphicon glyphicon-remove"></i> Delete Dashboard </button>',
       scope: {
         model: '='
       },
@@ -33,13 +34,12 @@
             templateUrl: 'parts/dashboard/modals/dashboard-delete.modal.tpl.html',
             backdrop: 'static'
           });
-          // deleteDashboardScope.changeStructure = function(name, structure){
-          //   TODO:
-          //   changeStructure(model, structure);
-          // };
+
+          deleteDashboardScope.isLast = function(){
+            return (DashboardSrv.dashboardsList.length === 1);
+          };
+
           deleteDashboardScope.closeDialog = function() {
-            // copy the new title back to the model
-            //model.title = deleteDashboardScope.copy.title;
             // close modal and destroy the scope
             instance.close();
             deleteDashboardScope.$destroy();

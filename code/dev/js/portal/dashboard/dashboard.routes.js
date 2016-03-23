@@ -14,7 +14,7 @@
     $stateProvider
       .state('index.dashboard', {
         url: '/dashboard',
-        abstract: false,
+        abstract: true,
         views: {
           page: {
             template: '<div class="container-fluid" ui-view="page"></div>'
@@ -34,12 +34,12 @@
         }
       })
       .state('index.dashboard.main', {
-        url: '/',
+        url: '',
         views: {
           page: {
-            templateUrl: 'parts/dashboard/dashboard_main.tpl.html',
-            // controller: 'DashdoardsController',
-            // controllerAs: 'dashboard'
+            templateUrl: 'parts/dashboard/dashboard.tpl.html',
+            controller: 'DashdoardController',
+            controllerAs: 'dashboard'
           }
         }
       })
