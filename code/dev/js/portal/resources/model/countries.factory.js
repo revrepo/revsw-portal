@@ -3,8 +3,7 @@
 
   angular
     .module('revapm.Portal.Resources')
-    .factory('Countries', CountriesService)
-    .factory('CountriesResource', CountriesResource);
+    .factory('Countries', CountriesResource);
 
 
   /*@ngInject*/
@@ -15,30 +14,29 @@
       }
     });
   }
+  // TODO: need make it as service.
+  //
   /*@ngInject*/
   function CountriesService($q, $http, $config) {
-    // NOTE: query method used attribute "countryList" for caching data
+    var deffer = $q.defer();
+    var refCountries = $q.defer();
     return {
       query: function() {
-        if (!this.countryList) {
-          this.countryList = {};
-        }
-        var deffer = $q.defer();
-        if (_.isEmpty(this.countryList)) {
+        if (refCountries.isLoad !== true) {
           var scope = this;
           $http.get($config.API_URL + '/countries/list')
             .then(function(data) {
-                scope.countryList = data.data;
-                deffer.resolve(data.data);
-                return data.data;
+                angular.extend(refCountries, data.data);
+                refCountries.isLoad = true;
+                refCountries.resolve(refCountries);
               },
               function(err) {
                 deffer.reject(err);
               });
         } else {
-          deffer.resolve(this.countryList);
+          refCountries.resolve(refCountries);
         }
-        return deffer.promise;
+        return refCountries.promise;
       }
     };
   }
