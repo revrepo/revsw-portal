@@ -13,20 +13,18 @@
    <a href title="Expand Widget" ng-show="options.collapsible && widgetState.isCollapsed" ng-click="widgetState.isCollapsed = !widgetState.isCollapsed">
    <i class="glyphicon glyphicon-plus"></i>
    </a>
-     <a href title="Edit Widget Configuration" ng-click=edit() ng-if=editMode>
+     <a href title="Edit Widget Configuration" ng-click="edit()" ng-if="editMode">
      <i class="glyphicon glyphicon-cog"></i>
      </a>
-     <a href title="Fullscreen Widget" ng-click=openFullScreen() ng-show=options.maximizable> <i class="glyphicon glyphicon-fullscreen"></i>
+     <a href title="Fullscreen Widget" ng-click="openFullScreen()" ng-show="options.maximizable"> <i class="glyphicon glyphicon-fullscreen"></i>
       </a>
-       <a href title="Remove Widget" ng-click=remove() ng-if=editMode> <i class="glyphicon glyphicon-remove"></i>
+       <a href title="Remove Widget" ng-click=remove() ng-if="editMode"> <i class="glyphicon glyphicon-remove"></i>
         </a>
        </span>
 </h3>
-
-<small ng-if="definition.config.filters.count_last_day">
-  Last {{definition.config.filters.count_last_day}} Day
-</small>
-
+<!-- TODO: create special filter -->
+<small ng-if="definition.config.filters.count_last_day && (definition.config.filters.count_last_day != 7)">Last {{definition.config.filters.count_last_day}} Day</small>
+<small ng-if="definition.config.filters.count_last_day == 7">Last {{definition.config.filters.count_last_day}} Days</small>
 <small ng-if="!!definition.config.filters.country && definition.config.filters.country!=='-'">&nbsp;Country: {{definition.config.info.country}}&nbsp;</small>
 
 <span class="widget_filters_info" ng-show="!!definition.config.filters[index.key]" ng-repeat="index in [{key:'os',title:'OS'},{key:'device',title:'Device'}]">
