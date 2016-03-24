@@ -28,7 +28,6 @@
               'bower_components/angular-dashboard-framework/dist/angular-dashboard-framework.min.js',
               // 'bower_components/angular-dashboard-framework/dist/angular-dashboard-framework.min.css',
               'widgets/adf-widget-analytics-proxy-traffic/dist/adf-widget-analytics-proxy-traffic.js',
-              // 'widgets/adf-widget-top-reports/dist/adf-widget-top-reports.js',
             ]);
           }]
         }
