@@ -15,26 +15,22 @@
       </select>
     </div>
     <div class="form-group">
-      <select id="country" class="form-control fixed" ngoptions="key as item for (key, item) in flCountry" ng-model="config.filters.country" ng-disabled="!domain">
+      <select id="country" class="form-control fixed" ng-model="config.filters.country" ng-disabled="!domain">
         <option value="-">All Countries</option>
         <option ng-repeat="(key, item) in flCountry" value="{{key}}">{{item}}</option>
       </select>
     </div>
     <div class="form-group">
-      <select id="os" class="form-control fixed" ngoptions="item for item  in flOs.labels" ng-model="config.filters.os" ng-disabled="!domain">
+      <select id="os" class="form-control fixed" ng-model="config.filters.os" ng-disabled="!domain">
         <option value="-">All OS</option>
         <option ng-repeat="item in flOs.labels" value="{{item}}">{{item}}</option>
       </select>
     </div>
     <div class="form-group">
-      <select id="device" class="form-control fixed" ngoptions="item for item in flDevice.labels" ng-model="config.filters.device" ng-disabled="!domain">
+      <select id="device" class="form-control fixed" ng-model="config.filters.device" ng-disabled="!domain">
         <option value="-">All Devices</option>
         <option ng-repeat="item in flDevice.labels" value="{{item}}">{{item}}</option>
       </select>
     </div>
   </div>
-  <!-- <div class="form-group"> -->
-  <!-- <label for="domain">Time period</label> -->
-  <!-- <input date-range-picker="" ng-model="config.filters.time_period.range" options="::datePicker.options" class="form-control date-picker select2" type="text" /> -->
-  <!-- </div> -->
 </form>

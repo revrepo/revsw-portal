@@ -13,7 +13,7 @@
    <a href title="Expand Widget" ng-show="options.collapsible && widgetState.isCollapsed" ng-click="widgetState.isCollapsed = !widgetState.isCollapsed">
    <i class="glyphicon glyphicon-plus"></i>
    </a>
-     <a href title="Edit Widget Configuration" ng-click="edit()" ng-if=editMode>
+     <a href title="Edit Widget Configuration" ng-click="edit()" ng-if="editMode">
      <i class="glyphicon glyphicon-cog"></i>
      </a>
      <a href title="Fullscreen Widget" ng-click=openFullScreen() ng-show="options.maximizable"> <i class="glyphicon glyphicon-fullscreen"></i>
@@ -22,9 +22,8 @@
         </a>
        </span>
 </h3>
-
 <small ng-if="definition.config.filters.count_last_hours!='' && !!definition.config.filters.count_last_hours ">Last {{definition.config.filters.count_last_hours}} Hours &nbsp;</small>
-<small ng-if="definition.config.filters.country!='-' && !!definition.config.filters.country ">Country: {{definition.config.filters.country}}   &nbsp;</small>
+<small ng-if="definition.config.filters.country!='-' && !!definition.config.filters.country ">Country: {{definition.config.info.country}}   &nbsp;</small>
 
 
 
