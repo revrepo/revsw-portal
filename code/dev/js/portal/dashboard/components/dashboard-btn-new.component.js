@@ -33,9 +33,12 @@
           newDashboardScope._isLoading = false;
           newDashboardScope.structures = dashboard.structures;
           newDashboardScope.model = {
-              title: 'Dashboard',
-              structure: '6-6'
-            };
+            title: 'Dashboard',
+            structure: '6-6',
+            options: {
+              autorefresh: '1'
+            }
+          };
 
           var instance = $uibModal.open({
             scope: newDashboardScope,
@@ -44,17 +47,16 @@
           });
 
           newDashboardScope.closeDialog = function() {
-            // copy the new title back to the model
-            //model.title = newDashboardScope.copy.title;
             // close modal and destroy the scope
             instance.close();
             newDashboardScope.$destroy();
           };
+
           /**
            * @name  applyDialog
            * @description
            * @param  {Object} model - new dashboard info
-           * @return {[type]}       [description]
+           * @return
            */
           newDashboardScope.applyDialog = function(model) {
             newDashboardScope._isLoading = true;
@@ -62,7 +64,6 @@
               .create(model)
               .then(function(data) {
                 newDashboardScope.closeDialog();
-                console.log(data);
                 $state.go('index.dashboard.details', {
                   dashboardId: data.id
                 });
