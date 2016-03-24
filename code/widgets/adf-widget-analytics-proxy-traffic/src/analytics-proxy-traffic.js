@@ -4,14 +4,15 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
   .config(function(dashboardProvider) {
     var _widget = {
       title: 'Proxy Traffic',
-      titleTemplateUrl: '{widgetsPath}/analytics-proxy-traffic/src/widget-title-with-params.html',
       description: 'Web Alalytics Proxy Traffic',
+      titleTemplateUrl: 'parts/dashboard/widgets/proxy-traffic/widget-title-with-params-proxy-traffic.html',
       templateUrl: '{widgetsPath}/analytics-proxy-traffic/src/view.html',
       // editTemplateUrl: '{widgetsPath}/analytics-proxy-traffic/src/widget-edit.html',
       editTemplateUrl: 'parts/dashboard/widgets/widget-edit.html',
       styleClass: 'rev-widget',
       controller: ['$scope', '$window', function($scope, $window, $timeout) {
         $window.dispatchEvent(new Event('resize'));
+        // NOTE: set default filter configuration
         var _defaultConfig = {
           filters: {
             country: '-',
@@ -24,9 +25,9 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
       }],
       edit: {
         // templateUrl: '{widgetsPath}/analytics-proxy-traffic/src/edit.html',
-        templateUrl: 'parts/dashboard/widgets/edit-proxy-traffic.html',
-        controller: ['$scope', '$q', 'Stats', 'Countries', 'User', 'AlertService', 'filterGeneratorConst',
-          function($scope, $q, Stats, Countries, User, AlertService, filterGeneratorConst) {
+        templateUrl: 'parts/dashboard/widgets/proxy-traffic/edit-proxy-traffic.html',
+        controller: ['$scope', '$q', 'Stats', 'Countries', 'User', 'AlertService',
+          function($scope, $q, Stats, Countries, User, AlertService) {
             var curConfig = angular.copy($scope.config);
             var _defaultConfig = {
               filters: {
@@ -34,14 +35,20 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
                 os: '-',
                 device: '-',
                 count_last_day: '1'
+              },
+              info: {
+                country: 'All countries'
               }
             };
             _.defaultsDeep($scope.config, _defaultConfig);
-            $scope.filtersList = [
-              filterGeneratorConst.COUNTRIES,
-              filterGeneratorConst.OS,
-              filterGeneratorConst.DEVICES
-            ];
+
+            $scope.$watch('config.filters', function(newVal, oldVal) {
+              if (!!newVal && !!newVal.country) {
+                angular.extend($scope.config.info, {
+                  'country': $scope.flCountry[newVal.country.toUpperCase()] || newVal.country.toUpperCase()
+                });
+              }
+            }, true);
 
             $scope.onDomainSelected = function() {
               if (!$scope.domain || !$scope.domain.id) {
@@ -166,85 +173,49 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
                 }
               });
             };
-
             //==================
             // Load user domains
             User.getUserDomains(true);
-
-            //datepicker ranges
-            var ranges = {};
-            var FILTER_EVENT_TIMEOUT = 2000,
-              DATE_PICKER_SELECTOR = '.date-picker',
-              LAST_DAY = 'Last 1 Day',
-              LAST_WEEK = 'Last 7 Days ',
-              LAST_MONTH = 'Last 30 Days';
-
-            //Default valuew is Last 1 Day!
-            ranges[LAST_DAY] = [moment().subtract(1, 'days'), moment()];
-            ranges[LAST_WEEK] = [moment().subtract(7, 'days'), moment()];
-            ranges[LAST_MONTH] = [moment().subtract(30, 'days'), moment()];
-
-            //date picker params
-            $scope.datePicker = {
-              overlay: {
-                show: true,
-                val: LAST_DAY
-              },
-              options: {
-                timePicker: true,
-                timePickerIncrement: 30,
-                ranges: ranges
-              },
-              date: {
-                startDate: ranges[LAST_DAY][0],
-                endDate: ranges[LAST_DAY][1]
-              }
-            };
           }
         ],
       }
     };
-
+    // Registration widgets
     dashboardProvider
       .widget('analytics-proxy-traffic-bandwidth-usage', angular.extend(_widget, {
         title: 'Bandwidth Usage',
-        titleTemplateUrl: '{widgetsPath}/analytics-proxy-traffic/src/widget-title-with-params.html',
-        // editTemplateUrl: '{widgetsPath}/analytics-proxy-traffic/src/widget-edit.html',
-        editTemplateUrl: 'parts/dashboard/widgets/widget-edit.html',
         description: 'Display the Bandwidth Usage', // NOTE: use directive 'requests-chart
         templateUrl: '{widgetsPath}/analytics-proxy-traffic/src/views/view-requests-chart.tpl.html',
-
       }))
-      // .widget('analytics-proxy-traffic-chart', angular.extend(_widget, {
-      //   title: 'Total Requests',
-      //   description: 'Display the Total Requests', // NOTE: use directive 'proxy-traffic-chart'
-      //   templateUrl: '{widgetsPath}/analytics-proxy-traffic/src/views/view-proxy-traffic-chart.tpl.html',
-      //   editTemplateUrl: '{widgetsPath}/analytics-proxy-traffic/src/widget-edit.html',
-      // }))
+      .widget('analytics-proxy-traffic-chart', angular.extend(_widget, {
+        title: 'Total Requests',
+        description: 'Display Total Requests Graph', // NOTE: use directive 'proxy-traffic-chart'
+        templateUrl: '{widgetsPath}/analytics-proxy-traffic/src/views/view-proxy-traffic-chart.tpl.html',
+      }))
       .widget('analytics-proxy-traffic-http-https-chart', angular.extend(_widget, {
         title: 'HTTP/HTTPS Hits',
         description: 'Display the HTTP/HTTPS Hits', // NOTE: use directive 'http-https-chart'
         templateUrl: '{widgetsPath}/analytics-proxy-traffic/src/views/view-http-https-chart.tpl.html',
-        editTemplateUrl: '{widgetsPath}/analytics-proxy-traffic/src/widget-edit.html',
       }))
-      // .widget('analytics-proxy-http-status-code-chart', angular.extend(_widget, {
-      //   title: 'HTTP Status Code Hits',
-      //   description: 'Display the HTTP Status Code Hits', // NOTE: use directive 'http-status-code-chart'
-      //   templateUrl: '{widgetsPath}/analytics-proxy-traffic/src/views/view-http-status-code-chart.tpl.html',
-      //   editTemplateUrl: '{widgetsPath}/analytics-proxy-traffic/src/widget-edit.html',
-      // }))
-      // .widget('analytics-proxy-request-status-chart', angular.extend(_widget, {
-      //   title: 'Success/Failure Request Status',
-      //   description: 'Display the Success/Failure Request Status', // NOTE: use directive 'request-status-chart'
-      //   templateUrl: '{widgetsPath}/analytics-proxy-traffic/src/views/view-request-status-chart.tpl.html',
-      //   editTemplateUrl: '{widgetsPath}/analytics-proxy-traffic/src/widget-edit.html',
-      // }))
-      // .widget('analytics-proxy-hits-cache-chart', angular.extend(_widget, {
-      //   title: 'Edge Cache Efficiency Hits',
-      //   description: 'Display the Edge Cache Efficiency Hits', // NOTE: use directive 'hits-cache-chart'
-      //   templateUrl: '{widgetsPath}/analytics-proxy-traffic/src/views/view-hits-cache-chart.tpl.html',
-      //   editTemplateUrl: '{widgetsPath}/analytics-proxy-traffic/src/widget-edit.html',
-      // }));
+      .widget('analytics-proxy-hits-cache-chart', angular.extend(_widget, {
+        title: 'Edge Cache Efficiency Hits',
+        description: 'Display Cache Hit/Miss Graph', // NOTE: use directive 'hits-cache-chart'
+        templateUrl: '{widgetsPath}/analytics-proxy-traffic/src/views/view-hits-cache-chart.tpl.html',
+      }))
+
+    // .widget('analytics-proxy-http-status-code-chart', angular.extend(_widget, {
+    //   title: 'HTTP Status Code Hits',
+    //   description: 'Display the HTTP Status Code Hits', // NOTE: use directive 'http-status-code-chart'
+    //   templateUrl: '{widgetsPath}/analytics-proxy-traffic/src/views/view-http-status-code-chart.tpl.html',
+    //   editTemplateUrl: '{widgetsPath}/analytics-proxy-traffic/src/widget-edit.html',
+    // }))
+    // .widget('analytics-proxy-request-status-chart', angular.extend(_widget, {
+    //   title: 'Success/Failure Request Status',
+    //   description: 'Display the Success/Failure Request Status', // NOTE: use directive 'request-status-chart'
+    //   templateUrl: '{widgetsPath}/analytics-proxy-traffic/src/views/view-request-status-chart.tpl.html',
+    //   editTemplateUrl: '{widgetsPath}/analytics-proxy-traffic/src/widget-edit.html',
+    // }))
+    // ;
 
     .widget('adf-widget-gbt-heatmaps', {
         title: 'GBT Heatmap',
@@ -260,18 +231,29 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
       })
       //==========Top Objects============================
 
-    .widget('adf-widget-http-https-requests-ratio', {
-      title: 'Top 10 Countries',
-      titleTemplateUrl: 'parts/dashboard/widgets/top-reports/widget-title-with-params-top-reports.html',
-      description: 'Top Proxy Traffic Reports - Top 10 Countries',
-      templateUrl: 'parts/dashboard/widgets/top-reports/view-top-10-countries.tpl.html',
-      controller: reportTop10Countries,
-      edit: {
-        // templateUrl: '{widgetsPath}/adf-widget-top-reports/src/edit.html',
-        templateUrl: 'parts/dashboard/widgets/top-reports/edit-top-reports.html',
-        controller: editTopReportConfig
-      }
-    });
+    .widget('adf-widget-top-10-countries', {
+        title: 'Top 10 Countries',
+        titleTemplateUrl: 'parts/dashboard/widgets/top-reports/widget-title-with-params-top-reports.html',
+        description: 'Top Proxy Traffic Reports - Top 10 Countries',
+        templateUrl: 'parts/dashboard/widgets/top-reports/view-top-10-countries.tpl.html',
+        controller: reportTop10CountriesController,
+        edit: {
+          templateUrl: 'parts/dashboard/widgets/top-reports/edit-top-reports.html',
+          controller: editTopReportConfig
+        }
+      })
+      // -- Request Success/Failure Ratio - Display Pie Chart For Request Completion Success/Failure Ratio
+      .widget('adf-widget-http-https-requests-ratio', {
+        title: 'Request Success/Failure Ratio',
+        description: 'Display Pie Chart For Request Completion Success/Failure Ratio',
+        titleTemplateUrl: 'parts/dashboard/widgets/top-reports/widget-title-with-params-top-reports.html',
+        templateUrl: 'parts/dashboard/widgets/top-reports/view-request-success-fialure-ratio.tpl.html',
+        controller: 'widgetRequestSuccessFailureRatioCtrl',
+        edit: {
+          templateUrl: 'parts/dashboard/widgets/top-reports/edit-top-reports.html',
+          controller: editTopReportConfig
+        }
+      });
 
 
     //==================
@@ -282,7 +264,7 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
      * @param  {[type]} $window  [description]
      * @param  {[type]} $timeout [description]
      * @param  {[type]} Stats    [description]
-     * @return {[type]}          [description]
+     * @return
      */
     function editHeatMapReportsConfigController($scope, $window, $timeout, Stats) {
       'ngInject';
@@ -303,8 +285,6 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
         angular.extend($scope.config, {
           domain: angular.copy($scope.domain)
         });
-        //$scope.reloadCountry($scope.domain.id);
-
       }
     };
 
@@ -318,7 +298,7 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
      * @param  {[type]} HeatmapsDrawer [description]
      * @return {[type]}                [description]
      */
-    function reportGBTHeatmapController($scope, $window, $timeout, Stats, Countries, HeatmapsDrawer) {
+    function reportGBTHeatmapController($scope, $q, $window, $timeout, Stats, Countries, HeatmapsDrawer) {
       'ngInject';
       var _defaultConfig = {
         filters: {
@@ -328,14 +308,18 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
       _.defaultsDeep($scope.config, _defaultConfig);
 
       $scope.elId = (new Date()).getTime();
+      $scope._loading = true;
+      Countries.query().$promise
+        .then(function(data) {
+          $scope.reload();
+          $scope.countries = data;
+        });
 
-      $scope.countries = Countries.query();
 
       $scope.reload = function() {
         if (!$scope.config.domain) {
           return;
         }
-
         var filters = {
           domainId: $scope.config.domain.id,
           count_last_hours: $scope.config.filters.count_last_hours || '6',
@@ -364,15 +348,13 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
         $scope._loading = true;
         // Clear old data
         $scope.countryGBTData = {};
-
         // Loading new data
         return Stats.gbt_country({
             domainId: filters.domainId,
             count: 250,
             from_timestamp: moment().subtract(filters.count_last_hours || '6', 'hours').valueOf(),
             to_timestamp: Date.now()
-          })
-          .$promise
+          }).$promise
           .then(function(data) {
             if (data.data && data.data.length > 0) {
               angular.forEach(data.data, function(item) {
@@ -388,7 +370,7 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
             return data;
           });
       };
-      $scope.reload();
+
     };
 
     /**
@@ -406,10 +388,16 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
         filters: {
           count_last_hours: '1',
           country: '-'
+        },
+        info: {
+          country: 'All countries'
         }
       };
       _.defaultsDeep($scope.config, _defaultConfig);
-      $scope.refCountries = Countries.query();
+      Countries.query().$promise
+        .then(function(data) {
+          $scope.refCountries = data;
+        });
       $scope.onDomainSelected = function() {
         if (!$scope.domain || !$scope.domain.id) {
           return;
@@ -426,14 +414,46 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
         angular.extend($scope.config, {
           domain: angular.copy($scope.domain)
         });
-      }
+      };
+
+      // NOTE :save info with country full name
+      $scope.$watch('config.filters', function(newVal, oldVal) {
+        if (!!newVal && !!newVal.country) {
+          angular.extend($scope.config.info, {
+            'country': $scope.refCountries[newVal.country.toUpperCase()] || newVal.country.toUpperCase()
+          });
+        }
+      }, true);
+
     };
 
     // TODO: directive
-    function reportTop10Countries($scope, Countries, Stats) {
+    /**
+     * [reportTop10CountriesController description]
+     * @param  {[type]} $scope    [description]
+     * @param  {[type]} Countries [description]
+     * @param  {[type]} Stats     [description]
+     * @return {[type]}           [description]
+     */
+    function reportTop10CountriesController($scope, Countries, Stats) {
       'ngInject';
       var _filters_field_list = ['domainId', 'from_timestamp', 'to_timestamp', 'country'];
-      $scope.countries = Countries.query();
+      var _defaultConfig = {
+        filters: {
+          count_last_hours: '1',
+          country: '-'
+        },
+        info: {
+          country: 'All countries'
+        }
+      };
+      _.defaultsDeep($scope.config, _defaultConfig);
+
+      Countries.query().$promise
+        .then(function(data) {
+          $scope.countries = data;
+          $scope.reload();
+        });
 
       function generateFilterParams(filters) {
         var params = {
@@ -492,6 +512,6 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
             }
           });
       };
-      $scope.reload();
+
     }
   });

@@ -523,6 +523,14 @@ polyline {
 .widget .reports_charts_title {
   display: none;
 }
+@media (min-width: 768px) {
+  .dl-horizontal dt {
+    width: 250px;
+  }
+  .dl-horizontal dd {
+    margin-left: 260px;
+  }
+}
 section[drawer] .side-menu .dashboard_menu .side-menu-item.item-title a {
   color: #f7941e;
 }

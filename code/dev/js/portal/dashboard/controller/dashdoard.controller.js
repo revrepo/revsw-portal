@@ -39,13 +39,18 @@
              $state.go('index.dashboard.details', {
                dashboardId: firstDashboard.id
              });
-           }else{
-            // TODO: Show information how create Dashboard ?
+           } else {
+             // TODO: Show information how create Dashboard ?
            }
          });
 
      }
-
+     /**
+      * @name  initDashboard
+      * @description
+      * @param  {String} dashboardId
+      * @return
+      */
      function initDashboard(dashboardId) {
        vm.model = {};
        vm._isLoading = true;
@@ -55,6 +60,7 @@
              angular.extend(vm.model, data);
              // TODO: set type dashboard settings
              vm.model.editTemplateUrl = 'parts/dashboard/modals/dashboard-edit-with-options.tpl.html';
+             $scope.autoRefresh(vm.model.options); // NOTE: run auto-refresh with dashboard options
            },
            function() {
              // TODO: alert message and go to
@@ -109,11 +115,18 @@
        }, true);
 
      var timeReload;
+     /**
+      * @name  autoRefresh
+      * @description
+      * @param  {Object} option -
+      * @return
+      */
      $scope.autoRefresh = function(option) {
        if (!!timeReload) {
          $timeout.cancel(timeReload);
        }
-       if (!!option && option.autorefresh !== '') {
+
+       if (!!option && !!option.autorefresh && option.autorefresh !== '') {
          timeReload = $timeout(
            function() {
              $scope.$broadcast('widgetReload');
@@ -121,13 +134,17 @@
            }, option.autorefresh * 60 * 1000);
        }
      };
-
+     /**
+      * @name  refreshWidgets
+      * @description Self refresh widgets
+      * @return
+      */
      $scope.refreshWidgets = function() {
        if (!!timeReload) {
          $timeout.cancel(timeReload);
        }
        if (!!vm.model.option && vm.model.option.autorefresh !== '') {
-         $scope.autoRefresh();
+         $scope.autoRefresh(vm.model.option);
        } else {
          $scope.$broadcast('widgetReload');
        }

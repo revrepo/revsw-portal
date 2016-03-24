@@ -1,5 +1,8 @@
 <div class="col-md-12">
-  <div class="alert alert-info" ng-if="_loading">
+  <div class="alert alert-info" ng-if="!config.domain">
+    No data to display
+  </div>
+  <div class="alert alert-info" ng-if="_loading && countryGBTData">
     <i class="glyphicon glyphicon-refresh spin" ng-if="item.loading"></i>&nbsp; Loading...
   </div>
   <div id="tooltip-container-gbt{{elId}}" class="tooltip-container"></div>
