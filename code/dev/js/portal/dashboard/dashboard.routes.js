@@ -14,7 +14,7 @@
     $stateProvider
       .state('index.dashboard', {
         url: '/dashboard',
-        abstract: false,
+        abstract: true,
         views: {
           page: {
             template: '<div class="container-fluid" ui-view="page"></div>'
@@ -28,18 +28,17 @@
               'bower_components/angular-dashboard-framework/dist/angular-dashboard-framework.min.js',
               // 'bower_components/angular-dashboard-framework/dist/angular-dashboard-framework.min.css',
               'widgets/adf-widget-analytics-proxy-traffic/dist/adf-widget-analytics-proxy-traffic.js',
-              // 'widgets/adf-widget-top-reports/dist/adf-widget-top-reports.js',
             ]);
           }]
         }
       })
       .state('index.dashboard.main', {
-        url: '/',
+        url: '',
         views: {
           page: {
-            templateUrl: 'parts/dashboard/dashboard_main.tpl.html',
-            // controller: 'DashdoardsController',
-            // controllerAs: 'dashboard'
+            templateUrl: 'parts/dashboard/dashboard.tpl.html',
+            controller: 'DashdoardController',
+            controllerAs: 'dashboard'
           }
         }
       })

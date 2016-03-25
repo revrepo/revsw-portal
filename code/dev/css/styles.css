@@ -153,6 +153,12 @@ select.form-control.fixed {
 select.form-control.fixed135 {
   width: 135px;
 }
+select.form-control.fixed155 {
+  width: 155px;
+}
+select.form-control.fixed175 {
+  width: 175px;
+}
 input.form-control {
   max-width: 550px;
 }
@@ -516,6 +522,14 @@ polyline {
 }
 .widget .reports_charts_title {
   display: none;
+}
+@media (min-width: 768px) {
+  .dl-horizontal dt {
+    width: 250px;
+  }
+  .dl-horizontal dd {
+    margin-left: 260px;
+  }
 }
 section[drawer] .side-menu .dashboard_menu .side-menu-item.item-title a {
   color: #f7941e;
