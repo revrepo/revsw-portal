@@ -65,15 +65,17 @@
         if (ifParams) {
           if (_.find([$state.params], ifParams)) {
             $element.addClass(classname);
+            $element.addClass('current');
             return;
           }
         } else {
           $element.addClass(classname);
+          $element.addClass('current');
           return;
         }
       }
 
-      $element.removeClass(classname);
+      $element.removeClass('current');
     }
 
     $scope.$on('$stateChangeSuccess', update);
