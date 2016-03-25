@@ -23,7 +23,9 @@
     $rootScope.$on('$stateChangeError', console.log.bind(console));
 
     $rootScope.collapseMenu = function($event){
-      if($event.currentTarget.className.indexOf('current') === -1) return;
+      if($event.currentTarget.className.indexOf('current') === -1) {
+        return;
+      }
 
       if($event.currentTarget.className.indexOf('active-side-menu-item') > 0){
         $event.currentTarget.className = $event.currentTarget.className.replace('active-side-menu-item', '');
