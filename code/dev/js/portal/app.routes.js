@@ -61,6 +61,14 @@
           }
         }
       })
+      .state('index.billing', {
+        url: '',
+        views: {
+          page: {
+            templateUrl: 'parts/layout/page.html'
+          }
+        }
+      })
       .state('index.reports', {
         url: '',
         views: {

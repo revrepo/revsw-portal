@@ -26,8 +26,8 @@
           }
         }
       })
-      .state('index.accountSettings.billing', {
-        url: '/profile/billing',
+      .state('index.billing.plans', {
+        url: '/profile/plans',
         views: {
           main: {
             controller: 'BillingController',
@@ -35,7 +35,7 @@
           }
         }
       })
-      .state('index.accountSettings.statements', {
+      .state('index.billing.statements', {
         url: '/profile/statements',
         views: {
           main: {
@@ -44,7 +44,7 @@
           }
         }
       })
-      .state('index.accountSettings.statement', {
+      .state('index.billing.statement', {
         url: '/profile/statements/:id',
         views: {
           main: {

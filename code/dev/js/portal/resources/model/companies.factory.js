@@ -9,6 +9,10 @@
   function CompaniesResource(Resource, $config) {
 
     return Resource($config.API_URL + '/accounts/:id', {id: '@id', statement: '@statement'},{
+      createBillingProfile: {
+        url: $config.API_URL + '/accounts/:id/billing_profile',
+        method: 'POST'
+      },
       statements: {
         url: $config.API_URL + '/accounts/:id/statements',
         method: 'GET',
