@@ -1,0 +1,38 @@
+{
+  "name": "adf-widget-analytics-proxy-traffic",
+  "version": "0.1.0",
+  "main": "dist/adf-widget-analytics-proxy-traffic.js",
+  "ignore": [
+    "bower.json",
+    ".bowerrc",
+    ".jshintrc",
+    ".gitignore",
+    "gulpfile.js",
+    "node_modules",
+    "package.json",
+    "components",
+    "src"
+  ],
+  "keywords": [
+    "dashboard",
+    "widget",
+    "adf",
+    "adf-widget"
+  ],
+  "description": "Web Alalytics Proxy Traffic",
+  "dependencies": {
+    "angular-dashboard-framework": ">=0.10"
+  },
+  "devDependencies": {
+    "angular-local-storage": ">=0.2"
+  },
+  "overrides": {
+    "bootstrap" : {
+      "main": [
+        "less/bootstrap.less",
+        "dist/css/bootstrap.css",
+        "dist/js/bootstrap.js"
+      ]
+    }
+  }
+}

@@ -79,13 +79,25 @@ gulp.task('dist', function () {
     .pipe(gulp.dest(destFolder));
 });
 
+// linting
+var jshint = require('gulp-jshint');
+var stylish = require('jshint-stylish');
+gulp.task('lintjs', function() {
+  return gulp.src([
+    'gulpfile.js',
+    devFolder + 'js/**/*.js'])
+    .pipe(jshint({linter:'jshint'}))
+    .pipe(jshint.reporter(stylish));
+});
+
 gulp.task('serve', function() {
   browserSync({
     server: {
       baseDir: './dev',
       routes: {
         '/bower_components': 'bower_components',
-        '/portal' : '/'
+        '/portal' : '/',
+        '/widgets' : 'widgets',
       }
     }
   });
@@ -95,7 +107,7 @@ gulp.task('serve', function() {
   gulp.watch([devFolder + 'polymer/**/*.html', '!./polymer/dist/*'],
     ['vulcanize', reload]);
 
-  gulp.watch([devFolder + 'js/**/*.js'], reload);
+  gulp.watch([devFolder + 'js/**/*.js'], ['lintjs',reload]);
   gulp.watch([devFolder + 'js/**/*.html'], reload);
   gulp.watch([devFolder + 'images/**/*'], reload);
 });

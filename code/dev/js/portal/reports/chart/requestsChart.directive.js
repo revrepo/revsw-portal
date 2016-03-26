@@ -16,7 +16,8 @@
         ngDomain: '=',
         flCountry: '=',
         flOs: '=',
-        flDevice: '='
+        flDevice: '=',
+        filtersSets: '='
       },
       /*@ngInject*/
       controller: RequestsChartCtrl
@@ -25,17 +26,36 @@
     return directive;
   }
 
-  RequestsChartCtrl.$inject = [
-    '$scope',
-    'Stats',
-    'Util'
-  ];
-
+  /*ngInject*/
   function RequestsChartCtrl(
     $scope,
     Stats,
     Util
   ) {
+
+    var _filters_field_list = ['from_timestamp', 'to_timestamp', 'country', 'device', 'os'];
+
+    function generateFilterParams(filters) {
+      var params = {
+        from_timestamp: moment().subtract(1, 'days').valueOf(),
+        to_timestamp: Date.now()
+      };
+      _.forEach(filters, function(val, key) {
+        if (_.indexOf(_filters_field_list, key) !== -1) {
+          if (val !== '-' && val !== '' ) {
+            params[key] = val;
+          }
+        } else {
+          if (key === 'count_last_day') {
+            params.from_timestamp = moment().subtract(val, 'days').valueOf();
+            params.to_timestamp  = Date.now();
+            delete params.count_last_day;
+          }
+        }
+      });
+      return params;
+    }
+
     $scope.delay = 1800;
     $scope._loading = false;
     $scope.reloadTrafficStats = reloadTrafficStats;
@@ -44,6 +64,10 @@
       from_timestamp: moment().subtract(1, 'days').valueOf(),
       to_timestamp: Date.now()
     };
+
+    if ($scope.filtersSets) {
+      _.extend($scope.filters, $scope.filtersSets);
+    }
 
     $scope.chartOptions = {
       yAxis: {
@@ -83,7 +107,6 @@
     });
 
     //////////////////
-
     /**
      * @name reloadTrafficStats
      * @desc reload traffic stats
@@ -105,7 +128,9 @@
         }]
       };
 
-      Stats.traffic(angular.merge({ domainId: $scope.ngDomain.id }, $scope.filters))
+      Stats.traffic(angular.merge({
+          domainId: $scope.ngDomain.id
+        }, generateFilterParams($scope.filters)))
         .$promise
         .then(function(data) {
           if (data.data && data.data.length > 0) {

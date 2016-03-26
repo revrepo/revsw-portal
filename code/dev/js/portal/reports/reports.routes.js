@@ -27,6 +27,16 @@
           }
         }
       })
+      .state('index.reports.edge-cache', {
+        url: '/reports/edge-cache',
+        views: {
+          main: {
+            controller: 'EdgeCacheReportsController',
+            controllerAs: 'vm',
+            templateUrl: 'parts/reports/edge-cache.html'
+          }
+        }
+      })
       .state('index.reports.topreports', {
         url: '/reports/topreports',
         views: {

@@ -1,6 +1,6 @@
-<h3>Edge Cache Efficiency Hits</h3>
+<h3 class="reports_charts_title">Edge Cache Efficiency Hits</h3>
 <div filter-time-periods
-     ng-hide="!ngDomain"
+     ng-hide="!ngDomain || hideFilters"
      fl-os="flOs"
      fl-country="flCountry"
      fl-device="flDevice"
@@ -13,7 +13,7 @@
   <i class="glyphicon glyphicon-refresh spin"></i>&nbsp;
   Loading
 </div>
-<div ng-hide="!traffic.labels || !traffic.labels.length">
+<div class="auto-scroll" ng-hide="!traffic.labels || !traffic.labels.length">
   <!--<canvas id="line"-->
           <!--class="chart chart-line"-->
           <!--chart-options="chartOptions"-->
