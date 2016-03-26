@@ -151,7 +151,11 @@
                   apps = [];
                   selectApplication( null );
                   accounts = [];
-                  selectAccount( null );
+                  getUserAccounts(false)
+                    .then(function (res) {
+                      selectAccount(res[0]);
+                    });
+                  //selectAccount( null );
                   $localStorage.last_user_id = res.user_id;
                 }
               } else {
