@@ -76,6 +76,14 @@
                 <span class="sortorder" ng-show="filter.predicate === 'createdBy'" ng-class="{reverse: filter.reverse}"></span>
               </th>
               <th class="col-lg-1">
+                <a href="" ng-click="order('subscription_state')">Subscription State</a>
+                <span class="sortorder" ng-show="filter.predicate === 'subscription_state'" ng-class="{reverse: filter.reverse}"></span>
+              </th>
+              <th class="col-lg-1">
+                <a href="" ng-click="order('subscription_name')">Subscription Name</a>
+                <span class="sortorder" ng-show="filter.predicate === 'subscription_name'" ng-class="{reverse: filter.reverse}"></span>
+              </th>
+              <th class="col-lg-1">
                 <a href="" ng-click="order('updated_at')">Last Update</a>
                 <span class="sortorder" ng-show="filter.predicate === 'updated_at'" ng-class="{reverse: filter.reverse}"></span>
               </th>
@@ -92,6 +100,8 @@
               </td>
               <td>{{item.comment}}</td>
               <td>{{item.createdBy}}</td>
+              <td>{{item.subscription_state}}</td>
+              <td>{{(item.subscription_name) ? item.subscription_name : 'Manual'}}</td>
               <td>{{getRelativeDate(item.updated_at)}}</td>
               <td class="actions text-right">
                 <i class="glyphicon glyphicon-refresh spin" ng-if="item.loading"></i>

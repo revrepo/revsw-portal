@@ -16,6 +16,15 @@
             templateUrl: 'parts/reports/usage-web.html'
           }
         }
+      })
+      .state('index.billing.company', {
+        url: '/account',
+        views: {
+          main: {
+            controller: 'CompanyProfileEditController',
+            templateUrl: 'parts/profile/edit-company.html '
+          }
+        }
       });
   }
 })();
