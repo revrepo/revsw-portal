@@ -91,10 +91,10 @@
     $scope.traffic = {
       labels: [],
       series: [{
-        name: 'Incoming bandwidth',
+        name: 'Incoming Bandwidth',
         data: []
       }, {
-        name: 'Outgoing bandwidth',
+        name: 'Outgoing Bandwidth',
         data: []
       }]
     };
@@ -120,10 +120,10 @@
       $scope.traffic = {
         labels: [],
         series: [{
-          name: 'Incoming bandwidth',
+          name: 'Incoming Bandwidth',
           data: []
         }, {
-          name: 'Outgoing bandwidth',
+          name: 'Outgoing Bandwidth',
           data: []
         }]
       };
@@ -135,10 +135,10 @@
         .then(function(data) {
           if (data.data && data.data.length > 0) {
             var series = [{
-              name: 'Incoming bandwidth',
+              name: 'Incoming Bandwidth',
               data: []
             }, {
-              name: 'Outgoing bandwidth',
+              name: 'Outgoing Bandwidth',
               data: []
             }];
             $scope.delay = data.metadata.interval_sec || 1800;
