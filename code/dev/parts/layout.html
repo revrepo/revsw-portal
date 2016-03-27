@@ -62,8 +62,8 @@
                 <a ui-sref-active="active" ui-sref="index.accountSettings.2fa" class="side-menu-sub-item" href="#/2fa">Security Settings</a>
                 <a ui-sref-active="active" ui-sref="index.accountSettings.activitylog" class="side-menu-sub-item">Activity Log</a>
             </li>
-            <li ui-sref-active-if="{class: 'active-side-menu-item', state: 'index.billing'}", ng-class="{'active-side-menu-item': menuExpanded('index.billing')}">
-                <a class="side-menu-item", ng-if="!userService.isUser()", ng-click="goToState('index.billing.usage')">
+            <li ng-if="!userService.isUser()" ui-sref-active-if="{class: 'active-side-menu-item', state: 'index.billing'}", ng-class="{'active-side-menu-item': menuExpanded('index.billing')}">
+                <a class="side-menu-item", ng-click="goToState('index.billing.usage')">
                     Billing
                     <i ng-click="expandMenu('index.billing', $event)" class="pull-right {{ menuExpanded('index.billing') ? 'fa fa-caret-down' : 'fa fa-caret-up' }}"></i>
                 </a>
