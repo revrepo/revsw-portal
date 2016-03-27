@@ -6,7 +6,7 @@
     .run(runApp);
 
   /*@ngInject*/
-  function runApp($rootScope, AlertService) {
+  function runApp($rootScope, AlertService, $state) {
     $rootScope.alertService = AlertService;
     $rootScope.$on('$stateChangeStart',
       function(event){
@@ -22,16 +22,27 @@
       });
     $rootScope.$on('$stateChangeError', console.log.bind(console));
 
-    $rootScope.collapseMenu = function($event){
-      if($event.currentTarget.className.indexOf('current') === -1) {
+    $rootScope.goToState = function(state){
+        $state.go(state);
+    };
+
+    $rootScope.menuExpanded = function(menuState){
+      return $rootScope.menuExpandedNodes && $rootScope.menuExpandedNodes[menuState];
+    };
+
+    $rootScope.expandMenu = function(menuState, event){
+      if($rootScope.menuExpandedNodes.current === menuState) {
         return;
       }
 
-      if($event.currentTarget.className.indexOf('active-side-menu-item') > 0){
-        $event.currentTarget.className = $event.currentTarget.className.replace('active-side-menu-item', '');
-      } else {
-        $event.currentTarget.className += ' current active-side-menu-item';
+      if($rootScope.menuExpandedNodes[menuState]) {
+        delete $rootScope.menuExpandedNodes[menuState];
       }
+      else {
+        $rootScope.menuExpandedNodes[menuState] = true;
+      }
+
+      event.stopPropagation();
     };
   }
 })();
