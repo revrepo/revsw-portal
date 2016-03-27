@@ -12,7 +12,7 @@
       replace: true,
       template:
       // TODO: make template as file
-        '<li class="dashboard_menu list"  ui-sref-active-if="{class: \'active-side-menu-item\', state: \'index.dashboard\'}">' +
+        '<li class="dashboard_menu list"  ui-sref-active-if="{class: \'active-side-menu-item\', state: \'index.dashboard\'}" ng-click="collapseMenu($event)">' +
         '  <a  class="side-menu-item" ng-if="vm.dashboardsList.length>0" ui-sref="index.dashboard.details({dashboardId:vm.dashboardsList[0].id})" >Dashboards</a>' +
         '<span ng-if="vm.dashboardsList.length==0"  class="side-menu-item item-title">' +
         ' Dashboards <dashboard-btn-new></dashboard-btn-new>' +

@@ -6,7 +6,7 @@
     .controller('CompaniesCrudController', CompaniesCrudController);
 
   /*@ngInject*/
-  function CompaniesCrudController($scope, CRUDController, Companies, $injector, $stateParams, $config, $state, $anchorScroll) {
+  function CompaniesCrudController($scope, CRUDController, Companies, BillingPlans, $injector, $stateParams, $config, $state, $anchorScroll) {
     //Invoking crud actions
     $injector.invoke(CRUDController, this, {
       $scope: $scope,
@@ -29,6 +29,19 @@
                 $scope.$digest();
               }, 500);
             }
+            return BillingPlans.query().$promise;
+
+          })
+          .then(function (res) {
+            $scope.records = $scope.records.map(function (r) {
+              var idx = _.findIndex(res, {id: r.billing_plan});
+              if(idx > 0){
+                r.subscription_name = res[idx].name;
+                return r;
+              }
+              r.subscription_name = 'Manual';
+              return r;
+            });
           });
       }
     });

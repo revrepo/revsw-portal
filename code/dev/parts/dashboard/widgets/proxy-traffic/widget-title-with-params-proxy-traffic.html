@@ -1,6 +1,6 @@
 <h3 class=panel-title>{{definition.title}}
   <span ng-if="!!definition.config.domain">
-      (<strong> {{definition.config.domain.domain_name}}</strong>)
+      (<strong>{{definition.config.domain.domain_name}}</strong>)
   </span>
  <span class=pull-right>
 <a href title="reload widget content" ng-if=widget.reload ng-click=reload()>
@@ -23,8 +23,8 @@
        </span>
 </h3>
 <!-- TODO: create special filter -->
-<small ng-if="definition.config.filters.count_last_day && (definition.config.filters.count_last_day != 7)">Last {{definition.config.filters.count_last_day}} Day</small>
-<small ng-if="definition.config.filters.count_last_day == 7">Last {{definition.config.filters.count_last_day}} Days</small>
+<small ng-if="definition.config.filters.count_last_day && (definition.config.filters.count_last_day === '1')">Last {{definition.config.filters.count_last_day}} Day</small>
+<small ng-if="definition.config.filters.count_last_day !== '1'">Last {{definition.config.filters.count_last_day}} Days</small>
 <small ng-if="!!definition.config.filters.country && definition.config.filters.country!=='-'">&nbsp;Country: {{definition.config.info.country}}&nbsp;</small>
 
 <span class="widget_filters_info" ng-show="!!definition.config.filters[index.key]" ng-repeat="index in [{key:'os',title:'OS'},{key:'device',title:'Device'}]">
