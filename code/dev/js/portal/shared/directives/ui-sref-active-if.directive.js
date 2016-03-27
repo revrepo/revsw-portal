@@ -37,6 +37,7 @@
 
   UiSrefActiveIfCtrl.$inject = [
     '$state',
+    '$rootScope',
     '$scope',
     '$element',
     '$attrs'
@@ -44,10 +45,15 @@
 
   function UiSrefActiveIfCtrl(
     $state,
+    $rootScope,
     $scope,
     $element,
     $attr
   ) {
+    if(!$rootScope.menuExpandedNodes) {
+      $rootScope.menuExpandedNodes = {};
+    }
+
     var state = null,
       classname = 'active',
       attr = $scope.uiSrefActiveIf,
@@ -65,17 +71,17 @@
         if (ifParams) {
           if (_.find([$state.params], ifParams)) {
             $element.addClass(classname);
-            $element.addClass('current');
+            $rootScope.menuExpandedNodes[state] = true;
+            $rootScope.menuExpandedNodes.current = state;
             return;
           }
         } else {
           $element.addClass(classname);
-          $element.addClass('current');
+          $rootScope.menuExpandedNodes[state] = true;
+          $rootScope.menuExpandedNodes.current = state;
           return;
         }
       }
-
-      $element.removeClass('current');
     }
 
     $scope.$on('$stateChangeSuccess', update);

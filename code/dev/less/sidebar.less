@@ -39,17 +39,6 @@ section[drawer] {
       i {
         margin: 0 10px;
       }
-
-      &:after {
-        font-family: FontAwesome;
-        content: "\f0d8";
-        float: right;
-      }
-      &.hide-caret {
-        &:after {
-          content: "";
-        }
-      }
     }
 
     .side-menu-sub-item {
@@ -72,11 +61,6 @@ section[drawer] {
     }
 
     .active-side-menu-item {
-      .side-menu-item {
-        &:after {
-          content: "\f0d7";
-        }
-      }
       .side-menu-sub-item {
         display: block;
       }
