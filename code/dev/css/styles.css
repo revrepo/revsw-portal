@@ -524,5 +524,8 @@ section[drawer] .side-menu .dashboard_menu .side-menu-item.item-title a {
   color: #f7941e;
 }
 .dashboard__title .btn-link {
-  font-size: 30px;
+  font-size: 28px;
+  padding-left: 3px;
+  padding-right: 3px;
+  padding-top: 10px;
 }
