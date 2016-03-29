@@ -17,6 +17,8 @@ function widgetRequestSuccessFailureRatioCtrl($scope, config, Countries, Stats) 
 
   _.defaultsDeep($scope.config, _defaultConfig);
 
+  $scope.domain = $scope.config.domain;
+
   Countries.query().$promise
     .then(function(data) {
       $scope.countries = data;

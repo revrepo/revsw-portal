@@ -25,11 +25,9 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
         _.defaultsDeep($scope.config, _defaultConfig);
       }],
       edit: {
-        // templateUrl: '{widgetsPath}/analytics-proxy-traffic/src/edit.html',
         templateUrl: 'parts/dashboard/widgets/proxy-traffic/edit-proxy-traffic.html',
         controller: ['$scope', '$q', 'Stats', 'Countries', 'User', 'AlertService',
           function($scope, $q, Stats, Countries, User, AlertService) {
-            var curConfig = angular.copy($scope.config);
             var _defaultConfig = {
               filters: {
                 country: '-',
@@ -42,6 +40,8 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
               }
             };
             _.defaultsDeep($scope.config, _defaultConfig);
+
+            $scope.domain = $scope.config.domain;
 
             $scope.$watch('config.filters', function(newVal, oldVal) {
               if (!!newVal && !!newVal.country) {
@@ -275,6 +275,14 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
      */
     function editHeatMapReportsConfigController($scope, $window, $timeout, Stats) {
       'ngInject';
+      var _defaultConfig = {
+        filters: {
+          count_last_hours: '6'
+        }
+      };
+      _.defaultsDeep($scope.config, _defaultConfig);
+
+      $scope.domain = $scope.config.domain;
 
       $scope.onDomainSelected = function() {
         if (!$scope.domain || !$scope.domain.id) {
@@ -282,6 +290,7 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
         }
         $scope.reload();
       };
+
 
       /**
        * @name  reload
@@ -403,6 +412,9 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
         }
       };
       _.defaultsDeep($scope.config, _defaultConfig);
+
+      $scope.domain = $scope.config.domain;
+
       Countries.query().$promise
         .then(function(data) {
           $scope.refCountries = data;
@@ -562,6 +574,8 @@ function widgetRequestSuccessFailureRatioCtrl($scope, config, Countries, Stats) 
   };
 
   _.defaultsDeep($scope.config, _defaultConfig);
+
+  $scope.domain = $scope.config.domain;
 
   Countries.query().$promise
     .then(function(data) {
