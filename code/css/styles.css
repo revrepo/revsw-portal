@@ -338,14 +338,6 @@ section[drawer] .side-menu .side-menu-item.active {
 section[drawer] .side-menu .side-menu-item i {
   margin: 0 10px;
 }
-section[drawer] .side-menu .side-menu-item:after {
-  font-family: FontAwesome;
-  content: "\f0d8";
-  float: right;
-}
-section[drawer] .side-menu .side-menu-item.hide-caret:after {
-  content: "";
-}
 section[drawer] .side-menu .side-menu-sub-item {
   display: block;
   border-bottom: 1px solid gray;
@@ -361,9 +353,6 @@ section[drawer] .side-menu .side-menu-sub-item.active {
 }
 section[drawer] .side-menu .side-menu-sub-item {
   display: none;
-}
-section[drawer] .side-menu .active-side-menu-item .side-menu-item:after {
-  content: "\f0d7";
 }
 section[drawer] .side-menu .active-side-menu-item .side-menu-sub-item {
   display: block;

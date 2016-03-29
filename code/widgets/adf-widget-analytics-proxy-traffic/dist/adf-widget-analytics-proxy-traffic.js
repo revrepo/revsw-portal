@@ -191,7 +191,7 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
     dashboardProvider
       .widget('analytics-proxy-traffic-bandwidth-usage', angular.extend(_widget, {
         title: 'Bandwidth Usage',
-        description: 'Display the Bandwidth Usage', // NOTE: use directive 'requests-chart
+        description: 'Display Bandwidth Usage Graph', // NOTE: use directive 'requests-chart
         templateUrl: '{widgetsPath}/analytics-proxy-traffic/src/views/view-requests-chart.tpl.html',
       }))
       .widget('analytics-proxy-traffic-chart', angular.extend(_widget, {
@@ -201,12 +201,12 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
       }))
       .widget('analytics-proxy-traffic-http-https-chart', angular.extend(_widget, {
         title: 'HTTP/HTTPS Hits',
-        description: 'Display the HTTP/HTTPS Hits', // NOTE: use directive 'http-https-chart'
+        description: 'Display HTTP/HTTPS Hits Graph', // NOTE: use directive 'http-https-chart'
         templateUrl: '{widgetsPath}/analytics-proxy-traffic/src/views/view-http-https-chart.tpl.html',
       }))
       .widget('analytics-proxy-hits-cache-chart', angular.extend(_widget, {
         title: 'Edge Cache Efficiency Hits',
-        description: 'Display Cache Hit/Miss Graph', // NOTE: use directive 'hits-cache-chart'
+        description: 'Display Edge Cache Hit/Miss Graph', // NOTE: use directive 'hits-cache-chart'
         templateUrl: '{widgetsPath}/analytics-proxy-traffic/src/views/view-hits-cache-chart.tpl.html',
       }))
 
@@ -227,7 +227,7 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
     .widget('adf-widget-gbt-heatmaps', {
         title: 'GBT Heatmap',
         titleTemplateUrl: 'parts/dashboard/widgets/heatmaps/widget-title-with-params-heatmap.html',
-        description: 'Global Traffic Heatmaps - GBT Heatmap',
+        description: 'Display Global Traffic GBT Heatmap',
         templateUrl: 'parts/dashboard/widgets/heatmaps/view-gbt-heatmaps.tpl.html',
         controller: reportGBTHeatmapController,
         edit: {
@@ -241,7 +241,7 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
     .widget('adf-widget-top-10-countries', {
         title: 'Top 10 Countries',
         titleTemplateUrl: 'parts/dashboard/widgets/top-reports/widget-title-with-params-top-reports.html',
-        description: 'Top Proxy Traffic Reports - Top 10 Countries',
+        description: 'Display Top 10 Countries Pie Chart',
         templateUrl: 'parts/dashboard/widgets/top-reports/view-top-10-countries.tpl.html',
         controller: reportTop10CountriesController,
         edit: {
@@ -252,7 +252,7 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
       // -- Request Success/Failure Ratio - Display Pie Chart For Request Completion Success/Failure Ratio
       .widget('adf-widget-http-https-requests-ratio', {
         title: 'Request Success/Failure Ratio',
-        description: 'Display Pie Chart For Request Completion Success/Failure Ratio',
+        description: 'Display Success/Failure Ratio Pie Chart',
         titleTemplateUrl: 'parts/dashboard/widgets/top-reports/widget-title-with-params-top-reports.html',
         templateUrl: 'parts/dashboard/widgets/top-reports/view-request-success-fialure-ratio.tpl.html',
         controller: 'widgetRequestSuccessFailureRatioCtrl',
