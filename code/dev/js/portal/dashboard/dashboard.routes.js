@@ -23,8 +23,6 @@
         resolve: {
           loadModules: ['$ocLazyLoad', function($ocLazyLoad) {
             return $ocLazyLoad.load([
-              // 'bower_components/Sortable/Sortable.min.js',
-              // 'bower_components/Sortable/ng-sortable.js',
               'bower_components/angular-dashboard-framework/dist/angular-dashboard-framework.min.js',
               // 'bower_components/angular-dashboard-framework/dist/angular-dashboard-framework.min.css',
               'widgets/adf-widget-analytics-proxy-traffic/dist/adf-widget-analytics-proxy-traffic.js',

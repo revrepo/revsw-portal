@@ -24,11 +24,9 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
         _.defaultsDeep($scope.config, _defaultConfig);
       }],
       edit: {
-        // templateUrl: '{widgetsPath}/analytics-proxy-traffic/src/edit.html',
         templateUrl: 'parts/dashboard/widgets/proxy-traffic/edit-proxy-traffic.html',
         controller: ['$scope', '$q', 'Stats', 'Countries', 'User', 'AlertService',
           function($scope, $q, Stats, Countries, User, AlertService) {
-            var curConfig = angular.copy($scope.config);
             var _defaultConfig = {
               filters: {
                 country: '-',
@@ -42,11 +40,19 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
             };
             _.defaultsDeep($scope.config, _defaultConfig);
 
+            $scope.domain = $scope.config.domain;
+
             $scope.$watch('config.filters', function(newVal, oldVal) {
               if (!!newVal && !!newVal.country) {
-                angular.extend($scope.config.info, {
-                  'country': $scope.flCountry[newVal.country.toUpperCase()] || newVal.country.toUpperCase()
-                });
+                if (newVal.country === '-') {
+                  angular.extend($scope.config.info, {
+                    'country': newVal.country
+                  });
+                } else {
+                  angular.extend($scope.config.info, {
+                    'country': $scope.flCountry[newVal.country.toUpperCase()] || newVal.country.toUpperCase()
+                  });
+                }
               }
             }, true);
 
@@ -184,7 +190,7 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
     dashboardProvider
       .widget('analytics-proxy-traffic-bandwidth-usage', angular.extend(_widget, {
         title: 'Bandwidth Usage',
-        description: 'Display the Bandwidth Usage', // NOTE: use directive 'requests-chart
+        description: 'Display Bandwidth Usage Graph', // NOTE: use directive 'requests-chart
         templateUrl: '{widgetsPath}/analytics-proxy-traffic/src/views/view-requests-chart.tpl.html',
       }))
       .widget('analytics-proxy-traffic-chart', angular.extend(_widget, {
@@ -194,12 +200,12 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
       }))
       .widget('analytics-proxy-traffic-http-https-chart', angular.extend(_widget, {
         title: 'HTTP/HTTPS Hits',
-        description: 'Display the HTTP/HTTPS Hits', // NOTE: use directive 'http-https-chart'
+        description: 'Display HTTP/HTTPS Hits Graph', // NOTE: use directive 'http-https-chart'
         templateUrl: '{widgetsPath}/analytics-proxy-traffic/src/views/view-http-https-chart.tpl.html',
       }))
       .widget('analytics-proxy-hits-cache-chart', angular.extend(_widget, {
         title: 'Edge Cache Efficiency Hits',
-        description: 'Display Cache Hit/Miss Graph', // NOTE: use directive 'hits-cache-chart'
+        description: 'Display Edge Cache Hit/Miss Graph', // NOTE: use directive 'hits-cache-chart'
         templateUrl: '{widgetsPath}/analytics-proxy-traffic/src/views/view-hits-cache-chart.tpl.html',
       }))
 
@@ -220,7 +226,7 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
     .widget('adf-widget-gbt-heatmaps', {
         title: 'GBT Heatmap',
         titleTemplateUrl: 'parts/dashboard/widgets/heatmaps/widget-title-with-params-heatmap.html',
-        description: 'Global Traffic Heatmaps - GBT Heatmap',
+        description: 'Display Global Traffic GBT Heatmap',
         templateUrl: 'parts/dashboard/widgets/heatmaps/view-gbt-heatmaps.tpl.html',
         controller: reportGBTHeatmapController,
         edit: {
@@ -234,7 +240,7 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
     .widget('adf-widget-top-10-countries', {
         title: 'Top 10 Countries',
         titleTemplateUrl: 'parts/dashboard/widgets/top-reports/widget-title-with-params-top-reports.html',
-        description: 'Top Proxy Traffic Reports - Top 10 Countries',
+        description: 'Display Top 10 Countries Pie Chart',
         templateUrl: 'parts/dashboard/widgets/top-reports/view-top-10-countries.tpl.html',
         controller: reportTop10CountriesController,
         edit: {
@@ -245,7 +251,7 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
       // -- Request Success/Failure Ratio - Display Pie Chart For Request Completion Success/Failure Ratio
       .widget('adf-widget-http-https-requests-ratio', {
         title: 'Request Success/Failure Ratio',
-        description: 'Display Pie Chart For Request Completion Success/Failure Ratio',
+        description: 'Display Success/Failure Ratio Pie Chart',
         titleTemplateUrl: 'parts/dashboard/widgets/top-reports/widget-title-with-params-top-reports.html',
         templateUrl: 'parts/dashboard/widgets/top-reports/view-request-success-fialure-ratio.tpl.html',
         controller: 'widgetRequestSuccessFailureRatioCtrl',
@@ -268,6 +274,14 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
      */
     function editHeatMapReportsConfigController($scope, $window, $timeout, Stats) {
       'ngInject';
+      var _defaultConfig = {
+        filters: {
+          count_last_hours: '6'
+        }
+      };
+      _.defaultsDeep($scope.config, _defaultConfig);
+
+      $scope.domain = $scope.config.domain;
 
       $scope.onDomainSelected = function() {
         if (!$scope.domain || !$scope.domain.id) {
@@ -275,6 +289,7 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
         }
         $scope.reload();
       };
+
 
       /**
        * @name  reload
@@ -308,7 +323,7 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
       _.defaultsDeep($scope.config, _defaultConfig);
 
       $scope.elId = (new Date()).getTime();
-      $scope._loading = true;
+      $scope._loading = false;
       Countries.query().$promise
         .then(function(data) {
           $scope.reload();
@@ -394,10 +409,14 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
         }
       };
       _.defaultsDeep($scope.config, _defaultConfig);
+
+      $scope.domain = $scope.config.domain;
+
       Countries.query().$promise
         .then(function(data) {
           $scope.refCountries = data;
         });
+
       $scope.onDomainSelected = function() {
         if (!$scope.domain || !$scope.domain.id) {
           return;
@@ -418,7 +437,11 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
 
       // NOTE :save info with country full name
       $scope.$watch('config.filters', function(newVal, oldVal) {
-        if (!!newVal && !!newVal.country) {
+        if (newVal.country === '-') {
+          angular.extend($scope.config.info, {
+            'country': newVal.country
+          });
+        } else {
           angular.extend($scope.config.info, {
             'country': $scope.refCountries[newVal.country.toUpperCase()] || newVal.country.toUpperCase()
           });
