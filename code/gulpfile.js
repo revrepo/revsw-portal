@@ -17,16 +17,17 @@ var destFolder = './';
 
 gulp.task('valid', function () {
   return gulp.src(devFolder + 'parts/**/*.html')
-  .pipe(htmlhint('.htmlhintrc'))
+    .pipe(htmlhint('.htmlhintrc'))
     .pipe(htmlhint.failReporter());
 });
 
 gulp.task('less', function () {
   return gulp.src(devFolder + 'less/styles.less')
     .pipe(less({
-      paths: [ path.join(__dirname, 'less') ]
+      paths: [path.join(__dirname, 'less')]
     }))
-    .pipe(gulp.dest(devFolder + 'css'));
+    .pipe(gulp.dest(devFolder + 'css'))
+    .pipe(browserSync.stream());
 });
 
 gulp.task('copyCss', function () {
@@ -82,32 +83,32 @@ gulp.task('dist', function () {
 // linting
 var jshint = require('gulp-jshint');
 var stylish = require('jshint-stylish');
-gulp.task('lintjs', function() {
+gulp.task('lintjs', function () {
   return gulp.src([
-    'gulpfile.js',
-    devFolder + 'js/**/*.js'])
-    .pipe(jshint({linter:'jshint'}))
+      'gulpfile.js',
+      devFolder + 'js/**/*.js'])
+    .pipe(jshint({linter: 'jshint'}))
     .pipe(jshint.reporter(stylish));
 });
 
-gulp.task('serve', function() {
+gulp.task('serve', function () {
   browserSync({
     server: {
       baseDir: './dev',
       routes: {
         '/bower_components': 'bower_components',
-        '/portal' : '/',
-        '/widgets' : 'widgets',
+        '/portal': '/',
+        '/widgets': 'widgets',
       }
     }
   });
 
   gulp.watch([devFolder + '**/*.html'], reload);
-  gulp.watch([devFolder + 'less/**/*.less'], ['less', reload]);
+  gulp.watch([devFolder + 'less/**/*.less'], ['less']);
   gulp.watch([devFolder + 'polymer/**/*.html', '!./polymer/dist/*'],
     ['vulcanize', reload]);
 
-  gulp.watch([devFolder + 'js/**/*.js'], ['lintjs',reload]);
+  gulp.watch([devFolder + 'js/**/*.js'], ['lintjs', reload]);
   gulp.watch([devFolder + 'js/**/*.html'], reload);
   gulp.watch([devFolder + 'images/**/*'], reload);
 });
