@@ -534,6 +534,18 @@ polyline {
 section[drawer] .side-menu .dashboard_menu .side-menu-item.item-title a {
   color: #f7941e;
 }
+.dashboard {
+  padding: 2px;
+}
+.dashboard .column {
+  padding: 3px;
+}
+.dashboard .panel {
+  margin-bottom: 6px;
+}
+.dashboard .panel-body {
+  margin: 5px;
+}
 .dashboard__title .btn-link {
   font-size: 28px;
   padding-left: 3px;
