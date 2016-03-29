@@ -18,24 +18,6 @@
         </div>
       </div>
     </div>
-<!--  TODO: delete <div class="form-group">
-      <label>Structure</label>
-      <div class="dashboard-structure-select list">
-        <div style="float:left" class="dashboard-structure-select-item" ng-repeat="(key, structure) in structures" ng-click="model.structure=key;changeStructure(key, structure)" ng-class="{'active':key==model.structure}" title="{{structure.title}}">
-          <input type="radio" style="display:none;" value="{{key}}" ng-model="model.structure" ng-change="changeStructure(key, structure)">
-          <div class="icon-structure icon-structure--{{key}}" ng-class="{'active':key==model.structure}"></div>
-
-        </div>
-      </div>
-    </div> -->
-    <!--  TODO: delete    <div class="form-group">
-      <label>Structure</label>
-      <div class="radio" ng-repeat="(key, structure) in structures">
-        <label>
-          <input type="radio" value="{{key}}" ng-model="model.structure" ng-change="changeStructure(key, structure)"> {{key}} {{structure.title}}
-        </label>
-      </div>
-    </div> -->
     <div class="form-group">
       <label>Auto-Refresh</label>
       <select class="select2 form-control fixed155" ng-model="model.options.autorefresh">
