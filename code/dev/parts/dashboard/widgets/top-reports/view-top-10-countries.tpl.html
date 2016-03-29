@@ -3,7 +3,7 @@
   <div class="alert alert-info" ng-if="!config.domain">
     Please click on <i class="glyphicon glyphicon-cog"></i> icon to configure the widget
   </div>
-  <div ng-if="config.domain" class="alert alert-info" ng-if="!country || !country.length">
+  <div  class="alert alert-info" ng-if="config.domain&&(!country || !country.length)">
     No data to display
   </div>
   <div class="auto-scroll" ng-if="country && country.length" ng-hide="!country || !country.length">
