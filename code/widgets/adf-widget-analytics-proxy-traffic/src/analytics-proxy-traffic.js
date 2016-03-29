@@ -44,9 +44,15 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
 
             $scope.$watch('config.filters', function(newVal, oldVal) {
               if (!!newVal && !!newVal.country) {
-                angular.extend($scope.config.info, {
-                  'country': $scope.flCountry[newVal.country.toUpperCase()] || newVal.country.toUpperCase()
-                });
+                if (newVal.country === '-') {
+                  angular.extend($scope.config.info, {
+                    'country': newVal.country
+                  });
+                } else {
+                  angular.extend($scope.config.info, {
+                    'country': $scope.flCountry[newVal.country.toUpperCase()] || newVal.country.toUpperCase()
+                  });
+                }
               }
             }, true);
 
@@ -308,7 +314,7 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
       _.defaultsDeep($scope.config, _defaultConfig);
 
       $scope.elId = (new Date()).getTime();
-      $scope._loading = true;
+      $scope._loading = false;
       Countries.query().$promise
         .then(function(data) {
           $scope.reload();
@@ -398,6 +404,7 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
         .then(function(data) {
           $scope.refCountries = data;
         });
+
       $scope.onDomainSelected = function() {
         if (!$scope.domain || !$scope.domain.id) {
           return;
@@ -418,7 +425,11 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
 
       // NOTE :save info with country full name
       $scope.$watch('config.filters', function(newVal, oldVal) {
-        if (!!newVal && !!newVal.country) {
+        if (newVal.country === '-') {
+          angular.extend($scope.config.info, {
+            'country': newVal.country
+          });
+        } else {
           angular.extend($scope.config.info, {
             'country': $scope.refCountries[newVal.country.toUpperCase()] || newVal.country.toUpperCase()
           });

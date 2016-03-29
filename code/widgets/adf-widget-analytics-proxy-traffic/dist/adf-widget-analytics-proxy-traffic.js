@@ -45,9 +45,15 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
 
             $scope.$watch('config.filters', function(newVal, oldVal) {
               if (!!newVal && !!newVal.country) {
-                angular.extend($scope.config.info, {
-                  'country': $scope.flCountry[newVal.country.toUpperCase()] || newVal.country.toUpperCase()
-                });
+                if (newVal.country === '-') {
+                  angular.extend($scope.config.info, {
+                    'country': newVal.country
+                  });
+                } else {
+                  angular.extend($scope.config.info, {
+                    'country': $scope.flCountry[newVal.country.toUpperCase()] || newVal.country.toUpperCase()
+                  });
+                }
               }
             }, true);
 
@@ -185,7 +191,7 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
     dashboardProvider
       .widget('analytics-proxy-traffic-bandwidth-usage', angular.extend(_widget, {
         title: 'Bandwidth Usage',
-        description: 'Display Bandwidth Usage Graph', // NOTE: use directive 'requests-chart
+        description: 'Display the Bandwidth Usage', // NOTE: use directive 'requests-chart
         templateUrl: '{widgetsPath}/analytics-proxy-traffic/src/views/view-requests-chart.tpl.html',
       }))
       .widget('analytics-proxy-traffic-chart', angular.extend(_widget, {
@@ -195,12 +201,12 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
       }))
       .widget('analytics-proxy-traffic-http-https-chart', angular.extend(_widget, {
         title: 'HTTP/HTTPS Hits',
-        description: 'Display HTTP/HTTPS Hits Graph', // NOTE: use directive 'http-https-chart'
+        description: 'Display the HTTP/HTTPS Hits', // NOTE: use directive 'http-https-chart'
         templateUrl: '{widgetsPath}/analytics-proxy-traffic/src/views/view-http-https-chart.tpl.html',
       }))
       .widget('analytics-proxy-hits-cache-chart', angular.extend(_widget, {
         title: 'Edge Cache Efficiency Hits',
-        description: 'Display Edge Cache Hit/Miss Graph', // NOTE: use directive 'hits-cache-chart'
+        description: 'Display Cache Hit/Miss Graph', // NOTE: use directive 'hits-cache-chart'
         templateUrl: '{widgetsPath}/analytics-proxy-traffic/src/views/view-hits-cache-chart.tpl.html',
       }))
 
@@ -221,7 +227,7 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
     .widget('adf-widget-gbt-heatmaps', {
         title: 'GBT Heatmap',
         titleTemplateUrl: 'parts/dashboard/widgets/heatmaps/widget-title-with-params-heatmap.html',
-        description: 'Display Global Traffic GBT Heatmap',
+        description: 'Global Traffic Heatmaps - GBT Heatmap',
         templateUrl: 'parts/dashboard/widgets/heatmaps/view-gbt-heatmaps.tpl.html',
         controller: reportGBTHeatmapController,
         edit: {
@@ -235,7 +241,7 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
     .widget('adf-widget-top-10-countries', {
         title: 'Top 10 Countries',
         titleTemplateUrl: 'parts/dashboard/widgets/top-reports/widget-title-with-params-top-reports.html',
-        description: 'Display Top 10 Countries Pie Chart',
+        description: 'Top Proxy Traffic Reports - Top 10 Countries',
         templateUrl: 'parts/dashboard/widgets/top-reports/view-top-10-countries.tpl.html',
         controller: reportTop10CountriesController,
         edit: {
@@ -246,7 +252,7 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
       // -- Request Success/Failure Ratio - Display Pie Chart For Request Completion Success/Failure Ratio
       .widget('adf-widget-http-https-requests-ratio', {
         title: 'Request Success/Failure Ratio',
-        description: 'Display Success/Failure Ratio Pie Chart',
+        description: 'Display Pie Chart For Request Completion Success/Failure Ratio',
         titleTemplateUrl: 'parts/dashboard/widgets/top-reports/widget-title-with-params-top-reports.html',
         templateUrl: 'parts/dashboard/widgets/top-reports/view-request-success-fialure-ratio.tpl.html',
         controller: 'widgetRequestSuccessFailureRatioCtrl',
@@ -310,7 +316,7 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
       _.defaultsDeep($scope.config, _defaultConfig);
 
       $scope.elId = (new Date()).getTime();
-      $scope._loading = true;
+      $scope._loading = false;
       Countries.query().$promise
         .then(function(data) {
           $scope.reload();
@@ -401,6 +407,7 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
         .then(function(data) {
           $scope.refCountries = data;
         });
+
       $scope.onDomainSelected = function() {
         if (!$scope.domain || !$scope.domain.id) {
           return;
@@ -421,7 +428,11 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
 
       // NOTE :save info with country full name
       $scope.$watch('config.filters', function(newVal, oldVal) {
-        if (!!newVal && !!newVal.country) {
+        if (newVal.country === '-') {
+          angular.extend($scope.config.info, {
+            'country': newVal.country
+          });
+        } else {
           angular.extend($scope.config.info, {
             'country': $scope.refCountries[newVal.country.toUpperCase()] || newVal.country.toUpperCase()
           });
@@ -525,12 +536,12 @@ angular.module("adf.widget.analytics-proxy-traffic").run(["$templateCache", func
 $templateCache.put("{widgetsPath}/analytics-proxy-traffic/src/view.html","<div><h1>Widget view</h1><p>Content of {{config.sample}}</p></div>");
 $templateCache.put("{widgetsPath}/analytics-proxy-traffic/src/widget-edit.html","<form name=widgetEditForm novalidate role=form ng-submit=saveDialog()><div class=modal-header><button type=button class=close ng-click=closeDialog() aria-hidden=true>&times;</button><h4 class=modal-title>{{widget.title}}</h4></div><div class=modal-body><div class=\"alert alert-danger\" role=alert ng-show=validationError><strong>Apply error:</strong> {{validationError}}</div><div ng-if=widget.edit><adf-widget-content model=definition content=widget.edit></adf-widget-content></div></div><div class=modal-footer><button type=button class=\"btn btn-default\" ng-click=closeDialog()>Cancel</button> <input type=submit class=\"btn btn-primary\" ng-disabled=widgetEditForm.$invalid value=Apply></div></form>");
 $templateCache.put("{widgetsPath}/analytics-proxy-traffic/src/widget-title-with-params.html","<h3 class=panel-title>{{definition.title}} <span ng-if=!!definition.config.domain>(<strong>{{definition.config.domain.domain_name}}</strong>)</span> <span class=pull-right><a title=\"reload widget content\" ng-if=widget.reload ng-click=reload()><i class=\"glyphicon glyphicon-refresh\"></i></a> <a title=\"Change Widget Location\" class=adf-move ng-if=editMode><i class=\"glyphicon glyphicon-move\"></i></a> <a title=\"Collapse Widget\" ng-show=\"options.collapsible && !widgetState.isCollapsed\" ng-click=\"widgetState.isCollapsed = !widgetState.isCollapsed\"><i class=\"glyphicon glyphicon-minus\"></i></a> <a title=\"Expand Widget\" ng-show=\"options.collapsible && widgetState.isCollapsed\" ng-click=\"widgetState.isCollapsed = !widgetState.isCollapsed\"><i class=\"glyphicon glyphicon-plus\"></i></a> <a title=\"Edit Widget Configuration\" ng-click=edit() ng-if=editMode><i class=\"glyphicon glyphicon-cog\"></i></a> <a title=\"Fullscreen Widget\" ng-click=openFullScreen() ng-show=options.maximizable><i class=\"glyphicon glyphicon-fullscreen\"></i></a> <a title=\"Remove Widget\" ng-click=remove() ng-if=editMode><i class=\"glyphicon glyphicon-remove\"></i></a></span></h3><small ng-if=definition.config.filters.count_last_day>Last {{definition.config.filters.count_last_day}} Day</small> <span class=widget_filters_info ng-show=!!definition.config.filters[index.key] ng-repeat=\"index in [{key:\'os\',title:\'OS\'},{key:\'country\',title:\'Сountry\'},{key:\'device\',title:\'Device\'}]\"><small ng-if=\"!!definition.config.filters[index.key]&& definition.config.filters[index.key]!==\'-\'\">&nbsp;{{index.title}}: {{definition.config.filters[index.key]}}&nbsp;</small></span> <span></span>");
-$templateCache.put("{widgetsPath}/analytics-proxy-traffic/src/views/view-hits-cache-chart.tpl.html","<div class=col-lg-12><div hits-cache-chart filters-sets=config.filters ng-domain=config.domain></div></div>");
-$templateCache.put("{widgetsPath}/analytics-proxy-traffic/src/views/view-http-https-chart.tpl.html","<div class=col-lg-12><div http-https-chart filters-sets=config.filters ng-domain=config.domain></div></div>");
-$templateCache.put("{widgetsPath}/analytics-proxy-traffic/src/views/view-http-status-code-chart.tpl.html","<div class=col-lg-12><div http-status-code-chart filters-sets=config.filters status-codes=config.statusCode ng-domain=config.domain></div></div>");
-$templateCache.put("{widgetsPath}/analytics-proxy-traffic/src/views/view-proxy-traffic-chart.tpl.html","<div class=col-lg-12><div proxy-traffic-chart filters-sets=config.filters status-codes=config.statusCode.labels ng-domain=config.domain></div></div>");
-$templateCache.put("{widgetsPath}/analytics-proxy-traffic/src/views/view-request-status-chart.tpl.html","<div class=col-lg-12><div request-status-chart status-codes=config.statusCode fl-os=config.os.labels fl-device=config.device.labels fl-country=config.countries ng-domain=config.domain></div></div>");
-$templateCache.put("{widgetsPath}/analytics-proxy-traffic/src/views/view-requests-chart.tpl.html","<div class=col-lg-12><div requests-chart filters-sets=config.filters ng-domain=config.domain></div></div>");
+$templateCache.put("{widgetsPath}/analytics-proxy-traffic/src/views/view-hits-cache-chart.tpl.html","<div class=col-lg-12><div class=\"alert alert-info\" ng-if=!config.domain>Please click on <i class=\"glyphicon glyphicon-cog\"></i> icon to configure the widget</div><div ng-if=config.domain hits-cache-chart filters-sets=config.filters ng-domain=config.domain></div></div>");
+$templateCache.put("{widgetsPath}/analytics-proxy-traffic/src/views/view-http-https-chart.tpl.html","<div class=col-lg-12><div class=\"alert alert-info\" ng-if=!config.domain>Please click on <i class=\"glyphicon glyphicon-cog\"></i> icon to configure the widget</div><div ng-if=config.domain http-https-chart filters-sets=config.filters ng-domain=config.domain></div></div>");
+$templateCache.put("{widgetsPath}/analytics-proxy-traffic/src/views/view-http-status-code-chart.tpl.html","<div class=col-lg-12><div class=\"alert alert-info\" ng-if=!config.domain>Please click on <i class=\"glyphicon glyphicon-cog\"></i> icon to configure the widget</div><div ng-if=config.domain http-status-code-chart filters-sets=config.filters status-codes=config.statusCode ng-domain=config.domain></div></div>");
+$templateCache.put("{widgetsPath}/analytics-proxy-traffic/src/views/view-proxy-traffic-chart.tpl.html","<div class=col-lg-12><div class=\"alert alert-info\" ng-if=!config.domain>Please click on <i class=\"glyphicon glyphicon-cog\"></i> icon to configure the widget</div><div ng-if=config.domain proxy-traffic-chart filters-sets=config.filters status-codes=config.statusCode.labels ng-domain=config.domain></div></div>");
+$templateCache.put("{widgetsPath}/analytics-proxy-traffic/src/views/view-request-status-chart.tpl.html","<div class=col-lg-12><div class=\"alert alert-info\" ng-if=!config.domain>Please click on <i class=\"glyphicon glyphicon-cog\"></i> icon to configure the widget</div><div ng-if=config.domain request-status-chart status-codes=config.statusCode fl-os=config.os.labels fl-device=config.device.labels fl-country=config.countries ng-domain=config.domain></div></div>");
+$templateCache.put("{widgetsPath}/analytics-proxy-traffic/src/views/view-requests-chart.tpl.html","<div class=col-lg-12><div class=\"alert alert-info\" ng-if=!config.domain>Please click on <i class=\"glyphicon glyphicon-cog\"></i> icon to configure the widget</div><div ng-if=config.domain requests-chart filters-sets=config.filters ng-domain=config.domain></div></div>");
 $templateCache.put("{widgetsPath}/analytics-proxy-traffic/src/views/parts/panel-filter-settings.tpl.html","<div ng-show=!!config.filters[index.key] class=col-md-3 ng-repeat=\"index in [{key:\'os\',title:\'OS\'},{key:\'country\',title:\'Сountry\'},{key:\'device\',title:\'Device\'}]\"><small>{{index.title}}: {{config.filters[index.key]}}</small></div>");
 $templateCache.put("{widgetsPath}/analytics-proxy-traffic/src/views/parts/title-with-filter-params.tpl.html","");}]);
 
