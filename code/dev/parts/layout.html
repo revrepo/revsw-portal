@@ -6,7 +6,11 @@
         <div class="side-menu" style="height: 94%; overflow: auto;">
             <dashboard-nav-menu></dashboard-nav-menu>
             <li ui-sref-active-if="{class: 'active-side-menu-item', state: 'index.apps'}", ng-class="{'active-side-menu-item': menuExpanded('index.apps')}">
+
                 <a class="side-menu-item" ng-click="goToState('index.apps.ios')">
+                    <div class="left-menu-start">
+                        <i class="fa fa-mobile"></i>
+                    </div>
                     Mobile Apps
                     <i ng-click="expandMenu('index.apps', $event)" class="pull-right {{ menuExpanded('index.apps') ? 'fa fa-caret-down' : 'fa fa-caret-up' }}"></i>
                 </a>
@@ -16,6 +20,9 @@
             </li>
             <li ui-sref-active-if="{class: 'active-side-menu-item', state: 'index.mobile'}", ng-class="{'active-side-menu-item': menuExpanded('index.mobile')}">
                 <a class="side-menu-item" ng-click="goToState('index.mobile.traffic')">
+                    <div class="left-menu-start">
+                        <i class="fa fa-line-chart"></i>
+                    </div>
                     Mobile Analytics
                     <i ng-click="expandMenu('index.mobile', $event)" class="pull-right {{ menuExpanded('index.mobile') ? 'fa fa-caret-down' : 'fa fa-caret-up' }}"></i>
                 </a>
@@ -27,6 +34,9 @@
             </li>
             <li ui-sref-active-if="{class: 'active-side-menu-item', state: 'index.webApp'}", ng-class="{'active-side-menu-item': menuExpanded('index.webApp')}">
                 <a class="side-menu-item", ng-click="goToState('index.webApp.domains')">
+                    <div class="left-menu-start">
+                        <i class="fa fa-globe"></i>
+                    </div>
                     Web
                     <i ng-click="expandMenu('index.webApp', $event)" class="pull-right {{ menuExpanded('index.webApp') ? 'fa fa-caret-down' : 'fa fa-caret-up' }}"></i>
                 </a>
@@ -39,6 +49,9 @@
             </li>
             <li ui-sref-active-if="{class: 'active-side-menu-item', state: 'index.reports'}", ng-class="{'active-side-menu-item': menuExpanded('index.reports')}">
                 <a class="side-menu-item", ng-click="goToState('index.reports.proxy')">
+                    <div class="left-menu-start">
+                        <i class="fa fa-bar-chart"></i>
+                    </div>
                     Web Analytics
                     <i ng-click="expandMenu('index.reports', $event)" class="pull-right {{ menuExpanded('index.reports') ? 'fa fa-caret-down' : 'fa fa-caret-up' }}"></i>
                 </a>
@@ -52,6 +65,9 @@
             </li>
             <li ui-sref-active-if="{class: 'active-side-menu-item', state: 'index.accountSettings'}", ng-class="{'active-side-menu-item': menuExpanded('index.accountSettings')}">
                 <a class="side-menu-item", ng-click="goToState('index.accountSettings.users')">
+                    <div class="left-menu-start">
+                        <i class="fa fa-users"></i>
+                    </div>
                     Admin
                     <i ng-click="expandMenu('index.accountSettings', $event)" class="pull-right {{ menuExpanded('index.accountSettings') ? 'fa fa-caret-down' : 'fa fa-caret-up' }}"></i>
                 </a>
@@ -64,6 +80,9 @@
             </li>
             <li ng-if="!userService.isUser()" ui-sref-active-if="{class: 'active-side-menu-item', state: 'index.billing'}", ng-class="{'active-side-menu-item': menuExpanded('index.billing')}">
                 <a class="side-menu-item", ng-click="goToState('index.billing.usage')">
+                    <div class="left-menu-start">
+                        <i class="fa fa-credit-card"></i>
+                    </div>
                     Billing
                     <i ng-click="expandMenu('index.billing', $event)" class="pull-right {{ menuExpanded('index.billing') ? 'fa fa-caret-down' : 'fa fa-caret-up' }}"></i>
                 </a>
@@ -74,6 +93,9 @@
             </li>
             <li ui-sref-active-if="{class: 'active-side-menu-item', state: 'index.help'}", ng-class="{'active-side-menu-item': menuExpanded('index.help')}">
                 <a class="side-menu-item", ng-click="goToState('index.help')">
+                    <div class="left-menu-start">
+                        <i class="fa fa-support"></i>
+                    </div>
                     Support
                     <i ng-click="expandMenu('index.help', $event)" class="pull-right {{ menuExpanded('index.help') ? 'fa fa-caret-down' : 'fa fa-caret-up' }}"></i>
                 </a>

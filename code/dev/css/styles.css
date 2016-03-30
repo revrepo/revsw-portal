@@ -586,3 +586,14 @@ section[drawer] .side-menu .dashboard_menu .side-menu-item.item-title a {
 .icon-structure--3-3-3-3 {
   background-image: url('../images/columns/3-3-3-3-sprite.png');
 }
+
+.left-menu-start {
+  display: inline-block;
+  width: 5px;
+  text-align: center;
+}
+
+.left-menu-start i {
+  margin: 0px 4px 0px -17px !important;
+  font-size: 20px;
+}
