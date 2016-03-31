@@ -58,7 +58,8 @@
          .get(dashboardId)
          .then(function(data) {
              angular.extend(vm.model, data);
-             // TODO: set type dashboard settings
+             vm.model.addTemplateUrl = 'parts/dashboard/widgets/widget-add.html';
+               // TODO: set type dashboard settings
              vm.model.editTemplateUrl = 'parts/dashboard/modals/dashboard-edit-with-options.tpl.html';
              $scope.autoRefresh(vm.model.options); // NOTE: run auto-refresh with dashboard options
            },
