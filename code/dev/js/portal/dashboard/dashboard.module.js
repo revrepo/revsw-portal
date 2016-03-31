@@ -76,7 +76,7 @@
     .config( /*ngInject*/ function(dashboardProvider) {
       dashboardProvider
         .widget('bluetriangletech-conversions-subcategories', {
-          title: 'Business Analytics',
+          title: 'Conversion Rate',
           description: 'Conversion Rate, Average Order Value and Page Views by PRT for Subcategories',
           templateUrl: 'parts/dashboard/widgets/bluetriangletech/view-iframe-bluetriangletech.tpl.html',
           titleTemplateUrl: 'parts/dashboard/widgets/bluetriangletech/widget-title-with-params-bluetriangletech.html',
