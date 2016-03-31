@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
 
   angular
@@ -17,13 +17,13 @@
           layout: {
             templateUrl: 'parts/layout.html',
             /*@ngInject*/
-            controller: function ($scope, $state, User) {
+            controller: function($scope, $state, User) {
               $scope.userService = User;
               if (!User.isAuthed() &&
                 $state.current.name !== 'index.restore' &&
                 $state.current.name !== 'signup' &&
                 $state.current.name !== 'billing_plans'
-              ){
+              ) {
                 $state.go('login');
               } else if ($state.current.name === 'index') {
                 $state.go('index.reports.proxy');
@@ -32,7 +32,7 @@
           }
         },
         resolve: {
-          isUserActive: function(User){
+          isUserActive: function(User) {
             return User.reloadUser();
           }
         }
@@ -90,6 +90,14 @@
         views: {
           page: {
             templateUrl: 'parts/help/contactus.html'
+          }
+        }
+      })
+      .state('index.security', {
+        url: '/security',
+        views: {
+          page: {
+            template: '<span></span>'
           }
         }
       });

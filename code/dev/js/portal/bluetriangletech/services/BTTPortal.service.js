@@ -16,7 +16,7 @@
     // TODO: create value BTTPortalConfig.defaults
     var _def = {
       ReportPage: ['subcategory'],
-      GranularitySelect: '1.0',
+      GranularitySelect: 1.0,
       TimeZone: 'America/New_York',
       siteID: 567,
       // authKey: 'a340ef373d412edcb431cf11a0b627c9',
@@ -27,7 +27,7 @@
       StatMethod: 85,
       startEpoch: '1458872580',
       endEpoch: '1458883380',
-      offset: '10800',
+      offset: 10800,
       // scrollx: 0,
       // scrolly: 500,
       // companyOptions: 567,
@@ -65,6 +65,7 @@
 
       var _startTime = moment().subtract(_count_last_days, 'days');
       var _endTime = moment(); //.subtract('1', 'days');
+      var __def = angular.copy(_def);
       var _now = {
         authKey: BTTPortalConfig.authKey,
         startEpoch: _startTime.valueOf().toString().substr(0, 10), //'1458366575'
@@ -76,7 +77,7 @@
         endTime: _endTime.format('HH:mm'), //'01:23',
       };
 
-      var url_data = $httpParamSerializerJQLike(_.merge(_def, _now));
+      var url_data = $httpParamSerializerJQLike(_.merge(__def, _now));
       def.resolve(BTTPortalConfig.url_api + '/conversions_html.php?&' + url_data);
       // def.resolve(BTTPortalConfig.url_demo);
       return def.promise;
@@ -106,7 +107,11 @@
 
       var _startTime = moment().subtract(_count_last_days, 'days');
       var _endTime = moment(); //.subtract('1', 'days');
+      var __def = angular.copy(_def);
       var _now = {
+        BrowserType: 'All Browsers',
+        GranularitySelect: '1.0',
+        StatSig: 0,
         timePeriod: 'hours_3',
         slowestFastest: 'slowest_500',
         refresh_rate: 60,
@@ -120,8 +125,9 @@
         endTime: _endTime.format('HH:mm'), //'01:23',
       };
 
-      var url_data = $httpParamSerializerJQLike(_.merge(_def, _now));
+      var url_data = $httpParamSerializerJQLike(_.merge(__def, _now));
       def.resolve(BTTPortalConfig.url_api + '/bounceRate_html.php?&' + url_data);
+
       return def.promise;
     }
     /**
@@ -148,10 +154,23 @@
 
       var _startTime = moment().subtract(_count_last_days, 'days');
       var _endTime = moment(); //.subtract('1', 'days');
+      var __def = angular.copy(_def);
       var _now = {
+        BrowserType: 'All Browsers',
+        GranularitySelect: 1.0,
+        StatSig: 0,
         timePeriod: 'hours_3',
         slowestFastest: 'slowest_500',
         refresh_rate: 60,
+        // == test date =
+        // startEpoch: 1458752400,
+        // endEpoch: 1458763200,
+        // offset: 10800,
+        // startTime: '13:00',
+        // endTime: '16:00',
+        // startDate: '2016-3-23',
+        // endDate: '2016-3-23',
+        //
         authKey: BTTPortalConfig.authKey,
         startEpoch: _startTime.valueOf().toString().substr(0, 10), //'1458366575'
         startDate: _startTime.format('YYYY-M-DD'), // date format '2016-03-24',
@@ -162,9 +181,9 @@
         endTime: _endTime.format('HH:mm'), //'01:23',
       };
 
-      var url_data = $httpParamSerializerJQLike(_.merge(_def, _now));
-      //def.resolve(BTTPortalConfig.url_api + '/bounceRate_html.php?&' + url_data);
-      def.resolve(BTTPortalConfig.url_demo_brandConversions_html);
+      var url_data = $httpParamSerializerJQLike(_.merge(__def, _now));
+      def.resolve(BTTPortalConfig.url_api + '/brandConversions_html.php?&' + url_data);
+      // def.resolve(BTTPortalConfig.url_demo_brandConversions_html);
       return def.promise;
     }
     /**
@@ -191,10 +210,46 @@
 
       var _startTime = moment().subtract(_count_last_days, 'days');
       var _endTime = moment(); //.subtract('1', 'days');
+      // BrowserType:All+Browsers
+      // Country:All+Countries
+      // authKey:a340ef373d412edcb431cf11a0b627c9
+      // timePeriod:hours_3
+      // startEpoch:1458752400
+      // endEpoch:1458763200
+      // offset:10800
+      // startTime:13%3A00
+      // endTime:16%3A00
+      // startDate:2016-3-23
+      // endDate:2016-3-23
+      // excluded_9:1
+      // siteID:567
+      // reportType:lostRevenue
+      // ReportPage%5B%5D:subcategory
+      // GranularitySelect:1.0
+      // StatMethod:85
+      // refreshRate:60
+      // TimeZone:America%2FNew_York
+      // panelID:1458763239486
+      // TimeZone:America/New_York
+      // slowestFastest:slowest_500
+
+      var __def = angular.copy(_def);
       var _now = {
+        BrowserType: 'All Browsers',
+        excluded_9: 1,
+        reportType: 'lostRevenue',
+        panelID: 1458763239486,
         timePeriod: 'hours_3',
         slowestFastest: 'slowest_500',
-        refresh_rate: 60,
+        refreshRate: 60,
+        // == test date ==========
+        // startTime: '13:00',
+        // endTime: '16:00',
+        // startDate: '2016-3-23',
+        // endDate: '2016-3-23',
+        // startEpoch: '1458752400',
+        // endEpoch: '1458763200',
+        // ===========
         authKey: BTTPortalConfig.authKey,
         startEpoch: _startTime.valueOf().toString().substr(0, 10), //'1458366575'
         startDate: _startTime.format('YYYY-M-DD'), // date format '2016-03-24',
@@ -205,9 +260,10 @@
         endTime: _endTime.format('HH:mm'), //'01:23',
       };
 
-      var url_data = $httpParamSerializerJQLike(_.merge(_def, _now));
-      //def.resolve(BTTPortalConfig.url_api + '/bounceRate_html.php?&' + url_data);
-      def.resolve(BTTPortalConfig.url_demo_lostRevenue_html);
+      var url_data = $httpParamSerializerJQLike(_.merge(__def, _now));
+      console.log(_.merge(__def, _now));
+      def.resolve(BTTPortalConfig.url_api + '/lostRevenue_html.php?&' + url_data);
+      //def.resolve(BTTPortalConfig.url_demo_lostRevenue_html);
       return def.promise;
     }
     return {
