@@ -6,8 +6,10 @@
     .run(runApp);
 
   /*@ngInject*/
-  function runApp($rootScope, AlertService, $state) {
+  function runApp($rootScope, $http, AlertService, $state) {
     $rootScope.alertService = AlertService;
+    $rootScope.contactUsLink = 'https://revapm.zendesk.com/hc/en-us/requests/new';
+
     $rootScope.$on('$stateChangeStart',
       function(event){
         // Clear alerts when routes change

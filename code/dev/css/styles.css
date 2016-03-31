@@ -597,3 +597,7 @@ section[drawer] .side-menu .dashboard_menu .side-menu-item.item-title a {
   margin: 0px 4px 0px -17px !important;
   font-size: 20px;
 }
+
+.sub-menu-icon {
+  margin: 0px 4px 0px -17px !important;
+}
