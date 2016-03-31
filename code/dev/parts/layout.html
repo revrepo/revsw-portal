@@ -50,6 +50,14 @@
                 <a ui-sref-active="active" ui-sref="index.reports.heatmaps" class="side-menu-sub-item">Traffic Heatmaps</a>
                 <a ui-sref-active="active" ui-sref="index.reports.lm_rtt_heatmaps" class="side-menu-sub-item">RTT Heatmaps</a>
             </li>
+            <!--  <li  ui-sref-active-if="{class: 'active-side-menu-item', state: 'index.security'}", ng-class="{'active-side-menu-item': menuExpanded('index.security')}">
+            <a class="side-menu-item", ng-click="goToState('index.security')">
+                    Security
+                    <i ng-click="expandMenu('index.security', $event)" class="pull-right {{ menuExpanded('index.security') ? 'fa fa-caret-down' : 'fa fa-caret-up' }}"></i>
+                </a>
+                <a href="#" class="side-menu-sub-item" ng-disabled="true"  >WAF</a>
+                <a href="#" class="side-menu-sub-item" ng-disabled="true"  >DDoS Protection</a>
+            </li> -->
             <li ui-sref-active-if="{class: 'active-side-menu-item', state: 'index.accountSettings'}", ng-class="{'active-side-menu-item': menuExpanded('index.accountSettings')}">
                 <a class="side-menu-item", ng-click="goToState('index.accountSettings.users')">
                     Admin
@@ -82,14 +90,6 @@
                 <a href="https://revapm.zendesk.com/hc/en-us/requests/new" class="side-menu-sub-item" target="_blank">Open Ticket</a>
                 <a href="http://status.revapm.net/" class="side-menu-sub-item" target="_blank">Network Status</a>
             </li>
-            <li  ui-sref-active-if="{class: 'active-side-menu-item', state: 'index.security'}", ng-class="{'active-side-menu-item': menuExpanded('index.security')}">
-            <a class="side-menu-item", ng-click="goToState('index.security')">
-                    Security
-                    <i ng-click="expandMenu('index.security', $event)" class="pull-right {{ menuExpanded('index.security') ? 'fa fa-caret-down' : 'fa fa-caret-up' }}"></i>
-                </a>
-                <a href="#" class="side-menu-sub-item" ng-disabled="true"  >WAF</a>
-                <a href="#" class="side-menu-sub-item" ng-disabled="true"  >DDoS Protection</a>
-                </li>
         </div>
     </section>
     <section main>
