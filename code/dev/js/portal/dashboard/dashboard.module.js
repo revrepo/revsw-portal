@@ -75,12 +75,13 @@
     // TODO: rebase
     .config( /*ngInject*/ function(dashboardProvider) {
       dashboardProvider
+      // #1  “Conversion Rate”
         .widget('bluetriangletech-conversions-subcategories', {
           title: 'Conversion Rate',
           description: 'Conversion Rate, Average Order Value and Page Views by PRT for Subcategories',
           templateUrl: 'parts/dashboard/widgets/bluetriangletech/view-iframe-bluetriangletech.tpl.html',
           titleTemplateUrl: 'parts/dashboard/widgets/bluetriangletech/widget-title-with-params-bluetriangletech.html',
-          controller: 'widgetBTTiframeController',
+          controller: 'widgetBTTConversionReportController',
           controllerAs: 'iframe',
           edit: {
             templateUrl: 'parts/dashboard/widgets/bluetriangletech/edit-bluetriangletech.html',
@@ -92,12 +93,82 @@
             country: 'All Countries',
             count_last_day: '1'
           }
-        });
-    })
-    .controller('widgetBTTiframeController', widgetBTTiframeController)
-    .controller('widgetEditBTTiframeController', widgetEditBTTiframeController);
+        })
+        // #2 ”Bounce Rate”
+        .widget('bluetriangletech-bounce-rate', {
+          title: 'Bounce Rate',
+          description: 'Bounce Rate and Page Views Per Session by PRT for subcategory',
+          templateUrl: 'parts/dashboard/widgets/bluetriangletech/view-iframe-bluetriangletech.tpl.html',
+          titleTemplateUrl: 'parts/dashboard/widgets/bluetriangletech/widget-title-with-params-bluetriangletech.html',
+          controller: 'widgetBTTBounceRateReportController',
+          controllerAs: 'iframe',
+          edit: {
+            templateUrl: 'parts/dashboard/widgets/bluetriangletech/edit-bluetriangletech.html',
+            controller: 'widgetEditBTTiframeController',
+            controllerAs: 'vm',
+          },
+          config: {
+            height: '100%',
+            country: 'All Countries',
+            count_last_day: '1'
+          }
+        })
+        // #3 'Brand Conversion Rate'
+        .widget('bluetriangletech-brand-conversion-rate', {
+          title: 'Brand Conversion Rate',
+          description: 'Brand Conversion Rate, Average Brand and Page Views by PRT for subcategory',
+          templateUrl: 'parts/dashboard/widgets/bluetriangletech/view-iframe-bluetriangletech.tpl.html',
+          titleTemplateUrl: 'parts/dashboard/widgets/bluetriangletech/widget-title-with-params-bluetriangletech.html',
+          controller: 'widgetBTTBrandConversionRateReportController',
+          controllerAs: 'iframe',
+          edit: {
+            templateUrl: 'parts/dashboard/widgets/bluetriangletech/edit-bluetriangletech.html',
+            controller: 'widgetEditBTTiframeController',
+            controllerAs: 'vm',
+          },
+          config: {
+            height: '100%',
+            country: 'All Countries',
+            count_last_day: '1'
+          }
+        })
+        // #4 'Lost Revenue Calculator'
+        .widget('bluetriangletech-lost-revenue-calculator', {
+          title: 'Lost Revenue Calculator',
+          description: 'Lost Revenue Calculator for subcategory',
+          templateUrl: 'parts/dashboard/widgets/bluetriangletech/view-iframe-bluetriangletech.tpl.html',
+          titleTemplateUrl: 'parts/dashboard/widgets/bluetriangletech/widget-title-with-params-bluetriangletech.html',
+          controller: 'widgetBTTLostRevenueCalculatorReportController',
+          controllerAs: 'iframe',
+          edit: {
+            templateUrl: 'parts/dashboard/widgets/bluetriangletech/edit-bluetriangletech.html',
+            controller: 'widgetEditBTTiframeController',
+            controllerAs: 'vm',
+          },
+          config: {
+            height: '100%',
+            country: 'All Countries',
+            count_last_day: '1'
+          }
+        })
 
-  function widgetBTTiframeController($sce, BTTPortalService, config) {
+      ;
+
+    })
+    .controller('widgetBTTConversionReportController', widgetBTTConversionReportController)
+    .controller('widgetBTTBounceRateReportController', widgetBTTBounceRateReportController)
+    .controller('widgetBTTBrandConversionRateReportController', widgetBTTBrandConversionRateReportController)
+    .controller('widgetBTTLostRevenueCalculatorReportController', widgetBTTLostRevenueCalculatorReportController)
+
+  .controller('widgetEditBTTiframeController', widgetEditBTTiframeController);
+  /**
+   * [widgetBTTConversionReportController description]
+   * @param  {[type]} $sce             [description]
+   * @param  {[type]} BTTPortalService [description]
+   * @param  {[type]} config           [description]
+   * @return {[type]}                  [description]
+   */
+  function widgetBTTConversionReportController($sce, BTTPortalService, config) {
     'ngInject';
     var vm = this;
     var _defaultConfig = {
@@ -113,7 +184,112 @@
     vm.config = config;
     vm._loading = false;
     // TODO: init function for control existing domain Id
-    BTTPortalService.generateUrl(config.filters)
+    BTTPortalService.generateUrlConversionReport(config.filters)
+      .then(function(url) {
+        config.url = url;
+        if (config.url) {
+          vm.url = $sce.trustAsResourceUrl(config.url);
+        }
+      })
+      .finally(function() {
+        vm._loading = false;
+      });
+  }
+  /**
+   * [widgetBTTBounceRateReportController description]
+   * @param  {[type]} $sce             [description]
+   * @param  {[type]} BTTPortalService [description]
+   * @param  {[type]} config           [description]
+   * @return {[type]}                  [description]
+   */
+  function widgetBTTBounceRateReportController($sce, BTTPortalService, config) {
+    'ngInject';
+    var vm = this;
+    var _defaultConfig = {
+      filters: {
+        country: 'All Countries',
+        count_last_day: '1'
+      },
+      info: {
+        country: 'All countries'
+      }
+    };
+    _.defaultsDeep(config, _defaultConfig);
+    vm.config = config;
+    vm._loading = false;
+    // TODO: init function for control existing domain Id
+    BTTPortalService.generateUrlBounceRateReport(config.filters)
+      .then(function(url) {
+        config.url = url;
+        if (config.url) {
+          vm.url = $sce.trustAsResourceUrl(config.url);
+        }
+      })
+      .finally(function() {
+        vm._loading = false;
+      });
+  }
+  /**
+   * [widgetBTTBrandConversionRateReportController description]
+   * @param  {[type]} $sce             [description]
+   * @param  {[type]} BTTPortalService [description]
+   * @param  {[type]} config           [description]
+   * @return {[type]}                  [description]
+   */
+  function widgetBTTBrandConversionRateReportController($sce, BTTPortalService, config) {
+    'ngInject';
+    var vm = this;
+    var _defaultConfig = {
+      filters: {
+        country: 'All Countries',
+        count_last_day: '1'
+      },
+      info: {
+        country: 'All countries'
+      }
+    };
+    _.defaultsDeep(config, _defaultConfig);
+    vm.config = config;
+    vm._loading = false;
+    // TODO: init function for control existing domain Id
+    BTTPortalService.generateUrlBrandConversionRateReport(config.filters)
+      .then(function(url) {
+        config.url = url;
+        if (config.url) {
+          vm.url = $sce.trustAsResourceUrl(config.url);
+        }
+      })
+      .finally(function() {
+        vm._loading = false;
+      });
+  }
+  /**
+   * @name  widgetBTTLostRevenueCalculatorReportController
+   * @description
+   *
+   *
+   * @param  {[type]} $sce             [description]
+   * @param  {[type]} BTTPortalService [description]
+   * @param  {[type]} config           [description]
+   * @return {[type]}                  [description]
+   */
+  function widgetBTTLostRevenueCalculatorReportController($sce, BTTPortalService, config) {
+    'ngInject';
+    var vm = this;
+    var _defaultConfig = {
+      filters: {
+        country: 'All Countries',
+        count_last_day: '1'
+      },
+      info: {
+        country: 'All countries'
+      }
+    };
+    _.defaultsDeep(config, _defaultConfig);
+    vm.config = config;
+    vm._loading = false;
+    // TODO: init function for control existing domain Id
+    BTTPortalService.generateUrlLostRevenueCalculatorReport(config.filters)
       .then(function(url) {
         config.url = url;
         if (config.url) {
@@ -125,6 +301,12 @@
       });
   }
 
+  /**
+   * [widgetEditBTTiframeController description]
+   * @param  {[type]} $scope    [description]
+   * @param  {[type]} Countries [description]
+   * @return {[type]}           [description]
+   */
   function widgetEditBTTiframeController($scope, Countries) {
     'ngInject';
     var vm = this;
