@@ -25,7 +25,7 @@
         <a href="" ng-if="editMode" title="Edit Dashboard Properties" class="btn btn-link"  ng-click="editDashboardDialog()">
           <i class="glyphicon glyphicon-cog"></i>
         </a>
-        <a href="" ng-if="options.editable" class="btn btn-link" title="{{editMode ? 'Save Changes' : 'Enable Edit Mode'}}" ng-click="toggleEditMode()">
+        <a href="" ng-if="options.editable" class="btn btn-link" title="{{editMode ? 'Save Changes' : 'Modify This Dashboard'}}" ng-click="toggleEditMode()">
           <i class="glyphicon" x-ng-class="{'glyphicon-edit' : !editMode, 'glyphicon-save' : editMode}"></i>
         </a>
         <a href="" ng-if="editMode" class="btn btn-link"  title="Undo Changes" ng-click="cancelEditMode()">
