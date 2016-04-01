@@ -154,7 +154,7 @@
         // Widget “Norse Live Attack Map”
         .widget('widget-norse-live-attack-map', {
           title: 'Norse Live Attack Map',
-          description: 'Display Norse Live Attack Mapp',
+          description: 'Display Norse Live Attack Map',
           templateUrl: 'parts/dashboard/widgets/norse/view-iframe-norse.tpl.html',
           titleTemplateUrl: 'parts/dashboard/widgets/norse/widget-title-without-params-norse.html',
           controller: function widgetNorseLiveAttackMapIframeController($sce, config) {
@@ -174,7 +174,7 @@
             controllerAs: 'vm',
           },
           config: {
-            url: ' http://map.norsecorp.com/#/'
+            url: ' https://map.norsecorp.com/#/'
           }
         });
 
