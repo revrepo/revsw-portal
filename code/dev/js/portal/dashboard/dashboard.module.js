@@ -174,7 +174,7 @@
             controllerAs: 'vm',
           },
           config: {
-            url: ' https://map.norsecorp.com/#/'
+            url: 'https://map.norsecorp.com/#/'
           }
         });
 
