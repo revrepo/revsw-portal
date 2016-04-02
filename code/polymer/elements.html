@@ -8179,7 +8179,7 @@ this.fire('dom-change');
     },
 
     observers: [
-      '_updateSelected(selectedValues.splices)'
+      '_updateSelected(selectedValues)'
     ],
 
     /**
@@ -8889,9 +8889,6 @@ this.fire('dom-change');
            * The CSS selector for the element that should receive focus when the drawer is open.
            * By default, when the drawer opens, it focuses the first tabbable element. That is,
            * the first element that can receive focus.
-           *
-           * To disable this behavior, you can set `drawerFocusSelector` to `null` or an empty string.
-           *
            */
           drawerFocusSelector: {
             type: String,
@@ -9188,32 +9185,28 @@ this.fire('dom-change');
 
         _getAutoFocusedNode: function() {
           var drawerContent = this._getDrawerContent();
-
-          return this.drawerFocusSelector ? 
-              Polymer.dom(drawerContent).querySelector(this.drawerFocusSelector) || drawerContent : null;
+          return Polymer.dom(drawerContent).querySelector(this.drawerFocusSelector) || drawerContent;
         },
 
         _toggleFocusListener: function(selected) {
           if (selected === 'drawer') {
-            this.addEventListener('focus', this._boundFocusListener, true);
+            document.addEventListener('focus', this._boundFocusListener, true);
           } else {
-            this.removeEventListener('focus', this._boundFocusListener, true);
+            document.removeEventListener('focus', this._boundFocusListener, true);
           }
         },
 
         _didFocus: function(event) {
-          var autoFocusedNode = this._getAutoFocusedNode();
-          if (!autoFocusedNode) {
-            return;
-          }
-
           var path = Polymer.dom(event).path;
           var focusedChild = path[0];
           var drawerContent = this._getDrawerContent();
-          var focusedChildCameFromDrawer = path.indexOf(drawerContent) !== -1;
+          var focusedChildCameFromDrawer = false;
+          var autoFocusedNode = this._getAutoFocusedNode();
 
-          if (!focusedChildCameFromDrawer) {
-            event.stopPropagation();
+          while (!focusedChildCameFromDrawer && path[0]) {
+            focusedChildCameFromDrawer = path.shift() === drawerContent;
+          }
+          if (!focusedChildCameFromDrawer && autoFocusedNode) {
             autoFocusedNode.focus();
           }
         },

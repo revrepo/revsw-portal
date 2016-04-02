@@ -601,3 +601,8 @@ section[drawer] .side-menu .dashboard_menu .side-menu-item.item-title a {
 .sub-menu-icon {
   margin: 0px 4px 0px -17px !important;
 }
+
+.menu-toggle{
+  font-size: 24px;
+  padding: 9px 0 9px 20px;
+}

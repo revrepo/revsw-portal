@@ -5,7 +5,7 @@
         </div>
         <div class="side-menu" style="height: 94%; overflow: auto;">
             <dashboard-nav-menu></dashboard-nav-menu>
-            <li ui-sref-active-if="{class: 'active-side-menu-item', state: 'index.apps'}", ng-class="{'active-side-menu-item': menuExpanded('index.apps')}">
+            <li ui-sref-active-if="{class: 'active-side-menu-item', state: 'index.apps'}", ng-class="{'active-side-menu-item': menuExpanded('index.apps')}" style="margin-top: 8px;">
 
                 <a class="side-menu-item" ng-click="goToState('index.apps.ios')">
                     <div class="left-menu-start">
@@ -210,8 +210,11 @@
                 <nav class="navbar">
                     <div class="navbar-inner">
                         <div class="navbar-header">
-                            <div paper-drawer-toggle>
-                                <span class="glyphicon glyphicon-menu-hamburger" paper-drawer-toggle></span>
+                            <div paper-drawer-toggle >
+                                <span class="glyphicon glyphicon-menu-hamburger" paper-drawer-toggle style="display: block !important;"></span>
+                            </div>
+                            <div id="menuToggleBtn" class="menu-toggle">
+                                <span menu-toggle="toggleMenu" ng-click="toggleMenu = !toggleMenu" class="glyphicon glyphicon-menu-hamburger"></span>
                             </div>
                         </div>
                         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -224,7 +227,13 @@
                 <div id="top"></div>
                 <div class="page-inner" ui-view="page"></div>
             </div>
+            <div class="col-md-12">
+                <span class="pull-left">Copyright Rev Software, Inc. 2015-2016</span>
+                <span class="pull-right">Version {{portalVersion}}/{{apiVersion}} | <a href="{{contactUsLink}}" target="_blank">Contact Us</a> </span>
+                <br>
+                <br>
+            </div>
         </paper-header-panel>
-    </section>
+</section>
 </paper-drawer-panel>
 

@@ -46,5 +46,20 @@
 
       event.stopPropagation();
     };
+
+    function initFooterInfo(){
+      $http.get('https://iad02-api03.revsw.net/healthcheck').success(function(data){
+        if(data){
+          $rootScope.apiVersion = data.version;
+        }
+
+        $http.get('/version.txt').success(function(data){
+          console.log(data);
+          if(data){
+            $rootScope.portalVersion = data;
+          }
+        });
+      });
+    } initFooterInfo();
   }
 })();
