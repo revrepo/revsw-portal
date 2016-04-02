@@ -6,7 +6,7 @@
     .controller('LoginController', LoginController);
 
   /*@ngInject*/
-  function LoginController($scope, User, $state, AlertService, $config, $modal) {
+  function LoginController($scope, User, $state, AlertService, DashboardSrv, $config, $modal, $location) {
 
     document.querySelector('body').style.paddingTop = '0';
 
@@ -37,7 +37,13 @@
       try {
         User.login(email, pass)
           .then(function(data) {
-            $state.go('index');
+            DashboardSrv.getAll().then(function(dashboards) {
+              if(dashboards && dashboards.length){
+                $location.path('dashboard/' + dashboards[0].id);
+              } else {
+                $state.go('index.reports.proxy');
+              }
+            });
           })
           .catch(function (err) {
             if (!err.status) {

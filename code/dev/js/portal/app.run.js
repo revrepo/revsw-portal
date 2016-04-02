@@ -6,8 +6,10 @@
     .run(runApp);
 
   /*@ngInject*/
-  function runApp($rootScope, AlertService, $state) {
+  function runApp($rootScope, $http, AlertService, $state) {
     $rootScope.alertService = AlertService;
+    $rootScope.contactUsLink = 'https://revapm.zendesk.com/hc/en-us/requests/new';
+
     $rootScope.$on('$stateChangeStart',
       function(event){
         // Clear alerts when routes change
@@ -44,5 +46,20 @@
 
       event.stopPropagation();
     };
+
+    function initFooterInfo(){
+      $http.get(window.API_URL + '/healthcheck').success(function(data){
+        if(data){
+          $rootScope.apiVersion = data.version;
+        }
+
+        $http.get('/version.txt').success(function(data){
+          console.log(data);
+          if(data){
+            $rootScope.portalVersion = data;
+          }
+        });
+      });
+    } initFooterInfo();
   }
 })();
