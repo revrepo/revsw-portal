@@ -4,7 +4,6 @@
 
 section[drawer] {
   background-color: @app-side-menu-background;
-
   #logo {
     background-color: @app-side-menu-background-logo;
     height: @app-top-menu-height;
@@ -14,9 +13,7 @@ section[drawer] {
       width: 50%;
     }
   }
-
   .side-menu {
-
     .side-menu-item {
       cursor: pointer;
       display: block;
@@ -27,20 +24,16 @@ section[drawer] {
       color: @app-side-menu-text-color;
       //border-bottom: 1px solid lighten(@app-side-menu-background, 5%);
       text-decoration: none;
-
       &.selected {
         background-color: @app-side-menu-background-selected;
       }
-
       &.active {
         border-right: 4px solid @app-side-menu-text-color;
       }
-
       i {
         margin: 0 10px;
       }
     }
-
     .side-menu-sub-item {
       display: block;
       border-bottom: 1px solid gray;
@@ -50,21 +43,37 @@ section[drawer] {
       margin-left: 40px;
       color: @app-side-menu-text-color;
       text-decoration: none;
-
       &.active {
         color: white;
       }
     }
-
     .side-menu-sub-item {
       display: none;
     }
-
     .active-side-menu-item {
       .side-menu-sub-item {
         display: block;
       }
     }
   }
+}
 
+//
+.left-menu-start {
+  display: inline-block;
+  width: 5px;
+  text-align: center;
+  i {
+    margin: 0px 4px 0px -17px !important;
+    font-size: 20px;
+  }
+}
+
+.sub-menu-icon {
+  margin: 0px 4px 0px -17px !important;
+}
+
+.menu-toggle {
+  font-size: 24px;
+  padding: 9px 0 9px 20px;
 }

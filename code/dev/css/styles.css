@@ -357,6 +357,22 @@ section[drawer] .side-menu .side-menu-sub-item {
 section[drawer] .side-menu .active-side-menu-item .side-menu-sub-item {
   display: block;
 }
+.left-menu-start {
+  display: inline-block;
+  width: 5px;
+  text-align: center;
+}
+.left-menu-start i {
+  margin: 0px 4px 0px -17px !important;
+  font-size: 20px;
+}
+.sub-menu-icon {
+  margin: 0px 4px 0px -17px !important;
+}
+.menu-toggle {
+  font-size: 24px;
+  padding: 9px 0 9px 20px;
+}
 .navbar {
   margin: 0;
   border: none;
@@ -536,10 +552,10 @@ section[drawer] .side-menu .dashboard_menu .side-menu-item.item-title a {
   margin: 5px;
 }
 .dashboard__title .btn-link {
-  font-size: 28px;
-  padding-left: 3px;
-  padding-right: 3px;
-  padding-top: 10px;
+  font-size: 28px !important;
+  padding-left: 3px !important;
+  padding-right: 3px !important;
+  padding-top: 10px !important;
 }
 .dashboard-structure-select-item {
   display: block;
@@ -585,24 +601,4 @@ section[drawer] .side-menu .dashboard_menu .side-menu-item.item-title a {
 }
 .icon-structure--3-3-3-3 {
   background-image: url('../images/columns/3-3-3-3-sprite.png');
-}
-
-.left-menu-start {
-  display: inline-block;
-  width: 5px;
-  text-align: center;
-}
-
-.left-menu-start i {
-  margin: 0px 4px 0px -17px !important;
-  font-size: 20px;
-}
-
-.sub-menu-icon {
-  margin: 0px 4px 0px -17px !important;
-}
-
-.menu-toggle{
-  font-size: 24px;
-  padding: 9px 0 9px 20px;
 }
