@@ -13,12 +13,14 @@
       template:
       // TODO: make template as file
         '<li class="dashboard_menu list"  ui-sref-active-if="{class: \'active-side-menu-item\', state: \'index.dashboard\'}">' +
-        '  <a  class="side-menu-item" ng-if="vm.dashboardsList.length>0" ui-sref="index.dashboard.details({dashboardId:vm.dashboardsList[0].id})" >' +
+        '<a  class="side-menu-item" ng-if="vm.dashboardsList.length>0" ui-sref="index.dashboard.details({dashboardId:vm.dashboardsList[0].id})" >' +
+        '<div class="left-menu-start" style="margin-right: 3px;"><i class="fa fa-tachometer"></i> </div>' +
         'Dashboards' +
         '<i ng-click="expandMenu(\'index.dashboard\', $event)" ng-if="vm.dashboardsList.length > 0"' +
         ' class="pull-right {{ menuExpanded(\'index.dashboard\') ? \'fa fa-caret-down\' : \'fa fa-caret-up\' }}"></i>' +
         '</a>' +
         '<span ng-if="vm.dashboardsList.length==0"  class="side-menu-item item-title">' +
+        '<div class="left-menu-start"><i class="fa fa-tachometer"></i> </div>' +
         ' Dashboards <dashboard-btn-new></dashboard-btn-new>' +
         '</span>' +
         '  <a  ng-if="vm.dashboardsList.length>0"  ng-repeat="dash in vm.dashboardsList" ' +
