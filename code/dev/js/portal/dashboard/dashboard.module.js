@@ -151,8 +151,32 @@
             count_last_day: '1'
           }
         })
-
-      ;
+        // Widget “Norse Live Attack Map”
+        .widget('widget-norse-live-attack-map', {
+          title: 'Norse Live Attack Map',
+          description: 'Display Norse Live Attack Map',
+          templateUrl: 'parts/dashboard/widgets/norse/view-iframe-norse.tpl.html',
+          titleTemplateUrl: 'parts/dashboard/widgets/norse/widget-title-without-params-norse.html',
+          controller: function widgetNorseLiveAttackMapIframeController($sce, config) {
+            'ngInject';
+            var vm = this;
+            if (config.url) {
+              vm.url = $sce.trustAsResourceUrl(config.url);
+            }
+          },
+          controllerAs: 'iframe',
+          edit: {
+            templateUrl: 'parts/dashboard/widgets/norse/edit-norse.html',
+            controller: function widgetEditBTTiframeController($sce, config) {
+              'ngInject';
+              var vm = this;
+            },
+            controllerAs: 'vm',
+          },
+          config: {
+            url: 'https://map.norsecorp.com/#/'
+          }
+        });
 
     })
     .controller('widgetBTTConversionReportController', widgetBTTConversionReportController)

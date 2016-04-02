@@ -5,7 +5,7 @@
 <div class="modal-body">
   <div style="display: inline-block;">
     <dl class="dl-horizontal">
-      <dt ng-repeat-start="(key, widget) in widgets">
+      <dt ng-repeat-start="(key, widget) in widgets | orderWidgets ">
         <a href="" ng-click="addWidget(key)">
           {{widget.title}}
         </a>
