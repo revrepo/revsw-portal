@@ -8,6 +8,7 @@
     'revapm.Portal.Domains',
     'revapm.Portal.Companies',
     'revapm.Portal.Cache',
+    'revapm.Portal.ImportConfig',
     'revapm.Portal.Reports',
     'revapm.Portal.Mobile',
     'revapm.Portal.Usage',

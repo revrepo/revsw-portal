@@ -72,6 +72,10 @@
                     <i class="sub-menu-icon fa fa-trash"></i>
                     Purge Cache
                 </a>
+                <a ui-sref-active="active" ui-sref="index.webApp.importConfig" class="side-menu-sub-item" ng-if="userService.isReseller() || userService.isRevadmin()">
+                    <i class="sub-menu-icon fa fa-arrow-right"></i>
+                    Import Config
+                </a>
                 <!--<a ui-sref="index.webApp.domainConfig" class="side-menu-item">-->
                 <!--<i class="glyphicon glyphicon-wrench"></i>-->
                 <!--Domains Advanced-->
