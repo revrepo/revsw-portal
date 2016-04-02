@@ -1,0 +1,92 @@
+<div class="domain-caching-rule ">
+  <div class="form-group">
+    <label class="col-md-3">URL</label>
+    <div class="col-md-12">
+      <label class="radio-inline">
+        <input type="radio" ng-model="$ctrl.caching_rule.url.is_wildcard" ng-value="true">Regular Expression Only
+      </label>
+      <label class="radio-inline">
+        <input type="radio" ng-model="$ctrl.caching_rule.url.is_wildcard" ng-value="false">Wildcard Pattern
+      </label>
+    </div>
+    <div class="col-md-12">
+      <input type="text" class="form-control" ng-model="$ctrl.caching_rule.url.value">
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-3">Edge Caching</label>
+  </div>
+  <div class="form-group form-inline">
+    <label for="override_origin" class="col-sm-3 control-label">
+      Override Origin Caching Headers
+    </label>
+    <div class="col-md-9">
+      <toggle-switch ng-model="$ctrl.caching_rule.edge_caching.override_origin" on-label="On" off-label="Off">
+      </toggle-switch>
+    </div>
+  </div>
+  <div class="form-group form-inline">
+    <label class="col-sm-3 control-label"> Edge Cache TTL, seconds</label>
+    <div class="col-md-9">
+      <input type="number" class="form-control" min="0" max="3600" ng-model="$ctrl.caching_rule.edge_caching.new_ttl">
+    </div>
+  </div>
+  <div class="form-group form-inline">
+    <label for="override_origin" class="col-sm-3 control-label">
+      Enforce New Edge Cache TTL If Origin Caching Headers Are Missing
+    </label>
+    <div class="col-md-9">
+      <toggle-switch ng-model="$ctrl.caching_rule.edge_caching.override_no_cc" on-label="On" off-label="Off">
+      </toggle-switch>
+    </div>
+  </div>
+  <div class="form-group ">
+    <label class="col-sm-3 control-label">Keep Or Drop Query String Parameters</label>
+    <div class="col-sm-9">
+      <toggle-switch ng-model="$ctrl.caching_rule.edge_caching.query_string_list_is_keep" on-label="On" off-label="Off">
+      </toggle-switch>
+    </div>
+  </div>
+  <div class="form-group ">
+    <label class="col-sm-3 control-label">Query String Parameters To Drop/Keep</label>
+    <div class="col-sm-9">
+      <ui-select tagging tagging-label="Add New Query String" multiple tagging-tokens="SPACE|," theme="bootstrap" class="form-control" ng-disabled="_loading" ng-model="$ctrl.caching_rule.edge_caching.query_string_keep_or_remove_list" id="domain_aliases">
+        <ui-select-match placeholder="Add Query String...">{{$item}}</ui-select-match>
+        <ui-select-choices repeat="query_string in $ctrl.caching_rule.edge_caching.query_string_keep_or_remove_list">
+        </ui-select-choices>
+      </ui-select>
+    </div>
+  </div>
+  <hr>
+  <div class="form-group">
+    <label class="col-sm-3 ">Browser Caching</label>
+  </div>
+  <div class="form-group form-inline">
+    <label for="override_origin" class="col-sm-3 control-label">
+      Override Edge Caching
+    </label>
+    <div class="col-md-9">
+      <toggle-switch ng-model="$ctrl.caching_rule.browser_caching.override_edge" on-label="On" off-label="Off">
+      </toggle-switch>
+    </div>
+  </div>
+  <div class="form-group form-inline" ng-show="$ctrl.caching_rule.browser_caching.override_edge">
+    <label class="col-sm-3 control-label">Browser Caching TTL, seconds</label>
+    <div class="col-md-9">
+      <input type="number" class="form-control" min="0" max="3600" ng-model="$ctrl.caching_rule.browser_caching.new_ttl">
+    </div>
+  </div>
+  <div class="form-group form-inline">
+    <label for="override_origin" class="col-sm-3 control-label">
+      Force Revalidation
+    </label>
+    <div class="col-md-9">
+      <toggle-switch ng-model="$ctrl.caching_rule.browser_caching.force_revalidate" on-label="On" off-label="Off">
+      </toggle-switch>
+    </div>
+  </div>
+  <hr>
+  <div class="form-group">
+    <label class="col-sm-3">Manage Origin Request Headers</label>
+  </div>
+</div>

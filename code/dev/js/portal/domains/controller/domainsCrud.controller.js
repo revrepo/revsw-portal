@@ -79,6 +79,11 @@
         delete model.rev_component_bp.cache_opt_choice;
         delete model.rev_component_bp.certificate_urls;
         delete model.rev_component_bp.ssl_certificates;
+        if (model.rev_component_bp.caching_rules) {
+          angular.forEach(model.rev_component_bp.caching_rules, function(item) {
+            delete item.$cachingRuleState;
+          });
+        }
       }
       if (model.domain_name) {
         delete model.domain_name;
@@ -112,9 +117,18 @@
 
     $scope.getDomain = function(id) {
       $scope.get(id)
+        .then(validateDomainProperties)
         .catch(function(err) {
           $scope.alertService.danger('Could not load domain details');
         });
+
+      function validateDomainProperties(domain) {
+        var _domain_property = {
+          proxy_timeout: 30,
+          domain_aliases: []
+        };
+        angular.merge($scope.model, _domain_property);
+      }
     };
 
     $scope.deleteDomain = function(model) {
@@ -215,6 +229,59 @@
 
     $scope.getRelativeDate = function(datetime) {
       return moment.utc(datetime).fromNow();
+    };
+
+    /**
+     * @name  onAddNewCacheRule
+     * @description
+     *
+     * Add new caching rule
+     *
+     * @return
+     */
+    $scope.onAddNewCachingRule = function() {
+      // TODO: delete not needed properties
+      var _cachinRule = {
+        version: 1,
+        url: {
+          is_wildcard: true,
+          value: '**'
+        },
+        edge_caching: {
+          new_ttl: 0,
+          override_no_cc: false,
+          override_origin: false,
+          query_string_list_is_keep: false,
+          query_string_keep_or_remove_list: []
+        },
+        browser_caching: {
+          force_revalidate: false,
+          new_ttl: 0,
+          override_edge: false
+        },
+        cookies: {
+          ignore_all: false,
+          keep_or_ignore_list: [],
+          list_is_keep: false,
+          override: false,
+          remove_ignored_from_request: false,
+          remove_ignored_from_response: false
+        },
+        $cachingRuleState: {
+          isCollapsed: true
+        }
+      };
+      $scope.model.rev_component_bp.caching_rules.push(_cachinRule);
+    };
+    /**
+     * @name  onRemoveCachingRule
+     * @description
+     *
+     *
+     * @return
+     */
+    $scope.onRemoveCachingRule = function(index) {
+      $scope.model.rev_component_bp.caching_rules.splice(index, 1);
     };
 
   }
