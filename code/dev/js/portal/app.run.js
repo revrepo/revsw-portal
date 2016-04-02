@@ -48,7 +48,7 @@
     };
 
     function initFooterInfo(){
-      $http.get('https://iad02-api03.revsw.net/healthcheck').success(function(data){
+      $http.get(window.API_URL + '/healthcheck').success(function(data){
         if(data){
           $rootScope.apiVersion = data.version;
         }
