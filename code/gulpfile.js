@@ -50,6 +50,12 @@ gulp.task('copyJson', function () {
     .pipe(gulp.dest(destFolder + 'js'));
 });
 
+// copy custom fonts
+gulp.task('copyFonts', function () {
+  return gulp.src(devFolder + 'fonts/**/*.*')
+    .pipe(gulp.dest(destFolder + 'fonts'));
+});
+
 gulp.task('vulcanize', function () {
   return gulp.src(devFolder + 'polymer/elements.html')
     .pipe(vulcanize({
@@ -113,6 +119,6 @@ gulp.task('serve', function () {
   gulp.watch([devFolder + 'images/**/*'], reload);
 });
 
-gulp.task('copy', ['copyCss', 'copyParts', 'copyImages', 'copyJson']);
+gulp.task('copy', ['copyCss', 'copyParts', 'copyImages', 'copyJson', 'copyFonts']);
 gulp.task('build', ['copy', 'dist', 'vulcanize']);
 gulp.task('default', ['serve', 'less']);
