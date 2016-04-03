@@ -40,7 +40,18 @@
     <button class="btn btn-success" type="button" ng-click="ok()">OK</button>
   </div>
 </script>
-
+  <script type="text/ng-template" id="confirmModalDeleteCachingRule.html">
+    <div class="modal-header">
+      <h3 class="modal-title">Confirm</h3>
+    </div>
+    <div class="modal-body">
+      Are you sure you want to delete Caching Rule "{{model.url}}"?
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+      <button class="btn btn-danger" type="button" ng-click="ok()">OK</button>
+    </div>
+  </script>
 <div class="container-fluid" ui-view="page">
   <div class="row">
     <div class="col-sm-12">

@@ -82,7 +82,7 @@
             </div>
           </div>
           -->
-        <!--   <hr> -->
+          <!--   <hr> -->
           <!-- Origin Communication Protocol -->
           <div class="form-group form-inline">
             <label for="origin_secure_protocol" class="col-sm-3 control-label">
@@ -164,56 +164,9 @@
               </toggle-switch>
             </div>
           </div>
-            <hr>
-          <!-- Caching Rules -->
-          <div class="panel panel-default" ng-if="model.rev_component_bp.enable_cache">
-            <div class="panel-heading">
-              <h4><span ng-click="onAddNewCachingRule()" class="btn btn-primary pull-right" title="Add New Caching Rule"><i class="glyphicon glyphicon-plus"></i></span> Caching Rules</h4>
-            </div>
-            <div class="panel-body">
-              <!-- TODO: creater directive -->
-              <div class="panel panel-default component__domain_caching_rules" ng-repeat="caching_rule in model.rev_component_bp.caching_rules">
-                <div class="panel-heading">
-                  <h3 class="panel-title">
- Rule index: {{$index}}
-   <!-- <i class="glyphicon glyphicon-star"></i> -->
-
-  <span class="pull-right">
-    <a href="" title="Reload Widget Content" ng-if="widget.reload" ng-click="reload()">
-      <i class="glyphicon glyphicon-refresh"></i>
-    </a>
-    <!-- collapse -->
-    <a href="" title="Collapse Rule" ng-show="!options.collapsible && !caching_rule.$cachingRuleState" ng-click="caching_rule.$cachingRuleState = !caching_rule.$cachingRuleState">
-      <i class="glyphicon glyphicon-minus"></i>
-    </a>
-    <!-- expand -->
-    <a href="" title="Expand Rule" ng-show="!options.collapsible && caching_rule.$cachingRuleState" ng-click="caching_rule.$cachingRuleState = !caching_rule.$cachingRuleState">
-      <i class="glyphicon glyphicon-plus"></i>
-    </a>
-    <!-- change widget location -->
-    <a href="" title="Change Widget Location" class="adf-move" ng-if="editMode">
-      <i class="glyphicon glyphicon-move"></i>
-    </a>
-    <!-- open edit mode -->
-    <a href="" title="Edit Widget Configuration" ng-click="edit()" ng-if="editMode">
-      <i class="glyphicon glyphicon-cog"></i>
-    </a>
-    <a href="" title="Fullscreen Widget" ng-click="openFullScreen()" ng-show="options.maximizable">
-     <i class="glyphicon glyphicon-fullscreen"></i>
-   </a>
-    <!-- remove widget -->
-    <a href="" title="Remove Rule" ng-click="onRemoveCachingRule($index)" ng-if="!editMode">
-      <i class="glyphicon glyphicon-remove"></i>
-    </a>
-  </span>
-</h3>
-                </div>
-                <domain-caching-rule class="panel-body" ng-model="caching_rule" ng-show="!caching_rule.$cachingRuleState"></domain-caching-rule>
-              </div>
-            </div>
-          </div>
+          <hr>
           <!-- Cache Bypass Locations -->
-          <div class="form-group">
+          <div class="form-group" ng-if="model.rev_component_bp.enable_cache">
             <label class="col-sm-3 control-label">Cache Bypass Locations</label>
             <div class="col-sm-9">
               <ui-select tagging tagging-label="Add Cache Bypass Locations" multiple tagging-tokens="SPACE|," theme="bootstrap" class="form-control" ng-disabled="_loading" ng-model="model.rev_component_bp.cache_bypass_locations" id="domain_aliases">
@@ -225,6 +178,49 @@
             </div>
           </div>
           <!-- -->
+          <!-- Caching Rules -->
+          <div class="panel panel-default caching-rules-list" ng-if="model.rev_component_bp.enable_cache">
+            <div class="panel-heading">
+              <span ng-click="onAddNewCachingRule()" class="btn btn-primary btn-sm pull-right" title="Add New Caching Rule"><i class="glyphicon glyphicon-plus"></i></span>
+              <h4>Caching Rules</h4>
+            </div>
+            <div class="panel-body">
+              <!-- TODO: creater directive -->
+              <div class="panel panel-default domain-caching-rules" ng-repeat="caching_rule in model.rev_component_bp.caching_rules">
+                <div class="panel-heading">
+                  <div class="domain-caching-rules__info">
+                    <div class="pull-left panel-buttons-left">
+                      <!-- collapse -->
+                      <a class="btn btn-default btn-xs" href="" title="Collapse Caching Rule" ng-show="!caching_rule.$cachingRuleState.isCollapsed" ng-click="caching_rule.$cachingRuleState.isCollapsed = !caching_rule.$cachingRuleState.isCollapsed">
+                        <i class="glyphicon glyphicon-chevron-up"></i>
+                      </a>
+                      <!-- expend -->
+                      <a class="btn btn-default btn-xs" href="" title="Expand Caching Rule" ng-show="caching_rule.$cachingRuleState.isCollapsed" ng-click="caching_rule.$cachingRuleState.isCollapsed = !caching_rule.$cachingRuleState.isCollapsed">
+                        <i class="glyphicon glyphicon-chevron-down"></i>
+                      </a>
+                      <!--  Caching Rule Up  -->
+                      <a class="btn btn-default btn-xs" href="" ng-click="onUpCachingRule(caching_rule)"><i class="glyphicon glyphicon glyphicon-arrow-up "></i></a>
+                      <!--  Caching Rule Down  -->
+                      <a class="btn btn-default btn-xs" href="" ng-click="onDownCachingRule(caching_rule)"><i class="glyphicon glyphicon glyphicon-arrow-down"></i></a>
+                      <!-- // -->
+                    </div>
+                    <div class="pull-right panel-button-right">
+                      <!-- remove widget -->
+                      <a href="" title="Remove Rule" ng-click="onRemoveCachingRule($index)" ng-if="!editMode">
+                        <i class="glyphicon glyphicon-remove"></i>
+                      </a>
+                    </div>
+                    <div class="panel-title">
+                      <i class="icon-revapm-icon-regex" ng-if="!caching_rule.url.is_wildcard"></i>
+                      <i class="icon-revapm-files-empty" ng-if="caching_rule.url.is_wildcard"></i>
+                      <b> URL </b>: </i> {{caching_rule.url.value}}
+                    </div>
+                  </div>
+                </div>
+                <domain-caching-rule class="panel-body" ng-model="caching_rule" ng-show="!caching_rule.$cachingRuleState.isCollapsed"></domain-caching-rule>
+              </div>
+            </div>
+          </div>
           <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
               <a ui-sref="^" class="btn btn-default">

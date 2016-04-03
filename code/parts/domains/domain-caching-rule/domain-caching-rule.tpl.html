@@ -1,7 +1,7 @@
 <div class="domain-caching-rule ">
   <div class="form-group">
-    <label class="col-md-3">URL</label>
-    <div class="col-md-12">
+    <label class="col-md-3 control-label">URL</label>
+    <div class=" col-md-9">
       <label class="radio-inline">
         <input type="radio" ng-model="$ctrl.caching_rule.url.is_wildcard" ng-value="true">Regular Expression Only
       </label>
@@ -9,11 +9,11 @@
         <input type="radio" ng-model="$ctrl.caching_rule.url.is_wildcard" ng-value="false">Wildcard Pattern
       </label>
     </div>
-    <div class="col-md-12">
+    <div class="col-md-offset-3 col-md-9">
       <input type="text" class="form-control" ng-model="$ctrl.caching_rule.url.value">
     </div>
   </div>
-  <div class="form-group">
+  <div class="form-group info">
     <label class="col-sm-3">Edge Caching</label>
   </div>
   <div class="form-group form-inline">
@@ -26,9 +26,9 @@
     </div>
   </div>
   <div class="form-group form-inline">
-    <label class="col-sm-3 control-label"> Edge Cache TTL, seconds</label>
+    <label class="col-sm-3 control-label"> Edge Cache TTL</label>
     <div class="col-md-9">
-      <input type="number" class="form-control" min="0" max="3600" ng-model="$ctrl.caching_rule.edge_caching.new_ttl">
+      <input type="number" class="form-control" min="0" max="3600" ng-model="$ctrl.caching_rule.edge_caching.new_ttl"> second(s)
     </div>
   </div>
   <div class="form-group form-inline">
@@ -50,7 +50,7 @@
   <div class="form-group ">
     <label class="col-sm-3 control-label">Query String Parameters To Drop/Keep</label>
     <div class="col-sm-9">
-      <ui-select tagging tagging-label="Add New Query String" multiple tagging-tokens="SPACE|," theme="bootstrap" class="form-control" ng-disabled="_loading" ng-model="$ctrl.caching_rule.edge_caching.query_string_keep_or_remove_list" id="domain_aliases">
+      <ui-select tagging tagging-label="Add New Query String" multiple tagging-tokens="SPACE|," theme="bootstrap" class="form-control" ng-disabled="_loading" ng-model="$ctrl.caching_rule.edge_caching.query_string_keep_or_remove_list" id="query_string">
         <ui-select-match placeholder="Add Query String...">{{$item}}</ui-select-match>
         <ui-select-choices repeat="query_string in $ctrl.caching_rule.edge_caching.query_string_keep_or_remove_list">
         </ui-select-choices>
@@ -88,5 +88,15 @@
   <hr>
   <div class="form-group">
     <label class="col-sm-3">Manage Origin Request Headers</label>
+  </div>
+  <div class="form-group">
+    <origin-request-headers class="col-sm-12" ng-model="$ctrl.caching_rule.origin_request_headers"></origin-request-headers>
+  </div>
+  <hr>
+  <div class="form-group">
+    <label class="col-sm-3">Manage End User Response Headers</label>
+  </div>
+  <div class="form-group">
+    <end-user-response-headers class="col-sm-12" ng-model="$ctrl.caching_rule.end_user_response_headers "></end-user-response-headers>
   </div>
 </div>

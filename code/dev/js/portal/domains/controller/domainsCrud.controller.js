@@ -73,8 +73,8 @@
       });
     };
 
-    $scope.prepareSimpleDomainUpdate = function(model) {
-      model = _.clone(model.toJSON());
+    $scope.prepareSimpleDomainUpdate = function(model_current) {
+      var model = _.clone(model_current.toJSON(), true);
       if (model.rev_component_bp) {
         delete model.rev_component_bp.cache_opt_choice;
         delete model.rev_component_bp.certificate_urls;
@@ -128,6 +128,14 @@
           domain_aliases: []
         };
         angular.merge($scope.model, _domain_property);
+        angular.forEach($scope.model.rev_component_bp.caching_rules, function(item) {
+          // NOTE: add parameter for collapsed item
+          angular.extend(item, {
+            $cachingRuleState: {
+              isCollapsed: true
+            }
+          });
+        });
       }
     };
 
@@ -277,12 +285,62 @@
      * @name  onRemoveCachingRule
      * @description
      *
+     * Deleting Caching
      *
      * @return
      */
     $scope.onRemoveCachingRule = function(index) {
-      $scope.model.rev_component_bp.caching_rules.splice(index, 1);
+      $scope.confirm('confirmModalDeleteCachingRule.html', {})
+        .then(function() {
+          $scope.model.rev_component_bp.caching_rules.splice(index, 1);
+          $scope.alertService.success('Caching Rule was deleted.');
+        });
     };
-
+    /**
+     * @name  onUpCachingRule
+     * @description
+     *
+     * @param  {Object} element - Caching Rule Object
+     * @return {Boolean|Integer}
+     */
+    $scope.onUpCachingRule = function(element) {
+      var array = $scope.model.rev_component_bp.caching_rules;
+      var index = array.indexOf(element);
+      // Item non-existent?
+      if (index === -1) {
+        return false;
+      }
+      // If there is a previous element in sections
+      if (array[index - 1]) {
+        // Swap elements
+        array.splice(index - 1, 2, array[index], array[index - 1]);
+      } else {
+        // Do nothing
+        return 0;
+      }
+    };
+    /**
+     * @name  onDownCachingRule
+     * @description
+     *
+     * @param  {Object} element - Caching Rule Object
+     * @return {Boolean|Integer}
+     */
+    $scope.onDownCachingRule = function(element) {
+      var array = $scope.model.rev_component_bp.caching_rules;
+      var index = array.indexOf(element);
+      // Item non-existent?
+      if (index === -1) {
+        return false;
+      }
+      // If there is a next element in sections
+      if (array[index + 1]) {
+        // Swap elements
+        array.splice(index, 2, array[index + 1], array[index]);
+      } else {
+        // Do nothing
+        return 0;
+      }
+    };
   }
 })();
