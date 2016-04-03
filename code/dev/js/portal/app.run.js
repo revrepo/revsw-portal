@@ -54,7 +54,6 @@
         }
 
         $http.get('/version.txt').success(function(data){
-          console.log(data);
           if(data){
             $rootScope.portalVersion = data;
           }
