@@ -17,7 +17,8 @@
     $http,
     $q,
     $state,
-    $anchorScroll) {
+    $anchorScroll,
+    DomainsCachingRuleDefault) {
     //Invoking crud actions
     $injector.invoke(CRUDController, this, {
       $scope: $scope,
@@ -73,12 +74,17 @@
       });
     };
 
-    $scope.prepareSimpleDomainUpdate = function(model) {
-      model = _.clone(model.toJSON());
+    $scope.prepareSimpleDomainUpdate = function(model_current) {
+      var model = _.clone(model_current.toJSON(), true);
       if (model.rev_component_bp) {
         delete model.rev_component_bp.cache_opt_choice;
         delete model.rev_component_bp.certificate_urls;
         delete model.rev_component_bp.ssl_certificates;
+        if (model.rev_component_bp.caching_rules) {
+          angular.forEach(model.rev_component_bp.caching_rules, function(item) {
+            delete item.$cachingRuleState;
+          });
+        }
       }
       if (model.domain_name) {
         delete model.domain_name;
@@ -112,9 +118,42 @@
 
     $scope.getDomain = function(id) {
       $scope.get(id)
+        .then(validateDomainProperties)
         .catch(function(err) {
           $scope.alertService.danger('Could not load domain details');
         });
+
+      /**
+       * @name  validateDomainProperties
+       * @description
+       *
+       * Rules:
+       * 1. If “Origin Communication Protocol”(origin_secure_protocol) is not specified in the received JSON then set it to default value “Use End User Protocol”
+       * 2. The default value for “RUM Data Collection”(rev_component_co.enable_rum) must to be “false”
+       * @param  {[type]} domain [description]
+       * @return {[type]}        [description]
+       */
+      function validateDomainProperties(domain) {
+        var _domain_default_property = {
+          proxy_timeout: 30,
+          domain_aliases: [],
+          origin_secure_protocol: 'use_end_user_protocol',
+          rev_component_co: {
+            enable_rum: false
+          }
+        };
+        // NOTE: set default properties
+        _.defaultsDeep($scope.model, _domain_default_property);
+
+        angular.forEach($scope.model.rev_component_bp.caching_rules, function(item) {
+          // NOTE: add parameter for collapsed item
+          angular.extend(item, {
+            $cachingRuleState: {
+              isCollapsed: true
+            }
+          });
+        });
+      }
     };
 
     $scope.deleteDomain = function(model) {
@@ -217,5 +256,136 @@
       return moment.utc(datetime).fromNow();
     };
 
+    /**
+     * @name  onAddNewCacheRule
+     * @description
+     *
+     * Add new caching rule
+     *
+     * @return
+     */
+    $scope.onAddNewCachingRule = function() {
+      var _newCachingRule = {
+        version: 1,
+        url: {
+          is_wildcard: true,
+          value: '' // NOTE: must be empty for a new Caching Rule
+        },
+        edge_caching: {
+          new_ttl: 0,
+          override_no_cc: false,
+          override_origin: false,
+          query_string_list_is_keep: false,
+          query_string_keep_or_remove_list: []
+        },
+        browser_caching: {
+          force_revalidate: false,
+          new_ttl: 0,
+          override_edge: false
+        },
+        cookies: {
+          ignore_all: false,
+          keep_or_ignore_list: [],
+          list_is_keep: false,
+          override: false,
+          remove_ignored_from_request: false,
+          remove_ignored_from_response: false
+        },
+        $cachingRuleState: {
+          isCollapsed: true
+        }
+      };
+      $scope.model.rev_component_bp.caching_rules.push(_newCachingRule);
+      $scope.alertService.success('A new default caching rule has been added to the end of the list. Please configure the rule before saving the configuration.');
+    };
+    /**
+     * @name  onRemoveCachingRule
+     * @description
+     *
+     * Deleting Caching
+     *
+     * @return
+     */
+    $scope.onRemoveCachingRule = function(index) {
+      $scope.confirm('confirmModalDeleteCachingRule.html', {
+          url: $scope.model.rev_component_bp.caching_rules[index].url
+        })
+        .then(function() {
+          $scope.model.rev_component_bp.caching_rules.splice(index, 1);
+          $scope.alertService.success('Caching Rule was deleted.');
+        });
+    };
+    /**
+     * @name  onUpCachingRule
+     * @description
+     *
+     * @param  {Object} element - Caching Rule Object
+     * @return {Boolean|Integer}
+     */
+    $scope.onUpCachingRule = function(element) {
+      var array = $scope.model.rev_component_bp.caching_rules;
+      var index = array.indexOf(element);
+      // Item non-existent?
+      if (index === -1) {
+        return false;
+      }
+      // If there is a previous element in sections
+      if (array[index - 1]) {
+        // Swap elements
+        array.splice(index - 1, 2, array[index], array[index - 1]);
+      } else {
+        // Do nothing
+        return 0;
+      }
+    };
+    /**
+     * @name  onDownCachingRule
+     * @description
+     *
+     * @param  {Object} element - Caching Rule Object
+     * @return {Boolean|Integer}
+     */
+    $scope.onDownCachingRule = function(element) {
+      var array = $scope.model.rev_component_bp.caching_rules;
+      var index = array.indexOf(element);
+      // Item non-existent?
+      if (index === -1) {
+        return false;
+      }
+      // If there is a next element in sections
+      if (array[index + 1]) {
+        // Swap elements
+        array.splice(index, 2, array[index + 1], array[index]);
+      } else {
+        // Do nothing
+        return 0;
+      }
+    };
+
+    /**
+     * @name  onCollapsAllCachingRule
+     * @description
+     *
+     * @return
+     */
+    $scope.onCollapsAllCachingRule = function() {
+      var _rules = $scope.model.rev_component_bp.caching_rules;
+      angular.forEach(_rules, function(item) {
+        item.$cachingRuleState.isCollapsed = true;
+
+      });
+    };
+    /**
+     * @name  onExpandAllCachingRule
+     * @description
+     *
+     * @return
+     */
+    $scope.onExpandAllCachingRule = function() {
+      var _rules = $scope.model.rev_component_bp.caching_rules;
+      angular.forEach(_rules, function(item) {
+        item.$cachingRuleState.isCollapsed = false;
+      });
+    };
   }
 })();
