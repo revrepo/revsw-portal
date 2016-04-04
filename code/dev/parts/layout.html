@@ -3,66 +3,222 @@
         <div id="logo">
             <img src="images/logo_color.png" alt="Logo" />
         </div>
-        <div class="side-menu">
-            <li ui-sref-active-if="{class: 'active-side-menu-item', state: 'index.apps'}">
-                <a ui-sref="index.apps.ios" class="side-menu-item">Mobile Apps</a>
-                <a ui-sref-active="active" ui-sref="index.apps.ios" class="side-menu-sub-item">iOS</a>
-                <a ui-sref-active="active" ui-sref="index.apps.android" class="side-menu-sub-item">Android</a>
-                <a ui-sref-active="active" ui-sref="index.apps.wm" class="side-menu-sub-item">Windows Mobile</a>
+        <div class="side-menu" style="height: 94%; overflow: auto;">
+            <dashboard-nav-menu></dashboard-nav-menu>
+            <li ui-sref-active-if="{class: 'active-side-menu-item', state: 'index.apps'}", ng-class="{'active-side-menu-item': menuExpanded('index.apps')}" style="margin-top: 8px;">
+
+                <a class="side-menu-item" ng-click="goToState('index.apps.ios')">
+                    <div class="left-menu-start">
+                        <i class="fa fa-mobile" style="font-size: 28px; margin-top: -14px !important;"></i>
+                    </div>
+                    Mobile Apps
+                    <i ng-click="expandMenu('index.apps', $event)" class="pull-right {{ menuExpanded('index.apps') ? 'fa fa-caret-down' : 'fa fa-caret-up' }}"></i>
+                </a>
+                <a ui-sref-active="active" ui-sref="index.apps.ios" class="side-menu-sub-item">
+                    <i class="sub-menu-icon fa fa-apple"></i>
+                    iOS
+                </a>
+                <a ui-sref-active="active" ui-sref="index.apps.android" class="side-menu-sub-item">
+                    <i class="sub-menu-icon fa fa-android"></i>
+                    Android
+                </a>
+                <a ui-sref-active="active" ui-sref="index.apps.wm" class="side-menu-sub-item">
+                    <i class="sub-menu-icon fa fa-windows"></i>
+                    Windows Mobile
+                </a>
             </li>
-            <li ui-sref-active-if="{class: 'active-side-menu-item', state: 'index.mobile'}">
-                <a ui-sref="index.mobile.traffic" class="side-menu-item">Mobile Analytics</a>
-                <a ui-sref-active="active" ui-sref="index.mobile.traffic" class="side-menu-sub-item">Traffic Levels</a>
-                <a ui-sref-active="active" ui-sref="index.mobile.tops" class="side-menu-sub-item">Top Reports</a>
-                <a ui-sref-active="active" ui-sref="index.mobile.objects" class="side-menu-sub-item">Top Objects</a>
-                <a ui-sref-active="active" ui-sref="index.mobile.distributions" class="side-menu-sub-item">Traffic Distributions</a>
-                <a ui-sref-active="active" ui-sref="index.mobile.ab" class="side-menu-sub-item">A/B Reports</a>
+            <li ui-sref-active-if="{class: 'active-side-menu-item', state: 'index.mobile'}", ng-class="{'active-side-menu-item': menuExpanded('index.mobile')}">
+                <a class="side-menu-item" ng-click="goToState('index.mobile.traffic')">
+                    <div class="left-menu-start">
+                        <i class="fa fa-signal"></i>
+                    </div>
+                    Mobile Analytics
+                    <i ng-click="expandMenu('index.mobile', $event)" class="pull-right {{ menuExpanded('index.mobile') ? 'fa fa-caret-down' : 'fa fa-caret-up' }}"></i>
+                </a>
+                <a ui-sref-active="active" ui-sref="index.mobile.traffic" class="side-menu-sub-item">
+                    <i class="sub-menu-icon fa fa-area-chart"></i>
+                    Traffic Levels
+                </a>
+                <a ui-sref-active="active" ui-sref="index.mobile.tops" class="side-menu-sub-item">
+                    <i class="sub-menu-icon fa fa-pie-chart"></i>
+                    Top Reports
+                </a>
+                <a ui-sref-active="active" ui-sref="index.mobile.objects" class="side-menu-sub-item">
+                    <i class="sub-menu-icon fa fa-th-list"></i>
+                    Top Objects
+                </a>
+                <a ui-sref-active="active" ui-sref="index.mobile.distributions" class="side-menu-sub-item">
+                    <i class="sub-menu-icon fa fa-pie-chart"></i>
+                    Traffic Distributions
+                </a>
+                <a ui-sref-active="active" ui-sref="index.mobile.ab" class="side-menu-sub-item">
+                    <i class="sub-menu-icon glyphicon glyphicon-stats"></i>
+                    A/B Reports
+                </a>
             </li>
-            <li ui-sref-active-if="{class: 'active-side-menu-item', state: 'index.webApp'}">
-                <a ui-sref="index.webApp.domains" class="side-menu-item">Web</a>
-                <a ui-sref-active="active" ui-sref="index.webApp.domains" class="side-menu-sub-item">Domains</a>
-                <a ui-sref-active="active" ui-sref="index.webApp.cache" class="side-menu-sub-item">Purge Cache</a>
+            <li ui-sref-active-if="{class: 'active-side-menu-item', state: 'index.webApp'}", ng-class="{'active-side-menu-item': menuExpanded('index.webApp')}">
+                <a class="side-menu-item", ng-click="goToState('index.webApp.domains')">
+                    <div class="left-menu-start">
+                        <i class="fa fa-desktop"></i>
+                    </div>
+                    Web
+                    <i ng-click="expandMenu('index.webApp', $event)" class="pull-right {{ menuExpanded('index.webApp') ? 'fa fa-caret-down' : 'fa fa-caret-up' }}"></i>
+                </a>
+                <a ui-sref-active="active" ui-sref="index.webApp.domains" class="side-menu-sub-item">
+                    <i class="sub-menu-icon fa fa-list"></i>
+                    Domains
+                </a>
+                <a ui-sref-active="active" ui-sref="index.webApp.cache" class="side-menu-sub-item">
+                    <i class="sub-menu-icon fa fa-trash"></i>
+                    Purge Cache
+                </a>
+                <a ui-sref-active="active" ui-sref="index.webApp.importConfig" class="side-menu-sub-item" ng-if="userService.isReseller() || userService.isRevadmin()">
+                    <i class="sub-menu-icon fa fa-arrow-right"></i>
+                    Upload Config
+                </a>
                 <!--<a ui-sref="index.webApp.domainConfig" class="side-menu-item">-->
                 <!--<i class="glyphicon glyphicon-wrench"></i>-->
                 <!--Domains Advanced-->
                 <!--</a>-->
             </li>
-            <li ui-sref-active-if="{class: 'active-side-menu-item', state: 'index.reports'}">
-                <a ui-sref="index.reports.proxy" class="side-menu-item">Web Analytics</a>
-                <a ui-sref-active="active" ui-sref="index.reports.proxy" class="side-menu-sub-item">Proxy Traffic</a>
-                <a ui-sref-active="active" ui-sref="index.reports.topreports" class="side-menu-sub-item">Top Reports</a>
-                <a ui-sref-active="active" ui-sref="index.reports.top" class="side-menu-sub-item">Top Objects</a>
-                <a ui-sref-active="active" ui-sref="index.reports.fbt" class="side-menu-sub-item">FBT Reports</a>
-                <a ui-sref-active="active" ui-sref="index.reports.heatmaps" class="side-menu-sub-item">Traffic Heatmaps</a>
-                <a ui-sref-active="active" ui-sref="index.reports.lm_rtt_heatmaps" class="side-menu-sub-item">RTT Heatmaps</a>
+            <li ui-sref-active-if="{class: 'active-side-menu-item', state: 'index.reports'}", ng-class="{'active-side-menu-item': menuExpanded('index.reports')}">
+                <a class="side-menu-item", ng-click="goToState('index.reports.proxy')">
+                    <div class="left-menu-start">
+                        <i class="fa fa-line-chart"></i>
+                    </div>
+                    Web Analytics
+                    <i ng-click="expandMenu('index.reports', $event)" class="pull-right {{ menuExpanded('index.reports') ? 'fa fa-caret-down' : 'fa fa-caret-up' }}"></i>
+                </a>
+                <a ui-sref-active="active" ui-sref="index.reports.proxy" class="side-menu-sub-item">
+                    <i class="sub-menu-icon fa fa-area-chart"></i>
+                    Proxy Traffic
+                </a>
+                <!--<a ui-sref-active="active" ui-sref="index.reports.edge-cache" class="side-menu-sub-item">Edge Cache Reports</a>-->
+                <a ui-sref-active="active" ui-sref="index.reports.topreports" class="side-menu-sub-item">
+                    <i class="sub-menu-icon fa fa-pie-chart"></i>
+                    Top Reports
+                </a>
+                <a ui-sref-active="active" ui-sref="index.reports.top" class="side-menu-sub-item">
+                    <i class="sub-menu-icon fa fa-th-list"></i>
+                    Top Objects
+                </a>
+                <a ui-sref-active="active" ui-sref="index.reports.fbt" class="side-menu-sub-item">
+                    <i class="sub-menu-icon fa fa-bar-chart"></i>
+                    FBT Reports
+                </a>
+                <a ui-sref-active="active" ui-sref="index.reports.heatmaps" class="side-menu-sub-item">
+                    <i class="sub-menu-icon fa fa-globe"></i>
+                    Traffic Heatmaps
+                </a>
+                <a ui-sref-active="active" ui-sref="index.reports.lm_rtt_heatmaps" class="side-menu-sub-item">
+                    <i class="sub-menu-icon fa fa-exchange"></i>
+                    RTT Heatmaps
+                </a>
             </li>
-            <li ui-sref-active-if="{class: 'active-side-menu-item', state: 'index.accountSettings'}">
-                <a ui-sref="index.accountSettings.users" class="side-menu-item">Admin</a>
-                <a ui-sref-active="active" ui-sref="index.accountSettings.users" class="side-menu-sub-item" ng-if="!userService.isUser()">Users</a>
-                <a ui-sref-active="active" ui-sref="index.accountSettings.companies" class="side-menu-sub-item" ng-if="userService.isReseller() || userService.isRevadmin()">Companies</a>
-                <a ui-sref-active="active" ui-sref="index.accountSettings.keys" class="side-menu-sub-item" ng-if="!userService.isUser()">API Keys</a>
-                <a ui-sref-active="active" ui-sref="index.accountSettings.profile" class="side-menu-sub-item">Update Password</a>
-                <a ui-sref-active="active" ui-sref="index.accountSettings.2fa" class="side-menu-sub-item">Security Settings</a>
-                <a ui-sref-active="active" ui-sref="index.accountSettings.activitylog" class="side-menu-sub-item">Activity Log</a>
-                <a ui-sref-active="active" ui-sref="index.accountSettings.usage" class="side-menu-sub-item" ng-if="!userService.isUser()">Usage Report</a>
+            <!--  <li  ui-sref-active-if="{class: 'active-side-menu-item', state: 'index.security'}", ng-class="{'active-side-menu-item': menuExpanded('index.security')}">
+            <a class="side-menu-item", ng-click="goToState('index.security')">
+                    Security
+                    <i ng-click="expandMenu('index.security', $event)" class="pull-right {{ menuExpanded('index.security') ? 'fa fa-caret-down' : 'fa fa-caret-up' }}"></i>
+                </a>
+                <a href="#" class="side-menu-sub-item" ng-disabled="true"  >WAF</a>
+                <a href="#" class="side-menu-sub-item" ng-disabled="true"  >DDoS Protection</a>
+            </li> -->
+            <li ui-sref-active-if="{class: 'active-side-menu-item', state: 'index.accountSettings'}", ng-class="{'active-side-menu-item': menuExpanded('index.accountSettings')}">
+                <a class="side-menu-item", ng-click="goToState('index.accountSettings.users')">
+                    <div class="left-menu-start">
+                        <i class="fa fa-gears"></i>
+                    </div>
+                    Admin
+                    <i ng-click="expandMenu('index.accountSettings', $event)" class="pull-right {{ menuExpanded('index.accountSettings') ? 'fa fa-caret-down' : 'fa fa-caret-up' }}"></i>
+                </a>
+                <a ui-sref-active="active" ui-sref="index.accountSettings.users" class="side-menu-sub-item" ng-if="!userService.isUser()">
+                    <i class="sub-menu-icon fa fa-users"></i>
+                    Users
+                </a>
+                <a ui-sref-active="active" ui-sref="index.accountSettings.companies" class="side-menu-sub-item" ng-if="userService.isReseller() || userService.isRevadmin()">
+                    <i class="sub-menu-icon fa fa-list-alt"></i>
+                    Accounts
+                </a>
+                <a ui-sref-active="active" ui-sref="index.accountSettings.keys" class="side-menu-sub-item" ng-if="!userService.isUser()">
+                    <i class="sub-menu-icon fa fa-key"></i>
+                    API Keys
+                </a>
+                <a ui-sref-active="active" ui-sref="index.accountSettings.profile" class="side-menu-sub-item" href="#/profile">
+                    <i class="sub-menu-icon fa fa-user"></i>
+                    Update Password
+                </a>
+                <a ui-sref-active="active" ui-sref="index.accountSettings.2fa" class="side-menu-sub-item" href="#/2fa">
+                    <i class="sub-menu-icon fa fa-lock"></i>
+                    Security Settings
+                </a>
+                <a ui-sref-active="active" ui-sref="index.accountSettings.activitylog" class="side-menu-sub-item">
+                    <i class="sub-menu-icon fa fa-tasks"></i>
+                    Activity Log
+                </a>
             </li>
-            <li ui-sref-active="active-side-menu-item">
-                <a ui-sref="index.help" class="side-menu-item">Support</a>
-                <a href="https://api.revapm.net/" class="side-menu-sub-item" target="_blank">API Documentation</a>
-                <a href="https://revapm.zendesk.com/hc/en-us" class="side-menu-sub-item" target="_blank">Knowledge Base</a>
-                <a href="https://revapm.zendesk.com/hc/en-us/requests/new" class="side-menu-sub-item" target="_blank">Open Ticket</a>
-                <a href="http://status.revapm.net/" class="side-menu-sub-item" target="_blank">Network Status</a>
+            <li ng-if="!userService.isUser()" ui-sref-active-if="{class: 'active-side-menu-item', state: 'index.billing'}", ng-class="{'active-side-menu-item': menuExpanded('index.billing')}">
+                <a class="side-menu-item", ng-click="goToState('index.billing.usage')">
+                    <div class="left-menu-start">
+                        <i class="fa fa-credit-card"></i>
+                    </div>
+                    Billing
+                    <i ng-click="expandMenu('index.billing', $event)" class="pull-right {{ menuExpanded('index.billing') ? 'fa fa-caret-down' : 'fa fa-caret-up' }}"></i>
+                </a>
+                <a ui-sref-active="active" ui-sref="index.billing.usage" class="side-menu-sub-item" ng-if="!userService.isUser()">
+                    <i class="sub-menu-icon fa fa-balance-scale"></i>
+                    Usage Report
+                </a>
+                <a ui-sref-active="active" ui-sref="index.billing.company" class="side-menu-sub-item" ng-if="userService.isAdmin()">
+                    <i class="sub-menu-icon fa fa-gear"></i>
+                    Account Profile
+                </a>
+                <a ui-sref-active="active" ui-sref="index.billing.plans" class="side-menu-sub-item" ng-if="userService.isAdmin() || userService.isReseller() || userService.isRevadmin()">
+                    <i class="sub-menu-icon fa fa-arrow-circle-up"></i>
+                    Change Billing Plan
+                </a>
+                <a ui-sref-active="active" ui-sref="index.billing.statements" class="side-menu-sub-item" ng-if="userService.isAdmin() || userService.isReseller() || userService.isRevadmin()">
+                    <i class="sub-menu-icon fa fa-money"></i>
+                    Billing Statements
+                </a>
+            </li>
+            <li ui-sref-active-if="{class: 'active-side-menu-item', state: 'index.help'}", ng-class="{'active-side-menu-item': menuExpanded('index.help')}">
+                <a class="side-menu-item", ng-click="goToState('index.help')">
+                    <div class="left-menu-start">
+                        <i class="fa fa-support"></i>
+                    </div>
+                    Support
+                    <i ng-click="expandMenu('index.help', $event)" class="pull-right {{ menuExpanded('index.help') ? 'fa fa-caret-down' : 'fa fa-caret-up' }}"></i>
+                </a>
+                <a href="https://api.revapm.net/" class="side-menu-sub-item" target="_blank">
+                    <i class="sub-menu-icon fa fa-wrench"></i>
+                    API Documentation
+                </a>
+                <a href="https://revapm.zendesk.com/hc/en-us" class="side-menu-sub-item" target="_blank">
+                    <i class="sub-menu-icon fa fa-book"></i>
+                    Knowledge Base
+                </a>
+                <a href="{{contactUsLink}}" class="side-menu-sub-item" target="_blank">
+                    <i class="sub-menu-icon fa fa-envelope"></i>
+                    Open Ticket
+                </a>
+                <a href="http://status.revapm.net/" class="side-menu-sub-item" target="_blank">
+                    <i class="sub-menu-icon fa fa-heartbeat"></i>
+                    Network Status
+                </a>
             </li>
         </div>
     </section>
-    <section main>
+    <section main >
         <paper-header-panel>
             <div class="paper-header">
                 <nav class="navbar">
                     <div class="navbar-inner">
                         <div class="navbar-header">
-                            <div paper-drawer-toggle>
-                                <span class="glyphicon glyphicon-menu-hamburger" paper-drawer-toggle></span>
+                            <div paper-drawer-toggle >
+                                <span class="glyphicon glyphicon-menu-hamburger" paper-drawer-toggle style="display: block !important;"></span>
+                            </div>
+                            <div id="menuToggleBtn" class="menu-toggle">
+                                <span menu-toggle="toggleMenu" ng-click="toggleMenu = !toggleMenu" class="glyphicon glyphicon-menu-hamburger" tooltip="{{(toggleMenu ? 'Show' : 'Hide') + ' Menu'}}" tooltip-placement="right"></span>
                             </div>
                         </div>
                         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -75,6 +231,13 @@
                 <div id="top"></div>
                 <div class="page-inner" ui-view="page"></div>
             </div>
+            <div class="col-md-12">
+                <span class="pull-left">Copyright Rev Software, Inc. 2015-2016</span>
+                <span class="pull-right">Version {{portalVersion}}/{{apiVersion}} | <a href="{{contactUsLink}}" target="_blank">Contact Us</a> </span>
+                <br>
+                <br>
+            </div>
         </paper-header-panel>
-    </section>
+</section>
 </paper-drawer-panel>
+

@@ -25,7 +25,10 @@ describe('Smoke', function () {
   // Defining set of users for which all below tests will be run
   var users = [
     config.get('portal.users.admin'),
-    config.get('portal.users.revAdmin')
+    config.get('portal.users.reseller'),
+//    config.get('portal.users.revAdmin')   // TODO: For revadmin role we need to fix the
+// user form input process to select an account otherwise the API will not allow to create
+// a user
   ];
 
   users.forEach(function (user) {

@@ -17,16 +17,17 @@ var destFolder = './';
 
 gulp.task('valid', function () {
   return gulp.src(devFolder + 'parts/**/*.html')
-  .pipe(htmlhint('.htmlhintrc'))
+    .pipe(htmlhint('.htmlhintrc'))
     .pipe(htmlhint.failReporter());
 });
 
 gulp.task('less', function () {
   return gulp.src(devFolder + 'less/styles.less')
     .pipe(less({
-      paths: [ path.join(__dirname, 'less') ]
+      paths: [path.join(__dirname, 'less')]
     }))
-    .pipe(gulp.dest(devFolder + 'css'));
+    .pipe(gulp.dest(devFolder + 'css'))
+    .pipe(browserSync.stream());
 });
 
 gulp.task('copyCss', function () {
@@ -47,6 +48,12 @@ gulp.task('copyParts', function () {
 gulp.task('copyJson', function () {
   return gulp.src(devFolder + 'js/**/*.json')
     .pipe(gulp.dest(destFolder + 'js'));
+});
+
+// copy custom fonts
+gulp.task('copyFonts', function () {
+  return gulp.src(devFolder + 'fonts/**/*.*')
+    .pipe(gulp.dest(destFolder + 'fonts'));
 });
 
 gulp.task('vulcanize', function () {
@@ -79,26 +86,39 @@ gulp.task('dist', function () {
     .pipe(gulp.dest(destFolder));
 });
 
-gulp.task('serve', function() {
+// linting
+var jshint = require('gulp-jshint');
+var stylish = require('jshint-stylish');
+gulp.task('lintjs', function () {
+  return gulp.src([
+      'gulpfile.js',
+      devFolder + 'js/**/*.js'])
+    .pipe(jshint({linter: 'jshint'}))
+    .pipe(jshint.reporter(stylish));
+});
+
+gulp.task('serve', function () {
   browserSync({
     server: {
       baseDir: './dev',
       routes: {
         '/bower_components': 'bower_components',
-        '/portal' : '/'
+        '/portal': '/',
+        '/widgets': 'widgets',
       }
     }
   });
 
   gulp.watch([devFolder + '**/*.html'], reload);
-  gulp.watch([devFolder + 'less/*.less'], ['less', reload]);
+  gulp.watch([devFolder + 'less/**/*.less'], ['less']);
   gulp.watch([devFolder + 'polymer/**/*.html', '!./polymer/dist/*'],
     ['vulcanize', reload]);
-  gulp.watch([devFolder + 'js/**/*.js'], reload);
+
+  gulp.watch([devFolder + 'js/**/*.js'], ['lintjs', reload]);
   gulp.watch([devFolder + 'js/**/*.html'], reload);
   gulp.watch([devFolder + 'images/**/*'], reload);
 });
 
-gulp.task('copy', ['copyCss', 'copyParts', 'copyImages', 'copyJson']);
+gulp.task('copy', ['copyCss', 'copyParts', 'copyImages', 'copyJson', 'copyFonts']);
 gulp.task('build', ['copy', 'dist', 'vulcanize']);
 gulp.task('default', ['serve', 'less']);

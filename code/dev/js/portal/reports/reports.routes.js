@@ -12,7 +12,8 @@
         url: '/reports/general',
         views: {
           main: {
-            controller: 'ReportsProxyTrafficController',
+            controller: 'GeneralCtrl',
+            controllerAs: 'vm',
             templateUrl: 'parts/reports/general.html'
           }
         }
@@ -23,6 +24,16 @@
           main: {
             controller: 'ReportsProxyTrafficController',
             templateUrl: 'parts/reports/proxy.html'
+          }
+        }
+      })
+      .state('index.reports.edge-cache', {
+        url: '/reports/edge-cache',
+        views: {
+          main: {
+            controller: 'EdgeCacheReportsController',
+            controllerAs: 'vm',
+            templateUrl: 'parts/reports/edge-cache.html'
           }
         }
       })

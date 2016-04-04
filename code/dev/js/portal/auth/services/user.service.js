@@ -151,7 +151,11 @@
                   apps = [];
                   selectApplication( null );
                   accounts = [];
-                  selectAccount( null );
+                  getUserAccounts(false)
+                    .then(function (res) {
+                      selectAccount(res[0]);
+                    });
+                  //selectAccount( null );
                   $localStorage.last_user_id = res.user_id;
                 }
               } else {
@@ -227,6 +231,16 @@
     function isUser() {
       var user = getUser();
       return Boolean(isAuthed() && user && user.role === $config.ROLE.USER);
+    }
+
+    /**
+     * Check if user account have set billing plan
+     *
+     * @returns {boolean}
+     */
+    function hasBillingPlan() {
+      var account = getSelectedAccount();
+      return Boolean(account.plan_id);
     }
 
     /**
@@ -414,7 +428,8 @@
               accounts = data.data.map( function( item ) {
                   return {
                     acc_name: item.companyName,
-                    acc_id: item.id
+                    acc_id: item.id,
+                    plan_id: item.billing_plan
                   };
                 })
                 .sort( function( lhs, rhs ) {
@@ -496,7 +511,9 @@
 
       selectAccount: selectAccount,
 
-      getSelectedAccount: getSelectedAccount
+      getSelectedAccount: getSelectedAccount,
+
+      hasBillingPlan: hasBillingPlan
     };
   }
 })();

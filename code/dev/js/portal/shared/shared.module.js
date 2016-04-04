@@ -4,7 +4,8 @@
   angular.module('revapm.Portal.Shared', [
     'ngTouch',
     'ui.bootstrap.tpls',
-    'ui.bootstrap.modal'
+    'ui.bootstrap.modal',
+    'daterangepicker'
   ]);
 
 })();
