@@ -28,15 +28,37 @@
         $scope._loading = false;
 
         //  ---------------------------------
+        var lbl_ = null,
+          rev_whole_avg_ = 0,
+          origin_whole_avg_ = 0;
+
         $scope.chartOptions = {
-
           chart: {
-            type: 'column'
+            type: 'column',
+            events: {
+              redraw: function() {
+                if ( lbl_ ) {
+                  lbl_.destroy();
+                  lbl_ = null;
+                }
+                lbl_ = this/*chart*/.renderer
+                  .label( 'Origin whole avg <span style="font-weight: bold; color: #3c65ac;">' + origin_whole_avg_ +
+                    '</span><br>RevAPM whole avg <span style="font-weight: bold; color: black;">' + rev_whole_avg_ + '</span>',
+                    90, 0, '', 0, 0, true/*html*/ )
+                  .css({ color: '#444' })
+                  .attr({
+                    fill: 'rgba(0, 0, 0, 0.1)',
+                    stroke: '#3c65ac',
+                    'stroke-width': 1,
+                    padding: 6,
+                    r: 2,
+                    zIndex: 5
+                  })
+                  .add();
+              }
+            }
           },
-
           yAxis: {
-            // type: 'logarithmic',
-            // minorTickInterval: 2,
             title: {
               text: 'FBT ms'
             },
@@ -146,8 +168,8 @@
                 var offset = interval * 1000;
                 var labels_filled = false;
                 // console.log( data );
-                angular.forEach( data.data, function( dest ) {
-                  angular.forEach( dest.items, function( item ) {
+                data.data.forEach( function( dest ) {
+                  dest.items.forEach( function( item ) {
                     if ( !labels_filled ) {
                       labels.push( moment( item.key + offset /*to show the _end_ of interval instead of begin*/ ).format( 'MMM Do YY h:mm' ) );
                     }
@@ -164,6 +186,17 @@
                 $scope.hits.series[3].data = hits.rev_edge.avg;
                 $scope.hits.series[4].data = hits.rev_edge.min;
                 $scope.hits.series[5].data = hits.rev_edge.max;
+
+                origin_whole_avg_ = hits.origin.avg.reduce( function( prev, curr ) {
+                  return prev + curr;
+                });
+                origin_whole_avg_ /= hits.origin.avg.length;
+                origin_whole_avg_ = Math.round( origin_whole_avg_ * 100 ) / 100;
+                rev_whole_avg_ = hits.rev_edge.avg.reduce( function( prev, curr ) {
+                  return prev + curr;
+                });
+                rev_whole_avg_ /= hits.rev_edge.avg.length;
+                rev_whole_avg_ = Math.round( rev_whole_avg_ * 100 ) / 100;
               }
             })
             .finally( function() {

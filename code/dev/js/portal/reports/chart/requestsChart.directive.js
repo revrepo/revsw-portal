@@ -63,43 +63,22 @@
     if ($scope.filtersSets) {
       _.extend($scope.filters, $scope.filtersSets);
     }
-    /**
-     * @funcCustomInfoGenerator
-     * @description
-     *
-     * @see example http://jsfiddle.net/c57L3cj2/3/
-     *
-     * @param  {Object}
-     * @return
-     */
-    function funcCustomInfoGenerator(e) {
-      var chart = this;
-      var x = 150,
-        y = 100;
-      var text = chart.renderer.text(
-        'Max',
-        x, y
-      ).attr({
-        zIndex: 5
-      }).add();
-
-      var box = text.getBBox();
-
-      chart.renderer.rect(box.x - 5, box.y - 5, box.width + 10, box.height + 10, 5)
-        .attr({
-          fill: '#FFFFEF',
-          stroke: 'red',
-          'stroke-width': 1,
-          zIndex: 4
-        })
-        .add();
-    }
 
     $scope.chartOptions = {
-      // NOTE: use this block for add more information to char
       // chart: {
       //   events: {
-      //     redraw: funcCustomInfoGenerator
+      //     redraw: function() {
+      //       this.renderer
+      //         .label( 'Some <span style="font-weight: 900;">data</span><br>Some other <span style="font-weight: 900;">data</span>', 70, 50, '', 0, 0, true/*html*/ )
+      //         .css({ color: '#ffffff' })
+      //         .attr({
+      //           fill: 'rgba(0, 0, 0, 0.5)',
+      //           padding: 6,
+      //           r: 3,
+      //           zIndex: 5
+      //         })
+      //         .add();
+      //     }
       //   }
       // },
       yAxis: {
