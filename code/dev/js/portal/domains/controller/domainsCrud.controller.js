@@ -342,6 +342,7 @@
         return 0;
       }
     };
+    $scope.isCollapsedAll= true;
     /**
      * @name  onCollapsAllCachingRule
      * @description
