@@ -6,19 +6,24 @@
       padding-right: 30px;
     }
   }
-  & .table-headers-info{
-      tr > th {
+  & .table-headers-info {
+    tr > th {
       text-align: center;
-     }
-
-     .table-title--operation{
-          width: 120px;
-     }
+    }
+    .table-title--operation {
+      width: 120px;
+    }
+  }
+  // NOTE: hardcode fix for ui-select
+  .ui-select-container {
+    input::-webkit-input-placeholder,.ui-select-search {
+      min-width: 200px;
+    }
   }
 }
 
-.caching-rules-list{
-  .panel-buttons-left{
+.caching-rules-list {
+  .panel-buttons-left {
     padding-right: 20px;
   }
 }

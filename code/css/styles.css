@@ -608,6 +608,13 @@ section[drawer] .side-menu .dashboard_menu .side-menu-item.item-title a {
 .domain-caching-rules .table-headers-info tr > th {
   text-align: center;
 }
+.domain-caching-rules .table-headers-info .table-title--operation {
+  width: 120px;
+}
+.domain-caching-rules .ui-select-container input::-webkit-input-placeholder,
+.domain-caching-rules .ui-select-container .ui-select-search {
+  min-width: 200px;
+}
 .caching-rules-list .panel-buttons-left {
   padding-right: 20px;
 }

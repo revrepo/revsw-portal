@@ -11,20 +11,18 @@
       <tr>
         <th>Header Name</th>
         <th>Header Value</th>
-        <th>Operation</th>
+        <th class="table-title--operation">Operation</th>
         <th></th>
       </tr>
       </thead>
       <tbody>
         <tr ng-repeat="line in $ctrl.origin_request_headers">
-          <td>
-            <button class="btn btn-warning btn-xs btn-delete-origin_request_header" type="button" ng-click="$ctrl.onDelete($index)">
-              <i class="glyphicon glyphicon-remove"></i>
-            </button>
-            {{line.header_name }}</td>
+          <td>{{line.header_name }}</td>
           <td>{{line.header_value }} </td>
           <td>{{line.operation}}</td>
-          <td> </td>
+          <td><button class="btn btn-warning btn-xs btn-delete-origin_request_header" type="button" ng-click="$ctrl.onDelete($index)" title="Delete Header">
+              <i class="glyphicon glyphicon-remove"> Delete</i>
+            </button> </td>
         </tr>
         <!-- New line-->
         <tr ng-form="newLineForm" class="well">
@@ -42,7 +40,7 @@
             </select>
           </td>
           <td>
-            <button type="button" class="btn btn-success" ng-disabled="!newLineForm.$valid" ng-click="$ctrl.onAddNew($ctrl.newOriginRequestHeader)">Add New</button>
+            <button type="button" class="btn btn-success" ng-disabled="!newLineForm.$valid" ng-click="$ctrl.onAddNew($ctrl.newOriginRequestHeader)" title="Add New Header"><i class="glyphicon glyphicon-plus"></i> Add New</button>
           </td>
         </tr>
       </tbody>
