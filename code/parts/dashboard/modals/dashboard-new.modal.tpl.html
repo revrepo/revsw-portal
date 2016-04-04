@@ -6,11 +6,14 @@
     <div class=form-group>
       <label for=dashboardTitle>Title</label>
       <input type=text class="form-control" id=dashboardTitle ng-model="model.title" required> </div>
-    <div class=form-group>
+    <div class="form-group">
       <label>Structure</label>
-      <div class=radio ng-repeat="(key, structure) in vm.structures">
-        <label>
-          <input type="radio" value="{{key}}" ng-model="model.structure" ng-change="changeStructure(key, structure)"> {{key}} {{structure.title}}</label>
+      <div class="dashboard-structure-select list">
+        <div class="dashboard-structure-select-item" ng-repeat="(key, structure) in structures" ng-click="model.structure=key;changeStructure(key, structure)" ng-class="{'active':key==model.structure}">
+          <input type="radio" value="{{key}}" ng-model="model.structure" ng-change="changeStructure(key, structure)">
+          <div class="icon-structure icon-structure--{{key}}" ng-class="{'active':key==model.structure}"></div>
+          <span class="dashboard-structure-select-title"> {{structure.title}}</span>
+        </div>
       </div>
     </div>
     <div class="form-group">

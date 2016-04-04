@@ -8,7 +8,7 @@
       //DashboardSrv.getAll();
     });
 
-  function DashboardSrv($q, $http, $localStorage, $config) {
+  function DashboardSrv($q, $http, $localStorage, $config, dashboard) {
     'ngInject';
     var API_URL = $config.API_URL;
     var dashboardsList = [];
@@ -63,6 +63,7 @@
         var deferred = $q.defer();
         $http.get(API_URL + '/dashboards/' + id)
           .success(function(data) {
+            // NOTE: set standart dashboard titleTemplateUrl for all dashboards
             data.titleTemplateUrl = 'parts/dashboard/dashboard-title.tpl.html';
             deferred.resolve(data);
           })
@@ -82,8 +83,6 @@
         var deferred = $q.defer();
         var model = {
           'title': 'New Dashboard ',
-          'titleTemplateUrl': 'parts/dashboard/dash"board-title.tpl.html',
-          // TODO: set custom edit template 'editTemplateUrl': 'parts/dashboard/dashboard-title.tpl.html',
           'structure': '6-6',
           'rows': [{
             'columns': [{
@@ -95,6 +94,10 @@
             }]
           }]
         };
+
+        if (!data.rows) {
+          data.rows = dashboard.structures[data.structure].rows;
+        }
         angular.extend(model, data);
         $http.post(API_URL + '/dashboards', model)
           .success(function(data) {

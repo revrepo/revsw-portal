@@ -357,6 +357,22 @@ section[drawer] .side-menu .side-menu-sub-item {
 section[drawer] .side-menu .active-side-menu-item .side-menu-sub-item {
   display: block;
 }
+.left-menu-start {
+  display: inline-block;
+  width: 5px;
+  text-align: center;
+}
+.left-menu-start i {
+  margin: 0px 4px 0px -17px !important;
+  font-size: 20px;
+}
+.sub-menu-icon {
+  margin: 0px 4px 0px -17px !important;
+}
+.menu-toggle {
+  font-size: 24px;
+  padding: 9px 0 9px 20px;
+}
 .navbar {
   margin: 0;
   border: none;
@@ -536,10 +552,10 @@ section[drawer] .side-menu .dashboard_menu .side-menu-item.item-title a {
   margin: 5px;
 }
 .dashboard__title .btn-link {
-  font-size: 28px;
-  padding-left: 3px;
-  padding-right: 3px;
-  padding-top: 10px;
+  font-size: 28px !important;
+  padding-left: 3px !important;
+  padding-right: 3px !important;
+  padding-top: 10px !important;
 }
 .dashboard-structure-select-item {
   display: block;
@@ -585,4 +601,91 @@ section[drawer] .side-menu .dashboard_menu .side-menu-item.item-title a {
 }
 .icon-structure--3-3-3-3 {
   background-image: url('../images/columns/3-3-3-3-sprite.png');
+}
+.domain-caching-rules__info .panel-buttons-left {
+  padding-right: 30px;
+}
+.domain-caching-rules .table-headers-info tr > th {
+  text-align: center;
+}
+.domain-caching-rules .table-headers-info .table-title--operation {
+  width: 120px;
+}
+.domain-caching-rules .ui-select-container input::-webkit-input-placeholder,
+.domain-caching-rules .ui-select-container .ui-select-search {
+  min-width: 200px;
+}
+.caching-rules-list .panel-buttons-left {
+  padding-right: 20px;
+}
+@font-face {
+  font-family: 'revapm';
+  src: url('../fonts/revapm.eot?4em4bb');
+  src: url('../fonts/revapm.eot?4em4bb#iefix') format('embedded-opentype'), url('../fonts/revapm.ttf?4em4bb') format('truetype'), url('../fonts/revapm.woff?4em4bb') format('woff'), url('../fonts/revapm.svg?4em4bb#revapm') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+i {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'revapm';
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.icon-revapm-icon-regex:before {
+  content: "\e900";
+}
+.icon-revapm-office:before {
+  content: "\e901";
+}
+.icon-revapm-files-empty:before {
+  content: "\e902";
+}
+.icon-revapm-copy:before {
+  content: "\e904";
+}
+.icon-revapm-database:before {
+  content: "\e905";
+}
+.icon-revapm-cog:before {
+  content: "\e906";
+}
+.icon-revapm-cogs:before {
+  content: "\e907";
+}
+.icon-revapm-meter:before {
+  content: "\e908";
+}
+.icon-revapm-meter2:before {
+  content: "\e909";
+}
+.icon-revapm-loop2:before {
+  content: "\e90a";
+}
+.icon-revapm-circle-up:before {
+  content: "\e90b";
+}
+.icon-revapm-circle-right:before {
+  content: "\e90c";
+}
+.icon-revapm-circle-down:before {
+  content: "\e90d";
+}
+.icon-revapm-circle-left:before {
+  content: "\e903";
+}
+.icon-revapm-move-up:before {
+  content: "\e90e";
+}
+.icon-revapm-move-down:before {
+  content: "\e90f";
+}
+.icon-revapm-banknote:before {
+  content: "\e912";
 }

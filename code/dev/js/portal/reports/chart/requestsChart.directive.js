@@ -38,13 +38,13 @@
       };
       _.forEach(filters, function(val, key) {
         if (_.indexOf(_filters_field_list, key) !== -1) {
-          if (val !== '-' && val !== '' ) {
+          if (val !== '-' && val !== '') {
             params[key] = val;
           }
         } else {
           if (key === 'count_last_day') {
             params.from_timestamp = moment().subtract(val, 'days').valueOf();
-            params.to_timestamp  = Date.now();
+            params.to_timestamp = Date.now();
             delete params.count_last_day;
           }
         }
@@ -63,8 +63,45 @@
     if ($scope.filtersSets) {
       _.extend($scope.filters, $scope.filtersSets);
     }
+    /**
+     * @funcCustomInfoGenerator
+     * @description
+     *
+     * @see example http://jsfiddle.net/c57L3cj2/3/
+     *
+     * @param  {Object}
+     * @return
+     */
+    function funcCustomInfoGenerator(e) {
+      var chart = this;
+      var x = 150,
+        y = 100;
+      var text = chart.renderer.text(
+        'Max',
+        x, y
+      ).attr({
+        zIndex: 5
+      }).add();
+
+      var box = text.getBBox();
+
+      chart.renderer.rect(box.x - 5, box.y - 5, box.width + 10, box.height + 10, 5)
+        .attr({
+          fill: '#FFFFEF',
+          stroke: 'red',
+          'stroke-width': 1,
+          zIndex: 4
+        })
+        .add();
+    }
 
     $scope.chartOptions = {
+      // NOTE: use this block for add more information to char
+      // chart: {
+      //   events: {
+      //     redraw: funcCustomInfoGenerator
+      //   }
+      // },
       yAxis: {
         title: {
           text: 'Bandwidth'
