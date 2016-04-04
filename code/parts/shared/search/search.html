@@ -1,0 +1,10 @@
+<div style="display: inline-block; margin-left:  15px; width: 300px; vertical-align: super;">
+    <input class="form-control"
+        ng-model="searchTerm",
+        placeholder="Search...",
+        typeahead-editable="false",
+        typeahead-min-length="0",
+        typeahead-on-select="searchItemSelected($item)",
+        typeahead="item as item.searchBarText for item in getFilteredList($viewValue)"/>
+</div>
+<i class="glyphicon glyphicon-remove" style="vertical-align: super;" ng-show="searchTerm != ''" ng-click="clearSearchBar()"></i>
