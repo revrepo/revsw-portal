@@ -342,7 +342,7 @@
         return 0;
       }
     };
-    $scope.isCollapsedAll= true;
+
     /**
      * @name  onCollapsAllCachingRule
      * @description
@@ -355,7 +355,6 @@
         item.$cachingRuleState.isCollapsed = true;
 
       });
-      $scope.isCollapsedAll= true;
     };
     /**
      * @name  onExpandAllCachingRule
@@ -368,7 +367,6 @@
       angular.forEach(_rules, function(item) {
         item.$cachingRuleState.isCollapsed = false;
       });
-      $scope.isCollapsedAll= false;
     };
   }
 })();
