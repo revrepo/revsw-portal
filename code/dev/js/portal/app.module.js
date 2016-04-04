@@ -16,6 +16,7 @@
     'revapm.Portal.Apps',
     'revapm.Portal.Signup',
     'ui.router',
+    'ui.bootstrap.typeahead',
     'ui.bootstrap.tpls',
     'ui.bootstrap.tooltip',
     'ui.bootstrap.popover',

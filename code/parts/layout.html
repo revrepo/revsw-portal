@@ -214,12 +214,15 @@
                 <nav class="navbar">
                     <div class="navbar-inner">
                         <div class="navbar-header">
-                            <div paper-drawer-toggle >
+                            <div paper-drawer-toggle style="padding-right: 0">
                                 <span class="glyphicon glyphicon-menu-hamburger" paper-drawer-toggle style="display: block !important;"></span>
                             </div>
-                            <div id="menuToggleBtn" class="menu-toggle">
-                                <span menu-toggle="toggleMenu" ng-click="toggleMenu = !toggleMenu" class="glyphicon glyphicon-menu-hamburger" tooltip="{{(toggleMenu ? 'Show' : 'Hide') + ' Menu'}}" tooltip-placement="right"></span>
+                            <div style="display: inline-block">
+                                <div id="menuToggleBtn" class="menu-toggle">
+                                    <span menu-toggle="toggleMenu" ng-click="toggleMenu = !toggleMenu" class="glyphicon glyphicon-menu-hamburger" tooltip="{{(toggleMenu ? 'Show' : 'Hide') + ' Menu'}}" tooltip-placement="right"></span>
+                                </div>
                             </div>
+                            <search></search>
                         </div>
                         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                             <div user-login-logout></div>
