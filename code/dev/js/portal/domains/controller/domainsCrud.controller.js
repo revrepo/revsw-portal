@@ -128,21 +128,22 @@
        *
        * Rules:
        * 1. If “Origin Communication Protocol”(origin_secure_protocol) is not specified in the received JSON then set it to default value “Use End User Protocol”
-       *
+       * 2. The default value for “RUM Data Collection”(rev_component_co.enable_rum) must to be “false”
        * @param  {[type]} domain [description]
        * @return {[type]}        [description]
        */
       function validateDomainProperties(domain) {
-        var _domain_property = {
+        var _domain_default_property = {
           proxy_timeout: 30,
-          domain_aliases: []
+          domain_aliases: [],
+          origin_secure_protocol: 'use_end_user_protocol',
+          rev_component_co: {
+            enable_rum: false
+          }
         };
+        // NOTE: set default properties
+        _.defaultsDeep($scope.model, _domain_default_property);
 
-        if (!$scope.model.origin_secure_protocol) {
-          $scope.model.origin_secure_protocol = 'use_end_user_protocol';
-        }
-
-        angular.merge($scope.model, _domain_property);
         angular.forEach($scope.model.rev_component_bp.caching_rules, function(item) {
           // NOTE: add parameter for collapsed item
           angular.extend(item, {
