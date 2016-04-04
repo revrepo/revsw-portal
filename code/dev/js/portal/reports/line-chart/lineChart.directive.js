@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
 
   angular
@@ -12,10 +12,10 @@
       var el = element[0];
 
       var chartOptions = {
-
         chart: {
           renderTo: el,
-          type: 'areaspline'
+          type: 'areaspline',
+
         },
 
         title: {
@@ -69,15 +69,15 @@
       /**
        * Redraw current chart
        */
-      $scope.reload = function () {
+      $scope.reload = function() {
         chart.redraw();
       };
 
       /**
        * Clear current chart
        */
-      $scope.clearChart = function () {
-        chart.series.forEach(function (series) {
+      $scope.clearChart = function() {
+        chart.series.forEach(function(series) {
           series.remove();
         });
         $scope.reload();
@@ -86,7 +86,7 @@
       /**
        *
        */
-      $scope.$watch('ngData', function (value) {
+      $scope.$watch('ngData', function(value) {
         if (!value || !_.isObject(value)) {
           return;
         }
@@ -105,14 +105,14 @@
             return;
           }
           // Set new data
-          value.series.forEach(function (val) {
+          value.series.forEach(function(val) {
             chart.addSeries(val);
           });
         }
         $scope.reload();
       });
 
-      $scope.$watch('xAxis', function (value) {
+      $scope.$watch('xAxis', function(value) {
         if (!value || !_.isArray(value)) {
           return;
         }
