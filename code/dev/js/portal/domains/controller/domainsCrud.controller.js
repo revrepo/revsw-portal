@@ -122,11 +122,26 @@
           $scope.alertService.danger('Could not load domain details');
         });
 
+      /**
+       * @name  validateDomainProperties
+       * @description
+       *
+       * Rules:
+       * 1. If “Origin Communication Protocol”(origin_secure_protocol) is not specified in the received JSON then set it to default value “Use End User Protocol”
+       *
+       * @param  {[type]} domain [description]
+       * @return {[type]}        [description]
+       */
       function validateDomainProperties(domain) {
         var _domain_property = {
           proxy_timeout: 30,
           domain_aliases: []
         };
+
+        if (!$scope.model.origin_secure_protocol) {
+          $scope.model.origin_secure_protocol = 'use_end_user_protocol';
+        }
+
         angular.merge($scope.model, _domain_property);
         angular.forEach($scope.model.rev_component_bp.caching_rules, function(item) {
           // NOTE: add parameter for collapsed item
@@ -290,7 +305,9 @@
      * @return
      */
     $scope.onRemoveCachingRule = function(index) {
-      $scope.confirm('confirmModalDeleteCachingRule.html', {})
+      $scope.confirm('confirmModalDeleteCachingRule.html', {
+          url: $scope.model.rev_component_bp.caching_rules[index].url
+        })
         .then(function() {
           $scope.model.rev_component_bp.caching_rules.splice(index, 1);
           $scope.alertService.success('Caching Rule was deleted.');
