@@ -130,7 +130,7 @@
               Data Read Timeout
             </label>
             <div class="col-md-9">
-              <input type="number" class="form-control" ng-model="model.proxy_timeout" min="0" max="120"> second(s)
+              <input type="number" class="form-control" ng-model="model.proxy_timeout" min="0" max="99999999"> second(s)
             </div>
           </div>
           <!-- -->
@@ -190,7 +190,7 @@
                 </a>
               </span>
               <span ng-click="onAddNewCachingRule()" class="btn btn-primary btn-sm pull-right" title="Add New Caching Rule"><i class="glyphicon glyphicon-plus"></i></span>
-              <h4>Caching Rules</h4>
+              <h4><b>Caching Rules</b></h4>
             </div>
             <div class="panel-body">
               <!-- TODO: creater directive -->
