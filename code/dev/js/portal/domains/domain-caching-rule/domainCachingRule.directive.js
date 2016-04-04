@@ -20,14 +20,14 @@
       replace: true,
       scope: true,
       bindToController: {
-        caching_rule: '=ngModel'
+        rule: '=ngModel'
       },
       templateUrl: 'parts/domains/domain-caching-rule/domain-caching-rule.tpl.html',
       controllerAs: '$ctrl',
       controller: function domainCachingRuleController($scope) {
         'ngInject';
         var $ctrl = this;
-        _.defaultsDeep(this.caching_rule, _defaultCachingRule);
+        // _.defaultsDeep(this.rule, _.clone(_defaultCachingRule));
       }
     };
   }

@@ -266,11 +266,35 @@
      */
     $scope.onAddNewCachingRule = function() {
       var _newCachingRule = {
+        version: 1,
+        url: {
+          is_wildcard: true,
+          value: '' // NOTE: must be empty for a new Caching Rule
+        },
+        edge_caching: {
+          new_ttl: 0,
+          override_no_cc: false,
+          override_origin: false,
+          query_string_list_is_keep: false,
+          query_string_keep_or_remove_list: []
+        },
+        browser_caching: {
+          force_revalidate: false,
+          new_ttl: 0,
+          override_edge: false
+        },
+        cookies: {
+          ignore_all: false,
+          keep_or_ignore_list: [],
+          list_is_keep: false,
+          override: false,
+          remove_ignored_from_request: false,
+          remove_ignored_from_response: false
+        },
         $cachingRuleState: {
           isCollapsed: true
         }
       };
-      _.defaultsDeep(_newCachingRule,DomainsCachingRuleDefault);
       $scope.model.rev_component_bp.caching_rules.push(_newCachingRule);
       $scope.alertService.success('A new default caching rule has been added to the end of the list. Please configure the rule before saving the configuration.');
     };
