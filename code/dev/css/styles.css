@@ -608,6 +608,9 @@ section[drawer] .side-menu .dashboard_menu .side-menu-item.item-title a {
 .domain-caching-rules .table-headers-info tr > th {
   text-align: center;
 }
+.caching-rules-list .panel-buttons-left {
+  padding-right: 20px;
+}
 @font-face {
   font-family: 'revapm';
   src: url('../fonts/revapm.eot?4em4bb');

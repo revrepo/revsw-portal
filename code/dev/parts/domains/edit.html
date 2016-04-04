@@ -23,7 +23,7 @@
         </div>
       </div>
       <div class="panel-body">
-        <form class="form-horizontal"  novalidate>
+        <form class="form-horizontal" novalidate>
           <div class="form-group">
             <label for="domain_name" class="col-sm-3 control-label" popover-trigger="mouseenter">Domain Name</label>
             <div class="col-sm-9">
@@ -181,6 +181,14 @@
           <!-- Caching Rules -->
           <div class="panel panel-default caching-rules-list" ng-if="model.rev_component_bp.enable_cache">
             <div class="panel-heading">
+              <span class="pull-left panel-buttons-left">
+                <a ng-show="!isCollapsedAll" class="btn btn-default btn-md " ng-click="onCollapsAllCachingRule()" title="Collapse All Rules" ng-show="!isCollapsedAll">
+                  <i class="glyphicon glyphicon-collapse-up "></i>
+                </a>
+                <a  ng-show="isCollapsedAll" class="btn btn-default btn-md " ng-click="onExpandAllCachingRule()" title="Expand All Rules">
+                  <i class="glyphicon glyphicon-collapse-down"></i>
+                </a>
+              </span>
               <span ng-click="onAddNewCachingRule()" class="btn btn-primary btn-sm pull-right" title="Add New Caching Rule"><i class="glyphicon glyphicon-plus"></i></span>
               <h4>Caching Rules</h4>
             </div>

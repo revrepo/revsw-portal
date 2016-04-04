@@ -248,12 +248,12 @@
      * @return
      */
     $scope.onAddNewCachingRule = function() {
-      // TODO: delete not needed properties
+      // TODO: rebase into "value"
       var _cachinRule = {
         version: 1,
         url: {
           is_wildcard: true,
-          value: '**'
+          value: '' // NOTE: must be empty for a new Caching Rule
         },
         edge_caching: {
           new_ttl: 0,
@@ -341,6 +341,33 @@
         // Do nothing
         return 0;
       }
+    };
+    /**
+     * @name  onCollapsAllCachingRule
+     * @description
+     *
+     * @return
+     */
+    $scope.onCollapsAllCachingRule = function() {
+      var _rules = $scope.model.rev_component_bp.caching_rules;
+      angular.forEach(_rules, function(item) {
+        item.$cachingRuleState.isCollapsed = true;
+
+      });
+      $scope.isCollapsedAll= true;
+    };
+    /**
+     * @name  onExpandAllCachingRule
+     * @description
+     *
+     * @return
+     */
+    $scope.onExpandAllCachingRule = function() {
+      var _rules = $scope.model.rev_component_bp.caching_rules;
+      angular.forEach(_rules, function(item) {
+        item.$cachingRuleState.isCollapsed = false;
+      });
+      $scope.isCollapsedAll= false;
     };
   }
 })();
