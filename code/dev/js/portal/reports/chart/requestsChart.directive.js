@@ -27,11 +27,7 @@
   }
 
   /*ngInject*/
-  function RequestsChartCtrl(
-    $scope,
-    Stats,
-    Util
-  ) {
+  function RequestsChartCtrl( $scope, Stats, Util ) {
 
     var _filters_field_list = ['from_timestamp', 'to_timestamp', 'country', 'device', 'os'];
 
@@ -56,7 +52,6 @@
       return params;
     }
 
-    $scope.delay = 1800;
     $scope._loading = false;
     $scope.reloadTrafficStats = reloadTrafficStats;
 
@@ -141,13 +136,13 @@
               name: 'Outgoing Bandwidth',
               data: []
             }];
-            $scope.delay = data.metadata.interval_sec || 1800;
-            var labels = [],
-              offset = $scope.delay * 1000;
-            angular.forEach(data.data, function(data) {
+            var interval = parseInt( data.metadata.interval_sec || 1800 ),
+              labels = [],
+              offset = interval * 1000;
+            data.data.forEach( function(data) {
               labels.push(moment(data.time + offset /*to show the _end_ of interval instead of begin*/ ).format('MMM Do YY h:mm'));
-              series[0].data.push(Util.toBps(data.received_bytes, $scope.delay, true));
-              series[1].data.push(Util.toBps(data.sent_bytes, $scope.delay, true));
+              series[0].data.push( data.received_bytes / interval * 8 /*BITS per second*/ );
+              series[1].data.push( data.sent_bytes / interval * 8 /*BITS per second*/ );
             });
             // model better to update once
             $scope.traffic = {
@@ -159,6 +154,7 @@
         .finally(function() {
           $scope._loading = false;
         });
+
     }
   }
 })();
