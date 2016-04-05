@@ -17,6 +17,7 @@
           }
         }
       })
+      // TODO: delete this route because it deprecated
       .state('index.webApp.domains.advanced', {
         url: '/configure/:id',
         views: {
