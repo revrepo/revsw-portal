@@ -52,7 +52,7 @@
                     '</span> Median <span style="font-weight: bold; color: black;">' + rev_median_ +
                     '</span> ms<br>Improvement Avg <span style="font-weight: bold; color: darkred;">' + imp_avg_ +
                     '</span> Median <span style="font-weight: bold; color: darkred;">' + imp_median_ +
-                    '</span> %%',
+                    '</span> %',
                     80, 0, '', 0, 0, true/*html*/ )
                   .css({ color: '#444' })
                   .attr({
