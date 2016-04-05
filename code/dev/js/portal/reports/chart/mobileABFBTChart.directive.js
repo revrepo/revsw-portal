@@ -29,8 +29,8 @@
 
         //  ---------------------------------
         var lbl_ = null,
-          rev_whole_avg_ = 0,
-          origin_whole_avg_ = 0,
+          rev_avg_ = 0,
+          origin_avg_ = 0,
           rev_median_ = 0,
           origin_median_ = 0,
           imp_avg_ = 0,
@@ -46,12 +46,12 @@
                   lbl_ = null;
                 }
                 lbl_ = this/*chart*/.renderer
-                .label( 'Origin whole avg <span style="font-weight: bold; color: #3c65ac;">' + origin_whole_avg_ +
-                    '</span> median <span style="font-weight: bold; color: #3c65ac;">' + origin_median_ +
-                    '</span> ms<br>RevAPM whole avg <span style="font-weight: bold; color: black;">' + rev_whole_avg_ +
-                    '</span> median <span style="font-weight: bold; color: black;">' + rev_median_ +
-                    '</span> ms<br>Improvement avg <span style="font-weight: bold; color: darkred;">' + imp_avg_ +
-                    '</span> median <span style="font-weight: bold; color: darkred;">' + imp_median_ +
+                .label( 'Origin Avg <span style="font-weight: bold; color: #3c65ac;">' + origin_avg_ +
+                    '</span> Median <span style="font-weight: bold; color: #3c65ac;">' + origin_median_ +
+                    '</span> ms<br>RevAPM Avg <span style="font-weight: bold; color: black;">' + rev_avg_ +
+                    '</span> Median <span style="font-weight: bold; color: black;">' + rev_median_ +
+                    '</span> ms<br>Improvement Avg <span style="font-weight: bold; color: darkred;">' + imp_avg_ +
+                    '</span> Median <span style="font-weight: bold; color: darkred;">' + imp_median_ +
                     '</span> %%',
                     80, 0, '', 0, 0, true/*html*/ )
                   .css({ color: '#444' })
@@ -200,10 +200,10 @@
                 var avg_t = hits.origin.avg.filter( function( item ) {
                   return item != null;
                 });
-                origin_whole_avg_ = avg_t.reduce( function( prev, curr ) {
+                origin_avg_ = avg_t.reduce( function( prev, curr ) {
                   return prev + curr;
                 });
-                origin_whole_avg_ /= avg_t.length;
+                origin_avg_ /= avg_t.length;
 
                 //  origin median
                 //  TODO: median can be calculated w/o sorting
@@ -219,10 +219,10 @@
                 avg_t = hits.rev_edge.avg.filter( function( item ) {
                   return item != null;
                 });
-                rev_whole_avg_ = avg_t.reduce( function( prev, curr ) {
+                rev_avg_ = avg_t.reduce( function( prev, curr ) {
                   return prev + curr;
                 });
-                rev_whole_avg_ /= avg_t.length;
+                rev_avg_ /= avg_t.length;
 
                 //  rev_edge median
                 avg_t.sort( function( lhs, rhs ) {
@@ -234,11 +234,11 @@
                 rev_median_ = ( idx0 === idx1 ) ? avg_t[idx0] : ( avg_t[idx0] + avg_t[idx1] ) / 2;
 
                 //  rounds
-                imp_avg_ = Math.round( origin_whole_avg_ / rev_whole_avg_ * 1000 ) / 10;
-                rev_whole_avg_ = Math.round( rev_whole_avg_ * 100 ) / 100;
-                origin_whole_avg_ = Math.round( origin_whole_avg_ * 100 ) / 100;
+                imp_avg_ = Math.round( ( origin_avg_ - rev_avg_ ) / origin_avg_ * 1000 ) / 10;
+                rev_avg_ = Math.round( rev_avg_ * 100 ) / 100;
+                origin_avg_ = Math.round( origin_avg_ * 100 ) / 100;
 
-                imp_median_ = Math.round( origin_median_ / rev_median_ * 1000 ) / 10;
+                imp_median_ = Math.round( ( origin_median_ - rev_median_ ) / origin_median_ * 1000 ) / 10;
                 origin_median_ = Math.round( origin_median_ * 100 ) / 100;
                 rev_median_ = Math.round( rev_median_ * 100 ) / 100;
               }

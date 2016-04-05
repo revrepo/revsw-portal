@@ -29,8 +29,8 @@
 
         //  ---------------------------------
         var lbl_ = null,
-          rev_whole_avg_ = 0,
-          origin_whole_avg_ = 0,
+          rev_avg_ = 0,
+          origin_avg_ = 0,
           imp_avg_ = 0;
 
         $scope.chartOptions = {
@@ -43,8 +43,8 @@
                   lbl_ = null;
                 }
                 lbl_ = this/*chart*/.renderer
-                .label( 'Origin whole avg <span style="font-weight: bold; color: #3c65ac;">' + origin_whole_avg_ +
-                    '</span><br>RevAPM whole avg <span style="font-weight: bold; color: black;">' + rev_whole_avg_ +
+                .label( 'Origin Avg <span style="font-weight: bold; color: #3c65ac;">' + origin_avg_ +
+                    '</span><br>RevAPM Avg <span style="font-weight: bold; color: black;">' + rev_avg_ +
                     '</span><br>Improvement <span style="font-weight: bold; color: darkred;">' + imp_avg_ +
                     '</span> %%',
                     80, 0, '', 0, 0, true/*html*/ )
@@ -152,24 +152,25 @@
                 var avg_t = hits.origin.filter( function( item ) {
                   return item != null;
                 });
-                origin_whole_avg_ = avg_t.reduce( function( prev, curr ) {
+                origin_avg_ = avg_t.reduce( function( prev, curr ) {
                   return prev + curr;
                 });
-                origin_whole_avg_ /= avg_t.length;
+                origin_avg_ /= avg_t.length;
 
                 //  rev_edge avg
                 avg_t = hits.rev_edge.filter( function( item ) {
                   return item != null;
                 });
-                rev_whole_avg_ = avg_t.reduce( function( prev, curr ) {
+                rev_avg_ = avg_t.reduce( function( prev, curr ) {
                   return prev + curr;
                 });
-                rev_whole_avg_ /= avg_t.length;
+                rev_avg_ /= avg_t.length;
 
                 //  rounds
-                imp_avg_ = Math.round( rev_whole_avg_ / origin_whole_avg_ * 1000 ) / 10;
-                rev_whole_avg_ = Util.convertTraffic( Math.round( rev_whole_avg_ * 100 ) / 100 );
-                origin_whole_avg_ = Util.convertTraffic( Math.round( origin_whole_avg_ * 100 ) / 100 );
+                imp_avg_ = Math.round( ( rev_avg_ - origin_avg_ ) / origin_avg_ * 1000 ) / 10;
+
+                rev_avg_ = Util.convertTraffic( Math.round( rev_avg_ * 100 ) / 100 );
+                origin_avg_ = Util.convertTraffic( Math.round( origin_avg_ * 100 ) / 100 );
               }
             })
             .finally( function() {
