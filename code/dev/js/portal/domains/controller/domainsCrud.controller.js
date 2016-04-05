@@ -152,7 +152,7 @@
         $scope.modelAdvance = angular.copy($scope.prepareSimpleDomainUpdate(domain));
         console.log($scope.modelAdvance);
         var _domain_default_property = {
-          proxy_timeout: 390,
+          proxy_timeout: 20,
           domain_aliases: [],
           origin_secure_protocol: 'use_end_user_protocol',
           rev_component_co: {
