@@ -27,11 +27,7 @@
   }
 
   /*ngInject*/
-  function RequestsChartCtrl(
-    $scope,
-    Stats,
-    Util
-  ) {
+  function RequestsChartCtrl( $scope, Stats, Util ) {
 
     var _filters_field_list = ['from_timestamp', 'to_timestamp', 'country', 'device', 'os'];
 
@@ -56,7 +52,6 @@
       return params;
     }
 
-    $scope.delay = 1800;
     $scope._loading = false;
     $scope.reloadTrafficStats = reloadTrafficStats;
 
@@ -68,43 +63,22 @@
     if ($scope.filtersSets) {
       _.extend($scope.filters, $scope.filtersSets);
     }
-    /**
-     * @funcCustomInfoGenerator
-     * @description
-     *
-     * @see example http://jsfiddle.net/c57L3cj2/3/
-     *
-     * @param  {Object}
-     * @return
-     */
-    function funcCustomInfoGenerator(e) {
-      var chart = this;
-      var x = 150,
-        y = 100;
-      var text = chart.renderer.text(
-        'Max',
-        x, y
-      ).attr({
-        zIndex: 5
-      }).add();
-
-      var box = text.getBBox();
-
-      chart.renderer.rect(box.x - 5, box.y - 5, box.width + 10, box.height + 10, 5)
-        .attr({
-          fill: '#FFFFEF',
-          stroke: 'red',
-          'stroke-width': 1,
-          zIndex: 4
-        })
-        .add();
-    }
 
     $scope.chartOptions = {
-      // NOTE: use this block for add more information to char
       // chart: {
       //   events: {
-      //     redraw: funcCustomInfoGenerator
+      //     redraw: function() {
+      //       this.renderer
+      //         .label( 'Some <span style="font-weight: 900;">data</span><br>Some other <span style="font-weight: 900;">data</span>', 70, 50, '', 0, 0, true/*html*/ )
+      //         .css({ color: '#ffffff' })
+      //         .attr({
+      //           fill: 'rgba(0, 0, 0, 0.5)',
+      //           padding: 6,
+      //           r: 3,
+      //           zIndex: 5
+      //         })
+      //         .add();
+      //     }
       //   }
       // },
       yAxis: {
@@ -178,13 +152,13 @@
               name: 'Outgoing Bandwidth',
               data: []
             }];
-            $scope.delay = data.metadata.interval_sec || 1800;
-            var labels = [],
-              offset = $scope.delay * 1000;
-            angular.forEach(data.data, function(data) {
+            var interval = parseInt( data.metadata.interval_sec || 1800 ),
+              labels = [],
+              offset = interval * 1000;
+            data.data.forEach( function(data) {
               labels.push(moment(data.time + offset /*to show the _end_ of interval instead of begin*/ ).format('MMM Do YY h:mm'));
-              series[0].data.push(Util.toBps(data.received_bytes, $scope.delay, true));
-              series[1].data.push(Util.toBps(data.sent_bytes, $scope.delay, true));
+              series[0].data.push( data.received_bytes / interval * 8 /*BITS per second*/ );
+              series[1].data.push( data.sent_bytes / interval * 8 /*BITS per second*/ );
             });
             // model better to update once
             $scope.traffic = {
@@ -196,6 +170,7 @@
         .finally(function() {
           $scope._loading = false;
         });
+
     }
   }
 })();

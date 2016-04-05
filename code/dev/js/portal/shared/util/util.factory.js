@@ -9,21 +9,6 @@
   function UtilFactory() {
 
     /**
-     * Convert traffic value to bytes per second
-     *
-     * @param {number} bytes
-     * @param {number} delay
-     * @returns {number}
-     */
-    function toBps(bytes, delay) {
-      delay = delay || 1800;
-      if (!angular.isNumber(delay)) {
-        delay = 1800;
-      }
-      return (bytes / delay * 8);
-    }
-
-    /**
      * Convert trafic value to Kbps, Mbps, Gbps, Tbps
      *
      * @param {number} bps
@@ -102,11 +87,6 @@
        * @inheritDoc
        */
       convertTraffic: convertTraffic,
-
-      /**
-       * @inheritDoc
-       */
-      toBps: toBps,
 
       /**
        * @inheritDoc
