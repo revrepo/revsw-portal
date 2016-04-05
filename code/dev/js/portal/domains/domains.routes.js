@@ -36,7 +36,7 @@
         }
       })
       .state('index.webApp.domains.edit', {
-        url: '/edit/:id',
+        url: '/edit/:id?isAdvanced',
         views: {
           page: {
             templateUrl: 'parts/domains/edit.html',
