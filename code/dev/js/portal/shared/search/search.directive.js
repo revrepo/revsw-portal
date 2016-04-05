@@ -150,7 +150,6 @@
 
           scope.searchItemSelected = function(item){
             item.searchBarText = item.searchDisplayText;
-            console.log(item);
 
             switch(item.searchType){
               case 'domain':
@@ -166,7 +165,11 @@
                   $location.path('companies/edit/' + item.id);
                 } else if(item.searchAction === 'usage'){
                   selectAccount(item);
-                  $location.path('usage');
+                  if($location.path() === '/usage'){
+                    window.location.reload();
+                  } else {
+                    $location.path('usage');
+                  }
                 }
                 break;
               case 'user':
