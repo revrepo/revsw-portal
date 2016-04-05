@@ -157,7 +157,11 @@
                   $location.path('domains/edit/' + item.id);
                 } else if(item.searchAction === 'analytics'){
                   selectDomain(item);
-                  $location.path('reports/proxy');
+                  if($location.path().indexOf('reports') !== -1){
+                    window.location.reload();
+                  } else {
+                    $location.path('reports/proxy');
+                  }
                 }
                 break;
               case 'company':
@@ -183,7 +187,11 @@
                   $location.path(path);
                 } else if(item.searchAction === 'analytics'){
                   selectApp(item);
-                  $location.path('mobile/traffic');
+                  if($location.path().indexOf('mobile') !== -1){
+                    window.location.reload();
+                  } else {
+                    $location.path('mobile/traffic');
+                  }
                 }
                 break;
               case 'apiKey':
