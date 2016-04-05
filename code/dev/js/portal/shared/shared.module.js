@@ -5,7 +5,8 @@
     'ngTouch',
     'ui.bootstrap.tpls',
     'ui.bootstrap.modal',
-    'daterangepicker'
+    'daterangepicker',
+    'ui.router'
   ]);
 
 })();
