@@ -28,15 +28,46 @@
         $scope._loading = false;
 
         //  ---------------------------------
+        var lbl_ = null,
+          rev_avg_ = 0,
+          origin_avg_ = 0,
+          rev_median_ = 0,
+          origin_median_ = 0,
+          imp_avg_ = 0,
+          imp_median_ = 0;
+
         $scope.chartOptions = {
-
           chart: {
-            type: 'column'
+            type: 'column',
+            events: {
+              redraw: function() {
+                if ( lbl_ ) {
+                  lbl_.destroy();
+                  lbl_ = null;
+                }
+                lbl_ = this/*chart*/.renderer
+                .label( 'Origin Avg <span style="font-weight: bold; color: #3c65ac;">' + origin_avg_ +
+                    '</span> Median <span style="font-weight: bold; color: #3c65ac;">' + origin_median_ +
+                    '</span> ms<br>RevAPM Avg <span style="font-weight: bold; color: black;">' + rev_avg_ +
+                    '</span> Median <span style="font-weight: bold; color: black;">' + rev_median_ +
+                    '</span> ms<br>Improvement Avg <span style="font-weight: bold; color: darkred;">' + imp_avg_ +
+                    '</span> Median <span style="font-weight: bold; color: darkred;">' + imp_median_ +
+                    '</span> %%',
+                    80, 0, '', 0, 0, true/*html*/ )
+                  .css({ color: '#444' })
+                  .attr({
+                    fill: 'rgba(240, 240, 240, 0.6)',
+                    stroke: '#3c65ac',
+                    'stroke-width': 1,
+                    padding: 6,
+                    r: 2,
+                    zIndex: 5
+                  })
+                  .add();
+              }
+            }
           },
-
           yAxis: {
-            // type: 'logarithmic',
-            // minorTickInterval: 2,
             title: {
               text: 'FBT ms'
             },
@@ -146,8 +177,8 @@
                 var offset = interval * 1000;
                 var labels_filled = false;
                 // console.log( data );
-                angular.forEach( data.data, function( dest ) {
-                  angular.forEach( dest.items, function( item ) {
+                data.data.forEach( function( dest ) {
+                  dest.items.forEach( function( item ) {
                     if ( !labels_filled ) {
                       labels.push( moment( item.key + offset /*to show the _end_ of interval instead of begin*/ ).format( 'MMM Do YY h:mm' ) );
                     }
@@ -164,6 +195,52 @@
                 $scope.hits.series[3].data = hits.rev_edge.avg;
                 $scope.hits.series[4].data = hits.rev_edge.min;
                 $scope.hits.series[5].data = hits.rev_edge.max;
+
+                //  origin avg
+                var avg_t = hits.origin.avg.filter( function( item ) {
+                  return item != null;
+                });
+                origin_avg_ = avg_t.reduce( function( prev, curr ) {
+                  return prev + curr;
+                });
+                origin_avg_ /= avg_t.length;
+
+                //  origin median
+                //  TODO: median can be calculated w/o sorting
+                avg_t.sort( function( lhs, rhs ) {
+                  return lhs - rhs;
+                });
+                var idx0 = avg_t.length - 1,
+                  idx1 = Math.ceil( idx0 / 2 );
+                idx0 = Math.floor( idx0 / 2 );
+                origin_median_ = ( idx0 === idx1 ) ? avg_t[idx0] : ( avg_t[idx0] + avg_t[idx1] ) / 2;
+
+                //  rev_edge avg
+                avg_t = hits.rev_edge.avg.filter( function( item ) {
+                  return item != null;
+                });
+                rev_avg_ = avg_t.reduce( function( prev, curr ) {
+                  return prev + curr;
+                });
+                rev_avg_ /= avg_t.length;
+
+                //  rev_edge median
+                avg_t.sort( function( lhs, rhs ) {
+                  return lhs - rhs;
+                });
+                idx0 = avg_t.length - 1;
+                idx1 = Math.ceil( idx0 / 2 );
+                idx0 = Math.floor( idx0 / 2 );
+                rev_median_ = ( idx0 === idx1 ) ? avg_t[idx0] : ( avg_t[idx0] + avg_t[idx1] ) / 2;
+
+                //  rounds
+                imp_avg_ = Math.round( ( origin_avg_ - rev_avg_ ) / origin_avg_ * 1000 ) / 10;
+                rev_avg_ = Math.round( rev_avg_ * 100 ) / 100;
+                origin_avg_ = Math.round( origin_avg_ * 100 ) / 100;
+
+                imp_median_ = Math.round( ( origin_median_ - rev_median_ ) / origin_median_ * 1000 ) / 10;
+                origin_median_ = Math.round( origin_median_ * 100 ) / 100;
+                rev_median_ = Math.round( rev_median_ * 100 ) / 100;
               }
             })
             .finally( function() {
