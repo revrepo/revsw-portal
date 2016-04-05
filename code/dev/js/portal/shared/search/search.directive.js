@@ -150,7 +150,6 @@
 
           scope.searchItemSelected = function(item){
             item.searchBarText = item.searchDisplayText;
-            console.log(item);
 
             switch(item.searchType){
               case 'domain':
@@ -158,7 +157,11 @@
                   $location.path('domains/edit/' + item.id);
                 } else if(item.searchAction === 'analytics'){
                   selectDomain(item);
-                  $location.path('reports/proxy');
+                  if($location.path().indexOf('reports') !== -1){
+                    window.location.reload();
+                  } else {
+                    $location.path('reports/proxy');
+                  }
                 }
                 break;
               case 'company':
@@ -166,7 +169,11 @@
                   $location.path('companies/edit/' + item.id);
                 } else if(item.searchAction === 'usage'){
                   selectAccount(item);
-                  $location.path('usage');
+                  if($location.path() === '/usage'){
+                    window.location.reload();
+                  } else {
+                    $location.path('usage');
+                  }
                 }
                 break;
               case 'user':
@@ -180,7 +187,11 @@
                   $location.path(path);
                 } else if(item.searchAction === 'analytics'){
                   selectApp(item);
-                  $location.path('mobile/traffic');
+                  if($location.path().indexOf('mobile') !== -1){
+                    window.location.reload();
+                  } else {
+                    $location.path('mobile/traffic');
+                  }
                 }
                 break;
               case 'apiKey':
