@@ -3,7 +3,7 @@
 
   angular
     .module('revapm.Portal.Shared')
-    .directive('search', function($location, $localStorage, DomainsConfig, Companies, Users, Apps, DashboardSrv, ApiKeys){
+    .directive('search', function($location, $localStorage, $state, DomainsConfig, Companies, Users, Apps, DashboardSrv, ApiKeys){
       return {
         restrict: 'AE',
         templateUrl: 'parts/shared/search/search.html',
@@ -157,8 +157,8 @@
                   $location.path('domains/edit/' + item.id);
                 } else if(item.searchAction === 'analytics'){
                   selectDomain(item);
-                  if($location.path().indexOf('reports') !== -1){
-                    window.location.reload();
+                  if($location.path().indexOf('reports/proxy') !== -1){
+                    $state.reload();
                   } else {
                     $location.path('reports/proxy');
                   }
@@ -170,7 +170,7 @@
                 } else if(item.searchAction === 'usage'){
                   selectAccount(item);
                   if($location.path() === '/usage'){
-                    window.location.reload();
+                    $state.reload();
                   } else {
                     $location.path('usage');
                   }
@@ -187,8 +187,8 @@
                   $location.path(path);
                 } else if(item.searchAction === 'analytics'){
                   selectApp(item);
-                  if($location.path().indexOf('mobile') !== -1){
-                    window.location.reload();
+                  if($location.path().indexOf('mobile/traffic') !== -1){
+                    $state.reload();
                   } else {
                     $location.path('mobile/traffic');
                   }
@@ -217,7 +217,14 @@
           }
 
           function selectApp(app){
-            $localStorage.selectedApplication = app;
+            var newApp = {
+              app_id: app.id,
+              id: app.id,
+              app_name: app.app_name,
+              sdk_key: app.sdk_key
+            };
+
+            $localStorage.selectedApplication = newApp;
           }
 
           function selectAccount(account){
