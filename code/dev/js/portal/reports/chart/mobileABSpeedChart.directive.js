@@ -28,12 +28,39 @@
         $scope._loading = false;
 
         //  ---------------------------------
+        var lbl_ = null,
+          rev_whole_avg_ = 0,
+          origin_whole_avg_ = 0,
+          imp_avg_ = 0;
+
         $scope.chartOptions = {
-
           chart: {
-            type: 'column'
+            type: 'column',
+            events: {
+              redraw: function() {
+                if ( lbl_ ) {
+                  lbl_.destroy();
+                  lbl_ = null;
+                }
+                lbl_ = this/*chart*/.renderer
+                .label( 'Origin whole avg <span style="font-weight: bold; color: #3c65ac;">' + origin_whole_avg_ +
+                    '</span><br>RevAPM whole avg <span style="font-weight: bold; color: black;">' + rev_whole_avg_ +
+                    '</span><br>Improvement <span style="font-weight: bold; color: darkred;">' + imp_avg_ +
+                    '</span> %%',
+                    80, 0, '', 0, 0, true/*html*/ )
+                  .css({ color: '#444' })
+                  .attr({
+                    fill: 'rgba(240, 240, 240, 0.6)',
+                    stroke: '#3c65ac',
+                    'stroke-width': 1,
+                    padding: 6,
+                    r: 2,
+                    zIndex: 5
+                  })
+                  .add();
+              }
+            }
           },
-
           yAxis: {
             title: {
               text: 'Speed Kb/s'
@@ -120,6 +147,29 @@
                 $scope.hits.labels = labels;
                 $scope.hits.series[0].data = hits.origin;
                 $scope.hits.series[1].data = hits.rev_edge;
+
+                //  origin avg
+                var avg_t = hits.origin.filter( function( item ) {
+                  return item != null;
+                });
+                origin_whole_avg_ = avg_t.reduce( function( prev, curr ) {
+                  return prev + curr;
+                });
+                origin_whole_avg_ /= avg_t.length;
+
+                //  rev_edge avg
+                avg_t = hits.rev_edge.filter( function( item ) {
+                  return item != null;
+                });
+                rev_whole_avg_ = avg_t.reduce( function( prev, curr ) {
+                  return prev + curr;
+                });
+                rev_whole_avg_ /= avg_t.length;
+
+                //  rounds
+                imp_avg_ = Math.round( rev_whole_avg_ / origin_whole_avg_ * 1000 ) / 10;
+                rev_whole_avg_ = Util.convertTraffic( Math.round( rev_whole_avg_ * 100 ) / 100 );
+                origin_whole_avg_ = Util.convertTraffic( Math.round( origin_whole_avg_ * 100 ) / 100 );
               }
             })
             .finally( function() {
