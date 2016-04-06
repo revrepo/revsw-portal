@@ -55,8 +55,8 @@ var TrafficHeatmapsPage = require('./analytics/trafficHeatmapsPage');
 var RTTHeatmapsPage = require('./analytics/rttHeatmapsPage');
 var HelpSupportPage = require('./helpSupport/helpSupportPage');
 var HelpPage = require('./help/helpPage');
-var SecSettingsPage = require('./accountSettings/securitySettingsPage');
-var ApiKeysListPage = require('./accountSettings/apiKeysListPage.js');
+var SecSettingsPage = require('./admin/securitySettingsPage');
+var ApiKeysListPage = require('./admin/apiKeysListPage.js');
 
 // This `Portal` Page Object is the entry point to use all other Page Objects
 // that abstract all components from the Portal App.
