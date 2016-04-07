@@ -32,7 +32,7 @@ var DomainForm = {
   locators: {
     textInputs: {
       domainName: {
-        model: 'model.domain_name'
+        id: 'domain_name'
       },
       originServer: {
         model: 'model.origin_server'
@@ -63,7 +63,7 @@ var DomainForm = {
    * @returns {Selenium WebDriver Element}
    */
   getDomainNameTxtIn: function () {
-    return element(by.model(this.locators.textInputs.domainName.model));
+    return element(by.id(this.locators.textInputs.domainName.id));
   },
 
   /**
