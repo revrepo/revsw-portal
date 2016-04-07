@@ -55,7 +55,7 @@ describe('Negative', function () {
         var filteredPages = Portal.userListPage.pager
           .getAllPageIndexButtons()
           .count();
-        expect(availablePages).toBeGreaterThan(1);
+        expect(availablePages).toBeGreaterThan(0);
         expect(filteredPages).toEqual(0);
         expect(availablePages).toBeGreaterThan(filteredPages);
         Portal.userListPage.searcher.clearSearchCriteria();
