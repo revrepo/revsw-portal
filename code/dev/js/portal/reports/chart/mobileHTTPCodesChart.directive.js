@@ -43,6 +43,7 @@
         };
 
         //  ---------------------------------
+        var tickInterval_ = 4;
         $scope.chartOptions = {
           yAxis: {
             title: {
@@ -54,11 +55,30 @@
               }
             }
           },
+          xAxis: {
+            crosshair: {
+              width: 1,
+              color: '#000000'
+            },
+            tickInterval: tickInterval_,
+            labels: {
+              autoRotation: false,
+              useHTML: true,
+              formatter: function() {
+                return this.value.label;
+              }
+            }
+          },
           tooltip: {
             formatter: function() {
-              return '<strong>' + this.x + '</strong><br/>' +
+              return this.key.tooltip + '<br/>' +
                 this.series.name + ': <strong>' + Util.formatNumber( this.y, 3 ) + '</strong>';
             }
+          },
+          subtitle: {
+            align: 'right',
+            text: 'displayed time is local to the computer',
+            y: 15, x: -30/*to left from the print button*/
           }
         };
 
@@ -89,7 +109,21 @@
                   for ( var i = 0, len = code.flow.length; i < len; ++i ) {
                     var item = code.flow[i];
                     if ( !labels_filled_up ) {
-                      labels.push( moment( item.time + offset /*to show the _end_ of interval instead of begin*/ ).format( 'MMM Do YY h:mm' ) );
+                      var val = moment( item.time + offset );
+                      var label;
+                      if ( i % tickInterval_ ) {
+                        label = '';
+                      } else if ( i === 0 ||
+                        ( new Date( item.time + offset ) ).getDate() !== ( new Date( code.flow[i - tickInterval_].time + offset ) ).getDate() ) {
+                        label = val.format( '[<span style="color: #000; font-weight: bold;">]HH:mm[</span><br>]MMM D' );
+                      } else {
+                        label = val.format( '[<span style="color: #000; font-weight: bold;">]HH:mm[</span>]' );
+                      }
+
+                      labels.push({
+                        tooltip: val.format( '[<span style="color: #000; font-weight: bold;">]HH:mm[</span>] MMMM Do YYYY' ),
+                        label: label
+                      });
                     }
                     var rps = Math.round( item.hits * 1000 / interval ) / 1000;
                     s.data.push( rps );

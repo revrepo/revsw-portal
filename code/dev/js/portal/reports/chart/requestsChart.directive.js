@@ -68,7 +68,8 @@
     var info_ = null,
       traffic_avg_ = 0,
       traffic_max_ = 0,
-      traffic_total_ = 0;
+      traffic_total_ = 0,
+      tickInterval_ = 10;
 
     $scope.chartOptions = {
       chart: {
@@ -107,11 +108,30 @@
           }
         }
       },
+      xAxis: {
+        crosshair: {
+          width: 1,
+          color: '#000000'
+        },
+        tickInterval: tickInterval_,
+        labels: {
+          autoRotation: false,
+          useHTML: true,
+          formatter: function() {
+            return this.value.label;
+          }
+        }
+      },
       tooltip: {
         formatter: function() {
-          return '<b>' + this.x + '</b><br/>' +
+          return this.key.tooltip + '<br/>' +
             this.series.name + ': ' + Util.convertTraffic(this.y);
         }
+      },
+      subtitle: {
+        align: 'center',
+        text: 'displayed time is local to the computer',
+        y: 300, x: 0
       }
     };
 
@@ -173,8 +193,24 @@
             var interval = parseInt( data.metadata.interval_sec || 1800 ),
               labels = [],
               offset = interval * 1000;
-            data.data.forEach( function( item ) {
-              labels.push(moment(item.time + offset /*to show the _end_ of interval instead of begin*/ ).format('MMM Do YY h:mm'));
+            data.data.forEach( function( item, idx, items ) {
+
+              var val = moment( item.time + offset );
+              var label;
+              if ( idx % tickInterval_ ) {
+                label = '';
+              } else if ( idx === 0 ||
+                ( new Date( item.time + offset ) ).getDate() !== ( new Date( items[idx - tickInterval_].time + offset ) ).getDate() ) {
+                label = val.format( '[<span style="color: #000; font-weight: bold;">]HH:mm[</span><br>]MMM D' );
+              } else {
+                label = val.format( '[<span style="color: #000; font-weight: bold;">]HH:mm[</span>]' );
+              }
+
+              labels.push({
+                tooltip: val.format( '[<span style="color: #000; font-weight: bold;">]HH:mm[</span>] MMMM Do YYYY' ),
+                label: label
+              });
+
               var sent_bw = item.sent_bytes * 8 / interval /*BITS per second*/;
               series[1].data.push( sent_bw );
               series[0].data.push( item.received_bytes / interval * 8 /*BITS per second*/ );

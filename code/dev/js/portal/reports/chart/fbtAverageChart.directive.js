@@ -30,7 +30,8 @@
         var info_ = null,
           avg_ = 0,
           median_ = 0,
-          max_ = 0;
+          max_ = 0,
+          tickInterval_ = 4;
 
         $scope.chartOptions = {
           chart: {
@@ -70,11 +71,30 @@
               }
             }
           },
+          xAxis: {
+            crosshair: {
+              width: 1,
+              color: '#000000'
+            },
+            tickInterval: tickInterval_,
+            labels: {
+              autoRotation: false,
+              useHTML: true,
+              formatter: function() {
+                return this.value.label;
+              }
+            }
+          },
           tooltip: {
             formatter: function() {
-              return '<strong>' + this.x + '</strong><br/>' +
+              return this.key.tooltip + '<br/>' +
                 this.series.name + ': <strong>' + Util.formatNumber( this.y / 1000, 2 ) + '</strong> ms';
             }
+          },
+          subtitle: {
+            align: 'right',
+            text: 'displayed time is local to the computer',
+            y: 15, x: -30/*to left from the print button*/
           }
         };
 
@@ -111,8 +131,24 @@
                 var offset = ( data.metadata.interval_sec || 1800 ) * 1000;
                 var cnt_ = 0;
                 // console.log( data );
-                data.data.forEach( function( item ) {
-                  labels.push( moment( item.time + offset /*to show the _end_ of interval instead of begin*/ ).format( 'HH:mm MMM Do' ) );
+                data.data.forEach( function( item, idx, items ) {
+
+                  var val = moment( item.time + offset );
+                  var label;
+                  if ( idx % tickInterval_ ) {
+                    label = '';
+                  } else if ( idx === 0 ||
+                    ( new Date( item.time + offset ) ).getDate() !== ( new Date( items[idx - tickInterval_].time + offset ) ).getDate() ) {
+                    label = val.format( '[<span style="color: #000; font-weight: bold;">]HH:mm[</span><br>]MMM D' );
+                  } else {
+                    label = val.format( '[<span style="color: #000; font-weight: bold;">]HH:mm[</span>]' );
+                  }
+
+                  labels.push({
+                    tooltip: val.format( '[<span style="color: #000; font-weight: bold;">]HH:mm[</span>] MMMM Do YYYY' ),
+                    label: label
+                  });
+
                   if ( max_ < item.avg_fbt ) {
                     max_ = item.avg_fbt;
                   }

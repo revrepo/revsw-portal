@@ -35,7 +35,7 @@
           origin_median_ = 0,
           imp_avg_ = 0,
           imp_median_ = 0,
-          tickInterval_ = 3;
+          tickInterval_ = 4;
 
         $scope.chartOptions = {
           chart: {
@@ -87,8 +87,8 @@
             labels: {
               autoRotation: false,
               useHTML: true,
-              // step: 1,
-              // staggerLines: 3
+              // step: 1,         //  doesn't work, use that tickInterval above
+              // staggerLines: 3  //  bad idea, looks messy
               formatter: function() {
                 return this.value.label;
                 // return '#';
@@ -100,7 +100,12 @@
               return this.key.tooltip + '<br/>' +
                 this.series.name + ': <strong>' + Util.formatNumber( this.y, 1 ) + '</strong>';
             }
-          }
+          },
+          subtitle: {
+            align: 'right',
+            text: 'displayed time is local to the computer',
+            y: 15, x: -30/*to left from the print button*/
+          },
         };
 
         $scope.hits = {
@@ -192,15 +197,13 @@
                 data.data.forEach( function( dest ) {
                   dest.items.forEach( function( item, idx, items ) {
                     if ( !labels_filled ) {
-                      // labels.push( moment( item.key + offset ).format( 'HH:mm MMM Do YYYY' ) );
-                      // labels.push(  moment( item.key + offset ).format( '[<span style="color: #000; font-weight: bold;">]HH:mm[</span><br>]MMM Do[<br>]YYYY' ) );
                       var val = moment( item.key + offset );
                       var label;
                       if ( idx % tickInterval_ ) {
                         label = '';
                       } else if ( idx === 0 ||
                         ( new Date( item.key + offset ) ).getDate() !== ( new Date( items[idx - tickInterval_].key + offset ) ).getDate() ) {
-                        label = val.format( '[<span style="color: #000; font-weight: bold;">]HH:mm[</span><br>]MMM[<br>]Do' );
+                        label = val.format( '[<span style="color: #000; font-weight: bold;">]HH:mm[</span><br>]MMM D' );
                       } else {
                         label = val.format( '[<span style="color: #000; font-weight: bold;">]HH:mm[</span>]' );
                       }
