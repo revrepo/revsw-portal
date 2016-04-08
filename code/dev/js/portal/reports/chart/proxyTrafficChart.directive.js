@@ -129,6 +129,8 @@
             }, generateFilterParams($scope.filters)))
             .$promise
             .then(function(data) {
+
+              rps_avg_ = rps_max_ = hits_total_ = 0;
               if (data.data && data.data.length > 0) {
                 var interval = data.metadata.interval_sec || 1800;
                 var offset = interval * 1000;

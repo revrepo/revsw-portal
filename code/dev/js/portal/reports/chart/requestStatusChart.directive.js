@@ -134,6 +134,8 @@
                 name: 'Failed',
                 data: []
               }];
+
+              success_ = failure_ = 0;
               if (data[0].data && data[0].data.length > 0) {
                 data[0].data.forEach( function(item) {
                   success_ += item.requests;

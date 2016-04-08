@@ -106,7 +106,7 @@
                 data: []
               } ];
               if ( data.data && data.data.length > 0 ) {
-                max_ = 0;
+                avg_ = max_ = 0;
                 var labels = [];
                 var offset = ( data.metadata.interval_sec || 1800 ) * 1000;
                 var cnt_ = 0;

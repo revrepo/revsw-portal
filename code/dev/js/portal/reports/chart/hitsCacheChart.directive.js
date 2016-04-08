@@ -193,6 +193,7 @@
                 data: []
               }];
 
+              hit_ = miss_ = 0;
               if (data[0].data && data[0].data.length > 0) {
                 data[0].data.forEach( function(item) {
                   hit_ += item.requests;

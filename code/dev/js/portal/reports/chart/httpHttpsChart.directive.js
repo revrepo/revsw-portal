@@ -156,6 +156,7 @@
                 name: 'HTTPS',
                 data: []
               }];
+              https_ = http_ = 0;
               if (data[0].data && data[0].data.length > 0) {
                 data[0].data.forEach( function(item) {
                   http_ += item.requests;

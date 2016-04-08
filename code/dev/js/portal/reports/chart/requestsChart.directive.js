@@ -160,6 +160,8 @@
         }, generateFilterParams($scope.filters)))
         .$promise
         .then(function(data) {
+
+          traffic_avg_ = traffic_max_ = traffic_total_ = 0;
           if (data.data && data.data.length > 0) {
             var series = [{
               name: 'Incoming Bandwidth',

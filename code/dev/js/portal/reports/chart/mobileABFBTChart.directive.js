@@ -206,7 +206,6 @@
                       }
 
                       labels.push({
-                        visible: !( idx % tickInterval_ ),
                         tooltip: val.format( '[<span style="color: #000; font-weight: bold;">]HH:mm[</span>] MMMM Do YYYY' ),
                         label: label
                       });

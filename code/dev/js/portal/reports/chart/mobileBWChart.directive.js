@@ -123,6 +123,7 @@
                 data: []
               }, ];
 
+              hits_total_ = traffic_total_ = traffic_max_ = traffic_avg_ = 0;
               if ( data.data && data.data.length > 0 ) {
                 var labels = [];
                 var interval = data.metadata.interval_sec || 1800;

@@ -116,12 +116,11 @@
                 data: []
               } ];
 
+              rps_avg_ = rps_max_ = hits_total_ = 0;
               if ( data.data && data.data.length > 0 ) {
                 var labels = [];
                 var interval = data.metadata.interval_sec || 1800;
                 var offset = interval * 1000;
-
-                console.log( data );
 
                 data.data.forEach( function( item ) {
                   labels.push( moment( item.time + offset /*to show the _end_ of interval instead of begin*/ ).format( 'MMM Do YY h:mm' ) );
