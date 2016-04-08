@@ -22,8 +22,6 @@
       /*@ngInject*/
       controller: function($scope, Stats, $q, Util) {
         $scope._loading = false;
-        $scope.delay = 1800;
-
         $scope.filters = {
           from_timestamp: moment().subtract(1, 'days').valueOf(),
           to_timestamp: Date.now()
@@ -62,19 +60,20 @@
           $q.all(promises)
             .then(function(data) {
               labels = [];
-              $scope.delay = 1800;
-              angular.forEach(data, function(val, idx) {
+              var interval = 1800;
+              // console.log( data );
+              _.forEach( data, function(val, idx) {
                 if (data[idx].metadata.interval_sec) {
-                  $scope.delay = data[idx].metadata.interval_sec;
+                  interval = data[idx].metadata.interval_sec;
                 }
-                var offset = $scope.delay * 1000;
+                var offset = interval * 1000;
                 var results = [];
                 if (data[idx].data && data[idx].data.length > 0) {
-                  angular.forEach(data[idx].data, function(res) {
+                  data[idx].data.forEach( function(res) {
                     if (!timeSet) {
                       labels.push(moment(res.time + offset /*to show the _end_ of interval instead of begin*/ ).format('MMM Do YY h:mm'));
                     }
-                    results.push(Util.toRPS(res.requests, $scope.delay, true));
+                    results.push( res.requests / interval );
                   });
                   timeSet = true;
                 }

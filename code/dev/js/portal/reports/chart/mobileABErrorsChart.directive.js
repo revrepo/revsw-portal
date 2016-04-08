@@ -96,7 +96,9 @@
                 var interval = data.metadata.interval_sec || 1800;
                 var offset = interval * 1000;
                 var labels_filled = false;
-                // console.log( data );
+
+                console.log( data );
+
                 angular.forEach( data.data, function( dest ) {
                   angular.forEach( dest.items, function( item ) {
                     if ( !labels_filled ) {
