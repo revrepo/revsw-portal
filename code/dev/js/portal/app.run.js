@@ -26,7 +26,7 @@
 
     $rootScope.goToState = function(state, dashboardID){
       if(dashboardID){
-        $location.path(state + '/' + dashboardID)
+        $location.path(state + '/' + dashboardID);
       } else {
         $state.go(state);
       }

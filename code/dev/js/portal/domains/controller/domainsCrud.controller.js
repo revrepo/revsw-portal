@@ -290,6 +290,25 @@
       $localStorage.selectedDomain = model;
     };
 
+    $scope.disableSubmit = function(model, isEdit){
+      if(!isEdit) {
+        return $scope._loading ||
+          !model.domain_name ||
+          !model.account_id ||
+          !model.origin_server ||
+          !model.origin_host_header ||
+          !model.origin_server_location_id;
+      } else {
+        return $scope._loading ||
+          !model.account_id ||
+          !model.origin_server ||
+          !model.origin_host_header ||
+          !model.origin_server_location_id ||
+          !model.domain_aliases || model.domain_aliases.length === 0 ||
+          !model.domain_wildcard_alias ||
+          !model.proxy_timeout;
+      }
+    };
 
     $scope.getRelativeDate = function(datetime) {
       return moment.utc(datetime).fromNow();
