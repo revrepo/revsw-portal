@@ -66,11 +66,6 @@
               return this.key.tooltip + '<br/>' +
                 this.series.name + ': <strong>' + Util.formatNumber( this.y, 3 ) + '</strong>';
             }
-          },
-          subtitle: {
-            align: 'center',
-            text: 'displayed time is local to the computer',
-            y: 300, x: 0
           }
         };
 

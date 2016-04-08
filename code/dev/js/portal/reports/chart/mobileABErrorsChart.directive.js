@@ -59,11 +59,6 @@
               return this.key.tooltip + '<br/>' +
                 this.series.name + ': <strong>' + Util.formatNumber( this.y, 0 ) + '</strong>';
             }
-          },
-          subtitle: {
-            align: 'right',
-            text: 'displayed time is local to the computer',
-            y: 15, x: -30/*to left from the print button*/
           }
         };
 

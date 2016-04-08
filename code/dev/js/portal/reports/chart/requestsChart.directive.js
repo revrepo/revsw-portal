@@ -127,11 +127,6 @@
           return this.key.tooltip + '<br/>' +
             this.series.name + ': ' + Util.convertTraffic(this.y);
         }
-      },
-      subtitle: {
-        align: 'center',
-        text: 'displayed time is local to the computer',
-        y: 300, x: 0
       }
     };
 

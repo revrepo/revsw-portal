@@ -90,12 +90,13 @@
               return this.key.tooltip + '<br/>' +
                 this.series.name + ': <strong>' + Util.formatNumber( this.y / 1000, 2 ) + '</strong> ms';
             }
-          },
-          subtitle: {
-            align: 'right',
-            text: 'displayed time is local to the computer',
-            y: 15, x: -30/*to left from the print button*/
           }
+          // subtitle: {
+          //   align: 'right',
+          //   text: 'displayed time is local to the computer',
+          //   y: 15, x: -30/*to left from the print button*/
+          //   y: 300, x: 0/*bottom*/
+          // }
         };
 
         //  ---------------------------------
