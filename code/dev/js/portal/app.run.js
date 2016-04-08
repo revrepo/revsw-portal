@@ -6,7 +6,7 @@
     .run(runApp);
 
   /*@ngInject*/
-  function runApp($rootScope, $http, AlertService, $state) {
+  function runApp($rootScope, $http, $location, AlertService, $state) {
     $rootScope.alertService = AlertService;
     $rootScope.contactUsLink = 'https://revapm.zendesk.com/hc/en-us/requests/new';
 
@@ -24,8 +24,12 @@
       });
     $rootScope.$on('$stateChangeError', console.log.bind(console));
 
-    $rootScope.goToState = function(state){
+    $rootScope.goToState = function(state, dashboardID){
+      if(dashboardID){
+        $location.path(state + '/' + dashboardID)
+      } else {
         $state.go(state);
+      }
     };
 
     $rootScope.menuExpanded = function(menuState){
@@ -34,6 +38,7 @@
 
     $rootScope.expandMenu = function(menuState, event){
       if($rootScope.menuExpandedNodes.current === menuState) {
+        event.stopPropagation();
         return;
       }
 

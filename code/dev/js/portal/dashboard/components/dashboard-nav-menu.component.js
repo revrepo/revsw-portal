@@ -12,8 +12,9 @@
       replace: true,
       template:
       // TODO: make template as file
-        '<li class="dashboard_menu list"  ui-sref-active-if="{class: \'active-side-menu-item\', state: \'index.dashboard\'}">' +
-        '<a  class="side-menu-item" ng-if="vm.dashboardsList.length>0" ui-sref="index.dashboard.details({dashboardId:vm.dashboardsList[0].id})" >' +
+        '<li class="dashboard_menu list"  ui-sref-active-if="{class: \'active-side-menu-item\', state: \'index.dashboard\'}", ' +
+        'ng-class="{\'active-side-menu-item\': menuExpanded(\'index.dashboard\')}">' +
+        '<a  class="side-menu-item" ng-if="vm.dashboardsList.length>0" ng-click="goToState(\'dashboard\', vm.dashboardsList[0].id)"  >' +
         '<div class="left-menu-start" style="margin-right: 3px;"><i class="fa fa-tachometer"></i> </div>' +
         'Dashboards' +
         '<i ng-click="expandMenu(\'index.dashboard\', $event)" ng-if="vm.dashboardsList.length > 0"' +
@@ -104,3 +105,5 @@
     };
   }
 })();
+
+//ui-sref="index.dashboard.details({dashboardId:vm.dashboardsList[0].id})"
