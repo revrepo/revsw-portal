@@ -5,7 +5,7 @@
      .module('revapm.Portal.Dashboard')
      .controller('DashdoardController', DashdoardController);
 
-   function DashdoardController($scope, $state, $window, $timeout, $localStorage, DashboardSrv, $stateParams) {
+   function DashdoardController($scope, $state, $window, $interval, $localStorage, DashboardSrv, $stateParams) {
      'ngInject';
      var vm = this;
 
@@ -16,13 +16,13 @@
 
      function onResize() {
        if (resizing) {
-         $timeout.cancel(resizing);
+         $interval.cancel(resizing);
        }
-       resizing = $timeout(function() {
+       resizing = $interval(function() {
          var event = new Event('resize');
          window.dispatchEvent(event);
          onResize();
-       }, 1000);
+       }, 1000, 1);
      }
 
 
@@ -124,15 +124,15 @@
       */
      $scope.autoRefresh = function(option) {
        if (!!timeReload) {
-         $timeout.cancel(timeReload);
+         $interval.cancel(timeReload);
        }
 
        if (!!option && !!option.autorefresh && option.autorefresh !== '') {
-         timeReload = $timeout(
+         timeReload = $interval(
            function() {
              $scope.$broadcast('widgetReload');
              $scope.autoRefresh(option);
-           }, option.autorefresh * 60 * 1000);
+           }, option.autorefresh * 60 * 1000, 1);
        }
      };
      /**
@@ -142,7 +142,7 @@
       */
      $scope.refreshWidgets = function() {
        if (!!timeReload) {
-         $timeout.cancel(timeReload);
+         $interval.cancel(timeReload);
        }
        if (!!vm.model.option && vm.model.option.autorefresh !== '') {
          $scope.autoRefresh(vm.model.option);
@@ -157,10 +157,10 @@
       */
      $scope.$on('destroy', function() {
        if (!!timeReload) {
-         $timeout.cancel(timeReload);
+         $interval.cancel(timeReload);
        }
        if (!!resizing) {
-         $timeout.cancel(resizing);
+         $interval.cancel(resizing);
        }
      });
    }

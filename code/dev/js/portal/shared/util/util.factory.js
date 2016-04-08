@@ -28,26 +28,6 @@
     }
 
     /**
-     * Convert value to RPS
-     *
-     * @param {number} bytes
-     * @param {number} delay
-     * @param {boolean=} [isNumber] if true - result will be a numeric. Otherwise string
-     * @returns {string|string}
-     */
-    function toRPS(bytes, delay, isNumber) {
-      if (!angular.isNumber(delay)) {
-        delay = 1800;
-      }
-      var result = (bytes / (delay)).toFixed(1);
-      if (isNumber) {
-        result = parseFloat(result);
-        return result || 0;
-      }
-      return result || '';
-    }
-
-    /**
      * 1234567890.456 --> 1'234'567'890.456
      * 1234567890.456 --> 1'234'567'890.5 when fixed == 1
      *
@@ -87,11 +67,6 @@
        * @inheritDoc
        */
       convertTraffic: convertTraffic,
-
-      /**
-       * @inheritDoc
-       */
-      toRPS: toRPS,
 
       /**
        * @inheritDoc
