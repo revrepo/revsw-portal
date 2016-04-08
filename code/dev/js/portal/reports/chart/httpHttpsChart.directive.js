@@ -66,7 +66,8 @@
         //  ---------------------------------
         var info_ = null,
           https_ = 0,
-          http_ = 0;
+          http_ = 0,
+          tickInterval_ = 10;
 
         $scope.chartOptions = {
           chart: {
@@ -106,9 +107,23 @@
               }
             }
           },
+          xAxis: {
+            crosshair: {
+              width: 1,
+              color: '#000000'
+            },
+            tickInterval: tickInterval_,
+            labels: {
+              autoRotation: false,
+              useHTML: true,
+              formatter: function() {
+                return this.value.label;
+              }
+            }
+          },
           tooltip: {
             formatter: function() {
-              return '<strong>' + this.x + '</strong><br/>' +
+              return this.key.tooltip + '<br/>' +
                 this.series.name + ': <strong>' + Util.formatNumber( this.y, 3 ) + '</strong>';
             }
           }
@@ -158,9 +173,25 @@
               }];
               https_ = http_ = 0;
               if (data[0].data && data[0].data.length > 0) {
-                data[0].data.forEach( function(item) {
+                data[0].data.forEach( function(item, idx, items) {
+
+                  var val = moment( item.time + offset );
+                  var label;
+                  if ( idx % tickInterval_ ) {
+                    label = '';
+                  } else if ( idx === 0 ||
+                    ( new Date( item.time + offset ) ).getDate() !== ( new Date( items[idx - tickInterval_].time + offset ) ).getDate() ) {
+                    label = val.format( '[<span style="color: #000; font-weight: bold;">]HH:mm[</span><br>]MMM D' );
+                  } else {
+                    label = val.format( '[<span style="color: #000; font-weight: bold;">]HH:mm[</span>]' );
+                  }
+
+                  labels.push({
+                    tooltip: val.format( '[<span style="color: #000; font-weight: bold;">]HH:mm[</span>] MMMM Do YYYY' ),
+                    label: label
+                  });
+
                   http_ += item.requests;
-                  labels.push(moment(item.time + offset /*to show the _end_ of interval instead of begin*/ ).format('MMM Do YY h:mm'));
                   series[0].data.push( item.requests / interval );
                 });
               }
