@@ -38,7 +38,8 @@ var Constants = {
       ACCOUNT_SETTINGS: 'Admin',
       WEB_ANALYTICS: 'Web Analytics',
       HELP_SUPPORT: 'Support',
-      WEB: 'Web'
+      WEB: 'Web',
+      MOBILE_APPS: 'Mobile Apps'
     },
     userMenu: {
       UPDATE_PASSWORD: 'Update Password',

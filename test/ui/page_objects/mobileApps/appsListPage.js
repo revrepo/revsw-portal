@@ -116,6 +116,19 @@ var AppsList = {
    */
   getClearSearchTxt: function () {
     return element(by.id(this.locators.buttons.clearSearch.css));
+  },
+
+  // ## Helper Methods
+
+  /**
+   * ### AppsList.getClearSearchTxt()
+   *
+   * Gets the reference to `Clear Search` button element.
+   *
+   * @returns {Promise}
+   */
+  getTitle: function () {
+    return this.getTitleLbl().getText();
   }
 };
 

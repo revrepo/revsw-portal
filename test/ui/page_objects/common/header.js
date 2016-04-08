@@ -49,6 +49,9 @@ var Header = {
         },
         helpSupport: {
           linkText: Constants.header.appMenu.HELP_SUPPORT
+        },
+        mobileApps: {
+          linkText: Constants.header.appMenu.MOBILE_APPS
         }
       },
       user: {
@@ -206,6 +209,20 @@ var Header = {
     return this
       .getNavBar()
       .element(by.linkText(this.locators.menu.navbar.helpSupport.linkText))
+      .click();
+  },
+
+  /**
+   * ### Header.clickMobileApps()
+   *
+   * Triggers a click on the specified navbar `Mobile Apps option`.
+   *
+   * @returns {Promise}
+   */
+  clickMobileApps: function() {
+    return this
+      .getNavBar()
+      .element(by.linkText(this.locators.menu.navbar.mobileApps.linkText))
       .click();
   }
 };

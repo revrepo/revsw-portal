@@ -142,7 +142,75 @@ var AddNewApp = {
   },
 
   // ## Helper Methods
-  
+
+  /**
+   * ### AddNewApp.setAppName()
+   *
+   * Sets a value into App Name field in `Add New App` Page.
+   *
+   * @param {String} value
+   *
+   * @returns {Promise}
+   */
+  setAppName: function (value) {
+    return this
+      .getAppNameTxt()
+      .sendKeys(value);
+  },
+
+  /**
+   * ### AddNewApp.setPlatform()
+   *
+   * Selects a platform value from Platform drop down in `Add New App` Page.
+   *
+   * @param {String} value
+   *
+   * @returns {Promise}
+   */
+  setPlatform: function (value) {
+    return this
+      .getPlatformDDown()
+      .sendKeys(value);
+  },
+
+  /**
+   * ### AddNewApp.clickBackToList()
+   *
+   * Clicks on Back To List button of `Add New App` Page.
+   *
+   * @returns {Promise}
+   */
+  clickBackToList: function () {
+    return this
+      .getBackToListBtn()
+      .click();
+  },
+
+  /**
+   * ### AddNewApp.clickCancel()
+   *
+   * Clicks on Cancel button of `Add New App` Page.
+   *
+   * @returns {Promise}
+   */
+  clickCancel: function () {
+    return this
+      .getCancelBtn()
+      .click();
+  },
+
+  /**
+   * ### AddNewApp.clickRegister()
+   *
+   * Clicks on Register button of `Add New App` Page.
+   *
+   * @returns {Promise}
+   */
+  clickRegister: function () {
+    return this
+      .getRegisterBtn()
+      .click();
+  }
 };
 
 module.exports = AddNewApp;

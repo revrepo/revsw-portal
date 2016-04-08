@@ -57,6 +57,8 @@ var HelpSupportPage = require('./helpSupport/helpSupportPage');
 var HelpPage = require('./help/helpPage');
 var SecSettingsPage = require('./admin/securitySettingsPage');
 var ApiKeysListPage = require('./admin/apiKeysListPage.js');
+var AppsListPage = require('./mobileApps/appsListPage.js');
+var AddNewAppPage = require('./mobileApps/addNewAppPage.js');
 
 // This `Portal` Page Object is the entry point to use all other Page Objects
 // that abstract all components from the Portal App.
@@ -99,6 +101,10 @@ var Portal = {
   secSettingsPage: SecSettingsPage,
   apiKeys: {
     listPage: ApiKeysListPage
+  },
+  mobileApps: {
+    listPage: AppsListPage,
+    addAppPage: AddNewAppPage
   },
 
   // ## Authentication Helper methods
