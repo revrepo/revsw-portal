@@ -31,7 +31,7 @@
         $scope.chartOptions = {
           yAxis: {
             title: {
-              text: 'Erros Count'
+              text: 'Errors Count'
             },
             labels: {
               formatter: function() {
@@ -96,7 +96,7 @@
                 var interval = data.metadata.interval_sec || 1800;
                 var offset = interval * 1000;
                 var labels_filled = false;
-                // console.log( data );
+
                 angular.forEach( data.data, function( dest ) {
                   angular.forEach( dest.items, function( item ) {
                     if ( !labels_filled ) {
