@@ -3,7 +3,7 @@
 
   angular
     .module('revapm.Portal.Shared')
-    .directive('search', function($location, $localStorage, $state, DomainsConfig, Companies, Users, Apps, DashboardSrv, ApiKeys){
+    .directive('search', function($location, $localStorage, $state, $rootScope, DomainsConfig, Companies, Users, Apps, DashboardSrv, ApiKeys){
       return {
         restrict: 'AE',
         templateUrl: 'parts/shared/search/search.html',
@@ -11,15 +11,7 @@
 
         link: function (scope) {
           scope.list = [];
-          scope.searchTerm = '';
-          scope.types = {
-            domains: 'Domains',
-            app_names: 'App names',
-            dashboards: 'Dashboards',
-            users: 'Users',
-            api_keys: 'API Keys',
-            accounts: 'Accounts'
-          };
+          scope.searchTerm = $rootScope.searchTerm;
 
           function init(){
             // DOMAINS
@@ -68,8 +60,10 @@
 
           } init();
 
-          scope.getFilteredList = function(term,x,y,z) {
+          scope.getFilteredList = function(term) {
             scope.searchTerm = term;
+            $rootScope.searchTerm = term;
+
             var results = [];
             term = (term || '').toLowerCase();
             var list = angular.copy(scope.list);
@@ -150,6 +144,8 @@
 
           scope.searchItemSelected = function(item){
             item.searchBarText = item.searchDisplayText;
+            scope.searchTerm = item.searchBarText;
+            $rootScope.searchTerm = item.searchBarText;
 
             switch(item.searchType){
               case 'domain':
@@ -209,8 +205,12 @@
 
           scope.clearSearchBar = function(){
             scope.searchTerm = '';
+            $rootScope.searchTerm = '';
           };
 
+          scope.showClear = function(){
+            return ($rootScope.searchTerm || '').trim().length;
+          };
 
           function selectDomain(domain){
             $localStorage.selectedDomain = domain;
