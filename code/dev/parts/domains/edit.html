@@ -15,25 +15,50 @@
               <a ui-sref="^" ng-disabled="_loading" class="btn btn-default">
                 <i class="glyphicon glyphicon-arrow-left"></i>&nbsp; Back To List
               </a>
-              <a ui-sref="^.advanced({id: params.id})" ng-disabled="_loading" class="btn btn-info">
-                <i class="glyphicon glyphicon-cog"></i>&nbsp; Advanced Mode
+              <a href="" ng-show="!isAdvancedMode" ng-click="onChangeModeView()" ng-disabled="_loading" class="btn btn-info">
+                <i class="icon-revapm-cogs"></i>&nbsp; Advanced Mode
+              </a>
+              <a href="" ng-show="isAdvancedMode" ng-click="onChangeModeView()" ng-disabled="_loading" class="btn btn-info">
+                <i class="glyphicon glyphicon-cog"></i>&nbsp; Basic Mode
               </a>
             </div>
           </div>
         </div>
       </div>
       <div class="panel-body">
-        <form class="form-horizontal" novalidate>
+        <div class="form-horizontal" ng-show="isAdvancedMode">
+          <div name="json" class="col-md-12 domains-advanced-mode-edit" id="json" ng-model="modelAdvance" options="jsoneditor.options" ng-jsoneditor style="height: 550px; padding-left: 0;"></div>
+          <div class="form-group ">
+            <div class="col-sm-offset-2 col-sm-10" style="margin-top: 15px;">
+              <a ui-sref="^" class="btn btn-default">
+                <i class="glyphicon glyphicon-remove"></i>&nbsp; Cancel
+              </a>
+              <button class="btn btn-info" ng-disabled="_loading" ng-click="validateDomain(modelAdvance)">
+                <i class="glyphicon glyphicon-refresh spin" ng-if="_loading"></i>
+                <i class="glyphicon glyphicon-check" ng-if="!_loading"></i>&nbsp; Verify
+              </button>
+              <button class="btn btn-success" ng-disabled="_loading" ng-click="updateDomain(modelAdvance)">
+                <i class="glyphicon glyphicon-refresh spin" ng-if="_loading"></i>
+                <i class="glyphicon glyphicon-file" ng-if="!_loading"></i>&nbsp; Update
+              </button>
+              <button class="btn btn-success" ng-disabled="_loading" ng-click="publishDomain(modelAdvance)">
+                <i class="glyphicon glyphicon-refresh spin" ng-if="_loading"></i>
+                <i class="glyphicon glyphicon-ok" ng-if="!_loading"></i>&nbsp; Publish
+              </button>
+            </div>
+          </div>
+        </div>
+        <form class="form-horizontal" novalidate ng-show="!isAdvancedMode">
           <div class="form-group">
             <label for="domain_name" class="col-sm-3 control-label" popover-trigger="mouseenter">Domain Name</label>
             <div class="col-sm-9">
-              <input type="text" class="form-control" disabled autofocus ng-model="model.domain_name" id="domain_name" placeholder="Domain Name">
+              <input type="text" class="form-control" disabled autofocus ng-model="modelInfo.domain_name" id="domain_name" placeholder="Domain Name">
             </div>
           </div>
           <div class="form-group">
             <label for="cname" class="col-sm-3 control-label" popover-trigger="mouseenter">Domain CNAME</label>
             <div class="col-sm-9">
-              <input type="text" class="form-control" disabled ng-model="model.cname" id="cname" placeholder="Domain CNAME">
+              <input type="text" class="form-control" disabled ng-model="modelInfo.cname" id="cname" placeholder="Domain CNAME">
             </div>
           </div>
           <div class="form-group" ng-if="auth.isReseller() || auth.isRevadmin()">
@@ -209,11 +234,11 @@
                   <div class="domain-caching-rules__info">
                     <div class="pull-left panel-buttons-left">
                       <!-- collapse -->
-                      <a class="btn btn-default btn-xs" href="" title="Collapse Caching Rule" ng-show="!caching_rule.$cachingRuleState.isCollapsed" ng-click="caching_rule.$cachingRuleState.isCollapsed = !caching_rule.$cachingRuleState.isCollapsed">
+                      <a class="btn btn-default btn-xs" href="" title="Collapse Caching Rule" ng-show="!caching_rule.$$cachingRuleState.isCollapsed" ng-click="caching_rule.$$cachingRuleState.isCollapsed = !caching_rule.$$cachingRuleState.isCollapsed">
                         <i class="glyphicon glyphicon-chevron-up"></i>
                       </a>
                       <!-- expend -->
-                      <a class="btn btn-default btn-xs" href="" title="Expand Caching Rule" ng-show="caching_rule.$cachingRuleState.isCollapsed" ng-click="caching_rule.$cachingRuleState.isCollapsed = !caching_rule.$cachingRuleState.isCollapsed">
+                      <a class="btn btn-default btn-xs" href="" title="Expand Caching Rule" ng-show="caching_rule.$$cachingRuleState.isCollapsed" ng-click="caching_rule.$$cachingRuleState.isCollapsed = !caching_rule.$$cachingRuleState.isCollapsed">
                         <i class="glyphicon glyphicon-chevron-down"></i>
                       </a>
                       <!--  Caching Rule Up  -->
@@ -235,11 +260,11 @@
                     </div>
                   </div>
                 </div>
-                <domain-caching-rule class="panel-body" ng-model="caching_rule" ng-show="!caching_rule.$cachingRuleState.isCollapsed"></domain-caching-rule>
+                <domain-caching-rule class="panel-body" ng-model="caching_rule" ng-show="!caching_rule.$$cachingRuleState.isCollapsed"></domain-caching-rule>
               </div>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group ">
             <div class="col-sm-offset-2 col-sm-10">
               <a ui-sref="^" class="btn btn-default">
                 <i class="glyphicon glyphicon-remove"></i>&nbsp; Cancel

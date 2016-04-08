@@ -24,7 +24,16 @@
       $scope: $scope,
       $stateParams: $stateParams
     });
-
+    $scope.isAdvancedMode = $stateParams.isAdvanced || false;
+    $scope.jsoneditor = {
+      options: {
+        mode: 'code',
+        modes: ['code', 'view'], // allowed modes['code', 'form', 'text', 'tree', 'view']
+        error: function(err) {
+          alert(err.toString());
+        }
+      }
+    };
     //Set state (ui.router)
     $scope.setState('index.webApp.domains');
 
@@ -75,14 +84,19 @@
     };
 
     $scope.prepareSimpleDomainUpdate = function(model_current) {
-      var model = _.clone(model_current.toJSON(), true);
+      var model;
+      if (model_current.toJSON === undefined) {
+        model = _.clone(model_current, true);
+      } else {
+        model = _.clone(model_current.toJSON(), true);
+      }
       if (model.rev_component_bp) {
         delete model.rev_component_bp.cache_opt_choice;
         delete model.rev_component_bp.certificate_urls;
         delete model.rev_component_bp.ssl_certificates;
         if (model.rev_component_bp.caching_rules) {
           angular.forEach(model.rev_component_bp.caching_rules, function(item) {
-            delete item.$cachingRuleState;
+            delete item.$$cachingRuleState;
           });
         }
       }
@@ -118,6 +132,7 @@
 
     $scope.getDomain = function(id) {
       $scope.get(id)
+        .then(saveNoChangingValue)
         .then(validateDomainProperties)
         .catch(function(err) {
           $scope.alertService.danger('Could not load domain details');
@@ -134,8 +149,10 @@
        * @return {[type]}        [description]
        */
       function validateDomainProperties(domain) {
+        $scope.modelAdvance = angular.copy($scope.prepareSimpleDomainUpdate(domain));
+        console.log($scope.modelAdvance);
         var _domain_default_property = {
-          proxy_timeout: 30,
+          proxy_timeout: 20,
           domain_aliases: [],
           origin_secure_protocol: 'use_end_user_protocol',
           rev_component_co: {
@@ -144,15 +161,37 @@
         };
         // NOTE: set default properties
         _.defaultsDeep($scope.model, _domain_default_property);
-
+        delete $scope.model.domain_name;
+        delete $scope.model.cname;
+        delete $scope.model.id;
         angular.forEach($scope.model.rev_component_bp.caching_rules, function(item) {
           // NOTE: add parameter for collapsed item
           angular.extend(item, {
-            $cachingRuleState: {
+            $$cachingRuleState: {
               isCollapsed: true
             }
           });
+
         });
+      }
+      /**
+       * @name  saveNoChangingValue
+       * @description
+       *
+       * Save no changing params
+       *
+       * @param  {Object} model
+       * @return {Promise}
+       */
+      function saveNoChangingValue(model) {
+        $scope.modelInfo = {
+          domain_name: model.domain_name,
+          cname: model.cname
+        };
+        delete model.domain_name;
+        delete model.cname;
+        delete model.id;
+        return $q.when(model);
       }
     };
 
@@ -291,7 +330,7 @@
           remove_ignored_from_request: false,
           remove_ignored_from_response: false
         },
-        $cachingRuleState: {
+        $$cachingRuleState: {
           isCollapsed: true
         }
       };
@@ -371,7 +410,7 @@
     $scope.onCollapsAllCachingRule = function() {
       var _rules = $scope.model.rev_component_bp.caching_rules;
       angular.forEach(_rules, function(item) {
-        item.$cachingRuleState.isCollapsed = true;
+        item.$$cachingRuleState.isCollapsed = true;
 
       });
     };
@@ -384,8 +423,31 @@
     $scope.onExpandAllCachingRule = function() {
       var _rules = $scope.model.rev_component_bp.caching_rules;
       angular.forEach(_rules, function(item) {
-        item.$cachingRuleState.isCollapsed = false;
+        item.$$cachingRuleState.isCollapsed = false;
       });
     };
+
+    $scope.onChangeModeView = function() {
+      $scope.isAdvancedMode = !$scope.isAdvancedMode;
+    };
+    /**
+     * @description
+     *
+     * Watch by changing "isAdvancedMode"
+     * Make synce data
+     *
+     * @param  {Boollean} newVal
+     * @param  {Boolean} oldVal
+     * @return
+     */
+    $scope.$watch('isAdvancedMode', function(newVal, oldVal) {
+      if (newVal !== oldVal && newVal === true) {
+        var newModel = $scope.prepareSimpleDomainUpdate($scope.model);
+        $scope.modelAdvance = angular.copy(newModel);
+      }
+      if (newVal !== oldVal && newVal === false) {
+        _.merge($scope.model, $scope.modelAdvance);
+      }
+    });
   }
 })();
