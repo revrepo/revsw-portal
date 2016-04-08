@@ -16,12 +16,12 @@
  * from Rev Software, Inc.
  */
 
-// # Android Page Object
+// # Apps List Page Object
 
 // Requiring `Apps List Table` component page object
 var AppsListTable = require('./appsListTable');
 
-// This `Android App` Page Object abstracts all operations or actions
+// This `Apps List` Page Object abstracts all operations or actions
 // that a common Two-Factor Authentication could do in the Portal app/site.
 var AppsList = {
 
@@ -44,15 +44,6 @@ var AppsList = {
       addNewApp:{
         linkText: 'Add New App'
       },
-      backToList: {
-        linkText: 'Back To List'
-      },
-      cancel: {
-        linkText: 'Cancel'
-      },
-      register: {
-        button: '[ng-click=\"createApp(model)\"]'
-      },
       clearSearch: {
         css: '[ng-click=\"filter.filter = ""\"]'
       }
@@ -60,14 +51,6 @@ var AppsList = {
     inputs: {
       search: {
         id: 'search'
-      },
-      appName: {
-        id: 'app_name'
-      }
-    },
-    dropDowns: {
-      platform: {
-        model: 'model.app_platform'
       }
     }
   },
@@ -76,7 +59,7 @@ var AppsList = {
    * ### AppsList.getTitleLbl()
    *
    * Returns the reference to the `Title` label element (Selenium WebDriver
-   * Element) from the Android Apps List page from the Portal app.
+   * Element) from the Apps List page from the Portal app.
    *
    * @returns {Selenium WebDriver Element}
    */
