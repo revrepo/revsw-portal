@@ -165,9 +165,16 @@
                 </div>
                 <div class="form-group col-md-6" ng-class="{ 'has-error': Company.billingContactEmail.$invalid &&
                             Company.billingContactEmail.$dirty }">
-                  <label for="phoneNumber" class="col-sm-4 control-label" popover-trigger="mouseenter" popover="Contact email">Contact email *</label>
+                  <label for="billingContactEmail" class="col-sm-4 control-label" popover-trigger="mouseenter" popover="Contact email">Contact email *</label>
                   <div class="col-sm-8">
                     <input type="email" class="form-control" required id="billingContactEmail" name="billingContactEmail" placeholder="Contact Email" ng-model="model.billing_info.contact_email" ng-disabled="_loading">
+                  </div>
+                </div>
+                <div class="form-group col-md-6" ng-class="{ 'has-error': Company.billingPhoneNumber.$invalid &&
+                            Company.billingPhoneNumber.$dirty }">
+                  <label for="phoneNumber" class="col-sm-4 control-label" popover-trigger="mouseenter" popover="Contact phone number">Phone </label>
+                  <div class="col-sm-8">
+                    <input type="text" ng-pattern="phoneRegex" class="form-control" id="billingPhoneNumber" name="billingPhoneNumber" placeholder="Contact Phone" ng-model="model.billing_info.phone_number" ng-disabled="_loading">
                   </div>
                 </div>
               </div>
