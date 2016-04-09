@@ -24,6 +24,21 @@
     <button class="btn btn-danger" type="button" ng-click="ok()">OK</button>
   </div>
 </script>
+<!-- -->
+<script type="text/ng-template" id="confirmCreateBillingProfileModal.html">
+  <div class="modal-header">
+    <h3 class="modal-title">Confirm</h3>
+  </div>
+  <div class="modal-body">
+    Are you sure you want to create Billing Profile for
+    <strong>{{model.companyName}}</strong> company?
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+    <button class="btn btn-danger" type="button" ng-click="ok()">OK</button>
+  </div>
+</script>
+
 <div class="container-fluid" ui-view="page">
   <div class="row">
     <div class="col-sm-12">
@@ -107,7 +122,7 @@
             </div>
             <div class="form-group" ng-class="{ 'has-error': Company.contactEmail.$invalid &&
                             Company.contactEmail.$dirty }">
-              <label for="phoneNumber" class="col-sm-2 control-label" popover-trigger="mouseenter" popover="Contact email">Contact email *</label>
+              <label for="phoneNumber" class="col-sm-2 control-label" popover-trigger="mouseenter" popover="Contact Email">Contact Email *</label>
               <div class="col-sm-10">
                 <input type="email" class="form-control" required id="contactEmail" name="contactEmail" placeholder="Contact Email" ng-model="model.contact_email" ng-disabled="_loading">
               </div>
@@ -140,7 +155,7 @@
                 <h3 class="col-md-12 text-center"> Billing Contact Details</h3>
               </div>
               <div class="form-group col-md-12">
-                <label class="col-sm-4 control-label" for="useContactInfoAsBillingInfo">Will be used account profile contact details as billing details.</label>
+                <label class="col-sm-4 control-label" for="useContactInfoAsBillingInfo">Use Company Contact Information As Billing Contact Details?</label>
                 <div class="col-sm-8">
                   <toggle-switch name="useContactInfoAsBillingInfo" ng-model="model.use_contact_info_as_billing_info" on-label="Yes" off-label="No">
                   </toggle-switch>
@@ -233,18 +248,23 @@
                 <a ui-sref="^" ng-disabled="_loading" class="btn btn-default">
                   <i class="glyphicon glyphicon-remove"></i>&nbsp; Cancel
                 </a>
-                <input type="submit" class="btn btn-success" ng-disabled="_loading || _disabled || !Company.$valid" value="Update Company Profile">
+                <button type="submit" class="btn btn-success" ng-disabled="_loading || _disabled || !Company.$valid" value="Update Company Profile">
+                 <i class="glyphicon glyphicon-save"></i> Update Company Profile
+                </button>
                 <!-- TODO: Need to disable "Edit Billing Profile" button if the billing profile is not active
                                 // TODO: in Chargify  -->
-                <a ng-if="model.chargify_id" href="{{model.billing_portal_link.url}}" class="btn btn-primary" target="_blank" ng-disabled="_loading || _disabled">
+                <a ng-if="model.chargify_id" ng-if="!!model.billing_portal_link.url" href="{{model.billing_portal_link.url}}" class="btn btn-primary" target="_blank" ng-disabled="_loading || _disabled">
                   <i class="glyphicon glyphicon-lock"></i> Update Payment Profile</a>
-                <button class="btn btn-primary" ng-if="User.isRevadmin() || User.isReseller()" ng-click="createBillingProfile(model)">
-                  Create Billing Profile
-                </button>
+                <!-- Create Billing Profile -->
+                <a href="" class="btn btn-primary" ng-if="!model.chargify_id && (userService.isRevadmin() || userService.isReseller())" ng-click="createBillingProfile(model)">
+                 <i class="glyphicon glyphicon-credit-card"></i> Create Billing Profile
+                </a>
                 <button ng-if="model.subscription_id" ng-click="deleteCompanyProfile(model.id)" class="btn btn-danger pull-right" ng-disabled="true || _loading || _disabled">
                   <i class="glyphicon glyphicon-refresh spin" ng-if="_loading"></i>
                   <i class="glyphicon glyphicon-remove" ng-if="!_loading"></i>&nbsp; Delete Company Profile
                 </button>
+
+
               </div>
             </div>
           </form>
