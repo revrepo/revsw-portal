@@ -53,13 +53,23 @@
             });
         });
     };
-
+    /**
+     * @name createBillingProfile
+     * @description
+     *
+     * Send command to create new customer in Chargify
+     *
+     * @param  {Object} company [description]
+     * @return
+     */
     $scope.createBillingProfile = function (company) {
-      $scope.confirm('confirmUpdateModal.html', company)
+
+      $scope.confirm('confirmCreateBillingProfileModal.html', company)
         .then(function () {
           $scope._loading = true;
-          Companies.createBillingProfile({id: company.id}, company)
-            .then(function () {
+          Companies.createBillingProfile({id: company.id}, company).$promise
+            .then(function (account) {
+              $scope.model.chargify_id = account.chargify_id;
               AlertService.success('Successfully created billing profile');
             })
             .catch(function (err) {
