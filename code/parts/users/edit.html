@@ -171,7 +171,7 @@
                 Cancel
               </a>
               <button class="btn btn-success"
-                      ng-disabled="_loading"
+                      ng-disabled="disableSubmit(model, true)"
                       ng-click="updateUser(model)">
                 <i class="glyphicon glyphicon-ok"></i>&nbsp;
                 Update
