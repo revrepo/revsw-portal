@@ -123,12 +123,42 @@ var AppsList = {
   /**
    * ### AppsList.getClearSearchTxt()
    *
-   * Gets the reference to `Clear Search` button element.
+   * Gets the title from `Title` label element.
    *
    * @returns {Promise}
    */
   getTitle: function () {
-    return this.getTitleLbl().getText();
+    return this
+      .getTitleLbl()
+      .getText();
+  },
+
+  /**
+   * ### AppsList.clickAddNewApp()
+   *
+   * Clicks on `Add New App` button element.
+   *
+   * @returns {Promise}
+   */
+  clickAddNewApp: function () {
+    return this
+      .getAddNewAppBtn()
+      .click();
+  },
+
+  /**
+   * ### AppsList.setSearch(value)
+   *
+   * Sets value in `Search` text input element.
+   *
+   * @param {String} value
+   *
+   * @returns {Promise}
+   */
+  setSearch: function (value) {
+    return this
+      .getSearchTxt()
+      .sendKeys(value);
   }
 };
 

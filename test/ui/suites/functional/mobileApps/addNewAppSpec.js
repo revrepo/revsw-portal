@@ -28,7 +28,7 @@ describe('Functional', function () {
 
     beforeAll(function () {
       Portal.signIn(adminUser);
-      Portal.header.clickMobileApps();
+      Portal.header.goTo('Mobile Apps');
       Portal.header.goTo('Android');
     });
 
@@ -42,9 +42,14 @@ describe('Functional', function () {
     afterEach(function () {
     });
 
-    it('should add a new app successfully', function () {
+    it('should get title from list app list', function () {
         var title = Portal.mobileApps.listPage.getTitle();
         expect(title).toEqual('Android Apps List');
+    });
+
+    it('should add a new app successfully', function () {
+        Portal.mobileApps.listPage.clickAddNewApp();
+        Portal.mobileApps.listPage.clickAddNewApp();
     });
   });
 });

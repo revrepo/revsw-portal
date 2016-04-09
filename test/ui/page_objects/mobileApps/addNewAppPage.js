@@ -144,7 +144,7 @@ var AddNewApp = {
   // ## Helper Methods
 
   /**
-   * ### AddNewApp.setAppName()
+   * ### AddNewApp.setAppName(value)
    *
    * Sets a value into App Name field in `Add New App` Page.
    *
@@ -159,7 +159,7 @@ var AddNewApp = {
   },
 
   /**
-   * ### AddNewApp.setPlatform()
+   * ### AddNewApp.setPlatform(value)
    *
    * Selects a platform value from Platform drop down in `Add New App` Page.
    *
@@ -210,6 +210,24 @@ var AddNewApp = {
     return this
       .getRegisterBtn()
       .click();
+  },
+
+  /**
+   * ### AddNewApp.createApp(app)
+   *
+   * Clicks on Register button of `Add New App` Page.
+   *
+   * @param {object} app, app data with following schema.
+   *
+   *    {
+   *        name: String,
+   *        platform: String
+   *    }   *
+   * @returns {Promise}
+   */
+  createApp: function (app) {
+    this.setAppName(app.name);
+    this.setPlatform(app.platform);
   }
 };
 
