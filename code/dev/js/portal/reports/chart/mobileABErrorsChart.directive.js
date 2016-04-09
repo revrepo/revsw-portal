@@ -26,6 +26,7 @@
         $scope.heading = 'SDK Failed Requests Graph';
         $scope.span = '1';
         $scope._loading = false;
+        var tickInterval_ = 4;
 
         //  ---------------------------------
         $scope.chartOptions = {
@@ -39,9 +40,23 @@
               }
             }
           },
+          xAxis: {
+            crosshair: {
+              width: 1,
+              color: '#000000'
+            },
+            tickInterval: tickInterval_,
+            labels: {
+              autoRotation: false,
+              useHTML: true,
+              formatter: function() {
+                return this.value.label;
+              }
+            }
+          },
           tooltip: {
             formatter: function() {
-              return '<strong>' + this.x + '</strong><br/>' +
+              return this.key.tooltip + '<br/>' +
                 this.series.name + ': <strong>' + Util.formatNumber( this.y, 0 ) + '</strong>';
             }
           }
@@ -97,15 +112,31 @@
                 var offset = interval * 1000;
                 var labels_filled = false;
 
-                angular.forEach( data.data, function( dest ) {
-                  angular.forEach( dest.items, function( item ) {
+                data.data.forEach( function( dest ) {
+                  dest.items.forEach( function( item, idx, items ) {
                     if ( !labels_filled ) {
-                      labels.push( moment( item.key + offset /*to show the _end_ of interval instead of begin*/ ).format( 'MMM Do YY h:mm' ) );
+                      // labels.push( moment( item.key + offset /*to show the _end_ of interval instead of begin*/ ).format( 'MMM Do YY h:mm' ) );
+                      var val = moment( item.key + offset );
+                      var label;
+                      if ( idx % tickInterval_ ) {
+                        label = '';
+                      } else if ( idx === 0 ||
+                        ( new Date( item.key + offset ) ).getDate() !== ( new Date( items[idx - tickInterval_].key + offset ) ).getDate() ) {
+                        label = val.format( '[<span style="color: #000; font-weight: bold;">]HH:mm[</span><br>]MMM D' );
+                      } else {
+                        label = val.format( '[<span style="color: #000; font-weight: bold;">]HH:mm[</span>]' );
+                      }
+
+                      labels.push({
+                        tooltip: val.format( '[<span style="color: #000; font-weight: bold;">]HH:mm[</span>] MMMM Do YYYY' ),
+                        label: label
+                      });
                     }
                     hits[dest.key].push( item.count );
                   });
                   labels_filled = true;
                 });
+
                 $scope.hits.labels = labels;
                 $scope.hits.series[0].data = hits.origin;
                 $scope.hits.series[1].data = hits.rev_edge;

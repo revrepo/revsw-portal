@@ -31,7 +31,8 @@
         var lbl_ = null,
           rev_avg_ = 0,
           origin_avg_ = 0,
-          imp_avg_ = 0;
+          imp_avg_ = 0,
+          tickInterval_ = 4;
 
         $scope.chartOptions = {
           chart: {
@@ -47,7 +48,7 @@
                     '</span><br>RevAPM Avg <span style="font-weight: bold; color: black;">' + rev_avg_ +
                     '</span><br>Improvement <span style="font-weight: bold; color: darkred;">' + imp_avg_ +
                     '</span> %',
-                    80, 0, '', 0, 0, true/*html*/ )
+                    this.xAxis[0].toPixels( 0 ), 0, '', 0, 0, true/*html*/ )
                   .css({ color: '#444' })
                   .attr({
                     fill: 'rgba(240, 240, 240, 0.6)',
@@ -63,11 +64,11 @@
           },
           yAxis: {
             title: {
-              text: 'Speed Kb/s'
+              text: 'Speed'
             },
             labels: {
               formatter: function() {
-                return Util.formatNumber( this.value / 1024, 0 );
+                return Util.convertTraffic( this.value );
               }
             }
           },
@@ -75,11 +76,19 @@
             crosshair: {
               width: 1,
               color: '#000000'
+            },
+            tickInterval: tickInterval_,
+            labels: {
+              autoRotation: false,
+              useHTML: true,
+              formatter: function() {
+                return this.value.label;
+              }
             }
           },
           tooltip: {
             formatter: function() {
-              return '<strong>' + this.x + '</strong><br/>' +
+              return this.key.tooltip + '<br/>' +
                 this.series.name + ': <strong>' + Util.convertTraffic( this.y ) + '</strong>';
             }
           }
@@ -132,13 +141,29 @@
                   origin: [],
                 };
                 var interval = data.metadata.interval_sec || 1800;
+
                 var offset = interval * 1000;
                 var labels_filled = false;
                 // console.log( data );
-                angular.forEach( data.data, function( dest ) {
-                  angular.forEach( dest.items, function( item ) {
+                data.data.forEach( function( dest ) {
+                  dest.items.forEach( function( item, idx, items ) {
                     if ( !labels_filled ) {
-                      labels.push( moment( item.key + offset /*to show the _end_ of interval instead of begin*/ ).format( 'MMM Do YY h:mm' ) );
+                      var val = moment( item.key + offset );
+                      var label;
+                      if ( idx % tickInterval_ ) {
+                        label = '';
+                      } else if ( idx === 0 ||
+                        ( new Date( item.key + offset ) ).getDate() !== ( new Date( items[idx - tickInterval_].key + offset ) ).getDate() ) {
+                        label = val.format( '[<span style="color: #000; font-weight: bold;">]HH:mm[</span><br>]MMM D' );
+                      } else {
+                        label = val.format( '[<span style="color: #000; font-weight: bold;">]HH:mm[</span>]' );
+                      }
+
+                      labels.push({
+                        tooltip: val.format( '[<span style="color: #000; font-weight: bold;">]HH:mm[</span>] MMMM Do YYYY' ),
+                        label: label
+                      });
+
                     }
                     hits[dest.key].push( ( item.count ? ( item.sent_bytes * 1000 / item.time_spent_ms ) : null ) );
                   });

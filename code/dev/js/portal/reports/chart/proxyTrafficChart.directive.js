@@ -64,7 +64,8 @@
         var info_ = null,
           rps_avg_ = 0,
           rps_max_ = 0,
-          hits_total_ = 0;
+          hits_total_ = 0,
+          tickInterval_ = 10;
 
         $scope.chartOptions = {
           chart: {
@@ -103,9 +104,23 @@
               }
             }
           },
+          xAxis: {
+            crosshair: {
+              width: 1,
+              color: '#000000'
+            },
+            tickInterval: tickInterval_,
+            labels: {
+              autoRotation: false,
+              useHTML: true,
+              formatter: function() {
+                return this.value.label;
+              }
+            }
+          },
           tooltip: {
             formatter: function() {
-              return '<strong>' + this.x + '</strong><br/>' +
+              return this.key.tooltip + '<br/>' +
                 this.series.name + ': <strong>' + Util.formatNumber( this.y, 3 ) + '</strong>';
             }
           }
@@ -139,8 +154,24 @@
                   data: []
                 }];
                 var labels = [];
-                data.data.forEach( function(item) {
-                  labels.push(moment(item.time + offset /*to show the _end_ of interval instead of begin*/ ).format('MMM Do YY h:mm'));
+                data.data.forEach( function(item, idx, items) {
+
+                  var val = moment( item.time + offset );
+                  var label;
+                  if ( idx % tickInterval_ ) {
+                    label = '';
+                  } else if ( idx === 0 ||
+                    ( new Date( item.time + offset ) ).getDate() !== ( new Date( items[idx - tickInterval_].time + offset ) ).getDate() ) {
+                    label = val.format( '[<span style="color: #000; font-weight: bold;">]HH:mm[</span><br>]MMM D' );
+                  } else {
+                    label = val.format( '[<span style="color: #000; font-weight: bold;">]HH:mm[</span>]' );
+                  }
+
+                  labels.push({
+                    tooltip: val.format( '[<span style="color: #000; font-weight: bold;">]HH:mm[</span>] MMMM Do YYYY' ),
+                    label: label
+                  });
+
                   var rps = item.requests / interval;
                   rps_avg_ += rps;
                   if ( rps > rps_max_ ) {
