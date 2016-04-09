@@ -46,7 +46,7 @@
             >API Key</label>
 
             <div class="col-sm-10">
-              <button class="btn btn-primary" clipboard text="key.key" on-copied="copyCallback()" on-error="copyCallback(err)" style="vertical-align: initial;"><i class="fa fa-files-o"></i></button>
+              <button class="btn btn-primary" clipboard text="key.key" on-copied="copyCallback()" on-error="copyCallback(err)" style="vertical-align: initial;"  tooltip="Click to copy the key to the clipboard" tooltip-placement="top"><i class="fa fa-files-o"></i></button>
               <button class="btn btn-primary" ng-click="switchKeyVisibility(key)" ng-hide="key.showKey" style="vertical-align: initial;">Show API Key</button>
               <input id="key" ng-if="key.showKey" ng-blur="switchKeyVisibility(key)" class="form-control" value="{{key.key}}" style="width: 300px; display: inline-block; position: absolute; z-index: 999; margin-left: 4px;" focus-me="key.showKey">
             </div>
