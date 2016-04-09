@@ -164,5 +164,17 @@
     $scope.$watch('key.account_id', function(account_id) {
       $scope.selectDomains(account_id);
     });
+
+    $scope.switchKeyVisibility = function(item){
+      item.showKey = !item.showKey;
+    };
+
+    $scope.copyCallback = function(err){
+      if(err){
+        $scope.alertService.danger('Copying failed, please try manual.', 2000);
+      } else {
+        $scope.alertService.success('The API key has been copied to the clipboard.', 2000);
+      }
+    };
   }
 })();

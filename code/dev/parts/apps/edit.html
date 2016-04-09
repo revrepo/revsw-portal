@@ -104,6 +104,17 @@
             </div>
           </div>
           <div class="form-group">
+            <label for="key"
+                   class="col-sm-2 control-label"
+            >SDK Key</label>
+
+            <div class="col-sm-10">
+              <button class="btn btn-primary" clipboard text="model.sdk_key" on-copied="copyCallback()" on-error="copyCallback(err)" style="vertical-align: initial;"><i class="fa fa-files-o"></i></button>
+              <button class="btn btn-primary" ng-click="switchKeyVisibility(model)" ng-hide="model.showKey" style="vertical-align: initial;">Show API Key</button>
+              <input id="key" ng-if="model.showKey" ng-blur="switchKeyVisibility(model)" class="form-control" value="{{model.sdk_key}}" style="width: 300px; display: inline-block; position: absolute; z-index: 999; margin-left: 4px;" focus-me="model.showKey">
+            </div>
+          </div>
+          <div class="form-group">
             <label for="operation_mode"
                    popover-append-to-body="{{true}}"
                    class="col-sm-2 control-label"

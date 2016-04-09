@@ -302,5 +302,17 @@
         $scope.jsonIsInvalid = true;
       }
     });
+
+    $scope.switchKeyVisibility = function(item){
+      item.showKey = !item.showKey;
+    };
+
+    $scope.copyCallback = function(err){
+      if(err){
+        $scope.alertService.danger('Copying failed, please try manual.', 2000);
+      } else {
+        $scope.alertService.success('The SDK key has been copied to the clipboard.', 2000);
+      }
+    };
   }
 })();
