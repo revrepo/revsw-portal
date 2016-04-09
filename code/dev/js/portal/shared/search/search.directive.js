@@ -18,6 +18,7 @@
             DomainsConfig.query().$promise.then(function(data){
               data.forEach(function(item){
                 item.searchType = 'domain';
+                item.domain_name += ' ';
                 scope.list.push(item);
               });
             });
@@ -25,6 +26,7 @@
             Companies.query().$promise.then(function(data){
               data.forEach(function(item){
                 item.searchType = 'company';
+                item.companyName += ' ';
                 scope.list.push(item);
               });
             });
@@ -36,10 +38,10 @@
               });
             });
 
-
             Apps.query().$promise.then(function(data){
               data.forEach(function(item){
                 item.searchType = 'app';
+                item.app_name += ' ';
                 scope.list.push(item);
               });
             });
@@ -47,6 +49,7 @@
             ApiKeys.query().$promise.then(function(data){
               data.forEach(function(item){
                 item.searchType = 'apiKey';
+                item.key_name += ' ';
                 scope.list.push(item);
               });
             });
@@ -54,6 +57,7 @@
             DashboardSrv.getAll().then(function(data){
               data.forEach(function(item){
                 item.searchType = 'dashboard';
+                item.title += ' ';
                 scope.list.push(item);
               });
             });

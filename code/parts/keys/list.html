@@ -22,11 +22,6 @@
     </div>
   </div>
 
-  <h3 class="hidden-lg hidden-md hidden-sm">XS</h3>
-  <h3 class="hidden-lg hidden-md hidden-xs">SM</h3>
-  <h3 class="hidden-lg hidden-sm hidden-xs">MD</h3>
-  <h3 class="hidden-md hidden-sm hidden-xs">LG</h3>
-
   <div class="row">
     <div class="col-md-12">
       <div class="panel panel-default">
@@ -90,7 +85,7 @@
                 </a>
               </td>
               <td>
-                <button class="btn btn-primary" clipboard text="item.key" on-copied="copyCallback()" on-error="copyCallback(err)" style="vertical-align: initial;"><i class="fa fa-files-o"></i></button>
+                <button class="btn btn-primary" clipboard text="item.key" on-copied="copyCallback()" on-error="copyCallback(err)" style="vertical-align: initial;" tooltip="Click to copy the key to the clipboard" tooltip-placement="top"><i class="fa fa-files-o"></i></button>
                 <button class="btn btn-primary" ng-click="switchKeyVisibility(item)" ng-hide="item.showKey" style="vertical-align: initial;">Show API Key</button>
                 <input ng-if="item.showKey" ng-blur="switchKeyVisibility(item)" class="form-control" value="{{item.key}}" style="width: 300px; display: inline-block; position: absolute; z-index: 999; margin-left: 4px;" focus-me="item.showKey">
               </td>
