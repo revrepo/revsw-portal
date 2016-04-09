@@ -105,6 +105,13 @@
                 <input type="text" ng-pattern="phoneRegex" class="form-control" required id="phoneNumber" name="phoneNumber" placeholder="Phone Number" ng-model="model.phone_number" ng-disabled="_loading">
               </div>
             </div>
+            <div class="form-group" ng-class="{ 'has-error': Company.contactEmail.$invalid &&
+                            Company.contactEmail.$dirty }">
+              <label for="phoneNumber" class="col-sm-2 control-label" popover-trigger="mouseenter" popover="Contact email">Contact email *</label>
+              <div class="col-sm-10">
+                <input type="email" class="form-control" required id="contactEmail" name="contactEmail" placeholder="Contact Email" ng-model="model.contact_email" ng-disabled="_loading">
+              </div>
+            </div>
             <hr>
             <div class="form-group" ng-class="{ 'has-error': Company.comment.$invalid &&
                             Company.comment.$dirty }">
@@ -114,6 +121,7 @@
                 </textarea>
               </div>
             </div>
+            <!-- -->
             <div class="form-group" ng-if="model.chargify_id">
               <label for="comment" class="col-sm-2 control-label" popover-trigger="mouseenter" popover="Billing plan">Billing Plan</label>
               <div class="col-sm-10">
@@ -125,13 +133,96 @@
                 </ui-select>
               </div>
             </div>
+            <!--  Section “Billing Contact Details” only for accounts without chagify_id -->
+            <section class="row billing_contact_details" ng-if="!model.chargify_id">
+              <hr>
+              <div class="col-md-12 ">
+                <h3 class="col-md-12 text-center"> Billing Contact Details</h3>
+              </div>
+              <div class="form-group col-md-12">
+                <label class="col-sm-4 control-label" for="useContactInfoAsBillingInfo">Will be used account profile contact details as billing details.</label>
+                <div class="col-sm-8">
+                  <toggle-switch name="useContactInfoAsBillingInfo" ng-model="model.use_contact_info_as_billing_info" on-label="Yes" off-label="No">
+                  </toggle-switch>
+                </div>
+              </div>
+              <div class="row contact_info" ng-if="!model.use_contact_info_as_billing_info">
+                <!-- billing_info.first_name-->
+                <div class="form-group col-md-6" ng-class="{ 'has-error': Company.firstName.$invalid &&
+                            Company.firstName.$dirty }">
+                  <label for="firstName" class="col-sm-4 control-label" popover-trigger="mouseenter" popover="First Name">First Name *</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" required id="first_name" name="firstName" placeholder="First Name" ng-model="model.billing_info.first_name" ng-disabled="_loading">
+                  </div>
+                </div>
+                <!-- billing_info.last_name-->
+                <div class="form-group col-md-6" ng-class="{ 'has-error': Company.lastName.$invalid &&
+                            Company.lastName.$dirty }">
+                  <label for="lastName" class="col-sm-4 control-label" popover-trigger="mouseenter" popover="First Name">Last Name *</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" required id="last_name" name="lastName" placeholder="Last Name" ng-model="model.billing_info.last_name" ng-disabled="_loading">
+                  </div>
+                </div>
+                <div class="form-group col-md-6" ng-class="{ 'has-error': Company.billingContactEmail.$invalid &&
+                            Company.billingContactEmail.$dirty }">
+                  <label for="phoneNumber" class="col-sm-4 control-label" popover-trigger="mouseenter" popover="Contact email">Contact email *</label>
+                  <div class="col-sm-8">
+                    <input type="email" class="form-control" required id="billingContactEmail" name="billingContactEmail" placeholder="Contact Email" ng-model="model.billing_info.contact_email" ng-disabled="_loading">
+                  </div>
+                </div>
+              </div>
+              <!-- Addres info-->
+              <div class="row" ng-if="!model.use_contact_info_as_billing_info">
+                <div class="form-group col-md-6">
+                  <label for="address1" class="col-sm-4 control-label" popover-trigger="mouseenter" popover="Will be used as a billing address later.">Address *</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" required id="address1" placeholder="Address 1" ng-model="model.address1" ng-disabled="_loading">
+                  </div>
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="address2" class="col-sm-4 control-label" popover-trigger="mouseenter" popover="Will be used as a billing address later.">Address (Line 2) &nbsp;</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" id="address2" placeholder="Address (Line 2)" ng-model="model.address2" ng-disabled="_loading">
+                  </div>
+                </div>
+              </div>
+              <!-- -->
+              <div class="row" ng-if="!model.use_contact_info_as_billing_info">
+                <div class="form-group col-md-6">
+                  <label for="billingCountry" class="col-sm-4 control-label" popover-trigger="mouseenter" popover="Will be used in a billing address.">Country *</label>
+                  <div class="col-sm-8">
+                    <select type="text" class="form-control" id="billingCountry" placeholder="Country" required ng-model="model.billing_info.country" ng-options="key as value for (key , value) in countries" ng-disabled="_loading">
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="billingState" class="col-sm-4 control-label" popover-trigger="mouseenter" popover="Will be used in a billing address.">State *</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" id="billingState" required placeholder="State" ng-model="model.billing_info.state" ng-disabled="_loading">
+                  </div>
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="billingCity" class="col-sm-4 control-label" popover-trigger="mouseenter" popover="Will be used in a billing address.">City *</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" id="billingCity" required placeholder="City" ng-model="model.billing_info.city" ng-disabled="_loading">
+                  </div>
+                </div>
+                <div class="form-group col-md-6" ng-class="{ 'has-error': Company.billingZipcode.$invalid &&
+                            Company.Zipcode.$dirty }">
+                  <label for="billingZipcode" class="col-sm-4 control-label" popover-trigger="mouseenter" popover="Will be used in a billing address.">Zip Code *</label>
+                  <div class="col-sm-8">
+                    <input type="text" ng-pattern="zipRegex" class="form-control" id="billingZipcode" name="billingZipcode" maxlength="10" required placeholder="Zip Code" ng-model="model.billing_info.zipcode" ng-disabled="_loading">
+                  </div>
+                </div>
+              </div>
+            </section>
             <hr>
             <div class="form-group">
               <div class="col-sm-offset-2 col-sm-10">
                 <a ui-sref="^" ng-disabled="_loading" class="btn btn-default">
                   <i class="glyphicon glyphicon-remove"></i>&nbsp; Cancel
                 </a>
-                <input type="submit" class="btn btn-success" ng-disabled="_loading || _disabled" value="Update Company Profile">
+                <input type="submit" class="btn btn-success" ng-disabled="_loading || _disabled || !Company.$valid" value="Update Company Profile">
                 <!-- TODO: Need to disable "Edit Billing Profile" button if the billing profile is not active
                                 // TODO: in Chargify  -->
                 <a ng-if="model.chargify_id" href="{{model.billing_portal_link.url}}" class="btn btn-primary" target="_blank" ng-disabled="_loading || _disabled">
