@@ -304,8 +304,6 @@
           !model.origin_server ||
           !model.origin_host_header ||
           !model.origin_server_location_id ||
-          !model.domain_aliases || model.domain_aliases.length === 0 ||
-          !model.domain_wildcard_alias ||
           !model.proxy_timeout;
       }
     };
