@@ -44,12 +44,12 @@
               });
             });
 
-            //ApiKeys.query().$promise.then(function(data){
-            //  data.forEach(function(item){
-            //    item.searchType = 'apiKey';
-            //    scope.list.push(item);
-            //  });
-            //});
+            ApiKeys.query().$promise.then(function(data){
+              data.forEach(function(item){
+                item.searchType = 'apiKey';
+                scope.list.push(item);
+              });
+            });
 
             DashboardSrv.getAll().then(function(data){
               data.forEach(function(item){
@@ -192,7 +192,7 @@
                 break;
               case 'apiKey':
                 if(item.searchAction === 'edit'){
-                  $location.path('users/edit/' + item.id);
+                  $location.path('keys/edit/' + item.id);
                 }
                 break;
               case 'dashboard':
