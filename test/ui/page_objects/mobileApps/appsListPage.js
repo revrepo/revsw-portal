@@ -131,7 +131,7 @@ var AppsList = {
   // ## Helper Methods
 
   /**
-   * ### AppsList.getClearSearchTxt()
+   * ### AppsList.getTitle()
    *
    * Gets the title from `Title` label element.
    *
@@ -190,9 +190,9 @@ var AppsList = {
   },
 
   /**
-   * ### AddNewApp.existApp(app)
+   * ### AddNewApp.findApp(app)
    *
-   * Searchs an app in the `Add New App` Page.
+   * Finds an app in the `Add New App` Page.
    *
    * @param {object} app, app data with following schema.
    *
