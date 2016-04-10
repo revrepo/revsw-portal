@@ -147,7 +147,7 @@
           };
 
           scope.searchItemSelected = function(item){
-            item.searchBarText = item.searchDisplayText;
+            item.searchBarText = item.searchDisplayText.trim();
             scope.searchTerm = item.searchBarText;
             $rootScope.searchTerm = item.searchBarText;
 
