@@ -6,7 +6,7 @@
     .controller('KeysEditController', KeysEditController);
 
   // @ngInject
-  function KeysEditController($scope, $injector, $stateParams, CRUDController, ApiKeys, Companies, DomainsConfig, AlertService) {
+  function KeysEditController($scope, $injector, $stateParams, $location, CRUDController, ApiKeys, Companies, DomainsConfig, AlertService) {
     //Invoking crud actions
     $injector.invoke(CRUDController, this, {
       $scope: $scope,
@@ -145,6 +145,7 @@
         .$promise
         .then(function (data) {
           AlertService.success('API Key updated');
+          $scope.$parent.list();
         })
         .catch(function (err) {
           AlertService.danger(err);
@@ -154,11 +155,9 @@
         });
     };
 
-    /**
-     * Close dialog
-     */
-    $scope.cancel = function () {
-      $modalInstance.dismiss('cancel');
+
+    $scope.goToList = function () {
+      $location.path('/keys');
     };
 
     $scope.$watch('key.account_id', function(account_id) {
