@@ -18,8 +18,10 @@
 
 // # Apps List Page Object
 
-// Requiring `Apps List Table` component page object
+// Requiring `Apps List Table` component page object.
 var AppsListTable = require('./appsListTable');
+// Requiring `Add New Aapp` component page object.
+var AddNewAppPage = require('./addNewAppPage');
 
 // This `Apps List` Page Object abstracts all operations or actions
 // that a common Two-Factor Authentication could do in the Portal app/site.
@@ -54,6 +56,14 @@ var AppsList = {
       }
     }
   },
+
+  // `Apps List Table` Page is compound mainly by a table. This property makes
+  // reference to the AppsListPage Page Object to interact with it.
+  appsTable: AppsListTable,
+
+  // `Apps List Form` Page is compound mainly by a form. This property makes
+  // reference to the AddNewAppPage Page Object to interact with it.
+  appsForm: AddNewAppPage,
 
   /**
    * ### AppsList.getTitleLbl()
@@ -159,6 +169,42 @@ var AppsList = {
     return this
       .getSearchTxt()
       .sendKeys(value);
+  },
+
+  /**
+   * ### AddNewApp.addNewApp(app)
+   *
+   * Adds new app in the `Add New App` Page.
+   *
+   * @param {object} app, app data with following schema.
+   *
+   *    {
+   *        name: String,
+   *        platform: String
+   *    }
+   * @returns {Promise}
+   */
+  addNewApp: function (app) {
+    this.clickAddNewApp();
+    this.appsForm.registerApp(app);
+  },
+
+  /**
+   * ### AddNewApp.existApp(app)
+   *
+   * Searchs an app in the `Add New App` Page.
+   *
+   * @param {object} app, app data with following schema.
+   *
+   *    {
+   *        name: String,
+   *        platform: String
+   *    }
+   * @returns {Promise}
+   */
+  findApp: function (app) {
+    this.setSearch(app.name);
+    return this.appsTable.countTotalRows();
   }
 };
 

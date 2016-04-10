@@ -48,8 +48,14 @@ describe('Functional', function () {
     });
 
     it('should add a new app successfully', function () {
-        Portal.mobileApps.listPage.clickAddNewApp();
-        Portal.mobileApps.listPage.clickAddNewApp();
+        var app = {
+          name: 'MyApp',
+          platform: 'Android'
+        };
+        Portal.mobileApps.listPage.addNewApp(app);
+        Portal.header.goTo('Android');
+        var findApp = Portal.mobileApps.listPage.findApp(app);
+        expect(findApp).toBe(0);
     });
   });
 });

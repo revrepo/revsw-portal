@@ -213,7 +213,7 @@ var AddNewApp = {
   },
 
   /**
-   * ### AddNewApp.createApp(app)
+   * ### AddNewApp.registerApp(app)
    *
    * Clicks on Register button of `Add New App` Page.
    *
@@ -222,10 +222,10 @@ var AddNewApp = {
    *    {
    *        name: String,
    *        platform: String
-   *    }   *
+   *    }
    * @returns {Promise}
    */
-  createApp: function (app) {
+  registerApp: function (app) {
     this.setAppName(app.name);
     this.setPlatform(app.platform);
   }
