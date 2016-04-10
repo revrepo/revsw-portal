@@ -3,7 +3,7 @@
 
   angular
     .module('revapm.Portal.Shared')
-    .directive('search', function($location, $localStorage, $state, DomainsConfig, Companies, Users, Apps, DashboardSrv, ApiKeys){
+    .directive('search', function($location, $localStorage, $state, $rootScope, DomainsConfig, Companies, Users, Apps, DashboardSrv, ApiKeys){
       return {
         restrict: 'AE',
         templateUrl: 'parts/shared/search/search.html',
@@ -11,21 +11,14 @@
 
         link: function (scope) {
           scope.list = [];
-          scope.searchTerm = '';
-          scope.types = {
-            domains: 'Domains',
-            app_names: 'App names',
-            dashboards: 'Dashboards',
-            users: 'Users',
-            api_keys: 'API Keys',
-            accounts: 'Accounts'
-          };
+          scope.searchTerm = $rootScope.searchTerm;
 
           function init(){
             // DOMAINS
             DomainsConfig.query().$promise.then(function(data){
               data.forEach(function(item){
                 item.searchType = 'domain';
+                item.domain_name += ' ';
                 scope.list.push(item);
               });
             });
@@ -33,6 +26,7 @@
             Companies.query().$promise.then(function(data){
               data.forEach(function(item){
                 item.searchType = 'company';
+                item.companyName += ' ';
                 scope.list.push(item);
               });
             });
@@ -44,32 +38,36 @@
               });
             });
 
-
             Apps.query().$promise.then(function(data){
               data.forEach(function(item){
                 item.searchType = 'app';
+                item.app_name += ' ';
                 scope.list.push(item);
               });
             });
 
-            //ApiKeys.query().$promise.then(function(data){
-            //  data.forEach(function(item){
-            //    item.searchType = 'apiKey';
-            //    scope.list.push(item);
-            //  });
-            //});
+            ApiKeys.query().$promise.then(function(data){
+              data.forEach(function(item){
+                item.searchType = 'apiKey';
+                item.key_name += ' ';
+                scope.list.push(item);
+              });
+            });
 
             DashboardSrv.getAll().then(function(data){
               data.forEach(function(item){
                 item.searchType = 'dashboard';
+                item.title += ' ';
                 scope.list.push(item);
               });
             });
 
           } init();
 
-          scope.getFilteredList = function(term,x,y,z) {
+          scope.getFilteredList = function(term) {
             scope.searchTerm = term;
+            $rootScope.searchTerm = term;
+
             var results = [];
             term = (term || '').toLowerCase();
             var list = angular.copy(scope.list);
@@ -150,6 +148,8 @@
 
           scope.searchItemSelected = function(item){
             item.searchBarText = item.searchDisplayText;
+            scope.searchTerm = item.searchBarText;
+            $rootScope.searchTerm = item.searchBarText;
 
             switch(item.searchType){
               case 'domain':
@@ -196,7 +196,7 @@
                 break;
               case 'apiKey':
                 if(item.searchAction === 'edit'){
-                  $location.path('users/edit/' + item.id);
+                  $location.path('keys/edit/' + item.id);
                 }
                 break;
               case 'dashboard':
@@ -209,8 +209,12 @@
 
           scope.clearSearchBar = function(){
             scope.searchTerm = '';
+            $rootScope.searchTerm = '';
           };
 
+          scope.showClear = function(){
+            return ($rootScope.searchTerm || '').trim().length;
+          };
 
           function selectDomain(domain){
             $localStorage.selectedDomain = domain;

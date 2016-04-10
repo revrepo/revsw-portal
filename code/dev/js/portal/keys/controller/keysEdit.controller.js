@@ -6,7 +6,38 @@
     .controller('KeysEditController', KeysEditController);
 
   // @ngInject
-  function KeysEditController($scope, $modalInstance, ApiKeys, AlertService, data) {
+  function KeysEditController($scope, $injector, $stateParams, CRUDController, ApiKeys, Companies, DomainsConfig, AlertService) {
+    //Invoking crud actions
+    $injector.invoke(CRUDController, this, {
+      $scope: $scope,
+      $stateParams: $stateParams
+    });
+
+    Companies
+      .query()
+      .$promise
+      .then(function (data) {
+        $scope.companies = data;
+      })
+      .catch(function (err) {
+        if (err.status === 403) {
+          // Fetch id
+          var user = $scope.auth.getUser();
+          $scope.companies = [{
+            id: user.companyId[0]
+          }];
+        }
+      });
+
+    DomainsConfig.query()
+      .$promise
+      .then(function (data) {
+        $scope.domains = data;
+      })
+      .catch(function (err) {
+        $scope.domains = [];
+      });
+
 
     /**
      * Loading flag
@@ -15,16 +46,6 @@
      * @private
      */
     $scope._loading = false;
-
-    /**
-     * List of companies provided from other controller
-     */
-    $scope.companies = data.companies;
-
-    /**
-     * List of domains provided from other controller
-     */
-    $scope.domains = data.domains;
 
     /**
      * Selected account id
@@ -112,9 +133,9 @@
     }
 
     /**
-     * Click on ok button
+     * Click on update button
      */
-    $scope.ok = function () {
+    $scope.update = function () {
       if (!$scope.key || !$scope.key.id) {
         return;
       }
@@ -123,9 +144,7 @@
         .update({id: $scope.key.id}, clearUpdateData($scope.key))
         .$promise
         .then(function (data) {
-          //console.log(data);
-          //AlertService.success('API Key updated');
-          $modalInstance.close(data);
+          AlertService.success('API Key updated');
         })
         .catch(function (err) {
           AlertService.danger(err);
@@ -142,12 +161,20 @@
       $modalInstance.dismiss('cancel');
     };
 
-    if (data.keyId) {
-      $scope.loadKeyDetails(data.keyId);
-    }
-
     $scope.$watch('key.account_id', function(account_id) {
       $scope.selectDomains(account_id);
     });
+
+    $scope.switchKeyVisibility = function(item){
+      item.showKey = !item.showKey;
+    };
+
+    $scope.copyCallback = function(err){
+      if(err){
+        $scope.alertService.danger('Copying failed, please try manual.', 2000);
+      } else {
+        $scope.alertService.success('The API key has been copied to the clipboard.', 2000);
+      }
+    };
   }
 })();
