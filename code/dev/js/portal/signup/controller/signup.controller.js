@@ -26,9 +26,9 @@
       if ($state.is('signup')){
         $scope.model = _.clone(User.getUser());
         $scope.model.country = 'US';
-        if(!$scope.model.billing_plan){
-          $state.go('billing_plans');
-        }
+        // if(!$scope.model.billing_plan){
+        //   $state.go('billing_plans');
+        // }
       }
 
 
@@ -38,12 +38,15 @@
     //$scope.user = User.getUser();
 
 
-    $scope.chooseBillingPlan = function (id, name) {
-      $localStorage.user = {billing_plan: id};
-      $state.transitionTo('signup');
+    // $scope.chooseBillingPlan = function (id, name) {
+    //   $localStorage.user = {billing_plan: id};
+    //   $state.transitionTo('signup');
+
+    // };
+
+    $scope.chooseBillingPlan = function (bp) {
+      $state.go('signup.contact_info',{billing_plan_handler:bp.chargify_handle});
     };
-
-
 
     $scope.initBillingPlans = function () {
       $scope.newUser = {};
@@ -100,6 +103,13 @@
           $state.go('email_sent');
         })
         .catch(function (err) {
+          model.passwordConfirm = model.password;
+          // NOTE: detect type problem
+          console.log(err);
+          // - 1. Not fount billing plan info
+          // - 2. User with email alraedy exists
+          // - 3. Server error (email, send)
+
           AlertService.danger(err, 5000);
         });
     };
