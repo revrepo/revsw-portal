@@ -69,7 +69,6 @@
           }
         }
       })
-    $stateProvider
       .state('signup.billing_plans', {
         url: '/plans',
         views: {

@@ -11,15 +11,13 @@
     $scope.billing_plans = [{
       id: null,
       name: 'Manual'
-    }]
+    }];
     BillingPlans.query().$promise
       .then(function(bp) {
         angular.forEach(bp, function(item) {
           $scope.billing_plans.push(item);
-        })
-
+        });
       });
-    // $scope.billing_plans.unshift({id: null, name: 'Manual'});
     $scope.zipRegex = '[0-9]{1,10}';
     $scope.phoneRegex = '[0-9, \\s, \\+, \\-, \\(, \\)]{1,20}';
     $scope.user = User.getUser();
