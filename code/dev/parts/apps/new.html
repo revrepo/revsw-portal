@@ -61,7 +61,8 @@
                       ng-disabled="_loading"
                       ng-model="model.account_id"
                       id="account_id"
-                      ng-options="obj.id as obj.companyName for obj in companies">
+                      ng-options="obj.id as obj.companyName for obj in companies"
+                      required>
                 <option value="">--- Select Company ---</option>
               </select>
             </div>
