@@ -48,6 +48,9 @@
                    popover-trigger="mouseenter"
                    popover="First name">First Name</label>
 
+              <span ng-show="!!myform.username.$error.isBlank">Email Required.</span>
+              <span ng-show="!!myform.username.$error.invalidChars">Example: Example@Exmple.com</span>
+
             <div class="col-sm-10">
               <input type="text"
                      class="form-control"
