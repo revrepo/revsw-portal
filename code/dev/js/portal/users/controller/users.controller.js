@@ -108,7 +108,7 @@
         return $scope._loading ||
           !model.email ||
           !model.access_control_list ||
-//          !model.companyId || model.companyId.length === 0 ||
+          !model.companyId || model.companyId.length === 0 ||
           !model.firstname ||
           !model.lastname ||
           !model.role;
@@ -116,7 +116,7 @@
         return $scope._loading ||
           !model.user_email ||
           !model.access_control_list ||
-//          !model.companyId || model.companyId.length === 0 ||
+          !model.companyId || model.companyId.length === 0 ||
           !model.firstname ||
           !model.lastname ||
           !model.password ||
