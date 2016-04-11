@@ -27,21 +27,21 @@
       </div>
       <div class="panel-body">
         <div class="form-horizontal" ng-show="isAdvancedMode">
-          <div name="json" class="col-md-12 domains-advanced-mode-edit" id="json" ng-model="modelAdvance" options="jsoneditor.options" ng-jsoneditor style="height: 550px; padding-left: 0;"></div>
+          <div name="json" class="col-md-12 domains-advanced-mode-edit" id="json" ng-model="modelAdvance" options="jsoneditor.options" ng-jsoneditor="jsonEditorEvent" style="height: 550px; padding-left: 0;"></div>
           <div class="form-group ">
             <div class="col-sm-offset-2 col-sm-10" style="margin-top: 15px;">
               <a ui-sref="^" class="btn btn-default">
                 <i class="glyphicon glyphicon-remove"></i>&nbsp; Cancel
               </a>
-              <button class="btn btn-info" ng-disabled="_loading" ng-click="validateDomain(modelAdvance)">
+              <button class="btn btn-info" ng-disabled="_loading || jsonIsInvalid" ng-click="validateDomain(modelAdvance)">
                 <i class="glyphicon glyphicon-refresh spin" ng-if="_loading"></i>
                 <i class="glyphicon glyphicon-check" ng-if="!_loading"></i>&nbsp; Verify
               </button>
-              <button class="btn btn-success" ng-disabled="_loading" ng-click="updateDomain(modelAdvance)">
+              <button class="btn btn-success" ng-disabled="_loading || jsonIsInvalid" ng-click="updateDomain(modelAdvance)">
                 <i class="glyphicon glyphicon-refresh spin" ng-if="_loading"></i>
                 <i class="glyphicon glyphicon-file" ng-if="!_loading"></i>&nbsp; Update
               </button>
-              <button class="btn btn-success" ng-disabled="_loading" ng-click="publishDomain(modelAdvance)">
+              <button class="btn btn-success" ng-disabled="_loading || jsonIsInvalid" ng-click="publishDomain(modelAdvance)">
                 <i class="glyphicon glyphicon-refresh spin" ng-if="_loading"></i>
                 <i class="glyphicon glyphicon-ok" ng-if="!_loading"></i>&nbsp; Publish
               </button>
@@ -269,15 +269,15 @@
               <a ui-sref="^" class="btn btn-default">
                 <i class="glyphicon glyphicon-remove"></i>&nbsp; Cancel
               </a>
-              <button class="btn btn-info" ng-disabled="_loading" ng-click="validateDomain(model)">
+              <button class="btn btn-info" ng-disabled="disableSubmit(model, true)" ng-click="validateDomain(model)">
                 <i class="glyphicon glyphicon-refresh spin" ng-if="_loading"></i>
                 <i class="glyphicon glyphicon-check" ng-if="!_loading"></i>&nbsp; Verify
               </button>
-              <button class="btn btn-success" ng-disabled="_loading" ng-click="updateDomain(model)">
+              <button class="btn btn-success" ng-disabled="disableSubmit(model, true)" ng-click="updateDomain(model)">
                 <i class="glyphicon glyphicon-refresh spin" ng-if="_loading"></i>
                 <i class="glyphicon glyphicon-file" ng-if="!_loading"></i>&nbsp; Update
               </button>
-              <button class="btn btn-success" ng-disabled="_loading" ng-click="publishDomain(model)">
+              <button class="btn btn-success" ng-disabled="disableSubmit(model, true)" ng-click="publishDomain(model)">
                 <i class="glyphicon glyphicon-refresh spin" ng-if="_loading"></i>
                 <i class="glyphicon glyphicon-ok" ng-if="!_loading"></i>&nbsp; Publish
               </button>

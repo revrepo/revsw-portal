@@ -38,7 +38,7 @@
                      class="form-control"
                      id="email"
                      placeholder="Email"
-                     ng-model="model.email"
+                     ng-model="model.user_email"
                      ng-disabled="_loading">
 
             </div>
@@ -192,7 +192,7 @@
                 Cancel
               </a>
               <button class="btn btn-success"
-                      ng-disabled="_loading"
+                      ng-disabled="disableSubmit(model)"
                       ng-click="createUser(model)">
                 <i class="glyphicon glyphicon-ok"></i>&nbsp;
                 Create User

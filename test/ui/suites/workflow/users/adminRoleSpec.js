@@ -107,6 +107,7 @@ describe('Workflow', function () {
       Portal.signOut();
       // Check new user is visible to other admin
       Portal.signIn(adminUser);
+      Portal.goToUsers();
       Portal.userListPage.searcher.setSearchCriteria(andrew.email);
       var newTotalRows = Portal.userListPage.userTbl.getRows().count();
       expect(newTotalRows).toEqual(1);
@@ -123,6 +124,7 @@ describe('Workflow', function () {
       // Check new user is visible to other admin
       Portal.signIn(adminUser);
       Portal.deleteUser(bruce);
+      Portal.goToUsers();
       Portal.userListPage.searcher.setSearchCriteria(bruce.email);
       var newTotalRows = Portal.userListPage.userTbl.getRows().count();
       expect(newTotalRows).toEqual(0);
@@ -137,6 +139,7 @@ describe('Workflow', function () {
       Portal.signOut();
       // Check new user is visible to other admin
       Portal.signIn(adminUser);
+      Portal.goToUsers();
       Portal.userListPage.searchAndClickEdit(steve.email);
       Portal.editUserPage.updateUser({firstName: 'updated'});
       Portal.editUserPage.clickBackToList();

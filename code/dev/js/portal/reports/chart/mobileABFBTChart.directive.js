@@ -28,32 +28,33 @@
         $scope._loading = false;
 
         //  ---------------------------------
-        var lbl_ = null,
+        var info_ = null,
           rev_avg_ = 0,
           origin_avg_ = 0,
           rev_median_ = 0,
           origin_median_ = 0,
           imp_avg_ = 0,
-          imp_median_ = 0;
+          imp_median_ = 0,
+          tickInterval_ = 4;
 
         $scope.chartOptions = {
           chart: {
             type: 'column',
             events: {
               redraw: function() {
-                if ( lbl_ ) {
-                  lbl_.destroy();
-                  lbl_ = null;
+                if ( info_ ) {
+                  info_.destroy();
+                  info_ = null;
                 }
-                lbl_ = this/*chart*/.renderer
-                .label( 'Origin Avg <span style="font-weight: bold; color: #3c65ac;">' + origin_avg_ +
-                    '</span> Median <span style="font-weight: bold; color: #3c65ac;">' + origin_median_ +
-                    '</span> ms<br>RevAPM Avg <span style="font-weight: bold; color: black;">' + rev_avg_ +
-                    '</span> Median <span style="font-weight: bold; color: black;">' + rev_median_ +
-                    '</span> ms<br>Improvement Avg <span style="font-weight: bold; color: darkred;">' + imp_avg_ +
-                    '</span> Median <span style="font-weight: bold; color: darkred;">' + imp_median_ +
-                    '</span> %',
-                    80, 0, '', 0, 0, true/*html*/ )
+                info_ = this/*chart*/.renderer
+                  .label( 'Origin Avg <span style="font-weight: bold; color: #3c65ac;">' + origin_avg_ +
+                      '</span> Median <span style="font-weight: bold; color: #3c65ac;">' + origin_median_ +
+                      '</span> ms<br>RevAPM Avg <span style="font-weight: bold; color: black;">' + rev_avg_ +
+                      '</span> Median <span style="font-weight: bold; color: black;">' + rev_median_ +
+                      '</span> ms<br>Improvement Avg <span style="font-weight: bold; color: darkred;">' + imp_avg_ +
+                      '</span> Median <span style="font-weight: bold; color: darkred;">' + imp_median_ +
+                      '</span> %',
+                      this.xAxis[0].toPixels( 0 ), 0, '', 0, 0, true/*html*/ )
                   .css({ color: '#444' })
                   .attr({
                     fill: 'rgba(240, 240, 240, 0.6)',
@@ -81,11 +82,22 @@
             crosshair: {
               width: 1,
               color: '#000000'
+            },
+            tickInterval: tickInterval_,
+            labels: {
+              autoRotation: false,
+              useHTML: true,
+              // step: 1,         //  doesn't work, use that tickInterval above
+              // staggerLines: 3  //  bad idea, looks messy
+              formatter: function() {
+                return this.value.label;
+                // return '#';
+              }
             }
           },
           tooltip: {
             formatter: function() {
-              return '<strong>' + this.x + '</strong><br/>' +
+              return this.key.tooltip + '<br/>' +
                 this.series.name + ': <strong>' + Util.formatNumber( this.y, 1 ) + '</strong>';
             }
           }
@@ -178,16 +190,30 @@
                 var labels_filled = false;
                 // console.log( data );
                 data.data.forEach( function( dest ) {
-                  dest.items.forEach( function( item ) {
+                  dest.items.forEach( function( item, idx, items ) {
                     if ( !labels_filled ) {
-                      labels.push( moment( item.key + offset /*to show the _end_ of interval instead of begin*/ ).format( 'MMM Do YY h:mm' ) );
+                      var val = moment( item.key + offset );
+                      var label;
+                      if ( idx % tickInterval_ ) {
+                        label = '';
+                      } else if ( idx === 0 ||
+                        ( new Date( item.key + offset ) ).getDate() !== ( new Date( items[idx - tickInterval_].key + offset ) ).getDate() ) {
+                        label = val.format( '[<span style="color: #000; font-weight: bold;">]HH:mm[</span><br>]MMM D' );
+                      } else {
+                        label = val.format( '[<span style="color: #000; font-weight: bold;">]HH:mm[</span>]' );
+                      }
+
+                      labels.push({
+                        tooltip: val.format( '[<span style="color: #000; font-weight: bold;">]HH:mm[</span>] MMMM Do YYYY' ),
+                        label: label
+                      });
                     }
                     hits[dest.key].max.push( item.fbt_max );
                     hits[dest.key].min.push( item.fbt_min );
                     hits[dest.key].avg.push( item.fbt_average );
                   });
                   labels_filled = true;
-                } );
+                });
                 $scope.hits.labels = labels;
                 $scope.hits.series[0].data = hits.origin.avg;
                 $scope.hits.series[1].data = hits.origin.min;
@@ -206,7 +232,6 @@
                 origin_avg_ /= avg_t.length;
 
                 //  origin median
-                //  TODO: median can be calculated w/o sorting
                 avg_t.sort( function( lhs, rhs ) {
                   return lhs - rhs;
                 });
