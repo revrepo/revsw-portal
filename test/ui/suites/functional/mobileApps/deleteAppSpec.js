@@ -22,7 +22,7 @@ var DataProvider = require('./../../../common/providers/data');
 var Constants = require('./../../../page_objects/constants');
 
 describe('Functional', function () {
-  describe('Add New App', function () {
+  describe('Delete App', function () {
 
     var adminUser = config.get('portal.users.admin');
 
@@ -42,14 +42,9 @@ describe('Functional', function () {
     afterEach(function () {
     });
 
-    it('should get title from list app list', function () {
-        var title = Portal.mobileApps.listPage.getTitle();
-        expect(title).toEqual('Android Apps List');
-    });
-
-    it('should add a new app successfully', function () {
+    it('should delete an app successfully', function () {
         var app = {
-          name: 'MyApp',
+          name: 'MyAppForDelete',
           platform: 'Android'
         };
         var findApp = null;

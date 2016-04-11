@@ -39,7 +39,7 @@ var AddNewApp = {
         linkText: 'Cancel'
       },
       register: {
-        button: '[ng-click=\"createApp(model)\"]'
+        css: '[ng-click=\"createApp(model)\"]'
       }
     },
     inputs: {
@@ -138,7 +138,7 @@ var AddNewApp = {
    */
   getRegisterBtn: function () {
     return element(
-      by.partialLinkText(this.locators.buttons.register.button));
+      by.css(this.locators.buttons.register.css));
   },
 
   // ## Helper Methods
@@ -213,9 +213,9 @@ var AddNewApp = {
   },
 
   /**
-   * ### AddNewApp.registerApp(app)
+   * ### AddNewApp.fill(app)
    *
-   * Clicks on Register button of `Add New App` Page.
+   * Fills on Add New App form of `Add New App` Page.
    *
    * @param {object} app, app data with following schema.
    *
@@ -225,7 +225,7 @@ var AddNewApp = {
    *    }
    * @returns {Promise}
    */
-  registerApp: function (app) {
+  fill: function (app) {
     this.setAppName(app.name);
     this.setPlatform(app.platform);
   }

@@ -156,6 +156,19 @@ var AppsList = {
       .click();
   },
 
+/**
+ * ### AppsList.clickClearSearch()
+ *
+ * Clicks on `Clear Search` X button element.
+ *
+ * @returns {Promise}
+ */
+clickClearSearch: function () {
+  return this
+    .getClearSearchTxt()
+    .click();
+},
+
   /**
    * ### AppsList.setSearch(value)
    *
@@ -166,15 +179,16 @@ var AppsList = {
    * @returns {Promise}
    */
   setSearch: function (value) {
+    this.getSearchTxt().clear();
     return this
       .getSearchTxt()
       .sendKeys(value);
   },
 
   /**
-   * ### AddNewApp.addNewApp(app)
+   * ### AppsList.addNewApp(app)
    *
-   * Adds new app in the `Add New App` Page.
+   * Adds new app in the `Apps List App` Page.
    *
    * @param {object} app, app data with following schema.
    *
@@ -186,25 +200,48 @@ var AppsList = {
    */
   addNewApp: function (app) {
     this.clickAddNewApp();
-    this.appsForm.registerApp(app);
+    this.appsForm.fill(app);
+    this.appsForm.clickRegister(app);
   },
 
   /**
-   * ### AddNewApp.findApp(app)
+   * ### AppsList.findApp(app)
    *
-   * Finds an app in the `Add New App` Page.
+   * Finds an app in the `Apps List App` Page.
    *
-   * @param {object} app, app data with following schema.
-   *
-   *    {
-   *        name: String,
-   *        platform: String
-   *    }
    * @returns {Promise}
    */
   findApp: function (app) {
     this.setSearch(app.name);
     return this.appsTable.countTotalRows();
+  },
+
+  /**
+   * ### AppsList.searchAndDelete(app)
+   *
+   * Deletes an app in the `Apps List App` Page.
+   *
+   * @param {object} app, app data.
+   *
+   * @returns {Promise}
+   */
+  searchAndDelete: function (app) {
+    this.setSearch(app.name);
+    this.appsTable.clickDeleteApp();
+  },
+
+  /**
+   * ### AppsList.searchAndEdit(app)
+   *
+   * Edits an existing app in the `Apps List App` Page.
+   *
+   * @param {object} app, app data.
+   *
+   * @returns {Promise}
+   */
+  searchAndEdit: function (app) {
+    this.setSearch(app.name);
+    this.appsTable.clickEditApp();
   }
 };
 

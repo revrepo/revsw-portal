@@ -22,7 +22,6 @@
 var Constants = require('./constants');
 var Utils = require('./../common/helpers/utils');
 
-
 // Requiring components
 var Header = require('./common/header');
 var SideBar = require('./common/sidebar');
@@ -59,6 +58,7 @@ var SecSettingsPage = require('./admin/securitySettingsPage');
 var ApiKeysListPage = require('./admin/apiKeysListPage.js');
 var AppsListPage = require('./mobileApps/appsListPage.js');
 var AddNewAppPage = require('./mobileApps/addNewAppPage.js');
+var EditAppPage = require('./mobileApps/editAppPage.js');
 
 // This `Portal` Page Object is the entry point to use all other Page Objects
 // that abstract all components from the Portal App.
@@ -104,7 +104,8 @@ var Portal = {
   },
   mobileApps: {
     listPage: AppsListPage,
-    addAppPage: AddNewAppPage
+    addAppPage: AddNewAppPage,
+    editAppPage: EditAppPage
   },
 
   // ## Authentication Helper methods

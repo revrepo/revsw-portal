@@ -30,15 +30,7 @@ var EditApp = {
   // Locators specific to HTML elements from this page object
   locators: {
     views: {
-      container: '.container-fluid .row',
-      panelHeading: {
-        css: '.col-md-12 .panel .panel-heading',
-        pullLeft: '.pull-left',
-        pullRight: '.pull-right'
-      },
-      panelBody: {
-        css: '.col-md-12 .panel .panel-body'
-      }
+      container: '.container-fluid .row'
     },
     buttons: {
       addNewApp:{
@@ -90,7 +82,7 @@ var EditApp = {
   // ## Helper Methods
 
   /**
-   * ### AppsList.getTitle()
+   * ### EditApp.getTitle()
    *
    * Gets the title from `Title` label element.
    *
@@ -103,7 +95,7 @@ var EditApp = {
   },
 
   /**
-   * ### AppsList.getAppName()
+   * ### EditApp.getAppName()
    *
    * Gets the title from `App Name` label element.
    *
@@ -113,6 +105,34 @@ var EditApp = {
     return this
       .getAppNameLbl()
       .getText();
+  },
+
+  /**
+   * ### EditApp.verify()
+   *
+   * Verifies the edited app from `Edit App` form element.
+   *
+   * @param {object} app, app data.
+   *
+   * @returns {Promise}
+   */
+  verify: function (app) {
+    this.form.fill(app);
+    this.form.clickVerify();
+  },
+
+  /**
+   * ### EditApp.update()
+   *
+   * Updates the edited app from `Edit App` form element.
+   *
+   * @param {object} app, app data.
+   *
+   * @returns {Promise}
+   */
+  update: function (app) {
+    this.form.fill(app);
+    this.form.clickUpdate();
   }
 };
 

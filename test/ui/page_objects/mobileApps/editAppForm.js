@@ -35,11 +35,23 @@ var EditAppForm = {
       backToList: {
         linkText: 'Back To List'
       },
+      advancedMode: {
+        linkText: 'Advanced Mode'
+      },
+      addNewVersion: {
+        linkText: 'Add New Version'
+      },
       cancel: {
         linkText: 'Cancel'
       },
-      register: {
-        button: '[ng-click=\"createApp(model)\"]'
+      verify: {
+        css: '[ng-click=\"verify(model, configuration)\"]'
+      },
+      update: {
+        css: '[ng-click=\"updateConfig(model, configuration)\"]'
+      },
+      publish: {
+        css: '[ng-click=\"publish(model, configuration)\"]'
       }
     },
     inputs: {
@@ -47,40 +59,84 @@ var EditAppForm = {
         id: 'app_name'
       }
     },
+    radios: {
+      debug: {
+        model: 'configuration.logging_level'
+      },
+      info: {
+        model: 'configuration.logging_level'
+      },
+      warning: {
+        model: 'configuration.logging_level'
+      },
+      error: {
+        model: 'configuration.logging_level'
+      },
+      critical: {
+        model: 'configuration.logging_level'
+      }
+    },
+    checkboxes: {
+      standard: {
+        css: '[ng-click=\"toggleProtocolSelection(protocol, configuration)\"]'
+      },
+      quic: {
+        css: '[ng-click=\"toggleProtocolSelection(protocol, configuration)\"]'
+      },
+      rpm: {
+        css: '[ng-click=\"toggleProtocolSelection(protocol, configuration)\"]'
+      }
+    },
     dropDowns: {
-      platform: {
-        id: 'app_platform'
+      sdkReleaseVersion: {
+        id: 'sdk_release_version'
+      },
+      sdkOperationMode: {
+        id: 'operation_mode'
+      },
+      configurationRefreshInterval: {
+        id: 'configuration_refresh_interval_sec'
+      },
+      configurationStaleTimeout: {
+        id: 'configuration_stale_timeout_sec'
+      },
+      initialTransportProtocol: {
+        id: 'initial_transport_protocol'
+      },
+      analyticsReportingLevel: {
+        id: 'stats_reporting_level'
+      },
+      analyticsReportingInterval: {
+        id: 'stats_reporting_interval_sec'
+      },
+      domainsWhiteList: {
+        css: '[ng-click=\"$select.activate()\"]'
+      },
+      domainsBlackList: {
+        css: '[ng-click=\"$select.activate()\"]'
+      },
+      domainsProvisionedList: {
+        css: '[ng-click=\"$select.activate()\"]'
+      },
+      testingOffloadingRatio: {
+        id: 'a_b_testing_origin_offload_ratio'
       }
     }
   },
 
   /**
-   * ### EditAppForm.getTitleLbl()
+   * ### EditAppForm.getPanelBodyElem()
    *
-   * Returns the reference to the `Title` label element (Selenium WebDriver
-   * Element) from the Add New App page from the Portal app.
-   *
-   * @returns {Selenium WebDriver Element}
-   */
-  getTitleLbl: function() {
-    return element
-      .all(by.css(this.locators.views.container))
-      .get(0);
-  },
-
-  /**
-   * ### EditAppForm.getPanelHeadingElem()
-   *
-   * Returns the reference to the `Panel Heading` element (Selenium WebDriver
-   * Element) from the Add New App page in the Portal app.
+   * Returns the reference to the `Panel Body` element (Selenium WebDriver
+   * Element) from the Edit App page in the Portal app.
    *
    * @returns {Selenium WebDriver Element}
    */
-  getPanelHeadingElem: function () {
+  getPanelBodyElem: function () {
     return element
       .all(by.css(this.locators.views.container))
-      .get(1)
-      .element(by.css(this.locators.views.panelHeading));
+      .get(2)
+      .element(by.css(this.locators.views.panelBody));
   },
 
   /**
@@ -95,14 +151,126 @@ var EditAppForm = {
   },
 
   /**
-   * ### EditAppForm.getPlatformDDown()
+   * ### EditAppForm.getSDKReleaseVersionDDown()
    *
    * Gets the reference to `Platform` Drop Down element.
    *
    * @returns {Promise}
    */
-  getPlatformDDown: function () {
-    return element(by.id(this.locators.dropDowns.platform.id));
+  getSDKReleaseVersionDDown: function () {
+    return element(by.id(this.locators.dropDowns.sdkReleaseVersion.id));
+  },
+
+  /**
+   * ### EditAppForm.getSDKOperationModeDDown()
+   *
+   * Gets the reference to `Platform` Drop Down element.
+   *
+   * @returns {Promise}
+   */
+  getSDKOperationModeDDown: function () {
+    return element(by.id(this.locators.dropDowns.sdkOperationMode.id));
+  },
+
+  /**
+   * ### EditAppForm.getConfigurationRefreshIntervalDDown()
+   *
+   * Gets the reference to `Configuration Refresh Interval` Drop Down element.
+   *
+   * @returns {Promise}
+   */
+  getConfigurationRefreshIntervalDDown: function () {
+    return element(
+      by.id(this.locators.dropDowns.configurationRefreshInterval.id));
+  },
+
+  /**
+   * ### EditAppForm.getConfigurationStaleTimeoutDDown()
+   *
+   * Gets the reference to `Configuration Stale Timeout` Drop Down element.
+   *
+   * @returns {Promise}
+   */
+  getConfigurationStaleTimeoutDDown: function () {
+    return element(by.id(this.locators.dropDowns.configurationStaleTimeout.id));
+  },
+
+  /**
+   * ### EditAppForm.getInitialTransportProtocol()
+   *
+   * Gets the reference to `Initial Transport Protocol` Drop Down element.
+   *
+   * @returns {Promise}
+   */
+  getInitialTransportProtocol: function () {
+    return element(by.id(this.locators.dropDowns.initialTransportProtocol.id));
+  },
+
+  /**
+   * ### EditAppForm.getAnalyticsReportingLevel()
+   *
+   * Gets the reference to `Analytics Reporting Level` Drop Down element.
+   *
+   * @returns {Promise}
+   */
+  getAnalyticsReportingLevel: function () {
+    return element(by.id(this.locators.dropDowns.analyticsReportingLevel.id));
+  },
+
+  /**
+   * ### EditAppForm.getAnalyticsReportingInterval()
+   *
+   * Gets the reference to `Analytics Reporting Interval` Drop Down element.
+   *
+   * @returns {Promise}
+   */
+  getAnalyticsReportingInterval: function () {
+    return element(
+      by.id(this.locators.dropDowns.analyticsReportingInterval.id));
+  },
+
+  /**
+   * ### EditAppForm.getDomainsWhiteList()
+   *
+   * Gets the reference to `Domains White List` Drop Down element.
+   *
+   * @returns {Promise}
+   */
+  getDomainsWhiteList: function () {
+    return element(by.id(this.locators.dropDowns.domainsWhiteList.id));
+  },
+
+  /**
+   * ### EditAppForm.getDomainsBlackList()
+   *
+   * Gets the reference to `Domains Black List` Drop Down element.
+   *
+   * @returns {Promise}
+   */
+  getDomainsBlackList: function () {
+    return element(by.id(this.locators.dropDowns.domainsBlackList.id));
+  },
+
+  /**
+   * ### EditAppForm.getDomainsProvisionedList()
+   *
+   * Gets the reference to `Domains Provisioned List` Drop Down element.
+   *
+   * @returns {Promise}
+   */
+  getDomainsProvisionedList: function () {
+    return element(by.id(this.locators.dropDowns.getDomainsProvisionedList.id));
+  },
+
+  /**
+   * ### EditAppForm.getTestingOffloadingRatio()
+   *
+   * Gets the reference to `Testing Offloading Ratio` Drop Down element.
+   *
+   * @returns {Promise}
+   */
+  getTestingOffloadingRatio: function () {
+    return element(by.id(this.locators.dropDowns.getTestingOffloadingRatio.id));
   },
 
   /**
@@ -118,6 +286,30 @@ var EditAppForm = {
   },
 
   /**
+   * ### EditAppForm.getBackToListBtn()
+   *
+   * Gets the reference to `Back To List` button element.
+   *
+   * @returns {Promise}
+   */
+  getAdvancedModeBtn: function () {
+    return element(
+      by.partialLinkText(this.locators.buttons.advancedMode.linkText));
+  },
+
+  /**
+   * ### EditAppForm.getAddNewVersionBtn()
+   *
+   * Gets the reference to `Add New Version` button element.
+   *
+   * @returns {Promise}
+   */
+  getAddNewVersionBtn: function () {
+    return element(
+      by.partialLinkText(this.locators.buttons.addNewVersion.linkText));
+  },
+
+  /**
    * ### EditAppForm.getCancelBtn()
    *
    * Gets the reference to `Cancel` button element.
@@ -125,20 +317,40 @@ var EditAppForm = {
    * @returns {Promise}
    */
   getCancelBtn: function () {
-    return element(
-      by.partialLinkText(this.locators.buttons.cancel.linkText));
+    return element(by.partialLinkText(this.locators.buttons.cancel.linkText));
   },
 
   /**
-   * ### EditAppForm.getRegisterBtn()
+   * ### EditAppForm.getVerifyBtn()
    *
-   * Gets the reference to `Register` button element.
+   * Gets the reference to `Verify` button element.
    *
    * @returns {Promise}
    */
-  getRegisterBtn: function () {
-    return element(
-      by.partialLinkText(this.locators.buttons.register.button));
+  getVerifyBtn: function () {
+    return element(by.css(this.locators.buttons.verify.css));
+  },
+
+  /**
+   * ### EditAppForm.getUpdateBtn()
+   *
+   * Gets the reference to `Update` button element.
+   *
+   * @returns {Promise}
+   */
+  getUpdateBtn: function () {
+    return element(by.css(this.locators.buttons.update.css));
+  },
+
+  /**
+   * ### EditAppForm.getPublishBtn()
+   *
+   * Gets the reference to `Publish` button element.
+   *
+   * @returns {Promise}
+   */
+  getPublishBtn: function () {
+    return element(by.css(this.locators.buttons.publish.css));
   },
 
   // ## Helper Methods
@@ -146,30 +358,181 @@ var EditAppForm = {
   /**
    * ### EditAppForm.setAppName(value)
    *
-   * Sets a value into App Name field in `Add New App` Page.
+   * Sets a value into App Name field in `Edit App` Page.
    *
-   * @param {String} value
+   * @param {String} value.
    *
    * @returns {Promise}
    */
   setAppName: function (value) {
+    this.getAppNameTxt().clear();
     return this
       .getAppNameTxt()
       .sendKeys(value);
   },
 
   /**
-   * ### EditAppForm.setPlatform(value)
+   * ### EditAppForm.setSDKReleaseVersion(value)
    *
-   * Selects a platform value from Platform drop down in `Add New App` Page.
+   * Sets a value into SDK Release Version drop down in `Edit App` Page.
    *
-   * @param {String} value
+   * @param {String} value.
    *
    * @returns {Promise}
    */
-  setPlatform: function (value) {
+  setSDKReleaseVersion: function (value) {
     return this
-      .getPlatformDDown()
+      .getSDKOperationModeDDown()
+      .sendKeys(value);
+  },
+
+  /**
+   * ### EditAppForm.setSDKOperationMode(value)
+   *
+   * Sets a value into SDK Operation Mode drop down in `Edit App` Page.
+   *
+   * @param {String} value.
+   *
+   * @returns {Promise}
+   */
+  setSDKOperationMode: function (value) {
+    return this
+      .getSDKOperationModeDDown()
+      .sendKeys(value);
+  },
+
+  /**
+   * ### EditAppForm.setConfigurationRefreshInterval(value)
+   *
+   * Sets into Configuration Refresh Interval drop down in `Edit App` Page.
+   *
+   * @param {String} value.
+   *
+   * @returns {Promise}
+   */
+  setConfigurationRefreshInterval: function (value) {
+    return this
+      .getConfigurationRefreshIntervalDDown()
+      .sendKeys(value);
+  },
+
+  /**
+   * ### EditAppForm.setConfigurationStaleTimeout(value)
+   *
+   * Sets value into Configuration Stale Timeout drop down in `Edit App` Page.
+   *
+   * @param {String} value.
+   *
+   * @returns {Promise}
+   */
+  setConfigurationStaleTimeout: function (value) {
+    return this
+      .getConfigurationStaleTimeoutDDown()
+      .sendKeys(value);
+  },
+
+  /**
+   * ### EditAppForm.setInitialTransportProtocol(value)
+   *
+   * Sets value into Initial Transport Protocol drop down in `Edit App` Page.
+   *
+   * @param {String} value.
+   *
+   * @returns {Promise}
+   */
+  setInitialTransportProtocol: function (value) {
+    return this
+      .getInitialTransportProtocol()
+      .sendKeys(value);
+  },
+
+  /**
+   * ### EditAppForm.setAnalyticsReportingLevel(value)
+   *
+   * Sets value into Analytics Reporting Level drop down in `Edit App` Page.
+   *
+   * @param {String} value.
+   *
+   * @returns {Promise}
+   */
+  setAnalyticsReportingLevel: function (value) {
+    return this
+      .getAnalyticsReportingLevel()
+      .sendKeys(value);
+  },
+
+  /**
+   * ### EditAppForm.setAnalyticsReportingInterval(value)
+   *
+   * Sets value into Analytics Reporting Interval drop down in `Edit App` Page.
+   *
+   * @param {String} value.
+   *
+   * @returns {Promise}
+   */
+  setAnalyticsReportingInterval: function (value) {
+    return this
+      .getAnalyticsReportingInterval()
+      .sendKeys(value);
+  },
+
+  /**
+   * ### EditAppForm.setDomainsWhiteList(value)
+   *
+   * Sets value into Domains White List drop down in `Edit App` Page.
+   *
+   * @param {String} value.
+   *
+   * @returns {Promise}
+   */
+  setDomainsWhiteList: function (value) {
+    return this
+      .getDomainsWhiteList()
+      .sendKeys(value);
+  },
+
+  /**
+   * ### EditAppForm.setDomainsBlackList(value)
+   *
+   * Sets value into Domains Black List drop down in `Edit App` Page.
+   *
+   * @param {String} value.
+   *
+   * @returns {Promise}
+   */
+  setDomainsBlackList: function (value) {
+    return this
+      .getDomainsBlackList()
+      .sendKeys(value);
+  },
+
+  /**
+   * ### EditAppForm.setDomainsProvisionedList(value)
+   *
+   * Sets value into Domains Provisioned List drop down in `Edit App` Page.
+   *
+   * @param {String} value.
+   *
+   * @returns {Promise}
+   */
+  setDomainsProvisionedList: function (value) {
+    return this
+      .getDomainsProvisionedList()
+      .sendKeys(value);
+  },
+
+  /**
+   * ### EditAppForm.setTestingOffloadingRatio(value)
+   *
+   * Sets value into Testing Offloading Ratio drop down in `Edit App` Page.
+   *
+   * @param {String} value.
+   *
+   * @returns {Promise}
+   */
+  setTestingOffloadingRatio: function (value) {
+    return this
+      .getTestingOffloadingRatio()
       .sendKeys(value);
   },
 
@@ -187,9 +550,35 @@ var EditAppForm = {
   },
 
   /**
+   * ### EditAppForm.clickAdvancedMode()
+   *
+   * Clicks on Advanced Mode button of `Edit App` Page.
+   *
+   * @returns {Promise}
+   */
+  clickAdvancedMode: function () {
+    return this
+      .getAdvancedModeBtn()
+      .click();
+  },
+
+  /**
+   * ### EditAppForm.clickAddNewVersion()
+   *
+   * Clicks on Add New Version button of `Edit App` Page.
+   *
+   * @returns {Promise}
+   */
+  clickAddNewVersion: function () {
+    return this
+      .getAddNewVersionBtn()
+      .click();
+  },
+
+  /**
    * ### EditAppForm.clickCancel()
    *
-   * Clicks on Cancel button of `Add New App` Page.
+   * Clicks on Cancel button of `Edit App` Page.
    *
    * @returns {Promise}
    */
@@ -200,34 +589,63 @@ var EditAppForm = {
   },
 
   /**
-   * ### EditAppForm.clickRegister()
+   * ### EditAppForm.clickVerify()
    *
-   * Clicks on Register button of `Add New App` Page.
+   * Clicks on Verify button of `Edit App` Page.
    *
    * @returns {Promise}
    */
-  clickRegister: function () {
+  clickVerify: function () {
     return this
-      .getRegisterBtn()
+      .getVerifyBtn()
       .click();
   },
 
   /**
-   * ### EditAppForm.registerApp(app)
+   * ### EditAppForm.clickUpdate()
    *
-   * Clicks on Register button of `Add New App` Page.
+   * Clicks on Update button of `Edit App` Page.
+   *
+   * @returns {Promise}
+   */
+  clickUpdate: function () {
+    return this
+      .getUpdateBtn()
+      .click();
+  },
+
+  /**
+   * ### EditAppForm.clickPublish()
+   *
+   * Clicks on Publish button of `Edit App` Page.
+   *
+   * @returns {Promise}
+   */
+  clickPublish: function () {
+    return this
+      .getPublishBtn()
+      .click();
+  },
+
+  /**
+   * ### EditAppForm.fill(app)
+   *
+   * Fills on Edit App from of `Edit App` Page.
    *
    * @param {object} app, app data with following schema.
    *
    *    {
    *        name: String,
-   *        platform: String
+   *        sdkOperationMode: String
    *    }
+   *
    * @returns {Promise}
    */
-  registerApp: function (app) {
+  fill: function (app) {
     this.setAppName(app.name);
-    this.setPlatform(app.platform);
+    //this.setSDKOperationMode(app.sdkOperationMode);
+    //this.setConfigurationRefreshInterval(app.configurationRefreshInterval);
+    //this.setConfigurationStaleTimeout(app.configurationStaleTimeout);
   }
 };
 

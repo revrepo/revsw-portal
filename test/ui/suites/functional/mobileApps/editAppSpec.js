@@ -22,7 +22,7 @@ var DataProvider = require('./../../../common/providers/data');
 var Constants = require('./../../../page_objects/constants');
 
 describe('Functional', function () {
-  describe('Add New App', function () {
+  describe('Edit App And Update', function () {
 
     var adminUser = config.get('portal.users.admin');
 
@@ -47,21 +47,46 @@ describe('Functional', function () {
         expect(title).toEqual('Android Apps List');
     });
 
-    it('should add a new app successfully', function () {
+    it('should edit and verify an existing app successfully', function () {
         var app = {
           name: 'MyApp',
           platform: 'Android'
         };
+
         var findApp = null;
         Portal.mobileApps.listPage.addNewApp(app);
         Portal.header.goTo('Android');
         findApp = Portal.mobileApps.listPage.findApp(app);
         expect(findApp).toBe(1);
 
-        Portal.mobileApps.listPage.searchAndDelete(app);
-        Portal.dialog.clickOk();
+        Portal.mobileApps.listPage.searchAndEdit(app);
+        Portal.mobileApps.editAppPage.verify(app);
+
+        Portal.header.goTo('Android');
         findApp = Portal.mobileApps.listPage.findApp(app);
-        expect(findApp).toBe(0);
+        expect(findApp).toBe(1);
+    });
+
+    it('should edit and update an existing app successfully', function () {
+        var app = {
+          name: 'MyApp',
+          platform: 'Android'
+        };
+
+        var findApp = null;
+        Portal.mobileApps.listPage.addNewApp(app);
+        Portal.header.goTo('Android');
+        findApp = Portal.mobileApps.listPage.findApp(app);
+        expect(findApp).toBe(1);
+
+        Portal.mobileApps.listPage.searchAndEdit(app);
+        app.name = 'MyAppUpdated';
+        Portal.mobileApps.editAppPage.update(app);
+        Portal.dialog.clickOk();
+
+        Portal.header.goTo('Android');
+        findApp = Portal.mobileApps.listPage.findApp(app);
+        expect(findApp).toBe(1);
     });
   });
 });
