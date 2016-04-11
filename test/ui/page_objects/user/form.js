@@ -32,7 +32,7 @@ var UserForm = {
   locators: {
     textInputs: {
       email: {
-        model: 'model.email'
+        model: 'model.user_email'
       },
       firstName: {
         model: 'model.firstname'

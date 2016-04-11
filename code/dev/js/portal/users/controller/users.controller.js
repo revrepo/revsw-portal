@@ -94,11 +94,35 @@
       $scope.alertService.clear();
       delete model.passwordConfirm;
       model.access_control_list.dashBoard = true;
+      model.email = angular.copy(model.user_email);
+      delete model.user_email;
       $scope.create(model)
         .then(function(data) {
           $scope.alertService.success('User created', 5000);
         })
         .catch($scope.alertService.danger);
+    };
+
+    $scope.disableSubmit = function(model, isEdit){
+      if(isEdit){
+        return $scope._loading ||
+          !model.email ||
+          !model.access_control_list ||
+//          !model.companyId || model.companyId.length === 0 ||
+          !model.firstname ||
+          !model.lastname ||
+          !model.role;
+      } else {
+        return $scope._loading ||
+          !model.user_email ||
+          !model.access_control_list ||
+//          !model.companyId || model.companyId.length === 0 ||
+          !model.firstname ||
+          !model.lastname ||
+          !model.password ||
+          !model.passwordConfirm ||
+          !model.role;
+      }
     };
 
     // Fetch list of users

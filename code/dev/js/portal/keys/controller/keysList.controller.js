@@ -6,7 +6,7 @@
     .controller('KeysListController', KeysListController);
 
   // @ngInject
-  function KeysListController($scope, CRUDController, ApiKeys, $injector, $stateParams, Companies, DomainsConfig, $state, $modal) {
+  function KeysListController($scope, CRUDController, ApiKeys, $injector, $stateParams, Companies, DomainsConfig, $state, $modal, clipboard) {
 
     //Invoking crud actions
     $injector.invoke(CRUDController, this, {$scope: $scope, $stateParams: $stateParams});
@@ -182,5 +182,16 @@
       return moment.utc(datetime).fromNow();
     };
 
+    $scope.switchKeyVisibility = function(item){
+      item.showKey = !item.showKey;
+    };
+
+    $scope.copyCallback = function(err){
+      if(err){
+        $scope.alertService.danger('Copying failed, please try manual.', 2000);
+      } else {
+        $scope.alertService.success('The API key has been copied to the clipboard.', 2000);
+      }
+    };
   }
 })();
