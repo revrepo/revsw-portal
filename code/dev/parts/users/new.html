@@ -26,7 +26,6 @@
       <div class="panel-body">
         <form class="form-horizontal">
           <div class="form-group">
-            <form name="myform">
             <label for="email"
                    popover-append-to-body="{{true}}"
                    class="col-sm-2 control-label"
@@ -40,10 +39,8 @@
                      id="email"
                      placeholder="Email"
                      ng-model="model.email"
-                     ng-disabled="_loading"
-                      required />
-              <span ng-show="myForm.email.$error.required && myForm.email.$dirty">required</span>
-              <span ng-show="!myForm.email.$error.required && myForm.email.$error.email && myForm.email.$dirty">invalid email</span>
+                     ng-disabled="_loading">
+
             </div>
           </div>
           <div class="form-group">
