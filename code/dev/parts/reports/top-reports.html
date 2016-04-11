@@ -76,7 +76,7 @@
               <h3>HTTP Status Codes Ratio</h3>
 
               <div class="alert alert-info" ng-if="!statusCode || !statusCode.length">
-                No data to display
+                <p align="center">No data to display</p>
               </div>
               <div ng-hide="!statusCode || !statusCode.length">
                 <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="statusCode"></div>
