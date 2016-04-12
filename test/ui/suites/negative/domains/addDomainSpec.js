@@ -24,6 +24,8 @@ var Constants = require('./../../../page_objects/constants');
 describe('Negative', function () {
   describe('Add domain', function () {
 
+    // TODO: Add domain add tests for reseller and revadmin roles
+
     var adminUser = config.get('portal.users.admin');
 
     beforeAll(function () {
@@ -48,11 +50,10 @@ describe('Negative', function () {
         myDomain.originHostHeader = ' ';
         Portal.getDomainsPage();
         Portal.domains.listPage.clickAddNewDomain();
-        Portal.domains.addPage.createDomain(myDomain);
-        var alert = Portal.alerts.getFirst();
-        var expectedMsg = 'child "domain_name" fails because ' +
-          '["domain_name" is not allowed to be empty]';
-        expect(alert.getText()).toEqual(expectedMsg);
+        var addBtn = Portal.domains.addPage.getCreateDomainBtn();
+//        console.log('addBtn = ', addBtn);
+//        console.log('addBtn.isEnabled() = ', addBtn.isEnabled());
+        expect(addBtn.isEnabled()).toBeFalsy();
       });
 
     it('should not create a domain if domain name field has empty values',
@@ -61,11 +62,9 @@ describe('Negative', function () {
         myDomain.name = ' ';
         Portal.getDomainsPage();
         Portal.domains.listPage.clickAddNewDomain();
-        Portal.domains.addPage.createDomain(myDomain);
-        var alert = Portal.alerts.getFirst();
-        var expectedMsg = 'child "domain_name" fails because ["domain_name" ' +
-          'is not allowed to be empty]';
-        expect(alert.getText()).toEqual(expectedMsg);
+        Portal.domains.addPage.fillForm(myDomain);
+        var addBtn = Portal.domains.addPage.getCreateDomainBtn();
+        expect(addBtn.isEnabled()).toBeFalsy();
       });
 
     it('should not create a domain if origin server field has empty values',
@@ -74,12 +73,9 @@ describe('Negative', function () {
         myDomain.originServer = ' ';
         Portal.getDomainsPage();
         Portal.domains.listPage.clickAddNewDomain();
-        Portal.domains.addPage.createDomain(myDomain);
-        var alert = Portal.alerts.getFirst();
-        var expectedMsg = 'child "origin_server" fails because ' +
-          '["origin_server" is not allowed to be empty, "origin_server" '+
-          'is not allowed to be empty]';
-        expect(alert.getText()).toEqual(expectedMsg);
+        Portal.domains.addPage.fillForm(myDomain);
+        var addBtn = Portal.domains.addPage.getCreateDomainBtn();
+        expect(addBtn.isEnabled()).toBeFalsy();
       });
 
     it('should not create domain if origin host header field has empty values',
@@ -88,11 +84,9 @@ describe('Negative', function () {
         myDomain.originHostHeader = ' ';
         Portal.getDomainsPage();
         Portal.domains.listPage.clickAddNewDomain();
-        Portal.domains.addPage.createDomain(myDomain);
-        var alert = Portal.alerts.getFirst();
-        var expectedMsg = 'child "origin_host_header" fails because ' +
-          '["origin_host_header" is not allowed to be empty]';
-        expect(alert.getText()).toEqual(expectedMsg);
+        Portal.domains.addPage.fillForm(myDomain);
+        var addBtn = Portal.domains.addPage.getCreateDomainBtn();
+        expect(addBtn.isEnabled()).toBeFalsy();
       });
 
     it('should not create a domain, if location list option is not selected ',
@@ -101,11 +95,9 @@ describe('Negative', function () {
         myDomain.originLocation = '--- Select Location ---';
         Portal.getDomainsPage();
         Portal.domains.listPage.clickAddNewDomain();
-        Portal.domains.addPage.createDomain(myDomain);
-        var alert = Portal.alerts.getFirst();
-        var expectedMsg = 'child "origin_server_location_id" fails because ' +
-          '["origin_server_location_id" is required]';
-        expect(alert.getText()).toEqual(expectedMsg);
+        Portal.domains.addPage.fillForm(myDomain);
+        var addBtn = Portal.domains.addPage.getCreateDomainBtn();
+        expect(addBtn.isEnabled()).toBeFalsy();
       });
 
     it('should not create domain when all fields have white spaces',
@@ -113,11 +105,9 @@ describe('Negative', function () {
         var myDomain = DataProvider.generateDomain();
         Portal.getDomainsPage();
         Portal.domains.listPage.clickAddNewDomain();
-        Portal.domains.addPage.createDomain(myDomain);
-        var alert = Portal.alerts.getFirst();
-        var expectedMsg = 'child "domain_name" fails because ["domain_name" ' +
-          'is required]';
-        expect(alert.getText()).toEqual(expectedMsg);
+        Portal.domains.addPage.fillForm(myDomain);
+        var addBtn = Portal.domains.addPage.getCreateDomainBtn();
+        expect(addBtn.isEnabled()).toBeFalsy();
       });
 
     it('should not create a domain if domain name field has white spaces',
@@ -126,11 +116,9 @@ describe('Negative', function () {
         myDomain.name = '';
         Portal.getDomainsPage();
         Portal.domains.listPage.clickAddNewDomain();
-        Portal.domains.addPage.createDomain(myDomain);
-        var alert = Portal.alerts.getFirst();
-        var expectedMsg = 'child "domain_name" fails because ' +
-          '["domain_name" is required]';
-        expect(alert.getText()).toEqual(expectedMsg);
+        Portal.domains.addPage.fillForm(myDomain);
+        var addBtn = Portal.domains.addPage.getCreateDomainBtn();
+        expect(addBtn.isEnabled()).toBeFalsy();
       });
 
     it('should not create a domain if origin server field has white space',
@@ -139,11 +127,9 @@ describe('Negative', function () {
         myDomain.originServer = '';
         Portal.getDomainsPage();
         Portal.domains.listPage.clickAddNewDomain();
-        Portal.domains.addPage.createDomain(myDomain);
-        var alert = Portal.alerts.getFirst();
-        var expectedMsg = 'child "origin_server" fails because ' +
-          '["origin_server" is required]';
-        expect(alert.getText()).toEqual(expectedMsg);
+        Portal.domains.addPage.fillForm(myDomain);
+        var addBtn = Portal.domains.addPage.getCreateDomainBtn();
+        expect(addBtn.isEnabled()).toBeFalsy();
       });
 
     it('should not create domain if origin host header field has white spaces',
@@ -152,11 +138,9 @@ describe('Negative', function () {
         myDomain.originHostHeader = '';
         Portal.getDomainsPage();
         Portal.domains.listPage.clickAddNewDomain();
-        Portal.domains.addPage.createDomain(myDomain);
-        var alert = Portal.alerts.getFirst();
-        var expectedMsg = 'child "origin_host_header" fails because ' +
-          '["origin_host_header" is required]';
-        expect(alert.getText()).toEqual(expectedMsg);
+        Portal.domains.addPage.fillForm(myDomain);
+        var addBtn = Portal.domains.addPage.getCreateDomainBtn();
+        expect(addBtn.isEnabled()).toBeFalsy();
       });
   });
 });
