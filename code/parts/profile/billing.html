@@ -46,11 +46,8 @@
             </div>
           </div>
         </div>
-    <!--     <div class="panel-body">
-          <div class="alert alert-info" ng-if="_loading">
-            <i class="glyphicon glyphicon-refresh spin" ng-if="item.loading"></i>&nbsp; Loading...
-          </div>
-          <table class="table">
+     <!--  <div class="panel-body">
+            <table class="table">
             <thead>
               <tr>
                 <th></th>
@@ -84,6 +81,9 @@
           </table>
         </div> -->
         <div class="panel-body" style="padding-top: 40px;">
+          <div class="alert alert-info" ng-if="_loading">
+            <i class="glyphicon glyphicon-refresh spin" ng-if="item.loading"></i>&nbsp; Loading...
+          </div>
           <div class="row" ng-if="records.length > 0">
             <div class="col-md-3  text-center" ng-repeat="item in records | orderBy: 'monthly_fee'">
               <div class="billing-plan" ng-class="{'current':item.id === account.plan_id}">
@@ -107,7 +107,7 @@
                     <i class="glyphicon glyphicon-refresh spin" ng-if="_loading"></i> Subscribe
                   </button>
                   <button ng-show="item.id === account.plan_id" ng-click="chooseBillingPlan(item.id, account)" class="btn btn-success btn-lg" disabled>
-                    <i class="glyphicon glyphicon-refresh spin" ng-if="_loading"></i> Current
+                    <i class="glyphicon glyphicon-refresh spin" ng-if="_loading"></i> Current Plan
                   </button>
                 </footer>
               </div>
