@@ -708,3 +708,6 @@ i {
 .billing-plan-action {
   padding-bottom: 20px;
 }
+.billing-plan-details {
+  margin: 0 20px;
+}

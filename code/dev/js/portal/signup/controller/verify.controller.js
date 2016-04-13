@@ -1,6 +1,6 @@
 (function () {
   'use strict';
-
+  // NOTE: functionality is depricated - we no more verify user by token.
   angular
     .module('revapm.Portal.Signup')
     .controller('VerifyController', VerifyController);

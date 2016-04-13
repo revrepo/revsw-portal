@@ -153,6 +153,9 @@
                 </textarea>
               </div>
             </div>
+            <div class="form-group" ng-if="model.billing_id && model.subscription_id">
+              <p class="col-md-12 text text-center"> To update your billing address and company name (as they will appears on your RevAPM statements) please click on “Update Payment Profile” button and provide the billing information together with credit card details.</p>
+            </div>
             <!--
             <div class="form-group" ng-if="model.billing_id && (userService.isReseller() || userService.isRevadmin())">
               <label for="comment" class="col-sm-2 control-label" popover-trigger="mouseenter" popover="Billing plan">Billing Plan</label>
