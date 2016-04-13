@@ -51,7 +51,8 @@
     "topojson": "~1.6.24",
     "ui-select": "angular-ui-select#~0.13.1",
     "angular-clipboard": "^1.3.0",
-    "ng-scrollbars": "^0.0.10"
+    "ng-scrollbars": "^0.0.10",
+    "PACE": "pace#^1.0.2"
   },
   "resolutions": {
     "moment": "~2.12.0"

@@ -22,8 +22,8 @@
 </div>
 
 <div>
-  <div class="alert alert-info" ng-if="!_loading && !hits.labels.length">
-    No data to display
+  <div class="alert alert-info" ng-if="!_loading && !hits.labels.length" >
+    <p align="center" >No data to display</p>
   </div>
 
   <div ng-class="{'invisible-chart-wrapper': hits.labels && _loading, 'hide': !_loading &&(!hits.labels || !hits.labels.length) }">

@@ -1,8 +1,3 @@
-<html>
-<head>
-
-</head>
-<body>
 <div class="row">
   <div class="col-sm-12">
     <h2 class="pull-left page-title">
@@ -29,16 +24,15 @@
 
       </div>
       <div class="panel-body">
-        <form name="newForm" class="form-horizontal">
-          <pre>{{newForm}}</pre>
-          <div class="control-group" ng-class="{true: 'error'}[newForm.email.$invalid]">
-            <label class="control-label" for="email"
+        <form class="form-horizontal" name="userform">
+          <div class="form-group">
+            <label for="email"
                    popover-append-to-body="{{true}}"
                    class="col-sm-2 control-label"
                    popover-trigger="mouseenter"
                    popover="New user's email address - the address should be unique across the system">Email</label>
 
-            <div class="col-sm-10, controls">
+            <div class="col-sm-10">
               <input type="email"
                      autofocus
                      class="form-control"
@@ -46,9 +40,11 @@
                      placeholder="Email"
                      ng-model="model.user_email"
                      ng-disabled="_loading"
-                      required="required">
-              <span class="help-inline" ng-show=" newForm.email.$error.required">Required</span>
-              <span class="help-inline" ng-show=" newForm.email.$error.email">Invalid email</span>
+                     name="userform.email">
+
+              <span ng-show="!!userform['userform.email'].$error.email" style="color:red">example@example.com </span>
+
+
             </div>
           </div>
           <div class="form-group">
@@ -63,7 +59,11 @@
                      id="firstname"
                      placeholder="First Name"
                      ng-model="model.firstname"
-                     ng-disabled="_loading">
+                     ng-disabled="_loading"
+                      name="userform.firstname"
+                     ng-pattern="/^[a-z0-9]+$/i" required/>
+
+              <span ng-show="!!userform['userform.firstname'].$error.pattern" style="color:red">First letter must contain letters, spaces and _ only. </span>
             </div>
           </div>
           <div class="form-group">
@@ -78,7 +78,11 @@
                      id="lastName"
                      placeholder="Last Name"
                      ng-model="model.lastname"
-                     ng-disabled="_loading">
+                     ng-disabled="_loading"
+                     name="userform.lastname"
+                     ng-pattern="/^[a-z0-9]+$/i" required/>
+
+              <span ng-show="!!userform['userform.lastname'].$error.pattern" style="color:red">First letter must contain letters, spaces and _ only. </span>
             </div>
           </div>
 
@@ -174,7 +178,11 @@
                      id="password"
                      ng-model="model.password"
                      ng-disabled="_loading"
-                     required="">
+                     required="" ng-minlength="8" ng-maxlength="20" name="userform.password">
+
+                <span ng-show="!!userform['userform.password'].$error.minlength" style="color:red">Password must contain atleast 8-20 charecters </span>
+                <span ng-show="!!userform['userform.password'].$error.maxlength" style="color:red">Password must contain atleast 8-20 charecters </span>
+              </div>
             </div>
           </div>
           <div class="form-group">
@@ -182,6 +190,7 @@
                    class="col-sm-2 control-label"
                    popover-trigger="mouseenter"
                    >Confirm Password</label>
+
 
             <div class="col-sm-10">
               <input type="password"
