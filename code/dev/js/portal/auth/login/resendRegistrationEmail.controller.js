@@ -25,7 +25,6 @@
             email: $scope.data.email
           }).$promise
           .then(function(data) {
-            console.log(data)
             if (data && data && data.message) {
               AlertService.success(data.message, 6000);
               // Show message

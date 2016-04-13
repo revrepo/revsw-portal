@@ -58,7 +58,7 @@
             if (err.status === $config.STATUS.UNAUTHORIZED) {
               AlertService.danger('Wrong username or password', 5000);
             }
-            if (err.data.message) {
+            if (err.data.message && (err.status !== $config.STATUS.SUBSCRIPTION_REQUIRED)) {
               AlertService.danger(err.data.message, 5000);
             }
           })
