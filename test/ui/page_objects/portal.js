@@ -56,9 +56,10 @@ var HelpSupportPage = require('./helpSupport/helpSupportPage');
 var HelpPage = require('./help/helpPage');
 var SecSettingsPage = require('./admin/securitySettingsPage');
 var ApiKeysListPage = require('./admin/apiKeysListPage.js');
-var AppsListPage = require('./mobileApps/appsListPage.js');
-var AddNewAppPage = require('./mobileApps/addNewAppPage.js');
-var EditAppPage = require('./mobileApps/editAppPage.js');
+var AppsListPage = require('./mobileApps/appsListPage');
+var AddNewAppPage = require('./mobileApps/addNewAppPage');
+var EditAppPage = require('./mobileApps/editAppPage');
+var EditAdvancedModePage = require('./mobileApps/editAppAdvancedModePage');
 
 // This `Portal` Page Object is the entry point to use all other Page Objects
 // that abstract all components from the Portal App.
@@ -105,7 +106,8 @@ var Portal = {
   mobileApps: {
     listPage: AppsListPage,
     addAppPage: AddNewAppPage,
-    editAppPage: EditAppPage
+    editAppPage: EditAppPage,
+    editAppAdvancedModePage: EditAdvancedModePage
   },
 
   // ## Authentication Helper methods

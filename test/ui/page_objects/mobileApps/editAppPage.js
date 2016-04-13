@@ -133,6 +133,20 @@ var EditApp = {
   update: function (app) {
     this.form.fill(app);
     this.form.clickUpdate();
+  },
+
+  /**
+   * ### EditApp.publish()
+   *
+   * Publishes the edited app from `Edit App` form element.
+   *
+   * @param {object} app, app data.
+   *
+   * @returns {Promise}
+   */
+  publish: function (app) {
+    this.form.fill(app);
+    this.form.clickPublish();
   }
 };
 

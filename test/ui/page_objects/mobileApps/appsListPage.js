@@ -242,6 +242,20 @@ clickClearSearch: function () {
   searchAndEdit: function (app) {
     this.setSearch(app.name);
     this.appsTable.clickEditApp();
+  },
+
+  /**
+   * ### AppsList.searchAndAdvancedEdit(app)
+   *
+   * Advanced Edits an existing app in the `Apps List App` Page.
+   *
+   * @param {object} app, app data.
+   *
+   * @returns {Promise}
+   */
+  searchAndAdvancedEdit: function (app) {
+    this.setSearch(app.name);
+    this.appsTable.clickAdvancedEditApp();
   }
 };
 
