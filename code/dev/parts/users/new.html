@@ -24,7 +24,7 @@
 
       </div>
       <div class="panel-body">
-        <form class="form-horizontal">
+        <form class="form-horizontal" name="userform">
           <div class="form-group">
             <label for="email"
                    popover-append-to-body="{{true}}"
@@ -39,7 +39,11 @@
                      id="email"
                      placeholder="Email"
                      ng-model="model.user_email"
-                     ng-disabled="_loading">
+                     ng-disabled="_loading"
+                     name="userform.email">
+
+              <span ng-show="!!userform['userform.email'].$error.email" style="color:red">example@example.com </span>
+
 
             </div>
           </div>
@@ -55,7 +59,11 @@
                      id="firstname"
                      placeholder="First Name"
                      ng-model="model.firstname"
-                     ng-disabled="_loading">
+                     ng-disabled="_loading"
+                      name="userform.firstname"
+                     ng-pattern="/^[a-z0-9]+$/i" required/>
+
+              <span ng-show="!!userform['userform.firstname'].$error.pattern" style="color:red">First letter must contain letters, spaces and _ only. </span>
             </div>
           </div>
           <div class="form-group">
@@ -70,7 +78,11 @@
                      id="lastName"
                      placeholder="Last Name"
                      ng-model="model.lastname"
-                     ng-disabled="_loading">
+                     ng-disabled="_loading"
+                     name="userform.lastname"
+                     ng-pattern="/^[a-z0-9]+$/i" required/>
+
+              <span ng-show="!!userform['userform.lastname'].$error.pattern" style="color:red">First letter must contain letters, spaces and _ only. </span>
             </div>
           </div>
 
@@ -166,7 +178,11 @@
                      id="password"
                      ng-model="model.password"
                      ng-disabled="_loading"
-                     required="">
+                     required="" ng-minlength="8" ng-maxlength="20" name="userform.password">
+
+                <span ng-show="!!userform['userform.password'].$error.minlength" style="color:red">Password must contain atleast 8-20 charecters </span>
+                <span ng-show="!!userform['userform.password'].$error.maxlength" style="color:red">Password must contain atleast 8-20 charecters </span>
+              </div>
             </div>
           </div>
           <div class="form-group">
@@ -174,6 +190,7 @@
                    class="col-sm-2 control-label"
                    popover-trigger="mouseenter"
                    >Confirm Password</label>
+
 
             <div class="col-sm-10">
               <input type="password"

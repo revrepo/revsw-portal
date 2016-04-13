@@ -25,7 +25,8 @@
     'revapm.Portal.Dashboard',
     'datatables',
     'datatables.bootstrap',
-    'ngFileSaver'
+    'ngFileSaver',
+    'ngScrollbars'
   ]);
 
 })();

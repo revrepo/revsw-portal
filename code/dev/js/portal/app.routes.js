@@ -8,7 +8,6 @@
   /*@ngInject*/
   function routesConfig($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/users');
-
     $stateProvider
     // Base 3 layout
       .state('index', {
@@ -19,6 +18,15 @@
             /*@ngInject*/
             controller: function($scope, $state, User) {
               $scope.userService = User;
+              $scope.scrollbarconfig = {
+                autoHideScrollbar: true,
+                theme: 'minimal',
+                advanced:{
+                  updateOnContentResize: true
+                },
+                setHeight: window.innerHeight - 52,
+                scrollInertia: 0
+              };
               if (!User.isAuthed() &&
                 $state.current.name !== 'index.restore' &&
                 $state.current.name !== 'signup' &&

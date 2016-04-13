@@ -3,7 +3,7 @@
         <div id="logo">
             <img src="images/logo_color.png" alt="Logo" />
         </div>
-        <div class="side-menu" style="height: 94%; overflow: auto;">
+        <div class="side-menu" style="height: 94%; overflow: auto;"  ng-scrollbars ng-scrollbars-config="scrollbarconfig">
             <dashboard-nav-menu></dashboard-nav-menu>
             <li ui-sref-active-if="{class: 'active-side-menu-item', state: 'index.apps'}", ng-class="{'active-side-menu-item': menuExpanded('index.apps')}" style="margin-top: 8px;">
 

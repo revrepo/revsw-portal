@@ -223,6 +223,9 @@ input[type="radio"] {
 input[type="checkbox"] {
   margin-left: 20px;
 }
+.section-edit-company {
+  padding-bottom: 30px;
+}
 .main_img_container {
   left: 50%;
   position: absolute;
@@ -318,6 +321,11 @@ section[drawer] #logo img {
   margin: 8px 5px;
   vertical-align: middle;
   width: 50%;
+}
+section[drawer] .side-menu {
+  height: 700px;
+  overflow: visible;
+  position: relative;
 }
 section[drawer] .side-menu .side-menu-item {
   cursor: pointer;
@@ -463,7 +471,6 @@ polyline {
 }
 .auto-scroll {
   overflow-y: auto;
-
 }
 .filter-generator .form-control {
   display: inline-block;
@@ -689,17 +696,4 @@ i {
 }
 .icon-revapm-banknote:before {
   content: "\e912";
-}
-h2 {
-  color: black;
-  font-family: Calibri;
-  font-weight: lighter;
-}
-h2 {
-  color: black;
-  font-family: Calibri;
-
-
-
-  font-weight: lighter;
 }
