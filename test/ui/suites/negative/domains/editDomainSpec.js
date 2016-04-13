@@ -54,18 +54,17 @@ describe('Negative', function () {
       expect(domainNameField.isEnabled()).toBeFalsy();
     });
 
-    it('should display an error message when trying to edit domain without ' +
+    it('should not allow to validate/update/publish a domain without ' +
       '"Origin Server"',
       function () {
         Portal.domains.listPage.searchAndClickEdit(myDomain.name);
         Portal.domains.editPage.domainForm.clearOriginServer();
-        Portal.domains.editPage.clickUpdateDomain();
-        Portal.dialog.clickOk();
-        var alert = Portal.alerts.getFirst();
-        var expectedMessage = 'child "origin_server" fails because ' +
-          '["origin_server" is not allowed to be empty, "origin_server" ' +
-          'is not allowed to be empty]';
-        expect(alert.getText()).toEqual(expectedMessage);
+        var validateBtn = Portal.domains.editPage.getValidateDomainBtn();
+        expect(validateBtn.isEnabled()).toBeFalsy();
+        var updateBtn = Portal.domains.editPage.getUpdateDomainBtn();
+        expect(updateBtn.isEnabled()).toBeFalsy();
+        var publishBtn = Portal.domains.editPage.getPublishDomainBtn();
+        expect(publishBtn.isEnabled()).toBeFalsy();
       });
 
     // it('should edit and update the domain without "Origin Host Header"',

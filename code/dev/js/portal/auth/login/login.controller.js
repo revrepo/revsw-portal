@@ -52,6 +52,9 @@
             if (err.status === $config.STATUS.TWO_FACTOR_AUTH_REQUIRED) {
               $scope.enter2faCode(email, pass);
             }
+            if (err.status === $config.STATUS.SUBSCRIPTION_REQUIRED) {
+              $scope.sendLinkSubscription(email, pass);
+            }
             if (err.status === $config.STATUS.UNAUTHORIZED) {
               AlertService.danger('Wrong username or password', 5000);
             }
@@ -106,6 +109,26 @@
 
       modalInstance.result.then(function (message) {
         AlertService.success(message, 5000);
+      });
+    };
+
+    $scope.sendLinkSubscription = function(email, password) {
+      var modalInstance = $modal.open({
+        templateUrl: 'parts/auth/resend-subscription-info.html',
+        controller: 'ForgotPasswordController',
+        size: 'md',
+        resolve: {
+          auth: function () {
+            return {
+              email: email,
+              password: password
+            };
+          }
+        }
+      });
+
+      modalInstance.result.then(function (data) {
+        $state.go('index');
       });
     };
   }
