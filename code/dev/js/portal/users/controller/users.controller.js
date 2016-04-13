@@ -37,6 +37,10 @@
     $scope.domains = DomainsConfig.query();
 
     if (!$scope.model) {
+      initModel();
+    }
+
+    function initModel(){
       $scope.model = {
         theme: 'light',
         access_control_list: {
@@ -98,6 +102,7 @@
       delete model.user_email;
       $scope.create(model)
         .then(function(data) {
+          initModel();
           $scope.alertService.success('User created', 5000);
         })
         .catch($scope.alertService.danger);
