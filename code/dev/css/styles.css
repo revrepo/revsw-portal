@@ -190,10 +190,6 @@ table tbody tr td {
 table tbody tr td.uppercase {
   text-transform: uppercase;
 }
-.billing-plan {
-  margin-right: 5px;
-  margin-bottom: 5px;
-}
 h1.signup {
   margin-top: auto;
   color: #A1A2A5;
@@ -321,11 +317,6 @@ section[drawer] #logo img {
   margin: 8px 5px;
   vertical-align: middle;
   width: 50%;
-}
-section[drawer] .side-menu {
-  height: 700px;
-  overflow: visible;
-  position: relative;
 }
 section[drawer] .side-menu .side-menu-item {
   cursor: pointer;
@@ -696,6 +687,26 @@ i {
 }
 .icon-revapm-banknote:before {
   content: "\e912";
+}
+.billing-plan {
+  border: solid 1px;
+  border-color: #F8A543;
+  margin: 5px;
+  border-radius: 3px;
+}
+.billing-plan.current {
+  margin-top: -20px;
+}
+.billing-plan-header {
+  color: #FFEBCD;
+  background-color: #F8A543;
+  padding: 10px;
+}
+.billing-plan-ammount {
+  color: green;
+}
+.billing-plan-action {
+  padding-bottom: 20px;
 }
 .billing-plan {
   border: solid 1px;
