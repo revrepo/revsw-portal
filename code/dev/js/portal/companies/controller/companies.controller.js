@@ -46,7 +46,7 @@
       }
     });
 
-    $scope.filterKeys = ['companyName', 'comment', 'createdBy', 'updated_at'];
+    $scope.filterKeys = ['companyName', 'comment', 'createdBy', 'updated_at', 'created_at'];
 
     $scope.getCompany = function(id) {
       $scope.get(id)

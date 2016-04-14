@@ -67,9 +67,13 @@
                 <a href="" ng-click="order('companyName')">Company Name</a>
                 <span class="sortorder" ng-show="filter.predicate === 'companyName'" ng-class="{reverse: filter.reverse}"></span>
               </th>
-              <th class="col-lg-4">
+              <!-- <th class="col-lg-4">
                 <a href="" ng-click="order('comment')">Comment</a>
                 <span class="sortorder" ng-show="filter.predicate === 'comment'" ng-class="{reverse: filter.reverse}"></span>
+              </th> -->
+              <th class="col-lg-1">
+                <a href="" ng-click="order('created_at')">Created At</a>
+                <span class="sortorder" ng-show="filter.predicate === 'created_at'" ng-class="{reverse: filter.reverse}"></span>
               </th>
               <th class="col-lg-2">
                 <a href="" ng-click="order('createdBy')">Created By</a>
@@ -98,7 +102,8 @@
                   {{item.companyName}}
                 </a>
               </td>
-              <td>{{item.comment}}</td>
+              <!-- <td>{{item.comment}}</td> -->
+              <td>{{getRelativeDate(item.created_at)}}</td>
               <td>{{item.createdBy}}</td>
               <td>{{item.subscription_state}}</td>
               <td>{{(item.subscription_name) ? item.subscription_name : 'Manual'}}</td>

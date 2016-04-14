@@ -23,6 +23,8 @@ var DataProvider = require('./../../../common/providers/data');
 describe('Negative', function () {
   describe('Add user', function () {
 
+    // TODO: please add negaive tests for reseller and revadmin roles
+
     var adminUser = config.get('portal.users.admin');
 
     beforeAll(function () {
@@ -45,11 +47,9 @@ describe('Negative', function () {
       function () {
         var emptyUserData = {};
         Portal.userListPage.clickAddNewUser();
-        Portal.addUserPage.createUser(emptyUserData);
-        var alert = Portal.alerts.getFirst();
-        var expectedMessage = 'child "email" fails because ["email" is ' +
-          'required]';
-        expect(alert.getText()).toEqual(expectedMessage);
+        Portal.addUserPage.userForm.fill(emptyUserData);
+        var addBtn = Portal.addUserPage.getCreateUserBtn();
+        expect(addBtn.isEnabled()).toBeFalsy();
       });
 
     it('should not create user when the filled email is already used by ' +
@@ -58,128 +58,73 @@ describe('Negative', function () {
         var tom = DataProvider.generateUser('Tom');
         var jerry = DataProvider.generateUser('Jerry');
         jerry.email = tom.email;
-        Portal.createUser(tom);
         Portal.userListPage.clickAddNewUser();
+        Portal.addUserPage.createUser(tom);
         Portal.addUserPage.createUser(jerry);
         var alert = Portal.alerts.getFirst();
-        var expectedMessage = 'child "access_control_list" fails because ' +
-          '["access_control_list" must be an object]';
+        var expectedMessage = 'The email address is already used by another user';
         expect(alert.getText()).toEqual(expectedMessage);
-        Portal.deleteUser(tom);
       });
 
-    it('should display an error message when trying to create user without ' +
-      'email',
+    it('should not allow to create a user without email',
       function () {
         var derek = DataProvider.generateUser('Derek');
         derek.email = '';
         Portal.userListPage.clickAddNewUser();
-        Portal.addUserPage.createUser(derek);
-        var alert = Portal.alerts.getFirst();
-        var expectedMessage = 'child "email" fails because ["email" is ' +
-          'required]';
-        expect(alert.getText()).toEqual(expectedMessage);
+        Portal.addUserPage.userForm.fill(derek);
+        var addBtn = Portal.addUserPage.getCreateUserBtn();
+        expect(addBtn.isEnabled()).toBeFalsy();
       });
 
-    it('should not create user when the email is not filled', function () {
-      var now = Date.now();
-      var andrew = DataProvider.generateUser('Andrew' + now);
-      andrew.email = '';
-      Portal.createUser(andrew);
-      Portal.userListPage.searcher.setSearchCriteria(andrew.firstName);
-      var filteredRows = Portal.userListPage.userTbl.getRows().count();
-      expect(filteredRows).toEqual(0);
-    });
-
-    it('should display an error message when trying to create user without ' +
-      'first name',
+    it('should not allow to create a user without first name',
       function () {
         var mathew = DataProvider.generateUser('Mathew');
         mathew.firstName = '';
         Portal.userListPage.clickAddNewUser();
-        Portal.addUserPage.createUser(mathew);
-        var alert = Portal.alerts.getFirst();
-        var expectedMessage = 'child "firstname" fails because ["firstname" ' +
-          'is required]';
-        expect(alert.getText()).toEqual(expectedMessage);
+        Portal.addUserPage.userForm.fill(mathew);
+        var addBtn = Portal.addUserPage.getCreateUserBtn();
+        expect(addBtn.isEnabled()).toBeFalsy();
       });
 
-    it('should not create user when the "First Name" is not filled',
+    it('should not allow to create a user without last name',
       function () {
-        var michael = DataProvider.generateUser('Michael');
-        michael.firstName = '';
-        Portal.createUser(michael);
-        Portal.userListPage.searcher.setSearchCriteria(michael.email);
-        var filteredRows = Portal.userListPage.userTbl.getRows().count();
-        expect(filteredRows).toEqual(0);
-      });
-
-    it('should display an error message when trying to create user without ' +
-      'last name',
-      function () {
-        var frank = DataProvider.generateUser('Frank');
-        frank.firstName = '';
+        var mathew = DataProvider.generateUser('Mathew');
+        mathew.lastName = '';
         Portal.userListPage.clickAddNewUser();
-        Portal.addUserPage.createUser(frank);
-        var alert = Portal.alerts.getFirst();
-        var expectedMessage = 'child "firstname" fails because ["firstname" ' +
-          'is required]';
-        expect(alert.getText()).toEqual(expectedMessage);
+        Portal.addUserPage.userForm.fill(mathew);
+        var addBtn = Portal.addUserPage.getCreateUserBtn();
+        expect(addBtn.isEnabled()).toBeFalsy();
       });
 
-    it('should not create user  when the "Last Name" is not filled',
-      function () {
-        var bruce = DataProvider.generateUser('Bruce');
-        bruce.firstName = '';
-        Portal.createUser(bruce);
-        Portal.userListPage.searcher.setSearchCriteria(bruce.email);
-        var filteredRows = Portal.userListPage.userTbl.getRows().count();
-        expect(filteredRows).toEqual(0);
-      });
-
-    it('should display an error message when trying to create user without ' +
-      'any role',
+    it('should not allow to create a user without any role',
       function () {
         var scott = DataProvider.generateUser('Scott');
         delete scott.role;
         Portal.userListPage.clickAddNewUser();
-        Portal.addUserPage.createUser(scott);
-        var alert = Portal.alerts.getFirst();
-        var expectedMessage = 'child "role" fails because ["role" is required]';
-        expect(alert.getText()).toEqual(expectedMessage);
+        Portal.addUserPage.userForm.fill(scott);
+        var addBtn = Portal.addUserPage.getCreateUserBtn();
+        expect(addBtn.isEnabled()).toBeFalsy();
       });
 
-    it('should not create user  when no "Role" is selected', function () {
-      var bruno = DataProvider.generateUser('Bruno');
-      delete bruno.role;
-      Portal.createUser(bruno);
-      Portal.userListPage.searcher.setSearchCriteria(bruno.email);
-      var filteredRows = Portal.userListPage.userTbl.getRows().count();
-      expect(filteredRows).toEqual(0);
-    });
 
-    it('should display an error message when trying to create user without ' +
-      'password',
+    it('should not allow to create a user without password',
       function () {
         var brian = DataProvider.generateUser('Brian');
         delete brian.password;
         Portal.userListPage.clickAddNewUser();
-        Portal.addUserPage.createUser(brian);
-        var alert = Portal.alerts.getFirst();
-        var expectedMessage = 'Passwords did not match';
-        expect(alert.getText()).toEqual(expectedMessage);
+        Portal.addUserPage.userForm.fill(brian);
+        var addBtn = Portal.addUserPage.getCreateUserBtn();
+        expect(addBtn.isEnabled()).toBeFalsy();
       });
 
-    it('should display an error message when trying to create user without ' +
-      '"Confirmation Password"',
+    it('should not allow to create a user without confirmation password',
       function () {
-        var joe = DataProvider.generateUser('Joe');
-        delete joe.passwordConfirm;
+        var brian = DataProvider.generateUser('Brian');
+        delete brian.passwordConfirm;
         Portal.userListPage.clickAddNewUser();
-        Portal.addUserPage.createUser(joe);
-        var alert = Portal.alerts.getFirst();
-        var expectedMessage = 'Passwords did not match';
-        expect(alert.getText()).toEqual(expectedMessage);
+        Portal.addUserPage.userForm.fill(brian);
+        var addBtn = Portal.addUserPage.getCreateUserBtn();
+        expect(addBtn.isEnabled()).toBeFalsy();
       });
 
     it('should display an error message when creating user when "Password" ' +

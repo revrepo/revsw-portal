@@ -39,7 +39,7 @@ var AddUser = {
         linkText: 'Back To List'
       },
       createUser: {
-        css: '.btn-success .glyphicon-ok'
+        css: '.btn-success'
       },
       cancel: {
         linkText: 'Cancel'
