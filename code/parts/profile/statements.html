@@ -10,7 +10,7 @@
     <div class="row" ng-init="initStatements()">
         <div class="col-md-12">
             <div class="panel panel-default">
-                <div class="panel-heading">
+                <div class="panel-heading" ng-if="!userService.isAdmin()">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="pull-left">
