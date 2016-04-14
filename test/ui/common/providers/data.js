@@ -61,7 +61,8 @@ var DataProvider = {
       lastName: prefixLastName + ' LName',
       role: Constants.user.roles.USER,
       password: 'password1',
-      passwordConfirm: 'password1'
+      passwordConfirm: 'password1',
+      company: 'API QA Reseller Company'
     };
   },
 

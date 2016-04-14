@@ -10,7 +10,7 @@
     <div class="row" ng-init="initStatements()">
         <div class="col-md-12">
             <div class="panel panel-default">
-                <div class="panel-heading">
+                <div class="panel-heading" ng-if="!userService.isAdmin()">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="pull-left">
@@ -121,9 +121,9 @@
                             <th>
                                 <p>Date</p>
                             </th>
-                            <th>
+                            <!-- <th>
                                 <p>Memo</p>
-                            </th>
+                            </th> -->
                             <th>
                                 <p>Amount</p>
                             </th>
@@ -136,7 +136,7 @@
                         <tr ng-repeat="statement in statements">
                             <td><a ui-sref="^.statement({id: statement.id})">{{statement.id}}</a></td>
                             <td>{{statement.opened_at | date : 'MMM d, y h:mm:ss a'}}</td>
-                            <td>{{statement.memo}}</td>
+                            <!-- <td>{{statement.memo}}</td>  -->
                             <td>{{statement.total_in_cents/100 | currency}}</td>
                             <td>{{statement.settled_at | date : 'MMM d, y h:mm:ss a'}}</td>
                         </tr>

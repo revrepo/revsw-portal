@@ -47,13 +47,11 @@ describe('Negative', function () {
       Portal.signOut();
     });
 
-    it('should display an error message when required fields are not filled',
+    it('should not enable the Update Password button when no fields are filled',
       function () {
-        Portal.updatePasswordPage.clickUpdatePassword();
-        var alert = Portal.alerts.getFirst();
-        var expectedMessage = 'Please fill all fields. (New password should ' +
-          'be at least 8 charecters length)';
-        expect(alert.getText()).toEqual(expectedMessage);
+        // Portal.addUserPage.userForm.fill(emptyUserData);
+        var updateBtn = Portal.updatePasswordPage.getUpdatePasswordBtn();
+        expect(updateBtn.isEnabled()).toBeFalsy();
       });
 
     it('should display error message when the "current password" is invalid',
@@ -96,30 +94,12 @@ describe('Negative', function () {
         expect(alert.getText()).toEqual(expectedMessage);
       });
 
-    it('should display an error message when trying to update password with ' +
-      'a value less than 8 chars',
+    it('should not allow to update password with a value less than 8 chars',
       function () {
         var newPassword = '123';
         Portal.updatePasswordPage.update(tom.password, newPassword);
-        var alert = Portal.alerts.getFirst();
-        var expectedMessage = 'Please fill all fields. (New password should ' +
-          'be at least 8 charecters length)';
-        expect(alert.getText()).toEqual(expectedMessage);
-      });
-
-    it('should not update password when filling a value less than 8 chars',
-      function () {
-        var newPassword = '123';
-        Portal.updatePasswordPage.update(tom.password, newPassword);
-        Portal.signOut();
-        Portal.signIn({
-          email: tom.email,
-          password: newPassword
-        });
-        var alert = Portal.alerts.getFirst();
-        var expectedMessage = 'Wrong username or password';
-        expect(alert.getText()).toEqual(expectedMessage);
-        Portal.signIn(tom);
+        var updateBtn = Portal.updatePasswordPage.getUpdatePasswordBtn();
+        expect(updateBtn.isEnabled()).toBeFalsy();
       });
 
     it('should display an error message when trying to update password with ' +

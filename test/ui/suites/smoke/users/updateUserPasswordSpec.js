@@ -32,6 +32,9 @@ describe('Smoke', function () {
 // for revadmin role
   ];
 
+  // TODO: need to fix the script to create users with different roles instead of using 
+  // different roles to create the same test user 
+
   users.forEach(function (user) {
 
     describe('With user: ' + user.role, function () {
@@ -57,6 +60,12 @@ describe('Smoke', function () {
         it('should update password successfully', function () {
           var carl = DataProvider.generateUser('Carl');
           var newPassword = 'password2';
+
+          // TODO need to find a more decent way to deal with company
+          // assignments for reseller/revadmin roles
+          if (user.role === 'Admin') {
+            delete carl.company;
+          }
           Portal.createUser(carl);
           Portal.signOut();
           Portal.signIn(carl);

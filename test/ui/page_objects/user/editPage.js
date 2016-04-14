@@ -39,7 +39,7 @@ var EditUser = {
         linkText: 'Back To List'
       },
       updateUser: {
-        css: 'button.btn-success .glyphicon-ok'
+        css: '.btn-success'
       },
       cancel: {
         linkText: 'Cancel'

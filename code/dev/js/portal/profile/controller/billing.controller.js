@@ -63,7 +63,7 @@
               User.getUserAccounts(true)
                 .then(function (accs) {
                   
-                  AlertService.success('Successfully changed billing plan', 5000);
+                  AlertService.success('Successfully changed the billing plan', 5000);
                   accs.forEach(function (acc) {
                     if(acc.acc_id === account.acc_id){
                       User.selectAccount( acc );

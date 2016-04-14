@@ -8,6 +8,9 @@
         <p class="lead">
           We have sent an email with instructions to your email <b>{{$ctrl.model.email}}</b> - please continue the RevAPM registration process by following the link. Please also check your Spam mailbox.
         </p>
+        <p class="lead">
+          Now you can close the browser window.
+        </p>
       </div>
     </div>
   </div>
@@ -118,7 +121,7 @@
             <i class="glyphicon glyphicon-remove"></i>&nbsp; Cancel
           </a>
           <button class="btn btn-success" ng-disabled="_loading || newUser.$invalid ||(($ctrl.model.password != $ctrl.model.passwordConfirm ||newUser.passwordConfirm.$invalid) &&newUser.passwordConfirm.$dirty )" ng-click="$ctrl.onSignUp($ctrl.model)">
-           <i class="glyphicon glyphicon-log-in"></i> SignUp
+           <i class="glyphicon glyphicon-log-in"></i> Sign Up
           </button>
         </div>
       </div>
