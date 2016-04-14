@@ -57,6 +57,12 @@ describe('Smoke', function () {
         it('should update password successfully', function () {
           var carl = DataProvider.generateUser('Carl');
           var newPassword = 'password2';
+
+          // TODO need to find a more decent way to deal with company
+          // assignments for reseller/revadmin roles
+          if (user.role === 'Admin') {
+            delete carl.company;
+          }
           Portal.createUser(carl);
           Portal.signOut();
           Portal.signIn(carl);
