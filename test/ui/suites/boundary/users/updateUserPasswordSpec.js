@@ -48,11 +48,9 @@ describe('Boundary', function () {
         Portal.updatePasswordPage.setCurrentPassword(bret.password);
         Portal.updatePasswordPage.setNewPassword(newPassword);
         Portal.updatePasswordPage.setPasswordConfirm(newPassword);
-        Portal.updatePasswordPage.clickUpdatePassword();
-        var alert = Portal.alerts.getFirst();
-        var expectedMessage = 'Please fill all fields. (New password should ' +
-          'be at least 8 charecters length)';
-        expect(alert.getText()).toEqual(expectedMessage);
+        var updateBtn = Portal.updatePasswordPage.getUpdatePasswordBtn();
+        expect(updateBtn.isEnabled()).toBeFalsy();
+
         Portal.signOut();
         Portal.signIn(adminUser);
         Portal.deleteUser(bret);

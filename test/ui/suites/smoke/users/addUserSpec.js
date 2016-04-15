@@ -26,9 +26,7 @@ describe('Smoke', function () {
   var users = [
     config.get('portal.users.admin'),
     config.get('portal.users.reseller'),
-    config.get('portal.users.revAdmin')   // TODO: For revadmin role we need to fix the
-// user form input process to select an account otherwise the API will not allow to create
-// a user
+    config.get('portal.users.revAdmin')
   ];
 
   users.forEach(function (user) {
@@ -64,12 +62,8 @@ describe('Smoke', function () {
         it('should create an user successfully when filling all required data',
           function () {
             // Create user
-            var bruce = DataProvider.generateUser('Bruce');
-            // TODO need to find a more decent way to deal with company
-            // assignments for reseller/revadmin roles
-            if (user.role === 'Admin') {
-              delete bruce.company;
-            }
+            var bruce = DataProvider.generateUser('Bruce', null, user);
+            // console.log('bruce = ' + JSON.stringify(bruce));
             Portal.userListPage.clickAddNewUser();
             Portal.addUserPage.createUser(bruce);
             // Check App alert notifications

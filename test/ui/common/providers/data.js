@@ -44,7 +44,7 @@ var DataProvider = {
    *         passwordConfirm: string
    *     }
    */
-  generateUser: function (prefix, skipTimestamp) {
+  generateUser: function (prefix, skipTimestamp, portalUser) {
     var prefixEmail = prefix.toLowerCase().replace(' ', '_');
     var names = prefix.split(' ');
     var prefixFirstName = names[0];
@@ -55,6 +55,15 @@ var DataProvider = {
       prefixLastName = 'LName' + prefix;
       timestamp = '-' + Date.now();
     }
+
+    // Special case when the portal user is creating a new user
+    // is a resller or revadmin which require the specify the 
+    // company the new user should be associated with
+    var company;
+    if (portalUser && portalUser.role && portalUser.role !== 'Admin') {
+       company = 'API QA Reseller Company';
+    } 
+
     return {
       email: prefixEmail + timestamp + '@portal-ui-test-email.com',
       firstName: prefixFirstName + ' FName',
@@ -62,7 +71,7 @@ var DataProvider = {
       role: Constants.user.roles.USER,
       password: 'password1',
       passwordConfirm: 'password1',
-      company: 'API QA Reseller Company'
+      company: company
     };
   },
 
