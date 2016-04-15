@@ -32,21 +32,6 @@
     $scope.delay = '24';
 
     /**
-     * Object with information about countries and RTT stats.
-     * Format:
-     * ```json
-     * {
-     *   'Russian Federation': { value: 34, tooltip: 'ave: 34, min: 12, max: 1201 ms' },
-     *   'Zimbabwe': { value: 617, tooltip: 'ave: 617, min: 501, max: 12033 ms' },
-     *   'United States': { value: 11, tooltip: 'ave: 11, min: 4, max: 277 ms' }
-     * }
-     * ```
-     *
-     * @type {Object}
-     */
-    $scope.countryLMRTTData = {};
-
-    /**
      * Loading list of country names
      */
     $scope.countries = Countries.query();
@@ -57,13 +42,7 @@
      * @param {String|Number} domainId
      */
     $scope.reloadCountry = function (domainId) {
-      // Remove prev map
-      HeatmapsDrawer.clearMap();
-      // Set loading
       $scope._loading = true;
-      // Clear old data
-      $scope.countryLMRTTData = {};
-      // Loading new data
       return Stats.lm_rtt_country({
           domainId: domainId,
           count: 250,
@@ -72,18 +51,20 @@
         })
         .$promise
         .then(function (data) {
+          var lm_rtt_data = [];
           if (data.data && data.data.length > 0) {
-            angular.forEach(data.data, function (item) {
-              var name = $scope.countries[item.key.toUpperCase()] || item.key;
-              $scope.countryLMRTTData[name] = {
+            data.data.forEach( function (item) {
+              lm_rtt_data.push({
+                id: item.key.toUpperCase(),
+                name: ( $scope.countries[item.key.toUpperCase()] || item.key ),
                 value: item.lm_rtt_avg_ms,
                 tooltip: ( 'Avg: <strong>' + item.lm_rtt_avg_ms + '</strong> Min: <strong>' +
                   item.lm_rtt_min_ms + '</strong> Max: <strong>' + item.lm_rtt_max_ms + '</strong> ms' )
-              };
+              });
             });
           }
           // Pass to next `.then()`
-          return data;
+          return lm_rtt_data;
         })
         .finally(function () {
           $scope._loading = false;
@@ -101,13 +82,11 @@
       }
       $scope
         .reloadCountry($scope.domain.id)
-        .then(function () {
+        .then(function ( lm_rtt_data ) {
           // Redraw a new map using received data
-          HeatmapsDrawer.drawMap('#canvas-svg', '#tooltip-container', $scope.countryLMRTTData);
+          HeatmapsDrawer.drawWorldMap('#canvas-svg', lm_rtt_data );
         });
 
     };
-    // Draw a empty world map
-    HeatmapsDrawer.drawMap('#canvas-svg', '#tooltip-container', {});
   }
 })();

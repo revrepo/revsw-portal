@@ -20,14 +20,11 @@
 
         $scope.delay = '24';
         $scope._loading = false;
-        $scope.fbtCountryData = {};
 
         $scope.reloadFBTStats = function() {
           if ( !$scope.ngDomain || !$scope.ngDomain.id ) {
             return;
           }
-
-          HeatmapsDrawer.clearMap( '#canvas-svg' );
 
           $scope._loading = true;
           var opts = {
@@ -39,23 +36,21 @@
             .$promise
             .then( function( data ) {
 
-              var cdata = {};
+              var fbt_data = [];
               if ( data.data && data.data.length > 0 ) {
-                angular.forEach( data.data, function( item ) {
-                  var name = $scope.flCountry[ item.key.toUpperCase() ] || item.key;
-                  cdata[ name ] = {
+                data.data.forEach( function( item ) {
+                  fbt_data.push({
+                    id: item.key.toUpperCase(),
+                    name: ( $scope.flCountry[ item.key.toUpperCase() ] || item.key ),
                     value: item.fbt_avg_ms,
                     tooltip: ( 'Avg: <strong>' + Util.formatNumber( item.fbt_avg_ms ) +
                       '</strong> Min: <strong>' + Util.formatNumber( item.fbt_min_ms ) +
                       '</strong> Max: <strong>' + Util.formatNumber( item.fbt_max_ms ) +
                       '</strong> ms' )
-                  };
-                } );
+                  });
+                });
               }
-
-              // console.log( cdata );
-              $scope.fbtCountryData = cdata;
-              HeatmapsDrawer.drawMap( '#canvas-svg', '#tooltip-container', $scope.fbtCountryData );
+              HeatmapsDrawer.drawWorldMap( '#canvas-svg', fbt_data );
             })
             .finally( function() {
               $scope._loading = false;
@@ -67,12 +62,10 @@
             return;
           }
           $scope.reloadFBTStats();
-        } );
-
-        // Draw a empty world map
-        HeatmapsDrawer.drawMap( '#canvas-svg', '#tooltip-container', {} );
+        });
       }
     };
   }
+
 } )();
 
