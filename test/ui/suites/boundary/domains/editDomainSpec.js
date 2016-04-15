@@ -70,19 +70,18 @@ describe('Functional', function () {
         expect(alert.getText()).toContain(lenStr100);
     });
 
-    it('should not update domain with value in origin server location field',
+    it('should not alow to validate/update/publish a domain with value in origin ' +
+        'server location field',
       function () {
         var location = '--- Select Location ---';
         Portal.domains.listPage.searchAndClickEdit(myDomain.name);
         Portal.domains.editPage.domainForm.setDomainOriginLocation(location);
-        Portal.domains.editPage.clickUpdateDomain();
-        Portal.dialog.clickOk();
-
-        var alert = Portal.alerts.getFirst();
-        var expectedMsg1 = 'child "origin_server_location_id" fails because';
-        var expectedMsg2 = '["origin_server_location_id" must be a string]';
-        expect(alert.getText()).toContain(expectedMsg1);
-        expect(alert.getText()).toContain(expectedMsg2);
+        var validateBtn = Portal.domains.editPage.getValidateDomainBtn();
+        expect(validateBtn.isEnabled()).toBeFalsy();
+        var updateBtn = Portal.domains.editPage.getUpdateDomainBtn();
+        expect(updateBtn.isEnabled()).toBeFalsy();
+        var publishBtn = Portal.domains.editPage.getPublishDomainBtn();
+        expect(publishBtn.isEnabled()).toBeFalsy();
     });
 
     it('should validate the length value in origin host header field (100)',
@@ -97,20 +96,6 @@ describe('Functional', function () {
         expect(alert.getText()).toContain(lenStr100);
     });
 
-    it('should validate the length value in domain origin location select',
-      function () {
-        var location = '--- Select Location ---';
-        Portal.domains.listPage.searchAndClickEdit(myDomain.name);
-        Portal.domains.editPage.domainForm.setDomainOriginLocation(location);
-        Portal.domains.editPage.clickValidateDomain();
-
-        var alert = Portal.alerts.getFirst();
-        var expectedMsg1 = 'child "origin_server_location_id" fails because';
-        var expectedMsg2 = '["origin_server_location_id" must be a string]';
-        expect(alert.getText()).toContain(expectedMsg1);
-        expect(alert.getText()).toContain(expectedMsg2);
-    });
-
     it('should not publish domain with value in origin host header field (100)',
       function () {
         Portal.domains.listPage.searchAndClickEdit(myDomain.name);
@@ -122,21 +107,6 @@ describe('Functional', function () {
         var expectedMsg = 'child "origin_host_header" fails because ["origin_';
         expect(alert.getText()).toContain(expectedMsg);
         expect(alert.getText()).toContain(lenStr100);
-    });
-
-    it('should not publish domain with value in origin server location field',
-      function () {
-        var location = '--- Select Location ---';
-        Portal.domains.listPage.searchAndClickEdit(myDomain.name);
-        Portal.domains.editPage.domainForm.setDomainOriginLocation(location);
-        Portal.domains.editPage.clickPublishDomain();
-        Portal.dialog.clickOk();
-
-        var alert = Portal.alerts.getFirst();
-        var expectedMsg1 = 'child "origin_server_location_id" fails because';
-        var expectedMsg2 = '["origin_server_location_id" must be a string]';
-        expect(alert.getText()).toContain(expectedMsg1);
-        expect(alert.getText()).toContain(expectedMsg2);
     });
   });
 });
