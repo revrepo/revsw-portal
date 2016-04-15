@@ -14,6 +14,9 @@
           scope.searchTerm = $rootScope.searchTerm;
 
           function init(){
+            scope.list = [];
+            scope.list.length = 0;
+
             // DOMAINS
             DomainsConfig.query().$promise.then(function(data){
               data.forEach(function(item){
@@ -219,6 +222,10 @@
           scope.showClear = function(){
             return ($rootScope.searchTerm || '').trim().length;
           };
+
+          scope.$on('update:searchData', function(){
+            init();
+          });
 
           function selectDomain(domain){
             $localStorage.selectedDomain = domain;
