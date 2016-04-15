@@ -98,8 +98,8 @@
       $scope.alertService.clear();
       delete model.passwordConfirm;
       model.access_control_list.dashBoard = true;
-      model.email = angular.copy(model.user_email);
-      delete model.user_email;
+//      model.email = angular.copy(model.user_email);
+//      delete model.user_email; 
       $scope.create(model)
         .then(function(data) {
           initModel();
@@ -122,7 +122,7 @@
           !model.role;
       } else {
         return $scope._loading ||
-          !model.user_email ||
+          !model.email ||
           !model.access_control_list ||
           !model.firstname ||
           !model.lastname ||

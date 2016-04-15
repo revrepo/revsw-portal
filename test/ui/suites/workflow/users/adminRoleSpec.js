@@ -25,9 +25,9 @@ describe('Workflow', function () {
   describe('Admin role user', function () {
 
     var resellerUser = config.get('portal.users.reseller');
-    var adminUser = DataProvider.generateUser('Admin');
+    var adminUser = DataProvider.generateUser('Admin', null, resellerUser);
     adminUser.role = Constants.user.roles.ADMIN;
-    var anotherAdmin = DataProvider.generateUser('OtherAdmin');
+    var anotherAdmin = DataProvider.generateUser('OtherAdmin', null, resellerUser);
     anotherAdmin.role = Constants.user.roles.ADMIN;
 
     beforeAll(function () {

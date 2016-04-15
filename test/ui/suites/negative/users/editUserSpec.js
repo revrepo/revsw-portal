@@ -48,6 +48,7 @@ describe('Negative', function () {
     });
 
     it('should not allow to edit the user\'s email', function () {
+      Portal.getUsersPage();
       Portal.userListPage.searchAndClickEdit(carl.email);
       var emailField = Portal.editUserPage.userForm.getEmailTxtIn();
       expect(emailField.isEnabled()).toBeFalsy();
