@@ -25,11 +25,27 @@ describe('Functional', function () {
   describe('Add New App', function () {
 
     var adminUser = config.get('portal.users.admin');
+    var apps = [
+      {
+        name: 'MyAppIOS',
+        platform: 'iOS',
+        title: 'iOS Apps List'
+      },
+      {
+        name: 'MyAppAndroid',
+        platform: 'Android',
+        title: 'Android Apps List'
+      }
+      // {
+      //   name: 'MyAppWindowsMobile',
+      //   platform: 'Windows Mobile',
+      //   title: 'Windows Mobile Apps List'
+      // }
+    ];
 
     beforeAll(function () {
       Portal.signIn(adminUser);
       Portal.header.goTo('Mobile Apps');
-      Portal.header.goTo('Android');
     });
 
     afterAll(function () {
@@ -42,26 +58,30 @@ describe('Functional', function () {
     afterEach(function () {
     });
 
-    it('should get title from list app list', function () {
-        var title = Portal.mobileApps.listPage.getTitle();
-        expect(title).toEqual('Android Apps List');
-    });
+    apps.forEach(function (app){
+      it('should get title from list app page for ' + app.platform, function() {
+          Portal.header.goTo(app.platform);
+          var title = Portal.mobileApps.listPage.getTitle();
+          expect(title).toEqual(app.title);
+      });
 
-    it('should add a new app successfully', function () {
-        var app = {
-          name: 'MyApp',
-          platform: 'Android'
-        };
-        var findApp = null;
+      it('should add a new app for ' + app.platform, function () {
+        Portal.header.goTo(app.platform);
         Portal.mobileApps.listPage.addNewApp(app);
-        Portal.header.goTo('Android');
-        findApp = Portal.mobileApps.listPage.findApp(app);
+
+        var alert = Portal.alerts.getFirst();
+        var expectedMsg = 'App registered';
+        expect(alert.getText()).toEqual(expectedMsg);
+
+        Portal.header.goTo(app.platform);
+        var findApp = Portal.mobileApps.listPage.findApp(app);
         expect(findApp).toBe(1);
 
         Portal.mobileApps.listPage.searchAndDelete(app);
         Portal.dialog.clickOk();
         findApp = Portal.mobileApps.listPage.findApp(app);
         expect(findApp).toBe(0);
+      });
     });
   });
 });
