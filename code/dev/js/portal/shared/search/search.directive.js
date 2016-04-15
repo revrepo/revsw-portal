@@ -3,7 +3,7 @@
 
   angular
     .module('revapm.Portal.Shared')
-    .directive('search', function($location, $localStorage, $state, $rootScope, DomainsConfig, Companies, Users, Apps, DashboardSrv, ApiKeys){
+    .directive('search', function($location, $localStorage, $state, $rootScope, DomainsConfig, Companies, Users, User, Apps, DashboardSrv, ApiKeys){
       return {
         restrict: 'AE',
         templateUrl: 'parts/shared/search/search.html',
@@ -62,7 +62,11 @@
               });
             });
 
-          } init();
+          }
+
+          if(User.isAuthed()) {
+            init();
+          }
 
           scope.getFilteredList = function(term) {
             scope.searchTerm = term;
