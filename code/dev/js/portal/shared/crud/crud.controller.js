@@ -6,7 +6,7 @@
     .factory('CRUDController', CRUDController);
 
   /*@ngInject*/
-  function CRUDController($config, AlertService, $q, User, $anchorScroll, $modal, $filter, $timeout) {
+  function CRUDController($config, $rootScope, AlertService, $q, User, $anchorScroll, $modal, $filter, $timeout) {
 
     function CRUDControllerImpl($scope, $stateParams) {
 
@@ -472,6 +472,7 @@
         // Could be removed using $resource
         return model.$remove()
           .then(function (data) {
+            $rootScope.$broadcast('update:searchData');
             var idx = $scope.records.indexOf(model);
             if (data.statusCode === $config.STATUS.OK) {
               $scope.records.splice(idx, 1);
@@ -503,6 +504,7 @@
         var record = new $scope.resource(model);
         return record.$save()
           .then(function (data) {
+            $rootScope.$broadcast('update:searchData');
             $scope.list(); // Update list
             $scope.clearModel(model);
             return data; // Send data next to promise handlers
@@ -574,6 +576,7 @@
           .update(params, model)
           .$promise
           .then(function (data) {
+            $rootScope.$broadcast('update:searchData');
             $scope.list(); // Update list
             $scope.$emit('list');
             return data;

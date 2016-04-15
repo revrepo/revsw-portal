@@ -3,7 +3,7 @@
 
   angular
     .module('revapm.Portal.Shared')
-    .directive('search', function($location, $localStorage, $state, $rootScope, DomainsConfig, Companies, Users, Apps, DashboardSrv, ApiKeys){
+    .directive('search', function($location, $localStorage, $state, $rootScope, DomainsConfig, Companies, Users, User, Apps, DashboardSrv, ApiKeys){
       return {
         restrict: 'AE',
         templateUrl: 'parts/shared/search/search.html',
@@ -14,6 +14,9 @@
           scope.searchTerm = $rootScope.searchTerm;
 
           function init(){
+            scope.list = [];
+            scope.list.length = 0;
+
             // DOMAINS
             DomainsConfig.query().$promise.then(function(data){
               data.forEach(function(item){
@@ -62,7 +65,11 @@
               });
             });
 
-          } init();
+          }
+
+          if(User.isAuthed()) {
+            init();
+          }
 
           scope.getFilteredList = function(term) {
             scope.searchTerm = term;
@@ -85,6 +92,11 @@
                     copy.searchBarText = copy.domain_name + ' (Web Analytics)';
                     copy.searchAction = 'analytics';
                     results.push(copy);
+
+                    var purgeCopy = angular.copy(item);
+                    purgeCopy.searchBarText = purgeCopy.domain_name + ' (Purge Cache)';
+                    purgeCopy.searchAction = 'purge';
+                    results.push(purgeCopy);
                   }
                   break;
                 case 'company':
@@ -162,6 +174,13 @@
                   } else {
                     $location.path('reports/proxy');
                   }
+                } else if(item.searchAction === 'purge'){
+                  selectDomain(item);
+                  if($location.path().indexOf('cache/purge') !== -1){
+                    $state.reload();
+                  } else {
+                    $location.path('cache/purge');
+                  }
                 }
                 break;
               case 'company':
@@ -215,6 +234,10 @@
           scope.showClear = function(){
             return ($rootScope.searchTerm || '').trim().length;
           };
+
+          scope.$on('update:searchData', function(){
+            init();
+          });
 
           function selectDomain(domain){
             $localStorage.selectedDomain = domain;
