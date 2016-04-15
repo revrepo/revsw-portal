@@ -92,6 +92,11 @@
                     copy.searchBarText = copy.domain_name + ' (Web Analytics)';
                     copy.searchAction = 'analytics';
                     results.push(copy);
+
+                    var purgeCopy = angular.copy(item);
+                    purgeCopy.searchBarText = purgeCopy.domain_name + ' (Purge Cache)';
+                    purgeCopy.searchAction = 'purge';
+                    results.push(purgeCopy);
                   }
                   break;
                 case 'company':
@@ -168,6 +173,13 @@
                     $state.reload();
                   } else {
                     $location.path('reports/proxy');
+                  }
+                } else if(item.searchAction === 'purge'){
+                  selectDomain(item);
+                  if($location.path().indexOf('cache/purge') !== -1){
+                    $state.reload();
+                  } else {
+                    $location.path('cache/purge');
                   }
                 }
                 break;
