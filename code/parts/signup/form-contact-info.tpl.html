@@ -116,21 +116,22 @@
       </div>
       <hr>
       <div class="form-group">
-        <div class="col-lg-12 subscribe-contact-info-terms">
-          By clicking on Sign Up you agree with our
-          <a href="https://www.revapm.com/tos/" target="_blank">Terms Of Service</a>,
-          <a href="https://www.revapm.com/aup/" target="_blank">Acceptable Use Policy</a> and
-          <a href="https://www.revapm.com/privacy/" target="_blank">Privacy Policy</a>
-        </div>
-      </div>
-      <div class="form-group">
-        <div class="col-sm-offset-6 col-sm-6 pull-right">
-          <a ui-sref="^" class="btn btn-default">
-            <i class="glyphicon glyphicon-remove"></i>&nbsp; Cancel
-          </a>
-          <button class="btn btn-success" ng-disabled="_loading || newUser.$invalid ||(($ctrl.model.password != $ctrl.model.passwordConfirm ||newUser.passwordConfirm.$invalid) &&newUser.passwordConfirm.$dirty )" ng-click="$ctrl.onSignUp($ctrl.model)">
-           <i class="glyphicon glyphicon-log-in"></i> Sign Up
-          </button>
+        <div class="col-md-8" >
+          <div class="pull-right" style="margin-bottom: 10px">
+            By clicking on Sign Up you agree with our
+            <a href="https://www.revapm.com/tos/" target="_blank">Terms Of Service</a>,
+            <a href="https://www.revapm.com/aup/" target="_blank">Acceptable Use Policy</a> and
+            <a href="https://www.revapm.com/privacy/" target="_blank">Privacy Policy</a>
+          </div>
+          <br>
+          <div class="pull-right">
+            <a ui-sref="^" class="btn btn-default">
+              <i class="glyphicon glyphicon-remove"></i>&nbsp; Cancel
+            </a>
+            <button class="btn btn-success" ng-disabled="_loading || newUser.$invalid ||(($ctrl.model.password != $ctrl.model.passwordConfirm ||newUser.passwordConfirm.$invalid) &&newUser.passwordConfirm.$dirty )" ng-click="$ctrl.onSignUp($ctrl.model)">
+             <i class="glyphicon glyphicon-log-in"></i> Sign Up
+            </button>
+          </div>
         </div>
       </div>
     </form>
