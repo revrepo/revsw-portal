@@ -6,7 +6,7 @@
     .controller('KeysListController', KeysListController);
 
   // @ngInject
-  function KeysListController($scope, CRUDController, ApiKeys, $injector, $stateParams, Companies, DomainsConfig, $state, $modal) {
+  function KeysListController($scope, $rootScope, CRUDController, ApiKeys, $injector, $stateParams, Companies, DomainsConfig, $state, $modal, clipboard) {
 
     //Invoking crud actions
     $injector.invoke(CRUDController, this, {$scope: $scope, $stateParams: $stateParams});
@@ -47,6 +47,9 @@
       $scope.confirm('confirmModal.html', model).then(function () {
         $scope
           .delete(model)
+          .then(function(){
+            $rootScope.$broadcast('update:searchData');
+          })
           .catch($scope.alertService.danger);
       });
     };
@@ -69,7 +72,8 @@
         })
         .$promise
         .then(function (data) {
-          $scope.alertService.success('API Key created.', 5000);
+          $rootScope.$broadcast('update:searchData');
+          $scope.alertService.success('API Key created', 5000);
           $scope.list();
           return data;
         })
@@ -132,7 +136,7 @@
        */
       modalInstance.result
         .then(function (account) {
-          $scope.alertService.success('API Key updated.', 5000);
+          $scope.alertService.success('API Key updated', 5000);
           $scope.list();
         });
     };
@@ -182,5 +186,16 @@
       return moment.utc(datetime).fromNow();
     };
 
+    $scope.switchKeyVisibility = function(item){
+      item.showKey = !item.showKey;
+    };
+
+    $scope.copyCallback = function(err){
+      if(err){
+        $scope.alertService.danger('Copying failed, please try manual approach', 2000);
+      } else {
+        $scope.alertService.success('The API key has been copied to the clipboard', 2000);
+      }
+    };
   }
 })();

@@ -7,6 +7,7 @@
       'revapm.Portal.Config',
       'revapm.Portal.Resources',
       'ui.router',
-      'ui.select'
+      'ui.select',
+      'angular-clipboard'
     ]);
 })();

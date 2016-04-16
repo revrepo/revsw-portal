@@ -3,7 +3,7 @@
 
   angular
     .module('revapm.Portal.Shared')
-    .directive('search', function($location, $localStorage, $state, DomainsConfig, Companies, Users, Apps, DashboardSrv, ApiKeys){
+    .directive('search', function($location, $localStorage, $state, $rootScope, DomainsConfig, Companies, Users, User, Apps, DashboardSrv, ApiKeys){
       return {
         restrict: 'AE',
         templateUrl: 'parts/shared/search/search.html',
@@ -11,21 +11,17 @@
 
         link: function (scope) {
           scope.list = [];
-          scope.searchTerm = '';
-          scope.types = {
-            domains: 'Domains',
-            app_names: 'App names',
-            dashboards: 'Dashboards',
-            users: 'Users',
-            api_keys: 'API Keys',
-            accounts: 'Accounts'
-          };
+          scope.searchTerm = $rootScope.searchTerm;
 
           function init(){
+            scope.list = [];
+            scope.list.length = 0;
+
             // DOMAINS
             DomainsConfig.query().$promise.then(function(data){
               data.forEach(function(item){
                 item.searchType = 'domain';
+                item.domain_name += ' ';
                 scope.list.push(item);
               });
             });
@@ -33,6 +29,7 @@
             Companies.query().$promise.then(function(data){
               data.forEach(function(item){
                 item.searchType = 'company';
+                item.companyName += ' ';
                 scope.list.push(item);
               });
             });
@@ -44,32 +41,40 @@
               });
             });
 
-
             Apps.query().$promise.then(function(data){
               data.forEach(function(item){
                 item.searchType = 'app';
+                item.app_name += ' ';
                 scope.list.push(item);
               });
             });
 
-            //ApiKeys.query().$promise.then(function(data){
-            //  data.forEach(function(item){
-            //    item.searchType = 'apiKey';
-            //    scope.list.push(item);
-            //  });
-            //});
+            ApiKeys.query().$promise.then(function(data){
+              data.forEach(function(item){
+                item.searchType = 'apiKey';
+                item.key_name += ' ';
+                scope.list.push(item);
+              });
+            });
 
             DashboardSrv.getAll().then(function(data){
               data.forEach(function(item){
                 item.searchType = 'dashboard';
+                item.title += ' ';
                 scope.list.push(item);
               });
             });
 
-          } init();
+          }
 
-          scope.getFilteredList = function(term,x,y,z) {
+          if(User.isAuthed()) {
+            init();
+          }
+
+          scope.getFilteredList = function(term) {
             scope.searchTerm = term;
+            $rootScope.searchTerm = term;
+
             var results = [];
             term = (term || '').toLowerCase();
             var list = angular.copy(scope.list);
@@ -87,6 +92,11 @@
                     copy.searchBarText = copy.domain_name + ' (Web Analytics)';
                     copy.searchAction = 'analytics';
                     results.push(copy);
+
+                    var purgeCopy = angular.copy(item);
+                    purgeCopy.searchBarText = purgeCopy.domain_name + ' (Purge Cache)';
+                    purgeCopy.searchAction = 'purge';
+                    results.push(purgeCopy);
                   }
                   break;
                 case 'company':
@@ -149,7 +159,9 @@
           };
 
           scope.searchItemSelected = function(item){
-            item.searchBarText = item.searchDisplayText;
+            item.searchBarText = item.searchDisplayText.trim();
+            scope.searchTerm = item.searchBarText;
+            $rootScope.searchTerm = item.searchBarText;
 
             switch(item.searchType){
               case 'domain':
@@ -161,6 +173,13 @@
                     $state.reload();
                   } else {
                     $location.path('reports/proxy');
+                  }
+                } else if(item.searchAction === 'purge'){
+                  selectDomain(item);
+                  if($location.path().indexOf('cache/purge') !== -1){
+                    $state.reload();
+                  } else {
+                    $location.path('cache/purge');
                   }
                 }
                 break;
@@ -196,7 +215,7 @@
                 break;
               case 'apiKey':
                 if(item.searchAction === 'edit'){
-                  $location.path('users/edit/' + item.id);
+                  $location.path('keys/edit/' + item.id);
                 }
                 break;
               case 'dashboard':
@@ -209,8 +228,16 @@
 
           scope.clearSearchBar = function(){
             scope.searchTerm = '';
+            $rootScope.searchTerm = '';
           };
 
+          scope.showClear = function(){
+            return ($rootScope.searchTerm || '').trim().length;
+          };
+
+          scope.$on('update:searchData', function(){
+            init();
+          });
 
           function selectDomain(domain){
             $localStorage.selectedDomain = domain;

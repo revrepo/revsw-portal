@@ -34,8 +34,7 @@ describe('Smoke', function () {
   var users = [
     config.get('portal.users.admin'),
     config.get('portal.users.reseller'),
-//    config.get('portal.users.revAdmin') // TODO: For revadmin need to fix the user
-//  creation process to specify an account
+    config.get('portal.users.revAdmin')
   ];
 
   users.forEach(function (user) {
@@ -89,7 +88,7 @@ describe('Smoke', function () {
         // This is another spec
         it('should allow to delete user', function () {
           // Generate 'Tom' user data
-          var tom = DataProvider.generateUser('Tom');
+          var tom = DataProvider.generateUser('Tom', null, user);
 
           // Create user Tom in portal app.
           // This is a Helper method that internally executes some other steps
@@ -121,7 +120,7 @@ describe('Smoke', function () {
         it('should display a confirmation message when deleting a user',
           function () {
             // Generate user data using 'Chris' as prefix
-            var chris = DataProvider.generateUser('Chris');
+            var chris = DataProvider.generateUser('Chris', null, user);
 
             // Using helper method to create the user Chris
             Portal.createUser(chris);

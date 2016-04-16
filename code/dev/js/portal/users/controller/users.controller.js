@@ -6,7 +6,7 @@
     .controller('UsersCrudController', UsersCrudController);
 
   // @ngInject
-  function UsersCrudController($scope, CRUDController, Users, $injector, $stateParams, Companies, DomainsConfig, $state, $anchorScroll) {
+  function UsersCrudController($scope, CRUDController, Users, User, $injector, $stateParams, Companies, DomainsConfig, $state, $anchorScroll) {
 
     //Invoking crud actions
     $injector.invoke(CRUDController, this, {
@@ -37,6 +37,10 @@
     $scope.domains = DomainsConfig.query();
 
     if (!$scope.model) {
+      initModel();
+    }
+
+    function initModel(){
       $scope.model = {
         theme: 'light',
         access_control_list: {
@@ -94,11 +98,38 @@
       $scope.alertService.clear();
       delete model.passwordConfirm;
       model.access_control_list.dashBoard = true;
+//      model.email = angular.copy(model.user_email);
+//      delete model.user_email; 
       $scope.create(model)
         .then(function(data) {
+          initModel();
           $scope.alertService.success('User created', 5000);
         })
         .catch($scope.alertService.danger);
+    };
+
+    $scope.disableSubmit = function(model, isEdit){
+      if((User.isRevadmin() || User.isReseller()) && !model.companyId || (model.companyId && model.companyId.length === 0)){
+        return true;
+      }
+
+      if(isEdit){
+        return $scope._loading ||
+          !model.email ||
+          !model.access_control_list ||
+          !model.firstname ||
+          !model.lastname ||
+          !model.role;
+      } else {
+        return $scope._loading ||
+          !model.email ||
+          !model.access_control_list ||
+          !model.firstname ||
+          !model.lastname ||
+          !model.password ||
+          !model.passwordConfirm ||
+          !model.role;
+      }
     };
 
     // Fetch list of users

@@ -32,7 +32,12 @@
           }
         },
         resolve: {
-          isUserActive: function(User) {
+          isUserActive: function(User, $location) {
+            //if its password reset disable reloadUser
+            if(($location.path() || '').indexOf('password/reset') >= 0){
+              return;
+            }
+
             return User.reloadUser();
           }
         }

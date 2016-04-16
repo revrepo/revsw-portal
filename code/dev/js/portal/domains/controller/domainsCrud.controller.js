@@ -290,10 +290,55 @@
       $localStorage.selectedDomain = model;
     };
 
+    $scope.disableSubmit = function(model, isEdit){
+      if(!isEdit) {
+        return $scope._loading ||
+          !model.domain_name ||
+          !model.account_id ||
+          !model.origin_server ||
+          !model.origin_host_header ||
+          !model.origin_server_location_id;
+      } else {
+        return $scope._loading ||
+          !model.account_id ||
+          !model.origin_server ||
+          !model.origin_host_header ||
+          !model.origin_server_location_id ||
+          !model.proxy_timeout;
+      }
+    };
 
     $scope.getRelativeDate = function(datetime) {
       return moment.utc(datetime).fromNow();
     };
+
+
+    /**
+     * Get editor instance
+     */
+    $scope.jsonEditorEvent = function(instance){
+      $scope.jsonEditorInstance = instance;
+    };
+
+    /**
+     * Set watcher on json editor's text to catch json validation error
+     */
+    $scope.$watch('jsonEditorInstance.getText()', function(val){
+      // if editor text is empty just return
+      if(!val) {
+        $scope.jsonIsInvalid = true;
+        return;
+      }
+
+      // try to parse editor text as valid json and check if at least one item exists, if yes then enable Purge button
+      try {
+        var json = JSON.parse(val);
+        $scope.jsonIsInvalid = !json || !Object.keys(json).length;
+      } catch(err) {
+        // if it's not valid json or it's empty disable Purge button
+        $scope.jsonIsInvalid = true;
+      }
+    });
 
     /**
      * @name  onAddNewCacheRule

@@ -138,7 +138,7 @@
                 Cancel
               </a>
               <button class="btn btn-success"
-                      ng-disabled="_loading">
+                      ng-disabled="disableSubmit(model)">
                 <i class="glyphicon glyphicon-refresh spin" ng-if="_loading"></i>
                 <i class="glyphicon glyphicon-ok" ng-if="!_loading"></i>&nbsp;
                 Create Domain

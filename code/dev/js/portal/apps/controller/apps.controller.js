@@ -274,5 +274,45 @@
       };
       $localStorage.selectedApplication = newApp;
     };
+
+
+    /**
+     * Get editor instance
+     */
+    $scope.jsonEditorEvent = function(instance){
+      $scope.jsonEditorInstance = instance;
+    };
+
+    /**
+     * Set watcher on json editor's text to catch json validation error
+     */
+    $scope.$watch('jsonEditorInstance.getText()', function(val){
+      // if editor text is empty just return
+      if(!val) {
+        $scope.jsonIsInvalid = true;
+        return;
+      }
+
+      // try to parse editor text as valid json and check if at least one item exists, if yes then enable Purge button
+      try {
+        var json = JSON.parse(val);
+        $scope.jsonIsInvalid = !json || !Object.keys(json).length;
+      } catch(err) {
+        // if it's not valid json or it's empty disable Purge button
+        $scope.jsonIsInvalid = true;
+      }
+    });
+
+    $scope.switchKeyVisibility = function(item){
+      item.showKey = !item.showKey;
+    };
+
+    $scope.copyCallback = function(err){
+      if(err){
+        $scope.alertService.danger('Copying failed, please try manual approach', 2000);
+      } else {
+        $scope.alertService.success('The SDK key has been copied to the clipboard', 2000);
+      }
+    };
   }
 })();

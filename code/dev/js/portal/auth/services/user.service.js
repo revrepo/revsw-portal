@@ -429,7 +429,9 @@
                   return {
                     acc_name: item.companyName,
                     acc_id: item.id,
-                    plan_id: item.billing_plan
+                    plan_id: item.billing_plan,// TODO:delete property name
+                    billing_plan: item.billing_plan
+
                   };
                 })
                 .sort( function( lhs, rhs ) {

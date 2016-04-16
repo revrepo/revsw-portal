@@ -8,7 +8,7 @@
       //DashboardSrv.getAll();
     });
 
-  function DashboardSrv($q, $http, $localStorage, $config, dashboard) {
+  function DashboardSrv($rootScope, $q, $http, $localStorage, $config, dashboard) {
     'ngInject';
     var API_URL = $config.API_URL;
     var dashboardsList = [];
@@ -101,6 +101,7 @@
         angular.extend(model, data);
         $http.post(API_URL + '/dashboards', model)
           .success(function(data) {
+            $rootScope.$broadcast('update:searchData');
             model.id = data.object_id;
             getAll();
             deferred.resolve(model);
@@ -120,6 +121,7 @@
         var deferred = $q.defer();
         $http.put(API_URL + '/dashboards/' + id, data)
           .success(function(res) {
+            $rootScope.$broadcast('update:searchData');
             updateDashboardsListItem(data);
             deferred.resolve();
           })
@@ -138,6 +140,7 @@
         var deferred = $q.defer();
         $http.delete(API_URL + '/dashboards/' + id)
           .success(function(data) {
+            $rootScope.$broadcast('update:searchData');
             deferred.resolve(data);
             getAll();
           })

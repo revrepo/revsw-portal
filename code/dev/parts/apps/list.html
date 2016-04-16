@@ -121,12 +121,16 @@
               <td>{{item.last_app_published_version}}</td>
               <td>{{ getRelativeDate(item.updated_at) }}</td>
               <td>
-                <input class="list-input" disabled ng-hide="item.show" type="password" value="{{item.sdk_key}}" />
-                <input class=""  ng-show="item.show" type="text" value="{{item.sdk_key}}"  />
-                <i class="glyphicon eye"
-                   ng-class="{'glyphicon-eye-close': !item.show, 'glyphicon-eye-open': item.show}"
-                   ng-click="switch(item)"
-                ></i>
+                <button class="btn btn-primary" clipboard text="item.sdk_key" on-copied="copyCallback()" on-error="copyCallback(err)" style="vertical-align: initial;"  tooltip="Click to copy the key to the clipboard" tooltip-placement="top"><i class="fa fa-files-o"></i></button>
+                <button class="btn btn-primary" ng-click="switchKeyVisibility(item)" ng-hide="item.showKey" style="vertical-align: initial;">Show SDK Key</button>
+                <input ng-if="item.showKey" ng-blur="switchKeyVisibility(item)" class="form-control" value="{{item.sdk_key}}" style="width: 300px; display: inline-block; position: absolute; z-index: 999; margin-left: 4px;" focus-me="item.showKey">
+
+                <!--<input class="list-input" disabled ng-hide="item.show" type="password" value="{{item.sdk_key}}" />-->
+                <!--<input class=""  ng-show="item.show" type="text" value="{{item.sdk_key}}"  />-->
+                <!--<i class="glyphicon eye"-->
+                   <!--ng-class="{'glyphicon-eye-close': !item.show, 'glyphicon-eye-open': item.show}"-->
+                   <!--ng-click="switch(item)"-->
+                <!--&gt;</i>-->
                 </td>
               <td>
                 <div app-staging-status ng-id="item.id"></div>

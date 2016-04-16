@@ -9,7 +9,7 @@
   "author": "Konstantin Zolotarev <konstantin.zolotarev@gmail.com>",
   "license": "ISC",
   "devDependencies": {
-    "browser-sync": "^2.8.2",
+    "browser-sync": "~2.8.2",
     "gulp": "^3.9.0",
     "gulp-html-validator": "0.0.5",
     "gulp-htmlhint": "^0.3.1",
