@@ -53,19 +53,47 @@
         })
         .$promise
         .then(function (data) {
-          var hits_data = [];
+
+          var world = [],
+            usa = [];
+
           if (data.data && data.data.length > 0) {
             data.data.forEach( function (item) {
-              hits_data.push({
-                name: ( $scope.countries[item.key.toUpperCase()] || item.key ),
-                id: item.key.toUpperCase(),
+
+              var key = item.key.toUpperCase();
+              world.push({
+                name: ( $scope.countries[key] || item.key ),
+                id: key,
                 value: item.count,
                 tooltip: '<strong>' + Util.convertValue(item.count) + '</strong> requests'
               });
+              if ( key === 'US' && item.regions ) {
+                usa = item.regions;
+              }
+            });
+
+            usa = usa.map( function( item ) {
+              return {
+                id: item.key,
+                name: item.key,
+                value: item.count,
+                tooltip: '<strong>' + Util.convertValue(item.count) + '</strong> requests'
+              };
             });
           }
+
+          // debug
+          // if ( usa.length === 1 ) {
+          //   usa[0].id = 'MA';
+          //   usa[0].name = 'MA';
+          // }
+          // debug
+
           // Pass to next `.then()`
-          return hits_data;
+          return {
+            world: world,
+            usa: usa
+          };
         });
     };
 
@@ -85,20 +113,44 @@
         })
         .$promise
         .then(function (data) {
-          var gbt_data = [];
+
+          var world = [],
+            usa = [];
+
           if (data.data && data.data.length > 0) {
             data.data.forEach( function (item) {
-              gbt_data.push({
-                name: ( $scope.countries[item.key.toUpperCase()] || item.key ),
-                id: item.key.toUpperCase(),
+
+              // console.log( item );
+              var key = item.key.toUpperCase();
+              world.push({
+                name: ( $scope.countries[key] || item.key ),
+                id: key,
                 value: item.sent_bytes,
                 tooltip: ( 'Sent: <strong>' + Util.humanFileSizeInGB(item.sent_bytes) +
                   '</strong> Received: <strong>' + Util.humanFileSizeInGB(item.received_bytes) + '</strong>' )
               });
+
+              if ( key === 'US' && item.regions ) {
+                usa = item.regions;
+              }
+            });
+
+            usa = usa.map( function( item ) {
+              return {
+                id: item.key,
+                name: item.key,
+                value: item.sent_bytes,
+                tooltip: ( 'Sent: <strong>' + Util.humanFileSizeInGB(item.sent_bytes) +
+                  '</strong> Received: <strong>' + Util.humanFileSizeInGB(item.received_bytes) + '</strong>' )
+              };
             });
           }
+
           // Pass to next `.then()`
-          return gbt_data;
+          return {
+            world: world,
+            usa: usa
+          };
         });
     };
 
@@ -116,9 +168,8 @@
         $scope.reloadGBTCountry($scope.domain.id)
       ]).then(function ( data ) {
         // Redraw maps using received data
-        console.log( data );
-        HeatmapsDrawer.drawWorldMap('#canvas-svg-hits', data[0/*hits_data*/] );
-        HeatmapsDrawer.drawWorldMap('#canvas-svg-gbt', data[1/*gbt_data*/] );
+        HeatmapsDrawer.drawWorldMap('#canvas-svg-hits', data[0/*hits data*/] );
+        HeatmapsDrawer.drawWorldMap('#canvas-svg-gbt', data[1/*gbt data*/] );
       }).finally(function () {
         $scope._loading = false;
       });

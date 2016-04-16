@@ -51,20 +51,41 @@
         })
         .$promise
         .then(function (data) {
-          var lm_rtt_data = [];
+
+          var world = [],
+            usa = [];
+
           if (data.data && data.data.length > 0) {
             data.data.forEach( function (item) {
-              lm_rtt_data.push({
-                id: item.key.toUpperCase(),
-                name: ( $scope.countries[item.key.toUpperCase()] || item.key ),
+              var key = item.key.toUpperCase();
+              world.push({
+                name: ( $scope.countries[key] || item.key ),
+                id: key,
                 value: item.lm_rtt_avg_ms,
                 tooltip: ( 'Avg: <strong>' + item.lm_rtt_avg_ms + '</strong> Min: <strong>' +
                   item.lm_rtt_min_ms + '</strong> Max: <strong>' + item.lm_rtt_max_ms + '</strong> ms' )
               });
+
+              if ( key === 'US' && item.regions ) {
+                usa = item.regions;
+              }
+            });
+
+            usa = usa.map( function( item ) {
+              return {
+                id: item.key,
+                name: item.key,
+                value: item.lm_rtt_avg_ms,
+                tooltip: ( 'Avg: <strong>' + item.lm_rtt_avg_ms + '</strong> Min: <strong>' +
+                  item.lm_rtt_min_ms + '</strong> Max: <strong>' + item.lm_rtt_max_ms + '</strong> ms' )
+              };
             });
           }
-          // Pass to next `.then()`
-          return lm_rtt_data;
+
+          return {
+            world: world,
+            usa: usa
+          };
         })
         .finally(function () {
           $scope._loading = false;

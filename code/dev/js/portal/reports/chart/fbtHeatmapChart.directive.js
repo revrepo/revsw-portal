@@ -36,21 +36,43 @@
             .$promise
             .then( function( data ) {
 
-              var fbt_data = [];
-              if ( data.data && data.data.length > 0 ) {
-                data.data.forEach( function( item ) {
-                  fbt_data.push({
-                    id: item.key.toUpperCase(),
-                    name: ( $scope.flCountry[ item.key.toUpperCase() ] || item.key ),
+              var world = [],
+                usa = [];
+
+              if (data.data && data.data.length > 0) {
+                data.data.forEach( function (item) {
+                  var key = item.key.toUpperCase();
+                  world.push({
+                    name: ( $scope.flCountry[key] || item.key ),
+                    id: key,
                     value: item.fbt_avg_ms,
                     tooltip: ( 'Avg: <strong>' + Util.formatNumber( item.fbt_avg_ms ) +
                       '</strong> Min: <strong>' + Util.formatNumber( item.fbt_min_ms ) +
                       '</strong> Max: <strong>' + Util.formatNumber( item.fbt_max_ms ) +
                       '</strong> ms' )
                   });
+
+                  if ( key === 'US' && item.regions ) {
+                    usa = item.regions;
+                  }
+                });
+
+                usa = usa.map( function( item ) {
+                  return {
+                    id: item.key,
+                    name: item.key,
+                    value: item.fbt_avg_ms,
+                    tooltip: ( 'Avg: <strong>' + Util.formatNumber( item.fbt_avg_ms ) +
+                      '</strong> Min: <strong>' + Util.formatNumber( item.fbt_min_ms ) +
+                      '</strong> Max: <strong>' + Util.formatNumber( item.fbt_max_ms ) +
+                      '</strong> ms' )
+                  };
                 });
               }
-              HeatmapsDrawer.drawWorldMap( '#canvas-svg', fbt_data );
+              HeatmapsDrawer.drawWorldMap( '#canvas-svg', {
+                world: world,
+                usa: usa
+              });
             })
             .finally( function() {
               $scope._loading = false;

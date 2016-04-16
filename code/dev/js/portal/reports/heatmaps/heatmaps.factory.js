@@ -14,6 +14,7 @@
     function getConfig_() {
 
       return {
+        credits: { enabled: false },
         chart: {
           style: {
             fontFamily: 'Verdana, Arial, Helvetica, sans-serif',
@@ -41,8 +42,8 @@
         tooltip: {
           useHTML: true,
           formatter: function () {
-            console.log( this.point );
-            return this.point.name + '<br>' + this.point.tooltip;
+            // console.log( this.point );
+            return '<span style="font-weight: bold; color: #004090;">' + this.point.name + '</span><br>' + this.point.tooltip;
           }
         },
         legend: {
@@ -70,53 +71,60 @@
      *
      * @param {String} dom container ID
      * @param {object} data:
-        [{
-          name: 'United States of America',
-          id: 'US',
-          value: 42,
-          tooltip: 'something: <strong>666</strong> ms'
-        },{
-          name: 'China', ............
-        }]
+        world: [{
+            name: 'United States of America',
+            id: 'US',
+            value: 42,
+            tooltip: 'something: <strong>666</strong> ms'
+          },{
+            name: 'China', ............
+          }],
+        usa: [{
+            name: 'AL',
+            id: 'AL',
+            value: 12,
+            tooltip: 'something: <strong>12</strong> ms'
+          },{
+            name: 'MI', ............
+          }]
+     * @param {Object} options to override maps config
      */
     function drawWorldMap(containerID, data, opts) {
 
       clearMap( containerID );
       var $el = $(containerID);
+      $el.css({ width: '100%', 'padding-bottom': '55%' });
 
       var $wrapper = $( '<div></div>' );
       $el.append( $wrapper );
-      var $btn = $( '<button style="position:absolute;top:0px;left:0px;" class="btn btn-info">Switch to USA map</button>' );
+      $wrapper.css({ position: 'absolute', top: 0, bottom: 0, left: 0, right: 0 });
+      var $btn = $( '<button style="position:absolute;top:0px;left:0px;" class="btn">Show USA Map</button>' );
       $el.append( $btn );
       $btn.on( 'click', function() {
         drawUSAMap( containerID, data, opts );
       });
 
       var conf = getConfig_();
-      conf.chart.width = $el.width();
-      conf.chart.height = conf.chart.width / 1.4;
-      conf.colorAxis.max = data.reduce( function( prev, curr ) {
-        return curr.value === undefined || curr.value <= prev ? prev : curr.value;
+      conf.colorAxis.max = data.world.reduce( function( prev, curr ) {
+        return curr.value === undefined || curr.id === '--' || curr.value <= prev ? prev : curr.value;
       }, 0 );
-      conf.colorAxis.min = data.reduce( function( prev, curr ) {
-        return curr.value === undefined || curr.value >= prev ? prev : curr.value;
+      conf.colorAxis.min = data.world.reduce( function( prev, curr ) {
+        return curr.value === undefined || curr.id === '--' || curr.value >= prev ? prev : curr.value;
       }, conf.colorAxis.max );
 
-      if ( !data || !data.length ) {
-        data = [];
+      if ( !data.world || !data.world.length || !conf.colorAxis.min ) {
         conf.colorAxis.type = 'linear';
       } else {
         conf.colorAxis.type = 'logarithmic';
       }
 
       conf.series[0].joinBy = ['iso-a2', 'id'];
-      conf.series[0].data = data.map( function( item ) {
+      conf.series[0].data = data.world.map( function( item ) {
         return _.clone( item );
       });
       conf.series[0].mapData = Highcharts.maps['custom/world-highres'];
 
       $wrapper.highcharts( 'Map', _.defaultsDeep( ( opts || {} ), conf ) );
-      $el.css( 'height', 'auto' );
     }
 
     /**
@@ -129,40 +137,38 @@
 
       clearMap( containerID );
       var $el = $(containerID);
+      $el.css({ width: '100%', 'padding-bottom': '70%' });
 
       var $wrapper = $( '<div></div>' );
       $el.append( $wrapper );
-      var $btn = $( '<button style="position:absolute;top:0px;left:0px;" class="btn btn-info">Switch to World map</button>' );
+      $wrapper.css({ position: 'absolute', top: 0, bottom: 0, left: 0, right: 0 });
+      var $btn = $( '<button style="position:absolute;top:0px;left:0px;" class="btn">Show World Map</button>' );
       $el.append( $btn );
       $btn.on( 'click', function() {
         drawWorldMap( containerID, data, opts );
       });
 
       var conf = getConfig_();
-      conf.chart.width = $el.width();
-      conf.chart.height = conf.chart.width / 1.4;
-      conf.colorAxis.max = data.reduce( function( prev, curr ) {
-        return curr.value === undefined || curr.value <= prev ? prev : curr.value;
+      conf.colorAxis.max = data.usa.reduce( function( prev, curr ) {
+        return curr.value === undefined || curr.id === '--' || curr.value <= prev ? prev : curr.value;
       }, 0 );
-      conf.colorAxis.min = data.reduce( function( prev, curr ) {
-        return curr.value === undefined || curr.value >= prev ? prev : curr.value;
+      conf.colorAxis.min = data.usa.reduce( function( prev, curr ) {
+        return curr.value === undefined || curr.id === '--' || curr.value >= prev ? prev : curr.value;
       }, conf.colorAxis.max );
 
-      if ( !data || !data.length ) {
-        data = [];
-        conf.colorAxis.type = 'linear';
-      } else {
-        conf.colorAxis.type = 'logarithmic';
-      }
+      conf.colorAxis.type = 'linear';
+      // if ( !data.usa || !data.usa.length || !conf.colorAxis.min ) {
+      //   conf.colorAxis.type = 'linear';
+      // } else {
+      //   conf.colorAxis.type = 'logarithmic';
+      // }
 
-      // conf.series[0].joinBy = ['iso-a2', 'id'];
-      conf.series[0].joinBy = ['hc-key', 'id'];
-      conf.series[0].data = data.map( function( item ) {
+      conf.series[0].joinBy = ['postal-code', 'id'];
+      conf.series[0].data = data.usa.map( function( item ) {
         return _.clone( item );
       });
       conf.series[0].mapData = Highcharts.maps['countries/us/us-all'];
       $wrapper.highcharts( 'Map', _.defaultsDeep( ( opts || {} ), conf ) );
-      $el.css( 'height', 'auto' );
     }
 
     /**
@@ -172,8 +178,6 @@
       var $el = $( containerID );
       var $wrapper = $el.children('div');
       if ( $wrapper.length ) {
-        //  to avoid height jumping
-        $el.height( $el.height() );
         $wrapper.highcharts().destroy();
         $wrapper.remove();
       }
