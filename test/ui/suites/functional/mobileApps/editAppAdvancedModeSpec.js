@@ -25,6 +25,8 @@ describe('Functional', function () {
   describe('Edit App Advanced Mode', function () {
 
     var adminUser = config.get('portal.users.admin');
+    var apps = DataProvider.generateMobileApps();
+
     var app = {
           name: 'MyApp',
           platform: 'Android'
@@ -32,21 +34,22 @@ describe('Functional', function () {
 
     beforeAll(function () {
       Portal.signIn(adminUser);
-      Portal.header.goTo('Mobile Apps');
-      Portal.header.goTo('Android');
-
-      Portal.mobileApps.listPage.addNewApp(app);
-      Portal.header.goTo('Android');
-      var findApp = Portal.mobileApps.listPage.findApp(app);
-      expect(findApp).toBe(1);
+      Portal.createMobileApps(apps);
+      // Portal.header.goTo('Android');
+      //
+      // Portal.mobileApps.listPage.addNewApp(app);
+      // Portal.header.goTo('Android');
+      // var findApp = Portal.mobileApps.listPage.findApp(app);
+      // expect(findApp).toBe(1);
     });
 
     afterAll(function () {
-      Portal.header.goTo('Android');
-      Portal.mobileApps.listPage.searchAndDelete(app);
-      Portal.dialog.clickOk();
-      var findApp = Portal.mobileApps.listPage.findApp(app);
-      expect(findApp).toBe(0);
+      // Portal.header.goTo('Android');
+      // Portal.mobileApps.listPage.searchAndDelete(app);
+      // Portal.dialog.clickOk();
+      // var findApp = Portal.mobileApps.listPage.findApp(app);
+      // expect(findApp).toBe(0);
+      Portal.deleteMobileApps(apps);
       Portal.signOut();
     });
 
@@ -57,8 +60,10 @@ describe('Functional', function () {
     afterEach(function () {
     });
 
-    it('should edit in advanced mode and verify the json editor content',
+    xit('should edit in advanced mode and verify the json editor content',
       function () {
+        Portal.header.goTo('Mobile Apps');
+        Portal.header.goTo('Android');
         Portal.mobileApps.listPage.searchAndAdvancedEdit(app);
         Portal.mobileApps.editAppAdvancedModePage.verify();
 
@@ -67,8 +72,10 @@ describe('Functional', function () {
         expect(findApp).toBe(1);
     });
 
-    it('should edit in advanced mode and update the json editor content',
+    xit('should edit in advanced mode and update the json editor content',
       function () {
+        Portal.header.goTo('Mobile Apps');
+        Portal.header.goTo('Android');
         Portal.mobileApps.listPage.searchAndAdvancedEdit(app);
         Portal.mobileApps.editAppAdvancedModePage.update();
         Portal.dialog.clickOk();

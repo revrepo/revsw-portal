@@ -31,7 +31,8 @@ var Constants = {
       list: '#/domains',
       new: '#/domains/new'
     },
-    profile: '#/profile'
+    profile: '#/profile',
+    mobileApps: '#/apps/'
   },
   header: {
     appMenu: {

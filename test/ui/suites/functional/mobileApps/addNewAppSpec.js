@@ -25,23 +25,7 @@ describe('Functional', function () {
   describe('Add New App', function () {
 
     var adminUser = config.get('portal.users.admin');
-    var apps = [
-      {
-        name: 'MyAppIOS',
-        platform: 'iOS',
-        title: 'iOS Apps List'
-      },
-      {
-        name: 'MyAppAndroid',
-        platform: 'Android',
-        title: 'Android Apps List'
-      }
-      // {
-      //   name: 'MyAppWindowsMobile',
-      //   platform: 'Windows Mobile',
-      //   title: 'Windows Mobile Apps List'
-      // }
-    ];
+    var apps = DataProvider.generateMobileApps();
 
     beforeAll(function () {
       Portal.signIn(adminUser);
