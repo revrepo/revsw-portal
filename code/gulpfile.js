@@ -92,7 +92,8 @@ var stylish = require('jshint-stylish');
 gulp.task('lintjs', function () {
   return gulp.src([
       'gulpfile.js',
-      devFolder + 'js/**/*.js'])
+      devFolder + 'js/**/*.js',
+      '!' + devFolder + 'js/heatmaps/*.js'])
     .pipe(jshint({linter: 'jshint'}))
     .pipe(jshint.reporter(stylish));
 });
