@@ -705,6 +705,29 @@ i {
 .billing-plan-details {
   margin: 0 20px;
 }
+.billing-plan-description {
+  min-height: 170px;
+}
+@media (max-width: 480px) {
+  .billing-plan-description {
+    min-height: 50px;
+  }
+}
+@media (min-width: 768px) {
+  .billing-plan-description {
+    min-height: 50px;
+  }
+}
+@media (min-width: 992px) {
+  .billing-plan-description {
+    min-height: 260px;
+  }
+}
+@media (min-width: 1200px) {
+  .billing-plan-description {
+    min-height: 140px;
+  }
+}
 .subscribe-contact-info-terms {
   margin: -10px 0 0 47px;
   font-weight: bold;
