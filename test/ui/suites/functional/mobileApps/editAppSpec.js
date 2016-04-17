@@ -25,14 +25,17 @@ describe('Functional', function () {
   describe('Edit App And Update', function () {
 
     var adminUser = config.get('portal.users.admin');
+    var apps = DataProvider.generateMobileApps();
 
     beforeAll(function () {
       Portal.signIn(adminUser);
-      Portal.goToMobileApps();
-      Portal.header.goTo('Android');
+      // Portal.goToMobileApps();
+      // Portal.header.goTo('Android');
+      Portal.createMobileApps(apps);
     });
 
     afterAll(function () {
+      Portal.deleteMobileApps(apps);
       Portal.signOut();
     });
 
@@ -42,51 +45,120 @@ describe('Functional', function () {
     afterEach(function () {
     });
 
-    it('should get title from list app list', function () {
-        var title = Portal.mobileApps.listPage.getTitle();
-        expect(title).toEqual('Android Apps List');
-    });
+    apps.forEach(function (app) {
+        xit('should get title from list app list', function () {
+            var title = Portal.mobileApps.listPage.getTitle();
+            expect(title).toEqual('Android Apps List');
+        });
 
-    it('should edit and verify an existing app successfully', function () {
-        var app = {
-          name: 'MyApp',
-          platform: 'Android'
-        };
+        it('should basic edit and "verify" an existing app - ' + app.platform,
+          function () {
+            Portal.goToMobileApps();
+            Portal.header.goTo(app.platform);
+            Portal.mobileApps.listPage.searchAndEdit(app);
+            Portal.mobileApps.editAppPage.verify(app);
 
-        var findApp = null;
-        Portal.mobileApps.listPage.addNewApp(app);
-        Portal.goToMobileApps();
-        findApp = Portal.mobileApps.listPage.findApp(app);
-        expect(findApp).toBe(1);
+            var alert = Portal.alerts.getFirst();
+            var expectedMsg = 'App configuration is correct';
+            expect(alert.getText()).toEqual(expectedMsg);
 
-        Portal.mobileApps.listPage.searchAndEdit(app);
-        Portal.mobileApps.editAppPage.verify(app);
+            Portal.goToMobileApps();
+            Portal.header.goTo(app.platform);
+            var findApp = Portal.mobileApps.listPage.findApp(app);
+            expect(findApp).toBe(1);
+        });
 
-        Portal.goToMobileApps();
-        findApp = Portal.mobileApps.listPage.findApp(app);
-        expect(findApp).toBe(1);
-    });
+        it('should basic edit and "update" an existing app - ' + app.platform,
+          function () {
+            Portal.goToMobileApps();
+            Portal.header.goTo(app.platform);
+            Portal.mobileApps.listPage.searchAndEdit(app);
+            Portal.mobileApps.editAppPage.update(app);
+            Portal.dialog.clickOk();
 
-    it('should edit and update an existing app successfully', function () {
-        var app = {
-          name: 'MyApp',
-          platform: 'Android'
-        };
+            var alert = Portal.alerts.getFirst();
+            var expectedMsg = 'App updated';
+            expect(alert.getText()).toEqual(expectedMsg);
 
-        var findApp = null;
-        Portal.mobileApps.listPage.addNewApp(app);
-        Portal.goToMobileApps();
-        findApp = Portal.mobileApps.listPage.findApp(app);
-        expect(findApp).toBe(1);
+            Portal.goToMobileApps();
+            Portal.header.goTo(app.platform);
+            var findApp = Portal.mobileApps.listPage.findApp(app);
+            expect(findApp).toBe(1);
+        });
 
-        Portal.mobileApps.listPage.searchAndEdit(app);
-        app.name = 'MyAppUpdated';
-        Portal.mobileApps.editAppPage.update(app);
-        Portal.dialog.clickOk();
+        it('should basic edit and "publish" an existing app - ' + app.platform,
+          function () {
+            Portal.goToMobileApps();
+            Portal.header.goTo(app.platform);
+            Portal.mobileApps.listPage.searchAndEdit(app);
+            Portal.mobileApps.editAppPage.publish(app);
+            Portal.dialog.clickOk();
 
-        Portal.goToMobileApps();
-        findApp = Portal.mobileApps.listPage.findApp(app);
-        expect(findApp).toBe(1);
+            var alert = Portal.alerts.getFirst();
+            var expectedMsg = 'App configuration is published';
+            expect(alert.getText()).toEqual(expectedMsg);
+
+            Portal.goToMobileApps();
+            Portal.header.goTo(app.platform);
+            var findApp = Portal.mobileApps.listPage.findApp(app);
+            expect(findApp).toBe(1);
+        });
+
+        xit('should basic edit and "verify" the app name - ' + app.platform,
+          function () {
+            Portal.goToMobileApps();
+            Portal.header.goTo(app.platform);
+            Portal.mobileApps.listPage.searchAndEdit(app);
+            app.name = app.name + 'UPDATED';
+            Portal.mobileApps.editAppPage.verify(app);
+
+            var alert = Portal.alerts.getFirst();
+            var expectedMsg = 'App configuration is correct';
+            expect(alert.getText()).toEqual(expectedMsg);
+
+            Portal.goToMobileApps();
+            Portal.header.goTo(app.platform);
+            var findApp = Portal.mobileApps.listPage.findApp(app);
+            expect(findApp).toBe(1);
+        });
+
+        xit('should basic edit and "update" the app name - ' + app.platform,
+          function () {
+            Portal.goToMobileApps();
+            Portal.header.goTo(app.platform);
+            Portal.mobileApps.listPage.searchAndEdit(app);
+            app.name = app.name + 'UPDATED';
+            Portal.mobileApps.editAppPage.update(app);
+            Portal.dialog.clickOk();
+
+            var alert = Portal.alerts.getFirst();
+            var expectedMsg = 'App updated';
+            expect(alert.getText()).toEqual(expectedMsg);
+
+            Portal.goToMobileApps();
+            Portal.header.goTo(app.platform);
+            var findApp = Portal.mobileApps.listPage.findApp(app);
+            expect(findApp).toBe(1);
+        });
+
+        xit('should basic edit and "publish" the app name - ' + app.platform,
+          function () {
+            Portal.goToMobileApps();
+            Portal.header.goTo(app.platform);
+            Portal.mobileApps.listPage.searchAndEdit(app);
+            app.name = app.name + 'UPDATED';
+            Portal.mobileApps.editAppPage.update(app);
+            Portal.dialog.clickOk();
+
+            var alert = Portal.alerts.getFirst();
+            var expectedMsg = 'App configuration is published';
+            expect(alert.getText()).toEqual(expectedMsg);
+
+            Portal.goToMobileApps();
+            Portal.header.goTo(app.platform);
+            var findApp = Portal.mobileApps.listPage.findApp(app);
+            expect(findApp).toBe(1);
+        });
     });
   });
 });
