@@ -29,7 +29,7 @@ describe('Functional', function () {
 
     beforeAll(function () {
       Portal.signIn(adminUser);
-      Portal.header.goTo('Mobile Apps');
+      Portal.goToMobileApps();
     });
 
     afterAll(function () {
@@ -43,13 +43,13 @@ describe('Functional', function () {
     });
 
     apps.forEach(function (app){
-      it('should get title from list app page for ' + app.platform, function() {
+      it('should get title from list app page - ' + app.platform, function() {
           Portal.header.goTo(app.platform);
           var title = Portal.mobileApps.listPage.getTitle();
           expect(title).toEqual(app.title);
       });
 
-      it('should add a new app for ' + app.platform, function () {
+      it('should add a new app - ' + app.platform, function () {
         Portal.header.goTo(app.platform);
         Portal.mobileApps.listPage.addNewApp(app);
 

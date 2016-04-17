@@ -44,7 +44,7 @@ describe('Functional', function () {
 
     apps.forEach(function (app) {
       it('should delete an app - ' + app.platform, function () {
-        Portal.header.goTo('Mobile Apps');
+        Portal.goToMobileApps();
         Portal.header.goTo(app.platform);
 
         Portal.mobileApps.listPage.searchAndDelete(app);

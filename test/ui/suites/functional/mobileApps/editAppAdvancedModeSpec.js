@@ -27,62 +27,60 @@ describe('Functional', function () {
     var adminUser = config.get('portal.users.admin');
     var apps = DataProvider.generateMobileApps();
 
-    var app = {
-          name: 'MyApp',
-          platform: 'Android'
-        };
-
     beforeAll(function () {
       Portal.signIn(adminUser);
       Portal.createMobileApps(apps);
-      // Portal.header.goTo('Android');
-      //
-      // Portal.mobileApps.listPage.addNewApp(app);
-      // Portal.header.goTo('Android');
-      // var findApp = Portal.mobileApps.listPage.findApp(app);
-      // expect(findApp).toBe(1);
     });
 
     afterAll(function () {
-      // Portal.header.goTo('Android');
-      // Portal.mobileApps.listPage.searchAndDelete(app);
-      // Portal.dialog.clickOk();
-      // var findApp = Portal.mobileApps.listPage.findApp(app);
-      // expect(findApp).toBe(0);
       Portal.deleteMobileApps(apps);
       Portal.signOut();
     });
 
     beforeEach(function () {
-      Portal.header.goTo('Android');
     });
 
     afterEach(function () {
     });
 
-    xit('should edit in advanced mode and verify the json editor content',
-      function () {
-        Portal.header.goTo('Mobile Apps');
-        Portal.header.goTo('Android');
-        Portal.mobileApps.listPage.searchAndAdvancedEdit(app);
-        Portal.mobileApps.editAppAdvancedModePage.verify();
+    apps.forEach(function (app) {
+      it('should edit advanced mode & "verify" json editor - ' + app.platform,
+        function () {
+          Portal.goToMobileApps();
+          Portal.header.goTo(app.platform);
+          Portal.mobileApps.listPage.searchAndAdvancedEdit(app);
+          Portal.mobileApps.editAppAdvancedModePage.verify();
 
-        Portal.header.goTo('Android');
-        var findApp = Portal.mobileApps.listPage.findApp(app);
-        expect(findApp).toBe(1);
-    });
+          Portal.header.goTo(app.platform);
+          var findApp = Portal.mobileApps.listPage.findApp(app);
+          expect(findApp).toBe(1);
+      });
 
-    xit('should edit in advanced mode and update the json editor content',
-      function () {
-        Portal.header.goTo('Mobile Apps');
-        Portal.header.goTo('Android');
-        Portal.mobileApps.listPage.searchAndAdvancedEdit(app);
-        Portal.mobileApps.editAppAdvancedModePage.update();
-        Portal.dialog.clickOk();
+      it('should edit advanced mode & "update" json editor - ' + app.platform,
+        function () {
+          Portal.goToMobileApps();
+          Portal.header.goTo(app.platform);
+          Portal.mobileApps.listPage.searchAndAdvancedEdit(app);
+          Portal.mobileApps.editAppAdvancedModePage.update();
+          Portal.dialog.clickOk();
 
-        Portal.header.goTo('Android');
-        var findApp = Portal.mobileApps.listPage.findApp(app);
-        expect(findApp).toBe(1);
+          Portal.header.goTo(app.platform);
+          var findApp = Portal.mobileApps.listPage.findApp(app);
+          expect(findApp).toBe(1);
+      });
+
+      it('should edit advanced mode & "publish" json editor - ' + app.platform,
+        function () {
+          Portal.goToMobileApps();
+          Portal.header.goTo(app.platform);
+          Portal.mobileApps.listPage.searchAndAdvancedEdit(app);
+          Portal.mobileApps.editAppAdvancedModePage.publish();
+          Portal.dialog.clickOk();
+
+          Portal.header.goTo(app.platform);
+          var findApp = Portal.mobileApps.listPage.findApp(app);
+          expect(findApp).toBe(1);
+      });
     });
   });
 });

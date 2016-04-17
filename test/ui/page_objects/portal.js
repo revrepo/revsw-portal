@@ -243,6 +243,18 @@ var Portal = {
   },
 
   /**
+   * ### Portal.goToMobileApps()
+   *
+   * Navigation helper method that executes all steps to navigate to `Mobile
+   * Apps` page.
+   *
+   * @returns {Promise}
+   */
+  goToMobileApps: function () {
+    return Portal.sideBar.goTo(Constants.sideBar.webMobileApps.MOBILE_APPS);
+  },
+
+  /**
    * ### Portal.goToSecuritySettings()
    *
    * Navigation helper method that executes all steps to navigate to `Security
