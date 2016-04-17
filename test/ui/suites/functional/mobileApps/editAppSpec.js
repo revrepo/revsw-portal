@@ -29,8 +29,6 @@ describe('Functional', function () {
 
     beforeAll(function () {
       Portal.signIn(adminUser);
-      // Portal.goToMobileApps();
-      // Portal.header.goTo('Android');
       Portal.createMobileApps(apps);
     });
 
@@ -106,6 +104,7 @@ describe('Functional', function () {
 
         xit('should basic edit and "verify" the app name - ' + app.platform,
           function () {
+            var tempAppName = app.name;
             Portal.goToMobileApps();
             Portal.header.goTo(app.platform);
             Portal.mobileApps.listPage.searchAndEdit(app);
@@ -118,6 +117,7 @@ describe('Functional', function () {
 
             Portal.goToMobileApps();
             Portal.header.goTo(app.platform);
+            app.name = tempAppName;
             var findApp = Portal.mobileApps.listPage.findApp(app);
             expect(findApp).toBe(1);
         });
@@ -147,7 +147,7 @@ describe('Functional', function () {
             Portal.header.goTo(app.platform);
             Portal.mobileApps.listPage.searchAndEdit(app);
             app.name = app.name + 'UPDATED';
-            Portal.mobileApps.editAppPage.update(app);
+            Portal.mobileApps.editAppPage.publish(app);
             Portal.dialog.clickOk();
 
             var alert = Portal.alerts.getFirst();
