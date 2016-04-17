@@ -1,6 +1,5 @@
-// //
+//
 .billing-plan {
-  // color:@app-color-blue;
   border: solid 1px;
   border-color: #F8A543;
   margin: 5px;
@@ -22,5 +21,20 @@
   }
   &-details {
     margin: 0 20px;
+  }
+  &-description {
+    min-height: 170px;
+    @media (max-width: @screen-xs-min) {
+      min-height: 50px;
+    }
+    @media (min-width: @screen-sm-min) {
+      min-height: 50px;
+    }
+    @media (min-width: @screen-md-min) {
+      min-height: 170px;
+    }
+    @media (min-width: @screen-lg-min) {
+      min-height: 170px;
+    }
   }
 }
