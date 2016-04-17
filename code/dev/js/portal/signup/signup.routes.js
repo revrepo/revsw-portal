@@ -10,7 +10,7 @@
     $urlRouterProvider.when('/signup', '/signup/plans');
     $stateProvider
       .state('signup', {
-        abstract: true,
+        abstract: false,
         url: '/signup',
         views: {
           layout: {

@@ -94,7 +94,7 @@
                   <h1 class=""><span class="billing-plan-ammount">${{item.monthly_fee}}</span>/mon</h1>
                 </div>
                 <div class="billing-plan-details">
-                  <div>{{item.description}}</div>
+                  <div class="billing-plan-description">{{item.description}}</div>
                   <h4>Overage Charges</h4>
                   <div class="billing-plan-services" ng-repeat="service in item.services">
                     <div>${{service.cost |  number:2}} per {{service.measurement_unit}}</div>
