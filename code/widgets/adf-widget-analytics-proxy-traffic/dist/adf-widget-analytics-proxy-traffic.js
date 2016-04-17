@@ -225,9 +225,9 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
     // ;
 
     .widget('adf-widget-gbt-heatmaps', {
-        title: 'GBT Heatmap',
+        title: 'World Traffic Heatmap',
         titleTemplateUrl: 'parts/dashboard/widgets/heatmaps/widget-title-with-params-heatmap.html',
-        description: 'Display Global Traffic GBT Heatmap',
+        description: 'Display Global Traffic Heatmap',
         templateUrl: 'parts/dashboard/widgets/heatmaps/view-gbt-heatmaps.tpl.html',
         controller: reportGBTHeatmapController,
         edit: {
@@ -315,7 +315,7 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
      * @param  {[type]} HeatmapsDrawer [description]
      * @return {[type]}                [description]
      */
-    function reportGBTHeatmapController($scope, $q, $window, $timeout, Stats, Countries, HeatmapsDrawer) {
+    function reportGBTHeatmapController($scope, $q, $window, $timeout, Stats, Countries, HeatmapsDrawer, Util) {
       'ngInject';
       var _defaultConfig = {
         filters: {
@@ -326,6 +326,7 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
 
       $scope.elId = (new Date()).getTime();
       $scope._loading = false;
+      $scope._data = false;
       Countries.query().$promise
         .then(function(data) {
           $scope.reload();
@@ -337,6 +338,7 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
         if (!$scope.config.domain) {
           return;
         }
+        $scope._data = false;
         var filters = {
           domainId: $scope.config.domain.id,
           count_last_hours: $scope.config.filters.count_last_hours || '6',
@@ -345,9 +347,11 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
         };
 
         $scope.reloadGBTCountry(filters)
-          .then(function() {
+          .then(function( gbt_data ) {
+            $scope._data = true;
             // Redraw maps using received data
-            HeatmapsDrawer.drawMap('#canvas-svg-gbt' + $scope.elId, '#tooltip-container-gbt' + $scope.elId, $scope.countryGBTData);
+            HeatmapsDrawer.drawWorldMap('#canvas-svg-gbt' + $scope.elId, gbt_data );
+
           }).finally(function() {
             $scope._loading = false;
           });
@@ -359,12 +363,8 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
        * @param {String|Number} domainId
        */
       $scope.reloadGBTCountry = function(filters) {
-        // Remove prev map
-        HeatmapsDrawer.clearMap('#canvas-svg-gbt' + $scope.elId);
         // Set loading
         $scope._loading = true;
-        // Clear old data
-        $scope.countryGBTData = {};
         // Loading new data
         return Stats.gbt_country({
             domainId: filters.domainId,
@@ -373,23 +373,47 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
             to_timestamp: Date.now()
           }).$promise
           .then(function(data) {
+
+            var world = [],
+              usa = [];
+
             if (data.data && data.data.length > 0) {
-              angular.forEach(data.data, function(item) {
-                var name = $scope.countries[item.key.toUpperCase()] || item.key;
-                $scope.countryGBTData[name] = {
+              data.data.forEach( function (item) {
+
+                var key = item.key.toUpperCase();
+                world.push({
+                  name: ( $scope.countries[key] || item.key ),
+                  id: key,
                   value: item.sent_bytes,
-                  tooltip: ('Sent: <strong>' + HeatmapsDrawer.valueFormat(item.sent_bytes, 'G' /*force G*/ ) +
-                    'B</strong> Received: <strong>' + HeatmapsDrawer.valueFormat(item.received_bytes, 'G') + 'B</strong>')
+                  tooltip: ( 'Sent: <strong>' + Util.humanFileSizeInGB(item.sent_bytes) +
+                    '</strong> Received: <strong>' + Util.humanFileSizeInGB(item.received_bytes) + '</strong>' )
+                });
+
+                if ( key === 'US' && item.regions ) {
+                  usa = item.regions;
+                }
+              });
+
+              usa = usa.map( function( item ) {
+                return {
+                  id: item.key,
+                  name: item.key,
+                  value: item.sent_bytes,
+                  tooltip: ( 'Sent: <strong>' + Util.humanFileSizeInGB(item.sent_bytes) +
+                    '</strong> Received: <strong>' + Util.humanFileSizeInGB(item.received_bytes) + '</strong>' )
                 };
               });
             }
-            // Pass to next `.then()`
-            return data;
+
+            return {
+              world: world,
+              usa: usa
+            };
           });
       };
 
     }
-    reportGBTHeatmapController.$inject = ["$scope", "$q", "$window", "$timeout", "Stats", "Countries", "HeatmapsDrawer"];;
+    reportGBTHeatmapController.$inject = ["$scope", "$q", "$window", "$timeout", "Stats", "Countries", "HeatmapsDrawer", "Util"];;
 
     /**
      * @name  editTopReportConfig

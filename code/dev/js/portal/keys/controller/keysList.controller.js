@@ -6,7 +6,7 @@
     .controller('KeysListController', KeysListController);
 
   // @ngInject
-  function KeysListController($scope, CRUDController, ApiKeys, $injector, $stateParams, Companies, DomainsConfig, $state, $modal, clipboard) {
+  function KeysListController($scope, $rootScope, CRUDController, ApiKeys, $injector, $stateParams, Companies, DomainsConfig, $state, $modal, clipboard) {
 
     //Invoking crud actions
     $injector.invoke(CRUDController, this, {$scope: $scope, $stateParams: $stateParams});
@@ -47,6 +47,9 @@
       $scope.confirm('confirmModal.html', model).then(function () {
         $scope
           .delete(model)
+          .then(function(){
+            $rootScope.$broadcast('update:searchData');
+          })
           .catch($scope.alertService.danger);
       });
     };
@@ -69,6 +72,7 @@
         })
         .$promise
         .then(function (data) {
+          $rootScope.$broadcast('update:searchData');
           $scope.alertService.success('API Key created', 5000);
           $scope.list();
           return data;

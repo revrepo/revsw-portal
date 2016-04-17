@@ -25,9 +25,8 @@
 
     $scope.roles = ['user', 'admin'];
     // Adding additional user roles for RevAdmin
-    if ($scope.auth.isRevadmin()) {
+    if ($scope.auth.isRevadmin() || $scope.auth.isReseller()) {
       $scope.roles.push('reseller');
-      $scope.roles.push('revadmin');
     }
 
     // $scope.filterKeys = ['firstname', 'lastname', 'email', 'role', 'updated_at', 'last_login_at'];

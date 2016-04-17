@@ -57,7 +57,7 @@ describe('Workflow', function () {
 
     it('should display new created user only for the reseller who created it',
       function () {
-        var tom = DataProvider.generateUser('Tom');
+        var tom = DataProvider.generateUser('Tom', null, resellerUser);
         Portal.createUser(tom);
         var userEmail = Portal.userListPage
           .searchAndGetFirstRow(tom.email)

@@ -6,7 +6,7 @@
     .controller('KeysEditController', KeysEditController);
 
   // @ngInject
-  function KeysEditController($scope, $injector, $stateParams, $location, CRUDController, ApiKeys, Companies, DomainsConfig, AlertService) {
+  function KeysEditController($scope, $rootScope, $injector, $stateParams, $location, CRUDController, ApiKeys, Companies, DomainsConfig, AlertService) {
     //Invoking crud actions
     $injector.invoke(CRUDController, this, {
       $scope: $scope,
@@ -144,6 +144,7 @@
         .update({id: $scope.key.id}, clearUpdateData($scope.key))
         .$promise
         .then(function (data) {
+          $rootScope.$broadcast('update:searchData');
           AlertService.success('API Key updated');
           $scope.$parent.list();
         })
