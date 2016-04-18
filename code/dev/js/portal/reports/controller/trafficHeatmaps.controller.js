@@ -8,6 +8,9 @@
   /*@ngInject*/
   function TrafficHeatmapsController($scope, HeatmapsDrawer, Countries, Stats, $q, Util) {
 
+    var hitsDrawer = HeatmapsDrawer.create('#canvas-svg-hits'),
+      gbtDrawer = HeatmapsDrawer.create('#canvas-svg-gbt');
+
     /**
      * Loading flag
      *
@@ -81,13 +84,6 @@
               };
             });
           }
-
-          // debug
-          // if ( usa.length === 1 ) {
-          //   usa[0].id = 'MA';
-          //   usa[0].name = 'MA';
-          // }
-          // debug
 
           // Pass to next `.then()`
           return {
@@ -167,9 +163,11 @@
         $scope.reloadHitsCountry($scope.domain.id),
         $scope.reloadGBTCountry($scope.domain.id)
       ]).then(function ( data ) {
-        // Redraw maps using received data
-        HeatmapsDrawer.drawWorldMap('#canvas-svg-hits', data[0/*hits data*/] );
-        HeatmapsDrawer.drawWorldMap('#canvas-svg-gbt', data[1/*gbt data*/] );
+
+        //  (re)Draw maps using received data
+        hitsDrawer.drawCurrentMap( data[0/*hits data*/] );
+        gbtDrawer.drawCurrentMap( data[1/*gbt data*/] );
+
       }).finally(function () {
         $scope._loading = false;
       });
