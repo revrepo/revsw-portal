@@ -15,16 +15,20 @@
    * @param {[type]} $localStorage [description]
    * @param {[type]} Countries     [description]
    */
-  function SignupBillingPlansController($scope, Users, AlertService, $stateParams, $localStorage, Countries) {
+  function SignupBillingPlansController($scope, Users, AlertService, $stateParams, $localStorage, Countries, $modal) {
     'ngInject';
-    var $ctrl = this;
     var billing_plan_handler = $stateParams.billing_plan_handler;
+    var $ctrl = this;
+
+    this.isRegistryFinish = false;
+
     this.countries = Countries.query();
+
     this.model = {
       'billing_plan': billing_plan_handler,
       'country': 'US',
       // TODO: delete data after finish tests
-      //   'email': 'nikolay.gerzhan@gmail.com',
+      //'email': 'nikolay.gerzhan@gmail.com',
       //   'last_name': 'Gerzhan',
       //   'address1': 'Мужества 22-18',
       //   'city': 'Красноярск',
@@ -37,7 +41,15 @@
       //   'state': 'Krasnoyrskiy kray',
       //   'city': 'Krasnoyrsk'
     };
-    this.isRegistryFinish = false;
+    /**
+     * @name  onSignUp
+     * @description]
+     *
+     * Call API for registration new User
+     *
+     * @param  {Object} model
+     * @return
+     */
     this.onSignUp = function onSignUp(model) {
       this._loading = true;
       if (!model) {
@@ -49,9 +61,6 @@
       }
       $scope.userData = _.clone(model);
       AlertService.clear();
-//      delete model.passwordConfirm;
-//      model.collection_method = ['Automatic'];
-//      model.billing_schedule = 'monthly';
 
       Users.signup(model)
         .$promise
@@ -60,10 +69,39 @@
           $ctrl.isRegistryFinish = true;
         })
         .catch(function(err) {
-          // model.passwordConfirm = model.password; // TODO: delete after finish testing registration
           AlertService.danger(err, 5000);
         });
     };
+
+    /**
+     * @name  onRepeatSendRegistrationEmail
+     * @description
+     *
+     * @param  {String} email
+     * @param  {String} password
+     * @return
+     */
+    this.onRepeatSendRegistrationEmail = function(email, password) {
+
+      var modalInstance = $modal.open({
+        templateUrl: 'parts/auth/resend-subscription-info.html',
+        controller: 'resendRegistrationEmailController',
+        size: 'md',
+        resolve: {
+          auth: function() {
+            return {
+              email: email,
+              password: password
+            };
+          }
+        }
+      });
+
+      modalInstance.result.then(function(data) {
+        //AlertService.success(data.message, 6000);
+      });
+    };
+
     this._loading = false;
   }
 })();

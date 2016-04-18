@@ -9,8 +9,10 @@
           We have sent an email with verification link to your email address <b>{{$ctrl.model.email}}</b> - please continue the RevAPM registration process by following the link. Please also check your Spam mailbox.
         </p>
         <p class="lead">
-          Now you can close the browser window.
+          <!-- Now you can close the browser window. -->
+           <button type="text" class="btn btn-warning pull-right" ng-click="$ctrl.onRepeatSendRegistrationEmail($ctrl.model.email,$ctrl.model.password)">Didn’t receive the email?</button>
         </p>
+
       </div>
     </div>
   </div>
