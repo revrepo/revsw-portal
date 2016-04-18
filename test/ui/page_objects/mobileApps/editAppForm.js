@@ -628,6 +628,45 @@ var EditAppForm = {
   },
 
   /**
+   * ### EditAppForm.isEnabledVerify()
+   *
+   * Checks if Verify button is enabled in `Edit App` Page.
+   *
+   * @returns {Promise}
+   */
+  isEnabledVerify: function () {
+    return this
+      .getVerifyBtn()
+      .isEnabled();
+  },
+
+  /**
+   * ### EditAppForm.isEnabledUpdate()
+   *
+   * Checks if Update button is enabled in `Edit App` Page.
+   *
+   * @returns {Promise}
+   */
+  isEnabledUpdate: function () {
+    return this
+      .getUpdateBtn()
+      .isEnabled();
+  },
+
+  /**
+   * ### EditAppForm.isEnabledPublish()
+   *
+   * Checks if Publish button is enabled in `Edit App` Page.
+   *
+   * @returns {Promise}
+   */
+  isEnabledPublish: function () {
+    return this
+      .getPublishBtn()
+      .isEnabled();
+  },
+
+  /**
    * ### EditAppForm.fill(app)
    *
    * Fills on Edit App from of `Edit App` Page.

@@ -30,11 +30,9 @@ describe('Boundary', function () {
 
     beforeAll(function () {
       Portal.signIn(adminUser);
-      // Portal.createMobileApps(apps);
     });
 
     afterAll(function () {
-      // Portal.deleteMobileApps(apps);
       Portal.signOut();
     });
 

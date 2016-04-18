@@ -22,7 +22,7 @@ var DataProvider = require('./../../../common/providers/data');
 var Constants = require('./../../../page_objects/constants');
 
 describe('Functional', function () {
-  describe('Edit App And Update', function () {
+  describe('Basic Edit App And Update', function () {
 
     var adminUser = config.get('portal.users.admin');
     var apps = DataProvider.generateMobileApps();
@@ -44,9 +44,14 @@ describe('Functional', function () {
     });
 
     apps.forEach(function (app) {
-        xit('should get title from list app list', function () {
-            var title = Portal.mobileApps.listPage.getTitle();
-            expect(title).toEqual('Android Apps List');
+        it('should get the title from basic edited app - ' + app.platform,
+          function () {
+            Portal.goToMobileApps();
+            Portal.header.goTo(app.platform);
+            Portal.mobileApps.listPage.searchAndEdit(app);
+            
+            var title = Portal.mobileApps.editAppPage.getAppName();
+            expect(title).toEqual('Name: ' + app.name);
         });
 
         it('should basic edit and "verify" an existing app - ' + app.platform,
@@ -102,7 +107,7 @@ describe('Functional', function () {
             expect(findApp).toBe(1);
         });
 
-        xit('should basic edit and "verify" the app name - ' + app.platform,
+        it('should basic edit and "verify" the app name - ' + app.platform,
           function () {
             var tempAppName = app.name;
             Portal.goToMobileApps();
@@ -122,7 +127,7 @@ describe('Functional', function () {
             expect(findApp).toBe(1);
         });
 
-        xit('should basic edit and "update" the app name - ' + app.platform,
+        it('should basic edit and "update" the app name - ' + app.platform,
           function () {
             Portal.goToMobileApps();
             Portal.header.goTo(app.platform);
@@ -141,7 +146,7 @@ describe('Functional', function () {
             expect(findApp).toBe(1);
         });
 
-        xit('should basic edit and "publish" the app name - ' + app.platform,
+        it('should basic edit and "publish" the app name - ' + app.platform,
           function () {
             Portal.goToMobileApps();
             Portal.header.goTo(app.platform);
