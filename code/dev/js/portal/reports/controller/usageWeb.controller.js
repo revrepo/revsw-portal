@@ -51,12 +51,12 @@
     var subFormat_ = function( data ) {
       if ( data.count !== undefined ) {
         data.count = Util.formatNumber( data.count );
-        data.received_bytes = Util.humanFileSizeInGB( data.received_bytes );
-        data.sent_bytes = Util.humanFileSizeInGB( data.sent_bytes );
+        data.received_bytes = Util.humanFileSizeInGB( data.received_bytes, 3 );
+        data.sent_bytes = Util.humanFileSizeInGB( data.sent_bytes, 3 );
       }
       if ( data.billable_received_bps !== undefined ) {
-        data.billable_received_bps = Util.convertTraffic( data.billable_received_bps );
-        data.billable_sent_bps = Util.convertTraffic( data.billable_sent_bps );
+        data.billable_received_bps = Util.convertTrafficMbps( data.billable_received_bps, 3 );
+        data.billable_sent_bps = Util.convertTrafficMbps( data.billable_sent_bps, 3 );
       }
       if ( data.cache_hits !== undefined ) {
         data.cache_hits.MISS = Util.formatNumber( data.cache_hits.MISS );
