@@ -62,7 +62,7 @@
             .then(function () {
               User.getUserAccounts(true)
                 .then(function (accs) {
-                  
+
                   AlertService.success('Successfully changed the billing plan', 5000);
                   accs.forEach(function (acc) {
                     if(acc.acc_id === account.acc_id){
@@ -73,7 +73,11 @@
                 });
             })
             .catch(function (err) {
-              AlertService.danger('Oops! Something went wrong');
+              var message = 'Oops! Something went wrong';
+              if(err.data && err.data.message) {
+                  message = err.data.message;
+              }
+              AlertService.danger(message);
             })
             .finally(function () {
               $scope._loading = false;

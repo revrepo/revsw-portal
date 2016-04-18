@@ -77,6 +77,10 @@
       $scope
         .update(model)
         .then(function(data) {
+          // NOTE: update current user info
+          if (model.user_id === User.getUser().user_id ){
+              User.reloadUser();
+          }
           $scope.alertService.success('User updated', 5000);
         })
         .catch($scope.alertService.danger);
@@ -98,7 +102,7 @@
       delete model.passwordConfirm;
       model.access_control_list.dashBoard = true;
 //      model.email = angular.copy(model.user_email);
-//      delete model.user_email; 
+//      delete model.user_email;
       $scope.create(model)
         .then(function(data) {
           initModel();
