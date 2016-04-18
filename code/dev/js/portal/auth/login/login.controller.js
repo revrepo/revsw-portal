@@ -108,7 +108,9 @@
       });
 
       modalInstance.result.then(function (message) {
-        AlertService.success(message, 5000);
+        if(!!message){
+          AlertService.success(message, 5000);
+        }
       });
     };
 

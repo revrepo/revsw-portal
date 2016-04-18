@@ -8,7 +8,7 @@
   /*@ngInject*/
   function CompaniesResource(Resource, $config) {
 
-    return Resource($config.API_URL + '/accounts/:id', {id: '@id', statement: '@statement'},{
+    return Resource($config.API_URL + '/accounts/:id', {id: '@id', statement: '@statement',chargify_handle:'@chargify_handle'},{
       createBillingProfile: {
         url: $config.API_URL + '/accounts/:id/billing_profile',
         method: 'POST'
@@ -47,7 +47,14 @@
         url: $config.API_URL + '/accounts/:id/transactions',
         method: 'GET',
         isArray: true
+      },
+
+      subscriptionPreview: {
+        url: $config.API_URL + '/accounts/:id/subscription_preview/:chargify_handle',
+        method: 'GET',
+        isArray: false
       }
+
       }
     );
   }
