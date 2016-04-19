@@ -97,8 +97,8 @@
       model.plan_id = model.billing_plan;
       model.billing_plan = model.billing_plan;
       User.selectAccount(model);
-      $state.go('index.billing.usage')
-    }
+      $state.go('index.billing.usage');
+    };
 
     $scope.onGoToBillingPlans = function(model){
       // NOTE: make data format for using into state 'index.billing.plans'
@@ -107,8 +107,8 @@
       model.plan_id = model.billing_plan;
       model.billing_plan = model.billing_plan;
       User.selectAccount(model);
-      $state.go('index.billing.plans')
-    }
+      $state.go('index.billing.plans');
+    };
 
     $scope.onGoToBillingStatement = function(model){
       // NOTE: make data format for using into state 'index.billing.statements'
@@ -117,10 +117,7 @@
       model.plan_id = model.billing_plan;
       model.billing_plan = model.billing_plan;
       User.selectAccount(model);
-      $state.go('index.billing.statements')
-    }
-
-
+      $state.go('index.billing.statements');
+    };
   }
-
 })();
