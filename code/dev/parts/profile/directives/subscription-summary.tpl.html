@@ -1,0 +1,45 @@
+<section class="subscription-summary">
+  <div class="stats-highlights-table">
+    <div class="stats-highlights-table-row">
+      <section class="col-sm stats-total">
+        <header>
+          <h1 class="stats-heading">Total Revenue</h1>
+        </header>
+        <p class="stats-data total_revenue">{{subscription.total_revenue_in_cents |MonetaryUnit| currency}}</p>
+      </section>
+      <section class="col-sm stats-balance">
+        <header>
+          <h1 class="stats-heading">Current Balance</h1>
+        </header>
+        <p class="stats-data">{{subscription.balance_in_cents | MonetaryUnit|currency }}</p>
+      </section>
+      <!-- </div> -->
+      <!-- <div class="stats-highlights-table-row"> -->
+      <section class="col-sm stats-since">
+        <header>
+          <h1 class="stats-heading">Subscriber since</h1>
+        </header>
+        <p class="stats-data">{{subscription.current_period_started_at | date}} </p>
+      </section>
+      <section class="col-sm stats-renewal">
+        <header>
+          <h1 class="stats-heading">Next Billing</h1>
+        </header>
+        <p class="stats-data">{{subscription.next_assessment_at | date }} </p>
+      </section>
+      <section class="col-sm stats-state">
+        <header>
+          <h1 class="stats-heading">Status </h1>
+        </header>
+        <p class="stats-data">{{subscription.state | date }} </p>
+      </section>
+      <section class="col-sm stats-state">
+        <header>
+          <h1 class="stats-heading">Activated At</h1>
+        </header>
+        <p class="stats-data">{{subscription.activated_at | date }} </p>
+      </section>
+      <!-- </div> -->
+    </div>
+    <!--   <pre> {{subscription|json}} </pre> -->
+</section>

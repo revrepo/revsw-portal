@@ -53,8 +53,13 @@
         url: $config.API_URL + '/accounts/:id/subscription_preview/:chargify_handle',
         method: 'GET',
         isArray: false
-      }
+      },
 
+      subscriptionSummary: {
+        url: $config.API_URL + '/accounts/:id/subscription_summary',
+        method: 'GET',
+        isArray: false
+      }
       }
     );
   }
