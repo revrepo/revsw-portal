@@ -732,3 +732,18 @@ i {
   margin: -10px 0 0 47px;
   font-weight: bold;
 }
+.subscription-summary .stats-highlights-table-row {
+  display: table-row;
+}
+.subscription-summary .col-sm {
+  display: table-cell;
+  padding-left: 7%;
+}
+.subscription-summary .stats-heading {
+  margin-bottom: 9px;
+  padding: 0;
+  border-bottom: none;
+  color: #888;
+  font-weight: bold;
+  font-size: 1.16667em;
+}
