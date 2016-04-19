@@ -49,6 +49,19 @@
     }
 
     /**
+     * Convert trafic value Mbps, forcibly
+     *
+     * @param {number} bps
+     * @param {number} precision
+     * @returns {string}
+     */
+    function convertTrafficMbps(bps, pr) {
+      if (!bps || bps < 1) {
+        return '0 Mbps';
+      }
+      return ( bps / (1024 * 1024) ).toFixed((pr||2)) + ' Mbps';
+    }
+    /**
      * 1234567890.456 --> 1'234'567'890.456
      * 1234567890.456 --> 1'234'567'890.5 when fixed == 1
      *
@@ -93,6 +106,11 @@
        * @inheritDoc
        */
       convertTraffic: convertTraffic,
+
+      /**
+       * @inheritDoc
+       */
+      convertTrafficMbps: convertTrafficMbps,
 
       /**
        * @inheritDoc
