@@ -30,14 +30,6 @@
 
       User.getUserAccounts()
         .then(function(accs) {
-          return Companies.subscriptionSummary({
-            id: $scope.account.acc_id
-          }).$promise.then(function(subscription) {
-            $scope.summary = subscription;
-            return accs;
-          });
-        })
-        .then(function(accs) {
           $scope.accounts = accs.length > 1 ? accs.slice(1) : accs;
 
           if (!$scope.account || !$scope.account.acc_id) {
@@ -59,6 +51,14 @@
             t.transaction_type = _.capitalize(t.transaction_type);
             t.success = JSON.parse(t.success);
             return t;
+          });
+        })
+       .then(function() {
+          return Companies.subscriptionSummary({
+            id: $scope.account.acc_id
+          }).$promise.then(function(subscription) {
+            $scope.summary = subscription;
+            return  subscription;
           });
         })
         .catch(function(err) {

@@ -106,7 +106,7 @@
       }
       Companies.subscriptionPreview({
           id: account.acc_id,
-          chargify_handle: plan.chargify_handle
+          billing_handle: plan.chargify_handle
         }).$promise
         .then(function onSuccessGetPreviewSubscriptionInfo(data) {
           // NOTE: show details confirm modal window

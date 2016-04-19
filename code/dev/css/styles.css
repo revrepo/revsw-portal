@@ -735,10 +735,6 @@ i {
 .subscription-summary .stats-highlights-table-row {
   display: table-row;
 }
-.subscription-summary .stats-data {
-  font-weight: 600;
-  text-align: center;
-}
 .subscription-summary .col-sm {
   display: table-cell;
   padding-left: 7%;
