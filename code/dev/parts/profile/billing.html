@@ -20,12 +20,11 @@
     <p>Changing billing plan will have the following effects:
       <br>
       <ul>
-        <li>A prorated credit of approximately  <strong>{{model.migration.prorated_adjustment_in_cents| AbsUnit| MonetaryUnit|currency}}</strong> will be applied for the current product</li>
-        <li>The pro-rated credit for prior period charges will include any component charges from that period</li>
-        <li>A charge for the full amount of the new product will be applied</li>
-        <li>A charge for the full amount of all component charges will be applied. All metered components will be reset to zero.</li>
-        <li>The period start date will be reset to today's date</li>
-        <li>If switching to a new product family, all component balances will be reset</li>
+        <li>A prorated credit of approximately  <strong>{{model.migration.prorated_adjustment_in_cents| AbsUnit| MonetaryUnit|currency}}</strong> will be applied for the current billing plan</li>
+        <li>The pro-rated credit for prior period charges will include any line-item charges from that period</li>
+        <li>A charge for the full amount of the new billing plan will be applied</li>
+        <li>A charge for the full amount of all line-item charges will be applied. All metered line-items (traffic, requests) will be reset to zero.</li>
+        <li>The billing period start date will be reset to today's date</li>
       </ul>
     </p>
     <p class="text-center">

@@ -8,7 +8,7 @@
   /*@ngInject*/
   function HeatmapsDrawer() {
 
-    /**
+    /** *********************************
      * conf for the maps, common parts
      */
     function getConfig_() {
@@ -37,7 +37,8 @@
         colorAxis: {
           minColor: '#99CCFF',
           maxColor: '#0050A1',
-          type: 'logarithmic'
+          type: 'logarithmic',
+          tickPixelInterval: 100
         },
         tooltip: {
           useHTML: true,
@@ -47,7 +48,10 @@
           }
         },
         legend: {
-          enabled: true
+          enabled: true,
+          itemDistance: 60,
+          symbolHeight: 6,
+          symbolWidth: 400
         },
         series: [{
           name: '',
@@ -66,10 +70,36 @@
       };
     }
 
-    /**
-     * Draw a world map using given HTML element id
+    /** *********************************
+     */
+    function Drawer( containerID ) {
+      if ( !containerID ) {
+        throw new Error( 'Drawer: containerID should be provided' );
+      }
+      this.$el = $( containerID );
+      this.$el.css({ width: '100%', 'padding-bottom': '55%' });
+      this.$wrapper = $( '<div></div>' );
+      this.$el.append( this.$wrapper );
+      this.$wrapper.css({ position: 'absolute', top: 0, bottom: 0, left: 0, right: 0 });
+      this.$btn = $( '<button style="position:absolute;top:0px;left:0px;" class="btn">Show USA Map</button>' );
+      this.$el.append( this.$btn );
+      this.$btn.on( 'click', function() {
+        if ( this.currentMap === 'world' ) {
+          this.drawUSAMap( this.currentData, this.currentOpts );
+          this.$btn.html( 'Show World Map' );
+        } else {
+          this.drawWorldMap( this.currentData, this.currentOpts );
+          this.$btn.html( 'Show USA Map' );
+        }
+      }.bind( this ) );
+      this.currentMap = '';
+      this.currentOpts = {};
+      this.currentData = null;
+    }
+
+    /** *********************************
+     * Draw World map
      *
-     * @param {String} dom container ID
      * @param {object} data:
         world: [{
             name: 'United States of America',
@@ -87,24 +117,14 @@
           },{
             name: 'MI', ............
           }]
-     * @param {Object} options to override maps config
+     * @param {object} options to override maps config
      */
-    function drawWorldMap(containerID, data, opts) {
+    Drawer.prototype.drawWorldMap = function ( data, opts ) {
 
-      clearMap( containerID );
-      var $el = $(containerID);
-      $el.css({ width: '100%', 'padding-bottom': '55%' });
-
-      var $wrapper = $( '<div></div>' );
-      $el.append( $wrapper );
-      $wrapper.css({ position: 'absolute', top: 0, bottom: 0, left: 0, right: 0 });
-      var $btn = $( '<button style="position:absolute;top:0px;left:0px;" class="btn">Show USA Map</button>' );
-      $el.append( $btn );
-      $btn.on( 'click', function() {
-        drawUSAMap( containerID, data, opts );
-      });
-
+      this.currentData = data;
+      this.currentOpts = opts;
       var conf = getConfig_();
+
       conf.colorAxis.max = data.world.reduce( function( prev, curr ) {
         return curr.value === undefined || curr.id === '--' || curr.value <= prev ? prev : curr.value;
       }, 0 );
@@ -123,32 +143,22 @@
         return _.clone( item );
       });
       conf.series[0].mapData = Highcharts.maps['custom/world-highres'];
+      this.$wrapper.highcharts( 'Map', _.defaultsDeep( {}, ( opts || {} ), conf ) );
+      this.currentMap = 'world';
+    };
 
-      $wrapper.highcharts( 'Map', _.defaultsDeep( ( opts || {} ), conf ) );
-    }
-
-    /**
-     * Draw a us map using given HTML element id
+    /** *********************************
+     * Draw US map
      *
-     * @param {String} container ID
      * @param {object} data - see above drawWorldMap description
+     * @param {object} options to override maps config
      */
-    function drawUSAMap( containerID, data, opts ) {
+    Drawer.prototype.drawUSAMap = function ( data, opts ) {
 
-      clearMap( containerID );
-      var $el = $(containerID);
-      $el.css({ width: '100%', 'padding-bottom': '70%' });
-
-      var $wrapper = $( '<div></div>' );
-      $el.append( $wrapper );
-      $wrapper.css({ position: 'absolute', top: 0, bottom: 0, left: 0, right: 0 });
-      var $btn = $( '<button style="position:absolute;top:0px;left:0px;" class="btn">Show World Map</button>' );
-      $el.append( $btn );
-      $btn.on( 'click', function() {
-        drawWorldMap( containerID, data, opts );
-      });
-
+      this.currentData = data;
+      this.currentOpts = opts;
       var conf = getConfig_();
+
       conf.colorAxis.max = data.usa.reduce( function( prev, curr ) {
         return curr.value === undefined || curr.id === '--' || curr.value <= prev ? prev : curr.value;
       }, 0 );
@@ -157,50 +167,46 @@
       }, conf.colorAxis.max );
 
       conf.colorAxis.type = 'linear';
-      // if ( !data.usa || !data.usa.length || !conf.colorAxis.min ) {
-      //   conf.colorAxis.type = 'linear';
-      // } else {
-      //   conf.colorAxis.type = 'logarithmic';
-      // }
-
       conf.series[0].joinBy = ['postal-code', 'id'];
       conf.series[0].data = data.usa.map( function( item ) {
         return _.clone( item );
       });
       conf.series[0].mapData = Highcharts.maps['countries/us/us-all'];
-      $wrapper.highcharts( 'Map', _.defaultsDeep( ( opts || {} ), conf ) );
-    }
 
-    /**
+      // console.log( opts );
+      // console.log( _.defaultsDeep( ( opts || {} ), conf ) );
+
+      this.$wrapper.highcharts( 'Map', _.defaultsDeep( {}, ( opts || {} ), conf ) );
+      this.currentMap = 'usa';
+    };
+
+    /** *********************************
+     * (re)Draw current map with the new data, world for the first call
+     *
+     * @params  - see above drawWorldMap/drawUSAMap descriptions
+     */
+    Drawer.prototype.drawCurrentMap = function ( data, opts ) {
+
+      if ( this.currentMap === 'usa' ) {
+        this.drawUSAMap( data, opts );
+      } else {
+        this.drawWorldMap( data, opts );
+      }
+    };
+
+    /** *********************************
      * Clear map
      */
-    function clearMap( containerID ) {
-      var $el = $( containerID );
-      var $wrapper = $el.children('div');
-      if ( $wrapper.length ) {
-        $wrapper.highcharts().destroy();
-        $wrapper.remove();
-      }
-      $el.children('button').remove();
-    }
+    // clearMap: function () {
+    //   this.$wrapper.highcharts().destroy();
+    //   this.currentMap = '';
+    // };
 
     //  ---------------------------------
     return {
-
-      /**
-       * @inheritDoc
-       */
-      clearMap: clearMap,
-
-      /**
-       * @inheritDoc
-       */
-      drawUSAMap: drawUSAMap,
-
-      /**
-       * @inheritDoc
-       */
-      drawWorldMap: drawWorldMap
+      create: function( containerID ) {
+        return new Drawer( containerID );
+      }
     };
 
   }

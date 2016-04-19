@@ -327,12 +327,13 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
       $scope.elId = (new Date()).getTime();
       $scope._loading = false;
       $scope._data = false;
+      var drawer = false;
+
       Countries.query().$promise
         .then(function(data) {
           $scope.reload();
           $scope.countries = data;
         });
-
 
       $scope.reload = function() {
         if (!$scope.config.domain) {
@@ -349,9 +350,11 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
         $scope.reloadGBTCountry(filters)
           .then(function( gbt_data ) {
             $scope._data = true;
-            // Redraw maps using received data
-            HeatmapsDrawer.drawWorldMap('#canvas-svg-gbt' + $scope.elId, gbt_data );
-
+            //  (re)draw map using received data
+            if ( !drawer ) {
+              drawer = HeatmapsDrawer.create('#canvas-svg-gbt' + $scope.elId );
+            }
+            drawer.drawCurrentMap( gbt_data, { legend: { symbolWidth: 360 } } );
           }).finally(function() {
             $scope._loading = false;
           });

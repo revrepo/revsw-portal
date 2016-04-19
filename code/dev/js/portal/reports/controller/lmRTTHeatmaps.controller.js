@@ -35,6 +35,8 @@
      * Loading list of country names
      */
     $scope.countries = Countries.query();
+    var drawer = HeatmapsDrawer.create('#canvas-svg');
+
 
     /**
      * Loads list of country hits.
@@ -105,7 +107,7 @@
         .reloadCountry($scope.domain.id)
         .then(function ( lm_rtt_data ) {
           // Redraw a new map using received data
-          HeatmapsDrawer.drawWorldMap('#canvas-svg', lm_rtt_data );
+          drawer.drawCurrentMap( lm_rtt_data );
         });
 
     };

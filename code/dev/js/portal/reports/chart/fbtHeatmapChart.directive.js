@@ -20,6 +20,8 @@
 
         $scope.delay = '24';
         $scope._loading = false;
+        var drawer = HeatmapsDrawer.create('#canvas-svg');
+
 
         $scope.reloadFBTStats = function() {
           if ( !$scope.ngDomain || !$scope.ngDomain.id ) {
@@ -69,7 +71,7 @@
                   };
                 });
               }
-              HeatmapsDrawer.drawWorldMap( '#canvas-svg', {
+              drawer.drawCurrentMap( {
                 world: world,
                 usa: usa
               });
