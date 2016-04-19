@@ -6,7 +6,7 @@
     .controller('CompaniesCrudController', CompaniesCrudController);
 
   /*@ngInject*/
-  function CompaniesCrudController($scope, CRUDController, Companies, BillingPlans, $injector, $stateParams, $config, $state, $anchorScroll) {
+  function CompaniesCrudController($scope, CRUDController, Companies, User, BillingPlans, $injector, $stateParams, $config, $state, $anchorScroll) {
     //Invoking crud actions
     $injector.invoke(CRUDController, this, {
       $scope: $scope,
@@ -89,6 +89,38 @@
         })
         .catch($scope.alertService.danger);
     };
+
+    $scope.onGoToUsageReport = function(model){
+      // NOTE: make data format for using into state 'index.billing.usage'
+      model.acc_id = model.id;
+      model.acc_name = model.companyName;
+      model.plan_id = model.billing_plan;
+      model.billing_plan = model.billing_plan;
+      User.selectAccount(model);
+      $state.go('index.billing.usage')
+    }
+
+    $scope.onGoToBillingPlans = function(model){
+      // NOTE: make data format for using into state 'index.billing.plans'
+      model.acc_id = model.id;
+      model.acc_name = model.companyName;
+      model.plan_id = model.billing_plan;
+      model.billing_plan = model.billing_plan;
+      User.selectAccount(model);
+      $state.go('index.billing.plans')
+    }
+
+    $scope.onGoToBillingStatement = function(model){
+      // NOTE: make data format for using into state 'index.billing.statements'
+      model.acc_id = model.id;
+      model.acc_name = model.companyName;
+      model.plan_id = model.billing_plan;
+      model.billing_plan = model.billing_plan;
+      User.selectAccount(model);
+      $state.go('index.billing.statements')
+    }
+
+
   }
 
 })();
