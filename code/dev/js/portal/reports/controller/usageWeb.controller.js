@@ -101,7 +101,7 @@
               sent_bytes: '0 GB',
               billable_received_bps: '0 Mbps',
               billable_sent_bps: '0 Mbps'
-            }
+            };
           }
         });
       }
