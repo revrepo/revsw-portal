@@ -277,7 +277,8 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
       'ngInject';
       var _defaultConfig = {
         filters: {
-          count_last_hours: '6'
+          count_last_hours: '6',
+          map_type: 'world'
         }
       };
       _.defaultsDeep($scope.config, _defaultConfig);
@@ -319,7 +320,8 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
       'ngInject';
       var _defaultConfig = {
         filters: {
-          count_last_hours: '6'
+          count_last_hours: '6',
+          map_type: 'world'
         }
       };
       _.defaultsDeep($scope.config, _defaultConfig);
@@ -328,6 +330,8 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
       $scope._loading = false;
       $scope._data = false;
       var drawer = false;
+
+      console.log( $scope );
 
       Countries.query().$promise
         .then(function(data) {
@@ -351,10 +355,12 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
           .then(function( gbt_data ) {
             $scope._data = true;
             //  (re)draw map using received data
-            if ( !drawer ) {
-              drawer = HeatmapsDrawer.create('#canvas-svg-gbt' + $scope.elId );
+            drawer = HeatmapsDrawer.create( '#canvas-svg-gbt' + $scope.elId );
+            if ( $scope.config.filters.map_type === 'world' ) {
+              drawer.drawWorldMap( gbt_data, { legend: { symbolWidth: 360 } } );
+            } else {
+              drawer.drawUSAMap( gbt_data, { legend: { symbolWidth: 360 } } );
             }
-            drawer.drawCurrentMap( gbt_data, { legend: { symbolWidth: 360 } } );
           }).finally(function() {
             $scope._loading = false;
           });

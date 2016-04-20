@@ -18,6 +18,7 @@
         flCountries: '=',
         flOperators: '=',
         flNetworks: '=',
+        flDisabled: '=',
         reportType: '@',
         heading: '@'
       },

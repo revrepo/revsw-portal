@@ -18,7 +18,8 @@
         flDevices: '=',
         flCountries: '=',
         flOperators: '=',
-        flNetworks: '='
+        flNetworks: '=',
+        flDisabled: '='
       },
       /*@ngInject*/
       controller: function ($scope) {
