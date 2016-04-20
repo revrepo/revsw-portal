@@ -213,6 +213,19 @@ var AddNewApp = {
   },
 
   /**
+   * ### AddNewApp.isEnabledRegister()
+   *
+   * Checks if Register button is enabled in `Add New App` Page.
+   *
+   * @returns {Promise}
+   */
+  isEnabledRegister: function () {
+    return this
+      .getRegisterBtn()
+      .isEnabled();
+  },
+
+  /**
    * ### AddNewApp.fill(app)
    *
    * Fills on Add New App form of `Add New App` Page.

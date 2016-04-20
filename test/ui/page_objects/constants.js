@@ -31,15 +31,15 @@ var Constants = {
       list: '#/domains',
       new: '#/domains/new'
     },
-    profile: '#/profile'
+    profile: '#/profile',
+    mobileApps: '#/apps/'
   },
   header: {
     appMenu: {
       ACCOUNT_SETTINGS: 'Admin',
       WEB_ANALYTICS: 'Web Analytics',
       HELP_SUPPORT: 'Support',
-      WEB: 'Web',
-      MOBILE_APPS: 'Mobile Apps'
+      WEB: 'Web'
     },
     userMenu: {
       UPDATE_PASSWORD: 'Update Password',
@@ -53,6 +53,12 @@ var Constants = {
       UPDATE_PASSWORD: 'Update Password',
       SECURITY_SETTINGS: 'Security Settings',
       ACTIVITY_LOG: 'Activity Log'
+    },
+    webMobileApps: {
+      MOBILE_APPS: 'Mobile Apps',
+      IOS: 'iOS',
+      ANDROID: 'Android',
+      WINDOWS_MOBILE: 'Windows Mobile'
     },
     web: {
       DOMAINS: 'Domains',

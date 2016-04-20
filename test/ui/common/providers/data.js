@@ -177,6 +177,25 @@ var DataProvider = {
                 '\/images4\/*.png\\n\/images5\/*.png\\n\/images6\/*.png\\n' +
                 '\/images7\/*.png\\n\/images8\/*.png\\n\/images9\/*.png\\n'
     };
+  },
+  generateMobileApps: function () {
+    return [
+      {
+        name: 'MyAppIOS',
+        platform: 'iOS',
+        title: 'iOS Apps List'
+      },
+      {
+        name: 'MyAppAndroid',
+        platform: 'Android',
+        title: 'Android Apps List'
+      }
+      // {
+      //   name: 'MyAppWindowsMobile',
+      //   platform: 'Windows Mobile',
+      //   title: 'Windows Mobile Apps List'
+      // }
+    ];
   }
 };
 

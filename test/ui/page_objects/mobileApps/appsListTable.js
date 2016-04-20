@@ -188,8 +188,7 @@ var AppsListTable = {
   getStagingStatus: function () {
     return this
       .getValueByColumnIndex(0, 5)
-      .all(by.tagName('i'))
-      .get(0);
+      .element(by.css(this.locators.buttons.stagingStatus.css));
   },
 
   /**
@@ -202,8 +201,7 @@ var AppsListTable = {
   getGlobalStatus: function () {
     return this
       .getValueByColumnIndex(0, 5)
-      .all(by.tagName('i'))
-      .get(1);
+      .element(by.css(this.locators.buttons.globalStatus.css));
   },
 
   /**
@@ -216,8 +214,7 @@ var AppsListTable = {
   getEditApp: function () {
     return this
       .getValueByColumnIndex(0, 6)
-      .all(by.tagName('a'))
-      .get(0);
+      .element(by.css(this.locators.buttons.editApp.css));
   },
 
   /**
@@ -230,8 +227,7 @@ var AppsListTable = {
   getAdvancedEditApp: function () {
     return this
       .getValueByColumnIndex(0, 6)
-      .all(by.tagName('a'))
-      .get(1);
+      .element(by.css(this.locators.buttons.advancedEdit.css));
   },
 
   /**
@@ -244,8 +240,7 @@ var AppsListTable = {
   getDeleteApp: function () {
     return this
       .getValueByColumnIndex(0, 6)
-      .all(by.tagName('a'))
-      .get(2);
+      .element(by.css(this.locators.buttons.deleteApp.css));
   },
 
   /**
@@ -258,8 +253,7 @@ var AppsListTable = {
   getStatsApp: function () {
     return this
       .getValueByColumnIndex(0, 6)
-      .all(by.tagName('a'))
-      .get(3);
+      .element(by.css(this.locators.buttons.stats.css));
   },
 
   /**
@@ -272,8 +266,7 @@ var AppsListTable = {
   getPreviousVersion: function () {
     return this
       .getValueByColumnIndex(0, 6)
-      .all(by.tagName('a'))
-      .get(4);
+      .element(by.css(this.locators.buttons.previousVersions.css));
   },
 
   // ## Helper Methods

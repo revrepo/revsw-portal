@@ -202,6 +202,19 @@ var Portal = {
     return this.getPage(Constants.hashFragments.profile);
   },
 
+  /**
+   * ### Portal.getMobileApps()
+   *
+   * Loads the hash fragment for the Mobile Apps page.
+   *
+   * @param {String} appName, name of app like ios, android and wm.
+   *
+   * @returns {Promise}
+   */
+  getMobileApps: function (appName) {
+    return this.getPage(Constants.hashFragments.mobileApps + appName);
+  },
+
   // ## Portal APP navigation Helper methods
 
   /**
@@ -227,6 +240,18 @@ var Portal = {
   goToUsers: function () {
     this.goToAccountSettings();
     return Portal.sideBar.goTo(Constants.sideBar.menu.USERS);
+  },
+
+  /**
+   * ### Portal.goToMobileApps()
+   *
+   * Navigation helper method that executes all steps to navigate to `Mobile
+   * Apps` page.
+   *
+   * @returns {Promise}
+   */
+  goToMobileApps: function () {
+    return Portal.sideBar.goTo(Constants.sideBar.webMobileApps.MOBILE_APPS);
   },
 
   /**
@@ -460,6 +485,61 @@ var Portal = {
         if (initialUrl !== currentUrl) {
           browser.get(initialUrl);
         }
+      });
+    });
+  },
+
+  /**
+   * ### Portal.createMobileApps()
+   *
+   * Helper method that executes all steps required to create
+   * new Mobile Apps from Portal app.
+   *
+   * @param {Object} apps, data applying the schema defined in
+   * `DataProvider.generateMobileApps()`
+   *
+   * @returns {Promise}
+   */
+  createMobileApps: function (apps) {
+    var me = this;
+    browser.getCurrentUrl().then(function (initialUrl) {
+      apps.forEach(function (app) {
+        me.getMobileApps(app.platform.toLowerCase());
+        me.header.goTo(app.platform);
+        me.mobileApps.listPage.addNewApp(app);
+        browser.getCurrentUrl().then(function (currentUrl) {
+          if (initialUrl !== currentUrl) {
+            browser.get(initialUrl);
+          }
+        });
+      });
+    });
+  },
+
+  /**
+   * ### Portal.deleteMobileApps()
+   *
+   * Helper method that executes all steps required to delete
+   * an existing Mobile Apps from Portal app.
+   *
+   * @param {Object} apps, data applying the schema defined in
+   * `DataProvider.generateMobileApps()`
+   *
+   * @returns {Promise}
+   */
+  deleteMobileApps: function (apps) {
+    var me = this;
+    browser.getCurrentUrl().then(function (initialUrl) {
+      apps.forEach(function (app) {
+        me.getMobileApps(app.platform.toLowerCase());
+        me.header.goTo(app.platform);
+        me.mobileApps.listPage.searchAndDelete(app);
+        me.dialog.clickOk();
+        browser.getCurrentUrl().then(function (currentUrl) {
+          if (initialUrl !== currentUrl) {
+            browser.get(initialUrl);
+          }
+        });
       });
     });
   }
