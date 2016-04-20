@@ -214,7 +214,10 @@
                 y: val.count
               });
             });
-            $scope.cacheStatus = newData;
+            if ( newData.length === 2 &&
+                 ( newData[0].y > 0 || newData[1].y > 0 ) ) {
+              $scope.cacheStatus = newData;
+            }
           }
         });
     };
