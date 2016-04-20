@@ -77,11 +77,17 @@
                   info_.destroy();
                   info_ = null;
                 }
+                var rel_hit = 0,
+                  rel_miss = 0;
+                if ( ( miss_ + hit_ ) !== 0 ) {
+                  rel_hit = Math.round( hit_ * 1000 / ( miss_ + hit_ ) ) / 10;
+                  rel_miss = Math.round( miss_ * 1000 / ( miss_ + hit_ ) ) / 10;
+                }
                 info_ = this/*chart*/.renderer
                   .label( 'Cache Hits <span style="font-weight: bold; color: #3c65ac;">' +  Util.formatNumber( hit_ ) +
-                      '</span> Requests, <span style="font-weight: bold; color: #3c65ac;">' + ( Math.round( hit_ * 1000 / ( miss_ + hit_ ) ) / 10 ) +
+                      '</span> Requests, <span style="font-weight: bold; color: #3c65ac;">' + rel_hit +
                       '</span>%<br> Cache Miss <span style="font-weight: bold; color: darkred;">' + Util.formatNumber( miss_ ) +
-                      '</span> Requests, <span style="font-weight: bold; color: darkred;">' + ( Math.round( miss_ * 1000 / ( miss_ + hit_ ) ) / 10 ) +
+                      '</span> Requests, <span style="font-weight: bold; color: darkred;">' + rel_miss +
                       '</span>%',
                       this.xAxis[0].toPixels( 0 ), 3, '', 0, 0, true/*html*/ )
                   .css({ color: '#444' })

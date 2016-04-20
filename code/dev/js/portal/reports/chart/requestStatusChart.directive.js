@@ -54,11 +54,17 @@
                   info_.destroy();
                   info_ = null;
                 }
+                var rel_success = 0,
+                  rel_failure = 0;
+                if ( ( failure_ + success_ ) !== 0 ) {
+                  rel_success = Math.round( success_ * 1000 / ( failure_ + success_ ) ) / 10;
+                  rel_failure = Math.round( failure_ * 1000 / ( failure_ + success_ ) ) / 10;
+                }
                 info_ = this/*chart*/.renderer
                   .label( 'Successful <span style="font-weight: bold; color: #3c65ac;">' +  Util.formatNumber( success_ ) +
-                      '</span> Requests, <span style="font-weight: bold; color: #3c65ac;">' + ( Math.round( success_ * 1000 / ( failure_ + success_ ) ) / 10 ) +
+                      '</span> Requests, <span style="font-weight: bold; color: #3c65ac;">' + rel_success +
                       '</span>%<br> Failed <span style="font-weight: bold; color: darkred;">' + Util.formatNumber( failure_ ) +
-                      '</span> Requests, <span style="font-weight: bold; color: darkred;">' + ( Math.round( failure_ * 1000 / ( failure_ + success_ ) ) / 10 ) +
+                      '</span> Requests, <span style="font-weight: bold; color: darkred;">' + rel_failure +
                       '</span>%',
                       this.xAxis[0].toPixels( 0 ), 3, '', 0, 0, true/*html*/ )
                   .css({ color: '#444' })
