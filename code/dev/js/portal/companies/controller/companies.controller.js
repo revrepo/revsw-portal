@@ -32,10 +32,12 @@
             return BillingPlans.query().$promise;
 
           })
-          .then(function (res) {
-            $scope.records = $scope.records.map(function (r) {
-              var idx = _.findIndex(res, {id: r.billing_plan});
-              if(idx > 0){
+          .then(function(res) {
+            $scope.records = $scope.records.map(function(r) {
+              var idx = _.findIndex(res, {
+                id: r.billing_plan
+              });
+              if (idx >= 0) {
                 r.subscription_name = res[idx].name;
                 return r;
               }
@@ -90,7 +92,7 @@
         .catch($scope.alertService.danger);
     };
 
-    $scope.onGoToUsageReport = function(model){
+    $scope.onGoToUsageReport = function(model) {
       // NOTE: make data format for using into state 'index.billing.usage'
       model.acc_id = model.id;
       model.acc_name = model.companyName;
@@ -100,7 +102,7 @@
       $state.go('index.billing.usage');
     };
 
-    $scope.onGoToBillingPlans = function(model){
+    $scope.onGoToBillingPlans = function(model) {
       // NOTE: make data format for using into state 'index.billing.plans'
       model.acc_id = model.id;
       model.acc_name = model.companyName;
@@ -110,7 +112,7 @@
       $state.go('index.billing.plans');
     };
 
-    $scope.onGoToBillingStatement = function(model){
+    $scope.onGoToBillingStatement = function(model) {
       // NOTE: make data format for using into state 'index.billing.statements'
       model.acc_id = model.id;
       model.acc_name = model.companyName;
