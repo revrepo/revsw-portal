@@ -3,14 +3,41 @@
     <h3 class="modal-title">Confirm</h3>
   </div>
   <div class="modal-body">
-    Are you sure you want to change billing plan to
-    <strong>{{model.name}}</strong>?
+      Are you sure you want to change billing plan to
+      <strong>{{model.name}}</strong>?
   </div>
   <div class="modal-footer">
     <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
     <button class="btn btn-danger" type="button" ng-click="ok()">OK</button>
   </div>
 </script>
+
+<script type="text/ng-template" id="confirmModalUpgrade.html">
+  <div class="modal-header">
+    <h3 class="modal-title">Confirm</h3>
+  </div>
+  <div class="modal-body">
+    <p>Changing billing plan will have the following effects:
+      <br>
+      <ul>
+        <li>A prorated credit of approximately  <strong>{{model.migration.prorated_adjustment_in_cents| AbsUnit| MonetaryUnit|currency}}</strong> will be applied for the current billing plan</li>
+        <li>The pro-rated credit for prior period charges will include any line-item charges from that period</li>
+        <li>A charge for the full amount of the new billing plan will be applied</li>
+        <li>A charge for the full amount of all line-item charges will be applied. All metered line-items (traffic, requests) will be reset to zero.</li>
+        <li>The billing period start date will be reset to today's date</li>
+      </ul>
+    </p>
+    <p class="text-center">
+      Are you sure you want to change billing plan to
+      <strong>{{model.plan.name}}</strong>?
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+    <button class="btn btn-danger" type="button" ng-click="ok()">OK</button>
+  </div>
+</script>
+
 <div class="container-fluid" ui-view="page">
   <div class="row">
     <div class="col-sm-12">
@@ -46,7 +73,7 @@
             </div>
           </div>
         </div>
-     <!--  <div class="panel-body">
+        <!--  <div class="panel-body">
             <table class="table">
             <thead>
               <tr>
@@ -94,16 +121,16 @@
                   <h1 class=""><span class="billing-plan-ammount">${{item.monthly_fee}}</span>/mon</h1>
                 </div>
                 <div class="billing-plan-details">
-                  <div>{{item.description}}</div>
+                  <div class="billing-plan-description">{{item.description}}</div>
                   <h4>Overage Charges</h4>
                   <div class="billing-plan-services" ng-repeat="service in item.services">
-                    <div>${{service.cost}} per {{service.measurement_unit}}</div>
+                    <div>${{service.cost | number:2}} per {{service.measurement_unit}}</div>
                   </div>
                 </div>
                 <hr>
                 <footer class="billing-plan-action">
-                <!--   <button href="" ng-click="chooseBillingPlan(item)" class="btn btn-success btn-lg">Subscribe</button> -->
-                <button ng-disabled="_loading" ng-show="item.id !== account.plan_id" ng-click="chooseBillingPlan(item, account)" class="btn btn-success btn-lg">
+                  <!--   <button href="" ng-click="chooseBillingPlan(item)" class="btn btn-success btn-lg">Subscribe</button> -->
+                  <button ng-disabled="_loading" ng-show="item.id !== account.plan_id" ng-click="chooseBillingPlan(item, account)" class="btn btn-success btn-lg">
                     <i class="glyphicon glyphicon-refresh spin" ng-if="_loading"></i> Subscribe
                   </button>
                   <button ng-show="item.id === account.plan_id" ng-click="chooseBillingPlan(item.id, account)" class="btn btn-success btn-lg" disabled>

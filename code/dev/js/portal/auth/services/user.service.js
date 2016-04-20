@@ -316,8 +316,9 @@
         }
         // Update auth headers
         //addAuthHeaderForAPI(user.email, newPassword);
-        login(user.email, newPassword);
-        return data;
+        return login(user.email, newPassword).then(function(){
+           return data;
+        });
       });
     }
 

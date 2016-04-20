@@ -67,9 +67,13 @@
                 <a href="" ng-click="order('companyName')">Company Name</a>
                 <span class="sortorder" ng-show="filter.predicate === 'companyName'" ng-class="{reverse: filter.reverse}"></span>
               </th>
-              <th class="col-lg-4">
+              <!-- <th class="col-lg-4">
                 <a href="" ng-click="order('comment')">Comment</a>
                 <span class="sortorder" ng-show="filter.predicate === 'comment'" ng-class="{reverse: filter.reverse}"></span>
+              </th> -->
+              <th class="col-lg-1">
+                <a href="" ng-click="order('created_at')">Created At</a>
+                <span class="sortorder" ng-show="filter.predicate === 'created_at'" ng-class="{reverse: filter.reverse}"></span>
               </th>
               <th class="col-lg-2">
                 <a href="" ng-click="order('createdBy')">Created By</a>
@@ -98,13 +102,23 @@
                   {{item.companyName}}
                 </a>
               </td>
-              <td>{{item.comment}}</td>
+              <!-- <td>{{item.comment}}</td> -->
+              <td>{{getRelativeDate(item.created_at)}}</td>
               <td>{{item.createdBy}}</td>
               <td>{{item.subscription_state}}</td>
               <td>{{(item.subscription_name) ? item.subscription_name : 'Manual'}}</td>
               <td>{{getRelativeDate(item.updated_at)}}</td>
               <td class="actions text-right">
                 <i class="glyphicon glyphicon-refresh spin" ng-if="item.loading"></i>
+                <a ng-click="onGoToUsageReport(item)"  uisref="index.billing.usage({acc_id: item.id})" ng-if="!item.loading" tooltip="Usage Report">
+                  <i class="fa fa-balance-scale"></i>
+                </a>
+                <a ng-click="onGoToBillingPlans(item)"  ng-if="!item.loading" tooltip="Change Billing Plan">
+                  <i class="fa fa-arrow-circle-up"></i>
+                </a>
+                <a ng-click="onGoToBillingStatement(item)" ng-if="!item.loading" tooltip="Statements">
+                  <i class="fa fa-money"></i>
+                </a>
                 <a ui-sref=".edit({id: item.id})" ng-if="!item.loading" tooltip="Edit Company">
                   <i class="glyphicon glyphicon-pencil"></i>
                 </a>

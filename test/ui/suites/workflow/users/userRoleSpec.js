@@ -29,7 +29,7 @@ describe('Workflow', function () {
 
     it('should be able to sign-in once it is created by a reseller user',
       function () {
-        var joe = DataProvider.generateUser('Joe');
+        var joe = DataProvider.generateUser('Joe', null, resellerUser);
         // Create user
         Portal.signIn(resellerUser);
         Portal.createUser(joe);

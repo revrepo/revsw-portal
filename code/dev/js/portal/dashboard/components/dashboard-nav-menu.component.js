@@ -28,15 +28,18 @@
         '      ui-sref-active="active" class="side-menu-sub-item" ui-sref="index.dashboard.details({dashboardId:dash.id})">{{dash.title}}</a>' +
         '</li>',
       scope: false,
-      controller: function($scope, $state, $uibModal, DashboardSrv, dashboard) {
+      controller: function($scope, $state, $uibModal, User, DashboardSrv, dashboard) {
         'igInject';
         var vm = this;
 
         this.dashboardsList = DashboardSrv.dashboardsList;
         this.structures = dashboard.structures;
-        DashboardSrv.getAll().then(function() {
+        if(User.isAuthed()) {
+          DashboardSrv.getAll().then(function() {
 
-        });
+          });
+        }
+
 
         // TODO: change structure
         this.changeStructure = function(name, structure) {

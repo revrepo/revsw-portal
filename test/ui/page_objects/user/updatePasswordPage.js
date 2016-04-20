@@ -39,7 +39,7 @@ var UpdatePassword = {
     },
     buttons: {
       updatePassword: {
-        css: 'button.btn-success .glyphicon-ok'
+        css: '.btn-success'
       },
       backToList: {
         linkText: 'Back'

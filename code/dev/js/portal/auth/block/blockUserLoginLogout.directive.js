@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
 
   angular
@@ -21,6 +21,10 @@
           User.logout();
           $state.go('login');
         };
+
+        $scope.$watch(User.getUser, function(newVal, oldVal) {
+          $scope.user = newVal;
+        });
       }
     };
   }

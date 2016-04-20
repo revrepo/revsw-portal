@@ -8,6 +8,7 @@
   <title>RevAPM Customer Portal</title>
 
   <!-- Bootstrap -->
+  <link href="bower_components/PACE/themes/orange/pace-theme-minimal.css" rel="stylesheet">
   <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="bower_components/jsoneditor/dist/jsoneditor.css" rel="stylesheet">
   <link href="bower_components/angular-chart.js/dist/angular-chart.min.css" rel="stylesheet">
@@ -43,6 +44,23 @@
 <alert-list></alert-list>
 <div ui-view="layout" class="layout"></div>
 
+<script type="text/javascript" src="bower_components/PACE/pace.js"></script>
+<!--<link href="bower_components/PACE/themes/red/pace-theme-minimal.css" rel="stylesheet">-->
+<script>
+  paceOptions = {
+    ajax: {
+      trackMethods: ['GET', 'POST'],
+      trackWebSockets: false,
+      ignoreURLs : ['/config_status/']
+    }, // disabled
+    document: true, // disabled
+    eventLag: false, // disabled
+    elements: {
+      selectors: ['.my-page']
+    }
+  };
+</script>
+
 
 <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
 <script type="text/javascript" src="bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
@@ -51,11 +69,16 @@
 <script type="text/javascript" src="bower_components/jsoneditor/dist/jsoneditor.min.js"></script>
 <script type="text/javascript" src="bower_components/Chart.js/Chart.js"></script>
 <script type="text/javascript" src="bower_components/moment/min/moment.min.js"></script>
+
 <script type="text/javascript" src="bower_components/highcharts/highcharts.js"></script>
+<script type="text/javascript" src="bower_components/highcharts/modules/map.js"></script>
+<!-- <script type="text/javascript" src="bower_components/highcharts/highmaps.js"></script> -->
 <script type="text/javascript" src="bower_components/highcharts/highcharts-3d.js"></script>
 <script type="text/javascript" src="bower_components/highcharts/highcharts-more.js"></script>
 <script type="text/javascript" src="bower_components/highcharts/modules/exporting.js"></script>
 <script type="text/javascript" src="bower_components/highcharts-export-csv/export-csv.js"></script>
+<!-- <script type="text/javascript" src="bower_components/highcharts/modules/data.js"></script> -->
+
 <script type="text/javascript" src="bower_components/d3/d3.min.js"></script>
 <script type="text/javascript" src="bower_components/topojson/topojson.js"></script>
 
@@ -68,7 +91,6 @@
 <script type="text/javascript" src='bower_components/Sortable/Sortable.min.js'></script>
 <script type="text/javascript" src='bower_components/Sortable/ng-sortable.js'></script>
 <script type="text/javascript" src='bower_components/angular-dashboard-framework/dist/angular-dashboard-framework.min.js'></script>
-
 
 <script type="text/javascript" src="bower_components/ngstorage/ngStorage.min.js"></script>
 <script type="text/javascript" src="bower_components/angular-base64/angular-base64.min.js"></script>
@@ -94,6 +116,9 @@
 <script type="text/javascript" src="bower_components/angular-bootstrap-toggle-switch/angular-toggle-switch.js"></script>
 <script type="text/javascript" src="bower_components/angular-clipboard/angular-clipboard.js"></script>
 
+<!-- maps -->
+<script type="text/javascript" src="js/heatmaps/highmap.us.js"></script>
+<script type="text/javascript" src="js/heatmaps/highmap.world.js"></script>
 
 <script src="config.js"></script>
 

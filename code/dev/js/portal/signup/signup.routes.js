@@ -10,7 +10,7 @@
     $urlRouterProvider.when('/signup', '/signup/plans');
     $stateProvider
       .state('signup', {
-        abstract: true,
+        abstract: false,
         url: '/signup',
         views: {
           layout: {
@@ -39,44 +39,8 @@
           }
         }
       })
-      // step 2 - enter contact information
-      // NOTE:
-      // .state('contact_info', {
-      //   url: '/signup/:billing_plan',
-      //   views: {
-      //     layout: {
-      //       controller: 'SignupController',
-      //       templateUrl: 'parts/signup/signup.html'
-      //     },
-      //     params: {
-      //       'billing_plan': null
-      //     }
-      //   }
-      // })
-
-    // .state('signup', {
-    //     url: '/signup/contact_info',
-    //     views: {
-    //       layout: {
-    //         controller: 'SignupController',
-    //         templateUrl: 'parts/signup/signup.html'
-    //       },
-    //       params: {
-    //         'billing_plan': null
-    //       }
-    //     }
-    //   })
-    // .state('billing_plans', {
-    //   url: '/signup/billing_plans',
-    //   views: {
-    //     layout: {
-    //       controller: 'SignupController',
-    //       templateUrl: 'parts/signup/billing_plans.html'
-    //     }
-    //   }
-    // })
-    // step 3 - inform user about success registration and show information about waiting email
-    .state('success', {
+      // step 3 - inform user about success registration and show information about waiting email
+      .state('success', {
         url: '/signup/success',
         views: {
           layout: {

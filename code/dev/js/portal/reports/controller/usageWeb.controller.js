@@ -51,12 +51,12 @@
     var subFormat_ = function( data ) {
       if ( data.count !== undefined ) {
         data.count = Util.formatNumber( data.count );
-        data.received_bytes = Util.humanFileSizeInGB( data.received_bytes );
-        data.sent_bytes = Util.humanFileSizeInGB( data.sent_bytes );
+        data.received_bytes = Util.humanFileSizeInGB( data.received_bytes, 3 );
+        data.sent_bytes = Util.humanFileSizeInGB( data.sent_bytes, 3 );
       }
       if ( data.billable_received_bps !== undefined ) {
-        data.billable_received_bps = Util.convertTraffic( data.billable_received_bps );
-        data.billable_sent_bps = Util.convertTraffic( data.billable_sent_bps );
+        data.billable_received_bps = Util.convertTrafficMbps( data.billable_received_bps, 3 );
+        data.billable_sent_bps = Util.convertTrafficMbps( data.billable_sent_bps, 3 );
       }
       if ( data.cache_hits !== undefined ) {
         data.cache_hits.MISS = Util.formatNumber( data.cache_hits.MISS );
@@ -72,6 +72,7 @@
       for ( var zone in data.traffic_per_billing_zone ) {
         subFormat_( data.traffic_per_billing_zone[zone] );
       }
+
       for ( var d in data.domains_usage ) {
         var dmn = data.domains_usage[d];
         subFormat_( dmn );
@@ -79,13 +80,30 @@
           subFormat_( dmn.traffic_per_billing_zone[t] );
         }
       }
+
       if ( data.traffic ) {
         subFormat_( data.traffic );
       }
+
       if ( data.accounts ) {
         for ( var i = 0, len = data.accounts.length; i < len; ++i ) {
           subFormat_( data.accounts[i] );
         }
+      }
+
+      if ( data.domains_usage !== undefined &&
+           data.domains.list ) {
+        data.domains.list.forEach( function( domain ) {
+          if ( !data.domains_usage[domain] ) {
+            data.domains_usage[domain] = {
+              count: '0',
+              received_bytes: '0 GB',
+              sent_bytes: '0 GB',
+              billable_received_bps: '0 Mbps',
+              billable_sent_bps: '0 Mbps'
+            };
+          }
+        });
       }
     };
 

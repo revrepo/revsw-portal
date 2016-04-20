@@ -26,8 +26,7 @@ describe('Smoke', function () {
   var users = [
     config.get('portal.users.admin'),
     config.get('portal.users.reseller'),
-//    config.get('portal.users.revAdmin') // TODO: need to fix the user creation process
-// for revadmin role
+    config.get('portal.users.revAdmin') 
   ];
 
   users.forEach(function (user) {
@@ -72,7 +71,7 @@ describe('Smoke', function () {
         });
 
         it('should update user when filling all required data', function () {
-          var joe = DataProvider.generateUser('Joe');
+          var joe = DataProvider.generateUser('Joe', null, user);
           Portal.createUser(joe);
           // Edit user name and last name
           Portal.userListPage.searcher.setSearchCriteria(joe.email);

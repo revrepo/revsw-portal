@@ -9,6 +9,27 @@
   function UtilFactory() {
 
     /**
+     * Shorten int value and add suffix G, M or K
+     *
+     * @param {number} val
+     * @param {string} forced suffix
+     * @returns {string} ( 0.00K or 9.99G or 9.99M )
+     */
+    function convertValue( val, suffix ) {
+      if (val > 1000000000 || suffix === 'G') {
+        return Math.round(val / 10000000) / 100 + 'G';
+      }
+      if (val > 1000000 || suffix === 'M') {
+        return Math.round(val / 10000) / 100 + 'M';
+      }
+      if (val > 1000 || suffix === 'K') {
+        return Math.round(val / 10 ) / 100 + 'K';
+      }
+
+      return val;
+    }
+
+    /**
      * Convert trafic value to Kbps, Mbps, Gbps, Tbps
      *
      * @param {number} bps
@@ -27,6 +48,19 @@
       return result || '';
     }
 
+    /**
+     * Convert trafic value Mbps, forcibly
+     *
+     * @param {number} bps
+     * @param {number} precision
+     * @returns {string}
+     */
+    function convertTrafficMbps(bps, pr) {
+      if (!bps || bps < 1) {
+        return '0 Mbps';
+      }
+      return ( bps / (1024 * 1024) ).toFixed((pr||2)) + ' Mbps';
+    }
     /**
      * 1234567890.456 --> 1'234'567'890.456
      * 1234567890.456 --> 1'234'567'890.5 when fixed == 1
@@ -51,7 +85,7 @@
     }
 
     /**
-     * same as above, fixed to GB
+     * same as above, forced to GB
      * @returns {string}
      */
     function humanFileSizeInGB(size, pr) {
@@ -66,7 +100,17 @@
       /**
        * @inheritDoc
        */
+      convertValue: convertValue,
+
+      /**
+       * @inheritDoc
+       */
       convertTraffic: convertTraffic,
+
+      /**
+       * @inheritDoc
+       */
+      convertTrafficMbps: convertTrafficMbps,
 
       /**
        * @inheritDoc

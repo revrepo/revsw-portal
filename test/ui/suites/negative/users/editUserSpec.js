@@ -48,45 +48,34 @@ describe('Negative', function () {
     });
 
     it('should not allow to edit the user\'s email', function () {
+      Portal.getUsersPage();
       Portal.userListPage.searchAndClickEdit(carl.email);
       var emailField = Portal.editUserPage.userForm.getEmailTxtIn();
-      expect(emailField.isEnabled()).not.toBeTruthy();
+      expect(emailField.isEnabled()).toBeFalsy();
     });
 
-    it('should display an error message when trying to edit user without ' +
-      '"First Name"',
+    it('should not allow to update a user without "First Name"',
       function () {
         Portal.userListPage.searchAndClickEdit(carl.email);
         Portal.editUserPage.userForm.clearFirstName();
-        Portal.editUserPage.clickUpdateUser();
-        var alert = Portal.alerts.getFirst();
-        var expectedMessage = 'child "firstname" fails because ["firstname" ' +
-          'is not allowed to be empty]';
-        expect(alert.getText()).toEqual(expectedMessage);
+        var addBtn = Portal.editUserPage.getUpdateUserBtn();
+        expect(addBtn.isEnabled()).toBeFalsy();
       });
 
-    it('should display an error message when trying to edit user without ' +
-      '"Last Name"',
+    it('should not allow to update a user without "Last Name"',
       function () {
         Portal.userListPage.searchAndClickEdit(carl.email);
         Portal.editUserPage.userForm.clearLastName();
-        Portal.editUserPage.clickUpdateUser();
-        var alert = Portal.alerts.getFirst();
-        var expectedMessage = 'child "lastname" fails because ["lastname" ' +
-          'is not allowed to be empty]';
-        expect(alert.getText()).toEqual(expectedMessage);
+        var addBtn = Portal.editUserPage.getUpdateUserBtn();
+        expect(addBtn.isEnabled()).toBeFalsy();
       });
 
-    it('should display an error message when trying to edit user without ' +
-      '"Role"',
+    it('should not allow to update a user without role',
       function () {
         Portal.userListPage.searchAndClickEdit(carl.email);
         Portal.editUserPage.userForm.setRole('--- Select Role ---');
-        Portal.editUserPage.clickUpdateUser();
-        var alert = Portal.alerts.getFirst();
-        var expectedMessage = 'child "role" fails because ["role" must be ' +
-          'a string]';
-        expect(alert.getText()).toEqual(expectedMessage);
+        var addBtn = Portal.editUserPage.getUpdateUserBtn();
+        expect(addBtn.isEnabled()).toBeFalsy();
       });
   });
 });
