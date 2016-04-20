@@ -149,10 +149,10 @@
        * @return {[type]}        [description]
        */
       function validateDomainProperties(domain) {
-        $scope.modelAdvance = {'loading':'Please wait few seconds...'};
+        // $scope.modelAdvance = {'loading':'Please wait few seconds...'};
         $timeout(function(){
               $scope.modelAdvance = angular.copy($scope.prepareSimpleDomainUpdate(domain));
-        },3000);
+        },2000);
 
         var _domain_default_property = {
           proxy_timeout: 20,
