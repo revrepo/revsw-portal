@@ -42,7 +42,7 @@
             var newData = [];
             angular.forEach(data.data, function (val) {
               newData.push({
-                name: val.key,
+                name: ( val.key !== '--' ? val.key : 'Unknown' ),
                 y: val.count
               });
             });
@@ -65,7 +65,7 @@
             var newData = [];
             angular.forEach(data.data, function (val) {
               newData.push({
-                name: val.key,
+                name: ( val.key !== '--' ? val.key : 'Unknown' ),
                 y: val.count
               });
             });
@@ -284,7 +284,7 @@
           if (data.data && data.data.length > 0) {
             var newData = [];
             angular.forEach(data.data, function (val) {
-              var name = $scope.countries[val.key.toUpperCase()] || val.key;
+              var name = $scope.countries[val.key.toUpperCase()] || 'Unknown';
               newData.push({
                 name: name,
                 y: val.count
