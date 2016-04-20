@@ -5,6 +5,10 @@
         <col class="col-sm-3">
       </colgroup>
       <tr>
+        <td>Current Billing Plan</td>
+        <td>{{subscription.product_name}}</td>
+      </tr>
+      <tr>
         <td>Total Payments</td>
         <td>{{subscription.total_revenue_in_cents |MonetaryUnit| currency}}</td>
       </tr>
@@ -18,14 +22,14 @@
       </tr>
       <tr>
         <td>Next Billing</td>
-        <td>{{subscription.product_price_in_cents| MonetaryUnit| currency }} on {{subscription.next_assessment_at | date }} </td>
+        <td>{{subscription.current_billing_amount_in_cents | MonetaryUnit| currency }} on {{subscription.next_assessment_at | date }} </td>
       </tr>
       <tr>
         <td>Status </td>
         <td>{{subscription.state | firstUpper}}</td>
       </tr>
       <tr>
-        <td>Activated At</td>
+        <td>Activated On</td>
         <td>{{subscription.activated_at | date }}</td>
       </tr>
     </table>
@@ -48,13 +52,16 @@
         <td>{{subscription.credit_card.masked_card_number}}</td>
       </tr>
       <tr>
-        <td>Expiration</td>
-        <td>{{subscription.credit_card.expiration_month}} / {{subscription.credit_card.expiration_year}}</td>
+        <td>Card Exp. Date</td>
+        <td>{{subscription.credit_card.expiration_month}}/{{subscription.credit_card.expiration_year}}</td>
       </tr>
+      <!-- TODO: For subscription.credit_card.card_type need to translate credit card code names to public names 
+        like 'Visa', 'Master Card', 'AMEX', etc
       <tr>
         <td>Card Type </td>
         <td>{{subscription.credit_card.card_type | uppercase}}</td>
       </tr>
+      -->
       <!--     <tr>
         <td>Activated At</td>
         <td>{{subscription.activated_at | date }}</td>

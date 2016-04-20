@@ -101,10 +101,16 @@
             angular.forEach(data.data, function (item) {
               newData.push({
                 name: item.key,
-                y: ( type === 'gbt' ? item.received_bytes : item.count )
+                y: ( type === 'gbt' ? (item.received_bytes + item.sent_bytes) : item.count )
               });
             });
             $scope[name + '_' + type] = newData;
+
+            // debug
+            // if ( type === 'gbt' && name === 'domain' ) {
+            //   debugger;
+            // }
+            // debug
           }
         });
     };
