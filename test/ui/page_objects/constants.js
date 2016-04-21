@@ -54,7 +54,7 @@ var Constants = {
       SECURITY_SETTINGS: 'Security Settings',
       ACTIVITY_LOG: 'Activity Log'
     },
-    webMobileApps: {
+    mobileApps: {
       MOBILE_APPS: 'Mobile Apps',
       IOS: 'iOS',
       ANDROID: 'Android',
@@ -76,6 +76,10 @@ var Constants = {
       SECURITY_SETTINGS: 'Security Settings',
       API_KEYS: 'API Keys',
       ACTIVITY_LOG: 'Activity Log'
+    },
+    billing: {
+      BILLING: 'Billing',
+      USAGE_REPORT: 'Usage Report'
     },
     helpSupport: {
       CUSTOMER_SUPPORT: 'Open Ticket',

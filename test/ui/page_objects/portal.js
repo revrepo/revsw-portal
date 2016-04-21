@@ -60,6 +60,7 @@ var AppsListPage = require('./mobileApps/appsListPage');
 var AddNewAppPage = require('./mobileApps/addNewAppPage');
 var EditAppPage = require('./mobileApps/editAppPage');
 var EditAdvancedModePage = require('./mobileApps/editAppAdvancedModePage');
+var UsageReportPage = require('./billing/usageReportPage');
 
 // This `Portal` Page Object is the entry point to use all other Page Objects
 // that abstract all components from the Portal App.
@@ -108,6 +109,9 @@ var Portal = {
     addAppPage: AddNewAppPage,
     editAppPage: EditAppPage,
     editAppAdvancedModePage: EditAdvancedModePage
+  },
+  billing: {
+    usageReportPage: UsageReportPage
   },
 
   // ## Authentication Helper methods
@@ -251,7 +255,19 @@ var Portal = {
    * @returns {Promise}
    */
   goToMobileApps: function () {
-    return Portal.sideBar.goTo(Constants.sideBar.webMobileApps.MOBILE_APPS);
+    return Portal.sideBar.goTo(Constants.sideBar.mobileApps.MOBILE_APPS);
+  },
+
+  /**
+   * ### Portal.goToBilling()
+   *
+   * Navigation helper method that executes all steps to navigate to `Billing`
+   * page.
+   *
+   * @returns {Promise}
+   */
+  goToBilling: function () {
+    return Portal.sideBar.goTo(Constants.sideBar.billing.BILLING);
   },
 
   /**

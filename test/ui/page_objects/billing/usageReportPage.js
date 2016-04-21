@@ -41,7 +41,7 @@ var UsageReport = {
     },
     inputs: {
       companySearch: {
-        model: '[ng-model=\"$select.search\"]'
+        model: '$select.search'
       }
     },
     dropDowns: {
@@ -116,7 +116,7 @@ var UsageReport = {
    * @returns {Promise}
    */
   getCompanyNameDDown: function () {
-    return element(by.id(this.locators.dropDowns.dropDowns.companyName));
+    return element(by.css(this.locators.dropDowns.companyName.css));
   },
 
   /**
@@ -156,7 +156,7 @@ var UsageReport = {
   },
 
   /**
-   * ### UsageReport.getDomainsForm()
+   * ### UsageReport.getForm()
    *
    * Gets the reference to `Domains` form element.
    *
@@ -183,7 +183,7 @@ var UsageReport = {
    * @returns {Promise}
    */
   getDomainsForm: function () {
-    return this.getForm(0, 0);
+    return this.getForm(0, 0).getText();
   },
 
   /**
@@ -194,7 +194,7 @@ var UsageReport = {
    * @returns {Promise}
    */
   getMobileAppsForm: function () {
-    return this.getForm(0, 1);
+    return this.getForm(0, 1).getText();
   },
 
   /**
@@ -205,7 +205,7 @@ var UsageReport = {
    * @returns {Promise}
    */
   getApiKeysForm: function () {
-    return this.getForm(0, 2);
+    return this.getForm(0, 2).getText();
   },
 
   /**
@@ -216,7 +216,7 @@ var UsageReport = {
    * @returns {Promise}
    */
   getTotalTrafficForm: function () {
-    return this.getForm(1, 0);
+    return this.getForm(1, 0).getText();
   },
 
   /**
@@ -227,7 +227,7 @@ var UsageReport = {
    * @returns {Promise}
    */
   getEdgeCacheUsageForm: function () {
-    return this.getForm(1, 1);
+    return this.getForm(1, 1).getText();
   },
 
   /**
@@ -238,7 +238,7 @@ var UsageReport = {
    * @returns {Promise}
    */
   getHTTPHTTPSRequestsForm: function () {
-    return this.getForm(1, 2);
+    return this.getForm(1, 2).getText();
   },
 
   // ## Helper Methods
@@ -267,7 +267,10 @@ var UsageReport = {
    */
   setCompanyName: function (value) {
     this.getCompanyNameDDown().click();
-    return this.getCompanySearchTxt().sendKeys(value);
+    this.getCompanySearchTxt().sendKeys(value);
+    return this
+      .getCompanySearchTxt()
+      .sendKeys(protractor.Key.ENTER);
   },
 
   /**
@@ -280,7 +283,10 @@ var UsageReport = {
    * @returns {Promise}
    */
   setMonthDD: function (value) {
-    return this.getMonthDDTxt().sendKeys(value);
+    this.getMonthDDTxt().clear();
+    return this
+      .getMonthDDTxt()
+      .sendKeys(value);
   },
 
   /**
@@ -297,15 +303,15 @@ var UsageReport = {
   },
 
   /**
-   * ### UsageReport.isEnabledRegister()
+   * ### UsageReport.isEnabledUpdateReport()
    *
-   * Checks if Register button is enabled in `Add New App` Page.
+   * Checks if Update Report button is enabled in `Usage Report` Page.
    *
    * @returns {Promise}
    */
-  isEnabledRegister: function () {
+  isEnabledUpdateReport: function () {
     return this
-      .getRegisterBtn()
+      .getUpdateReportBtn()
       .isEnabled();
   },
 
@@ -324,7 +330,22 @@ var UsageReport = {
    */
   fill: function (data) {
     this.setCompanyName(data.companyName);
-    this.setMonthDD(data.monthDD);
+    return this.setMonthDD(data.monthDD);
+  },
+
+  /**
+   * ### UsageReport.updateReport()
+   *
+   * Fills data in Company and Date and click on Update Report button in
+   * the `Usage Report` Page.
+   *
+   * @param {object} data, data with schema defined in fill method.
+   *
+   * @returns {Promise}
+   */
+  updateReport: function (data) {
+    this.fill(data);
+    return this.clickUpdateReport();
   }
 };
 

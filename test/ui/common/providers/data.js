@@ -196,6 +196,12 @@ var DataProvider = {
       //   title: 'Windows Mobile Apps List'
       // }
     ];
+  },
+  generateUsageReportData: function () {
+    return {
+      companyName: 'QA API Company',
+      monthDD: '2016-01'
+    };
   }
 };
 
