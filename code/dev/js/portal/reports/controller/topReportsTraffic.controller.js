@@ -42,7 +42,7 @@
             var newData = [];
             angular.forEach(data.data, function (val) {
               newData.push({
-                name: val.key,
+                name: ( val.key !== '--' ? val.key : 'Unknown' ),
                 y: val.count
               });
             });
@@ -65,7 +65,7 @@
             var newData = [];
             angular.forEach(data.data, function (val) {
               newData.push({
-                name: val.key,
+                name: ( val.key !== '--' ? val.key : 'Unknown' ),
                 y: val.count
               });
             });
@@ -214,7 +214,10 @@
                 y: val.count
               });
             });
-            $scope.cacheStatus = newData;
+            if ( newData.length === 2 &&
+                 ( newData[0].y > 0 || newData[1].y > 0 ) ) {
+              $scope.cacheStatus = newData;
+            }
           }
         });
     };
@@ -281,7 +284,7 @@
           if (data.data && data.data.length > 0) {
             var newData = [];
             angular.forEach(data.data, function (val) {
-              var name = $scope.countries[val.key.toUpperCase()] || val.key;
+              var name = $scope.countries[val.key.toUpperCase()] || 'Unknown';
               newData.push({
                 name: name,
                 y: val.count

@@ -1,15 +1,8 @@
 <div class="row"  ng-init="initEdit(params.id)">
   <div class="col-sm-12">
     <h2 class="pull-left page-title">
-      Edit App
+      Edit App <strong ng-if="model.app_name">{{model.app_name}}</strong>
     </h2>
-  </div>
-</div>
-<div class="row">
-  <div class="col-sm-12">
-    <h3 class="pull-left page-title">
-      Name:  <strong>{{model.app_name}}</strong>
-    </h3>
   </div>
 </div>
 <div class="row">

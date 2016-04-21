@@ -127,7 +127,7 @@
                 data: []
               } ];
               if ( data.data && data.data.length > 0 ) {
-                avg_ = max_ = 0;
+                avg_ = max_ = median_ = 0;
                 var labels = [];
                 var offset = ( data.metadata.interval_sec || 1800 ) * 1000;
                 var cnt_ = 0;
@@ -161,25 +161,29 @@
                     series[ 0 ].data.push( null );
                   }
                 });
-                avg_ /= cnt_;
-
-                //  median
-                var avg_t = data.data.filter( function( item ) {
-                  return item.requests !== 0;
-                }).map( function( item ) {
-                  return item.avg_fbt;
-                }).sort( function( lhs, rhs ) {
-                  return lhs - rhs;
-                });
-                var idx0 = avg_t.length - 1,
-                  idx1 = Math.ceil( idx0 / 2 );
-                idx0 = Math.floor( idx0 / 2 );
-                median_ = ( idx0 === idx1 ) ? avg_t[idx0] : ( avg_t[idx0] + avg_t[idx1] ) / 2;
 
                 $scope.traffic = {
                   labels: labels,
                   series: series
                 };
+
+                if ( cnt_ ) {
+                  avg_ /= cnt_;
+
+                  //  median
+                  var avg_t = data.data.filter( function( item ) {
+                    return item.requests !== 0;
+                  }).map( function( item ) {
+                    return item.avg_fbt;
+                  }).sort( function( lhs, rhs ) {
+                    return lhs - rhs;
+                  });
+                  var idx0 = avg_t.length - 1,
+                    idx1 = Math.ceil( idx0 / 2 );
+                  idx0 = Math.floor( idx0 / 2 );
+                  median_ = ( idx0 === idx1 ) ? avg_t[idx0] : ( avg_t[idx0] + avg_t[idx1] ) / 2;
+                }
+
               } else {
                 $scope.traffic = {
                   labels: [],

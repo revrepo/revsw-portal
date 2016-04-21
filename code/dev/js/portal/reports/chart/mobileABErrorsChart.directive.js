@@ -18,6 +18,7 @@
         flDevices: '=',
         flCountries: '=',
         flOperators: '=',
+        flDisabled: '=',
         flNetworks: '='
       },
       /*@ngInject*/

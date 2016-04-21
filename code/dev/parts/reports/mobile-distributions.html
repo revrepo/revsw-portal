@@ -34,7 +34,7 @@
                   </div>
 
                   <div class="form-group">
-                    <button class="btn btn-info" ng-click="reload()">
+                    <button class="btn btn-info" ng-click="reload()" ng-disabled="_loading || !application">
                       <i class="glyphicon glyphicon-refresh"></i>&nbsp;
                       Update Reports
                     </button>
