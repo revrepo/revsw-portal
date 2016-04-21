@@ -10,7 +10,7 @@
     $stateProvider
       .state('index.apps.android', {
         url: '/android',
-        data: {platform: 'Android', list: true},
+        data: {platform: 'Android', platform_code: 'Android', list: true},
         views: {
           main: {
             controller: 'AppsController',
@@ -20,7 +20,7 @@
       })
       .state('index.apps.ios', {
         url: '/ios',
-        data: {platform: 'iOS', list: true},
+        data: {platform: 'iOS', platform_code: 'iOS', list: true},
         views: {
           main: {
             controller: 'AppsController',
@@ -28,9 +28,9 @@
           }
         }
       })
-      .state('index.apps.wm', {
-        url: '/wm',
-        data: {platform: 'Windows Mobile', list: true},
+      .state('index.apps.windows_mobile', {
+        url: '/windows_mobile',
+        data: {platform: 'Windows Mobile', platform_code: 'Windows_Mobile', list: true},
         views: {
           main: {
             templateUrl: 'parts/apps/list.html',
@@ -110,7 +110,7 @@
           }
         }
       })
-      .state('index.apps.wm.new', {
+      .state('index.apps.windows_mobile.new', {
         url: '/new',
         views: {
           page: {
@@ -119,7 +119,7 @@
           }
         }
       })
-      .state('index.apps.wm.configure', {
+      .state('index.apps.windows_mobile.configure', {
         url: '/configure/:id',
         views: {
           page: {
@@ -128,7 +128,7 @@
           }
         }
       })
-      .state('index.apps.wm.edit', {
+      .state('index.apps.windows_mobile.edit', {
         url: '/edit/:id',
         views: {
           page: {
@@ -137,7 +137,7 @@
           }
         }
       })
-      .state('index.apps.wm.versions', {
+      .state('index.apps.windows_mobile.versions', {
         url: '/versions/:id/',
         views: {
           page: {
