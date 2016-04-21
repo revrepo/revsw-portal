@@ -29,7 +29,7 @@
                     </select>
                   </div>
                   <div class="form-group">
-                    <button class="btn btn-info" ng-click="onDomainSelect()">
+                    <button class="btn btn-info" ng-click="onDomainSelect()" ng-disabled="_loading || !domain">
                       <i class="glyphicon glyphicon-refresh"></i>&nbsp;
                       Update Report
                     </button>

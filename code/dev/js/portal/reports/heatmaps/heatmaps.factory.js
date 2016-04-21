@@ -71,11 +71,27 @@
     }
 
     /** *********************************
+     *  ctor
+     *
+     * @param {string} DOM node ID
      */
     function Drawer( containerID ) {
+      this.reInit( containerID );
+      this.currentMap = '';
+      this.currentOpts = {};
+      this.currentData = null;
+    }
+
+    /** *********************************
+     *  re-init context
+     *
+     * @param {string} DOM node ID
+     */
+    Drawer.prototype.reInit = function ( containerID ) {
       if ( !containerID ) {
         throw new Error( 'Drawer: containerID should be provided' );
       }
+      this.destroy();
       this.$el = $( containerID );
       this.$el.css({ width: '100%', 'padding-bottom': '55%' });
       this.$wrapper = $( '<div></div>' );
@@ -86,16 +102,28 @@
       this.$btn.on( 'click', function() {
         if ( this.currentMap === 'world' ) {
           this.drawUSAMap( this.currentData, this.currentOpts );
-          this.$btn.html( 'Show World Map' );
         } else {
           this.drawWorldMap( this.currentData, this.currentOpts );
-          this.$btn.html( 'Show USA Map' );
         }
       }.bind( this ) );
-      this.currentMap = '';
-      this.currentOpts = {};
-      this.currentData = null;
-    }
+    };
+
+    /** *********************************
+     *
+     *
+     */
+    Drawer.prototype.destroy = function () {
+      if ( !this.$el ) {
+        return;
+      }
+      this.$wrapper.highcharts().destroy();
+      this.$wrapper.remove();
+      this.$btn.off();
+      this.$btn.remove();
+      this.$btn = null;
+      this.$wrapper = null;
+      this.$el = null;
+    };
 
     /** *********************************
      * Draw World map
@@ -145,6 +173,7 @@
       conf.series[0].mapData = Highcharts.maps['custom/world-highres'];
       this.$wrapper.highcharts( 'Map', _.defaultsDeep( {}, ( opts || {} ), conf ) );
       this.currentMap = 'world';
+      this.$btn.html( 'Show USA Map' );
     };
 
     /** *********************************
@@ -172,12 +201,9 @@
         return _.clone( item );
       });
       conf.series[0].mapData = Highcharts.maps['countries/us/us-all'];
-
-      // console.log( opts );
-      // console.log( _.defaultsDeep( ( opts || {} ), conf ) );
-
       this.$wrapper.highcharts( 'Map', _.defaultsDeep( {}, ( opts || {} ), conf ) );
       this.currentMap = 'usa';
+      this.$btn.html( 'Show World Map' );
     };
 
     /** *********************************
@@ -193,14 +219,6 @@
         this.drawWorldMap( data, opts );
       }
     };
-
-    /** *********************************
-     * Clear map
-     */
-    // clearMap: function () {
-    //   this.$wrapper.highcharts().destroy();
-    //   this.currentMap = '';
-    // };
 
     //  ---------------------------------
     return {

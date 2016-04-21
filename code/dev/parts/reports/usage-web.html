@@ -48,7 +48,7 @@
                   </div>
 
                   <div class="form-group">
-                    <button class="btn btn-info" ng-click="onUpdate()" ng-disabled="_loading">
+                    <button class="btn btn-info" ng-click="onUpdate()" ng-disabled="_loading || !selected.val">
                       <i class="glyphicon glyphicon-refresh"></i>&nbsp;
                       Update Report
                     </button>

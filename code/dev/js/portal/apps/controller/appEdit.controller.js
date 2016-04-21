@@ -7,6 +7,7 @@
 
   /*@ngInject*/
   function AppEditController($scope,
+                          $rootScope,
                           Apps,
                           User,
                           CRUDController,
@@ -206,6 +207,7 @@
           }, $scope.cleanModel(model))
           .$promise
           .then(function(data) {
+            $rootScope.$broadcast('update:searchData');
             $scope
               .alertService
               .success('App configuration is published', 5000);

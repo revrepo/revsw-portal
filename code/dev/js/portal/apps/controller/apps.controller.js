@@ -27,7 +27,7 @@
     $scope.setResource(Apps);
     $scope.$state = $state;
     //// Fetch list of records
-    $scope._baseFilter = {app_platform: $state.current.data.platform};
+    $scope._baseFilter = {app_platform: $state.current.data.platform_code};
 
     $scope.$on('$stateChangeSuccess', function (state) {
       $scope
@@ -113,12 +113,12 @@
 
     $scope.initNew = function () {
       $scope.platforms = [
-        {name: 'iOS', disabled: false},
-        {name: 'Android', disabled: false},
-        {name: 'Windows Mobile', disabled: true}
+        {name: 'iOS', code: 'iOS', disabled: false},
+        {name: 'Android', code: 'Android', disabled: false},
+        {name: 'Windows Mobile', code: 'Windows_Mobile', disabled: false}
       ];
       var idx = _.findIndex($scope.platforms,
-        {name: $state.current.data.platform});
+        {code: $state.current.data.platform_code});
       $scope.model.app_platform = $scope.platforms[idx];
     };
 
@@ -148,7 +148,7 @@
     $scope.createApp = function (model) {
       var modelCopy = _.clone(model);
       delete modelCopy.configs;
-      modelCopy.app_platform = model.app_platform.name;
+      modelCopy.app_platform = model.app_platform.code;
       $scope.create(modelCopy)
         .then(function () {
           model.app_name = '';

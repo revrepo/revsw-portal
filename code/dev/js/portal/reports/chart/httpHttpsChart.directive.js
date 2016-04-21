@@ -77,11 +77,17 @@
                   info_.destroy();
                   info_ = null;
                 }
+                var rel_http = 0,
+                  rel_https = 0;
+                if ( ( https_ + http_ ) !== 0 ) {
+                  rel_http = Math.round( http_ * 1000 / ( https_ + http_ ) ) / 10;
+                  rel_https = Math.round( https_ * 1000 / ( https_ + http_ ) ) / 10;
+                }
                 info_ = this/*chart*/.renderer
                   .label( 'HTTPS <span style="font-weight: bold; color: #3c65ac;">' +  Util.formatNumber( https_ ) +
-                      '</span> Requests, <span style="font-weight: bold; color: #3c65ac;">' + ( Math.round( https_ * 1000 / ( http_ + https_ ) ) / 10 ) +
+                      '</span> Requests, <span style="font-weight: bold; color: #3c65ac;">' + rel_https +
                       '</span>%<br> HTTP <span style="font-weight: bold; color: black;">' + Util.formatNumber( http_ ) +
-                      '</span> Requests, <span style="font-weight: bold; color: black;">' + ( Math.round( http_ * 1000 / ( http_ + https_ ) ) / 10 ) +
+                      '</span> Requests, <span style="font-weight: bold; color: black;">' + rel_http +
                       '</span>%',
                       this.xAxis[0].toPixels( 0 ), 3, '', 0, 0, true/*html*/ )
                   .css({ color: '#444' })
