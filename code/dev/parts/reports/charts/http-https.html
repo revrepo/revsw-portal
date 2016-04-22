@@ -1,19 +1,26 @@
-<h3 class="reports_charts_title">HTTP/HTTPS Hits</h3>
-<div filter-time-periods
+<div class="row">
+  <div class="col-md-2"><h4 class="reports_charts_title, headerh3" style="   margin-top: -33px;
+    font-size: 16px;
+    margin-right: 30px;
+    margin-left: 5px;">HTTP/HTTPS Hits</h4></div>
+  <div class="col-md-10">
+<div class="buttonpanel" filter-time-periods
      ng-hide="!ngDomain"
      fl-os="flOs"
      fl-country="flCountry"
      fl-device="flDevice"
      ng-filters="filters"
-     on-filter="reload()"></div>
+     on-filter="reload()"></div></div>
+  </div>
 <div class="alert alert-info" ng-if="!_loading && (!ngDomain || !traffic.labels.length)">
   <p align="center">No data to display</p>
 </div>
 <div class="alert alert-info" ng-if="_loading">
+  <p align="center">
   <i class="glyphicon glyphicon-refresh spin"></i>&nbsp;
-  Loading
+  Loading</p>
 </div>
-<div class="auto-scroll" ng-hide="!traffic.labels || !traffic.labels.length">
+<div class="container1" ng-hide="!traffic.labels || !traffic.labels.length">
   <div style="min-width: 500px; min-height: 350px" line-chart ng-data="traffic" ng-chart-options="chartOptions"></div>
 </div>
 

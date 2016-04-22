@@ -57,7 +57,8 @@
                 <p align="center">No data to display</p>
               </div>
               <div class="alert alert-info" ng-hide="!_loading">
-                <i class="glyphicon glyphicon-refresh spin"></i>&nbsp; Loading
+                <p style="align: center">
+                <i class="glyphicon glyphicon-refresh spin"></i>&nbsp; Loading</p>
               </div>
               <div ng-hide="_loading || !destination_hits.length">
                 <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="destination_hits" ng-chart-options="hitsChartOpts"></div>

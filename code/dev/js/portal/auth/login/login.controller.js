@@ -53,12 +53,12 @@
               $scope.enter2faCode(email, pass);
             }
             if (err.status === $config.STATUS.SUBSCRIPTION_REQUIRED) {
-              $scope.sendLinkSubscription(email, pass);
+              $scope.resendRegistrationEmail(email, pass);
             }
             if (err.status === $config.STATUS.UNAUTHORIZED) {
               AlertService.danger('Wrong username or password', 5000);
             }
-            if (err.data.message) {
+            if (err.data.message && (err.status !== $config.STATUS.SUBSCRIPTION_REQUIRED)) {
               AlertService.danger(err.data.message, 5000);
             }
           })
@@ -108,14 +108,16 @@
       });
 
       modalInstance.result.then(function (message) {
-        AlertService.success(message, 5000);
+        if(!!message){
+          AlertService.success(message, 5000);
+        }
       });
     };
 
-    $scope.sendLinkSubscription = function(email, password) {
+    $scope.resendRegistrationEmail = function(email, password) {
       var modalInstance = $modal.open({
         templateUrl: 'parts/auth/resend-subscription-info.html',
-        controller: 'ForgotPasswordController',
+        controller: 'resendRegistrationEmailController',
         size: 'md',
         resolve: {
           auth: function () {

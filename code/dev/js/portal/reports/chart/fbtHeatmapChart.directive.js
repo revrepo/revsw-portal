@@ -20,14 +20,13 @@
 
         $scope.delay = '24';
         $scope._loading = false;
-        $scope.fbtCountryData = {};
+        var drawer = HeatmapsDrawer.create('#canvas-svg');
+
 
         $scope.reloadFBTStats = function() {
           if ( !$scope.ngDomain || !$scope.ngDomain.id ) {
             return;
           }
-
-          HeatmapsDrawer.clearMap( '#canvas-svg' );
 
           $scope._loading = true;
           var opts = {
@@ -39,23 +38,43 @@
             .$promise
             .then( function( data ) {
 
-              var cdata = {};
-              if ( data.data && data.data.length > 0 ) {
-                angular.forEach( data.data, function( item ) {
-                  var name = $scope.flCountry[ item.key.toUpperCase() ] || item.key;
-                  cdata[ name ] = {
+              var world = [],
+                usa = [];
+
+              if (data.data && data.data.length > 0) {
+                data.data.forEach( function (item) {
+                  var key = item.key.toUpperCase();
+                  world.push({
+                    name: ( $scope.flCountry[key] || item.key ),
+                    id: key,
+                    value: item.fbt_avg_ms,
+                    tooltip: ( 'Avg: <strong>' + Util.formatNumber( item.fbt_avg_ms ) +
+                      '</strong> Min: <strong>' + Util.formatNumber( item.fbt_min_ms ) +
+                      '</strong> Max: <strong>' + Util.formatNumber( item.fbt_max_ms ) +
+                      '</strong> ms' )
+                  });
+
+                  if ( key === 'US' && item.regions ) {
+                    usa = item.regions;
+                  }
+                });
+
+                usa = usa.map( function( item ) {
+                  return {
+                    id: item.key,
+                    name: item.key,
                     value: item.fbt_avg_ms,
                     tooltip: ( 'Avg: <strong>' + Util.formatNumber( item.fbt_avg_ms ) +
                       '</strong> Min: <strong>' + Util.formatNumber( item.fbt_min_ms ) +
                       '</strong> Max: <strong>' + Util.formatNumber( item.fbt_max_ms ) +
                       '</strong> ms' )
                   };
-                } );
+                });
               }
-
-              // console.log( cdata );
-              $scope.fbtCountryData = cdata;
-              HeatmapsDrawer.drawMap( '#canvas-svg', '#tooltip-container', $scope.fbtCountryData );
+              drawer.drawCurrentMap( {
+                world: world,
+                usa: usa
+              });
             })
             .finally( function() {
               $scope._loading = false;
@@ -67,12 +86,10 @@
             return;
           }
           $scope.reloadFBTStats();
-        } );
-
-        // Draw a empty world map
-        HeatmapsDrawer.drawMap( '#canvas-svg', '#tooltip-container', {} );
+        });
       }
     };
   }
+
 } )();
 

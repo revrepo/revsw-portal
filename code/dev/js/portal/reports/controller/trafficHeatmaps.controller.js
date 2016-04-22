@@ -6,7 +6,10 @@
     .controller('TrafficHeatmapsController', TrafficHeatmapsController);
 
   /*@ngInject*/
-  function TrafficHeatmapsController($scope, HeatmapsDrawer, Countries, Stats, $q) {
+  function TrafficHeatmapsController($scope, HeatmapsDrawer, Countries, Stats, $q, Util) {
+
+    var hitsDrawer = HeatmapsDrawer.create('#canvas-svg-hits'),
+      gbtDrawer = HeatmapsDrawer.create('#canvas-svg-gbt');
 
     /**
      * Loading flag
@@ -32,33 +35,6 @@
     $scope.delay = '24';
 
     /**
-     * Object with information about countries and hits.
-     * Format:
-     * ```json
-     * {
-     *   'United States': { value: 2564, tooltip: '2.6K requests' }
-     *    .........
-     * }
-     * ```
-     *
-     * @type {Object}
-     */
-    $scope.countryHitsData = {};
-    /**
-     * Object with information about countries and transfer stats.
-     * Format:
-     * ```json
-     * {
-     *   'United States': { value: 9876543, tooltip: 'Sent: 36.3 GB Received: 1.88 GB' }
-     *    .........
-     * }
-     * ```
-     *
-     * @type {Object}
-     */
-    $scope.countryGBTData = {};
-
-    /**
      * Loading list of country names
      */
     $scope.countries = Countries.query();
@@ -69,12 +45,7 @@
      * @param {String|Number} domainId
      */
     $scope.reloadHitsCountry = function (domainId) {
-      // Remove prev map
-      HeatmapsDrawer.clearMap( '#canvas-svg-hits' );
-      // Set loading
       $scope._loading = true;
-      // Clear old data
-      $scope.countryHitsData = {};
 
       // Loading new data
       return Stats.country({
@@ -85,33 +56,50 @@
         })
         .$promise
         .then(function (data) {
+
+          var world = [],
+            usa = [];
+
           if (data.data && data.data.length > 0) {
-            angular.forEach(data.data, function (item) {
-              var name = $scope.countries[item.key.toUpperCase()] || item.key;
-              $scope.countryHitsData[name] = {
+            data.data.forEach( function (item) {
+
+              var key = item.key.toUpperCase();
+              world.push({
+                name: ( $scope.countries[key] || item.key ),
+                id: key,
                 value: item.count,
-                tooltip: '<strong>' + HeatmapsDrawer.valueFormat(item.count) + '</strong> requests'
+                tooltip: '<strong>' + Util.convertValue(item.count) + '</strong> requests'
+              });
+              if ( key === 'US' && item.regions ) {
+                usa = item.regions;
+              }
+            });
+
+            usa = usa.map( function( item ) {
+              return {
+                id: item.key,
+                name: item.key,
+                value: item.count,
+                tooltip: '<strong>' + Util.convertValue(item.count) + '</strong> requests'
               };
             });
           }
+
           // Pass to next `.then()`
-          return data;
+          return {
+            world: world,
+            usa: usa
+          };
         });
     };
 
     /**
-     * Loads list of country trensferred data.
+     * Loads list of country transferred data.
      *
      * @param {String|Number} domainId
      */
     $scope.reloadGBTCountry = function (domainId) {
-      // Remove prev map
-      HeatmapsDrawer.clearMap( '#canvas-svg-gbt' );
-      // Set loading
       $scope._loading = true;
-      // Clear old data
-      $scope.countryGBTData = {};
-
       // Loading new data
       return Stats.gbt_country({
           domainId: domainId,
@@ -121,18 +109,44 @@
         })
         .$promise
         .then(function (data) {
+
+          var world = [],
+            usa = [];
+
           if (data.data && data.data.length > 0) {
-            angular.forEach(data.data, function (item) {
-              var name = $scope.countries[item.key.toUpperCase()] || item.key;
-              $scope.countryGBTData[name] = {
+            data.data.forEach( function (item) {
+
+              // console.log( item );
+              var key = item.key.toUpperCase();
+              world.push({
+                name: ( $scope.countries[key] || item.key ),
+                id: key,
                 value: item.sent_bytes,
-                tooltip: ( 'Sent: <strong>' + HeatmapsDrawer.valueFormat(item.sent_bytes, 'G'/*force G*/) +
-                  'B</strong> Received: <strong>' + HeatmapsDrawer.valueFormat(item.received_bytes, 'G') + 'B</strong>' )
+                tooltip: ( 'Sent: <strong>' + Util.humanFileSizeInGB(item.sent_bytes) +
+                  '</strong> Received: <strong>' + Util.humanFileSizeInGB(item.received_bytes) + '</strong>' )
+              });
+
+              if ( key === 'US' && item.regions ) {
+                usa = item.regions;
+              }
+            });
+
+            usa = usa.map( function( item ) {
+              return {
+                id: item.key,
+                name: item.key,
+                value: item.sent_bytes,
+                tooltip: ( 'Sent: <strong>' + Util.humanFileSizeInGB(item.sent_bytes) +
+                  '</strong> Received: <strong>' + Util.humanFileSizeInGB(item.received_bytes) + '</strong>' )
               };
             });
           }
+
           // Pass to next `.then()`
-          return data;
+          return {
+            world: world,
+            usa: usa
+          };
         });
     };
 
@@ -148,18 +162,17 @@
       $q.all([
         $scope.reloadHitsCountry($scope.domain.id),
         $scope.reloadGBTCountry($scope.domain.id)
-      ]).then(function () {
-        // Redraw maps using received data
-        HeatmapsDrawer.drawMap('#canvas-svg-hits', '#tooltip-container-hits', $scope.countryHitsData);
-        HeatmapsDrawer.drawMap('#canvas-svg-gbt', '#tooltip-container-gbt', $scope.countryGBTData);
+      ]).then(function ( data ) {
+
+        //  (re)Draw maps using received data
+        hitsDrawer.drawCurrentMap( data[0/*hits data*/] );
+        gbtDrawer.drawCurrentMap( data[1/*gbt data*/] );
+
       }).finally(function () {
         $scope._loading = false;
       });
 
     };
-
-    // Draw a empty world map
-    HeatmapsDrawer.drawMap('#canvas-svg-hits', '#tooltip-container-hits', {});
-    HeatmapsDrawer.drawMap('#canvas-svg-gbt', '#tooltip-container-gbt', {});
   }
+
 })();

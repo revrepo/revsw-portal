@@ -51,8 +51,7 @@
             Loading...
           </div>
 
-          <div id="tooltip-container-hits" class="tooltip-container"></div>
-          <div id="canvas-svg-hits"></div>
+          <div id="canvas-svg-hits" style="position: relative;"></div>
 
         </div>
       </div>
@@ -63,12 +62,12 @@
         <div class="panel-body">
 
           <div class="alert alert-info" ng-if="_loading">
+            <p style="align: center">
             <i class="glyphicon glyphicon-refresh spin" ng-if="item.loading"></i>&nbsp;
-            Loading...
+            Loading...</p>
           </div>
 
-          <div id="tooltip-container-gbt" class="tooltip-container"></div>
-          <div id="canvas-svg-gbt"></div>
+          <div id="canvas-svg-gbt" style="position: relative;"></div>
 
         </div>
       </div>

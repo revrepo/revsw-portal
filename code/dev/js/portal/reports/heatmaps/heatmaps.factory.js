@@ -6,265 +6,209 @@
     .factory('HeatmapsDrawer', HeatmapsDrawer);
 
   /*@ngInject*/
-  function HeatmapsDrawer(HeatmapsConfig) {
+  function HeatmapsDrawer() {
 
-    function Interpolate(start, end, steps, count) {
-      var s = start,
-        e = end,
-        final = s + (((e - s) / steps) * count);
-      return Math.floor(final);
-    }
-
-    function Color(_r, _g, _b) {
-      var r, g, b;
-      var setColors = function (_r, _g, _b) {
-        r = _r;
-        g = _g;
-        b = _b;
-      };
-
-      setColors(_r, _g, _b);
-      this.getColors = function () {
-        var colors = {
-          r: r,
-          g: g,
-          b: b
-        };
-        return colors;
-      };
-    }
-
-    function hexToRgb(hex) {
-      var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-      return result ? {
-        r: parseInt(result[1], 16),
-        g: parseInt(result[2], 16),
-        b: parseInt(result[3], 16)
-      } : null;
-    }
-
-    function valueFormat( d, force ) {
-
-      if (d > 1000000000 || force === 'G') {
-        return Math.round(d / 10000000) / 100 + 'G';
-      }
-
-      if (d > 1000000 || force === 'M') {
-        return Math.round(d / 100000) / 10 + 'M';
-      }
-
-      if (d > 1000 || force === 'K') {
-        return Math.round(d / 100 ) / 10 + 'K';
-      }
-
-      return d;
-    }
-
-    function log10(val) {
-      return Math.log(val);
-    }
-
-    /**
-     * Draw a world map using given HTML element ids
-     *
-     * @param {String} canvasSvgId
-     * @param {String} tooltipId
-     * @param {object} data
-        data pseudo-structure:
-          { property: {
-              value: 42,
-              tooltip: 'here\'s answer - 42 ms'
-            },
-            property: .....
-          }
-        where property is most probably country name,
-          value - actual value of the property for calculations,
-          and tooltip is a string to show over the map
+    /** *********************************
+     * conf for the maps, common parts
      */
-    function drawMap(canvasSvgId, tooltipId, data) {
+    function getConfig_() {
 
-      var self = this;
-      var width = $(canvasSvgId).width(),
-        height = width / 1.5;
-
-      var COLOR_COUNTS = this.conf.COLOR_COUNTS;
-      var COLOR_FIRST = this.conf.COLORS.FIRST;
-      var COLOR_LAST = this.conf.COLORS.LAST;
-      var COLOR_ZERO = this.conf.COLORS.ZERO;
-
-      var rgb = hexToRgb(COLOR_FIRST);
-
-      var COLOR_START = new Color(rgb.r, rgb.g, rgb.b);
-
-      rgb = hexToRgb(COLOR_LAST);
-      var COLOR_END = new Color(rgb.r, rgb.g, rgb.b);
-
-      var startColors = COLOR_START.getColors(),
-        endColors = COLOR_END.getColors();
-
-      var colors = [];
-
-      for (var i = 0; i < COLOR_COUNTS; i++) {
-        var r = Interpolate(startColors.r, endColors.r, COLOR_COUNTS, i);
-        var g = Interpolate(startColors.g, endColors.g, COLOR_COUNTS, i);
-        var b = Interpolate(startColors.b, endColors.b, COLOR_COUNTS, i);
-        colors.push(new Color(r, g, b));
-      }
-
-      var projection = d3.geo.mercator()
-        .scale((width + 1) / 2 / Math.PI)
-        .translate([width / 2, height / 1.4])
-        .precision(0.1);
-
-      var path = d3.geo.path()
-        .projection(projection);
-
-      var graticule = d3.geo.graticule();
-
-      // Clear svg
-      clearMap( canvasSvgId );
-
-      var svg = d3.select(canvasSvgId).append('svg')
-        .attr('width', '100%')
-        .attr('height', height);
-
-      svg.append('path')
-        .datum(graticule)
-        .attr('class', 'graticule')
-        .attr('d', path);
-
-      //  simplify input data to name->value hashes
-      var valueHash = _.mapValues( data, function( item ) {
-        return item.value;
-      });
-
-      var quantize = d3.scale.quantize()
-        .domain([0, 1.0])
-        .range(d3.range(COLOR_COUNTS).map(function (i) {
-          return i;
-        }));
-
-      var values = d3.values( valueHash );
-
-      quantize.domain([
-        d3.min(values, function (d) {
-          return (+d);
-        }),
-        d3.max(values, function (d) {
-          return (+d);
-        })
-      ]);
-
-      // Loading world json
-      d3.json('js/heatmaps/world-topo-min.json', function (error, world) {
-        var countries = topojson.feature(world, world.objects.countries).features;
-
-        svg.append('path')
-          .datum(graticule)
-          .attr('class', 'choropleth')
-          .attr('d', path);
-
-        var g = svg.append('g');
-
-        g.append('path')
-          .datum({type: 'LineString', coordinates: [[-180, 0], [-90, 0], [0, 0], [90, 0], [180, 0]]})
-          .attr('class', 'equator')
-          .attr('d', path);
-
-        var country = g.selectAll('.country').data(countries);
-
-        country.enter().insert('path')
-          .attr('class', 'country')
-          .attr('d', path)
-          .attr('id', function (d, i) {
-            return d.id;
-          })
-          .attr('title', function (d) {
-            return d.properties.name;
-          })
-          .style('fill', function (d) {
-            if (valueHash[d.properties.name]) {
-              var c = quantize((valueHash[d.properties.name]));
-              if ( c !== undefined ) {
-                var color = colors[c].getColors();
-                return 'rgb(' + color.r + ',' + color.g + ',' + color.b + ')';
-              }
-              return COLOR_LAST;
+      return {
+        credits: { enabled: false },
+        chart: {
+          style: {
+            fontFamily: 'Verdana, Arial, Helvetica, sans-serif',
+            fontSize: '12px'
+          },
+        },
+        title : {
+          text : null
+        },
+        mapNavigation: {
+          enabled: true,
+          enableButtons: true,
+          enableMouseWheelZoom: false,
+          enableTouchZoom: false,
+          buttonOptions: {
+            align: 'left',
+            verticalAlign: 'bottom'
+          }
+        },
+        colorAxis: {
+          minColor: '#99CCFF',
+          maxColor: '#0050A1',
+          type: 'logarithmic',
+          tickPixelInterval: 100
+        },
+        tooltip: {
+          useHTML: true,
+          formatter: function () {
+            // console.log( this.point );
+            return '<span style="font-weight: bold; color: #004090;">' + this.point.name + '</span><br>' + this.point.tooltip;
+          }
+        },
+        legend: {
+          enabled: true,
+          itemDistance: 60,
+          symbolHeight: 6,
+          symbolWidth: 400
+        },
+        series: [{
+          name: '',
+          borderColor: 'white',
+          states: {
+            hover: { color: '#A9DCFF' }
+          },
+          dataLabels: {
+            enabled: false,
+            formatter: function () {
+              return this.point.labelrank && this.point.name && this.point.labelrank > 1000000 ? this.point.name : null;
             }
-            return COLOR_ZERO;
-          })
-          .on('mousemove', function (d) {
-            var html = '';
-
-            html += '<div class=\'tooltip_kv\'>';
-            html += '<span class=\'tooltip_key\'>';
-            html += d.properties.name;
-            html += '</span>';
-            html += '<span class=\'tooltip_value\'>';
-            html += (data[d.properties.name] && data[d.properties.name].tooltip ? data[d.properties.name].tooltip : '--');
-            html += '</span>';
-            html += '</div>';
-
-            $(tooltipId).html(html);
-            $(this).attr('fill-opacity', '0.8');
-            $(tooltipId).show();
-
-            var coordinates = d3.mouse(this);
-
-            var map_width = $('.choropleth')[0].getBoundingClientRect().width;
-
-            if (d3.event.pageX < map_width / 2) {
-              d3.select(tooltipId)
-                .style('top', (d3.event.layerY + 15) + 'px')
-                .style('left', (d3.event.layerX + 15) + 'px');
-            } else {
-              var tooltip_width = $(tooltipId).width();
-              d3.select(tooltipId)
-                .style('top', (d3.event.layerY + 15) + 'px')
-                .style('left', (d3.event.layerX - tooltip_width - 30) + 'px');
-            }
-          })
-          .on('mouseout', function () {
-            $(this).attr('fill-opacity', '1.0');
-            $(tooltipId).hide();
-          });
-
-        g.append('path')
-          .datum(topojson.mesh(world, world.objects.countries, function (a, b) {
-            return a !== b;
-          }))
-          .attr('class', 'boundary')
-          .attr('d', path);
-      });
+          },
+          nullColor: '#B0B0B0'
+        }]
+      };
     }
 
-    /**
+    /** *********************************
+     */
+    function Drawer( containerID ) {
+      if ( !containerID ) {
+        throw new Error( 'Drawer: containerID should be provided' );
+      }
+      this.$el = $( containerID );
+      this.$el.css({ width: '100%', 'padding-bottom': '55%' });
+      this.$wrapper = $( '<div></div>' );
+      this.$el.append( this.$wrapper );
+      this.$wrapper.css({ position: 'absolute', top: 0, bottom: 0, left: 0, right: 0 });
+      this.$btn = $( '<button style="position:absolute;top:0px;left:0px;" class="btn">Show USA Map</button>' );
+      this.$el.append( this.$btn );
+      this.$btn.on( 'click', function() {
+        if ( this.currentMap === 'world' ) {
+          this.drawUSAMap( this.currentData, this.currentOpts );
+          this.$btn.html( 'Show World Map' );
+        } else {
+          this.drawWorldMap( this.currentData, this.currentOpts );
+          this.$btn.html( 'Show USA Map' );
+        }
+      }.bind( this ) );
+      this.currentMap = '';
+      this.currentOpts = {};
+      this.currentData = null;
+    }
+
+    /** *********************************
+     * Draw World map
+     *
+     * @param {object} data:
+        world: [{
+            name: 'United States of America',
+            id: 'US',
+            value: 42,
+            tooltip: 'something: <strong>666</strong> ms'
+          },{
+            name: 'China', ............
+          }],
+        usa: [{
+            name: 'AL',
+            id: 'AL',
+            value: 12,
+            tooltip: 'something: <strong>12</strong> ms'
+          },{
+            name: 'MI', ............
+          }]
+     * @param {object} options to override maps config
+     */
+    Drawer.prototype.drawWorldMap = function ( data, opts ) {
+
+      this.currentData = data;
+      this.currentOpts = opts;
+      var conf = getConfig_();
+
+      conf.colorAxis.max = data.world.reduce( function( prev, curr ) {
+        return curr.value === undefined || curr.id === '--' || curr.value <= prev ? prev : curr.value;
+      }, 0 );
+      conf.colorAxis.min = data.world.reduce( function( prev, curr ) {
+        return curr.value === undefined || curr.id === '--' || curr.value >= prev ? prev : curr.value;
+      }, conf.colorAxis.max );
+
+      if ( !data.world || !data.world.length || !conf.colorAxis.min ) {
+        conf.colorAxis.type = 'linear';
+      } else {
+        conf.colorAxis.type = 'logarithmic';
+      }
+
+      conf.series[0].joinBy = ['iso-a2', 'id'];
+      conf.series[0].data = data.world.map( function( item ) {
+        return _.clone( item );
+      });
+      conf.series[0].mapData = Highcharts.maps['custom/world-highres'];
+      this.$wrapper.highcharts( 'Map', _.defaultsDeep( {}, ( opts || {} ), conf ) );
+      this.currentMap = 'world';
+    };
+
+    /** *********************************
+     * Draw US map
+     *
+     * @param {object} data - see above drawWorldMap description
+     * @param {object} options to override maps config
+     */
+    Drawer.prototype.drawUSAMap = function ( data, opts ) {
+
+      this.currentData = data;
+      this.currentOpts = opts;
+      var conf = getConfig_();
+
+      conf.colorAxis.max = data.usa.reduce( function( prev, curr ) {
+        return curr.value === undefined || curr.id === '--' || curr.value <= prev ? prev : curr.value;
+      }, 0 );
+      conf.colorAxis.min = data.usa.reduce( function( prev, curr ) {
+        return curr.value === undefined || curr.id === '--' || curr.value >= prev ? prev : curr.value;
+      }, conf.colorAxis.max );
+
+      conf.colorAxis.type = 'linear';
+      conf.series[0].joinBy = ['postal-code', 'id'];
+      conf.series[0].data = data.usa.map( function( item ) {
+        return _.clone( item );
+      });
+      conf.series[0].mapData = Highcharts.maps['countries/us/us-all'];
+
+      // console.log( opts );
+      // console.log( _.defaultsDeep( ( opts || {} ), conf ) );
+
+      this.$wrapper.highcharts( 'Map', _.defaultsDeep( {}, ( opts || {} ), conf ) );
+      this.currentMap = 'usa';
+    };
+
+    /** *********************************
+     * (re)Draw current map with the new data, world for the first call
+     *
+     * @params  - see above drawWorldMap/drawUSAMap descriptions
+     */
+    Drawer.prototype.drawCurrentMap = function ( data, opts ) {
+
+      if ( this.currentMap === 'usa' ) {
+        this.drawUSAMap( data, opts );
+      } else {
+        this.drawWorldMap( data, opts );
+      }
+    };
+
+    /** *********************************
      * Clear map
      */
-    function clearMap( canvasSvgId ) {
-      canvasSvgId = canvasSvgId ? canvasSvgId + ' svg' : 'svg';
-      if (d3.select(canvasSvgId)) {
-        d3.select(canvasSvgId).remove();
-      }
-    }
+    // clearMap: function () {
+    //   this.$wrapper.highcharts().destroy();
+    //   this.currentMap = '';
+    // };
 
+    //  ---------------------------------
     return {
-
-      conf: HeatmapsConfig,
-
-      clearMap: clearMap,
-
-      drawMap: drawMap,
-
-      Interpolate: Interpolate,
-
-      Color: Color,
-
-      hexToRgb: hexToRgb,
-
-      valueFormat: valueFormat,
-
-      log10: log10
+      create: function( containerID ) {
+        return new Drawer( containerID );
+      }
     };
+
   }
+
 })();

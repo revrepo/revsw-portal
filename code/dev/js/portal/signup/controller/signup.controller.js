@@ -92,9 +92,9 @@
       }
       $scope.userData = _.clone(model);
       $scope.alertService.clear();
-      delete model.passwordConfirm;
-      model.collection_method = ['Automatic'];
-      model.billing_schedule = 'monthly';
+//      delete model.passwordConfirm;
+//      model.collection_method = ['Automatic'];
+//      model.billing_schedule = 'monthly';
 
       Users.signup(model)
         .$promise
