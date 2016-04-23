@@ -156,18 +156,18 @@ var AppsList = {
       .click();
   },
 
-/**
- * ### AppsList.clickClearSearch()
- *
- * Clicks on `Clear Search` X button element.
- *
- * @returns {Promise}
- */
-clickClearSearch: function () {
-  return this
-    .getClearSearchTxt()
-    .click();
-},
+  /**
+   * ### AppsList.clickClearSearch()
+   *
+   * Clicks on `Clear Search` X button element.
+   *
+   * @returns {Promise}
+   */
+  clickClearSearch: function () {
+    return this
+      .getClearSearchTxt()
+      .click();
+  },
 
   /**
    * ### AppsList.setSearch(value)

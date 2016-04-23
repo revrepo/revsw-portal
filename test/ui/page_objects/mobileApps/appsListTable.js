@@ -60,6 +60,34 @@ var AppsListTable = {
       previousVersions: {
         css: '.glyphicon.glyphicon-book'
       }
+    },
+    links: {
+      name: {
+        css: '[ng-click=\"order(\'app_name\')\"]'
+      },
+      platform: {
+        css: '[ng-click=\"order(\'app_platform\')\"]'
+      },
+      version: {
+        css: '[ng-click=\"order(\'last_app_published_version\')\"]'
+      },
+      lastUpdate: {
+        css: '[ng-click=\"order(\'updated_at\')\"]'
+      }
+    },
+    pagination: {
+      first: {
+        css: '[ng-click=\"goToPage(1)\"]'
+      },
+      last: {
+        css: '[ng-click=\"goToPage(page.pages.length)\"]'
+      },
+      next: {
+        css: '[ng-click=\"nextPage()\"]'
+      },
+      previous: {
+        css: '[ng-click=\"prevPage()\"]'
+      }
     }
   },
 
@@ -269,7 +297,103 @@ var AppsListTable = {
       .element(by.css(this.locators.buttons.previousVersions.css));
   },
 
+  /**
+   * ### AppsList.getNameColumnLnk()
+   *
+   * Gets the reference to `Name Column` link element of table.
+   *
+   * @returns {Promise}
+   */
+  getNameColumnLnk: function () {
+    return element(by.css(this.locators.links.name.css));
+  },
+
+  /**
+   * ### AppsList.getPlatformColumnLnk()
+   *
+   * Gets the reference to `Platform Column` link element of table.
+   *
+   * @returns {Promise}
+   */
+  getPlatformColumnLnk: function () {
+    return element(by.css(this.locators.links.platform.css));
+  },
+
+  /**
+   * ### AppsList.getVersionColumnLnk()
+   *
+   * Gets the reference to `Version Column` link element of table.
+   *
+   * @returns {Promise}
+   */
+  getVersionColumnLnk: function () {
+    return element(by.css(this.locators.links.version.css));
+  },
+
+  /**
+   * ### AppsList.getLastUpdateColumnLnk()
+   *
+   * Gets the reference to `Last Update Column` link element of table.
+   *
+   * @returns {Promise}
+   */
+  getLastUpdateColumnLnk: function () {
+    return element(by.css(this.locators.links.lastUpdate.css));
+  },
+
   // ## Helper Methods
+
+  /**
+   * ### AppsList.sortByName()
+   *
+   * Clicks on `Name Column` element of apps table, in Apps List page.
+   *
+   * @returns {Promise}
+   */
+  sortByName: function () {
+    return this
+      .getNameColumnLnk()
+      .click();
+  },
+
+  /**
+   * ### AppsList.sortByPlatform()
+   *
+   * Clicks on `Platform Column` element of apps table, in Apps List page.
+   *
+   * @returns {Promise}
+   */
+  sortByPlatform: function () {
+    return this
+      .getPlatformColumnLnk()
+      .click();
+  },
+
+  /**
+   * ### AppsList.sortByVersion()
+   *
+   * Clicks on `Version Column` element of apps table, in Apps List page.
+   *
+   * @returns {Promise}
+   */
+  sortByVersion: function () {
+    return this
+      .getVersionColumnLnk()
+      .click();
+  },
+
+  /**
+   * ### AppsList.sortByLastUpdate()
+   *
+   * Clicks on `Last Update Column` element of apps table, in Apps List page.
+   *
+   * @returns {Promise}
+   */
+  sortByLastUpdate: function () {
+    return this
+      .getLastUpdateColumnLnk()
+      .click();
+  },
 
   /**
    * ### AppsListTable.countTotalRows()
@@ -397,19 +521,19 @@ var AppsListTable = {
   },
 
   /**
-   * ### AppsListTable.getRow()
+   * ### AppsListTable.getFirstRow()
    *
    * Gets the first row of `Apps List` from the table element per page.
    *
    * @returns {Promise}
    */
-  getRow: function() {
+  getFirstRow: function() {
     return {
-      name: this.getName(),
-      platform: this.getPlatform(),
-      version: this.getVersion(),
-      lastUpdate: this.getLastUpdate(),
-      sdkKey: this.getSDKKey(),
+      name: this.getName().getText(),
+      platform: this.getPlatform().getText(),
+      version: this.getVersion().getText(),
+      lastUpdate: this.getLastUpdate().getText(),
+      sdkKey: this.getSDKKey().getText(),
       stagingStatus: this.getStagingStatus(),
       globalStatus: this.getGlobalStatus()
     };

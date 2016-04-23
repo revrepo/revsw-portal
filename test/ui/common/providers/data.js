@@ -197,6 +197,18 @@ var DataProvider = {
       // }
     ];
   },
+  generateMultipleMobileApps: function (platform, numApps) {
+    var apps = [];
+    var i;
+    for(i=0; i<numApps; i++) {
+      var app = {};
+      app.name = platform + (i+1);
+      app.platform = platform;
+      app.title = platform + ' Apps List';
+      apps.push(app);
+    }
+    return apps;
+  },
   generateUsageReportData: function () {
     return {
       companyName: 'QA API Company',
