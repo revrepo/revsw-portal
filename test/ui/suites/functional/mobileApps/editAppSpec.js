@@ -36,7 +36,8 @@ describe('Functional', function () {
     });
 
     afterAll(function () {
-      Portal.deleteMobileApps(apps);
+      Portal.deleteMobileApps(iosApps);
+      Portal.deleteMobileApps(androidApps);
       Portal.signOut();
     });
 
@@ -112,10 +113,10 @@ describe('Functional', function () {
 
         it('should basic edit and "verify" the app name - ' + app.platform,
           function () {
-            var tempAppName = app.name;
             Portal.goToMobileApps();
             Portal.header.goTo(app.platform);
             Portal.mobileApps.listPage.searchAndEdit(app);
+            var tempAppName = app.name;
             app.name = app.name + 'UPDATED';
             Portal.mobileApps.editAppPage.verify(app);
 
@@ -135,6 +136,7 @@ describe('Functional', function () {
             Portal.goToMobileApps();
             Portal.header.goTo(app.platform);
             Portal.mobileApps.listPage.searchAndEdit(app);
+            var tempAppName = app.name;
             app.name = app.name + 'UPDATED';
             Portal.mobileApps.editAppPage.update(app);
             Portal.dialog.clickOk();
@@ -145,6 +147,7 @@ describe('Functional', function () {
 
             Portal.goToMobileApps();
             Portal.header.goTo(app.platform);
+            app.name = tempAppName; //TODO: Remove this line, once edit is fixed
             var findApp = Portal.mobileApps.listPage.findApp(app);
             expect(findApp).toBe(1);
         });
@@ -154,6 +157,7 @@ describe('Functional', function () {
             Portal.goToMobileApps();
             Portal.header.goTo(app.platform);
             Portal.mobileApps.listPage.searchAndEdit(app);
+            var tempAppName = app.name;
             app.name = app.name + 'UPDATED';
             Portal.mobileApps.editAppPage.publish(app);
             Portal.dialog.clickOk();
@@ -164,6 +168,7 @@ describe('Functional', function () {
 
             Portal.goToMobileApps();
             Portal.header.goTo(app.platform);
+            app.name = tempAppName; //TODO: Remove this line, once edit is fixed
             var findApp = Portal.mobileApps.listPage.findApp(app);
             expect(findApp).toBe(1);
         });

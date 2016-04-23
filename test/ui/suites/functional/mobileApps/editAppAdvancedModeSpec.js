@@ -32,10 +32,11 @@ describe('Functional', function () {
     beforeAll(function () {
       Portal.signIn(adminUser);
       Portal.createMobileApps('iOS', iosApps);
-      Portal.createMobileApps('Android', iosApps);
+      Portal.createMobileApps('Android', androidApps);
     });
 
     afterAll(function () {
+      Portal.deleteMobileApps(iosApps);
       Portal.deleteMobileApps(apps);
       Portal.signOut();
     });
