@@ -25,11 +25,14 @@ describe('Functional', function () {
   describe('Basic Edit App And Update', function () {
 
     var adminUser = config.get('portal.users.admin');
-    var apps = DataProvider.generateMobileApps();
+    var iosApps = DataProvider.generateMobileAppData('iOS', 1);
+    var androidApps = DataProvider.generateMobileAppData('Android', 1);
+    var apps = iosApps.concat(androidApps);
 
     beforeAll(function () {
       Portal.signIn(adminUser);
-      Portal.createMobileApps(apps);
+      Portal.createMobileApps('iOS', iosApps);
+      Portal.createMobileApps('Android', androidApps);
     });
 
     afterAll(function () {
@@ -44,14 +47,14 @@ describe('Functional', function () {
     });
 
     apps.forEach(function (app) {
-        it('should get the title from basic edited app - ' + app.platform,
+      it('should get the title from basic edited app - ' + app.platform,
           function () {
             Portal.goToMobileApps();
             Portal.header.goTo(app.platform);
             Portal.mobileApps.listPage.searchAndEdit(app);
-            
-            var title = Portal.mobileApps.editAppPage.getAppName();
-            expect(title).toEqual('Name: ' + app.name);
+
+            var title = Portal.mobileApps.editAppPage.getTitle();
+            expect(title).toContain('Edit App');
         });
 
         it('should basic edit and "verify" an existing app - ' + app.platform,

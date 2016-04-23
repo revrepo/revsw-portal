@@ -57,12 +57,12 @@ var DataProvider = {
     }
 
     // Special case when the portal user is creating a new user
-    // is a resller or revadmin which require the specify the 
+    // is a resller or revadmin which require the specify the
     // company the new user should be associated with
     var company;
     if (portalUser && portalUser.role && portalUser.role !== 'Admin') {
        company = 'API QA Reseller Company';
-    } 
+    }
 
     return {
       email: prefixEmail + timestamp + '@portal-ui-test-email.com',
@@ -178,26 +178,26 @@ var DataProvider = {
                 '\/images7\/*.png\\n\/images8\/*.png\\n\/images9\/*.png\\n'
     };
   },
-  generateMobileApps: function () {
-    return [
-      {
-        name: 'MyAppIOS',
-        platform: 'iOS',
-        title: 'iOS Apps List'
-      },
-      {
-        name: 'MyAppAndroid',
-        platform: 'Android',
-        title: 'Android Apps List'
-      }
-      // {
-      //   name: 'MyAppWindowsMobile',
-      //   platform: 'Windows Mobile',
-      //   title: 'Windows Mobile Apps List'
-      // }
-    ];
-  },
-  generateMultipleMobileApps: function (platform, numApps) {
+  // generateMobileApps: function () {
+  //   return [
+  //     {
+  //       name: 'MyAppIOS',
+  //       platform: 'iOS',
+  //       title: 'iOS Apps List'
+  //     },
+  //     {
+  //       name: 'MyAppAndroid',
+  //       platform: 'Android',
+  //       title: 'Android Apps List'
+  //     }
+  //     // {
+  //     //   name: 'MyAppWindowsMobile',
+  //     //   platform: 'Windows Mobile',
+  //     //   title: 'Windows Mobile Apps List'
+  //     // }
+  //   ];
+  // },
+  generateMobileAppData: function (platform, numApps) {
     var apps = [];
     var i;
     for(i=0; i<numApps; i++) {

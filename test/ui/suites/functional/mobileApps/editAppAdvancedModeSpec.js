@@ -25,11 +25,14 @@ describe('Functional', function () {
   describe('Edit App Advanced Mode', function () {
 
     var adminUser = config.get('portal.users.admin');
-    var apps = DataProvider.generateMobileApps();
+    var iosApps = DataProvider.generateMobileAppData('iOS', 1);
+    var androidApps = DataProvider.generateMobileAppData('Android', 1);
+    var apps = iosApps.concat(androidApps);
 
     beforeAll(function () {
       Portal.signIn(adminUser);
-      Portal.createMobileApps(apps);
+      Portal.createMobileApps('iOS', iosApps);
+      Portal.createMobileApps('Android', iosApps);
     });
 
     afterAll(function () {

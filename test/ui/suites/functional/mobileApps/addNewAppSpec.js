@@ -25,7 +25,9 @@ describe('Functional', function () {
   describe('Add New App', function () {
 
     var adminUser = config.get('portal.users.admin');
-    var apps = DataProvider.generateMobileApps();
+    var iosApps = DataProvider.generateMobileAppData('iOS', 1);
+    var androidApps = DataProvider.generateMobileAppData('Android', 1);
+    var apps = iosApps.concat(androidApps);
 
     beforeAll(function () {
       Portal.signIn(adminUser);
@@ -33,6 +35,7 @@ describe('Functional', function () {
     });
 
     afterAll(function () {
+      Portal.deleteMobileApps(apps);
       Portal.signOut();
     });
 
@@ -60,11 +63,6 @@ describe('Functional', function () {
         Portal.header.goTo(app.platform);
         var findApp = Portal.mobileApps.listPage.findApp(app);
         expect(findApp).toBe(1);
-
-        Portal.mobileApps.listPage.searchAndDelete(app);
-        Portal.dialog.clickOk();
-        findApp = Portal.mobileApps.listPage.findApp(app);
-        expect(findApp).toBe(0);
       });
     });
   });

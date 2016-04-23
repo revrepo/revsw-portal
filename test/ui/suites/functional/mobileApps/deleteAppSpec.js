@@ -25,11 +25,14 @@ describe('Functional', function () {
   describe('Delete App', function () {
 
     var adminUser = config.get('portal.users.admin');
-    var apps = DataProvider.generateMobileApps();
+    var iosApps = DataProvider.generateMobileAppData('iOS', 1);
+    var androidApps = DataProvider.generateMobileAppData('Android', 1);
+    var apps = iosApps.concat(androidApps);
 
     beforeAll(function () {
       Portal.signIn(adminUser);
-      Portal.createMobileApps(apps);
+      Portal.createMobileApps('iOS', iosApps);
+      Portal.createMobileApps('Android', androidApps);
     });
 
     afterAll(function () {
@@ -49,8 +52,8 @@ describe('Functional', function () {
 
         Portal.mobileApps.listPage.searchAndDelete(app);
         Portal.dialog.clickOk();
-        //var alert = Portal.alerts.getFirst();
-        //var expectedMsg = 'App ' + app.name + ' deleted.';
+        var alert = Portal.alerts.getFirst();
+        var expectedMsg = 'App ' + app.name + ' deleted.';
 
         var findApp = Portal.mobileApps.listPage.findApp(app);
         expect(findApp).toBe(0);

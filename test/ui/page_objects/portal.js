@@ -511,23 +511,25 @@ var Portal = {
    * Helper method that executes all steps required to create
    * new Mobile Apps from Portal app.
    *
+   * @param {String} platform, platform name of Mobile App.
+   *
    * @param {Object} apps, data applying the schema defined in
    * `DataProvider.generateMobileApps()`
    *
    * @returns {Promise}
    */
-  createMobileApps: function (apps) {
+  createMobileApps: function (platform, apps) {
     var me = this;
-    browser.getCurrentUrl().then(function (initialUrl) {
+    me.getMobileApps(platform.toLowerCase());
+    return browser.getCurrentUrl().then(function (initialUrl) {
       apps.forEach(function (app) {
-        me.getMobileApps(app.platform.toLowerCase());
-        me.header.goTo(app.platform);
+        me.header.goTo(platform);
         me.mobileApps.listPage.addNewApp(app);
-        browser.getCurrentUrl().then(function (currentUrl) {
-          if (initialUrl !== currentUrl) {
-            browser.get(initialUrl);
-          }
-        });
+      });
+      browser.getCurrentUrl().then(function (currentUrl) {
+        if (initialUrl !== currentUrl) {
+          browser.get(initialUrl);
+        }
       });
     });
   },
@@ -551,11 +553,11 @@ var Portal = {
         me.header.goTo(app.platform);
         me.mobileApps.listPage.searchAndDelete(app);
         me.dialog.clickOk();
-        browser.getCurrentUrl().then(function (currentUrl) {
-          if (initialUrl !== currentUrl) {
-            browser.get(initialUrl);
-          }
-        });
+      });
+      browser.getCurrentUrl().then(function (currentUrl) {
+        if (initialUrl !== currentUrl) {
+          browser.get(initialUrl);
+        }
       });
     });
   }

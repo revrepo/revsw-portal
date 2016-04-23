@@ -25,17 +25,20 @@ describe('Smoke', function () {
   describe('Search App List', function () {
 
     var adminUser = config.get('portal.users.admin');
-    var apps = DataProvider.generateMobileApps();
-    var tempApps = DataProvider.generateMobileApps();
+    var iosApps = DataProvider.generateMobileAppData('iOS', 1);
+    var androidApps = DataProvider.generateMobileAppData('Android', 1);
+    var apps = iosApps.concat(androidApps);
 
     beforeAll(function () {
       Portal.signIn(adminUser);
-      Portal.createMobileApps(tempApps);
+      Portal.createMobileApps('iOS', iosApps);
+      Portal.createMobileApps('Android', androidApps);
       Portal.goToMobileApps();
     });
 
     afterAll(function () {
-      Portal.deleteMobileApps(tempApps);
+      Portal.deleteMobileApps(iosApps);
+      Portal.deleteMobileApps(androidApps);
       Portal.signOut();
     });
 
@@ -50,7 +53,7 @@ describe('Smoke', function () {
         function () {
           Portal.goToMobileApps();
           Portal.header.goTo(app.platform);
-          
+
           var findApp = Portal.mobileApps.listPage.findApp(app);
           expect(findApp).toBe(1);
       });
@@ -60,7 +63,7 @@ describe('Smoke', function () {
           Portal.goToMobileApps();
           Portal.header.goTo(app.platform);
           app.name = 'Nothing';
-          
+
           var findApp = Portal.mobileApps.listPage.findApp(app);
           expect(findApp).toBe(0);
       });
