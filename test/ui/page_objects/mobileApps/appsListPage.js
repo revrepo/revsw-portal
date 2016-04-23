@@ -61,7 +61,7 @@ var AppsList = {
   // reference to the AppsListPage Page Object to interact with it.
   appsTable: AppsListTable,
 
-  // `Apps List Form` Page is compound mainly by a form. This property makes
+  // `Add New App` Page is compound mainly by a form. This property makes
   // reference to the AddNewAppPage Page Object to interact with it.
   appsForm: AddNewAppPage,
 
