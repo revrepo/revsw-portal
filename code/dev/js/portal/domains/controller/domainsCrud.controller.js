@@ -44,6 +44,23 @@
       if ($state.is($scope.state)) {
         $scope.list()
           .then(function() {
+            if ($scope.auth.isReseller() || $scope.auth.isRevadmin()) {
+              // Loading list of companies
+              return Companies.query(function(list) {
+                _.forEach($scope.records, function(item) {
+                  var index = _.findIndex(list, {
+                    id: item.account_id
+                  });
+                  if (index >= 0) {
+                    item.companyName = list[index].companyName;
+                  }
+                });
+              });
+            } else {
+              return $q.when();
+            }
+          })
+          .then(function() {
             if ($scope.elementIndexForAnchorScroll) {
               setTimeout(function() {
                 $anchorScroll('anchor' + $scope.elementIndexForAnchorScroll);
@@ -150,9 +167,9 @@
        */
       function validateDomainProperties(domain) {
         // $scope.modelAdvance = {'loading':'Please wait few seconds...'};
-        $timeout(function(){
-              $scope.modelAdvance = angular.copy($scope.prepareSimpleDomainUpdate(domain));
-        },2000);
+        $timeout(function() {
+          $scope.modelAdvance = angular.copy($scope.prepareSimpleDomainUpdate(domain));
+        }, 2000);
 
         var _domain_default_property = {
           proxy_timeout: 20,
@@ -293,8 +310,8 @@
       $localStorage.selectedDomain = model;
     };
 
-    $scope.disableSubmit = function(model, isEdit){
-      if(!isEdit) {
+    $scope.disableSubmit = function(model, isEdit) {
+      if (!isEdit) {
         return $scope._loading ||
           !model.domain_name ||
           !model.account_id ||
@@ -319,16 +336,16 @@
     /**
      * Get editor instance
      */
-    $scope.jsonEditorEvent = function(instance){
+    $scope.jsonEditorEvent = function(instance) {
       $scope.jsonEditorInstance = instance;
     };
 
     /**
      * Set watcher on json editor's text to catch json validation error
      */
-    $scope.$watch('jsonEditorInstance.getText()', function(val){
+    $scope.$watch('jsonEditorInstance.getText()', function(val) {
       // if editor text is empty just return
-      if(!val) {
+      if (!val) {
         $scope.jsonIsInvalid = true;
         return;
       }
@@ -337,7 +354,7 @@
       try {
         var json = JSON.parse(val);
         $scope.jsonIsInvalid = !json || !Object.keys(json).length;
-      } catch(err) {
+      } catch (err) {
         // if it's not valid json or it's empty disable Purge button
         $scope.jsonIsInvalid = true;
       }
