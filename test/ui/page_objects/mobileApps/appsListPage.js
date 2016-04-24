@@ -16,12 +16,14 @@
  * from Rev Software, Inc.
  */
 
-// # Android Page Object
+// # Apps List Page Object
 
-// Requiring `Apps List Table` component page object
+// Requiring `Apps List Table` component page object.
 var AppsListTable = require('./appsListTable');
+// Requiring `Add New Aapp` component page object.
+var AddNewAppPage = require('./addNewAppPage');
 
-// This `Android App` Page Object abstracts all operations or actions
+// This `Apps List` Page Object abstracts all operations or actions
 // that a common Two-Factor Authentication could do in the Portal app/site.
 var AppsList = {
 
@@ -44,15 +46,6 @@ var AppsList = {
       addNewApp:{
         linkText: 'Add New App'
       },
-      backToList: {
-        linkText: 'Back To List'
-      },
-      cancel: {
-        linkText: 'Cancel'
-      },
-      register: {
-        button: '[ng-click=\"createApp(model)\"]'
-      },
       clearSearch: {
         css: '[ng-click=\"filter.filter = ""\"]'
       }
@@ -60,23 +53,23 @@ var AppsList = {
     inputs: {
       search: {
         id: 'search'
-      },
-      appName: {
-        id: 'app_name'
-      }
-    },
-    dropDowns: {
-      platform: {
-        model: 'model.app_platform'
       }
     }
   },
+
+  // `Apps List Table` Page is compound mainly by a table. This property makes
+  // reference to the AppsListPage Page Object to interact with it.
+  appsTable: AppsListTable,
+
+  // `Add New App` Page is compound mainly by a form. This property makes
+  // reference to the AddNewAppPage Page Object to interact with it.
+  appsForm: AddNewAppPage,
 
   /**
    * ### AppsList.getTitleLbl()
    *
    * Returns the reference to the `Title` label element (Selenium WebDriver
-   * Element) from the Android Apps List page from the Portal app.
+   * Element) from the Apps List page from the Portal app.
    *
    * @returns {Selenium WebDriver Element}
    */
@@ -133,6 +126,136 @@ var AppsList = {
    */
   getClearSearchTxt: function () {
     return element(by.id(this.locators.buttons.clearSearch.css));
+  },
+
+  // ## Helper Methods
+
+  /**
+   * ### AppsList.getTitle()
+   *
+   * Gets the title from `Title` label element.
+   *
+   * @returns {Promise}
+   */
+  getTitle: function () {
+    return this
+      .getTitleLbl()
+      .getText();
+  },
+
+  /**
+   * ### AppsList.clickAddNewApp()
+   *
+   * Clicks on `Add New App` button element.
+   *
+   * @returns {Promise}
+   */
+  clickAddNewApp: function () {
+    return this
+      .getAddNewAppBtn()
+      .click();
+  },
+
+  /**
+   * ### AppsList.clickClearSearch()
+   *
+   * Clicks on `Clear Search` X button element.
+   *
+   * @returns {Promise}
+   */
+  clickClearSearch: function () {
+    return this
+      .getClearSearchTxt()
+      .click();
+  },
+
+  /**
+   * ### AppsList.setSearch(value)
+   *
+   * Sets value in `Search` text input element.
+   *
+   * @param {String} value
+   *
+   * @returns {Promise}
+   */
+  setSearch: function (value) {
+    this.getSearchTxt().clear();
+    return this
+      .getSearchTxt()
+      .sendKeys(value);
+  },
+
+  /**
+   * ### AppsList.addNewApp(app)
+   *
+   * Adds new app in the `Apps List App` Page.
+   *
+   * @param {object} app, app data with following schema.
+   *
+   *    {
+   *        name: String,
+   *        platform: String
+   *    }
+   * @returns {Promise}
+   */
+  addNewApp: function (app) {
+    this.clickAddNewApp();
+    this.appsForm.fill(app);
+    this.appsForm.clickRegister(app);
+  },
+
+  /**
+   * ### AppsList.findApp(app)
+   *
+   * Finds an app in the `Apps List App` Page.
+   *
+   * @returns {Promise}
+   */
+  findApp: function (app) {
+    this.setSearch(app.name);
+    return this.appsTable.countTotalRows();
+  },
+
+  /**
+   * ### AppsList.searchAndDelete(app)
+   *
+   * Deletes an app in the `Apps List App` Page.
+   *
+   * @param {object} app, app data.
+   *
+   * @returns {Promise}
+   */
+  searchAndDelete: function (app) {
+    this.setSearch(app.name);
+    this.appsTable.clickDeleteApp();
+  },
+
+  /**
+   * ### AppsList.searchAndEdit(app)
+   *
+   * Edits an existing app in the `Apps List App` Page.
+   *
+   * @param {object} app, app data.
+   *
+   * @returns {Promise}
+   */
+  searchAndEdit: function (app) {
+    this.setSearch(app.name);
+    this.appsTable.clickEditApp();
+  },
+
+  /**
+   * ### AppsList.searchAndAdvancedEdit(app)
+   *
+   * Advanced Edits an existing app in the `Apps List App` Page.
+   *
+   * @param {object} app, app data.
+   *
+   * @returns {Promise}
+   */
+  searchAndAdvancedEdit: function (app) {
+    this.setSearch(app.name);
+    this.appsTable.clickAdvancedEditApp();
   }
 };
 

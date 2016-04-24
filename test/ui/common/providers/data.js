@@ -57,12 +57,12 @@ var DataProvider = {
     }
 
     // Special case when the portal user is creating a new user
-    // is a resller or revadmin which require the specify the 
+    // is a resller or revadmin which require the specify the
     // company the new user should be associated with
     var company;
     if (portalUser && portalUser.role && portalUser.role !== 'Admin') {
        company = 'API QA Reseller Company';
-    } 
+    }
 
     return {
       email: prefixEmail + timestamp + '@portal-ui-test-email.com',
@@ -176,6 +176,24 @@ var DataProvider = {
       textArea: '\/images1\/*.png\\n\/images2\/*.png\\n\/images3\/*.png\\n' +
                 '\/images4\/*.png\\n\/images5\/*.png\\n\/images6\/*.png\\n' +
                 '\/images7\/*.png\\n\/images8\/*.png\\n\/images9\/*.png\\n'
+    };
+  },
+  generateMobileAppData: function (platform, numApps) {
+    var apps = [];
+    var i;
+    for(i=0; i<numApps; i++) {
+      var app = {};
+      app.name = platform + (i+1);
+      app.platform = platform;
+      app.title = platform + ' Apps List';
+      apps.push(app);
+    }
+    return apps;
+  },
+  generateUsageReportData: function () {
+    return {
+      companyName: 'QA API Company',
+      monthDD: '2016-01'
     };
   }
 };
