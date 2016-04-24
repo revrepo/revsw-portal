@@ -105,11 +105,11 @@
                   <span class="sortorder" ng-show="filter.predicate === 'updated_at'" ng-class="{reverse: filter.reverse}"></span>
                 </th>
                 <th class="thin">Status</th>
+                <th>Actions</th>
                 <th class="account" ng-if="auth.isReseller() ||  auth.isRevadmin()">
                   <a href="" ng-click="order('companyName')">Account</a>
                   <span class="sortorder" ng-show="filter.predicate === 'companyName'" ng-class="{reverse: filter.reverse}"></span>
                 </th>
-                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -123,9 +123,6 @@
                 <td>{{ getRelativeDate(item.updated_at) }}</td>
                 <td>
                   <div domain-staging-status ng-id="item.id"></div>
-                </td>
-                <td ng-if="auth.isReseller() ||  auth.isRevadmin()">
-                  <div>{{item.companyName}}</div>
                 </td>
                 <td class="actions">
                   <i class="glyphicon glyphicon-refresh spin" ng-if="item.loading"></i>
@@ -147,6 +144,9 @@
                   <a ui-sref=".versions({id: item.id})" ng-if="!item.loading" tooltip="Previous Versions">
                     <i class="glyphicon glyphicon-book"></i>
                   </a>
+                </td>
+                <td ng-if="auth.isReseller() ||  auth.isRevadmin()">
+                  <div>{{item.companyName}}</div>
                 </td>
               </tr>
               <!--<tr class="disabled loading">-->
