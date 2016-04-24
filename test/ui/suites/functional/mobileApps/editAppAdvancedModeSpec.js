@@ -36,7 +36,6 @@ describe('Functional', function () {
     });
 
     afterAll(function () {
-      Portal.deleteMobileApps(iosApps);
       Portal.deleteMobileApps(apps);
       Portal.signOut();
     });

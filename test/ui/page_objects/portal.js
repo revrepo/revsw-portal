@@ -553,6 +553,7 @@ var Portal = {
         me.header.goTo(app.platform);
         me.mobileApps.listPage.searchAndDelete(app);
         me.dialog.clickOk();
+        browser.sleep(3000);
       });
       browser.getCurrentUrl().then(function (currentUrl) {
         if (initialUrl !== currentUrl) {

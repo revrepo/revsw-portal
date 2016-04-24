@@ -25,18 +25,18 @@ describe('Functional', function () {
   describe('Pagination List App', function () {
 
     var adminUser = config.get('portal.users.admin');
-    var iosApps = DataProvider.generateMobileAppData('iOS', 3);
-    var androidApps = DataProvider.generateMobileAppData('Android', 3);
+    var iosApps = DataProvider.generateMobileAppData('iOS', 25);
+    //var androidApps = DataProvider.generateMobileAppData('Android', 25);
+    //var apps = iosApps.concat(androidApps);
 
     beforeAll(function () {
       Portal.signIn(adminUser);
       Portal.createMobileApps('iOS', iosApps);
-      Portal.createMobileApps('Android', androidApps);
+      //Portal.createMobileApps('Android', androidApps);
     });
 
     afterAll(function () {
       Portal.deleteMobileApps(iosApps);
-      Portal.deleteMobileApps(androidApps);
       Portal.signOut();
     });
 
@@ -46,23 +46,36 @@ describe('Functional', function () {
     afterEach(function () {
     });
 
-    it('should sorted list apps ascendent and descendant - iOS', function () {
+    it('should check the pagination of apps table - iOS', function () {
       Portal.goToMobileApps();
       Portal.header.goTo('iOS');
-      Portal.mobileApps.listPage.appsTable.sortByName();
-      var firstApp = Portal.mobileApps.listPage.appsTable.getFirstRow();
-      var appName1 = firstApp.name;
+      var first = Portal.mobileApps.listPage.appsTable.getFirst();
+      var last = Portal.mobileApps.listPage.appsTable.getLast();
+      var next = Portal.mobileApps.listPage.appsTable.getNext();
+      var previous = Portal.mobileApps.listPage.appsTable.getPrevious();
+      expect(first.isDisplayed()).toBe(false);
+      expect(last.isDisplayed()).toBe(false);
+      expect(next.isDisplayed()).toBe(false);
+      expect(previous.isDisplayed()).toBe(false);
+      
+      var newApp = {
+        name: 'iOS26',
+        platform: 'iOS'
+      };
+      Portal.mobileApps.listPage.addNewApp(newApp);
+      Portal.goToMobileApps();
+      Portal.header.goTo('iOS');
+      first = Portal.mobileApps.listPage.appsTable.getFirst();
+      last = Portal.mobileApps.listPage.appsTable.getLast();
+      next = Portal.mobileApps.listPage.appsTable.getNext();
+      previous = Portal.mobileApps.listPage.appsTable.getPrevious();
+      expect(first.isDisplayed()).toBe(true);
+      expect(last.isDisplayed()).toBe(true);
+      expect(next.isDisplayed()).toBe(true);
+      expect(previous.isDisplayed()).toBe(true);
 
-      Portal.mobileApps.listPage.appsTable.sortByName();
-      firstApp = Portal.mobileApps.listPage.appsTable.getFirstRow();
-      var appName2 = firstApp.name;
-      expect(appName1).toBeLessThan(appName2);
-      expect(appName2).toBeGreaterThan(appName1);
-
-      Portal.mobileApps.listPage.appsTable.sortByName();
-      firstApp = Portal.mobileApps.listPage.appsTable.getFirstRow();
-      var appName3 = firstApp.name;
-      expect(appName1).toEqual(appName3);
+      Portal.mobileApps.listPage.searchAndDelete(newApp);
+      Portal.dialog.clickOk();
     });
   });
 });

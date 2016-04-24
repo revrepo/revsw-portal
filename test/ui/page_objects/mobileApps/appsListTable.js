@@ -341,6 +341,22 @@ var AppsListTable = {
     return element(by.css(this.locators.links.lastUpdate.css));
   },
 
+  getFirst: function () {
+    return element(by.css(this.locators.pagination.first.css));
+  },
+
+  getLast: function () {
+    return element(by.css(this.locators.pagination.last.css));
+  },
+
+  getNext: function () {
+    return element(by.css(this.locators.pagination.next.css));
+  },
+
+  getPrevious: function () {
+    return element(by.css(this.locators.pagination.previous.css));
+  },
+
   // ## Helper Methods
 
   /**
