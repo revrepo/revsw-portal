@@ -7,6 +7,7 @@
 
   /*@ngInject*/
   function AppsController($scope,
+                          $timeout,
                           $anchorScroll,
                           User,
                           Companies,
@@ -76,7 +77,7 @@
       }
     };
 
-    $scope.filterKeys = ['app_name', 'app_platform', 'last_app_published_version', 'updated_at'];
+    $scope.filterKeys = ['app_name', 'app_platform', 'companyName', 'last_app_published_version', 'updated_at'];
 
 
     $scope.getRelativeDate = function (datetime) {
@@ -111,19 +112,21 @@
     };
     $scope.initEdit = function (id) {
       $scope.get(id)
-        .then(function () {
-          $scope.copyForEditor = _.clone($scope.model);
-          delete $scope.copyForEditor.$promise;
-          delete $scope.copyForEditor.$resolved;
-          delete $scope.copyForEditor.id;
-          delete $scope.copyForEditor.account_id;
-          delete $scope.copyForEditor.app_platform;
-          delete $scope.copyForEditor.sdk_key;
-          delete $scope.copyForEditor.created_at;
-          delete $scope.copyForEditor.updated_at;
-          delete $scope.copyForEditor.updated_by;
-          delete $scope.copyForEditor.created_by;
-        })
+        .then(function() {
+            $timeout(function() {
+              $scope.copyForEditor = _.clone($scope.model);
+              delete $scope.copyForEditor.$promise;
+              delete $scope.copyForEditor.$resolved;
+              delete $scope.copyForEditor.id;
+              delete $scope.copyForEditor.account_id;
+              delete $scope.copyForEditor.app_platform;
+              delete $scope.copyForEditor.sdk_key;
+              delete $scope.copyForEditor.created_at;
+              delete $scope.copyForEditor.updated_at;
+              delete $scope.copyForEditor.updated_by;
+              delete $scope.copyForEditor.created_by;
+            }, 2000);
+          })
         .catch(function (err) {
           $scope.alertService.danger('Could not load app details');
         });

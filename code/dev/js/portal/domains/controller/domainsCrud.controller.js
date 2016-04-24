@@ -71,7 +71,7 @@
       }
     });
 
-    $scope.filterKeys = ['domain_name', 'cname', 'updated_at'];
+    $scope.filterKeys = ['domain_name', 'cname', 'companyName', 'updated_at'];
 
     $scope.locations = [];
     $scope.companies = [];
