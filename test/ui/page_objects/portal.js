@@ -55,7 +55,8 @@ var RTTHeatmapsPage = require('./analytics/rttHeatmapsPage');
 var HelpSupportPage = require('./helpSupport/helpSupportPage');
 var HelpPage = require('./help/helpPage');
 var SecSettingsPage = require('./admin/securitySettingsPage');
-var ApiKeysListPage = require('./admin/apiKeysListPage.js');
+var ApiKeysListPage = require('./admin/apiKeysListPage');
+var ActivityLogPage = require('./admin/activityLogPage');
 var AppsListPage = require('./mobileApps/appsListPage');
 var AddNewAppPage = require('./mobileApps/addNewAppPage');
 var EditAppPage = require('./mobileApps/editAppPage');
@@ -109,6 +110,9 @@ var Portal = {
     addAppPage: AddNewAppPage,
     editAppPage: EditAppPage,
     editAppAdvancedModePage: EditAdvancedModePage
+  },
+  admin: {
+    activityLog: ActivityLogPage
   },
   billing: {
     usageReportPage: UsageReportPage
