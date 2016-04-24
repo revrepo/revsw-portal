@@ -29,18 +29,36 @@
     //// Fetch list of records
     $scope._baseFilter = {app_platform: $state.current.data.platform_code};
 
-    $scope.$on('$stateChangeSuccess', function (state) {
+    $scope.$on('$stateChangeSuccess', function(state) {
       $scope
         .list()
-        .then(function(){
+        .then(function() {
+          if ($scope.auth.isReseller() || $scope.auth.isRevadmin()) {
+            // Loading list of companies
+            return Companies.query(function(list) {
+              _.forEach($scope.records, function(item) {
+                var index = _.findIndex(list, {
+                  id: item.account_id
+                });
+                if (index >= 0) {
+                  item.companyName = list[index].companyName;
+                }
+              });
+            });
+          } else {
+            return $q.when();
+          }
+        })
+        .then(function() {
           if ($scope.elementIndexForAnchorScroll) {
-            setTimeout(function(){
+            setTimeout(function() {
               $anchorScroll('anchor' + $scope.elementIndexForAnchorScroll);
               $scope.$digest();
-            },500);
+            }, 500);
           }
         });
     });
+
 
     $scope.companies = [];
     $scope.model = {
