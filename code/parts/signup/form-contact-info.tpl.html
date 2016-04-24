@@ -1,4 +1,4 @@
-<div class="form-contact-info panel panel-default">
+<div class="panel panel-default">
   <div class="panel-heading" ng-if="$ctrl.isRegistryFinish">
     <h4>Please finish your registration</h4>
   </div>
@@ -10,9 +10,8 @@
         </p>
         <p class="lead">
           <!-- Now you can close the browser window. -->
-           <button type="text" class="btn btn-warning pull-right" ng-click="$ctrl.onRepeatSendRegistrationEmail($ctrl.model.email,$ctrl.model.password)">Didn’t receive the email?</button>
+          <button type="text" class="btn btn-warning pull-right" ng-click="$ctrl.onRepeatSendRegistrationEmail($ctrl.model.email,$ctrl.model.password)">Didn’t receive the email?</button>
         </p>
-
       </div>
     </div>
   </div>
@@ -24,7 +23,7 @@
     </div>
   </div>
   <div class="panel-body" ng-if="!$ctrl.isRegistryFinish">
-    <form class="form-horizontal" name="newUser" novalidate>
+    <form class="form-horizontal form-contact-info" name="newUser" novalidate>
       <div class="form-group " ng-class="{ 'has-error': newUser.email.$invalid &&
                                 newUser.email.$dirty }">
         <label for="email" popover-append-to-body="{{true}}" class="col-sm-2 control-label" popover-trigger="mouseenter" popover="New user's email address - the address should be unique across the system">
@@ -101,9 +100,9 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="Country" class="col-sm-2 control-label" popover-trigger="mouseenter" popover="Could be used in a billing address later.">Country *</label>
+        <label for="country" class="col-sm-2 control-label" popover-trigger="mouseenter" popover="Could be used in a billing address later.">Country *</label>
         <div class="col-sm-10">
-          <select type="text" class="form-control" id="Country" placeholder="Country" required ng-model="$ctrl.model.country" ng-options="key as value for (key , value) in  $ctrl.countries" ng-disabled="_loading">
+          <select type="text" class="form-control" id="country" placeholder="Country" required ng-model="$ctrl.model.country" ng-options="key as value for (key , value) in  $ctrl.countries" ng-disabled="_loading">
           </select>
         </div>
       </div>
@@ -131,7 +130,7 @@
       </div>
       <hr>
       <div class="form-group">
-        <div class="col-md-8" >
+        <div class="col-md-8">
           <div class="pull-right" style="margin-bottom: 10px">
             By clicking on Sign Up you agree with our
             <a href="https://www.revapm.com/tos/" target="_blank">Terms Of Service</a>,
@@ -144,7 +143,7 @@
               <i class="glyphicon glyphicon-remove"></i>&nbsp; Cancel
             </a>
             <button class="btn btn-success" ng-disabled="_loading || newUser.$invalid ||(($ctrl.model.password != $ctrl.model.passwordConfirm ||newUser.passwordConfirm.$invalid) &&newUser.passwordConfirm.$dirty )" ng-click="$ctrl.onSignUp($ctrl.model)">
-             <i class="glyphicon glyphicon-log-in"></i> Sign Up
+              <i class="glyphicon glyphicon-log-in"></i> Sign Up
             </button>
           </div>
         </div>
