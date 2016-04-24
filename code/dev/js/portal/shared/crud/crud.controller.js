@@ -149,17 +149,17 @@
           // filters over the array
           filtered = _.filter($scope.records, function(record){
             //checks for each key
-            //if value is found returns true 
+            //if value is found returns true
             for(i = 0; i < $scope.filterKeys.length; i++) {
               compareValue = record[$scope.filterKeys[i]];
-
-              //checks if date
-              if (moment(compareValue, moment.ISO_8601).isValid()) {
-                //formats as date obj
-                compareValue = new Date(compareValue);
+              if(compareValue){
+                //checks if date
+                if (moment(compareValue, moment.ISO_8601).isValid()) {
+                  //formats as date obj
+                  compareValue = new Date(compareValue);
+                }
+                res = (compareValue.toString().toLowerCase().indexOf($scope.filter.filter.toLowerCase()) !== -1);
               }
-              res = (compareValue.toString().toLowerCase().indexOf($scope.filter.filter.toLowerCase()) !== -1);
-
               if (res) {
                 return res;
               }
@@ -603,7 +603,7 @@
 
        /**
        * Save anchor index
-       * 
+       *
        * @param {Number} index of the clicked element
        */
        function saveAnchorScrollIndex($index) {

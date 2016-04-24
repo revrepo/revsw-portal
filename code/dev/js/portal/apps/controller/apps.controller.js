@@ -77,7 +77,7 @@
       }
     };
 
-    $scope.filterKeys = ['app_name', 'app_platform', 'last_app_published_version', 'updated_at'];
+    $scope.filterKeys = ['app_name', 'app_platform', 'companyName', 'last_app_published_version', 'updated_at'];
 
 
     $scope.getRelativeDate = function (datetime) {
