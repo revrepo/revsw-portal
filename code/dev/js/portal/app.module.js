@@ -6,6 +6,7 @@
     'revapm.Portal.Profile',
     'revapm.Portal.Users',
     'revapm.Portal.Domains',
+    'revapm.Portal.SSL_certs',
     'revapm.Portal.Companies',
     'revapm.Portal.Cache',
     'revapm.Portal.ImportConfig',
