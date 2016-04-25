@@ -21,7 +21,11 @@ var Portal = require('./../../../page_objects/portal');
 var DataProvider = require('./../../../common/providers/data');
 var Constants = require('./../../../page_objects/constants');
 
-describe('Smoke', function () {
+// TODO:
+// 1) Please use unique app names (with timestamps - just like we do with other tests)
+// 2) The Android app is not getting created - please review and fix
+
+xdescribe('Smoke', function () {   // jshint ignore:line
   describe('Search App List', function () {
 
     var adminUser = config.get('portal.users.admin');

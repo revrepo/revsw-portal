@@ -2,14 +2,14 @@
   'use strict';
 
   angular
-    .module('revapm.Portal.Domains')
-    .controller('DomainsCrudController', DomainsCrudController);
+    .module('revapm.Portal.SSL_certs')
+    .controller('SSL_certsCrudController', SSL_certsCrudController);
 
   /*@ngInject*/
-  function DomainsCrudController($scope, $timeout,
+  function SSL_certsCrudController($scope, $timeout,
     $localStorage,
     CRUDController,
-    DomainsConfig,
+    SSL_certs,
     $injector,
     $stateParams,
     $config,
@@ -17,8 +17,7 @@
     $http,
     $q,
     $state,
-    $anchorScroll,
-    DomainsCachingRuleDefault) {
+    $anchorScroll) {
     //Invoking crud actions
     $injector.invoke(CRUDController, this, {
       $scope: $scope,
@@ -35,9 +34,9 @@
       }
     };
     //Set state (ui.router)
-    $scope.setState('index.webApp.domains');
+    $scope.setState('index.webApp.ssl_certs');
 
-    $scope.setResource(DomainsConfig);
+    $scope.setResource(SSL_certs);
 
     // Fetch list of records
     $scope.$on('$stateChangeSuccess', function(state) {
@@ -71,23 +70,22 @@
       }
     });
 
-    $scope.filterKeys = ['domain_name', 'cname', 'companyName', 'updated_at'];
+    $scope.filterKeys = ['cert_name', 'companyName', 'updated_at']; // TODO: add anothe filter's fields
 
     $scope.locations = [];
     $scope.companies = [];
     $scope.model = {};
-
-    // fetch list of locations
-    $scope.fetchLocations = function() {
-      $http
-        .get($config.API_URL + '/locations/firstmile')
-        .then(function(data) {
-          if (data.status === $config.STATUS.OK) {
-            $scope.locations = data.data;
-          }
-        });
-    };
-
+    // TODO: Change to real types
+    $scope.certs_types = [{
+      id: 'shared',
+      typeName: 'Shared RevAPM Certificate'
+    }, {
+      id: 'private',
+      typeName: 'Private With Customer-Provided Key'
+    }, {
+      id: 'private-revapm',
+      typeName: 'Private With RevAPM-Provided Key'
+    }];
     $scope.fetchCompanies = function(companyIds) {
       var promises = [];
       companyIds.forEach(function(id) {
@@ -145,7 +143,6 @@
     };
 
     $scope.setAccountId();
-    $scope.fetchLocations();
 
     $scope.getDomain = function(id) {
       $scope.get(id)
@@ -309,7 +306,7 @@
     $scope.storeToStorage = function(model) {
       $localStorage.selectedDomain = model;
     };
-
+    // TODO: change rule
     $scope.disableSubmit = function(model, isEdit) {
       if (!isEdit) {
         return $scope._loading ||
@@ -498,7 +495,7 @@
     /**
      * @description
      *
-     * Watch by changing "isAdvancedMode"
+     * Watch by changing 'isAdvancedMode'
      * Make synce data
      *
      * @param  {Boollean} newVal

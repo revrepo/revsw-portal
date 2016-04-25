@@ -227,7 +227,6 @@
       delete modelCopy.$promise;
       delete modelCopy.$resolved;
       delete modelCopy.id;
-      delete modelCopy.account_id;
       delete modelCopy.app_platform;
       delete modelCopy.sdk_key;
       delete modelCopy.created_at;

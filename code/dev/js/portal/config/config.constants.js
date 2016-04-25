@@ -63,7 +63,25 @@
       /**
        * Interval delay for refreshing domain staging/global status
        */
-      DOMAIN_STATUS_REFRESH_INTERVAL: 5000
+      DOMAIN_STATUS_REFRESH_INTERVAL: 5000,
+      /**
+       * List of icon classes for SSL Certificates statuses
+       */
+      SSL_CERT_STAGING_STATUS_ICONS : {
+        InProgress: 'glyphicon-refresh spin',
+        Published: 'glyphicon-ok-sign text-success',
+        Modified: 'glyphicon-ok-sign text-primary'
+      },
+      SSL_CERT_PRODUCTION_STATUS_ICONS : {
+        InProgress: 'glyphicon-refresh spin',
+        Published: 'glyphicon-ok-circle text-success',
+        Modified: 'glyphicon-ok-circle text-primary'
+      },
+
+      /**
+       * Interval delay for refreshing SSL Certificate staging/global status
+       */
+      SSL_CERT_STATUS_REFRESH_INTERVAL: 5000,
     });
 
 })();

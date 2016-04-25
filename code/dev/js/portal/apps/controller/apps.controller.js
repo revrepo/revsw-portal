@@ -7,6 +7,7 @@
 
   /*@ngInject*/
   function AppsController($scope,
+                          $timeout,
                           $anchorScroll,
                           User,
                           Companies,
@@ -16,7 +17,8 @@
                           $state,
                           $stateParams,
                           AlertService,
-                          $localStorage ) {
+                          $localStorage,
+                          $q) {
     //Invoking crud actions
     $injector.invoke(CRUDController,
        this, {$scope: $scope, $stateParams: $stateParams});
@@ -29,18 +31,36 @@
     //// Fetch list of records
     $scope._baseFilter = {app_platform: $state.current.data.platform_code};
 
-    $scope.$on('$stateChangeSuccess', function (state) {
+    $scope.$on('$stateChangeSuccess', function(state) {
       $scope
         .list()
-        .then(function(){
+        .then(function() {
+          if ($scope.auth.isReseller() || $scope.auth.isRevadmin()) {
+            // Loading list of companies
+            return Companies.query(function(list) {
+              _.forEach($scope.records, function(item) {
+                var index = _.findIndex(list, {
+                  id: item.account_id
+                });
+                if (index >= 0) {
+                  item.companyName = list[index].companyName;
+                }
+              });
+            });
+          } else {
+            return $q.when();
+          }
+        })
+        .then(function() {
           if ($scope.elementIndexForAnchorScroll) {
-            setTimeout(function(){
+            setTimeout(function() {
               $anchorScroll('anchor' + $scope.elementIndexForAnchorScroll);
               $scope.$digest();
-            },500);
+            }, 500);
           }
         });
     });
+
 
     $scope.companies = [];
     $scope.model = {
@@ -58,7 +78,7 @@
       }
     };
 
-    $scope.filterKeys = ['app_name', 'app_platform', 'last_app_published_version', 'updated_at'];
+    $scope.filterKeys = ['app_name', 'app_platform', 'companyName', 'last_app_published_version', 'updated_at'];
 
 
     $scope.getRelativeDate = function (datetime) {
@@ -93,19 +113,21 @@
     };
     $scope.initEdit = function (id) {
       $scope.get(id)
-        .then(function () {
-          $scope.copyForEditor = _.clone($scope.model);
-          delete $scope.copyForEditor.$promise;
-          delete $scope.copyForEditor.$resolved;
-          delete $scope.copyForEditor.id;
-          delete $scope.copyForEditor.account_id;
-          delete $scope.copyForEditor.app_platform;
-          delete $scope.copyForEditor.sdk_key;
-          delete $scope.copyForEditor.created_at;
-          delete $scope.copyForEditor.updated_at;
-          delete $scope.copyForEditor.updated_by;
-          delete $scope.copyForEditor.created_by;
-        })
+        .then(function() {
+            $timeout(function() {
+              $scope.copyForEditor = _.clone($scope.model);
+              delete $scope.copyForEditor.$promise;
+              delete $scope.copyForEditor.$resolved;
+              delete $scope.copyForEditor.id;
+              delete $scope.copyForEditor.account_id;
+              delete $scope.copyForEditor.app_platform;
+              delete $scope.copyForEditor.sdk_key;
+              delete $scope.copyForEditor.created_at;
+              delete $scope.copyForEditor.updated_at;
+              delete $scope.copyForEditor.updated_by;
+              delete $scope.copyForEditor.created_by;
+            }, 2000);
+          })
         .catch(function (err) {
           $scope.alertService.danger('Could not load app details');
         });
@@ -159,11 +181,10 @@
     $scope.cleanModel = function (model) {
         var modelCopy = _.clone(model);
         var params = {id: model.id};
-
+        modelCopy.account_id = $scope.model.account_id;
         delete modelCopy.$promise;
         delete modelCopy.$resolved;
         delete modelCopy.id;
-        delete modelCopy.account_id;
         delete modelCopy.app_platform;
         delete modelCopy.sdk_key;
         delete modelCopy.created_at;

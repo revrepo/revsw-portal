@@ -24,6 +24,8 @@ var Constants = require('./../../../page_objects/constants');
 describe('Functional', function () {
   describe('Usage Report', function () {
 
+    // TODO: please add the same tests for reseller and revadmin roles.
+    // For "user" role please check that the menu item is not available
     var adminUser = config.get('portal.users.admin');
     var reportData = DataProvider.generateUsageReportData();
 
