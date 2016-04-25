@@ -198,6 +198,14 @@
               <input type="number" min="0" max="100" class="form-control" name="ratio" ng-disabled="_loading" ng-model="configuration.a_b_testing_origin_offload_ratio" id="a_b_testing_origin_offload_ratio">
             </div>
           </div>
+          <div class="form-group" ng-class="{ 'has-error': editForm.comment.$invalid &&
+                                      editForm.comment.$dirty }">
+            <label for="comment" class="col-sm-2 control-label" popover-trigger="mouseenter" popover="Comment">Comment</label>
+            <div class="col-sm-5">
+              <textarea id="comment" class="form-control" name="comment" ng-model="model.comment" ng-disabled="_loading">
+              </textarea>
+            </div>
+          </div>
           <hr>
           <div class="col-sm-offset-2 col-sm-10">
             <a ui-sref="^" ng-disabled="_loading" class="btn btn-default">

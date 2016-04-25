@@ -85,9 +85,14 @@
               </select>
             </div>
           </div>
-
-
-
+          <div class="form-group" ng-class="{ 'has-error': createForm.comment.$invalid &&
+                                      createForm.comment.$dirty }">
+            <label for="comment" class="col-sm-2 control-label" popover-trigger="mouseenter" popover="Comment">Comment</label>
+            <div class="col-sm-5">
+              <textarea id="comment" placeholder="Comment (max 300 symbol)" class="form-control" name="comment" ng-model="model.comment" ng-disabled="_loading">
+              </textarea>
+            </div>
+          </div>
 
           <hr>
           <div class="form-group">
