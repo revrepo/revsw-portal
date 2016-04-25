@@ -17,7 +17,8 @@
                           $state,
                           $stateParams,
                           AlertService,
-                          $localStorage ) {
+                          $localStorage,
+                          $q) {
     //Invoking crud actions
     $injector.invoke(CRUDController,
        this, {$scope: $scope, $stateParams: $stateParams});
@@ -180,11 +181,10 @@
     $scope.cleanModel = function (model) {
         var modelCopy = _.clone(model);
         var params = {id: model.id};
-
+        modelCopy.account_id = $scope.model.account_id;
         delete modelCopy.$promise;
         delete modelCopy.$resolved;
         delete modelCopy.id;
-        delete modelCopy.account_id;
         delete modelCopy.app_platform;
         delete modelCopy.sdk_key;
         delete modelCopy.created_at;
