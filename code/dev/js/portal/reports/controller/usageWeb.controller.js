@@ -17,17 +17,24 @@
 
     //  ---------------------------------
     $scope.onAccountSelect = function ( acc ) {
-      // console.log( 'onAccountSelect', acc );
-      User.selectAccount( acc );
       $scope.selected.val = acc;
+      //  do not store 'All accounts'
+      if ( acc.acc_id !== '' ) {
+        User.selectAccount( acc );
+      }
+      // console.log( 'onAccountSelect', acc );
     };
     $scope.onAccountClick = function ( acc_id ) {
       var acc = $scope.accounts.find( function( a ) {
         return a.acc_id === acc_id;
       });
       $scope.selected.val = acc;
-      User.selectAccount( acc );
+      //  do not store 'All account'
+      if ( acc.acc_id !== '' ) {
+        User.selectAccount( acc );
+      }
       $scope.onUpdate();
+      // console.log( 'onAccountClick', acc_id );
     };
 
     $scope.onTimeSet = function( newDate ) {
@@ -128,7 +135,7 @@
         .then( function( data ) {
 
           // debug
-          console.log( data );
+          // console.log( data );
           // debug
 
           var overall = data.data[data.data.length - 1/*overall summary*/];
@@ -146,6 +153,7 @@
 
     //  ---------------------------------
     if ( User.getSelectedAccount() ) {
+      console.log( '(re)loaded', User.getSelectedAccount() );
       $scope.selected.val = User.getSelectedAccount();
     }
 
