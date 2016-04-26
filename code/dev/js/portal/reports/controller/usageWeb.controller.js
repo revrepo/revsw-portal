@@ -22,6 +22,14 @@
       .withBootstrap()
       .withDOM('<<"pull-left"pl>f<t>i<"pull-left"p>>');
 
+    $scope.colDefs = [{
+      targets: [1],
+      type: 'num-fmt'
+    }, {
+      targets: [6,7],
+      type: 'num'
+    }];
+
     //  ---------------------------------
     $scope.onAccountSelect = function ( acc ) {
       $scope.selected.val = acc;
@@ -141,11 +149,7 @@
       Stats.usage_web( q )
         .$promise
         .then( function( data ) {
-
-          // debug
           // console.log( data );
-          // debug
-
           var overall = data.data[data.data.length - 1/*overall summary*/];
           format_( overall );
           $scope.report = overall;
@@ -167,7 +171,7 @@
 
     //  ---------------------------------
     if ( User.getSelectedAccount() ) {
-      console.log( '(re)loaded', User.getSelectedAccount() );
+      // console.log( '(re)loaded', User.getSelectedAccount() );
       $scope.selected.val = User.getSelectedAccount();
     }
 
