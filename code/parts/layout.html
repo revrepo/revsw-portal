@@ -1,8 +1,8 @@
 <paper-drawer-panel responsive-width="980px" drawer-width="210px">
     <section drawer>
-        <div id="logo">
+        <a href="https://www.revapm.com/" id="logo" target="_blank">
             <img src="images/logo_color.png" alt="Logo" />
-        </div>
+        </a>
         <div class="side-menu" style="height: 94%; overflow: auto;">
             <dashboard-nav-menu></dashboard-nav-menu>
             <li ui-sref-active-if="{class: 'active-side-menu-item', state: 'index.apps'}", ng-class="{'active-side-menu-item': menuExpanded('index.apps')}" style="margin-top: 8px;">

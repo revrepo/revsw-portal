@@ -316,6 +316,7 @@ section[drawer] {
 section[drawer] #logo {
   background-color: #606363;
   height: 52px;
+  background: transparent;
 }
 section[drawer] #logo img {
   margin: 8px 5px;
