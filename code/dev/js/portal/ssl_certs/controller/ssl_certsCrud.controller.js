@@ -70,7 +70,7 @@
       }
     });
 
-    $scope.filterKeys = ['cert_name', 'companyName', 'updated_at']; // TODO: add anothe filter's fields
+    $scope.filterKeys = ['cert_name', 'companyName', 'expires_at', 'domains', 'updated_at'];
 
     $scope.locations = [];
     $scope.companies = [];
@@ -150,10 +150,14 @@
         });
 
     };
-
-    $scope.deleteDomain = function(model) {
+    /**
+     * [deleteDomain description]
+     * @param  {[type]} model [description]
+     * @return {[type]}       [description]
+     */
+    $scope.deleteSSL_cert = function(model) {
       $scope.confirm('confirmModal.html', model).then(function() {
-        var certName = model.domain_name;
+        var certName = model.cert_name;
         $scope
           .delete(model)
           .then(function(data) {
@@ -279,7 +283,7 @@
       if (!isEdit) {
         return $scope._loading ||
           !model.cert_name ||
-          (!model.account_id && !$scope.model.account_id)||
+          (!model.account_id && !$scope.model.account_id) ||
           !model.public_ssl_cert ||
           !model.private_ssl_key;
       } else {
