@@ -139,19 +139,19 @@
       var json = {
         domainName: $scope.domain.domain_name,
         purges: [{
-          "url": {
-            "is_wildcard": true,
-            "expression": "/**/*"
+          'url': {
+            'is_wildcard': true,
+            'expression': '/**/*'
           }
         }, {
-          "url": {
-            "is_wildcard": true,
-            "expression": "/"
+          'url': {
+            'is_wildcard': true,
+            'expression': '/'
           }
         }, {
-          "url": {
-            "is_wildcard": true,
-            "expression": "/**"
+          'url': {
+            'is_wildcard': true,
+            'expression': '/**'
           }
         }]
       };
