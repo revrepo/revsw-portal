@@ -30,8 +30,8 @@
         url: '/edit/:id?isAdvanced',
         views: {
           page: {
-            templateUrl: 'parts/domains/edit.html',
-            // controller: 'DomainsCrudController'
+            templateUrl: 'parts/ssl_certs/edit.html',
+            controller: 'SSL_certsCrudController'
           }
         }
       });

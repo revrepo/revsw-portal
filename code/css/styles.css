@@ -222,6 +222,16 @@ input[type="checkbox"] {
 .section-edit-company {
   padding-bottom: 30px;
 }
+textarea.form-control {
+  max-width: 550px;
+}
+textarea.text--courier {
+  min-height: 30vh;
+  font-size: smaller;
+}
+.text--courier {
+  font-family: Courier;
+}
 .main_img_container {
   left: 50%;
   position: absolute;
@@ -306,6 +316,7 @@ section[drawer] {
 section[drawer] #logo {
   background-color: #606363;
   height: 52px;
+  background: transparent;
 }
 section[drawer] #logo img {
   margin: 8px 5px;

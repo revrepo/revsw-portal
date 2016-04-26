@@ -32,6 +32,7 @@
         'apikey': 'API Key',
         'team': 'Team',
         'app': 'App',
+        'sslcert': 'SSL Certificate',
         'object': 'Object'
       }
     });
