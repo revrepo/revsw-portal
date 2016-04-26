@@ -40,7 +40,7 @@ var UpdatePasswordPage = require('./user/updatePasswordPage');
 
 var AddDomainPage = require('./domain/addPage');
 var ConfigureDomainPage = require('./domain/configurePage');
-var DomainStatsPage= require('./domain/statsPage');
+var DomainStatsPage = require('./domain/statsPage');
 var DomainVersionsPage = require('./domain/versionsPage');
 var EditDomainPage = require('./domain/editPage');
 var ListDomainsPage = require('./domain/listPage');
@@ -173,7 +173,7 @@ var Portal = {
    */
   getPage: function (location) {
     return browser.getCurrentUrl().then(function (currentUrl) {
-      var hashFragmentRegExp =new RegExp('^.*' + location + '$');
+      var hashFragmentRegExp = new RegExp('^.*' + location + '$');
       if (hashFragmentRegExp.test(currentUrl)) {
         return;
       }
@@ -419,7 +419,7 @@ var Portal = {
   },
 
   /**
-   * ### Portal.createDomain()
+   * ### Portal.createDomainIfNotExist()
    *
    * Helper method that executes all steps required to create a new Domain from
    * Portal app. This method creates the domain only if it does not exist (it
@@ -564,6 +564,40 @@ var Portal = {
           browser.get(initialUrl);
         }
       });
+    });
+  },
+
+  /**
+   * ### Portal.createMobileAppIfNotExist()
+   *
+   * Helper method that executes all steps required to create a new App from
+   * Portal app. This method creates the Mobile App only if it does not exist
+   * (it validates the existence by doing a search by the domain name).
+   *
+   * @param {Object} app, data applying the schema defined in
+   * `DataProvider.generateMobileApp()`
+   *
+   * @returns {Promise}
+   */
+  createMobileAppIfNotExist: function (app) {
+    var me = this;
+    return browser.getCurrentUrl().then(function (initialUrl) {
+      me.getDomainsPage();
+      me.mobileApps.listPage.setSearch(app.name);
+      me.mobileApps.listPage.appsTable
+        .countTotalRows()
+        .then(function (totalResults) {
+          if (totalResults === 0) {
+            me.mobileApps.listPage.clickAddNewApp();
+            me.mobileApps.listPage.addNewApp(app);
+            me.mobileApps.addAppPage.clickBackToList();
+          }
+          browser.getCurrentUrl().then(function (currentUrl) {
+            if (initialUrl !== currentUrl) {
+              browser.get(initialUrl);
+            }
+          });
+        });
     });
   }
 };

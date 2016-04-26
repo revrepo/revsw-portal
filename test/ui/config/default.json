@@ -35,6 +35,12 @@
         "password": "password1",
         "role": "Normal User"
       }
+    },
+    "mobileApps": {
+      "platforms": {
+        "ios": "iOS",
+        "android": "Android"
+      }
     }
   }
 }

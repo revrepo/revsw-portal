@@ -61,7 +61,7 @@ var DataProvider = {
     // company the new user should be associated with
     var company;
     if (portalUser && portalUser.role && portalUser.role !== 'Admin') {
-       company = 'API QA Reseller Company';
+      company = 'API QA Reseller Company';
     }
 
     return {
@@ -174,16 +174,28 @@ var DataProvider = {
     }
     return {
       textArea: '\/images1\/*.png\\n\/images2\/*.png\\n\/images3\/*.png\\n' +
-                '\/images4\/*.png\\n\/images5\/*.png\\n\/images6\/*.png\\n' +
-                '\/images7\/*.png\\n\/images8\/*.png\\n\/images9\/*.png\\n'
+      '\/images4\/*.png\\n\/images5\/*.png\\n\/images6\/*.png\\n' +
+      '\/images7\/*.png\\n\/images8\/*.png\\n\/images9\/*.png\\n'
     };
   },
+
+  generateMobileApp: function (platform, skipTimestamp) {
+    var timestamp = '';
+    if (skipTimestamp === undefined || skipTimestamp !== true) {
+      timestamp = '-' + Date.now();
+    }
+    return {
+      name: platform + timestamp,
+      platform: platform
+    };
+  },
+
   generateMobileAppData: function (platform, numApps) {
     var apps = [];
     var i;
-    for(i=0; i<numApps; i++) {
+    for (i = 0; i < numApps; i++) {
       var app = {};
-      app.name = platform + (i+1);
+      app.name = platform + (i + 1);
       app.platform = platform;
       app.title = platform + ' Apps List';
       apps.push(app);

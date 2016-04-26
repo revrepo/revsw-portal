@@ -226,6 +226,19 @@ var AddNewApp = {
   },
 
   /**
+   * ### AddNewApp.isDisplayed()
+   *
+   * Checks whether the Add App page is being displayed in the UI or not.
+   *
+   * @returns {Promise}
+   */
+  isDisplayed: function () {
+    return this
+      .getTitleLbl()
+      .isPresent();
+  },
+
+  /**
    * ### AddNewApp.fill(app)
    *
    * Fills on Add New App form of `Add New App` Page.
