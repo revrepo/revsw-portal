@@ -20,7 +20,8 @@
       .withPaginationType('full_numbers')
       .withDisplayLength(pageLength)
       .withBootstrap()
-      .withDOM('<<"pull-left"pl>f<t>i<"pull-left"p>>');
+      .withDOM('<<"pull-left"pl>f<t>i<"pull-left"p>>')
+      .withOption('order', [[1, 'desc']]);
 
     $scope.colDefs = [{
       targets: [1],
@@ -28,6 +29,9 @@
     }, {
       targets: [6,7],
       type: 'num'
+    }, {
+      targets: [2,3,4,5],
+      orderData: 1
     }];
 
     //  ---------------------------------
@@ -54,8 +58,7 @@
     };
 
     $scope.onTimeSet = function( newDate ) {
-      newDate = new Date( newDate );
-      // console.log( newDate );
+      newDate = new Date( newDate + 86400000 ); //  add one day to avoid glitches with timezones
       $scope.month_year = newDate;
       $scope.month_year_symbol = newDate.toISOString().slice( 0, 7 );
     };
@@ -165,7 +168,8 @@
             .withDisplayLength(pageLength)
             .withBootstrap()
             .withDOM('<<"pull-left"pl>f<t>i<"pull-left"p>>')
-            .withOption('paging', ($scope.report.accounts.length > pageLength));
+            .withOption('paging', ($scope.report.accounts.length > pageLength))
+            .withOption('order', [[1, 'desc']]);
         });
     };
 
