@@ -1,4 +1,5 @@
-html, body {
+html,
+body {
   height: 100%;
 }
 
@@ -44,7 +45,6 @@ section[main] {
 
 .log-details {
   cursor: pointer;
-
   &:hover {
     padding-left: 2px;
   }
@@ -84,6 +84,7 @@ section[main] {
 .sortorder:after {
   content: '\25b2';
 }
+
 .sortorder.reverse:after {
   content: '\25bc';
 }
@@ -102,34 +103,29 @@ table {
 }
 
 table {
-  th {
-
-  }
-  th.thin{
+  th {}
+  th.thin {
     width: 70px;
   }
   th.actions {
     width: 120px;
   }
-
   tbody {
-
     tr.disabled {
-      &>td, &>th {
+      &>td,
+      &>th {
         color: @app-color-text-disabled;
-
         .spin {
           color: @app-color-grey;
         }
       }
     }
-
     tr.loading {
-      &>td, &th {
+      &>td,
+      &th {
         cursor: progress;
       }
     }
-
     .actions {
       a {
         margin-right: 10px;
@@ -138,7 +134,8 @@ table {
   }
 }
 
-.ui-select-multiple.ui-select-bootstrap, input.ui-select-search {
+.ui-select-multiple.ui-select-bootstrap,
+input.ui-select-search {
   max-width: 550px;
 }
 
@@ -149,15 +146,19 @@ table {
 select.form-control {
   max-width: 550px;
 }
+
 select.form-control.fixed {
   width: 150px;
 }
+
 select.form-control.fixed135 {
   width: 135px;
 }
+
 select.form-control.fixed155 {
   width: 155px;
 }
+
 select.form-control.fixed175 {
   width: 175px;
 }
@@ -169,23 +170,27 @@ input.form-control {
 .usage-report .form-group {
   margin-bottom: 6px;
 }
+
 .usage-report div.form-control {
   height: 30px;
   padding: 4px 8px;
 }
+
 .usage-report .form-horizontal .control-label {
   padding-top: 5px;
 }
+
 .usage-report .panel-title {
   font-size: 14px;
 }
+
 .usage-report a {
   cursor: pointer;
 }
+
 .popover {
   z-index: 999;
 }
-
 
 table tbody tr td {
   max-width: 300px;
@@ -208,7 +213,6 @@ alert-list {
   z-index: 999;
   left: 50%;
   top: 70px;
-
   alert {
     position: relative;
     left: -50%;
@@ -221,19 +225,38 @@ alert-list {
   background-color: transparent;
 }
 
+
 /* To hide "Powered by Ace" label in the JSON editor */
+
 a.poweredBy {
   display: none;
 }
 
-input[type="radio"]{
+input[type="radio"] {
   margin-left: 20px;
 }
 
-input[type="checkbox"]{
+input[type="checkbox"] {
   margin-left: 20px;
 }
 
-.section-edit-company{
+.section-edit-company {
   padding-bottom: 30px;
+}
+
+//
+textarea {
+  &.form-control {
+    // font-family: Courier;
+    max-width: 550px;
+  }
+  &.text--courier {
+    min-height: 30vh;
+    font-size: smaller;
+  }
+}
+
+.text--courier {
+  font-family: Courier;
+
 }
