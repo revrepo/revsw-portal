@@ -6,7 +6,7 @@
     .controller('UsageWebController', UsageWebController);
 
   /*@ngInject*/
-  function UsageWebController($scope, User, AlertService, Stats, Util) {
+  function UsageWebController($scope, User, DTOptionsBuilder, DTColumnDefBuilder, AlertService, Stats, Util) {
 
     $scope._loading = true;
     $scope.accounts = [];
@@ -14,25 +14,51 @@
     $scope.month_year = new Date();
     $scope.month_year_symbol = $scope.month_year.toISOString().slice( 0, 7 );
     $scope.report = null;
+    var pageLength = 10;
+
+    $scope.accountsDtOptions = DTOptionsBuilder.newOptions()
+      .withPaginationType('full_numbers')
+      .withDisplayLength(pageLength)
+      .withBootstrap()
+      .withDOM('<<"pull-left"pl>f<t>i<"pull-left"p>>')
+      .withOption('order', [[1, 'desc']]);
+
+    $scope.colDefs = [{
+      targets: [1],
+      type: 'num-fmt'
+    }, {
+      targets: [6,7],
+      type: 'num'
+    }, {
+      targets: [2,3,4,5],
+      orderData: 1
+    }];
 
     //  ---------------------------------
     $scope.onAccountSelect = function ( acc ) {
-      // console.log( 'onAccountSelect', acc );
-      User.selectAccount( acc );
       $scope.selected.val = acc;
+      //  do not store 'All accounts'
+      if ( acc.acc_id !== '' ) {
+        User.selectAccount( acc );
+      }
+      // console.log( 'onAccountSelect', acc );
     };
+
     $scope.onAccountClick = function ( acc_id ) {
       var acc = $scope.accounts.find( function( a ) {
         return a.acc_id === acc_id;
       });
       $scope.selected.val = acc;
-      User.selectAccount( acc );
+      //  do not store 'All account'
+      if ( acc.acc_id !== '' ) {
+        User.selectAccount( acc );
+      }
       $scope.onUpdate();
+      // console.log( 'onAccountClick', acc_id );
     };
 
     $scope.onTimeSet = function( newDate ) {
-      newDate = new Date( newDate );
-      // console.log( newDate );
+      newDate = new Date( newDate + 86400000 ); //  add one day to avoid glitches with timezones
       $scope.month_year = newDate;
       $scope.month_year_symbol = newDate.toISOString().slice( 0, 7 );
     };
@@ -126,11 +152,7 @@
       Stats.usage_web( q )
         .$promise
         .then( function( data ) {
-
-          // debug
-          console.log( data );
-          // debug
-
+          // console.log( data );
           var overall = data.data[data.data.length - 1/*overall summary*/];
           format_( overall );
           $scope.report = overall;
@@ -141,11 +163,19 @@
         })
         .finally( function() {
           $scope._loading = false;
+          $scope.accountsDtOptions = DTOptionsBuilder.newOptions()
+            .withPaginationType('full_numbers')
+            .withDisplayLength(pageLength)
+            .withBootstrap()
+            .withDOM('<<"pull-left"pl>f<t>i<"pull-left"p>>')
+            .withOption('paging', ($scope.report.accounts.length > pageLength))
+            .withOption('order', [[1, 'desc']]);
         });
     };
 
     //  ---------------------------------
     if ( User.getSelectedAccount() ) {
+      // console.log( '(re)loaded', User.getSelectedAccount() );
       $scope.selected.val = User.getSelectedAccount();
     }
 
