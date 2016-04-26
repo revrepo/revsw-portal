@@ -4,7 +4,7 @@
     <h3 class="modal-title">Confirm</h3>
   </div>
   <div class="modal-body">
-    Are you sure you want to delete SSL Certificate
+    Are you sure you want to delete SSL certificate
     <strong>{{model.cert_name}}</strong>?
   </div>
   <div class="modal-footer">
@@ -17,7 +17,7 @@
     <h3 class="modal-title">Confirm</h3>
   </div>
   <div class="modal-body">
-    Are you sure you want to update SSL Certificate
+    Are you sure you want to update SSL certificate
     <strong>{{model.cert_name}}</strong>?
   </div>
   <div class="modal-footer">
@@ -30,7 +30,7 @@
     <h3 class="modal-title">Confirm</h3>
   </div>
   <div class="modal-body">
-    Are you sure you want to publish SSL Certificate
+    Are you sure you want to publish SSL certificate
     <strong>{{model.cert_name}}</strong>?
   </div>
   <div class="modal-footer">
@@ -72,7 +72,7 @@
         </div>
         <div class="panel-body">
           <div class="alert alert-info" ng-if="records.length == 0 && !_loading">
-            Currently you don't have any SSL Certificates registered in the system. You can click on "Add SSL Certificate" button above to add a SSL Certificate.
+            Currently you don't have any SSL certificates registered in the system. You can click on "Add SSL Certificate" button above to add a SSL certificate.
           </div>
           <div class="alert alert-info" ng-if="_loading">
             <i class="glyphicon glyphicon-refresh spin" ng-if="item.loading"></i>&nbsp; Loading...
@@ -82,19 +82,18 @@
             <thead>
               <tr>
                 <th>
-                  <a href="" ng-click="order('cert_name')">Name</a>
+                  <a href="" ng-click="order('cert_name')">Certificate Name</a>
                   <span class="sortorder" ng-show="filter.predicate === 'cert_name'" ng-class="{reverse: filter.reverse}"></span>
                 </th>
                 <th>Domains</th>
-                <th><a href="" ng-click="order('type')">Type</a>
-                  <span class="sortorder" ng-show="filter.predicate === 'type'" ng-class="{reverse: filter.reverse}"></span></th>
-                <th>Expiration Date</th>
-                <th>Created By</th>
-                <th class="thin">Status</th>
+                <!-- <th><a href="" ng-click="order('type')">Type</a>
+                  <span class="sortorder" ng-show="filter.predicate === 'type'" ng-class="{reverse: filter.reverse}"></span></th> -->
+                <th>Expires At</th>
                 <th>
                   <a href="" ng-click="order('updated_at')">Last Update</a>
                   <span class="sortorder" ng-show="filter.predicate === 'updated_at'" ng-class="{reverse: filter.reverse}"></span>
                 </th>
+                 <th class="thin">Status</th>
                 <th>Actions</th>
                 <th class="account" ng-if="auth.isReseller() ||  auth.isRevadmin()">
                   <a href="" ng-click="order('companyName')">Account</a>
@@ -110,13 +109,11 @@
                 </a>
                 </td>
                 <td>{{item.domains}}</td>
-                <th>Type Private</th>
-                <th>Expiration Date</th>
-                <th>Created By</th>
-                <td> <!-- Valid/Expiring Soon/Not Validated -->
+                <td>{{getRelativeDate(item.expires_at)}}</td>
+                <td>{{getRelativeDate(item.updated_at) }}</td>
+                <td>
                   <div  cert-staging-status ng-id="item.id">ddd</div>
                 </td>
-                <td>{{ getRelativeDate(item.updated_at) }}</td>
                 <td class="actions">
                   <i class="glyphicon glyphicon-refresh spin" ng-if="item.loading"></i>
                   <a ui-sref=".edit({id: item.id})" ng-if="!item.loading" tooltip="Edit SSL Certificate">
