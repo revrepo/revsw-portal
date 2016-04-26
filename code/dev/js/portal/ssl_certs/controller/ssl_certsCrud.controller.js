@@ -38,27 +38,34 @@
 
     $scope.setResource(SSL_certs);
 
+    /**
+     * @name setAccountName
+     * @description
+     *
+     */
+    function setAccountName() {
+      if ($scope.auth.isReseller() || $scope.auth.isRevadmin()) {
+        // Loading list of companies
+        return Companies.query(function(list) {
+          _.forEach($scope.records, function(item) {
+            var index = _.findIndex(list, {
+              id: item.account_id
+            });
+            if (index >= 0) {
+              item.companyName = list[index].companyName;
+            }
+          });
+        });
+      } else {
+        return $q.when();
+      }
+    }
+
     // Fetch list of records
     $scope.$on('$stateChangeSuccess', function(state) {
       if ($state.is($scope.state)) {
         $scope.list()
-          .then(function() {
-            if ($scope.auth.isReseller() || $scope.auth.isRevadmin()) {
-              // Loading list of companies
-              return Companies.query(function(list) {
-                _.forEach($scope.records, function(item) {
-                  var index = _.findIndex(list, {
-                    id: item.account_id
-                  });
-                  if (index >= 0) {
-                    item.companyName = list[index].companyName;
-                  }
-                });
-              });
-            } else {
-              return $q.when();
-            }
-          })
+          .then(setAccountName)
           .then(function() {
             if ($scope.elementIndexForAnchorScroll) {
               setTimeout(function() {
@@ -70,7 +77,7 @@
       }
     });
 
-    $scope.filterKeys = ['cert_name', 'companyName', 'updated_at']; // TODO: add anothe filter's fields
+    $scope.filterKeys = ['cert_name', 'companyName', 'expires_at', 'domains', 'updated_at'];
 
     $scope.locations = [];
     $scope.companies = [];
@@ -150,15 +157,20 @@
         });
 
     };
-
-    $scope.deleteDomain = function(model) {
+    /**
+     * [deleteDomain description]
+     * @param  {[type]} model [description]
+     * @return {[type]}       [description]
+     */
+    $scope.deleteSSL_cert = function(model) {
       $scope.confirm('confirmModal.html', model).then(function() {
-        var certName = model.domain_name;
+        var certName = model.cert_name;
         $scope
           .delete(model)
           .then(function(data) {
             $scope.alertService.success('SSL certificate ' + certName + ' deleted.');
-            $scope.list();
+            $scope.list()
+              .then(setAccountName);
           })
           .catch(function(err) {
             $scope.alertService.danger(err);
@@ -279,7 +291,7 @@
       if (!isEdit) {
         return $scope._loading ||
           !model.cert_name ||
-          (!model.account_id && !$scope.model.account_id)||
+          (!model.account_id && !$scope.model.account_id) ||
           !model.public_ssl_cert ||
           !model.private_ssl_key;
       } else {
@@ -293,188 +305,5 @@
     $scope.getRelativeDate = function(datetime) {
       return moment.utc(datetime).fromNow();
     };
-
-
-    /**
-     * Get editor instance
-     */
-    $scope.jsonEditorEvent = function(instance) {
-      $scope.jsonEditorInstance = instance;
-    };
-
-    /**
-     * Set watcher on json editor's text to catch json validation error
-     */
-    $scope.$watch('jsonEditorInstance.getText()', function(val) {
-      // if editor text is empty just return
-      if (!val) {
-        $scope.jsonIsInvalid = true;
-        return;
-      }
-
-      // try to parse editor text as valid json and check if at least one item exists, if yes then enable Purge button
-      try {
-        var json = JSON.parse(val);
-        $scope.jsonIsInvalid = !json || !Object.keys(json).length;
-      } catch (err) {
-        // if it's not valid json or it's empty disable Purge button
-        $scope.jsonIsInvalid = true;
-      }
-    });
-
-    /**
-     * @name  onAddNewCacheRule
-     * @description
-     *
-     * Add new caching rule
-     *
-     * @return
-     */
-    $scope.onAddNewCachingRule = function() {
-      var _newCachingRule = {
-        version: 1,
-        url: {
-          is_wildcard: true,
-          value: '' // NOTE: must be empty for a new Caching Rule
-        },
-        edge_caching: {
-          new_ttl: 0,
-          override_no_cc: false,
-          override_origin: false,
-          query_string_list_is_keep: false,
-          query_string_keep_or_remove_list: []
-        },
-        browser_caching: {
-          force_revalidate: false,
-          new_ttl: 0,
-          override_edge: false
-        },
-        cookies: {
-          ignore_all: false,
-          keep_or_ignore_list: [],
-          list_is_keep: false,
-          override: false,
-          remove_ignored_from_request: false,
-          remove_ignored_from_response: false
-        },
-        $$cachingRuleState: {
-          isCollapsed: true
-        }
-      };
-      $scope.model.rev_component_bp.caching_rules.push(_newCachingRule);
-      $scope.alertService.success('A new default caching rule has been added to the end of the list. Please configure the rule before saving the configuration.');
-    };
-    /**
-     * @name  onRemoveCachingRule
-     * @description
-     *
-     * Deleting Caching
-     *
-     * @return
-     */
-    $scope.onRemoveCachingRule = function(index) {
-      $scope.confirm('confirmModalDeleteCachingRule.html', {
-          url: $scope.model.rev_component_bp.caching_rules[index].url
-        })
-        .then(function() {
-          $scope.model.rev_component_bp.caching_rules.splice(index, 1);
-          $scope.alertService.success('Caching Rule was deleted.');
-        });
-    };
-    /**
-     * @name  onUpCachingRule
-     * @description
-     *
-     * @param  {Object} element - Caching Rule Object
-     * @return {Boolean|Integer}
-     */
-    $scope.onUpCachingRule = function(element) {
-      var array = $scope.model.rev_component_bp.caching_rules;
-      var index = array.indexOf(element);
-      // Item non-existent?
-      if (index === -1) {
-        return false;
-      }
-      // If there is a previous element in sections
-      if (array[index - 1]) {
-        // Swap elements
-        array.splice(index - 1, 2, array[index], array[index - 1]);
-      } else {
-        // Do nothing
-        return 0;
-      }
-    };
-    /**
-     * @name  onDownCachingRule
-     * @description
-     *
-     * @param  {Object} element - Caching Rule Object
-     * @return {Boolean|Integer}
-     */
-    $scope.onDownCachingRule = function(element) {
-      var array = $scope.model.rev_component_bp.caching_rules;
-      var index = array.indexOf(element);
-      // Item non-existent?
-      if (index === -1) {
-        return false;
-      }
-      // If there is a next element in sections
-      if (array[index + 1]) {
-        // Swap elements
-        array.splice(index, 2, array[index + 1], array[index]);
-      } else {
-        // Do nothing
-        return 0;
-      }
-    };
-
-    /**
-     * @name  onCollapsAllCachingRule
-     * @description
-     *
-     * @return
-     */
-    $scope.onCollapsAllCachingRule = function() {
-      var _rules = $scope.model.rev_component_bp.caching_rules;
-      angular.forEach(_rules, function(item) {
-        item.$$cachingRuleState.isCollapsed = true;
-
-      });
-    };
-    /**
-     * @name  onExpandAllCachingRule
-     * @description
-     *
-     * @return
-     */
-    $scope.onExpandAllCachingRule = function() {
-      var _rules = $scope.model.rev_component_bp.caching_rules;
-      angular.forEach(_rules, function(item) {
-        item.$$cachingRuleState.isCollapsed = false;
-      });
-    };
-
-    $scope.onChangeModeView = function() {
-      $scope.isAdvancedMode = !$scope.isAdvancedMode;
-    };
-    /**
-     * @description
-     *
-     * Watch by changing 'isAdvancedMode'
-     * Make synce data
-     *
-     * @param  {Boollean} newVal
-     * @param  {Boolean} oldVal
-     * @return
-     */
-    $scope.$watch('isAdvancedMode', function(newVal, oldVal) {
-      if (newVal !== oldVal && newVal === true) {
-        var newModel = $scope.prepareSSL_certToUpdate($scope.model);
-        $scope.modelAdvance = angular.copy(newModel);
-      }
-      if (newVal !== oldVal && newVal === false) {
-        _.merge($scope.model, $scope.modelAdvance);
-      }
-    });
   }
 })();
