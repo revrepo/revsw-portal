@@ -1,3 +1,16 @@
+<script type="text/ng-template" id="confirmModal.html">
+  <div class="modal-header">
+    <h3 class="modal-title">Confirm</h3>
+  </div>
+  <div class="modal-body">
+    Are you sure you want to purge all objects for
+    <strong>{{model.domain_name}}</strong>?
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+    <button class="btn btn-danger" type="button" ng-click="ok()">OK</button>
+  </div>
+</script>
 <div class="container-fluid">
   <div class="row">
     <div class="col-sm-12">
@@ -47,6 +60,11 @@
                     Cancel
                   </a>
                   &nbsp;
+                  <button class="btn btn-danger" ng-disabled="_loading || !domain" ng-click="purgeDefaultText()">
+                    <i class="glyphicon glyphicon-refresh spin" ng-if="_loading"></i>
+                    <i class="glyphicon glyphicon-trash" ng-if="!_loading"></i>&nbsp; Purge All Objects
+                  </button>
+                  &nbsp;
                   <button class="btn btn-danger"
                           ng-disabled="_loading || !domain || jsonIsInvalid"
                           ng-click="purge()">
@@ -82,7 +100,7 @@
                    <div class="">
                      Purge all PNG files under /images, <b>recursive</b> (so e.g. files under /images/today/ will also be
                      purged)
-  
+
                          <pre>
 {
 "purges": [

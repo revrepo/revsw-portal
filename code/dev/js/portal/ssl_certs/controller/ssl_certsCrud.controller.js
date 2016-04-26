@@ -86,6 +86,7 @@
       id: 'private-revapm',
       typeName: 'Private With RevAPM-Provided Key'
     }];
+
     $scope.fetchCompanies = function(companyIds) {
       var promises = [];
       companyIds.forEach(function(id) {
@@ -97,30 +98,28 @@
         $scope.companies = data;
       });
     };
-
-    $scope.prepareSimpleDomainUpdate = function(model_current) {
+    /**
+     * @name prepareSSL_certToUpdate
+     * @description
+     *
+     * @param  {[type]} model_current [description]
+     * @return {[type]}               [description]
+     */
+    $scope.prepareSSL_certToUpdate = function(model_current) {
       var model;
       if (model_current.toJSON === undefined) {
         model = _.clone(model_current, true);
       } else {
         model = _.clone(model_current.toJSON(), true);
       }
-      if (model.rev_component_bp) {
-        delete model.rev_component_bp.cache_opt_choice;
-        delete model.rev_component_bp.certificate_urls;
-        delete model.rev_component_bp.ssl_certificates;
-        if (model.rev_component_bp.caching_rules) {
-          angular.forEach(model.rev_component_bp.caching_rules, function(item) {
-            delete item.$$cachingRuleState;
-          });
-        }
-      }
-      if (model.domain_name) {
-        delete model.domain_name;
-      }
-      delete model.cname;
-      delete model.origin_protocol;
       delete model.id;
+      delete model.created_by;
+      delete model.created_at;
+      delete model.updated_at;
+      delete model.expires_at;
+      delete model.domains;
+      delete model.last_published_ssl_config_version;
+
       return model;
     };
 
@@ -144,81 +143,21 @@
 
     $scope.setAccountId();
 
-    $scope.getDomain = function(id) {
+    $scope.getSSL_cert = function(id) {
       $scope.get(id)
-        .then(saveNoChangingValue)
-        .then(validateDomainProperties)
         .catch(function(err) {
-          $scope.alertService.danger('Could not load domain details');
+          $scope.alertService.danger('Could not load SSL certificate details');
         });
 
-      /**
-       * @name  validateDomainProperties
-       * @description
-       *
-       * Rules:
-       * 1. If “Origin Communication Protocol”(origin_secure_protocol) is not specified in the received JSON then set it to default value “Use End User Protocol”
-       * 2. The default value for “RUM Data Collection”(rev_component_co.enable_rum) must to be “false”
-       * @param  {[type]} domain [description]
-       * @return {[type]}        [description]
-       */
-      function validateDomainProperties(domain) {
-        // $scope.modelAdvance = {'loading':'Please wait few seconds...'};
-        $timeout(function() {
-          $scope.modelAdvance = angular.copy($scope.prepareSimpleDomainUpdate(domain));
-        }, 2000);
-
-        var _domain_default_property = {
-          proxy_timeout: 20,
-          domain_aliases: [],
-          origin_secure_protocol: 'use_end_user_protocol',
-          rev_component_co: {
-            enable_rum: false
-          }
-        };
-        // NOTE: set default properties
-        _.defaultsDeep($scope.model, _domain_default_property);
-        delete $scope.model.domain_name;
-        delete $scope.model.cname;
-        delete $scope.model.id;
-        angular.forEach($scope.model.rev_component_bp.caching_rules, function(item) {
-          // NOTE: add parameter for collapsed item
-          angular.extend(item, {
-            $$cachingRuleState: {
-              isCollapsed: true
-            }
-          });
-
-        });
-      }
-      /**
-       * @name  saveNoChangingValue
-       * @description
-       *
-       * Save no changing params
-       *
-       * @param  {Object} model
-       * @return {Promise}
-       */
-      function saveNoChangingValue(model) {
-        $scope.modelInfo = {
-          domain_name: model.domain_name,
-          cname: model.cname
-        };
-        delete model.domain_name;
-        delete model.cname;
-        delete model.id;
-        return $q.when(model);
-      }
     };
 
     $scope.deleteDomain = function(model) {
       $scope.confirm('confirmModal.html', model).then(function() {
-        var domainName = model.domain_name;
+        var certName = model.domain_name;
         $scope
           .delete(model)
           .then(function(data) {
-            $scope.alertService.success('Domain ' + domainName + ' deleted.');
+            $scope.alertService.success('SSL certificate ' + certName + ' deleted.');
             $scope.list();
           })
           .catch(function(err) {
@@ -226,18 +165,34 @@
           });
       });
     };
-
-    $scope.createDomain = function(model) {
+    /**
+     * @name  createSSL_cert
+     * @description
+     *
+     * Create new SSL certificate
+     *
+     * @param  {[type]} model [description]
+     * @return {[type]}       [description]
+     */
+    $scope.createSSL_cert = function(model) {
+      model.cert_type = 'private'; // TODO:
       $scope
         .create(model)
         .then(function() {
-          $scope.alertService.success('Domain created', 5000);
+          $scope.alertService.success('SSL certificate created', 5000);
           $scope.setAccountId();
         })
         .catch($scope.alertService.danger);
     };
-
-    $scope.publishDomain = function(model) {
+    /**
+     * @name  publishSSL_cert
+     * @description
+     *
+     *
+     * @param  {[type]} model [description]
+     * @return {[type]}       [description]
+     */
+    $scope.publishSSL_cert = function(model) {
       if (!model) {
         return;
       }
@@ -246,21 +201,27 @@
       }
       var modelId = model.id;
       $scope.confirm('confirmPublishModal.html', model).then(function() {
-        model = $scope.prepareSimpleDomainUpdate(model);
+        model = $scope.prepareSSL_certToUpdate(model);
         $scope.update({
             id: modelId,
             options: 'publish'
           }, model)
           .then(function(data) {
-            $scope.alertService.success('Domain configuration published', 5000);
+            $scope.alertService.success('SSL certificate published', 5000);
           })
           .catch(function(err) {
             $scope.alertService.danger(err);
           });
       });
     };
-
-    $scope.validateDomain = function(model) {
+    /**
+     * @name  validateSSL_cert
+     * @description
+     *
+     * @param  {[type]} model [description]
+     * @return {[type]}       [description]
+     */
+    $scope.validateSSL_cert = function(model) {
       if (!model) {
         return;
       }
@@ -268,20 +229,27 @@
         model.id = $stateParams.id;
       }
       var modelId = model.id;
-      model = $scope.prepareSimpleDomainUpdate(model);
+      model = $scope.prepareSSL_certToUpdate(model);
       $scope.update({
           id: modelId,
           options: 'verify_only'
         }, model)
         .then(function(data) {
-          $scope.alertService.success('The domain configuration is correct', 5000);
+          $scope.alertService.success('The SSL certificate is correct', 5000);
         })
         .catch(function(err) {
           $scope.alertService.danger(err.data.message || 'Oops something ment wrong', 5000);
         });
     };
+    /**
+     * @name  updateSSL_cert
+     * @description
+     *
+     * @param  {[type]} model [description]
+     * @return {[type]}       [description]
+     */
+    $scope.updateSSL_cert = function(model) {
 
-    $scope.updateDomain = function(model) {
       if (!model) {
         return;
       }
@@ -290,12 +258,12 @@
       }
       var modelId = model.id;
       $scope.confirm('confirmUpdateModal.html', model).then(function() {
-        model = $scope.prepareSimpleDomainUpdate(model);
+        model = $scope.prepareSSL_certToUpdate(model);
         $scope.update({
             id: modelId
           }, model)
           .then(function() {
-            $scope.alertService.success('Domain updated', 5000);
+            $scope.alertService.success('SSL certificate updated', 5000);
           })
           .catch(function(err) {
             $scope.alertService.danger(err.data.message || 'Oops something ment wrong', 5000);
@@ -310,18 +278,15 @@
     $scope.disableSubmit = function(model, isEdit) {
       if (!isEdit) {
         return $scope._loading ||
-          !model.domain_name ||
-          !model.account_id ||
-          !model.origin_server ||
-          !model.origin_host_header ||
-          !model.origin_server_location_id;
+          !model.cert_name ||
+          (!model.account_id && !$scope.model.account_id)||
+          !model.public_ssl_cert ||
+          !model.private_ssl_key;
       } else {
         return $scope._loading ||
-          !model.account_id ||
-          !model.origin_server ||
-          !model.origin_host_header ||
-          !model.origin_server_location_id ||
-          !model.proxy_timeout;
+          (!model.account_id && !$scope.model.account_id) ||
+          !model.public_ssl_cert ||
+          !model.private_ssl_key;
       }
     };
 
@@ -504,7 +469,7 @@
      */
     $scope.$watch('isAdvancedMode', function(newVal, oldVal) {
       if (newVal !== oldVal && newVal === true) {
-        var newModel = $scope.prepareSimpleDomainUpdate($scope.model);
+        var newModel = $scope.prepareSSL_certToUpdate($scope.model);
         $scope.modelAdvance = angular.copy(newModel);
       }
       if (newVal !== oldVal && newVal === false) {
