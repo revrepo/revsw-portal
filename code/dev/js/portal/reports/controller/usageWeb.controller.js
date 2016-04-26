@@ -31,7 +31,7 @@
       type: 'num'
     }, {
       targets: [2,3,4,5],
-      orderData: 1
+      orderable: false
     }];
 
     //  ---------------------------------
