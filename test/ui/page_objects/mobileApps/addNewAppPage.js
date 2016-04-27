@@ -221,9 +221,11 @@ var AddNewApp = {
    * @returns {Promise}
    */
   clickRegister: function () {
-    return this
-      .getRegisterBtn()
-      .click();
+    if (this.getRegisterBtn()) {
+      return this.getRegisterBtn().click();
+    } else {
+      return null;
+    }
   },
 
   /**
