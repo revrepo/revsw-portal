@@ -48,9 +48,10 @@ xdescribe('Smoke', function () {   // jshint ignore:line
 
           describe('Platform: ' + platform, function () {
 
+            var app = DataProvider.generateMobileApp(platform);
+            
             beforeAll(function () {
               Portal.signIn(user);
-              var app = DataProvider.generateMobileApp(platform);
               Portal.createMobileApps(platform, [app]);
               Portal.goToMobileApps();
             });
