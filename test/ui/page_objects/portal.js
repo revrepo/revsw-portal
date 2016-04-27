@@ -582,13 +582,13 @@ var Portal = {
   createMobileAppIfNotExist: function (app) {
     var me = this;
     return browser.getCurrentUrl().then(function (initialUrl) {
-      me.getDomainsPage();
+      me.goToMobileApps();
+      me.header.goTo(app.platform);
       me.mobileApps.listPage.setSearch(app.name);
       me.mobileApps.listPage.appsTable
         .countTotalRows()
         .then(function (totalResults) {
           if (totalResults === 0) {
-            me.mobileApps.listPage.clickAddNewApp();
             me.mobileApps.listPage.addNewApp(app);
             me.mobileApps.addAppPage.clickBackToList();
           }

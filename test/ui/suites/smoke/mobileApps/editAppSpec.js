@@ -60,9 +60,8 @@ describe('Smoke', function () {
 
             it('should display edit app button',
               function () {
-                var editButton = Portal.mobileApps.listPage
-                  .getFirstRow()
-                  .getEditBtn();
+                var editButton = Portal.mobileApps.listPage.appsTable
+                  .getEditApp();
                 expect(editButton.isPresent()).toBeTruthy();
               });
 
@@ -76,8 +75,8 @@ describe('Smoke', function () {
             it('should allow to cancel an app edition',
               function () {
                 Portal.mobileApps.listPage.appsTable.clickEditApp();
-                Portal.mobileApps.editAppPage.setAppName('something');
-                Portal.mobileApps.editAppPage.clickCancel();
+                Portal.mobileApps.editAppPage.form.setAppName('something');
+                Portal.mobileApps.editAppPage.form.clickCancel();
                 expect(Portal.mobileApps.listPage.isDisplayed()).toBeTruthy();
               });
 
@@ -89,9 +88,11 @@ describe('Smoke', function () {
                 expect(Portal.alerts.getAll().count()).toEqual(1);
                 expect(Portal.alerts.getFirst().getText())
                   .toEqual('App registered');
+                Portal.mobileApps.addAppPage.clickBackToList();
                 Portal.mobileApps.listPage.searchAndEdit(app);
-                app.name = 'UPDATED_' + app.name;
+                app.name = 'UPDATED-' + app.name;
                 Portal.mobileApps.editAppPage.update(app);
+                Portal.dialog.clickOk();
                 expect(Portal.alerts.getAll().count()).toEqual(1);
                 expect(Portal.alerts.getFirst().getText())
                   .toEqual('App updated');

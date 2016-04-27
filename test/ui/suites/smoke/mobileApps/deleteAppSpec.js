@@ -25,8 +25,8 @@ describe('Smoke', function () {
   // Defining set of users for which all below tests will be run
   var users = [
     config.get('portal.users.admin'),
-     config.get('portal.users.reseller'),
-     config.get('portal.users.revAdmin')
+    config.get('portal.users.reseller'),
+    config.get('portal.users.revAdmin')
   ];
   var platforms = [
     config.get('portal.mobileApps.platforms.ios'),
@@ -51,6 +51,8 @@ describe('Smoke', function () {
 
           describe('Platform: ' + platform, function () {
 
+            var app;
+
             beforeEach(function () {
               Portal.header.goTo(platform);
             });
@@ -60,15 +62,14 @@ describe('Smoke', function () {
 
             it('should display delete app button',
               function () {
-                var editButton = Portal.mobileApps.listPage
-                  .getFirstRow()
-                  .getDeleteBtn();
+                var editButton = Portal.mobileApps.listPage.appsTable
+                  .getDeleteApp();
                 expect(editButton.isPresent()).toBeTruthy();
               });
 
             it('should display a confirmation message when deleting an app',
               function () {
-                var app = DataProvider.generateMobileApp(platform);
+                app = DataProvider.generateMobileApp(platform);
                 Portal.mobileApps.listPage.addNewApp(app);
                 expect(Portal.alerts.getAll().count()).toEqual(1);
                 expect(Portal.alerts.getFirst().getText())
@@ -81,7 +82,6 @@ describe('Smoke', function () {
 
             it('should allow to delete an app',
               function () {
-                var app = DataProvider.generateMobileApp(platform);
                 Portal.mobileApps.listPage.searchAndDelete(app);
                 expect(Portal.dialog.isDisplayed()).toBeTruthy();
                 Portal.dialog.clickOk();

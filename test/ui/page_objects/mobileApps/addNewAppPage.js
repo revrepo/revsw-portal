@@ -50,6 +50,9 @@ var AddNewApp = {
     dropDowns: {
       platform: {
         id: 'app_platform'
+      },
+      companyName: {
+        id: 'account_id'
       }
     }
   },
@@ -62,7 +65,7 @@ var AddNewApp = {
    *
    * @returns {Selenium WebDriver Element}
    */
-  getTitleLbl: function() {
+  getTitleLbl: function () {
     return element
       .all(by.css(this.locators.views.container))
       .get(0);
@@ -103,6 +106,10 @@ var AddNewApp = {
    */
   getPlatformDDown: function () {
     return element(by.id(this.locators.dropDowns.platform.id));
+  },
+
+  getCompanyNameDDown: function () {
+    return element(by.id(this.locators.dropDowns.companyName.id));
   },
 
   /**
@@ -171,6 +178,13 @@ var AddNewApp = {
     return this
       .getPlatformDDown()
       .sendKeys(value);
+  },
+
+  setCompanyName: function (companyName) {
+    return this
+      .getCompanyNameDDown()
+      .element(by.cssContainingText('option', companyName))
+      .click();
   },
 
   /**
@@ -252,8 +266,15 @@ var AddNewApp = {
    * @returns {Promise}
    */
   fill: function (app) {
-    this.setAppName(app.name);
-    this.setPlatform(app.platform);
+    var me = this;
+    return element.all(by.id(this.locators.dropDowns.companyName.id))
+      .then(function (items) {
+        me.setAppName(app.name);
+        me.setPlatform(app.platform);
+        if (app.companyName && items.length > 0) {
+          me.setCompanyName(app.companyName);
+        }
+      });
   }
 };
 

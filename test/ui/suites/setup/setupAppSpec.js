@@ -20,7 +20,7 @@ var config = require('config');
 var Portal = require('./../../page_objects/portal');
 var DataProvider = require('./../../common/providers/data');
 
-xdescribe('Setup', function () { // jshint ignore:line
+xdescribe('Setup', function () {
 
   // Defining set of users for which all below tests will be run
   var users = [
@@ -45,7 +45,6 @@ xdescribe('Setup', function () { // jshint ignore:line
 
             beforeEach(function () {
               Portal.signIn(user);
-              Portal.getMobileApps(platform);
             });
 
             afterEach(function () {
@@ -53,12 +52,15 @@ xdescribe('Setup', function () { // jshint ignore:line
             });
 
             var apps = [];
+            var app;
             var prefix;
 
             for (var i = 10; i < 40; i++) {
               prefix = 'qa-' + user.role.toLowerCase().replace(/\W/g, '-') +
                 '-';
-              apps.push(DataProvider.generateMobileApp(prefix + i, true));
+              app = DataProvider.generateMobileApp(platform, true);
+              app.name = app.name + '-' + i;
+              apps.push(app);
             }
 
             apps.forEach(function (app) {

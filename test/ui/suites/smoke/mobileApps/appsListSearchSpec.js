@@ -21,11 +21,7 @@ var Portal = require('./../../../page_objects/portal');
 var DataProvider = require('./../../../common/providers/data');
 var Constants = require('./../../../page_objects/constants');
 
-// TODO:
-// 1) Please use unique app names (with timestamps - just like we do with other tests)
-// 2) The Android app is not getting created - please review and fix
-
-xdescribe('Smoke', function () {   // jshint ignore:line
+describe('Smoke', function () {
 
   // Defining set of users for which all below tests will be run
   var users = [
@@ -48,9 +44,11 @@ xdescribe('Smoke', function () {   // jshint ignore:line
 
           describe('Platform: ' + platform, function () {
 
+            var app;
+
             beforeAll(function () {
               Portal.signIn(user);
-              var app = DataProvider.generateMobileApp(platform);
+              app = DataProvider.generateMobileApp(platform);
               Portal.createMobileApps(platform, [app]);
               Portal.goToMobileApps();
             });
