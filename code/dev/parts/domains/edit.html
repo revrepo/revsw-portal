@@ -285,7 +285,7 @@
           </div>
           <!-- //  “SSL Configuration” -->
           <!-- Attached SSL Certificate-->
-          <div class="form-group" >
+          <div class="form-group">
             <label for="account_id" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" popover="Select SSL certificate should be associated with">SSL Certificates</label>
             <div class="col-sm-9">
               <select class="form-control" ng-disabled="_loading" ng-model="model.ssl_cert_id" id="ssl_cert_id" ng-options="obj.id as obj.cert_name for obj in SSL_certs | filter :{account_id:model.account_id}" style="float: left;">
@@ -295,7 +295,7 @@
             </div>
           </div>
           <!-- -->
-          <div class="col-md-12 ssl-certificate-configuration">
+          <div class="ssl-certificate-configuration">
             <div class="panel panel-default ">
               <div class="panel-body form">
                 <div class="col-md-5">
@@ -340,16 +340,9 @@
                       <input type="text" class="form-control" ng-disabled="!isCustomSSL_conf_profile" ng-model="model.ssl_ciphers" id="ssl_ciphers" placeholder="SSL Ciphers">
                     </div>
                   </div>
-                  <div class="form-group ">
-                    <label for="ssl_prefer_server_ciphers" popover-append-to-body="{{true}}" class="col-sm-6 control-label" popover-trigger="mouseenter" popover="Prefer Server-Side Ciphers">
-                      Prefer Server-Side Ciphers</label>
-                    <div class="col-sm-6">
-                      <div class="checkbox">
-                        <label>
-                          <input type="checkbox" ng-disabled="!isCustomSSL_conf_profile" ng-model="model.ssl_prefer_server_ciphers" id="ssl_prefer_server_ciphers" placeholder="Prefer Server-Side Ciphers">
-                        </label>
-                      </div>
-                    </div>
+                  <div class="checkbox">
+                    <label popover-trigger="mouseenter">
+                      <input type="checkbox" ng-disabled="!isCustomSSL_conf_profile" ng-model="model.ssl_prefer_server_ciphers" id="ssl_prefer_server_ciphers" placeholder="Prefer Server-Side Ciphers"><strong> Prefer Server-Side Ciphers</strong></label>
                   </div>
                 </div>
                 <!-- // Right section-->

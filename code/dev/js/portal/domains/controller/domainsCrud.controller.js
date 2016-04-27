@@ -181,6 +181,10 @@
       return SSL_conf_profiles.query().$promise
         .then(function(list) {
           $scope.SSL_conf_profiles = list;
+          if($scope.model.ssl_conf_profile ===''){
+            // set default value for ssl_conf_profile
+            $scope.model.ssl_conf_profile = $scope.SSL_conf_profiles[0].id;
+          }
         }).$promise;
     }
     /**
