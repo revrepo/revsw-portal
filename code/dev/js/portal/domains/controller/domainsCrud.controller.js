@@ -18,7 +18,9 @@
     $q,
     $state,
     $anchorScroll,
-    DomainsCachingRuleDefault) {
+    DomainsCachingRuleDefault,
+    SSL_certs,
+    SSL_conf_profiles) {
     //Invoking crud actions
     $injector.invoke(CRUDController, this, {
       $scope: $scope,
@@ -120,9 +122,23 @@
       if (model.domain_name) {
         delete model.domain_name;
       }
+      // NOTE: clean params ssl config
+      if ($scope.isCustomSSL_conf_profile) {
+        model.ssl_conf_profile = '';
+      } else {
+        var item = _.find($scope.SSL_conf_profiles, {
+          id: model.ssl_conf_profile
+        });
+        if (!!item) {
+          model.ssl_ciphers = item.ssl_ciphers;
+          model.ssl_protocols = item.ssl_protocols;
+          model.ssl_prefer_server_ciphers = item.ssl_prefer_server_ciphers;
+        }
+      }
       delete model.cname;
       delete model.origin_protocol;
       delete model.id;
+      // console.log('model', model);
       return model;
     };
 
@@ -147,10 +163,45 @@
     $scope.setAccountId();
     $scope.fetchLocations();
 
+    $scope.SSL_certs = [];
+    $scope.SSL_conf_profiles = [];
+
+    function fetchSSL_certificates() {
+      $scope.SSL_certs.length = 0;
+      return SSL_certs.query().$promise
+        .then(function(list) {
+          //TODO: add control USER ROLE for filtred data
+          if ($scope.auth.isReseller() || $scope.auth.isRevadmin()) {}
+          $scope.SSL_certs = list;
+        }).$promise;
+    }
+
+    function fetchSSL_conf_profiles() {
+      $scope.SSL_conf_profiles.length = 0;
+      return SSL_conf_profiles.query().$promise
+        .then(function(list) {
+          $scope.SSL_conf_profiles = list;
+        }).$promise;
+    }
+    /**
+     * @name  getDomain
+     * @description
+     *
+     * @param  {String} id
+     * @return
+     */
     $scope.getDomain = function(id) {
       $scope.get(id)
         .then(saveNoChangingValue)
         .then(validateDomainProperties)
+        .then(function() {
+          if ($scope.model.ssl_conf_profile !== '') {
+            $scope.isCustomSSL_conf_profile = false;
+          } else {
+            $scope.isCustomSSL_conf_profile = true;
+          }
+          return $q.all([fetchSSL_certificates(), fetchSSL_conf_profiles()]);
+        })
         .catch(function(err) {
           $scope.alertService.danger('Could not load domain details');
         });
@@ -505,14 +556,60 @@
      * @param  {Boolean} oldVal
      * @return
      */
+    var _id_ssl_conf_profile = '';
     $scope.$watch('isAdvancedMode', function(newVal, oldVal) {
       if (newVal !== oldVal && newVal === true) {
         var newModel = $scope.prepareSimpleDomainUpdate($scope.model);
+        _id_ssl_conf_profile = $scope.model.ssl_conf_profile;
         $scope.modelAdvance = angular.copy(newModel);
+        if ($scope.isCustomSSL_conf_profile === true) {
+          $scope.modelAdvance.ssl_conf_profile = '';
+        }
       }
       if (newVal !== oldVal && newVal === false) {
+        if (_id_ssl_conf_profile !== '') {
+          $scope.modelAdvance.ssl_conf_profile = _id_ssl_conf_profile;
+        }
         _.merge($scope.model, $scope.modelAdvance);
+        if ($scope.isCustomSSL_conf_profile === false) {
+          syncSSL_conf_profile($scope.model.ssl_conf_profile);
+        }
       }
     });
+
+    $scope.$watch('model.ssl_conf_profile', function(newVal, oldVal) {
+      if (newVal !== oldVal && !!newVal) {
+        syncSSL_conf_profile(newVal);
+      }
+    });
+
+    $scope.$watch('isCustomSSL_conf_profile', function(newVal, oldVal) {
+      if (newVal !== oldVal && newVal !== 'undefuned') {
+        if (newVal === false) {
+          syncSSL_conf_profile($scope.model.ssl_conf_profile);
+        }
+      }
+    });
+    /**
+     * @name  syncSSL_conf_profile
+     * @description
+     *
+     *
+     * @param  {[type]} id [description]
+     * @return {[type]}    [description]
+     */
+    function syncSSL_conf_profile(id) {
+      var item = _.find($scope.SSL_conf_profiles, {
+        id: id
+      });
+      if (!!item) {
+        angular.extend($scope.model, {
+          ssl_ciphers: item.ssl_ciphers,
+          ssl_protocols: item.ssl_protocols,
+          ssl_prefer_server_ciphers: item.ssl_prefer_server_ciphers
+        });
+      }
+    }
+
   }
 })();
