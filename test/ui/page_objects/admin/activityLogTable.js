@@ -18,8 +18,8 @@
 
 // # Activity Log Page Object
 
-// This `Activity Log Table` Page Object abstracts all operations or actions that a
-// common user could do in the Activity Log page the Portal app/site.
+// This `Activity Log Table` Page Object abstracts all operations or actions
+// that a common user could do in the Activity Log page the Portal app/site.
 var ActivityLogTable = {
 
   // ## Properties
@@ -33,7 +33,8 @@ var ActivityLogTable = {
     pullRight: '.pull-right',
     tables: {
       log: {
-        repeater: 'log in filteredRecords | limitTo:filter.limit:filter.skip track by $index'
+        repeater: 'log in filteredRecords | limitTo:filter.limit:filter.skip ' +
+        'track by $index'
       }
     },
     pagination: {
