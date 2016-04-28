@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-sm-12">
     <h2 class="pull-left page-title">
-      Edit Domain {{model.domain_name}}
+      Edit Domain <strong ng-if="modelInfo.domain_name">{{modelInfo.domain_name}}</strong>
     </h2>
   </div>
 </div>
@@ -272,6 +272,84 @@
               </div>
             </div>
           </div>
+          <hr>
+          <!--  “SSL Configuration” -->
+          <div class="form-group form-inline">
+            <label for="enable_ssl" class="col-sm-3 control-label">
+              Accept SSL Requests
+            </label>
+            <div class="col-md-9">
+              <toggle-switch name="enable_ssl" ng-disabled="_loading" ng-model="model.enable_ssl" on-label="On" off-label="Off">
+              </toggle-switch>
+            </div>
+          </div>
+          <!-- //  “SSL Configuration” -->
+          <!-- Attached SSL Certificate-->
+          <div class="form-group">
+            <label for="account_id" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" popover="Select SSL certificate which should be associated with the domain">SSL Certificate</label>
+            <div class="col-sm-9">
+              <select class="form-control" ng-disabled="_loading" ng-model="model.ssl_cert_id" id="ssl_cert_id" ng-options="obj.id as obj.cert_name for obj in SSL_certs | filter :{account_id:model.account_id}" style="float: left;">
+                <option value="">Default RevAPM SSL Certificate</option>
+              </select>
+              <a ui-sref="index.webApp.ssl_certs" class="btn btn-primary pull-right"><i class="fa fa-lock"></i> Manage SSL Certificates</a>
+            </div>
+          </div>
+          <!-- -->
+          <div class="ssl-certificate-configuration">
+            <div class="panel panel-default ">
+              <div class="panel-body form">
+                <div class="col-md-5">
+                  <div class="form-group ">
+                    <div class="col-sm-12">
+                      <div class="checkbox">
+                        <label>
+                          <input type="radio" ng-model="isCustomSSL_conf_profile" ng-value="false" ngclick="onClackCustomSSL_conf_profile($event)"> Predefined SSL Configuration Profile
+                        </label>
+                      </div>
+                    </div>
+                    <!-- {{isCustomSSL_conf_profile}}-{{_loading || isCustomSSL_conf_profile}} -->
+                  </div>
+                  <div class="form-group form-inline">
+                    <select class="form-control col-sm-offset-3" ng-disabled="_loading|| (isCustomSSL_conf_profile == true)" ng-model="model.ssl_conf_profile" id="ssl_conf_profile" ng-options="obj.id as obj.profile_name for obj in SSL_conf_profiles" style="float: left;">
+                    </select>
+                  </div>
+                  <div class="form-group ">
+                    <div class="col-sm-12">
+                      <div class="checkbox">
+                        <label>
+                          <input type="radio" ng-model="isCustomSSL_conf_profile" ng-value="true"> Custom SSL Configuration Profile
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Right section -->
+                <div class="col-md-7" ng-disabled="isCustomSSL_conf_profile">
+                  <div class="form-group ">
+                    <label for="ssl_protocols" popover-append-to-body="{{true}}" class="col-sm-12" popover-trigger="mouseenter" popover="Allowed SSL protocols">
+                      Allowed SSL Protocols <small>(in Nginx format)</small></label>
+                    <div class="col-sm-12">
+                      <input type="text" class="form-control" ng-disabled="!isCustomSSL_conf_profile" ng-model="model.ssl_protocols" id="ssl_protocols" placeholder="SSL Protocols">
+                    </div>
+                  </div>
+                  <div class="form-group ">
+                    <label for="ssl_ciphers" popover-append-to-body="{{true}}" class="col-sm-12" popover-trigger="mouseenter" popover="Allowed SSL ciphers">
+                      Allowed SSL Ciphers
+                      <small>(in Nginx format)</small></label>
+                    <div class="col-sm-12">
+                      <input type="text" class="form-control" ng-disabled="!isCustomSSL_conf_profile" ng-model="model.ssl_ciphers" id="ssl_ciphers" placeholder="SSL Ciphers">
+                    </div>
+                  </div>
+                  <div class="checkbox">
+                    <label popover-trigger="mouseenter">
+                      <input type="checkbox" ng-disabled="!isCustomSSL_conf_profile" ng-model="model.ssl_prefer_server_ciphers" id="ssl_prefer_server_ciphers" placeholder="Prefer Server-Side Ciphers"><strong> Prefer Server-Side Ciphers</strong></label>
+                  </div>
+                </div>
+                <!-- // Right section-->
+              </div>
+            </div>
+          </div>
+          <!-- //Attached SSL Certificate-->
           <div class="form-group ">
             <div class="col-sm-offset-2 col-sm-10">
               <a ui-sref="^" class="btn btn-default">
