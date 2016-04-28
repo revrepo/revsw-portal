@@ -254,7 +254,7 @@ var DataProvider = {
    */
   generateUsageReportData: function () {
     return {
-      companyName: 'QA API Company',
+      companyName: 'API QA Account updated',
       monthDD: '2016-01'
     };
   }

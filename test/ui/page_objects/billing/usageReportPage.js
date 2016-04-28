@@ -92,7 +92,8 @@ var UsageReport = {
     return element
       .all(by.css(this.locators.views.container))
       .get(1)
-      .element(by.css(this.locators.views.panelBody));
+      .all(by.css(this.locators.views.panelBody))
+      .get(0);
   },
 
   /**
@@ -274,6 +275,17 @@ var UsageReport = {
   },
 
   /**
+   * ### UsageReport.getCompanyName()
+   *
+   * Gets a value from `Company Name` drop down element from the page.
+   *
+   * @returns {Promise}
+   */
+  getCompanyName: function (value) {
+    return this.getCompanyNameDDown().getText();
+  },
+
+  /**
    * ### UsageReport.setMonthDD(value)
    *
    * Sets a value into `Month DD` input text element from the page.
@@ -329,8 +341,8 @@ var UsageReport = {
    * @returns {Promise}
    */
   fill: function (data) {
-    this.setCompanyName(data.companyName);
-    return this.setMonthDD(data.monthDD);
+    return this.setCompanyName(data.companyName);
+    //return this.setMonthDD(data.monthDD);
   },
 
   /**

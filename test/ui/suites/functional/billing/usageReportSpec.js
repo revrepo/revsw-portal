@@ -28,108 +28,120 @@ describe('Functional', function () {
     // For "user" role please check that the menu item is not available
     var adminUser = config.get('portal.users.admin');
     var reportData = DataProvider.generateUsageReportData();
+    var USAGE_REPORT = Constants.sideBar.billing.USAGE_REPORT;
 
-    beforeAll(function () {
-      Portal.signIn(adminUser);
-      Portal.goToBilling();
-      Portal.header.goTo(Constants.sideBar.billing.USAGE_REPORT);
-    });
+    // Defining set of users for which all below tests will be run
+    var users = [
+      config.get('portal.users.admin'),
+      config.get('portal.users.reseller'),
+      config.get('portal.users.revAdmin')
+    ];
 
-    afterAll(function () {
-      Portal.signOut();
-    });
+    users.forEach(function (user) {
+      describe('With user: ' + user.role, function () {
+        beforeAll(function () {
+          Portal.signIn(adminUser);
+          Portal.goToBilling();
+          Portal.header.goTo(USAGE_REPORT);
+        });
 
-    beforeEach(function () {
-    });
+        afterAll(function () {
+          Portal.signOut();
+        });
 
-    afterEach(function () {
-    });
+        beforeEach(function () {
+        });
 
-    it('should get title from Usage Report page', function() {
-        var title = Portal.billing.usageReportPage.getTitle();
-        expect(title).toEqual('Usage Report');
-    });
+        afterEach(function () {
+        });
 
-    it('should check Domains form with correct report data', function() {
-      var domains = {
-        title: 'Domains',
-        active: 'Active',
-        deleted: 'Deleted',
-        sslEnabled: 'SSL Enabled',
-        total: 'Total'
-      };
-      Portal.billing.usageReportPage.updateReport(reportData);
-      var result = Portal.billing.usageReportPage.getDomainsForm();
-      expect(result).toContain(domains.title);
-      expect(result).toContain(domains.active);
-      expect(result).toContain(domains.deleted);
-      expect(result).toContain(domains.sslEnabled);
-      expect(result).toContain(domains.total);
-    });
+        it('should get title from Usage Report page', function() {
+            var title = Portal.billing.usageReportPage.getTitle();
+            expect(title).toEqual('Usage Report');
+        });
 
-    it('should check Mobile Apps form with correct report data', function() {
-      var mobileApps = {
-        active: 'Active',
-        deleted: 'Deleted',
-        total: 'Total'
-      };
-      Portal.billing.usageReportPage.updateReport(reportData);
-      var result = Portal.billing.usageReportPage.getMobileAppsForm();
-      expect(result).toContain(mobileApps.active);
-      expect(result).toContain(mobileApps.deleted);
-      expect(result).toContain(mobileApps.total);
-    });
+        it('should check Domains form with correct report data', function() {
+          var domains = {
+            title: 'Domains',
+            active: 'Active',
+            deleted: 'Deleted',
+            sslEnabled: 'SSL Enabled',
+            total: 'Total'
+          };
+          Portal.billing.usageReportPage.updateReport(reportData);
+          var result = Portal.billing.usageReportPage.getDomainsForm();
+          expect(result).toContain(domains.title);
+          expect(result).toContain(domains.active);
+          expect(result).toContain(domains.deleted);
+          expect(result).toContain(domains.sslEnabled);
+          expect(result).toContain(domains.total);
+        });
 
-    it('should check API Keys form with correct report data', function() {
-      var apiKeys = {
-        active: 'Active',
-        inactive: 'Inactive',
-        total: 'Total'
-      };
-      Portal.billing.usageReportPage.updateReport(reportData);
-      var result = Portal.billing.usageReportPage.getApiKeysForm();
-      expect(result).toContain(apiKeys.active);
-      expect(result).toContain(apiKeys.inactive);
-      expect(result).toContain(apiKeys.total);
-    });
+        it('should check Mobile Apps form with correct report data', function() {
+          var mobileApps = {
+            active: 'Active',
+            deleted: 'Deleted',
+            total: 'Total'
+          };
+          Portal.billing.usageReportPage.updateReport(reportData);
+          var result = Portal.billing.usageReportPage.getMobileAppsForm();
+          expect(result).toContain(mobileApps.active);
+          expect(result).toContain(mobileApps.deleted);
+          expect(result).toContain(mobileApps.total);
+        });
 
-    it('should check Total Traffic form with correct report data', function() {
-      var totalTraffic = {
-        hits: 'Hits',
-        sent: 'Sent',
-        received: 'Received',
-        bwSent: 'BW Sent',
-        bwReceived: 'BW Received'
-      };
-      Portal.billing.usageReportPage.updateReport(reportData);
-      var result = Portal.billing.usageReportPage.getTotalTrafficForm();
-      expect(result).toContain(totalTraffic.hits);
-      expect(result).toContain(totalTraffic.sent);
-      expect(result).toContain(totalTraffic.received);
-      expect(result).toContain(totalTraffic.bwSent);
-      expect(result).toContain(totalTraffic.bwReceived);
-    });
+        it('should check API Keys form with correct report data', function() {
+          var apiKeys = {
+            active: 'Active',
+            inactive: 'Inactive',
+            total: 'Total'
+          };
+          Portal.billing.usageReportPage.updateReport(reportData);
+          var result = Portal.billing.usageReportPage.getApiKeysForm();
+          expect(result).toContain(apiKeys.active);
+          expect(result).toContain(apiKeys.inactive);
+          expect(result).toContain(apiKeys.total);
+        });
 
-    it('should check Edge Cache Usage form with correct report', function() {
-      var edgeCacheUsage = {
-        hit: 'HIT',
-        miss: 'MISS'
-      };
-      Portal.billing.usageReportPage.updateReport(reportData);
-      var result = Portal.billing.usageReportPage.getEdgeCacheUsageForm();
-      expect(result).toContain(edgeCacheUsage.hit);
-      expect(result).toContain(edgeCacheUsage.miss);
-    });
+        it('should check Total Traffic form with correct report data', function() {
+          var totalTraffic = {
+            hits: 'Hits',
+            sent: 'Sent',
+            received: 'Received',
+            bwSent: 'BW Sent',
+            bwReceived: 'BW Received'
+          };
+          Portal.billing.usageReportPage.updateReport(reportData);
+          var result = Portal.billing.usageReportPage.getTotalTrafficForm();
+          expect(result).toContain(totalTraffic.hits);
+          expect(result).toContain(totalTraffic.sent);
+          expect(result).toContain(totalTraffic.received);
+          expect(result).toContain(totalTraffic.bwSent);
+          expect(result).toContain(totalTraffic.bwReceived);
+        });
 
-    it('should check HTTP HTTPS Requests form with correct report', function() {
-      var httpHttpsRequests = {
-        http: 'HTTP',
-        https: 'HTTPS'
-      };
-      Portal.billing.usageReportPage.updateReport(reportData);
-      var result = Portal.billing.usageReportPage.getHTTPHTTPSRequestsForm();
-      expect(result).toContain(httpHttpsRequests.http);
-      expect(result).toContain(httpHttpsRequests.https);
+        it('should check Edge Cache Usage form with correct report', function() {
+          var edgeCacheUsage = {
+            hit: 'HIT',
+            miss: 'MISS'
+          };
+          Portal.billing.usageReportPage.updateReport(reportData);
+          var result = Portal.billing.usageReportPage.getEdgeCacheUsageForm();
+          expect(result).toContain(edgeCacheUsage.hit);
+          expect(result).toContain(edgeCacheUsage.miss);
+        });
+
+        it('should check HTTP HTTPS Requests form with correct report', function() {
+          var httpHttpsRequests = {
+            http: 'HTTP',
+            https: 'HTTPS'
+          };
+          Portal.billing.usageReportPage.updateReport(reportData);
+          var result = Portal.billing.usageReportPage.getHTTPHTTPSRequestsForm();
+          expect(result).toContain(httpHttpsRequests.http);
+          expect(result).toContain(httpHttpsRequests.https);
+        });
+      });
     });
   });
 });
