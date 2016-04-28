@@ -22,7 +22,7 @@ var DataProvider = require('./../../../common/providers/data');
 var Constants = require('./../../../page_objects/constants');
 
 describe('Negative', function () {
-  describe('Sorting List App', function () {
+  xdescribe('Sorting List App', function () {
 
     var adminUser = config.get('portal.users.admin');
     var iosApps = DataProvider.generateMobileAppData('iOS', 3);
