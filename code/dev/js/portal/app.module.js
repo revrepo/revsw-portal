@@ -26,7 +26,8 @@
     'revapm.Portal.Dashboard',
     'datatables',
     'datatables.bootstrap',
-    'ngFileSaver'
+    'ngFileSaver',
+    'revapm.Portal.LogShippers',
   ]);
 
 })();
