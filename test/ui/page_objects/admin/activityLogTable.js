@@ -33,7 +33,8 @@ var ActivityLogTable = {
     pullRight: '.pull-right',
     tables: {
       log: {
-        repeater: 'log in filteredRecords | limitTo:filter.limit:filter.skip track by $index'
+        repeater: 'log in filteredRecords | limitTo:filter.limit:filter.skip track by ' +
+          '$index'
       }
     },
     pagination: {

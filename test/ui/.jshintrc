@@ -23,6 +23,7 @@
     "document": true,
     "jasmine": true,
     "describe": true,
+    "xdescribe": true,
     "it": true,
     "xit": true,
     "before": true,
