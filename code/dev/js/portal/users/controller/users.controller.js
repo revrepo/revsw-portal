@@ -39,7 +39,7 @@
       initModel();
     }
 
-    function initModel(){
+    function initModel() {
       $scope.model = {
         theme: 'light',
         access_control_list: {
@@ -78,8 +78,8 @@
         .update(model)
         .then(function(data) {
           // NOTE: update current user info
-          if (model.user_id === User.getUser().user_id ){
-              User.reloadUser();
+          if (model.user_id === User.getUser().user_id) {
+            User.reloadUser();
           }
           $scope.alertService.success('User updated', 5000);
         })
@@ -101,8 +101,8 @@
       $scope.alertService.clear();
       delete model.passwordConfirm;
       model.access_control_list.dashBoard = true;
-//      model.email = angular.copy(model.user_email);
-//      delete model.user_email;
+      //      model.email = angular.copy(model.user_email);
+      //      delete model.user_email;
       $scope.create(model)
         .then(function(data) {
           initModel();
@@ -111,12 +111,12 @@
         .catch($scope.alertService.danger);
     };
 
-    $scope.disableSubmit = function(model, isEdit){
-      if((User.isRevadmin() || User.isReseller()) && !model.companyId || (model.companyId && model.companyId.length === 0)){
+    $scope.disableSubmit = function(model, isEdit) {
+      if ((User.isRevadmin() || User.isReseller()) && !model.companyId || (model.companyId && model.companyId.length === 0)) {
         return true;
       }
 
-      if(isEdit){
+      if (isEdit) {
         return $scope._loading ||
           !model.email ||
           !model.access_control_list ||
@@ -139,6 +139,40 @@
     $scope.$on('$stateChangeSuccess', function(state) {
       $scope
         .list()
+        .then(function setCompaniesName() {
+          if ($scope.auth.isReseller() || $scope.auth.isRevadmin()) {
+            // Loading list of companies
+            return Companies.query(function(list) {
+              _.forEach($scope.records, function(item) {
+                if (item.companyId.length === 1) {
+                  var index = _.findIndex(list, {
+                    id: item.companyId[0]
+                  });
+                  if (index >= 0) {
+                    item.companyName = list[index].companyName;
+                  }
+                } else {
+                  if (item.companyId.length > 1) {
+                    item.companyName = '';
+                    angular.forEach(item.companyId, function(account_id, key) {
+                      var index = _.findIndex(list, {
+                        id: account_id
+                      });
+                      if (index >= 0) {
+                        if (key !== item.companyId.length && key !== 0) {
+                          item.companyName = item.companyName + ', ';
+                        }
+                        item.companyName = item.companyName + list[index].companyName;
+                      }
+                    });
+                  }
+                }
+              });
+            });
+          } else {
+            return $q.when();
+          }
+        })
         .then(function() {
           if ($scope.elementIndexForAnchorScroll) {
             setTimeout(function() {

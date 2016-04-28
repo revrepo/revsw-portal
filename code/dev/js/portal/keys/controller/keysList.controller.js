@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
 
   angular
@@ -9,7 +9,10 @@
   function KeysListController($scope, $rootScope, CRUDController, ApiKeys, $injector, $stateParams, Companies, DomainsConfig, $state, $modal, clipboard) {
 
     //Invoking crud actions
-    $injector.invoke(CRUDController, this, {$scope: $scope, $stateParams: $stateParams});
+    $injector.invoke(CRUDController, this, {
+      $scope: $scope,
+      $stateParams: $stateParams
+    });
 
     if ($scope.auth.isUser()) {
       $state.go('index.accountSettings.profile');
@@ -23,10 +26,10 @@
     Companies
       .query()
       .$promise
-      .then(function (data) {
+      .then(function(data) {
         $scope.companies = data;
       })
-      .catch(function (err) {
+      .catch(function(err) {
         if (err.status === 403) {
           // Fetch id
           var user = $scope.auth.getUser();
@@ -43,11 +46,11 @@
      *
      * @param {Object} model
      */
-    $scope.deleteKey = function (model) {
-      $scope.confirm('confirmModal.html', model).then(function () {
+    $scope.deleteKey = function(model) {
+      $scope.confirm('confirmModal.html', model).then(function() {
         $scope
           .delete(model)
-          .then(function(){
+          .then(function() {
             $rootScope.$broadcast('update:searchData');
           })
           .catch($scope.alertService.danger);
@@ -60,7 +63,7 @@
      * @param {Object} account
      * @returns {Promise}
      */
-    $scope.createKey = function (account) {
+    $scope.createKey = function(account) {
       if (!account || !account.id) {
         return;
       }
@@ -71,14 +74,16 @@
           account_id: account.id
         })
         .$promise
-        .then(function (data) {
+        .then(function(data) {
           $rootScope.$broadcast('update:searchData');
           $scope.alertService.success('API Key created', 5000);
-          $scope.list();
+          $scope.list().then(function() {
+            $scope.setCompanyName();
+          });
           return data;
         })
         .catch($scope.alertService.danger)
-        .finally(function () {
+        .finally(function() {
           $scope._loading = false;
         });
     };
@@ -86,7 +91,7 @@
     /**
      * Should open dialog for selecting company account
      */
-    $scope.openCreateDialog = function () {
+    $scope.openCreateDialog = function() {
       $scope.alertService.clear();
       if ($scope.companies && $scope.companies.length === 1) {
         // select only one and create
@@ -98,7 +103,7 @@
         controller: 'KeysCreateController',
         size: 'md',
         resolve: {
-          companies: function () {
+          companies: function() {
             return $scope.companies;
           }
         }
@@ -113,7 +118,7 @@
     /**
      * Should open dialog for selecting company account
      */
-    $scope.openUpdateDialogFor = function (keyId) {
+    $scope.openUpdateDialogFor = function(keyId) {
       $scope.alertService.clear();
       var modalInstance = $modal.open({
         animation: true,
@@ -121,7 +126,7 @@
         controller: 'KeysEditController',
         size: 'md',
         resolve: {
-          data: function () {
+          data: function() {
             return {
               companies: $scope.companies,
               domains: $scope.domains,
@@ -135,9 +140,11 @@
        * Handle ok button on update
        */
       modalInstance.result
-        .then(function (account) {
+        .then(function(account) {
           $scope.alertService.success('API Key updated', 5000);
-          $scope.list();
+          $scope.list().then(function() {
+            $scope.setCompanyName();
+          });
         });
     };
 
@@ -161,40 +168,62 @@
      * @param {string} property
      * @returns {Promise}
      */
-    $scope.toggleProperty = function (key, property) {
+    $scope.toggleProperty = function(key, property) {
       if (!key || !key.id || key.loading) {
         return;
       }
       key[property] = !key[property];
       key.loading = true;
       return ApiKeys
-        .update({id: key.id}, clearUpdateData(key))
+        .update({
+          id: key.id
+        }, clearUpdateData(key))
         .$promise
-        .then(function (data) {
+        .then(function(data) {
           return data;
         })
         .catch($scope.alertService.danger)
-        .finally(function () {
+        .finally(function() {
           key.loading = false;
         });
     };
 
     // Fetch list of users
-    $scope.list();
+    $scope.list().then(function() {
+      $scope.setCompanyName();
+    });
 
-    $scope.getRelativeDate = function (datetime) {
+    $scope.getRelativeDate = function(datetime) {
       return moment.utc(datetime).fromNow();
     };
 
-    $scope.switchKeyVisibility = function(item){
+    $scope.switchKeyVisibility = function(item) {
       item.showKey = !item.showKey;
     };
 
-    $scope.copyCallback = function(err){
-      if(err){
+    $scope.copyCallback = function(err) {
+      if (err) {
         $scope.alertService.danger('Copying failed, please try manual approach', 2000);
       } else {
         $scope.alertService.success('The API key has been copied to the clipboard', 2000);
+      }
+    };
+
+    $scope.setCompanyName = function() {
+      if ($scope.auth.isReseller() || $scope.auth.isRevadmin()) {
+        // Loading list of companies
+        return Companies.query(function(list) {
+          _.forEach($scope.records, function(item) {
+            var index = _.findIndex(list, {
+              id: item.account_id
+            });
+            if (index >= 0) {
+              item.companyName = list[index].companyName;
+            }
+          });
+        });
+      } else {
+        return $q.when();
       }
     };
   }
