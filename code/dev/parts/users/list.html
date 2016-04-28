@@ -78,6 +78,10 @@
                 <span class="sortorder" ng-show="filter.predicate === 'last_login_at'" ng-class="{reverse: filter.reverse}"></span>
               </th>
               <th>Actions</th>
+              <th class="account" ng-if="auth.isReseller() ||  auth.isRevadmin()">
+                <a href="" ng-click="order('companyName')">Account</a>
+                <span class="sortorder" ng-show="filter.predicate === 'companyName'" ng-class="{reverse: filter.reverse}"></span>
+              </th>
             </tr>
             </thead>
             <tbody>
@@ -103,6 +107,9 @@
                 <a href="" ng-click="deleteUser(user)" tooltip="Delete User">
                   <i class="glyphicon glyphicon-trash"></i>
                 </a>
+              </td>
+              <td ng-if="auth.isReseller() ||  auth.isRevadmin()">
+                  <div class="company-names">{{user.companyName}}</div>
               </td>
             </tr>
             </tbody>
