@@ -286,7 +286,7 @@
           <!-- //  “SSL Configuration” -->
           <!-- Attached SSL Certificate-->
           <div class="form-group">
-            <label for="account_id" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" popover="Select SSL certificate should be associated with">SSL Certificates</label>
+            <label for="account_id" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" popover="Select SSL certificate which should be associated with the domain">SSL Certificate</label>
             <div class="col-sm-9">
               <select class="form-control" ng-disabled="_loading" ng-model="model.ssl_cert_id" id="ssl_cert_id" ng-options="obj.id as obj.cert_name for obj in SSL_certs | filter :{account_id:model.account_id}" style="float: left;">
                 <option value="">Default RevAPM SSL Certificate</option>
@@ -326,14 +326,14 @@
                 <!-- Right section -->
                 <div class="col-md-7" ng-disabled="isCustomSSL_conf_profile">
                   <div class="form-group ">
-                    <label for="ssl_protocols" popover-append-to-body="{{true}}" class="col-sm-12" popover-trigger="mouseenter" popover="Allowed SSL Protocols">
+                    <label for="ssl_protocols" popover-append-to-body="{{true}}" class="col-sm-12" popover-trigger="mouseenter" popover="Allowed SSL protocols">
                       Allowed SSL Protocols <small>(in Nginx format)</small></label>
                     <div class="col-sm-12">
                       <input type="text" class="form-control" ng-disabled="!isCustomSSL_conf_profile" ng-model="model.ssl_protocols" id="ssl_protocols" placeholder="SSL Protocols">
                     </div>
                   </div>
                   <div class="form-group ">
-                    <label for="ssl_ciphers" popover-append-to-body="{{true}}" class="col-sm-12" popover-trigger="mouseenter" popover="Allowed SSL Ciphers">
+                    <label for="ssl_ciphers" popover-append-to-body="{{true}}" class="col-sm-12" popover-trigger="mouseenter" popover="Allowed SSL ciphers">
                       Allowed SSL Ciphers
                       <small>(in Nginx format)</small></label>
                     <div class="col-sm-12">
