@@ -33,6 +33,7 @@
         'team': 'Team',
         'app': 'App',
         'sslcert': 'SSL Certificate',
+        'logshippingjob': 'Log Shipping Job',
         'object': 'Object'
       }
     });
