@@ -28,7 +28,7 @@ describe('Boundary', function () {
     var length51Characters = new Array(52).join('x');
     var iosApps = DataProvider.generateMobileAppData('iOS', 1);
     var androidApps = DataProvider.generateMobileAppData('Android', 1);
-    var apps = iosApps.concat(androidApps);
+    //var apps = iosApps.concat(androidApps);
     var apps = iosApps;
 
     beforeAll(function () {
