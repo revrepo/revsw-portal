@@ -147,6 +147,19 @@ var EditApp = {
   publish: function (app) {
     this.form.fill(app);
     this.form.clickPublish();
+  },
+
+  /**
+   * ### EditApp.isDisplayed()
+   *
+   * Checks whether the Edit App page is being displayed in the UI or not.
+   *
+   * @returns {Promise}
+   */
+  isDisplayed: function () {
+    return this
+      .getTitleLbl()
+      .isPresent();
   }
 };
 

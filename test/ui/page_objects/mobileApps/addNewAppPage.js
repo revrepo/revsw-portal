@@ -50,6 +50,9 @@ var AddNewApp = {
     dropDowns: {
       platform: {
         id: 'app_platform'
+      },
+      companyName: {
+        id: 'account_id'
       }
     }
   },
@@ -62,7 +65,7 @@ var AddNewApp = {
    *
    * @returns {Selenium WebDriver Element}
    */
-  getTitleLbl: function() {
+  getTitleLbl: function () {
     return element
       .all(by.css(this.locators.views.container))
       .get(0);
@@ -103,6 +106,10 @@ var AddNewApp = {
    */
   getPlatformDDown: function () {
     return element(by.id(this.locators.dropDowns.platform.id));
+  },
+
+  getCompanyNameDDown: function () {
+    return element(by.id(this.locators.dropDowns.companyName.id));
   },
 
   /**
@@ -173,6 +180,13 @@ var AddNewApp = {
       .sendKeys(value);
   },
 
+  setCompanyName: function (companyName) {
+    return this
+      .getCompanyNameDDown()
+      .element(by.cssContainingText('option', companyName))
+      .click();
+  },
+
   /**
    * ### AddNewApp.clickBackToList()
    *
@@ -207,9 +221,11 @@ var AddNewApp = {
    * @returns {Promise}
    */
   clickRegister: function () {
-    return this
-      .getRegisterBtn()
-      .click();
+    if (this.getRegisterBtn()) {
+      return this.getRegisterBtn().click();
+    } else {
+      return null;
+    }
   },
 
   /**
@@ -226,6 +242,19 @@ var AddNewApp = {
   },
 
   /**
+   * ### AddNewApp.isDisplayed()
+   *
+   * Checks whether the Add App page is being displayed in the UI or not.
+   *
+   * @returns {Promise}
+   */
+  isDisplayed: function () {
+    return this
+      .getTitleLbl()
+      .isPresent();
+  },
+
+  /**
    * ### AddNewApp.fill(app)
    *
    * Fills on Add New App form of `Add New App` Page.
@@ -239,8 +268,15 @@ var AddNewApp = {
    * @returns {Promise}
    */
   fill: function (app) {
-    this.setAppName(app.name);
-    this.setPlatform(app.platform);
+    var me = this;
+    return element.all(by.id(this.locators.dropDowns.companyName.id))
+      .then(function (items) {
+        me.setAppName(app.name);
+        me.setPlatform(app.platform);
+        if (app.companyName && items.length > 0) {
+          me.setCompanyName(app.companyName);
+        }
+      });
   }
 };
 

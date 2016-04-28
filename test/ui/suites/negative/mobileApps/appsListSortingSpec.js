@@ -21,7 +21,7 @@ var Portal = require('./../../../page_objects/portal');
 var DataProvider = require('./../../../common/providers/data');
 var Constants = require('./../../../page_objects/constants');
 
-describe('Functional', function () {
+describe('Negative', function () {
   xdescribe('Sorting List App', function () {
 
     var adminUser = config.get('portal.users.admin');
@@ -49,67 +49,43 @@ describe('Functional', function () {
     it('should sorted list apps ascendent and descendant - iOS', function () {
       Portal.goToMobileApps();
       Portal.header.goTo('iOS');
+      Portal.mobileApps.listPage.setSearch('Something weird');
       Portal.mobileApps.listPage.appsTable.sortByName();
-      var firstApp = Portal.mobileApps.listPage.appsTable.getFirstRow();
-      var appName1 = firstApp.name;
+      var appsCount1 = Portal.mobileApps.listPage.appsTable.countTotalRows();
 
+      Portal.header.goTo('iOS');
       Portal.mobileApps.listPage.appsTable.sortByName();
-      firstApp = Portal.mobileApps.listPage.appsTable.getFirstRow();
-      var appName2 = firstApp.name;
-      expect(appName1).toBeLessThan(appName2);
-      expect(appName2).toBeGreaterThan(appName1);
+      var appsCount2 = Portal.mobileApps.listPage.appsTable.countTotalRows();
 
+      Portal.header.goTo('iOS');
+      Portal.mobileApps.listPage.setSearch(' ');
       Portal.mobileApps.listPage.appsTable.sortByName();
-      firstApp = Portal.mobileApps.listPage.appsTable.getFirstRow();
-      var appName3 = firstApp.name;
-      expect(appName1).toEqual(appName3);
+      var appsCount3 = Portal.mobileApps.listPage.appsTable.countTotalRows();
+
+      expect(appsCount1).toBe(0);
+      expect(appsCount2).toBe(0);
+      expect(appsCount3).toBe(3);
     });
 
     it('should sorted list apps ascendent & descendant - Android', function () {
       Portal.goToMobileApps();
       Portal.header.goTo('Android');
+      Portal.mobileApps.listPage.setSearch('Something weird');
       Portal.mobileApps.listPage.appsTable.sortByName();
-      var firstApp = Portal.mobileApps.listPage.appsTable.getFirstRow();
-      var appName1 = firstApp.name;
+      var appsCount1 = Portal.mobileApps.listPage.appsTable.countTotalRows();
 
+      Portal.header.goTo('Android');
       Portal.mobileApps.listPage.appsTable.sortByName();
-      firstApp = Portal.mobileApps.listPage.appsTable.getFirstRow();
-      var appName2 = firstApp.name;
-      expect(appName1).toBeLessThan(appName2);
-      expect(appName2).toBeGreaterThan(appName1);
+      var appsCount2 = Portal.mobileApps.listPage.appsTable.countTotalRows();
 
+      Portal.header.goTo('Android');
+      Portal.mobileApps.listPage.setSearch(' ');
       Portal.mobileApps.listPage.appsTable.sortByName();
-      firstApp = Portal.mobileApps.listPage.appsTable.getFirstRow();
-      var appName3 = firstApp.name;
-      expect(appName1).toEqual(appName3);
-    });
+      var appsCount3 = Portal.mobileApps.listPage.appsTable.countTotalRows();
 
-    it('should list apps sorted descendant by default - iOS',
-      function () {
-        Portal.goToMobileApps();
-        Portal.header.goTo('iOS');
-
-        var firstApp = Portal.mobileApps.listPage.appsTable.getFirstRow();
-        var appName1 = firstApp.name;
-        Portal.mobileApps.listPage.appsTable.sortByName();
-        Portal.mobileApps.listPage.appsTable.sortByName();
-        firstApp = Portal.mobileApps.listPage.appsTable.getFirstRow();
-        var appName2 = firstApp.name;
-        expect(appName1).toBeLessThan(appName2);
-    });
-
-    it('should list apps sorted descendant by default - Android',
-      function () {
-        Portal.goToMobileApps();
-        Portal.header.goTo('Android');
-
-        var firstApp = Portal.mobileApps.listPage.appsTable.getFirstRow();
-        var appName1 = firstApp.name;
-        Portal.mobileApps.listPage.appsTable.sortByName();
-        Portal.mobileApps.listPage.appsTable.sortByName();
-        firstApp = Portal.mobileApps.listPage.appsTable.getFirstRow();
-        var appName2 = firstApp.name;
-        expect(appName1).toBeLessThan(appName2);
+      expect(appsCount1).toBe(0);
+      expect(appsCount2).toBe(0);
+      expect(appsCount3).toBe(3);
     });
   });
 });
