@@ -23,6 +23,7 @@ var AppsListTable = require('./appsListTable');
 // Requiring `Add New App` component page object.
 var AddNewAppPage = require('./addNewAppPage');
 var Pager = require('./../common/pager');
+var Searcher = require('./../common/searcher');
 
 // This `Apps List` Page Object abstracts all operations or actions
 // that a common Two-Factor Authentication could do in the Portal app/site.
@@ -67,6 +68,7 @@ var AppsList = {
   appsForm: AddNewAppPage,
 
   pager: Pager,
+  searcher: Searcher,
 
   /**
    * ### AppsList.getTitleLbl()
