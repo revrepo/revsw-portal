@@ -25,21 +25,22 @@ describe('Functional', function () {
     var adminUser = config.get('portal.users.admin');
 
     beforeAll(function () {
-    });
-
-    afterAll(function () {
-    });
-
-    beforeEach(function () {
       Portal.signIn(adminUser);
       Portal.getDomainsPage();
     });
 
-    afterEach(function () {
+    afterAll(function () {
       Portal.signOut();
     });
 
-    it('should be displayed when the amount of items exceed the maximum ' +
+    beforeEach(function () {
+      Portal.domains.listPage.pager.clickPageIndex(1);
+    });
+
+    afterEach(function () {
+    });
+
+    it('should be displayed when the amount of items exceeds the maximum ' +
       'amount configured to displayed in one page',
       function () {
         var uniqueString = 'unique_string_' + (new Date()).getTime();
