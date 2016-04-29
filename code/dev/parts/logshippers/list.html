@@ -25,12 +25,12 @@
     <button class="btn btn-success" type="button" ng-click="ok()">OK</button>
   </div>
 </script>
-<script type="text/ng-template" id="confirmPublishModal.html">
+<script type="text/ng-template" id="confirmChangeLogShippingStateModal.html">
   <div class="modal-header">
     <h3 class="modal-title">Confirm</h3>
   </div>
   <div class="modal-body">
-    Are you sure you want to publish Job
+    Are you sure you want to change State for Job
     <strong>{{model.job_name}}</strong>?
   </div>
   <div class="modal-footer">
@@ -97,6 +97,8 @@
                   <span class="sortorder" ng-show="filter.predicate === 'destination_host'" ng-class="{reverse: filter.reverse}"></span>
                 </th>
                 <th>
+                  <a href="" ng-click="order('updated_at')">Last Update</a>
+                  <span class="sortorder" ng-show="filter.predicate === 'updated_at'" ng-class="{reverse: filter.reverse}"></span>
                 </th>
                 <th class="state">
                   <a href="" ng-click="order('operationalModeName')">State</a>
@@ -127,30 +129,29 @@
                 <td>{{item.destination_type}}</td>
                 <td>{{item.destination_host}}</td>
                 <td>{{getRelativeDate(item.updated_at) }}</td>
-                <td class="state">{{item.operationalModeName}}
+                <td class="state">
+                  <!-- {{item.operationalModeName}} -->
+                  <div logshippers-staging-status current-state="item.operationalModeName" ng-id="item.id"></div>
                   <!--NOTE: it`s{{item.operational_mode}}-->
                 </td>
-                <!--  <td>
-                  TODO: ? <div logstaging-staging-status ng-id="item.id">ddd</div>
-                </td> -->
                 <td class="actions">
                   <i class="glyphicon glyphicon-refresh spin" ng-if="item.loading"></i>
-                  <a ui-sref=".edit({id: item.id})" ng-if="!item.loading" tooltip="Edit SSL Certificate">
+                  <a ui-sref=".edit({id: item.id})" ng-if="!item.loading" tooltip="Edit Job">
                     <i class="glyphicon glyphicon-pencil"></i>
                   </a>
-                  <a href="" ng-if="!item.loading" ng-click="deleteSSL_cert(item)" tooltip="Delete SSL Certificate">
+                  <a href="" ng-if="!item.loading" ng-click="deleteJob(item)" tooltip="Delete Job">
                     <i class="glyphicon glyphicon-trash"></i>
                   </a>
                   <!-- “Pause With Log Piling” -->
-                  <a href="" ng-disabled="true" ng-if="!item.loading" ng-click="onPauseLogShipping(item)" tooltip="Pause With Log Piling">
+                  <a href="" ng-class="{'not-active':item.operational_mode=='pause'}" ng-if="!item.loading" ng-click="onChangeLogShippingState(item,'pause')" tooltip="Pause With Log Piling">
                     <i class="glyphicon glyphicon-pause"></i>
                   </a>
                   <!--   “Start”  -->
-                  <a href="" ng-disabled="true"  ng-if="!item.loading" ng-click="onStartLogShipping(item)" tooltip="Start">
+                  <a href="" ng-class="{'not-active':item.operational_mode=='active'}" ng-if="!item.loading" ng-click="onChangeLogShippingState(item,'active')" tooltip="Start">
                     <i class="glyphicon glyphicon-play"></i>
                   </a>
                   <!-- “Stop” / “Start”  -->
-                  <a href="" ng-disabled="true"  ng-if="!item.loading" ng-click="onStopLogShipping(item)" tooltip="Stop">
+                  <a href="" ng-class="{'not-active':item.operational_mode=='stop'}" ng-if="!item.loading" ng-click="onChangeLogShippingState(item,'stop')" tooltip="Stop">
                     <i class="glyphicon glyphicon-stop"></i>
                   </a>
                 </td>
