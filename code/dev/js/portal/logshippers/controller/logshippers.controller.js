@@ -265,11 +265,11 @@
      */
     $scope.deleteJob = function(model) {
       $scope.confirm('confirmModal.html', model).then(function() {
-        var certName = model.cert_name;
+        var jobName = model.job_name;
         $scope
           .delete(model)
           .then(function(data) {
-            $scope.alertService.success('Job ' + certName + ' deleted.');
+            $scope.alertService.success('Job ' + jobName + ' deleted.');
             $scope.list()
               .then(setAccountName)
               .then(setMappingInformation);
