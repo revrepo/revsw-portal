@@ -128,13 +128,17 @@
                 <a href="#" class="side-menu-sub-item" ng-disabled="true"  >DDoS Protection</a>
             </li> -->
             <li ui-sref-active-if="{class: 'active-side-menu-item', state: 'index.accountSettings'}", ng-class="{'active-side-menu-item': menuExpanded('index.accountSettings')}">
-                <a class="side-menu-item", ng-click="goToState('index.accountSettings.users')">
-                    <div class="left-menu-start">
-                        <i class="fa fa-gears"></i>
-                    </div>
-                    Admin
-                    <i ng-click="expandMenu('index.accountSettings', $event)" class="pull-right {{ menuExpanded('index.accountSettings') ? 'fa fa-caret-down' : 'fa fa-caret-up' }}"></i>
+                <a class="side-menu-item" , ng-click="goToState('index.accountSettings.users')">
+                  <div class="left-menu-start">
+                    <i class="fa fa-gears"></i>
+                  </div>
+                  Admin
+                  <i ng-click="expandMenu('index.accountSettings', $event)" class="pull-right {{ menuExpanded('index.accountSettings') ? 'fa fa-caret-down' : 'fa fa-caret-up' }}"></i>
                 </a>
+                <!--a ui-sref-active="active" ui-sref="index.accountSettings.logshippers" class="side-menu-sub-item" ng-if="!userService.isUser()">
+                  <i class="sub-menu-icon glyphicon glyphicon-open-file"></i>
+                   Log Shipping
+                </a-->
                 <a ui-sref-active="active" ui-sref="index.accountSettings.users" class="side-menu-sub-item" ng-if="!userService.isUser()">
                     <i class="sub-menu-icon fa fa-users"></i>
                     Users

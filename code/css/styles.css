@@ -137,7 +137,8 @@ table tbody tr.loadingth {
 table tbody .actions a {
   margin-right: 10px;
 }
-table tbody .company-names {
+table tbody .company-names,
+table tbody .source-name {
   white-space: normal;
   word-break: break-word;
   max-height: 50px;
