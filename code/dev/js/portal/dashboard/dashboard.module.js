@@ -21,9 +21,11 @@
           title: '(One Wide Column And One Narrow Column)',
           rows: [{
             columns: [{
-              styleClass: 'col-md-8'
+              styleClass: 'col-md-8',
+              widgets: []
             }, {
-              styleClass: 'col-md-4'
+              styleClass: 'col-md-4',
+              widgets: []
             }]
           }]
         })
@@ -31,7 +33,8 @@
           title: '(One Wide Column)',
           rows: [{
             columns: [{
-              styleClass: 'col-md-12'
+              styleClass: 'col-md-12',
+              widgets: []
             }]
           }]
         })
@@ -39,9 +42,11 @@
           title: '(Two Columns Of Equal Width)',
           rows: [{
             columns: [{
-              styleClass: 'col-md-6'
+              styleClass: 'col-md-6',
+              widgets: []
             }, {
-              styleClass: 'col-md-6'
+              styleClass: 'col-md-6',
+              widgets: []
             }]
           }]
         })
@@ -49,11 +54,14 @@
           title: '(Three Columns of Equal Width)',
           rows: [{
             columns: [{
-              styleClass: 'col-md-4'
+              styleClass: 'col-md-4',
+              widgets: []
             }, {
-              styleClass: 'col-md-4'
+              styleClass: 'col-md-4',
+              widgets: []
             }, {
-              styleClass: 'col-md-4'
+              styleClass: 'col-md-4',
+              widgets: []
             }]
           }]
         })
@@ -61,13 +69,17 @@
           title: '(Four Columns Of Equal Width)',
           rows: [{
             columns: [{
-              styleClass: 'col-md-3'
+              styleClass: 'col-md-3',
+              widgets: []
             }, {
-              styleClass: 'col-md-3'
+              styleClass: 'col-md-3',
+              widgets: []
             }, {
-              styleClass: 'col-md-3'
+              styleClass: 'col-md-3',
+              widgets: []
             }, {
-              styleClass: 'col-md-3'
+              styleClass: 'col-md-3',
+              widgets: []
             }]
           }]
         });

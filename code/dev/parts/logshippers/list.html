@@ -101,10 +101,9 @@
                   <span class="sortorder" ng-show="filter.predicate === 'updated_at'" ng-class="{reverse: filter.reverse}"></span>
                 </th>
                 <th class="state">
-                  <a href="" ng-click="order('operationalModeName')">State</a>
+                  <a href="" ng-click="order('operationalModeName')">Current State</a>
                   <span class="sortorder" ng-show="filter.predicate === 'operationalModeName'" ng-class="{reverse: filter.reverse}"></span>
                 </th>
-                <!-- <th class="thin">Status</th> -->
                 <th>Actions</th>
                 <th class="account" ng-if="auth.isReseller() ||  auth.isRevadmin()">
                   <a href="" ng-click="order('companyName')">Account</a>
@@ -119,14 +118,14 @@
                   {{item.job_name}}
                 </a>
                 </td>
-                <td>{{item.sourceTypeName}}
-                  <!-- NOTE: it`s {{ item.source_type}} -->
+                <td>{{sourceTypes[item.source_type]}}
                 </td>
                 <td>
                   <div class="source-name">{{item.sourceName}}</div>
                   <!-- NOTE: it`s mapping data-->
                 </td>
-                <td>{{item.destination_type}}</td>
+                <td>{{destinationTypes[item.destination_type]}}
+                </td>
                 <td>{{item.destination_host}}</td>
                 <td>{{getRelativeDate(item.updated_at) }}</td>
                 <td class="state">
