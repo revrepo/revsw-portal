@@ -7,7 +7,6 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
     editHeatMapReportsConfigController.$inject = ["$scope", "$window", "$timeout", "Stats"];
     reportTop10CountriesController.$inject = ["$scope", "Countries", "Stats"];
     editTopReportConfig.$inject = ["$scope", "$window", "$timeout", "Countries", "Stats"];
-    alert('1 dsasdddddfasddsadsd')
     var _widget = {
       title: 'Proxy Traffic',
       description: 'Web Alalytics Proxy Traffic',
