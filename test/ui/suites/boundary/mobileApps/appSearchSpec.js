@@ -22,62 +22,75 @@ var DataProvider = require('./../../../common/providers/data');
 var Constants = require('./../../../page_objects/constants');
 
 describe('Boundary', function () {
-  describe('Searching apps', function () {
-    var adminUser = config.get('portal.users.admin');
-    var iosApps = DataProvider.generateMobileAppData('iOS', 1);
-    var androidApps = DataProvider.generateMobileAppData('Android', 1);
-    var apps = iosApps.concat(androidApps);
+  describe('App search', function () {
 
-    beforeAll(function () {
-      Portal.signIn(adminUser);
-    });
+    var user = config.get('portal.users.admin');
+    var platforms = [
+      config.get('portal.mobileApps.platforms.ios'),
+      config.get('portal.mobileApps.platforms.android')
+    ];
 
-    afterAll(function () {
-      Portal.signOut();
-    });
+    platforms.forEach(function (platform) {
 
-    beforeEach(function () {
-    });
+      describe('Platform: ' + platform, function () {
 
-    afterEach(function () {
-    });
+        beforeAll(function () {
+          Portal.signIn(user);
+        });
 
-    apps.forEach(function (app){
-      it('should search apps with 51 characters' + app.platform, function () {
-        Portal.goToMobileApps();
-        Portal.header.goTo(app.platform);
-        
-        var length51Characters = new Array(51).join('x');
-        app.name = length51Characters;
-        Portal.mobileApps.listPage.addNewApp(app);
-        Portal.header.goTo(app.platform);
-        var countApps = Portal.mobileApps.listPage.findApp(app);
-        expect(countApps).toBe(1);
+        afterAll(function () {
+          Portal.signOut();
+        });
 
-        Portal.mobileApps.listPage.searchAndDelete(app);
-        Portal.dialog.clickOk();
-      });
-
-      it('should search field support more higher or equal to 200 characters ' +
-        app.platform, function () {
+        beforeEach(function () {
           Portal.goToMobileApps();
-          Portal.header.goTo(app.platform);
-          
-          var length200Characters = new Array(200).join('x');
-          app.name = length200Characters;
-          var countApps = Portal.mobileApps.listPage.findApp(app);
-          expect(countApps).toBe(0);
-      });
+          Portal.header.goTo(platform);
+          Portal.mobileApps.listPage.searcher.clearSearchCriteria();
+        });
 
-      xit('should search text field accept special characters ' + app.platform,
-        function () {
-          Portal.goToMobileApps();
-          Portal.header.goTo(app.platform);
+        afterEach(function () {
+        });
 
-          app.name = '& ^ $ @ # % ( ) _ +  / \\ ~ ` , . ; :';
-          var countApps = Portal.mobileApps.listPage.findApp(app);
-          expect(countApps).toBe(0);
+        it('should search apps with 51 characters',
+          function () {
+
+            var longString = new Array(51).join('x');
+            var app = DataProvider.generateMobileAppData(platform, 1)[0];
+            app.name = longString;
+
+            Portal.mobileApps.listPage.addNewApp(app);
+            Portal.header.goTo(platform);
+            var countApps = Portal.mobileApps.listPage.findApp(app);
+            expect(countApps).toBe(1);
+
+            Portal.mobileApps.listPage.searchAndDelete(app);
+            Portal.dialog.clickOk();
+          });
+
+        it('should search field support more higher or equal to 200 characters',
+          function () {
+
+            var longString = new Array(200).join('x');
+            var app = {
+              name: longString
+            };
+            var countApps = Portal.mobileApps.listPage.findApp(app);
+            expect(countApps).toBe(0);
+          });
+
+        xit('should search text field accept special characters',
+          function () {
+            Portal.goToMobileApps();
+            Portal.header.goTo(platform);
+
+            var app = {
+              name: '& ^ $ @ # % ( ) _ +  / \\ ~ ` , . ; :'
+            };
+            var countApps = Portal.mobileApps.listPage.findApp(app);
+            expect(countApps).toBe(0);
+          });
       });
     });
   });
-});
+})
+;
