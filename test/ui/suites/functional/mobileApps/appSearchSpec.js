@@ -31,7 +31,7 @@ describe('Functional', function () {
     var buildPrefix = function (user, platform) {
       var tmp = 'qa-' + user.role + '-' + platform + '-';
       return tmp.toLowerCase().replace(/\W/g, '-');
-    }
+    };
 
     platforms.forEach(function (platform) {
 
