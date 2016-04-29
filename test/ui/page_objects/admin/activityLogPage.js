@@ -18,8 +18,8 @@
 
 // # Activity Log Page Object
 
-// Requiring `Activity Log List Table` component page object
-//var ApiKeyListTable = require('./apiKeysListTable');
+// Requiring `Activity Log Table` component page object
+var ActivityLogTable = require('./activityLogTable');
 
 // This `Activity Log` Page Object abstracts all operations or actions that a
 // common user could do in the Activity Log page the Portal app/site.
@@ -34,8 +34,6 @@ var ActivityLog = {
     panelBody: '.col-md-12 .panel .panel-body',
     pullLeft: '.pull-left',
     pullRight: '.pull-right',
-    buttons: {
-    },
     inputs: {
       search: {
         id: 'search'
@@ -43,9 +41,9 @@ var ActivityLog = {
     }
   },
 
-  // `Activity Log List Table` Page is compound mainly by a table. This property
+  // `Activity Log Table` Page is compound mainly by a table. This property
   // makes a reference to the apiKeysListTable Page Object to interact with it.
-  //table: ApiKeyListTable,
+  table: ActivityLogTable,
 
   /**
    * ### ActivityLog.getTitleLbl()
@@ -148,20 +146,6 @@ var ActivityLog = {
 
   // ## Helper Methods
 
-  /**
-   * ### ActivityLog.isDisplayed()
-   *
-   * Checks whether the Purge Cached Objects page is displayed in the UI or not.
-   *
-   * @returns {Promise}
-   */
-  isDisplayed: function () {
-    // var title = this.getTitle().isPresent();
-    // var addNewApiKey = this.getAddNewApiKeyBtn().isPresent();
-    // var searchInput = this.getSearchInputTxt().isPresent();
-    // return (title && addNewApiKey && searchInput);
-    return true;
-  }
 };
 
 module.exports = ActivityLog;

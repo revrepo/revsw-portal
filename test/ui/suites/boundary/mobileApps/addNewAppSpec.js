@@ -24,7 +24,6 @@ var Constants = require('./../../../page_objects/constants');
 describe('Boundary', function () {
   describe('Add New App', function () {
 
-    // TODO: please add the same tests for user, reseller and revadmin role
     var adminUser = config.get('portal.users.admin');
     var length51Characters = new Array(52).join('x');
     var iosApps = DataProvider.generateMobileAppData('iOS', 1);
@@ -45,7 +44,7 @@ describe('Boundary', function () {
     afterEach(function () {
     });
 
-    apps.forEach(function (app){
+    apps.forEach(function (app) {
       it('should check Register button is disabled when app name have more ' +
         'than 51 characters - ' + app.platform, function () {
         Portal.goToMobileApps();

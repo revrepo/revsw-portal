@@ -61,7 +61,7 @@ var DataProvider = {
     // company the new user should be associated with
     var company;
     if (portalUser && portalUser.role && portalUser.role !== 'Admin') {
-       company = 'API QA Reseller Company';
+      company = 'API QA Reseller Company';
     }
 
     return {
@@ -174,25 +174,87 @@ var DataProvider = {
     }
     return {
       textArea: '\/images1\/*.png\\n\/images2\/*.png\\n\/images3\/*.png\\n' +
-                '\/images4\/*.png\\n\/images5\/*.png\\n\/images6\/*.png\\n' +
-                '\/images7\/*.png\\n\/images8\/*.png\\n\/images9\/*.png\\n'
+      '\/images4\/*.png\\n\/images5\/*.png\\n\/images6\/*.png\\n' +
+      '\/images7\/*.png\\n\/images8\/*.png\\n\/images9\/*.png\\n'
     };
   },
+
+  /**
+   * ### DataProvider.generateMobileApp()
+   *
+   * Generates mobile app data object based on the unique para that it requires.
+   *
+   * @param {String} platform, the prefix value to use in all domain data fields
+   * @param {Boolean} skipTimestamp, defaults to FALSE. If timestamp should be
+   * used in domain data or not.
+   *
+   * @returns {Object}, generate mobile apps data with the following schema:
+   *
+   *     {
+   *         name: string,
+   *         platform: string,
+   *         companyName: string
+   *     }
+   */
+  generateMobileApp: function (platform, skipTimestamp) {
+    var timestamp = '';
+    if (skipTimestamp === undefined || skipTimestamp !== true) {
+      timestamp = '-' + Date.now();
+    }
+    return {
+      name: platform + timestamp,
+      platform: platform,
+      companyName: 'API QA Reseller Company'
+    };
+  },
+
+  /**
+   * ### DataProvider.generateMobileAppData()
+   *
+   * Generates mobile app data objects based on the unique para that it requires
+   *
+   * @param {String} platform, the prefix value to use in all domain data fields
+   * @param {Number} numApps, total objects to create.
+   *
+   * @returns {Object}, generate mobile apps with the following schema:
+   *
+   *     [{
+   *         name: string,
+   *         platform: string,
+   *         title: string,
+   *         companyName: string
+   *     }, ...]
+   */
   generateMobileAppData: function (platform, numApps) {
     var apps = [];
     var i;
-    for(i=0; i<numApps; i++) {
+    for (i = 0; i < numApps; i++) {
       var app = {};
-      app.name = platform + (i+1);
+      app.name = platform + '-' + Date.now() + '-' + (i + 1);
       app.platform = platform;
       app.title = platform + ' Apps List';
+      app.companyName = 'API QA Reseller Company';
       apps.push(app);
     }
     return apps;
   },
+
+  /**
+   * ### DataProvider.generateUsageReportData()
+   *
+   * Generates usage report data object based on the unique para that it
+   * requires.
+   *
+   * @returns {Object}, generate usage report data with the following schema:
+   *
+   *     {
+   *         companyName: string,
+   *         monthDD: string
+   *     }
+   */
   generateUsageReportData: function () {
     return {
-      companyName: 'QA API Company',
+      companyName: 'API QA Account updated',
       monthDD: '2016-01'
     };
   }

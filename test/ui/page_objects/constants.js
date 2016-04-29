@@ -73,6 +73,7 @@ var Constants = {
       RTT_HEATMAPS: 'RTT Heatmaps'
     },
     admin: {
+      ADMIN: 'Admin',
       SECURITY_SETTINGS: 'Security Settings',
       API_KEYS: 'API Keys',
       ACTIVITY_LOG: 'Activity Log'

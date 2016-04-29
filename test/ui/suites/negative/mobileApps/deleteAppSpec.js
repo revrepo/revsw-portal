@@ -21,17 +21,18 @@ var Portal = require('./../../../page_objects/portal');
 var DataProvider = require('./../../../common/providers/data');
 var Constants = require('./../../../page_objects/constants');
 
-describe('Negative: ', function () {
-  describe('Usage Report', function () {
+describe('Negative', function () {
+  describe('Delete App', function () {
 
     var adminUser = config.get('portal.users.admin');
-    var data = DataProvider.generateUsageReportData();
-    var tempCompanyName = data.companyName;
+    var iosApps = DataProvider.generateMobileAppData('iOS', 1);
+    var androidApps = DataProvider.generateMobileAppData('Android', 1);
+    var apps = iosApps.concat(androidApps);
 
     beforeAll(function () {
       Portal.signIn(adminUser);
-      Portal.goToBilling();
-      Portal.header.goTo(Constants.sideBar.billing.USAGE_REPORT);
+      Portal.createMobileApps('iOS', iosApps);
+      Portal.createMobileApps('Android', androidApps);
     });
 
     afterAll(function () {
@@ -44,26 +45,17 @@ describe('Negative: ', function () {
     afterEach(function () {
     });
 
-    it('should check that Update Report fails with invalid date', function() {
-      data.companyName = 'Wrong Company 01';
-      Portal.billing.usageReportPage.updateReport(data);
-      var result = Portal.billing.usageReportPage.getCompanyName();
-      expect(result).toEqual(tempCompanyName);
-    });
+    apps.forEach(function (app) {
+      it('should cancel when try to delete delete an app - ' + app.platform,
+        function () {
+          Portal.goToMobileApps();
+          Portal.header.goTo(app.platform);
 
-    it('should check that Update Report fails with empty date', function() {
-      data.companyName = '   ';
-      Portal.billing.usageReportPage.updateReport(data);
-      var result = Portal.billing.usageReportPage.getCompanyName();
-      expect(result).toBe(tempCompanyName);
-    });
-
-    it('should check that Update Report fails with special characters date',
-      function() {
-        data.companyName = 'abcdefg!@#$%';
-        Portal.billing.usageReportPage.updateReport(data);
-        var result = Portal.billing.usageReportPage.getCompanyName();
-        expect(result).toBe(tempCompanyName);
+          Portal.mobileApps.listPage.searchAndDelete(app);
+          Portal.dialog.clickCancel();
+          var findApp = Portal.mobileApps.listPage.findApp(app);
+          expect(findApp).toBe(1);
+      });
     });
   });
 });

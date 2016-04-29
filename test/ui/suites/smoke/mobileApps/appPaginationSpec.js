@@ -2,7 +2,7 @@
  *
  * REV SOFTWARE CONFIDENTIAL
  *
- * [2013] - [2015] Rev Software, Inc.
+ * [2013] - [2016] Rev Software, Inc.
  * All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains
@@ -19,7 +19,6 @@
 var config = require('config');
 var Portal = require('./../../../page_objects/portal');
 var DataProvider = require('./../../../common/providers/data');
-var Constants = require('./../../../page_objects/constants');
 
 describe('Smoke', function () {
 
@@ -37,26 +36,20 @@ describe('Smoke', function () {
   users.forEach(function (user) {
 
     describe('With user: ' + user.role, function () {
+      describe('App Pagination', function () {
 
-      describe('Search App', function () {
+        beforeAll(function () {
+          Portal.signIn(user);
+          Portal.goToMobileApps();
+        });
+
+        afterAll(function () {
+          Portal.signOut();
+        });
 
         platforms.forEach(function (platform) {
 
           describe('Platform: ' + platform, function () {
-
-            var app;
-
-            beforeAll(function () {
-              Portal.signIn(user);
-              app = DataProvider.generateMobileApp(platform);
-              Portal.createMobileApps(platform, [app]);
-              Portal.goToMobileApps();
-            });
-
-            afterAll(function () {
-              Portal.deleteMobileApps([app]);
-              Portal.signOut();
-            });
 
             beforeEach(function () {
               Portal.header.goTo(platform);
@@ -65,19 +58,11 @@ describe('Smoke', function () {
             afterEach(function () {
             });
 
-            it('should search and filter an existing app',
+            it('should be displayed when displaying User List page',
               function () {
-                var appsFound = Portal.mobileApps.listPage.findApp(app);
-                expect(appsFound).toBe(1);
-              });
-
-            it('should search and filter a non-existing app',
-              function () {
-                var neApp = {
-                  name: 'Non existing app ' + Date.now()
-                };
-                var appsFound = Portal.mobileApps.listPage.findApp(neApp);
-                expect(appsFound).toBe(0);
+                var currPageBtn = Portal.mobileApps.listPage.pager
+                  .getCurrentPageIndexBtn();
+                expect(currPageBtn.isPresent()).toBeTruthy();
               });
           });
         });

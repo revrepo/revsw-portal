@@ -20,8 +20,9 @@
 
 // Requiring `Apps List Table` component page object.
 var AppsListTable = require('./appsListTable');
-// Requiring `Add New Aapp` component page object.
+// Requiring `Add New App` component page object.
 var AddNewAppPage = require('./addNewAppPage');
+var Pager = require('./../common/pager');
 
 // This `Apps List` Page Object abstracts all operations or actions
 // that a common Two-Factor Authentication could do in the Portal app/site.
@@ -64,6 +65,8 @@ var AppsList = {
   // `Add New App` Page is compound mainly by a form. This property makes
   // reference to the AddNewAppPage Page Object to interact with it.
   appsForm: AddNewAppPage,
+
+  pager: Pager,
 
   /**
    * ### AppsList.getTitleLbl()
@@ -167,6 +170,19 @@ var AppsList = {
     return this
       .getClearSearchTxt()
       .click();
+  },
+
+  /**
+   * ### AppsList.isDisplayed()
+   *
+   * Checks whether the Add App page is being displayed in the UI or not.
+   *
+   * @returns {Promise}
+   */
+  isDisplayed: function () {
+    return this
+      .getTitleLbl()
+      .isPresent();
   },
 
   /**

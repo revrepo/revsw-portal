@@ -92,7 +92,8 @@ var UsageReport = {
     return element
       .all(by.css(this.locators.views.container))
       .get(1)
-      .element(by.css(this.locators.views.panelBody));
+      .all(by.css(this.locators.views.panelBody))
+      .get(0);
   },
 
   /**
@@ -271,6 +272,17 @@ var UsageReport = {
     return this
       .getCompanySearchTxt()
       .sendKeys(protractor.Key.ENTER);
+  },
+
+  /**
+   * ### UsageReport.getCompanyName()
+   *
+   * Gets a value from `Company Name` drop down element from the page.
+   *
+   * @returns {Promise}
+   */
+  getCompanyName: function (value) {
+    return this.getCompanyNameDDown().getText();
   },
 
   /**
