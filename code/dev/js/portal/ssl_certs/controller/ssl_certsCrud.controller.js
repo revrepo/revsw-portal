@@ -158,9 +158,11 @@
 
     };
     /**
-     * [deleteDomain description]
-     * @param  {[type]} model [description]
-     * @return {[type]}       [description]
+     * @name  deleteSSL_cert
+     * @description
+     *
+     * @param  {Object} model
+     * @return
      */
     $scope.deleteSSL_cert = function(model) {
       $scope.confirm('confirmModal.html', model).then(function() {
