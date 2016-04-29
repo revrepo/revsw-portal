@@ -30,16 +30,17 @@ describe('Functional', function () {
 
     var iosApps = DataProvider.generateMobileAppData('iOS', 1);
     var androidApps = DataProvider.generateMobileAppData('Android', 1);
-    var apps = iosApps;//.concat(androidApps);
+    var apps = iosApps.concat(androidApps);
 
     apps.forEach(function (app) {
 
-      // TODO: Commenting out pagination tests as there are timing issues.
-      // Probably something related to the app. Need to confirm.
-      xdescribe('Platform: ' + app.platform, function () {
+      describe('Platform: ' + app.platform, function () {
 
         beforeAll(function () {
           Portal.signIn(user);
+          Portal.goToMobileApps();
+          Portal.header.goTo(app.platform);
+          Portal.mobileApps.listPage.setSearch(searchValue);
         });
 
         afterAll(function () {
@@ -47,13 +48,21 @@ describe('Functional', function () {
         });
 
         beforeEach(function () {
-          Portal.goToMobileApps();
-          Portal.header.goTo(app.platform);
-          //Portal.mobileApps.listPage.setSearch(searchValue);
+          Portal.mobileApps.listPage.pager.clickPageIndex(1);
         });
 
         afterEach(function () {
         });
+
+        it('should be displayed when the amount of items exceeds the maximum ' +
+          'amount configured to displayed in one page',
+          function () {
+            var uniqueString = 'unique_string_' + (new Date()).getTime();
+            Portal.mobileApps.listPage.setSearch(uniqueString);
+            expect(Portal.mobileApps.listPage.pager.isDisplayed()).toBe(false);
+            Portal.domains.listPage.searcher.clearSearchCriteria();
+            expect(Portal.mobileApps.listPage.pager.isDisplayed()).toBe(true);
+          });
 
         it('should display the next page with next apps when clicking ' +
           '"Next page"',
