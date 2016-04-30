@@ -19,9 +19,9 @@
 // # Apps List Page Object
 
 // Requiring `Apps List Table` component page object.
-var AppsListTable = require('./appsListTable');
+var AppsListTable = require('./table');
 // Requiring `Add New App` component page object.
-var AddNewAppPage = require('./addNewAppPage');
+var AddNewAppPage = require('./addPage');
 var Pager = require('./../common/pager');
 var Searcher = require('./../common/searcher');
 
@@ -63,6 +63,7 @@ var AppsList = {
   // reference to the AppsListPage Page Object to interact with it.
   appsTable: AppsListTable,
 
+  // TODO: This does not apply to this section. Need to remove
   // `Add New App` Page is compound mainly by a form. This property makes
   // reference to the AddNewAppPage Page Object to interact with it.
   appsForm: AddNewAppPage,

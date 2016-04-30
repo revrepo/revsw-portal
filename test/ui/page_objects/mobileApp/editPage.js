@@ -19,7 +19,7 @@
 // # Edit App Page Object
 
 // Requiring `Edit App` component page object.
-var EditAppForm = require('./editAppForm');
+var EditAppForm = require('./editForm');
 
 // This `Edit App` Page Object abstracts all operations or actions
 // that a common Two-Factor Authentication could do in the Portal app/site.
