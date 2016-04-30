@@ -19,7 +19,7 @@
 // # User List Page Object
 
 // Requiring other Page Objects that compound the User List Page one
-var UserTable = require('./table');
+var UserTable = require('./table/table');
 var Pager = require('./../common/pager');
 var Searcher = require('./../common/searcher');
 
