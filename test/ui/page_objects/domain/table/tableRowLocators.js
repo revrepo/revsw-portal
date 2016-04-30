@@ -16,6 +16,15 @@
  * from Rev Software, Inc.
  */
 
+var tableLocators = {
+  header: {
+    css: 'table thead tr'
+  },
+  rows: {
+    repeater: 'item in filteredRecords'
+  }
+};
+
 var headerLocators = {
   name: {
     css: 'th:nth-of-type(1) a'
@@ -101,6 +110,7 @@ var rowLocators = {
 };
 
 module.exports = {
+  table: tableLocators,
   header: headerLocators,
   row: rowLocators
 }

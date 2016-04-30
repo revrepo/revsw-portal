@@ -17,18 +17,11 @@
  */
 
 var DomainTableRow = require('./tableRow');
-var DomainTableRowLocators = require('./tableRowLocators');
+var DomainTableLocators = require('./tableRowLocators');
 
 var DomainTable = {
 
-  locators: {
-    header: {
-      css: 'table thead tr'
-    },
-    rows: {
-      repeater: 'item in filteredRecords'
-    }
-  },
+  locators: DomainTableLocators.table,
 
   getHeaderEl: function () {
     return element(by.css(this.locators.header.css));
@@ -36,7 +29,7 @@ var DomainTable = {
 
   getHeader: function () {
     var header = this.getHeaderEl();
-    return new DomainTableRow(header, DomainTableRowLocators.header);
+    return new DomainTableRow(header, DomainTableLocators.header);
   },
 
   getRows: function () {
@@ -51,7 +44,7 @@ var DomainTable = {
     var el = this
       .getRows()
       .get(rowIndex);
-    return new DomainTableRow(el, DomainTableRowLocators.row);
+    return new DomainTableRow(el, DomainTableLocators.row);
   }
 };
 
