@@ -39,7 +39,7 @@ describe('Smoke', function () {
     it('should display "Versions" page title including "Domain versions"',
       function () {
         var expectedTitle = 'Domain versions';
-        Portal.domains.listPage.domainsTbl
+        Portal.domains.listPage.table
           .getFirstRow()
           .clickVersions();
         expect(Portal.domains.versionsPage.getTitle()).toContain(expectedTitle);
@@ -48,7 +48,7 @@ describe('Smoke', function () {
     it('should display "Versions" page title including name of domain config ' +
       'selected from domain list',
       function () {
-        var firstDomain = Portal.domains.listPage.domainsTbl.getFirstRow();
+        var firstDomain = Portal.domains.listPage.table.getFirstRow();
         var domainName = firstDomain.getName();
         firstDomain.clickVersions();
         expect(Portal.domains.versionsPage.getTitle()).toContain(domainName);

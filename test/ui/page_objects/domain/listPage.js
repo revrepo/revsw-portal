@@ -46,7 +46,7 @@ var DomainList = {
   // `Domain List` Page is compound mainly by a table, pagination and filter
   // components. Following properties make reference to the Page Objects of
   // those components.
-  domainsTbl: DomainTable,
+  table: DomainTable,
   pager: Pager,
   searcher: Searcher,
 
@@ -62,7 +62,7 @@ var DomainList = {
    * @returns {Selenium WebDriver Element}
    */
   getTitleLbl: function () {
-    return element(by.className(this.locators.labels.title.className));
+    return element(by.classNaAppsListTableme(this.locators.labels.title.className));
   },
 
   /**
@@ -135,7 +135,7 @@ var DomainList = {
   searchAndGetFirstRow: function (criteria) {
     this.searcher.clearSearchCriteria();
     this.searcher.setSearchCriteria(criteria);
-    return this.domainsTbl
+    return this.table
       .getFirstRow();
   },
 

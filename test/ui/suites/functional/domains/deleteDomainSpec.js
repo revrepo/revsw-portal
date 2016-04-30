@@ -50,7 +50,7 @@ describe('Functional', function () {
         Portal.domains.listPage.searchAndClickDelete(domain.name);
         Portal.dialog.clickOk();
         Portal.domains.listPage.searcher.setSearchCriteria(domain.name);
-        var domainTableRows = Portal.domains.listPage.domainsTbl.getRows();
+        var domainTableRows = Portal.domains.listPage.table.getRows();
         expect(domainTableRows.count()).toEqual(0);
       });
 
@@ -63,7 +63,7 @@ describe('Functional', function () {
         expect(okBtn.isDisplayed()).toBeTruthy();
         Portal.dialog.clickOk();
         Portal.domains.listPage.searcher.setSearchCriteria(domain.name);
-        var domainTableRows = Portal.domains.listPage.domainsTbl.getRows();
+        var domainTableRows = Portal.domains.listPage.table.getRows();
         expect(domainTableRows.count()).toEqual(0);
       });
 
@@ -75,7 +75,7 @@ describe('Functional', function () {
         var cancelBtn = Portal.dialog.getCancelBtn();
         expect(cancelBtn.isDisplayed()).toBeTruthy();
         Portal.dialog.clickCancel();
-        var domainTableRows = Portal.domains.listPage.domainsTbl.getRows();
+        var domainTableRows = Portal.domains.listPage.table.getRows();
         expect(domainTableRows.count()).toEqual(1);
         Portal.deleteDomain(domain);
       });
@@ -87,7 +87,7 @@ describe('Functional', function () {
         Portal.domains.listPage.searchAndClickDelete(domain.name);
         expect(Portal.dialog.getModalEl().isPresent()).toBeTruthy();
         Portal.dialog.getModalEl().sendKeys(protractor.Key.ESCAPE);
-        var tableRows = Portal.domains.listPage.domainsTbl.getRows();
+        var tableRows = Portal.domains.listPage.table.getRows();
         expect(tableRows.count()).toEqual(1);
         Portal.deleteDomain(domain);
       });

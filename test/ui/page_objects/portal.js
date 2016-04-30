@@ -435,7 +435,7 @@ var Portal = {
     return browser.getCurrentUrl().then(function (initialUrl) {
       me.getDomainsPage();
       me.domains.listPage.searcher.setSearchCriteria(domain.name);
-      me.domains.listPage.domainsTbl
+      me.domains.listPage.table
         .getRows()
         .count()
         .then(function (totalResults) {
@@ -497,7 +497,7 @@ var Portal = {
       me.getDomainsPage();
       me.domains.listPage.searcher.clearSearchCriteria();
       me.domains.listPage.searcher.setSearchCriteria(domain.name);
-      me.domains.listPage.domainsTbl
+      me.domains.listPage.table
         .getFirstRow()
         .clickDelete();
       me.dialog.clickOk();

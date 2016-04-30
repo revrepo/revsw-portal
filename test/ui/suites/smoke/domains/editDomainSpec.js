@@ -104,7 +104,7 @@ describe('Smoke', function () {
           function () {
             Portal.domains.listPage.searcher.clearSearchCriteria();
             Portal.domains.listPage.searcher.setSearchCriteria(myDomain.name);
-            Portal.domains.listPage.domainsTbl
+            Portal.domains.listPage.table
               .getFirstRow()
               .getNameLink()
               .click();
