@@ -19,7 +19,7 @@
 // # Domain List Page Object
 
 // Requiring other Page Objects that compound the Domain List Page one
-var DomainTable = require('./table');
+var DomainTable = require('./table/table');
 var Pager = require('./../common/pager');
 var Searcher = require('./../common/searcher');
 
