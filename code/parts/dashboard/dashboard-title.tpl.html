@@ -31,12 +31,16 @@
         <a href="" ng-if="editMode" class="btn btn-link"  title="Undo Changes" ng-click="cancelEditMode()">
           <i class="glyphicon glyphicon-repeat adf-flip"></i>
         </a>
-  </span>
-</h2>
+    </span>
+    </h2>
   </div>
-<div class="col-md-12" ng-if="model.rows[0]['columns'][0]['widgets'].length == 0 && model.rows[0]['columns'][1]['widgets'].length == 0">
-  <!-- TODO: add to model information about count added widgets-->
-  <strong class="alert alert-attention"> Click on <i class="glyphicon glyphicon-edit"></i> icon in the top right corner to add graphs to the dashboard</strong>
+
+<div class="col-md-12" ng-if="(model.getCountDashboardWidget(model.rows)==0)">
+  <strong class="alert alert-attention"> Click on <i class="glyphicon glyphicon-edit"></i> icon in the top right corner to add graphs to the dashboard.</strong>
+  <hr>
+  <div class="dashboard-preview-background">
+
+  </div>
 </div>
 
 

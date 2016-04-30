@@ -27,8 +27,7 @@
               <input type="text" autofocus class="form-control" ng-disabled="_loading" ng-model="model.job_name" name="job_name" id="job_name" placeholder="Job Name" required>
             </div>
           </div>
-          <div class="form-group" ng-if="auth.isReseller() || auth.isRevadmin()" ng-class="{ 'has-error': editForm.accountId.$invalid &&
-                                      editForm.accountId.$dirty }">
+          <div class="form-group" ng-if="auth.isReseller() || auth.isRevadmin()" ng-class="{ 'has-error': editForm.accountId.$invalid && editForm.accountId.$dirty }">
             <label for="account_id" popover-append-to-body="{{true}}" class="col-sm-2 control-label" popover-trigger="mouseenter" popover="Select account name the job should be associated with">Account *</label>
             <div class="col-sm-10">
               <!--    <select class="form-control" ng-disabled="_loading" ng-model="model.account_id" id="account_id" ng-options="obj.id as obj.companyName for obj in companies" name="accountId" required>
@@ -54,7 +53,7 @@
           <div class="form-group">
             <label for="domain" popover-append-to-body="{{true}}" class="col-sm-2 control-label" popover-trigger="mouseenter" popover="Select Source Type">Source Type *</label>
             <div class="col-sm-10">
-              <select class="form-control" id="domain" ng-model="model.source_type" ng-disabled="_loading" ng-options="key as value for (key,value) in sourceTypes" required></select>
+              <select class="form-control" id="domain" ng-model="model.source_type" ng-disabled="_loading" ng-options="key as value for (key,value) in sourceTypes" required ng-change="onChangeSourceType(model.source_type)"></select>
             </div>
           </div>
           <!-- //Source Type-->
@@ -64,17 +63,15 @@
               Source <span ng-show="model.source_type=='domain'">Domain</span>
               <span ng-show="model.source_type=='app'">Application</span> *
             </label>
-            <div class="col-sm-10" >
-            <!-- <input type="hidden" ng-if="model.source_type=='domain'"  ng-model="selectedDomainSourceId" name="sourceId" required></input> -->
-              <!-- TODO: switch the type Source Name for Source Type -->
-              <ui-select ng-model="selectedDomainSourceId" theme="select2" name="sourceId" ng-disabled="_loading" on-select="onDomainSelect($model)" style="min-width: 550px;" ng-if="model.source_type=='domain'" required >
+            <div class="col-sm-10">
+              <ui-select ng-model="selectedDomainSourceId" theme="select2" name="sourceId" ng-disabled="_loading" on-select="onDomainSelect($model)" style="min-width: 550px;" ng-if="model.source_type=='domain'" required>
                 <ui-select-match placeholder="Select Domain">{{$select.selected.domain_name}}</ui-select-match>
                 <ui-select-choices repeat="item.id as item in domainsList | filter: {domain_name: $select.search,account_id:model.account_id}">
                   <div ng-bind-html="item.domain_name|highlight: $select.search"></div>
                 </ui-select-choices>
               </ui-select>
               <!-- TODO: make select of Mobile Apps-->
-              <ui-select ng-model="selectedAppSourceId" class="source-select" theme="select2" ng-disabled="_loading" on-select="onAppSelect($model)" style="min-width: 550px;" ng-if="(model.source_type=='app')">
+              <ui-select ng-model="selectedAppSourceId" class="source-select" theme="select2" name="sourceId" ng-disabled="_loading" on-select="onAppSelect($model)" style="min-width: 550px;" ng-if="(model.source_type=='app')" required>
                 <ui-select-match placeholder="Select Application">{{$select.selected.app_name}}</ui-select-match>
                 <ui-select-choices repeat="item.id as item in appsList | filter: {app_name: $select.search,account_id:model.account_id }">
                   <div ng-bind-html="item.app_name|highlight: $select.search"></div>

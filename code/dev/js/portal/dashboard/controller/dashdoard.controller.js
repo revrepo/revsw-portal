@@ -58,8 +58,9 @@
          .get(dashboardId)
          .then(function(data) {
              angular.extend(vm.model, data);
+             vm.model.getCountDashboardWidget = vm.getCountDashboardWidget;
              vm.model.addTemplateUrl = 'parts/dashboard/widgets/widget-add.html';
-               // TODO: set type dashboard settings
+             // TODO: set type dashboard settings
              vm.model.editTemplateUrl = 'parts/dashboard/modals/dashboard-edit-with-options.tpl.html';
              $scope.autoRefresh(vm.model.options); // NOTE: run auto-refresh with dashboard options
            },
@@ -163,5 +164,23 @@
          $interval.cancel(resizing);
        }
      });
+     /**
+      * @name  getCountDashboardWidget
+      * @description
+      *
+      * @param  {Array}  rows
+      * @return {Integer}
+      */
+     vm.getCountDashboardWidget = function getCountDashboardWidget(rows) {
+       var wc = 0;
+       angular.forEach(rows, function(cols) {
+         angular.forEach(cols.columns, function(col) {
+           if (!!col.widgets && col.widgets.length > 0) {
+             wc = wc + col.widgets.length;
+           }
+         });
+       });
+       return wc;
+     };
    }
  })();

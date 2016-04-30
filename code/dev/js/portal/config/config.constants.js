@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
 
   angular
@@ -49,12 +49,12 @@
       /**
        * List of icon classes for domain statuses
        */
-      DOMAIN_STAGING_STATUS_ICONS : {
+      DOMAIN_STAGING_STATUS_ICONS: {
         InProgress: 'glyphicon-refresh spin',
         Published: 'glyphicon-ok-sign text-success',
         Modified: 'glyphicon-ok-sign text-primary'
       },
-      DOMAIN_PRODUCTION_STATUS_ICONS : {
+      DOMAIN_PRODUCTION_STATUS_ICONS: {
         InProgress: 'glyphicon-refresh spin',
         Published: 'glyphicon-ok-circle text-success',
         Modified: 'glyphicon-ok-circle text-primary'
@@ -67,12 +67,12 @@
       /**
        * List of icon classes for SSL Certificates statuses
        */
-      SSL_CERT_STAGING_STATUS_ICONS : {
+      SSL_CERT_STAGING_STATUS_ICONS: {
         InProgress: 'glyphicon-refresh spin',
         Published: 'glyphicon-ok-sign text-success',
         Modified: 'glyphicon-ok-sign text-primary'
       },
-      SSL_CERT_PRODUCTION_STATUS_ICONS : {
+      SSL_CERT_PRODUCTION_STATUS_ICONS: {
         InProgress: 'glyphicon-refresh spin',
         Published: 'glyphicon-ok-circle text-success',
         Modified: 'glyphicon-ok-circle text-primary'
@@ -82,6 +82,57 @@
        * Interval delay for refreshing SSL Certificate staging/global status
        */
       SSL_CERT_STATUS_REFRESH_INTERVAL: 5000,
+      /**
+       * [LOGSHIPPERS_SOURCE_TYPES description]
+       * @type {Object}
+       */
+      LOGSHIPPERS_SOURCE_TYPES: {
+        domain: 'Domain',
+        app: 'Application'
+      },
+
+      /**
+       * [LOGSHIPPERS_DESTINATIONA_TYPES  description]
+       * @type {Object}
+       */
+      LOGSHIPPERS_DESTINATIONA_TYPES: {
+        Syslog: 'Syslog',
+        s3: 'S3',
+        ftp: 'FTP',
+        sftp: 'SFTP',
+        logstash: 'Logstash',
+        elasticsearch: 'Elasticsearch'
+      },
+      /**
+       * List of icon classes for Log Shippers statuses
+       */
+      LOGSHIPPERS_STAGING_STATUS_ICONS: {
+        InProgress: 'glyphicon-refresh spin',
+        stop: 'glyphicon-stop text-warning',
+        active: 'glyphicon-play text-success',
+        pause: 'glyphicon-pause text-primary'
+      },
+
+      LOGSHIPPERS_OPERATIONAL_MODES: {
+        active: 'Active',
+        pause: 'Pause',
+        stop: 'Stop'
+      },
+      /**
+       * [LOGSHIPPERS_GENERAL_JOB_STATUSIES description]
+       * @type {Object}
+       */
+      LOGSHIPPERS_GENERAL_JOB_STATUSIES: {
+        actived: 'Actived',
+        stopped: 'Stopped',
+        pause: 'Pause',
+        paused_with_log_piling: 'Paused With Log_piling',
+        Paused_by_revadmin: 'Paused by Rev Admin'
+      },
+      /**
+       * Interval delay for refreshing Log Shippers status
+       */
+      LOGSHIPPERS_STATUS_REFRESH_INTERVAL: 25000,
     });
 
 })();

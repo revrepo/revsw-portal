@@ -137,6 +137,9 @@ table tbody tr.loadingth {
 table tbody .actions a {
   margin-right: 10px;
 }
+table tbody .actions .not-active {
+  opacity: 0.65;
+}
 table tbody .company-names,
 table tbody .source-name {
   white-space: normal;
@@ -611,6 +614,14 @@ section[drawer] .side-menu .dashboard_menu .side-menu-item.item-title a {
 }
 .icon-structure--3-3-3-3 {
   background-image: url('../images/columns/3-3-3-3-sprite.png');
+}
+.dashboard-preview-background {
+  width: 100%;
+  min-height: 90vh;
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-image: url('../images/background-dashboard.png');
 }
 .domain-caching-rules__info .panel-buttons-left {
   padding-right: 30px;
