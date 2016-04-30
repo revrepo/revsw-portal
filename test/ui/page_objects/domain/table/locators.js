@@ -113,4 +113,4 @@ module.exports = {
   table: tableLocators,
   header: headerLocators,
   row: rowLocators
-}
+};

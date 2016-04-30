@@ -57,10 +57,10 @@ var HelpPage = require('./help/helpPage');
 var SecSettingsPage = require('./admin/securitySettingsPage');
 var ApiKeysListPage = require('./admin/apiKeysListPage');
 var ActivityLogPage = require('./admin/activityLogPage');
-var AppsListPage = require('./mobileApps/appsListPage');
-var AddNewAppPage = require('./mobileApps/addNewAppPage');
-var EditAppPage = require('./mobileApps/editAppPage');
-var EditAdvancedModePage = require('./mobileApps/editAppAdvancedModePage');
+var ListPage = require('./mobileApp/appsListPage');
+var AddPage = require('./mobileApp/addNewAppPage');
+var EditPage = require('./mobileApp/editAppPage');
+var AdvancedEditPage = require('./mobileApp/editAppAdvancedModePage');
 var UsageReportPage = require('./billing/usageReportPage');
 
 // This `Portal` Page Object is the entry point to use all other Page Objects
@@ -106,10 +106,10 @@ var Portal = {
     listPage: ApiKeysListPage
   },
   mobileApps: {
-    listPage: AppsListPage,
-    addAppPage: AddNewAppPage,
-    editAppPage: EditAppPage,
-    editAppAdvancedModePage: EditAdvancedModePage
+    listPage: ListPage,
+    addAppPage: AddPage,
+    editAppPage: EditPage,
+    editAppAdvancedModePage: AdvancedEditPage
   },
   admin: {
     activityLog: ActivityLogPage
