@@ -77,7 +77,7 @@ describe('Smoke', function () {
         it('should display delete user button', function () {
           // Getting reference to the delete button of the first user from the
           // list
-          var deleteButton = Portal.userListPage.userTbl
+          var deleteButton = Portal.userListPage.table
             .getFirstRow()
             .getDeleteBtn();
 
@@ -110,7 +110,7 @@ describe('Smoke', function () {
           Portal.userListPage.searcher.setSearchCriteria(tom.email);
 
           // Gets reference to all rows from the list
-          var tableRows = Portal.userListPage.userTbl.getRows();
+          var tableRows = Portal.userListPage.table.getRows();
 
           // Validates the size of all rows
           expect(tableRows.count()).toEqual(0);
@@ -129,7 +129,7 @@ describe('Smoke', function () {
             Portal.userListPage.searcher.setSearchCriteria(chris.email);
 
             // Click on `delete` button of the first row from the list
-            Portal.userListPage.userTbl
+            Portal.userListPage.table
               .getFirstRow()
               .clickDelete();
 

@@ -94,7 +94,7 @@ describe('Workflow', function () {
         expect(user.getEmail()).toEqual(frank.email);
         Portal.deleteUser(frank);
         Portal.userListPage.searcher.setSearchCriteria(frank.email);
-        var totalRows = Portal.userListPage.userTbl.getRows().count();
+        var totalRows = Portal.userListPage.table.getRows().count();
         expect(totalRows).toEqual(0);
       });
 
@@ -109,7 +109,7 @@ describe('Workflow', function () {
       Portal.signIn(adminUser);
       Portal.goToUsers();
       Portal.userListPage.searcher.setSearchCriteria(andrew.email);
-      var newTotalRows = Portal.userListPage.userTbl.getRows().count();
+      var newTotalRows = Portal.userListPage.table.getRows().count();
       expect(newTotalRows).toEqual(1);
       Portal.deleteUser(andrew);
     });
@@ -126,7 +126,7 @@ describe('Workflow', function () {
       Portal.deleteUser(bruce);
       Portal.goToUsers();
       Portal.userListPage.searcher.setSearchCriteria(bruce.email);
-      var newTotalRows = Portal.userListPage.userTbl.getRows().count();
+      var newTotalRows = Portal.userListPage.table.getRows().count();
       expect(newTotalRows).toEqual(0);
     });
 
@@ -151,7 +151,7 @@ describe('Workflow', function () {
 
     it('should not see reseller user', function () {
       Portal.userListPage.searcher.setSearchCriteria(resellerUser.email);
-      var totalRows = Portal.userListPage.userTbl.getRows().count();
+      var totalRows = Portal.userListPage.table.getRows().count();
       expect(totalRows).toEqual(0);
     });
 

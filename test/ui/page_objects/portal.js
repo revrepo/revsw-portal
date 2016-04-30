@@ -345,7 +345,7 @@ var Portal = {
     return browser.getCurrentUrl().then(function (initialUrl) {
       me.getUsersPage();
       me.userListPage.searcher.setSearchCriteria(user.email);
-      me.userListPage.userTbl
+      me.userListPage.table
         .getRows()
         .count()
         .then(function (totalResults) {
@@ -380,7 +380,7 @@ var Portal = {
       me.getUsersPage();
       me.userListPage.searcher.clearSearchCriteria();
       me.userListPage.searcher.setSearchCriteria(user.email);
-      me.userListPage.userTbl
+      me.userListPage.table
         .getFirstRow()
         .clickDelete();
       me.dialog.clickOk();

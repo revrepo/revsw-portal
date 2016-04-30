@@ -52,7 +52,7 @@ describe('Functional', function () {
       Portal.userListPage.searchAndClickDelete(tom.email);
       Portal.dialog.clickOk();
       Portal.userListPage.searcher.setSearchCriteria(tom.email);
-      var tableRows = Portal.userListPage.userTbl.getRows();
+      var tableRows = Portal.userListPage.table.getRows();
       expect(tableRows.count()).toEqual(0);
     });
 
@@ -63,7 +63,7 @@ describe('Functional', function () {
       Portal.userListPage.searchAndClickDelete(carl.email);
       Portal.dialog.clickOk();
       Portal.userListPage.searcher.setSearchCriteria(carl.email);
-      var tableRows = Portal.userListPage.userTbl.getRows();
+      var tableRows = Portal.userListPage.table.getRows();
       expect(tableRows.count()).toEqual(0);
     });
 
@@ -75,7 +75,7 @@ describe('Functional', function () {
       expect(okBtn.isDisplayed()).toBeTruthy();
       Portal.dialog.clickOk();
       Portal.userListPage.searcher.setSearchCriteria(sam.email);
-      var tableRows = Portal.userListPage.userTbl.getRows();
+      var tableRows = Portal.userListPage.table.getRows();
       expect(tableRows.count()).toEqual(0);
     });
 
@@ -86,7 +86,7 @@ describe('Functional', function () {
       var okBtn = Portal.dialog.getCancelBtn();
       expect(okBtn.isDisplayed()).toBeTruthy();
       Portal.dialog.clickCancel();
-      var tableRows = Portal.userListPage.userTbl.getRows();
+      var tableRows = Portal.userListPage.table.getRows();
       expect(tableRows.count()).toEqual(1);
       Portal.userListPage.searchAndClickDelete(bruce.email);
       Portal.dialog.clickOk();
@@ -97,7 +97,7 @@ describe('Functional', function () {
       Portal.createUser(bruce);
       Portal.userListPage.searchAndClickDelete(bruce.email);
       Portal.dialog.getModalEl().sendKeys(protractor.Key.ESCAPE);
-      var tableRows = Portal.userListPage.userTbl.getRows();
+      var tableRows = Portal.userListPage.table.getRows();
       expect(tableRows.count()).toEqual(1);
       Portal.userListPage.searchAndClickDelete(bruce.email);
       Portal.dialog.clickOk();

@@ -48,21 +48,21 @@ describe('Smoke', function () {
         });
 
         it('should display edit user button', function () {
-          var editButton = Portal.userListPage.userTbl
+          var editButton = Portal.userListPage.table
             .getFirstRow()
             .getEditBtn();
           expect(editButton.isPresent()).toBeTruthy();
         });
 
         it('should display "Edit User" form', function () {
-          Portal.userListPage.userTbl
+          Portal.userListPage.table
             .getFirstRow()
             .clickEdit();
           expect(Portal.editUserPage.isDisplayed()).toBeTruthy();
         });
 
         it('should allow to cancel an user edition', function () {
-          Portal.userListPage.userTbl
+          Portal.userListPage.table
             .getFirstRow()
             .clickEdit();
           Portal.editUserPage.userForm.setFirstName('Something Else');
@@ -75,7 +75,7 @@ describe('Smoke', function () {
           Portal.createUser(joe);
           // Edit user name and last name
           Portal.userListPage.searcher.setSearchCriteria(joe.email);
-          Portal.userListPage.userTbl
+          Portal.userListPage.table
             .getFirstRow()
             .clickEdit();
           var valueAdded = 'user-updated';

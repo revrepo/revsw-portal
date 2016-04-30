@@ -47,11 +47,11 @@ describe('Functional', function () {
 
     it('should display the next page with next users when clicking "Next page"',
       function () {
-        var firstUserEmail = Portal.userListPage.userTbl
+        var firstUserEmail = Portal.userListPage.table
           .getFirstRow()
           .getEmail();
         Portal.userListPage.pager.clickNext();
-        var nextFirstUserEmail = Portal.userListPage.userTbl
+        var nextFirstUserEmail = Portal.userListPage.table
           .getFirstRow()
           .getEmail();
         expect(firstUserEmail).not.toEqual(nextFirstUserEmail);
@@ -60,15 +60,15 @@ describe('Functional', function () {
     it('should display the previous page with previous users when clicking ' +
       '"Previous page"',
       function () {
-        var firstUserEmail = Portal.userListPage.userTbl
+        var firstUserEmail = Portal.userListPage.table
           .getFirstRow()
           .getEmail();
         Portal.userListPage.pager.clickNext();
-        var nextFirstUserEmail = Portal.userListPage.userTbl
+        var nextFirstUserEmail = Portal.userListPage.table
           .getFirstRow()
           .getEmail();
         Portal.userListPage.pager.clickPrevious();
-        var newFirstUserEmail = Portal.userListPage.userTbl
+        var newFirstUserEmail = Portal.userListPage.table
           .getFirstRow()
           .getEmail();
         expect(newFirstUserEmail).not.toEqual(nextFirstUserEmail);
@@ -77,11 +77,11 @@ describe('Functional', function () {
 
     it('should display a set of user when clicking an specific page',
       function () {
-        var firstUserEmail = Portal.userListPage.userTbl
+        var firstUserEmail = Portal.userListPage.table
           .getFirstRow()
           .getEmail();
         Portal.userListPage.pager.clickPageIndex(2);
-        var nextFirstUserEmail = Portal.userListPage.userTbl
+        var nextFirstUserEmail = Portal.userListPage.table
           .getFirstRow()
           .getEmail();
         expect(firstUserEmail).not.toEqual(nextFirstUserEmail);
