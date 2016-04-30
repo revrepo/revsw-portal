@@ -16,8 +16,8 @@
  * from Rev Software, Inc.
  */
 
-var DomainTableRow = require('./tableRow');
-var DomainTableLocators = require('./tableRowLocators');
+var DomainTableRow = require('./row');
+var DomainTableLocators = require('./locators');
 
 var DomainTable = {
 
