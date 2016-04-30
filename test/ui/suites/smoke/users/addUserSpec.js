@@ -49,12 +49,12 @@ describe('Smoke', function () {
         it('should display "Add user" form', function () {
           Portal.userListPage.clickAddNewUser();
           expect(Portal.addUserPage.isDisplayed()).toBeTruthy();
-          expect(Portal.addUserPage.userForm.isDisplayed()).toBeTruthy();
+          expect(Portal.addUserPage.form.isDisplayed()).toBeTruthy();
         });
 
         it('should allow to cancel an user edition', function () {
           Portal.userListPage.clickAddNewUser();
-          Portal.addUserPage.userForm.setEmail('something');
+          Portal.addUserPage.form.setEmail('something');
           Portal.addUserPage.clickCancel();
           expect(Portal.userListPage.isDisplayed()).toBeTruthy();
         });

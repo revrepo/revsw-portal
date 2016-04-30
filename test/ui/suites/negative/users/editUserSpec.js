@@ -50,14 +50,14 @@ describe('Negative', function () {
     it('should not allow to edit the user\'s email', function () {
       Portal.getUsersPage();
       Portal.userListPage.searchAndClickEdit(carl.email);
-      var emailField = Portal.editUserPage.userForm.getEmailTxtIn();
+      var emailField = Portal.editUserPage.form.getEmailTxtIn();
       expect(emailField.isEnabled()).toBeFalsy();
     });
 
     it('should not allow to update a user without "First Name"',
       function () {
         Portal.userListPage.searchAndClickEdit(carl.email);
-        Portal.editUserPage.userForm.clearFirstName();
+        Portal.editUserPage.form.clearFirstName();
         var addBtn = Portal.editUserPage.getUpdateUserBtn();
         expect(addBtn.isEnabled()).toBeFalsy();
       });
@@ -65,7 +65,7 @@ describe('Negative', function () {
     it('should not allow to update a user without "Last Name"',
       function () {
         Portal.userListPage.searchAndClickEdit(carl.email);
-        Portal.editUserPage.userForm.clearLastName();
+        Portal.editUserPage.form.clearLastName();
         var addBtn = Portal.editUserPage.getUpdateUserBtn();
         expect(addBtn.isEnabled()).toBeFalsy();
       });
@@ -73,7 +73,7 @@ describe('Negative', function () {
     it('should not allow to update a user without role',
       function () {
         Portal.userListPage.searchAndClickEdit(carl.email);
-        Portal.editUserPage.userForm.setRole('--- Select Role ---');
+        Portal.editUserPage.form.setRole('--- Select Role ---');
         var addBtn = Portal.editUserPage.getUpdateUserBtn();
         expect(addBtn.isEnabled()).toBeFalsy();
       });

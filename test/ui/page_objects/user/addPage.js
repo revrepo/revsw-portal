@@ -49,7 +49,7 @@ var AddUser = {
 
   // `Add User` Page is compound mainly by a form. This property makes reference
   // to the UserForm Page Object to interact with it.
-  userForm: UserForm,
+  form: UserForm,
 
   // ## Methods to retrieve references to UI elements (Selenium WebDriver
   // Element)
@@ -187,7 +187,7 @@ var AddUser = {
    * @returns {Promise}
    */
   createUser: function (user) {
-    this.userForm.fill(user);
+    this.form.fill(user);
     return this.clickCreateUser();
   }
 };
