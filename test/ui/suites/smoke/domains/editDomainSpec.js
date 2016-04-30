@@ -96,7 +96,7 @@ describe('Smoke', function () {
         it('should display "Edit Domain" form',
           function () {
             Portal.domains.listPage.searchAndClickEdit(myDomain.name);
-            var domainForm = Portal.domains.editPage.domainForm.isDisplayed();
+            var domainForm = Portal.domains.editPage.form.isDisplayed();
             expect(domainForm).toBeTruthy();
           });
 
@@ -108,15 +108,15 @@ describe('Smoke', function () {
               .getFirstRow()
               .getNameLink()
               .click();
-            var domainForm = Portal.domains.editPage.domainForm.isDisplayed();
+            var domainForm = Portal.domains.editPage.form.isDisplayed();
             expect(domainForm).toBeTruthy();
           });
 
         it('should allow to cancel an domain edition',
           function () {
             Portal.domains.listPage.searchAndClickEdit(myDomain.name);
-            Portal.domains.editPage.domainForm.setOriginServer('x');
-            Portal.domains.editPage.domainForm.setOriginHostHeader('x');
+            Portal.domains.editPage.form.setOriginServer('x');
+            Portal.domains.editPage.form.setOriginHostHeader('x');
             Portal.domains.editPage.clickCancel();
             expect(Portal.domains.listPage.isDisplayed()).toBeTruthy();
           });

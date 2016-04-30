@@ -48,7 +48,7 @@ describe('Functional', function () {
     it('should not update domain with long value in origin server field (100)',
       function () {
         Portal.domains.listPage.searchAndClickEdit(myDomain.name);
-        Portal.domains.editPage.domainForm.setOriginServer(lenStr100);
+        Portal.domains.editPage.form.setOriginServer(lenStr100);
         Portal.domains.editPage.clickUpdateDomain();
         Portal.dialog.clickOk();
 
@@ -60,7 +60,7 @@ describe('Functional', function () {
     it('should not update domain with value in origin host header field (100)',
       function () {
         Portal.domains.listPage.searchAndClickEdit(myDomain.name);
-        Portal.domains.editPage.domainForm.setOriginHostHeader(lenStr100);
+        Portal.domains.editPage.form.setOriginHostHeader(lenStr100);
         Portal.domains.editPage.clickUpdateDomain();
         Portal.dialog.clickOk();
 
@@ -75,7 +75,7 @@ describe('Functional', function () {
       function () {
         var location = '--- Select Location ---';
         Portal.domains.listPage.searchAndClickEdit(myDomain.name);
-        Portal.domains.editPage.domainForm.setDomainOriginLocation(location);
+        Portal.domains.editPage.form.setDomainOriginLocation(location);
         var validateBtn = Portal.domains.editPage.getValidateDomainBtn();
         expect(validateBtn.isEnabled()).toBeFalsy();
         var updateBtn = Portal.domains.editPage.getUpdateDomainBtn();
@@ -87,7 +87,7 @@ describe('Functional', function () {
     it('should validate the length value in origin host header field (100)',
       function () {
         Portal.domains.listPage.searchAndClickEdit(myDomain.name);
-        Portal.domains.editPage.domainForm.setOriginHostHeader(lenStr100);
+        Portal.domains.editPage.form.setOriginHostHeader(lenStr100);
         Portal.domains.editPage.clickValidateDomain();
 
         var alert = Portal.alerts.getFirst();
@@ -99,7 +99,7 @@ describe('Functional', function () {
     it('should not publish domain with value in origin host header field (100)',
       function () {
         Portal.domains.listPage.searchAndClickEdit(myDomain.name);
-        Portal.domains.editPage.domainForm.setOriginHostHeader(lenStr100);
+        Portal.domains.editPage.form.setOriginHostHeader(lenStr100);
         Portal.domains.editPage.clickPublishDomain();
         Portal.dialog.clickOk();
 
