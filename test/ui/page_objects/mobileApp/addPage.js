@@ -317,7 +317,7 @@ var AddNewApp = {
     return element.all(by.id(this.locators.dropDowns.companyName.id))
       .then(function (items) {
         me.setAppName(app.name);
-        me.setPlatform(app.platform);
+        //me.setPlatform(app.platform);
         me.setComment(app.comment);
         if (app.companyName && items.length > 0) {
           me.setCompanyName(app.companyName);
