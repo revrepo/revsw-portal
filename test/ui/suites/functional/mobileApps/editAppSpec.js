@@ -48,9 +48,8 @@ describe('Functional', function () {
     });
 
     apps.forEach(function (app) {
-      it('should get the title from basic edited app - ' + app.platform,
+        it('should get the title from basic edited app - ' + app.platform,
           function () {
-            Portal.goToMobileApps();
             Portal.header.goTo(app.platform);
             Portal.mobileApps.listPage.searchAndEdit(app);
 
@@ -60,7 +59,6 @@ describe('Functional', function () {
 
         it('should basic edit and "verify" an existing app - ' + app.platform,
           function () {
-            Portal.goToMobileApps();
             Portal.header.goTo(app.platform);
             Portal.mobileApps.listPage.searchAndEdit(app);
             Portal.mobileApps.editAppPage.verify(app);
@@ -69,7 +67,6 @@ describe('Functional', function () {
             var expectedMsg = 'App configuration is correct';
             expect(alert.getText()).toEqual(expectedMsg);
 
-            Portal.goToMobileApps();
             Portal.header.goTo(app.platform);
             var findApp = Portal.mobileApps.listPage.findApp(app);
             expect(findApp).toBe(1);
@@ -77,7 +74,6 @@ describe('Functional', function () {
 
         it('should basic edit and "update" an existing app - ' + app.platform,
           function () {
-            Portal.goToMobileApps();
             Portal.header.goTo(app.platform);
             Portal.mobileApps.listPage.searchAndEdit(app);
             Portal.mobileApps.editAppPage.update(app);
@@ -95,7 +91,6 @@ describe('Functional', function () {
 
         it('should basic edit and "publish" an existing app - ' + app.platform,
           function () {
-            Portal.goToMobileApps();
             Portal.header.goTo(app.platform);
             Portal.mobileApps.listPage.searchAndEdit(app);
             Portal.mobileApps.editAppPage.publish(app);
@@ -113,7 +108,6 @@ describe('Functional', function () {
 
         it('should basic edit and "verify" the app name - ' + app.platform,
           function () {
-            Portal.goToMobileApps();
             Portal.header.goTo(app.platform);
             Portal.mobileApps.listPage.searchAndEdit(app);
             var tempAppName = app.name;
@@ -133,7 +127,6 @@ describe('Functional', function () {
 
         it('should basic edit and "update" the app name - ' + app.platform,
           function () {
-            Portal.goToMobileApps();
             Portal.header.goTo(app.platform);
             Portal.mobileApps.listPage.searchAndEdit(app);
             var tempAppName = app.name;
@@ -154,7 +147,6 @@ describe('Functional', function () {
 
         it('should basic edit and "publish" the app name - ' + app.platform,
           function () {
-            Portal.goToMobileApps();
             Portal.header.goTo(app.platform);
             Portal.mobileApps.listPage.searchAndEdit(app);
             var tempAppName = app.name;
