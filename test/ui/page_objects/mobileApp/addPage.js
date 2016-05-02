@@ -45,6 +45,9 @@ var AddNewApp = {
     inputs: {
       appName: {
         id: 'app_name'
+      },
+      comment: {
+        id: 'comment'
       }
     },
     dropDowns: {
@@ -108,8 +111,26 @@ var AddNewApp = {
     return element(by.id(this.locators.dropDowns.platform.id));
   },
 
+  /**
+   * ### AddNewApp.getCompanyNameDDown()
+   *
+   * Gets the reference to `Company Name` input text element.
+   *
+   * @returns {Promise}
+   */
   getCompanyNameDDown: function () {
     return element(by.id(this.locators.dropDowns.companyName.id));
+  },
+
+  /**
+   * ### AddNewApp.getCommentTxt()
+   *
+   * Gets the reference to `Comment` textarea field element.
+   *
+   * @returns {Promise}
+   */
+  getCommentTxt: function () {
+    return element(by.id(this.locators.inputs.comment.id));
   },
 
   /**
@@ -180,11 +201,35 @@ var AddNewApp = {
       .sendKeys(value);
   },
 
+  /**
+   * ### AddNewApp.setCompanyName(value)
+   *
+   * Selects a Company Name value from Platform drop down in `Add New App` Page.
+   *
+   * @param {String} companyName.
+   *
+   * @returns {Promise}
+   */
   setCompanyName: function (companyName) {
     return this
       .getCompanyNameDDown()
       .element(by.cssContainingText('option', companyName))
       .click();
+  },
+
+  /**
+   * ### AddNewApp.setComment(comment)
+   *
+   * Selects a Company Name value from Platform drop down in `Add New App` Page.
+   *
+   * @param {String} comment.
+   *
+   * @returns {Promise}
+   */
+  setComment: function (comment) {
+    return this
+      .getCommentTxt()
+      .sendKeys(comment);
   },
 
   /**
@@ -273,6 +318,7 @@ var AddNewApp = {
       .then(function (items) {
         me.setAppName(app.name);
         me.setPlatform(app.platform);
+        me.setComment(app.comment);
         if (app.companyName && items.length > 0) {
           me.setCompanyName(app.companyName);
         }

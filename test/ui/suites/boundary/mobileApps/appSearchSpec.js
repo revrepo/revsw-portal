@@ -51,7 +51,7 @@ describe('Boundary', function () {
         afterEach(function () {
         });
 
-        it('should search apps with 51 characters',
+        it('should search apps with 50 characters',
           function () {
 
             var longString = new Array(51).join('x');
