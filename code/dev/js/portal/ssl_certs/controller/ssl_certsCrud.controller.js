@@ -89,9 +89,6 @@
     }, {
       id: 'private',
       typeName: 'Private With Customer-Provided Key'
-    }, {
-      id: 'private-revapm',
-      typeName: 'Private With RevAPM-Provided Key'
     }];
 
     $scope.fetchCompanies = function(companyIds) {
@@ -252,7 +249,7 @@
           $scope.alertService.success('The SSL certificate is correct', 5000);
         })
         .catch(function(err) {
-          $scope.alertService.danger(err.data.message || 'Oops something ment wrong', 5000);
+          $scope.alertService.danger(err.data.message || 'Oops something went wrong', 5000);
         });
     };
     /**
@@ -280,7 +277,7 @@
             $scope.alertService.success('SSL certificate updated', 5000);
           })
           .catch(function(err) {
-            $scope.alertService.danger(err.data.message || 'Oops something ment wrong', 5000);
+            $scope.alertService.danger(err.data.message || 'Oops something went wrong', 5000);
           });
       });
     };
