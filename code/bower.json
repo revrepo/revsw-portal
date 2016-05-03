@@ -27,7 +27,7 @@
     "angular-daterangepicker": "~0.2.2",
     "angular-file-saver": "~1.1.0",
     "angular-highlightjs": "~0.5.1",
-    "angular-intro.js": "~2.0.1",
+    "angular-intro.js": "https://github.com/usablica/intro.js.git#2.0",
     "angular-moment": "^0.10.3",
     "angular-resource": "~1.4.6",
     "angular-sanitize": "~1.4.6",
