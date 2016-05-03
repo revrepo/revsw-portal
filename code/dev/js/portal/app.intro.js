@@ -35,16 +35,17 @@
           intro: 'Mobile Apps -> iOS',
           position: 'right'
         },
-        //“Web Analytics -> Traffic Levels”: TBD
-        {
-          element: '#side-menu-sub-item__apps-ios',
-          intro: 'Mobile Apps -> iOS',
-          position: 'right'
-        },
+        // TODO: “Web Analytics -> Traffic Levels”: TBD
+        // {
+        //   element: '#side-menu-sub-item__',
+        //   intro: 'Mobile Apps -> Traffic LevelsiOS',
+        //   position: 'right'
+        // },
       ]
     };
     // NOTE: Main Menu Introduction
     $rootScope.IntroOptions = introduction_application;
+
     if ($localStorage.intro === undefined) {
       $localStorage.intro = {
         isShowMainIntro: false,
@@ -53,20 +54,14 @@
       $rootScope.menuExpandedNodes = {};
       $rootScope.isShowMainIntro = false;
     } else {
+      $rootScope.isShowMainIntro = false;
       $rootScope.isShowMainIntro = $localStorage.intro.isShowMainIntro;
     }
-
     if ($rootScope.isShowMainIntro === false) {
       ['index.apps', 'index.reports', 'index.webApp', 'index.accountSettings'].forEach(function(menuState) {
         $rootScope.menuExpandedNodes[menuState] = true;
       });
     }
-
-    $rootScope.ChangeEvent = function(targetElement, scope) {
-      // console.log('Change Event called');
-      // console.log(targetElement); //The target element
-      // console.log(this); //The IntroJS object
-    };
 
     /**
      * @name  BeforeChangeEvent
@@ -76,24 +71,32 @@
      * @param {[type]} scope [description]
      */
     $rootScope.BeforeChangeEvent = function(e, scope) {
-      angular.element(e).focus();
+      var el = angular.element(e);
+      el.addClass('.intro-active');
+      return el.focus();
     };
-
+    $rootScope.AfterChangeEvent = function(e, scope) {
+      var el = angular.element(e);
+      el.removeClass('intro-active');
+      return;
+    };
     /**
-     * @CompletedEvent
+     * @name CompletedEvent
      * @description
-     * @param {[type]} e [description]
+     *
+     * @param {Object} e
      */
     $rootScope.onIntroCompletedEvent = function(e) {
-      if ($localStorage.intro.isShowMainIntro === false) {
+      if (!!$localStorage.intro && $localStorage.intro.isShowMainIntro === false) {
         $localStorage.intro.isShowMainIntro = true;
+        $rootScope.isShowMainIntro = true;
         $state.transitionTo($state.current, $stateParams, {
           reload: true,
           inherit: true,
           notify: true
         });
       } else {
-        if ($localStorage.intro.pages[$state.current.name] !== true) {
+        if (!!$localStorage.intro.pages && $localStorage.intro.pages[$state.current.name] !== true) {
           $localStorage.intro.pages[$state.current.name] = true;
         }
       }

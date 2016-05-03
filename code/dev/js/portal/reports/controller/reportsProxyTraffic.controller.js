@@ -34,10 +34,6 @@
             $scope.stateIntro();
           }
         }, 300);
-      } else {
-        $timeout(function() {
-          $scope.CallGlobalIntro();
-        }, 300);
       }
     }
 
