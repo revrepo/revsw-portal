@@ -112,6 +112,7 @@ gulp.task('serve', function() {
       routes: {
         '/bower_components': 'bower_components',
         '/portal': '/',
+        '/widgets': '/../widgets',
       }
     }
   });
