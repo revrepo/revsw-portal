@@ -52,7 +52,7 @@ describe('Negavive', function () {
       it('should not add a duplicated app - ' + app.platform, function () {
         Portal.goToMobileApps();
         Portal.header.goTo(app.platform);
-        Portal.mobileApps.listPage.addNewApp(app);
+        Portal.mobileApps.listPage.addNew(app);
 
         var alert = Portal.alerts.getFirst();
         var s = 'The app name and platform is already registered in the system';

@@ -54,7 +54,7 @@ describe('Functional', function () {
 
       it('should add a new app - ' + app.platform, function () {
         Portal.header.goTo(app.platform);
-        Portal.mobileApps.listPage.addNewApp(app);
+        Portal.mobileApps.listPage.addNew(app);
 
         var alert = Portal.alerts.getFirst();
         var expectedMsg = 'App registered';

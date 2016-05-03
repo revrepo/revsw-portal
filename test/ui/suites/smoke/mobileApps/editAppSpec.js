@@ -84,7 +84,7 @@ describe('Smoke', function () {
               'data',
               function () {
                 var app = DataProvider.generateMobileApp(platform);
-                Portal.mobileApps.listPage.addNewApp(app);
+                Portal.mobileApps.listPage.addNew(app);
                 expect(Portal.alerts.getAll().count()).toEqual(1);
                 expect(Portal.alerts.getFirst().getText())
                   .toEqual('App registered');

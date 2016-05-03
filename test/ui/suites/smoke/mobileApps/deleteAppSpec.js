@@ -70,7 +70,7 @@ describe('Smoke', function () {
             it('should display a confirmation message when deleting an app',
               function () {
                 app = DataProvider.generateMobileApp(platform);
-                Portal.mobileApps.listPage.addNewApp(app);
+                Portal.mobileApps.listPage.addNew(app);
                 expect(Portal.alerts.getAll().count()).toEqual(1);
                 expect(Portal.alerts.getFirst().getText())
                   .toEqual('App registered');

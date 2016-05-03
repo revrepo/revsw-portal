@@ -21,7 +21,7 @@
 // Requiring `Apps List Table` component page object.
 var AppsListTable = require('./table');
 // Requiring `Add New App` component page object.
-var AddNewAppPage = require('./addPage');
+var AddAppPage = require('./addPage');
 var Pager = require('./../common/pager');
 var Searcher = require('./../common/searcher');
 
@@ -62,12 +62,6 @@ var AppsList = {
   // `Apps List Table` Page is compound mainly by a table. This property makes
   // reference to the AppsListPage Page Object to interact with it.
   appsTable: AppsListTable,
-
-  // TODO: This does not apply to this section. Need to remove
-  // `Add New App` Page is compound mainly by a form. This property makes
-  // reference to the AddNewAppPage Page Object to interact with it.
-  appsForm: AddNewAppPage,
-
   pager: Pager,
   searcher: Searcher,
 
@@ -205,7 +199,7 @@ var AppsList = {
   },
 
   /**
-   * ### AppsList.addNewApp(app)
+   * ### AppsList.addNew(app)
    *
    * Adds new app in the `Apps List App` Page.
    *
@@ -217,10 +211,12 @@ var AppsList = {
    *    }
    * @returns {Promise}
    */
-  addNewApp: function (app) {
+  addNew: function (app) {
     this.clickAddNewApp();
-    this.appsForm.fill(app);
-    this.appsForm.clickRegister(app);
+    // TODO: This does not apply to this section. Nee to improve the usage of
+    // AddPage from mobile apps.
+    AddAppPage.fill(app);
+    AddAppPage.clickRegister(app);
   },
 
   /**

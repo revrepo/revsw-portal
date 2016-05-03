@@ -528,7 +528,7 @@ var Portal = {
     return browser.getCurrentUrl().then(function (initialUrl) {
       apps.forEach(function (app) {
         me.header.goTo(platform);
-        me.mobileApps.listPage.addNewApp(app);
+        me.mobileApps.listPage.addNew(app);
       });
       browser.getCurrentUrl().then(function (currentUrl) {
         if (initialUrl !== currentUrl) {
@@ -589,7 +589,7 @@ var Portal = {
         .countTotalRows()
         .then(function (totalResults) {
           if (totalResults === 0) {
-            me.mobileApps.listPage.addNewApp(app);
+            me.mobileApps.listPage.addNew(app);
             me.mobileApps.addPage.clickBackToList();
           }
           browser.getCurrentUrl().then(function (currentUrl) {

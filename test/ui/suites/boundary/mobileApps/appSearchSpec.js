@@ -58,7 +58,7 @@ describe('Boundary', function () {
             var app = DataProvider.generateMobileAppData(platform, 1)[0];
             app.name = longString;
 
-            Portal.mobileApps.listPage.addNewApp(app);
+            Portal.mobileApps.listPage.addNew(app);
             Portal.header.goTo(platform);
             var countApps = Portal.mobileApps.listPage.findApp(app);
             expect(countApps).toBe(1);
