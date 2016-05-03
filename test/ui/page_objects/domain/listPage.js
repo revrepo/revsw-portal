@@ -62,7 +62,7 @@ var DomainList = {
    * @returns {Selenium WebDriver Element}
    */
   getTitleLbl: function () {
-    return element(by.classNaAppsListTableme(this.locators.labels.title.className));
+    return element(by.className(this.locators.labels.title.className));
   },
 
   /**
