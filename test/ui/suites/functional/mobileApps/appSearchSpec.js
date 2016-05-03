@@ -59,9 +59,9 @@ describe('Functional', function () {
             var appNameToSearch = buildPrefix(user, platform) + '10';
             Portal.mobileApps.listPage.searcher
               .setSearchCriteria(appNameToSearch);
-            var allRows = Portal.mobileApps.listPage.appsTable.countTotalRows();
+            var allRows = Portal.mobileApps.listPage.table.countTotalRows();
             expect(allRows).toEqual(1);
-            var appNameDisplayed = Portal.mobileApps.listPage.appsTable
+            var appNameDisplayed = Portal.mobileApps.listPage.table
               .getFirstRow()
               .name;
             expect(appNameDisplayed).toEqual(appNameToSearch);
@@ -69,7 +69,7 @@ describe('Functional', function () {
 
         it('should clear the search field when clicking `X` button',
           function () {
-            var appNameToSearch = Portal.mobileApps.listPage.appsTable
+            var appNameToSearch = Portal.mobileApps.listPage.table
               .getFirstRow()
               .name;
             Portal.mobileApps.listPage.searcher
@@ -85,11 +85,11 @@ describe('Functional', function () {
             var appNameToSearch = buildPrefix(user, platform) + '10';
             Portal.mobileApps.listPage.searcher
               .setSearchCriteria(appNameToSearch);
-            var totalRows = Portal.mobileApps.listPage.appsTable
+            var totalRows = Portal.mobileApps.listPage.table
               .countTotalRows();
             expect(totalRows).toEqual(1);
             Portal.mobileApps.listPage.searcher.clickReset();
-            var newTotalRows = Portal.mobileApps.listPage.appsTable
+            var newTotalRows = Portal.mobileApps.listPage.table
               .countTotalRows();
             expect(newTotalRows).not.toEqual(totalRows);
             expect(newTotalRows).toBeGreaterThan(totalRows);

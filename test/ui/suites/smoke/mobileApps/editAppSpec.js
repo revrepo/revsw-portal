@@ -60,21 +60,21 @@ describe('Smoke', function () {
 
             it('should display edit app button',
               function () {
-                var editButton = Portal.mobileApps.listPage.appsTable
+                var editButton = Portal.mobileApps.listPage.table
                   .getEditApp();
                 expect(editButton.isPresent()).toBeTruthy();
               });
 
             it('should display `Edit app` form',
               function () {
-                Portal.mobileApps.listPage.appsTable.clickEditApp();
+                Portal.mobileApps.listPage.table.clickEditApp();
                 expect(Portal.mobileApps.editPage.isDisplayed())
                   .toBeTruthy();
               });
 
             it('should allow to cancel an app edition',
               function () {
-                Portal.mobileApps.listPage.appsTable.clickEditApp();
+                Portal.mobileApps.listPage.table.clickEditApp();
                 Portal.mobileApps.editPage.form.setAppName('something');
                 Portal.mobileApps.editPage.form.clickCancel();
                 expect(Portal.mobileApps.listPage.isDisplayed()).toBeTruthy();

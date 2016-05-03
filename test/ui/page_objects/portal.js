@@ -585,7 +585,7 @@ var Portal = {
       me.goToMobileApps();
       me.header.goTo(app.platform);
       me.mobileApps.listPage.setSearch(app.name);
-      me.mobileApps.listPage.appsTable
+      me.mobileApps.listPage.table
         .countTotalRows()
         .then(function (totalResults) {
           if (totalResults === 0) {

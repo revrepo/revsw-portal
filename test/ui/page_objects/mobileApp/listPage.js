@@ -19,7 +19,7 @@
 // # Apps List Page Object
 
 // Requiring `Apps List Table` component page object.
-var AppsListTable = require('./table');
+var AppsTable = require('./table');
 // Requiring `Add New App` component page object.
 var AddAppPage = require('./addPage');
 var Pager = require('./../common/pager');
@@ -60,8 +60,8 @@ var AppsList = {
   },
 
   // `Apps List Table` Page is compound mainly by a table. This property makes
-  // reference to the AppsListPage Page Object to interact with it.
-  appsTable: AppsListTable,
+  // reference to the AppsTable Page Object to interact with it.
+  table: AppsTable,
   pager: Pager,
   searcher: Searcher,
 
@@ -228,7 +228,7 @@ var AppsList = {
    */
   findApp: function (app) {
     this.setSearch(app.name);
-    return this.appsTable.countTotalRows();
+    return this.table.countTotalRows();
   },
 
   /**
@@ -242,7 +242,7 @@ var AppsList = {
    */
   searchAndDelete: function (app) {
     this.setSearch(app.name);
-    this.appsTable.clickDeleteApp();
+    this.table.clickDeleteApp();
   },
 
   /**
@@ -256,7 +256,7 @@ var AppsList = {
    */
   searchAndEdit: function (app) {
     this.setSearch(app.name);
-    this.appsTable.clickEditApp();
+    this.table.clickEditApp();
   },
 
   /**
@@ -270,7 +270,7 @@ var AppsList = {
    */
   searchAndAdvancedEdit: function (app) {
     this.setSearch(app.name);
-    this.appsTable.clickAdvancedEditApp();
+    this.table.clickAdvancedEditApp();
   }
 };
 

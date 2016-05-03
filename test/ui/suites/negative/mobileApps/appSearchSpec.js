@@ -51,11 +51,11 @@ describe('Negative', function () {
 
         it('should not apply filters when typing spaces in `Search` field',
           function () {
-            var totalRows = Portal.mobileApps.listPage.appsTable
+            var totalRows = Portal.mobileApps.listPage.table
               .countTotalRows();
             Portal.mobileApps.listPage.searcher
               .setSearchCriteria('    '); // 4 char spaces
-            var newTotalRows = Portal.mobileApps.listPage.appsTable
+            var newTotalRows = Portal.mobileApps.listPage.table
               .countTotalRows();
             expect(totalRows).toEqual(newTotalRows);
           });
@@ -65,7 +65,7 @@ describe('Negative', function () {
           function () {
             var uniqueString = 'unique_string_' + Date.now();
             Portal.mobileApps.listPage.searcher.setSearchCriteria(uniqueString);
-            var totalRows = Portal.mobileApps.listPage.appsTable
+            var totalRows = Portal.mobileApps.listPage.table
               .countTotalRows();
             expect(totalRows).toEqual(0);
           });

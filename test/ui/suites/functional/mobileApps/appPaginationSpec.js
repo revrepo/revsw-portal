@@ -67,11 +67,11 @@ describe('Functional', function () {
         it('should display the next page with next apps when clicking ' +
           '"Next page"',
           function () {
-            var firstAppName = Portal.mobileApps.listPage.appsTable
+            var firstAppName = Portal.mobileApps.listPage.table
               .getFirstRow()
               .name;
             Portal.mobileApps.listPage.pager.clickNext();
-            var nextFirstAppName = Portal.mobileApps.listPage.appsTable
+            var nextFirstAppName = Portal.mobileApps.listPage.table
               .getFirstRow()
               .name;
             expect(firstAppName).not.toEqual(nextFirstAppName);
@@ -80,15 +80,15 @@ describe('Functional', function () {
         it('should display the previous page with previous apps when ' +
           'clicking "Previous page"',
           function () {
-            var firstAppName = Portal.mobileApps.listPage.appsTable
+            var firstAppName = Portal.mobileApps.listPage.table
               .getFirstRow()
               .name;
             Portal.mobileApps.listPage.pager.clickNext();
-            var nextFirstAppName = Portal.mobileApps.listPage.appsTable
+            var nextFirstAppName = Portal.mobileApps.listPage.table
               .getFirstRow()
               .name;
             Portal.mobileApps.listPage.pager.clickPrevious();
-            var newFirstAppName = Portal.mobileApps.listPage.appsTable
+            var newFirstAppName = Portal.mobileApps.listPage.table
               .getFirstRow()
               .name;
             expect(newFirstAppName).not.toEqual(nextFirstAppName);
@@ -97,11 +97,11 @@ describe('Functional', function () {
 
         it('should display a set of apps when clicking an specific page',
           function () {
-            var firstAppName = Portal.mobileApps.listPage.appsTable
+            var firstAppName = Portal.mobileApps.listPage.table
               .getFirstRow()
               .name;
             Portal.mobileApps.listPage.pager.clickPageIndex(2);
-            var nextFirstAppName = Portal.mobileApps.listPage.appsTable
+            var nextFirstAppName = Portal.mobileApps.listPage.table
               .getFirstRow()
               .name;
             expect(firstAppName).not.toEqual(nextFirstAppName);
