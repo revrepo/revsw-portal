@@ -72,7 +72,39 @@
           AlertService.danger(err, 5000);
         });
     };
+    /**
+     * @name  onShortSignUp
+     * @description]
+     *
+     * Call API for registration new User
+     *
+     * @param  {Object} model
+     * @return
+     */
+    this.onSignUpShort = function onSignUpShort(model) {
+      console.log(model);
+      this._loading = true;
 
+      if (!model) {
+        return;
+      }
+      // if (model.passwordConfirm !== model.password) {
+      //   AlertService.danger('Passwords did not match', 5000);
+      //   return;
+      // }
+      $scope.userData = _.clone(model);
+      AlertService.clear();
+
+      Users.signupShort(model)
+        .$promise
+        .then(function(data) {
+          $ctrl.user = model;
+          $ctrl.isRegistryFinish = true;
+        })
+        .catch(function(err) {
+          AlertService.danger(err, 5000);
+        });
+    };
     /**
      * @name  onRepeatSendRegistrationEmail
      * @description
