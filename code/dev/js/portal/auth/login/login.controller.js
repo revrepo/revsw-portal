@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -28,10 +28,8 @@
       'images/bg/yosemite_valley.jpg',
     ];
 
-    $scope.randomImage = images[Math.floor(Math.random() * images.length)];
-    $scope.randomImageStyle = {
-      'background-image': 'url(' + $scope.randomImage + ')'
-    };
+    $scope.randomImage = images[Math.floor(Math.random()*images.length)];
+    $scope.randomImageStyle = {'background-image': 'url(' + $scope.randomImage + ')'};
 
     $scope.login = function(email, pass) {
       AlertService.clear();
@@ -40,16 +38,16 @@
         User.login(email, pass)
           .then(function(data) {
             DashboardSrv.getAll().then(function(dashboards) {
-              if (dashboards && dashboards.length) {
+              if(dashboards && dashboards.length){
                 $location.path('dashboard/' + dashboards[0].id);
               } else {
                 $state.go('index.reports.proxy');
               }
             });
           })
-          .catch(function(err) {
+          .catch(function (err) {
             if (!err.status) {
-
+              AlertService.danger('Something get wrong', 5000);
             }
             if (err.status === $config.STATUS.TWO_FACTOR_AUTH_REQUIRED) {
               $scope.enter2faCode(email, pass);
@@ -60,18 +58,14 @@
             if (err.status === $config.STATUS.UNAUTHORIZED) {
               AlertService.danger('Wrong username or password', 5000);
             }
-            if (!!err.data) {
-              if (err.data.message && (err.status !== $config.STATUS.SUBSCRIPTION_REQUIRED)) {
-                AlertService.danger(err.data.message, 5000);
-              }
-            } else {
-              AlertService.danger('Something get wrong', 5000);
+            if (err.data.message && (err.status !== $config.STATUS.SUBSCRIPTION_REQUIRED)) {
+              AlertService.danger(err.data.message, 5000);
             }
           })
-          .finally(function() {
+          .finally(function () {
             $scope._loading = false;
           });
-      } catch (e) {
+      } catch(e) {
         AlertService.danger(e.message);
         $scope._loading = false;
       }
@@ -87,7 +81,7 @@
         controller: 'TwoFactorAuthCodeModalController',
         size: 'md',
         resolve: {
-          auth: function() {
+          auth: function () {
             return {
               email: email,
               password: password
@@ -96,7 +90,7 @@
         }
       });
 
-      modalInstance.result.then(function(data) {
+      modalInstance.result.then(function (data) {
         $state.go('index');
       });
     };
@@ -105,16 +99,16 @@
       var modalInstance = $modal.open({
         templateUrl: 'parts/auth/forgot-password.html',
         controller: 'ForgotPasswordController',
-        size: 'md' //,
-          //resolve: {
-          //  items: function () {
-          //    return $scope.items;
-          //  }
-          //}
+        size: 'md'//,
+        //resolve: {
+        //  items: function () {
+        //    return $scope.items;
+        //  }
+        //}
       });
 
-      modalInstance.result.then(function(message) {
-        if (!!message) {
+      modalInstance.result.then(function (message) {
+        if(!!message){
           AlertService.success(message, 5000);
         }
       });
@@ -126,7 +120,7 @@
         controller: 'resendRegistrationEmailController',
         size: 'md',
         resolve: {
-          auth: function() {
+          auth: function () {
             return {
               email: email,
               password: password
@@ -135,7 +129,7 @@
         }
       });
 
-      modalInstance.result.then(function(data) {
+      modalInstance.result.then(function (data) {
         $state.go('index');
       });
     };
