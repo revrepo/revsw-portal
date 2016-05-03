@@ -108,8 +108,8 @@ var Portal = {
   mobileApps: {
     listPage: ListPage,
     addAppPage: AddPage,
-    editAppPage: EditPage,
-    editAppAdvancedModePage: AdvancedEditPage
+    editPage: EditPage,
+    advancedEditPage: AdvancedEditPage
   },
   admin: {
     activityLog: ActivityLogPage

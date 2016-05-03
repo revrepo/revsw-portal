@@ -52,7 +52,7 @@ describe('Functional', function () {
           Portal.goToMobileApps();
           Portal.header.goTo(app.platform);
           Portal.mobileApps.listPage.searchAndAdvancedEdit(app);
-          Portal.mobileApps.editAppAdvancedModePage.verify();
+          Portal.mobileApps.advancedEditPage.verify();
 
           Portal.header.goTo(app.platform);
           var findApp = Portal.mobileApps.listPage.findApp(app);
@@ -64,7 +64,7 @@ describe('Functional', function () {
           Portal.goToMobileApps();
           Portal.header.goTo(app.platform);
           Portal.mobileApps.listPage.searchAndAdvancedEdit(app);
-          Portal.mobileApps.editAppAdvancedModePage.update();
+          Portal.mobileApps.advancedEditPage.update();
           Portal.dialog.clickOk();
 
           Portal.header.goTo(app.platform);
@@ -77,7 +77,7 @@ describe('Functional', function () {
           Portal.goToMobileApps();
           Portal.header.goTo(app.platform);
           Portal.mobileApps.listPage.searchAndAdvancedEdit(app);
-          Portal.mobileApps.editAppAdvancedModePage.publish();
+          Portal.mobileApps.advancedEditPage.publish();
           Portal.dialog.clickOk();
 
           Portal.header.goTo(app.platform);

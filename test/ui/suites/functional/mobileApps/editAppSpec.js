@@ -53,7 +53,7 @@ describe('Functional', function () {
             Portal.header.goTo(app.platform);
             Portal.mobileApps.listPage.searchAndEdit(app);
 
-            var title = Portal.mobileApps.editAppPage.getTitle();
+            var title = Portal.mobileApps.editPage.getTitle();
             expect(title).toContain('Edit App');
         });
 
@@ -61,7 +61,7 @@ describe('Functional', function () {
           function () {
             Portal.header.goTo(app.platform);
             Portal.mobileApps.listPage.searchAndEdit(app);
-            Portal.mobileApps.editAppPage.verify(app);
+            Portal.mobileApps.editPage.verify(app);
 
             var alert = Portal.alerts.getFirst();
             var expectedMsg = 'App configuration is correct';
@@ -76,7 +76,7 @@ describe('Functional', function () {
           function () {
             Portal.header.goTo(app.platform);
             Portal.mobileApps.listPage.searchAndEdit(app);
-            Portal.mobileApps.editAppPage.update(app);
+            Portal.mobileApps.editPage.update(app);
             Portal.dialog.clickOk();
 
             var alert = Portal.alerts.getFirst();
@@ -93,7 +93,7 @@ describe('Functional', function () {
           function () {
             Portal.header.goTo(app.platform);
             Portal.mobileApps.listPage.searchAndEdit(app);
-            Portal.mobileApps.editAppPage.publish(app);
+            Portal.mobileApps.editPage.publish(app);
             Portal.dialog.clickOk();
 
             var alert = Portal.alerts.getFirst();
@@ -112,7 +112,7 @@ describe('Functional', function () {
             Portal.mobileApps.listPage.searchAndEdit(app);
             var tempAppName = app.name;
             app.name = app.name + 'UPDATED';
-            Portal.mobileApps.editAppPage.verify(app);
+            Portal.mobileApps.editPage.verify(app);
 
             var alert = Portal.alerts.getFirst();
             var expectedMsg = 'App configuration is correct';
@@ -131,7 +131,7 @@ describe('Functional', function () {
             Portal.mobileApps.listPage.searchAndEdit(app);
             var tempAppName = app.name;
             app.name = app.name + 'UPDATED';
-            Portal.mobileApps.editAppPage.update(app);
+            Portal.mobileApps.editPage.update(app);
             Portal.dialog.clickOk();
 
             var alert = Portal.alerts.getFirst();
@@ -151,7 +151,7 @@ describe('Functional', function () {
             Portal.mobileApps.listPage.searchAndEdit(app);
             var tempAppName = app.name;
             app.name = app.name + 'UPDATED';
-            Portal.mobileApps.editAppPage.publish(app);
+            Portal.mobileApps.editPage.publish(app);
             Portal.dialog.clickOk();
 
             var alert = Portal.alerts.getFirst();

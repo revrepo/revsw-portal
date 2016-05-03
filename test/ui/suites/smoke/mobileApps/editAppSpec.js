@@ -68,15 +68,15 @@ describe('Smoke', function () {
             it('should display `Edit app` form',
               function () {
                 Portal.mobileApps.listPage.appsTable.clickEditApp();
-                expect(Portal.mobileApps.editAppPage.isDisplayed())
+                expect(Portal.mobileApps.editPage.isDisplayed())
                   .toBeTruthy();
               });
 
             it('should allow to cancel an app edition',
               function () {
                 Portal.mobileApps.listPage.appsTable.clickEditApp();
-                Portal.mobileApps.editAppPage.form.setAppName('something');
-                Portal.mobileApps.editAppPage.form.clickCancel();
+                Portal.mobileApps.editPage.form.setAppName('something');
+                Portal.mobileApps.editPage.form.clickCancel();
                 expect(Portal.mobileApps.listPage.isDisplayed()).toBeTruthy();
               });
 
@@ -91,7 +91,7 @@ describe('Smoke', function () {
                 Portal.mobileApps.addAppPage.clickBackToList();
                 Portal.mobileApps.listPage.searchAndEdit(app);
                 app.name = 'UPDATED-' + app.name;
-                Portal.mobileApps.editAppPage.update(app);
+                Portal.mobileApps.editPage.update(app);
                 Portal.dialog.clickOk();
                 expect(Portal.alerts.getAll().count()).toEqual(1);
                 expect(Portal.alerts.getFirst().getText())
