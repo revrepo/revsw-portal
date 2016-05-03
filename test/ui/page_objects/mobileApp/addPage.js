@@ -51,9 +51,9 @@ var AddNewApp = {
       }
     },
     dropDowns: {
-      platform: {
-        id: 'app_platform'
-      },
+//      platform: {
+//        id: 'app_platform'
+//      },
       companyName: {
         id: 'account_id'
       }
@@ -107,9 +107,9 @@ var AddNewApp = {
    *
    * @returns {Promise}
    */
-  getPlatformDDown: function () {
-    return element(by.id(this.locators.dropDowns.platform.id));
-  },
+//  getPlatformDDown: function () {
+//    return element(by.id(this.locators.dropDowns.platform.id));
+//  },
 
   /**
    * ### AddNewApp.getCompanyNameDDown()
@@ -195,11 +195,11 @@ var AddNewApp = {
    *
    * @returns {Promise}
    */
-  setPlatform: function (value) {
-    return this
-      .getPlatformDDown()
-      .sendKeys(value);
-  },
+//  setPlatform: function (value) {
+//   return this
+//      .getPlatformDDown()
+//      .sendKeys(value);
+//  },
 
   /**
    * ### AddNewApp.setCompanyName(value)

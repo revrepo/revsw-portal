@@ -181,9 +181,19 @@
       return SSL_conf_profiles.query().$promise
         .then(function(list) {
           $scope.SSL_conf_profiles = list;
-          if($scope.model.ssl_conf_profile ===''){
+          if ($scope.model.ssl_conf_profile === '') {
             // set default value for ssl_conf_profile
             $scope.model.ssl_conf_profile = $scope.SSL_conf_profiles[0].id;
+          } else {
+            // fill values for SSL Conf Profile
+            var _conf_profile = _.find($scope.SSL_conf_profiles, {
+              id: $scope.model.ssl_conf_profile
+            });
+            if (!!_conf_profile) {
+              $scope.model.ssl_protocols = _conf_profile.ssl_protocols;
+              $scope.model.ssl_ciphers = _conf_profile.ssl_ciphers;
+              $scope.model.ssl_prefer_server_ciphers = _conf_profile.ssl_prefer_server_ciphers;
+            }
           }
         }).$promise;
     }

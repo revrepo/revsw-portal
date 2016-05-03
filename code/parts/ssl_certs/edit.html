@@ -36,16 +36,16 @@
               </select>
             </div>
           </div>
-          <!--  <div class="form-group">
+          <div class="form-group" ng-if="auth.isRevadmin()">
             <label for="cert_type_id" popover-append-to-body="{{true}}" class="col-sm-2 control-label" popover-trigger="mouseenter" popover="Select Certificate Type">Certificate Type</label>
             <div class="col-sm-10">
               <select class="form-control" ng-disabled="_loading" ng-model="model.cert_type" id="cert_type_id" ng-options="obj.id as obj.typeName for obj in certs_types">
                 <option value="">--- Select Certificate Type ---</option>
               </select>
             </div>
-          </div> -->
+          </div>
           <div class="form-group" ng-class="{ 'has-error': editForm.public_ssl_cert.$invalid && editForm.public_ssl_cert.$dirty }">
-            <label for="public_ssl_cert" class="col-sm-2 control-label" popover-trigger="mouseenter" popover="Enter here a Public Certificate">Public Certificate *
+            <label for="public_ssl_cert" class="col-sm-2 control-label" popover-trigger="mouseenter" popover="Enter here a Public Certificate">Public And Intermediate Certificates *
               <br><small>(in PEM format)</small></label>
             <div class="col-md-10">
               <textarea id="public_ssl_cert" placeholder="Public Certificate" class="form-control text--courier" name="public_ssl_cert" ng-model="model.public_ssl_cert" ng-disabled="_loading" required>
@@ -55,13 +55,13 @@
           <div class="form-group" ng-class="{ 'has-error': editForm.private_ssl_key.$invalid &&
                                       editForm.private_ssl_key.$dirty }">
             <label for="private_ssl_key" class="col-sm-2 control-label" popover-trigger="mouseenter" popover="Enter here a Private Key">Private Key *
-              <br><small>(in PEM format)</small></label>
+              <br><small>(in PEM format, unencrypted)</small></label>
             <div class="col-md-10">
               <textarea id="private_ssl_key" placeholder="Private Key" class="form-control text--courier" name="private_ssl_key" ng-model="model.private_ssl_key" ng-disabled="_loading" required>
               </textarea>
             </div>
           </div>
-          <div class="form-group">
+          <!-- <div class="form-group">
             <label for="cert_name" popover-append-to-body="{{true}}" class="col-sm-2 control-label" popover-trigger="mouseenter" popover="Enter here a Private Key Password">Private Key Password</label>
             <div class="col-sm-10">
               <input type="text" class="form-control" ng-disabled="_loading" ng-model="model.private_ssl_key_passphrase" id="private_ssl_key_passphrase" max="100" placeholder="Private Key Password">
@@ -75,7 +75,7 @@
               <textarea id="chain_ssl_cert" placeholder="Chain SSL Certificates" class="form-control text--courier" name="chain_ssl_cert" ng-model="model.chain_ssl_cert" ng-disabled="_loading">
               </textarea>
             </div>
-          </div>
+          </div> -->
           <div class="form-group" ng-class="{ 'has-error': editForm.comment.$invalid &&
                                       editForm.comment.$dirty }">
             <label for="comment" class="col-sm-2 control-label" popover-trigger="mouseenter" popover="Comment">Comment</label>
