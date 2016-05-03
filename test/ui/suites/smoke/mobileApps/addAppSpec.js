@@ -61,14 +61,14 @@ describe('Smoke', function () {
             it('should display "Add app" form',
               function () {
                 Portal.mobileApps.listPage.clickAddNewApp();
-                expect(Portal.mobileApps.addAppPage.isDisplayed()).toBeTruthy();
+                expect(Portal.mobileApps.addPage.isDisplayed()).toBeTruthy();
               });
 
             it('should allow to cancel an app creation',
               function () {
                 Portal.mobileApps.listPage.clickAddNewApp();
-                Portal.mobileApps.addAppPage.setAppName('something');
-                Portal.mobileApps.addAppPage.clickCancel();
+                Portal.mobileApps.addPage.setAppName('something');
+                Portal.mobileApps.addPage.clickCancel();
                 expect(Portal.mobileApps.listPage.isDisplayed()).toBeTruthy();
               });
 

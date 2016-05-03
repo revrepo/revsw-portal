@@ -52,8 +52,8 @@ describe('Boundary', function () {
 
         Portal.mobileApps.listPage.clickAddNewApp();
         app.name = length51Characters;
-        Portal.mobileApps.addAppPage.fill(app);
-        var enabled = Portal.mobileApps.addAppPage.isEnabledRegister();
+        Portal.mobileApps.addPage.fill(app);
+        var enabled = Portal.mobileApps.addPage.isEnabledRegister();
         expect(enabled).toBe(false);
       });
 
@@ -64,8 +64,8 @@ describe('Boundary', function () {
 
         Portal.mobileApps.listPage.clickAddNewApp();
         app.name = '';
-        Portal.mobileApps.addAppPage.fill(app);
-        var enabled = Portal.mobileApps.addAppPage.isEnabledRegister();
+        Portal.mobileApps.addPage.fill(app);
+        var enabled = Portal.mobileApps.addPage.isEnabledRegister();
         expect(enabled).toBe(false);
       });
 
@@ -76,8 +76,8 @@ describe('Boundary', function () {
 
         Portal.mobileApps.listPage.clickAddNewApp();
         app.name = '       ';
-        Portal.mobileApps.addAppPage.fill(app);
-        var enabled = Portal.mobileApps.addAppPage.isEnabledRegister();
+        Portal.mobileApps.addPage.fill(app);
+        var enabled = Portal.mobileApps.addPage.isEnabledRegister();
         expect(enabled).toBe(false);
       });
 
@@ -88,8 +88,8 @@ describe('Boundary', function () {
 
         Portal.mobileApps.listPage.clickAddNewApp();
         app.name = '& ^ $ @ # % ( ) _ +  / \\ ~ ` , . ; :';
-        Portal.mobileApps.addAppPage.fill(app);
-        var enabled = Portal.mobileApps.addAppPage.isEnabledRegister();
+        Portal.mobileApps.addPage.fill(app);
+        var enabled = Portal.mobileApps.addPage.isEnabledRegister();
         expect(enabled).toBe(false);
       });
     });

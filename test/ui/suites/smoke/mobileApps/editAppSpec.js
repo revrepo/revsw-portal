@@ -88,7 +88,7 @@ describe('Smoke', function () {
                 expect(Portal.alerts.getAll().count()).toEqual(1);
                 expect(Portal.alerts.getFirst().getText())
                   .toEqual('App registered');
-                Portal.mobileApps.addAppPage.clickBackToList();
+                Portal.mobileApps.addPage.clickBackToList();
                 Portal.mobileApps.listPage.searchAndEdit(app);
                 app.name = 'UPDATED-' + app.name;
                 Portal.mobileApps.editPage.update(app);

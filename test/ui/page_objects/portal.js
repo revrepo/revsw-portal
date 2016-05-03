@@ -107,7 +107,7 @@ var Portal = {
   },
   mobileApps: {
     listPage: ListPage,
-    addAppPage: AddPage,
+    addPage: AddPage,
     editPage: EditPage,
     advancedEditPage: AdvancedEditPage
   },
@@ -590,7 +590,7 @@ var Portal = {
         .then(function (totalResults) {
           if (totalResults === 0) {
             me.mobileApps.listPage.addNewApp(app);
-            me.mobileApps.addAppPage.clickBackToList();
+            me.mobileApps.addPage.clickBackToList();
           }
           browser.getCurrentUrl().then(function (currentUrl) {
             if (initialUrl !== currentUrl) {
