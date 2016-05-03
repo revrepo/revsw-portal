@@ -79,6 +79,9 @@ var tableRowLocators = {
         className: 'glyphicon-book'
       }
     }
+  },
+  account: {
+    css: 'td:nth-of-type(6)'
   }
 };
 
@@ -121,6 +124,10 @@ var TableRow = function (rowEl, locators) {
       .element(by.css(this.locators.status.icons.global.css));
   };
 
+  this.getAccountCell = function () {
+    return this.rowEl.element(by.css(this.locators.account.css));
+  };
+
   this.getName = function () {
     return this
       .getNameCell()
@@ -136,6 +143,12 @@ var TableRow = function (rowEl, locators) {
   this.getLastUpdated = function () {
     return this
       .getLastUpdatedCell()
+      .getText();
+  };
+
+  this.getAccount = function () {
+    return this
+      .getAccountCell()
       .getText();
   };
 
