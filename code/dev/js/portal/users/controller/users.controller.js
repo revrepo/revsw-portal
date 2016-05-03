@@ -6,7 +6,7 @@
     .controller('UsersCrudController', UsersCrudController);
 
   // @ngInject
-  function UsersCrudController($scope, CRUDController, Users, User, $injector, $stateParams, Companies, DomainsConfig, $state, $anchorScroll) {
+  function UsersCrudController($scope, $q, CRUDController, Users, User, $injector, $stateParams, Companies, DomainsConfig, $state, $anchorScroll) {
 
     //Invoking crud actions
     $injector.invoke(CRUDController, this, {

@@ -60,11 +60,6 @@ gulp.task('copyFonts', function() {
   return gulp.src(devFolder + 'fonts/**/*.*')
     .pipe(gulp.dest(destFolder + 'fonts'));
 });
-// build and copy widgets
-gulp.task('copyWidgets',  function() {
-  return gulp.src(devFolder + 'widgets/**/dist/*.*')
-    .pipe(gulp.dest(destFolder + 'widgets'));
-});
 
 gulp.task('vulcanize', function() {
   return gulp.src(devFolder + 'polymer/elements.html')
@@ -117,6 +112,7 @@ gulp.task('serve', function() {
       routes: {
         '/bower_components': 'bower_components',
         '/portal': '/',
+        '/widgets': '/../widgets',
       }
     }
   });
@@ -131,6 +127,6 @@ gulp.task('serve', function() {
   gulp.watch([devFolder + 'widgets/**/*'], ['widgets:build']);
 });
 
-gulp.task('copy', ['copyCss', 'copyParts', 'copyImages', 'copyJson', 'copyFonts','copyWidgets']);
+gulp.task('copy', ['copyCss', 'copyParts', 'copyImages', 'copyJson', 'copyFonts','widgets:build']);
 gulp.task('build', ['copy', 'dist', 'vulcanize']);
 gulp.task('default', ['serve', 'less']);

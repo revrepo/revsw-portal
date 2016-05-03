@@ -35,7 +35,11 @@
           form: {
             controller: 'SignupBillingPlansController',
             controllerAs: '$ctrl',
-            templateUrl: 'parts/signup/form-contact-info.tpl.html'
+             templateUrl: function() {
+              // TODO: Add config for select type the form
+              return 'parts/signup/form-contact-info.tpl.html';
+              //return 'parts/signup/form-short-signup.tpl.html';
+            }
           }
         }
       })

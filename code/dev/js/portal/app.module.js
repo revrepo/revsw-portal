@@ -28,6 +28,7 @@
     'datatables.bootstrap',
     'ngFileSaver',
     'revapm.Portal.LogShippers',
+    'angular-intro'
   ]);
 
 })();

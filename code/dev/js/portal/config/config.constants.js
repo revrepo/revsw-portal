@@ -133,6 +133,7 @@
        * Interval delay for refreshing Log Shippers status
        */
       LOGSHIPPERS_STATUS_REFRESH_INTERVAL: 25000,
+      INTRO_IS_ACTIVE: false
     });
 
 })();
