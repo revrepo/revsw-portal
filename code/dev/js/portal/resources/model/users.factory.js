@@ -17,10 +17,6 @@
         url: $config.API_URL + '/signup',
         method: 'POST'
       },
-      signupShort: {
-        url: $config.API_URL + '/signup2',
-        method: 'POST'
-      },
       verify: {
         url: $config.API_URL + '/signup/verify/:token',
         method: 'GET'

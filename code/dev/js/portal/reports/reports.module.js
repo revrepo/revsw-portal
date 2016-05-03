@@ -7,7 +7,6 @@
       'revapm.Portal.Config',
       'revapm.Portal.Resources',
       'ui.router',
-      'chart.js',
-      'angular-intro'
+      'chart.js'
     ]);
 })();
