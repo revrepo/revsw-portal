@@ -28,18 +28,19 @@
       'billing_plan': billing_plan_handler,
       'country': 'US',
       // TODO: delete data after finish tests
-      //'email': 'nikolay.gerzhan@gmail.com',
-      //   'last_name': 'Gerzhan',
-      //   'address1': 'Мужества 22-18',
-      //   'city': 'Красноярск',
-      //   'zipcode': '660043',
-      //   'password': '12345678',
-      //   'passwordConfirm': '12345678',
-      //   'first_name': 'Nikolay',
-      //   'phone_number': '89832877503',
-      //   'company_name': 'Demo',
-      //   'state': 'Krasnoyrskiy kray',
-      //   'city': 'Krasnoyrsk'
+      // 'email': 'nikolay.gerzhan@gmail.com',
+      // 'email': 'demo@demo.com',
+      // 'last_name': 'DEMO ',
+      // 'first_name': 'Simple Registry',
+      // 'address1': 'Мужества 22-18',
+      // 'city': 'Красноярск',
+      // 'zipcode': '660043',
+      // 'password': '12345678',
+      // 'passwordConfirm': '12345678',
+      // 'phone_number': '89832877503',
+      // 'company_name': 'Demo',
+      // 'state': 'Krasnoyrskiy kray',
+      // 'city': 'Krasnoyrsk'
     };
     /**
      * @name  onSignUp

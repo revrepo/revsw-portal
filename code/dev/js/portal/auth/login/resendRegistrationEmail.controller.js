@@ -25,11 +25,15 @@
             email: $scope.data.email
           }).$promise
           .then(function(data) {
-            if (data && data && data.message) {
-              AlertService.success(data.message, 6000);
+            if (!!data && data.message) {
               // Show message
+              AlertService.success(data.message, 6000);
               $modalInstance.close(data.message);
             }
+          }, function(err) {
+            // TODO: check work message
+            AlertService.danger(err.data.message);
+            // console.log('err',err);
           })
           .catch(function(err) {
             AlertService.danger(err.data.message);
