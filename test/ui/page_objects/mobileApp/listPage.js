@@ -19,10 +19,11 @@
 // # Apps List Page Object
 
 // Requiring `Apps List Table` component page object.
-var AppsListTable = require('./appsListTable');
+var AppsTable = require('./table');
 // Requiring `Add New App` component page object.
-var AddNewAppPage = require('./addNewAppPage');
+var AddAppPage = require('./addPage');
 var Pager = require('./../common/pager');
+var Searcher = require('./../common/searcher');
 
 // This `Apps List` Page Object abstracts all operations or actions
 // that a common Two-Factor Authentication could do in the Portal app/site.
@@ -59,14 +60,10 @@ var AppsList = {
   },
 
   // `Apps List Table` Page is compound mainly by a table. This property makes
-  // reference to the AppsListPage Page Object to interact with it.
-  appsTable: AppsListTable,
-
-  // `Add New App` Page is compound mainly by a form. This property makes
-  // reference to the AddNewAppPage Page Object to interact with it.
-  appsForm: AddNewAppPage,
-
+  // reference to the AppsTable Page Object to interact with it.
+  table: AppsTable,
   pager: Pager,
+  searcher: Searcher,
 
   /**
    * ### AppsList.getTitleLbl()
@@ -202,7 +199,7 @@ var AppsList = {
   },
 
   /**
-   * ### AppsList.addNewApp(app)
+   * ### AppsList.addNew(app)
    *
    * Adds new app in the `Apps List App` Page.
    *
@@ -214,10 +211,12 @@ var AppsList = {
    *    }
    * @returns {Promise}
    */
-  addNewApp: function (app) {
+  addNew: function (app) {
     this.clickAddNewApp();
-    this.appsForm.fill(app);
-    this.appsForm.clickRegister(app);
+    // TODO: This does not apply to this section. Nee to improve the usage of
+    // AddPage from mobile apps.
+    AddAppPage.fill(app);
+    AddAppPage.clickRegister(app);
   },
 
   /**
@@ -229,7 +228,7 @@ var AppsList = {
    */
   findApp: function (app) {
     this.setSearch(app.name);
-    return this.appsTable.countTotalRows();
+    return this.table.countTotalRows();
   },
 
   /**
@@ -243,7 +242,7 @@ var AppsList = {
    */
   searchAndDelete: function (app) {
     this.setSearch(app.name);
-    this.appsTable.clickDeleteApp();
+    this.table.clickDeleteApp();
   },
 
   /**
@@ -257,7 +256,7 @@ var AppsList = {
    */
   searchAndEdit: function (app) {
     this.setSearch(app.name);
-    this.appsTable.clickEditApp();
+    this.table.clickEditApp();
   },
 
   /**
@@ -271,7 +270,7 @@ var AppsList = {
    */
   searchAndAdvancedEdit: function (app) {
     this.setSearch(app.name);
-    this.appsTable.clickAdvancedEditApp();
+    this.table.clickAdvancedEditApp();
   }
 };
 

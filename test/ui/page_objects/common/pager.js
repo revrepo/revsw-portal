@@ -35,7 +35,7 @@ var Pager = {
   locators: {
     buttons: {
       allPages: {
-        css: 'hr + crud-pagination li.pointer'
+        css: 'hr + crud-pagination li.pointer span'
       },
       previousPage: {
         css: 'hr + crud-pagination li.previous a'

@@ -40,13 +40,13 @@ describe('Functional', function () {
     });
 
     it('should filter items according to email search criteria', function () {
-      var emailToSearch = Portal.userListPage.userTbl
+      var emailToSearch = Portal.userListPage.table
         .getFirstRow()
         .getEmail();
       Portal.userListPage.searcher.setSearchCriteria(emailToSearch);
-      var allRows = Portal.userListPage.userTbl.getRows();
+      var allRows = Portal.userListPage.table.getRows();
       expect(allRows.count()).toEqual(1);
-      var emailDisplayed = Portal.userListPage.userTbl
+      var emailDisplayed = Portal.userListPage.table
         .getFirstRow()
         .getEmail();
       expect(emailDisplayed).toEqual(emailToSearch);
@@ -54,7 +54,7 @@ describe('Functional', function () {
     });
 
     it('should clear the search field when clicking "X" button', function () {
-      var emailToSearch = Portal.userListPage.userTbl
+      var emailToSearch = Portal.userListPage.table
         .getFirstRow()
         .getEmail();
       Portal.userListPage.searcher.setSearchCriteria(emailToSearch);
@@ -65,14 +65,14 @@ describe('Functional', function () {
     });
 
     it('should reset the filtering when clicking "X" button', function () {
-      var emailToSearch = Portal.userListPage.userTbl
+      var emailToSearch = Portal.userListPage.table
         .getFirstRow()
         .getEmail();
       Portal.userListPage.searcher.setSearchCriteria(emailToSearch);
-      var totalRows = Portal.userListPage.userTbl.getRows().count();
+      var totalRows = Portal.userListPage.table.getRows().count();
       expect(totalRows).toEqual(1);
       Portal.userListPage.searcher.clickReset();
-      var newTotalRows = Portal.userListPage.userTbl.getRows().count();
+      var newTotalRows = Portal.userListPage.table.getRows().count();
       expect(newTotalRows).not.toEqual(1);
       expect(newTotalRows).toBeGreaterThan(1);
       Portal.userListPage.searcher.clearSearchCriteria();

@@ -54,7 +54,7 @@ describe('Smoke', function () {
         it('should be displayed when "Back to list" button is clicked ' +
           'from "Edit User" page',
           function () {
-            Portal.userListPage.userTbl
+            Portal.userListPage.table
               .getFirstRow()
               .clickEdit();
             Portal.addUserPage.clickBackToList();

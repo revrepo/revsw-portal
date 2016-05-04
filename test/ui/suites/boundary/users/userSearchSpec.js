@@ -43,7 +43,7 @@ describe('Negative', function () {
         bret.email = 'kk' + bret.email;
         Portal.createUser(bret);
         Portal.userListPage.searcher.setSearchCriteria('k');
-        var tableRows = Portal.userListPage.userTbl.getRows();
+        var tableRows = Portal.userListPage.table.getRows();
         expect(tableRows.count()).toEqual(1);
         Portal.userListPage.searcher.clearSearchCriteria();
         Portal.deleteUser(bret);

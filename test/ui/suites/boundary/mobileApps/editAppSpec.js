@@ -61,9 +61,9 @@ describe('Boundary', function () {
         Portal.header.goTo(app.platform);
         Portal.mobileApps.listPage.searchAndEdit(app);
         app.name = length51Characters;
-        Portal.mobileApps.editAppPage.form.fill(app);
+        Portal.mobileApps.editPage.form.fill(app);
 
-        var enabled = Portal.mobileApps.editAppPage.form.isEnabledVerify();
+        var enabled = Portal.mobileApps.editPage.form.isEnabledVerify();
         expect(enabled).toBe(false);
       });
 
@@ -74,7 +74,7 @@ describe('Boundary', function () {
         Portal.header.goTo(app.platform);
         Portal.mobileApps.listPage.searchAndEdit(app);
         app.name = '';
-        Portal.mobileApps.editAppPage.verify(app);
+        Portal.mobileApps.editPage.verify(app);
 
         var alert = Portal.alerts.getFirst();
         var expectedMsg1 = 'fails because';
@@ -90,7 +90,7 @@ describe('Boundary', function () {
         Portal.header.goTo(app.platform);
         Portal.mobileApps.listPage.searchAndEdit(app);
         app.name = '       ';
-        Portal.mobileApps.editAppPage.verify(app);
+        Portal.mobileApps.editPage.verify(app);
 
         var alert = Portal.alerts.getFirst();
         var expectedMsg1 = 'fails because';
@@ -106,7 +106,7 @@ describe('Boundary', function () {
         Portal.header.goTo(app.platform);
         Portal.mobileApps.listPage.searchAndEdit(app);
         app.name = '& ^ $ @ # % ( ) _ +  / \\ ~ ` , . ; :';
-        Portal.mobileApps.editAppPage.verify(app);
+        Portal.mobileApps.editPage.verify(app);
 
         var alert = Portal.alerts.getFirst();
         var expectedMsg1 = 'fails because';
@@ -124,9 +124,9 @@ describe('Boundary', function () {
         Portal.header.goTo(app.platform);
         Portal.mobileApps.listPage.searchAndEdit(app);
         app.name = length51Characters;
-        Portal.mobileApps.editAppPage.form.fill(app);
+        Portal.mobileApps.editPage.form.fill(app);
 
-        var enabled = Portal.mobileApps.editAppPage.form.isEnabledVerify();
+        var enabled = Portal.mobileApps.editPage.form.isEnabledVerify();
         expect(enabled).toBe(false);
       });
 
@@ -137,7 +137,7 @@ describe('Boundary', function () {
         Portal.header.goTo(app.platform);
         Portal.mobileApps.listPage.searchAndEdit(app);
         app.name = '';
-        Portal.mobileApps.editAppPage.update(app);
+        Portal.mobileApps.editPage.update(app);
         Portal.dialog.clickOk();
 
         var alert = Portal.alerts.getFirst();
@@ -154,7 +154,7 @@ describe('Boundary', function () {
         Portal.header.goTo(app.platform);
         Portal.mobileApps.listPage.searchAndEdit(app);
         app.name = '       ';
-        Portal.mobileApps.editAppPage.update(app);
+        Portal.mobileApps.editPage.update(app);
         Portal.dialog.clickOk();
 
         var alert = Portal.alerts.getFirst();
@@ -171,7 +171,7 @@ describe('Boundary', function () {
         Portal.header.goTo(app.platform);
         Portal.mobileApps.listPage.searchAndEdit(app);
         app.name = '& ^ $ @ # % ( ) _ +  / \\ ~ ` , . ; :';
-        Portal.mobileApps.editAppPage.update(app);
+        Portal.mobileApps.editPage.update(app);
         Portal.dialog.clickOk();
 
         var alert = Portal.alerts.getFirst();
@@ -190,9 +190,9 @@ describe('Boundary', function () {
         Portal.header.goTo(app.platform);
         Portal.mobileApps.listPage.searchAndEdit(app);
         app.name = length51Characters;
-        Portal.mobileApps.editAppPage.form.fill(app);
+        Portal.mobileApps.editPage.form.fill(app);
 
-        var enabled = Portal.mobileApps.editAppPage.form.isEnabledVerify();
+        var enabled = Portal.mobileApps.editPage.form.isEnabledVerify();
         expect(enabled).toBe(false);
       });
 
@@ -203,7 +203,7 @@ describe('Boundary', function () {
         Portal.header.goTo(app.platform);
         Portal.mobileApps.listPage.searchAndEdit(app);
         app.name = '';
-        Portal.mobileApps.editAppPage.publish(app);
+        Portal.mobileApps.editPage.publish(app);
         Portal.dialog.clickOk();
 
         var alert = Portal.alerts.getFirst();
@@ -220,7 +220,7 @@ describe('Boundary', function () {
         Portal.header.goTo(app.platform);
         Portal.mobileApps.listPage.searchAndEdit(app);
         app.name = '       ';
-        Portal.mobileApps.editAppPage.publish(app);
+        Portal.mobileApps.editPage.publish(app);
         Portal.dialog.clickOk();
 
         var alert = Portal.alerts.getFirst();
@@ -237,7 +237,7 @@ describe('Boundary', function () {
         Portal.header.goTo(app.platform);
         Portal.mobileApps.listPage.searchAndEdit(app);
         app.name = '& ^ $ @ # % ( ) _ +  / \\ ~ ` , . ; :';
-        Portal.mobileApps.editAppPage.publish(app);
+        Portal.mobileApps.editPage.publish(app);
         Portal.dialog.clickOk();
 
         var alert = Portal.alerts.getFirst();

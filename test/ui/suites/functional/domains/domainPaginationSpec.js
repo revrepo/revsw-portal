@@ -25,21 +25,22 @@ describe('Functional', function () {
     var adminUser = config.get('portal.users.admin');
 
     beforeAll(function () {
-    });
-
-    afterAll(function () {
-    });
-
-    beforeEach(function () {
       Portal.signIn(adminUser);
       Portal.getDomainsPage();
     });
 
-    afterEach(function () {
+    afterAll(function () {
       Portal.signOut();
     });
 
-    it('should be displayed when the amount of items exceed the maximum ' +
+    beforeEach(function () {
+      Portal.domains.listPage.pager.clickPageIndex(1);
+    });
+
+    afterEach(function () {
+    });
+
+    it('should be displayed when the amount of items exceeds the maximum ' +
       'amount configured to displayed in one page',
       function () {
         var uniqueString = 'unique_string_' + (new Date()).getTime();
@@ -52,11 +53,11 @@ describe('Functional', function () {
     it('should display the next page with next domains when clicking ' +
       '"Next page"',
       function () {
-        var firstDomainName = Portal.domains.listPage.domainsTbl
+        var firstDomainName = Portal.domains.listPage.table
           .getFirstRow()
           .getName();
         Portal.domains.listPage.pager.clickNext();
-        var nextDomainName = Portal.domains.listPage.domainsTbl
+        var nextDomainName = Portal.domains.listPage.table
           .getFirstRow()
           .getName();
         expect(firstDomainName).not.toEqual(nextDomainName);
@@ -65,15 +66,15 @@ describe('Functional', function () {
     it('should display the previous page with previous domains when ' +
       'clicking "Previous page"',
       function () {
-        var firstDomainName = Portal.domains.listPage.domainsTbl
+        var firstDomainName = Portal.domains.listPage.table
           .getFirstRow()
           .getName();
         Portal.domains.listPage.pager.clickNext();
-        var nextFirstDomainName = Portal.domains.listPage.domainsTbl
+        var nextFirstDomainName = Portal.domains.listPage.table
           .getFirstRow()
           .getName();
         Portal.domains.listPage.pager.clickPrevious();
-        var newFirstDomainName = Portal.domains.listPage.domainsTbl
+        var newFirstDomainName = Portal.domains.listPage.table
           .getFirstRow()
           .getName();
         expect(newFirstDomainName).not.toEqual(nextFirstDomainName);
@@ -82,11 +83,11 @@ describe('Functional', function () {
 
     it('should display a set of domains when clicking an specific page',
       function () {
-        var firstDomainName = Portal.domains.listPage.domainsTbl
+        var firstDomainName = Portal.domains.listPage.table
           .getFirstRow()
           .getName();
         Portal.domains.listPage.pager.clickPageIndex(2);
-        var nextFirstDomainName = Portal.domains.listPage.domainsTbl
+        var nextFirstDomainName = Portal.domains.listPage.table
           .getFirstRow()
           .getName();
         expect(firstDomainName).not.toEqual(nextFirstDomainName);

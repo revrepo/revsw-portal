@@ -17,6 +17,8 @@
     $state,
     $config
   ) {
+
+/*
     if ($config.INTRO_IS_ACTIVE) {
       if (!!$localStorage.intro && $localStorage.intro.isShowMainIntro === true) {
         $scope.IntroOptionsScope = {
@@ -36,7 +38,7 @@
         }, 300);
       }
     }
-
+*/
 
     $scope.userService = User;
     $scope._loading = true;

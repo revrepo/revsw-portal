@@ -21,7 +21,7 @@ var Portal = require('./../../../page_objects/portal');
 var DataProvider = require('./../../../common/providers/data');
 var Constants = require('./../../../page_objects/constants');
 
-describe('Functional', function () {
+describe('Negavive', function () {
   describe('Add New App', function () {
 
     var adminUser = config.get('portal.users.admin');
@@ -31,11 +31,14 @@ describe('Functional', function () {
 
     beforeAll(function () {
       Portal.signIn(adminUser);
-      Portal.goToMobileApps();
+      Portal.createMobileApps('iOS', iosApps);
+      Portal.createMobileApps('Android', androidApps);
     });
 
     afterAll(function () {
-      Portal.deleteMobileApps(apps);
+      //Portal.deleteMobileApps(apps);
+      Portal.deleteMobileApps(iosApps);
+      Portal.deleteMobileApps(androidApps);
       Portal.signOut();
     });
 
@@ -46,23 +49,14 @@ describe('Functional', function () {
     });
 
     apps.forEach(function (app){
-      it('should get title from list app page - ' + app.platform, function() {
-          Portal.header.goTo(app.platform);
-          var title = Portal.mobileApps.listPage.getTitle();
-          expect(title).toEqual(app.title);
-      });
-
-      it('should add a new app - ' + app.platform, function () {
+      it('should not add a duplicated app - ' + app.platform, function () {
+        Portal.goToMobileApps();
         Portal.header.goTo(app.platform);
-        Portal.mobileApps.listPage.addNewApp(app);
+        Portal.mobileApps.listPage.addNew(app);
 
         var alert = Portal.alerts.getFirst();
-        var expectedMsg = 'App registered';
-        expect(alert.getText()).toEqual(expectedMsg);
-
-        Portal.header.goTo(app.platform);
-        var findApp = Portal.mobileApps.listPage.findApp(app);
-        expect(findApp).toBe(1);
+        var s = 'The app name and platform is already registered in the system';
+        expect(alert.getText()).toEqual(s);
       });
     });
   });

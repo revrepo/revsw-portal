@@ -56,94 +56,94 @@ describe('Functional', function () {
 
     it('should apply `ascendant` sorting by `first name` column',
       function () {
-        expect(Portal.userListPage.userTbl.getRows().count()).toEqual(2);
-        Portal.userListPage.userTbl
+        expect(Portal.userListPage.table.getRows().count()).toEqual(2);
+        Portal.userListPage.table
           .getHeader()
           .getFirstNameCell()
           .click();
-        var firstRow = Portal.userListPage.userTbl.getFirstRow();
+        var firstRow = Portal.userListPage.table.getFirstRow();
         expect(firstRow.getFirstNameCell().getText()).toContain(prefix + '1');
       });
 
     it('should apply `descendant` sorting by `first name` column',
       function () {
-        expect(Portal.userListPage.userTbl.getRows().count()).toEqual(2);
-        Portal.userListPage.userTbl
+        expect(Portal.userListPage.table.getRows().count()).toEqual(2);
+        Portal.userListPage.table
           .getHeader()
           .getFirstNameCell()
           .click()
           .click();
-        var firstRow = Portal.userListPage.userTbl.getFirstRow();
+        var firstRow = Portal.userListPage.table.getFirstRow();
         expect(firstRow.getFirstNameCell().getText()).toContain(prefix + '2');
       });
 
     it('should apply `ascendant` sorting by `last name` column',
       function () {
-        expect(Portal.userListPage.userTbl.getRows().count()).toEqual(2);
-        Portal.userListPage.userTbl
+        expect(Portal.userListPage.table.getRows().count()).toEqual(2);
+        Portal.userListPage.table
           .getHeader()
           .getLastNameCell()
           .click();
-        var firstRow = Portal.userListPage.userTbl.getFirstRow();
+        var firstRow = Portal.userListPage.table.getFirstRow();
         expect(firstRow.getLastNameCell().getText()).toContain(prefix + '1');
       });
 
     it('should apply `descendant` sorting by `last name` column',
       function () {
-        expect(Portal.userListPage.userTbl.getRows().count()).toEqual(2);
-        Portal.userListPage.userTbl
+        expect(Portal.userListPage.table.getRows().count()).toEqual(2);
+        Portal.userListPage.table
           .getHeader()
           .getLastNameCell()
           .click()
           .click();
-        var firstRow = Portal.userListPage.userTbl.getFirstRow();
+        var firstRow = Portal.userListPage.table.getFirstRow();
         expect(firstRow.getLastNameCell().getText()).toContain(prefix + '2');
       });
 
     it('should apply `ascendant` sorting by `email` column',
       function () {
-        expect(Portal.userListPage.userTbl.getRows().count()).toEqual(2);
-        Portal.userListPage.userTbl
+        expect(Portal.userListPage.table.getRows().count()).toEqual(2);
+        Portal.userListPage.table
           .getHeader()
           .getEmailCell()
           .click();
-        var firstRow = Portal.userListPage.userTbl.getFirstRow();
+        var firstRow = Portal.userListPage.table.getFirstRow();
         expect(firstRow.getEmailCell().getText()).toContain(prefix + '1');
       });
 
     it('should apply `descendant` sorting by `email` column',
       function () {
-        expect(Portal.userListPage.userTbl.getRows().count()).toEqual(2);
-        Portal.userListPage.userTbl
+        expect(Portal.userListPage.table.getRows().count()).toEqual(2);
+        Portal.userListPage.table
           .getHeader()
           .getEmailCell()
           .click()
           .click();
-        var firstRow = Portal.userListPage.userTbl.getFirstRow();
+        var firstRow = Portal.userListPage.table.getFirstRow();
         expect(firstRow.getEmailCell().getText()).toContain(prefix + '2');
       });
 
     it('should apply `ascendant` sorting by `role` column',
       function () {
-        expect(Portal.userListPage.userTbl.getRows().count()).toEqual(2);
-        Portal.userListPage.userTbl
+        expect(Portal.userListPage.table.getRows().count()).toEqual(2);
+        Portal.userListPage.table
           .getHeader()
           .getRoleCell()
           .click();
-        var firstRow = Portal.userListPage.userTbl.getFirstRow();
+        var firstRow = Portal.userListPage.table.getFirstRow();
         var userRole = firstRow.getRoleCell().getText();
         expect(userRole).toContain(Constants.user.roles.ADMIN);
       });
 
     it('should apply `descendant` sorting by `role` column',
       function () {
-        expect(Portal.userListPage.userTbl.getRows().count()).toEqual(2);
-        Portal.userListPage.userTbl
+        expect(Portal.userListPage.table.getRows().count()).toEqual(2);
+        Portal.userListPage.table
           .getHeader()
           .getRoleCell()
           .click()
           .click();
-        var firstRow = Portal.userListPage.userTbl.getFirstRow();
+        var firstRow = Portal.userListPage.table.getFirstRow();
         var userRole = firstRow.getRoleCell().getText();
         expect(userRole).toContain(Constants.user.roles.USER);
       });

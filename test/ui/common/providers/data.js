@@ -193,6 +193,7 @@ var DataProvider = {
    *     {
    *         name: string,
    *         platform: string,
+   *         comment: string,
    *         companyName: string
    *     }
    */
@@ -204,6 +205,7 @@ var DataProvider = {
     return {
       name: platform + timestamp,
       platform: platform,
+      comment: 'My comment just for testing proposal',
       companyName: 'API QA Reseller Company'
     };
   },
@@ -221,6 +223,7 @@ var DataProvider = {
    *     [{
    *         name: string,
    *         platform: string,
+   *         comment: string,
    *         title: string,
    *         companyName: string
    *     }, ...]
@@ -233,6 +236,7 @@ var DataProvider = {
       app.name = platform + '-' + Date.now() + '-' + (i + 1);
       app.platform = platform;
       app.title = platform + ' Apps List';
+      app.comment = 'My comment just for testing proposal';
       app.companyName = 'API QA Reseller Company';
       apps.push(app);
     }
