@@ -1,5 +1,12 @@
 <paper-drawer-panel responsive-width="980px" drawer-width="210px">
-    <section drawer>
+    <section drawer  ng-intro-options="IntroOptions"
+         ng-intro-method="CallGlobalIntro"
+         ng-intro-oncomplete="onIntroCompletedEvent"
+         ng-intro-onexit="ExitEvent"
+         ng-intro-onchange="ChangeEvent"
+         ng-intro-onbeforechange="BeforeChangeEvent"
+         ng-intro-onafterchange="AfterChangeEvent"
+         ng-intro-autostart="isShowMainIntro==false || isShowMainIntro =='false'">
         <a href="https://www.revapm.com/" id="logo" target="_blank">
             <img src="images/logo_color.png" alt="Logo" />
         </a>
@@ -14,15 +21,15 @@
                     Mobile Apps
                     <i ng-click="expandMenu('index.apps', $event)" class="pull-right {{ menuExpanded('index.apps') ? 'fa fa-caret-down' : 'fa fa-caret-up' }}"></i>
                 </a>
-                <a ui-sref-active="active" ui-sref="index.apps.ios" class="side-menu-sub-item">
+                <a id="side-menu-sub-item__apps-ios" ui-sref-active="active" ui-sref="index.apps.ios" class="side-menu-sub-item">
                     <i class="sub-menu-icon fa fa-apple"></i>
                     iOS
                 </a>
-                <a ui-sref-active="active" ui-sref="index.apps.android" class="side-menu-sub-item">
+                <a id="side-menu-sub-item__apps-android" ui-sref-active="active" ui-sref="index.apps.android" class="side-menu-sub-item">
                     <i class="sub-menu-icon fa fa-android"></i>
                     Android
                 </a>
-                <a ui-sref-active="active" ui-sref="index.apps.windows_mobile" class="side-menu-sub-item">
+                <a id="side-menu-sub-item__apps-windows" ui-sref-active="active" ui-sref="index.apps.windows_mobile" class="side-menu-sub-item">
                     <i class="sub-menu-icon fa fa-windows"></i>
                     Windows Mobile
                 </a>
@@ -64,15 +71,15 @@
                     Web
                     <i ng-click="expandMenu('index.webApp', $event)" class="pull-right {{ menuExpanded('index.webApp') ? 'fa fa-caret-down' : 'fa fa-caret-up' }}"></i>
                 </a>
-                <a ui-sref-active="active" ui-sref="index.webApp.domains" class="side-menu-sub-item">
+                <a id="side-menu-sub-item__webApp-domains" ui-sref-active="active" ui-sref="index.webApp.domains" class="side-menu-sub-item">
                     <i class="sub-menu-icon fa fa-list"></i>
                     Domains
                 </a>
-                  <a ui-sref-active="active" ui-sref="index.webApp.ssl_certs" class="side-menu-sub-item">
+                  <a id="side-menu-sub-item__webApp-ssl_certs"  ui-sref-active="active" ui-sref="index.webApp.ssl_certs" class="side-menu-sub-item">
                     <i class="sub-menu-icon fa fa-lock"></i>
                     SSL Certificates
                 </a>
-                <a ui-sref-active="active" ui-sref="index.webApp.cache" class="side-menu-sub-item">
+                <a id="side-menu-sub-item__webApp-cache"ui-sref-active="active" ui-sref="index.webApp.cache" class="side-menu-sub-item">
                     <i class="sub-menu-icon fa fa-trash"></i>
                     Purge Cache
                 </a>
@@ -93,7 +100,7 @@
                     Web Analytics
                     <i ng-click="expandMenu('index.reports', $event)" class="pull-right {{ menuExpanded('index.reports') ? 'fa fa-caret-down' : 'fa fa-caret-up' }}"></i>
                 </a>
-                <a ui-sref-active="active" ui-sref="index.reports.proxy" class="side-menu-sub-item">
+                <a  id="side-menu-sub-item__reports-proxy"  ui-sref-active="active" ui-sref="index.reports.proxy" class="side-menu-sub-item">
                     <i class="sub-menu-icon fa fa-area-chart"></i>
                     Proxy Traffic
                 </a>
