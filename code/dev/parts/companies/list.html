@@ -63,7 +63,7 @@
           <table class="table">
             <thead>
             <tr>
-              <th class="col-lg-4">
+              <th class="col-sm-2 col-lg-2">
                 <a href="" ng-click="order('companyName')">Company Name</a>
                 <span class="sortorder" ng-show="filter.predicate === 'companyName'" ng-class="{reverse: filter.reverse}"></span>
               </th>
@@ -71,27 +71,27 @@
                 <a href="" ng-click="order('comment')">Comment</a>
                 <span class="sortorder" ng-show="filter.predicate === 'comment'" ng-class="{reverse: filter.reverse}"></span>
               </th> -->
-              <th class="col-lg-1">
+              <th class="col-sm-1 col-lg-1">
                 <a href="" ng-click="order('created_at')">Created At</a>
                 <span class="sortorder" ng-show="filter.predicate === 'created_at'" ng-class="{reverse: filter.reverse}"></span>
               </th>
-              <th class="col-lg-2">
+              <th class="col-sm-1 col-lg-1">
                 <a href="" ng-click="order('createdBy')">Created By</a>
                 <span class="sortorder" ng-show="filter.predicate === 'createdBy'" ng-class="{reverse: filter.reverse}"></span>
               </th>
-              <th class="col-lg-1">
+              <th class="col-sm-1 col-lg-1">
                 <a href="" ng-click="order('subscription_state')">Subscription State</a>
                 <span class="sortorder" ng-show="filter.predicate === 'subscription_state'" ng-class="{reverse: filter.reverse}"></span>
               </th>
-              <th class="col-lg-1">
+              <th class="actions col-sm-1 col-lg-1">
                 <a href="" ng-click="order('subscription_name')">Billing Plan</a>
                 <span class="sortorder" ng-show="filter.predicate === 'subscription_name'" ng-class="{reverse: filter.reverse}"></span>
               </th>
-              <th class="col-lg-1">
+              <th class="col-sm-1 col-lg-1">
                 <a href="" ng-click="order('updated_at')">Last Update</a>
                 <span class="sortorder" ng-show="filter.predicate === 'updated_at'" ng-class="{reverse: filter.reverse}"></span>
               </th>
-              <th class="col-lg-1">Actions</th>
+              <th class="actions col-sm-1 col-lg-1 text-center">Actions</th>
             </tr>
             </thead>
             <tbody>
