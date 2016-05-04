@@ -45,22 +45,24 @@
     };
     // NOTE: Main Menu Introduction
     $rootScope.IntroOptions = introduction_application;
+    if ($config.INTRO_IS_ACTIVE) {
+      if ($localStorage.intro === undefined) {
+        $localStorage.intro = {
+          isShowMainIntro: false,
+          pages: {}
+        };
+        $rootScope.menuExpandedNodes = {};
+        $rootScope.isShowMainIntro = false;
+      } else {
+        $rootScope.isShowMainIntro = false;
+        $rootScope.isShowMainIntro = $localStorage.intro.isShowMainIntro;
+      }
+      if ($rootScope.isShowMainIntro === false) {
+        ['index.apps', 'index.reports', 'index.webApp', 'index.accountSettings'].forEach(function(menuState) {
+          $rootScope.menuExpandedNodes[menuState] = true;
+        });
+      }
 
-    if ($localStorage.intro === undefined) {
-      $localStorage.intro = {
-        isShowMainIntro: false,
-        pages: {}
-      };
-      $rootScope.menuExpandedNodes = {};
-      $rootScope.isShowMainIntro = false;
-    } else {
-      $rootScope.isShowMainIntro = false;
-      $rootScope.isShowMainIntro = $localStorage.intro.isShowMainIntro;
-    }
-    if ($rootScope.isShowMainIntro === false) {
-      ['index.apps', 'index.reports', 'index.webApp', 'index.accountSettings'].forEach(function(menuState) {
-        $rootScope.menuExpandedNodes[menuState] = true;
-      });
     }
 
     /**
