@@ -174,9 +174,10 @@
     };
 
     //  ---------------------------------
-    if ( User.getSelectedAccount() ) {
+    var sel_account = User.getSelectedAccount();
+    if ( sel_account && sel_account.acc_id !== ''/*do not restore 'All accounts'*/ ) {
       // console.log( '(re)loaded', User.getSelectedAccount() );
-      $scope.selected.val = User.getSelectedAccount();
+      $scope.selected.val = sel_account;
     }
 
     User.getUserAccounts()
