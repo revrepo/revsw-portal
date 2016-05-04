@@ -550,8 +550,8 @@ var AppsListTable = {
       version: this.getVersion().getText(),
       lastUpdate: this.getLastUpdate().getText(),
       sdkKey: this.getSDKKey().getText(),
-      stagingStatus: this.getStagingStatus(),
-      globalStatus: this.getGlobalStatus()
+      stagingStatus: this.getStagingStatus().getAttribute('tooltip'),
+      globalStatus: this.getGlobalStatus().getAttribute('tooltip')
     };
   }
 };

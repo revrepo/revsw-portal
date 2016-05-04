@@ -164,6 +164,42 @@ describe('Functional', function () {
             var findApp = Portal.mobileApps.listPage.findApp(app);
             expect(findApp).toBe(1);
         });
+
+        it('should verify staging status after "publish" - ' + app.platform,
+          function () {
+            Portal.header.goTo(app.platform);
+            Portal.mobileApps.listPage.searchAndEdit(app);
+            Portal.mobileApps.editPage.publish(app);
+            Portal.dialog.clickOk();
+
+            var alert = Portal.alerts.getFirst();
+            var expectedMsg = 'App configuration is published';
+            expect(alert.getText()).toEqual(expectedMsg);
+
+            Portal.goToMobileApps();
+            Portal.header.goTo(app.platform);
+            var row = Portal.mobileApps.listPage.table.getFirstRow();
+            expect(row.stagingStatus).toEqual('Staging Status: Published');
+            expect(row.globalStatus).toEqual('Global Status: Published');
+        });
+
+        it('should verify global status after "update" - ' + app.platform,
+          function () {
+            Portal.header.goTo(app.platform);
+            Portal.mobileApps.listPage.searchAndEdit(app);
+            Portal.mobileApps.editPage.update(app);
+            Portal.dialog.clickOk();
+
+            var alert = Portal.alerts.getFirst();
+            var expectedMsg = 'App updated';
+            expect(alert.getText()).toEqual(expectedMsg);
+
+            Portal.goToMobileApps();
+            Portal.header.goTo(app.platform);
+            var row = Portal.mobileApps.listPage.table.getFirstRow();
+            expect(row.stagingStatus).toEqual('Staging Status: Published');
+            expect(row.globalStatus).toEqual('Global Status: Modified');
+        });
     });
   });
 });
