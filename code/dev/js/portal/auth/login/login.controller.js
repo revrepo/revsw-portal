@@ -136,7 +136,8 @@
       });
 
       modalInstance.result.then(function(data) {
-        $state.go('index');
+        // $state.go('index');
+         // $modalInstance.close();
       });
     };
   }

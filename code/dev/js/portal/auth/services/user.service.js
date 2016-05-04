@@ -101,34 +101,7 @@
       delete $http.defaults.headers.common.Authorization;
     }
 
-    /**
-     * Method to login
-     *
-     * @throws Error
-     * @param {string} email
-     * @param {string} password
-     * @param {string?} [oneTimePassword]
-     * @returns {Promise}
-     */
-    function login(email, password, oneTimePassword) {
-      if (!email || !password) {
-        throw new Error('Please fill email and password');
-      }
-      // Create data that will be sent to login
-      var authData = {
-        email: email,
-        password: password
-      };
-      //Check and add one time password
-      if (oneTimePassword) {
-        authData.oneTimePassword = oneTimePassword;
-      }
-      return $http.post($config.API_URL + '/authenticate', authData).then(function (data) {
-        if (data.status === $config.STATUS.OK) {
-          setToken(data.data.token);
-          addAuthHeaderForAPI(data.data.token);
-          return $http.get($config.API_URL + '/users/myself')
-            .then(function (data) {
+    function _successGetUserMyself(data) {
               if (data && data.status === $config.STATUS.OK) {
                 // Success
                 var res = data.data;
@@ -163,7 +136,35 @@
                 throw new Error(data.response);
               }
               return data;
-            });
+            }
+    /**
+     * Method to login
+     *
+     * @throws Error
+     * @param {string} email
+     * @param {string} password
+     * @param {string?} [oneTimePassword]
+     * @returns {Promise}
+     */
+    function login(email, password, oneTimePassword) {
+      if (!email || !password) {
+        throw new Error('Please fill email and password');
+      }
+      // Create data that will be sent to login
+      var authData = {
+        email: email,
+        password: password
+      };
+      //Check and add one time password
+      if (oneTimePassword) {
+        authData.oneTimePassword = oneTimePassword;
+      }
+      return $http.post($config.API_URL + '/authenticate', authData).then(function (data) {
+        if (data.status === $config.STATUS.OK) {
+          setToken(data.data.token);
+          addAuthHeaderForAPI(data.data.token);
+          return $http.get($config.API_URL + '/users/myself')
+            .then(_successGetUserMyself );
         }
         return data;
       }).catch(function (err) {
@@ -466,13 +467,30 @@
       return accSelected || $localStorage.selectedAccount;
     }
 
-
+    function updateToken(token) {
+      var def = $q.defer();
+      if (!!token) {
+        setToken(token);
+        addAuthHeaderForAPI(token);
+        $http.get($config.API_URL + '/users/myself')
+          .then(_successGetUserMyself).then(function(data) {
+            def.resolve(data);
+          });
+      } else {
+        def.reject({
+          message: 'Token not correct'
+        });
+      }
+      return def.promise;
+    }
 
     return {
 
       getToken: getToken,
 
       setToken: setToken,
+
+      updateToken: updateToken,
 
       isAuthed: isAuthed,
 
