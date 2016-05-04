@@ -44,11 +44,11 @@
           intro: 'This section is full of information about mobile application availability, performance, userbase, top objects, etc.',
           position: 'right'
         },
-//        {
-//          element: '#default-dashboard-item',
-//          intro: 'Here you can easily build your own dashboards using different graphs from mobile and web analytics sections.',
-//          position: 'right'
-//        },
+        {
+          element: '#left-menu-dashboard-section',
+          intro: 'Here you can easily build your own dashboards using different graphs from mobile and web analytics sections.',
+          position: 'right'
+        },
       ]
     };
     // NOTE: Main Menu Introduction

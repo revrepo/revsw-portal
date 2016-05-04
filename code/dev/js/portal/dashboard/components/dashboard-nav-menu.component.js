@@ -12,15 +12,15 @@
       replace: true,
       template:
       // TODO: make template as file
-        '<li class="dashboard_menu list"  ui-sref-active-if="{class: \'active-side-menu-item\', state: \'index.dashboard\'}", ' +
+        '<li id="left-menu-dashboard-section" class="dashboard_menu list"  ui-sref-active-if="{class: \'active-side-menu-item\', state: \'index.dashboard\'}", ' +
         'ng-class="{\'active-side-menu-item\': menuExpanded(\'index.dashboard\')}">' +
-        '<a id="default-dashboard-item" class="side-menu-item" ng-if="vm.dashboardsList.length>0" ng-click="goToState(\'dashboard\', vm.dashboardsList[0].id)"  >' +
+        '<a class="side-menu-item" ng-if="vm.dashboardsList.length>0" ng-click="goToState(\'dashboard\', vm.dashboardsList[0].id)"  >' +
         '<div class="left-menu-start" style="margin-right: 3px;"><i class="fa fa-tachometer"></i> </div>' +
         'Dashboards' +
         '<i ng-click="expandMenu(\'index.dashboard\', $event)" ng-if="vm.dashboardsList.length > 0"' +
         ' class="pull-right {{ menuExpanded(\'index.dashboard\') ? \'fa fa-caret-down\' : \'fa fa-caret-up\' }}"></i>' +
         '</a>' +
-        '<span id="default-dashboard-item" ng-if="vm.dashboardsList.length==0"  class="side-menu-item item-title">' +
+        '<span ng-if="vm.dashboardsList.length==0"  class="side-menu-item item-title">' +
         '<div class="left-menu-start"><i class="fa fa-tachometer"></i> </div>' +
         ' Dashboards <dashboard-btn-new></dashboard-btn-new>' +
         '</span>' +
