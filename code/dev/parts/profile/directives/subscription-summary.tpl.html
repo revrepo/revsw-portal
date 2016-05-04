@@ -48,29 +48,17 @@
         <td>{{subscription.credit_card.last_name}} </td>
       </tr>
       <tr>
-        <td>Card Number</td>{{subscription.credit_card}}
+        <td>Card Number</td>
         <td>
-          <span ng-if="!!subscription.credit_car">{{subscription.credit_card.masked_card_number}}</span>
-          <strong ng-if="!subscription.credit_car"> Not on file </strong>
+          <span ng-if="!!subscription.credit_card">{{subscription.credit_card.masked_card_number}}</span>
+          <strong ng-if="!subscription.credit_card"> No card on file </strong>
           <a ng-href="{{subscription.billing_portal_link.url}}" class="btn btn-xs btn-primary" tooltip="Update Payment Profile" ng-disabled="!subscription.billing_portal_link.url" target="_blank"><i class="glyphicon glyphicon-lock"></i> Update Payment Profile</a>
         </td>
       </tr>
       <tr>
         <td>Card Exp. Date</td>
-        <td><span ng-if="!!subscription.credit_car">{{subscription.credit_card.expiration_month}}/{{subscription.credit_card.expiration_year}}</span></td>
+        <td><span ng-if="!!subscription.credit_card">{{subscription.credit_card.expiration_month}}/{{subscription.credit_card.expiration_year}}</span></td>
       </tr>
-      <!-- TODO: For subscription.credit_card.card_type need to translate credit card code names to public names
-        like 'Visa', 'Master Card', 'AMEX', etc
-      <tr>
-        <td>Card Type </td>
-        <td>{{subscription.credit_card.card_type | uppercase}}</td>
-      </tr>
-      -->
-      <!--     <tr>
-        <td>Activated At</td>
-        <td>{{subscription.activated_at | date }}</td>
-      </tr> -->
     </table>
   </div>
-  <!--   <pre> {{subscription|json}} </pre> -->
 </section>
