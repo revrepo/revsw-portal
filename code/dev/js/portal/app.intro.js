@@ -45,7 +45,7 @@
     };
     // NOTE: Main Menu Introduction
     $rootScope.IntroOptions = introduction_application;
-    if ($config.INTRO_IS_ACTIVE) {
+    if ($config.INTRO_IS_ACTIVE === true) {
       if ($localStorage.intro === undefined) {
         $localStorage.intro = {
           isShowMainIntro: false,
@@ -62,9 +62,9 @@
           $rootScope.menuExpandedNodes[menuState] = true;
         });
       }
-
+    } else {
+      $rootScope.isShowMainIntro = true;
     }
-
     /**
      * @name  BeforeChangeEvent
      * @description
