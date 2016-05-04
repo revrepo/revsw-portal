@@ -10,37 +10,41 @@
     $rootScope.menuExpandedNodes = {};
     var introduction_application = {
       steps: [{
+          intro: 'Welcome to the RevAPM Customer Portal! It looks like you are a new user of the service, and we would like to run for you a quick introduction tour.',
+        }, {
           element: '#side-menu-sub-item__webApp-domains',
-          intro: 'Use Domains section to configure your websites or API backend URLs if you don’t use RevAPM mobile SDK',
+          intro: 'The "Domains" section allows you to manage the way how your websites (domains) are accelerated by RevAPM.',
           position: 'right'
         }, {
           element: '#side-menu-sub-item__webApp-ssl_certs',
-          intro: 'Use the section to upload and configure your SSL certificates purchased from a third-party CA',
+          intro: 'We highly recommend to use SSL protocol for your websites - it will increase the website security and also allow your visitors to use modern and fast HTTP/2 protocol',
           position: 'right'
         }, {
           element: '#side-menu-sub-item__webApp-cache ',
-          intro: 'If you use our global edge caching feature then the Purge Cache section will allow to instantly ' +
-            'purge cached objects when you make changes on your origin server',
+          intro: 'If you use our global edge caching feature then the "Purge Cache" section will allow you to instantly ' +
+            'purge cached objects when you make changes on your origin server.',
           position: 'right'
         },
-        //“Web Analytics -> Proxy Traffic”:
         {
-          element: '#side-menu-sub-item__reports-proxy',
-          intro: ' Proxy Traffic ',
+          element: '#side-menu-web-analytics-item',
+          intro: 'The "Web Analytics" section will provide you with a lot of insights about your website\'s performance, avaiability, user geography, popular content and many other important metrics!',
           position: 'right'
         },
-        //“Mobile Apps -> iOS”: TBD
         {
-          element: '#side-menu-sub-item__apps-ios',
-          intro: 'Mobile Apps -> iOS',
+          element: '#side-menu-apps-item',
+          intro: 'The "Mobile Apps" section is the right place to supercharge your mobile application with RevSDK. In the section your can create new SDK keys and manage RevAPM acceleration options.',
           position: 'right'
         },
-        // TODO: “Web Analytics -> Traffic Levels”: TBD
-        // {
-        //   element: '#side-menu-sub-item__',
-        //   intro: 'Mobile Apps -> Traffic LevelsiOS',
-        //   position: 'right'
-        // },
+        {
+          element: '#side-menu-mobile-analytics-item',
+          intro: 'This section is full of information about mobile application availability, performance, userbase, top objects, etc.',
+          position: 'right'
+        },
+//        {
+//          element: '#default-dashboard-item',
+//          intro: 'Here you can easily build your own dashboards using different graphs from mobile and web analytics sections.',
+//          position: 'right'
+//        },
       ]
     };
     // NOTE: Main Menu Introduction

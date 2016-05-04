@@ -14,7 +14,7 @@
             <dashboard-nav-menu></dashboard-nav-menu>
             <li ui-sref-active-if="{class: 'active-side-menu-item', state: 'index.apps'}", ng-class="{'active-side-menu-item': menuExpanded('index.apps')}" style="margin-top: 8px;">
 
-                <a class="side-menu-item" ng-click="goToState('index.apps.ios')">
+                <a id="side-menu-apps-item" class="side-menu-item" ng-click="goToState('index.apps.ios')">
                     <div class="left-menu-start">
                         <i class="fa fa-mobile" style="font-size: 28px; margin-top: -14px !important;"></i>
                     </div>
@@ -35,7 +35,7 @@
                 </a>
             </li>
             <li ui-sref-active-if="{class: 'active-side-menu-item', state: 'index.mobile'}", ng-class="{'active-side-menu-item': menuExpanded('index.mobile')}">
-                <a class="side-menu-item" ng-click="goToState('index.mobile.traffic')">
+                <a id="side-menu-mobile-analytics-item" class="side-menu-item" ng-click="goToState('index.mobile.traffic')">
                     <div class="left-menu-start">
                         <i class="fa fa-signal"></i>
                     </div>
@@ -64,7 +64,7 @@
                 </a>
             </li>
             <li ui-sref-active-if="{class: 'active-side-menu-item', state: 'index.webApp'}", ng-class="{'active-side-menu-item': menuExpanded('index.webApp')}">
-                <a class="side-menu-item", ng-click="goToState('index.webApp.domains')">
+                <a id="side-menu-web-item" class="side-menu-item", ng-click="goToState('index.webApp.domains')">
                     <div class="left-menu-start">
                         <i class="fa fa-desktop"></i>
                     </div>
@@ -93,7 +93,7 @@
                 <!--</a>-->
             </li>
             <li ui-sref-active-if="{class: 'active-side-menu-item', state: 'index.reports'}", ng-class="{'active-side-menu-item': menuExpanded('index.reports')}">
-                <a class="side-menu-item", ng-click="goToState('index.reports.proxy')">
+                <a id="side-menu-web-analytics-item" class="side-menu-item", ng-click="goToState('index.reports.proxy')">
                     <div class="left-menu-start">
                         <i class="fa fa-line-chart"></i>
                     </div>
