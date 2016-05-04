@@ -17,7 +17,8 @@
           position: 'right'
         }, {
           element: '#side-menu-sub-item__webApp-ssl_certs',
-          intro: 'We highly recommend to use SSL protocol for your websites - it will increase the website security and also allow your visitors to use modern and fast HTTP/2 protocol',
+          intro: 'We highly recommend to use SSL protocol for your websites - it will increase the website security and also allow your visitors to use modern and ' +
+            'fast HTTP/2 protocol',
           position: 'right'
         }, {
           element: '#side-menu-sub-item__webApp-cache ',
@@ -27,12 +28,15 @@
         },
         {
           element: '#side-menu-web-analytics-item',
-          intro: 'The "Web Analytics" section will provide you with a lot of insights about your website\'s performance, avaiability, user geography, popular content and many other important metrics!',
+          intro: 'The "Web Analytics" section will provide you with a lot of insights about your website\'s performance, avaiability, user geography, popular content ' +
+            'and many other important metrics!',
           position: 'right'
         },
         {
           element: '#side-menu-apps-item',
-          intro: 'The "Mobile Apps" section is the right place to supercharge your mobile application with RevSDK. In the section your can create new SDK keys and manage RevAPM acceleration options.',
+          intro: 'The "Mobile Apps" section is the right place to supercharge your mobile application with RevSDK. In the section your can create new SDK ' +
+            'keys and manage ' +
+            'RevAPM acceleration options.',
           position: 'right'
         },
         {
