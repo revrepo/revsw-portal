@@ -48,7 +48,7 @@ describe('Smoke', function () {
 
         it('should be displayed when clicking "Stats" icon for specific domain',
           function () {
-            Portal.domains.listPage.domainsTbl
+            Portal.domains.listPage.table
               .getFirstRow()
               .clickStats();
             expect(Portal.domains.statsPage.isDisplayed()).toBeTruthy();

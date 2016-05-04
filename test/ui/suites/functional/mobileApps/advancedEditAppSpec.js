@@ -21,8 +21,9 @@ var Portal = require('./../../../page_objects/portal');
 var DataProvider = require('./../../../common/providers/data');
 var Constants = require('./../../../page_objects/constants');
 
-describe('Boundary', function () {
-  describe('Searching apps', function () {
+describe('Functional', function () {
+  describe('Edit App Advanced Mode', function () {
+
     var adminUser = config.get('portal.users.admin');
     var iosApps = DataProvider.generateMobileAppData('iOS', 1);
     var androidApps = DataProvider.generateMobileAppData('Android', 1);
@@ -30,9 +31,12 @@ describe('Boundary', function () {
 
     beforeAll(function () {
       Portal.signIn(adminUser);
+      Portal.createMobileApps('iOS', iosApps);
+      Portal.createMobileApps('Android', androidApps);
     });
 
     afterAll(function () {
+      Portal.deleteMobileApps(apps);
       Portal.signOut();
     });
 
@@ -42,41 +46,43 @@ describe('Boundary', function () {
     afterEach(function () {
     });
 
-    apps.forEach(function (app){
-      it('should search apps with 51 characters' + app.platform, function () {
-        Portal.goToMobileApps();
-        Portal.header.goTo(app.platform);
-        
-        var length51Characters = new Array(51).join('x');
-        app.name = length51Characters;
-        Portal.mobileApps.listPage.addNewApp(app);
-        Portal.header.goTo(app.platform);
-        var countApps = Portal.mobileApps.listPage.findApp(app);
-        expect(countApps).toBe(1);
-
-        Portal.mobileApps.listPage.searchAndDelete(app);
-        Portal.dialog.clickOk();
-      });
-
-      it('should search field support more higher or equal to 200 characters ' +
-        app.platform, function () {
-          Portal.goToMobileApps();
-          Portal.header.goTo(app.platform);
-          
-          var length200Characters = new Array(200).join('x');
-          app.name = length200Characters;
-          var countApps = Portal.mobileApps.listPage.findApp(app);
-          expect(countApps).toBe(0);
-      });
-
-      xit('should search text field accept special characters ' + app.platform,
+    apps.forEach(function (app) {
+      it('should edit advanced mode & "verify" json editor - ' + app.platform,
         function () {
           Portal.goToMobileApps();
           Portal.header.goTo(app.platform);
+          Portal.mobileApps.listPage.searchAndAdvancedEdit(app);
+          Portal.mobileApps.advancedEditPage.verify();
 
-          app.name = '& ^ $ @ # % ( ) _ +  / \\ ~ ` , . ; :';
-          var countApps = Portal.mobileApps.listPage.findApp(app);
-          expect(countApps).toBe(0);
+          Portal.header.goTo(app.platform);
+          var findApp = Portal.mobileApps.listPage.findApp(app);
+          expect(findApp).toBe(1);
+      });
+
+      it('should edit advanced mode & "update" json editor - ' + app.platform,
+        function () {
+          Portal.goToMobileApps();
+          Portal.header.goTo(app.platform);
+          Portal.mobileApps.listPage.searchAndAdvancedEdit(app);
+          Portal.mobileApps.advancedEditPage.update();
+          Portal.dialog.clickOk();
+
+          Portal.header.goTo(app.platform);
+          var findApp = Portal.mobileApps.listPage.findApp(app);
+          expect(findApp).toBe(1);
+      });
+
+      it('should edit advanced mode & "publish" json editor - ' + app.platform,
+        function () {
+          Portal.goToMobileApps();
+          Portal.header.goTo(app.platform);
+          Portal.mobileApps.listPage.searchAndAdvancedEdit(app);
+          Portal.mobileApps.advancedEditPage.publish();
+          Portal.dialog.clickOk();
+
+          Portal.header.goTo(app.platform);
+          var findApp = Portal.mobileApps.listPage.findApp(app);
+          expect(findApp).toBe(1);
       });
     });
   });

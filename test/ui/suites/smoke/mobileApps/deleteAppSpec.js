@@ -62,7 +62,7 @@ describe('Smoke', function () {
 
             it('should display delete app button',
               function () {
-                var editButton = Portal.mobileApps.listPage.appsTable
+                var editButton = Portal.mobileApps.listPage.table
                   .getDeleteApp();
                 expect(editButton.isPresent()).toBeTruthy();
               });
@@ -70,7 +70,7 @@ describe('Smoke', function () {
             it('should display a confirmation message when deleting an app',
               function () {
                 app = DataProvider.generateMobileApp(platform);
-                Portal.mobileApps.listPage.addNewApp(app);
+                Portal.mobileApps.listPage.addNew(app);
                 expect(Portal.alerts.getAll().count()).toEqual(1);
                 expect(Portal.alerts.getFirst().getText())
                   .toEqual('App registered');
@@ -86,7 +86,7 @@ describe('Smoke', function () {
                 expect(Portal.dialog.isDisplayed()).toBeTruthy();
                 Portal.dialog.clickOk();
                 Portal.mobileApps.listPage.setSearch(app.name);
-                var count = Portal.mobileApps.listPage.appsTable
+                var count = Portal.mobileApps.listPage.table
                   .countTotalRows();
                 expect(count).toBe(0);
               });

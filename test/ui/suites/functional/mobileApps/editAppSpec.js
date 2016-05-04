@@ -48,28 +48,25 @@ describe('Functional', function () {
     });
 
     apps.forEach(function (app) {
-      it('should get the title from basic edited app - ' + app.platform,
+        it('should get the title from basic edited app - ' + app.platform,
           function () {
-            Portal.goToMobileApps();
             Portal.header.goTo(app.platform);
             Portal.mobileApps.listPage.searchAndEdit(app);
 
-            var title = Portal.mobileApps.editAppPage.getTitle();
+            var title = Portal.mobileApps.editPage.getTitle();
             expect(title).toContain('Edit App');
         });
 
         it('should basic edit and "verify" an existing app - ' + app.platform,
           function () {
-            Portal.goToMobileApps();
             Portal.header.goTo(app.platform);
             Portal.mobileApps.listPage.searchAndEdit(app);
-            Portal.mobileApps.editAppPage.verify(app);
+            Portal.mobileApps.editPage.verify(app);
 
             var alert = Portal.alerts.getFirst();
             var expectedMsg = 'App configuration is correct';
             expect(alert.getText()).toEqual(expectedMsg);
 
-            Portal.goToMobileApps();
             Portal.header.goTo(app.platform);
             var findApp = Portal.mobileApps.listPage.findApp(app);
             expect(findApp).toBe(1);
@@ -77,10 +74,9 @@ describe('Functional', function () {
 
         it('should basic edit and "update" an existing app - ' + app.platform,
           function () {
-            Portal.goToMobileApps();
             Portal.header.goTo(app.platform);
             Portal.mobileApps.listPage.searchAndEdit(app);
-            Portal.mobileApps.editAppPage.update(app);
+            Portal.mobileApps.editPage.update(app);
             Portal.dialog.clickOk();
 
             var alert = Portal.alerts.getFirst();
@@ -95,10 +91,9 @@ describe('Functional', function () {
 
         it('should basic edit and "publish" an existing app - ' + app.platform,
           function () {
-            Portal.goToMobileApps();
             Portal.header.goTo(app.platform);
             Portal.mobileApps.listPage.searchAndEdit(app);
-            Portal.mobileApps.editAppPage.publish(app);
+            Portal.mobileApps.editPage.publish(app);
             Portal.dialog.clickOk();
 
             var alert = Portal.alerts.getFirst();
@@ -113,12 +108,11 @@ describe('Functional', function () {
 
         it('should basic edit and "verify" the app name - ' + app.platform,
           function () {
-            Portal.goToMobileApps();
             Portal.header.goTo(app.platform);
             Portal.mobileApps.listPage.searchAndEdit(app);
             var tempAppName = app.name;
             app.name = app.name + 'UPDATED';
-            Portal.mobileApps.editAppPage.verify(app);
+            Portal.mobileApps.editPage.verify(app);
 
             var alert = Portal.alerts.getFirst();
             var expectedMsg = 'App configuration is correct';
@@ -133,12 +127,11 @@ describe('Functional', function () {
 
         it('should basic edit and "update" the app name - ' + app.platform,
           function () {
-            Portal.goToMobileApps();
             Portal.header.goTo(app.platform);
             Portal.mobileApps.listPage.searchAndEdit(app);
             var tempAppName = app.name;
             app.name = app.name + 'UPDATED';
-            Portal.mobileApps.editAppPage.update(app);
+            Portal.mobileApps.editPage.update(app);
             Portal.dialog.clickOk();
 
             var alert = Portal.alerts.getFirst();
@@ -154,12 +147,11 @@ describe('Functional', function () {
 
         it('should basic edit and "publish" the app name - ' + app.platform,
           function () {
-            Portal.goToMobileApps();
             Portal.header.goTo(app.platform);
             Portal.mobileApps.listPage.searchAndEdit(app);
             var tempAppName = app.name;
             app.name = app.name + 'UPDATED';
-            Portal.mobileApps.editAppPage.publish(app);
+            Portal.mobileApps.editPage.publish(app);
             Portal.dialog.clickOk();
 
             var alert = Portal.alerts.getFirst();
@@ -171,6 +163,42 @@ describe('Functional', function () {
             app.name = tempAppName; //TODO: Remove this line, once edit is fixed
             var findApp = Portal.mobileApps.listPage.findApp(app);
             expect(findApp).toBe(1);
+        });
+
+        it('should verify staging status after "publish" - ' + app.platform,
+          function () {
+            Portal.header.goTo(app.platform);
+            Portal.mobileApps.listPage.searchAndEdit(app);
+            Portal.mobileApps.editPage.publish(app);
+            Portal.dialog.clickOk();
+
+            var alert = Portal.alerts.getFirst();
+            var expectedMsg = 'App configuration is published';
+            expect(alert.getText()).toEqual(expectedMsg);
+
+            Portal.goToMobileApps();
+            Portal.header.goTo(app.platform);
+            var row = Portal.mobileApps.listPage.table.getFirstRow();
+            expect(row.stagingStatus).toEqual('Staging Status: Published');
+            expect(row.globalStatus).toEqual('Global Status: Published');
+        });
+
+        it('should verify global status after "update" - ' + app.platform,
+          function () {
+            Portal.header.goTo(app.platform);
+            Portal.mobileApps.listPage.searchAndEdit(app);
+            Portal.mobileApps.editPage.update(app);
+            Portal.dialog.clickOk();
+
+            var alert = Portal.alerts.getFirst();
+            var expectedMsg = 'App updated';
+            expect(alert.getText()).toEqual(expectedMsg);
+
+            Portal.goToMobileApps();
+            Portal.header.goTo(app.platform);
+            var row = Portal.mobileApps.listPage.table.getFirstRow();
+            expect(row.stagingStatus).toEqual('Staging Status: Published');
+            expect(row.globalStatus).toEqual('Global Status: Modified');
         });
     });
   });

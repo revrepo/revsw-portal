@@ -50,14 +50,14 @@ describe('Smoke', function () {
         it('should display "Add domain" form', function () {
           Portal.domains.listPage.clickAddNewDomain();
           expect(Portal.domains.addPage.isDisplayed()).toBeTruthy();
-          expect(Portal.domains.addPage.domainForm.isDisplayed()).toBeTruthy();
+          expect(Portal.domains.addPage.form.isDisplayed()).toBeTruthy();
         });
 
         it('should allow to cancel a domain edition in domain form',
           function () {
             Portal.domains.listPage.clickAddNewDomain();
-            Portal.domains.addPage.domainForm.clearForm();
-            Portal.domains.addPage.domainForm.setDomainName('smoke.test.com');
+            Portal.domains.addPage.form.clearForm();
+            Portal.domains.addPage.form.setDomainName('smoke.test.com');
             Portal.domains.addPage.clickCancel();
             expect(Portal.domains.listPage.isDisplayed()).toBeTruthy();
           });
@@ -66,7 +66,7 @@ describe('Smoke', function () {
           function () {
             var smoketest = DataProvider.generateDomain('smoketest');
             Portal.domains.listPage.clickAddNewDomain();
-            Portal.domains.addPage.domainForm.clearForm();
+            Portal.domains.addPage.form.clearForm();
             Portal.domains.addPage.createDomain(smoketest);
             expect(Portal.alerts.getAll().count()).toEqual(1);
             expect(Portal.alerts

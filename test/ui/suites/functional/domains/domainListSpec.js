@@ -39,7 +39,7 @@ describe('Functional', function () {
 
     it('should display domain with a Staging Status',
       function () {
-        Portal.domains.listPage.domainsTbl
+        Portal.domains.listPage.table
           .getRow(0)
           .getStagingStatusIcon()
           .isDisplayed()
@@ -50,7 +50,7 @@ describe('Functional', function () {
 
     it('should display domain with a Global Status',
       function () {
-        Portal.domains.listPage.domainsTbl
+        Portal.domains.listPage.table
           .getRow(0)
           .getGlobalStatusIcon()
           .isDisplayed()
@@ -61,7 +61,7 @@ describe('Functional', function () {
 
     it('should display a `edit` icon for the domain',
       function () {
-        Portal.domains.listPage.domainsTbl
+        Portal.domains.listPage.table
           .getRow(0)
           .getEditBtn()
           .isDisplayed()
@@ -72,7 +72,7 @@ describe('Functional', function () {
 
     it('should display a `configure` icon for the domain',
       function () {
-        Portal.domains.listPage.domainsTbl
+        Portal.domains.listPage.table
           .getRow(0)
           .getConfigureBtn()
           .isDisplayed()
@@ -83,7 +83,7 @@ describe('Functional', function () {
 
     it('should display a `delete` icon for the domain',
       function () {
-        Portal.domains.listPage.domainsTbl
+        Portal.domains.listPage.table
           .getRow(0)
           .getDeleteBtn()
           .isDisplayed()
@@ -94,7 +94,7 @@ describe('Functional', function () {
 
     it('should display a `stats` icon for the domain',
       function () {
-        Portal.domains.listPage.domainsTbl
+        Portal.domains.listPage.table
           .getRow(0)
           .getStatsBtn()
           .isDisplayed()
@@ -105,7 +105,7 @@ describe('Functional', function () {
 
     it('should display a `versions` icon for the domain',
       function () {
-        Portal.domains.listPage.domainsTbl
+        Portal.domains.listPage.table
           .getRow(0)
           .getVersionsBtn()
           .isDisplayed()
@@ -138,13 +138,13 @@ describe('Functional', function () {
         // Create domain
         Portal.createDomain(myDomain);
         Portal.domains.listPage.searcher.setSearchCriteria(myDomain.name);
-        Portal.domains.listPage.domainsTbl
+        Portal.domains.listPage.table
           .getFirstRow()
           .clickDelete();
         Portal.dialog.clickOk();
         Portal.domains.listPage.searcher.clearSearchCriteria();
         Portal.domains.listPage.searcher.setSearchCriteria(myDomain.name);
-        var rows = Portal.domains.listPage.domainsTbl.getRows();
+        var rows = Portal.domains.listPage.table.getRows();
         expect(rows.count()).toEqual(0);
       });
   });

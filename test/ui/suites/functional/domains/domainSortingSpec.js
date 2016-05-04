@@ -50,75 +50,75 @@ describe('Functional', function () {
 
     it('should apply `ascendant` sorting by `name` column',
       function () {
-        expect(Portal.domains.listPage.domainsTbl.getRows().count()).toEqual(2);
-        Portal.domains.listPage.domainsTbl
+        expect(Portal.domains.listPage.table.getRows().count()).toEqual(2);
+        Portal.domains.listPage.table
           .getHeader()
           .getNameCell()
           .click();
-        var firstRow = Portal.domains.listPage.domainsTbl.getFirstRow();
+        var firstRow = Portal.domains.listPage.table.getFirstRow();
         firstRow.getNameCell().getText();
         expect(firstRow.getNameCell().getText()).toContain(prefix + '1');
       });
 
     it('should apply `descendant` sorting by `name` column',
       function () {
-        expect(Portal.domains.listPage.domainsTbl.getRows().count()).toEqual(2);
-        Portal.domains.listPage.domainsTbl
+        expect(Portal.domains.listPage.table.getRows().count()).toEqual(2);
+        Portal.domains.listPage.table
           .getHeader()
           .getNameCell()
           .click()
           .click();
-        var firstRow = Portal.domains.listPage.domainsTbl.getFirstRow();
+        var firstRow = Portal.domains.listPage.table.getFirstRow();
         firstRow.getNameCell().getText();
         expect(firstRow.getNameCell().getText()).toContain(prefix + '2');
       });
 
     it('should apply `ascendant` sorting by `cName` column',
       function () {
-        expect(Portal.domains.listPage.domainsTbl.getRows().count()).toEqual(2);
-        Portal.domains.listPage.domainsTbl
+        expect(Portal.domains.listPage.table.getRows().count()).toEqual(2);
+        Portal.domains.listPage.table
           .getHeader()
           .getCNameCell()
           .click();
-        var firstRow = Portal.domains.listPage.domainsTbl.getFirstRow();
+        var firstRow = Portal.domains.listPage.table.getFirstRow();
         firstRow.getNameCell().getText();
         expect(firstRow.getCNameCell().getText()).toContain(prefix + '1');
       });
 
     it('should apply `descendant` sorting by `cName` column',
       function () {
-        expect(Portal.domains.listPage.domainsTbl.getRows().count()).toEqual(2);
-        Portal.domains.listPage.domainsTbl
+        expect(Portal.domains.listPage.table.getRows().count()).toEqual(2);
+        Portal.domains.listPage.table
           .getHeader()
           .getCNameCell()
           .click()
           .click();
-        var firstRow = Portal.domains.listPage.domainsTbl.getFirstRow();
+        var firstRow = Portal.domains.listPage.table.getFirstRow();
         firstRow.getNameCell().getText();
         expect(firstRow.getCNameCell().getText()).toContain(prefix + '2');
       });
 
     it('should apply `ascendant` sorting by `last updated` column',
       function () {
-        expect(Portal.domains.listPage.domainsTbl.getRows().count()).toEqual(2);
-        Portal.domains.listPage.domainsTbl
+        expect(Portal.domains.listPage.table.getRows().count()).toEqual(2);
+        Portal.domains.listPage.table
           .getHeader()
           .getLastUpdatedCell()
           .click();
-        var firstRow = Portal.domains.listPage.domainsTbl.getFirstRow();
+        var firstRow = Portal.domains.listPage.table.getFirstRow();
         firstRow.getNameCell().getText();
         expect(firstRow.getNameCell().getText()).toContain(prefix + '1');
       });
 
     it('should apply `descendant` sorting by `last updated` column',
       function () {
-        expect(Portal.domains.listPage.domainsTbl.getRows().count()).toEqual(2);
-        Portal.domains.listPage.domainsTbl
+        expect(Portal.domains.listPage.table.getRows().count()).toEqual(2);
+        Portal.domains.listPage.table
           .getHeader()
           .getLastUpdatedCell()
           .click()
           .click();
-        var firstRow = Portal.domains.listPage.domainsTbl.getFirstRow();
+        var firstRow = Portal.domains.listPage.table.getFirstRow();
         firstRow.getNameCell().getText();
         expect(firstRow.getNameCell().getText()).toContain(prefix + '2');
       });

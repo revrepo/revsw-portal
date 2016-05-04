@@ -65,6 +65,13 @@ describe('Smoke', function () {
             afterEach(function () {
             });
 
+            it('should be displayed when displaying `App List` page',
+              function () {
+                var searchField = Portal.mobileApps.listPage.searcher
+                  .getSearchCriteriaTxtIn();
+                expect(searchField.isPresent()).toBeTruthy();
+              });
+
             it('should search and filter an existing app',
               function () {
                 var appsFound = Portal.mobileApps.listPage.findApp(app);

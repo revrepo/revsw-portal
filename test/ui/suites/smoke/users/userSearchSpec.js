@@ -55,11 +55,11 @@ describe('Smoke', function () {
 
         it('should filter items according to text filled',
           function () {
-            var emailToSearch = Portal.userListPage.userTbl
+            var emailToSearch = Portal.userListPage.table
               .getFirstRow()
               .getEmail();
             Portal.userListPage.searcher.setSearchCriteria(emailToSearch);
-            var allRows = Portal.userListPage.userTbl.getRows();
+            var allRows = Portal.userListPage.table.getRows();
             expect(allRows.count()).toEqual(1);
           });
       });

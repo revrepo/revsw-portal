@@ -55,12 +55,12 @@ describe('Smoke', function () {
 
         it('should filter items according to text filled',
           function () {
-            var domainNameToSearch = Portal.domains.listPage.domainsTbl
+            var domainNameToSearch = Portal.domains.listPage.table
               .getFirstRow()
               .getName();
             Portal.domains.listPage.searcher
               .setSearchCriteria(domainNameToSearch);
-            var allRows = Portal.domains.listPage.domainsTbl.getRows();
+            var allRows = Portal.domains.listPage.table.getRows();
             expect(allRows.count()).toEqual(1);
           });
       });

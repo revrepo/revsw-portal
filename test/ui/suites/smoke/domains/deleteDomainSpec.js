@@ -54,7 +54,7 @@ describe('Smoke', function () {
 
         it('should display delete domain button',
           function () {
-            var deleteButton = Portal.domains.listPage.domainsTbl
+            var deleteButton = Portal.domains.listPage.table
               .getFirstRow()
               .getDeleteBtn();
             expect(deleteButton.isDisplayed()).toBeTruthy();
@@ -69,7 +69,7 @@ describe('Smoke', function () {
             Portal.dialog.clickOk();
             Portal.domains.listPage.searcher.setSearchCriteria(domain.name);
             // Gets reference to all rows from the list
-            var tableRows = Portal.domains.listPage.domainsTbl.getRows();
+            var tableRows = Portal.domains.listPage.table.getRows();
             // Validates the size of all rows
             expect(tableRows.count()).toEqual(0);
           });
@@ -81,7 +81,7 @@ describe('Smoke', function () {
             // Create domain
             Portal.createDomain(domain);
             Portal.domains.listPage.searcher.setSearchCriteria(domain.name);
-            Portal.domains.listPage.domainsTbl
+            Portal.domains.listPage.table
               .getFirstRow()
               .clickDelete();
             // Validate `modal dialog` is displayed

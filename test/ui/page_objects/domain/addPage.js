@@ -49,7 +49,7 @@ var AddDomain = {
 
   // `Add Domain` Page is compound mainly by a form. This property makes
   // reference to the DomainForm Page Object to interact with it.
-  domainForm: DomainForm,
+  form: DomainForm,
 
   // ## Methods to retrieve references to UI elements (Selenium WebDriver
   // Element)
@@ -187,7 +187,7 @@ var AddDomain = {
    * @returns {Promise}
    */
    fillForm: function(domain) {
-     return this.domainForm.fill(domain);
+     return this.form.fill(domain);
    },
 
    /**

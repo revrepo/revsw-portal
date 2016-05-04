@@ -56,7 +56,7 @@ describe('Negative', function () {
             Portal.mobileApps.listPage.searchAndEdit(app);
             var tempAppName = app.name;
             app.name = ' ';
-            Portal.mobileApps.editAppPage.verify(app);
+            Portal.mobileApps.editPage.verify(app);
 
             var alert = Portal.alerts.getFirst();
             expect(alert.getText()).toContain('is not allowed to be empty');
@@ -76,7 +76,7 @@ describe('Negative', function () {
             Portal.mobileApps.listPage.searchAndEdit(app);
             var tempAppName = app.name;
             app.name = ' ';
-            Portal.mobileApps.editAppPage.update(app);
+            Portal.mobileApps.editPage.update(app);
             Portal.dialog.clickOk();
 
             var alert = Portal.alerts.getFirst();
@@ -97,7 +97,7 @@ describe('Negative', function () {
             Portal.mobileApps.listPage.searchAndEdit(app);
             var tempAppName = app.name;
             app.name = ' ';
-            Portal.mobileApps.editAppPage.publish(app);
+            Portal.mobileApps.editPage.publish(app);
             Portal.dialog.clickOk();
 
             var alert = Portal.alerts.getFirst();

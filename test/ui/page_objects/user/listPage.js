@@ -19,7 +19,7 @@
 // # User List Page Object
 
 // Requiring other Page Objects that compound the User List Page one
-var UserTable = require('./table');
+var UserTable = require('./table/table');
 var Pager = require('./../common/pager');
 var Searcher = require('./../common/searcher');
 
@@ -46,7 +46,7 @@ var UserList = {
   // `User List` Page is compound mainly by a table, pagination and filter
   // components. Following properties make reference to the Page Objects of
   // those components.
-  userTbl: UserTable,
+  table: UserTable,
   pager: Pager,
   searcher: Searcher,
 
@@ -135,7 +135,7 @@ var UserList = {
   searchAndGetFirstRow: function (criteria) {
     this.searcher.clearSearchCriteria();
     this.searcher.setSearchCriteria(criteria);
-    return this.userTbl
+    return this.table
       .getFirstRow();
   },
 

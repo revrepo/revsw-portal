@@ -58,7 +58,7 @@ describe('Functional', function () {
       carl.role = Constants.user.roles.USER;
       Portal.createUser(carl);
       Portal.userListPage.searcher.setSearchCriteria(carl.email);
-      var user = Portal.userListPage.userTbl.getFirstRow();
+      var user = Portal.userListPage.table.getFirstRow();
       expect(user.getRole()).toEqual(Constants.user.roles.USER);
       Portal.deleteUser(carl);
     });
@@ -68,7 +68,7 @@ describe('Functional', function () {
       tom.role = Constants.user.roles.ADMIN;
       Portal.createUser(tom);
       Portal.userListPage.searcher.setSearchCriteria(tom.email);
-      var user = Portal.userListPage.userTbl.getFirstRow();
+      var user = Portal.userListPage.table.getFirstRow();
       expect(user.getRole()).toEqual(Constants.user.roles.ADMIN);
       Portal.deleteUser(tom);
     });

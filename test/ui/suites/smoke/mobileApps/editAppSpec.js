@@ -60,23 +60,23 @@ describe('Smoke', function () {
 
             it('should display edit app button',
               function () {
-                var editButton = Portal.mobileApps.listPage.appsTable
+                var editButton = Portal.mobileApps.listPage.table
                   .getEditApp();
                 expect(editButton.isPresent()).toBeTruthy();
               });
 
             it('should display `Edit app` form',
               function () {
-                Portal.mobileApps.listPage.appsTable.clickEditApp();
-                expect(Portal.mobileApps.editAppPage.isDisplayed())
+                Portal.mobileApps.listPage.table.clickEditApp();
+                expect(Portal.mobileApps.editPage.isDisplayed())
                   .toBeTruthy();
               });
 
             it('should allow to cancel an app edition',
               function () {
-                Portal.mobileApps.listPage.appsTable.clickEditApp();
-                Portal.mobileApps.editAppPage.form.setAppName('something');
-                Portal.mobileApps.editAppPage.form.clickCancel();
+                Portal.mobileApps.listPage.table.clickEditApp();
+                Portal.mobileApps.editPage.form.setAppName('something');
+                Portal.mobileApps.editPage.form.clickCancel();
                 expect(Portal.mobileApps.listPage.isDisplayed()).toBeTruthy();
               });
 
@@ -84,14 +84,14 @@ describe('Smoke', function () {
               'data',
               function () {
                 var app = DataProvider.generateMobileApp(platform);
-                Portal.mobileApps.listPage.addNewApp(app);
+                Portal.mobileApps.listPage.addNew(app);
                 expect(Portal.alerts.getAll().count()).toEqual(1);
                 expect(Portal.alerts.getFirst().getText())
                   .toEqual('App registered');
-                Portal.mobileApps.addAppPage.clickBackToList();
+                Portal.mobileApps.addPage.clickBackToList();
                 Portal.mobileApps.listPage.searchAndEdit(app);
                 app.name = 'UPDATED-' + app.name;
-                Portal.mobileApps.editAppPage.update(app);
+                Portal.mobileApps.editPage.update(app);
                 Portal.dialog.clickOk();
                 expect(Portal.alerts.getAll().count()).toEqual(1);
                 expect(Portal.alerts.getFirst().getText())

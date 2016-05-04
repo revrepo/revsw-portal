@@ -49,7 +49,7 @@ describe('Negative', function () {
 
     it('should not enable the Update Password button when no fields are filled',
       function () {
-        // Portal.addUserPage.userForm.fill(emptyUserData);
+        // Portal.addUserPage.form.fill(emptyUserData);
         var updateBtn = Portal.updatePasswordPage.getUpdatePasswordBtn();
         expect(updateBtn.isEnabled()).toBeFalsy();
       });

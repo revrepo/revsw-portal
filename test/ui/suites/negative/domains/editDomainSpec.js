@@ -50,7 +50,7 @@ describe('Negative', function () {
     it('should not allow to edit the domain\'s name', function () {
       Portal.domains.listPage.searchAndClickEdit(myDomain.name);
       var domainNameField =
-        Portal.domains.editPage.domainForm.getDomainNameTxtIn();
+        Portal.domains.editPage.form.getDomainNameTxtIn();
       expect(domainNameField.isEnabled()).toBeFalsy();
     });
 
@@ -58,7 +58,7 @@ describe('Negative', function () {
       '"Origin Server"',
       function () {
         Portal.domains.listPage.searchAndClickEdit(myDomain.name);
-        Portal.domains.editPage.domainForm.clearOriginServer();
+        Portal.domains.editPage.form.clearOriginServer();
         var validateBtn = Portal.domains.editPage.getValidateDomainBtn();
         expect(validateBtn.isEnabled()).toBeFalsy();
         var updateBtn = Portal.domains.editPage.getUpdateDomainBtn();
@@ -70,7 +70,7 @@ describe('Negative', function () {
     // it('should edit and update the domain without "Origin Host Header"',
     //   function () {
     //     Portal.userListPage.searchAndClickEdit(myDomain.email);
-    //     Portal.domains.editPage.domainForm.clearOriginHostHeader();
+    //     Portal.domains.editPage.form.clearOriginHostHeader();
     //     Portal.domains.editPage.clickUpdateDomain();
     //   });
     //
@@ -78,7 +78,7 @@ describe('Negative', function () {
     //   '"Domain Origin Location"',
     //   function () {
     //     Portal.userListPage.searchAndClickEdit(myDomain.email);
-    //     Portal.domains.editPage.domainForm.
+    //     Portal.domains.editPage.form.
     //       setDomainOriginLocation('--- Select role ---');
     //     Portal.domains.editPage.clickUpdateDomain();
     //     var alert = Portal.alerts.getFirst();

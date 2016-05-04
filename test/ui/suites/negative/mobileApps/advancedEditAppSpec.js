@@ -52,7 +52,7 @@ describe('Negative', function () {
           Portal.goToMobileApps();
           Portal.header.goTo(app.platform);
           Portal.mobileApps.listPage.searchAndAdvancedEdit(app);
-          Portal.mobileApps.editAppAdvancedModePage.cancel();
+          Portal.mobileApps.advancedEditPage.cancel();
 
           Portal.header.goTo(app.platform);
           var findApp = Portal.mobileApps.listPage.findApp(app);

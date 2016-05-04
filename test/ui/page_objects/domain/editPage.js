@@ -61,7 +61,7 @@ var EditDomain = {
 
   // `Edit Domain` Page is compound mainly by a form. This property makes
   // reference to the DomainForm Page Object to interact with it.
-  domainForm: DomainForm,
+  form: DomainForm,
 
   // ## Methods to retrieve references to UI elements (Selenium WebDriver
   // Element)
@@ -305,7 +305,7 @@ var EditDomain = {
    * @returns {Promise}
    */
   updateDomain: function (domain) {
-    this.domainForm.fill(domain);
+    this.form.fill(domain);
     return this.clickUpdateDomain();
   }
 };
