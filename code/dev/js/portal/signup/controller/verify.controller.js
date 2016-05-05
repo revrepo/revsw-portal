@@ -33,7 +33,8 @@
       $timeout(function() {
         $state.go('index');
       }, 5000);
-    }
+    };
+
     if ($stateParams.token) {
       $scope.steps = 'verify-token';
       Users.verify({
@@ -54,7 +55,7 @@
               // NOTE: user success verify, but can't make auto-login
               AlertService.danger(err.message);
             })
-            .finally($ctrl.redirectToIndex)
+            .finally($ctrl.redirectToIndex);
         })
         .catch(function(err) {
           $timeout(function() {
