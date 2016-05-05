@@ -30,6 +30,7 @@
     };
 
     $ctrl.redirectToIndex = function redirectToIndex() {
+      $scope.steps = 'verify-token-success';
       $timeout(function() {
         $state.go('index');
       }, 5000);
@@ -59,7 +60,7 @@
         })
         .catch(function(err) {
           $timeout(function() {
-            $scope.steps = 'error-verify-token';
+            $scope.steps = 'verify-token-error';
           }, 3000);
         });
     }
