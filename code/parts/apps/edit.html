@@ -50,13 +50,13 @@
         <form name="editForm" class="form-horizontal">
           <div class="form-group" ng-class="{ 'has-error': editForm.app_name.$invalid &&
                 editForm.app_name.$dirty }">
-            <label for="app_name" popover-append-to-body="{{true}}" class="col-sm-2 control-label" popover-trigger="mouseenter" popover="Internal application name">App Name</label>
+            <label for="app_name" popover-append-to-body="{{true}}" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Internal application name">App Name</label>
             <div class="col-sm-10">
               <input type="text" class="form-control" name="app_name" ng-disabled="_loading" ng-model="model.app_name" ng-maxlength="50" id="app_name">
             </div>
           </div>
           <div class="form-group" ng-if="auth.isReseller() || auth.isRevadmin()">
-            <label for="account_id" popover-append-to-body="{{true}}" class="col-sm-2 control-label" popover-trigger="mouseenter" popover="Select company name the application name should be associated with">Company</label>
+            <label for="account_id" popover-append-to-body="{{true}}" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Select company name the application name should be associated with">Company</label>
             <div class="col-sm-10">
               <select class="form-control" ng-disabled="_loading" ng-model="model.account_id" id="account_id" ng-options="obj.id as obj.companyName for obj in companies">
                 <option value="">--- Select Company ---</option>
@@ -72,7 +72,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="operation_mode" popover-append-to-body="{{true}}" class="col-sm-2 control-label" popover-trigger="mouseenter" popover="Rev SDK operation mode">SDK Operation Mode</label>
+            <label for="operation_mode" popover-append-to-body="{{true}}" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Rev SDK operation mode">SDK Operation Mode</label>
             <div class="col-sm-10">
               <select class="form-control" ng-disabled="_loading" ng-model="configuration.operation_mode" id="operation_mode">
                 <option value="transfer_and_report">Transfer And Report</option>
@@ -104,20 +104,20 @@
           </div>
           <div class="form-group" ng-class="{ 'has-error': editForm.refresh_interval.$invalid &&
                 editForm.refresh_interval.$dirty }">
-            <label for="configuration_refresh_interval_sec" popover-append-to-body="{{true}}" class="col-sm-2 control-label" popover-trigger="mouseenter" popover="SDK configuration refresh interval in seconds">Configuration Refresh Interval (seconds)</label>
+            <label for="configuration_refresh_interval_sec" popover-append-to-body="{{true}}" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="SDK configuration refresh interval in seconds">Configuration Refresh Interval (seconds)</label>
             <div class="col-sm-10">
               <input type="number" class="form-control" name="refresh_interval" ng-disabled="_loading" ng-model="configuration.configuration_refresh_interval_sec" id="configuration_refresh_interval_sec">
             </div>
           </div>
           <div class="form-group" ng-class="{ 'has-error': editForm.stale_timeout.$invalid &&
                 editForm.stale_timeout.$dirty }">
-            <label for="configuration_stale_timeout_sec" popover-append-to-body="{{true}}" class="col-sm-2 control-label" popover-trigger="mouseenter" popover="SDK configuration stale timeout in seconds">Configuration Stale Timeout (seconds)</label>
+            <label for="configuration_stale_timeout_sec" popover-append-to-body="{{true}}" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="SDK configuration stale timeout in seconds">Configuration Stale Timeout (seconds)</label>
             <div class="col-sm-10">
               <input type="number" class="form-control" name="stale_timeout" ng-disabled="_loading" ng-model="configuration.configuration_stale_timeout_sec" id="configuration_stale_timeout_sec">
             </div>
           </div>
           <div class="form-group">
-            <label for="allowed_transport_protocols" popover-append-to-body="{{true}}" class="col-sm-2 control-label" popover-trigger="mouseenter" popover="Rev SDK allowed last mile transport protocols">Allowed Transport Protocols</label>
+            <label for="allowed_transport_protocols" popover-append-to-body="{{true}}" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Rev SDK allowed last mile transport protocols">Allowed Transport Protocols</label>
             <div class="col-sm-10" id="allowed-transport-protocols">
               <span ng-repeat="protocol in protocols">
               <input
@@ -131,7 +131,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="initial_transport_protocol" popover-append-to-body="{{true}}" class="col-sm-2 control-label" popover-trigger="mouseenter" popover="Rev SDK initial last mile transport protocol">Initial Transport Protocol</label>
+            <label for="initial_transport_protocol" popover-append-to-body="{{true}}" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Rev SDK initial last mile transport protocol">Initial Transport Protocol</label>
             <div class="col-sm-10">
               <select class="form-control" ng-disabled="_loading" ng-model="configuration.initial_transport_protocol" id="initial_transport_protocol">
                 <option value="standard">Standard</option>
@@ -141,7 +141,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="stats_reporting_level" popover-append-to-body="{{true}}" class="col-sm-2 control-label" popover-trigger="mouseenter" popover="SDK analytics reporting level">Analytics Reporting Level</label>
+            <label for="stats_reporting_level" popover-append-to-body="{{true}}" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="SDK analytics reporting level">Analytics Reporting Level</label>
             <div class="col-sm-10">
               <select class="form-control" ng-disabled="_loading" ng-model="configuration.stats_reporting_level" id="stats_reporting_level">
                 <option value="info">Info</option>
@@ -152,13 +152,13 @@
           </div>
           <div class="form-group" ng-class="{ 'has-error': editForm.reporting_interval.$invalid &&
                 editForm.reporting_interval.$dirty }">
-            <label for="stats_reporting_interval_sec" popover-append-to-body="{{true}}" class="col-sm-2 control-label" popover-trigger="mouseenter" popover="SDK analytics reporting interval in seconds">Analytics Reporting Interval (seconds)</label>
+            <label for="stats_reporting_interval_sec" popover-append-to-body="{{true}}" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="SDK analytics reporting interval in seconds">Analytics Reporting Interval (seconds)</label>
             <div class="col-sm-10">
               <input type="number" class="form-control" name="reporting_interval" ng-disabled="_loading" ng-model="configuration.stats_reporting_interval_sec" id="stats_reporting_interval_sec">
             </div>
           </div>
           <div class="form-group">
-            <label for="domains_white_list" popover-append-to-body="{{true}}" class="col-sm-2 control-label" popover-trigger="mouseenter" popover="'White list' of domains which should be served via RevAPM edge service">Domains White List</label>
+            <label for="domains_white_list" popover-append-to-body="{{true}}" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="'White list' of domains which should be served via RevAPM edge service">Domains White List</label>
             <div class="col-sm-10">
               <ui-select tagging tagging-label="Add New Domain" multiple tagging-tokens="SPACE|," theme="bootstrap" class="form-control" ng-disabled="_loading" ng-model="configuration.domains_white_list" id="domains_white_list">
                 <ui-select-match placeholder="Add domains...">{{$item}}</ui-select-match>
@@ -169,7 +169,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="domains_black_list" popover-append-to-body="{{true}}" class="col-sm-2 control-label" popover-trigger="mouseenter" popover="'Black list' of domains which should be always served directly from domain origin servers">Domains Black List</label>
+            <label for="domains_black_list" popover-append-to-body="{{true}}" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="'Black list' of domains which should be always served directly from domain origin servers">Domains Black List</label>
             <div class="col-sm-10">
               <ui-select tagging tagging-label="Add New Domain" multiple tagging-tokens="SPACE|," theme="bootstrap" class="form-control" ng-disabled="_loading" ng-model="configuration.domains_black_list" id="domains_black_list">
                 <ui-select-match placeholder="Add domains...">{{$item}}</ui-select-match>
@@ -180,7 +180,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="domains_provisioned_list " popover-append-to-body="{{true}}" class="col-sm-2 control-label" popover-trigger="mouseenter" popover="'Provisioned' domains which are registered in the 'Web' section of the portal and provide full middle-mile acceleration">Domains Provisioned List</label>
+            <label for="domains_provisioned_list " popover-append-to-body="{{true}}" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="'Provisioned' domains which are registered in the 'Web' section of the portal and provide full middle-mile acceleration">Domains Provisioned List</label>
             <div class="col-sm-10">
               <ui-select multiple tagging-tokens="SPACE|," theme="bootstrap" class="form-control" ng-if="domainList.length" ng-disabled="_loading" ng-model="configuration.domains_provisioned_list " id="domains_provisioned_list ">
                 <ui-select-match placeholder="{{domainsListPlaceholder}}">{{$item}}</ui-select-match>
@@ -193,14 +193,14 @@
           </div>
           <div class="form-group" ng-class="{ 'has-error': editForm.ratio.$invalid &&
                 editForm.ratio.$dirty }">
-            <label for="a_b_testing_origin_offload_ratio" popover-append-to-body="{{true}}" class="col-sm-2 control-label" popover-trigger="mouseenter" popover="A/B testing offloading ratio in %">A/B Testing Offloading Ratio In %</label>
+            <label for="a_b_testing_origin_offload_ratio" popover-append-to-body="{{true}}" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="A/B testing offloading ratio in %">A/B Testing Offloading Ratio In %</label>
             <div class="col-sm-10">
               <input type="number" min="0" max="100" class="form-control" name="ratio" ng-disabled="_loading" ng-model="configuration.a_b_testing_origin_offload_ratio" id="a_b_testing_origin_offload_ratio">
             </div>
           </div>
           <div class="form-group" ng-class="{ 'has-error': editForm.comment.$invalid &&
                                       editForm.comment.$dirty }">
-            <label for="comment" class="col-sm-2 control-label" popover-trigger="mouseenter" popover="Comment">Comment</label>
+            <label for="comment" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Comment">Comment</label>
             <div class="col-sm-5">
               <textarea id="comment" class="form-control" name="comment" ng-model="model.comment" ng-disabled="_loading">
               </textarea>

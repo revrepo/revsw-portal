@@ -49,7 +49,7 @@
               <form class="col-sm-offset-2 col-sm-8 form-horizontal" ng-submit="resendToken(model)" novalidate name="verifyForm">
                 <div class="form-group" ng-class="{ 'has-error': verifyForm.email.$invalid &&
                                 verifyForm.email.$dirty }">
-                  <label for="email" popover-append-to-body="{{true}}" class="col-sm-2 control-label" popover-trigger="mouseenter" popover="We will send a new verification token to this email">Email *</label>
+                  <label for="email" popover-append-to-body="{{true}}" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="We will send a new verification token to this email">Email *</label>
                   <div class="col-sm-10">
                     <input type="email" autofocus class="form-control" id="email" name="email" placeholder="Email" ng-model="model.email" ng-disabled="_loading" required>
                     <span ng-show="!!verifyForm['email'].$error.email" style="color:red">Please use format example@example.com</span>
