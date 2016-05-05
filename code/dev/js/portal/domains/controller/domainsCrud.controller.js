@@ -135,6 +135,10 @@
           model.ssl_prefer_server_ciphers = item.ssl_prefer_server_ciphers;
         }
       }
+      // NOTE: set corret value for ssl_cert_id
+      if(model.ssl_cert_id ===''){
+        model.ssl_cert_id = null;
+      }
       delete model.cname;
       delete model.origin_protocol;
       delete model.id;
