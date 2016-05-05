@@ -6,7 +6,8 @@
     .controller('DomainsCrudController', DomainsCrudController);
 
   /*@ngInject*/
-  function DomainsCrudController($scope, $timeout,
+  function DomainsCrudController($scope,
+    $timeout,
     $localStorage,
     CRUDController,
     DomainsConfig,
@@ -41,27 +42,33 @@
 
     $scope.setResource(DomainsConfig);
 
+    /**
+     * @name setAccountName
+     * @description
+     *
+     */
+    function setAccountName() {
+      if ($scope.auth.isReseller() || $scope.auth.isRevadmin()) {
+        // Loading list of companies
+        return Companies.query(function(list) {
+          _.forEach($scope.records, function(item) {
+            var index = _.findIndex(list, {
+              id: item.account_id
+            });
+            if (index >= 0) {
+              item.companyName = list[index].companyName;
+            }
+          });
+        });
+      } else {
+        return $q.when();
+      }
+    }
     // Fetch list of records
     $scope.$on('$stateChangeSuccess', function(state) {
       if ($state.is($scope.state)) {
         $scope.list()
-          .then(function() {
-            if ($scope.auth.isReseller() || $scope.auth.isRevadmin()) {
-              // Loading list of companies
-              return Companies.query(function(list) {
-                _.forEach($scope.records, function(item) {
-                  var index = _.findIndex(list, {
-                    id: item.account_id
-                  });
-                  if (index >= 0) {
-                    item.companyName = list[index].companyName;
-                  }
-                });
-              });
-            } else {
-              return $q.when();
-            }
-          })
+          .then(setAccountName)
           .then(function() {
             if ($scope.elementIndexForAnchorScroll) {
               setTimeout(function() {
@@ -136,8 +143,8 @@
         }
       }
       // NOTE: set corret value for ssl_cert_id
-      if(model.ssl_cert_id ===''){
-        model.ssl_cert_id = null;
+      if (model.ssl_cert_id === null || model.ssl_cert_id === undefined) {
+        model.ssl_cert_id = '';
       }
       delete model.cname;
       delete model.origin_protocol;
@@ -291,7 +298,8 @@
           .delete(model)
           .then(function(data) {
             $scope.alertService.success('Domain ' + domainName + ' deleted.');
-            $scope.list();
+            $scope.list()
+              .then(setAccountName);
           })
           .catch(function(err) {
             $scope.alertService.danger(err);
@@ -630,4 +638,5 @@
     }
 
   }
+
 })();

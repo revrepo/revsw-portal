@@ -23,6 +23,29 @@
 
     $scope.setResource(ApiKeys);
 
+    /**
+     * @name setAccountName
+     * @description
+     *
+     */
+    function setAccountName() {
+      if ($scope.auth.isReseller() || $scope.auth.isRevadmin()) {
+        // Loading list of companies
+        return Companies.query(function(list) {
+          _.forEach($scope.records, function(item) {
+            var index = _.findIndex(list, {
+              id: item.account_id
+            });
+            if (index >= 0) {
+              item.companyName = list[index].companyName;
+            }
+          });
+        });
+      } else {
+        return $q.when();
+      }
+    }
+
     Companies
       .query()
       .$promise
@@ -77,9 +100,8 @@
         .then(function(data) {
           $rootScope.$broadcast('update:searchData');
           $scope.alertService.success('API Key created', 5000);
-          $scope.list().then(function() {
-            $scope.setCompanyName();
-          });
+          $scope.list()
+            .then(setAccountName);
           return data;
         })
         .catch($scope.alertService.danger)
@@ -142,9 +164,8 @@
       modalInstance.result
         .then(function(account) {
           $scope.alertService.success('API Key updated', 5000);
-          $scope.list().then(function() {
-            $scope.setCompanyName();
-          });
+          $scope.list()
+            .then(setAccountName);
         });
     };
 
@@ -189,9 +210,8 @@
     };
 
     // Fetch list of users
-    $scope.list().then(function() {
-      $scope.setCompanyName();
-    });
+    $scope.list()
+        .then(setAccountName);
 
     $scope.getRelativeDate = function(datetime) {
       return moment.utc(datetime).fromNow();
@@ -206,24 +226,6 @@
         $scope.alertService.danger('Copying failed, please try manual approach', 2000);
       } else {
         $scope.alertService.success('The API key has been copied to the clipboard', 2000);
-      }
-    };
-
-    $scope.setCompanyName = function() {
-      if ($scope.auth.isReseller() || $scope.auth.isRevadmin()) {
-        // Loading list of companies
-        return Companies.query(function(list) {
-          _.forEach($scope.records, function(item) {
-            var index = _.findIndex(list, {
-              id: item.account_id
-            });
-            if (index >= 0) {
-              item.companyName = list[index].companyName;
-            }
-          });
-        });
-      } else {
-        return $q.when();
       }
     };
   }
