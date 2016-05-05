@@ -6,7 +6,7 @@
     <div class="row">
       <div class="col-md-12">
         <p class="lead">
-          We have sent an email with verification link to your email address <b>{{$ctrl.model.email}}</b> - please continue the RevAPM registration process by following the link. Please also check your Spam mailbox.
+          We have sent an email with verification link to email address <b>{{$ctrl.model.email}}</b> - please continue the RevAPM registration process by following the link (don't forget to check your Spam mailbox too).
         </p>
         <p class="lead">
           <!-- Now you can close the browser window. -->
@@ -18,12 +18,21 @@
   <div class="panel-heading" ng-if="!$ctrl.isRegistryFinish">
     <div class="row">
       <div class="col-md-12">
-        <h4 class="text-center"> Please fill in your contact info. Fields marked with asterisk (*) are required. </h4>
+        <h4 class="text-center">Please fill in your contact info (all fields are required):</h4>
       </div>
     </div>
   </div>
   <div class="panel-body" ng-if="!$ctrl.isRegistryFinish">
     <form class="form-horizontal form-contact-info" name="newUser" novalidate>
+      <div class="form-group " ng-class="{ 'has-error': newUser.email.$invalid &&
+                                newUser.email.$dirty }">
+        <label for="email" popover-append-to-body="{{true}}" class="col-sm-2 control-label" popover-trigger="mouseenter" popover="New user's email address - the address should be unique across the system">
+          Email *</label>
+        <div class="col-sm-10">
+          <input type="email" autofocus class="form-control" id="email" name="email" placeholder="Email" ng-model="$ctrl.model.email" required ng-disabled="_loading">
+          <span ng-show="!!newUser['email'].$error.email" style="color:red">Please use format example@example.com</span>
+        </div>
+      </div>
       <div class="form-group">
         <label for="firstName" class="col-sm-2 control-label" popover-trigger="mouseenter" popover="First name">First Name *</label>
         <div class="col-sm-10">
@@ -36,15 +45,6 @@
         <div class="col-sm-10">
           <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Last Name" ng-model="$ctrl.model.last_name" required ng-maxlength="150" ng-disabled="_loading">
           <span ng-show="!!newUser['lastName'].$error.maxlength" style="color:red">150 characters max</span>
-        </div>
-      </div>
-      <div class="form-group " ng-class="{ 'has-error': newUser.email.$invalid &&
-                                newUser.email.$dirty }">
-        <label for="email" popover-append-to-body="{{true}}" class="col-sm-2 control-label" popover-trigger="mouseenter" popover="New user's email address - the address should be unique across the system">
-          Email *</label>
-        <div class="col-sm-10">
-          <input type="email" autofocus class="form-control" id="email" name="email" placeholder="Email" ng-model="$ctrl.model.email" required ng-disabled="_loading">
-          <span ng-show="!!newUser['email'].$error.email" style="color:red">Please use format example@example.com</span>
         </div>
       </div>
       <div class="form-group" ng-class="{ 'has-error': newUser.password.$invalid &&

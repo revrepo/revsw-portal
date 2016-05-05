@@ -178,6 +178,8 @@ describe('Functional', function () {
 
             Portal.goToMobileApps();
             Portal.header.goTo(app.platform);
+            var findApp = Portal.mobileApps.listPage.findApp(app);
+            expect(findApp).toBe(1);
             var row = Portal.mobileApps.listPage.table.getFirstRow();
             expect(row.stagingStatus).toEqual('Staging Status: Published');
             expect(row.globalStatus).toEqual('Global Status: Published');
@@ -196,6 +198,8 @@ describe('Functional', function () {
 
             Portal.goToMobileApps();
             Portal.header.goTo(app.platform);
+            var findApp = Portal.mobileApps.listPage.findApp(app);
+            expect(findApp).toBe(1);
             var row = Portal.mobileApps.listPage.table.getFirstRow();
             expect(row.stagingStatus).toEqual('Staging Status: Published');
             expect(row.globalStatus).toEqual('Global Status: Modified');
