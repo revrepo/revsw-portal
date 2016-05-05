@@ -62,7 +62,7 @@
             </div>
           </div>
           <div class="form-group" ng-if="auth.isReseller() || auth.isRevadmin()">
-            <label for="account_id" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" popover="Select company name the domain should be associated with">Company</label>
+            <label for="account_id" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Select company name the domain should be associated with">Company</label>
             <div class="col-sm-9">
               <select class="form-control" ng-disabled="_loading" ng-model="model.account_id" id="account_id" ng-options="obj.id as obj.companyName for obj in companies">
                 <option value="">--- Select Company ---</option>
@@ -70,19 +70,19 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="origin_server" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" popover="Enter here domain name or IP address of origin web server">Origin Server Name/IP</label>
+            <label for="origin_server" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Enter here domain name or IP address of origin web server">Origin Server Name/IP</label>
             <div class="col-sm-9">
               <input type="text" class="form-control" ng-disabled="_loading" ng-model="model.origin_server" id="origin_server" placeholder="Origin Server Name">
             </div>
           </div>
           <div class="form-group">
-            <label for="origin_host_header" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" popover="Enter here a domain name to be used in 'Host' header in requests sent from RevAPM to the origin server">Origin Host Header</label>
+            <label for="origin_host_header" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Enter here a domain name to be used in 'Host' header in requests sent from RevAPM to the origin server">Origin Host Header</label>
             <div class="col-sm-9">
               <input type="text" class="form-control" ng-model="model.origin_host_header" ng-disabled="_loading" id="origin_host_header" placeholder="Origin Host Header">
             </div>
           </div>
           <div class="form-group">
-            <label for="origin_server_location_id" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" popover="Select a RevAPM location closest to the location of the origin server">Domain Origin Location</label>
+            <label for="origin_server_location_id" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Select a RevAPM location closest to the location of the origin server">Domain Origin Location</label>
             <div class="col-sm-9">
               <select class="form-control" ng-disabled="_loading" ng-model="model.origin_server_location_id" id="origin_server_location_id" ng-options="obj.id as obj.locationName for obj in locations">
                 <option value="">--- Select Location ---</option>
@@ -95,7 +95,7 @@
                    popover-append-to-body="{{true}}"
                    class="col-sm-3 control-label"
                    popover-trigger="mouseenter"
-                   popover="Web page performance threshold used for RUM heatmap report. Recommended value is 3000 ms.">Threshold</label>
+                   uib-popover="Web page performance threshold used for RUM heatmap report. Recommended value is 3000 ms.">Threshold</label>
 
             <div class="col-sm-9">
               <input type="text"
@@ -128,7 +128,7 @@
           <!-- // -->
           <!-- "Non-Wildcard Domain Aliases" -->
           <div class="form-group">
-            <label for="domain_aliases" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" popover="Non-Wildcard Domain Aliases">Non-Wildcard Domain Aliases</label>
+            <label for="domain_aliases" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Non-Wildcard Domain Aliases">Non-Wildcard Domain Aliases</label>
             <div class="col-sm-9">
               <ui-select tagging tagging-label="Add New Domain" multiple tagging-tokens="SPACE|," theme="bootstrap" class="form-control" ng-disabled="_loading" ng-model="model.domain_aliases" id="domain_aliases">
                 <ui-select-match placeholder="Add domains...">{{$item}}</ui-select-match>
@@ -201,7 +201,7 @@
           </div>
           <div class="form-group" ng-class="{ 'has-error': editForm.comment.$invalid &&
                                       editForm.comment.$dirty }">
-            <label for="comment" class="col-sm-3 control-label" popover-trigger="mouseenter" popover="Comment">Comment</label>
+            <label for="comment" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Comment">Comment</label>
             <div class="col-md-6">
               <textarea id="comment" placeholder="Comment (max 300 symbol)" class="form-control" name="comment" ng-model="model.comment" ng-disabled="_loading">
               </textarea>
@@ -286,7 +286,7 @@
           <!-- //  “SSL Configuration” -->
           <!-- Attached SSL Certificate-->
           <div class="form-group">
-            <label for="account_id" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" popover="Select SSL certificate which should be associated with the domain">SSL Certificate</label>
+            <label for="account_id" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Select SSL certificate which should be associated with the domain">SSL Certificate</label>
             <div class="col-sm-9">
               <select class="form-control" ng-disabled="_loading" ng-model="model.ssl_cert_id" id="ssl_cert_id" ng-options="obj.id as obj.cert_name for obj in SSL_certs | filter :{account_id:model.account_id}" style="float: left;">
                 <option value="">Default RevAPM SSL Certificate</option>
@@ -326,14 +326,14 @@
                 <!-- Right section -->
                 <div class="col-md-7" ng-disabled="isCustomSSL_conf_profile">
                   <div class="form-group ">
-                    <label for="ssl_protocols" popover-append-to-body="{{true}}" class="col-sm-12" popover-trigger="mouseenter" popover="Allowed SSL protocols">
+                    <label for="ssl_protocols" popover-append-to-body="{{true}}" class="col-sm-12" popover-trigger="mouseenter" uib-popover="Allowed SSL protocols">
                       Allowed SSL Protocols <small>(in Nginx format)</small></label>
                     <div class="col-sm-12">
                       <input type="text" class="form-control" ng-disabled="!isCustomSSL_conf_profile" ng-model="model.ssl_protocols" id="ssl_protocols" placeholder="SSL Protocols">
                     </div>
                   </div>
                   <div class="form-group ">
-                    <label for="ssl_ciphers" popover-append-to-body="{{true}}" class="col-sm-12" popover-trigger="mouseenter" popover="Allowed SSL ciphers">
+                    <label for="ssl_ciphers" popover-append-to-body="{{true}}" class="col-sm-12" popover-trigger="mouseenter" uib-popover="Allowed SSL ciphers">
                       Allowed SSL Ciphers
                       <small>(in Nginx format)</small></label>
                     <div class="col-sm-12">

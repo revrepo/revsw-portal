@@ -32,7 +32,7 @@
                    popover-append-to-body="{{true}}"
                    class="col-sm-2 control-label"
                    popover-trigger="mouseenter"
-                   popover="Enter here a website/API domain name to be served by RevAPM"
+                   uib-popover="Enter here a website/API domain name to be served by RevAPM"
                    >Domain Name</label>
 
             <div class="col-sm-10">
@@ -50,7 +50,7 @@
                    popover-append-to-body="{{true}}"
                    class="col-sm-2 control-label"
                    popover-trigger="mouseenter"
-                   popover="Select company name the domain should be associated with">Company</label>
+                   uib-popover="Select company name the domain should be associated with">Company</label>
 
             <div class="col-sm-10">
               <select class="form-control"
@@ -67,7 +67,7 @@
                    popover-append-to-body="{{true}}"
                    class="col-sm-2 control-label"
                    popover-trigger="mouseenter"
-                   popover="Enter here domain name or IP address of origin web server">Origin Server Name/IP</label>
+                   uib-popover="Enter here domain name or IP address of origin web server">Origin Server Name/IP</label>
 
             <div class="col-sm-10">
               <input type="text"
@@ -83,7 +83,7 @@
                    popover-append-to-body="{{true}}"
                    class="col-sm-2 control-label"
                    popover-trigger="mouseenter"
-                   popover="Enter here a domain name to be used in 'Host' header in requests sent from RevAPM to the origin server">Origin Host Header</label>
+                   uib-popover="Enter here a domain name to be used in 'Host' header in requests sent from RevAPM to the origin server">Origin Host Header</label>
 
             <div class="col-sm-10">
               <input type="text"
@@ -99,7 +99,7 @@
                    popover-append-to-body="{{true}}"
                    class="col-sm-2 control-label"
                    popover-trigger="mouseenter"
-                   popover="Select a RevAPM location closest to the location of the origin server">Domain Origin Location</label>
+                   uib-popover="Select a RevAPM location closest to the location of the origin server">Domain Origin Location</label>
 
             <div class="col-sm-10">
               <select class="form-control"
@@ -117,7 +117,7 @@
                    popover-append-to-body="{{true}}"
                    class="col-sm-2 control-label"
                    popover-trigger="mouseenter"
-                   popover="Web page performance threshold used for RUM heatmap report. Recommended value is 3000 ms.">Threshold</label>
+                   uib-popover="Web page performance threshold used for RUM heatmap report. Recommended value is 3000 ms.">Threshold</label>
 
             <div class="col-sm-10">
               <input type="text"
@@ -131,7 +131,7 @@
           -->
           <div class="form-group" ng-class="{ 'has-error': createForm.comment.$invalid &&
                                       editForm.comment.$dirty }">
-            <label for="comment" class="col-sm-2 control-label" popover-trigger="mouseenter" popover="Comment">Comment</label>
+            <label for="comment" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Comment">Comment</label>
             <div class="col-md-5">
               <textarea id="comment" placeholder="Comment (max 300 symbol)" class="form-control" name="comment" ng-model="model.comment" ng-disabled="_loading">
               </textarea>

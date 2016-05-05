@@ -34,7 +34,7 @@
                    popover-append-to-body="{{true}}"
                    class="col-sm-2 control-label"
                    popover-trigger="mouseenter"
-                   popover="Enter App name to register"
+                   uib-popover="Enter App name to register"
             >App Name</label>
 
             <div class="col-sm-10">
@@ -54,7 +54,7 @@
                    popover-append-to-body="{{true}}"
                    class="col-sm-2 control-label"
                    popover-trigger="mouseenter"
-                   popover="Select company name the domain should be associated with">Company</label>
+                   uib-popover="Select company name the domain should be associated with">Company</label>
 
             <div class="col-sm-10">
               <select class="form-control"
@@ -73,7 +73,7 @@
                    popover-append-to-body="{{true}}"
                    class="col-sm-2 control-label"
                    popover-trigger="mouseenter"
-                   popover="Select desired platform"
+                   uib-popover="Select desired platform"
             >Platform</label>
 
             <div class="col-sm-10">
@@ -89,7 +89,7 @@
 -->
           <div class="form-group" ng-class="{ 'has-error': createForm.comment.$invalid &&
                                       createForm.comment.$dirty }">
-            <label for="comment" class="col-sm-2 control-label" popover-trigger="mouseenter" popover="Comment">Comment</label>
+            <label for="comment" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Comment">Comment</label>
             <div class="col-sm-5">
               <textarea id="comment" placeholder="Comment (max 300 symbol)" class="form-control" name="comment" ng-model="model.comment" ng-disabled="_loading">
               </textarea>
