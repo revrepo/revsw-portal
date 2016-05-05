@@ -6,7 +6,7 @@
     .controller('KeysListController', KeysListController);
 
   // @ngInject
-  function KeysListController($scope, $rootScope, CRUDController, ApiKeys, $injector, $stateParams, Companies, DomainsConfig, $state, $modal, clipboard) {
+  function KeysListController($scope, $rootScope, $q, CRUDController, ApiKeys, $injector, $stateParams, Companies, DomainsConfig, $state, $uibModal, clipboard) {
 
     //Invoking crud actions
     $injector.invoke(CRUDController, this, {
@@ -97,7 +97,7 @@
         // select only one and create
         return $scope.createKey($scope.companies[0]);
       }
-      var modalInstance = $modal.open({
+      var modalInstance = $uibModal.open({
         animation: true,
         templateUrl: 'parts/keys/dialog/create.html',
         controller: 'KeysCreateController',
@@ -120,7 +120,7 @@
      */
     $scope.openUpdateDialogFor = function(keyId) {
       $scope.alertService.clear();
-      var modalInstance = $modal.open({
+      var modalInstance = $uibModal.open({
         animation: true,
         templateUrl: 'parts/keys/dialog/edit.html',
         controller: 'KeysEditController',
