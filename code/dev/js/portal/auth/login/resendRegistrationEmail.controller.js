@@ -6,13 +6,13 @@
     .controller('resendRegistrationEmailController', resendRegistrationEmailController);
 
   /*@ngInject*/
-  function resendRegistrationEmailController($scope, $modalInstance, User, Users, AlertService, auth) {
+  function resendRegistrationEmailController($scope, $uibModalInstance, User, Users, AlertService, auth) {
     $scope.data = auth;
     $scope.data.loading = false;
 
     $scope.close = function() {
       $scope.data.loading = false;
-      $modalInstance.dismiss();
+      $uibModalInstance.dismiss();
     };
 
     $scope.onResendEmail = function() {
@@ -28,7 +28,7 @@
             if (!!data && data.message) {
               // Show message
               AlertService.success(data.message, 6000);
-              $modalInstance.close(data.message);
+              $uibModalInstance.close(data.message);
             }
           }, function(err) {
             // TODO: check work message
@@ -41,7 +41,7 @@
           .finally(function() {
             $scope.data.loading = false;
           });
-        //$modalInstance.close();
+        //$uibModalInstance.close();
       }
     };
   }

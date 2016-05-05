@@ -23,7 +23,7 @@
     </div>
   </div>
   <div class="panel-body" ng-if="!$ctrl.isRegistryFinish">
-    <form class="form-horizontal form-contact-info" name="newUser" novalidate>
+    <form class="col-sm-offset-2 col-sm-8 form-horizontal form-contact-info" name="newUser" novalidate>
       <div class="form-group " ng-class="{ 'has-error': newUser.email.$invalid &&
                                 newUser.email.$dirty }">
         <label for="email" popover-append-to-body="{{true}}" class="col-sm-2 control-label" popover-trigger="mouseenter" popover="New user's email address - the address should be unique across the system">
@@ -58,14 +58,14 @@
       </div>
       <hr>
       <div class="form-group">
+        <div class="text-center" style="margin-bottom: 10px">
+          By clicking on Sign Up you agree with our
+          <a href="https://www.revapm.com/tos/" target="_blank">Terms Of Service</a>,
+          <a href="https://www.revapm.com/aup/" target="_blank">Acceptable Use Policy</a> and
+          <a href="https://www.revapm.com/privacy/" target="_blank">Privacy Policy</a>
+        </div>
+        <br>
         <div class="col-md-8">
-          <div class="pull-right" style="margin-bottom: 10px">
-            By clicking on Sign Up you agree with our
-            <a href="https://www.revapm.com/tos/" target="_blank">Terms Of Service</a>,
-            <a href="https://www.revapm.com/aup/" target="_blank">Acceptable Use Policy</a> and
-            <a href="https://www.revapm.com/privacy/" target="_blank">Privacy Policy</a>
-          </div>
-          <br>
           <div class="pull-right">
             <a ui-sref="^" class="btn btn-default">
               <i class="glyphicon glyphicon-remove"></i>&nbsp; Cancel

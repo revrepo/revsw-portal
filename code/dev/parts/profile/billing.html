@@ -3,24 +3,23 @@
     <h3 class="modal-title">Confirm</h3>
   </div>
   <div class="modal-body">
-      Are you sure you want to change billing plan to
-      <strong>{{model.name}}</strong>?
+    Are you sure you want to change billing plan to
+    <strong>{{model.name}}</strong>?
   </div>
   <div class="modal-footer">
     <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
     <button class="btn btn-danger" type="button" ng-click="ok()">OK</button>
   </div>
 </script>
-
 <script type="text/ng-template" id="confirmModalUpgrade.html">
   <div class="modal-header">
     <h3 class="modal-title">Confirm</h3>
   </div>
-  <div class="modal-body">
+  <div class="modal-body" ng-if="model.credit_card">
     <p>Changing billing plan will have the following effects:
       <br>
       <ul>
-        <li>A prorated credit of approximately  <strong>{{model.migration.prorated_adjustment_in_cents| AbsUnit| MonetaryUnit|currency}}</strong> will be applied for the current billing plan</li>
+        <li>A prorated credit of approximately <strong>{{model.migration.prorated_adjustment_in_cents| AbsUnit| MonetaryUnit|currency}}</strong> will be applied for the current billing plan</li>
         <li>The pro-rated credit for prior period charges will include any line-item charges from that period</li>
         <li>A charge for the full amount of the new billing plan will be applied</li>
         <li>A charge for the full amount of all line-item charges will be applied. All metered line-items (traffic, requests) will be reset to zero.</li>
@@ -32,12 +31,14 @@
       <strong>{{model.plan.name}}</strong>.
     </p>
   </div>
+  <div class="modal-body" ng-if="!model.credit_card">
+    <p> It looks like we don’t have your credit card details on file. Please provide the information before changing to another billing plan.</p>
+  </div>
   <div class="modal-footer">
     <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
-    <button class="btn btn-danger" type="button" ng-click="ok()">OK</button>
+    <button class="btn btn-danger" type="button" ng-click="ok()" ng-if="model.credit_card">OK</button>
   </div>
 </script>
-
 <div class="container-fluid" ui-view="page">
   <div class="row">
     <div class="col-sm-12">

@@ -784,3 +784,6 @@ i {
   font-weight: bold;
   font-size: 1.16667em;
 }
+.subscription-summary .btn {
+  margin-left: 20px;
+}

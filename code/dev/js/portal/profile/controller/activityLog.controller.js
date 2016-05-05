@@ -6,7 +6,7 @@
     .controller('ActivityLogController', ActivityLogController);
 
   /*@ngInject*/
-  function ActivityLogController($scope, CRUDController, Activity, $injector, $stateParams, ActivityPhrase, $modal) {
+  function ActivityLogController($scope, CRUDController, Activity, $injector, $stateParams, ActivityPhrase, $uibModal) {
     //Invoking crud actions
     $injector.invoke(CRUDController, this, {$scope: $scope, $stateParams: $stateParams});
 
@@ -83,7 +83,7 @@
 
       // Uses ConfirmModalInstanceCtrl. This controller has all needed methods
       // So no need to create a new one.
-      var modalInstance = $modal.open({
+      var modalInstance = $uibModal.open({
         animation: true,
         templateUrl: 'activityDetails.html',
         controller: 'ConfirmModalInstanceCtrl',

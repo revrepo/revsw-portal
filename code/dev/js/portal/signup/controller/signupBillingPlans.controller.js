@@ -15,7 +15,7 @@
    * @param {[type]} $localStorage [description]
    * @param {[type]} Countries     [description]
    */
-  function SignupBillingPlansController($scope, Users, AlertService, $stateParams, $localStorage, Countries, $modal) {
+  function SignupBillingPlansController($scope, Users, AlertService, $stateParams, $localStorage, Countries, $uibModal) {
     'ngInject';
     var billing_plan_handler = $stateParams.billing_plan_handler;
     var $ctrl = this;
@@ -116,7 +116,7 @@
      */
     this.onRepeatSendRegistrationEmail = function(email, password) {
 
-      var modalInstance = $modal.open({
+      var modalInstance = $uibModal.open({
         templateUrl: 'parts/auth/resend-subscription-info.html',
         controller: 'resendRegistrationEmailController',
         size: 'md',
