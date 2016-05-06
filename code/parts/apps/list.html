@@ -107,7 +107,7 @@
             <tbody>
               <tr id="anchor{{::$index}}" ng-click="saveAnchorScrollIndex($index)" ng-repeat="item in filteredRecords | limitTo:filter.limit:filter.skip track by $index">
                 <td>
-                  <a ui-sref=".edit({id: item.id})" ng-if="!item.loading" tooltip="Edit App">
+                  <a ui-sref=".edit({id: item.id})" ng-if="!item.loading" uib-tooltip="Edit App">
                   {{item.app_name}}
                 </a>
                 </td>
@@ -115,7 +115,7 @@
                 <td>{{item.last_app_published_version}}</td>
                 <td>{{ getRelativeDate(item.updated_at) }}</td>
                 <td>
-                  <button class="btn btn-primary" clipboard text="item.sdk_key" on-copied="copyCallback()" on-error="copyCallback(err)" style="vertical-align: initial;" tooltip="Click to copy the key to the clipboard" tooltip-placement="top"><i class="fa fa-files-o"></i></button>
+                  <button class="btn btn-primary" clipboard text="item.sdk_key" on-copied="copyCallback()" on-error="copyCallback(err)" style="vertical-align: initial;" uib-tooltip="Click to copy the key to the clipboard" tooltip-placement="top"><i class="fa fa-files-o"></i></button>
                   <button class="btn btn-primary" ng-click="switchKeyVisibility(item)" ng-hide="item.showKey" style="vertical-align: initial;">Show SDK Key</button>
                   <input ng-if="item.showKey" ng-blur="switchKeyVisibility(item)" class="form-control" value="{{item.sdk_key}}" style="width: 300px; display: inline-block; position: absolute; z-index: 999; margin-left: 4px;" focus-me="item.showKey">
                   <!--<input class="list-input" disabled ng-hide="item.show" type="password" value="{{item.sdk_key}}" />-->
@@ -130,19 +130,19 @@
                 </td>
                 <td class="actions">
                   <i class="glyphicon glyphicon-refresh spin" ng-if="item.loading"></i>
-                  <a ui-sref=".edit({id: item.id})" ng-if="!item.loading" tooltip="Edit App">
+                  <a ui-sref=".edit({id: item.id})" ng-if="!item.loading" uib-tooltip="Edit App">
                     <i class="glyphicon glyphicon-pencil"></i>
                   </a>
-                  <a ui-sref=".configure({id: item.id})" ng-if="!item.loading" tooltip="Advanced Edit App">
+                  <a ui-sref=".configure({id: item.id})" ng-if="!item.loading" uib-tooltip="Advanced Edit App">
                     <i class="glyphicon glyphicon-cog"></i>
                   </a>
-                  <a href="" ng-if="!item.loading" ng-click="deleteApp(item)" tooltip="Delete App">
+                  <a href="" ng-if="!item.loading" ng-click="deleteApp(item)" uib-tooltip="Delete App">
                     <i class="glyphicon glyphicon-trash"></i>
                   </a>
-                  <a href="#/mobile/traffic" ng-if="!item.loading" ng-click="storeToStorage(item)" tooltip="Stats">
+                  <a href="#/mobile/traffic" ng-if="!item.loading" ng-click="storeToStorage(item)" uib-tooltip="Stats">
                     <i class="glyphicon glyphicon-stats"></i>
                   </a>
-                  <a href="" ui-sref=".versions({id: item.id})" ng-if="!item.loading" tooltip="Previous Versions">
+                  <a href="" ui-sref=".versions({id: item.id})" ng-if="!item.loading" uib-tooltip="Previous Versions">
                     <i class="glyphicon glyphicon-book"></i>
                   </a>
                 </td>
