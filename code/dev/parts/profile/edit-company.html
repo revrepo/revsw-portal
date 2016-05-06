@@ -301,7 +301,7 @@
                   <i class="glyphicon glyphicon-credit-card"></i> Create Billing Profile
                 </a> -->
                 <!-- TODO: add check valid payment method -->
-                <button type="button" ng-if="user.isAdmin && model.self_registered && model.billing_plan.length>0 && model.subscription_state != 'canceled'" ng-click="deleteCompanyProfile(model)" class="btn btn-danger pull-right" ng-disabled="_loading || _disabled || !user.isAdmin">
+                <button type="button" ng-if="user.isAdmin" ng-click="deleteCompanyProfile(model)" class="btn btn-danger pull-right" ng-disabled="_loading || _disabled || !isCanDeleteCompanyProfile()">
                   <i class="glyphicon glyphicon-refresh spin" ng-if="_loading"></i>
                   <i class="glyphicon glyphicon-remove" ng-if="!_loading"></i>&nbsp; Delete Company Profile
                 </button>

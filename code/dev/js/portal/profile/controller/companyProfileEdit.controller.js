@@ -111,18 +111,21 @@
             });
         });
     };
-
+    /**
+     * @name  deleteCompanyProfile
+     * @description
+     *
+     *  Delete Account
+     *
+     * @param  {[type]} company [description]
+     * @return {[type]}         [description]
+     */
     $scope.deleteCompanyProfile = function(company) {
       $scope._loading = true;
       $q.all([User.getUserDomains(true), Apps.query().$promise, BillingPlans.get({
           id: company.billing_plan
         }).$promise]).then(
           function(results) {
-            // TODO: delete log
-            console.log('company', company);
-            console.log('domains', results[0].length);
-            console.log('apps', results[1].length);
-            console.log('bp', results[2]);
             var _model = {
               company: company,
               domains: results[0],
@@ -158,25 +161,24 @@
         .finally(function() {
           $scope._loading = false;
         });
-
-      // $scope.confirm('confirmDeleteModal.html', company)
-      //   .then(function() {
-      //     $scope._loading = true;
-      //     $scope.delete(company)
-      //       .then(function() {
-      //         AlertService.success('Successfully deleted company profile');
-      //       })
-      //       .catch(function(err) {
-      //         AlertService.danger('Oops! Something went wrong');
-      //       })
-      //       .finally(function() {
-      //         $scope._loading = false;
-      //       });
-      //   });
     };
-
-
-
+    /**
+     * @name  isCanDeleteCompanyProfile
+     * @description
+     *
+     * Check rules for Delete Company Profile
+     *    - Account is self-registered AND
+     *    - Account has a valid billing plan AND
+     *    - (Account is in trial mode  OR
+     *    - Account is not at trial mode and has a valid payment method)
+     * @return {Boolean}
+     */
+    $scope.isCanDeleteCompanyProfile = function() {
+      var model = $scope.model;
+      return (model.self_registered === true && model.billing_plan.length > 0 &&
+        (model.subscription_state === 'trialing' ||
+          (model.subscription_state !== 'trialing' && model.valid_payment_method_configured === true)));
+    };
 
   }
 })();
