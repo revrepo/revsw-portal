@@ -16,12 +16,33 @@
     <h3 class="modal-title">Confirm</h3>
   </div>
   <div class="modal-body">
-    Are you sure you want to delete company profile
-    <strong>{{model.companyName}}</strong>?
+    <div class="row">
+      <!-- isCanBeDeleted = true -->
+      <div class="col-sm-12" ng-if="model.isCanBeDeleted">
+        <p>You are requesting to cancel your current subscription to billing plan <strong>{{model.bp.name}}</strong> and delete your customer account in system. The following will happen:</p>
+        <ul>
+          <li>Your credit card will be not charged after the cancellation will take affect</li>
+          <li>No refunds or prorations will be made</li>
+          <li>All your RevAPM users accounts and API keys will be removed from the system</li>
+        </ul>
+        <div class="form-group">
+          <label class="">Enter an optional cancellation reason/message:</label>
+          <div class="col-sm-12">
+            <textarea class="form-control" name="cancellationMessage" ng-model="model.cancellation_message" class="cancellation_message"></textarea>
+          </div>
+        </div>
+      </div>
+      <!-- isCanBeDeleted = false -->
+      <div class="col-sm-12" ng-if="!model.isCanBeDeleted">
+        <p class="text-center">Your RevAPM account has active web domain and/or mobile app configurations. To ensure that the account cancellation will not affect your end users please review your RevAPM configuration and manually delete the resources before proceeding with account cancellation
+        </p>
+      </div>
+    </div>
   </div>
   <div class="modal-footer">
-    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
-    <button class="btn btn-danger" type="button" ng-click="ok()">OK</button>
+    <button class="btn btn-warning" type="button" ng-if="model.isCanBeDeleted" ng-click="cancel()">Cancel</button>
+    <button class="btn btn-warning" type="button" ng-if="!model.isCanBeDeleted" ng-click="cancel()">Close The Window</button>
+    <button class="btn btn-danger" type="button" ng-if="model.isCanBeDeleted" ng-click="ok(model)">Proceed</button>
   </div>
 </script>
 <!-- -->
@@ -67,7 +88,7 @@
           <form class="form-horizontal" name="Company" ng-submit="updateCompany(model)" novalidate>
             <div class="form-group" ng-class="{ 'has-error': Company.companyName.$invalid &&
                             Company.companyName.$dirty }">
-              <label for="companyName" class="col-sm-2 control-label" popover-trigger="mouseenter" popover="Will be generated from your first and last name if left empty.">
+              <label for="companyName" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Will be generated from your first and last name if left empty.">
                 Company Name &nbsp;</label>
               <div class="col-sm-10">
                 <input type="text" class="form-control" id="companyName" name="companyName" placeholder="Company Name" maxlength="250" ng-model="model.companyName" ng-disabled="_loading">
@@ -77,7 +98,7 @@
             <!-- first_name-->
             <div class="form-group" ng-class="{ 'has-error': Company.firstName.$invalid &&
                             Company.firstName.$dirty }">
-              <label for="firstName" class="col-sm-2 control-label" popover-trigger="mouseenter" popover="First Name">First Name *</label>
+              <label for="firstName" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="First Name">First Name *</label>
               <div class="col-sm-10 ">
                 <input type="text" class="form-control" required id="firstName" name="firstName" placeholder="First Name" ng-model="model.first_name" ng-disabled="_loading">
               </div>
@@ -85,39 +106,39 @@
             <!-- last_name-->
             <div class="form-group" ng-class="{ 'has-error': Company.lastName.$invalid &&
                             Company.lastName.$dirty }">
-              <label for="lastName" class="col-sm-2 control-label" popover-trigger="mouseenter" popover="Last Name">Last Name *</label>
+              <label for="lastName" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Last Name">Last Name *</label>
               <div class="col-sm-10 ">
                 <input type="text" class="form-control" required id="lastName" name="lastName" placeholder="Last Name" ng-model="model.last_name" ng-disabled="_loading">
               </div>
             </div>
             <div class="form-group" ng-class="{ 'has-error': Company.phoneNumber.$invalid &&
                             Company.phoneNumber.$dirty }">
-              <label for="phoneNumber" class="col-sm-2 control-label" popover-trigger="mouseenter" popover="Contact phone number">Phone Number *</label>
+              <label for="phoneNumber" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Contact phone number">Phone Number *</label>
               <div class="col-sm-10">
                 <input type="text" ng-pattern="phoneRegex" class="form-control" required id="phoneNumber" name="phoneNumber" placeholder="Phone Number" ng-model="model.phone_number" ng-disabled="_loading">
               </div>
             </div>
             <div class="form-group" ng-class="{ 'has-error': Company.contactEmail.$invalid &&
                             Company.contactEmail.$dirty }">
-              <label for="phoneNumber" class="col-sm-2 control-label" popover-trigger="mouseenter" popover="Contact Email">Contact Email *</label>
+              <label for="phoneNumber" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Contact Email">Contact Email *</label>
               <div class="col-sm-10">
                 <input type="email" class="form-control" required id="contactEmail" name="contactEmail" placeholder="Contact Email" ng-model="model.contact_email" ng-disabled="_loading">
               </div>
             </div>
             <div class="form-group" ng-class="{ 'has-error': Company.address1.$invalid && Company.address1.$dirty }">
-              <label for="address1" class="col-sm-2 control-label" popover-trigger="mouseenter" popover="Could be used as a billing address later.">Address *</label>
+              <label for="address1" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Could be used as a billing address later.">Address *</label>
               <div class="col-sm-10">
                 <input type="text" class="form-control" required id="address1" name="address1" placeholder="Address 1" ng-model="model.address1" ng-disabled="_loading">
               </div>
             </div>
             <div class="form-group" ng-class="{ 'has-error': Company.address2.$invalid && Company.address2.$dirty }">
-              <label for="address2" class="col-sm-2 control-label" popover-trigger="mouseenter" popover="Could be used as a billing address later.">Address (Line 2) &nbsp;</label>
+              <label for="address2" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Could be used as a billing address later.">Address (Line 2) &nbsp;</label>
               <div class="col-sm-10">
                 <input type="text" class="form-control" id="address2" name="address2" placeholder="Address (Line 2)" ng-model="model.address2" ng-disabled="_loading">
               </div>
             </div>
             <div class="form-group">
-              <label for="Country" class="col-sm-2 control-label" popover-trigger="mouseenter" popover="Could be used in a billing address later.">Country *</label>
+              <label for="Country" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Could be used in a billing address later.">Country *</label>
               <div class="col-sm-10">
                 <select type="text" class="form-control" id="Country" placeholder="Country" required ng-model="model.country" ng-options="key as value for (key , value) in countries" ng-disabled="_loading">
                 </select>
@@ -125,21 +146,21 @@
             </div>
             <div class="form-group" ng-class="{ 'has-error': Company.state.$invalid &&
                             Company.state.$dirty }">
-              <label for="state" class="col-sm-2 control-label" popover-trigger="mouseenter" popover="Could be used in a billing address later.">State *</label>
+              <label for="state" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Could be used in a billing address later.">State *</label>
               <div class="col-sm-10">
                 <input type="text" class="form-control" id="state" name="state" required placeholder="State" ng-model="model.state" ng-disabled="_loading">
               </div>
             </div>
             <div class="form-group" ng-class="{ 'has-error': Company.city.$invalid &&
                             Company.city.$dirty }">
-              <label for="City" class="col-sm-2 control-label" popover-trigger="mouseenter" popover="Could be used in a billing address later.">City *</label>
+              <label for="City" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Could be used in a billing address later.">City *</label>
               <div class="col-sm-10">
                 <input type="text" class="form-control" id="city" name="city" required placeholder="City" ng-model="model.city" ng-disabled="_loading">
               </div>
             </div>
             <div class="form-group" ng-class="{ 'has-error': Company.Zipcode.$invalid &&
                             Company.Zipcode.$dirty }">
-              <label for="Zipcode" class="col-sm-2 control-label" popover-trigger="mouseenter" popover="Could be used in a billing address later.">Zip Code *</label>
+              <label for="Zipcode" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Could be used in a billing address later.">Zip Code *</label>
               <div class="col-sm-10">
                 <input type="text" ng-pattern="zipRegex" class="form-control" id="Zipcode" name="Zipcode" maxlength="10" required placeholder="Zip Code" ng-model="model.zipcode" ng-disabled="_loading">
               </div>
@@ -147,8 +168,8 @@
             <hr>
             <div class="form-group" ng-class="{ 'has-error': Company.comment.$invalid &&
                             Company.comment.$dirty }">
-              <label for="comment" class="col-sm-2 control-label" popover-trigger="mouseenter" popover="Comment">Comment</label>
-              <div class="col-sm-5">
+              <label for="comment" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Comment">Comment</label>
+              <div class="col-sm-10">
                 <textarea id="comment" class="form-control" name="comment" ng-model="model.comment" ng-disabled="_loading">
                 </textarea>
               </div>
@@ -158,7 +179,7 @@
             </div>
             <!--
             <div class="form-group" ng-if="model.billing_id && (userService.isReseller() || userService.isRevadmin())">
-              <label for="comment" class="col-sm-2 control-label" popover-trigger="mouseenter" popover="Billing plan">Billing Plan</label>
+              <label for="comment" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Billing plan">Billing Plan</label>
               <div class="col-sm-10">
                 <ui-select ng-model="model.billing_plan" theme="select2" ng-disabled="_loading" on-select="" style="min-width: 300px;">
                   <ui-select-match placeholder="Select Billing Plan">{{$select.selected.name}}</ui-select-match>
@@ -186,7 +207,7 @@
                 <!-- billing_info.first_name-->
                 <div class="form-group col-md-6" ng-class="{ 'has-error': Company.billingFirstName.$invalid &&
                             Company.billingFirstName.$dirty }">
-                  <label for="billingFirstName" class="col-sm-4 control-label" popover-trigger="mouseenter" popover="First Name">First Name *</label>
+                  <label for="billingFirstName" class="col-sm-4 control-label" popover-trigger="mouseenter" uib-popover="First Name">First Name *</label>
                   <div class="col-sm-8">
                     <input type="text" class="form-control" required id="first_name" name="billingFirstName" placeholder="First Name" ng-model="model.billing_info.first_name" ng-disabled="_loading">
                   </div>
@@ -194,21 +215,21 @@
                 <!-- billing_info.last_name-->
                 <div class="form-group col-md-6" ng-class="{ 'has-error': Company.billingLastName.$invalid &&
                             Company.billingLastName.$dirty }">
-                  <label for="billingLastName" class="col-sm-4 control-label" popover-trigger="mouseenter" popover="Last Name">Last Name *</label>
+                  <label for="billingLastName" class="col-sm-4 control-label" popover-trigger="mouseenter" uib-popover="Last Name">Last Name *</label>
                   <div class="col-sm-8">
                     <input type="text" class="form-control" required id="last_name" name="billingLastName" placeholder="Last Name" ng-model="model.billing_info.last_name" ng-disabled="_loading">
                   </div>
                 </div>
                 <div class="form-group col-md-6" ng-class="{ 'has-error': Company.billingContactEmail.$invalid &&
                             Company.billingContactEmail.$dirty }">
-                  <label for="billingContactEmail" class="col-sm-4 control-label" popover-trigger="mouseenter" popover="Contact email">Contact email *</label>
+                  <label for="billingContactEmail" class="col-sm-4 control-label" popover-trigger="mouseenter" uib-popover="Contact email">Contact email *</label>
                   <div class="col-sm-8">
                     <input type="email" class="form-control" required id="billingContactEmail" name="billingContactEmail" placeholder="Contact Email" ng-model="model.billing_info.contact_email" ng-disabled="_loading">
                   </div>
                 </div>
                 <div class="form-group col-md-6" ng-class="{ 'has-error': Company.billingPhoneNumber.$invalid &&
                             Company.billingPhoneNumber.$dirty }">
-                  <label for="phoneNumber" class="col-sm-4 control-label" popover-trigger="mouseenter" popover="Contact phone number">Phone </label>
+                  <label for="phoneNumber" class="col-sm-4 control-label" popover-trigger="mouseenter" uib-popover="Contact phone number">Phone </label>
                   <div class="col-sm-8">
                     <input type="text" ng-pattern="phoneRegex" class="form-control" id="billingPhoneNumber" name="billingPhoneNumber" placeholder="Contact Phone" ng-model="model.billing_info.phone_number" ng-disabled="_loading">
                   </div>
@@ -218,13 +239,13 @@
               <div class="row" ng-if="!model.use_contact_info_as_billing_info">
                 <div class="form-group col-md-6" ng-class="{ 'has-error': Company.billingAddress1.$invalid &&
                             Company.billingAddress1.$dirty }">
-                  <label for="billingAddress1" class="col-sm-4 control-label" popover-trigger="mouseenter" popover="Will be used as a billing address.">Address *</label>
+                  <label for="billingAddress1" class="col-sm-4 control-label" popover-trigger="mouseenter" uib-popover="Will be used as a billing address.">Address *</label>
                   <div class="col-sm-8">
                     <input type="text" class="form-control" required id="billingAddress1" name="billingAddress1" placeholder="Address 1" ng-model="model.billing_info.address1" ng-disabled="_loading">
                   </div>
                 </div>
                 <div class="form-group col-md-6">
-                  <label for="billingAddress2" class="col-sm-4 control-label" popover-trigger="mouseenter" popover="Will be used as a billing address later.">Address (Line 2) &nbsp;</label>
+                  <label for="billingAddress2" class="col-sm-4 control-label" popover-trigger="mouseenter" uib-popover="Will be used as a billing address later.">Address (Line 2) &nbsp;</label>
                   <div class="col-sm-8">
                     <input type="text" class="form-control" id="billingAddress2" placeholder="Address (Line 2)" ng-model="model.billing_info.address2" ng-disabled="_loading">
                   </div>
@@ -234,7 +255,7 @@
               <div class="row" ng-if="!model.use_contact_info_as_billing_info">
                 <div class="form-group col-md-6" ng-class="{ 'has-error': Company.billingCountry.$invalid &&
                             Company.billingCountry.$dirty }">
-                  <label for="billingCountry" class="col-sm-4 control-label" popover-trigger="mouseenter" popover="Will be used in a billing address.">Country *</label>
+                  <label for="billingCountry" class="col-sm-4 control-label" popover-trigger="mouseenter" uib-popover="Will be used in a billing address.">Country *</label>
                   <div class="col-sm-8">
                     <select type="text" class="form-control" id="billingCountry" placeholder="Country" required ng-model="model.billing_info.country" ng-options="key as value for (key , value) in countries" ng-disabled="_loading">
                     </select>
@@ -242,21 +263,21 @@
                 </div>
                 <div class="form-group col-md-6" ng-class="{ 'has-error': Company.billingState.$invalid &&
                             Company.billingState.$dirty }">
-                  <label for="billingState" class="col-sm-4 control-label" popover-trigger="mouseenter" popover="Will be used in a billing address.">State *</label>
+                  <label for="billingState" class="col-sm-4 control-label" popover-trigger="mouseenter" uib-popover="Will be used in a billing address.">State *</label>
                   <div class="col-sm-8">
                     <input type="text" class="form-control" id="billingState" name="billingState" required placeholder="State" ng-model="model.billing_info.state" ng-disabled="_loading">
                   </div>
                 </div>
                 <div class="form-group col-md-6" ng-class="{ 'has-error': Company.billingCity.$invalid &&
                             Company.billingCity.$dirty }">
-                  <label for="billingCity" class="col-sm-4 control-label" popover-trigger="mouseenter" popover="Will be used in a billing address.">City *</label>
+                  <label for="billingCity" class="col-sm-4 control-label" popover-trigger="mouseenter" uib-popover="Will be used in a billing address.">City *</label>
                   <div class="col-sm-8">
                     <input type="text" class="form-control" id="billingCity" name="billingCity" required placeholder="City" ng-model="model.billing_info.city" ng-disabled="_loading">
                   </div>
                 </div>
                 <div class="form-group col-md-6" ng-class="{ 'has-error': Company.billingZipcode.$invalid &&
                             Company.billingZipcode.$dirty }">
-                  <label for="billingZipcode" class="col-sm-4 control-label" popover-trigger="mouseenter" popover="Will be used in a billing address.">Zip Code *</label>
+                  <label for="billingZipcode" class="col-sm-4 control-label" popover-trigger="mouseenter" uib-popover="Will be used in a billing address.">Zip Code *</label>
                   <div class="col-sm-8">
                     <input type="text" ng-pattern="zipRegex" class="form-control" id="billingZipcode" name="billingZipcode" maxlength="10" required placeholder="Zip Code" ng-model="model.billing_info.zipcode" ng-disabled="_loading">
                   </div>
@@ -272,15 +293,15 @@
                 <button type="submit" class="btn btn-success" ng-disabled="_loading || _disabled || !Company.$valid" value="Update Company Profile">
                   <i class="glyphicon glyphicon-save"></i> Update Company Profile
                 </button>
-                <!-- TODO: Need to disable "Edit Billing Profile" button if the billing profile is not active
-                                // TODO: in Chargify  -->
-                <a ng-if="model.billing_id && !!model.billing_portal_link.url && !!model.subscription_id" href="{{model.billing_portal_link.url}}" class="btn btn-primary" target="_blank" ng-disabled="_loading || _disabled" popover-trigger="mouseenter" popover="Click here to update your payment details - you will be taken to our billing portal which uses a separate URL">
+                <!-- TODO: Need to disable "Edit Billing Profile" button if the billing profile is not active in Chargify  -->
+                <a ng-if="model.billing_id && !!model.billing_portal_link.url && !!model.subscription_id" href="{{model.billing_portal_link.url}}" class="btn btn-primary" target="_blank" ng-disabled="_loading || _disabled" popover-trigger="mouseenter" uib-popover="Click here to update your payment details - you will be taken to our billing portal which uses a separate URL">
                   <i class="glyphicon glyphicon-lock"></i> Update Payment Profile</a>
                 <!-- Create Billing Profile -->
                 <!-- <a href="" class="btn btn-primary" ng-if="!model.billing_id && (userService.isRevadmin() || userService.isReseller())" ng-click="createBillingProfile(model)">
                   <i class="glyphicon glyphicon-credit-card"></i> Create Billing Profile
                 </a> -->
-                <button ng-if="model.subscription_id" ng-click="deleteCompanyProfile(model.id)" class="btn btn-danger pull-right" ng-disabled="true || _loading || _disabled">
+                <!-- TODO: add check valid payment method -->
+                <button type="button" ng-if="user.isAdmin && model.self_registered && model.billing_plan.length>0 && model.subscription_state != 'canceled'" ng-click="deleteCompanyProfile(model)" class="btn btn-danger pull-right" ng-disabled="_loading || _disabled || !user.isAdmin">
                   <i class="glyphicon glyphicon-refresh spin" ng-if="_loading"></i>
                   <i class="glyphicon glyphicon-remove" ng-if="!_loading"></i>&nbsp; Delete Company Profile
                 </button>

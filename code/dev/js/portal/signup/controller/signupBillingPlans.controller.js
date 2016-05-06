@@ -83,7 +83,6 @@
      * @return
      */
     this.onSignUpShort = function onSignUpShort(model) {
-      console.log(model);
       this._loading = true;
 
       if (!model) {

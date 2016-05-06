@@ -241,7 +241,7 @@
      */
     function hasBillingPlan() {
       var account = getSelectedAccount();
-      return Boolean(account.plan_id);
+      return Boolean(account.billing_plan);
     }
 
     /**
@@ -484,6 +484,27 @@
       return def.promise;
     }
 
+    function deleteAccountProfile(account_id, data) {
+      var def = $q.defer();
+      var config = {
+        method: 'DELETE',
+        url: $config.API_URL + '/accounts/' + account_id,
+        data: data,
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8'
+        }
+      };
+
+      $http(config)
+        .then(function(data) {
+          //NOTE: auto logout, but not redirect
+          logout();
+          def.resolve(data);
+        }, def.reject);
+
+      return def.promise;
+    }
+
     return {
 
       getToken: getToken,
@@ -534,7 +555,9 @@
 
       getSelectedAccount: getSelectedAccount,
 
-      hasBillingPlan: hasBillingPlan
+      hasBillingPlan: hasBillingPlan,
+
+      deleteAccountProfile: deleteAccountProfile
     };
   }
 })();
