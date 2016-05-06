@@ -27,6 +27,30 @@
   //  $scope.setState('index.apps');
 
     $scope.setResource(Apps);
+
+    /**
+     * @name setAccountName
+     * @description
+     *
+     */
+    function setAccountName() {
+      if ($scope.auth.isReseller() || $scope.auth.isRevadmin()) {
+        // Loading list of companies
+        return Companies.query(function(list) {
+          _.forEach($scope.records, function(item) {
+            var index = _.findIndex(list, {
+              id: item.account_id
+            });
+            if (index >= 0) {
+              item.companyName = list[index].companyName;
+            }
+          });
+        });
+      } else {
+        return $q.when();
+      }
+    }
+
     $scope.$state = $state;
     //// Fetch list of records
     $scope._baseFilter = {app_platform: $state.current.data.platform_code};
@@ -34,23 +58,7 @@
     $scope.$on('$stateChangeSuccess', function(state) {
       $scope
         .list()
-        .then(function() {
-          if ($scope.auth.isReseller() || $scope.auth.isRevadmin()) {
-            // Loading list of companies
-            return Companies.query(function(list) {
-              _.forEach($scope.records, function(item) {
-                var index = _.findIndex(list, {
-                  id: item.account_id
-                });
-                if (index >= 0) {
-                  item.companyName = list[index].companyName;
-                }
-              });
-            });
-          } else {
-            return $q.when();
-          }
-        })
+        .then(setAccountName)
         .then(function() {
           if ($scope.elementIndexForAnchorScroll) {
             setTimeout(function() {

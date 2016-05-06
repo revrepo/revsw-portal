@@ -6,7 +6,7 @@
     .controller('LoginController', LoginController);
 
   /*@ngInject*/
-  function LoginController($scope, User, $state, AlertService, DashboardSrv, $config, $modal, $location) {
+  function LoginController($scope, User, $state, AlertService, DashboardSrv, $config, $uibModal, $location) {
 
     document.querySelector('body').style.paddingTop = '0';
 
@@ -82,7 +82,7 @@
     }
 
     $scope.enter2faCode = function(email, password) {
-      var modalInstance = $modal.open({
+      var modalInstance = $uibModal.open({
         templateUrl: 'parts/auth/two-factor-auth-code.html',
         controller: 'TwoFactorAuthCodeModalController',
         size: 'md',
@@ -102,7 +102,7 @@
     };
 
     $scope.forgotPassword = function() {
-      var modalInstance = $modal.open({
+      var modalInstance = $uibModal.open({
         templateUrl: 'parts/auth/forgot-password.html',
         controller: 'ForgotPasswordController',
         size: 'md' //,
@@ -121,7 +121,7 @@
     };
 
     $scope.resendRegistrationEmail = function(email, password) {
-      var modalInstance = $modal.open({
+      var modalInstance = $uibModal.open({
         templateUrl: 'parts/auth/resend-subscription-info.html',
         controller: 'resendRegistrationEmailController',
         size: 'md',
@@ -137,7 +137,7 @@
 
       modalInstance.result.then(function(data) {
         // $state.go('index');
-         // $modalInstance.close();
+         // $uibModalInstance.close();
       });
     };
   }

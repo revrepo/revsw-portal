@@ -13,7 +13,9 @@
     $state,
     AlertService,
     $localStorage,
+    $timeout,
     $window) {
+    var $ctrl = this;
     $scope.user = User.getUser();
 
     $scope.resendToken = function(model) {
@@ -27,30 +29,39 @@
         .catch(AlertService.danger);
     };
 
+    $ctrl.redirectToIndex = function redirectToIndex() {
+      $scope.steps = 'verify-token-success';
+      $timeout(function() {
+        $state.go('index');
+      }, 5000);
+    };
+
     if ($stateParams.token) {
+      $scope.steps = 'verify-token';
       Users.verify({
           token: $stateParams.token
         })
         .$promise
-        .then(function(res) {
+        .then(function successVerify(res) {
           $localStorage.user = {
             email: res.email
           };
+          AlertService.success('Verification was successful', 5000);
           // TODO: inform into modal window
           return User.updateToken(res.token)
             .then(User.reloadUser)
             .then(function() {
-              $state.go('index');
+              // NOTE: auto login success
             }, function(err) {
+              // NOTE: user success verify, but can't make auto-login
               AlertService.danger(err.message);
-            });
-        }, function(err) {
-          //TODO: change message - show message from server
-          AlertService.danger('Oops something went wrong', 5000);
+            })
+            .finally($ctrl.redirectToIndex);
         })
         .catch(function(err) {
-          // TODO: detect type error
-          //$state.go('resend_token');
+          $timeout(function() {
+            $scope.steps = 'verify-token-error';
+          }, 3000);
         });
     }
   }

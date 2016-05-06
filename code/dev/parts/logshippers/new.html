@@ -22,14 +22,14 @@
       <div class="panel-body">
         <form class="form-horizontal" ng-submit="createLogShippingJob(model)" name="createForm">
           <div class="form-group" ng-class="{ 'has-error': createForm.job_name.$invalid && createForm.job_name.$dirty }">
-            <label for="job_name" popover-append-to-body="{{true}}" class="col-sm-2 control-label" popover-trigger="mouseenter" popover="Enter here a Job Name">Job Name *</label>
+            <label for="job_name" popover-append-to-body="{{true}}" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Enter here a Job Name">Job Name *</label>
             <div class="col-sm-10">
               <input type="text" autofocus class="form-control" ng-disabled="_loading" ng-model="model.job_name" name="job_name" id="job_name" placeholder="Job Name" required>
             </div>
           </div>
           <div class="form-group" ng-if="auth.isReseller() || auth.isRevadmin()" ng-class="{ 'has-error': createForm.accountId.$invalid &&
                                       createForm.accountId.$dirty }">
-            <label for="account_id" popover-append-to-body="{{true}}" class="col-sm-2 control-label" popover-trigger="mouseenter" popover="Select account name the job should be associated with">Account *</label>
+            <label for="account_id" popover-append-to-body="{{true}}" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Select account name the job should be associated with">Account *</label>
             <div class="col-sm-10">
               <select class="form-control" ng-disabled="_loading" ng-model="model.account_id" id="account_id" ng-options="obj.id as obj.companyName for obj in companies" name="accountId" required>
                 <option value="">--- Select Account ---</option>

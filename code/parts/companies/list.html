@@ -98,7 +98,7 @@
             <tr id="anchor{{::$index}}" ng-click="saveAnchorScrollIndex($index)"
               ng-repeat="item in filteredRecords | limitTo:filter.limit:filter.skip track by $index">
               <td>
-                <a ui-sref=".edit({id: item.id})" ng-if="!item.loading" tooltip="Edit Company">
+                <a ui-sref=".edit({id: item.id})" ng-if="!item.loading" uib-tooltip="Edit Company">
                   {{item.companyName}}
                 </a>
               </td>
@@ -110,19 +110,19 @@
               <td>{{getRelativeDate(item.updated_at)}}</td>
               <td class="actions text-right">
                 <i class="glyphicon glyphicon-refresh spin" ng-if="item.loading"></i>
-                <a ng-click="onGoToUsageReport(item)"  uisref="index.billing.usage({acc_id: item.id})" ng-if="!item.loading" tooltip="Usage Report">
+                <a ng-click="onGoToUsageReport(item)"  uisref="index.billing.usage({acc_id: item.id})" ng-if="!item.loading" uib-tooltip="Usage Report">
                   <i class="fa fa-balance-scale"></i>
                 </a>
-                <a ng-click="onGoToBillingPlans(item)"  ng-if="!item.loading" tooltip="Change Billing Plan">
+                <a ng-click="onGoToBillingPlans(item)"  ng-if="!item.loading" uib-tooltip="Change Billing Plan">
                   <i class="fa fa-arrow-circle-up"></i>
                 </a>
-                <a ng-click="onGoToBillingStatement(item)" ng-if="!item.loading" tooltip="Statements">
+                <a ng-click="onGoToBillingStatement(item)" ng-if="!item.loading" uib-tooltip="Statements">
                   <i class="fa fa-money"></i>
                 </a>
-                <a ui-sref=".edit({id: item.id})" ng-if="!item.loading" tooltip="Edit Company">
+                <a ui-sref=".edit({id: item.id})" ng-if="!item.loading" uib-tooltip="Edit Company">
                   <i class="glyphicon glyphicon-pencil"></i>
                 </a>
-                <a href="" ng-if="!item.loading" ng-click="deleteCompany(item)" tooltip="Delete Company">
+                <a href="" ng-if="!item.loading" ng-click="deleteCompany(item)" uib-tooltip="Delete Company">
                   <i class="glyphicon glyphicon-trash"></i>
                 </a>
               </td>

@@ -6,7 +6,7 @@
     .controller('TwoFactorAuthController', TwoFactorAuthController);
 
   /*@ngInject*/
-  function TwoFactorAuthController($scope, User, TwoFactorAuth, AlertService, $modal) {
+  function TwoFactorAuthController($scope, User, TwoFactorAuth, AlertService, $uibModal) {
 
     /**
      * Loading flag
@@ -175,7 +175,7 @@
      * @returns {Promise}
      */
     $scope.confirm = function() {
-      var modalInstance = $modal.open({
+      var modalInstance = $uibModal.open({
         animation: true,
         templateUrl: 'confirm2FaDisable.html',
         controller: 'ConfirmModalInstanceCtrl',

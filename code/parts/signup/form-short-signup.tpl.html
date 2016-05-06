@@ -23,10 +23,10 @@
     </div>
   </div>
   <div class="panel-body" ng-if="!$ctrl.isRegistryFinish">
-    <form class="form-horizontal form-contact-info" name="newUser" novalidate>
+    <form class="col-sm-offset-2 col-sm-8 form-horizontal form-contact-info" name="newUser" novalidate>
       <div class="form-group " ng-class="{ 'has-error': newUser.email.$invalid &&
                                 newUser.email.$dirty }">
-        <label for="email" popover-append-to-body="{{true}}" class="col-sm-2 control-label" popover-trigger="mouseenter" popover="New user's email address - the address should be unique across the system">
+        <label for="email" popover-append-to-body="{{true}}" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="New user's email address - the address should be unique across the system">
           Email *</label>
         <div class="col-sm-10">
           <input type="email" autofocus class="form-control" id="email" name="email" placeholder="Email" ng-model="$ctrl.model.email" required ng-disabled="_loading">
@@ -34,14 +34,14 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="firstName" class="col-sm-2 control-label" popover-trigger="mouseenter" popover="First name">First Name *</label>
+        <label for="firstName" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="First name">First Name *</label>
         <div class="col-sm-10">
           <input type="text" class="form-control" id="firstName" name="firstName" placeholder="First Name" required ng-maxlength="150" ng-model="$ctrl.model.first_name" ng-disabled="_loading">
           <span ng-show="!!newUser['firstName'].$error.maxlength" style="color:red">150 characters max</span>
         </div>
       </div>
       <div class="form-group">
-        <label for="lastName" class="col-sm-2 control-label" popover-trigger="mouseenter" popover="Last name">Last Name *</label>
+        <label for="lastName" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Last name">Last Name *</label>
         <div class="col-sm-10">
           <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Last Name" ng-model="$ctrl.model.last_name" required ng-maxlength="150" ng-disabled="_loading">
           <span ng-show="!!newUser['lastName'].$error.maxlength" style="color:red">150 characters max</span>
@@ -49,7 +49,7 @@
       </div>
       <div class="form-group" ng-class="{ 'has-error': newUser.password.$invalid &&
                             newUser.password.$dirty }">
-        <label for="password" popover-append-to-body="{{true}}" class="col-sm-2 control-label" popover-trigger="mouseenter" popover="At least eight symbols">Password *</label>
+        <label for="password" popover-append-to-body="{{true}}" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="At least eight symbols">Password *</label>
         <div class="col-sm-10">
           <input type="password" class="form-control" id="password" name="password" ng-model="$ctrl.model.password" ng-minlength="8" ng-maxlength="15" required ng-disabled="_loading">
           <span ng-show="!!newUser['password'].$error.minlength" style="color:red">Password must contain at least 8 characters</span>
@@ -58,14 +58,14 @@
       </div>
       <hr>
       <div class="form-group">
+        <div class="text-center" style="margin-bottom: 10px">
+          By clicking on Sign Up you agree with our
+          <a href="https://www.revapm.com/tos/" target="_blank">Terms Of Service</a>,
+          <a href="https://www.revapm.com/aup/" target="_blank">Acceptable Use Policy</a> and
+          <a href="https://www.revapm.com/privacy/" target="_blank">Privacy Policy</a>
+        </div>
+        <br>
         <div class="col-md-8">
-          <div class="pull-right" style="margin-bottom: 10px">
-            By clicking on Sign Up you agree with our
-            <a href="https://www.revapm.com/tos/" target="_blank">Terms Of Service</a>,
-            <a href="https://www.revapm.com/aup/" target="_blank">Acceptable Use Policy</a> and
-            <a href="https://www.revapm.com/privacy/" target="_blank">Privacy Policy</a>
-          </div>
-          <br>
           <div class="pull-right">
             <a ui-sref="^" class="btn btn-default">
               <i class="glyphicon glyphicon-remove"></i>&nbsp; Cancel
