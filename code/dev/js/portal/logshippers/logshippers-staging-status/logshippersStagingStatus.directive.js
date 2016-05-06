@@ -8,7 +8,7 @@
   /*@ngInject*/
   function logshippersStagingStatus(LogShippingJobs, $config, $interval, $rootScope, $state) {
     return {
-      template: '<div><i class="glyphicon" ng-class="iconStaging" tooltip="{{tooltipStaging}}"></i> {{operationalModeName}}</div>',
+      template: '<div><i class="glyphicon" ng-class="iconStaging" uib-tooltip="{{tooltipStaging}}"></i> {{operationalModeName}}</div>',
       scope: {
         ngId: '=', // Log Shipper id
         currentState: '=',
