@@ -1,12 +1,7 @@
 (function(window, undefined) {'use strict';
 
-widgetRequestSuccessFailureRatioCtrl.$inject = ["$scope", "config", "Countries", "Stats"];
 angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
   .config(["dashboardProvider", function(dashboardProvider) {
-    reportGBTHeatmapController.$inject = ["$scope", "$q", "$window", "$timeout", "Stats", "Countries", "HeatmapsDrawer", "Util"];
-    editHeatMapReportsConfigController.$inject = ["$scope", "$window", "$timeout", "Stats"];
-    reportTop10CountriesController.$inject = ["$scope", "Countries", "Stats"];
-    editTopReportConfig.$inject = ["$scope", "$window", "$timeout", "Countries", "Stats"];
     var _widget = {
       title: 'Proxy Traffic',
       description: 'Web Alalytics Proxy Traffic',
@@ -307,7 +302,8 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
           domain: angular.copy($scope.domain)
         });
       }
-    };
+    }
+    editHeatMapReportsConfigController.$inject = ["$scope", "$window", "$timeout", "Stats"];;
 
     /**
      * @name  reportGBTHeatmapController
@@ -429,7 +425,8 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
             };
           });
       };
-    };
+    }
+    reportGBTHeatmapController.$inject = ["$scope", "$q", "$window", "$timeout", "Stats", "Countries", "HeatmapsDrawer", "Util"];;
 
     /**
      * @name  editTopReportConfig
@@ -491,7 +488,8 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
         }
       }, true);
 
-    };
+    }
+    editTopReportConfig.$inject = ["$scope", "$window", "$timeout", "Countries", "Stats"];;
 
     // TODO: directive
     /**
@@ -580,6 +578,7 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
       };
 
     }
+    reportTop10CountriesController.$inject = ["$scope", "Countries", "Stats"];
   }]);
 
 angular.module("adf.widget.analytics-proxy-traffic").run(["$templateCache", function($templateCache) {$templateCache.put("{widgetsPath}/analytics-proxy-traffic/src/edit.html","<form role=form><div class=form-group><label for=domain>Domain</label><div domain-select id=domain ng-model=domain on-select=onDomainSelected() select-one=true></div></div><div class=form-group><label for=domain>Filters</label>{{config.filters}}</div><div class=form-inline><div class=form-group><select id=country class=\"form-control fixed\" ng-model=config.filters.country ng-disabled=!domain><option value=->All Countries</option><option ng-repeat=\"(key, item) in flCountry\" value={{key}}>{{item}}</option></select></div><div class=form-group><select id=os class=\"form-control fixed\" ng-model=config.filters.os ng-disabled=!domain><option value=->All OS</option><option ng-repeat=\"item in flOs.labels\" value={{item}}>{{item}}</option></select></div><div class=form-group><select id=device class=\"form-control fixed\" ng-model=config.filters.device ng-disabled=!domain><option value=->All Devices</option><option ng-repeat=\"item in flDevice.labels\" value={{item}}>{{item}}</option></select></div></div><div class=form-group><label for=domain>Time Period</label></div><div class=form-group></div></form>");
@@ -684,4 +683,5 @@ function widgetRequestSuccessFailureRatioCtrl($scope, config, Countries, Stats) 
       });
   };
 }
+widgetRequestSuccessFailureRatioCtrl.$inject = ["$scope", "config", "Countries", "Stats"];
 })(window);
