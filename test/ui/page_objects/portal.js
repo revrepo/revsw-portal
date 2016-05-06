@@ -62,6 +62,7 @@ var AddPage = require('./mobileApp/addPage');
 var EditPage = require('./mobileApp/editPage');
 var AdvancedEditPage = require('./mobileApp/advancedEditPage');
 var UsageReportPage = require('./billing/usageReportPage');
+var UsageReportDomainsPage = require('./billing/usageReportDomainsPage');
 
 // This `Portal` Page Object is the entry point to use all other Page Objects
 // that abstract all components from the Portal App.
@@ -115,7 +116,8 @@ var Portal = {
     activityLog: ActivityLogPage
   },
   billing: {
-    usageReportPage: UsageReportPage
+    usageReportPage: UsageReportPage,
+    usageReportDomainsPage: UsageReportDomainsPage
   },
 
   // ## Authentication Helper methods

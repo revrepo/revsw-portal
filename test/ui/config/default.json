@@ -34,6 +34,11 @@
         "email": "qa_user_with_user_perm@revsw.com",
         "password": "password1",
         "role": "Normal User"
+      },
+      "testDomainOwner": {
+        "email": "victor@revsw.com",
+        "password": "123qweasd",
+        "role": "Admin"
       }
     },
     "mobileApps": {
