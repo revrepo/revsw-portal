@@ -44,11 +44,9 @@
     },
     "usageReport": {
       "testDomain": "www.google-test.com",
-      "testDomainOwner": {
-        "email": "victor@revsw.com",
-        "password": "123qweasd",
-        "role": "Admin"
-      }
+      "hits_denominator": 120000,
+      "sent_unit": 2000,
+      "received_unit": 200
     }
   }
 }
