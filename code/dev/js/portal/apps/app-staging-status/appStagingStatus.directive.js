@@ -36,7 +36,7 @@
             return;
           }
           intervalPromise = $interval($scope.fetchStatus,
-             $config.DOMAIN_STATUS_REFRESH_INTERVAL, 1);
+             $config.APP_STATUS_REFRESH_INTERVAL, 1);
         };
 
         $scope.stopRefresh = function () {
