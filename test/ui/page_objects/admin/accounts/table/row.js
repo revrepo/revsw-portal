@@ -89,82 +89,70 @@ var CompanyTableRow = function (rowElem, locators) {
       .getText();
   };
 
-  if (this.locators.actions && this.locators.actions.buttons.pencil) {
-
-    this.getEditBtn = function () {
+  if (this.locators.actions && this.locators.actions.buttons.scale) {
+    this.getUsageReportBtn = function () {
       return this.rowElem
         .element(by.css(this.locators.actions.css))
-        .element(by.className(this.locators.actions.buttons.pencil.className));
+        .element(by.className(this.locators.actions.buttons.scale.className));
     };
-
-    this.clickEdit = function () {
+    this.clickUsageReport = function () {
       return this
-        .getEditBtn()
+        .getUsageReportBtn()
         .click();
     };
   }
 
-  if (this.locators.actions && this.locators.actions.buttons.cog) {
-
-    this.getConfigureBtn = function () {
+  if (this.locators.actions && this.locators.actions.buttons.billing) {
+    this.getChangeBillingPlanBtn = function () {
       return this.rowElem
         .element(by.css(this.locators.actions.css))
-        .element(by.className(this.locators.actions.buttons.cog.className));
+        .element(by.className(this.locators.actions.buttons.billing.className));
     };
-
-    this.clickConfigure = function () {
+    this.clickChangeBillingPlan = function () {
       return this
-        .getConfigureBtn()
+        .getChangeBillingPlanBtn()
+        .click();
+    };
+  }
+
+  if (this.locators.actions && this.locators.actions.buttons.money) {
+    this.getStatementsBtn = function () {
+      return this.rowElem
+        .element(by.css(this.locators.actions.css))
+        .element(by.className(this.locators.actions.buttons.money.className));
+    };
+    this.clickStatements = function () {
+      return this
+        .getStatementsBtn()
+        .click();
+    };
+  }
+
+  if (this.locators.actions && this.locators.actions.buttons.pencil) {
+    this.getEditCompanyBtn = function () {
+      return this.rowElem
+        .element(by.css(this.locators.actions.css))
+        .element(by.className(this.locators.actions.buttons.pencil.className));
+    };
+    this.clickEditCompany = function () {
+      return this
+        .getEditCompanyBtn()
         .click();
     };
   }
 
   if (this.locators.actions && this.locators.actions.buttons.trash) {
-
-    this.getDeleteBtn = function () {
+    this.getDeleteCompanyBtn = function () {
       return this.rowElem
         .element(by.css(this.locators.actions.css))
         .element(by.className(this.locators.actions.buttons.trash.className));
     };
-
-    this.clickDelete = function () {
+    this.clickDeleteCompany = function () {
       return this
-        .getDeleteBtn()
+        .getDeleteCompanyBtn()
         .click();
     };
   }
-
-
-  if (this.locators.actions && this.locators.actions.buttons.stats) {
-
-    this.getStatsBtn = function () {
-      return this.rowElem
-        .element(by.css(this.locators.actions.css))
-        .element(by.className(this.locators.actions.buttons.stats.className));
-    };
-
-    this.clickStats = function () {
-      return this
-        .getStatsBtn()
-        .click();
-    };
-  }
-
-  if (this.locators.actions && this.locators.actions.buttons.book) {
-
-    this.getVersionsBtn = function () {
-      return this.rowElem
-        .element(by.css(this.locators.actions.css))
-        .element(by.className(this.locators.actions.buttons.book.className));
-    };
-
-    this.clickVersions = function () {
-      return this
-        .getVersionsBtn()
-        .click();
-    };
-  }
-
 };
 
 module.exports = CompanyTableRow;

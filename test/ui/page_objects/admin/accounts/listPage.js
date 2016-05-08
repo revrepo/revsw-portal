@@ -20,8 +20,8 @@
 
 // Requiring other Page Objects that compound the Company List Page one
 var CompanyTable = require('./table/table');
-var Pager = require('./../common/pager');
-var Searcher = require('./../common/searcher');
+var Pager = require('./../../common/pager');
+var Searcher = require('./../../common/searcher');
 var AddCompany = require('./addCompany');
 
 // This `Company List` Page Object abstracts all operations or actions that a

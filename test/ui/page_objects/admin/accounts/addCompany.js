@@ -112,7 +112,7 @@ var AddCompany = {
   getCompanyNameTxt: function () {
     return this
       .getPanelBodyElem()
-      .element(this.locators.textInputs.companyName.id);
+      .element(by.id(this.locators.textInputs.companyName.id));
   },
 
   /**
@@ -126,7 +126,7 @@ var AddCompany = {
   getCommentTxt: function () {
     return this
       .getPanelBodyElem()
-      .element(this.locators.textInputs.comment.id);
+      .element(by.id(this.locators.textInputs.comment.id));
   },
 
   /**
@@ -279,27 +279,28 @@ var AddCompany = {
    *
    * @returns {Promise}
    */
-   fillForm: function(company) {
-     this.setCompanyName(company.companyName);
-     this.setComment(company.comment);
+  fillForm: function(company) {
+    var me = this;
+    me.setCompanyName(company.companyName);
+    me.setComment(company.comment);
    },
 
-   /**
-    * ### AddCompany.createCompany(company)
-    *
-    * Helper method that executes all steps required to create a new Company
-    * from AddCompany app.
-    *
-    * @param {company} company, data applying the schema defined in
-    * `DataProvider.generateAccountProfileData()`
-    *
-    * @returns {Promise}
-    */
-    createCompany: function(company) {
-      var me = this;
-      me.fillForm(company);
-      me.clickCreateCompany();
-    }
+  /**
+   * ### AddCompany.createCompany(company)
+   *
+   * Helper method that executes all steps required to create a new Company
+   * from AddCompany app.
+   *
+   * @param {company} company, data applying the schema defined in
+   * `DataProvider.generateAccountProfileData()`
+   *
+   * @returns {Promise}
+   */
+  createCompany: function(company) {
+    var me = this;
+    me.fillForm(company);
+    me.clickCreateCompany();
+  }
 };
 
 module.exports = AddCompany;
