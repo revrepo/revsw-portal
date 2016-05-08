@@ -22,6 +22,7 @@
 var CompanyTable = require('./table/table');
 var Pager = require('./../common/pager');
 var Searcher = require('./../common/searcher');
+var AddCompany = require('./addCompany');
 
 // This `Company List` Page Object abstracts all operations or actions that a
 // common user could do in the Company List page from the Portal app/site.
@@ -54,6 +55,7 @@ var CompanyList = {
   table: CompanyTable,
   pager: Pager,
   searcher: Searcher,
+  addCompany: AddCompany,
 
   // ## Methods to retrieve references to UI elements (Selenium WebDriver
   // Element)
@@ -136,7 +138,8 @@ var CompanyList = {
    * @returns {Promise}
    */
   isDisplayed: function () {
-    return this.searcher
+    return this
+      .searcher
       .getSearchCriteriaTxtIn()
       .isPresent();
   },
@@ -154,7 +157,8 @@ var CompanyList = {
   searchAndGetFirstRow: function (criteria) {
     this.searcher.clearSearchCriteria();
     this.searcher.setSearchCriteria(criteria);
-    return this.table
+    return this
+      .table
       .getFirstRow();
   },
 
@@ -188,6 +192,20 @@ var CompanyList = {
     return this
       .searchAndGetFirstRow(criteria)
       .clickEdit();
+  },
+
+  /**
+   * ### CompanyList.addNewCompany(company)
+   *
+   * Fills Company form and clicks on Create Company button.
+   *
+   * @param {String} company, to add.
+   *
+   * @returns {Promise}
+   */
+  addNewCompany: function (company) {
+    this.clickAddNewCompany();
+    this.addCompany.createCompany(company);
   }
 };
 

@@ -54,9 +54,10 @@ var TrafficHeatmapsPage = require('./analytics/trafficHeatmapsPage');
 var RTTHeatmapsPage = require('./analytics/rttHeatmapsPage');
 var HelpSupportPage = require('./helpSupport/helpSupportPage');
 var HelpPage = require('./help/helpPage');
-var SecSettingsPage = require('./admin/securitySettingsPage');
-var ApiKeysListPage = require('./admin/apiKeysListPage');
-var ActivityLogPage = require('./admin/activityLogPage');
+var Accounts = require('./admin/accounts');
+var AdminSettingsPage = require('./admin/securitySettings');
+var ApiKeysListPage = require('./admin/apiKeys');
+var ActivityLogPage = require('./admin/activityLog');
 var ListPage = require('./mobileApp/listPage');
 var AddPage = require('./mobileApp/addPage');
 var EditPage = require('./mobileApp/editPage');
@@ -101,10 +102,6 @@ var Portal = {
   purgeCacheAdvancedPage: PurgeCacheAdvancedPage,
   helpSupportPage: HelpSupportPage,
   helpPage: HelpPage,
-  secSettingsPage: SecSettingsPage,
-  apiKeys: {
-    listPage: ApiKeysListPage
-  },
   mobileApps: {
     listPage: ListPage,
     addPage: AddPage,
@@ -112,7 +109,10 @@ var Portal = {
     advancedEditPage: AdvancedEditPage
   },
   admin: {
-    activityLog: ActivityLogPage
+    accounts: Accounts,
+    apiKeys: ApiKeysListPage,
+    settingsPage: AdminSettingsPage,
+    activityLog: ActivityLogPage,
   },
   billing: {
     usageReportPage: UsageReportPage
@@ -186,6 +186,17 @@ var Portal = {
 
   getDomainsPage: function () {
     return this.getPage(Constants.hashFragments.domains.list);
+  },
+
+  /**
+   * ### Portal.getAdminPage()
+   *
+   * Loads the hash fragment for the Admin page.
+   *
+   * @returns {Promise}
+   */
+  getAdminPage: function () {
+    return this.getPage(Constants.hashFragments.admin);
   },
 
   /**
