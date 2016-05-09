@@ -87,12 +87,12 @@
             <tbody>
             <tr ng-repeat="user in filteredRecords | limitTo:filter.limit:filter.skip track by $index" id="anchor{{::$index}}" ng-click="saveAnchorScrollIndex($index)">
               <td>
-                <a ui-sref=".edit({id: user.user_id})" ng-if="!item.loading" tooltip="Edit User Profile">
+                <a ui-sref=".edit({id: user.user_id})" ng-if="!item.loading" uib-tooltip="Edit User Profile">
                   {{user.firstname}}
                 </a>
               </td>
               <td>
-                <a ui-sref=".edit({id: user.user_id})" ng-if="!item.loading" tooltip="Edit User Profile">
+                <a ui-sref=".edit({id: user.user_id})" ng-if="!item.loading" uib-tooltip="Edit User Profile">
                   {{user.lastname}}
                 </a>
               </td>
@@ -101,10 +101,10 @@
               <td>{{ getRelativeDate(user.updated_at) }}</td>
               <td>{{ user.last_login_at ? getRelativeDate(user.last_login_at) : 'Never' }}</td>
               <td class="actions">
-                <a ui-sref=".edit({id: user.user_id})" tooltip="Edit User Profile">
+                <a ui-sref=".edit({id: user.user_id})" uib-tooltip="Edit User Profile">
                   <i class="glyphicon glyphicon-pencil"></i>
                 </a>
-                <a href="" ng-click="deleteUser(user)" tooltip="Delete User">
+                <a href="" ng-click="deleteUser(user)" uib-tooltip="Delete User">
                   <i class="glyphicon glyphicon-trash"></i>
                 </a>
               </td>

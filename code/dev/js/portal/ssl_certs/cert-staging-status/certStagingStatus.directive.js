@@ -8,9 +8,9 @@
   /*@ngInject*/
   function ssl_certStagingStatus(SSL_certs, $config, $interval, $rootScope, $state) {
     return {
-      template: '<i class="glyphicon" ng-class="iconStaging" tooltip="{{tooltipStaging}}"></i>' +
+      template: '<i class="glyphicon" ng-class="iconStaging" uib-tooltip="{{tooltipStaging}}"></i>' +
                 '&nbsp;&nbsp;&nbsp;' +
-                '<i class="glyphicon" ng-class="iconGlobal" tooltip="{{tooltipGlobal}}"></i>',
+                '<i class="glyphicon" ng-class="iconGlobal" uib-tooltip="{{tooltipGlobal}}"></i>',
       scope: {
         ngId: '=' // SSL_cert id
       },

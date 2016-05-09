@@ -364,6 +364,12 @@ section[drawer] .side-menu .side-menu-sub-item {
 section[drawer] .side-menu .side-menu-sub-item.active {
   color: white;
 }
+section[drawer] .side-menu .side-menu-sub-item.introjs-showElement {
+  color: #f9af33;
+}
+section[drawer] .side-menu .side-menu-sub-item.introjs-helperLayer {
+  background-color: #f9af33;
+}
 section[drawer] .side-menu .side-menu-sub-item {
   display: none;
 }
@@ -385,6 +391,9 @@ section[drawer] .side-menu .active-side-menu-item .side-menu-sub-item {
 .menu-toggle {
   font-size: 24px;
   padding: 9px 0 9px 20px;
+}
+.introjs-helperNumberLayer {
+  line-height: 12px;
 }
 .navbar {
   margin: 0;
@@ -774,4 +783,7 @@ i {
   color: #888;
   font-weight: bold;
   font-size: 1.16667em;
+}
+.subscription-summary .btn {
+  margin-left: 20px;
 }

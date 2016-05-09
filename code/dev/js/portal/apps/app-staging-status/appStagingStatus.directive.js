@@ -8,9 +8,9 @@
   /*@ngInject*/
   function appStagingStatus(Apps, $config, $interval, $rootScope, $state) {
     return {
-      template: '<i class="glyphicon" ng-class="iconStaging" tooltip="{{tooltipStaging}}"></i>' +
+      template: '<i class="glyphicon" ng-class="iconStaging" uib-tooltip="{{tooltipStaging}}"></i>' +
       '&nbsp;&nbsp;&nbsp;' +
-      '<i class="glyphicon" ng-class="iconGlobal" tooltip="{{tooltipGlobal}}"></i>',
+      '<i class="glyphicon" ng-class="iconGlobal" uib-tooltip="{{tooltipGlobal}}"></i>',
       scope: {
         ngId: '=' // App id
       },
@@ -36,7 +36,7 @@
             return;
           }
           intervalPromise = $interval($scope.fetchStatus,
-             $config.DOMAIN_STATUS_REFRESH_INTERVAL, 1);
+             $config.APP_STATUS_REFRESH_INTERVAL, 1);
         };
 
         $scope.stopRefresh = function () {

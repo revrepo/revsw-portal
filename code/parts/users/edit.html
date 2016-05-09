@@ -47,7 +47,7 @@
             <label for="firstname"
                    class="col-sm-2 control-label"
                    popover-trigger="mouseenter"
-                   popover="First name">First Name</label>
+                   uib-popover="First name">First Name</label>
 
             <div class="col-sm-10">
               <input type="text"
@@ -62,7 +62,7 @@
             <label for="lastName"
                    class="col-sm-2 control-label"
                    popover-trigger="mouseenter"
-                   popover="Last name">Last Name</label>
+                   uib-popover="Last name">Last Name</label>
 
             <div class="col-sm-10">
               <input type="text"
@@ -79,7 +79,7 @@
                    popover-append-to-body="{{true}}"
                    class="col-sm-2 control-label"
                    popover-trigger="mouseenter"
-                   popover="Select here the user's role in management of the account">Role</label>
+                   uib-popover="Select here the user's role in management of the account">Role</label>
 
             <div class="col-sm-10">
               <select class="form-control"
@@ -96,7 +96,7 @@
                    popover-append-to-body="{{true}}"
                    class="col-sm-2 control-label"
                    popover-trigger="mouseenter"
-                   popover="Select here companies the user should be associated with">Company</label>
+                   uib-popover="Select here companies the user should be associated with">Company</label>
 
             <div class="col-sm-10">
               <select class="form-control"
@@ -113,7 +113,7 @@
                    popover-append-to-body="{{true}}"
                    class="col-sm-2 control-label"
                    popover-trigger="mouseenter"
-                   popover="Select domain names the user should be allowed to manage">Domains</label>
+                   uib-popover="Select domain names the user should be allowed to manage">Domains</label>
 
             <div class="col-sm-10">
               <select class="form-control"
@@ -131,7 +131,7 @@
                    popover-append-to-body="{{true}}"
                    class="col-sm-2 control-label"
                    popover-trigger="mouseenter"
-                   popover="Set here the new user's access control permissions">Access Control List</label>
+                   uib-popover="Set here the new user's access control permissions">Access Control List</label>
 
             <div class="col-sm-10">
               <div>
@@ -164,7 +164,7 @@
           <hr>
           <div class="form-group" ng-class="{ 'has-error': createForm.comment.$invalid &&
                                       createForm.comment.$dirty }">
-            <label for="comment" class="col-sm-2 control-label" popover-trigger="mouseenter" popover="Comment">Comment</label>
+            <label for="comment" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Comment">Comment</label>
             <div class="col-sm-5">
               <textarea id="comment" placeholder="Comment (max 300 symbol)" class="form-control" name="comment" ng-model="model.comment" ng-disabled="_loading">
               </textarea>

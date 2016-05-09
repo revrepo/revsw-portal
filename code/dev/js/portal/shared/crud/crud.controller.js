@@ -6,7 +6,7 @@
     .factory('CRUDController', CRUDController);
 
   /*@ngInject*/
-  function CRUDController($config, $rootScope, AlertService, $q, User, $anchorScroll, $modal, $filter, $timeout) {
+  function CRUDController($config, $rootScope, AlertService, $q, User, $anchorScroll, $uibModal, $filter, $timeout) {
 
     function CRUDControllerImpl($scope, $stateParams) {
 
@@ -219,7 +219,7 @@
             model: resolve
           };
         }
-        var modalInstance = $modal.open({
+        var modalInstance = $uibModal.open({
           animation: true,
           templateUrl: template || 'parts/modal/confirmDelete.html',
           controller: 'ConfirmModalInstanceCtrl',

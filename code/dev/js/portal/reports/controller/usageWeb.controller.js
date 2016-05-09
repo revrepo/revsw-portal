@@ -152,7 +152,9 @@
       Stats.usage_web( q )
         .$promise
         .then( function( data ) {
+
           // console.log( data );
+
           var overall = data.data[data.data.length - 1/*overall summary*/];
           format_( overall );
           $scope.report = overall;
@@ -174,9 +176,10 @@
     };
 
     //  ---------------------------------
-    if ( User.getSelectedAccount() ) {
+    var sel_account = User.getSelectedAccount();
+    if ( sel_account && sel_account.acc_id !== ''/*do not restore 'All accounts'*/ ) {
       // console.log( '(re)loaded', User.getSelectedAccount() );
-      $scope.selected.val = User.getSelectedAccount();
+      $scope.selected.val = sel_account;
     }
 
     User.getUserAccounts()
@@ -194,24 +197,3 @@
 
   }
 })();
-
-
-// console.log( user );
-// companyId: Array[1]
-//   0: "5588869fbde7a0d00338ce8f"
-// created_at: "2015-06-22T23:07:40.000Z"
-// domain: Array[11]
-//   0: "test-proxy-acl-deny-except.revsw.net"
-//   1: "test-proxy-cache-config-02.revsw.net"
-//   ...
-// email: "victor@revsw.com"
-// firstname: "Victor"
-// last_login_at: "2016-03-03T03:26:35.894Z"
-// last_login_from: "172.16.0.153"
-// lastname: "Garvich2"
-// role: "admin"
-// theme: "light"
-// two_factor_auth_enabled: false
-// updated_at: "2016-03-03T03:26:35.897Z"
-// user_id: "5588953c1ef09d211562a43f"
-

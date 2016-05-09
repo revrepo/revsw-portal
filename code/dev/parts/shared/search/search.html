@@ -7,6 +7,6 @@
         typeahead-editable="false",
         typeahead-min-length="0",
         typeahead-on-select="searchItemSelected($item)",
-        typeahead="item as item.searchBarText for item in getFilteredList($viewValue)"/>
+        uib-typeahead="item as item.searchBarText for item in getFilteredList($viewValue)"/>
 </div>
 <i class="glyphicon glyphicon-remove" style="vertical-align: super;" ng-show="showClear()" ng-click="clearSearchBar()"></i>

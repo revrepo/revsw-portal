@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
   // NOTE: functionality is depricated - we no more verify user by token.
   angular
@@ -7,51 +7,61 @@
 
   /*@ngInject*/
   function VerifyController($scope,
-                            Users,
-                            User,
-                            $stateParams,
-                            $state,
-                            AlertService,
-                            $localStorage,
-                            $window) {
+    Users,
+    User,
+    $stateParams,
+    $state,
+    AlertService,
+    $localStorage,
+    $timeout,
+    $window) {
+    var $ctrl = this;
     $scope.user = User.getUser();
 
-      $scope.resendToken = function (model) {
-      Users.resend({email: model.email})
+    $scope.resendToken = function(model) {
+      Users.resend({
+          email: model.email
+        })
         .$promise
-        .then(function () {
+        .then(function() {
           AlertService.success('Verification link is sent to ' + model.email, 5000);
         })
         .catch(AlertService.danger);
     };
 
-    $scope.getQueryString = function (model) {
-      var q = '?first_name=' + encodeURIComponent(model.firstname ? model.firstname : '') +
-        '&last_name=' + encodeURIComponent(model.lastname ? model.lastname : '') +
-        '&email=' + encodeURIComponent(model.email ? model.email : '') +
-        '&phone=' + encodeURIComponent(model.phone_number ? model.phone_number : '') +
-        '&reference=' + encodeURIComponent(model.user_id ? model.user_id : '') +
-        '&organization=' + encodeURIComponent(model.companyName ? model.companyName : '') +
-        '&billing_address=' + encodeURIComponent(model.address1 ? model.address1 : '') +
-        '&billing_address_2=' + encodeURIComponent(model.address2 ? model.address2 : '') +
-        '&billing_city=' + encodeURIComponent(model.city ? model.city : '') +
-        '&billing_state=' + encodeURIComponent((model.state && model.country === 'US') ?
-          model.state : '') +
-        '&billing_zip=' + encodeURIComponent(model.zipcode ? model.zipcode : '') +
-        '&billing_country=' + encodeURIComponent(model.country ? model.country : '');
-      return q;
+    $ctrl.redirectToIndex = function redirectToIndex() {
+      $scope.steps = 'verify-token-success';
+      $timeout(function() {
+        $state.go('index');
+      }, 5000);
     };
 
-    if($stateParams.token){
-      Users.verify({token: $stateParams.token})
-        .$promise
-        .then(function (res) {
-          $localStorage.user = {email: res.email};
-          var q = $scope.getQueryString(res);
-          $window.location.href = res.hosted_page + q;
+    if ($stateParams.token) {
+      $scope.steps = 'verify-token';
+      Users.verify({
+          token: $stateParams.token
         })
-        .catch(function () {
-          $state.go('resend_token');
+        .$promise
+        .then(function successVerify(res) {
+          $localStorage.user = {
+            email: res.email
+          };
+          AlertService.success('Verification was successful', 5000);
+          // TODO: inform into modal window
+          return User.updateToken(res.token)
+            .then(User.reloadUser)
+            .then(function() {
+              // NOTE: auto login success
+            }, function(err) {
+              // NOTE: user success verify, but can't make auto-login
+              AlertService.danger(err.message);
+            })
+            .finally($ctrl.redirectToIndex);
+        })
+        .catch(function(err) {
+          $timeout(function() {
+            $scope.steps = 'verify-token-error';
+          }, 3000);
         });
     }
   }
