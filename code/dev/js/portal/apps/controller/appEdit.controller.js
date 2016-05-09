@@ -35,12 +35,10 @@
 
     $scope.model.configs.domains_white_list = [];
     $scope.model.configs.domains_black_list = [];
-
-
-
+    $scope.domainList  = [];
+    $scope.allUserDomains = [];
 
     $scope.protocols = ['standard', 'quic', 'rmp'];
-
 
     $scope.initEdit = function (id) {
       $scope._loading = true;
@@ -62,9 +60,11 @@
           $scope.fieldsToShow = _.keys($scope.model.configs[0]);
 
           if ($scope.auth.isReseller() || $scope.auth.isRevadmin()) {
+
             User.getUserDomains(true)
               .then(function (domains) {
-                var domainList = _.filter(domains,
+                $scope.allUserDomains = domains;
+                var domainList = _.filter($scope.allUserDomains ,
                   {account_id: $scope.model.account_id}).map(function (d) {
                   return d.domain_name;
                 });
@@ -73,6 +73,7 @@
           }else{
             User.getUserDomains(true)
               .then(function (domains) {
+                $scope.allUserDomains = domains;
                 $scope.domainList = domains.map(function (d) {
                   return d.domain_name;
                 });
@@ -236,6 +237,33 @@
 
       return modelCopy;
     };
+    /**
+     * @name  getAccountDomainNameList
+     * @description
+     *
+     * @param  {[type]} account_id [description]
+     * @return {[type]}            [description]
+     */
+    $scope.getAccountDomainNameList = function(account_id) {
+      if (!account_id) {
+        account_id = $scope.model.account_id;
+      }
+      return _.filter($scope.allUserDomains, {
+        account_id: account_id
+      }).map(function(d) {
+        return d.domain_name;
+      });
+    }
+
+    /**
+     * @name  onAccountSelect
+     * @description
+     *   Clear selected domain names after change Account
+     * @return {[type]} [description]
+     */
+    $scope.onAccountSelect = function(){
+        $scope.configuration.domains_provisioned_list = [];
+    }
   }
 })();
 
