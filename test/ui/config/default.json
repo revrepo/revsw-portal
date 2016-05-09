@@ -41,6 +41,12 @@
         "ios": "iOS",
         "android": "Android"
       }
+    },
+    "usageReport": {
+      "testDomain": "www.google-test.com",
+      "hits_denominator": 120000,
+      "sent_unit": 2000,
+      "received_unit": 200
     }
   }
 }
