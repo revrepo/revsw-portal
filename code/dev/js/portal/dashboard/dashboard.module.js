@@ -220,7 +220,7 @@
     vm.config = config;
     vm._loading = false;
     // TODO: init function for control existing domain Id
-    BTTPortalService.generateUrlConversionReport(config.filters)
+    BTTPortalService.generateUrlConversionReport(config)
       .then(function(url) {
         config.url = url;
         if (config.url) {
@@ -254,7 +254,7 @@
     vm.config = config;
     vm._loading = false;
     // TODO: init function for control existing domain Id
-    BTTPortalService.generateUrlBounceRateReport(config.filters)
+    BTTPortalService.generateUrlBounceRateReport(config)
       .then(function(url) {
         config.url = url;
         if (config.url) {
@@ -288,7 +288,7 @@
     vm.config = config;
     vm._loading = false;
     // TODO: init function for control existing domain Id
-    BTTPortalService.generateUrlBrandConversionRateReport(config.filters)
+    BTTPortalService.generateUrlBrandConversionRateReport(config)
       .then(function(url) {
         config.url = url;
         if (config.url) {
@@ -325,7 +325,7 @@
     vm.config = config;
     vm._loading = false;
     // TODO: init function for control existing domain Id
-    BTTPortalService.generateUrlLostRevenueCalculatorReport(config.filters)
+    BTTPortalService.generateUrlLostRevenueCalculatorReport(config)
       .then(function(url) {
         config.url = url;
         if (config.url) {

@@ -47,10 +47,11 @@
     /**
      * @name  generateUrl
      * @description
-     * @param  {Object} filters
+     * @param  {Object} config
      * @return {Promise}
      */
-    function generateUrlConversionReport(filters) {
+    function generateUrlConversionReport(config) {
+      var filters = config.filters;
       var def = $q.defer();
       var _count_last_days = '7'; // default count days
 
@@ -67,7 +68,7 @@
       var _endTime = moment(); //.subtract('1', 'days');
       var __def = angular.copy(_def);
       var _now = {
-        authKey: BTTPortalConfig.authKey,
+        authKey: BTTPortalConfig.authKey, // TODO: use  config.domain.btt_key,
         startEpoch: _startTime.valueOf().toString().substr(0, 10), //'1458366575'
         startDate: _startTime.format('YYYY-M-DD'), // date format '2016-03-24',
         startTime: _startTime.format('HH:mm'), // time format '22:23',
@@ -89,10 +90,11 @@
      *
      * Generate url for get report "Bounce Rate and Page Views Per Session by PRT for subcategory"
      *
-     * @param  {[type]} filters [description]
+     * @param  {[type]} config  [description]
      * @return {[type]}         [description]
      */
-    function generateUrlBounceRateReport(filters) {
+    function generateUrlBounceRateReport(config) {
+      var filters = config.filters;
       var def = $q.defer();
       var _count_last_days = '7'; // default count days
 
@@ -115,7 +117,7 @@
         timePeriod: 'hours_3',
         slowestFastest: 'slowest_500',
         refresh_rate: 60,
-        authKey: BTTPortalConfig.authKey,
+        authKey: BTTPortalConfig.authKey, // TODO: use  config.domain.btt_key,
         startEpoch: _startTime.valueOf().toString().substr(0, 10), //'1458366575'
         startDate: _startTime.format('YYYY-M-DD'), // date format '2016-03-24',
         startTime: _startTime.format('HH:mm'), // time format '22:23',
@@ -136,10 +138,11 @@
      *
      * Brand Conversion Rate - Brand Conversion Rate, Average Brand and Page Views by PRT for subcategory
      *
-     * @param  {[type]} filters [description]
+     * @param  {[type]} config [description]
      * @return {[type]}         [description]
      */
-    function generateUrlBrandConversionRateReport(filters) {
+    function generateUrlBrandConversionRateReport(config) {
+      var filters = config.filters;
       var def = $q.defer();
       var _count_last_days = '7'; // default count days
 
@@ -171,7 +174,7 @@
         // startDate: '2016-3-23',
         // endDate: '2016-3-23',
         //
-        authKey: BTTPortalConfig.authKey,
+        authKey: BTTPortalConfig.authKey, // TODO: use  config.domain.btt_key,
         startEpoch: _startTime.valueOf().toString().substr(0, 10), //'1458366575'
         startDate: _startTime.format('YYYY-M-DD'), // date format '2016-03-24',
         startTime: _startTime.format('HH:mm'), // time format '22:23',
@@ -192,10 +195,11 @@
      *
      * Lost Revenue Calculator: Lost Revenue Calculator for subcategory
      *
-     * @param  {[type]} filters [description]
+     * @param  {[type]} config  [description]
      * @return {[type]}         [description]
      */
-    function generateUrlLostRevenueCalculatorReport(filters) {
+    function generateUrlLostRevenueCalculatorReport(config) {
+      var filters = config.filters;
       var def = $q.defer();
       var _count_last_days = '7'; // default count days
 
@@ -250,7 +254,7 @@
         // startEpoch: '1458752400',
         // endEpoch: '1458763200',
         // ===========
-        authKey: BTTPortalConfig.authKey,
+        authKey: BTTPortalConfig.authKey, // TODO: use  config.domain.btt_key,
         startEpoch: _startTime.valueOf().toString().substr(0, 10), //'1458366575'
         startDate: _startTime.format('YYYY-M-DD'), // date format '2016-03-24',
         startTime: _startTime.format('HH:mm'), // time format '22:23',
