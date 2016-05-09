@@ -134,17 +134,16 @@
               isCanBeDeleted: (results[0].length === 0 && results[1].length === 0) ? true : false
             };
             $scope.confirm('confirmDeleteModal.html', _model)
-              .then(function(data1, data) {
+              .then(function(data) {
                 $scope._loading = true;
                 User.deleteAccountProfile(company.id, {
                     cancellation_message: _model.cancellation_message
                   })
-                  // $scope.delete(company.id)
                   .then(function() {
                     AlertService.success('Successfully deleted account profile');
                     $timeout(function() {
                       $state.go('index');
-                    }, 7000);
+                    }, 10);
                   })
                   .catch(function(err) {
                     AlertService.danger('Oops! Something went wrong');
