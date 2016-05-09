@@ -39,6 +39,10 @@ var UserTableRow = function (rowEl, locators) {
     return this.rowEl.element(by.css(this.locators.role.css));
   };
 
+  this.getStatus2faCell = function () {
+    return this.rowEl.element(by.css(this.locators.status2fa.css));
+  };
+
   this.getLastUpdateCell = function () {
     return this.rowEl.element(by.css(this.locators.updatedAt.css));
   };

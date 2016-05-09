@@ -241,6 +241,12 @@ textarea.text--courier {
 .text--courier {
   font-family: Courier;
 }
+.table.users-list .status-2fa-enabled {
+  color: #9bbb5a;
+}
+.table.users-list .status-2fa-disabled {
+  color: #d87551;
+}
 .main_img_container {
   left: 50%;
   position: absolute;
