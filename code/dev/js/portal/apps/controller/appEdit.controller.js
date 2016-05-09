@@ -253,7 +253,7 @@
       }).map(function(d) {
         return d.domain_name;
       });
-    }
+    };
 
     /**
      * @name  onAccountSelect
@@ -263,7 +263,7 @@
      */
     $scope.onAccountSelect = function(){
         $scope.configuration.domains_provisioned_list = [];
-    }
+    };
   }
 })();
 
