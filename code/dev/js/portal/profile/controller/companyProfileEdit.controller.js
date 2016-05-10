@@ -96,9 +96,15 @@
       $scope.confirm('confirmCreateBillingProfileModal.html', company)
         .then(function() {
           $scope._loading = true;
-          Companies.createBillingProfile({
+          // NOTE: Update information about Company(Account)
+          $scope.update({
               id: company.id
-            }, company).$promise
+            }, company)
+            .then(function(data) {
+              return Companies.createBillingProfile({
+                id: company.id
+              }, company).$promise;
+            })
             .then(function(account) {
               $scope.model.billing_id = account.billing_id;
               AlertService.success('Successfully created billing profile');
