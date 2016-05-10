@@ -44,7 +44,6 @@ describe('Smoke', function () {
         });
 
         afterAll(function () {
-          //Portal.admin.accounts.listPage.searchAndClickDelete(criteria);
           Portal.signOut();
         });
 
@@ -57,8 +56,10 @@ describe('Smoke', function () {
           expect(Portal.alerts.getFirst().getText()).toEqual('Company created');
 
           Portal.header.goTo(Constants.sideBar.admin.ACCOUNTS);
-        //var r = Portal.admin.accounts.listPage.searchAndGetFirstRow(criteria);
-        //expect(r).toBe(1);
+          var result = Portal.admin.accounts
+            .listPage
+            .searchAndGetFirstRow(criteria);
+          expect(result.getCompanyName()).toBe(criteria);
         });
       });
     });
