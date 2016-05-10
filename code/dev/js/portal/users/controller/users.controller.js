@@ -19,7 +19,7 @@
       return;
     }
     // NOTE: init load dependencies for Add New User Page
-    if ($state.current.name === "index.accountSettings.users.new") {
+    if ($state.current.name === 'index.accountSettings.users.new') {
       dependencies();
     }
     //Set state (ui.router)
@@ -246,9 +246,9 @@
      * @return {String}
      */
     $scope.getDomainPlaceholder = function() {
-        var list = $scope.getAccountDomainNameList();
-        return (list.length > 0) ? 'Select domains...' : 'Domains list is epmty...';
-      }
+      var list = $scope.getAccountDomainNameList();
+      return (list.length > 0) ? 'Select domains...' : 'Domains list is epmty...';
+    };
 
     // NOTE: watch on change companyId for update available domain names
     $scope.$watch('model.companyId', function(newVal, oldVal) {
