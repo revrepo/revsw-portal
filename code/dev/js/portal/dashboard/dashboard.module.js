@@ -121,6 +121,7 @@
           },
           config: {
             height: '100%',
+            className: 'bluetriangletech--bounce-rate',
             country: 'All Countries',
             count_last_day: '1'
           }
@@ -140,6 +141,7 @@
           },
           config: {
             height: '100%',
+            className: 'bluetriangletech--brand-conversion-rate',
             country: 'All Countries',
             count_last_day: '1'
           }
@@ -159,6 +161,27 @@
           },
           config: {
             height: '100%',
+            className: 'bluetriangletech--lost-revenue-calculator',
+            country: 'All Countries',
+            count_last_day: '1'
+          }
+        })
+        // #5 'BTT Traffic Parameters'
+        .widget('bluetriangletech-traffic-info', {
+          title: 'BTT Traffic Parameters',
+          description: 'BTT Traffic Parameters',
+          templateUrl: 'parts/dashboard/widgets/bluetriangletech/view-iframe-bluetriangletech.tpl.html',
+          titleTemplateUrl: 'parts/dashboard/widgets/bluetriangletech/widget-title-with-params-bluetriangletech.html',
+          controller: 'widgetBTTTrafficInfoReportController',
+          controllerAs: 'iframe',
+          edit: {
+            templateUrl: 'parts/dashboard/widgets/bluetriangletech/edit-bluetriangletech.html',
+            controller: 'widgetEditBTTiframeController',
+            controllerAs: 'vm',
+          },
+          config: {
+            height: '100%',
+            className: 'bluetriangletech--traffic-info',
             country: 'All Countries',
             count_last_day: '1'
           }
@@ -195,6 +218,7 @@
     .controller('widgetBTTBounceRateReportController', widgetBTTBounceRateReportController)
     .controller('widgetBTTBrandConversionRateReportController', widgetBTTBrandConversionRateReportController)
     .controller('widgetBTTLostRevenueCalculatorReportController', widgetBTTLostRevenueCalculatorReportController)
+    .controller('widgetBTTTrafficInfoReportController', widgetBTTTrafficInfoReportController)
 
   .controller('widgetEditBTTiframeController', widgetEditBTTiframeController);
   /**
@@ -336,7 +360,43 @@
         vm._loading = false;
       });
   }
-
+  /**
+   * @name  widgetBTTTrafficInfoReportController
+   * @description
+   *
+   *
+   * @param  {[type]} $sce             [description]
+   * @param  {[type]} BTTPortalService [description]
+   * @param  {[type]} config           [description]
+   * @return {[type]}                  [description]
+   */
+  function widgetBTTTrafficInfoReportController($sce, BTTPortalService, config) {
+    'ngInject';
+    var vm = this;
+    var _defaultConfig = {
+      filters: {
+        country: 'All Countries',
+        count_last_day: '1'
+      },
+      info: {
+        country: 'All countries'
+      }
+    };
+    _.defaultsDeep(config, _defaultConfig);
+    vm.config = config;
+    vm._loading = false;
+    // TODO: init function for control existing domain Id
+    BTTPortalService.generateUrlTrafficInfoReport(config)
+      .then(function(url) {
+        config.url = url;
+        if (config.url) {
+          vm.url = $sce.trustAsResourceUrl(config.url);
+        }
+      })
+      .finally(function() {
+        vm._loading = false;
+      });
+  }
   /**
    * @name  widgetEditBTTiframeController
    * @description
@@ -415,4 +475,6 @@
       });
     };
   }
+
+
 })();

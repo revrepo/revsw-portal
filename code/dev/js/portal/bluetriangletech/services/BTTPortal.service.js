@@ -229,12 +229,64 @@
       def.resolve(BTTPortalConfig.url_api + '/lostRevenue_html.php?&' + url_data);
       return def.promise;
     }
+
+/**
+     * @name  generateUrlTrafficInfoReport
+     * @description
+     *
+     * BTT Traffic Parameters
+     *
+     * @param  {Object} config
+     * @return {Promise}
+     */
+    function generateUrlTrafficInfoReport(config) {
+      var filters = config.filters;
+      var def = $q.defer();
+      var _count_last_days = '7'; // default count days
+
+      if (filters) {
+        _count_last_days = filters.count_last_day || '7';
+        if (filters.country) {
+          _.merge(_def, {
+            'Country': [filters.country]
+          });
+        }
+      }
+
+      var _startTime = moment().subtract(_count_last_days, 'days');
+      var _endTime = moment();
+
+      var __def = angular.copy(_def);
+      var _btt_key = (!!config.domain) ? config.domain.btt_key : BTTPortalConfig.authKey;
+      var _now = {
+        BrowserType: 'All Browsers',
+        excluded_9: 1,
+        reportType: 'lostRevenue',
+        panelID: 1458763239486,
+        timePeriod: 'hours_3',
+        slowestFastest: 'slowest_500',
+        refreshRate: 60,
+        authKey: _btt_key, //BTT authKey
+        startEpoch: _startTime.valueOf().toString().substr(0, 10), //'1458366575'
+        startDate: _startTime.format('YYYY-M-DD'), // date format '2016-03-24',
+        startTime: _startTime.format('HH:mm'), // time format '22:23',
+
+        endEpoch: _endTime.valueOf().toString().substr(0, 10), //'1459230575',
+        endDate: _endTime.format('YYYY-M-DD'), //'2016-3-24',
+        endTime: _endTime.format('HH:mm'), //'01:23',
+      };
+
+      var url_data = $httpParamSerializerJQLike(_.merge(__def, _now));
+      def.resolve(BTTPortalConfig.url_api + '/trafficInfo_html.php?&' + url_data);
+      return def.promise;
+    }
+
     return {
       generateUrlConversionReport: generateUrlConversionReport,
       generateUrlBounceRateReport: generateUrlBounceRateReport,
       generateUrlBrandConversionRateReport: generateUrlBrandConversionRateReport,
       generateUrlLostRevenueCalculatorReport: generateUrlLostRevenueCalculatorReport,
-
+      generateUrlTrafficInfoReport: generateUrlTrafficInfoReport,
     };
   }
 })();
