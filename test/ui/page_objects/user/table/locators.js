@@ -38,11 +38,14 @@ var headerLocators = {
   role: {
     css: 'th:nth-of-type(4) a'
   },
-  updatedAt: {
+  status2fa: {
     css: 'th:nth-of-type(5) a'
   },
-  lastLoginAt: {
+  updatedAt: {
     css: 'th:nth-of-type(6) a'
+  },
+  lastLoginAt: {
+    css: 'th:nth-of-type(7) a'
   }
 };
 
@@ -59,14 +62,17 @@ var rowLocators = {
   role: {
     css: 'td:nth-of-type(4)'
   },
-  updatedAt: {
-    css: 'th:nth-of-type(5)'
+  status2fa: {
+    css: 'td:nth-of-type(5)'
   },
-  lastLoginAt: {
+  updatedAt: {
     css: 'th:nth-of-type(6)'
   },
+  lastLoginAt: {
+    css: 'th:nth-of-type(7)'
+  },
   actions: {
-    css: 'td:nth-of-type(7)',
+    css: 'td:nth-of-type(8)',
     buttons: {
       pencil: {
         className: 'glyphicon-pencil'

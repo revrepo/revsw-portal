@@ -558,6 +558,17 @@ polyline {
     margin-left: 260px;
   }
 }
+.bluetriangletech {
+  max-height: 395px;
+  overflow: hidden;
+}
+.bluetriangletech iframe {
+  border: 0px inset;
+  min-height: 450px;
+}
+.bluetriangletech iframe.bluetriangletech--traffic-info {
+  min-height: 240px;
+}
 section[drawer] .side-menu .dashboard_menu .side-menu-item.item-title a {
   color: #f7941e;
 }

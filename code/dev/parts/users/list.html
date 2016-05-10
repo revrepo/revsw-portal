@@ -50,7 +50,7 @@
             Loading...
           </div>
           <crud-pagination></crud-pagination>
-          <table class="table">
+          <table class="table users-list">
             <thead>
             <tr>
               <th>
@@ -68,6 +68,10 @@
               <th>
                 <a href="" ng-click="order('role')">Role</a>
                 <span class="sortorder" ng-show="filter.predicate === 'role'" ng-class="{reverse: filter.reverse}"></span>
+              </th>
+              <th>
+                <a href="" ng-click="order('two_factor_auth_enabled')">2FA</a>
+                <span class="sortorder" ng-show="filter.predicate === 'two_factor_auth_enabled'" ng-class="{reverse: filter.reverse}"></span>
               </th>
               <th>
                 <a href="" ng-click="order('updated_at')">Last Update</a>
@@ -98,6 +102,10 @@
               </td>
               <td>{{user.email}}</td>
               <td>{{user.role}}</td>
+              <td>
+                <span class="status-2fa-enabled" ng-if="user.two_factor_auth_enabled==true">Enabled</span>
+                <span class="status-2fa-disabled " ng-if="!user.two_factor_auth_enabled==true">Disabled</span>
+              </td>
               <td>{{ getRelativeDate(user.updated_at) }}</td>
               <td>{{ user.last_login_at ? getRelativeDate(user.last_login_at) : 'Never' }}</td>
               <td class="actions">

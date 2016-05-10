@@ -267,7 +267,10 @@
               isCollapsed: true
             }
           });
-
+          // NOTE: Check existing  requered fields
+          if (!item.edge_caching.query_string_keep_or_remove_list) {
+            item.edge_caching.query_string_keep_or_remove_list = [];
+          }
         });
       }
       /**

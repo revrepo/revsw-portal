@@ -9,7 +9,7 @@
              style="min-width: 300px;" >
     <ui-select-match placeholder="Select account">{{$select.selected.companyName}}</ui-select-match>
     <ui-select-choices repeat="item in companies | filter: {companyName: $select.search}">
-      <small>{{item.companyName}}</small>
+      <small ng-bind-html="item.companyName|highlight: $select.search"></small>
     </ui-select-choices>
   </ui-select>
 
