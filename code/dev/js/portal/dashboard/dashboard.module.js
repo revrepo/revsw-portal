@@ -338,12 +338,15 @@
   }
 
   /**
-   * [widgetEditBTTiframeController description]
+   * @name  widgetEditBTTiframeController
+   * @description
+   *
+   *
    * @param  {[type]} $scope    [description]
    * @param  {[type]} Countries [description]
    * @return {[type]}           [description]
    */
-  function widgetEditBTTiframeController($scope, Countries) {
+  function widgetEditBTTiframeController($scope, $localStorage, Countries, User, AlertService) {
     'ngInject';
     var vm = this;
     var _defaultConfig = {
@@ -356,15 +359,50 @@
       }
     };
     _.defaultsDeep($scope.config, _defaultConfig);
-
+    vm._loading = true;
+    vm.domains = [];
     vm.domain = $scope.config.domain;
     vm.refCountry = Countries.query();
-    vm.onDomainSelected = function() {
+
+    // Load user domains
+    User.getUserDomains(true)
+      .then(function(domains) {
+        vm.domains = _.filter(domains, function(item) {
+          return (!!item.btt_key && item.btt_key !== '');
+        });
+        // Set default value if ngModel is empty
+        if (!vm.domain || !vm.domain.id) {
+          // Select domain if it's only one
+          if (domains.length === 1 && $scope.selectOne) {
+            vm.onDomainSelected($scope.domains[0]);
+            vm.domain = $scope.domains[0];
+          }
+          if ($localStorage.selectedDomain && $localStorage.selectedDomain.id) {
+            var ind = _.findIndex(domains, function(d) {
+              return d.id === $localStorage.selectedDomain.id;
+            });
+
+            vm.domain = vm.domains[ind];
+            vm.onDomainSelected(vm.domains[ind]);
+          }
+        }
+        return vm.domains;
+      })
+      .catch(function() {
+        AlertService.danger('Oops something wrong');
+      })
+      .finally(function() {
+        vm._loading = false;
+      });
+
+    vm.onDomainSelected = function(domain) {
+      if (!!domain) {
+        $localStorage.selectedDomain = domain;
+      }
       if (!vm.domain || !vm.domain.id) {
         return;
       }
       vm.reload();
-
     };
     /**
      * @name  reload
