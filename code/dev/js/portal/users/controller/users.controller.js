@@ -6,7 +6,7 @@
     .controller('UsersCrudController', UsersCrudController);
 
   // @ngInject
-  function UsersCrudController($scope, $q, CRUDController, Users, User, $injector, $stateParams, Companies, DomainsConfig, $state, $anchorScroll) {
+  function UsersCrudController($scope, $q, CRUDController, Users, User, $injector, $state, $stateParams, Companies, DomainsConfig, $anchorScroll) {
 
     //Invoking crud actions
     $injector.invoke(CRUDController, this, {
@@ -17,6 +17,10 @@
     if ($scope.auth.isUser()) {
       $state.go('index.accountSettings.profile');
       return;
+    }
+    // NOTE: init load dependencies for Add New User Page
+    if ($state.current.name === "index.accountSettings.users.new") {
+      dependencies();
     }
     //Set state (ui.router)
     $scope.setState('index.accountSettings.users');
@@ -31,9 +35,9 @@
 
     // $scope.filterKeys = ['firstname', 'lastname', 'email', 'role', 'updated_at', 'last_login_at'];
 
-    $scope.companies = Companies.query();
+    $scope.companies = [];
 
-    $scope.domains = DomainsConfig.query();
+    $scope.domains = [];
 
     if (!$scope.model) {
       initModel();
@@ -51,11 +55,40 @@
         }
       };
     }
+    /**
+     * @name  dependencies
+     * @description
+     *  Release controller data dependencies
+     * @return {Promise}
+     */
+    function dependencies() {
+      return $q.all([
+          Companies.query().$promise,
+          DomainsConfig.query().$promise
+        ])
+        .then(function(dataRefs) {
+          //
+          $scope.companies = dataRefs[0];
+          $scope.domains = dataRefs[1];
+        });
+    }
 
     $scope.getUser = function(id) {
+      $scope._loading = true;
       $scope.get(id)
+        .then(dependencies)
+        .then(function firstValidationDomainNames() {
+          $scope.model.domain = _.intersection(_.findByValues($scope.domains, 'account_id', $scope.model.companyId)
+            .map(function(item) {
+              return item.domain_name;
+            }), $scope.model.domain);
+          return $scope.model.domain;
+        })
         .catch(function(err) {
           $scope.alertService.danger('Could not load user details');
+        })
+        .finally(function() {
+          $scope._loading = false;
         });
     };
 
@@ -139,36 +172,37 @@
     $scope.$on('$stateChangeSuccess', function(state) {
       $scope
         .list()
+        .then(dependencies)
         .then(function setCompaniesName() {
           if ($scope.auth.isReseller() || $scope.auth.isRevadmin()) {
-            // Loading list of companies
-            return Companies.query(function(list) {
-              _.forEach($scope.records, function(item) {
-                if (item.companyId.length === 1) {
-                  var index = _.findIndex(list, {
-                    id: item.companyId[0]
-                  });
-                  if (index >= 0) {
-                    item.companyName = list[index].companyName;
-                  }
-                } else {
-                  if (item.companyId.length > 1) {
-                    item.companyName = '';
-                    angular.forEach(item.companyId, function(account_id, key) {
-                      var index = _.findIndex(list, {
-                        id: account_id
-                      });
-                      if (index >= 0) {
-                        if (key !== item.companyId.length && key !== 0) {
-                          item.companyName = item.companyName + ', ';
-                        }
-                        item.companyName = item.companyName + list[index].companyName;
-                      }
-                    });
-                  }
+            // NOTE: set companies(account) name (must be aplay method "dependencies" first)
+            var list = $scope.companies;
+            _.forEach($scope.records, function(item) {
+              if (item.companyId.length === 1) {
+                var index = _.findIndex(list, {
+                  id: item.companyId[0]
+                });
+                if (index >= 0) {
+                  item.companyName = list[index].companyName;
                 }
-              });
+              } else {
+                if (item.companyId.length > 1) {
+                  item.companyName = '';
+                  angular.forEach(item.companyId, function(account_id, key) {
+                    var index = _.findIndex(list, {
+                      id: account_id
+                    });
+                    if (index >= 0) {
+                      if (key !== item.companyId.length && key !== 0) {
+                        item.companyName = item.companyName + ', ';
+                      }
+                      item.companyName = item.companyName + list[index].companyName;
+                    }
+                  });
+                }
+              }
             });
+            $q.when(list);
           } else {
             return $q.when();
           }
@@ -182,5 +216,49 @@
           }
         });
     });
+
+    // NOTE: mixin lodash for
+    _.mixin({
+      'findByValues': function(collection, property, values) {
+        return _.filter(collection, function(item) {
+          return _.contains(values, item[property]);
+        });
+      }
+    });
+    /**
+     * @name  getAccountDomainNameList
+     * @description
+     *
+     * @param  {[type]} account_id [description]
+     * @return {[type]}            [description]
+     */
+    $scope.getAccountDomainNameList = function(account_id) {
+      if (!account_id) {
+        account_id = $scope.model.companyId;
+      }
+      var data = _.findByValues($scope.domains, 'account_id', account_id);
+      return data;
+    };
+
+    /**
+     * @name  getDomainPlaceholder
+     * @description [description]
+     * @return {String}
+     */
+    $scope.getDomainPlaceholder = function() {
+        var list = $scope.getAccountDomainNameList();
+        return (list.length > 0) ? 'Select domains...' : 'Domains list is epmty...';
+      }
+
+    // NOTE: watch on change companyId for update available domain names
+    $scope.$watch('model.companyId', function(newVal, oldVal) {
+      if (newVal !== undefined && oldVal !== undefined) {
+        var data = _.findByValues($scope.domains, 'account_id', $scope.model.companyId).map(function(item) {
+          return item.domain_name;
+        });
+        $scope.model.domain = _.intersection(data, $scope.model.domain);
+      }
+    });
+
   }
 })();
