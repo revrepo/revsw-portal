@@ -21,6 +21,8 @@
 // Requiring constant values
 var Constants = require('./../constants');
 
+var DropDownWidget = require('./../common/dropDownWidget');
+
 // This `Domain Form` Page Object abstracts all operations or actions that a
 // common domain could do in the Add Domain and Edit Domain page from the Portal
 // app/site.
@@ -75,7 +77,8 @@ var DomainForm = {
    * @returns {Selenium WebDriver Element}
    */
   getCompanyNameDDown: function () {
-    return element(by.model(this.locators.dropDowns.companyName.model));
+    return new DropDownWidget(
+      by.model(this.locators.dropDowns.companyName.model));
   },
 
   /**
@@ -195,8 +198,7 @@ var DomainForm = {
   setCompanyName: function (companyName) {
     return this
       .getCompanyNameDDown()
-      .element(by.cssContainingText('option', companyName))
-      .click();
+      .setValue(companyName);
   },
 
   /**

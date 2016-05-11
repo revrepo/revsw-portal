@@ -18,6 +18,8 @@
 
 // # Add New App Page Object
 
+var DropDownWidget = require('./../common/dropDownWidget');
+
 // This `Add New App` Page Object abstracts all operations or actions
 // that a common Two-Factor Authentication could do in the Portal app/site.
 var AddNewApp = {
@@ -116,10 +118,10 @@ var AddNewApp = {
    *
    * Gets the reference to `Company Name` input text element.
    *
-   * @returns {Promise}
+   * @returns {Object}
    */
   getCompanyNameDDown: function () {
-    return element(by.id(this.locators.dropDowns.companyName.id));
+    return new DropDownWidget(by.id(this.locators.dropDowns.companyName.id));
   },
 
   /**
@@ -213,8 +215,7 @@ var AddNewApp = {
   setCompanyName: function (companyName) {
     return this
       .getCompanyNameDDown()
-      .element(by.cssContainingText('option', companyName))
-      .click();
+      .setValue(companyName);
   },
 
   /**
