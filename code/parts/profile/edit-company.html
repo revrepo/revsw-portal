@@ -297,9 +297,9 @@
                 <a ng-if="model.billing_id && !!model.billing_portal_link.url && !!model.subscription_id" href="{{model.billing_portal_link.url}}" class="btn btn-primary" target="_blank" ng-disabled="_loading || _disabled" popover-trigger="mouseenter" uib-popover="Click here to update your payment details - you will be taken to our billing portal which uses a separate URL">
                   <i class="glyphicon glyphicon-lock"></i> Update Payment Profile</a>
                 <!-- Create Billing Profile -->
-                <!-- <a href="" class="btn btn-primary" ng-if="!model.billing_id && (userService.isRevadmin() || userService.isReseller())" ng-click="createBillingProfile(model)">
+                <a href="" class="btn btn-primary" ng-disabled="_loading || _disabled || !Company.$valid" ng-if="!model.billing_id && (userService.isRevadmin() || userService.isReseller())" ng-click="createBillingProfile(model)">
                   <i class="glyphicon glyphicon-credit-card"></i> Create Billing Profile
-                </a> -->
+                </a>
                 <!-- TODO: add check valid payment method -->
                 <button type="button" ng-if="user.isAdmin" ng-click="deleteCompanyProfile(model)" class="btn btn-danger pull-right" ng-disabled="_loading || _disabled || !isCanDeleteCompanyProfile()">
                   <i class="glyphicon glyphicon-refresh spin" ng-if="_loading"></i>

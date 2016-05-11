@@ -15,6 +15,7 @@
     'bluetriangletech-bounce-rate', //"Bounce Rate"
     'bluetriangletech-brand-conversion-rate', // "Brand Conversion Rate"
     'bluetriangletech-lost-revenue-calculator', //"Lost Revenue Calculator"
+    'bluetriangletech-traffic-info', //"BTT Traffic Parameters"
     'widget-norse-live-attack-map', //"Norse Live Attack Map"
   ];
   /**
