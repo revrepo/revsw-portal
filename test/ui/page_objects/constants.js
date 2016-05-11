@@ -32,6 +32,7 @@ var Constants = {
       new: '#/domains/new'
     },
     profile: '#/profile',
+    admin: '#/users',
     mobileApps: '#/apps/'
   },
   header: {
@@ -74,8 +75,11 @@ var Constants = {
     },
     admin: {
       ADMIN: 'Admin',
-      SECURITY_SETTINGS: 'Security Settings',
+      USERS: 'Users',
+      ACCOUNTS: 'Accounts',
       API_KEYS: 'API Keys',
+      UPDATE_PASSWORD: 'Update Password',
+      SECURITY_SETTINGS: 'Security Settings',
       ACTIVITY_LOG: 'Activity Log'
     },
     billing: {

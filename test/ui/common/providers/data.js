@@ -261,6 +261,85 @@ var DataProvider = {
       companyName: 'API QA Account updated',
       monthDD: '2016-01'
     };
+  },
+
+  /**
+   * ### DataProvider.generateAccountProfileData()
+   *
+   * Generates usage report data object based on the unique para that it
+   * requires.
+   *
+   * @returns {Object}, generate usage report data with the following schema:
+   *
+   *     {
+   *         companyName: string,
+   *         firstName: string,
+   *         lastName: string,
+   *         phoneNumber: string,
+   *         contactEmail: string,
+   *         address1: string,
+   *         address2: string,
+   *         country: string,
+   *         state: string,
+   *         city: string,
+   *         zipcode: string,
+   *         comment: string
+   *     }
+   */
+  generateAccountProfileData: function () {
+    var timestamp = Date.now();
+    return {
+      companyName: 'QA-Company-' + timestamp,
+      firstName: 'TestFirstName01',
+      lastName: 'TestLastName01',
+      phoneNumber: '1111111111',
+      contactEmail: 'company01@mail.com',
+      address1: 'Street 1',
+      address2: 'Street 2',
+      country: 'Canada',
+      state: 'Toronto',
+      city: 'Toronto',
+      zipcode: '02',
+      comment: 'Comments just for testing proposal for company ' + timestamp
+    };
+  },
+
+  /**
+   * ### DataProvider.generateAccountBillingData()
+   *
+   * Generates usage report data object based on the unique para that it
+   * requires.
+   *
+   * @returns {Object}, generate usage report data with the following schema:
+   *
+   *     {
+   *         firstName: string,
+   *         lastName: string,
+   *         contactEmail: string,
+   *         phoneNumber: string,
+   *         address1: string,
+   *         address2: string,
+   *         country: string,
+   *         state: string,
+   *         city: string,
+   *         zipcode: string
+   *     }
+   */
+  generateAccountBillingData: function () {
+    return {
+      companyName: 'Company01',
+      firstName: 'TestFirstName01',
+      lastName: 'TestLastName01',
+      phoneNumber: '1111111111',
+      contactEmail: 'company01@mail.com',
+      address1: 'Street 1',
+      address2: 'Street 2',
+      country: 'Canada',
+      state: 'Toronto',
+      city: 'Toronto',
+      zipcode: '02',
+      comment: 'My comment just for testing proposal'
+    };
   }
 };
 
