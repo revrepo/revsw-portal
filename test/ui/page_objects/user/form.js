@@ -21,6 +21,8 @@
 // Requiring constant values
 var Constants = require('./../constants');
 
+var DropDownWidget = require('./../common/multiSelectDropDownWidget');
+
 // This `User Form` Page Object abstracts all operations or actions that a
 // common user could do in the Add User and Edit User page from the Portal
 // app/site.
@@ -86,7 +88,7 @@ var UserForm = {
    * Returns the reference to the `Email` text field (Selenium WebDriver
    * Element)
    *
-   * @returns {Selenium WebDriver Element}
+   * @returns {Object} Selenium WebDriver Element
    */
   getEmailTxtIn: function () {
     return element(by.model(this.locators.textInputs.email.model));
@@ -98,7 +100,7 @@ var UserForm = {
    * Returns the reference to the `First Name` text field (Selenium WebDriver
    * Element)
    *
-   * @returns {Selenium WebDriver Element}
+   * @returns {Object} Selenium WebDriver Element
    */
   getFirstNameTxtIn: function () {
     return element(by.model(this.locators.textInputs.firstName.model));
@@ -110,7 +112,7 @@ var UserForm = {
    * Returns the reference to the `Last Name` text field (Selenium WebDriver
    * Element)
    *
-   * @returns {Selenium WebDriver Element}
+   * @returns {Object} Selenium WebDriver Element
    */
   getLastNameTxtIn: function () {
     return element(by.model(this.locators.textInputs.lastName.model));
@@ -121,7 +123,7 @@ var UserForm = {
    *
    * Returns the reference to the `Role` drop-down (Selenium WebDriver Element)
    *
-   * @returns {Selenium WebDriver Element}
+   * @returns {Object} Selenium WebDriver Element
    */
   getRoleDDown: function () {
     return element(by.model(this.locators.dropDowns.role.model));
@@ -133,10 +135,10 @@ var UserForm = {
    * Returns the reference to the `Company` drop-down (Selenium WebDriver
    * Element)
    *
-   * @returns {Selenium WebDriver Element}
+   * @returns {Object} Selenium WebDriver Element
    */
   getCompanyDDown: function () {
-    return element(by.model(this.locators.dropDowns.company.model));
+    return new DropDownWidget(by.model(this.locators.dropDowns.company.model));
   },
 
   /**
@@ -145,7 +147,7 @@ var UserForm = {
    * Returns the reference to the `Domain` drop-down (Selenium WebDriver
    * Element)
    *
-   * @returns {Selenium WebDriver Element}
+   * @returns {Object} Selenium WebDriver Element
    */
   getDomainDDown: function () {
     return element(by.model(this.locators.dropDowns.domain.model));
@@ -157,7 +159,7 @@ var UserForm = {
    * Returns the reference to the `Password` text field (Selenium WebDriver
    * Element)
    *
-   * @returns {Selenium WebDriver Element}
+   * @returns {Object} Selenium WebDriver Element
    */
   getPasswordTxtIn: function () {
     return element(by.model(this.locators.textInputs.password.model));
@@ -169,7 +171,7 @@ var UserForm = {
    * Returns the reference to the `Password confirm` text field (Selenium
    * WebDriver Element)
    *
-   * @returns {Selenium WebDriver Element}
+   * @returns {Object} Selenium WebDriver Element
    */
   getPasswordConfirmTxtIn: function () {
     return element(by.model(this.locators.textInputs.passwordConfirm.model));
@@ -181,7 +183,7 @@ var UserForm = {
    * Returns the reference to the `Dashboard` checkbox (Selenium WebDriver
    * Element)
    *
-   * @returns {Selenium WebDriver Element}
+   * @returns {Object} Selenium WebDriver Element
    */
   getDashboardChBox: function () {
     return element(by.model(this.locators.checkBoxes.dashboard.model));
@@ -193,7 +195,7 @@ var UserForm = {
    * Returns the reference to the `Reports` checkbox (Selenium WebDriver
    * Element)
    *
-   * @returns {Selenium WebDriver Element}
+   * @returns {Object} Selenium WebDriver Element
    */
   getReportsChBox: function () {
     return element(by.model(this.locators.checkBoxes.reports.model));
@@ -205,7 +207,7 @@ var UserForm = {
    * Returns the reference to the `getConfigureChBox` checkbox (Selenium
    * WebDriver Element)
    *
-   * @returns {Selenium WebDriver Element}
+   * @returns {Object} Selenium WebDriver Element
    */
   getConfigureChBox: function () {
     return element(by.model(this.locators.checkBoxes.configure.model));
@@ -216,7 +218,7 @@ var UserForm = {
    *
    * Returns the reference to the `Test` checkbox (Selenium WebDriver Element)
    *
-   * @returns {Selenium WebDriver Element}
+   * @returns {Object} Selenium WebDriver Element
    */
   getTestChBox: function () {
     return element(by.model(this.locators.checkBoxes.test.model));
@@ -228,7 +230,7 @@ var UserForm = {
    * Returns the reference to the `REad only` checkbox (Selenium WebDriver
    * Element)
    *
-   * @returns {Selenium WebDriver Element}
+   * @returns {Object} Selenium WebDriver Element
    */
   getReadOnlyChBox: function () {
     return element(by.model(this.locators.checkBoxes.readOnly.model));
@@ -241,7 +243,7 @@ var UserForm = {
    *
    * Gets the current value set for Email
    *
-   * @returns {Promise}
+   * @returns {Object} Promise
    */
   getEmail: function () {
     return this
@@ -254,7 +256,7 @@ var UserForm = {
    *
    * Gets the current value set for First Name
    *
-   * @returns {Promise}
+   * @returns {Object} Promise
    */
   getFirstName: function () {
     return this
@@ -267,7 +269,7 @@ var UserForm = {
    *
    * Gets the current value set for Last Name
    *
-   * @returns {Promise}
+   * @returns {Object} Promise
    */
   getLastName: function () {
     return this
@@ -280,7 +282,7 @@ var UserForm = {
    *
    * Gets the current value set for Role
    *
-   * @returns {Promise}
+   * @returns {Object} Promise
    */
   getRole: function () {
     return this
@@ -296,7 +298,7 @@ var UserForm = {
    *
    * @param {String} email
    *
-   * @returns {Promise}
+   * @returns {Object} Promise
    */
   setEmail: function (email) {
     return this
@@ -311,7 +313,7 @@ var UserForm = {
    *
    * @param {String} firstName
    *
-   * @returns {Promise}
+   * @returns {Object} Promise
    */
   setFirstName: function (firstName) {
     return this
@@ -326,7 +328,7 @@ var UserForm = {
    *
    * @param {String} lastName
    *
-   * @returns {Promise}
+   * @returns {Object} Promise
    */
   setLastName: function (lastName) {
     return this
@@ -341,7 +343,7 @@ var UserForm = {
    *
    * @param {String} role
    *
-   * @returns {Promise}
+   * @returns {Object} Promise
    */
   setRole: function (role) {
     return this
@@ -355,17 +357,16 @@ var UserForm = {
    *
    * Sets a new value for `Company` drop-down
    *
-   * @param [String] companies, array of companies
+   * @param {String} companies, array of companies
    *
-   * @returns {Promise}
+   * @returns {Object} Promise
    */
   setCompany: function (companies) {
     for (var i = 0, len = companies.length; i < len; i++) {
       var company = companies[i];
       var option = this
         .getCompanyDDown()
-        .element(by.cssContainingText('option', company))
-        .click();
+        .setValue(company);
       if (i === len - 1) {
         return option;
       }
@@ -377,9 +378,9 @@ var UserForm = {
    *
    * Sets a new value for `Domain` drop-down
    *
-   * @param [String] domains, array of domains
+   * @param {String} domains, array of domains
    *
-   * @returns {Promise}
+   * @returns {Object} Promise
    */
   setDomain: function (domains) {
     for (var i = 0, len = domains.length; i < len; i++) {
@@ -399,9 +400,10 @@ var UserForm = {
    *
    * Checks/un-checks the specified checkbox element
    *
-   * @param {Selenium WebDriver Element} chBox, reference to checkbox to change
+   * @param {Object} chBox, Selenium WebDriver Element, reference to checkbox
+   * to change
    * @param {Boolean} checked
-   * @returns {Promise}
+   * @returns {Object} Promise
    */
   changeCheckBox: function (chBox, checked) {
     return chBox
@@ -419,7 +421,7 @@ var UserForm = {
    * Checks/un-checks the `Dashboard` checkbox element
    *
    * @param {Boolean} checked, whether check or not the element
-   * @returns {Promise}
+   * @returns {Object} Promise
    */
   setDashboard: function (checked) {
     return this.changeCheckBox(this.getDashboardChBox(), checked);
@@ -431,7 +433,7 @@ var UserForm = {
    * Checks/un-checks the `Reports` checkbox element
    *
    * @param {Boolean} checked, whether check or not the element
-   * @returns {Promise}
+   * @returns {Object} Promise
    */
   setReports: function (checked) {
     return this.changeCheckBox(this.getReportsChBox(), checked);
@@ -443,7 +445,7 @@ var UserForm = {
    * Checks/un-checks the `Configure` checkbox element
    *
    * @param {Boolean} checked, whether check or not the element
-   * @returns {Promise}
+   * @returns {Object} Promise
    */
   setConfigure: function (checked) {
     return this.changeCheckBox(this.getConfigureChBox(), checked);
@@ -455,7 +457,7 @@ var UserForm = {
    * Checks/un-checks the `Test` checkbox element
    *
    * @param {Boolean} checked, whether check or not the element
-   * @returns {Promise}
+   * @returns {Object} Promise
    */
   setTest: function (checked) {
     return this.changeCheckBox(this.getTestChBox(), checked);
@@ -467,7 +469,7 @@ var UserForm = {
    * Checks/un-checks the `Read Only` checkbox element
    *
    * @param {Boolean} checked, whether check or not the element
-   * @returns {Promise}
+   * @returns {Object} Promise
    */
   setReadOnly: function (checked) {
     return this.changeCheckBox(this.getReadOnlyChBox(), checked);
@@ -480,7 +482,7 @@ var UserForm = {
    *
    * @param {String} password
    *
-   * @returns {Promise}
+   * @returns {Object} Promise
    */
   setPassword: function (password) {
     return this
@@ -495,7 +497,7 @@ var UserForm = {
    *
    * @param {String} password
    *
-   * @returns {Promise}
+   * @returns {Object} Promise
    */
   setPasswordConfirm: function (password) {
     return this
@@ -508,9 +510,9 @@ var UserForm = {
    *
    * Checks the `Access Controls` specified in an array
    *
-   * @param [String] accessControls, array of `access controls` to check
+   * @param {String} accessControls, array of `access controls` to check
    *
-   * @returns {Promise}
+   * @returns {Object} Promise
    */
   setAccessControls: function (accessControls) {
     for (var i = 0, len = accessControls.length; i < len; i++) {
@@ -547,7 +549,7 @@ var UserForm = {
    *
    * Clears the current value set in the `First Name` text field
    *
-   * @returns {Promise}
+   * @returns {Object} Promise
    */
   clearFirstName: function () {
     var me = this;
@@ -567,7 +569,7 @@ var UserForm = {
    *
    * Clears the current value set in the `Last Name` text field
    *
-   * @returns {Promise}
+   * @returns {Object} Promise
    */
   clearLastName: function () {
     var me = this;
@@ -589,7 +591,7 @@ var UserForm = {
    *
    * Checks whether the User Form is displayed or not in the UI
    *
-   * @returns {Promise}
+   * @returns {Object} Promise
    */
   isDisplayed: function () {
     return this
