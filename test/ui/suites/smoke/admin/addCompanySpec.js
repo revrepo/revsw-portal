@@ -30,6 +30,7 @@ describe('Smoke', function () {
     //config.get('portal.users.reseller')
   ];
   var company = DataProvider.generateAccountProfileData();
+  var criteria = company.companyName;
 
   users.forEach(function (user) {
 
@@ -52,9 +53,13 @@ describe('Smoke', function () {
 
         it('should "Add Company" in accounts page', function () {
           Portal.admin.accounts.listPage.addNewCompany(company);
-          var criteria = company.companyName;
-          //var r = Portal.admin.accounts.listPage.searchAndGetFirstRow(criteria);
-          //expect(r).toBe(1);
+          expect(Portal.alerts.getFirst().getText()).toEqual('Company created');
+
+          Portal.header.goTo(Constants.sideBar.admin.ACCOUNTS);
+          var result = Portal.admin.accounts
+            .listPage
+            .searchAndGetFirstRow(criteria);
+          expect(result.getCompanyName()).toBe(criteria);
         });
       });
     });

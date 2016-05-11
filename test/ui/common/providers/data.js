@@ -287,8 +287,9 @@ var DataProvider = {
    *     }
    */
   generateAccountProfileData: function () {
+    var timestamp = Date.now();
     return {
-      companyName: 'Company01',
+      companyName: 'QA-Company-' + timestamp,
       firstName: 'TestFirstName01',
       lastName: 'TestLastName01',
       phoneNumber: '1111111111',
@@ -299,7 +300,7 @@ var DataProvider = {
       state: 'Toronto',
       city: 'Toronto',
       zipcode: '02',
-      comment: 'My comment just for testing proposal'
+      comment: 'Comments just for testing proposal for company ' + timestamp
     };
   },
 

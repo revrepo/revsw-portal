@@ -41,10 +41,10 @@ var CompanyTable = {
   },
 
   getRow: function (rowIndex) {
-    var el = this
+    var elem = this
       .getRows()
       .get(rowIndex);
-    return new CompanyTableRow(el, CompanyTableLocators.row);
+    return new CompanyTableRow(elem, CompanyTableLocators.row);
   }
 };
 
