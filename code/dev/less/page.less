@@ -283,3 +283,33 @@ textarea {
     }
   }
 }
+
+form {
+  & .error-messages {
+    display: none;
+  }
+  &.ng-invalid {
+    &.ng-submitted {
+      & .error-messages {
+        display: block;
+      }
+    }
+  }
+  & .has-error .error-messages {
+    display: block;
+  }
+  & .error-messages {
+    color: @app-color-red;
+    &.alert {
+      &-text {
+        color: @app-color-red;
+      }
+    }
+    &.ng-inactive {
+      opacity: 0;
+    }
+    &.ng-active {
+      opacity: 1;
+    }
+  }
+}

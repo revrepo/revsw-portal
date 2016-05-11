@@ -241,6 +241,27 @@ textarea.text--courier {
 .text--courier {
   font-family: Courier;
 }
+form .error-messages {
+  display: none;
+}
+form.ng-invalid.ng-submitted .error-messages {
+  display: block;
+}
+form .has-error .error-messages {
+  display: block;
+}
+form .error-messages {
+  color: #d87551;
+}
+form .error-messages.alert-text {
+  color: #d87551;
+}
+form .error-messages.ng-inactive {
+  opacity: 0;
+}
+form .error-messages.ng-active {
+  opacity: 1;
+}
 .main_img_container {
   left: 50%;
   position: absolute;
