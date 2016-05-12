@@ -44,14 +44,14 @@ describe('Workflow', function () {
 
     it('should display a user only for one reseller user',
       function () {
-        var userEmail = Portal.userListPage.userTbl
+        var userEmail = Portal.userListPage.table
           .getFirstRow()
           .getEmail();
         Portal.signOut();
         Portal.signIn(secondResellerUser);
         Portal.getUsersPage();
         Portal.userListPage.searcher.setSearchCriteria(userEmail);
-        var filteredRows = Portal.userListPage.userTbl.getRows();
+        var filteredRows = Portal.userListPage.table.getRows();
         expect(filteredRows.count()).toEqual(0);
       });
 
@@ -62,13 +62,13 @@ describe('Workflow', function () {
         var userEmail = Portal.userListPage
           .searchAndGetFirstRow(tom.email)
           .getEmail();
-        var filteredRows = Portal.userListPage.userTbl.getRows();
+        var filteredRows = Portal.userListPage.table.getRows();
         expect(filteredRows.count()).toEqual(1);
         Portal.signOut();
         Portal.signIn(secondResellerUser);
         Portal.getUsersPage();
         Portal.userListPage.searcher.setSearchCriteria(userEmail);
-        var newFilteredRows = Portal.userListPage.userTbl.getRows();
+        var newFilteredRows = Portal.userListPage.table.getRows();
         expect(newFilteredRows.count()).toEqual(0);
       });
 

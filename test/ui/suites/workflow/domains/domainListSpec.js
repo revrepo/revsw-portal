@@ -65,7 +65,7 @@ describe('Workflow', function () {
         Portal.domains.listPage
           .searchAndGetFirstRow(myDomain.name)
           .getStagingStatusIcon()
-          .getAttribute('tooltip')
+          .getAttribute('uib-tooltip')
           .then(function (tooltip) {
             expect(tooltip).toEqual('Staging Status: InProgress');
             Portal.deleteDomain(myDomain);
@@ -82,7 +82,7 @@ describe('Workflow', function () {
         Portal.domains.listPage
           .searchAndGetFirstRow(myDomain.name)
           .getGlobalStatusIcon()
-          .getAttribute('tooltip')
+          .getAttribute('uib-tooltip')
           .then(function (tooltip) {
             expect(tooltip).toEqual('Global Status: InProgress');
             Portal.deleteDomain(myDomain);
@@ -101,7 +101,7 @@ describe('Workflow', function () {
         Portal.domains.listPage
           .searchAndGetFirstRow(myDomain.name)
           .getStagingStatusIcon()
-          .getAttribute('tooltip')
+          .getAttribute('uib-tooltip')
           .then(function (tooltip) {
             expect(tooltip).toEqual('Staging Status: Published');
             Portal.deleteDomain(myDomain);
@@ -120,7 +120,7 @@ describe('Workflow', function () {
         Portal.domains.listPage
           .searchAndGetFirstRow(myDomain.name)
           .getGlobalStatusIcon()
-          .getAttribute('tooltip')
+          .getAttribute('uib-tooltip')
           .then(function (tooltip) {
             expect(tooltip).toEqual('Global Status: Published');
             Portal.deleteDomain(myDomain);
@@ -146,7 +146,7 @@ describe('Workflow', function () {
         Portal.domains.listPage
           .searchAndGetFirstRow(myDomain.name)
           .getGlobalStatusIcon()
-          .getAttribute('tooltip')
+          .getAttribute('uib-tooltip')
           .then(function (tooltip) {
             expect(tooltip).toEqual('Global Status: Modified');
             Portal.deleteDomain(myDomain);

@@ -6,7 +6,7 @@
     .controller('KeysCreateController', KeysCreateController);
 
   // @ngInject
-  function KeysCreateController($scope, $modalInstance, companies) {
+  function KeysCreateController($scope, $uibModalInstance, companies) {
 
     /**
      * List of companies provided from other controller
@@ -33,14 +33,14 @@
      * Click on ok button
      */
     $scope.ok = function () {
-      $modalInstance.close($scope.selected);
+      $uibModalInstance.close($scope.selected);
     };
 
     /**
      * Close dialog
      */
     $scope.cancel = function () {
-      $modalInstance.dismiss('cancel');
+      $uibModalInstance.dismiss('cancel');
     };
 
   }

@@ -12,6 +12,8 @@ var reload = browserSync.reload;
 var ngAnnotate = require('gulp-ng-annotate');
 var htmlhint = require('gulp-htmlhint');
 var gulpRequireTasks = require('gulp-require-tasks');
+var flatten = require('gulp-flatten');
+
 // Call it when neccesary.
 gulpRequireTasks({
   // Pass any options to it. Please see below.
@@ -60,10 +62,11 @@ gulp.task('copyFonts', function() {
   return gulp.src(devFolder + 'fonts/**/*.*')
     .pipe(gulp.dest(destFolder + 'fonts'));
 });
-// build and copy widgets
-gulp.task('copyWidgets',  function() {
-  return gulp.src(devFolder + 'widgets/**/dist/*.*')
-    .pipe(gulp.dest(destFolder + 'widgets'));
+
+gulp.task('fonts', function () {
+  return gulp.src('./bower_components/**/*.{eot,svg,ttf,woff,woff2}')
+    .pipe(flatten())
+    .pipe(gulp.dest(destFolder + 'fonts'));
 });
 
 gulp.task('vulcanize', function() {
@@ -117,6 +120,7 @@ gulp.task('serve', function() {
       routes: {
         '/bower_components': 'bower_components',
         '/portal': '/',
+        '/widgets': '/../widgets',
       }
     }
   });
@@ -131,6 +135,6 @@ gulp.task('serve', function() {
   gulp.watch([devFolder + 'widgets/**/*'], ['widgets:build']);
 });
 
-gulp.task('copy', ['copyCss', 'copyParts', 'copyImages', 'copyJson', 'copyFonts','copyWidgets']);
+gulp.task('copy', ['copyCss', 'copyParts', 'copyImages', 'copyJson', 'copyFonts', 'fonts','widgets:build']);
 gulp.task('build', ['copy', 'dist', 'vulcanize']);
 gulp.task('default', ['serve', 'less']);

@@ -59,11 +59,15 @@
         Published: 'glyphicon-ok-circle text-success',
         Modified: 'glyphicon-ok-circle text-primary'
       },
+      /**
+       * Interval delay for refreshing apps staging/global status
+       */
+      APP_STATUS_REFRESH_INTERVAL: 15000,
 
       /**
        * Interval delay for refreshing domain staging/global status
        */
-      DOMAIN_STATUS_REFRESH_INTERVAL: 5000,
+      DOMAIN_STATUS_REFRESH_INTERVAL: 15000,
       /**
        * List of icon classes for SSL Certificates statuses
        */
@@ -81,7 +85,7 @@
       /**
        * Interval delay for refreshing SSL Certificate staging/global status
        */
-      SSL_CERT_STATUS_REFRESH_INTERVAL: 5000,
+      SSL_CERT_STATUS_REFRESH_INTERVAL: 15000,
       /**
        * [LOGSHIPPERS_SOURCE_TYPES description]
        * @type {Object}
@@ -133,6 +137,8 @@
        * Interval delay for refreshing Log Shippers status
        */
       LOGSHIPPERS_STATUS_REFRESH_INTERVAL: 25000,
+      INTRO_IS_ACTIVE: true,
+      ENABLE_SIMPLIFIED_SIGNUP_PROCESS: true
     });
 
 })();

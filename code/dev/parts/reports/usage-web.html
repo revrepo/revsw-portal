@@ -33,7 +33,7 @@
                     <div class="dropdown">
                       <a class="dropdown-toggle" id="month-dd" role="button" data-toggle="dropdown" ng-disabled="_loading">
                         <div class="input-group">
-                          <input type="text" class="form-control" data-ng-model="month_year_symbol" disabled>
+                          <input type="text" class="form-control" data-ng-model="month_year_symbol">
                           <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                         </div>
                       </a>
@@ -306,7 +306,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr ng-repeat-start="( domain, usage ) in report.domains_usage">
+                  <tr ng-repeat-start="( domain, usage ) in report.domains_usage" name="{{domain}}">
                     <td>
                       <a ng-if="usage.count !== '0'" role="button" data-toggle="collapse" data-target="#domain-{{$index}}" >
                         <i class="glyphicon glyphicon-plus-sign"></i>
@@ -319,7 +319,7 @@
                     <td class="text-right">{{usage.billable_sent_bps}}</td>
                     <td class="text-right">{{usage.billable_received_bps}}</td>
                   </tr>
-                  <tr ng-repeat-end id="domain-{{$index}}" class="panel-collapse collapse" role="tabpanel">
+                  <tr ng-repeat-end id="domain-{{$index}}" class="panel-collapse collapse" role="tabpanel" name="{{domain}}">
                     <td colspan="7" style="background-color: #d0d0e0; padding-left: 25px;">
                       <div class="panel-body" style="padding: 10px; padding-bottom: 0;">
 
@@ -334,14 +334,14 @@
                               <div class="form-group">
                                 <label class="col-sm-6 control-label" >HIT</label>
                                 <div class="col-sm-6">
-                                  <div class="form-control text-right">{{ usage.cache_hits.HIT }}</div>
+                                  <div class="form-control text-right" id="cache_hit">{{ usage.cache_hits.HIT }}</div>
                                 </div>
                               </div>
 
                               <div class="form-group">
                                 <label class="col-sm-6 control-label" >MISS</label>
                                 <div class="col-sm-6">
-                                  <div class="form-control text-right">{{ usage.cache_hits.MISS }}</div>
+                                  <div class="form-control text-right" id="cache_miss">{{ usage.cache_hits.MISS }}</div>
                                 </div>
                               </div>
 
@@ -358,7 +358,7 @@
                               <div class="form-group" ng-repeat="( port, hits ) in usage.port_hits">
                                 <label class="col-sm-6 control-label" >{{ port === '80' ? 'HTTP' : 'HTTPS' }}</label>
                                 <div class="col-sm-6">
-                                  <div class="form-control text-right">{{ hits }}</div>
+                                  <div class="form-control text-right" id="port_{{port}}">{{ hits }}</div>
                                 </div>
                               </div>
 

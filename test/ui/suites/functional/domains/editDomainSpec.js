@@ -55,7 +55,7 @@ xdescribe('Functional', function () {  // jshint ignore:line
     it('should edit a domain and update the domain successfully',
       function () {
         Portal.domains.listPage.searchAndClickEdit(myDomain.name);
-        Portal.domains.editPage.domainForm.setOriginHostHeader(' ');
+        Portal.domains.editPage.form.setOriginHostHeader(' ');
         Portal.domains.editPage.clickUpdateDomain();
         Portal.dialog.clickOk();
         var alert = Portal.alerts.getFirst();

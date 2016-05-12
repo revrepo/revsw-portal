@@ -114,7 +114,7 @@
             <tbody>
               <tr id="anchor{{::$index}}" ng-click="saveAnchorScrollIndex($index)" ng-repeat="item in filteredRecords | limitTo:filter.limit:filter.skip track by $index">
                 <td>
-                  <a ui-sref=".edit({id: item.id})" ng-if="!item.loading" tooltip="Edit Job">
+                  <a ui-sref=".edit({id: item.id})" ng-if="!item.loading" uib-tooltip="Edit Job">
                   {{item.job_name}}
                 </a>
                 </td>
@@ -135,22 +135,22 @@
                 </td>
                 <td class="actions">
                   <i class="glyphicon glyphicon-refresh spin" ng-if="item.loading"></i>
-                  <a ui-sref=".edit({id: item.id})" ng-if="!item.loading" tooltip="Edit Job">
+                  <a ui-sref=".edit({id: item.id})" ng-if="!item.loading" uib-tooltip="Edit Job">
                     <i class="glyphicon glyphicon-pencil"></i>
                   </a>
-                  <a href="" ng-if="!item.loading" ng-click="deleteJob(item)" tooltip="Delete Job">
+                  <a href="" ng-if="!item.loading" ng-click="deleteJob(item)" uib-tooltip="Delete Job">
                     <i class="glyphicon glyphicon-trash"></i>
                   </a>
                   <!-- “Pause With Log Piling” -->
-                  <a href="" ng-class="{'not-active':item.operational_mode=='pause'}" ng-if="!item.loading" ng-click="onChangeLogShippingState(item,'pause')" tooltip="Pause With Log Piling">
+                  <a href="" ng-class="{'not-active':item.operational_mode=='pause'}" ng-if="!item.loading" ng-click="onChangeLogShippingState(item,'pause')" uib-tooltip="Pause With Log Piling">
                     <i class="glyphicon glyphicon-pause"></i>
                   </a>
                   <!--   “Start”  -->
-                  <a href="" ng-class="{'not-active':item.operational_mode=='active'}" ng-if="!item.loading" ng-click="onChangeLogShippingState(item,'active')" tooltip="Start">
+                  <a href="" ng-class="{'not-active':item.operational_mode=='active'}" ng-if="!item.loading" ng-click="onChangeLogShippingState(item,'active')" uib-tooltip="Start">
                     <i class="glyphicon glyphicon-play"></i>
                   </a>
                   <!-- “Stop” / “Start”  -->
-                  <a href="" ng-class="{'not-active':item.operational_mode=='stop'}" ng-if="!item.loading" ng-click="onChangeLogShippingState(item,'stop')" tooltip="Stop">
+                  <a href="" ng-class="{'not-active':item.operational_mode=='stop'}" ng-if="!item.loading" ng-click="onChangeLogShippingState(item,'stop')" uib-tooltip="Stop">
                     <i class="glyphicon glyphicon-stop"></i>
                   </a>
                 </td>

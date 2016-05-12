@@ -6,7 +6,7 @@
     .controller('TwoFactorAuthCodeModalController', TwoFactorAuthCodeModalController);
 
   /*@ngInject*/
-  function TwoFactorAuthCodeModalController($scope, $modalInstance, auth, User, AlertService, $config) {
+  function TwoFactorAuthCodeModalController($scope, $uibModalInstance, auth, User, AlertService, $config) {
     $scope.data = {
       code: '',
       loading: false
@@ -14,7 +14,7 @@
 
     $scope.close = function() {
       $scope.data.loading = false;
-      $modalInstance.dismiss();
+      $uibModalInstance.dismiss();
     };
 
     $scope.login = function() {
@@ -27,7 +27,7 @@
       try {
         User.login(auth.email, auth.password, $scope.data.code)
           .then(function(data) {
-            $modalInstance.close(data);
+            $uibModalInstance.close(data);
           })
           .catch(function (err) {
             if (err.status === $config.STATUS.UNAUTHORIZED) {

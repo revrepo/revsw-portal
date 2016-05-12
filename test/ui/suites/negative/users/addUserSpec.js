@@ -47,7 +47,7 @@ describe('Negative', function () {
       function () {
         var emptyUserData = {};
         Portal.userListPage.clickAddNewUser();
-        Portal.addUserPage.userForm.fill(emptyUserData);
+        Portal.addUserPage.form.fill(emptyUserData);
         var addBtn = Portal.addUserPage.getCreateUserBtn();
         expect(addBtn.isEnabled()).toBeFalsy();
       });
@@ -71,7 +71,7 @@ describe('Negative', function () {
         var derek = DataProvider.generateUser('Derek');
         derek.email = '';
         Portal.userListPage.clickAddNewUser();
-        Portal.addUserPage.userForm.fill(derek);
+        Portal.addUserPage.form.fill(derek);
         var addBtn = Portal.addUserPage.getCreateUserBtn();
         expect(addBtn.isEnabled()).toBeFalsy();
       });
@@ -81,7 +81,7 @@ describe('Negative', function () {
         var mathew = DataProvider.generateUser('Mathew');
         mathew.firstName = '';
         Portal.userListPage.clickAddNewUser();
-        Portal.addUserPage.userForm.fill(mathew);
+        Portal.addUserPage.form.fill(mathew);
         var addBtn = Portal.addUserPage.getCreateUserBtn();
         expect(addBtn.isEnabled()).toBeFalsy();
       });
@@ -91,7 +91,7 @@ describe('Negative', function () {
         var mathew = DataProvider.generateUser('Mathew');
         mathew.lastName = '';
         Portal.userListPage.clickAddNewUser();
-        Portal.addUserPage.userForm.fill(mathew);
+        Portal.addUserPage.form.fill(mathew);
         var addBtn = Portal.addUserPage.getCreateUserBtn();
         expect(addBtn.isEnabled()).toBeFalsy();
       });
@@ -101,7 +101,7 @@ describe('Negative', function () {
         var scott = DataProvider.generateUser('Scott');
         delete scott.role;
         Portal.userListPage.clickAddNewUser();
-        Portal.addUserPage.userForm.fill(scott);
+        Portal.addUserPage.form.fill(scott);
         var addBtn = Portal.addUserPage.getCreateUserBtn();
         expect(addBtn.isEnabled()).toBeFalsy();
       });
@@ -112,7 +112,7 @@ describe('Negative', function () {
         var brian = DataProvider.generateUser('Brian');
         delete brian.password;
         Portal.userListPage.clickAddNewUser();
-        Portal.addUserPage.userForm.fill(brian);
+        Portal.addUserPage.form.fill(brian);
         var addBtn = Portal.addUserPage.getCreateUserBtn();
         expect(addBtn.isEnabled()).toBeFalsy();
       });
@@ -122,7 +122,7 @@ describe('Negative', function () {
         var brian = DataProvider.generateUser('Brian');
         delete brian.passwordConfirm;
         Portal.userListPage.clickAddNewUser();
-        Portal.addUserPage.userForm.fill(brian);
+        Portal.addUserPage.form.fill(brian);
         var addBtn = Portal.addUserPage.getCreateUserBtn();
         expect(addBtn.isEnabled()).toBeFalsy();
       });

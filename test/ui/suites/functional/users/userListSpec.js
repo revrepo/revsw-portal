@@ -41,7 +41,7 @@ describe('Functional', function () {
     it('should display N items maximum in the page (25 items by default)',
       function () {
         var expectedUsersPerPage = 25;
-        var tableRows = Portal.userListPage.userTbl.getRows();
+        var tableRows = Portal.userListPage.table.getRows();
         expect(tableRows.count()).not.toBeGreaterThan(expectedUsersPerPage);
       });
 

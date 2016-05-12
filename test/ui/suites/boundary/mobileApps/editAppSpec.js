@@ -61,9 +61,8 @@ describe('Boundary', function () {
         Portal.header.goTo(app.platform);
         Portal.mobileApps.listPage.searchAndEdit(app);
         app.name = length51Characters;
-        Portal.mobileApps.editAppPage.form.fill(app);
-
-        var enabled = Portal.mobileApps.editAppPage.form.isEnabledVerify();
+        Portal.mobileApps.editPage.form.fill(app);
+        var enabled = Portal.mobileApps.editPage.form.isEnabledVerify();
         expect(enabled).toBe(false);
       });
 
@@ -74,13 +73,9 @@ describe('Boundary', function () {
         Portal.header.goTo(app.platform);
         Portal.mobileApps.listPage.searchAndEdit(app);
         app.name = '';
-        Portal.mobileApps.editAppPage.verify(app);
-
-        var alert = Portal.alerts.getFirst();
-        var expectedMsg1 = 'fails because';
-        var expectedMsg2 = 'is not allowed to be empty';
-        expect(alert.getText()).toContain(expectedMsg1);
-        expect(alert.getText()).toContain(expectedMsg2);
+        Portal.mobileApps.editPage.form.fill(app);
+        var enabled = Portal.mobileApps.editPage.form.isEnabledVerify();
+        expect(enabled).toBe(false);
       });
 
       it('should click "Verify" button and validate app name with empty ' +
@@ -90,13 +85,9 @@ describe('Boundary', function () {
         Portal.header.goTo(app.platform);
         Portal.mobileApps.listPage.searchAndEdit(app);
         app.name = '       ';
-        Portal.mobileApps.editAppPage.verify(app);
-
-        var alert = Portal.alerts.getFirst();
-        var expectedMsg1 = 'fails because';
-        var expectedMsg2 = 'is not allowed to be empty';
-        expect(alert.getText()).toContain(expectedMsg1);
-        expect(alert.getText()).toContain(expectedMsg2);
+        Portal.mobileApps.editPage.form.fill(app);
+        var enabled = Portal.mobileApps.editPage.form.isEnabledVerify();
+        expect(enabled).toBe(false);
       });
 
       xit('should click "Verify" button and validate app name with special ' +
@@ -106,13 +97,9 @@ describe('Boundary', function () {
         Portal.header.goTo(app.platform);
         Portal.mobileApps.listPage.searchAndEdit(app);
         app.name = '& ^ $ @ # % ( ) _ +  / \\ ~ ` , . ; :';
-        Portal.mobileApps.editAppPage.verify(app);
-
-        var alert = Portal.alerts.getFirst();
-        var expectedMsg1 = 'fails because';
-        var expectedMsg2 = 'is not allowed to be empty';
-        expect(alert.getText()).toContain(expectedMsg1);
-        expect(alert.getText()).toContain(expectedMsg2);
+        Portal.mobileApps.editPage.form.fill(app);
+        var enabled = Portal.mobileApps.editPage.form.isEnabledVerify();
+        expect(enabled).toBe(false);
       });
 
       /* Update tests: */
@@ -124,9 +111,9 @@ describe('Boundary', function () {
         Portal.header.goTo(app.platform);
         Portal.mobileApps.listPage.searchAndEdit(app);
         app.name = length51Characters;
-        Portal.mobileApps.editAppPage.form.fill(app);
+        Portal.mobileApps.editPage.form.fill(app);
 
-        var enabled = Portal.mobileApps.editAppPage.form.isEnabledVerify();
+        var enabled = Portal.mobileApps.editPage.form.isEnabledVerify();
         expect(enabled).toBe(false);
       });
 
@@ -137,14 +124,9 @@ describe('Boundary', function () {
         Portal.header.goTo(app.platform);
         Portal.mobileApps.listPage.searchAndEdit(app);
         app.name = '';
-        Portal.mobileApps.editAppPage.update(app);
-        Portal.dialog.clickOk();
-
-        var alert = Portal.alerts.getFirst();
-        var expectedMsg1 = 'fails because';
-        var expectedMsg2 = 'is not allowed to be empty';
-        expect(alert.getText()).toContain(expectedMsg1);
-        expect(alert.getText()).toContain(expectedMsg2);
+        Portal.mobileApps.editPage.form.fill(app);
+        var enabled = Portal.mobileApps.editPage.form.isEnabledUpdate();
+        expect(enabled).toBe(false);
       });
 
       it('should click "Update" button and validate app name with empty ' +
@@ -154,14 +136,9 @@ describe('Boundary', function () {
         Portal.header.goTo(app.platform);
         Portal.mobileApps.listPage.searchAndEdit(app);
         app.name = '       ';
-        Portal.mobileApps.editAppPage.update(app);
-        Portal.dialog.clickOk();
-
-        var alert = Portal.alerts.getFirst();
-        var expectedMsg1 = 'fails because';
-        var expectedMsg2 = 'is not allowed to be empty';
-        expect(alert.getText()).toContain(expectedMsg1);
-        expect(alert.getText()).toContain(expectedMsg2);
+        Portal.mobileApps.editPage.form.fill(app);
+        var enabled = Portal.mobileApps.editPage.form.isEnabledUpdate();
+        expect(enabled).toBe(false);
       });
 
       xit('should click "Update" button and validate app name with special ' +
@@ -171,14 +148,9 @@ describe('Boundary', function () {
         Portal.header.goTo(app.platform);
         Portal.mobileApps.listPage.searchAndEdit(app);
         app.name = '& ^ $ @ # % ( ) _ +  / \\ ~ ` , . ; :';
-        Portal.mobileApps.editAppPage.update(app);
-        Portal.dialog.clickOk();
-
-        var alert = Portal.alerts.getFirst();
-        var expectedMsg1 = 'fails because';
-        var expectedMsg2 = 'is not allowed to be empty';
-        expect(alert.getText()).toContain(expectedMsg1);
-        expect(alert.getText()).toContain(expectedMsg2);
+        Portal.mobileApps.editPage.form.fill(app);
+        var enabled = Portal.mobileApps.editPage.form.isEnabledUpdate();
+        expect(enabled).toBe(false);
       });
 
       /* Publish tests: */
@@ -190,9 +162,9 @@ describe('Boundary', function () {
         Portal.header.goTo(app.platform);
         Portal.mobileApps.listPage.searchAndEdit(app);
         app.name = length51Characters;
-        Portal.mobileApps.editAppPage.form.fill(app);
+        Portal.mobileApps.editPage.form.fill(app);
 
-        var enabled = Portal.mobileApps.editAppPage.form.isEnabledVerify();
+        var enabled = Portal.mobileApps.editPage.form.isEnabledPublish();
         expect(enabled).toBe(false);
       });
 
@@ -203,14 +175,10 @@ describe('Boundary', function () {
         Portal.header.goTo(app.platform);
         Portal.mobileApps.listPage.searchAndEdit(app);
         app.name = '';
-        Portal.mobileApps.editAppPage.publish(app);
-        Portal.dialog.clickOk();
+        Portal.mobileApps.editPage.form.fill(app);
 
-        var alert = Portal.alerts.getFirst();
-        var expectedMsg1 = 'fails because';
-        var expectedMsg2 = 'is not allowed to be empty';
-        expect(alert.getText()).toContain(expectedMsg1);
-        expect(alert.getText()).toContain(expectedMsg2);
+        var enabled = Portal.mobileApps.editPage.form.isEnabledPublish();
+        expect(enabled).toBe(false);
       });
 
       it('should click "Publish" button and validate app name with empty ' +
@@ -220,31 +188,23 @@ describe('Boundary', function () {
         Portal.header.goTo(app.platform);
         Portal.mobileApps.listPage.searchAndEdit(app);
         app.name = '       ';
-        Portal.mobileApps.editAppPage.publish(app);
-        Portal.dialog.clickOk();
+        Portal.mobileApps.editPage.form.fill(app);
 
-        var alert = Portal.alerts.getFirst();
-        var expectedMsg1 = 'fails because';
-        var expectedMsg2 = 'is not allowed to be empty';
-        expect(alert.getText()).toContain(expectedMsg1);
-        expect(alert.getText()).toContain(expectedMsg2);
+        var enabled = Portal.mobileApps.editPage.form.isEnabledPublish();
+        expect(enabled).toBe(false);
       });
 
-      xit('should click "Publish" button and validate app name with special ' +
+      it('should click "Publish" button and validate app name with special ' +
         'characters - ' + app.platform, function () {
         app.name = tempAppName;
         Portal.goToMobileApps();
         Portal.header.goTo(app.platform);
         Portal.mobileApps.listPage.searchAndEdit(app);
         app.name = '& ^ $ @ # % ( ) _ +  / \\ ~ ` , . ; :';
-        Portal.mobileApps.editAppPage.publish(app);
-        Portal.dialog.clickOk();
+        Portal.mobileApps.editPage.form.fill(app);
 
-        var alert = Portal.alerts.getFirst();
-        var expectedMsg1 = 'fails because';
-        var expectedMsg2 = 'is not allowed to be empty';
-        expect(alert.getText()).toContain(expectedMsg1);
-        expect(alert.getText()).toContain(expectedMsg2);
+        var enabled = Portal.mobileApps.editPage.form.isEnabledPublish();
+        expect(enabled).toBe(false);
       });
     });
   });

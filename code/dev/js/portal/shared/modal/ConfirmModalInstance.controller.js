@@ -6,16 +6,16 @@
     .controller('ConfirmModalInstanceCtrl', ConfirmModalInstanceCtrl);
 
   /*@ngInject*/
-  function ConfirmModalInstanceCtrl($scope, $modalInstance, model) {
+  function ConfirmModalInstanceCtrl($scope, $uibModalInstance, model) {
 
     $scope.model = model;
 
     $scope.ok = function () {
-      $modalInstance.close(true);
+      $uibModalInstance.close(true);
     };
 
     $scope.cancel = function () {
-      $modalInstance.dismiss('cancel');
+      $uibModalInstance.dismiss('cancel');
     };
   }
 })();

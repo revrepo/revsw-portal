@@ -101,34 +101,7 @@
       delete $http.defaults.headers.common.Authorization;
     }
 
-    /**
-     * Method to login
-     *
-     * @throws Error
-     * @param {string} email
-     * @param {string} password
-     * @param {string?} [oneTimePassword]
-     * @returns {Promise}
-     */
-    function login(email, password, oneTimePassword) {
-      if (!email || !password) {
-        throw new Error('Please fill email and password');
-      }
-      // Create data that will be sent to login
-      var authData = {
-        email: email,
-        password: password
-      };
-      //Check and add one time password
-      if (oneTimePassword) {
-        authData.oneTimePassword = oneTimePassword;
-      }
-      return $http.post($config.API_URL + '/authenticate', authData).then(function (data) {
-        if (data.status === $config.STATUS.OK) {
-          setToken(data.data.token);
-          addAuthHeaderForAPI(data.data.token);
-          return $http.get($config.API_URL + '/users/myself')
-            .then(function (data) {
+    function _successGetUserMyself(data) {
               if (data && data.status === $config.STATUS.OK) {
                 // Success
                 var res = data.data;
@@ -163,7 +136,35 @@
                 throw new Error(data.response);
               }
               return data;
-            });
+            }
+    /**
+     * Method to login
+     *
+     * @throws Error
+     * @param {string} email
+     * @param {string} password
+     * @param {string?} [oneTimePassword]
+     * @returns {Promise}
+     */
+    function login(email, password, oneTimePassword) {
+      if (!email || !password) {
+        throw new Error('Please fill email and password');
+      }
+      // Create data that will be sent to login
+      var authData = {
+        email: email,
+        password: password
+      };
+      //Check and add one time password
+      if (oneTimePassword) {
+        authData.oneTimePassword = oneTimePassword;
+      }
+      return $http.post($config.API_URL + '/authenticate', authData).then(function (data) {
+        if (data.status === $config.STATUS.OK) {
+          setToken(data.data.token);
+          addAuthHeaderForAPI(data.data.token);
+          return $http.get($config.API_URL + '/users/myself')
+            .then(_successGetUserMyself );
         }
         return data;
       }).catch(function (err) {
@@ -240,7 +241,7 @@
      */
     function hasBillingPlan() {
       var account = getSelectedAccount();
-      return Boolean(account.plan_id);
+      return Boolean(account.billing_plan);
     }
 
     /**
@@ -466,13 +467,51 @@
       return accSelected || $localStorage.selectedAccount;
     }
 
+    function updateToken(token) {
+      var def = $q.defer();
+      if (!!token) {
+        setToken(token);
+        addAuthHeaderForAPI(token);
+        $http.get($config.API_URL + '/users/myself')
+          .then(_successGetUserMyself).then(function(data) {
+            def.resolve(data);
+          });
+      } else {
+        def.reject({
+          message: 'Token not correct'
+        });
+      }
+      return def.promise;
+    }
 
+    function deleteAccountProfile(account_id, data) {
+      var def = $q.defer();
+      var config = {
+        method: 'DELETE',
+        url: $config.API_URL + '/accounts/' + account_id,
+        data: data,
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8'
+        }
+      };
+
+      $http(config)
+        .then(function(data) {
+          //NOTE: auto logout, but not redirect
+          logout();
+          def.resolve(data);
+        }, def.reject);
+
+      return def.promise;
+    }
 
     return {
 
       getToken: getToken,
 
       setToken: setToken,
+
+      updateToken: updateToken,
 
       isAuthed: isAuthed,
 
@@ -516,7 +555,9 @@
 
       getSelectedAccount: getSelectedAccount,
 
-      hasBillingPlan: hasBillingPlan
+      hasBillingPlan: hasBillingPlan,
+
+      deleteAccountProfile: deleteAccountProfile
     };
   }
 })();

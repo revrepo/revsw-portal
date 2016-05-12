@@ -38,12 +38,12 @@ describe('Negative', function () {
 
     it('should not apply filters when typing spaces in "Search" field',
       function () {
-        var totalRows = Portal.domains.listPage.domainsTbl
+        var totalRows = Portal.domains.listPage.table
           .getRows()
           .count();
         Portal.domains.listPage.searcher
           .setSearchCriteria('    '); // 4 char spaces
-        var newTotalRows = Portal.domains.listPage.domainsTbl
+        var newTotalRows = Portal.domains.listPage.table
           .getRows()
           .count();
         expect(totalRows).toEqual(newTotalRows);
@@ -54,7 +54,7 @@ describe('Negative', function () {
       function () {
         var uniqueString = 'unique_string_' + Date.now();
         Portal.domains.listPage.searcher.setSearchCriteria(uniqueString);
-        var totalRows = Portal.domains.listPage.domainsTbl
+        var totalRows = Portal.domains.listPage.table
           .getRows()
           .count();
         expect(totalRows).toEqual(0);

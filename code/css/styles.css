@@ -241,6 +241,27 @@ textarea.text--courier {
 .text--courier {
   font-family: Courier;
 }
+form .error-messages {
+  display: none;
+}
+form.ng-invalid.ng-submitted .error-messages {
+  display: block;
+}
+form .has-error .error-messages {
+  display: block;
+}
+form .error-messages {
+  color: #d87551;
+}
+form .error-messages.alert-text {
+  color: #d87551;
+}
+form .error-messages.ng-inactive {
+  opacity: 0;
+}
+form .error-messages.ng-active {
+  opacity: 1;
+}
 .main_img_container {
   left: 50%;
   position: absolute;
@@ -364,6 +385,12 @@ section[drawer] .side-menu .side-menu-sub-item {
 section[drawer] .side-menu .side-menu-sub-item.active {
   color: white;
 }
+section[drawer] .side-menu .side-menu-sub-item.introjs-showElement {
+  color: #f9af33;
+}
+section[drawer] .side-menu .side-menu-sub-item.introjs-helperLayer {
+  background-color: #f9af33;
+}
 section[drawer] .side-menu .side-menu-sub-item {
   display: none;
 }
@@ -385,6 +412,9 @@ section[drawer] .side-menu .active-side-menu-item .side-menu-sub-item {
 .menu-toggle {
   font-size: 24px;
   padding: 9px 0 9px 20px;
+}
+.introjs-helperNumberLayer {
+  line-height: 12px;
 }
 .navbar {
   margin: 0;
@@ -548,6 +578,17 @@ polyline {
   .dl-horizontal dd {
     margin-left: 260px;
   }
+}
+.bluetriangletech {
+  max-height: 395px;
+  overflow: hidden;
+}
+.bluetriangletech iframe {
+  border: 0px inset;
+  min-height: 450px;
+}
+.bluetriangletech iframe.bluetriangletech--traffic-info {
+  min-height: 240px;
 }
 section[drawer] .side-menu .dashboard_menu .side-menu-item.item-title a {
   color: #f7941e;
@@ -774,4 +815,7 @@ i {
   color: #888;
   font-weight: bold;
   font-size: 1.16667em;
+}
+.subscription-summary .btn {
+  margin-left: 20px;
 }

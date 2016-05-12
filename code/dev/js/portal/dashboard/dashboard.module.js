@@ -121,6 +121,7 @@
           },
           config: {
             height: '100%',
+            className: 'bluetriangletech--bounce-rate',
             country: 'All Countries',
             count_last_day: '1'
           }
@@ -140,6 +141,7 @@
           },
           config: {
             height: '100%',
+            className: 'bluetriangletech--brand-conversion-rate',
             country: 'All Countries',
             count_last_day: '1'
           }
@@ -159,6 +161,27 @@
           },
           config: {
             height: '100%',
+            className: 'bluetriangletech--lost-revenue-calculator',
+            country: 'All Countries',
+            count_last_day: '1'
+          }
+        })
+        // #5 'BTT Traffic Parameters'
+        .widget('bluetriangletech-traffic-info', {
+          title: 'BTT Traffic Parameters',
+          description: 'BTT Traffic Parameters',
+          templateUrl: 'parts/dashboard/widgets/bluetriangletech/view-iframe-bluetriangletech.tpl.html',
+          titleTemplateUrl: 'parts/dashboard/widgets/bluetriangletech/widget-title-with-params-bluetriangletech.html',
+          controller: 'widgetBTTTrafficInfoReportController',
+          controllerAs: 'iframe',
+          edit: {
+            templateUrl: 'parts/dashboard/widgets/bluetriangletech/edit-bluetriangletech.html',
+            controller: 'widgetEditBTTiframeController',
+            controllerAs: 'vm',
+          },
+          config: {
+            height: '100%',
+            className: 'bluetriangletech--traffic-info',
             country: 'All Countries',
             count_last_day: '1'
           }
@@ -195,6 +218,7 @@
     .controller('widgetBTTBounceRateReportController', widgetBTTBounceRateReportController)
     .controller('widgetBTTBrandConversionRateReportController', widgetBTTBrandConversionRateReportController)
     .controller('widgetBTTLostRevenueCalculatorReportController', widgetBTTLostRevenueCalculatorReportController)
+    .controller('widgetBTTTrafficInfoReportController', widgetBTTTrafficInfoReportController)
 
   .controller('widgetEditBTTiframeController', widgetEditBTTiframeController);
   /**
@@ -220,7 +244,7 @@
     vm.config = config;
     vm._loading = false;
     // TODO: init function for control existing domain Id
-    BTTPortalService.generateUrlConversionReport(config.filters)
+    BTTPortalService.generateUrlConversionReport(config)
       .then(function(url) {
         config.url = url;
         if (config.url) {
@@ -254,7 +278,7 @@
     vm.config = config;
     vm._loading = false;
     // TODO: init function for control existing domain Id
-    BTTPortalService.generateUrlBounceRateReport(config.filters)
+    BTTPortalService.generateUrlBounceRateReport(config)
       .then(function(url) {
         config.url = url;
         if (config.url) {
@@ -288,7 +312,7 @@
     vm.config = config;
     vm._loading = false;
     // TODO: init function for control existing domain Id
-    BTTPortalService.generateUrlBrandConversionRateReport(config.filters)
+    BTTPortalService.generateUrlBrandConversionRateReport(config)
       .then(function(url) {
         config.url = url;
         if (config.url) {
@@ -325,7 +349,7 @@
     vm.config = config;
     vm._loading = false;
     // TODO: init function for control existing domain Id
-    BTTPortalService.generateUrlLostRevenueCalculatorReport(config.filters)
+    BTTPortalService.generateUrlLostRevenueCalculatorReport(config)
       .then(function(url) {
         config.url = url;
         if (config.url) {
@@ -336,14 +360,53 @@
         vm._loading = false;
       });
   }
-
   /**
-   * [widgetEditBTTiframeController description]
+   * @name  widgetBTTTrafficInfoReportController
+   * @description
+   *
+   *
+   * @param  {[type]} $sce             [description]
+   * @param  {[type]} BTTPortalService [description]
+   * @param  {[type]} config           [description]
+   * @return {[type]}                  [description]
+   */
+  function widgetBTTTrafficInfoReportController($sce, BTTPortalService, config) {
+    'ngInject';
+    var vm = this;
+    var _defaultConfig = {
+      filters: {
+        country: 'All Countries',
+        count_last_day: '1'
+      },
+      info: {
+        country: 'All countries'
+      }
+    };
+    _.defaultsDeep(config, _defaultConfig);
+    vm.config = config;
+    vm._loading = false;
+    // TODO: init function for control existing domain Id
+    BTTPortalService.generateUrlTrafficInfoReport(config)
+      .then(function(url) {
+        config.url = url;
+        if (config.url) {
+          vm.url = $sce.trustAsResourceUrl(config.url);
+        }
+      })
+      .finally(function() {
+        vm._loading = false;
+      });
+  }
+  /**
+   * @name  widgetEditBTTiframeController
+   * @description
+   *
+   *
    * @param  {[type]} $scope    [description]
    * @param  {[type]} Countries [description]
    * @return {[type]}           [description]
    */
-  function widgetEditBTTiframeController($scope, Countries) {
+  function widgetEditBTTiframeController($scope, $localStorage, Countries, User, AlertService) {
     'ngInject';
     var vm = this;
     var _defaultConfig = {
@@ -356,15 +419,50 @@
       }
     };
     _.defaultsDeep($scope.config, _defaultConfig);
-
+    vm._loading = true;
+    vm.domains = [];
     vm.domain = $scope.config.domain;
     vm.refCountry = Countries.query();
-    vm.onDomainSelected = function() {
+
+    // Load user domains
+    User.getUserDomains(true)
+      .then(function(domains) {
+        vm.domains = _.filter(domains, function(item) {
+          return (!!item.btt_key && item.btt_key !== '');
+        });
+        // Set default value if ngModel is empty
+        if (!vm.domain || !vm.domain.id) {
+          // Select domain if it's only one
+          if (domains.length === 1 && $scope.selectOne) {
+            vm.onDomainSelected($scope.domains[0]);
+            vm.domain = $scope.domains[0];
+          }
+          if ($localStorage.selectedDomain && $localStorage.selectedDomain.id) {
+            var ind = _.findIndex(domains, function(d) {
+              return d.id === $localStorage.selectedDomain.id;
+            });
+
+            vm.domain = vm.domains[ind];
+            vm.onDomainSelected(vm.domains[ind]);
+          }
+        }
+        return vm.domains;
+      })
+      .catch(function() {
+        AlertService.danger('Oops something wrong');
+      })
+      .finally(function() {
+        vm._loading = false;
+      });
+
+    vm.onDomainSelected = function(domain) {
+      if (!!domain) {
+        $localStorage.selectedDomain = domain;
+      }
       if (!vm.domain || !vm.domain.id) {
         return;
       }
       vm.reload();
-
     };
     /**
      * @name  reload
@@ -377,4 +475,6 @@
       });
     };
   }
+
+
 })();

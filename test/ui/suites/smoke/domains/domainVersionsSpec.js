@@ -49,7 +49,7 @@ describe('Smoke', function () {
         it('should be displayed when clicking "Versions" icon for specific ' +
           'domain',
           function () {
-            Portal.domains.listPage.domainsTbl
+            Portal.domains.listPage.table
               .getFirstRow()
               .clickVersions();
             expect(Portal.domains.versionsPage.isDisplayed()).toBeTruthy();

@@ -6,7 +6,7 @@
     .controller('ForgotPasswordController', ForgotPasswordController);
 
   /*@ngInject*/
-  function ForgotPasswordController($scope, $modalInstance, $config, $modal, User, AlertService) {
+  function ForgotPasswordController($scope, $uibModalInstance, $config, $uibModal, User, AlertService) {
 
     $scope.data = {
       email: '',
@@ -15,7 +15,7 @@
 
     $scope.close = function() {
       $scope.data.loading = false;
-      $modalInstance.dismiss();
+      $uibModalInstance.dismiss();
     };
 
     $scope.forgot = function() {
@@ -28,7 +28,7 @@
           .then(function(data) {
             if (data && data.data && data.data.message) {
               // Show message
-              $modalInstance.close(data.data.message);
+              $uibModalInstance.close(data.data.message);
             }
           })
           .catch(function(err) {
@@ -43,12 +43,12 @@
           .finally(function() {
             $scope.data.loading = false;
           });
-        //$modalInstance.close();
+        //$uibModalInstance.close();
       }
     };
 
     $scope.resendRegistrationEmail = function(email, password) {
-      var modalInstance = $modal.open({
+      var modalInstance = $uibModal.open({
         templateUrl: 'parts/auth/resend-subscription-info.html',
         controller: 'resendRegistrationEmailController',
         size: 'md',
@@ -63,7 +63,7 @@
       });
 
       modalInstance.result.then(function(data) {
-        $modalInstance.close();
+        $uibModalInstance.close();
       });
     };
   }

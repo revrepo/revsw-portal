@@ -107,7 +107,7 @@
             <tbody>
               <tr id="anchor{{::$index}}" ng-click="saveAnchorScrollIndex($index)" ng-repeat="item in filteredRecords | limitTo:filter.limit:filter.skip track by $index">
                 <td>
-                  <a ui-sref=".edit({id: item.id})" ng-if="!item.loading" tooltip="Edit SSL Certificate">
+                  <a ui-sref=".edit({id: item.id})" ng-if="!item.loading" uib-tooltip="Edit SSL Certificate">
                   {{item.cert_name}}
                 </a>
                 </td>
@@ -120,10 +120,10 @@
                 </td>
                 <td class="actions">
                   <i class="glyphicon glyphicon-refresh spin" ng-if="item.loading"></i>
-                  <a ui-sref=".edit({id: item.id})" ng-if="!item.loading" tooltip="Edit SSL Certificate">
+                  <a ui-sref=".edit({id: item.id})" ng-if="!item.loading" uib-tooltip="Edit SSL Certificate">
                     <i class="glyphicon glyphicon-pencil"></i>
                   </a>
-                  <a href="" ng-if="!item.loading" ng-click="deleteSSL_cert(item)" tooltip="Delete SSL Certificate">
+                  <a href="" ng-if="!item.loading" ng-click="deleteSSL_cert(item)" uib-tooltip="Delete SSL Certificate">
                     <i class="glyphicon glyphicon-trash"></i>
                   </a>
                 </td>

@@ -58,7 +58,7 @@ describe('Smoke', function () {
             afterEach(function () {
             });
 
-            it('should be displayed when displaying User List page',
+            it('should be displayed when displaying `App List` page',
               function () {
                 var currPageBtn = Portal.mobileApps.listPage.pager
                   .getCurrentPageIndexBtn();

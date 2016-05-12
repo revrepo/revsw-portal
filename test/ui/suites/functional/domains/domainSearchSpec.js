@@ -42,13 +42,13 @@ describe('Functional', function () {
 
     it('should filter domain-configs according to name search criteria',
       function () {
-        var domainNameToSearch = Portal.domains.listPage.domainsTbl
+        var domainNameToSearch = Portal.domains.listPage.table
           .getFirstRow()
           .getName();
         Portal.domains.listPage.searcher.setSearchCriteria(domainNameToSearch);
-        var allRows = Portal.domains.listPage.domainsTbl.getRows();
+        var allRows = Portal.domains.listPage.table.getRows();
         expect(allRows.count()).toEqual(1);
-        var domainNameDisplayed = Portal.domains.listPage.domainsTbl
+        var domainNameDisplayed = Portal.domains.listPage.table
           .getFirstRow()
           .getName();
         expect(domainNameDisplayed).toEqual(domainNameToSearch);
@@ -56,13 +56,13 @@ describe('Functional', function () {
 
     it('should filter domain-configs according to cname search criteria',
       function () {
-        var cNameToSearch = Portal.domains.listPage.domainsTbl
+        var cNameToSearch = Portal.domains.listPage.table
           .getFirstRow()
           .getCName();
         Portal.domains.listPage.searcher.setSearchCriteria(cNameToSearch);
-        var allRows = Portal.domains.listPage.domainsTbl.getRows();
+        var allRows = Portal.domains.listPage.table.getRows();
         expect(allRows.count()).toEqual(1);
-        var cNameDisplayed = Portal.domains.listPage.domainsTbl
+        var cNameDisplayed = Portal.domains.listPage.table
           .getFirstRow()
           .getCName();
         expect(cNameDisplayed).toEqual(cNameToSearch);
@@ -70,7 +70,7 @@ describe('Functional', function () {
 
     it('should clear the search field when clicking "X" button',
       function () {
-        var domainNameToSearch = Portal.domains.listPage.domainsTbl
+        var domainNameToSearch = Portal.domains.listPage.table
           .getFirstRow()
           .getName();
         Portal.domains.listPage.searcher.setSearchCriteria(domainNameToSearch);
@@ -81,14 +81,14 @@ describe('Functional', function () {
 
     it('should reset the filtering when clicking "X" button',
       function () {
-        var domainNameToSearch = Portal.domains.listPage.domainsTbl
+        var domainNameToSearch = Portal.domains.listPage.table
           .getFirstRow()
           .getName();
         Portal.domains.listPage.searcher.setSearchCriteria(domainNameToSearch);
-        var totalRows = Portal.domains.listPage.domainsTbl.getRows().count();
+        var totalRows = Portal.domains.listPage.table.getRows().count();
         expect(totalRows).toEqual(1);
         Portal.domains.listPage.searcher.clickReset();
-        var newTotalRows = Portal.domains.listPage.domainsTbl.getRows().count();
+        var newTotalRows = Portal.domains.listPage.table.getRows().count();
         expect(newTotalRows).not.toEqual(totalRows);
         expect(newTotalRows).toBeGreaterThan(totalRows);
       });

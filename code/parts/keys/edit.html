@@ -46,7 +46,7 @@
             >API Key</label>
 
             <div class="col-sm-10">
-              <button class="btn btn-primary" clipboard text="key.key" on-copied="copyCallback()" on-error="copyCallback(err)" style="vertical-align: initial;"  tooltip="Click to copy the key to the clipboard" tooltip-placement="top"><i class="fa fa-files-o"></i></button>
+              <button class="btn btn-primary" clipboard text="key.key" on-copied="copyCallback()" on-error="copyCallback(err)" style="vertical-align: initial;"  uib-tooltip="Click to copy the key to the clipboard" tooltip-placement="top"><i class="fa fa-files-o"></i></button>
               <button class="btn btn-primary" ng-click="switchKeyVisibility(key)" ng-hide="key.showKey" style="vertical-align: initial;">Show API Key</button>
               <input id="key" ng-if="key.showKey" ng-blur="switchKeyVisibility(key)" class="form-control" value="{{key.key}}" style="width: 300px; display: inline-block; position: absolute; z-index: 999; margin-left: 4px;" focus-me="key.showKey">
             </div>
@@ -54,15 +54,11 @@
           <div class="form-group" ng-hide="!companies || companies.length == 1">
             <label for="account_id"
                    class="col-sm-2 control-label">Account</label>
-
             <div class="col-sm-4">
-              <ui-select id="account_id"
-                         ng-disabled="_loading"
-                         ng-model="key.account_id"
-                         style="width: 100%;">
+               <ui-select ng-model="key.account_id" theme="select2" ng-disabled="_loading" on-select="onAccountSelect($model)" style="min-width: 550px;" id="account_id" name="accountId">
                 <ui-select-match placeholder="Select Account">{{$select.selected.companyName}}</ui-select-match>
                 <ui-select-choices repeat="item.id as item in companies | filter: {companyName: $select.search}">
-                  <small>{{item.companyName}}</small>
+                  <div ng-bind-html="item.companyName|highlight: $select.search"></div>
                 </ui-select-choices>
               </ui-select>
             </div>
@@ -96,7 +92,7 @@
             <label for="domains"
                    class="col-sm-2 control-label"
                    popover-trigger="mouseenter"
-                   popover="Managed Domains">Managed Domains</label>
+                   uib-popover="Managed Domains">Managed Domains</label>
 
             <div class="col-sm-10">
               <ui-select id="domains"
@@ -117,7 +113,7 @@
             <label popover-append-to-body="{{true}}"
                    class="col-sm-2 control-label"
                    popover-trigger="mouseenter"
-                   popover="Permissions">Permissions</label>
+                   uib-popover="Permissions">Permissions</label>
 
             <div class="col-sm-10">
                 <div class="col-sm-10">

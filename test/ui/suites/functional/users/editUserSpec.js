@@ -52,7 +52,7 @@ describe('Functional', function () {
           Portal.createUser(tom);
           // Edit user
           Portal.userListPage.searchAndClickEdit(tom.email);
-          Portal.editUserPage.userForm.setRole(Constants.user.roles.USER);
+          Portal.editUserPage.form.setRole(Constants.user.roles.USER);
           Portal.editUserPage.clickUpdateUser();
           var alert = Portal.alerts.getFirst();
           expect(alert.getText()).toEqual('User updated');
@@ -74,7 +74,7 @@ describe('Functional', function () {
           Portal.createUser(joe);
           // Edit user
           Portal.userListPage.searchAndClickEdit(joe.email);
-          Portal.editUserPage.userForm.setRole(Constants.user.roles.ADMIN);
+          Portal.editUserPage.form.setRole(Constants.user.roles.ADMIN);
           Portal.editUserPage.clickUpdateUser();
           var alert = Portal.alerts.getFirst();
           expect(alert.getText()).toEqual('User updated');
@@ -97,7 +97,7 @@ describe('Functional', function () {
           Portal.createUser(mark);
           // Edit user
           Portal.userListPage.searchAndClickEdit(mark.email);
-          Portal.editUserPage.userForm.setFirstName(valueToAdd);
+          Portal.editUserPage.form.setFirstName(valueToAdd);
           Portal.editUserPage.clickUpdateUser();
           var alert = Portal.alerts.getFirst();
           expect(alert.getText()).toEqual('User updated');
@@ -121,7 +121,7 @@ describe('Functional', function () {
           Portal.createUser(adele);
           // Edit user
           Portal.userListPage.searchAndClickEdit(adele.email);
-          Portal.editUserPage.userForm.setLastName(valueToAdd);
+          Portal.editUserPage.form.setLastName(valueToAdd);
           Portal.editUserPage.clickUpdateUser();
           var alert = Portal.alerts.getFirst();
           expect(alert.getText()).toEqual('User updated');
@@ -144,7 +144,7 @@ describe('Functional', function () {
           Portal.createUser(andrew);
           // Edit user
           Portal.userListPage.searchAndClickEdit(andrew.email);
-          Portal.editUserPage.userForm.setRole(Constants.user.roles.USER);
+          Portal.editUserPage.form.setRole(Constants.user.roles.USER);
           Portal.editUserPage.clickUpdateUser();
           var alert = Portal.alerts.getFirst();
           expect(alert.getText()).toEqual('User updated');
@@ -167,7 +167,7 @@ describe('Functional', function () {
           Portal.createUser(frank);
           // Edit user
           Portal.userListPage.searchAndClickEdit(frank.email);
-          Portal.editUserPage.userForm.setAccessControls([
+          Portal.editUserPage.form.setAccessControls([
             Constants.user.accessControls.REPORTS
           ]);
           Portal.editUserPage.clickUpdateUser();
@@ -176,9 +176,9 @@ describe('Functional', function () {
           // Check user is in list
           Portal.editUserPage.clickBackToList();
           Portal.userListPage.searchAndClickEdit(frank.email);
-          var role = Portal.editUserPage.userForm.getRole();
+          var role = Portal.editUserPage.form.getRole();
           expect(role).toEqual(Constants.user.roles.ADMIN);
-          var reportsCheckBox = Portal.editUserPage.userForm.getReportsChBox();
+          var reportsCheckBox = Portal.editUserPage.form.getReportsChBox();
           expect(reportsCheckBox.isSelected()).toBeTruthy();
           // Delete user
           Portal.editUserPage.clickBackToList();
@@ -194,7 +194,7 @@ describe('Functional', function () {
           Portal.createUser(mark);
           // Edit user
           Portal.userListPage.searchAndClickEdit(mark.email);
-          Portal.editUserPage.userForm.setFirstName(valueToAdd);
+          Portal.editUserPage.form.setFirstName(valueToAdd);
           Portal.editUserPage.clickUpdateUser();
           var alert = Portal.alerts.getFirst();
           expect(alert.getText()).toEqual('User updated');
@@ -217,7 +217,7 @@ describe('Functional', function () {
           Portal.createUser(adele);
           // Edit user
           Portal.userListPage.searchAndClickEdit(adele.email);
-          Portal.editUserPage.userForm.setLastName(valueToAdd);
+          Portal.editUserPage.form.setLastName(valueToAdd);
           Portal.editUserPage.clickUpdateUser();
           var alert = Portal.alerts.getFirst();
           expect(alert.getText()).toEqual('User updated');
@@ -240,7 +240,7 @@ describe('Functional', function () {
           Portal.createUser(mathew);
           // Edit user
           Portal.userListPage.searchAndClickEdit(mathew.email);
-          Portal.editUserPage.userForm.setRole(Constants.user.roles.ADMIN);
+          Portal.editUserPage.form.setRole(Constants.user.roles.ADMIN);
           Portal.editUserPage.clickUpdateUser();
           var alert = Portal.alerts.getFirst();
           expect(alert.getText()).toEqual('User updated');
@@ -263,7 +263,7 @@ describe('Functional', function () {
           Portal.createUser(scott);
           // Edit user
           Portal.userListPage.searchAndClickEdit(scott.email);
-          Portal.editUserPage.userForm.setAccessControls([
+          Portal.editUserPage.form.setAccessControls([
             Constants.user.accessControls.TEST
           ]);
           Portal.editUserPage.clickUpdateUser();
@@ -272,9 +272,9 @@ describe('Functional', function () {
           // Check user is in list
           Portal.editUserPage.clickBackToList();
           Portal.userListPage.searchAndClickEdit(scott.email);
-          var role = Portal.editUserPage.userForm.getRole();
+          var role = Portal.editUserPage.form.getRole();
           expect(role).toEqual(Constants.user.roles.USER);
-          var reportsCheckBox = Portal.editUserPage.userForm.getTestChBox();
+          var reportsCheckBox = Portal.editUserPage.form.getTestChBox();
           expect(reportsCheckBox.isSelected()).toBeTruthy();
           // Delete user
           Portal.editUserPage.clickBackToList();

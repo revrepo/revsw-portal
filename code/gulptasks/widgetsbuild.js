@@ -1,15 +1,14 @@
 var gulp = require('gulp');
-// var connect = require('gulp-connect');
-// var wiredep = require('wiredep').stream;
 var $ = require('gulp-load-plugins')();
 var del = require('del');
 var jsReporter = require('jshint-stylish');
 var annotateAdfPlugin = require('ng-annotate-adf-plugin');
 var path = require('path');
-console.log(__dirname);
-var widgetDir = path.join(__dirname, '..', 'dev','widgets', 'adf-widget-analytics-proxy-traffic')
+
+var widgetDirPath = path.join('widgets', 'adf-widget-analytics-proxy-traffic');
+var widgetDir = path.join(__dirname, '..', 'dev',widgetDirPath);
 var widgetSrcDir = path.join(widgetDir, 'src');
-var widgetDistDir = path.join(widgetDir, 'dist');
+var widgetDistDir = path.join(widgetDir, '..','..','..',widgetDirPath,'dist');
 
 var pkg = require(widgetDir + '/package.json');
 
@@ -47,34 +46,6 @@ gulp.task('templates', function() {
     .pipe($.angularTemplatecache('templates.tpl.js', templateOptions))
     .pipe(gulp.dest(path.join(widgetDir, '.tmp', 'dist')));
 });
-
-// gulp.task('sample', ['templates'], function() {
-//   var files = gulp.src([widgetDir+'src/**/*.js', widgetDir+'src/**/*.css', widgetDir+'src/**/*.less', widgetDir+'.tmp/dist/*.js'])
-//     .pipe($.if('*.js', $.angularFilesort()));
-
-//   gulp.src('sample/index.html')
-//     .pipe(wiredep({
-//       directory: './components/',
-//       bowerJson: require('./bower.json'),
-//       devDependencies: true,
-//       dependencies: true
-//     }))
-//     .pipe($.inject(files))
-//     .pipe(gulp.dest('.tmp/dist'))
-//     .pipe(connect.reload());
-// });
-
-// gulp.task('watch', function() {
-//   gulp.watch(['src/**'], ['sample']);
-// });
-
-// gulp.task('serve', ['watch', 'sample'], function() {
-//   connect.server({
-//     root: ['.tmp/dist', '.'],
-//     livereload: true,
-//     port: 9002
-//   });
-// });
 
 /** build **/
 

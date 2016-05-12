@@ -62,7 +62,7 @@ describe('Smoke', function () {
         it('should be displayed when "Back to list" button is clicked from ' +
           '"Edit Domain" page',
           function () {
-            Portal.domains.listPage.domainsTbl
+            Portal.domains.listPage.table
               .getFirstRow()
               .clickEdit();
             Portal.domains.editPage.clickBackToList();
@@ -72,7 +72,7 @@ describe('Smoke', function () {
         it('should be displayed when "Back to list" button is clicked from ' +
           '"Configure Domain" page',
           function () {
-            Portal.domains.listPage.domainsTbl
+            Portal.domains.listPage.table
               .getFirstRow()
               .clickConfigure();
             Portal.domains.configurePage.clickBackToList();
@@ -82,7 +82,7 @@ describe('Smoke', function () {
         it('should be displayed when "Back to list" button is clicked from ' +
           '"Domain versions" page',
           function () {
-            Portal.domains.listPage.domainsTbl
+            Portal.domains.listPage.table
               .getFirstRow()
               .clickVersions();
             Portal.domains.versionsPage.clickBackToList();

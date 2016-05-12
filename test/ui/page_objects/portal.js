@@ -54,14 +54,16 @@ var TrafficHeatmapsPage = require('./analytics/trafficHeatmapsPage');
 var RTTHeatmapsPage = require('./analytics/rttHeatmapsPage');
 var HelpSupportPage = require('./helpSupport/helpSupportPage');
 var HelpPage = require('./help/helpPage');
-var SecSettingsPage = require('./admin/securitySettingsPage');
-var ApiKeysListPage = require('./admin/apiKeysListPage');
-var ActivityLogPage = require('./admin/activityLogPage');
-var AppsListPage = require('./mobileApps/appsListPage');
-var AddNewAppPage = require('./mobileApps/addNewAppPage');
-var EditAppPage = require('./mobileApps/editAppPage');
-var EditAdvancedModePage = require('./mobileApps/editAppAdvancedModePage');
+var Accounts = require('./admin/accounts');
+var AdminSettingsPage = require('./admin/securitySettings');
+var ApiKeysListPage = require('./admin/apiKeys');
+var ActivityLogPage = require('./admin/activityLog');
+var ListPage = require('./mobileApp/listPage');
+var AddPage = require('./mobileApp/addPage');
+var EditPage = require('./mobileApp/editPage');
+var AdvancedEditPage = require('./mobileApp/advancedEditPage');
 var UsageReportPage = require('./billing/usageReportPage');
+var UsageReportDomainsPage = require('./billing/usageReportDomainsPage');
 
 // This `Portal` Page Object is the entry point to use all other Page Objects
 // that abstract all components from the Portal App.
@@ -101,21 +103,21 @@ var Portal = {
   purgeCacheAdvancedPage: PurgeCacheAdvancedPage,
   helpSupportPage: HelpSupportPage,
   helpPage: HelpPage,
-  secSettingsPage: SecSettingsPage,
-  apiKeys: {
-    listPage: ApiKeysListPage
-  },
   mobileApps: {
-    listPage: AppsListPage,
-    addAppPage: AddNewAppPage,
-    editAppPage: EditAppPage,
-    editAppAdvancedModePage: EditAdvancedModePage
+    listPage: ListPage,
+    addPage: AddPage,
+    editPage: EditPage,
+    advancedEditPage: AdvancedEditPage
   },
   admin: {
-    activityLog: ActivityLogPage
+    accounts: Accounts,
+    apiKeys: ApiKeysListPage,
+    settingsPage: AdminSettingsPage,
+    activityLog: ActivityLogPage,
   },
   billing: {
-    usageReportPage: UsageReportPage
+    usageReportPage: UsageReportPage,
+    usageReportDomainsPage: UsageReportDomainsPage
   },
 
   // ## Authentication Helper methods
@@ -186,6 +188,17 @@ var Portal = {
 
   getDomainsPage: function () {
     return this.getPage(Constants.hashFragments.domains.list);
+  },
+
+  /**
+   * ### Portal.getAdminPage()
+   *
+   * Loads the hash fragment for the Admin page.
+   *
+   * @returns {Promise}
+   */
+  getAdminPage: function () {
+    return this.getPage(Constants.hashFragments.admin);
   },
 
   /**
@@ -345,7 +358,7 @@ var Portal = {
     return browser.getCurrentUrl().then(function (initialUrl) {
       me.getUsersPage();
       me.userListPage.searcher.setSearchCriteria(user.email);
-      me.userListPage.userTbl
+      me.userListPage.table
         .getRows()
         .count()
         .then(function (totalResults) {
@@ -380,7 +393,7 @@ var Portal = {
       me.getUsersPage();
       me.userListPage.searcher.clearSearchCriteria();
       me.userListPage.searcher.setSearchCriteria(user.email);
-      me.userListPage.userTbl
+      me.userListPage.table
         .getFirstRow()
         .clickDelete();
       me.dialog.clickOk();
@@ -435,7 +448,7 @@ var Portal = {
     return browser.getCurrentUrl().then(function (initialUrl) {
       me.getDomainsPage();
       me.domains.listPage.searcher.setSearchCriteria(domain.name);
-      me.domains.listPage.domainsTbl
+      me.domains.listPage.table
         .getRows()
         .count()
         .then(function (totalResults) {
@@ -497,7 +510,7 @@ var Portal = {
       me.getDomainsPage();
       me.domains.listPage.searcher.clearSearchCriteria();
       me.domains.listPage.searcher.setSearchCriteria(domain.name);
-      me.domains.listPage.domainsTbl
+      me.domains.listPage.table
         .getFirstRow()
         .clickDelete();
       me.dialog.clickOk();
@@ -528,7 +541,7 @@ var Portal = {
     return browser.getCurrentUrl().then(function (initialUrl) {
       apps.forEach(function (app) {
         me.header.goTo(platform);
-        me.mobileApps.listPage.addNewApp(app);
+        me.mobileApps.listPage.addNew(app);
       });
       browser.getCurrentUrl().then(function (currentUrl) {
         if (initialUrl !== currentUrl) {
@@ -585,12 +598,12 @@ var Portal = {
       me.goToMobileApps();
       me.header.goTo(app.platform);
       me.mobileApps.listPage.setSearch(app.name);
-      me.mobileApps.listPage.appsTable
+      me.mobileApps.listPage.table
         .countTotalRows()
         .then(function (totalResults) {
           if (totalResults === 0) {
-            me.mobileApps.listPage.addNewApp(app);
-            me.mobileApps.addAppPage.clickBackToList();
+            me.mobileApps.listPage.addNew(app);
+            me.mobileApps.addPage.clickBackToList();
           }
           browser.getCurrentUrl().then(function (currentUrl) {
             if (initialUrl !== currentUrl) {

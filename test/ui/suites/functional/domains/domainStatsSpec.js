@@ -39,7 +39,7 @@ describe('Smoke', function () {
     it('should display "Stats" page title as "Proxy Traffic Reports"',
       function () {
         var expectedTitle = 'Proxy Traffic Reports';
-        Portal.domains.listPage.domainsTbl
+        Portal.domains.listPage.table
           .getFirstRow()
           .clickStats();
         expect(Portal.domains.statsPage.getTitle()).toEqual(expectedTitle);
@@ -48,7 +48,7 @@ describe('Smoke', function () {
     it('should display domain drop-down with specific domain config selected ' +
       'as default',
       function () {
-        var firstDomain = Portal.domains.listPage.domainsTbl.getFirstRow();
+        var firstDomain = Portal.domains.listPage.table.getFirstRow();
         var domainName = firstDomain.getName();
         firstDomain.clickStats();
         var selectedDomainName = Portal.domains.statsPage.getSelectedDomain();

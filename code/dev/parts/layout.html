@@ -1,5 +1,12 @@
 <paper-drawer-panel responsive-width="980px" drawer-width="210px">
-    <section drawer>
+    <section drawer  ng-intro-options="IntroOptions"
+         ng-intro-method="CallGlobalIntro"
+         ng-intro-oncomplete="onIntroCompletedEvent"
+         ng-intro-onexit="ExitEvent"
+         ng-intro-onchange="ChangeEvent"
+         ng-intro-onbeforechange="BeforeChangeEvent"
+         ng-intro-onafterchange="AfterChangeEvent"
+         ng-intro-autostart="isShowMainIntro==false || isShowMainIntro =='false'">
         <a href="https://www.revapm.com/" id="logo" target="_blank">
             <img src="images/logo_color.png" alt="Logo" />
         </a>
@@ -7,28 +14,28 @@
             <dashboard-nav-menu></dashboard-nav-menu>
             <li ui-sref-active-if="{class: 'active-side-menu-item', state: 'index.apps'}", ng-class="{'active-side-menu-item': menuExpanded('index.apps')}" style="margin-top: 8px;">
 
-                <a class="side-menu-item" ng-click="goToState('index.apps.ios')">
+                <a id="side-menu-apps-item" class="side-menu-item" ng-click="goToState('index.apps.ios')">
                     <div class="left-menu-start">
                         <i class="fa fa-mobile" style="font-size: 28px; margin-top: -14px !important;"></i>
                     </div>
                     Mobile Apps
                     <i ng-click="expandMenu('index.apps', $event)" class="pull-right {{ menuExpanded('index.apps') ? 'fa fa-caret-down' : 'fa fa-caret-up' }}"></i>
                 </a>
-                <a ui-sref-active="active" ui-sref="index.apps.ios" class="side-menu-sub-item">
+                <a id="side-menu-sub-item__apps-ios" ui-sref-active="active" ui-sref="index.apps.ios" class="side-menu-sub-item">
                     <i class="sub-menu-icon fa fa-apple"></i>
                     iOS
                 </a>
-                <a ui-sref-active="active" ui-sref="index.apps.android" class="side-menu-sub-item">
+                <a id="side-menu-sub-item__apps-android" ui-sref-active="active" ui-sref="index.apps.android" class="side-menu-sub-item">
                     <i class="sub-menu-icon fa fa-android"></i>
                     Android
                 </a>
-                <a ui-sref-active="active" ui-sref="index.apps.windows_mobile" class="side-menu-sub-item">
+                <a id="side-menu-sub-item__apps-windows" ui-sref-active="active" ui-sref="index.apps.windows_mobile" class="side-menu-sub-item">
                     <i class="sub-menu-icon fa fa-windows"></i>
                     Windows Mobile
                 </a>
             </li>
             <li ui-sref-active-if="{class: 'active-side-menu-item', state: 'index.mobile'}", ng-class="{'active-side-menu-item': menuExpanded('index.mobile')}">
-                <a class="side-menu-item" ng-click="goToState('index.mobile.traffic')">
+                <a id="side-menu-mobile-analytics-item" class="side-menu-item" ng-click="goToState('index.mobile.traffic')">
                     <div class="left-menu-start">
                         <i class="fa fa-signal"></i>
                     </div>
@@ -57,22 +64,22 @@
                 </a>
             </li>
             <li ui-sref-active-if="{class: 'active-side-menu-item', state: 'index.webApp'}", ng-class="{'active-side-menu-item': menuExpanded('index.webApp')}">
-                <a class="side-menu-item", ng-click="goToState('index.webApp.domains')">
+                <a id="side-menu-web-item" class="side-menu-item", ng-click="goToState('index.webApp.domains')">
                     <div class="left-menu-start">
                         <i class="fa fa-desktop"></i>
                     </div>
                     Web
                     <i ng-click="expandMenu('index.webApp', $event)" class="pull-right {{ menuExpanded('index.webApp') ? 'fa fa-caret-down' : 'fa fa-caret-up' }}"></i>
                 </a>
-                <a ui-sref-active="active" ui-sref="index.webApp.domains" class="side-menu-sub-item">
+                <a id="side-menu-sub-item__webApp-domains" ui-sref-active="active" ui-sref="index.webApp.domains" class="side-menu-sub-item">
                     <i class="sub-menu-icon fa fa-list"></i>
                     Domains
                 </a>
-                  <a ui-sref-active="active" ui-sref="index.webApp.ssl_certs" class="side-menu-sub-item">
+                  <a id="side-menu-sub-item__webApp-ssl_certs"  ui-sref-active="active" ui-sref="index.webApp.ssl_certs" class="side-menu-sub-item">
                     <i class="sub-menu-icon fa fa-lock"></i>
                     SSL Certificates
                 </a>
-                <a ui-sref-active="active" ui-sref="index.webApp.cache" class="side-menu-sub-item">
+                <a id="side-menu-sub-item__webApp-cache"ui-sref-active="active" ui-sref="index.webApp.cache" class="side-menu-sub-item">
                     <i class="sub-menu-icon fa fa-trash"></i>
                     Purge Cache
                 </a>
@@ -86,14 +93,14 @@
                 <!--</a>-->
             </li>
             <li ui-sref-active-if="{class: 'active-side-menu-item', state: 'index.reports'}", ng-class="{'active-side-menu-item': menuExpanded('index.reports')}">
-                <a class="side-menu-item", ng-click="goToState('index.reports.proxy')">
+                <a id="side-menu-web-analytics-item" class="side-menu-item", ng-click="goToState('index.reports.proxy')">
                     <div class="left-menu-start">
                         <i class="fa fa-line-chart"></i>
                     </div>
                     Web Analytics
                     <i ng-click="expandMenu('index.reports', $event)" class="pull-right {{ menuExpanded('index.reports') ? 'fa fa-caret-down' : 'fa fa-caret-up' }}"></i>
                 </a>
-                <a ui-sref-active="active" ui-sref="index.reports.proxy" class="side-menu-sub-item">
+                <a  id="side-menu-sub-item__reports-proxy"  ui-sref-active="active" ui-sref="index.reports.proxy" class="side-menu-sub-item">
                     <i class="sub-menu-icon fa fa-area-chart"></i>
                     Proxy Traffic
                 </a>
@@ -135,10 +142,6 @@
                   Admin
                   <i ng-click="expandMenu('index.accountSettings', $event)" class="pull-right {{ menuExpanded('index.accountSettings') ? 'fa fa-caret-down' : 'fa fa-caret-up' }}"></i>
                 </a>
-                <a ui-sref-active="active" ui-sref="index.accountSettings.logshippers" class="side-menu-sub-item" ng-if="!userService.isUser()">
-                  <i class="sub-menu-icon glyphicon glyphicon-open-file"></i>
-                   Log Shipping
-                </a>
                 <a ui-sref-active="active" ui-sref="index.accountSettings.users" class="side-menu-sub-item" ng-if="!userService.isUser()">
                     <i class="sub-menu-icon fa fa-users"></i>
                     Users
@@ -150,6 +153,10 @@
                 <a ui-sref-active="active" ui-sref="index.accountSettings.keys" class="side-menu-sub-item" ng-if="!userService.isUser()">
                     <i class="sub-menu-icon fa fa-key"></i>
                     API Keys
+                </a>
+                <a ui-sref-active="active" ui-sref="index.accountSettings.logshippers" class="side-menu-sub-item" ng-if="!userService.isUser()">
+                  <i class="sub-menu-icon glyphicon glyphicon-open-file"></i>
+                   Log Shipping
                 </a>
                 <a ui-sref-active="active" ui-sref="index.accountSettings.profile" class="side-menu-sub-item" href="#/profile">
                     <i class="sub-menu-icon fa fa-user"></i>
@@ -227,7 +234,7 @@
                             </div>
                             <div style="display: inline-block">
                                 <div id="menuToggleBtn" class="menu-toggle">
-                                    <span menu-toggle="toggleMenu" ng-click="toggleMenu = !toggleMenu" class="glyphicon glyphicon-menu-hamburger" tooltip="{{(toggleMenu ? 'Show' : 'Hide') + ' Menu'}}" tooltip-placement="right"></span>
+                                    <span menu-toggle="toggleMenu" ng-click="toggleMenu = !toggleMenu" class="glyphicon glyphicon-menu-hamburger" uib-tooltip="{{(toggleMenu ? 'Show' : 'Hide') + ' Menu'}}" tooltip-placement="right" role="button"></span>
                                 </div>
                             </div>
                             <search></search>

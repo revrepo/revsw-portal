@@ -6,7 +6,7 @@
     .directive('disableTwoFactorAuth', disableTwoFactorAuthDirective);
 
   /*@ngInject*/
-  function disableTwoFactorAuthDirective(User, Users, TwoFactorAuth, AlertService, $modal) {
+  function disableTwoFactorAuthDirective(User, Users, TwoFactorAuth, AlertService, $uibModal) {
 
     return {
       restrict: 'AE',
@@ -139,7 +139,7 @@
          * @returns {Promise}
          */
         $scope.confirm = function() {
-          var modalInstance = $modal.open({
+          var modalInstance = $uibModal.open({
             animation: true,
             templateUrl: 'confirm2FaDisable.html',
             controller: 'ConfirmModalInstanceCtrl',

@@ -112,7 +112,8 @@
           // NOTE: show details confirm modal window
           $scope.confirm('confirmModalUpgrade.html', {
               plan: plan,
-              migration: data.migration
+              migration: data.migration,
+              credit_card: data.credit_card
             })
             .then(CompaniesUpdate);
         }, function onErrorGetPreviewSubscriptionInfo() {

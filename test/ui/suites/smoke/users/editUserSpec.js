@@ -48,24 +48,24 @@ describe('Smoke', function () {
         });
 
         it('should display edit user button', function () {
-          var editButton = Portal.userListPage.userTbl
+          var editButton = Portal.userListPage.table
             .getFirstRow()
             .getEditBtn();
           expect(editButton.isPresent()).toBeTruthy();
         });
 
         it('should display "Edit User" form', function () {
-          Portal.userListPage.userTbl
+          Portal.userListPage.table
             .getFirstRow()
             .clickEdit();
           expect(Portal.editUserPage.isDisplayed()).toBeTruthy();
         });
 
         it('should allow to cancel an user edition', function () {
-          Portal.userListPage.userTbl
+          Portal.userListPage.table
             .getFirstRow()
             .clickEdit();
-          Portal.editUserPage.userForm.setFirstName('Something Else');
+          Portal.editUserPage.form.setFirstName('Something Else');
           Portal.editUserPage.clickCancel();
           expect(Portal.userListPage.isDisplayed()).toBeTruthy();
         });
@@ -75,18 +75,18 @@ describe('Smoke', function () {
           Portal.createUser(joe);
           // Edit user name and last name
           Portal.userListPage.searcher.setSearchCriteria(joe.email);
-          Portal.userListPage.userTbl
+          Portal.userListPage.table
             .getFirstRow()
             .clickEdit();
           var valueAdded = 'user-updated';
-          Portal.editUserPage.userForm.setFirstName(valueAdded);
-          Portal.editUserPage.userForm.setLastName(valueAdded);
+          Portal.editUserPage.form.setFirstName(valueAdded);
+          Portal.editUserPage.form.setLastName(valueAdded);
           Portal.editUserPage.clickUpdateUser();
           // Check alert message and data updated
           var alert = Portal.alerts.getFirst();
           expect(alert.getText()).toEqual('User updated');
-          var updatedFirstName = Portal.editUserPage.userForm.getFirstName();
-          var updatedLastName = Portal.editUserPage.userForm.getLastName();
+          var updatedFirstName = Portal.editUserPage.form.getFirstName();
+          var updatedLastName = Portal.editUserPage.form.getLastName();
           expect(updatedFirstName).toContain(valueAdded);
           expect(updatedLastName).toContain(valueAdded);
           Portal.editUserPage.clickBackToList();
