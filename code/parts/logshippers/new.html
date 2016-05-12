@@ -31,9 +31,16 @@
                                       createForm.accountId.$dirty }">
             <label for="account_id" popover-append-to-body="{{true}}" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Select account name the job should be associated with">Account *</label>
             <div class="col-sm-10">
-              <select class="form-control" ng-disabled="_loading" ng-model="model.account_id" id="account_id" ng-options="obj.id as obj.companyName for obj in companies" name="accountId" required>
-                <option value="">--- Select Account ---</option>
-              </select>
+              <input type="hidden" ng-model="model.account_id" name="accountId" required></input>
+              <ui-select ng-model="model.account_id" theme="select2" ng-disabled="_loading" name="account_id" on-select="onAccountSelect($model)" style="min-width: 550px;" id="account_id">
+                <ui-select-match placeholder="Select Account">{{$select.selected.companyName}}</ui-select-match>
+                <ui-select-choices repeat="item.id as item in companies | filter: {companyName: $select.search}">
+                  <div ng-bind-html="item.companyName|highlight: $select.search"></div>
+                </ui-select-choices>
+              </ui-select>
+              <div class="has-error error-messages" ng-messages="createForm.accountId.$error" role="alert" ng-messages-multiple>
+                <div ng-messages-include="parts/shared/error-messages.html"></div>
+              </div>
             </div>
           </div>
           <hr>
