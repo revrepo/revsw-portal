@@ -38,5 +38,7 @@
     "less-plugin-clean-css": "^1.5.1",
     "ng-annotate-adf-plugin": "^0.1.2"
   },
-  "dependencies": {}
+  "dependencies": {
+    "gulp-flatten": "^0.2.0"
+  }
 }
