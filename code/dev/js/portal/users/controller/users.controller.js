@@ -247,7 +247,7 @@
      */
     $scope.getDomainPlaceholder = function() {
       var list = $scope.getAccountDomainNameList();
-      return (list.length > 0) ? 'Select domains...' : 'Domains list is epmty...';
+      return (list.length > 0) ? 'Select domains...' : 'Domains list is empty...';
     };
 
     // NOTE: watch on change companyId for update available domain names
