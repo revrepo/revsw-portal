@@ -10,7 +10,7 @@
         <a href="https://www.revapm.com/" id="logo" target="_blank">
             <img src="images/logo_color.png" alt="Logo" />
         </a>
-        <div class="side-menu" style="height: 94%; overflow: auto;">
+        <div class="side-menu" style="height: 94%;">
             <dashboard-nav-menu></dashboard-nav-menu>
             <li ui-sref-active-if="{class: 'active-side-menu-item', state: 'index.apps'}", ng-class="{'active-side-menu-item': menuExpanded('index.apps')}" style="margin-top: 8px;">
 
@@ -232,12 +232,12 @@
                             <div paper-drawer-toggle style="padding-right: 0">
                                 <span class="glyphicon glyphicon-menu-hamburger" paper-drawer-toggle style="display: block !important;"></span>
                             </div>
-                            <div style="display: inline-block">
+                            <div style="display: inline-block; float:left;">
                                 <div id="menuToggleBtn" class="menu-toggle">
                                     <span menu-toggle="toggleMenu" ng-click="toggleMenu = !toggleMenu" class="glyphicon glyphicon-menu-hamburger" uib-tooltip="{{(toggleMenu ? 'Show' : 'Hide') + ' Menu'}}" tooltip-placement="right" role="button"></span>
                                 </div>
                             </div>
-                            <search></search>
+                            <search style="display: inline-block;"></search>
                         </div>
                         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                             <div user-login-logout></div>
