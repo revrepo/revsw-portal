@@ -19,6 +19,12 @@
             /*@ngInject*/
             controller: function($scope, $state, User) {
               $scope.userService = User;
+              if($(window).width() < 980) {
+                $('#drawer').css('display', 'block');
+                $('#menuToggleBtn').css('display', 'none');
+              } else {
+                $('#menuToggleBtn').css('display', 'block');
+              }
               if (!User.isAuthed() &&
                 $state.current.name !== 'index.restore' &&
                 $state.current.name !== 'signup' &&

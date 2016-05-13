@@ -339,7 +339,6 @@ form .error-messages.ng-active {
 }
 #drawer {
   z-index: 999;
-  overflow: auto;
 }
 section[drawer] {
   background-color: #2E2F2F;
@@ -347,7 +346,6 @@ section[drawer] {
 section[drawer] #logo {
   background-color: #606363;
   height: 52px;
-  margin-left: 10px;
   background: transparent;
 }
 section[drawer] #logo img {
@@ -360,9 +358,8 @@ section[drawer] .side-menu .side-menu-item {
   display: block;
   height: 40px;
   line-height: 20px;
-  padding: 10px;
+  padding: 2px 0 10px 5px;
   font-size: 16px;
-  margin-left: 10px;
   color: #f7941e;
   text-decoration: none;
 }
@@ -373,7 +370,7 @@ section[drawer] .side-menu .side-menu-item.active {
   border-right: 4px solid #f7941e;
 }
 section[drawer] .side-menu .side-menu-item i {
-  margin: 0 10px;
+  margin: 0 10px 0 0;
 }
 section[drawer] .side-menu .side-menu-sub-item {
   display: block;
@@ -402,21 +399,14 @@ section[drawer] .side-menu .active-side-menu-item .side-menu-sub-item {
 }
 .left-menu-start {
   display: inline-block;
-  width: 5px;
   text-align: center;
 }
 .left-menu-start i {
-  margin: 0px 4px 0px -17px !important;
   font-size: 20px;
 }
 .sub-menu-icon {
-  margin: 0px 4px 0px -17px !important;
+  margin: 0px 4px 0px 0px !important;
 }
-.menu-toggle {
-  font-size: 24px;
-  padding: 12px 0 9px 20px;
-}
-
 .menu-search {
   padding: 9px 0 9px 20px;
 }
@@ -435,8 +425,17 @@ section[drawer] .side-menu .active-side-menu-item .side-menu-sub-item {
 }
 .navbar .navbar-inner div[paper-drawer-toggle] {
   display: inline-block;
-  padding: 20px;
   font-size: 24px;
+}
+.navbar .navbar-inner .glyphicon-menu-hamburger {
+  padding: 12px 0 9px 20px !important;
+}
+.navbar .navbar-inner .mobile-menu {
+  float: left;
+}
+.navbar .navbar-inner .menu-toggle {
+  font-size: 24px;
+  padding: 0 0 9px 20px;
 }
 .navbar .navbar-inner .user {
   margin-right: 20px;
@@ -447,7 +446,7 @@ section[drawer] .side-menu .active-side-menu-item .side-menu-sub-item {
 }
 .navbar .navbar-inner .user li.fit {
   text-align: right;
-  margin-top: 6px;
+  margin-top: 12px;
 }
 .nav > li {
   text-align: center;

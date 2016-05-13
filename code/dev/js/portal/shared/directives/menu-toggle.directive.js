@@ -54,7 +54,7 @@
     $scope.$watch('menuToggle', update);
 
     window.onresize = function() {
-      if($(window).width() < 980){
+      if($(window).width() < 980) {
         $('#drawer').css('display', 'block');
         $('#menuToggleBtn').css('display', 'none');
       } else {
