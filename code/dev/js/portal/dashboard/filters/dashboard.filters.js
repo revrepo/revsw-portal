@@ -34,10 +34,13 @@
         return orderWidgets.widgetList;
       }
       var _widgets = angular.copy(widgets);
+
       orderWidgets.widgetList = {};
 
       angular.forEach(_default_order_widgets, function(key) {
+        widgets[key].edit.immediate = true;// NOTE: open edit window immediate
         orderWidgets.widgetList[key] = _widgets[key];
+
         delete _widgets[key];
       });
       // add anothe widget not set in "_default_order_widgets"
