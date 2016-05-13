@@ -287,28 +287,66 @@ textarea {
 form {
   & .error-messages {
     display: none;
+    opacity: 1;
+    line-height: 0%;
+    transition: 0.4s linear all;
   }
   &.ng-invalid {
     &.ng-submitted {
       & .error-messages {
         display: block;
+        transition: 0.4s linear all;
+        &.ng-inactive {
+          line-height: 50%;
+          opacity: 0;
+        }
+        &.ng-active {
+          line-height: 100%;
+          opacity: 1;
+        }
       }
     }
   }
   & .has-error .error-messages {
     display: block;
-  }
-  & .error-messages {
-    color: @app-color-red;
-    &.alert {
-      &-text {
-        color: @app-color-red;
-      }
-    }
+    transition: 0.4s linear all;
     &.ng-inactive {
+      line-height: 50%;
       opacity: 0;
     }
     &.ng-active {
+      display: block;
+      line-height: 100%;
+      opacity: 1;
+    }
+  }
+  & .error-messages {
+    color: @app-color-red;
+    transition: 0.4s linear all;
+    &.alert {
+      &-text {
+        transition: 1s linear all;
+        color: @app-color-red;
+        &.ng-enter {
+          color: @app-color-blue;
+          &.ng-enter-active {
+            color: @app-color-green;
+          }
+        }
+        &.ng-leave {
+          color: @app-color-green;
+          &.ng-leave-active {
+            color: @app-color-green;
+          }
+        }
+      }
+    }
+    &.ng-inactive {
+      line-height: 50%;
+      opacity: 0;
+    }
+    &.ng-active {
+      line-height: 100%;
       opacity: 1;
     }
   }
