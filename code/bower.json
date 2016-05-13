@@ -55,7 +55,9 @@
     "paper-drawer-panel": "PolymerElements/paper-drawer-panel#~1.0.3",
     "paper-header-panel": "PolymerElements/paper-header-panel#~1.0.5",
     "topojson": "~1.6.24",
-    "ui-select": "angular-ui-select#~0.13.1"
+    "ui-select": "angular-ui-select#~0.13.1",
+    "select2": "~3.4.5",
+    "select2-bootstrap-css": "~1.4.6"
   },
   "resolutions": {
     "moment": "~2.12.0",
