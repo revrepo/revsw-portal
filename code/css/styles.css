@@ -252,6 +252,7 @@ form.ng-invalid.ng-submitted .error-messages {
   transition: 0.4s linear all;
 }
 form.ng-invalid.ng-submitted .error-messages.ng-inactive {
+  line-height: 50%;
   opacity: 0;
 }
 form.ng-invalid.ng-submitted .error-messages.ng-active {
