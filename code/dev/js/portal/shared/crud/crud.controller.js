@@ -6,7 +6,7 @@
     .factory('CRUDController', CRUDController);
 
   /*@ngInject*/
-  function CRUDController($config, $rootScope, AlertService, $q, User, $anchorScroll, $uibModal, $filter, $timeout) {
+  function CRUDController($config, $rootScope, AlertService, $q, User, $anchorScroll, $uibModal, $filter, $timeout, $animate, toaster) {
 
     function CRUDControllerImpl($scope, $stateParams) {
 
@@ -20,6 +20,7 @@
        * Alert service
        */
       $scope.alertService = AlertService;
+      $scope.toaster = toaster;
 
       /**
        * Loading flag
