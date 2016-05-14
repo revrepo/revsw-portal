@@ -85,7 +85,12 @@
           return $scope.model.domain;
         })
         .catch(function(err) {
-          $scope.alertService.danger('Could not load user details');
+          $scope.toaster.pop({
+            type: 'error',
+            body: 'Could not load user details',
+            timeout: 0,
+            showCloseButton: true
+            });
         })
         .finally(function() {
           $scope._loading = false;
@@ -96,7 +101,14 @@
       $scope.confirm('confirmModal.html', model).then(function() {
         $scope
           .delete(model)
-          .catch($scope.alertService.danger);
+          .catch(function(err) {
+            $scope.toaster.pop({
+              type: 'error',
+              body: err.data.message || 'Oops something went wrong',
+              timeout: 0,
+              showCloseButton: true
+              });
+          });          
       });
     };
 
@@ -104,7 +116,6 @@
       if (!model) {
         return;
       }
-      $scope.alertService.clear();
       // copy user id
       model.id = model.user_id;
       $scope
@@ -114,9 +125,20 @@
           if (model.user_id === User.getUser().user_id) {
             User.reloadUser();
           }
-          $scope.alertService.success('User updated', 5000);
+          $scope.toaster.pop({
+            type: 'success',
+            body: 'User updated',
+            timeout: 5000
+            });
         })
-        .catch($scope.alertService.danger);
+        .catch(function(err) {
+          $scope.toaster.pop({
+            type: 'error',
+            body: err.data.message || 'Oops something went wrong',
+            timeout: 0,
+            showCloseButton: true
+            });
+        });
     };
 
     $scope.getRelativeDate = function(datetime) {
@@ -128,10 +150,13 @@
         return;
       }
       if (model.passwordConfirm !== model.password) {
-        $scope.alertService.danger('Passwords did not match', 5000);
+          $scope.toaster.pop({
+            type: 'error',
+            body: 'Passwords did not match',
+            timeout: 5000
+            });
         return;
       }
-      $scope.alertService.clear();
       delete model.passwordConfirm;
       model.access_control_list.dashBoard = true;
       //      model.email = angular.copy(model.user_email);
@@ -139,9 +164,20 @@
       $scope.create(model)
         .then(function(data) {
           initModel();
-          $scope.alertService.success('User created', 5000);
+          $scope.toaster.pop({
+            type: 'success',
+            body: 'User created',
+            timeout: 5000
+            });
         })
-        .catch($scope.alertService.danger);
+        .catch(function(err) {
+          $scope.toaster.pop({
+            type: 'error',
+            body: err.data.message || 'Oops something went wrong',
+            timeout: 0,
+            showCloseButton: true
+            });
+        });
     };
 
     $scope.disableSubmit = function(model, isEdit) {
