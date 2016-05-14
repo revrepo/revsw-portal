@@ -85,3 +85,29 @@ section[drawer] .side-menu .dashboard_menu .side-menu-item.item-title {
   background-repeat: no-repeat;
   background-image: url('../images/background-dashboard.png')
 }
+
+body {
+    overflow-y: hidden;
+}
+
+@-moz-document url-prefix() {  
+  section[drawer] .side-menu .side-menu-item {
+     padding-left: 20px;
+  }
+  
+  .paper-header .navbar .navbar-inner .navbar-header .ng-isolate-scope .form-control.ng-pristine.ng-untouched.ng-valid.ng-valid-editable {
+    position: relative;
+    top: 12px;
+  }
+}
+
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+    section[drawer] .side-menu .side-menu-item {
+     padding-left: 20px;
+    }
+}
+@supports (-ms-accelerator:true) {
+    section[drawer] .side-menu .side-menu-item {
+     padding-left: 20px;
+    }
+}
