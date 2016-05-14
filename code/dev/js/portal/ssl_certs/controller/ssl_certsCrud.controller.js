@@ -29,7 +29,12 @@
         mode: 'code',
         modes: ['code', 'view'], // allowed modes['code', 'form', 'text', 'tree', 'view']
         error: function(err) {
-          alert(err.toString());
+          $scope.toaster.pop({
+            type: 'error',
+            body: (err.data && err.data.message) && err.data.message || 'Oops something went wrong',
+            timeout: 0,
+            showCloseButton: true
+            });
         }
       }
     };
@@ -183,7 +188,7 @@
           .catch(function(err) {
             $scope.toaster.pop({
               type: 'error',
-              body: err.data.message || 'Oops something went wrong',
+              body: (err.data && err.data.message) && err.data.message || 'Oops something went wrong',
               timeout: 0,
               showCloseButton: true
               });
@@ -214,7 +219,7 @@
         .catch(function(err) {
             $scope.toaster.pop({
               type: 'error',
-              body: err.data.message || 'Oops something went wrong',
+              body: (err.data && err.data.message) && err.data.message || 'Oops something went wrong',
               timeout: 0,
               showCloseButton: true
               });
@@ -252,7 +257,7 @@
           .catch(function(err) {
             $scope.toaster.pop({
               type: 'error',
-              body: err.data.message || 'Oops something went wrong',
+              body: (err.data && err.data.message) && err.data.message || 'Oops something went wrong',
               timeout: 0,
               showCloseButton: true
               });
@@ -289,7 +294,7 @@
         .catch(function(err) {
             $scope.toaster.pop({
               type: 'error',
-              body: err.data.message || 'Oops something went wrong',
+              body: (err.data && err.data.message) && err.data.message || 'Oops something went wrong',
               timeout: 0,
               showCloseButton: true
               });
@@ -326,7 +331,7 @@
           .catch(function(err) {
             $scope.toaster.pop({
               type: 'error',
-              body: err.data.message || 'Oops something went wrong',
+              body: (err.data && err.data.message) && err.data.message || 'Oops something went wrong',
               timeout: 0,
               showCloseButton: true
               });
