@@ -511,11 +511,6 @@
             return data; // Send data next to promise handlers
           })
           .catch(function (data) {
-            if (data.status === $config.STATUS.BAD_REQUEST) {
-              if (data.data && data.data.message) {
-                $scope.alertService.danger(data.data.message, 5000);
-              }
-            }
             return $q.reject(data);
           })
           .finally(function () {
