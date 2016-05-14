@@ -29,12 +29,10 @@
         mode: 'code',
         modes: ['code', 'view'], // allowed modes['code', 'form', 'text', 'tree', 'view']
         error: function(err) {
-          $scope.toaster.pop({
-            type: 'error',
-            body: $scope.toaster.oops(err),
-            timeout: 0,
-            showCloseButton: true
-            });
+          $scope.toaster.error({
+            showCloseButton: true,
+            error: err
+          });
         }
       }
     };
@@ -155,12 +153,10 @@
     $scope.getSSL_cert = function(id) {
       $scope.get(id)
         .catch(function(err) {
-            $scope.toaster.pop({
-              type: 'error',
-              body: 'Could not load SSL certificate details',
-              timeout: 0,
-              showCloseButton: true
-              });
+          $scope.toaster.error({
+            showCloseButton: true,
+            error: err
+          });
         });
 
     };
@@ -186,12 +182,10 @@
               .then(setAccountName);
           })
           .catch(function(err) {
-            $scope.toaster.pop({
-              type: 'error',
-              body: $scope.toaster.oops(err),
-              timeout: 0,
-              showCloseButton: true
-              });
+            $scope.toaster.error({
+              showCloseButton: true,
+              error: err
+            });
           });
       });
     };
@@ -217,12 +211,10 @@
           $scope.setAccountId();
         })
         .catch(function(err) {
-            $scope.toaster.pop({
-              type: 'error',
-              body: $scope.toaster.oops(err),
-              timeout: 0,
-              showCloseButton: true
-              });
+            $scope.toaster.error({
+              showCloseButton: true,
+              error: err
+            });
           });
     };
     /**
@@ -255,12 +247,10 @@
               });
           })
           .catch(function(err) {
-            $scope.toaster.pop({
-              type: 'error',
-              body: $scope.toaster.oops(err),
-              timeout: 0,
-              showCloseButton: true
-              });
+            $scope.toaster.error({
+              showCloseButton: true,
+              error: err
+            });
           });
       });
     };
@@ -292,12 +282,10 @@
               });
         })
         .catch(function(err) {
-            $scope.toaster.pop({
-              type: 'error',
-              body: $scope.toaster.oops(err),
-              timeout: 0,
-              showCloseButton: true
-              });
+          $scope.toaster.error({
+            showCloseButton: true,
+            error: err
+          });
         });
     };
     /**
@@ -329,12 +317,10 @@
               });
           })
           .catch(function(err) {
-            $scope.toaster.pop({
-              type: 'error',
-              body: $scope.toaster.oops(err),
-              timeout: 0,
-              showCloseButton: true
-              });
+            $scope.toaster.error({
+              showCloseButton: true,
+              error: err
+            });
           });
       });
     };

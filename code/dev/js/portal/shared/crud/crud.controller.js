@@ -618,6 +618,17 @@
         }
       };
 
+      $scope.toaster.error = function (params) {
+        params.type = 'error';
+        if (params.showCloseButton === true) {
+          params.timeout = 0;
+        }
+        if (!params.body) {
+          params.body = $scope.toaster.oops(params.error);
+        }
+        $scope.toaster.pop(params);
+      };
+
       /***************************************************************************************
        *****                             END EXTENSIONS FOR TOASTER ALERTS
        **************************************************************************************/

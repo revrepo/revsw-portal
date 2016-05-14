@@ -85,12 +85,10 @@
           return $scope.model.domain;
         })
         .catch(function(err) {
-          $scope.toaster.pop({
-            type: 'error',
-            body: 'Could not load user details',
-            timeout: 0,
-            showCloseButton: true
-            });
+          $scope.toaster.error({
+            showCloseButton: true,
+            body: 'Could not load user details'
+          });
         })
         .finally(function() {
           $scope._loading = false;
@@ -102,12 +100,10 @@
         $scope
           .delete(model)
           .catch(function(err) {
-            $scope.toaster.pop({
-              type: 'error',
-              body: $scope.toaster.oops(err),
-              timeout: 0,
-              showCloseButton: true
-              });
+            $scope.toaster.error({
+              showCloseButton: true,
+              error: err
+            });
           });          
       });
     };
@@ -132,12 +128,10 @@
             });
         })
         .catch(function(err) {
-          $scope.toaster.pop({
-            type: 'error',
-            body: $scope.toaster.oops(err),
-            timeout: 0,
-            showCloseButton: true
-            });
+          $scope.toaster.error({
+            showCloseButton: true,
+            error: err
+          });
         });
     };
 
@@ -171,12 +165,10 @@
             });
         })
         .catch(function(err) {
-          $scope.toaster.pop({
-            type: 'error',
-            body: $scope.toaster.oops(err),
-            timeout: 0,
-            showCloseButton: true
-            });
+          $scope.toaster.error({
+            showCloseButton: true,
+            error: err
+          });
         });
     };
 
