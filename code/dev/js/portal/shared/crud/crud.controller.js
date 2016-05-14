@@ -500,7 +500,6 @@
         if (!$scope.resource) {
           throw new Error('No resource provided.');
         }
-        $scope.alertService.clear();
         $scope.loading(true);
         var record = new $scope.resource(model);
         return record.$save()
@@ -529,7 +528,6 @@
           throw new Error('No resource provided.');
         }
         $scope.clearModel();
-        $scope.alertService.clear();
         $scope.loading(true);
         return $scope.resource
           .get({id: id})
@@ -564,8 +562,6 @@
             delete model[val];
           }
         });
-
-        $scope.alertService.clear();
         $scope.loading(true);
         // Send data
         return $scope.resource
@@ -610,6 +606,21 @@
        *****                             END SCROLL POSITION HANDLER SECTION
        **************************************************************************************/
 
+      /***************************************************************************************
+       *****                             EXTENSIONS FOR TOASTER ALERTS
+       **************************************************************************************/
+
+      $scope.toaster.oops = function (err) {
+        if (err.data && err.data.message) {
+          return err.data.message;
+        } else {
+          return 'Oops something went wrong';
+        }
+      };
+
+      /***************************************************************************************
+       *****                             END EXTENSIONS FOR TOASTER ALERTS
+       **************************************************************************************/
     }
 
     return CRUDControllerImpl;

@@ -31,7 +31,7 @@
         error: function(err) {
           $scope.toaster.pop({
             type: 'error',
-            body: (err.data && err.data.message) && err.data.message || 'Oops something went wrong',
+            body: $scope.toaster.oops(err),
             timeout: 0,
             showCloseButton: true
             });
@@ -188,7 +188,7 @@
           .catch(function(err) {
             $scope.toaster.pop({
               type: 'error',
-              body: (err.data && err.data.message) && err.data.message || 'Oops something went wrong',
+              body: $scope.toaster.oops(err),
               timeout: 0,
               showCloseButton: true
               });
@@ -219,7 +219,7 @@
         .catch(function(err) {
             $scope.toaster.pop({
               type: 'error',
-              body: (err.data && err.data.message) && err.data.message || 'Oops something went wrong',
+              body: $scope.toaster.oops(err),
               timeout: 0,
               showCloseButton: true
               });
@@ -257,7 +257,7 @@
           .catch(function(err) {
             $scope.toaster.pop({
               type: 'error',
-              body: (err.data && err.data.message) && err.data.message || 'Oops something went wrong',
+              body: $scope.toaster.oops(err),
               timeout: 0,
               showCloseButton: true
               });
@@ -294,7 +294,7 @@
         .catch(function(err) {
             $scope.toaster.pop({
               type: 'error',
-              body: (err.data && err.data.message) && err.data.message || 'Oops something went wrong',
+              body: $scope.toaster.oops(err),
               timeout: 0,
               showCloseButton: true
               });
@@ -331,7 +331,7 @@
           .catch(function(err) {
             $scope.toaster.pop({
               type: 'error',
-              body: (err.data && err.data.message) && err.data.message || 'Oops something went wrong',
+              body: $scope.toaster.oops(err),
               timeout: 0,
               showCloseButton: true
               });
