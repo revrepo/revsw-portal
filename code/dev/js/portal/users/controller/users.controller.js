@@ -85,7 +85,11 @@
           return $scope.model.domain;
         })
         .catch(function(err) {
-          $scope.alertService.danger('Could not load user details');
+          $scope.toaster.alert({
+            type: 'error',
+            message: err,
+            showCloseButton: true
+          });
         })
         .finally(function() {
           $scope._loading = false;
@@ -96,7 +100,19 @@
       $scope.confirm('confirmModal.html', model).then(function() {
         $scope
           .delete(model)
-          .catch($scope.alertService.danger);
+          .then(function(data) {
+            $scope.toaster.alert({
+              type: 'success',
+              message: data
+            });
+          })
+          .catch(function(err) {
+            $scope.toaster.alert({
+              type: 'error',
+              message: err,
+              showCloseButton: true
+            });
+          });          
       });
     };
 
@@ -104,7 +120,6 @@
       if (!model) {
         return;
       }
-      $scope.alertService.clear();
       // copy user id
       model.id = model.user_id;
       $scope
@@ -114,9 +129,18 @@
           if (model.user_id === User.getUser().user_id) {
             User.reloadUser();
           }
-          $scope.alertService.success('User updated', 5000);
+          $scope.toaster.alert({
+            type: 'success',
+            message: data
+          });
         })
-        .catch($scope.alertService.danger);
+        .catch(function(err) {
+          $scope.toaster.alert({
+            type: 'error',
+            message: err,
+            showCloseButton: true
+          });
+        });
     };
 
     $scope.getRelativeDate = function(datetime) {
@@ -128,10 +152,12 @@
         return;
       }
       if (model.passwordConfirm !== model.password) {
-        $scope.alertService.danger('Passwords did not match', 5000);
+          $scope.toaster.alert({
+            type: 'error',
+            body: 'Passwords did not match'
+          });
         return;
       }
-      $scope.alertService.clear();
       delete model.passwordConfirm;
       model.access_control_list.dashBoard = true;
       //      model.email = angular.copy(model.user_email);
@@ -139,9 +165,18 @@
       $scope.create(model)
         .then(function(data) {
           initModel();
-          $scope.alertService.success('User created', 5000);
+          $scope.toaster.alert({
+            type: 'success',
+            message: data
+          });
         })
-        .catch($scope.alertService.danger);
+        .catch(function(err) {
+          $scope.toaster.alert({
+            type: 'error',
+            message: err,
+            showCloseButton: true
+          });
+        });
     };
 
     $scope.disableSubmit = function(model, isEdit) {

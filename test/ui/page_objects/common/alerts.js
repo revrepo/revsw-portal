@@ -31,10 +31,10 @@ var Alerts = {
   // Locators specific to HTML elements from this page object
   locators: {
     alert: {
-      css: '.alert'
+      css: '.toast'
     },
     alertGroup: {
-      repeater: 'i in as.alerts'
+      repeater: 'toaster in toasters'
     }
   },
   waitTimeout: 10000, // TODO: read from config file

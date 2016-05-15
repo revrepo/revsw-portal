@@ -29,7 +29,10 @@
         mode: 'code',
         modes: ['code', 'view'], // allowed modes['code', 'form', 'text', 'tree', 'view']
         error: function(err) {
-          alert(err.toString());
+          $scope.toaster.error({
+            showCloseButton: true,
+            error: err
+          });
         }
       }
     };
@@ -150,7 +153,11 @@
     $scope.getSSL_cert = function(id) {
       $scope.get(id)
         .catch(function(err) {
-          $scope.alertService.danger('Could not load SSL certificate details');
+          $scope.toaster.alert({
+            type: 'error',
+            message: err,
+            showCloseButton: true
+          });
         });
 
     };
@@ -167,12 +174,19 @@
         $scope
           .delete(model)
           .then(function(data) {
-            $scope.alertService.success('SSL certificate ' + certName + ' deleted.');
+            $scope.toaster.alert({
+              type: 'success',
+              message: data
+            });
             $scope.list()
               .then(setAccountName);
           })
           .catch(function(err) {
-            $scope.alertService.danger(err);
+            $scope.toaster.alert({
+              type: 'error',
+              message: err,
+              showCloseButton: true
+            });
           });
       });
     };
@@ -189,11 +203,20 @@
       model.cert_type = 'private'; // TODO:
       $scope
         .create(model)
-        .then(function() {
-          $scope.alertService.success('SSL certificate created', 5000);
+        .then(function(data) {
+          $scope.toaster.alert({
+            type: 'success',
+            message: data
+          });
           $scope.setAccountId();
         })
-        .catch($scope.alertService.danger);
+        .catch(function(err) {
+          $scope.toaster.alert({
+            type: 'error',
+            message: err,
+            showCloseButton: true
+          });
+        });
     };
     /**
      * @name  publishSSL_cert
@@ -218,10 +241,17 @@
             options: 'publish'
           }, model)
           .then(function(data) {
-            $scope.alertService.success('SSL certificate published', 5000);
+            $scope.toaster.alert({
+              type: 'success',
+              message: data
+            });
           })
           .catch(function(err) {
-            $scope.alertService.danger(err);
+            $scope.toaster.alert({
+              type: 'error',
+              message: err,
+              showCloseButton: true
+            });
           });
       });
     };
@@ -246,10 +276,17 @@
           options: 'verify_only'
         }, model)
         .then(function(data) {
-          $scope.alertService.success('The SSL certificate is correct', 5000);
+          $scope.toaster.alert({
+            type: 'success',
+            message: data
+          });
         })
         .catch(function(err) {
-          $scope.alertService.danger(err.data.message || 'Oops something went wrong', 5000);
+          $scope.toaster.alert({
+            type: 'error',
+            message: err,
+            showCloseButton: true
+          });
         });
     };
     /**
@@ -273,11 +310,18 @@
         $scope.update({
             id: modelId
           }, model)
-          .then(function() {
-            $scope.alertService.success('SSL certificate updated', 5000);
+          .then(function(data) {
+            $scope.toaster.alert({
+              type: 'success',
+              message: data
+            });
           })
           .catch(function(err) {
-            $scope.alertService.danger(err.data.message || 'Oops something went wrong', 5000);
+            $scope.toaster.alert({
+              type: 'error',
+              message: err,
+              showCloseButton: true
+            });
           });
       });
     };
