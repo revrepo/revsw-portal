@@ -183,6 +183,9 @@
         .then(function () {
           model.app_name = '';
           $scope.alertService.success('App registered', 5000);
+        })
+        .catch(function (err) {
+          $scope.alertService.danger(err);
         });
     };
 
