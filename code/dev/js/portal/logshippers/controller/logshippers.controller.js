@@ -253,7 +253,7 @@
           });
         })
         .catch(function(err) {
-          $scope.alertService.danger('Could not load job details');
+          $scope.toaster.error('Could not load job details');
         });
     };
     /**
@@ -269,13 +269,13 @@
         $scope
           .delete(model)
           .then(function(data) {
-            $scope.alertService.success('Job ' + jobName + ' deleted.');
+            $scope.toaster.success(data);
             $scope.list()
               .then(setAccountName)
               .then(setMappingInformation);
           })
           .catch(function(err) {
-            $scope.alertService.danger(err);
+            $scope.toaster.error(err);
           });
       });
     };
@@ -292,11 +292,13 @@
 
       $scope
         .create(model)
-        .then(function() {
-          $scope.alertService.success('Jod created', 5000);
+        .then(function(data) {
+          $scope.toaster.success(data);
           $scope.setAccountId();
         })
-        .catch($scope.alertService.danger);
+        .catch(function(err) {
+          $scope.toaster.error(err);
+        });
     };
 
     /**
@@ -320,11 +322,11 @@
         $scope.update({
             id: modelId
           }, model)
-          .then(function() {
-            $scope.alertService.success('Job updated', 5000);
+          .then(function(data) {
+            $scope.toaster.success(data);
           })
           .catch(function(err) {
-            $scope.alertService.danger(err.data.message || 'Oops something ment wrong', 5000);
+            $scope.toaster.error(err);
           });
       });
     };
@@ -468,11 +470,11 @@
             .then(function(data) {
               return data;
             })
-            .then(function() {
-              $scope.alertService.success('Job updated', 5000);
+            .then(function(data) {
+              $scope.toaster.success(data);
             })
             .catch(function(err) {
-              $scope.alertService.danger(err.data.message || 'Oops something ment wrong', 5000);
+              $scope.toaster.error(err);
             })
             .finally(function() {
               $scope.loading(false);

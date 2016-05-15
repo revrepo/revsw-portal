@@ -138,7 +138,10 @@
        */
       LOGSHIPPERS_STATUS_REFRESH_INTERVAL: 25000,
       INTRO_IS_ACTIVE: true,
-      ENABLE_SIMPLIFIED_SIGNUP_PROCESS: true
+      ENABLE_SIMPLIFIED_SIGNUP_PROCESS: true,
+
+      // Used by Angular Toaster
+      SUCCESS_MESSAGE_DISPLAY_TIMEOUT: 5000
     });
 
 })();

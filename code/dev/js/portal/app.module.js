@@ -30,7 +30,8 @@
     'revapm.Portal.LogShippers',
     'angular-intro',
     'ngMessages',
-    'ngAnimate'
+    'ngAnimate',
+    'toaster'
   ]);
 
 })();

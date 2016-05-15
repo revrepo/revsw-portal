@@ -85,11 +85,7 @@
           return $scope.model.domain;
         })
         .catch(function(err) {
-          $scope.toaster.alert({
-            type: 'error',
-            message: err,
-            showCloseButton: true
-          });
+          $scope.toaster.error(err);
         })
         .finally(function() {
           $scope._loading = false;
@@ -101,17 +97,10 @@
         $scope
           .delete(model)
           .then(function(data) {
-            $scope.toaster.alert({
-              type: 'success',
-              message: data
-            });
+            $scope.toaster.success(data);
           })
           .catch(function(err) {
-            $scope.toaster.alert({
-              type: 'error',
-              message: err,
-              showCloseButton: true
-            });
+            $scope.toaster.error(err);
           });          
       });
     };
@@ -129,17 +118,10 @@
           if (model.user_id === User.getUser().user_id) {
             User.reloadUser();
           }
-          $scope.toaster.alert({
-            type: 'success',
-            message: data
-          });
+          $scope.toaster.success(data);
         })
         .catch(function(err) {
-          $scope.toaster.alert({
-            type: 'error',
-            message: err,
-            showCloseButton: true
-          });
+          $scope.toaster.error(err);
         });
     };
 
@@ -152,10 +134,7 @@
         return;
       }
       if (model.passwordConfirm !== model.password) {
-          $scope.toaster.alert({
-            type: 'error',
-            body: 'Passwords did not match'
-          });
+        $scope.toaster.error('Passwords did not match');
         return;
       }
       delete model.passwordConfirm;
@@ -165,17 +144,10 @@
       $scope.create(model)
         .then(function(data) {
           initModel();
-          $scope.toaster.alert({
-            type: 'success',
-            message: data
-          });
+          $scope.toaster.success(data);
         })
         .catch(function(err) {
-          $scope.toaster.alert({
-            type: 'error',
-            message: err,
-            showCloseButton: true
-          });
+          $scope.toaster.error(err);
         });
     };
 

@@ -29,10 +29,7 @@
         mode: 'code',
         modes: ['code', 'view'], // allowed modes['code', 'form', 'text', 'tree', 'view']
         error: function(err) {
-          $scope.toaster.error({
-            showCloseButton: true,
-            error: err
-          });
+          $scope.toaster.error(err);
         }
       }
     };
@@ -153,11 +150,7 @@
     $scope.getSSL_cert = function(id) {
       $scope.get(id)
         .catch(function(err) {
-          $scope.toaster.alert({
-            type: 'error',
-            message: err,
-            showCloseButton: true
-          });
+          $scope.toaster.error('Could not load SSL certificate details');
         });
 
     };
@@ -174,19 +167,12 @@
         $scope
           .delete(model)
           .then(function(data) {
-            $scope.toaster.alert({
-              type: 'success',
-              message: data
-            });
+            $scope.toaster.success(data);
             $scope.list()
               .then(setAccountName);
           })
           .catch(function(err) {
-            $scope.toaster.alert({
-              type: 'error',
-              message: err,
-              showCloseButton: true
-            });
+            $scope.toaster.error(err);
           });
       });
     };
@@ -204,18 +190,11 @@
       $scope
         .create(model)
         .then(function(data) {
-          $scope.toaster.alert({
-            type: 'success',
-            message: data
-          });
+          $scope.toaster.success(data);
           $scope.setAccountId();
         })
         .catch(function(err) {
-          $scope.toaster.alert({
-            type: 'error',
-            message: err,
-            showCloseButton: true
-          });
+          $scope.toaster.error(err);
         });
     };
     /**
@@ -241,17 +220,10 @@
             options: 'publish'
           }, model)
           .then(function(data) {
-            $scope.toaster.alert({
-              type: 'success',
-              message: data
-            });
+            $scope.toaster.success(data);
           })
           .catch(function(err) {
-            $scope.toaster.alert({
-              type: 'error',
-              message: err,
-              showCloseButton: true
-            });
+            $scope.toaster.error(err);
           });
       });
     };
@@ -276,17 +248,10 @@
           options: 'verify_only'
         }, model)
         .then(function(data) {
-          $scope.toaster.alert({
-            type: 'success',
-            message: data
-          });
+          $scope.toaster.success(data);
         })
         .catch(function(err) {
-          $scope.toaster.alert({
-            type: 'error',
-            message: err,
-            showCloseButton: true
-          });
+          $scope.toaster.error(err);
         });
     };
     /**
@@ -311,17 +276,10 @@
             id: modelId
           }, model)
           .then(function(data) {
-            $scope.toaster.alert({
-              type: 'success',
-              message: data
-            });
+            $scope.toaster.success(data);
           })
           .catch(function(err) {
-            $scope.toaster.alert({
-              type: 'error',
-              message: err,
-              showCloseButton: true
-            });
+            $scope.toaster.error(err);
           });
       });
     };

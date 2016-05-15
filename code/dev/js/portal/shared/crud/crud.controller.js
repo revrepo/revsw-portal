@@ -610,27 +610,35 @@
        *****                             EXTENSIONS FOR TOASTER ALERTS
        **************************************************************************************/
 
-      $scope.toaster.oops = function (msg) {
+      $scope.toaster.getMessage = function (msg) {
         if (msg.data && msg.data.message) {
           return msg.data.message;
-        } 
-        else if (msg.message) {
+        } else if (msg.message) {
           return msg.message;
-        }
-        else {
-          return 'Oops something went wrong';
+        } else if (typeof msg === 'string') {
+          return msg;
+        } else {
+          return 'Oops, something went wrong';
         }
       };
 
-      $scope.toaster.alert = function (params) {
-        params.timeout = 5000;
-        if (params.showCloseButton === true) {
-          params.timeout = 0;
-        }
-        if (!params.body) {
-          params.body = $scope.toaster.oops(params.message);
-        }
-        $scope.toaster.pop(params);
+      $scope.toaster.success = function (params) {
+        var toasterParams = {
+          timeout: $config.SUCCESS_MESSAGE_DISPLAY_TIMEOUT,
+          body: $scope.toaster.getMessage(params),
+          type: 'success'
+        };
+        $scope.toaster.pop(toasterParams);
+      };
+
+      $scope.toaster.error = function (params) {
+        var toasterParams = {
+          timeout: 0,
+          showCloseButton: true,
+          body: $scope.toaster.getMessage(params),
+          type: 'error'
+        };
+        $scope.toaster.pop(toasterParams);
       };
 
       /***************************************************************************************
