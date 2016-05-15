@@ -73,6 +73,11 @@
         });
     }
 
+    $scope.initNew = function() {
+      initModel();
+      // $scope.setAccountId(); // TODO: use CRUD method
+    }
+
     $scope.getUser = function(id) {
       $scope._loading = true;
       $scope.get(id)
@@ -217,7 +222,7 @@
         });
     });
 
-    // NOTE: mixin lodash for
+    // NOTE: mixin lodash for find objects
     _.mixin({
       'findByValues': function(collection, property, values) {
         return _.filter(collection, function(item) {
@@ -234,7 +239,7 @@
      */
     $scope.getAccountDomainNameList = function(account_id) {
       if (!account_id) {
-        account_id = $scope.model.companyId;
+        account_id = $scope.model.companyId||$scope.model.account_id;
       }
       var data = _.findByValues($scope.domains, 'account_id', account_id);
       return data;
