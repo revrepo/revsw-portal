@@ -73,7 +73,7 @@
                 <input type="password" required
                        class="form-control"
                        name="confirm_password"
-                       ng-pattern="/^{{pass.new_password}}$/"
+                       validate-compare-to="pass.new_password"
                        ng-disabled="_loading"
                        ng-model="pass.confirm_password"
                        autocomplete="off"
