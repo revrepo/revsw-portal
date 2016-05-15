@@ -57,11 +57,5 @@
       $scope.updatePassword();
     };
 
-    $scope.disableSubmit = function(pass){
-      return $scope._loading ||
-        !pass.current_password ||
-        !pass.new_password ||
-        !pass.confirm_password;
-    };
   }
 })();
