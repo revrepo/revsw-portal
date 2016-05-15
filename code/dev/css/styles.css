@@ -397,8 +397,8 @@ section[drawer] .side-menu .side-menu-item {
   height: 40px;
   line-height: 20px;
   padding: 10px;
-  font-size: 16px;
-  color: #f7941e;
+  font-size: 14px;
+  color: #bbb;
   text-decoration: none;
 }
 section[drawer] .side-menu .side-menu-item.selected {
@@ -408,20 +408,19 @@ section[drawer] .side-menu .side-menu-item.active {
   border-right: 4px solid #f7941e;
 }
 section[drawer] .side-menu .side-menu-item i {
-  margin: 0 10px;
+  margin: 0 0 0 10px;
 }
 section[drawer] .side-menu .side-menu-sub-item {
   display: block;
-  border-bottom: 1px solid gray;
-  padding-bottom: 5px;
-  margin-bottom: 5px;
-  margin-right: 10px;
-  margin-left: 40px;
-  color: #f7941e;
+  padding: 8px 10px 8px 40px;
+  color: #bbb;
   text-decoration: none;
 }
 section[drawer] .side-menu .side-menu-sub-item.active {
   color: white;
+  border-top: solid 1px #444;
+  border-bottom: solid 1px #333;
+  background-color: #000;
 }
 section[drawer] .side-menu .side-menu-sub-item.introjs-showElement {
   color: #f9af33;
