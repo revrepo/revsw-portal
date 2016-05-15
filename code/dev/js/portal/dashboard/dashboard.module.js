@@ -13,7 +13,8 @@
       'ngSanitize',
       // 'adf', // TODO: add after fix conflict with directive 'alert'
       'adf.provider',
-      'revapm.Portal.BlueTriangleTech'
+      'revapm.Portal.BlueTriangleTech',
+       'angular-nicescroll'
     ])
     .config( /*ngInject*/ function(dashboardProvider) {
       // NOTE: define dashboard structures

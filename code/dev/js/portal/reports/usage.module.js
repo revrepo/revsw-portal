@@ -11,5 +11,6 @@
       'ui.bootstrap.datetimepicker',
       'ng.jsoneditor',
       'ngSanitize',
+      'toaster'
     ]);
 })();

@@ -16,7 +16,10 @@
         'delete': 'Deleted',
         'publish': 'Published',
         'login': 'Logged In',
-        'purge': 'Purged'
+        'purge': 'Purged',
+        'init2fa': 'Initialized 2FA',
+        'enable2fa': 'Enabled 2FA',
+        'disable2fa': 'Disabled 2FA'
       },
 
       /**
