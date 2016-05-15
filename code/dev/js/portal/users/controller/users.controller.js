@@ -85,9 +85,10 @@
           return $scope.model.domain;
         })
         .catch(function(err) {
-          $scope.toaster.error({
-            showCloseButton: true,
-            body: 'Could not load user details'
+          $scope.toaster.alert({
+            type: 'error',
+            message: err,
+            showCloseButton: true
           });
         })
         .finally(function() {
@@ -99,10 +100,17 @@
       $scope.confirm('confirmModal.html', model).then(function() {
         $scope
           .delete(model)
+          .then(function(data) {
+            $scope.toaster.alert({
+              type: 'success',
+              message: data
+            });
+          })
           .catch(function(err) {
-            $scope.toaster.error({
-              showCloseButton: true,
-              error: err
+            $scope.toaster.alert({
+              type: 'error',
+              message: err,
+              showCloseButton: true
             });
           });          
       });
@@ -121,16 +129,16 @@
           if (model.user_id === User.getUser().user_id) {
             User.reloadUser();
           }
-          $scope.toaster.pop({
+          $scope.toaster.alert({
             type: 'success',
-            body: 'User updated',
-            timeout: 5000
-            });
+            message: data
+          });
         })
         .catch(function(err) {
-          $scope.toaster.error({
-            showCloseButton: true,
-            error: err
+          $scope.toaster.alert({
+            type: 'error',
+            message: err,
+            showCloseButton: true
           });
         });
     };
@@ -144,11 +152,10 @@
         return;
       }
       if (model.passwordConfirm !== model.password) {
-          $scope.toaster.pop({
+          $scope.toaster.alert({
             type: 'error',
-            body: 'Passwords did not match',
-            timeout: 5000
-            });
+            body: 'Passwords did not match'
+          });
         return;
       }
       delete model.passwordConfirm;
@@ -158,16 +165,16 @@
       $scope.create(model)
         .then(function(data) {
           initModel();
-          $scope.toaster.pop({
+          $scope.toaster.alert({
             type: 'success',
-            body: 'User created',
-            timeout: 5000
-            });
+            message: data
+          });
         })
         .catch(function(err) {
-          $scope.toaster.error({
-            showCloseButton: true,
-            error: err
+          $scope.toaster.alert({
+            type: 'error',
+            message: err,
+            showCloseButton: true
           });
         });
     };
