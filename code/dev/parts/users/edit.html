@@ -133,7 +133,7 @@
               <a ui-sref="^" class="btn btn-default">
                 <i class="glyphicon glyphicon-remove"></i>&nbsp; Cancel
               </a>
-              <button class="btn btn-success" ng-disabled="disableSubmit(model, true)" ng-click="updateUser(model)">
+              <button class="btn btn-success" type="button" ng-disabled="disableSubmit(model, true)||editForm.$invalid" ng-click="updateUser(model)">
                 <i class="glyphicon glyphicon-ok"></i>&nbsp; Update
               </button>
             </div>
