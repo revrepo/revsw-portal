@@ -24,27 +24,35 @@
   </div>
   <div class="panel-body" ng-if="!$ctrl.isRegistryFinish">
     <form class="col-sm-offset-2 col-sm-8 form-horizontal form-contact-info" name="newUser" novalidate>
-      <div class="form-group " ng-class="{ 'has-error': newUser.email.$invalid &&
-                                newUser.email.$dirty }">
+      <div class="form-group " ng-class="{ 'has-error': newUser.email.$invalid && newUser.email.$dirty }">
         <label for="email" popover-append-to-body="{{true}}" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="New user's email address - the address should be unique across the system">
           Email *</label>
         <div class="col-sm-10">
           <input type="email" autofocus class="form-control" id="email" name="email" placeholder="Email" ng-model="$ctrl.model.email" required ng-disabled="_loading">
-          <span ng-show="!!newUser['email'].$error.email" style="color:red">Please use format example@example.com</span>
+          <div class="error-messages" ng-messages="newUser.email.$error" role="alert" ng-messages-multiple>
+            <div ng-message="email" class="alert-text alert-text--required">Please use format example@example.com</div>
+            <div ng-messages-include="parts/shared/error-messages.html"></div>
+          </div>
         </div>
       </div>
-      <div class="form-group">
+      <div class="form-group" ng-class="{ 'has-error': newUser.firstName.$invalid && newUser.firstName.$dirty }">
         <label for="firstName" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="First name">First Name *</label>
         <div class="col-sm-10">
           <input type="text" class="form-control" id="firstName" name="firstName" placeholder="First Name" required ng-maxlength="150" ng-model="$ctrl.model.first_name" ng-disabled="_loading">
-          <span ng-show="!!newUser['firstName'].$error.maxlength" style="color:red">150 characters max</span>
+          <div class="error-messages" ng-messages="newUser.firstName.$error" role="alert" ng-messages-multiple>
+            <div ng-message="maxlength" class="alert-text alert-text--maxlength">150 characters max</div>
+            <div ng-messages-include="parts/shared/error-messages.html"></div>
+          </div>
         </div>
       </div>
-      <div class="form-group">
+      <div class="form-group" ng-class="{ 'has-error': newUser.lastName.$invalid && newUser.lastName.$dirty }">
         <label for="lastName" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Last name">Last Name *</label>
         <div class="col-sm-10">
           <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Last Name" ng-model="$ctrl.model.last_name" required ng-maxlength="150" ng-disabled="_loading">
-          <span ng-show="!!newUser['lastName'].$error.maxlength" style="color:red">150 characters max</span>
+          <div class="error-messages" ng-messages="newUser.lastName.$error" role="alert" ng-messages-multiple>
+            <div ng-message="maxlength" class="alert-text alert-text--maxlength">150 characters max</div>
+            <div ng-messages-include="parts/shared/error-messages.html"></div>
+          </div>
         </div>
       </div>
       <div class="form-group" ng-class="{ 'has-error': newUser.password.$invalid &&
@@ -52,8 +60,11 @@
         <label for="password" popover-append-to-body="{{true}}" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="At least eight symbols">Password *</label>
         <div class="col-sm-10">
           <input type="password" class="form-control" id="password" name="password" ng-model="$ctrl.model.password" ng-minlength="8" ng-maxlength="15" required ng-disabled="_loading">
-          <span ng-show="!!newUser['password'].$error.minlength" style="color:red">Password must contain at least 8 characters</span>
-          <span ng-show="!!newUser['password'].$error.maxlength" style="color:red">Password must contain 15 characters max</span>
+          <div class="error-messages" ng-messages="newUser.password.$error" role="alert" ng-messages-multiple>
+            <div ng-message="minlength" class="alert-text alert-text--minlength">Password must contain at least 8 characters</div>
+            <div ng-message="maxlength" class="alert-text alert-text--maxlength">Password must contain 15 characters max</div>
+            <div ng-messages-include="parts/shared/error-messages.html"></div>
+          </div>
         </div>
       </div>
       <hr>
@@ -70,7 +81,7 @@
             <a ui-sref="^" class="btn btn-default">
               <i class="glyphicon glyphicon-remove"></i>&nbsp; Cancel
             </a>
-            <button class="btn btn-success" ng-disabled="_loading || newUser.$invalid ||(($ctrl.model.password != $ctrl.model.passwordConfirm ||newUser.passwordConfirm.$invalid) &&newUser.passwordConfirm.$dirty )" ng-click="$ctrl.onSignUpShort($ctrl.model)">
+            <button class="btn btn-success" ng-disabled="_loading || newUser.$invalid" ng-click="$ctrl.onSignUpShort($ctrl.model)">
               <i class="glyphicon glyphicon-log-in"></i> Sign Up
             </button>
           </div>
