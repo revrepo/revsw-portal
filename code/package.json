@@ -39,6 +39,7 @@
     "ng-annotate-adf-plugin": "^0.1.2"
   },
   "dependencies": {
+    "gulp": "^3.9.1",
     "gulp-flatten": "^0.2.0"
   }
 }
