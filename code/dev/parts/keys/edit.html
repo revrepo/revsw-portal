@@ -25,9 +25,9 @@
       </div>
       <div class="panel-body">
 
-        <form class="form-horizontal" ng-submit="ok()">
-          <div class="form-group">
-            <label for="key_name"
+        <form class="form-horizontal" name="editForm" ng-submit="ok()">
+          <div class="form-group" ng-class="{'has-error': editForm.keyName.$invalid && editForm.keyName.$dirty}">
+            <label for="keyName"
                    class="col-sm-2 control-label"
             >API Key Name</label>
 
@@ -36,8 +36,12 @@
                      class="form-control"
                      ng-model="key.key_name"
                      id="key_name"
+                     name="keyName"
                      ng-disabled="_loading"
-                     placeholder="Api Key name">
+                     placeholder="Api Key name" required>
+              <div class="error-messages" ng-messages="editForm.keyName.$error" role="alert" ng-messages-multiple>
+                  <div ng-messages-include="parts/shared/error-messages.html"></div>
+              </div>
             </div>
           </div>
           <div class="form-group">
@@ -48,19 +52,24 @@
             <div class="col-sm-10">
               <button class="btn btn-primary" clipboard text="key.key" on-copied="copyCallback()" on-error="copyCallback(err)" style="vertical-align: initial;"  uib-tooltip="Click to copy the key to the clipboard" tooltip-placement="top"><i class="fa fa-files-o"></i></button>
               <button class="btn btn-primary" ng-click="switchKeyVisibility(key)" ng-hide="key.showKey" style="vertical-align: initial;">Show API Key</button>
+              <!-- TODO - re-base style-->
               <input id="key" ng-if="key.showKey" ng-blur="switchKeyVisibility(key)" class="form-control" value="{{key.key}}" style="width: 300px; display: inline-block; position: absolute; z-index: 999; margin-left: 4px;" focus-me="key.showKey">
             </div>
           </div>
-          <div class="form-group" ng-hide="!companies || companies.length == 1">
+          <!-- TODO: change rule ng-hide on isAdmin (?)-->
+          <div class="form-group" ng-hide="!companies || companies.length == 1"  ng-class="{'has-error': editForm.accountId.$invalid && editForm.accountId.$dirty}">
             <label for="account_id"
                    class="col-sm-2 control-label">Account</label>
             <div class="col-sm-4">
-               <ui-select ng-model="key.account_id" theme="select2" ng-disabled="_loading" on-select="onAccountSelect($model)" style="min-width: 550px;" id="account_id" name="accountId">
+               <ui-select ng-model="key.account_id" theme="select2" ng-disabled="_loading" on-select="onAccountSelect($model)" style="min-width: 550px;" id="account_id" name="accountId" required>
                 <ui-select-match placeholder="Select Account">{{$select.selected.companyName}}</ui-select-match>
                 <ui-select-choices repeat="item.id as item in companies | filter: {companyName: $select.search}">
                   <div ng-bind-html="item.companyName|highlight: $select.search"></div>
                 </ui-select-choices>
               </ui-select>
+              <div class="error-messages" ng-messages="editForm.accountId.$error" role="alert" ng-messages-multiple>
+                  <div ng-messages-include="parts/shared/error-messages.html"></div>
+              </div>
             </div>
           </div>
           <div class="form-group">
@@ -135,7 +144,7 @@
                 Cancel
               </a>
               <button class="btn btn-success"
-                      ng-disabled="_loading || !key.key_name"
+                      ng-disabled="_loading || editForm.$invalid"
                       ng-click="update()">
                 <i class="glyphicon glyphicon-ok"></i>&nbsp;
                 Update
