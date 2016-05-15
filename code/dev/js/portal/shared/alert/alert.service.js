@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
 
   angular
@@ -6,99 +6,83 @@
     .factory('AlertService', AlertService);
 
   /*@ngInject*/
-  function AlertService($interval) {
-
-    var alerts = [];
-
+  function AlertService($interval, toaster, $config) {
     /**
-     * Add new alert
-     * @param {object} alert
-     * @param {number=} [timeout]
+     * @name  getMessage
+     * @description
+     *  Internal method for get server text message
+     *
+     * @param  {Object} msg
+     * @return {String}     message for display
      */
-    function add(alert, timeout) {
-      // Will check existing same message
-      var exists = false;
-      angular.forEach(alerts, function (record) {
-        if (record.message === alert.message && record.type === alert.type) {
-          exists = true;
-        }
-      });
-      if (!exists) {
-        alerts.push(alert);
+    function getMessage(msg) {
 
-        if (timeout) {
-          $interval(remove.bind(this, alert), timeout, 1);
+      if (angular.isObject(msg)) {
+        if (msg.status === 403) {
+          // TODO: add message for status -1
+          msg = 'Access denied. Do you have a read-only user account?';
+        } else if (msg.data && msg.data.message) {
+          return msg.data.message;
+        } else if (msg.message) {
+          return msg.message;
         }
+      } else if (typeof msg === 'string') {
+        return msg;
+      } else {
+        return 'Oops, something went wrong';
       }
     }
 
     /**
-     * Add a success alert
+     * Show a success alert
      *
      * @param {string} msg
      * @param {number=} [timeout]
      */
     function success(msg, timeout) {
       if (angular.isUndefined(timeout)) {
-        timeout = 5000;
+        timeout = $config.SUCCESS_MESSAGE_DISPLAY_TIMEOUT;
       }
-      add({
-        type: 'success',
-        message: msg || ''
-      }, timeout);
+
+      var toasterParams = {
+        timeout: timeout,
+        body: getMessage(msg),
+        type: 'success'
+      };
+      toaster.pop(toasterParams);
     }
 
     /**
-     * Add a danger alert
+     * Show a danger alert
      *
      * @param {string|object} msg
      * @param {number=} [timeout]
      */
     function danger(msg, timeout) {
       if (angular.isUndefined(timeout)) {
-        timeout = 5000;
+        timeout = $config.SUCCESS_MESSAGE_DISPLAY_TIMEOUT;
       }
-      // Check if err obj passed from `.catch()`
-      if (angular.isObject(msg)) {
-        if (msg.status === 403) {
-          msg = 'Access denied. Do you have a read-only user account?';
-        } else if (msg && msg.data && msg.data.message) {
-          msg = msg.data.message;
-        } else {
-          msg = 'Something wrong...';
-        }
-      }
-      add({
-        type: 'danger',
-        message: msg || ''
-      }, timeout);
-    }
-
-    function remove(alert) {
-      var idx = alerts.indexOf(alert);
-      if (!~idx) {
-        return;
-      }
-      alerts.splice(idx, 1);
+      var toasterParams = {
+        timeout: 0,
+        showCloseButton: true,
+        body: getMessage(msg),
+        type: 'error'
+      };
+      toaster.pop(toasterParams);
     }
 
     /**
      * Clear all alerts
      */
     function clear() {
-      alerts.splice(0, alerts.length);
+      toaster.clear();
     }
 
     return {
-      alerts: alerts,
 
       success: success,
 
       danger: danger,
-
-      add: add,
-
-      remove: remove,
 
       clear: clear
     };
