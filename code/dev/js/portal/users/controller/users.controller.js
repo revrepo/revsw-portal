@@ -76,7 +76,7 @@
     $scope.initNew = function() {
       initModel();
       // $scope.setAccountId(); // TODO: use CRUD method
-    }
+    };
 
     $scope.getUser = function(id) {
       $scope._loading = true;
@@ -106,7 +106,7 @@
           })
           .catch(function(err) {
             $scope.toaster.error(err);
-          });          
+          });
       });
     };
 
