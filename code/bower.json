@@ -59,6 +59,7 @@
     "select2": "~3.4.5",
     "select2-bootstrap-css": "~1.4.6",
     "AngularJS-Toaster": "angularjs-toaster#^2.0.0"
+    "angular-nicescroll": "^0.0.9"
   },
   "resolutions": {
     "moment": "~2.12.0",
