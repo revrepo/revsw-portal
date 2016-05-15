@@ -9,8 +9,10 @@
       </div>
       <form novalidate class="login_form block-center" ng-submit="login(email, pass)">
         <div class="block-center">
+          <h2 class="login_rev">Login</h2>
+          <p class="login_rev1">To access this page, you have to log in to Revapm</p>
           <div class="">
-            <div class="form-group">
+            <div class="form-group email-rev">
               <input type="email"
                      name="email"
                      placeholder="Email"
@@ -40,11 +42,12 @@
             </div>
           </div>
           <div class="form-inline">
-            <div class="form-group marl_med">
+            <div class="form-group marl_med forgot_rev">
               <input type="button" id="forgot_password" ng-click="forgotPassword()" value="Forgot Password?" class="btn btn-link forgot_password">
             </div>
-            <div class="form-group marl_med pull-right">
-              <a ng-href="/#/signup/plans" class="btn btn-link">Sign Up</a>
+            <p class="d_account_rev1">Dont have an Account ?</p>
+            <div class="form-group marl_med pull-right create_rev">
+              <a ng-href="/#/signup/plans" class="btn btn-link">Create Account Now</a>
             </div>
           </div>
         </div>
