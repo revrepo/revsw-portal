@@ -37,12 +37,11 @@
                 <input type="password"
                        class="form-control"
                        name="current_password"
-                       ng-minlength="8"
                        ng-disabled="_loading"
                        ng-model="pass.current_password"
                        id="current_password"
                        autocomplete="off"
-                       autofocus>
+                       autofocus required>
                 <div class="error-messages" ng-messages="editForm.current_password.$error" role="alert" ng-messages-multiple>
                   <div ng-messages-include="parts/shared/error-messages.html"></div>
                 </div>
@@ -55,27 +54,32 @@
                        class="form-control"
                        name="new_password"
                        ng-minlength="8"
+                       ng-maxlength="15"
                        ng-disabled="_loading"
                        ng-model="pass.new_password"
                        autocomplete="off"
-                       id="new_password">
+                       id="new_password" required>
                 <div class="error-messages" ng-messages="editForm.new_password.$error" role="alert" ng-messages-multiple>
+                  <div ng-message="minlength" class="alert-text alert-text--minlength">Password must contain at least 8 characters</div>
+                  <div ng-message="maxlength" class="alert-text alert-text--maxlength">Password must contain 15 characters max</div>
                   <div ng-messages-include="parts/shared/error-messages.html"></div>
                 </div>
               </div>
             </div>
+
             <div class="form-group" ng-class="{'has-error': editForm.confirm_password.$invalid && editForm.confirm_password.$dirty}">
               <label for="confirm_password" class="col-sm-2 control-label">Confirm New Password</label>
               <div class="col-sm-10">
-                <input type="password"
+                <input type="password" required
                        class="form-control"
                        name="confirm_password"
-                       ng-minlength="8"
+                       ng-pattern="/^{{pass.new_password}}$/"
                        ng-disabled="_loading"
                        ng-model="pass.confirm_password"
                        autocomplete="off"
                        id="confirm_password">
                 <div class="error-messages" ng-messages="editForm.confirm_password.$error" role="alert" ng-messages-multiple>
+                  <div ng-message="pattern">The new and confirmation passwords do not match</div>
                   <div ng-messages-include="parts/shared/error-messages.html"></div>
                 </div>
               </div>
