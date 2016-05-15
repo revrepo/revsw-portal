@@ -120,7 +120,7 @@
           <div class="form-group" ng-class="{'has-error': createForm.passwordConfirm.$invalid && createForm.passwordConfirm.$dirty}">
             <label for="passwordConfirm" class="col-sm-2 control-label" popover-trigger="mouseenter">Confirm Password *</label>
             <div class="col-sm-10">
-              <input type="password" class="form-control" id="passwordConfirm" name="passwordConfirm" ng-model="model.passwordConfirm" ng-disabled="_loading" required>
+              <input type="password" class="form-control" id="passwordConfirm" name="passwordConfirm" ng-model="model.passwordConfirm" ng-disabled="_loading" validate-compare-to="model.password">
               <div class="error-messages" ng-messages="createForm.passwordConfirm.$error" role="alert" ng-messages-multiple>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
               </div>

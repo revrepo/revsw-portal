@@ -45,11 +45,7 @@
           return data;
         })
         .catch(function (err) {
-          if (err.data && err.data.message) {
-            AlertService.danger(err.data.message);
-          } else {
-            AlertService.danger('Something goes wrong');
-          }
+          AlertService.danger(err);
         });
     };
 
