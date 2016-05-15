@@ -74,6 +74,7 @@
         $scope
           .delete(model)
           .then(function() {
+            $scope.alertService.success('API Key success delete');
             $rootScope.$broadcast('update:searchData');
           })
           .catch($scope.alertService.danger);
