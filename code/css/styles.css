@@ -391,12 +391,15 @@ section[drawer] #logo img {
   vertical-align: middle;
   width: 50%;
 }
+section[drawer] .side-menu {
+  align: right;
+}
 section[drawer] .side-menu .side-menu-item {
   cursor: pointer;
   display: block;
   height: 40px;
   line-height: 20px;
-  padding: 10px;
+  padding: 10px 10px 10px 19px;
   font-size: 16px;
   color: #f7941e;
   text-decoration: none;
@@ -701,6 +704,28 @@ section[drawer] .side-menu .dashboard_menu .side-menu-item.item-title a {
   background-size: contain;
   background-repeat: no-repeat;
   background-image: url('../images/background-dashboard.png');
+}
+body {
+  overflow-y: hidden;
+}
+@-moz-document url-prefix() {
+  section[drawer] .side-menu .side-menu-item {
+    padding-left: 20px;
+  }
+  .paper-header .navbar .navbar-inner .navbar-header .ng-isolate-scope .form-control.ng-pristine.ng-untouched.ng-valid.ng-valid-editable {
+    position: relative;
+    top: 12px;
+  }
+}
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+  section[drawer] .side-menu .side-menu-item {
+    padding-left: 20px;
+  }
+}
+@supports (-ms-accelerator:true) {
+  section[drawer] .side-menu .side-menu-item {
+    padding-left: 20px;
+  }
 }
 .domain-caching-rules__info .panel-buttons-left {
   padding-right: 30px;

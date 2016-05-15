@@ -391,12 +391,15 @@ section[drawer] #logo img {
   vertical-align: middle;
   width: 50%;
 }
+section[drawer] .side-menu {
+  align: right;
+}
 section[drawer] .side-menu .side-menu-item {
   cursor: pointer;
   display: block;
   height: 40px;
   line-height: 20px;
-  padding: 10px;
+  padding: 10px 10px 10px 19px;
   font-size: 16px;
   color: #f7941e;
   text-decoration: none;
