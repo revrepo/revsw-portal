@@ -6,7 +6,7 @@
   </div>
 </div>
 
-<div class="row">
+<div class="row" ng-init="initNew()">
   <div class="col-md-12">
     <div class="panel panel-default">
       <div class="panel-heading">
@@ -26,14 +26,14 @@
 
       </div>
       <div class="panel-body">
-        <form class="form-horizontal" ng-submit="createDomain(model)" name="createForm">
-          <div class="form-group">
+        <form class="form-horizontal" name="createForm" novalidate>
+          <div class="form-group" ng-class="{'has-error': createForm.domain_name.$invalid && createForm.domain_name.$dirty}">
             <label for="domain_name"
                    popover-append-to-body="{{true}}"
                    class="col-sm-2 control-label"
                    popover-trigger="mouseenter"
                    uib-popover="Enter here a website/API domain name to be served by RevAPM"
-                   >Domain Name</label>
+                   >Domain Name *</label>
 
             <div class="col-sm-10">
               <input type="text"
@@ -42,10 +42,17 @@
                      ng-disabled="_loading"
                      ng-model="model.domain_name"
                      id="domain_name"
-                     placeholder="Domain Name">
+                     name="domain_name"
+                     ng-pattern="/(?=^.{4,253}$)(^((?!-)(?!\_)[a-zA-Z0-9-\_]{0,62}[a-zA-Z0-9]\.)+[a-zA-Z]{2,63}$)/"
+                     ng-maxlength="50"
+                     placeholder="Domain Name"
+                     required>
+              <div class="error-messages" ng-messages="createForm.domain_name.$error" role="alert" ng-messages-multiple>
+                <div ng-messages-include="parts/shared/error-messages.html"></div>
+              </div>
             </div>
           </div>
-          <div class="form-group" ng-if="companies.length > 1">
+          <div class="form-group" ng-class="{'has-error': createForm.accountId.$invalid && createForm.accountId.$dirty}"  ng-if="companies.length > 1">
             <label for="account_id"
                    popover-append-to-body="{{true}}"
                    class="col-sm-2 control-label"
@@ -53,20 +60,23 @@
                    uib-popover="Select company name the domain should be associated with">Account</label>
 
             <div class="col-sm-10">
-               <ui-select ng-model="model.account_id" theme="select2" ng-disabled="_loading" on-select="onAccountSelect($model)" style="min-width: 550px;" id="account_id" name="accountId">
+               <ui-select ng-model="model.account_id" theme="select2" ng-disabled="_loading" on-select="onAccountSelect($model)" style="min-width: 550px;" id="account_id" name="accountId" required>
                 <ui-select-match placeholder="Select Account">{{$select.selected.companyName}}</ui-select-match>
                 <ui-select-choices repeat="item.id as item in companies | filter: {companyName: $select.search}">
                   <div ng-bind-html="item.companyName|highlight: $select.search"></div>
                 </ui-select-choices>
               </ui-select>
+              <div class="error-messages" ng-messages="createForm.accountId.$error" role="alert" ng-messages-multiple>
+                <div ng-messages-include="parts/shared/error-messages.html"></div>
+              </div>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group" ng-class="{'has-error': createForm.origin_server.$invalid && createForm.origin_server.$dirty}">
             <label for="origin_server"
                    popover-append-to-body="{{true}}"
                    class="col-sm-2 control-label"
                    popover-trigger="mouseenter"
-                   uib-popover="Enter here domain name or IP address of origin web server">Origin Server Name/IP</label>
+                   uib-popover="Enter here domain name or IP address of origin web server">Origin Server Name/IP *</label>
 
             <div class="col-sm-10">
               <input type="text"
@@ -74,15 +84,22 @@
                      ng-disabled="_loading"
                      ng-model="model.origin_server"
                      id="origin_server"
-                     placeholder="Origin Server name">
+                     name="origin_server"
+                     ng-pattern="/(?=^.{4,253}$)(^((?!-)(?!\_)[a-zA-Z0-9-\_]{0,62}[a-zA-Z0-9]\.)+[a-zA-Z]{2,63}$)/"
+                     ng-maxlength="50"
+                     placeholder="Origin Server name"
+                     required>
+              <div class="error-messages" ng-messages="createForm.origin_server.$error" role="alert" ng-messages-multiple>
+                <div ng-messages-include="parts/shared/error-messages.html"></div>
+              </div>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group"  ng-class="{'has-error': createForm.origin_host_header.$invalid && createForm.origin_host_header.$dirty}">
             <label for="origin_host_header"
                    popover-append-to-body="{{true}}"
                    class="col-sm-2 control-label"
                    popover-trigger="mouseenter"
-                   uib-popover="Enter here a domain name to be used in 'Host' header in requests sent from RevAPM to the origin server">Origin Host Header</label>
+                   uib-popover="Enter here a domain name to be used in 'Host' header in requests sent from RevAPM to the origin server">Origin Host Header *</label>
 
             <div class="col-sm-10">
               <input type="text"
@@ -90,10 +107,17 @@
                      ng-model="model.origin_host_header"
                      ng-disabled="_loading"
                      id="origin_host_header"
-                     placeholder="Origin Host Header">
+                     name="origin_host_header"
+                     ng-pattern="/(?=^.{4,253}$)(^((?!-)(?!\_)[a-zA-Z0-9-\_]{0,62}[a-zA-Z0-9]\.)+[a-zA-Z]{2,63}$)/"
+                     ng-maxlength="50"
+                     placeholder="Origin Host Header"
+                     required>
+              <div class="error-messages" ng-messages="createForm.origin_host_header.$error" role="alert" ng-messages-multiple>
+                <div ng-messages-include="parts/shared/error-messages.html"></div>
+              </div>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group" ng-class="{'has-error': createForm.origin_server_location_id.$invalid && createForm.origin_server_location_id.$dirty}">
             <label for="origin_server_location_id"
                    popover-append-to-body="{{true}}"
                    class="col-sm-2 control-label"
@@ -105,9 +129,13 @@
                       ng-disabled="_loading"
                       ng-model="model.origin_server_location_id"
                       id="origin_server_location_id"
-                      ng-options="obj.id as obj.locationName for obj in locations">
+                      name="origin_server_location_id"
+                      ng-options="obj.id as obj.locationName for obj in locations" required>
                 <option value="">--- Select Location ---</option>
               </select>
+              <div class="error-messages" ng-messages="createForm.origin_server_location_id.$error" role="alert" ng-messages-multiple>
+                <div ng-messages-include="parts/shared/error-messages.html"></div>
+              </div>
             </div>
           </div>
           <!--
@@ -128,12 +156,14 @@
             </div>
           </div>
           -->
-          <div class="form-group" ng-class="{ 'has-error': createForm.comment.$invalid &&
-                                      editForm.comment.$dirty }">
+          <div class="form-group" ng-class="{ 'has-error': createForm.comment.$invalid && createForm.comment.$dirty }">
             <label for="comment" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Comment">Comment</label>
             <div class="col-md-10">
-              <textarea id="comment" placeholder="Comment (max 300 symbol)" class="form-control" name="comment" ng-model="model.comment" ng-disabled="_loading">
+              <textarea id="comment" placeholder="Comment (max 300 symbol)" ng-maxlength="300" class="form-control" name="comment" ng-model="model.comment" ng-disabled="_loading">
               </textarea>
+              <div class="error-messages" ng-messages="createForm.comment.$error" role="alert" ng-messages-multiple>
+                <div ng-messages-include="parts/shared/error-messages.html"></div>
+              </div>
             </div>
           </div>
           <hr>
@@ -143,11 +173,17 @@
                 <i class="glyphicon glyphicon-remove"></i>&nbsp;
                 Cancel
               </a>
-              <button class="btn btn-success"
-                      ng-disabled="disableSubmit(model)">
+              <button class="btn btn-success" id="create_domain"
+                      ng-disabled="disableSubmit(model) || createForm.$invalid" ng-click="createDomain(model, false)">
                 <i class="glyphicon glyphicon-refresh spin" ng-if="_loading"></i>
                 <i class="glyphicon glyphicon-ok" ng-if="!_loading"></i>&nbsp;
                 Create Domain
+              </button>
+              <button class="btn btn-success" id="create_domain_and_add_more"
+                      ng-disabled="disableSubmit(model) || createForm.$invalid" ng-click="createDomain(model, true);createForm.$setPristine()">
+                <i class="glyphicon glyphicon-refresh spin" ng-if="_loading"></i>
+                <i class="glyphicon glyphicon-ok" ng-if="!_loading"></i>&nbsp;
+                Create And Add More
               </button>
             </div>
           </div>

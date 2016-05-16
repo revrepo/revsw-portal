@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
 
   angular
@@ -10,7 +10,11 @@
     $stateProvider
       .state('index.apps.android', {
         url: '/android',
-        data: {platform: 'Android', platform_code: 'Android', list: true},
+        data: {
+          platform: 'Android',
+          platform_code: 'Android',
+          list: true
+        },
         views: {
           main: {
             controller: 'AppsController',
@@ -20,7 +24,11 @@
       })
       .state('index.apps.ios', {
         url: '/ios',
-        data: {platform: 'iOS', platform_code: 'iOS', list: true},
+        data: {
+          platform: 'iOS',
+          platform_code: 'iOS',
+          list: true
+        },
         views: {
           main: {
             controller: 'AppsController',
@@ -30,7 +38,11 @@
       })
       .state('index.apps.windows_mobile', {
         url: '/windows_mobile',
-        data: {platform: 'Windows Mobile', platform_code: 'Windows_Mobile', list: true},
+        data: {
+          platform: 'Windows Mobile',
+          platform_code: 'Windows_Mobile',
+          list: true
+        },
         views: {
           main: {
             templateUrl: 'parts/apps/list.html',
@@ -40,15 +52,25 @@
       })
       .state('index.apps.ios.new', {
         url: '/new',
+        data: {
+          platform: 'iOS',
+          platform_code: 'iOS',
+          list: false
+        },
         views: {
           page: {
             templateUrl: 'parts/apps/new.html',
-            controller: 'AppsController'
+            // controller: 'AppsController'
           }
         }
       })
       .state('index.apps.ios.configure', {
         url: '/configure/:id',
+        data: {
+          platform: 'iOS',
+          platform_code: 'iOS',
+          list: false
+        },
         views: {
           page: {
             templateUrl: 'parts/apps/configure.html',
@@ -58,6 +80,11 @@
       })
       .state('index.apps.ios.edit', {
         url: '/edit/:id',
+        data: {
+          platform: 'iOS',
+          platform_code: 'iOS',
+          list: false
+        },
         views: {
           page: {
             templateUrl: 'parts/apps/edit.html',
@@ -76,15 +103,25 @@
       })
       .state('index.apps.android.new', {
         url: '/new',
+        data: {
+          platform: 'Android',
+          platform_code: 'Android',
+          list: false
+        },
         views: {
           page: {
             templateUrl: 'parts/apps/new.html',
-            controller: 'AppsController'
+            // controller: 'AppsController'
           }
         }
       })
       .state('index.apps.android.configure', {
         url: '/configure/:id',
+        data: {
+          platform: 'Android',
+          platform_code: 'Android',
+          list: false
+        },
         views: {
           page: {
             templateUrl: 'parts/apps/configure.html',
@@ -94,6 +131,11 @@
       })
       .state('index.apps.android.edit', {
         url: '/edit/:id',
+        data: {
+          platform: 'Android',
+          platform_code: 'Android',
+          list: false
+        },
         views: {
           page: {
             templateUrl: 'parts/apps/edit.html',
@@ -112,15 +154,25 @@
       })
       .state('index.apps.windows_mobile.new', {
         url: '/new',
+        data: {
+          platform: 'Windows Mobile',
+          platform_code: 'Windows_Mobile',
+          list: false
+        },
         views: {
           page: {
             templateUrl: 'parts/apps/new.html',
-            controller: 'AppsController'
+            // controller: 'AppsController'
           }
         }
       })
       .state('index.apps.windows_mobile.configure', {
         url: '/configure/:id',
+        data: {
+          platform: 'Windows Mobile',
+          platform_code: 'Windows_Mobile',
+          list: false
+        },
         views: {
           page: {
             templateUrl: 'parts/apps/configure.html',
@@ -130,6 +182,11 @@
       })
       .state('index.apps.windows_mobile.edit', {
         url: '/edit/:id',
+        data: {
+          platform: 'Windows Mobile',
+          platform_code: 'Windows_Mobile',
+          list: false
+        },
         views: {
           page: {
             templateUrl: 'parts/apps/edit.html',
@@ -139,6 +196,11 @@
       })
       .state('index.apps.windows_mobile.versions', {
         url: '/versions/:id/',
+        data: {
+          platform: 'Windows Mobile',
+          platform_code: 'Windows_Mobile',
+          list: false
+        },
         views: {
           page: {
             templateUrl: 'parts/apps/versions.html',
@@ -148,4 +210,3 @@
       });
   }
 })();
-

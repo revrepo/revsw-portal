@@ -70,12 +70,19 @@
           //
           $scope.companies = dataRefs[0];
           $scope.domains = dataRefs[1];
+          return dataRefs;
         });
     }
 
     $scope.initNew = function() {
       initModel();
-      // $scope.setAccountId(); // TODO: use CRUD method
+      if ($scope.auth.isReseller() || $scope.auth.isRevadmin()) {
+        dependencies().then(function(data) {
+          $scope.setDefaultAccountId();
+        });
+      } else {
+        $scope.setDefaultAccountId();
+      }
     };
 
     $scope.getUser = function(id) {
@@ -246,7 +253,7 @@
      */
     $scope.getAccountDomainNameList = function(account_id) {
       if (!account_id) {
-        account_id = $scope.model.companyId||$scope.model.account_id;
+        account_id = $scope.model.companyId || $scope.model.account_id;
       }
       var data = _.findByValues($scope.domains, 'account_id', account_id);
       return data;

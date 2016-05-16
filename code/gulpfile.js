@@ -63,7 +63,7 @@ gulp.task('copyFonts', function() {
     .pipe(gulp.dest(destFolder + 'fonts'));
 });
 
-gulp.task('fonts', function () {
+gulp.task('fonts', function() {
   return gulp.src('./bower_components/**/*.{eot,svg,ttf,woff,woff2}')
     .pipe(flatten())
     .pipe(gulp.dest(destFolder + 'fonts'));
@@ -113,7 +113,7 @@ gulp.task('lintjs', function() {
     .pipe(jshint.reporter(stylish));
 });
 
-gulp.task('serve', function() {
+gulp.task('serve:dev', function() {
   browserSync({
     server: {
       baseDir: './dev',
@@ -135,6 +135,22 @@ gulp.task('serve', function() {
   gulp.watch([devFolder + 'widgets/**/*'], ['widgets:build']);
 });
 
-gulp.task('copy', ['copyCss', 'copyParts', 'copyImages', 'copyJson', 'copyFonts', 'fonts','widgets:build']);
+gulp.task('serve:public', function() {
+  // NOTE: only run public
+  browserSync({
+    server: {
+      baseDir: './',
+      routes: {
+        '/bower_components': 'bower_components',
+        '/portal': '/',
+        '/widgets': '/../widgets',
+      }
+    }
+  });
+});
+
+
+gulp.task('copy', ['copyCss', 'copyParts', 'copyImages', 'copyJson', 'copyFonts', 'fonts', 'widgets:build']);
 gulp.task('build', ['copy', 'dist', 'vulcanize']);
-gulp.task('default', ['serve', 'less']);
+gulp.task('default', ['serve:dev', 'less']);
+gulp.task('public', ['serve:public']);
