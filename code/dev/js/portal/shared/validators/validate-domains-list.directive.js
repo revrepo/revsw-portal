@@ -13,8 +13,9 @@
   function validateDomainsList($config) {
     'ngInject';
     var _name = 'domains-list';
+    var DOMAIN = $config.PATTERNS.DOMAIN;
+
     function link(scope, element, attrs, ngModel) {
-      var DOMAIN = $config.PATTERNS.DOMAIN;
 
       ngModel.$validators.domainsList = function(value) {
         ngModel.$setValidity(_name, true);
