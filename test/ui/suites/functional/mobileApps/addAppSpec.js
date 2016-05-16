@@ -57,7 +57,7 @@ describe('Functional', function () {
         Portal.mobileApps.listPage.addNew(app);
 
         var alert = Portal.alerts.getFirst();
-        var expectedMsg = 'App registered';
+        var expectedMsg = '×\nApp registered';
         expect(alert.getText()).toEqual(expectedMsg);
 
         Portal.header.goTo(app.platform);

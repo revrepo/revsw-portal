@@ -88,10 +88,10 @@
           <form class="form-horizontal" name="editForm" ng-submit="updateCompany(model)" novalidate>
             <div class="form-group" ng-class="{ 'has-error': editForm.companyName.$invalid &&
                             editForm.companyName.$dirty }">
-              <label for="companyName" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Will be generated from your first and last name if left empty.">
-                Company Name &nbsp;</label>
+              <label for="companyName" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Company name (150 characters max)">
+                Company Name * &nbsp;</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="companyName" name="companyName" placeholder="Company Name" maxlength="250" ng-model="model.companyName" ng-disabled="_loading" required>
+                <input type="text" class="form-control" id="companyName" name="companyName" placeholder="Company Name" ng-maxlength="150" ng-model="model.companyName" ng-disabled="_loading" required>
                 <div class="error-messages" ng-messages="editForm.companyName.$error" role="alert" ng-messages-multiple>
                   <div ng-messages-include="parts/shared/error-messages.html"></div>
                 </div>
@@ -100,9 +100,9 @@
             <hr>
             <!-- first_name-->
             <div class="form-group" ng-class="{ 'has-error': editForm.firstName.$invalid && editForm.firstName.$dirty }">
-              <label for="firstName" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="First Name">First Name *</label>
+              <label for="firstName" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Contact person first name (30 characters max)">First Name *</label>
               <div class="col-sm-10 ">
-                <input type="text" class="form-control" required id="firstName" name="firstName" placeholder="First Name" ng-model="model.first_name" ng-disabled="_loading">
+                <input type="text" class="form-control" required id="firstName" name="firstName" placeholder="First Name" ng-maxlength="30" ng-model="model.first_name" ng-disabled="_loading" required>
                 <div class="error-messages" ng-messages="editForm.firstName.$error" role="alert" ng-messages-multiple>
                   <div ng-messages-include="parts/shared/error-messages.html"></div>
                 </div>
@@ -110,9 +110,9 @@
             </div>
             <!-- last_name-->
             <div class="form-group" ng-class="{ 'has-error': editForm.lastName.$invalid && editForm.lastName.$dirty }">
-              <label for="lastName" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Last Name">Last Name *</label>
+              <label for="lastName" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Contact person last name (30 characters max)">Last Name *</label>
               <div class="col-sm-10 ">
-                <input type="text" class="form-control" required id="lastName" name="lastName" placeholder="Last Name" ng-model="model.last_name" ng-disabled="_loading">
+                <input type="text" class="form-control" required id="lastName" name="lastName" placeholder="Last Name"  ng-maxlength="30" ng-model="model.last_name" ng-disabled="_loading" required>
                 <div class="error-messages" ng-messages="editForm.lastName.$error" role="alert" ng-messages-multiple>
                   <div ng-messages-include="parts/shared/error-messages.html"></div>
                 </div>
@@ -122,7 +122,7 @@
                             editForm.phoneNumber.$dirty }">
               <label for="phoneNumber" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Contact phone number">Phone Number *</label>
               <div class="col-sm-10">
-                <input type="text" ng-pattern="phoneRegex" class="form-control" required id="phoneNumber" name="phoneNumber" placeholder="Phone Number" ng-model="model.phone_number" ng-disabled="_loading">
+                <input type="text"  class="form-control" required id="phoneNumber" name="phoneNumber" placeholder="Phone Number" ng-maxlength="30" ng-model="model.phone_number" ng-disabled="_loading" required>
                 <div class="error-messages" ng-messages="editForm.phoneNumber.$error" role="alert" ng-messages-multiple>
                   <div ng-messages-include="parts/shared/error-messages.html"></div>
                 </div>
@@ -131,32 +131,32 @@
             <div class="form-group" ng-class="{ 'has-error': editForm.contactEmail.$invalid &&  editForm.contactEmail.$dirty }">
               <label for="phoneNumber" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Contact Email">Contact Email *</label>
               <div class="col-sm-10">
-                <input type="email" class="form-control" required id="contactEmail" name="contactEmail" placeholder="Contact Email" ng-model="model.contact_email" ng-disabled="_loading">
+                <input type="email" class="form-control" required id="contactEmail" name="contactEmail" placeholder="Contact Email" ng-model="model.contact_email" ng-disabled="_loading" required>
                 <div class="error-messages" ng-messages="editForm.contactEmail.$error" role="alert" ng-messages-multiple>
                   <div ng-messages-include="parts/shared/error-messages.html"></div>
                 </div>
               </div>
             </div>
             <div class="form-group" ng-class="{'has-error': editForm.address1.$invalid && editForm.address1.$dirty }">
-              <label for="address1" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Could be used as a billing address later.">Address *</label>
+              <label for="address1" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Contact street address (150 characters max)">Address *</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" required id="address1" name="address1" placeholder="Address 1" ng-model="model.address1" ng-disabled="_loading">
+                <input type="text" class="form-control" required id="address1" name="address1" placeholder="Address 1" ng-maxlength="150" ng-model="model.address1" ng-disabled="_loading">
                 <div class="error-messages" ng-messages="editForm.address1.$error" role="alert" ng-messages-multiple>
                   <div ng-messages-include="parts/shared/error-messages.html"></div>
                 </div>
               </div>
             </div>
             <div class="form-group" ng-class="{ 'has-error': editForm.address2.$invalid && editForm.address2.$dirty }">
-              <label for="address2" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Could be used as a billing address later.">Address (Line 2) &nbsp;</label>
+              <label for="address2" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Optional second line of street address (150 characters max)">Address (Line 2) &nbsp;</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="address2" name="address2" placeholder="Address (Line 2)" ng-model="model.address2" ng-disabled="_loading">
+                <input type="text" class="form-control" id="address2" name="address2" placeholder="Address (Line 2)" ng-maxlength="150" ng-model="model.address2" ng-disabled="_loading">
                 <div class="error-messages" ng-messages="editForm.address2.$error" role="alert" ng-messages-multiple>
                   <div ng-messages-include="parts/shared/error-messages.html"></div>
                 </div>
               </div>
             </div>
             <div class="form-group" ng-class="{ 'has-error': editForm.country.$invalid && editForm.country.$dirty }">
-              <label for="Country" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Could be used in a billing address later.">Country *</label>
+              <label for="Country" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Country">Country *</label>
               <div class="col-sm-10">
                 <select type="text" class="form-control" id="Country" name="country" placeholder="Country" required ng-model="model.country" ng-options="key as value for (key , value) in countries" ng-disabled="_loading">
                 </select>
@@ -166,27 +166,27 @@
               </div>
             </div>
             <div class="form-group" ng-class="{ 'has-error': editForm.state.$invalid && editForm.state.$dirty }">
-              <label for="state" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Could be used in a billing address later.">State *</label>
+              <label for="state" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="State (150 characters max)">State *</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="state" name="state" required placeholder="State" ng-model="model.state" ng-disabled="_loading">
+                <input type="text" class="form-control" id="state" name="state" required placeholder="State" ng-model="model.state" ng-maxlength="150" ng-disabled="_loading">
                 <div class="error-messages" ng-messages="editForm.state.$error" role="alert" ng-messages-multiple>
                   <div ng-messages-include="parts/shared/error-messages.html"></div>
                 </div>
               </div>
             </div>
             <div class="form-group" ng-class="{ 'has-error': editForm.city.$invalid && editForm.city.$dirty }">
-              <label for="City" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Could be used in a billing address later.">City *</label>
+              <label for="City" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="City name (150 characters max)">City *</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="city" name="city" required placeholder="City" ng-model="model.city" ng-disabled="_loading">
+                <input type="text" class="form-control" id="city" name="city" required placeholder="City" ng-model="model.city" ng-maxlength="150" ng-disabled="_loading">
                 <div class="error-messages" ng-messages="editForm.city.$error" role="alert" ng-messages-multiple>
                   <div ng-messages-include="parts/shared/error-messages.html"></div>
                 </div>
               </div>
             </div>
             <div class="form-group" ng-class="{ 'has-error': editForm.Zipcode.$invalid && editForm.Zipcode.$dirty }">
-              <label for="Zipcode" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Could be used in a billing address later.">Zip Code *</label>
+              <label for="Zipcode" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Zip code (30 characters max)">Zip Code *</label>
               <div class="col-sm-10">
-                <input type="text" ng-pattern="zipRegex" class="form-control" id="Zipcode" name="Zipcode" maxlength="10" required placeholder="Zip Code" ng-model="model.zipcode" ng-disabled="_loading">
+                <input type="text" class="form-control" id="Zipcode" name="Zipcode" ng-maxlength="30" required placeholder="Zip Code" ng-model="model.zipcode" ng-disabled="_loading">
                 <div class="error-messages" ng-messages="editForm.Zipcode.$error" role="alert" ng-messages-multiple>
                   <div ng-messages-include="parts/shared/error-messages.html"></div>
                 </div>
@@ -194,9 +194,9 @@
             </div>
             <hr>
             <div class="form-group" ng-class="{ 'has-error': editForm.comment.$invalid && editForm.comment.$dirty }">
-              <label for="comment" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Comment">Comment</label>
+              <label for="comment" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Comment (300 characters max)">Comment</label>
               <div class="col-sm-10">
-                <textarea id="comment" class="form-control" name="comment" ng-model="model.comment" placeholder="Comment (max 300 symbol) " ng-maxlength="300" ng-disabled="_loading">
+                <textarea id="comment" class="form-control" name="comment" ng-model="model.comment" placeholder="Comment (300 characters max) " ng-maxlength="300" ng-disabled="_loading">
                 </textarea>
                 <div class="error-messages" ng-messages="editForm.comment.$error" role="alert" ng-messages-multiple>
                   <div ng-messages-include="parts/shared/error-messages.html"></div>
@@ -235,9 +235,9 @@
               <div class="row contact_info" ng-if="!model.use_contact_info_as_billing_info">
                 <!-- billing_info.first_name-->
                 <div class="form-group col-md-6" ng-class="{ 'has-error': editForm.billingFirstName.$invalid && editForm.billingFirstName.$dirty }">
-                  <label for="billingFirstName" class="col-sm-4 control-label" popover-trigger="mouseenter" uib-popover="First Name">First Name *</label>
+                  <label for="billingFirstName" class="col-sm-4 control-label" popover-trigger="mouseenter" uib-popover="First Name (30 characters max)">First Name *</label>
                   <div class="col-sm-8">
-                    <input type="text" class="form-control" required id="first_name" name="billingFirstName" placeholder="First Name" ng-model="model.billing_info.first_name" ng-disabled="_loading">
+                    <input type="text" class="form-control" required id="first_name" name="billingFirstName" placeholder="First Name" ng-model="model.billing_info.first_name" ng-maxlength="30" ng-disabled="_loading">
                     <div class="error-messages" ng-messages="editForm.billingFirstName.$error" role="alert" ng-messages-multiple>
                       <div ng-messages-include="parts/shared/error-messages.html"></div>
                     </div>
@@ -245,9 +245,9 @@
                 </div>
                 <!-- billing_info.last_name-->
                 <div class="form-group col-md-6" ng-class="{ 'has-error': editForm.billingLastName.$invalid &&  editForm.billingLastName.$dirty }">
-                  <label for="billingLastName" class="col-sm-4 control-label" popover-trigger="mouseenter" uib-popover="Last Name">Last Name *</label>
+                  <label for="billingLastName" class="col-sm-4 control-label" popover-trigger="mouseenter" uib-popover="Last Name (30 characters max)">Last Name *</label>
                   <div class="col-sm-8">
-                    <input type="text" class="form-control" required id="last_name" name="billingLastName" placeholder="Last Name" ng-model="model.billing_info.last_name" ng-disabled="_loading">
+                    <input type="text" class="form-control" required id="last_name" name="billingLastName" placeholder="Last Name" ng-model="model.billing_info.last_name" ng-maxlength="30" ng-disabled="_loading">
                     <div class="error-messages" ng-messages="editForm.billingLastName.$error" role="alert" ng-messages-multiple>
                       <div ng-messages-include="parts/shared/error-messages.html"></div>
                     </div>
@@ -268,7 +268,7 @@
                 <div class="form-group col-md-6" ng-class="{ 'has-error': editForm.billingPhoneNumber.$invalid &&  editForm.billingPhoneNumber.$dirty }">
                   <label for="phoneNumber" class="col-sm-4 control-label" popover-trigger="mouseenter" uib-popover="Contact phone number">Phone </label>
                   <div class="col-sm-8">
-                    <input type="text" ng-pattern="phoneRegex" class="form-control" id="billingPhoneNumber" name="billingPhoneNumber" placeholder="Contact Phone" ng-model="model.billing_info.phone_number" ng-disabled="_loading">
+                    <input type="text" class="form-control" id="billingPhoneNumber" name="billingPhoneNumber" placeholder="Contact Phone" ng-model="model.billing_info.phone_number" ng-maxlength="30" ng-disabled="_loading">
                     <div class="error-messages" ng-messages="editForm.billingPhoneNumber.$error" role="alert" ng-messages-multiple>
                       <div ng-messages-include="parts/shared/error-messages.html"></div>
                     </div>
@@ -278,18 +278,18 @@
               <!-- Addres info-->
               <div class="row" ng-if="!model.use_contact_info_as_billing_info">
                 <div class="form-group col-md-6" ng-class="{ 'has-error': editForm.billingAddress1.$invalid && editForm.billingAddress1.$dirty }">
-                  <label for="billingAddress1" class="col-sm-4 control-label" popover-trigger="mouseenter" uib-popover="Will be used as a billing address.">Address *</label>
+                  <label for="billingAddress1" class="col-sm-4 control-label" popover-trigger="mouseenter" uib-popover="Street address (150 characters max)">Address *</label>
                   <div class="col-sm-8">
-                    <input type="text" class="form-control" required id="billingAddress1" name="billingAddress1" placeholder="Address 1" ng-model="model.billing_info.address1" ng-disabled="_loading">
+                    <input type="text" class="form-control" required id="billingAddress1" name="billingAddress1" placeholder="Address 1" ng-model="model.billing_info.address1" ng-maxlength="150" ng-disabled="_loading">
                     <div class="error-messages" ng-messages="editForm.billingAddress1.$error" role="alert" ng-messages-multiple>
                       <div ng-messages-include="parts/shared/error-messages.html"></div>
                     </div>
                   </div>
                 </div>
                 <div class="form-group col-md-6" ng-class="{ 'has-error': editForm.billingAddress2.$invalid && editForm.billingAddress2.$dirty }">
-                  <label for="billingAddress2" class="col-sm-4 control-label" popover-trigger="mouseenter" uib-popover="Will be used as a billing address later.">Address (Line 2) &nbsp;</label>
+                  <label for="billingAddress2" class="col-sm-4 control-label" popover-trigger="mouseenter" uib-popover="Optional second line of street address">Address (Line 2) &nbsp;</label>
                   <div class="col-sm-8">
-                    <input type="text" class="form-control" id="billingAddress2" name="billingAddress2" placeholder="Address (Line 2)" ng-model="model.billing_info.address2" ng-disabled="_loading">
+                    <input type="text" class="form-control" id="billingAddress2" name="billingAddress2" placeholder="Address (Line 2)" ng-model="model.billing_info.address2" ng-maxlength="150" ng-disabled="_loading">
                     <div class="error-messages" ng-messages="editForm.billingAddress2.$error" role="alert" ng-messages-multiple>
                       <div ng-messages-include="parts/shared/error-messages.html"></div>
                     </div>
@@ -300,7 +300,7 @@
               <div class="row" ng-if="!model.use_contact_info_as_billing_info">
                 <div class="form-group col-md-6" ng-class="{ 'has-error': editForm.billingCountry.$invalid &&
                             editForm.billingCountry.$dirty }">
-                  <label for="billingCountry" class="col-sm-4 control-label" popover-trigger="mouseenter" uib-popover="Will be used in a billing address.">Country *</label>
+                  <label for="billingCountry" class="col-sm-4 control-label" popover-trigger="mouseenter" uib-popover="Country name">Country *</label>
                   <div class="col-sm-8">
                     <select type="text" class="form-control" id="billingCountry" name="billingCountry" placeholder="Country" required ng-model="model.billing_info.country" ng-options="key as value for (key , value) in countries" ng-disabled="_loading">
                     </select>
@@ -310,27 +310,27 @@
                   </div>
                 </div>
                 <div class="form-group col-md-6" ng-class="{ 'has-error': editForm.billingState.$invalid &&  editForm.billingState.$dirty }">
-                  <label for="billingState" class="col-sm-4 control-label" popover-trigger="mouseenter" uib-popover="Will be used in a billing address.">State *</label>
+                  <label for="billingState" class="col-sm-4 control-label" popover-trigger="mouseenter" uib-popover="State (150 characters max)">State *</label>
                   <div class="col-sm-8">
-                    <input type="text" class="form-control" id="billingState" name="billingState" required placeholder="State" ng-model="model.billing_info.state" ng-disabled="_loading">
+                    <input type="text" class="form-control" id="billingState" name="billingState" required placeholder="State" ng-model="model.billing_info.state" ng-maxlength="150" ng-disabled="_loading">
                     <div class="error-messages" ng-messages="editForm.billingState.$error" role="alert" ng-messages-multiple>
                       <div ng-messages-include="parts/shared/error-messages.html"></div>
                     </div>
                   </div>
                 </div>
                 <div class="form-group col-md-6" ng-class="{ 'has-error': editForm.billingCity.$invalid &&  editForm.billingCity.$dirty }">
-                  <label for="billingCity" class="col-sm-4 control-label" popover-trigger="mouseenter" uib-popover="Will be used in a billing address.">City *</label>
+                  <label for="billingCity" class="col-sm-4 control-label" popover-trigger="mouseenter" uib-popover="City name (150 characters max)">City *</label>
                   <div class="col-sm-8">
-                    <input type="text" class="form-control" id="billingCity" name="billingCity" required placeholder="City" ng-model="model.billing_info.city" ng-disabled="_loading">
+                    <input type="text" class="form-control" id="billingCity" name="billingCity" required placeholder="City" ng-model="model.billing_info.city" ng-maxlength="150" ng-disabled="_loading">
                     <div class="error-messages" ng-messages="editForm.billingCity.$error" role="alert" ng-messages-multiple>
                       <div ng-messages-include="parts/shared/error-messages.html"></div>
                     </div>
                   </div>
                 </div>
                 <div class="form-group col-md-6" ng-class="{ 'has-error': editForm.billingZipcode.$invalid && editForm.billingZipcode.$dirty }">
-                  <label for="billingZipcode" class="col-sm-4 control-label" popover-trigger="mouseenter" uib-popover="Will be used in a billing address.">Zip Code *</label>
+                  <label for="billingZipcode" class="col-sm-4 control-label" popover-trigger="mouseenter" uib-popover="Zip code (30 characters max)">Zip Code *</label>
                   <div class="col-sm-8">
-                    <input type="text" ng-pattern="zipRegex" class="form-control" id="billingZipcode" name="billingZipcode" maxlength="10" required placeholder="Zip Code" ng-model="model.billing_info.zipcode" ng-disabled="_loading">
+                    <input type="text" class="form-control" id="billingZipcode" name="billingZipcode" ng-maxlength="30" required placeholder="Zip Code" ng-model="model.billing_info.zipcode" ng-disabled="_loading">
                     <div class="error-messages" ng-messages="editForm.billingZipcode.$error" role="alert" ng-messages-multiple>
                       <div ng-messages-include="parts/shared/error-messages.html"></div>
                     </div>

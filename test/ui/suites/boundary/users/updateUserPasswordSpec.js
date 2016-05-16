@@ -68,11 +68,9 @@ describe('Boundary', function () {
         Portal.updatePasswordPage.setCurrentPassword(bruno.password);
         Portal.updatePasswordPage.setNewPassword(newPassword);
         Portal.updatePasswordPage.setPasswordConfirm(newPassword);
-        Portal.updatePasswordPage.clickUpdatePassword();
-        var alert = Portal.alerts.getFirst();
-        var expectedMessage = 'child "new_password" fails because ["new_' +
-          'password" length must be less than or equal to 15 characters long]';
-        expect(alert.getText()).toEqual(expectedMessage);
+        var updateBtn = Portal.updatePasswordPage.getUpdatePasswordBtn();
+        expect(updateBtn.isEnabled()).toBeFalsy();
+
         Portal.signOut();
         Portal.signIn(adminUser);
         Portal.deleteUser(bruno);
@@ -91,7 +89,7 @@ describe('Boundary', function () {
         Portal.updatePasswordPage.setPasswordConfirm(newPassword);
         Portal.updatePasswordPage.clickUpdatePassword();
         var alert = Portal.alerts.getFirst();
-        var expectedMessage = 'Please fill all fields. (New password should ' +
+        var expectedMessage = '×\nPlease fill all fields. (New password should ' +
             'be at least 8 charecters length)';
         // TODO: Change message once update password with only spaces is fixed
         expect(alert.getText()).toEqual(expectedMessage);
