@@ -40,11 +40,8 @@
                 <ui-select-choices repeat="item.id as item in companies | filter: {companyName: $select.search}">
                   <div ng-bind-html="item.companyName|highlight: $select.search"></div>
                 </ui-select-choices>
-                <div class="error-messages" ng-messages="createForm.accountId.$error" role="alert" ng-messages-multiple>
-                  <div ng-messages-include="parts/shared/error-messages.html"></div>
-                </div>
               </ui-select>
-              <div class="has-error error-messages" ng-messages="createForm.accountId.$error" role="alert" ng-messages-multiple>
+              <div class="error-messages" ng-messages="createForm.accountId.$error" role="alert" ng-messages-multiple>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
               </div>
             </div>
