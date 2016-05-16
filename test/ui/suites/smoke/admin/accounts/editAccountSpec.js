@@ -17,60 +17,62 @@
  */
 
 var config = require('config');
-var Portal = require('./../../../page_objects/portal');
-var DataProvider = require('./../../../common/providers/data');
-var Constants = require('./../../../page_objects/constants');
+var Portal = require('./../../../../page_objects/portal');
+var DataProvider = require('./../../../../common/providers/data');
+var Constants = require('./../../../../page_objects/constants');
 
-xdescribe('Smoke', function () {  // jshint ignore:line
-  describe('Edit accounts', function () {
+describe('Smoke', function () {  // jshint ignore:line
+  describe('Edit Accounts', function () {
 
     var revAdminUser = config.get('portal.users.revAdmin');
-    var account = DataProvider.generateAccountProfileData();
-    var myDomain;
+    var accountProfile = DataProvider.generateAccountProfileData();
+    var billingContact = DataProvider.generateAccountBillingData();
 
     beforeAll(function () {
       Portal.signIn(revAdminUser);
-      Portal.createDomain(myDomain);
+      Portal.createAccounts([accountProfile]);
     });
 
     afterAll(function () {
-      Portal.deleteDomain(myDomain);
+      Portal.deleteAccounts([accountProfile]);
       Portal.signOut();
     });
 
     beforeEach(function () {
-      Portal.header.clickWeb();
+      Portal.header.goTo(Constants.sideBar.admin.ACCOUNTS);
     });
 
     afterEach(function () {
     });
 
-    it('should edit a domain and validate the domain successfully',
+    it('should edit an account and Update Company Profile',
       function () {
-        Portal.domains.listPage.searchAndClickEdit(myDomain.name);
-        Portal.domains.editPage.clickValidateDomain();
-        var alert = Portal.alerts.getFirst();
-        expect(alert.getText()).toEqual('The domain configuration is correct');
+        var account1 = accountProfile.companyName;
+        var account2 = accountProfile.companyName + '_UPDATED';
+        Portal.admin.accounts.listPage.searchAndClickEdit(account1);
+
+        accountProfile.companyName = account2;
+        Portal.admin.accounts.editPage
+          .updateAccountProfile(accountProfile, billingContact);
+        Portal.dialog.clickOk();
+
+        Portal.header.goTo(Constants.sideBar.admin.ACCOUNTS);
+        Portal.admin.accounts.listPage.searcher.clearSearchCriteria();
+        Portal.admin.accounts.listPage.searcher.setSearchCriteria(account2);
+        var allRows = Portal.admin.accounts.listPage.table.getRows();
+        expect(allRows.count()).toEqual(1);
       });
 
-    it('should edit a domain and update the domain successfully',
+    it('should edit a account and Create Billing Profile',
       function () {
-        Portal.domains.listPage.searchAndClickEdit(myDomain.name);
-        Portal.domains.editPage.form.setOriginHostHeader(' ');
-        Portal.domains.editPage.clickUpdateDomain();
+        var account1 = accountProfile.companyName;
+        Portal.admin.accounts.listPage.searchAndClickEdit(account1);
+        Portal.admin.accounts.editPage
+          .createBillingContact(accountProfile, billingContact);
         Portal.dialog.clickOk();
-        var alert = Portal.alerts.getFirst();
-        expect(alert.getText()).toEqual('Domain updated');
-      });
 
-    it('should edit a domain and publish the domain successfully',
-      function () {
-        Portal.domains.listPage.searchAndClickEdit(myDomain.name);
-        Portal.domains.editPage.clickPublishDomain();
-        Portal.dialog.clickOk();
-        browser.sleep(3000);
-        var alert = Portal.alerts.getFirst();
-        expect(alert.getText()).toEqual('Domain configuration published');
+        var res = Portal.admin.accounts.editPage.isDisplayedBillingContact();
+        expect(res).toBe(false);
       });
   });
 });
