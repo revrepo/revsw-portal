@@ -6,7 +6,7 @@
     .factory('CRUDController', CRUDController);
 
   /*@ngInject*/
-  function CRUDController($config, $rootScope, AlertService, $q, User, $anchorScroll, $uibModal, $filter, $timeout) {
+  function CRUDController($config, $rootScope, AlertService, $q, User, $anchorScroll, $uibModal, $filter, $timeout, $animate, toaster) {
 
     function CRUDControllerImpl($scope, $stateParams) {
 
@@ -20,6 +20,7 @@
        * Alert service
        */
       $scope.alertService = AlertService;
+      $scope.toaster = toaster;
 
       /**
        * Loading flag
@@ -499,7 +500,6 @@
         if (!$scope.resource) {
           throw new Error('No resource provided.');
         }
-        $scope.alertService.clear();
         $scope.loading(true);
         var record = new $scope.resource(model);
         return record.$save()
@@ -510,11 +510,6 @@
             return data; // Send data next to promise handlers
           })
           .catch(function (data) {
-            if (data.status === $config.STATUS.BAD_REQUEST) {
-              if (data.data && data.data.message) {
-                $scope.alertService.danger(data.data.message, 5000);
-              }
-            }
             return $q.reject(data);
           })
           .finally(function () {
@@ -533,7 +528,6 @@
           throw new Error('No resource provided.');
         }
         $scope.clearModel();
-        $scope.alertService.clear();
         $scope.loading(true);
         return $scope.resource
           .get({id: id})
@@ -568,8 +562,6 @@
             delete model[val];
           }
         });
-
-        $scope.alertService.clear();
         $scope.loading(true);
         // Send data
         return $scope.resource
@@ -614,6 +606,44 @@
        *****                             END SCROLL POSITION HANDLER SECTION
        **************************************************************************************/
 
+      /***************************************************************************************
+       *****                             EXTENSIONS FOR TOASTER ALERTS
+       **************************************************************************************/
+
+      $scope.toaster.getMessage = function (msg) {
+        if (msg.data && msg.data.message) {
+          return msg.data.message;
+        } else if (msg.message) {
+          return msg.message;
+        } else if (typeof msg === 'string') {
+          return msg;
+        } else {
+          return 'Oops, something went wrong';
+        }
+      };
+
+      $scope.toaster.success = function (params) {
+        var toasterParams = {
+          timeout: $config.SUCCESS_MESSAGE_DISPLAY_TIMEOUT,
+          body: $scope.toaster.getMessage(params),
+          type: 'success'
+        };
+        $scope.toaster.pop(toasterParams);
+      };
+
+      $scope.toaster.error = function (params) {
+        var toasterParams = {
+          timeout: 0,
+          showCloseButton: true,
+          body: $scope.toaster.getMessage(params),
+          type: 'error'
+        };
+        $scope.toaster.pop(toasterParams);
+      };
+
+      /***************************************************************************************
+       *****                             END EXTENSIONS FOR TOASTER ALERTS
+       **************************************************************************************/
     }
 
     return CRUDControllerImpl;

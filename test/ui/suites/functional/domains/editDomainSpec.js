@@ -49,7 +49,7 @@ xdescribe('Functional', function () {  // jshint ignore:line
         Portal.domains.listPage.searchAndClickEdit(myDomain.name);
         Portal.domains.editPage.clickValidateDomain();
         var alert = Portal.alerts.getFirst();
-        expect(alert.getText()).toEqual('The domain configuration is correct');
+        expect(alert.getText()).toEqual('×\nThe domain configuration is correct');
       });
 
     it('should edit a domain and update the domain successfully',
@@ -59,7 +59,7 @@ xdescribe('Functional', function () {  // jshint ignore:line
         Portal.domains.editPage.clickUpdateDomain();
         Portal.dialog.clickOk();
         var alert = Portal.alerts.getFirst();
-        expect(alert.getText()).toEqual('Domain updated');
+        expect(alert.getText()).toEqual('×\nDomain updated');
       });
 
     it('should edit a domain and publish the domain successfully',
@@ -69,7 +69,7 @@ xdescribe('Functional', function () {  // jshint ignore:line
         Portal.dialog.clickOk();
         browser.sleep(3000);
         var alert = Portal.alerts.getFirst();
-        expect(alert.getText()).toEqual('Domain configuration published');
+        expect(alert.getText()).toEqual('×\nDomain configuration published');
       });
   });
 });

@@ -90,7 +90,7 @@ describe('Boundary', function () {
         expect(enabled).toBe(false);
       });
 
-      xit('should click "Verify" button and validate app name with special ' +
+      it('should click "Verify" button and validate app name with special ' +
         'characters - ' + app.platform, function () {
         app.name = tempAppName;
         Portal.goToMobileApps();
@@ -141,7 +141,7 @@ describe('Boundary', function () {
         expect(enabled).toBe(false);
       });
 
-      xit('should click "Update" button and validate app name with special ' +
+      it('should click "Update" button and validate app name with special ' +
         'characters - ' + app.platform, function () {
         app.name = tempAppName;
         Portal.goToMobileApps();

@@ -59,7 +59,7 @@ describe('Functional', function () {
       Portal.domains.addPage.createDomain(myDomain);
 
       var alert = Portal.alerts.getFirst();
-      var expectedMsg = 'The domain name is already registered in the system';
+      var expectedMsg = '×\nThe domain name is already registered in the system';
       expect(alert.getText()).toEqual(expectedMsg);
     });
   });

@@ -6,7 +6,9 @@
     'ui.bootstrap.tpls',
     'ui.bootstrap.modal',
     'daterangepicker',
-    'ui.router'
+    'ui.router',
+    'toaster',
+    'ngAnimate'
   ]);
 
 })();

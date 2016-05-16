@@ -159,9 +159,8 @@
           format_( overall );
           $scope.report = overall;
         })
-        .catch( function( err ) {
-          AlertService.danger('Oops! Something went wrong');
-          console.log( err );
+        .catch( function(err) {
+          $scope.toaster.error(err);
         })
         .finally( function() {
           $scope._loading = false;
@@ -190,8 +189,8 @@
         }
         $scope.onUpdate();
       })
-      .catch(function ( err ) {
-        AlertService.danger('Oops! Something went wrong');
+      .catch(function (err) {
+        $scope.toaster.error(err);
         $scope._loading = false;
       });
 

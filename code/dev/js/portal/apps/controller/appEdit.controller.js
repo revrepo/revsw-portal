@@ -234,6 +234,7 @@
       delete modelCopy.updated_at;
       delete modelCopy.updated_by;
       delete modelCopy.created_by;
+      delete modelCopy.showKey;
 
       return modelCopy;
     };

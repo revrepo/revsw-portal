@@ -14,6 +14,7 @@
     'ngInject';
 
     function link(scope, element, attrs, ngModel) {
+      // TODO: need to move the domain pattern to a central place
       var DOMAIN = /(?=^.{4,253}$)(^((?!-)(?!\_)[a-zA-Z0-9-\_]{0,62}[a-zA-Z0-9]\.)+[a-zA-Z]{2,63}$)/;
       ngModel.$validators.domainsList = function(value) {
         ngModel.$setValidity('domains-list', true);

@@ -55,7 +55,7 @@ describe('Functional', function () {
           Portal.editUserPage.form.setRole(Constants.user.roles.USER);
           Portal.editUserPage.clickUpdateUser();
           var alert = Portal.alerts.getFirst();
-          expect(alert.getText()).toEqual('User updated');
+          expect(alert.getText()).toEqual('Successfully updated the user');
           // Check user is in list
           Portal.editUserPage.clickBackToList();
           var user = Portal.userListPage.searchAndGetFirstRow(tom.email);
@@ -77,7 +77,7 @@ describe('Functional', function () {
           Portal.editUserPage.form.setRole(Constants.user.roles.ADMIN);
           Portal.editUserPage.clickUpdateUser();
           var alert = Portal.alerts.getFirst();
-          expect(alert.getText()).toEqual('User updated');
+          expect(alert.getText()).toEqual('Successfully updated the user');
           // Check user is in list
           Portal.editUserPage.clickBackToList();
           var user = Portal.userListPage.searchAndGetFirstRow(joe.email);
@@ -100,7 +100,7 @@ describe('Functional', function () {
           Portal.editUserPage.form.setFirstName(valueToAdd);
           Portal.editUserPage.clickUpdateUser();
           var alert = Portal.alerts.getFirst();
-          expect(alert.getText()).toEqual('User updated');
+          expect(alert.getText()).toEqual('Successfully updated the user');
           // Check user is in list
           Portal.editUserPage.clickBackToList();
           var user = Portal.userListPage.searchAndGetFirstRow(mark.email);
@@ -124,7 +124,7 @@ describe('Functional', function () {
           Portal.editUserPage.form.setLastName(valueToAdd);
           Portal.editUserPage.clickUpdateUser();
           var alert = Portal.alerts.getFirst();
-          expect(alert.getText()).toEqual('User updated');
+          expect(alert.getText()).toEqual('Successfully updated the user');
           // Check user is in list
           Portal.editUserPage.clickBackToList();
           var user = Portal.userListPage.searchAndGetFirstRow(adele.email);
@@ -147,7 +147,7 @@ describe('Functional', function () {
           Portal.editUserPage.form.setRole(Constants.user.roles.USER);
           Portal.editUserPage.clickUpdateUser();
           var alert = Portal.alerts.getFirst();
-          expect(alert.getText()).toEqual('User updated');
+          expect(alert.getText()).toEqual('Successfully updated the user');
           // Check user is in list
           Portal.editUserPage.clickBackToList();
           var user = Portal.userListPage.searchAndGetFirstRow(andrew.email);
@@ -172,7 +172,7 @@ describe('Functional', function () {
           ]);
           Portal.editUserPage.clickUpdateUser();
           var alert = Portal.alerts.getFirst();
-          expect(alert.getText()).toEqual('User updated');
+          expect(alert.getText()).toEqual('Successfully updated the user');
           // Check user is in list
           Portal.editUserPage.clickBackToList();
           Portal.userListPage.searchAndClickEdit(frank.email);
@@ -197,7 +197,7 @@ describe('Functional', function () {
           Portal.editUserPage.form.setFirstName(valueToAdd);
           Portal.editUserPage.clickUpdateUser();
           var alert = Portal.alerts.getFirst();
-          expect(alert.getText()).toEqual('User updated');
+          expect(alert.getText()).toEqual('Successfully updated the user');
           // Check user is in list
           Portal.editUserPage.clickBackToList();
           var user = Portal.userListPage.searchAndGetFirstRow(mark.email);
@@ -220,7 +220,7 @@ describe('Functional', function () {
           Portal.editUserPage.form.setLastName(valueToAdd);
           Portal.editUserPage.clickUpdateUser();
           var alert = Portal.alerts.getFirst();
-          expect(alert.getText()).toEqual('User updated');
+          expect(alert.getText()).toEqual('Successfully updated the user');
           // Check user is in list
           Portal.editUserPage.clickBackToList();
           var user = Portal.userListPage.searchAndGetFirstRow(adele.email);
@@ -243,7 +243,7 @@ describe('Functional', function () {
           Portal.editUserPage.form.setRole(Constants.user.roles.ADMIN);
           Portal.editUserPage.clickUpdateUser();
           var alert = Portal.alerts.getFirst();
-          expect(alert.getText()).toEqual('User updated');
+          expect(alert.getText()).toEqual('Successfully updated the user');
           // Check user is in list
           Portal.editUserPage.clickBackToList();
           var user = Portal.userListPage.searchAndGetFirstRow(mathew.email);
@@ -268,7 +268,7 @@ describe('Functional', function () {
           ]);
           Portal.editUserPage.clickUpdateUser();
           var alert = Portal.alerts.getFirst();
-          expect(alert.getText()).toEqual('User updated');
+          expect(alert.getText()).toEqual('Successfully updated the user');
           // Check user is in list
           Portal.editUserPage.clickBackToList();
           Portal.userListPage.searchAndClickEdit(scott.email);

@@ -8,6 +8,7 @@
       'revapm.Portal.Resources',
       'ui.router',
       'chart.js',
-      'angular-intro'
+      'angular-intro',
+      'toaster'
     ]);
 })();
