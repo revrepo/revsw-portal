@@ -6,7 +6,7 @@
     .controller('CachePurgeController', CachePurgeController);
 
   /*@ngInject*/
-  function CachePurgeController($scope, Cache, DomainsConfig, AlertService, $timeout, $uibModal) {
+  function CachePurgeController($scope, $state, Cache, DomainsConfig, AlertService, $timeout, $uibModal) {
     $scope._loading = false;
 
     // $scope.domain;
@@ -18,6 +18,41 @@
         }
       }]
     };
+
+    // $scope.exampleJsons for advanced cache
+    if ($state.current.name == 'index.webApp.advanced'){
+      $scope.exampleJsons =  [{
+        "purges": [
+          {
+            "url": {
+              "is_wildcard": true,
+              "expression": "/images/*.png"
+            }
+          }
+        ]
+      },
+        {
+          "purges": [
+            {
+              "url": {
+                "is_wildcard": true,
+                "expression": "/images/**/*.png"
+              }
+            }
+          ]
+        },
+        {
+          "purges": [
+            {
+              "url": {
+                "is_wildcard": true,
+                "expression": "/**/*"
+              }
+            }
+          ]
+        }
+      ];
+    }
 
     $scope.text = '';
 
@@ -209,6 +244,13 @@
       });
 
       return modalInstance.result;
+    };
+
+    /**
+     * Copy example to json editor
+     */
+    $scope.copyToJsonEditor = function(index) {
+       $scope.json =  $scope.exampleJsons[index];
     };
   }
 })();
