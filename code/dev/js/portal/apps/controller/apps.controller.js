@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
 
   angular
@@ -7,24 +7,27 @@
 
   /*@ngInject*/
   function AppsController($scope,
-                          $timeout,
-                          $anchorScroll,
-                          User,
-                          Companies,
-                          Apps,
-                          CRUDController,
-                          $injector,
-                          $state,
-                          $stateParams,
-                          AlertService,
-                          $localStorage,
-                          $q) {
+    $timeout,
+    $anchorScroll,
+    User,
+    Companies,
+    Apps,
+    CRUDController,
+    $injector,
+    $state,
+    $stateParams,
+    AlertService,
+    $localStorage,
+    $q) {
     //Invoking crud actions
     $injector.invoke(CRUDController,
-       this, {$scope: $scope, $stateParams: $stateParams});
+      this, {
+        $scope: $scope,
+        $stateParams: $stateParams
+      });
 
     //Set state (ui.router)
-  //  $scope.setState('index.apps');
+    $scope.setState('index.apps');
 
     $scope.setResource(Apps);
 
@@ -53,20 +56,29 @@
 
     $scope.$state = $state;
     //// Fetch list of records
-    $scope._baseFilter = {app_platform: $state.current.data.platform_code};
+    $scope._baseFilter = {
+      app_platform: $state.current.data.platform_code
+    };
 
-    $scope.$on('$stateChangeSuccess', function(state) {
-      $scope
-        .list()
-        .then(setAccountName)
-        .then(function() {
-          if ($scope.elementIndexForAnchorScroll) {
-            setTimeout(function() {
-              $anchorScroll('anchor' + $scope.elementIndexForAnchorScroll);
-              $scope.$digest();
-            }, 500);
-          }
-        });
+    $scope.$on('$stateChangeSuccess', function(event, stateTo,stateParam ) {
+      if (!!stateTo.data && (stateTo.data.list !==undefined && stateTo.data.list === true)) {
+        $scope
+          .list()
+          .then(setAccountName)
+          .then(function() {
+            if ($scope.elementIndexForAnchorScroll) {
+              setTimeout(function() {
+                $anchorScroll('anchor' + $scope.elementIndexForAnchorScroll);
+                $scope.$digest();
+              }, 500);
+            }
+          });
+      } else {
+        if (!!stateParam.id && !stateParam.id) {
+          $scope.params = $stateParams;
+          $scope.initEdit($stateParams.id);
+        }
+      }
     });
 
 
@@ -89,137 +101,156 @@
     $scope.filterKeys = ['app_name', 'app_platform', 'companyName', 'last_app_published_version', 'updated_at'];
 
 
-    $scope.getRelativeDate = function (datetime) {
+    $scope.getRelativeDate = function(datetime) {
       return moment.utc(datetime).fromNow();
     };
 
     $scope.model.account_id = $scope.auth.getUser().companyId[0];
 
     User.getUserDomains(true)
-      .then(function (domains) {
-        $scope.domainList = domains.map(function (d) {
+      .then(function(domains) {
+        $scope.domainList = domains.map(function(d) {
           return d.domain_name;
         });
       });
 
-    $scope.fetchCompanies = function(companyIds) {
-      var promises = [];
-      companyIds.forEach(function (id) {
-        promises.push(Companies.get({id: id}).$promise);
-      });
-      $q.all(promises).then(function (data) {
-        $scope.companies = data;
-      });
-    };
+    // $scope.fetchCompanies = function(companyIds) {
+    //   var promises = [];
+    //   companyIds.forEach(function(id) {
+    //     promises.push(Companies.get({
+    //       id: id
+    //     }).$promise);
+    //   });
+    //   $q.all(promises).then(function(data) {
+    //     $scope.companies = data;
+    //   });
+    // };
 
-    $scope.switch = function (item){
-      if(item.show === true ){
+    $scope.switch = function(item) {
+      if (item.show === true) {
         item.show = false;
       } else {
         item.show = true;
       }
     };
-    $scope.initEdit = function (id) {
+
+    $scope.initEdit = function(id) {
       $scope.get(id)
+        .then(function(data) {
+          if ($scope.auth.isReseller() || $scope.auth.isRevadmin()) {
+            Companies.query(function(list) {
+              $scope.companies = list;
+            });
+          }
+        })
         .then(function() {
-            $timeout(function() {
-              $scope.copyForEditor = _.clone($scope.model);
-              delete $scope.copyForEditor.$promise;
-              delete $scope.copyForEditor.$resolved;
-              delete $scope.copyForEditor.id;
-              delete $scope.copyForEditor.account_id;
-              delete $scope.copyForEditor.app_platform;
-              delete $scope.copyForEditor.sdk_key;
-              delete $scope.copyForEditor.created_at;
-              delete $scope.copyForEditor.updated_at;
-              delete $scope.copyForEditor.updated_by;
-              delete $scope.copyForEditor.created_by;
-            }, 2000);
-          })
-        .catch(function (err) {
+          $timeout(function() {
+            $scope.copyForEditor = _.clone($scope.model);
+            delete $scope.copyForEditor.$promise;
+            delete $scope.copyForEditor.$resolved;
+            delete $scope.copyForEditor.id;
+            delete $scope.copyForEditor.account_id;
+            delete $scope.copyForEditor.app_platform;
+            delete $scope.copyForEditor.sdk_key;
+            delete $scope.copyForEditor.created_at;
+            delete $scope.copyForEditor.updated_at;
+            delete $scope.copyForEditor.updated_by;
+            delete $scope.copyForEditor.created_by;
+          }, 2000);
+        })
+        .catch(function(err) {
           $scope.alertService.danger('Could not load app details');
         });
     };
 
-    $scope.initNew = function () {
-      $scope.platforms = [
-        {name: 'iOS', code: 'iOS', disabled: false},
-        {name: 'Android', code: 'Android', disabled: false},
-        {name: 'Windows Mobile', code: 'Windows_Mobile', disabled: false}
-      ];
-      var idx = _.findIndex($scope.platforms,
-        {code: $state.current.data.platform_code});
-      $scope.model.app_platform = $scope.platforms[idx];
-    };
-
-    if ($scope.auth.isReseller() || $scope.auth.isRevadmin()) {
-      // Loading list of companies
-      Companies.query(function (list) {
-        $scope.companies = list;
-        if ($scope.companies.length === 1) {
-          $scope.model.account_id = $scope.companies[0].id;
-        }
+    $scope.initNew = function() {
+      $scope.platforms = [{
+        name: 'iOS',
+        code: 'iOS',
+        disabled: false
+      }, {
+        name: 'Android',
+        code: 'Android',
+        disabled: false
+      }, {
+        name: 'Windows Mobile',
+        code: 'Windows_Mobile',
+        disabled: false
+      }];
+      var idx = _.findIndex($scope.platforms, {
+        code: $state.current.data.platform_code
       });
-    } else if (!angular.isArray($scope.auth.getUser().companyId)) {
-      $scope.model.account_id = $scope.auth.getUser().companyId;
-    } else if ($scope.auth.getUser().companyId.length === 1) {
-      $scope.model.account_id = $scope.auth.getUser().companyId[0];
-    } else {
-      $scope.fetchCompanies($scope.auth.getUser().companyId);
-    }
+      $scope.model.app_platform = $scope.platforms[idx];
+
+      if ($scope.auth.isReseller() || $scope.auth.isRevadmin()) {
+        $scope.model.account_id = null;
+        Companies.query(function(list) {
+          $scope.companies = list;
+          $scope.setDefaultAccountId();
+        });
+      } else {
+        $scope.setDefaultAccountId();
+      }
+    };
 
     $scope.getApp = function(id) {
       $scope.get(id)
-        .catch(function (err) {
+        .catch(function(err) {
           $scope.alertService.danger('Could not load app details');
         });
     };
 
-    $scope.createApp = function (model) {
+    $scope.createApp = function(model, isStay) {
       var modelCopy = _.clone(model);
       delete modelCopy.configs;
       modelCopy.app_platform = model.app_platform.code;
-      $scope.create(modelCopy)
-        .then(function () {
+      $scope.create(modelCopy, isStay)
+        .then(function() {
           model.app_name = '';
+          model.comment = '';
+          model.account_id = null;
           $scope.alertService.success('App registered', 5000);
         })
-        .catch(function (err) {
+        .catch(function(err) {
           $scope.alertService.danger(err);
         });
     };
 
-    $scope.cleanModel = function (model) {
-        var modelCopy = _.clone(model);
-        var params = {id: model.id};
-        modelCopy.account_id = $scope.model.account_id;
-        delete modelCopy.$promise;
-        delete modelCopy.$resolved;
-        delete modelCopy.id;
-        delete modelCopy.app_platform;
-        delete modelCopy.sdk_key;
-        delete modelCopy.created_at;
-        delete modelCopy.updated_at;
-        delete modelCopy.updated_by;
-        delete modelCopy.created_by;
+    $scope.cleanModel = function(model) {
+      var modelCopy = _.clone(model);
+      var params = {
+        id: model.id
+      };
+      modelCopy.account_id = $scope.model.account_id;
+      delete modelCopy.$promise;
+      delete modelCopy.$resolved;
+      delete modelCopy.id;
+      delete modelCopy.app_platform;
+      delete modelCopy.sdk_key;
+      delete modelCopy.created_at;
+      delete modelCopy.updated_at;
+      delete modelCopy.updated_by;
+      delete modelCopy.created_by;
 
-        return modelCopy;
+      return modelCopy;
     };
 
-    $scope.updateApp = function (model) {
-      $scope.confirm('confirmUpdateModal.html', model).then(function () {
+    $scope.updateApp = function(model) {
+      $scope.confirm('confirmUpdateModal.html', model).then(function() {
         $scope._loading = true;
-        var params = {id: $scope.model.id};
+        var params = {
+          id: $scope.model.id
+        };
         $scope.update(params, $scope.cleanModel(model))
-          .then(function () {
+          .then(function(data) {
             $scope.alertService.success('App updated', 5000);
           })
-          .catch(function (err) {
+          .catch(function(err) {
             $scope
               .alertService
-              .danger(err.data.message || 'Oops something went wrong', 5000);
+              .danger(err, 5000);
           })
-          .finally(function () {
+          .finally(function() {
             delete model.$promise;
             delete model.$resolved;
             delete model.$rejected;
@@ -256,7 +287,7 @@
         AlertService.danger('Please select app first');
         return;
       }
-      $scope.confirm('confirmPublishModal.html', model).then(function () {
+      $scope.confirm('confirmPublishModal.html', model).then(function() {
         $scope._loading = true;
         Apps.update({
             id: $scope.model.id,
@@ -265,8 +296,8 @@
           .$promise
           .then(function(data) {
             $scope
-            .alertService
-            .success('App configuration is published', 5000);
+              .alertService
+              .success('App configuration is published', 5000);
           })
           .catch(function(err) {
             AlertService.danger(err);
@@ -279,25 +310,25 @@
     };
 
     $scope.deleteApp = function(model) {
-      $scope.confirm('confirmModal.html', model).then(function () {
+      $scope.confirm('confirmModal.html', model).then(function() {
         var appName = model.app_name;
         $scope
           .delete(model)
-          .then(function (data) {
+          .then(function(data) {
             $scope.alertService.success('App ' + appName + ' deleted.');
           })
-          .catch(function (err) {
+          .catch(function(err) {
             $scope.alertService.danger(err);
           })
-          .finally(function () {
-            if($scope.page.current > $scope.page.pages.length){
+          .finally(function() {
+            if ($scope.page.current > $scope.page.pages.length) {
               $scope.prevPage();
             }
           });
       });
     };
 
-    $scope.storeToStorage = function (app) {
+    $scope.storeToStorage = function(app) {
       var newApp = {
         app_id: app.id,
         id: app.id,
@@ -311,16 +342,16 @@
     /**
      * Get editor instance
      */
-    $scope.jsonEditorEvent = function(instance){
+    $scope.jsonEditorEvent = function(instance) {
       $scope.jsonEditorInstance = instance;
     };
 
     /**
      * Set watcher on json editor's text to catch json validation error
      */
-    $scope.$watch('jsonEditorInstance.getText()', function(val){
+    $scope.$watch('jsonEditorInstance.getText()', function(val) {
       // if editor text is empty just return
-      if(!val) {
+      if (!val) {
         $scope.jsonIsInvalid = true;
         return;
       }
@@ -329,18 +360,18 @@
       try {
         var json = JSON.parse(val);
         $scope.jsonIsInvalid = !json || !Object.keys(json).length;
-      } catch(err) {
+      } catch (err) {
         // if it's not valid json or it's empty disable Purge button
         $scope.jsonIsInvalid = true;
       }
     });
 
-    $scope.switchKeyVisibility = function(item){
+    $scope.switchKeyVisibility = function(item) {
       item.showKey = !item.showKey;
     };
 
-    $scope.copyCallback = function(err){
-      if(err){
+    $scope.copyCallback = function(err) {
+      if (err) {
         $scope.alertService.danger('Copying failed, please try manual approach', 2000);
       } else {
         $scope.alertService.success('The SDK key has been copied to the clipboard', 2000);
