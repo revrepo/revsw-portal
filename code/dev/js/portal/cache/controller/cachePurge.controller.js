@@ -20,42 +20,42 @@
     };
 
     // $scope.exampleJsons for advanced cache
-    if ($state.current.name == 'index.webApp.advanced'){
+    if ($state.current.name === 'index.webApp.advanced'){
       $scope.exampleJsons =  [
         {
-        "text": "Purge all PNG files under /images, <b>non-recursive</b> (so e.g. files under /images/today/ will not be purged)",
-        "json": {
-        "purges": [
+        'text': 'Purge all PNG files under /images, <b>non-recursive</b> (so e.g. files under /images/today/ will not be purged):',
+        'json': {
+        'purges': [
           {
-            "url": {
-              "is_wildcard": true,
-              "expression": "/images/*.png"
+            'url': {
+              'is_wildcard': true,
+              'expression': '/images/*.png'
             }
           }
         ]
        }
       },
         {
-          "text": " Purge all PNG files under /images, <b>recursive</b> (so e.g. files under /images/today/ will also be purged)",
-          "json": {
-          "purges": [
+          'text': ' Purge all PNG files under /images, <b>recursive</b> (so e.g. files under /images/today/ will also be purged):',
+          'json': {
+          'purges': [
             {
-              "url": {
-                "is_wildcard": true,
-                "expression": "/images/**/*.png"
+              'url': {
+                'is_wildcard': true,
+                'expression': '/images/**/*.png'
               }
             }
           ]
          }
         },
         {
-          "text": "Purge everything, recursively, for current domain",
-          "json": {
-          "purges": [
+          'text': 'Purge everything, recursively, for current domain:',
+          'json': {
+          'purges': [
             {
-              "url": {
-                "is_wildcard": true,
-                "expression": "/**/*"
+              'url': {
+                'is_wildcard': true,
+                'expression': '/**/*'
               }
             }
           ]
