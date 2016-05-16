@@ -18,8 +18,11 @@
       $uibModalInstance.dismiss();
     };
 
-    $scope.forgot = function() {
-      if (!$scope.data.email) {
+    $scope.forgot = function(form) {
+      if(form.$invalid){
+        return
+      }
+      if (!$scope.data.email || form.$invalid) {
         // Show error
         AlertService.danger('Wrong email address');
       } else {
@@ -34,11 +37,9 @@
           .catch(function(err) {
             if (err.status === $config.STATUS.SUBSCRIPTION_REQUIRED) {
               $scope.resendRegistrationEmail($scope.data.email);
-
             } else {
-              AlertService.danger(err.data.message);
+              AlertService.danger(err);
             }
-
           })
           .finally(function() {
             $scope.data.loading = false;
