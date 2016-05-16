@@ -21,7 +21,10 @@
 
     // $scope.exampleJsons for advanced cache
     if ($state.current.name == 'index.webApp.advanced'){
-      $scope.exampleJsons =  [{
+      $scope.exampleJsons =  [
+        {
+        "text": "Purge all PNG files under /images, <b>non-recursive</b> (so e.g. files under /images/today/ will not be purged)",
+        "json": {
         "purges": [
           {
             "url": {
@@ -30,8 +33,11 @@
             }
           }
         ]
+       }
       },
         {
+          "text": " Purge all PNG files under /images, <b>recursive</b> (so e.g. files under /images/today/ will also be purged)",
+          "json": {
           "purges": [
             {
               "url": {
@@ -40,8 +46,11 @@
               }
             }
           ]
+         }
         },
         {
+          "text": "Purge everything, recursively, for current domain",
+          "json": {
           "purges": [
             {
               "url": {
@@ -51,7 +60,12 @@
             }
           ]
         }
+        }
       ];
+
+      $scope.exampleJsons.forEach(function(item){
+        item.json = JSON.stringify(item.json,null,2);
+      });
     }
 
     $scope.text = '';
@@ -249,8 +263,8 @@
     /**
      * Copy example to json editor
      */
-    $scope.copyToJsonEditor = function(index) {
-       $scope.json =  $scope.exampleJsons[index];
+    $scope.copyToJsonEditor = function(item) {
+       $scope.json = JSON.parse(item.json);
     };
   }
 })();
