@@ -5,7 +5,8 @@
     'revapm.Portal.Shared',
     'revapm.Portal.Config',
     'revapm.Portal.Resources',
-    'ui.router'
+    'ui.router',
+    'toaster'
   ]);
 
 })();

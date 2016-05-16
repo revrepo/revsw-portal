@@ -241,6 +241,65 @@ textarea.text--courier {
 .text--courier {
   font-family: Courier;
 }
+form .error-messages {
+  display: none;
+  opacity: 1;
+  line-height: 0%;
+  transition: 0.4s linear all;
+}
+form.ng-invalid.ng-submitted .error-messages {
+  display: block;
+  transition: 0.4s linear all;
+}
+form.ng-invalid.ng-submitted .error-messages.ng-inactive {
+  line-height: 50%;
+  opacity: 0;
+}
+form.ng-invalid.ng-submitted .error-messages.ng-active {
+  line-height: 100%;
+  opacity: 1;
+}
+form .has-error .error-messages {
+  display: block;
+  transition: 0.4s linear all;
+}
+form .has-error .error-messages.ng-inactive {
+  line-height: 50%;
+  opacity: 0;
+}
+form .has-error .error-messages.ng-active {
+  display: block;
+  line-height: 100%;
+  opacity: 1;
+}
+form .error-messages {
+  color: #d87551;
+  transition: 0.4s linear all;
+}
+form .error-messages.alert-text {
+  transition: 1s linear all;
+  color: #d87551;
+}
+form .error-messages.alert-text.ng-enter {
+  color: #66b2bf;
+}
+form .error-messages.alert-text.ng-enter.ng-enter-active {
+  color: #9bbb5a;
+}
+form .error-messages.alert-text.ng-leave {
+  color: #9bbb5a;
+}
+form .error-messages.alert-text.ng-leave.ng-leave-active {
+  color: #9bbb5a;
+}
+form .error-messages.ng-inactive {
+  line-height: 50%;
+  opacity: 0;
+}
+form .error-messages.ng-active {
+  line-height: 100%;
+  opacity: 1;
+}
 .main_img_container {
   left: 50%;
   position: absolute;
@@ -797,4 +856,11 @@ i {
 }
 .subscription-summary .btn {
   margin-left: 20px;
+}
+.introjs-tooltip {
+  min-width: 300px;
+  font-size: 1.2em;
+}
+.introjs-tooltipbuttons .introjs-button {
+  font: 15px / normal sans-serif;
 }

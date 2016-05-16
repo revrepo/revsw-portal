@@ -60,7 +60,7 @@ describe('Negative', function () {
         var newPassword = 'password2';
         Portal.updatePasswordPage.update(invalidCurrentPassword, newPassword);
         var alert = Portal.alerts.getFirst();
-        var expectedMessage = 'The current user password is not correct';
+        var expectedMessage = '×\nThe current user password is not correct';
         expect(alert.getText()).toEqual(expectedMessage);
       });
 
@@ -75,7 +75,7 @@ describe('Negative', function () {
           password: newPassword
         });
         var alert = Portal.alerts.getFirst();
-        var expectedMessage = 'Wrong username or password';
+        var expectedMessage = '×\nWrong username or password';
         expect(alert.getText()).toEqual(expectedMessage);
         Portal.signIn(tom);
       });
@@ -88,16 +88,17 @@ describe('Negative', function () {
         Portal.updatePasswordPage.setCurrentPassword(tom.password);
         Portal.updatePasswordPage.setNewPassword(newPassword);
         Portal.updatePasswordPage.setPasswordConfirm(newPasswordConfirm);
-        Portal.updatePasswordPage.clickUpdatePassword();
-        var alert = Portal.alerts.getFirst();
-        var expectedMessage = 'Passwords did not match';
-        expect(alert.getText()).toEqual(expectedMessage);
+        var updateBtn = Portal.updatePasswordPage.getUpdatePasswordBtn();
+        expect(updateBtn.isEnabled()).toBeFalsy();
       });
 
     it('should not allow to update password with a value less than 8 chars',
       function () {
         var newPassword = '123';
-        Portal.updatePasswordPage.update(tom.password, newPassword);
+        Portal.goToUpdatePassword();
+        Portal.updatePasswordPage.setCurrentPassword(tom.password);
+        Portal.updatePasswordPage.setNewPassword(newPassword);
+        Portal.updatePasswordPage.setPasswordConfirm(newPassword);
         var updateBtn = Portal.updatePasswordPage.getUpdatePasswordBtn();
         expect(updateBtn.isEnabled()).toBeFalsy();
       });
@@ -106,26 +107,12 @@ describe('Negative', function () {
       'a value greater than 15 chars',
       function () {
         var newPassword = '12345678901234567890';
-        Portal.updatePasswordPage.update(tom.password, newPassword);
-        var alert = Portal.alerts.getFirst();
-        var expectedMessage = 'child "new_password" fails because ["new_' +
-          'password" length must be less than or equal to 15 characters long]';
-        expect(alert.getText()).toEqual(expectedMessage);
-      });
-
-    it('should not update password when filling a value greater than 15 chars',
-      function () {
-        var newPassword = '12345678901234567890';
-        Portal.updatePasswordPage.update(tom.password, newPassword);
-        Portal.signOut();
-        Portal.signIn({
-          email: tom.email,
-          password: newPassword
-        });
-        var alert = Portal.alerts.getFirst();
-        var expectedMessage = 'Wrong username or password';
-        expect(alert.getText()).toEqual(expectedMessage);
-        Portal.signIn(tom);
+        Portal.goToUpdatePassword();
+        Portal.updatePasswordPage.setCurrentPassword(tom.password);
+        Portal.updatePasswordPage.setNewPassword(newPassword);
+        Portal.updatePasswordPage.setPasswordConfirm(newPassword);
+        var updateBtn = Portal.updatePasswordPage.getUpdatePasswordBtn();
+        expect(updateBtn.isEnabled()).toBeFalsy();
       });
   });
 });

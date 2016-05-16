@@ -60,6 +60,63 @@
     </div>
   </div>
   <hr>
+  <!-- Override HTTP Cookies-->
+  <div class="form-group ">
+    <label class="col-sm-3 control-label">Override HTTP Cookies</label>
+    <div class="col-sm-9">
+      <toggle-switch ng-model="$ctrl.rule.cookies.override" on-label="Yes" off-label="No">
+      </toggle-switch>
+    </div>
+  </div>
+  <div class="block-override--true" ng-if="$ctrl.rule.cookies.override == true">
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Ignore All HTTP Cookies</label>
+      <div class="col-sm-9">
+        <toggle-switch ng-model="$ctrl.rule.cookies.ignore_all" on-label="Yes" off-label="No">
+        </toggle-switch>
+      </div>
+    </div>
+    <div class="form-group" ng-if="$ctrl.rule.cookies.ignore_all == false">
+      <label class="col-sm-3 control-label">Keep or Drop Specific HTTP Cookies</label>
+      <div class="col-sm-9">
+        <toggle-switch ng-model="$ctrl.rule.cookies.list_is_keep" on-label="Keep" off-label="Drop">
+        </toggle-switch>
+      </div>
+    </div>
+    <div class="form-group" ng-if="$ctrl.rule.cookies.ignore_all == false">
+      <label class="col-sm-3 control-label" ng-if="$ctrl.rule.cookies.list_is_keep == true">List Of Cookies To Keep</label>
+      <label class="col-sm-3 control-label" ng-if="$ctrl.rule.cookies.list_is_keep == false">List Of Cookies To Drop</label>
+      <div class="col-sm-9">
+        <ui-select tagging tagging-label="Add New Cookie String" multiple tagging-tokens="SPACE|," theme="bootstrap" class="form-control" ng-disabled="_loading" ng-model="$ctrl.rule.cookies.keep_or_ignore_list" id="keep_or_ignore_list_str">
+          <ui-select-match placeholder="Add Cookies String ...">{{$item}}</ui-select-match>
+          <ui-select-choices repeat="keep_or_ignore_list_str in $ctrl.rule.cookies.keep_or_ignore_list">
+            {{keep_or_ignore_list_str}}
+          </ui-select-choices>
+        </ui-select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label" ng-if="$ctrl.rule.cookies.ignore_all == true">Remove Ignored Cookies From Origin Requests</label>
+      <label class="col-sm-3 control-label" ng-if="$ctrl.rule.cookies.ignore_all == false" ng-switch="$ctrl.rule.cookies.list_is_keep">
+        Remove <span ng-switch-when="false">Ignored</span><span ng-switch-when="true">Kept</span> Cookies From Origin Requests</label>
+      <div class="col-sm-9">
+        <toggle-switch ng-model="$ctrl.rule.cookies.remove_ignored_from_request" on-label="Yes" off-label="No">
+        </toggle-switch>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label" ng-if="$ctrl.rule.cookies.ignore_all == true">Remove Ignored Cookies from Edge Responses</label>
+      <label class="col-sm-3 control-label" ng-if="$ctrl.rule.cookies.ignore_all == false" ng-switch="$ctrl.rule.cookies.list_is_keep">
+        Remove <span ng-switch-when="false">Ignored</span><span ng-switch-when="true">Kept</span> Cookies from Edge Responses</label>
+      <div class="col-sm-9">
+        <toggle-switch ng-model="$ctrl.rule.cookies.remove_ignored_from_response" on-label="Yes" off-label="No">
+        </toggle-switch>
+      </div>
+    </div>
+    <!-- // Keep or Drop Specific HTTP Cookies -->
+  </div>
+  <!-- //  Override HTTP Cookies-->
+  <hr>
   <div class="form-group">
     <label class="col-sm-3 ">Browser Caching</label>
   </div>

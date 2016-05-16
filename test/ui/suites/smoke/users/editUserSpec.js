@@ -84,7 +84,7 @@ describe('Smoke', function () {
           Portal.editUserPage.clickUpdateUser();
           // Check alert message and data updated
           var alert = Portal.alerts.getFirst();
-          expect(alert.getText()).toEqual('User updated');
+          expect(alert.getText()).toEqual('Successfully updated the user');
           var updatedFirstName = Portal.editUserPage.form.getFirstName();
           var updatedLastName = Portal.editUserPage.form.getLastName();
           expect(updatedFirstName).toContain(valueAdded);

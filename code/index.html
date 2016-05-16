@@ -7,29 +7,10 @@
   <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
   <title>RevAPM Customer Portal</title>
 
-  <!-- Bootstrap -->
-  <link href="bower_components/PACE/themes/orange/pace-theme-minimal.css" rel="stylesheet">
-  <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="bower_components/jsoneditor/dist/jsoneditor.css" rel="stylesheet">
-  <link href="bower_components/angular-chart.js/dist/angular-chart.min.css" rel="stylesheet">
-  <link href="bower_components/ui-select/dist/select.min.css" rel="stylesheet">
-  <link href="bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-  <link href="bower_components/angular-datatables/dist/plugins/bootstrap/datatables.bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="bower_components/angular-bootstrap-datetimepicker/src/css/datetimepicker.css" >
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/select2/3.4.5/select2.css">
-  <link rel="stylesheet" href="//fk.github.io/select2-bootstrap-css/css/select2-bootstrap.css">
+  <link rel="stylesheet" href="css/vendor.css">
 
-  <link rel="stylesheet" href="bower_components/bootstrap-daterangepicker/daterangepicker.css"/>
-  <link rel="stylesheet" href='bower_components/angular-dashboard-framework/dist/angular-dashboard-framework.min.css' rel="stylesheet">
-   <link rel="stylesheet" href='bower_components/angular-bootstrap-toggle-switch/style/bootstrap3/angular-toggle-switch-bootstrap-3.css' rel="stylesheet">
-<!-- highlight.js -->
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/github.min.css">
-  <!-- Angular -->
-  <link href="bower_components/angular/angular-csp.css" rel="stylesheet">
-  <link href="bower_components/intro.js/minified/introjs.min.css" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
 
-  <script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
   <link rel="import" href="polymer/elements.html">
 
   <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -42,10 +23,10 @@
 </head>
 <body data-ng-app="revapm.Portal">
 <alert-list></alert-list>
+<toaster-container toaster-options="{'animation-class': 'toast-top-center'}"></toaster-container>
 <div ui-view="layout" class="layout"></div>
 
-<script type="text/javascript" src="bower_components/PACE/pace.js"></script>
-<!--<link href="bower_components/PACE/themes/red/pace-theme-minimal.css" rel="stylesheet">-->
+
 <script>
   paceOptions = {
     ajax: {
@@ -61,66 +42,7 @@
   };
 </script>
 
-
-<script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
-<script type="text/javascript" src="bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="bower_components/lodash/lodash.min.js"></script>
-<script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="bower_components/jsoneditor/dist/jsoneditor.min.js"></script>
-<script type="text/javascript" src="bower_components/Chart.js/Chart.js"></script>
-<script type="text/javascript" src="bower_components/moment/min/moment.min.js"></script>
-
-<script type="text/javascript" src="bower_components/highcharts/highcharts.js"></script>
-<script type="text/javascript" src="bower_components/highcharts/modules/map.js"></script>
-<!-- <script type="text/javascript" src="bower_components/highcharts/highmaps.js"></script> -->
-<script type="text/javascript" src="bower_components/highcharts/highcharts-3d.js"></script>
-<script type="text/javascript" src="bower_components/highcharts/highcharts-more.js"></script>
-<script type="text/javascript" src="bower_components/highcharts/modules/exporting.js"></script>
-<script type="text/javascript" src="bower_components/highcharts-export-csv/export-csv.js"></script>
-<!-- <script type="text/javascript" src="bower_components/highcharts/modules/data.js"></script> -->
-
-<script type="text/javascript" src="bower_components/d3/d3.min.js"></script>
-<script type="text/javascript" src="bower_components/topojson/topojson.js"></script>
-<script type="text/javascript" src="bower_components/intro.js/minified/intro.min.js"></script>
-
-<script type="text/javascript" src="bower_components/angular/angular.js"></script>
-<script type="text/javascript" src="bower_components/angular-resource/angular-resource.min.js"></script>
-<script type="text/javascript" src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
-<script type="text/javascript" src="bower_components/angular-touch/angular-touch.min.js"></script>
-<script type="text/javascript" src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
-
-<script type="text/javascript" src="bower_components/angular-intro.js/build/angular-intro.min.js"></script>
-<script type="text/javascript" src='bower_components/Sortable/Sortable.min.js'></script>
-<script type="text/javascript" src='bower_components/Sortable/ng-sortable.js'></script>
-<script type="text/javascript" src='bower_components/angular-dashboard-framework/dist/angular-dashboard-framework.min.js'></script>
-
-<script type="text/javascript" src="bower_components/ngstorage/ngStorage.min.js"></script>
-<script type="text/javascript" src="bower_components/angular-base64/angular-base64.min.js"></script>
-<script type="text/javascript" src="bower_components/ng-jsoneditor/ng-jsoneditor.min.js"></script>
-<script type="text/javascript" src="bower_components/angular-bootstrap/ui-bootstrap.js"></script>
-<script type="text/javascript" src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-<script type="text/javascript" src="bower_components/angular-chart.js/dist/angular-chart.min.js"></script>
-<script type="text/javascript" src="bower_components/ui-select/dist/select.min.js"></script>
-<script type="text/javascript" src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
-<script type="text/javascript" src="bower_components/angular-file-saver/dist/angular-file-saver.bundle.min.js"></script>
-
-<script type="text/javascript" src="bower_components/highlightjs/highlight.pack.js"></script>
-<script type="text/javascript" src="bower_components/angular-highlightjs/src/angular-highlightjs.js"></script>
-
-<script type="text/javascript" src="bower_components/angular-bootstrap-datetimepicker/src/js/datetimepicker.js"></script>
-<script type="text/javascript" src="bower_components/angular-bootstrap-datetimepicker/src/js/datetimepicker.templates.js"></script>
-<script type="text/javascript" src="bower_components/angular-moment/angular-moment.min.js"></script>
-<script type="text/javascript" src="bower_components/oclazyload/dist/ocLazyLoad.min.js"></script>
-<script type="text/javascript" src="bower_components/angular-datatables/dist/angular-datatables.min.js"></script>
-<script type="text/javascript" src="bower_components/angular-datatables/dist/plugins/bootstrap/angular-datatables.bootstrap.min.js"></script>
-<script type="text/javascript" src="bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
-<script type="text/javascript" src="bower_components/angular-daterangepicker/js/angular-daterangepicker.js"></script>
-<script type="text/javascript" src="bower_components/angular-bootstrap-toggle-switch/angular-toggle-switch.js"></script>
-<script type="text/javascript" src="bower_components/angular-clipboard/angular-clipboard.js"></script>
-
-<!-- maps -->
-<script type="text/javascript" src="js/heatmaps/highmap.us.js"></script>
-<script type="text/javascript" src="js/heatmaps/highmap.world.js"></script>
+<script src="scripts/vendor.js"></script>
 
 <script src="config.js"></script>
 <!-- Google Analytics -->

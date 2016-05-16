@@ -55,7 +55,7 @@ describe('Negavive', function () {
         Portal.mobileApps.listPage.addNew(app);
 
         var alert = Portal.alerts.getFirst();
-        var s = 'The app name and platform is already registered in the system';
+        var s = '×\nThe app name and platform is already registered in the system';
         expect(alert.getText()).toEqual(s);
       });
     });

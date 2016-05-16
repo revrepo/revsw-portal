@@ -75,7 +75,7 @@
               AlertService.success('Successfully updated company profile');
             })
             .catch(function(err) {
-              AlertService.danger('Oops! Something went wrong');
+              AlertService.danger(err);
             })
             .finally(function() {
               $scope._loading = false;
@@ -110,7 +110,7 @@
               AlertService.success('Successfully created billing profile');
             })
             .catch(function(err) {
-              AlertService.danger('Oops! Something went wrong');
+              AlertService.danger(err);
             })
             .finally(function() {
               $scope._loading = false;
@@ -152,7 +152,7 @@
                     }, 10);
                   })
                   .catch(function(err) {
-                    AlertService.danger('Oops! Something went wrong');
+                    AlertService.danger(err);
                   })
                   .finally(function() {
                     $scope._loading = false;
@@ -161,7 +161,7 @@
           }
         )
         .catch(function(err) {
-          AlertService.danger('Oops! Something went wrong');
+          AlertService.danger(err);
         })
         .finally(function() {
           $scope._loading = false;

@@ -48,7 +48,7 @@ describe('Functional', function () {
       Portal.userListPage.clickAddNewUser();
       Portal.addUserPage.createUser(bret);
       var alert = Portal.alerts.getFirst();
-      expect(alert.getText()).toEqual('User created');
+      expect(alert.getText()).toEqual('Successfully created new user');
       Portal.addUserPage.clickBackToList();
       Portal.deleteUser(bret);
     });

@@ -45,11 +45,7 @@
           return data;
         })
         .catch(function (err) {
-          if (err.data && err.data.message) {
-            AlertService.danger(err.data.message);
-          } else {
-            AlertService.danger('Something goes wrong');
-          }
+          AlertService.danger(err);
         });
     };
 
@@ -57,11 +53,5 @@
       $scope.updatePassword();
     };
 
-    $scope.disableSubmit = function(pass){
-      return $scope._loading ||
-        !pass.current_password ||
-        !pass.new_password ||
-        !pass.confirm_password;
-    };
   }
 })();

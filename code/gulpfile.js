@@ -12,6 +12,8 @@ var reload = browserSync.reload;
 var ngAnnotate = require('gulp-ng-annotate');
 var htmlhint = require('gulp-htmlhint');
 var gulpRequireTasks = require('gulp-require-tasks');
+var flatten = require('gulp-flatten');
+
 // Call it when neccesary.
 gulpRequireTasks({
   // Pass any options to it. Please see below.
@@ -58,6 +60,12 @@ gulp.task('copyJson', function() {
 // copy custom fonts
 gulp.task('copyFonts', function() {
   return gulp.src(devFolder + 'fonts/**/*.*')
+    .pipe(gulp.dest(destFolder + 'fonts'));
+});
+
+gulp.task('fonts', function () {
+  return gulp.src('./bower_components/**/*.{eot,svg,ttf,woff,woff2}')
+    .pipe(flatten())
     .pipe(gulp.dest(destFolder + 'fonts'));
 });
 
@@ -127,6 +135,6 @@ gulp.task('serve', function() {
   gulp.watch([devFolder + 'widgets/**/*'], ['widgets:build']);
 });
 
-gulp.task('copy', ['copyCss', 'copyParts', 'copyImages', 'copyJson', 'copyFonts','widgets:build']);
+gulp.task('copy', ['copyCss', 'copyParts', 'copyImages', 'copyJson', 'copyFonts', 'fonts','widgets:build']);
 gulp.task('build', ['copy', 'dist', 'vulcanize']);
 gulp.task('default', ['serve', 'less']);

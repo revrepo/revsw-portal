@@ -73,6 +73,11 @@
         });
     }
 
+    $scope.initNew = function() {
+      initModel();
+      // $scope.setAccountId(); // TODO: use CRUD method
+    };
+
     $scope.getUser = function(id) {
       $scope._loading = true;
       $scope.get(id)
@@ -85,7 +90,7 @@
           return $scope.model.domain;
         })
         .catch(function(err) {
-          $scope.alertService.danger('Could not load user details');
+          $scope.toaster.error(err);
         })
         .finally(function() {
           $scope._loading = false;
@@ -96,7 +101,12 @@
       $scope.confirm('confirmModal.html', model).then(function() {
         $scope
           .delete(model)
-          .catch($scope.alertService.danger);
+          .then(function(data) {
+            $scope.toaster.success(data);
+          })
+          .catch(function(err) {
+            $scope.toaster.error(err);
+          });
       });
     };
 
@@ -104,7 +114,6 @@
       if (!model) {
         return;
       }
-      $scope.alertService.clear();
       // copy user id
       model.id = model.user_id;
       $scope
@@ -114,9 +123,11 @@
           if (model.user_id === User.getUser().user_id) {
             User.reloadUser();
           }
-          $scope.alertService.success('User updated', 5000);
+          $scope.toaster.success(data);
         })
-        .catch($scope.alertService.danger);
+        .catch(function(err) {
+          $scope.toaster.error(err);
+        });
     };
 
     $scope.getRelativeDate = function(datetime) {
@@ -128,10 +139,9 @@
         return;
       }
       if (model.passwordConfirm !== model.password) {
-        $scope.alertService.danger('Passwords did not match', 5000);
+        $scope.toaster.error('Passwords did not match');
         return;
       }
-      $scope.alertService.clear();
       delete model.passwordConfirm;
       model.access_control_list.dashBoard = true;
       //      model.email = angular.copy(model.user_email);
@@ -139,9 +149,11 @@
       $scope.create(model)
         .then(function(data) {
           initModel();
-          $scope.alertService.success('User created', 5000);
+          $scope.toaster.success(data);
         })
-        .catch($scope.alertService.danger);
+        .catch(function(err) {
+          $scope.toaster.error(err);
+        });
     };
 
     $scope.disableSubmit = function(model, isEdit) {
@@ -217,7 +229,7 @@
         });
     });
 
-    // NOTE: mixin lodash for
+    // NOTE: mixin lodash for find objects
     _.mixin({
       'findByValues': function(collection, property, values) {
         return _.filter(collection, function(item) {
@@ -234,7 +246,7 @@
      */
     $scope.getAccountDomainNameList = function(account_id) {
       if (!account_id) {
-        account_id = $scope.model.companyId;
+        account_id = $scope.model.companyId||$scope.model.account_id;
       }
       var data = _.findByValues($scope.domains, 'account_id', account_id);
       return data;
@@ -247,7 +259,7 @@
      */
     $scope.getDomainPlaceholder = function() {
       var list = $scope.getAccountDomainNameList();
-      return (list.length > 0) ? 'Select domains...' : 'Domains list is epmty...';
+      return (list.length > 0) ? 'Select domains...' : 'Domains list is empty...';
     };
 
     // NOTE: watch on change companyId for update available domain names

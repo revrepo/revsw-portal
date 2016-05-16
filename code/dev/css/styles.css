@@ -241,6 +241,65 @@ textarea.text--courier {
 .text--courier {
   font-family: Courier;
 }
+form .error-messages {
+  display: none;
+  opacity: 1;
+  line-height: 0%;
+  transition: 0.4s linear all;
+}
+form.ng-invalid.ng-submitted .error-messages {
+  display: block;
+  transition: 0.4s linear all;
+}
+form.ng-invalid.ng-submitted .error-messages.ng-inactive {
+  line-height: 50%;
+  opacity: 0;
+}
+form.ng-invalid.ng-submitted .error-messages.ng-active {
+  line-height: 100%;
+  opacity: 1;
+}
+form .has-error .error-messages {
+  display: block;
+  transition: 0.4s linear all;
+}
+form .has-error .error-messages.ng-inactive {
+  line-height: 50%;
+  opacity: 0;
+}
+form .has-error .error-messages.ng-active {
+  display: block;
+  line-height: 100%;
+  opacity: 1;
+}
+form .error-messages {
+  color: #d87551;
+  transition: 0.4s linear all;
+}
+form .error-messages.alert-text {
+  transition: 1s linear all;
+  color: #d87551;
+}
+form .error-messages.alert-text.ng-enter {
+  color: #66b2bf;
+}
+form .error-messages.alert-text.ng-enter.ng-enter-active {
+  color: #9bbb5a;
+}
+form .error-messages.alert-text.ng-leave {
+  color: #9bbb5a;
+}
+form .error-messages.alert-text.ng-leave.ng-leave-active {
+  color: #9bbb5a;
+}
+form .error-messages.ng-inactive {
+  line-height: 50%;
+  opacity: 0;
+}
+form .error-messages.ng-active {
+  line-height: 100%;
+  opacity: 1;
+}
 .main_img_container {
   left: 50%;
   position: absolute;
@@ -643,6 +702,28 @@ section[drawer] .side-menu .dashboard_menu .side-menu-item.item-title a {
   background-repeat: no-repeat;
   background-image: url('../images/background-dashboard.png');
 }
+body {
+  overflow-y: hidden;
+}
+@-moz-document url-prefix() {
+  section[drawer] .side-menu .side-menu-item {
+    padding-left: 20px;
+  }
+  .paper-header .navbar .navbar-inner .navbar-header .ng-isolate-scope .form-control.ng-pristine.ng-untouched.ng-valid.ng-valid-editable {
+    position: relative;
+    top: 12px;
+  }
+}
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+  section[drawer] .side-menu .side-menu-item {
+    padding-left: 20px;
+  }
+}
+@supports (-ms-accelerator:true) {
+  section[drawer] .side-menu .side-menu-item {
+    padding-left: 20px;
+  }
+}
 .domain-caching-rules__info .panel-buttons-left {
   padding-right: 30px;
 }
@@ -797,4 +878,11 @@ i {
 }
 .subscription-summary .btn {
   margin-left: 20px;
+}
+.introjs-tooltip {
+  min-width: 300px;
+  font-size: 1.2em;
+}
+.introjs-tooltipbuttons .introjs-button {
+  font: 15px / normal sans-serif;
 }

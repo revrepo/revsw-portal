@@ -10,7 +10,7 @@
         <a href="https://www.revapm.com/" id="logo" target="_blank">
             <img src="images/logo_color.png" alt="Logo" />
         </a>
-        <div class="side-menu" style="height: 94%; overflow: auto;">
+        <div class="side-menu" style="height: 94%; overflow: auto;" ng-nicescroll nice-option="{cursorcolor: '#f7941e',cursorwidth: '8px',zindex: '9999999'}">
             <dashboard-nav-menu></dashboard-nav-menu>
             <li ui-sref-active-if="{class: 'active-side-menu-item', state: 'index.apps'}", ng-class="{'active-side-menu-item': menuExpanded('index.apps')}" style="margin-top: 8px;">
 
@@ -147,9 +147,7 @@
                     Users
                 </a>
                 <a ui-sref-active="active" ui-sref="index.accountSettings.companies" class="side-menu-sub-item" ng-if="userService.isReseller() || userService.isRevadmin()">
-                    <i class="sub-menu-icon fa fa-list-alt"></i>
-                    Accounts
-                </a>
+                    <i class="sub-menu-icon fa fa-list-alt"></i>Accounts</a>
                 <a ui-sref-active="active" ui-sref="index.accountSettings.keys" class="side-menu-sub-item" ng-if="!userService.isUser()">
                     <i class="sub-menu-icon fa fa-key"></i>
                     API Keys
@@ -234,7 +232,7 @@
                             </div>
                             <div style="display: inline-block">
                                 <div id="menuToggleBtn" class="menu-toggle">
-                                    <span menu-toggle="toggleMenu" ng-click="toggleMenu = !toggleMenu" class="glyphicon glyphicon-menu-hamburger" uib-tooltip="{{(toggleMenu ? 'Show' : 'Hide') + ' Menu'}}" tooltip-placement="right"></span>
+                                    <span menu-toggle="toggleMenu" ng-click="toggleMenu = !toggleMenu" class="glyphicon glyphicon-menu-hamburger" uib-tooltip="{{(toggleMenu ? 'Show' : 'Hide') + ' Menu'}}" tooltip-placement="right" role="button"></span>
                                 </div>
                             </div>
                             <search></search>

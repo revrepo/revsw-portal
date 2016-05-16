@@ -48,7 +48,8 @@ describe('Negative', function () {
     });
 
     apps.forEach(function (app) {
-        it('should basic edit and "verify" app name with empty characters - ' +
+        it('should not allow to "verify" an app in Basic Edit mode with app name ' +
+          'set to empty characters - ' +
           app.platform,
           function () {
             Portal.goToMobileApps();
@@ -56,19 +57,13 @@ describe('Negative', function () {
             Portal.mobileApps.listPage.searchAndEdit(app);
             var tempAppName = app.name;
             app.name = ' ';
-            Portal.mobileApps.editPage.verify(app);
-
-            var alert = Portal.alerts.getFirst();
-            expect(alert.getText()).toContain('is not allowed to be empty');
-
-            Portal.goToMobileApps();
-            Portal.header.goTo(app.platform);
-            app.name = tempAppName;
-            var findApp = Portal.mobileApps.listPage.findApp(app);
-            expect(findApp).toBe(1);
+            Portal.mobileApps.editPage.form.fill(app);
+            var enabled = Portal.mobileApps.editPage.form.isEnabledVerify();
+            expect(enabled).toBe(false);
         });
 
-        it('should basic edit and "update" app name with empty characters - ' +
+        it('should not alow to "update" an app in Basic Edit mode with app name ' +
+          'set to empty characters - ' +
           app.platform,
           function () {
             Portal.goToMobileApps();
@@ -76,20 +71,13 @@ describe('Negative', function () {
             Portal.mobileApps.listPage.searchAndEdit(app);
             var tempAppName = app.name;
             app.name = ' ';
-            Portal.mobileApps.editPage.update(app);
-            Portal.dialog.clickOk();
-
-            var alert = Portal.alerts.getFirst();
-            expect(alert.getText()).toContain('is not allowed to be empty');
-
-            Portal.goToMobileApps();
-            Portal.header.goTo(app.platform);
-            app.name = tempAppName; //TODO: Remove this line, once edit is fixed
-            var findApp = Portal.mobileApps.listPage.findApp(app);
-            expect(findApp).toBe(1);
+            Portal.mobileApps.editPage.form.fill(app);
+            var enabled = Portal.mobileApps.editPage.form.isEnabledUpdate();
+            expect(enabled).toBe(false);
         });
 
-        it('should basic edit and "publish" app name with empty characters - ' +
+        it('should not alow to "publish" an app in Basic Edit mode with app name ' +
+          'set to empty characters - ' +
           app.platform,
           function () {
             Portal.goToMobileApps();
@@ -97,17 +85,9 @@ describe('Negative', function () {
             Portal.mobileApps.listPage.searchAndEdit(app);
             var tempAppName = app.name;
             app.name = ' ';
-            Portal.mobileApps.editPage.publish(app);
-            Portal.dialog.clickOk();
-
-            var alert = Portal.alerts.getFirst();
-            expect(alert.getText()).toContain('is not allowed to be empty');
-
-            Portal.goToMobileApps();
-            Portal.header.goTo(app.platform);
-            app.name = tempAppName; //TODO: Remove this line, once edit is fixed
-            var findApp = Portal.mobileApps.listPage.findApp(app);
-            expect(findApp).toBe(1);
+            Portal.mobileApps.editPage.form.fill(app);
+            var enabled = Portal.mobileApps.editPage.form.isEnabledPublish();
+            expect(enabled).toBe(false);
         });
     });
   });

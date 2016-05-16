@@ -48,39 +48,27 @@ describe('Boundary', function () {
         tommy.email = 'email678901234567890123456789012345678901234567890' +
           '123456789012345@ui-test-email.com';
         Portal.userListPage.clickAddNewUser();
-        Portal.addUserPage.createUser(tommy);
-        var alerts = Portal.alerts.getAll();
-        expect(alerts.count()).toEqual(1);
-        var expectedMessage = 'child "email" fails because ["email" must be ' +
-          'a valid email]';
-        var alert = Portal.alerts.getFirst();
-        expect(alert.getText()).toEqual(expectedMessage);
+        Portal.addUserPage.form.fill(tommy);
+        var addBtn = Portal.addUserPage.getCreateUserBtn();
+        expect(addBtn.isEnabled()).toBeFalsy();
       });
 
     it('should not allow to create user with long First Name.', function () {
       var rocky = DataProvider.generateUser('Rocky');
       rocky.firstName += ' is an invalid name longer than thirty characters.';
       Portal.userListPage.clickAddNewUser();
-      Portal.addUserPage.createUser(rocky);
-      var alerts = Portal.alerts.getAll();
-      expect(alerts.count()).toEqual(1);
-      var expectedMessage = 'child "firstname" fails because ["firstname" ' +
-        'length must be less than or equal to 30 characters long]';
-      var alert = Portal.alerts.getFirst();
-      expect(alert.getText()).toEqual(expectedMessage);
+      Portal.addUserPage.form.fill(rocky);
+      var addBtn = Portal.addUserPage.getCreateUserBtn();
+      expect(addBtn.isEnabled()).toBeFalsy();
     });
 
     it('should not allow to create user with long Last Name.', function () {
       var paul = DataProvider.generateUser('Paul');
       paul.lastName += ' is an invalid name longer than thirty characters.';
       Portal.userListPage.clickAddNewUser();
-      Portal.addUserPage.createUser(paul);
-      var alerts = Portal.alerts.getAll();
-      expect(alerts.count()).toEqual(1);
-      var expectedMessage = 'child "lastname" fails because ["lastname" ' +
-        'length must be less than or equal to 30 characters long]';
-      var alert = Portal.alerts.getFirst();
-      expect(alert.getText()).toEqual(expectedMessage);
+      Portal.addUserPage.form.fill(paul);
+      var addBtn = Portal.addUserPage.getCreateUserBtn();
+      expect(addBtn.isEnabled()).toBeFalsy();
     });
 
     it('should not create user when the "Password" value is not 8 characters ' +
@@ -90,13 +78,9 @@ describe('Boundary', function () {
         michael.password = '123';
         michael.passwordConfirm = '123';
         Portal.userListPage.clickAddNewUser();
-        Portal.addUserPage.createUser(michael);
-        var alerts = Portal.alerts.getAll();
-        expect(alerts.count()).toEqual(1);
-        var expectedMessage = 'child "password" fails because ["password" ' +
-          'length must be at least 8 characters long]';
-        var alert = Portal.alerts.getFirst();
-        expect(alert.getText()).toEqual(expectedMessage);
+        Portal.addUserPage.form.fill(michael);
+        var addBtn = Portal.addUserPage.getCreateUserBtn();
+        expect(addBtn.isEnabled()).toBeFalsy();
       });
 
     it('should not create user when the "Password" value is greater than ' +
@@ -106,13 +90,9 @@ describe('Boundary', function () {
         vincent.password = '1234567890123456789012345678901234567890';
         vincent.passwordConfirm = '1234567890123456789012345678901234567890';
         Portal.userListPage.clickAddNewUser();
-        Portal.addUserPage.createUser(vincent);
-        var alerts = Portal.alerts.getAll();
-        expect(alerts.count()).toEqual(1);
-        var expectedMessage = 'child "password" fails because ["password" ' +
-          'length must be less than or equal to 15 characters long]';
-        var alert = Portal.alerts.getFirst();
-        expect(alert.getText()).toEqual(expectedMessage);
+        Portal.addUserPage.form.fill(vincent);
+        var addBtn = Portal.addUserPage.getCreateUserBtn();
+        expect(addBtn.isEnabled()).toBeFalsy();
       });
   });
 });
