@@ -289,7 +289,7 @@ var DataProvider = {
   generateAccountProfileData: function () {
     var timestamp = Date.now();
     return {
-      companyName: 'QA-Company-' + timestamp,
+      companyName: 'QA-Account-Profile-' + timestamp,
       firstName: 'TestFirstName01',
       lastName: 'TestLastName01',
       phoneNumber: '1111111111',
@@ -326,8 +326,9 @@ var DataProvider = {
    *     }
    */
   generateAccountBillingData: function () {
+    var timestamp = Date.now();
     return {
-      companyName: 'Company01',
+      companyName: 'QA-Account-Billing-' + timestamp,
       firstName: 'TestFirstName01',
       lastName: 'TestLastName01',
       phoneNumber: '1111111111',

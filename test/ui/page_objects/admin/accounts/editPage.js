@@ -48,8 +48,16 @@ var EditCompany = {
       updateCompanyProfile: {
         css: '.btn.btn-success'
       },
+      createBillingProfile: {
+        css: '.btn.btn-primary.ng-scope'
+      },
       cancel: {
         linkText: 'Cancel'
+      }
+    },
+    sections: {
+      billingContact: {
+        css: '.row.billing_contact_details'
       }
     }
   },
@@ -126,6 +134,18 @@ var EditCompany = {
   },
 
   /**
+   * ### EditCompany.getCreateBillingProfileBtn()
+   *
+   * Returns the reference to the `Create Billing Profile` button (Selenium
+   * WebDriver Element) from the Edit Company page from the Portal app.
+   *
+   * @returns {Selenium WebDriver Element}
+   */
+  getCreateBillingProfileBtn: function () {
+    return element(by.css(this.locators.buttons.createBillingProfile.css));
+  },
+
+  /**
    * ### EditCompany.getCancelBtn()
    *
    * Returns the reference to the `Cancel` button (Selenium WebDriver Element)
@@ -135,6 +155,18 @@ var EditCompany = {
    */
   getCancelBtn: function () {
     return element(by.partialLinkText(this.locators.buttons.cancel.linkText));
+  },
+
+  /**
+   * ### EditCompany.getBillingContactSection()
+   *
+   * Returns the reference to the `Billing Contact` section (Selenium WebDriver
+   * Element) from the Edit Company page from the Portal app.
+   *
+   * @returns {Selenium WebDriver Element}
+   */
+  getBillingContactSection: function () {
+    return element(by.css(this.locators.sections.billingContact.css));
   },
 
   // ## Methods to interact with the Edit Company Page components
@@ -156,14 +188,28 @@ var EditCompany = {
   /**
    * ### EditCompany.clickUpdateCompanyProfile()
    *
-   * Triggers a click on the `Back` button from the Edit Company page
-   * from the Portal app.
+   * Triggers a click on the `Update Company Profile` button from the
+   * Edit Company page from the Portal app.
    *
    * @returns {Promise}
    */
   clickUpdateCompanyProfile: function () {
     return this
       .getUpdateCompanyProfileBtn()
+      .click();
+  },
+
+  /**
+   * ### EditCompany.clickCreateBillingProfile()
+   *
+   * Triggers a click on the `Create Billing Profile` button from the
+   * Edit Company page from the Portal app.
+   *
+   * @returns {Promise}
+   */
+  clickCreateBillingProfile: function () {
+    return this
+      .getCreateBillingProfileBtn()
       .click();
   },
 
@@ -210,20 +256,51 @@ var EditCompany = {
   },
 
   /**
-   * ### EditCompany.updateCompany(company)
+   * ### EditCompany.updateAccountProfile(accountProfile, billingContact)
    *
    * Updates the company using the given data by filling it in the form and
    * clicking on the `Update Company Profile` button from the Edit Company page.
    *
-   * @param {Object} company, company data with the schema specified in
-   * DataProvider.generateAccountProfileData()
+   * @param {Object} accountProfile, billingContact. Company data with the
+   * schema specified in DataProvider.generateAccountProfileData()
    *
    * @returns {Promise}
    */
-  updateCompany: function (company) {
-    this.formProfile.fill(company);
-    this.formBilling.fill(company);
-    return this.clickUpdateDomain();
+  updateAccountProfile: function (accountProfile, billingContact) {
+    this.formProfile.fill(accountProfile);
+    this.formBilling.fill(billingContact);
+    return this.clickUpdateCompanyProfile();
+  },
+
+  /**
+   * ### EditCompany.createBillingContact(accountProfile, billingContact)
+   *
+   * Updates the company using the given data by filling it in the form and
+   * clicking on the `Update Company Profile` button from the Edit Company page.
+   *
+   * @param {Object} accountProfile, billingContact, company data with the
+   * schema specified in DataProvider.generateAccountBillingData()
+   *
+   * @returns {Promise}
+   */
+  createBillingContact: function (accountProfile, billingContact) {
+    this.formProfile.fill(accountProfile);
+    this.formBilling.fill(billingContact);
+    return this.clickCreateBillingProfile();
+  },
+
+  /**
+   * ### EditCompany.isDisplayedBillingContact()
+   *
+   * Checks if `Create Billing Contact` button exists in the Edit Company page.
+   *
+   * @returns {Promise}
+   */
+  isDisplayedBillingContact: function () {
+    // var billingButton = this.getCreateBillingProfileBtn().isPresent();
+    // var billingForm = this.getCreateBillingProfileBtn().isPresent();
+    // return (billingButton && billingForm);
+    return this.getCreateBillingProfileBtn().isPresent();
   }
 };
 

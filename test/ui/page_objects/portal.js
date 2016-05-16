@@ -198,7 +198,7 @@ var Portal = {
    * @returns {Promise}
    */
   getAdminPage: function () {
-    return this.getPage(Constants.hashFragments.admin);
+    return this.getPage(Constants.hashFragments.admin.users);
   },
 
   /**
@@ -611,6 +611,67 @@ var Portal = {
             }
           });
         });
+    });
+  },
+
+  /**
+   * ### Portal.createAccounts()
+   *
+   * Helper method that executes all steps required to create
+   * new Accounts from Portal Admin.
+   *
+   * @param {String} accounts, accounts objects.
+   *
+   * @param {Object} accounts, data applying the schema defined in
+   * `DataProvider.generateAccountProfileData()`
+   *
+   * @returns {Promise}
+   */
+  createAccounts: function (accounts) {
+    var me = this;
+    me.getAdminPage();
+    me.header.goTo(Constants.sideBar.admin.ACCOUNTS);
+    me.admin.accounts.listPage.clickAddNewCompany();
+    return browser.getCurrentUrl().then(function (initialUrl) {
+      accounts.forEach(function (account) {
+        // me.header.goTo(platform);
+        me.admin.accounts.addCompany.createCompany(account);
+      });
+      browser.getCurrentUrl().then(function (currentUrl) {
+        if (initialUrl !== currentUrl) {
+          browser.get(initialUrl);
+        }
+      });
+    });
+  },
+
+  /**
+   * ### Portal.deleteAccounts()
+   *
+   * Helper method that executes all steps required to delete
+   * new Accounts from Portal Admin.
+   *
+   * @param {String} accounts, accounts objects.
+   *
+   * @param {Object} accounts, data applying the schema defined in
+   * `DataProvider.generateAccountProfileData()`
+   *
+   * @returns {Promise}
+   */
+  deleteAccounts: function (accounts) {
+    var me = this;
+    me.getAdminPage();
+    return browser.getCurrentUrl().then(function (initialUrl) {
+      accounts.forEach(function (account) {
+        me.header.goTo(Constants.sideBar.admin.ACCOUNTS);
+        me.admin.accounts.listPage.searchAndClickDelete(account.companyName);
+        Portal.dialog.clickOk();
+      });
+      browser.getCurrentUrl().then(function (currentUrl) {
+        if (initialUrl !== currentUrl) {
+          browser.get(initialUrl);
+        }
+      });
     });
   }
 };
