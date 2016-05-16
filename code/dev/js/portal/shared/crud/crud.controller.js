@@ -474,13 +474,20 @@
         return model.$remove()
           .then(function(data) {
             $rootScope.$broadcast('update:searchData');
-            var idx = $scope.records.indexOf(model);
-            if (data.statusCode === $config.STATUS.OK) {
-              $scope.records.splice(idx, 1);
-            }
-            idx = $scope.filteredRecords.indexOf(model);
-            if (data.statusCode === $config.STATUS.OK) {
-              $scope.filteredRecords.splice(idx, 1);
+            if (data.statusCode === $config.STATUS.OK || data.statusCode === $config.STATUS.ACCEPTED) {
+              // NOTE: delete item from arrays
+              var idx = _.findIndex($scope.records, function(item) {
+                return item.id === model.id;
+              });
+              if (idx > -1) {
+                $scope.records.splice(idx, 1);
+              }
+              var idx_f = _.findIndex($scope.filteredRecords, function(item) {
+                return item.id === model.id;
+              });
+              if (idx_f > -1) {
+                $scope.filteredRecords.splice(idx_f, 1);
+              }
             }
             return data;
           })
@@ -510,15 +517,16 @@
             $rootScope.$broadcast('update:searchData');
             $scope.clearModel(model);
             if (isStay === true) {
-              return data; // Send data next to promise handlers
+              return $q.resolve(data); // Send data next to promise handlers
             } else {
               $state.go('.^'); // NOTE: go to up to list from new state
               return $scope.list().then(function() {
                 // NOTE: set sort for see new record on top of list
                 $scope.filter.predicate = 'updated_at';
                 $scope.filter.reverse = true;
+                $scope.goToPage(1);
                 $scope.elementIndexForAnchorScroll = 'anchor0';
-                return data;
+                return $q.resolve(data);
               }); // Update list
             }
           })

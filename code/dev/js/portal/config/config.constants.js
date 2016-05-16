@@ -22,6 +22,7 @@
        */
       STATUS: {
         OK: 200,
+        ACCEPTED: 202,
         BAD_REQUEST: 400,
         UNAUTHORIZED: 401,
         TWO_FACTOR_AUTH_REQUIRED: 403,
