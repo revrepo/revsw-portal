@@ -143,10 +143,12 @@
 
       // Used by Angular Toaster
       SUCCESS_MESSAGE_DISPLAY_TIMEOUT: 5000,
+      // PATTERNS
       PATTERNS: {
         DOMAIN: /(?=^.{4,253}$)(^((?!-)(?!\_)[a-zA-Z0-9-\_]{0,62}[a-zA-Z0-9]\.)+[a-zA-Z]{2,63}$)/,
         COOKIE: /(?=^.{4,253}$)(^((?!-)(?!\_)[a-zA-Z0-9-\_]{0,62}[a-zA-Z0-9]\.)+[a-zA-Z]{2,63}$)/, // TODO: set correct pattern for cookie
-        CACHE_BYPASS_LOCATION: /(?=^.{4,253}$)(^((?!-)(?!\_)[a-zA-Z0-9-\_]{0,62}[a-zA-Z0-9]\.)+[a-zA-Z]{2,63}$)/ // TODO: set correct pattern
+        CACHE_BYPASS_LOCATION: /(?=^.{4,253}$)(^((?!-)(?!\_)[a-zA-Z0-9-\_]{0,62}[a-zA-Z0-9]\.)+[a-zA-Z]{2,63}$)/, // TODO: set correct pattern
+        QUERY_STRINGS_OPTION: /(?=^.{4,253}$)(^((?!-)(?!\_)[a-zA-Z0-9-\_]{0,62}[a-zA-Z0-9]\.)+[a-zA-Z]{2,63}$)/ // TODO: set correct pattern
       }
     });
 
