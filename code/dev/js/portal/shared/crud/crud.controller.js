@@ -1,4 +1,4 @@
-(function (angular, empty) {
+(function(angular, empty) {
   'use strict';
 
   angular
@@ -6,7 +6,7 @@
     .factory('CRUDController', CRUDController);
 
   /*@ngInject*/
-  function CRUDController($config, $rootScope, AlertService, $q, User, $anchorScroll, $uibModal, $filter, $timeout, $animate, toaster) {
+  function CRUDController($config, $rootScope, AlertService, $q, User, $anchorScroll, $uibModal, $filter, $timeout, $animate, toaster, $state) {
 
     function CRUDControllerImpl($scope, $stateParams) {
 
@@ -148,12 +148,12 @@
         // checks if filter value is string and not blank + checks the length of filterKeys to be not empty
         if (_.isString($scope.filter.filter) && $scope.filter.filter.length > 0 && $scope.filterKeys.length > 0) {
           // filters over the array
-          filtered = _.filter($scope.records, function(record){
+          filtered = _.filter($scope.records, function(record) {
             //checks for each key
             //if value is found returns true
-            for(i = 0; i < $scope.filterKeys.length; i++) {
+            for (i = 0; i < $scope.filterKeys.length; i++) {
               compareValue = record[$scope.filterKeys[i]];
-              if(compareValue){
+              if (compareValue) {
                 //checks if date
                 if (moment(compareValue, moment.ISO_8601).isValid()) {
                   //formats as date obj
@@ -190,7 +190,7 @@
       /**
        * Will watch filter to be able to apply it
        */
-      $scope.$watch('filter', function () {
+      $scope.$watch('filter', function() {
         // Apply filters here
         $scope.filterList();
       }, true);
@@ -210,7 +210,7 @@
        * @param {Object=} [resolve]
        * @returns {*}
        */
-      $scope.confirm = function (template, resolve) {
+      $scope.confirm = function(template, resolve) {
         if (angular.isObject(template)) {
           resolve = template;
           template = '';
@@ -241,7 +241,7 @@
        * @param {boolean?} [loading]
        * @returns {boolean}
        */
-      $scope.loading = function (loading) {
+      $scope.loading = function(loading) {
         if (angular.isUndefined(loading)) {
           return $scope._loading;
         }
@@ -253,7 +253,7 @@
        *
        * @param {string} state
        */
-      $scope.setState = function (state) {
+      $scope.setState = function(state) {
         if (!state) {
           throw new Error('Wrong state provided.');
         }
@@ -265,7 +265,7 @@
        *
        * @param {string=} [filter] filter to clear otherwise {@link $scope.quickFilter} will be cleared
        */
-      $scope.clearQuickFilter = function (filter) {
+      $scope.clearQuickFilter = function(filter) {
         if (filter) {
           filter = '';
         } else {
@@ -278,11 +278,11 @@
        *
        * @param {object=} [model]
        */
-      $scope.clearModel = function (model) {
+      $scope.clearModel = function(model) {
         if (!model) {
           model = $scope.model;
         }
-        angular.forEach(model, function (val, key) {
+        angular.forEach(model, function(val, key) {
           model[key] = '';
         });
         model = null;
@@ -291,7 +291,7 @@
       /**
        * Will remove all elements from array of records.
        */
-      $scope.clearList = function () {
+      $scope.clearList = function() {
         $scope.records.splice(0, $scope.records.length);
         $scope.filteredRecords.splice(0, $scope.filteredRecords.length);
       };
@@ -301,7 +301,7 @@
        *
        * @param {object} resource
        */
-      $scope.setResource = function (resource) {
+      $scope.setResource = function(resource) {
         $scope.resource = resource;
       };
 
@@ -310,7 +310,7 @@
        *
        * @param {Array} fields
        */
-      $scope.setDeniedFields = function (fields) {
+      $scope.setDeniedFields = function(fields) {
         if (!angular.isArray(fields)) {
           return;
         }
@@ -352,7 +352,7 @@
        *
        * @private
        */
-      $scope._checkPagination = function () {
+      $scope._checkPagination = function() {
         if ($scope.filteredRecords.length < ($scope.filter.limit + $scope.filter.skip)) {
           $scope.page.hasNextPage = false;
         } else {
@@ -374,11 +374,11 @@
       /**
        * Load next records
        */
-      $scope.nextPage = function () {
+      $scope.nextPage = function() {
         if (!$scope.page.hasNextPage) {
           return;
         }
-        if($scope.page.current === $scope.page.pages.length){
+        if ($scope.page.current === $scope.page.pages.length) {
           return;
         }
         $scope.filter.skip += $scope.filter.limit;
@@ -389,7 +389,7 @@
       /**
        * Load prev records
        */
-      $scope.prevPage = function () {
+      $scope.prevPage = function() {
         if (!$scope.page.hasPrevPage) {
           return;
         }
@@ -433,14 +433,14 @@
        * @throws Error is not {@link $scope.resource} provided
        * @returns {Promise}
        */
-      $scope.list = function () {
+      $scope.list = function() {
         if (!$scope.resource) {
           throw new Error('No resource provided.');
         }
         $scope.loading(true);
         //fetching data
         return $scope.resource
-          .query(function (data) {
+          .query(function(data) {
             if (!$scope._baseFilter) {
               $scope.records = data;
             } else {
@@ -450,7 +450,7 @@
             $scope._checkPagination();
             return data; // Send data to future promise
           }).$promise
-          .finally(function () {
+          .finally(function() {
             $scope.loading(false);
           });
       };
@@ -461,7 +461,7 @@
        * @throws Error if not {@link $scope.resource} provided
        * @param {object} model
        */
-      $scope.delete = function (model) {
+      $scope.delete = function(model) {
         if (!model) {
           return;
         }
@@ -472,7 +472,7 @@
         model.loading = true;
         // Could be removed using $resource
         return model.$remove()
-          .then(function (data) {
+          .then(function(data) {
             $rootScope.$broadcast('update:searchData');
             var idx = $scope.records.indexOf(model);
             if (data.statusCode === $config.STATUS.OK) {
@@ -484,35 +484,48 @@
             }
             return data;
           })
-          .finally(function () {
+          .finally(function() {
             model.loading = false;
           });
       };
 
       /**
-       * Create a new record
+       * @name  create
+       * @description
        *
-       * @throws Error
-       * @param {object} model
-       * @returns {Promise}
+       *   Create a new record
+       *
+       * @param  {Object}  model  [description]
+       * @param  {Boolean} isStay [description]
+       * @return {Promise}         [description]
        */
-      $scope.create = function (model) {
+      $scope.create = function(model, isStay) {
         if (!$scope.resource) {
           throw new Error('No resource provided.');
         }
         $scope.loading(true);
         var record = new $scope.resource(model);
         return record.$save()
-          .then(function (data) {
+          .then(function(data) {
             $rootScope.$broadcast('update:searchData');
-            $scope.list(); // Update list
             $scope.clearModel(model);
-            return data; // Send data next to promise handlers
+            if (isStay === true) {
+              return data; // Send data next to promise handlers
+            } else {
+              $state.go('.^'); // NOTE: go to up to list from new state
+              return $scope.list().then(function() {
+                // NOTE: set sort for see new record on top of list
+                $scope.filter.predicate = 'updated_at';
+                $scope.filter.reverse = true;
+                $scope.elementIndexForAnchorScroll = 'anchor0';
+                return data;
+              }); // Update list
+            }
           })
-          .catch(function (data) {
+          .catch(function(data) {
             return $q.reject(data);
           })
-          .finally(function () {
+          .finally(function() {
             $scope.loading(false);
           });
       };
@@ -523,20 +536,22 @@
        * @param {string|number} id
        * @returns {Promise}
        */
-      $scope.get = function (id) {
+      $scope.get = function(id) {
         if (!$scope.resource) {
           throw new Error('No resource provided.');
         }
         $scope.clearModel();
         $scope.loading(true);
         return $scope.resource
-          .get({id: id})
+          .get({
+            id: id
+          })
           .$promise
-          .then(function (record) {
+          .then(function(record) {
             $scope.model = record;
             return record;
           })
-          .finally(function () {
+          .finally(function() {
             $scope.loading(false);
           });
       };
@@ -548,16 +563,18 @@
        * @param {object} model
        * @returns {Promise}
        */
-      $scope.update = function (params, model) {
+      $scope.update = function(params, model) {
         if (angular.isObject(params) && !model) {
           model = params;
           params = undefined;
         }
         var id = model.id;
         if (!params) {
-          params = {id: id};
+          params = {
+            id: id
+          };
         }
-        angular.forEach($scope.deniedFields, function (val) {
+        angular.forEach($scope.deniedFields, function(val) {
           if (model[val]) {
             delete model[val];
           }
@@ -567,13 +584,13 @@
         return $scope.resource
           .update(params, model)
           .$promise
-          .then(function (data) {
+          .then(function(data) {
             $rootScope.$broadcast('update:searchData');
             $scope.list(); // Update list
             $scope.$emit('list');
             return data;
           })
-          .finally(function () {
+          .finally(function() {
             $scope.loading(false);
           });
       };
@@ -590,17 +607,17 @@
        *****                                  SCROLL ANCHOR POSITION SECTION
        **************************************************************************************/
 
-       $scope.saveAnchorScrollIndex = saveAnchorScrollIndex;
-       $scope.elementIndexForAnchorScroll = empty;
+      $scope.saveAnchorScrollIndex = saveAnchorScrollIndex;
+      $scope.elementIndexForAnchorScroll = empty;
 
-       /**
+      /**
        * Save anchor index
        *
        * @param {Number} index of the clicked element
        */
-       function saveAnchorScrollIndex($index) {
+      function saveAnchorScrollIndex($index) {
         $scope.elementIndexForAnchorScroll = $index;
-       }
+      }
 
       /***************************************************************************************
        *****                             END SCROLL POSITION HANDLER SECTION
@@ -610,7 +627,7 @@
        *****                             EXTENSIONS FOR TOASTER ALERTS
        **************************************************************************************/
 
-      $scope.toaster.getMessage = function (msg) {
+      $scope.toaster.getMessage = function(msg) {
         if (msg.data && msg.data.message) {
           return msg.data.message;
         } else if (msg.message) {
@@ -622,7 +639,7 @@
         }
       };
 
-      $scope.toaster.success = function (params) {
+      $scope.toaster.success = function(params) {
         var toasterParams = {
           timeout: $config.SUCCESS_MESSAGE_DISPLAY_TIMEOUT,
           body: $scope.toaster.getMessage(params),
@@ -631,7 +648,7 @@
         $scope.toaster.pop(toasterParams);
       };
 
-      $scope.toaster.error = function (params) {
+      $scope.toaster.error = function(params) {
         var toasterParams = {
           timeout: 0,
           showCloseButton: true,
@@ -644,6 +661,35 @@
       /***************************************************************************************
        *****                             END EXTENSIONS FOR TOASTER ALERTS
        **************************************************************************************/
+
+      $scope.setDefaultAccountId = function() {
+        if ($scope.auth.isReseller() || $scope.auth.isRevadmin()) {
+          if (!!$scope.companies && $scope.companies.length === 1) {
+            $scope.model.account_id = $scope.companies[0].id;
+          }
+        } else if (!angular.isArray($scope.auth.getUser().companyId)) {
+          $scope.model.account_id = $scope.auth.getUser().companyId;
+        } else if ($scope.auth.getUser().companyId.length === 1) {
+          $scope.model.account_id = $scope.auth.getUser().companyId[0];
+        } else {
+          $scope.fetchCompanies($scope.auth.getUser().companyId);
+        }
+      };
+
+      $scope.fetchCompanies = function(companyIds) {
+        var promises = [];
+        if (!companyIds) {
+          return $q.when([]);
+        }
+        companyIds.forEach(function(id) {
+          promises.push(Companies.get({
+            id: id
+          }).$promise);
+        });
+        return $q.all(promises).then(function(data) {
+          $scope.companies = data;
+        });
+      };
     }
 
     return CRUDControllerImpl;
