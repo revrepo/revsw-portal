@@ -49,7 +49,7 @@ describe('Functional', function () {
         Portal.domains.addPage.createDomain(myDomain);
 
         var alert = Portal.alerts.getFirst();
-        var expectedMsg = '×\nDomain created';
+        var expectedMsg = 'Domain created';
         expect(alert.getText()).toEqual(expectedMsg);
     });
 
