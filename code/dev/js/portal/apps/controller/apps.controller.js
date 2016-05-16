@@ -189,6 +189,18 @@
         });
     };
 
+    $scope.checkDirty = function(dirty, model) {
+
+      if (dirty) {
+        $scope.confirm('confirmDirtyModal.html', model).then(function () {
+          $state.go('^');  
+        });
+      }
+      else {
+        $state.go('^');
+      }
+    };
+
     $scope.cleanModel = function (model) {
         var modelCopy = _.clone(model);
         var params = {id: model.id};

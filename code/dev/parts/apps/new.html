@@ -82,7 +82,7 @@
           <hr>
           <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-              <a ui-sref="^" class="btn btn-default">
+              <a class="btn btn-default" ng-click="checkDirty(createForm.app_name.$dirty || createForm.comment.$dirty, model)">
                 <i class="glyphicon glyphicon-remove"></i>&nbsp; Cancel
               </a>
               <button class="btn btn-success" ng-disabled="_loading || createForm.$invalid" ng-click="createApp(model)">
