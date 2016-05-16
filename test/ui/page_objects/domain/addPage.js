@@ -39,7 +39,8 @@ var AddDomain = {
         linkText: 'Back To List'
       },
       createDomain: {
-        css: '.btn.btn-success'
+        css: '.btn.btn-success',
+        id: 'create_domain_and_add_more'
       },
       cancel: {
         linkText: 'Cancel'
@@ -88,7 +89,7 @@ var AddDomain = {
    * @returns {Selenium WebDriver Element}
    */
   getCreateDomainBtn: function () {
-    return element(by.css(this.locators.buttons.createDomain.css));
+    return element(by.id(this.locators.buttons.createDomain.id));
   },
 
   /**
