@@ -20,7 +20,7 @@
 
     $scope.forgot = function(form) {
       if(form.$invalid){
-        return
+        return ;
       }
       if (!$scope.data.email || form.$invalid) {
         // Show error

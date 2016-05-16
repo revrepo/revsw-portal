@@ -75,7 +75,7 @@
       } else {
         $scope.setDefaultAccountId();
       }
-    }
+    };
 
     $scope.initEdit = function() {
       if ($scope.auth.isReseller() || $scope.auth.isRevadmin()) {
@@ -84,7 +84,7 @@
           $scope.companies = list;
         });
       }
-    }
+    };
 
     // Fetch list of records
     $scope.$on('$stateChangeSuccess', function(state, stateTo, stateParam) {
