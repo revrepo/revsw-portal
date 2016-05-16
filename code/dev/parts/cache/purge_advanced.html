@@ -76,61 +76,12 @@
               </div>
 
               <div class="col-md-4">
-                <div class="form-group ">
+                <label>Examples:</label>
+                <div class="form-group" ng-repeat="item in exampleJsons">
                   <div class="">
-                    <label>Examples:</label>
-                    <br/>Purge all PNG files under /images, <b>non-recursive</b> (so e.g. files under /images/today/ will not
-                    be purged)<br/>
-             <pre>
-{
-"purges": [
-  {
-    "url": {
-      "is_wildcard": true,
-      "expression": "/images/*.png"
-    }
-  }
-]
-}
-             </pre>
-                  </div>
-                </div>
-
-               <div class="form-group ">
-                   <div class="">
-                     Purge all PNG files under /images, <b>recursive</b> (so e.g. files under /images/today/ will also be
-                     purged)
-
-                         <pre>
-{
-"purges": [
-  {
-    "url": {
-      "is_wildcard": true,
-      "expression": "/images/**/*.png"
-    }
-  }
-]
-}
-                      </pre>
-                   </div>
-                 </div>
-
-                <div class="form-group ">
-                  <div class="">
-                    Purge everything, recursively, for current domain
-                  <pre>
-{
-"purges": [
-  {
-    "url": {
-      "is_wildcard": true,
-      "expression": "/**/*"
-    }
-  }
-]
-}
-   </pre>
+                    <p ng-bind-html="item.text"></p>
+                    <pre ng-bind="item.json"></pre>
+                    <button class="btn btn-info text-capitalize" ng-click="copyToJsonEditor(item)">Use This Example</button>
                   </div>
                 </div>
 
