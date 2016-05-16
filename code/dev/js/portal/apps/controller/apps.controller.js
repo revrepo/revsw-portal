@@ -60,8 +60,8 @@
       app_platform: $state.current.data.platform_code
     };
 
-    $scope.$on('$stateChangeSuccess', function(event, stateTo,stateParam ) {
-      if (!!stateTo.data && (stateTo.data.list !==undefined && stateTo.data.list === true)) {
+    $scope.$on('$stateChangeSuccess', function(event, stateTo, stateParam) {
+      if (!!stateTo.data && (stateTo.data.list !== undefined && stateTo.data.list === true)) {
         $scope
           .list()
           .then(setAccountName)
@@ -208,7 +208,9 @@
         .then(function() {
           model.app_name = '';
           model.comment = '';
-          model.account_id = null;
+          if ($scope.auth.isReseller() || $scope.auth.isRevadmin()) {
+            model.account_id = null;
+          }
           $scope.alertService.success('App registered', 5000);
         })
         .catch(function(err) {
