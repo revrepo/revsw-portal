@@ -59,7 +59,7 @@ describe('Functional', function () {
         Portal.purgeCacheBasicPage.clickPurge();
 
         var alert = Portal.alerts.getFirst();
-        var expectedMsg = 'The request has been successfully submitted';
+        var expectedMsg = '×\nThe request has been successfully submitted';
         expect(alert.getText()).toEqual(expectedMsg);
     });
 
@@ -74,7 +74,7 @@ describe('Functional', function () {
         Portal.purgeCacheBasicPage.clickPurge();
 
         var alert = Portal.alerts.getFirst();
-        var expectedMsg = 'The request has been successfully submitted';
+        var expectedMsg = '×\nThe request has been successfully submitted';
         expect(alert.getText()).toEqual(expectedMsg);
     });
 

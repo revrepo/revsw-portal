@@ -24,7 +24,7 @@
           <div class="form-group" ng-class="{'has-error': createForm.email.$invalid && createForm.email.$dirty}">
             <label for="email" popover-append-to-body="{{true}}" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="New user's email address - the address should be unique across the system">Email *</label>
             <div class="col-sm-10">
-              <input type="email" autofocus class="form-control" id="email" name="email" placeholder="Email" ng-model="model.email" ng-disabled="_loading" required>
+              <input type="email" autofocus class="form-control" id="email" name="email" placeholder="Email" ng-model="model.email" ng-maxlength="64" ng-disabled="_loading" required>
               <div class="error-messages" ng-messages="createForm.email.$error" role="alert" ng-messages-multiple>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
               </div>

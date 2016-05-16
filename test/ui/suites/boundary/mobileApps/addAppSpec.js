@@ -81,7 +81,7 @@ describe('Boundary', function () {
         expect(enabled).toBe(false);
       });
 
-      xit('should check Register button is disabled when app name have ' + // jshint ignore:line
+      it('should check Register button is disabled when app name have ' + // jshint ignore:line
         'special characters - ' + app.platform, function () {
         Portal.goToMobileApps();
         Portal.header.goTo(app.platform);

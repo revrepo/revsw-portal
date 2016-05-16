@@ -68,7 +68,8 @@ describe('Smoke', function () {
             Portal.addUserPage.createUser(bruce);
             // Check App alert notifications
             expect(Portal.alerts.getAll().count()).toEqual(1);
-            expect(Portal.alerts.getFirst().getText()).toEqual('User created');
+            expect(Portal.alerts.getFirst().getText())
+              .toEqual('Successfully created new user');
             // Delete created user
             Portal.deleteUser(bruce);
           });

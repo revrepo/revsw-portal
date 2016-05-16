@@ -61,8 +61,9 @@ describe('Negative', function () {
         Portal.userListPage.clickAddNewUser();
         Portal.addUserPage.createUser(tom);
         Portal.addUserPage.createUser(jerry);
+        expect(Portal.alerts.getAll().count()).toEqual(1);
         var alert = Portal.alerts.getFirst();
-        var expectedMessage = 'The email address is already used by another user';
+        var expectedMessage = '×\nThe email address is already used by another user';
         expect(alert.getText()).toEqual(expectedMessage);
       });
 
@@ -135,9 +136,9 @@ describe('Negative', function () {
         vincent.passwordConfirm = 'different';
         Portal.userListPage.clickAddNewUser();
         Portal.addUserPage.createUser(vincent);
-        var alert = Portal.alerts.getFirst();
-        var expectedMessage = 'Passwords did not match';
-        expect(alert.getText()).toEqual(expectedMessage);
+        Portal.addUserPage.form.fill(vincent);
+        var addBtn = Portal.addUserPage.getCreateUserBtn();
+        expect(addBtn.isEnabled()).toBeFalsy();
       });
   });
 });
