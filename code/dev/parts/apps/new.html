@@ -86,7 +86,7 @@
                 <i class="glyphicon glyphicon-refresh spin" ng-if="_loading"></i>
                 <i class="glyphicon glyphicon-ok" ng-if="!_loading"></i>&nbsp; Create App
               </button>
-               <button class="btn btn-success" id="create_app_and_more" ng-disabled="_loading || createForm.$invalid" ng-click="createApp(model,true)">
+               <button class="btn btn-success" id="create_app_and_more" ng-disabled="_loading || createForm.$invalid" ng-click="createApp(model,true); createForm.$setPristine()">
                 <i class="glyphicon glyphicon-refresh spin" ng-if="_loading"></i>
                 <i class="glyphicon glyphicon-ok" ng-if="!_loading"></i>&nbsp; Create And Add More
               </button>
