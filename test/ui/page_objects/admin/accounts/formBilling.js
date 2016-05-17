@@ -129,7 +129,7 @@ var CompanyBillingForm = {
    * @returns {Selenium WebDriver Element}
    */
   getContactEmailTxt: function () {
-    return element(by.id(this.locators.textInputs.contactEmail.id));
+    return element(by.id(this.locators.textInputs.billingContactEmail.id));
   },
 
   /**
@@ -141,7 +141,7 @@ var CompanyBillingForm = {
    * @returns {Selenium WebDriver Element}
    */
   getPhoneNumberTxt: function () {
-    return element(by.id(this.locators.textInputs.phoneNumber.id));
+    return element(by.id(this.locators.textInputs.billingPhoneNumber.id));
   },
 
   /**
@@ -153,7 +153,7 @@ var CompanyBillingForm = {
    * @returns {Selenium WebDriver Element}
    */
   getAddress1Txt: function () {
-    return element(by.id(this.locators.textInputs.address1.id));
+    return element(by.id(this.locators.textInputs.billingAddress1.id));
   },
 
   /**
@@ -165,7 +165,7 @@ var CompanyBillingForm = {
    * @returns {Selenium WebDriver Element}
    */
   getAddress2Txt: function () {
-    return element(by.id(this.locators.textInputs.address2.id));
+    return element(by.id(this.locators.textInputs.billingAddress2.id));
   },
 
   /**
@@ -177,7 +177,7 @@ var CompanyBillingForm = {
    * @returns {Selenium WebDriver Element}
    */
   getCountryDDown: function () {
-    return element(by.id(this.locators.textInputs.country.id));
+    return element(by.id(this.locators.textInputs.billingCountry.id));
   },
 
   /**
@@ -189,7 +189,7 @@ var CompanyBillingForm = {
    * @returns {Selenium WebDriver Element}
    */
   getStateTxt: function () {
-    return element(by.id(this.locators.textInputs.state.id));
+    return element(by.id(this.locators.textInputs.billingState.id));
   },
 
   /**
@@ -201,7 +201,7 @@ var CompanyBillingForm = {
    * @returns {Selenium WebDriver Element}
    */
   getCityTxt: function () {
-    return element(by.id(this.locators.textInputs.city.id));
+    return element(by.id(this.locators.textInputs.billingCity.id));
   },
 
   /**
@@ -213,7 +213,7 @@ var CompanyBillingForm = {
    * @returns {Selenium WebDriver Element}
    */
   getZipCodeTxt: function () {
-    return element(by.id(this.locators.textInputs.zipcode.id));
+    return element(by.id(this.locators.textInputs.billingZipcode.id));
   },
 
   // ## Methods to interact with the Edit Company Page components
@@ -228,6 +228,7 @@ var CompanyBillingForm = {
    * @returns {Promise}
    */
   setFirstName: function (firstName) {
+    this.getFirstNameTxt().clear();
     return this
       .getFirstNameTxt()
       .sendKeys(firstName);
@@ -243,6 +244,7 @@ var CompanyBillingForm = {
    * @returns {Promise}
    */
   setLastName: function (lastName) {
+    this.getLastNameTxt().clear();
     return this
       .getLastNameTxt()
       .sendKeys(lastName);
@@ -258,6 +260,7 @@ var CompanyBillingForm = {
    * @returns {Promise}
    */
   setContactEmail: function (contactEmail) {
+    this.getContactEmailTxt().clear();
     return this
       .getContactEmailTxt()
       .sendKeys(contactEmail);
@@ -273,6 +276,7 @@ var CompanyBillingForm = {
    * @returns {Promise}
    */
   setPhoneNumber: function (phoneNumber) {
+    this.getPhoneNumberTxt().clear();
     return this
       .getPhoneNumberTxt()
       .sendKeys(phoneNumber);
@@ -288,6 +292,7 @@ var CompanyBillingForm = {
    * @returns {Promise}
    */
   setAddress1: function (address1) {
+    this.getAddress1Txt().clear();
     return this
       .getAddress1Txt()
       .sendKeys(address1);
@@ -303,6 +308,7 @@ var CompanyBillingForm = {
    * @returns {Promise}
    */
   setAddress2: function (address2) {
+    this.getAddress2Txt().clear();
     return this
       .getAddress2Txt()
       .sendKeys(address2);
@@ -333,6 +339,7 @@ var CompanyBillingForm = {
    * @returns {Promise}
    */
   setState: function (state) {
+    this.getStateTxt().clear();
     return this
       .getStateTxt()
       .sendKeys(state);
@@ -348,6 +355,7 @@ var CompanyBillingForm = {
    * @returns {Promise}
    */
   setCity: function (city) {
+    this.getCityTxt().clear();
     return this
       .getCityTxt()
       .sendKeys(city);
@@ -363,6 +371,7 @@ var CompanyBillingForm = {
    * @returns {Promise}
    */
   setZipCode: function (zipcode) {
+    this.getZipCodeTxt().clear();
     return this
       .getZipCodeTxt()
       .sendKeys(zipcode);

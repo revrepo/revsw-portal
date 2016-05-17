@@ -41,7 +41,8 @@ var AddNewApp = {
         linkText: 'Cancel'
       },
       register: {
-        css: '[ng-click=\"createApp(model)\"]'
+        css: '[ng-click=\"createApp(model)\"]',
+        id: 'create_app_and_more'
       }
     },
     inputs: {
@@ -168,7 +169,7 @@ var AddNewApp = {
    */
   getRegisterBtn: function () {
     return element(
-      by.css(this.locators.buttons.register.css));
+      by.id(this.locators.buttons.register.id));
   },
 
   // ## Helper Methods

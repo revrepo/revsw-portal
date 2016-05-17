@@ -257,6 +257,7 @@ var CompanyProfileForm = {
    * @returns {Promise}
    */
   setCompanyName: function (companyName) {
+    this.getCompanyNameTxt().clear();
     return this
       .getCompanyNameTxt()
       .sendKeys(companyName);
@@ -272,6 +273,7 @@ var CompanyProfileForm = {
    * @returns {Promise}
    */
   setFirstName: function (firstName) {
+    this.getFirstNameTxt().clear();
     return this
       .getFirstNameTxt()
       .sendKeys(firstName);
@@ -287,6 +289,7 @@ var CompanyProfileForm = {
    * @returns {Promise}
    */
   setLastName: function (lastName) {
+    this.getLastNameTxt().clear();
     return this
       .getLastNameTxt()
       .sendKeys(lastName);
@@ -302,6 +305,7 @@ var CompanyProfileForm = {
    * @returns {Promise}
    */
   setPhoneNumber: function (phoneNumber) {
+    this.getPhoneNumberTxt().clear();
     return this
       .getPhoneNumberTxt()
       .sendKeys(phoneNumber);
@@ -317,6 +321,7 @@ var CompanyProfileForm = {
    * @returns {Promise}
    */
   setContactEmail: function (contactEmail) {
+    this.getContactEmailTxt().clear();
     return this
       .getContactEmailTxt()
       .sendKeys(contactEmail);
@@ -332,6 +337,7 @@ var CompanyProfileForm = {
    * @returns {Promise}
    */
   setAddress1: function (address1) {
+    this.getAddress1Txt().clear();
     return this
       .getAddress1Txt()
       .sendKeys(address1);
@@ -347,6 +353,7 @@ var CompanyProfileForm = {
    * @returns {Promise}
    */
   setAddress2: function (address2) {
+    this.getAddress2Txt().clear();
     return this
       .getAddress2Txt()
       .sendKeys(address2);
@@ -377,6 +384,7 @@ var CompanyProfileForm = {
    * @returns {Promise}
    */
   setState: function (state) {
+    this.getStateTxt().clear();
     return this
       .getStateTxt()
       .sendKeys(state);
@@ -392,6 +400,7 @@ var CompanyProfileForm = {
    * @returns {Promise}
    */
   setCity: function (city) {
+    this.getCityTxt().clear();
     return this
       .getCityTxt()
       .sendKeys(city);
@@ -407,6 +416,7 @@ var CompanyProfileForm = {
    * @returns {Promise}
    */
   setZipCode: function (zipcode) {
+    this.getZipCodeTxt().clear();
     return this
       .getZipCodeTxt()
       .sendKeys(zipcode);
@@ -422,6 +432,7 @@ var CompanyProfileForm = {
    * @returns {Promise}
    */
   setComment: function (comment) {
+    this.getCommentTxt().clear();
     return this
       .getCommentTxt()
       .sendKeys(comment);

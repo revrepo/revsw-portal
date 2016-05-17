@@ -89,6 +89,24 @@ var CompanyTableRow = function (rowElem, locators) {
       .getText();
   };
 
+  this.clickCompanyName = function () {
+    return this
+      .getCompanyNameCell()
+      .click();
+  };
+
+  this.clickCreatedAt = function () {
+    return this
+      .getCreatedAtCell()
+      .click();
+  };
+
+  this.clickBillingPlan = function () {
+    return this
+      .getBillingPlanCell()
+      .click();
+  };
+
   if (this.locators.actions && this.locators.actions.buttons.scale) {
     this.getUsageReportBtn = function () {
       return this.rowElem
@@ -134,7 +152,7 @@ var CompanyTableRow = function (rowElem, locators) {
         .element(by.css(this.locators.actions.css))
         .element(by.className(this.locators.actions.buttons.pencil.className));
     };
-    this.clickEditCompany = function () {
+    this.clickEdit = function () {
       return this
         .getEditCompanyBtn()
         .click();
@@ -147,7 +165,7 @@ var CompanyTableRow = function (rowElem, locators) {
         .element(by.css(this.locators.actions.css))
         .element(by.className(this.locators.actions.buttons.trash.className));
     };
-    this.clickDeleteCompany = function () {
+    this.clickDelete = function () {
       return this
         .getDeleteCompanyBtn()
         .click();

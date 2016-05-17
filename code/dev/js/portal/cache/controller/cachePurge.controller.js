@@ -6,7 +6,7 @@
     .controller('CachePurgeController', CachePurgeController);
 
   /*@ngInject*/
-  function CachePurgeController($scope, Cache, DomainsConfig, AlertService, $timeout, $uibModal) {
+  function CachePurgeController($scope, $state, Cache, DomainsConfig, AlertService, $timeout, $uibModal) {
     $scope._loading = false;
 
     // $scope.domain;
@@ -18,6 +18,55 @@
         }
       }]
     };
+
+    // $scope.exampleJsons for advanced cache
+    if ($state.current.name === 'index.webApp.advanced'){
+      $scope.exampleJsons =  [
+        {
+        'text': 'Purge all PNG files under /images, <b>non-recursive</b> (so e.g. files under /images/today/ will not be purged):',
+        'json': {
+        'purges': [
+          {
+            'url': {
+              'is_wildcard': true,
+              'expression': '/images/*.png'
+            }
+          }
+        ]
+       }
+      },
+        {
+          'text': ' Purge all PNG files under /images, <b>recursive</b> (so e.g. files under /images/today/ will also be purged):',
+          'json': {
+          'purges': [
+            {
+              'url': {
+                'is_wildcard': true,
+                'expression': '/images/**/*.png'
+              }
+            }
+          ]
+         }
+        },
+        {
+          'text': 'Purge everything, recursively, for current domain:',
+          'json': {
+          'purges': [
+            {
+              'url': {
+                'is_wildcard': true,
+                'expression': '/**/*'
+              }
+            }
+          ]
+        }
+        }
+      ];
+
+      $scope.exampleJsons.forEach(function(item){
+        item.json = JSON.stringify(item.json,null,2);
+      });
+    }
 
     $scope.text = '';
 
@@ -209,6 +258,13 @@
       });
 
       return modalInstance.result;
+    };
+
+    /**
+     * Copy example to json editor
+     */
+    $scope.copyToJsonEditor = function(item) {
+       $scope.json = JSON.parse(item.json);
     };
   }
 })();

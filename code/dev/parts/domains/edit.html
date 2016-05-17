@@ -84,7 +84,7 @@
             <label for="originServer" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Enter here domain name or IP address of origin web server">Origin Server Name/IP *</label>
             <div class="col-sm-9">
               <!-- TODO: add custome validation -->
-              <input type="text" class="form-control" ng-disabled="_loading" ng-model="model.origin_server" id="origin_server" name="originServer" placeholder="Origin Server Name" required>
+              <input type="text" class="form-control" ng-disabled="_loading" ng-model="model.origin_server" id="origin_server" name="originServer" placeholder="Origin Server Name" ng-maxlength="50" required>
               <div class="error-messages" ng-messages="editForm.originServer.$error" role="alert">
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
               </div>
@@ -94,7 +94,7 @@
             <label for="originHostHeader" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Enter here a domain name to be used in 'Host' header in requests sent from RevAPM to the origin server">Origin Host Header *</label>
             <div class="col-sm-9">
               <!-- TODO: add custom validation -->
-              <input type="text" class="form-control" ng-model="model.origin_host_header" ng-disabled="_loading" id="origin_host_header" name="originHostHeader" placeholder="Origin Host Header" required>
+              <input type="text" class="form-control" ng-model="model.origin_host_header" ng-disabled="_loading" id="origin_host_header" name="originHostHeader" placeholder="Origin Host Header" ng-maxlength="50" required>
               <div class="error-messages" ng-messages="editForm.originHostHeader.$error" role="alert">
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
               </div>
@@ -133,7 +133,7 @@
           <div class="form-group" ng-class="{'has-error': editForm.domainAliases.$invalid && editForm.domainAliases.$dirty}">
             <label for="domainAliases" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Non-Wildcard Domain Aliases">Non-Wildcard Domain Aliases</label>
             <div class="col-sm-9">
-              <!-- TODO: add custome validation directive -->
+              <!-- TODO: add custom validation directive -->
               <ui-select tagging tagging-label="Add New Domain" multiple tagging-tokens="SPACE|," theme="bootstrap" class="form-control" ng-disabled="_loading" ng-model="model.domain_aliases" name="domainAliases" id="domain_aliases">
                 <ui-select-match placeholder="Add domains...">{{$item}}</ui-select-match>
                 <ui-select-choices repeat="domain in model.domain_aliases">
@@ -153,7 +153,7 @@
             </label>
             <div class="col-md-9">
               <!-- TODO: add custome validation directive - validate-wilcard-domain -->
-              <input type="text" class="form-control" ng-disabled="_loading" id="domain_wildcard_alias" name="domainWildcardAlias" ng-model="model.domain_wildcard_alias" placeholder="Wildcard Domain Alias">
+              <input type="text" class="form-control" ng-disabled="_loading" id="domain_wildcard_alias" name="domainWildcardAlias" ng-model="model.domain_wildcard_alias" ng-maxlength="50" placeholder="Wildcard Domain Alias">
               <div class="error-messages" ng-messages="editForm.domainWildcardAlias.$error" role="alert">
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
               </div>
@@ -162,11 +162,11 @@
           <!-- -->
           <!-- Data Read Timeout, seconds -->
           <div class="form-group form-inline" ng-class="{'has-error': editForm.proxyTimeout.$invalid && editForm.proxyTimeout.$dirty}">
-            <label for="proxyTimeout" class="col-sm-3 control-label">
+            <label for="proxyTimeout" class="col-sm-3 control-label"  popover-trigger="mouseenter" uib-popover="Proxy data read timeout in seconds (1-3600 range)">
               Data Read Timeout
             </label>
             <div class="col-md-9">
-              <input type="number" id="proxy_timeout" name="proxyTimeout" class="form-control" ng-disabled="_loading" ng-model="model.proxy_timeout" ng-min="0" min="0" max="99999999" required> second(s)
+              <input type="number" id="proxy_timeout" name="proxyTimeout" class="form-control" ng-disabled="_loading" ng-model="model.proxy_timeout" ng-min="1" ng-max="3600" required> second(s)
               <div class="error-messages" ng-messages="editForm.proxyTimeout.$error" role="alert">
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
               </div>
@@ -216,7 +216,7 @@
           <div class="form-group" ng-class="{ 'has-error': editForm.comment.$invalid &&  editForm.comment.$dirty }">
             <label for="comment" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Comment">Comment</label>
             <div class="col-md-6">
-              <textarea id="comment" name="comment" placeholder="Comment (max 300 symbol)" ng-maxlength="300" class="form-control" name="comment" ng-model="model.comment" ng-disabled="_loading">
+              <textarea id="comment" name="comment" placeholder="Comment (300 characters max)" ng-maxlength="300" class="form-control" name="comment" ng-model="model.comment" ng-disabled="_loading">
               </textarea>
               <div class="error-messages" ng-messages="editForm.comment.$error" role="alert">
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
@@ -350,7 +350,7 @@
                     <label for="sslProtocols" popover-append-to-body="{{true}}" class="col-sm-12" popover-trigger="mouseenter" uib-popover="Allowed SSL protocols">
                       Allowed SSL Protocols <small>(in Nginx format)</small></label>
                     <div class="col-sm-12">
-                      <input type="text" class="form-control" ng-disabled="!isCustomSSL_conf_profile" ng-model="model.ssl_protocols" id="ssl_protocols" name="sslProtocols" placeholder="SSL Protocols" required>
+                      <input type="text" class="form-control" ng-disabled="!isCustomSSL_conf_profile" ng-model="model.ssl_protocols" id="ssl_protocols" name="sslProtocols" ng-maxlength="200" placeholder="SSL Protocols" required>
                       <div class="error-messages" ng-messages="editForm.sslProtocols.$error" role="alert">
                         <div ng-messages-include="parts/shared/error-messages.html"></div>
                       </div>
@@ -361,7 +361,7 @@
                       Allowed SSL Ciphers
                       <small>(in Nginx format)</small></label>
                     <div class="col-sm-12">
-                      <input type="text" class="form-control" ng-disabled="!isCustomSSL_conf_profile" ng-model="model.ssl_ciphers" id="ssl_ciphers" name="sslCiphers" placeholder="SSL Ciphers" required>
+                      <input type="text" class="form-control" ng-disabled="!isCustomSSL_conf_profile" ng-model="model.ssl_ciphers" id="ssl_ciphers" name="sslCiphers" ng-maxlength="200" placeholder="SSL Ciphers" required>
                       <div class="error-messages" ng-messages="editForm.sslCiphers.$error" role="alert">
                         <div ng-messages-include="parts/shared/error-messages.html"></div>
                       </div>
@@ -385,7 +385,7 @@
             <div class="col-md-9">
               <input type="text" class="form-control" ng-disabled="_loading" name="bttKey" ng-model="model.btt_key" placeholder="BTT API key for the domain" ng-pattern="/^[0-9a-fA-F]{24}$/">
               <div class="error-messages" ng-messages="editForm.bttKey.$error" role="alert">
-                <div ng-message="pattern" class="alert-text alert-text--pattern">BTT API key is ObjectId</div>
+                <div ng-message="pattern" class="alert-text alert-text--pattern">The BTT key format is not correct</div>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
               </div>
             </div>

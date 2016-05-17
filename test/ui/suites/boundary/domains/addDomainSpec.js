@@ -47,14 +47,9 @@ describe('Functional', function () {
         myDomain.name = lengthString100;
         Portal.getDomainsPage();
         Portal.domains.listPage.clickAddNewDomain();
-        Portal.domains.addPage.createDomain(myDomain);
-
-        var alert = Portal.alerts.getFirst();
-        var expectedMsg1 = 'child "domain_name" fails because ["domain_name"';
-        var expectedMsg2 = 'fails to match the required pattern:';
-        expect(alert.getText()).toContain(expectedMsg1);
-        expect(alert.getText()).toContain(expectedMsg2);
-        expect(alert.getText()).toContain(myDomain.name);
+        Portal.domains.addPage.fillForm(myDomain);
+        var addBtn = Portal.domains.addPage.getCreateDomainBtn();
+        expect(addBtn.isEnabled()).toBeFalsy();
     });
 
     it('should not create domain with long value in origin server field (100)',
@@ -63,14 +58,9 @@ describe('Functional', function () {
         myDomain.originServer = lengthString100;
         Portal.getDomainsPage();
         Portal.domains.listPage.clickAddNewDomain();
-        Portal.domains.addPage.createDomain(myDomain);
-    
-        var alert = Portal.alerts.getFirst();
-        var expectedMsg1 = 'child "origin_server" fails because ["origin_serv';
-        var expectedMsg2 = 'fails to match the required pattern:';
-        expect(alert.getText()).toContain(expectedMsg1);
-        expect(alert.getText()).toContain(expectedMsg2);
-        expect(alert.getText()).toContain(myDomain.originServer);
+        Portal.domains.addPage.fillForm(myDomain);
+        var addBtn = Portal.domains.addPage.getCreateDomainBtn();
+        expect(addBtn.isEnabled()).toBeFalsy();
     });
 
     it('should not create a domain with long value in origin host header field',
@@ -79,14 +69,9 @@ describe('Functional', function () {
         myDomain.originHostHeader = lengthString100;
         Portal.getDomainsPage();
         Portal.domains.listPage.clickAddNewDomain();
-        Portal.domains.addPage.createDomain(myDomain);
-
-        var alert = Portal.alerts.getFirst();
-        var expectedMsg1 = 'child "origin_host_header" fails because ["origin_';
-        var expectedMsg2 = 'fails to match the required pattern:';
-        expect(alert.getText()).toContain(expectedMsg1);
-        expect(alert.getText()).toContain(expectedMsg2);
-        expect(alert.getText()).toContain(myDomain.originHostHeader);
+        Portal.domains.addPage.fillForm(myDomain);
+        var addBtn = Portal.domains.addPage.getCreateDomainBtn();
+        expect(addBtn.isEnabled()).toBeFalsy();
     });
   });
 });

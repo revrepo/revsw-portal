@@ -55,7 +55,7 @@
     <label class="col-sm-3 control-label">Query String Parameters To Drop/Keep</label>
     <div class="col-sm-9">
       <ui-select validate-query-strings-options tagging tagging-label="Add New Query String" multiple tagging-tokens="SPACE|," theme="bootstrap" class="form-control" ng-disabled="_loading" ng-model="$ctrl.rule.edge_caching.query_string_keep_or_remove_list" id="query_str" name="queryStringKeepOrRemoveList">
-        <ui-select-match placeholder="Add Query String ...">{{$item}}</ui-select-match>
+        <ui-select-match placeholder="Add Query String...">{{$item}}</ui-select-match>
         <ui-select-choices repeat="query_str in $ctrl.rule.edge_caching.query_string_keep_or_remove_list">
           {{query_str}}
         </ui-select-choices>
@@ -94,7 +94,7 @@
       <label class="col-sm-3 control-label" ng-if="$ctrl.rule.cookies.list_is_keep == false">List Of Cookies To Drop</label>
       <div class="col-sm-9">
         <ui-select validate-cookies-options tagging tagging-label="Add New Cookie String" multiple tagging-tokens="SPACE|," theme="bootstrap" class="form-control" ng-disabled="_loading" ng-model="$ctrl.rule.cookies.keep_or_ignore_list" id="keep_or_ignore_list_str" name="keepOrIgnoreList">
-          <ui-select-match placeholder="Add Cookies String ...">{{$item}}</ui-select-match>
+          <ui-select-match placeholder="Add Cookies String...">{{$item}}</ui-select-match>
           <ui-select-choices repeat="keep_or_ignore_list_str in $ctrl.rule.cookies.keep_or_ignore_list">
             {{keep_or_ignore_list_str}}
           </ui-select-choices>

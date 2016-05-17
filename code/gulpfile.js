@@ -153,4 +153,5 @@ gulp.task('serve:public', function() {
 gulp.task('copy', ['copyCss', 'copyParts', 'copyImages', 'copyJson', 'copyFonts', 'fonts', 'widgets:build']);
 gulp.task('build', ['copy', 'dist', 'vulcanize']);
 gulp.task('default', ['serve:dev', 'less']);
+gulp.task('serve', ['serve:dev']);
 gulp.task('public', ['serve:public']);

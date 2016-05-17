@@ -22,10 +22,10 @@
           if (value !== undefined && WILDCARD_DOMAIN_FIELD.test(value) === false) {
             ngModel.$setValidity(_name, false);
           }
-        }
+        };
         // NOTE: only set value for attribute "$valid"
       return true;
-    };
+    }
 
     return {
       require: 'ngModel',

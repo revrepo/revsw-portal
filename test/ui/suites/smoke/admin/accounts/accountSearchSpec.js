@@ -17,9 +17,8 @@
  */
 
 var config = require('config');
-var Portal = require('./../../../page_objects/portal');
-var DataProvider = require('./../../../common/providers/data');
-var Constants = require('./../../../page_objects/constants');
+var Portal = require('./../../../../page_objects/portal');
+var Constants = require('./../../../../page_objects/constants');
 
 describe('Smoke', function () {
 
@@ -27,16 +26,14 @@ describe('Smoke', function () {
   var users = [
     //config.get('portal.users.admin'),
     config.get('portal.users.revAdmin'),
-    //config.get('portal.users.reseller')
+    config.get('portal.users.reseller')
   ];
-  var company = DataProvider.generateAccountProfileData();
-  var criteria = company.companyName;
 
   users.forEach(function (user) {
 
     describe('With user: ' + user.role, function () {
 
-      describe('Add Company', function () {
+      describe('Account Search', function () {
 
         beforeAll(function () {
           Portal.signIn(user);
@@ -51,16 +48,23 @@ describe('Smoke', function () {
           Portal.header.goTo(Constants.sideBar.admin.ACCOUNTS);
         });
 
-        it('should "Add Company" in accounts page', function () {
-          Portal.admin.accounts.listPage.addNewCompany(company);
-          expect(Portal.alerts.getFirst().getText()).toEqual('Company created');
+        it('should be displayed when displaying Accounts List page',
+          function () {
+            var searchField = Portal.admin.accounts.listPage.searcher
+              .getSearchCriteriaTxtIn();
+            expect(searchField.isPresent()).toBeTruthy();
+          });
 
-          Portal.header.goTo(Constants.sideBar.admin.ACCOUNTS);
-          var result = Portal.admin.accounts
-            .listPage
-            .searchAndGetFirstRow(criteria);
-          expect(result.getCompanyName()).toBe(criteria);
-        });
+        it('should filter accounts according to text filled',
+          function () {
+            var accountNameToSearch = Portal.admin.accounts.listPage.table
+              .getFirstRow()
+              .getCompanyName();
+            Portal.admin.accounts.listPage.searcher
+              .setSearchCriteria(accountNameToSearch);
+            var allRows = Portal.admin.accounts.listPage.table.getRows();
+            expect(allRows.count()).toEqual(1);
+          });
       });
     });
   });
