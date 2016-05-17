@@ -10,7 +10,7 @@
     </div>
     <label class="col-md-3 control-label">URL</label>
     <div class="col-md-9">
-      <input type="text" validate-wildcard-domain-field name="url_value" class="form-control" ng-model="$ctrl.rule.url.value" required>
+      <input type="text" validate-caching-rule-url name="url_value" class="form-control" ng-model="$ctrl.rule.url.value" required>
       <div class="error-messages" ng-messages="editForm.url_value.$error" role="alert" ng-messages-multiple>
         <div ng-messages-include="parts/shared/error-messages.html"></div>
       </div>

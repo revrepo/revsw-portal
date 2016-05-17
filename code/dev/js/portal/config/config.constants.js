@@ -147,6 +147,7 @@
       PATTERNS: {
         WILDCARD_DOMAIN_FIELD: /(?=^.{4,253}$)(^((?!-)(?!\_)[a-zA-Z0-9-\_]{0,62}[a-zA-Z0-9]\.)+[a-zA-Z]{2,63}$)/, // TODO: set correct pattern
         URL: /(https?:)?\/\/.+/,
+        HEADER_VALUE: /^[0-9a-fA-F]{24}$/,
         DOMAIN: /(?=^.{4,253}$)(^((?!-)(?!\_)[a-zA-Z0-9-\_]{0,62}[a-zA-Z0-9]\.)+[a-zA-Z]{2,63}$)/,
         COOKIE: /(?=^.{4,253}$)(^((?!-)(?!\_)[a-zA-Z0-9-\_]{0,62}[a-zA-Z0-9]\.)+[a-zA-Z]{2,63}$)/, // TODO: set correct pattern for cookie
         CACHE_BYPASS_LOCATION: /(?=^.{4,253}$)(^((?!-)(?!\_)[a-zA-Z0-9-\_]{0,62}[a-zA-Z0-9]\.)+[a-zA-Z]{2,63}$)/, // TODO: set correct pattern
