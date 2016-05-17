@@ -1,6 +1,6 @@
-<div class="domain-caching-rule ">
+<div class="domain-caching-rule form" ng-form="editForm">
   <div class="form-group">
-    <div class="col-md-offset-3  col-md-9">
+    <div class="col-md-offset-3  col-md-9" ng-class="{'has-error': editForm.url_value.$invalid && editForm.url_value.$dirty}">
       <label class="radio-inline">
         <input type="radio" ng-model="$ctrl.rule.url.is_wildcard" ng-value="false">Regular Expression
       </label>
@@ -10,7 +10,10 @@
     </div>
     <label class="col-md-3 control-label">URL</label>
     <div class="col-md-9">
-      <input type="text" class="form-control" ng-model="$ctrl.rule.url.value">
+      <input type="text" validate-wildcard-domain-field name="url_value" class="form-control" ng-model="$ctrl.rule.url.value" required>
+      <div class="error-messages" ng-messages="editForm.url_value.$error" role="alert" ng-messages-multiple>
+        <div ng-messages-include="parts/shared/error-messages.html"></div>
+      </div>
     </div>
   </div>
   <hr>
@@ -48,15 +51,18 @@
       </toggle-switch>
     </div>
   </div>
-  <div class="form-group ">
+  <div class="form-group" ng-class="{'has-error': editForm.queryStringKeepOrRemoveList.$invalid && editForm.queryStringKeepOrRemoveList.$dirty}">
     <label class="col-sm-3 control-label">Query String Parameters To Drop/Keep</label>
     <div class="col-sm-9">
-      <ui-select tagging tagging-label="Add New Query String" multiple tagging-tokens="SPACE|," theme="bootstrap" class="form-control" ng-disabled="_loading" ng-model="$ctrl.rule.edge_caching.query_string_keep_or_remove_list" id="query_str">
+      <ui-select validate-query-strings-options tagging tagging-label="Add New Query String" multiple tagging-tokens="SPACE|," theme="bootstrap" class="form-control" ng-disabled="_loading" ng-model="$ctrl.rule.edge_caching.query_string_keep_or_remove_list" id="query_str" name="queryStringKeepOrRemoveList">
         <ui-select-match placeholder="Add Query String ...">{{$item}}</ui-select-match>
         <ui-select-choices repeat="query_str in $ctrl.rule.edge_caching.query_string_keep_or_remove_list">
           {{query_str}}
         </ui-select-choices>
       </ui-select>
+      <div class="error-messages" ng-messages="editForm.queryStringKeepOrRemoveList.$error" role="alert" ng-messages-multiple>
+        <div ng-messages-include="parts/shared/error-messages.html"></div>
+      </div>
     </div>
   </div>
   <hr>
@@ -83,16 +89,19 @@
         </toggle-switch>
       </div>
     </div>
-    <div class="form-group" ng-if="$ctrl.rule.cookies.ignore_all == false">
+    <div class="form-group" ng-class="{'has-error': editForm.keepOrIgnoreList.$invalid && editForm.keepOrIgnoreList.$dirty}" ng-if="$ctrl.rule.cookies.ignore_all == false">
       <label class="col-sm-3 control-label" ng-if="$ctrl.rule.cookies.list_is_keep == true">List Of Cookies To Keep</label>
       <label class="col-sm-3 control-label" ng-if="$ctrl.rule.cookies.list_is_keep == false">List Of Cookies To Drop</label>
       <div class="col-sm-9">
-        <ui-select tagging tagging-label="Add New Cookie String" multiple tagging-tokens="SPACE|," theme="bootstrap" class="form-control" ng-disabled="_loading" ng-model="$ctrl.rule.cookies.keep_or_ignore_list" id="keep_or_ignore_list_str">
+        <ui-select validate-cookies-options tagging tagging-label="Add New Cookie String" multiple tagging-tokens="SPACE|," theme="bootstrap" class="form-control" ng-disabled="_loading" ng-model="$ctrl.rule.cookies.keep_or_ignore_list" id="keep_or_ignore_list_str" name="keepOrIgnoreList">
           <ui-select-match placeholder="Add Cookies String ...">{{$item}}</ui-select-match>
           <ui-select-choices repeat="keep_or_ignore_list_str in $ctrl.rule.cookies.keep_or_ignore_list">
             {{keep_or_ignore_list_str}}
           </ui-select-choices>
         </ui-select>
+        <div class="error-messages" ng-messages="editForm.keepOrIgnoreList.$error" role="alert" ng-messages-multiple>
+          <div ng-messages-include="parts/shared/error-messages.html"></div>
+        </div>
       </div>
     </div>
     <div class="form-group">
