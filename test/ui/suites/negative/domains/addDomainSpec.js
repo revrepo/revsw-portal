@@ -42,17 +42,14 @@ describe('Negative', function () {
     afterEach(function () {
     });
 
-    it('should not create domain when all required fields are empty',
+
+    it('should have both Create buttons disabled on fresh new domain form',
       function () {
-        var myDomain = DataProvider.generateDomain();
-        myDomain.name = ' ';
-        myDomain.originServer = ' ';
-        myDomain.originHostHeader = ' ';
         Portal.getDomainsPage();
         Portal.domains.listPage.clickAddNewDomain();
         var addBtn = Portal.domains.addPage.getCreateDomainBtn();
-//        console.log('addBtn = ', addBtn);
-//        console.log('addBtn.isEnabled() = ', addBtn.isEnabled());
+        expect(addBtn.isEnabled()).toBeFalsy();
+        addBtn = Portal.domains.addPage.getCreateDomainAndAddMoreBtn();
         expect(addBtn.isEnabled()).toBeFalsy();
       });
 
