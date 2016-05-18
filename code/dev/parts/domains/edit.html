@@ -133,8 +133,7 @@
           <div class="form-group" ng-class="{'has-error': editForm.domainAliases.$invalid && editForm.domainAliases.$dirty}">
             <label for="domainAliases" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Non-Wildcard Domain Aliases">Non-Wildcard Domain Aliases</label>
             <div class="col-sm-9">
-              <!-- TODO: add custom validation directive -->
-              <ui-select tagging tagging-label="Add New Domain" multiple tagging-tokens="SPACE|," theme="bootstrap" class="form-control" ng-disabled="_loading" ng-model="model.domain_aliases" name="domainAliases" id="domain_aliases">
+              <ui-select validate-domains-list tagging tagging-label="Add New Domain" multiple tagging-tokens="SPACE|," theme="bootstrap" class="form-control" ng-disabled="_loading" ng-model="model.domain_aliases" name="domainAliases" id="domain_aliases">
                 <ui-select-match placeholder="Add domains...">{{$item}}</ui-select-match>
                 <ui-select-choices repeat="domain in model.domain_aliases">
                   {{domain}}
@@ -152,8 +151,7 @@
               Wildcard Domain Alias
             </label>
             <div class="col-md-9">
-              <!-- TODO: add custome validation directive - validate-wilcard-domain -->
-              <input type="text" class="form-control" ng-disabled="_loading" id="domain_wildcard_alias" name="domainWildcardAlias" ng-model="model.domain_wildcard_alias" ng-maxlength="50" placeholder="Wildcard Domain Alias">
+              <input validate-wildcard-domain-field type="text" class="form-control" ng-disabled="_loading" id="domain_wildcard_alias" name="domainWildcardAlias" ng-model="model.domain_wildcard_alias" ng-maxlength="50" placeholder="Wildcard Domain Alias">
               <div class="error-messages" ng-messages="editForm.domainWildcardAlias.$error" role="alert">
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
               </div>
