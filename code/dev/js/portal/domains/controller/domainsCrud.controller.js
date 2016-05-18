@@ -312,8 +312,9 @@
     };
 
     $scope.createDomain = function(model, isStay) {
+      var _model =angular.copy(model);
       $scope
-        .create(model, isStay)
+        .create(_model, isStay)
         .then(function(data) {
           // NOTE: clean model for new domain
           model.domain_name = '';
@@ -322,7 +323,7 @@
           model.origin_server = '';
           model.origin_server_location_id = '';
           if ($scope.auth.isReseller() || $scope.auth.isRevadmin()) {
-            // NOTE: claen account_id for new Domain
+            // NOTE: clean account_id for new Domain
             model.account_id = null;
           }
           $scope.alertService.success('Domain created', 5000);
