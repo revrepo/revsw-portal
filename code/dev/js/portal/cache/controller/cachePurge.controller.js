@@ -74,7 +74,7 @@
       mode: 'code',
       modes: ['code', 'view'], // allowed modes['code', 'form', 'text', 'tree', 'view']
       error: function(err) {
-        AlertService.danger(err.toString())
+        AlertService.danger(err.toString());
       }
     };
 
