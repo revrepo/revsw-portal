@@ -190,14 +190,17 @@
 
       delete _model.account_id;
       delete _model.passwordConfirm;
-
       $scope.create(_model, isStay)
         .then(function(data) {
           initModel();
+
           if (angular.isArray($scope.model.companyId)) {
             $scope.model.companyId.length = 0;
           }
-          $scope.model.domain.length = 0;
+          if (angular.isArray($scope.model.domain)) {
+            $scope.model.domain.length = 0;
+          }
+
           $scope.toaster.success(data);
         })
         .catch(function(err) {
