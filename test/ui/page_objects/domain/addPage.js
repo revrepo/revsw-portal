@@ -40,6 +40,9 @@ var AddDomain = {
       },
       createDomain: {
         css: '.btn.btn-success',
+        id: 'create_domain'
+      },
+      createDomainAndAddMore: {
         id: 'create_domain_and_add_more'
       },
       cancel: {
@@ -90,6 +93,10 @@ var AddDomain = {
    */
   getCreateDomainBtn: function () {
     return element(by.id(this.locators.buttons.createDomain.id));
+  },
+
+  getCreateDomainAndAddMoreBtn: function () {
+    return element(by.id(this.locators.buttons.createDomainAndAddMore.id));
   },
 
   /**

@@ -113,7 +113,8 @@ var DataProvider = {
       companyName: 'API QA Reseller Company',
       originServer: prefix + '-portal-ui-test.origin-server.com',
       originHostHeader: prefix + '-portal-ui-test.origin-host-header.com',
-      originLocation: 'HQ Test Lab'
+      originLocation: 'HQ Test Lab',
+      bttKey: '573bf3f5b884a4202599a4cd'
     };
   },
 
