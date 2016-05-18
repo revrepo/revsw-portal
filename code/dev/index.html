@@ -25,6 +25,7 @@
   <link rel="stylesheet" href="../bower_components/select2-bootstrap-css/select2-bootstrap.css">
   <link rel="stylesheet" href="../bower_components/highlightjs/styles/github.css">
   <link rel="stylesheet" href="../bower_components/AngularJS-Toaster/toaster.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../bower_components/angular-loading/angular-loading.css" rel="stylesheet">
   <!-- endbuild -->
 
   <link rel="stylesheet" href="css/styles.css">
@@ -39,7 +40,7 @@
   <![endif]-->
   <script src="zendesk.js"></script>
 </head>
-<body data-ng-app="revapm.Portal">
+<body dw-loading="loading" data-ng-app="revapm.Portal">
 <toaster-container toaster-options="{'animation-class': 'toast-top-center'}"></toaster-container>
 <div ui-view="layout" class="layout"></div>
 
@@ -122,6 +123,9 @@
 <script type="text/javascript" src="../bower_components/jquery.nicescroll/jquery.nicescroll.min.js"></script>
 <script type="text/javascript" src="../bower_components/angular-nicescroll/angular-nicescroll.js"></script>
 
+<script type="text/javascript" src="../bower_components/spin.js/spin.js"></script>
+<script type="text/javascript" src="../bower_components/angular-loading/angular-loading.js"></script>
+    
 <script type="text/javascript" src="js/heatmaps/highmap.us.js"></script>
 <script type="text/javascript" src="js/heatmaps/highmap.world.js"></script>
 <!-- endbuild -->

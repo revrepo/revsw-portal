@@ -6,23 +6,28 @@
     .run(runApp);
 
   /*@ngInject*/
-  function runApp($rootScope, $http, $location, AlertService, $state) {
+  function runApp($rootScope, $http, $location, AlertService, $state,$loading) {
     $rootScope.alertService = AlertService;
     $rootScope.contactUsLink = 'https://revapm.zendesk.com/hc/en-us/requests/new';
 
     $rootScope.$on('$stateChangeStart',
       function(event){
+        $loading.start("loading");
         // Clear alerts when routes change
         AlertService.clear();
       });
     $rootScope.$on('$stateChangeSuccess',
       function(event){
+          $loading.finish("loading");
         // Clear alerts when routes change //TODO:check comment
         setTimeout(function() {
           $('[autofocus]').focus();
         }, 0);
       });
-    $rootScope.$on('$stateChangeError', console.log.bind(console));
+    $rootScope.$on('$stateChangeError', function (event) {
+            $loading.finish("loading");
+            console.log.bind(console)
+        });
 
     $rootScope.goToState = function(state, dashboardID){
       if(dashboardID){

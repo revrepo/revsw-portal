@@ -6,9 +6,10 @@
     .controller('FBTReportsController', FBTReportsController);
 
   /*@ngInject*/
-  function FBTReportsController($scope, User, AlertService, Stats, Countries, $q) {
+  function FBTReportsController($scope, User, AlertService, Stats, Countries, $q,$loading) {
 
     $scope._loading = true;
+    $loading.start("loading");
     // Domain that selected
     $scope.domain = null;
     $scope.domains = [];
@@ -57,6 +58,7 @@
       })
       .finally(function () {
         $scope._loading = false;
+        $loading.finish("loading");
       });
 
     $scope.onDomainSelected = function () {

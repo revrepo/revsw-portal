@@ -6,7 +6,7 @@
     .factory('CRUDController', CRUDController);
 
   /*@ngInject*/
-  function CRUDController($config, $rootScope, AlertService, $q, User, $anchorScroll, $uibModal, $filter, $timeout, $animate, toaster, $state) {
+  function CRUDController($config, $rootScope, AlertService, $q, User, $anchorScroll, $uibModal, $filter, $timeout, $animate, toaster, $state,$loading) {
 
     function CRUDControllerImpl($scope, $stateParams) {
 
@@ -438,6 +438,7 @@
           throw new Error('No resource provided.');
         }
         $scope.loading(true);
+        $loading.start("loading");
         //fetching data
         return $scope.resource
           .query(function(data) {
@@ -452,6 +453,7 @@
           }).$promise
           .finally(function() {
             $scope.loading(false);
+            $loading.finish("loading");
           });
       };
 

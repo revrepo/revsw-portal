@@ -6,9 +6,10 @@
     .controller('MobileTrafficController', MobileTrafficController);
 
   /*@ngInject*/
-  function MobileTrafficController($scope, User, AlertService, Stats) {
+  function MobileTrafficController($scope, User, AlertService, Stats,$loading) {
 
     $scope._loading = true;
+    $loading.start("loading");
     $scope.application = null;
     var u = User.getUser();
     $scope.account = u.companyId[0] || null;
@@ -31,6 +32,7 @@
       }
 
       $scope._loading = true;
+      $loading.start("loading");
       Stats.sdk_dirs({
           account_id: $scope.account,
           app_id: ( ( $scope.application && $scope.application.app_id ) || null ),
@@ -53,6 +55,7 @@
         })
         .finally( function() {
           $scope._loading = false;
+          $loading.finish("loading");
         });
     };
   }

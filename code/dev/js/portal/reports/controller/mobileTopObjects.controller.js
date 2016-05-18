@@ -6,9 +6,10 @@
     .controller('MobileTopObjectsController', MobileTopObjectsController);
 
   /*@ngInject*/
-  function MobileTopObjectsController($scope, User, AlertService, Stats, Util) {
+  function MobileTopObjectsController($scope, User, AlertService, Stats, Util,$loading) {
 
     $scope._loading = true;
+    $loading.start("loading");
     $scope.application = null;
     var u = User.getUser();
     $scope.account = u.companyId[0] || null;
@@ -28,6 +29,7 @@
       }
 
       $scope._loading = true;
+      $loading.start("loading");
       $scope.oses = [];
       $scope.devices = [];
       $scope.countries = [];
@@ -55,6 +57,7 @@
         })
         .finally( function() {
           $scope._loading = false;
+          $loading.finish("loading");
         });
     };
   }

@@ -5,7 +5,7 @@
      .module('revapm.Portal.Dashboard')
      .controller('DashdoardController', DashdoardController);
 
-   function DashdoardController($scope, $state, $window, $interval, $localStorage, DashboardSrv, $stateParams) {
+   function DashdoardController($scope, $state, $window, $interval, $localStorage, DashboardSrv, $stateParams,$loading) {
      'ngInject';
      var vm = this;
 
@@ -54,6 +54,7 @@
      function initDashboard(dashboardId) {
        vm.model = {};
        vm._isLoading = true;
+       $loading.start("loading");
        return DashboardSrv
          .get(dashboardId)
          .then(function(data) {
@@ -68,6 +69,7 @@
              // TODO: alert message and go to
            })
          .finally(function() {
+           $loading.finish("loading");
            vm._isLoading = false;
          });
      }

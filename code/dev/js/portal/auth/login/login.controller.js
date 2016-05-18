@@ -6,7 +6,7 @@
     .controller('LoginController', LoginController);
 
   /*@ngInject*/
-  function LoginController($scope, User, $state, AlertService, DashboardSrv, $config, $uibModal, $location) {
+  function LoginController($scope, User, $state, AlertService, DashboardSrv, $config, $uibModal, $location,$loading) {
 
     document.querySelector('body').style.paddingTop = '0';
 
@@ -35,6 +35,7 @@
 
     $scope.login = function(email, pass) {
       AlertService.clear();
+       $loading.start("loading");
       $scope._loading = true;
       try {
         User.login(email, pass)
@@ -67,6 +68,7 @@
             } else {
               AlertService.danger('Something get wrong', 5000);
             }
+             $loading.finish("loading");
           })
           .finally(function() {
             $scope._loading = false;
@@ -74,6 +76,7 @@
       } catch (e) {
         AlertService.danger(e.message);
         $scope._loading = false;
+        $loading.finish("loading");
       }
     };
 
