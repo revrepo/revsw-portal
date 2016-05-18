@@ -192,7 +192,7 @@
     $scope.$watch('jsonEditorInstance.getText()', function(val) {
       // if editor text is empty just return
       if (!val) {
-        $scope.jsonIsInvalid = false;
+        $scope.jsonIsInvalid = true;
         return;
       }
 
