@@ -20,7 +20,8 @@ gulpRequireTasks({
   path: __dirname + '/gulptasks' // This is default
 });
 var devFolder = 'dev/';
-var destFolder = './';
+var destFolder = './public/';
+var bowerComponentsFolder = './bower_components/';
 
 gulp.task('valid', function() {
   return gulp.src(devFolder + 'parts/**/*.html')
@@ -38,7 +39,8 @@ gulp.task('less', function() {
 });
 
 gulp.task('copyCss', function() {
-  return gulp.src(devFolder + 'css/**/*.css')
+  console.log(destFolder + 'css');
+  return gulp.src([devFolder + 'css/**/*.css', devFolder + 'css/**/*.{png,gif}'])
     .pipe(gulp.dest(destFolder + 'css'));
 });
 
@@ -56,6 +58,16 @@ gulp.task('copyJson', function() {
   return gulp.src(devFolder + 'js/**/*.json')
     .pipe(gulp.dest(destFolder + 'js'));
 });
+// copy production configuration files
+gulp.task('copyConfig', function() {
+  return gulp.src([devFolder + '../config.js', devFolder + '../version.txt'])
+    .pipe(gulp.dest(destFolder));
+});
+// copy widgets
+gulp.task('widgetsCopy', function() {
+  return gulp.src([devFolder + 'widgets/**/dist/**/*.*'])
+    .pipe(gulp.dest(destFolder + 'widgets'));
+});
 
 // copy custom fonts
 gulp.task('copyFonts', function() {
@@ -64,7 +76,7 @@ gulp.task('copyFonts', function() {
 });
 
 gulp.task('fonts', function() {
-  return gulp.src('./bower_components/**/*.{eot,svg,ttf,woff,woff2}')
+  return gulp.src(bowerComponentsFolder + '/**/*.{eot,svg,ttf,woff,woff2}')
     .pipe(flatten())
     .pipe(gulp.dest(destFolder + 'fonts'));
 });
@@ -119,7 +131,7 @@ gulp.task('serve:dev', function() {
       baseDir: './dev',
       routes: {
         '/bower_components': 'bower_components',
-        '/portal': '/',
+        //'/portal': '/',
         '/widgets': '/../widgets',
       }
     }
@@ -132,26 +144,25 @@ gulp.task('serve:dev', function() {
   gulp.watch([devFolder + 'js/**/*.js'], ['lintjs', reload]);
   gulp.watch([devFolder + 'js/**/*.html'], reload);
   gulp.watch([devFolder + 'images/**/*'], reload);
-  gulp.watch([devFolder + 'widgets/**/*'], ['widgets:build']);
+  gulp.watch([devFolder + 'widgets/**/src/*'], ['widgets:build']);
 });
 
 gulp.task('serve:public', function() {
   // NOTE: only run public
   browserSync({
     server: {
-      baseDir: './',
+      baseDir: './public',
       routes: {
-        '/bower_components': 'bower_components',
-        '/portal': '/',
-        '/widgets': '/../widgets',
+        //'/portal': '/public',
+        '/widgets': '/public/widgets',
       }
     }
   });
 });
 
 
-gulp.task('copy', ['copyCss', 'copyParts', 'copyImages', 'copyJson', 'copyFonts', 'fonts', 'widgets:build']);
+gulp.task('copy', ['copyCss', 'copyParts', 'copyImages', 'copyJson', 'copyFonts', 'fonts', 'widgetsCopy', 'copyConfig']);
 gulp.task('build', ['copy', 'dist', 'vulcanize']);
-gulp.task('default', ['serve:dev', 'less']);
+gulp.task('default', ['serve', 'less', 'widgets:build']);
 gulp.task('serve', ['serve:dev']);
 gulp.task('public', ['serve:public']);
