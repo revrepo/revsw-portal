@@ -1,4 +1,6 @@
-/*<![CDATA[*/window.zEmbed||function(e,t){
+// jshint ignore: start
+
+window.zEmbed||function(e,t){
 var n,o,d,i,s,a=[],r=document.createElement("iframe");
 window.zEmbed=function(){a.push(arguments)},
 window.zE=window.zE||window.zEmbed,
@@ -21,4 +23,4 @@ try{o=s}catch(c){n=document.domain,
     this.body.appendChild(o)},
     o.write('<body onload="document._l();">'),
     o.close()}("https://assets.zendesk.com/embeddable_framework/main.js",
-    "revapm.zendesk.com");/*]]>*/
+    "revapm.zendesk.com");
