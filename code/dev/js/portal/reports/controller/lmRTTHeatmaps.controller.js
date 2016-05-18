@@ -6,7 +6,7 @@
     .controller('LMRTTHeatmapsController', LMRTTHeatmapsController);
 
   /*@ngInject*/
-  function LMRTTHeatmapsController($scope, HeatmapsDrawer, Countries, Stats) {
+  function LMRTTHeatmapsController($scope, HeatmapsDrawer, Countries, Stats,$loading) {
 
     /**
      * Loading flag
@@ -15,6 +15,7 @@
      * @private
      */
     $scope._loading = false;
+    $loading.finish("loading");
 
     /**
      * Domain object that will be selected from dropdown
@@ -45,6 +46,7 @@
      */
     $scope.reloadCountry = function (domainId) {
       $scope._loading = true;
+      $loading.start("loading");
       return Stats.lm_rtt_country({
           domainId: domainId,
           count: 250,
@@ -91,6 +93,7 @@
         })
         .finally(function () {
           $scope._loading = false;
+          $loading.finish("loading");
         });
     };
 

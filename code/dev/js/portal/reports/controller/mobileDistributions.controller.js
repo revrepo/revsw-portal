@@ -6,9 +6,10 @@
     .controller('MobileDistributionsController', MobileDistributionsController);
 
   /*@ngInject*/
-  function MobileDistributionsController($scope, $q, User, AlertService, Stats, Util) {
+  function MobileDistributionsController($scope, $q, User, AlertService, Stats, Util,$loading) {
 
     $scope._loading = true;
+    $loading.start("loading");
     $scope.application = null;
     var u = User.getUser();
     $scope.account = u.companyId[0] || null;
@@ -86,7 +87,7 @@
         to_timestamp: Date.now(),
         count: 10
       };
-
+      $loading.start("loading");
       $scope._loading = true;
       $q.all([
           $scope.reloadTwo( 'destination', filters ),
@@ -100,6 +101,7 @@
         })
         .finally(function () {
           $scope._loading = false;
+          $loading.finish("loading");
         });
     };
 

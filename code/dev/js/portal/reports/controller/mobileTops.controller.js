@@ -6,9 +6,10 @@
     .controller('MobileTopsController', MobileTopsController);
 
   /*@ngInject*/
-  function MobileTopsController($scope, $q, User, AlertService, Stats, Countries, Util) {
+  function MobileTopsController($scope, $q, User, AlertService, Stats, Countries, Util,$loading) {
 
     $scope._loading = false;
+    $loading.finish("loading");
     $scope.application = null;
     var u = User.getUser();
     $scope.account = u.companyId[0] || null;
@@ -131,6 +132,7 @@
       };
 
       $scope._loading = true;
+      $loading.start("loading");
       return $q.all([
           $scope.reloadOne( 'hits', 'country', 20, filters ),
           $scope.reloadOne( 'users', 'country', 20, filters ),
@@ -157,6 +159,7 @@
         })
         .finally(function () {
           $scope._loading = false;
+          $loading.finish("loading");
         });
     };
 

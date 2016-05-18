@@ -31,7 +31,8 @@
     'angular-intro',
     'ngMessages',
     'ngAnimate',
-    'toaster'
+    'toaster',
+    'darthwade.dwLoading'
   ]);
 
 })();

@@ -6,7 +6,7 @@
     .controller('TrafficHeatmapsController', TrafficHeatmapsController);
 
   /*@ngInject*/
-  function TrafficHeatmapsController($scope, HeatmapsDrawer, Countries, Stats, $q, Util) {
+  function TrafficHeatmapsController($scope, HeatmapsDrawer, Countries, Stats, $q, Util,$loading) {
 
     var hitsDrawer = HeatmapsDrawer.create('#canvas-svg-hits'),
       gbtDrawer = HeatmapsDrawer.create('#canvas-svg-gbt');
@@ -18,6 +18,7 @@
      * @private
      */
     $scope._loading = false;
+    $loading.finish("loading");
 
     /**
      * Domain object that will be selected from dropdown
@@ -46,6 +47,7 @@
      */
     $scope.reloadHitsCountry = function (domainId) {
       $scope._loading = true;
+      $loading.start("loading");
 
       // Loading new data
       return Stats.country({
@@ -100,6 +102,7 @@
      */
     $scope.reloadGBTCountry = function (domainId) {
       $scope._loading = true;
+      $loading.start("loading");
       // Loading new data
       return Stats.gbt_country({
           domainId: domainId,
@@ -170,6 +173,7 @@
 
       }).finally(function () {
         $scope._loading = false;
+        $loading.finish("loading");
       });
 
     };

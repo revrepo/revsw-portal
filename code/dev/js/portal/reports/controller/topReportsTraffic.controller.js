@@ -6,10 +6,11 @@
     .controller('TopReportsTrafficController', TopReportsTrafficController);
 
   /*@ngInject*/
-  function TopReportsTrafficController($scope, User, AlertService, Stats, Countries) {
+  function TopReportsTrafficController($scope, User, AlertService, Stats, Countries,$loading) {
     $scope.userService = User;
 
     $scope._loading = true;
+    $loading.start("loading");
     // Domain that selected
     $scope.domain = null;
     $scope.domains = [];
@@ -363,6 +364,7 @@
       })
       .finally(function () {
         $scope._loading = false;
+        $loading.finish("loading");
       });
 
     $scope.onDomainSelected = function (domain) {

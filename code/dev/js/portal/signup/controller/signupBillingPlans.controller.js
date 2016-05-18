@@ -15,7 +15,7 @@
    * @param {[type]} $localStorage [description]
    * @param {[type]} Countries     [description]
    */
-  function SignupBillingPlansController($scope, Users, AlertService, $stateParams, $localStorage, Countries, $uibModal) {
+  function SignupBillingPlansController($scope, Users, AlertService, $stateParams, $localStorage, Countries, $uibModal,$loading) {
     'ngInject';
     var billing_plan_handler = $stateParams.billing_plan_handler;
     var $ctrl = this;
@@ -53,6 +53,7 @@
      */
     this.onSignUp = function onSignUp(model) {
       this._loading = true;
+      $loading.start("loading");
       if (!model) {
         return;
       }
@@ -71,7 +72,10 @@
         })
         .catch(function(err) {
           AlertService.danger(err, 5000);
-        });
+        })
+        .finally(function () {
+           $loading.finish("loading");
+         });
     };
     /**
      * @name  onShortSignUp
@@ -84,6 +88,7 @@
      */
     this.onSignUpShort = function onSignUpShort(model) {
       this._loading = true;
+      $loading.start("loading");
 
       if (!model) {
         return;
@@ -103,6 +108,9 @@
         })
         .catch(function(err) {
           AlertService.danger(err, 5000);
+        })
+        .finally(function () {
+          $loading.finish("loading");
         });
     };
     /**
@@ -135,5 +143,7 @@
     };
 
     this._loading = false;
+    $loading.finish("loading");
+
   }
 })();
