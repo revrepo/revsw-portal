@@ -145,13 +145,13 @@
       SUCCESS_MESSAGE_DISPLAY_TIMEOUT: 5000,
       // PATTERNS
       PATTERNS: {
-        WILDCARD_DOMAIN_FIELD: /(?=^.{4,253}$)(^((?!-)(?!\_)[a-zA-Z0-9-\_]{0,62}[a-zA-Z0-9]\.)+[a-zA-Z]{2,63}$)/, // TODO: set correct pattern
+        WILDCARD_DOMAIN_FIELD: /(^(\*\.[a-zA-Z0-9-\_]{0,62}[a-zA-Z0-9]\.)+[a-zA-Z]{2,63}$)/,
         URL: /(https?:)?\/\/.+/,
-        HEADER_VALUE: /^[0-9a-fA-F]{24}$/,
+        HEADER_VALUE: /^[0-9a-fA-F]$/,
         DOMAIN: /(?=^.{4,253}$)(^((?!-)(?!\_)[a-zA-Z0-9-\_]{0,62}[a-zA-Z0-9]\.)+[a-zA-Z]{2,63}$)/,
-        COOKIE: /(?=^.{4,253}$)(^((?!-)(?!\_)[a-zA-Z0-9-\_]{0,62}[a-zA-Z0-9]\.)+[a-zA-Z]{2,63}$)/, // TODO: set correct pattern for cookie
-        CACHE_BYPASS_LOCATION: /(?=^.{4,253}$)(^((?!-)(?!\_)[a-zA-Z0-9-\_]{0,62}[a-zA-Z0-9]\.)+[a-zA-Z]{2,63}$)/, // TODO: set correct pattern
-        QUERY_STRINGS_OPTION: /(?=^.{4,253}$)(^((?!-)(?!\_)[a-zA-Z0-9-\_]{0,62}[a-zA-Z0-9]\.)+[a-zA-Z]{2,63}$)/ // TODO: set correct pattern
+        COOKIE: /^[0-9a-fA-F]$/,
+        CACHE_BYPASS_LOCATION: /^[0-9a-fA-F]$/,
+        QUERY_STRINGS_OPTION: /^[0-9a-fA-F]$/
       }
     });
 
