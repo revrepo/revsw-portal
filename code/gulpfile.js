@@ -60,7 +60,7 @@ gulp.task('copyJson', function() {
 });
 // copy production configuration files
 gulp.task('copyConfig', function() {
-  return gulp.src([devFolder + '../config.js', devFolder + '../zendesk.js'])
+  return gulp.src([devFolder + '../config.js', devFolder + '../version.txt'])
     .pipe(gulp.dest(destFolder));
 });
 // copy widgets
