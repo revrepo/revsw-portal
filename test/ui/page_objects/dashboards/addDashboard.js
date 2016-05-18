@@ -16,11 +16,11 @@
  * from Rev Software, Inc.
  */
 
-// # Add Company Page Object
+// # Add Dashboard Page Object
 
-// This `Add Company` Page Object abstracts all operations or actions that a
-// common company could do in the Add Company page from the Portal app/site.
-var AddCompany = {
+// This `Add Dashboard` Page Object abstracts all operations or actions that a
+// common dashboard could do in the Add Dashboard page from the Portal app/site.
+var AddDashboard = {
 
   // ## Properties
 
@@ -61,7 +61,7 @@ var AddCompany = {
   // Element)
 
   /**
-   * ### AddCompany.getContainerFluidElem()
+   * ### AddDashboard.getContainerFluidElem()
    *
    * Returns the reference to the `Container Fluid` element (Selenium WebDriver
    * Element) from the Company List page from the Portal app.
@@ -73,7 +73,7 @@ var AddCompany = {
   },
 
   /**
-   * ### AddCompany.getPanelBodyElem()
+   * ### AddDashboard.getPanelBodyElem()
    *
    * Returns the reference to the `Panel Body` element (Selenium WebDriver
    * Element) from the Company List page from the Portal app.
@@ -88,7 +88,7 @@ var AddCompany = {
   },
 
   /**
-   * ### AddCompany.getTitleLbl()
+   * ### AddDashboard.getTitleLbl()
    *
    * Returns the reference to the `Title` label element (Selenium WebDriver
    * Element) from the Add Company page from the Portal app.
@@ -102,7 +102,7 @@ var AddCompany = {
   },
 
   /**
-   * ### AddCompany.getCompanyNameTxt()
+   * ### AddDashboard.getCompanyNameTxt()
    *
    * Returns the reference to the `Title` label element (Selenium WebDriver
    * Element) from the Add Company page from the Portal app.
@@ -116,7 +116,7 @@ var AddCompany = {
   },
 
   /**
-   * ### AddCompany.getCommentTxt()
+   * ### AddDashboard.getCommentTxt()
    *
    * Returns the reference to the `Title` label element (Selenium WebDriver
    * Element) from the Add Company page from the Portal app.
@@ -130,7 +130,7 @@ var AddCompany = {
   },
 
   /**
-   * ### AddCompany.getBackToListBtn()
+   * ### AddDashboard.getBackToListBtn()
    *
    * Returns the reference to the `Back To List` button (Selenium WebDriver
    * Element) from the Add Company page from the Portal app.
@@ -143,7 +143,7 @@ var AddCompany = {
   },
 
   /**
-   * ### AddCompany.getCreateCompanyBtn()
+   * ### AddDashboard.getCreateCompanyBtn()
    *
    * Returns the reference to the `Create Company` button (Selenium WebDriver
    * Element) from the Add Company page from the Portal app.
@@ -155,7 +155,7 @@ var AddCompany = {
   },
 
   /**
-   * ### AddCompany.getCancelBtn()
+   * ### AddDashboard.getCancelBtn()
    *
    * Returns the reference to the `Cancel` button (Selenium WebDriver
    * Element) from the Add Company page from the Portal app.
@@ -169,7 +169,7 @@ var AddCompany = {
   // ## Methods to interact with the Add Company Page components
 
   /**
-   * ### AddCompany.setCompanyName(companyName)
+   * ### AddDashboard.setCompanyName(companyName)
    *
    * Sets a new value for `Company Name` text field.
    *
@@ -184,7 +184,7 @@ var AddCompany = {
   },
 
   /**
-   * ### AddCompany.setComment(comment)
+   * ### AddDashboard.setComment(comment)
    *
    * Sets a new value for `Comment` text field.
    *
@@ -199,7 +199,7 @@ var AddCompany = {
   },
 
   /**
-   * ### AddCompany.clickBackToList()
+   * ### AddDashboard.clickBackToList()
    *
    * Triggers a click on the `Back To List` button from the Add Company page
    * from the Portal app.
@@ -213,7 +213,7 @@ var AddCompany = {
   },
 
   /**
-   * ### AddCompany.clickCreateCompany()
+   * ### AddDashboard.clickCreateCompany()
    *
    * Triggers a click on the `Create Company` button from the Add Company page
    * from the Portal app.
@@ -227,7 +227,7 @@ var AddCompany = {
   },
 
   /**
-   * ### AddCompany.clickCancel()
+   * ### AddDashboard.clickCancel()
    *
    * Triggers a click on the `Cancel` button from the Add Company page from the
    * Portal app
@@ -243,7 +243,7 @@ var AddCompany = {
   // ## Helper Methods
 
   /**
-   * ### AddCompany.isDisplayed()
+   * ### AddDashboard.isDisplayed()
    *
    * Checks whether the Add Company page is being displayed in the UI or not.
    *
@@ -256,7 +256,7 @@ var AddCompany = {
   },
 
   /**
-   * ### AddCompany.getTitle()
+   * ### AddDashboard.getTitle()
    *
    * Gets the `Title` label from the Add Company page.
    *
@@ -269,7 +269,7 @@ var AddCompany = {
   },
 
   /**
-   * ### AddCompany.createCompany(company)
+   * ### AddDashboard.createCompany(company)
    *
    * Creates a new company using the given data by filling it in the form and
    * clicking on the `Create Company` button from the Add Company page.
@@ -286,10 +286,10 @@ var AddCompany = {
    },
 
   /**
-   * ### AddCompany.createCompany(company)
+   * ### AddDashboard.createCompany(company)
    *
    * Helper method that executes all steps required to create a new Company
-   * from AddCompany app.
+   * from AddDashboard app.
    *
    * @param {company} company, data applying the schema defined in
    * `DataProvider.generateAccountProfileData()`
@@ -303,4 +303,4 @@ var AddCompany = {
   }
 };
 
-module.exports = AddCompany;
+module.exports = AddDashboard;
