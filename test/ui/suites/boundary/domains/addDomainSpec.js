@@ -21,7 +21,7 @@ var Portal = require('./../../../page_objects/portal');
 var DataProvider = require('./../../../common/providers/data');
 var Constants = require('./../../../page_objects/constants');
 
-describe('Functional', function () {
+describe('Boundary', function () {
   describe('Add domain', function () {
 
     var adminUser = config.get('portal.users.admin');
