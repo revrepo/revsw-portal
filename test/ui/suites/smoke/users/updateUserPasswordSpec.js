@@ -32,8 +32,8 @@ describe('Smoke', function () {
 // for revadmin role
   ];
 
-  // TODO: need to fix the script to create users with different roles instead of using 
-  // different roles to create the same test user 
+  // TODO: need to fix the script to create users with different roles instead of using
+  // different roles to create the same test user
 
   users.forEach(function (user) {
 
@@ -70,7 +70,7 @@ describe('Smoke', function () {
           Portal.updatePasswordPage.setPasswordConfirm(newPassword);
           Portal.updatePasswordPage.clickUpdatePassword();
           var alert = Portal.alerts.getFirst();
-          expect(alert.getText()).toEqual('Your password updated');
+          expect(alert.getText()).toEqual('Successfully updated the password');
           Portal.signOut();
           Portal.signIn(user);
           Portal.deleteUser(carl);

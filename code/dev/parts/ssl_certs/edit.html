@@ -109,15 +109,15 @@
               <a ui-sref="^" class="btn btn-default">
                 <i class="glyphicon glyphicon-remove"></i>&nbsp; Cancel
               </a>
-              <button class="btn btn-info" ng-disabled="disableSubmit(model, true)" ng-click="validateSSL_cert(model)">
+              <button class="btn btn-info" ng-disabled="disableSubmit(model, true)" ng-click="validateSSLCert(model)">
                 <i class="glyphicon glyphicon-refresh spin" ng-if="_loading"></i>
                 <i class="glyphicon glyphicon-check" ng-if="!_loading"></i>&nbsp; Verify
               </button>
-              <button class="btn btn-success" ng-disabled="disableSubmit(model, true)" ng-click="updateSSL_cert(model)">
+              <button class="btn btn-success" ng-disabled="disableSubmit(model, true)" ng-click="updateSSLCert(model)">
                 <i class="glyphicon glyphicon-refresh spin" ng-if="_loading"></i>
                 <i class="glyphicon glyphicon-file" ng-if="!_loading"></i>&nbsp; Update
               </button>
-              <button class="btn btn-success" ng-disabled="disableSubmit(model, true)" ng-click="publishSSL_cert(model)">
+              <button class="btn btn-success" ng-disabled="disableSubmit(model, true)" ng-click="publishSSLCert(model)">
                 <i class="glyphicon glyphicon-refresh spin" ng-if="_loading"></i>
                 <i class="glyphicon glyphicon-ok" ng-if="!_loading"></i>&nbsp; Publish
               </button>

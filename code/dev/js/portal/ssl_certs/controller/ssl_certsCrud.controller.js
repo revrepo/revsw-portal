@@ -29,7 +29,7 @@
         mode: 'code',
         modes: ['code', 'view'], // allowed modes['code', 'form', 'text', 'tree', 'view']
         error: function(err) {
-          $scope.toaster.error(err);
+          $scope.alertService.danger(err);
         }
       }
     };
@@ -103,13 +103,13 @@
       });
     };
     /**
-     * @name prepareSSL_certToUpdate
+     * @name prepareSSLCertToUpdate
      * @description
      *
      * @param  {[type]} model_current [description]
      * @return {[type]}               [description]
      */
-    $scope.prepareSSL_certToUpdate = function(model_current) {
+    $scope.prepareSSLCertToUpdate = function(model_current) {
       var model;
       if (model_current.toJSON === undefined) {
         model = _.clone(model_current, true);
@@ -150,34 +150,34 @@
     $scope.getSSL_cert = function(id) {
       $scope.get(id)
         .catch(function(err) {
-          $scope.toaster.error('Could not load SSL certificate details');
+          $scope.alertService.danger('Could not load SSL certificate details');
         });
 
     };
     /**
-     * @name  deleteSSL_cert
+     * @name  deleteSSLCert
      * @description
      *
      * @param  {Object} model
      * @return
      */
-    $scope.deleteSSL_cert = function(model) {
+    $scope.deleteSSLCert = function(model) {
       $scope.confirm('confirmModal.html', model).then(function() {
         var certName = model.cert_name;
         $scope
           .delete(model)
           .then(function(data) {
-            $scope.toaster.success(data);
+            $scope.alertService.success(data);
             $scope.list()
               .then(setAccountName);
           })
           .catch(function(err) {
-            $scope.toaster.error(err);
+            $scope.alertService.danger(err);
           });
       });
     };
     /**
-     * @name  createSSL_cert
+     * @name  createSSLCert
      * @description
      *
      * Create new SSL certificate
@@ -185,16 +185,16 @@
      * @param  {[type]} model [description]
      * @return {[type]}       [description]
      */
-    $scope.createSSL_cert = function(model) {
+    $scope.createSSLCert = function(model, isStay) {
       model.cert_type = 'private'; // TODO:
       $scope
-        .create(model)
+        .create(model, isStay)
         .then(function(data) {
-          $scope.toaster.success(data);
+          $scope.alertService.success(data);
           $scope.setAccountId();
         })
         .catch(function(err) {
-          $scope.toaster.error(err);
+          $scope.alertService.danger(err);
         });
     };
     /**
@@ -205,7 +205,7 @@
      * @param  {[type]} model [description]
      * @return {[type]}       [description]
      */
-    $scope.publishSSL_cert = function(model) {
+    $scope.publishSSLCert = function(model) {
       if (!model) {
         return;
       }
@@ -214,16 +214,16 @@
       }
       var modelId = model.id;
       $scope.confirm('confirmPublishModal.html', model).then(function() {
-        model = $scope.prepareSSL_certToUpdate(model);
+        model = $scope.prepareSSLCertToUpdate(model);
         $scope.update({
             id: modelId,
             options: 'publish'
           }, model)
           .then(function(data) {
-            $scope.toaster.success(data);
+            $scope.alertService.success(data);
           })
           .catch(function(err) {
-            $scope.toaster.error(err);
+            $scope.alertService.danger(err);
           });
       });
     };
@@ -234,7 +234,7 @@
      * @param  {[type]} model [description]
      * @return {[type]}       [description]
      */
-    $scope.validateSSL_cert = function(model) {
+    $scope.validateSSLCert = function(model) {
       if (!model) {
         return;
       }
@@ -242,16 +242,16 @@
         model.id = $stateParams.id;
       }
       var modelId = model.id;
-      model = $scope.prepareSSL_certToUpdate(model);
+      model = $scope.prepareSSLCertToUpdate(model);
       $scope.update({
           id: modelId,
           options: 'verify_only'
         }, model)
         .then(function(data) {
-          $scope.toaster.success(data);
+          $scope.alertService.success(data);
         })
         .catch(function(err) {
-          $scope.toaster.error(err);
+          $scope.alertService.danger(err);
         });
     };
     /**
@@ -261,7 +261,7 @@
      * @param  {[type]} model [description]
      * @return {[type]}       [description]
      */
-    $scope.updateSSL_cert = function(model) {
+    $scope.updateSSLCert = function(model) {
 
       if (!model) {
         return;
@@ -271,15 +271,15 @@
       }
       var modelId = model.id;
       $scope.confirm('confirmUpdateModal.html', model).then(function() {
-        model = $scope.prepareSSL_certToUpdate(model);
+        model = $scope.prepareSSLCertToUpdate(model);
         $scope.update({
             id: modelId
           }, model)
           .then(function(data) {
-            $scope.toaster.success(data);
+            $scope.alertService.success(data);
           })
           .catch(function(err) {
-            $scope.toaster.error(err);
+            $scope.alertService.danger(err);
           });
       });
     };
@@ -287,7 +287,7 @@
     $scope.storeToStorage = function(model) {
       $localStorage.selectedDomain = model;
     };
-    // TODO: change rule
+
     $scope.disableSubmit = function(model, isEdit) {
       if (!isEdit) {
         return $scope._loading ||

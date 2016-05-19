@@ -58,7 +58,7 @@ describe('Functional', function () {
         Portal.updatePasswordPage.setPasswordConfirm(newPassword);
         Portal.updatePasswordPage.clickUpdatePassword();
         var alert = Portal.alerts.getFirst();
-        expect(alert.getText()).toEqual('Your password updated');
+        expect(alert.getText()).toEqual('Successfully updated the password');
         // Delete user
         Portal.signOut();
         Portal.signIn(adminUser);
@@ -80,7 +80,7 @@ describe('Functional', function () {
         Portal.updatePasswordPage.setPasswordConfirm(newPassword);
         Portal.updatePasswordPage.clickUpdatePassword();
         var alert = Portal.alerts.getFirst();
-        expect(alert.getText()).toEqual('Your password updated');
+        expect(alert.getText()).toEqual('Successfully updated the password');
         // Delete user
         Portal.signOut();
         Portal.signIn(adminUser);
