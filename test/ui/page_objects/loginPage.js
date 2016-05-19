@@ -26,17 +26,22 @@ var Login = {
 
   // Locators specific to HTML elements from this page object
   locators: {
+    buttons: {
+      signIn: {
+        className: 'signin'
+      }
+    },
+    links: {
+      signUp: {
+        linkText: 'Sign Up'
+      }
+    },
     textInputs: {
       email: {
         model: 'email'
       },
       password: {
         model: 'pass'
-      }
-    },
-    buttons: {
-      signIn: {
-        className: 'signin'
       }
     }
   },
@@ -50,7 +55,7 @@ var Login = {
    * Returns the reference to the `Email` text input field (Selenium WebDriver
    * Element) from the Login page from the Portal app.
    *
-   * @returns {Selenium WebDriver Element}
+   * @returns {Object} Selenium WebDriver Element
    */
   getEmailTxtIn: function () {
     return element(by.model(this.locators.textInputs.email.model));
@@ -62,7 +67,7 @@ var Login = {
    * Returns the reference to the `Password` text input field (Selenium
    * WebDriver Element) from the Login page from the Portal app.
    *
-   * @returns {Selenium WebDriver Element}
+   * @returns {Object} Selenium WebDriver Element
    */
   getPasswordTxtIn: function () {
     return element(by.model(this.locators.textInputs.password.model));
@@ -74,10 +79,22 @@ var Login = {
    * Returns the reference to the `Sign In` button (Selenium WebDriver
    * Element) from the Login page from the Portal app.
    *
-   * @returns {Selenium WebDriver Element}
+   * @returns {Object} Selenium WebDriver Element
    */
   getSignInBtn: function () {
     return element(by.className(this.locators.buttons.signIn.className));
+  },
+
+  /**
+   * ### Login.getSignUpLnk()
+   *
+   * Returns the reference to the `Sign Un` link (Selenium WebDriver
+   * Element) from the Login page from the Portal app.
+   *
+   * @returns {Object} Selenium WebDriver Element
+   */
+  getSignUpLnk: function () {
+    return element(by.partialLinkText(this.locators.links.signUp.linkText));
   },
 
   // ## Methods to interact with the components from the Page Object
@@ -89,7 +106,7 @@ var Login = {
    *
    * @param {String} email
    *
-   * @returns {Promise}
+   * @returns {Object} Promise
    */
   setEmail: function (email) {
     return this
@@ -104,7 +121,7 @@ var Login = {
    *
    * @param {String} password
    *
-   * @returns {Promise}
+   * @returns {Object} Promise
    */
   setPassword: function (password) {
     return this
@@ -117,11 +134,24 @@ var Login = {
    *
    * Triggers a click on the `Sign In` button
    *
-   * @returns {Promise}
+   * @returns {Object} Promise
    */
   clickSignIn: function () {
     return this
       .getSignInBtn()
+      .click();
+  },
+
+  /**
+   * ### Login.clickSignUp()
+   *
+   * Triggers a click on the `Sign Up` link
+   *
+   * @returns {Object} Promise
+   */
+  clickSignUp: function () {
+    return this
+      .getSignUpLnk()
       .click();
   },
 
