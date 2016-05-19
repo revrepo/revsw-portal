@@ -83,8 +83,7 @@
           <div class="form-group" ng-class="{'has-error': editForm.originServer.$invalid && editForm.originServer.$dirty}">
             <label for="originServer" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Enter here domain name or IP address of origin web server">Origin Server Name/IP *</label>
             <div class="col-sm-9">
-              <!-- TODO: add custome validation -->
-              <input type="text" class="form-control" ng-disabled="_loading" ng-model="model.origin_server" id="origin_server" name="originServer" placeholder="Origin Server Name" ng-maxlength="50" required>
+              <input type="text" validate-origin-server-name class="form-control" ng-disabled="_loading" ng-model="model.origin_server" id="origin_server" name="originServer" placeholder="Origin Server Name" ng-maxlength="50" required>
               <div class="error-messages" ng-messages="editForm.originServer.$error" role="alert">
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
               </div>
@@ -93,8 +92,7 @@
           <div class="form-group" ng-class="{'has-error': editForm.originHostHeader.$invalid && editForm.originHostHeader.$dirty}">
             <label for="originHostHeader" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Enter here a domain name to be used in 'Host' header in requests sent from RevAPM to the origin server">Origin Host Header *</label>
             <div class="col-sm-9">
-              <!-- TODO: add custom validation -->
-              <input type="text" class="form-control" ng-model="model.origin_host_header" ng-disabled="_loading" id="origin_host_header" name="originHostHeader" placeholder="Origin Host Header" ng-maxlength="50" required>
+              <input type="text" validate-domain-name class="form-control" ng-model="model.origin_host_header" ng-disabled="_loading" id="origin_host_header" name="originHostHeader" placeholder="Origin Host Header" ng-maxlength="50" required>
               <div class="error-messages" ng-messages="editForm.originHostHeader.$error" role="alert">
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
               </div>
@@ -214,7 +212,7 @@
           <div class="form-group" ng-class="{ 'has-error': editForm.comment.$invalid &&  editForm.comment.$dirty }">
             <label for="comment" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Comment">Comment</label>
             <div class="col-md-6">
-              <textarea id="comment" name="comment" placeholder="Comment (300 characters max)" ng-maxlength="300" class="form-control" name="comment" ng-model="model.comment" ng-disabled="_loading">
+              <textarea id="comment" name="comment" placeholder="Comment (300 characters max)" ng-maxlength="300" class="form-control" name="comment" ng-model="model.comment" ng-pattern="NO_SPECIAL_CHARS" ng-disabled="_loading">
               </textarea>
               <div class="error-messages" ng-messages="editForm.comment.$error" role="alert">
                 <div ng-messages-include="parts/shared/error-messages.html"></div>

@@ -16,6 +16,7 @@
     $injector,
     $state,
     $stateParams,
+    $config,
     AlertService,
     $localStorage,
     $q) {
@@ -30,6 +31,8 @@
     $scope.setState('index.apps');
 
     $scope.setResource(Apps);
+
+    $scope.NO_SPECIAL_CHARS = $config.PATTERNS.NO_SPECIAL_CHARS;
 
     /**
      * @name setAccountName

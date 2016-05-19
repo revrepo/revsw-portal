@@ -37,7 +37,8 @@
       <div class="form-group" ng-class="{ 'has-error': newUser.firstName.$invalid && newUser.firstName.$dirty }">
         <label for="firstName" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="First name">First Name *</label>
         <div class="col-sm-10">
-          <input type="text" class="form-control" id="firstName" name="firstName" placeholder="First name (30 characters max)" required ng-maxlength="30" ng-model="$ctrl.model.first_name" ng-disabled="_loading">
+          <input type="text" class="form-control" id="firstName" name="firstName" placeholder="First name (30 characters max)" required ng-maxlength="30" ng-model="$ctrl.model.first_name"
+            ng-pattern="NO_SPECIAL_CHARS" ng-disabled="_loading">
           <div class="error-messages" ng-messages="newUser.firstName.$error" role="alert" ng-messages-multiple>
             <div ng-messages-include="parts/shared/error-messages.html"></div>
           </div>
@@ -46,7 +47,8 @@
       <div class="form-group" ng-class="{ 'has-error': newUser.lastName.$invalid && newUser.lastName.$dirty }">
         <label for="lastName" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Last name">Last Name *</label>
         <div class="col-sm-10">
-          <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Last Name (30 characters max)" ng-model="$ctrl.model.last_name" required ng-maxlength="30" ng-disabled="_loading">
+          <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Last Name (30 characters max)" ng-model="$ctrl.model.last_name" required ng-maxlength="30"
+            ng-pattern="NO_SPECIAL_CHARS" ng-disabled="_loading">
           <div class="error-messages" ng-messages="newUser.lastName.$error" role="alert" ng-messages-multiple>
             <div ng-messages-include="parts/shared/error-messages.html"></div>
           </div>

@@ -24,7 +24,7 @@
           <div class="form-group" ng-class="{ 'has-error': createForm.job_name.$invalid && createForm.job_name.$dirty }">
             <label for="job_name" popover-append-to-body="{{true}}" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Name of the new log shipping job (150 characters max)">Job Name *</label>
             <div class="col-sm-10">
-              <input type="text" autofocus class="form-control" ng-disabled="_loading" ng-model="model.job_name" name="job_name" id="job_name" placeholder="Job Name" ng-maxlength="150" required>
+              <input type="text" autofocus class="form-control" ng-disabled="_loading" ng-model="model.job_name" name="job_name" id="job_name" placeholder="Job Name" ng-maxlength="150" ng-pattern="NO_SPECIAL_CHARS" required>
               <div class="error-messages" ng-messages="createForm.job_name.$error" role="alert">
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
               </div>

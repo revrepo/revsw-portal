@@ -15,6 +15,7 @@
                             CRUDController,
                             Countries,
                             $state,
+                            $config,
                             AlertService,
                             $injector) {
 
@@ -30,13 +31,11 @@
         //   $state.go('billing_plans');
         // }
       }
-
-
     });
 
+    $scope.NO_SPECIAL_CHARS = $config.PATTERNS.NO_SPECIAL_CHARS;
 
     //$scope.user = User.getUser();
-
 
     // $scope.chooseBillingPlan = function (id, name) {
     //   $localStorage.user = {billing_plan: id};
@@ -79,8 +78,6 @@
 
     $scope.zipRegex = '[0-9]{1,10}';
     $scope.phoneRegex = '[0-9, \\s, \\+, \\-, \\(, \\)]{1,20}';
-
-
 
     $scope.createUser = function (model) {
       if (!model) {
