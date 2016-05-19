@@ -26,6 +26,7 @@
         </div>
       </div>
       <div class="panel-body">
+        <!-- Display data in Advanced Mode-->
         <div class="form-horizontal" ng-show="isAdvancedMode">
           <div name="json" class="col-md-12 domains-advanced-mode-edit" id="json" ng-model="modelAdvance" options="jsoneditor.options" ng-jsoneditor="jsonEditorEvent" style="height: 550px; padding-left: 0;"></div>
           <div class="form-group ">
@@ -48,69 +49,68 @@
             </div>
           </div>
         </div>
+        <!-- Display data in Basic Mode -->
         <form class="form-horizontal" name="editForm" novalidate ng-show="!isAdvancedMode">
-          <div class="form-group">
+          <div class="form-group" ng-class="{'has-error': editForm.app_name.$invalid && editForm.app_name.$dirty}">
             <label for="domain_name" class="col-sm-3 control-label" popover-trigger="mouseenter">Domain Name</label>
             <div class="col-sm-9">
-              <input type="text" class="form-control" disabled autofocus ng-model="modelInfo.domain_name" id="domain_name" placeholder="Domain Name">
+              <input type="text" class="form-control" disabled autofocus ng-model="modelInfo.domain_name" id="domain_name" placeholder="Domain Name" ng-pattern="/(?=^.{4,253}$)(^((?!-)(?!\_)[a-zA-Z0-9-\_]{0,62}[a-zA-Z0-9]\.)+[a-zA-Z]{2,63}$)/" ng-maxlength="50">
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group" ng-class="{'has-error': editForm.cname.$invalid && editForm.cname.$dirty}">
             <label for="cname" class="col-sm-3 control-label" popover-trigger="mouseenter">Domain CNAME</label>
             <div class="col-sm-9">
-              <input type="text" class="form-control" disabled ng-model="modelInfo.cname" id="cname" placeholder="Domain CNAME">
+              <input type="text" class="form-control" disabled ng-model="modelInfo.cname" id="cname" name="cname" placeholder="Domain CNAME">
+              <div class="error-messages" ng-messages="editForm.cname.$error" role="alert">
+                <div ng-messages-include="parts/shared/error-messages.html"></div>
+              </div>
             </div>
           </div>
-          <div class="form-group" ng-if="auth.isReseller() || auth.isRevadmin()">
-            <label for="account_id" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Select company name the domain should be associated with">Account</label>
+          <div class="form-group" ng-class="{'has-error': editForm.accountId.$invalid && editForm.accountId.$dirty}" ng-if="auth.isReseller() || auth.isRevadmin()">
+            <label for="accountId" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Select company name the domain should be associated with">Account</label>
             <div class="col-sm-9">
-              <ui-select ng-model="model.account_id" theme="select2" ng-disabled="_loading" on-select="onAccountSelect($model)" style="min-width: 550px;" id="account_id" name="accountId">
+              <ui-select ng-model="model.account_id" theme="select2" ng-disabled="_loading" on-select="onAccountSelect($model)" style="min-width: 550px;" id="account_id" name="accountId" required>
                 <ui-select-match placeholder="Select Account">{{$select.selected.companyName}}</ui-select-match>
                 <ui-select-choices repeat="item.id as item in companies | filter: {companyName: $select.search}">
                   <div ng-bind-html="item.companyName|highlight: $select.search"></div>
                 </ui-select-choices>
               </ui-select>
+              <div class="error-messages" ng-messages="editForm.accountId.$error" role="alert">
+                <div ng-messages-include="parts/shared/error-messages.html"></div>
+              </div>
             </div>
           </div>
-          <div class="form-group">
-            <label for="origin_server" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Enter here domain name or IP address of origin web server">Origin Server Name/IP</label>
+          <div class="form-group" ng-class="{'has-error': editForm.originServer.$invalid && editForm.originServer.$dirty}">
+            <label for="originServer" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Enter here domain name or IP address of origin web server">Origin Server Name/IP *</label>
             <div class="col-sm-9">
-              <input type="text" class="form-control" ng-disabled="_loading" ng-model="model.origin_server" id="origin_server" placeholder="Origin Server Name">
+              <!-- TODO: add custome validation -->
+              <input type="text" class="form-control" ng-disabled="_loading" ng-model="model.origin_server" id="origin_server" name="originServer" placeholder="Origin Server Name" ng-maxlength="50" required>
+              <div class="error-messages" ng-messages="editForm.originServer.$error" role="alert">
+                <div ng-messages-include="parts/shared/error-messages.html"></div>
+              </div>
             </div>
           </div>
-          <div class="form-group">
-            <label for="origin_host_header" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Enter here a domain name to be used in 'Host' header in requests sent from RevAPM to the origin server">Origin Host Header</label>
+          <div class="form-group" ng-class="{'has-error': editForm.originHostHeader.$invalid && editForm.originHostHeader.$dirty}">
+            <label for="originHostHeader" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Enter here a domain name to be used in 'Host' header in requests sent from RevAPM to the origin server">Origin Host Header *</label>
             <div class="col-sm-9">
-              <input type="text" class="form-control" ng-model="model.origin_host_header" ng-disabled="_loading" id="origin_host_header" placeholder="Origin Host Header">
+              <!-- TODO: add custom validation -->
+              <input type="text" class="form-control" ng-model="model.origin_host_header" ng-disabled="_loading" id="origin_host_header" name="originHostHeader" placeholder="Origin Host Header" ng-maxlength="50" required>
+              <div class="error-messages" ng-messages="editForm.originHostHeader.$error" role="alert">
+                <div ng-messages-include="parts/shared/error-messages.html"></div>
+              </div>
             </div>
           </div>
-          <div class="form-group">
-            <label for="origin_server_location_id" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Select a RevAPM location closest to the location of the origin server">Domain Origin Location</label>
+          <div class="form-group" ng-class="{'has-error': editForm.originServerLocationId.$invalid && editForm.originServerLocationId.$dirty}">
+            <label for="originServerLocationId" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Select a RevAPM location closest to the location of the origin server">Domain Origin Location</label>
             <div class="col-sm-9">
-              <select class="form-control" ng-disabled="_loading" ng-model="model.origin_server_location_id" id="origin_server_location_id" ng-options="obj.id as obj.locationName for obj in locations">
+              <select class="form-control" ng-disabled="_loading" ng-model="model.origin_server_location_id" id="origin_server_location_id" name="originServerLocationId" ng-options="obj.id as obj.locationName for obj in locations" required="">
                 <option value="">--- Select Location ---</option>
               </select>
+              <div class="error-messages" ng-messages="editForm.originServerLocationId.$error" role="alert">
+                <div ng-messages-include="parts/shared/error-messages.html"></div>
+              </div>
             </div>
           </div>
-          <!--
-          <div class="form-group">
-            <label for="tolerance"
-                   popover-append-to-body="{{true}}"
-                   class="col-sm-3 control-label"
-                   popover-trigger="mouseenter"
-                   uib-popover="Web page performance threshold used for RUM heatmap report. Recommended value is 3000 ms.">Threshold</label>
-
-            <div class="col-sm-9">
-              <input type="text"
-                     class="form-control"
-                     ng-disabled="_loading"
-                     ng-model="model.tolerance"
-                     id="tolerance"
-                     placeholder="Time in milliseconds">
-            </div>
-          </div>
-          -->
-          <!--   <hr> -->
           <!-- Origin Communication Protocol -->
           <div class="form-group form-inline">
             <label for="origin_secure_protocol" class="col-sm-3 control-label">
@@ -130,35 +130,44 @@
           </div>
           <!-- // -->
           <!-- "Non-Wildcard Domain Aliases" -->
-          <div class="form-group">
-            <label for="domain_aliases" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Non-Wildcard Domain Aliases">Non-Wildcard Domain Aliases</label>
+          <div class="form-group" ng-class="{'has-error': editForm.domainAliases.$invalid && editForm.domainAliases.$dirty}">
+            <label for="domainAliases" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Non-Wildcard Domain Aliases">Non-Wildcard Domain Aliases</label>
             <div class="col-sm-9">
-              <ui-select tagging tagging-label="Add New Domain" multiple tagging-tokens="SPACE|," theme="bootstrap" class="form-control" ng-disabled="_loading" ng-model="model.domain_aliases" id="domain_aliases">
+              <ui-select validate-domains-list tagging tagging-label="Add New Domain" multiple tagging-tokens="SPACE|," theme="bootstrap" class="form-control" ng-disabled="_loading" ng-model="model.domain_aliases" name="domainAliases" id="domain_aliases">
                 <ui-select-match placeholder="Add domains...">{{$item}}</ui-select-match>
                 <ui-select-choices repeat="domain in model.domain_aliases">
                   {{domain}}
                 </ui-select-choices>
               </ui-select>
+              <div class="error-messages" ng-messages="editForm.domainAliases.$error" role="alert">
+                <div ng-messages-include="parts/shared/error-messages.html"></div>
+              </div>
             </div>
           </div>
           <!-- // -->
           <!-- Wildcard Domain Alias -->
-          <div class="form-group">
-            <label for="origin_secure_protocol" class="col-sm-3 control-label">
+          <div class="form-group" ng-class="{'has-error': editForm.domainWildcardAlias.$invalid && editForm.domainWildcardAlias.$dirty}">
+            <label for="domainWildcardAlias" class="col-sm-3 control-label">
               Wildcard Domain Alias
             </label>
             <div class="col-md-9">
-              <input type="text" class="form-control" ng-disabled="_loading" ng-model="model.domain_wildcard_alias" placeholder="Wildcard Domain Alias">
+              <input validate-wildcard-domain-field type="text" class="form-control" ng-disabled="_loading" id="domain_wildcard_alias" name="domainWildcardAlias" ng-model="model.domain_wildcard_alias" ng-maxlength="50" placeholder="Wildcard Domain Alias">
+              <div class="error-messages" ng-messages="editForm.domainWildcardAlias.$error" role="alert">
+                <div ng-messages-include="parts/shared/error-messages.html"></div>
+              </div>
             </div>
           </div>
           <!-- -->
           <!-- Data Read Timeout, seconds -->
-          <div class="form-group form-inline">
-            <label for="origin_secure_protocol" class="col-sm-3 control-label">
+          <div class="form-group form-inline" ng-class="{'has-error': editForm.proxyTimeout.$invalid && editForm.proxyTimeout.$dirty}">
+            <label for="proxyTimeout" class="col-sm-3 control-label"  popover-trigger="mouseenter" uib-popover="Proxy data read timeout in seconds (1-3600 range)">
               Data Read Timeout
             </label>
             <div class="col-md-9">
-              <input type="number" class="form-control" ng-disabled="_loading" ng-model="model.proxy_timeout" min="0" max="99999999"> second(s)
+              <input type="number" id="proxy_timeout" name="proxyTimeout" class="form-control" ng-disabled="_loading" ng-model="model.proxy_timeout" ng-min="1" ng-max="3600" required> second(s)
+              <div class="error-messages" ng-messages="editForm.proxyTimeout.$error" role="alert">
+                <div ng-messages-include="parts/shared/error-messages.html"></div>
+              </div>
             </div>
           </div>
           <!-- -->
@@ -202,18 +211,20 @@
               </toggle-switch>
             </div>
           </div>
-          <div class="form-group" ng-class="{ 'has-error': editForm.comment.$invalid &&
-                                      editForm.comment.$dirty }">
+          <div class="form-group" ng-class="{ 'has-error': editForm.comment.$invalid &&  editForm.comment.$dirty }">
             <label for="comment" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Comment">Comment</label>
             <div class="col-md-6">
-              <textarea id="comment" placeholder="Comment (max 300 symbol)" class="form-control" name="comment" ng-model="model.comment" ng-disabled="_loading">
+              <textarea id="comment" name="comment" placeholder="Comment (300 characters max)" ng-maxlength="300" class="form-control" name="comment" ng-model="model.comment" ng-disabled="_loading">
               </textarea>
+              <div class="error-messages" ng-messages="editForm.comment.$error" role="alert">
+                <div ng-messages-include="parts/shared/error-messages.html"></div>
+              </div>
             </div>
           </div>
           <hr>
           <!-- Cache Bypass Locations -->
-          <div class="form-group" ng-if="model.rev_component_bp.enable_cache">
-            <label class="col-sm-3 control-label">Cache Bypass Locations</label>
+          <div class="form-group" ng-if="model.rev_component_bp.enable_cache" ng-class="{'has-error': editForm.cacheBypassLocations.$invalid && editForm.cacheBypassLocations.$dirty}">
+            <label for="cacheBypassLocations" class="col-sm-3 control-label">Cache Bypass Locations</label>
             <div class="col-sm-9">
               <ui-select tagging tagging-label="Add Cache Bypass Locations" multiple tagging-tokens="SPACE|," theme="bootstrap" class="form-control" ng-disabled="_loading" ng-model="model.rev_component_bp.cache_bypass_locations" id="domain_aliases">
                 <ui-select-match placeholder="Add Cache Bypass Locations...">{{$item}}</ui-select-match>
@@ -221,6 +232,9 @@
                   {{bypass_locations}}
                 </ui-select-choices>
               </ui-select>
+              <div class="error-messages" ng-messages="editForm.cacheBypassLocations.$error" role="alert">
+                <div ng-messages-include="parts/shared/error-messages.html"></div>
+              </div>
             </div>
           </div>
           <!-- -->
@@ -288,10 +302,10 @@
           </div>
           <!-- //  “SSL Configuration” -->
           <!-- Attached SSL Certificate-->
-          <div class="form-group">
-            <label for="account_id" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Select SSL certificate which should be associated with the domain">SSL Certificate</label>
+          <div class="form-group" ng-class="{'has-error': editForm.sslCertId.$invalid && editForm.sslCertId.$dirty}">
+            <label for="sslCertId" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Select SSL certificate which should be associated with the domain">SSL Certificate</label>
             <div class="col-sm-9">
-              <select class="form-control" ng-disabled="_loading" ng-model="model.ssl_cert_id" id="ssl_cert_id" ng-options="obj.id as obj.cert_name for obj in SSL_certs | filter :{account_id:model.account_id}" style="float: left;">
+              <select class="form-control" ng-disabled="_loading" ng-model="model.ssl_cert_id" id="ssl_cert_id" name="sslCertId" ng-options="obj.id as obj.cert_name for obj in SSL_certs | filter :{account_id:model.account_id}" style="float: left;" required>
                 <option value="">Default RevAPM SSL Certificate</option>
               </select>
               <a ui-sref="index.webApp.ssl_certs" class="btn btn-primary pull-right"><i class="fa fa-lock"></i> Manage SSL Certificates</a>
@@ -306,15 +320,17 @@
                     <div class="col-sm-12">
                       <div class="checkbox">
                         <label>
-                          <input type="radio" ng-model="isCustomSSL_conf_profile" ng-value="false" ngclick="onClackCustomSSL_conf_profile($event)"> Predefined SSL Configuration Profile
+                          <input type="radio" ng-model="isCustomSSL_conf_profile" ng-value="false"> Predefined SSL Configuration Profile
                         </label>
                       </div>
                     </div>
-                    <!-- {{isCustomSSL_conf_profile}}-{{_loading || isCustomSSL_conf_profile}} -->
                   </div>
-                  <div class="form-group form-inline">
-                    <select class="form-control col-sm-offset-3" ng-disabled="_loading|| (isCustomSSL_conf_profile == true)" ng-model="model.ssl_conf_profile" id="ssl_conf_profile" ng-options="obj.id as obj.profile_name for obj in SSL_conf_profiles" style="float: left;">
+                  <div class="form-group form-inline" ng-class="{'has-error': editForm.sslConfProfile.$invalid && editForm.sslConfProfile.$dirty}">
+                    <select class="form-control col-sm-offset-3" ng-disabled="_loading|| (isCustomSSL_conf_profile == true)" ng-model="model.ssl_conf_profile" id="ssl_conf_profile" name="sslConfProfile" ng-options="obj.id as obj.profile_name for obj in SSL_conf_profiles" style="float: left;" required>
                     </select>
+                    <div class="error-messages" ng-messages="editForm.sslConfProfile.$error" role="alert">
+                      <div ng-messages-include="parts/shared/error-messages.html"></div>
+                    </div>
                   </div>
                   <div class="form-group ">
                     <div class="col-sm-12">
@@ -327,20 +343,26 @@
                   </div>
                 </div>
                 <!-- Right section -->
-                <div class="col-md-7" ng-disabled="isCustomSSL_conf_profile">
-                  <div class="form-group ">
-                    <label for="ssl_protocols" popover-append-to-body="{{true}}" class="col-sm-12" popover-trigger="mouseenter" uib-popover="Allowed SSL protocols">
+                <div class="col-md-7">
+                  <div class="form-group" ng-disabled="isCustomSSL_conf_profile" ng-class="{'has-error': editForm.sslProtocols.$invalid && editForm.sslProtocols.$dirty}">
+                    <label for="sslProtocols" popover-append-to-body="{{true}}" class="col-sm-12" popover-trigger="mouseenter" uib-popover="Allowed SSL protocols">
                       Allowed SSL Protocols <small>(in Nginx format)</small></label>
                     <div class="col-sm-12">
-                      <input type="text" class="form-control" ng-disabled="!isCustomSSL_conf_profile" ng-model="model.ssl_protocols" id="ssl_protocols" placeholder="SSL Protocols">
+                      <input type="text" class="form-control" ng-disabled="!isCustomSSL_conf_profile" ng-model="model.ssl_protocols" id="ssl_protocols" name="sslProtocols" ng-maxlength="200" placeholder="SSL Protocols" required>
+                      <div class="error-messages" ng-messages="editForm.sslProtocols.$error" role="alert">
+                        <div ng-messages-include="parts/shared/error-messages.html"></div>
+                      </div>
                     </div>
                   </div>
-                  <div class="form-group ">
-                    <label for="ssl_ciphers" popover-append-to-body="{{true}}" class="col-sm-12" popover-trigger="mouseenter" uib-popover="Allowed SSL ciphers">
+                  <div class="form-group" ng-class="{'has-error': editForm.sslCiphers.$invalid && editForm.sslCiphers.$dirty}">
+                    <label for="sslCiphers" popover-append-to-body="{{true}}" class="col-sm-12" popover-trigger="mouseenter" uib-popover="Allowed SSL ciphers">
                       Allowed SSL Ciphers
                       <small>(in Nginx format)</small></label>
                     <div class="col-sm-12">
-                      <input type="text" class="form-control" ng-disabled="!isCustomSSL_conf_profile" ng-model="model.ssl_ciphers" id="ssl_ciphers" placeholder="SSL Ciphers">
+                      <input type="text" class="form-control" ng-disabled="!isCustomSSL_conf_profile" ng-model="model.ssl_ciphers" id="ssl_ciphers" name="sslCiphers" ng-maxlength="200" placeholder="SSL Ciphers" required>
+                      <div class="error-messages" ng-messages="editForm.sslCiphers.$error" role="alert">
+                        <div ng-messages-include="parts/shared/error-messages.html"></div>
+                      </div>
                     </div>
                   </div>
                   <div class="checkbox">
@@ -354,16 +376,18 @@
           </div>
           <hr>
           <!--  Third-party integrtions -->
-
-          <div class="form-group">
+          <div class="form-group" ng-class="{'has-error': editForm.bttKey.$invalid && editForm.bttKey.$dirty}">
             <label for="third-party-integrations" class="col-sm-3 control-label">
               Blue Triangle Tech. Key
             </label>
             <div class="col-md-9">
-              <input type="text" class="form-control" ng-disabled="_loading" ng-model="model.btt_key" placeholder="BTT API key for the domain">
+              <input type="text" class="form-control" ng-disabled="_loading" name="bttKey" ng-model="model.btt_key" placeholder="BTT API key for the domain" ng-pattern="/^[0-9a-fA-F]{24}$/">
+              <div class="error-messages" ng-messages="editForm.bttKey.$error" role="alert">
+                <div ng-message="pattern" class="alert-text alert-text--pattern">The BTT key format is not correct</div>
+                <div ng-messages-include="parts/shared/error-messages.html"></div>
+              </div>
             </div>
           </div>
-
           <div class="form-group ">
             <div class="col-sm-offset-2 col-sm-10">
               <a ui-sref="^" class="btn btn-default">

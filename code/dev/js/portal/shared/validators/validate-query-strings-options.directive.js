@@ -3,26 +3,26 @@
 
   angular
     .module('revapm.Portal.Shared')
-    .directive('validateDomainsList', validateDomainsList);
+    .directive('validateQueryStringsOptions', validateQueryStringsOptions);
   /**
-   * @name  validateDomainsList
+   * @name  validateQueryStringsOptions
    * @description
    *
    * @return {Boolean}
    */
-  function validateDomainsList($config) {
+  function validateQueryStringsOptions($config) {
     'ngInject';
-    var _name = 'domains-list';
-    var DOMAIN = $config.PATTERNS.DOMAIN;
+    var _name = 'query-strings-options';
+    var QUERY_STRINGS_OPTION = $config.PATTERNS.QUERY_STRINGS_OPTION;
 
     function link(scope, element, attrs, ngModel) {
 
-      ngModel.$validators.domainsList = function(value) {
+      ngModel.$validators.queryStringsOptions = function(value) {
         ngModel.$setValidity(_name, true);
 
         if (value !== undefined && angular.isArray(value)) {
           angular.forEach(ngModel.$modelValue, function(item) {
-            if (DOMAIN.test(item) === false) {
+            if (QUERY_STRINGS_OPTION.test(item) === false) {
               ngModel.$setValidity(_name, false);
             }
           });

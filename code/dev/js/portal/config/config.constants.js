@@ -22,6 +22,7 @@
        */
       STATUS: {
         OK: 200,
+        ACCEPTED: 202,
         BAD_REQUEST: 400,
         UNAUTHORIZED: 401,
         TWO_FACTOR_AUTH_REQUIRED: 403,
@@ -141,7 +142,17 @@
       ENABLE_SIMPLIFIED_SIGNUP_PROCESS: true,
 
       // Used by Angular Toaster
-      SUCCESS_MESSAGE_DISPLAY_TIMEOUT: 5000
+      SUCCESS_MESSAGE_DISPLAY_TIMEOUT: 5000,
+      // PATTERNS
+      PATTERNS: {
+        WILDCARD_DOMAIN_FIELD: /(^(\*\.[a-zA-Z0-9-\_]{0,62}[a-zA-Z0-9]\.)+[a-zA-Z]{2,63}$)/,
+        URL: /(https?:)?\/\/.+/,
+        HEADER_VALUE: /^[0-9a-fA-F]$/,
+        DOMAIN: /(?=^.{4,253}$)(^((?!-)(?!\_)[a-zA-Z0-9-\_]{0,62}[a-zA-Z0-9]\.)+[a-zA-Z]{2,63}$)/,
+        COOKIE: /^[0-9a-fA-F]$/,
+        CACHE_BYPASS_LOCATION: /^[0-9a-fA-F]$/,
+        QUERY_STRINGS_OPTION: /^[0-9a-fA-F]$/
+      }
     });
 
 })();

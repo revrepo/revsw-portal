@@ -39,7 +39,8 @@ var AddUser = {
         linkText: 'Back To List'
       },
       createUser: {
-        css: '.btn-success'
+        css: '.btn-success',
+        id: 'create_user_and_more'
       },
       cancel: {
         linkText: 'Cancel'
@@ -88,7 +89,7 @@ var AddUser = {
    * @returns {Selenium WebDriver Element}
    */
   getCreateUserBtn: function () {
-    return element(by.css(this.locators.buttons.createUser.css));
+    return element(by.id(this.locators.buttons.createUser.id));
   },
 
   /**

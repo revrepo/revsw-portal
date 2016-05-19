@@ -203,17 +203,6 @@ h1.signup {
   margin-top: auto;
   color: #A1A2A5;
 }
-alert-list {
-  position: fixed;
-  z-index: 999;
-  left: 50%;
-  top: 70px;
-}
-alert-list alert {
-  position: relative;
-  left: -50%;
-  min-width: 200px;
-}
 .list-input {
   border: none;
   background-color: transparent;
@@ -701,9 +690,6 @@ section[drawer] .side-menu .dashboard_menu .side-menu-item.item-title a {
   background-size: contain;
   background-repeat: no-repeat;
   background-image: url('../images/background-dashboard.png');
-}
-body {
-  overflow-y: hidden;
 }
 @-moz-document url-prefix() {
   section[drawer] .side-menu .side-menu-item {

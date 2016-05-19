@@ -64,8 +64,30 @@
         return $q.when();
       }
     }
+
+    $scope.initNew = function() {
+      if ($scope.auth.isReseller() || $scope.auth.isRevadmin()) {
+        // Loading list of companies
+        Companies.query(function(list) {
+          $scope.companies = list;
+          $scope.setDefaultAccountId();
+        });
+      } else {
+        $scope.setDefaultAccountId();
+      }
+    };
+
+    $scope.initEdit = function() {
+      if ($scope.auth.isReseller() || $scope.auth.isRevadmin()) {
+        // Loading list of companies
+        Companies.query(function(list) {
+          $scope.companies = list;
+        });
+      }
+    };
+
     // Fetch list of records
-    $scope.$on('$stateChangeSuccess', function(state) {
+    $scope.$on('$stateChangeSuccess', function(state, stateTo, stateParam) {
       if ($state.is($scope.state)) {
         $scope.list()
           .then(setAccountName)
@@ -77,6 +99,13 @@
               }, 500);
             }
           });
+      } else {
+        if (!!stateParam.id && !stateParam.id) {
+          $scope.params = $stateParams;
+          $scope.initEdit($stateParams.id);
+        } else {
+          $scope.setDefaultAccountId();
+        }
       }
     });
 
@@ -95,18 +124,6 @@
             $scope.locations = data.data;
           }
         });
-    };
-
-    $scope.fetchCompanies = function(companyIds) {
-      var promises = [];
-      companyIds.forEach(function(id) {
-        promises.push(Companies.get({
-          id: id
-        }).$promise);
-      });
-      $q.all(promises).then(function(data) {
-        $scope.companies = data;
-      });
     };
 
     $scope.prepareSimpleDomainUpdate = function(model_current) {
@@ -149,29 +166,10 @@
       delete model.cname;
       delete model.origin_protocol;
       delete model.id;
-      // console.log('model', model);
       return model;
     };
 
-    $scope.setAccountId = function() {
-      if ($scope.auth.isReseller() || $scope.auth.isRevadmin()) {
-        // Loading list of companies
-        Companies.query(function(list) {
-          $scope.companies = list;
-          if ($scope.companies.length === 1) {
-            $scope.model.account_id = $scope.companies[0].id;
-          }
-        });
-      } else if (!angular.isArray($scope.auth.getUser().companyId)) {
-        $scope.model.account_id = $scope.auth.getUser().companyId;
-      } else if ($scope.auth.getUser().companyId.length === 1) {
-        $scope.model.account_id = $scope.auth.getUser().companyId[0];
-      } else {
-        $scope.fetchCompanies($scope.auth.getUser().companyId);
-      }
-    };
 
-    $scope.setAccountId();
     $scope.fetchLocations();
 
     $scope.SSL_certs = [];
@@ -219,6 +217,11 @@
       $scope.get(id)
         .then(saveNoChangingValue)
         .then(validateDomainProperties)
+        .then(function() {
+          return Companies.query(function(list) {
+            $scope.companies = list;
+          });
+        })
         .then(function() {
           if ($scope.model.ssl_conf_profile !== '') {
             $scope.isCustomSSL_conf_profile = false;
@@ -301,21 +304,29 @@
           .delete(model)
           .then(function(data) {
             $scope.alertService.success('Domain ' + domainName + ' deleted.');
-            $scope.list()
-              .then(setAccountName);
+            // $scope.list()
+            //   .then(setAccountName);
           })
-          .catch(function(err) {
-            $scope.alertService.danger(err);
-          });
+          .catch($scope.alertService.danger);
       });
     };
 
-    $scope.createDomain = function(model) {
+    $scope.createDomain = function(model, isStay) {
+      var _model =angular.copy(model);
       $scope
-        .create(model)
-        .then(function() {
+        .create(_model, isStay)
+        .then(function(data) {
+          // NOTE: clean model for new domain
+          model.domain_name = '';
+          model.comment = '';
+          model.origin_host_header = '';
+          model.origin_server = '';
+          model.origin_server_location_id = '';
+          if ($scope.auth.isReseller() || $scope.auth.isRevadmin()) {
+            // NOTE: clean account_id for new Domain
+            model.account_id = null;
+          }
           $scope.alertService.success('Domain created', 5000);
-          $scope.setAccountId();
         })
         .catch($scope.alertService.danger);
     };

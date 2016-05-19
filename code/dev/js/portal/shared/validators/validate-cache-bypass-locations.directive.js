@@ -3,26 +3,26 @@
 
   angular
     .module('revapm.Portal.Shared')
-    .directive('validateDomainsList', validateDomainsList);
+    .directive('validateCacheBypassLocations', validateCacheBypassLocations);
   /**
-   * @name  validateDomainsList
+   * @name  validateCacheBypassLocations
    * @description
    *
    * @return {Boolean}
    */
-  function validateDomainsList($config) {
+  function validateCacheBypassLocations($config) {
     'ngInject';
-    var _name = 'domains-list';
-    var DOMAIN = $config.PATTERNS.DOMAIN;
+    var _name = 'сache-bypass-locations';
+    var CACHE_BYPASS_LOCATION = $config.PATTERNS.CACHE_BYPASS_LOCATION;
 
     function link(scope, element, attrs, ngModel) {
 
-      ngModel.$validators.domainsList = function(value) {
+      ngModel.$validators.cacheBypassLocations = function(value) {
         ngModel.$setValidity(_name, true);
 
         if (value !== undefined && angular.isArray(value)) {
           angular.forEach(ngModel.$modelValue, function(item) {
-            if (DOMAIN.test(item) === false) {
+            if (CACHE_BYPASS_LOCATION.test(item) === false) {
               ngModel.$setValidity(_name, false);
             }
           });

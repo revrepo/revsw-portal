@@ -14,6 +14,11 @@ if [ -z "$BUILD_NUMBER" ]; then
 	exit 1
 fi
 
+if [ ! -d "$WORKSPACE/code/public" ]; then
+  echo "ERROR: $WORKSPACE/code/public directory does not exist. Do you need to run 'gulp build'?"
+  exit 1
+fi
+
 VERSION=5.0.$BUILD_NUMBER
 
 PACKAGEDIR=packages
@@ -66,20 +71,12 @@ Description: Rev Customer Portal UI Component" >> $foldername/DEBIAN/control
 
 echo "/opt/revsw-portal/config.js" > $foldername/DEBIAN/conffiles
 
-
 mkdir -p $foldername/opt/$PackageName 
 
-
-cp -rf  $WORKSPACE/code/* $foldername/opt/$PackageName/
+cp -rf  $WORKSPACE/code/public/* $foldername/opt/$PackageName/
 echo $VERSION > $foldername/opt/$PackageName/version.txt
-rm -r $foldername/opt/$PackageName/dev
-rm -r $foldername/opt/$PackageName/node_modules
-rm  $foldername/opt/$PackageName/package.json
-rm  $foldername/opt/$PackageName/gulpfile.js
-rm  $foldername/opt/$PackageName/bower.json
 
 sudo chown -R root:root $foldername/opt
 
 dpkg -b $foldername $WORKSPACE/$PACKAGEDIR/$foldername.deb
 
- 

@@ -143,8 +143,11 @@
               <a ui-sref="{{state}}" class="btn btn-default">
                 <i class="glyphicon glyphicon-remove"></i>&nbsp; Cancel
               </a>
-              <button class="btn btn-success" ng-disabled="disableSubmit(model)" ng-click="createUser(model)">
+              <button class="btn btn-success" id="create_user" ng-disabled="disableSubmit(model)" ng-click="createUser(model,false)">
                 <i class="glyphicon glyphicon-ok"></i>&nbsp; Create User
+              </button>
+              <button class="btn btn-success" id="create_user_and_more" ng-disabled="disableSubmit(model)" ng-click="createUser(model,true);createForm.$setPristine()">
+                <i class="glyphicon glyphicon-ok"></i>&nbsp; Create And Add More
               </button>
             </div>
           </div>

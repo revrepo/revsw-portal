@@ -6,7 +6,7 @@
     .controller('UsersCrudController', UsersCrudController);
 
   // @ngInject
-  function UsersCrudController($scope, $q, CRUDController, Users, User, $injector, $state, $stateParams, Companies, DomainsConfig, $anchorScroll) {
+  function UsersCrudController($scope, $q, CRUDController, Users, User, $injector, $state, $stateParams, Companies, DomainsConfig, $anchorScroll, $config) {
 
     //Invoking crud actions
     $injector.invoke(CRUDController, this, {
@@ -44,7 +44,11 @@
     }
 
     function initModel() {
-      $scope.model = {
+      if (!$scope.model) {
+        $scope.model = {};
+      }
+
+      angular.merge($scope.model, {
         theme: 'light',
         access_control_list: {
           dashBoard: true,
@@ -52,8 +56,14 @@
           configure: false,
           test: false,
           readOnly: false
-        }
-      };
+        },
+        email: '',
+        firstname: '',
+        lastname: '',
+        password: '',
+        passwordConfirm: '',
+        role: null
+      });
     }
     /**
      * @name  dependencies
@@ -70,12 +80,19 @@
           //
           $scope.companies = dataRefs[0];
           $scope.domains = dataRefs[1];
+          return dataRefs;
         });
     }
 
     $scope.initNew = function() {
       initModel();
-      // $scope.setAccountId(); // TODO: use CRUD method
+      if ($scope.auth.isReseller() || $scope.auth.isRevadmin()) {
+        dependencies().then(function(data) {
+          $scope.setDefaultAccountId();
+        });
+      } else {
+        $scope.setDefaultAccountId();
+      }
     };
 
     $scope.getUser = function(id) {
@@ -102,6 +119,22 @@
         $scope
           .delete(model)
           .then(function(data) {
+            // NOTE: hook only for user
+            if (data.statusCode === $config.STATUS.OK || data.statusCode === $config.STATUS.ACCEPTED) {
+              // NOTE: delete item from arrays
+              var idx = _.findIndex($scope.records, function(item) {
+                return item.user_id === model.user_id;
+              });
+              if (idx > -1) {
+                $scope.records.splice(idx, 1);
+              }
+              var idx_f = _.findIndex($scope.filteredRecords, function(item) {
+                return item.user_id === model.user_id;
+              });
+              if (idx_f > -1) {
+                $scope.filteredRecords.splice(idx_f, 1);
+              }
+            }
             $scope.toaster.success(data);
           })
           .catch(function(err) {
@@ -133,8 +166,14 @@
     $scope.getRelativeDate = function(datetime) {
       return moment.utc(datetime).fromNow();
     };
-
-    $scope.createUser = function(model) {
+    /**
+     * @name  createUser
+     * @description
+     *
+     * @param  {Object} model [description]
+     * @return
+     */
+    $scope.createUser = function(model, isStay) {
       if (!model) {
         return;
       }
@@ -142,13 +181,26 @@
         $scope.toaster.error('Passwords did not match');
         return;
       }
-      delete model.passwordConfirm;
+
       model.access_control_list.dashBoard = true;
-      //      model.email = angular.copy(model.user_email);
-      //      delete model.user_email;
-      $scope.create(model)
+      var _model = angular.copy(model);
+      if (!_model.companyId || !angular.isArray(_model.companyId)) {
+        _model.companyId = [model.account_id] || [$scope.model.account_id];
+      }
+
+      delete _model.account_id;
+      delete _model.passwordConfirm;
+      $scope.create(_model, isStay)
         .then(function(data) {
           initModel();
+
+          if (angular.isArray($scope.model.companyId)) {
+            $scope.model.companyId.length = 0;
+          }
+          if (angular.isArray($scope.model.domain)) {
+            $scope.model.domain.length = 0;
+          }
+
           $scope.toaster.success(data);
         })
         .catch(function(err) {
@@ -246,7 +298,7 @@
      */
     $scope.getAccountDomainNameList = function(account_id) {
       if (!account_id) {
-        account_id = $scope.model.companyId||$scope.model.account_id;
+        account_id = $scope.model.companyId || $scope.model.account_id;
       }
       var data = _.findByValues($scope.domains, 'account_id', account_id);
       return data;
