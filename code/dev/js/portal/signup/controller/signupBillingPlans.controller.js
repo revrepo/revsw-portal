@@ -4,7 +4,6 @@
     .module('revapm.Portal.Signup')
     .controller('SignupBillingPlansController', SignupBillingPlansController);
 
-  $scope.NO_SPECIAL_CHARS = $config.PATTERNS.NO_SPECIAL_CHARS;
   /**
    * @name SignupBillingPlansController
    * @description
