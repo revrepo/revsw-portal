@@ -38,6 +38,7 @@ var AddUserPage = require('./user/addPage');
 var SecuritySettingsPage = require('./user/securitySettingsPage');
 var UpdatePasswordPage = require('./user/updatePasswordPage');
 
+var Dashboards = require('./dashboards');
 var AddDomainPage = require('./domain/addPage');
 var ConfigureDomainPage = require('./domain/configurePage');
 var DomainStatsPage = require('./domain/statsPage');
@@ -85,6 +86,7 @@ var Portal = {
   addUserPage: AddUserPage,
   securitySettingsPage: SecuritySettingsPage,
   updatePasswordPage: UpdatePasswordPage,
+  dashboards: Dashboards,
   domains: {
     addPage: AddDomainPage,
     configurePage: ConfigureDomainPage,
@@ -191,6 +193,17 @@ var Portal = {
   },
 
   /**
+   * ### Portal.getDashboardsPage()
+   *
+   * Loads the hash fragment for the Dashboards page.
+   *
+   * @returns {Promise}
+   */
+  getDashboardsPage: function () {
+    return this.getPage(Constants.hashFragments.dashboard);
+  },
+
+  /**
    * ### Portal.getAdminPage()
    *
    * Loads the hash fragment for the Admin page.
@@ -242,7 +255,7 @@ var Portal = {
    * ### Portal.goToAccountSettings()
    *
    * Navigation helper method that executes all steps to navigate to `Account
-   * Settings` section
+   * Settings` section.
    *
    * @returns {Promise}
    */
@@ -666,6 +679,65 @@ var Portal = {
         me.header.goTo(Constants.sideBar.admin.ACCOUNTS);
         me.admin.accounts.listPage.searchAndClickDelete(account.companyName);
         Portal.dialog.clickOk();
+      });
+      browser.getCurrentUrl().then(function (currentUrl) {
+        if (initialUrl !== currentUrl) {
+          browser.get(initialUrl);
+        }
+      });
+    });
+  },
+
+  /**
+   * ### Portal.createDashboard()
+   *
+   * Helper method that executes all steps required to create
+   * new Dashboard from Portal Dashboards.
+   *
+   * @param {String} arrayDashboards, arrayDashboards objects.
+   *
+   * @param {Object} arrayDashboards, data applying the schema defined in
+   * `DataProvider.generateDashboardData()`
+   *
+   * @returns {Promise}
+   */
+  createDashboard: function (arrayDashboards) {
+    var me = this;
+    me.getDashboardsPage();
+    return browser.getCurrentUrl().then(function (initialUrl) {
+      arrayDashboards.forEach(function (dashboard) {
+        me.dashboards.listPage.addNewDashboard(dashboard);
+      });
+      browser.getCurrentUrl().then(function (currentUrl) {
+        if (initialUrl !== currentUrl) {
+          browser.get(initialUrl);
+        }
+      });
+    });
+  },
+
+  /**
+   * ### Portal.deleteDashboard()
+   *
+   * Helper method that executes all steps required to delete an existing
+   * Dashboard from Portal Dashboards.
+   *
+   * @param {String} arrayDashboards, arrayDashboards objects.
+   *
+   * @param {Object} arrayDashboards, data applying the schema defined in
+   * `DataProvider.generateDashboardData()`
+   *
+   * @returns {Promise}
+   */
+  deleteDashboard: function (arrayDashboards) {
+    var me = this;
+    return browser.getCurrentUrl().then(function (initialUrl) {
+      arrayDashboards.forEach(function (dashboard) {
+        me.getDashboardsPage();
+        me.header.goTo(dashboard.title);
+        me.dashboards.listPage.clickModifyDashboard();
+        me.dashboards.listPage.clickEditDashboard();
+        me.dashboards.editDashboard.deleteDashboard();
       });
       browser.getCurrentUrl().then(function (currentUrl) {
         if (initialUrl !== currentUrl) {

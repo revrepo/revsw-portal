@@ -64,7 +64,10 @@ var DashboardList = {
       }
     },
     dashboards: {
-      css: '.dashboard-preview-background'
+      css: '.dashboard-preview-background',
+      leftMenu: {
+        id: 'left-menu-dashboard-section'
+      }
     }
   },
 
@@ -203,6 +206,18 @@ var DashboardList = {
     return element(by.css(this.locators.dashboards.css));
   },
 
+  /**
+   * ### DashboardList.getLeftMenuDashboards()
+   *
+   * Returns the reference to the `Dashboards Left Menu` dashboards (Selenium
+   * WebDriver Element) from the Dashboard List page from the Portal app.
+   *
+   * @returns {Selenium WebDriver Element}
+   */
+  getLeftMenuDashboards: function () {
+    return element(by.id(this.locators.dashboards.leftMenu.id));
+  },
+
   // ## Methods to interact with the Dashboard List Page components.
 
   /**
@@ -339,9 +354,8 @@ var DashboardList = {
    *
    * @returns {Promise}
    */
-  isDashboardsDisplayed: function () {
+  existDashboard: function () {
     return this
-      .searcher
       .getDashboardsElem()
       .isPresent();
   },
@@ -351,13 +365,15 @@ var DashboardList = {
    *
    * Fills Dashboard form and clicks on Create Dashboard button.
    *
-   * @param {String} dashboard, to add.
+   * @param {String} dashboard, to add dashboard.
    *
    * @returns {Promise}
    */
   addNewDashboard: function (dashboard) {
     this.clickAddNewDashboard();
     this.addDashboard.createDashboard(dashboard);
+    // this.form.fill(dashboard);
+    // this.form.clickCreate(dashboard);
   }
 };
 

@@ -341,6 +341,29 @@ var DataProvider = {
       zipcode: '02',
       comment: 'My comment just for testing proposal'
     };
+  },
+
+  /**
+   * ### DataProvider.generateDashboardData()
+   *
+   * Generates dashboard data object based on the unique para that it
+   * requires.
+   *
+   * @returns {Object}, generate dashboard data with the following schema:
+   *
+   *     {
+   *         title: string,
+   *         structure: Number,
+   *         autoRefresh: string
+   *     }
+   */
+  generateDashboardData: function () {
+    var timestamp = Date.now();
+    return {
+      title: 'QA-Dashboard-' + timestamp,
+      structure: 0,
+      autoRefresh: 'Every 1 Minute'
+    };
   }
 };
 

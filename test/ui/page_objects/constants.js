@@ -32,6 +32,7 @@ var Constants = {
       new: '#/domains/new'
     },
     profile: '#/profile',
+    dashboard: '#/dashboard',
     admin: {
       users: '#/users',
       companies: '#/companies',

@@ -55,10 +55,13 @@ var DashboardForm = {
     },
     buttons: {
       create: {
-        css: '.btn.btn-default'
+        css: '.btn.btn-primary'
       },
       cancel: {
-        css: '.btn.btn-primary'
+        css: '.btn.btn-default'
+      },
+      delete: {
+        css: '.btn.btn-danger'
       }
     }
   },
@@ -124,6 +127,18 @@ var DashboardForm = {
    */
   getCancelBtn: function () {
     return element(by.css(this.locators.buttons.cancel.css));
+  },
+
+  /**
+   * ### DashboardForm.getDeleteBtn()
+   *
+   * Returns the reference to the `Delete Dashboard` button (Selenium
+   * WebDriver Element).
+   *
+   * @returns {Selenium WebDriver Element}
+   */
+  getDeleteBtn: function () {
+    return element(by.css(this.locators.buttons.delete.css));
   },
 
   /**
@@ -221,6 +236,19 @@ var DashboardForm = {
   clickCancel: function () {
     return this
       .getCancelBtn()
+      .click();
+  },
+
+  /**
+   * ### DashboardForm.clickDelete()
+   *
+   * Clicks on `Delete` button.
+   *
+   * @returns {Promise}
+   */
+  clickDelete: function () {
+    return this
+      .getDeleteBtn()
       .click();
   },
 
