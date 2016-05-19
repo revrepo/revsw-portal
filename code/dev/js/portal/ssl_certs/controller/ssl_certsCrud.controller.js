@@ -177,7 +177,7 @@
       });
     };
     /**
-     * @name  createSSL_cert
+     * @name  createSSLCert
      * @description
      *
      * Create new SSL certificate
@@ -185,10 +185,10 @@
      * @param  {[type]} model [description]
      * @return {[type]}       [description]
      */
-    $scope.createSSL_cert = function(model) {
+    $scope.createSSLCert = function(model, isStay) {
       model.cert_type = 'private'; // TODO:
       $scope
-        .create(model)
+        .create(model, isStay)
         .then(function(data) {
           $scope.toaster.success(data);
           $scope.setAccountId();
