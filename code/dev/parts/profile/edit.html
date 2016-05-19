@@ -26,11 +26,11 @@
         </div>
         <div class="panel-body">
           <div class="alert alert-info" ng-if="_loading">
-            <i class="glyphicon glyphicon-refresh spin" ng-if="item.loading"></i>&nbsp;
+            <i class="glyphicon glyphicon-refresh spin" ng-if="_loading"></i>&nbsp;
             Loading...
           </div>
 
-          <form class="form-horizontal" name="editForm" ng-submit="updateProfile(user)" novalidate>
+          <form class="form-horizontal" name="editForm" ng-submit="updateProfile(user);editForm.$setPristine();" novalidate>
             <div class="form-group"  ng-class="{'has-error': editForm.current_password.$invalid && editForm.current_password.$dirty}">
               <label for="current_password" class="col-sm-2 control-label">Current Password</label>
               <div class="col-sm-10">
@@ -101,6 +101,7 @@
                 </a>
 
                 <button class="btn btn-success" ng-disabled="_loading || editForm.$invalid">
+                  <i class="glyphicon glyphicon-refresh spin" ng-if="_loading"></i>
                   <i class="glyphicon glyphicon-ok"></i>&nbsp;
                   Update Password
                 </button>

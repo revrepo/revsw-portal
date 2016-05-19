@@ -1,4 +1,4 @@
-<div class="end-user-response-headers">
+<div class="end-user-response-headers" >
   <div class="panel panel-default">
     <!-- Default panel contents -->
     <div class="panel-heading"> End User Response Headers </div>
@@ -17,8 +17,8 @@
       </thead>
       <tbody>
         <tr ng-repeat="line in $ctrl.end_user_response_headers">
-          <td> {{line.header_name }}</td>
-          <td>{{line.header_value }} </td>
+          <td>{{line.header_name}}</td>
+          <td>{{line.header_value}}</td>
           <td>{{line.operation}}</td>
           <td>
             <button class="btn btn-warning btn-xs btn-delete-end_user_response_headers" type="button" ng-click="$ctrl.onDelete($index)" title="Delete Header">
@@ -28,15 +28,15 @@
         </tr>
         <!-- New line-->
         <tr ng-form="newLineForm" class="well">
-          <td ng-class="{ 'has-error': newLineForm.header_name.$invalid && newLineForm.header_name.$dirty }">
-            <input type="text" name="header_name" class="form-control" ng-model="$ctrl.newEndUserResponseHeader.header_name" placeholder="New Header Name" required>
-            <div class="error-messages" ng-messages="newLineForm.header_name.$error" role="alert" ng-messages-multiple="false">
+          <td ng-class="{ 'has-error': newLineForm.headerName.$invalid && newLineForm.headerName.$dirty }">
+            <input type="text" validate-caching-rule-header-name name="headerName" class="form-control" ng-model="$ctrl.newEndUserResponseHeader.header_name" placeholder="New Header Name" required>
+            <div class="error-messages" ng-messages="newLineForm.headerName.$error" role="alert" ng-messages-multiple="false">
               <div ng-messages-include="parts/shared/error-messages.html"></div>
             </div>
           </td>
-          <td ng-class="{ 'has-error': newLineForm.header_value.$invalid && newLineForm.header_value.$dirty }">
-            <input type="text" validate-caching-rule-header-value name="header_value" class="form-control" ng-model="$ctrl.newEndUserResponseHeader.header_value" placeholder="New Header Value" required>
-            <div class="error-messages" ng-messages="newLineForm.header_value.$error" role="alert" ng-messages-multiple="false">
+          <td ng-class="{ 'has-error': newLineForm.headerValue.$invalid && newLineForm.headerValue.$dirty }">
+            <input type="text" validate-caching-rule-header-value name="headerValue" class="form-control" ng-model="$ctrl.newEndUserResponseHeader.header_value" placeholder="New Header Value" required>
+            <div class="error-messages" ng-messages="newLineForm.headerValue.$error" role="alert" ng-messages-multiple="false">
               <div ng-messages-include="parts/shared/error-messages.html"></div>
             </div>
           </td>

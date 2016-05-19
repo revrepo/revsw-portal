@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
 
   angular
@@ -16,7 +16,7 @@
       confirm_password: ''
     };
 
-    $scope.clearPassword = function () {
+    $scope.clearPassword = function() {
       $scope.pass = {
         current_password: '',
         new_password: '',
@@ -29,7 +29,7 @@
      *
      * @returns {Promise}
      */
-    $scope.updatePassword = function () {
+    $scope.updatePassword = function() {
       if (!_.trim($scope.pass.current_password) || !_.trim($scope.pass.new_password)) {
         AlertService.danger('Please fill all fields. (New password should be at least 8 charecters length)', 5000);
         return;
@@ -38,18 +38,20 @@
         AlertService.danger('Passwords did not match', 5000);
         return;
       }
+      $scope._loading = true;
       return User.updatePassword($scope.pass.current_password, $scope.pass.new_password)
-        .then(function (data) {
+        .then(function(data) {
           $scope.clearPassword();
-          AlertService.success('Your password updated', 5000);
+          AlertService.success(data);
           return data;
         })
-        .catch(function (err) {
-          AlertService.danger(err);
+        .catch(AlertService.danger)
+        .finally(function() {
+          $scope._loading = false;
         });
     };
 
-    $scope.updateProfile = function (user) {
+    $scope.updateProfile = function(user) {
       $scope.updatePassword();
     };
 

@@ -226,7 +226,7 @@
           <div class="form-group" ng-if="model.rev_component_bp.enable_cache" ng-class="{'has-error': editForm.cacheBypassLocations.$invalid && editForm.cacheBypassLocations.$dirty}">
             <label for="cacheBypassLocations" class="col-sm-3 control-label">Cache Bypass Locations</label>
             <div class="col-sm-9">
-              <ui-select tagging tagging-label="Add Cache Bypass Locations" multiple tagging-tokens="SPACE|," theme="bootstrap" class="form-control" ng-disabled="_loading" ng-model="model.rev_component_bp.cache_bypass_locations" id="domain_aliases">
+              <ui-select validate-cache-bypass-locations tagging tagging-label="Add Cache Bypass Locations" multiple tagging-tokens="SPACE|," theme="bootstrap" class="form-control" ng-disabled="_loading" ng-model="model.rev_component_bp.cache_bypass_locations" name="cacheBypassLocations" id="cacheBypassLocations">
                 <ui-select-match placeholder="Add Cache Bypass Locations...">{{$item}}</ui-select-match>
                 <ui-select-choices repeat="bypass_locations in model.rev_component_bp.cache_bypass_locations">
                   {{bypass_locations}}
