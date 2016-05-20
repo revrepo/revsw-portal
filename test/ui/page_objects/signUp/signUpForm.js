@@ -54,9 +54,9 @@ var SignUp = {
   // Element)
 
   /**
-   * ### PlansList.getSignInLnk()
+   * ### SignUpForm.getEmailTxtIn()
    *
-   * Returns the link Element that returns to the Sign In page.
+   * Returns the Email text input.
    *
    * @returns {Object} Selenium WebDriver Element
    */
@@ -64,46 +64,109 @@ var SignUp = {
     return element(by.id(this.locators.textInputs.email.id));
   },
 
+  /**
+   * ### SignUpForm.getFirstNameTxtIn()
+   *
+   * Returns the First Name text input.
+   *
+   * @returns {Object} Selenium WebDriver Element
+   */
   getFirstNameTxtIn: function () {
     return element(by.id(this.locators.textInputs.firstName.id));
   },
 
+  /**
+   * ### SignUpForm.getLastNameTxtIn()
+   *
+   * Returns the Last Name text input.
+   *
+   * @returns {Object} Selenium WebDriver Element
+   */
   getLastNameTxtIn: function () {
     return element(by.id(this.locators.textInputs.lastName.id));
   },
 
+  /**
+   * ### SignUpForm.getPasswordTxtIn()
+   *
+   * Returns the Password text input.
+   *
+   * @returns {Object} Selenium WebDriver Element
+   */
   getPasswordTxtIn: function () {
     return element(by.id(this.locators.textInputs.password.id));
   },
 
+  /**
+   * ### SignUpForm.getCancelBtn()
+   *
+   * Gets the Cancel button from sign up form.
+   *
+   * @returns {Object} Selenium WebDriver Element
+   */
   getCancelBtn: function () {
     return element(by.partialLinkText(this.locators.buttons.cancel.linkText));
   },
 
+  /**
+   * ### SignUpForm.getSignUpBtn()
+   *
+   * Gets the Sign Up button from sign up form.
+   *
+   * @returns {Object} Selenium WebDriver Element
+   */
   getSignUpBtn: function () {
     return element(by.partialLinkText(this.locators.buttons.signUp.linkText));
   },
 
   // ## Methods to interact with the User List Page components
 
+  /**
+   * ### SignUpForm.setEmail()
+   *
+   * Introduces a value in the Email field.
+   *
+   * @returns {Object} Promise
+   */
   setEmail: function (value) {
     return this
       .getEmailTxtIn()
       .sendKeys(value);
   },
 
+  /**
+   * ### SignUpForm.setFirstName()
+   *
+   * Introduces a value in the First Name field.
+   *
+   * @returns {Object} Promise
+   */
   setFirstName: function (value) {
     return this
       .getFirstNameTxtIn()
       .sendKeys(value);
   },
 
+  /**
+   * ### SignUpForm.setLastName()
+   *
+   * Introduces a value in the Last Name field.
+   *
+   * @returns {Object} Promise
+   */
   setLastName: function (value) {
     return this
       .getLastNameTxtIn()
       .sendKeys(value);
   },
 
+  /**
+   * ### SignUpForm.setPassword()
+   *
+   * Introduces a value in the Password field.
+   *
+   * @returns {Object} Promise
+   */
   setPassword: function (value) {
     return this
       .getPasswordTxtIn()
@@ -112,6 +175,13 @@ var SignUp = {
 
   // ## Helper Methods
 
+  /**
+   * ### SignUpForm.fill()
+   *
+   * Fills the form by handling all form elements from the view.
+   *
+   * @returns {Object} Promise
+   */
   fill: function (data) {
     if (data.email) {
       this.set(data.email);

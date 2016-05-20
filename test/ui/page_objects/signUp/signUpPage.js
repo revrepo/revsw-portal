@@ -47,9 +47,9 @@ var SignUp = {
   // Element)
 
   /**
-   * ### PlansList.getSignInLnk()
+   * ### SignUpPage.getTermsOfServiceLnk()
    *
-   * Returns the link Element that returns to the Sign In page.
+   * Returns the Terms of Service from the page.
    *
    * @returns {Object} Selenium WebDriver Element
    */
@@ -58,29 +58,64 @@ var SignUp = {
       by.partialLinkText(this.locators.links.termsOfService.linkText));
   },
 
+  /**
+   * ### SignUpPage.getUsePolicyLnk()
+   *
+   * Returns the Use Policy from the page.
+   *
+   * @returns {Object} Selenium WebDriver Element
+   */
   getUsePolicyLnk: function () {
     return element(by.partialLinkText(this.locators.links.usePolicy.linkText));
   },
 
+  /**
+   * ### SignUpPage.getPrivacyLnk()
+   *
+   * Returns the Privacy Policy from the page.
+   *
+   * @returns {Object} Selenium WebDriver Element
+   */
   getPrivacyLnk: function () {
-    return e  lement(
+    return element(
       by.partialLinkText(this.locators.links.privacyPolicy.linkText));
   },
 
   // ## Methods to interact with the User List Page components
 
+  /**
+   * ### SignUpPage.clickTermsOfService()
+   *
+   * Clicks `Terms of Service` link
+   *
+   * @returns {Object} Promise
+   */
   clickTermsOfService: function () {
     return this
       .getTermsOfServiceLnk()
       .click();
   },
 
+  /**
+   * ### SignUpPage.clickUsePolicy()
+   *
+   * Clicks `Use Policy` link
+   *
+   * @returns {Object} Promise
+   */
   clickUsePolicy: function () {
     return this
       .getUsePolicyLnk()
       .click();
   },
 
+  /**
+   * ### SignUpPage.clickPrivacyPolicy()
+   *
+   * Clicks `Private Policy` link
+   *
+   * @returns {Object} Promise
+   */
   clickPrivacyPolicy: function () {
     return this
       .getPrivacyLnk()
