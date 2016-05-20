@@ -1,6 +1,5 @@
 (function(window) {
   'use strict';
-
   angular
     .module('revapm.Portal.Config')
     .constant('$config', {
@@ -139,7 +138,7 @@
        */
       LOGSHIPPERS_STATUS_REFRESH_INTERVAL: 25000,
       // Intro module configuration
-      INTRO_IS_ACTIVE: window.intro || true,
+      INTRO_IS_ACTIVE: (window.intro === true) ? true : false,
       ENABLE_SIMPLIFIED_SIGNUP_PROCESS: true,
 
       // Used by Angular Toaster
