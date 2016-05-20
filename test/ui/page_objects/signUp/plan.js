@@ -65,7 +65,7 @@ var PlanElement = function (titleEl) {
     /**
      * ### PlanElement.getHeaderEl()
      *
-     * Returns the Header Element that containss the title.
+     * Returns the Header Element that contains the title.
      *
      * @returns {Object} Selenium WebDriver Element
      */
@@ -74,23 +74,51 @@ var PlanElement = function (titleEl) {
         .element(by.css(this.locators.elements.header.css));
     },
 
+    /**
+     * ### PlanElement.getActionEl()
+     *
+     * Returns the Action Element that contains the buttons.
+     *
+     * @returns {Object} Selenium WebDriver Element
+     */
     getActionEl: function () {
       return containerEl
         .element(by.css(this.locators.elements.action.css));
     },
 
+    /**
+     * ### PlanElement.getTitleEl()
+     *
+     * Returns the Title Element that is inside the plan container element.
+     *
+     * @returns {Object} Selenium WebDriver Element
+     */
     getTitleEl: function () {
       return containerEl
         .getHeaderEl()
         .element(by.css(this.locators.labels.title.css));
     },
 
+    /**
+     * ### PlanElement.getSubscribeBtn()
+     *
+     * Returns Subscribe button from plan container.
+     *
+     * @returns {Object} Selenium WebDriver Element
+     */
     getSubscribeBtn: function () {
       return containerEl
         .getActionEl()
         .element(by.partialLinkText(this.locators.buttons.subscribe));
     },
 
+    /**
+     * ### PlanElement.getContactUsBtn()
+     *
+     * Returns Contact Us button from plan container.
+     *
+     * @returns {Object} Selenium WebDriver Element
+     */
     getContactUsBtn: function () {
       return containerEl
         .getActionEl()
@@ -99,18 +127,39 @@ var PlanElement = function (titleEl) {
 
     // ## Methods to interact with the User List Page components
 
+    /**
+     * ### PlanElement.getTitle()
+     *
+     * Returns the Title of the plan container.
+     *
+     * @returns {Object} Promise
+     */
     getTitle: function () {
       return this
         .getTitleEl()
         .getText();
     },
 
+    /**
+     * ### PlanElement.clickSubscribe()
+     *
+     * Clicks on Subscribe link from page.
+     *
+     * @returns {Object} Promise
+     */
     clickSubscribe: function () {
       return this
         .getSubscribeBtn()
         .click();
     },
 
+    /**
+     * ### PlanElement.clickContactUs()
+     *
+     * Clicks on Contact Us link from page.
+     *
+     * @returns {Object} Promise
+     */
     clickContactUs: function () {
       return this
         .getContactUsBtn()

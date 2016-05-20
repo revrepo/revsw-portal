@@ -18,6 +18,8 @@
 
 // # Plans List Page Object
 
+var Plan = require('./plan');
+
 // This `Plans List` Page Object abstracts all operations or actions that a
 // common user could do in the Plans List page from the Portal app/site.
 var PlansList = {
@@ -58,10 +60,26 @@ var PlansList = {
     return element(by.linkText(this.locators.links.signIn.linkText));
   },
 
+  /**
+   * ### PlanElement.getContactUsLnk()
+   *
+   * Returns the Contact Us link element.
+   *
+   * @returns {Object} Selenium WebDriver Element
+   */
   getContactUsLnk: function () {
     return element(by.linkText(this.locators.links.contactUs.linkText));
   },
 
+  /**
+   * ### PlanElement.getPlanEl()
+   *
+   * Returns a Plan element rom the list.
+   *
+   * @param {String} title, of the Plan element that is going to be returned.
+   *
+   * @returns {Object} Selenium WebDriver Element
+   */
   getPlanEl: function (title) {
     var plan;
     plan = element(by.cssContainingText(this.locators.labels.plan.css, title));
@@ -70,17 +88,31 @@ var PlansList = {
 
   // ## Methods to interact with the User List Page components
 
+  /**
+   * ### PlanElement.clickSignIn()
+   *
+   * Clicks the link to return to Sign In page.
+   *
+   * @returns {Object} Promise
+   */
   clickSignIn: function () {
     return this
       .getSignInLnk()
       .click();
   },
 
+  /**
+   * ### PlanElement.clickContactUs()
+   *
+   * Clicks the Contact Us link.
+   *
+   * @returns {Object} Promise
+   */
   clickContactUs: function () {
     return this
       .getContactUsLnk()
       .click();
-  },
+  }
 
   // ## Helper Methods
 
