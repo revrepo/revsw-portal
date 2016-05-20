@@ -1,21 +1,15 @@
 <div class="row" ng-init="initBillingPlans()">
   <div class="col-md-12">
-    <div class="panel panel-default center-block">
-      <div class="panel-heading">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="text-center">
-              <h4 class="">
-                                    The world of mobile app and web acceleration is just a few minutes away.<br><br>
-                                    <b>One month free trial - NO CREDIT CARD REQUIRED.</b><br><br>
-                                     Please select your RevAPM billing plan <br>
-                                      or <a ui-sref="index"> sign in if you already have an account</a>.
-                                </h4>
-            </div>
-          </div>
+    <div class="plans-heading center-block">
+        <div class="text-center">
+          <h2 class="text-capitalize">RevAPM billing plan</h2>
+          <p class="text-muted">The world of mobile app and web acceleration is just a few minutes away.</p>
+
+          <h4 class="text-info"><b>One month free trial - NO CREDIT CARD REQUIRED</b></h4>
         </div>
-      </div>
-      <div class="panel-body ">
+    </div>
+
+     <div class="plans-body">
         <div class="row" ng-if="records.length > 0">
           <div class="col-md-3  text-center" ng-repeat="item in records | orderBy: 'monthly_fee'">
             <div class="billing-plan">
@@ -61,5 +55,6 @@
         <p class="lead">Not sure which plan to choose? <a href="https://www.revapm.com/contact-us/" class="alert-link"><!-- <i class="glyphicon glyphicon-envelope"></i> -->Talk to an expert</a></p>
         </div>
       </div>
+
     </div>
   </div>

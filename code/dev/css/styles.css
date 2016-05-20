@@ -38,9 +38,9 @@ html,
 body {
   height: 100%;
 }
-body {
-  padding-top: 60px;
-}
+/*body {*/
+  /*padding-top: 60px;*/
+/*}*/
 .main-layout {
   overflow-x: auto;
 }
@@ -703,7 +703,7 @@ section[drawer] .side-menu .dashboard_menu .side-menu-item.item-title a {
   background-image: url('../images/background-dashboard.png');
 }
 body {
-  overflow-y: hidden;
+  /*overflow-y: hidden;*/
 }
 @-moz-document url-prefix() {
   section[drawer] .side-menu .side-menu-item {
@@ -885,4 +885,30 @@ i {
 }
 .introjs-tooltipbuttons .introjs-button {
   font: 15px / normal sans-serif;
+}
+/* Singup css goes here */
+.signup-wrapper {
+  background-color: #f2f2f2;;
+  padding-top: 30px;
+}
+.signup-wrapper .signup-container {
+ background-color: #fff;
+  margin: 0 30px;
+}
+.header-logo img{
+  padding: 20px;
+  width: 200px;
+}
+.signup {
+  padding: 20px;
+}
+.signup-wrapper header{
+  border-bottom: 1px solid #EAEAEA;
+}
+.signup-plans {
+  margin-top: 10px;
+}
+.login-link {
+  color: #A1A2A5;
+  padding: 25px;
 }
