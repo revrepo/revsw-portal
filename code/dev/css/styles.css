@@ -813,29 +813,51 @@ i {
 }
 .billing-plan {
   border: solid 1px;
-  border-color: #F8A543;
-  margin: 5px;
-  border-radius: 3px;
+  border-color: #EAEAEA;
 }
 .billing-plan.current {
   margin-top: -20px;
 }
 .billing-plan-header {
-  color: #FFEBCD;
-  background-color: #F8A543;
-  padding: 10px;
+  color: #FFF;
+  background-color: #4A4F55;
+  padding: 7.5px;
+}
+.billing-plan-price h1 {
+  color: #424242;
 }
 .billing-plan-ammount {
-  color: green;
+  color: #FF8A00;
 }
 .billing-plan-action {
-  padding-bottom: 20px;
+  margin-top: 30px;
+  padding: 0 15px 20px;
+}
+.billing-plan-action button.btn-success, .billing-plan-action a.btn-success {
+  background-color: #FF8A00;
+  border-radius: 0;
+  width: 170px;
+  text-transform: uppercase;
+  border: 0;
+  outline: none;
+}
+.billing-plan-action button.btn-success:hover, .billing-plan-action a.btn-success:hover{
+  background-color: rgba(255, 136, 0, 0.70);
+  border: 0;
 }
 .billing-plan-details {
-  margin: 0 20px;
+  margin: 0 15px;
+  color: #777;
+}
+.billing-plan-details h4 {
+  color: #424242;
 }
 .billing-plan-description {
-  min-height: 170px;
+  min-height: 75px;
+  color: #777;
+}
+.billing-plan-services {
+  color: #777;
 }
 @media (max-width: 480px) {
   .billing-plan-description {
@@ -844,17 +866,17 @@ i {
 }
 @media (min-width: 768px) {
   .billing-plan-description {
-    min-height: 50px;
+    min-height: 75px;
   }
 }
 @media (min-width: 992px) {
   .billing-plan-description {
-    min-height: 260px;
+    min-height: 240px;
   }
 }
 @media (min-width: 1200px) {
   .billing-plan-description {
-    min-height: 140px;
+    min-height: 120px;
   }
 }
 .subscribe-contact-info-terms {
@@ -890,6 +912,7 @@ i {
 .signup-wrapper {
   background-color: #f2f2f2;;
   padding-top: 30px;
+  padding-bottom: 30px;
 }
 .signup-wrapper .signup-container {
  background-color: #fff;
@@ -900,7 +923,7 @@ i {
   width: 200px;
 }
 .signup {
-  padding: 20px;
+  padding: 25px 0 15px;
 }
 .signup-wrapper header{
   border-bottom: 1px solid #EAEAEA;
@@ -911,4 +934,31 @@ i {
 .login-link {
   color: #A1A2A5;
   padding: 25px;
+}
+.plans-body {
+  padding: 10px 45px;
+}
+.plans-heading h2 {
+  color: #424242;
+}
+.individual-plan {
+  padding: 5px;
+  text-align: center;
+}
+.billing-plan-title {
+  margin-top: 10px;
+}
+.billing-plan:hover {
+  -moz-box-shadow: 0 5px 20px 0 #888888;
+  -webkit-box-shadow: 0 5px 20px 0 #888888;
+  box-shadow: 0 5px 20px 0 #888888;
+}
+.signup-wrapper .panel-footer {
+  background-color: #fff;
+  margin-top: 20px;
+}
+.signup-wrapper .lead {
+  margin-top: 30px;
+  font-size: 18px;
+  color: #777;
 }
