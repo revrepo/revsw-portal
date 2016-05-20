@@ -29,21 +29,11 @@
       if ($state.is('signup')) {
         $scope.model = _.clone(User.getUser());
         $scope.model.country = 'US';
-        // if(!$scope.model.billing_plan){
-        //   $state.go('billing_plans');
-        // }
       }
     });
 
     $scope.NO_SPECIAL_CHARS = $config.PATTERNS.NO_SPECIAL_CHARS;
 
-    //$scope.user = User.getUser();
-
-    // $scope.chooseBillingPlan = function (id, name) {
-    //   $localStorage.user = {billing_plan: id};
-    //   $state.transitionTo('signup');
-
-    // };
     /**
      * @name chooseBillingPlan
      * @description
@@ -73,21 +63,6 @@
 
     $scope.countries = Countries.query();
 
-    $scope.getQueryString = function(model) {
-      var q = '?first_name=' + encodeURIComponent(model.firstname ? model.firstname : '') +
-        '&last_name=' + encodeURIComponent(model.lastname ? model.lastname : '') +
-        '&email=' + encodeURIComponent(model.email ? model.email : '') +
-        '&phone=' + encodeURIComponent(model.phone_number ? model.phone_number : '') +
-        '&reference=' + encodeURIComponent(model.user_id ? model.user_id : '') +
-        '&organization=' + encodeURIComponent(model.companyName ? model.companyName : '') +
-        '&billing_address=' + encodeURIComponent(model.address1 ? model.address1 : '') +
-        '&billing_address_2=' + encodeURIComponent(model.address2 ? model.address2 : '') +
-        '&billing_city=' + encodeURIComponent(model.city ? model.city : '') +
-        '&billing_zip=' + encodeURIComponent(model.zipcode ? model.zipcode : '') +
-        '&billing_country=' + encodeURIComponent(model.country ? model.country : '');
-      $scope.query = q;
-    };
-
     $scope.zipRegex = '[0-9]{1,10}';
     $scope.phoneRegex = '[0-9, \\s, \\+, \\-, \\(, \\)]{1,20}';
 
@@ -101,9 +76,6 @@
       }
       $scope.userData = _.clone(model);
       $scope.alertService.clear();
-      //      delete model.passwordConfirm;
-      //      model.collection_method = ['Automatic'];
-      //      model.billing_schedule = 'monthly';
 
       Users.signup(model)
         .$promise
@@ -119,7 +91,7 @@
           // - 2. User with email alraedy exists
           // - 3. Server error (email, send)
 
-          AlertService.danger(err, 5000);
+          AlertService.danger(err);
         });
     };
     $scope._loading = false;
