@@ -61,7 +61,7 @@ var PlansList = {
   },
 
   /**
-   * ### PlanElement.getContactUsLnk()
+   * ### PlansList.getContactUsLnk()
    *
    * Returns the Contact Us link element.
    *
@@ -72,7 +72,7 @@ var PlansList = {
   },
 
   /**
-   * ### PlanElement.getPlanEl()
+   * ### PlansList.getPlanEl()
    *
    * Returns a Plan element rom the list.
    *
@@ -89,7 +89,7 @@ var PlansList = {
   // ## Methods to interact with the User List Page components
 
   /**
-   * ### PlanElement.clickSignIn()
+   * ### PlansList.clickSignIn()
    *
    * Clicks the link to return to Sign In page.
    *
@@ -102,7 +102,7 @@ var PlansList = {
   },
 
   /**
-   * ### PlanElement.clickContactUs()
+   * ### PlansList.clickContactUs()
    *
    * Clicks the Contact Us link.
    *
