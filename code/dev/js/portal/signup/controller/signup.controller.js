@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
 
   angular
@@ -7,24 +7,26 @@
 
   /*@ngInject*/
   function SignupController($scope,
-                            Users,
-                            $localStorage,
-                            User,
-                            Companies,
-                            BillingPlans,
-                            CRUDController,
-                            Countries,
-                            $state,
-                            $config,
-                            AlertService,
-                            $injector) {
+    Users,
+    $localStorage,
+    User,
+    Companies,
+    BillingPlans,
+    CRUDController,
+    Countries,
+    $state,
+    $config,
+    AlertService,
+    $injector) {
 
     //Invoking crud actions
     $injector.invoke(CRUDController,
-      this, {$scope: $scope});
+      this, {
+        $scope: $scope
+      });
 
-    $scope.$on('$stateChangeSuccess', function (state) {
-      if ($state.is('signup')){
+    $scope.$on('$stateChangeSuccess', function(state) {
+      if ($state.is('signup')) {
         $scope.model = _.clone(User.getUser());
         $scope.model.country = 'US';
         // if(!$scope.model.billing_plan){
@@ -42,44 +44,54 @@
     //   $state.transitionTo('signup');
 
     // };
-
-    $scope.chooseBillingPlan = function (bp) {
-      $state.go('signup.contact_info',{billing_plan_handler:bp.chargify_handle});
+    /**
+     * @name chooseBillingPlan
+     * @description
+     *
+     * Choose Billin Plan for registration
+     *
+     * @param  {Object} bp Billing Plan
+     * @return
+     */
+    $scope.chooseBillingPlan = function(bp) {
+      $state.go('signup.contact_info2', {
+        billing_plan_handler: bp.chargify_handle
+      });
     };
 
-    $scope.initBillingPlans = function () {
+    $scope.initBillingPlans = function() {
       $scope.newUser = {};
       $scope.setResource(BillingPlans);
       $scope.list();
     };
 
-    $scope.initLoginRedirect = function () {
-      setTimeout(function () {
-          $state.go('login');
+    $scope.initLoginRedirect = function() {
+      setTimeout(function() {
+        $state.go('login');
       }, 10000);
     };
 
     $scope.countries = Countries.query();
 
-    $scope.getQueryString = function (model) {
-        var q = '?first_name=' + encodeURIComponent(model.firstname ? model.firstname : '') +
-          '&last_name=' + encodeURIComponent(model.lastname ? model.lastname : '') +
-          '&email=' + encodeURIComponent(model.email ? model.email : '') +
-          '&phone=' + encodeURIComponent(model.phone_number ? model.phone_number : '') +
-          '&reference=' + encodeURIComponent(model.user_id ? model.user_id : '') +
-          '&organization=' + encodeURIComponent(model.companyName ? model.companyName : '') +
-          '&billing_address=' + encodeURIComponent(model.address1 ? model.address1 : '') +
-          '&billing_address_2=' + encodeURIComponent(model.address2 ? model.address2 : '') +
-          '&billing_city=' +  encodeURIComponent(model.city ? model.city : '') +
-          '&billing_zip=' + encodeURIComponent(model.zipcode ? model.zipcode : '') +
-          '&billing_country=' + encodeURIComponent(model.country ? model.country : '');
-        $scope.query = q;
+    $scope.getQueryString = function(model) {
+      var q = '?first_name=' + encodeURIComponent(model.firstname ? model.firstname : '') +
+        '&last_name=' + encodeURIComponent(model.lastname ? model.lastname : '') +
+        '&email=' + encodeURIComponent(model.email ? model.email : '') +
+        '&phone=' + encodeURIComponent(model.phone_number ? model.phone_number : '') +
+        '&reference=' + encodeURIComponent(model.user_id ? model.user_id : '') +
+        '&organization=' + encodeURIComponent(model.companyName ? model.companyName : '') +
+        '&billing_address=' + encodeURIComponent(model.address1 ? model.address1 : '') +
+        '&billing_address_2=' + encodeURIComponent(model.address2 ? model.address2 : '') +
+        '&billing_city=' + encodeURIComponent(model.city ? model.city : '') +
+        '&billing_zip=' + encodeURIComponent(model.zipcode ? model.zipcode : '') +
+        '&billing_country=' + encodeURIComponent(model.country ? model.country : '');
+      $scope.query = q;
     };
 
     $scope.zipRegex = '[0-9]{1,10}';
     $scope.phoneRegex = '[0-9, \\s, \\+, \\-, \\(, \\)]{1,20}';
 
-    $scope.createUser = function (model) {
+    $scope.createUser = function(model) {
       if (!model) {
         return;
       }
@@ -89,17 +101,17 @@
       }
       $scope.userData = _.clone(model);
       $scope.alertService.clear();
-//      delete model.passwordConfirm;
-//      model.collection_method = ['Automatic'];
-//      model.billing_schedule = 'monthly';
+      //      delete model.passwordConfirm;
+      //      model.collection_method = ['Automatic'];
+      //      model.billing_schedule = 'monthly';
 
       Users.signup(model)
         .$promise
-        .then(function (data) {
+        .then(function(data) {
           $localStorage.user.email = model.email;
           $state.go('email_sent');
         })
-        .catch(function (err) {
+        .catch(function(err) {
           model.passwordConfirm = model.password;
           // NOTE: detect type problem
           console.log(err);
