@@ -8,3 +8,5 @@ window.gaAccount = 'UA-68856309-3'; // Production
 //   console.warn = function() {};
 //   console.info = function() {};
 // }
+// Intro configuration flag (true=on, false=off)
+window.intro = true;

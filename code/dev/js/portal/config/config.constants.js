@@ -1,4 +1,4 @@
-(function() {
+(function(window) {
   'use strict';
 
   angular
@@ -138,7 +138,8 @@
        * Interval delay for refreshing Log Shippers status
        */
       LOGSHIPPERS_STATUS_REFRESH_INTERVAL: 25000,
-      INTRO_IS_ACTIVE: false,
+      // Intro module configuration
+      INTRO_IS_ACTIVE: window.intro || true,
       ENABLE_SIMPLIFIED_SIGNUP_PROCESS: true,
 
       // Used by Angular Toaster
@@ -157,4 +158,4 @@
       }
     });
 
-})();
+})(window);
