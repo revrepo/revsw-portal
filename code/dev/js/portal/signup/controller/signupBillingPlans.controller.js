@@ -3,6 +3,7 @@
   angular
     .module('revapm.Portal.Signup')
     .controller('SignupBillingPlansController', SignupBillingPlansController);
+
   /**
    * @name SignupBillingPlansController
    * @description
@@ -15,12 +16,13 @@
    * @param {[type]} $localStorage [description]
    * @param {[type]} Countries     [description]
    */
-  function SignupBillingPlansController($scope, Users, AlertService, $stateParams, $localStorage, Countries, $uibModal) {
+  function SignupBillingPlansController($scope, Users, AlertService, $stateParams, $localStorage, Countries, $config, $uibModal) {
     'ngInject';
     var billing_plan_handler = $stateParams.billing_plan_handler;
     var $ctrl = this;
 
     this.isRegistryFinish = false;
+    $scope.NO_SPECIAL_CHARS = $config.PATTERNS.NO_SPECIAL_CHARS;
 
     this.countries = Countries.query();
 

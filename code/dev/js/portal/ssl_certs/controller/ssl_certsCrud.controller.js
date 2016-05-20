@@ -38,6 +38,8 @@
 
     $scope.setResource(SSL_certs);
 
+    $scope.NO_SPECIAL_CHARS = $config.PATTERNS.NO_SPECIAL_CHARS;
+
     /**
      * @name setAccountName
      * @description

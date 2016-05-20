@@ -42,6 +42,8 @@
 
     $scope.setResource(DomainsConfig);
 
+    $scope.NO_SPECIAL_CHARS = $config.PATTERNS.NO_SPECIAL_CHARS;
+
     /**
      * @name setAccountName
      * @description

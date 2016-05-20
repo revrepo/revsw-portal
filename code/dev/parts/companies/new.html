@@ -36,6 +36,7 @@
                      name="companyName"
                      ng-maxlength="150"
                      id="name"
+                     ng-pattern="NO_SPECIAL_CHARS"
                      placeholder="Company Name" required>
               <div class="error-messages" ng-messages="createForm.companyName.$error" role="alert" ng-messages-multiple>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
@@ -45,7 +46,7 @@
           <div class="form-group" ng-class="{ 'has-error': createForm.comment.$invalid && createForm.comment.$dirty }">
             <label for="comment" class="col-sm-2 control-label">Comment</label>
             <div class="col-sm-10">
-              <textarea id="comment" placeholder="Comment (max 300 symbol)" ng-maxlength="300" class="form-control" id="comment" name="comment" ng-model="model.comment" ng-disabled="_loading">
+              <textarea id="comment" placeholder="Comment (max 300 symbol)" ng-maxlength="300" class="form-control" id="comment" name="comment" ng-model="model.comment" ng-pattern="NO_SPECIAL_CHARS" ng-disabled="_loading">
               </textarea>
               <div class="error-messages" ng-messages="createForm.comment.$error" role="alert" ng-messages-multiple>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>

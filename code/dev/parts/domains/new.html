@@ -43,12 +43,11 @@
                      ng-model="model.domain_name"
                      id="domain_name"
                      name="domain_name"
-                     ng-pattern="/(?=^.{4,253}$)(^((?!-)(?!\_)[a-zA-Z0-9-\_]{0,62}[a-zA-Z0-9]\.)+[a-zA-Z]{2,63}$)/"
+                     validate-domain-name
                      ng-maxlength="50"
                      placeholder="Domain Name"
                      required>
               <div class="error-messages" ng-messages="createForm.domain_name.$error" role="alert" ng-messages-multiple>
-                <div ng-message="pattern" class="alert-text alert-text--pattern">The entered value is not a correct domain name</div>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
               </div>
             </div>
@@ -86,6 +85,7 @@
                      ng-model="model.origin_server"
                      id="origin_server"
                      name="origin_server"
+                     validate-origin-server-name
                      ng-maxlength="50"
                      placeholder="Origin Server name"
                      required>
@@ -109,6 +109,7 @@
                      id="origin_host_header"
                      name="origin_host_header"
                      ng-maxlength="50"
+                     validate-domain-name
                      placeholder="Origin Host Header"
                      required>
               <div class="error-messages" ng-messages="createForm.origin_host_header.$error" role="alert" ng-messages-multiple>
@@ -158,7 +159,7 @@
           <div class="form-group" ng-class="{ 'has-error': createForm.comment.$invalid && createForm.comment.$dirty }">
             <label for="comment" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Comment">Comment</label>
             <div class="col-md-10">
-              <textarea id="comment" placeholder="Comment (300 characters max)" ng-maxlength="300" class="form-control" name="comment" ng-model="model.comment" ng-disabled="_loading">
+              <textarea id="comment" placeholder="Comment (300 characters max)" ng-maxlength="300" class="form-control" name="comment" ng-model="model.comment" ng-pattern="NO_SPECIAL_CHARS" ng-disabled="_loading">
               </textarea>
               <div class="error-messages" ng-messages="createForm.comment.$error" role="alert" ng-messages-multiple>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
