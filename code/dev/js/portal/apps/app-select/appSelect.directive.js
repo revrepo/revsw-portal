@@ -30,7 +30,7 @@
 
         //  ---------------------------------
         // Load user applications
-        User.getUserApps()
+        User.getUserApps(true)
           .then(function ( apps ) {
             $scope.apps = apps;
           })

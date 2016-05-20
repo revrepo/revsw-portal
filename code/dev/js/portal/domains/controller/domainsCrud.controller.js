@@ -314,7 +314,7 @@
     };
 
     $scope.createDomain = function(model, isStay) {
-      var _model =angular.copy(model);
+      var _model = angular.copy(model);
       $scope
         .create(_model, isStay)
         .then(function(data) {
@@ -341,7 +341,9 @@
         model.id = $stateParams.id;
       }
       var modelId = model.id;
-      $scope.confirm('confirmPublishModal.html', model).then(function() {
+      $scope.confirm('confirmPublishModal.html', {
+        domain_name: $scope.modelInfo.domain_name
+      }).then(function() {
         model = $scope.prepareSimpleDomainUpdate(model);
         $scope.update({
             id: modelId,
@@ -385,7 +387,9 @@
         model.id = $stateParams.id;
       }
       var modelId = model.id;
-      $scope.confirm('confirmUpdateModal.html', model).then(function() {
+      $scope.confirm('confirmUpdateModal.html', {
+        domain_name: $scope.modelInfo.domain_name
+      }).then(function() {
         model = $scope.prepareSimpleDomainUpdate(model);
         $scope.update({
             id: modelId
