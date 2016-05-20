@@ -45,7 +45,7 @@ var PurgeCacheAdvanced = {
         css: '.ace_content'
       },
       jsonExamples: {
-        css: '.col-md-4 .form-group'
+        css: '.col-md-4 .form-group >div'
       }
     },
     buttons: {
