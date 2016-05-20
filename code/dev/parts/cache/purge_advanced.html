@@ -47,7 +47,6 @@
             <div class="form-group">
               <div class="col-md-7 no-left-padding">
                 <div name="json"
-                     class="col-md-12"
                      id="json"
                      ng-model="json"
                      options="options"
@@ -76,16 +75,14 @@
               </div>
 
               <div class="col-md-4">
-                <label>Examples:</label>
-                <div class="form-group" ng-repeat="item in exampleJsons">
-                  <div class="">
+                <div class="form-group">
+                  <label>Examples:</label>
+                  <div class=" " ng-repeat="item in exampleJsons">
                     <p ng-bind-html="item.text"></p>
                     <pre ng-bind="item.json"></pre>
                     <button class="btn btn-info text-capitalize" ng-click="copyToJsonEditor(item)">Use This Example</button>
                   </div>
-                  <br>
                 </div>
-
               </div>
             </div>
 
