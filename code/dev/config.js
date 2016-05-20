@@ -4,7 +4,7 @@ window.API_URL = 'https://testsjc20-api01.revsw.net/v1';
 // window.API_URL = 'https://testsjc20-victordev01.revsw.net:8000/v1';
 
 // Local development server
-// window.API_URL = 'http://localhost:8000/v1';
+// window.API_URL = 'https://localhost:8000/v1';
 
 // Production staging API server
 // window.API_URL = 'https://iad02-api03.revsw.net/v1';
@@ -14,4 +14,4 @@ window.API_URL = 'https://testsjc20-api01.revsw.net/v1';
 // Google Analytic Account ID
 window.gaAccount = 'UA-68856309-2'; // develop
 // Intro configuration flag (true=on, false=off)
-window.intro = true;
+window.intro = false;
