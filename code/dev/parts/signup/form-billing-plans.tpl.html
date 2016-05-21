@@ -10,7 +10,7 @@
     </div>
 
      <div class="plans-body">
-        <div class="row" ng-if="records.length > 0">
+        <div class="row">
           <div class="col-sm-6 col-md-3 individual-plan" ng-repeat="item in records | orderBy: 'monthly_fee'">
             <div class="billing-plan">
               <div class="billing-plan-header">
@@ -34,7 +34,7 @@
           <hr/>
         </div>
         <br>
-        <div class="row">
+        <div class="row" ng-show="records.length">
           <div class=" col-sm-offset-3 col-md-offset-4 col-sm-6 col-md-4  text-center " _style="max-height: 280px">
             <div class="billing-plan">
               <div class="billing-plan-header">
