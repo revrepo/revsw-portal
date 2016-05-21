@@ -51,7 +51,7 @@ body {
   min-height: 100%;
 }
 .page-inner {
-  background-color: #eeeeee;
+  background-color: #fafbfc;
 }
 .layout {
   height: 100%;
@@ -61,7 +61,7 @@ body {
 }
 section[main] {
   overflow: auto;
-  background-color: #eeeeee;
+  background-color: #fafbfc;
 }
 .max-height-pre {
   max-height: 400px;
@@ -379,7 +379,7 @@ form .error-messages.ng-active {
   z-index: 999;
 }
 section[drawer] {
-  background-color: #2E2F2F;
+  background-color: #3C3B39;
 }
 section[drawer] #logo {
   background-color: #606363;
@@ -397,7 +397,7 @@ section[drawer] .side-menu .side-menu-item {
   height: 40px;
   line-height: 20px;
   padding: 10px;
-  font-size: 16px;
+  font-size: 14px;
   color: #f7941e;
   text-decoration: none;
 }
@@ -457,6 +457,8 @@ section[drawer] .side-menu .active-side-menu-item .side-menu-sub-item {
 .navbar {
   margin: 0;
   border: none;
+  border-radius: 0;
+  background-color: #fff;
 }
 .navbar .navbar-inner a.two-line {
   line-height: 30px;
@@ -485,6 +487,7 @@ section[drawer] .side-menu .active-side-menu-item .side-menu-sub-item {
   height: 50px;
 }
 .navbar-nav > li > a {
+  color: #FF8A00;
   padding-top: 10px;
   padding-bottom: 10px;
   line-height: 16px;
@@ -910,7 +913,7 @@ i {
 }
 /* Singup css goes here */
 .signup-wrapper {
-  background-color: #f2f2f2;;
+  background-color: #F6F6F6;
   padding-top: 30px;
   padding-bottom: 30px;
   min-height: 100%;
@@ -973,25 +976,29 @@ i {
 .signup-form .form-control{
   height: 40px;
 }
-.signup-form .control-label {
+.signup-form .control-label, label {
   color: #777;
 }
-.form-action .btn {
+form .btn {
   height: 40px;
   line-height: 25px;
-  width: 100px;
 }
-.form-action button.btn-success {
+.btn.btn-success {
   background-color: #FF8A00;
   border-color: #FF8A00;
 }
-.form-action button.btn-success:hover {
+.btn.btn-success:hover {
   background-color: rgba(255, 138, 0, 0.70);
   border-color: #FF8A00;
 }
-
+.panel-default .panel-heading {
+  background-color: #4A4F55;
+}
+.panel-heading label {
+  color: #fff;
+}
 /* some common input form css */
-input[type="text"], input[type="email"], input[type="password"], textarea {
+input[type="text"], input[type="email"], input[type="password"], textarea, input.form-control {
   padding: 1%;
   border: 1px solid #EAEAEA;
   line-height: 20px;
@@ -1005,7 +1012,7 @@ input[type="text"], input[type="email"], input[type="password"], textarea {
   -webkit-box-shadow: none;
   box-shadow: none;
 }
-input[type="text"], input[type="email"], input[type="search"], input[type="password"], textarea {
+input[type="text"], input[type="email"], input[type="search"], input[type="password"], textarea,input.form-control {
   -moz-appearance: none !important;
   -webkit-appearance: none !important;
   appearance: none !important;
