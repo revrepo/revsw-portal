@@ -38,9 +38,6 @@ html,
 body {
   height: 100%;
 }
-/*body {*/
-  /*padding-top: 60px;*/
-/*}*/
 .main-layout {
   overflow-x: auto;
 }
@@ -61,7 +58,7 @@ body {
 }
 section[main] {
   overflow: auto;
-  background-color: #fafbfc;
+  background-color: #eeeeee;
 }
 .max-height-pre {
   max-height: 400px;
@@ -300,6 +297,61 @@ form .error-messages.ng-active {
   line-height: 100%;
   opacity: 1;
 }
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea,
+input.form-control {
+  padding: 1%;
+  border: 1px solid #EAEAEA;
+  line-height: 20px;
+  width: 98%;
+  margin: 0 0 5px;
+  background-color: #F8F8F8;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+input[type="text"],
+input[type="email"],
+input[type="search"],
+input[type="password"],
+textarea,
+input.form-control {
+  -moz-appearance: none !important;
+  -webkit-appearance: none !important;
+  appearance: none !important;
+}
+button,
+input,
+select,
+textarea {
+  color: #666666;
+  font: 16px 'Lato', sans-serif;
+  line-height: 20px;
+  word-wrap: break-word;
+}
+form .btn {
+  height: 40px;
+  line-height: 25px;
+}
+.btn.btn-success {
+  background-color: #FF8A00;
+  border-color: #FF8A00;
+}
+.btn.btn-success:hover {
+  background-color: rgba(255, 138, 0, 0.7);
+  border-color: #FF8A00;
+}
+.panel-default .panel-heading {
+  background-color: #4A4F55;
+}
+.panel-heading label {
+  color: #fff;
+}
 .main_img_container {
   left: 50%;
   position: absolute;
@@ -375,11 +427,66 @@ form .error-messages.ng-active {
   width: 100%;
   height: 100%;
 }
+.signup {
+  padding: 25px 0 15px;
+}
+.signup-wrapper {
+  background-color: #F6F6F6;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  min-height: 100%;
+}
+.signup-wrapper .panel-footer {
+  background-color: #fff;
+  margin-top: 20px;
+}
+.signup-wrapper .lead {
+  margin-top: 30px;
+  font-size: 18px;
+  color: #777;
+}
+.signup-wrapper header {
+  border-bottom: 1px solid #EAEAEA;
+}
+.signup-container {
+  background-color: #fff;
+  margin: 0 30px;
+}
+.signup-plans {
+  margin-top: 10px;
+}
+.signup-form .form-control {
+  height: 40px;
+}
+.signup-form .control-label,
+.signup-form label {
+  color: #777;
+}
+.header-logo img {
+  padding: 20px;
+  width: 200px;
+}
+.login-link {
+  color: #A1A2A5;
+  padding: 25px;
+}
+.plans-body {
+  padding: 10px 45px;
+}
+.plans-heading h2 {
+  color: #424242;
+}
+.form-body {
+  margin-top: 25px;
+}
+.form-action {
+  padding: 12.5px 0;
+}
 #drawer {
   z-index: 999;
 }
 section[drawer] {
-  background-color: #3C3B39;
+  background-color: #2E2F2F;
 }
 section[drawer] #logo {
   background-color: #606363;
@@ -705,9 +812,6 @@ section[drawer] .side-menu .dashboard_menu .side-menu-item.item-title a {
   background-repeat: no-repeat;
   background-image: url('../images/background-dashboard.png');
 }
-body {
-  /*overflow-y: hidden;*/
-}
 @-moz-document url-prefix() {
   section[drawer] .side-menu .side-menu-item {
     padding-left: 20px;
@@ -815,28 +919,37 @@ i {
   content: "\e912";
 }
 .billing-plan {
-  border: 1px solid #EAEAEA;
+  border: 1px solid #4A4F55;
   background: #F5F5F5;
+}
+.billing-plan:hover {
+  -moz-box-shadow: 0 5px 20px 0 #888888;
+  -webkit-box-shadow: 0 5px 20px 0 #888888;
+  box-shadow: 0 5px 20px 0 #888888;
 }
 .billing-plan.current {
   margin-top: -20px;
 }
 .billing-plan-header {
-  color: #FFF;
+  color: #fff;
   background-color: #4A4F55;
   padding: 7.5px;
 }
-.billing-plan-price h1 {
-  color: #424242;
+.billing-plan-title {
+  margin-top: 10px;
 }
 .billing-plan-ammount {
-  color: #FF8A00;
+  color: #f7941e;
+}
+.billing-plan-services {
+  color: #777;
 }
 .billing-plan-action {
   margin-top: 30px;
   padding: 0 15px 20px;
 }
-.billing-plan-action button.btn-success, .billing-plan-action a.btn-success {
+.billing-plan-action button.btn-success,
+.billing-plan-action a.btn-success {
   background-color: #FF8A00;
   border-radius: 0;
   width: 170px;
@@ -844,22 +957,14 @@ i {
   border: 0;
   outline: none;
 }
-.billing-plan-action button.btn-success:hover, .billing-plan-action a.btn-success:hover{
-  background-color: rgba(255, 136, 0, 0.70);
-  border: 0;
-}
 .billing-plan-details {
-  margin: 0 15px;
-  color: #777;
+  margin: 0 20px;
 }
 .billing-plan-details h4 {
   color: #424242;
 }
 .billing-plan-description {
   min-height: 75px;
-  color: #777;
-}
-.billing-plan-services {
   color: #777;
 }
 @media (max-width: 480px) {
@@ -886,6 +991,10 @@ i {
   margin: -10px 0 0 47px;
   font-weight: bold;
 }
+.individual-plan {
+  padding: 5px;
+  text-align: center;
+}
 .subscription-summary .stats-highlights-table-row {
   display: table-row;
 }
@@ -910,116 +1019,4 @@ i {
 }
 .introjs-tooltipbuttons .introjs-button {
   font: 15px / normal sans-serif;
-}
-/* Singup css goes here */
-.signup-wrapper {
-  background-color: #F6F6F6;
-  padding-top: 30px;
-  padding-bottom: 30px;
-  min-height: 100%;
-}
-.signup-wrapper .signup-container {
- background-color: #fff;
-  margin: 0 30px;
-}
-.header-logo img{
-  padding: 20px;
-  width: 200px;
-}
-.signup {
-  padding: 25px 0 15px;
-}
-.signup-wrapper header{
-  border-bottom: 1px solid #EAEAEA;
-}
-.signup-plans {
-  margin-top: 10px;
-}
-.login-link {
-  color: #A1A2A5;
-  padding: 25px;
-}
-.plans-body {
-  padding: 10px 45px;
-}
-.plans-heading h2 {
-  color: #424242;
-}
-.individual-plan {
-  padding: 5px;
-  text-align: center;
-}
-.billing-plan-title {
-  margin-top: 10px;
-}
-.billing-plan:hover {
-  -moz-box-shadow: 0 5px 20px 0 #888888;
-  -webkit-box-shadow: 0 5px 20px 0 #888888;
-  box-shadow: 0 5px 20px 0 #888888;
-}
-.signup-wrapper .panel-footer {
-  background-color: #fff;
-  margin-top: 20px;
-}
-.signup-wrapper .lead {
-  margin-top: 30px;
-  font-size: 18px;
-  color: #777;
-}
-
-.form-body {
-  margin-top: 25px;
-}
-.form-action {
-  padding: 12.5px 0;
-}
-.signup-form .form-control{
-  height: 40px;
-}
-.signup-form .control-label, label {
-  color: #777;
-}
-form .btn {
-  height: 40px;
-  line-height: 25px;
-}
-.btn.btn-success {
-  background-color: #FF8A00;
-  border-color: #FF8A00;
-}
-.btn.btn-success:hover {
-  background-color: rgba(255, 138, 0, 0.70);
-  border-color: #FF8A00;
-}
-.panel-default .panel-heading {
-  background-color: #4A4F55;
-}
-.panel-heading label {
-  color: #fff;
-}
-/* some common input form css */
-input[type="text"], input[type="email"], input[type="password"], textarea, input.form-control {
-  padding: 1%;
-  border: 1px solid #EAEAEA;
-  line-height: 20px;
-  width: 98%;
-  margin: 0 0 5px;
-  background-color: #F8F8F8;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-  -moz-box-shadow: none;
-  -webkit-box-shadow: none;
-  box-shadow: none;
-}
-input[type="text"], input[type="email"], input[type="search"], input[type="password"], textarea,input.form-control {
-  -moz-appearance: none !important;
-  -webkit-appearance: none !important;
-  appearance: none !important;
-}
-button, input, select, textarea {
-  color: #666666;
-  font: 16px 'Lato', sans-serif;
-  line-height: 20px;
-  word-wrap: break-word;
 }
