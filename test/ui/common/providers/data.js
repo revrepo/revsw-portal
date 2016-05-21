@@ -113,7 +113,8 @@ var DataProvider = {
       companyName: 'API QA Reseller Company',
       originServer: prefix + '-portal-ui-test.origin-server.com',
       originHostHeader: prefix + '-portal-ui-test.origin-host-header.com',
-      originLocation: 'HQ Test Lab'
+      originLocation: 'HQ Test Lab',
+      bttKey: '573bf3f5b884a4202599a4cd'
     };
   },
 
@@ -258,7 +259,7 @@ var DataProvider = {
    */
   generateUsageReportData: function () {
     return {
-      companyName: 'API QA Account updated',
+      companyName: 'API QA Account',
       monthDD: '2016-01'
     };
   },
@@ -289,7 +290,7 @@ var DataProvider = {
   generateAccountProfileData: function () {
     var timestamp = Date.now();
     return {
-      companyName: 'QA-Company-' + timestamp,
+      companyName: 'QA-Account-Profile-' + timestamp,
       firstName: 'TestFirstName01',
       lastName: 'TestLastName01',
       phoneNumber: '1111111111',
@@ -326,8 +327,9 @@ var DataProvider = {
    *     }
    */
   generateAccountBillingData: function () {
+    var timestamp = Date.now();
     return {
-      companyName: 'Company01',
+      companyName: 'QA-Account-Billing-' + timestamp,
       firstName: 'TestFirstName01',
       lastName: 'TestLastName01',
       phoneNumber: '1111111111',

@@ -39,7 +39,11 @@ var AddDomain = {
         linkText: 'Back To List'
       },
       createDomain: {
-        css: '.btn.btn-success'
+        css: '.btn.btn-success',
+        id: 'create_domain'
+      },
+      createDomainAndAddMore: {
+        id: 'create_domain_and_add_more'
       },
       cancel: {
         linkText: 'Cancel'
@@ -88,7 +92,19 @@ var AddDomain = {
    * @returns {Selenium WebDriver Element}
    */
   getCreateDomainBtn: function () {
-    return element(by.css(this.locators.buttons.createDomain.css));
+    return element(by.id(this.locators.buttons.createDomain.id));
+  },
+
+  /**
+   * ### AddDomain.getCreateDomainAndAddMoreBtn()
+   *
+   * Returns the reference to the `Create And Add More` button (Selenium WebDriver
+   * Element) from the Add Domain page from the Portal app.
+   *
+   * @returns {Selenium WebDriver Element}
+   */
+  getCreateDomainAndAddMoreBtn: function () {
+    return element(by.id(this.locators.buttons.createDomainAndAddMore.id));
   },
 
   /**
@@ -129,7 +145,7 @@ var AddDomain = {
    */
   clickCreateDomain: function () {
     return this
-      .getCreateDomainBtn()
+      .getCreateDomainAndAddMoreBtn()
       .click();
   },
 

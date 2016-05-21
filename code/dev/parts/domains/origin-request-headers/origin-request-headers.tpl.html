@@ -8,29 +8,37 @@
     <!-- Table -->
     <table class="table table-headers-info">
       <thead>
-      <tr>
-        <th>Header Name</th>
-        <th>Header Value</th>
-        <th class="table-title--operation">Operation</th>
-        <th></th>
-      </tr>
+        <tr>
+          <th>Header Name</th>
+          <th>Header Value</th>
+          <th class="table-title--operation">Operation</th>
+          <th></th>
+        </tr>
       </thead>
       <tbody>
         <tr ng-repeat="line in $ctrl.origin_request_headers">
-          <td>{{line.header_name }}</td>
-          <td>{{line.header_value }} </td>
+          <td>{{line.header_name}}</td>
+          <td>{{line.header_value}}</td>
           <td>{{line.operation}}</td>
-          <td><button class="btn btn-warning btn-xs btn-delete-origin_request_header" type="button" ng-click="$ctrl.onDelete($index)" title="Delete Header">
+          <td>
+            <button class="btn btn-warning btn-xs btn-delete-origin_request_header" type="button" ng-click="$ctrl.onDelete($index)" title="Delete Header">
               <i class="glyphicon glyphicon-remove"> Delete</i>
-            </button> </td>
+            </button>
+          </td>
         </tr>
         <!-- New line-->
         <tr ng-form="newLineForm" class="well">
-          <td>
-            <input type="text" name="header_name" class="form-control" ng-model="$ctrl.newOriginRequestHeader.header_name" placeholder="New Header Name" required>
+          <td ng-class="{'has-error': newLineForm.headerName.$invalid && newLineForm.headerName.$dirty }">
+            <input type="text" validate-caching-rule-header-name name="headerName" class="form-control" ng-model="$ctrl.newOriginRequestHeader.header_name" placeholder="New Header Name" required>
+            <div class="error-messages" ng-messages="newLineForm.headerName.$error" role="alert" ng-messages-multiple="false">
+              <div ng-messages-include="parts/shared/error-messages.html"></div>
+            </div>
           </td>
-          <td>
-            <input type="text" name="header_value" class="form-control" ng-model="$ctrl.newOriginRequestHeader.header_value" placeholder="New Header Value" required>
+          <td ng-class="{ 'has-error': newLineForm.headerValue.$invalid && newLineForm.headerValue.$dirty }">
+            <input validate-caching-rule-header-value type="text" name="headerValue" class="form-control" ng-model="$ctrl.newOriginRequestHeader.header_value" placeholder="New Header Value" required>
+            <div class="error-messages" ng-messages="newLineForm.headerValue.$error" role="alert" ng-messages-multiple="false">
+              <div ng-messages-include="parts/shared/error-messages.html"></div>
+            </div>
           </td>
           <td>
             <select class="form-control" ng-model="$ctrl.newOriginRequestHeader.operation">

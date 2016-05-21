@@ -1,16 +1,16 @@
 <paper-drawer-panel responsive-width="980px" drawer-width="210px">
-    <section drawer  ng-intro-options="IntroOptions"
+    <section drawer ng-intro-options="IntroOptions"
          ng-intro-method="CallGlobalIntro"
          ng-intro-oncomplete="onIntroCompletedEvent"
          ng-intro-onexit="ExitEvent"
          ng-intro-onchange="ChangeEvent"
          ng-intro-onbeforechange="BeforeChangeEvent"
          ng-intro-onafterchange="AfterChangeEvent"
-         ng-intro-autostart="isShowMainIntro==false || isShowMainIntro =='false'">
+         ng-intro-autostart="(isShowMainIntro==false || isShowMainIntro =='false')&& userService.isAuthed()">
         <a href="https://www.revapm.com/" id="logo" target="_blank">
             <img src="images/logo_color.png" alt="Logo" />
         </a>
-        <div class="side-menu" style="height: 94%; overflow: auto;" ng-nicescroll nice-option="{cursorcolor: '#f7941e',cursorwidth: '8px',zindex: '9999999'}">
+        <div class="side-menu" style="height: 92%; overflow: auto;" ng-nicescroll nice-option="{cursorcolor: '#f7941e',cursorwidth: '8px',zindex: '9999999'}">
             <dashboard-nav-menu></dashboard-nav-menu>
             <li ui-sref-active-if="{class: 'active-side-menu-item', state: 'index.apps'}", ng-class="{'active-side-menu-item': menuExpanded('index.apps')}" style="margin-top: 8px;">
 
@@ -147,7 +147,7 @@
                     Users
                 </a>
                 <a ui-sref-active="active" ui-sref="index.accountSettings.companies" class="side-menu-sub-item" ng-if="userService.isReseller() || userService.isRevadmin()">
-                    <i class="sub-menu-icon fa fa-list-alt"></i>Accounts</a>
+                    <i class="sub-menu-icon fa fa-list-alt"></i> Accounts</a>
                 <a ui-sref-active="active" ui-sref="index.accountSettings.keys" class="side-menu-sub-item" ng-if="!userService.isUser()">
                     <i class="sub-menu-icon fa fa-key"></i>
                     API Keys

@@ -25,6 +25,8 @@
           return msg.data.message;
         } else if (msg.message) {
           return msg.message;
+        } else {
+          return 'Oops, something went wrong';
         }
       } else if (typeof msg === 'string') {
         return msg;

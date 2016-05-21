@@ -22,9 +22,12 @@
       <div class="panel-body">
         <form class="form-horizontal" name="editForm">
           <div class="form-group" ng-class="{ 'has-error': editForm.job_name.$invalid && editForm.job_name.$dirty }">
-            <label for="job_name" popover-append-to-body="{{true}}" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Enter here a Job Name">Job Name *</label>
+            <label for="job_name" popover-append-to-body="{{true}}" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Log shipping job name (150 characters max)">Job Name *</label>
             <div class="col-sm-10">
-              <input type="text" autofocus class="form-control" ng-disabled="_loading" ng-model="model.job_name" name="job_name" id="job_name" placeholder="Job Name" required>
+              <input type="text" autofocus class="form-control" ng-disabled="_loading" ng-model="model.job_name" name="job_name" id="job_name" placeholder="Job Name" ng-maxlength="150" ng-pattern="NO_SPECIAL_CHARS" required>
+              <div class="error-messages" ng-messages="editForm.job_name.$error" role="alert" ng-messages-multiple>
+                <div ng-messages-include="parts/shared/error-messages.html"></div>
+              </div>
             </div>
           </div>
           <div class="form-group" ng-if="auth.isReseller() || auth.isRevadmin()" ng-class="{ 'has-error': editForm.accountId.$invalid && editForm.accountId.$dirty }">
@@ -37,24 +40,30 @@
                   <div ng-bind-html="item.companyName|highlight: $select.search"></div>
                 </ui-select-choices>
               </ui-select>
-              <div class="has-error error-messages" ng-messages="createForm.accountId.$error" role="alert" ng-messages-multiple>
+              <div class="error-messages" ng-messages="editForm.accountId.$error" role="alert" ng-messages-multiple>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
               </div>
             </div>
           </div>
           <!-- Set Current Mode -->
-          <div class="form-group" ng-if="auth.isReseller() || auth.isRevadmin()">
-            <label for="company" popover-append-to-body="{{true}}" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Select current mode">Set Current Mode *</label>
+          <div class="form-group" ng-if="auth.isReseller() || auth.isRevadmin()" ng-class="{ 'has-error': editForm.operationalMode.$invalid && editForm.operationalMode.$dirty }">
+            <label for="operationalMode" popover-append-to-body="{{true}}" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Select current mode">Set Current Mode *</label>
             <div class="col-sm-10">
-              <select class="form-control" id="company" ng-model="model.operational_mode" ng-disabled="_loading" ng-options="key as value for (key, value) in operationalStates"></select>
+              <select class="form-control" id="operational_mode" name="operationalMode" ng-model="model.operational_mode" ng-disabled="_loading" ng-options="key as value for (key, value) in operationalStates"></select>
+              <div class="error-messages" ng-messages="editForm.operationalMode.$error" role="alert" ng-messages-multiple>
+                <div ng-messages-include="parts/shared/error-messages.html"></div>
+              </div>
             </div>
           </div>
           <!-- //Set Current Mode -->
           <!-- Source Type-->
-          <div class="form-group">
-            <label for="domain" popover-append-to-body="{{true}}" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Select Source Type">Source Type *</label>
+          <div class="form-group" ng-class="{ 'has-error': editForm.sourceType.$invalid && editForm.sourceType.$dirty }">
+            <label for="sourceType" popover-append-to-body="{{true}}" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Select Source Type">Source Type *</label>
             <div class="col-sm-10">
-              <select class="form-control" id="domain" ng-model="model.source_type" ng-disabled="_loading" ng-options="key as value for (key,value) in sourceTypes" required ng-change="onChangeSourceType(model.source_type)"></select>
+              <select class="form-control" id="source_type" name="sourceType" ng-model="model.source_type" ng-disabled="_loading" ng-options="key as value for (key,value) in sourceTypes" required ng-change="onChangeSourceType(model.source_type)"></select>
+              <div class="error-messages" ng-messages="editForm.sourceType.$error" role="alert" ng-messages-multiple>
+                <div ng-messages-include="parts/shared/error-messages.html"></div>
+              </div>
             </div>
           </div>
           <!-- //Source Type-->
@@ -78,6 +87,9 @@
                   <div ng-bind-html="item.app_name|highlight: $select.search"></div>
                 </ui-select-choices>
               </ui-select>
+              <div class="error-messages" ng-messages="editForm.sourceId.$error" role="alert" ng-messages-multiple>
+                <div ng-messages-include="parts/shared/error-messages.html"></div>
+              </div>
             </div>
           </div>
           <!-- // Source Name-->
@@ -87,59 +99,83 @@
               <label>Destination</label>
             </div>
             <div class="panel-body">
-              <div class="form-group">
-                <label for="domain" popover-append-to-body="{{true}}" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Select Destination ">Destination *</label>
+              <div class="form-group" ng-class="{ 'has-error': editForm.destinationTypes.$invalid && editForm.destinationTypes.$dirty }">
+                <label for="destinationTypes" popover-append-to-body="{{true}}" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Select Destination ">Destination *</label>
                 <div class="col-sm-10">
-                  <select class="form-control" id="domain" ng-model="model.destination_type" ng-disabled="_loading" ng-options="key as value for (key,value) in destinationTypes" required></select>
+                  <select class="form-control" id="destination_type" name="destinationTypes" ng-model="model.destination_type" ng-disabled="_loading" ng-options="key as value for (key,value) in destinationTypes" required></select>
+                  <div class="error-messages" ng-messages="editForm.destinationTypes.$error" role="alert" ng-messages-multiple>
+                    <div ng-messages-include="parts/shared/error-messages.html"></div>
+                  </div>
                 </div>
               </div>
               <!-- Destination Host -->
-              <div class="form-group">
-                <label for="Host" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Host">Host</label>
+              <div class="form-group" ng-class="{ 'has-error': editForm.destinationHost.$invalid && editForm.destinationHost.$dirty }">
+                <label for="destinationHost" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Host">Host</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" id="firstname" placeholder="Host" ng-model="model.destination_host" ng-disabled="_loading">
+                  <input type="text" class="form-control" id="Host" name="destinationHost" placeholder="Host" ng-model="model.destination_host" ng-maxlength="150" ng-disabled="_loading">
+                  <div class="error-messages" ng-messages="editForm.destinationHost.$error" role="alert" ng-messages-multiple>
+                    <div ng-messages-include="parts/shared/error-messages.html"></div>
+                  </div>
                 </div>
               </div>
-              <div class="form-group">
-                <label for="destination_port" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Port">Port</label>
+              <div class="form-group" ng-class="{'has-error': editForm.destinationPort.$invalid && editForm.destinationPort.$dirty }">
+                <label for="destinationPort" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Port">Port</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" id="destination_port" placeholder="Port" ng-model="model.destination_port" ng-disabled="_loading">
+                  <input type="text" class="form-control" id="destination_port" name="destinationPort" placeholder="Port" ng-model="model.destination_port" ng-maxlength="10" ng-disabled="_loading">
+                  <div class="error-messages" ng-messages="editForm.destinationPort.$error" role="alert" ng-messages-multiple>
+                    <div ng-messages-include="parts/shared/error-messages.html"></div>
+                  </div>
                 </div>
               </div>
-              <div class="form-group">
-                <label for="destination_key" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Secret Key">Secret Key</label>
+              <div class="form-group" ng-class="{ 'has-error': editForm.destinationKey.$invalid && editForm.destinationKey.$dirty }">
+                <label for="destinationKey" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Secret Key">Secret Key</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" id="destination_key" placeholder="Secret Key" ng-model="model.destination_key" ng-disabled="_loading">
+                  <input type="text" class="form-control" id="destination_key" name="destinationKey" placeholder="Secret Key" ng-model="model.destination_key" ng-maxlength="150" ng-disabled="_loading">
+                </div>
+                <div class="error-messages" ng-messages="editForm.destinationKey.$error" role="alert" ng-messages-multiple>
+                  <div ng-messages-include="parts/shared/error-messages.html"></div>
                 </div>
               </div>
-              <div class="form-group">
-                <label for="destination_username" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Username">Username</label>
+              <div class="form-group" ng-class="{ 'has-error': editForm.destinationUsername.$invalid && editForm.destinationUsername.$dirty }">
+                <label for="destinationUsername" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Username">Username</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" id="destination_username" placeholder="Username" ng-model="model.destination_username" ng-disabled="_loading">
+                  <input type="text" class="form-control" id="destination_username" name="destinationUsername" placeholder="Username" ng-model="model.destination_username" ng-maxlength="150" 
+                    ng-pattern="NO_SPECIAL_CHARS" ng-disabled="_loading">
+                  <div class="error-messages" ng-messages="editForm.destinationUsername.$error" role="alert" ng-messages-multiple>
+                    <div ng-messages-include="parts/shared/error-messages.html"></div>
+                  </div>
                 </div>
               </div>
-              <div class="form-group">
-                <label for="destination_password" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Password ">Password </label>
+              <div class="form-group" ng-class="{'has-error': editForm.destinationPassword.$invalid && editForm.destinationPassword.$dirty }">
+                <label for="destinationPassword" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Password ">Password </label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" id="destination_password" placeholder="Password" ng-model="model.destination_password" ng-disabled="_loading">
+                  <input type="text" class="form-control" id="destination_password" name="destinationPassword" placeholder="Password" ng-model="model.destination_password" ng-maxlength="150" ng-disabled="_loading">
+                  <div class="error-messages" ng-messages="editForm.destinationPassword.$error" role="alert" ng-messages-multiple>
+                    <div ng-messages-include="parts/shared/error-messages.html"></div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
           <!-- // Destination-->
           <hr>
-          <div class="form-group">
-            <label for="notification_email" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Email For Problem Notifications">Email For Problem Notifications</label>
+          <div class="form-group" ng-class="{ 'has-error': editForm.notificationEmail.$invalid && editForm.notificationEmail.$dirty }">
+            <label for="notificationEmail" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Email For Problem Notifications">Email For Problem Notifications</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="notification_email" placeholder="Username" ng-model="model.notification_email" ng-disabled="_loading">
+              <input type="email" class="form-control" id="notification_email" name="notificationEmail" placeholder="Username" ng-model="model.notification_email" ng-disabled="_loading">
+              <div class="error-messages" ng-messages="editForm.notificationEmail.$error" role="alert" ng-messages-multiple>
+                <div ng-messages-include="parts/shared/error-messages.html"></div>
+              </div>
             </div>
           </div>
-          <div class="form-group" ng-class="{ 'has-error': editForm.comment.$invalid &&
-                                      editForm.comment.$dirty }">
+          <div class="form-group" ng-class="{'has-error': editForm.comment.$invalid && editForm.comment.$dirty }">
             <label for="comment" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Comment">Comment</label>
             <div class="col-sm-6">
-              <textarea id="comment" placeholder="Comment (max 300 symbol)" class="form-control" name="comment" ng-model="model.comment" ng-disabled="_loading">
+              <textarea id="comment" name="comment" placeholder="Comment (300 characters max)" ng-maxlength="300" class="form-control" ng-model="model.comment" ng-pattern="NO_SPECIAL_CHARS" ng-disabled="_loading">
               </textarea>
+              <div class="error-messages" ng-messages="editForm.comment.$error" role="alert" ng-messages-multiple>
+                <div ng-messages-include="parts/shared/error-messages.html"></div>
+              </div>
             </div>
           </div>
           <hr>

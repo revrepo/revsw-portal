@@ -37,10 +37,9 @@
   <script src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
   <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
-  <script src="zendesk.js"></script>
+
 </head>
 <body data-ng-app="revapm.Portal">
-<alert-list></alert-list>
 <toaster-container toaster-options="{'animation-class': 'toast-top-center'}"></toaster-container>
 <div ui-view="layout" class="layout"></div>
 
@@ -61,6 +60,7 @@
 </script>
 
 <!-- build:js scripts/vendor.js -->
+<script src="js/zendesk/zendesk.js"></script>
 <script type="text/javascript" src="../bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
 <script type="text/javascript" src="../bower_components/PACE/pace.js"></script>
 
@@ -145,8 +145,6 @@ ga('create',  window.gaAccount, 'auto');
 <script type="text/javascript" src="js/portal/shared/shared.module.js"></script>
 <script type="text/javascript" src="js/portal/shared/interceptor/http.interceptor.js"></script>
 <script type="text/javascript" src="js/portal/shared/alert/alert.service.js"></script>
-<script type="text/javascript" src="js/portal/shared/alert/alertList.directive.js"></script>
-<script type="text/javascript" src="js/portal/shared/alert/alert.directive.js"></script>
 <script type="text/javascript" src="js/portal/shared/modal/ConfirmModalInstance.controller.js"></script>
 <script type="text/javascript" src="js/portal/shared/crud/crud.controller.js"></script>
 <script type="text/javascript" src="js/portal/shared/crud/pagination.directive.js"></script>
@@ -160,8 +158,17 @@ ga('create',  window.gaAccount, 'auto');
 <script type="text/javascript" src="js/portal/shared/filter-generator/filter-generator.directive.js"></script>
 <script type="text/javascript" src="js/portal/shared/filter-generator/filter-generator.service.js"></script>
 <script type="text/javascript" src="js/portal/shared/search/search.directive.js"></script>
+<script type="text/javascript" src="js/portal/shared/validators/validate-cache-bypass-locations.directive.js"></script>
+<script type="text/javascript" src="js/portal/shared/validators/validate-caching-rule-header-name.directive.js"></script>
+<script type="text/javascript" src="js/portal/shared/validators/validate-caching-rule-header-value.directive.js"></script>
+<script type="text/javascript" src="js/portal/shared/validators/validate-caching-rule-url.directive.js"></script>
 <script type="text/javascript" src="js/portal/shared/validators/validate-compare-to.directive.js"></script>
+<script type="text/javascript" src="js/portal/shared/validators/validate-cookies-options.directive.js"></script>
 <script type="text/javascript" src="js/portal/shared/validators/validate-domains-list.directive.js"></script>
+<script type="text/javascript" src="js/portal/shared/validators/validate-query-strings-options.directive.js"></script>
+<script type="text/javascript" src="js/portal/shared/validators/validate-wildcard-domain-field.directive.js"></script>
+<script type="text/javascript" src="js/portal/shared/validators/validate-domain-name.directive.js"></script>
+<script type="text/javascript" src="js/portal/shared/validators/validate-origin-server-name.directive.js"></script>
 
 <script type="text/javascript" src="js/portal/resources/resources.module.js"></script>
 <script type="text/javascript" src="js/portal/resources/resources.config.js"></script>

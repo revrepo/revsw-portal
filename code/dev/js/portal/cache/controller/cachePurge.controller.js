@@ -20,42 +20,42 @@
     };
 
     // $scope.exampleJsons for advanced cache
-    if ($state.current.name == 'index.webApp.advanced'){
+    if ($state.current.name === 'index.webApp.advanced'){
       $scope.exampleJsons =  [
         {
-        "text": "Purge all PNG files under /images, <b>non-recursive</b> (so e.g. files under /images/today/ will not be purged)",
-        "json": {
-        "purges": [
+        'text': 'Purge all PNG files under /images, <b>non-recursive</b> (so e.g. files under /images/today/ will not be purged):',
+        'json': {
+        'purges': [
           {
-            "url": {
-              "is_wildcard": true,
-              "expression": "/images/*.png"
+            'url': {
+              'is_wildcard': true,
+              'expression': '/images/*.png'
             }
           }
         ]
        }
       },
         {
-          "text": " Purge all PNG files under /images, <b>recursive</b> (so e.g. files under /images/today/ will also be purged)",
-          "json": {
-          "purges": [
+          'text': ' Purge all PNG files under /images, <b>recursive</b> (so e.g. files under /images/today/ will also be purged):',
+          'json': {
+          'purges': [
             {
-              "url": {
-                "is_wildcard": true,
-                "expression": "/images/**/*.png"
+              'url': {
+                'is_wildcard': true,
+                'expression': '/images/**/*.png'
               }
             }
           ]
          }
         },
         {
-          "text": "Purge everything, recursively, for current domain",
-          "json": {
-          "purges": [
+          'text': 'Purge everything, recursively, for current domain:',
+          'json': {
+          'purges': [
             {
-              "url": {
-                "is_wildcard": true,
-                "expression": "/**/*"
+              'url': {
+                'is_wildcard': true,
+                'expression': '/**/*'
               }
             }
           ]
@@ -74,7 +74,7 @@
       mode: 'code',
       modes: ['code', 'view'], // allowed modes['code', 'form', 'text', 'tree', 'view']
       error: function(err) {
-        alert(err.toString());
+        AlertService.danger(err.toString());
       }
     };
 
@@ -91,19 +91,10 @@
       Cache.purge({}, json)
         .$promise
         .then(function(data) {
-          AlertService.success('The request has been successfully submitted', 5000);
+          AlertService.success(data);
         })
         .catch(function(err) {
-          // set default error message
-          var message = 'Oops something went wrong';
-
-          // if response contains message then show it
-
-          if (err && err.data && err.data.message) {
-            message = err.data.message;
-          }
-
-          AlertService.danger(message, 5000);
+          AlertService.danger(err, 5000);
         })
         .finally(function() {
           $scope._loading = false;
@@ -131,19 +122,10 @@
       Cache.purge({}, json)
         .$promise
         .then(function(data) {
-          console.log(data);
-          AlertService.success('The request has been successfully submitted', 5000);
+          AlertService.success(data);
         })
         .catch(function(err) {
-          // set default error message
-          var message = 'Oops something went wrong';
-
-          // if response contains message then show it
-          if (err && err.data && err.data.message) {
-            message = err.data.message;
-          }
-
-          AlertService.danger(message, 5000);
+          AlertService.danger(err);
         })
         .finally(function() {
           $scope._loading = false;
@@ -168,18 +150,10 @@
           Cache.purge({}, json)
             .$promise
             .then(function(data) {
-              AlertService.success('The request has been successfully submitted', 5000);
+              AlertService.success(data);
             })
             .catch(function(err) {
-              // set default error message
-              var message = 'Oops something went wrong';
-
-              // if response contains message then show it
-              if (err && err.data && err.data.message) {
-                message = err.data.message;
-              }
-
-              AlertService.danger(message, 5000);
+              AlertService.danger(err);
             })
             .finally(function() {
               $scope._loading = false;
@@ -218,6 +192,7 @@
     $scope.$watch('jsonEditorInstance.getText()', function(val) {
       // if editor text is empty just return
       if (!val) {
+        $scope.jsonIsInvalid = true;
         return;
       }
 
@@ -264,7 +239,11 @@
      * Copy example to json editor
      */
     $scope.copyToJsonEditor = function(item) {
-       $scope.json = JSON.parse(item.json);
+      if (angular.isObject($scope.json)) {
+        $scope.jsonEditorInstance.setText(item.json);
+      } else {
+        angular.extend($scope.json, JSON.parse(item.json));
+      }
     };
   }
 })();

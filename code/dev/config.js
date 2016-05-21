@@ -13,3 +13,5 @@
 //
 // Google Analytic Account ID
 window.gaAccount = 'UA-68856309-2'; // develop
+// Intro configuration flag (true=on, false=off)
+window.intro = false;

@@ -8,7 +8,7 @@ var path = require('path');
 var widgetDirPath = path.join('widgets', 'adf-widget-analytics-proxy-traffic');
 var widgetDir = path.join(__dirname, '..', 'dev',widgetDirPath);
 var widgetSrcDir = path.join(widgetDir, 'src');
-var widgetDistDir = path.join(widgetDir, '..','..','..',widgetDirPath,'dist');
+var widgetDistDir = path.join(widgetDir, 'dist');
 
 var pkg = require(widgetDir + '/package.json');
 

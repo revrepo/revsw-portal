@@ -32,7 +32,11 @@ var Constants = {
       new: '#/domains/new'
     },
     profile: '#/profile',
-    admin: '#/users',
+    admin: {
+      users: '#/users',
+      companies: '#/companies',
+      apiKeys: '#/keys'
+    },
     mobileApps: '#/apps/'
   },
   header: {

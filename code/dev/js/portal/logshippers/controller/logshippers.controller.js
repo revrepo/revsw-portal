@@ -25,6 +25,9 @@
       $scope: $scope,
       $stateParams: $stateParams
     });
+
+    $scope.NO_SPECIAL_CHARS = $config.PATTERNS.NO_SPECIAL_CHARS;
+
     /**
      * @name  sourceTypes
      * @description

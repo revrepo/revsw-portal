@@ -21,7 +21,7 @@ var Portal = require('./../../../page_objects/portal');
 var DataProvider = require('./../../../common/providers/data');
 var Constants = require('./../../../page_objects/constants');
 
-describe('Functional', function () {
+describe('Boundary', function () {
   describe('Edit domain', function () {
 
     var adminUser = config.get('portal.users.admin');
@@ -45,29 +45,30 @@ describe('Functional', function () {
     afterEach(function () {
     });
 
-    it('should not update domain with long value in origin server field (100)',
+    it('should have action buttons disabled when trying to update domain with ' +
+      'long value in origin server field (100)',
       function () {
         Portal.domains.listPage.searchAndClickEdit(myDomain.name);
         Portal.domains.editPage.form.setOriginServer(lenStr100);
-        Portal.domains.editPage.clickUpdateDomain();
-        Portal.dialog.clickOk();
-
-        var alert = Portal.alerts.getFirst();
-        var expectedMsg = 'Domain updated';
-        expect(alert.getText()).not.toEqual(expectedMsg);
+        var validateBtn = Portal.domains.editPage.getValidateDomainBtn();
+        expect(validateBtn.isEnabled()).toBeFalsy();
+        var updateBtn = Portal.domains.editPage.getUpdateDomainBtn();
+        expect(updateBtn.isEnabled()).toBeFalsy();
+        var publishBtn = Portal.domains.editPage.getPublishDomainBtn();
+        expect(publishBtn.isEnabled()).toBeFalsy();
     });
 
-    it('should not update domain with value in origin host header field (100)',
+    it('should have action buttons disabled when trying to update domain with ' +
+      'with value in origin host header field (100)',
       function () {
         Portal.domains.listPage.searchAndClickEdit(myDomain.name);
         Portal.domains.editPage.form.setOriginHostHeader(lenStr100);
-        Portal.domains.editPage.clickUpdateDomain();
-        Portal.dialog.clickOk();
-
-        var alert = Portal.alerts.getFirst();
-        var expectedMsg = 'child "origin_host_header" fails because ["origin_';
-        expect(alert.getText()).toContain(expectedMsg);
-        expect(alert.getText()).toContain(lenStr100);
+        var validateBtn = Portal.domains.editPage.getValidateDomainBtn();
+        expect(validateBtn.isEnabled()).toBeFalsy();
+        var updateBtn = Portal.domains.editPage.getUpdateDomainBtn();
+        expect(updateBtn.isEnabled()).toBeFalsy();
+        var publishBtn = Portal.domains.editPage.getPublishDomainBtn();
+        expect(publishBtn.isEnabled()).toBeFalsy();
     });
 
     it('should not alow to validate/update/publish a domain with value in origin ' +
@@ -82,31 +83,6 @@ describe('Functional', function () {
         expect(updateBtn.isEnabled()).toBeFalsy();
         var publishBtn = Portal.domains.editPage.getPublishDomainBtn();
         expect(publishBtn.isEnabled()).toBeFalsy();
-    });
-
-    it('should validate the length value in origin host header field (100)',
-      function () {
-        Portal.domains.listPage.searchAndClickEdit(myDomain.name);
-        Portal.domains.editPage.form.setOriginHostHeader(lenStr100);
-        Portal.domains.editPage.clickValidateDomain();
-
-        var alert = Portal.alerts.getFirst();
-        var expectedMsg = 'child "origin_host_header" fails because ["origin_';
-        expect(alert.getText()).toContain(expectedMsg);
-        expect(alert.getText()).toContain(lenStr100);
-    });
-
-    it('should not publish domain with value in origin host header field (100)',
-      function () {
-        Portal.domains.listPage.searchAndClickEdit(myDomain.name);
-        Portal.domains.editPage.form.setOriginHostHeader(lenStr100);
-        Portal.domains.editPage.clickPublishDomain();
-        Portal.dialog.clickOk();
-
-        var alert = Portal.alerts.getFirst();
-        var expectedMsg = 'child "origin_host_header" fails because ["origin_';
-        expect(alert.getText()).toContain(expectedMsg);
-        expect(alert.getText()).toContain(lenStr100);
     });
   });
 });

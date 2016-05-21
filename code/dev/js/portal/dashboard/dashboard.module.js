@@ -14,7 +14,8 @@
       // 'adf', // TODO: add after fix conflict with directive 'alert'
       'adf.provider',
       'revapm.Portal.BlueTriangleTech',
-       'angular-nicescroll'
+      'angular-nicescroll',
+      'adf'
     ])
     .config( /*ngInject*/ function(dashboardProvider) {
       // NOTE: define dashboard structures

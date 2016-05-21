@@ -25,7 +25,8 @@
             <label for="app_name" popover-append-to-body="{{true}}" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Enter a name for the app to be registered (50 characters max)">App Name *
             </label>
             <div class="col-sm-10">
-              <input type="text" name="app_name" class="form-control" ng-disabled="_loading" ng-model="model.app_name" ng-maxlength="50" id="app_name" placeholder="App name (for example, 'MyCoolApp')" ng-pattern="/^[A-Za-z0-9 -]+$/" required>
+              <input type="text" name="app_name" class="form-control" ng-disabled="_loading" ng-model="model.app_name" ng-maxlength="50" id="app_name"
+                placeholder="App name (for example, 'MyCoolApp')" ng-pattern="NO_SPECIAL_CHARS" required>
               <div class="error-messages" ng-messages="createForm.app_name.$error" role="alert" ng-messages-multiple>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
               </div>
@@ -40,11 +41,8 @@
                 <ui-select-choices repeat="item.id as item in companies | filter: {companyName: $select.search}">
                   <div ng-bind-html="item.companyName|highlight: $select.search"></div>
                 </ui-select-choices>
-                <div class="error-messages" ng-messages="createForm.accountId.$error" role="alert" ng-messages-multiple>
-                  <div ng-messages-include="parts/shared/error-messages.html"></div>
-                </div>
               </ui-select>
-              <div class="has-error error-messages" ng-messages="createForm.accountId.$error" role="alert" ng-messages-multiple>
+              <div class="error-messages" ng-messages="createForm.accountId.$error" role="alert" ng-messages-multiple>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
               </div>
             </div>
@@ -72,7 +70,7 @@
           <div class="form-group" ng-class="{ 'has-error': createForm.comment.$invalid && createForm.comment.$dirty }">
             <label for="comment" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Enter a free-text comment about the app (300 characters max)">Comment</label>
             <div class="col-sm-10">
-              <textarea id="comment" placeholder="Comment" ng-maxlength="300" class="form-control" name="comment" ng-model="model.comment" ng-disabled="_loading">
+              <textarea id="comment" placeholder="Comment" ng-maxlength="300" class="form-control" name="comment" ng-model="model.comment" ng-pattern="NO_SPECIAL_CHARS" ng-disabled="_loading">
               </textarea>
               <div class="error-messages" ng-messages="createForm.comment.$error" role="alert" ng-messages-multiple>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
@@ -85,9 +83,13 @@
               <a ui-sref="^" class="btn btn-default">
                 <i class="glyphicon glyphicon-remove"></i>&nbsp; Cancel
               </a>
-              <button class="btn btn-success" ng-disabled="_loading || createForm.$invalid" ng-click="createApp(model)">
+              <button class="btn btn-success" id="create_app" ng-disabled="_loading || createForm.$invalid" ng-click="createApp(model,false)">
                 <i class="glyphicon glyphicon-refresh spin" ng-if="_loading"></i>
-                <i class="glyphicon glyphicon-ok" ng-if="!_loading"></i>&nbsp; Register
+                <i class="glyphicon glyphicon-ok" ng-if="!_loading"></i>&nbsp; Create App
+              </button>
+               <button class="btn btn-success" id="create_app_and_more" ng-disabled="_loading || createForm.$invalid" ng-click="createApp(model,true); createForm.$setPristine()">
+                <i class="glyphicon glyphicon-refresh spin" ng-if="_loading"></i>
+                <i class="glyphicon glyphicon-ok" ng-if="!_loading"></i>&nbsp; Create And Add More
               </button>
             </div>
           </div>

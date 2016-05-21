@@ -10,23 +10,24 @@
    *
    * @return {Boolean}
    */
-  function validateDomainsList() {
+  function validateDomainsList($config) {
     'ngInject';
+    var _name = 'domains-list';
+    var DOMAIN = $config.PATTERNS.DOMAIN;
 
     function link(scope, element, attrs, ngModel) {
-      // TODO: need to move the domain pattern to a central place
-      var DOMAIN = /(?=^.{4,253}$)(^((?!-)(?!\_)[a-zA-Z0-9-\_]{0,62}[a-zA-Z0-9]\.)+[a-zA-Z]{2,63}$)/;
+
       ngModel.$validators.domainsList = function(value) {
-        ngModel.$setValidity('domains-list', true);
+        ngModel.$setValidity(_name, true);
 
         if (value !== undefined && angular.isArray(value)) {
           angular.forEach(ngModel.$modelValue, function(item) {
             if (DOMAIN.test(item) === false) {
-              ngModel.$setValidity('domains-list', false);
+              ngModel.$setValidity(_name, false);
             }
           });
         }
-        // NOTE: only set valune for attribute "$valid"
+        // NOTE: only set value for attribute "$valid"
         return true;
       };
     }
