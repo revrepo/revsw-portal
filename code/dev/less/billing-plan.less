@@ -8,7 +8,9 @@
     box-shadow: 0 5px 20px 0 #888888;
   }
   &.current {
-    margin-top: -20px;
+    -moz-box-shadow: 0 5px 20px 0 #888888;
+    -webkit-box-shadow: 0 5px 20px 0 #888888;
+    box-shadow: 0 5px 20px 0 #888888;
   }
   &-header {
     color: #fff;
@@ -32,7 +34,6 @@
       background-color: #FF8A00;
       border-radius: 0;
       width: 170px;
-      text-transform: uppercase;
       border: 0;
       outline: none;
     }
@@ -54,10 +55,10 @@
       min-height: 75px;
     }
     @media (min-width: @screen-md-min) {
-      min-height: 240px;
+      min-height: 160px;
     }
     @media (min-width: @screen-lg-min) {
-      min-height: 120px;
+      min-height: 140px;
     }
   }
 }

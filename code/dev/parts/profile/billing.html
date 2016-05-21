@@ -113,7 +113,7 @@
             <i class="glyphicon glyphicon-refresh spin" ng-if="item.loading"></i>&nbsp; Loading...
           </div>
           <div class="row" ng-if="records.length > 0">
-            <div class="col-md-3  text-center" ng-repeat="item in records | orderBy: 'monthly_fee'">
+            <div class="col-sm-6 col-md-3 individual-plan" ng-repeat="item in records | orderBy: 'monthly_fee'">
               <div class="billing-plan" ng-class="{'current':item.id === account.plan_id}">
                 <div class="billing-plan-header">
                   <h2 class="billing-plan-title">{{item.name}}</h2>
@@ -128,7 +128,6 @@
                     <div>${{service.cost | number:2}} per {{service.measurement_unit}}</div>
                   </div>
                 </div>
-                <hr>
                 <footer class="billing-plan-action">
                   <!--   <button href="" ng-click="chooseBillingPlan(item)" class="btn btn-success btn-lg">Subscribe</button> -->
                   <button ng-disabled="_loading" ng-show="item.id !== account.plan_id" ng-click="chooseBillingPlan(item, account)" class="btn btn-success btn-lg">
