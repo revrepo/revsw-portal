@@ -812,8 +812,8 @@ i {
   content: "\e912";
 }
 .billing-plan {
-  border: solid 1px;
-  border-color: #EAEAEA;
+  border: 1px solid #EAEAEA;
+  background: #F5F5F5;
 }
 .billing-plan.current {
   margin-top: -20px;
