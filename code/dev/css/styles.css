@@ -290,11 +290,10 @@ input[type="text"],
 input[type="email"],
 input[type="password"],
 textarea,
-input.form-control {
+.form-control {
   padding: 1%;
   border: 1px solid #EAEAEA;
   line-height: 20px;
-  width: 98%;
   margin: 0 0 5px;
   background-color: #F8F8F8;
   -webkit-border-radius: 3px;
@@ -309,7 +308,7 @@ input[type="email"],
 input[type="search"],
 input[type="password"],
 textarea,
-input.form-control {
+.form-control {
   -moz-appearance: none !important;
   -webkit-appearance: none !important;
   appearance: none !important;
@@ -338,6 +337,9 @@ form .btn {
 .btn.btn-warning:hover,
 .btn.btn-warning:focus {
   border-color: #FF8A00;
+}
+.mar-top20 {
+  margin-top: 20px;
 }
 .main_img_container {
   left: 50%;
@@ -445,9 +447,16 @@ form .btn {
 .signup-form .form-control {
   height: 40px;
 }
-.signup-form .control-label,
-.signup-form label {
+form .control-label,
+form label {
   color: #777;
+}
+form.new-user-form .form-group {
+  margin: 10px;
+}
+form.new-user-form .form-group h4 {
+  color: #FF8A00;
+  font-style: italic;
 }
 .header-logo img {
   padding: 20px;
@@ -578,13 +587,17 @@ section[drawer] .side-menu .active-side-menu-item .side-menu-sub-item {
 }
 .nav > li {
   text-align: center;
-  height: 50px;
+  height: 47px;
 }
 .navbar-nav > li > a {
-  color: #FF8A00;
+  color: #424242;
   padding-top: 10px;
   padding-bottom: 10px;
   line-height: 16px;
+}
+.dropdown-menu > li > a {
+  color: #424242;
+  letter-spacing: 0.1px;
 }
 .top-menu {
   padding: 20px;
