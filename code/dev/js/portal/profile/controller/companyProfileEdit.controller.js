@@ -34,6 +34,8 @@
     $scope.zipRegex = '[0-9]{1,10}';
     $scope.phoneRegex = '[0-9, \\s, \\+, \\-, \\(, \\)]{1,20}';
     $scope.NO_SPECIAL_CHARS = $config.PATTERNS.NO_SPECIAL_CHARS;
+    $scope.COMMENT_NO_SPECIAL_CHARS = $config.PATTERNS.COMMENT_NO_SPECIAL_CHARS;
+
     $scope.user = User.getUser();
     $scope.user.isAdmin = User.isAdmin();
     // console.log($scope.user.access_control_list.readOnly)

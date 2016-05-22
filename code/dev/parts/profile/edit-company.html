@@ -23,12 +23,13 @@
         <ul>
           <li>Your credit card will be not charged after the cancellation will take affect</li>
           <li>No refunds or prorations will be made</li>
-          <li>All your RevAPM users accounts and API keys will be removed from the system</li>
+          <li>All your RevAPM users accounts, API keys and SSL certificates will be removed from the system</li>
         </ul>
         <div class="form-group" ng-class="{ 'has-error': accountDeleteForm.cancellationMessage.$invalid && accountDeleteForm.cancellationMessage.$dirty }">
           <label class=" control-label" for="cancellationMessage">Enter an optional cancellation reason/message:</label>
           <div class="col-sm-12">
-            <textarea class="form-control" placeholder="max 300 symbol" ng-maxlength="300"  name="cancellationMessage"  ng-model="model.cancellation_message" class="cancellation_message" validate-pattern-no-special-chars></textarea>
+            <textarea class="form-control" placeholder="300 characters max" ng-maxlength="300"  name="cancellationMessage"  ng-model="model.cancellation_message" class="cancellation_message"
+              validate-pattern-comment-no-special-chars></textarea>
             <div class="error-messages" ng-messages="accountDeleteForm.cancellationMessage.$error" role="alert" ng-messages-multiple>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
               </div>
@@ -199,7 +200,7 @@
             <div class="form-group" ng-class="{ 'has-error': editForm.comment.$invalid && editForm.comment.$dirty }">
               <label for="comment" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Comment (300 characters max)">Comment</label>
               <div class="col-sm-10">
-                <textarea id="comment" class="form-control" name="comment" ng-model="model.comment" placeholder="Comment (300 characters max) " ng-maxlength="300" ng-pattern="NO_SPECIAL_CHARS" ng-disabled="_loading">
+                <textarea id="comment" class="form-control" name="comment" ng-model="model.comment" placeholder="Comment (300 characters max) " ng-maxlength="300" ng-pattern="COMMENT_NO_SPECIAL_CHARS" ng-disabled="_loading">
                 </textarea>
                 <div class="error-messages" ng-messages="editForm.comment.$error" role="alert" ng-messages-multiple>
                   <div ng-messages-include="parts/shared/error-messages.html"></div>
