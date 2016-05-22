@@ -42,9 +42,12 @@ section[drawer] {
     .side-menu-sub-item {
       display: block;
       padding: 10px 0;
+      padding-left: 10px;;
       margin-right: 10px;
-      margin-left: 40px;
+      margin-left: 30px;
       font-size: 13px;
+
+      border-left: 3px solid transparent;
 
       color: @app-side-menu-text-color;
       text-decoration: none;
@@ -52,6 +55,7 @@ section[drawer] {
 
       &.active {
         color: @app-color-orange-logo;
+        border-color: #FF8A00;
       }
       &.introjs-showElement {
         color:  @app-color-orange;
@@ -65,7 +69,6 @@ section[drawer] {
     }
     .active-side-menu-item {
       background-color: #fcfcfc;
-      border-left: 3px solid #FF8A00;
       margin-left: 2px;
       .side-menu-item{
         color: #FF8A00;
@@ -87,10 +90,6 @@ section[drawer] {
     margin: 0 4px 0 -17px !important;
     font-size: 20px;
   }
-}
-
-.sub-menu-icon {
-  margin: 0 4px 0 -17px !important;
 }
 
 .menu-toggle {
