@@ -340,6 +340,9 @@ form .error-messages.ng-active,
   border-color: #a94442;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(250, 0, 0, 0.6);
 }
+.login_box .error-messages {
+  text-align: center;
+}
 #main .footerNoteA {
   color: #fff;
   display: block;

@@ -7,10 +7,10 @@
           <img src="images/logo_color.png" alt="RevAPM Logo">
         </a>
       </div>
-      <form novalidate class="login_form block-center" ng-submit="login(email, pass)">
-        <div class="block-center">
+      <form novalidate class="login_form block-center" name="loginForm" ng-submit="login(email, pass)">
+        <div class="block-center" >
           <div class="">
-            <div class="form-group">
+            <div class="form-group" ng-class="{'has-error': loginForm.email.$invalid && loginForm.email.$dirty}">
               <input type="email"
                      name="email"
                      placeholder="Email"
@@ -20,6 +20,9 @@
                      autofocus
                      required
                      >
+              <div class="error-messages" ng-messages="loginForm.email.$error" role="alert" ng-messages-multiple>
+                <div ng-messages-include="parts/shared/error-messages.html"></div>
+              </div>
             </div>
             <div class="form-group">
               <input type="password"
@@ -32,11 +35,9 @@
                      >
             </div>
             <div class="form-group">
-              <input type="submit"
-                     value="Sign In"
-                     class="btn btn-primary btn-lg btn-block signin"
-                     ng-disabled="_loading"
-                     >
+              <button ng-disabled="_loading || loginForm.$invalid" type="submit" class="btn btn-primary btn-lg btn-block signin" ng-class="">
+                <i class="glyphicon  " ng-class="_loading ? 'glyphicon-refresh spin': 'glyphicon-log-in'"></i> Sign In
+              </button>
             </div>
           </div>
           <div class="form-inline">
