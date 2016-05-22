@@ -1,33 +1,61 @@
 <div class="origin-request-headers">
   <div class="panel panel-default">
     <!-- Default panel contents -->
-    <div class="panel-heading"> Origin Request Headers</div>
+    <div class="panel-heading"> Origin Request Headers
+      <button type="button" class="btn btn-xs btn-success pull-right" ng-click="$ctrl.onAddNew({operation:'add',header_name:'',header_value:''})" title="Add New Header"><i class="glyphicon glyphicon-plus"></i> Add New</button>
+    </div>
     <!--     <div class="panel-body">
       <p>...</p>
     </div> -->
     <!-- Table -->
-    <table class="table table-headers-info">
+    <p ng-show="!$ctrl.origin_request_headers || $ctrl.origin_request_headers.length==0" class="text text-center">no data</p>
+    <table class="table table-headers-info" ng-show="!!$ctrl.origin_request_headers && $ctrl.origin_request_headers.length>0">
       <thead>
         <tr>
           <th>Header Name</th>
           <th>Header Value</th>
           <th class="table-title--operation">Operation</th>
-          <th></th>
+          <th> </th>
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="line in $ctrl.origin_request_headers">
-          <td>{{line.header_name}}</td>
-          <td>{{line.header_value}}</td>
-          <td>{{line.operation}}</td>
+        <tr ng-animate-disabled  ng-repeat="line in $ctrl.origin_request_headers" ng-form="editRow">
+          <td ng-animate-disabled ng-click="editRow.isSelectedIndex = $index" ng-class="{'has-error': editRow.headerName.$invalid}">
+            <span ng-animate-disabled ng-show="editRow.isSelectedIndex!==$index">{{line.header_name}} </span>
+            <input type="text" ng-animate-disabled validate-caching-rule-header-name name="headerName" class="form-control" ng-model="line.header_name" placeholder="New Header Name" ng-show="editRow.isSelectedIndex==$index" required>
+            <div class="error-messages" ng-messages="editRow.headerName.$error" role="alert" ng-messages-multiple="false">
+              <div ng-messages-include="parts/shared/error-messages.html"></div>
+            </div>
+          </td>
+          <td ng-animate-disabled ng-click="editRow.isSelectedIndex = $index" ng-class="{'has-error': editRow.headerValue.$invalid}">
+            <span ng-animate-disabled  ng-show="editRow.isSelectedIndex!==$index">{{line.header_value}} </span>
+            <input ng-animate-disabled validate-caching-rule-header-value type="text" name="headerValue" class="form-control" ng-model="line.header_value" placeholder="New Header Value" ng-show="editRow.isSelectedIndex==$index" required>
+            <div class="error-messages" ng-messages="editRow.headerValue.$error" role="alert" ng-messages-multiple="false">
+              <div ng-messages-include="parts/shared/error-messages.html"></div>
+            </div>
+          </td>
+          <td ng-click="editRow.isSelectedIndex = $index">
+            <span ng-animate-disabled  ng-show="editRow.isSelectedIndex!==$index" >{{line.operation}}</span>
+            <select ng-animate-disabled ng-if="editRow.isSelectedIndex==$index" class="form-control" ng-model="line.operation">
+              <option value="add">Add</option>
+              <option value="replace">Replace</option>
+              <option value="remove">Remove</option>
+            </select>
+          </td>
           <td>
+            <button class="btn btn-primary btn-xs btn-edit-origin_request_header" type="button" ng-click="editRow.isSelectedIndex=$index" title="Edit Header" ng-if="editRow.isSelectedIndex!==$index">
+              <i class="glyphicon glyphicon-remove"> Edit</i>
+            </button>
+            <button class="btn btn-success btn-xs btn-edit-origin_request_header" type="button" ng-click="editRow.isSelectedIndex =null" title="Save Header" ng-if="editRow.isSelectedIndex==$index" ng-disabled="editRow.$invalid">
+              <i class="glyphicon glyphicon-ok"> Ok</i>
+            </button>
             <button class="btn btn-warning btn-xs btn-delete-origin_request_header" type="button" ng-click="$ctrl.onDelete($index)" title="Delete Header">
               <i class="glyphicon glyphicon-remove"> Delete</i>
             </button>
           </td>
         </tr>
         <!-- New line-->
-        <tr ng-form="newLineForm" class="well">
+        <!--       <tr ng-form="newLineForm" class="well">
           <td ng-class="{'has-error': newLineForm.headerName.$invalid && newLineForm.headerName.$dirty }">
             <input type="text" validate-caching-rule-header-name name="headerName" class="form-control" ng-model="$ctrl.newOriginRequestHeader.header_name" placeholder="New Header Name" required>
             <div class="error-messages" ng-messages="newLineForm.headerName.$error" role="alert" ng-messages-multiple="false">
@@ -50,7 +78,7 @@
           <td>
             <button type="button" class="btn btn-success" ng-disabled="!newLineForm.$valid" ng-click="$ctrl.onAddNew($ctrl.newOriginRequestHeader)" title="Add New Header"><i class="glyphicon glyphicon-plus"></i> Add New</button>
           </td>
-        </tr>
+        </tr> -->
       </tbody>
     </table>
   </div>
