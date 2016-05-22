@@ -499,8 +499,10 @@ section[drawer] #logo {
   background: transparent;
 }
 section[drawer] #logo img {
-  margin: 8px 5px;
+  margin-top: 15px;
+  margin-bottom: 5px;
   vertical-align: middle;
+  margin-left: 25%;
   width: 50%;
 }
 section[drawer] .side-menu .side-menu-item {
