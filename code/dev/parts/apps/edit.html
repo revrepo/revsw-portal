@@ -133,15 +133,23 @@
           <div class="form-group">
             <label for="allowed_transport_protocols" popover-append-to-body="{{true}}" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Rev SDK allowed last mile transport protocols">Allowed Transport Protocols</label>
             <div class="col-sm-10" id="allowed-transport-protocols">
-              <span ng-repeat="protocol in protocols">
-              <input
-                type="checkbox"
-                value="{{protocol}}"
-                ng-checked="configuration.allowed_transport_protocols.indexOf(protocol) > -1"
-                ng-click="toggleProtocolSelection(protocol, configuration)"
+              <span ng-repeat="protocol in protocols track by $index"
+                ng-model="protocols" 
+                data-drop="true" 
+                data-drag="true" 
+                jqyoui-droppable="{index: {{$index}}}" 
+                jqyoui-draggable="{index: {{$index}}, insertInline: true, direction:'jqyouiDirection'}" 
+                data-jqyoui-options="{revert: 'invalid'}" 
+                data-direction="{{protocol.jqyouiDirection}}"
               >
-              {{protocol.toUpperCase()}}
-            </span>
+                <input
+                  type="checkbox"
+                  value="{{protocol.title}}"
+                  ng-checked="configuration.allowed_transport_protocols.indexOf(protocol.title) > -1"
+                  ng-click="toggleProtocolSelection(protocol.title, configuration)"
+                >
+                {{protocol.title.toUpperCase()}}
+              </span>
             </div>
           </div>
           <div class="form-group">
