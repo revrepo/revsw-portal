@@ -741,6 +741,9 @@ section[drawer] .side-menu .dashboard_menu .side-menu-item.item-title a {
 .caching-rules-list .panel-buttons-left {
   padding-right: 20px;
 }
+.btn-copy--cname {
+  margin-left: 10px;
+}
 @font-face {
   font-family: 'revapm';
   src: url('../fonts/revapm.eot?4em4bb');
