@@ -40,7 +40,7 @@ var DashboardForm = {
     },
     textInputs: {
       title: {
-        css: 'modal-header'
+        id: 'dashboardTitle'
       }
     },
     radios: {
@@ -90,7 +90,7 @@ var DashboardForm = {
    * @returns {Selenium WebDriver Element}
    */
   getTitleTxtIn: function () {
-    return element(by.css(this.locators.textInputs.title.css));
+    return element(by.id(this.locators.textInputs.title.id));
   },
 
   /**
@@ -150,19 +150,21 @@ var DashboardForm = {
    * @returns {Selenium WebDriver Element}
    */
   getAutoRefreshDDown: function () {
-    return element(by.model(this.locators.dropDowns.autoRefresh.model));
+    return element
+      .all(by.model(this.locators.dropDowns.autoRefresh.model))
+      .get(1);
   },
 
   // ## Methods to interact with the Dashboard form components
 
   /**
-   * ### DashboardForm.getTitle()
+   * ### DashboardForm.getFormTitle()
    *
    * Gets the current title from Dashboard form.
    *
    * @returns {Promise}
    */
-  getTitle: function () {
+  getFormTitle: function () {
     return this
       .getTitleLbl()
       .getText();
@@ -178,6 +180,7 @@ var DashboardForm = {
    * @returns {Promise}
    */
   setTitle: function (title) {
+    this.getTitleTxtIn().clear();
     return this
       .getTitleTxtIn()
       .sendKeys(title);

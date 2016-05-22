@@ -18,6 +18,9 @@
 
 // # Dashboard List Page Object
 
+// Requiring other Page Objects that compound the Dashboards List Page:
+var DashboardForm = require('./form');
+
 // This `Dashboard List` Page Object abstracts all operations or actions that a
 // common user could do in the Dashboard List page from the Portal app/site.
 var DashboardList = {
@@ -43,12 +46,12 @@ var DashboardList = {
         css: '[ng-click=\"model.refreshNow= true\"]'
       },
       modifyDashboard: {
-        css: '.glyphicon.glyphicon-edit'
+        css: '[ng-click=\"toggleEditMode()\"]'
       },
       addNewWidget: {
         css: '.glyphicon.glyphicon-plus-sign'
       },
-      editDashboard: {
+      editDashboardProperties: {
         css: '.glyphicon.glyphicon-cog'
       },
       saveChanges: {
@@ -67,9 +70,14 @@ var DashboardList = {
       css: '.dashboard-preview-background',
       leftMenu: {
         id: 'left-menu-dashboard-section'
+        // repeater: 'dash in vm.dashboardsList'
       }
     }
   },
+
+  // `Dashboards List` Page is compound mainly by the form. Following
+  // properties make reference to the Page Objects of those components.
+  form: DashboardForm,
 
   // ## Methods to retrieve references to UI elements (Selenium WebDriver
   // Element)
@@ -147,15 +155,15 @@ var DashboardList = {
   },
 
   /**
-   * ### DashboardList.getEditDashboardBtn()
+   * ### DashboardList.getEditDashboardPropertiesBtn()
    *
    * Returns the reference to the `Edit Dashboard` button (Selenium WebDriver
    * Element) from the Dashboard List page from the Portal app.
    *
    * @returns {Selenium WebDriver Element}
    */
-  getEditDashboardBtn: function () {
-    return element(by.css(this.locators.buttons.editDashboard.css));
+  getEditDashboardPropertiesBtn: function () {
+    return element(by.css(this.locators.buttons.editDashboardProperties.css));
   },
 
   /**
@@ -207,15 +215,16 @@ var DashboardList = {
   },
 
   /**
-   * ### DashboardList.getLeftMenuDashboards()
+   * ### DashboardList.getLeftMenuDashboardsElem()
    *
    * Returns the reference to the `Dashboards Left Menu` dashboards (Selenium
    * WebDriver Element) from the Dashboard List page from the Portal app.
    *
    * @returns {Selenium WebDriver Element}
    */
-  getLeftMenuDashboards: function () {
+  getLeftMenuDashboardsElem: function () {
     return element(by.id(this.locators.dashboards.leftMenu.id));
+    // return element.all(by.repeater(this.locators.dashboards.leftMenu.repeater));
   },
 
   // ## Methods to interact with the Dashboard List Page components.
@@ -230,6 +239,19 @@ var DashboardList = {
   getTitle: function () {
     return this
       .getTitleLbl()
+      .getText();
+  },
+
+  /**
+   * ### DashboardList.getLeftMenuDashboards()
+   *
+   * Gets the `Dashboard Name` label from the Left Menu of Dashboard List page.
+   *
+   * @returns {Promise}
+   */
+  getLeftMenuDashboards: function () {
+    return this
+      .getLeftMenuDashboardsElem()
       .getText();
   },
 
@@ -290,16 +312,16 @@ var DashboardList = {
   },
 
   /**
-   * ### DashboardList.clickEditDashboard()
+   * ### DashboardList.clickEditDashboardProperties()
    *
    * Triggers a click to the `Edit Dashboard` button from the Dashboard List
    * page from the Portal app.
    *
    * @returns {Promise}
    */
-  clickEditDashboard: function () {
+  clickEditDashboardProperties: function () {
     return this
-      .getEditDashboardBtn()
+      .getEditDashboardPropertiesBtn()
       .click();
   },
 
@@ -348,16 +370,59 @@ var DashboardList = {
   // ## Helper Methods
 
   /**
-   * ### DashboardList.isDashboardsDisplayed()
+   * ### DashboardList.selectDashboard(dashboardName)
+   *
+   * Selects the dashboard listed in left side in the Portal page.
+   *
+   * @param {String} dashboardName, the option to click.
+   *
+   * @returns {Promise}
+   */
+  selectDashboard: function (dashboardName) {
+    return element(by.linkText(dashboardName)).click();
+  },
+
+  /**
+   * ### DashboardList.isDisplayed()
+   *
+   * Checks whether the Dashboards page is displayed or not.
+   *
+   * @returns {Promise}
+   */
+  isDisplayed: function () {
+    var btn1 = this.getAddNewDashboardBtn().isPresent();
+    var btn2 = this.getModifyDashboardBtn().isPresent();
+    var btn3 = this.getRefreshNowBtn().isPresent();
+    var btn4 = this.getDashboardsElem().isPresent();
+    return (btn1 && btn2 && btn3 && btn4);
+  },
+
+  /**
+   * ### DashboardList.existDashboardChart()
    *
    * Checks whether the Dashboard List page is being displayed in the UI or not.
    *
    * @returns {Promise}
    */
-  existDashboard: function () {
+  existDashboardChart: function () {
     return this
       .getDashboardsElem()
       .isPresent();
+  },
+
+  /**
+   * ### DashboardList.existControlButtons()
+   *
+   * Checks whether exists the control buttons in the Dashboard page or not,
+   *
+   * @returns {Promise}
+   */
+  existControlButtons: function () {
+    var btn1 = this.getAddNewWidgetBtn().isPresent();
+    var btn2 = this.getEditDashboardPropertiesBtn().isPresent();
+    var btn3 = this.getSaveChangesBtn().isPresent();
+    var btn4 = this.getUndoChangesBtn().isPresent();
+    return (btn1 && btn2 && btn3 && btn4);
   },
 
   /**
@@ -370,10 +435,27 @@ var DashboardList = {
    * @returns {Promise}
    */
   addNewDashboard: function (dashboard) {
-    this.clickAddNewDashboard();
-    this.addDashboard.createDashboard(dashboard);
-    // this.form.fill(dashboard);
-    // this.form.clickCreate(dashboard);
+    var me = this;
+    me.clickAddNewDashboard();
+    me.form.fill(dashboard);
+    me.form.clickCreate();
+  },
+
+  /**
+   * ### DashboardList.deleteDashboard(dashboard)
+   *
+   * Deletes a dashboard from Dashboard form.
+   *
+   * @param {String} dashboard, to delete dashboard.
+   *
+   * @returns {Promise}
+   */
+  deleteDashboard: function (dashboard) {
+    var me = this;
+    me.selectDashboard(dashboard.title);
+    me.clickModifyDashboard();
+    me.clickEditDashboardProperties();
+    me.form.clickDelete();
   }
 };
 

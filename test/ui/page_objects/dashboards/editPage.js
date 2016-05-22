@@ -70,8 +70,19 @@ var EditDashboard = {
    * @returns {Promise}
    */
   deleteDashboard: function(dashboard) {
-    this.form.clickDelete();
-  }
+    return this.form.clickDelete();
+  },
+
+  /**
+   * ### DashboardForm.getTitle()
+   *
+   * Gets the form title from edited dashboard.
+   *
+   * @returns {Promise}
+   */
+  getTitle: function () {
+    return this.form.getTitleLbl().getText();
+  },
 };
 
 module.exports = EditDashboard;

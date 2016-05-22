@@ -358,13 +358,20 @@ var DataProvider = {
    *         autoRefresh: string
    *     }
    */
-  generateDashboardData: function () {
+  generateDashboardData: function (dashboardName) {
     var timestamp = Date.now();
-    return {
-      title: 'QA-Dashboard-' + timestamp,
-      structure: 0,
-      autoRefresh: 'Every 1 Minute'
+    var dashboard = {
+        title: 'QA-' + timestamp,
+        structure: 2,
+        autoRefresh: 'Every 15 Minutes'
     };
+
+    if (dashboardName) {
+      dashboard.title = dashboardName + '-' + timestamp;
+      return dashboard;
+    } else {
+      return dashboard;
+    }
   }
 };
 

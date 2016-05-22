@@ -703,9 +703,9 @@ var Portal = {
    */
   createDashboard: function (arrayDashboards) {
     var me = this;
-    me.getDashboardsPage();
     return browser.getCurrentUrl().then(function (initialUrl) {
       arrayDashboards.forEach(function (dashboard) {
+        me.getDashboardsPage();
         me.dashboards.listPage.addNewDashboard(dashboard);
       });
       browser.getCurrentUrl().then(function (currentUrl) {
@@ -734,10 +734,8 @@ var Portal = {
     return browser.getCurrentUrl().then(function (initialUrl) {
       arrayDashboards.forEach(function (dashboard) {
         me.getDashboardsPage();
-        me.header.goTo(dashboard.title);
-        me.dashboards.listPage.clickModifyDashboard();
-        me.dashboards.listPage.clickEditDashboard();
-        me.dashboards.editDashboard.deleteDashboard();
+        me.dashboards.listPage.deleteDashboard(dashboard);
+        me.dashboards.dialogPage.clickDelete();
       });
       browser.getCurrentUrl().then(function (currentUrl) {
         if (initialUrl !== currentUrl) {

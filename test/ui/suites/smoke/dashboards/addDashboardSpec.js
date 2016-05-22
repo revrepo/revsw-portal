@@ -29,8 +29,7 @@ describe('Smoke', function () {
     // config.get('portal.users.revAdmin'),
     // config.get('portal.users.reseller')
   ];
-  var dashboard = DataProvider.generateDashboardData();
-
+  
   users.forEach(function (user) {
 
     describe('With user: ' + user.role, function () {
@@ -47,15 +46,80 @@ describe('Smoke', function () {
         });
 
         beforeEach(function () {
-          // Portal.header.goTo(Constants.sideBar.admin.ACCOUNTS);
         });
 
-        it('should "Add Dashboard" in Dasboards page', function () {
-          // Portal.dashboards.listPage.addNewDashboard(dashboard);
-          // Portal.dashboards.listPage.getTitle();
-          // Portal.dashboards.listPage.getLeftMenuDashboards();
-          // Portal.dashboards.listPage.existDashboard();
-          // expect(result.getCompanyName()).toBe(criteria);
+        // it('should default "Dashboard" exist in Dasboards page', function () {
+        //   var defaultDashboardName = 'Dashboard';
+        //   var defaultDashboardAutoRefresh = 'Every 15 Minute';
+
+        //   var createdDashboard = Portal.dashboards.listPage.getTitle();
+        //   var leftMenu = Portal.dashboards.listPage.getLeftMenuDashboards();
+        //   var existDashChart = Portal.dashboards.listPage.existDashboardChart();
+
+        //   expect(createdDashboard).toContain(defaultDashboardName);
+        //   expect(createdDashboard).toContain(defaultDashboardAutoRefresh);
+        //   expect(leftMenu).toContain(defaultDashboardName);
+        //   expect(existDashChart).toBe(true);
+        // });
+
+        it('should "Add Dashboard" in Dashboard Page - Structure - ' +
+          'Two Columns Of Equal Width - Every 15 Minutes',
+          function () {
+            var dashboard = DataProvider.generateDashboardData();
+            dashboard.structure = 2;
+
+            Portal.dashboards.listPage.addNewDashboard(dashboard);
+            var createdDashboard = Portal.dashboards.listPage.getTitle();
+            var leftMenu = Portal.dashboards.listPage.getLeftMenuDashboards();
+            var existChart = Portal.dashboards.listPage.existDashboardChart();
+            
+            expect(createdDashboard).toContain(dashboard.title);
+            expect(createdDashboard).toContain(dashboard.autoRefresh);
+            expect(leftMenu).toContain(dashboard.title);
+            expect(existChart).toBe(true);
+
+            Portal.dashboards.listPage.deleteDashboard(dashboard);
+            Portal.dashboards.dialogPage.clickDelete();
+        });
+
+        it('should "Add Dashboard" in Dashboard Page - Structure - ' +
+          'One Wide Column - Every 1 Minute',
+          function () {
+            var dashboard = DataProvider.generateDashboardData();
+            dashboard.structure = 0;
+
+            Portal.dashboards.listPage.addNewDashboard(dashboard);
+            var createdDashboard = Portal.dashboards.listPage.getTitle();
+            var leftMenu = Portal.dashboards.listPage.getLeftMenuDashboards();
+            var existChart = Portal.dashboards.listPage.existDashboardChart();
+            
+            expect(createdDashboard).toContain(dashboard.title);
+            expect(createdDashboard).toContain(dashboard.autoRefresh);
+            expect(leftMenu).toContain(dashboard.title);
+            expect(existChart).toBe(true);
+
+            Portal.dashboards.listPage.deleteDashboard(dashboard);
+            Portal.dashboards.dialogPage.clickDelete();
+        });
+
+        it('should "Add Dashboard" in Dashboard Page - Structure - ' +
+          'Four Columns Of Equal Width - No Auto-Refresh',
+          function () {
+            var dashboard = DataProvider.generateDashboardData();
+            dashboard.structure = 4;
+
+            Portal.dashboards.listPage.addNewDashboard(dashboard);
+            var createdDashboard = Portal.dashboards.listPage.getTitle();
+            var leftMenu = Portal.dashboards.listPage.getLeftMenuDashboards();
+            var existChart = Portal.dashboards.listPage.existDashboardChart();
+            
+            expect(createdDashboard).toContain(dashboard.title);
+            expect(createdDashboard).toContain(dashboard.autoRefresh);
+            expect(leftMenu).toContain(dashboard.title);
+            expect(existChart).toBe(true);
+
+            Portal.dashboards.listPage.deleteDashboard(dashboard);
+            Portal.dashboards.dialogPage.clickDelete();
         });
       });
     });
