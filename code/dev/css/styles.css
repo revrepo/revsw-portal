@@ -309,7 +309,7 @@ textarea,
   padding: 1%;
   border: 1px solid #EAEAEA;
   line-height: 20px;
-  margin: 0 0 5px;
+  margin-bottom: 5px;
   background-color: #F8F8F8;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
@@ -322,8 +322,7 @@ input[type="text"],
 input[type="email"],
 input[type="search"],
 input[type="password"],
-textarea,
-.form-control {
+textarea {
   -moz-appearance: none !important;
   -webkit-appearance: none !important;
   appearance: none !important;
