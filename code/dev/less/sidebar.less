@@ -4,6 +4,7 @@
 
 section[drawer] {
   background-color: @app-side-menu-background;
+  border-right: 1px solid #ddd;
   #logo {
     background-color: @app-side-menu-background-logo;
     height: @app-top-menu-height;
@@ -20,10 +21,11 @@ section[drawer] {
       display: block;
       height: @app-side-menu-item-height;
       line-height: (@app-side-menu-item-height - 20);
-      padding: 10px;
+      padding: 15px;
       font-size: 14px;
       color: @app-side-menu-text-color;
-      //border-bottom: 1px solid lighten(@app-side-menu-background, 5%);
+      letter-spacing: .025em;
+
       text-decoration: none;
       &.selected {
         background-color: @app-side-menu-background-selected;
@@ -37,15 +39,17 @@ section[drawer] {
     }
     .side-menu-sub-item {
       display: block;
-      border-bottom: 1px solid gray;
-      padding-bottom: 5px;
-      margin-bottom: 5px;
+      padding: 10px 0;
       margin-right: 10px;
       margin-left: 40px;
+      font-size: 13px;
+
       color: @app-side-menu-text-color;
       text-decoration: none;
+      letter-spacing: .025em;
+
       &.active {
-        color: white;
+        color: @app-color-orange-logo;
       }
       &.introjs-showElement {
         color:  @app-color-orange;
@@ -58,6 +62,13 @@ section[drawer] {
       display: none;
     }
     .active-side-menu-item {
+      background-color: #fcfcfc;
+      border-left: 3px solid #FF8A00;
+      margin-left: 2px;
+      .side-menu-item{
+        color: #FF8A00;
+      }
+
       .side-menu-sub-item {
         display: block;
       }
@@ -71,13 +82,13 @@ section[drawer] {
   width: 5px;
   text-align: center;
   i {
-    margin: 0px 4px 0px -17px !important;
+    margin: 0 4px 0 -17px !important;
     font-size: 20px;
   }
 }
 
 .sub-menu-icon {
-  margin: 0px 4px 0px -17px !important;
+  margin: 0 4px 0 -17px !important;
 }
 
 .menu-toggle {

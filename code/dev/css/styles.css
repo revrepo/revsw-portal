@@ -341,6 +341,14 @@ form .btn {
 .mar-top20 {
   margin-top: 20px;
 }
+.panel-default > .panel-heading input.form-control,
+.navbar input.form-control {
+  background-color: #fff;
+  border: 0;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
 .main_img_container {
   left: 50%;
   position: absolute;
@@ -482,10 +490,11 @@ form.new-user-form .form-group h4 {
   z-index: 999;
 }
 section[drawer] {
-  background-color: #2E2F2F;
+  background-color: #fff;
+  border-right: 1px solid #ddd;
 }
 section[drawer] #logo {
-  background-color: #606363;
+  background-color: #ffffff;
   height: 52px;
   background: transparent;
 }
@@ -499,32 +508,33 @@ section[drawer] .side-menu .side-menu-item {
   display: block;
   height: 40px;
   line-height: 20px;
-  padding: 10px;
+  padding: 15px;
   font-size: 14px;
-  color: #f7941e;
+  color: #515253;
+  letter-spacing: .025em;
   text-decoration: none;
 }
 section[drawer] .side-menu .side-menu-item.selected {
-  background-color: #151515;
+  background-color: #e6e6e6;
 }
 section[drawer] .side-menu .side-menu-item.active {
-  border-right: 4px solid #f7941e;
+  border-right: 4px solid #515253;
 }
 section[drawer] .side-menu .side-menu-item i {
   margin: 0 10px;
 }
 section[drawer] .side-menu .side-menu-sub-item {
   display: block;
-  border-bottom: 1px solid gray;
-  padding-bottom: 5px;
-  margin-bottom: 5px;
+  padding: 10px 0;
   margin-right: 10px;
   margin-left: 40px;
-  color: #f7941e;
+  font-size: 13px;
+  color: #515253;
   text-decoration: none;
+  letter-spacing: .025em;
 }
 section[drawer] .side-menu .side-menu-sub-item.active {
-  color: white;
+  color: #f7941e;
 }
 section[drawer] .side-menu .side-menu-sub-item.introjs-showElement {
   color: #f9af33;
@@ -535,6 +545,14 @@ section[drawer] .side-menu .side-menu-sub-item.introjs-helperLayer {
 section[drawer] .side-menu .side-menu-sub-item {
   display: none;
 }
+section[drawer] .side-menu .active-side-menu-item {
+  background-color: #fcfcfc;
+  border-left: 3px solid #FF8A00;
+  margin-left: 2px;
+}
+section[drawer] .side-menu .active-side-menu-item .side-menu-item {
+  color: #FF8A00;
+}
 section[drawer] .side-menu .active-side-menu-item .side-menu-sub-item {
   display: block;
 }
@@ -544,11 +562,11 @@ section[drawer] .side-menu .active-side-menu-item .side-menu-sub-item {
   text-align: center;
 }
 .left-menu-start i {
-  margin: 0px 4px 0px -17px !important;
+  margin: 0 4px 0 -17px !important;
   font-size: 20px;
 }
 .sub-menu-icon {
-  margin: 0px 4px 0px -17px !important;
+  margin: 0 4px 0 -17px !important;
 }
 .menu-toggle {
   font-size: 24px;
@@ -561,7 +579,12 @@ section[drawer] .side-menu .active-side-menu-item .side-menu-sub-item {
   margin: 0;
   border: none;
   border-radius: 0;
-  background-color: #fff;
+  background-color: rgba(255, 140, 0, 0.7);
+  color: #fff;
+}
+.navbar .navbar-inner .dropdown-toggle {
+  color: #fff;
+  background: transparent !important;
 }
 .navbar .navbar-inner a.two-line {
   line-height: 30px;
@@ -596,8 +619,8 @@ section[drawer] .side-menu .active-side-menu-item .side-menu-sub-item {
   line-height: 16px;
 }
 .dropdown-menu > li > a {
-  color: #424242;
-  letter-spacing: 0.1px;
+  color: #515253;
+  letter-spacing: 0.025em;
 }
 .top-menu {
   padding: 20px;
@@ -739,7 +762,7 @@ polyline {
   min-height: 240px;
 }
 section[drawer] .side-menu .dashboard_menu .side-menu-item.item-title a {
-  color: #f7941e;
+  color: #515253;
 }
 .dashboard {
   padding: 2px;

@@ -16,7 +16,18 @@
         AlertService.clear();
       });
     $rootScope.$on('$stateChangeSuccess',
-      function(event){
+      function(event,toState){
+
+        var stateArr =  toState.name.split('.');
+        if (stateArr[0] === 'index') {
+          for(var key in $rootScope.menuExpandedNodes){
+            if (key !==  'current'){
+              $rootScope.menuExpandedNodes[key] = false;
+            }
+          }
+          $rootScope.menuExpandedNodes[stateArr[0]+'.'+stateArr[1]] = true;
+        }
+
         // Clear alerts when routes change //TODO:check comment
         setTimeout(function() {
           $('[autofocus]').focus();
@@ -25,6 +36,7 @@
     $rootScope.$on('$stateChangeError', console.log.bind(console));
 
     $rootScope.goToState = function(state, dashboardID){
+
       if(dashboardID){
         $location.path(state + '/' + dashboardID);
       } else {
@@ -37,6 +49,7 @@
     };
 
     $rootScope.expandMenu = function(menuState, event){
+
       if($rootScope.menuExpandedNodes.current === menuState) {
         event.stopPropagation();
         return;
