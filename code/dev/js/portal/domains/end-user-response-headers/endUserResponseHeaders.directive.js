@@ -11,16 +11,6 @@
   // header_name (string),
   // operation (string) = ['add' or 'remove' or 'replace']
   // }
-  var EndUserResponseHeader = {
-    header_value: '',
-    header_name: '',
-    operation: 'add'
-  };
-
-  var refEndUserResponseHeaderOperation = [
-    'add', 'remove', 'replace'
-  ];
-
 
   function endUserResponseHeaders() {
     return {
@@ -32,27 +22,22 @@
       },
       templateUrl: 'parts/domains/end-user-response-headers/end-user-response-headers.tpl.html',
       controllerAs: '$ctrl',
-      controller: function endUserResponseHeadersController($scope,$uibModal) {
+      controller: function endUserResponseHeadersController($scope, $uibModal, $config) {
         'ngInject';
         var $ctrl = this;
-        this.newEndUserResponseHeader = {
-            operation: 'add'
-          };
+        this.headerOperations = $config.HEADER_OPERATIONS;
 
-          /**
-           * @name  onAddNew
-           * @description
-           * @param  {Object} newEndUserResponseHeader
-           * @return
-           */
+        /**
+         * @name  onAddNew
+         * @description
+         * @param  {Object} newEndUserResponseHeader
+         * @return
+         */
         this.onAddNew = function(newEndUserResponseHeader) {
           if (!_.isArray($ctrl.end_user_response_headers)) {
             $ctrl.end_user_response_headers = [];
           }
           $ctrl.end_user_response_headers.push(_.clone(newEndUserResponseHeader));
-          $ctrl.newEndUserResponseHeader = {
-            operation: 'add'
-          };
         };
 
         this.onDelete = function(index) {
@@ -72,7 +57,7 @@
           var modalInstance = $uibModal.open({
             animation: true,
             templateUrl: 'parts/domains/modals/confirmDeleteHeaderInfo.tpl.html',
-            controller: /*ngInject*/ function ($scope,$uibModalInstance,model) {
+            controller: /*ngInject*/ function($scope, $uibModalInstance, model) {
               $scope.model = model;
               $scope.ok = function() {
                 $uibModalInstance.close('ok');
@@ -93,7 +78,7 @@
             .then(function() {
               $ctrl.end_user_response_headers.splice(index, 1);
             }, function() {
-               // TODO: Alert ?
+              // TODO: Alert ?
             });
 
         };
