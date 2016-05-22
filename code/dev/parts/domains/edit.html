@@ -60,10 +60,8 @@
           <div class="form-group" ng-class="{'has-error': editForm.cname.$invalid && editForm.cname.$dirty}">
             <label for="cname" class="col-sm-3 control-label" popover-trigger="mouseenter">Domain CNAME</label>
             <div class="col-sm-9">
-              <input type="text" class="form-control" disabled ng-model="modelInfo.cname" id="cname" name="cname" placeholder="Domain CNAME">
-              <div class="error-messages" ng-messages="editForm.cname.$error" role="alert">
-                <div ng-messages-include="parts/shared/error-messages.html"></div>
-              </div>
+              <input type="text" class="form-control" disabled ng-model="modelInfo.cname" id="cname" name="cname" placeholder="Domain CNAME" style="float:left">
+              <button class="btn btn-primary btn-copy--cname" clipboard text="modelInfo.cname" on-copied="copyCallback()" on-error="copyCallback(err)" style="vertical-align: initial;" uib-tooltip="Click to copy the Domain CNAME to the clipboard" tooltip-placement="top"><i class="fa fa-files-o"></i></button>
             </div>
           </div>
           <div class="form-group" ng-class="{'has-error': editForm.accountId.$invalid && editForm.accountId.$dirty}" ng-if="auth.isReseller() || auth.isRevadmin()">
@@ -158,7 +156,7 @@
           <!-- -->
           <!-- Data Read Timeout, seconds -->
           <div class="form-group form-inline" ng-class="{'has-error': editForm.proxyTimeout.$invalid && editForm.proxyTimeout.$dirty}">
-            <label for="proxyTimeout" class="col-sm-3 control-label"  popover-trigger="mouseenter" uib-popover="Proxy data read timeout in seconds (1-3600 range)">
+            <label for="proxyTimeout" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Proxy data read timeout in seconds (1-3600 range)">
               Data Read Timeout
             </label>
             <div class="col-md-9">
@@ -303,7 +301,7 @@
           <div class="form-group" ng-class="{'has-error': editForm.sslCertId.$invalid && editForm.sslCertId.$dirty}">
             <label for="sslCertId" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Select SSL certificate which should be associated with the domain">SSL Certificate</label>
             <div class="col-sm-9">
-              <select class="form-control" ng-disabled="_loading" ng-model="model.ssl_cert_id" id="ssl_cert_id" name="sslCertId" ng-options="obj.id as obj.cert_name for obj in SSL_certs | filter :{account_id:model.account_id}" style="float: left;" required>
+              <select class="form-control" ng-disabled="_loading" ng-model="model.ssl_cert_id" id="ssl_cert_id" name="sslCertId" ng-options="obj.id as obj.cert_name for obj in SSL_certs | filter :{account_id:model.account_id}" style="float: left;">
                 <option value="">Default RevAPM SSL Certificate</option>
               </select>
               <a ui-sref="index.webApp.ssl_certs" class="btn btn-primary pull-right"><i class="fa fa-lock"></i> Manage SSL Certificates</a>
@@ -392,16 +390,13 @@
                 <i class="glyphicon glyphicon-remove"></i>&nbsp; Cancel
               </a>
               <button class="btn btn-info" ng-disabled="disableSubmit(model, true)" ng-click="validateDomain(model)">
-                <i class="glyphicon glyphicon-refresh spin" ng-if="_loading"></i>
-                <i class="glyphicon glyphicon-check" ng-if="!_loading"></i>&nbsp; Verify
+                <i class="glyphicon" ng-class="_loading ? 'glyphicon-refresh spin':'glyphicon-check'"></i>&nbsp; Verify
               </button>
-              <button class="btn btn-success" ng-disabled="disableSubmit(model, true)" ng-click="updateDomain(model)">
-                <i class="glyphicon glyphicon-refresh spin" ng-if="_loading"></i>
-                <i class="glyphicon glyphicon-file" ng-if="!_loading"></i>&nbsp; Update
+              <button class="btn btn-success" ng-disabled="disableSubmit(model, true) || editForm.$invalid" ng-click="updateDomain(model)">
+                <i class="glyphicon" ng-class="_loading ? 'glyphicon-refresh spin':'glyphicon-file'"></i>&nbsp; Update
               </button>
-              <button class="btn btn-success" ng-disabled="disableSubmit(model, true)" ng-click="publishDomain(model)">
-                <i class="glyphicon glyphicon-refresh spin" ng-if="_loading"></i>
-                <i class="glyphicon glyphicon-ok" ng-if="!_loading"></i>&nbsp; Publish
+              <button class="btn btn-success" ng-disabled="disableSubmit(model, true)|| editForm.$invalid" ng-click="publishDomain(model)">
+                <i class="glyphicon" ng-class="_loading ? 'glyphicon-refresh spin':'glyphicon-ok'"></i>&nbsp; Publish
               </button>
             </div>
           </div>
