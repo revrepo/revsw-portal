@@ -22,10 +22,9 @@
             <div class="panel-body">
                 <form class="new-user-form" name="createForm" novalidate>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-xs-12 col-sm-8 col-md-6">
                             <div class="form-group"
                                  ng-class="{'has-error': createForm.email.$invalid && createForm.email.$dirty}">
-                                <h4>User Information</h4>
                                 <label for="email" popover-append-to-body="{{true}}" class="control-label"
                                        popover-trigger="mouseenter"
                                        uib-popover="New user's email address - the address should be unique across the system">Email
@@ -120,14 +119,17 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-8 col-md-6">
+                            <hr>
 
-                        <div class="col-md-6">
                             <div class="form-group">
                                 <label for="access_control_list" popover-append-to-body="{{true}}" class="control-label"
                                        popover-trigger="mouseenter"
                                        uib-popover="Set here the new user's access control permissions">Access Control
                                     List</label>
-                                <br/>
+                                <br>
                                 <input type="checkbox" disabled ng-model="model.access_control_list.dashBoard">
                                 Dashboard
 
@@ -140,12 +142,14 @@
 
                                 <input type="checkbox" ng-model="model.access_control_list.readOnly"> Read Only
                             </div>
-
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <hr>
 
                             <div class="form-group"
                                  ng-class="{'has-error': createForm.password.$invalid && createForm.password.$dirty}">
-                                <h4 class="mar-top20">Change Password</h4>
-
                                 <label for="password" class="control-label" popover-trigger="mouseenter">Password
                                     *</label>
                                 <input type="password" class="form-control" id="password" name="password"
@@ -176,41 +180,53 @@
                                     <div ng-messages-include="parts/shared/error-messages.html"></div>
                                 </div>
                             </div>
-
-                            <div class="form-group"
-                                 ng-class="{ 'has-error': createForm.comment.$invalid && createForm.comment.$dirty }">
-                                <h4 class="mar-top20">User Comment  </h4>
-                                <label for="comment" class="control-label" popover-trigger="mouseenter"
-                                       uib-popover="Comment">Comment</label>
-
-                                <textarea id="comment" placeholder="Comment (300 characters max)" ng-maxlength="300" class="form-control"
-                                          name="comment" ng-model="model.comment" ng-pattern="NO_SPECIAL_CHARS" ng-disabled="_loading">
-                                </textarea>
-
-                                    <div class="error-messages" ng-messages="createForm.comment.$error" role="alert"
-                                         ng-messages-multiple>
-                                        <div ng-messages-include="parts/shared/error-messages.html"></div>
-                                    </div>
-                                </div>
-
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <div class="text-center">
-                            <a ui-sref="{{state}}" class="btn btn-default">
-                                <i class="glyphicon glyphicon-remove"></i>&nbsp; Cancel
-                            </a>
-                            <button class="btn btn-success" id="create_user" ng-disabled="disableSubmit(model)"
-                                    ng-click="createUser(model,false)">
-                                <i class="glyphicon glyphicon-ok"></i>&nbsp; Create User
-                            </button>
-                            <button class="btn btn-success" id="create_user_and_more" ng-disabled="disableSubmit(model)"
-                                    ng-click="createUser(model,true);createForm.$setPristine()">
-                                <i class="glyphicon glyphicon-ok"></i>&nbsp; Create And Add More
-                            </button>
-                        </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-8 col-md-6">
+                            <hr>
 
+                            <div class="form-group"
+                                 ng-class="{ 'has-error': createForm.comment.$invalid && createForm.comment.$dirty }">
+                                <label for="comment" class="control-label" popover-trigger="mouseenter"
+                                       uib-popover="Comment">Comment</label>
+
+                                <textarea id="comment" placeholder="Comment (300 characters max)" ng-maxlength="300"
+                                          class="form-control"
+                                          name="comment" ng-model="model.comment" ng-pattern="NO_SPECIAL_CHARS"
+                                          ng-disabled="_loading">
+                                </textarea>
+
+                                <div class="error-messages" ng-messages="createForm.comment.$error" role="alert"
+                                     ng-messages-multiple>
+                                    <div ng-messages-include="parts/shared/error-messages.html"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-8 col-md-6">
+                            <hr>
+
+                            <div class="form-group">
+                                <div class="text-center">
+                                    <a ui-sref="{{state}}" class="btn btn-default">
+                                        <i class="glyphicon glyphicon-remove"></i>&nbsp; Cancel
+                                    </a>
+                                    <button class="btn btn-success" id="create_user" ng-disabled="disableSubmit(model)"
+                                            ng-click="createUser(model,false)">
+                                        <i class="glyphicon glyphicon-ok"></i>&nbsp; Create User
+                                    </button>
+                                    <button class="btn btn-success" id="create_user_and_more"
+                                            ng-disabled="disableSubmit(model)"
+                                            ng-click="createUser(model,true);createForm.$setPristine()">
+                                        <i class="glyphicon glyphicon-ok"></i>&nbsp; Create And Add More
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </form>
             </div>

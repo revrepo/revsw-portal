@@ -322,10 +322,6 @@ textarea {
   line-height: 20px;
   word-wrap: break-word;
 }
-form .btn {
-  height: 40px;
-  line-height: 25px;
-}
 .btn.btn-success {
   background-color: #FF8A00;
   border-color: #FF8A00;
@@ -461,10 +457,6 @@ form label {
 }
 form.new-user-form .form-group {
   margin: 10px;
-}
-form.new-user-form .form-group h4 {
-  color: #FF8A00;
-  font-style: italic;
 }
 .header-logo img {
   padding: 20px;
