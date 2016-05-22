@@ -4,9 +4,12 @@
 </div>
 <div class="modal-body">
   <form role="form" name="editDashboardForm">
-    <div class="form-group">
+    <div class="form-group" ng-class="{'has-error': editDashboardForm.dashboardTitle.$invalid && editDashboardForm.dashboardTitle.$dirty}">
       <label for="dashboardTitle">Title</label>
-      <input type="text" class="form-control" id="dashboardTitle" ng-model="copy.title" required="">
+      <input type="text" class="form-control" id="dashboardTitle" name="dashboardTitle" ng-model="copy.title" ng-maxlength="20" validate-pattern-no-special-chars required>
+      <div class="error-messages" ng-messages="editDashboardForm.dashboardTitle.$error" role="alert" ng-messages-multiple>
+        <div ng-messages-include="parts/shared/error-messages.html"></div>
+      </div>
     </div>
     <div class="form-group">
       <label>Structure</label>

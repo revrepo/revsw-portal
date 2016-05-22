@@ -96,7 +96,7 @@
           <div class="form-group" ng-class="{'has-error': editForm.comment.$invalid && editForm.comment.$dirty }">
             <label for="comment" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Comment">Comment</label>
             <div class="col-md-10">
-              <textarea id="comment" placeholder="Comment (max 300 symbol)" class="form-control" name="comment" ng-model="model.comment" ng-disabled="_loading" ng-pattern="NO_SPECIAL_CHARS" ng-maxlength="300">
+              <textarea id="comment" placeholder="Comment (max 300 symbol)" class="form-control" name="comment" ng-model="model.comment" ng-disabled="_loading" ng-pattern="COMMENT_NO_SPECIAL_CHARS" ng-maxlength="300">
               </textarea>
               <div class="error-messages" ng-messages="editForm.comment.$error" role="alert" ng-messages-multiple>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
