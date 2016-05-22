@@ -15,7 +15,7 @@
   <div class="modal-header">
     <h3 class="modal-title">Confirm</h3>
   </div>
-  <div class="modal-body">
+  <div class="modal-body form" ng-form="accountDeleteForm">
     <div class="row">
       <!-- isCanBeDeleted = true -->
       <div class="col-sm-12" ng-if="model.isCanBeDeleted">
@@ -25,10 +25,13 @@
           <li>No refunds or prorations will be made</li>
           <li>All your RevAPM users accounts and API keys will be removed from the system</li>
         </ul>
-        <div class="form-group">
-          <label class="">Enter an optional cancellation reason/message:</label>
+        <div class="form-group" ng-class="{ 'has-error': accountDeleteForm.cancellationMessage.$invalid && accountDeleteForm.cancellationMessage.$dirty }">
+          <label class=" control-label" for="cancellationMessage">Enter an optional cancellation reason/message:</label>
           <div class="col-sm-12">
-            <textarea class="form-control" name="cancellationMessage" ng-model="model.cancellation_message" class="cancellation_message"></textarea>
+            <textarea class="form-control" placeholder="max 300 symbol" ng-maxlength="300"  name="cancellationMessage"  ng-model="model.cancellation_message" class="cancellation_message" validate-pattern-no-special-chars></textarea>
+            <div class="error-messages" ng-messages="accountDeleteForm.cancellationMessage.$error" role="alert" ng-messages-multiple>
+                <div ng-messages-include="parts/shared/error-messages.html"></div>
+              </div>
           </div>
         </div>
       </div>
@@ -42,7 +45,7 @@
   <div class="modal-footer">
     <button class="btn btn-warning" type="button" ng-if="model.isCanBeDeleted" ng-click="cancel()">Cancel</button>
     <button class="btn btn-warning" type="button" ng-if="!model.isCanBeDeleted" ng-click="cancel()">Close The Window</button>
-    <button class="btn btn-danger" type="button" ng-if="model.isCanBeDeleted" ng-click="ok(model)">Proceed</button>
+    <button class="btn btn-danger" type="button" ng-disabled="accountDeleteForm.$invalid" ng-if="model.isCanBeDeleted" ng-click="ok(model)">Proceed</button>
   </div>
 </script>
 <!-- -->
@@ -237,7 +240,7 @@
                 <div class="form-group col-md-6" ng-class="{ 'has-error': editForm.billingFirstName.$invalid && editForm.billingFirstName.$dirty }">
                   <label for="billingFirstName" class="col-sm-4 control-label" popover-trigger="mouseenter" uib-popover="First Name (30 characters max)">First Name *</label>
                   <div class="col-sm-8">
-                    <input type="text" class="form-control" required id="first_name" name="billingFirstName" placeholder="First Name" ng-model="model.billing_info.first_name" ng-maxlength="30" 
+                    <input type="text" class="form-control" required id="first_name" name="billingFirstName" placeholder="First Name" ng-model="model.billing_info.first_name" ng-maxlength="30"
                       ng-pattern="NO_SPECIAL_CHARS" ng-disabled="_loading">
                     <div class="error-messages" ng-messages="editForm.billingFirstName.$error" role="alert" ng-messages-multiple>
                       <div ng-messages-include="parts/shared/error-messages.html"></div>
@@ -282,7 +285,7 @@
                 <div class="form-group col-md-6" ng-class="{ 'has-error': editForm.billingAddress1.$invalid && editForm.billingAddress1.$dirty }">
                   <label for="billingAddress1" class="col-sm-4 control-label" popover-trigger="mouseenter" uib-popover="Street address (150 characters max)">Address *</label>
                   <div class="col-sm-8">
-                    <input type="text" class="form-control" required id="billingAddress1" name="billingAddress1" placeholder="Address 1" ng-model="model.billing_info.address1" ng-maxlength="150" 
+                    <input type="text" class="form-control" required id="billingAddress1" name="billingAddress1" placeholder="Address 1" ng-model="model.billing_info.address1" ng-maxlength="150"
                       ng-pattern="NO_SPECIAL_CHARS" ng-disabled="_loading">
                     <div class="error-messages" ng-messages="editForm.billingAddress1.$error" role="alert" ng-messages-multiple>
                       <div ng-messages-include="parts/shared/error-messages.html"></div>
@@ -292,7 +295,7 @@
                 <div class="form-group col-md-6" ng-class="{ 'has-error': editForm.billingAddress2.$invalid && editForm.billingAddress2.$dirty }">
                   <label for="billingAddress2" class="col-sm-4 control-label" popover-trigger="mouseenter" uib-popover="Optional second line of street address">Address (Line 2) &nbsp;</label>
                   <div class="col-sm-8">
-                    <input type="text" class="form-control" id="billingAddress2" name="billingAddress2" placeholder="Address (Line 2)" ng-model="model.billing_info.address2" ng-maxlength="150" 
+                    <input type="text" class="form-control" id="billingAddress2" name="billingAddress2" placeholder="Address (Line 2)" ng-model="model.billing_info.address2" ng-maxlength="150"
                       ng-pattern="NO_SPECIAL_CHARS" ng-disabled="_loading">
                     <div class="error-messages" ng-messages="editForm.billingAddress2.$error" role="alert" ng-messages-multiple>
                       <div ng-messages-include="parts/shared/error-messages.html"></div>
@@ -334,7 +337,7 @@
                 <div class="form-group col-md-6" ng-class="{ 'has-error': editForm.billingZipcode.$invalid && editForm.billingZipcode.$dirty }">
                   <label for="billingZipcode" class="col-sm-4 control-label" popover-trigger="mouseenter" uib-popover="Zip code (30 characters max)">Zip Code *</label>
                   <div class="col-sm-8">
-                    <input type="text" class="form-control" id="billingZipcode" name="billingZipcode" ng-maxlength="30" required placeholder="Zip Code" ng-model="model.billing_info.zipcode" 
+                    <input type="text" class="form-control" id="billingZipcode" name="billingZipcode" ng-maxlength="30" required placeholder="Zip Code" ng-model="model.billing_info.zipcode"
                       ng-pattern="NO_SPECIAL_CHARS" ng-disabled="_loading">
                     <div class="error-messages" ng-messages="editForm.billingZipcode.$error" role="alert" ng-messages-multiple>
                       <div ng-messages-include="parts/shared/error-messages.html"></div>
