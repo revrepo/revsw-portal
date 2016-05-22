@@ -54,7 +54,10 @@
           <div class="form-group" ng-class="{'has-error': editForm.app_name.$invalid && editForm.app_name.$dirty}">
             <label for="domain_name" class="col-sm-3 control-label" popover-trigger="mouseenter">Domain Name</label>
             <div class="col-sm-9">
-              <input type="text" class="form-control" disabled autofocus ng-model="modelInfo.domain_name" id="domain_name" placeholder="Domain Name" ng-pattern="/(?=^.{4,253}$)(^((?!-)(?!\_)[a-zA-Z0-9-\_]{0,62}[a-zA-Z0-9]\.)+[a-zA-Z]{2,63}$)/" ng-maxlength="50">
+              <input type="text" class="form-control" disabled autofocus ng-model="modelInfo.domain_name" id="domain_name" placeholder="Domain Name" validate-domain-name ng-maxlength="50">
+              <div class="error-messages" ng-messages="editForm.accountId.$error" role="alert" ng-messages-multiple>
+                <div ng-messages-include="parts/shared/error-messages.html"></div>
+              </div>
             </div>
           </div>
           <div class="form-group" ng-class="{'has-error': editForm.cname.$invalid && editForm.cname.$dirty}">
@@ -389,7 +392,7 @@
               <a ui-sref="^" class="btn btn-default">
                 <i class="glyphicon glyphicon-remove"></i>&nbsp; Cancel
               </a>
-              <button class="btn btn-info" ng-disabled="disableSubmit(model, true)" ng-click="validateDomain(model)">
+              <button class="btn btn-info" ng-disabled="disableSubmit(model, true) || editForm.$invalid" ng-click="validateDomain(model)">
                 <i class="glyphicon" ng-class="_loading ? 'glyphicon-refresh spin':'glyphicon-check'"></i>&nbsp; Verify
               </button>
               <button class="btn btn-success" ng-disabled="disableSubmit(model, true) || editForm.$invalid" ng-click="updateDomain(model)">
