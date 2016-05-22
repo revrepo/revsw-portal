@@ -358,7 +358,7 @@ var DataProvider = {
    *         autoRefresh: string
    *     }
    */
-  generateDashboardData: function (dashboardName) {
+  generateDashboardData: function (dashboardPrefix) {
     var timestamp = Date.now();
     var dashboard = {
         title: 'QA-' + timestamp,
@@ -366,8 +366,8 @@ var DataProvider = {
         autoRefresh: 'Every 15 Minutes'
     };
 
-    if (dashboardName) {
-      dashboard.title = dashboardName + '-' + timestamp;
+    if (dashboardPrefix) {
+      dashboard.title = dashboardPrefix + '-' + timestamp;
       return dashboard;
     } else {
       return dashboard;

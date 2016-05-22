@@ -398,6 +398,19 @@ var DashboardList = {
   },
 
   /**
+   * ### DashboardList.isListedInLeftSide(dashboardName)
+   *
+   * Checks if dashboard name is listed in left side in the Portal page.
+   *
+   * @param {String} dashboardName, the option to check.
+   *
+   * @returns {Promise}
+   */
+  isListedInLeftSide: function (dashboardName) {
+    return element(by.linkText(dashboardName)).isPresent();
+  },
+
+  /**
    * ### DashboardList.existDashboardChart()
    *
    * Checks whether the Dashboard List page is being displayed in the UI or not.

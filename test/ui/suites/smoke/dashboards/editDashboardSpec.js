@@ -49,8 +49,6 @@ describe('Smoke', function () {
 
         beforeEach(function () {
           Portal.getDashboardsPage();
-          Portal.header.goTo(dashboard.title);
-
           Portal.dashboards.listPage.selectDashboard(dashboard.title);
           Portal.dashboards.listPage.clickModifyDashboard();
           Portal.dashboards.listPage.clickEditDashboardProperties();
