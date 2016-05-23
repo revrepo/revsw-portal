@@ -133,7 +133,8 @@
           <div class="form-group">
             <label for="allowed_transport_protocols" popover-append-to-body="{{true}}" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Rev SDK allowed last mile transport protocols">Allowed Transport Protocols</label>
             <div class="col-sm-10" id="allowed-transport-protocols">
-              <span ng-repeat="protocol in protocols track by $index"
+              <span class="protocolbox"
+                ng-repeat="protocol in protocols track by $index"
                 ng-model="protocols" 
                 data-drop="true" 
                 data-drag="true" 
