@@ -18,12 +18,14 @@
     function link(scope, element, attrs, ngModel) {
 
       ngModel.$validators.cachingRuleUrl = function(value) {
-        ngModel.$setValidity(_name, true);
-        if (value !== undefined && !angular.isArray(value)) {
-          if (URL.test(value) === false) {
-            ngModel.$setValidity(_name, false);
-          }
-        }
+
+         ngModel.$setValidity(_name, true);
+        // NOTE: temporary lock
+        // if (value !== undefined && !angular.isArray(value)) {
+        //   if (URL.test(value) === false) {
+        //     ngModel.$setValidity(_name, false);
+        //   }
+        // }
         // NOTE: only set value for attribute "$valid"
         return true;
       };
