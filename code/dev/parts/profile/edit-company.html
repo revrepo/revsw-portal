@@ -214,7 +214,7 @@
             <div class="form-group" ng-if="model.billing_id && (userService.isReseller() || userService.isRevadmin())">
               <label for="comment" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Billing plan">Billing Plan</label>
               <div class="col-sm-10">
-                <ui-select ng-model="model.billing_plan" theme="select2" ng-disabled="_loading" on-select="" style="min-width: 300px;">
+                <ui-select ng-model="model.billing_plan" theme="select2" ng-animate-disabled ng-disabled="_loading" on-select="" style="min-width: 300px;">
                   <ui-select-match placeholder="Select Billing Plan">{{$select.selected.name}}</ui-select-match>
                   <ui-select-choices repeat="item.id as item in billing_plans | filter: {name: $select.search}">
                     <div ng-bind-html="item.name|highlight: $select.search"></div>

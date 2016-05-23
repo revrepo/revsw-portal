@@ -62,7 +62,7 @@
                 <form class="form-inline">
                   <div class="form-group">
                     <!-- <div app-select ng-model="application" on-select="reloadDirs()"></div> -->
-                    <ui-select ng-model="account" theme="select2" ng-disabled="_loading" on-select="onAccountSelect($model)" style="min-width: 300px;">
+                    <ui-select ng-model="account" theme="select2" ng-animate-disabled ng-disabled="_loading" on-select="onAccountSelect($model)" style="min-width: 300px;">
                       <ui-select-match placeholder="Select Account">{{$select.selected.acc_name}}</ui-select-match>
                       <ui-select-choices repeat="item in accounts | filter: {acc_name: $select.search}">
                         <div ng-bind-html="item.acc_name|highlight: $select.search"></div>

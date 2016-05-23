@@ -33,7 +33,7 @@
           <div class="form-group" ng-if="auth.isReseller() || auth.isRevadmin()" ng-class="{ 'has-error': createForm.accountId.$invalid && createForm.accountId.$dirty }">
             <label for="account_id" popover-append-to-body="{{true}}" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Select account name the job should be associated with">Account *</label>
             <div class="col-sm-10">
-              <ui-select ng-model="model.account_id" theme="select2" ng-disabled="_loading" name="account_id" on-select="onAccountSelect($model)" style="min-width: 550px;" id="account_id" required>
+              <ui-select ng-model="model.account_id" theme="select2" ng-animate-disabled ng-disabled="_loading" name="account_id" on-select="onAccountSelect($model)" style="min-width: 550px;" id="account_id" required>
                 <ui-select-match placeholder="Select Account">{{$select.selected.companyName}}</ui-select-match>
                 <ui-select-choices repeat="item.id as item in companies | filter: {companyName: $select.search}">
                   <div ng-bind-html="item.companyName|highlight: $select.search"></div>
