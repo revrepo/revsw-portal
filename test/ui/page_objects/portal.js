@@ -346,7 +346,7 @@ var Portal = {
    * @param {user} newUser, data applying the schema defined in
    * `DataProvider.generateUser()`
    *
-   * @returns {Promise}
+   * @returns {Object} Promise
    */
   createUser: function (newUser) {
     var me = this;
@@ -370,10 +370,10 @@ var Portal = {
    * Portal app. This method creates the user only if it does not exist (it
    * validates the existence by doing a search by the user email).
    *
-   * @param {User} user, data applying the schema defined in
+   * @param {Object} user, data applying the schema defined in
    * `DataProvider.generateUser()`
    *
-   * @returns {Promise}
+   * @returns {Object} Promise
    */
   createUserIfNotExist: function (user) {
     var me = this;
@@ -404,10 +404,10 @@ var Portal = {
    * Helper method that executes all steps required to delete a User from
    * Portal app.
    *
-   * @param {user} user, data applying the schema defined in
+   * @param {Object} user, data applying the schema defined in
    * `DataProvider.generateUser()`
    *
-   * @returns {Promise}
+   * @returns {Object} Promise
    */
   deleteUser: function (user) {
     var me = this;
@@ -433,10 +433,10 @@ var Portal = {
    * Helper method that executes all steps required to create a new Domain from
    * Portal app.
    *
-   * @param {Domain} newDomain, data applying the schema defined in
+   * @param {Object} newDomain, data applying the schema defined in
    * `DataProvider.generateDomain()`
    *
-   * @returns {Promise}
+   * @returns {Object} Promise
    */
   createDomain: function (newDomain) {
     var me = this;
@@ -460,10 +460,10 @@ var Portal = {
    * Portal app. This method creates the domain only if it does not exist (it
    * validates the existence by doing a search by the domain name).
    *
-   * @param {Domain} domain, data applying the schema defined in
+   * @param {Object} domain, data applying the schema defined in
    * `DataProvider.generateDomain()`
    *
-   * @returns {Promise}
+   * @returns {Object} Promise
    */
   createDomainIfNotExist: function (domain) {
     var me = this;
@@ -494,10 +494,10 @@ var Portal = {
    * Helper method that executes all steps required to update an existing
    * domain for Portal app.
    *
-   * @param {domain object} domain, data applying the schema defined in
+   * @param {Object} domain, data applying the schema defined in
    * `DataProvider.generateDomain()`
    *
-   * @returns {Promise}
+   * @returns {Object} Promise
    */
   updateDomain: function (domain) {
     var me = this;
@@ -521,10 +521,10 @@ var Portal = {
    * Helper method that executes all steps required to delete a Domain from
    * Portal app.
    *
-   * @param {user} domain, data applying the schema defined in
+   * @param {Object} domain, data applying the schema defined in
    * `DataProvider.generateDomain()`
    *
-   * @returns {Promise}
+   * @returns {Object} Promise
    */
   deleteDomain: function (domain) {
     var me = this;
@@ -555,7 +555,7 @@ var Portal = {
    * @param {Object} apps, data applying the schema defined in
    * `DataProvider.generateMobileApps()`
    *
-   * @returns {Promise}
+   * @returns {Object} Promise
    */
   createMobileApps: function (platform, apps) {
     var me = this;
@@ -582,7 +582,7 @@ var Portal = {
    * @param {Object} apps, data applying the schema defined in
    * `DataProvider.generateMobileApps()`
    *
-   * @returns {Promise}
+   * @returns {Object} Promise
    */
   deleteMobileApps: function (apps) {
     var me = this;
@@ -612,7 +612,7 @@ var Portal = {
    * @param {Object} app, data applying the schema defined in
    * `DataProvider.generateMobileApp()`
    *
-   * @returns {Promise}
+   * @returns {Object} Promise
    */
   createMobileAppIfNotExist: function (app) {
     var me = this;
@@ -647,7 +647,7 @@ var Portal = {
    * @param {Object} accounts, data applying the schema defined in
    * `DataProvider.generateAccountProfileData()`
    *
-   * @returns {Promise}
+   * @returns {Object} Promise
    */
   createAccounts: function (accounts) {
     var me = this;
@@ -678,7 +678,7 @@ var Portal = {
    * @param {Object} accounts, data applying the schema defined in
    * `DataProvider.generateAccountProfileData()`
    *
-   * @returns {Promise}
+   * @returns {Object} Promise
    */
   deleteAccounts: function (accounts) {
     var me = this;
@@ -708,7 +708,7 @@ var Portal = {
    * @param {Object} arrayDashboards, data applying the schema defined in
    * `DataProvider.generateDashboardData()`
    *
-   * @returns {Promise}
+   * @returns {Object} Promise
    */
   createDashboard: function (arrayDashboards) {
     var me = this;
@@ -736,7 +736,7 @@ var Portal = {
    * @param {Object} arrayDashboards, data applying the schema defined in
    * `DataProvider.generateDashboardData()`
    *
-   * @returns {Promise}
+   * @returns {Object} Promise
    */
   deleteDashboard: function (arrayDashboards) {
     var me = this;
