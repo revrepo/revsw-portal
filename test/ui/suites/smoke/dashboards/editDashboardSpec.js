@@ -102,7 +102,7 @@ describe('Smoke', function () {
         it('should update form after clicking on dashboard name',
           function () {
             var tempTitle = dashboard.title;
-            dashboard.title = dashboard.title + '-UPDATED';
+            dashboard.title = dashboard.title + '-NEW';
             Portal.dashboards.editPage.form.fill(dashboard);
             Portal.dashboards.editPage.form.clickCreate();
             
