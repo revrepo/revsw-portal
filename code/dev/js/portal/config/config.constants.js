@@ -1,6 +1,5 @@
-(function() {
+(function(window) {
   'use strict';
-
   angular
     .module('revapm.Portal.Config')
     .constant('$config', {
@@ -138,21 +137,31 @@
        * Interval delay for refreshing Log Shippers status
        */
       LOGSHIPPERS_STATUS_REFRESH_INTERVAL: 25000,
-      INTRO_IS_ACTIVE: false,
+      // Intro module configuration
+      INTRO_IS_ACTIVE: (window.intro === true) ? true : false,
       ENABLE_SIMPLIFIED_SIGNUP_PROCESS: true,
 
       // Used by Angular Toaster
       SUCCESS_MESSAGE_DISPLAY_TIMEOUT: 5000,
       // PATTERNS
       PATTERNS: {
+        NO_SPECIAL_CHARS: /^[A-Za-z0-9//_.' -]+$/,
+        COMMENT_NO_SPECIAL_CHARS: /^[A-Za-z0-9//_.' \n\r-]+$/,
+        IP_ADDRESS: /^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$/,
         WILDCARD_DOMAIN_FIELD: /(^(\*\.[a-zA-Z0-9-\_]{0,62}[a-zA-Z0-9]\.)+[a-zA-Z]{2,63}$)/,
         URL: /(https?:)?\/\/.+/,
-        HEADER_VALUE: /^[0-9a-fA-F]$/,
+        HEADER_VALUE: /^[A-Za-z0-9.' -]+$/,
         DOMAIN: /(?=^.{4,253}$)(^((?!-)(?!\_)[a-zA-Z0-9-\_]{0,62}[a-zA-Z0-9]\.)+[a-zA-Z]{2,63}$)/,
-        COOKIE: /^[0-9a-fA-F]$/,
-        CACHE_BYPASS_LOCATION: /^[0-9a-fA-F]$/,
-        QUERY_STRINGS_OPTION: /^[0-9a-fA-F]$/
+        COOKIE: /^[A-Za-z0-9.' -]+$/,
+        CACHE_BYPASS_LOCATION: /^[A-Za-z0-9//.' -]+$/,
+        QUERY_STRINGS_OPTION: /^[A-Za-z0-9.' -]+$/
+      },
+      // HEADER OPERATION FOR DOMAIN CACHING RULE
+      HEADER_OPERATIONS: {
+        'add': 'Add',
+        'remove': 'Remove',
+        'replace': 'Replace'
       }
     });
 
-})();
+})(window);

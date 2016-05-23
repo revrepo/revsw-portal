@@ -18,6 +18,10 @@
     //Set state (ui.router)
     $scope.setState('index.accountSettings.companies');
 
+    $scope.NO_SPECIAL_CHARS = $config.PATTERNS.NO_SPECIAL_CHARS;
+    $scope.COMMENT_NO_SPECIAL_CHARS = $config.PATTERNS.COMMENT_NO_SPECIAL_CHARS;
+  
+
     // Fetch list of users
     $scope.$on('$stateChangeSuccess', function(state) {
       if ($state.is($scope.state)) {

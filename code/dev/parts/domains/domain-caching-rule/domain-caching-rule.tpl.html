@@ -1,6 +1,6 @@
 <div class="domain-caching-rule form" ng-form="editForm">
-  <div class="form-group">
-    <div class="col-md-offset-3  col-md-9" ng-class="{'has-error': editForm.url_value.$invalid && editForm.url_value.$dirty}">
+  <div class="form-group" ng-class="{'has-error': editForm.url_value.$invalid && editForm.url_value.$dirty}">
+    <div class="col-md-offset-3  col-md-9">
       <label class="radio-inline">
         <input type="radio" ng-model="$ctrl.rule.url.is_wildcard" ng-value="false">Regular Expression
       </label>
@@ -8,7 +8,7 @@
         <input type="radio" ng-model="$ctrl.rule.url.is_wildcard" ng-value="true">Wildcard Pattern
       </label>
     </div>
-    <label class="col-md-3 control-label">URL</label>
+    <label class="col-md-3 control-label">URL *</label>
     <div class="col-md-9">
       <input type="text" validate-caching-rule-url name="url_value" class="form-control" ng-model="$ctrl.rule.url.value" required>
       <div class="error-messages" ng-messages="editForm.url_value.$error" role="alert" ng-messages-multiple>
@@ -29,10 +29,13 @@
       </toggle-switch>
     </div>
   </div>
-  <div class="form-group form-inline">
-    <label class="col-sm-3 control-label"> Edge Cache TTL</label>
+  <div class="form-group form-inline" ng-class="{'has-error': editForm.newTTL.$invalid && editForm.newTTL.$dirty}">
+    <label class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Defines how long a cached objected will be consider frash (range 0-10,000,000)">Edge Cache TTL</label>
     <div class="col-md-9">
-      <input type="number" class="form-control" min="0" max="99999999" ng-model="$ctrl.rule.edge_caching.new_ttl"> second(s)
+      <input type="number" class="form-control" name="newTTL" ng-model="$ctrl.rule.edge_caching.new_ttl" min="0" max="10000000" ng-min="0" ng-max="10000000" required> second(s)
+      <div class="error-messages" ng-messages="editForm.newTTL.$error" role="alert" ng-messages-multiple>
+        <div ng-messages-include="parts/shared/error-messages.html"></div>
+      </div>
     </div>
   </div>
   <div class="form-group form-inline">
@@ -138,10 +141,13 @@
       </toggle-switch>
     </div>
   </div>
-  <div class="form-group form-inline" ng-show="$ctrl.rule.browser_caching.override_edge">
-    <label class="col-sm-3 control-label">Browser Caching TTL, seconds</label>
+  <div class="form-group form-inline"  ng-class="{'has-error': editForm.browserCachingNewTTL.$invalid && editForm.browserCachingNewTTL.$dirty}" ng-show="$ctrl.rule.browser_caching.override_edge">
+    <label class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Defines for now long objects will be cached in browser cache (range 0-10,000,000 seconds)">Browser Caching TTL, seconds</label>
     <div class="col-md-9">
-      <input type="number" class="form-control" min="0" max="3600" ng-model="$ctrl.rule.browser_caching.new_ttl">
+      <input type="number" class="form-control"name="browserCachingNewTTL" ng-model="$ctrl.rule.browser_caching.new_ttl" ng-min="0" ng-max="10000000" required>
+      <div class="error-messages" ng-messages="editForm.browserCachingNewTTL.$error" role="alert" ng-messages-multiple>
+        <div ng-messages-include="parts/shared/error-messages.html"></div>
+      </div>
     </div>
   </div>
   <div class="form-group form-inline">

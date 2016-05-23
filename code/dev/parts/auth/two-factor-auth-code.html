@@ -2,23 +2,24 @@
   <h3 class="modal-title">Enter Your One Time Password</h3>
 </div>
 <div class="modal-body">
-  <form class="form-horizontal" ng-submit="login()">
-    <div class="form-group">
+  <form class="form-horizontal" name="editForm" novalidate>
+    <div class="form-group" ng-class="{ 'has-error': editForm.code.$invalid && editForm.code.$dirty }">
       <div class="col-sm-8 col-sm-offset-2">
-        <input type="text"
-               class="form-control"
-               ng-model="data.code"
-               id="code"
-               placeholder="Enter Your Code here"
-               ng-disabled="data.loading"
-               required
-               autofocus>
+        <input type="text" class="form-control" ng-model="data.code" id="code" name="code" placeholder="Enter Your Code here" ng-disabled="data.loading" pattern="^\d{6}$" required autofocus>
+        <div class="error-messages" ng-messages="editForm.code.$error" role="alert" ng-messages-multiple>
+          <div ng-message="pattern">Please enter six digits of your one-time password</div>
+          <div ng-message="required">Please enter six digits of your one-time password</div>
+          <div ng-messages-include="parts/shared/error-messages.html"></div>
+        </div>
       </div>
     </div>
   </form>
-
 </div>
 <div class="modal-footer">
-  <button class="btn btn-default" type="button" ng-click="close()">Cancel</button>
-  <button class="btn btn-primary" type="button" ng-click="login()" ng-disabled="!data.code">Submit</button>
+  <button class="btn btn-default" type="button" ng-click="close()">
+    <i class="glyphicon glyphicon-remove"></i>&nbsp; Cancel
+  </button>
+  <button class="btn btn-primary" type="button" ng-click="login()" ng-disabled="!data.code || data.loading">
+    <i class="glyphicon " ng-class="data.loading ? 'glyphicon-refresh spin': 'glyphicon-log-in'"></i> Submit
+  </button>
 </div>

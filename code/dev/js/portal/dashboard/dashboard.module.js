@@ -216,13 +216,13 @@
         });
 
     })
+    .run(setCustomWidgetTemplates)
     .controller('widgetBTTConversionReportController', widgetBTTConversionReportController)
     .controller('widgetBTTBounceRateReportController', widgetBTTBounceRateReportController)
     .controller('widgetBTTBrandConversionRateReportController', widgetBTTBrandConversionRateReportController)
     .controller('widgetBTTLostRevenueCalculatorReportController', widgetBTTLostRevenueCalculatorReportController)
     .controller('widgetBTTTrafficInfoReportController', widgetBTTTrafficInfoReportController)
-
-  .controller('widgetEditBTTiframeController', widgetEditBTTiframeController);
+    .controller('widgetEditBTTiframeController', widgetEditBTTiframeController);
   /**
    * [widgetBTTConversionReportController description]
    * @param  {[type]} $sce             [description]
@@ -477,6 +477,29 @@
       });
     };
   }
-
+  /**
+   * @name  setCustomWidgetTemplates
+   * @description
+   *   Set new template for ADF
+   * @param {[type]} $templateCache [description]
+   */
+  function setCustomWidgetTemplates($templateCache) {
+    'ngInject';
+    $templateCache.put('../src/templates/widget-edit.html',
+      '<form name=widgetEditForm novalidate role=form ng-submit=saveDialog()>' +
+      '<div class=modal-header> <button type=button class=close ng-click=closeDialog() aria-hidden=true>&times;</button> ' +
+      '<h4 class=modal-title>{{widget.title}}</h4> </div> <div class=modal-body>' +
+      // " <div class=\"alert alert-danger\" role=alert ng-show=validationError> <strong>Apply error:</strong> {{validationError}} </div>"+
+      ' <div class=form-group  ng-class="{\'has-error\': widgetEditForm.widgetTitle.$invalid && widgetEditForm.widgetTitle.$dirty}">' +
+      '<label for=widgetTitle>Title</label> ' +
+      '<input type=text class=form-control id=widgetTitle  name="widgetTitle" ng-model=definition.title placeholder="Enter title" ' +
+      'ng-maxlength=30 validate-pattern-no-special-chars required>' +
+      '<div class="error-messages" ng-messages="widgetEditForm.widgetTitle.$error" role="alert" ng-messages-multiple>' +
+      '   <div ng-messages-include="parts/shared/error-messages.html"></div>' +
+      '  </div>' +
+      '</div> <div ng-if=widget.edit> <adf-widget-content model=definition content=widget.edit> </adf-widget-content></div> </div> ' +
+      '<div class=modal-footer> <button type=button class="btn btn-default" ng-click=closeDialog()>Cancel</button> ' +
+      '<input type=submit class="btn btn-primary" ng-disabled=widgetEditForm.$invalid value=Apply> </div></form>');
+  }
 
 })();

@@ -28,7 +28,7 @@
 
                                         <!-- <div app-select ng-model="application" on-select="reloadDirs()"></div> -->
                                         <ui-select ng-model="account"
-                                                   theme="select2"
+                                                   theme="select2" ng-animate-disabled
                                                    ng-disabled=""
                                                    on-select="onAccountSelect($model)"
                                                    style="min-width: 300px;" >
@@ -58,7 +58,7 @@
                   <div class="alert alert-info" ng-if="_loading">
                     <i class="glyphicon glyphicon-refresh spin" ng-if="item.loading"></i>&nbsp; Loading...
                   </div>
-                  <subscription-summary   ng-if="!_loading" ng-model="summary.subscription"></subscription-summary> 
+                  <subscription-summary   ng-if="!_loading" ng-model="summary.subscription"></subscription-summary>
                 </div>
 
 

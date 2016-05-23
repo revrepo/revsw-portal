@@ -45,16 +45,15 @@
           <form class="form-horizontal">
 
             <div class="form-group">
-              <div class="col-md-7 no-left-padding">
+              <div class="col-md-7">
                 <div name="json"
-                     class="col-md-12"
                      id="json"
                      ng-model="json"
                      options="options"
                      ng-jsoneditor="jsonEditorEvent"
-                     style="height: 400px"></div>
+                     style="height: 252px"></div>
 
-                <div class="col-sm-12" style="margin-top: 15px">
+                <div style="margin-top: 15px">
                   <a ui-sref="^.domains" class="btn btn-default">
                     <i class="glyphicon glyphicon-remove"></i>&nbsp;
                     Cancel
@@ -76,16 +75,15 @@
               </div>
 
               <div class="col-md-4">
-                <label>Examples:</label>
-                <div class="form-group" ng-repeat="item in exampleJsons">
-                  <div class="">
+                <div class="form-group">
+                  <label>Examples:</label>
+                  <div class=" " ng-repeat="item in exampleJsons">
                     <p ng-bind-html="item.text"></p>
                     <pre ng-bind="item.json"></pre>
                     <button class="btn btn-info text-capitalize" ng-click="copyToJsonEditor(item)">Use This Example</button>
+                    <p>&nbsp;</p>
                   </div>
-                  <br>
                 </div>
-
               </div>
             </div>
 
