@@ -658,6 +658,20 @@
       }
     }
 
+    /**
+     * @name copyCallback
+     * @description
+     *
+     * @param  {[type]} err [description]
+     * @return {[type]}     [description]
+     */
+    $scope.copyCallback = function(err) {
+      if (err) {
+        $scope.alertService.danger('Copying failed, please try manual approach', 2000);
+      } else {
+        $scope.alertService.success('The Domain CNAME has been copied to the clipboard', 2000);
+      }
+    };
   }
 
 })();

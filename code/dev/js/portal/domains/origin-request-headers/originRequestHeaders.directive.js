@@ -11,16 +11,6 @@
   // header_name (string),
   // operation (string) = ['add' or 'remove' or 'replace']
   // }
-  var _originRequestHeaderObject = {
-    header_value: '',
-    header_name: '',
-    operation: 'add'
-  };
-
-  var _refOriginRequestHeaderOperation = [
-    'add', 'remove', 'replace'
-  ];
-
 
   function originRequestHeaders() {
     return {
@@ -32,15 +22,10 @@
       },
       templateUrl: 'parts/domains/origin-request-headers/origin-request-headers.tpl.html',
       controllerAs: '$ctrl',
-      controller: function originRequestHeadersController($scope, $uibModal) {
+      controller: function originRequestHeadersController($scope, $uibModal, $config) {
         'ngInject';
         var $ctrl = this;
-        this.newOriginRequestHeader = {
-          operation: 'add',
-          header_name: '',
-          header_value: ''
-        };
-
+        this.headerOperations = $config.HEADER_OPERATIONS;
         /**
          * @name  onAddNew
          * @description
@@ -52,11 +37,6 @@
             $ctrl.origin_request_headers = [];
           }
           $ctrl.origin_request_headers.push(_.clone(newOriginRequestHeader));
-          $ctrl.newOriginRequestHeader = {
-            operation: 'add',
-            header_name: '',
-            header_value: ''
-          };
         };
         /**
          * @name  onDelete
@@ -89,7 +69,7 @@
           modalInstance.result
             .then(function() {
               $ctrl.origin_request_headers.splice(index, 1);
-            }, function() {
+            }, function(err) {
               // TODO: Alert ?
             });
 

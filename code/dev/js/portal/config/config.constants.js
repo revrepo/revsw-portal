@@ -155,6 +155,12 @@
         COOKIE: /^[A-Za-z0-9.' -]+$/,
         CACHE_BYPASS_LOCATION: /^[A-Za-z0-9//.' -]+$/,
         QUERY_STRINGS_OPTION: /^[A-Za-z0-9.' -]+$/
+      },
+      // HEADER OPERATION FOR DOMAIN CACHING RULE
+      HEADER_OPERATIONS: {
+        'add': 'Add',
+        'remove': 'Remove',
+        'replace': 'Replace'
       }
     });
 
