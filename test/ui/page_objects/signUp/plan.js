@@ -22,7 +22,7 @@
 // common user could do in the Plans List page from the Portal app/site.
 var PlanElement = function (titleEl) {
 
-  var containerEl = titleEl.getDriver().getDriver();
+  var containerEl = titleEl.element(by.xpath('../../'));
 
   return {
 
@@ -94,7 +94,7 @@ var PlanElement = function (titleEl) {
      * @returns {Object} Selenium WebDriver Element
      */
     getTitleEl: function () {
-      return containerEl
+      return this
         .getHeaderEl()
         .element(by.css(this.locators.labels.title.css));
     },
@@ -107,7 +107,7 @@ var PlanElement = function (titleEl) {
      * @returns {Object} Selenium WebDriver Element
      */
     getSubscribeBtn: function () {
-      return containerEl
+      return this
         .getActionEl()
         .element(by.partialLinkText(this.locators.buttons.subscribe));
     },
@@ -120,7 +120,7 @@ var PlanElement = function (titleEl) {
      * @returns {Object} Selenium WebDriver Element
      */
     getContactUsBtn: function () {
-      return containerEl
+      return this
         .getActionEl()
         .element(by.partialLinkText(this.locators.buttons.contactUs));
     },

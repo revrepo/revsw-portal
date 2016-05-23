@@ -66,6 +66,11 @@ var AdvancedEditPage = require('./mobileApp/advancedEditPage');
 var UsageReportPage = require('./billing/usageReportPage');
 var UsageReportDomainsPage = require('./billing/usageReportDomainsPage');
 
+var PlansPage = require('./signUp/plansPage');
+var SignUpPage = require('./signUp/signUpPage');
+
+var Mailinator = require('./external/mailinator');
+
 // This `Portal` Page Object is the entry point to use all other Page Objects
 // that abstract all components from the Portal App.
 var Portal = {
@@ -110,6 +115,10 @@ var Portal = {
     addPage: AddPage,
     editPage: EditPage,
     advancedEditPage: AdvancedEditPage
+  },
+  signUp: {
+    plansPage: PlansPage,
+    formPage: SignUpPage,
   },
   admin: {
     accounts: Accounts,
@@ -743,6 +752,29 @@ var Portal = {
         }
       });
     });
+  },
+
+  signUpUser: function () {
+    var me = this;
+    var user;
+    me.load();
+    me.loginPage.clickSignUp();
+    me.signUp.plansPage
+      .getPlanEl('Gold')
+      .clickSubscribe();
+    me.signUp.formPage.form.fill(user);
+    me.signUp.formPage.form.clickSignUp();
+
+    Mailinator.inboxPage.loadFor(user.email);
+    Mailinator.inboxPage.waitForInbox();
+    Mailinator.inboxPage.openLastEmail();
+
+    Mailinator.emailPage
+      .getFirstLink()
+      .click(); // Click Token Link
+
+
+    return user;
   }
 };
 

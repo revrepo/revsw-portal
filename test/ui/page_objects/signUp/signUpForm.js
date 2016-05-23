@@ -173,6 +173,12 @@ var SignUp = {
       .sendKeys(value);
   },
 
+  clickSignUp: function () {
+    return this
+      .getSignUpBtn()
+      .click();
+  },
+
   // ## Helper Methods
 
   /**
