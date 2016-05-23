@@ -93,7 +93,7 @@
           <div class="form-group" ng-class="{'has-error': editForm.originHostHeader.$invalid && editForm.originHostHeader.$dirty}">
             <label for="originHostHeader" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Enter here a domain name to be used in 'Host' header in requests sent from RevAPM to the origin server">Origin Host Header *</label>
             <div class="col-sm-9">
-              <input type="text" validate-domain-name class="form-control" ng-model="model.origin_host_header" ng-disabled="_loading" id="origin_host_header" name="originHostHeader" placeholder="Origin Host Header" ng-maxlength="50" required>
+              <input type="text" validate-domain-name class="form-control" ng-model="model.origin_host_header" ng-disabled="_loading" id="origin_host_header" name="originHostHeader" placeholder="Origin Host Header" ng-maxlength="63" required>
               <div class="error-messages" ng-messages="editForm.originHostHeader.$error" role="alert" ng-messages-multiple>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
               </div>
