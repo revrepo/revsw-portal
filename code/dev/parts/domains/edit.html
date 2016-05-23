@@ -64,7 +64,7 @@
             <label for="cname" class="col-sm-3 control-label" popover-trigger="mouseenter">Domain CNAME</label>
             <div class="col-sm-9">
               <input type="text" class="form-control" disabled ng-model="modelInfo.cname" id="cname" name="cname" placeholder="Domain CNAME" style="float:left">
-              <button class="btn btn-primary btn-copy--cname" clipboard text="modelInfo.cname" on-copied="copyCallback()" on-error="copyCallback(err)" style="vertical-align: initial;" uib-tooltip="Click to copy the Domain CNAME to the clipboard" tooltip-placement="top"><i class="fa fa-files-o"></i></button>
+              <button class="btn btn-primary btn-copy--cname" clipboard text="modelInfo.cname" on-copied="copyCallback()" on-error="copyCallback(err)" style="vertical-align: initial;" uib-tooltip="Click to copy the CNAME to the clipboard" tooltip-placement="top"><i class="fa fa-files-o"></i></button>
             </div>
           </div>
           <div class="form-group" ng-class="{'has-error': editForm.accountId.$invalid && editForm.accountId.$dirty}" ng-if="auth.isReseller() || auth.isRevadmin()">

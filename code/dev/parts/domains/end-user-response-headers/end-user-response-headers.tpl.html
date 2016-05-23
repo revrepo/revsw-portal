@@ -8,7 +8,7 @@
       <p>...</p>
     </div> -->
     <!-- Table -->
-    <p ng-show="!$ctrl.end_user_response_headers || $ctrl.end_user_response_headers.length==0" class="text text-center">no data</p>
+    <p ng-show="!$ctrl.end_user_response_headers || $ctrl.end_user_response_headers.length==0" class="text text-center">No records</p>
     <table class="table table-headers-info" ng-show="!!$ctrl.end_user_response_headers && $ctrl.end_user_response_headers.length>0">
       <thead>
         <tr>
@@ -22,14 +22,16 @@
         <tr ng-animate-disabled ng-repeat="line in $ctrl.end_user_response_headers" ng-form="editRow">
           <td ng-animate-disabled ng-click="editRow.isSelectedIndex = $index" ng-class="{'has-error': editRow.headerName.$invalid}">
             <span ng-animate-disabled ng-show="editRow.isSelectedIndex!==$index">{{line.header_name}} </span>
-            <input type="text" ng-animate-disabled validate-caching-rule-header-name name="headerName" class="form-control" ng-model="line.header_name" placeholder="New Header Name" ng-show="editRow.isSelectedIndex==$index" required>
+            <input type="text" ng-animate-disabled validate-caching-rule-header-name name="headerName" class="form-control" ng-model="line.header_name" placeholder="New Header Name"
+              ng-maxlength="128" ng-show="editRow.isSelectedIndex==$index" required>
             <div class="error-messages" ng-messages="editRow.headerName.$error" role="alert" ng-messages-multiple="false">
               <div ng-messages-include="parts/shared/error-messages.html"></div>
             </div>
           </td>
           <td ng-animate-disabled ng-click="editRow.isSelectedIndex = $index" ng-class="{'has-error': editRow.headerValue.$invalid}">
             <span ng-animate-disabled ng-show="editRow.isSelectedIndex!==$index">{{line.header_value}} </span>
-            <input ng-animate-disabled validate-caching-rule-header-value type="text" name="headerValue" class="form-control" ng-model="line.header_value" placeholder="New Header Value" ng-show="editRow.isSelectedIndex==$index" required>
+            <input ng-animate-disabled validate-caching-rule-header-value type="text" name="headerValue" class="form-control" ng-model="line.header_value" placeholder="New Header Value"
+              ng-maxlength="128" ng-show="editRow.isSelectedIndex==$index" required>
             <div class="error-messages" ng-messages="editRow.headerValue.$error" role="alert" ng-messages-multiple="false">
               <div ng-messages-include="parts/shared/error-messages.html"></div>
             </div>
