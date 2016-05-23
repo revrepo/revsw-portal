@@ -380,7 +380,7 @@
               Blue Triangle Tech. Key
             </label>
             <div class="col-md-9">
-              <input type="text" class="form-control" ng-disabled="_loading" name="bttKey" ng-model="model.btt_key" placeholder="BTT API key for the domain" ng-pattern="/^[0-9a-fA-F]{24}$/">
+              <input type="text" class="form-control" ng-disabled="_loading" name="bttKey" ng-model="model.btt_key" placeholder="BTT API key for the domain" ng-pattern="/^[0-9a-fA-F]{32}$/">
               <div class="error-messages" ng-messages="editForm.bttKey.$error" role="alert" ng-messages-multiple>
                 <div ng-message="pattern" class="alert-text alert-text--pattern">The BTT key format is not correct</div>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
