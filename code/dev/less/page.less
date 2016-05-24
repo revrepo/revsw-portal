@@ -217,6 +217,18 @@ h1.signup {
   color: @app-color-grey-logo;
 }
 
+alert-list {
+  position: fixed;
+  z-index: 999;
+  left: 50%;
+  top: 70px;
+  alert {
+    position: relative;
+    left: -50%;
+    min-width: 200px;
+  }
+}
+
 .list-input {
   border: none;
   background-color: transparent;
@@ -237,20 +249,10 @@ input[type="checkbox"] {
   margin-left: 20px;
 }
 
-// PAGE EDIT ACCOUNT PROFILE
 .section-edit-company {
   padding-bottom: 30px;
-  .select2-container {
-    min-width: 550px;
-  }
 }
 
-
-.billing_contact_details {
-  .select2-container {
-    min-width: 386px;
-  }
-}
 //
 textarea {
   &.form-control {
@@ -282,8 +284,7 @@ textarea {
   }
 }
 
-form,
-.form {
+form {
   & .error-messages {
     display: none;
     opacity: 1;
@@ -348,5 +349,38 @@ form,
       line-height: 100%;
       opacity: 1;
     }
+  }
+}
+
+.jsoneditor div.tree table.tree {
+     width: auto !important; 
+}
+
+.margin-bottom{
+  margin-bottom:8px !important;
+}
+
+a:focus{
+  outline:none !important;
+}
+.rps-graph .clearfix > .pull-right {
+  width:100%;
+}
+
+@media screen and (max-width:767px){
+    .navbar-header .ng-isolate-scope > div{ width: 280px !important}
+    .last-btns .btn{ clear: both; margin-bottom: 10px; width: 100% ; }
+    .select2-container .select2-choice{ width: 87%;}
+    select.form-control.fixed135{ width: 100%}
+    select.form-control.fixed{ width: 100%}
+    .table_wrepper{ width: 100%;overflow-y:auto }
+    .table_wrepper table{ width: auto;}
+    #menuToggleBtn{ display: none;}
+    .helpcontainer{width:285;}
+}
+@media screen and (max-width:350px){
+  .navbar-header .ng-isolate-scope > div {
+      width: 235px !important;
+      width:100%;
   }
 }

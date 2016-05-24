@@ -203,6 +203,17 @@ h1.signup {
   margin-top: auto;
   color: #A1A2A5;
 }
+alert-list {
+  position: fixed;
+  z-index: 999;
+  left: 50%;
+  top: 70px;
+}
+alert-list alert {
+  position: relative;
+  left: -50%;
+  min-width: 200px;
+}
 .list-input {
   border: none;
   background-color: transparent;
@@ -220,12 +231,6 @@ input[type="checkbox"] {
 .section-edit-company {
   padding-bottom: 30px;
 }
-.section-edit-company .select2-container {
-  min-width: 550px;
-}
-.billing_contact_details .select2-container {
-  min-width: 386px;
-}
 textarea.form-control {
   max-width: 550px;
 }
@@ -236,79 +241,114 @@ textarea.text--courier {
 .text--courier {
   font-family: Courier;
 }
-form .error-messages,
-.form .error-messages {
+form .error-messages {
   display: none;
   opacity: 1;
   line-height: 0%;
   transition: 0.4s linear all;
 }
-form.ng-invalid.ng-submitted .error-messages,
-.form.ng-invalid.ng-submitted .error-messages {
+form.ng-invalid.ng-submitted .error-messages {
   display: block;
   transition: 0.4s linear all;
 }
-form.ng-invalid.ng-submitted .error-messages.ng-inactive,
-.form.ng-invalid.ng-submitted .error-messages.ng-inactive {
+form.ng-invalid.ng-submitted .error-messages.ng-inactive {
   line-height: 50%;
   opacity: 0;
 }
-form.ng-invalid.ng-submitted .error-messages.ng-active,
-.form.ng-invalid.ng-submitted .error-messages.ng-active {
+form.ng-invalid.ng-submitted .error-messages.ng-active {
   line-height: 100%;
   opacity: 1;
 }
-form .has-error .error-messages,
-.form .has-error .error-messages {
+form .has-error .error-messages {
   display: block;
   transition: 0.4s linear all;
 }
-form .has-error .error-messages.ng-inactive,
-.form .has-error .error-messages.ng-inactive {
+form .has-error .error-messages.ng-inactive {
   line-height: 50%;
   opacity: 0;
 }
-form .has-error .error-messages.ng-active,
-.form .has-error .error-messages.ng-active {
+form .has-error .error-messages.ng-active {
   display: block;
   line-height: 100%;
   opacity: 1;
 }
-form .error-messages,
-.form .error-messages {
+form .error-messages {
   color: #d87551;
   transition: 0.4s linear all;
 }
-form .error-messages.alert-text,
-.form .error-messages.alert-text {
+form .error-messages.alert-text {
   transition: 1s linear all;
   color: #d87551;
 }
-form .error-messages.alert-text.ng-enter,
-.form .error-messages.alert-text.ng-enter {
+form .error-messages.alert-text.ng-enter {
   color: #66b2bf;
 }
-form .error-messages.alert-text.ng-enter.ng-enter-active,
-.form .error-messages.alert-text.ng-enter.ng-enter-active {
+form .error-messages.alert-text.ng-enter.ng-enter-active {
   color: #9bbb5a;
 }
-form .error-messages.alert-text.ng-leave,
-.form .error-messages.alert-text.ng-leave {
+form .error-messages.alert-text.ng-leave {
   color: #9bbb5a;
 }
-form .error-messages.alert-text.ng-leave.ng-leave-active,
-.form .error-messages.alert-text.ng-leave.ng-leave-active {
+form .error-messages.alert-text.ng-leave.ng-leave-active {
   color: #9bbb5a;
 }
-form .error-messages.ng-inactive,
-.form .error-messages.ng-inactive {
+form .error-messages.ng-inactive {
   line-height: 50%;
   opacity: 0;
 }
-form .error-messages.ng-active,
-.form .error-messages.ng-active {
+form .error-messages.ng-active {
   line-height: 100%;
   opacity: 1;
+}
+.jsoneditor div.tree table.tree {
+  width: auto !important;
+}
+.margin-bottom {
+  margin-bottom: 8px !important;
+}
+a:focus {
+  outline: none !important;
+}
+.rps-graph .clearfix > .pull-right {
+  width: 100%;
+}
+@media screen and (max-width: 767px) {
+  .navbar-header .ng-isolate-scope > div {
+    width: 280px !important;
+  }
+  .last-btns .btn {
+    clear: both;
+    margin-bottom: 10px;
+    width: 100% ;
+  }
+  .select2-container .select2-choice {
+    width: 87%;
+  }
+  select.form-control.fixed135 {
+    width: 100%;
+  }
+  select.form-control.fixed {
+    width: 100%;
+  }
+  .table_wrepper {
+    width: 100%;
+    overflow-y: auto;
+  }
+  .table_wrepper table {
+    width: auto;
+  }
+  #menuToggleBtn {
+    display: none;
+  }
+  .helpcontainer {
+    width: 285;
+  }
+}
+@media screen and (max-width: 350px) {
+  .navbar-header .ng-isolate-scope > div {
+    width: 235px !important;
+    width: 100%;
+  }
 }
 .main_img_container {
   left: 50%;
