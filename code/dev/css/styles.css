@@ -223,6 +223,9 @@ input[type="checkbox"] {
 .section-edit-company .select2-container {
   min-width: 550px;
 }
+.billing_contact_details .select2-container {
+  min-width: 386px;
+}
 textarea.form-control {
   max-width: 550px;
 }
@@ -893,10 +896,11 @@ i {
   margin-left: 20px;
 }
 .time-note-display {
+  font-size: 0.9em;
   margin: 10px;
 }
 .panel .time-note-display {
-  font-size: 0.9em;
+  font-size: 1.5em;
 }
 .introjs-tooltip {
   min-width: 300px;
