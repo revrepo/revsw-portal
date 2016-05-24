@@ -69,7 +69,7 @@ var UsageReportDomainsPage = require('./billing/usageReportDomainsPage');
 var PlansPage = require('./signUp/plansPage');
 var SignUpPage = require('./signUp/signUpPage');
 
-var Mailinator = require('./external/mailinator');
+var MailinatorHelper = require('./../mailinator/helper');
 
 var DataProvider = require('./../common/providers/data');
 
@@ -758,29 +758,25 @@ var Portal = {
 
   signUpUser: function () {
     var me = this;
-    //var user = DataProvider.generateUserToSignUp();
-    //me.load();
-    //me.loginPage.clickSignUp();
-    //me.signUp.plansPage
-    //  .getPlanEl('Gold')
-    //  .clickSubscribe();
-    //me.signUp.formPage.form.fill(user);
-    //me.signUp.formPage.form.clickSignUp();
-    //browser.sleep(10000);
-
-    var user = {email: 'oda-halvorson-1464059663901@mailinator.com'};
-    Mailinator.inboxPage.load();
-    //browser.sleep(10000);
-    Mailinator.inboxPage.waitForInbox(user.email);
-    Mailinator.inboxPage.openLastEmail();
+    var user = DataProvider.generateUserToSignUp();
+    me.load();
+    me.loginPage.clickSignUp();
+    me.signUp.plansPage
+      .getPlanEl('Gold')
+      .clickSubscribe();
+    me.signUp.formPage.form.fill(user);
+    me.signUp.formPage.form.clickSignUp();
+    // TODO: Probably we need to use Promise here instead of the sleep
     browser.sleep(10000);
-
-    //Mailinator.emailPage
-    //  .getFirstLink()
-    //  .click(); // Click Token Link
-
-
-    return user;
+    return MailinatorHelper
+      .getVerificationTokenUrl(user.email)
+      .then(function (verificationUrl) {
+        return browser
+          .get(verificationUrl)
+          .then(function () {
+            return user;
+          });
+      });
   }
 };
 
