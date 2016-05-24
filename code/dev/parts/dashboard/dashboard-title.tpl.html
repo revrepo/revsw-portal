@@ -2,7 +2,7 @@
   <div class="col-md-12">
     <dashboard-btn-new class="h4 pull-left btn btn-link" ng-if="!editMode && !!model"></dashboard-btn-new>
     <h2 class "h2 pull-left page-title">
-   {{model.title}}
+   {{model.title}} <time-note-display ng-show="(model.getCountDashboardWidget(model.rows)!=0)"></time-note-display>
     <span class="h5 form-inline pull-right">
       <!-- TODO: make directive autorefresh-time-period -->
       <div class="form-group">
