@@ -160,7 +160,7 @@
           $scope.report = overall;
         })
         .catch( function(err) {
-          $scope.toaster.error(err);
+          $scope.alertService.danger(err);
         })
         .finally( function() {
           $scope._loading = false;
@@ -190,7 +190,7 @@
         $scope.onUpdate();
       })
       .catch(function (err) {
-        $scope.toaster.error(err);
+        $scope.alertService.danger(err);
         $scope._loading = false;
       });
 

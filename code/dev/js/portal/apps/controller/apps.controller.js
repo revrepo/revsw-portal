@@ -17,7 +17,6 @@
     $state,
     $stateParams,
     $config,
-    AlertService,
     $localStorage,
     $q) {
     //Invoking crud actions
@@ -268,7 +267,7 @@
 
     $scope.verify = function(model) {
       if (!$scope.model.id) {
-        AlertService.danger('Please select app first');
+        $scope.alertService.danger('Please select app first');
         return;
       }
       $scope._loading = true;
@@ -281,7 +280,7 @@
           $scope.alertService.success('App configuration is correct', 5000);
         })
         .catch(function(err) {
-          AlertService.danger(err);
+          $scope.alertService.danger(err);
         })
         .finally(function() {
           $scope._loading = false;
@@ -290,7 +289,7 @@
 
     $scope.publish = function(model) {
       if (!$scope.model.id) {
-        AlertService.danger('Please select app first');
+        $scope.alertService.danger('Please select app first');
         return;
       }
       $scope.confirm('confirmPublishModal.html', model).then(function() {
@@ -306,7 +305,7 @@
               .success('App configuration is published', 5000);
           })
           .catch(function(err) {
-            AlertService.danger(err);
+            $scope.alertService.danger(err);
           })
           .finally(function() {
             _.assign($scope.model, model);

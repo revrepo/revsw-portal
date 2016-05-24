@@ -394,6 +394,9 @@ textarea {
   border-color: #a94442;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(250, 0, 0, 0.6);
 }
+.login_box .error-messages {
+  text-align: center;
+}
 #main .footerNoteA {
   color: #fff;
   display: block;
@@ -875,6 +878,9 @@ section[drawer] .side-menu .dashboard_menu .side-menu-item.item-title a {
 }
 .caching-rules-list .panel-buttons-left {
   padding-right: 20px;
+}
+.btn-copy--cname {
+  margin-left: 10px;
 }
 @font-face {
   font-family: 'revapm';

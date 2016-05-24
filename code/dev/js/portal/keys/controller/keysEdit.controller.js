@@ -6,7 +6,7 @@
     .controller('KeysEditController', KeysEditController);
 
   // @ngInject
-  function KeysEditController($scope, $rootScope, $injector, $stateParams, $location, CRUDController, ApiKeys, Companies, $config, DomainsConfig, AlertService) {
+  function KeysEditController($scope, $rootScope, $injector, $stateParams, $location, CRUDController, ApiKeys, Companies, $config, DomainsConfig) {
     //Invoking crud actions
     $injector.invoke(CRUDController, this, {
       $scope: $scope,
@@ -106,7 +106,7 @@
           $scope.key = key;
         })
         .catch(function (err) {
-          AlertService.danger(err);
+          $scope.alertService.danger(err);
         })
         .finally(function () {
           $scope._loading = false;
@@ -148,11 +148,11 @@
         .$promise
         .then(function (data) {
           $rootScope.$broadcast('update:searchData');
-          AlertService.success('API Key updated');
+          $scope.alertService.success('API Key updated');
           $scope.$parent.list();
         })
         .catch(function (err) {
-          AlertService.danger(err);
+          $scope.alertService.danger(err);
         })
         .finally(function () {
           $scope._loading = false;
