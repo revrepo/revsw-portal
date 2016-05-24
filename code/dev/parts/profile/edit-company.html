@@ -161,7 +161,7 @@
             <div class="form-group" ng-class="{ 'has-error': editForm.country.$invalid && editForm.country.$dirty }">
               <label for="Country" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Country">Country *</label>
               <div class="col-sm-10">
-                <ui-select ng-model="model.country" id="Country" name="country" theme="select2" ng-animate-disabled ng-disabled="_loading" onselect="onModelSelect($model)" >
+                <ui-select ng-model="model.country" id="Country" name="country" theme="select2" ng-animate-disabled ng-disabled="_loading" onselect="onModelSelect($model)">
                   <ui-select-match placeholder="Select Country">{{$select.selected.value}}</ui-select-match>
                   <ui-select-choices repeat="value.key as (key, value) in countries | filter: {'value': $select.search}">
                     <div ng-bind-html="value.value|highlight: $select.search"></div>
@@ -352,19 +352,16 @@
                   <i class="glyphicon glyphicon-remove"></i>&nbsp; Cancel
                 </a>
                 <button type="submit" class="btn btn-success" ng-disabled="_loading || _disabled || !editForm.$valid" value="Update Company Profile">
-                  <i class="glyphicon glyphicon-save"></i> Update Company Profile
+                  <i class="glyphicon " ng-class="_loading?'glyphicon-refresh spin':'glyphicon-save'"></i>&nbsp; Update Company Profile
                 </button>
-                <!-- TODO: Need to disable "Edit Billing Profile" button if the billing profile is not active in Chargify  -->
                 <a ng-if="model.billing_id && !!model.billing_portal_link.url && !!model.subscription_id" href="{{model.billing_portal_link.url}}" class="btn btn-primary" target="_blank" ng-disabled="_loading || _disabled" popover-trigger="mouseenter" uib-popover="Click here to update your payment details - you will be taken to our billing portal which uses a separate URL">
-                  <i class="glyphicon glyphicon-lock"></i> Update Payment Profile</a>
+                  <i class="glyphicon " ng-class="_loading?'glyphicon-refresh spin':'glyphicon-lock'"></i>&nbsp; Update Payment Profile</a>
                 <!-- Create Billing Profile -->
                 <a href="" class="btn btn-primary" ng-disabled="_loading || _disabled || !editForm.$valid" ng-if="!model.billing_id && (userService.isRevadmin() || userService.isReseller())" ng-click="createBillingProfile(model)">
-                  <i class="glyphicon glyphicon-credit-card"></i> Create Billing Profile
+                  <i class="glyphicon " ng-class="_loading?'glyphicon-refresh spin':'glyphicon-credit-card'"></i>&nbsp; Create Billing Profile
                 </a>
-                <!-- TODO: add check valid payment method -->
                 <button type="button" ng-if="user.isAdmin" ng-click="deleteCompanyProfile(model)" class="btn btn-danger pull-right" ng-disabled="_loading || _disabled || !isCanDeleteCompanyProfile()">
-                  <i class="glyphicon glyphicon-refresh spin" ng-if="_loading"></i>
-                  <i class="glyphicon glyphicon-remove" ng-if="!_loading"></i>&nbsp; Delete Company Profile
+                  <i class="glyphicon " ng-class="_loading?'glyphicon-refresh spin':'glyphicon-remove'"></i>&nbsp; Delete Company Profile
                 </button>
               </div>
             </div>
