@@ -28,11 +28,10 @@
         <div class="form-group" ng-class="{ 'has-error': accountDeleteForm.cancellationMessage.$invalid && accountDeleteForm.cancellationMessage.$dirty }">
           <label class=" control-label" for="cancellationMessage">Thank you for giving us a try! Is there anything we can do better in the future?</label>
           <div class="col-sm-12">
-            <textarea class="form-control" placeholder="300 characters max" ng-maxlength="300"  name="cancellationMessage"  ng-model="model.cancellation_message" class="cancellation_message"
-              validate-pattern-comment-no-special-chars></textarea>
+            <textarea class="form-control" placeholder="300 characters max" ng-maxlength="300" name="cancellationMessage" ng-model="model.cancellation_message" class="cancellation_message" validate-pattern-comment-no-special-chars></textarea>
             <div class="error-messages" ng-messages="accountDeleteForm.cancellationMessage.$error" role="alert" ng-messages-multiple>
-                <div ng-messages-include="parts/shared/error-messages.html"></div>
-              </div>
+              <div ng-messages-include="parts/shared/error-messages.html"></div>
+            </div>
           </div>
         </div>
       </div>
@@ -116,7 +115,7 @@
             <div class="form-group" ng-class="{ 'has-error': editForm.lastName.$invalid && editForm.lastName.$dirty }">
               <label for="lastName" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Contact person last name (30 characters max)">Last Name *</label>
               <div class="col-sm-10 ">
-                <input type="text" class="form-control" required id="lastName" name="lastName" placeholder="Last Name"  ng-maxlength="30" ng-model="model.last_name" ng-pattern="NO_SPECIAL_CHARS" ng-disabled="_loading" required>
+                <input type="text" class="form-control" required id="lastName" name="lastName" placeholder="Last Name" ng-maxlength="30" ng-model="model.last_name" ng-pattern="NO_SPECIAL_CHARS" ng-disabled="_loading" required>
                 <div class="error-messages" ng-messages="editForm.lastName.$error" role="alert" ng-messages-multiple>
                   <div ng-messages-include="parts/shared/error-messages.html"></div>
                 </div>
@@ -126,7 +125,7 @@
                             editForm.phoneNumber.$dirty }">
               <label for="phoneNumber" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Contact phone number">Phone Number *</label>
               <div class="col-sm-10">
-                <input type="text"  class="form-control" required id="phoneNumber" name="phoneNumber" placeholder="Phone Number" ng-maxlength="30" ng-model="model.phone_number" ng-disabled="_loading" required>
+                <input type="text" class="form-control" required id="phoneNumber" name="phoneNumber" placeholder="Phone Number" ng-maxlength="30" ng-model="model.phone_number" ng-disabled="_loading" required>
                 <div class="error-messages" ng-messages="editForm.phoneNumber.$error" role="alert" ng-messages-multiple>
                   <div ng-messages-include="parts/shared/error-messages.html"></div>
                 </div>
@@ -162,8 +161,12 @@
             <div class="form-group" ng-class="{ 'has-error': editForm.country.$invalid && editForm.country.$dirty }">
               <label for="Country" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Country">Country *</label>
               <div class="col-sm-10">
-                <select type="text" class="form-control" id="Country" name="country" placeholder="Country" required ng-model="model.country" ng-options="key as value for (key , value) in countries" ng-disabled="_loading">
-                </select>
+                <ui-select ng-model="model.country" id="Country" name="country" theme="select2" ng-animate-disabled ng-disabled="_loading" onselect="onModelSelect($model)">
+                  <ui-select-match placeholder="Select Country">{{$select.selected.value}}</ui-select-match>
+                  <ui-select-choices repeat="value.key as (key, value) in countries | filter: {'value': $select.search,'key':'!A1'}">
+                    <div ng-bind-html="value.value|highlight: $select.search"></div>
+                  </ui-select-choices>
+                </ui-select>
                 <div class="error-messages" ng-messages="editForm.country.$error" role="alert" ng-messages-multiple>
                   <div ng-messages-include="parts/shared/error-messages.html"></div>
                 </div>
@@ -241,8 +244,7 @@
                 <div class="form-group col-md-6" ng-class="{ 'has-error': editForm.billingFirstName.$invalid && editForm.billingFirstName.$dirty }">
                   <label for="billingFirstName" class="col-sm-4 control-label" popover-trigger="mouseenter" uib-popover="First Name (30 characters max)">First Name *</label>
                   <div class="col-sm-8">
-                    <input type="text" class="form-control" required id="first_name" name="billingFirstName" placeholder="First Name" ng-model="model.billing_info.first_name" ng-maxlength="30"
-                      ng-pattern="NO_SPECIAL_CHARS" ng-disabled="_loading">
+                    <input type="text" class="form-control" required id="first_name" name="billingFirstName" placeholder="First Name" ng-model="model.billing_info.first_name" ng-maxlength="30" ng-pattern="NO_SPECIAL_CHARS" ng-disabled="_loading">
                     <div class="error-messages" ng-messages="editForm.billingFirstName.$error" role="alert" ng-messages-multiple>
                       <div ng-messages-include="parts/shared/error-messages.html"></div>
                     </div>
@@ -252,8 +254,7 @@
                 <div class="form-group col-md-6" ng-class="{ 'has-error': editForm.billingLastName.$invalid &&  editForm.billingLastName.$dirty }">
                   <label for="billingLastName" class="col-sm-4 control-label" popover-trigger="mouseenter" uib-popover="Last Name (30 characters max)">Last Name *</label>
                   <div class="col-sm-8">
-                    <input type="text" class="form-control" required id="last_name" name="billingLastName" placeholder="Last Name" ng-model="model.billing_info.last_name" ng-maxlength="30"
-                      ng-pattern="NO_SPECIAL_CHARS" ng-disabled="_loading">
+                    <input type="text" class="form-control" required id="last_name" name="billingLastName" placeholder="Last Name" ng-model="model.billing_info.last_name" ng-maxlength="30" ng-pattern="NO_SPECIAL_CHARS" ng-disabled="_loading">
                     <div class="error-messages" ng-messages="editForm.billingLastName.$error" role="alert" ng-messages-multiple>
                       <div ng-messages-include="parts/shared/error-messages.html"></div>
                     </div>
@@ -286,8 +287,7 @@
                 <div class="form-group col-md-6" ng-class="{ 'has-error': editForm.billingAddress1.$invalid && editForm.billingAddress1.$dirty }">
                   <label for="billingAddress1" class="col-sm-4 control-label" popover-trigger="mouseenter" uib-popover="Street address (150 characters max)">Address *</label>
                   <div class="col-sm-8">
-                    <input type="text" class="form-control" required id="billingAddress1" name="billingAddress1" placeholder="Address 1" ng-model="model.billing_info.address1" ng-maxlength="150"
-                      ng-pattern="NO_SPECIAL_CHARS" ng-disabled="_loading">
+                    <input type="text" class="form-control" required id="billingAddress1" name="billingAddress1" placeholder="Address 1" ng-model="model.billing_info.address1" ng-maxlength="150" ng-pattern="NO_SPECIAL_CHARS" ng-disabled="_loading">
                     <div class="error-messages" ng-messages="editForm.billingAddress1.$error" role="alert" ng-messages-multiple>
                       <div ng-messages-include="parts/shared/error-messages.html"></div>
                     </div>
@@ -296,8 +296,7 @@
                 <div class="form-group col-md-6" ng-class="{ 'has-error': editForm.billingAddress2.$invalid && editForm.billingAddress2.$dirty }">
                   <label for="billingAddress2" class="col-sm-4 control-label" popover-trigger="mouseenter" uib-popover="Optional second line of street address">Address (Line 2) &nbsp;</label>
                   <div class="col-sm-8">
-                    <input type="text" class="form-control" id="billingAddress2" name="billingAddress2" placeholder="Address (Line 2)" ng-model="model.billing_info.address2" ng-maxlength="150"
-                      ng-pattern="NO_SPECIAL_CHARS" ng-disabled="_loading">
+                    <input type="text" class="form-control" id="billingAddress2" name="billingAddress2" placeholder="Address (Line 2)" ng-model="model.billing_info.address2" ng-maxlength="150" ng-pattern="NO_SPECIAL_CHARS" ng-disabled="_loading">
                     <div class="error-messages" ng-messages="editForm.billingAddress2.$error" role="alert" ng-messages-multiple>
                       <div ng-messages-include="parts/shared/error-messages.html"></div>
                     </div>
@@ -310,8 +309,12 @@
                             editForm.billingCountry.$dirty }">
                   <label for="billingCountry" class="col-sm-4 control-label" popover-trigger="mouseenter" uib-popover="Country name">Country *</label>
                   <div class="col-sm-8">
-                    <select type="text" class="form-control" id="billingCountry" name="billingCountry" placeholder="Country" required ng-model="model.billing_info.country" ng-options="key as value for (key , value) in countries" ng-disabled="_loading">
-                    </select>
+                    <ui-select ng-model="model.billing_info.country" id="billingCountry" name="billingCountry" theme="select2" ng-animate-disabled ng-disabled="_loading" onselect="onModelSelect($model)">
+                      <ui-select-match placeholder="Country">{{$select.selected.value}}</ui-select-match>
+                      <ui-select-choices repeat="value.key as (key, value) in countries | filter: {'value': $select.search,'key':'!A1'}">
+                        <div ng-bind-html="value.value|highlight: $select.search"></div>
+                      </ui-select-choices>
+                    </ui-select>
                     <div class="error-messages" ng-messages="editForm.billingCountry.$error" role="alert" ng-messages-multiple>
                       <div ng-messages-include="parts/shared/error-messages.html"></div>
                     </div>
@@ -338,8 +341,7 @@
                 <div class="form-group col-md-6" ng-class="{ 'has-error': editForm.billingZipcode.$invalid && editForm.billingZipcode.$dirty }">
                   <label for="billingZipcode" class="col-sm-4 control-label" popover-trigger="mouseenter" uib-popover="Zip code (30 characters max)">Zip Code *</label>
                   <div class="col-sm-8">
-                    <input type="text" class="form-control" id="billingZipcode" name="billingZipcode" ng-maxlength="30" required placeholder="Zip Code" ng-model="model.billing_info.zipcode"
-                      ng-pattern="NO_SPECIAL_CHARS" ng-disabled="_loading">
+                    <input type="text" class="form-control" id="billingZipcode" name="billingZipcode" ng-maxlength="30" required placeholder="Zip Code" ng-model="model.billing_info.zipcode" ng-pattern="NO_SPECIAL_CHARS" ng-disabled="_loading">
                     <div class="error-messages" ng-messages="editForm.billingZipcode.$error" role="alert" ng-messages-multiple>
                       <div ng-messages-include="parts/shared/error-messages.html"></div>
                     </div>
@@ -354,19 +356,16 @@
                   <i class="glyphicon glyphicon-remove"></i>&nbsp; Cancel
                 </a>
                 <button type="submit" class="btn btn-success" ng-disabled="_loading || _disabled || !editForm.$valid" value="Update Company Profile">
-                  <i class="glyphicon glyphicon-save"></i> Update Company Profile
+                  <i class="glyphicon " ng-class="_loading?'glyphicon-refresh spin':'glyphicon-save'"></i>&nbsp; Update Company Profile
                 </button>
-                <!-- TODO: Need to disable "Edit Billing Profile" button if the billing profile is not active in Chargify  -->
                 <a ng-if="model.billing_id && !!model.billing_portal_link.url && !!model.subscription_id" href="{{model.billing_portal_link.url}}" class="btn btn-primary" target="_blank" ng-disabled="_loading || _disabled" popover-trigger="mouseenter" uib-popover="Click here to update your payment details - you will be taken to our billing portal which uses a separate URL">
-                  <i class="glyphicon glyphicon-lock"></i> Update Payment Profile</a>
+                  <i class="glyphicon " ng-class="_loading?'glyphicon-refresh spin':'glyphicon-lock'"></i>&nbsp; Update Payment Profile</a>
                 <!-- Create Billing Profile -->
                 <a href="" class="btn btn-primary" ng-disabled="_loading || _disabled || !editForm.$valid" ng-if="!model.billing_id && (userService.isRevadmin() || userService.isReseller())" ng-click="createBillingProfile(model)">
-                  <i class="glyphicon glyphicon-credit-card"></i> Create Billing Profile
+                  <i class="glyphicon " ng-class="_loading?'glyphicon-refresh spin':'glyphicon-credit-card'"></i>&nbsp; Create Billing Profile
                 </a>
-                <!-- TODO: add check valid payment method -->
                 <button type="button" ng-if="user.isAdmin" ng-click="deleteCompanyProfile(model)" class="btn btn-danger pull-right" ng-disabled="_loading || _disabled || !isCanDeleteCompanyProfile()">
-                  <i class="glyphicon glyphicon-refresh spin" ng-if="_loading"></i>
-                  <i class="glyphicon glyphicon-remove" ng-if="!_loading"></i>&nbsp; Delete Company Profile
+                  <i class="glyphicon " ng-class="_loading?'glyphicon-refresh spin':'glyphicon-remove'"></i>&nbsp; Delete Company Profile
                 </button>
               </div>
             </div>

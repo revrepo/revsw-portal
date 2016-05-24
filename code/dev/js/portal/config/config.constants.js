@@ -161,7 +161,11 @@
         'add': 'Add',
         'remove': 'Remove',
         'replace': 'Replace'
-      }
+      },
+      TIME_NOTE_DISPLAY: {
+        MESSAGE: 'All times are shown in the computer’s local time zone'
+      },
+      REFRESH_NOW_TIMEOUT: 5000,
     });
 
 })(window);
