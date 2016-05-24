@@ -220,6 +220,12 @@ input[type="checkbox"] {
 .section-edit-company {
   padding-bottom: 30px;
 }
+.section-edit-company .select2-container {
+  min-width: 550px;
+}
+.billing_contact_details .select2-container {
+  min-width: 386px;
+}
 textarea.form-control {
   max-width: 550px;
 }
@@ -728,6 +734,9 @@ section[drawer] .side-menu .dashboard_menu .side-menu-item.item-title a {
     padding-left: 20px;
   }
 }
+input[name="destinationPassword"] {
+  max-width: 510px;
+}
 .domain-caching-rules__info .panel-buttons-left {
   padding-right: 30px;
 }
@@ -885,6 +894,13 @@ i {
 }
 .subscription-summary .btn {
   margin-left: 20px;
+}
+.time-note-display {
+  font-size: 0.9em;
+  margin: 10px;
+}
+.panel .time-note-display {
+  font-size: 1.5em;
 }
 .introjs-tooltip {
   min-width: 300px;
