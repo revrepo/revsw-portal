@@ -22,7 +22,7 @@
 // common user could do in the User List page from the Portal app/site.
 var Mailinator = {
 
-  baseUrl: 'https://www.mailinator.com/inbox2.jsp',
+  baseUrl: 'https://www.mailinator.com',///inbox2.jsp',
 
   waitTimeout: 180000, // 180 seconds | 3 minutes
 
@@ -30,9 +30,21 @@ var Mailinator = {
 
   // Locators specific to HTML elements from this page object
   locators: {
+    buttons: {
+      go: {
+        //css: '.btn.btn-sm.btn-dark'
+        css: 'button[onclick*=changeInbox]'
+      }
+    },
     links: {
       email: {
         repeater: 'email in emails'
+      }
+    },
+    textFields: {
+      inbox: {
+        //id: 'publicinboxfield'
+        id: 'inboxfield'
       }
     }
   },
@@ -45,16 +57,23 @@ var Mailinator = {
    *
    * Loads the Mailinator URL pointing to the inbox for the given email ID.
    *
-   * @param {String} emailId
    * @returns {Object} Promise
    */
-  loadFor: function (emailId) {
-    var url = this.baseUrl + '?public_to=' + emailId + '#/#public_maildirdiv';
-    return browser.get(url);
+  load: function () {
+    return browser.get(this.baseUrl);
+  },
+
+  getInboxTxtIn: function () {
+    return element(by.id(this.locators.textFields.inbox.id));
+  },
+
+  getGoBtn: function () {
+    return element(by.css(this.locators.buttons.go.css));
   },
 
   getAllEmailEls: function () {
-    return element.all(by.repeater(this.locators.links.email.repeater));
+    //return element.all(by.repeater(this.locators.links.email.repeater));
+    return element.all(by.css('div[onclick*=showTheMessage]'));
   },
 
   getLastEmailEl: function () {
@@ -65,19 +84,43 @@ var Mailinator = {
 
   // ## Methods to interact with the components from the Page Object
 
-  // ## Helper Methods
+  setInbox: function (value) {
+    return this
+      .getInboxTxtIn()
+      .sendKeys(value);
+  },
 
-  waitForInbox: function () {
+  clickGo: function () {
+    return this
+      .getGoBtn()
+      .click();
+  },
+
+  // ## Helper Methodsemail
+
+  waitForInbox: function (email) {
+
+    console.log('browser.ignoreSynchronization', browser.ignoreSynchronization);
+    var localName = email.split('@')[0];
     var me = this;
+    me.setInbox(localName);
+    me.clickGo();
+    browser.sleep(3000);
     browser.wait(function () {
-      browser.refresh();
-      return me.getAllEmailEls().length > 0;
+      me.clickGo();
+      browser.sleep(1000); // every one sec
+      return me
+        .getAllEmailEls()
+        .then(function (elements) {
+          return elements.length > 0;
+        });
     }, this.waitTimeout);
   },
 
   openLastEmail: function () {
     return this
       .getLastEmailEl()
+      //.element(by.css('div[onclick*=showTheMessage]'))
       .click();
   }
 

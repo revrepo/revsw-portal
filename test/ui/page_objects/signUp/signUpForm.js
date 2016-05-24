@@ -31,7 +31,7 @@ var SignUp = {
         linkText: 'Cancel'
       },
       signUp: {
-        linkText: 'Sign Up'
+        buttonText: 'Sign Up'
       }
     },
     textInputs: {
@@ -116,7 +116,8 @@ var SignUp = {
    * @returns {Object} Selenium WebDriver Element
    */
   getSignUpBtn: function () {
-    return element(by.partialLinkText(this.locators.buttons.signUp.linkText));
+    return element(
+      by.partialButtonText(this.locators.buttons.signUp.buttonText));
   },
 
   // ## Methods to interact with the User List Page components
@@ -190,16 +191,16 @@ var SignUp = {
    */
   fill: function (data) {
     if (data.email) {
-      this.set(data.email);
+      this.setEmail(data.email);
     }
     if (data.firstName) {
-      this.set(data.firstName);
+      this.setFirstName(data.firstName);
     }
     if (data.lastName) {
-      this.set(data.lastName);
+      this.setLastName(data.lastName);
     }
     if (data.password) {
-      this.set(data.password);
+      this.setPassword(data.password);
     }
   }
 };

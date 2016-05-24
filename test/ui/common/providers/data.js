@@ -16,6 +16,8 @@
  * from Rev Software, Inc.
  */
 
+var faker = require('faker');
+
 // # Data Provider object
 
 // Requiring constants object
@@ -73,6 +75,21 @@ var DataProvider = {
       passwordConfirm: 'password1',
       company: company
     };
+  },
+
+  generateUserToSignUp: function () {
+    var firstName = faker.name.firstName();
+    var lastName = faker.name.lastName();
+    var user = {
+      firstName: firstName,
+      lastName: lastName,
+      email: [firstName, lastName, Date.now() + '@mailinator.com']
+        .join('-')
+        .toLowerCase(),
+      password: 'password1'
+    };
+    return user;
+
   },
 
   /**

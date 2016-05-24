@@ -33,7 +33,10 @@ var Mailinator = {
     elements: {
       email: {
         body: {
-          css: '',
+          css: 'body',
+          iFrame: {
+            id: 'publicshowmaildivcontent'
+          },
           links: {
             css: 'a'
           }
@@ -53,13 +56,15 @@ var Mailinator = {
    * @returns {Object} Promise
    */
   getBodyEl: function () {
+    browser.switchTo().frame(this.locators.elements.email.body.iFrame.id);
+    console.log(element(by.css(this.locators.elements.email.body.css)).element);
     return element(by.css(this.locators.elements.email.body.css));
   },
 
   getAllBodyLinks: function () {
     return this
       .getBodyEl()
-      .element
+      .element()
       .all(by.css(this.locators.elements.email.body.links.css));
   },
 

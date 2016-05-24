@@ -22,7 +22,9 @@
 // common user could do in the Plans List page from the Portal app/site.
 var PlanElement = function (titleEl) {
 
-  var containerEl = titleEl.element(by.xpath('../../'));
+  var containerEl = titleEl
+    .element(by.xpath('..'))
+    .element(by.xpath('..'));
 
   return {
 
@@ -32,10 +34,10 @@ var PlanElement = function (titleEl) {
     locators: {
       buttons: {
         subscribe: {
-          linkText: 'Subscribe'
+          buttonText: 'Subscribe'
         },
         contactUs: {
-          linkText: 'Contact Us'
+          buttonText: 'Contact Us'
         }
       },
       elements: {
@@ -109,7 +111,8 @@ var PlanElement = function (titleEl) {
     getSubscribeBtn: function () {
       return this
         .getActionEl()
-        .element(by.partialLinkText(this.locators.buttons.subscribe));
+        .element(by.partialButtonText(
+          this.locators.buttons.subscribe.buttonText));
     },
 
     /**
@@ -122,7 +125,8 @@ var PlanElement = function (titleEl) {
     getContactUsBtn: function () {
       return this
         .getActionEl()
-        .element(by.partialLinkText(this.locators.buttons.contactUs));
+        .element(by.partialButtonText(
+          this.locators.buttons.contactUs.buttonText));
     },
 
     // ## Methods to interact with the User List Page components

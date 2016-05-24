@@ -71,6 +71,8 @@ var SignUpPage = require('./signUp/signUpPage');
 
 var Mailinator = require('./external/mailinator');
 
+var DataProvider = require('./../common/providers/data');
+
 // This `Portal` Page Object is the entry point to use all other Page Objects
 // that abstract all components from the Portal App.
 var Portal = {
@@ -756,22 +758,26 @@ var Portal = {
 
   signUpUser: function () {
     var me = this;
-    var user;
-    me.load();
-    me.loginPage.clickSignUp();
-    me.signUp.plansPage
-      .getPlanEl('Gold')
-      .clickSubscribe();
-    me.signUp.formPage.form.fill(user);
-    me.signUp.formPage.form.clickSignUp();
+    //var user = DataProvider.generateUserToSignUp();
+    //me.load();
+    //me.loginPage.clickSignUp();
+    //me.signUp.plansPage
+    //  .getPlanEl('Gold')
+    //  .clickSubscribe();
+    //me.signUp.formPage.form.fill(user);
+    //me.signUp.formPage.form.clickSignUp();
+    //browser.sleep(10000);
 
-    Mailinator.inboxPage.loadFor(user.email);
-    Mailinator.inboxPage.waitForInbox();
+    var user = {email: 'oda-halvorson-1464059663901@mailinator.com'};
+    Mailinator.inboxPage.load();
+    //browser.sleep(10000);
+    Mailinator.inboxPage.waitForInbox(user.email);
     Mailinator.inboxPage.openLastEmail();
+    browser.sleep(10000);
 
-    Mailinator.emailPage
-      .getFirstLink()
-      .click(); // Click Token Link
+    //Mailinator.emailPage
+    //  .getFirstLink()
+    //  .click(); // Click Token Link
 
 
     return user;
