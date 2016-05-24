@@ -79,7 +79,6 @@
                   <div ng-bind-html="item.domain_name|highlight: $select.search"></div>
                 </ui-select-choices>
               </ui-select>
-              <!-- TODO: make select of Mobile Apps-->
               <ui-select ng-model="selectedAppSourceId" class="source-select" theme="select2" ng-animate-disabled name="sourceId" ng-disabled="_loading" on-select="onAppSelect($model)" style="min-width: 550px;" ng-if="(model.source_type=='app')" required>
                 <ui-select-match placeholder="Select Application">{{$select.selected.app_name}}</ui-select-match>
                 <ui-select-choices repeat="item.id as item in appsList | filter: {app_name: $select.search,account_id:model.account_id }">
@@ -138,8 +137,7 @@
               <div class="form-group" ng-class="{ 'has-error': editForm.destinationUsername.$invalid && editForm.destinationUsername.$dirty }">
                 <label for="destinationUsername" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Username">Username</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" id="destination_username" name="destinationUsername" placeholder="Username" ng-model="model.destination_username" ng-maxlength="150"
-                    ng-pattern="NO_SPECIAL_CHARS" ng-disabled="_loading">
+                  <input type="text" class="form-control" id="destination_username" name="destinationUsername" placeholder="Username" ng-model="model.destination_username" ng-maxlength="150" ng-pattern="NO_SPECIAL_CHARS" ng-disabled="_loading">
                   <div class="error-messages" ng-messages="editForm.destinationUsername.$error" role="alert" ng-messages-multiple>
                     <div ng-messages-include="parts/shared/error-messages.html"></div>
                   </div>
@@ -148,7 +146,11 @@
               <div class="form-group" ng-class="{'has-error': editForm.destinationPassword.$invalid && editForm.destinationPassword.$dirty }">
                 <label for="destinationPassword" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Password ">Password </label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" id="destination_password" name="destinationPassword" placeholder="Password" ng-model="model.destination_password" ng-maxlength="150" ng-disabled="_loading">
+                  <div class="input-group">
+                    <span id="spnPassword" class="add-on input-group-addon" style="cursor:pointer;" ng-click="isShowPassw= !isShowPassw">
+                   <i id="icnPassword" class="glyphicon" ng-class="isShowPassw?'glyphicon-eye-open':'glyphicon-eye-close'"></i></span>
+                    <input type="{{isShowPassw?'text':'password'}}" class="form-control" id="destination_password" name="destinationPassword" placeholder="Password" ng-model="model.destination_password" ng-maxlength="150" ng-disabled="_loading">
+                  </div>
                   <div class="error-messages" ng-messages="editForm.destinationPassword.$error" role="alert" ng-messages-multiple>
                     <div ng-messages-include="parts/shared/error-messages.html"></div>
                   </div>
@@ -158,7 +160,7 @@
           </div>
           <!-- // Destination-->
           <hr>
-          <div class="form-group" ng-class="{ 'has-error': editForm.notificationEmail.$invalid && editForm.notificationEmail.$dirty }">
+          <div class="form-group" ng-class="{'has-error': editForm.notificationEmail.$invalid && editForm.notificationEmail.$dirty }">
             <label for="notificationEmail" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Email For Problem Notifications">Email For Problem Notifications</label>
             <div class="col-sm-10">
               <input type="email" class="form-control" id="notification_email" name="notificationEmail" placeholder="Username" ng-model="model.notification_email" ng-disabled="_loading">
