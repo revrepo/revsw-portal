@@ -220,6 +220,9 @@ input[type="checkbox"] {
 .section-edit-company {
   padding-bottom: 30px;
 }
+.section-edit-company .select2-container {
+  min-width: 550px;
+}
 textarea.form-control {
   max-width: 550px;
 }
@@ -888,6 +891,12 @@ i {
 }
 .subscription-summary .btn {
   margin-left: 20px;
+}
+.time-note-display {
+  margin: 10px;
+}
+.panel .time-note-display {
+  font-size: 0.9em;
 }
 .introjs-tooltip {
   min-width: 300px;
