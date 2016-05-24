@@ -16,7 +16,6 @@
     Countries,
     $state,
     $config,
-    AlertService,
     $injector) {
 
     //Invoking crud actions
@@ -91,7 +90,7 @@
           // - 2. User with email alraedy exists
           // - 3. Server error (email, send)
 
-          AlertService.danger(err);
+          $scope.alertService.danger(err);
         });
     };
     $scope._loading = false;
