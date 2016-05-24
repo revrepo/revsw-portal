@@ -163,7 +163,7 @@
               <div class="col-sm-10">
                 <ui-select ng-model="model.country" id="Country" name="country" theme="select2" ng-animate-disabled ng-disabled="_loading" onselect="onModelSelect($model)">
                   <ui-select-match placeholder="Select Country">{{$select.selected.value}}</ui-select-match>
-                  <ui-select-choices repeat="value.key as (key, value) in countries | filter: {'value': $select.search}">
+                  <ui-select-choices repeat="value.key as (key, value) in countries | filter: {'value': $select.search,'key':'!A1'}">
                     <div ng-bind-html="value.value|highlight: $select.search"></div>
                   </ui-select-choices>
                 </ui-select>
@@ -309,8 +309,12 @@
                             editForm.billingCountry.$dirty }">
                   <label for="billingCountry" class="col-sm-4 control-label" popover-trigger="mouseenter" uib-popover="Country name">Country *</label>
                   <div class="col-sm-8">
-                    <select type="text" class="form-control" id="billingCountry" name="billingCountry" placeholder="Country" required ng-model="model.billing_info.country" ng-options="key as value for (key , value) in countries" ng-disabled="_loading">
-                    </select>
+                    <ui-select ng-model="model.billing_info.country" id="billingCountry" name="billingCountry" theme="select2" ng-animate-disabled ng-disabled="_loading" onselect="onModelSelect($model)">
+                      <ui-select-match placeholder="Country">{{$select.selected.value}}</ui-select-match>
+                      <ui-select-choices repeat="value.key as (key, value) in countries | filter: {'value': $select.search,'key':'!A1'}">
+                        <div ng-bind-html="value.value|highlight: $select.search"></div>
+                      </ui-select-choices>
+                    </ui-select>
                     <div class="error-messages" ng-messages="editForm.billingCountry.$error" role="alert" ng-messages-multiple>
                       <div ng-messages-include="parts/shared/error-messages.html"></div>
                     </div>
