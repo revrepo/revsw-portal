@@ -41,7 +41,7 @@
     $scope.domainList = [];
     $scope.allUserDomains = [];
 
-    $scope.protocols = ['standard', 'quic', 'rmp'];
+    $scope.protocols = [ {'title': 'standard'}, {'title': 'quic'}, {'title': 'rmp'}];
 
     $scope.initEdit = function(id) {
       $scope._loading = true;
