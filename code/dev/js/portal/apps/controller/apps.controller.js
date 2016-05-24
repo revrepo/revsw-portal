@@ -17,7 +17,6 @@
     $state,
     $stateParams,
     $config,
-    AlertService,
     $localStorage,
     $q) {
     //Invoking crud actions
@@ -281,7 +280,7 @@
           $scope.alertService.success('App configuration is correct', 5000);
         })
         .catch(function(err) {
-          AlertService.danger(err);
+          $scope.alertService.danger(err);
         })
         .finally(function() {
           $scope._loading = false;
