@@ -240,7 +240,6 @@
       $scope.get(id)
         .then(function findAllSources() {
           return $q.all([Apps.query().$promise, DomainsConfig.query().$promise]).then(function(res) {
-            //console.log(res)
             $scope.appsList = res[0];
             $scope.domainsList = res[1];
             if ($scope.model.source_id !== '') {
@@ -257,7 +256,7 @@
           });
         })
         .catch(function(err) {
-          $scope.toaster.error('Could not load job details');
+          $scope.alertService.danger('Could not load job details');
         });
     };
     /**
@@ -273,13 +272,13 @@
         $scope
           .delete(model)
           .then(function(data) {
-            $scope.toaster.success(data);
+            $scope.alertService.success(data);
             $scope.list()
               .then(setAccountName)
               .then(setMappingInformation);
           })
           .catch(function(err) {
-            $scope.toaster.error(err);
+            $scope.alertService.danger(err);
           });
       });
     };
@@ -297,11 +296,11 @@
       $scope
         .create(model)
         .then(function(data) {
-          $scope.toaster.success(data);
+          $scope.alertService.success(data);
           $scope.setAccountId();
         })
         .catch(function(err) {
-          $scope.toaster.error(err);
+          $scope.alertService.danger(err);
         });
     };
 
@@ -327,10 +326,10 @@
             id: modelId
           }, model)
           .then(function(data) {
-            $scope.toaster.success(data);
+            $scope.alertService.success(data);
           })
           .catch(function(err) {
-            $scope.toaster.error(err);
+            $scope.alertService.danger(err);
           });
       });
     };
@@ -475,10 +474,10 @@
               return data;
             })
             .then(function(data) {
-              $scope.toaster.success(data);
+              $scope.alertService.success(data);
             })
             .catch(function(err) {
-              $scope.toaster.error(err);
+              $scope.alertService.danger(err);
             })
             .finally(function() {
               $scope.loading(false);

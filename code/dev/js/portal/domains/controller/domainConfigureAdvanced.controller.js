@@ -27,7 +27,7 @@
       return $scope.obj.data;
     }, function(newValue, oldValue){
       if ($scope.domain && !newValue.origin_host_header) {
-        $scope.obj.data = oldValue;  
+        $scope.obj.data = oldValue;
       }
     });
 
@@ -126,9 +126,7 @@
           }, $scope.obj.data)
           .$promise
           .then(function(data) {
-            if (data.message) {
-              AlertService.success(data.message, 5000);
-            }
+              AlertService.success(data);
           })
           .catch(function(err) {
             if (err.data && err.data.message) {

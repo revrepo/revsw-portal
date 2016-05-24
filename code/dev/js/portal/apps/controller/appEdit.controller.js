@@ -14,8 +14,7 @@
     $injector,
     $state,
     $stateParams,
-    Companies,
-    AlertService
+    Companies
   ) {
     //Invoking crud actions
     $injector.invoke(CRUDController,
@@ -159,9 +158,6 @@
       };
     };
 
-
-
-
     $scope.updateConfig = function(model, config) {
       $scope.confirm('confirmUpdateModal.html', model).then(function() {
         var idx = _.findIndex(model.configs, {
@@ -200,7 +196,7 @@
           $scope.alertService.success('App configuration is correct', 5000);
         })
         .catch(function(err) {
-          AlertService.danger(err);
+          $scope.alertService.danger(err);
         })
         .finally(function() {
           $scope._loading = false;
@@ -209,7 +205,7 @@
 
     $scope.publish = function(model, config) {
       if (!model.id) {
-        AlertService.danger('Please select app first');
+        $scope.alertService.danger('Please select app first');
         return;
       }
       $scope.confirm('confirmPublishModal.html', model).then(function() {
@@ -232,7 +228,7 @@
               .success('App configuration is published', 5000);
           })
           .catch(function(err) {
-            AlertService.danger(err);
+            $scope.alertService.danger(err);
           })
           .finally(function() {
             $scope._loading = false;

@@ -27,13 +27,11 @@
           .then(function(data) {
             if (!!data && data.message) {
               // Show message
-              AlertService.success(data.message, 6000);
+              AlertService.success(data, 6000);
               $uibModalInstance.close(data.message);
             }
           }, function(err) {
-            // TODO: check work message
-            AlertService.danger(err.data.message);
-            // console.log('err',err);
+            AlertService.danger(err);
           })
           .catch(function(err) {
             AlertService.danger(err.data.message);
