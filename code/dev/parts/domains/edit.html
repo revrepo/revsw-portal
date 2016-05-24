@@ -64,7 +64,7 @@
             <label for="cname" class="col-sm-3 control-label" popover-trigger="mouseenter">Domain CNAME</label>
             <div class="col-sm-9">
               <input type="text" class="form-control" disabled ng-model="modelInfo.cname" id="cname" name="cname" placeholder="Domain CNAME" style="float:left">
-              <button class="btn btn-primary btn-copy--cname" clipboard text="modelInfo.cname" on-copied="copyCallback()" on-error="copyCallback(err)" style="vertical-align: initial;" uib-tooltip="Click to copy the Domain CNAME to the clipboard" tooltip-placement="top"><i class="fa fa-files-o"></i></button>
+              <button class="btn btn-primary btn-copy--cname" clipboard text="modelInfo.cname" on-copied="copyCallback()" on-error="copyCallback(err)" style="vertical-align: initial;" uib-tooltip="Click to copy the CNAME to the clipboard" tooltip-placement="top"><i class="fa fa-files-o"></i></button>
             </div>
           </div>
           <div class="form-group" ng-class="{'has-error': editForm.accountId.$invalid && editForm.accountId.$dirty}" ng-if="auth.isReseller() || auth.isRevadmin()">
@@ -93,7 +93,7 @@
           <div class="form-group" ng-class="{'has-error': editForm.originHostHeader.$invalid && editForm.originHostHeader.$dirty}">
             <label for="originHostHeader" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Enter here a domain name to be used in 'Host' header in requests sent from RevAPM to the origin server">Origin Host Header *</label>
             <div class="col-sm-9">
-              <input type="text" validate-domain-name class="form-control" ng-model="model.origin_host_header" ng-disabled="_loading" id="origin_host_header" name="originHostHeader" placeholder="Origin Host Header" ng-maxlength="50" required>
+              <input type="text" validate-domain-name class="form-control" ng-model="model.origin_host_header" ng-disabled="_loading" id="origin_host_header" name="originHostHeader" placeholder="Origin Host Header" ng-maxlength="63" required>
               <div class="error-messages" ng-messages="editForm.originHostHeader.$error" role="alert" ng-messages-multiple>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
               </div>
@@ -380,7 +380,7 @@
               Blue Triangle Tech. Key
             </label>
             <div class="col-md-9">
-              <input type="text" class="form-control" ng-disabled="_loading" name="bttKey" ng-model="model.btt_key" placeholder="BTT API key for the domain" ng-pattern="/^[0-9a-fA-F]{24}$/">
+              <input type="text" class="form-control" ng-disabled="_loading" name="bttKey" ng-model="model.btt_key" placeholder="BTT API key for the domain" ng-pattern="/^[0-9a-fA-F]{32}$/">
               <div class="error-messages" ng-messages="editForm.bttKey.$error" role="alert" ng-messages-multiple>
                 <div ng-message="pattern" class="alert-text alert-text--pattern">The BTT key format is not correct</div>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>

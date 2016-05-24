@@ -669,7 +669,7 @@
       if (err) {
         $scope.alertService.danger('Copying failed, please try manual approach', 2000);
       } else {
-        $scope.alertService.success('The Domain CNAME has been copied to the clipboard', 2000);
+        $scope.alertService.success('The CNAME has been copied to the clipboard', 2000);
       }
     };
   }
