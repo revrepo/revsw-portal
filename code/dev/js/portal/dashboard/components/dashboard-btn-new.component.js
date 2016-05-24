@@ -69,7 +69,7 @@
                   dashboardId: data.id
                 });
               }, function(err) {
-                //TODO: add AlertService
+                AlertService.danger(err);
               })
               .finally(function() {
                 newDashboardScope._isLoading = false;

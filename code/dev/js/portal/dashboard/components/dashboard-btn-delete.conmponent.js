@@ -11,12 +11,12 @@
       replace: true,
       template:
       // TODO: make template as file
-        '<button type="button" ng-click="vm.onDeleteDashboard($event)" ng-disabled="model.isLast" class="btn btn-danger" title="Delete Dashboard">'+
+        '<button type="button" ng-click="vm.onDeleteDashboard($event)" ng-disabled="model.isLast" class="btn btn-danger" title="Delete Dashboard">' +
         ' <i class="glyphicon glyphicon-remove"></i> Delete Dashboard </button>',
       scope: {
         model: '='
       },
-      controller: function($scope, $state, $uibModal, DashboardSrv, dashboard) {
+      controller: function($scope, $state, $uibModal, DashboardSrv, dashboard, AlertService) {
         'igInject';
         var vm = this;
         /**
@@ -35,7 +35,7 @@
             backdrop: 'static'
           });
 
-          deleteDashboardScope.isLast = function(){
+          deleteDashboardScope.isLast = function() {
             return (DashboardSrv.dashboardsList.length === 1);
           };
 
@@ -58,7 +58,7 @@
                 deleteDashboardScope.closeDialog();
                 $state.go('index.dashboard.main');
               }, function(err) {
-                //TODO: add AlertService
+                AlertService.danger(err);
               })
               .finally(function() {
                 deleteDashboardScope._isLoading = false;

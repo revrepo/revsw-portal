@@ -16,7 +16,7 @@
     });
 
   /*@ngInject*/
-  function BillingController($scope, $state, User, Companies, BillingPlans, CRUDController, $injector, $stateParams, AlertService) {
+  function BillingController($scope, $state, User, Companies, BillingPlans, CRUDController, $injector, $stateParams) {
 
     $injector.invoke(CRUDController, this, {
       $scope: $scope,
@@ -50,7 +50,7 @@
           return $scope.list();
         })
         .catch(function(err) {
-          AlertService.danger('Oops! Something went wrong');
+          $scope.alertService.danger('Oops! Something went wrong');
         })
         .finally(function() {
           $scope._loading = false;
@@ -84,7 +84,7 @@
             User.getUserAccounts(true)
               .then(function(accs) {
 
-                AlertService.success('Successfully changed the billing plan', 5000);
+                $scope.alertService.success('Successfully changed the billing plan', 5000);
                 accs.forEach(function(acc) {
                   if (acc.acc_id === account.acc_id) {
                     User.selectAccount(acc);
@@ -98,7 +98,7 @@
             if (err.data && err.data.message) {
               message = err.data.message;
             }
-            AlertService.danger(message);
+            $scope.alertService.danger(message);
           })
           .finally(function() {
             $scope._loading = false;
@@ -126,7 +126,7 @@
           if (err.data && err.data.message) {
             message = err.data.message;
           }
-          AlertService.danger(message);
+          $scope.alertService.danger(message);
           $scope._loading = false;
         });
     };

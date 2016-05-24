@@ -396,10 +396,10 @@
             id: modelId
           }, model)
           .then(function() {
-            $scope.alertService.success('Domain updated', 5000);
+            $scope.alertService.success('Domain updated');
           })
           .catch(function(err) {
-            $scope.alertService.danger(err.data.message || 'Oops something ment wrong', 5000);
+            $scope.alertService.danger(err);
           });
       });
     };

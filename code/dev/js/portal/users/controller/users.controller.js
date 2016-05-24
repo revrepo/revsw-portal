@@ -110,7 +110,7 @@
           return $scope.model.domain;
         })
         .catch(function(err) {
-          $scope.toaster.error(err);
+          $scope.alertService.danger(err);
         })
         .finally(function() {
           $scope._loading = false;
@@ -138,10 +138,10 @@
                 $scope.filteredRecords.splice(idx_f, 1);
               }
             }
-            $scope.toaster.success(data);
+            $scope.alertService.success(data);
           })
           .catch(function(err) {
-            $scope.toaster.error(err);
+            $scope.alertService.danger(err);
           });
       });
     };
@@ -159,10 +159,10 @@
           if (model.user_id === User.getUser().user_id) {
             User.reloadUser();
           }
-          $scope.toaster.success(data);
+          $scope.alertService.success(data);
         })
         .catch(function(err) {
-          $scope.toaster.error(err);
+          $scope.alertService.danger(err);
         });
     };
 
@@ -181,7 +181,7 @@
         return;
       }
       if (model.passwordConfirm !== model.password) {
-        $scope.toaster.error('Passwords did not match');
+        $scope.alertService.danger('Passwords did not match');
         return;
       }
 
@@ -204,10 +204,10 @@
             $scope.model.domain.length = 0;
           }
 
-          $scope.toaster.success(data);
+          $scope.alertService.success(data);
         })
         .catch(function(err) {
-          $scope.toaster.error(err);
+          $scope.alertService.danger(err);
         });
     };
 

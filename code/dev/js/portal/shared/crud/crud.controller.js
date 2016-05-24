@@ -6,7 +6,7 @@
     .factory('CRUDController', CRUDController);
 
   /*@ngInject*/
-  function CRUDController($config, $rootScope, AlertService, $q, User, $anchorScroll, $uibModal, $filter, $timeout, $animate, toaster, $state) {
+  function CRUDController($config, $rootScope, AlertService, $q, User, $anchorScroll, $uibModal, $filter, $timeout, $animate, $state) {
 
     function CRUDControllerImpl($scope, $stateParams) {
 
@@ -20,7 +20,6 @@
        * Alert service
        */
       $scope.alertService = AlertService;
-      $scope.toaster = toaster;
 
       /**
        * Loading flag
@@ -629,45 +628,6 @@
 
       /***************************************************************************************
        *****                             END SCROLL POSITION HANDLER SECTION
-       **************************************************************************************/
-
-      /***************************************************************************************
-       *****                             EXTENSIONS FOR TOASTER ALERTS
-       **************************************************************************************/
-
-      $scope.toaster.getMessage = function(msg) {
-        if (msg.data && msg.data.message) {
-          return msg.data.message;
-        } else if (msg.message) {
-          return msg.message;
-        } else if (typeof msg === 'string') {
-          return msg;
-        } else {
-          return 'Oops, something went wrong';
-        }
-      };
-
-      $scope.toaster.success = function(params) {
-        var toasterParams = {
-          timeout: $config.SUCCESS_MESSAGE_DISPLAY_TIMEOUT,
-          body: $scope.toaster.getMessage(params),
-          type: 'success'
-        };
-        $scope.toaster.pop(toasterParams);
-      };
-
-      $scope.toaster.error = function(params) {
-        var toasterParams = {
-          timeout: 0,
-          showCloseButton: true,
-          body: $scope.toaster.getMessage(params),
-          type: 'error'
-        };
-        $scope.toaster.pop(toasterParams);
-      };
-
-      /***************************************************************************************
-       *****                             END EXTENSIONS FOR TOASTER ALERTS
        **************************************************************************************/
 
       $scope.setDefaultAccountId = function() {
