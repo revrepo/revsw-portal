@@ -23,40 +23,107 @@ var DataProvider = require('./../../../common/providers/data');
 describe('Smoke', function () {
 
   // Defining set of users for which all below tests will be run
-  var users = [
+  //var users = [
     //config.get('portal.users.admin'),
     //config.get('portal.users.reseller'),
-    config.get('portal.users.revAdmin')
-  ];
+    //config.get('portal.users.revAdmin')
+  //];
 
-  users.forEach(function (user) {
+  //users.forEach(function (user) {
 
-    describe('With user: ' + user.role, function () {
-      describe('Add user', function () {
+    //describe('With user: ' + user.role, function () {
+      describe('Sign Up user', function () {
 
-        beforeAll(function () {
-          // Portal.signIn(user);
-          var newUser = Portal.signUpUser();
-          console.log(newUser);
+        beforeAll(function (done) {
+          //Portal
+          //  .signUpUser()
+          //  .then(function (newUser) {
+          //    console.log('USER', newUser);
+          //    Portal
+          //      .signOut()
+          //      .then(function () {
+          //        done();
+          //      });
+          //  });
         });
 
         afterAll(function () {
           // Portal.signOut();
-          browser.ignoreSynchronization = true;
         });
 
         beforeEach(function () {
-          // done
+          Portal.load();
         });
 
         afterEach(function () {
           // done
         });
 
-        it('should display "Add user" form', function () {
-          console.log('END TEST!!!');
-        });
+        it('should display `Sign Up` button.',
+          function () {
+            expect(Portal.loginPage
+              .getSignUpBtn()
+              .isDisplayed()).toBeTruthy();
+          });
+
+        it('should display billing plans',
+          function () {
+            Portal.loginPage.clickSignUp();
+            expect(Portal.signUp.plansPage
+              .getPlanEl('Gold')
+              .isDisplayed()).toBeTruthy();
+          });
+
+        it('should display `Sign Up` form after selecting a billing plan',
+          function () {
+            Portal.loginPage.clickSignUp();
+            Portal.signUp.plansPage
+              .getPlanEl('Gold')
+              .clickSubscribe();
+            expect(Portal.signUp.formPage.form
+              .getSignUpBtn()
+              .isDisplayed()).toBeTruthy();
+          });
+
+        it('should display `Cancel` button in `sign up` form',
+          function () {
+            Portal.loginPage.clickSignUp();
+            Portal.signUp.plansPage
+              .getPlanEl('Gold')
+              .clickSubscribe();
+            expect(Portal.signUp.formPage.form
+              .getCancelBtn()
+              .isDisplayed()).toBeTruthy();
+          });
+
+        it('should go back to `Billing Plans` view after clicking on ' +
+          '`Cancel` button',
+          function () {
+            Portal.loginPage.clickSignUp();
+            Portal.signUp.plansPage
+              .getPlanEl('Gold')
+              .clickSubscribe();
+            Portal.signUp.formPage.form
+              .clickCancel();
+            expect(Portal.signUp.plansPage
+              .getPlanEl('Gold')
+              .isDisplayed()).toBeTruthy();
+          });
+
+        it('should go back to `Billing Plans` view after clicking on ' +
+          '`Cancel` button',
+          function () {
+            var user = DataProvider.generateUserToSignUp();
+            Portal.loginPage.clickSignUp();
+            Portal.signUp.plansPage
+              .getPlanEl('Gold')
+              .clickSubscribe();
+            Portal.signUp.formPage.form.fill(user);
+            Portal.signUp.formPage.form.clickSignUp();
+            expect(Portal.signUp.formPage.getSuccessMessage())
+              .toEqual('Something');
+          });
       });
-    });
-  });
+    //});
+  //});
 });
