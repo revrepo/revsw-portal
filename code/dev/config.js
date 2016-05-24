@@ -14,4 +14,4 @@ window.API_URL = 'https://testsjc20-api01.revsw.net/v1';
 // Google Analytic Account ID
 window.gaAccount = 'UA-68856309-2'; // develop
 // Intro configuration flag (true=on, false=off)
-window.intro = false;
+// window.intro = false;
