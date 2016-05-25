@@ -16,6 +16,8 @@
  * from Rev Software, Inc.
  */
 
+var faker = require('faker');
+
 // # Data Provider object
 
 // Requiring constants object
@@ -73,6 +75,21 @@ var DataProvider = {
       passwordConfirm: 'password1',
       company: company
     };
+  },
+
+  generateUserToSignUp: function () {
+    var firstName = faker.name.firstName();
+    var lastName = faker.name.lastName();
+    var user = {
+      firstName: firstName,
+      lastName: lastName,
+      email: [firstName, lastName, Date.now() + '@mailinator.com']
+        .join('-')
+        .toLowerCase(),
+      password: 'password1'
+    };
+    return user;
+
   },
 
   /**
@@ -342,6 +359,36 @@ var DataProvider = {
       zipcode: '02',
       comment: 'My comment just for testing proposal'
     };
+  },
+
+  /**
+   * ### DataProvider.generateDashboardData()
+   *
+   * Generates dashboard data object based on the unique para that it
+   * requires.
+   *
+   * @returns {Object}, generate dashboard data with the following schema:
+   *
+   *     {
+   *         title: string,
+   *         structure: Number,
+   *         autoRefresh: string
+   *     }
+   */
+  generateDashboardData: function (dashboardPrefix) {
+    var timestamp = Date.now();
+    var dashboard = {
+        title: 'QA-' + timestamp,
+        structure: 2,
+        autoRefresh: 'Every 15 Minutes'
+    };
+
+    if (dashboardPrefix) {
+      dashboard.title = dashboardPrefix + '-' + timestamp;
+      return dashboard;
+    } else {
+      return dashboard;
+    }
   }
 };
 
