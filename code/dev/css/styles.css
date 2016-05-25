@@ -221,10 +221,32 @@ input[type="checkbox"] {
   padding-bottom: 30px;
 }
 .section-edit-company .select2-container {
-  min-width: 550px;
+  min-width: 100%;
+}
+@media (min-width: 768px) {
+  .section-edit-company .select2-container {
+    min-width: 550px;
+    max-width: 550px;
+  }
+}
+@media (max-width: 425px) {
+  .section-edit-company .select2-container {
+    min-width: 100%;
+  }
 }
 .billing_contact_details .select2-container {
-  min-width: 380px;
+  min-width: 100%;
+}
+@media (min-width: 2559px) {
+  .billing_contact_details .select2-container {
+    min-width: 550px;
+    max-width: 550px;
+  }
+}
+@media (max-width: 425px) {
+  .billing_contact_details .select2-container {
+    min-width: 100%;
+  }
 }
 textarea.form-control {
   max-width: 550px;
@@ -1067,6 +1089,21 @@ i {
 }
 .panel .time-note-display {
   font-size: 1.5em;
+}
+.form--user .loader--waite-company {
+  display: block;
+  float: left;
+}
+.form--user .select2-container,
+.form--user .loader--waite-company {
+  min-width: 550px;
+  max-width: 550px;
+}
+@media (max-width: 425px) {
+  .form--user .select2-container,
+  .form--user .loader--waite-company {
+    min-width: 100%;
+  }
 }
 .introjs-tooltip {
   min-width: 300px;
