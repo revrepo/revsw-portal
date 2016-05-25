@@ -61,7 +61,7 @@ var DataProvider = {
     // company the new user should be associated with
     var company;
     if (portalUser && portalUser.role && portalUser.role !== 'Admin') {
-      company = 'API QA Reseller Company';
+      company = [ 'API QA Reseller Company' ];
     }
 
     return {
