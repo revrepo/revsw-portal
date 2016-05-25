@@ -38,6 +38,7 @@ var AddUserPage = require('./user/addPage');
 var SecuritySettingsPage = require('./user/securitySettingsPage');
 var UpdatePasswordPage = require('./user/updatePasswordPage');
 
+var Dashboards = require('./dashboards');
 var AddDomainPage = require('./domain/addPage');
 var ConfigureDomainPage = require('./domain/configurePage');
 var DomainStatsPage = require('./domain/statsPage');
@@ -65,6 +66,13 @@ var AdvancedEditPage = require('./mobileApp/advancedEditPage');
 var UsageReportPage = require('./billing/usageReportPage');
 var UsageReportDomainsPage = require('./billing/usageReportDomainsPage');
 
+var PlansPage = require('./signUp/plansPage');
+var SignUpPage = require('./signUp/signUpPage');
+
+var MailinatorHelper = require('./../mailinator/helper');
+
+var DataProvider = require('./../common/providers/data');
+
 // This `Portal` Page Object is the entry point to use all other Page Objects
 // that abstract all components from the Portal App.
 var Portal = {
@@ -85,6 +93,7 @@ var Portal = {
   addUserPage: AddUserPage,
   securitySettingsPage: SecuritySettingsPage,
   updatePasswordPage: UpdatePasswordPage,
+  dashboards: Dashboards,
   domains: {
     addPage: AddDomainPage,
     configurePage: ConfigureDomainPage,
@@ -108,6 +117,10 @@ var Portal = {
     addPage: AddPage,
     editPage: EditPage,
     advancedEditPage: AdvancedEditPage
+  },
+  signUp: {
+    plansPage: PlansPage,
+    formPage: SignUpPage,
   },
   admin: {
     accounts: Accounts,
@@ -191,6 +204,17 @@ var Portal = {
   },
 
   /**
+   * ### Portal.getDashboardsPage()
+   *
+   * Loads the hash fragment for the Dashboards page.
+   *
+   * @returns {Promise}
+   */
+  getDashboardsPage: function () {
+    return this.getPage(Constants.hashFragments.dashboard);
+  },
+
+  /**
    * ### Portal.getAdminPage()
    *
    * Loads the hash fragment for the Admin page.
@@ -242,7 +266,7 @@ var Portal = {
    * ### Portal.goToAccountSettings()
    *
    * Navigation helper method that executes all steps to navigate to `Account
-   * Settings` section
+   * Settings` section.
    *
    * @returns {Promise}
    */
@@ -324,7 +348,7 @@ var Portal = {
    * @param {user} newUser, data applying the schema defined in
    * `DataProvider.generateUser()`
    *
-   * @returns {Promise}
+   * @returns {Object} Promise
    */
   createUser: function (newUser) {
     var me = this;
@@ -348,10 +372,10 @@ var Portal = {
    * Portal app. This method creates the user only if it does not exist (it
    * validates the existence by doing a search by the user email).
    *
-   * @param {User} user, data applying the schema defined in
+   * @param {Object} user, data applying the schema defined in
    * `DataProvider.generateUser()`
    *
-   * @returns {Promise}
+   * @returns {Object} Promise
    */
   createUserIfNotExist: function (user) {
     var me = this;
@@ -382,10 +406,10 @@ var Portal = {
    * Helper method that executes all steps required to delete a User from
    * Portal app.
    *
-   * @param {user} user, data applying the schema defined in
+   * @param {Object} user, data applying the schema defined in
    * `DataProvider.generateUser()`
    *
-   * @returns {Promise}
+   * @returns {Object} Promise
    */
   deleteUser: function (user) {
     var me = this;
@@ -411,10 +435,10 @@ var Portal = {
    * Helper method that executes all steps required to create a new Domain from
    * Portal app.
    *
-   * @param {Domain} newDomain, data applying the schema defined in
+   * @param {Object} newDomain, data applying the schema defined in
    * `DataProvider.generateDomain()`
    *
-   * @returns {Promise}
+   * @returns {Object} Promise
    */
   createDomain: function (newDomain) {
     var me = this;
@@ -438,10 +462,10 @@ var Portal = {
    * Portal app. This method creates the domain only if it does not exist (it
    * validates the existence by doing a search by the domain name).
    *
-   * @param {Domain} domain, data applying the schema defined in
+   * @param {Object} domain, data applying the schema defined in
    * `DataProvider.generateDomain()`
    *
-   * @returns {Promise}
+   * @returns {Object} Promise
    */
   createDomainIfNotExist: function (domain) {
     var me = this;
@@ -472,10 +496,10 @@ var Portal = {
    * Helper method that executes all steps required to update an existing
    * domain for Portal app.
    *
-   * @param {domain object} domain, data applying the schema defined in
+   * @param {Object} domain, data applying the schema defined in
    * `DataProvider.generateDomain()`
    *
-   * @returns {Promise}
+   * @returns {Object} Promise
    */
   updateDomain: function (domain) {
     var me = this;
@@ -499,10 +523,10 @@ var Portal = {
    * Helper method that executes all steps required to delete a Domain from
    * Portal app.
    *
-   * @param {user} domain, data applying the schema defined in
+   * @param {Object} domain, data applying the schema defined in
    * `DataProvider.generateDomain()`
    *
-   * @returns {Promise}
+   * @returns {Object} Promise
    */
   deleteDomain: function (domain) {
     var me = this;
@@ -533,7 +557,7 @@ var Portal = {
    * @param {Object} apps, data applying the schema defined in
    * `DataProvider.generateMobileApps()`
    *
-   * @returns {Promise}
+   * @returns {Object} Promise
    */
   createMobileApps: function (platform, apps) {
     var me = this;
@@ -560,7 +584,7 @@ var Portal = {
    * @param {Object} apps, data applying the schema defined in
    * `DataProvider.generateMobileApps()`
    *
-   * @returns {Promise}
+   * @returns {Object} Promise
    */
   deleteMobileApps: function (apps) {
     var me = this;
@@ -590,7 +614,7 @@ var Portal = {
    * @param {Object} app, data applying the schema defined in
    * `DataProvider.generateMobileApp()`
    *
-   * @returns {Promise}
+   * @returns {Object} Promise
    */
   createMobileAppIfNotExist: function (app) {
     var me = this;
@@ -625,7 +649,7 @@ var Portal = {
    * @param {Object} accounts, data applying the schema defined in
    * `DataProvider.generateAccountProfileData()`
    *
-   * @returns {Promise}
+   * @returns {Object} Promise
    */
   createAccounts: function (accounts) {
     var me = this;
@@ -656,7 +680,7 @@ var Portal = {
    * @param {Object} accounts, data applying the schema defined in
    * `DataProvider.generateAccountProfileData()`
    *
-   * @returns {Promise}
+   * @returns {Object} Promise
    */
   deleteAccounts: function (accounts) {
     var me = this;
@@ -673,6 +697,86 @@ var Portal = {
         }
       });
     });
+  },
+
+  /**
+   * ### Portal.createDashboard()
+   *
+   * Helper method that executes all steps required to create
+   * new Dashboard from Portal Dashboards.
+   *
+   * @param {String} arrayDashboards, arrayDashboards objects.
+   *
+   * @param {Object} arrayDashboards, data applying the schema defined in
+   * `DataProvider.generateDashboardData()`
+   *
+   * @returns {Object} Promise
+   */
+  createDashboard: function (arrayDashboards) {
+    var me = this;
+    return browser.getCurrentUrl().then(function (initialUrl) {
+      arrayDashboards.forEach(function (dashboard) {
+        me.getDashboardsPage();
+        me.dashboards.listPage.addNewDashboard(dashboard);
+      });
+      browser.getCurrentUrl().then(function (currentUrl) {
+        if (initialUrl !== currentUrl) {
+          browser.get(initialUrl);
+        }
+      });
+    });
+  },
+
+  /**
+   * ### Portal.deleteDashboard()
+   *
+   * Helper method that executes all steps required to delete an existing
+   * Dashboard from Portal Dashboards.
+   *
+   * @param {String} arrayDashboards, arrayDashboards objects.
+   *
+   * @param {Object} arrayDashboards, data applying the schema defined in
+   * `DataProvider.generateDashboardData()`
+   *
+   * @returns {Object} Promise
+   */
+  deleteDashboard: function (arrayDashboards) {
+    var me = this;
+    return browser.getCurrentUrl().then(function (initialUrl) {
+      arrayDashboards.forEach(function (dashboard) {
+        me.getDashboardsPage();
+        me.dashboards.listPage.deleteDashboard(dashboard);
+        me.dashboards.dialogPage.clickDelete();
+      });
+      browser.getCurrentUrl().then(function (currentUrl) {
+        if (initialUrl !== currentUrl) {
+          browser.get(initialUrl);
+        }
+      });
+    });
+  },
+
+  signUpUser: function () {
+    var me = this;
+    var user = DataProvider.generateUserToSignUp();
+    me.load();
+    me.loginPage.clickSignUp();
+    me.signUp.plansPage
+      .getPlanEl('Gold')
+      .clickSubscribe();
+    me.signUp.formPage.form.fill(user);
+    me.signUp.formPage.form.clickSignUp();
+    // TODO: Probably we need to use Promise here instead of the sleep
+    browser.sleep(10000);
+    return MailinatorHelper
+      .getVerificationTokenUrl(user.email)
+      .then(function (verificationUrl) {
+        return browser
+          .get(verificationUrl)
+          .then(function () {
+            return user;
+          });
+      });
   }
 };
 
