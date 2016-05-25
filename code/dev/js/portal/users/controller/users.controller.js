@@ -49,6 +49,7 @@
     function initModel() {
       if (!$scope.model) {
         $scope.model = {};
+        $scope.model.companyId = [];
       }
 
       angular.merge($scope.model, {
@@ -319,7 +320,23 @@
         });
         $scope.model.domain = _.intersection(data, $scope.model.domain);
       }
+    }, true);
+
+    $scope.$watch('model.role', function(newVal, oldVal) {
+      if (newVal !== undefined && oldVal !== undefined) {
+        if (((newVal !== 'reseller' && oldVal !== '') || oldVal === 'reseller') && angular.isArray($scope.model.companyId)) {
+          $scope.model.companyId.length = 0;
+        }
+      }
     });
 
+    $scope.onOneAccountSelect = function(model) {
+      if (angular.isArray($scope.model.companyId)) {
+        $scope.model.companyId.length = 1;
+      } else {
+        $scope.model.companyId = [];
+      }
+      $scope.model.companyId[0] = model;
+    };
   }
 })();

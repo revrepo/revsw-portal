@@ -1090,6 +1090,18 @@ i {
 .panel .time-note-display {
   font-size: 1.5em;
 }
+.btn--manage-account {
+  margin-left: 10px;
+}
+.form--user .select2-container {
+  min-width: 550px;
+  max-width: 550px;
+}
+@media (max-width: 425px) {
+  .form--user .select2-container {
+    min-width: 100%;
+  }
+}
 .introjs-tooltip {
   min-width: 300px;
   font-size: 1.2em;
