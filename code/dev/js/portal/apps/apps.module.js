@@ -9,7 +9,8 @@
     'ui.router',
     'ui.select',
     'ng.jsoneditor',
-    'ngSanitize'
+    'ngSanitize',
+    'ng-sortable'
   ]);
 })();
 

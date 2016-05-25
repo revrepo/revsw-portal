@@ -119,6 +119,12 @@
       $scope.fieldsToShow = _.keys($scope.model.configs[idx]);
     };
 
+    $scope.protocolOrder = {
+//        group: 'foobar',
+        animation: 150,
+        onSort: function (/** ngSortEvent */evt){
+        }
+    };
     $scope.toggleProtocolSelection = function(protocol, model) {
       var idx = model
         .allowed_transport_protocols
