@@ -150,6 +150,9 @@ input.ui-select-search {
 .select2-container {
   min-width: 300px;
 }
+.select2-container .select2-choice {
+  background-color: #F8F8F8;
+}
 select.form-control {
   max-width: 550px;
 }
@@ -221,7 +224,7 @@ input[type="checkbox"] {
   min-width: 550px;
 }
 .billing_contact_details .select2-container {
-  min-width: 386px;
+  min-width: 380px;
 }
 textarea.form-control {
   max-width: 550px;
