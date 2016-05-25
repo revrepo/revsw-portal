@@ -122,7 +122,14 @@
     $scope.protocolOrder = {
 //        group: 'foobar',
         animation: 150,
-        onSort: function (/** ngSortEvent */evt){
+        onSort: function (evt){
+
+          $scope.configuration.allowed_transport_protocols.sort(
+//            (a,b)=>$scope.protocols.indexOf(a)-$scope.protocols.indexOf(b)
+            function (a, b) { return $scope.protocols.indexOf(a)-$scope.protocols.indexOf(b); }
+          );
+
+          console.log($scope.configuration.allowed_transport_protocols); // === model
         }
     };
     $scope.toggleProtocolSelection = function(protocol, model) {
