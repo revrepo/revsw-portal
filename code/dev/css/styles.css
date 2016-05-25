@@ -1093,12 +1093,18 @@ i {
 .btn--manage-account {
   margin-left: 10px;
 }
-.form--user .select2-container {
+.form--user .loader--waite-company {
+  display: block;
+  float: left;
+}
+.form--user .select2-container,
+.form--user .loader--waite-company {
   min-width: 550px;
   max-width: 550px;
 }
 @media (max-width: 425px) {
-  .form--user .select2-container {
+  .form--user .select2-container,
+  .form--user .loader--waite-company {
     min-width: 100%;
   }
 }
