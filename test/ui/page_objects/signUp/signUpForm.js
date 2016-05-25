@@ -174,9 +174,29 @@ var SignUp = {
       .sendKeys(value);
   },
 
+  /**
+   * ### SignUpForm.clickSignUp()
+   *
+   * Clicks `Sign Up` button from form
+   *
+   * @returns {Object} Promise
+   */
   clickSignUp: function () {
     return this
       .getSignUpBtn()
+      .click();
+  },
+
+  /**
+   * ### SignUpForm.clickCancel()
+   *
+   * Clicks `Cancel` button from form
+   *
+   * @returns {Object} Promise
+   */
+  clickCancel: function () {
+    return this
+      .getCancelBtn()
       .click();
   },
 

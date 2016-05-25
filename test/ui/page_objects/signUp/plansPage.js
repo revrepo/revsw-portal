@@ -30,7 +30,7 @@ var PlansList = {
   locators: {
     labels: {
       enterprise: {
-        css: 'h2:last'
+        css: 'h2'
       },
       plan: {
         css: 'h2.billing-plan-title'
@@ -83,6 +83,13 @@ var PlansList = {
   getPlanEl: function (title) {
     var plan;
     plan = element(by.cssContainingText(this.locators.labels.plan.css, title));
+    return new Plan(plan);
+  },
+
+  getEnterprisePlanEl: function () {
+    var plan;
+    plan = element(
+      by.cssContainingText(this.locators.labels.enterprise.css, 'Enterprise'));
     return new Plan(plan);
   },
 

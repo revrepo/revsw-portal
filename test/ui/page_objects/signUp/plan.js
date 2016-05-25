@@ -37,7 +37,7 @@ var PlanElement = function (titleEl) {
           buttonText: 'Subscribe'
         },
         contactUs: {
-          buttonText: 'Contact Us'
+          linkText: 'Contact Us'
         }
       },
       elements: {
@@ -125,8 +125,7 @@ var PlanElement = function (titleEl) {
     getContactUsBtn: function () {
       return this
         .getActionEl()
-        .element(by.partialButtonText(
-          this.locators.buttons.contactUs.buttonText));
+        .element(by.partialLinkText(this.locators.buttons.contactUs.linkText));
     },
 
     // ## Methods to interact with the User List Page components
