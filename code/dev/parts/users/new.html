@@ -20,7 +20,7 @@
                 </div>
             </div>
             <div class="panel-body">
-                <form name="createForm" class="form-horizontal" novalidate>
+                <form name="createForm" class="form-horizontal" confirm-on-exit novalidate>
                     <div class="form-group" ng-class="{'has-error': createForm.email.$invalid && createForm.email.$dirty}">
                         <label for="email" popover-append-to-body="{{true}}" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="New user's email address - the address should be unique across the system">Email *</label>
                         <div class="col-sm-10">
