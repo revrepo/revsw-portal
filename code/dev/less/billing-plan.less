@@ -1,37 +1,61 @@
 //
 .billing-plan {
-  border: solid 1px;
-  border-color: #F8A543;
-  margin: 5px;
-  border-radius: 3px;
+  border: 1px solid #4A4F55;
+  background: #F5F5F5;
+  &:hover {
+    -moz-box-shadow: 0 5px 20px 0 #888888;
+    -webkit-box-shadow: 0 5px 20px 0 #888888;
+    box-shadow: 0 5px 20px 0 #888888;
+  }
   &.current {
-    margin-top: -20px;
+    -moz-box-shadow: 0 5px 20px 0 #888888;
+    -webkit-box-shadow: 0 5px 20px 0 #888888;
+    box-shadow: 0 5px 20px 0 #888888;
   }
   &-header {
-    color: #FFEBCD;
-    background-color: #F8A543; // @app-color-blue;
-    padding: 10px;
+    color: #fff;
+    background-color: #4A4F55;
+    padding: 7.5px;
+  }
+  &-title {
+    margin-top: 10px;
   }
   &-ammount {
-    color: green;
+    color: @app-color-orange-logo;
   }
-  &-services {}
+  &-services {
+    color: #777;
+  }
   &-action {
-    padding-bottom: 20px;
+    margin-top: 30px;
+    padding: 0 15px 20px;
+
+    button.btn-success, a.btn-success {
+      background-color: #FF8A00;
+      border-radius: 0;
+      width: 170px;
+      border: 0;
+      outline: none;
+    }
+
   }
   &-details {
     margin: 0 20px;
+    h4 {
+      color: #424242;
+    }
   }
   &-description {
-    min-height: 170px;
+    min-height: 75px;
+    color: #777;
     @media (max-width: @screen-xs-min) {
       min-height: 50px;
     }
     @media (min-width: @screen-sm-min) {
-      min-height: 50px;
+      min-height: 75px;
     }
     @media (min-width: @screen-md-min) {
-      min-height: 260px;
+      min-height: 160px;
     }
     @media (min-width: @screen-lg-min) {
       min-height: 140px;
@@ -41,4 +65,8 @@
 .subscribe-contact-info-terms {
   margin: -10px 0 0 47px;
   font-weight: bold;
+}
+.individual-plan {
+  padding: 5px;
+  text-align: center;
 }

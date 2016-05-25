@@ -106,7 +106,7 @@
 
      $scope.$watch(
        function() {
-         return (!vm.model && vm.model.refreshNow == false) ? null : vm.model.refreshNow;
+         return (!vm.model && vm.model.refreshNow === false) ? null : vm.model.refreshNow;
        },
        function(newVal, oldVal) {
          if (newVal !== oldVal && newVal === true) {
