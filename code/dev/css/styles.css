@@ -1090,9 +1090,6 @@ i {
 .panel .time-note-display {
   font-size: 1.5em;
 }
-.btn--manage-account {
-  margin-left: 10px;
-}
 .form--user .loader--waite-company {
   display: block;
   float: left;
