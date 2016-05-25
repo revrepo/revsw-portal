@@ -49,6 +49,7 @@
     function initModel() {
       if (!$scope.model) {
         $scope.model = {};
+        $scope.model.companyId = [];
       }
 
       angular.merge($scope.model, {
@@ -116,34 +117,28 @@
           $scope._loading = false;
         });
     };
-
+    /**
+     * @name  deleteUser
+     * @description
+     *
+     *   Delete user after confirm
+     *
+     * @param  {[type]} model [description]
+     * @return {[type]}       [description]
+     */
     $scope.deleteUser = function(model) {
-      $scope.confirm('confirmModal.html', model).then(function() {
-        $scope
-          .delete(model)
-          .then(function(data) {
-            // NOTE: hook only for user
-            if (data.statusCode === $config.STATUS.OK || data.statusCode === $config.STATUS.ACCEPTED) {
-              // NOTE: delete item from arrays
-              var idx = _.findIndex($scope.records, function(item) {
-                return item.user_id === model.user_id;
-              });
-              if (idx > -1) {
-                $scope.records.splice(idx, 1);
-              }
-              var idx_f = _.findIndex($scope.filteredRecords, function(item) {
-                return item.user_id === model.user_id;
-              });
-              if (idx_f > -1) {
-                $scope.filteredRecords.splice(idx_f, 1);
-              }
-            }
-            $scope.alertService.success(data);
-          })
-          .catch(function(err) {
-            $scope.alertService.danger(err);
-          });
-      });
+      model.id = model.user_id; // NOTE: extend model for CRUD Controller operation
+      $scope.confirm('confirmModal.html', model)
+        .then(function() {
+          $scope
+            .delete(model)
+            .then(function(data) {
+              $scope.alertService.success(data);
+            })
+            .catch(function(err) {
+              $scope.alertService.danger(err);
+            });
+        });
     };
 
     $scope.updateUser = function(model) {
@@ -325,7 +320,23 @@
         });
         $scope.model.domain = _.intersection(data, $scope.model.domain);
       }
+    }, true);
+
+    $scope.$watch('model.role', function(newVal, oldVal) {
+      if (newVal !== undefined && oldVal !== undefined) {
+        if (((newVal !== 'reseller' && oldVal !== '') || oldVal === 'reseller') && angular.isArray($scope.model.companyId)) {
+          $scope.model.companyId.length = 0;
+        }
+      }
     });
 
+    $scope.onOneAccountSelect = function(model) {
+      if (angular.isArray($scope.model.companyId)) {
+        $scope.model.companyId.length = 1;
+      } else {
+        $scope.model.companyId = [];
+      }
+      $scope.model.companyId[0] = model;
+    };
   }
 })();
