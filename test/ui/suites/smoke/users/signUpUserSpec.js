@@ -37,14 +37,14 @@ describe('Smoke', function () {
     afterEach(function () {
     });
 
-    xit('should display `Sign Up` button.',
+    it('should display `Sign Up` button.',
       function () {
         expect(Portal.loginPage
           .getSignUpLnk()
           .isDisplayed()).toBeTruthy();
       });
 
-    xit('should display billing plans',
+    it('should display billing plans',
       function () {
         Portal.loginPage.clickSignUp();
         expect(Portal.signUp.plansPage
@@ -53,7 +53,7 @@ describe('Smoke', function () {
           .isDisplayed()).toBeTruthy();
       });
 
-    xit('should display Enterprise plan',
+    it('should display Enterprise plan',
       function () {
         Portal.loginPage.clickSignUp();
         expect(Portal.signUp.plansPage
@@ -62,7 +62,7 @@ describe('Smoke', function () {
           .isDisplayed()).toBeTruthy();
       });
 
-    xit('should display `Sign Up` form after selecting a billing plan',
+    it('should display `Sign Up` form after selecting a billing plan',
       function () {
         Portal.loginPage.clickSignUp();
         Portal.signUp.plansPage
@@ -73,7 +73,7 @@ describe('Smoke', function () {
           .isDisplayed()).toBeTruthy();
       });
 
-    xit('should display `Cancel` button in `sign up` form',
+    it('should display `Cancel` button in `sign up` form',
       function () {
         Portal.loginPage.clickSignUp();
         Portal.signUp.plansPage
@@ -84,7 +84,7 @@ describe('Smoke', function () {
           .isDisplayed()).toBeTruthy();
       });
 
-    xit('should go back to `Billing Plans` view after clicking on ' +
+    it('should go back to `Billing Plans` view after clicking on ' +
       '`Cancel` button',
       function () {
         Portal.loginPage.clickSignUp();
