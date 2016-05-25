@@ -130,7 +130,7 @@
                       ng-model="model.origin_server_location_id"
                       id="origin_server_location_id"
                       name="origin_server_location_id"
-                      ng-options="obj.id as obj.locationName for obj in locations" required>
+                      ng-options="obj.id as obj.locationName for obj in locations | orderBy:'locationName'" required>
                 <option value="">--- Select Location ---</option>
               </select>
               <div class="error-messages" ng-messages="createForm.origin_server_location_id.$error" role="alert" ng-messages-multiple>
