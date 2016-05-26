@@ -108,8 +108,8 @@
           }),
           function(item) {
             domains.push(item);
-          })
-      })
+          });
+      });
       if ($scope.domains.length === 0) {
 
       } else {
