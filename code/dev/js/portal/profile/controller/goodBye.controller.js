@@ -9,7 +9,7 @@
   function GoodByeController($scope, $config) {
 
     $scope.websiteUrl = $config.LINKS.WEBSITE_URL;
-    $scope.contactSupportUrl = $config.LINKS.CONTACT_SUPPORT_URL
+    $scope.contactSupportUrl = $config.LINKS.CONTACT_SUPPORT_URL;
 
   }
 })();
