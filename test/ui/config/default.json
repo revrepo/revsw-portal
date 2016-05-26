@@ -39,7 +39,8 @@
     "mobileApps": {
       "platforms": {
         "ios": "iOS",
-        "android": "Android"
+        "android": "Android",
+        "windows_mobile": "Windows_Mobile"
       }
     },
     "usageReport": {

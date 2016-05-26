@@ -27,7 +27,8 @@ describe('Functional', function () {
     var adminUser = config.get('portal.users.admin');
     var iosApps = DataProvider.generateMobileAppData('iOS', 1);
     var androidApps = DataProvider.generateMobileAppData('Android', 1);
-    var apps = iosApps.concat(androidApps);
+    var windowsMobileApps = DataProvider.generateMobileAppData('Windows_Mobile', 1);
+    var apps = iosApps.concat(androidApps).concat(windowsMobileApps);
 
     beforeAll(function () {
       Portal.signIn(adminUser);
@@ -57,8 +58,8 @@ describe('Functional', function () {
         Portal.mobileApps.listPage.addNew(app);
 
         var alert = Portal.alerts.getFirst();
-        var expectedMsg = 'App registered';
-        expect(alert.getText()).toEqual(expectedMsg);
+        var expectedMsg = Constants.alertMessages.app.MSG_SUCCESS_ADD;
+        expect(alert.getText()).toContain(expectedMsg);
 
         Portal.header.goTo(app.platform);
         var findApp = Portal.mobileApps.listPage.findApp(app);

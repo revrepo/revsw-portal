@@ -53,8 +53,8 @@ describe('Functional', function () {
         Portal.mobileApps.listPage.searchAndDelete(app);
         Portal.dialog.clickOk();
         var alert = Portal.alerts.getFirst();
-        var expectedMsg = '×\App ' + app.name + ' deleted.';
-
+        var expectedMsg = Constants.alertMessages.app.MSG_SUCCESS_DELETE;
+        expect(alert.getText()).toContain(expectedMsg);
         var findApp = Portal.mobileApps.listPage.findApp(app);
         expect(findApp).toBe(0);
       });

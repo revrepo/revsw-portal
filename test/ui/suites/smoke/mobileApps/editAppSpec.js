@@ -19,6 +19,7 @@
 var config = require('config');
 var Portal = require('./../../../page_objects/portal');
 var DataProvider = require('./../../../common/providers/data');
+var Constants = require('./../../../page_objects/constants');
 
 describe('Smoke', function () {
 
@@ -30,7 +31,8 @@ describe('Smoke', function () {
   ];
   var platforms = [
     config.get('portal.mobileApps.platforms.ios'),
-    config.get('portal.mobileApps.platforms.android')
+    config.get('portal.mobileApps.platforms.android'),
+    config.get('portal.mobileApps.platforms.windows_mobile').replace('_', ' ')
   ];
 
   users.forEach(function (user) {
@@ -87,7 +89,7 @@ describe('Smoke', function () {
                 Portal.mobileApps.listPage.addNew(app);
                 expect(Portal.alerts.getAll().count()).toEqual(1);
                 expect(Portal.alerts.getFirst().getText())
-                  .toEqual('App registered');
+                  .toContain(Constants.alertMessages.app.MSG_SUCCESS_ADD);
                 Portal.mobileApps.addPage.clickBackToList();
                 Portal.mobileApps.listPage.searchAndEdit(app);
                 app.name = 'UPDATED-' + app.name;
@@ -95,7 +97,7 @@ describe('Smoke', function () {
                 Portal.dialog.clickOk();
                 expect(Portal.alerts.getAll().count()).toEqual(1);
                 expect(Portal.alerts.getFirst().getText())
-                  .toEqual('App updated');
+                  .toContain(Constants.alertMessages.app.MSG_SUCCESS_UPDATE);
               });
           });
         });
