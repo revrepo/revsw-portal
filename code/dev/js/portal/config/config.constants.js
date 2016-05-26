@@ -166,6 +166,11 @@
         MESSAGE: 'All times are shown in the computer’s local time zone'
       },
       REFRESH_NOW_TIMEOUT: 5000,
+
+      LINKS: {
+        WEBSITE_URL: 'https://www.revapm.com',
+        CONTACT_SUPPORT_URL: 'https://revapm.zendesk.com/hc/en-us/requests/new'
+      }
     });
 
 })(window);

@@ -1242,3 +1242,33 @@ i {
 #cancellation_message {
   max-width: none;
 }
+.goodbye {
+  background-color: #f2f2f2;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  min-height: 100%;
+}
+.goodbye .header-logo {
+  width: 200px;
+}
+.goodbye-wrapper {
+  margin-top: 30px;
+  padding: 30px 50px;
+  background-color: #fff;
+  border: 2px solid #cccccc;
+  box-shadow: 0 0 5px #888;
+  max-width: 620px;
+  color: #424242;
+}
+.goodbye-wrapper h5 {
+  font-size: 3em;
+}
+.goodbye-wrapper p {
+  font-size: 18px;
+  color: #777;
+  margin-bottom: 15px;
+}
+.goodbye-wrapper address {
+  color: #777;
+  font-size: 18px;
+}
