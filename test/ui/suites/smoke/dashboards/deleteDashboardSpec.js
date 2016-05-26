@@ -39,11 +39,11 @@ describe('Smoke', function () {
 
         beforeAll(function () {
           Portal.signIn(user);
-          Portal.createDashboard([dashboard]);
+          // Portal.createDashboard([dashboard]);
         });
 
         afterAll(function () {
-          Portal.deleteDashboard([dashboard]);
+          //Portal.deleteDashboard([dashboard]);
           Portal.signOut();
         });
 
@@ -56,14 +56,20 @@ describe('Smoke', function () {
 
         it('should selected dashboard and "Delete" from edited Dashboard page',
           function () {
-            Portal.dashboards.listPage.deleteDashboard(dashboard);
-            Portal.dashboards.dialogPage.clickDelete();
             Portal.getDashboardsPage();
+            Portal.dashboards.listPage.addNewDashboard(dashboard);
 
             var title = Portal.dashboards.listPage.getTitle();
             var leftSide = Portal.dashboards.listPage.getLeftMenuDashboards();
-            
-            expect(title).not.toEqual(dashboard.title);
+            expect(title).toContain(dashboard.title);
+            expect(leftSide).toContain(dashboard.title);
+
+            Portal.dashboards.listPage.deleteDashboard(dashboard);
+            Portal.dashboards.dialogPage.clickDelete();
+
+            title = Portal.dashboards.listPage.getTitle();
+            leftSide = Portal.dashboards.listPage.getLeftMenuDashboards();
+            expect(title).not.toContain(dashboard.title);
             expect(leftSide).not.toContain(dashboard.title);
           });
 

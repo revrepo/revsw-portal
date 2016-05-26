@@ -40,13 +40,13 @@ var DashboardList = {
     },
     buttons: {
       addDashboard: {
-        css: '[ng-click=\"vm.onCreateDashboard($event)\"]'
+        css: '.glyphicon.glyphicon-plus'
       },
       refreshNow: {
-        css: '[ng-click=\"model.refreshNow= true\"]'
+        css: '.btn.btn-info'
       },
       modifyDashboard: {
-        css: '[ng-click=\"toggleEditMode()\"]'
+        css: '.glyphicon.glyphicon-edit'
       },
       addNewWidget: {
         css: '.glyphicon.glyphicon-plus-sign'
@@ -62,7 +62,7 @@ var DashboardList = {
       }
     },
     dropDowns: {
-      refreshFrequency: {
+      autoRefresh: {
         model: 'model.options.autorefresh'
       }
     },
@@ -115,7 +115,9 @@ var DashboardList = {
    * @returns {Selenium WebDriver Element}
    */
   getAddNewDashboardBtn: function () {
-    return element(by.css(this.locators.buttons.addDashboard.css));
+    return element
+      .all(by.css(this.locators.buttons.addDashboard.css))
+      .get(0);
   },
 
   /**
@@ -139,7 +141,9 @@ var DashboardList = {
    * @returns {Selenium WebDriver Element}
    */
   getModifyDashboardBtn: function () {
-    return element(by.css(this.locators.buttons.modifyDashboard.css));
+    return element
+      .all(by.css(this.locators.buttons.modifyDashboard.css))
+      .get(0);
   },
 
   /**
@@ -191,15 +195,15 @@ var DashboardList = {
   },
 
   /**
-   * ### DashboardList.getRefreshFrequencyDDown()
+   * ### DashboardList.getAutoRefreshDDown()
    *
    * Returns the reference to the `Refresh Frequency` drop down (Selenium
    * WebDriver Element) from the Dashboard List page from the Portal app.
    *
    * @returns {Selenium WebDriver Element}
    */
-  getRefreshFrequencyDDown: function () {
-    return element(by.model(this.locators.dropDowns.refreshFrequency.model));
+  getAutoRefreshDDown: function () {
+    return element(by.model(this.locators.dropDowns.autoRefresh.model));
   },
 
   /**
@@ -354,17 +358,17 @@ var DashboardList = {
   },
 
   /**
-   * ### DashboardList.setRefreshFrequency()
+   * ### DashboardList.setAutoRefresh(frequency)
    *
    * Sets the `Refresh Frequency` drop down from the Dashboard List
    * page from the Portal app.
    *
    * @returns {Promise}
    */
-  setRefreshFrequency: function () {
+  setAutoRefresh: function (frequency) {
     return this
-      .getRefreshFrequencyDDown()
-      .click();
+      .getAutoRefreshDDown()
+      .sendKeys(frequency);
   },
 
   // ## Helper Methods
