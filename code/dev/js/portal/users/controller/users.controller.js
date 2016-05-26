@@ -99,7 +99,13 @@
       }
     };
 
-    function aplayValidationDomainNames() {
+    /**
+     * @name  applyValidationDomainNames
+     * @description
+     *
+     * @return {Array}
+     */
+    function applyValidationDomainNames() {
       var domains = [];
       angular.forEach($scope.model.companyId, function(account_id) {
         angular.forEach(_.findByValues($scope.domains, 'account_id', account_id)
@@ -328,7 +334,7 @@
     // NOTE: watch on change companyId for update available domain names
     $scope.$watch('model.companyId', function(newVal, oldVal) {
       if (newVal !== undefined && oldVal !== undefined) {
-        aplayValidationDomainNames();
+        applyValidationDomainNames();
       }
     }, true);
 
