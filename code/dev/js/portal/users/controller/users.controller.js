@@ -99,17 +99,30 @@
       }
     };
 
+    function aplayValidationDomainNames() {
+      var domains = [];
+      angular.forEach($scope.model.companyId, function(account_id) {
+        angular.forEach(_.findByValues($scope.domains, 'account_id', account_id)
+          .map(function(item) {
+            return item.domain_name;
+          }),
+          function(item) {
+            domains.push(item);
+          })
+      })
+      if ($scope.domains.length === 0) {
+
+      } else {
+        $scope.model.domain = _.intersection(domains, $scope.model.domain);
+      }
+
+      return $scope.model.domain;
+    }
+
     $scope.getUser = function(id) {
       $scope._loading = true;
       $scope.get(id)
         .then(dependencies)
-        .then(function firstValidationDomainNames() {
-          $scope.model.domain = _.intersection(_.findByValues($scope.domains, 'account_id', $scope.model.companyId)
-            .map(function(item) {
-              return item.domain_name;
-            }), $scope.model.domain);
-          return $scope.model.domain;
-        })
         .catch(function(err) {
           $scope.alertService.danger(err);
         })
@@ -315,16 +328,13 @@
     // NOTE: watch on change companyId for update available domain names
     $scope.$watch('model.companyId', function(newVal, oldVal) {
       if (newVal !== undefined && oldVal !== undefined) {
-        var data = _.findByValues($scope.domains, 'account_id', $scope.model.companyId).map(function(item) {
-          return item.domain_name;
-        });
-        $scope.model.domain = _.intersection(data, $scope.model.domain);
+        aplayValidationDomainNames();
       }
     }, true);
 
     $scope.$watch('model.role', function(newVal, oldVal) {
       if (newVal !== undefined && oldVal !== undefined) {
-        if (((newVal !== 'reseller' && oldVal !== '') || oldVal === 'reseller') && angular.isArray($scope.model.companyId)) {
+        if (((newVal === 'reseller' && oldVal !== '') || oldVal === 'reseller') && angular.isArray($scope.model.companyId)) {
           $scope.model.companyId.length = 0;
         }
       }
