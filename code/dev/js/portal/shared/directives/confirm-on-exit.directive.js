@@ -1,26 +1,53 @@
-(function(angular) {
+/**
+ * @name confirmOnExit
+ *
+ * @description
+ * Prompts user while he navigating away from the current route (or, as long as this directive
+ * is not destroyed) if any unsaved form changes present.
+ *
+ */
+
+ (function(angular) {
   'use strict';
 
   angular
     .module('revapm.Portal.Shared')
-    .directive('confirmOnExit', function () {
+    .directive('confirmOnExit', function ($state) {
       return {
         link: function($scope, elem, attrs) {
 
-          window.onbeforeunload = function(){
+          window.onbeforeunload = function() {
             if ($scope.createForm.$dirty) {
-              return "The form is dirty, do you want to stay on the page?";
+              return 'You have unsaved changes!';
             }
           };
-          var $stateChangeStartUnbind = $scope.$on('$stateChangeStart', function(event, next, current) {
+
+          var $stateChangeStartUnbind =  $scope.$on('$stateChangeStart', function(event, next, current) {
             if ($scope.createForm.$dirty) {
-              if(!confirm("The form is dirty, do you want to stay on the page?")) {
-                event.preventDefault();
-              }
+
+              event.preventDefault();
+
+              swal({
+                title: 'You have unsaved changes!',
+                text: 'Are you sure want to leave the page?',
+                type: 'warning',
+                showCancelButton: true,
+                cancelButtonText: 'Stay on this page',
+                confirmButtonColor: '#DD6B55',
+                confirmButtonText: 'Leave this page',
+                closeOnConfirm: true
+              }, function (isConfirm) {
+                  if (isConfirm) {
+                    $scope.createForm.$setPristine();
+                    $state.go(next);
+                  }
+              });
+
             }
+
           });
 
-          $scope.$on('$destroy', function() {
+          $scope.$on('$destroy', function(){
             window.onbeforeunload = null;
             $stateChangeStartUnbind();
           });
