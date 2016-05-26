@@ -1232,3 +1232,6 @@ i {
     transform: rotate(360deg);
   }
 }
+#cancellation_message {
+  max-width: none;
+}
