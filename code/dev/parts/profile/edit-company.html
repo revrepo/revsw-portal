@@ -19,19 +19,19 @@
     <div class="row">
       <!-- isCanBeDeleted = true -->
       <div class="col-sm-12" ng-if="model.isCanBeDeleted">
-        <p>You are requesting to cancel your current subscription to billing plan <strong>{{model.bp.name}}</strong> and delete your customer account. There is no undo for this action! The following will happen:</p>
-        <ul>
-          <li>Your credit card will be not charged after the cancellation will take affect</li>
-          <li>No refunds or prorations will be made</li>
-          <li>All your RevAPM users accounts, API keys and SSL certificates will be removed from the system</li>
-        </ul>
+        <div class="form-group">
+          <p>You are requesting to cancel your current subscription to billing plan <strong>{{model.bp.name}}</strong> and delete your customer account. There is no undo for this action! The following will happen:</p>
+          <ul>
+            <li>Your credit card will be not charged after the cancellation will take affect</li>
+            <li>No refunds or prorations will be made</li>
+            <li>All your RevAPM users accounts, API keys and SSL certificates will be removed from the system</li>
+          </ul>
+        </div>
         <div class="form-group" ng-class="{ 'has-error': accountDeleteForm.cancellationMessage.$invalid && accountDeleteForm.cancellationMessage.$dirty }">
           <label class=" control-label" for="cancellationMessage">Thank you for giving us a try! Is there anything we can do better in the future?</label>
-          <div class="col-sm-12">
-            <textarea class="form-control" placeholder="300 characters max" ng-maxlength="300" name="cancellationMessage" ng-model="model.cancellation_message" class="cancellation_message" validate-pattern-comment-no-special-chars></textarea>
-            <div class="error-messages" ng-messages="accountDeleteForm.cancellationMessage.$error" role="alert" ng-messages-multiple>
-              <div ng-messages-include="parts/shared/error-messages.html"></div>
-            </div>
+          <textarea class="form-control cancellation_message" placeholder="300 characters max" ng-maxlength="300" name="cancellationMessage" id="cancellation_message" ng-model="model.cancellation_message" validate-pattern-comment-no-special-chars></textarea>
+          <div class="error-messages" ng-messages="accountDeleteForm.cancellationMessage.$error" role="alert" ng-messages-multiple>
+            <div ng-messages-include="parts/shared/error-messages.html"></div>
           </div>
         </div>
       </div>
