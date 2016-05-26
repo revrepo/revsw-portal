@@ -75,6 +75,7 @@
         url: '/goodbye',
         views: {
           layout: {
+            controller: 'GoodByeController',
             templateUrl: 'parts/profile/goodbye.html'
           }
         }

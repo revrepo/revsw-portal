@@ -1,7 +1,7 @@
 <div class="goodbye">
     <div class="container">
         <div class="header-logo center-block">
-            <a href="https://www.revapm.com/" target="_blank">
+            <a ng-href="{{::websiteUrl}}" target="_blank">
                 <img class="img-responsive" src="images/logo_color.png" alt="Logo">
             </a>
         </div>
@@ -11,11 +11,11 @@
             <br><br>
 
             <p>Thanks for trying us out. Best of luck in all you do.</p>
-            <p>If this was an accident, please <a href="https://revapm.zendesk.com/hc/en-us/requests/new" target="_blank">Contact Support.</a> </p>
+            <p>If this was an accident, please <a ng-href="{{::contactSupportUrl}}" target="_blank">Contact Support.</a> </p>
 
           <br>
             <address>
-               - The revAPM Team
+               - The RevAPM Team
             </address>
 
         </div>
