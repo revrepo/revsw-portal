@@ -27,9 +27,9 @@ describe('Functional', function () {
     var adminUser = config.get('portal.users.admin');
     var iosApps = DataProvider.generateMobileAppData('iOS', 1);
     var androidApps = DataProvider.generateMobileAppData('Android', 1);
-    var windowsMobileApps = DataProvider.generateMobileAppData('Windows_Mobile', 1);
+    // var windowsMobileApps = DataProvider.generateMobileAppData('Windows_Mobile', 1);
     var apps = iosApps.concat(androidApps);//.concat(windowsMobileApps);
-    console.log(apps)
+
     beforeAll(function () {
       Portal.signIn(adminUser);
       Portal.createMobileApps('iOS', iosApps);
