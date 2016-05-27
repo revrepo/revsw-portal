@@ -105,7 +105,7 @@
      */
     function applyValidationDomainNames() {
       var domains = [];
-      if (angular.isAngular($scope.model.companyId)) {
+      if (angular.isArray($scope.model.companyId)) {
         angular.forEach($scope.model.companyId, function(account_id) {
           angular.forEach(_.findByValues($scope.domains, 'account_id', account_id)
             .map(function(item) {
