@@ -354,6 +354,19 @@ var UserForm = {
   },
 
   /**
+   * ### UserForm.setFirstRole()
+   *
+   * Clears the current value selecte in the `Role` select box and set first option
+   *
+   * @returns {Object} Promise
+   */
+  setFirstRole: function() {
+    return this.getRoleDDown()
+      .all(by.tagName('option'))
+      .get(1)
+      .click();
+  },
+  /**
    * ### UserForm.setCompany()
    *
    * Sets a new value for `Company` drop-down
@@ -373,7 +386,21 @@ var UserForm = {
       }
     }
   },
+  /**
+   * ### UserForm.setFirstCompany()
+   *
+   * Sets a new value for `Company` drop-down  - first option
+   *
+   * @returns {Object} Promise
+   */
 
+  setFirstCompany: function () {
+      return this
+        .getCompanyDDown()
+        .all(by.tagName('option'))
+        .get(1)
+        .click();
+  },
   /**
    * ### UserForm.setDomain()
    *
@@ -395,7 +422,20 @@ var UserForm = {
       }
     }
   },
-
+  /**
+   * ### UserForm.setFirstDomain()
+   *
+   * Sets a new value for `Domain` drop-down - first option
+   *
+   * @returns {Object} Promise
+   */
+  setFirstDomain: function () {
+      return this
+        .getDomainDDown()
+        .all(by.tagName('option'))
+        .get(1)
+        .click();
+  },
   /**
    * ### UserForm.changeCheckBox()
    *
@@ -544,7 +584,25 @@ var UserForm = {
       }
     }
   },
-
+  /**
+   * ### UserForm.clearEmail()
+   *
+   * Clears the current value set in the `Email` text field
+   *
+   * @returns {Object} Promise
+   */
+  clearEmail: function () {
+    var me = this;
+    return this
+      .getEmailTxtIn()
+      .getAttribute('value').then(function (text) {
+        var len = text.length;
+        var backspaces = new Array(len + 1).join(protractor.Key.BACK_SPACE);
+        me
+          .getEmailTxtIn()
+          .sendKeys(backspaces);
+      });
+  },
   /**
    * ### UserForm.clearFirstName()
    *
@@ -585,6 +643,44 @@ var UserForm = {
       });
   },
 
+  /**
+   * ### UserForm.clearPassword()
+   *
+   * Clears the current value set in the `Password` text field
+   *
+   * @returns {Object} Promise
+   */
+  clearPassword: function () {
+    var me = this;
+    return this
+      .getPasswordTxtIn()
+      .getAttribute('value').then(function (text) {
+        var len = text.length;
+        var backspaces = new Array(len + 1).join(protractor.Key.BACK_SPACE);
+        me
+          .getPasswordTxtIn()
+          .sendKeys(backspaces);
+      });
+  },
+  /**
+   * ### UserForm.clearPasswordConfirm()
+   *
+   * Clears the current value set in the `Password Confirm` text field
+   *
+   * @returns {Object} Promise
+   */
+  clearPasswordConfirm: function () {
+    var me = this;
+    return this
+      .getPasswordConfirmTxtIn()
+      .getAttribute('value').then(function (text) {
+        var len = text.length;
+        var backspaces = new Array(len + 1).join(protractor.Key.BACK_SPACE);
+        me
+          .getPasswordConfirmTxtIn()
+          .sendKeys(backspaces);
+      });
+  },
   // ## Helper Methods
 
   /**
@@ -652,6 +748,57 @@ var UserForm = {
     }
     if (user.passwordConfirm !== undefined) {
       this.setPasswordConfirm(user.passwordConfirm);
+    }
+  },
+    /**
+   * ### UserForm.clear()
+   *
+   * Helper method that clear the User Form given not specified user data object
+   *
+   * @param {object} user, user data with the following schema
+   *
+   *    {
+   *        email: String,
+   *        firstName, String,
+   *        lastName, String,
+   *        role, String,
+   *        companies, [ String ],
+   *        domains, [ String ],
+   *        accessControls: [ String ],
+   *        password: String,
+   *        passwordConfirm: String
+   *    }
+   */
+  clear: function (user) {
+
+    if (!user || user.email === undefined) {
+      this.clearEmail();
+    }
+    if (!user || user.firstName === undefined) {
+      this.clearFirstName();
+    }
+    if (!user || user.lastName === undefined) {
+      this.clearLastName();
+    }
+    if (!user || user.role === undefined) {
+      this.setFirstRole();
+    }
+    if (!user || user.company === undefined) {
+      // TODO: user role control ???
+      // this.setFirstCompany();
+    }
+    if (!user || user.domain === undefined) {
+      // TODO: user role control ???
+      // this.setFirstDomain();
+    }
+    if (!user || user.accessControls === undefined) {
+      this.setAccessControls([]);
+    }
+    if (!user || user.password === undefined) {
+      this.clearPassword();
+    }
+    if (!user || user.passwordConfirm === undefined) {
+      this.clearPasswordConfirm();
     }
   }
 };
