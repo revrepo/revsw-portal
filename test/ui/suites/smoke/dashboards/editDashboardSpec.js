@@ -40,6 +40,9 @@ describe('Smoke', function () {
         beforeAll(function () {
           Portal.signIn(user);
           Portal.createDashboard([dashboard]);
+          Portal.dashboards.listPage.selectDashboard(dashboard.title);
+          Portal.dashboards.listPage.clickModifyDashboard();
+          Portal.dashboards.listPage.clickEditDashboardProperties();
         });
 
         afterAll(function () {
@@ -48,10 +51,6 @@ describe('Smoke', function () {
         });
 
         beforeEach(function () {
-          Portal.getDashboardsPage();
-          Portal.dashboards.listPage.selectDashboard(dashboard.title);
-          Portal.dashboards.listPage.clickModifyDashboard();
-          Portal.dashboards.listPage.clickEditDashboardProperties();
         });
 
         afterEach(function () {
@@ -99,12 +98,14 @@ describe('Smoke', function () {
             expect(radio.isPresent()).toBeTruthy();
           });
 
-        it('should update form after clicking on dashboard name',
+        it('should update the dashboard "Title" in edited dashboard after ' +
+          'clicking on save button',
           function () {
             var tempTitle = dashboard.title;
             dashboard.title = dashboard.title + '-NEW';
             Portal.dashboards.editPage.form.fill(dashboard);
             Portal.dashboards.editPage.form.clickCreate();
+            Portal.dashboards.listPage.selectDashboard(dashboard.title);
             
             var updatedTitle = Portal.dashboards.listPage.getTitle();
             expect(updatedTitle).toContain(dashboard.title);

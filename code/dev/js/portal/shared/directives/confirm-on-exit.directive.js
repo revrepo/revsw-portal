@@ -32,9 +32,9 @@
                 text: 'Are you sure want to leave the page?',
                 type: 'warning',
                 showCancelButton: true,
-                cancelButtonText: 'Stay on this page',
+                cancelButtonText: 'Stay On This Page',
                 confirmButtonColor: '#DD6B55',
-                confirmButtonText: 'Leave this page',
+                confirmButtonText: 'Leave This Page',
                 closeOnConfirm: true
               }, function (isConfirm) {
                   if (isConfirm) {

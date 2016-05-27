@@ -44,6 +44,9 @@ var AddUser = {
       },
       cancel: {
         linkText: 'Cancel'
+      },
+      leavePage: {
+        linkText: 'Leave This Page'
       }
     }
   },
@@ -78,6 +81,11 @@ var AddUser = {
   getBackToListBtn: function () {
     return element(
       by.partialLinkText(this.locators.buttons.backToList.linkText));
+  },
+
+  getLeavePageBtn: function () {
+    return element(
+      by.partialLinkText(this.locators.buttons.leavePage.linkText));
   },
 
   /**
@@ -117,6 +125,12 @@ var AddUser = {
   clickBackToList: function () {
     return this
       .getBackToListBtn()
+      .click();
+  },
+
+  clickLeavePage: function () {
+    return this
+      .getLeavePageBtn()
       .click();
   },
 
