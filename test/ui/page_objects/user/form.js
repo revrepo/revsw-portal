@@ -21,7 +21,7 @@
 // Requiring constant values
 var Constants = require('./../constants');
 
-var DropDownWidget = require('./../common/multiSelectDropDownWidget');
+var DropDownWidget = require('./../common/dropDownWidget');
 
 // This `User Form` Page Object abstracts all operations or actions that a
 // common user could do in the Add User and Edit User page from the Portal
@@ -71,7 +71,7 @@ var UserForm = {
         model: 'model.role'
       },
       company: {
-        model: 'model.companyId'
+        id: 'company'
       },
       domain: {
         model: 'model.domain'
@@ -138,7 +138,7 @@ var UserForm = {
    * @returns {Object} Selenium WebDriver Element
    */
   getCompanyDDown: function () {
-    return new DropDownWidget(by.model(this.locators.dropDowns.company.model));
+    return new DropDownWidget(by.id(this.locators.dropDowns.company.id));
   },
 
   /**
