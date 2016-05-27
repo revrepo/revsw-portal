@@ -25,12 +25,12 @@ describe('Smoke', function () {
   // Defining set of users for which all below tests will be run
   var users = [
     config.get('portal.users.admin'),
-    config.get('portal.users.reseller'),
-    config.get('portal.users.revAdmin')
+    //config.get('portal.users.reseller'),
+    //config.get('portal.users.revAdmin')
   ];
   var platforms = [
     config.get('portal.mobileApps.platforms.ios'),
-    config.get('portal.mobileApps.platforms.android')
+   // config.get('portal.mobileApps.platforms.android')
   ];
 
   users.forEach(function (user) {
@@ -87,15 +87,47 @@ describe('Smoke', function () {
                 Portal.mobileApps.listPage.addNew(app);
                 expect(Portal.alerts.getAll().count()).toEqual(1);
                 expect(Portal.alerts.getFirst().getText())
-                  .toEqual('App registered');
+                  .toEqual('The application record has been successfully created');
                 Portal.mobileApps.addPage.clickBackToList();
                 Portal.mobileApps.listPage.searchAndEdit(app);
-                app.name = 'UPDATED-' + app.name;
+                app = DataProvider.generateUpdateMobileApp(app);
                 Portal.mobileApps.editPage.update(app);
-                Portal.dialog.clickOk();
-                expect(Portal.alerts.getAll().count()).toEqual(1);
-                expect(Portal.alerts.getFirst().getText())
-                  .toEqual('App updated');
+                Portal.dialog.clickOk(); 
+
+                expect(Portal.mobileApps.editPage.form.getAppNameTxt().getAttribute('value')).toEqual(app.name);
+                expect(Portal.mobileApps.editPage.form.getComment().getAttribute('value')).toEqual(app.comment);
+                expect(Portal.mobileApps.editPage.form.getSDKOperationModeDDown().getAttribute('value').getText()).toContain(app.sdkOperationMode);                                           
+                Portal.mobileApps.editPage.form.getConfigurationRefreshIntervalDDown().getAttribute('value').then(function(value){
+                  expect(value).toEqual(app.configurationRefreshInterval);
+                });
+                Portal.mobileApps.editPage.form.getConfigurationStaleTimeoutDDown().getAttribute('value').then(function(value){
+                  expect(value).toEqual(app.configurationStaleTimeout);
+                 });
+                Portal.mobileApps.editPage.form.getInitialTransportProtocol().getAttribute('value').then(function(value){
+                  expect(value).toEqual(app.initialTransportProtocol.toLowerCase());
+                 });
+                //TODO:
+                /////expect(Portal.mobileApps.editPage.form.getAnalyticsReportingLevel().getAttribute('value').getText()).toContain(app.analyticsReportingLevel);
+                
+                Portal.mobileApps.editPage.form.getDomainsWhiteListValues().then(function(value){
+                  expect(value).toContain(app.domainsWhiteList);
+                });
+                Portal.mobileApps.editPage.form.getDomainsBlackListValues().then(function(value){
+                 expect(value).toContain(app.domainsBlackList);
+                });
+
+                expect(Portal.mobileApps.editPage.form.getDomainsProvisionedListValues()).toContain(app.domainsProvisionedList);
+                
+                Portal.mobileApps.editPage.form.getTestingOffloadingRatio().getAttribute('value').then(function(value){
+                  expect(value).toContain(app.testingOffloadingRatio);
+                });
+
+               
+               
+                //element(by.xpath('.//body')).click();             
+                //expect(Portal.alerts.getAll().count()).toEqual(1);
+               // expect(Portal.alerts.getFirst().getText())
+               //   .toEqual('App updated');
               });
           });
         });

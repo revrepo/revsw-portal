@@ -211,6 +211,22 @@ var DataProvider = {
     };
   },
 
+  generateUpdateMobileApp: function(app) {
+    return {
+      name: 'UPDATED-' + app.name,
+      account: 'API_TEST_COMPANY_1461793655217',
+      configurationStaleTimeout: '36001',
+      sdkOperationMode: 'Report Only',
+      configurationRefreshInterval: '36001',
+      initialTransportProtocol: 'QUIC',
+      domainsWhiteList: 'www.meta.ua',
+      comment: 'App was updated',
+      domainsBlackList: 'www.meta.ua',
+      domainsProvisionedList: 'qa-admin-10-portal-ui-test.com',
+      testingOffloadingRatio:'1'
+    };
+  },
+
   /**
    * ### DataProvider.generateMobileAppData()
    *
@@ -243,7 +259,6 @@ var DataProvider = {
     }
     return apps;
   },
-
   /**
    * ### DataProvider.generateUsageReportData()
    *
