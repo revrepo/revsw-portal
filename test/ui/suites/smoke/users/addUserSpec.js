@@ -45,16 +45,15 @@ describe('Smoke', function () {
 
         beforeEach(function () {
           Portal.getUsersPage();
+          Portal.userListPage.clickAddNewUser();
         });
 
         it('should display "Add user" form', function () {
-          Portal.userListPage.clickAddNewUser();
           expect(Portal.addUserPage.isDisplayed()).toBeTruthy();
           expect(Portal.addUserPage.form.isDisplayed()).toBeTruthy();
         });
 
         it('should allow to cancel an user edition', function () {
-          Portal.userListPage.clickAddNewUser();
           Portal.addUserPage.form.setEmail('something');
           Portal.addUserPage.clickCancel();
 //          Portal.addUserPage.clickLeavePage();
@@ -66,7 +65,6 @@ describe('Smoke', function () {
             // Create user
             var bruce = DataProvider.generateUser('Bruce', null, user);
             // console.log('bruce = ' + JSON.stringify(bruce));
-            Portal.userListPage.clickAddNewUser();
             Portal.addUserPage.createUser(bruce);
             // Check App alert notifications
             expect(Portal.alerts.getAll().count()).toEqual(1);

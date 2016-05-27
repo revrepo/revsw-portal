@@ -19,8 +19,7 @@
 
       if (angular.isObject(msg)) {
         if (msg.status === 403) {
-          // TODO: add message for status -1
-          msg = 'Access denied. Do you have a read-only user account?';
+          return msg.message = 'Access denied. Do you have a read-only user account?';
         } else if (msg.data && msg.data.message) {
           return msg.data.message;
         } else if (msg.message) {
