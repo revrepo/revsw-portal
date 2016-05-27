@@ -70,6 +70,15 @@
             templateUrl: 'parts/profile/two-factor-auth.html'
           }
         }
+      })
+      .state('goodbye', {
+        url: '/goodbye',
+        views: {
+          layout: {
+            controller: 'GoodByeController',
+            templateUrl: 'parts/profile/goodbye.html'
+          }
+        }
       });
   }
 })();

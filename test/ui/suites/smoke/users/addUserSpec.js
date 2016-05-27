@@ -56,6 +56,7 @@ describe('Smoke', function () {
           Portal.userListPage.clickAddNewUser();
           Portal.addUserPage.form.setEmail('something');
           Portal.addUserPage.clickCancel();
+//          Portal.addUserPage.clickLeavePage();
           expect(Portal.userListPage.isDisplayed()).toBeTruthy();
         });
 

@@ -71,6 +71,7 @@ var UserForm = {
         model: 'model.role'
       },
       company: {
+        model: 'model.companyId',
         id: 'company'
       },
       domain: {

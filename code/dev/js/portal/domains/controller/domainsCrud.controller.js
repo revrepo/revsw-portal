@@ -126,7 +126,8 @@
           if (data.status === $config.STATUS.OK) {
             $scope.locations = data.data;
           }
-        });
+        })
+        .catch($scope.alertService.danger);
     };
 
     $scope.prepareSimpleDomainUpdate = function(model_current) {

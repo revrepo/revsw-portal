@@ -469,8 +469,10 @@
         }
         // loading model
         model.loading = true;
-        // Could be removed using $resource
-        return model.$remove()
+        // NOTE: user resource method "remove" for delete data.
+        return $scope.resource.remove({
+            id: model.id
+          }).$promise
           .then(function(data) {
             $rootScope.$broadcast('update:searchData');
             if (data.statusCode === $config.STATUS.OK || data.statusCode === $config.STATUS.ACCEPTED) {
@@ -480,13 +482,14 @@
               });
               if (idx > -1) {
                 $scope.records.splice(idx, 1);
+                $scope.filterList();
               }
-              var idx_f = _.findIndex($scope.filteredRecords, function(item) {
-                return item.id === model.id;
-              });
-              if (idx_f > -1) {
-                $scope.filteredRecords.splice(idx_f, 1);
-              }
+              // var idx_f = _.findIndex($scope.filteredRecords, function(item) {
+              //   return item.id === model.id;
+              // });
+              // if (idx_f > -1) {
+              //   $scope.filteredRecords.splice(idx_f, 1);
+              // }
             }
             return data;
           })

@@ -252,8 +252,8 @@ var DataProvider = {
     for (i = 0; i < numApps; i++) {
       var app = {};
       app.name = platform + '-' + Date.now() + '-' + (i + 1);
-      app.platform = platform;
-      app.title = platform + ' Apps List';
+      app.platform = platform.replace('_', ' ');
+      app.title = platform.replace('_', ' ') + ' Apps List';
       app.comment = 'My comment just for testing proposal';
       app.companyName = 'API QA Reseller Company';
       apps.push(app);

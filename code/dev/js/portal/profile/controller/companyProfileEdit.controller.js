@@ -151,7 +151,7 @@
                   .then(function() {
                     $scope.alertService.success('Successfully deleted account profile');
                     $timeout(function() {
-                      $state.go('index');
+                      $state.go('goodbye');
                     }, 10);
                   })
                   .catch(function(err) {

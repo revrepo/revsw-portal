@@ -150,6 +150,9 @@ input.ui-select-search {
 
 .select2-container {
   min-width: 300px;
+  & .select2-choice {
+    background-color: #F8F8F8;
+  }
 }
 
 select.form-control {
@@ -241,16 +244,32 @@ input[type="checkbox"] {
 .section-edit-company {
   padding-bottom: 30px;
   .select2-container {
-    min-width: 550px;
+    min-width: 100%;
+    @media (min-width: @screen-sm) {
+      min-width: 550px;
+      max-width: 550px;
+    }
+    @media (max-width: 425px) {
+      // min-width:380px;
+      min-width: 100%;
+    }
   }
 }
-
 
 .billing_contact_details {
   .select2-container {
-    min-width: 386px;
+    min-width: 100%;
+    @media (min-width: 2559px) {
+      min-width: 550px;
+      max-width: 550px;
+    }
+    @media (max-width: 425px) {
+      // min-width:380px;
+      min-width: 100%;
+    }
   }
 }
+
 //
 textarea {
   &.form-control {
