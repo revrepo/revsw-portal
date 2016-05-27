@@ -56,7 +56,7 @@ describe('Functional', function () {
           Portal.editUserPage.clickUpdateUser();
           var alert = Portal.alerts.getFirst();
           expect(alert.getText())
-            .toContain(Constants.alertMessages.users.MSG_SUCCESS_UPDATE);//'Successfully updated the user');
+            .toContain(Constants.alertMessages.users.MSG_SUCCESS_UPDATE);
           // Check user is in list
           Portal.editUserPage.clickBackToList();
           var user = Portal.userListPage.searchAndGetFirstRow(tom.email);
@@ -102,7 +102,7 @@ describe('Functional', function () {
           Portal.editUserPage.clickUpdateUser();
           var alert = Portal.alerts.getFirst();
           expect(alert.getText())
-            .toContain(Constants.alertMessages.users.MSG_SUCCESS_UPDATE);//'Successfully updated the user');
+            .toContain(Constants.alertMessages.users.MSG_SUCCESS_UPDATE);
           // Check user is in list
           Portal.editUserPage.clickBackToList();
           var user = Portal.userListPage.searchAndGetFirstRow(mark.email);
@@ -127,7 +127,7 @@ describe('Functional', function () {
           Portal.editUserPage.clickUpdateUser();
           var alert = Portal.alerts.getFirst();
           expect(alert.getText())
-            .toContain(Constants.alertMessages.users.MSG_SUCCESS_UPDATE);//'Successfully updated the user'
+            .toContain(Constants.alertMessages.users.MSG_SUCCESS_UPDATE);
           // Check user is in list
           Portal.editUserPage.clickBackToList();
           var user = Portal.userListPage.searchAndGetFirstRow(adele.email);
@@ -151,7 +151,7 @@ describe('Functional', function () {
           Portal.editUserPage.clickUpdateUser();
           var alert = Portal.alerts.getFirst();
           expect(alert.getText())
-            .toContain(Constants.alertMessages.users.MSG_SUCCESS_UPDATE);//.toEqual('Successfully updated the user');
+            .toContain(Constants.alertMessages.users.MSG_SUCCESS_UPDATE);
           // Check user is in list
           Portal.editUserPage.clickBackToList();
           var user = Portal.userListPage.searchAndGetFirstRow(andrew.email);
@@ -177,7 +177,7 @@ describe('Functional', function () {
           Portal.editUserPage.clickUpdateUser();
           var alert = Portal.alerts.getFirst();
           expect(alert.getText())
-            .toContain(Constants.alertMessages.users.MSG_SUCCESS_UPDATE);//'Successfully updated the user');
+            .toContain(Constants.alertMessages.users.MSG_SUCCESS_UPDATE);
           // Check user is in list
           Portal.editUserPage.clickBackToList();
           Portal.userListPage.searchAndClickEdit(frank.email);
