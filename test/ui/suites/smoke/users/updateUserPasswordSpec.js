@@ -19,6 +19,7 @@
 var config = require('config');
 var Portal = require('./../../../page_objects/portal');
 var DataProvider = require('./../../../common/providers/data');
+var Constants = require('./../../../page_objects/constants');
 
 describe('Smoke', function () {
 
@@ -70,7 +71,8 @@ describe('Smoke', function () {
           Portal.updatePasswordPage.setPasswordConfirm(newPassword);
           Portal.updatePasswordPage.clickUpdatePassword();
           var alert = Portal.alerts.getFirst();
-          expect(alert.getText()).toEqual('Successfully updated the password');
+          expect(alert.getText())
+            .toContain(Constants.alertMessages.users.MSG_SUCCESS_UPDATE_PASSWORD);
           Portal.signOut();
           Portal.signIn(user);
           Portal.deleteUser(carl);
