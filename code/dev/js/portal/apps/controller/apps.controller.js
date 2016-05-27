@@ -17,7 +17,6 @@
     $state,
     $stateParams,
     $config,
-    AlertService,
     $localStorage,
     $q) {
     //Invoking crud actions
@@ -33,6 +32,7 @@
     $scope.setResource(Apps);
 
     $scope.NO_SPECIAL_CHARS = $config.PATTERNS.NO_SPECIAL_CHARS;
+    $scope.COMMENT_NO_SPECIAL_CHARS = $config.PATTERNS.COMMENT_NO_SPECIAL_CHARS;
 
     /**
      * @name setAccountName
@@ -198,9 +198,7 @@
 
     $scope.getApp = function(id) {
       $scope.get(id)
-        .catch(function(err) {
-          $scope.alertService.danger('Could not load app details');
-        });
+        .catch($scope.alertService.danger);
     };
 
     $scope.createApp = function(model, isStay) {
@@ -208,17 +206,15 @@
       delete modelCopy.configs;
       modelCopy.app_platform = model.app_platform.code;
       $scope.create(modelCopy, isStay)
-        .then(function() {
+        .then(function(data) {
           model.app_name = '';
           model.comment = '';
           if ($scope.auth.isReseller() || $scope.auth.isRevadmin()) {
             model.account_id = null;
           }
-          $scope.alertService.success('App registered', 5000);
+          $scope.alertService.success(data);
         })
-        .catch(function(err) {
-          $scope.alertService.danger(err);
-        });
+        .catch($scope.alertService.danger);
     };
 
     $scope.cleanModel = function(model) {
@@ -247,14 +243,8 @@
           id: $scope.model.id
         };
         $scope.update(params, $scope.cleanModel(model))
-          .then(function(data) {
-            $scope.alertService.success('App updated', 5000);
-          })
-          .catch(function(err) {
-            $scope
-              .alertService
-              .danger(err, 5000);
-          })
+          .then($scope.alertService.success)
+          .catch($scope.alertService.danger)
           .finally(function() {
             delete model.$promise;
             delete model.$resolved;
@@ -267,7 +257,7 @@
 
     $scope.verify = function(model) {
       if (!$scope.model.id) {
-        AlertService.danger('Please select app first');
+        $scope.alertService.danger('Please select app first');
         return;
       }
       $scope._loading = true;
@@ -276,12 +266,8 @@
           options: 'verify_only'
         }, $scope.cleanModel(model))
         .$promise
-        .then(function(data) {
-          $scope.alertService.success('App configuration is correct', 5000);
-        })
-        .catch(function(err) {
-          AlertService.danger(err);
-        })
+        .then($scope.alertService.success)
+        .catch($scope.alertService.danger)
         .finally(function() {
           $scope._loading = false;
         });
@@ -289,7 +275,7 @@
 
     $scope.publish = function(model) {
       if (!$scope.model.id) {
-        AlertService.danger('Please select app first');
+        $scope.alertService.danger('Please select app first');
         return;
       }
       $scope.confirm('confirmPublishModal.html', model).then(function() {
@@ -299,14 +285,8 @@
             options: 'publish'
           }, $scope.cleanModel(model))
           .$promise
-          .then(function(data) {
-            $scope
-              .alertService
-              .success('App configuration is published', 5000);
-          })
-          .catch(function(err) {
-            AlertService.danger(err);
-          })
+          .then($scope.alertService.success)
+          .catch($scope.alertService.danger)
           .finally(function() {
             _.assign($scope.model, model);
             $scope._loading = false;
@@ -319,12 +299,8 @@
         var appName = model.app_name;
         $scope
           .delete(model)
-          .then(function(data) {
-            $scope.alertService.success('App ' + appName + ' deleted.');
-          })
-          .catch(function(err) {
-            $scope.alertService.danger(err);
-          })
+          .then($scope.alertService.success)
+          .catch($scope.alertService.danger)
           .finally(function() {
             if ($scope.page.current > $scope.page.pages.length) {
               $scope.prevPage();

@@ -14,8 +14,7 @@
     $injector,
     $state,
     $stateParams,
-    Companies,
-    AlertService
+    Companies
   ) {
     //Invoking crud actions
     $injector.invoke(CRUDController,
@@ -91,9 +90,7 @@
               });
           }
         })
-        .catch(function(err) {
-          $scope.alertService.danger('Could not load app details');
-        })
+        .catch($scope.alertService.danger)
         .finally(function() {
           $scope.$watch('selectedSDKVersion', function() {
             onSelectedSDKVersionChange();
@@ -159,9 +156,6 @@
       };
     };
 
-
-
-
     $scope.updateConfig = function(model, config) {
       $scope.confirm('confirmUpdateModal.html', model).then(function() {
         var idx = _.findIndex(model.configs, {
@@ -173,14 +167,8 @@
         $scope.update({
             id: model.id
           }, $scope.cleanModel(model))
-          .then(function() {
-            $scope.alertService.success('App updated', 5000);
-          })
-          .catch(function(err) {
-            $scope
-              .alertService
-              .danger(err.data.message || 'Oops something went wrong', 5000);
-          });
+          .then( $scope.alertService.success)
+          .catch($scope.alertService.danger);
       });
     };
 
@@ -196,12 +184,8 @@
           id: model.id,
           options: 'verify_only'
         }, $scope.cleanModel(model))
-        .then(function(data) {
-          $scope.alertService.success('App configuration is correct', 5000);
-        })
-        .catch(function(err) {
-          AlertService.danger(err);
-        })
+        .then($scope.alertService.success)
+        .catch($scope.alertService.danger)
         .finally(function() {
           $scope._loading = false;
         });
@@ -209,7 +193,7 @@
 
     $scope.publish = function(model, config) {
       if (!model.id) {
-        AlertService.danger('Please select app first');
+        $scope.alertService.danger('Please select app first');
         return;
       }
       $scope.confirm('confirmPublishModal.html', model).then(function() {
@@ -227,13 +211,9 @@
           .$promise
           .then(function(data) {
             $rootScope.$broadcast('update:searchData');
-            $scope
-              .alertService
-              .success('App configuration is published', 5000);
+            $scope.alertService.success(data);
           })
-          .catch(function(err) {
-            AlertService.danger(err);
-          })
+          .catch($scope.alertService.danger)
           .finally(function() {
             $scope._loading = false;
           });

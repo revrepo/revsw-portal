@@ -16,6 +16,8 @@
  * from Rev Software, Inc.
  */
 
+var faker = require('faker');
+
 // # Data Provider object
 
 // Requiring constants object
@@ -61,7 +63,7 @@ var DataProvider = {
     // company the new user should be associated with
     var company;
     if (portalUser && portalUser.role && portalUser.role !== 'Admin') {
-      company = 'API QA Reseller Company';
+      company = [ 'API QA Reseller Company' ];
     }
 
     return {
@@ -73,6 +75,21 @@ var DataProvider = {
       passwordConfirm: 'password1',
       company: company
     };
+  },
+
+  generateUserToSignUp: function () {
+    var firstName = faker.name.firstName();
+    var lastName = faker.name.lastName();
+    var user = {
+      firstName: firstName,
+      lastName: lastName,
+      email: [firstName, lastName, Date.now() + '@mailinator.com']
+        .join('-')
+        .toLowerCase(),
+      password: 'password1'
+    };
+    return user;
+
   },
 
   /**
@@ -235,8 +252,8 @@ var DataProvider = {
     for (i = 0; i < numApps; i++) {
       var app = {};
       app.name = platform + '-' + Date.now() + '-' + (i + 1);
-      app.platform = platform;
-      app.title = platform + ' Apps List';
+      app.platform = platform.replace('_', ' ');
+      app.title = platform.replace('_', ' ') + ' Apps List';
       app.comment = 'My comment just for testing proposal';
       app.companyName = 'API QA Reseller Company';
       apps.push(app);
@@ -342,6 +359,82 @@ var DataProvider = {
       zipcode: '02',
       comment: 'My comment just for testing proposal'
     };
+  },
+
+  /**
+   * ### DataProvider.generateDashboardData(dashboardPrefix)
+   *
+   * Generates dashboard data object based on the unique para that it
+   * requires.
+   *
+   * @returns {Object}, generate dashboard data with the following schema:
+   *
+   *     {
+   *         title: string,
+   *         structure: Number,
+   *         autoRefresh: string
+   *     }
+   */
+  generateDashboardData: function (dashboardPrefix) {
+    var timestamp = Date.now();
+    var dashboard = {
+        title: 'QA-' + timestamp,
+        structure: 2,
+        autoRefresh: 'Every 15 Minutes'
+    };
+
+    if (dashboardPrefix) {
+      dashboard.title = dashboardPrefix + '-' + timestamp;
+      return dashboard;
+    } else {
+      return dashboard;
+    }
+  },
+
+  /**
+   * ### DataProvider.generateApiKeyData(apiKey)
+   *
+   * Generates dashboard data object based on the unique para that it
+   * requires.
+   *
+   * @returns {Object}, generate API Key data with the following schema:
+   *
+   *     {
+   *         name: string,
+   *         key: string,
+   *         active: string,
+   *         readOnly: string,
+   *         managedDomain: string,
+   *         read: string,
+   *         modify: string,
+   *         delete: string,
+   *         purge: string,
+   *         reports: string,
+   *         admin: string
+   *     }
+   */
+  generateApiKeyData: function (apiKeyPrefix) {
+    var timestamp = Date.now();
+    var apiKey = {
+        name: 'QA-API-Key-' + timestamp,
+        key: '',
+        active: false,
+        readOnly: false,
+        managedDomain: false,
+        read: false,
+        modify: false,
+        delete: false,
+        purge: false,
+        reports: false,
+        admin: false
+    };
+
+    if (apiKeyPrefix) {
+      apiKey.title = apiKeyPrefix + '-' + timestamp;
+      return apiKey;
+    } else {
+      return apiKey;
+    }
   }
 };
 

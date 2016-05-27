@@ -62,7 +62,7 @@
                 <form class="form-inline">
                   <div class="form-group">
                     <!-- <div app-select ng-model="application" on-select="reloadDirs()"></div> -->
-                    <ui-select ng-model="account" theme="select2" ng-disabled="_loading" on-select="onAccountSelect($model)" style="min-width: 300px;">
+                    <ui-select ng-model="account" theme="select2" ng-animate-disabled ng-disabled="_loading" on-select="onAccountSelect($model)" style="min-width: 300px;">
                       <ui-select-match placeholder="Select Account">{{$select.selected.acc_name}}</ui-select-match>
                       <ui-select-choices repeat="item in accounts | filter: {acc_name: $select.search}">
                         <div ng-bind-html="item.acc_name|highlight: $select.search"></div>
@@ -113,7 +113,7 @@
             <i class="glyphicon glyphicon-refresh spin" ng-if="item.loading"></i>&nbsp; Loading...
           </div>
           <div class="row" ng-if="records.length > 0">
-            <div class="col-md-3  text-center" ng-repeat="item in records | orderBy: 'monthly_fee'">
+            <div class="col-sm-6 col-md-3 individual-plan" ng-repeat="item in records | orderBy: 'monthly_fee'">
               <div class="billing-plan" ng-class="{'current':item.id === account.plan_id}">
                 <div class="billing-plan-header">
                   <h2 class="billing-plan-title">{{item.name}}</h2>
@@ -128,7 +128,6 @@
                     <div>${{service.cost | number:2}} per {{service.measurement_unit}}</div>
                   </div>
                 </div>
-                <hr>
                 <footer class="billing-plan-action">
                   <!--   <button href="" ng-click="chooseBillingPlan(item)" class="btn btn-success btn-lg">Subscribe</button> -->
                   <button ng-disabled="_loading" ng-show="item.id !== account.plan_id" ng-click="chooseBillingPlan(item, account)" class="btn btn-success btn-lg">

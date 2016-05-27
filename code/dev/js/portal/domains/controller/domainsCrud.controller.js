@@ -43,6 +43,7 @@
     $scope.setResource(DomainsConfig);
 
     $scope.NO_SPECIAL_CHARS = $config.PATTERNS.NO_SPECIAL_CHARS;
+    $scope.COMMENT_NO_SPECIAL_CHARS = $config.PATTERNS.COMMENT_NO_SPECIAL_CHARS;
 
     /**
      * @name setAccountName
@@ -125,7 +126,8 @@
           if (data.status === $config.STATUS.OK) {
             $scope.locations = data.data;
           }
-        });
+        })
+        .catch($scope.alertService.danger);
     };
 
     $scope.prepareSimpleDomainUpdate = function(model_current) {
@@ -395,10 +397,10 @@
             id: modelId
           }, model)
           .then(function() {
-            $scope.alertService.success('Domain updated', 5000);
+            $scope.alertService.success('Domain updated');
           })
           .catch(function(err) {
-            $scope.alertService.danger(err.data.message || 'Oops something ment wrong', 5000);
+            $scope.alertService.danger(err);
           });
       });
     };
@@ -657,6 +659,20 @@
       }
     }
 
+    /**
+     * @name copyCallback
+     * @description
+     *
+     * @param  {[type]} err [description]
+     * @return {[type]}     [description]
+     */
+    $scope.copyCallback = function(err) {
+      if (err) {
+        $scope.alertService.danger('Copying failed, please try manual approach', 2000);
+      } else {
+        $scope.alertService.success('The CNAME has been copied to the clipboard', 2000);
+      }
+    };
   }
 
 })();

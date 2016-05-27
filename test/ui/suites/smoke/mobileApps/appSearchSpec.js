@@ -32,6 +32,7 @@ describe('Smoke', function () {
   var platforms = [
     config.get('portal.mobileApps.platforms.ios'),
     config.get('portal.mobileApps.platforms.android')
+    // ,config.get('portal.mobileApps.platforms.windows_mobile')
   ];
 
   users.forEach(function (user) {

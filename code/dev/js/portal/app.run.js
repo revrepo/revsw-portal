@@ -25,6 +25,7 @@
     $rootScope.$on('$stateChangeError', console.log.bind(console));
 
     $rootScope.goToState = function(state, dashboardID){
+
       if(dashboardID){
         $location.path(state + '/' + dashboardID);
       } else {
@@ -37,6 +38,7 @@
     };
 
     $rootScope.expandMenu = function(menuState, event){
+
       if($rootScope.menuExpandedNodes.current === menuState) {
         event.stopPropagation();
         return;

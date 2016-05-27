@@ -32,6 +32,7 @@ var Constants = {
       new: '#/domains/new'
     },
     profile: '#/profile',
+    dashboard: '#/dashboard',
     admin: {
       users: '#/users',
       companies: '#/companies',
@@ -167,6 +168,29 @@ var Constants = {
   },
   rttHeatmaps: {
     TITLE: 'Global Last Mile RTT Heatmap'
+  },
+  alertMessages: {
+    // @see revsw-cds/lib/handlers/appHandlers.js
+    app: {
+      MSG_FAIL_LIST: 'Failed to retrieve a list of mobile applications',
+      MSG_FAIL_ITEM: 'Failed to retrieve application details',
+      MSG_FAIL_SDK_ITEM: 'Failed to retrieve SDK configuration API service details',
+      MSG_FAIL_STATS_ITEM: 'Failed to retrieve SDK stats reporting API service details',
+      MSG_FAIL_SERVER_ITEM: 'Failed to retrieve server group details',
+      MSG_FAIL_UPDATE: 'Failed to update application details',
+      MSG_FAIL_ADD: 'Failed to add new application record',
+      MSG_FAIL_DELETE: 'Failed to delete application record',
+      MSG_SUCCESS_ADD: 'The application record has been successfully created',
+      MSG_SUCCESS_VERIFY: 'The configuration has been successfully verified',
+      MSG_SUCCESS_UPDATE: 'The application record has been successfully updated',
+      MSG_SUCCESS_DELETE: 'The application has been successfully deleted',
+      MSG_NOT_FOUND: 'Application not found',
+      MSG_SDK_NOT_FOUND: 'SDK configuration API service not found',
+      NSG_STATS_NOT_FOUND: 'SDK stats reporting API service not found',
+      MSG_SERVER_NOT_FOUND: 'Server group not found',
+      MSG_ALREADY_EXISTS: 'The application name and platform is' +
+        ' already registered in the system',
+    }
   }
 };
 

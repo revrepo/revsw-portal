@@ -39,7 +39,8 @@
     "mobileApps": {
       "platforms": {
         "ios": "iOS",
-        "android": "Android"
+        "android": "Android",
+        "windows_mobile": "Windows_Mobile"
       }
     },
     "usageReport": {
@@ -47,6 +48,12 @@
       "hits_denominator": 120000,
       "sent_unit": 2000,
       "received_unit": 200
+    }
+  },
+  "mailinator": {
+    "api": {
+      "baseUrl": "https://api.mailinator.com/api/",
+      "token": "6ee7081dedc04b5ba7b259ec7ca34faa"
     }
   }
 }

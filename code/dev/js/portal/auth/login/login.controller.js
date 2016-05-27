@@ -48,6 +48,8 @@
             });
           })
           .catch(function(err) {
+            $scope._loading = false;
+
             if (!err.status) {
 
             }
@@ -67,9 +69,6 @@
             } else {
               AlertService.danger('Something get wrong', 5000);
             }
-          })
-          .finally(function() {
-            $scope._loading = false;
           });
       } catch (e) {
         AlertService.danger(e.message);
