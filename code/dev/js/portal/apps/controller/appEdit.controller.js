@@ -41,8 +41,6 @@
     $scope.domainList = [];
     $scope.allUserDomains = [];
 
-    $scope.protocols = ['standard', 'quic', 'rmp'];
-
     $scope.initEdit = function(id) {
       $scope._loading = true;
       $scope.get(id)
@@ -55,6 +53,12 @@
         })
         .then(function() {
           $scope.configuration = $scope.model.configs[0];
+
+          $scope.protocols = $scope.configuration.allowed_transport_protocols.concat(
+          ['standard', 'quic', 'rmp']
+          .filter(function(elem) {return $scope.configuration.allowed_transport_protocols.indexOf(elem) < 0 })
+          );
+
           $scope.SDKVersionsInConfigs = $scope.model.configs.map(function(config) {
             return config.sdk_release_version;
           });
@@ -118,18 +122,15 @@
     };
 
     $scope.protocolOrder = {
-//        group: 'foobar',
         animation: 150,
         onSort: function (evt){
-
           $scope.configuration.allowed_transport_protocols.sort(
 //            (a,b)=>$scope.protocols.indexOf(a)-$scope.protocols.indexOf(b)
             function (a, b) { return $scope.protocols.indexOf(a)-$scope.protocols.indexOf(b); }
           );
-
-          console.log($scope.configuration.allowed_transport_protocols); // === model
         }
     };
+
     $scope.toggleProtocolSelection = function(protocol, model) {
       var idx = model
         .allowed_transport_protocols
@@ -144,6 +145,10 @@
           .allowed_transport_protocols
           .push(protocol);
       }
+
+      $scope.configuration.allowed_transport_protocols.sort(
+        function (a, b) { return $scope.protocols.indexOf(a)-$scope.protocols.indexOf(b); }
+      );
     };
 
     $scope.isVersion = function(version) {
