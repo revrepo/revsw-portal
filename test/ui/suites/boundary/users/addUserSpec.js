@@ -39,8 +39,7 @@ describe('Boundary', function () {
     });
 
     afterEach(function () {
-      Portal.addUserPage.form.clear();
-      browser.sleep(500);
+      Portal.addUserPage.form.clear(adminUser);
     });
 
     it('should not allow to create user with long email address (> 64 chars).',

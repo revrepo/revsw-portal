@@ -26,6 +26,7 @@ var Portal = require('./../../../page_objects/portal');
 // Requiring Data Provider to generate test data. In this case we need it to
 // generate test user data
 var DataProvider = require('./../../../common/providers/data');
+var Constants = require('./../../../page_objects/constants');
 
 // Defining smoke suite
 describe('Smoke', function () {
@@ -142,6 +143,10 @@ describe('Smoke', function () {
             // the test/spec started. Since this test/spec created a user, then
             // it should delete it once all validations were made.
             Portal.dialog.clickOk();
+            // Check App alert notifications
+            expect(Portal.alerts.getAll().count()).toEqual(1);
+            expect(Portal.alerts.getFirst().getText())
+              .toContain(Constants.alertMessages.users.MSG_SUCCESS_DELETE);
           });
       });
     });

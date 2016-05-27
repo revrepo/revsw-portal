@@ -354,19 +354,6 @@ var UserForm = {
   },
 
   /**
-   * ### UserForm.setFirstRole()
-   *
-   * Clears the current value selecte in the `Role` select box and set first option
-   *
-   * @returns {Object} Promise
-   */
-  setFirstRole: function() {
-    return this.getRoleDDown()
-      .all(by.tagName('option'))
-      .get(1)
-      .click();
-  },
-  /**
    * ### UserForm.setCompany()
    *
    * Sets a new value for `Company` drop-down
@@ -386,21 +373,7 @@ var UserForm = {
       }
     }
   },
-  /**
-   * ### UserForm.setFirstCompany()
-   *
-   * Sets a new value for `Company` drop-down  - first option
-   *
-   * @returns {Object} Promise
-   */
 
-  setFirstCompany: function () {
-      return this
-        .getCompanyDDown()
-        .all(by.tagName('option'))
-        .get(1)
-        .click();
-  },
   /**
    * ### UserForm.setDomain()
    *
@@ -422,20 +395,7 @@ var UserForm = {
       }
     }
   },
-  /**
-   * ### UserForm.setFirstDomain()
-   *
-   * Sets a new value for `Domain` drop-down - first option
-   *
-   * @returns {Object} Promise
-   */
-  setFirstDomain: function () {
-      return this
-        .getDomainDDown()
-        .all(by.tagName('option'))
-        .get(1)
-        .click();
-  },
+
   /**
    * ### UserForm.changeCheckBox()
    *
@@ -755,7 +715,7 @@ var UserForm = {
    *
    * Helper method that clear the User Form given not specified user data object
    *
-   * @param {object} user, user data with the following schema
+   * @param {object} user, user who calls the methods "clears"
    *
    *    {
    *        email: String,
@@ -769,38 +729,22 @@ var UserForm = {
    *        passwordConfirm: String
    *    }
    */
-  clear: function (user) {
-
-    if (!user || user.email === undefined) {
-      this.clearEmail();
-    }
-    if (!user || user.firstName === undefined) {
-      this.clearFirstName();
-    }
-    if (!user || user.lastName === undefined) {
-      this.clearLastName();
-    }
-    if (!user || user.role === undefined) {
-      this.setFirstRole();
-    }
-    if (!user || user.company === undefined) {
-      // TODO: user role control ???
-      // this.setFirstCompany();
-    }
-    if (!user || user.domain === undefined) {
-      // TODO: user role control ???
-      // this.setFirstDomain();
-    }
-    if (!user || user.accessControls === undefined) {
-      this.setAccessControls([]);
-    }
-    if (!user || user.password === undefined) {
-      this.clearPassword();
-    }
-    if (!user || user.passwordConfirm === undefined) {
-      this.clearPasswordConfirm();
+  clear: function(user) {
+    this.clearEmail();
+    this.clearFirstName();
+    this.clearLastName();
+    this.setRole('--- Select Role ---');
+    this.setAccessControls([]);
+    this.clearPassword();
+    this.clearPasswordConfirm();
+    // clear specific data for differen roles
+    if (!!user && (user.role === 'revadmin' || user.role === 'reseller')) {
+      // TODO: check work for 'revadmin' and 'reseller'
+      // this.setCompany([]);
+      // this.setDomain([]);
     }
   }
+
 };
 
 module.exports = UserForm;

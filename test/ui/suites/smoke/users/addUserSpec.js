@@ -19,6 +19,7 @@
 var config = require('config');
 var Portal = require('./../../../page_objects/portal');
 var DataProvider = require('./../../../common/providers/data');
+var Constants = require('./../../../page_objects/constants');
 
 describe('Smoke', function () {
 
@@ -70,7 +71,7 @@ describe('Smoke', function () {
             // Check App alert notifications
             expect(Portal.alerts.getAll().count()).toEqual(1);
             expect(Portal.alerts.getFirst().getText())
-              .toEqual('Successfully created new user');
+              .toContain(Constants.alertMessages.users.MSG_SUCCESS_ADD);
             // Delete created user
             Portal.deleteUser(bruce);
           });
