@@ -714,6 +714,7 @@ var Portal = {
    */
   createDashboard: function (arrayDashboards) {
     var me = this;
+    me.getDashboardsPage();
     return browser.getCurrentUrl().then(function (initialUrl) {
       arrayDashboards.forEach(function (dashboard) {
         me.getDashboardsPage();
@@ -742,6 +743,7 @@ var Portal = {
    */
   deleteDashboard: function (arrayDashboards) {
     var me = this;
+    me.getDashboardsPage();
     return browser.getCurrentUrl().then(function (initialUrl) {
       arrayDashboards.forEach(function (dashboard) {
         me.getDashboardsPage();
