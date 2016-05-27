@@ -71,7 +71,8 @@ var UserForm = {
         model: 'model.role'
       },
       company: {
-        model: 'model.companyId'
+        model: 'model.companyId',
+        id: 'company'
       },
       domain: {
         model: 'model.domain'
@@ -138,7 +139,7 @@ var UserForm = {
    * @returns {Object} Selenium WebDriver Element
    */
   getCompanyDDown: function () {
-    return new DropDownWidget(by.model(this.locators.dropDowns.company.model));
+    return new DropDownWidget(by.id(this.locators.dropDowns.company.id));
   },
 
   /**
