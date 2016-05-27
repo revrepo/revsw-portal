@@ -49,7 +49,6 @@
     function initModel() {
       if (!$scope.model) {
         $scope.model = {};
-        $scope.model.companyId = [];
       }
 
       angular.merge($scope.model, {
@@ -81,7 +80,6 @@
           DomainsConfig.query().$promise
         ])
         .then(function(dataRefs) {
-          //
           $scope.companies = dataRefs[0];
           $scope.domains = dataRefs[1];
           return dataRefs;
@@ -107,18 +105,19 @@
      */
     function applyValidationDomainNames() {
       var domains = [];
-      angular.forEach($scope.model.companyId, function(account_id) {
-        angular.forEach(_.findByValues($scope.domains, 'account_id', account_id)
-          .map(function(item) {
-            return item.domain_name;
-          }),
-          function(item) {
-            domains.push(item);
-          });
-      });
-      if ($scope.domains.length === 0) {
+      if (angular.isAngular($scope.model.companyId)) {
+        angular.forEach($scope.model.companyId, function(account_id) {
+          angular.forEach(_.findByValues($scope.domains, 'account_id', account_id)
+            .map(function(item) {
+              return item.domain_name;
+            }),
+            function(item) {
+              domains.push(item);
+            });
+        });
+      }
 
-      } else {
+      if ($scope.domains.length !== 0) {
         $scope.model.domain = _.intersection(domains, $scope.model.domain);
       }
 
@@ -129,9 +128,7 @@
       $scope._loading = true;
       $scope.get(id)
         .then(dependencies)
-        .catch(function(err) {
-          $scope.alertService.danger(err);
-        })
+        .catch($scope.alertService.danger)
         .finally(function() {
           $scope._loading = false;
         });
@@ -151,12 +148,8 @@
         .then(function() {
           $scope
             .delete(model)
-            .then(function(data) {
-              $scope.alertService.success(data);
-            })
-            .catch(function(err) {
-              $scope.alertService.danger(err);
-            });
+            .then($scope.alertService.success)
+            .catch($scope.alertService.danger);
         });
     };
 
@@ -175,9 +168,7 @@
           }
           $scope.alertService.success(data);
         })
-        .catch(function(err) {
-          $scope.alertService.danger(err);
-        });
+        .catch($scope.alertService.danger);
     };
 
     $scope.getRelativeDate = function(datetime) {
@@ -194,11 +185,6 @@
       if (!model) {
         return;
       }
-      if (model.passwordConfirm !== model.password) {
-        $scope.alertService.danger('Passwords did not match');
-        return;
-      }
-
       model.access_control_list.dashBoard = true;
       var _model = angular.copy(model);
       if (!_model.companyId || !angular.isArray(_model.companyId)) {
@@ -220,9 +206,7 @@
 
           $scope.alertService.success(data);
         })
-        .catch(function(err) {
-          $scope.alertService.danger(err);
-        });
+        .catch($scope.alertService.danger);
     };
 
     $scope.disableSubmit = function(model, isEdit) {
