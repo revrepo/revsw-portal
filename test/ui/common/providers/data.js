@@ -362,7 +362,7 @@ var DataProvider = {
   },
 
   /**
-   * ### DataProvider.generateDashboardData()
+   * ### DataProvider.generateDashboardData(dashboardPrefix)
    *
    * Generates dashboard data object based on the unique para that it
    * requires.
@@ -388,6 +388,52 @@ var DataProvider = {
       return dashboard;
     } else {
       return dashboard;
+    }
+  },
+
+  /**
+   * ### DataProvider.generateApiKeyData(apiKey)
+   *
+   * Generates dashboard data object based on the unique para that it
+   * requires.
+   *
+   * @returns {Object}, generate API Key data with the following schema:
+   *
+   *     {
+   *         name: string,
+   *         key: string,
+   *         active: string,
+   *         readOnly: string,
+   *         managedDomain: string,
+   *         read: string,
+   *         modify: string,
+   *         delete: string,
+   *         purge: string,
+   *         reports: string,
+   *         admin: string
+   *     }
+   */
+  generateApiKeyData: function (apiKeyPrefix) {
+    var timestamp = Date.now();
+    var apiKey = {
+        name: 'QA-API-Key-' + timestamp,
+        key: '',
+        active: false,
+        readOnly: false,
+        managedDomain: false,
+        read: false,
+        modify: false,
+        delete: false,
+        purge: false,
+        reports: false,
+        admin: false
+    };
+
+    if (apiKeyPrefix) {
+      apiKey.title = apiKeyPrefix + '-' + timestamp;
+      return apiKey;
+    } else {
+      return apiKey;
     }
   }
 };
