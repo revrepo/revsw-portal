@@ -18,8 +18,7 @@
     $injector,
     $state,
     $config,
-    $stateParams,
-    AlertService) {
+    $stateParams) {
     $scope.countries = Countries.query();
     $scope.billing_plans = [{
       id: null,
@@ -34,6 +33,8 @@
     $scope.zipRegex = '[0-9]{1,10}';
     $scope.phoneRegex = '[0-9, \\s, \\+, \\-, \\(, \\)]{1,20}';
     $scope.NO_SPECIAL_CHARS = $config.PATTERNS.NO_SPECIAL_CHARS;
+    $scope.COMMENT_NO_SPECIAL_CHARS = $config.PATTERNS.COMMENT_NO_SPECIAL_CHARS;
+
     $scope.user = User.getUser();
     $scope.user.isAdmin = User.isAdmin();
     // console.log($scope.user.access_control_list.readOnly)
@@ -74,10 +75,10 @@
               id: company.id
             }, company)
             .then(function() {
-              AlertService.success('Successfully updated company profile');
+              $scope.alertService.success('Successfully updated company profile');
             })
             .catch(function(err) {
-              AlertService.danger(err);
+              $scope.alertService.danger(err);
             })
             .finally(function() {
               $scope._loading = false;
@@ -109,10 +110,10 @@
             })
             .then(function(account) {
               $scope.model.billing_id = account.billing_id;
-              AlertService.success('Successfully created billing profile');
+              $scope.alertService.success('Successfully created billing profile');
             })
             .catch(function(err) {
-              AlertService.danger(err);
+              $scope.alertService.danger(err);
             })
             .finally(function() {
               $scope._loading = false;
@@ -148,13 +149,13 @@
                     cancellation_message: _model.cancellation_message
                   })
                   .then(function() {
-                    AlertService.success('Successfully deleted account profile');
+                    $scope.alertService.success('Successfully deleted account profile');
                     $timeout(function() {
-                      $state.go('index');
+                      $state.go('goodbye');
                     }, 10);
                   })
                   .catch(function(err) {
-                    AlertService.danger(err);
+                    $scope.alertService.danger(err);
                   })
                   .finally(function() {
                     $scope._loading = false;
@@ -163,7 +164,7 @@
           }
         )
         .catch(function(err) {
-          AlertService.danger(err);
+          $scope.alertService.danger(err);
         })
         .finally(function() {
           $scope._loading = false;

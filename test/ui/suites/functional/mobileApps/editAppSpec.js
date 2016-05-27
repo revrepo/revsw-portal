@@ -64,8 +64,8 @@ describe('Functional', function () {
             Portal.mobileApps.editPage.verify(app);
 
             var alert = Portal.alerts.getFirst();
-            var expectedMsg = 'App configuration is correct';
-            expect(alert.getText()).toEqual(expectedMsg);
+            var expectedMsg = Constants.alertMessages.app.MSG_SUCCESS_VERIFY;
+            expect(alert.getText()).toContain(expectedMsg);
 
             Portal.header.goTo(app.platform);
             var findApp = Portal.mobileApps.listPage.findApp(app);
@@ -80,8 +80,8 @@ describe('Functional', function () {
             Portal.dialog.clickOk();
 
             var alert = Portal.alerts.getFirst();
-            var expectedMsg = 'App updated';
-            expect(alert.getText()).toEqual(expectedMsg);
+            var expectedMsg = Constants.alertMessages.app.MSG_SUCCESS_UPDATE;
+            expect(alert.getText()).toContain(expectedMsg);
 
             Portal.goToMobileApps();
             Portal.header.goTo(app.platform);
@@ -97,8 +97,8 @@ describe('Functional', function () {
             Portal.dialog.clickOk();
 
             var alert = Portal.alerts.getFirst();
-            var expectedMsg = 'App configuration is published';
-            expect(alert.getText()).toEqual(expectedMsg);
+            var expectedMsg = Constants.alertMessages.app.MSG_SUCCESS_UPDATE;
+            expect(alert.getText()).toContain(expectedMsg);
 
             Portal.goToMobileApps();
             Portal.header.goTo(app.platform);
@@ -115,8 +115,8 @@ describe('Functional', function () {
             Portal.mobileApps.editPage.verify(app);
 
             var alert = Portal.alerts.getFirst();
-            var expectedMsg = 'App configuration is correct';
-            expect(alert.getText()).toEqual(expectedMsg);
+            var expectedMsg = Constants.alertMessages.app.MSG_SUCCESS_VERIFY;
+            expect(alert.getText()).toContain(expectedMsg);
 
             Portal.goToMobileApps();
             Portal.header.goTo(app.platform);
@@ -135,8 +135,8 @@ describe('Functional', function () {
             Portal.dialog.clickOk();
 
             var alert = Portal.alerts.getFirst();
-            var expectedMsg = 'App updated';
-            expect(alert.getText()).toEqual(expectedMsg);
+            var expectedMsg =  Constants.alertMessages.app.MSG_SUCCESS_UPDATE;
+            expect(alert.getText()).toContain(expectedMsg);
 
             Portal.goToMobileApps();
             Portal.header.goTo(app.platform);
@@ -155,8 +155,8 @@ describe('Functional', function () {
             Portal.dialog.clickOk();
 
             var alert = Portal.alerts.getFirst();
-            var expectedMsg = 'App configuration is published';
-            expect(alert.getText()).toEqual(expectedMsg);
+            var expectedMsg =  Constants.alertMessages.app.MSG_SUCCESS_UPDATE;
+            expect(alert.getText()).toContain(expectedMsg);
 
             Portal.goToMobileApps();
             Portal.header.goTo(app.platform);
@@ -173,8 +173,8 @@ describe('Functional', function () {
             Portal.dialog.clickOk();
 
             var alert = Portal.alerts.getFirst();
-            var expectedMsg = 'App configuration is published';
-            expect(alert.getText()).toEqual(expectedMsg);
+            var expectedMsg = Constants.alertMessages.app.MSG_SUCCESS_UPDATE;
+            expect(alert.getText()).toContain(expectedMsg);
 
             Portal.goToMobileApps();
             Portal.header.goTo(app.platform);
@@ -193,8 +193,8 @@ describe('Functional', function () {
             Portal.dialog.clickOk();
 
             var alert = Portal.alerts.getFirst();
-            var expectedMsg = 'App updated';
-            expect(alert.getText()).toEqual(expectedMsg);
+            var expectedMsg = Constants.alertMessages.app.MSG_SUCCESS_UPDATE;
+            expect(alert.getText()).toContain(expectedMsg);
 
             Portal.goToMobileApps();
             Portal.header.goTo(app.platform);

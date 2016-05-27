@@ -145,7 +145,8 @@
       SUCCESS_MESSAGE_DISPLAY_TIMEOUT: 5000,
       // PATTERNS
       PATTERNS: {
-        NO_SPECIAL_CHARS: /^[A-Za-z0-9_.' -]+$/,
+        NO_SPECIAL_CHARS: /^[A-Za-z0-9//_.' -]+$/,
+        COMMENT_NO_SPECIAL_CHARS: /^[A-Za-z0-9//_.' \n\r-]+$/,
         IP_ADDRESS: /^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$/,
         WILDCARD_DOMAIN_FIELD: /(^(\*\.[a-zA-Z0-9-\_]{0,62}[a-zA-Z0-9]\.)+[a-zA-Z]{2,63}$)/,
         URL: /(https?:)?\/\/.+/,
@@ -154,6 +155,21 @@
         COOKIE: /^[A-Za-z0-9.' -]+$/,
         CACHE_BYPASS_LOCATION: /^[A-Za-z0-9//.' -]+$/,
         QUERY_STRINGS_OPTION: /^[A-Za-z0-9.' -]+$/
+      },
+      // HEADER OPERATION FOR DOMAIN CACHING RULE
+      HEADER_OPERATIONS: {
+        'add': 'Add',
+        'remove': 'Remove',
+        'replace': 'Replace'
+      },
+      TIME_NOTE_DISPLAY: {
+        MESSAGE: 'All times are shown in the computer’s local time zone'
+      },
+      REFRESH_NOW_TIMEOUT: 5000,
+
+      LINKS: {
+        WEBSITE_URL: 'https://www.revapm.com',
+        CONTACT_SUPPORT_URL: 'https://revapm.zendesk.com/hc/en-us/requests/new'
       }
     });
 

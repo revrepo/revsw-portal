@@ -2,7 +2,7 @@
   <div class="form-group">
     <label for="domain">Domain <small>(with BTT key)</small></label>
     <div>
-      <ui-select ng-model="vm.domain" theme="select2" ng-disabled="vm.domains.length == 0" on-select="vm.onDomainSelected($model)" style="min-width: 300px;">
+      <ui-select ng-model="vm.domain" theme="select2" ng-animate-disabled ng-disabled="vm.domains.length == 0" on-select="vm.onDomainSelected($model)" style="min-width: 300px;">
         <ui-select-match placeholder="Select Domain">{{$select.selected.domain_name}}</ui-select-match>
         <ui-select-choices repeat="item in vm.domains | filter: {domain_name: $select.search}">
           <div ng-bind-html="item.domain_name|highlight: $select.search"></div>

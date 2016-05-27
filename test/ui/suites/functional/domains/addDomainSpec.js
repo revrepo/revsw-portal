@@ -53,6 +53,7 @@ describe('Functional', function () {
         expect(alert.getText()).toEqual(expectedMsg);
     });
 
+    // TODO: move the test to negative suite?
     it('should not create a domain with duplicate values', function () {
       Portal.getDomainsPage();
       Portal.domains.listPage.clickAddNewDomain();

@@ -3,9 +3,13 @@
   <h4 class=modal-title>New Dashboard</h4> </div>
 <div class=modal-body>
   <form role="form" name="newDashboardForm">
-    <div class=form-group>
-      <label for=dashboardTitle>Title</label>
-      <input type=text class="form-control" id=dashboardTitle ng-model="model.title" required> </div>
+    <div class="form-group" ng-class="{'has-error': newDashboardForm.dashboardTitle.$invalid && newDashboardForm.dashboardTitle.$dirty}">
+      <label for="dashboardTitle">Title</label>
+      <input type=text class="form-control" id="dashboardTitle" name="dashboardTitle" ng-model="model.title" ng-maxlength="20" validate-pattern-no-special-chars required>
+      <div class="error-messages" ng-messages="newDashboardForm.dashboardTitle.$error" role="alert" ng-messages-multiple>
+        <div ng-messages-include="parts/shared/error-messages.html"></div>
+      </div>
+    </div>
     <div class="form-group">
       <label>Structure</label>
       <div class="dashboard-structure-select list">

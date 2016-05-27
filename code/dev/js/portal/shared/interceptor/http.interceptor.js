@@ -27,6 +27,13 @@
           $rootScope.$emit('not.connected');
         }
         return $q.reject(rejection);
+      },
+       'request': function(config) {
+        //Added to ignore loading bar for config_status request
+       if(config.url.indexOf('/config_status')>=0){
+           config.ignoreLoadingBar=true;
+       }
+        return config;
       }
     };
   }

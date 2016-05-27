@@ -6,9 +6,8 @@
     .config(configure);
 
   /*@ngInject*/
-  function configure() {
-
-    // All configuration except routing should be placed here
-
+  function configure(cfpLoadingBarProvider) {
+   // All configuration except routing should be placed here
+     cfpLoadingBarProvider.includeBar = false;
   }
 })();

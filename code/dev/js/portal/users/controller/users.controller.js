@@ -28,6 +28,7 @@
     $scope.setResource(Users);
 
     $scope.NO_SPECIAL_CHARS = $config.PATTERNS.NO_SPECIAL_CHARS;
+    $scope.COMMENT_NO_SPECIAL_CHARS = $config.PATTERNS.COMMENT_NO_SPECIAL_CHARS;
 
     $scope.roles = ['user', 'admin'];
     // Adding additional user roles for RevAdmin
@@ -48,6 +49,7 @@
     function initModel() {
       if (!$scope.model) {
         $scope.model = {};
+        $scope.model.companyId = [];
       }
 
       angular.merge($scope.model, {
@@ -97,52 +99,65 @@
       }
     };
 
+    /**
+     * @name  applyValidationDomainNames
+     * @description
+     *
+     * @return {Array}
+     */
+    function applyValidationDomainNames() {
+      var domains = [];
+      angular.forEach($scope.model.companyId, function(account_id) {
+        angular.forEach(_.findByValues($scope.domains, 'account_id', account_id)
+          .map(function(item) {
+            return item.domain_name;
+          }),
+          function(item) {
+            domains.push(item);
+          });
+      });
+      if ($scope.domains.length === 0) {
+
+      } else {
+        $scope.model.domain = _.intersection(domains, $scope.model.domain);
+      }
+
+      return $scope.model.domain;
+    }
+
     $scope.getUser = function(id) {
       $scope._loading = true;
       $scope.get(id)
         .then(dependencies)
-        .then(function firstValidationDomainNames() {
-          $scope.model.domain = _.intersection(_.findByValues($scope.domains, 'account_id', $scope.model.companyId)
-            .map(function(item) {
-              return item.domain_name;
-            }), $scope.model.domain);
-          return $scope.model.domain;
-        })
         .catch(function(err) {
-          $scope.toaster.error(err);
+          $scope.alertService.danger(err);
         })
         .finally(function() {
           $scope._loading = false;
         });
     };
-
+    /**
+     * @name  deleteUser
+     * @description
+     *
+     *   Delete user after confirm
+     *
+     * @param  {[type]} model [description]
+     * @return {[type]}       [description]
+     */
     $scope.deleteUser = function(model) {
-      $scope.confirm('confirmModal.html', model).then(function() {
-        $scope
-          .delete(model)
-          .then(function(data) {
-            // NOTE: hook only for user
-            if (data.statusCode === $config.STATUS.OK || data.statusCode === $config.STATUS.ACCEPTED) {
-              // NOTE: delete item from arrays
-              var idx = _.findIndex($scope.records, function(item) {
-                return item.user_id === model.user_id;
-              });
-              if (idx > -1) {
-                $scope.records.splice(idx, 1);
-              }
-              var idx_f = _.findIndex($scope.filteredRecords, function(item) {
-                return item.user_id === model.user_id;
-              });
-              if (idx_f > -1) {
-                $scope.filteredRecords.splice(idx_f, 1);
-              }
-            }
-            $scope.toaster.success(data);
-          })
-          .catch(function(err) {
-            $scope.toaster.error(err);
-          });
-      });
+      model.id = model.user_id; // NOTE: extend model for CRUD Controller operation
+      $scope.confirm('confirmModal.html', model)
+        .then(function() {
+          $scope
+            .delete(model)
+            .then(function(data) {
+              $scope.alertService.success(data);
+            })
+            .catch(function(err) {
+              $scope.alertService.danger(err);
+            });
+        });
     };
 
     $scope.updateUser = function(model) {
@@ -158,10 +173,10 @@
           if (model.user_id === User.getUser().user_id) {
             User.reloadUser();
           }
-          $scope.toaster.success(data);
+          $scope.alertService.success(data);
         })
         .catch(function(err) {
-          $scope.toaster.error(err);
+          $scope.alertService.danger(err);
         });
     };
 
@@ -180,7 +195,7 @@
         return;
       }
       if (model.passwordConfirm !== model.password) {
-        $scope.toaster.error('Passwords did not match');
+        $scope.alertService.danger('Passwords did not match');
         return;
       }
 
@@ -203,10 +218,10 @@
             $scope.model.domain.length = 0;
           }
 
-          $scope.toaster.success(data);
+          $scope.alertService.success(data);
         })
         .catch(function(err) {
-          $scope.toaster.error(err);
+          $scope.alertService.danger(err);
         });
     };
 
@@ -319,12 +334,25 @@
     // NOTE: watch on change companyId for update available domain names
     $scope.$watch('model.companyId', function(newVal, oldVal) {
       if (newVal !== undefined && oldVal !== undefined) {
-        var data = _.findByValues($scope.domains, 'account_id', $scope.model.companyId).map(function(item) {
-          return item.domain_name;
-        });
-        $scope.model.domain = _.intersection(data, $scope.model.domain);
+        applyValidationDomainNames();
+      }
+    }, true);
+
+    $scope.$watch('model.role', function(newVal, oldVal) {
+      if (newVal !== undefined && oldVal !== undefined) {
+        if (((newVal === 'reseller' && oldVal !== '') || oldVal === 'reseller') && angular.isArray($scope.model.companyId)) {
+          $scope.model.companyId.length = 0;
+        }
       }
     });
 
+    $scope.onOneAccountSelect = function(model) {
+      if (angular.isArray($scope.model.companyId)) {
+        $scope.model.companyId.length = 1;
+      } else {
+        $scope.model.companyId = [];
+      }
+      $scope.model.companyId[0] = model;
+    };
   }
 })();

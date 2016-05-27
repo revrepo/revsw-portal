@@ -61,7 +61,7 @@ var AddCompany = {
   // Element)
 
   /**
-   * ### CompanyList.getContainerFluidElem()
+   * ### AddCompany.getContainerFluidElem()
    *
    * Returns the reference to the `Container Fluid` element (Selenium WebDriver
    * Element) from the Company List page from the Portal app.
@@ -73,7 +73,7 @@ var AddCompany = {
   },
 
   /**
-   * ### CompanyList.getPanelBodyElem()
+   * ### AddCompany.getPanelBodyElem()
    *
    * Returns the reference to the `Panel Body` element (Selenium WebDriver
    * Element) from the Company List page from the Portal app.
