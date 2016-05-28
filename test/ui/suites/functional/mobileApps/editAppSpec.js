@@ -83,7 +83,7 @@ describe('Functional', function () {
 
 /*            var alert = Portal.alerts.getFirst();
             var expectedMsg = Constants.alertMessages.app.MSG_SUCCESS_UPDATE;
-            expect(alert.getText()).toContain(expectedMsg);
+            expect(alert.getText()).toContain(expectedMsg);*/
 
             Portal.goToMobileApps();
             Portal.header.goTo(app.platform);
@@ -101,7 +101,7 @@ describe('Functional', function () {
 
 /*            var alert = Portal.alerts.getFirst();
             var expectedMsg = Constants.alertMessages.app.MSG_SUCCESS_UPDATE;
-            expect(alert.getText()).toContain(expectedMsg);
+            expect(alert.getText()).toContain(expectedMsg);*/
 
             Portal.goToMobileApps();
             Portal.header.goTo(app.platform);
@@ -120,7 +120,7 @@ describe('Functional', function () {
 
 /*            var alert = Portal.alerts.getFirst();
             var expectedMsg = Constants.alertMessages.app.MSG_SUCCESS_VERIFY;
-            expect(alert.getText()).toContain(expectedMsg);
+            expect(alert.getText()).toContain(expectedMsg);*/
 
             Portal.goToMobileApps();
             Portal.header.goTo(app.platform);
@@ -141,7 +141,7 @@ describe('Functional', function () {
 
 /*            var alert = Portal.alerts.getFirst();
             var expectedMsg =  Constants.alertMessages.app.MSG_SUCCESS_UPDATE;
-            expect(alert.getText()).toContain(expectedMsg);
+            expect(alert.getText()).toContain(expectedMsg);*/
 
             Portal.goToMobileApps();
             Portal.header.goTo(app.platform);
@@ -162,7 +162,7 @@ describe('Functional', function () {
 
 /*            var alert = Portal.alerts.getFirst();
             var expectedMsg =  Constants.alertMessages.app.MSG_SUCCESS_UPDATE;
-            expect(alert.getText()).toContain(expectedMsg);
+            expect(alert.getText()).toContain(expectedMsg);*/
 
             Portal.goToMobileApps();
             Portal.header.goTo(app.platform);
@@ -181,7 +181,7 @@ describe('Functional', function () {
 
 /*            var alert = Portal.alerts.getFirst();
             var expectedMsg = Constants.alertMessages.app.MSG_SUCCESS_UPDATE;
-            expect(alert.getText()).toContain(expectedMsg);
+            expect(alert.getText()).toContain(expectedMsg);*/
 
             Portal.goToMobileApps();
             Portal.header.goTo(app.platform);
@@ -202,7 +202,7 @@ describe('Functional', function () {
 
 /*            var alert = Portal.alerts.getFirst();
             var expectedMsg = Constants.alertMessages.app.MSG_SUCCESS_UPDATE;
-            expect(alert.getText()).toContain(expectedMsg);
+            expect(alert.getText()).toContain(expectedMsg);*/
 
             Portal.goToMobileApps();
             Portal.header.goTo(app.platform);
