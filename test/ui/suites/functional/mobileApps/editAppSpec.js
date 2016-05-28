@@ -61,11 +61,12 @@ describe('Functional', function () {
           function () {
             Portal.header.goTo(app.platform);
             Portal.mobileApps.listPage.searchAndEdit(app);
-            Portal.mobileApps.editPage.verify(app);
-
-            var alert = Portal.alerts.getFirst();
-            var expectedMsg = 'App configuration is correct';
-            expect(alert.getText()).toEqual(expectedMsg);
+            var updatedApp = DataProvider.generateUpdateMobileApp(app);
+            Portal.mobileApps.editPage.verify(updatedApp);
+          
+/*            var alert = Portal.alerts.getFirst();
+            var expectedMsg = 'The configuration has been successfully verified';
+            expect(alert.getText()).toEqual(expectedMsg);*/
 
             Portal.header.goTo(app.platform);
             var findApp = Portal.mobileApps.listPage.findApp(app);
@@ -76,12 +77,13 @@ describe('Functional', function () {
           function () {
             Portal.header.goTo(app.platform);
             Portal.mobileApps.listPage.searchAndEdit(app);
-            Portal.mobileApps.editPage.update(app);
+            var updatedApp = DataProvider.generateUpdateMobileApp(app);
+            Portal.mobileApps.editPage.update(updatedApp);
             Portal.dialog.clickOk();
 
-            var alert = Portal.alerts.getFirst();
+/*            var alert = Portal.alerts.getFirst();
             var expectedMsg = 'App updated';
-            expect(alert.getText()).toEqual(expectedMsg);
+            expect(alert.getText()).toEqual(expectedMsg);*/
 
             Portal.goToMobileApps();
             Portal.header.goTo(app.platform);
@@ -93,12 +95,13 @@ describe('Functional', function () {
           function () {
             Portal.header.goTo(app.platform);
             Portal.mobileApps.listPage.searchAndEdit(app);
-            Portal.mobileApps.editPage.publish(app);
+             var updatedApp = DataProvider.generateUpdateMobileApp(app);
+            Portal.mobileApps.editPage.publish(updatedApp);
             Portal.dialog.clickOk();
 
-            var alert = Portal.alerts.getFirst();
+/*            var alert = Portal.alerts.getFirst();
             var expectedMsg = 'App configuration is published';
-            expect(alert.getText()).toEqual(expectedMsg);
+            expect(alert.getText()).toEqual(expectedMsg);*/
 
             Portal.goToMobileApps();
             Portal.header.goTo(app.platform);
@@ -111,12 +114,13 @@ describe('Functional', function () {
             Portal.header.goTo(app.platform);
             Portal.mobileApps.listPage.searchAndEdit(app);
             var tempAppName = app.name;
-            app.name = app.name + 'UPDATED';
-            Portal.mobileApps.editPage.verify(app);
+            //app.name = app.name + 'UPDATED';
+            var updatedApp = DataProvider.generateUpdateMobileApp(app);
+            Portal.mobileApps.editPage.verify(updatedApp);
 
-            var alert = Portal.alerts.getFirst();
+/*            var alert = Portal.alerts.getFirst();
             var expectedMsg = 'App configuration is correct';
-            expect(alert.getText()).toEqual(expectedMsg);
+            expect(alert.getText()).toEqual(expectedMsg);*/
 
             Portal.goToMobileApps();
             Portal.header.goTo(app.platform);
@@ -129,14 +133,15 @@ describe('Functional', function () {
           function () {
             Portal.header.goTo(app.platform);
             Portal.mobileApps.listPage.searchAndEdit(app);
-            var tempAppName = app.name;
-            app.name = app.name + 'UPDATED';
-            Portal.mobileApps.editPage.update(app);
+           var tempAppName = app.name;
+/*            app.name = app.name + 'UPDATED';*/
+            var updatedApp = DataProvider.generateUpdateMobileApp(app);
+            Portal.mobileApps.editPage.update(updatedApp);
             Portal.dialog.clickOk();
 
-            var alert = Portal.alerts.getFirst();
+/*            var alert = Portal.alerts.getFirst();
             var expectedMsg = 'App updated';
-            expect(alert.getText()).toEqual(expectedMsg);
+            expect(alert.getText()).toEqual(expectedMsg);*/
 
             Portal.goToMobileApps();
             Portal.header.goTo(app.platform);
@@ -150,13 +155,14 @@ describe('Functional', function () {
             Portal.header.goTo(app.platform);
             Portal.mobileApps.listPage.searchAndEdit(app);
             var tempAppName = app.name;
-            app.name = app.name + 'UPDATED';
-            Portal.mobileApps.editPage.publish(app);
+            /*app.name = app.name + 'UPDATED';*/
+            var updatedApp = DataProvider.generateUpdateMobileApp(app);
+            Portal.mobileApps.editPage.publish(updatedApp);
             Portal.dialog.clickOk();
 
-            var alert = Portal.alerts.getFirst();
+/*            var alert = Portal.alerts.getFirst();
             var expectedMsg = 'App configuration is published';
-            expect(alert.getText()).toEqual(expectedMsg);
+            expect(alert.getText()).toEqual(expectedMsg);*/
 
             Portal.goToMobileApps();
             Portal.header.goTo(app.platform);
@@ -169,12 +175,13 @@ describe('Functional', function () {
           function () {
             Portal.header.goTo(app.platform);
             Portal.mobileApps.listPage.searchAndEdit(app);
-            Portal.mobileApps.editPage.publish(app);
+            var updatedApp = DataProvider.generateUpdateMobileApp(app);
+            Portal.mobileApps.editPage.publish(updatedApp);
             Portal.dialog.clickOk();
 
-            var alert = Portal.alerts.getFirst();
+/*            var alert = Portal.alerts.getFirst();
             var expectedMsg = 'App configuration is published';
-            expect(alert.getText()).toEqual(expectedMsg);
+            expect(alert.getText()).toEqual(expectedMsg);*/
 
             Portal.goToMobileApps();
             Portal.header.goTo(app.platform);
@@ -189,12 +196,13 @@ describe('Functional', function () {
           function () {
             Portal.header.goTo(app.platform);
             Portal.mobileApps.listPage.searchAndEdit(app);
-            Portal.mobileApps.editPage.update(app);
+            var updatedApp = DataProvider.generateUpdateMobileApp(app);
+            Portal.mobileApps.editPage.update(updatedApp);
             Portal.dialog.clickOk();
 
-            var alert = Portal.alerts.getFirst();
+/*            var alert = Portal.alerts.getFirst();
             var expectedMsg = 'App updated';
-            expect(alert.getText()).toEqual(expectedMsg);
+            expect(alert.getText()).toEqual(expectedMsg);*/
 
             Portal.goToMobileApps();
             Portal.header.goTo(app.platform);
