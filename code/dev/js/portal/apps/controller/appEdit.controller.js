@@ -56,7 +56,7 @@
 
           $scope.protocols = $scope.configuration.allowed_transport_protocols.concat(
           ['standard', 'quic', 'rmp']
-          .filter(function(elem) {return $scope.configuration.allowed_transport_protocols.indexOf(elem) < 0 })
+          .filter(function(elem) {return $scope.configuration.allowed_transport_protocols.indexOf(elem) < 0; })
           );
 
           $scope.SDKVersionsInConfigs = $scope.model.configs.map(function(config) {
