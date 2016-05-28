@@ -57,6 +57,9 @@ var EditAppForm = {
     inputs: {
       appName: {
         id: 'app_name'
+      },
+      comment: {
+        id: 'comment'
       }
     },
     radios: {
@@ -91,6 +94,9 @@ var EditAppForm = {
       sdkReleaseVersion: {
         id: 'sdk_release_version'
       },
+      account: {
+        xpath: './/*[@class="select2-chosen ng-binding ng-hide"]'
+      },
       sdkOperationMode: {
         id: 'operation_mode'
       },
@@ -110,14 +116,26 @@ var EditAppForm = {
         id: 'stats_reporting_interval_sec'
       },
       domainsWhiteList: {
-        css: '[ng-click=\"$select.activate()\"]'
+        css: '[id="domains_white_list"] >div > span + input'
+      },
+      domainsWhiteListValue: {
+         css: '[id="domains_white_list"] >div'
       },
       domainsBlackList: {
-        css: '[ng-click=\"$select.activate()\"]'
+        css: '[id="domains_black_list"] >div > span + input'
+      },
+      domainsBlackListValue: {
+        css: '[id="domains_black_list"] >div'
       },
       domainsProvisionedList: {
-        css: '[ng-click=\"$select.activate()\"]'
+        css: '[id="domains_provisioned_list"] >div > span + input'
       },
+      domainsProvisionedListValues: {
+        css: '[id="domains_provisioned_list"] >div > span'
+      },
+      selectChoicesRow : {
+        css: '.ui-select-choices-row-inner'
+      },   
       testingOffloadingRatio: {
         id: 'a_b_testing_origin_offload_ratio'
       }
@@ -170,6 +188,10 @@ var EditAppForm = {
    */
   getSDKOperationModeDDown: function () {
     return element(by.id(this.locators.dropDowns.sdkOperationMode.id));
+  },
+
+  getAccountDown: function(){
+    return element(by.xpath(this.locators.dropDowns.account.xpath));
   },
 
   /**
@@ -237,7 +259,11 @@ var EditAppForm = {
    * @returns {Promise}
    */
   getDomainsWhiteList: function () {
-    return element(by.id(this.locators.dropDowns.domainsWhiteList.id));
+    return element(by.css(this.locators.dropDowns.domainsWhiteList.css));
+  },
+
+  getDomainsWhiteListValues: function() {
+    return element(by.css(this.locators.dropDowns.domainsWhiteListValue.css)).getText();
   },
 
   /**
@@ -248,7 +274,11 @@ var EditAppForm = {
    * @returns {Promise}
    */
   getDomainsBlackList: function () {
-    return element(by.id(this.locators.dropDowns.domainsBlackList.id));
+    return element(by.css(this.locators.dropDowns.domainsBlackList.css));
+  },
+
+  getDomainsBlackListValues: function () {
+    return element(by.css(this.locators.dropDowns.domainsBlackListValue.css)).getText();
   },
 
   /**
@@ -259,7 +289,15 @@ var EditAppForm = {
    * @returns {Promise}
    */
   getDomainsProvisionedList: function () {
-    return element(by.id(this.locators.dropDowns.getDomainsProvisionedList.id));
+    return element(by.css(this.locators.dropDowns.domainsProvisionedList.css));
+  },
+
+  getDomainsProvisionedListValues: function () {
+    return element(by.css(this.locators.dropDowns.domainsProvisionedListValues.css)).getText();
+  },
+
+  getSelectChoicesRowDown: function() {
+    return element(by.css(this.locators.dropDowns.selectChoicesRow.css));
   },
 
   /**
@@ -270,8 +308,12 @@ var EditAppForm = {
    * @returns {Promise}
    */
   getTestingOffloadingRatio: function () {
-    return element(by.id(this.locators.dropDowns.getTestingOffloadingRatio.id));
+    return element(by.id(this.locators.dropDowns.testingOffloadingRatio.id));
   },
+
+  getComment: function () {
+    return element(by.id(this.locators.inputs.comment.id));
+  }, 
 
   /**
    * ### EditAppForm.getBackToListBtn()
@@ -386,6 +428,13 @@ var EditAppForm = {
       .sendKeys(value);
   },
 
+  setAccount: function (value) {
+      this
+      .getAccountDown()
+      .click();
+
+  },
+
   /**
    * ### EditAppForm.setSDKOperationMode(value)
    *
@@ -411,7 +460,11 @@ var EditAppForm = {
    * @returns {Promise}
    */
   setConfigurationRefreshInterval: function (value) {
-    return this
+    this
+      .getConfigurationRefreshIntervalDDown()
+      .clear();
+
+    this
       .getConfigurationRefreshIntervalDDown()
       .sendKeys(value);
   },
@@ -426,7 +479,11 @@ var EditAppForm = {
    * @returns {Promise}
    */
   setConfigurationStaleTimeout: function (value) {
-    return this
+    this
+      .getConfigurationStaleTimeoutDDown()
+      .clear();
+
+    this
       .getConfigurationStaleTimeoutDDown()
       .sendKeys(value);
   },
@@ -486,10 +543,15 @@ var EditAppForm = {
    * @returns {Promise}
    */
   setDomainsWhiteList: function (value) {
-    return this
+      this
       .getDomainsWhiteList()
       .sendKeys(value);
+
+      this
+      .getSelectChoicesRowDown()
+      .click();
   },
+
 
   /**
    * ### EditAppForm.setDomainsBlackList(value)
@@ -501,9 +563,13 @@ var EditAppForm = {
    * @returns {Promise}
    */
   setDomainsBlackList: function (value) {
-    return this
+      this
       .getDomainsBlackList()
       .sendKeys(value);
+
+      this
+      .getSelectChoicesRowDown()
+      .click();
   },
 
   /**
@@ -516,9 +582,13 @@ var EditAppForm = {
    * @returns {Promise}
    */
   setDomainsProvisionedList: function (value) {
-    return this
+       this
       .getDomainsProvisionedList()
       .sendKeys(value);
+
+      this
+      .getSelectChoicesRowDown()
+      .click();
   },
 
   /**
@@ -531,9 +601,22 @@ var EditAppForm = {
    * @returns {Promise}
    */
   setTestingOffloadingRatio: function (value) {
-    return this
+    this
+      .getTestingOffloadingRatio()
+      .clear();
+    this
       .getTestingOffloadingRatio()
       .sendKeys(value);
+  },
+
+  setComment: function(value) {
+    this
+    .getComment()
+    .clear();
+
+    this
+    .getComment()
+    .sendKeys(value);
   },
 
   /**
@@ -682,9 +765,17 @@ var EditAppForm = {
    */
   fill: function (app) {
     this.setAppName(app.name);
-    //this.setSDKOperationMode(app.sdkOperationMode);
-    //this.setConfigurationRefreshInterval(app.configurationRefreshInterval);
-    //this.setConfigurationStaleTimeout(app.configurationStaleTimeout);
+    //this.setAccount(app.account);
+    this.setSDKOperationMode(app.sdkOperationMode);
+    this.setConfigurationRefreshInterval(app.configurationRefreshInterval);
+    this.setConfigurationStaleTimeout(app.configurationStaleTimeout);
+    this.setInitialTransportProtocol(app.initialTransportProtocol);
+    this.setAnalyticsReportingLevel(app.analyticsReportingLevel);
+    this.setDomainsWhiteList(app.domainsWhiteList);
+    this.setDomainsBlackList(app.domainsBlackList);
+    this.setDomainsProvisionedList(app.domainsProvisionedList);
+    this.setTestingOffloadingRatio(app.testingOffloadingRatio);
+    this.setComment(app.comment);
   }
 };
 
