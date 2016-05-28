@@ -96,16 +96,23 @@ describe('Smoke', function () {
                 Portal.mobileApps.editPage.update(app);
                 Portal.dialog.clickOk(); 
 
-                expect(Portal.mobileApps.editPage.form.getAppNameTxt().getAttribute('value')).toEqual(app.name);
-                expect(Portal.mobileApps.editPage.form.getComment().getAttribute('value')).toEqual(app.comment);
-                expect(Portal.mobileApps.editPage.form.getSDKOperationModeDDown().getAttribute('value').getText()).toContain(app.sdkOperationMode);                                           
-                Portal.mobileApps.editPage.form.getConfigurationRefreshIntervalDDown().getAttribute('value').then(function(value){
+                expect(Portal.mobileApps.editPage.form.getAppNameTxt()
+                  .getAttribute('value')).toEqual(app.name);
+                expect(Portal.mobileApps.editPage.form.getComment()
+                  .getAttribute('value')).toEqual(app.comment);
+                expect(Portal.mobileApps.editPage.form.getSDKOperationModeDDown()
+                  .getAttribute('value').getText())
+                  .toContain(app.sdkOperationMode);                                           
+                Portal.mobileApps.editPage.form.getConfigurationRefreshIntervalDDown()
+                  .getAttribute('value').then(function(value){
                   expect(value).toEqual(app.configurationRefreshInterval);
                 });
-                Portal.mobileApps.editPage.form.getConfigurationStaleTimeoutDDown().getAttribute('value').then(function(value){
+                Portal.mobileApps.editPage.form.getConfigurationStaleTimeoutDDown()
+                  .getAttribute('value').then(function(value){
                   expect(value).toEqual(app.configurationStaleTimeout);
                  });
-                Portal.mobileApps.editPage.form.getInitialTransportProtocol().getAttribute('value').then(function(value){
+                Portal.mobileApps.editPage.form.getInitialTransportProtocol()
+                  .getAttribute('value').then(function(value){
                   expect(value).toEqual(app.initialTransportProtocol.toLowerCase());
                  });
                 //TODO:
@@ -118,9 +125,11 @@ describe('Smoke', function () {
                  expect(value).toContain(app.domainsBlackList);
                 });
 
-                expect(Portal.mobileApps.editPage.form.getDomainsProvisionedListValues()).toContain(app.domainsProvisionedList);
+                expect(Portal.mobileApps.editPage.form.getDomainsProvisionedListValues())
+                  .toContain(app.domainsProvisionedList);
                 
-                Portal.mobileApps.editPage.form.getTestingOffloadingRatio().getAttribute('value').then(function(value){
+                Portal.mobileApps.editPage.form.getTestingOffloadingRatio()
+                  .getAttribute('value').then(function(value){
                   expect(value).toContain(app.testingOffloadingRatio);
                 });
 
