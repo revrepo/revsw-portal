@@ -41,7 +41,7 @@ var KeysList = {
     },
     buttons: {
       addNewApiKey: {
-        linkText: 'Add New API Key'
+        css: '.btn.btn-success'
       }
     }
   },
@@ -89,8 +89,7 @@ var KeysList = {
    * @returns {Selenium WebDriver Element}
    */
   getAddNewApiKeyBtn: function () {
-    return element(
-      by.partialLinkText(this.locators.buttons.addNewApiKey.linkText));
+    return element(by.css(this.locators.buttons.addNewApiKey.css));
   },
 
   // ## Methods to interact with the Keys List Page components.

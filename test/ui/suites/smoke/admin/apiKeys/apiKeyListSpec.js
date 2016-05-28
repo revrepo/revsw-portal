@@ -25,7 +25,7 @@ describe('Smoke', function () {
   var users = [
     config.get('portal.users.admin'),
     // config.get('portal.users.revAdmin'),
-    // config.get('portal.users.reseller')
+    config.get('portal.users.reseller')
   ];
 
   users.forEach(function (user) {
@@ -61,21 +61,23 @@ describe('Smoke', function () {
         it('should display "Add New API Key" button in "API Keys List" page',
           function () {
             var button = Portal.admin.apiKeys.listPage.getAddNewApiKeyBtn();
-            Portal.admin.apiKeys.addPage.clickBackToList();
             expect(button.isDisplayed()).toBeTruthy();
           });
 
         it('should display the table of API Keys in "API Keys List" page',
           function () {
             Portal.admin.apiKeys.listPage.table.getFirstRow().clickEdit();
-            expect(Portal.admin.apiKeys.listPage.isDisplayed()).toBeTruthy();
+            Portal.admin.apiKeys.editPage.clickBackToList();
+            var displayed = Portal.admin.apiKeys.listPage.isDisplayed();
+            expect(displayed).toBeTruthy();
           });
 
         it('should display the list of API Keys in "API Keys List" page',
           function () {
-            Portal.admin.apiKeys.listPage.table.getFirstRow().clickVersions();
-            Portal.admin.apiKeys.versionsPage.clickBackToList();
-            expect(Portal.admin.apiKeys.listPage.isDisplayed()).toBeTruthy();
+            Portal.admin.apiKeys.listPage.table.getFirstRow().clickEdit();
+            Portal.admin.apiKeys.editPage.clickBackToList();
+            var displayed = Portal.admin.apiKeys.listPage.isDisplayed();
+            expect(displayed).toBeTruthy();
           });
       });
     });
