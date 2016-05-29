@@ -46,22 +46,22 @@ describe('Smoke', function () {
       Portal.getApiKeysPage();
 
       var defaultName = 'New API Key';
-      var data = DataProvider.generateApiKeyData();
+      var keyData = DataProvider.generateApiKeyData();
 
       Portal.admin.apiKeys.listPage.clickAddNewApiKey();
       Portal.admin.apiKeys.listPage.searcher.clearSearchCriteria();
       Portal.admin.apiKeys.listPage.searchAndClickEdit(defaultName);
 
-      Portal.admin.apiKeys.editPage.form.setName(data.name);
+      Portal.admin.apiKeys.editPage.form.setName(keyData.name);
       Portal.admin.apiKeys.editPage.form.clickUpdate();
       Portal.admin.apiKeys.editPage.clickBackToList();
       Portal.admin.apiKeys.listPage.searcher.clearSearchCriteria();
-      Portal.admin.apiKeys.listPage.searcher.setSearchCriteria(data.name);
+      Portal.admin.apiKeys.listPage.searcher.setSearchCriteria(keyData.name);
       
       var allRows = Portal.admin.apiKeys.listPage.table.getRows();
       expect(allRows.count()).toEqual(1);
 
-      Portal.admin.apiKeys.listPage.searchAndClickDelete(data.name);
+      Portal.admin.apiKeys.listPage.searchAndClickDelete(keyData.name);
       Portal.dialog.clickOk();
 
       Portal.signOut();
@@ -73,23 +73,23 @@ describe('Smoke', function () {
 
       var defaultName = 'New API Key';
       var account = 'API QA Reseller Company';
-      var data = DataProvider.generateApiKeyData();
+      var keyData = DataProvider.generateApiKeyData();
 
       Portal.admin.apiKeys.listPage.clickAddNewApiKey();
       Portal.admin.apiKeys.addPage.createAccount(account);
       Portal.admin.apiKeys.listPage.searcher.clearSearchCriteria();
       Portal.admin.apiKeys.listPage.searchAndClickEdit(defaultName);
 
-      Portal.admin.apiKeys.editPage.form.setName(data.name);
+      Portal.admin.apiKeys.editPage.form.setName(keyData.name);
       Portal.admin.apiKeys.editPage.form.clickUpdate();
       Portal.admin.apiKeys.editPage.clickBackToList();
       Portal.admin.apiKeys.listPage.searcher.clearSearchCriteria();
-      Portal.admin.apiKeys.listPage.searcher.setSearchCriteria(data.name);
+      Portal.admin.apiKeys.listPage.searcher.setSearchCriteria(keyData.name);
       
       var allRows = Portal.admin.apiKeys.listPage.table.getRows();
       expect(allRows.count()).toEqual(1);
 
-      Portal.admin.apiKeys.listPage.searchAndClickDelete(data.name);
+      Portal.admin.apiKeys.listPage.searchAndClickDelete(keyData.name);
       Portal.dialog.clickOk();
 
       Portal.signOut();

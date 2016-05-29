@@ -711,7 +711,7 @@ var Portal = {
   },
 
   /**
-   * ### Portal.createDashboard()
+   * ### Portal.createDashboard(arrayDashboards)
    *
    * Helper method that executes all steps required to create
    * new Dashboard from Portal Dashboards.
@@ -740,7 +740,7 @@ var Portal = {
   },
 
   /**
-   * ### Portal.deleteDashboard()
+   * ### Portal.deleteDashboard(arrayDashboards)
    *
    * Helper method that executes all steps required to delete an existing
    * Dashboard from Portal Dashboards.
@@ -791,6 +791,70 @@ var Portal = {
               });
           });
       });
+  },
+
+  /**
+   * ### Portal.createApiKey(apiKey)
+   *
+   * Helper method that executes all steps required to create
+   * new API Key in the Portal Dashboards.
+   *
+   * @param {String} apiKey, apiKey objects.
+   *
+   * @param {Object} apiKey, data applying the schema defined in
+   * `DataProvider.generateApiKeyData()`
+   *
+   * @returns {Object} Promise
+   */
+  createApiKey: function (apiKey, isUserAdmin, account) {
+    var me = this;
+    return browser.getCurrentUrl().then(function (initialUrl) {
+      me.getApiKeysPage();
+      me.admin.apiKeys.listPage.clickAddNewApiKey();
+
+      if (isUserAdmin && account) {
+        me.admin.apiKeys.addPage.createAccount(account);
+      }
+
+      me.admin.apiKeys.listPage.searcher.clearSearchCriteria();
+      me.admin.apiKeys.listPage.searchAndClickEdit('New API Key');
+
+      Portal.admin.apiKeys.editPage.form.setName(apiKey.name);
+      Portal.admin.apiKeys.editPage.form.clickUpdate();
+      Portal.admin.apiKeys.editPage.clickBackToList();
+      browser.getCurrentUrl().then(function (currentUrl) {
+        if (initialUrl !== currentUrl) {
+          browser.get(initialUrl);
+        }
+      });
+    });
+  },
+
+  /**
+   * ### Portal.deleteAPIKey()
+   *
+   * Helper method that executes all steps required to delete an existing
+   * Dashboard from Portal Dashboards.
+   *
+   * @param {String} apiKey, apiKey objects.
+   *
+   * @param {Object} apiKey, data applying the schema defined in
+   * `DataProvider.generateApiKeyData()`
+   *
+   * @returns {Object} Promise
+   */
+  deleteAPIKey: function (apiKey) {
+    var me = this;
+    return browser.getCurrentUrl().then(function (initialUrl) {
+      me.getApiKeysPage();
+      Portal.admin.apiKeys.listPage.searchAndClickDelete(apiKey.name);
+      Portal.dialog.clickOk();
+      browser.getCurrentUrl().then(function (currentUrl) {
+        if (initialUrl !== currentUrl) {
+          browser.get(initialUrl);
+        }
+      });
+    });
   }
 };
 
