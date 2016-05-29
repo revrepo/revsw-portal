@@ -22,20 +22,9 @@ var DataProvider = require('./../../../common/providers/data');
 
 describe('Functional', function () {
 
-  // TODO: Sign up bug needs to be fixed
-  xdescribe('Sign Up user', function () {
+  describe('Sign Up user', function () {
 
     beforeAll(function (done) {
-      Portal
-        .signUpUser()
-        .then(function (newUser) {
-          console.log('USER', newUser);
-          Portal
-            .signOut()
-            .then(function () {
-              done();
-            });
-        });
     });
 
     afterAll(function () {
@@ -55,6 +44,12 @@ describe('Functional', function () {
 
     it('should sign in user after success verification.',
       function () {
+        Portal
+          .signUpUser()
+          .then(function (res) {
+            console.log(res);
+            expect(Portal.header.getUserInfoEl().isDisplayed()).toBeTruthy();
+          });
       });
   });
 });

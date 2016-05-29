@@ -83,7 +83,7 @@ var DataProvider = {
     var user = {
       firstName: firstName,
       lastName: lastName,
-      email: [firstName, lastName, Date.now() + '@mailinator.com']
+      email: [firstName, Date.now() + '@mailinator.com']
         .join('-')
         .toLowerCase(),
       password: 'password1'

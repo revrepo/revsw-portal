@@ -778,16 +778,17 @@ var Portal = {
       .getPlanEl('Gold')
       .clickSubscribe();
     me.signUp.formPage.form.fill(user);
-    me.signUp.formPage.form.clickSignUp();
-    // TODO: Probably we need to use Promise here instead of the sleep
-    browser.sleep(10000);
-    return MailinatorHelper
-      .getVerificationTokenUrl(user.email)
-      .then(function (verificationUrl) {
-        return browser
-          .get(verificationUrl)
-          .then(function () {
-            return user;
+    return me.signUp.formPage.form
+      .clickSignUp()
+      .then(function () {
+        return MailinatorHelper
+          .getVerificationTokenUrl(user.email)
+          .then(function (verificationUrl) {
+            return browser
+              .get(verificationUrl)
+              .then(function () {
+                return user;
+              });
           });
       });
   }
