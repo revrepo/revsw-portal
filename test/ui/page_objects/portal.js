@@ -226,6 +226,17 @@ var Portal = {
   },
 
   /**
+   * ### Portal.getApiKeysPage()
+   *
+   * Loads the hash fragment for the API Keys page.
+   *
+   * @returns {Promise}
+   */
+  getApiKeysPage: function () {
+    return this.getPage(Constants.hashFragments.admin.apiKeys);
+  },
+
+  /**
    * ### Portal.getUsersPage()
    *
    * Loads the hash fragment for the User List page

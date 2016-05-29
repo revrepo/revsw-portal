@@ -22,7 +22,6 @@
 var KeysTable = require('./table/table');
 var Pager = require('./../../common/pager');
 var Searcher = require('./../../common/searcher');
-var AddKey = require('./addKey');
 
 // This `API Keys List` Page Object abstracts all operations or actions that
 // a common user could do in the Keys List page from the Portal app/site.
@@ -42,7 +41,7 @@ var KeysList = {
     },
     buttons: {
       addNewApiKey: {
-        linkText: 'Add New API Key'
+        css: '.btn.btn-success'
       }
     }
   },
@@ -53,7 +52,6 @@ var KeysList = {
   table: KeysTable,
   pager: Pager,
   searcher: Searcher,
-  addKey: AddKey,
 
   // ## Methods to retrieve references to UI elements (Selenium WebDriver
   // Element)
@@ -91,8 +89,7 @@ var KeysList = {
    * @returns {Selenium WebDriver Element}
    */
   getAddNewApiKeyBtn: function () {
-    return element(
-      by.partialLinkText(this.locators.buttons.addNewApiKey.linkText));
+    return element(by.css(this.locators.buttons.addNewApiKey.css));
   },
 
   // ## Methods to interact with the Keys List Page components.
