@@ -20,11 +20,13 @@ var config = require('config');
 var Portal = require('./../../../page_objects/portal');
 var DataProvider = require('./../../../common/providers/data');
 
+var MailinatorHelper = require('./../../../mailinator/helper');
+
 describe('Functional', function () {
 
   describe('Sign Up user', function () {
 
-    beforeAll(function (done) {
+    beforeAll(function () {
     });
 
     afterAll(function () {
@@ -40,14 +42,22 @@ describe('Functional', function () {
 
     it('should send verification token after success sign up.',
       function () {
+        Portal
+          .signUpUser()
+          .then(function (user) {
+            return MailinatorHelper
+              .getVerificationTokenUrl(user.email)
+              .then(function (verificationUrl) {
+                expect(verificationUrl).not.toBeUndefined();
+              });
+          });
       });
 
     it('should sign in user after success verification.',
       function () {
         Portal
-          .signUpUser()
-          .then(function (res) {
-            console.log(res);
+          .signUpAndVerifyUser()
+          .then(function () {
             expect(Portal.header.getUserInfoEl().isDisplayed()).toBeTruthy();
           });
       });

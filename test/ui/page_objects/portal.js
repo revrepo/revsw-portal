@@ -769,6 +769,13 @@ var Portal = {
     });
   },
 
+  /**
+   * ### Portal.signUpUser()
+   *
+   * Signs up a test (auto-generated) user
+   *
+   * @returns {Object} user signed up
+   */
   signUpUser: function () {
     var me = this;
     var user = DataProvider.generateUserToSignUp();
@@ -781,6 +788,21 @@ var Portal = {
     return me.signUp.formPage.form
       .clickSignUp()
       .then(function () {
+        return user;
+      });
+  },
+
+  /**
+   * ### Portal.signUpAndVerifyUser()
+   *
+   * Signs up and verifies a test (auto-generated) user
+   *
+   * @returns {Object} user signed up and verified
+   */
+  signUpAndVerifyUser: function () {
+    return this
+      .signUpUser()
+      .then(function (user) {
         return MailinatorHelper
           .getVerificationTokenUrl(user.email)
           .then(function (verificationUrl) {
