@@ -153,7 +153,7 @@ var SignUp = {
      *
      * Returns the email address element displayed in the verification message
      *
-     * @returns {*}
+     * @returns {Object} Promise
      */
     getEmailAddressEl: function () {
       return this
@@ -166,7 +166,7 @@ var SignUp = {
      *
      * Returns the email address value displayed in the verification message
      *
-     * @returns {*}
+     * @returns {Object} Promise
      */
     getEmailAddress: function () {
       return this
