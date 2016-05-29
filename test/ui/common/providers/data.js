@@ -392,7 +392,7 @@ var DataProvider = {
   },
 
   /**
-   * ### DataProvider.generateApiKeyData(apiKey)
+   * ### DataProvider.generateApiKeyData(apiKeyPrefix)
    *
    * Generates dashboard data object based on the unique para that it
    * requires.

@@ -23,7 +23,7 @@ var KeyForm = require('./form');
 
 // This `Edit API Key` Page Object abstracts all operations or actions that a
 // common API Key could do in the Edit API Key page from the Portal app/site.
-var EditKey = {
+var EditApiKey = {
 
   // ## Properties
 
@@ -49,7 +49,7 @@ var EditKey = {
   // Element)
 
   /**
-   * ### EditKey.getTitleLbl()
+   * ### EditApiKey.getTitleLbl()
    *
    * Returns the reference to the `Title` label element (Selenium WebDriver
    * Element) from the Edit API Key page from the Portal app.
@@ -61,7 +61,7 @@ var EditKey = {
   },
 
   /**
-   * ### EditKey.getBackToListBtn()
+   * ### EditApiKey.getBackToListBtn()
    *
    * Returns the reference to the `Back To List` button (Selenium WebDriver
    * Element) from the Edit API Key page from the Portal app.
@@ -76,7 +76,7 @@ var EditKey = {
   // ## Methods to interact with the Edit API Key Page components
 
   /**
-   * ### EditKey.clickBackToList()
+   * ### EditApiKey.clickBackToList()
    *
    * Triggers a click on the `Back To List` button from the Edit API Key page
    * from the Portal app.
@@ -92,7 +92,7 @@ var EditKey = {
   // ## Helper Methods
 
   /**
-   * ### EditKey.isDisplayed()
+   * ### EditApiKey.isDisplayed()
    *
    * Checks whether the Edit API Key page is being displayed in the UI or not.
    *
@@ -105,7 +105,7 @@ var EditKey = {
   },
 
   /**
-   * ### EditKey.getTitle()
+   * ### EditApiKey.getTitle()
    *
    * Gets the `Title` label from the Edit API Key page
    *
@@ -118,7 +118,7 @@ var EditKey = {
   },
 
   /**
-   * ### EditKey.updateKey(apiKey)
+   * ### EditApiKey.updateKey(apiKey)
    *
    * Updates the API Key using the given data by filling it in the form and
    * clicking on the `Update` button from the Edit API Key page.
@@ -134,4 +134,4 @@ var EditKey = {
   }
 };
 
-module.exports = EditKey;
+module.exports = EditApiKey;

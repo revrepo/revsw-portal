@@ -438,6 +438,21 @@ var KeyForm = {
   // ## Helper Methods
 
   /**
+   * ### KeyForm.isDisplayed()
+   *
+   * Checks whether the API Key Form is displayed or not in the UI.
+   *
+   * @returns {Promise}
+   */
+  isDisplayed: function () {
+    var input1 = this.getNameInputTxt().isPresent();
+    var input2 = this.getManagedDomainInputTxt().isPresent();
+    var button1 = this.getShowApiKeyBtn().isPresent();
+    var button2 = this.getUpdateBtn().isPresent();
+    return input1 && input2 && button1 && button2;
+  },
+
+  /**
    * ### KeyForm.fill(apiKey)
    *
    * Updates the API Key using the given data by filling the form and
