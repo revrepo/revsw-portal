@@ -49,7 +49,10 @@ describe('Negative', function () {
         Portal.userListPage.clickAddNewUser();
         Portal.addUserPage.form.fill(emptyUserData);
         var addBtn = Portal.addUserPage.getCreateUserBtn();
-        expect(addBtn.isEnabled()).toBeFalsy();
+        // expect(addBtn.isEnabled()).toBeFalsy();
+        expect(addBtn.getAttribute('ng-disabled')).toEqual('disableSubmit(model)');
+
+
       });
 
     it('should not create user when the filled email is already used by ' +
@@ -74,7 +77,9 @@ describe('Negative', function () {
         Portal.userListPage.clickAddNewUser();
         Portal.addUserPage.form.fill(derek);
         var addBtn = Portal.addUserPage.getCreateUserBtn();
-        expect(addBtn.isEnabled()).toBeFalsy();
+        //expect(addBtn.isEnabled()).toBeFalsy();
+        expect(addBtn.getAttribute('disabled')).toEqual('disabled');
+
       });
 
     it('should not allow to create a user without first name',
@@ -84,7 +89,9 @@ describe('Negative', function () {
         Portal.userListPage.clickAddNewUser();
         Portal.addUserPage.form.fill(mathew);
         var addBtn = Portal.addUserPage.getCreateUserBtn();
-        expect(addBtn.isEnabled()).toBeFalsy();
+        //expect(addBtn.isEnabled()).toBeFalsy();
+        expect(addBtn.getAttribute('disabled')).toEqual('disabled');
+
       });
 
     it('should not allow to create a user without last name',
@@ -94,7 +101,9 @@ describe('Negative', function () {
         Portal.userListPage.clickAddNewUser();
         Portal.addUserPage.form.fill(mathew);
         var addBtn = Portal.addUserPage.getCreateUserBtn();
-        expect(addBtn.isEnabled()).toBeFalsy();
+        //expect(addBtn.isEnabled()).toBeFalsy();
+        expect(addBtn.getAttribute('disabled')).toEqual('disabled');
+
       });
 
     it('should not allow to create a user without any role',
@@ -104,7 +113,9 @@ describe('Negative', function () {
         Portal.userListPage.clickAddNewUser();
         Portal.addUserPage.form.fill(scott);
         var addBtn = Portal.addUserPage.getCreateUserBtn();
-        expect(addBtn.isEnabled()).toBeFalsy();
+        // expect(addBtn.isEnabled()).toBeFalsy();
+        expect(addBtn.getAttribute('disabled')).toEqual('disabled');
+
       });
 
 
@@ -115,7 +126,9 @@ describe('Negative', function () {
         Portal.userListPage.clickAddNewUser();
         Portal.addUserPage.form.fill(brian);
         var addBtn = Portal.addUserPage.getCreateUserBtn();
-        expect(addBtn.isEnabled()).toBeFalsy();
+        //expect(addBtn.isEnabled()).toBeFalsy();
+        expect(addBtn.getAttribute('disabled')).toEqual('disabled');
+
       });
 
     it('should not allow to create a user without confirmation password',
@@ -125,7 +138,10 @@ describe('Negative', function () {
         Portal.userListPage.clickAddNewUser();
         Portal.addUserPage.form.fill(brian);
         var addBtn = Portal.addUserPage.getCreateUserBtn();
-        expect(addBtn.isEnabled()).toBeFalsy();
+        //expect(addBtn.isEnabled()).toBeFalsy();
+        //adding exepcted result for disbal
+        expect(addBtn.getAttribute('disabled')).toEqual('disabled');
+
       });
 
     it('should display an error message when creating user when "Password" ' +
@@ -138,7 +154,9 @@ describe('Negative', function () {
         Portal.addUserPage.createUser(vincent);
         Portal.addUserPage.form.fill(vincent);
         var addBtn = Portal.addUserPage.getCreateUserBtn();
-        expect(addBtn.isEnabled()).toBeFalsy();
+        // expect(addBtn.isEnabled()).toBeFalsy();
+        expect(addBtn.getAttribute('disabled')).toEqual('disabled');
+
       });
   });
 });
