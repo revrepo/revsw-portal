@@ -67,6 +67,7 @@ var AdvancedEditPage = require('./mobileApp/advancedEditPage');
 var UsageReportPage = require('./billing/usageReportPage');
 var UsageReportDomainsPage = require('./billing/usageReportDomainsPage');
 var AccountProfilePage = require('./account/profilePage');
+var BillingPlanPage = require('./account/billingPlanPage');
 
 var PlansPage = require('./signUp/plansPage');
 var SignUpPage = require('./signUp/signUpPage');
@@ -132,7 +133,8 @@ var Portal = {
     activityLog: ActivityLogPage,
   },
   accounts: {
-    profilePage: AccountProfilePage
+    profilePage: AccountProfilePage,
+    billingPlanPage: BillingPlanPage
   },
   billing: {
     usageReportPage: UsageReportPage,
@@ -331,6 +333,11 @@ var Portal = {
   goToAccountProfile: function () {
     this.goToBilling();
     return Portal.sideBar.goTo(Constants.sideBar.billing.ACCOUNT_PROFILE);
+  },
+
+  goToChangeBillingPlan: function () {
+    this.goToBilling();
+    return Portal.sideBar.goTo(Constants.sideBar.billing.CHANGE_BILLING_PLAN);
   },
 
   /**
@@ -785,15 +792,19 @@ var Portal = {
    *
    * Signs up a test (auto-generated) user
    *
+   * @param {String} plan, to which the user is going to be subscribed.
+   * Defaults to `Gold`
+   *
    * @returns {Object} user signed up
    */
-  signUpUser: function () {
+  signUpUser: function (plan) {
+    var _plan = plan || 'Gold';
     var me = this;
     var user = DataProvider.generateUserToSignUp();
     me.load();
     me.loginPage.clickSignUp();
     me.signUp.plansPage
-      .getPlanEl('Gold')
+      .getPlanEl(_plan)
       .clickSubscribe();
     me.signUp.formPage.form.fill(user);
     return me.signUp.formPage.form
@@ -808,11 +819,14 @@ var Portal = {
    *
    * Signs up and verifies a test (auto-generated) user
    *
+   * @param {String} plan, to which the user is going to be subscribed.
+   * Defaults to `Gold`
+   *
    * @returns {Object} user signed up and verified
    */
-  signUpAndVerifyUser: function () {
+  signUpAndVerifyUser: function (plan) {
     return this
-      .signUpUser()
+      .signUpUser(plan)
       .then(function (user) {
         return MailinatorHelper
           .getVerificationTokenUrl(user.email)
