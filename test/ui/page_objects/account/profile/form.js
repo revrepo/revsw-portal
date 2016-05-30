@@ -16,7 +16,7 @@
  * from Rev Software, Inc.
  */
 
-var DropDownWidget = require('./../common/dropDownWidget');
+var DropDownWidget = require('./../../common/dropDownWidget');
 
 // # Account Profile Form Object
 
