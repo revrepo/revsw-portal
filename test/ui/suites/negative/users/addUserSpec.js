@@ -139,7 +139,7 @@ describe('Negative', function () {
         Portal.addUserPage.form.fill(brian);
         var addBtn = Portal.addUserPage.getCreateUserBtn();
         //expect(addBtn.isEnabled()).toBeFalsy();
-        //adding exepcted result for disbal
+        //adding excepted result for disbal
         expect(addBtn.getAttribute('disabled')).toEqual('disabled');
 
       });
