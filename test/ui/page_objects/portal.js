@@ -30,6 +30,7 @@ var Dialog = require('./common/dialog');
 
 // Requiring page objects
 var LoginPage = require('./loginPage');
+var GoodByePage = require('./goodByePage');
 
 var ListUsersPage = require('./user/listPage');
 var EditUserPage = require('./user/editPage');
@@ -65,6 +66,7 @@ var EditPage = require('./mobileApp/editPage');
 var AdvancedEditPage = require('./mobileApp/advancedEditPage');
 var UsageReportPage = require('./billing/usageReportPage');
 var UsageReportDomainsPage = require('./billing/usageReportDomainsPage');
+var AccountProfilePage = require('./account/profilePage');
 
 var PlansPage = require('./signUp/plansPage');
 var SignUpPage = require('./signUp/signUpPage');
@@ -88,6 +90,7 @@ var Portal = {
 
   // Pages that compound this Portal app/site
   loginPage: LoginPage,
+  goodByePage: GoodByePage,
   userListPage: ListUsersPage,
   editUserPage: EditUserPage,
   addUserPage: AddUserPage,
@@ -127,6 +130,9 @@ var Portal = {
     apiKeys: ApiKeysListPage,
     settingsPage: AdminSettingsPage,
     activityLog: ActivityLogPage,
+  },
+  accounts: {
+    profilePage: AccountProfilePage
   },
   billing: {
     usageReportPage: UsageReportPage,
@@ -320,6 +326,11 @@ var Portal = {
    */
   goToBilling: function () {
     return Portal.sideBar.goTo(Constants.sideBar.billing.BILLING);
+  },
+
+  goToAccountProfile: function () {
+    this.goToBilling();
+    return Portal.sideBar.goTo(Constants.sideBar.billing.ACCOUNT_PROFILE);
   },
 
   /**
