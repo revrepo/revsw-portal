@@ -62,7 +62,7 @@
      * @return {[type]}    [description]
      */
     $scope.getCompany = function(id) {
-      $scope.get(id+1)
+      $scope.get(id)
         .catch($scope.alertService.danger);
     };
 
