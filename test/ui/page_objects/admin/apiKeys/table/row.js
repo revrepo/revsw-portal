@@ -57,8 +57,14 @@ var KeyTableRow = function (rowElem, locators) {
       .getText();
   };
 
+  this.clickName = function () {
+    return this
+      .getNameCell()
+      .click();
+  };
 
-  if (this.locators.actions && this.locators.actions.buttons.pencil) {
+  // if (this.locators.actions && this.locators.actions.buttons.pencil) {
+  if (this.locators.actions) {
 
     this.getEditBtn = function () {
       return this.rowElem
@@ -73,7 +79,8 @@ var KeyTableRow = function (rowElem, locators) {
     };
   }
 
-  if (this.locators.actions && this.locators.actions.buttons.trash) {
+  // if (this.locators.actions && this.locators.actions.buttons.trash) {
+  if (this.locators.actions) {
 
     this.getDeleteBtn = function () {
       return this.rowElem
