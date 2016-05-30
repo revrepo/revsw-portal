@@ -199,6 +199,11 @@ var Constants = {
       MSG_SUCCESS_DELETE: 'Successfully deleted the user',
       MSG_SUCCESS_UPDATE_PASSWORD: 'Successfully updated the password',
       MSG_FAIL_ADD_EMAIL_EXISTS:'The email address is already used by another user',
+    },
+    accounts:{
+      MSG_SUCCESS_ADD: 'Successfully created new account',
+      MSG_SUCCESS_UPDATE: 'Successfully updated the account',
+      MSG_SUCCESS_DELETE: 'Successfully deleted the account',
     }
   }
 };

@@ -53,8 +53,9 @@ describe('Smoke', function () {
 
         it('should "Add Company" in accounts page', function () {
           Portal.admin.accounts.listPage.addNewCompany(company);
-          // expect(Portal.alerts.getFirst().getText()).toEqual('Company created');
-
+          expect(Portal.alerts.getAll().count()).toEqual(1);
+          expect(Portal.alerts.getFirst().getText())
+            .toContain(Constants.alertMessages.accounts.MSG_SUCCESS_ADD);
           Portal.header.goTo(Constants.sideBar.admin.ACCOUNTS);
           var result = Portal.admin.accounts
             .listPage

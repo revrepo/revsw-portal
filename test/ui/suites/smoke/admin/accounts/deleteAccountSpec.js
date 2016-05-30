@@ -67,6 +67,8 @@ describe('Smoke', function () {
             var account = accountProfile.companyName;
             Portal.admin.accounts.listPage.searchAndClickDelete(account);
             Portal.dialog.clickOk();
+            expect(Portal.alerts.getFirst().getText())
+              .toContain(Constants.alertMessages.accounts.MSG_SUCCESS_DELETE);
             Portal.admin.accounts.listPage.searcher.setSearchCriteria(account);
 
             // Gets reference to all rows from the list;
