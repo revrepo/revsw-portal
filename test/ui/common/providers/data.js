@@ -63,7 +63,7 @@ var DataProvider = {
     // company the new user should be associated with
     var company;
     if (portalUser && portalUser.role && portalUser.role !== 'Admin') {
-      company = [ 'API QA Reseller Company' ];
+      company = ['API QA Reseller Company'];
     }
 
     return {
@@ -77,19 +77,76 @@ var DataProvider = {
     };
   },
 
+  /**
+   * ### DataProvider.generateUserToSignUp()
+   *
+   * Generates user data object to sign up.
+   *
+   * @returns {Object}, generate user data with the following schema:
+   *
+   *     {
+   *         firstName: string,
+   *         lastName: string,
+   *         email: string,
+   *         password: string
+   *     }
+   */
   generateUserToSignUp: function () {
     var firstName = faker.name.firstName();
     var lastName = faker.name.lastName();
     var user = {
       firstName: firstName,
       lastName: lastName,
-      email: [firstName, lastName, Date.now() + '@mailinator.com']
+      email: [firstName, Date.now() + '@mailinator.com']
         .join('-')
         .toLowerCase(),
       password: 'password1'
     };
     return user;
 
+  },
+
+  /**
+   * ### DataProvider.generateProfile()
+   *
+   * Generates user data profile to update in portal app.
+   *
+   * @returns {Object}, generate user data with the following schema:
+   *
+   *     {
+   *         companyName: string,
+   *         firstName: string,
+   *         lastName: string,
+   *         phoneNumber: string,
+   *         contactEmail: string,
+   *         firstAddress: string,
+   *         secondAddress: string,
+   *         country: string,
+   *         state: string,
+   *         city: string,
+   *         zipCode: string,
+   *         comment: string
+   *     }
+   */
+  generateProfile: function () {
+    var firstName = faker.name.firstName();
+    var lastName = faker.name.lastName();
+    return {
+      companyName: firstName + ' ' + lastName,
+      firstName: firstName,
+      lastName: lastName,
+      phoneNumber: faker.phone.phoneNumber(),
+      contactEmail: [firstName, Date.now() + '@mailinator.com']
+        .join('-')
+        .toLowerCase(),
+      firstAddress: faker.address.streetAddress(),
+      secondAddress: faker.address.secondaryAddress(),
+      country: faker.address.country(),
+      state: faker.address.state(),
+      city: faker.address.city(),
+      zipCode: faker.address.zipCode(),
+      comment: faker.lorem.sentence()
+    };
   },
 
   /**
@@ -228,7 +285,7 @@ var DataProvider = {
     };
   },
 
-  generateUpdateMobileApp: function(app) {
+  generateUpdateMobileApp: function (app) {
     return {
       name: 'UPDATED-' + app.name,
       account: 'API_TEST_COMPANY_1461793655217',
@@ -240,7 +297,7 @@ var DataProvider = {
       comment: 'App was updated',
       domainsBlackList: 'www.meta.ua',
       domainsProvisionedList: 'qa-admin-10-portal-ui-test.com',
-      testingOffloadingRatio:'1'
+      testingOffloadingRatio: '1'
     };
   },
 
@@ -393,9 +450,9 @@ var DataProvider = {
   generateDashboardData: function (dashboardPrefix) {
     var timestamp = Date.now();
     var dashboard = {
-        title: 'QA-' + timestamp,
-        structure: 2,
-        autoRefresh: 'Every 15 Minutes'
+      title: 'QA-' + timestamp,
+      structure: 2,
+      autoRefresh: 'Every 15 Minutes'
     };
 
     if (dashboardPrefix) {
@@ -407,7 +464,7 @@ var DataProvider = {
   },
 
   /**
-   * ### DataProvider.generateApiKeyData(apiKey)
+   * ### DataProvider.generateApiKeyData(apiKeyPrefix)
    *
    * Generates dashboard data object based on the unique para that it
    * requires.
@@ -419,7 +476,7 @@ var DataProvider = {
    *         key: string,
    *         active: string,
    *         readOnly: string,
-   *         managedDomain: string,
+   *         domain: string,
    *         read: string,
    *         modify: string,
    *         delete: string,
@@ -431,17 +488,17 @@ var DataProvider = {
   generateApiKeyData: function (apiKeyPrefix) {
     var timestamp = Date.now();
     var apiKey = {
-        name: 'QA-API-Key-' + timestamp,
-        key: '',
-        active: false,
-        readOnly: false,
-        managedDomain: false,
-        read: false,
-        modify: false,
-        delete: false,
-        purge: false,
-        reports: false,
-        admin: false
+      name: 'QA-API-Key-' + timestamp,
+      key: '',
+      active: true,
+      readOnly: false,
+      domain: false,
+      read: false,
+      modify: false,
+      delete: false,
+      purge: false,
+      reports: false,
+      admin: false
     };
 
     if (apiKeyPrefix) {

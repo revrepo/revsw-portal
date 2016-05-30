@@ -89,6 +89,8 @@ var Constants = {
     },
     billing: {
       BILLING: 'Billing',
+      ACCOUNT_PROFILE: 'Account Profile',
+      CHANGE_BILLING_PLAN: 'Change Billing Plan',
       USAGE_REPORT: 'Usage Report'
     },
     helpSupport: {
