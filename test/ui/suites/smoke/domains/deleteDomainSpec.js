@@ -25,9 +25,10 @@ describe('Smoke', function () {
 
   // Defining set of users for which all below tests will be run
   var users = [
+    // config.get('portal.users.user'),
     config.get('portal.users.admin'),
-    // config.get('portal.users.revAdmin'),
-    // config.get('portal.users.reseller')
+    config.get('portal.users.revAdmin'),
+    config.get('portal.users.reseller')
   ];
 
   users.forEach(function (user) {
@@ -45,8 +46,6 @@ describe('Smoke', function () {
         });
 
         beforeEach(function () {
-          // TODO: Move signIn and signOut calls to beforeAll and afterAll once
-          // bug about creating consecutive domains is fixed
           Portal.getDomainsPage();
           Portal.domains.listPage.searcher.clearSearchCriteria();
         });
@@ -85,9 +84,7 @@ describe('Smoke', function () {
             var domain = DataProvider.generateDomain('domain-02');
             // Create domain
             Portal.createDomain(domain);
-            console.log(domain.name)
             Portal.domains.listPage.searcher.setSearchCriteria(domain.name);
-            browser.sleep(60000);
             Portal.domains.listPage.table
               .getFirstRow()
               .clickDelete();
