@@ -34,6 +34,16 @@
   padding-bottom: 15px;
   margin-bottom: 15px;
 }
+.protocolbox {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 6px 12px;
+  margin: 6px;
+  cursor: move;
+}
+.protocolbox input[type="checkbox"] {
+  margin-left: 0px;
+}
 html,
 body {
   height: 100%;
