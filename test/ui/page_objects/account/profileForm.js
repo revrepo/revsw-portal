@@ -86,7 +86,7 @@ var AccountProfileForm = {
    *
    * @returns {Object} Selenium WebDriver Element
    */
-  getCompanyNameTxtIn: function() {
+  getCompanyNameTxtIn: function () {
     return element(by.id(this.locators.textInputs.companyName.id));
   },
 
@@ -119,7 +119,7 @@ var AccountProfileForm = {
    *
    * @returns {Object} Selenium WebDriver Element
    */
-  getPhoneNumberTxtIn: function() {
+  getPhoneNumberTxtIn: function () {
     return element(by.id(this.locators.textInputs.phoneNumber.id));
   },
 
@@ -131,7 +131,7 @@ var AccountProfileForm = {
    * @returns {Object} Selenium WebDriver Element
    */
   getEmailTxtIn: function () {
-    return element(by.id(this.locators.textInputs.email.id));
+    return element(by.id(this.locators.textInputs.contactEmail.id));
   },
 
   /**
@@ -141,7 +141,7 @@ var AccountProfileForm = {
    *
    * @returns {Object} Selenium WebDriver Element
    */
-  getFirstAddressTxtIn: function() {
+  getFirstAddressTxtIn: function () {
     return element(by.id(this.locators.textInputs.firstAddress.id));
   },
 
@@ -152,7 +152,7 @@ var AccountProfileForm = {
    *
    * @returns {Object} Selenium WebDriver Element
    */
-  getSecondAddressTxtIn: function() {
+  getSecondAddressTxtIn: function () {
     return element(by.id(this.locators.textInputs.secondAddress.id));
   },
 
@@ -163,7 +163,7 @@ var AccountProfileForm = {
    *
    * @returns {Object} Selenium WebDriver Element
    */
-  getCountryDDown: function() {
+  getCountryDDown: function () {
     return new DropDownWidget(by.id(this.locators.textInputs.country.id));
   },
 
@@ -174,7 +174,7 @@ var AccountProfileForm = {
    *
    * @returns {Object} Selenium WebDriver Element
    */
-  getStateTxtIn: function() {
+  getStateTxtIn: function () {
     return element(by.id(this.locators.textInputs.state.id));
   },
 
@@ -185,7 +185,7 @@ var AccountProfileForm = {
    *
    * @returns {Object} Selenium WebDriver Element
    */
-  getCityTxtIn: function() {
+  getCityTxtIn: function () {
     return element(by.id(this.locators.textInputs.city.id));
   },
 
@@ -196,7 +196,7 @@ var AccountProfileForm = {
    *
    * @returns {Object} Selenium WebDriver Element
    */
-  getZipCodeTxtIn: function() {
+  getZipCodeTxtIn: function () {
     return element(by.id(this.locators.textInputs.zipCode.id));
   },
 
@@ -207,7 +207,7 @@ var AccountProfileForm = {
    *
    * @returns {Object} Selenium WebDriver Element
    */
-  getCommentTxtIn: function() {
+  getCommentTxtIn: function () {
     return element(by.id(this.locators.textInputs.comment.id));
   },
 
@@ -237,15 +237,158 @@ var AccountProfileForm = {
   // ## Methods to interact with the User List Page components
 
   /**
+   * ### AccountProfileForm.clearCompanyName()
+   *
+   * Clears the value from Company Name field.
+   *
+   * @returns {Object} Promise
+   */
+  clearCompanyName: function () {
+    return this
+      .getCompanyNameTxtIn()
+      .clear();
+  },
+
+  /**
+   * ### AccountProfileForm.clearFirstName()
+   *
+   * Clears the value from First Name field.
+   *
+   * @returns {Object} Promise
+   */
+  clearFirstName: function () {
+    return this
+      .getFirstNameTxtIn()
+      .clear();
+  },
+
+  /**
+   * ### AccountProfileForm.clearLastName()
+   *
+   * Clears the value from Last Name field.
+   *
+   * @returns {Object} Promise
+   */
+  clearLastName: function () {
+    return this
+      .getLastNameTxtIn()
+      .clear();
+  },
+
+  /**
+   * ### AccountProfileForm.clearPhoneNumber()
+   *
+   * Clears the value from PhoneNumber field.
+   *
+   * @returns {Object} Promise
+   */
+  clearPhoneNumber: function () {
+    return this
+      .getPhoneNumberTxtIn()
+      .clear();
+  },
+
+  /**
+   * ### AccountProfileForm.clearEmail()
+   *
+   * Clears the value from Email field.
+   *
+   * @returns {Object} Promise
+   */
+  clearEmail: function () {
+    return this
+      .getEmailTxtIn()
+      .clear();
+  },
+
+  /**
+   * ### AccountProfileForm.clearFirstAddress()
+   *
+   * Clears the value from First Address field.
+   *
+   * @returns {Object} Promise
+   */
+  clearFirstAddress: function () {
+    return this
+      .getFirstAddressTxtIn()
+      .clear();
+  },
+
+  /**
+   * ### AccountProfileForm.clearSecondAddress()
+   *
+   * Clears the value from Second Address field.
+   *
+   * @returns {Object} Promise
+   */
+  clearSecondAddress: function () {
+    return this
+      .getSecondAddressTxtIn()
+      .clear();
+  },
+
+  /**
+   * ### AccountProfileForm.clearState()
+   *
+   * Clears the value from State field.
+   *
+   * @returns {Object} Promise
+   */
+  clearState: function () {
+    return this
+      .getStateTxtIn()
+      .clear();
+  },
+
+  /**
+   * ### AccountProfileForm.clearCity()
+   *
+   * Clears the value from City field.
+   *
+   * @returns {Object} Promise
+   */
+  clearCity: function () {
+    return this
+      .getCityTxtIn()
+      .clear();
+  },
+
+  /**
+   * ### AccountProfileForm.clearZipCode()
+   *
+   * Clears the value from Zip Code field.
+   *
+   * @returns {Object} Promise
+   */
+  clearZipCode: function () {
+    return this
+      .getZipCodeTxtIn()
+      .clear();
+  },
+
+  /**
+   * ### AccountProfileForm.clearComment()
+   *
+   * Clears the value from Comment field.
+   *
+   * @returns {Object} Promise
+   */
+  clearComment: function () {
+    return this
+      .getCommentTxtIn()
+      .clear();
+  },
+//////////////////////////
+  /**
    * ### AccountProfileForm.setCompanyName()
    *
    * Introduces a value in the Company Name field.
    *
    * @returns {Object} Promise
    */
-  setCompanyName: function(value) {
+  setCompanyName: function (value) {
     return this
-      .getCompanyNameTxtIn()
+      .clearCompanyName()
       .sendKeys(value);
   },
 
@@ -258,7 +401,7 @@ var AccountProfileForm = {
    */
   setFirstName: function (value) {
     return this
-      .getFirstNameTxtIn()
+      .clearFirstName()
       .sendKeys(value);
   },
 
@@ -271,7 +414,7 @@ var AccountProfileForm = {
    */
   setLastName: function (value) {
     return this
-      .getLastNameTxtIn()
+      .clearLastName()
       .sendKeys(value);
   },
 
@@ -282,9 +425,9 @@ var AccountProfileForm = {
    *
    * @returns {Object} Promise
    */
-  setPhoneNumber: function(value) {
+  setPhoneNumber: function (value) {
     return this
-      .getPhoneNumberTxtIn()
+      .clearPhoneNumber()
       .sendKeys(value);
   },
 
@@ -297,7 +440,7 @@ var AccountProfileForm = {
    */
   setEmail: function (value) {
     return this
-      .getEmailTxtIn()
+      .clearEmail()
       .sendKeys(value);
   },
 
@@ -308,9 +451,9 @@ var AccountProfileForm = {
    *
    * @returns {Object} Promise
    */
-  setFirstAddress: function(value) {
+  setFirstAddress: function (value) {
     return this
-      .getFirstAddressTxtIn()
+      .clearFirstAddress()
       .sendKeys(value);
   },
 
@@ -321,9 +464,9 @@ var AccountProfileForm = {
    *
    * @returns {Object} Promise
    */
-  setSecondAddress: function(value) {
+  setSecondAddress: function (value) {
     return this
-      .getSecondAddressTxtIn()
+      .clearSecondAddress()
       .sendKeys(value);
   },
 
@@ -334,10 +477,10 @@ var AccountProfileForm = {
    *
    * @returns {Object} Promise
    */
-  setCountry: function(value) {
+  setCountry: function (value) {
     return this
       .getCountryDDown()
-      .sendKeys(value);
+      .setValue(value);
   },
 
   /**
@@ -347,9 +490,9 @@ var AccountProfileForm = {
    *
    * @returns {Object} Promise
    */
-  setState: function(value) {
+  setState: function (value) {
     return this
-      .getStateTxtIn()
+      .clearState()
       .sendKeys(value);
   },
 
@@ -360,9 +503,9 @@ var AccountProfileForm = {
    *
    * @returns {Object} Promise
    */
-  setCity: function(value) {
+  setCity: function (value) {
     return this
-      .getCityTxtIn()
+      .clearCity()
       .sendKeys(value);
   },
 
@@ -373,9 +516,9 @@ var AccountProfileForm = {
    *
    * @returns {Object} Promise
    */
-  setZipCode: function(value) {
+  setZipCode: function (value) {
     return this
-      .getZipCodeTxtIn()
+      .clearZipCode()
       .sendKeys(value);
   },
 
@@ -386,9 +529,9 @@ var AccountProfileForm = {
    *
    * @returns {Object} Promise
    */
-  setComment: function(value) {
+  setComment: function (value) {
     return this
-      .getCommentTxtIn()
+      .clearComment()
       .sendKeys(value);
   },
 
@@ -438,8 +581,8 @@ var AccountProfileForm = {
     if (data.phoneNumber) {
       this.setPhoneNumber(data.phoneNumber);
     }
-    if (data.email) {
-      this.setEmail(data.email);
+    if (data.contactEmail) {
+      this.setEmail(data.contactEmail);
     }
     if (data.firstAddress) {
       this.setFirstAddress(data.firstAddress);
