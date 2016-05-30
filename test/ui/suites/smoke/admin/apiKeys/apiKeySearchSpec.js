@@ -68,6 +68,8 @@ describe('Smoke', function () {
               .setSearchCriteria(keyData.name);
             var allRows = Portal.admin.apiKeys.listPage.table.getRows();
             expect(allRows.count()).toEqual(1);
+
+            Portal.deleteAPIKey(keyData);
           });
       });
     });

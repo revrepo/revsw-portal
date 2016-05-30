@@ -22,13 +22,13 @@ var DataProvider = require('./../../../../common/providers/data');
 var Constants = require('./../../../../page_objects/constants');
 
 describe('Smoke', function () {
+
   describe('API Keys Sorting', function () {
 
     var revAdminUser = config.get('portal.users.revAdmin');
 
     beforeAll(function () {
       Portal.signIn(revAdminUser);
-      Portal.getAdminPage();
     });
 
     afterAll(function () {
@@ -36,91 +36,29 @@ describe('Smoke', function () {
     });
 
     beforeEach(function () {
-      Portal.header.goTo(Constants.sideBar.admin.ACCOUNTS);
+      Portal.getApiKeysPage();
     });
 
     afterEach(function () {
     });
 
-    it('should apply `descendant` sorting by `Company Name` column',
+    it('should apply `descendant` sorting by `API Key Name` column',
       function () {
-        Portal.admin.accounts.listPage.table.getHeader().clickCompanyName();
-        var companyName1 = Portal.admin.accounts.listPage
-          .table.getFirstRow().getCompanyName();
-
-        Portal.admin.accounts.listPage.table.getHeader().clickCompanyName();
-        var companyName2 = Portal.admin.accounts.listPage
-          .table.getFirstRow().getCompanyName();
-
-        expect(companyName1).toBeLessThan(companyName2);
+        Portal.admin.apiKeys.listPage.table.getHeader().clickName();
+        var name1 = Portal.admin.apiKeys.listPage.table.getFirstRow().getName();
+        Portal.admin.apiKeys.listPage.table.getHeader().clickName();
+        var name2 = Portal.admin.apiKeys.listPage.table.getFirstRow().getName();
+        expect(name1).toBeLessThan(name2);
       });
 
-    it('should apply `ascendant` sorting by `Company Name` column',
+    it('should apply `ascendant` sorting by `API Key Name` column',
       function () {
-        Portal.admin.accounts.listPage.table.getHeader().clickCompanyName();
-        Portal.admin.accounts.listPage.table.getHeader().clickCompanyName();
-        var companyName1 = Portal.admin.accounts.listPage
-          .table.getFirstRow().getCompanyName();
-
-        Portal.admin.accounts.listPage.table.getHeader().clickCompanyName();
-        var companyName2 = Portal.admin.accounts.listPage
-          .table.getFirstRow().getCompanyName();
-
-        expect(companyName1).toBeGreaterThan(companyName2);
-      });
-
-    it('should apply `descendant` sorting by `Created At` column',
-      function () {
-        Portal.admin.accounts.listPage.table.getHeader().clickCreatedAt();
-        var createdAt1 = Portal.admin.accounts.listPage
-          .table.getFirstRow().getCreatedAt();
-
-        Portal.admin.accounts.listPage.table.getHeader().clickCreatedAt();
-        var createdAt2 = Portal.admin.accounts.listPage
-          .table.getFirstRow().getCreatedAt();
-
-        expect(createdAt1).not.toEqual(createdAt2);
-      });
-
-    it('should apply `ascendant` sorting by `Created At` column',
-      function () {
-        Portal.admin.accounts.listPage.table.getHeader().clickCreatedAt();
-        Portal.admin.accounts.listPage.table.getHeader().clickCreatedAt();
-        var createdAt1 = Portal.admin.accounts.listPage
-          .table.getFirstRow().getCreatedAt();
-
-        Portal.admin.accounts.listPage.table.getHeader().clickCompanyName();
-        var createdAt2 = Portal.admin.accounts.listPage
-          .table.getFirstRow().getCreatedAt();
-
-        expect(createdAt1).not.toEqual(createdAt2);
-      });
-
-    it('should apply `descendant` sorting by `Billing Plan` column',
-      function () {
-        Portal.admin.accounts.listPage.table.getHeader().clickBillingPlan();
-        var billingPlan1 = Portal.admin.accounts.listPage
-          .table.getFirstRow().getBillingPlan();
-
-        Portal.admin.accounts.listPage.table.getHeader().clickBillingPlan();
-        var billingPlan2 = Portal.admin.accounts.listPage
-          .table.getFirstRow().getBillingPlan();
-
-        expect(billingPlan1).toBeLessThan(billingPlan2);
-      });
-
-    it('should apply `ascendant` sorting by `Billing Plan` column',
-      function () {
-        Portal.admin.accounts.listPage.table.getHeader().clickBillingPlan();
-        Portal.admin.accounts.listPage.table.getHeader().clickBillingPlan();
-        var billingPlan1 = Portal.admin.accounts.listPage
-          .table.getFirstRow().getBillingPlan();
-
-        Portal.admin.accounts.listPage.table.getHeader().clickBillingPlan();
-        var billingPlan2 = Portal.admin.accounts.listPage
-          .table.getFirstRow().getBillingPlan();
-
-        expect(billingPlan1).toBeGreaterThan(billingPlan2);
+        Portal.admin.apiKeys.listPage.table.getHeader().clickName();
+        Portal.admin.apiKeys.listPage.table.getHeader().clickName();
+        var name1 = Portal.admin.apiKeys.listPage.table.getFirstRow().getName();
+        Portal.admin.apiKeys.listPage.table.getHeader().clickName();
+        var name2 = Portal.admin.apiKeys.listPage.table.getFirstRow().getName();
+        expect(name1).toBeGreaterThan(name2);
       });
   });
 });

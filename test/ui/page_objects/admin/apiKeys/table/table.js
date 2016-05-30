@@ -16,12 +16,12 @@
  * from Rev Software, Inc.
  */
 
-var KeyTableRow = require('./row');
-var KeyTableLocators = require('./locators');
+var KeyRow = require('./row');
+var KeyLocators = require('./locators');
 
 var KeyTable = {
 
-  locators: KeyTableLocators.table,
+  locators: KeyLocators.table,
 
   getHeaderEl: function () {
     return element(by.css(this.locators.header.css));
@@ -29,7 +29,7 @@ var KeyTable = {
 
   getHeader: function () {
     var header = this.getHeaderEl();
-    return new KeyTableRow(header, KeyTableLocators.header);
+    return new KeyRow(header, KeyLocators.header);
   },
 
   getRows: function () {
@@ -44,7 +44,7 @@ var KeyTable = {
     var el = this
       .getRows()
       .get(rowIndex);
-    return new KeyTableRow(el, KeyTableLocators.row);
+    return new KeyRow(el, KeyLocators.row);
   }
 };
 
