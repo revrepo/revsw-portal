@@ -28,11 +28,7 @@ describe('Smoke', function () {
   describe('Account Profile', function () {
 
     beforeAll(function () {
-      //user = Portal.signUpAndVerifyUser();
-      user = {
-        email: 'thelma-1464562356649@mailinator.com',
-        password: 'password1'
-      }
+      user = Portal.signUpAndVerifyUser();
       Portal.signIn(user);
     });
 
