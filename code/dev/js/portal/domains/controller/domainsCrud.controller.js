@@ -300,19 +300,21 @@
         return $q.when(model);
       }
     };
-
+    /**
+     * @name deleteDomain
+     * @description
+     *   Delete domain
+     * @param  {Object} model [description]
+     * @return
+     */
     $scope.deleteDomain = function(model) {
-      $scope.confirm('confirmModal.html', model).then(function() {
-        var domainName = model.domain_name;
-        $scope
-          .delete(model)
-          .then(function(data) {
-            $scope.alertService.success('Domain ' + domainName + ' deleted.');
-            // $scope.list()
-            //   .then(setAccountName);
-          })
-          .catch($scope.alertService.danger);
-      });
+      $scope.confirm('confirmModal.html', model)
+        .then(function() {
+          $scope
+            .delete(model)
+            .then($scope.alertService.success)
+            .catch($scope.alertService.danger);
+        });
     };
 
     $scope.createDomain = function(model, isStay) {
@@ -330,7 +332,7 @@
             // NOTE: clean account_id for new Domain
             model.account_id = null;
           }
-          $scope.alertService.success('Domain created', 5000);
+          $scope.alertService.success(data);
         })
         .catch($scope.alertService.danger);
     };

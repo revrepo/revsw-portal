@@ -19,14 +19,15 @@
 var config = require('config');
 var Portal = require('./../../../page_objects/portal');
 var DataProvider = require('./../../../common/providers/data');
+var Constants = require('./../../../page_objects/constants');
 
 describe('Smoke', function () {
 
   // Defining set of users for which all below tests will be run
   var users = [
     config.get('portal.users.admin'),
-    config.get('portal.users.revAdmin'),
-    config.get('portal.users.reseller')
+    // config.get('portal.users.revAdmin'),
+    // config.get('portal.users.reseller')
   ];
 
   users.forEach(function (user) {
@@ -36,20 +37,21 @@ describe('Smoke', function () {
       describe('Delete domain', function () {
 
         beforeAll(function () {
+          Portal.signIn(user);
         });
 
         afterAll(function () {
+          Portal.signOut();
         });
 
         beforeEach(function () {
           // TODO: Move signIn and signOut calls to beforeAll and afterAll once
           // bug about creating consecutive domains is fixed
-          Portal.signIn(user);
           Portal.getDomainsPage();
+          Portal.domains.listPage.searcher.clearSearchCriteria();
         });
 
         afterEach(function () {
-          Portal.signOut();
         });
 
         it('should display delete domain button',
@@ -67,6 +69,9 @@ describe('Smoke', function () {
             Portal.createDomain(domain);
             Portal.domains.listPage.searchAndClickDelete(domain.name);
             Portal.dialog.clickOk();
+            expect(Portal.alerts.getAll().count()).toEqual(1);
+            expect(Portal.alerts.getFirst().getText())
+              .toContain(Constants.alertMessages.domains.MSG_SUCCESS_DELETE);
             Portal.domains.listPage.searcher.setSearchCriteria(domain.name);
             // Gets reference to all rows from the list
             var tableRows = Portal.domains.listPage.table.getRows();
@@ -80,7 +85,9 @@ describe('Smoke', function () {
             var domain = DataProvider.generateDomain('domain-02');
             // Create domain
             Portal.createDomain(domain);
+            console.log(domain.name)
             Portal.domains.listPage.searcher.setSearchCriteria(domain.name);
+            browser.sleep(60000);
             Portal.domains.listPage.table
               .getFirstRow()
               .clickDelete();

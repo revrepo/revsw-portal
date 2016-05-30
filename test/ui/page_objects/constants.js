@@ -202,6 +202,13 @@ var Constants = {
       MSG_SUCCESS_ADD: 'Successfully created new account',
       MSG_SUCCESS_UPDATE: 'Successfully updated the account',
       MSG_SUCCESS_DELETE: 'Successfully deleted the account',
+    },
+    domains:{
+      MSG_SUCCESS_ADD: 'Successfully created new domain configuration',
+      MSG_SUCCESS_VERIFY: 'The configuration has been successfully verified',
+      MSG_SUCCESS_UPDATE: 'Successfully saved the domain configuration',
+      MSG_SUCCESS_DELETE: 'The domain has been scheduled for removal',
+      MSG_FAIL_VERIFY: 'Failed to verify domain configuration',
     }
   }
 };
