@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
 
   angular
@@ -19,10 +19,10 @@
     Companies
       .query()
       .$promise
-      .then(function (data) {
+      .then(function(data) {
         $scope.companies = data;
       })
-      .catch(function (err) {
+      .catch(function(err) {
         if (err.status === 403) {
           // Fetch id
           var user = $scope.auth.getUser();
@@ -34,10 +34,10 @@
 
     DomainsConfig.query()
       .$promise
-      .then(function (data) {
+      .then(function(data) {
         $scope.domains = data;
       })
-      .catch(function (err) {
+      .catch(function(err) {
         $scope.domains = [];
       });
 
@@ -81,7 +81,7 @@
       if (!accountId) {
         return;
       }
-      angular.forEach($scope.domains, function (domain) {
+      angular.forEach($scope.domains, function(domain) {
         if (domain.account_id === accountId) {
           $scope.selectedDomains.push(domain);
         }
@@ -100,15 +100,15 @@
       $scope._loading = true;
       $scope.key = null;
       ApiKeys
-        .get({id: id})
+        .get({
+          id: id
+        })
         .$promise
-        .then(function (key) {
+        .then(function(key) {
           $scope.key = key;
         })
-        .catch(function (err) {
-          $scope.alertService.danger(err);
-        })
-        .finally(function () {
+        .catch($scope.alertService.danger)
+        .finally(function() {
           $scope._loading = false;
         });
     };
@@ -131,36 +131,34 @@
     function clearUpdateData(data) {
       var fields = ['key_name', 'account_id', 'domains', 'allowed_ops', 'read_only_status', 'active'];
       return _.pick(_.clone(data), fields);
-      //var result = _.pick(_.clone(data), fields);
-      //return result;
     }
 
     /**
      * Click on update button
      */
-    $scope.update = function () {
+    $scope.update = function() {
       if (!$scope.key || !$scope.key.id) {
         return;
       }
       $scope._loading = true;
       ApiKeys
-        .update({id: $scope.key.id}, clearUpdateData($scope.key))
+        .update({
+          id: $scope.key.id
+        }, clearUpdateData($scope.key))
         .$promise
-        .then(function (data) {
+        .then(function(data) {
           $rootScope.$broadcast('update:searchData');
-          $scope.alertService.success('API Key updated');
+          $scope.alertService.success(data);
           $scope.$parent.list();
         })
-        .catch(function (err) {
-          $scope.alertService.danger(err);
-        })
-        .finally(function () {
+        .catch($scope.alertService.danger)
+        .finally(function() {
           $scope._loading = false;
         });
     };
 
 
-    $scope.goToList = function () {
+    $scope.goToList = function() {
       $location.path('/keys');
     };
 
@@ -168,12 +166,12 @@
       $scope.selectDomains(account_id);
     });
 
-    $scope.switchKeyVisibility = function(item){
+    $scope.switchKeyVisibility = function(item) {
       item.showKey = !item.showKey;
     };
 
-    $scope.copyCallback = function(err){
-      if(err){
+    $scope.copyCallback = function(err) {
+      if (err) {
         $scope.alertService.danger('Copying failed, please try manual.', 2000);
       } else {
         $scope.alertService.success('The API key has been copied to the clipboard.', 2000);

@@ -20,7 +20,7 @@
 
     $scope.NO_SPECIAL_CHARS = $config.PATTERNS.NO_SPECIAL_CHARS;
     $scope.COMMENT_NO_SPECIAL_CHARS = $config.PATTERNS.COMMENT_NO_SPECIAL_CHARS;
-  
+
 
     // Fetch list of users
     $scope.$on('$stateChangeSuccess', function(state) {
@@ -53,36 +53,54 @@
     });
 
     $scope.filterKeys = ['companyName', 'comment', 'createdBy', 'updated_at', 'created_at'];
-
+    /**
+     * @name  getCompany
+     * @description
+     *
+     *      Get Account by id
+     * @param  {[type]} id [description]
+     * @return {[type]}    [description]
+     */
     $scope.getCompany = function(id) {
       $scope.get(id)
-        .catch(function(err) {
-          $scope.alertService.danger('Could not load company details');
-        });
+        .catch($scope.alertService.danger);
     };
 
     $scope.getRelativeDate = function(datetime) {
       return moment.utc(datetime).fromNow();
     };
-
+    /**
+     * @name  deleteCompany
+     * @description
+     *
+     * @param  {Object} model [description]
+     * @return
+     */
     $scope.deleteCompany = function(model) {
       $scope
         .confirm('confirmModal.html', model)
         .then(function() {
           return $scope
-            .delete(model);
+            .delete(model)
+            .then($scope.alertService.success);
         })
         .catch($scope.alertService.danger);
     };
-
+    /**
+     * @name  createCompany
+     * @description
+     *
+     * @param  {Object} model [description]
+     * @return
+     */
     $scope.createCompany = function(model) {
       if (!model) {
         return;
       }
       $scope
         .create(model)
-        .then(function() {
-          $scope.alertService.success('Company created', 5000);
+        .then(function(data) {
+          $scope.alertService.success(data);
           $scope.auth.reloadUser();
         })
         .catch($scope.alertService.danger);
@@ -90,9 +108,7 @@
 
     $scope.updateCompany = function(model) {
       $scope.update(model)
-        .then(function() {
-          $scope.alertService.success('Company updated', 5000);
-        })
+        .then($scope.alertService.success)
         .catch($scope.alertService.danger);
     };
 
