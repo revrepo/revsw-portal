@@ -29,11 +29,7 @@ describe('Smoke', function () {
   describe('Billing Plan', function () {
 
     beforeAll(function () {
-      //user = Portal.signUpAndVerifyUser();
-      user = {
-        email: 'david-1464575411848@mailinator.com',
-        password: 'password1'
-      }
+      user = Portal.signUpAndVerifyUser();
       Portal.signIn(user);
     });
 

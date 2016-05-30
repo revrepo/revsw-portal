@@ -66,7 +66,7 @@ var EditPage = require('./mobileApp/editPage');
 var AdvancedEditPage = require('./mobileApp/advancedEditPage');
 var UsageReportPage = require('./billing/usageReportPage');
 var UsageReportDomainsPage = require('./billing/usageReportDomainsPage');
-var AccountProfilePage = require('./account/profilePage');
+var AccountProfilePage = require('./account/profile/page');
 var BillingPlanPage = require('./account/billingPlanPage');
 
 var PlansPage = require('./signUp/plansPage');

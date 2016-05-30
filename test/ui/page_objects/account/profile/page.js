@@ -18,7 +18,7 @@
 
 // # Account Profile Page Object
 
-var AccountProfileForm = require('./profileForm');
+var AccountProfileForm = require('./form');
 
 // This `Account Profile` Page Object abstracts all operations or actions that a
 // common user could do in the Account Profile page from the Portal app/site.
