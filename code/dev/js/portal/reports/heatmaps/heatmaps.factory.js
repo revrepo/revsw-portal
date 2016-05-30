@@ -100,11 +100,13 @@
       this.$btn = $( '<button style="position:absolute;top:0px;left:0px;" class="btn">Show USA Map</button>' );
       this.$el.append( this.$btn );
       this.$btn.on( 'click', function() {
-        if ( this.currentMap === 'world' ) {
-          this.drawUSAMap( this.currentData, this.currentOpts );
-        } else {
-          this.drawWorldMap( this.currentData, this.currentOpts );
-        }
+		if(this.currentData!=null){
+			if ( this.currentMap === 'world' ) {
+			  this.drawUSAMap( this.currentData, this.currentOpts );
+			} else {
+			  this.drawWorldMap( this.currentData, this.currentOpts );
+			}
+		}
       }.bind( this ) );
     };
 
