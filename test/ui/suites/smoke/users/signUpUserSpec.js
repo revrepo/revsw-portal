@@ -108,9 +108,8 @@ describe('Smoke', function () {
           .clickSubscribe();
         Portal.signUp.formPage.form.fill(user);
         Portal.signUp.formPage.form.clickSignUp();
-        // TODO: Sign up bug needs to be fixed
-        //expect(Portal.signUp.formPage.getSuccessMessage())
-        //  .toEqual('Something');
+        expect(Portal.signUp.formPage.verificationMessage.getEmailAddress())
+          .toEqual(user.email);
       });
   });
 });

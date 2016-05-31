@@ -30,6 +30,7 @@ var Dialog = require('./common/dialog');
 
 // Requiring page objects
 var LoginPage = require('./loginPage');
+var GoodByePage = require('./goodByePage');
 
 var ListUsersPage = require('./user/listPage');
 var EditUserPage = require('./user/editPage');
@@ -65,6 +66,8 @@ var EditPage = require('./mobileApp/editPage');
 var AdvancedEditPage = require('./mobileApp/advancedEditPage');
 var UsageReportPage = require('./billing/usageReportPage');
 var UsageReportDomainsPage = require('./billing/usageReportDomainsPage');
+var AccountProfilePage = require('./account/profile/page');
+var BillingPlanPage = require('./account/billingPlanPage');
 
 var PlansPage = require('./signUp/plansPage');
 var SignUpPage = require('./signUp/signUpPage');
@@ -88,6 +91,7 @@ var Portal = {
 
   // Pages that compound this Portal app/site
   loginPage: LoginPage,
+  goodByePage: GoodByePage,
   userListPage: ListUsersPage,
   editUserPage: EditUserPage,
   addUserPage: AddUserPage,
@@ -127,6 +131,10 @@ var Portal = {
     apiKeys: ApiKeysListPage,
     settingsPage: AdminSettingsPage,
     activityLog: ActivityLogPage,
+  },
+  accounts: {
+    profilePage: AccountProfilePage,
+    billingPlanPage: BillingPlanPage
   },
   billing: {
     usageReportPage: UsageReportPage,
@@ -226,6 +234,17 @@ var Portal = {
   },
 
   /**
+   * ### Portal.getApiKeysPage()
+   *
+   * Loads the hash fragment for the API Keys page.
+   *
+   * @returns {Promise}
+   */
+  getApiKeysPage: function () {
+    return this.getPage(Constants.hashFragments.admin.apiKeys);
+  },
+
+  /**
    * ### Portal.getUsersPage()
    *
    * Loads the hash fragment for the User List page
@@ -309,6 +328,16 @@ var Portal = {
    */
   goToBilling: function () {
     return Portal.sideBar.goTo(Constants.sideBar.billing.BILLING);
+  },
+
+  goToAccountProfile: function () {
+    this.goToBilling();
+    return Portal.sideBar.goTo(Constants.sideBar.billing.ACCOUNT_PROFILE);
+  },
+
+  goToChangeBillingPlan: function () {
+    this.goToBilling();
+    return Portal.sideBar.goTo(Constants.sideBar.billing.CHANGE_BILLING_PLAN);
   },
 
   /**
@@ -700,7 +729,7 @@ var Portal = {
   },
 
   /**
-   * ### Portal.createDashboard()
+   * ### Portal.createDashboard(arrayDashboards)
    *
    * Helper method that executes all steps required to create
    * new Dashboard from Portal Dashboards.
@@ -729,7 +758,7 @@ var Portal = {
   },
 
   /**
-   * ### Portal.deleteDashboard()
+   * ### Portal.deleteDashboard(arrayDashboards)
    *
    * Helper method that executes all steps required to delete an existing
    * Dashboard from Portal Dashboards.
@@ -758,27 +787,121 @@ var Portal = {
     });
   },
 
-  signUpUser: function () {
+  /**
+   * ### Portal.signUpUser()
+   *
+   * Signs up a test (auto-generated) user
+   *
+   * @param {String} plan, to which the user is going to be subscribed.
+   * Defaults to `Gold`
+   *
+   * @returns {Object} user signed up
+   */
+  signUpUser: function (plan) {
+    var _plan = plan || 'Gold';
     var me = this;
     var user = DataProvider.generateUserToSignUp();
     me.load();
     me.loginPage.clickSignUp();
     me.signUp.plansPage
-      .getPlanEl('Gold')
+      .getPlanEl(_plan)
       .clickSubscribe();
     me.signUp.formPage.form.fill(user);
-    me.signUp.formPage.form.clickSignUp();
-    // TODO: Probably we need to use Promise here instead of the sleep
-    browser.sleep(10000);
-    return MailinatorHelper
-      .getVerificationTokenUrl(user.email)
-      .then(function (verificationUrl) {
-        return browser
-          .get(verificationUrl)
-          .then(function () {
-            return user;
+    return me.signUp.formPage.form
+      .clickSignUp()
+      .then(function () {
+        return user;
+      });
+  },
+
+  /**
+   * ### Portal.signUpAndVerifyUser()
+   *
+   * Signs up and verifies a test (auto-generated) user
+   *
+   * @param {String} plan, to which the user is going to be subscribed.
+   * Defaults to `Gold`
+   *
+   * @returns {Object} user signed up and verified
+   */
+  signUpAndVerifyUser: function (plan) {
+    return this
+      .signUpUser(plan)
+      .then(function (user) {
+        return MailinatorHelper
+          .getVerificationTokenUrl(user.email)
+          .then(function (verificationUrl) {
+            return browser
+              .get(verificationUrl)
+              .then(function () {
+                return user;
+              });
           });
       });
+  },
+
+  /**
+   * ### Portal.createApiKey(apiKey)
+   *
+   * Helper method that executes all steps required to create
+   * new API Key in the Portal Dashboards.
+   *
+   * @param {String} apiKey, apiKey objects.
+   *
+   * @param {Object} apiKey, data applying the schema defined in
+   * `DataProvider.generateApiKeyData()`
+   *
+   * @returns {Object} Promise
+   */
+  createApiKey: function (apiKey, isUserAdmin, account) {
+    var me = this;
+    return browser.getCurrentUrl().then(function (initialUrl) {
+      me.getApiKeysPage();
+      me.admin.apiKeys.listPage.clickAddNewApiKey();
+
+      if (isUserAdmin && account) {
+        me.admin.apiKeys.addPage.createAccount(account);
+      }
+
+      me.admin.apiKeys.listPage.searcher.clearSearchCriteria();
+      me.admin.apiKeys.listPage.searchAndClickEdit('New API Key');
+
+      Portal.admin.apiKeys.editPage.form.setName(apiKey.name);
+      Portal.admin.apiKeys.editPage.form.clickUpdate();
+      Portal.admin.apiKeys.editPage.clickBackToList();
+      browser.getCurrentUrl().then(function (currentUrl) {
+        if (initialUrl !== currentUrl) {
+          browser.get(initialUrl);
+        }
+      });
+    });
+  },
+
+  /**
+   * ### Portal.deleteAPIKey()
+   *
+   * Helper method that executes all steps required to delete an existing
+   * Dashboard from Portal Dashboards.
+   *
+   * @param {String} apiKey, apiKey objects.
+   *
+   * @param {Object} apiKey, data applying the schema defined in
+   * `DataProvider.generateApiKeyData()`
+   *
+   * @returns {Object} Promise
+   */
+  deleteAPIKey: function (apiKey) {
+    var me = this;
+    return browser.getCurrentUrl().then(function (initialUrl) {
+      me.getApiKeysPage();
+      Portal.admin.apiKeys.listPage.searchAndClickDelete(apiKey.name);
+      Portal.dialog.clickOk();
+      browser.getCurrentUrl().then(function (currentUrl) {
+        if (initialUrl !== currentUrl) {
+          browser.get(initialUrl);
+        }
+      });
+    });
   }
 };
 

@@ -33,6 +33,9 @@ var Dialog = {
         ok: {
           css: 'button[ng-click="ok()"]'
         },
+        proceed: {
+          css: '.modal-footer .btn-danger'
+        },
         cancel: {
           css: 'button[ng-click="cancel()"]'
         }
@@ -84,6 +87,20 @@ var Dialog = {
   },
 
   /**
+   * ### Dialog.getProceedBtn()
+   *
+   * Return the reference to the `Proceed` button (Selenium WebDriver Element)
+   * from the Modal Dialog component from Portal app
+   *
+   * @returns {Selenium WebDriver Element}
+   */
+  getProceedBtn: function () {
+    return this
+      .getModalEl()
+      .element(by.css(this.locators.modal.buttons.proceed.css));
+  },
+
+  /**
    * ### Dialog.getCancelBtn()
    *
    * Return the reference to the `Cancel` button (Selenium WebDriver Element)
@@ -107,6 +124,20 @@ var Dialog = {
   clickOk: function () {
     return this
       .getOkBtn()
+      .click();
+  },
+
+  /**
+   * ### Dialog.clickProceed()
+   *
+   * Triggers a click action on the `Proceed` button fro the Modal Dialog
+   * component
+   *
+   * @returns {Promise}
+   */
+  clickProceed: function () {
+    return this
+      .getProceedBtn()
       .click();
   },
 

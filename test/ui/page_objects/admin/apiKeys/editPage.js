@@ -22,8 +22,8 @@
 var KeyForm = require('./form');
 
 // This `Edit API Key` Page Object abstracts all operations or actions that a
-// common domain could do in the Edit API Key page from the Portal app/site.
-var EditKey = {
+// common API Key could do in the Edit API Key page from the Portal app/site.
+var EditApiKey = {
 
   // ## Properties
 
@@ -34,52 +34,9 @@ var EditKey = {
         className: 'page-title'
       }
     },
-    inputTexts: {
-      apiKeyName: {
-        id: 'key_name'
-      },
-      managedDomains: {
-        css: '[ng-click=\"$select.activate()\"]'
-      }
-    },
     buttons: {
       backToList: {
         linkText: 'Back To List'
-      },
-      showApiKey: {
-        css: '.btn.btn-primary'
-      },
-      cancel: {
-        linkText: 'Cancel'
-      },
-      update: {
-        css: '.btn.btn-success'
-      }
-    },
-    checkboxes: {
-      active: {
-        id: 'active'
-      },
-      readOnly: {
-        id: 'read_only_status'
-      },
-      read: {
-        model: 'key.allowed_ops.read_config'
-      },
-      modify: {
-        model: 'key.allowed_ops.modify_config'
-      },
-      delete: {
-        model: 'key.allowed_ops.delete_config'
-      },
-      purge: {
-        model: 'key.allowed_ops.purge'
-      },
-      reports: {
-        model: 'key.allowed_ops.reports'
-      },
-      admin: {
-        model: 'key.allowed_ops.admin'
       }
     }
   },
@@ -92,10 +49,10 @@ var EditKey = {
   // Element)
 
   /**
-   * ### EditKey.getTitleLbl()
+   * ### EditApiKey.getTitleLbl()
    *
    * Returns the reference to the `Title` label element (Selenium WebDriver
-   * Element) from the Edit Domain page from the Portal app.
+   * Element) from the Edit API Key page from the Portal app.
    *
    * @returns {Selenium WebDriver Element}
    */
@@ -104,10 +61,10 @@ var EditKey = {
   },
 
   /**
-   * ### EditKey.getBackToListBtn()
+   * ### EditApiKey.getBackToListBtn()
    *
    * Returns the reference to the `Back To List` button (Selenium WebDriver
-   * Element) from the Edit Domain page from the Portal app.
+   * Element) from the Edit API Key page from the Portal app.
    *
    * @returns {Selenium WebDriver Element}
    */
@@ -116,47 +73,10 @@ var EditKey = {
       by.partialLinkText(this.locators.buttons.backToList.linkText));
   },
 
-  /**
-   * ### EditKey.getShowApiKeyBtn()
-   *
-   * Returns the reference to the `Show API Key` button (Selenium WebDriver
-   * Element) from the Edit Show API Key Page from the Portal app.
-   *
-   * @returns {Selenium WebDriver Element}
-   */
-  getShowApiKeyBtn: function () {
-    return element(
-      by.partialLinkText(this.locators.buttons.showApiKey.linkText));
-  },
+  // ## Methods to interact with the Edit API Key Page components
 
   /**
-   * ### EditKey.getCancelBtn()
-   *
-   * Returns the reference to the `Cancel` button (Selenium WebDriver
-   * Element) from the Edit API Key Page from the Portal app.
-   *
-   * @returns {Selenium WebDriver Element}
-   */
-  getCancelBtn: function () {
-    return element(by.partialLinkText(this.locators.buttons.cancel.linkText));
-  },
-
-  /**
-   * ### EditKey.getUpdateBtn()
-   *
-   * Returns the reference to the `Update` button (Selenium WebDriver
-   * Element) from the Edit API Key Page from the Portal app.
-   *
-   * @returns {Selenium WebDriver Element}
-   */
-  getUpdateBtn: function () {
-    return element(by.css(this.locators.buttons.update.css));
-  },
-
-  // ## Methods to interact with the Edit Domain Page components
-
-  /**
-   * ### EditKey.clickBackToList()
+   * ### EditApiKey.clickBackToList()
    *
    * Triggers a click on the `Back To List` button from the Edit API Key page
    * from the Portal app.
@@ -169,52 +89,10 @@ var EditKey = {
       .click();
   },
 
-  /**
-   * ### EditKey.clickShowApiKey()
-   *
-   * Triggers a click on the `Show API Key` button from the Edit API Key page
-   * from the Portal app.
-   *
-   * @returns {Promise}
-   */
-  clickShowApiKey: function () {
-    return this
-      .getShowApiKeyBtn()
-      .click();
-  },
-
-  /**
-   * ### EditKey.clickBasicMode()
-   *
-   * Triggers a click on the `Basic mode` button from the Edit Domain page
-   * from the Portal app.
-   *
-   * @returns {Promise}
-   */
-  clickCancel: function () {
-    return this
-      .getCancelBtn()
-      .click();
-  },
-
-  /**
-   * ### EditKey.clickUpdate()
-   *
-   * Triggers a click on the `Update` button from the Edit API Key page
-   * from the Portal app.
-   *
-   * @returns {Promise}
-   */
-  clickUpdate: function () {
-    return this
-      .getUpdateBtn()
-      .click();
-  },
-
   // ## Helper Methods
 
   /**
-   * ### EditKey.isDisplayed()
+   * ### EditApiKey.isDisplayed()
    *
    * Checks whether the Edit API Key page is being displayed in the UI or not.
    *
@@ -227,7 +105,7 @@ var EditKey = {
   },
 
   /**
-   * ### EditKey.getTitle()
+   * ### EditApiKey.getTitle()
    *
    * Gets the `Title` label from the Edit API Key page
    *
@@ -240,7 +118,7 @@ var EditKey = {
   },
 
   /**
-   * ### EditKey.updateDomain(apiKey)
+   * ### EditApiKey.updateKey(apiKey)
    *
    * Updates the API Key using the given data by filling it in the form and
    * clicking on the `Update` button from the Edit API Key page.
@@ -251,9 +129,9 @@ var EditKey = {
    * @returns {Promise}
    */
   updateKey: function (apiKey) {
-    
-    return this.clickUpdateDomain();
+    this.form.fill(apiKey);
+    this.form.clickUpdate();
   }
 };
 
-module.exports = EditKey;
+module.exports = EditApiKey;
