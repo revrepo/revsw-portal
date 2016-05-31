@@ -34,9 +34,7 @@
           .then(function ( apps ) {
             $scope.apps = apps;
           })
-          .catch(function () {
-            AlertService.danger('Oops! Something went wrong');
-          })
+          .catch(AlertService.danger)
           .finally(function () {
             $scope._loading = false;
           });

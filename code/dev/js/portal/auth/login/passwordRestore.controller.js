@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
 
   angular
@@ -17,27 +17,16 @@
 
     $scope.reset = function() {
       AlertService.clear();
-      if (!$scope.password || !$scope.passwordRepeat || $scope.password !== $scope.passwordRepeat) {
-        AlertService.danger('Passwords did not match', 5000);
-        return;
-      }
       $scope.loading = true;
       User.resetPassword($scope.token, $scope.password)
-        .then(function (data) {
-          if (data.data && data.data.message) {
-            AlertService.success(data.data.message, 5000);
-            $timeout(function () {
-              $state.go('login');
-            }, 3000);
-          }
+        .then(function(data) {
+          AlertService.success(data);
+          $timeout(function() {
+            $state.go('login');
+          }, 3000);
         })
-        .catch(function (err) {
-          if (err.data && err.data.message) {
-            AlertService.danger(err.data.message, 5000);
-
-          }
-        })
-        .finally(function () {
+        .catch(AlertService.danger)
+        .finally(function() {
           $scope.loading = false;
         });
     };

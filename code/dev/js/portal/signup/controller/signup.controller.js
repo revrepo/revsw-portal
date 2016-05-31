@@ -69,10 +69,6 @@
       if (!model) {
         return;
       }
-      if (model.passwordConfirm !== model.password) {
-        $scope.alertService.danger('Passwords did not match', 5000);
-        return;
-      }
       $scope.userData = _.clone(model);
       $scope.alertService.clear();
 
@@ -84,12 +80,6 @@
         })
         .catch(function(err) {
           model.passwordConfirm = model.password;
-          // NOTE: detect type problem
-          console.log(err);
-          // - 1. Not fount billing plan info
-          // - 2. User with email alraedy exists
-          // - 3. Server error (email, send)
-
           $scope.alertService.danger(err);
         });
     };

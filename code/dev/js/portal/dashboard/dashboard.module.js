@@ -450,9 +450,7 @@
         }
         return vm.domains;
       })
-      .catch(function() {
-        AlertService.danger('Oops something wrong');
-      })
+      .catch(AlertService.danger)
       .finally(function() {
         vm._loading = false;
       });
