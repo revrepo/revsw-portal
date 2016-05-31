@@ -49,9 +49,7 @@
         .then(function (data) {
           $scope.obj.data = JSON.stringify(data, null, 2);
         })
-        .catch(function (err) {
-          AlertService.danger(err);
-        })
+        .catch(AlertService.danger)
         .finally(function () {
           $scope._loading = false;
         });
@@ -65,9 +63,7 @@
           $scope.versions = data;
         }
       })
-      .catch(function (err) {
-        AlertService.danger(err);
-      })
+      .catch(AlertService.danger)
       .finally(function () {
         $scope._loading = false;
       });

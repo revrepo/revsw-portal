@@ -354,9 +354,7 @@
             options: 'publish'
           }, model)
           .then($scope.alertService.success)
-          .catch(function(err) {
-            $scope.alertService.danger(err);
-          });
+          .catch($scope.alertService.danger);
       });
     };
 

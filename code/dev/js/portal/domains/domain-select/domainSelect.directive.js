@@ -49,11 +49,8 @@
                 $scope.ngDomain = $scope.domains[ind];
               }
             }
-
           })
-          .catch(function() {
-            AlertService.danger('Oops something wrong');
-          })
+          .catch(AlertService.danger)
           .finally(function() {
             $scope._loading = false;
           });

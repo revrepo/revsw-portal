@@ -196,9 +196,7 @@
           $scope.alertService.success(data);
           $scope.setAccountId();
         })
-        .catch(function(err) {
-          $scope.alertService.danger(err);
-        });
+        .catch($scope.alertService.danger);
     };
     /**
      * @name  publishSSL_cert
@@ -222,12 +220,8 @@
             id: modelId,
             options: 'publish'
           }, model)
-          .then(function(data) {
-            $scope.alertService.success(data);
-          })
-          .catch(function(err) {
-            $scope.alertService.danger(err);
-          });
+          .then($scope.alertService.success)
+          .catch($scope.alertService.danger);
       });
     };
     /**
@@ -250,12 +244,8 @@
           id: modelId,
           options: 'verify_only'
         }, model)
-        .then(function(data) {
-          $scope.alertService.success(data);
-        })
-        .catch(function(err) {
-          $scope.alertService.danger(err);
-        });
+        .then($scope.alertService.success)
+        .catch($scope.alertService.danger);
     };
     /**
      * @name  updateSSL_cert
@@ -278,12 +268,8 @@
         $scope.update({
             id: modelId
           }, model)
-          .then(function(data) {
-            $scope.alertService.success(data);
-          })
-          .catch(function(err) {
-            $scope.alertService.danger(err);
-          });
+          .then($scope.alertService.success)
+          .catch($scope.alertService.danger);
       });
     };
 
