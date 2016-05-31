@@ -74,12 +74,10 @@
           $scope.update({
               id: company.id
             }, company)
-            .then(function() {
+            .then(function(data) {
               $scope.alertService.success('Successfully updated company profile');
             })
-            .catch(function(err) {
-              $scope.alertService.danger(err);
-            })
+            .catch($scope.alertService.danger)
             .finally(function() {
               $scope._loading = false;
             });
@@ -112,9 +110,7 @@
               $scope.model.billing_id = account.billing_id;
               $scope.alertService.success('Successfully created billing profile');
             })
-            .catch(function(err) {
-              $scope.alertService.danger(err);
-            })
+            .catch($scope.alertService.danger)
             .finally(function() {
               $scope._loading = false;
             });
@@ -154,18 +150,14 @@
                       $state.go('goodbye');
                     }, 10);
                   })
-                  .catch(function(err) {
-                    $scope.alertService.danger(err);
-                  })
+                  .catch($scope.alertService.danger)
                   .finally(function() {
                     $scope._loading = false;
                   });
               });
           }
         )
-        .catch(function(err) {
-          $scope.alertService.danger(err);
-        })
+        .catch($scope.alertService.danger)
         .finally(function() {
           $scope._loading = false;
         });

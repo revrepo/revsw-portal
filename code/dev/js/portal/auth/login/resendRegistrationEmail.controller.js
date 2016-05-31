@@ -33,9 +33,7 @@
           }, function(err) {
             AlertService.danger(err);
           })
-          .catch(function(err) {
-            AlertService.danger(err.data.message);
-          })
+          .catch(AlertService.danger)
           .finally(function() {
             $scope.data.loading = false;
           });

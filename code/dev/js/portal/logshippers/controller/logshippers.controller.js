@@ -239,25 +239,24 @@
     $scope.getJob = function(id) {
       $scope.get(id)
         .then(function findAllSources() {
-          return $q.all([Apps.query().$promise, DomainsConfig.query().$promise]).then(function(res) {
-            $scope.appsList = res[0];
-            $scope.domainsList = res[1];
-            if ($scope.model.source_id !== '') {
-              if ($scope.model.source_type === 'app') {
-                $scope.selectedAppSourceId = $scope.model.source_id;
+          return $q.all([Apps.query().$promise, DomainsConfig.query().$promise])
+            .then(function(res) {
+              $scope.appsList = res[0];
+              $scope.domainsList = res[1];
+              if ($scope.model.source_id !== '') {
+                if ($scope.model.source_type === 'app') {
+                  $scope.selectedAppSourceId = $scope.model.source_id;
+                }
+                if ($scope.model.source_type === 'domain') {
+                  $scope.selectedDomainSourceId = $scope.model.source_id;
+                }
+              } else {
+                // TODO: set default first App of current Account ID
+                // TODO: set default first Domain  of current Domain ID
               }
-              if ($scope.model.source_type === 'domain') {
-                $scope.selectedDomainSourceId = $scope.model.source_id;
-              }
-            } else {
-              // TODO: set default first App of current Account ID
-              // TODO: set default first Domain  of current Domain ID
-            }
-          });
+            });
         })
-        .catch(function(err) {
-          $scope.alertService.danger('Could not load job details');
-        });
+        .catch($scope.alertService.danger);
     };
     /**
      * @name  deleteJob
@@ -277,9 +276,7 @@
               .then(setAccountName)
               .then(setMappingInformation);
           })
-          .catch(function(err) {
-            $scope.alertService.danger(err);
-          });
+          .catch($scope.alertService.danger);
       });
     };
     /**
@@ -299,9 +296,7 @@
           $scope.alertService.success(data);
           $scope.setAccountId();
         })
-        .catch(function(err) {
-          $scope.alertService.danger(err);
-        });
+        .catch($scope.alertService.danger);
     };
 
     /**
@@ -325,25 +320,20 @@
         $scope.update({
             id: modelId
           }, model)
-          .then(function(data) {
-            $scope.alertService.success(data);
-          })
-          .catch(function(err) {
-            $scope.alertService.danger(err);
-          });
+          .then($scope.alertService.success)
+          .catch($scope.alertService.danger);
       });
     };
 
     $scope.storeToStorage = function(model) {
       $localStorage.selectedDomain = model;
     };
-    // TODO: change rule
+
     $scope.disableSubmit = function(model, isEdit) {
       if (!isEdit) {
         return $scope._loading ||
           !model.job_name ||
           !model.account_id;
-        // TODO: add all requerid fields
       } else {
         return $scope._loading ||
           !model.job_name ||
@@ -397,14 +387,6 @@
       } else {
         $scope.selectedDomainSourceId = $scope.domainsList[index_domain].id;
       }
-      // TODO: DELETE
-      // var save = $scope.model.source_type;
-      // $scope.model.source_type = '';
-      // // $scope.model.source_id = $scope.model.source_id;
-      // // NOTE: hardcode
-      // $timeout(function() {
-      //   $scope.model.source_type = save;
-      // }, 200);
     };
     /**
      * @name  onChangeSourceType
@@ -473,12 +455,8 @@
             .then(function(data) {
               return data;
             })
-            .then(function(data) {
-              $scope.alertService.success(data);
-            })
-            .catch(function(err) {
-              $scope.alertService.danger(err);
-            })
+            .then($scope.alertService.success)
+            .catch($scope.alertService.danger)
             .finally(function() {
               $scope.loading(false);
             });
