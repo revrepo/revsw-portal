@@ -353,9 +353,7 @@
             id: modelId,
             options: 'publish'
           }, model)
-          .then(function(data) {
-            $scope.alertService.success('Domain configuration published', 5000);
-          })
+          .then($scope.alertService.success)
           .catch(function(err) {
             $scope.alertService.danger(err);
           });
@@ -375,12 +373,8 @@
           id: modelId,
           options: 'verify_only'
         }, model)
-        .then(function(data) {
-          $scope.alertService.success('The domain configuration is correct', 5000);
-        })
-        .catch(function(err) {
-          $scope.alertService.danger(err.data.message || 'Oops something ment wrong', 5000);
-        });
+        .then($scope.alertService.success)
+        .catch($scope.alertService.danger);
     };
 
     $scope.updateDomain = function(model) {
@@ -398,12 +392,8 @@
         $scope.update({
             id: modelId
           }, model)
-          .then(function() {
-            $scope.alertService.success('Domain updated');
-          })
-          .catch(function(err) {
-            $scope.alertService.danger(err);
-          });
+          .then($scope.alertService.success)
+          .catch($scope.alertService.danger);
       });
     };
 
