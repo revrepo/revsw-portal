@@ -41,7 +41,6 @@
       if ( acc.acc_id !== '' ) {
         User.selectAccount( acc );
       }
-      // console.log( 'onAccountSelect', acc );
     };
 
     $scope.onAccountClick = function ( acc_id ) {
@@ -54,7 +53,6 @@
         User.selectAccount( acc );
       }
       $scope.onUpdate();
-      // console.log( 'onAccountClick', acc_id );
     };
 
     $scope.onTimeSet = function( newDate ) {
@@ -152,16 +150,11 @@
       Stats.usage_web( q )
         .$promise
         .then( function( data ) {
-
-          // console.log( data );
-
           var overall = data.data[data.data.length - 1/*overall summary*/];
           format_( overall );
           $scope.report = overall;
         })
-        .catch( function(err) {
-          $scope.alertService.danger(err);
-        })
+        .catch($scope.alertService.danger)
         .finally( function() {
           $scope._loading = false;
           $scope.accountsDtOptions = DTOptionsBuilder.newOptions()
@@ -177,7 +170,6 @@
     //  ---------------------------------
     var sel_account = User.getSelectedAccount();
     if ( sel_account && sel_account.acc_id !== ''/*do not restore 'All accounts'*/ ) {
-      // console.log( '(re)loaded', User.getSelectedAccount() );
       $scope.selected.val = sel_account;
     }
 
@@ -189,8 +181,8 @@
         }
         $scope.onUpdate();
       })
-      .catch(function (err) {
-        $scope.alertService.danger(err);
+      .catch($scope.alertService.danger)
+      .finally(function(){
         $scope._loading = false;
       });
 

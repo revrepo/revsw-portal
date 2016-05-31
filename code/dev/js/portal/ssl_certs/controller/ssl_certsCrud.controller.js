@@ -174,9 +174,7 @@
             $scope.list()
               .then(setAccountName);
           })
-          .catch(function(err) {
-            $scope.alertService.danger(err);
-          });
+          .catch($scope.alertService.danger);
       });
     };
     /**
