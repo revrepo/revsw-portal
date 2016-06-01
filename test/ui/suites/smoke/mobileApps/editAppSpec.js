@@ -120,9 +120,6 @@ describe('Smoke', function () {
                 }
                 if(app.allowedTransportProtocolsAndSelectionPriority==='QUIC')
                 {
-/*                    Portal.mobileApps.editPage.form.getAllowedTransportProtocolsAndSelectionPriorityQUIC().getAttribute('checked').then(function(value){
-                     expect(value).toEqual('true');
-                    });*/
                     Portal.mobileApps.editPage.form.getAllowedTransportProtocolsAndSelectionPriorityQUIC().getAttribute('checked').then(function(value){
                      expect(value).toEqual('true');
                     });
