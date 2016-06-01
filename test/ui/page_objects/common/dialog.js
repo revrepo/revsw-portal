@@ -38,6 +38,12 @@ var Dialog = {
         },
         cancel: {
           css: 'button[ng-click="cancel()"]'
+        },
+        leavePage: {
+          buttonText: 'Leave This Page'
+        },
+        stayPage: {
+          buttonText: 'Stay On This Page'
         }
       }
     }
