@@ -152,9 +152,9 @@ describe('Smoke', function () {
                 });             
 
              
-               // expect(Portal.alerts.getAll().count()).toEqual(1);
-              // expect(Portal.alerts.getFirst().getText())
-               //   .toEqual('App updated');
+              expect(Portal.alerts.getAll().count()).toEqual(1);
+              expect(Portal.alerts.getFirst().getText())
+                  .toEqual('The application record has been successfully updated');
               });
           });
         });
