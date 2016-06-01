@@ -31,7 +31,7 @@ var KeyForm = {
         id: 'key_name'
       },
       managedDomains: {
-        css: '[ng-click=\"$select.activate()\"]'
+        css: '.ui-select-search'
       },
       keyGuid: {
         id: 'key'
@@ -464,40 +464,40 @@ var KeyForm = {
    * @returns {Promise}
    */
   fill: function (apiKey) {
-    this.setName(apiKey.name);
-    this.setManagedDomain(apiKey.domain);
+    return this.setName(apiKey.name);
+    // this.setManagedDomain(apiKey.domain);
 
-    if (!apiKey.active) {
-      this.checkActive();
-    }
+    // if (!apiKey.active) {
+    //   this.checkActive();
+    // }
 
-    if (apiKey.readOnly) {
-      this.checkReadOnly();
-    }
+    // if (apiKey.readOnly) {
+    //   this.checkReadOnly();
+    // }
 
-    if (apiKey.read) {
-      this.checkRead();
-    }
+    // if (apiKey.read) {
+    //   this.checkRead();
+    // }
 
-    if (apiKey.modify) {
-      this.checkModify();
-    }
+    // if (apiKey.modify) {
+    //   this.checkModify();
+    // }
 
-    if (apiKey.delete) {
-      this.checkDelete();
-    }
+    // if (apiKey.delete) {
+    //   this.checkDelete();
+    // }
 
-    if (apiKey.purge) {
-      this.checkPurge();
-    }
+    // if (apiKey.purge) {
+    //   this.checkPurge();
+    // }
 
-    if (apiKey.reports) {
-      this.checkReports();
-    }
+    // if (apiKey.reports) {
+    //   this.checkReports();
+    // }
 
-    if (apiKey.admin) {
-      this.checkAdmin();
-    }
+    // if (apiKey.admin) {
+    //   this.checkAdmin();
+    // }
   }
 };
 
