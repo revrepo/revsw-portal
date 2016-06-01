@@ -22,13 +22,13 @@
 </div>
 <h3 style="margin-top: 0;">Hits</h3>
 
-<div class="alert alert-info" ng-if="!_loading && !traffic.labels.length">
+<!-- <div class="alert alert-info" ng-if="!_loading && !traffic.labels.length">
   No data to display
-</div>
-<div class="alert alert-info" ng-if="_loading">
+</div> -->
+<!-- <div class="alert alert-info" ng-if="_loading">
   <i class="glyphicon glyphicon-refresh spin"></i>&nbsp;
   Loading
-</div>
-<div ng-hide="!traffic.labels || !traffic.labels.length">
-  <div style="min-width: 500px; min-height: 350px" line-chart ng-data="traffic" ng-chart-options="hitsChartOptions"></div>
+</div> -->
+<div> <!-- ng-hide="!traffic.labels || !traffic.labels.length"> -->
+  <div style="width: 500px; height: 350px" line-chart ng-data="traffic" ng-chart-options="hitsChartOptions"></div>
 </div>

@@ -17,18 +17,18 @@
   </div>
 </div>
 
-<div class="alert alert-info" ng-if="_loading">
+<!-- <div class="alert alert-info" ng-if="_loading">
   <i class="glyphicon glyphicon-refresh spin"></i>&nbsp;
   Loading
-</div>
+</div> -->
 
 <div>
-  <div class="alert alert-info" ng-if="!_loading && !hits.labels.length">
+<!--   <div class="alert alert-info" ng-if="!_loading && !hits.labels.length">
     No data to display
-  </div>
+  </div> -->
 
-  <div ng-class="{'invisible-chart-wrapper': hits.labels && _loading, 'hide': !_loading &&(!hits.labels || !hits.labels.length) }">
-    <div ng-if="!_loading" style="min-width: 500px; min-height: 350px" line-chart ng-data="hits" ng-chart-options="chartOptions"></div>
+  <div><!--  ng-class="{'invisible-chart-wrapper': hits.labels && _loading, 'hide': !_loading &&(!hits.labels || !hits.labels.length) }"> -->
+    <div ngif="!_loading" style="width: 500px; height: 350px" line-chart ng-data="hits" ng-chart-options="chartOptions"></div>
   </div>
 </div>
 
