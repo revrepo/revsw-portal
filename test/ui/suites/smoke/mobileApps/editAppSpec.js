@@ -25,9 +25,9 @@ describe('Smoke', function () {
 
   // Defining set of users for which all below tests will be run
   var users = [
-    config.get('portal.users.admin'),
+    //config.get('portal.users.admin'),
     //config.get('portal.users.reseller'),
-    //config.get('portal.users.revAdmin')
+    config.get('portal.users.revAdmin')
   ];
   var platforms = [
     config.get('portal.mobileApps.platforms.ios'),
@@ -84,8 +84,17 @@ describe('Smoke', function () {
 
             it('should update an app successfully when filling all required ' +
               'data',
-              function () {
+              function () {          
                 var app = DataProvider.generateMobileApp(platform);
+
+/*                Portal.getAccountsPage();
+                Portal.admin.accounts.listPage.clickAddNewCompany();
+                Portal.admin.accounts.addCompany.createCompany(app);
+                browser.sleep(10000);
+                Portal.goToMobileApps();
+                Portal.header.goTo(platform);
+                browser.sleep(10000);*/
+                
                 Portal.mobileApps.listPage.addNew(app);
                 expect(Portal.alerts.getAll().count()).toEqual(1);
                 expect(Portal.alerts.getFirst().getText())
@@ -93,7 +102,7 @@ describe('Smoke', function () {
                 Portal.mobileApps.addPage.clickBackToList();
                 Portal.mobileApps.listPage.searchAndEdit(app);
 
-                checkSDKkeyClipboard();
+                checkSDKKeyClipboard();
 
                 app = DataProvider.generateUpdateMobileApp(app);
                 Portal.mobileApps.editPage.update(app);
@@ -152,9 +161,9 @@ describe('Smoke', function () {
                 });             
 
              
-/*              expect(Portal.alerts.getAll().count()).toEqual(1);
+              expect(Portal.alerts.getAll().count()).toEqual(1);
               expect(Portal.alerts.getFirst().getText())
-                  .toEqual('The application record has been successfully updated');*/
+                  .toEqual(Constants.alertMessages.app.MSG_SUCCESS_UPDATE);
               });
           });
         });
@@ -162,13 +171,13 @@ describe('Smoke', function () {
     });
   });
 });
-            function checkSDKkeyClipboard(){
-              Portal.mobileApps.editPage.form.clickSDKkeyClipboardButton();
-                Portal.mobileApps.editPage.form.clickShowSDKkeyButton();
+            function checkSDKKeyClipboard(){
+              Portal.mobileApps.editPage.form.clickSDKKeyClipboardButton();
+                Portal.mobileApps.editPage.form.clickShowSDKKeyButton();
                 Portal.mobileApps.editPage.form.getSDKKeyInput().getAttribute('value').then(function(value){
                   return value;                  
                 }).then(function(value){                  
-                  Portal.mobileApps.editPage.form.setSDKkey(protractor.Key.chord(protractor.Key.CONTROL, "v"));
+                  Portal.mobileApps.editPage.form.setSDKKey(protractor.Key.chord(protractor.Key.CONTROL, "v"));
                   Portal.mobileApps.editPage.form.getSDKKeyInput().getAttribute('value').then(function(pasteValue){
                     expect(value).toEqual(pasteValue); 
                  });

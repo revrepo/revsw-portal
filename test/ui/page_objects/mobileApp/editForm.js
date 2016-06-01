@@ -53,10 +53,10 @@ var EditAppForm = {
       publish: {
         css: '[ng-click=\"publish(model, configuration)\"]'
       },
-      SDKkey: {
+      SDKKey: {
         css : '.btn.btn-primary.ng-isolate-scope'
       }, 
-      showSDKkey: {
+      showSDKKey: {
         buttonText : 'Show SDK Key'
       }
     },
@@ -67,7 +67,7 @@ var EditAppForm = {
       comment: {
         id: 'comment'
       },
-      SDKkey: {
+      SDKKey: {
         id: 'key'
       }
     },
@@ -191,16 +191,16 @@ var EditAppForm = {
     return element(by.id(this.locators.dropDowns.sdkReleaseVersion.id));
   },
 
-  clickSDKkeyClipboardButton: function () {
-    element(by.css(this.locators.buttons.SDKkey.css)).click();
+  clickSDKKeyClipboardButton: function () {
+    element(by.css(this.locators.buttons.SDKKey.css)).click();
   },
 
-  getShowSDKkeyButton: function () {
-    return element(by.buttonText(this.locators.buttons.showSDKkey.buttonText));
+  getShowSDKKeyButton: function () {
+    return element(by.buttonText(this.locators.buttons.showSDKKey.buttonText));
   },
 
   getSDKKeyInput: function() {
-     return element(by.id(this.locators.inputs.SDKkey.id));
+     return element(by.id(this.locators.inputs.SDKKey.id));
   },
 
   /**
@@ -518,13 +518,13 @@ var EditAppForm = {
 //TODO:
   },
 
-  setSDKkey: function (value) {
+  setSDKKey: function (value) {
       this.getSDKKeyInput().clear();
       this.getSDKKeyInput().sendKeys(value);
   },
 
-  clickShowSDKkeyButton: function() {
-   this.getShowSDKkeyButton().click();
+  clickShowSDKKeyButton: function() {
+   this.getShowSDKKeyButton().click();
   },
 
   /**
