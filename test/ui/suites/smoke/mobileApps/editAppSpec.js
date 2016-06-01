@@ -82,7 +82,7 @@ describe('Smoke', function () {
                 expect(Portal.mobileApps.listPage.isDisplayed()).toBeTruthy();
               });
 
-            fit('should update an app successfully when filling all required ' +
+            it('should update an app successfully when filling all required ' +
               'data',
               function () {
                 var app = DataProvider.generateMobileApp(platform);
