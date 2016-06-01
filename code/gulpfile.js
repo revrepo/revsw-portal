@@ -21,7 +21,7 @@ gulpRequireTasks({
 });
 var devFolder = 'dev/';
 var destFolder = './public/';
-var bowerComponentsFolder = './bower_components/';
+var bowerComponentsFolder = devFolder +'bower_components/';
 
 gulp.task('valid', function() {
   return gulp.src(devFolder + 'parts/**/*.html')
