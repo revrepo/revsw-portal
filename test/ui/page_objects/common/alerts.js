@@ -64,6 +64,7 @@ var Alerts = {
    * @returns [{Selenium WebDriver Element}]
    */
   getAll: function () {
+    this.waitToDisplay();
     return element.all(by.repeater(this.locators.alertGroup.repeater));
   },
 

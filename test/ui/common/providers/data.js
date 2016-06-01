@@ -229,13 +229,37 @@ var DataProvider = {
   },
 
   generateUpdateMobileApp: function(app) {
+    var _ = require('underscore');
+    var SDKeventsLoggingLevel_arr = ['Info', 'Warning','Error','Critical'];
+    var SDKeventsLoggingLevel_shuffleArr = _.shuffle(SDKeventsLoggingLevel_arr);
+    var SDKeventsLoggingLevel = SDKeventsLoggingLevel_shuffleArr[0];
+
+    var SDKoperationMode_arr = ['Transfer And Report', 'Transfer Only', 'Report Only', 'Off'];
+    var SDKoperationMode_shuffleArr = _.shuffle(SDKoperationMode_arr);
+    var SDKoperationMode = SDKoperationMode_shuffleArr[0];
+
+    var allowedTransportProtocolsAndSelectionPriority_arr = ['STANDARD', 'QUIC', 'RMP'];
+    var allowedTransportProtocolsAndSelectionPriority_shuffleArr =  _.shuffle(allowedTransportProtocolsAndSelectionPriority_arr);
+    var allowedTransportProtocolsAndSelectionPriority = allowedTransportProtocolsAndSelectionPriority_shuffleArr[0];
+    
+    var initialTransportProtocol_arr = ['STANDARD', 'QUIC', 'RMP'];
+    var initialTransportProtocol_shuffleArr = _.shuffle(initialTransportProtocol_arr);
+    var initialTransportProtocol = initialTransportProtocol_shuffleArr[0];
+
+    var analyticsReportingLevel_arr = ['Info', 'Debug','Error'];
+    var analyticsReportingLevel_shuffleArr = _.shuffle(analyticsReportingLevel_arr);
+    var analyticsReportingLevel = analyticsReportingLevel_shuffleArr[0];
     return {
       name: 'UPDATED-' + app.name,
       account: 'API_TEST_COMPANY_1461793655217',
-      configurationStaleTimeout: '36001',
-      sdkOperationMode: 'Report Only',
+      sdkOperationMode: SDKoperationMode,
+      SDKeventsLoggingLevel: SDKeventsLoggingLevel,
       configurationRefreshInterval: '36001',
-      initialTransportProtocol: 'QUIC',
+      configurationStaleTimeout: '36001', 
+      allowedTransportProtocolsAndSelectionPriority: allowedTransportProtocolsAndSelectionPriority,
+      analyticsReportingLevel: analyticsReportingLevel,
+      initialTransportProtocol: initialTransportProtocol,
+      analyticsReportingInterval: '21',
       domainsWhiteList: 'www.meta.ua',
       comment: 'App was updated',
       domainsBlackList: 'www.meta.ua',

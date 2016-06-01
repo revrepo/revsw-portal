@@ -52,6 +52,12 @@ var EditAppForm = {
       },
       publish: {
         css: '[ng-click=\"publish(model, configuration)\"]'
+      },
+      SDKkey: {
+        css : '.btn.btn-primary.ng-isolate-scope'
+      }, 
+      showSDKkey: {
+        buttonText : 'Show SDK Key'
       }
     },
     inputs: {
@@ -60,34 +66,40 @@ var EditAppForm = {
       },
       comment: {
         id: 'comment'
+      },
+      SDKkey: {
+        id: 'key'
       }
     },
     radios: {
       debug: {
-        model: 'configuration.logging_level'
+        css: '[ng-model="configuration.logging_level"][value="debug"]'
       },
       info: {
-        model: 'configuration.logging_level'
+        css: '[ng-model="configuration.logging_level"][value="info"]'
       },
       warning: {
-        model: 'configuration.logging_level'
+        css: '[ng-model="configuration.logging_level"][value="warning"]'
       },
       error: {
-        model: 'configuration.logging_level'
+        css: '[ng-model="configuration.logging_level"][value="error"]'
       },
       critical: {
-        model: 'configuration.logging_level'
+        css: '[ng-model="configuration.logging_level"][value="critical"]'
+      },
+      selected: {
+        xpath: './/*[@class="ng-valid ng-dirty ng-valid-parse ng-touched"]/..'
       }
     },
     checkboxes: {
       standard: {
-        css: '[ng-click=\"toggleProtocolSelection(protocol, configuration)\"]'
+        css: 'input[value="standard"]'
       },
       quic: {
-        css: '[ng-click=\"toggleProtocolSelection(protocol, configuration)\"]'
+        css: 'input[value="quic"]'
       },
       rpm: {
-        css: '[ng-click=\"toggleProtocolSelection(protocol, configuration)\"]'
+        css: 'input[value="rmp"]'
       }
     },
     dropDowns: {
@@ -179,6 +191,18 @@ var EditAppForm = {
     return element(by.id(this.locators.dropDowns.sdkReleaseVersion.id));
   },
 
+  clickSDKkeyClipboardButton: function () {
+    element(by.css(this.locators.buttons.SDKkey.css)).click();
+  },
+
+  getShowSDKkeyButton: function () {
+    return element(by.buttonText(this.locators.buttons.showSDKkey.buttonText));
+  },
+
+  getSDKKeyInput: function() {
+     return element(by.id(this.locators.inputs.SDKkey.id));
+  },
+
   /**
    * ### EditAppForm.getSDKOperationModeDDown()
    *
@@ -188,6 +212,30 @@ var EditAppForm = {
    */
   getSDKOperationModeDDown: function () {
     return element(by.id(this.locators.dropDowns.sdkOperationMode.id));
+  },
+
+  getDebugSDKeventsLoggingLevel: function () {
+     return element(by.css(this.locators.radios.debug.css));
+  },
+
+  getInfoSDKeventsLoggingLevel: function () {
+     return element(by.css(this.locators.radios.info.css));
+  },
+
+  getWarningSDKeventsLoggingLevel: function () {
+     return element(by.css(this.locators.radios.warning.css));
+  },
+
+  getErrorSDKeventsLoggingLevel: function () {
+     return element(by.css(this.locators.radios.error.css));
+  },
+
+  getCriticalSDKeventsLoggingLevel: function () {
+     return element(by.css(this.locators.radios.critical.css));
+  },
+
+  getSelectedSDKEventsLoggingLevel: function () {
+    return element(by.xpath(this.locators.radios.selected.xpath));
   },
 
   getAccountDown: function(){
@@ -215,6 +263,41 @@ var EditAppForm = {
    */
   getConfigurationStaleTimeoutDDown: function () {
     return element(by.id(this.locators.dropDowns.configurationStaleTimeout.id));
+  },
+
+  getAllowedTransportProtocolsAndSelectionPriorityRPM: function() {
+    return element(by.css(this.locators.checkboxes.rpm.css));
+  },
+
+  isAllowedTransportProtocolsAndSelectionPriorityRPMchecked: function() {
+    return this.getAllowedTransportProtocolsAndSelectionPriorityRPM().getAttribute('checked');
+  },
+
+  getAllowedTransportProtocolsAndSelectionPriorityQUIC: function() {
+    return element(by.css(this.locators.checkboxes.quic.css));
+  },
+
+  isAllowedTransportProtocolsAndSelectionPriorityQUICchecked: function() {
+    return this.getAllowedTransportProtocolsAndSelectionPriorityQUIC().getAttribute('checked');
+  },
+
+  getAllowedTransportProtocolsAndSelectionPrioritySTANDARD: function() {
+    return element(by.css(this.locators.checkboxes.standard.css));
+  },
+
+  isAllowedTransportProtocolsAndSelectionPrioritySTANDARDchecked: function() {
+    return this.getAllowedTransportProtocolsAndSelectionPrioritySTANDARD().getAttribute('checked');
+  },
+
+  uncheckAllAllowedTransportProtocolsAndSelectionPriority: function() {
+  if(this.isAllowedTransportProtocolsAndSelectionPriorityRPMchecked()) 
+    this. getAllowedTransportProtocolsAndSelectionPriorityRPM().click();
+   
+  if(this.isAllowedTransportProtocolsAndSelectionPriorityQUICchecked()) 
+    this.getAllowedTransportProtocolsAndSelectionPriorityQUIC().click();
+  
+  if(this.isAllowedTransportProtocolsAndSelectionPrioritySTANDARDchecked()) 
+    this.getAllowedTransportProtocolsAndSelectionPrioritySTANDARD().click();
   },
 
   /**
@@ -432,7 +515,16 @@ var EditAppForm = {
       this
       .getAccountDown()
       .click();
+//TODO:
+  },
 
+  setSDKkey: function (value) {
+      this.getSDKKeyInput().clear();
+      this.getSDKKeyInput().sendKeys(value);
+  },
+
+  clickShowSDKkeyButton: function() {
+   this.getShowSDKkeyButton().click();
   },
 
   /**
@@ -448,6 +540,23 @@ var EditAppForm = {
     return this
       .getSDKOperationModeDDown()
       .sendKeys(value);
+  },
+
+  setSDKeventsLoggingLevel : function(value){
+    switch(value){
+      case 'Info':
+      this.getInfoSDKeventsLoggingLevel().click();
+      break;
+      case 'Warning':
+      this.getWarningSDKeventsLoggingLevel().click();
+      break;
+      case 'Error':
+      this.getErrorSDKeventsLoggingLevel().click();
+      break;
+      case 'Critical':
+      this.getCriticalSDKeventsLoggingLevel().click();
+      break;
+    }
   },
 
   /**
@@ -486,6 +595,21 @@ var EditAppForm = {
     this
       .getConfigurationStaleTimeoutDDown()
       .sendKeys(value);
+  },
+
+  setAllowedTransportProtocolsAndSelectionPriority: function(value){
+      this.uncheckAllAllowedTransportProtocolsAndSelectionPriority();
+       switch(value){
+        case 'STANDARD':
+          this.getAllowedTransportProtocolsAndSelectionPrioritySTANDARD().click();
+        break;
+        case 'QUIC':
+          this.getAllowedTransportProtocolsAndSelectionPriorityQUIC().click();
+        break;
+        case 'RMP':
+          this. getAllowedTransportProtocolsAndSelectionPriorityRPM().click();
+        break;
+       }
   },
 
   /**
@@ -528,7 +652,11 @@ var EditAppForm = {
    * @returns {Promise}
    */
   setAnalyticsReportingInterval: function (value) {
-    return this
+    this
+      .getAnalyticsReportingInterval()
+      .clear();
+
+    this
       .getAnalyticsReportingInterval()
       .sendKeys(value);
   },
@@ -548,9 +676,6 @@ var EditAppForm = {
       .sendKeys(value);
 
       browser.actions().sendKeys( protractor.Key.ENTER ).perform();
-/*      this
-      .getSelectChoicesRowDown()
-      .click();*/
   },
 
 
@@ -569,9 +694,6 @@ var EditAppForm = {
       .sendKeys(value);
 
       browser.actions().sendKeys( protractor.Key.ENTER ).perform();
-      /*this
-      .getSelectChoicesRowDown()
-      .click();*/
   },
 
   /**
@@ -770,13 +892,16 @@ var EditAppForm = {
     this.setAppName(app.name);
     //this.setAccount(app.account);
     this.setSDKOperationMode(app.sdkOperationMode);
+    this.setSDKeventsLoggingLevel(app.SDKeventsLoggingLevel);
     this.setConfigurationRefreshInterval(app.configurationRefreshInterval);
     this.setConfigurationStaleTimeout(app.configurationStaleTimeout);
+    this.setAllowedTransportProtocolsAndSelectionPriority(app.allowedTransportProtocolsAndSelectionPriority);
     this.setInitialTransportProtocol(app.initialTransportProtocol);
     this.setAnalyticsReportingLevel(app.analyticsReportingLevel);
+    this.setAnalyticsReportingInterval(app.analyticsReportingInterval);
     this.setDomainsWhiteList(app.domainsWhiteList);
     this.setDomainsBlackList(app.domainsBlackList);
-    this.setDomainsProvisionedList(app.domainsProvisionedList);
+    //this.setDomainsProvisionedList(app.domainsProvisionedList);
     this.setTestingOffloadingRatio(app.testingOffloadingRatio);
     this.setComment(app.comment);
   }

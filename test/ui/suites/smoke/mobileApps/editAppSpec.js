@@ -82,7 +82,7 @@ describe('Smoke', function () {
                 expect(Portal.mobileApps.listPage.isDisplayed()).toBeTruthy();
               });
 
-            it('should update an app successfully when filling all required ' +
+            fit('should update an app successfully when filling all required ' +
               'data',
               function () {
                 var app = DataProvider.generateMobileApp(platform);
@@ -92,11 +92,17 @@ describe('Smoke', function () {
                   .toContain(Constants.alertMessages.app.MSG_SUCCESS_ADD);
                 Portal.mobileApps.addPage.clickBackToList();
                 Portal.mobileApps.listPage.searchAndEdit(app);
+
+                checkSDKkeyClipboard();
+
                 app = DataProvider.generateUpdateMobileApp(app);
                 Portal.mobileApps.editPage.update(app);
+
+
                 Portal.dialog.clickOk(); 
 
                 expect(Portal.mobileApps.editPage.form.getAppNameTxt().getAttribute('value')).toEqual(app.name);
+                expect(Portal.mobileApps.editPage.form.getSelectedSDKEventsLoggingLevel().getText()).toEqual(app.SDKeventsLoggingLevel);
                 expect(Portal.mobileApps.editPage.form.getComment().getAttribute('value')).toEqual(app.comment);
                 expect(Portal.mobileApps.editPage.form.getSDKOperationModeDDown().getAttribute('value').getText()).toContain(app.sdkOperationMode);                                           
                 Portal.mobileApps.editPage.form.getConfigurationRefreshIntervalDDown().getAttribute('value').then(function(value){
@@ -104,13 +110,34 @@ describe('Smoke', function () {
                 });
                 Portal.mobileApps.editPage.form.getConfigurationStaleTimeoutDDown().getAttribute('value').then(function(value){
                   expect(value).toEqual(app.configurationStaleTimeout);
-                 });
+                });
+                element(by.xpath('.//body')).getAttribute('class').then(function(){
+                if(app.allowedTransportProtocolsAndSelectionPriority==='STANDARD')
+                {
+                  Portal.mobileApps.editPage.form.getAllowedTransportProtocolsAndSelectionPrioritySTANDARD().getAttribute('checked').then(function(value){
+                     expect(value).toEqual('true');
+                    });                    
+                }
+                if(app.allowedTransportProtocolsAndSelectionPriority==='QUIC')
+                {
+                    Portal.mobileApps.editPage.form.getAllowedTransportProtocolsAndSelectionPrioritySTANDARD().getAttribute('checked').then(function(value){
+                     expect(value).toEqual('true');
+                    });
+                 }
+                if(app.allowedTransportProtocolsAndSelectionPriority==='RMP')
+                {
+                    Portal.mobileApps.editPage.form.getAllowedTransportProtocolsAndSelectionPriorityRPM().getAttribute('checked').then(function(value){
+                    expect(value).toEqual('true');  
+                    });
+                }
+                });        
+
                 Portal.mobileApps.editPage.form.getInitialTransportProtocol().getAttribute('value').then(function(value){
                   expect(value).toEqual(app.initialTransportProtocol.toLowerCase());
                  });
-                //TODO:
-                /////expect(Portal.mobileApps.editPage.form.getAnalyticsReportingLevel().getAttribute('value').getText()).toContain(app.analyticsReportingLevel);
-                
+                Portal.mobileApps.editPage.form.getAnalyticsReportingLevel().getAttribute('value').then(function(value){
+                  expect(value).toEqual(app.analyticsReportingLevel.toLowerCase());
+                });                
                 Portal.mobileApps.editPage.form.getDomainsWhiteListValues().then(function(value){
                   expect(value).toContain(app.domainsWhiteList);
                 });
@@ -118,17 +145,15 @@ describe('Smoke', function () {
                  expect(value).toContain(app.domainsBlackList);
                 });
 
-                expect(Portal.mobileApps.editPage.form.getDomainsProvisionedListValues()).toContain(app.domainsProvisionedList);
+               // expect(Portal.mobileApps.editPage.form.getDomainsProvisionedListValues()).toContain(app.domainsProvisionedList);
                 
                 Portal.mobileApps.editPage.form.getTestingOffloadingRatio().getAttribute('value').then(function(value){
                   expect(value).toContain(app.testingOffloadingRatio);
-                });
+                });             
 
-               
-               
-                //element(by.xpath('.//body')).click();             
-                //expect(Portal.alerts.getAll().count()).toEqual(1);
-               // expect(Portal.alerts.getFirst().getText())
+             
+               // expect(Portal.alerts.getAll().count()).toEqual(1);
+              // expect(Portal.alerts.getFirst().getText())
                //   .toEqual('App updated');
               });
           });
@@ -137,3 +162,15 @@ describe('Smoke', function () {
     });
   });
 });
+            function checkSDKkeyClipboard(){
+              Portal.mobileApps.editPage.form.clickSDKkeyClipboardButton();
+                Portal.mobileApps.editPage.form.clickShowSDKkeyButton();
+                Portal.mobileApps.editPage.form.getSDKKeyInput().getAttribute('value').then(function(value){
+                  return value;                  
+                }).then(function(value){                  
+                  Portal.mobileApps.editPage.form.setSDKkey(protractor.Key.chord(protractor.Key.CONTROL, "v"));
+                  Portal.mobileApps.editPage.form.getSDKKeyInput().getAttribute('value').then(function(pasteValue){
+                    expect(value).toEqual(pasteValue); 
+                 });
+                });
+            }
