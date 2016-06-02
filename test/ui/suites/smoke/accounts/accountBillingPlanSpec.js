@@ -28,11 +28,12 @@ describe('Smoke', function () {
 
   describe('Billing Plan', function () {
 
-    beforeAll(function () {
+    beforeAll(function (done) {
       Portal
         .signUpAndVerifyUser(currentPlan)
         .then(function (newUser) {
           user = newUser;
+          done();
         });
     });
 

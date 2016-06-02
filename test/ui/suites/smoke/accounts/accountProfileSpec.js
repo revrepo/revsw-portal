@@ -25,8 +25,12 @@ describe('Smoke', function () {
 
   describe('Account Profile', function () {
 
-    beforeAll(function () {
-      Portal.signUpAndVerifyUser();
+    beforeAll(function (done) {
+      Portal
+        .signUpAndVerifyUser()
+        .then(function () {
+          done();
+        });
     });
 
     afterAll(function () {
