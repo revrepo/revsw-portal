@@ -23,13 +23,10 @@ var Constants = require('./../../../page_objects/constants');
 
 describe('Smoke', function () {
 
-  var user;
-
   describe('Account Profile', function () {
 
     beforeAll(function () {
-      user = Portal.signUpAndVerifyUser();
-      Portal.signIn(user);
+      Portal.signUpAndVerifyUser();
     });
 
     afterAll(function () {
