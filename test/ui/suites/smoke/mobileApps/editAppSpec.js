@@ -82,6 +82,21 @@ describe('Smoke', function () {
                 expect(Portal.mobileApps.listPage.isDisplayed()).toBeTruthy();
               });
 
+            it('should save SDKKey to clipboard', 
+              function(){
+              Portal.mobileApps.listPage.table.clickEditApp();
+                Portal.mobileApps.editPage.form.clickSDKKeyClipboardButton();
+                Portal.mobileApps.editPage.form.clickShowSDKKeyButton();
+                Portal.mobileApps.editPage.form.getSDKKeyInput().getAttribute('value').then(function(value){
+                  return value;                  
+                }).then(function(value){                  
+                  Portal.mobileApps.editPage.form.setSDKKey(protractor.Key.chord(protractor.Key.CONTROL, "v"));
+                  Portal.mobileApps.editPage.form.getSDKKeyInput().getAttribute('value').then(function(pasteValue){
+                    expect(value).toEqual(pasteValue); 
+                 });
+                });
+            });
+
             it('should update an app successfully when filling all required ' +
               'data',
               function () {          
@@ -101,12 +116,8 @@ describe('Smoke', function () {
                   .toContain(Constants.alertMessages.app.MSG_SUCCESS_ADD);
                 Portal.mobileApps.addPage.clickBackToList();
                 Portal.mobileApps.listPage.searchAndEdit(app);
-
-                checkSDKKeyClipboard();
-
                 app = DataProvider.generateUpdateMobileApp(app);
                 Portal.mobileApps.editPage.update(app);
-
 
                 Portal.dialog.clickOk(); 
 
@@ -171,15 +182,4 @@ describe('Smoke', function () {
     });
   });
 });
-            function checkSDKKeyClipboard(){
-              Portal.mobileApps.editPage.form.clickSDKKeyClipboardButton();
-                Portal.mobileApps.editPage.form.clickShowSDKKeyButton();
-                Portal.mobileApps.editPage.form.getSDKKeyInput().getAttribute('value').then(function(value){
-                  return value;                  
-                }).then(function(value){                  
-                  Portal.mobileApps.editPage.form.setSDKKey(protractor.Key.chord(protractor.Key.CONTROL, "v"));
-                  Portal.mobileApps.editPage.form.getSDKKeyInput().getAttribute('value').then(function(pasteValue){
-                    expect(value).toEqual(pasteValue); 
-                 });
-                });
-            }
+
