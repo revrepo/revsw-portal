@@ -839,7 +839,7 @@ var Portal = {
                   .waitToDisplay()
                   .then(function () {
                     return user;
-                  })
+                  });
               });
           });
       });
