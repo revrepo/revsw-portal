@@ -835,8 +835,7 @@ var Portal = {
             return browser
               .get(verificationUrl)
               .then(function () {
-                return me.header
-                  .waitToDisplay()
+                return browser.sleep(10000)
                   .then(function () {
                     return user;
                   })
