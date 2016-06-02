@@ -17,9 +17,8 @@
       $uibModalInstance.dismiss();
     };
 
-    $scope.login = function() {
-      if (!$scope.data.code) {
-        AlertService.danger('Please enter One Time Password', 3000);
+    $scope.login = function(form) {
+      if (form.$invalid) {
         return;
       }
       AlertService.clear();
@@ -30,6 +29,7 @@
             $uibModalInstance.close(data);
           })
           .catch(function (err) {
+            $scope.data.code = '';
             if (err.status === $config.STATUS.UNAUTHORIZED) {
               AlertService.danger('Wrong one Time Password', 5000);
             }
