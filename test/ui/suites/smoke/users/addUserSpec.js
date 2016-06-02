@@ -44,8 +44,8 @@ describe('Smoke', function () {
         });
 
         beforeEach(function () {
-          Portal.getUsersPage();
-          Portal.userListPage.clickAddNewUser();
+          Portal.goToUsersThroughClassNameLocator();
+          Portal.userListPage.clickAddNewUserThroughClassName();
         });
 
         it('should display "Add user" form', function () {
@@ -65,13 +65,13 @@ describe('Smoke', function () {
             // Create user
             var bruce = DataProvider.generateUser('Bruce', null, user);
             // console.log('bruce = ' + JSON.stringify(bruce));
-            Portal.addUserPage.createUser(bruce);
+            Portal.addUserPage.createUserThroughClassNameLocators(bruce);
             // Check App alert notifications
             expect(Portal.alerts.getAll().count()).toEqual(1);
             expect(Portal.alerts.getFirst().getText())
               .toContain(Constants.alertMessages.users.MSG_SUCCESS_ADD);
             // Delete created user
-            Portal.deleteUser(bruce);
+            Portal.deleteUserThroughClassNameLocators(bruce);
           });
       });
     });
