@@ -221,7 +221,7 @@ var Header = {
   waitToDisplay: function () {
     var me = this;
     return browser.wait(function () {
-      return browser.isElementPresent(by.css(me.locators.menu.navbar.css));
+      return browser.isElementPresent(by.css(me.locators.menu.user.css));
     }, this.waitTimeout);
   }
 };
