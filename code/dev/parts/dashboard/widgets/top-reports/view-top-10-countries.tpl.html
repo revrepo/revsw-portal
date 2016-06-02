@@ -3,10 +3,10 @@
   <div class="alert alert-info" ng-if="!config.domain">
     Please click on <i class="glyphicon glyphicon-cog"></i> icon to configure the widget
   </div>
-  <div  class="alert alert-info" ng-if="config.domain&&(!country || !country.length)">
+<!--   <div  class="alert alert-info" ng-if="config.domain&&(!country || !country.length)">
     No data to display
-  </div>
-  <div class="auto-scroll" ng-if="country && country.length" ng-hide="!country || !country.length">
+  </div> -->
+  <div class="auto-scroll" ng-if="config.domain"><!--  ng-if="country && country.length" ng-hide="!country || !country.length"> -->
     <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="country"></div>
   </div>
 </div>

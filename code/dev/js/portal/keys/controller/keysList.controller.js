@@ -139,39 +139,6 @@
     };
 
     /**
-     * TODO: DELETE?
-     * Should open dialog for selecting company account
-     */
-    $scope.openUpdateDialogFor = function(keyId) {
-      $scope.alertService.clear();
-      var modalInstance = $uibModal.open({
-        animation: true,
-        templateUrl: 'parts/keys/dialog/edit.html',
-        controller: 'KeysEditController',
-        size: 'md',
-        resolve: {
-          data: function() {
-            return {
-              companies: $scope.companies,
-              domains: $scope.domains,
-              keyId: keyId
-            };
-          }
-        }
-      });
-
-      /**
-       * Handle ok button on update
-       */
-      modalInstance.result
-        .then(function(data) {
-          $scope.alertService.success(data);
-          $scope.list()
-            .then(setAccountName);
-        });
-    };
-
-    /**
      * Function will remove all data that should not be sent to server
      *
      * @param {Object} data

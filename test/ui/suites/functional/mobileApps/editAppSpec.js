@@ -61,11 +61,12 @@ describe('Functional', function () {
           function () {
             Portal.header.goTo(app.platform);
             Portal.mobileApps.listPage.searchAndEdit(app);
-            Portal.mobileApps.editPage.verify(app);
-
+            var updatedApp = DataProvider.generateUpdateMobileApp(app);
+            Portal.mobileApps.editPage.verify(updatedApp);
+          
             var alert = Portal.alerts.getFirst();
-            var expectedMsg = Constants.alertMessages.app.MSG_SUCCESS_VERIFY;
-            expect(alert.getText()).toContain(expectedMsg);
+            var expectedMsg = 'The configuration has been successfully verified';
+            expect(alert.getText()).toEqual(expectedMsg);
 
             Portal.header.goTo(app.platform);
             var findApp = Portal.mobileApps.listPage.findApp(app);
@@ -76,7 +77,8 @@ describe('Functional', function () {
           function () {
             Portal.header.goTo(app.platform);
             Portal.mobileApps.listPage.searchAndEdit(app);
-            Portal.mobileApps.editPage.update(app);
+            var updatedApp = DataProvider.generateUpdateMobileApp(app);
+            Portal.mobileApps.editPage.update(updatedApp);
             Portal.dialog.clickOk();
 
             var alert = Portal.alerts.getFirst();
@@ -93,7 +95,8 @@ describe('Functional', function () {
           function () {
             Portal.header.goTo(app.platform);
             Portal.mobileApps.listPage.searchAndEdit(app);
-            Portal.mobileApps.editPage.publish(app);
+             var updatedApp = DataProvider.generateUpdateMobileApp(app);
+            Portal.mobileApps.editPage.publish(updatedApp);
             Portal.dialog.clickOk();
 
             var alert = Portal.alerts.getFirst();
@@ -111,8 +114,9 @@ describe('Functional', function () {
             Portal.header.goTo(app.platform);
             Portal.mobileApps.listPage.searchAndEdit(app);
             var tempAppName = app.name;
-            app.name = app.name + 'UPDATED';
-            Portal.mobileApps.editPage.verify(app);
+            //app.name = app.name + 'UPDATED';
+            var updatedApp = DataProvider.generateUpdateMobileApp(app);
+            Portal.mobileApps.editPage.verify(updatedApp);
 
             var alert = Portal.alerts.getFirst();
             var expectedMsg = Constants.alertMessages.app.MSG_SUCCESS_VERIFY;
@@ -130,8 +134,8 @@ describe('Functional', function () {
             Portal.header.goTo(app.platform);
             Portal.mobileApps.listPage.searchAndEdit(app);
             var tempAppName = app.name;
-            app.name = app.name + 'UPDATED';
-            Portal.mobileApps.editPage.update(app);
+            var updatedApp = DataProvider.generateUpdateMobileApp(app);
+            Portal.mobileApps.editPage.update(updatedApp);
             Portal.dialog.clickOk();
 
             var alert = Portal.alerts.getFirst();
@@ -150,8 +154,9 @@ describe('Functional', function () {
             Portal.header.goTo(app.platform);
             Portal.mobileApps.listPage.searchAndEdit(app);
             var tempAppName = app.name;
-            app.name = app.name + 'UPDATED';
-            Portal.mobileApps.editPage.publish(app);
+            /*app.name = app.name + 'UPDATED';*/
+            var updatedApp = DataProvider.generateUpdateMobileApp(app);
+            Portal.mobileApps.editPage.publish(updatedApp);
             Portal.dialog.clickOk();
 
             var alert = Portal.alerts.getFirst();
@@ -169,7 +174,8 @@ describe('Functional', function () {
           function () {
             Portal.header.goTo(app.platform);
             Portal.mobileApps.listPage.searchAndEdit(app);
-            Portal.mobileApps.editPage.publish(app);
+            var updatedApp = DataProvider.generateUpdateMobileApp(app);
+            Portal.mobileApps.editPage.publish(updatedApp);
             Portal.dialog.clickOk();
 
             var alert = Portal.alerts.getFirst();
@@ -189,7 +195,8 @@ describe('Functional', function () {
           function () {
             Portal.header.goTo(app.platform);
             Portal.mobileApps.listPage.searchAndEdit(app);
-            Portal.mobileApps.editPage.update(app);
+            var updatedApp = DataProvider.generateUpdateMobileApp(app);
+            Portal.mobileApps.editPage.update(updatedApp);
             Portal.dialog.clickOk();
 
             var alert = Portal.alerts.getFirst();

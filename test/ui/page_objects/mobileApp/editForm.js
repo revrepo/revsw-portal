@@ -547,9 +547,10 @@ var EditAppForm = {
       .getDomainsWhiteList()
       .sendKeys(value);
 
-      this
+      browser.actions().sendKeys( protractor.Key.ENTER ).perform();
+/*      this
       .getSelectChoicesRowDown()
-      .click();
+      .click();*/
   },
 
 
@@ -567,9 +568,10 @@ var EditAppForm = {
       .getDomainsBlackList()
       .sendKeys(value);
 
-      this
+      browser.actions().sendKeys( protractor.Key.ENTER ).perform();
+      /*this
       .getSelectChoicesRowDown()
-      .click();
+      .click();*/
   },
 
   /**
@@ -586,9 +588,10 @@ var EditAppForm = {
       .getDomainsProvisionedList()
       .sendKeys(value);
 
-      this
+      browser.actions().sendKeys( protractor.Key.ENTER ).perform();
+/*      this
       .getSelectChoicesRowDown()
-      .click();
+      .click();*/
   },
 
   /**
@@ -771,9 +774,9 @@ var EditAppForm = {
     this.setConfigurationStaleTimeout(app.configurationStaleTimeout);
     this.setInitialTransportProtocol(app.initialTransportProtocol);
     this.setAnalyticsReportingLevel(app.analyticsReportingLevel);
-    this.setDomainsWhiteList(app.domainsWhiteList);
-    this.setDomainsBlackList(app.domainsBlackList);
-    this.setDomainsProvisionedList(app.domainsProvisionedList);
+//    this.setDomainsWhiteList(app.domainsWhiteList);
+//    this.setDomainsBlackList(app.domainsBlackList);
+//    this.setDomainsProvisionedList(app.domainsProvisionedList);
     this.setTestingOffloadingRatio(app.testingOffloadingRatio);
     this.setComment(app.comment);
   }

@@ -300,19 +300,21 @@
         return $q.when(model);
       }
     };
-
+    /**
+     * @name deleteDomain
+     * @description
+     *   Delete domain
+     * @param  {Object} model [description]
+     * @return
+     */
     $scope.deleteDomain = function(model) {
-      $scope.confirm('confirmModal.html', model).then(function() {
-        var domainName = model.domain_name;
-        $scope
-          .delete(model)
-          .then(function(data) {
-            $scope.alertService.success('Domain ' + domainName + ' deleted.');
-            // $scope.list()
-            //   .then(setAccountName);
-          })
-          .catch($scope.alertService.danger);
-      });
+      $scope.confirm('confirmModal.html', model)
+        .then(function() {
+          $scope
+            .delete(model)
+            .then($scope.alertService.success)
+            .catch($scope.alertService.danger);
+        });
     };
 
     $scope.createDomain = function(model, isStay) {
@@ -330,7 +332,7 @@
             // NOTE: clean account_id for new Domain
             model.account_id = null;
           }
-          $scope.alertService.success('Domain created', 5000);
+          $scope.alertService.success(data);
         })
         .catch($scope.alertService.danger);
     };
@@ -351,12 +353,8 @@
             id: modelId,
             options: 'publish'
           }, model)
-          .then(function(data) {
-            $scope.alertService.success('Domain configuration published', 5000);
-          })
-          .catch(function(err) {
-            $scope.alertService.danger(err);
-          });
+          .then($scope.alertService.success)
+          .catch($scope.alertService.danger);
       });
     };
 
@@ -373,12 +371,8 @@
           id: modelId,
           options: 'verify_only'
         }, model)
-        .then(function(data) {
-          $scope.alertService.success('The domain configuration is correct', 5000);
-        })
-        .catch(function(err) {
-          $scope.alertService.danger(err.data.message || 'Oops something ment wrong', 5000);
-        });
+        .then($scope.alertService.success)
+        .catch($scope.alertService.danger);
     };
 
     $scope.updateDomain = function(model) {
@@ -396,12 +390,8 @@
         $scope.update({
             id: modelId
           }, model)
-          .then(function() {
-            $scope.alertService.success('Domain updated');
-          })
-          .catch(function(err) {
-            $scope.alertService.danger(err);
-          });
+          .then($scope.alertService.success)
+          .catch($scope.alertService.danger);
       });
     };
 
