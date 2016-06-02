@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
 
   /* jshint maxlen: false */
@@ -13,7 +13,9 @@
     $scope._loading = true;
     $scope.id = $stateParams.id;
 
-    $scope.domain = DomainsConfig.get({id: $stateParams.id});
+    $scope.domain = DomainsConfig.get({
+      id: $stateParams.id
+    });
     $scope.versions = [];
     $scope.currentVersion = {};
 
@@ -22,7 +24,7 @@
       options: {
         mode: 'code',
         modes: ['code', 'view'], // allowed modes['code', 'form', 'text', 'tree', 'view']
-        error: function (err) {
+        error: function(err) {
           $window.alert(err.toString());
         }
       }
@@ -35,8 +37,8 @@
      * @return {string}
      */
     $scope.format = function(item) {
-      return 'Version ' + item.last_published_domain_version + ' Last updated at ' + $filter('date')(new Date(item.updated_at), 'MMM dd, yyyy H:mm:ss a')
-      +' By '+ (item.updated_by || item.created_by);
+      return 'Version ' + item.last_published_domain_version + ' Last updated at ' + $filter('date')(new Date(item.updated_at), 'MMM dd, yyyy H:mm:ss a') +
+        ' By ' + (item.updated_by || item.created_by);
     };
 
     $scope.onChangeVersion = function() {
@@ -46,31 +48,36 @@
       }
       $scope._loading = true;
       DomainsConfig
-        .get({id: $stateParams.id, version: $scope.currentVersion})
+        .get({
+          id: $stateParams.id,
+          version: $scope.currentVersion
+        })
         .$promise
-        .then(function (data) {
+        .then(function(data) {
           $scope.obj.data = JSON.stringify(data, null, 2);
         })
         .catch(AlertService.danger)
-        .finally(function () {
+        .finally(function() {
           $scope._loading = false;
         });
     };
 
     DomainsConfig
-      .versions({id: $stateParams.id})
+      .versions({
+        id: $stateParams.id
+      })
       .$promise
-      .then(function (data) {
+      .then(function(data) {
         if (angular.isArray(data)) {
           $scope.versions = data;
         }
       })
       .catch(AlertService.danger)
-      .finally(function () {
+      .finally(function() {
         $scope._loading = false;
       });
 
-    $timeout(function () {
+    $timeout(function() {
       $scope.obj.options.mode = 'code';
     }, 10);
   }
