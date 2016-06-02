@@ -65,7 +65,7 @@ describe('Smoke', function () {
             // Create user
             var bruce = DataProvider.generateUser('Bruce', null, user);
             // console.log('bruce = ' + JSON.stringify(bruce));
-            Portal.addUserPage.createUserThroughClassNameLocators(bruce);
+            Portal.addUserPage.createUser(bruce);
             // Check App alert notifications
             expect(Portal.alerts.getAll().count()).toEqual(1);
             expect(Portal.alerts.getFirst().getText())
