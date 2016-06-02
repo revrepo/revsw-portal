@@ -825,7 +825,8 @@ var Portal = {
    * @returns {Object} user signed up and verified
    */
   signUpAndVerifyUser: function (plan) {
-    return this
+    var me = this;
+    return me
       .signUpUser(plan)
       .then(function (user) {
         return MailinatorHelper
@@ -834,7 +835,11 @@ var Portal = {
             return browser
               .get(verificationUrl)
               .then(function () {
-                return user;
+                return me.header
+                  .waitToDisplay()
+                  .then(function () {
+                    return user;
+                  })
               });
           });
       });
