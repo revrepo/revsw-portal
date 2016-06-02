@@ -38,6 +38,7 @@ describe('Smoke', function () {
     });
 
     afterAll(function () {
+      Portal.signOut();
     });
 
     beforeEach(function () {
