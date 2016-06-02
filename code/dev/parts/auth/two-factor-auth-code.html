@@ -2,7 +2,7 @@
   <h3 class="modal-title">Enter Your One Time Password</h3>
 </div>
 <div class="modal-body">
-  <form class="form-horizontal" name="editForm" novalidate>
+  <form class="form-horizontal" name="editForm" novalidate ng-submit="login(editForm)">
     <div class="form-group" ng-class="{ 'has-error': editForm.code.$invalid && editForm.code.$dirty }">
       <div class="col-sm-8 col-sm-offset-2">
         <input type="text" class="form-control" ng-model="data.code" id="code" name="code" placeholder="Enter Your Code here" ng-disabled="data.loading" pattern="^\d{6}$" required autofocus>
@@ -19,7 +19,7 @@
   <button class="btn btn-default" type="button" ng-click="close()">
     <i class="glyphicon glyphicon-remove"></i>&nbsp; Cancel
   </button>
-  <button class="btn btn-primary" type="button" ng-click="login()" ng-disabled="!data.code || data.loading">
+  <button class="btn btn-primary" type="submit" ng-disabled="editForm.$invalid || data.loading">
     <i class="glyphicon " ng-class="data.loading ? 'glyphicon-refresh spin': 'glyphicon-log-in'"></i> Submit
   </button>
 </div>
