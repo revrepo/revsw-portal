@@ -30,11 +30,13 @@
 
     /**
      * Format options for select box
+     * //Version X Last Updated At YYYY By ZZZZ
      * @param  {Object} item
      * @return {string}
      */
     $scope.format = function(item) {
-      return 'Version ' + item.last_published_domain_version + ' Last updated at ' + $filter('date')(new Date(item.updated_at), 'MMM dd, yyyy H:mm:ss a');
+      return 'Version ' + item.last_published_domain_version + ' Last updated at ' + $filter('date')(new Date(item.updated_at), 'MMM dd, yyyy H:mm:ss a')
+      +' By '+ (item.updated_by || item.created_by);
     };
 
     $scope.onChangeVersion = function() {
