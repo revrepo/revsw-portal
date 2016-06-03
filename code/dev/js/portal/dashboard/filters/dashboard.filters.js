@@ -11,6 +11,13 @@
     'adf-widget-gbt-heatmaps', //"GBT Heatmap"
     'adf-widget-top-10-countries', // "Top 10 Countries"
     'adf-widget-http-https-requests-ratio', // "Request Success/Failure Ratio"
+
+    'widget-web-analytics-http-staus-codes-graph', //Web Analytics "HTTP Status Codes Graph"
+    'widget-web-analytics-edge-cache-hit-miss-ratio', //Web Analytics “Edge Cache Hit/Miss Ratio”
+    'widget-web-analytics-http-status-codes-ratio', //Web Analytics “HTTP Status Codes Ratio”
+    'widget-web-analytics-http-https-request-ratio', //Web Analytics Pie chart “HTTP/HTTPS Requests Ratio”
+    'widget-web-analytics-ftb-average', //Web Analytics Web Analitycs - Average FBT
+
     'bluetriangletech-conversions-subcategories', //"Conversion Rate"
     'bluetriangletech-bounce-rate', //"Bounce Rate"
     'bluetriangletech-brand-conversion-rate', // "Brand Conversion Rate"
@@ -38,7 +45,7 @@
       orderWidgets.widgetList = {};
 
       angular.forEach(_default_order_widgets, function(key) {
-        widgets[key].edit.immediate = true;// NOTE: open edit window immediate
+        widgets[key].edit.immediate = true; // NOTE: open edit window immediate
         orderWidgets.widgetList[key] = _widgets[key];
 
         delete _widgets[key];
