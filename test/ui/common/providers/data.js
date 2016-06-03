@@ -286,13 +286,38 @@ var DataProvider = {
   },
 
   generateUpdateMobileApp: function (app) {
+    var underscore = require('underscore');
+    var SDKEventsLoggingLevel_arr = ['Info', 'Warning','Error','Critical'];
+    var SDKEventsLoggingLevel_shuffleArr = underscore.shuffle(SDKEventsLoggingLevel_arr);
+    var SDKEventsLoggingLevel = SDKEventsLoggingLevel_shuffleArr[0];
+
+    var SDKOperationMode_arr = ['Transfer And Report', 'Transfer Only', 'Report Only', 'Off'];
+    var SDKOperationMode_shuffleArr = underscore.shuffle(SDKOperationMode_arr);
+    var SDKOperationMode = SDKOperationMode_shuffleArr[0];
+
+    var allowedTransportProtocolsAndSelectionPriority_arr = ['STANDARD', 'QUIC', 'RMP'];
+    var allowedTransportProtocolsAndSelectionPriority_shuffleArr =  underscore.shuffle(allowedTransportProtocolsAndSelectionPriority_arr);
+    var allowedTransportProtocolsAndSelectionPriority = allowedTransportProtocolsAndSelectionPriority_shuffleArr[0];
+    
+    var initialTransportProtocol_arr = ['STANDARD', 'QUIC', 'RMP'];
+    var initialTransportProtocol_shuffleArr = underscore.shuffle(initialTransportProtocol_arr);
+    var initialTransportProtocol = initialTransportProtocol_shuffleArr[0];
+
+    var analyticsReportingLevel_arr = ['Info', 'Debug','Error'];
+    var analyticsReportingLevel_shuffleArr = underscore.shuffle(analyticsReportingLevel_arr);
+    var analyticsReportingLevel = analyticsReportingLevel_shuffleArr[0];
     return {
       name: 'UPDATED-' + app.name,
-      account: 'API_TEST_COMPANY_1461793655217',
-      configurationStaleTimeout: '36001',
-      sdkOperationMode: 'Report Only',
+      //account: 'API_TEST_COMPANY_1461793655217',
+      companyName:'Vadym_test',
+      sdkOperationMode: SDKOperationMode,
+      SDKeventsLoggingLevel: SDKEventsLoggingLevel,
       configurationRefreshInterval: '36001',
-      initialTransportProtocol: 'QUIC',
+      configurationStaleTimeout: '36001', 
+      allowedTransportProtocolsAndSelectionPriority: allowedTransportProtocolsAndSelectionPriority,
+      analyticsReportingLevel: analyticsReportingLevel,
+      initialTransportProtocol: initialTransportProtocol,
+      analyticsReportingInterval: '21',
       domainsWhiteList: 'www.meta.ua',
       comment: 'App was updated',
       domainsBlackList: 'www.meta.ua',
