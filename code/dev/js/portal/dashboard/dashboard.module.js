@@ -11,11 +11,11 @@
       'revapm.Portal.Resources',
       'ui.router',
       'ngSanitize',
-      // 'adf', // TODO: add after fix conflict with directive 'alert'
+      'adf',
       'adf.provider',
       'revapm.Portal.BlueTriangleTech',
       'angular-nicescroll',
-      'adf'
+      'revapm.Portal.Dashboard.Widgets.WebAnalytics',
     ])
     .config( /*ngInject*/ function(dashboardProvider) {
       // NOTE: define dashboard structures
