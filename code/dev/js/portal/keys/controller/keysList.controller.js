@@ -73,8 +73,8 @@
       $scope.confirm('confirmModal.html', model).then(function() {
         $scope
           .delete(model)
-          .then(function() {
-            $scope.alertService.success('API Key success delete');
+          .then(function(data) {
+            $scope.alertService.success(data);
             $rootScope.$broadcast('update:searchData');
           })
           .catch($scope.alertService.danger);
@@ -100,7 +100,7 @@
         .$promise
         .then(function(data) {
           $rootScope.$broadcast('update:searchData');
-          $scope.alertService.success('API Key created', 5000);
+          $scope.alertService.success(data);
           $scope.list()
             .then(setAccountName);
           return data;
@@ -139,38 +139,6 @@
     };
 
     /**
-     * Should open dialog for selecting company account
-     */
-    $scope.openUpdateDialogFor = function(keyId) {
-      $scope.alertService.clear();
-      var modalInstance = $uibModal.open({
-        animation: true,
-        templateUrl: 'parts/keys/dialog/edit.html',
-        controller: 'KeysEditController',
-        size: 'md',
-        resolve: {
-          data: function() {
-            return {
-              companies: $scope.companies,
-              domains: $scope.domains,
-              keyId: keyId
-            };
-          }
-        }
-      });
-
-      /**
-       * Handle ok button on update
-       */
-      modalInstance.result
-        .then(function(account) {
-          $scope.alertService.success('API Key updated', 5000);
-          $scope.list()
-            .then(setAccountName);
-        });
-    };
-
-    /**
      * Function will remove all data that should not be sent to server
      *
      * @param {Object} data
@@ -179,8 +147,6 @@
     function clearUpdateData(data) {
       var fields = ['key_name', 'account_id', 'domains', 'allowed_ops', 'read_only_status', 'active'];
       return _.pick(_.clone(data), fields);
-      //var result = _.pick(_.clone(data), fields);
-      //return result;
     }
 
     /**
@@ -212,7 +178,7 @@
 
     // Fetch list of users
     $scope.list()
-        .then(setAccountName);
+      .then(setAccountName);
 
     $scope.getRelativeDate = function(datetime) {
       return moment.utc(datetime).fromNow();

@@ -1,6 +1,7 @@
 {
   "protractor": {
-    "seleniumAddress": "http://testsjc20-build01.revsw.net:4444/wd/hub"
+    //"seleniumAddress": "http://testsjc20-build01.revsw.net:4444/wd/hub"
+    "seleniumServerJar": "./selenium-server-standalone-2.44.0.jar"
   },
   "portal": {
     "host": {

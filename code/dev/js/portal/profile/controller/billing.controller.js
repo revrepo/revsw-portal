@@ -49,9 +49,7 @@
           $scope.setResource(BillingPlans);
           return $scope.list();
         })
-        .catch(function(err) {
-          $scope.alertService.danger('Oops! Something went wrong');
-        })
+        .catch($scope.alertService.danger)
         .finally(function() {
           $scope._loading = false;
         });
@@ -93,13 +91,7 @@
                 });
               });
           })
-          .catch(function(err) {
-            var message = 'Oops! Something went wrong';
-            if (err.data && err.data.message) {
-              message = err.data.message;
-            }
-            $scope.alertService.danger(message);
-          })
+          .catch($scope.alertService.danger)
           .finally(function() {
             $scope._loading = false;
           });
@@ -121,12 +113,8 @@
           $scope.confirm('confirmModal.html', plan)
             .then(CompaniesUpdate);
         })
-        .catch(function(err) {
-          var message = 'Oops! Something went wrong';
-          if (err.data && err.data.message) {
-            message = err.data.message;
-          }
-          $scope.alertService.danger(message);
+        .catch($scope.alertService.danger)
+        .finnaly(function() {
           $scope._loading = false;
         });
     };

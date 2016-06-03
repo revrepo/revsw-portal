@@ -27,6 +27,8 @@ var Header = {
 
   // ## Properties
 
+  waitTimeout: 20000, // TODO: read from config file
+
   // Locators specific to HTML elements from this page object
   locators: {
     labels: {
@@ -207,6 +209,20 @@ var Header = {
       .getNavBar()
       .element(by.linkText(this.locators.menu.navbar.helpSupport.linkText))
       .click();
+  },
+
+  /**
+   * ### Header.waitToDisplay()
+   *
+   * Waits/Delays the execution until Header element is displayed in the UI.
+   * If it is not displayed until the given timeout, it throws an error which
+   * makes the spec/test to fail.
+   */
+  waitToDisplay: function () {
+    var me = this;
+    return browser.wait(function () {
+      return browser.isElementPresent(by.css(me.locators.menu.user.css));
+    }, this.waitTimeout);
   }
 };
 

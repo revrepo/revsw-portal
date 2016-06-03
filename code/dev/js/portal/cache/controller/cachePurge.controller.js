@@ -74,7 +74,7 @@
       mode: 'code',
       modes: ['code', 'view'], // allowed modes['code', 'form', 'text', 'tree', 'view']
       error: function(err) {
-        AlertService.danger(err.toString());
+        AlertService.danger(err);
       }
     };
 
@@ -90,12 +90,8 @@
       $scope._loading = true;
       Cache.purge({}, json)
         .$promise
-        .then(function(data) {
-          AlertService.success(data);
-        })
-        .catch(function(err) {
-          AlertService.danger(err, 5000);
-        })
+        .then(AlertService.success)
+        .catch(AlertService.danger)
         .finally(function() {
           $scope._loading = false;
         });
@@ -121,12 +117,8 @@
       $scope._loading = true;
       Cache.purge({}, json)
         .$promise
-        .then(function(data) {
-          AlertService.success(data);
-        })
-        .catch(function(err) {
-          AlertService.danger(err);
-        })
+        .then(AlertService.success)
+        .catch(AlertService.danger)
         .finally(function() {
           $scope._loading = false;
         });
@@ -149,12 +141,8 @@
           $scope._loading = true;
           Cache.purge({}, json)
             .$promise
-            .then(function(data) {
-              AlertService.success(data);
-            })
-            .catch(function(err) {
-              AlertService.danger(err);
-            })
+            .then(AlertService.success)
+            .catch(AlertService.danger)
             .finally(function() {
               $scope._loading = false;
             });

@@ -50,7 +50,7 @@ var Alerts = {
    */
   waitToDisplay: function () {
     var me = this;
-    browser.wait(function () {
+    return browser.wait(function () {
       return browser.isElementPresent(by.css(me.locators.alert.css));
     }, this.waitTimeout);
   },

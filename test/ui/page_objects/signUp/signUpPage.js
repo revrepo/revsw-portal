@@ -120,6 +120,59 @@ var SignUp = {
     return this
       .getPrivacyLnk()
       .click();
+  },
+
+  // Represents the verification message container that is displayed after
+  // submitting the `sign up` form successfully.
+  verificationMessage: {
+
+    locators: {
+      container: {
+        css: '.verification-msg'
+      },
+      labels: {
+        email: {
+          css: 'p.lead b'
+        }
+      }
+    },
+
+    /**
+     * ### SignUpPage.verificationMessage.getContainerEl()
+     *
+     * Gets the container element for verification message area.
+     *
+     * @returns {Object} Promise
+     */
+    getContainerEl: function () {
+      return element(by.css(this.locators.container.css));
+    },
+
+    /**
+     * ### SignUpPage.verificationMessage.getEmailAddressEl()
+     *
+     * Returns the email address element displayed in the verification message
+     *
+     * @returns {Object} Promise
+     */
+    getEmailAddressEl: function () {
+      return this
+        .getContainerEl()
+        .element(by.css(this.locators.labels.email.css));
+    },
+
+    /**
+     * ### SignUpPage.verificationMessage.getEmailAddress()
+     *
+     * Returns the email address value displayed in the verification message
+     *
+     * @returns {Object} Promise
+     */
+    getEmailAddress: function () {
+      return this
+        .getEmailAddressEl()
+        .getText();
+    }
   }
 
   // ## Helper Methods

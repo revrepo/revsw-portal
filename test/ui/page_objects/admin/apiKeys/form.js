@@ -19,7 +19,7 @@
 // # Edit API Key Page Object
 
 // This `API Key Form` Page Object abstracts all operations or actions that a
-// common domain could do in the Edit API Key page from the Portal app/site.
+// common API Key could do in the Edit API Key page from the Portal app/site.
 var KeyForm = {
 
   // ## Properties
@@ -31,7 +31,10 @@ var KeyForm = {
         id: 'key_name'
       },
       managedDomains: {
-        css: '[ng-click=\"$select.activate()\"]'
+        css: '.ui-select-search'
+      },
+      keyGuid: {
+        id: 'key'
       }
     },
     buttons: {
@@ -86,6 +89,18 @@ var KeyForm = {
    */
   getNameInputTxt: function () {
     return element(by.id(this.locators.inputTexts.apiKeyName.id));
+  },
+
+  /**
+   * ### KeyForm.getKeyGuidInputTxt()
+   *
+   * Returns the reference to the `Key GUID` input text (Selenium
+   * WebDriver Element) from the Edit API Key Form Page from the Portal app.
+   *
+   * @returns {Selenium WebDriver Element}
+   */
+  getKeyGuidInputTxt: function () {
+    return element(by.id(this.locators.inputTexts.keyGuid.id));
   },
 
   /**
@@ -233,7 +248,150 @@ var KeyForm = {
     return element(by.css(this.locators.buttons.update.css));
   },
 
-  // ## Methods to interact with the Edit Domain Page components
+  // ## Methods to interact with the Edit API Key Form Page components.
+
+  /**
+   * ### KeyForm.checkActive()
+   *
+   * Triggers a click on the `Active` checkbox from the Edit API Key page
+   * from the Portal app.
+   *
+   * @returns {Promise}
+   */
+  checkActive: function () {
+    return this
+      .getActiveChekBox()
+      .click();
+  },
+
+  /**
+   * ### KeyForm.checkReadOnly()
+   *
+   * Triggers a click on the `Read Only` checkbox from the Edit API Key page
+   * from the Portal app.
+   *
+   * @returns {Promise}
+   */
+  checkReadOnly: function () {
+    return this
+      .getReadOnlyChekBox()
+      .click();
+  },
+
+  /**
+   * ### KeyForm.checkRead()
+   *
+   * Triggers a click on the `Read` checkbox from the Edit API Key page
+   * from the Portal app.
+   *
+   * @returns {Promise}
+   */
+  checkRead: function () {
+    return this
+      .getReadChekBox()
+      .click();
+  },
+
+  /**
+   * ### KeyForm.checkModify()
+   *
+   * Triggers a click on the `Modify` checkbox from the Edit API Key page
+   * from the Portal app.
+   *
+   * @returns {Promise}
+   */
+  checkModify: function () {
+    return this
+      .getModifyChekBox()
+      .click();
+  },
+
+  /**
+   * ### KeyForm.checkDelete()
+   *
+   * Triggers a click on the `Delete` checkbox from the Edit API Key page
+   * from the Portal app.
+   *
+   * @returns {Promise}
+   */
+  checkDelete: function () {
+    return this
+      .getDeleteChekBox()
+      .click();
+  },
+
+  /**
+   * ### KeyForm.checkPurge()
+   *
+   * Triggers a click on the `Purge` checkbox from the Edit API Key page
+   * from the Portal app.
+   *
+   * @returns {Promise}
+   */
+  checkPurge: function () {
+    return this
+      .getPurgeChekBox()
+      .click();
+  },
+
+  /**
+   * ### KeyForm.checkReports()
+   *
+   * Triggers a click on the `Reports` checkbox from the Edit API Key page
+   * from the Portal app.
+   *
+   * @returns {Promise}
+   */
+  checkReports: function () {
+    return this
+      .getReportsChekBox()
+      .click();
+  },
+
+  /**
+   * ### KeyForm.checkAdmin()
+   *
+   * Triggers a click on the `Admin` checkbox from the Edit API Key page
+   * from the Portal app.
+   *
+   * @returns {Promise}
+   */
+  checkAdmin: function () {
+    return this
+      .getAdminChekBox()
+      .click();
+  },
+
+  /**
+   * ### KeyForm.setName(name)
+   *
+   * Sets a value in `API Key Name` input text in the Edit API Key Form page.
+   *
+   * @param {String} name, API Key name.
+   *
+   * @returns {Promise}
+   */
+  setName: function (name) {
+    this.getNameInputTxt().clear();
+    return this
+      .getNameInputTxt()
+      .sendKeys(name);
+  },
+
+  /**
+   * ### KeyForm.setManagedDomain(domain)
+   *
+   * Selects a domain in the `Managed Domain` input text of Edit API Key Form.
+   *
+   * @param {String} domain, domain API Key.
+   *
+   * @returns {Promise}
+   */
+  setManagedDomain: function (domain) {
+    return this
+      .getManagedDomainInputTxt()
+      .sendKeys(domain);
+  },
 
   /**
    * ### KeyForm.clickShowApiKey()
@@ -250,9 +408,9 @@ var KeyForm = {
   },
 
   /**
-   * ### KeyForm.clickBasicMode()
+   * ### KeyForm.clickCancel()
    *
-   * Triggers a click on the `Basic mode` button from the Edit Domain page
+   * Triggers a click on the `Cancel` button from the Edit API Key Form page
    * from the Portal app.
    *
    * @returns {Promise}
@@ -280,9 +438,24 @@ var KeyForm = {
   // ## Helper Methods
 
   /**
-   * ### KeyForm.updateDomain(apiKey)
+   * ### KeyForm.isDisplayed()
    *
-   * Updates the API Key using the given data by filling it in the form and
+   * Checks whether the API Key Form is displayed or not in the UI.
+   *
+   * @returns {Promise}
+   */
+  isDisplayed: function () {
+    var input1 = this.getNameInputTxt().isPresent();
+    var input2 = this.getManagedDomainInputTxt().isPresent();
+    var button1 = this.getShowApiKeyBtn().isPresent();
+    var button2 = this.getUpdateBtn().isPresent();
+    return input1 && input2 && button1 && button2;
+  },
+
+  /**
+   * ### KeyForm.fill(apiKey)
+   *
+   * Updates the API Key using the given data by filling the form and
    * clicking on the `Update` button from the Edit API Key page.
    *
    * @param {Object} apiKey, apiKey data with the schema specified in
@@ -291,8 +464,40 @@ var KeyForm = {
    * @returns {Promise}
    */
   fill: function (apiKey) {
-    
-    return this.clickUpdateDomain();
+    return this.setName(apiKey.name);
+    // this.setManagedDomain(apiKey.domain);
+
+    // if (!apiKey.active) {
+    //   this.checkActive();
+    // }
+
+    // if (apiKey.readOnly) {
+    //   this.checkReadOnly();
+    // }
+
+    // if (apiKey.read) {
+    //   this.checkRead();
+    // }
+
+    // if (apiKey.modify) {
+    //   this.checkModify();
+    // }
+
+    // if (apiKey.delete) {
+    //   this.checkDelete();
+    // }
+
+    // if (apiKey.purge) {
+    //   this.checkPurge();
+    // }
+
+    // if (apiKey.reports) {
+    //   this.checkReports();
+    // }
+
+    // if (apiKey.admin) {
+    //   this.checkAdmin();
+    // }
   }
 };
 

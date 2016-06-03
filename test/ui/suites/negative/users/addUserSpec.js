@@ -19,6 +19,7 @@
 var config = require('config');
 var Portal = require('./../../../page_objects/portal');
 var DataProvider = require('./../../../common/providers/data');
+var Constants = require('./../../../page_objects/constants');
 
 describe('Negative', function () {
   describe('Add user', function () {
@@ -60,11 +61,13 @@ describe('Negative', function () {
         jerry.email = tom.email;
         Portal.userListPage.clickAddNewUser();
         Portal.addUserPage.createUser(tom);
+        Portal.addUserPage.clickBackToList();
+        Portal.userListPage.clickAddNewUser();
         Portal.addUserPage.createUser(jerry);
         expect(Portal.alerts.getAll().count()).toEqual(1);
         var alert = Portal.alerts.getFirst();
-        var expectedMessage = '×\nThe email address is already used by another user';
-        expect(alert.getText()).toEqual(expectedMessage);
+        var expectedMessage = Constants.alertMessages.users.MSG_FAIL_ADD_EMAIL_EXISTS;
+        expect(alert.getText()).toContain(expectedMessage);
       });
 
     it('should not allow to create a user without email',

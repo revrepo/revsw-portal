@@ -89,6 +89,8 @@ var Constants = {
     },
     billing: {
       BILLING: 'Billing',
+      ACCOUNT_PROFILE: 'Account Profile',
+      CHANGE_BILLING_PLAN: 'Change Billing Plan',
       USAGE_REPORT: 'Usage Report'
     },
     helpSupport: {
@@ -190,6 +192,25 @@ var Constants = {
       MSG_SERVER_NOT_FOUND: 'Server group not found',
       MSG_ALREADY_EXISTS: 'The application name and platform is' +
         ' already registered in the system',
+    },
+    users: {
+      MSG_SUCCESS_ADD: 'Successfully created new user',
+      MSG_SUCCESS_UPDATE: 'Successfully updated the user',
+      MSG_SUCCESS_DELETE: 'Successfully deleted the user',
+      MSG_SUCCESS_UPDATE_PASSWORD: 'Successfully updated the password',
+      MSG_FAIL_ADD_EMAIL_EXISTS:'The email address is already used by another user',
+    },
+    accounts:{
+      MSG_SUCCESS_ADD: 'Successfully created new account',
+      MSG_SUCCESS_UPDATE: 'Successfully updated the account',
+      MSG_SUCCESS_DELETE: 'Successfully deleted the account',
+    },
+    domains:{
+      MSG_SUCCESS_ADD: 'Successfully created new domain configuration',
+      MSG_SUCCESS_VERIFY: 'The configuration has been successfully verified',
+      MSG_SUCCESS_UPDATE: 'Successfully saved the domain configuration',
+      MSG_SUCCESS_DELETE: 'The domain has been scheduled for removal',
+      MSG_FAIL_VERIFY: 'Failed to verify domain configuration',
     }
   }
 };

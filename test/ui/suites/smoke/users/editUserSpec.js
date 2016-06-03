@@ -19,6 +19,7 @@
 var config = require('config');
 var Portal = require('./../../../page_objects/portal');
 var DataProvider = require('./../../../common/providers/data');
+var Constants = require('./../../../page_objects/constants');
 
 describe('Smoke', function () {
 
@@ -26,7 +27,7 @@ describe('Smoke', function () {
   var users = [
     config.get('portal.users.admin'),
     config.get('portal.users.reseller'),
-    config.get('portal.users.revAdmin') 
+    config.get('portal.users.revAdmin')
   ];
 
   users.forEach(function (user) {
@@ -84,7 +85,8 @@ describe('Smoke', function () {
           Portal.editUserPage.clickUpdateUser();
           // Check alert message and data updated
           var alert = Portal.alerts.getFirst();
-          expect(alert.getText()).toEqual('Successfully updated the user');
+          expect(alert.getText())
+            .toContain(Constants.alertMessages.users.MSG_SUCCESS_UPDATE);
           var updatedFirstName = Portal.editUserPage.form.getFirstName();
           var updatedLastName = Portal.editUserPage.form.getLastName();
           expect(updatedFirstName).toContain(valueAdded);

@@ -278,21 +278,33 @@
      */
     $scope.reloadCountry = function ( filters ) {
       $scope.country = [];
-      Stats.country( filters )
-        .$promise
-        .then(function (data) {
-          if (data.data && data.data.length > 0) {
-            var newData = [];
-            angular.forEach(data.data, function (val) {
-              var name = $scope.countries[val.key.toUpperCase()] || 'Unknown';
-              newData.push({
-                name: name,
-                y: val.count
+      // NOTE:  $scope.countries must be loaded
+      if($scope.countries.length===0){
+          Countries.query().then(function(data){
+             $scope.countries = data;
+             getDataCountry(filters);
+          });
+      }else{
+        getDataCountry(filters);
+      }
+      function getDataCountry(filters) {
+        Stats.country(filters)
+          .$promise
+          .then(function(data) {
+            if (data.data && data.data.length > 0) {
+              var newData = [];
+              angular.forEach(data.data, function(val) {
+
+                var name = $scope.countries[val.key.toUpperCase()] || 'Unknown';
+                newData.push({
+                  name: name,
+                  y: val.count
+                });
               });
-            });
-            $scope.country = newData;
-          }
-        });
+              $scope.country = newData;
+            }
+          });
+      }
     };
 
     /**
@@ -301,7 +313,6 @@
      * @param {object} common parameters(domainId, from, to)
      */
     $scope.reloadRequestStatus = function ( filters ) {
-
       $scope.requestStatus = [];
       Stats.requestStatus( filters )
         .$promise
@@ -341,7 +352,7 @@
 
       $scope.reloadOS( filters );
       $scope.reloadDevice( filters );
-      $scope.reloadCountry( filters );
+      $scope.reloadCountry(filters);
       $scope.reloadProtocol( filters );
       $scope.reloadHttpMethod( filters );
       $scope.reloadHttpProtocol( filters );

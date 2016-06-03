@@ -128,7 +128,8 @@ describe('Smoke', function () {
                 Portal.mobileApps.editPage.form.getConfigurationRefreshIntervalDDown().getAttribute('value').then(function(value){
                   expect(value).toEqual(app.configurationRefreshInterval);
                 });
-                Portal.mobileApps.editPage.form.getConfigurationStaleTimeoutDDown().getAttribute('value').then(function(value){
+                Portal.mobileApps.editPage.form.getConfigurationStaleTimeoutDDown()
+                  .getAttribute('value').then(function(value){
                   expect(value).toEqual(app.configurationStaleTimeout);
                 });
                 element(by.xpath('.//body')).getAttribute('class').then(function(){
@@ -152,7 +153,8 @@ describe('Smoke', function () {
                 }
                 });        
 
-                Portal.mobileApps.editPage.form.getInitialTransportProtocol().getAttribute('value').then(function(value){
+                Portal.mobileApps.editPage.form.getInitialTransportProtocol()
+                  .getAttribute('value').then(function(value){
                   expect(value).toEqual(app.initialTransportProtocol.toLowerCase());
                  });
                 Portal.mobileApps.editPage.form.getAnalyticsReportingLevel().getAttribute('value').then(function(value){
@@ -167,7 +169,8 @@ describe('Smoke', function () {
 
                // expect(Portal.mobileApps.editPage.form.getDomainsProvisionedListValues()).toContain(app.domainsProvisionedList);
                 
-                Portal.mobileApps.editPage.form.getTestingOffloadingRatio().getAttribute('value').then(function(value){
+                Portal.mobileApps.editPage.form.getTestingOffloadingRatio()
+                  .getAttribute('value').then(function(value){
                   expect(value).toContain(app.testingOffloadingRatio);
                 });             
 

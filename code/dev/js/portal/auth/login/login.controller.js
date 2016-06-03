@@ -49,10 +49,6 @@
           })
           .catch(function(err) {
             $scope._loading = false;
-
-            if (!err.status) {
-
-            }
             if (err.status === $config.STATUS.TWO_FACTOR_AUTH_REQUIRED) {
               $scope.enter2faCode(email, pass);
             }
@@ -60,18 +56,18 @@
               $scope.resendRegistrationEmail(email, pass);
             }
             if (err.status === $config.STATUS.UNAUTHORIZED) {
-              AlertService.danger('Wrong username or password', 5000);
+              AlertService.danger('Wrong username or password');
             }
             if (!!err.data) {
               if (err.data.message && (err.status !== $config.STATUS.SUBSCRIPTION_REQUIRED)) {
-                AlertService.danger(err.data.message, 5000);
+                AlertService.danger(err);
               }
             } else {
-              AlertService.danger('Something get wrong', 5000);
+              AlertService.danger(err);
             }
           });
-      } catch (e) {
-        AlertService.danger(e.message);
+      } catch (err) {
+        AlertService.danger(err);
         $scope._loading = false;
       }
     };
@@ -114,7 +110,7 @@
 
       modalInstance.result.then(function(message) {
         if (!!message) {
-          AlertService.success(message, 5000);
+          AlertService.success(message);
         }
       });
     };

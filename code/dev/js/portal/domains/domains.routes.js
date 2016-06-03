@@ -17,16 +17,6 @@
           }
         }
       })
-      // TODO: delete this route because it deprecated
-      .state('index.webApp.domains.advanced', {
-        url: '/configure/:id',
-        views: {
-          page: {
-            controller: 'DomainsConfigureAdvancedController',
-            templateUrl: 'parts/domains/configure_advanced.html'
-          }
-        }
-      })
       .state('index.webApp.domains.new', {
         url: '/new',
         views: {

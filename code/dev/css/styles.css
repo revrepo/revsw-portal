@@ -34,6 +34,16 @@
   padding-bottom: 15px;
   margin-bottom: 15px;
 }
+.protocolbox {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 6px 12px;
+  margin: 6px;
+  cursor: move;
+}
+.protocolbox input[type="checkbox"] {
+  margin-left: 0px;
+}
 html,
 body {
   height: 100%;
@@ -332,6 +342,9 @@ form .error-messages.ng-active,
   line-height: 100%;
   opacity: 1;
 }
+.toast-top-right {
+  right: auto;
+}
 input[type="text"],
 input[type="email"],
 input[type="password"],
@@ -424,9 +437,6 @@ textarea {
 .login_box .ng-submitted input.ng-invalid-required {
   border-color: #a94442;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(250, 0, 0, 0.6);
-}
-.login_box .error-messages {
-  text-align: center;
 }
 #main .footerNoteA {
   color: #fff;
