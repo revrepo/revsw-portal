@@ -1,9 +1,9 @@
-( function() {
+(function() {
   'use strict';
 
   angular
-    .module( 'revapm.Portal.Reports' )
-    .directive( 'fbtAverageChart', fbtAverageChartDirective );
+    .module('revapm.Portal.Reports')
+    .directive('fbtAverageChart', fbtAverageChartDirective);
 
   /*@ngInject*/
   function fbtAverageChartDirective() {
@@ -15,10 +15,38 @@
         flCountry: '=',
         flOs: '=',
         flDevice: '=',
-        ngDomain: '='
+        ngDomain: '=',
+        filtersSets: '='
       },
       /*@ngInject*/
-      controller: function( $scope, Stats, Util ) {
+      controller: function($scope, Stats, Util) {
+        var _filters_field_list = ['from_timestamp', 'to_timestamp', 'country', 'device', 'os'];
+
+        function generateFilterParams(filters) {
+          // var filter = {
+          //   domainId: $scope.ngDomain.id,
+          //   from_timestamp: moment().subtract( $scope.delay, 'days' ).valueOf(),
+          //   to_timestamp: Date.now(),
+          // };
+          var params = {
+            from_timestamp: moment().subtract(1, 'days').valueOf(),
+            to_timestamp: Date.now()
+          };
+          _.forEach(filters, function(val, key) {
+            if (_.indexOf(_filters_field_list, key) !== -1) {
+              if (val !== '-' && val !== '') {
+                params[key] = val;
+              }
+            } else {
+              if (key === 'count_last_day' || key === 'delay') {
+                params.from_timestamp = moment().subtract(val, 'days').valueOf();
+                params.to_timestamp = Date.now();
+                delete params[key];
+              }
+            }
+          });
+          return params;
+        }
 
         $scope.delay = '1';
         $scope.os = '';
@@ -38,17 +66,19 @@
             type: 'column',
             events: {
               redraw: function() {
-                if ( info_ ) {
+                if (info_) {
                   info_.destroy();
                   info_ = null;
                 }
-                info_ = this/*chart*/.renderer
-                  .label( 'FBT Avg <span style="font-weight: bold; color: #3c65ac;">' + Util.formatNumber( avg_ / 1000, 1 ) +
-                      '</span> Median <span style="font-weight: bold; color: #3c65ac;">' + Util.formatNumber( median_ / 1000, 1 ) +
-                      '</span> Max <span style="font-weight: bold; color: black;">' + Util.formatNumber( max_ / 1000, 1 ) +
-                      '</span> ms',
-                      this.xAxis[0].toPixels( 0 ), 0, '', 0, 0, true/*html*/ )
-                  .css({ color: '#444' })
+                info_ = this /*chart*/ .renderer
+                  .label('FBT Avg <span style="font-weight: bold; color: #3c65ac;">' + Util.formatNumber(avg_ / 1000, 1) +
+                    '</span> Median <span style="font-weight: bold; color: #3c65ac;">' + Util.formatNumber(median_ / 1000, 1) +
+                    '</span> Max <span style="font-weight: bold; color: black;">' + Util.formatNumber(max_ / 1000, 1) +
+                    '</span> ms',
+                    this.xAxis[0].toPixels(0), 0, '', 0, 0, true /*html*/ )
+                  .css({
+                    color: '#444'
+                  })
                   .attr({
                     fill: 'rgba(240, 240, 240, 0.6)',
                     stroke: '#3c65ac',
@@ -67,7 +97,7 @@
             },
             labels: {
               formatter: function() {
-                return Util.formatNumber( Math.round( this.value / 1000 ) );
+                return Util.formatNumber(Math.round(this.value / 1000));
               }
             }
           },
@@ -88,7 +118,7 @@
           tooltip: {
             formatter: function() {
               return this.key.tooltip + '<br/>' +
-                this.series.name + ': <strong>' + Util.formatNumber( this.y / 1000, 2 ) + '</strong> ms';
+                this.series.name + ': <strong>' + Util.formatNumber(this.y / 1000, 2) + '</strong> ms';
             }
           }
           // subtitle: {
@@ -99,66 +129,77 @@
           // }
         };
 
+        $scope.filters = {
+          from_timestamp: moment().subtract(1, 'days').valueOf(),
+          to_timestamp: Date.now()
+        };
+
+        if ($scope.filtersSets) {
+          _.extend($scope.filters, $scope.filtersSets);
+        }
+
         //  ---------------------------------
         $scope.reloadTrafficStats = function() {
-          if ( !$scope.ngDomain || !$scope.ngDomain.id ) {
+          if (!$scope.ngDomain || !$scope.ngDomain.id) {
             return;
           }
+
           $scope._loading = true;
-          var opts = {
-            domainId: $scope.ngDomain.id,
-            from_timestamp: moment().subtract( $scope.delay, 'days' ).valueOf(),
-            to_timestamp: Date.now(),
-          };
-          if ( $scope.country !== '' ) {
-            opts.country = $scope.country;
+
+          if ($scope.delay !== '') {
+            $scope.filters.count_last_day = $scope.delay;
           }
-          if ( $scope.device !== '' ) {
-            opts.device = $scope.device;
+          if ($scope.country !== '') {
+            $scope.filters.country = $scope.country;
           }
-          if ( $scope.os !== '' ) {
-            opts.os = $scope.os;
+          if ($scope.device !== '') {
+            $scope.filters.device = $scope.device;
           }
-          Stats.fbt_average( opts )
+          if ($scope.os !== '') {
+            $scope.filters.os = $scope.os;
+          }
+          Stats.fbt_average(angular.merge({
+              domainId: $scope.ngDomain.id
+            }, generateFilterParams($scope.filters)))
             .$promise
-            .then( function( data ) {
-              var series = [ {
+            .then(function(data) {
+              var series = [{
                 name: 'Average FBT',
                 data: []
-              } ];
-              if ( data.data && data.data.length > 0 ) {
+              }];
+              if (data.data && data.data.length > 0) {
                 avg_ = max_ = median_ = 0;
                 var labels = [];
-                var offset = ( data.metadata.interval_sec || 1800 ) * 1000;
+                var offset = (data.metadata.interval_sec || 1800) * 1000;
                 var cnt_ = 0;
                 // console.log( data );
-                data.data.forEach( function( item, idx, items ) {
+                data.data.forEach(function(item, idx, items) {
 
-                  var val = moment( item.time + offset );
+                  var val = moment(item.time + offset);
                   var label;
-                  if ( idx % tickInterval_ ) {
+                  if (idx % tickInterval_) {
                     label = '';
-                  } else if ( idx === 0 ||
-                    ( new Date( item.time + offset ) ).getDate() !== ( new Date( items[idx - tickInterval_].time + offset ) ).getDate() ) {
-                    label = val.format( '[<span style="color: #000; font-weight: bold;">]HH:mm[</span><br>]MMM D' );
+                  } else if (idx === 0 ||
+                    (new Date(item.time + offset)).getDate() !== (new Date(items[idx - tickInterval_].time + offset)).getDate()) {
+                    label = val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span><br>]MMM D');
                   } else {
-                    label = val.format( '[<span style="color: #000; font-weight: bold;">]HH:mm[</span>]' );
+                    label = val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span>]');
                   }
 
                   labels.push({
-                    tooltip: val.format( '[<span style="color: #000; font-weight: bold;">]HH:mm[</span>] MMMM Do YYYY' ),
+                    tooltip: val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span>] MMMM Do YYYY'),
                     label: label
                   });
 
-                  if ( max_ < item.avg_fbt ) {
+                  if (max_ < item.avg_fbt) {
                     max_ = item.avg_fbt;
                   }
-                  if ( item.requests ) {
+                  if (item.requests) {
                     avg_ += item.avg_fbt;
                     ++cnt_;
-                    series[ 0 ].data.push( item.avg_fbt );
+                    series[0].data.push(item.avg_fbt);
                   } else {
-                    series[ 0 ].data.push( null );
+                    series[0].data.push(null);
                   }
                 });
 
@@ -167,21 +208,21 @@
                   series: series
                 };
 
-                if ( cnt_ ) {
+                if (cnt_) {
                   avg_ /= cnt_;
 
                   //  median
-                  var avg_t = data.data.filter( function( item ) {
+                  var avg_t = data.data.filter(function(item) {
                     return item.requests !== 0;
-                  }).map( function( item ) {
+                  }).map(function(item) {
                     return item.avg_fbt;
-                  }).sort( function( lhs, rhs ) {
+                  }).sort(function(lhs, rhs) {
                     return lhs - rhs;
                   });
                   var idx0 = avg_t.length - 1,
-                    idx1 = Math.ceil( idx0 / 2 );
-                  idx0 = Math.floor( idx0 / 2 );
-                  median_ = ( idx0 === idx1 ) ? avg_t[idx0] : ( avg_t[idx0] + avg_t[idx1] ) / 2;
+                    idx1 = Math.ceil(idx0 / 2);
+                  idx0 = Math.floor(idx0 / 2);
+                  median_ = (idx0 === idx1) ? avg_t[idx0] : (avg_t[idx0] + avg_t[idx1]) / 2;
                 }
 
               } else {
@@ -190,20 +231,22 @@
                   series: series
                 };
               }
-            } )
-            .finally( function() {
+            })
+            .finally(function() {
               $scope._loading = false;
-            } );
+            });
         };
 
-        $scope.$watch( 'ngDomain', function() {
-          if ( !$scope.ngDomain ) {
+
+
+
+        $scope.$watch('ngDomain', function() {
+          if (!$scope.ngDomain) {
             return;
           }
           $scope.reloadTrafficStats();
-        } );
+        });
       }
     };
   }
-} )();
-
+})();
