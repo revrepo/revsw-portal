@@ -35,7 +35,7 @@ var SideBar = {
     items: {
       className: 'side-menu-sub-item'
     },
-    activecontainer: {
+    activeContainer: {
       className: 'active-side-menu-item'
     },
     arrow: {
@@ -119,7 +119,7 @@ var SideBar = {
    */
   getActiveContainer: function() {
     return element
-      .all(by.className(this.locators.activecontainer.className))
+      .all(by.className(this.locators.activeContainer.className))
       //first active container is always Dashboards
       .get(1);
   },
@@ -134,10 +134,10 @@ var SideBar = {
    */
   getActiveContainersCount: function() {
     return element
-      .all(by.className(this.locators.activecontainer.className))
+      .all(by.className(this.locators.activeContainer.className))
       .count();
   },
-  
+
   /**
    * ### SideBar.getHeaderElem()
    *
@@ -191,7 +191,7 @@ var SideBar = {
       }
     });
   },
-  
+
   /**
    * ### SideBar.getItemWithinActiveContainer()
    *
