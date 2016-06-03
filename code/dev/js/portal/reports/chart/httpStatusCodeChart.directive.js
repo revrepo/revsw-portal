@@ -51,7 +51,7 @@
         if ($scope.filtersSets){
           _.extend($scope.filters, $scope.filtersSets);
         }
-        console.log($scope.filters,$scope.ngDomain ,$scope.statusCodes);
+
         $scope.traffic = {
           labels: [],
           series: []
