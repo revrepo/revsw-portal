@@ -492,7 +492,7 @@ var DataProvider = {
       key: '',
       active: true,
       readOnly: false,
-      domain: false,
+      domain: 'DummyDomain',
       read: false,
       modify: false,
       delete: false,
