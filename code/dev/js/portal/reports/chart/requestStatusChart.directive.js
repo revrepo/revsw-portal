@@ -21,6 +21,29 @@
       /*@ngInject*/
       controller: function($scope, Stats, $q, Util) {
 
+        var _filters_field_list = ['from_timestamp', 'to_timestamp', 'country', 'device', 'os'];
+
+        function generateFilterParams(filters) {
+          var params = {
+            from_timestamp: moment().subtract(1, 'days').valueOf(),
+            to_timestamp: Date.now()
+          };
+          _.forEach(filters, function(val, key) {
+            if (_.indexOf(_filters_field_list, key) !== -1) {
+              if (val !== '-' && val !== '') {
+                params[key] = val;
+              }
+            } else {
+              if (key === 'count_last_day') {
+                params.from_timestamp = moment().subtract(val, 'days').valueOf();
+                params.to_timestamp = Date.now();
+                delete params.count_last_day;
+              }
+            }
+          });
+          return params;
+        }
+
         $scope._loading = false;
         $scope.filters = {
           from_timestamp: moment().subtract(1, 'days').valueOf(),
@@ -50,24 +73,26 @@
           chart: {
             events: {
               redraw: function() {
-                if ( info_ ) {
+                if (info_) {
                   info_.destroy();
                   info_ = null;
                 }
                 var rel_success = 0,
                   rel_failure = 0;
-                if ( ( failure_ + success_ ) !== 0 ) {
-                  rel_success = Math.round( success_ * 1000 / ( failure_ + success_ ) ) / 10;
-                  rel_failure = Math.round( failure_ * 1000 / ( failure_ + success_ ) ) / 10;
+                if ((failure_ + success_) !== 0) {
+                  rel_success = Math.round(success_ * 1000 / (failure_ + success_)) / 10;
+                  rel_failure = Math.round(failure_ * 1000 / (failure_ + success_)) / 10;
                 }
-                info_ = this/*chart*/.renderer
-                  .label( 'Successful <span style="font-weight: bold; color: #3c65ac;">' +  Util.formatNumber( success_ ) +
-                      '</span> Requests, <span style="font-weight: bold; color: #3c65ac;">' + rel_success +
-                      '</span>%<br> Failed <span style="font-weight: bold; color: darkred;">' + Util.formatNumber( failure_ ) +
-                      '</span> Requests, <span style="font-weight: bold; color: darkred;">' + rel_failure +
-                      '</span>%',
-                      this.xAxis[0].toPixels( 0 ), 3, '', 0, 0, true/*html*/ )
-                  .css({ color: '#444' })
+                info_ = this /*chart*/ .renderer
+                  .label('Successful <span style="font-weight: bold; color: #3c65ac;">' + Util.formatNumber(success_) +
+                    '</span> Requests, <span style="font-weight: bold; color: #3c65ac;">' + rel_success +
+                    '</span>%<br> Failed <span style="font-weight: bold; color: darkred;">' + Util.formatNumber(failure_) +
+                    '</span> Requests, <span style="font-weight: bold; color: darkred;">' + rel_failure +
+                    '</span>%',
+                    this.xAxis[0].toPixels(0), 3, '', 0, 0, true /*html*/ )
+                  .css({
+                    color: '#444'
+                  })
                   .attr({
                     fill: 'rgba(240, 240, 240, 0.6)',
                     stroke: '#3c65ac',
@@ -86,7 +111,7 @@
             },
             labels: {
               formatter: function() {
-                return Util.formatNumber( this.value );
+                return Util.formatNumber(this.value);
               }
             }
           },
@@ -107,7 +132,7 @@
           tooltip: {
             formatter: function() {
               return this.key.tooltip + '<br/>' +
-                this.series.name + ': <strong>' + Util.formatNumber( this.y, 3 ) + '</strong>';
+                this.series.name + ': <strong>' + Util.formatNumber(this.y, 3) + '</strong>';
             }
           }
         };
@@ -132,16 +157,16 @@
           $q.all([
 
               Stats.traffic(angular.merge({
-                  domainId: $scope.ngDomain.id
-                }, $scope.filters, {
-                  request_status: 'OK'
-                })).$promise,
+                domainId: $scope.ngDomain.id
+              }, generateFilterParams($scope.filters), {
+                request_status: 'OK'
+              })).$promise,
 
               Stats.traffic(angular.merge({
-                  domainId: $scope.ngDomain.id
-                }, $scope.filters, {
-                  request_status: 'ERROR'
-                })).$promise
+                domainId: $scope.ngDomain.id
+              }, generateFilterParams($scope.filters), {
+                request_status: 'ERROR'
+              })).$promise
 
             ])
             .then(function(data) {
@@ -158,32 +183,32 @@
 
               success_ = failure_ = 0;
               if (data[0].data && data[0].data.length > 0) {
-                data[0].data.forEach( function(item, idx, items) {
+                data[0].data.forEach(function(item, idx, items) {
 
-                  var val = moment( item.time + offset );
+                  var val = moment(item.time + offset);
                   var label;
-                  if ( idx % tickInterval_ ) {
+                  if (idx % tickInterval_) {
                     label = '';
-                  } else if ( idx === 0 ||
-                    ( new Date( item.time + offset ) ).getDate() !== ( new Date( items[idx - tickInterval_].time + offset ) ).getDate() ) {
-                    label = val.format( '[<span style="color: #000; font-weight: bold;">]HH:mm[</span><br>]MMM D' );
+                  } else if (idx === 0 ||
+                    (new Date(item.time + offset)).getDate() !== (new Date(items[idx - tickInterval_].time + offset)).getDate()) {
+                    label = val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span><br>]MMM D');
                   } else {
-                    label = val.format( '[<span style="color: #000; font-weight: bold;">]HH:mm[</span>]' );
+                    label = val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span>]');
                   }
 
                   labels.push({
-                    tooltip: val.format( '[<span style="color: #000; font-weight: bold;">]HH:mm[</span>] MMMM Do YYYY' ),
+                    tooltip: val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span>] MMMM Do YYYY'),
                     label: label
                   });
 
                   success_ += item.requests;
-                  series[0].data.push( item.requests / interval );
+                  series[0].data.push(item.requests / interval);
                 });
               }
               if (data[1].data && data[1].data.length > 0) {
-                data[1].data.forEach( function(item) {
+                data[1].data.forEach(function(item) {
                   failure_ += item.requests;
-                  series[1].data.push( item.requests / interval );
+                  series[1].data.push(item.requests / interval);
                 });
               }
               $scope.traffic = {

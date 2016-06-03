@@ -23,8 +23,8 @@
        </span>
 </h3>
 <small ng-if="definition.config.filters.count_last_day" >
-  Last {{definition.config.filters.count_last_day}} Day
-</small>
+  Last {{definition.config.filters.count_last_day}} <span ng-if="definition.config.filters.count_last_day == '1'"> Day</span>
+<span ng-if="definition.config.filters.count_last_day !== '1'"> Days</span></small>
 <span class="widget_filters_info" ng-show="!!definition.config.filters[index.key]" ng-repeat="index in [{key:'os',title:'OS'},{key:'country',title:'Сountry'},{key:'device',title:'Device'}]">
   <small ng-if="!!definition.config.filters[index.key]&& definition.config.filters[index.key]!=='-'">&nbsp;{{index.title}}: {{definition.config.filters[index.key]}}&nbsp;</small>
 </span>

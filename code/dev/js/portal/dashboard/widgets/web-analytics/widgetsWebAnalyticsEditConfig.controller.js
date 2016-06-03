@@ -10,7 +10,8 @@
         country: '-',
         os: '-',
         device: '-',
-        count_last_day: '1'
+        count_last_day: '1',
+        delay: '1'
       },
       info: {
         country: 'All countries',
