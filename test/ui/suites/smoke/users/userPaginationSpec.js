@@ -43,7 +43,7 @@ describe('Smoke', function () {
         });
 
         beforeEach(function () {
-          Portal.getUsersPage();
+          Portal.goToUsersThroughClassNameLocator();
         });
 
         it('should be displayed when displaying User List page',

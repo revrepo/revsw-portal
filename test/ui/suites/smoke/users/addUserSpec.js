@@ -44,8 +44,8 @@ describe('Smoke', function () {
         });
 
         beforeEach(function () {
-          Portal.getUsersPage();
-          Portal.userListPage.clickAddNewUser();
+          Portal.goToUsersThroughClassNameLocator();
+          Portal.userListPage.clickAddNewUserThroughClassName();
         });
 
         it('should display "Add user" form', function () {
@@ -71,7 +71,7 @@ describe('Smoke', function () {
             expect(Portal.alerts.getFirst().getText())
               .toContain(Constants.alertMessages.users.MSG_SUCCESS_ADD);
             // Delete created user
-            Portal.deleteUser(bruce);
+            Portal.deleteUserThroughClassNameLocators(bruce);
           });
       });
     });

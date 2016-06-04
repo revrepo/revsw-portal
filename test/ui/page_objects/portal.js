@@ -307,6 +307,19 @@ var Portal = {
   },
 
   /**
+   * ### Portal.goToUsersThroughClassNameLocator()
+   *
+   * Navigates to Users Page avoiding direct link browsing
+   *
+   * @returns {Promise}
+   */
+  goToUsersThroughClassNameLocator: function () {
+    return this
+      .sideBar.gotoThroughClassNameLocator(Constants.header.appMenu.ACCOUNT_SETTINGS
+        ,Constants.sideBar.menu.USERS);
+  },
+
+  /**
    * ### Portal.goToMobileApps()
    *
    * Navigation helper method that executes all steps to navigate to `Mobile
@@ -395,6 +408,32 @@ var Portal = {
   },
 
   /**
+   * ### Portal.createUserThroughClassNameLocators()
+   *
+   * Helper method that navigates to Users page avoiding direct link browsing and executes all steps required to create a new User from
+   * Portal app.
+   *
+   * @param {user} newUser, data applying the schema defined in
+   * `DataProvider.generateUser()`
+   *
+   * @returns {Object} Promise
+   */
+  createUserThroughClassNameLocators: function (newUser) {
+    var me = this;
+    return browser.getCurrentUrl().then(function (initialUrl) {
+      me.goToUsersThroughClassNameLocator();
+      me.userListPage.clickAddNewUserThroughClassName();
+      me.addUserPage.createUser(newUser);
+      me.addUserPage.clickBackToList();
+      browser.getCurrentUrl().then(function (currentUrl) {
+        if (initialUrl !== currentUrl) {
+          browser.get(initialUrl);
+        }
+      });
+    });
+  },
+
+  /**
    * ### Portal.createUserIfNotExist()
    *
    * Helper method that executes all steps required to create a new User from
@@ -444,6 +483,35 @@ var Portal = {
     var me = this;
     return browser.getCurrentUrl().then(function (initialUrl) {
       me.getUsersPage();
+      me.userListPage.searcher.clearSearchCriteria();
+      me.userListPage.searcher.setSearchCriteria(user.email);
+      me.userListPage.table
+        .getFirstRow()
+        .clickDelete();
+      me.dialog.clickOk();
+      browser.getCurrentUrl().then(function (currentUrl) {
+        if (initialUrl !== currentUrl) {
+          browser.get(initialUrl);
+        }
+      });
+    });
+  },
+
+  /**
+   * ### Portal.deleteUserThroughClassNameLocators()
+   *
+   * Helper method that executes all steps required to delete a User from
+   * Portal app avoiding direct link browsing.
+   *
+   * @param {Object} user, data applying the schema defined in
+   * `DataProvider.generateUser()`
+   *
+   * @returns {Object} Promise
+   */
+  deleteUserThroughClassNameLocators: function (user) {
+    var me = this;
+    return browser.getCurrentUrl().then(function (initialUrl) {
+      me.goToUsersThroughClassNameLocator();
       me.userListPage.searcher.clearSearchCriteria();
       me.userListPage.searcher.setSearchCriteria(user.email);
       me.userListPage.table
