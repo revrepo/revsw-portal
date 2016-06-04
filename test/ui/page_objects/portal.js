@@ -315,8 +315,8 @@ var Portal = {
    */
   goToUsersThroughClassNameLocator: function () {
     return this
-      .sideBar.gotoThroughClassNameLocator(Constants.header.appMenu.ACCOUNT_SETTINGS
-        ,Constants.sideBar.menu.USERS);
+      .sideBar.gotoThroughClassNameLocator(Constants.header.appMenu.ACCOUNT_SETTINGS,
+        Constants.sideBar.menu.USERS);
   },
 
   /**
@@ -410,7 +410,8 @@ var Portal = {
   /**
    * ### Portal.createUserThroughClassNameLocators()
    *
-   * Helper method that navigates to Users page avoiding direct link browsing and executes all steps required to create a new User from
+   * Helper method that navigates to Users page avoiding direct link browsing
+   * and executes all steps required to create a new User from
    * Portal app.
    *
    * @param {user} newUser, data applying the schema defined in

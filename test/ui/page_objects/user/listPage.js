@@ -82,7 +82,8 @@ var UserList = {
   /**
    * ### UserList.getAddNewUserBtnByClassName()
    *
-   * Gets AddNewUser btn element by className and returns the reference to the `Add New User` button (Selenium WebDriver
+   * Gets AddNewUser btn element by className and returns the reference to
+   * the `Add New User` button (Selenium WebDriver
    * Element) from the User List page from the Portal app.
    *
    * @returns {Selenium WebDriver Element}

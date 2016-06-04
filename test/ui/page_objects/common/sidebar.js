@@ -185,7 +185,7 @@ var SideBar = {
   expandBlockIfNotExpanded: function (menuHeaderName) {
     var me = this;
     return this.getActiveContainersCount().then(function(result) {
-      if (result == 1) {
+      if (result === 1) {
         me.getArrowElement(menuHeaderName)
           .click();
       }
