@@ -9,3 +9,4 @@ test/ui/config/local.json
 sftp-config.json
 local.js
 code/public/
+code/dev/config.js
