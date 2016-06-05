@@ -21,7 +21,7 @@
       },
       /*@ngInject*/
       controller: function($scope, Stats, $q, Util) {
-         var _filters_field_list = ['from_timestamp', 'to_timestamp', 'country', 'device', 'os'];
+        var _filters_field_list = ['from_timestamp', 'to_timestamp', 'country', 'device', 'os'];
 
         function generateFilterParams(filters) {
           var params = {
@@ -48,7 +48,7 @@
           from_timestamp: moment().subtract(1, 'days').valueOf(),
           to_timestamp: Date.now()
         };
-        if ($scope.filtersSets){
+        if ($scope.filtersSets) {
           _.extend($scope.filters, $scope.filtersSets);
         }
 
@@ -66,7 +66,7 @@
             },
             labels: {
               formatter: function() {
-                return Util.formatNumber( this.value );
+                return Util.formatNumber(this.value);
               }
             }
           },
@@ -87,7 +87,7 @@
           tooltip: {
             formatter: function() {
               return this.key.tooltip + '<br/>' +
-                this.series.name + ': <strong>' + Util.formatNumber( this.y, 3 ) + '</strong>';
+                this.series.name + ': <strong>' + Util.formatNumber(this.y, 3) + '</strong>';
             }
           }
         };
@@ -97,10 +97,6 @@
           if (!$scope.ngDomain || !$scope.ngDomain.id || !$scope.statusCodes || !$scope.statusCodes.length) {
             return;
           }
-          $scope.traffic = {
-            labels: [],
-            series: []
-          };
           var promises = {};
           var series = [];
           var labels = [];
@@ -120,42 +116,48 @@
             .then(function(data) {
               labels = [];
               var interval = 1800;
-              _.forEach( data, function(val, idx) {
+              _.forEach(data, function(val, idx) {
                 if (data[idx].metadata.interval_sec) {
                   interval = data[idx].metadata.interval_sec;
                 }
                 var offset = interval * 1000;
                 var results = [];
+                var total = 0;
                 if (data[idx].data && data[idx].data.length > 0) {
-                  data[idx].data.forEach( function(item, idx, items) {
+                  data[idx].data.forEach(function(item, idx, items) {
                     if (!timeSet) {
 
-                      var val = moment( item.time + offset );
+                      var val = moment(item.time + offset);
                       var label;
-                      if ( idx % tickInterval_ ) {
+                      if (idx % tickInterval_) {
                         label = '';
-                      } else if ( idx === 0 ||
-                        ( new Date( item.time + offset ) ).getDate() !== ( new Date( items[idx - tickInterval_].time + offset ) ).getDate() ) {
-                        label = val.format( '[<span style="color: #000; font-weight: bold;">]HH:mm[</span><br>]MMM D' );
+                      } else if (idx === 0 ||
+                        (new Date(item.time + offset)).getDate() !== (new Date(items[idx - tickInterval_].time + offset)).getDate()) {
+                        label = val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span><br>]MMM D');
                       } else {
-                        label = val.format( '[<span style="color: #000; font-weight: bold;">]HH:mm[</span>]' );
+                        label = val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span>]');
                       }
 
                       labels.push({
-                        tooltip: val.format( '[<span style="color: #000; font-weight: bold;">]HH:mm[</span>] MMMM Do YYYY' ),
+                        tooltip: val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span>] MMMM Do YYYY'),
                         label: label
                       });
-
                     }
-                    results.push( item.requests / interval );
+                    total += item.requests / interval;
+                    results.push(item.requests / interval);
                   });
                   timeSet = true;
+                  if (total === 0) {
+                    results.length = 0;
+                  }
                 }
+
                 series.push({
                   name: idx,
                   data: results
                 });
               });
+
               $scope.traffic = {
                 labels: labels,
                 series: series

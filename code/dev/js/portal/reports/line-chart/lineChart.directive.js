@@ -60,7 +60,6 @@
         credits: {
           enabled: false
         },
-
         series: []
       };
 
@@ -78,7 +77,8 @@
        */
       $scope.clearChart = function() {
         chart.series.forEach(function(series) {
-          series.remove();
+          // series.remove();
+          series.setData([]);
         });
         $scope.reload();
       };
@@ -90,10 +90,10 @@
         if (!value || !_.isObject(value)) {
           return;
         }
-        $scope.clearChart();
         // update labels
         if (_.isArray(value.labels)) {
           if (value.labels.length === 0) {
+            $scope.clearChart();
             return;
           }
           // Set new data
@@ -102,15 +102,23 @@
         // Update series
         if (_.isArray(value.series)) {
           if (value.series.length === 0) {
+            chart.series.forEach(function(val, key) {
+              chart.series[key].setData([]);
+              //chart.series[key].series.remove();
+            });
             return;
           }
-          // Set new data
-          value.series.forEach(function(val) {
-            chart.addSeries(val);
+          // Set new data (add new or reset exists)
+          value.series.forEach(function(val, key) {
+            if (!chart.series[key]) {
+              chart.addSeries(val);
+            } else {
+              chart.series[key].setData(val.data);
+            }
           });
         }
         $scope.reload();
-      });
+      }, true);
 
       $scope.$watch('xAxis', function(value) {
         if (!value || !_.isArray(value)) {

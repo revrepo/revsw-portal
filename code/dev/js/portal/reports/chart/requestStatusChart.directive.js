@@ -143,16 +143,6 @@
             return;
           }
           $scope._loading = true;
-          $scope.traffic = {
-            labels: [],
-            series: [{
-              name: 'Successful',
-              data: []
-            }, {
-              name: 'Failed',
-              data: []
-            }]
-          };
 
           $q.all([
 
@@ -204,12 +194,18 @@
                   success_ += item.requests;
                   series[0].data.push(item.requests / interval);
                 });
+                if (success_ === 0) {
+                  series[0].data.length = 0;
+                }
               }
               if (data[1].data && data[1].data.length > 0) {
                 data[1].data.forEach(function(item) {
                   failure_ += item.requests;
                   series[1].data.push(item.requests / interval);
                 });
+                if (failure_ === 0) {
+                  series[1].data.length = 0;
+                }
               }
               $scope.traffic = {
                 labels: labels,
