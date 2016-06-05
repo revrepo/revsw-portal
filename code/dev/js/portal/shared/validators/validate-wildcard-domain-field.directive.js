@@ -19,7 +19,7 @@
 
       ngModel.$validators.wildcardDomainField = function(value) {
         ngModel.$setValidity(_name, true);
-        if (value !== undefined && !angular.isArray(value)) {
+        if (value !== undefined && !angular.isArray(value) && value !=='' ) {
           if (WILDCARD_DOMAIN_FIELD.test(value) === false) {
             ngModel.$setValidity(_name, false);
           }
