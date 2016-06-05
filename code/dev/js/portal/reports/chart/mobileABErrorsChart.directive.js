@@ -155,7 +155,7 @@
                 $scope.hits.series[1].data = [];
               }
             })
-            .catch(functin() {
+            .catch(function() {
               $scope.hits.labels = [];
               $scope.hits.series[0].data = [];
               $scope.hits.series[1].data = [];
