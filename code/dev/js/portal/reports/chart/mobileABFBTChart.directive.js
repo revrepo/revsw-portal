@@ -287,7 +287,30 @@
                 $scope.hits.series[3].data = [];
                 $scope.hits.series[4].data = [];
                 $scope.hits.series[5].data = [];
+                rev_avg_ = 0;
+                origin_avg_ = 0;
+                rev_median_ = 0;
+                origin_median_ = 0;
+                imp_avg_ = 0;
+                imp_median_ = 0;
+                tickInterval_ = 4;
               }
+            })
+            .catch(function() {
+              $scope.hits.labels = [];
+              $scope.hits.series[0].data = [];
+              $scope.hits.series[1].data = [];
+              $scope.hits.series[2].data = [];
+              $scope.hits.series[3].data = [];
+              $scope.hits.series[4].data = [];
+              $scope.hits.series[5].data = [];
+              rev_avg_ = 0;
+              origin_avg_ = 0;
+              rev_median_ = 0;
+              origin_median_ = 0;
+              imp_avg_ = 0;
+              imp_median_ = 0;
+              tickInterval_ = 4;
             })
             .finally(function() {
               $scope._loading = false;
