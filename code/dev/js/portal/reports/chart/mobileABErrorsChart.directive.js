@@ -1,9 +1,9 @@
-( function() {
+(function() {
   'use strict';
 
   angular
-    .module( 'revapm.Portal.Mobile' )
-    .directive( 'mobileAbErrorsChart', mobileAbErrorsChartDirective );
+    .module('revapm.Portal.Mobile')
+    .directive('mobileAbErrorsChart', mobileAbErrorsChartDirective);
 
   /*@ngInject*/
   function mobileAbErrorsChartDirective() {
@@ -22,7 +22,7 @@
         flNetworks: '='
       },
       /*@ngInject*/
-      controller: function( $scope, Stats, Util ) {
+      controller: function($scope, Stats, Util) {
 
         $scope.heading = 'SDK Failed Requests Graph';
         $scope.span = '1';
@@ -37,7 +37,7 @@
             },
             labels: {
               formatter: function() {
-                return Util.formatNumber( this.value, 0 );
+                return Util.formatNumber(this.value, 0);
               }
             }
           },
@@ -58,7 +58,7 @@
           tooltip: {
             formatter: function() {
               return this.key.tooltip + '<br/>' +
-                this.series.name + ': <strong>' + Util.formatNumber( this.y, 0 ) + '</strong>';
+                this.series.name + ': <strong>' + Util.formatNumber(this.y, 0) + '</strong>';
             }
           }
         };
@@ -69,12 +69,18 @@
             name: 'Origin',
             data: [],
             color: Highcharts.getOptions().colors[0],
-            marker: { radius: 4, symbol: 'circle' }
+            marker: {
+              radius: 4,
+              symbol: 'circle'
+            }
           }, {
             name: 'RevAPM',
             data: [],
             color: Highcharts.getOptions().colors[1],
-            marker: { radius: 4, symbol: 'diamond' }
+            marker: {
+              radius: 4,
+              symbol: 'diamond'
+            }
           }]
         };
 
@@ -93,17 +99,13 @@
         $scope.reload = function() {
 
           $scope._loading = true;
-          $scope.hits.labels = [];
-          $scope.hits.series[0].data = [];
-          $scope.hits.series[1].data = [];
-
           $scope.filters.account_id = $scope.ngAccount;
-          $scope.filters.app_id = ( $scope.ngApp || null );
-          return Stats.sdk_ab_errors( $scope.filters )
+          $scope.filters.app_id = ($scope.ngApp || null);
+          return Stats.sdk_ab_errors($scope.filters)
             .$promise
-            .then( function( data ) {
+            .then(function(data) {
 
-              if ( data.data && data.data.length > 0 ) {
+              if (data.data && data.data.length > 0) {
                 var labels = [];
                 var hits = {
                   rev_edge: [],
@@ -113,27 +115,27 @@
                 var offset = interval * 1000;
                 var labels_filled = false;
 
-                data.data.forEach( function( dest ) {
-                  dest.items.forEach( function( item, idx, items ) {
-                    if ( !labels_filled ) {
+                data.data.forEach(function(dest) {
+                  dest.items.forEach(function(item, idx, items) {
+                    if (!labels_filled) {
                       // labels.push( moment( item.key + offset /*to show the _end_ of interval instead of begin*/ ).format( 'MMM Do YY h:mm' ) );
-                      var val = moment( item.key + offset );
+                      var val = moment(item.key + offset);
                       var label;
-                      if ( idx % tickInterval_ ) {
+                      if (idx % tickInterval_) {
                         label = '';
-                      } else if ( idx === 0 ||
-                        ( new Date( item.key + offset ) ).getDate() !== ( new Date( items[idx - tickInterval_].key + offset ) ).getDate() ) {
-                        label = val.format( '[<span style="color: #000; font-weight: bold;">]HH:mm[</span><br>]MMM D' );
+                      } else if (idx === 0 ||
+                        (new Date(item.key + offset)).getDate() !== (new Date(items[idx - tickInterval_].key + offset)).getDate()) {
+                        label = val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span><br>]MMM D');
                       } else {
-                        label = val.format( '[<span style="color: #000; font-weight: bold;">]HH:mm[</span>]' );
+                        label = val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span>]');
                       }
 
                       labels.push({
-                        tooltip: val.format( '[<span style="color: #000; font-weight: bold;">]HH:mm[</span>] MMMM Do YYYY' ),
+                        tooltip: val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span>] MMMM Do YYYY'),
                         label: label
                       });
                     }
-                    hits[dest.key].push( item.count );
+                    hits[dest.key].push(item.count);
                   });
                   labels_filled = true;
                 });
@@ -141,27 +143,35 @@
                 $scope.hits.labels = labels;
                 $scope.hits.series[0].data = hits.origin;
                 $scope.hits.series[1].data = hits.rev_edge;
-                if ( hits.origin.length === 0 ) {
+                if (hits.origin.length === 0) {
                   $scope.hits.series[0].visible = false;
                 }
-                if ( hits.rev_edge.length === 0 ) {
+                if (hits.rev_edge.length === 0) {
                   $scope.hits.series[1].visible = false;
                 }
+              } else {
+                $scope.hits.labels = [];
+                $scope.hits.series[0].data = [];
+                $scope.hits.series[1].data = [];
               }
             })
-            .finally( function() {
+            .catch(functin() {
+              $scope.hits.labels = [];
+              $scope.hits.series[0].data = [];
+              $scope.hits.series[1].data = [];
+            })
+            .finally(function() {
               $scope._loading = false;
             });
         };
 
         //  ---------------------------------
-        $scope.$watch( 'ngApp', function() {
-          if ( $scope.ngAccount || $scope.ngApp ) {
+        $scope.$watch('ngApp', function() {
+          if ($scope.ngAccount || $scope.ngApp) {
             $scope.reload();
           }
         });
       }
     };
   }
-} )();
-
+})();
