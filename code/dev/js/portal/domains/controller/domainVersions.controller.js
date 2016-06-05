@@ -8,7 +8,7 @@
     .controller('DomainVersionsController', DomainVersionsController);
 
   /*@ngInject*/
-  function DomainVersionsController($scope, DomainsConfig, $stateParams, AlertService, $timeout, $window, $filter) {
+  function DomainVersionsController($scope, DomainsConfig, $stateParams, AlertService, $timeout, $window, $filter, ObjectDiff) {
 
     $scope._loading = true;
     $scope.id = $stateParams.id;
@@ -17,7 +17,7 @@
       id: $stateParams.id
     });
     $scope.versions = [];
-    $scope.currentVersion = {};
+    $scope.currentVersion = null;
 
     $scope.obj = {
       data: 'Configuration will appear here',
@@ -43,6 +43,7 @@
 
     $scope.onChangeVersion = function() {
       if (!$scope.currentVersion) {
+        $scope.currentData = null;
         $scope.obj.data = '';
         return;
       }
@@ -54,6 +55,7 @@
         })
         .$promise
         .then(function(data) {
+          $scope.currentData = data;
           $scope.obj.data = JSON.stringify(data, null, 2);
         })
         .catch(AlertService.danger)
@@ -61,6 +63,52 @@
           $scope._loading = false;
         });
     };
+
+
+    $scope.onChangeCompareVersion = function() {
+      if (!$scope.compareVersion || !$scope.currentData) {
+        $scope.dataCompare = '';
+        return;
+      }
+      if ($scope.compareVersion === $scope.currentVersion) {
+        $scope.compareVersion = null;
+        $scope.dataCompare = '';
+        return;
+      }
+      $scope._loading = true;
+      DomainsConfig
+        .get({
+          id: $stateParams.id,
+          version: $scope.compareVersion
+        })
+        .$promise
+        .then(function(data) {
+          var objOne = angular.fromJson(angular.toJson($scope.currentData));
+          var objTwo = angular.fromJson(angular.toJson(data))
+          var diff = ObjectDiff.diffOwnProperties(objOne, objTwo);
+          $scope.dataCompare = ObjectDiff.toJsonDiffView(diff);
+          if (diff.changed === 'equal') {
+            $scope.dataCompare = 'Configuration is equal'
+          }
+        })
+        .catch(AlertService.danger)
+        .finally(function() {
+          $scope._loading = false;
+        });
+    };
+
+    $scope.$watch('compareVersion', function(newVal, oldVal) {
+      if (newVal == null) {
+        $scope.dataCompare = null;
+      }
+    });
+
+    $scope.$watch('currentVersion', function(newVal, oldVal) {
+      if (newVal !== oldVal) {
+        $scope.dataCompare = null;
+      }
+    });
+
 
     DomainsConfig
       .versions({
