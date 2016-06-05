@@ -163,12 +163,13 @@
                   hits_total_ += item.hits;
                 });
                 rps_avg_ /= data.data.length;
-                if (hits_total_) {
-                  $scope.hits = {
-                    labels: labels,
-                    series: hits_series
-                  };
+                if (hits_total_ === 0) {
+                  hits_series[0].data.length = 0;
                 }
+                $scope.hits = {
+                  labels: labels,
+                  series: hits_series
+                };
               }
             })
             .finally(function() {
