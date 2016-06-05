@@ -84,11 +84,11 @@
         .$promise
         .then(function(data) {
           var objOne = angular.fromJson(angular.toJson($scope.currentData));
-          var objTwo = angular.fromJson(angular.toJson(data))
+          var objTwo = angular.fromJson(angular.toJson(data));
           var diff = ObjectDiff.diffOwnProperties(objOne, objTwo);
           $scope.dataCompare = ObjectDiff.toJsonDiffView(diff);
           if (diff.changed === 'equal') {
-            $scope.dataCompare = 'There are no differences between the configurations'
+            $scope.dataCompare = 'There are no differences between the configurations';
           }
         })
         .catch(AlertService.danger)
