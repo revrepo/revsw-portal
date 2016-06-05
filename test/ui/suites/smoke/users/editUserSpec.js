@@ -45,7 +45,7 @@ describe('Smoke', function () {
         });
 
         beforeEach(function () {
-          Portal.getUsersPage();
+          Portal.goToUsersThroughClassNameLocator();
         });
 
         it('should display edit user button', function () {
@@ -73,7 +73,7 @@ describe('Smoke', function () {
 
         it('should update user when filling all required data', function () {
           var joe = DataProvider.generateUser('Joe', null, user);
-          Portal.createUser(joe);
+          Portal.createUserThroughClassNameLocators(joe);
           // Edit user name and last name
           Portal.userListPage.searcher.setSearchCriteria(joe.email);
           Portal.userListPage.table
@@ -93,7 +93,7 @@ describe('Smoke', function () {
           expect(updatedLastName).toContain(valueAdded);
           Portal.editUserPage.clickBackToList();
           // Delete created user
-          Portal.deleteUser(joe);
+          Portal.deleteUserThroughClassNameLocators(joe);
         });
       });
     });

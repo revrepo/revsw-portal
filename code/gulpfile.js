@@ -44,6 +44,11 @@ gulp.task('copyCss', function() {
     .pipe(gulp.dest(destFolder + 'css'));
 });
 
+gulp.task('copyFaviconIcon', function() {
+  return gulp.src(devFolder + 'favicon.ico')
+    .pipe(gulp.dest(destFolder));
+});
+
 gulp.task('copyImages', function() {
   return gulp.src(devFolder + 'images/**/*')
     .pipe(gulp.dest(destFolder + 'images'));
@@ -60,7 +65,8 @@ gulp.task('copyJson', function() {
 });
 // copy production configuration files
 gulp.task('copyConfig', function() {
-  return gulp.src([devFolder + '../config.js', devFolder + '../version.txt'])
+  return gulp.src([devFolder + '../config.js', devFolder + 'version.txt',
+    devFolder + 'robots.txt'])
     .pipe(gulp.dest(destFolder));
 });
 // copy widgets
@@ -161,7 +167,7 @@ gulp.task('serve:public', function() {
 });
 
 
-gulp.task('copy', ['copyCss', 'copyParts', 'copyImages', 'copyJson', 'copyFonts', 'fonts', 'widgetsCopy', 'copyConfig']);
+gulp.task('copy', ['copyCss', 'copyParts', 'copyFaviconIcon', 'copyImages', 'copyJson', 'copyFonts', 'fonts', 'widgetsCopy', 'copyConfig']);
 gulp.task('build', ['copy', 'dist', 'vulcanize']);
 gulp.task('default', ['serve', 'less', 'widgets:build']);
 gulp.task('serve', ['serve:dev']);

@@ -62,7 +62,7 @@ describe('Smoke', function () {
           Portal.signIn(user);
 
           // Load in the browser URL the Users page
-          Portal.getUsersPage();
+          Portal.goToUsersThroughClassNameLocator();
         });
 
         // Use this block to run some code after each spec is run
@@ -95,7 +95,7 @@ describe('Smoke', function () {
           // This is a Helper method that internally executes some other steps
           // required to create a user in portal app using the given user
           // information.
-          Portal.createUser(tom);
+          Portal.createUserThroughClassNameLocators(tom);
 
           // Another helper method to search/filter the list by the provided
           // filter criteria (in this case an email) and then licks on the
@@ -124,7 +124,7 @@ describe('Smoke', function () {
             var chris = DataProvider.generateUser('Chris', null, user);
 
             // Using helper method to create the user Chris
-            Portal.createUser(chris);
+            Portal.createUserThroughClassNameLocators(chris);
 
             // Apply Chris' email as filter criteria in the search component
             Portal.userListPage.searcher.setSearchCriteria(chris.email);

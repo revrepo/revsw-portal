@@ -62,7 +62,7 @@ describe('Smoke', function () {
           var carl = DataProvider.generateUser('Carl', null, user);
           var newPassword = 'password2';
 
-          Portal.createUser(carl);
+          Portal.createUserThroughClassNameLocators(carl);
           Portal.signOut();
           Portal.signIn(carl);
           Portal.goToUpdatePassword();
@@ -75,7 +75,7 @@ describe('Smoke', function () {
             .toContain(Constants.alertMessages.users.MSG_SUCCESS_UPDATE_PASSWORD);
           Portal.signOut();
           Portal.signIn(user);
-          Portal.deleteUser(carl);
+          Portal.deleteUserThroughClassNameLocators(carl);
         });
       });
     });
