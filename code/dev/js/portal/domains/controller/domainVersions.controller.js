@@ -88,7 +88,7 @@
           var diff = ObjectDiff.diffOwnProperties(objOne, objTwo);
           $scope.dataCompare = ObjectDiff.toJsonDiffView(diff);
           if (diff.changed === 'equal') {
-            $scope.dataCompare = 'Configuration is equal'
+            $scope.dataCompare = 'There are no differences between the configurations'
           }
         })
         .catch(AlertService.danger)

@@ -31,9 +31,9 @@
               </div>
               <div class="col-md-6">
                 <select name="compareVersions" id="compareVersions" class="form-control" ng-disabled="_loading" ng-model="compareVersion" ngchange="onChangeCompareVersion()" ng-options="ver.last_published_domain_version as format(ver) for ver in versions " ng-disabled="currentVersion==null || currentVersion==''">
-                  <option value="">Please Select Domain Configuration Version For Compare</option>
+                  <option value="">Please Select Domain Configuration Version To Compare With</option>
                 </select>
-                <button ng-disabled="compareVersion=='' || compareVersion==null" class="btn btn-primary btn-sm" ng-click="onChangeCompareVersion()"> Compare </button>
+                <button ng-disabled="compareVersion=='' || compareVersion==null || currentVersion=='' || currentVersion==null" class="btn btn-primary btn-sm" ng-click="onChangeCompareVersion()"> Compare </button>
               </div>
             </div>
           </div>
@@ -44,14 +44,17 @@
                   <pre class="col-md-12" hljs hljs-source="obj.data"></pre>
                 </div>
                 <div class="col-md-6" ng-if="!!dataCompare">
-                  <pre class="col-md-12" ng-bind-html="dataCompare"></pre>
-                  <div class="col-md-12">
+                 <div class="col-md-12">
                     <div class="form-group">
-                      <label> NOTE: </label>
-                      <del class="diff diff-key"> value in Version {{currentVersion}} </del>
-                      <ins class="diff diff-key"> value in Version {{compareVersion}} </ins>
+                      <label> Differences between versions: </label>
+                      <div>
+                      <del class="diff diff-key"> Value in version {{currentVersion}} </del>
+                      <ins class="diff diff-key"> Value in version {{compareVersion}} </ins>
+                      </div>
                     </div>
                   </div>
+                  <pre class="col-md-12" ng-bind-html="dataCompare"></pre>
+
                 </div>
               </div>
               <div class="col-sm-12" style="margin-top: 15px">
