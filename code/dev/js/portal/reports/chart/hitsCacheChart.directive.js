@@ -20,8 +20,9 @@
         hideFilters: '='
       },
       /*@ngInject*/
-      controller: function ($scope, Stats, $q, Util, filterGeneratorService) {
+      controller: function($scope, Stats, $q, Util, filterGeneratorService) {
         var _filters_field_list = ['from_timestamp', 'to_timestamp', 'country', 'device', 'os'];
+
         function generateFilterParams(filters) {
           var params = {
             from_timestamp: moment().subtract(1, 'days').valueOf(),
@@ -73,24 +74,26 @@
           chart: {
             events: {
               redraw: function() {
-                if ( info_ ) {
+                if (info_) {
                   info_.destroy();
                   info_ = null;
                 }
                 var rel_hit = 0,
                   rel_miss = 0;
-                if ( ( miss_ + hit_ ) !== 0 ) {
-                  rel_hit = Math.round( hit_ * 1000 / ( miss_ + hit_ ) ) / 10;
-                  rel_miss = Math.round( miss_ * 1000 / ( miss_ + hit_ ) ) / 10;
+                if ((miss_ + hit_) !== 0) {
+                  rel_hit = Math.round(hit_ * 1000 / (miss_ + hit_)) / 10;
+                  rel_miss = Math.round(miss_ * 1000 / (miss_ + hit_)) / 10;
                 }
-                info_ = this/*chart*/.renderer
-                  .label( 'Cache Hits <span style="font-weight: bold; color: #3c65ac;">' +  Util.formatNumber( hit_ ) +
-                      '</span> Requests, <span style="font-weight: bold; color: #3c65ac;">' + rel_hit +
-                      '</span>%<br> Cache Miss <span style="font-weight: bold; color: darkred;">' + Util.formatNumber( miss_ ) +
-                      '</span> Requests, <span style="font-weight: bold; color: darkred;">' + rel_miss +
-                      '</span>%',
-                      this.xAxis[0].toPixels( 0 ), 3, '', 0, 0, true/*html*/ )
-                  .css({ color: '#444' })
+                info_ = this /*chart*/ .renderer
+                  .label('Cache Hits <span style="font-weight: bold; color: #3c65ac;">' + Util.formatNumber(hit_) +
+                    '</span> Requests, <span style="font-weight: bold; color: #3c65ac;">' + rel_hit +
+                    '</span>%<br> Cache Miss <span style="font-weight: bold; color: darkred;">' + Util.formatNumber(miss_) +
+                    '</span> Requests, <span style="font-weight: bold; color: darkred;">' + rel_miss +
+                    '</span>%',
+                    this.xAxis[0].toPixels(0), 3, '', 0, 0, true /*html*/ )
+                  .css({
+                    color: '#444'
+                  })
                   .attr({
                     fill: 'rgba(240, 240, 240, 0.6)',
                     stroke: '#3c65ac',
@@ -109,7 +112,7 @@
             },
             labels: {
               formatter: function() {
-                return Util.formatNumber( this.value );
+                return Util.formatNumber(this.value);
               }
             }
           },
@@ -130,7 +133,7 @@
           tooltip: {
             formatter: function() {
               return this.key.tooltip + '<br/>' +
-                this.series.name + ': <strong>' + Util.formatNumber( this.y, 3 ) + '</strong>';
+                this.series.name + ': <strong>' + Util.formatNumber(this.y, 3) + '</strong>';
             }
           }
         };
@@ -156,7 +159,7 @@
             $scope.filters = {};
           }
 
-          _.forIn(eventDataObject.data, function(value, key){
+          _.forIn(eventDataObject.data, function(value, key) {
             $scope.filters[key] = value;
           });
 
@@ -177,16 +180,7 @@
           }
 
           $scope._loading = true;
-          $scope.traffic = {
-            labels: [],
-            series: [{
-              name: 'Cache Hit',
-              data: []
-            }, {
-              name: 'Cache Miss',
-              data: []
-            }]
-          };
+
           $q.all([
 
               Stats.traffic(angular.merge({
@@ -197,7 +191,7 @@
 
               Stats.traffic(angular.merge({
                 domainId: $scope.ngDomain.id
-              },generateFilterParams($scope.filters), {
+              }, generateFilterParams($scope.filters), {
                 cache_code: 'MISS'
               })).$promise
 
@@ -216,34 +210,40 @@
 
               hit_ = miss_ = 0;
               if (data[0].data && data[0].data.length > 0) {
-                data[0].data.forEach( function(item, idx, items) {
+                data[0].data.forEach(function(item, idx, items) {
 
                   // labels.push(moment(item.time + offset /*to show the _end_ of interval instead of begin*/ ).format('MMM Do YY h:mm'));
-                  var val = moment( item.time + offset );
+                  var val = moment(item.time + offset);
                   var label;
-                  if ( idx % tickInterval_ ) {
+                  if (idx % tickInterval_) {
                     label = '';
-                  } else if ( idx === 0 ||
-                    ( new Date( item.time + offset ) ).getDate() !== ( new Date( items[idx - tickInterval_].time + offset ) ).getDate() ) {
-                    label = val.format( '[<span style="color: #000; font-weight: bold;">]HH:mm[</span><br>]MMM D' );
+                  } else if (idx === 0 ||
+                    (new Date(item.time + offset)).getDate() !== (new Date(items[idx - tickInterval_].time + offset)).getDate()) {
+                    label = val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span><br>]MMM D');
                   } else {
-                    label = val.format( '[<span style="color: #000; font-weight: bold;">]HH:mm[</span>]' );
+                    label = val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span>]');
                   }
 
                   labels.push({
-                    tooltip: val.format( '[<span style="color: #000; font-weight: bold;">]HH:mm[</span>] MMMM Do YYYY' ),
+                    tooltip: val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span>] MMMM Do YYYY'),
                     label: label
                   });
 
                   hit_ += item.requests;
-                  series[0].data.push( item.requests / interval );
+                  series[0].data.push(item.requests / interval);
                 });
+                if (hit_ === 0) {
+                  series[0].data.length = 0;
+                }
               }
               if (data[1].data && data[1].data.length > 0) {
-                data[1].data.forEach( function(item) {
+                data[1].data.forEach(function(item) {
                   miss_ += item.requests;
-                  series[1].data.push( item.requests / interval );
+                  series[1].data.push(item.requests / interval);
                 });
+                if (miss_ === 0) {
+                  series[1].data.length = 0;
+                }
               }
               $scope.traffic = {
                 labels: labels,

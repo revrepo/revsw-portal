@@ -27,7 +27,7 @@
   }
 
   /*ngInject*/
-  function RequestsChartCtrl( $scope, Stats, Util ) {
+  function RequestsChartCtrl($scope, Stats, Util) {
 
     var _filters_field_list = ['from_timestamp', 'to_timestamp', 'country', 'device', 'os'];
 
@@ -75,17 +75,19 @@
       chart: {
         events: {
           redraw: function() {
-            if ( info_ ) {
+            if (info_) {
               info_.destroy();
               info_ = null;
             }
-            info_ = this/*chart*/.renderer
-              .label( 'Traffic Level Avg <span style="font-weight: bold; color: #3c65ac;">' + Util.convertTraffic( traffic_avg_ ) +
-                  '</span> Max <span style="font-weight: bold; color: #3c65ac;">' + Util.convertTraffic( traffic_max_ ) +
-                  '</span><br>Traffic Total <span style="font-weight: bold; color: #3c65ac;">' + Util.humanFileSizeInGB( traffic_total_, 3 ) +
-                  '</span>',
-                  this.xAxis[0].toPixels( 0 ), 3, '', 0, 0, true/*html*/ )
-              .css({ color: '#444' })
+            info_ = this /*chart*/ .renderer
+              .label('Traffic Level Avg <span style="font-weight: bold; color: #3c65ac;">' + Util.convertTraffic(traffic_avg_) +
+                '</span> Max <span style="font-weight: bold; color: #3c65ac;">' + Util.convertTraffic(traffic_max_) +
+                '</span><br>Traffic Total <span style="font-weight: bold; color: #3c65ac;">' + Util.humanFileSizeInGB(traffic_total_, 3) +
+                '</span>',
+                this.xAxis[0].toPixels(0), 3, '', 0, 0, true /*html*/ )
+              .css({
+                color: '#444'
+              })
               .attr({
                 fill: 'rgba(240, 240, 240, 0.6)',
                 stroke: '#3c65ac',
@@ -159,17 +161,6 @@
         return;
       }
       $scope._loading = true;
-      $scope.traffic = {
-        labels: [],
-        series: [{
-          name: 'Incoming Bandwidth',
-          data: []
-        }, {
-          name: 'Outgoing Bandwidth',
-          data: []
-        }]
-      };
-
       Stats.traffic(angular.merge({
           domainId: $scope.ngDomain.id
         }, generateFilterParams($scope.filters)))
@@ -185,38 +176,41 @@
               name: 'Outgoing Bandwidth',
               data: []
             }];
-            var interval = parseInt( data.metadata.interval_sec || 1800 ),
+            var interval = parseInt(data.metadata.interval_sec || 1800),
               labels = [],
               offset = interval * 1000;
-            data.data.forEach( function( item, idx, items ) {
+            data.data.forEach(function(item, idx, items) {
 
-              var val = moment( item.time + offset );
+              var val = moment(item.time + offset);
               var label;
-              if ( idx % tickInterval_ ) {
+              if (idx % tickInterval_) {
                 label = '';
-              } else if ( idx === 0 ||
-                ( new Date( item.time + offset ) ).getDate() !== ( new Date( items[idx - tickInterval_].time + offset ) ).getDate() ) {
-                label = val.format( '[<span style="color: #000; font-weight: bold;">]HH:mm[</span><br>]MMM D' );
+              } else if (idx === 0 ||
+                (new Date(item.time + offset)).getDate() !== (new Date(items[idx - tickInterval_].time + offset)).getDate()) {
+                label = val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span><br>]MMM D');
               } else {
-                label = val.format( '[<span style="color: #000; font-weight: bold;">]HH:mm[</span>]' );
+                label = val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span>]');
               }
 
               labels.push({
-                tooltip: val.format( '[<span style="color: #000; font-weight: bold;">]HH:mm[</span>] MMMM Do YYYY' ),
+                tooltip: val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span>] MMMM Do YYYY'),
                 label: label
               });
 
-              var sent_bw = item.sent_bytes * 8 / interval /*BITS per second*/;
-              series[1].data.push( sent_bw );
-              series[0].data.push( item.received_bytes / interval * 8 /*BITS per second*/ );
+              var sent_bw = item.sent_bytes * 8 / interval /*BITS per second*/ ;
+              series[1].data.push(sent_bw);
+              series[0].data.push(item.received_bytes / interval * 8 /*BITS per second*/ );
               traffic_total_ += item.sent_bytes;
-              if ( traffic_max_ < sent_bw ) {
+              if (traffic_max_ < sent_bw) {
                 traffic_max_ = sent_bw;
               }
               traffic_avg_ += sent_bw;
             });
             traffic_avg_ /= data.data.length;
-
+            if (traffic_avg_ === 0) {
+              series[0].data.length = 0;
+              series[1].data.length = 0;
+            }
             // model better to update once
             $scope.traffic = {
               labels: labels,
