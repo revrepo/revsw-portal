@@ -60,7 +60,7 @@ describe('Smoke', function () {  // jshint ignore:line
     it('should not update API Key name with 30 characters max', function () {
       Portal.admin.apiKeys.listPage.searchAndClickEdit(apiKeyData.name);
 
-      var apiKeyName = apiKeyData.name
+      var apiKeyName = apiKeyData.name;
       apiKeyData.name = apiKeyData.name + '_LONG_CHARACTERS';
       Portal.admin.apiKeys.editPage.updateKey(apiKeyData);
       Portal.admin.apiKeys.editPage.clickBackToList();
