@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
 
   angular
@@ -29,7 +29,7 @@
     $scope.gbtChartOpts = {
       tooltip: {
         formatter: function() {
-          return '<b>'+ this.point.name +': </b>'+
+          return '<b>' + this.point.name + ': </b>' +
             Highcharts.numberFormat(this.point.percentage, 1) + '% (' + Util.humanFileSize(this.y, 2) + ')';
         }
       },
@@ -37,25 +37,22 @@
     $scope.hitsChartOpts = {
       tooltip: {
         formatter: function() {
-          return '<b>'+ this.point.name +': </b>'+
+          return '<b>' + this.point.name + ': </b>' +
             Highcharts.numberFormat(this.point.percentage, 1) + '% (' + Highcharts.numberFormat(this.y, 0, '.', '\'') + ' hits)';
         }
       },
     };
 
     //  ---------------------------------
-    $scope.reloadTwo = function ( name, filters ) {
-
-      $scope[name + '_hits'] = [];
-      $scope[name + '_gbt'] = [];
+    $scope.reloadTwo = function(name, filters) {
       filters.report_type = name;
-      return Stats.sdk_distributions( filters )
+      return Stats.sdk_distributions(filters)
         .$promise
-        .then(function (data) {
+        .then(function(data) {
           if (data.data && data.data.length > 0) {
             var hits = [];
             var gbt = [];
-            angular.forEach(data.data, function (item) {
+            angular.forEach(data.data, function(item) {
               hits.push({
                 name: item.key,
                 y: item.count
@@ -67,38 +64,42 @@
             });
             $scope[name + '_hits'] = hits;
             $scope[name + '_gbt'] = gbt;
+          } else {
+            $scope[name + '_hits'] = [];
+            $scope[name + '_gbt'] = [];
           }
+        })
+        .catch(function() {
+          $scope[name + '_hits'] = [];
+          $scope[name + '_gbt'] = [];
         });
     };
 
     //  ---------------------------------
     $scope.reload = function() {
 
-      if ( !$scope.account &&
-          ( !$scope.application || !$scope.application.app_id ) ) {
+      if (!$scope.account &&
+        (!$scope.application || !$scope.application.app_id)) {
         return;
       }
 
       var filters = {
         account_id: $scope.account,
-        app_id: ( ( $scope.application && $scope.application.app_id ) || null ),
-        from_timestamp: moment().subtract( $scope.span, 'hours' ).valueOf(),
+        app_id: (($scope.application && $scope.application.app_id) || null),
+        from_timestamp: moment().subtract($scope.span, 'hours').valueOf(),
         to_timestamp: Date.now(),
         count: 10
       };
 
       $scope._loading = true;
       $q.all([
-          $scope.reloadTwo( 'destination', filters ),
-          $scope.reloadTwo( 'transport', filters ),
-          $scope.reloadTwo( 'status', filters ),
-          $scope.reloadTwo( 'cache', filters ),
+          $scope.reloadTwo('destination', filters),
+          $scope.reloadTwo('transport', filters),
+          $scope.reloadTwo('status', filters),
+          $scope.reloadTwo('cache', filters),
         ])
-        .catch( function( err ) {
-          AlertService.danger('Oops! Something went wrong');
-          console.log( err );
-        })
-        .finally(function () {
+        .catch(AlertService.danger)
+        .finally(function() {
           $scope._loading = false;
         });
     };

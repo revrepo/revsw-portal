@@ -180,6 +180,11 @@
                   labels: labels,
                   series: hits_series
                 };
+              } else {
+                $scope.hits = {
+                  labels: [],
+                  series: []
+                };
               }
             })
             .finally(function() {

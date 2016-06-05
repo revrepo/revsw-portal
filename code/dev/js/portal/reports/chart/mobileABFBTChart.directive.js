@@ -1,9 +1,9 @@
-( function() {
+(function() {
   'use strict';
 
   angular
-    .module( 'revapm.Portal.Mobile' )
-    .directive( 'mobileAbFbtChart', mobileAbFbtChartDirective );
+    .module('revapm.Portal.Mobile')
+    .directive('mobileAbFbtChart', mobileAbFbtChartDirective);
 
   /*@ngInject*/
   function mobileAbFbtChartDirective() {
@@ -22,7 +22,7 @@
         flNetworks: '='
       },
       /*@ngInject*/
-      controller: function( $scope, Stats, Util ) {
+      controller: function($scope, Stats, Util) {
 
         $scope.heading = 'First Byte Time Graph';
         $scope.span = '1';
@@ -43,20 +43,22 @@
             type: 'column',
             events: {
               redraw: function() {
-                if ( info_ ) {
+                if (info_) {
                   info_.destroy();
                   info_ = null;
                 }
-                info_ = this/*chart*/.renderer
-                  .label( 'Origin Avg <span style="font-weight: bold; color: #3c65ac;">' + origin_avg_ +
-                      '</span> Median <span style="font-weight: bold; color: #3c65ac;">' + origin_median_ +
-                      '</span> ms<br>RevAPM Avg <span style="font-weight: bold; color: black;">' + rev_avg_ +
-                      '</span> Median <span style="font-weight: bold; color: black;">' + rev_median_ +
-                      '</span> ms<br>Improvement Avg <span style="font-weight: bold; color: darkred;">' + imp_avg_ +
-                      '</span> Median <span style="font-weight: bold; color: darkred;">' + imp_median_ +
-                      '</span> %',
-                      this.xAxis[0].toPixels( 0 ), 0, '', 0, 0, true/*html*/ )
-                  .css({ color: '#444' })
+                info_ = this /*chart*/ .renderer
+                  .label('Origin Avg <span style="font-weight: bold; color: #3c65ac;">' + origin_avg_ +
+                    '</span> Median <span style="font-weight: bold; color: #3c65ac;">' + origin_median_ +
+                    '</span> ms<br>RevAPM Avg <span style="font-weight: bold; color: black;">' + rev_avg_ +
+                    '</span> Median <span style="font-weight: bold; color: black;">' + rev_median_ +
+                    '</span> ms<br>Improvement Avg <span style="font-weight: bold; color: darkred;">' + imp_avg_ +
+                    '</span> Median <span style="font-weight: bold; color: darkred;">' + imp_median_ +
+                    '</span> %',
+                    this.xAxis[0].toPixels(0), 0, '', 0, 0, true /*html*/ )
+                  .css({
+                    color: '#444'
+                  })
                   .attr({
                     fill: 'rgba(240, 240, 240, 0.6)',
                     stroke: '#3c65ac',
@@ -75,7 +77,7 @@
             },
             labels: {
               formatter: function() {
-                return Util.formatNumber( this.value, 1 );
+                return Util.formatNumber(this.value, 1);
               }
             }
           },
@@ -99,7 +101,7 @@
           tooltip: {
             formatter: function() {
               return this.key.tooltip + '<br/>' +
-                this.series.name + ': <strong>' + Util.formatNumber( this.y, 1 ) + '</strong>';
+                this.series.name + ': <strong>' + Util.formatNumber(this.y, 1) + '</strong>';
             }
           }
         };
@@ -110,35 +112,53 @@
             name: 'Origin, Avg',
             data: [],
             color: '#3c65ac',
-            marker: { radius: 4, symbol: 'circle' }
+            marker: {
+              radius: 4,
+              symbol: 'circle'
+            }
           }, {
             name: 'Origin, Min',
             data: [],
             color: '#7cb5ec',
-            marker: { radius: 2, symbol: 'circle' },
+            marker: {
+              radius: 2,
+              symbol: 'circle'
+            },
             visible: false
           }, {
             name: 'Origin, Max',
             data: [],
             color: '#7cb5ec',
-            marker: { radius: 2, symbol: 'circle' },
+            marker: {
+              radius: 2,
+              symbol: 'circle'
+            },
             visible: false
           }, {
             name: 'RevAPM, Avg',
             data: [],
             color: '#000000',
-            marker: { radius: 4, symbol: 'diamond' }
+            marker: {
+              radius: 4,
+              symbol: 'diamond'
+            }
           }, {
             name: 'RevAPM, Min',
             data: [],
             color: '#808080',
-            marker: { radius: 2, symbol: 'diamond' },
+            marker: {
+              radius: 2,
+              symbol: 'diamond'
+            },
             visible: false
           }, {
             name: 'RevAPM, Max',
             data: [],
             color: '#808080',
-            marker: { radius: 2, symbol: 'diamond' },
+            marker: {
+              radius: 2,
+              symbol: 'diamond'
+            },
             visible: false
           }]
         };
@@ -158,21 +178,13 @@
         $scope.reload = function() {
 
           $scope._loading = true;
-          $scope.hits.labels = [];
-          $scope.hits.series[0].data = [];
-          $scope.hits.series[1].data = [];
-          $scope.hits.series[2].data = [];
-          $scope.hits.series[3].data = [];
-          $scope.hits.series[4].data = [];
-          $scope.hits.series[5].data = [];
-
           $scope.filters.account_id = $scope.ngAccount;
-          $scope.filters.app_id = ( $scope.ngApp || null );
-          return Stats.sdk_ab_fbt( $scope.filters )
+          $scope.filters.app_id = ($scope.ngApp || null);
+          return Stats.sdk_ab_fbt($scope.filters)
             .$promise
-            .then( function( data ) {
+            .then(function(data) {
 
-              if ( data.data && data.data.length > 0 ) {
+              if (data.data && data.data.length > 0) {
                 var labels = [];
                 var hits = {
                   rev_edge: {
@@ -190,28 +202,28 @@
                 var offset = interval * 1000;
                 var labels_filled = false;
                 // console.log( data );
-                data.data.forEach( function( dest ) {
-                  dest.items.forEach( function( item, idx, items ) {
-                    if ( !labels_filled ) {
-                      var val = moment( item.key + offset );
+                data.data.forEach(function(dest) {
+                  dest.items.forEach(function(item, idx, items) {
+                    if (!labels_filled) {
+                      var val = moment(item.key + offset);
                       var label;
-                      if ( idx % tickInterval_ ) {
+                      if (idx % tickInterval_) {
                         label = '';
-                      } else if ( idx === 0 ||
-                        ( new Date( item.key + offset ) ).getDate() !== ( new Date( items[idx - tickInterval_].key + offset ) ).getDate() ) {
-                        label = val.format( '[<span style="color: #000; font-weight: bold;">]HH:mm[</span><br>]MMM D' );
+                      } else if (idx === 0 ||
+                        (new Date(item.key + offset)).getDate() !== (new Date(items[idx - tickInterval_].key + offset)).getDate()) {
+                        label = val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span><br>]MMM D');
                       } else {
-                        label = val.format( '[<span style="color: #000; font-weight: bold;">]HH:mm[</span>]' );
+                        label = val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span>]');
                       }
 
                       labels.push({
-                        tooltip: val.format( '[<span style="color: #000; font-weight: bold;">]HH:mm[</span>] MMMM Do YYYY' ),
+                        tooltip: val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span>] MMMM Do YYYY'),
                         label: label
                       });
                     }
-                    hits[dest.key].max.push( item.fbt_max );
-                    hits[dest.key].min.push( item.fbt_min );
-                    hits[dest.key].avg.push( item.fbt_average );
+                    hits[dest.key].max.push(item.fbt_max);
+                    hits[dest.key].min.push(item.fbt_min);
+                    hits[dest.key].avg.push(item.fbt_average);
                   });
                   labels_filled = true;
                 });
@@ -224,64 +236,71 @@
                 $scope.hits.series[5].data = hits.rev_edge.max;
 
                 //  origin avg
-                var avg_t = hits.origin.avg.filter( function( item ) {
+                var avg_t = hits.origin.avg.filter(function(item) {
                   return item != null;
                 });
-                origin_avg_ = avg_t.reduce( function( prev, curr ) {
+                origin_avg_ = avg_t.reduce(function(prev, curr) {
                   return prev + curr;
                 });
                 origin_avg_ /= avg_t.length;
 
                 //  origin median
-                avg_t.sort( function( lhs, rhs ) {
+                avg_t.sort(function(lhs, rhs) {
                   return lhs - rhs;
                 });
                 var idx0 = avg_t.length - 1,
-                  idx1 = Math.ceil( idx0 / 2 );
-                idx0 = Math.floor( idx0 / 2 );
-                origin_median_ = ( idx0 === idx1 ) ? avg_t[idx0] : ( avg_t[idx0] + avg_t[idx1] ) / 2;
+                  idx1 = Math.ceil(idx0 / 2);
+                idx0 = Math.floor(idx0 / 2);
+                origin_median_ = (idx0 === idx1) ? avg_t[idx0] : (avg_t[idx0] + avg_t[idx1]) / 2;
 
                 //  rev_edge avg
-                avg_t = hits.rev_edge.avg.filter( function( item ) {
+                avg_t = hits.rev_edge.avg.filter(function(item) {
                   return item != null;
                 });
-                rev_avg_ = avg_t.reduce( function( prev, curr ) {
+                rev_avg_ = avg_t.reduce(function(prev, curr) {
                   return prev + curr;
                 });
                 rev_avg_ /= avg_t.length;
 
                 //  rev_edge median
-                avg_t.sort( function( lhs, rhs ) {
+                avg_t.sort(function(lhs, rhs) {
                   return lhs - rhs;
                 });
                 idx0 = avg_t.length - 1;
-                idx1 = Math.ceil( idx0 / 2 );
-                idx0 = Math.floor( idx0 / 2 );
-                rev_median_ = ( idx0 === idx1 ) ? avg_t[idx0] : ( avg_t[idx0] + avg_t[idx1] ) / 2;
+                idx1 = Math.ceil(idx0 / 2);
+                idx0 = Math.floor(idx0 / 2);
+                rev_median_ = (idx0 === idx1) ? avg_t[idx0] : (avg_t[idx0] + avg_t[idx1]) / 2;
 
                 //  rounds
-                imp_avg_ = Math.round( ( origin_avg_ - rev_avg_ ) / origin_avg_ * 1000 ) / 10;
-                rev_avg_ = Math.round( rev_avg_ * 100 ) / 100;
-                origin_avg_ = Math.round( origin_avg_ * 100 ) / 100;
+                imp_avg_ = Math.round((origin_avg_ - rev_avg_) / origin_avg_ * 1000) / 10;
+                rev_avg_ = Math.round(rev_avg_ * 100) / 100;
+                origin_avg_ = Math.round(origin_avg_ * 100) / 100;
 
-                imp_median_ = Math.round( ( origin_median_ - rev_median_ ) / origin_median_ * 1000 ) / 10;
-                origin_median_ = Math.round( origin_median_ * 100 ) / 100;
-                rev_median_ = Math.round( rev_median_ * 100 ) / 100;
+                imp_median_ = Math.round((origin_median_ - rev_median_) / origin_median_ * 1000) / 10;
+                origin_median_ = Math.round(origin_median_ * 100) / 100;
+                rev_median_ = Math.round(rev_median_ * 100) / 100;
+              } else {
+                $scope.hits.labels = [];
+                $scope.hits.series[0].data = [];
+                $scope.hits.series[1].data = [];
+                $scope.hits.series[2].data = [];
+                $scope.hits.series[3].data = [];
+                $scope.hits.series[4].data = [];
+                $scope.hits.series[5].data = [];
               }
             })
-            .finally( function() {
+            .finally(function() {
               $scope._loading = false;
             });
         };
 
         //  ---------------------------------
-        $scope.$watch( 'ngApp', function() {
-          if ( $scope.ngAccount || $scope.ngApp ) {
+        $scope.$watch('ngApp', function() {
+          if ($scope.ngAccount || $scope.ngApp) {
             $scope.reload();
           }
         });
       }
     };
   }
-} )();
-
+})();
