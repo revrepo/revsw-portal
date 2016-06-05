@@ -38,7 +38,8 @@ var UserList = {
     },
     buttons: {
       addNewUser: {
-        linkText: 'Add New User'
+        linkText: 'Add New User',
+        className: 'btn-success'
       }
     }
   },
@@ -78,6 +79,20 @@ var UserList = {
       by.partialLinkText(this.locators.buttons.addNewUser.linkText));
   },
 
+  /**
+   * ### UserList.getAddNewUserBtnByClassName()
+   *
+   * Gets AddNewUser btn element by className and returns the reference to
+   * the `Add New User` button (Selenium WebDriver
+   * Element) from the User List page from the Portal app.
+   *
+   * @returns {Selenium WebDriver Element}
+   */
+  getAddNewUserBtnByClassName: function () {
+    return element(
+      by.className(this.locators.buttons.addNewUser.className));
+  },
+
   // ## Methods to interact with the User List Page components
 
   /**
@@ -91,6 +106,20 @@ var UserList = {
   clickAddNewUser: function () {
     return this
       .getAddNewUserBtn()
+      .click();
+  },
+
+  /**
+   * ### UserList.clickAddNewUserThroughClassName()
+   *
+   * Triggers a click to the `Add New User` button which found by className from the User List page
+   * from the Portal app
+   *
+   * @returns {Promise}
+   */
+  clickAddNewUserThroughClassName: function () {
+    return this
+      .getAddNewUserBtnByClassName()
       .click();
   },
 
