@@ -46,7 +46,7 @@ describe('Functional', function () {
 
     beforeEach(function () {
       Portal.signIn(adminUser);
-      Portal.getUsersPage();
+      Portal.goToUsersThroughClassNameLocator();
       Portal.userListPage.searcher.setSearchCriteria(prefix);
     });
 

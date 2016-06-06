@@ -49,7 +49,7 @@ describe('Functional', function () {
         var andrew = DataProvider.generateUser('Andrew');
         var newPassword = 'newpassword';
         // Create user
-        Portal.createUser(andrew);
+        Portal.createUserThroughClassNameLocators(andrew);
         Portal.signOut();
         // Update password using new user
         Portal.signIn(andrew);
@@ -64,7 +64,7 @@ describe('Functional', function () {
         // Delete user
         Portal.signOut();
         Portal.signIn(adminUser);
-        Portal.deleteUser(andrew);
+        Portal.deleteUserThroughClassNameLocators(andrew);
       });
 
     it('should update password successfully  using only numbers',
@@ -72,7 +72,7 @@ describe('Functional', function () {
         var mathew = DataProvider.generateUser('Andrew');
         var newPassword = '12345678';
         // Create user
-        Portal.createUser(mathew);
+        Portal.createUserThroughClassNameLocators(mathew);
         Portal.signOut();
         // Update password using new user
         Portal.signIn(mathew);
@@ -87,7 +87,7 @@ describe('Functional', function () {
         // Delete user
         Portal.signOut();
         Portal.signIn(adminUser);
-        Portal.deleteUser(mathew);
+        Portal.deleteUserThroughClassNameLocators(mathew);
       });
   });
 });
