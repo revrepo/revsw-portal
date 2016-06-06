@@ -19,6 +19,7 @@
 var config = require('config');
 var Portal = require('./../../../page_objects/portal');
 var DataProvider = require('./../../../common/providers/data');
+var Constants = require('./../../../page_objects/constants');
 
 describe('Workflow', function () {
   describe('Add Domain', function () {
@@ -51,8 +52,9 @@ describe('Workflow', function () {
         // Check domain is in list
         Portal.domains.listPage.clickAddNewDomain();
         Portal.domains.addPage.createDomain(secondDomain);
-        var alerts = Portal.alerts.getFirst();
-        expect(alerts.getText()).toEqual('Domain created');
+        var alert = Portal.alerts.getFirst();
+        var expectedMsg = Constants.alertMessages.domains.MSG_SUCCESS_ADD;
+        expect(alert.getText()).toContain(expectedMsg);
       });
 
     it('should display `In Progress` staging status right after creating a ' +
