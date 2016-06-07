@@ -49,8 +49,8 @@ describe('Functional', function () {
         Portal.domains.addPage.createDomain(myDomain);
 
         var alert = Portal.alerts.getFirst();
-        var expectedMsg = 'Domain created';
-        expect(alert.getText()).toEqual(expectedMsg);
+        var expectedMsg = Constants.alertMessages.domains.MSG_SUCCESS_ADD;
+        expect(alert.getText()).toContain(expectedMsg);
     });
 
     // TODO: move the test to negative suite?
@@ -60,8 +60,8 @@ describe('Functional', function () {
       Portal.domains.addPage.createDomain(myDomain);
 
       var alert = Portal.alerts.getFirst();
-      var expectedMsg = '×\nThe domain name is already registered in the system';
-      expect(alert.getText()).toEqual(expectedMsg);
+      var expectedMsg = Constants.alertMessages.domains.MSG_FAIL_ADD_DUPLICATE_NAME;
+      expect(alert.getText()).toContain(expectedMsg);
     });
   });
 });

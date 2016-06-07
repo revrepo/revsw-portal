@@ -1,9 +1,9 @@
-( function() {
+(function() {
   'use strict';
 
   angular
-    .module( 'revapm.Portal.Mobile' )
-    .directive( 'mobileHttpCodesChart', mobileHttpCodesChartDirective );
+    .module('revapm.Portal.Mobile')
+    .directive('mobileHttpCodesChart', mobileHttpCodesChartDirective);
 
   /*@ngInject*/
   function mobileHttpCodesChartDirective() {
@@ -22,7 +22,7 @@
         flDisabled: '='
       },
       /*@ngInject*/
-      controller: function( $scope, Stats, Util ) {
+      controller: function($scope, Stats, Util) {
 
         $scope.heading = 'HTTP Status Codes Graph';
         $scope.span = '1';
@@ -52,7 +52,7 @@
             },
             labels: {
               formatter: function() {
-                return Util.formatNumber( this.value );
+                return Util.formatNumber(this.value);
               }
             }
           },
@@ -73,7 +73,7 @@
           tooltip: {
             formatter: function() {
               return this.key.tooltip + '<br/>' +
-                this.series.name + ': <strong>' + Util.formatNumber( this.y, 3 ) + '</strong>';
+                this.series.name + ': <strong>' + Util.formatNumber(this.y, 3) + '</strong>';
             }
           }
         };
@@ -82,52 +82,52 @@
         $scope.reload = function() {
 
           $scope._loading = true;
-          $scope.hits = {
-            labels: [],
-            series: []
-          };
           $scope.filters.account_id = $scope.ngAccount;
-          $scope.filters.app_id = ( $scope.ngApp || null );
+          $scope.filters.app_id = ($scope.ngApp || null);
 
-          return Stats.sdk_agg_flow( $scope.filters )
+          return Stats.sdk_agg_flow($scope.filters)
             .$promise
-            .then( function( data ) {
+            .then(function(data) {
 
-              if ( data.data && data.data.length > 0 ) {
+              if (data.data && data.data.length > 0) {
                 var hits_series = [];
                 var labels = [];
                 var interval = data.metadata.interval_sec || 1800;
                 var offset = interval * 1000;
                 var labels_filled_up = false;
 
-                angular.forEach( data.data, function( code ) {
-                  var s = { name: (''+code.key), data: [], visible: false };
-                  for ( var i = 0, len = code.flow.length; i < len; ++i ) {
+                angular.forEach(data.data, function(code) {
+                  var s = {
+                    name: ('' + code.key),
+                    data: [],
+                    visible: false
+                  };
+                  for (var i = 0, len = code.flow.length; i < len; ++i) {
                     var item = code.flow[i];
-                    if ( !labels_filled_up ) {
-                      var val = moment( item.time + offset );
+                    if (!labels_filled_up) {
+                      var val = moment(item.time + offset);
                       var label;
-                      if ( i % tickInterval_ ) {
+                      if (i % tickInterval_) {
                         label = '';
-                      } else if ( i === 0 ||
-                        ( new Date( item.time + offset ) ).getDate() !== ( new Date( code.flow[i - tickInterval_].time + offset ) ).getDate() ) {
-                        label = val.format( '[<span style="color: #000; font-weight: bold;">]HH:mm[</span><br>]MMM D' );
+                      } else if (i === 0 ||
+                        (new Date(item.time + offset)).getDate() !== (new Date(code.flow[i - tickInterval_].time + offset)).getDate()) {
+                        label = val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span><br>]MMM D');
                       } else {
-                        label = val.format( '[<span style="color: #000; font-weight: bold;">]HH:mm[</span>]' );
+                        label = val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span>]');
                       }
 
                       labels.push({
-                        tooltip: val.format( '[<span style="color: #000; font-weight: bold;">]HH:mm[</span>] MMMM Do YYYY' ),
+                        tooltip: val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span>] MMMM Do YYYY'),
                         label: label
                       });
                     }
-                    var rps = Math.round( item.hits * 1000 / interval ) / 1000;
-                    s.data.push( rps );
-                    if ( rps > 0.01 ) {
+                    var rps = Math.round(item.hits * 1000 / interval) / 1000;
+                    s.data.push(rps);
+                    if (rps > 0.01) {
                       s.visible = true;
                     }
                   }
-                  hits_series.push( s );
+                  hits_series.push(s);
                   labels_filled_up = true;
                 });
 
@@ -136,21 +136,24 @@
                   labels: labels,
                   series: hits_series
                 };
+              }else{
+                 $scope.hits = {
+                  series: []
+                };
               }
             })
-            .finally( function() {
+            .finally(function() {
               $scope._loading = false;
-            } );
+            });
         };
 
         //  ---------------------------------
-        $scope.$watch( 'ngApp', function() {
-          if ( $scope.ngAccount || $scope.ngApp ) {
+        $scope.$watch('ngApp', function() {
+          if ($scope.ngAccount || $scope.ngApp) {
             $scope.reload();
           }
         });
       }
     };
   }
-} )();
-
+})();

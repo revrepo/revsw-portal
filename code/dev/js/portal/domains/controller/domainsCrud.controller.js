@@ -170,6 +170,9 @@
       delete model.cname;
       delete model.origin_protocol;
       delete model.id;
+      if (model.domain_wildcard_alias === '') {
+        delete model.domain_wildcard_alias;
+      }
       return model;
     };
 

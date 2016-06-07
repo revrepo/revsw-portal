@@ -10,6 +10,7 @@
     'ui.select',
     'ng.jsoneditor',
     'ngSanitize',
-    'toggle-switch'
+    'toggle-switch',
+    'ds.objectDiff'
   ]);
 })();

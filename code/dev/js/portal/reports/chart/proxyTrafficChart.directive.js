@@ -71,17 +71,19 @@
           chart: {
             events: {
               redraw: function() {
-                if ( info_ ) {
+                if (info_) {
                   info_.destroy();
                   info_ = null;
                 }
-                info_ = this/*chart*/.renderer
-                  .label( 'RPS Avg <span style="font-weight: bold; color: #3c65ac;">' + ( Math.round( rps_avg_ * 1000 ) / 1000 ) +
-                      '</span> Max <span style="font-weight: bold; color: #3c65ac;">' + ( Math.round( rps_max_ * 1000 ) / 1000 ) +
-                      '</span><br>Hits Total <span style="font-weight: bold; color: #3c65ac;">' + Util.formatNumber( hits_total_ ) +
-                      '</span>',
-                      this.xAxis[0].toPixels( 0 ), 3, '', 0, 0, true/*html*/ )
-                  .css({ color: '#444' })
+                info_ = this /*chart*/ .renderer
+                  .label('RPS Avg <span style="font-weight: bold; color: #3c65ac;">' + (Math.round(rps_avg_ * 1000) / 1000) +
+                    '</span> Max <span style="font-weight: bold; color: #3c65ac;">' + (Math.round(rps_max_ * 1000) / 1000) +
+                    '</span><br>Hits Total <span style="font-weight: bold; color: #3c65ac;">' + Util.formatNumber(hits_total_) +
+                    '</span>',
+                    this.xAxis[0].toPixels(0), 3, '', 0, 0, true /*html*/ )
+                  .css({
+                    color: '#444'
+                  })
                   .attr({
                     fill: 'rgba(240, 240, 240, 0.6)',
                     stroke: '#3c65ac',
@@ -100,7 +102,7 @@
             },
             labels: {
               formatter: function() {
-                return Util.formatNumber( this.value );
+                return Util.formatNumber(this.value);
               }
             }
           },
@@ -121,7 +123,7 @@
           tooltip: {
             formatter: function() {
               return this.key.tooltip + '<br/>' +
-                this.series.name + ': <strong>' + Util.formatNumber( this.y, 3 ) + '</strong>';
+                this.series.name + ': <strong>' + Util.formatNumber(this.y, 3) + '</strong>';
             }
           }
         };
@@ -132,13 +134,6 @@
             return;
           }
           $scope._loading = true;
-          $scope.traffic = {
-            labels: [],
-            series: [{
-              name: 'Total',
-              data: []
-            }]
-          };
           Stats.traffic(angular.merge({
               domainId: $scope.ngDomain.id
             }, generateFilterParams($scope.filters)))
@@ -154,33 +149,36 @@
                   data: []
                 }];
                 var labels = [];
-                data.data.forEach( function(item, idx, items) {
+                data.data.forEach(function(item, idx, items) {
 
-                  var val = moment( item.time + offset );
+                  var val = moment(item.time + offset);
                   var label;
-                  if ( idx % tickInterval_ ) {
+                  if (idx % tickInterval_) {
                     label = '';
-                  } else if ( idx === 0 ||
-                    ( new Date( item.time + offset ) ).getDate() !== ( new Date( items[idx - tickInterval_].time + offset ) ).getDate() ) {
-                    label = val.format( '[<span style="color: #000; font-weight: bold;">]HH:mm[</span><br>]MMM D' );
+                  } else if (idx === 0 ||
+                    (new Date(item.time + offset)).getDate() !== (new Date(items[idx - tickInterval_].time + offset)).getDate()) {
+                    label = val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span><br>]MMM D');
                   } else {
-                    label = val.format( '[<span style="color: #000; font-weight: bold;">]HH:mm[</span>]' );
+                    label = val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span>]');
                   }
 
                   labels.push({
-                    tooltip: val.format( '[<span style="color: #000; font-weight: bold;">]HH:mm[</span>] MMMM Do YYYY' ),
+                    tooltip: val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span>] MMMM Do YYYY'),
                     label: label
                   });
 
                   var rps = item.requests / interval;
                   rps_avg_ += rps;
-                  if ( rps > rps_max_ ) {
+                  if (rps > rps_max_) {
                     rps_max_ = rps;
                   }
                   hits_total_ += item.requests;
-                  series[0].data.push( rps );
+                  series[0].data.push(rps);
                 });
                 rps_avg_ /= data.data.length;
+                if (rps_avg_ === 0) {
+                  series[0].data.length = 0;
+                }
                 $scope.traffic = {
                   labels: labels,
                   series: series

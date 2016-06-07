@@ -1,9 +1,9 @@
-( function() {
+(function() {
   'use strict';
 
   angular
-    .module( 'revapm.Portal.Mobile' )
-    .directive( 'mobileAbFbtDistributionChart', mobileAbFbtDistributionChartDirective );
+    .module('revapm.Portal.Mobile')
+    .directive('mobileAbFbtDistributionChart', mobileAbFbtDistributionChartDirective);
 
   /*@ngInject*/
   function mobileAbFbtDistributionChartDirective() {
@@ -24,10 +24,10 @@
         flLimit: '@'
       },
       /*@ngInject*/
-      controller: function( $scope, Stats, Util ) {
+      controller: function($scope, Stats, Util) {
 
-        var _interval = parseInt( ( $scope.flInterval || 100 ) );
-        var _limit = parseInt( ( $scope.flLimit || 5000 ) );
+        var _interval = parseInt(($scope.flInterval || 100));
+        var _limit = parseInt(($scope.flLimit || 5000));
 
         $scope.heading = 'First Byte Time Values Distribution Graph';
         $scope.span = '1';
@@ -44,7 +44,7 @@
             },
             labels: {
               formatter: function() {
-                return Util.formatNumber( this.value, 0 );
+                return Util.formatNumber(this.value, 0);
               }
             }
           },
@@ -59,8 +59,8 @@
           },
           tooltip: {
             formatter: function() {
-              return '<strong>'+ this.x + '÷' + ( this.x + _interval ) + '</strong> ms<br/>' +
-                this.series.name + ': <strong>' + Util.formatNumber( this.y, 0 ) + '</strong> hits';
+              return '<strong>' + this.x + '÷' + (this.x + _interval) + '</strong> ms<br/>' +
+                this.series.name + ': <strong>' + Util.formatNumber(this.y, 0) + '</strong> hits';
             }
           }
         };
@@ -71,12 +71,18 @@
             name: 'Origin',
             data: [],
             color: Highcharts.getOptions().colors[0],
-            marker: { radius: 4, symbol: 'circle' }
+            marker: {
+              radius: 4,
+              symbol: 'circle'
+            }
           }, {
             name: 'RevAPM',
             data: [],
             color: Highcharts.getOptions().colors[1],
-            marker: { radius: 4, symbol: 'diamond' }
+            marker: {
+              radius: 4,
+              symbol: 'diamond'
+            }
           }]
         };
 
@@ -97,17 +103,13 @@
         $scope.reload = function() {
 
           $scope._loading = true;
-          $scope.hits.labels = [];
-          $scope.hits.series[0].data = [];
-          $scope.hits.series[1].data = [];
-
           $scope.filters.account_id = $scope.ngAccount;
-          $scope.filters.app_id = ( $scope.ngApp || null );
-          return Stats.sdk_ab_fbt_distribution( $scope.filters )
+          $scope.filters.app_id = ($scope.ngApp || null);
+          return Stats.sdk_ab_fbt_distribution($scope.filters)
             .$promise
-            .then( function( data ) {
+            .then(function(data) {
 
-              if ( data.data && data.data.length > 0 ) {
+              if (data.data && data.data.length > 0) {
                 var labels = [];
                 var hits = {
                   rev_edge: [],
@@ -115,33 +117,41 @@
                 };
                 var labels_filled = false;
                 // console.log( data );
-                angular.forEach( data.data, function( dest ) {
-                  angular.forEach( dest.items, function( item ) {
-                    if ( !labels_filled ) {
-                      labels.push( item.key );
+                angular.forEach(data.data, function(dest) {
+                  angular.forEach(dest.items, function(item) {
+                    if (!labels_filled) {
+                      labels.push(item.key);
                     }
-                    hits[dest.key].push( item.count );
+                    hits[dest.key].push(item.count);
                   });
                   labels_filled = true;
                 });
                 $scope.hits.labels = labels;
                 $scope.hits.series[0].data = hits.origin;
                 $scope.hits.series[1].data = hits.rev_edge;
+              } else {
+                $scope.hits.labels = [];
+                $scope.hits.series[0].data = [];
+                $scope.hits.series[1].data = [];
               }
             })
-            .finally( function() {
+            .catch(function() {
+              $scope.hits.labels = [];
+              $scope.hits.series[0].data = [];
+              $scope.hits.series[1].data = [];
+            })
+            .finally(function() {
               $scope._loading = false;
             });
         };
 
         //  ---------------------------------
-        $scope.$watch( 'ngApp', function() {
-          if ( $scope.ngAccount || $scope.ngApp ) {
+        $scope.$watch('ngApp', function() {
+          if ($scope.ngAccount || $scope.ngApp) {
             $scope.reload();
           }
         });
       }
     };
   }
-} )();
-
+})();

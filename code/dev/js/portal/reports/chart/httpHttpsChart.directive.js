@@ -73,24 +73,26 @@
           chart: {
             events: {
               redraw: function() {
-                if ( info_ ) {
+                if (info_) {
                   info_.destroy();
                   info_ = null;
                 }
                 var rel_http = 0,
                   rel_https = 0;
-                if ( ( https_ + http_ ) !== 0 ) {
-                  rel_http = Math.round( http_ * 1000 / ( https_ + http_ ) ) / 10;
-                  rel_https = Math.round( https_ * 1000 / ( https_ + http_ ) ) / 10;
+                if ((https_ + http_) !== 0) {
+                  rel_http = Math.round(http_ * 1000 / (https_ + http_)) / 10;
+                  rel_https = Math.round(https_ * 1000 / (https_ + http_)) / 10;
                 }
-                info_ = this/*chart*/.renderer
-                  .label( 'HTTPS <span style="font-weight: bold; color: #3c65ac;">' +  Util.formatNumber( https_ ) +
-                      '</span> Requests, <span style="font-weight: bold; color: #3c65ac;">' + rel_https +
-                      '</span>%<br> HTTP <span style="font-weight: bold; color: black;">' + Util.formatNumber( http_ ) +
-                      '</span> Requests, <span style="font-weight: bold; color: black;">' + rel_http +
-                      '</span>%',
-                      this.xAxis[0].toPixels( 0 ), 3, '', 0, 0, true/*html*/ )
-                  .css({ color: '#444' })
+                info_ = this /*chart*/ .renderer
+                  .label('HTTPS <span style="font-weight: bold; color: #3c65ac;">' + Util.formatNumber(https_) +
+                    '</span> Requests, <span style="font-weight: bold; color: #3c65ac;">' + rel_https +
+                    '</span>%<br> HTTP <span style="font-weight: bold; color: black;">' + Util.formatNumber(http_) +
+                    '</span> Requests, <span style="font-weight: bold; color: black;">' + rel_http +
+                    '</span>%',
+                    this.xAxis[0].toPixels(0), 3, '', 0, 0, true /*html*/ )
+                  .css({
+                    color: '#444'
+                  })
                   .attr({
                     fill: 'rgba(240, 240, 240, 0.6)',
                     stroke: '#3c65ac',
@@ -109,7 +111,7 @@
             },
             labels: {
               formatter: function() {
-                return Util.formatNumber( this.value );
+                return Util.formatNumber(this.value);
               }
             }
           },
@@ -130,9 +132,17 @@
           tooltip: {
             formatter: function() {
               return this.key.tooltip + '<br/>' +
-                this.series.name + ': <strong>' + Util.formatNumber( this.y, 3 ) + '</strong>';
+                this.series.name + ': <strong>' + Util.formatNumber(this.y, 3) + '</strong>';
             }
-          }
+          },
+          labels: [],
+          series: [{
+            name: 'HTTP',
+            data: []
+          }, {
+            name: 'HTTPS',
+            data: []
+          }]
         };
 
         //  ---------------------------------
@@ -141,16 +151,6 @@
             return;
           }
           $scope._loading = true;
-          $scope.traffic = {
-            labels: [],
-            series: [{
-              name: 'HTTP',
-              data: []
-            }, {
-              name: 'HTTPS',
-              data: []
-            }]
-          };
           $q.all([
 
               Stats.traffic(angular.merge({
@@ -179,38 +179,49 @@
               }];
               https_ = http_ = 0;
               if (data[0].data && data[0].data.length > 0) {
-                data[0].data.forEach( function(item, idx, items) {
-
-                  var val = moment( item.time + offset );
+                data[0].data.forEach(function(item, idx, items) {
+                  var val = moment(item.time + offset);
                   var label;
-                  if ( idx % tickInterval_ ) {
+                  if (idx % tickInterval_) {
                     label = '';
-                  } else if ( idx === 0 ||
-                    ( new Date( item.time + offset ) ).getDate() !== ( new Date( items[idx - tickInterval_].time + offset ) ).getDate() ) {
-                    label = val.format( '[<span style="color: #000; font-weight: bold;">]HH:mm[</span><br>]MMM D' );
+                  } else if (idx === 0 ||
+                    (new Date(item.time + offset)).getDate() !== (new Date(items[idx - tickInterval_].time + offset)).getDate()) {
+                    label = val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span><br>]MMM D');
                   } else {
-                    label = val.format( '[<span style="color: #000; font-weight: bold;">]HH:mm[</span>]' );
+                    label = val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span>]');
                   }
 
                   labels.push({
-                    tooltip: val.format( '[<span style="color: #000; font-weight: bold;">]HH:mm[</span>] MMMM Do YYYY' ),
+                    tooltip: val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span>] MMMM Do YYYY'),
                     label: label
                   });
 
                   http_ += item.requests;
-                  series[0].data.push( item.requests / interval );
+                  series[0].data.push(item.requests / interval);
+
                 });
+                if (http_ === 0) {
+                  series[0].data.length = 0;
+                }
               }
               if (data[1].data && data[1].data.length > 0) {
-                data[1].data.forEach( function(item) {
+                data[1].data.forEach(function(item) {
                   https_ += item.requests;
-                  series[1].data.push( item.requests / interval );
+                  series[1].data.push(item.requests / interval);
                 });
+                if (https_ === 0) {
+                  series[1].data.length = 0;
+                }
               }
               // model better to update once
               $scope.traffic = {
                 labels: labels,
                 series: series
+              };
+            },function(){
+              $scope.traffic = {
+                labels: [],
+                series: []
               };
             })
             .finally(function() {

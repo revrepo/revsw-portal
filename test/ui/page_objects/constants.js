@@ -211,6 +211,7 @@ var Constants = {
       MSG_SUCCESS_UPDATE: 'Successfully saved the domain configuration',
       MSG_SUCCESS_DELETE: 'The domain has been scheduled for removal',
       MSG_FAIL_VERIFY: 'Failed to verify domain configuration',
+      MSG_FAIL_ADD_DUPLICATE_NAME: 'The domain name is already registered in the system'
     }
   }
 };
