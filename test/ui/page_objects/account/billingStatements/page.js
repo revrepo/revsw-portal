@@ -18,9 +18,9 @@
 
 // # Billing Statements and Transactions Page Object
 
-var SummaryTable = require('./summaryTable');
-var TransactionsTable = require('./transactionsTable');
-var StatementsTable = require('./statementsTable');
+var Summary = require('./summary');
+var Transactions = require('./transactions');
+var Statements = require('./statements');
 
 // This `Billing Statements and Transactions` Page Object abstracts all
 // operations or actions that a common user could do in the Billing Statements
@@ -38,11 +38,9 @@ var BSTPage = {
     }
   },
 
-  tables: {
-    summary: SummaryTable,
-    transactions: TransactionsTable,
-    statements: StatementsTable
-  },
+  summary: Summary,
+  transactions: Transactions,
+  statements: Statements,
 
   // ## Methods to retrieve references to UI elements (Selenium WebDriver
   // Element)
