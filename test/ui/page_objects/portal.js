@@ -68,6 +68,8 @@ var UsageReportPage = require('./billing/usageReportPage');
 var UsageReportDomainsPage = require('./billing/usageReportDomainsPage');
 var AccountProfilePage = require('./account/profile/page');
 var BillingPlanPage = require('./account/billingPlanPage');
+var AccountBillingStatementsPage =
+  require('./account/billingStatementsTransactions/page');
 
 var PlansPage = require('./signUp/plansPage');
 var SignUpPage = require('./signUp/signUpPage');
@@ -134,7 +136,8 @@ var Portal = {
   },
   accounts: {
     profilePage: AccountProfilePage,
-    billingPlanPage: BillingPlanPage
+    billingPlanPage: BillingPlanPage,
+    billingStatements: AccountBillingStatementsPage
   },
   billing: {
     usageReportPage: UsageReportPage,
@@ -351,6 +354,11 @@ var Portal = {
   goToChangeBillingPlan: function () {
     this.goToBilling();
     return Portal.sideBar.goTo(Constants.sideBar.billing.CHANGE_BILLING_PLAN);
+  },
+
+  goToBillingStatements: function () {
+    this.goToBilling();
+    return Portal.sideBar.goTo(Constants.sideBar.billing.BILLING_STATEMENTS);
   },
 
   /**

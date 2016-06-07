@@ -70,7 +70,7 @@ var BSTPage = {
   getTitle: function () {
     return this
       .getTitleLbl()
-      .click();
+      .getText();
   }
 
   // ## Helper Methods
