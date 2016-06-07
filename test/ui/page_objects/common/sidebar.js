@@ -104,9 +104,10 @@ var SideBar = {
    * @returns {Promise}
    */
   gotoThroughClassNameLocator: function(headerName, itemName) {
+    var me = this;
     var container = this.getHeaderElem(headerName);
     this.expandBlockIfNotExpanded(container);
-    return this.getItemWithinContainer(container, itemName)
+    return this.getItemWithinContainer(me.getMenu(), itemName)
       .click();
   },
 
