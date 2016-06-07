@@ -68,8 +68,7 @@ var UsageReportPage = require('./billing/usageReportPage');
 var UsageReportDomainsPage = require('./billing/usageReportDomainsPage');
 var AccountProfilePage = require('./account/profile/page');
 var BillingPlanPage = require('./account/billingPlanPage');
-var AccountBillingStatementsPage =
-  require('./account/billingStatementsTransactions/page');
+var AccountBillingStatementsPage = require('./account/billingStatements/page');
 
 var PlansPage = require('./signUp/plansPage');
 var SignUpPage = require('./signUp/signUpPage');
