@@ -150,7 +150,7 @@ var SideBar = {
    *
    * Clicks on expand arrow if block is not expanded
    *
-   * @param {String} menuHeaderName, the label of header from the menu option
+   * @param {Selenium WebDriver Element} container, current left side menu block to work with
    *
    * @returns {Promise}
    */
@@ -159,7 +159,13 @@ var SideBar = {
   },
 
   /**
+   *### SideBar.clickArrowIfDisplayed()
    *
+   * Check if expand arrow is available and perform click on it
+   *
+   * @param {Selenium WebDriver Element} container, current left side menu block to work with
+   *
+   * @returns {Promise}
    */
   clickArrowIfDisplayed: function (container) {
     var me = this;
@@ -175,9 +181,10 @@ var SideBar = {
   /**
    * ### SideBar.getItemWithinContainer()
    *
-   * Return the reference to the item within active container (Selenium WebDriver
+   * Return the reference to the item within given container (Selenium WebDriver
    * Element)
    *
+   * @param {Selenium WebDriver Element} container, current left side menu block to work with
    * @param {String} menuOption, the label of item within active container
    *
    * @returns {Selenium WebDriver Element}
