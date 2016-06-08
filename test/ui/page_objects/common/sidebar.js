@@ -104,38 +104,11 @@ var SideBar = {
    * @returns {Promise}
    */
   gotoThroughClassNameLocator: function(headerName, itemName) {
-    this.expandBlockIfNotExpanded(headerName);
-    return this.getItemWithinActiveContainer(itemName)
+    var me = this;
+    var container = this.getHeaderElem(headerName);
+    this.expandBlockIfNotExpanded(container);
+    return this.getItemWithinContainer(me.getMenu(), itemName)
       .click();
-  },
-
-  /**
-   * ### SideBar.getActiveContainer()
-   *
-   * Return the reference to the current active container (Selenium WebDriver
-   * Element)
-   *
-   * @returns {Selenium WebDriver Element}
-   */
-  getActiveContainer: function() {
-    return element
-      .all(by.className(this.locators.activeContainer.className))
-      //first active container is always Dashboards
-      .get(1);
-  },
-
-  /**
-   * ### SideBar.getActiveContainersCount()
-   *
-   * Return a count of an expanded blocks (Selenium WebDriver
-   * Element)
-   *
-   * @returns {Promise}
-   */
-  getActiveContainersCount: function() {
-    return element
-      .all(by.className(this.locators.activeContainer.className))
-      .count();
   },
 
   /**
@@ -167,8 +140,8 @@ var SideBar = {
    *
    * @returns {Selenium WebDriver Element}
    */
-  getArrowElement: function (menuHeaderName) {
-    return this.getHeaderElem(menuHeaderName)
+  getArrowElement: function (container) {
+    return container
       .all(by.className(this.locators.arrow.className))
       .get(0);
   },
@@ -178,32 +151,47 @@ var SideBar = {
    *
    * Clicks on expand arrow if block is not expanded
    *
-   * @param {String} menuHeaderName, the label of header from the menu option
+   * @param {Selenium WebDriver Element} container, current left side menu block to work with
    *
    * @returns {Promise}
    */
-  expandBlockIfNotExpanded: function (menuHeaderName) {
-    var me = this;
-    return this.getActiveContainersCount().then(function(result) {
-      if (result === 1) {
-        me.getArrowElement(menuHeaderName)
-          .click();
-      }
-    });
+  expandBlockIfNotExpanded: function (container) {
+    return this.clickArrowIfDisplayed(container);
   },
 
   /**
-   * ### SideBar.getItemWithinActiveContainer()
+   *### SideBar.clickArrowIfDisplayed()
    *
-   * Return the reference to the item within active container (Selenium WebDriver
+   * Check if expand arrow is available and perform click on it
+   *
+   * @param {Selenium WebDriver Element} container, current left side menu block to work with
+   *
+   * @returns {Promise}
+   */
+  clickArrowIfDisplayed: function (container) {
+    var me = this;
+    return container.all(by.className(this.locators.arrow.className)).count()
+      .then(function (result) {
+        if (result === 1) {
+          me.getArrowElement(container)
+            .click();
+      }
+    })
+  },
+
+  /**
+   * ### SideBar.getItemWithinContainer()
+   *
+   * Return the reference to the item within given container (Selenium WebDriver
    * Element)
    *
+   * @param {Selenium WebDriver Element} container, current left side menu block to work with
    * @param {String} menuOption, the label of item within active container
    *
    * @returns {Selenium WebDriver Element}
    */
-  getItemWithinActiveContainer: function (menuOption) {
-    var els = this.getActiveContainer().all(by.className(this.locators.items.className));
+  getItemWithinContainer: function (container, menuOption) {
+    var els = container.all(by.className(this.locators.items.className));
     return els.filter(function (elem) {
       return elem.getText().then(function (text) {
         return text === menuOption;
