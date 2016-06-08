@@ -176,7 +176,7 @@ var SideBar = {
           me.getArrowElement(container)
             .click();
       }
-    })
+    });
   },
 
   /**
