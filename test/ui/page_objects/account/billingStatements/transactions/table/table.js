@@ -15,3 +15,37 @@
  * is strictly forbidden unless prior written permission is obtained
  * from Rev Software, Inc.
  */
+
+var TransactionTableRow = require('./row');
+var TransactionTableLocators = require('./locators');
+
+var TransactionTable = {
+
+  locators: TransactionTableLocators.table,
+
+  getHeaderEl: function () {
+    return element(by.css(this.locators.header.css));
+  },
+
+  getHeader: function () {
+    var header = this.getHeaderEl();
+    return new TransactionTableRow(header, TransactionTableLocators.header);
+  },
+
+  getRows: function () {
+    return element.all(by.repeater(this.locators.rows.repeater));
+  },
+
+  getFirstRow: function () {
+    return this.getRow(0);
+  },
+
+  getRow: function (rowIndex) {
+    var el = this
+      .getRows()
+      .get(rowIndex);
+    return new TransactionTableRow(el, TransactionTableLocators.row);
+  }
+};
+
+module.exports = TransactionTable;
