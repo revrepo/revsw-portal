@@ -28,13 +28,17 @@ describe('Smoke', function () {
 
   describe('Billing Statements', function () {
 
-    beforeAll(function (done) {
-      Portal
-        .signUpAndVerifyUser(currentPlan)
-        .then(function (newUser) {
-          user = newUser;
-          done();
-        });
+    beforeAll(function (/*done*/) {
+      //Portal
+      //  .signUpAndVerifyUser(currentPlan)
+      //  .then(function (newUser) {
+      //    user = newUser;
+      //    done();
+      //  });
+      Portal.signIn({
+        email: 'armando-1465444578163@mailinator.com',
+        password: 'password1'
+      })
     });
 
     afterAll(function () {
@@ -45,19 +49,20 @@ describe('Smoke', function () {
       Portal.goToBillingStatements();
     });
 
-    it('Should Check That Billing Summary exists.',
+    it('should check that Billing Summary area exists.',
       function () {
         expect(Portal.accounts.billingStatements.summary
+          .getCurrentBillingPlanEl()
           .isDisplayed()).toBeTruthy();
       });
 
-    xit('Should Check That Transactions exists.',
+    it('should check that Transactions area exists.',
       function () {
         expect(Portal.accounts.billingStatements.transactions
           .isDisplayed()).toBeTruthy();
       });
 
-    xit('Should Check That Statements exists.',
+    it('should check that Statements area exists.',
       function () {
         expect(Portal.accounts.billingStatements.statements
           .isDisplayed()).toBeTruthy();

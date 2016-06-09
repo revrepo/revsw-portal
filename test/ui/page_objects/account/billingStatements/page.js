@@ -18,9 +18,9 @@
 
 // # Billing Statements and Transactions Page Object
 
-var Summary = require('./summary');
-var Transactions = require('./transactions');
-var Statements = require('./statements');
+var Summary = require('./summary/summary');
+var Transactions = require('./transactions/transactions');
+var Statements = require('./statements/statements');
 
 // This `Billing Statements and Transactions` Page Object abstracts all
 // operations or actions that a common user could do in the Billing Statements

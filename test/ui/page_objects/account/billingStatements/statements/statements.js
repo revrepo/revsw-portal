@@ -21,7 +21,6 @@
 // Requiring other Page Objects that compound the Statements List Page one
 var StatementTable = require('./table/table');
 var Pager = require('./../../../common/pager');
-var Searcher = require('./../../../common/searcher');
 
 // This `Statements List` Page Object abstracts all operations or actions
 // that a common user could do in the Statements List page from the Portal
@@ -31,16 +30,33 @@ var StatementList = {
   // ## Properties
 
   // Locators specific to HTML elements from this page object
-  locators: {},
+  locators: {
+    container: {
+      css: '.panel-body'
+    },
+    textInputs: {
+      searcher: {
+        css: 'input[type="search"]'
+      }
+    }
+  },
 
   // `Statement List` Page is compound mainly by following components.
   table: StatementTable,
   pager: Pager,
-  searcher: Searcher,
 
   // ## Methods to retrieve references to UI elements (Selenium WebDriver
   // Element)
 
+  getContainer: function () {
+    return element.all(by.css(this.locators.container.css)).get(2);
+  },
+
+  getSearchTxtIn: function () {
+    return this
+      .getContainer()
+      .element(by.css(this.locators.textInputs.searcher.css));
+  },
 
   // ## Methods to interact with the Statements List Page components
 
@@ -56,9 +72,9 @@ var StatementList = {
    * @returns {Object} Promise
    */
   isDisplayed: function () {
-    return this.searcher
-      .getSearchCriteriaTxtIn()
-      .isPresent();
+    return this
+      .getSearchTxtIn()
+      .isDisplayed();
   }
 };
 

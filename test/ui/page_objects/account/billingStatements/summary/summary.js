@@ -33,37 +33,37 @@ var Summary = {
   locators: {
     elements: {
       currentBillingPlan: {
-        css: '.subscription-summary td.ng-binding:nth-of-type(1)'
+        css: '.subscription-summary td:nth-of-type(2)'
       },
       totalPayments: {
-        css: '.subscription-summary td.ng-binding:nth-of-type(2)'
+        css: '.subscription-summary td:nth-of-type(4)'
       },
       currentBalance: {
-        css: '.subscription-summary td.ng-binding:nth-of-type(3)'
+        css: '.subscription-summary td:nth-of-type(6)'
       },
       subscriberSince: {
-        css: '.subscription-summary td.ng-binding:nth-of-type(4)'
+        css: '.subscription-summary td:nth-of-type(8)'
       },
       nextBilling: {
-        css: '.subscription-summary td.ng-binding:nth-of-type(5)'
+        css: '.subscription-summary td:nth-of-type(10)'
       },
       status: {
-        css: '.subscription-summary td.ng-binding:nth-of-type(6)'
+        css: '.subscription-summary td:nth-of-type(12)'
       },
       activeSince: {
-        css: '.subscription-summary td.ng-binding:nth-of-type(7)'
+        css: '.subscription-summary td:nth-of-type(14)'
       },
       firstName: {
-        css: '.subscription-summary td.ng-binding:nth-of-type(8)'
+        css: '.subscription-summary td:nth-of-type(16)'
       },
       lastName: {
-        css: '.subscription-summary td.ng-binding:nth-of-type(9)'
+        css: '.subscription-summary td:nth-of-type(18)'
       },
       cardNumber: {
-        css: '.subscription-summary td strong'
+        css: '.subscription-summary td:nth-of-type(20)'
       },
       cardExpDate: {
-        css: '.subscription-summary td:last'
+        css: '.subscription-summary td:nth-of-type(22)'
       }
     },
     buttons: {

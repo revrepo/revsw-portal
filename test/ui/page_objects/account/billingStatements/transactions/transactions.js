@@ -21,7 +21,6 @@
 // Requiring other Page Objects that compound the Transactions List Page one
 var TransactionTable = require('./table/table');
 var Pager = require('./../../../common/pager');
-var Searcher = require('./../../../common/searcher');
 
 // This `Transactions List` Page Object abstracts all operations or actions
 // that a common user could do in the Transaction List page from the Portal
@@ -31,16 +30,33 @@ var TransactionList = {
   // ## Properties
 
   // Locators specific to HTML elements from this page object
-  locators: {},
+  locators: {
+    container: {
+      css: '.panel-body'
+    },
+    textInputs: {
+      searcher: {
+        css: 'input[type="search"]'
+      }
+    }
+  },
 
   // `Transaction List` Page is compound mainly by following components.
   table: TransactionTable,
   pager: Pager,
-  searcher: Searcher,
 
   // ## Methods to retrieve references to UI elements (Selenium WebDriver
   // Element)
 
+  getContainer: function () {
+    return element.all(by.css(this.locators.container.css)).get(1);
+  },
+
+  getSearchTxtIn: function () {
+    return this
+      .getContainer()
+      .element(by.css(this.locators.textInputs.searcher.css));
+  },
 
   // ## Methods to interact with the Transaction List Page components
 
@@ -56,8 +72,8 @@ var TransactionList = {
    * @returns {Object} Promise
    */
   isDisplayed: function () {
-    return this.searcher
-      .getSearchCriteriaTxtIn()
+    return this
+      .getSearchTxtIn()
       .isPresent();
   }
 };
