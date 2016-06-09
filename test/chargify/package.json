@@ -1,0 +1,22 @@
+{
+  "name": "chargify_clear_test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "nightwatch --env chargify_clear_test",
+    "lint": "jshint ./tests ./page_objects"
+  },
+  "author": "Nikolay Gerzhan <nikolay.gerzhan@gmail.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "cucumber": "^1.0.0"
+  },
+  "dependencies": {
+    "config": "^1.21.0",
+    "jshint": "^2.9.2",
+    "lodash": "^4.13.1",
+    "nightwatch": "^0.9.2",
+    "selenium-webdriver": "2.47.0"
+  }
+}
