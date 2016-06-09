@@ -32,7 +32,7 @@ describe('Functional', function () {
 
     beforeEach(function () {
       Portal.signIn(adminUser);
-      Portal.getUsersPage();
+      Portal.selectUsersItem();
     });
 
     afterEach(function () {

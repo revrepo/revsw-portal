@@ -62,7 +62,7 @@ describe('Smoke', function () {
           Portal.signIn(user);
 
           // Load in the browser URL the Users page
-          Portal.goToUsersThroughClassNameLocator();
+          Portal.selectUsersItem();
         });
 
         // Use this block to run some code after each spec is run

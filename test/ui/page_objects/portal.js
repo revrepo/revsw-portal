@@ -68,6 +68,7 @@ var UsageReportPage = require('./billing/usageReportPage');
 var UsageReportDomainsPage = require('./billing/usageReportDomainsPage');
 var AccountProfilePage = require('./account/profile/page');
 var BillingPlanPage = require('./account/billingPlanPage');
+var AccountBillingStatementsPage = require('./account/billingStatements/page');
 
 var PlansPage = require('./signUp/plansPage');
 var SignUpPage = require('./signUp/signUpPage');
@@ -134,7 +135,8 @@ var Portal = {
   },
   accounts: {
     profilePage: AccountProfilePage,
-    billingPlanPage: BillingPlanPage
+    billingPlanPage: BillingPlanPage,
+    billingStatements: AccountBillingStatementsPage
   },
   billing: {
     usageReportPage: UsageReportPage,
@@ -307,16 +309,44 @@ var Portal = {
   },
 
   /**
-   * ### Portal.goToUsersThroughClassNameLocator()
+   * ### Portal.selectUsersItem()
    *
    * Navigates to Users Page avoiding direct link browsing
    *
    * @returns {Promise}
    */
-  goToUsersThroughClassNameLocator: function () {
+  selectUsersItem: function () {
     return this
-      .sideBar.gotoThroughClassNameLocator(Constants.header.appMenu.ACCOUNT_SETTINGS,
+      .sideBar.selectItemFromExpandedBlock(Constants.header.appMenu.ACCOUNT_SETTINGS,
         Constants.sideBar.menu.USERS);
+  },
+
+  /**
+   * ### Portal.selectUpdatePasswordItem()
+   *
+   * Navigates to Update Password avoiding direct link browsing
+   * and without extra click on menu header
+   *
+   * @returns {Promise}
+   */
+  selectUpdatePasswordItem: function () {
+    return this
+      .sideBar.selectItemFromExpandedBlock(Constants.header.appMenu.ACCOUNT_SETTINGS,
+        Constants.sideBar.menu.UPDATE_PASSWORD);
+  },
+
+  /**
+   * ### Portal.selectSecuritySettingsItem()
+   *
+   * Navigates to Security settings avoiding direct link browsing
+   * and without extra click on menu header
+   *
+   * @returns {Promise}
+   */
+  selectSecuritySettingsItem: function () {
+    return this
+      .sideBar.selectItemFromExpandedBlock(Constants.header.appMenu.ACCOUNT_SETTINGS,
+        Constants.sideBar.menu.SECURITY_SETTINGS);
   },
 
   /**
@@ -351,6 +381,11 @@ var Portal = {
   goToChangeBillingPlan: function () {
     this.goToBilling();
     return Portal.sideBar.goTo(Constants.sideBar.billing.CHANGE_BILLING_PLAN);
+  },
+
+  goToBillingStatements: function () {
+    this.goToBilling();
+    return Portal.sideBar.goTo(Constants.sideBar.billing.BILLING_STATEMENTS);
   },
 
   /**
@@ -422,7 +457,7 @@ var Portal = {
   createUserThroughClassNameLocators: function (newUser) {
     var me = this;
     return browser.getCurrentUrl().then(function (initialUrl) {
-      me.goToUsersThroughClassNameLocator();
+      me.selectUsersItem();
       me.userListPage.clickAddNewUserThroughClassName();
       me.addUserPage.createUser(newUser);
       me.addUserPage.clickBackToList();
@@ -512,7 +547,7 @@ var Portal = {
   deleteUserThroughClassNameLocators: function (user) {
     var me = this;
     return browser.getCurrentUrl().then(function (initialUrl) {
-      me.goToUsersThroughClassNameLocator();
+      me.selectUsersItem();
       me.userListPage.searcher.clearSearchCriteria();
       me.userListPage.searcher.setSearchCriteria(user.email);
       me.userListPage.table

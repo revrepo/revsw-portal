@@ -34,19 +34,19 @@ describe('Negative', function () {
     });
 
     beforeEach(function () {
-      Portal.getUsersPage();
+      Portal.selectUsersItem();
     });
 
     it('should apply filters only when typing 1 char in "Search" field',
       function () {
         var bret = DataProvider.generateUser('Bret');
         bret.email = 'kk' + bret.email;
-        Portal.createUser(bret);
+        Portal.createUserThroughClassNameLocators(bret);
         Portal.userListPage.searcher.setSearchCriteria('k');
         var tableRows = Portal.userListPage.table.getRows();
         expect(tableRows.count()).toEqual(1);
         Portal.userListPage.searcher.clearSearchCriteria();
-        Portal.deleteUser(bret);
+        Portal.deleteUserThroughClassNameLocators(bret);
       });
   });
 });

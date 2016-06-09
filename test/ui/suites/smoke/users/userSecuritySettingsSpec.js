@@ -44,7 +44,7 @@ describe('Smoke', function () {
         });
 
         beforeEach(function () {
-          Portal.goToSecuritySettings();
+          Portal.selectSecuritySettingsItem();
         });
 
         it('should display "Security Settings" by selecting option from ' +

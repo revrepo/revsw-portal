@@ -15,3 +15,51 @@
  * is strictly forbidden unless prior written permission is obtained
  * from Rev Software, Inc.
  */
+
+var tableLocators = {
+  container: {
+    css: '.panel-body'
+  },
+  header: {
+    css: 'thead tr'
+  },
+  rows: {
+    repeater: 'transaction in transactions'
+  }
+};
+
+var headerLocators = {
+  operationType: {
+    css: 'th:nth-of-type(1) a'
+  },
+  date: {
+    css: 'th:nth-of-type(2) a'
+  },
+  memo: {
+    css: 'th:nth-of-type(3) a'
+  },
+  amount: {
+    css: 'th:nth-of-type(4) a'
+  }
+};
+
+var rowLocators = {
+  operationType: {
+    css: 'td:nth-of-type(1)'
+  },
+  date: {
+    css: 'td:nth-of-type(2)'
+  },
+  memo: {
+    css: 'td:nth-of-type(3)'
+  },
+  amount: {
+    css: 'td:nth-of-type(4)'
+  }
+};
+
+module.exports = {
+  table: tableLocators,
+  header: headerLocators,
+  row: rowLocators
+};

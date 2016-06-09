@@ -45,7 +45,7 @@ describe('Smoke', function () {
         });
 
         beforeEach(function () {
-          Portal.goToUsersThroughClassNameLocator();
+          Portal.selectUsersItem();
         });
 
         it('should display edit user button', function () {
