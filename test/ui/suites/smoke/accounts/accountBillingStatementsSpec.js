@@ -49,35 +49,52 @@ describe('Smoke', function () {
       Portal.goToBillingStatements();
     });
 
-    it('should check that Billing Summary area exists.',
+    xit('should check that Billing Summary area exists.',
       function () {
         expect(Portal.accounts.billingStatements.summary
           .getCurrentBillingPlanEl()
           .isDisplayed()).toBeTruthy();
       });
 
-    it('should check that Transactions area exists.',
+    xit('should check that Transactions area exists.',
       function () {
         expect(Portal.accounts.billingStatements.transactions
           .isDisplayed()).toBeTruthy();
       });
 
-    it('should check that Statements area exists.',
+    xit('should check that Statements area exists.',
       function () {
         expect(Portal.accounts.billingStatements.statements
           .isDisplayed()).toBeTruthy();
       });
 
-    xit('Should Check That Billing Summary displays report values.',
+    xit('should check that Billing Summary displays report values.',
       function () {
+        Portal.accounts.billingStatements.summary
+          .getCurrentBillingPlan()
+          .then(function (currentValue) {
+            expect(currentValue.length).toBeGreaterThan(0);
+          });
       });
 
-    xit('Should Check That Transactions displays report values.',
+    it('should check that Transactions displays report values.',
       function () {
+        Portal.accounts.billingStatements.transactions.table
+          .getFirstRow()
+          .getOperationType()
+          .then(function (currentValue) {
+            expect(currentValue.length).toBeGreaterThan(0);
+          });
       });
 
-    xit('Should Check That Statements displays report values.',
+    it('should check that Statements displays report values.',
       function () {
+        Portal.accounts.billingStatements.statements.table
+          .getFirstRow()
+          .getStatement()
+          .then(function (statementValue) {
+            expect(statementValue.length).toBeGreaterThan(0);
+          });
       });
   });
 });
