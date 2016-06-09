@@ -69,6 +69,10 @@
        */
       DOMAIN_STATUS_REFRESH_INTERVAL: 15000,
       /**
+       * Interval delay for refreshing domain staging/global status in Edit Form
+       */
+      DOMAIN_STATUS_REFRESH_INTERVAL_EDIT_FORM: 25000,
+      /**
        * List of icon classes for SSL Certificates statuses
        */
       SSL_CERT_STAGING_STATUS_ICONS: {
