@@ -307,28 +307,28 @@ var Portal = {
   },
 
   /**
-   * ### Portal.goToUsersThroughClassNameLocator()
+   * ### Portal.selectUsersItem()
    *
    * Navigates to Users Page avoiding direct link browsing
    *
    * @returns {Promise}
    */
-  goToUsersThroughClassNameLocator: function () {
+  selectUsersItem: function () {
     return this
-      .sideBar.goToThroughClassNameLocator(Constants.header.appMenu.ACCOUNT_SETTINGS,
+      .sideBar.selectItemFromExpandedBlock(Constants.header.appMenu.ACCOUNT_SETTINGS,
         Constants.sideBar.menu.USERS);
   },
 
   /**
-   * ### Portal.goToUpdatePasswordThroughClassNameLocator()
+   * ### Portal.selectUpdatePasswordItem()
    *
    * Navigates to Update Password avoiding direct link browsing
    *
    * @returns {Promise}
    */
-  goToUpdatePasswordThroughClassNameLocator: function () {
+  selectUpdatePasswordItem: function () {
     return this
-      .sideBar.goToThroughClassNameLocator(Constants.header.appMenu.ACCOUNT_SETTINGS,
+      .sideBar.selectItemFromExpandedBlock(Constants.header.appMenu.ACCOUNT_SETTINGS,
         Constants.sideBar.menu.UPDATE_PASSWORD);
   },
 
@@ -435,7 +435,7 @@ var Portal = {
   createUserThroughClassNameLocators: function (newUser) {
     var me = this;
     return browser.getCurrentUrl().then(function (initialUrl) {
-      me.goToUsersThroughClassNameLocator();
+      me.selectUsersItem();
       me.userListPage.clickAddNewUserThroughClassName();
       me.addUserPage.createUser(newUser);
       me.addUserPage.clickBackToList();
@@ -525,7 +525,7 @@ var Portal = {
   deleteUserThroughClassNameLocators: function (user) {
     var me = this;
     return browser.getCurrentUrl().then(function (initialUrl) {
-      me.goToUsersThroughClassNameLocator();
+      me.selectUsersItem();
       me.userListPage.searcher.clearSearchCriteria();
       me.userListPage.searcher.setSearchCriteria(user.email);
       me.userListPage.table

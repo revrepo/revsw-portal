@@ -35,7 +35,7 @@ describe('Functional', function () {
     beforeEach(function () {
       // TODO: Move this line to afterAll call once add-reset-form bug  is fixed
       Portal.signIn(adminUser);
-      Portal.goToUsersThroughClassNameLocator();
+      Portal.selectUsersItem();
     });
 
     afterEach(function () {
