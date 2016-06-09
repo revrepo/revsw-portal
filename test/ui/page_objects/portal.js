@@ -325,6 +325,7 @@ var Portal = {
    * ### Portal.selectUpdatePasswordItem()
    *
    * Navigates to Update Password avoiding direct link browsing
+   * and without extra click on menu header
    *
    * @returns {Promise}
    */
@@ -347,7 +348,7 @@ var Portal = {
       .sideBar.selectItemFromExpandedBlock(Constants.header.appMenu.ACCOUNT_SETTINGS,
         Constants.sideBar.menu.SECURITY_SETTINGS);
   },
-  
+
   /**
    * ### Portal.goToMobileApps()
    *
