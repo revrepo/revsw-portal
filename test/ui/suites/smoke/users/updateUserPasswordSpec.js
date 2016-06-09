@@ -51,7 +51,7 @@ describe('Smoke', function () {
         });
 
         beforeEach(function () {
-          Portal.goToUpdatePassword();
+          Portal.goToUpdatePasswordThroughClassNameLocator();
         });
 
         it('should display updated password form', function () {
@@ -65,7 +65,7 @@ describe('Smoke', function () {
           Portal.createUserThroughClassNameLocators(carl);
           Portal.signOut();
           Portal.signIn(carl);
-          Portal.goToUpdatePassword();
+          Portal.goToUpdatePasswordThroughClassNameLocator();
           Portal.updatePasswordPage.setCurrentPassword(carl.password);
           Portal.updatePasswordPage.setNewPassword(newPassword);
           Portal.updatePasswordPage.setPasswordConfirm(newPassword);
