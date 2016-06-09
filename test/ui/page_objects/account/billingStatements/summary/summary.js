@@ -36,48 +36,48 @@ var Summary = {
     },
     elements: {
       currentBillingPlan: {
-        css: '.table:nth-of-type(1) tr:nth-of-type(1) td:nth-of-type(2)'
+        css: 'table:nth-of-type(1) tr:nth-of-type(1) td:nth-of-type(2)'
       },
       totalPayments: {
-        css: '.table:nth-of-type(1) tr:nth-of-type(2) td:nth-of-type(2)'
+        css: 'table:nth-of-type(1) tr:nth-of-type(2) td:nth-of-type(2)'
       },
       currentBalance: {
-        css: '.table:nth-of-type(1) tr:nth-of-type(3) td:nth-of-type(2)'
+        css: 'table:nth-of-type(1) tr:nth-of-type(3) td:nth-of-type(2)'
       },
       subscriberSince: {
-        css: '.table:nth-of-type(1) tr:nth-of-type(4) td:nth-of-type(2)'
+        css: 'table:nth-of-type(1) tr:nth-of-type(4) td:nth-of-type(2)'
       },
       nextBilling: {
-        css: '.table:nth-of-type(1) tr:nth-of-type(5) td:nth-of-type(2)'
+        css: 'table:nth-of-type(1) tr:nth-of-type(5) td:nth-of-type(2)'
       },
       status: {
-        css: '.table:nth-of-type(1) tr:nth-of-type(6) td:nth-of-type(2)'
+        css: 'table:nth-of-type(1) tr:nth-of-type(6) td:nth-of-type(2)'
       },
       activeSince: {
-        css: '.table:nth-of-type(1) tr:nth-of-type(7) td:nth-of-type(2)'
+        css: 'table:nth-of-type(1) tr:nth-of-type(7) td:nth-of-type(2)'
       },
       firstName: {
-        css: '.table:nth-of-type(2) tr:nth-of-type(1) td:nth-of-type(2)'
+        css: 'table:nth-of-type(2) tr:nth-of-type(1) td:nth-of-type(2)'
       },
       lastName: {
-        css: '.table:nth-of-type(2) tr:nth-of-type(2) td:nth-of-type(2)'
+        css: 'table:nth-of-type(2) tr:nth-of-type(2) td:nth-of-type(2)'
       },
       cardNumber: {
-        css: '.table:nth-of-type(2) tr:nth-of-type(3) td:nth-of-type(2)'
+        css: 'table:nth-of-type(2) tr:nth-of-type(3) td:nth-of-type(2)'
       },
       cardExpDate: {
-        css: '.table:nth-of-type(2) tr:nth-of-type(4) td:nth-of-type(2)'
+        css: 'table:nth-of-type(2) tr:nth-of-type(4) td:nth-of-type(2)'
       }
     },
     buttons: {
       changeBillingPlan: {
-        css: '.table:nth-of-type(1) tr:nth-of-type(1) td:nth-of-type(2) a'
+        css: 'table:nth-of-type(1) tr:nth-of-type(1) td:nth-of-type(2) a'
       },
       viewDetails: {
-        css: '.table:nth-of-type(1) tr:nth-of-type(5) td:nth-of-type(2) a'
+        css: 'table:nth-of-type(1) tr:nth-of-type(5) td:nth-of-type(2) a'
       },
       updatePaymentProfile: {
-        css: '.table:nth-of-type(2) tr:nth-of-type(3) td:nth-of-type(2) a'
+        css: 'table tr:nth-of-type(3) td:nth-of-type(2) a'
       }
     }
   },
