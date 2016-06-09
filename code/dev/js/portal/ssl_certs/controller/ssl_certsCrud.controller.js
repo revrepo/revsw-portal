@@ -152,6 +152,16 @@
 
     $scope.getSSL_cert = function(id) {
       $scope.get(id)
+        .then(function() {
+          // NOTE: auto set Dirty attribute for fields (validation exists data)
+          var _fields = ['cert_name', 'public_ssl_cert'];
+          angular.forEach(_fields, setDirty);
+          function setDirty(field) {
+            if (!!$scope.editForm[field]) {
+              $scope.editForm[field].$setDirty();
+            }
+          }
+        })
         .catch(function(err) {
           $scope.alertService.danger('Could not load SSL certificate details');
         });

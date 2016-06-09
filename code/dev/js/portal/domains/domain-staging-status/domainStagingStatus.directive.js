@@ -12,7 +12,8 @@
                 '&nbsp;&nbsp;&nbsp;' +
                 '<i class="glyphicon" ng-class="iconGlobal" uib-tooltip="{{tooltipGlobal}}"></i>',
       scope: {
-        ngId: '=' // Domain id
+        ngId: '=', // Domain id
+        interval: '=' // Interval update for Edit Form
       },
       /*@ngInject*/
       controller: function ($scope) {
@@ -28,11 +29,11 @@
         $scope.startRefresh = function() {
           if (!domainId || !$scope.shouldRefresh ||
             $state.includes('index.webApp.domains.new') ||
-            $state.includes('index.webApp.domains.edit') ||
+            ($state.includes('index.webApp.domains.edit')&&!$scope.interval) ||
             $state.includes('index.webApp.domains.versions')) {
             return;
           }
-          intervalPromise = $interval($scope.fetchStatus, $config.DOMAIN_STATUS_REFRESH_INTERVAL, 1);
+          intervalPromise = $interval($scope.fetchStatus, $scope.interval || $config.DOMAIN_STATUS_REFRESH_INTERVAL, 1);
         };
 
         $scope.stopRefresh = function () {
