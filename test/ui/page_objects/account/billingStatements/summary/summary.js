@@ -31,50 +31,53 @@ var Summary = {
 
   // Locators specific to HTML elements from this page object
   locators: {
+    container: {
+      css: '.subscription-summary'
+    },
     elements: {
       currentBillingPlan: {
-        css: '.subscription-summary td:nth-of-type(2)'
+        css: '.table:nth-of-type(1) tr:nth-of-type(1) td:nth-of-type(2)'
       },
       totalPayments: {
-        css: '.subscription-summary td:nth-of-type(4)'
+        css: '.table:nth-of-type(1) tr:nth-of-type(2) td:nth-of-type(2)'
       },
       currentBalance: {
-        css: '.subscription-summary td:nth-of-type(6)'
+        css: '.table:nth-of-type(1) tr:nth-of-type(3) td:nth-of-type(2)'
       },
       subscriberSince: {
-        css: '.subscription-summary td:nth-of-type(8)'
+        css: '.table:nth-of-type(1) tr:nth-of-type(4) td:nth-of-type(2)'
       },
       nextBilling: {
-        css: '.subscription-summary td:nth-of-type(10)'
+        css: '.table:nth-of-type(1) tr:nth-of-type(5) td:nth-of-type(2)'
       },
       status: {
-        css: '.subscription-summary td:nth-of-type(12)'
+        css: '.table:nth-of-type(1) tr:nth-of-type(6) td:nth-of-type(2)'
       },
       activeSince: {
-        css: '.subscription-summary td:nth-of-type(14)'
+        css: '.table:nth-of-type(1) tr:nth-of-type(7) td:nth-of-type(2)'
       },
       firstName: {
-        css: '.subscription-summary td:nth-of-type(16)'
+        css: '.table:nth-of-type(2) tr:nth-of-type(1) td:nth-of-type(2)'
       },
       lastName: {
-        css: '.subscription-summary td:nth-of-type(18)'
+        css: '.table:nth-of-type(2) tr:nth-of-type(2) td:nth-of-type(2)'
       },
       cardNumber: {
-        css: '.subscription-summary td:nth-of-type(20)'
+        css: '.table:nth-of-type(2) tr:nth-of-type(3) td:nth-of-type(2)'
       },
       cardExpDate: {
-        css: '.subscription-summary td:nth-of-type(22)'
+        css: '.table:nth-of-type(2) tr:nth-of-type(4) td:nth-of-type(2)'
       }
     },
     buttons: {
       changeBillingPlan: {
-        css: '.subscription-summary td.ng-binding:nth-of-type(1) a'
+        css: '.table:nth-of-type(1) tr:nth-of-type(1) td:nth-of-type(2) a'
       },
       viewDetails: {
-        css: '.subscription-summary td.ng-binding:nth-of-type(5) a'
+        css: '.table:nth-of-type(1) tr:nth-of-type(5) td:nth-of-type(2) a'
       },
       updatePaymentProfile: {
-        partialLinkText: 'Update Payment Profile'
+        css: '.table:nth-of-type(2) tr:nth-of-type(3) td:nth-of-type(2) a'
       }
     }
   },
@@ -82,58 +85,89 @@ var Summary = {
   // ## Methods to retrieve references to UI elements (Selenium WebDriver
   // Element)
 
+  getContainer: function () {
+    return element(by.css(this.locators.container.css));
+  },
+
   getCurrentBillingPlanEl: function () {
-    return element(by.css(this.locators.elements.currentBillingPlan.css));
+    return this
+      .getContainer()
+      .element(by.css(this.locators.elements.currentBillingPlan.css));
   },
   getTotalPaymentsEl: function () {
-    return element(by.css(this.locators.elements.totalPayments.css));
+    return this
+      .getContainer()
+      .element(by.css(this.locators.elements.totalPayments.css));
   },
   getCurrentBalanceEl: function () {
-    return element(by.css(this.locators.elements.currentBalance.css));
+    return this
+      .getContainer()
+      .element(by.css(this.locators.elements.currentBalance.css));
   },
   getSubscriberSinceEl: function () {
-    return element(by.css(this.locators.elements.subscriberSince.css));
+    return this
+      .getContainer()
+      .element(by.css(this.locators.elements.subscriberSince.css));
   },
   getNextBillingEl: function () {
-    return element(by.css(this.locators.elements.nextBilling.css));
+    return this
+      .getContainer()
+      .element(by.css(this.locators.elements.nextBilling.css));
   },
   getStatusEl: function () {
-    return element(by.css(this.locators.elements.status.css));
+    return this
+      .getContainer()
+      .element(by.css(this.locators.elements.status.css));
   },
   getActiveSinceEl: function () {
-    return element(by.css(this.locators.elements.activeSince.css));
+    return this
+      .getContainer()
+      .element(by.css(this.locators.elements.activeSince.css));
   },
 
   getFirstNameEl: function () {
-    return element(by.css(this.locators.elements.firstName.css));
+    return this
+      .getContainer()
+      .element(by.css(this.locators.elements.firstName.css));
   },
   getLastNameEl: function () {
-    return element(by.css(this.locators.elements.lastName.css));
+    return this
+      .getContainer()
+      .element(by.css(this.locators.elements.lastName.css));
   },
   getCardNumberEl: function () {
-    return element(by.css(this.locators.elements.cardNumber.css));
+    return this
+      .getContainer()
+      .element(by.css(this.locators.elements.cardNumber.css));
   },
   getCardExpDateEl: function () {
-    return element(by.css(this.locators.elements.cardExpDate.css));
+    return this
+      .getContainer()
+      .element(by.css(this.locators.elements.cardExpDate.css));
   },
 
   getChangeBillingPlanBtn: function () {
-    return element(by.css(this.locators.buttons.changeBillingPlan.css));
+    return this
+      .getContainer()
+      .element(by.css(this.locators.buttons.changeBillingPlan.css));
   },
   getViewDetailsBtn: function () {
-    return element(by.css(this.locators.buttons.viewDetails.css));
+    return this
+      .getContainer()
+      .element(by.css(this.locators.buttons.viewDetails.css));
 
   },
   getUpdatePaymentProfileBtn: function () {
-    return element(by.partialLinkText(
-      this.locators.buttons.updatePaymentProfile.partialLinkText));
+    return this
+      .getContainer()
+      .element(by.css(this.locators.buttons.updatePaymentProfile.css));
   },
 
   // ## Methods to interact with the Summary Page components
 
   getCurrentBillingPlan: function () {
     return this
-      .getCurrentBalanceEl()
+      .getCurrentBillingPlanEl()
       .getText();
   },
   getTotalPayments: function () {

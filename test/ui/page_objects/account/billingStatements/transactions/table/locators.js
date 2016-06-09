@@ -17,8 +17,11 @@
  */
 
 var tableLocators = {
+  container: {
+    css: '.panel-body'
+  },
   header: {
-    css: 'table.dataTable:nth-of-type(1) thead tr'
+    css: 'thead tr'
   },
   rows: {
     repeater: 'transaction in transactions'
@@ -27,31 +30,31 @@ var tableLocators = {
 
 var headerLocators = {
   operationType: {
-    css: 'table.dataTable:nth-of-type(1) th:nth-of-type(1) a'
+    css: 'th:nth-of-type(1) a'
   },
   date: {
-    css: 'table.dataTable:nth-of-type(1) th:nth-of-type(2) a'
+    css: 'th:nth-of-type(2) a'
   },
   memo: {
-    css: 'table.dataTable:nth-of-type(1) th:nth-of-type(3) a'
+    css: 'th:nth-of-type(3) a'
   },
   amount: {
-    css: 'table.dataTable:nth-of-type(1) th:nth-of-type(4) a'
+    css: 'th:nth-of-type(4) a'
   }
 };
 
 var rowLocators = {
   operationType: {
-    css: 'table.dataTable:nth-of-type(1) td:nth-of-type(1)'
+    css: 'td:nth-of-type(1)'
   },
   date: {
-    css: 'table.dataTable:nth-of-type(1) td:nth-of-type(2)'
+    css: 'td:nth-of-type(2)'
   },
   memo: {
-    css: 'table.dataTable:nth-of-type(1) td:nth-of-type(3)'
+    css: 'td:nth-of-type(3)'
   },
   amount: {
-    css: 'table.dataTable:nth-of-type(1) td:nth-of-type(4)'
+    css: 'td:nth-of-type(4)'
   }
 };
 

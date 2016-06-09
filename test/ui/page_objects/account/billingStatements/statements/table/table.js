@@ -23,8 +23,14 @@ var StatementTable = {
 
   locators: StatementTableLocators.table,
 
+  getContainer: function () {
+    return element.all(by.css(this.locators.container.css)).get(2);
+  },
+
   getHeaderEl: function () {
-    return element(by.css(this.locators.header.css));
+    return this
+      .getContainer()
+      .element(by.css(this.locators.header.css));
   },
 
   getHeader: function () {
@@ -33,7 +39,9 @@ var StatementTable = {
   },
 
   getRows: function () {
-    return element.all(by.repeater(this.locators.rows.repeater));
+    return this
+      .getContainer()
+      .all(by.repeater(this.locators.rows.repeater));
   },
 
   getFirstRow: function () {
