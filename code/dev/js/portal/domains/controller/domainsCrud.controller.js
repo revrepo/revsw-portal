@@ -44,7 +44,7 @@
 
     $scope.NO_SPECIAL_CHARS = $config.PATTERNS.NO_SPECIAL_CHARS;
     $scope.COMMENT_NO_SPECIAL_CHARS = $config.PATTERNS.COMMENT_NO_SPECIAL_CHARS;
-
+    $scope.DOMAIN_STATUS_REFRESH_INTERVAL_EDIT_FORM = $config.DOMAIN_STATUS_REFRESH_INTERVAL_EDIT_FORM;
     /**
      * @name setAccountName
      * @description
@@ -295,7 +295,8 @@
       function saveNoChangingValue(model) {
         $scope.modelInfo = {
           domain_name: model.domain_name,
-          cname: model.cname
+          cname: model.cname,
+          status_domain_id: model.id || $stateParams.id
         };
         delete model.domain_name;
         delete model.cname;
@@ -303,6 +304,21 @@
         return $q.when(model);
       }
     };
+    /**
+     * @name  reloadStatus
+     * @description
+     *
+     * @return
+     */
+    function reloadStatus() {
+      $scope.modelInfo.status_domain_id = null;
+      $scope.refresh = true;
+      $timeout(function() {
+        $scope.modelInfo.status_domain_id = $scope.model.id || $stateParams.id;
+      }, 300);
+
+    }
+
     /**
      * @name deleteDomain
      * @description
@@ -357,6 +373,7 @@
             options: 'publish'
           }, model)
           .then($scope.alertService.success)
+          .then(reloadStatus)
           .catch($scope.alertService.danger);
       });
     };
@@ -375,6 +392,7 @@
           options: 'verify_only'
         }, model)
         .then($scope.alertService.success)
+        .then(reloadStatus)
         .catch($scope.alertService.danger);
     };
 
@@ -394,6 +412,7 @@
             id: modelId
           }, model)
           .then($scope.alertService.success)
+          .then(reloadStatus)
           .catch($scope.alertService.danger);
       });
     };
