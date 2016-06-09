@@ -34,7 +34,7 @@ describe('Negative', function () {
     });
 
     beforeEach(function () {
-      Portal.goToUsersThroughClassNameLocator();
+      Portal.selectUsersItem();
     });
 
     it('should apply filters only when typing 1 char in "Search" field',

@@ -33,7 +33,7 @@ describe('Functional', function () {
     });
 
     beforeEach(function () {
-      Portal.goToUsersThroughClassNameLocator();
+      Portal.selectUsersItem();
     });
 
     afterEach(function () {

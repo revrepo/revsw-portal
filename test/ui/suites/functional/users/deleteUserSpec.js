@@ -36,7 +36,7 @@ describe('Functional', function () {
       // TODO: Move sign-in to afterAll callback once issue about dashboard
       // checkbox is fixed.
       Portal.signIn(adminUser);
-      Portal.goToUsersThroughClassNameLocator();
+      Portal.selectUsersItem();
     });
 
     afterEach(function () {

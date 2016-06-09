@@ -94,7 +94,7 @@ var SideBar = {
   },
 
   /**
-   * ### SideBar.gotoThroughClassNameLocator()
+   * ### SideBar.selectItemFromExpandedBlock()
    *
    * Triggers a click on the specified sidebar `menu option` avoiding using by.linkText
    *
@@ -103,7 +103,7 @@ var SideBar = {
    *
    * @returns {Promise}
    */
-  gotoThroughClassNameLocator: function(headerName, itemName) {
+  selectItemFromExpandedBlock: function(headerName, itemName) {
     var me = this;
     var container = this.getHeaderElem(headerName);
     this.expandBlockIfNotExpanded(container);
