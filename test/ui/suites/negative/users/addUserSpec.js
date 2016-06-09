@@ -36,7 +36,7 @@ describe('Negative', function () {
 
     beforeEach(function () {
       Portal.signIn(adminUser);
-      Portal.getUsersPage();
+      Portal.goToUsersThroughClassNameLocator();
     });
 
     afterEach(function () {
@@ -59,10 +59,10 @@ describe('Negative', function () {
         var tom = DataProvider.generateUser('Tom');
         var jerry = DataProvider.generateUser('Jerry');
         jerry.email = tom.email;
-        Portal.userListPage.clickAddNewUser();
+        Portal.userListPage.clickAddNewUserThroughClassName();
         Portal.addUserPage.createUser(tom);
         Portal.addUserPage.clickBackToList();
-        Portal.userListPage.clickAddNewUser();
+        Portal.userListPage.clickAddNewUserThroughClassName();
         Portal.addUserPage.createUser(jerry);
         expect(Portal.alerts.getAll().count()).toEqual(1);
         var alert = Portal.alerts.getFirst();
@@ -74,7 +74,7 @@ describe('Negative', function () {
       function () {
         var derek = DataProvider.generateUser('Derek');
         derek.email = '';
-        Portal.userListPage.clickAddNewUser();
+        Portal.userListPage.clickAddNewUserThroughClassName();
         Portal.addUserPage.form.fill(derek);
         var addBtn = Portal.addUserPage.getCreateUserBtn();
         expect(addBtn.isEnabled()).toBeFalsy();
@@ -84,7 +84,7 @@ describe('Negative', function () {
       function () {
         var mathew = DataProvider.generateUser('Mathew');
         mathew.firstName = '';
-        Portal.userListPage.clickAddNewUser();
+        Portal.userListPage.clickAddNewUserThroughClassName();
         Portal.addUserPage.form.fill(mathew);
         var addBtn = Portal.addUserPage.getCreateUserBtn();
         expect(addBtn.isEnabled()).toBeFalsy();
@@ -94,7 +94,7 @@ describe('Negative', function () {
       function () {
         var mathew = DataProvider.generateUser('Mathew');
         mathew.lastName = '';
-        Portal.userListPage.clickAddNewUser();
+        Portal.userListPage.clickAddNewUserThroughClassName();
         Portal.addUserPage.form.fill(mathew);
         var addBtn = Portal.addUserPage.getCreateUserBtn();
         expect(addBtn.isEnabled()).toBeFalsy();
@@ -104,7 +104,7 @@ describe('Negative', function () {
       function () {
         var scott = DataProvider.generateUser('Scott');
         delete scott.role;
-        Portal.userListPage.clickAddNewUser();
+        Portal.userListPage.clickAddNewUserThroughClassName();
         Portal.addUserPage.form.fill(scott);
         var addBtn = Portal.addUserPage.getCreateUserBtn();
         expect(addBtn.isEnabled()).toBeFalsy();
@@ -125,7 +125,7 @@ describe('Negative', function () {
       function () {
         var brian = DataProvider.generateUser('Brian');
         delete brian.passwordConfirm;
-        Portal.userListPage.clickAddNewUser();
+        Portal.userListPage.clickAddNewUserThroughClassName();
         Portal.addUserPage.form.fill(brian);
         var addBtn = Portal.addUserPage.getCreateUserBtn();
         expect(addBtn.isEnabled()).toBeFalsy();
@@ -137,7 +137,7 @@ describe('Negative', function () {
         var vincent = DataProvider.generateUser('Vincent');
         vincent.password = 'something';
         vincent.passwordConfirm = 'different';
-        Portal.userListPage.clickAddNewUser();
+        Portal.userListPage.clickAddNewUserThroughClassName();
         Portal.addUserPage.createUser(vincent);
         Portal.addUserPage.form.fill(vincent);
         var addBtn = Portal.addUserPage.getCreateUserBtn();

@@ -35,7 +35,7 @@ describe('Functional', function () {
     beforeEach(function () {
       // TODO: Move this line to afterAll call once add-reset-form bug  is fixed
       Portal.signIn(adminUser);
-      Portal.getUsersPage();
+      Portal.goToUsersThroughClassNameLocator();
     });
 
     afterEach(function () {
@@ -45,33 +45,33 @@ describe('Functional', function () {
 
     it('should display a successful message when creating user', function () {
       var bret = DataProvider.generateUser('Bret');
-      Portal.userListPage.clickAddNewUser();
+      Portal.userListPage.clickAddNewUserThroughClassName();
       Portal.addUserPage.createUser(bret);
       var alert = Portal.alerts.getFirst();
       expect(alert.getText())
         .toContain(Constants.alertMessages.users.MSG_SUCCESS_ADD);
       Portal.addUserPage.clickBackToList();
-      Portal.deleteUser(bret);
+      Portal.deleteUserThroughClassNameLocators(bret);
     });
 
     it('should create a new user with "user" role', function () {
       var carl = DataProvider.generateUser('Carl');
       carl.role = Constants.user.roles.USER;
-      Portal.createUser(carl);
+      Portal.createUserThroughClassNameLocators(carl);
       Portal.userListPage.searcher.setSearchCriteria(carl.email);
       var user = Portal.userListPage.table.getFirstRow();
       expect(user.getRole()).toEqual(Constants.user.roles.USER);
-      Portal.deleteUser(carl);
+      Portal.deleteUserThroughClassNameLocators(carl);
     });
 
     it('should create a new user with "admin" role', function () {
       var tom = DataProvider.generateUser('Tom');
       tom.role = Constants.user.roles.ADMIN;
-      Portal.createUser(tom);
+      Portal.createUserThroughClassNameLocators(tom);
       Portal.userListPage.searcher.setSearchCriteria(tom.email);
       var user = Portal.userListPage.table.getFirstRow();
       expect(user.getRole()).toEqual(Constants.user.roles.ADMIN);
-      Portal.deleteUser(tom);
+      Portal.deleteUserThroughClassNameLocators(tom);
     });
   });
 });

@@ -36,7 +36,7 @@ describe('Functional', function () {
       beforeEach(function () {
         // TODO: Move sign-in to afterAll callback once issue about dashboard
         Portal.signIn(adminUser);
-        Portal.getUsersPage();
+        Portal.goToUsersThroughClassNameLocator();
       });
 
       afterEach(function () {
@@ -49,7 +49,7 @@ describe('Functional', function () {
           var tom = DataProvider.generateUser('Tom');
           tom.role = Constants.user.roles.ADMIN;
           // Add user
-          Portal.createUser(tom);
+          Portal.createUserThroughClassNameLocators(tom);
           // Edit user
           Portal.userListPage.searchAndClickEdit(tom.email);
           Portal.editUserPage.form.setRole(Constants.user.roles.USER);
@@ -72,7 +72,7 @@ describe('Functional', function () {
           var joe = DataProvider.generateUser('Joe');
           joe.role = Constants.user.roles.USER;
           // Add user
-          Portal.createUser(joe);
+          Portal.createUserThroughClassNameLocators(joe);
           // Edit user
           Portal.userListPage.searchAndClickEdit(joe.email);
           Portal.editUserPage.form.setRole(Constants.user.roles.ADMIN);
@@ -95,7 +95,7 @@ describe('Functional', function () {
           var valueToAdd = 'updated';
           mark.role = Constants.user.roles.ADMIN;
           // Add user
-          Portal.createUser(mark);
+          Portal.createUserThroughClassNameLocators(mark);
           // Edit user
           Portal.userListPage.searchAndClickEdit(mark.email);
           Portal.editUserPage.form.setFirstName(valueToAdd);
@@ -120,7 +120,7 @@ describe('Functional', function () {
           var valueToAdd = 'updated';
           adele.role = Constants.user.roles.ADMIN;
           // Add user
-          Portal.createUser(adele);
+          Portal.createUserThroughClassNameLocators(adele);
           // Edit user
           Portal.userListPage.searchAndClickEdit(adele.email);
           Portal.editUserPage.form.setLastName(valueToAdd);
@@ -144,7 +144,7 @@ describe('Functional', function () {
           var andrew = DataProvider.generateUser('Andrew');
           andrew.role = Constants.user.roles.ADMIN;
           // Add user
-          Portal.createUser(andrew);
+          Portal.createUserThroughClassNameLocators(andrew);
           // Edit user
           Portal.userListPage.searchAndClickEdit(andrew.email);
           Portal.editUserPage.form.setRole(Constants.user.roles.USER);
@@ -168,7 +168,7 @@ describe('Functional', function () {
           var frank = DataProvider.generateUser('Frank');
           frank.role = Constants.user.roles.ADMIN;
           // Add user
-          Portal.createUser(frank);
+          Portal.createUserThroughClassNameLocators(frank);
           // Edit user
           Portal.userListPage.searchAndClickEdit(frank.email);
           Portal.editUserPage.form.setAccessControls([
@@ -196,7 +196,7 @@ describe('Functional', function () {
           var mark = DataProvider.generateUser('Mark');
           var valueToAdd = 'updated';
           // Add user
-          Portal.createUser(mark);
+          Portal.createUserThroughClassNameLocators(mark);
           // Edit user
           Portal.userListPage.searchAndClickEdit(mark.email);
           Portal.editUserPage.form.setFirstName(valueToAdd);
@@ -220,7 +220,7 @@ describe('Functional', function () {
           var adele = DataProvider.generateUser('Adele');
           var valueToAdd = 'updated';
           // Add user
-          Portal.createUser(adele);
+          Portal.createUserThroughClassNameLocators(adele);
           // Edit user
           Portal.userListPage.searchAndClickEdit(adele.email);
           Portal.editUserPage.form.setLastName(valueToAdd);
@@ -244,7 +244,7 @@ describe('Functional', function () {
           var mathew = DataProvider.generateUser('Mathew');
           mathew.role = Constants.user.roles.USER;
           // Add user
-          Portal.createUser(mathew);
+          Portal.createUserThroughClassNameLocators(mathew);
           // Edit user
           Portal.userListPage.searchAndClickEdit(mathew.email);
           Portal.editUserPage.form.setRole(Constants.user.roles.ADMIN);
@@ -268,7 +268,7 @@ describe('Functional', function () {
           var scott = DataProvider.generateUser('Scott');
           scott.role = Constants.user.roles.USER;
           // Add user
-          Portal.createUser(scott);
+          Portal.createUserThroughClassNameLocators(scott);
           // Edit user
           Portal.userListPage.searchAndClickEdit(scott.email);
           Portal.editUserPage.form.setAccessControls([

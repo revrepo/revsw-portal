@@ -34,14 +34,14 @@ describe('Boundary', function () {
     });
 
     beforeEach(function () {
-      Portal.getUsersPage();
+      Portal.goToUsersThroughClassNameLocator();
     });
 
     it('should not update the password when it is less than 8 chars length.',
       function () {
         var bret = DataProvider.generateUser('Bret');
         var newPassword = '123';
-        Portal.createUser(bret);
+        Portal.createUserThroughClassNameLocators(bret);
         Portal.signOut();
         Portal.signIn(bret);
         Portal.goToUpdatePassword();
@@ -53,7 +53,7 @@ describe('Boundary', function () {
 
         Portal.signOut();
         Portal.signIn(adminUser);
-        Portal.deleteUser(bret);
+        Portal.deleteUserThroughClassNameLocators(bret);
       });
 
     it('should not update the password when it is greater than 15 chars ' +
@@ -61,7 +61,7 @@ describe('Boundary', function () {
       function () {
         var bruno = DataProvider.generateUser('Bruno');
         var newPassword = '01234567890123456789';
-        Portal.createUser(bruno);
+        Portal.createUserThroughClassNameLocators(bruno);
         Portal.signOut();
         Portal.signIn(bruno);
         Portal.goToUpdatePassword();
@@ -73,14 +73,14 @@ describe('Boundary', function () {
 
         Portal.signOut();
         Portal.signIn(adminUser);
-        Portal.deleteUser(bruno);
+        Portal.deleteUserThroughClassNameLocators(bruno);
       });
 
     it('should not update the password when filling only blank spaces',
       function () {
         var carol = DataProvider.generateUser('Carol');
         var newPassword = '        '; // 8 spaces
-        Portal.createUser(carol);
+        Portal.createUserThroughClassNameLocators(carol);
         Portal.signOut();
         Portal.signIn(carol);
         Portal.goToUpdatePassword();
@@ -95,7 +95,7 @@ describe('Boundary', function () {
         expect(alert.getText()).toEqual(expectedMessage);
         Portal.signOut();
         Portal.signIn(adminUser);
-        Portal.deleteUser(carol);
+        Portal.deleteUserThroughClassNameLocators(carol);
       });
   });
 });
