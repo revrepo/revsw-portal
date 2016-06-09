@@ -333,6 +333,20 @@ var Portal = {
   },
 
   /**
+   * ### Portal.selectSecuritySettingsItem()
+   *
+   * Navigates to Security settings avoiding direct link browsing
+   * and without extra click on menu header
+   *
+   * @returns {Promise}
+   */
+  selectSecuritySettingsItem: function () {
+    return this
+      .sideBar.selectItemFromExpandedBlock(Constants.header.appMenu.ACCOUNT_SETTINGS,
+        Constants.sideBar.menu.SECURITY_SETTINGS);
+  },
+  
+  /**
    * ### Portal.goToMobileApps()
    *
    * Navigation helper method that executes all steps to navigate to `Mobile
