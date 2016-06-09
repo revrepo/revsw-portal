@@ -161,8 +161,8 @@ describe('Smoke', function () {
               .getTitle()
               .then(function (title) {
                 expect(title).toBe('Manage Billing Plan');
-              })
-          })
+              });
+          });
       });
   });
 })
