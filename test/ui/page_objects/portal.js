@@ -315,8 +315,21 @@ var Portal = {
    */
   goToUsersThroughClassNameLocator: function () {
     return this
-      .sideBar.gotoThroughClassNameLocator(Constants.header.appMenu.ACCOUNT_SETTINGS,
+      .sideBar.goToThroughClassNameLocator(Constants.header.appMenu.ACCOUNT_SETTINGS,
         Constants.sideBar.menu.USERS);
+  },
+
+  /**
+   * ### Portal.goToUpdatePasswordThroughClassNameLocator()
+   *
+   * Navigates to Update Password avoiding direct link browsing
+   *
+   * @returns {Promise}
+   */
+  goToUpdatePasswordThroughClassNameLocator: function () {
+    return this
+      .sideBar.goToThroughClassNameLocator(Constants.header.appMenu.ACCOUNT_SETTINGS,
+        Constants.sideBar.menu.UPDATE_PASSWORD);
   },
 
   /**

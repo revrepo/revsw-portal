@@ -28,19 +28,19 @@ describe('Negative', function () {
 
     beforeAll(function () {
       Portal.signIn(adminUser);
-      Portal.createUser(tom);
+      Portal.createUserThroughClassNameLocators(tom);
       Portal.signOut();
     });
 
     afterAll(function () {
       Portal.signIn(adminUser);
-      Portal.deleteUser(tom);
+      Portal.deleteUserThroughClassNameLocators(tom);
       Portal.signOut();
     });
 
     beforeEach(function () {
       Portal.signIn(tom);
-      Portal.getUpdatePasswordPage();
+      Portal.goToUpdatePasswordThroughClassNameLocator();
     });
 
     afterEach(function () {
@@ -95,7 +95,7 @@ describe('Negative', function () {
     it('should not allow to update password with a value less than 8 chars',
       function () {
         var newPassword = '123';
-        Portal.goToUpdatePassword();
+        Portal.goToUpdatePasswordThroughClassNameLocator();
         Portal.updatePasswordPage.setCurrentPassword(tom.password);
         Portal.updatePasswordPage.setNewPassword(newPassword);
         Portal.updatePasswordPage.setPasswordConfirm(newPassword);
@@ -107,7 +107,7 @@ describe('Negative', function () {
       'a value greater than 15 chars',
       function () {
         var newPassword = '12345678901234567890';
-        Portal.goToUpdatePassword();
+        Portal.goToUpdatePasswordThroughClassNameLocator();
         Portal.updatePasswordPage.setCurrentPassword(tom.password);
         Portal.updatePasswordPage.setNewPassword(newPassword);
         Portal.updatePasswordPage.setPasswordConfirm(newPassword);
