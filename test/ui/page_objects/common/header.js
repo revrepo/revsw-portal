@@ -236,7 +236,8 @@ var Header = {
    * @returns {Object} Promise
    */
   isPresent: function () {
-    return browser.isElementPresent(by.css(this.locators.labels.userInfo.css));
+    return browser.driver
+      .isElementPresent(by.css(this.locators.labels.userInfo.css));
   }
 };
 
