@@ -33,7 +33,7 @@ var Header = {
   locators: {
     labels: {
       userInfo: {
-        css: '.user-info > a'
+        css: '.paper-header .user-info > a'
       }
     },
     menu: {
@@ -236,7 +236,7 @@ var Header = {
    * @returns {Object} Promise
    */
   isPresent: function () {
-    return browser.isElementPresent(by.css(this.locators.menu.user.css));
+    return browser.isElementPresent(by.css(this.locators.labels.userInfo.css));
   }
 };
 
