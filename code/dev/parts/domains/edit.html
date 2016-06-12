@@ -50,7 +50,7 @@
           </div>
         </div>
         <!-- Display data in Basic Mode -->
-        <form class="form-horizontal" name="editForm" novalidate ng-show="!isAdvancedMode">
+        <form class="form-horizontal domain-edit-form" name="editForm" novalidate ng-show="!isAdvancedMode">
           <div class="form-group" ng-class="{'has-error': editForm.app_name.$invalid && editForm.app_name.$dirty}">
             <label for="domainName" class="col-sm-3 control-label" popover-trigger="mouseenter">Domain Name</label>
             <div class="col-sm-9">
@@ -173,7 +173,7 @@
               Last Mile QUIC Protocol
             </label>
             <div class="col-md-9">
-              <toggle-switch ng-disabled="_loading" ng-model="model.rev_component_bp.enable_quic" on-label="On" off-label="Off">
+              <toggle-switch is-disabled="_loading" ng-model="model.rev_component_bp.enable_quic" on-label="On" off-label="Off">
               </toggle-switch>
             </div>
           </div>
@@ -183,7 +183,7 @@
               Block All Web Crawlers
             </label>
             <div class="col-md-9">
-              <toggle-switch ng-disabled="_loading" ng-model="model.rev_component_bp.block_crawlers" on-label="On" off-label="Off">
+              <toggle-switch is-disabled="_loading" ng-model="model.rev_component_bp.block_crawlers" on-label="On" off-label="Off">
               </toggle-switch>
             </div>
           </div>
@@ -193,7 +193,7 @@
               RUM Data Collection
             </label>
             <div class="col-md-9">
-              <toggle-switch ng-disabled="_loading" ng-model="model.rev_component_co.enable_rum" on-label="On" off-label="Off">
+              <toggle-switch is-disabled="_loading" ng-model="model.rev_component_co.enable_rum" on-label="On" off-label="Off">
               </toggle-switch>
             </div>
           </div>
@@ -203,10 +203,74 @@
               Edge Caching
             </label>
             <div class="col-md-9">
-              <toggle-switch ng-disabled="_loading" ng-model="model.rev_component_bp.enable_cache" on-label="On" off-label="Off">
+              <toggle-switch is-disabled="_loading" ng-model="model.rev_component_bp.enable_cache" on-label="On" off-label="Off">
               </toggle-switch>
             </div>
           </div>
+          <!-- BLOCK Origin Health Monitoring -->
+          <div class="form-group form-inline">
+            <label for="enable_cache" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Enables regular monitoring of origin health and fine-grained control on serving of expired (stale) cached objects in case of origin failures. This functionality requires Edge Caching feature">
+              Origin Health Monitoring
+            </label>
+            <div class="col-md-9">
+              <toggle-switch is-disabled="_loading || (model.rev_component_bp.enable_cache==false || model.rev_component_bp.enable_cache=='false')" ng-model="model.enable_origin_health_probe" on-label="On" off-label="Off">
+              </toggle-switch>
+            </div>
+          </div>
+          <div class="panel panel-default" ng-if="model.enable_origin_health_probe == true && model.rev_component_bp.enable_cache == true">
+            <div class="panel-body">
+              <!--  Origin Monitoring HTTP Request-->
+              <div class="form-group" ng-class="{'has-error': editForm.originHealthProbeHTTP_REQUEST.$invalid && editForm.originHealthProbeHTTP_REQUEST.$dirty}">
+                <label for="third-party-integrations" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="This string will be sent to the origin HTTP server after connecting to port 80. Default value ‘GET / HTTP/1.1’ will work in majority of cases.">
+                  Origin Monitoring HTTP Request
+                </label>
+                <div class="col-md-9">
+                  <input type="text" class="form-control" ng-disabled="_loading" name="originHealthProbeHTTP_REQUEST" ng-model="model.origin_health_probe.HTTP_REQUEST" placeholder="GET / HTTP/1.1" required>
+                  <div class="error-messages" ng-messages="editForm.originHealthProbeHTTP_REQUEST.$error" role="alert" ng-messages-multiple>
+                    <div ng-messages-include="parts/shared/error-messages.html"></div>
+                  </div>
+                </div>
+              </div>
+              <!--  // Origin Monitoring HTTP Request-->
+              <!--  Probe Timeout-->
+              <div class="form-group form-inline" ng-class="{'has-error': editForm.originHealthProbePROBE_TIMEOUT.$invalid && editForm.originHealthProbePROBE_TIMEOUT.$dirty}">
+                <label for="originHealthProbePROBE_TIMEOUT" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Defines for how long the proxy will wait for the origin to respond on monitoring HTTP request (1-60 range)">
+                  Probe Timeout
+                </label>
+                <div class="col-md-9">
+                  <input type="number" id="proxy_timeout" name="originHealthProbePROBE_TIMEOUT" class="form-control" ng-disabled="_loading" ng-model="model.origin_health_probe.PROBE_TIMEOUT" ng-min="1" ng-max="60" required> second(s)
+                  <div class="error-messages" ng-messages="editForm.originHealthProbePROBE_TIMEOUT.$error" role="alert" ng-messages-multiple>
+                    <div ng-messages-include="parts/shared/error-messages.html"></div>
+                  </div>
+                </div>
+              </div>
+              <!--  Probe Interval -->
+              <div class="form-group form-inline" ng-class="{'has-error': editForm.originHealthProbePROBE_INTERVAL.$invalid && editForm.originHealthProbePROBE_INTERVAL.$dirty}">
+                <label for="originHealthProbePROBE_INTERVAL" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Defines the interval in seconds between origin monitoring checks (1-1800 range)">
+                  Probe Interval
+                </label>
+                <div class="col-md-9">
+                  <input type="number" id="origin_health_probe_PROBE_INTERVAL" name="originHealthProbePROBE_INTERVAL" class="form-control" ng-disabled="_loading" ng-model="model.origin_health_probe.PROBE_INTERVAL" ng-min="1" ng-max="1800" required> second(s)
+                  <div class="error-messages" ng-messages="editForm.originHealthProbePROBE_INTERVAL.$error" role="alert" ng-messages-multiple>
+                    <div ng-messages-include="parts/shared/error-messages.html"></div>
+                  </div>
+                </div>
+              </div>
+              <!--  Expected HTTP Response Code-->
+              <div class="form-group form-inline" ng-class="{'has-error': editForm.originHealthProbeHTTP_STATUS.$invalid && editForm.originHealthProbeHTTP_STATUS.$dirty}">
+                <label for="originHealthProbeHTTP_STATUS" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="The origin server should respond with this HTTP status code to be considered healthy (range 100-599)">
+                  Expected HTTP Response Code
+                </label>
+                <div class="col-md-9">
+                  <input type="number" id="proxy_timeout" name="originHealthProbeHTTP_STATUS" class="form-control" ng-disabled="_loading" ng-model="model.origin_health_probe.HTTP_STATUS" ng-min="100" ng-max="599" required>
+                  <div class="error-messages" ng-messages="editForm.originHealthProbeHTTP_STATUS.$error" role="alert" ng-messages-multiple>
+                    <div ng-messages-include="parts/shared/error-messages.html"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--  //BLOCK Origin Health Monitoring -->
           <div class="form-group" ng-class="{ 'has-error': editForm.comment.$invalid &&  editForm.comment.$dirty }">
             <label for="comment" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Comment">Comment</label>
             <div class="col-md-6">
