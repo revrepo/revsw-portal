@@ -667,6 +667,24 @@
         }
       }
     });
+
+    $scope.$watch('model.enable_origin_health_probe', function(newVal, oldVal) {
+      if (newVal !== oldVal && newVal !== 'undefuned') {
+        if (newVal === true || newVal === 'true') {
+          // NOTE: set default values for new Origin Health Probe
+          var _default = {
+            HTTP_REQUEST: 'GET / HTTP/1.1',
+            PROBE_TIMEOUT: 1,
+            PROBE_INTERVAL: 2,
+            HTTP_STATUS: 200
+          }
+          if (!$scope.model.origin_health_probe) {
+            $scope.model.origin_health_probe = {};
+          }
+          _.defaults($scope.model.origin_health_probe, _default);
+        }
+      }
+    });
     /**
      * @name  syncSSL_conf_profile
      * @description

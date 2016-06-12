@@ -225,7 +225,7 @@
                   Origin Monitoring HTTP Request
                 </label>
                 <div class="col-md-9">
-                  <input type="text" class="form-control" ng-disabled="_loading" name="originHealthProbeHTTP_REQUEST" ng-model="model.origin_health_probe.HTTP_REQUEST" placeholder="GET / HTTP/1.1" required>
+                  <input type="text" class="form-control" ng-disabled="_loading" name="originHealthProbeHTTP_REQUEST" ng-model="model.origin_health_probe.HTTP_REQUEST" placeholder="Text like 'GET / HTTP/1.1' (300 characters max)" ng-maxlength="300" characters required>
                   <div class="error-messages" ng-messages="editForm.originHealthProbeHTTP_REQUEST.$error" role="alert" ng-messages-multiple>
                     <div ng-messages-include="parts/shared/error-messages.html"></div>
                   </div>
