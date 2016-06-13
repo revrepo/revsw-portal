@@ -159,8 +159,21 @@ var Portal = {
    * @returns {Promise}
    */
   signIn: function (user) {
-    this.load();
-    return this.loginPage.signIn(user);
+    var me = this;
+    return this.header
+      .isPresent()
+      .then(function (isPresent) {
+        if (isPresent) {
+          // Session is already open.
+          // So, closing it and starting new session for user.
+          me.signOut();
+        }
+        else {
+          // There is not any session created yet.
+          me.load();
+        }
+        return me.loginPage.signIn(user);
+      });
   },
 
   /**

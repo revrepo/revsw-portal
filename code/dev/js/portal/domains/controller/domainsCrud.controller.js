@@ -677,7 +677,7 @@
             PROBE_TIMEOUT: 1,
             PROBE_INTERVAL: 2,
             HTTP_STATUS: 200
-          }
+          };
           if (!$scope.model.origin_health_probe) {
             $scope.model.origin_health_probe = {};
           }

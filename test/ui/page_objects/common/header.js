@@ -33,7 +33,7 @@ var Header = {
   locators: {
     labels: {
       userInfo: {
-        css: '.user-info > a'
+        css: '.paper-header .user-info > a'
       }
     },
     menu: {
@@ -76,7 +76,7 @@ var Header = {
    * Return the reference to the `Nav Menu` container (Selenium WebDriver
    * Element) from the Portal app
    *
-   * @returns {Selenium WebDriver Element}
+   * @returns {Object} Selenium WebDriver Element
    */
   getNavBar: function () {
     return element.all(by.css(this.locators.menu.navbar.css)).first();
@@ -88,7 +88,7 @@ var Header = {
    * Return the reference to the User Info area (Selenium WebDriver Element)
    * from the Portal app
    *
-   * @returns {Selenium WebDriver Element}
+   * @returns {Object} Selenium WebDriver Element
    */
   getUserInfoEl: function () {
     return element(by.css(this.locators.labels.userInfo.css));
@@ -100,7 +100,7 @@ var Header = {
    * Return the reference to the User Info menu (Selenium WebDriver Element)
    * from the Portal app. This menu appears once `UserInfoEl` is clicked.
    *
-   * @returns {Selenium WebDriver Element}
+   * @returns {Object} Selenium WebDriver Element
    */
   getUserInfoMenu: function () {
     return element(by.css(this.locators.menu.user.css));
@@ -113,7 +113,7 @@ var Header = {
    * from the Portal app. This menu appears once `UserMenuEl` element is
    * displayed by triggering a click on the `UserInfoEl` element.
    *
-   * @returns {Selenium WebDriver Element}
+   * @returns {Object} Selenium WebDriver Element
    */
   getLogoutEl: function () {
     return this
@@ -131,7 +131,7 @@ var Header = {
    *
    * @param {String} menuOption, the option to click
    *
-   * @returns {Promise}
+   * @returns {Object} Promise
    */
   goTo: function (menuOption) {
     return element(by.linkText(menuOption))
@@ -144,7 +144,7 @@ var Header = {
    * Helper method that executes all required steps to go and click Logout
    * option from the User menu list from Header component.
    *
-   * @returns {Promise}
+   * @returns {Object} Promise
    */
   clickLogout: function () {
     this
@@ -160,7 +160,7 @@ var Header = {
    *
    * Triggers a click on the specified navbar `Web option`.
    *
-   * @returns {Promise}
+   * @returns {Object} Promise
    */
   clickWeb: function() {
     return this
@@ -174,7 +174,7 @@ var Header = {
    *
    * Triggers a click on the specified navbar `Analytics option`.
    *
-   * @returns {Promise}
+   * @returns {Object} Promise
    */
   clickAnalytics: function() {
     return this
@@ -188,7 +188,7 @@ var Header = {
    *
    * Triggers a click on the specified navbar `Account Settings option`.
    *
-   * @returns {Promise}
+   * @returns {Object} Promise
    */
   clickAccountSettings: function() {
     return this
@@ -202,7 +202,7 @@ var Header = {
    *
    * Triggers a click on the specified navbar `Help Support option`.
    *
-   * @returns {Promise}
+   * @returns {Object} Promise
    */
   clickHelpSupport: function() {
     return this
@@ -217,12 +217,27 @@ var Header = {
    * Waits/Delays the execution until Header element is displayed in the UI.
    * If it is not displayed until the given timeout, it throws an error which
    * makes the spec/test to fail.
+   *
+   * @returns {Object} Promise
    */
   waitToDisplay: function () {
     var me = this;
     return browser.wait(function () {
       return browser.isElementPresent(by.css(me.locators.menu.user.css));
     }, this.waitTimeout);
+  },
+
+  /**
+   * ### Header.isPresent()
+   *
+   * Checks whether the header menu is openedd (which means a user is already
+   * signed in).
+   *
+   * @returns {Object} Promise
+   */
+  isPresent: function () {
+    return browser.driver
+      .isElementPresent(by.css(this.locators.labels.userInfo.css));
   }
 };
 
