@@ -102,8 +102,7 @@ describe('Smoke', function () {
                 });
             });
 
-            // TODO: need to fix the test
-            xit('should update an app successfully when filling all required ' +
+            it('should update an app successfully when filling all required ' +
               'data',
               function () {          
                 var app = DataProvider.generateMobileApp(platform);
@@ -124,8 +123,15 @@ describe('Smoke', function () {
                 Portal.mobileApps.listPage.searchAndEdit(app);
                 app = DataProvider.generateUpdateMobileApp(app);
                 Portal.mobileApps.editPage.update(app);
-
+                browser.ignoreSynchronization = true;
                 Portal.dialog.clickOk(); 
+                browser.wait(protractor.ExpectedConditions.visibilityOf(element(by.xpath('.//*[contains(text(),"' + Constants.alertMessages.app.MSG_SUCCESS_UPDATE + '")]'))), 20000);
+                expect(Portal.alerts.getAll().count()).toEqual(1);
+                expect(Portal.alerts.getFirst().getText())
+                .toEqual(Constants.alertMessages.app.MSG_SUCCESS_UPDATE);
+                element(by.xpath('.//body')).getAttribute('class').then(function(){
+                    browser.ignoreSynchronization = false;
+                });
 
                 expect(Portal.mobileApps.editPage.form.getAppNameTxt().getAttribute('value')).toEqual(app.name);
                 expect(Portal.mobileApps.editPage.form.getSelectedSDKEventsLoggingLevel().getText()).toEqual(app.SDKeventsLoggingLevel);
@@ -178,12 +184,12 @@ describe('Smoke', function () {
                 Portal.mobileApps.editPage.form.getTestingOffloadingRatio()
                   .getAttribute('value').then(function(value){
                   expect(value).toContain(app.testingOffloadingRatio);
-                });             
+                });        
 
              
-              expect(Portal.alerts.getAll().count()).toEqual(1);
+/*              expect(Portal.alerts.getAll().count()).toEqual(1);
               expect(Portal.alerts.getFirst().getText())
-                  .toEqual(Constants.alertMessages.app.MSG_SUCCESS_UPDATE);
+                  .toEqual(Constants.alertMessages.app.MSG_SUCCESS_UPDATE);*/
               });
           });
         });
