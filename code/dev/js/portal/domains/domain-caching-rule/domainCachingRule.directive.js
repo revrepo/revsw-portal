@@ -36,9 +36,15 @@
             remove_ignored_from_request: false,
             remove_ignored_from_response: false
           };
-          // _.defaultsDeep(this.rule, _.clone(_defaultCachingRule));
-        } else {
-          // console.log('$ctrl.rule.cookies',$ctrl.rule.cookies)
+        }
+
+        if (!$ctrl.rule.serve_stale) {
+          // NOTE: set default values for "serve_stale"
+          $ctrl.rule.serve_stale = {
+            enable: false,
+            while_fetching_ttl: 8,
+            origin_sick_ttl: 15
+          };
         }
       }
     };
