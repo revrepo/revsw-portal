@@ -653,7 +653,7 @@
     });
 
     $scope.$watch('isCustomSSL_conf_profile', function(newVal, oldVal) {
-      if (newVal !== oldVal && newVal !== 'undefuned') {
+      if (newVal !== oldVal && newVal !== undefined) {
         if (newVal === false) {
           syncSSL_conf_profile($scope.model.ssl_conf_profile);
         }
@@ -661,7 +661,7 @@
     });
 
     $scope.$watch('model.rev_component_bp.enable_cache', function(newVal, oldVal) {
-      if (newVal !== oldVal && newVal !== 'undefuned') {
+      if (newVal !== oldVal && newVal !== undefined) {
         if (newVal === false) {
           $scope.model.enable_origin_health_probe = false;
         }
@@ -669,7 +669,7 @@
     });
 
     $scope.$watch('model.enable_origin_health_probe', function(newVal, oldVal) {
-      if (newVal !== oldVal && newVal !== 'undefuned') {
+      if (newVal !== oldVal && newVal !== undefined) {
         if (newVal === true || newVal === 'true') {
           // NOTE: set default values for new Origin Health Probe
           var _default = {
