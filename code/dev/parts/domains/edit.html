@@ -209,7 +209,7 @@
           </div>
           <!-- BLOCK Origin Health Monitoring -->
           <div class="form-group form-inline">
-            <label for="enable_cache" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Enables regular monitoring of origin health and fine-grained control on serving of expired (stale) cached objects in case of origin failures. This functionality requires Edge Caching feature">
+            <label for="enable_cache" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Enables regular monitoring of origin health and fine-grained control on serving of expired (stale) cached objects in case of origin failures. This functionality requires Edge Caching feature enabled.">
               Origin Health Monitoring
             </label>
             <div class="col-md-9">
@@ -221,7 +221,7 @@
             <div class="panel-body">
               <!--  Origin Monitoring HTTP Request-->
               <div class="form-group" ng-class="{'has-error': editForm.originHealthProbeHTTP_REQUEST.$invalid && editForm.originHealthProbeHTTP_REQUEST.$dirty}">
-                <label for="third-party-integrations" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="This string will be sent to the origin HTTP server after connecting to port 80. Default value ‘GET / HTTP/1.1’ will work in majority of cases.">
+                <label for="third-party-integrations" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="This string will be sent to the origin HTTP server after connecting to ports 80 and 443. Default value ‘GET / HTTP/1.1’ will work in majority of cases.">
                   Origin Monitoring HTTP Request
                 </label>
                 <div class="col-md-9">
