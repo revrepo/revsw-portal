@@ -28,13 +28,13 @@ describe('Negative', function () {
 
     beforeAll(function () {
       Portal.signIn(adminUser);
-      Portal.createUserThroughClassNameLocators(tom);
+      Portal.selectUsersItemAndCreateUser(tom);
       Portal.signOut();
     });
 
     afterAll(function () {
       Portal.signIn(adminUser);
-      Portal.deleteUserThroughClassNameLocators(tom);
+      Portal.selectUsersItemAndDeleteUser(tom);
       Portal.signOut();
     });
 

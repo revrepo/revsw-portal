@@ -41,7 +41,7 @@ describe('Boundary', function () {
       function () {
         var bret = DataProvider.generateUser('Bret');
         var newPassword = '123';
-        Portal.createUserThroughClassNameLocators(bret);
+        Portal.selectUsersItemAndCreateUser(bret);
         Portal.signOut();
         Portal.signIn(bret);
         Portal.goToUpdatePassword();
@@ -53,7 +53,7 @@ describe('Boundary', function () {
 
         Portal.signOut();
         Portal.signIn(adminUser);
-        Portal.deleteUserThroughClassNameLocators(bret);
+        Portal.selectUsersItemAndDeleteUser(bret);
       });
 
     it('should not update the password when it is greater than 15 chars ' +
@@ -61,7 +61,7 @@ describe('Boundary', function () {
       function () {
         var bruno = DataProvider.generateUser('Bruno');
         var newPassword = '01234567890123456789';
-        Portal.createUserThroughClassNameLocators(bruno);
+        Portal.selectUsersItemAndCreateUser(bruno);
         Portal.signOut();
         Portal.signIn(bruno);
         Portal.goToUpdatePassword();
@@ -73,14 +73,14 @@ describe('Boundary', function () {
 
         Portal.signOut();
         Portal.signIn(adminUser);
-        Portal.deleteUserThroughClassNameLocators(bruno);
+        Portal.selectUsersItemAndDeleteUser(bruno);
       });
 
     it('should not update the password when filling only blank spaces',
       function () {
         var carol = DataProvider.generateUser('Carol');
         var newPassword = '        '; // 8 spaces
-        Portal.createUserThroughClassNameLocators(carol);
+        Portal.selectUsersItemAndCreateUser(carol);
         Portal.signOut();
         Portal.signIn(carol);
         Portal.goToUpdatePassword();
@@ -95,7 +95,7 @@ describe('Boundary', function () {
         expect(alert.getText()).toEqual(expectedMessage);
         Portal.signOut();
         Portal.signIn(adminUser);
-        Portal.deleteUserThroughClassNameLocators(carol);
+        Portal.selectUsersItemAndDeleteUser(carol);
       });
   });
 });

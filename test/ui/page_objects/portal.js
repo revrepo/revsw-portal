@@ -470,7 +470,7 @@ var Portal = {
   },
 
   /**
-   * ### Portal.createUserThroughClassNameLocators()
+   * ### Portal.selectUsersItemAndCreateUser()
    *
    * Helper method that navigates to Users page avoiding direct link browsing
    * and executes all steps required to create a new User from
@@ -481,7 +481,7 @@ var Portal = {
    *
    * @returns {Object} Promise
    */
-  createUserThroughClassNameLocators: function (newUser) {
+  selectUsersItemAndCreateUser: function (newUser) {
     var me = this;
     return browser.getCurrentUrl().then(function (initialUrl) {
       me.selectUsersItem();
@@ -561,7 +561,7 @@ var Portal = {
   },
 
   /**
-   * ### Portal.deleteUserThroughClassNameLocators()
+   * ### Portal.selectUsersItemAndDeleteUser()
    *
    * Helper method that executes all steps required to delete a User from
    * Portal app avoiding direct link browsing.
@@ -571,7 +571,7 @@ var Portal = {
    *
    * @returns {Object} Promise
    */
-  deleteUserThroughClassNameLocators: function (user) {
+  selectUsersItemAndDeleteUser: function (user) {
     var me = this;
     return browser.getCurrentUrl().then(function (initialUrl) {
       me.selectUsersItem();
