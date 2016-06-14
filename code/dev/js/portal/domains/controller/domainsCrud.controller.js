@@ -163,7 +163,7 @@
           model.ssl_prefer_server_ciphers = item.ssl_prefer_server_ciphers;
         }
       }
-      // NOTE: set corret value for ssl_cert_id
+      // NOTE: set correct value for ssl_cert_id
       if (model.ssl_cert_id === null || model.ssl_cert_id === undefined) {
         model.ssl_cert_id = '';
       }
@@ -172,6 +172,10 @@
       delete model.id;
       if (model.domain_wildcard_alias === '') {
         delete model.domain_wildcard_alias;
+      }
+      // NOTE:  "Origin Health Monitoring" should be active if “Edge Caching” is ON(true)
+      if (!model.rev_component_bp.enable_cache || model.rev_component_bp.enable_cache === false) {
+        model.enable_origin_health_probe = false;
       }
       return model;
     };
@@ -506,6 +510,11 @@
           remove_ignored_from_request: false,
           remove_ignored_from_response: false
         },
+        serve_stale: {
+          enable: false,
+          while_fetching_ttl: 8,
+          origin_sick_ttl: 15
+        },
         $$cachingRuleState: {
           isCollapsed: true
         }
@@ -644,9 +653,35 @@
     });
 
     $scope.$watch('isCustomSSL_conf_profile', function(newVal, oldVal) {
-      if (newVal !== oldVal && newVal !== 'undefuned') {
+      if (newVal !== oldVal && newVal !== undefined) {
         if (newVal === false) {
           syncSSL_conf_profile($scope.model.ssl_conf_profile);
+        }
+      }
+    });
+
+    $scope.$watch('model.rev_component_bp.enable_cache', function(newVal, oldVal) {
+      if (newVal !== oldVal && newVal !== undefined) {
+        if (newVal === false) {
+          $scope.model.enable_origin_health_probe = false;
+        }
+      }
+    });
+
+    $scope.$watch('model.enable_origin_health_probe', function(newVal, oldVal) {
+      if (newVal !== oldVal && newVal !== undefined) {
+        if (newVal === true || newVal === 'true') {
+          // NOTE: set default values for new Origin Health Probe
+          var _default = {
+            HTTP_REQUEST: 'GET / HTTP/1.1',
+            PROBE_TIMEOUT: 1,
+            PROBE_INTERVAL: 2,
+            HTTP_STATUS: 200
+          };
+          if (!$scope.model.origin_health_probe) {
+            $scope.model.origin_health_probe = {};
+          }
+          _.defaults($scope.model.origin_health_probe, _default);
         }
       }
     });
