@@ -363,6 +363,20 @@ var Portal = {
   },
 
   /**
+   * ### Portal.selectDomainsItem()
+   *
+   * Navigates to Domains avoiding direct link browsing
+   * and without extra click on menu header
+   *
+   * @returns {Promise}
+   */
+  selectDomainsItem: function () {
+    return this
+      .sideBar.selectItemFromExpandedBlock(Constants.header.appMenu.WEB,
+        Constants.sideBar.web.DOMAINS);
+  },
+
+  /**
    * ### Portal.goToMobileApps()
    *
    * Navigation helper method that executes all steps to navigate to `Mobile
@@ -456,7 +470,7 @@ var Portal = {
   },
 
   /**
-   * ### Portal.createUserThroughClassNameLocators()
+   * ### Portal.selectUsersItemAndCreateUser()
    *
    * Helper method that navigates to Users page avoiding direct link browsing
    * and executes all steps required to create a new User from
@@ -467,7 +481,7 @@ var Portal = {
    *
    * @returns {Object} Promise
    */
-  createUserThroughClassNameLocators: function (newUser) {
+  selectUsersItemAndCreateUser: function (newUser) {
     var me = this;
     return browser.getCurrentUrl().then(function (initialUrl) {
       me.selectUsersItem();
@@ -547,7 +561,7 @@ var Portal = {
   },
 
   /**
-   * ### Portal.deleteUserThroughClassNameLocators()
+   * ### Portal.selectUsersItemAndDeleteUser()
    *
    * Helper method that executes all steps required to delete a User from
    * Portal app avoiding direct link browsing.
@@ -557,7 +571,7 @@ var Portal = {
    *
    * @returns {Object} Promise
    */
-  deleteUserThroughClassNameLocators: function (user) {
+  selectUsersItemAndDeleteUser: function (user) {
     var me = this;
     return browser.getCurrentUrl().then(function (initialUrl) {
       me.selectUsersItem();
@@ -590,6 +604,32 @@ var Portal = {
     var me = this;
     return browser.getCurrentUrl().then(function (initialUrl) {
       me.getDomainsPage();
+      me.domains.listPage.clickAddNewDomain();
+      me.domains.addPage.createDomain(newDomain);
+      me.domains.addPage.clickBackToList();
+      browser.getCurrentUrl().then(function (currentUrl) {
+        if (initialUrl !== currentUrl) {
+          browser.get(initialUrl);
+        }
+      });
+    });
+  },
+
+  /**
+   * ### Portal.selectDomainsItemAndCreateDomain()
+   *
+   * Helper method that executes all steps required to create a new Domain from
+   * Portal app avoiding direct link browsing
+   *
+   * @param {Object} newDomain, data applying the schema defined in
+   * `DataProvider.generateDomain()`
+   *
+   * @returns {Object} Promise
+   */
+  selectDomainsItemAndCreateDomain: function (newDomain) {
+    var me = this;
+    return browser.getCurrentUrl().then(function (initialUrl) {
+      me.selectDomainsItem();
       me.domains.listPage.clickAddNewDomain();
       me.domains.addPage.createDomain(newDomain);
       me.domains.addPage.clickBackToList();
@@ -678,6 +718,35 @@ var Portal = {
     var me = this;
     return browser.getCurrentUrl().then(function (initialUrl) {
       me.getDomainsPage();
+      me.domains.listPage.searcher.clearSearchCriteria();
+      me.domains.listPage.searcher.setSearchCriteria(domain.name);
+      me.domains.listPage.table
+        .getFirstRow()
+        .clickDelete();
+      me.dialog.clickOk();
+      browser.getCurrentUrl().then(function (currentUrl) {
+        if (initialUrl !== currentUrl) {
+          browser.get(initialUrl);
+        }
+      });
+    });
+  },
+
+  /**
+   * ### Portal.selectDomainsItemAndDeleteDomain()
+   *
+   * Helper method that executes all steps required to delete a Domain from
+   * Portal app avoiding direct link navigation
+   *
+   * @param {Object} domain, data applying the schema defined in
+   * `DataProvider.generateDomain()`
+   *
+   * @returns {Object} Promise
+   */
+  selectDomainsItemAndDeleteDomain: function (domain) {
+    var me = this;
+    return browser.getCurrentUrl().then(function (initialUrl) {
+      me.selectDomainsItem();
       me.domains.listPage.searcher.clearSearchCriteria();
       me.domains.listPage.searcher.setSearchCriteria(domain.name);
       me.domains.listPage.table

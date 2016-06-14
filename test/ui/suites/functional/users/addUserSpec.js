@@ -51,27 +51,27 @@ describe('Functional', function () {
       expect(alert.getText())
         .toContain(Constants.alertMessages.users.MSG_SUCCESS_ADD);
       Portal.addUserPage.clickBackToList();
-      Portal.deleteUserThroughClassNameLocators(bret);
+      Portal.selectUsersItemAndDeleteUser(bret);
     });
 
     it('should create a new user with "user" role', function () {
       var carl = DataProvider.generateUser('Carl');
       carl.role = Constants.user.roles.USER;
-      Portal.createUserThroughClassNameLocators(carl);
+      Portal.selectUsersItemAndCreateUser(carl);
       Portal.userListPage.searcher.setSearchCriteria(carl.email);
       var user = Portal.userListPage.table.getFirstRow();
       expect(user.getRole()).toEqual(Constants.user.roles.USER);
-      Portal.deleteUserThroughClassNameLocators(carl);
+      Portal.selectUsersItemAndDeleteUser(carl);
     });
 
     it('should create a new user with "admin" role', function () {
       var tom = DataProvider.generateUser('Tom');
       tom.role = Constants.user.roles.ADMIN;
-      Portal.createUserThroughClassNameLocators(tom);
+      Portal.selectUsersItemAndCreateUser(tom);
       Portal.userListPage.searcher.setSearchCriteria(tom.email);
       var user = Portal.userListPage.table.getFirstRow();
       expect(user.getRole()).toEqual(Constants.user.roles.ADMIN);
-      Portal.deleteUserThroughClassNameLocators(tom);
+      Portal.selectUsersItemAndDeleteUser(tom);
     });
   });
 });
