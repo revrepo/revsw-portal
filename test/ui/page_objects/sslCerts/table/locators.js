@@ -63,7 +63,7 @@ var rowLocators = {
     css: 'td:nth-of-type(5)'
   },
   actions: {
-    css: 'td:nth-of-type(6)',
+    css: 'td:nth-of-type(7)',
     buttons: {
       pencil: {
         className: 'glyphicon-pencil'
@@ -74,7 +74,7 @@ var rowLocators = {
     }
   },
   account: {
-    css: 'th:nth-of-type(7)'
+    css: 'th:nth-of-type(8)'
   },
 };
 

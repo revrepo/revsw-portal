@@ -1048,6 +1048,24 @@ var Portal = {
     });
   },
 
+  createSSLCert: function (sslCert) {
+    var me = this;
+    return browser.getCurrentUrl().then(function (initialUrl) {
+      me.getSSLCertsPage();
+      me.sslCerts.listPage.clickAddNewSSLCert();
+      me.sslCerts.listPage.searcher.clearSearchCriteria();
+      me.sslCerts.listPage.searchAndClickEdit(sslCert.name);
+      var newSSLCertName = 'UPDATED ' + sslCert.name;
+      Portal.sslCerts.editPage.form.setCertName(newSSLCertName);
+      Portal.sslCerts.editPage.clickUpdate();
+      browser.getCurrentUrl().then(function (currentUrl) {
+        if (initialUrl !== currentUrl) {
+          browser.get(initialUrl);
+        }
+      });
+    });
+  },
+
   /**
    * ### Portal.deleteSSLCert()
    *
