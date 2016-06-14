@@ -47,6 +47,7 @@ describe('Smoke', function () {
 
         beforeAll(function () {
           Portal.signIn(user);
+          Portal.getSSLCertsPage();
         });
 
         afterAll(function () {
@@ -54,7 +55,6 @@ describe('Smoke', function () {
         });
 
         beforeEach(function () {
-          Portal.getSSLCertsPage();
         });
 
         afterEach(function () {
@@ -70,6 +70,7 @@ describe('Smoke', function () {
         it('should allow to delete SSL Cert', function () {
           var sslCert = DataProvider.generateSSLCertData();
           Portal.createSSLCert(sslCert);
+          Portal.sslCerts.listPage.searcher.clearSearchCriteria();
           Portal.sslCerts.listPage.searchAndClickDelete(sslCert.name);
           Portal.dialog.clickOk();
           Portal.sslCerts.listPage.searcher.setSearchCriteria(sslCert.name);
@@ -81,6 +82,7 @@ describe('Smoke', function () {
           function () {
             var sslCert = DataProvider.generateSSLCertData();
             Portal.createSSLCert(sslCert);
+            Portal.sslCerts.listPage.searcher.clearSearchCriteria();
             Portal.sslCerts.listPage.searcher.setSearchCriteria(sslCert.name);
             Portal.sslCerts.listPage.table
               .getFirstRow()
@@ -89,7 +91,7 @@ describe('Smoke', function () {
             Portal.dialog.clickOk();
             expect(Portal.alerts.getAll().count()).toEqual(1);
             expect(Portal.alerts.getFirst().getText())
-              .toContain(Constants.alertMessages.users.MSG_SUCCESS_DELETE);
+              .toContain('The SSL certificate has been scheduled for removal');
           });
       });
     });
