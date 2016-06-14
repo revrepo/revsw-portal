@@ -25,8 +25,8 @@ describe('Smoke', function () {
 
   // Defining set of users for which all below tests will be run
   var users = [
-    config.get('portal.users.admin'),
-    config.get('portal.users.reseller'),
+    //config.get('portal.users.admin'),
+    //config.get('portal.users.reseller'),
     config.get('portal.users.revAdmin')
   ];
 
@@ -69,7 +69,7 @@ describe('Smoke', function () {
           Portal.sslCerts.listPage.table
             .getFirstRow()
             .clickEdit();
-          Portal.sslCerts.editPage.form.setFirstName('Something Else');
+          Portal.sslCerts.editPage.form.setCertName('Something Else');
           Portal.sslCerts.editPage.clickCancel();
           expect(Portal.sslCerts.listPage.isDisplayed()).toBeTruthy();
         });
@@ -79,6 +79,7 @@ describe('Smoke', function () {
           var sslCert = DataProvider.generateSSLCertData();
           Portal.createSSLCert(sslCert);
           // Edit cert name
+          Portal.sslCerts.listPage.searcher.clearSearchCriteria();
           Portal.sslCerts.listPage.searcher.setSearchCriteria(sslCert.name);
           Portal.sslCerts.listPage.table
             .getFirstRow()
@@ -87,13 +88,12 @@ describe('Smoke', function () {
           Portal.sslCerts.editPage.form.setCertName(valueAdded);
           Portal.sslCerts.editPage.clickUpdate();
           // Check alert message and data updated
+          // Add modal steps
           var alert = Portal.alerts.getFirst();
           expect(alert.getText())
             .toContain(Constants.alertMessages.users.MSG_SUCCESS_UPDATE);
-          var updatedFirstName = Portal.sslCerts.editPage.form.getFirstName();
-          var updatedLastName = Portal.sslCerts.editPage.form.getLastName();
-          expect(updatedFirstName).toContain(valueAdded);
-          expect(updatedLastName).toContain(valueAdded);
+          var updatedCerttName = Portal.sslCerts.editPage.form.getCertName();
+          expect(updatedCerttName).toContain(valueAdded);
           Portal.sslCerts.editPage.clickBackToList();
           // Delete created SSL Cert
           Portal.deleteSSLCert(sslCert);

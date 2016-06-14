@@ -106,7 +106,7 @@ var EditSSLCert = {
    * @returns {Object} Selenium WebDriver Element
    */
   getVerifyBtn: function () {
-    return element(by.partialLinkText(this.locators.buttons.verify.linkText));
+    return element(by.partialButtonText(this.locators.buttons.verify.linkText));
   },
 
   /**
@@ -118,7 +118,7 @@ var EditSSLCert = {
    * @returns {Object} Selenium WebDriver Element
    */
   getUpdateBtn: function () {
-    return element(by.partialLinkText(this.locators.buttons.update.linkText));
+    return element(by.partialButtonText(this.locators.buttons.update.linkText));
   },
 
   /**
@@ -130,7 +130,8 @@ var EditSSLCert = {
    * @returns {Object} Selenium WebDriver Element
    */
   getPublishBtn: function () {
-    return element(by.partialLinkText(this.locators.buttons.publish.linkText));
+    return element(
+      by.partialButtonText(this.locators.buttons.publish.linkText));
   },
 
   // ## Methods to interact with the Edit SSL Cert Page components

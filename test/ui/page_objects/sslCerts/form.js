@@ -244,6 +244,19 @@ var SSLCertFormForm = {
       .click();
   },
 
+  /**
+   * ### SSLCertForm.getCertName()
+   *
+   * Returns the current value for Cert Name
+   *
+   * @returns {Object} Promise
+   */
+  getCertName: function () {
+    return this
+      .getCertNameTxtIn()
+      .getAttribute('value');
+  },
+
   // ## Helper Methods
 
   /**
