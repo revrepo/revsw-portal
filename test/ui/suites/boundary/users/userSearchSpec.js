@@ -41,12 +41,12 @@ describe('Negative', function () {
       function () {
         var bret = DataProvider.generateUser('Bret');
         bret.email = 'kk' + bret.email;
-        Portal.createUserThroughClassNameLocators(bret);
+        Portal.selectUsersItemAndCreateUser(bret);
         Portal.userListPage.searcher.setSearchCriteria('k');
         var tableRows = Portal.userListPage.table.getRows();
         expect(tableRows.count()).toEqual(1);
         Portal.userListPage.searcher.clearSearchCriteria();
-        Portal.deleteUserThroughClassNameLocators(bret);
+        Portal.selectUsersItemAndDeleteUser(bret);
       });
   });
 });
