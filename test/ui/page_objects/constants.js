@@ -38,7 +38,8 @@ var Constants = {
       companies: '#/companies',
       apiKeys: '#/keys'
     },
-    mobileApps: '#/apps/'
+    mobileApps: '#/apps/',
+    sslCerts: '#/ssl_certs'
   },
   header: {
     appMenu: {
