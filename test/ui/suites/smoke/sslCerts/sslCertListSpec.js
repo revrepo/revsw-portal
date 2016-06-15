@@ -23,8 +23,6 @@ describe('Smoke', function () {
 
   // Defining set of users for which all below tests will be run
   var users = [
-    config.get('portal.users.admin'),
-    config.get('portal.users.reseller'),
     config.get('portal.users.revAdmin')
   ];
 
@@ -57,7 +55,7 @@ describe('Smoke', function () {
             Portal.sslCerts.listPage.table
               .getFirstRow()
               .clickEdit();
-            Portal.sslCerts.addPage.clickBackToList();
+            Portal.sslCerts.editPage.clickBackToList();
             expect(Portal.sslCerts.listPage.isDisplayed()).toBeTruthy();
           });
 
