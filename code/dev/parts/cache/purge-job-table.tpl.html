@@ -1,18 +1,23 @@
-<table class="purge-job-table table order-column table-striped" datatable="ng" dt-options="vm.purgeJobsDtOptions" >
+<table class="purge-job-table table order-column table-striped" datatable="ng" dt-options="vm.purgeJobsDtOptions">
   <thead>
-    <th style="width: 15%">Job submission date</th>
+    <th style="width: 15%">Job Submission Date</th>
     <th style="width: 30%">Job ID</th>
-    <th>Snippet of purged URLs </th>
-    <th style="width: 15%">Completion status </th>
+    <th>Purged URLs</th>
+    <th>Submitted By</th>
+    <th style="width: 15%">Completion Status </th>
     <th style="width: 7%"></th>
   </thead>
   <tbody>
     <tr ng-repeat="row in vm.purgeJobsList">
-    <td >{{vm.getRelativeDate(row.create_date_time)}}</td>
-    <td><span>{{row.req_id}}</span></td>
-    <td><div class="purge-job-snippets"><span ng-repeat="item in row.snippets">"{{item}}"<span ng-if="!$last">, </span></span> <!-- Snippet of purged URLs --> </div></td>
-    <td>{{row.req_status}}<!-- Completion status --> </td>
-  <td><a title="Details" ng-click="vm.showDetails(row)"><i class="glyphicon glyphicon-plus-sign"></i></a><!-- Details --></td>
+      <td>{{vm.getRelativeDate(row.create_date_time)}}</td>
+      <td><span>{{row.req_id}}</span></td>
+      <td>
+        <div class="purge-job-snippets"><span ng-repeat="item in row.snippets">"{{item}}"<span ng-if="!$last">, </span></span>
+        </div>
+      </td>
+      <td><span>{{row.req_email}}</span></td>
+      <td>{{row.req_status}}</td>
+      <td><a title="Details" ng-click="vm.showDetails(row)"><i class="glyphicon glyphicon-plus-sign"></i></a></td>
     </tr>
   </tbody>
 </table>
