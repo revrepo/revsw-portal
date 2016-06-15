@@ -35,7 +35,7 @@ describe('Functional', function () {
     });
 
     beforeEach(function () {
-      Portal.getUsersPage();
+      Portal.selectUsersItem();
     });
 
     it('should display N items maximum in the page (25 items by default)',
@@ -65,14 +65,8 @@ describe('Functional', function () {
         var frank = DataProvider.generateUser('Frank');
         frank.role = Constants.user.roles.ADMIN;
         // Create users
-        // TODO: Remove next two lines once form-reset issue is fixed
-        Portal.getUpdatePasswordPage();
-        Portal.getUsersPage();
-        Portal.createUser(scott);
-        // TODO: Remove next two lines once form-reset issue is fixed
-        Portal.getUpdatePasswordPage();
-        Portal.getUsersPage();
-        Portal.createUser(frank);
+        Portal.selectUsersItemAndCreateUser(scott);
+        Portal.selectUsersItemAndCreateUser(frank);
         // Check users are in list
         var user = Portal.userListPage.searchAndGetFirstRow(scott.email);
         expect(user.getFirstName()).toEqual(scott.firstName);
@@ -85,8 +79,8 @@ describe('Functional', function () {
         expect(user.getEmail()).toEqual(frank.email);
         expect(user.getRole()).toEqual(frank.role);
         // Delete users
-        Portal.deleteUser(scott);
-        Portal.deleteUser(frank);
+        Portal.selectUsersItemAndDeleteUser(scott);
+        Portal.selectUsersItemAndDeleteUser(frank);
       });
   });
 });

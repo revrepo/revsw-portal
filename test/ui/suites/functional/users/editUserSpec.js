@@ -28,20 +28,18 @@ describe('Functional', function () {
       var adminUser = config.get('portal.users.admin');
 
       beforeAll(function () {
+        Portal.signIn(adminUser);
       });
 
       afterAll(function () {
+        Portal.signOut();
       });
 
       beforeEach(function () {
-        // TODO: Move sign-in to afterAll callback once issue about dashboard
-        Portal.signIn(adminUser);
         Portal.selectUsersItem();
       });
 
       afterEach(function () {
-        // TODO: Move sign-in to afterAll callback once issue about dashboard
-        Portal.signOut();
       });
 
       it('should update successfully an "admin-role" user to "user-role" user',
