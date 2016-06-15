@@ -1,5 +1,5 @@
 <div class="modal-header">
-  <h3 class="modal-title">Purge Job Details</h3>
+  <h3 class="modal-title">Purge Request Details</h3>
 </div>
 <div class="modal-body">
   <div class="row">
@@ -7,7 +7,7 @@
     <div class="col-md-9">{{model.create_date_time | date : 'MMM dd, yyyy H:mm:ss a'}}</div>
   </div>
   <hr>
-  <strong>Purge Objects:</strong>
+  <strong>Purge Request Objects:</strong>
   <div class="purges_container">
     <pre class="max-height-pre" ng-repeat="purge in model.request_json.purges">{{purge| json}}</pre>
   </div>
