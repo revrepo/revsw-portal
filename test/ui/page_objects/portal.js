@@ -60,15 +60,19 @@ var Accounts = require('./admin/accounts');
 var AdminSettingsPage = require('./admin/securitySettings');
 var ApiKeysListPage = require('./admin/apiKeys');
 var ActivityLogPage = require('./admin/activityLog');
-var ListPage = require('./mobileApp/listPage');
-var AddPage = require('./mobileApp/addPage');
-var EditPage = require('./mobileApp/editPage');
-var AdvancedEditPage = require('./mobileApp/advancedEditPage');
+var MobileAppListPage = require('./mobileApp/listPage');
+var MobileAppAddPage = require('./mobileApp/addPage');
+var MobileAppEditPage = require('./mobileApp/editPage');
+var MobileAppAdvancedEditPage = require('./mobileApp/advancedEditPage');
 var UsageReportPage = require('./billing/usageReportPage');
 var UsageReportDomainsPage = require('./billing/usageReportDomainsPage');
 var AccountProfilePage = require('./account/profile/page');
 var BillingPlanPage = require('./account/billingPlanPage');
 var AccountBillingStatementsPage = require('./account/billingStatements/page');
+
+var SSLCertListPage = require('./sslCerts/listPage');
+var SSLCertAddPage = require('./sslCerts/addPage');
+var SSLCertEditPage = require('./sslCerts/editPage');
 
 var PlansPage = require('./signUp/plansPage');
 var SignUpPage = require('./signUp/signUpPage');
@@ -118,10 +122,10 @@ var Portal = {
   helpSupportPage: HelpSupportPage,
   helpPage: HelpPage,
   mobileApps: {
-    listPage: ListPage,
-    addPage: AddPage,
-    editPage: EditPage,
-    advancedEditPage: AdvancedEditPage
+    listPage: MobileAppListPage,
+    addPage: MobileAppAddPage,
+    editPage: MobileAppEditPage,
+    advancedEditPage: MobileAppAdvancedEditPage
   },
   signUp: {
     plansPage: PlansPage,
@@ -141,6 +145,11 @@ var Portal = {
   billing: {
     usageReportPage: UsageReportPage,
     usageReportDomainsPage: UsageReportDomainsPage
+  },
+  sslCerts: {
+    listPage: SSLCertListPage,
+    addPage: SSLCertAddPage,
+    editPage: SSLCertEditPage
   },
 
   // ## Authentication Helper methods
@@ -292,6 +301,19 @@ var Portal = {
    */
   getMobileApps: function (appName) {
     return this.getPage(Constants.hashFragments.mobileApps + appName);
+  },
+
+  /**
+   * ### Portal.getSSLCertsPage()
+   *
+   * Loads the hash fragment for the SSL Cert page.
+   *
+   * TODO: Need to improve navigation to reduce tests execution time
+   *
+   * @returns {Promise}
+   */
+  getSSLCertsPage: function(){
+    return this.getPage(Constants.hashFragments.sslCerts);
   },
 
   // ## Portal APP navigation Helper methods
@@ -1087,6 +1109,50 @@ var Portal = {
       me.getApiKeysPage();
       Portal.admin.apiKeys.listPage.searchAndClickDelete(apiKey.name);
       Portal.dialog.clickOk();
+      browser.getCurrentUrl().then(function (currentUrl) {
+        if (initialUrl !== currentUrl) {
+          browser.get(initialUrl);
+        }
+      });
+    });
+  },
+
+  createSSLCert: function (sslCert) {
+    var me = this;
+    return browser.getCurrentUrl().then(function (initialUrl) {
+      me.getSSLCertsPage();
+      Portal.sslCerts.listPage.clickAddNewSSLCert();
+      Portal.sslCerts.addPage.form.fill(sslCert);
+      Portal.sslCerts.addPage.clickCreateSSLCert();
+      browser.getCurrentUrl().then(function (currentUrl) {
+        if (initialUrl !== currentUrl) {
+          browser.get(initialUrl);
+        }
+      });
+    });
+  },
+
+  /**
+   * ### Portal.deleteSSLCert()
+   *
+   * Helper method that executes all steps required to delete a SSL Cert from
+   * Portal app.
+   *
+   * @param {Object} sslCert, data applying the schema defined in
+   * `DataProvider.generateSSLCertData()`
+   *
+   * @returns {Object} Promise
+   */
+  deleteSSLCert: function (sslCert) {
+    var me = this;
+    return browser.getCurrentUrl().then(function (initialUrl) {
+      me.getSSLCertsPage();
+      me.userListPage.searcher.clearSearchCriteria();
+      me.userListPage.searcher.setSearchCriteria(sslCert.name);
+      me.userListPage.table
+        .getFirstRow()
+        .clickDelete();
+      me.dialog.clickOk();
       browser.getCurrentUrl().then(function (currentUrl) {
         if (initialUrl !== currentUrl) {
           browser.get(initialUrl);
