@@ -4,7 +4,7 @@
     .run(function($templateRequest) {
       'ngInject';
       $templateRequest('parts/cache/cache-environment-drop-down-menu/cache-environment-drop-down-menu.tpl.html', true);
-    });;
+    });
 
   function cacheEnvironmentDropDownMenu($config) {
     'ngInject';
@@ -24,7 +24,7 @@
 
         $ctrl.onModelSelect = function(model) {
 
-        }
+        };
       }
     };
   }
