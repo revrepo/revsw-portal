@@ -77,7 +77,7 @@
           </form>
           <div class="cache-purge--last-jobs" ng-if="!!domain ">
             <hr>
-            <div class="h3">History of Purge Jobs</div>
+            <div class="h3">History of Cache Purge Requests For Domain <strong>{{domain.domain_name}}</strong></div>
             <div ng-include="'parts/cache/purge-job-table.tpl.html'"></div>
           </div>
         </div>
