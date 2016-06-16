@@ -29,7 +29,10 @@
                 <div domain-select ng-model="domain" on-select="onDomainSelected()"></div>
               </div>
               <div class="pull-left">
-                <cache-environment-drop-down-menu environment="environment" class="col-md-12"></cache-environment-drop-down-menu>
+                <div class="col-md-12 form-inline">
+                  <div class="form-group"> Target Environment:</div>
+                  <cache-environment-drop-down-menu environment="environment" class="form-group"></cache-environment-drop-down-meu>
+                </div>
               </div>
               <div class="pull-right">
                 <a ui-sref="^.advanced" class="btn btn-info">
@@ -77,8 +80,11 @@
           </form>
           <div class="cache-purge--last-jobs" ng-if="!!domain">
             <hr>
-            <div class="h3">History of Cache Purge Requests For Domain <strong>{{domain.domain_name}}</strong> <div class="pull-right"><button class="btn btn-primary btn-sm" ng-click="refreshPurgeJobTable(domain)" ng-disabled="_load"><i class="glyphicon" ng-class="_loading ? 'glyphicon-refresh spin': 'glyphicon-refresh'"></i></button>
-            </div></div>
+            <div class="h3">History of Cache Purge Requests For Domain <strong>{{domain.domain_name}}</strong>
+              <span>
+                <button class="btn btn-primary btn-sm" uib-tooltip="Refresh" ng-click="refreshPurgeJobTable(domain)" ng-disabled="_load"><i class="glyphicon" ng-class="_loading ? 'glyphicon-refresh spin': 'glyphicon-refresh'"></i></button>
+              </span>
+            </div>
             <div ng-include="'parts/cache/purge-job-table.tpl.html'"></div>
           </div>
         </div>

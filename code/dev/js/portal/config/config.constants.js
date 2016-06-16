@@ -179,7 +179,7 @@
         LIMIT_HISTORY_ROWS: 100,
         DEFAULT_PAGE_LENGTH: 10
       },
-      'PURGE_JOB_ENVIRONMENTS_CHOICE': [{
+      PURGE_JOB_ENVIRONMENTS_CHOICE: [{
         key: 'staging_only',
         name: 'Staging Only'
       }, {
