@@ -10,6 +10,7 @@
     $q, DTOptionsBuilder, DTColumnDefBuilder, $config
   ) {
     $scope._loading = false;
+    $scope.environment = $config.PURGE_JOB_ENVIRONMENTS_CHOICE[0].key;
 
     // $scope.domain;
     $scope.json = {
@@ -79,6 +80,7 @@
       }
       var json = angular.copy($scope.json);
       json.domainName = $scope.domain.domain_name;
+      json.environment = $scope.environment;
       $scope._loading = true;
       Cache.purge({}, json)
         .$promise
@@ -154,6 +156,7 @@
 
       var json = {
         domainName: $scope.domain.domain_name,
+        environment: $scope.environment,
         purges: [{
           'url': {
             'is_wildcard': true,
@@ -280,12 +283,17 @@
       return def.promise;
     };
 
+    vm.dtColumnDefs = [
+      DTColumnDefBuilder.newColumnDef([0]).withOption('type', 'date')
+    ];
+
     vm.purgeJobsDtOptions = DTOptionsBuilder.newOptions()
       .withOption('aLengthMenu', [10, 20, 30])
       .withPaginationType('full_numbers')
       .withDisplayLength(pageLength)
       .withOption('paging', true)
       .withOption('lengthChange', true)
+      .withOption('order', [0, 'desc'])
       .withBootstrap()
       .withDOM('<<"pull-left"pl>f<t>i<"pull-left"p>>');
 
@@ -301,14 +309,29 @@
           });
       }
     });
-
     /**
-     * Show modal dialog with Purge Job details
-     *
-     * @see {@link ConfirmModalInstanceCtrl}
-     * @param {Object} purgeJob
-     * @returns {*}
+     * @name  refreshPurgeJobTable
+     * @description
+     *  Refresh table data for domain
+     * @type {Object}
      */
+    $scope.refreshPurgeJobTable = function(domain) {
+        vm._loading = true;
+        vm.getPurgeJobs(domain)
+          .then(function(data) {
+            vm.purgeJobsList = data;
+          })
+          .finally(function() {
+            vm._loading = false;
+          });
+      }
+      /**
+       * Show modal dialog with Purge Job details
+       *
+       * @see {@link ConfirmModalInstanceCtrl}
+       * @param {Object} purgeJob
+       * @returns {*}
+       */
     vm.showDetails = function(purgeJob) {
       // Need to clone object here not to overwrite defaults
       var _purgeJob = angular.copy(purgeJob);

@@ -175,10 +175,20 @@
         WEBSITE_URL: 'https://www.revapm.com',
         CONTACT_SUPPORT_URL: 'https://revapm.zendesk.com/hc/en-us/requests/new'
       },
-      PURGE_CACHED_OBJECTS:{
-        LIMIT_HISTORY_ROWS: 300,
+      PURGE_CACHED_OBJECTS: {
+        LIMIT_HISTORY_ROWS: 100,
         DEFAULT_PAGE_LENGTH: 10
-      }
+      },
+      "PURGE_JOB_ENVIRONMENTS_CHOICE": [{
+        key: 'staging_only',
+        name: 'Staging Only'
+      }, {
+        key: 'global_only',
+        name: 'Global Only'
+      }, {
+        key: 'global_and_staging',
+        name: 'Global and Staging'
+      }]
     });
 
 })(window);
