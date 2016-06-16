@@ -176,7 +176,7 @@
         CONTACT_SUPPORT_URL: 'https://revapm.zendesk.com/hc/en-us/requests/new'
       },
       PURGE_CACHED_OBJECTS: {
-        LIMIT_HISTORY_ROWS: 300,
+        LIMIT_HISTORY_ROWS: 100,
         DEFAULT_PAGE_LENGTH: 10
       },
       "PURGE_JOB_ENVIRONMENTS_CHOICE": [{
