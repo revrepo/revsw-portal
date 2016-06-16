@@ -47,31 +47,22 @@ describe('Smoke', function () {
 
         // Use this block to run some code before all specs are run
         beforeAll(function () {
+          Portal.signIn(user);
         });
 
         // Use this block to run some code after all specs are run
         afterAll(function () {
+          Portal.signOut();
         });
 
         // Use this block to run some code before each spec is run
         beforeEach(function () {
-          // TODO: Move sign-in to afterAll callback once issue about dashboard
-          // checkbox is fixed.
-
-          // Login into portal app as admin user
-          Portal.signIn(user);
-
-          // Load in the browser URL the Users page
           Portal.selectUsersItem();
+          Portal.userListPage.searcher.clearSearchCriteria();
         });
 
         // Use this block to run some code after each spec is run
         afterEach(function () {
-          // TODO: Move sign-in to afterAll callback once issue about dashboard
-          // checkbox is fixed.
-
-          // sign the user out from the portal app
-          Portal.signOut();
         });
 
         // This is an spec

@@ -324,7 +324,7 @@
           .finally(function() {
             vm._loading = false;
           });
-      }
+      };
       /**
        * Show modal dialog with Purge Job details
        *
