@@ -18,6 +18,15 @@
         url: $config.API_URL + '/domain_configs/:id/versions',
         method: 'GET',
         isArray: true
+      },
+      // TODO: re-base to cache.factory.js after fix API (query options)
+      purge: {
+        url: $config.API_URL + '/purge',
+        method: 'GET',
+        isArray: false,
+        params:{
+          domain_id: '@id'
+        }
       }
     });
   }

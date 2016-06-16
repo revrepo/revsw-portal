@@ -6,7 +6,9 @@
     .controller('CachePurgeController', CachePurgeController);
 
   /*@ngInject*/
-  function CachePurgeController($scope, $state, Cache, DomainsConfig, AlertService, $timeout, $uibModal) {
+  function CachePurgeController($scope, $state, Cache, DomainsConfig, AlertService, $timeout, $uibModal,
+    $q, DTOptionsBuilder, DTColumnDefBuilder, $config
+  ) {
     $scope._loading = false;
 
     // $scope.domain;
@@ -20,51 +22,41 @@
     };
 
     // $scope.exampleJsons for advanced cache
-    if ($state.current.name === 'index.webApp.advanced'){
-      $scope.exampleJsons =  [
-        {
+    if ($state.current.name === 'index.webApp.advanced') {
+      $scope.exampleJsons = [{
         'text': 'Purge all PNG files under /images, <b>non-recursive</b> (so e.g. files under /images/today/ will not be purged):',
         'json': {
-        'purges': [
-          {
+          'purges': [{
             'url': {
               'is_wildcard': true,
               'expression': '/images/*.png'
             }
-          }
-        ]
-       }
-      },
-        {
-          'text': ' Purge all PNG files under /images, <b>recursive</b> (so e.g. files under /images/today/ will also be purged):',
-          'json': {
-          'purges': [
-            {
-              'url': {
-                'is_wildcard': true,
-                'expression': '/images/**/*.png'
-              }
-            }
-          ]
-         }
-        },
-        {
-          'text': 'Purge everything, recursively, for current domain:',
-          'json': {
-          'purges': [
-            {
-              'url': {
-                'is_wildcard': true,
-                'expression': '/**/*'
-              }
-            }
-          ]
+          }]
         }
+      }, {
+        'text': ' Purge all PNG files under /images, <b>recursive</b> (so e.g. files under /images/today/ will also be purged):',
+        'json': {
+          'purges': [{
+            'url': {
+              'is_wildcard': true,
+              'expression': '/images/**/*.png'
+            }
+          }]
         }
-      ];
+      }, {
+        'text': 'Purge everything, recursively, for current domain:',
+        'json': {
+          'purges': [{
+            'url': {
+              'is_wildcard': true,
+              'expression': '/**/*'
+            }
+          }]
+        }
+      }];
 
-      $scope.exampleJsons.forEach(function(item){
-        item.json = JSON.stringify(item.json,null,2);
+      $scope.exampleJsons.forEach(function(item) {
+        item.json = JSON.stringify(item.json, null, 2);
       });
     }
 
@@ -119,6 +111,12 @@
         .$promise
         .then(AlertService.success)
         .catch(AlertService.danger)
+        .then(function() {
+          return vm.getPurgeJobs($scope.domain)
+            .then(function(data) {
+              vm.purgeJobsList = data;
+            });
+        })
         .finally(function() {
           $scope._loading = false;
         });
@@ -143,10 +141,17 @@
             .$promise
             .then(AlertService.success)
             .catch(AlertService.danger)
+            .then(function() {
+              return vm.getPurgeJobs($scope.domain)
+                .then(function(data) {
+                  vm.purgeJobsList = data;
+                });
+            })
             .finally(function() {
               $scope._loading = false;
             });
         });
+
       var json = {
         domainName: $scope.domain.domain_name,
         purges: [{
@@ -194,7 +199,6 @@
       }
     });
 
-
     /**
      * Confirmation dialog
      *
@@ -232,6 +236,99 @@
       } else {
         angular.extend($scope.json, JSON.parse(item.json));
       }
+    };
+
+    // Last Purge Job
+    //
+    var vm = this;
+    var pageLength = $config.PURGE_CACHED_OBJECTS.DEFAULT_PAGE_LENGTH;
+
+    $scope.vm = vm;
+    vm.purgeJobsList = [];
+
+    vm.getPurgeJobs = function(domain) {
+      var def = $q.defer();
+      var data = [];
+      if (!!domain) {
+        $scope._loading = true;
+        DomainsConfig.purge({
+            domain_id: domain.id,
+            limit: $config.PURGE_CACHED_OBJECTS.LIMIT_HISTORY_ROWS // Max count rows
+          })
+          .$promise
+          .then(function(data) {
+            var new_data = _.map(data.data, function(item) {
+              item.snippets = [];
+              if (angular.isArray(item.request_json.purges)) {
+                item.snippets = _.map(item.request_json.purges, function(purge) {
+                  delete purge._id;
+                  delete purge.url.domain;
+                  return purge.url.expression;
+                });
+              }
+              return item;
+            });
+            def.resolve(new_data);
+          })
+          .catch(AlertService.danger)
+          .finally(function() {
+            $scope._loading = false;
+          });
+      } else {
+        def.resolve(data);
+      }
+      return def.promise;
+    };
+
+    vm.purgeJobsDtOptions = DTOptionsBuilder.newOptions()
+      .withOption('aLengthMenu', [10, 20, 30])
+      .withPaginationType('full_numbers')
+      .withDisplayLength(pageLength)
+      .withOption('paging', true)
+      .withOption('lengthChange', true)
+      .withBootstrap()
+      .withDOM('<<"pull-left"pl>f<t>i<"pull-left"p>>');
+
+    $scope.$watch('domain', function(newVal, oldVal) {
+      if (newVal !== undefined) {
+        vm._loading = true;
+        vm.getPurgeJobs(newVal)
+          .then(function(data) {
+            vm.purgeJobsList = data;
+          })
+          .finally(function() {
+            vm._loading = false;
+          });
+      }
+    });
+
+    /**
+     * Show modal dialog with Purge Job details
+     *
+     * @see {@link ConfirmModalInstanceCtrl}
+     * @param {Object} purgeJob
+     * @returns {*}
+     */
+    vm.showDetails = function(purgeJob) {
+      // Need to clone object here not to overwrite defaults
+      var _purgeJob = angular.copy(purgeJob);
+      _purgeJob.request_json = _purgeJob.request_json;
+      // Uses ConfirmModalInstanceCtrl. This controller has all needed methods
+      // So no need to create a new one.
+      var modalInstance = $uibModal.open({
+        animation: true,
+        templateUrl: 'parts/cache/purge-details.modal.tpl.html',
+        controller: 'ConfirmModalInstanceCtrl',
+        size: 'md',
+        resolve: {
+          model: _purgeJob
+        }
+      });
+      return modalInstance.result;
+    };
+
+    vm.getRelativeDate = function(datetime) {
+      return moment.utc(datetime).fromNow();
     };
   }
 })();

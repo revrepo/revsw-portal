@@ -174,6 +174,10 @@
       LINKS: {
         WEBSITE_URL: 'https://www.revapm.com',
         CONTACT_SUPPORT_URL: 'https://revapm.zendesk.com/hc/en-us/requests/new'
+      },
+      PURGE_CACHED_OBJECTS:{
+        LIMIT_HISTORY_ROWS: 300,
+        DEFAULT_PAGE_LENGTH: 10
       }
     });
 
