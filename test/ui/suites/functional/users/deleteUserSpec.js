@@ -27,22 +27,18 @@ describe('Functional', function () {
     var adminUser = config.get('portal.users.admin');
 
     beforeAll(function () {
+      Portal.signIn(adminUser);
     });
 
     afterAll(function () {
+      Portal.signOut();
     });
 
     beforeEach(function () {
-      // TODO: Move sign-in to afterAll callback once issue about dashboard
-      // checkbox is fixed.
-      Portal.signIn(adminUser);
       Portal.selectUsersItem();
     });
 
     afterEach(function () {
-      // TODO: Move sign-in to afterAll callback once issue about dashboard
-      // checkbox is fixed.
-      Portal.signOut();
     });
 
     it('should delete successfully a user with "admin" role', function () {

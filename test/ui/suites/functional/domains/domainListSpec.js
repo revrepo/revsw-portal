@@ -34,7 +34,7 @@ describe('Functional', function () {
     });
 
     beforeEach(function () {
-      Portal.getDomainsPage();
+      Portal.selectDomainsItem();
     });
 
     it('should display domain with a Staging Status',
@@ -118,25 +118,20 @@ describe('Functional', function () {
       function () {
         var myDomain = DataProvider.generateDomain('my-domain');
         // Create domain
-        Portal.createDomain(myDomain);
+        Portal.selectDomainsItemAndCreateDomain(myDomain);
         // Check domain is in list
         var newDomain = Portal.domains.listPage
           .searchAndGetFirstRow(myDomain.name);
         expect(newDomain.getName()).toEqual(myDomain.name);
         // Delete domain
-        Portal.deleteDomain(myDomain);
+        Portal.selectDomainsItemAndDeleteDomain(myDomain);
       });
 
     it('should not list domain-config right after deleting it',
       function () {
-        // TODO: Once below issue about creating 2 domains, we should remove the
-        // sign-in and sign-out for every test/script (following 3 lines)
-        Portal.signOut();
-        Portal.signIn(user);
-        Portal.getDomainsPage();
         var myDomain = DataProvider.generateDomain('other-domain');
         // Create domain
-        Portal.createDomain(myDomain);
+        Portal.selectDomainsItemAndCreateDomain(myDomain);
         Portal.domains.listPage.searcher.setSearchCriteria(myDomain.name);
         Portal.domains.listPage.table
           .getFirstRow()

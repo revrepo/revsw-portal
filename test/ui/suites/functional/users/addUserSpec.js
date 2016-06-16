@@ -27,20 +27,18 @@ describe('Functional', function () {
     var adminUser = config.get('portal.users.admin');
 
     beforeAll(function () {
+      Portal.signIn(adminUser);
     });
 
     afterAll(function () {
+      Portal.signOut();
     });
 
     beforeEach(function () {
-      // TODO: Move this line to afterAll call once add-reset-form bug  is fixed
-      Portal.signIn(adminUser);
       Portal.selectUsersItem();
     });
 
     afterEach(function () {
-      // TODO: Move this line to afterAll call once add-reset-form bug  is fixed
-      Portal.signOut();
     });
 
     it('should display a successful message when creating user', function () {
