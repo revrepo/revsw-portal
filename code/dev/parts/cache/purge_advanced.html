@@ -32,7 +32,10 @@
                 <div domain-select ng-model="domain" on-select="onDomainSelected()"></div>
               </div>
               <div class="pull-left">
-                  <cache-environment-drop-down-menu environment="environment" class="col-md-12"></cache-environment-drop-down-menu>
+                <div class="col-md-12 form-inline">
+                  <div class="form-group"> Target Environment:</div>
+                  <cache-environment-drop-down-menu environment="environment" class="form-group"></cache-environment-drop-down-meu>
+                </div>
               </div>
               <div class="pull-right">
                 <a ui-sref="^.cache" class="btn btn-info">
