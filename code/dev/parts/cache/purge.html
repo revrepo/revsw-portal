@@ -28,6 +28,9 @@
               <div class="pull-left">
                 <div domain-select ng-model="domain" on-select="onDomainSelected()"></div>
               </div>
+              <div class="pull-left">
+                <cache-environment-drop-down-menu environment="environment" class="col-md-12"></cache-environment-drop-down-menu>
+              </div>
               <div class="pull-right">
                 <a ui-sref="^.advanced" class="btn btn-info">
                   <i class="glyphicon glyphicon-cog"></i>&nbsp; Advanced Mode
@@ -73,7 +76,7 @@
             </div>
           </form>
           <div class="cache-purge--last-jobs" ng-if="!!domain ">
-          <hr>
+            <hr>
             <div class="h3">History of Purge Jobs</div>
             <div ng-include="'parts/cache/purge-job-table.tpl.html'"></div>
           </div>

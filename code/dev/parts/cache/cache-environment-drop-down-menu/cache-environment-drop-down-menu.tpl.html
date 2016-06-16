@@ -1,0 +1,8 @@
+<div class="cache-environment-drop-down-menu">
+  <ui-select ng-model="$ctrl.environment" theme="select2" ng-animate-disabled ng-disabled="_loading" on-select="$ctrl.onModelSelect($model)" style="min-width: 300px;">
+    <ui-select-match placeholder="Select Environment">{{$select.selected.name }}</ui-select-match>
+    <ui-select-choices repeat="label.key as label in $ctrl.purgeJobEnvorinments">
+      <div ng-bind-html="label.name  |highlight: $select.search"></div>
+    </ui-select-choices>
+  </ui-select>
+</div>

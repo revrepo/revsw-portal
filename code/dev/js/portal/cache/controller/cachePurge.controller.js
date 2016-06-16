@@ -10,6 +10,7 @@
     $q, DTOptionsBuilder, DTColumnDefBuilder, $config
   ) {
     $scope._loading = false;
+    $scope.environment = $config.PURGE_JOB_ENVIRONMENTS_CHOICE[0].key;
 
     // $scope.domain;
     $scope.json = {
@@ -79,6 +80,7 @@
       }
       var json = angular.copy($scope.json);
       json.domainName = $scope.domain.domain_name;
+      json.environment = $scope.environment;
       $scope._loading = true;
       Cache.purge({}, json)
         .$promise
@@ -154,6 +156,7 @@
 
       var json = {
         domainName: $scope.domain.domain_name,
+        environment: $scope.environment,
         purges: [{
           'url': {
             'is_wildcard': true,
