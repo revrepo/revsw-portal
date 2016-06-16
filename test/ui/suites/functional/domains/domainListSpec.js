@@ -129,11 +129,6 @@ describe('Functional', function () {
 
     it('should not list domain-config right after deleting it',
       function () {
-        // TODO: Once below issue about creating 2 domains, we should remove the
-        // sign-in and sign-out for every test/script (following 3 lines)
-        //Portal.signOut();
-        //Portal.signIn(user);
-        //Portal.getDomainsPage();
         var myDomain = DataProvider.generateDomain('other-domain');
         // Create domain
         Portal.selectDomainsItemAndCreateDomain(myDomain);

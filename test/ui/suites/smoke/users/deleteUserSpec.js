@@ -58,6 +58,7 @@ describe('Smoke', function () {
         // Use this block to run some code before each spec is run
         beforeEach(function () {
           Portal.selectUsersItem();
+          Portal.userListPage.searcher.clearSearchCriteria();
         });
 
         // Use this block to run some code after each spec is run

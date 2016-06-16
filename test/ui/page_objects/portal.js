@@ -603,6 +603,7 @@ var Portal = {
         .getFirstRow()
         .clickDelete();
       me.dialog.clickOk();
+      me.userListPage.searcher.clearSearchCriteria();
       browser.getCurrentUrl().then(function (currentUrl) {
         if (initialUrl !== currentUrl) {
           browser.get(initialUrl);
@@ -775,6 +776,7 @@ var Portal = {
         .getFirstRow()
         .clickDelete();
       me.dialog.clickOk();
+      me.domains.listPage.searcher.clearSearchCriteria();
       browser.getCurrentUrl().then(function (currentUrl) {
         if (initialUrl !== currentUrl) {
           browser.get(initialUrl);
