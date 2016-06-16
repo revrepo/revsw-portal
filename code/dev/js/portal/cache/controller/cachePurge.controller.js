@@ -249,7 +249,7 @@
 
     $scope.vm = vm;
     vm.purgeJobsList = [];
-
+    vm.purgeJobStatus = $config.PURGE_JOB_STATUS;
     vm.getPurgeJobs = function(domain) {
       var def = $q.defer();
       var data = [];

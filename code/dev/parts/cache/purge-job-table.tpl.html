@@ -16,7 +16,7 @@
         </div>
       </td>
       <td><span>{{row.req_email}}</span></td>
-      <td>{{row.req_status}}</td>
+      <td>{{vm.purgeJobStatus[row.req_status]}}</td>
       <td><a title="Details" ng-click="vm.showDetails(row)"><i class="glyphicon glyphicon-plus-sign"></i></a></td>
     </tr>
   </tbody>

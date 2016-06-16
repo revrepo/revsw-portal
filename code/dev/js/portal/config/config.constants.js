@@ -188,7 +188,15 @@
       }, {
         key: 'global_and_staging',
         name: 'Global and Staging'
-      }]
+      }],
+      /**
+       * [PURGE_JOB_STATUS description]
+       * @type {Object}
+       */
+      PURGE_JOB_STATUS: {
+        'InProgress': 'In Progress',
+        'Success': 'Successful'
+      }
     });
 
 })(window);
