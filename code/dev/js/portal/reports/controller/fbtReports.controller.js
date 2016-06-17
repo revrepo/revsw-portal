@@ -13,38 +13,63 @@
     $scope.domain = null;
     $scope.domains = [];
 
-    $scope.countries = Countries.query();
-    $scope.oses = [];
-    $scope.devices = [];
+    $scope.os = [];
+    $scope.device = [];
+    $scope.browser = [];
 
-    $scope.reload = function () {
-      if (!$scope.domain || !$scope.domain.id) {
-        return;
-      }
-      $scope.oses = [];
-      $scope.devices = [];
-      var promises = [
-        Stats.os({domainId: $scope.domain.id}).$promise,
-        Stats.device({domainId: $scope.domain.id}).$promise
-      ];
-      $q
-        .all(promises)
-        .then(function (data) {
-          if (!data || !data[0] || !data[1] || !data[0].data || !data[1].data) {
-            return;
-          }
-          var oses = [],
-            devices = [];
-          data[0].data.map(function (os) {
-            oses.push(os.key);
-          });
-          data[1].data.map(function (device) {
-            devices.push(device.key);
-          });
+    var countriesList = Countries.query();
+    $scope.countries = countriesList;
+    $scope.country = {};
 
-          $scope.oses = oses;
-          $scope.devices = devices;
-        });
+    /**
+     * Reload list of given entities
+     * @param {string} list name
+     */
+    $scope.reloadList = function( list ) {
+      $scope[list] = {};
+      Stats[list]({
+        domainId: $scope.domain.id
+      }).$promise.then(function( data ) {
+        if ( data.data && data.data.length > 0 ) {
+          $scope[list] = data.data.filter( function( item ) {
+            return item.key !== '--' && item.key !== '-' && item.key !== '';
+          })
+          .map( function( item ) {
+            return item.key;
+          });
+        }
+      });
+    };
+
+    /**
+     * List of countries
+     */
+    $scope.reloadCountry = function() {
+      $scope.country = {};
+      var c = {};
+      Stats.country({
+        domainId: $scope.domain.id
+      }).$promise.then(function(data) {
+
+        if (data.data && data.data.length > 0) {
+          data.data.forEach( function(item) {
+            if ( countriesList[item.key] ) {
+              c[item.key] = countriesList[item.key];
+            }
+          });
+        }
+        $scope.country = c;
+      });
+    };
+
+    /**
+     * reload all lists
+     */
+    $scope.reload = function() {
+      $scope.reloadList('os');
+      $scope.reloadList('device');
+      $scope.reloadList('browser');
+      $scope.reloadCountry();
     };
 
     // Load user domains

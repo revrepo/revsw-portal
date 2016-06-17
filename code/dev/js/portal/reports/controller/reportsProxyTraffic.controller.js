@@ -66,13 +66,12 @@
     /**
      * Reload list of given entities
      *
-     * @param {string|number} domainId
      * @param {string} list name
      */
-    $scope.reloadList = function( domainId, list ) {
+    $scope.reloadList = function( list ) {
       $scope[list] = {};
       Stats[list]({
-        domainId: domainId
+        domainId: $scope.domain.id
       }).$promise.then(function( data ) {
         if ( data.data && data.data.length > 0 ) {
           $scope[list] = data.data.filter( function( item ) {
@@ -87,14 +86,12 @@
 
     /**
      * List of country
-     *
-     * @param {string|number} domainId
      */
-    $scope.reloadCountry = function(domainId) {
+    $scope.reloadCountry = function() {
       $scope.country = {};
       var c = {};
       Stats.country({
-        domainId: domainId
+        domainId: $scope.domain.id
       }).$promise.then(function(data) {
 
         if (data.data && data.data.length > 0) {
@@ -110,15 +107,13 @@
 
     /**
      * reload all lists
-     *
-     * @param {string|number} domainId
      */
     $scope.reload = function() {
-      $scope.reloadList($scope.domain.id, 'os');
-      $scope.reloadList($scope.domain.id, 'device');
-      $scope.reloadList($scope.domain.id, 'browser');
-      $scope.reloadList($scope.domain.id, 'statusCode');
-      $scope.reloadCountry($scope.domain.id);
+      $scope.reloadList('os');
+      $scope.reloadList('device');
+      $scope.reloadList('browser');
+      $scope.reloadList('statusCode');
+      $scope.reloadCountry();
     };
 
     $scope.onDomainSelected = function() {
