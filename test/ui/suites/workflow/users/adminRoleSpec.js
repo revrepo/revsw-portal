@@ -32,21 +32,21 @@ describe('Workflow', function () {
 
     beforeAll(function () {
       Portal.signIn(resellerUser);
-      Portal.selectUsersItemAndCreateUser(adminUser);
-      Portal.selectUsersItemAndCreateUser(anotherAdmin);
+      Portal.createUser(adminUser);
+      Portal.createUser(anotherAdmin);
       Portal.signOut();
     });
 
     afterAll(function () {
       Portal.signIn(resellerUser);
-      Portal.selectUsersItemAndDeleteUser(adminUser);
-      Portal.selectUsersItemAndDeleteUser(anotherAdmin);
+      Portal.deleteUser(adminUser);
+      Portal.deleteUser(anotherAdmin);
       Portal.signOut();
     });
 
     beforeEach(function () {
       Portal.signIn(adminUser);
-      Portal.selectUsersItem();
+      Portal.goToUsers();
     });
 
     afterEach(function () {
@@ -57,20 +57,20 @@ describe('Workflow', function () {
       'reseller user',
       function () {
         var tom = DataProvider.generateUser('Tom');
-        Portal.selectUsersItemAndCreateUser(tom);
+        Portal.createUser(tom);
         var user = Portal.userListPage.searchAndGetFirstRow(tom.email);
         expect(user.getEmail()).toEqual(tom.email);
         expect(user.getFirstName()).toEqual(tom.firstName);
         expect(user.getLastName()).toEqual(tom.lastName);
         expect(user.getRole()).toEqual(tom.role);
-        Portal.selectUsersItemAndDeleteUser(tom);
+        Portal.deleteUser(tom);
       });
 
     it('should be able to update/edit other user after it was created by a ' +
       'reseller user',
       function () {
         var scott = DataProvider.generateUser('Scott');
-        Portal.selectUsersItemAndCreateUser(scott);
+        Portal.createUser(scott);
         Portal.userListPage.searchAndClickEdit(scott.email);
         Portal.editUserPage.updateUser({firstName: 'updated'});
         Portal.editUserPage.clickBackToList();
@@ -79,17 +79,17 @@ describe('Workflow', function () {
         expect(user.getFirstName()).toContain('updated');
         expect(user.getLastName()).toEqual(scott.lastName);
         expect(user.getRole()).toEqual(scott.role);
-        Portal.selectUsersItemAndDeleteUser(scott);
+        Portal.deleteUser(scott);
       });
 
     it('should be able to delete other user after it was created by a ' +
       'reseller user',
       function () {
         var frank = DataProvider.generateUser('Frank');
-        Portal.selectUsersItemAndCreateUser(frank);
+        Portal.createUser(frank);
         var user = Portal.userListPage.searchAndGetFirstRow(frank.email);
         expect(user.getEmail()).toEqual(frank.email);
-        Portal.selectUsersItemAndDeleteUser(frank);
+        Portal.deleteUser(frank);
         Portal.userListPage.searcher.setSearchCriteria(frank.email);
         var totalRows = Portal.userListPage.table.getRows().count();
         expect(totalRows).toEqual(0);
@@ -100,15 +100,15 @@ describe('Workflow', function () {
       // Use new ADMIN to create new USER
       Portal.signIn(anotherAdmin);
       var andrew = DataProvider.generateUser('Andrew');
-      Portal.selectUsersItemAndCreateUser(andrew);
+      Portal.createUser(andrew);
       Portal.signOut();
       // Check new user is visible to other admin
       Portal.signIn(adminUser);
-      Portal.selectUsersItem();
+      Portal.goToUsers();
       Portal.userListPage.searcher.setSearchCriteria(andrew.email);
       var newTotalRows = Portal.userListPage.table.getRows().count();
       expect(newTotalRows).toEqual(1);
-      Portal.selectUsersItemAndDeleteUser(andrew);
+      Portal.deleteUser(andrew);
     });
 
     it('should delete users created by other admin', function () {
@@ -116,12 +116,12 @@ describe('Workflow', function () {
       // Use new ADMIN to create new USER
       Portal.signIn(anotherAdmin);
       var bruce = DataProvider.generateUser('Bruce');
-      Portal.selectUsersItemAndCreateUser(bruce);
+      Portal.createUser(bruce);
       Portal.signOut();
       // Check new user is visible to other admin
       Portal.signIn(adminUser);
-      Portal.selectUsersItemAndDeleteUser(bruce);
-      Portal.selectUsersItem();
+      Portal.deleteUser(bruce);
+      Portal.goToUsers();
       Portal.userListPage.searcher.setSearchCriteria(bruce.email);
       var newTotalRows = Portal.userListPage.table.getRows().count();
       expect(newTotalRows).toEqual(0);
@@ -132,18 +132,18 @@ describe('Workflow', function () {
       // Use new ADMIN to create new USER
       Portal.signIn(anotherAdmin);
       var steve = DataProvider.generateUser('Steve');
-      Portal.selectUsersItemAndCreateUser(steve);
+      Portal.createUser(steve);
       Portal.signOut();
       // Check new user is visible to other admin
       Portal.signIn(adminUser);
-      Portal.selectUsersItem();
+      Portal.goToUsers();
       Portal.userListPage.searchAndClickEdit(steve.email);
       Portal.editUserPage.updateUser({firstName: 'updated'});
       Portal.editUserPage.clickBackToList();
       var user = Portal.userListPage.searchAndGetFirstRow(steve.email);
       expect(user.getEmail()).toEqual(steve.email);
       expect(user.getFirstName()).toContain('updated');
-      Portal.selectUsersItemAndDeleteUser(steve);
+      Portal.deleteUser(steve);
     });
 
     it('should not see reseller user', function () {
@@ -163,7 +163,7 @@ describe('Workflow', function () {
       function () {
         var oldPassword = adminUser.password;
         var newPassword = 'pwd123456';
-        Portal.selectUpdatePasswordItem();
+        Portal.goToUpdatePassword();
         Portal.updatePasswordPage.update(adminUser.password, newPassword);
         Portal.signOut();
         Portal.signIn({email: adminUser.email, password: newPassword});
