@@ -51,7 +51,7 @@ describe('Smoke', function () {
         });
 
         beforeEach(function () {
-          Portal.selectUpdatePasswordItem();
+          Portal.goToUpdatePassword();
         });
 
         it('should display updated password form', function () {
@@ -62,10 +62,10 @@ describe('Smoke', function () {
           var carl = DataProvider.generateUser('Carl', null, user);
           var newPassword = 'password2';
 
-          Portal.selectUsersItemAndCreateUser(carl);
+          Portal.createUser(carl);
           Portal.signOut();
           Portal.signIn(carl);
-          Portal.selectUpdatePasswordItem();
+          Portal.goToUpdatePassword();
           Portal.updatePasswordPage.setCurrentPassword(carl.password);
           Portal.updatePasswordPage.setNewPassword(newPassword);
           Portal.updatePasswordPage.setPasswordConfirm(newPassword);
@@ -75,7 +75,7 @@ describe('Smoke', function () {
             .toContain(Constants.alertMessages.users.MSG_SUCCESS_UPDATE_PASSWORD);
           Portal.signOut();
           Portal.signIn(user);
-          Portal.selectUsersItemAndDeleteUser(carl);
+          Portal.deleteUser(carl);
         });
       });
     });
