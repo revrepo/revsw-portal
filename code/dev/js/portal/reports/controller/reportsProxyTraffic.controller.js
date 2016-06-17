@@ -40,12 +40,10 @@
     }
 */
 
-    var countriesList = Countries.query();
     $scope.userService = User;
     $scope._loading = true;
     // Domain that selected
     $scope.domain = $rootScope.domain;
-    // $scope.domains = [];
 
     $scope.filters = {
       from_timestamp: moment().subtract(1, 'days').valueOf(),
@@ -56,113 +54,32 @@
       scaleOverride: true
     };
 
-    $scope.os = {
-      labels: [],
-      data: []
-    };
-    $scope.device = {
-      labels: [],
-      data: []
-    };
-    $scope.browser = {
-      labels: [],
-      data: []
-    };
+    $scope.os = [];
+    $scope.device = [];
+    $scope.browser = [];
+    $scope.statusCode = [];
 
-    $scope.statusCode = {
-      labels: [],
-      data: []
-    };
+    var countriesList = Countries.query();
     $scope.country = {};
 
 
     /**
-     * Reload list of OSes
+     * Reload list of given entities
      *
      * @param {string|number} domainId
+     * @param {string} list name
      */
-    $scope.reloadOS = function(domainId) {
-      $scope.os = {
-        labels: [],
-        data: []
-      };
-      Stats.os({
+    $scope.reloadList = function( domainId, list ) {
+      $scope[list] = {};
+      Stats[list]({
         domainId: domainId
-      }).$promise.then(function(data) {
-        if (data.data && data.data.length > 0) {
-          data.data.forEach( function(item) {
-            $scope.os.labels.push(item.key);
-            $scope.os.data.push(item.count);
-          });
-        }
-      });
-    };
-
-    /**
-     * List of devices
-     *
-     * @param {string|number} domainId
-     */
-    $scope.reloadDevice = function(domainId) {
-      $scope.device = {
-        labels: [],
-        data: []
-      };
-      Stats.device({
-        domainId: domainId
-      }).$promise.then(function(data) {
-        if (data.data && data.data.length > 0) {
-          data.data.forEach( function(item) {
-            $scope.device.labels.push(item.key);
-            $scope.device.data.push(item.count);
-          });
-        }
-      });
-    };
-
-    /**
-     * List of browsers
-     *
-     * @param {string|number} domainId
-     */
-    $scope.reloadBrowser = function(domainId) {
-      $scope.browser = {
-        labels: [],
-        data: []
-      };
-      Stats.browser({
-        domainId: domainId
-      }).$promise.then(function(data) {
-        if (data.data && data.data.length > 0) {
-          data.data.forEach( function(item) {
-            $scope.browser.labels.push(item.key);
-            $scope.browser.data.push(item.count);
-          });
-        }
-      });
-    };
-
-    /**
-     * List of status codes
-     *
-     * @param {string|number} domainId
-     */
-    $scope.reloadStatusCode = function(domainId) {
-      $scope.statusCode = {
-        labels: [],
-        data: []
-      };
-      Stats.statusCode({
-        domainId: domainId
-      }).$promise.then(function(data) {
-        if (data.data && data.data.length > 0) {
-          $scope.statusCode = {
-            labels: [],
-            data: []
-          };
-          data.data.forEach( function(item) {
-            $scope.statusCode.labels.push(item.key);
-            $scope.statusCode.data.push(item.count);
+      }).$promise.then(function( data ) {
+        if ( data.data && data.data.length > 0 ) {
+          $scope[list] = data.data.filter( function( item ) {
+            return item.key !== '--' && item.key !== '-' && item.key !== '';
+          })
+          .map( function( item ) {
+            return item.key;
           });
         }
       });
@@ -180,8 +97,6 @@
         domainId: domainId
       }).$promise.then(function(data) {
 
-        console.log( 'countries data ', data );
-
         if (data.data && data.data.length > 0) {
           data.data.forEach( function(item) {
             if ( countriesList[item.key] ) {
@@ -193,149 +108,18 @@
       });
     };
 
+    /**
+     * reload all lists
+     *
+     * @param {string|number} domainId
+     */
     $scope.reload = function() {
-
-      $scope.reloadOS($scope.domain.id);
-      $scope.reloadDevice($scope.domain.id);
-      $scope.reloadBrowser($scope.domain.id);
+      $scope.reloadList($scope.domain.id, 'os');
+      $scope.reloadList($scope.domain.id, 'device');
+      $scope.reloadList($scope.domain.id, 'browser');
+      $scope.reloadList($scope.domain.id, 'statusCode');
       $scope.reloadCountry($scope.domain.id);
-      $scope.reloadStatusCode($scope.domain.id);
-
-      //$scope.reloadProtocol($scope.domain.id);
-      //$scope.reloadHttpMethod($scope.domain.id);
-      //$scope.reloadHttpProtocol($scope.domain.id);
-      //$scope.reloadContentType($scope.domain.id);
-      //$scope.reloadCacheStatus($scope.domain.id);
     };
-
-    // /**
-    //  * List of
-    //  *
-    //  * @param {string|number} domainId
-    //  */
-    // $scope.reloadHttpMethod = function(domainId) {
-    //   $scope.httpMethod = {
-    //     labels: [],
-    //     data: []
-    //   };
-    //   Stats.httpMethod({
-    //     domainId: domainId
-    //   }).$promise.then(function(data) {
-    //     if (data.data && data.data.length > 0) {
-    //       angular.forEach(data.data, function(os) {
-    //         $scope.httpMethod.labels.push(os.key);
-    //         $scope.httpMethod.data.push(os.count);
-    //       });
-    //     }
-    //   });
-    // };
-
-    // /**
-    //  * List of
-    //  *
-    //  * @param {string|number} domainId
-    //  */
-    // $scope.reloadHttpProtocol = function(domainId) {
-    //   $scope.httpProtocol = {
-    //     labels: [],
-    //     data: []
-    //   };
-    //   Stats.httpProtocol({
-    //     domainId: domainId
-    //   }).$promise.then(function(data) {
-    //     if (data.data && data.data.length > 0) {
-    //       angular.forEach(data.data, function(os) {
-    //         $scope.httpProtocol.labels.push(os.key);
-    //         $scope.httpProtocol.data.push(os.count);
-    //       });
-    //     }
-    //   });
-    // };
-
-    // /**
-    //  * List of
-    //  *
-    //  * @param {string|number} domainId
-    //  */
-    // $scope.reloadProtocol = function(domainId) {
-    //   $scope.protocol = {
-    //     labels: [],
-    //     data: []
-    //   };
-    //   Stats.protocol({
-    //     domainId: domainId
-    //   }).$promise.then(function(data) {
-    //     if (data.data && data.data.length > 0) {
-    //       angular.forEach(data.data, function(os) {
-    //         var protocol = 'Unknows';
-    //         if (os.key === 80) {
-    //           protocol = 'HTTP';
-    //         }
-    //         if (os.key === 443) {
-    //           protocol = 'HTTPS';
-    //         }
-    //         $scope.protocol.labels.push(protocol);
-    //         $scope.protocol.data.push(os.count);
-    //       });
-    //     }
-    //   });
-    // };
-
-    // /**
-    //  * List of
-    //  *
-    //  * @param {string|number} domainId
-    //  */
-    // $scope.reloadContentType = function(domainId) {
-    //   $scope.contentType = {
-    //     labels: [],
-    //     data: []
-    //   };
-    //   Stats.contentType({
-    //     domainId: domainId
-    //   }).$promise.then(function(data) {
-    //     if (data.data && data.data.length > 0) {
-    //       angular.forEach(data.data, function(os) {
-    //         $scope.contentType.labels.push(os.key);
-    //         $scope.contentType.data.push(os.count);
-    //       });
-    //     }
-    //   });
-    // };
-
-    // /**
-    //  * List of
-    //  *
-    //  * @param {string|number} domainId
-    //  */
-    // $scope.reloadCacheStatus = function(domainId) {
-    //   $scope.cacheStatus = {
-    //     labels: [],
-    //     data: []
-    //   };
-    //   Stats.cacheStatus({
-    //     domainId: domainId
-    //   }).$promise.then(function(data) {
-    //     if (data.data && data.data.length > 0) {
-    //       angular.forEach(data.data, function(os) {
-    //         $scope.cacheStatus.labels.push(os.key);
-    //         $scope.cacheStatus.data.push(os.count);
-    //       });
-    //     }
-    //   });
-    // };
-
-    // Load user domains
-    // User.getUserDomains(true)
-    //   .then(function (domains) {
-    //     $scope.domains = domains;
-    //   })
-    //   .catch(function () {
-    //     AlertService.danger('Oops something wrong');
-    //   })
-    //   .finally(function () {
-    //     $scope._loading = false;
-    //   });
 
     $scope.onDomainSelected = function() {
       if (!$scope.domain || !$scope.domain.id) {
