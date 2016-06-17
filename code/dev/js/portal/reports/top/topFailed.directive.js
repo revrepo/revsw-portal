@@ -14,7 +14,8 @@
         ngDomain: '=',
         flCountry: '=',
         flOs: '=',
-        flDevice: '='
+        flDevice: '=',
+        flBrowser: '='
       },
       /*@ngInject*/
       controller: function ($scope, Stats) {

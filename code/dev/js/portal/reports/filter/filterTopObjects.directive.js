@@ -16,7 +16,8 @@
         onFilter: '&',
         flCountry: '=',
         flOs: '=',
-        flDevice: '='
+        flDevice: '=',
+        flBrowser: '='
       },
       /*@ngInject*/
       controller: function($scope, filterGeneratorService) {
