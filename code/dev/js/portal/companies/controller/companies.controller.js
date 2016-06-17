@@ -52,7 +52,7 @@
       }
     });
 
-    $scope.filterKeys = ['companyName', 'comment', 'createdBy', 'updated_at', 'created_at'];
+    $scope.filterKeys = ['companyName', 'comment', 'createdBy', 'updated_at', 'subscription_name', 'subscription_state', 'created_at'];
     /**
      * @name  getCompany
      * @description
