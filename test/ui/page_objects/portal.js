@@ -319,6 +319,23 @@ var Portal = {
   // ## Portal APP navigation Helper methods
 
   /**
+   * ### Portal.goTo()
+   *
+   * Navigation helper method that executes all steps to expand the appropriate
+   * header section from the sidebar menu and select an item from it
+   *
+   * @param {String} menuHeader, the header's label from the menu option to click
+   * @param {String} menuItem, the item's label from the menu option to click
+   * 
+   *  @returns {Promise}
+   */
+  goTo: function (menuHeader, menuItem) {
+    return this
+      .sideBar.selectItemFromExpandedBlock(menuHeader,
+        menuItem);
+  },
+
+  /**
    * ### Portal.goToAccountSettings()
    *
    * Navigation helper method that executes all steps to navigate to `Account
@@ -339,63 +356,9 @@ var Portal = {
    * @returns {Promise}
    */
   goToUsers: function () {
-    this.goToAccountSettings();
-    return Portal.sideBar.goTo(Constants.sideBar.menu.USERS);
-  },
-
-  /**
-   * ### Portal.selectUsersItem()
-   *
-   * Navigates to Users Page avoiding direct link browsing
-   *
-   * @returns {Promise}
-   */
-  selectUsersItem: function () {
     return this
-      .sideBar.selectItemFromExpandedBlock(Constants.header.appMenu.ACCOUNT_SETTINGS,
+      .goTo(Constants.header.appMenu.ACCOUNT_SETTINGS,
         Constants.sideBar.menu.USERS);
-  },
-
-  /**
-   * ### Portal.selectUpdatePasswordItem()
-   *
-   * Navigates to Update Password avoiding direct link browsing
-   * and without extra click on menu header
-   *
-   * @returns {Promise}
-   */
-  selectUpdatePasswordItem: function () {
-    return this
-      .sideBar.selectItemFromExpandedBlock(Constants.header.appMenu.ACCOUNT_SETTINGS,
-        Constants.sideBar.menu.UPDATE_PASSWORD);
-  },
-
-  /**
-   * ### Portal.selectSecuritySettingsItem()
-   *
-   * Navigates to Security settings avoiding direct link browsing
-   * and without extra click on menu header
-   *
-   * @returns {Promise}
-   */
-  selectSecuritySettingsItem: function () {
-    return this
-      .sideBar.selectItemFromExpandedBlock(Constants.header.appMenu.ACCOUNT_SETTINGS,
-        Constants.sideBar.menu.SECURITY_SETTINGS);
-  },
-
-  /**
-   * ### Portal.selectDomainsItem()
-   *
-   * Navigates to Domains avoiding direct link browsing
-   * and without extra click on menu header
-   *
-   * @returns {Promise}
-   */
-  selectDomainsItem: function () {
-    return this
-      .sideBar.selectItemFromExpandedBlock(Constants.header.appMenu.WEB,
-        Constants.sideBar.web.DOMAINS);
   },
 
   /**
@@ -446,8 +409,9 @@ var Portal = {
    * @returns {Promise}
    */
   goToSecuritySettings: function () {
-    this.goToAccountSettings();
-    return Portal.sideBar.goTo(Constants.sideBar.menu.SECURITY_SETTINGS);
+    return this
+      .goTo(Constants.header.appMenu.ACCOUNT_SETTINGS,
+        Constants.sideBar.menu.SECURITY_SETTINGS);
   },
 
   /**
@@ -459,8 +423,23 @@ var Portal = {
    * @returns {Promise}
    */
   goToUpdatePassword: function () {
-    this.goToAccountSettings();
-    return Portal.sideBar.goTo(Constants.sideBar.menu.UPDATE_PASSWORD);
+    return this
+      .goTo(Constants.header.appMenu.ACCOUNT_SETTINGS,
+        Constants.sideBar.menu.UPDATE_PASSWORD);
+  },
+
+  /**
+   * ### Portal.goToDomains()
+   *
+   * Navigation helper method that executes all steps to navigate to `Domains`
+   * page
+   *
+   * @returns {Promise}
+   */
+  goToDomains: function () {
+    return this
+      .goTo(Constants.header.appMenu.WEB,
+        Constants.sideBar.web.DOMAINS);
   },
 
   // ## User Helper methods
@@ -479,35 +458,8 @@ var Portal = {
   createUser: function (newUser) {
     var me = this;
     return browser.getCurrentUrl().then(function (initialUrl) {
-      me.getUsersPage();
+      me.goToUsers();
       me.userListPage.clickAddNewUser();
-      me.addUserPage.createUser(newUser);
-      me.addUserPage.clickBackToList();
-      browser.getCurrentUrl().then(function (currentUrl) {
-        if (initialUrl !== currentUrl) {
-          browser.get(initialUrl);
-        }
-      });
-    });
-  },
-
-  /**
-   * ### Portal.selectUsersItemAndCreateUser()
-   *
-   * Helper method that navigates to Users page avoiding direct link browsing
-   * and executes all steps required to create a new User from
-   * Portal app.
-   *
-   * @param {user} newUser, data applying the schema defined in
-   * `DataProvider.generateUser()`
-   *
-   * @returns {Object} Promise
-   */
-  selectUsersItemAndCreateUser: function (newUser) {
-    var me = this;
-    return browser.getCurrentUrl().then(function (initialUrl) {
-      me.selectUsersItem();
-      me.userListPage.clickAddNewUserThroughClassName();
       me.addUserPage.createUser(newUser);
       me.addUserPage.clickBackToList();
       browser.getCurrentUrl().then(function (currentUrl) {
@@ -567,36 +519,7 @@ var Portal = {
   deleteUser: function (user) {
     var me = this;
     return browser.getCurrentUrl().then(function (initialUrl) {
-      me.getUsersPage();
-      me.userListPage.searcher.clearSearchCriteria();
-      me.userListPage.searcher.setSearchCriteria(user.email);
-      me.userListPage.table
-        .getFirstRow()
-        .clickDelete();
-      me.dialog.clickOk();
-      browser.getCurrentUrl().then(function (currentUrl) {
-        if (initialUrl !== currentUrl) {
-          browser.get(initialUrl);
-        }
-      });
-    });
-  },
-
-  /**
-   * ### Portal.selectUsersItemAndDeleteUser()
-   *
-   * Helper method that executes all steps required to delete a User from
-   * Portal app avoiding direct link browsing.
-   *
-   * @param {Object} user, data applying the schema defined in
-   * `DataProvider.generateUser()`
-   *
-   * @returns {Object} Promise
-   */
-  selectUsersItemAndDeleteUser: function (user) {
-    var me = this;
-    return browser.getCurrentUrl().then(function (initialUrl) {
-      me.selectUsersItem();
+      me.goToUsers();
       me.userListPage.searcher.clearSearchCriteria();
       me.userListPage.searcher.setSearchCriteria(user.email);
       me.userListPage.table
@@ -626,33 +549,7 @@ var Portal = {
   createDomain: function (newDomain) {
     var me = this;
     return browser.getCurrentUrl().then(function (initialUrl) {
-      me.getDomainsPage();
-      me.domains.listPage.clickAddNewDomain();
-      me.domains.addPage.createDomain(newDomain);
-      me.domains.addPage.clickBackToList();
-      browser.getCurrentUrl().then(function (currentUrl) {
-        if (initialUrl !== currentUrl) {
-          browser.get(initialUrl);
-        }
-      });
-    });
-  },
-
-  /**
-   * ### Portal.selectDomainsItemAndCreateDomain()
-   *
-   * Helper method that executes all steps required to create a new Domain from
-   * Portal app avoiding direct link browsing
-   *
-   * @param {Object} newDomain, data applying the schema defined in
-   * `DataProvider.generateDomain()`
-   *
-   * @returns {Object} Promise
-   */
-  selectDomainsItemAndCreateDomain: function (newDomain) {
-    var me = this;
-    return browser.getCurrentUrl().then(function (initialUrl) {
-      me.selectDomainsItem();
+      me.goToDomains();
       me.domains.listPage.clickAddNewDomain();
       me.domains.addPage.createDomain(newDomain);
       me.domains.addPage.clickBackToList();
@@ -740,36 +637,7 @@ var Portal = {
   deleteDomain: function (domain) {
     var me = this;
     return browser.getCurrentUrl().then(function (initialUrl) {
-      me.getDomainsPage();
-      me.domains.listPage.searcher.clearSearchCriteria();
-      me.domains.listPage.searcher.setSearchCriteria(domain.name);
-      me.domains.listPage.table
-        .getFirstRow()
-        .clickDelete();
-      me.dialog.clickOk();
-      browser.getCurrentUrl().then(function (currentUrl) {
-        if (initialUrl !== currentUrl) {
-          browser.get(initialUrl);
-        }
-      });
-    });
-  },
-
-  /**
-   * ### Portal.selectDomainsItemAndDeleteDomain()
-   *
-   * Helper method that executes all steps required to delete a Domain from
-   * Portal app avoiding direct link navigation
-   *
-   * @param {Object} domain, data applying the schema defined in
-   * `DataProvider.generateDomain()`
-   *
-   * @returns {Object} Promise
-   */
-  selectDomainsItemAndDeleteDomain: function (domain) {
-    var me = this;
-    return browser.getCurrentUrl().then(function (initialUrl) {
-      me.selectDomainsItem();
+      me.goToDomains();
       me.domains.listPage.searcher.clearSearchCriteria();
       me.domains.listPage.searcher.setSearchCriteria(domain.name);
       me.domains.listPage.table

@@ -57,7 +57,7 @@ describe('Smoke', function () {
 
         // Use this block to run some code before each spec is run
         beforeEach(function () {
-          Portal.selectUsersItem();
+          Portal.goToUsers();
           Portal.userListPage.searcher.clearSearchCriteria();
         });
 
@@ -86,7 +86,7 @@ describe('Smoke', function () {
           // This is a Helper method that internally executes some other steps
           // required to create a user in portal app using the given user
           // information.
-          Portal.selectUsersItemAndCreateUser(tom);
+          Portal.createUser(tom);
 
           // Another helper method to search/filter the list by the provided
           // filter criteria (in this case an email) and then licks on the
@@ -115,7 +115,7 @@ describe('Smoke', function () {
             var chris = DataProvider.generateUser('Chris', null, user);
 
             // Using helper method to create the user Chris
-            Portal.selectUsersItemAndCreateUser(chris);
+            Portal.createUser(chris);
 
             // Apply Chris' email as filter criteria in the search component
             Portal.userListPage.searcher.setSearchCriteria(chris.email);
