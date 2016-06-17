@@ -1,6 +1,6 @@
 <div class="filter-generator">
 	<div class="date-picker-wrapper pull-left">
-		<input 
+		<input
 			date-range-picker=""
 			ng-model="datePicker.date"
 			options="::datePicker.options"
@@ -11,7 +11,7 @@
 			ng-show="datePicker.overlay.show"
 			ng-focus="handlers.overlayClickHandler()"
 			ng-model="datePicker.overlay.val"
-			class="over form-control select2"/>
+			class="over form-control select2" type="text"/>
 	</div>
 	<div class="pull-left" ng-repeat="filter in filters">
   <select
@@ -27,7 +27,7 @@
 				>All Countries
 			</option>
 		</select>
-		<select 
+		<select
 			ng-if="filter.name != constants.country"
 			ng-model="filter.selected"
 			ng-options="::item for item in filter.vals")

@@ -352,6 +352,22 @@ form .error-messages.ng-active,
   overflow-x: auto;
   margin-bottom: -15px;
 }
+.filter-time-period .form-control.date-picker.select2,
+.filter-time-period.date-picker-wrapper > input[type="text"] {
+  margin-top: 5px;
+}
+.filter-time-period .date-picker-wrapper {
+  position: relative;
+}
+.filter-time-period .date-picker-wrapper .over {
+  margin-top: 5px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+}
 input[type="text"],
 input[type="email"],
 input[type="password"],
