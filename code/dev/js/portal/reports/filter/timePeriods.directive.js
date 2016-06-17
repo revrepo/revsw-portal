@@ -15,7 +15,8 @@
         onFilter: '&',
         flCountry: '=',
         flOs: '=',
-        flDevice: '='
+        flDevice: '=',
+        flBrowser: '='
       },
       link: {
         post: link

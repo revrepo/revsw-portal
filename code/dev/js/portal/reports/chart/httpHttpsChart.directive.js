@@ -16,11 +16,12 @@
         flCountry: '=',
         flOs: '=',
         flDevice: '=',
+        flBrowser: '=',
         filtersSets: '='
       },
       /*@ngInject*/
       controller: function($scope, Stats, $q, Util) {
-        var _filters_field_list = ['from_timestamp', 'to_timestamp', 'country', 'device', 'os'];
+        var _filters_field_list = ['from_timestamp', 'to_timestamp', 'country', 'device', 'os', 'browser'];
         $scope._loading = false;
         $scope.filters = {
           from_timestamp: moment().subtract(1, 'days').valueOf(),
