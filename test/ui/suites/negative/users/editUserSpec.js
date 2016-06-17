@@ -28,19 +28,19 @@ describe('Negative', function () {
 
     beforeAll(function () {
       Portal.signIn(adminUser);
-      Portal.selectUsersItemAndCreateUser(carl);
+      Portal.createUser(carl);
       Portal.signOut();
     });
 
     afterAll(function () {
       Portal.signIn(adminUser);
-      Portal.selectUsersItemAndDeleteUser(carl);
+      Portal.deleteUser(carl);
       Portal.signOut();
     });
 
     beforeEach(function () {
       Portal.signIn(adminUser);
-      Portal.selectUsersItem();
+      Portal.goToUsers();
     });
 
     afterEach(function () {

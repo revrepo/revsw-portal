@@ -35,7 +35,7 @@ describe('Functional', function () {
     });
 
     beforeEach(function () {
-      Portal.selectUsersItem();
+      Portal.goToUsers();
     });
 
     it('should display N items maximum in the page (25 items by default)',
@@ -65,8 +65,8 @@ describe('Functional', function () {
         var frank = DataProvider.generateUser('Frank');
         frank.role = Constants.user.roles.ADMIN;
         // Create users
-        Portal.selectUsersItemAndCreateUser(scott);
-        Portal.selectUsersItemAndCreateUser(frank);
+        Portal.createUser(scott);
+        Portal.createUser(frank);
         // Check users are in list
         var user = Portal.userListPage.searchAndGetFirstRow(scott.email);
         expect(user.getFirstName()).toEqual(scott.firstName);
@@ -79,8 +79,8 @@ describe('Functional', function () {
         expect(user.getEmail()).toEqual(frank.email);
         expect(user.getRole()).toEqual(frank.role);
         // Delete users
-        Portal.selectUsersItemAndDeleteUser(scott);
-        Portal.selectUsersItemAndDeleteUser(frank);
+        Portal.deleteUser(scott);
+        Portal.deleteUser(frank);
       });
   });
 });
