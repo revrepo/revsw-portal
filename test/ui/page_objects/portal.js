@@ -319,6 +319,20 @@ var Portal = {
   // ## Portal APP navigation Helper methods
 
   /**
+   * ### Portal.goTo()
+   *
+   * Navigation helper method that executes all steps to expand the appropriate
+   * header section from the sidebar menu and select an item from it
+   *
+   * @returns {Promise}
+   */
+  goTo: function (menuHeader, menuItem) {
+    return this
+      .sideBar.selectItemFromExpandedBlock(menuHeader,
+        menuItem);
+  },
+
+  /**
    * ### Portal.goToAccountSettings()
    *
    * Navigation helper method that executes all steps to navigate to `Account
@@ -339,64 +353,65 @@ var Portal = {
    * @returns {Promise}
    */
   goToUsers: function () {
-    this.goToAccountSettings();
-    return Portal.sideBar.goTo(Constants.sideBar.menu.USERS);
+    return this
+      .goTo(Constants.header.appMenu.ACCOUNT_SETTINGS,
+        Constants.sideBar.menu.USERS);
   },
 
-  /**
+/*  /!**
    * ### Portal.selectUsersItem()
    *
    * Navigates to Users Page avoiding direct link browsing
    *
    * @returns {Promise}
-   */
+   *!/
   selectUsersItem: function () {
     return this
       .sideBar.selectItemFromExpandedBlock(Constants.header.appMenu.ACCOUNT_SETTINGS,
         Constants.sideBar.menu.USERS);
-  },
+  },*/
 
-  /**
+/*  /!**
    * ### Portal.selectUpdatePasswordItem()
    *
    * Navigates to Update Password avoiding direct link browsing
    * and without extra click on menu header
    *
    * @returns {Promise}
-   */
+   *!/
   selectUpdatePasswordItem: function () {
     return this
       .sideBar.selectItemFromExpandedBlock(Constants.header.appMenu.ACCOUNT_SETTINGS,
         Constants.sideBar.menu.UPDATE_PASSWORD);
-  },
+  },*/
 
-  /**
+/*  /!**
    * ### Portal.selectSecuritySettingsItem()
    *
    * Navigates to Security settings avoiding direct link browsing
    * and without extra click on menu header
    *
    * @returns {Promise}
-   */
+   *!/
   selectSecuritySettingsItem: function () {
     return this
       .sideBar.selectItemFromExpandedBlock(Constants.header.appMenu.ACCOUNT_SETTINGS,
         Constants.sideBar.menu.SECURITY_SETTINGS);
-  },
+  },*/
 
-  /**
+/*  /!**
    * ### Portal.selectDomainsItem()
    *
    * Navigates to Domains avoiding direct link browsing
    * and without extra click on menu header
    *
    * @returns {Promise}
-   */
+   *!/
   selectDomainsItem: function () {
     return this
       .sideBar.selectItemFromExpandedBlock(Constants.header.appMenu.WEB,
         Constants.sideBar.web.DOMAINS);
-  },
+  },*/
 
   /**
    * ### Portal.goToMobileApps()
@@ -446,8 +461,9 @@ var Portal = {
    * @returns {Promise}
    */
   goToSecuritySettings: function () {
-    this.goToAccountSettings();
-    return Portal.sideBar.goTo(Constants.sideBar.menu.SECURITY_SETTINGS);
+    return this
+      .goTo(Constants.header.appMenu.ACCOUNT_SETTINGS,
+        Constants.sideBar.menu.SECURITY_SETTINGS);
   },
 
   /**
@@ -459,8 +475,23 @@ var Portal = {
    * @returns {Promise}
    */
   goToUpdatePassword: function () {
-    this.goToAccountSettings();
-    return Portal.sideBar.goTo(Constants.sideBar.menu.UPDATE_PASSWORD);
+    return this
+      .goTo(Constants.header.appMenu.ACCOUNT_SETTINGS,
+        Constants.sideBar.menu.UPDATE_PASSWORD);
+  },
+
+  /**
+   * ### Portal.goToDomains()
+   *
+   * Navigation helper method that executes all steps to navigate to `Domains`
+   * page
+   *
+   * @returns {Promise}
+   */
+  goToDomains: function () {
+    return this
+      .goTo(Constants.header.appMenu.WEB,
+        Constants.sideBar.web.DOMAINS);
   },
 
   // ## User Helper methods
@@ -479,7 +510,7 @@ var Portal = {
   createUser: function (newUser) {
     var me = this;
     return browser.getCurrentUrl().then(function (initialUrl) {
-      me.getUsersPage();
+      me.goToUsers();
       me.userListPage.clickAddNewUser();
       me.addUserPage.createUser(newUser);
       me.addUserPage.clickBackToList();
@@ -491,7 +522,7 @@ var Portal = {
     });
   },
 
-  /**
+/*  /!**
    * ### Portal.selectUsersItemAndCreateUser()
    *
    * Helper method that navigates to Users page avoiding direct link browsing
@@ -502,7 +533,7 @@ var Portal = {
    * `DataProvider.generateUser()`
    *
    * @returns {Object} Promise
-   */
+   *!/
   selectUsersItemAndCreateUser: function (newUser) {
     var me = this;
     return browser.getCurrentUrl().then(function (initialUrl) {
@@ -516,7 +547,7 @@ var Portal = {
         }
       });
     });
-  },
+  },*/
 
   /**
    * ### Portal.createUserIfNotExist()
@@ -567,13 +598,14 @@ var Portal = {
   deleteUser: function (user) {
     var me = this;
     return browser.getCurrentUrl().then(function (initialUrl) {
-      me.getUsersPage();
+      me.goToUsers();
       me.userListPage.searcher.clearSearchCriteria();
       me.userListPage.searcher.setSearchCriteria(user.email);
       me.userListPage.table
         .getFirstRow()
         .clickDelete();
       me.dialog.clickOk();
+      me.userListPage.searcher.clearSearchCriteria();
       browser.getCurrentUrl().then(function (currentUrl) {
         if (initialUrl !== currentUrl) {
           browser.get(initialUrl);
@@ -582,7 +614,7 @@ var Portal = {
     });
   },
 
-  /**
+/*  /!**
    * ### Portal.selectUsersItemAndDeleteUser()
    *
    * Helper method that executes all steps required to delete a User from
@@ -592,7 +624,7 @@ var Portal = {
    * `DataProvider.generateUser()`
    *
    * @returns {Object} Promise
-   */
+   *!/
   selectUsersItemAndDeleteUser: function (user) {
     var me = this;
     return browser.getCurrentUrl().then(function (initialUrl) {
@@ -610,7 +642,7 @@ var Portal = {
         }
       });
     });
-  },
+  },*/
 
   /**
    * ### Portal.createDomain()
@@ -626,7 +658,7 @@ var Portal = {
   createDomain: function (newDomain) {
     var me = this;
     return browser.getCurrentUrl().then(function (initialUrl) {
-      me.getDomainsPage();
+      me.goToDomains();
       me.domains.listPage.clickAddNewDomain();
       me.domains.addPage.createDomain(newDomain);
       me.domains.addPage.clickBackToList();
@@ -638,7 +670,7 @@ var Portal = {
     });
   },
 
-  /**
+/*  /!**
    * ### Portal.selectDomainsItemAndCreateDomain()
    *
    * Helper method that executes all steps required to create a new Domain from
@@ -648,7 +680,7 @@ var Portal = {
    * `DataProvider.generateDomain()`
    *
    * @returns {Object} Promise
-   */
+   *!/
   selectDomainsItemAndCreateDomain: function (newDomain) {
     var me = this;
     return browser.getCurrentUrl().then(function (initialUrl) {
@@ -662,7 +694,7 @@ var Portal = {
         }
       });
     });
-  },
+  },*/
 
   /**
    * ### Portal.createDomainIfNotExist()
@@ -740,13 +772,14 @@ var Portal = {
   deleteDomain: function (domain) {
     var me = this;
     return browser.getCurrentUrl().then(function (initialUrl) {
-      me.getDomainsPage();
+      me.goToDomains();
       me.domains.listPage.searcher.clearSearchCriteria();
       me.domains.listPage.searcher.setSearchCriteria(domain.name);
       me.domains.listPage.table
         .getFirstRow()
         .clickDelete();
       me.dialog.clickOk();
+      me.domains.listPage.searcher.clearSearchCriteria();
       browser.getCurrentUrl().then(function (currentUrl) {
         if (initialUrl !== currentUrl) {
           browser.get(initialUrl);
@@ -755,7 +788,7 @@ var Portal = {
     });
   },
 
-  /**
+/*  /!**
    * ### Portal.selectDomainsItemAndDeleteDomain()
    *
    * Helper method that executes all steps required to delete a Domain from
@@ -765,7 +798,7 @@ var Portal = {
    * `DataProvider.generateDomain()`
    *
    * @returns {Object} Promise
-   */
+   *!/
   selectDomainsItemAndDeleteDomain: function (domain) {
     var me = this;
     return browser.getCurrentUrl().then(function (initialUrl) {
@@ -783,7 +816,7 @@ var Portal = {
         }
       });
     });
-  },
+  },*/
 
   /**
    * ### Portal.createMobileApps()
