@@ -63,6 +63,10 @@
       labels: [],
       data: []
     };
+    $scope.browser = {
+      labels: [],
+      data: []
+    };
     $scope.country = {
       labels: [],
       data: []
@@ -114,6 +118,31 @@
           angular.forEach(data.data, function(os) {
             $scope.device.labels.push(os.key);
             $scope.device.data.push(os.count);
+          });
+        }
+      });
+    };
+
+    /**
+     * List of browsers
+     *
+     * @param {string|number} domainId
+     */
+    $scope.reloadBrowser = function(domainId) {
+      $scope.browser = {
+        labels: [],
+        data: []
+      };
+      Stats.browser({
+        domainId: domainId
+      }).$promise.then(function(data) {
+        if (data.data && data.data.length > 0) {
+
+          console.log( data );
+
+          data.data.forEach( function(item) {
+            $scope.browser.labels.push(item.key);
+            $scope.browser.data.push(item.count);
           });
         }
       });
@@ -288,6 +317,7 @@
     $scope.reload = function() {
       $scope.reloadOS($scope.domain.id);
       $scope.reloadDevice($scope.domain.id);
+      $scope.reloadBrowser($scope.domain.id);
       $scope.reloadCountry($scope.domain.id);
       //$scope.reloadProtocol($scope.domain.id);
       //$scope.reloadHttpMethod($scope.domain.id);

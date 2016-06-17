@@ -15,7 +15,8 @@
         onFilter: '&',
         flCountry: '=',
         flOs: '=',
-        flDevice: '='
+        flDevice: '=',
+        flBrowser: '='
       },
       controller: FilterTimePeriodCtrl
     };
@@ -62,7 +63,7 @@
           delete $scope.ngFilters[key];
         }
       });
-      
+
 
       $scope.onFilter();
     }

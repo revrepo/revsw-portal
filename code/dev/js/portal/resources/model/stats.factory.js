@@ -27,6 +27,14 @@
           count: 10
         }
       },
+      browser: {
+        method: 'GET',
+        url: $config.API_URL + '/stats/top/:domainId',
+        params: {
+          report_type: 'browser',
+          count: 10
+        }
+      },
       country: {
         method: 'GET',
         url: $config.API_URL + '/stats/top/:domainId',
