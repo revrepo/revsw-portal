@@ -35,7 +35,7 @@ describe('Functional', function () {
     });
 
     beforeEach(function () {
-      Portal.selectUsersItem();
+      Portal.goToUsers();
     });
 
     afterEach(function () {
@@ -43,33 +43,33 @@ describe('Functional', function () {
 
     it('should display a successful message when creating user', function () {
       var bret = DataProvider.generateUser('Bret');
-      Portal.userListPage.clickAddNewUserThroughClassName();
+      Portal.userListPage.clickAddNewUser();
       Portal.addUserPage.createUser(bret);
       var alert = Portal.alerts.getFirst();
       expect(alert.getText())
         .toContain(Constants.alertMessages.users.MSG_SUCCESS_ADD);
       Portal.addUserPage.clickBackToList();
-      Portal.selectUsersItemAndDeleteUser(bret);
+      Portal.deleteUser(bret);
     });
 
     it('should create a new user with "user" role', function () {
       var carl = DataProvider.generateUser('Carl');
       carl.role = Constants.user.roles.USER;
-      Portal.selectUsersItemAndCreateUser(carl);
+      Portal.createUser(carl);
       Portal.userListPage.searcher.setSearchCriteria(carl.email);
       var user = Portal.userListPage.table.getFirstRow();
       expect(user.getRole()).toEqual(Constants.user.roles.USER);
-      Portal.selectUsersItemAndDeleteUser(carl);
+      Portal.deleteUser(carl);
     });
 
     it('should create a new user with "admin" role', function () {
       var tom = DataProvider.generateUser('Tom');
       tom.role = Constants.user.roles.ADMIN;
-      Portal.selectUsersItemAndCreateUser(tom);
+      Portal.createUser(tom);
       Portal.userListPage.searcher.setSearchCriteria(tom.email);
       var user = Portal.userListPage.table.getFirstRow();
       expect(user.getRole()).toEqual(Constants.user.roles.ADMIN);
-      Portal.selectUsersItemAndDeleteUser(tom);
+      Portal.deleteUser(tom);
     });
   });
 });
