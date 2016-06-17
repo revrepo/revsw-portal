@@ -324,7 +324,10 @@ var Portal = {
    * Navigation helper method that executes all steps to expand the appropriate
    * header section from the sidebar menu and select an item from it
    *
-   * @returns {Promise}
+   * @param {String} menuHeader, the header's label from the menu option to click
+   * @param {String} menuItem, the item's label from the menu option to click
+   * 
+   *  @returns {Promise}
    */
   goTo: function (menuHeader, menuItem) {
     return this
