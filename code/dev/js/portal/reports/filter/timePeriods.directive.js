@@ -188,8 +188,8 @@
       }
       // $scope.ngFilters.from_timestamp = moment(Date.now()).subtract(parseInt($scope.delay), 'days').valueOf();
       // $scope.ngFilters.to_timestamp = Date.now();
-      $scope.ngFilters.from_timestamp = $scope.datePicker.date.startDate.toDate().getTime(),
-        $scope.ngFilters.to_timestamp = $scope.datePicker.date.endDate.toDate().getTime()
+      $scope.ngFilters.from_timestamp = $scope.datePicker.date.startDate.toDate().getTime();
+        $scope.ngFilters.to_timestamp = $scope.datePicker.date.endDate.toDate().getTime();
       $scope.onFilter();
     }
   }
