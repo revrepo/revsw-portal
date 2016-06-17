@@ -19,6 +19,7 @@
 
     $scope.os = [];
     $scope.device = [];
+    $scope.browser = [];
     $scope.country = [];
     $scope.statusCode = [];
     $scope.requestStatus = [];
@@ -78,6 +79,33 @@
         })
         .catch(function() {
           $scope.device = [];
+        });
+    };
+
+    /**
+     * List of browsers
+     *
+     * @param {object} common parameters(domainId, from, to)
+     */
+    $scope.reloadBrowser = function(filters) {
+      Stats.browser(filters)
+        .$promise
+        .then(function(data) {
+          if (data.data && data.data.length > 0) {
+            var newData = [];
+            newData = data.data.map( function(val) {
+              return {
+                name: (val.key !== '--' ? val.key : 'Unknown'),
+                y: val.count
+              };
+            });
+            $scope.browser = newData;
+          } else {
+            $scope.browser = [];
+          }
+        })
+        .catch(function() {
+          $scope.browser = [];
         });
     };
 
@@ -404,6 +432,7 @@
 
       $scope.reloadOS(filters);
       $scope.reloadDevice(filters);
+      $scope.reloadBrowser(filters);
       $scope.reloadCountry(filters);
       $scope.reloadProtocol(filters);
       $scope.reloadHttpMethod(filters);

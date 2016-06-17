@@ -37,6 +37,14 @@
       </div>
 
       <div class="form-group">
+        <select class="form-control fixed"
+                ng-model="browser"
+                ng-options="item for item in flBrowser">
+          <option value="">All Browsers</option>
+        </select>
+      </div>
+
+      <div class="form-group">
         <button class="btn btn-info" ng-click="reloadTrafficStats()" ng-disabled="_loading || !ngDomain">
           <i class="glyphicon glyphicon-refresh"></i>&nbsp;
           Update Report

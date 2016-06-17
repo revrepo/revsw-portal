@@ -15,19 +15,15 @@
         flCountry: '=',
         flOs: '=',
         flDevice: '=',
+        flBrowser: '=',
         ngDomain: '=',
         filtersSets: '='
       },
       /*@ngInject*/
       controller: function($scope, Stats, Util) {
-        var _filters_field_list = ['from_timestamp', 'to_timestamp', 'country', 'device', 'os'];
+        var _filters_field_list = ['from_timestamp', 'to_timestamp', 'country', 'device', 'os', 'browser'];
 
         function generateFilterParams(filters) {
-          // var filter = {
-          //   domainId: $scope.ngDomain.id,
-          //   from_timestamp: moment().subtract( $scope.delay, 'days' ).valueOf(),
-          //   to_timestamp: Date.now(),
-          // };
           var params = {
             from_timestamp: moment().subtract(1, 'days').valueOf(),
             to_timestamp: Date.now()
@@ -52,6 +48,7 @@
         $scope.os = '';
         $scope.country = '';
         $scope.device = '';
+        $scope.browser = '';
         $scope._loading = false;
 
         //  ---------------------------------
@@ -158,6 +155,10 @@
           if ($scope.os !== '') {
             $scope.filters.os = $scope.os;
           }
+          if ( $scope.browser !== '' ) {
+            $scope.filters.browser = $scope.browser;
+          }
+
           Stats.fbt_average(angular.merge({
               domainId: $scope.ngDomain.id
             }, generateFilterParams($scope.filters)))
