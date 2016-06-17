@@ -373,14 +373,35 @@ form,
 }
 
 // fix for toast
-.toast-top-right{
+.toast-top-right {
   right: auto;
 }
 
 // cache purge
 //
-.modal-body .purges_container{
-    max-height: 50vh;
-    overflow-x: auto;
-    margin-bottom: -15px;
+.modal-body .purges_container {
+  max-height: 50vh;
+  overflow-x: auto;
+  margin-bottom: -15px;
+}
+
+// directiver "filter-time-period"
+.filter-time-period {
+  .form-control.date-picker.select2,
+  &.date-picker-wrapper > input[type="text"] {
+    margin-top: 5px;
   }
+  & .date-picker-wrapper {
+    // margin: 10px;
+    position: relative;
+    .over {
+      margin-top: 5px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+    }
+  }
+}
