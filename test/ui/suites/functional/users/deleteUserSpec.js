@@ -35,7 +35,7 @@ describe('Functional', function () {
     });
 
     beforeEach(function () {
-      Portal.selectUsersItem();
+      Portal.goToUsers();
     });
 
     afterEach(function () {
@@ -44,7 +44,7 @@ describe('Functional', function () {
     it('should delete successfully a user with "admin" role', function () {
       var tom = DataProvider.generateUser('Tom');
       tom.role = Constants.user.roles.USER;
-      Portal.selectUsersItemAndCreateUser(tom);
+      Portal.createUser(tom);
       Portal.userListPage.searchAndClickDelete(tom.email);
       Portal.dialog.clickOk();
       Portal.userListPage.searcher.setSearchCriteria(tom.email);
@@ -55,7 +55,7 @@ describe('Functional', function () {
     it('should delete successfully a user with "user" role', function () {
       var carl = DataProvider.generateUser('Carl');
       carl.role = Constants.user.roles.ADMIN;
-      Portal.selectUsersItemAndCreateUser(carl);
+      Portal.createUser(carl);
       Portal.userListPage.searchAndClickDelete(carl.email);
       Portal.dialog.clickOk();
       Portal.userListPage.searcher.setSearchCriteria(carl.email);
@@ -65,7 +65,7 @@ describe('Functional', function () {
 
     it('should confirm user deletion when clicking "Ok" button', function () {
       var sam = DataProvider.generateUser('Sam');
-      Portal.selectUsersItemAndCreateUser(sam);
+      Portal.createUser(sam);
       Portal.userListPage.searchAndClickDelete(sam.email);
       var okBtn = Portal.dialog.getOkBtn();
       expect(okBtn.isDisplayed()).toBeTruthy();
@@ -77,7 +77,7 @@ describe('Functional', function () {
 
     it('should cancel the deletion when clicking "Cancel" button', function () {
       var bruce = DataProvider.generateUser('Bruce');
-      Portal.selectUsersItemAndCreateUser(bruce);
+      Portal.createUser(bruce);
       Portal.userListPage.searchAndClickDelete(bruce.email);
       var okBtn = Portal.dialog.getCancelBtn();
       expect(okBtn.isDisplayed()).toBeTruthy();
@@ -90,7 +90,7 @@ describe('Functional', function () {
 
     it('should cancel the deletion after pressing "ESCAPE" key', function () {
       var bruce = DataProvider.generateUser('Bruce');
-      Portal.selectUsersItemAndCreateUser(bruce);
+      Portal.createUser(bruce);
       Portal.userListPage.searchAndClickDelete(bruce.email);
       Portal.dialog.getModalEl().sendKeys(protractor.Key.ESCAPE);
       var tableRows = Portal.userListPage.table.getRows();

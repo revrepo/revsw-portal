@@ -17,13 +17,33 @@ section[drawer] .side-menu .dashboard_menu .side-menu-item.item-title {
   }
 }
 
+.dashboard-btn-new {
+  padding-right: 0;
+  padding-top: 2px;
+  & i {
+    margin-right: 7px;
+  }
+}
+
 // button size into dashboard title
 .dashboard__title {
   .btn-link {
-    font-size: 28px !important;
+    font-size: 30px !important;
     padding-left: 3px !important;
     padding-right: 3px !important;
     padding-top: 10px !important;
+    &:focus {
+      outline: none;
+    }
+  }
+  .dashboard-btn-new {
+    font-size: 29px !important;
+    padding-left: 3px !important;
+    padding-right: 3px !important;
+    padding-top: 6px !important;
+    &:focus {
+      outline: none;
+    }
   }
 }
 
@@ -77,7 +97,7 @@ section[drawer] .side-menu .dashboard_menu .side-menu-item.item-title {
   }
 }
 
-.dashboard-preview-background{
+.dashboard-preview-background {
   width: 100%;
   min-height: 90vh;
   background-position: center;
@@ -88,22 +108,23 @@ section[drawer] .side-menu .dashboard_menu .side-menu-item.item-title {
 
 @-moz-document url-prefix() {
   section[drawer] .side-menu .side-menu-item {
-     padding-left: 20px;
+    padding-left: 20px;
   }
-
   .paper-header .navbar .navbar-inner .navbar-header .ng-isolate-scope .form-control.ng-pristine.ng-untouched.ng-valid.ng-valid-editable {
     position: relative;
     top: 12px;
   }
 }
 
-@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
-    section[drawer] .side-menu .side-menu-item {
-     padding-left: 20px;
-    }
+@media screen and (-ms-high-contrast: active),
+(-ms-high-contrast: none) {
+  section[drawer] .side-menu .side-menu-item {
+    padding-left: 20px;
+  }
 }
+
 @supports (-ms-accelerator:true) {
-    section[drawer] .side-menu .side-menu-item {
-     padding-left: 20px;
-    }
+  section[drawer] .side-menu .side-menu-item {
+    padding-left: 20px;
+  }
 }

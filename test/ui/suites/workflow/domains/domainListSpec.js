@@ -35,7 +35,7 @@ describe('Workflow', function () {
     });
 
     beforeEach(function () {
-      Portal.selectDomainsItem();
+      Portal.goToDomains();
     });
 
     afterEach(function () {
@@ -47,7 +47,7 @@ describe('Workflow', function () {
         var firstDomain = DataProvider.generateDomain('first-domain');
         var secondDomain = DataProvider.generateDomain('second-domain');
         // Create domain
-        Portal.selectDomainsItemAndCreateDomain(firstDomain);
+        Portal.createDomain(firstDomain);
         // Check domain is in list
         Portal.domains.listPage.clickAddNewDomain();
         Portal.domains.addPage.createDomain(secondDomain);
@@ -61,7 +61,7 @@ describe('Workflow', function () {
       function () {
         var myDomain = DataProvider.generateDomain('my-domain');
         // Create domain
-        Portal.selectDomainsItemAndCreateDomain(myDomain);
+        Portal.createDomain(myDomain);
         // Check domain is in list
         Portal.domains.listPage
           .searchAndGetFirstRow(myDomain.name)
@@ -69,7 +69,7 @@ describe('Workflow', function () {
           .getAttribute('uib-tooltip')
           .then(function (tooltip) {
             expect(tooltip).toEqual('Staging Status: InProgress');
-            Portal.selectDomainsItemAndDeleteDomain(myDomain);
+            Portal.deleteDomain(myDomain);
           });
       });
 
@@ -78,7 +78,7 @@ describe('Workflow', function () {
       function () {
         var myDomain = DataProvider.generateDomain('my-domain');
         // Create domain
-        Portal.selectDomainsItemAndCreateDomain(myDomain);
+        Portal.createDomain(myDomain);
         // Check domain is in list
         Portal.domains.listPage
           .searchAndGetFirstRow(myDomain.name)
@@ -86,7 +86,7 @@ describe('Workflow', function () {
           .getAttribute('uib-tooltip')
           .then(function (tooltip) {
             expect(tooltip).toEqual('Global Status: InProgress');
-            Portal.selectDomainsItemAndDeleteDomain(myDomain);
+            Portal.deleteDomain(myDomain);
           });
       });
 
@@ -95,7 +95,7 @@ describe('Workflow', function () {
       function () {
         var myDomain = DataProvider.generateDomain('my-domain');
         // Create domain
-        Portal.selectDomainsItemAndCreateDomain(myDomain);
+        Portal.createDomain(myDomain);
         // Wait for some period of time to get the domain Published
         browser.sleep(30000);
         // Check domain is in list
@@ -105,7 +105,7 @@ describe('Workflow', function () {
           .getAttribute('uib-tooltip')
           .then(function (tooltip) {
             expect(tooltip).toEqual('Staging Status: Published');
-            Portal.selectDomainsItemAndDeleteDomain(myDomain);
+            Portal.deleteDomain(myDomain);
           });
       });
 
@@ -114,7 +114,7 @@ describe('Workflow', function () {
       function () {
         var myDomain = DataProvider.generateDomain('my-domain');
         // Create domain
-        Portal.selectDomainsItemAndCreateDomain(myDomain);
+        Portal.createDomain(myDomain);
         // Wait for some period of time to get the domain Published
         browser.sleep(80000);
         // Check domain is in list
@@ -124,7 +124,7 @@ describe('Workflow', function () {
           .getAttribute('uib-tooltip')
           .then(function (tooltip) {
             expect(tooltip).toEqual('Global Status: Published');
-            Portal.selectDomainsItemAndDeleteDomain(myDomain);
+            Portal.deleteDomain(myDomain);
           });
       });
 
@@ -138,7 +138,7 @@ describe('Workflow', function () {
           originHostHeader: 'UPDATED' + myDomain.originHostHeader
         };
         // Create domain
-        Portal.selectDomainsItemAndCreateDomain(myDomain);
+        Portal.createDomain(myDomain);
         // Update domain
         Portal.updateDomain(updatedDomain);
         // Wait for the domain to get global status as Modified
@@ -150,7 +150,7 @@ describe('Workflow', function () {
           .getAttribute('uib-tooltip')
           .then(function (tooltip) {
             expect(tooltip).toEqual('Global Status: Modified');
-            Portal.selectDomainsItemAndDeleteDomain(myDomain);
+            Portal.deleteDomain(myDomain);
           });
       });
   });

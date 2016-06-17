@@ -166,6 +166,7 @@ input.ui-select-search {
 }
 select.form-control {
   max-width: 550px;
+  margin-bottom: auto;
 }
 select.form-control.fixed {
   width: 150px;
@@ -832,11 +833,30 @@ section[drawer] .side-menu .dashboard_menu .side-menu-item.item-title a {
 .dashboard .panel-body {
   margin: 5px;
 }
+.dashboard-btn-new {
+  padding-right: 0;
+  padding-top: 2px;
+}
+.dashboard-btn-new i {
+  margin-right: 7px;
+}
 .dashboard__title .btn-link {
-  font-size: 28px !important;
+  font-size: 30px !important;
   padding-left: 3px !important;
   padding-right: 3px !important;
   padding-top: 10px !important;
+}
+.dashboard__title .btn-link:focus {
+  outline: none;
+}
+.dashboard__title .dashboard-btn-new {
+  font-size: 29px !important;
+  padding-left: 3px !important;
+  padding-right: 3px !important;
+  padding-top: 6px !important;
+}
+.dashboard__title .dashboard-btn-new:focus {
+  outline: none;
 }
 .dashboard-structure-select-item {
   display: block;
