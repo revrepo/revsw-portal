@@ -71,7 +71,8 @@
     $scope.reloadList = function( list ) {
       $scope[list] = {};
       Stats[list]({
-        domainId: $scope.domain.id
+        domainId: $scope.domain.id,
+        count: 250
       }).$promise.then(function( data ) {
         if ( data.data && data.data.length > 0 ) {
           $scope[list] = data.data.filter( function( item ) {
@@ -91,7 +92,8 @@
       $scope.country = {};
       var c = {};
       Stats.country({
-        domainId: $scope.domain.id
+        domainId: $scope.domain.id,
+        count: 250
       }).$promise.then(function(data) {
 
         if (data.data && data.data.length > 0) {
