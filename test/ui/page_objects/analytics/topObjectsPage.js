@@ -229,8 +229,8 @@ var TopObjects = {
     this.form.setCountry(0, 1, dataReport.country);
     this.form.setOS(0, 2, dataReport.os);
     this.form.setDevice(0, 3, dataReport.device);
-    this.form.setCount(0, 4, dataReport.count);
-    this.form.clickCreateReport(0, 5);
+    this.form.setCount(0, 5, dataReport.count);
+    this.form.clickCreateReport(0, 6);
   },
 
  /**
@@ -247,8 +247,8 @@ var TopObjects = {
     this.form.setCountry(2, 1, dataReport.country);
     this.form.setOS(2, 2, dataReport.os);
     this.form.setDevice(2, 3, dataReport.device);
-    this.form.setCount(2, 4, dataReport.count);
-    this.form.clickCreateReport(2, 5);
+    this.form.setCount(2, 5, dataReport.count);
+    this.form.clickCreateReport(2, 6);
   },
 
   /**
@@ -265,8 +265,8 @@ var TopObjects = {
     this.form.setCountry(4, 1, dataReport.country);
     this.form.setOS(4, 2, dataReport.os);
     this.form.setDevice(4, 3, dataReport.device);
-    this.form.setCount(4, 4, dataReport.count);
-    this.form.clickCreateReport(4, 5);
+    this.form.setCount(4, 5, dataReport.count);
+    this.form.clickCreateReport(4, 6);
   },
 
   /**
@@ -283,8 +283,8 @@ var TopObjects = {
     this.form.setCountry(6, 1, dataReport.country);
     this.form.setOS(6, 2, dataReport.os);
     this.form.setDevice(6, 3, dataReport.device);
-    this.form.setCount(6, 4, dataReport.count);
-    this.form.clickCreateReport(6, 5);
+    this.form.setCount(6, 5, dataReport.count);
+    this.form.clickCreateReport(6, 6);
   },
 
   /**
@@ -301,8 +301,8 @@ var TopObjects = {
     this.form.setCountry(8, 1, dataReport.country);
     this.form.setOS(8, 2, dataReport.os);
     this.form.setDevice(8, 3, dataReport.device);
-    this.form.setCount(8, 4, dataReport.count);
-    this.form.clickCreateReport(8, 5);
+    this.form.setCount(8, 5, dataReport.count);
+    this.form.clickCreateReport(8, 6);
   },
 
   /**
@@ -318,7 +318,7 @@ var TopObjects = {
     dataReport.country = this.form.getCountry(0, 1);
     dataReport.os = this.form.getOS(0, 2);
     dataReport.device = this.form.getDevice(0, 3);
-    dataReport.count = this.form.getCount(0, 4);
+    dataReport.count = this.form.getCount(0, 5);
     return dataReport;
   },
 
@@ -335,7 +335,7 @@ var TopObjects = {
     dataReport.country = this.form.getCountry(1, 1);
     dataReport.os = this.form.getOS(1, 2);
     dataReport.device = this.form.getDevice(1, 3);
-    dataReport.count = this.form.getCount(1, 4);
+    dataReport.count = this.form.getCount(1, 5);
     return dataReport;
   },
 
@@ -352,7 +352,7 @@ var TopObjects = {
     dataReport.country = this.form.getCountry(2, 1);
     dataReport.os = this.form.getOS(2, 2);
     dataReport.device = this.form.getDevice(2, 3);
-    dataReport.count = this.form.getCount(2, 4);
+    dataReport.count = this.form.getCount(2, 5);
     return dataReport;
   },
 
@@ -369,7 +369,7 @@ var TopObjects = {
     dataReport.country = this.form.getCountry(3, 1);
     dataReport.os = this.form.getOS(3, 2);
     dataReport.device = this.form.getDevice(3, 3);
-    dataReport.count = this.form.getCount(3, 4);
+    dataReport.count = this.form.getCount(3, 5);
     return dataReport;
   },
 
@@ -386,7 +386,7 @@ var TopObjects = {
     dataReport.country = this.form.getCountry(4, 1);
     dataReport.os = this.form.getOS(4, 2);
     dataReport.device = this.form.getDevice(4, 3);
-    dataReport.count = this.form.getCount(4, 4);
+    dataReport.count = this.form.getCount(4, 5);
     return dataReport;
   }
 };
