@@ -34,6 +34,7 @@ var TopObjectsForm = {
       country: 'ngFilters.country',
       os: 'ngFilters.os',
       device: 'ngFilters.device',
+      browser: 'ngFilters.browser',
       count: 'ngFilters.count'
     }
   },

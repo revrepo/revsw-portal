@@ -35,7 +35,7 @@ var DashboardList = {
     labels: {
       title: {
         // css: 'page-title'
-        tagName: 'h2'
+        css: '.h2.ng-binding'
       }
     },
     buttons: {
@@ -103,7 +103,7 @@ var DashboardList = {
    * @returns {Selenium WebDriver Element}
    */
   getTitleLbl: function () {
-    return element(by.tagName(this.locators.labels.title.tagName));
+    return element(by.css(this.locators.labels.title.css));
   },
 
   /**
