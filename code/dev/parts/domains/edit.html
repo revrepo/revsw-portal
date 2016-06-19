@@ -41,7 +41,7 @@
               <button class="btn btn-info" ng-disabled="_loading || jsonIsInvalid" ng-click="validateDomain(modelAdvance)">
                 <i class="glyphicon" ng-class="_loading ? 'glyphicon-refresh spin':'glyphicon-check'"></i>&nbsp; Verify
               </button>
-              <button class="btn btn-success" ng-disabled="_loading || jsonIsInvalid" ng-click="updateDomain(modelAdvance)">
+              <button class="btn btn-success" ng-disabled="_loading || jsonIsInvalid" ng-click="updateDomain(modelAdvance)" uib-tooltip="{{domain_update_help_info}}">
                 <i class="glyphicon" ng-class="_loading ? 'glyphicon-refresh spin':'glyphicon-file'"></i>&nbsp; Update
               </button>
               <button class="btn btn-success" ng-disabled="_loading || jsonIsInvalid" ng-click="publishDomain(modelAdvance)">
@@ -461,10 +461,10 @@
               <button class="btn btn-info" ng-disabled="disableSubmit(model, true) || editForm.$invalid" ng-click="validateDomain(model)">
                 <i class="glyphicon" ng-class="_loading ? 'glyphicon-refresh spin':'glyphicon-check'"></i>&nbsp; Verify
               </button>
-              <button class="btn btn-success" ng-disabled="disableSubmit(model, true) || editForm.$invalid" ng-click="updateDomain(model)">
+              <button class="btn btn-success" ng-disabled="disableSubmit(model, true) || editForm.$invalid" ng-click="updateDomain(model)" uib-tooltip="{{domain_update_help_info}}">
                 <i class="glyphicon" ng-class="_loading ? 'glyphicon-refresh spin':'glyphicon-file'"></i>&nbsp; Update
               </button>
-              <button class="btn btn-success" ng-disabled="disableSubmit(model, true)|| editForm.$invalid" ng-click="publishDomain(model)">
+              <button class="btn btn-success" ng-disabled="disableSubmit(model, true)|| editForm.$invalid" ng-click="publishDomain(model)"  uib-tooltip="{{domain_publish_help_info}}">
                 <i class="glyphicon" ng-class="_loading ? 'glyphicon-refresh spin':'glyphicon-ok'"></i>&nbsp; Publish
               </button>
             </div>

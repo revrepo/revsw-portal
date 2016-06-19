@@ -45,6 +45,13 @@
     $scope.NO_SPECIAL_CHARS = $config.PATTERNS.NO_SPECIAL_CHARS;
     $scope.COMMENT_NO_SPECIAL_CHARS = $config.PATTERNS.COMMENT_NO_SPECIAL_CHARS;
     $scope.DOMAIN_STATUS_REFRESH_INTERVAL_EDIT_FORM = $config.DOMAIN_STATUS_REFRESH_INTERVAL_EDIT_FORM;
+    $scope.domain_update_help_info = 'Use the button to send the modified configuration to the staging environment ' +
+      'which can be used to test the new configuration before sending it to the global network (and making it ' +
+      'available for all your end users). Please see “Web -> Staging Env.” section for details about the staging ' +
+      'environment and how to use';
+    $scope.domain_publish_help_info = 'Once you have tested the new updated configuration in the staging environment ' +
+      '(using “Update” button) are you welcome to publish the configuration in the global network (and make it ' +
+      'available to all your end users)';
     /**
      * @name setAccountName
      * @description
