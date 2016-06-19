@@ -15,6 +15,7 @@
         flCountry: '=',
         flOs: '=',
         flDevice: '=',
+        flBrowser: '=',
         ngDomain: '='
       },
       /*@ngInject*/
@@ -24,8 +25,10 @@
         $scope.os = '';
         $scope.country = '';
         $scope.device = '';
+        $scope.browser = '';
         $scope._ims = 300;
         $scope._loading = false;
+
         $scope.chartOptions = {
           chart: {
             type: 'column'
@@ -80,6 +83,9 @@
           }
           if ( $scope.os !== '' ) {
             opts.os = $scope.os;
+          }
+          if ( $scope.browser !== '' ) {
+            opts.browser = $scope.browser;
           }
 
           $scope._loading = true;

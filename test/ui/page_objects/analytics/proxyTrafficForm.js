@@ -30,7 +30,7 @@ var ProxyTrafficForm = {
       css: '.panel-body'
     },
     models: {
-      delay: 'delay',
+      delay: 'datePicker.date',
       country: 'ngFilters.country',
       os: 'ngFilters.os',
       device: 'ngFilters.device'
@@ -167,7 +167,7 @@ var ProxyTrafficForm = {
     return this
       .getProxyTrafficReport(indexChart, indexForm)
       .element(by.model(this.locators.models.delay))
-      .getText();
+      .getAttribute('value');
   },
 
   /**

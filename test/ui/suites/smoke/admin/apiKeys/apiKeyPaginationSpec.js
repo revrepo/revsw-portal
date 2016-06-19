@@ -41,6 +41,7 @@ describe('Smoke', function () {
     afterEach(function () {
     });
 
+    // TODO: Leo, do we have a process which creates the required 25 keys?
     it('should be displayed total of 25 accounts as maximum',
       function () {
         var rows = Portal.admin.apiKeys.listPage.table.getRows().count();

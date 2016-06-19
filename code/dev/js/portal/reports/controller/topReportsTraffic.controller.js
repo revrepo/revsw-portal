@@ -19,6 +19,7 @@
 
     $scope.os = [];
     $scope.device = [];
+    $scope.browser = [];
     $scope.country = [];
     $scope.statusCode = [];
     $scope.requestStatus = [];
@@ -27,8 +28,29 @@
     $scope.delay = '24';
     $scope.country_filter = '';
 
+    var filter_ = function( data ) {
+      return data.filter( function( item ) {
+          return item.key !== '--';
+        })
+        .map( function( item ) {
+          return {
+            name: item.key,
+            y: item.count
+          };
+        });
+    };
+
+    var direct_ = function( data ) {
+      return data.map( function( item ) {
+          return {
+            name: item.key,
+            y: item.count
+          };
+        });
+    };
+
     /**
-     * Reload list of OS
+     * Reload list of OSes
      *
      * @param {object} common parameters(domainId, from, to)
      */
@@ -36,18 +58,7 @@
       Stats.os(filters)
         .$promise
         .then(function(data) {
-          if (data.data && data.data.length > 0) {
-            var newData = [];
-            angular.forEach(data.data, function(val) {
-              newData.push({
-                name: (val.key !== '--' ? val.key : 'Unknown'),
-                y: val.count
-              });
-            });
-            $scope.os = newData;
-          } else {
-            $scope.os = [];
-          }
+          $scope.os = filter_( data.data );
         })
         .catch(function() {
           $scope.os = [];
@@ -63,18 +74,7 @@
       Stats.device(filters)
         .$promise
         .then(function(data) {
-          if (data.data && data.data.length > 0) {
-            var newData = [];
-            angular.forEach(data.data, function(val) {
-              newData.push({
-                name: (val.key !== '--' ? val.key : 'Unknown'),
-                y: val.count
-              });
-            });
-            $scope.device = newData;
-          } else {
-            $scope.device = [];
-          }
+          $scope.device = filter_( data.data );
         })
         .catch(function() {
           $scope.device = [];
@@ -82,32 +82,36 @@
     };
 
     /**
-     * List of devices
+     * List of browsers
+     *
+     * @param {object} common parameters(domainId, from, to)
+     */
+    $scope.reloadBrowser = function(filters) {
+      Stats.browser(filters)
+        .$promise
+        .then(function(data) {
+          $scope.browser = filter_( data.data );
+        })
+        .catch(function() {
+          $scope.browser = [];
+        });
+    };
+
+    /**
+     * HTTP/S requests distribution
      *
      * @param {object} common parameters(domainId, from, to)
      */
     $scope.reloadProtocol = function(filters) {
-      // $scope.protocol = [];
       Stats.protocol(filters)
         .$promise
         .then(function(data) {
-          if (data.data && data.data.length > 0) {
-            var newData = [];
-            angular.forEach(data.data, function(val) {
-              var protocol = 'Unknows';
-              if (val.key === 80 || val.key === '80') {
-                protocol = 'HTTP';
-              }
-              if (val.key === 443 || val.key === '443') {
-                protocol = 'HTTPS';
-              }
-              newData.push({
-                name: protocol,
-                y: val.count
-              });
+          $scope.protocol = data.data.map( function( item ) {
+              return {
+                name: ( (item.key|0) === 80 ? 'HTTP' : ( (item.key|0) === 443 ? 'HTTPS' : 'Unknown' ) ),
+                y: item.count
+              };
             });
-            $scope.protocol = newData;
-          }
         })
         .catch(function() {
           $scope.protocol = [];
@@ -115,7 +119,7 @@
     };
 
     /**
-     * List of devices
+     * requests distribution by HTTP methods
      *
      * @param {object} common parameters(domainId, from, to)
      */
@@ -123,18 +127,7 @@
       Stats.httpMethod(filters)
         .$promise
         .then(function(data) {
-          if (data.data && data.data.length > 0) {
-            var newData = [];
-            angular.forEach(data.data, function(val) {
-              newData.push({
-                name: val.key,
-                y: val.count
-              });
-            });
-            $scope.httpMethod = newData;
-          } else {
-            $scope.httpMethod = [];
-          }
+          $scope.httpMethod = direct_( data.data );
         })
         .catch(function() {
           $scope.httpMethod = [];
@@ -142,52 +135,31 @@
     };
 
     /**
-     * List of devices
+     * requests distribution by HTTP protos
      *
-     * @param {object} common parameters(domainId, from, to)
+     * @param {object}
      */
     $scope.reloadHttpProtocol = function(filters) {
-      //$scope.httpProtocol = [];
       Stats.httpProtocol(filters)
         .$promise
         .then(function(data) {
-          if (data.data && data.data.length > 0) {
-            var newData = [];
-            angular.forEach(data.data, function(val) {
-              newData.push({
-                name: val.key,
-                y: val.count
-              });
-            });
-            $scope.httpProtocol = newData;
-          } else {
-            $scope.httpProtocol = [];
-          }
+          $scope.httpProtocol = direct_( data.data );
+        })
+        .catch(function() {
+          $scope.httpProtocol = [];
         });
     };
 
     /**
-     * List of devices
+     * requests distribution by statuses
      *
      * @param {object} common parameters(domainId, from, to)
      */
     $scope.reloadStatusCode = function(filters) {
-      // $scope.statusCode = [];
       Stats.statusCode(filters)
         .$promise
         .then(function(data) {
-          var newData = [];
-          if (data.data && data.data.length > 0) {
-            angular.forEach(data.data, function(os) {
-              newData.push({
-                name: os.key,
-                y: os.count
-              });
-            });
-            $scope.statusCode = newData;
-          } else {
-            $scope.statusCode = [];
-          }
+          $scope.statusCode = direct_( data.data );
         })
         .catch(function() {
           $scope.statusCode = [];
@@ -195,27 +167,15 @@
     };
 
     /**
-     * List of devices
+     * requests distribution by content types
      *
      * @param {object} common parameters(domainId, from, to)
      */
     $scope.reloadContentType = function(filters) {
-      //
       Stats.contentType(filters)
         .$promise
         .then(function(data) {
-          if (data.data && data.data.length > 0) {
-            var newData = [];
-            angular.forEach(data.data, function(val) {
-              newData.push({
-                name: val.key,
-                y: val.count
-              });
-            });
-            $scope.contentType = newData;
-          } else {
-            $scope.contentType = [];
-          }
+          $scope.contentType = direct_( data.data );
         })
         .catch(function() {
           $scope.contentType = [];
@@ -223,7 +183,7 @@
     };
 
     /**
-     * List of devices
+     * cache HIT/MISS requests distribution
      *
      * @param {object} common parameters(domainId, from, to)
      */
@@ -231,21 +191,12 @@
       Stats.cacheStatus(filters)
         .$promise
         .then(function(data) {
-          if (data.data && data.data.length > 0) {
-            var newData = [];
-            angular.forEach(data.data, function(val) {
-              newData.push({
-                name: val.key,
-                y: val.count
-              });
-            });
-
-            if (newData.length === 2 &&
-              (newData[0].y > 0 || newData[1].y > 0)) {
-              $scope.cacheStatus = newData;
-            } else {
-              $scope.cacheStatus = [];
-            }
+          var newData = direct_( data.data );
+          if (newData.length === 2 &&
+            (newData[0].y > 0 || newData[1].y > 0)) {
+            $scope.cacheStatus = newData;
+          } else {
+            $scope.cacheStatus = [];
           }
         })
         .catch(function() {
@@ -262,18 +213,12 @@
       Stats.quic(filters)
         .$promise
         .then(function(data) {
-          if (data.data && data.data.length > 0) {
-            var newData = [];
-            angular.forEach(data.data, function(val) {
-              newData.push({
-                name: (val.key === '-' ? 'Non-QUIC' : val.key),
-                y: val.count
-              });
+          $scope.quic = data.data.map( function( item ) {
+              return {
+                name: ( item.key === '-' ? 'Non-QUIC' : item.key ),
+                y: item.count
+              };
             });
-            $scope.quic = newData;
-          } else {
-            $scope.quic = [];
-          }
         })
         .catch(function() {
           $scope.quic = [];
@@ -289,19 +234,12 @@
       Stats.http2(filters)
         .$promise
         .then(function(data) {
-          if (data.data && data.data.length > 0) {
-            var http2 = [];
-            angular.forEach(data.data, function(val) {
-              http2.push({
-                name: (val.key === '' ? 'Non-HTTP2' : val.key.toUpperCase()),
-                // name: val.key.toUpperCase(),
-                y: val.count
-              });
+          $scope.http2 = data.data.map( function( item ) {
+              return {
+                name: ( item.key === '' ? 'Non-HTTP2' : item.key.toUpperCase()),
+                y: item.count
+              };
             });
-            $scope.http2 = http2;
-          } else {
-            $scope.http2 = [];
-          }
         })
         .catch(function() {
           $scope.http2 = [];
@@ -309,43 +247,27 @@
     };
 
     /**
-     * List of country
+     * List of countries
      *
      * @param {object} common parameters(domainId, from, to)
      */
     $scope.reloadCountry = function(filters) {
-      // NOTE:  $scope.countries must be loaded
-      if ($scope.countries.length === 0) {
-        Countries.query().then(function(data) {
-          $scope.countries = data;
-          getDataCountry(filters);
+      Stats.country(filters)
+        .$promise
+        .then(function(data) {
+          $scope.country = data.data.filter( function( item ) {
+              return item.key !== '--';
+            })
+            .map( function( item ) {
+              return {
+                name: $scope.countries[item.key],
+                y: item.count
+              };
+            });
+        })
+        .catch(function() {
+          $scope.country = [];
         });
-      } else {
-        getDataCountry(filters);
-      }
-
-      function getDataCountry(filters) {
-        Stats.country(filters)
-          .$promise
-          .then(function(data) {
-            if (data.data && data.data.length > 0) {
-              var newData = [];
-              angular.forEach(data.data, function(val) {
-                var name = $scope.countries[val.key.toUpperCase()] || 'Unknown';
-                newData.push({
-                  name: name,
-                  y: val.count
-                });
-              });
-              $scope.country = newData;
-            } else {
-              $scope.country = [];
-            }
-          })
-          .catch(function() {
-            $scope.country = [];
-          });
-      }
     };
 
     /**
@@ -357,39 +279,32 @@
       Stats.requestStatus(filters)
         .$promise
         .then(function(data) {
-          if (data.data && data.data.length > 0) {
 
-            var st = [{
-              name: 'Successfull',
-              y: 0
-            }, {
-              name: 'Failed',
-              y: 0
-            }];
+          var st = [{
+            name: 'Successfull',
+            y: 0
+          }, {
+            name: 'Failed',
+            y: 0
+          }];
 
-            angular.forEach(data.data, function(item) {
-              if (item.key === 'OK') {
-                st[0].y = item.count;
-              } else {
-                st[1].y += item.count;
-              }
-            });
-            $scope.requestStatus = st;
-          } else {
-            $scope.requestStatus = [];
-          }
+          data.data.forEach( function(item) {
+            if (item.key === 'OK') {
+              st[0].y = item.count;
+            } else {
+              st[1].y += item.count;
+            }
+          });
+          $scope.requestStatus = st;
         })
         .catch(function() {
           $scope.requestStatus = [];
         });
+
     };
+
     /**
-     * @name  reload
-     * @description
-     *
-     *  Reload all data with current filter data
-     *
-     * @return
+     * reload everything
      */
     $scope.reload = function() {
 
@@ -404,6 +319,7 @@
 
       $scope.reloadOS(filters);
       $scope.reloadDevice(filters);
+      $scope.reloadBrowser(filters);
       $scope.reloadCountry(filters);
       $scope.reloadProtocol(filters);
       $scope.reloadHttpMethod(filters);

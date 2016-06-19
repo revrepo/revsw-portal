@@ -13,36 +13,56 @@
     $scope.domain = null;
     $scope.domains = [];
 
-    $scope.countries = Countries.query();
+    var countriesList = Countries.query();
+    $scope.country = {};
     $scope.os = [];
-    $scope.devices = [];
+    $scope.device = [];
+    $scope.browser = [];
 
-    $scope.reload = function () {
-      if (!$scope.domain || !$scope.domain.id) {
-        return;
-      }
-      //Clear data
-      $scope.os = [];
-      $scope.devices = [];
+    /**
+     * Reload list of given entities
+     *
+     * @param {string} list name
+     */
+    $scope.reloadList = function( list ) {
+      $scope[list] = [];
+      Stats[list]({
+        domainId: $scope.domain.id,
+        count: 250
+      }).$promise.then(function( data ) {
 
-      var promises = [
-        Stats.os({domainId: $scope.domain.id}).$promise,
-        Stats.device({domainId: $scope.domain.id}).$promise
-      ];
-      $q
-        .all(promises)
-        .then(function (data) {
-          if (!data || !data[0] || !data[1] || !data[0].data || !data[1].data) {
-            return;
-          }
-          data[0].data.map(function (os) {
-            $scope.os.push(os.key);
-          });
-          data[1].data.map(function (device) {
-            $scope.devices.push(device.key);
-          });
+        $scope[list] = data.data.filter( function( item ) {
+          return item.key !== '--' && item.key !== '-' && item.key !== '';
+        })
+        .map( function( item ) {
+          return item.key;
         });
+      });
     };
+
+    /**
+     * List of country
+     */
+    $scope.reloadCountry = function() {
+      $scope.country = {};
+      var c = {};
+      Stats.country({
+        domainId: $scope.domain.id,
+        count: 250
+      }).$promise.then(function(data) {
+
+        if (data.data && data.data.length > 0) {
+          data.data.forEach( function(item) {
+            if ( countriesList[item.key] ) {
+              c[item.key] = countriesList[item.key];
+            }
+          });
+        }
+        $scope.country = c;
+      });
+    };
+
+
 
     // Load user domains
     User.getUserDomains(true)
@@ -56,8 +76,15 @@
         $scope._loading = false;
       });
 
+    //  reload all lists
     $scope.onDomainSelected = function () {
-      $scope.reload();
+      if ( !$scope.domain || !$scope.domain.id ) {
+        return;
+      }
+      $scope.reloadList('os');
+      $scope.reloadList('device');
+      $scope.reloadList('browser');
+      $scope.reloadCountry();
     };
   }
 })();
