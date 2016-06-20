@@ -7,33 +7,36 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-md-12">
+    <div class="staging-servers col-sm-12 col-md-12 col-lg-6">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <!--           <div class="row">
-            <div class="col-md-12">
-              <div class="pull-left">
-                <a ng-disabled="_loading" ui-sref="login" class="btn btn-default">
-                  <i class="glyphicon glyphicon-arrow-left"></i>&nbsp; Back
-                </a>
-              </div>
-            </div>
-          </div>
-        </div> -->
           <div class="panel-body">
-            <div class="alert alert-info" ng-if="_loading">
-              <i class="glyphicon glyphicon-refresh spin" ng-if="_loading"></i>&nbsp; Loading...
+            <p>Before sending ("publishing" in our terms) your updated domain configuration to the global network (and making it available for all end users of your website) you have a simple way to test the configuration in a "sandbox" ("staging" in our terms) environment. The environment is available for RevAPM customers, similar to the global network configuration but is not used to serve real end users.</p>
+            <!--  <div class="alert alert-info" ng-if="$ctrl._loading">
+              <i class="glyphicon glyphicon-refresh spin" ng-if="$ctrl._loading"></i>&nbsp; Please waite few moment...
+              </div> -->
+            <p>When you click on <strong>"Update"</strong>(not "Publish") button in the domain and SSL certificate configuration forms the updated configuration it sent to the following staging servers:</p>
+            <div ng-show="$ctrl._loading && $ctrl.stagingServers.length==0">
+            <p><i class="glyphicon glyphicon-refresh spin" ng-show="$ctrl._loading && $ctrl.stagingServers.length==0"></i></p>
             </div>
-            <form>
-              <p>Before sending (“publishing” in our terms) your updated domain configuration to the global network (and making it available for all end users of your website) you have a simple way to test the configuration in a “sandbox” (“staging” in our terms) environment. The environment is available for RevAPM customers, similar to the global network configuration but is not used to serve real end users.</p>
-              <p>When you click on <strong>“Update”</strong>(not “Publish”) button in the domain and SSL certificate configuration forms the updated configuration it sent to the following staging servers:</p>
-              <pre><div ng-repeat="server in $ctrl.stagingServers"> {{server.server_ip}}</div></pre>
-              <p>You can access the staging servers and test new domain/SSL configuration using the following method: Update your local /etc/hosts file (or c:\windows\system32\drivers\etc\hosts for Windows users) to point the tested domain name to one of the staging IP addresses. For example, for domain “www.test-domain.com”:</p>
-              <pre>  {{$ctrl.stagingServers[0].server_ip}} www.test-domain.com </pre>
-              <p>After redirecting the domain name you can test the website in a regular browser window (don’t forget to clear the browser’s DNS cache) or using CLI command like “wget” or “curl”; Using proxy configuration options for “wget” or “curl” commands. For example:</p>
-              <pre> curl -x {{$ctrl.stagingServers[0].server_ip}}:80 -v http://www.test-domain.com/</pre>
-              <p>After verifying that the new configuration is working as expected you are welcome to send the configuration to the global network (and make available for your end users) by using “Publish” button in domain/SSL configuration forms.</p>
-            </form>
+            <div class="form-group staging-servers-list" ng-if="!$ctrl._loading && $ctrl.stagingServers.length >=2">
+               <p ng-repeat="server in $ctrl.stagingServers">{{$index+1}}) {{server.server_ip}}</p>
+            </div>
+            <div class="form-group staging-servers-list" ng-if="!$ctrl._loading &&$ctrl.stagingServers.length === 1">
+              <p>{{$ctrl.stagingServers[0].server_ip}}</p>
+            </div>
+            <p>You can access the staging servers and test new domain/SSL configuration using the following method:
+              <ol>
+                <li>
+                  <p>Update your local /etc/hosts file (or c:\windows\system32\drivers\etc\hosts for Windows users) to point the tested domain name to one of the staging IP addresses. For example, for domain "www.test-domain.com":</p>
+                  <pre class="console">  {{$ctrl.stagingServers[0].server_ip}} www.test-domain.com </pre>
+                </li>
+                <li>
+                  <p>After redirecting the domain name you can test the website in a regular browser window (don’t forget to clear the browser’s DNS cache) or using CLI command like "wget" or "curl"; Using proxy configuration options for "wget" or "curl" commands. For example:</p>
+                  <pre class="console"> curl -x {{$ctrl.stagingServers[0].server_ip}}:80 -v http://www.test-domain.com/</pre>
+                </li>
+              </ol>
+              <p>After verifying that the new configuration is working as expected you are welcome to send the configuration to the global network (and make available for your end users) by using <strong>"Publish"</strong> button in domain/SSL configuration forms.</p>
           </div>
         </div>
       </div>
