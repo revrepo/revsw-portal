@@ -29,14 +29,14 @@ describe('Smoke', function () {
 
   // Defining set of users for which all below tests will be run
   var users = [
-    //config.get('portal.users.admin'),
-    //config.get('portal.users.reseller'),
+    //config.get('portal.users.admin'), //TODO: it('should save SDKKey to clipboard' not working for this role
+    config.get('portal.users.reseller'),
     config.get('portal.users.revAdmin')
   ];
   var platforms = [
     config.get('portal.mobileApps.platforms.ios'),
-    //config.get('portal.mobileApps.platforms.android'),
-    //config.get('portal.mobileApps.platforms.windows_mobile').replace('_', ' ')
+    config.get('portal.mobileApps.platforms.android')
+    //config.get('portal.mobileApps.platforms.windows_mobile').replace('_', ' ') //TODO: Test are not working for win mobile
   ];
 
   users.forEach(function (user) {
@@ -46,7 +46,6 @@ describe('Smoke', function () {
 
         beforeAll(function () {
           Portal.signIn(user);
-          Portal.goToMobileApps();
         });
 
         afterAll(function () {
@@ -58,7 +57,8 @@ describe('Smoke', function () {
           describe('Platform: ' + platform, function () {
 
             beforeEach(function () {
-              Portal.header.goTo(platform);
+              Portal.goTo(Constants.sideBar.mobileApps.MOBILE_APPS,
+                platform);
             });
 
             afterEach(function () {
