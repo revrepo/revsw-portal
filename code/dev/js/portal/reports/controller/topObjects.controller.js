@@ -62,8 +62,6 @@
       });
     };
 
-
-
     // Load user domains
     User.getUserDomains(true)
       .then(function (domains) {

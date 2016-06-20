@@ -126,9 +126,13 @@
       topObjects: {
         method: 'GET',
         url: $config.API_URL + '/stats/top_objects/:domainId',
-        params: {
+        params: {}
+      },
 
-        }
+      slowestFBTObjects: {
+        method: 'GET',
+        url: $config.API_URL + '/stats/slowest_fbt_objects/:domainId',
+        params: {}
       },
 
       lm_rtt_country: {
