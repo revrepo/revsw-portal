@@ -15,7 +15,7 @@
             <!--  <div class="alert alert-info" ng-if="$ctrl._loading">
               <i class="glyphicon glyphicon-refresh spin" ng-if="$ctrl._loading"></i>&nbsp; Please waite few moment...
               </div> -->
-            <p>When you click on <strong>"Update"</strong>(not "Publish") button in the domain and SSL certificate configuration forms the updated configuration it sent to the following staging servers:</p>
+            <p>When you click on <strong>"Update"</strong> (not "Publish") button in the domain and SSL certificate configuration forms the updated configuration it sent to the following staging servers:</p>
             <div ng-show="$ctrl._loading && $ctrl.stagingServers.length==0">
             <p><i class="glyphicon glyphicon-refresh spin" ng-show="$ctrl._loading && $ctrl.stagingServers.length==0"></i></p>
             </div>
@@ -25,14 +25,15 @@
             <div class="form-group staging-servers-list" ng-if="!$ctrl._loading &&$ctrl.stagingServers.length === 1">
               <p>{{$ctrl.stagingServers[0].server_ip}}</p>
             </div>
-            <p>You can access the staging servers and test new domain/SSL configuration using the following method:
+            <p>You can access the staging servers and test new domain/SSL configuration using the following methods:
               <ol>
                 <li>
                   <p>Update your local /etc/hosts file (or c:\windows\system32\drivers\etc\hosts for Windows users) to point the tested domain name to one of the staging IP addresses. For example, for domain "www.test-domain.com":</p>
                   <pre class="console">  {{$ctrl.stagingServers[0].server_ip}} www.test-domain.com </pre>
+                  <p>After redirecting the domain name you can test the website in a regular browser window (don’t forget to clear the browser’s DNS cache) or using CLI command like "wget" or "curl".</p>
                 </li>
                 <li>
-                  <p>After redirecting the domain name you can test the website in a regular browser window (don’t forget to clear the browser’s DNS cache) or using CLI command like "wget" or "curl"; Using proxy configuration options for "wget" or "curl" commands.</p>
+                  <p>Using proxy configuration options for "wget" or "curl" commands.</p>
                   <p> For example:</p>
                   <pre class="console"> curl -x {{$ctrl.stagingServers[0].server_ip}}:80 -v http://www.test-domain.com/</pre>
                 </li>
