@@ -32,7 +32,8 @@
                   <pre class="console">  {{$ctrl.stagingServers[0].server_ip}} www.test-domain.com </pre>
                 </li>
                 <li>
-                  <p>After redirecting the domain name you can test the website in a regular browser window (don’t forget to clear the browser’s DNS cache) or using CLI command like "wget" or "curl"; Using proxy configuration options for "wget" or "curl" commands. For example:</p>
+                  <p>After redirecting the domain name you can test the website in a regular browser window (don’t forget to clear the browser’s DNS cache) or using CLI command like "wget" or "curl"; Using proxy configuration options for "wget" or "curl" commands.</p>
+                  <p> For example:</p>
                   <pre class="console"> curl -x {{$ctrl.stagingServers[0].server_ip}}:80 -v http://www.test-domain.com/</pre>
                 </li>
               </ol>
