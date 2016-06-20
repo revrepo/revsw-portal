@@ -37,8 +37,12 @@ describe('Functional', function () {
       config.get('portal.users.revAdmin')
     ];
 
-    users.forEach(function (user) {
-      describe('With user: ' + user.role, function () {
+    //users.forEach(function (user) { //TODO: Currently this script is doing the same things 3 times
+                                      // in a row with the same user 'portal.users.admin'
+                                      // so disabled users.forEach(user) temporary because
+                                      // it doesn't make any sense
+
+      describe('With user: ' + adminUser.role, function () {
         beforeAll(function () {
           Portal.signIn(adminUser);
           Portal.goToBilling();
@@ -143,5 +147,5 @@ describe('Functional', function () {
         });
       });
     });
-  });
+  //});
 });
