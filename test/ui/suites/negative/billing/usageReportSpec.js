@@ -30,8 +30,7 @@ describe('Negative: ', function () {
 
     beforeAll(function () {
       Portal.signIn(adminUser);
-      Portal.goToBilling();
-      Portal.header.goTo(Constants.sideBar.billing.USAGE_REPORT);
+      Portal.goToUsageReport();
     });
 
     afterAll(function () {
