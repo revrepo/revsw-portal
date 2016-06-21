@@ -1,4 +1,4 @@
-<h3>Top Objects With Unsuccessful Completion Status</h3>
+<h3>Objects Wwith Slowest FBT</h3>
 <div filter-top-objects
      ng-disabled="!ngDomain"
      fl-os="flOs"
@@ -20,7 +20,10 @@
       <thead>
       <tr>
         <th>Path</th>
-        <th style="width: 10%;">Requests</th>
+        <th style="width: 15%;text-align:right">FBT(ms) Average</th>
+        <th style="width:  7%;text-align:right">Min</th>
+        <th style="width:  7%;text-align:right">Max</th>
+        <th style="width:  6%;text-align:right">Count</th>
       </tr>
       </thead>
       <tbody>
@@ -28,7 +31,11 @@
         <td>
           <a target="_blank" ng-href="http://{{ngDomain.domain_name}}{{item.path}}">{{item.path}}</a>
         </td>
+        <td class="text-right"><strong>{{item.fbt_avg}}</strong></td>
+        <td class="text-right">{{item.fbt_min}}</td>
+        <td class="text-right">{{item.fbt_max}}</td>
         <td class="text-right">{{item.count}}</td>
+
       </tr>
       </tbody>
     </table>

@@ -40,6 +40,13 @@
 
     $scope.NO_SPECIAL_CHARS = $config.PATTERNS.NO_SPECIAL_CHARS;
     $scope.COMMENT_NO_SPECIAL_CHARS = $config.PATTERNS.COMMENT_NO_SPECIAL_CHARS;
+    $scope.sslCert_update_help_info = 'Use the button to send the modified configuration to the staging environment ' +
+      'which can be used to test the new configuration before sending it to the global network (and making it ' +
+      'available for all your end users). Please see “Web -> Staging Env.” section for details about the staging ' +
+      'environment and how to use it.';
+    $scope.sslCert_publish_help_info = 'Once you have tested the updated configuration in the staging environment ' +
+      '(using “Update” button) are you welcome to publish the configuration in the global network (and make it ' +
+      'available to all your end users)';
 
     /**
      * @name setAccountName
@@ -156,6 +163,7 @@
           // NOTE: auto set Dirty attribute for fields (validation exists data)
           var _fields = ['cert_name', 'public_ssl_cert'];
           angular.forEach(_fields, setDirty);
+
           function setDirty(field) {
             if (!!$scope.editForm[field]) {
               $scope.editForm[field].$setDirty();

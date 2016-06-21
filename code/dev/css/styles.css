@@ -1365,3 +1365,15 @@ del.diff span {
   max-width: 300px;
   overflow: auto;
 }
+.staging-servers {
+  text-align: justify;
+}
+.staging-servers-list {
+  margin-left: 2em;
+  font-style: italic;
+}
+.staging-servers pre.console {
+  color: white;
+  background-color: black;
+  opacity: 0.85;
+}
