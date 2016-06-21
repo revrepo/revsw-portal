@@ -24,14 +24,24 @@ var Constants = require('./../../../page_objects/constants');
 describe('Functional', function () {
   describe('Usage Report', function () {
 
-    // TODO: For "user" role please check that the menu item is not available
-
     // Defining set of users for which all below tests will be run
     var users = [
       config.get('portal.users.admin'),
       config.get('portal.users.reseller'),
       config.get('portal.users.revAdmin')
     ];
+
+    var normalUser = config.get('portal.users.user');
+
+    describe('With user: ' + normalUser.role, function () {
+      it('check that the Billing menu item is not available for the normal User', function () {
+        Portal.signIn(normalUser);
+
+        expect(Portal.sideBar
+          .isHeaderElemExists(Constants.sideBar.billing.BILLING))
+            .toBeFalsy();
+      });
+    });
 
     users.forEach(function (user) {
       describe('With user: ' + user.role, function () {

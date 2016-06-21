@@ -131,6 +131,22 @@ var SideBar = {
   },
 
   /**
+   * ### SideBar.isHeaderElemExists()
+   *
+   * Check Existence of the Header menu element
+   *
+   * @param {String} menuHeader, the label of header from the menu option
+   *
+   * @returns {Promise}
+   */
+  isHeaderElemExists: function (menuHeader) {
+    return this
+      .getMenu()
+        .element(by.linkText(menuHeader))
+          .isPresent();
+  },
+
+  /**
    * ### SideBar.getArrowElement()
    *
    * Returns the reference to the expand arrow (Selenium WebDriver
