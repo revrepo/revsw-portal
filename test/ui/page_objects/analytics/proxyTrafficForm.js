@@ -16,6 +16,8 @@
  * from Rev Software, Inc.
  */
 
+var DateRangePicker = require('./../common/dateRangePicker');
+
 // # Proxy Traffic Page Object
 
 // This `Proxy Traffic` Page Object abstracts all operations or actions that a
@@ -49,16 +51,16 @@ var ProxyTrafficForm = {
     return element.all(by.css(this.locators.chartsTable.css));
   },
 
- /**
-  * ### ProxyTraffic.getProxyTrafficReport()
-  *
-  * Selects a `Report` in the Proxy Traffic page.
-  *
-  * @param {String} indexChart of proxy Traffic report panel.
-  * @param {String} indexForm of Proxy Traffic report panel.
-  *
-  * @returns {Promise}
-  */
+  /**
+   * ### ProxyTraffic.getProxyTrafficReport()
+   *
+   * Selects a `Report` in the Proxy Traffic page.
+   *
+   * @param {String} indexChart of proxy Traffic report panel.
+   * @param {String} indexForm of Proxy Traffic report panel.
+   *
+   * @returns {Promise}
+   */
   getProxyTrafficReport: function (indexChart, indexForm) {
     return this
       .getChartsTableObj()
@@ -83,7 +85,11 @@ var ProxyTrafficForm = {
     return this
       .getProxyTrafficReport(indexChart, indexForm) // (0, 0)
       .element(by.model(this.locators.models.delay))
-      .sendKeys(value); // 'Last 1 day'
+      .sendKeys('')
+      .then(function () {
+        var drPicker = new DateRangePicker(indexChart);
+        return drPicker.setCustomRange(value.start, value.end);
+      });
   },
 
   /**

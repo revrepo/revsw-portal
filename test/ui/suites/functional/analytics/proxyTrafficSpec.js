@@ -47,7 +47,8 @@ describe('Functional', function () {
         Portal.proxyTrafficPage.createBandwidthUsageReport(dataReport);
 
         var getData = Portal.proxyTrafficPage.getBandwidthUsageValues();
-        expect(getData.delay).toContain(dataReport.delay);
+        expect(getData.delay).toContain(dataReport.delay.start);
+        expect(getData.delay).toContain(dataReport.delay.end);
     });
 
     it('should create a default proxy traffic report for Total Requests',
@@ -56,7 +57,8 @@ describe('Functional', function () {
         Portal.proxyTrafficPage.createTotalRequestsReport(dataReport);
 
         var getData = Portal.proxyTrafficPage.getTotalRequestsValues();
-        expect(getData.delay).toContain(dataReport.delay);
+        expect(getData.delay).toContain(dataReport.delay.start);
+        expect(getData.delay).toContain(dataReport.delay.end);
     });
 
     it('should create a default proxy traffic report for HTTP HTTPS Hits',
@@ -65,7 +67,8 @@ describe('Functional', function () {
         Portal.proxyTrafficPage.createHttpHttpsHitsReport(dataReport);
 
         var getData = Portal.proxyTrafficPage.getHttpHttpsHitsValues();
-        expect(getData.delay).toContain(dataReport.delay);
+        expect(getData.delay).toContain(dataReport.delay.start);
+        expect(getData.delay).toContain(dataReport.delay.end);
     });
 
     it('should create a default proxy traffic report for HTTP Status Code',
@@ -74,7 +77,8 @@ describe('Functional', function () {
         Portal.proxyTrafficPage.createHttpStatusCodeHitsReport(dataReport);
 
         var getData = Portal.proxyTrafficPage.getHttpStatusCodeHitsValues();
-        expect(getData.delay).toContain(dataReport.delay);
+        expect(getData.delay).toContain(dataReport.delay.start);
+        expect(getData.delay).toContain(dataReport.delay.end);
     });
 
     it('should create a default proxy traffic report for Request Status',
@@ -83,7 +87,8 @@ describe('Functional', function () {
         Portal.proxyTrafficPage.createRequestStatusReport(dataReport);
 
         var getData = Portal.proxyTrafficPage.getRequestStatusValues();
-        expect(getData.delay).toContain(dataReport.delay);
+        expect(getData.delay).toContain(dataReport.delay.start);
+        expect(getData.delay).toContain(dataReport.delay.end);
     });
 
     it('should create a default proxy traffic report for Edge Cache Hits',
@@ -92,73 +97,98 @@ describe('Functional', function () {
         Portal.proxyTrafficPage.createEdgeCacheEfficiencyHitsReport(dataReport);
 
         var data = Portal.proxyTrafficPage.getEdgeCacheEfficiencyHitsValues();
-        expect(data.delay).toContain(dataReport.delay);
+        expect(data.delay).toContain(dataReport.delay.start);
+        expect(data.delay).toContain(dataReport.delay.end);
     });
 
     it('should create a custom proxy traffic report for Bandwidth Usage',
       function () {
         var dataReport = DataProvider.generateAnalyticsInfo();
-        dataReport.delay = 'Last 7 Day';
+        dataReport.delay = {
+          start: '2016-06-06',
+          end: '2016-07-07'
+        };
         dataReport.country = 'Mexico';
         Portal.proxyTrafficPage.createBandwidthUsageReport(dataReport);
 
         var getData = Portal.proxyTrafficPage.getBandwidthUsageValues();
-        expect(getData.delay).toContain(dataReport.delay);
+        expect(getData.delay).toContain(dataReport.delay.start);
+        expect(getData.delay).toContain(dataReport.delay.end);
     });
 
     it('should create a custom proxy traffic report for Total Requests',
       function () {
         var dataReport = DataProvider.generateAnalyticsInfo();
-        dataReport.delay = 'Last 7 Day';
+        dataReport.delay = {
+          start: '2016-06-06',
+          end: '2016-07-07'
+        };
         dataReport.country = 'France';
         Portal.proxyTrafficPage.createTotalRequestsReport(dataReport);
 
         var getData = Portal.proxyTrafficPage.getTotalRequestsValues();
-        expect(getData.delay).toContain(dataReport.delay);
+        expect(getData.delay).toContain(dataReport.delay.start);
+        expect(getData.delay).toContain(dataReport.delay.end);
     });
 
     it('should create a custom proxy traffic report for HTTP HTTPS Hits',
       function () {
         var dataReport = DataProvider.generateAnalyticsInfo();
-        dataReport.delay = 'Last 7 Day';
+        dataReport.delay = {
+          start: '2016-06-06',
+          end: '2016-07-07'
+        };
         dataReport.country = 'India';
         Portal.proxyTrafficPage.createHttpHttpsHitsReport(dataReport);
 
         var getData = Portal.proxyTrafficPage.getHttpHttpsHitsValues();
-        expect(getData.delay).toContain(dataReport.delay);
+        expect(getData.delay).toContain(dataReport.delay.start);
+        expect(getData.delay).toContain(dataReport.delay.end);
     });
 
     it('should create a custom proxy traffic report for HTTP Status Code',
       function () {
         var dataReport = DataProvider.generateAnalyticsInfo();
-        dataReport.delay = 'Last 7 Day';
+        dataReport.delay = {
+          start: '2016-06-06',
+          end: '2016-07-07'
+        };
         dataReport.country = 'Bolivia';
         Portal.proxyTrafficPage.createHttpStatusCodeHitsReport(dataReport);
 
         var getData = Portal.proxyTrafficPage.getHttpStatusCodeHitsValues();
-        expect(getData.delay).toContain(dataReport.delay);
+        expect(getData.delay).toContain(dataReport.delay.start);
+        expect(getData.delay).toContain(dataReport.delay.end);
     });
 
     it('should create a custom proxy traffic report for Request Status',
       function () {
         var dataReport = DataProvider.generateAnalyticsInfo();
-        dataReport.delay = 'Last 7 Day';
+        dataReport.delay = {
+          start: '2016-06-06',
+          end: '2016-07-07'
+        };
         dataReport.country = 'Angola';
         Portal.proxyTrafficPage.createRequestStatusReport(dataReport);
 
         var getData = Portal.proxyTrafficPage.getRequestStatusValues();
-        expect(getData.delay).toContain(dataReport.delay);
+        expect(getData.delay).toContain(dataReport.delay.start);
+        expect(getData.delay).toContain(dataReport.delay.end);
     });
 
     it('should create a custom proxy traffic report for Edge Cache Hits',
       function () {
         var dataReport = DataProvider.generateAnalyticsInfo();
-        dataReport.delay = 'Last 7 Day';
+        dataReport.delay = {
+          start: '2016-06-06',
+          end: '2016-07-07'
+        };
         dataReport.country = 'Germany';
         Portal.proxyTrafficPage.createEdgeCacheEfficiencyHitsReport(dataReport);
 
         var data = Portal.proxyTrafficPage.getEdgeCacheEfficiencyHitsValues();
-        expect(data.delay).toContain(dataReport.delay);
+        expect(data.delay).toContain(dataReport.delay.start);
+        expect(data.delay).toContain(dataReport.delay.end);
     });
   });
 });
