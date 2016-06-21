@@ -25,7 +25,7 @@ describe('Negative: ', function () {
   describe('Usage Report', function () {
 
     var adminUser = config.get('portal.users.admin');
-    var data = DataProvider.generateUsageReportData();
+    var data = DataProvider.generateUsageReportData(adminUser.role);
     var tempCompanyName = data.companyName;
 
     beforeAll(function () {

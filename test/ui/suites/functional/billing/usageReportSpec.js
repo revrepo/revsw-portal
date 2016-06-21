@@ -24,11 +24,7 @@ var Constants = require('./../../../page_objects/constants');
 describe('Functional', function () {
   describe('Usage Report', function () {
 
-    // TODO: please add the same tests for reseller and revadmin roles.
-    // For "user" role please check that the menu item is not available
-    var adminUser = config.get('portal.users.admin');
-    var reportData = DataProvider.generateUsageReportData();
-    var USAGE_REPORT = Constants.sideBar.billing.USAGE_REPORT;
+    // TODO: For "user" role please check that the menu item is not available
 
     // Defining set of users for which all below tests will be run
     var users = [
@@ -37,16 +33,11 @@ describe('Functional', function () {
       config.get('portal.users.revAdmin')
     ];
 
-    //users.forEach(function (user) { //TODO: Currently this script is doing the same things 3 times
-                                      // in a row with the same user 'portal.users.admin'
-                                      // so disabled users.forEach(user) temporary because
-                                      // it doesn't make any sense
-
-      describe('With user: ' + adminUser.role, function () {
+    users.forEach(function (user) {
+      describe('With user: ' + user.role, function () {
         beforeAll(function () {
-          Portal.signIn(adminUser);
-          Portal.goToBilling();
-          Portal.header.goTo(USAGE_REPORT);
+          Portal.signIn(user);
+          Portal.goToUsageReport();
         });
 
         afterAll(function () {
@@ -65,6 +56,7 @@ describe('Functional', function () {
         });
 
         it('should check Domains form with correct report data', function() {
+          var reportData = DataProvider.generateUsageReportData(user.role);
           var domains = {
             title: 'Domains',
             active: 'Active',
@@ -82,6 +74,7 @@ describe('Functional', function () {
         });
 
         it('should check Mobile Apps form with correct report data', function() {
+          var reportData = DataProvider.generateUsageReportData(user.role);
           var mobileApps = {
             active: 'Active',
             deleted: 'Deleted',
@@ -95,6 +88,7 @@ describe('Functional', function () {
         });
 
         it('should check API Keys form with correct report data', function() {
+          var reportData = DataProvider.generateUsageReportData(user.role);
           var apiKeys = {
             active: 'Active',
             inactive: 'Inactive',
@@ -108,6 +102,7 @@ describe('Functional', function () {
         });
 
         it('should check Total Traffic form with correct report data', function() {
+          var reportData = DataProvider.generateUsageReportData(user.role);
           var totalTraffic = {
             hits: 'Hits',
             sent: 'Sent',
@@ -125,6 +120,7 @@ describe('Functional', function () {
         });
 
         it('should check Edge Cache Usage form with correct report', function() {
+          var reportData = DataProvider.generateUsageReportData(user.role);
           var edgeCacheUsage = {
             hit: 'HIT',
             miss: 'MISS'
@@ -136,6 +132,7 @@ describe('Functional', function () {
         });
 
         it('should check HTTP HTTPS Requests form with correct report', function() {
+          var reportData = DataProvider.generateUsageReportData(user.role);
           var httpHttpsRequests = {
             http: 'HTTP',
             https: 'HTTPS'
@@ -147,5 +144,5 @@ describe('Functional', function () {
         });
       });
     });
-  //});
+  });
 });

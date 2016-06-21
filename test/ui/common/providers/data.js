@@ -374,9 +374,15 @@ var DataProvider = {
    *         monthDD: string
    *     }
    */
-  generateUsageReportData: function () {
+  generateUsageReportData: function (role) {
+/*    var defaultCompanyName = 'API QA Account';
+
+    if (role == 'Reseller'){
+      defaultCompanyName = 'API QA Reseller Company';
+    }*/
+
     return {
-      companyName: 'API QA Account',
+      companyName: (role === 'Reseller') ? 'API QA Reseller Company' : 'API QA Account',
       monthDD: '2016-01'
     };
   },
