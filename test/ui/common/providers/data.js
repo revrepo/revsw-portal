@@ -223,7 +223,10 @@ var DataProvider = {
       };
     }
     return {
-      delay: 'Last 1 Day',
+      delay: {
+        start: '2016-06-06',
+        end: '2016-07-07'
+      },
       country: 'All Countries',
       os: 'All OS',
       device: 'All Devices',
@@ -367,6 +370,8 @@ var DataProvider = {
    * Generates usage report data object based on the unique para that it
    * requires.
    *
+   * @param {Object} user for whom usage report is generated
+   *
    * @returns {Object}, generate usage report data with the following schema:
    *
    *     {
@@ -374,9 +379,9 @@ var DataProvider = {
    *         monthDD: string
    *     }
    */
-  generateUsageReportData: function () {
+  generateUsageReportData: function (user) {
     return {
-      companyName: 'API QA Account',
+      companyName: (user.role === 'Reseller') ? 'API QA Reseller Company' : 'API QA Account',
       monthDD: '2016-01'
     };
   },
