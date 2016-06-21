@@ -135,6 +135,12 @@
         params: {}
       },
 
+      topLists: {
+        method: 'GET',
+        url: $config.API_URL + '/stats/top_lists/:domainId',
+        params: {}
+      },
+
       lm_rtt_country: {
         method: 'GET',
         url: $config.API_URL + '/stats/lastmile_rtt/:domainId',
