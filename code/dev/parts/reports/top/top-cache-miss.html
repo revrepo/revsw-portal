@@ -7,14 +7,14 @@
      fl-browser="flBrowser"
      ng-filters="filters"
      on-filter="loadDetails()"></div>
-<div class="alert alert-info" ng-if="!_loading && !data.labels.length">
+<div class="alert alert-info" ng-if="!_loading && !items.length">
   No data to display
 </div>
 <div class="alert alert-info" ng-if="_loading">
   <i class="glyphicon glyphicon-refresh spin"></i>&nbsp;
   Loading
 </div>
-<div class="row margin-top" ng-if="ngDomain && data.labels.length">
+<div class="row margin-top" ng-if="ngDomain && items.length">
   <div class="col-md-12">
     <table class="table">
       <thead>
