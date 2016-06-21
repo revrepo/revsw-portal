@@ -21,29 +21,17 @@
       controller: function ($scope, Stats) {
         $scope._loading = false;
         $scope.filters = {
-          from_timestamp: moment().subtract(1, 'hours').valueOf(),
+          from_timestamp: moment().subtract(24, 'hours').valueOf(),
           to_timestamp: Date.now(),
           request_status: 'ERROR'
         };
 
         $scope.items = [];
-
-        $scope.data = {
-          labels: [],
-          data: [[]]
-        };
-
         $scope.loadDetails = function () {
           if (!$scope.ngDomain || !$scope.ngDomain.id) {
             return;
           }
           $scope._loading = true;
-
-          $scope.data = {
-            labels: [],
-            data: [[]]
-          };
-
           var params = angular.merge({
             domainId: $scope.ngDomain.id
           }, $scope.filters);
@@ -53,10 +41,6 @@
             .$promise
             .then(function (res) {
               $scope.items = res.data;
-              res.data.map(function (val) {
-                $scope.data.labels.push(val.path);
-                $scope.data.data[0].push(val.count);
-              });
             })
             .finally(function () {
               $scope._loading = false;
