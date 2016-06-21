@@ -223,7 +223,10 @@ var DataProvider = {
       };
     }
     return {
-      delay: 'Last 1 Day',
+      delay: {
+        start: '2016-06-06',
+        end: '2016-07-07'
+      },
       country: 'All Countries',
       os: 'All OS',
       device: 'All Devices',
