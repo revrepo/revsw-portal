@@ -10,7 +10,7 @@
     "start_process": false,
     "server_path": "lib/selenium-server-standalone-2.53.0.jar",
     "log_path": "",
-    "host": "127.0.0.1",
+    "host": "testsjc20-build01.revsw.net",
     "port": 4444,
     "cli_args": {
       "webdriver.chrome.driver": "",
@@ -20,9 +20,9 @@
 
   "test_settings": {
     "default": {
-      "launch_url": "http://localhost",
+      "launch_url": "http://testsjc20-build01.revsw.net",
       "selenium_port": 4444,
-      "selenium_host": "localhost",
+      "selenium_host": "testsjc20-build01.revsw.net",
       "silent": true,
       "screenshots": {
         "enabled": false,
@@ -41,9 +41,9 @@
     },
     "chargify_clear_test": {
       "test_runner": "mocha",
-      "launch_url": "http://localhost",
+      "launch_url": "http://testsjc20-build01.revsw.net",
       "selenium_port": 4444,
-      "selenium_host": "localhost",
+      "selenium_host": "testsjc20-build01.revsw.net",
       "silent": true,
       "screenshots": {
         "enabled": false,
@@ -51,7 +51,7 @@
       },
       "desiredCapabilities": {
         "page_objects_path": ["./page_objects", "./page_objects/chargify"],
-        "browserName": "chrome",
+        "browserName": "firefox",
         "javascriptEnabled": true,
         "acceptSslCerts": true,
         "silent": true
