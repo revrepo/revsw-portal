@@ -135,6 +135,12 @@
         params: {}
       },
 
+      slowestDownloadObjects: {
+        method: 'GET',
+        url: $config.API_URL + '/stats/slowest_download_objects/:domainId',
+        params: {}
+      },
+
       topLists: {
         method: 'GET',
         url: $config.API_URL + '/stats/top_lists/:domainId',
