@@ -56,7 +56,7 @@ describe('Functional', function () {
         });
 
         it('should check Domains form with correct report data', function() {
-          var reportData = DataProvider.generateUsageReportData(user.role);
+          var reportData = DataProvider.generateUsageReportData(user);
           var domains = {
             title: 'Domains',
             active: 'Active',
@@ -74,7 +74,7 @@ describe('Functional', function () {
         });
 
         it('should check Mobile Apps form with correct report data', function() {
-          var reportData = DataProvider.generateUsageReportData(user.role);
+          var reportData = DataProvider.generateUsageReportData(user);
           var mobileApps = {
             active: 'Active',
             deleted: 'Deleted',
@@ -88,7 +88,7 @@ describe('Functional', function () {
         });
 
         it('should check API Keys form with correct report data', function() {
-          var reportData = DataProvider.generateUsageReportData(user.role);
+          var reportData = DataProvider.generateUsageReportData(user);
           var apiKeys = {
             active: 'Active',
             inactive: 'Inactive',
@@ -102,7 +102,7 @@ describe('Functional', function () {
         });
 
         it('should check Total Traffic form with correct report data', function() {
-          var reportData = DataProvider.generateUsageReportData(user.role);
+          var reportData = DataProvider.generateUsageReportData(user);
           var totalTraffic = {
             hits: 'Hits',
             sent: 'Sent',
@@ -120,7 +120,7 @@ describe('Functional', function () {
         });
 
         it('should check Edge Cache Usage form with correct report', function() {
-          var reportData = DataProvider.generateUsageReportData(user.role);
+          var reportData = DataProvider.generateUsageReportData(user);
           var edgeCacheUsage = {
             hit: 'HIT',
             miss: 'MISS'
@@ -132,7 +132,7 @@ describe('Functional', function () {
         });
 
         it('should check HTTP HTTPS Requests form with correct report', function() {
-          var reportData = DataProvider.generateUsageReportData(user.role);
+          var reportData = DataProvider.generateUsageReportData(user);
           var httpHttpsRequests = {
             http: 'HTTP',
             https: 'HTTPS'
