@@ -127,7 +127,7 @@ var DateRangePicker = function (index) {
         me.setEndDate(endDate);
         return me.clickApply();
       });
-  }
+  };
 };
 
 module.exports = DateRangePicker;
