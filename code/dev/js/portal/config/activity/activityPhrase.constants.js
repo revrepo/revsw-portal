@@ -21,7 +21,8 @@
         'enable2fa': 'Enabled 2FA',
         'disable2fa': 'Disabled 2FA',
         'resetpassword': 'Password Reset',
-        'signup': 'Signed Up'
+        'signup': 'Signed Up',
+        'verify': 'Verified Domain Control'
       },
 
       /**
@@ -39,6 +40,7 @@
         'app': 'App',
         'sslcert': 'SSL Certificate',
         'logshippingjob': 'Log Shipping Job',
+        'sslname': 'SSL Name',
         'object': 'Object'
       }
     });
