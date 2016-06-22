@@ -13,13 +13,16 @@
     $scope.domain = null;
     $scope.domains = [];
 
+    $scope.countries = Countries.query();
     $scope.os = [];
     $scope.device = [];
     $scope.browser = [];
-
-    var countriesList = Countries.query();
-    $scope.countries = countriesList;
     $scope.country = {};
+
+    $scope.os24 = [];
+    $scope.device24 = [];
+    $scope.browser24 = [];
+    $scope.country24 = {};
 
     //  load user domains
     User.getUserDomains(true)
@@ -42,7 +45,7 @@
       var now = Date.now();
       Stats.topLists({
         domainId: $scope.domain.id,
-        from_timestamp: ( now - 7 * 86400000/*day in ms*/ ),
+        from_timestamp: ( now - 30 * 86400000/*day in ms*/ ),
         to_timestamp: now
       }).$promise.then(function(data) {
         // console.log( 'lists', data );
@@ -54,6 +57,22 @@
           c[item.key] = item.value;
         });
         $scope.country = c;
+      });
+
+      Stats.topLists({
+        domainId: $scope.domain.id,
+        from_timestamp: ( now - 86400000/*day in ms*/ ),
+        to_timestamp: now
+      }).$promise.then(function(data) {
+        // console.log( 'lists', data );
+        $scope.os24 = data.data.os;
+        $scope.browser24 = data.data.browser;
+        $scope.device24 = data.data.device;
+        var c = {};
+        data.data.country.forEach( function( item ) {
+          c[item.key] = item.value;
+        });
+        $scope.country24 = c;
       });
 
     };

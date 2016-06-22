@@ -25,13 +25,12 @@ describe('Negative: ', function () {
   describe('Usage Report', function () {
 
     var adminUser = config.get('portal.users.admin');
-    var data = DataProvider.generateUsageReportData();
+    var data = DataProvider.generateUsageReportData(adminUser);
     var tempCompanyName = data.companyName;
 
     beforeAll(function () {
       Portal.signIn(adminUser);
-      Portal.goToBilling();
-      Portal.header.goTo(Constants.sideBar.billing.USAGE_REPORT);
+      Portal.goToUsageReport();
     });
 
     afterAll(function () {

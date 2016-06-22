@@ -32,7 +32,7 @@ if [ ! -d $PACKAGEDIR ]; then
         fi
 fi
 
-echo -n $VERSION > $PACKAGEDIR/version.txt
+echo -ne $VERSION > $PACKAGEDIR/version.txt
 
 PACKAGENAME=revsw-portal
 

@@ -400,6 +400,12 @@ var Portal = {
     return Portal.sideBar.goTo(Constants.sideBar.billing.BILLING_STATEMENTS);
   },
 
+  goToUsageReport: function () {
+    return this
+      .goTo(Constants.sideBar.billing.BILLING,
+        Constants.sideBar.billing.USAGE_REPORT);
+  },
+  
   /**
    * ### Portal.goToSecuritySettings()
    *
