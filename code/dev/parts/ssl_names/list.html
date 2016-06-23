@@ -12,7 +12,6 @@
     <button class="btn btn-danger" type="button" ng-click="ok()">OK</button>
   </div>
 </script>
-
 <script type="text/ng-template" id="confirmVerifyDomainModal.html">
   <div class="modal-header">
     <h3 class="modal-title">{{model.title}}</h3>
@@ -25,12 +24,6 @@
     <button class="btn btn-success" type="button" ng-disabled="!model.verify.url || _loading" ng-click="ok(model)">{{model.okBtnTitle||'Ok'}}</button>
   </div>
 </script>
-
-
-
-
-
-
 <div class="container-fluid" ui-view="page">
   <div class="row">
     <div class="col-sm-12">
@@ -46,15 +39,15 @@
           <div class="row">
             <div class="col-md-12">
               <div class="pull-left form-inline">
-               <div class="form-group">
-                <a ui-sref=".new" class="btn btn-success" ng-disabled="_loading">
-                  <i class="glyphicon glyphicon-plus"></i>&nbsp; Add New SSL Name
-                </a>
+                <div class="form-group">
+                  <a ui-sref=".new" class="btn btn-success" ng-disabled="_loading">
+                    <i class="glyphicon glyphicon-plus"></i>&nbsp; Add New SSL Name
+                  </a>
                 </div>
                 <div class="form-group">
-                 <button class="btn btn-success" ng-disabled="_loading" ng-click="onClickRefresh()">
-                  <i class="glyphicon glyphicon-refresh" ng-class="_loading ? 'spin' : ''"></i>&nbsp; Refresh
-                </dutton>
+                  <button class="btn btn-success" ng-disabled="_loading" ng-click="onClickRefresh()">
+                    <i class="glyphicon glyphicon-refresh" ng-class="_loading ? 'spin' : ''"></i>&nbsp; Refresh
+                    </dutton>
                 </div>
               </div>
               <div class="pull-right">
@@ -77,7 +70,7 @@
             <i class="glyphicon glyphicon-refresh spin" ng-if="item.loading"></i>&nbsp; Loading...
           </div>
           <crud-pagination></crud-pagination>
-          <table class="table">
+          <table class="table ssl-names--table ">
             <thead>
               <tr>
                 <th><a href="" ng-click="order('ssl_name')">Domain Name</a>
@@ -117,7 +110,7 @@
                 </td>
                 <td class="actions">
                   <i class="glyphicon glyphicon-refresh spin" ng-if="item.loading"></i>
-                  <a href="" ng-class="item.verified?'disabled':''"ng-disabled="item.verified" ng-if="!item.loading" uib-tooltip="Verify Domain Control" ng-click="onVerifyDomain($event,item)">
+                  <a href="" ng-class="item.verified?'disabled':''" ng-disabled="item.verified" ng-if="!item.loading" uib-tooltip="{{item.verified?'Already Verified':'Verify Domain Control'}}" ng-click="onVerifyDomain($event,item)">
                     <i class="glyphicon glyphicon-check"></i>
                   </a>
                   <a href="" ng-if="!item.loading" ng-click="deleteSSLName(item)" uib-tooltip="Delete SSL Name">

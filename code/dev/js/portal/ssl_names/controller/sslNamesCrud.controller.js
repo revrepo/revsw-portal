@@ -78,7 +78,7 @@
               }, 500);
             }
           });
-      }else{
+      } else {
         $scope.model = {};
       }
     });
@@ -103,6 +103,14 @@
      * @return {[type]}       [description]
      */
     $scope.onVerifyDomain = function(e, model) {
+      if (e) {
+        e.preventDefault();
+      }
+
+      if (!!model.verified && model.verified === true) {
+        return;
+      }
+
       /**
        * @name  confirmVerifySSLName
        * @description
@@ -164,66 +172,59 @@
         });
         return modalInstance.result;
       }
-
-      if (e) {
-        e.preventDefault();
-      }
-
       // 1. GET SSL Name detaild by id
       SSLNames.get({
           id: model.id
         }).$promise
         .then(function(model) {
-          //
-          if (!model.verified) {
-            // Prepare parameters and open modal dialog
-            var params = {
-              title: 'Confirm',
-              okBtnTitle: 'Ok',
-              model: model
-            };
-            switch (model.verification_method) {
-              case 'url':
-                params.title = 'URL Verification';
-                params.okBtnTitle = 'Verify HTML Tag';
-                confirmVerifySSLName(params);
-                break;
-              case 'dns':
-                params.title = 'DNS Verification';
-                params.okBtnTitle = 'Verify TXT Record';
-                confirmVerifySSLName(params);
-                break;
-              case 'email':
-                $scope._loading = true;
-                SSLNames.verify({
-                    id: model.id
-                  }).$promise
-                  .then(function successGetDetails(data) {
-                      if (data.message && data.message === 'Waiting for approval') {
-                        showMessageFailedValidationSSLName(data);
-                      } else {
-                        showMessageSuccessValidationSSLNameByEmail(data);
-                      }
-                    },
-                    function errorGetDetails(data) {
-                      // NOTE: server error display like standart error
-                      if (data.status === 500) {
-                        $scope.alertService.danger(data);
-                      } else {
-                        // NOTE: show error information in modal window
-                        showMessageFailedValidationSSLName(data.data);
-                      }
-                    })
-                  .catch($scope.alertService.danger)
-                  .finally(function() {
-                    $scope._loading = false;
-                  });
-                break;
-              default:
-                //
-                break;
-            }
+          // Prepare parameters and open modal dialog
+          var params = {
+            title: 'Confirm',
+            okBtnTitle: 'Ok',
+            model: model
+          };
+          switch (model.verification_method) {
+            case 'url':
+              params.title = 'URL Verification';
+              params.okBtnTitle = 'Verify HTML Tag';
+              confirmVerifySSLName(params);
+              break;
+            case 'dns':
+              params.title = 'DNS Verification';
+              params.okBtnTitle = 'Verify TXT Record';
+              confirmVerifySSLName(params);
+              break;
+            case 'email':
+              $scope._loading = true;
+              SSLNames.verify({
+                  id: model.id
+                }).$promise
+                .then(function successGetDetails(data) {
+                    if (data.message && data.message === 'Waiting for approval') {
+                      showMessageFailedValidationSSLName(data);
+                    } else {
+                      showMessageSuccessValidationSSLNameByEmail(data);
+                    }
+                  },
+                  function errorGetDetails(data) {
+                    // NOTE: server error display like standart error
+                    if (data.status === 500) {
+                      $scope.alertService.danger(data);
+                    } else {
+                      // NOTE: show error information in modal window
+                      showMessageFailedValidationSSLName(data.data);
+                    }
+                  })
+                .catch($scope.alertService.danger)
+                .finally(function() {
+                  $scope._loading = false;
+                });
+              break;
+            default:
+              //
+              break;
           }
+
         })
         .catch($scope.alertService.danger)
         .finally(function() {
@@ -296,7 +297,7 @@
               modelApprove.approvers = data;
               return $scope.confirm('parts/ssl_names/modal/approvers-emails.tpl.html', modelApprove)
                 .then(function() {
-                  return  {
+                  return {
                     'account_id': model.account_id,
                     'ssl_name': model.ssl_name,
                     'verification_method': model.verification_method,
@@ -309,8 +310,8 @@
           })
           .then(function showMessageSuccessCreate() {
             return $scope.confirm('parts/ssl_names/modal/modal-message-succes-create.tpl.html', {
-                verification_email: modelApprove.verification_email
-              });
+              verification_email: modelApprove.verification_email
+            });
           })
           .then(function goBackToList() {
             $state.model = {};
