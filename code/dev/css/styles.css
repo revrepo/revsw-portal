@@ -368,6 +368,18 @@ form .error-messages.ng-active,
   bottom: 0;
   width: 100%;
 }
+.modal-header--error {
+  background-color: #d87551;
+}
+.modal-header--success {
+  background-color: #76923c;
+}
+.modal-title--error {
+  color: #ffffff;
+}
+.modal-title--success {
+  color: #ffffff;
+}
 input[type="text"],
 input[type="email"],
 input[type="password"],
