@@ -1380,9 +1380,8 @@ del.diff span {
 .ssl-names--new-form .fa-question-circle {
   color: #66b2bf;
 }
-.actions .disabled {
+.ssl-names--table .actions .disabled {
   opacity: 0.4;
-  pointer-events: none;
 }
 .approvers-email-list {
   max-height: 30vh;
