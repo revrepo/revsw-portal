@@ -32,7 +32,7 @@
 
     $scope.SSL_NAMES_VERIFICATION_METHODS = $config.SSL_NAMES_VERIFICATION_METHODS;
 
-    $scope.filterKeys = ['ssl_name', 'companyName', 'expires_at', 'domains', 'verified', 'published', 'updated_by', 'updated_at'];
+    $scope.filterKeys = ['ssl_name', 'companyName', 'domains', 'verified', 'published', 'updated_by', 'updated_at'];
 
     $scope.locations = [];
     $scope.companies = [];
@@ -258,7 +258,6 @@
                 .create(_model, isStay)
                 .then(function(data) {
                   $scope.alertService.success(data);
-                  $state.model = {};
                   // Auto start Verify
                   $scope.onVerifyDomain(null, {
                     id: data.object_id
@@ -312,7 +311,11 @@
             });
           })
           .then(function goBackToList() {
-            $state.model = {};
+            // NOTE: Auto order list
+            $scope.filter.predicate = 'updated_at';
+            $scope.filter.reverse = true;
+            $scope.goToPage(1);
+            $scope.elementIndexForAnchorScroll = 'anchor0';
             $state.go('.^');
           })
           .catch(function broke(data) {
