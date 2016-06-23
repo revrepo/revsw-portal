@@ -31,7 +31,6 @@
     $scope.setResource(SSLNames);
 
     $scope.SSL_NAMES_VERIFICATION_METHODS = $config.SSL_NAMES_VERIFICATION_METHODS;
-    $scope.REGUALR_WILDCARD_DOMAIN_FIELD = $config.PATTERNS.REGUALR_WILDCARD_DOMAIN_FIELD;
 
     $scope.filterKeys = ['ssl_name', 'companyName', 'expires_at', 'domains', 'verified', 'published', 'updated_by', 'updated_at'];
 
