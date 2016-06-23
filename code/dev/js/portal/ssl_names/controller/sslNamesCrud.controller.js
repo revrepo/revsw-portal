@@ -38,9 +38,6 @@
     $scope.locations = [];
     $scope.companies = [];
     $scope.model = {};
-    // TODO: delete after test - demo data
-    // $scope.model.ssl_name = 'test20.revapm.com';
-    // $scope.model.account_id = '5714b425fce0aa6415edd853';
 
     /**
      * @name setAccountName
@@ -79,7 +76,9 @@
             }
           });
       } else {
-        $scope.model = {};
+        // NOTE: clear model for create new SSL Name
+        $scope.model.ssl_name = '';
+        $scope.model.verification_method = null;
       }
     });
 
