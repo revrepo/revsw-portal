@@ -1,0 +1,140 @@
+<!-- Note that element contain ui-view child page will be added here -->
+<script type="text/ng-template" id="confirmModal.html">
+  <div class="modal-header">
+    <h3 class="modal-title">Confirm</h3>
+  </div>
+  <div class="modal-body">
+    Are you sure you want to delete SSL name
+    <strong>{{model.ssl_name}}</strong>?
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+    <button class="btn btn-danger" type="button" ng-click="ok()">OK</button>
+  </div>
+</script>
+
+<script type="text/ng-template" id="confirmVerifyDomainModal.html">
+  <div class="modal-header">
+    <h3 class="modal-title">{{model.title}}</h3>
+  </div>
+  <div class="modal-body">
+    <div ng-include="model.infoTemplatePath"></div>
+
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+    <button class="btn btn-success" type="button" ng-click="ok(model)">{{model.okBtnTitle||'Ok'}}</button>
+  </div>
+</script>
+
+
+
+
+
+
+<div class="container-fluid" ui-view="page">
+  <div class="row">
+    <div class="col-sm-12">
+      <h2 class="pull-left page-title">
+        SSL Names List
+      </h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="pull-left form-inline">
+               <div class="form-group">
+                <a ui-sref=".new" class="btn btn-success" ng-disabled="_loading">
+                  <i class="glyphicon glyphicon-plus"></i>&nbsp; Add New SSL Name
+                </a>
+                </div>
+                <div class="form-group">
+                 <button class="btn btn-success" ng-disabled="_loading" ng-click="onClickRefresh()">
+                  <i class="glyphicon glyphicon-refresh" ng-class="_loading ? 'spin' : ''"></i>&nbsp; Refresh
+                </dutton>
+                </div>
+              </div>
+              <div class="pull-right">
+                <form class="form-inline">
+                  <div class="form-group">
+                    <label for="search">Search:&nbsp;</label>
+                    <input type="text" class="form-control" id="search" placeholder="" ng-model="filter.filter" ng-change="checkFilterPage()">&nbsp;&nbsp;
+                    <i class="glyphicon glyphicon-remove" ng-show="filter.filter != ''" ng-click="filter.filter = ''"></i>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="panel-body">
+          <div class="alert alert-info" ng-if="records.length == 0 && !_loading">
+            Currently you don't have any SSL names registered in the system. You can click on "Add New SSL Name" button above to add an SSL certificate.
+          </div>
+          <div class="alert alert-info" ng-if="_loading">
+            <i class="glyphicon glyphicon-refresh spin" ng-if="item.loading"></i>&nbsp; Loading...
+          </div>
+          <crud-pagination></crud-pagination>
+          <table class="table">
+            <thead>
+              <tr>
+                <th><a href="" ng-click="order('ssl_name')">Domain Name</a>
+                  <span class="sortorder" ng-show="filter.predicate === 'ssl_name'" ng-class="{reverse: filter.reverse}"></span></th>
+                <th><a href="" ng-click="order('verification_method')">Verification Method</a>
+                  <span class="sortorder" ng-show="filter.predicate === 'verification_method'" ng-class="{reverse: filter.reverse}"></span></th>
+                <th>
+                  <a href="" ng-click="order('updated_at')">Last Update</a>
+                  <span class="sortorder" ng-show="filter.predicate === 'updated_at'" ng-class="{reverse: filter.reverse}"></span>
+                </th>
+                <th> <a href="" ng-click="order('updated_by')">Updated By</a>
+                  <span class="sortorder" ng-show="filter.predicate === 'updated_by'" ng-class="{reverse: filter.reverse}"></span></th>
+                <th class="status status--verification">
+                  <a href="" ng-click="order('verified')">Verification Status</a>
+                  <span class="sortorder" ng-show="filter.predicate === 'verified'" ng-class="{reverse: filter.reverse}"></span></th>
+                <th class="status status--publishing">
+                  <a href="" ng-click="order('published')">Publishing Status</a>
+                  <span class="sortorder" ng-show="filter.predicate === 'published'" ng-class="{reverse: filter.reverse}"></span></th>
+                <th>Actions</th>
+                <th class="account" ng-if="auth.isReseller() ||  auth.isRevadmin()">
+                  <a href="" ng-click="order('companyName')">Account</a>
+                  <span class="sortorder" ng-show="filter.predicate === 'companyName'" ng-class="{reverse: filter.reverse}"></span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr id="anchor{{::$index}}" ng-click="saveAnchorScrollIndex($index)" ng-repeat="item in filteredRecords | limitTo:filter.limit:filter.skip track by $index">
+                <td> {{item.ssl_name}} </td>
+                <td>{{SSL_NAMES_VERIFICATION_METHODS[item.verification_method]}}</td>
+                <td>{{getRelativeDate(item.updated_at) }}</td>
+                <td>{{item.updated_by}}</td>
+                <td>
+                  <label class="label" ng-class="item.verified? 'label-primary':'label-warning'" ng-bind="item.verified ? 'Verified':'Not Verified'">{{item.verified}}</label>
+                </td>
+                <td>
+                  <label class="label" ng-class="item.published ? 'label-primary':'label-warning'" ng-bind="item.published ? 'Published':'Not Published'">{{item.published}}</label>
+                </td>
+                <td class="actions">
+                  <i class="glyphicon glyphicon-refresh spin" ng-if="item.loading"></i>
+                  <a href="" ng-class="item.verified?'disabled':''"ng-disabled="item.verified" ng-if="!item.loading" uib-tooltip="Verify Domain Control" ng-click="onVerifyDomain($event,item)">
+                    <i class="glyphicon glyphicon-check"></i>
+                  </a>
+                  <a href="" ng-if="!item.loading" ng-click="deleteSSLName(item)" uib-tooltip="Delete SSL Name">
+                    <i class="glyphicon glyphicon-trash"></i>
+                  </a>
+                </td>
+                <td ng-if="auth.isReseller() ||  auth.isRevadmin()">
+                  <div>{{item.companyName}}</div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <hr>
+          <crud-pagination></crud-pagination>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

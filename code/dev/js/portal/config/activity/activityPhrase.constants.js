@@ -40,6 +40,11 @@
         'sslcert': 'SSL Certificate',
         'logshippingjob': 'Log Shipping Job',
         'object': 'Object'
+      },
+      EVENT_TYPES:{
+        'domain': 'Domain Config Modification',
+        'purge': 'Object Purge',
+        'sslcert': 'SSL Config Modification'
       }
     });
 
