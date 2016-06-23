@@ -34,7 +34,7 @@
       <div class="panel-body ssl-names">
         <form class="form-horizontal ssl-names--new-form" name="createForm">
           <div class="form-group" ng-class="{ 'has-error': createForm.sslName.$invalid && createForm.sslName.$dirty }">
-            <label for="cert_name" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Enter here a specific domain name (like “www.example.com”) or wildcard name (like “*.example.com”) to be added to RevAPM’s shared SSL certificate. You should be able to verify the control of the domain name.">Regular or Wildcard Domain Name*</label>
+            <label for="cert_name" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Enter here a specific domain name (like “www.example.com”) or wildcard name (like “*.example.com”) to be added to RevAPM’s shared SSL certificate. You should be able to verify the control of the domain name.">Regular or Wildcard Domain Name *</label>
             <div class="col-sm-9">
               <input type="text" autofocus class="form-control" ng-disabled="_loading" ng-model="model.ssl_name" name="sslName" id="cert_name" placeholder="Domain Name" ngpattern="REGUALR_WILDCARD_DOMAIN_FIELD" ng-maxlength="150" required>
               <div class="error-messages" ng-messages="createForm.sslName.$error" role="alert" ng-messages-multiple>
@@ -43,7 +43,7 @@
             </div>
           </div>
           <div class="form-group" ng-if="auth.isReseller() || auth.isRevadmin()" ng-class="{ 'has-error': createForm.accountId.$invalid && createForm.accountId.$dirty }">
-            <label for="account_id" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Select account name the SSL name should be associated with">Account*</label>
+            <label for="account_id" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Select account name the SSL name should be associated with">Account *</label>
             <div class="col-sm-9">
               <ui-select ng-model="model.account_id" theme="select2" ng-animate-disabled ng-disabled="_loading" on-select="onAccountSelect($model)" style="min-width: 550px;" id="account_id" name="accountId">
                 <ui-select-match placeholder="Select Account">{{$select.selected.companyName}}</ui-select-match>
@@ -58,13 +58,13 @@
           </div>
           <div class="form-group" ng-class="{'has-error': createForm.verificationMethod.$invalid &&
                                       createForm.verificationMethod.$dirty }">
-            <label for="verification_method" class="col-sm-12 col-sm-3 control-label">Domain Control Verification Method*</label>
+            <label for="verification_method" class="col-sm-12 col-sm-3 control-label">Domain Control Verification Method *</label>
             <div class="col-sm-9">
               <div class="col-sm-9">
                 <div class="col-sm-12">
                   <input type="hidden" ng-model="model.verification_method" required="" name="verificationMethod">
                   <label class="radio">
-                    <input type="radio" ng-model="model.verification_method" value="url"> A Meta-tag On Home HTML Page (URL verification) <i class="fa fa-question-circle" popover-trigger="mouseenter" uib-popover="This method is suitable if you have a website provisioned on the domain - we will ask you to add a special verification meta-tag in the “<head>” section of the website’s home page (“/”)"> </i></label>
+                    <input type="radio" ng-model="model.verification_method" value="url"> A Meta-tag On Home HTML Page (URL Verification) <i class="fa fa-question-circle" popover-trigger="mouseenter" uib-popover="This method is suitable if you have a website provisioned on the domain - we will ask you to add a special verification meta-tag in the “<head>” section of the website’s home page (“/”)"> </i></label>
                   <label class="radio">
                     <input type="radio" ng-model="model.verification_method" value="dns"> A TXT DNS record (DNS Verification) <i popover-trigger="mouseenter" uib-popover="This domain control verification method will require you to add a new TXT record to the domain name" class="fa  fa-question-circle"></i>
                   </label>
@@ -82,7 +82,7 @@
                 <i class="glyphicon glyphicon-remove"></i>&nbsp; Cancel
               </a>
               <button class="btn btn-success" id="create_ssr_cert" ng-disabled="createForm.$invalid|| _loading" ng-click="onCreateSSLName(model,false)">
-                <i class="glyphicon" ng-class="_loading?'glyphicon-refresh spin':'glyphicon-ok'"></i>&nbsp; Create SSL Name
+                <i class="glyphicon" ng-class="_loading?'glyphicon-refresh spin':'glyphicon-ok'"></i>&nbsp; Add SSL Name
               </button>
             </div>
           </div>
