@@ -36,7 +36,7 @@
           <div class="form-group" ng-class="{ 'has-error': createForm.sslName.$invalid && createForm.sslName.$dirty }">
             <label for="cert_name" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Enter here a specific domain name (like “www.example.com”) or wildcard name (like “*.example.com”) to be added to RevAPM’s shared SSL certificate. You should be able to verify the control of the domain name.">Regular or Wildcard Domain Name *</label>
             <div class="col-sm-9">
-              <input type="text" autofocus class="form-control" ng-disabled="_loading" ng-model="model.ssl_name" name="sslName" id="cert_name" placeholder="Domain Name" ngpattern="REGUALR_WILDCARD_DOMAIN_FIELD" ng-maxlength="150" required>
+              <input type="text" autofocus class="form-control" ng-disabled="_loading" ng-model="model.ssl_name" name="sslName" id="cert_name" placeholder="Domain Name"  validate-domain-name-regular-or-wildcard ng-maxlength="150" required>
               <div class="error-messages" ng-messages="createForm.sslName.$error" role="alert" ng-messages-multiple>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
               </div>
