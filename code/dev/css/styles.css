@@ -1377,3 +1377,10 @@ del.diff span {
   background-color: black;
   opacity: 0.85;
 }
+.ssl-names--new-form .fa-question-circle {
+  color: #66b2bf;
+}
+.actions .disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
