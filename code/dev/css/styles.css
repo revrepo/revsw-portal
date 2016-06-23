@@ -1377,3 +1377,20 @@ del.diff span {
   background-color: black;
   opacity: 0.85;
 }
+.ssl-names--new-form .fa-question-circle {
+  color: #66b2bf;
+}
+.actions .disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+.approvers-email-list {
+  max-height: 30vh;
+  overflow-y: auto;
+}
+.validation-info-url pre.meta-tag {
+  overflow-x: scroll;
+}
+.validation-info-dns pre.dns-text {
+  overflow-x: scroll;
+}

@@ -1,0 +1,32 @@
+.ssl-names {
+  &--new-form {
+    & .fa-question-circle {
+      color: @app-color-blue;
+    }
+  }
+}
+
+.actions {
+  & .disabled {
+    opacity: 0.4;
+    pointer-events: none;
+  }
+}
+
+.approvers-email-list {
+  max-height: 30vh;
+  overflow-y: auto;
+}
+
+.validation-info {
+  &-url {
+    & pre.meta-tag {
+      overflow-x: scroll;
+    }
+  }
+  &-dns {
+    pre.dns-text {
+      overflow-x: scroll;
+    }
+  }
+}

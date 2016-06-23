@@ -7,6 +7,7 @@
     'revapm.Portal.Users',
     'revapm.Portal.Domains',
     'revapm.Portal.SSL_certs',
+    'revapm.Portal.SSLNames',
     'revapm.Portal.stagingEnvironment',
     'revapm.Portal.Companies',
     'revapm.Portal.Cache',
