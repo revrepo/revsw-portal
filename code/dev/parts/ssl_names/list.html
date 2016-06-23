@@ -19,11 +19,10 @@
   </div>
   <div class="modal-body">
     <div ng-include="model.infoTemplatePath"></div>
-
   </div>
   <div class="modal-footer">
     <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
-    <button class="btn btn-success" type="button" ng-click="ok(model)">{{model.okBtnTitle||'Ok'}}</button>
+    <button class="btn btn-success" type="button" ng-disabled="!model.verify.url || _loading" ng-click="ok(model)">{{model.okBtnTitle||'Ok'}}</button>
   </div>
 </script>
 

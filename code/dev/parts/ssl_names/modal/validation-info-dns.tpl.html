@@ -1,15 +1,12 @@
-<div class="">
-  <p>Please add TXT record with value
-    <br>
-    <strong>{{model.data.verification_object}}</strong>
-    <br> to one of the following DNS names:</p>
-  <div>
-    <div class="form-group">
-        <!-- Show radio buttons for elements in “verification_names” attribute-->
-          <label for="" class="col-sm-12 label-control" ng-repeat="item in model.data.verification_names">
-            <input type="radio" ng-model="model.verify.url" value="{{item}}">{{item}}
-          </label>
-    </div>
+<div class="validation-info-dns">
+  <p>Please add TXT record with value</p>
+  <pre class="dns-text"><strong ng-bind-html="model.data.verification_object">{{model.data.verification_object}}</strong></pre>
+  <p> to one of the following DNS names:</p>
+  <div class="form-group">
+    <!-- Show radio buttons for elements in “verification_names” attribute-->
+    <label for="" class="col-sm-12 label-control" ng-repeat="item in model.data.verification_names">
+      <input type="radio" ng-model="model.verify.url" value="{{item}}">&nbsp; {{item}}
+    </label>
   </div>
 </div>
 <p>Once you are ready with the change please click “Verify TXT Record” button below.</p>

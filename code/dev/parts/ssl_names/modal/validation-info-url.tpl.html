@@ -1,15 +1,12 @@
-<div class="">
-  <p>Please place HTML meta-tag
-    <br>
-    <pre>{{model.data.verification_object}}</pre>
-    <br> in "&lt;head&gt;" section (right before closing “&lt;/head&gt;” statement) on index (home) page on one of the following websites:</p>
-  <div>
-    <div class="form-group">
-      <label for="" class="col-sm-12 label-control" ng-repeat="item in model.data.verification_names">
-        <input type="radio" ng-model="model.verify.url" value="{{item}}">{{item}}
-      </label>
-    </div>
-    <Show radio buttons for elements in “verification_names” attribute>
+<div class="validation-info-url">
+  <p>Please place HTML meta-tag</p>
+  <pre class="meta-tag"><strong>{{model.data.verification_object}}</strong></pre>
+  <p>in "&lt;head&gt;" section (right before closing “&lt;/head&gt;” statement) on index (home) page on one of the following websites:</p>
+  <div class="form-group">
+    <!--Show radio buttons for elements in “verification_names” attribute-->
+    <label for="" class="col-sm-12 label-control" ng-repeat="item in model.data.verification_names">
+      <input type="radio" ng-model="model.verify.url" value="{{item}}">&nbsp;{{item}}
+    </label>
   </div>
 </div>
 <p>One you are ready with the change please click “Verify HTML Tag” button below.</p>

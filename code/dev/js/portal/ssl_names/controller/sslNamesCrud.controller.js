@@ -31,14 +31,21 @@
     $scope.setResource(SSLNames);
 
     $scope.SSL_NAMES_VERIFICATION_METHODS = $config.SSL_NAMES_VERIFICATION_METHODS;
-    $scope.REGUALR_WILDCARD_DOMAIN_FIELD = $config.PATTERNS.WILDCARD_DOMAIN_FIELD; // TODO: Update
-    $scope.COMMENT_NO_SPECIAL_CHARS = $config.PATTERNS.COMMENT_NO_SPECIAL_CHARS;
+    $scope.REGUALR_WILDCARD_DOMAIN_FIELD = $config.PATTERNS.REGUALR_WILDCARD_DOMAIN_FIELD;
 
+    $scope.filterKeys = ['ssl_name', 'companyName', 'expires_at', 'domains', 'verified', 'published', 'updated_by', 'updated_at'];
+
+    $scope.locations = [];
+    $scope.companies = [];
+    $scope.model = {};
+    // TODO: delete after test - demo data
+    // $scope.model.ssl_name = 'test20.revapm.com';
+    // $scope.model.account_id = '5714b425fce0aa6415edd853';
 
     /**
      * @name setAccountName
      * @description
-     *
+     *   Update information about Account Name for Reseller and RevAdmin
      */
     function setAccountName() {
       if ($scope.auth.isReseller() || $scope.auth.isRevadmin()) {
@@ -71,17 +78,10 @@
               }, 500);
             }
           });
+      }else{
+        $scope.model = {};
       }
     });
-
-    $scope.filterKeys = ['cert_name', 'companyName', 'expires_at', 'domains', 'verified', 'published', 'updated_by', 'updated_at'];
-
-    $scope.locations = [];
-    $scope.companies = [];
-    $scope.model = {};
-    // TODO: delete after test - demo data
-    $scope.model.ssl_name = 'test1.revamp.com';
-    $scope.model.account_id = '5714b425fce0aa6415edd853';
 
     $scope.fetchCompanies = function(companyIds) {
       var promises = [];
@@ -97,45 +97,41 @@
     /**
      * @name  onVerifyDomain
      * @description
-     *   email validation
+     *
      * @param  {[type]} e     [description]
      * @param  {[type]} model [description]
      * @return {[type]}       [description]
      */
     $scope.onVerifyDomain = function(e, model) {
-      function confirmVerifySSLName() {
-        // console.log(model);
+      /**
+       * @name  confirmVerifySSLName
+       * @description
+       *   Internal method
+       * @return {[type]} [description]
+       */
+      function confirmVerifySSLName(params) {
         var _model = {
-          title: title,
-          data: model,
-          okBtnTitle: okBtnTitle,
-          infoTemplatePath: 'parts/ssl_names/modal/validation-info-' + model.verification_method + '.tpl.html'
+          title: params.title,
+          data: params.model,
+          okBtnTitle: params.okBtnTitle,
+          infoTemplatePath: 'parts/ssl_names/modal/validation-info-' + params.model.verification_method + '.tpl.html'
         };
 
-        $scope.confirm('confirmVerifyDomainModal.html', _model)
+        return $scope.confirm('confirmVerifyDomainModal.html', _model)
           .then(function onSuccessCloseModalDialog(result) {
-            console.log(result, model.verify, _model);
             SSLNames.verify({
-                id: model.id,
+                id: params.model.id,
                 url: _model.verify.url
               }).$promise
               .then(showMessageSuccessValidationSSLNameByEmail,
                 function(data) {
-                  showMessageFailedValidationSSLNameByEmail(data.data);
+                  showMessageFailedValidationSSLName(data.data);
                 })
+              .then($scope.onClickRefresh) // NOTE: refresh list for update status
               .catch($scope.alertService.danger)
               .finally(function() {
-                $scope._loading = true;
+                $scope._loading = false;
               });
-            // 2. show modal window with result
-            // $scope
-            //   .delete(model)
-            //   .then(function(data) {
-            //     $scope.alertService.success(data);
-            //     $scope.list()
-            //       .then(setAccountName);
-            //   })
-            //   .catch($scope.alertService.danger);
           });
       }
 
@@ -153,7 +149,10 @@
         return modalInstance.result;
       }
 
-      function showMessageFailedValidationSSLNameByEmail(info) {
+      function showMessageFailedValidationSSLName(info) {
+        if (!!info.error && !angular.isArray(info.error)) {
+          info.error = [info.error];
+        }
         var modalInstance = $uibModal.open({
           animation: true,
           templateUrl: 'parts/ssl_names/modal/modal-message-verification-error.tpl.html',
@@ -166,48 +165,70 @@
         return modalInstance.result;
       }
 
-
-
       if (e) {
         e.preventDefault();
       }
-      if (!model.verified) {
-        // open modal dialog
-        var title = 'Confirm';
-        var okBtnTitle = 'Ok';
-        switch (model.verification_method) {
-          case 'url':
-            title = 'URL Verification';
-            okBtnTitle = 'Verify HTML Tag';
-            confirmVerifySSLName();
-            break;
-          case 'dns':
-            title = 'DNS Verification';
-            okBtnTitle = 'Verify TXT Record';
-            confirmVerifySSLName();
-            break;
-          case 'email':
-            title = 'Email Verification';
-            $scope._loading = true;
-            SSLNames.verify({
-                id: model.id
-              }).$promise
-              .then(showMessageSuccessValidationSSLNameByEmail,
-                function(data) {
-                  showMessageFailedValidationSSLNameByEmail(data.data);
-                })
-              .catch($scope.alertService.danger)
-              .finally(function() {
+
+      // 1. GET SSL Name detaild by id
+      SSLNames.get({
+          id: model.id
+        }).$promise
+        .then(function(model) {
+          //
+          if (!model.verified) {
+            // Prepare parameters and open modal dialog
+            var params = {
+              title: 'Confirm',
+              okBtnTitle: 'Ok',
+              model: model
+            };
+            switch (model.verification_method) {
+              case 'url':
+                params.title = 'URL Verification';
+                params.okBtnTitle = 'Verify HTML Tag';
+                confirmVerifySSLName(params);
+                break;
+              case 'dns':
+                params.title = 'DNS Verification';
+                params.okBtnTitle = 'Verify TXT Record';
+                confirmVerifySSLName(params);
+                break;
+              case 'email':
                 $scope._loading = true;
-              });
-
-            break;
-          default:
-
-            break;
-        }
-
-      }
+                SSLNames.verify({
+                    id: model.id
+                  }).$promise
+                  .then(function successGetDetails(data) {
+                      if (data.message && data.message === 'Waiting for approval') {
+                        showMessageFailedValidationSSLName(data);
+                      } else {
+                        showMessageSuccessValidationSSLNameByEmail(data);
+                      }
+                    },
+                    function errorGetDetails(data) {
+                      // NOTE: server error display like standart error
+                      if (data.status === 500) {
+                        $scope.alertService.danger(data);
+                      } else {
+                        // NOTE: show error information in modal window
+                        showMessageFailedValidationSSLName(data.data);
+                      }
+                    })
+                  .catch($scope.alertService.danger)
+                  .finally(function() {
+                    $scope._loading = false;
+                  });
+                break;
+              default:
+                //
+                break;
+            }
+          }
+        })
+        .catch($scope.alertService.danger)
+        .finally(function() {
+          $scope._loading = false;
+        });
     };
 
     /**
@@ -220,15 +241,12 @@
      */
     $scope.onCreateSSLName = function(model, isStay) {
       // Check additional parameters
-      // console.log(model)
       switch (model.verification_method) {
         case 'dns':
         case 'url':
-          // 1. Confirm
+          // 1. Confirm creating SSL Name
           $scope.confirm('confirmCreateSSLNameModal.html', model)
             .then(function(data) {
-              // console.log('====', data)
-              // var _model = angular.copy(model);
               var _model = {
                 account_id: model.account_id,
                 ssl_name: model.ssl_name,
@@ -241,18 +259,14 @@
                 .create(_model, isStay)
                 .then(function(data) {
                   $scope.alertService.success(data);
-
+                  $state.model = {};
+                  // Auto start Verify
                   $scope.onVerifyDomain(null, {
-                    id: data.object_id,
-                    verified: false,
-                    account_id: model.account_id,
-                    ssl_name: model.ssl_name,
-                    verification_method: model.verification_method
+                    id: data.object_id
                   });
                 })
                 .catch($scope.alertService.danger);
             });
-          //
           break;
         case 'email':
           verificationSSLNameByEmail(model);
@@ -261,72 +275,64 @@
           $scope.alertService.danger('Verification method unknown');
           break;
       }
-
+      /**
+       * @verificationSSLNameByEmail
+       * @description
+       *
+       * @param  {Object} model
+       * @return {[type]}
+       */
       function verificationSSLNameByEmail(model) {
-        // Make call
         $scope._loading = true;
+        var modelApprove = {
+          approvers: []
+        };
+        var createdSSLName = {};
         SSLNames.approvers({
             ssl_name: model.ssl_name
-          })
-          .$promise.then(
-            function(data) {
-              // var data = [{
-              //   'ApproverEmail': 'hello@revamp.com'
-              // }, {
-              //   'ApproverEmail': 'admin@test1.revamp.com'
-              // }, {
-              //   'ApproverEmail': 'administrator@test1.revamp.com'
-              // }, {
-              //   'ApproverEmail': 'hostmaster@test1.revamp.com'
-              // }, {
-              //   'ApproverEmail': 'postmaster@test1.revamp.com'
-              // }, {
-              //   'ApproverEmail': 'webmaster@test1.revamp.com'
-              // }, {
-              //   'ApproverEmail': 'admin@revamp.com'
-              // }, {
-              //   'ApproverEmail': 'administrator@revamp.com'
-              // }, {
-              //   'ApproverEmail': 'hostmaster@revamp.com'
-              // }, {
-              //   'ApproverEmail': 'postmaster@revamp.com'
-              // }, {
-              //   'ApproverEmail': 'webmaster@revamp.com'
-              // }];
-
-              // console.log(data);
-              var template = 'parts/ssl_names/modal/approvers-emails.tpl.html';
-              var modelApprove = data;
-              // TODO: delete after test
-              // {
-              //   approvers: _.map(data, function(item) {
-              //     return {
-              //       approver_email: item.ApproverEmail
-              //     }
-              //   })
-              // }
-              $scope.confirm(template, modelApprove)
-                .then(function(data) {
-                  // console.log(data, model)
-                  var createdSSLName = {
+          }).$promise
+          .then(
+            function showApproversEmails(data) {
+              modelApprove.approvers = data;
+              return $scope.confirm('parts/ssl_names/modal/approvers-emails.tpl.html', modelApprove)
+                .then(function() {
+                  return  {
                     'account_id': model.account_id,
                     'ssl_name': model.ssl_name,
                     'verification_method': model.verification_method,
                     'verification_email': modelApprove.verification_email
                   };
-                  $scope.create(createdSSLName, model)
-                    .then($scope.alertService.success)
-                    .catch($scope.alertService.danger);
                 });
-
             })
-          .catch($scope.alertService.danger)
+          .then(function createSSLName(createdSSLName) {
+            return $scope.create(createdSSLName, true);
+          })
+          .then(function showMessageSuccessCreate() {
+            return $scope.confirm('parts/ssl_names/modal/modal-message-succes-create.tpl.html', {
+                verification_email: modelApprove.verification_email
+              });
+          })
+          .then(function goBackToList() {
+            $state.model = {};
+            $state.go('.^');
+          })
+          .catch(function broke(data) {
+            if (data !== 'cancel') {
+              $scope.alertService.danger(data);
+            }
+          })
           .finally(function() {
             $scope._loading = false;
           });
       }
     };
 
+    /**
+     * @name onClickRefresh
+     * @description
+     *   Refresh data in table
+     * @return {[type]} [description]
+     */
     $scope.onClickRefresh = function() {
       $scope._loading = true;
       $scope.list()
@@ -358,32 +364,6 @@
         });
     };
 
-    ///===============================
-    /**
-     * @name prepareSSLCertToUpdate
-     * @description
-     *
-     * @param  {[type]} model_current [description]
-     * @return {[type]}               [description]
-     */
-    $scope.prepareSSLCertToUpdate = function(model_current) {
-      var model;
-      if (model_current.toJSON === undefined) {
-        model = _.clone(model_current, true);
-      } else {
-        model = _.clone(model_current.toJSON(), true);
-      }
-      delete model.id;
-      delete model.created_by;
-      delete model.created_at;
-      delete model.updated_at;
-      delete model.expires_at;
-      delete model.domains;
-      delete model.last_published_ssl_config_version;
-
-      return model;
-    };
-
     $scope.setAccountId = function() {
       if ($scope.auth.isReseller() || $scope.auth.isRevadmin()) {
         // Loading list of companies
@@ -404,124 +384,9 @@
 
     $scope.setAccountId();
 
-    $scope.getSSL_cert = function(id) {
-      $scope.get(id)
-        .then(function() {
-          // NOTE: auto set Dirty attribute for fields (validation exists data)
-          var _fields = ['cert_name', 'public_ssl_cert'];
-          angular.forEach(_fields, setDirty);
-
-          function setDirty(field) {
-            if (!!$scope.editForm[field]) {
-              $scope.editForm[field].$setDirty();
-            }
-          }
-        })
-        .catch(function(err) {
-          $scope.alertService.danger('Could not load SSL certificate details');
-        });
-
-    };
-
-    /**
-     * @name  createSSLCert
-     * @description
-     *
-     * Create new SSL certificate
-     *
-     * @param  {[type]} model [description]
-     * @return {[type]}       [description]
-     */
-    $scope.createSSLCert = function(model, isStay) {
-      model.cert_type = 'private'; // TODO:
-      $scope
-        .create(model, isStay)
-        .then(function(data) {
-          $scope.alertService.success(data);
-          $scope.setAccountId();
-        })
-        .catch($scope.alertService.danger);
-    };
-    /**
-     * @name  publishSSL_cert
-     * @description
-     *
-     *
-     * @param  {[type]} model [description]
-     * @return {[type]}       [description]
-     */
-    $scope.publishSSLCert = function(model) {
-      if (!model) {
-        return;
-      }
-      if (!model.id) {
-        model.id = $stateParams.id;
-      }
-      var modelId = model.id;
-      $scope.confirm('confirmPublishModal.html', model).then(function() {
-        model = $scope.prepareSSLCertToUpdate(model);
-        $scope.update({
-            id: modelId,
-            options: 'publish'
-          }, model)
-          .then($scope.alertService.success)
-          .catch($scope.alertService.danger);
-      });
-    };
-    /**
-     * @name  validateSSL_cert
-     * @description
-     *
-     * @param  {[type]} model [description]
-     * @return {[type]}       [description]
-     */
-    $scope.validateSSLCert = function(model) {
-      if (!model) {
-        return;
-      }
-      if (!model.id) {
-        model.id = $stateParams.id;
-      }
-      var modelId = model.id;
-      model = $scope.prepareSSLCertToUpdate(model);
-      $scope.update({
-          id: modelId,
-          options: 'verify_only'
-        }, model)
-        .then($scope.alertService.success)
-        .catch($scope.alertService.danger);
-    };
-    /**
-     * @name  updateSSL_cert
-     * @description
-     *
-     * @param  {[type]} model [description]
-     * @return {[type]}       [description]
-     */
-    $scope.updateSSLCert = function(model) {
-
-      if (!model) {
-        return;
-      }
-      if (!model.id) {
-        model.id = $stateParams.id;
-      }
-      var modelId = model.id;
-      $scope.confirm('confirmUpdateModal.html', model).then(function() {
-        model = $scope.prepareSSLCertToUpdate(model);
-        $scope.update({
-            id: modelId
-          }, model)
-          .then($scope.alertService.success)
-          .catch($scope.alertService.danger);
-      });
-    };
-
     $scope.storeToStorage = function(model) {
       $localStorage.selectedDomain = model;
     };
-
-
 
     $scope.getRelativeDate = function(datetime) {
       return moment.utc(datetime).fromNow();

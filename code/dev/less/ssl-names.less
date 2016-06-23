@@ -12,3 +12,21 @@
     pointer-events: none;
   }
 }
+
+.approvers-email-list {
+  max-height: 30vh;
+  overflow-y: auto;
+}
+
+.validation-info {
+  &-url {
+    & pre.meta-tag {
+      overflow-x: scroll;
+    }
+  }
+  &-dns {
+    pre.dns-text {
+      overflow-x: scroll;
+    }
+  }
+}
