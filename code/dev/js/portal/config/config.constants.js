@@ -152,7 +152,7 @@
         NO_SPECIAL_CHARS: /^[A-Za-z0-9//_.' -]+$/,
         COMMENT_NO_SPECIAL_CHARS: /^[A-Za-z0-9//_.' \n\r-]+$/,
         IP_ADDRESS: /^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$/,
-        REGUALR_WILDCARD_DOMAIN_FIELD: /^*$/, // TODO: set correct expression
+        REGUALR_WILDCARD_DOMAIN_FIELD: /(^(\*\.[a-zA-Z0-9-\_]{0,62}[a-zA-Z0-9]\.)+[a-zA-Z]{2,63}$)/, // TODO: set correct expression
         WILDCARD_DOMAIN_FIELD: /(^(\*\.[a-zA-Z0-9-\_]{0,62}[a-zA-Z0-9]\.)+[a-zA-Z]{2,63}$)/,
         URL: /(https?:)?\/\/.+/,
         HEADER_VALUE: /^[A-Za-z0-9.' -]+$/,
