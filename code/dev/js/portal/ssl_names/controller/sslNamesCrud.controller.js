@@ -199,9 +199,9 @@
                 }).$promise
                 .then(function successGetDetails(data) {
                     if (data.message && data.message === 'Waiting for approval') {
-                      showMessageFailedValidationSSLName(data);
+                      showMessageFailedValidationSSLName(data).then($scope.onClickRefresh);
                     } else {
-                      showMessageSuccessValidationSSLNameByEmail(data);
+                      showMessageSuccessValidationSSLNameByEmail(data).then($scope.onClickRefresh);
                     }
                   },
                   function errorGetDetails(data) {
@@ -210,7 +210,7 @@
                       $scope.alertService.danger(data);
                     } else {
                       // NOTE: show error information in modal window
-                      showMessageFailedValidationSSLName(data.data);
+                      showMessageFailedValidationSSLName(data.data).then($scope.onClickRefresh);
                     }
                   })
                 .catch($scope.alertService.danger)
