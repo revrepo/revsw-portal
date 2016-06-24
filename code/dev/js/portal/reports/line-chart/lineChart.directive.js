@@ -23,8 +23,7 @@
         },
 
         xAxis: {
-          categories: [],
-          tickInterval: 4,
+          // NOTE: DON`T SET default property "categories" and "tickInterval"!!!
           crosshair: {
             width: 1,
             color: '#000000'
@@ -111,10 +110,27 @@
           // Set new data (add new or reset exists)
           value.series.forEach(function(val, key) {
             if (!chart.series[key]) {
+              if (!!value.pointStart) {
+                val.pointStart = value.pointStart;
+              }
+              if (!!value.pointInterval) {
+                val.pointInterval = value.pointInterval;
+              }
               chart.addSeries(val);
             } else {
-              chart.series[key].setData(val.data);
+              if (!!value.pointStart) {
+                val.pointStart = value.pointStart;
+              }
+              if (!!value.pointInterval) {
+                val.pointInterval = value.pointInterval;
+              }
+              chart.series[key].update(val, false);
             }
+          });
+        }
+        if (!!value.plotLines) {
+          value.plotLines.forEach(function(val, key) {
+            chart.xAxis[0].addPlotLine(val);
           });
         }
         $scope.reload();
@@ -129,7 +145,7 @@
           return;
         }
         chart.xAxis[0].update(value);
-      });
+      }, true);
     }
 
     return {

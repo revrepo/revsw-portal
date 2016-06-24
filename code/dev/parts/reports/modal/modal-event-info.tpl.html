@@ -1,0 +1,35 @@
+<div class="modal-header">
+  <h3 class="modal-title">Event Details</h3>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div class="col-md-3 strong">Date/Time</div>
+    <div class="col-md-9">{{model.datetime | date : 'MMM dd, yyyy H:mm:ss a'}}</div>
+  </div>
+  <!--     <div class="row">
+      <div class="col-md-3 strong">User</div>
+      <div class="col-md-9">{{model.user_name}}</div>
+    </div>
+    <div class="row">
+      <div class="col-md-3 strong">User ID</div>
+      <div class="col-md-9">{{model.user_id}}</div>
+    </div> -->
+  <div class="row">
+    <div class="col-md-3 strong">User Type</div>
+    <div class="col-md-9">{{model.user_type}}</div>
+  </div>
+  <div class="row">
+    <div class="col-md-3 strong">Target ID</div>
+    <div class="col-md-9">{{model.target_id}}</div>
+  </div>
+  <div class="row">
+    <div class="col-md-3 strong">Event</div>
+    <div class="col-md-9">{{model.activity}}</div>
+  </div>
+  <hr>
+  <strong>Target Object:</strong>
+  <pre class="max-height-pre">{{model.target_object}}</pre>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-default" type="button" ng-click="cancel()">Hide</button>
+</div>
