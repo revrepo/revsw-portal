@@ -368,6 +368,18 @@ form .error-messages.ng-active,
   bottom: 0;
   width: 100%;
 }
+.modal-header--error {
+  background-color: #d87551;
+}
+.modal-header--success {
+  background-color: #76923c;
+}
+.modal-title--error {
+  color: #ffffff;
+}
+.modal-title--success {
+  color: #ffffff;
+}
 input[type="text"],
 input[type="email"],
 input[type="password"],
@@ -1380,9 +1392,8 @@ del.diff span {
 .ssl-names--new-form .fa-question-circle {
   color: #66b2bf;
 }
-.actions .disabled {
+.ssl-names--table .actions .disabled {
   opacity: 0.4;
-  pointer-events: none;
 }
 .approvers-email-list {
   max-height: 30vh;

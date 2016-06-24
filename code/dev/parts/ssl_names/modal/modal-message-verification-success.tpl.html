@@ -1,10 +1,10 @@
-<div class="modal-header">
-  <h3 class="modal-title">Success</h3>
+<div class="modal-header modal-header--success">
+  <h3 class="modal-title modal-title--success">Success</h3>
 </div>
 <div class="modal-body">
   <div class="modal-message-verification-success" ng-if="model.message!=='Waiting for approval'">
     <p>Thank you for validating the control of the domain name.</p>
-    <p> In about 5-7 minutes the new SSL name will be deployed in our global network and be available to serve your SSL requests (please monitor “Published Status” attribute of the new SSL name)</p>
+    <p> In about 5-7 minutes the new SSL name will be deployed in our global network and be available to serve your SSL requests (please monitor “Published Status” attribute of the new SSL name).</p>
   </div>
   <div class="modal-message-verification-success" ng-if="model.message=='Waiting for approval'">
     <p>{{model.message}}</p>
