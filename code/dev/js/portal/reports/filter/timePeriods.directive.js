@@ -53,7 +53,8 @@
         ranges: ranges,
         maxDate: moment(),
         dateLimit: {
-          "days": 30
+          // days: 30
+          months: 1
         }
       },
       date: {

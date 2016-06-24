@@ -2,12 +2,6 @@
   <div class="col-md-12">
     <form class="form-inline">
       <div class="form-group">
-      <!--<select class="form-control fixed"
-                ng-model="delay">
-          <option value="1">Last 1 Day</option>
-          <option value="7">Last 7 Days</option>
-          <option value="30">Last 30 Days</option>
-        </select> -->
         <div class="date-picker-wrapper pull-left">
           <input
             date-range-picker=""
@@ -17,7 +11,7 @@
             max="datePicker.maxDate"
             class="form-control date-picker select2"
             type="text"
-            />
+             readonly/>
           <input
             ng-show="datePicker.overlay.show"
             ng-focus="handlers.overlayClickHandler()"
