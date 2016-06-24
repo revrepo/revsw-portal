@@ -1,5 +1,3 @@
-
-
 /* jshint ignore:start */
 
 
@@ -59,10 +57,10 @@ var EditAppForm = {
         css: '[ng-click=\"publish(model, configuration)\"]'
       },
       SDKKey: {
-        css : '.btn.btn-primary.ng-isolate-scope'
-      }, 
+        css: '.btn.btn-primary.ng-isolate-scope'
+      },
       showSDKKey: {
-        buttonText : 'Show SDK Key'
+        buttonText: 'Show SDK Key'
       }
     },
     inputs: {
@@ -136,7 +134,7 @@ var EditAppForm = {
         css: '[id="domains_white_list"] >div > span + input'
       },
       domainsWhiteListValue: {
-         css: '[id="domains_white_list"] >div'
+        css: '[id="domains_white_list"] >div'
       },
       domainsBlackList: {
         css: '[id="domains_black_list"] >div > span + input'
@@ -150,9 +148,9 @@ var EditAppForm = {
       domainsProvisionedListValues: {
         css: '[id="domains_provisioned_list"] >div > span'
       },
-      selectChoicesRow : {
+      selectChoicesRow: {
         css: '.ui-select-choices-row-inner'
-      },   
+      },
       testingOffloadingRatio: {
         id: 'a_b_testing_origin_offload_ratio'
       }
@@ -204,8 +202,8 @@ var EditAppForm = {
     return element(by.buttonText(this.locators.buttons.showSDKKey.buttonText));
   },
 
-  getSDKKeyInput: function() {
-     return element(by.id(this.locators.inputs.SDKKey.id));
+  getSDKKeyInput: function () {
+    return element(by.id(this.locators.inputs.SDKKey.id));
   },
 
   /**
@@ -220,30 +218,30 @@ var EditAppForm = {
   },
 
   getDebugSDKeventsLoggingLevel: function () {
-     return element(by.css(this.locators.radios.debug.css));
+    return element(by.css(this.locators.radios.debug.css));
   },
 
   getInfoSDKeventsLoggingLevel: function () {
-     return element(by.css(this.locators.radios.info.css));
+    return element(by.css(this.locators.radios.info.css));
   },
 
   getWarningSDKeventsLoggingLevel: function () {
-     return element(by.css(this.locators.radios.warning.css));
+    return element(by.css(this.locators.radios.warning.css));
   },
 
   getErrorSDKeventsLoggingLevel: function () {
-     return element(by.css(this.locators.radios.error.css));
+    return element(by.css(this.locators.radios.error.css));
   },
 
   getCriticalSDKeventsLoggingLevel: function () {
-     return element(by.css(this.locators.radios.critical.css));
+    return element(by.css(this.locators.radios.critical.css));
   },
 
   getSelectedSDKEventsLoggingLevel: function () {
     return element(by.xpath(this.locators.radios.selected.xpath));
   },
 
-  getAccountDown: function(){
+  getAccountDown: function () {
     return element(by.xpath(this.locators.dropDowns.account.xpath));
   },
 
@@ -270,39 +268,39 @@ var EditAppForm = {
     return element(by.id(this.locators.dropDowns.configurationStaleTimeout.id));
   },
 
-  getAllowedTransportProtocolsAndSelectionPriorityRPM: function() {
+  getAllowedTransportProtocolsAndSelectionPriorityRPM: function () {
     return element(by.css(this.locators.checkboxes.rpm.css));
   },
 
-  isAllowedTransportProtocolsAndSelectionPriorityRPMchecked: function() {
+  isAllowedTransportProtocolsAndSelectionPriorityRPMchecked: function () {
     return this.getAllowedTransportProtocolsAndSelectionPriorityRPM().getAttribute('checked');
   },
 
-  getAllowedTransportProtocolsAndSelectionPriorityQUIC: function() {
+  getAllowedTransportProtocolsAndSelectionPriorityQUIC: function () {
     return element(by.css(this.locators.checkboxes.quic.css));
   },
 
-  isAllowedTransportProtocolsAndSelectionPriorityQUICchecked: function() {
+  isAllowedTransportProtocolsAndSelectionPriorityQUICchecked: function () {
     return this.getAllowedTransportProtocolsAndSelectionPriorityQUIC().getAttribute('checked');
   },
 
-  getAllowedTransportProtocolsAndSelectionPrioritySTANDARD: function() {
+  getAllowedTransportProtocolsAndSelectionPrioritySTANDARD: function () {
     return element(by.css(this.locators.checkboxes.standard.css));
   },
 
-  isAllowedTransportProtocolsAndSelectionPrioritySTANDARDchecked: function() {
+  isAllowedTransportProtocolsAndSelectionPrioritySTANDARDchecked: function () {
     return this.getAllowedTransportProtocolsAndSelectionPrioritySTANDARD().getAttribute('checked');
   },
 
-  uncheckAllAllowedTransportProtocolsAndSelectionPriority: function() {
-  if(this.isAllowedTransportProtocolsAndSelectionPriorityRPMchecked()) 
-    this. getAllowedTransportProtocolsAndSelectionPriorityRPM().click();
-   
-  if(this.isAllowedTransportProtocolsAndSelectionPriorityQUICchecked()) 
-    this.getAllowedTransportProtocolsAndSelectionPriorityQUIC().click();
-  
-  if(this.isAllowedTransportProtocolsAndSelectionPrioritySTANDARDchecked()) 
-    this.getAllowedTransportProtocolsAndSelectionPrioritySTANDARD().click();
+  uncheckAllAllowedTransportProtocolsAndSelectionPriority: function () {
+    if (this.isAllowedTransportProtocolsAndSelectionPriorityRPMchecked())
+      this.getAllowedTransportProtocolsAndSelectionPriorityRPM().click();
+
+    if (this.isAllowedTransportProtocolsAndSelectionPriorityQUICchecked())
+      this.getAllowedTransportProtocolsAndSelectionPriorityQUIC().click();
+
+    if (this.isAllowedTransportProtocolsAndSelectionPrioritySTANDARDchecked())
+      this.getAllowedTransportProtocolsAndSelectionPrioritySTANDARD().click();
   },
 
   /**
@@ -350,7 +348,7 @@ var EditAppForm = {
     return element(by.css(this.locators.dropDowns.domainsWhiteList.css));
   },
 
-  getDomainsWhiteListValues: function() {
+  getDomainsWhiteListValues: function () {
     return element(by.css(this.locators.dropDowns.domainsWhiteListValue.css)).getText();
   },
 
@@ -384,7 +382,7 @@ var EditAppForm = {
     return element(by.css(this.locators.dropDowns.domainsProvisionedListValues.css)).getText();
   },
 
-  getSelectChoicesRowDown: function() {
+  getSelectChoicesRowDown: function () {
     return element(by.css(this.locators.dropDowns.selectChoicesRow.css));
   },
 
@@ -401,7 +399,7 @@ var EditAppForm = {
 
   getComment: function () {
     return element(by.id(this.locators.inputs.comment.id));
-  }, 
+  },
 
   /**
    * ### EditAppForm.getBackToListBtn()
@@ -517,19 +515,26 @@ var EditAppForm = {
   },
 
   setAccount: function (value) {
-      this
+    this
       .getAccountDown()
       .click();
 //TODO:
   },
 
   setSDKKey: function (value) {
-      this.getSDKKeyInput().clear();
-      this.getSDKKeyInput().sendKeys(value);
+    var me = this;
+    return me
+      .getSDKKeyInput()
+      .clear()
+      .then(function () {
+        return me
+          .getSDKKeyInput()
+          .sendKeys(value);
+      });
   },
 
-  clickShowSDKKeyButton: function() {
-   this.getShowSDKKeyButton().click();
+  clickShowSDKKeyButton: function () {
+    this.getShowSDKKeyButton().click();
   },
 
   /**
@@ -547,20 +552,20 @@ var EditAppForm = {
       .sendKeys(value);
   },
 
-  setSDKeventsLoggingLevel : function(value){
-    switch(value){
+  setSDKeventsLoggingLevel: function (value) {
+    switch (value) {
       case 'Info':
-      this.getInfoSDKeventsLoggingLevel().click();
-      break;
+        this.getInfoSDKeventsLoggingLevel().click();
+        break;
       case 'Warning':
-      this.getWarningSDKeventsLoggingLevel().click();
-      break;
+        this.getWarningSDKeventsLoggingLevel().click();
+        break;
       case 'Error':
-      this.getErrorSDKeventsLoggingLevel().click();
-      break;
+        this.getErrorSDKeventsLoggingLevel().click();
+        break;
       case 'Critical':
-      this.getCriticalSDKeventsLoggingLevel().click();
-      break;
+        this.getCriticalSDKeventsLoggingLevel().click();
+        break;
     }
   },
 
@@ -602,19 +607,19 @@ var EditAppForm = {
       .sendKeys(value);
   },
 
-  setAllowedTransportProtocolsAndSelectionPriority: function(value){
-      this.uncheckAllAllowedTransportProtocolsAndSelectionPriority();
-       switch(value){
-        case 'STANDARD':
-          this.getAllowedTransportProtocolsAndSelectionPrioritySTANDARD().click();
+  setAllowedTransportProtocolsAndSelectionPriority: function (value) {
+    this.uncheckAllAllowedTransportProtocolsAndSelectionPriority();
+    switch (value) {
+      case 'STANDARD':
+        this.getAllowedTransportProtocolsAndSelectionPrioritySTANDARD().click();
         break;
-        case 'QUIC':
-          this.getAllowedTransportProtocolsAndSelectionPriorityQUIC().click();
+      case 'QUIC':
+        this.getAllowedTransportProtocolsAndSelectionPriorityQUIC().click();
         break;
-        case 'RMP':
-          this. getAllowedTransportProtocolsAndSelectionPriorityRPM().click();
+      case 'RMP':
+        this.getAllowedTransportProtocolsAndSelectionPriorityRPM().click();
         break;
-       }
+    }
   },
 
   /**
@@ -676,11 +681,11 @@ var EditAppForm = {
    * @returns {Promise}
    */
   setDomainsWhiteList: function (value) {
-      this
+    this
       .getDomainsWhiteList()
       .sendKeys(value);
 
-      browser.actions().sendKeys( protractor.Key.ENTER ).perform();
+    browser.actions().sendKeys(protractor.Key.ENTER).perform();
   },
 
 
@@ -694,11 +699,11 @@ var EditAppForm = {
    * @returns {Promise}
    */
   setDomainsBlackList: function (value) {
-      this
+    this
       .getDomainsBlackList()
       .sendKeys(value);
 
-      browser.actions().sendKeys( protractor.Key.ENTER ).perform();
+    browser.actions().sendKeys(protractor.Key.ENTER).perform();
   },
 
   /**
@@ -711,14 +716,14 @@ var EditAppForm = {
    * @returns {Promise}
    */
   setDomainsProvisionedList: function (value) {
-       this
+    this
       .getDomainsProvisionedList()
       .sendKeys(value);
 
-      browser.actions().sendKeys( protractor.Key.ENTER ).perform();
-/*      this
-      .getSelectChoicesRowDown()
-      .click();*/
+    browser.actions().sendKeys(protractor.Key.ENTER).perform();
+    /*      this
+     .getSelectChoicesRowDown()
+     .click();*/
   },
 
   /**
@@ -739,14 +744,14 @@ var EditAppForm = {
       .sendKeys(value);
   },
 
-  setComment: function(value) {
+  setComment: function (value) {
     this
-    .getComment()
-    .clear();
+      .getComment()
+      .clear();
 
     this
-    .getComment()
-    .sendKeys(value);
+      .getComment()
+      .sendKeys(value);
   },
 
   /**
