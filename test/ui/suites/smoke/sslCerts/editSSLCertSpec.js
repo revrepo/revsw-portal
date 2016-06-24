@@ -35,15 +35,18 @@ describe('Smoke', function () {
       describe('Edit SSL Cert', function () {
 
         beforeAll(function () {
-          Portal.signIn(user);
         });
 
         afterAll(function () {
-          Portal.signOut();
         });
 
         beforeEach(function () {
+          Portal.signIn(user);
           Portal.getSSLCertsPage();
+        });
+
+        afterEach(function () {
+          Portal.signOut();
         });
 
         it('should display edit SSL Cert button',
@@ -85,13 +88,10 @@ describe('Smoke', function () {
           var valueAdded = ' updated';
           Portal.sslCerts.editPage.form.setCertName(valueAdded);
           Portal.sslCerts.editPage.clickUpdate();
-          // Check alert message and data updated
-          // Add modal steps
-          var alert = Portal.alerts.getFirst();
-          expect(alert.getText())
-            .toContain(Constants.alertMessages.users.MSG_SUCCESS_UPDATE);
-          var updatedCerttName = Portal.sslCerts.editPage.form.getCertName();
-          expect(updatedCerttName).toContain(valueAdded);
+          // Check Dialog and form data
+          Portal.dialog.clickOk();
+          var updatedCertName = Portal.sslCerts.editPage.form.getCertName();
+          expect(updatedCertName).toContain(valueAdded);
           Portal.sslCerts.editPage.clickBackToList();
           // Delete created SSL Cert
           Portal.deleteSSLCert(sslCert);
