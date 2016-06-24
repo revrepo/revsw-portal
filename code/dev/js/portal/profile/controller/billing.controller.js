@@ -114,7 +114,7 @@
             .then(CompaniesUpdate);
         })
         .catch($scope.alertService.danger)
-        .finnaly(function() {
+        .finally(function() {
           $scope._loading = false;
         });
     };
