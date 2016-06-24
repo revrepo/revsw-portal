@@ -72,6 +72,7 @@
 
     $scope.chartOptions = {
       chart: {
+        zoomType: 'x',
         events: {
           redraw: function() {
             if (info_) {
