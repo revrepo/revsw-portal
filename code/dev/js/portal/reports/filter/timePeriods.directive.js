@@ -50,7 +50,8 @@
       options: {
         timePicker: true,
         timePickerIncrement: 30,
-        ranges: ranges
+        ranges: ranges,
+        maxDate: moment()
       },
       date: {
         startDate: ranges[LAST_DAY][0],
