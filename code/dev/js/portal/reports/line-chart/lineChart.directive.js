@@ -13,6 +13,7 @@
 
       var chartOptions = {
         chart: {
+          zoomType: 'x',
           renderTo: el,
           type: 'areaspline',
 
