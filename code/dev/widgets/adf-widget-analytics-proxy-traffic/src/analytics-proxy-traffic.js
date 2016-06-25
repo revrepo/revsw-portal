@@ -304,8 +304,8 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
       }
     };
 
-    //  store HeatmapsDrawer instance in a closure
-    var heatmapDrawer_ = false;
+    //  store HeatmapsDrawer instances in a closure
+    var heatmapDrawers_ = {};
 
     /**
      * @name  reportGBTHeatmapController
@@ -353,20 +353,21 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
           .then(function(gbt_data) {
             $scope._data = true;
 
+            var wid = $scope.$parent.model.wid; //  is it a legal way to get some context or just dirty hack ??
             //  (re)draw map using received data
-            if ( heatmapDrawer_ ) {
-              heatmapDrawer_.destroy();
+            if ( heatmapDrawers_[wid] ) {
+              heatmapDrawers_[wid].destroy();
             }
-            heatmapDrawer_ = HeatmapsDrawer.create('#canvas-svg-gbt' + $scope.elId);
+            heatmapDrawers_[wid] = HeatmapsDrawer.create('#canvas-svg-gbt' + $scope.elId);
 
             if ($scope.config.filters.map_type === 'world') {
-              heatmapDrawer_.drawWorldMap(gbt_data, {
+              heatmapDrawers_[wid].drawWorldMap(gbt_data, {
                 legend: {
                   symbolWidth: 360
                 }
               });
             } else {
-              heatmapDrawer_.drawUSAMap(gbt_data, {
+              heatmapDrawers_[wid].drawUSAMap(gbt_data, {
                 legend: {
                   symbolWidth: 360
                 }
