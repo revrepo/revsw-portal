@@ -175,7 +175,7 @@
       Stats.contentType(filters)
         .$promise
         .then(function(data) {
-          $scope.contentType = direct_( data.data );
+          $scope.contentType = filter_( data.data );
         })
         .catch(function() {
           $scope.contentType = [];
