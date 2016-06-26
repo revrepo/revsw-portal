@@ -1,4 +1,3 @@
-
 /* jshint ignore:start */
 
 
@@ -87,32 +86,39 @@ describe('Smoke', function () {
               });
 
             it('should save SDKKey to clipboard',
-              function(){
-              Portal.mobileApps.listPage.table.clickEditApp();
+              function () {
+                Portal.mobileApps.listPage.table.clickEditApp();
                 Portal.mobileApps.editPage.form.clickSDKKeyClipboardButton();
                 Portal.mobileApps.editPage.form.clickShowSDKKeyButton();
-                Portal.mobileApps.editPage.form.getSDKKeyInput().getAttribute('value').then(function(value){
-                  return value;
-                }).then(function(value){
-                  Portal.mobileApps.editPage.form.setSDKKey(protractor.Key.chord(protractor.Key.CONTROL, "v"));
-                  Portal.mobileApps.editPage.form.getSDKKeyInput().getAttribute('value').then(function(pasteValue){
-                    expect(value).toEqual(pasteValue);
-                 });
-                });
-            });
+                Portal.mobileApps.editPage.form
+                  .getSDKKeyInput()
+                  .getAttribute('value')
+                  .then(function (value) {
+                    Portal.mobileApps.editPage.form
+                      .setSDKKey(protractor.Key.chord(protractor.Key.CONTROL, 'v'))
+                      .then(function () {
+                        return Portal.mobileApps.editPage.form
+                          .getSDKKeyInput()
+                          .getAttribute('value')
+                          .then(function (pasteValue) {
+                            expect(value).toEqual(pasteValue);
+                          });
+                      });
+                  });
+              });
 
             it('should update an app successfully when filling all required ' +
               'data',
               function () {
                 var app = DataProvider.generateMobileApp(platform);
 
-/*                Portal.getAccountsPage();
-                Portal.admin.accounts.listPage.clickAddNewCompany();
-                Portal.admin.accounts.addCompany.createCompany(app);
-                browser.sleep(10000);
-                Portal.goToMobileApps();
-                Portal.header.goTo(platform);
-                browser.sleep(10000);*/
+                /*                Portal.getAccountsPage();
+                 Portal.admin.accounts.listPage.clickAddNewCompany();
+                 Portal.admin.accounts.addCompany.createCompany(app);
+                 browser.sleep(10000);
+                 Portal.goToMobileApps();
+                 Portal.header.goTo(platform);
+                 browser.sleep(10000);*/
 
                 Portal.mobileApps.listPage.addNew(app);
                 expect(Portal.alerts.getAll().count()).toEqual(1);
@@ -127,68 +133,65 @@ describe('Smoke', function () {
                 browser.wait(protractor.ExpectedConditions.visibilityOf(element(by.xpath('.//*[contains(text(),"' + Constants.alertMessages.app.MSG_SUCCESS_UPDATE + '")]'))), 20000);
                 expect(Portal.alerts.getAll().count()).toEqual(1);
                 expect(Portal.alerts.getFirst().getText())
-                .toEqual(Constants.alertMessages.app.MSG_SUCCESS_UPDATE);
-                element(by.xpath('.//body')).getAttribute('class').then(function(){
-                    browser.ignoreSynchronization = false;
+                  .toEqual(Constants.alertMessages.app.MSG_SUCCESS_UPDATE);
+                element(by.xpath('.//body')).getAttribute('class').then(function () {
+                  browser.ignoreSynchronization = false;
                 });
 
                 expect(Portal.mobileApps.editPage.form.getAppNameTxt().getAttribute('value')).toEqual(app.name);
                 expect(Portal.mobileApps.editPage.form.getSelectedSDKEventsLoggingLevel().getText()).toEqual(app.SDKeventsLoggingLevel);
                 expect(Portal.mobileApps.editPage.form.getComment().getAttribute('value')).toEqual(app.comment);
                 expect(Portal.mobileApps.editPage.form.getSDKOperationModeDDown().getAttribute('value').getText()).toContain(app.sdkOperationMode);
-                Portal.mobileApps.editPage.form.getConfigurationRefreshIntervalDDown().getAttribute('value').then(function(value){
+                Portal.mobileApps.editPage.form.getConfigurationRefreshIntervalDDown().getAttribute('value').then(function (value) {
                   expect(value).toEqual(app.configurationRefreshInterval);
                 });
                 Portal.mobileApps.editPage.form.getConfigurationStaleTimeoutDDown()
-                  .getAttribute('value').then(function(value){
-                  expect(value).toEqual(app.configurationStaleTimeout);
-                });
-                element(by.xpath('.//body')).getAttribute('class').then(function(){
-                if(app.allowedTransportProtocolsAndSelectionPriority==='STANDARD')
-                {
-                  Portal.mobileApps.editPage.form.getAllowedTransportProtocolsAndSelectionPrioritySTANDARD().getAttribute('checked').then(function(value){
-                     expect(value).toEqual('true');
+                  .getAttribute('value').then(function (value) {
+                    expect(value).toEqual(app.configurationStaleTimeout);
+                  });
+                element(by.xpath('.//body')).getAttribute('class').then(function () {
+                  if (app.allowedTransportProtocolsAndSelectionPriority === 'STANDARD') {
+                    Portal.mobileApps.editPage.form.getAllowedTransportProtocolsAndSelectionPrioritySTANDARD().getAttribute('checked').then(function (value) {
+                      expect(value).toEqual('true');
                     });
-                }
-                if(app.allowedTransportProtocolsAndSelectionPriority==='QUIC')
-                {
-                    Portal.mobileApps.editPage.form.getAllowedTransportProtocolsAndSelectionPriorityQUIC().getAttribute('checked').then(function(value){
-                     expect(value).toEqual('true');
+                  }
+                  if (app.allowedTransportProtocolsAndSelectionPriority === 'QUIC') {
+                    Portal.mobileApps.editPage.form.getAllowedTransportProtocolsAndSelectionPriorityQUIC().getAttribute('checked').then(function (value) {
+                      expect(value).toEqual('true');
                     });
-                 }
-                if(app.allowedTransportProtocolsAndSelectionPriority==='RMP')
-                {
-                    Portal.mobileApps.editPage.form.getAllowedTransportProtocolsAndSelectionPriorityRPM().getAttribute('checked').then(function(value){
-                    expect(value).toEqual('true');
+                  }
+                  if (app.allowedTransportProtocolsAndSelectionPriority === 'RMP') {
+                    Portal.mobileApps.editPage.form.getAllowedTransportProtocolsAndSelectionPriorityRPM().getAttribute('checked').then(function (value) {
+                      expect(value).toEqual('true');
                     });
-                }
+                  }
                 });
 
                 Portal.mobileApps.editPage.form.getInitialTransportProtocol()
-                  .getAttribute('value').then(function(value){
-                  expect(value).toEqual(app.initialTransportProtocol.toLowerCase());
-                 });
-                Portal.mobileApps.editPage.form.getAnalyticsReportingLevel().getAttribute('value').then(function(value){
+                  .getAttribute('value').then(function (value) {
+                    expect(value).toEqual(app.initialTransportProtocol.toLowerCase());
+                  });
+                Portal.mobileApps.editPage.form.getAnalyticsReportingLevel().getAttribute('value').then(function (value) {
                   expect(value).toEqual(app.analyticsReportingLevel.toLowerCase());
                 });
-                Portal.mobileApps.editPage.form.getDomainsWhiteListValues().then(function(value){
+                Portal.mobileApps.editPage.form.getDomainsWhiteListValues().then(function (value) {
                   expect(value).toContain(app.domainsWhiteList);
                 });
-                Portal.mobileApps.editPage.form.getDomainsBlackListValues().then(function(value){
-                 expect(value).toContain(app.domainsBlackList);
+                Portal.mobileApps.editPage.form.getDomainsBlackListValues().then(function (value) {
+                  expect(value).toContain(app.domainsBlackList);
                 });
 
-               // expect(Portal.mobileApps.editPage.form.getDomainsProvisionedListValues()).toContain(app.domainsProvisionedList);
+                // expect(Portal.mobileApps.editPage.form.getDomainsProvisionedListValues()).toContain(app.domainsProvisionedList);
 
                 Portal.mobileApps.editPage.form.getTestingOffloadingRatio()
-                  .getAttribute('value').then(function(value){
-                  expect(value).toContain(app.testingOffloadingRatio);
-                });
+                  .getAttribute('value').then(function (value) {
+                    expect(value).toContain(app.testingOffloadingRatio);
+                  });
 
 
-/*              expect(Portal.alerts.getAll().count()).toEqual(1);
-              expect(Portal.alerts.getFirst().getText())
-                  .toEqual(Constants.alertMessages.app.MSG_SUCCESS_UPDATE);*/
+                /*              expect(Portal.alerts.getAll().count()).toEqual(1);
+                 expect(Portal.alerts.getFirst().getText())
+                 .toEqual(Constants.alertMessages.app.MSG_SUCCESS_UPDATE);*/
               });
           });
         });

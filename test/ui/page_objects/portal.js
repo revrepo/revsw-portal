@@ -1023,9 +1023,9 @@ var Portal = {
     var me = this;
     return browser.getCurrentUrl().then(function (initialUrl) {
       me.getSSLCertsPage();
-      me.userListPage.searcher.clearSearchCriteria();
-      me.userListPage.searcher.setSearchCriteria(sslCert.name);
-      me.userListPage.table
+      me.sslCerts.listPage.searcher.clearSearchCriteria();
+      me.sslCerts.listPage.searcher.setSearchCriteria(sslCert.name);
+      me.sslCerts.listPage.table
         .getFirstRow()
         .clickDelete();
       me.dialog.clickOk();
