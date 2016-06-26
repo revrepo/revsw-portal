@@ -47,7 +47,7 @@ describe('Smoke', function () {
 
         afterEach(function () {
           Portal.signOut();
-        })
+        });
 
         it('should display "Add SSL Cert" form', function () {
           expect(Portal.sslCerts.addPage.isDisplayed()).toBeTruthy();
