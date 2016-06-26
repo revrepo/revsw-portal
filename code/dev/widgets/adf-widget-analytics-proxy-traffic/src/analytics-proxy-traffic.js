@@ -1,6 +1,7 @@
 'use strict';
 angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
   .config(function(dashboardProvider) {
+
     var _widget = {
       title: 'Proxy Traffic',
       description: 'Web Alalytics Proxy Traffic',
@@ -185,6 +186,7 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
         ],
       }
     };
+
     // Registration widgets
     dashboardProvider
       .widget('analytics-proxy-traffic-bandwidth-usage', angular.extend(_widget, {
@@ -208,21 +210,20 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
         templateUrl: '{widgetsPath}/analytics-proxy-traffic/src/views/view-hits-cache-chart.tpl.html',
       }))
 
-    // .widget('analytics-proxy-http-status-code-chart', angular.extend(_widget, {
-    //   title: 'HTTP Status Code Hits',
-    //   description: 'Display the HTTP Status Code Hits', // NOTE: use directive 'http-status-code-chart'
-    //   templateUrl: '{widgetsPath}/analytics-proxy-traffic/src/views/view-http-status-code-chart.tpl.html',
-    //   editTemplateUrl: '{widgetsPath}/analytics-proxy-traffic/src/widget-edit.html',
-    // }))
-    // .widget('analytics-proxy-request-status-chart', angular.extend(_widget, {
-    //   title: 'Success/Failure Request Status',
-    //   description: 'Display the Success/Failure Request Status', // NOTE: use directive 'request-status-chart'
-    //   templateUrl: '{widgetsPath}/analytics-proxy-traffic/src/views/view-request-status-chart.tpl.html',
-    //   editTemplateUrl: '{widgetsPath}/analytics-proxy-traffic/src/widget-edit.html',
-    // }))
-    // ;
+      // .widget('analytics-proxy-http-status-code-chart', angular.extend(_widget, {
+      //   title: 'HTTP Status Code Hits',
+      //   description: 'Display the HTTP Status Code Hits', // NOTE: use directive 'http-status-code-chart'
+      //   templateUrl: '{widgetsPath}/analytics-proxy-traffic/src/views/view-http-status-code-chart.tpl.html',
+      //   editTemplateUrl: '{widgetsPath}/analytics-proxy-traffic/src/widget-edit.html',
+      // }))
+      // .widget('analytics-proxy-request-status-chart', angular.extend(_widget, {
+      //   title: 'Success/Failure Request Status',
+      //   description: 'Display the Success/Failure Request Status', // NOTE: use directive 'request-status-chart'
+      //   templateUrl: '{widgetsPath}/analytics-proxy-traffic/src/views/view-request-status-chart.tpl.html',
+      //   editTemplateUrl: '{widgetsPath}/analytics-proxy-traffic/src/widget-edit.html',
+      // }))
 
-    .widget('adf-widget-gbt-heatmaps', {
+      .widget('adf-widget-gbt-heatmaps', {
         title: 'World Traffic Heatmap',
         titleTemplateUrl: 'parts/dashboard/widgets/heatmaps/widget-title-with-params-heatmap.html',
         description: 'Display Global Traffic Heatmap',
@@ -236,7 +237,7 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
       })
       //==========Top Objects============================
 
-    .widget('adf-widget-top-10-countries', {
+      .widget('adf-widget-top-10-countries', {
         title: 'Top 10 Countries',
         titleTemplateUrl: 'parts/dashboard/widgets/top-reports/widget-title-with-params-top-reports.html',
         description: 'Display Top 10 Countries Pie Chart',
@@ -303,6 +304,9 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
       }
     };
 
+    //  store HeatmapsDrawer instances in a closure
+    var heatmapDrawers_ = {};
+
     /**
      * @name  reportGBTHeatmapController
      * @description
@@ -333,13 +337,11 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
           $scope.countries = data;
         });
 
-
       $scope.reload = function() {
         if (!$scope.config.domain) {
           return;
         }
         $scope._data = false;
-        var drawer = false;
         var filters = {
           domainId: $scope.config.domain.id,
           count_last_hours: $scope.config.filters.count_last_hours || '6',
@@ -350,16 +352,22 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
         $scope.reloadGBTCountry(filters)
           .then(function(gbt_data) {
             $scope._data = true;
+
+            var wid = $scope.$parent.model.wid; //  is it a legal way to get some context or just dirty hack ??
             //  (re)draw map using received data
-            drawer = HeatmapsDrawer.create('#canvas-svg-gbt' + $scope.elId);
+            if ( heatmapDrawers_[wid] ) {
+              heatmapDrawers_[wid].destroy();
+            }
+            heatmapDrawers_[wid] = HeatmapsDrawer.create('#canvas-svg-gbt' + $scope.elId);
+
             if ($scope.config.filters.map_type === 'world') {
-              drawer.drawWorldMap(gbt_data, {
+              heatmapDrawers_[wid].drawWorldMap(gbt_data, {
                 legend: {
                   symbolWidth: 360
                 }
               });
             } else {
-              drawer.drawUSAMap(gbt_data, {
+              heatmapDrawers_[wid].drawUSAMap(gbt_data, {
                 legend: {
                   symbolWidth: 360
                 }
