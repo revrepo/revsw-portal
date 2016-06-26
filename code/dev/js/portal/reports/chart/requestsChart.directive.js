@@ -5,10 +5,8 @@
     .module('revapm.Portal.Reports')
     .directive('requestsChart', requestsChartDirective);
 
-  requestsChartDirective.$inject = [];
-
-  /*@ngInject*/
   function requestsChartDirective() {
+    'ngInject';
     var directive = {
       restrict: 'AE',
       templateUrl: 'parts/reports/charts/requests.html',
@@ -28,7 +26,7 @@
   }
 
   /*ngInject*/
-  function RequestsChartCtrl($scope, Stats, Util) {
+  function RequestsChartCtrl($scope, Stats, Util, EventsSerieDataService, $q) {
 
     var _filters_field_list = ['from_timestamp', 'to_timestamp', 'country', 'device', 'os', 'browser'];
 
@@ -74,18 +72,21 @@
 
     $scope.chartOptions = {
       chart: {
+        zoomType: 'x',
         events: {
           redraw: function() {
             if (info_) {
               info_.destroy();
               info_ = null;
             }
+
+            var _text = 'Traffic Level Avg <span style="font-weight: bold; color: #3c65ac;">' + Util.convertTraffic(traffic_avg_) +
+              '</span> Max <span style="font-weight: bold; color: #3c65ac;">' + Util.convertTraffic(traffic_max_) +
+              '</span><br>Traffic Total <span style="font-weight: bold; color: #3c65ac;">' + Util.humanFileSizeInGB(traffic_total_, 3) +
+              '</span>';
             info_ = this /*chart*/ .renderer
-              .label('Traffic Level Avg <span style="font-weight: bold; color: #3c65ac;">' + Util.convertTraffic(traffic_avg_) +
-                '</span> Max <span style="font-weight: bold; color: #3c65ac;">' + Util.convertTraffic(traffic_max_) +
-                '</span><br>Traffic Total <span style="font-weight: bold; color: #3c65ac;">' + Util.humanFileSizeInGB(traffic_total_, 3) +
-                '</span>',
-                this.xAxis[0].toPixels(0), 3, '', 0, 0, true /*html*/ )
+              .label(_text,
+                3 /*x*/ , 3 /*y*/ , '' /*img*/ , 0, 0, true /*html*/ )
               .css({
                 color: '#444'
               })
@@ -109,40 +110,19 @@
           formatter: function() {
             return Util.convertTraffic(this.value);
           }
-        }
+        },
       },
       xAxis: {
-        crosshair: {
-          width: 1,
-          color: '#000000'
-        },
-        tickInterval: tickInterval_,
-        labels: {
-          autoRotation: false,
-          useHTML: true,
-          formatter: function() {
-            return this.value.label;
-          }
-        }
-      },
-      tooltip: {
-        formatter: function() {
-          return this.key.tooltip + '<br/>' +
-            this.series.name + ': ' + Util.convertTraffic(this.y);
-        }
+        type: 'datetime',
+        pointInterval: 24 * 60 * 60 * 1000,
       }
     };
 
-    $scope.traffic = {
-      labels: [],
-      series: [{
-        name: 'Incoming Bandwidth',
-        data: []
-      }, {
-        name: 'Outgoing Bandwidth',
-        data: []
-      }]
-    };
+    function defaultPointFormatter() {
+      var val = moment(this.x).format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span><br>]MMM D');
+      return val + '<br/>' +
+        this.series.name + ': ' + Util.convertTraffic(this.y);
+    }
 
     $scope.$watch('ngDomain', function() {
       if (!$scope.ngDomain) {
@@ -162,41 +142,36 @@
         return;
       }
       $scope._loading = true;
+      var _xAxisPointStart = null;
+      var _xAxisPointInterval = null;
+      var series = [{
+        name: 'Incoming Bandwidth',
+        data: [],
+        tooltip: {
+          headerFormat: '',
+          pointFormatter: defaultPointFormatter
+        }
+      }, {
+        name: 'Outgoing Bandwidth',
+        data: [],
+        tooltip: {
+          headerFormat: '',
+          pointFormatter: defaultPointFormatter
+        }
+      }];
       Stats.traffic(angular.merge({
           domainId: $scope.ngDomain.id
         }, generateFilterParams($scope.filters)))
         .$promise
-        .then(function(data) {
-
+        .then(function getData(data) {
           traffic_avg_ = traffic_max_ = traffic_total_ = 0;
           if (data.data && data.data.length > 0) {
-            var series = [{
-              name: 'Incoming Bandwidth',
-              data: []
-            }, {
-              name: 'Outgoing Bandwidth',
-              data: []
-            }];
-            var interval = parseInt(data.metadata.interval_sec || 1800),
-              labels = [],
-              offset = interval * 1000;
+            _xAxisPointStart = parseInt(data.metadata.start_timestamp);
+            _xAxisPointInterval = parseInt(data.metadata.interval_sec) * 1000;
+
+            var interval = parseInt(data.metadata.interval_sec || 1800);
+
             data.data.forEach(function(item, idx, items) {
-
-              var val = moment(item.time + offset);
-              var label;
-              if (idx % tickInterval_) {
-                label = '';
-              } else if (idx === 0 ||
-                (new Date(item.time + offset)).getDate() !== (new Date(items[idx - tickInterval_].time + offset)).getDate()) {
-                label = val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span><br>]MMM D');
-              } else {
-                label = val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span>]');
-              }
-
-              labels.push({
-                tooltip: val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span>] MMMM Do YYYY'),
-                label: label
-              });
 
               var sent_bw = item.sent_bytes * 8 / interval /*BITS per second*/ ;
               series[1].data.push(sent_bw);
@@ -207,22 +182,51 @@
               }
               traffic_avg_ += sent_bw;
             });
+
             traffic_avg_ /= data.data.length;
             if (traffic_avg_ === 0) {
               series[0].data.length = 0;
               series[1].data.length = 0;
             }
-            // model better to update once
-            $scope.traffic = {
-              labels: labels,
-              series: series
-            };
+            return $q.when(series);
+          } else {
+            return $q.when(series);
           }
+        })
+        .then(function(data) {
+          addEventsData(data);
+          return data;
+        })
+        .then(function setNewData(data) {
+          // model better to update once
+          $scope.traffic = {
+            pointStart: _xAxisPointStart,
+            pointInterval: _xAxisPointInterval,
+            series: series
+          };
         })
         .finally(function() {
           $scope._loading = false;
         });
-
+    }
+    /**
+     * @name  addEventsData
+     * @description
+     *   Add to series new serie with Events
+     * @param {[type]} series [description]
+     */
+    function addEventsData(series) {
+      var options = {
+        from_timestamp: generateFilterParams($scope.filters).from_timestamp,
+        to_timestamp: generateFilterParams($scope.filters).to_timestamp,
+        account_id: $scope.ngDomain.account_id,
+        domain_name: $scope.ngDomain.domain_name
+      };
+      return EventsSerieDataService.getEventsSerieDataForDomain(options)
+        .then(function(data) {
+          // NOTE: add new series data "Events"
+          series.push(data);
+        });
     }
   }
 })();

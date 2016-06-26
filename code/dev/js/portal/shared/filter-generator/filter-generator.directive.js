@@ -1,11 +1,11 @@
 /* filter-generator.directive.js */
 
-/** 
- * 
+/**
+ *
  * @module 'revapm.Portal.Shared'
  * @desc filter generator directive
  * @example <filter-generator domain="domain" ng-model="data"></filter-generator>
- * 
+ *
  *  DOMAIN AND NG-MODEL ARE REQUIRED!
  *
  */
@@ -241,7 +241,7 @@
 
       /*
        * @name startFilterChangeEventTimeout
-       * @desc starts timeout to send fitler change event
+       * @desc starts timeout to send filter change event
        * @kind function
        */
       function startFilterChangeEventTimeout() {
@@ -301,7 +301,7 @@
 
       /*
        * @name subscribeOnDatePickerHide
-       * @desc subscribes on the datePicker hide. 
+       * @desc subscribes on the datePicker hide.
        *       Shows overlay when date picker is hidden
        *
        * @kind function
