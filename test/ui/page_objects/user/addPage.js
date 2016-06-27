@@ -46,7 +46,7 @@ var AddUser = {
         linkText: 'Cancel'
       },
       leavePage: {
-        linkText: 'Leave This Page'
+        buttonText: 'Leave This Page'
       }
     }
   },
@@ -85,7 +85,11 @@ var AddUser = {
 
   getLeavePageBtn: function () {
     return element(
-      by.partialLinkText(this.locators.buttons.leavePage.linkText));
+//        sa-confirm-button-container
+//        by.partialLinkText(this.locators.buttons.leavePage.linkText)
+//        by.className("sa-confirm-button-container")
+        by.buttonText(this.locators.buttons.leavePage.buttonText)
+      );
   },
 
   /**

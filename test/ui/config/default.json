@@ -7,7 +7,7 @@
       "protocol": "http",
       "name": "localhost",
       "port": 3000,
-      "path": null// "portal/www/revsw-portal"
+      "path": null
     },
     "users": {
       "revAdmin": {
