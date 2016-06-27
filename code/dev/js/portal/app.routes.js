@@ -6,6 +6,26 @@
     .config(routesConfig);
 
   /*@ngInject*/
+  function resizeBinding($scope, $window){
+    var w = angular.element($window);
+    $scope.previous_width = $window.innerWidth;
+    w.bind('resize', function () {
+      if ($window.innerWidth <= 980 && $scope.previous_width > 980){
+         $scope.$apply(function(){
+           $scope.isHide = true;
+         })
+         $scope.previous_width = $window.innerWidth;
+      }
+      else if ($window.innerWidth > 980 && $scope.previous_width <= 980) {
+        $scope.$apply(function(){
+          $scope.isHide = false;
+        })
+        $scope.previous_width = $window.innerWidth;
+      }
+    });
+    $scope.isHide = $window.innerWidth <= 980 ? true : false;
+
+  }
   function routesConfig($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/users');
 
@@ -17,7 +37,11 @@
           layout: {
             templateUrl: 'parts/layout.html',
             /*@ngInject*/
-            controller: function($scope, $state, User) {
+            controller: function($scope, $state, $window, User) {
+              resizeBinding($scope, $window);
+              $scope.toggle = function() {
+                 $scope.isHide = $scope.isHide === false ? true: false;
+              }
               $scope.userService = User;
               if (!User.isAuthed() &&
                 $state.current.name !== 'index.restore' &&
