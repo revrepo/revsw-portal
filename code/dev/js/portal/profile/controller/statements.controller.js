@@ -64,7 +64,7 @@
         .catch(function(err) {
           $scope._loading = false;
           $scope._error = err.data;
-          AlertService.danger('Oops! Something went wrong');
+          AlertService.danger(err);
         })
         .finally(function() {
           $scope.transactionsDtOptions = DTOptionsBuilder.newOptions()

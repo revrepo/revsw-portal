@@ -4,11 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "nightwatch --env chargify_clear_test",
+    "remove_cancelled_accounts": "nightwatch --env chargify_clear_test --verbose",
     "lint": "jshint ./tests ./page_objects"
   },
   "author": "Nikolay Gerzhan <nikolay.gerzhan@gmail.com>",
-  "license": "ISC",
+  "license": "private",
   "devDependencies": {
     "cucumber": "^1.0.0"
   },
