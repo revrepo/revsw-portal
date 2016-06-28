@@ -8,19 +8,19 @@
   /*@ngInject*/
   function resizeBinding($scope, $window){
     var w = angular.element($window);
-    $scope.previous_width = $window.innerWidth;
+    $scope.previousWidth = $window.innerWidth;
     w.bind('resize', function () {
-      if ($window.innerWidth <= 980 && $scope.previous_width > 980){
+      if ($window.innerWidth <= 980 && $scope.previousWidth > 980){
          $scope.$apply(function(){
            $scope.isHide = true;
          })
-         $scope.previous_width = $window.innerWidth;
+         $scope.previousWidth = $window.innerWidth;
       }
-      else if ($window.innerWidth > 980 && $scope.previous_width <= 980) {
+      else if ($window.innerWidth > 980 && $scope.previousWidth <= 980) {
         $scope.$apply(function(){
           $scope.isHide = false;
         })
-        $scope.previous_width = $window.innerWidth;
+        $scope.previousWidth = $window.innerWidth;
       }
     });
     $scope.isHide = $window.innerWidth <= 980 ? true : false;
