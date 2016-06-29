@@ -18,6 +18,7 @@
     });
     $scope.versions = [];
     $scope.currentVersion = null;
+    $scope.isZeroVersionModified = false;
 
     $scope.obj = {
       data: 'Configuration will appear here',
@@ -31,12 +32,14 @@
     };
 
     /**
-     * Format options for select box
+     * Format options for select box, and also update the isZeroVersionModified
      * //Version X Last Updated At YYYY By ZZZZ
      * @param  {Object} item
      * @return {string}
      */
     $scope.format = function(item) {
+      if (!item.last_published_domain_version)
+        $scope.isZeroVersionModified = true;
       return 'Version ' + item.last_published_domain_version + ' Last updated at ' + $filter('date')(new Date(item.updated_at), 'MMM dd, yyyy H:mm:ss a') +
         ' By ' + (item.updated_by || item.created_by);
     };
