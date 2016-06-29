@@ -68,9 +68,9 @@ describe('Smoke', function () {
     it('should delete an API Key with RevAdmin user', function () {
       var apiKey = DataProvider.generateApiKeyData('API-Key-Delete');
       Portal.signIn(userRevAdmin);
-      Portal.createApiKey(apiKey, isAdminUser, account);
       var isAdminUser = true;
       var account = 'API QA Reseller Company';
+      Portal.createApiKey(apiKey, isAdminUser, account);
 
       Portal.getApiKeysPage();
       Portal.admin.apiKeys.listPage.searchAndClickDelete(apiKey.name);
