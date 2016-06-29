@@ -26,6 +26,7 @@ describe('Smoke', function () {
   var user;
   var currentPlan = 'Gold';
   var billingPortal = /www\.billingportal\.com/;
+  var waitTimeout = 30000; // 30 secs
 
   describe('Billing Statements', function () {
 
@@ -123,8 +124,16 @@ describe('Smoke', function () {
         Portal.accounts.billingStatements.summary
           .clickViewDetails()
           .then(function () {
-            browser.sleep(5000); // Wait for tab to open/load
+            console.time('SPEC00');
+            browser.wait(function () {
+              return browser
+                .getAllWindowHandles()
+                .then(function (handles) {
+                  return handles.length === 2;
+                });
+            }, waitTimeout);
             browser.getAllWindowHandles().then(function (handles) {
+              console.timeEnd('SPEC00');
               var oldWindowHandle = handles[0]; // this is the new window
               var newWindowHandle = handles[1]; // this is the new window
               browser.switchTo().window(newWindowHandle).then(function () {
@@ -141,8 +150,16 @@ describe('Smoke', function () {
         Portal.accounts.billingStatements.summary
           .clickUpdatePaymentProfile()
           .then(function () {
-            browser.sleep(5000); // Wait for tab to open/load
+            console.time('SPEC01');
+            browser.wait(function () {
+              return browser
+                .getAllWindowHandles()
+                .then(function (handles) {
+                  return handles.length === 2;
+                });
+            }, waitTimeout);
             browser.getAllWindowHandles().then(function (handles) {
+              console.timeEnd('SPEC01');
               var oldWindowHandle = handles[0]; // this is the parent window
               var newWindowHandle = handles[1]; // this is the new window
               browser.switchTo().window(newWindowHandle).then(function () {
