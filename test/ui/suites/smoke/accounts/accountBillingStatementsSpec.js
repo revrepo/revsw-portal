@@ -123,6 +123,7 @@ describe('Smoke', function () {
         Portal.accounts.billingStatements.summary
           .clickViewDetails()
           .then(function () {
+            browser.sleep(5000); // Wait for tab to open/load
             browser.getAllWindowHandles().then(function (handles) {
               var oldWindowHandle = handles[0]; // this is the new window
               var newWindowHandle = handles[1]; // this is the new window
@@ -140,6 +141,7 @@ describe('Smoke', function () {
         Portal.accounts.billingStatements.summary
           .clickUpdatePaymentProfile()
           .then(function () {
+            browser.sleep(5000); // Wait for tab to open/load
             browser.getAllWindowHandles().then(function (handles) {
               var oldWindowHandle = handles[0]; // this is the parent window
               var newWindowHandle = handles[1]; // this is the new window
