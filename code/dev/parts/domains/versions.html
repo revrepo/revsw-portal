@@ -30,10 +30,10 @@
                 </select>
               </div>
               <div class="col-md-6">
-                <select name="compareVersions" id="compareVersions" class="form-control" ng-disabled="_loading" ng-model="compareVersion" ngchange="onChangeCompareVersion()" ng-options="ver.last_published_domain_version as format(ver) for ver in versions " ng-disabled="currentVersion==null || currentVersion==''">
+                <select name="compareVersions" id="compareVersions" class="form-control" ng-disabled="_loading" ng-model="compareVersion" ng-change="onChangeCompareVersion()" ng-options="ver.last_published_domain_version as format(ver) for ver in versions " ng-disabled="currentVersion==null || currentVersion==''">
                   <option value="">Please Select Domain Configuration Version To Compare With</option>
                 </select>
-                <button ng-disabled="compareVersion=='' || compareVersion==null || currentVersion=='' || currentVersion==null" class="btn btn-primary btn-sm" ng-click="onChangeCompareVersion()"> Compare </button>
+                <button ng-disabled="compareVersion==null || currentVersion==null" class="btn btn-primary btn-sm" ng-click="onChangeCompareVersion()"> Compare </button>
               </div>
             </div>
           </div>

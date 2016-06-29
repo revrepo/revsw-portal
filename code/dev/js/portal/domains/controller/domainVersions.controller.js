@@ -42,7 +42,8 @@
     };
 
     $scope.onChangeVersion = function() {
-      if (!$scope.currentVersion) {
+
+      if (angular.isUndefined($scope.currentVersion) || $scope.currentVersion === null) {
         $scope.currentData = null;
         $scope.obj.data = '';
         return;
@@ -66,7 +67,8 @@
 
 
     $scope.onChangeCompareVersion = function() {
-      if (!$scope.compareVersion || !$scope.currentData) {
+
+      if ((angular.isUndefined($scope.compareVersion) || $scope.compareVersion === null) || !$scope.currentData) {
         $scope.dataCompare = '';
         return;
       }
