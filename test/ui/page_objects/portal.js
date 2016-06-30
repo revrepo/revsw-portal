@@ -312,7 +312,7 @@ var Portal = {
    *
    * @returns {Promise}
    */
-  getSSLCertsPage: function(){
+  getSSLCertsPage: function () {
     return this.getPage(Constants.hashFragments.sslCerts);
   },
 
@@ -326,13 +326,13 @@ var Portal = {
    *
    * @param {String} menuHeader, the header's label from the menu option to click
    * @param {String} menuItem, the item's label from the menu option to click
-   * 
+   *
    *  @returns {Promise}
    */
   goTo: function (menuHeader, menuItem) {
     return this
       .sideBar.selectItemFromExpandedBlock(menuHeader,
-        menuItem);
+      menuItem);
   },
 
   /**
@@ -358,7 +358,7 @@ var Portal = {
   goToUsers: function () {
     return this
       .goTo(Constants.header.appMenu.ACCOUNT_SETTINGS,
-        Constants.sideBar.menu.USERS);
+      Constants.sideBar.menu.USERS);
   },
 
   /**
@@ -403,9 +403,9 @@ var Portal = {
   goToUsageReport: function () {
     return this
       .goTo(Constants.sideBar.billing.BILLING,
-        Constants.sideBar.billing.USAGE_REPORT);
+      Constants.sideBar.billing.USAGE_REPORT);
   },
-  
+
   /**
    * ### Portal.goToSecuritySettings()
    *
@@ -417,7 +417,7 @@ var Portal = {
   goToSecuritySettings: function () {
     return this
       .goTo(Constants.header.appMenu.ACCOUNT_SETTINGS,
-        Constants.sideBar.menu.SECURITY_SETTINGS);
+      Constants.sideBar.menu.SECURITY_SETTINGS);
   },
 
   /**
@@ -431,7 +431,7 @@ var Portal = {
   goToUpdatePassword: function () {
     return this
       .goTo(Constants.header.appMenu.ACCOUNT_SETTINGS,
-        Constants.sideBar.menu.UPDATE_PASSWORD);
+      Constants.sideBar.menu.UPDATE_PASSWORD);
   },
 
   /**
@@ -445,7 +445,7 @@ var Portal = {
   goToDomains: function () {
     return this
       .goTo(Constants.header.appMenu.WEB,
-        Constants.sideBar.web.DOMAINS);
+      Constants.sideBar.web.DOMAINS);
   },
 
   // ## User Helper methods
@@ -1035,6 +1035,28 @@ var Portal = {
         }
       });
     });
+  },
+
+  /**
+   * Timeout of for `waiter` functions/methods
+   */
+  waitTimeout: 30000, // 30 secs
+
+  /**
+   * Waits for specified number of browser windows/tabs are displayed/opened.
+   * It times out if there are not the amount specified of windows.
+   *
+   * @param numOfWindows, expected number of windows/tabs (handles) to exist
+   * @returns {Object} Promise
+   */
+  waitForNumberOfWindowsToEqual: function (numOfWindows) {
+    return browser.wait(function () {
+      return browser
+        .getAllWindowHandles()
+        .then(function (handles) {
+          return handles.length === numOfWindows;
+        });
+    }, this.waitTimeout);
   }
 };
 
