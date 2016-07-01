@@ -20,6 +20,7 @@
  */
 
 var faker = require('faker');
+var moment = require('moment');
 
 // # Data Provider object
 
@@ -213,6 +214,7 @@ var DataProvider = {
    *     }
    */
   generateAnalyticsInfo: function (dataReport) {
+
     if (dataReport) {
       return {
         delay: dataReport.day,
@@ -222,10 +224,15 @@ var DataProvider = {
         count: dataReport.count
       };
     }
+
+    var now = moment();
+    var today = now.format('YYYY-MM-DD');
+    var yesterday = now.subtract(1, 'days').format('YYYY-MM-DD');
+
     return {
       delay: {
-        start: '2016-06-06',
-        end: '2016-07-07'
+        start: yesterday,
+        end: today
       },
       country: 'All Countries',
       os: 'All OS',
