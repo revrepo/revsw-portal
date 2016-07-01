@@ -43,7 +43,7 @@ describe('Functional', function () {
 
     it('should create an Average FBT report with default values',
       function () {
-        var dataReport = DataProvider.generateAnalyticsInfo();
+        var dataReport = DataProvider.generateFBTAnalyticsInfo();
         Portal.fbtReportsPage.createAverageFBT(dataReport);
 
         var getData = Portal.fbtReportsPage.getInfoAverageFBTReport();
@@ -55,9 +55,8 @@ describe('Functional', function () {
 
     it('should create an Average FBT report with custom values',
       function () {
-        var dataReport = DataProvider.generateAnalyticsInfo();
+        var dataReport = DataProvider.generateFBTAnalyticsInfo();
         dataReport.delay = 'Last 7 Days';
-        dataReport.country = 'Turkey';
         Portal.fbtReportsPage.createAverageFBT(dataReport);
 
         var getData = Portal.fbtReportsPage.getInfoAverageFBTReport();
@@ -69,7 +68,7 @@ describe('Functional', function () {
 
     it('should create a FBT values distribution report with default values',
       function () {
-        var dataReport = DataProvider.generateAnalyticsInfo();
+        var dataReport = DataProvider.generateFBTAnalyticsInfo();
         dataReport.delay = 'Last 6 Hours';
         Portal.fbtReportsPage.createFBTValuesDistribution(dataReport);
 
@@ -84,7 +83,6 @@ describe('Functional', function () {
       function () {
         var dataReport = DataProvider.generateAnalyticsInfo();
         dataReport.delay = 'Last 24 Hours';
-        dataReport.country = 'Antigua and Barbuda';
         Portal.fbtReportsPage.createFBTValuesDistribution(dataReport);
 
         var getData = Portal.fbtReportsPage.getInfoFBTValuesDistribution();

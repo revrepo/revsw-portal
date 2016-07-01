@@ -45,7 +45,8 @@ describe('Boundary', function () {
         Portal.createDomain(coolDomain);
         Portal.domains.listPage.searcher.setSearchCriteria('z');
         var tableRows = Portal.domains.listPage.table.getRows();
-        expect(tableRows.count()).toEqual(1);
+        expect(tableRows.count()).toBeGreaterThan(0); // At least on result
+        expect(tableRows.count()).toBeLessThan(26); // No more than 1 page
         Portal.domains.listPage.searcher.clearSearchCriteria();
         Portal.deleteDomain(coolDomain);
       });

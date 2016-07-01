@@ -119,13 +119,15 @@ var DateRangePicker = function (index) {
    */
   this.setCustomRange = function (startDate, endDate) {
     var me = this;
+    var delayAfterApply = 1000;
     return me
       .getCustomRangeBtn()
       .click()
       .then(function () {
         me.setStartDate(startDate);
         me.setEndDate(endDate);
-        return me.clickApply();
+        me.clickApply();
+        return browser.sleep(delayAfterApply);
       });
   };
 };
