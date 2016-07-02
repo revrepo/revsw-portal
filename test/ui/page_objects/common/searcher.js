@@ -2,7 +2,7 @@
  *
  * REV SOFTWARE CONFIDENTIAL
  *
- * [2013] - [2015] Rev Software, Inc.
+ * [2013] - [2016] Rev Software, Inc.
  * All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains
@@ -48,7 +48,7 @@ var Searcher = {
    * Returns the reference to the filter `Text Field` from the searcher
    * component
    *
-   * @returns {Selenium WebDriver Element}
+   * @returns {Object} Selenium WebDriver Element
    */
   getSearchCriteriaTxtIn: function () {
     return element(by.css(this.locators.textInputs.searchCriteria.css));
@@ -60,7 +60,7 @@ var Searcher = {
    * Returns the reference to the `Reset` button from the Filter/searcher
    * component
    *
-   * @returns {Selenium WebDriver Element}
+   * @returns {Object} Selenium WebDriver Element
    */
   getResetBtn: function () {
     return element(by.css(this.locators.buttons.reset.css));
@@ -72,11 +72,11 @@ var Searcher = {
    * ### Searcher.setSearchCriteria()
    *
    * Filters (types a search criteria) in the filter `text field` in order to
-   * get filterd data inthe table associated to this searcher component.
+   * get filtered data in the table associated to this searcher component.
    *
    * @param {String} criteria, the filter criteria
    *
-   * @returns {Promise}
+   * @returns {Object} Promise
    */
   setSearchCriteria: function (criteria) {
     return this
@@ -90,7 +90,7 @@ var Searcher = {
    * Returns the current search criteria set in the filter `text field`
    * from the searcher component
    *
-   * @returns {Promise}
+   * @returns {Object} Promise
    */
   getSearchCriteria: function () {
     return this
@@ -105,7 +105,7 @@ var Searcher = {
    * search criteria written in the `text field` from the Filter/Searcher
    * component
    *
-   * @returns {Promise}
+   * @returns {Object} Promise
    */
   clearSearchCriteria: function () {
     var me = this;
@@ -114,7 +114,7 @@ var Searcher = {
       .getAttribute('value').then(function (text) {
         var len = text.length;
         var backspaces = new Array(len + 1).join(protractor.Key.BACK_SPACE);
-        me
+        return me
           .getSearchCriteriaTxtIn()
           .sendKeys(backspaces);
       });
@@ -125,7 +125,7 @@ var Searcher = {
    *
    * Triggers a click in the `reset` button from the Filter/Searcher component
    *
-   * @returns {Promise}
+   * @returns {Object} Promise
    */
   clickReset: function () {
     return this
