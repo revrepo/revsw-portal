@@ -141,12 +141,29 @@ var GlobalSearcher = {
    *
    * Triggers a click in the `reset` button from the Global Searcher component
    *
-   * @returns {Promise}
+   * @returns {Object} Promise
    */
   clickReset: function () {
     return this
       .getResetBtn()
       .click();
+  },
+
+  // ## Helper Methods
+
+  /**
+   * ### GlobalSearcher.clickReset()
+   *
+   * Helper method to put search criteria and hit ENTER key on Global Search
+   * component.
+   *
+   * @param searchCriteria
+   * @returns {Object} Promise
+   */
+  search: function (searchCriteria) {
+    return this
+      .setSearchCriteria(searchCriteria)
+      .sendKeys(protractor.Key.ENTER);
   }
 };
 
