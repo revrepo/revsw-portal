@@ -31,11 +31,30 @@ describe('Smoke', function () {
     revAdmin
   ];
 
+  // Platforms
+  var ios = config.get('portal.mobileApps.platforms.ios');
+  var android = config.get('portal.mobileApps.platforms.android');
+  var platforms = [
+    ios,
+    android
+  ];
+
   // Domains
   var domains = {};
   domains[admin.role] = 'qa-admin-10-portal-ui-test.com';
   domains[reseller.role] = 'qa-reseller-10-portal-ui-test.com';
   domains[revAdmin.role] = 'qa-rev-admin-10-portal-ui-test.com';
+
+  // Mobile Apps
+  var mobileApps = {};
+  mobileApps[ios] = {};
+  mobileApps[ios][admin.role] = 'qa-admin-ios-10';
+  mobileApps[ios][reseller.role] = 'qa-reseller-ios-10';
+  mobileApps[ios][revAdmin.role] = 'qa-rev-admin-ios-10';
+  mobileApps[android] = {};
+  mobileApps[android][admin.role] = 'qa-admin-android-10';
+  mobileApps[android][reseller.role] = 'qa-reseller-android-10';
+  mobileApps[android][revAdmin.role] = 'qa-rev-admin-android-10';
 
   // Accounts
   var accounts = {};
@@ -71,6 +90,19 @@ describe('Smoke', function () {
             expect(Portal.domains.editPage.getTitle()).toContain(domainName);
           });
 
+        platforms.forEach(function (platform) {
+
+          describe('Platform: ' + platform, function () {
+
+            it('should search mobile app: ' + mobileApps[platform][user.role],
+              function () {
+                var appName = mobileApps[platform][user.role];
+                Portal.globalSearcher.search(appName);
+                expect(Portal.mobileApps.editPage.getTitle())
+                  .toContain(appName);
+              });
+          });
+        });
       });
     });
   });
