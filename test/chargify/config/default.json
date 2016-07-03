@@ -1,6 +1,6 @@
 {
-  "username": "",
-  "password": "",
+  "username": "please_specify_the_value_in_local.json",
+  "password": "please_specify_the_value_in_local.json",
   "url_app_chargify": "https://app.chargify.com",
   "url_site_revapm": "https://revapm-test.chargify.com",
   "count_not_deleted_rows": 0

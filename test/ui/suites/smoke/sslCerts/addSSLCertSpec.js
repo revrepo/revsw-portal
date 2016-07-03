@@ -34,24 +34,27 @@ describe('Smoke', function () {
       describe('Add SSL Cert', function () {
 
         beforeAll(function () {
-          Portal.signIn(user);
         });
 
         afterAll(function () {
-          Portal.signOut();
         });
 
         beforeEach(function () {
+          Portal.signIn(user);
           Portal.getSSLCertsPage();
           Portal.sslCerts.listPage.clickAddNewSSLCert();
         });
 
-        xit('should display "Add SSL Cert" form', function () {
+        afterEach(function () {
+          Portal.signOut();
+        });
+
+        it('should display "Add SSL Cert" form', function () {
           expect(Portal.sslCerts.addPage.isDisplayed()).toBeTruthy();
           expect(Portal.sslCerts.addPage.form.isDisplayed()).toBeTruthy();
         });
 
-        xit('should allow to cancel a SSL cert edition', function () {
+        it('should allow to cancel a SSL cert edition', function () {
           Portal.sslCerts.addPage.form.setCertName('something');
           Portal.sslCerts.addPage.clickCancel();
           expect(Portal.sslCerts.listPage.isDisplayed()).toBeTruthy();
@@ -62,13 +65,9 @@ describe('Smoke', function () {
           function () {
             var sslCert = DataProvider.generateSSLCertData();
             Portal.sslCerts.addPage.createSSLCert(sslCert);
-            expect(Portal.alerts
-              .getAll()
-              .count()).toEqual(1);
-            expect(Portal.alerts
-              .getFirst()
-              .getText())
-              .toContain('The SSL certificate has been successfully created');
+            expect(Portal.sslCerts.listPage
+              .searchAndGetFirstRow(sslCert.name)
+              .getCertName()).toEqual(sslCert.name);
             Portal.deleteSSLCert(sslCert);
           });
       });

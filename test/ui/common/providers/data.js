@@ -20,6 +20,7 @@
  */
 
 var faker = require('faker');
+var moment = require('moment');
 
 // # Data Provider object
 
@@ -213,6 +214,7 @@ var DataProvider = {
    *     }
    */
   generateAnalyticsInfo: function (dataReport) {
+
     if (dataReport) {
       return {
         delay: dataReport.day,
@@ -222,11 +224,54 @@ var DataProvider = {
         count: dataReport.count
       };
     }
+
+    var now = moment();
+    var today = now.format('YYYY-MM-DD');
+    var yesterday = now.subtract(1, 'days').format('YYYY-MM-DD');
+
     return {
       delay: {
-        start: '2016-06-06',
-        end: '2016-07-07'
+        start: yesterday,
+        end: today
       },
+      country: 'All Countries',
+      os: 'All OS',
+      device: 'All Devices',
+      count: 'Top 20 Records'
+    };
+  },
+
+  /**
+   * ### DataProvider.generateFBTAnalyticsInfo()
+   *
+   * Generates data for to fill FTB reports.
+   *
+   * @param {string} dataReport, this value is use in all reports.
+   *
+   * @returns {Object}, generate data with the following schema:
+   *
+   *     {
+   *         delay: string,
+   *         country: string,
+   *         os: string,
+   *         device: string
+   *         count: string
+   *     }
+   */
+  generateFBTAnalyticsInfo: function (dataReport) {
+
+    if (dataReport) {
+      return {
+        delay: dataReport.day,
+        country: dataReport.country,
+        os: dataReport.os,
+        device: dataReport.device,
+        count: dataReport.count
+      };
+    }
+
+    return {
+      delay: 'Last 1 Day',
       country: 'All Countries',
       os: 'All OS',
       device: 'All Devices',

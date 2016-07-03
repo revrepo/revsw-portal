@@ -12,7 +12,7 @@ Install in project
 
 Create file config/local.json and set correct credantional values ("username" and "password" for REVApm Test account)
 
-## Run test in this project
+## Run the job
 
-    $npm run tests
+    $npm run remove_cancelled_accounts
 

@@ -175,6 +175,8 @@
         model.ssl_cert_id = '';
       }
       delete model.cname;
+      delete model.published_domain_version;
+      delete model.last_published_domain_version;
       delete model.origin_protocol;
       delete model.id;
       if (model.domain_wildcard_alias === '') {

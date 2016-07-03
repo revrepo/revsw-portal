@@ -51,7 +51,7 @@
         timePicker: true,
         timePickerIncrement: 30,
         ranges: ranges,
-        minDate: moment().subtract(3, 'months'),
+        minDate: moment().subtract(1, 'months'),
         maxDate: moment(),
         dateLimit: {
           // days: 30
