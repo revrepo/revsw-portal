@@ -84,9 +84,10 @@
               '</span> Max <span style="font-weight: bold; color: #3c65ac;">' + Util.convertTraffic(traffic_max_) +
               '</span><br>Traffic Total <span style="font-weight: bold; color: #3c65ac;">' + Util.humanFileSizeInGB(traffic_total_, 3) +
               '</span>';
+            var x = this.xAxis[0].toPixels(this.xAxis[0].min)+3;
             info_ = this /*chart*/ .renderer
               .label(_text,
-                3 /*x*/ , 3 /*y*/ , '' /*img*/ , 0, 0, true /*html*/ )
+                x /*x*/ , 3 /*y*/ , '' /*img*/ , 0, 0, true /*html*/ )
               .css({
                 color: '#444'
               })
