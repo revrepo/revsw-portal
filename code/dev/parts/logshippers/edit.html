@@ -108,9 +108,9 @@
               </div>
               <!-- Destination Host -->
               <div class="form-group" ng-class="{ 'has-error': editForm.destinationHost.$invalid && editForm.destinationHost.$dirty }">
-                <label for="destinationHost" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Host">Host</label>
+                <label for="destinationHost" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Host">Host *</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" id="Host" name="destinationHost" placeholder="Host" ng-model="model.destination_host" ng-maxlength="150" ng-disabled="_loading">
+                  <input type="text" class="form-control" id="Host" name="destinationHost" placeholder="Host" ng-model="model.destination_host" ng-maxlength="150" ng-disabled="_loading" required>
                   <div class="error-messages" ng-messages="editForm.destinationHost.$error" role="alert" ng-messages-multiple>
                     <div ng-messages-include="parts/shared/error-messages.html"></div>
                   </div>
@@ -126,30 +126,30 @@
                 </div>
               </div>
               <div class="form-group" ng-class="{ 'has-error': editForm.destinationKey.$invalid && editForm.destinationKey.$dirty }">
-                <label for="destinationKey" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Secret Key">Secret Key</label>
+                <label for="destinationKey" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Secret Key">Secret Key<span ng-if="model.destination_type ==='s3'"> *</span></label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" id="destination_key" name="destinationKey" placeholder="Secret Key" ng-model="model.destination_key" ng-maxlength="150" ng-disabled="_loading">
-                </div>
-                <div class="error-messages" ng-messages="editForm.destinationKey.$error" role="alert" ng-messages-multiple>
-                  <div ng-messages-include="parts/shared/error-messages.html"></div>
+                  <input type="text" class="form-control" id="destination_key" name="destinationKey" placeholder="Secret Key" ng-model="model.destination_key" ng-maxlength="150" ng-disabled="_loading" ng-required="model.destination_type ==='s3'">
+                  <div class="error-messages" ng-messages="editForm.destinationKey.$error" role="alert" ng-messages-multiple>
+                    <div ng-messages-include="parts/shared/error-messages.html"></div>
+                  </div>
                 </div>
               </div>
               <div class="form-group" ng-class="{ 'has-error': editForm.destinationUsername.$invalid && editForm.destinationUsername.$dirty }">
-                <label for="destinationUsername" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Username">Username</label>
+                <label for="destinationUsername" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Username">Username<span ng-if="model.destination_type ==='sftp' ||model.destination_type ==='ftp'"> *</span></label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" id="destination_username" name="destinationUsername" placeholder="Username" ng-model="model.destination_username" ng-maxlength="150" ng-pattern="NO_SPECIAL_CHARS" ng-disabled="_loading">
+                  <input type="text" class="form-control" id="destination_username" name="destinationUsername" placeholder="Username" ng-model="model.destination_username" ng-maxlength="150" ng-pattern="NO_SPECIAL_CHARS" ng-disabled="_loading" ng-required="model.destination_type ==='sftp' ||model.destination_type ==='ftp'">
                   <div class="error-messages" ng-messages="editForm.destinationUsername.$error" role="alert" ng-messages-multiple>
                     <div ng-messages-include="parts/shared/error-messages.html"></div>
                   </div>
                 </div>
               </div>
               <div class="form-group" ng-class="{'has-error': editForm.destinationPassword.$invalid && editForm.destinationPassword.$dirty }">
-                <label for="destinationPassword" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Password ">Password </label>
+                <label for="destinationPassword" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Password ">Password<span ng-if="model.destination_type ==='sftp' ||model.destination_type ==='ftp'"> *</span> </label>
                 <div class="col-sm-10">
                   <div class="input-group">
                     <span id="spnPassword" class="add-on input-group-addon" style="cursor:pointer;" ng-click="isShowPassw= !isShowPassw" popover-trigger="mouseenter" uib-popover="Click to show/hide the password">
                    <i id="icnPassword" class="glyphicon" ng-class="isShowPassw?'glyphicon-eye-open':'glyphicon-eye-close'"></i></span>
-                    <input type="{{isShowPassw?'text':'password'}}" class="form-control" id="destination_password" name="destinationPassword" placeholder="Password" ng-model="model.destination_password" ng-maxlength="150" ng-disabled="_loading">
+                    <input type="{{isShowPassw?'text':'password'}}" class="form-control" id="destination_password" name="destinationPassword" placeholder="Password" ng-model="model.destination_password" ng-maxlength="150" ng-disabled="_loading" ng-required="model.destination_type ==='sftp' ||model.destination_type ==='ftp'">
                   </div>
                   <div class="error-messages" ng-messages="editForm.destinationPassword.$error" role="alert" ng-messages-multiple>
                     <div ng-messages-include="parts/shared/error-messages.html"></div>
@@ -185,8 +185,8 @@
               <a ui-sref="^" class="btn btn-default">
                 <i class="glyphicon glyphicon-remove"></i>&nbsp; Cancel
               </a>
-              <button class="btn btn-success" ng-disabled="disableSubmit(model, true)" ng-click="updateJob(model)">
-                <i class="glyphicon glyphicon-ok"></i>&nbsp; Update
+              <button class="btn btn-success" ng-disabled="disableSubmit(model, true)|| editForm.$invalid" ng-click="updateJob(model)">
+                <i class="glyphicon" ng-class="_loading ? 'glyphicon-refresh spin':'glyphicon-ok'"></i>&nbsp; Update
               </button>
             </div>
           </div>
