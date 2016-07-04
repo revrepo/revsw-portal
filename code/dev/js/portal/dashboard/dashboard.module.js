@@ -16,6 +16,7 @@
       'revapm.Portal.BlueTriangleTech',
       'angular-nicescroll',
       'revapm.Portal.Dashboard.Widgets.WebAnalytics',
+      'adf.widget.analytics-proxy-traffic'
     ])
     .config( /*ngInject*/ function(dashboardProvider) {
       // NOTE: define dashboard structures
