@@ -84,7 +84,7 @@
               '</span> Max <span style="font-weight: bold; color: #3c65ac;">' + Util.convertTraffic(traffic_max_) +
               '</span><br>Traffic Total <span style="font-weight: bold; color: #3c65ac;">' + Util.humanFileSizeInGB(traffic_total_, 3) +
               '</span>';
-            var x = this.xAxis[0].toPixels(this.xAxis[0].min)+3;
+            var x = this.xAxis[0].toPixels(this.xAxis[0].min) + 3;
             info_ = this /*chart*/ .renderer
               .label(_text,
                 x /*x*/ , 3 /*y*/ , '' /*img*/ , 0, 0, true /*html*/ )
@@ -118,12 +118,6 @@
         pointInterval: 24 * 60 * 60 * 1000,
       }
     };
-
-    function defaultPointFormatter() {
-      var val = moment(this.x).format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span><br>]MMM D');
-      return val + '<br/>' +
-        this.series.name + ': ' + Util.convertTraffic(this.y);
-    }
 
     $scope.$watch('ngDomain', function() {
       if (!$scope.ngDomain) {
@@ -166,10 +160,10 @@
         .$promise
         .then(function getData(data) {
           traffic_avg_ = traffic_max_ = traffic_total_ = 0;
+          _xAxisPointStart = parseInt(data.metadata.start_timestamp);
+          _xAxisPointInterval = parseInt(data.metadata.interval_sec) * 1000;
+          $scope.chartOptions.minRange =  _xAxisPointStart;
           if (data.data && data.data.length > 0) {
-            _xAxisPointStart = parseInt(data.metadata.start_timestamp);
-            _xAxisPointInterval = parseInt(data.metadata.interval_sec) * 1000;
-
             var interval = parseInt(data.metadata.interval_sec || 1800);
 
             data.data.forEach(function(item, idx, items) {
@@ -209,6 +203,17 @@
         .finally(function() {
           $scope._loading = false;
         });
+    }
+    /**
+     * @name  defaultPointFormatter
+     * @description
+     *   Point Formatter for
+     * @return {String}
+     */
+    function defaultPointFormatter() {
+      var val = moment(this.x).format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span><br>]MMM D');
+      return val + '<br/>' +
+        this.series.name + ': ' + Util.convertTraffic(this.y);
     }
     /**
      * @name  addEventsData
