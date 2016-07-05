@@ -3,10 +3,10 @@
 
   angular
     .module('revapm.Portal.Reports')
-    .directive('lmRTTChart', lmRTTChartDirective);
+    .directive('lmRttChart', lmRttChartDirective);
 
   /*@ngInject*/
-  function lmRTTChartDirective() {
+  function lmRttChartDirective() {
 
     return {
       restrict: 'AE',
@@ -55,17 +55,18 @@
 
         $scope.traffic = {
           labels: [],
-          series: [{
-            name: 'Latency, ms',
-            data: []
-          }]
+          series: [
+            { name: 'Average', data: [] },
+            { name: 'Min', data: [] },
+            { name: 'Max', data: [] }
+          ]
         };
 
         //  ---------------------------------
         var info_ = null,
           lm_rtt_avg_ = 0,
           lm_rtt_max_ = 0,
-          lm_rtt_min_ = 1000000,
+          lm_rtt_min_ = 0,
           hits_total_ = 0,
           tickInterval_ = 10;
 
@@ -78,10 +79,10 @@
                   info_ = null;
                 }
                 info_ = this /*chart*/ .renderer
-                  .label('LM RTT Avg <span style="font-weight: bold; color: #3c65ac;">' + (Math.round(lm_rtt_avg_ * 1000) / 1000) +
-                    '</span> Max <span style="font-weight: bold; color: #3c65ac;">' + (Math.round(lm_rtt_max_ * 1000) / 1000) +
-                    '</span> Min <span style="font-weight: bold; color: #3c65ac;">' + (Math.round(lm_rtt_min_ * 1000) / 1000) +
-                    '</span><br>Hits Total <span style="font-weight: bold; color: #3c65ac;">' + Util.formatNumber(hits_total_) +
+                  .label('LM RTT Avg <span style="font-weight: bold; color: #3c65ac;">' + Util.formatNumber(Math.round(lm_rtt_avg_)) +
+                    '</span>ms, Max <span style="font-weight: bold; color: #3c65ac;">' + Util.formatNumber(Math.round(lm_rtt_max_)) +
+                    '</span>ms, Min <span style="font-weight: bold; color: #3c65ac;">' + Util.formatNumber(Math.round(lm_rtt_min_)) +
+                    '</span>ms<br>Hits Total <span style="font-weight: bold; color: #3c65ac;">' + Util.formatNumber(hits_total_) +
                     '</span>',
                     this.xAxis[0].toPixels(0), 3, '', 0, 0, true /*html*/ )
                   .css({
@@ -101,7 +102,7 @@
           },
           yAxis: {
             title: {
-              text: 'Latency'
+              text: 'Latency, ms'
             },
             labels: {
               formatter: function() {
@@ -126,7 +127,7 @@
           tooltip: {
             formatter: function() {
               return this.key.tooltip + '<br/>' +
-                this.series.name + ': <strong>' + Util.formatNumber(this.y, 3) + '</strong>';
+                this.series.name + ': <strong>' + Util.formatNumber(this.y) + '</strong>ms';
             }
           }
         };
@@ -145,12 +146,15 @@
 
               lm_rtt_avg_ = lm_rtt_max_ = hits_total_ = 0;
               if (data.data && data.data.length > 0) {
+
+                lm_rtt_min_ = 1000000;
                 var interval = data.metadata.interval_sec || 1800;
                 var offset = interval * 1000;
-                var series = [{
-                  name: 'Latency, ms',
-                  data: []
-                }];
+                var series = [
+                  { name: 'Average', data: [] },
+                  { name: 'Min', data: [], visible: false },
+                  { name: 'Max', data: [], visible: false }
+                ];
                 var labels = [];
                 data.data.forEach(function(item, idx, items) {
 
@@ -170,15 +174,17 @@
                     label: label
                   });
 
-                  lm_rtt_avg_ += item.lm_rtt_avg;
-                  if (item.lm_rtt_max > lm_rtt_max_) {
-                    lm_rtt_max_ = item.lm_rtt_max;
+                  lm_rtt_avg_ += item.lm_rtt_avg_ms;
+                  if (item.lm_rtt_max_ms > lm_rtt_max_) {
+                    lm_rtt_max_ = item.lm_rtt_max_ms;
                   }
-                  if (item.lm_rtt_min < lm_rtt_min_) {
-                    lm_rtt_min_ = item.lm_rtt_min;
+                  if (item.lm_rtt_min_ms < lm_rtt_min_) {
+                    lm_rtt_min_ = item.lm_rtt_min_ms;
                   }
                   hits_total_ += item.requests;
-                  series[0].data.push(item.lm_rtt_avg);
+                  series[0].data.push(item.lm_rtt_avg_ms);
+                  series[1].data.push(item.lm_rtt_min_ms);
+                  series[2].data.push(item.lm_rtt_max_ms);
                 });
                 lm_rtt_avg_ /= data.data.length;
                 $scope.traffic = {
@@ -196,7 +202,7 @@
           if (!$scope.ngDomain) {
             return;
           }
-          $scope.reloadTrafficStats();
+          $scope.reload();
         });
       }
     };
