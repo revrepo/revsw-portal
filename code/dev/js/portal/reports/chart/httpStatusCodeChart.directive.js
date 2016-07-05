@@ -135,9 +135,15 @@
           if (!$scope.ngDomain || !$scope.ngDomain.id || !$scope.statusCodes || !$scope.statusCodes.length) {
             return;
           }
+
           var promises = {};
           var series = [];
           var labels = [];
+          $scope.traffic = {
+            labels: [],
+            series: []
+          };
+
           $scope.statusCodes.forEach(function(code) {
             if (!code) {
               return;
@@ -225,19 +231,24 @@
                 item.percent = item.requests / bigTotal;
               });
 
+              // console.log( $scope.traffic );
+              // console.log( series );
+              // console.log( labels );
               $scope.traffic = {
                 labels: labels,
                 series: series
               };
+              // console.log( $scope.traffic );
+
             })
             .finally(function() {
               $scope._loading = false;
             });
         };
 
-        $scope.$watch('ngDomain', function() {
-          $scope.reload();
-        });
+        // $scope.$watch('ngDomain', function() {
+        //   $scope.reload();
+        // });
         $scope.$watch('statusCodes', function() {
           $scope.reload();
         });
