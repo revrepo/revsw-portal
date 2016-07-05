@@ -162,7 +162,7 @@
           traffic_avg_ = traffic_max_ = traffic_total_ = 0;
           _xAxisPointStart = parseInt(data.metadata.start_timestamp);
           _xAxisPointInterval = parseInt(data.metadata.interval_sec) * 1000;
-          $scope.chartOptions.minRange =  _xAxisPointStart;
+          $scope.chartOptions.minRange = _xAxisPointStart;
           if (data.data && data.data.length > 0) {
             var interval = parseInt(data.metadata.interval_sec || 1800);
 

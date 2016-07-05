@@ -75,27 +75,6 @@
             type: 'datetime',
             pointInterval: 24 * 60 * 60 * 1000,
           }
-          // xAxis: {
-          //   crosshair: {
-          //     width: 1,
-          //     color: '#000000'
-          //   },
-          //   tickInterval: tickInterval_,
-          //   labels: {
-          //     autoRotation: false,
-          //     useHTML: true,
-          //     formatter: function() {
-          //       return this.value.label;
-          //     }
-          //   }
-          // }
-          // ,
-          // tooltip: {
-          //   formatter: function() {
-          //     return this.key.tooltip + '<br/>' +
-          //       this.series.name + ': <strong>' + Util.formatNumber(this.y, 3) + '</strong>';
-          //   }
-          // }
         };
 
         $scope.$watch('ngDomain', function() {
@@ -112,7 +91,6 @@
           }
           var promises = {};
           var series = [];
-          // var labels = [];
           $scope.statusCodes.forEach(function(code) {
             if (!code) {
               return;

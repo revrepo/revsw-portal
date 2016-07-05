@@ -84,13 +84,14 @@
                   rel_http = Math.round(http_ * 1000 / (https_ + http_)) / 10;
                   rel_https = Math.round(https_ * 1000 / (https_ + http_)) / 10;
                 }
+                var x = this.xAxis[0].toPixels(this.xAxis[0].min) + 3;
                 info_ = this /*chart*/ .renderer
                   .label('HTTPS <span style="font-weight: bold; color: #3c65ac;">' + Util.formatNumber(https_) +
                     '</span> Requests, <span style="font-weight: bold; color: #3c65ac;">' + rel_https +
                     '</span>%<br> HTTP <span style="font-weight: bold; color: black;">' + Util.formatNumber(http_) +
                     '</span> Requests, <span style="font-weight: bold; color: black;">' + rel_http +
                     '</span>%',
-                    this.xAxis[0].toPixels(0), 3, '', 0, 0, true /*html*/ )
+                    x, 3, '', 0, 0, true /*html*/ )
                   .css({
                     color: '#444'
                   })
@@ -130,12 +131,6 @@
               }
             }
           },
-          // tooltip: {
-          //   formatter: function() {
-          //     return this.key.tooltip + '<br/>' +
-          //       this.series.name + ': <strong>' + Util.formatNumber(this.y, 3) + '</strong>';
-          //   }
-          // },
 
           series: [{
             name: 'HTTP',

@@ -76,12 +76,13 @@
                   info_.destroy();
                   info_ = null;
                 }
+                var x = this.xAxis[0].toPixels(this.xAxis[0].min) + 3;
                 info_ = this /*chart*/ .renderer
                   .label('RPS Avg <span style="font-weight: bold; color: #3c65ac;">' + (Math.round(rps_avg_ * 1000) / 1000) +
                     '</span> Max <span style="font-weight: bold; color: #3c65ac;">' + (Math.round(rps_max_ * 1000) / 1000) +
                     '</span><br>Hits Total <span style="font-weight: bold; color: #3c65ac;">' + Util.formatNumber(hits_total_) +
                     '</span>',
-                    this.xAxis[0].toPixels(0), 3, '', 0, 0, true /*html*/ )
+                    x, 3, '', 0, 0, true /*html*/ )
                   .css({
                     color: '#444'
                   })
