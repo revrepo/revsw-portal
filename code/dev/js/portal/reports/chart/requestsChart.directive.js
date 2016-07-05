@@ -82,8 +82,8 @@
             }
 
             // var x = this.xAxis[0].toPixels(this.xAxis[0].min)+3;
-            var x = this.xAxis[0].toPixels(0);
-            console.log( x );
+            // var x = this.xAxis[0].toPixels(0);
+            // console.log( x );
 
             info_ = this /*chart*/ .renderer
               .label( 'Traffic Level Avg <span style="font-weight: bold; color: #3c65ac;">' + Util.convertTraffic(traffic_avg_) +

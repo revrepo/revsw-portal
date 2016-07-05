@@ -60,8 +60,44 @@
         };
 
         //  ---------------------------------
-        var tickInterval_ = 10;
+        var info_ = null,
+          CODES_NUM = 5,
+          codeStats = [],
+          bigTotal = 0,
+          tickInterval_ = 10;
+
         $scope.chartOptions = {
+          chart: {
+            events: {
+              redraw: function() {
+                if (info_) {
+                  info_.destroy();
+                  info_ = null;
+                }
+                info_ = this /*chart*/ .renderer
+                  .label( codeStats.reduce( function( prev, item ) {
+                      return prev +
+                        'Code <span style="font-weight: bold; color: #3c65ac;">' + item.code +
+                        '</span>: <span style="font-weight: bold">' + item.requests +
+                        '</span> Requests or <span style="font-weight: bold">' + item.percent.toFixed( 2 ) +
+                        '</span> %<br>';
+                      }, '' ),
+                    this.xAxis[0].toPixels(0), 3, '', 0, 0, true /*html*/ )
+                  .css({
+                    color: '#444'
+                  })
+                  .attr({
+                    fill: 'rgba(240, 240, 240, 0.6)',
+                    stroke: '#3c65ac',
+                    'stroke-width': 1,
+                    padding: 6,
+                    r: 2,
+                    zIndex: 5
+                  })
+                  .add();
+              }
+            }
+          },
           yAxis: {
             title: {
               text: 'Requests Per Second'
@@ -114,6 +150,9 @@
           });
           $scope._loading = true;
           var timeSet = false;
+          codeStats = [];
+          bigTotal = 0;
+
           $q.all(promises)
             .then(function(data) {
               labels = [];
@@ -145,12 +184,19 @@
                         label: label
                       });
                     }
-                    total += item.requests / interval;
+                    total += item.requests;
                     results.push(item.requests / interval);
                   });
+
                   timeSet = true;
                   if (total === 0) {
                     results.length = 0;
+                  } else {
+                    codeStats.push({
+                      code: idx,
+                      requests: total
+                    });
+                    bigTotal += total;
                   }
                 }
 
@@ -158,6 +204,25 @@
                   name: idx,
                   data: results
                 });
+              });
+
+              codeStats.sort( function( lhs, rhs) {
+                return rhs.requests - lhs.requests;
+              });
+              if ( codeStats.length > CODES_NUM ) {
+                var total = 0;
+                for ( var i = CODES_NUM - 1, len = codeStats.length; i < len; ++i ) {
+                  total += codeStats[i].requests;
+                }
+                codeStats.length = CODES_NUM - 1;
+                codeStats.push({
+                  code: 'Others',
+                  requests: total
+                });
+              }
+              bigTotal /= 100;
+              codeStats.forEach( function( item ) {
+                item.percent = item.requests / bigTotal;
               });
 
               $scope.traffic = {
