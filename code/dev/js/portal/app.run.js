@@ -9,6 +9,12 @@
   function runApp($rootScope, $http, $location, AlertService, $state) {
     $rootScope.alertService = AlertService;
     $rootScope.contactUsLink = 'https://revapm.zendesk.com/hc/en-us/requests/new';
+    // @see http://api.highcharts.com/highcharts#global.useUTC
+    Highcharts.setOptions({
+      global: {
+        useUTC: false
+      }
+    });
 
     $rootScope.$on('$stateChangeStart',
       function(event){
