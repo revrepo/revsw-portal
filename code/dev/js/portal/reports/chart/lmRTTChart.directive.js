@@ -10,7 +10,7 @@
 
     return {
       restrict: 'AE',
-      templateUrl: 'parts/reports/charts/lm-rtt.html',
+      templateUrl: 'parts/reports/charts/traffic-common.html',
       scope: {
         ngDomain: '=',
         flCountry: '=',
@@ -21,6 +21,7 @@
       },
       /*@ngInject*/
       controller: function($scope, Stats, Util) {
+
         var _filters_field_list = ['from_timestamp', 'to_timestamp', 'country', 'device', 'os', 'browser'];
 
         function generateFilterParams(filters) {
@@ -44,6 +45,7 @@
           return params;
         }
         $scope._loading = false;
+        $scope.heading = 'Last Mile Round Trip Time Latency';
         $scope.filters = {
           from_timestamp: moment().subtract(1, 'days').valueOf(),
           to_timestamp: Date.now()

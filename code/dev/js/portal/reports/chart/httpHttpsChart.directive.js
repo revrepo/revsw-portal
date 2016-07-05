@@ -10,7 +10,7 @@
 
     return {
       restrict: 'AE',
-      templateUrl: 'parts/reports/charts/http-https.html',
+      templateUrl: 'parts/reports/charts/traffic-common.html',
       scope: {
         ngDomain: '=',
         flCountry: '=',
@@ -22,6 +22,7 @@
       /*@ngInject*/
       controller: function($scope, Stats, $q, Util) {
         var _filters_field_list = ['from_timestamp', 'to_timestamp', 'country', 'device', 'os', 'browser'];
+        $scope.heading = 'HTTP/HTTPS Hits';
         $scope._loading = false;
         $scope.filters = {
           from_timestamp: moment().subtract(1, 'days').valueOf(),

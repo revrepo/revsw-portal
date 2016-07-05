@@ -9,7 +9,7 @@
     'ngInject';
     var directive = {
       restrict: 'AE',
-      templateUrl: 'parts/reports/charts/requests.html',
+      templateUrl: 'parts/reports/charts/traffic-common.html',
       scope: {
         ngDomain: '=',
         flCountry: '=',
@@ -51,8 +51,8 @@
       return params;
     }
 
+    $scope.heading = 'Bandwidth Usage';
     $scope._loading = false;
-    $scope.reloadTrafficStats = reloadTrafficStats;
 
     $scope.filters = {
       from_timestamp: moment().subtract(1, 'days').valueOf(),
@@ -72,23 +72,26 @@
 
     $scope.chartOptions = {
       chart: {
-        zoomType: 'x',
+        // zoomType: 'x',
         events: {
           redraw: function() {
+
             if (info_) {
               info_.destroy();
               info_ = null;
             }
 
-            var _text = 'Traffic Level Avg <span style="font-weight: bold; color: #3c65ac;">' + Util.convertTraffic(traffic_avg_) +
-              '</span> Max <span style="font-weight: bold; color: #3c65ac;">' + Util.convertTraffic(traffic_max_) +
-              '</span><br>Traffic Total <span style="font-weight: bold; color: #3c65ac;">' + Util.humanFileSizeInGB(traffic_total_, 3) +
-              '</span>';
             // var x = this.xAxis[0].toPixels(this.xAxis[0].min)+3;
             var x = this.xAxis[0].toPixels(0);
+            console.log( x );
+
             info_ = this /*chart*/ .renderer
-              .label(_text,
-                x /*x*/ , 3 /*y*/ , '' /*img*/ , 0, 0, true /*html*/ )
+              .label( 'Traffic Level Avg <span style="font-weight: bold; color: #3c65ac;">' + Util.convertTraffic(traffic_avg_) +
+                '</span> Max <span style="font-weight: bold; color: #3c65ac;">' + Util.convertTraffic(traffic_max_) +
+                '</span><br>Traffic Total <span style="font-weight: bold; color: #3c65ac;">' + Util.humanFileSizeInGB(traffic_total_, 3) +
+                '</span>',
+                this.xAxis[0].toPixels(0)/*x*/ ,
+                3 /*y*/ , '' /*img*/ , 0, 0, true /*html*/ )
               .css({
                 color: '#444'
               })
@@ -114,32 +117,47 @@
           }
         },
       },
+      // xAxis: {
+      //   type: 'datetime',
+      //   pointInterval: 24 * 60 * 60 * 1000,
+      // }
       xAxis: {
-        type: 'datetime',
-        pointInterval: 24 * 60 * 60 * 1000,
+        crosshair: {
+          width: 1,
+          color: '#000000'
+        },
+        tickInterval: tickInterval_,
+        labels: {
+          autoRotation: false,
+          useHTML: true,
+          formatter: function() {
+            return this.value.label;
+          }
+        }
       }
+
     };
 
-    function defaultPointFormatter() {
-      var val = moment(this.x).format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span><br>]MMM D');
-      return val + '<br/>' +
-        this.series.name + ': ' + Util.convertTraffic(this.y);
-    }
+    // function defaultPointFormatter() {
+    //   var val = moment(this.x).format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span><br>]MMM D');
+    //   return val + '<br/>' +
+    //     this.series.name + ': ' + Util.convertTraffic(this.y);
+    // }
 
     $scope.$watch('ngDomain', function() {
       if (!$scope.ngDomain) {
         return;
       }
-      reloadTrafficStats();
+      $scope.reload();
     });
 
     //////////////////
     /**
-     * @name reloadTrafficStats
+     * @name reload
      * @desc reload traffic stats
      * @kind function
      */
-    function reloadTrafficStats() {
+    $scope.reload = function() {
       if (!$scope.ngDomain || !$scope.ngDomain.id) {
         return;
       }
@@ -149,17 +167,17 @@
       var series = [{
         name: 'Incoming Bandwidth',
         data: [],
-        tooltip: {
-          headerFormat: '',
-          pointFormatter: defaultPointFormatter
-        }
+        // tooltip: {
+        //   headerFormat: '',
+        //   pointFormatter: defaultPointFormatter
+        // }
       }, {
         name: 'Outgoing Bandwidth',
         data: [],
-        tooltip: {
-          headerFormat: '',
-          pointFormatter: defaultPointFormatter
-        }
+        // tooltip: {
+        //   headerFormat: '',
+        //   pointFormatter: defaultPointFormatter
+        // }
       }];
       Stats.traffic(angular.merge({
           domainId: $scope.ngDomain.id
@@ -195,22 +213,23 @@
             return $q.when(series);
           }
         })
-        .then(function(data) {
-          addEventsData(data);
-          return data;
-        })
+        // .then(function(data) {
+        //   addEventsData(data);
+        //   return data;
+        // })
         .then(function setNewData(data) {
           // model better to update once
           $scope.traffic = {
-            pointStart: _xAxisPointStart,
-            pointInterval: _xAxisPointInterval,
+            // pointStart: _xAxisPointStart,
+            // pointInterval: _xAxisPointInterval,
             series: series
           };
         })
         .finally(function() {
           $scope._loading = false;
         });
-    }
+    };
+
     /**
      * @name  addEventsData
      * @description

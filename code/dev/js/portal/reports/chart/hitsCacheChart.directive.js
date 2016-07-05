@@ -10,7 +10,7 @@
 
     return {
       restrict: 'AE',
-      templateUrl: 'parts/reports/charts/hits-cache.html',
+      templateUrl: 'parts/reports/charts/traffic-common.html',
       scope: {
         ngDomain: '=',
         flCountry: '=',
@@ -45,6 +45,7 @@
           return params;
         }
 
+        $scope.heading = 'Edge Cache Efficiency Hits';
         $scope._loading = false;
         $scope.filters = {
           from_timestamp: moment().subtract(1, 'days').valueOf(),

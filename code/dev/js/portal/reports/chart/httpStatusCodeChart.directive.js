@@ -10,7 +10,7 @@
 
     return {
       restrict: 'AE',
-      templateUrl: 'parts/reports/charts/http-status-code.html',
+      templateUrl: 'parts/reports/charts/traffic-common.html',
       scope: {
         ngDomain: '=',
         statusCodes: '=',
@@ -44,6 +44,7 @@
           });
           return params;
         }
+        $scope.heading = 'HTTP Status Code Hits';
         $scope._loading = false;
         $scope.filters = {
           from_timestamp: moment().subtract(1, 'days').valueOf(),
