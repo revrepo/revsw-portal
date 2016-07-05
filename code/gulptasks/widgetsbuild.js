@@ -68,10 +68,10 @@ gulp.task('js', function() {
     .pipe($.concat(pkg.name + '.js'))
     .pipe($.headerfooter('(function(window, undefined) {\'use strict\';\n', '})(window);'))
     .pipe($.ngAnnotate(annotateOptions))
-    .pipe(gulp.dest(widgetDistDir))
-    .pipe($.rename(pkg.name + '.min.js'))
-    .pipe($.uglify())
     .pipe(gulp.dest(widgetDistDir));
+    // .pipe($.rename(pkg.name + '.min.js'))
+    // .pipe($.uglify())
+    // .pipe(gulp.dest(widgetDistDir));
 });
 
 /** clean **/

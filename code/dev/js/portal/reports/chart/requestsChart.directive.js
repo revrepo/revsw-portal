@@ -215,13 +215,15 @@
      * @name  addEventsData
      * @description
      *   Add to series new serie with Events
-     * @param {[type]} series [description]
+     * @param {Array} series
      */
     function addEventsData(series) {
+      var filterParams = generateFilterParams($scope.filters);
       var options = {
-        from_timestamp: generateFilterParams($scope.filters).from_timestamp,
-        to_timestamp: generateFilterParams($scope.filters).to_timestamp,
+        from_timestamp: filterParams.from_timestamp,
+        to_timestamp: filterParams.to_timestamp,
         account_id: $scope.ngDomain.account_id,
+        domain_id: $scope.ngDomain.id,
         domain_name: $scope.ngDomain.domain_name
       };
       return EventsSerieDataService.getEventsSerieDataForDomain(options)

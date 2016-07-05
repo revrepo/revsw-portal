@@ -3,16 +3,16 @@
 /**
  * @service reportsFilterService
  * @module 'revapm.Portal.Reports'
- * @desc service for the getting data for the global filter reports
+ * @desc service for the getting data for Events(Activity) information
  */
-(function(angular) {
+(function(angular, moment, _) {
   'use strict';
 
   angular
     .module('revapm.Portal.Reports')
     .factory('EventsSerieDataService', EventsSerieDataService);
 
-  function EventsSerieDataService($q, Activity, ActivityPhrase, $uibModal) {
+  function EventsSerieDataService($q, Activity, ActivityPhrase, DomainsConfig, $uibModal) {
     'ngInject';
     // TODO: rebase to config
     var constEventsColor = {
@@ -20,28 +20,128 @@
       'purge': 'green',
       'sslcert': 'red'
     };
-
+    // service API
     return {
       getEventsSerieDataForDomain: getEventsSerieDataForDomain
     };
-
+    /**
+     * @name  getEventsSerieDataForDomain
+     * @description
+     *   get Events (Activity) for Domain
+     * @param  {Object} options
+     * @return {Promise}
+     */
     function getEventsSerieDataForDomain(options) {
+      var promises = [];
       var queryParams = {
         from_timestamp: options.from_timestamp,
         to_timestamp: options.to_timestamp
       };
       // TODO: activate after checking server work
-      // if (!!options.account_id) {
-      //   queryParams.account_id = options.account_id;
-      // }
+      if (!!options.account_id) {
+        queryParams.account_id = options.account_id;
+      }
 
-      return Activity.query(queryParams).$promise
-        .then(function(data) {
-          // NOTE: Activity series
+      /**
+       * @actionPreparingRequestSSLCertEvents
+       * @description
+       *   Preparing request for get Events(Activity) of target type "SSL Certificates"
+       * @return {Promise}
+       */
+      function actionPreparingRequestSSLCertEvents(options) {
+        var def = $q.defer();
+        if (!!options.domain_id) {
+          DomainsConfig.get({
+            id: options.domain_id
+          }).$promise.then(function(domainConfig) {
+            if (domainConfig.ssl_cert_id && domainConfig.ssl_cert_id !== '') {
+              var sslCertQueryPrams = {
+                from_timestamp: options.from_timestamp,
+                to_timestamp: options.to_timestamp,
+                target_id: domainConfig.ssl_cert_id,
+                target_type: 'sslcert'
+              };
+              def.resolve(Activity.query(sslCertQueryPrams).$promise);
+            }
+            def.resolve($q.when(null));
+          });
+        } else {
+          def.resolve($q.when(null));
+        }
+        return def.promise;
+      }
+      /**
+       * @name  actionPreparingRequestDomainEvents
+       * @description
+       *    Action for preparing to get events (activities) only type 'domain'
+       *
+       * @param  {Object} options
+       * @return {[type]}          [description]
+       */
+      function actionPreparingRequestDomainEvents(options) {
+        var def = $q.defer();
+        if (!!options.domain_id) {
+          var domainQueryPrams = {
+            from_timestamp: options.from_timestamp,
+            to_timestamp: options.to_timestamp,
+            target_id: options.domain_id,
+            target_type: 'domain'
+          };
+          def.resolve(Activity.query(domainQueryPrams).$promise);
+        } else {
+          def.resolve($q.when(null));
+        }
+        return def.promise;
+      }
+
+      /**
+       * @name  actionPreparingRequestPurgeEvents
+       * @description
+       *    Action for preparing to get events (activities) only type 'purge'
+       *    Attention: target_id - is Domain ID
+       *
+       * @param  {Object} options
+       * @return {Promise}
+       */
+      function actionPreparingRequestPurgeEvents(options) {
+        var def = $q.defer();
+        if (!!options.domain_id) {
+          var domainQueryPrams = {
+            from_timestamp: options.from_timestamp,
+            to_timestamp: options.to_timestamp,
+            target_id: options.domain_id,
+            target_type: 'purge'
+          };
+          def.resolve(Activity.query(domainQueryPrams).$promise);
+        } else {
+          def.resolve($q.when(null));
+        }
+        return def.promise;
+      }
+      // Async call all needed data
+      return $q.all([
+          actionPreparingRequestDomainEvents(options),
+          actionPreparingRequestSSLCertEvents(options),
+          actionPreparingRequestPurgeEvents(options)
+        ])
+        .then(function clearData(requests) {
+          return $q.all(requests).then(function(results) {
+            if (results[0] !== null && !!results[0].data) {
+              results[0].data = _.filter(results[0].data, function(item) {
+                if (item.activity_target === 'domain' && item.activity_type === 'publish') {
+                  return item;
+                }
+              });
+            }
+            return results;
+          });
+        })
+        .then(function(dataAllRequests) {
+          // NOTE: create series data
           var serie = {
             name: 'Events',
             data: [],
-            type: 'flags', //'scatter',
+            type: 'flags',
             // color: '#333333',
             shape: 'circlepin',
             states: {
@@ -55,7 +155,7 @@
             },
             point: {
               events: {
-                click: function() {
+                click: function clickOnPointWithEventInfo() {
                   showEventDetails(this.options.total);
                 }
               }
@@ -84,46 +184,34 @@
             //   color: 'white'
             // },
           };
-          // - Cache purges
-          // - Domain configuration changes (publishes)
-          // - SSL Cert
-          angular.forEach(data.data, function(item) {
-            if (item.activity_target === 'purge' ||
-              (item.activity_target === 'domain' && item.activity_type === 'publish') ||
-              item.activity_target === 'sslcert') {
-              // Skip events not for domain
-              if (!!options.domain_name) {
-                if (((item.activity_target === 'domain' && item.activity_type === 'publish') ||
-                    item.activity_target === 'purge') && item.target_name !== options.domain_name) {
-                  return;
-                }
-              }
-              // Set color for activity_target
-              var marker = {
-                fillColor: constEventsColor[item.activity_target],
-                radius: 6
-              };
-              var eventPointData = {
-                id: item.activity_target + '_' + item.datetime,
-                name: item.activity_target,
-                activity_target: item.activity_target,
-                user_type: item.user_type,
-                total: item,
-                title: item.activity_target[0].toUpperCase(),
-                y: 0,
-                x: item.datetime,
-                marker: marker
-              };
-              serie.data.push(eventPointData);
+          angular.forEach(dataAllRequests, function(data) {
+            if (data !== null) {
+              angular.forEach(data.data, function addPointsToSerie(item) {
+                // Set color for activity_target name
+                var marker = {
+                  fillColor: constEventsColor[item.activity_target],
+                  radius: 6
+                };
+                var eventPointData = {
+                  id: item.activity_target + '_' + item.datetime,
+                  name: item.activity_target,
+                  activity_target: item.activity_target,
+                  user_type: item.user_type,
+                  total: item,
+                  title: item.activity_target[0].toUpperCase(),
+                  y: 0,
+                  x: item.datetime,
+                  marker: marker
+                };
+                serie.data.push(eventPointData);
+
+              });
             }
           });
-          return $q.when(serie);
-        }, function() {
-          return $q.when(serie);
+          return serie;
         });
     }
 
-    //
     /**
      * Show modal dialog with log details
      *
@@ -153,4 +241,4 @@
       return modalInstance.result;
     }
   }
-})(angular);
+})(angular, moment, _);

@@ -104,11 +104,11 @@
        * @type {Object}
        */
       LOGSHIPPERS_DESTINATIONA_TYPES: {
-        Syslog: 'Syslog',
+        // Syslog: 'Syslog',
         s3: 'S3',
         ftp: 'FTP',
         sftp: 'SFTP',
-        logstash: 'Logstash',
+        // logstash: 'Logstash',
         elasticsearch: 'Elasticsearch'
       },
       /**
