@@ -31,7 +31,7 @@
                 <p class="text-info" ng-show="isZeroVersionModified">Version "0" is the currently modified but not yet published domain configuration</p>
               </div>
               <div class="col-md-6">
-                <select name="compareVersions" id="compareVersions" class="form-control" ng-disabled="_loading" ng-model="compareVersion" ng-change="onChangeCompareVersion()" ng-options="ver.last_published_domain_version as format(ver) for ver in versions " ng-disabled="currentVersion==null || currentVersion==''">
+                <select name="compareVersions" id="compareVersions" class="form-control" ng-model="compareVersion" ng-change="onChangeCompareVersion()" ng-options="ver.last_published_domain_version as format(ver) for ver in versions | filter:{ last_published_domain_version: '!'+currentVersion}" ng-disabled="_loading || currentVersion==null || currentVersion==''">
                   <option value="">Please Select Domain Configuration Version To Compare With</option>
                 </select>
               </div>
