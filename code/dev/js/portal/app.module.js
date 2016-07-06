@@ -33,7 +33,8 @@
     'ngMessages',
     'ngAnimate',
     'toaster',
-    'angular-loading-bar'
+    'angular-loading-bar',
+    'revapm.Portal.DNSZones'
   ]);
 
 })();
