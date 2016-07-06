@@ -184,9 +184,16 @@
                     lm_rtt_min_ = item.lm_rtt_min_ms;
                   }
                   hits_total_ += item.requests;
-                  series[0].data.push(item.lm_rtt_avg_ms);
-                  series[1].data.push(item.lm_rtt_min_ms);
-                  series[2].data.push(item.lm_rtt_max_ms);
+                  if ( item.requests ) {
+                    series[0].data.push(item.lm_rtt_avg_ms);
+                    series[1].data.push(item.lm_rtt_min_ms);
+                    series[2].data.push(item.lm_rtt_max_ms);
+                  } else {
+                    series[0].data.push( null );
+                    series[1].data.push( null );
+                    series[2].data.push( null );
+                  }
+
                 });
                 lm_rtt_avg_ /= data.data.length;
                 $scope.traffic = {
