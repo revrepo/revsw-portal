@@ -74,6 +74,7 @@
 
         $scope.chartOptions = {
           chart: {
+            type: 'column',
             events: {
               redraw: function() {
                 if (info_) {
