@@ -3,10 +3,10 @@
 
   angular
     .module('revapm.Portal.Reports')
-    .directive('hitsCacheChart', histCacheChartDirective);
+    .directive('lmRttChart', lmRttChartDirective);
 
   /*@ngInject*/
-  function histCacheChartDirective() {
+  function lmRttChartDirective() {
 
     return {
       restrict: 'AE',
@@ -17,11 +17,11 @@
         flOs: '=',
         flDevice: '=',
         flBrowser: '=',
-        filtersSets: '=',
-        hideFilters: '='
+        filtersSets: '='
       },
       /*@ngInject*/
-      controller: function($scope, Stats, $q, Util, filterGeneratorService) {
+      controller: function($scope, Stats, Util) {
+
         var _filters_field_list = ['from_timestamp', 'to_timestamp', 'country', 'device', 'os', 'browser'];
 
         function generateFilterParams(filters) {
@@ -44,9 +44,8 @@
           });
           return params;
         }
-
-        $scope.heading = 'Edge Cache Efficiency Hits';
         $scope._loading = false;
+        $scope.heading = 'Last Mile Round Trip Time Latency';
         $scope.filters = {
           from_timestamp: moment().subtract(1, 'days').valueOf(),
           to_timestamp: Date.now()
@@ -55,21 +54,22 @@
         if ($scope.filtersSets) {
           _.extend($scope.filters, $scope.filtersSets);
         }
+
         $scope.traffic = {
           labels: [],
-          series: [{
-            name: 'Cache Hit',
-            data: []
-          }, {
-            name: 'Cache Miss',
-            data: []
-          }]
+          series: [
+            { name: 'Average', data: [] },
+            { name: 'Min', data: [] },
+            { name: 'Max', data: [] }
+          ]
         };
 
         //  ---------------------------------
         var info_ = null,
-          hit_ = 0,
-          miss_ = 0,
+          lm_rtt_avg_ = 0,
+          lm_rtt_max_ = 0,
+          lm_rtt_min_ = 0,
+          hits_total_ = 0,
           tickInterval_ = 10;
 
         $scope.chartOptions = {
@@ -80,18 +80,12 @@
                   info_.destroy();
                   info_ = null;
                 }
-                var rel_hit = 0,
-                  rel_miss = 0;
-                if ((miss_ + hit_) !== 0) {
-                  rel_hit = Math.round(hit_ * 1000 / (miss_ + hit_)) / 10;
-                  rel_miss = Math.round(miss_ * 1000 / (miss_ + hit_)) / 10;
-                }
                 info_ = this /*chart*/ .renderer
-                  .label('Cache Hits <span style="font-weight: bold; color: #3c65ac;">' + Util.formatNumber(hit_) +
-                    '</span> Requests, <span style="font-weight: bold; color: #3c65ac;">' + rel_hit +
-                    '</span>%<br> Cache Miss <span style="font-weight: bold; color: darkred;">' + Util.formatNumber(miss_) +
-                    '</span> Requests, <span style="font-weight: bold; color: darkred;">' + rel_miss +
-                    '</span>%',
+                  .label('LM RTT Avg <span style="font-weight: bold; color: #3c65ac;">' + Util.formatNumber(Math.round(lm_rtt_avg_)) +
+                    '</span>ms, Max <span style="font-weight: bold; color: #3c65ac;">' + Util.formatNumber(Math.round(lm_rtt_max_)) +
+                    '</span>ms, Min <span style="font-weight: bold; color: #3c65ac;">' + Util.formatNumber(Math.round(lm_rtt_min_)) +
+                    '</span>ms<br>Hits Total <span style="font-weight: bold; color: #3c65ac;">' + Util.formatNumber(hits_total_) +
+                    '</span>',
                     this.xAxis[0].toPixels(0), 3, '', 0, 0, true /*html*/ )
                   .css({
                     color: '#444'
@@ -110,7 +104,7 @@
           },
           yAxis: {
             title: {
-              text: 'Requests Per Second'
+              text: 'Latency, ms'
             },
             labels: {
               formatter: function() {
@@ -135,86 +129,37 @@
           tooltip: {
             formatter: function() {
               return this.key.tooltip + '<br/>' +
-                this.series.name + ': <strong>' + Util.formatNumber(this.y, 3) + '</strong>';
+                this.series.name + ': <strong>' + Util.formatNumber(this.y) + '</strong>ms';
             }
           }
         };
 
-        /**
-         * @name Subscribe for filters change
-         * @kind call function
-         * @params {Object} scope
-         * @params {function} callback function
-         */
-        filterGeneratorService.subscribeOnFilterChangeEvent($scope, callbackOnGlobalFilterChange);
-
-        /**
-         * @name callbackOnGlobalFilterChange
-         * @desc triggers when global filter changes
-         * @kind function
-         * @params {Object} Event object
-         * @params {Object} Data passed with event
-         */
-        function callbackOnGlobalFilterChange($event, eventDataObject) {
-          //$scope.updateFilters();
-          if (!$scope.filters) {
-            $scope.filters = {};
-          }
-
-          _.forIn(eventDataObject.data, function(value, key) {
-            $scope.filters[key] = value;
-          });
-
-          //clear all empty fields in the filter object
-          _.forIn($scope.filters, function(value, key) {
-            if (!eventDataObject.data[key]) {
-              delete $scope.filters[key];
-            }
-          });
-
-
-          $scope.reload();
-        }
-
+        //  ---------------------------------
         $scope.reload = function() {
           if (!$scope.ngDomain || !$scope.ngDomain.id) {
             return;
           }
-
           $scope._loading = true;
-
-          $q.all([
-
-              Stats.traffic(angular.merge({
-                domainId: $scope.ngDomain.id
-              }, generateFilterParams($scope.filters), {
-                cache_code: 'HIT'
-              })).$promise,
-
-              Stats.traffic(angular.merge({
-                domainId: $scope.ngDomain.id
-              }, generateFilterParams($scope.filters), {
-                cache_code: 'MISS'
-              })).$promise
-
-            ])
+          Stats.lm_rtt_stats(angular.merge({
+              domainId: $scope.ngDomain.id
+            }, generateFilterParams($scope.filters)))
+            .$promise
             .then(function(data) {
-              var interval = data[0].metadata.interval_sec || 1800;
-              var offset = interval * 1000;
-              var labels = [];
-              var series = [{
-                name: 'Cache Hit',
-                data: []
-              }, {
-                name: 'Cache Miss',
-                data: []
-              }];
 
-              hit_ = miss_ = 0;
-              if (data[0].data && data[0].data.length > 0) {
-                data[0].data.forEach(function(item, idx, items) {
+              lm_rtt_avg_ = lm_rtt_max_ = hits_total_ = 0;
+              if (data.data && data.data.length > 0) {
 
-                  // labels.push(moment(item.time + offset /*to show the _end_ of interval instead of begin*/ ).format('MMM Do YY h:mm'));
+                lm_rtt_min_ = 1000000;
+                var interval = data.metadata.interval_sec || 1800;
+                var offset = interval * 1000;
+                var series = [
+                  { name: 'Average', data: [] },
+                  { name: 'Min', data: [], visible: false },
+                  { name: 'Max', data: [], visible: false }
+                ];
+                var labels = [];
+                data.data.forEach(function(item, idx, items) {
+
                   var val = moment(item.time + offset);
                   var label;
                   if (idx % tickInterval_) {
@@ -231,26 +176,24 @@
                     label: label
                   });
 
-                  hit_ += item.requests;
-                  series[0].data.push(item.requests / interval);
+                  lm_rtt_avg_ += item.lm_rtt_avg_ms;
+                  if (item.lm_rtt_max_ms > lm_rtt_max_) {
+                    lm_rtt_max_ = item.lm_rtt_max_ms;
+                  }
+                  if (item.lm_rtt_min_ms < lm_rtt_min_) {
+                    lm_rtt_min_ = item.lm_rtt_min_ms;
+                  }
+                  hits_total_ += item.requests;
+                  series[0].data.push(item.lm_rtt_avg_ms);
+                  series[1].data.push(item.lm_rtt_min_ms);
+                  series[2].data.push(item.lm_rtt_max_ms);
                 });
-                if (hit_ === 0) {
-                  series[0].data.length = 0;
-                }
+                lm_rtt_avg_ /= data.data.length;
+                $scope.traffic = {
+                  labels: labels,
+                  series: series
+                };
               }
-              if (data[1].data && data[1].data.length > 0) {
-                data[1].data.forEach(function(item) {
-                  miss_ += item.requests;
-                  series[1].data.push(item.requests / interval);
-                });
-                if (miss_ === 0) {
-                  series[1].data.length = 0;
-                }
-              }
-              $scope.traffic = {
-                labels: labels,
-                series: series
-              };
             })
             .finally(function() {
               $scope._loading = false;
