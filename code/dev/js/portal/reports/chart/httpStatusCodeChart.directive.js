@@ -78,7 +78,7 @@
                   .label( codeStats.reduce( function( prev, item ) {
                       return prev +
                         'Code <span style="font-weight: bold; color: #3c65ac;">' + item.code +
-                        '</span>: <span style="font-weight: bold">' + item.requests +
+                        '</span>: <span style="font-weight: bold">' + Util.formatNumber( item.requests ) +
                         '</span> Requests or <span style="font-weight: bold">' + item.percent.toFixed( 2 ) +
                         '</span> %<br>';
                       }, '' ),
