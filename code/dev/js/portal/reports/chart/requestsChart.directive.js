@@ -9,7 +9,7 @@
     'ngInject';
     var directive = {
       restrict: 'AE',
-      templateUrl: 'parts/reports/charts/requests.html',
+      templateUrl: 'parts/reports/charts/traffic-common.html',
       scope: {
         ngDomain: '=',
         flCountry: '=',
@@ -52,7 +52,8 @@
     }
 
     $scope._loading = false;
-    $scope.reloadTrafficStats = reloadTrafficStats;
+    $scope.heading = 'Bandwidth Usage';
+    $scope.reload = reload;
 
     $scope.filters = {
       from_timestamp: moment().subtract(1, 'days').valueOf(),
@@ -84,9 +85,10 @@
               '</span> Max <span style="font-weight: bold; color: #3c65ac;">' + Util.convertTraffic(traffic_max_) +
               '</span><br>Traffic Total <span style="font-weight: bold; color: #3c65ac;">' + Util.humanFileSizeInGB(traffic_total_, 3) +
               '</span>';
+            var x = this.xAxis[0].toPixels(this.xAxis[0].min)+3;
             info_ = this /*chart*/ .renderer
               .label(_text,
-                3 /*x*/ , 3 /*y*/ , '' /*img*/ , 0, 0, true /*html*/ )
+                x /*x*/ , 3 /*y*/ , '' /*img*/ , 0, 0, true /*html*/ )
               .css({
                 color: '#444'
               })
@@ -128,16 +130,16 @@
       if (!$scope.ngDomain) {
         return;
       }
-      reloadTrafficStats();
+      reload();
     });
 
     //////////////////
     /**
-     * @name reloadTrafficStats
+     * @name reload
      * @desc reload traffic stats
      * @kind function
      */
-    function reloadTrafficStats() {
+    function reload() {
       if (!$scope.ngDomain || !$scope.ngDomain.id) {
         return;
       }
@@ -213,13 +215,15 @@
      * @name  addEventsData
      * @description
      *   Add to series new serie with Events
-     * @param {[type]} series [description]
+     * @param {Array} series
      */
     function addEventsData(series) {
+      var filterParams = generateFilterParams($scope.filters);
       var options = {
-        from_timestamp: generateFilterParams($scope.filters).from_timestamp,
-        to_timestamp: generateFilterParams($scope.filters).to_timestamp,
+        from_timestamp: filterParams.from_timestamp,
+        to_timestamp: filterParams.to_timestamp,
         account_id: $scope.ngDomain.account_id,
+        domain_id: $scope.ngDomain.id,
         domain_name: $scope.ngDomain.domain_name
       };
       return EventsSerieDataService.getEventsSerieDataForDomain(options)

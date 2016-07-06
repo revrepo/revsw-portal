@@ -24,7 +24,6 @@
     'ui.bootstrap.tooltip',
     'ui.bootstrap.popover',
     'hljs',
-    'oc.lazyLoad',
     'revapm.Portal.Dashboard',
     'datatables',
     'datatables.bootstrap',

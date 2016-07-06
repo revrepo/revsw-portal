@@ -46,7 +46,7 @@
         to_timestamp: now,
         status_codes: true
       }).$promise.then(function(data) {
-        // console.log( 'lists', data );
+        // console.log( 'lists', data.data );
         $scope.os = data.data.os;
         $scope.browser = data.data.browser;
         $scope.device = data.data.device;
