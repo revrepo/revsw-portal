@@ -10,7 +10,7 @@
 
     return {
       restrict: 'AE',
-      templateUrl: 'parts/reports/charts/request-status.html',
+      templateUrl: 'parts/reports/charts/traffic-common.html',
       scope: {
         ngDomain: '=',
         flCountry: '=',
@@ -45,6 +45,7 @@
           return params;
         }
 
+        $scope.heading = 'Success/Failure Request Status';
         $scope._loading = false;
         $scope.filters = {
           from_timestamp: moment().subtract(1, 'days').valueOf(),

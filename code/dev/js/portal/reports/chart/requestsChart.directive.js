@@ -9,7 +9,7 @@
     'ngInject';
     var directive = {
       restrict: 'AE',
-      templateUrl: 'parts/reports/charts/requests.html',
+      templateUrl: 'parts/reports/charts/traffic-common.html',
       scope: {
         ngDomain: '=',
         flCountry: '=',
@@ -52,7 +52,8 @@
     }
 
     $scope._loading = false;
-    $scope.reloadTrafficStats = reloadTrafficStats;
+    $scope.heading = 'Bandwidth Usage';
+    $scope.reload = reload;
 
     $scope.filters = {
       from_timestamp: moment().subtract(1, 'days').valueOf(),
@@ -123,16 +124,16 @@
       if (!$scope.ngDomain) {
         return;
       }
-      reloadTrafficStats();
+      reload();
     });
 
     //////////////////
     /**
-     * @name reloadTrafficStats
+     * @name reload
      * @desc reload traffic stats
      * @kind function
      */
-    function reloadTrafficStats() {
+    function reload() {
       if (!$scope.ngDomain || !$scope.ngDomain.id) {
         return;
       }

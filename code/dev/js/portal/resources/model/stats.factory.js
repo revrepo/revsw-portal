@@ -155,6 +155,13 @@
           count: 10
         }
       },
+
+      lm_rtt_stats: {
+        method: 'GET',
+        url: $config.API_URL + '/stats/lastmile_rtt_histo/:domainId',
+        params: {}
+      },
+
       gbt_country: {
         method: 'GET',
         url: $config.API_URL + '/stats/gbt/:domainId',
