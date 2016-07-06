@@ -73,8 +73,9 @@
       } else {
         if (!!stateParam.id && !stateParam.id) {
           $scope.params = $stateParams;
-          $scope.initEdit($stateParams.id);
+          // $scope.initEdit($stateParams.id);
         } else {
+          $scope.params = $stateParams;
           $scope.setDefaultAccountId();
         }
       }
@@ -118,9 +119,9 @@
       delete model.expires_at;
       delete model.zone;
       delete model.records;
-
+      delete model.account_id;
       // delete model.last_published_ssl_config_version;
-      model.zone_body ={};
+      // model.zone_body ={};
       return model;
     };
 
@@ -147,7 +148,7 @@
     $scope.getDNSZone = function(id) {
       $scope.get(id)
         .catch(function(err) {
-          $scope.alertService.danger('Could not load SSL certificate details');
+          $scope.alertService.danger('Could not load DNS Zone details');
         });
     };
     /**
