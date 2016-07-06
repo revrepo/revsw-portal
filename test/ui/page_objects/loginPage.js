@@ -29,6 +29,9 @@ var Login = {
     buttons: {
       signIn: {
         className: 'signin'
+      },
+      forgotPassword: {
+        id: 'forgot_password'
       }
     },
     links: {
@@ -97,6 +100,18 @@ var Login = {
     return element(by.partialLinkText(this.locators.links.signUp.linkText));
   },
 
+  /**
+   * ### Login.getForgotPasswordBtn()
+   *
+   * Returns the reference to the `Forgot Password?` button (Selenium WebDriver
+   * Element) from the Login page from the Portal app.
+   *
+   * @returns {Object} Selenium WebDriver Element
+   */
+  getForgotPasswordBtn: function () {
+    return element(by.id(this.locators.buttons.forgotPassword.id));
+  },
+
   // ## Methods to interact with the components from the Page Object
 
   /**
@@ -152,6 +167,19 @@ var Login = {
   clickSignUp: function () {
     return this
       .getSignUpLnk()
+      .click();
+  },
+
+  /**
+   * ### Login.clickForgotPassword()
+   *
+   * Triggers a click on the `Forgot Password?` button
+   *
+   * @returns {Object} Promise
+   */
+  clickForgotPassword: function () {
+    return this
+      .getForgotPasswordBtn()
       .click();
   },
 
