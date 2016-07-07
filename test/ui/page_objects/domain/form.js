@@ -49,6 +49,9 @@ var DomainForm = {
       },
       originServerLocation: {
         model: 'model.origin_server_location_id'
+      },
+      sslCert: {
+        model: 'model.ssl_cert_id'
       }
     }
   },
@@ -79,6 +82,19 @@ var DomainForm = {
   getCompanyNameDDown: function () {
     return new DropDownWidget(
       by.model(this.locators.dropDowns.companyName.model));
+  },
+
+  /**
+   * ### DomainForm.getSslCertDDown()
+   *
+   * Returns the reference to the `SSL Certificate` drop-down (Selenium WebDriver
+   * Element)
+   *
+   * @returns {Selenium WebDriver Element}
+   */
+  getSslCertDDown: function () {
+    return element(
+        by.model(this.locators.dropDowns.sslCert.model));
   },
 
   /**
@@ -185,7 +201,7 @@ var DomainForm = {
       .getDomainNameTxtIn()
       .sendKeys(domainName);
   },
-
+  
   /**
    * ### DomainForm.setCompanyName()
    *
@@ -201,6 +217,21 @@ var DomainForm = {
       .setValue(companyName);
   },
 
+  /**
+   * ### DomainForm.setCompanyName()
+   *
+   * Sets a new value for `Company Name` drop-down
+   *
+   * @param {String} companyName
+   *
+   * @returns {Promise}
+   */
+  setSslCert: function (sslCert) {
+    return this
+        .getSslCertDDown()
+        .sendKeys(sslCert);
+  },
+  
   /**
    * ### DomainForm.setOriginServer()
    *

@@ -69,7 +69,8 @@ var Constants = {
     },
     web: {
       DOMAINS: 'Domains',
-      PURGE_CACHE: 'Purge Cache'
+      PURGE_CACHE: 'Purge Cache',
+      SSL_CERTIFICATES: 'SSL Certificates'
     },
     analytics: {
       PROXY_TRAFFIC: 'Proxy Traffic',
