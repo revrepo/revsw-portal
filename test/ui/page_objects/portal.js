@@ -27,6 +27,7 @@ var Header = require('./common/header');
 var SideBar = require('./common/sidebar');
 var Alerts = require('./common/alerts');
 var Dialog = require('./common/dialog');
+var GlobalSearcher = require('./common/globalSearcher');
 
 // Requiring page objects
 var LoginPage = require('./loginPage');
@@ -93,6 +94,7 @@ var Portal = {
   sideBar: SideBar,
   alerts: Alerts,
   dialog: Dialog,
+  globalSearcher: GlobalSearcher,
 
   // Pages that compound this Portal app/site
   loginPage: LoginPage,

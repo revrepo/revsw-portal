@@ -16,25 +16,27 @@
  * from Rev Software, Inc.
  */
 
-// # Searcher Page Object
+// # Global Searcher Page Object
 
 // This `Searcher` Page Object abstracts all operations or actions that a common
-// user could do with the Filter component from any list table from the
-// Portal app.
-var Searcher = {
+// user could do with the Global Filter component from Portal app.
+var GlobalSearcher = {
 
   // ## Properties
 
   // Locators specific to HTML elements from this page object
   locators: {
+    container: {
+      css: 'search'
+    },
     textInputs: {
       searchCriteria: {
-        css: 'input#search'
+        model: 'searchTerm'
       }
     },
     buttons: {
       reset: {
-        css: 'input#search + i.glyphicon-remove'
+        css: 'i.glyphicon-remove'
       }
     }
   },
@@ -43,36 +45,50 @@ var Searcher = {
   // Element)
 
   /**
-   * ### Searcher.getSearchCriteriaTxtIn()
+   * ### GlobalSearcher.getContainerEl()
    *
-   * Returns the reference to the filter `Text Field` from the searcher
+   * Returns the container element for the Global Searcher component
+   *
+   * @returns {Object} Selenium WebDriver Element
+   */
+  getContainerEl: function () {
+    return element(by.css(this.locators.container.css));
+  },
+
+  /**
+   * ### GlobalSearcher.getSearchCriteriaTxtIn()
+   *
+   * Returns the reference to the filter `Text Field` from the Global Searcher
    * component
    *
    * @returns {Object} Selenium WebDriver Element
    */
   getSearchCriteriaTxtIn: function () {
-    return element(by.css(this.locators.textInputs.searchCriteria.css));
+    return this
+      .getContainerEl()
+      .element(by.model(this.locators.textInputs.searchCriteria.model));
   },
 
   /**
-   * ### Searcher.getResetBtn()
+   * ### GlobalSearcher.getResetBtn()
    *
-   * Returns the reference to the `Reset` button from the Filter/searcher
+   * Returns the reference to the `Reset` button from the Global Searcher
    * component
    *
    * @returns {Object} Selenium WebDriver Element
    */
   getResetBtn: function () {
-    return element(by.css(this.locators.buttons.reset.css));
+    return this
+      .getContainerEl()
+      .element(by.css(this.locators.buttons.reset.css));
   },
 
   // ## Methods to interact with the Searcher/Filter component
 
   /**
-   * ### Searcher.setSearchCriteria()
+   * ### GlobalSearcher.setSearchCriteria()
    *
-   * Filters (types a search criteria) in the filter `text field` in order to
-   * get filtered data in the table associated to this searcher component.
+   * Filters (types a search criteria) in the filter `text field`.
    *
    * @param {String} criteria, the filter criteria
    *
@@ -85,10 +101,10 @@ var Searcher = {
   },
 
   /**
-   * ### Searcher.getSearchCriteria()
+   * ### GlobalSearcher.getSearchCriteria()
    *
    * Returns the current search criteria set in the filter `text field`
-   * from the searcher component
+   * from the Global Searcher component
    *
    * @returns {Object} Promise
    */
@@ -99,10 +115,10 @@ var Searcher = {
   },
 
   /**
-   * ### Searchers.clearSearchCriteria()
+   * ### GlobalSearcher.clearSearchCriteria()
    *
    * Types required times the BACKSPACE key in order to delete the current
-   * search criteria written in the `text field` from the Filter/Searcher
+   * search criteria written in the `text field` from the Global Searcher
    * component
    *
    * @returns {Object} Promise
@@ -121,9 +137,9 @@ var Searcher = {
   },
 
   /**
-   * ### Searchers.clickReset()
+   * ### GlobalSearcher.clickReset()
    *
-   * Triggers a click in the `reset` button from the Filter/Searcher component
+   * Triggers a click in the `reset` button from the Global Searcher component
    *
    * @returns {Object} Promise
    */
@@ -131,7 +147,24 @@ var Searcher = {
     return this
       .getResetBtn()
       .click();
+  },
+
+  // ## Helper Methods
+
+  /**
+   * ### GlobalSearcher.clickReset()
+   *
+   * Helper method to put search criteria and hit ENTER key on Global Search
+   * component.
+   *
+   * @param searchCriteria
+   * @returns {Object} Promise
+   */
+  search: function (searchCriteria) {
+    return this
+      .setSearchCriteria(searchCriteria)
+      .sendKeys(protractor.Key.ENTER);
   }
 };
 
-module.exports = Searcher;
+module.exports = GlobalSearcher;

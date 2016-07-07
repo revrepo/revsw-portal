@@ -38,6 +38,14 @@ var Dialog = {
         },
         cancel: {
           css: 'button[ng-click="cancel()"]'
+        },
+        submit: {
+          css: '.btn-primary'
+        }
+      },
+      textInputs: {
+        email: {
+          id: 'email'
         }
       }
     }
@@ -66,7 +74,7 @@ var Dialog = {
    *
    * Return the reference to the Modal Dialog (Selenium WebDriver Element)
    *
-   * @returns {Selenium WebDriver Element}
+   * @returns {Object} Selenium WebDriver Element
    */
   getModalEl: function () {
     return element(by.className(this.locators.modal.className));
@@ -78,7 +86,7 @@ var Dialog = {
    * Return the reference to the `OK` button (Selenium WebDriver Element) from
    * the Modal Dialog component from Portal app
    *
-   * @returns {Selenium WebDriver Element}
+   * @returns {Object} Selenium WebDriver Element
    */
   getOkBtn: function () {
     return this
@@ -92,7 +100,7 @@ var Dialog = {
    * Return the reference to the `Proceed` button (Selenium WebDriver Element)
    * from the Modal Dialog component from Portal app
    *
-   * @returns {Selenium WebDriver Element}
+   * @returns {Object} Selenium WebDriver Element
    */
   getProceedBtn: function () {
     return this
@@ -106,7 +114,7 @@ var Dialog = {
    * Return the reference to the `Cancel` button (Selenium WebDriver Element)
    * from the Modal Dialog component from Portal app
    *
-   * @returns {Selenium WebDriver Element}
+   * @returns {Object} Selenium WebDriver Element
    */
   getCancelBtn: function () {
     return this
@@ -115,11 +123,39 @@ var Dialog = {
   },
 
   /**
+   * ### Dialog.getSubmitBtn()
+   *
+   * Return the reference to the `Submit` button (Selenium WebDriver Element)
+   * from the Modal Dialog component from Portal app
+   *
+   * @returns {Object} Selenium WebDriver Element
+   */
+  getSubmitBtn: function () {
+    return this
+      .getModalEl()
+      .element(by.css(this.locators.modal.buttons.submit.css));
+  },
+
+  /**
+   * ### Dialog.getEmailTxtIn()
+   *
+   * Return the reference to the `email` text input (Selenium WebDriver Element)
+   * from the Modal Dialog component from Portal app
+   *
+   * @returns {Object} Selenium WebDriver Element
+   */
+  getEmailTxtIn: function () {
+    return this
+      .getModalEl()
+      .element(by.id(this.locators.modal.textInputs.email.id));
+  },
+
+  /**
    * ### Dialog.clickOk()
    *
    * Triggers a click action on the `OK` button fro the Modal Dialog component
    *
-   * @returns {Promise}
+   * @returns {Object} Promise
    */
   clickOk: function () {
     return this
@@ -133,7 +169,7 @@ var Dialog = {
    * Triggers a click action on the `Proceed` button fro the Modal Dialog
    * component
    *
-   * @returns {Promise}
+   * @returns {Object} Promise
    */
   clickProceed: function () {
     return this
@@ -144,15 +180,43 @@ var Dialog = {
   /**
    * ### Dialog.clickCancel()
    *
-   * Triggers a click action on the `Cancel` button fro the Modal Dialog
+   * Triggers a click action on the `Cancel` button from the Modal Dialog
    * component
    *
-   * @returns {Promise}
+   * @returns {Object} Promise
    */
   clickCancel: function () {
     return this
       .getCancelBtn()
       .click();
+  },
+
+  /**
+   * ### Dialog.clickSubmit()
+   *
+   * Triggers a click action on the `Submit` button from the Modal Dialog
+   * component
+   *
+   * @returns {Object} Promise
+   */
+  clickSubmit: function () {
+    return this
+      .getSubmitBtn()
+      .click();
+  },
+
+  /**
+   * ### Dialog.setEmail()
+   *
+   * Sets value in the `email` button from the Modal Dialog component
+   *
+   * @param value
+   * @returns {Object} Promise
+   */
+  setEmail: function (value) {
+    return this
+      .getEmailTxtIn()
+      .sendKeys(value);
   }
 };
 
