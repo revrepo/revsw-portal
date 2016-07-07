@@ -32,10 +32,67 @@ body {
 .page-title {
   margin-bottom: 24px;
 }
-
+.left-panel {
+  transition: left ease-in-out 0.3s, padding ease-in-out 0.3s;
+  position: absolute;
+  left: 210px;
+  right:0;
+  top:0;
+  bottom: 0;
+}
 section[main] {
   overflow: auto;
   background-color: @app-color-grey-200;
+  height: 100%;
+  .drop-shadow {
+     position: absolute;
+     top: 0;
+     bottom: -6px;
+     right: 0;
+     left: 0;
+     box-shadow: inset 0px 5px 6px -3px rgba(0, 0, 0, 0.4);
+     height: 6px;
+     pointer-events: none;
+     -webkit-transition: opacity 0.5s;
+     transition: opacity 0.5s;
+     opacity: 1;
+  }
+  #mainPanel {
+    display: -ms-flexbox;
+    /* display: -webkit-flex; */
+    display: flex;
+    -ms-flex-direction: column;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    -ms-flex: 1 1 0.000000001px;
+    -webkit-flex: 1;
+    flex: 1;
+    -webkit-flex-basis: 0.000000001px;
+    flex-basis: 0.000000001px;
+    position: relative;
+  }
+  .paper-container{
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -ms-flex-direction: column;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    position: relative;
+    height: 100%;
+  }
+  #mainContainer {
+    width: 100%;
+    -ms-flex: 1 1 0.000000001px;
+    -webkit-flex: 1;
+    flex: 1;
+    -webkit-flex-basis: 0.000000001px;
+    flex-basis: 0.000000001px;
+    position: relative;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
 }
 
 .max-height-pre {
@@ -422,5 +479,20 @@ form,
   }
   &--success {
     color: @app-color-white;
+  }
+}
+@media (max-width: 980px) {
+  #scrim {
+     position: absolute;
+     top: 0;
+     right: 0;
+     bottom: 0;
+     left: 0;
+     opacity: 0;
+     transition: opacity ease-in-out 0.38s, visibility ease-in-out 0.38s;
+     background-color: rgba(0, 0, 0, 0.3);
+  }
+  .left-panel {
+    left: 0!important
   }
 }
