@@ -52,37 +52,19 @@ describe('Workflow', function () {
                     function () {
                         var testSslCert = DataProvider.generateSSLCertData();
                         testSslCert.account = ['API QA Reseller Company'];
-
                         var testDomain = DataProvider.generateDomain('sslTestDomain');
-
-                        var domainListPage = Portal.domains.listPage;
-                        var domainAddPage = Portal.domains.addPage;
-                        var domainEditPage = Portal.domains.editPage;
-                        var domainForm = domainEditPage.form;
-
                         Portal.createSSLCert(testSslCert);
-
                         Portal.goToDomains();
-
-                        domainListPage.clickAddNewDomain();
-                        domainAddPage.createDomain(testDomain);
-                        domainAddPage.clickBackToList();
-
-                        domainListPage.searchAndClickEdit(testDomain.name);
-                        domainForm.setSslCert(testSslCert.name);
-                        domainEditPage.clickUpdateDomain();
+                        Portal.domains.listPage.clickAddNewDomain();
+                        Portal.domains.addPage.createDomain(testDomain);
+                        Portal.domains.addPage.clickBackToList();
+                        Portal.domains.listPage.searchAndClickEdit(testDomain.name);
+                        Portal.domains.editPage.form.setSslCert(testSslCert.name);
+                        Portal.domains.editPage.clickUpdateDomain();
                         Portal.dialog.clickOk();
-                        domainEditPage.clickBackToList();
-
-                        // domainListPage.searchAndClickEdit(testDomain.name);
-                        //
-                        // var sslCertText = domainForm.getSslCert();
-                        // expect(sslCertText).toEqual(testSslCert.name);
-                        // domainEditPage.clickBackToList();
-
+                        Portal.domains.editPage.clickBackToList();
                         Portal.goToSslCert();
                         Portal.deleteSSLCert(testSslCert);
-
                         var alert = Portal.alerts.getFirst();
                         var expectedMsg = Constants.alertMessages.sslCerts.MSG_FAIL_DELETE;
                         expect(alert.getText()).toContain(expectedMsg);
@@ -92,39 +74,20 @@ describe('Workflow', function () {
                     function () {
                         var testSslCert = DataProvider.generateSSLCertData();
                         testSslCert.account = ['API QA Reseller Company'];
-
                         var testDomain = DataProvider.generateDomain('sslTestDomain');
-
-                        var domainListPage = Portal.domains.listPage;
-                        var domainAddPage = Portal.domains.addPage;
-                        var domainEditPage = Portal.domains.editPage;
-                        var domainForm = domainEditPage.form;
-
                         Portal.createSSLCert(testSslCert);
-
                         Portal.goToDomains();
-
-                        domainListPage.clickAddNewDomain();
-                        domainAddPage.createDomain(testDomain);
-                        domainAddPage.clickBackToList();
-
-                        domainListPage.searchAndClickEdit(testDomain.name);
-                        domainForm.setSslCert(testSslCert.name);
-                        domainEditPage.clickUpdateDomain();
+                        Portal.domains.listPage.clickAddNewDomain();
+                        Portal.domains.addPage.createDomain(testDomain);
+                        Portal.domains.addPage.clickBackToList();
+                        Portal.domains.listPage.searchAndClickEdit(testDomain.name);
+                        Portal.domains.editPage.form.setSslCert(testSslCert.name);
+                        Portal.domains.editPage.clickUpdateDomain();
                         Portal.dialog.clickOk();
-                        domainEditPage.clickBackToList();
-
-                        // domainListPage.searchAndClickEdit(testDomain.name);
-                        //
-                        // var sslCertText = domainForm.getSslCert();
-                        // expect(sslCertText).toEqual(testSslCert.name);
-                        // domainEditPage.clickBackToList();
-
+                        Portal.domains.editPage.clickBackToList();
                         Portal.deleteDomain(testDomain);
-
                         Portal.goToSslCert();
                         Portal.deleteSSLCert(testSslCert);
-
                         Portal.sslCerts.listPage.searcher.setSearchCriteria(testSslCert.name);
                         var tableRows = Portal.sslCerts.listPage.table.getRows();
                         expect(tableRows.count()).toEqual(0);

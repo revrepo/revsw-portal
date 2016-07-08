@@ -52,29 +52,17 @@ describe('Workflow', function () {
                     function () {
                         var testSslCert = DataProvider.generateSSLCertData();
                         testSslCert.account = ['API QA Reseller Company'];
-
                         var testDomain = DataProvider.generateDomain('sslTestDomain');
-
-                        var domainListPage = Portal.domains.listPage;
-                        var domainAddPage = Portal.domains.addPage;
-                        var domainEditPage = Portal.domains.editPage;
-                        var domainForm = domainEditPage.form;
-
                         Portal.createSSLCert(testSslCert);
-
                         Portal.goToDomains();
-
-                        domainListPage.clickAddNewDomain();
-                        domainAddPage.createDomain(testDomain);
-                        domainAddPage.clickBackToList();
-
-                        domainListPage.searchAndClickEdit(testDomain.name);
-                        domainForm.setSslCert(testSslCert.name);
-                        domainEditPage.clickUpdateDomain();
+                        Portal.domains.listPage.clickAddNewDomain();
+                        Portal.domains.addPage.createDomain(testDomain);
+                        Portal.domains.addPage.clickBackToList();
+                        Portal.domains.listPage.searchAndClickEdit(testDomain.name);
+                        Portal.domains.editPage.form.setSslCert(testSslCert.name);
+                        Portal.domains.editPage.clickUpdateDomain();
                         Portal.dialog.clickOk();
-
                         Portal.goToSslCert();
-
                         Portal.sslCerts.listPage.searcher.setSearchCriteria(testSslCert.name);
                         Portal.sslCerts.listPage.table
                             .getFirstRow()
@@ -82,52 +70,67 @@ describe('Workflow', function () {
                         var valueAdded = ' updated';
                         Portal.sslCerts.editPage.form.setCertName(valueAdded);
                         Portal.sslCerts.editPage.clickUpdate();
-
                         Portal.dialog.clickOk();
                         var updatedCertName = Portal.sslCerts.editPage.form.getCertName();
-
                         Portal.goToSslCert();
-                        
                         Portal.sslCerts.listPage.searcher.clearSearchCriteria();
                         Portal.sslCerts.listPage.searcher.setSearchCriteria(updatedCertName);
                         var tableRows = Portal.sslCerts.listPage.table.getRows();
                         expect(tableRows.count()).toEqual(1);
-
                         Portal.goToDomains();
-
                         Portal.deleteDomain(testDomain);
-
                         Portal.goToSslCert();
                         Portal.deleteSSLCert(testSslCert);
                     });
 
-                xit('should update sslCert name on domain form when sslCert name changed',
+                it('should disappear from domain form when sslCert account changed',
                     function () {
                         var testSslCert = DataProvider.generateSSLCertData();
                         testSslCert.account = ['API QA Reseller Company'];
-
                         var testDomain = DataProvider.generateDomain('sslTestDomain');
-
-                        var domainListPage = Portal.domains.listPage;
-                        var domainAddPage = Portal.domains.addPage;
-                        var domainEditPage = Portal.domains.editPage;
-                        var domainForm = domainEditPage.form;
-
                         Portal.createSSLCert(testSslCert);
-
                         Portal.goToDomains();
-
-                        domainListPage.clickAddNewDomain();
-                        domainAddPage.createDomain(testDomain);
-                        domainAddPage.clickBackToList();
-
-                        domainListPage.searchAndClickEdit(testDomain.name);
-                        domainForm.setSslCert(testSslCert.name);
-                        domainEditPage.clickUpdateDomain();
+                        Portal.domains.listPage.clickAddNewDomain();
+                        Portal.domains.addPage.createDomain(testDomain);
+                        Portal.domains.addPage.clickBackToList();
+                        Portal.domains.listPage.searchAndClickEdit(testDomain.name);
+                        Portal.domains.editPage.form.setSslCert(testSslCert.name);
+                        Portal.domains.editPage.clickUpdateDomain();
                         Portal.dialog.clickOk();
-
                         Portal.goToSslCert();
+                        Portal.sslCerts.listPage.searcher.setSearchCriteria(testSslCert.name);
+                        Portal.sslCerts.listPage.table
+                            .getFirstRow()
+                            .clickEdit();
+                        var changedAccName = ['Portal UI QA Company'];
+                        Portal.sslCerts.editPage.form.setAccount(changedAccName);
+                        Portal.sslCerts.editPage.clickUpdate();
+                        Portal.dialog.clickOk();
+                        Portal.goToDomains();
+                        Portal.domains.listPage.searchAndClickEdit(testDomain.name);
+                        var sslCertText = Portal.domains.editPage.form.getSslCert();
+                        expect(sslCertText).toEqual('Default RevAPM SSL Certificate');
+                        Portal.domains.editPage.clickBackToList();
+                        Portal.deleteDomain(testDomain);
+                        Portal.goToSslCert();
+                        Portal.deleteSSLCert(testSslCert);
+                    });
 
+                it('should update sslCert name on domain form when sslCert name changed',
+                    function () {
+                        var testSslCert = DataProvider.generateSSLCertData();
+                        testSslCert.account = ['API QA Reseller Company'];
+                        var testDomain = DataProvider.generateDomain('sslTestDomain');
+                        Portal.createSSLCert(testSslCert);
+                        Portal.goToDomains();
+                        Portal.domains.listPage.clickAddNewDomain();
+                        Portal.domains.addPage.createDomain(testDomain);
+                        Portal.domains.addPage.clickBackToList();
+                        Portal.domains.listPage.searchAndClickEdit(testDomain.name);
+                        Portal.domains.editPage.form.setSslCert(testSslCert.name);
+                        Portal.domains.editPage.clickUpdateDomain();
+                        Portal.dialog.clickOk();
+                        Portal.goToSslCert();
                         Portal.sslCerts.listPage.searcher.setSearchCriteria(testSslCert.name);
                         Portal.sslCerts.listPage.table
                             .getFirstRow()
@@ -135,20 +138,14 @@ describe('Workflow', function () {
                         var valueAdded = ' updated';
                         Portal.sslCerts.editPage.form.setCertName(valueAdded);
                         Portal.sslCerts.editPage.clickUpdate();
-
                         Portal.dialog.clickOk();
                         var updatedCertName = Portal.sslCerts.editPage.form.getCertName();
-
                         Portal.goToDomains();
-                        domainListPage.searchAndClickEdit(testDomain.name);
-
-                        var sslCertText = domainForm.getSslCert();
+                        Portal.domains.listPage.searchAndClickEdit(testDomain.name);
+                        var sslCertText = Portal.domains.editPage.form.getSslCert();
                         expect(sslCertText).toEqual(updatedCertName);
-                        domainEditPage.clickBackToList();
-
-
+                        Portal.domains.editPage.clickBackToList();
                         Portal.deleteDomain(testDomain);
-
                         Portal.goToSslCert();
                         Portal.deleteSSLCert(testSslCert);
                     });
