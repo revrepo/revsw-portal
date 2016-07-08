@@ -231,10 +231,10 @@
               }
               return $q.when(series);
             })
-            .then(function(data) {
-              addEventsData(data);
-              return data;
-            })
+            // .then(function(data) {
+            //   addEventsData(data);
+            //   return data;
+            // })
             .then(function setNewData(data) {
               // model better to update once
               $scope.traffic = {
