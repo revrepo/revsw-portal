@@ -188,6 +188,21 @@ var DomainForm = {
   },
 
   /**
+   * ### DomainForm.getSslCert()
+   *
+   * Gets the current value set for SSL Certificate.
+   *
+   * @returns {Promise}
+   */
+  getSslCert: function () {
+    return this
+        .getSslCertDDown()
+          .all(by.css('option[selected="selected"]'))
+            .last()
+              .getText();
+  },
+
+  /**
    * ### DomainForm.setDomainName()
    *
    * Sets a new value for `Domain Name` text field
@@ -218,9 +233,9 @@ var DomainForm = {
   },
 
   /**
-   * ### DomainForm.setCompanyName()
+   * ### DomainForm.setSslCert()
    *
-   * Sets a new value for `Company Name` drop-down
+   * Sets a new value for `SSL Certificate` drop-down
    *
    * @param {String} companyName
    *

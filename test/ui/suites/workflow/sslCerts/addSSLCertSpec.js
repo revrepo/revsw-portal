@@ -21,7 +21,7 @@ var Portal = require('./../../../page_objects/portal');
 var DataProvider = require('./../../../common/providers/data');
 var Constants = require('./../../../page_objects/constants');
 
-describe('Smoke', function () {
+describe('Workflow', function () {
 
   // Defining set of users for which all below tests will be run
   var users = [
@@ -34,53 +34,57 @@ describe('Smoke', function () {
       describe('Add SSL Cert', function () {
 
         beforeAll(function () {
+            Portal.signIn(user);
         });
 
         afterAll(function () {
+            Portal.signOut();
         });
 
         beforeEach(function () {
-          Portal.signIn(user);
-          Portal.goToSslCert();
+            Portal.goToSslCert();
         });
 
         afterEach(function () {
-          Portal.signOut();
+          
         });
 
         it('should create an ssl certificate and add to domain successfully',
             function () {
                 var testSslCert = DataProvider.generateSSLCertData();
-                testSslCert.account = 'API QA Reseller Company';
+                testSslCert.account = ['API QA Reseller Company'];
 
                 var testDomain = DataProvider.generateDomain('sslTestDomain');
 
-                var listPage = Portal.domains.listPage;
-                var addPage = Portal.domains.addPage;
-                var editPage = Portal.domains.editPage;
-                var domainForm = editPage.form;
+                var domainListPage = Portal.domains.listPage;
+                var domainAddPage = Portal.domains.addPage;
+                var domainEditPage = Portal.domains.editPage;
+                var domainForm = domainEditPage.form;
 
                 Portal.createSSLCert(testSslCert);
 
                 Portal.goToDomains();
 
-                listPage.clickAddNewDomain();
-                addPage.createDomain(testDomain);
-                addPage.clickBackToList();
+                domainListPage.clickAddNewDomain();
+                domainAddPage.createDomain(testDomain);
+                domainAddPage.clickBackToList();
 
-                listPage.searchAndClickEdit(testDomain.name);
+                domainListPage.searchAndClickEdit(testDomain.name);
                 domainForm.setSslCert(testSslCert.name);
-                editPage.clickUpdateDomain();
+                domainEditPage.clickUpdateDomain();
                 Portal.dialog.clickOk();
-                editPage.clickBackToList();
+                domainEditPage.clickBackToList();
 
-                listPage.searchAndClickEdit(testDomain.name);
+                domainListPage.searchAndClickEdit(testDomain.name);
 
-                sslCertText = domainForm.getSslCertDDown().getText();
+                var sslCertText = domainForm.getSslCert();
                 expect(sslCertText).toEqual(testSslCert.name);
-                editPage.clickBackToList();
+                domainEditPage.clickBackToList();
 
                 Portal.deleteDomain(testDomain);
+
+                Portal.goToSslCert();
+                Portal.deleteSSLCert(testSslCert);
             });
       });
     });

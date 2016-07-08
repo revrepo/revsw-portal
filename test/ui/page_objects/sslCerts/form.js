@@ -218,7 +218,7 @@ var SSLCertFormForm = {
    *
    * @returns {Object} Promise
    */
-  setAccount: function (accounts) {
+  setAccount: function (accounts) { 
     for (var i = 0, len = accounts.length; i < len; i++) {
       var account = accounts[i];
       var option = this
