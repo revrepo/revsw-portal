@@ -24,7 +24,6 @@
       $stateParams: $stateParams
     });
 
-
     //Set state (ui.router)
     $scope.setState('index.dnsServices.dns_zones');
 
@@ -75,13 +74,13 @@
           $scope.params = $stateParams;
           // $scope.initEdit($stateParams.id);
         } else {
-          $scope.params = $stateParams;
+          $scope.params = stateParam;
           $scope.setDefaultAccountId();
-        }
+         }
       }
     });
 
-    // $scope.filterKeys = ['cert_name', 'companyName', 'expires_at', 'domains', 'updated_at'];
+    $scope.filterKeys = ['zone', 'companyName', 'records_count', 'updated_by', 'updated_at'];
 
     $scope.locations = [];
     $scope.companies = [];

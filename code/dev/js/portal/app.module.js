@@ -34,6 +34,7 @@
     'ngAnimate',
     'toaster',
     'angular-loading-bar',
+    'revapm.Portal.DNSZoneRecords',
     'revapm.Portal.DNSZones'
   ]);
 
