@@ -47,8 +47,61 @@ describe('Workflow', function () {
 
                 afterEach(function () {
                 });
-                
-                it('should update sslCert name on domain form when sslCert name changed',
+
+                it('should be possible to edit certificate which is in use',
+                    function () {
+                        var testSslCert = DataProvider.generateSSLCertData();
+                        testSslCert.account = ['API QA Reseller Company'];
+
+                        var testDomain = DataProvider.generateDomain('sslTestDomain');
+
+                        var domainListPage = Portal.domains.listPage;
+                        var domainAddPage = Portal.domains.addPage;
+                        var domainEditPage = Portal.domains.editPage;
+                        var domainForm = domainEditPage.form;
+
+                        Portal.createSSLCert(testSslCert);
+
+                        Portal.goToDomains();
+
+                        domainListPage.clickAddNewDomain();
+                        domainAddPage.createDomain(testDomain);
+                        domainAddPage.clickBackToList();
+
+                        domainListPage.searchAndClickEdit(testDomain.name);
+                        domainForm.setSslCert(testSslCert.name);
+                        domainEditPage.clickUpdateDomain();
+                        Portal.dialog.clickOk();
+
+                        Portal.goToSslCert();
+
+                        Portal.sslCerts.listPage.searcher.setSearchCriteria(testSslCert.name);
+                        Portal.sslCerts.listPage.table
+                            .getFirstRow()
+                            .clickEdit();
+                        var valueAdded = ' updated';
+                        Portal.sslCerts.editPage.form.setCertName(valueAdded);
+                        Portal.sslCerts.editPage.clickUpdate();
+
+                        Portal.dialog.clickOk();
+                        var updatedCertName = Portal.sslCerts.editPage.form.getCertName();
+
+                        Portal.goToSslCert();
+                        
+                        Portal.sslCerts.listPage.searcher.clearSearchCriteria();
+                        Portal.sslCerts.listPage.searcher.setSearchCriteria(updatedCertName);
+                        var tableRows = Portal.sslCerts.listPage.table.getRows();
+                        expect(tableRows.count()).toEqual(1);
+
+                        Portal.goToDomains();
+
+                        Portal.deleteDomain(testDomain);
+
+                        Portal.goToSslCert();
+                        Portal.deleteSSLCert(testSslCert);
+                    });
+
+                xit('should update sslCert name on domain form when sslCert name changed',
                     function () {
                         var testSslCert = DataProvider.generateSSLCertData();
                         testSslCert.account = ['API QA Reseller Company'];
