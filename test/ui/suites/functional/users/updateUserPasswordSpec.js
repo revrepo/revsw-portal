@@ -61,10 +61,6 @@ describe('Functional', function () {
         var alert = Portal.alerts.getFirst();
         expect(alert.getText())
           .toContain(Constants.alertMessages.users.MSG_SUCCESS_UPDATE_PASSWORD);
-        // Delete user
-        Portal.signOut();
-        Portal.signIn(adminUser);
-        Portal.deleteUser(andrew);
       });
 
     it('should update password successfully  using only numbers',
@@ -84,10 +80,6 @@ describe('Functional', function () {
         var alert = Portal.alerts.getFirst();
         expect(alert.getText())
           .toContain(Constants.alertMessages.users.MSG_SUCCESS_UPDATE_PASSWORD);
-        // Delete user
-        Portal.signOut();
-        Portal.signIn(adminUser);
-        Portal.deleteUser(mathew);
       });
   });
 });
