@@ -48,6 +48,46 @@ describe('Workflow', function () {
                 afterEach(function () {
                 });
 
+                it('should not delete a certificate which is in use/released',
+                    function () {
+                        var testSslCert = DataProvider.generateSSLCertData();
+                        testSslCert.account = ['API QA Reseller Company'];
+
+                        var testDomain = DataProvider.generateDomain('sslTestDomain');
+
+                        var domainListPage = Portal.domains.listPage;
+                        var domainAddPage = Portal.domains.addPage;
+                        var domainEditPage = Portal.domains.editPage;
+                        var domainForm = domainEditPage.form;
+
+                        Portal.createSSLCert(testSslCert);
+
+                        Portal.goToDomains();
+
+                        domainListPage.clickAddNewDomain();
+                        domainAddPage.createDomain(testDomain);
+                        domainAddPage.clickBackToList();
+
+                        domainListPage.searchAndClickEdit(testDomain.name);
+                        domainForm.setSslCert(testSslCert.name);
+                        domainEditPage.clickUpdateDomain();
+                        Portal.dialog.clickOk();
+                        domainEditPage.clickBackToList();
+
+                        domainListPage.searchAndClickEdit(testDomain.name);
+
+                        var sslCertText = domainForm.getSslCert();
+                        expect(sslCertText).toEqual(testSslCert.name);
+                        domainEditPage.clickBackToList();
+
+                        Portal.goToSslCert();
+                        Portal.deleteSSLCert(testSslCert);
+
+                        var alert = Portal.alerts.getFirst();
+                        var expectedMsg = Constants.alertMessages.sslCerts.MSG_FAIL_DELETE;
+                        expect(alert.getText()).toContain(expectedMsg);
+                    });
+                
                 it('should delete a certificate which is not in use/released',
                     function () {
                         var testSslCert = DataProvider.generateSSLCertData();
