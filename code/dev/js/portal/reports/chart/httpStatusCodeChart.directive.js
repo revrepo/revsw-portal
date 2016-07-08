@@ -21,7 +21,7 @@
         filtersSets: '='
       },
       /*@ngInject*/
-      controller: function($scope, Stats, $q, Util) {
+      controller: function($scope, Stats, Util, EventsSerieDataService, $q) {
         var _filters_field_list = ['from_timestamp', 'to_timestamp', 'country', 'device', 'os', 'browser'];
 
         function generateFilterParams(filters) {
@@ -74,15 +74,16 @@
                   info_.destroy();
                   info_ = null;
                 }
+                var x = this.xAxis[0].toPixels(this.xAxis[0].min) + 3;
                 info_ = this /*chart*/ .renderer
-                  .label( codeStats.reduce( function( prev, item ) {
+                  .label(codeStats.reduce(function(prev, item) {
                       return prev +
                         'Code <span style="font-weight: bold; color: #3c65ac;">' + item.code +
-                        '</span>: <span style="font-weight: bold">' + Util.formatNumber( item.requests ) +
-                        '</span> Requests or <span style="font-weight: bold">' + item.percent.toFixed( 2 ) +
+                        '</span>: <span style="font-weight: bold">' + Util.formatNumber(item.requests) +
+                        '</span> Requests or <span style="font-weight: bold">' + item.percent.toFixed(2) +
                         '</span> %<br>';
-                      }, '' ),
-                    this.xAxis[0].toPixels(0), 3, '', 0, 0, true /*html*/ )
+                    }, ''),
+                    x, 3, '', 0, 0, true /*html*/ )
                   .css({
                     color: '#444'
                   })
@@ -109,41 +110,25 @@
             }
           },
           xAxis: {
-            crosshair: {
-              width: 1,
-              color: '#000000'
-            },
-            tickInterval: tickInterval_,
-            labels: {
-              autoRotation: false,
-              useHTML: true,
-              formatter: function() {
-                return this.value.label;
-              }
-            }
-          },
-          tooltip: {
-            formatter: function() {
-              return this.key.tooltip + '<br/>' +
-                this.series.name + ': <strong>' + Util.formatNumber(this.y, 3) + '</strong>';
-            }
+            type: 'datetime',
+            pointInterval: 24 * 60 * 60 * 1000,
           }
         };
 
+        // $scope.$watch('ngDomain', function() {
+        //   $scope.reload();
+        // });
+
+        $scope.$watch('statusCodes', function() {
+          $scope.reload();
+        });
         //  ---------------------------------
         $scope.reload = function() {
           if (!$scope.ngDomain || !$scope.ngDomain.id || !$scope.statusCodes || !$scope.statusCodes.length) {
             return;
           }
-
           var promises = {};
           var series = [];
-          var labels = [];
-          $scope.traffic = {
-            labels: [],
-            series: []
-          };
-
           $scope.statusCodes.forEach(function(code) {
             if (!code) {
               return;
@@ -155,15 +140,16 @@
             })).$promise;
           });
           $scope._loading = true;
-          var timeSet = false;
+          var _xAxisPointStart = null;
+          var _xAxisPointInterval = null;
           codeStats = [];
           bigTotal = 0;
-
           $q.all(promises)
             .then(function(data) {
-              labels = [];
               var interval = 1800;
               _.forEach(data, function(val, idx) {
+                _xAxisPointStart = parseInt(data[idx].metadata.start_timestamp);
+                _xAxisPointInterval = parseInt(data[idx].metadata.interval_sec) * 1000;
                 if (data[idx].metadata.interval_sec) {
                   interval = data[idx].metadata.interval_sec;
                 }
@@ -172,29 +158,9 @@
                 var total = 0;
                 if (data[idx].data && data[idx].data.length > 0) {
                   data[idx].data.forEach(function(item, idx, items) {
-                    if (!timeSet) {
-
-                      var val = moment(item.time + offset);
-                      var label;
-                      if (idx % tickInterval_) {
-                        label = '';
-                      } else if (idx === 0 ||
-                        (new Date(item.time + offset)).getDate() !== (new Date(items[idx - tickInterval_].time + offset)).getDate()) {
-                        label = val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span><br>]MMM D');
-                      } else {
-                        label = val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span>]');
-                      }
-
-                      labels.push({
-                        tooltip: val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span>] MMMM Do YYYY'),
-                        label: label
-                      });
-                    }
                     total += item.requests;
                     results.push(item.requests / interval);
                   });
-
-                  timeSet = true;
                   if (total === 0) {
                     results.length = 0;
                   } else {
@@ -208,16 +174,19 @@
 
                 series.push({
                   name: idx,
-                  data: results
+                  data: results,
+                  tooltip: {
+                    headerFormat: '',
+                    pointFormatter: defaultPointFormatter
+                  }
                 });
               });
-
-              codeStats.sort( function( lhs, rhs) {
+              codeStats.sort(function(lhs, rhs) {
                 return rhs.requests - lhs.requests;
               });
-              if ( codeStats.length > CODES_NUM ) {
+              if (codeStats.length > CODES_NUM) {
                 var total = 0;
-                for ( var i = CODES_NUM - 1, len = codeStats.length; i < len; ++i ) {
+                for (var i = CODES_NUM - 1, len = codeStats.length; i < len; ++i) {
                   total += codeStats[i].requests;
                 }
                 codeStats.length = CODES_NUM - 1;
@@ -227,15 +196,23 @@
                 });
               }
               bigTotal /= 100;
-              codeStats.forEach( function( item ) {
+              codeStats.forEach(function(item) {
                 item.percent = item.requests / bigTotal;
               });
 
               // console.log( $scope.traffic );
               // console.log( series );
-              // console.log( labels );
+              return $q.when(series);
+            })
+            // .then(function(data) {
+            //   addEventsData(data);
+            //   return data;
+            // })
+            .then(function setNewData(data) {
+              // model better to update once
               $scope.traffic = {
-                labels: labels,
+                pointStart: _xAxisPointStart,
+                pointInterval: _xAxisPointInterval,
                 series: series
               };
               // console.log( $scope.traffic );
@@ -245,13 +222,38 @@
               $scope._loading = false;
             });
         };
-
-        // $scope.$watch('ngDomain', function() {
-        //   $scope.reload();
-        // });
-        $scope.$watch('statusCodes', function() {
-          $scope.reload();
-        });
+        /**
+         * @name  defaultPointFormatter
+         * @description
+         *   Point Formatter for
+         * @return {String}
+         */
+        function defaultPointFormatter() {
+          var val = moment(this.x).format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span><br>]MMM D');
+          return val + '<br/>' +
+            this.series.name + ': ' + Util.convertTraffic(this.y);
+        }
+        /**
+         * @name  addEventsData
+         * @description
+         *   Add to series new serie with Events
+         * @param {Array} series
+         */
+        function addEventsData(series) {
+          var filterParams = generateFilterParams($scope.filters);
+          var options = {
+            from_timestamp: filterParams.from_timestamp,
+            to_timestamp: filterParams.to_timestamp,
+            account_id: $scope.ngDomain.account_id,
+            domain_id: $scope.ngDomain.id,
+            domain_name: $scope.ngDomain.domain_name
+          };
+          return EventsSerieDataService.getEventsSerieDataForDomain(options)
+            .then(function(data) {
+              // NOTE: add new series data "Events"
+              series.push(data);
+            });
+        }
       }
     };
   }

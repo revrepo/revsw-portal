@@ -142,6 +142,29 @@
                 <a href="#" class="side-menu-sub-item" ng-disabled="true"  >WAF</a>
                 <a href="#" class="side-menu-sub-item" ng-disabled="true"  >DDoS Protection</a>
             </li> -->
+            <li ui-sref-active-if="{class: 'active-side-menu-item', state: 'index.dnsServices'}", ng-class="{'active-side-menu-item': menuExpanded('index.dnsServices')}">
+                <a class="side-menu-item" , ng-click="goToState('index.dnsServices.dns_zones')">
+                  <div class="left-menu-start">
+                    <i class="fa fa-gear"></i>
+                  </div>
+                  DNS Service
+                  <i ng-click="expandMenu('index.dnsServices', $event)" class="pull-right {{ menuExpanded('index.dnsServices') ? 'fa fa-caret-down' : 'fa fa-caret-up' }}"></i>
+                </a>
+                <a ui-sref-active="active" ui-sref="index.dnsServices.dns_zones" class="side-menu-sub-item" ng-if="!userService.isUser()">
+                    <i class="sub-menu-icon fa fa-tasks"></i>
+                    DNS Zones
+                </a>
+                <!-- TODO: delete style color: gerey after release module-->
+                <a ui-sref-active="active" style="color:grey" uisref="index.dnsServices.dns_monitors" class="side-menu-sub-item" ng-if="!userService.isUser()">
+                    <i class="sub-menu-icon fa fa-eye"></i>
+                    Monitors
+                </a>
+                <!-- TODO: delete style color: gerey after release module-->
+                <a ui-sref-active="active" style="color:grey" uisref="index.dnsServices.dns_datasources" class="side-menu-sub-item" ng-if="!userService.isUser()">
+                    <i class="sub-menu-icon fa fa-upload"></i>
+                    Data Sources
+                </a>
+            </li>
             <li ui-sref-active-if="{class: 'active-side-menu-item', state: 'index.accountSettings'}", ng-class="{'active-side-menu-item': menuExpanded('index.accountSettings')}">
                 <a class="side-menu-item" , ng-click="goToState('index.accountSettings.users')">
                   <div class="left-menu-start">
@@ -264,4 +287,3 @@
         </paper-header-panel>
 </section>
 </paper-drawer-panel>
-

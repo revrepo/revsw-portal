@@ -21,7 +21,7 @@
         hideFilters: '='
       },
       /*@ngInject*/
-      controller: function($scope, Stats, $q, Util, filterGeneratorService) {
+      controller: function($scope, Stats, Util, filterGeneratorService, EventsSerieDataService, $q) {
         var _filters_field_list = ['from_timestamp', 'to_timestamp', 'country', 'device', 'os', 'browser'];
 
         function generateFilterParams(filters) {
@@ -86,13 +86,14 @@
                   rel_hit = Math.round(hit_ * 1000 / (miss_ + hit_)) / 10;
                   rel_miss = Math.round(miss_ * 1000 / (miss_ + hit_)) / 10;
                 }
+                var x = this.xAxis[0].toPixels(this.xAxis[0].min) + 3;
                 info_ = this /*chart*/ .renderer
                   .label('Cache Hits <span style="font-weight: bold; color: #3c65ac;">' + Util.formatNumber(hit_) +
                     '</span> Requests, <span style="font-weight: bold; color: #3c65ac;">' + rel_hit +
                     '</span>%<br> Cache Miss <span style="font-weight: bold; color: darkred;">' + Util.formatNumber(miss_) +
                     '</span> Requests, <span style="font-weight: bold; color: darkred;">' + rel_miss +
                     '</span>%',
-                    this.xAxis[0].toPixels(0), 3, '', 0, 0, true /*html*/ )
+                    x, 3, '', 0, 0, true /*html*/ )
                   .css({
                     color: '#444'
                   })
@@ -119,27 +120,17 @@
             }
           },
           xAxis: {
-            crosshair: {
-              width: 1,
-              color: '#000000'
-            },
-            tickInterval: tickInterval_,
-            labels: {
-              autoRotation: false,
-              useHTML: true,
-              formatter: function() {
-                return this.value.label;
-              }
-            }
-          },
-          tooltip: {
-            formatter: function() {
-              return this.key.tooltip + '<br/>' +
-                this.series.name + ': <strong>' + Util.formatNumber(this.y, 3) + '</strong>';
-            }
+            type: 'datetime',
+            pointInterval: 24 * 60 * 60 * 1000,
           }
         };
 
+        $scope.$watch('ngDomain', function() {
+          if (!$scope.ngDomain) {
+            return;
+          }
+          $scope.reload();
+        });
         /**
          * @name Subscribe for filters change
          * @kind call function
@@ -182,7 +173,23 @@
           }
 
           $scope._loading = true;
-
+          var _xAxisPointStart = null;
+          var _xAxisPointInterval = null;
+          var series = [{
+            name: 'Cache Hit',
+            data: [],
+            tooltip: {
+              headerFormat: '',
+              pointFormatter: defaultPointFormatter
+            }
+          }, {
+            name: 'Cache Miss',
+            data: [],
+            tooltip: {
+              headerFormat: '',
+              pointFormatter: defaultPointFormatter
+            }
+          }];
           $q.all([
 
               Stats.traffic(angular.merge({
@@ -201,36 +208,11 @@
             .then(function(data) {
               var interval = data[0].metadata.interval_sec || 1800;
               var offset = interval * 1000;
-              var labels = [];
-              var series = [{
-                name: 'Cache Hit',
-                data: []
-              }, {
-                name: 'Cache Miss',
-                data: []
-              }];
-
+              _xAxisPointStart = parseInt(data[0].metadata.start_timestamp);
+              _xAxisPointInterval = parseInt(data[0].metadata.interval_sec) * 1000;
               hit_ = miss_ = 0;
               if (data[0].data && data[0].data.length > 0) {
                 data[0].data.forEach(function(item, idx, items) {
-
-                  // labels.push(moment(item.time + offset /*to show the _end_ of interval instead of begin*/ ).format('MMM Do YY h:mm'));
-                  var val = moment(item.time + offset);
-                  var label;
-                  if (idx % tickInterval_) {
-                    label = '';
-                  } else if (idx === 0 ||
-                    (new Date(item.time + offset)).getDate() !== (new Date(items[idx - tickInterval_].time + offset)).getDate()) {
-                    label = val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span><br>]MMM D');
-                  } else {
-                    label = val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span>]');
-                  }
-
-                  labels.push({
-                    tooltip: val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span>] MMMM Do YYYY'),
-                    label: label
-                  });
-
                   hit_ += item.requests;
                   series[0].data.push(item.requests / interval);
                 });
@@ -247,8 +229,17 @@
                   series[1].data.length = 0;
                 }
               }
+              return $q.when(series);
+            })
+            // .then(function(data) {
+            //   addEventsData(data);
+            //   return data;
+            // })
+            .then(function setNewData(data) {
+              // model better to update once
               $scope.traffic = {
-                labels: labels,
+                pointStart: _xAxisPointStart,
+                pointInterval: _xAxisPointInterval,
                 series: series
               };
             })
@@ -256,13 +247,39 @@
               $scope._loading = false;
             });
         };
+        /**
+         * @name  defaultPointFormatter
+         * @description
+         *   Point Formatter for
+         * @return {String}
+         */
+        function defaultPointFormatter() {
+          var val = moment(this.x).format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span><br>]MMM D');
+          return val + '<br/>' +
+            this.series.name + ': ' + Util.convertTraffic(this.y);
+        }
+        /**
+         * @name  addEventsData
+         * @description
+         *   Add to series new serie with Events
+         * @param {Array} series
+         */
+        function addEventsData(series) {
+          var filterParams = generateFilterParams($scope.filters);
+          var options = {
+            from_timestamp: filterParams.from_timestamp,
+            to_timestamp: filterParams.to_timestamp,
+            account_id: $scope.ngDomain.account_id,
+            domain_id: $scope.ngDomain.id,
+            domain_name: $scope.ngDomain.domain_name
+          };
+          return EventsSerieDataService.getEventsSerieDataForDomain(options)
+            .then(function(data) {
+              // NOTE: add new series data "Events"
+              series.push(data);
+            });
+        }
 
-        $scope.$watch('ngDomain', function() {
-          if (!$scope.ngDomain) {
-            return;
-          }
-          $scope.reload();
-        });
       }
     };
   }

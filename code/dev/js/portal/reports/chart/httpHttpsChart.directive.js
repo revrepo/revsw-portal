@@ -20,7 +20,7 @@
         filtersSets: '='
       },
       /*@ngInject*/
-      controller: function($scope, Stats, $q, Util) {
+      controller: function($scope, Stats, Util, EventsSerieDataService, $q) {
         var _filters_field_list = ['from_timestamp', 'to_timestamp', 'country', 'device', 'os', 'browser'];
         $scope.heading = 'HTTP/HTTPS Hits';
         $scope._loading = false;
@@ -85,13 +85,14 @@
                   rel_http = Math.round(http_ * 1000 / (https_ + http_)) / 10;
                   rel_https = Math.round(https_ * 1000 / (https_ + http_)) / 10;
                 }
+                var x = this.xAxis[0].toPixels(this.xAxis[0].min) + 3;
                 info_ = this /*chart*/ .renderer
                   .label('HTTPS <span style="font-weight: bold; color: #3c65ac;">' + Util.formatNumber(https_) +
                     '</span> Requests, <span style="font-weight: bold; color: #3c65ac;">' + rel_https +
                     '</span>%<br> HTTP <span style="font-weight: bold; color: black;">' + Util.formatNumber(http_) +
                     '</span> Requests, <span style="font-weight: bold; color: black;">' + rel_http +
                     '</span>%',
-                    this.xAxis[0].toPixels(0), 3, '', 0, 0, true /*html*/ )
+                    x, 3, '', 0, 0, true /*html*/ )
                   .css({
                     color: '#444'
                   })
@@ -131,28 +132,54 @@
               }
             }
           },
-          tooltip: {
-            formatter: function() {
-              return this.key.tooltip + '<br/>' +
-                this.series.name + ': <strong>' + Util.formatNumber(this.y, 3) + '</strong>';
-            }
-          },
-          labels: [],
+
           series: [{
             name: 'HTTP',
-            data: []
+            data: [],
+            tooltip: {
+              headerFormat: '',
+              pointFormatter: defaultPointFormatter
+            }
           }, {
             name: 'HTTPS',
-            data: []
+            data: [],
+            tooltip: {
+              headerFormat: '',
+              pointFormatter: defaultPointFormatter
+            }
           }]
         };
 
+        $scope.$watch('ngDomain', function() {
+          if (!$scope.ngDomain) {
+            return;
+          }
+          $scope.reload();
+        });
         //  ---------------------------------
         $scope.reload = function() {
           if (!$scope.ngDomain || !$scope.ngDomain.id) {
             return;
           }
           $scope._loading = true;
+          var _xAxisPointStart = null;
+          var _xAxisPointInterval = null;
+          var series = [{
+            name: 'HTTP',
+            data: [],
+            tooltip: {
+              headerFormat: '',
+              pointFormatter: defaultPointFormatter
+            }
+          }, {
+            name: 'HTTPS',
+            data: [],
+            tooltip: {
+              headerFormat: '',
+              pointFormatter: defaultPointFormatter
+            }
+          }];
+
           $q.all([
 
               Stats.traffic(angular.merge({
@@ -172,31 +199,26 @@
               var interval = data[0].metadata.interval_sec || 1800;
               var offset = interval * 1000;
               var labels = [];
-              var series = [{
-                name: 'HTTP',
-                data: []
-              }, {
-                name: 'HTTPS',
-                data: []
-              }];
               https_ = http_ = 0;
+              _xAxisPointStart = parseInt(data[0].metadata.start_timestamp);
+              _xAxisPointInterval = parseInt(data[0].metadata.interval_sec) * 1000;
               if (data[0].data && data[0].data.length > 0) {
                 data[0].data.forEach(function(item, idx, items) {
-                  var val = moment(item.time + offset);
-                  var label;
-                  if (idx % tickInterval_) {
-                    label = '';
-                  } else if (idx === 0 ||
-                    (new Date(item.time + offset)).getDate() !== (new Date(items[idx - tickInterval_].time + offset)).getDate()) {
-                    label = val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span><br>]MMM D');
-                  } else {
-                    label = val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span>]');
-                  }
+                  // var val = moment(item.time + offset);
+                  // var label;
+                  // if (idx % tickInterval_) {
+                  //   label = '';
+                  // } else if (idx === 0 ||
+                  //   (new Date(item.time + offset)).getDate() !== (new Date(items[idx - tickInterval_].time + offset)).getDate()) {
+                  //   label = val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span><br>]MMM D');
+                  // } else {
+                  //   label = val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span>]');
+                  // }
 
-                  labels.push({
-                    tooltip: val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span>] MMMM Do YYYY'),
-                    label: label
-                  });
+                  // labels.push({
+                  //   tooltip: val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span>] MMMM Do YYYY'),
+                  //   label: label
+                  // });
 
                   http_ += item.requests;
                   series[0].data.push(item.requests / interval);
@@ -215,28 +237,63 @@
                   series[1].data.length = 0;
                 }
               }
-              // model better to update once
-              $scope.traffic = {
-                labels: labels,
-                series: series
-              };
-            },function(){
+              return $q.when(series);
+
+            }, function() {
               $scope.traffic = {
                 labels: [],
                 series: []
+              };
+            })
+            // .then(function(data) {
+            //   addEventsData(data);
+            //   return data;
+            // })
+            .then(function setNewData(data) {
+              // model better to update once
+              $scope.traffic = {
+                pointStart: _xAxisPointStart,
+                pointInterval: _xAxisPointInterval,
+                series: series
               };
             })
             .finally(function() {
               $scope._loading = false;
             });
         };
+        /**
+         * @name  defaultPointFormatter
+         * @description
+         *   Point Formatter for
+         * @return {String}
+         */
+        function defaultPointFormatter() {
+          var val = moment(this.x).format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span><br>]MMM D');
+          return val + '<br/>' +
+            this.series.name + ': ' + Util.convertTraffic(this.y);
+        }
+        /**
+         * @name  addEventsData
+         * @description
+         *   Add to series new serie with Events
+         * @param {Array} series
+         */
+        function addEventsData(series) {
+          var filterParams = generateFilterParams($scope.filters);
+          var options = {
+            from_timestamp: filterParams.from_timestamp,
+            to_timestamp: filterParams.to_timestamp,
+            account_id: $scope.ngDomain.account_id,
+            domain_id: $scope.ngDomain.id,
+            domain_name: $scope.ngDomain.domain_name
+          };
+          return EventsSerieDataService.getEventsSerieDataForDomain(options)
+            .then(function(data) {
+              // NOTE: add new series data "Events"
+              series.push(data);
+            });
+        }
 
-        $scope.$watch('ngDomain', function() {
-          if (!$scope.ngDomain) {
-            return;
-          }
-          $scope.reload();
-        });
       }
     };
   }
