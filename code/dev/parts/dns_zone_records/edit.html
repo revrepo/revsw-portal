@@ -1,13 +1,44 @@
+<script type="text/ng-template" id="confirmNewAnswerModal.html">
+  <div class="modal-header">
+    <h3 class="modal-title">New Answer</h3>
+  </div>
+  <div class="modal-body">
+    <form name="newAnswerForm" class="form row">
+      <div class="form-group">
+        <label class="control-label col-sm-3" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Set values for each of the fields of this DNS record, depending on the record type">
+          Answer Fields *
+        </label>
+        <dns-zone-record-answer class="col-sm-9" record-type="{{model.record.type}}" ng-model="model.newanswer"></dns-zone-record-answer>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+    <button class="btn btn-danger" type="button" ng-click="ok()||newAnswerForm.$invalid">OK</button>
+  </div>
+</script>
+<script type="text/ng-template" id="confirmDeleteModal.html">
+  <div class="modal-header">
+    <h3 class="modal-title">Confirm Delete</h3>
+  </div>
+  <div class="modal-body">
+    <p>Are you sure you want to remove the <b>{{model.record.answers[model.index].answer | mergearray}}</b> answer and all associated metadata and feeds from this record?</p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+    <button class="btn btn-danger" type="button" ng-click="ok()">OK</button>
+  </div>
+</script>
 <div class="row">
   <div class="col-sm-12">
     <h2 class="pull-left page-title">
-      Edit Record   <span>{{ model.domain }}
+      Edit Record   <strong>{{ model.domain }}
           <span class="badge">{{ model.type }}</span>
           <span ng-show="record.tier == 1" class="badge badge-1">STATIC</span>
           <span ng-show="record.tier == 2" class="badge badge-2">DYNAMIC</span>
           <span ng-show="record.tier == 3" class="badge badge-3">INTELLIGENT</span>
           <span ng-show="record.link != null" class="badge badge-L">LINK</span>
-        </span>
+        </strong>
     </h2>
   </div>
 </div>
@@ -27,100 +58,73 @@
       </div>
       <div class="panel-body">
         <form class="form-horizontal" name="editForm">
-
-
-          <div class="form-horizontal">
-          <div class="form-group" ng-show="record.link==null">
-              <label class="control-label col-sm-2" title="Optional; if not set, the default TTL for the {{zone}} zone will be used.">
-                TTL (seconds)</label>
-              <div class="col-sm-10">
-                <input type="number" min="0" max="2147483647" class="form-control" placeholder="20" ng-model="record.ttl">
-              </div>
+          <div class="form-group form-inline" ng-show="record.link==null">
+            <label for="recordTtl" class="control-label col-sm-2" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Optional; if not set, the default TTL for the {{zone}} zone will be used.">
+              TTL </label>
+            <div class="col-sm-10">
+              <input name="recordTtl" type="number" min="0" max="2147483647" class="form-control" placeholder="20" ng-model="record.ttl"> (seconds)
             </div>
+          </div>
           <div class="form-group">
-              <label class="control-label col-sm-2">Use Client Subnet
-          <span class="infosign">
-                  <a data-toggle="tooltip" title="If enabled, edns-client-subnet data will be used with compatible filters. edns-client-subnet results in more accurate routing, but increased query counts, so disabling this option will reduce queries at the cost of accuracy">
-          <i class="icon-info-sign"></i>
-            </a>
-          </span>
-              </label>
-              <div class="col-sm-10">
-                <input type="checkbox" ng-model="record.use_client_subnet">
-              </div>
+            <label class="control-label col-sm-2" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="If enabled, edns-client-subnet data will be used with compatible filters. edns-client-subnet results in more accurate routing, but increased query counts, so disabling this option will reduce queries at the cost of accuracy">
+              Use Client Subnet</label>
+            <div class="col-sm-10">
+              <!-- <input type="checkbox" ng-model="record.use_client_subnet"> -->
+              <toggle-switch is-disabled="_loading" ng-model="record.use_client_subnet" on-label="Yes" off-label="No">
+              </toggle-switch>
             </div>
+          </div>
           <div class="form-group" ng-show="record.link!=null">
-              <label class="control-label col-sm-2">Link Target
-            <span class="infosign">
-                  <a data-toggle="tooltip" title="The FQDN of the record (in NS1 platform) holding the configuration this link should use.">
-            <i class="icon-info-sign"></i>
-              </a>
-            </span>
-              </label>
-              <div class="col-sm-10">
-                <input type="text" class="input-xlarge" placeholder="target.example.com" ng-model="record.link">
-              </div>
+            <label for class="control-label col-sm-2" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="The FQDN of the record (in NS1 platform) holding the configuration this link should use.">Link Target</label>
+            <div class="col-sm-10">
+              <input type="text" class="input-xlarge" placeholder="target.example.com" ng-model="record.link">
             </div>
           </div>
           <!-- Answers -->
-          <div class="panel panel-default" id="answers"  ng-show="record&&record.link==null">
+          <div class="panel panel-default" id="answers" ng-show="record&&record.link==null">
             <div class="panel-heading">
-              <!-- <span class="pull-left panel-buttons-left">
-                <a class="btn btn-default btn-md " ng-click="onCollapsAllCachingRule()" title="Collapse All Rules" ng-show="!isCollapsedAll">
-                  <i class="glyphicon glyphicon-chevron-up "></i>
-                </a>
-                <a class="btn btn-default btn-md " ng-click="onExpandAllCachingRule()" title="Expand All Rules">
-                  <i class="glyphicon glyphicon-chevron-down"></i>
-                </a>
-              </span> -->
-              <span ng-click="onAddNewAnswer()"  _ngclick="show_addanswer()"  class="btn btn-primary btn-sm pull-right" title="Add New Answer"><i class="glyphicon glyphicon-plus"></i></span>
+              <span ng-click="onAddNewAnswer(record)" class="btn btn-primary btn-sm pull-right" title="Add New Answer"><i class="glyphicon glyphicon-plus"></i></span>
               <h4><b>Answers</b></h4>
             </div>
             <div class="panel-body">
-              <div ng-repeat="answer in record.answers">
-                <div class="answer">
-                  <div class="pull-right pcontrols clickable-nohover">
-                    <a ng-click="confirm_delanswer($index)">
-                      <i class="icon-remove-sign"></i>
-                    </a>
-                  </div>
-                  <!-- <h3>{{answer.answer}}</h3> -->
-                  <h3>{{answer.answer | mergearray}}</h3>
-                  <div class="container-fluid">
-                    <div class="form" ng-class="{ 'span6' : feed_ptrs_enabled }">
-                      <div class="form-group">
-                        <label class="control-label col-sm-2" title="Specify answer fields depending on the record type">
-                          <h4 style="color: #777; display: inline-block;">Answer *</h4>
-
-                        </label>
-                        <!-- TODO: Fix work-->
-                        <ng:include src="'parts/dns_zone_records/answercontrols.html'" onload="newanswer=answer.longanswer;origanswer=answer;"></ng:include>
-                      </div>
+              <div class="panel panel-default dns-zone-record-answer-list" ng-repeat="answer in record.answers">
+                <div class="panel-heading">
+                  <div class="panel-title row">
+                    <div class="col-sm-12">
+                      <spap>{{answer.answer | mergearray}}</span><span ng-if="!answer.answer">undefined</span>
+                        <div class="pull-right panel-button-right">
+                          <!-- remove answer button-->
+                          <a href="" title="Remove Answer" ng-click="onRemoveAnswer($index)" ng-if="!editMode">
+                            <i class="glyphicon glyphicon-remove"></i>
+                          </a>
+                        </div>
                     </div>
-
-
                   </div>
                 </div>
-                <hr>
+                <div class="panel-body container-fluid">
+                  <div class="form">
+                    <div class="form-group">
+                      <label class="control-label col-sm-2" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Specify answer fields depending on the record type">
+                        <h4 style="color: #777; display: inline-block;">Answer *</h4>
+                      </label>
+                      <dns-zone-record-answer class="col-sm-10" record-type="{{record.type}}" ng-model="answer"></dns-zone-record-answer>
+                      <!-- <ng:include src="'parts/dns_zone_records/answercontrols.html'" onload="model.newanswer=answer.longanswer;origanswer=answer;"></ng:include> -->
+                    </div>
+                  </div>
+                </div>
               </div>
-
             </div>
           </div>
-
-
           <!-- ANSWERS-->
-
-
           <!-- <div class="module" id="answers" ng-show="record&&record.link==null">
             <div class="module-header">
               <h3 style="display: inline-block;">Answers&nbsp;</h3>
-            	<span class="h3" tooltipper ng-show="recwarning()" data-toggle="tooltip" title="Please note: According to RFC, a CNAME record should not return multiple answers. Doing so may cause problems during resolution. If you want to use multiple answers, you should ensure you have the correct filters in place (such as SELECT_FIRST_N 1) to limit them to a single answer at resolution time.">
-        				<i class="icon-exclamation-sign icon-2x text-warning"></i>
-        			</span>
+              <span class="h3" tooltipper ng-show="recwarning()" data-toggle="tooltip" title="Please note: According to RFC, a CNAME record should not return multiple answers. Doing so may cause problems during resolution. If you want to use multiple answers, you should ensure you have the correct filters in place (such as SELECT_FIRST_N 1) to limit them to a single answer at resolution time.">
+                <i class="icon-exclamation-sign icon-2x text-warning"></i>
+              </span>
             </div>
           </div> -->
-
-   <hr>
+          <hr>
           <div class="form-group ">
             <div class="col-sm-offset-2 col-sm-10">
               <a ui-sref="^" class="btn btn-default">

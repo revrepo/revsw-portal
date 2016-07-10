@@ -22,7 +22,6 @@
         views: {
           page: {
             templateUrl: 'parts/dns_zone_records/new.html'
-              //controller: 'DomainsNewController'
           }
         }
       })

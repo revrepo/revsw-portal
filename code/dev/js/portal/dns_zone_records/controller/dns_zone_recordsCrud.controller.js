@@ -189,8 +189,6 @@
         .create(newDNSZoneRecord, isStay)
         .then(function(data) {
           $scope.alertService.success(data);
-          console.log($scope.model)
-          // $scope.model.rec = {};
         })
         .catch($scope.alertService.danger);
     };
@@ -202,7 +200,6 @@
      * @return {[type]}       [description]
      */
     $scope.updateDNSZoneRecord = function(model) {
-
       if (!model) {
         return;
       }
@@ -250,11 +247,31 @@
       return (record_type === 'A' || record_type === 'AAAA');
     };
 
-    // TODO: add new answers
-    $scope.onAddNewAnswer = function() {
-
+    //confirmNewAnswerModal
+    $scope.onAddNewAnswer = function(model) {
+      var model_ = {
+        record: $scope.model,
+        newanswer: {
+          answer: []
+        }
+      };
+      $scope.confirm('confirmNewAnswerModal.html', model_)
+        .then(function(data) {
+          $scope.model.answers.push(model_.newanswer);
+        });
     };
-
+    // confirmDeleteModal
+    $scope.onRemoveAnswer = function($index) {
+      var model_ = {
+        record: $scope.model,
+        zone: $scope.zone_name,
+        index: $index
+      };
+      $scope.confirm('confirmDeleteModal.html', model_).then(function() {
+        var domain = model.domain;
+        $scope.model.answers.splice($index, 1);
+      });
+    };
     //==============================
     // Override method
     /**

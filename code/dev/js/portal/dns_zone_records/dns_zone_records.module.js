@@ -25,19 +25,17 @@
         return arr.join(sep);
       };
     })
-    .filter("answerlist", ["$filter", function($filter, n) {
-  "use strict";
-  return function(answers, n) {
-    var shortlist = answers;
-    if (n) { shortlist = $filter("limitTo")(answers, n) }
-    var out = shortlist.join(", ");
-    if (shortlist.length < answers.length) {
-      out += ", ..."
-    }
-    return out
-  }
-}])
-    ;
+    .filter('answerlist', ['$filter', function($filter, n) {
+      return function(answers, n) {
+        var shortlist = answers;
+        if (n) { shortlist = $filter('limitTo')(answers, n); }
+        var out = shortlist.join(', ');
+        if (shortlist.length < answers.length) {
+          out += ', ...';
+        }
+        return out;
+      };
+    }]);
 
   function DNSZoneRecordsAnswerParser() {
     'ngInject';
