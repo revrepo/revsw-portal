@@ -157,12 +157,12 @@
                 <!-- TODO: delete style color: gerey after release module-->
                 <a ui-sref-active="active" style="color:grey" uisref="index.dnsServices.dns_monitors" class="side-menu-sub-item" ng-if="!userService.isUser()">
                     <i class="sub-menu-icon fa fa-eye"></i>
-                    Monitors
+                    Monitors <i class="fa fa-hourglass-half comming-soon" aria-hidden="true" popover-append-to-body="{{true}}"  popover-trigger="mouseenter" uib-popover="Coming Soon "></i>
                 </a>
                 <!-- TODO: delete style color: gerey after release module-->
                 <a ui-sref-active="active" style="color:grey" uisref="index.dnsServices.dns_datasources" class="side-menu-sub-item" ng-if="!userService.isUser()">
                     <i class="sub-menu-icon fa fa-upload"></i>
-                    Data Sources
+                    Data Sources <i class="fa fa-hourglass-half comming-soon" aria-hidden="true" popover-append-to-body="{{true}}"  popover-trigger="mouseenter" uib-popover="Coming Soon "></i>
                 </a>
             </li>
             <li ui-sref-active-if="{class: 'active-side-menu-item', state: 'index.accountSettings'}", ng-class="{'active-side-menu-item': menuExpanded('index.accountSettings')}">

@@ -1432,3 +1432,8 @@ form.dns-zone-records--new-form input[type="number"] {
 form.dns-zone-records--new-form input[name="subdomain"] {
   max-width: 360px;
 }
+.comming-soon {
+  color: #f4006f;
+  font-size: 0.7em;
+  vertical-align: top;
+}
