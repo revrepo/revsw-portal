@@ -549,6 +549,7 @@
   </div>
 </div>
 
+
 <div id="confirmdelanswer" class="modal hide">
   <div class="modal-header">
     <a class="close" ng-click="cancel_delanswer()">&times;</a>
@@ -571,8 +572,16 @@
   </div>
   <div class="modal-body">
     <div class="form-horizontal">
-
-
+      <div class="control-group">
+        <label class="control-label">Answer Fields *
+            <span class="infosign">
+              <a data-toggle="tooltip" title="Set values for each of the fields of this DNS record, depending on the record type.">
+                <i class="icon-info-sign"></i>
+              </a>
+            </span>
+        </label>
+        <ng:include src="'partials/answercontrols.html'"></ng:include>
+      </div>
       <div class="control-group">
         <label class="control-label">Region
             <span class="infosign">

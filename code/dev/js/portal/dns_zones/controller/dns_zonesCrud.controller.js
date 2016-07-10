@@ -112,15 +112,14 @@
         model = _.clone(model_current.toJSON(), true);
       }
       delete model.id;
+      delete model.dns_servers;
       delete model.created_by;
       delete model.created_at;
       delete model.updated_at;
       delete model.expires_at;
       delete model.zone;
       delete model.records;
-      delete model.account_id;
-      // delete model.last_published_ssl_config_version;
-      // model.zone_body ={};
+      delete model.account_id; 
       return model;
     };
 
