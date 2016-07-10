@@ -69,7 +69,6 @@
             <label class="control-label col-sm-2" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="If enabled, edns-client-subnet data will be used with compatible filters. edns-client-subnet results in more accurate routing, but increased query counts, so disabling this option will reduce queries at the cost of accuracy">
               Use Client Subnet</label>
             <div class="col-sm-10">
-              <!-- <input type="checkbox" ng-model="record.use_client_subnet"> -->
               <toggle-switch is-disabled="_loading" ng-model="record.use_client_subnet" on-label="Yes" off-label="No">
               </toggle-switch>
             </div>
@@ -77,7 +76,7 @@
           <div class="form-group" ng-show="record.link!=null">
             <label for class="control-label col-sm-2" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="The FQDN of the record (in NS1 platform) holding the configuration this link should use.">Link Target</label>
             <div class="col-sm-10">
-              <input type="text" class="input-xlarge" placeholder="target.example.com" ng-model="record.link">
+              <input type="text" class="form-control" placeholder="target.example.com" ng-model="record.link">
             </div>
           </div>
           <!-- Answers -->
@@ -91,13 +90,13 @@
                 <div class="panel-heading">
                   <div class="panel-title row">
                     <div class="col-sm-12">
-                      <spap>{{answer.answer | mergearray}}</span><span ng-if="!answer.answer">undefined</span>
-                        <div class="pull-right panel-button-right">
-                          <!-- remove answer button-->
-                          <a href="" title="Remove Answer" ng-click="onRemoveAnswer($index)" ng-if="!editMode">
-                            <i class="glyphicon glyphicon-remove"></i>
-                          </a>
-                        </div>
+                      <strong>{{answer.answer | mergearray}}</strong>
+                      <div class="pull-right panel-button-right">
+                        <!-- remove answer button-->
+                        <a href="" title="Remove Answer" ng-click="onRemoveAnswer($index)" ng-if="!editMode">
+                          <i class="glyphicon glyphicon-remove"></i>
+                        </a>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -108,7 +107,6 @@
                         <h4 style="color: #777; display: inline-block;">Answer *</h4>
                       </label>
                       <dns-zone-record-answer class="col-sm-10" record-type="{{record.type}}" ng-model="answer"></dns-zone-record-answer>
-                      <!-- <ng:include src="'parts/dns_zone_records/answercontrols.html'" onload="model.newanswer=answer.longanswer;origanswer=answer;"></ng:include> -->
                     </div>
                   </div>
                 </div>

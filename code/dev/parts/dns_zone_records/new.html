@@ -85,7 +85,7 @@
               <label class="control-label col-sm-2 " popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="The FQDN of the record (in NS1 platform) holding the configuration the new record should be linked to. Record type must be the same type (A, MX, etc) as the target record.">
                 Link Target (FQDN)</label>
               <div class="col-sm-10">
-                <input ng-required="create_linked" type="text" class="form-control" placeholder="target.{{zone_name}}" ng-model="newanswer.link">
+                <input ng-required="create_linked" type="text" class="form-control" placeholder="target.{{zone_name}}" ng-model="model.newanswer.link">
                 <p>
                   <br><i><b>Note:</b> A link uses the exact configuration of the record to which it links.  When changes are made to the link target's configuration, they will also apply to this linked record.  You can change a link's target at a later point but cannot change it to a non-linked record (you must delete it).</i></p>
               </div>
