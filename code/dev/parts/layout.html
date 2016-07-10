@@ -150,7 +150,7 @@
                   DNS Service
                   <i ng-click="expandMenu('index.dnsServices', $event)" class="pull-right {{ menuExpanded('index.dnsServices') ? 'fa fa-caret-down' : 'fa fa-caret-up' }}"></i>
                 </a>
-                <a ui-sref-active="active" ui-sref="index.dnsServices.dns_zones" class="side-menu-sub-item" ng-if="!userService.isUser()">
+                <a ui-sref-active="active" ui-sref-active-if="{class: 'active', state: 'index.dnsServices.dns_zone_records'}" ui-sref="index.dnsServices.dns_zones" class="side-menu-sub-item" ng-if="!userService.isUser()">
                     <i class="sub-menu-icon fa fa-tasks"></i>
                     DNS Zones
                 </a>

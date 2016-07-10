@@ -174,10 +174,13 @@
       } else {
         model.rec.answers = [];
       }
-      if ($scope.create_linked && $scope.newanswer.link) {
-        model.rec.link = $scope.newanswer.link;
+      console.log($scope.create_linked, $scope.newanswer, model,!!model.newanswer  , model.newanswer.link)
+      if (!!model.newanswer  && model.newanswer.link) {
+        model.rec.link = model.newanswer.link;
         model.rec.answers = [];
+        console.log('----',model.rec)
       }
+
       var newDNSZoneRecord = {
         dns_zone_id: $scope.dnsZoneId,
         domain: model.rec.domain,
@@ -268,7 +271,6 @@
         index: $index
       };
       $scope.confirm('confirmDeleteModal.html', model_).then(function() {
-        var domain = model.domain;
         $scope.model.answers.splice($index, 1);
       });
     };
