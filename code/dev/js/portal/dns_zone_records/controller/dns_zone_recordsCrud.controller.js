@@ -174,11 +174,9 @@
       } else {
         model.rec.answers = [];
       }
-      console.log($scope.create_linked, $scope.newanswer, model,!!model.newanswer  , model.newanswer.link)
       if (!!model.newanswer  && model.newanswer.link) {
         model.rec.link = model.newanswer.link;
         model.rec.answers = [];
-        console.log('----',model.rec)
       }
 
       var newDNSZoneRecord = {
