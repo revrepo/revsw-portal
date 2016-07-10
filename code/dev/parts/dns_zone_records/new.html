@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-sm-12">
     <h2 class="pull-left page-title">
-      Add New Record <!-- TODO: add? {{zone_name}} -->
+      Add New Record
     </h2>
   </div>
 </div>
@@ -24,10 +24,10 @@
           <!-- <p>Set up the basics of your record here — you can do additional configuration after creating a basic record.</p> -->
           <div class="form-horizontal">
             <div class="form-group  form-inline" ng-class="{ 'has-error': createForm.subdomain.$invalid && createForm.subdomain.$dirty }">
-              <label for="subdomain" class="control-label col-sm-2 " popover-trigger="mouseenter" uib-popover="Enter a subdomain within the {{zone_name}} zone.  You may enter &#39;*&#39; as the first component of the subdomain to create a wildcard record.  For example, &#39;*.{{zone_name}}&#39; will match &#39;foo.{{zone_name}}&#39;, &#39;bar.{{zone_name}}&#39;, &#39;foo.bar.{{zone_name}}&#39;, and so on.  You may also leave the subdomain blank to create a record for {{zone_name}}.">
-                Domain *</label>
+              <label for="subdomain" class="control-label col-sm-2 " popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enter a subdomain within the {{zone_name}} zone.  You may enter &#39;*&#39; as the first component of the subdomain to create a wildcard record.  For example, &#39;*.{{zone_name}}&#39; will match &#39;foo.{{zone_name}}&#39;, &#39;bar.{{zone_name}}&#39;, &#39;foo.bar.{{zone_name}}&#39;, and so on.  You may also leave the subdomain blank to create a record for {{zone_name}}.">
+                Domain </label>
               <div class="col-sm-10">
-                <input type="text" id="subdomain" name="subdomain" autofocus class="form-control" placeholder="my.subdomain" ng-model="model.idomain" required>
+                <input type="text" id="subdomain" name="subdomain" autofocus class="form-control" placeholder="my.subdomain" ng-model="model.idomain">
                 <label class="add-on" ng-if="zone_name">.{{zone_name}}</label>
                 <div class="error-messages" ng-messages="createForm.subdomain.$error" role="alert" ng-messages-multiple>
                   <div ng-messages-include="parts/shared/error-messages.html"></div>
@@ -35,10 +35,10 @@
               </div>
             </div>
             <div class="form-group" ng-class="{ 'has-error': createForm.recordType.$invalid && createForm.recordType.$dirty }">
-              <label for="recordType" class="control-label col-sm-2" popover-trigger="mouseenter" uib-popover="Choose from among the supported DNS record types">
+              <label for="recordType" class="control-label col-sm-2" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Choose from among the supported DNS record types">
                 Record Type *</label>
               <div class="col-sm-10">
-                <select required class="form-control" id="recordType" name="recordType" ng-model="model.rec.type" ng-init="model.rec.type=&#39;A&#39;">
+                <select required class="form-control fixed" id="recordType" name="recordType" ng-model="model.rec.type" ng-init="model.rec.type=&#39;A&#39;">
                   <option selected="selected">A</option>
                   <option>AAAA</option>
                   <option>ALIAS</option>
@@ -61,23 +61,20 @@
                 </div>
               </div>
             </div>
-            <!-- TODO: uncomment after fiz rules-->
-            <!-- <div class="form-group" ng-class="{ 'has-error': createForm.recordType.$invalid && createForm.recordType.$dirty }">
-              <label class="control-label col-sm-2 " popover-trigger="mouseenter" uib-popover="Optionally check this to link the configuration (answers, filters, TTL, etc) to another record in NS1. Linked records cannot be changed to non-linked records after creation.">
+            <div class="form-group" ng-class="{ 'has-error': createForm.recordType.$invalid && createForm.recordType.$dirty }">
+              <label class="control-label col-sm-2 " popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Optionally check this to link the configuration (answers, filters, TTL, etc) to another record in NS1. Linked records cannot be changed to non-linked records after creation.">
                 Linked Record</label>
               <div class="col-sm-10">
-                <input type="checkbox" class="" ng-model="create_linked">
+                <toggle-switch is-disabled="_loading" ng-model="create_linked" on-label="Yes" off-label="No">
+                </toggle-switch>
               </div>
-            </div> -->
+            </div>
             <hr>
             <div class="form-group  form-inline" ng-show="!create_linked" ng-class="{'has-error': createForm.recTtl.$invalid && createForm.recTtl.$dirty}">
-              <label for="recTtl" class="control-label col-sm-2 " popover-trigger="mouseenter" uib-popover="Optional; if not set, the default TTL for the {{zone_name}} zone will be used">
+              <label for="recTtl" class="control-label col-sm-2 " popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Optional; if not set, the default TTL for the {{zone_name}} zone will be used">
                 TTL </label>
-              <!-- <div class="col-sm-10">
-                <input type="number" ng-min="0" class="form-control" ng-model="model.rec.ttl" placeholder="{{zone.nx_ttl}}">
-              </div> -->
               <div class="col-md-10">
-                <input type="number" id="proxy_timeout" name="recTtl" class="form-control" ng-disabled="_loading" ng-model="model.rec.ttl" ng-min="1" ng-max="3600"> second(s)
+                <input type="number" placeholder="3600" id="proxy_timeout" name="recTtl" class="form-control" ng-disabled="_loading" ng-model="model.rec.ttl" ng-min="1" ng-max="3600"> second(s)
                 <div class="error-messages" ng-messages="createForm.recTtl.$error" role="alert" ng-messages-multiple>
                   <div ng-messages-include="parts/shared/error-messages.html"></div>
                 </div>
@@ -85,14 +82,8 @@
             </div>
             <hr ng-show="!create_linked">
             <div class="form-group" ng-show="create_linked">
-              <label class="control-label col-sm-2 ">
-                Link Target (FQDN)
-                <span class="infosign">
-                    <a data-toggle="tooltip" title="The FQDN of the record (in NS1 platform) holding the configuration the new record should be linked to. Record type must be the same type (A, MX, etc) as the target record.">
-                      <i class="icon-info-sign"></i>
-                    </a>
-                  </span>
-              </label>
+              <label class="control-label col-sm-2 " popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="The FQDN of the record (in NS1 platform) holding the configuration the new record should be linked to. Record type must be the same type (A, MX, etc) as the target record.">
+                Link Target (FQDN)</label>
               <div class="col-sm-10">
                 <input ng-required="create_linked" type="text" class="form-control" placeholder="target.{{zone_name}}" ng-model="newanswer.link">
                 <p>
@@ -100,17 +91,13 @@
               </div>
             </div>
             <div class="form-group" ng-show="!create_linked">
-              <label class="control-label col-sm-2 ">Answer
-                <span class="infosign">
-                    <a data-toggle="tooltip" title="If you&#39;re just creating a simple DNS record, you can set the answer here.  If you&#39;re configuring a record with multiple answers, regions, data feeds, and filter chain, you can leave this out and configure the record after it&#39;s created, or skip straight to advanced config.">
-                      <i class="icon-info-sign"></i>
-                    </a>
-                  </span>
-              </label>
+              <label class="control-label col-sm-2 " popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="If you&#39;re just creating a simple DNS record, you can set the answer here.  If you&#39;re configuring a record with multiple answers, regions, data feeds, and filter chain, you can leave this out and configure the record after it&#39;s created, or skip straight to advanced config.">
+                Answer</label>
+                <!-- TODO: replace directive-->
               <ng:include src="'parts/dns_zone_records/answercontrols.html'"></ng:include>
             </div>
 
-          <!-- TODO: fix this field -->
+          <!-- TODO: not used eat -->
           <!-- <div class="control-group"ng-show="!create_linked &amp;&amp; reverse_permitted(model.rec.type)">
             <label class="control-label col-sm-2 ">
               Also create reverse PTR record

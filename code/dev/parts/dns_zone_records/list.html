@@ -27,11 +27,11 @@
     <button class="btn btn-success" type="button" ng-click="ok()">OK</button>
   </div>
 </script>
- <div class="container-fluid" ui-view="page">
+<div class="container-fluid" ui-view="page">
   <div class="row">
     <div class="col-sm-12">
       <h2 class="pull-left page-title">
-        Records For Zone <span ng-show="zone_name">"{{zone_name}}"</span>
+        Records For Zone <strong ng-show="zone_name">{{zone_name}}</strong>
       </h2>
     </div>
   </div>
@@ -47,12 +47,12 @@
                     <i class="glyphicon glyphicon-arrow-left"></i>&nbsp; Back To Zones List
                   </a>
                 </div>
-              <div class="form-group">
-                <a ui-sref=".new" class="btn btn-success" ng-disabled="_loading">
-                  <i class="glyphicon glyphicon-plus"></i>&nbsp; Add New Record
-                </a>
+                <div class="form-group">
+                  <a ui-sref=".new" class="btn btn-success" ng-disabled="_loading">
+                    <i class="glyphicon glyphicon-plus"></i>&nbsp; Add New Record
+                  </a>
+                </div>
               </div>
-            </div>
               <div class="pull-right">
                 <form class="form-inline">
                   <div class="form-group">
@@ -76,8 +76,12 @@
           <table class="table">
             <thead>
               <tr>
-                <th>Record</th>
-                <th>Type</th>
+                <th><a href="" ng-click="order('domain')">Record</a>
+                  <span class="sortorder" ng-show="filter.predicate === 'domain'" ng-class="{reverse: filter.reverse}"></span>
+                </th>
+                <th><a href="" ng-click="order('type')">Type</a>
+                  <span class="sortorder" ng-show="filter.predicate === 'type'" ng-class="{reverse: filter.reverse}"></span>
+                </th>
                 <th>Answers</th>
                 <th>Actions</th>
               </tr>
@@ -91,17 +95,16 @@
                 </td>
                 <td>
                   <span class="badge">{{ record.type }}</span>
-                          <span ng-show="record.tier == 1" class="badge badge-1">STATIC</span>
-                          <span ng-show="record.tier == 2" class="badge badge-2">DYNAMIC</span>
-                          <span ng-show="record.tier == 3" class="badge badge-3">INTELLIGENT</span>
-                          <span ng-show="record.link != null" class="badge badge-L">LINK</span>
-
+                  <span ng-show="record.tier == 1" class="badge badge-1">STATIC</span>
+                  <span ng-show="record.tier == 2" class="badge badge-2">DYNAMIC</span>
+                  <span ng-show="record.tier == 3" class="badge badge-3">INTELLIGENT</span>
+                  <span ng-show="record.link != null" class="badge badge-L">LINK</span>
                 </td>
                 <td>
                   <div ng-show="record.link == null">{{ record.short_answers.length }} Answers</div>
-              <div ng-show="record.link != null">Links To</div>
-              {{ record.short_answers | answerlist:2 }}
-              <span ng-show="record.link != null">{{ record.link}}</span>
+                  <div ng-show="record.link != null">Links To</div>
+                  {{ record.short_answers | answerlist:2 }}
+                  <span ng-show="record.link != null">{{ record.link}}</span>
                 </td>
                 <td class="actions">
                   <i class="glyphicon glyphicon-refresh spin" ng-if="record.loading"></i>
@@ -115,7 +118,7 @@
               </tr>
             </tbody>
           </table>
-                    <hr>
+          <hr>
           <crud-pagination></crud-pagination>
         </div>
       </div>

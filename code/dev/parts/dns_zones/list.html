@@ -76,6 +76,8 @@
                 </th>
                 <th><a href="" ng-click="order('records_count')"># Of Records</a>
                   <span class="sortorder" ng-show="filter.predicate === 'records_count'" ng-class="{reverse: filter.reverse}"></span></th>
+
+                <th>DNS Servers</th>
                 <th>
                   <a href="" ng-click="order('updated_at')">Last Update</a>
                   <span class="sortorder" ng-show="filter.predicate === 'updated_at'" ng-class="{reverse: filter.reverse}"></span>
@@ -97,6 +99,7 @@
                 </a>
                 </td>
                 <td>{{item.records_count}}</td>
+                <td><div ng-repeat="server in item.dns_servers">{{server}}<span ng-hide="$last">,</span></div></td>
                 <td>{{getRelativeDate(item.updated_at) }}</td>
                 <td>{{item.updated_by}}</td>
                 <td class="actions">
