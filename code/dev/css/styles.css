@@ -1421,6 +1421,11 @@ del.diff span {
 .badge-L {
   background-color: #39b54a;
 }
+.ns1-logo--title {
+  line-height: 1.1;
+  vertical-align: top;
+  height: 1em;
+}
 form.dns-zone-records--new-form input[type="number"] {
   max-width: 120px;
 }
