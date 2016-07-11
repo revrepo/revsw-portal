@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "find ./dev/js -name \"*.js\"|xargs jshint -c .jshintrc"
   },
   "author": "Konstantin Zolotarev <konstantin.zolotarev@gmail.com>",
   "license": "ISC",
