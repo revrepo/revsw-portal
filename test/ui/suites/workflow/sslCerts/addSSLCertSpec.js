@@ -48,7 +48,27 @@ describe('Workflow', function () {
         afterEach(function () {
           
         });
-
+          
+        it('should newly created cert has appeared in the domain configuration window',
+            function () {
+                var testSslCert = DataProvider.generateSSLCertData();
+                testSslCert.account = ['API QA Reseller Company'];
+                var testDomain = DataProvider.generateDomain('sslTestDomain');
+                Portal.createSSLCert(testSslCert);
+                Portal.goToDomains();
+                Portal.domains.listPage.clickAddNewDomain();
+                Portal.domains.addPage.createDomain(testDomain);
+                Portal.domains.addPage.clickBackToList();
+                Portal.domains.listPage.searchAndClickEdit(testDomain.name);
+                var newAddedSSLItemText = Portal.domains.editPage.form.getSslCertDDownItems()
+                    .last().getText();
+                expect(newAddedSSLItemText).toBe(testSslCert.name);
+                Portal.domains.editPage.clickBackToList();
+                Portal.deleteDomain(testDomain);
+                Portal.goToSslCert();
+                Portal.deleteSSLCert(testSslCert);
+            });          
+          
         it('should create an ssl certificate and add to domain successfully',
             function () {
                 var testSslCert = DataProvider.generateSSLCertData();

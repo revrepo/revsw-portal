@@ -98,6 +98,20 @@ var DomainForm = {
   },
 
   /**
+   * ### DomainForm.getSslCertDDownItems()
+   *
+   * Returns the reference to the `SSL Certificate` drop-down items (Selenium WebDriver
+   * Element)
+   *
+   * @returns {Selenium WebDriver Element}
+   */
+  getSslCertDDownItems: function () {
+    return this
+        .getSslCertDDown()
+          .all(by.css('option'));
+  },
+  
+  /**
    * ### DomainForm.getOriginServerTxtIn()
    *
    * Returns the reference to the `Origin Server` text field (Selenium WebDriver
