@@ -1405,3 +1405,35 @@ del.diff span {
 .validation-info-dns pre.dns-text {
   overflow-x: scroll;
 }
+.fill-1,
+.badge-1 {
+  background-color: #00aef9;
+}
+.fill-2,
+.badge-2 {
+  background-color: #f68712;
+}
+.fill-3,
+.badge-3 {
+  background-color: #ed1c24;
+}
+.fill-L,
+.badge-L {
+  background-color: #39b54a;
+}
+.ns1-logo--title {
+  line-height: 1.1;
+  vertical-align: top;
+  height: 1em;
+}
+form.dns-zone-records--new-form input[type="number"] {
+  max-width: 120px;
+}
+form.dns-zone-records--new-form input[name="subdomain"] {
+  max-width: 360px;
+}
+.comming-soon {
+  color: #f4006f;
+  font-size: 0.7em;
+  vertical-align: top;
+}

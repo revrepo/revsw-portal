@@ -1,0 +1,84 @@
+<div class="col-sm-9" ng-show="model.rec.type=='A'">
+  <p>Domain points to</p>
+  <p><input ng-required="!create_linked&&model.rec.type=='A'" type="text" class="form-control" placeholder="12.34.56.78" ng-model="model.newanswer.value" ng-change="updatefromlong(model.newanswer, origanswer)"></p>
+</div>
+<div class="col-sm-9" ng-show="model.rec.type=='AAAA'">
+  <p>Domain points to</p>
+  <p><input ng-required="!create_linked&&model.rec.type=='AAAA'" type="text" class="form-control" placeholder="2001::beef" ng-model="model.newanswer.value" ng-change="updatefromlong(model.newanswer, origanswer)"></p>
+</div>
+<div class="col-sm-9" ng-show="model.rec.type=='AFSDB'">
+  <p>Service subtype is</p>
+  <p><input ng-required="!create_linked&&model.rec.type=='AFSDB'" type="number" class="form-control" placeholder="1" ng-model="model.newanswer.subtype" ng-change="updatefromlong(model.newanswer, origanswer)"></p>
+  <p>With AFS cell server</p>
+  <p><input ng-required="!create_linked&&model.rec.type=='AFSDB'" type="text" class="form-control" placeholder="afs.{{zone_name}}" ng-model="model.newanswer.host" ng-change="updatefromlong(model.newanswer, origanswer)"></p>
+</div>
+<div class="col-sm-9" ng-show="model.rec.type=='ALIAS'">
+  <p>Domain is an alias for</p>
+  <p><input ng-required="!create_linked&&model.rec.type=='ALIAS'" type="text" class="form-control" placeholder="alias.example.com" ng-model="model.newanswer.value" ng-change="updatefromlong(model.newanswer, origanswer)"></p>
+</div>
+<div class="col-sm-9" ng-show="model.rec.type=='CNAME'">
+  <p>Domain is an alias for</p>
+  <p><input ng-required="!create_linked&&model.rec.type=='CNAME'" type="text" class="form-control" placeholder="cname.{{zone_name}}" ng-model="model.newanswer.value" ng-change="updatefromlong(model.newanswer, origanswer)"></p>
+</div>
+<div class="col-sm-9" ng-show="model.rec.type=='DNAME'">
+  <p>DNS tree is an alias for</p>
+  <p><input ng-required="!create_linked&&model.rec.type=='DNAME'" type="text" class="form-control" placeholder="dname.{{zone_name}}" ng-model="model.newanswer.value" ng-change="updatefromlong(model.newanswer, origanswer)"></p>
+</div>
+<div class="col-sm-9" ng-show="model.rec.type=='HINFO'">
+  <p>Host hardware is</p>
+  <p><input ng-required="!create_linked&&model.rec.type=='HINFO'" type="text" class="form-control" placeholder="PC-Intel-3200mhz" ng-model="model.newanswer.hardware" ng-change="updatefromlong(model.newanswer, origanswer)"></p>
+  <p>With operating system</p>
+  <p><input ng-required="!create_linked&&model.rec.type=='HINFO'" type="text" class="form-control" placeholder="Ubuntu 13.04" ng-model="model.newanswer.os" ng-change="updatefromlong(model.newanswer, origanswer)"></p>
+</div>
+<div class="col-sm-9" ng-show="model.rec.type=='MX'">
+  <p>Mail is handled by</p>
+  <p><input ng-required="!create_linked&&model.rec.type=='MX'" type="text" class="form-control" placeholder="mail.{{zone_name}}" ng-model="model.newanswer.host" ng-change="updatefromlong(model.newanswer, origanswer)"></p>
+  <p>With priority</p>
+  <p><input ng-required="!create_linked&&model.rec.type=='MX'" type="number" class="form-control" placeholder="10" ng-model="model.newanswer.priority" ng-change="updatefromlong(model.newanswer, origanswer)"></p>
+</div>
+<div class="col-sm-9" ng-show="model.rec.type=='NAPTR'">
+  <p>Order for processing this answer</p>
+  <p><input ng-required="!create_linked&&model.rec.type=='NAPTR'" type="number" class="form-control" placeholder="100" ng-model="model.newanswer.order" ng-change="updatefromlong(model.newanswer, origanswer)"></p>
+  <p>Preference in case other answers have equal values</p>
+  <p><input ng-required="!create_linked&&model.rec.type=='NAPTR'" type="number" class="form-control" placeholder="10" ng-model="model.newanswer.preference" ng-change="updatefromlong(model.newanswer, origanswer)"></p>
+  <p>Flags</p>
+  <p><input ng-required="!create_linked&&model.rec.type=='NAPTR'" type="text" class="form-control" placeholder="u" ng-model="model.newanswer.flags" ng-change="updatefromlong(model.newanswer, origanswer)"></p>
+  <p>Service(s) available down this rewrite path</p>
+  <p><input ng-required="!create_linked&&model.rec.type=='NAPTR'" type="text" class="form-control" placeholder="sip+E2U" ng-model="model.newanswer.service" ng-change="updatefromlong(model.newanswer, origanswer)"></p>
+  <p>Regexp</p>
+  <p><input ng-required="!create_linked&&model.rec.type=='NAPTR'" type="text" class="form-control" placeholder="!^.*$!sip:information@{{zone_name}}!" ng-model="model.newanswer.regexp" ng-change="updatefromlong(model.newanswer, origanswer)"></p>
+  <p>Replacement FQDN</p>
+  <p><input ng-required="!create_linked&&model.rec.type=='NAPTR'" type="text" class="form-control" placeholder="." ng-model="model.newanswer.replacement" ng-change="updatefromlong(model.newanswer, origanswer)"></p>
+</div>
+<div class="col-sm-9" ng-show="model.rec.type=='NS'">
+  <p>DNS is handled by</p>
+  <p><input ng-required="!create_linked&&model.rec.type=='NS'" type="text" class="form-control" placeholder="ns1.{{zone_name}}" ng-model="model.newanswer.value" ng-change="updatefromlong(model.newanswer, origanswer)"></p>
+</div>
+<div class="col-sm-9" ng-show="model.rec.type=='PTR'">
+  <p>Reverse DNS points to</p>
+  <p><input ng-required="!create_linked&&model.rec.type=='PTR'" type="text" class="form-control" placeholder="host.{{zone_name}}" ng-model="model.newanswer.value" ng-change="updatefromlong(model.newanswer, origanswer)"></p>
+</div>
+<div class="col-sm-9" ng-show="model.rec.type=='RP'">
+  <p>Email of person responsible for this host is</p>
+  <p><input ng-required="!create_linked&&model.rec.type=='RP'" type="email" class="input" placeholder="host.{{zone_name}}" ng-model="model.newanswer.email" ng-change="updatefromlong(model.newanswer, origanswer)"></p>
+  <p>Domain for which <span class="badge">TXT</span> record exists is</p>
+  <p><input ng-required="!create_linked&&model.rec.type=='RP'" type="text" class="form-control" placeholder="{{zone_name}}" ng-model="model.newanswer.txt_dname" ng-change="updatefromlong(model.newanswer, origanswer)"></p>
+</div>
+<div class="col-sm-9" ng-show="model.rec.type=='SPF'">
+  <p>Sender Policy Framework configuration is</p>
+  <p><textarea ng-required="!create_linked&&model.rec.type=='SPF'" rows="1" class="input" placeholder="v=spf1 +mx a:mail.{{zone_name}}/28 -all" ng-model="model.newanswer.value" ng-change="updatefromlong(model.newanswer, origanswer)"></textarea></p>
+</div>
+<div class="col-sm-9" ng-show="model.rec.type=='SRV'">
+  <p>Priority of target host is</p>
+  <p><input ng-required="!create_linked&&model.rec.type=='SRV'" type="number" class="form-control" placeholder="10" ng-model="model.newanswer.priority" ng-change="updatefromlong(model.newanswer, origanswer)"></p>
+  <p>Relative weight for hosts with same priority is</p>
+  <p><input ng-required="!create_linked&&model.rec.type=='SRV'" type="number" class="form-control" placeholder="5" ng-model="model.newanswer.weight" ng-change="updatefromlong(model.newanswer, origanswer)"></p>
+  <p>TCP/UDP service port is</p>
+  <p><input ng-required="!create_linked&&model.rec.type=='SRV'" type="number" class="form-control" placeholder="5060" ng-model="model.newanswer.port" ng-change="updatefromlong(model.newanswer, origanswer)"></p>
+  <p>Host providing service is</p>
+  <p><input ng-required="!create_linked&&model.rec.type=='SRV'" type="text" class="form-control" placeholder="sip.{{zone_name}}" ng-model="model.newanswer.host" ng-change="updatefromlong(model.newanswer, origanswer)"></p>
+</div>
+<div class="col-sm-9" ng-show="model.rec.type=='TXT'">
+  <p>Text value is</p>
+  <p><textarea ng-required="!create_linked&&model.rec.type=='TXT'" rows="1" class="form-control" placeholder="Freeform text" ng-model="model.newanswer.value" ng-change="updatefromlong(model.newanswer, origanswer)"></textarea></p>
+</div>

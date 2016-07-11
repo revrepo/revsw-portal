@@ -1,0 +1,128 @@
+<!-- Note that element contain ui-view child page will be added here -->
+<script type="text/ng-template" id="confirmModal.html">
+  <div class="modal-header">
+    <h3 class="modal-title">Confirm</h3>
+  </div>
+  <div class="modal-body">
+    Are you sure you want to delete zone
+    <strong>{{model.zone}}</strong> and all records in the zone?
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+    <button class="btn btn-danger" type="button" ng-click="ok()">OK</button>
+  </div>
+</script>
+<script type="text/ng-template" id="confirmUpdateModal.html">
+  <div class="modal-header">
+    <h3 class="modal-title">Confirm</h3>
+  </div>
+  <div class="modal-body">
+    Are you sure you want to update zone
+    <strong>{{model.zone}}</strong>?
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+    <button class="btn btn-success" type="button" ng-click="ok()">OK</button>
+  </div>
+</script>
+
+<div class="container-fluid" ui-view="page">
+  <div class="row">
+    <div class="col-sm-12">
+      <h2 class="pull-left page-title">
+        <img class="ns1-logo--title" ng-src="images/ns1/white-pb-ns1.svg"></img>
+        DNS Zones List
+      </h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="pull-left">
+                <a ui-sref=".new" class="btn btn-success" ng-disabled="_loading">
+                  <i class="glyphicon glyphicon-plus"></i>&nbsp; Add New DNS Zone
+                </a>
+              </div>
+              <div class="pull-right">
+                <form class="form-inline">
+                  <div class="form-group">
+                    <label for="search">Search:&nbsp;</label>
+                    <input type="text" class="form-control" id="search" placeholder="" ng-model="filter.filter" ng-change="checkFilterPage()">&nbsp;&nbsp;
+                    <i class="glyphicon glyphicon-remove" ng-show="filter.filter != ''" ng-click="filter.filter = ''"></i>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="panel-body">
+          <div class="alert alert-info" ng-if="records.length == 0 && !_loading">
+            Currently you don't have any DNS zones registered in the system. You can click on "Add New DNS Zone" button above to add a DNS Zone.
+          </div>
+          <div class="alert alert-info" ng-if="_loading">
+            <i class="glyphicon glyphicon-refresh spin" ng-if="item.loading"></i>&nbsp; Loading...
+          </div>
+          <crud-pagination></crud-pagination>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>
+                  <a href="" ng-click="order('zone')">Zone Name</a>
+                  <span class="sortorder" ng-show="filter.predicate === 'zone'" ng-class="{reverse: filter.reverse}"></span>
+                </th>
+                <th><a href="" ng-click="order('records_count')"># Of Records</a>
+                  <span class="sortorder" ng-show="filter.predicate === 'records_count'" ng-class="{reverse: filter.reverse}"></span></th>
+
+                <th>DNS Servers</th>
+                <th>
+                  <a href="" ng-click="order('updated_at')">Last Update</a>
+                  <span class="sortorder" ng-show="filter.predicate === 'updated_at'" ng-class="{reverse: filter.reverse}"></span>
+                </th>
+                <th> <a href="" ng-click="order('updated_by')">Updated By</a>
+                  <span class="sortorder" ng-show="filter.predicate === 'updated_by'" ng-class="{reverse: filter.reverse}"></span></th>
+                <th>Actions</th>
+                <th class="account" ng-if="auth.isReseller() ||  auth.isRevadmin()">
+                  <a href="" ng-click="order('companyName')">Account</a>
+                  <span class="sortorder" ng-show="filter.predicate === 'companyName'" ng-class="{reverse: filter.reverse}"></span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr id="anchor{{::$index}}" ng-click="saveAnchorScrollIndex($index)" ng-repeat="item in filteredRecords | limitTo:filter.limit:filter.skip track by $index">
+                <td>
+                  <a ui-sref="^.dns_zone_records({dns_zone_id: item.id})" ng-if="!item.loading" uib-tooltip="Manage Records">
+                  {{item.zone}}
+                </a>
+                </td>
+                <td>{{item.records_count}}</td>
+                <td><div ng-repeat="server in item.dns_servers">{{server}}<span ng-hide="$last">,</span></div></td>
+                <td>{{getRelativeDate(item.updated_at) }}</td>
+                <td>{{item.updated_by}}</td>
+                <td class="actions">
+                  <i class="glyphicon glyphicon-refresh spin" ng-if="item.loading"></i>
+                  <a ui-sref="^.dns_zone_records({dns_zone_id: item.id})" ng-if="!item.loading" uib-tooltip="Manage Records">
+                    <i class="glyphicon glyphicon-tasks"></i>
+                  </a>
+                  <a ui-sref=".edit({id: item.id})" ng-if="!item.loading" uib-tooltip="Edit Zone Properties">
+                    <i class="glyphicon glyphicon-pencil"></i>
+                  </a>
+                  <a href="" ng-if="!item.loading" ng-click="deleteDNSZone(item)" uib-tooltip="Delete Zone">
+                    <i class="glyphicon glyphicon-trash"></i>
+                  </a>
+                </td>
+                <td ng-if="auth.isReseller() ||  auth.isRevadmin()">
+                  <div>{{item.companyName}}</div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <hr>
+          <crud-pagination></crud-pagination>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

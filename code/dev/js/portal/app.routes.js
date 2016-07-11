@@ -105,6 +105,14 @@
             template: '<span></span>'
           }
         }
+      })
+      .state('index.dnsServices', {
+        url: '',
+        views: {
+          page: {
+            templateUrl: 'parts/layout/page.html'
+          }
+        }
       });
   }
 })();

@@ -1,0 +1,140 @@
+<div class="dns-zone-record-answer" ng-if="!!$ctrl.recordType">
+  <div class="form-group" ng-show="$ctrl.recordType=='A'">
+    <p>Domain points to</p>
+    <p>
+      <input ng-required="!create_linked&&$ctrl.recordType=='A'" type="text" class="form-control" placeholder="12.34.56.78" ng-model="$ctrl.newanswer.value">
+    </p>
+  </div>
+  <div class="form-group" ng-show="$ctrl.recordType=='AAAA'">
+    <p>Domain points to</p>
+    <p>
+      <input ng-required="!create_linked&&$ctrl.recordType=='AAAA'" type="text" class="form-control" placeholder="2001::beef" ng-model="$ctrl.newanswer.value">
+    </p>
+  </div>
+  <div class="form-group" ng-show="$ctrl.recordType=='AFSDB'">
+    <p>Service subtype is</p>
+    <p>
+      <input ng-required="!create_linked&&$ctrl.recordType=='AFSDB'" type="number" class="form-control" placeholder="1" ng-model="$ctrl.newanswer.subtype">
+    </p>
+    <p>With AFS cell server</p>
+    <p>
+      <input ng-required="!create_linked&&$ctrl.recordType=='AFSDB'" type="text" class="form-control" placeholder="afs.{{zone_name}}" ng-model="$ctrl.newanswer.host">
+    </p>
+  </div>
+  <div class="form-group" ng-show="$ctrl.recordType=='ALIAS'">
+    <p>Domain is an alias for</p>
+    <p>
+      <input ng-required="!create_linked&&$ctrl.recordType=='ALIAS'" type="text" class="form-control" placeholder="alias.example.com" ng-model="$ctrl.newanswer.value">
+    </p>
+  </div>
+  <div class="form-group" ng-show="$ctrl.recordType=='CNAME'">
+    <p>Domain is an alias for</p>
+    <p>
+      <input ng-required="!create_linked&&$ctrl.recordType=='CNAME'" type="text" class="form-control" placeholder="cname.{{zone_name}}" ng-model="$ctrl.newanswer.value">
+    </p>
+  </div>
+  <div class="form-group" ng-show="$ctrl.recordType=='DNAME'">
+    <p>DNS tree is an alias for</p>
+    <p>
+      <input ng-required="!create_linked&&$ctrl.recordType=='DNAME'" type="text" class="form-control" placeholder="dname.{{zone_name}}" ng-model="$ctrl.newanswer.value">
+    </p>
+  </div>
+  <div class="form-group" ng-show="$ctrl.recordType=='HINFO'">
+    <p>Host hardware is</p>
+    <p>
+      <input ng-required="!create_linked&&$ctrl.recordType=='HINFO'" type="text" class="form-control" placeholder="PC-Intel-3200mhz" ng-model="$ctrl.newanswer.hardware">
+    </p>
+    <p>With operating system</p>
+    <p>
+      <input ng-required="!create_linked&&$ctrl.recordType=='HINFO'" type="text" class="form-control" placeholder="Ubuntu 13.04" ng-model="$ctrl.newanswer.os">
+    </p>
+  </div>
+  <div class="form-group" ng-show="$ctrl.recordType=='MX'">
+    <p>Mail is handled by</p>
+    <p>
+      <input ng-required="!create_linked&&$ctrl.recordType=='MX'" type="text" class="form-control" placeholder="mail.{{zone_name}}" ng-model="$ctrl.newanswer.host">
+    </p>
+    <p>With priority</p>
+    <p>
+      <input ng-required="!create_linked&&$ctrl.recordType=='MX'" type="number" class="form-control" placeholder="10" ng-model="$ctrl.newanswer.priority">
+    </p>
+  </div>
+  <div class="form-group" ng-show="$ctrl.recordType=='NAPTR'">
+    <p>Order for processing this answer</p>
+    <p>
+      <input ng-required="!create_linked&&$ctrl.recordType=='NAPTR'" type="number" class="form-control" placeholder="100" ng-model="$ctrl.newanswer.order">
+    </p>
+    <p>Preference in case other answers have equal values</p>
+    <p>
+      <input ng-required="!create_linked&&$ctrl.recordType=='NAPTR'" type="number" class="form-control" placeholder="10" ng-model="$ctrl.newanswer.preference">
+    </p>
+    <p>Flags</p>
+    <p>
+      <input ng-required="!create_linked&&$ctrl.recordType=='NAPTR'" type="text" class="form-control" placeholder="u" ng-model="$ctrl.newanswer.flags">
+    </p>
+    <p>Service(s) available down this rewrite path</p>
+    <p>
+      <input ng-required="!create_linked&&$ctrl.recordType=='NAPTR'" type="text" class="form-control" placeholder="sip+E2U" ng-model="$ctrl.newanswer.service">
+    </p>
+    <p>Regexp</p>
+    <p>
+      <input ng-required="!create_linked&&$ctrl.recordType=='NAPTR'" type="text" class="form-control" placeholder="!^.*$!sip:information@{{zone_name}}!" ng-model="$ctrl.newanswer.regexp">
+    </p>
+    <p>Replacement FQDN</p>
+    <p>
+      <input ng-required="!create_linked&&$ctrl.recordType=='NAPTR'" type="text" class="form-control" placeholder="." ng-model="$ctrl.newanswer.replacement">
+    </p>
+  </div>
+  <div class="form-group" ng-show="$ctrl.recordType=='NS'">
+    <p>DNS is handled by</p>
+    <p>
+      <input ng-required="!create_linked&&$ctrl.recordType=='NS'" type="text" class="form-control" placeholder="ns1.{{zone_name}}" ng-model="$ctrl.newanswer.value">
+    </p>
+  </div>
+  <div class="form-group" ng-show="$ctrl.recordType=='PTR'">
+    <p>Reverse DNS points to</p>
+    <p>
+      <input ng-required="!create_linked&&$ctrl.recordType=='PTR'" type="text" class="form-control" placeholder="host.{{zone_name}}" ng-model="$ctrl.newanswer.value">
+    </p>
+  </div>
+  <div class="form-group" ng-show="$ctrl.recordType=='RP'">
+    <p>Email of person responsible for this host is</p>
+    <p>
+      <input ng-required="!create_linked&&$ctrl.recordType=='RP'" type="email" class="input" placeholder="host.{{zone_name}}" ng-model="$ctrl.newanswer.email">
+    </p>
+    <p>Domain for which <span class="badge">TXT</span> record exists is</p>
+    <p>
+      <input ng-required="!create_linked&&$ctrl.recordType=='RP'" type="text" class="form-control" placeholder="{{zone_name}}" ng-model="$ctrl.newanswer.txt_dname">
+    </p>
+  </div>
+  <div class="form-group" ng-show="$ctrl.recordType=='SPF'">
+    <p>Sender Policy Framework configuration is</p>
+    <p>
+      <textarea ng-required="!create_linked&&$ctrl.recordType=='SPF'" rows="1" class="input" placeholder="v=spf1 +mx a:mail.{{zone_name}}/28 -all" ng-model="$ctrl.newanswer.value"></textarea>
+    </p>
+  </div>
+  <div class="form-group" ng-show="$ctrl.recordType=='SRV'">
+    <p>Priority of target host is</p>
+    <p>
+      <input ng-required="!create_linked&&$ctrl.recordType=='SRV'" type="number" class="form-control" placeholder="10" ng-model="$ctrl.newanswer.priority">
+    </p>
+    <p>Relative weight for hosts with same priority is</p>
+    <p>
+      <input ng-required="!create_linked&&$ctrl.recordType=='SRV'" type="number" class="form-control" placeholder="5" ng-model="$ctrl.newanswer.weight">
+    </p>
+    <p>TCP/UDP service port is</p>
+    <p>
+      <input ng-required="!create_linked&&$ctrl.recordType=='SRV'" type="number" class="form-control" placeholder="5060" ng-model="$ctrl.newanswer.port">
+    </p>
+    <p>Host providing service is</p>
+    <p>
+      <input ng-required="!create_linked&&$ctrl.recordType=='SRV'" type="text" class="form-control" placeholder="sip.{{zone_name}}" ng-model="$ctrl.newanswer.host">
+    </p>
+  </div>
+  <div class="form-group" ng-show="$ctrl.recordType=='TXT'">
+    <p>Text value is</p>
+    <p>
+      <textarea ng-required="!create_linked&&$ctrl.recordType=='TXT'" rows="1" class="form-control" placeholder="Freeform text" ng-model="$ctrl.newanswer.value"></textarea>
+    </p>
+  </div>
+</div>
