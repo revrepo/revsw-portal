@@ -48,7 +48,7 @@ describe('Workflow', function () {
                 afterEach(function () {
                 });
 
-                it('should be possible to edit certificate which is in use',
+                xit('should be possible to edit certificate which is in use',
                     function () {
                         var testSslCert = DataProvider.generateSSLCertData();
                         testSslCert.account = ['API QA Reseller Company'];
@@ -83,7 +83,7 @@ describe('Workflow', function () {
                         Portal.deleteSSLCert(testSslCert);
                     });
 
-                it('should disappear from domain form when sslCert account changed',
+                xit('should disappear from domain form when sslCert account changed',
                     function () {
                         var testSslCert = DataProvider.generateSSLCertData();
                         testSslCert.account = ['API QA Reseller Company'];
@@ -116,7 +116,7 @@ describe('Workflow', function () {
                         Portal.deleteSSLCert(testSslCert);
                     });
 
-                it('should update sslCert name on domain form when sslCert name changed',
+                xit('should update sslCert name on domain form when sslCert name changed',
                     function () {
                         var testSslCert = DataProvider.generateSSLCertData();
                         testSslCert.account = ['API QA Reseller Company'];
@@ -150,7 +150,7 @@ describe('Workflow', function () {
                         Portal.deleteSSLCert(testSslCert);
                     });
 
-                it('should be able to change to default SSL',
+                xit('should be able to change to default SSL',
                     function () {
                         var testSslCert = DataProvider.generateSSLCertData();
                         testSslCert.account = ['API QA Reseller Company'];
@@ -177,6 +177,41 @@ describe('Workflow', function () {
                         Portal.deleteDomain(testDomain);
                         Portal.goToSslCert();
                         Portal.deleteSSLCert(testSslCert);
+                    });
+
+                it('should be able to use a private SSL and after that to use another',
+                    function () {
+                        var firstTestSslCert = DataProvider.generateSSLCertData();
+                        var secondTestSslCert = DataProvider.generateSSLCertData();
+
+                        firstTestSslCert.account = ['API QA Reseller Company'];
+                        secondTestSslCert.account = ['API QA Reseller Company'];
+
+                        var testDomain = DataProvider.generateDomain('sslTestDomain');
+                        Portal.createSSLCert(firstTestSslCert);
+                        Portal.createSSLCert(secondTestSslCert);
+                        Portal.goToDomains();
+                        Portal.domains.listPage.clickAddNewDomain();
+                        Portal.domains.addPage.createDomain(testDomain);
+                        Portal.domains.addPage.clickBackToList();
+                        Portal.domains.listPage.searchAndClickEdit(testDomain.name);
+                        Portal.domains.editPage.form.setSslCert(firstTestSslCert.name);
+                        Portal.domains.editPage.clickUpdateDomain();
+                        Portal.dialog.clickOk();
+                        Portal.domains.editPage.clickBackToList();
+                        Portal.domains.listPage.searchAndClickEdit(testDomain.name);
+                        Portal.domains.editPage.form.setSslCert(secondTestSslCert.name);
+                        Portal.domains.editPage.clickUpdateDomain();
+                        Portal.dialog.clickOk();
+                        Portal.domains.editPage.clickBackToList();
+                        Portal.domains.listPage.searchAndClickEdit(testDomain.name);
+                        var sslCertText = Portal.domains.editPage.form.getSslCert();
+                        expect(sslCertText).toEqual(secondTestSslCert.name);
+                        Portal.domains.editPage.clickBackToList();
+                        Portal.deleteDomain(testDomain);
+                        Portal.goToSslCert();
+                        Portal.deleteSSLCert(firstTestSslCert);
+                        Portal.deleteSSLCert(secondTestSslCert);
                     });
             });
         });
