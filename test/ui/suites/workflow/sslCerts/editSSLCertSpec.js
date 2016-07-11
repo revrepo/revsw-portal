@@ -48,7 +48,7 @@ describe('Workflow', function () {
                 afterEach(function () {
                 });
 
-                xit('should be possible to edit certificate which is in use',
+                it('should be possible to edit certificate which is in use',
                     function () {
                         var testSslCert = DataProvider.generateSSLCertData();
                         testSslCert.account = ['API QA Reseller Company'];
@@ -83,7 +83,7 @@ describe('Workflow', function () {
                         Portal.deleteSSLCert(testSslCert);
                     });
 
-                xit('should disappear from domain form when sslCert account changed',
+                it('should disappear from domain form when sslCert account changed',
                     function () {
                         var testSslCert = DataProvider.generateSSLCertData();
                         testSslCert.account = ['API QA Reseller Company'];
@@ -116,7 +116,7 @@ describe('Workflow', function () {
                         Portal.deleteSSLCert(testSslCert);
                     });
 
-                xit('should update sslCert name on domain form when sslCert name changed',
+                it('should update sslCert name on domain form when sslCert name changed',
                     function () {
                         var testSslCert = DataProvider.generateSSLCertData();
                         testSslCert.account = ['API QA Reseller Company'];
@@ -150,7 +150,7 @@ describe('Workflow', function () {
                         Portal.deleteSSLCert(testSslCert);
                     });
 
-                xit('should be able to change to default SSL',
+                it('should be able to change to default SSL',
                     function () {
                         var testSslCert = DataProvider.generateSSLCertData();
                         testSslCert.account = ['API QA Reseller Company'];
