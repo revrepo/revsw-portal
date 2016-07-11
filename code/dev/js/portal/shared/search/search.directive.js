@@ -159,7 +159,6 @@
                   }
                   break;
                 case 'zones':
-                  console.log(item)
                   if ((item.zone || '').toLowerCase().indexOf(term) >= 0) {
                     item.searchBarText = item.zone + ' (Edit DNS Zone)';
                     item.searchDisplayText = item.zone;
@@ -240,7 +239,7 @@
                 break;
               case 'zones':
                 if (item.searchAction === 'edit') {
-                  $location.path('dns/zones/edit/' + item.id);
+                  $location.path('dns/zones/' + item.id+'/records');
                 }
                 break;
             }
