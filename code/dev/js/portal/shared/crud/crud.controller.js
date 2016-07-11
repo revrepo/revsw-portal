@@ -220,7 +220,7 @@
           };
         }
         var modalInstance = $uibModal.open({
-          animation: true,
+          animation: false,
           templateUrl: template || 'parts/modal/confirmDelete.html',
           controller: 'ConfirmModalInstanceCtrl',
           size: 'md',
@@ -432,14 +432,14 @@
        * @throws Error is not {@link $scope.resource} provided
        * @returns {Promise}
        */
-      $scope.list = function() {
+      $scope.list = function(data) {
         if (!$scope.resource) {
           throw new Error('No resource provided.');
         }
         $scope.loading(true);
         //fetching data
         return $scope.resource
-          .query(function(data) {
+          .query(data, function(data) {
             if (!$scope._baseFilter) {
               $scope.records = data;
             } else {

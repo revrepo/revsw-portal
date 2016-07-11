@@ -1,0 +1,128 @@
+<!-- Note that element contain ui-view child page will be added here -->
+<script type="text/ng-template" id="confirmModal.html">
+  <div class="modal-header">
+    <h3 class="modal-title">Confirm</h3>
+  </div>
+  <div class="modal-body">
+    <p>Are you sure you want to delete the <span class="badge">{{model.delrec.type}}</span> <b>{{model.delrec.domain}}</b> record and all associated answers and configuration details?</p>
+    <span ng-show="reverse_permitted(model.delrec.type) &amp;&amp; revrec != null">
+        <label><input type="checkbox" class="input-top" ng-model="delete_revrec"> Also delete reverse record <span class="badge">{{revrec.type}}</span> <b>{{revrec.domain}}</b></label>
+    </span>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+    <button class="btn btn-danger" type="button" ng-click="ok()">OK</button>
+  </div>
+</script>
+<script type="text/ng-template" id="confirmUpdateModal.html">
+  <div class="modal-header">
+    <h3 class="modal-title">Confirm</h3>
+  </div>
+  <div class="modal-body">
+    Are you sure you want to update
+    <strong>{{model.domain}}</strong>?
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+    <button class="btn btn-success" type="button" ng-click="ok()">OK</button>
+  </div>
+</script>
+<div class="container-fluid" ui-view="page">
+  <div class="row">
+    <div class="col-sm-12">
+      <h2 class="pull-left page-title">
+        <img class="ns1-logo--title" ng-src="images/ns1/white-pb-ns1.svg"></img>
+        Records For Zone <strong ng-show="zone_name">{{zone_name}}</strong>
+      </h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-inline pull-left">
+                <div class="form-group">
+                  <a ui-sref="^.dns_zones" class="btn btn-info">
+                    <i class="glyphicon glyphicon-arrow-left"></i>&nbsp; Back To Zones List
+                  </a>
+                </div>
+                <div class="form-group">
+                  <a ui-sref=".new" class="btn btn-success" ng-disabled="_loading">
+                    <i class="glyphicon glyphicon-plus"></i>&nbsp; Add New Record
+                  </a>
+                </div>
+              </div>
+              <div class="pull-right">
+                <form class="form-inline">
+                  <div class="form-group">
+                    <label for="search">Search:&nbsp;</label>
+                    <input type="text" class="form-control" id="search" placeholder="" ng-model="filter.filter" ng-change="checkFilterPage()">&nbsp;&nbsp;
+                    <i class="glyphicon glyphicon-remove" ng-show="filter.filter != ''" ng-click="filter.filter = ''"></i>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="panel-body">
+          <div class="alert alert-info" ng-if="records.length == 0 && !_loading">
+            Currently you don't have any DNS zones registered in the system. You can click on "Add New DNS Zone" button above to add an DNS Zone.
+          </div>
+          <div class="alert alert-info" ng-if="_loading">
+            <i class="glyphicon glyphicon-refresh spin" ng-if="record.loading"></i>&nbsp; Loading...
+          </div>
+          <crud-pagination></crud-pagination>
+          <table class="table">
+            <thead>
+              <tr>
+                <th><a href="" ng-click="order('domain')">Record</a>
+                  <span class="sortorder" ng-show="filter.predicate === 'domain'" ng-class="{reverse: filter.reverse}"></span>
+                </th>
+                <th><a href="" ng-click="order('type')">Type</a>
+                  <span class="sortorder" ng-show="filter.predicate === 'type'" ng-class="{reverse: filter.reverse}"></span>
+                </th>
+                <th>Answers</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr id="anchor{{::$index}}" ng-click="saveAnchorScrollIndex($index)" ng-repeat="record in filteredRecords| limitTo:filter.limit:filter.skip track by $index">
+                <td>
+                  <a ui-sref=".edit({id: record.id})" ng-if="!record.loading" uib-tooltip="Edit Record">
+                  {{record.domain}}
+                </a>
+                </td>
+                <td>
+                  <span class="badge">{{ record.type }}</span>
+                  <span ng-show="record.tier == 1" class="badge badge-1">STATIC</span>
+                  <span ng-show="record.tier == 2" class="badge badge-2">DYNAMIC</span>
+                  <span ng-show="record.tier == 3" class="badge badge-3">INTELLIGENT</span>
+                  <span ng-show="record.link != null" class="badge badge-L">LINK</span>
+                </td>
+                <td>
+                  <div ng-show="record.link == null">{{ record.short_answers.length }} Answers</div>
+                  <div ng-show="record.link != null">Links To</div>
+                  {{ record.short_answers | answerlist:2 }}
+                  <span ng-show="record.link != null">{{ record.link}}</span>
+                </td>
+                <td class="actions">
+                  <i class="glyphicon glyphicon-refresh spin" ng-if="record.loading"></i>
+                  <a ui-sref=".edit({id: record.id})" ng-if="!record.loading" uib-tooltip="Edit Record">
+                    <i class="glyphicon glyphicon-pencil"></i>
+                  </a>
+                  <a href="" ng-if="!record.loading" ng-click="deleteDNSZoneRecord(record)" uib-tooltip="Delete Record">
+                    <i class="glyphicon glyphicon-trash"></i>
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <hr>
+          <crud-pagination></crud-pagination>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

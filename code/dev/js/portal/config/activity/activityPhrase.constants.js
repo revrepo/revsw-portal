@@ -41,7 +41,8 @@
         'sslcert': 'SSL Certificate',
         'logshippingjob': 'Log Shipping Job',
         'sslname': 'SSL Name',
-        'object': 'Object'
+        'object': 'Object',
+        'dnszone':'DNS Zone'
       },
       EVENT_TYPES:{
         'domain': 'Domain Config Modification',

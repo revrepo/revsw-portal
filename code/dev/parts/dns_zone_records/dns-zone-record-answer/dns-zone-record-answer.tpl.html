@@ -1,0 +1,199 @@
+<div class="dns-zone-record-answer" ng-if="!!$ctrl.recordType" ng-form="answerForm">
+  <div class="form-group" ng-show="$ctrl.recordType=='A'" ng-class="{ 'has-error': answerForm.recordType_A.$invalid && answerForm.recordType_A.$dirty }">
+    <p>Domain points to</p>
+    <p>
+      <input ng-required="!create_linked&&$ctrl.recordType=='A'" name="recordType_A" type="text" class="form-control" placeholder="12.34.56.78" ng-model="$ctrl.newanswer.value">
+      <div class="error-messages" ng-messages="answerForm.recordType_A.$error" role="alert" ng-messages-multiple>
+        <div ng-messages-include="parts/shared/error-messages.html"></div>
+      </div>
+    </p>
+  </div>
+  <div class="form-group" ng-show="$ctrl.recordType=='AAAA'" ng-class="{ 'has-error': answerForm.recordType_AAAA.$invalid && answerForm.recordType_AAAA.$dirty }">
+    <p>Domain points to</p>
+    <p>
+      <input ng-required="!create_linked&&$ctrl.recordType=='AAAA'" name="recordType_AAAA" type="text" class="form-control" placeholder="2001::beef" ng-model="$ctrl.newanswer.value">
+      <div class="error-messages" ng-messages="answerForm.recordType_AAAA.$error" role="alert" ng-messages-multiple>
+        <div ng-messages-include="parts/shared/error-messages.html"></div>
+      </div>
+    </p>
+  </div>
+  <!-- NOTE: don't use now-->
+  <!-- <div class="form-group" ng-show="$ctrl.recordType=='AFSDB'">
+    <p>Service subtype is</p>
+    <p>
+      <input ng-required="!create_linked&&$ctrl.recordType=='AFSDB'" type="number" class="form-control" placeholder="1" ng-model="$ctrl.newanswer.subtype">
+    </p>
+    <p>With AFS cell server</p>
+    <p>
+      <input ng-required="!create_linked&&$ctrl.recordType=='AFSDB'" type="text" class="form-control" placeholder="afs.{{zone_name}}" ng-model="$ctrl.newanswer.host">
+    </p>
+  </div> -->
+  <div class="form-group" ng-show="$ctrl.recordType=='ALIAS'" ng-class="{ 'has-error': answerForm.recordType_ALIAS.$invalid && answerForm.recordType_ALIAS.$dirty }">
+    <p>Domain is an alias for</p>
+    <p>
+      <input ng-required="!create_linked&&$ctrl.recordType=='ALIAS'" name="recordType_ALIAS" type="text" class="form-control" placeholder="alias.example.com" ng-model="$ctrl.newanswer.value">
+      <div class="error-messages" ng-messages="answerForm.recordType_ALIAS.$error" role="alert" ng-messages-multiple>
+        <div ng-messages-include="parts/shared/error-messages.html"></div>
+      </div>
+    </p>
+  </div>
+  <div class="form-group" ng-show="$ctrl.recordType=='CNAME'" ng-class="{ 'has-error': answerForm.recordType_CNAME.$invalid && answerForm.recordType_CNAME.$dirty }">
+    <p>Domain is an alias for</p>
+    <p>
+      <input ng-required="!create_linked&&$ctrl.recordType=='CNAME'" name="recordType_CNAME" type="text" class="form-control" placeholder="cname.{{zone_name}}" ng-model="$ctrl.newanswer.value">
+      <div class="error-messages" ng-messages="answerForm.recordType_CNAME.$error" role="alert" ng-messages-multiple>
+        <div ng-messages-include="parts/shared/error-messages.html"></div>
+      </div>
+    </p>
+  </div>
+  <div class="form-group" ng-show="$ctrl.recordType=='DNAME'" ng-class="{ 'has-error': answerForm.recordType_DNAME.$invalid && answerForm.recordType_DNAME.$dirty }">
+    <p>DNS tree is an alias for</p>
+    <p>
+      <input name="recordType_DNAME" ng-required="!create_linked&&$ctrl.recordType=='DNAME'" type="text" class="form-control" placeholder="dname.{{zone_name}}" ng-model="$ctrl.newanswer.value">
+      <div class="error-messages" ng-messages="answerForm.recordType_DNAME.$error" role="alert" ng-messages-multiple>
+        <div ng-messages-include="parts/shared/error-messages.html"></div>
+      </div>
+    </p>
+  </div>
+  <div class="form-group" ng-show="$ctrl.recordType=='HINFO'" ng-form="recordTypeHINFOForm" ng-class="{ 'has-error': recordTypeHINFOForm.$invalid && recordTypeHINFOForm.$dirty }">
+    <p>Host hardware is</p>
+    <p>
+      <input ng-required="!create_linked&&$ctrl.recordType=='HINFO'" name="recordType_HINFO_hardware" type="text" class="form-control" placeholder="PC-Intel-3200mhz" ng-model="$ctrl.newanswer.hardware">
+      <div class="error-messages" ng-messages="recordTypeHINFOForm.recordType_HINFO_hardware.$error" role="alert" ng-messages-multiple>
+        <div ng-messages-include="parts/shared/error-messages.html"></div>
+      </div>
+    </p>
+    <p>With operating system</p>
+    <p>
+      <input ng-required="!create_linked&&$ctrl.recordType=='HINFO'" name="recordType_HINFO_os" type="text" class="form-control" placeholder="Ubuntu 13.04" ng-model="$ctrl.newanswer.os">
+      <div class="error-messages" ng-messages="recordTypeHINFOForm.recordType_HINFO_os.$error" role="alert" ng-messages-multiple>
+        <div ng-messages-include="parts/shared/error-messages.html"></div>
+      </div>
+    </p>
+  </div>
+  <div class="form-group" ng-show="$ctrl.recordType=='MX'" ng-form="recordTypeMXForm" ng-class="{ 'has-error': recordTypeMXForm.$invalid && recordTypeMXForm.$dirty }">
+    <p>Mail is handled by</p>
+    <p>
+      <input ng-required="!create_linked&&$ctrl.recordType=='MX'" name="host" type="text" class="form-control" placeholder="mail.{{zone_name}}" ng-model="$ctrl.newanswer.host">
+      <div class="error-messages" ng-messages="recordTypeMXForm.host.$error" role="alert" ng-messages-multiple>
+        <div ng-messages-include="parts/shared/error-messages.html"></div>
+      </div>
+    </p>
+    <p>With priority</p>
+    <p>
+      <input ng-required="!create_linked&&$ctrl.recordType=='MX'" name="priority" type="number" class="form-control" placeholder="10" ng-model="$ctrl.newanswer.priority">
+      <div class="error-messages" ng-messages="recordTypeMXForm.priority.$error" role="alert" ng-messages-multiple>
+        <div ng-messages-include="parts/shared/error-messages.html"></div>
+      </div>
+    </p>
+  </div>
+  <!-- NOTE: don't use now-->
+  <!-- <div class="form-group" ng-show="$ctrl.recordType=='NAPTR'">
+    <p>Order for processing this answer</p>
+    <p>
+      <input ng-required="!create_linked&&$ctrl.recordType=='NAPTR'" type="number" class="form-control" placeholder="100" ng-model="$ctrl.newanswer.order">
+    </p>
+    <p>Preference in case other answers have equal values</p>
+    <p>
+      <input ng-required="!create_linked&&$ctrl.recordType=='NAPTR'" type="number" class="form-control" placeholder="10" ng-model="$ctrl.newanswer.preference">
+    </p>
+    <p>Flags</p>
+    <p>
+      <input ng-required="!create_linked&&$ctrl.recordType=='NAPTR'" type="text" class="form-control" placeholder="u" ng-model="$ctrl.newanswer.flags">
+    </p>
+    <p>Service(s) available down this rewrite path</p>
+    <p>
+      <input ng-required="!create_linked&&$ctrl.recordType=='NAPTR'" type="text" class="form-control" placeholder="sip+E2U" ng-model="$ctrl.newanswer.service">
+    </p>
+    <p>Regexp</p>
+    <p>
+      <input ng-required="!create_linked&&$ctrl.recordType=='NAPTR'" type="text" class="form-control" placeholder="!^.*$!sip:information@{{zone_name}}!" ng-model="$ctrl.newanswer.regexp">
+    </p>
+    <p>Replacement FQDN</p>
+    <p>
+      <input ng-required="!create_linked&&$ctrl.recordType=='NAPTR'" type="text" class="form-control" placeholder="." ng-model="$ctrl.newanswer.replacement">
+    </p>
+  </div> -->
+  <div class="form-group" ng-show="$ctrl.recordType=='NS'" ng-class="{ 'has-error': answerForm.recordType_NS.$invalid && answerForm.recordType_NS.$dirty }">
+    <p>DNS is handled by</p>
+    <p>
+      <input ng-required="!create_linked&&$ctrl.recordType=='NS'" name="recordType_NS" type="text" class="form-control" placeholder="ns1.{{zone_name}}" ng-model="$ctrl.newanswer.value">
+      <div class="error-messages" ng-messages="answerForm.recordType_NS.$error" role="alert" ng-messages-multiple>
+        <div ng-messages-include="parts/shared/error-messages.html"></div>
+      </div>
+    </p>
+  </div>
+  <div class="form-group" ng-show="$ctrl.recordType=='PTR'" ng-class="{ 'has-error': answerForm.recordType_PTR.$invalid && answerForm.recordType_PTR.$dirty }">
+    <p>Reverse DNS points to</p>
+    <p>
+      <input ng-required="!create_linked&&$ctrl.recordType=='PTR'" name="recordType_PTR" type="text" class="form-control" placeholder="host.{{zone_name}}" ng-model="$ctrl.newanswer.value">
+      <div class="error-messages" ng-messages="answerForm.recordType_PTR.$error" role="alert" ng-messages-multiple>
+        <div ng-messages-include="parts/shared/error-messages.html"></div>
+      </div>
+    </p>
+  </div>
+  <div class="form-group" ng-show="$ctrl.recordType=='RP'" ng-class="{ 'has-error': answerForm.recordType_RP.$invalid && answerForm.recordType_RP.$dirty }">
+    <p>Email of person responsible for this host is</p>
+    <p>
+      <input ng-required="!create_linked&&$ctrl.recordType=='RP'" name="recordType_RP_email" type="email" class="input" placeholder="host.{{zone_name}}" ng-model="$ctrl.newanswer.email">
+      <div class="error-messages" ng-messages="answerForm.recordType_RP_email.$error" role="alert" ng-messages-multiple>
+        <div ng-messages-include="parts/shared/error-messages.html"></div>
+      </div>
+    </p>
+    <p>Domain for which <span class="badge">TXT</span> record exists is</p>
+    <p>
+      <input ng-required="!create_linked&&$ctrl.recordType=='RP'" name="recordType_RP_txt_dname" type="text" class="form-control" placeholder="{{zone_name}}" ng-model="$ctrl.newanswer.txt_dname">
+      <div class="error-messages" ng-messages="answerForm.recordType_RP_txt_dname.$error" role="alert" ng-messages-multiple>
+        <div ng-messages-include="parts/shared/error-messages.html"></div>
+      </div>
+    </p>
+  </div>
+  <!-- NOTE: don't use now-->
+  <!-- <div class="form-group" ng-show="$ctrl.recordType=='SPF'" ng-class="{ 'has-error': answerForm.recordType_SPF.$invalid && answerForm.recordType_SPF.$dirty }">
+    <p>Sender Policy Framework configuration is</p>
+    <p>
+      <textarea ng-required="!create_linked&&$ctrl.recordType=='SPF'" name="recordType_SPF" rows="1" class="input" placeholder="v=spf1 +mx a:mail.{{zone_name}}/28 -all" ng-model="$ctrl.newanswer.value"></textarea>
+      <div class="error-messages" ng-messages="answerForm.recordType_SPF.$error" role="alert" ng-messages-multiple>
+        <div ng-messages-include="parts/shared/error-messages.html"></div>
+      </div>
+    </p>
+  </div> -->
+  <div class="form-group" ng-show="$ctrl.recordType=='SRV'" ng-form="recordTypeSRVForm" ng-class="{ 'has-error': recordTypeSRVForm.$invalid && recordTypeSRVForm.$dirty }">
+    <p>Priority of target host is</p>
+    <p>
+      <input ng-required="!create_linked&&$ctrl.recordType=='SRV'" name="_priority" type="number" class="form-control" placeholder="10" ng-min="0" ng-model="$ctrl.newanswer.priority">
+      <div class="error-messages" ng-messages="recordTypeSRVForm._priority.$error" role="alert" ng-messages-multiple>
+        <div ng-messages-include="parts/shared/error-messages.html"></div>
+      </div>
+    </p>
+    <p>Relative weight for hosts with same priority is</p>
+    <p>
+      <input ng-required="!create_linked&&$ctrl.recordType=='SRV'" name="_weight" type="number" class="form-control" placeholder="5" ng-min="0" ng-model="$ctrl.newanswer.weight">
+      <div class="error-messages" ng-messages="recordTypeSRVForm._weight.$error" role="alert" ng-messages-multiple>
+        <div ng-messages-include="parts/shared/error-messages.html"></div>
+      </div>
+    </p>
+    <p>TCP/UDP service port is</p>
+    <p>
+      <input ng-required="!create_linked&&$ctrl.recordType=='SRV'" name="_port" type="number" class="form-control" placeholder="5060" ng-model="$ctrl.newanswer.port">
+      <div class="error-messages" ng-messages="recordTypeSRVForm._port.$error" role="alert" ng-messages-multiple>
+        <div ng-messages-include="parts/shared/error-messages.html"></div>
+      </div>
+    </p>
+    <p>Host providing service is</p>
+    <p>
+      <input ng-required="!create_linked&&$ctrl.recordType=='SRV'" name="_host" type="text" class="form-control" placeholder="sip.{{zone_name}}" ng-model="$ctrl.newanswer.host">
+      <div class="error-messages" ng-messages="recordTypeSRVForm._host.$error" role="alert" ng-messages-multiple>
+        <div ng-messages-include="parts/shared/error-messages.html"></div>
+      </div>
+  </div>
+  <div class="form-group" ng-show="$ctrl.recordType=='TXT'" ng-class="{ 'has-error': answerForm.recordType_TXT.$invalid && answerForm.recordType_TXT.$dirty }">
+    <p>Text value is</p>
+    <p>
+      <textarea ng-required="!create_linked&&$ctrl.recordType=='TXT'" name="recordType_TXT" rows="1" class="form-control" placeholder="Freeform text" ng-model="$ctrl.newanswer.value"></textarea>
+      <div class="error-messages" ng-messages="answerForm.recordType_TXT.$error" role="alert" ng-messages-multiple>
+        <div ng-messages-include="parts/shared/error-messages.html"></div>
+      </div>
+    </p>
+  </div>
+</div>
