@@ -24,10 +24,10 @@ var Constants = require('./../../../page_objects/constants');
 describe('Functional', function () {
   describe('Update user password', function () {
 
-    var adminUser = config.get('portal.users.admin');
+    var admin = config.get('portal.users.admin');
 
     beforeAll(function () {
-      Portal.signIn(adminUser);
+      Portal.signIn(admin);
     });
 
     afterAll(function () {
@@ -61,6 +61,8 @@ describe('Functional', function () {
         var alert = Portal.alerts.getFirst();
         expect(alert.getText())
           .toContain(Constants.alertMessages.users.MSG_SUCCESS_UPDATE_PASSWORD);
+        Portal.signOut();
+        Portal.signIn(admin);
       });
 
     it('should update password successfully  using only numbers',
@@ -80,6 +82,8 @@ describe('Functional', function () {
         var alert = Portal.alerts.getFirst();
         expect(alert.getText())
           .toContain(Constants.alertMessages.users.MSG_SUCCESS_UPDATE_PASSWORD);
+        Portal.signOut();
+        Portal.signIn(admin);
       });
   });
 });
