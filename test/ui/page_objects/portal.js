@@ -450,6 +450,20 @@ var Portal = {
       Constants.sideBar.web.DOMAINS);
   },
 
+  /**
+   * ### Portal.goToDomains()
+   *
+   * Navigation helper method that executes all steps to navigate to `Domains`
+   * page
+   *
+   * @returns {Promise}
+   */
+  goToSslCert: function () {
+    return this
+        .goTo(Constants.header.appMenu.WEB,
+            Constants.sideBar.web.SSL_CERTIFICATES);
+  },
+
   // ## User Helper methods
 
   /**

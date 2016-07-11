@@ -603,64 +603,80 @@ var DataProvider = {
    *       comment: string
    *     }
    */
-  generateSSLCertData: function () {
+  generateSSLCertData: function (data) {
     var timestamp = Date.now();
     var name = 'QA ' + timestamp;
-    return {
-      name: name,
-      account: ['Portal UI QA Company'],
-      type: 'Private With Customer-Provided Key',
-      publicSSLCert: [
-        '-----BEGIN CERTIFICATE-----',
-        'MIIC9zCCAd+gAwIBAgIJALjDeIy6xsYNMA0GCSqGSIb3DQEBBQUAMBIxEDAOBgNV',
-        'BAMMB2FzZC5jb20wHhcNMTYwNTE5MTcxOTE2WhcNMjYwNTE3MTcxOTE2WjASMRAw',
-        'DgYDVQQDDAdhc2QuY29tMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA',
-        'rrWqpABvagJZvHk+YDWycv0rwbbl/UbK/osBcV2bfjYB2A7dFCGvGg2sZ6rGeI5S',
-        'PWBVdu1I7sNalZGjk8R8tAfoRLLoR99teOlkSQUNP9nTEfX9cTSeHhLAK3ZSnJHE',
-        'hB3jFyMBAeVEXf5CiNWyyVNVMkVIyFnDDDP0ag4kTvSEHeGlsXZDC1rKE/7mY07K',
-        'uPGs4E99HkDq+Zgf6BpPEvdYiterI3SptEMYxdpRjwMqvUQb1KLn2yL/FLgeM10F',
-        'wDQhlEUqna54+bQoP2h1pWafz8zHem6AeaIrz6dIETy4eDmyoaU/DrJOARw+yAS+',
-        'U1BlW59kHxrDlxK9KfPVFwIDAQABo1AwTjAdBgNVHQ4EFgQU7P7jJfmbqUTV7bTb',
-        'a0KwhxP6Q+owHwYDVR0jBBgwFoAU7P7jJfmbqUTV7bTba0KwhxP6Q+owDAYDVR0T',
-        'BAUwAwEB/zANBgkqhkiG9w0BAQUFAAOCAQEAUJMVngyc9xxOitqqvi9+jSGqXdBr',
-        'dAMaWna0xhySoNenmguJVnRa3EYai1J/nk5qJgJq9DyPxXArDn2N4UGVK/u97ozT',
-        '4HIbCQxrrFJxAL3JhYo5q1Mdo1LvJFOypRwKS1QP+VcgUt+DW8MNdgnWihxbDnCX',
-        '0zgutoPorMtD8rMCtSjhxHpvkBdgOsGYCMeYBUOXgrhHEWfHX/v6Yt/jFw5zWL0I',
-        '11syc2MjJ+c3bN2/yMTIK+Nu+j9+Tu/kNchfe4v7jK2NQozCcCSsSNae92nUjaux',
-        'FhIcSq0V6/My737H12LJLDDFGOcKaoOYNVYXMEl9Z2GVPmmQVGzqVbUXAA==',
-        '-----END CERTIFICATE-----'
-      ], // Public SSL certificate in PEM format,
-      privateSSLKey: [
-        '-----BEGIN RSA PRIVATE KEY-----',
-        'MIIEpAIBAAKCAQEArrWqpABvagJZvHk+YDWycv0rwbbl/UbK/osBcV2bfjYB2A7d',
-        'FCGvGg2sZ6rGeI5SPWBVdu1I7sNalZGjk8R8tAfoRLLoR99teOlkSQUNP9nTEfX9',
-        'cTSeHhLAK3ZSnJHEhB3jFyMBAeVEXf5CiNWyyVNVMkVIyFnDDDP0ag4kTvSEHeGl',
-        'sXZDC1rKE/7mY07KuPGs4E99HkDq+Zgf6BpPEvdYiterI3SptEMYxdpRjwMqvUQb',
-        '1KLn2yL/FLgeM10FwDQhlEUqna54+bQoP2h1pWafz8zHem6AeaIrz6dIETy4eDmy',
-        'oaU/DrJOARw+yAS+U1BlW59kHxrDlxK9KfPVFwIDAQABAoIBAHAzmaBz6xmw4sKp',
-        'NwcA1VcGAtkIxlHP6kRpL4cH7/mxY6PHf/IS4+qeh2+YfJgmBukF+j1DjMhSS9Ws',
-        'z9nxoYjZXzDnmUe3VQ4HDfHbPbQZB3YMfjT67uUvc502Az4sW4Hh09sjDt2RyUN4',
-        'LHDGlWi4jQmY93I8O4iVwU1vQaA2Vv9EyWcRsdjkCwYCK7EvPIOmZrZtBj6JNGPW',
-        'nYMuwDMiV6oY0ic70AMqB7vPX53IEnxVepeFea7hVkXapNZ+j8f8M97ERdfzFoAg',
-        'PgbuE3hcmHGf7EUWMULJKSWJrQN1m8TV/F34cWm6jQSRuAtEQdEOQ07cKMPw+MXn',
-        'M3Mz6JECgYEA2IgsVJ1sTlMWR1Uw3bOVLl7Udb7dWAZdU6MISEoXIYZOnibADHWI',
-        'wN7+UpXPtBtq95J8rMCY90WR39Wj93OnFvC40c8oEOleDrKaXgJJx/Z1gCOv5xwl',
-        '6s+N2lEYNT8M1/Q/1JyE3ZJOifM/AG+gxT8vkGYSj9x176UH3DqpX7kCgYEAzo36',
-        'mk33cqa6DwjOvcYoPQSYyDtzE9ciNAyyoyJFgO1PdvpGUY+Z6W90uNHTQcoi1t1v',
-        'pEfUYinzpiuEtQUv2hQYxbgVm/ym5CkfVg8KEasfLKN3sVCvya5GDEwc6qiRW4EH',
-        'EJIZJxN4KuZd93YvpWCkytTRckd2chZasfbhI08CgYBSKOFBPfZRhd9HM8D17mUl',
-        'kh/liYVtGAUjbhH/c/Vw6Ag+pA9s6s/39uTjKysDeP/ObovV9MJV2NTv7J1pkD2P',
-        'S8mk+oiGWjYxN32xPAcI07Bj7aaZ96k/fn+hnfGkiobyDiCGKNmVRSV93IlEPhbv',
-        'oPkIPmK+qXUqeCESZEPOKQKBgQCHHUzO3y18rB+Nch96+EKeF4GxiWHvmozfK2c3',
-        'W1XHznRqybBx7dOqZaQeufLNWGKN1vAOsIX3aKXfDxySJUB2EStbOt232f95xISh',
-        'ENlvUVblJlFHhhZXgU6FAMzxmy7qgm6Sol8dtpimx2a0V3U3Yw6pN6mCbcjHPGQ7',
-        'gdkn9QKBgQDX35FhVfyHGCQyOv5Me+2Ycfc5iFKmXie6IJB/El7xt0lTPdccl7c/',
-        'sA8KhjneeQs8qMNzxEtppNM9A86IP7OAnO8ydS/IyQBvAtoqwSNE1ydVcjg8Rjik',
-        'pVLyiPsKT20w/q3x4P36coz+VCcCM7kKuZxfNoXHceX1jsau/ZXJXw==',
-        '-----END RSA PRIVATE KEY-----'
-      ], // Private SSL key in PEM format,
-      comment: 'Comment ' + name
+    var publicSSLCert = [
+          '-----BEGIN CERTIFICATE-----',
+          'MIIC9zCCAd+gAwIBAgIJALjDeIy6xsYNMA0GCSqGSIb3DQEBBQUAMBIxEDAOBgNV',
+          'BAMMB2FzZC5jb20wHhcNMTYwNTE5MTcxOTE2WhcNMjYwNTE3MTcxOTE2WjASMRAw',
+          'DgYDVQQDDAdhc2QuY29tMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA',
+          'rrWqpABvagJZvHk+YDWycv0rwbbl/UbK/osBcV2bfjYB2A7dFCGvGg2sZ6rGeI5S',
+          'PWBVdu1I7sNalZGjk8R8tAfoRLLoR99teOlkSQUNP9nTEfX9cTSeHhLAK3ZSnJHE',
+          'hB3jFyMBAeVEXf5CiNWyyVNVMkVIyFnDDDP0ag4kTvSEHeGlsXZDC1rKE/7mY07K',
+          'uPGs4E99HkDq+Zgf6BpPEvdYiterI3SptEMYxdpRjwMqvUQb1KLn2yL/FLgeM10F',
+          'wDQhlEUqna54+bQoP2h1pWafz8zHem6AeaIrz6dIETy4eDmyoaU/DrJOARw+yAS+',
+          'U1BlW59kHxrDlxK9KfPVFwIDAQABo1AwTjAdBgNVHQ4EFgQU7P7jJfmbqUTV7bTb',
+          'a0KwhxP6Q+owHwYDVR0jBBgwFoAU7P7jJfmbqUTV7bTba0KwhxP6Q+owDAYDVR0T',
+          'BAUwAwEB/zANBgkqhkiG9w0BAQUFAAOCAQEAUJMVngyc9xxOitqqvi9+jSGqXdBr',
+          'dAMaWna0xhySoNenmguJVnRa3EYai1J/nk5qJgJq9DyPxXArDn2N4UGVK/u97ozT',
+          '4HIbCQxrrFJxAL3JhYo5q1Mdo1LvJFOypRwKS1QP+VcgUt+DW8MNdgnWihxbDnCX',
+          '0zgutoPorMtD8rMCtSjhxHpvkBdgOsGYCMeYBUOXgrhHEWfHX/v6Yt/jFw5zWL0I',
+          '11syc2MjJ+c3bN2/yMTIK+Nu+j9+Tu/kNchfe4v7jK2NQozCcCSsSNae92nUjaux',
+          'FhIcSq0V6/My737H12LJLDDFGOcKaoOYNVYXMEl9Z2GVPmmQVGzqVbUXAA==',
+          '-----END CERTIFICATE-----'
+        ]; // Public SSL certificate in PEM format,
+
+    var privateSSLKey = [
+      '-----BEGIN RSA PRIVATE KEY-----',
+      'MIIEpAIBAAKCAQEArrWqpABvagJZvHk+YDWycv0rwbbl/UbK/osBcV2bfjYB2A7d',
+      'FCGvGg2sZ6rGeI5SPWBVdu1I7sNalZGjk8R8tAfoRLLoR99teOlkSQUNP9nTEfX9',
+      'cTSeHhLAK3ZSnJHEhB3jFyMBAeVEXf5CiNWyyVNVMkVIyFnDDDP0ag4kTvSEHeGl',
+      'sXZDC1rKE/7mY07KuPGs4E99HkDq+Zgf6BpPEvdYiterI3SptEMYxdpRjwMqvUQb',
+      '1KLn2yL/FLgeM10FwDQhlEUqna54+bQoP2h1pWafz8zHem6AeaIrz6dIETy4eDmy',
+      'oaU/DrJOARw+yAS+U1BlW59kHxrDlxK9KfPVFwIDAQABAoIBAHAzmaBz6xmw4sKp',
+      'NwcA1VcGAtkIxlHP6kRpL4cH7/mxY6PHf/IS4+qeh2+YfJgmBukF+j1DjMhSS9Ws',
+      'z9nxoYjZXzDnmUe3VQ4HDfHbPbQZB3YMfjT67uUvc502Az4sW4Hh09sjDt2RyUN4',
+      'LHDGlWi4jQmY93I8O4iVwU1vQaA2Vv9EyWcRsdjkCwYCK7EvPIOmZrZtBj6JNGPW',
+      'nYMuwDMiV6oY0ic70AMqB7vPX53IEnxVepeFea7hVkXapNZ+j8f8M97ERdfzFoAg',
+      'PgbuE3hcmHGf7EUWMULJKSWJrQN1m8TV/F34cWm6jQSRuAtEQdEOQ07cKMPw+MXn',
+      'M3Mz6JECgYEA2IgsVJ1sTlMWR1Uw3bOVLl7Udb7dWAZdU6MISEoXIYZOnibADHWI',
+      'wN7+UpXPtBtq95J8rMCY90WR39Wj93OnFvC40c8oEOleDrKaXgJJx/Z1gCOv5xwl',
+      '6s+N2lEYNT8M1/Q/1JyE3ZJOifM/AG+gxT8vkGYSj9x176UH3DqpX7kCgYEAzo36',
+      'mk33cqa6DwjOvcYoPQSYyDtzE9ciNAyyoyJFgO1PdvpGUY+Z6W90uNHTQcoi1t1v',
+      'pEfUYinzpiuEtQUv2hQYxbgVm/ym5CkfVg8KEasfLKN3sVCvya5GDEwc6qiRW4EH',
+      'EJIZJxN4KuZd93YvpWCkytTRckd2chZasfbhI08CgYBSKOFBPfZRhd9HM8D17mUl',
+      'kh/liYVtGAUjbhH/c/Vw6Ag+pA9s6s/39uTjKysDeP/ObovV9MJV2NTv7J1pkD2P',
+      'S8mk+oiGWjYxN32xPAcI07Bj7aaZ96k/fn+hnfGkiobyDiCGKNmVRSV93IlEPhbv',
+      'oPkIPmK+qXUqeCESZEPOKQKBgQCHHUzO3y18rB+Nch96+EKeF4GxiWHvmozfK2c3',
+      'W1XHznRqybBx7dOqZaQeufLNWGKN1vAOsIX3aKXfDxySJUB2EStbOt232f95xISh',
+      'ENlvUVblJlFHhhZXgU6FAMzxmy7qgm6Sol8dtpimx2a0V3U3Yw6pN6mCbcjHPGQ7',
+      'gdkn9QKBgQDX35FhVfyHGCQyOv5Me+2Ycfc5iFKmXie6IJB/El7xt0lTPdccl7c/',
+      'sA8KhjneeQs8qMNzxEtppNM9A86IP7OAnO8ydS/IyQBvAtoqwSNE1ydVcjg8Rjik',
+      'pVLyiPsKT20w/q3x4P36coz+VCcCM7kKuZxfNoXHceX1jsau/ZXJXw==',
+      '-----END RSA PRIVATE KEY-----'
+    ]; // Private SSL key in PEM format,
+
+    if (data){
+      return {
+        name: (data.name === undefined) ? name : data.name,
+        account: (data.account === undefined) ? ['Portal UI QA Company'] : data.account,
+        type: (data.type === undefined) ? 'Private With Customer-Provided Key' : data.type,
+        publicSSLCert: (data.publicSSLCert === undefined) ? publicSSLCert : data.publicSSLCert,
+        privateSSLKey: (data.privateSSLKey === undefined) ? privateSSLKey : data.privateSSLKey,
+        comment: (data.comment === undefined) ? 'Comment ' + name : data.comment
+      }
+    } else {
+      return {
+        name: name,
+        account: ['Portal UI QA Company'],
+        type: 'Private With Customer-Provided Key',
+        publicSSLCert: publicSSLCert,
+        privateSSLKey: privateSSLKey,
+        comment: 'Comment ' + name
+      }
     }
+
   }
 };
 
