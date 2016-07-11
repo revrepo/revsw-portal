@@ -25,7 +25,10 @@ describe('Workflow', function () {
 
   // Defining set of users for which all below tests will be run
   var users = [
-    config.get('portal.users.revAdmin')
+      config.get('portal.users.user'),
+      config.get('portal.users.admin'),
+      config.get('portal.users.revAdmin'),
+      config.get('portal.users.reseller')
   ];
 
   users.forEach(function (user) {
@@ -33,11 +36,24 @@ describe('Workflow', function () {
     describe('With user: ' + user.role, function () {
       describe('Add SSL Cert', function () {
 
+        var usedCerts = []; // TODO: Temporary decision for cleanup till Portal.deleteSSLCert() is
+                            // not fixed for user, reseller and admin roles
+
         beforeAll(function () {
             Portal.signIn(user);
         });
 
         afterAll(function () {
+            // TODO: Temporary decision for cleanup till Portal.deleteSSLCert() is
+            // not fixed for user, reseller and admin roles
+
+            var revAdmUser = config.get('portal.users.revAdmin');
+            Portal.signIn(revAdmUser);
+            usedCerts.forEach(function (cert) {
+                Portal.goToSslCert();
+                Portal.deleteSSLCert(cert);
+            });
+
             Portal.signOut();
         });
 
@@ -53,6 +69,10 @@ describe('Workflow', function () {
             function () {
                 var testSslCert = DataProvider.generateSSLCertData();
                 testSslCert.account = ['API QA Reseller Company'];
+
+                usedCerts.push(testSslCert); // TODO: Remove this line when Portal.deleteSSLCert()
+                                             // is fixed for user, admin and reseller
+
                 var testDomain = DataProvider.generateDomain('sslTestDomain');
                 Portal.createSSLCert(testSslCert);
                 Portal.goToDomains();
@@ -65,14 +85,22 @@ describe('Workflow', function () {
                 expect(newAddedSSLItemText).toBe(testSslCert.name);
                 Portal.domains.editPage.clickBackToList();
                 Portal.deleteDomain(testDomain);
-                Portal.goToSslCert();
-                Portal.deleteSSLCert(testSslCert);
+
+                // TODO: Two followed lines should be uncommented when Portal.deleteSSLCert()
+                // is fixed for user, admin and reseller
+
+                //Portal.goToSslCert();
+                //Portal.deleteSSLCert(testSslCert);
             });          
           
         it('should create an ssl certificate and add to domain successfully',
             function () {
                 var testSslCert = DataProvider.generateSSLCertData();
                 testSslCert.account = ['API QA Reseller Company'];
+
+                usedCerts.push(testSslCert); // TODO: Remove this line when Portal.deleteSSLCert()
+                                             // is fixed for user, admin and reseller
+
                 var testDomain = DataProvider.generateDomain('sslTestDomain');
                 Portal.createSSLCert(testSslCert);
                 Portal.goToDomains();
@@ -89,8 +117,12 @@ describe('Workflow', function () {
                 expect(sslCertText).toEqual(testSslCert.name);
                 Portal.domains.editPage.clickBackToList();
                 Portal.deleteDomain(testDomain);
-                Portal.goToSslCert();
-                Portal.deleteSSLCert(testSslCert);
+
+                // TODO: Two followed lines should be uncommented when Portal.deleteSSLCert()
+                // is fixed for user, admin and reseller
+
+                //Portal.goToSslCert();
+                //Portal.deleteSSLCert(testSslCert);
             });
       });
     });
