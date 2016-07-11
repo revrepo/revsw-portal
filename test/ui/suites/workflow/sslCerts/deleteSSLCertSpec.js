@@ -33,6 +33,10 @@ describe('Workflow', function () {
         describe('With user: ' + user.role, function () {
             describe('Delete SSL Cert', function () {
 
+                var sslCertData = {
+                    account: ['API QA Reseller Company']
+                };
+
                 beforeAll(function () {
                     Portal.signIn(user);
                 });
@@ -50,8 +54,8 @@ describe('Workflow', function () {
 
                 it('should not delete a certificate which is in use/released',
                     function () {
-                        var testSslCert = DataProvider.generateSSLCertData();
-                        testSslCert.account = ['API QA Reseller Company'];
+                        var testSslCert = DataProvider.generateSSLCertData(sslCertData);
+
                         var testDomain = DataProvider.generateDomain('sslTestDomain');
                         Portal.createSSLCert(testSslCert);
                         Portal.goToDomains();
@@ -72,8 +76,8 @@ describe('Workflow', function () {
                 
                 it('should delete a certificate which is not in use/released',
                     function () {
-                        var testSslCert = DataProvider.generateSSLCertData();
-                        testSslCert.account = ['API QA Reseller Company'];
+                        var testSslCert = DataProvider.generateSSLCertData(sslCertData);
+
                         var testDomain = DataProvider.generateDomain('sslTestDomain');
                         Portal.createSSLCert(testSslCert);
                         Portal.goToDomains();

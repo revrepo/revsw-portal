@@ -39,6 +39,10 @@ describe('Workflow', function () {
         var usedCerts = []; // TODO: Temporary decision for cleanup till Portal.deleteSSLCert() is
                             // not fixed for user, reseller and admin roles
 
+        var sslCertData = {
+            account: ['API QA Reseller Company']
+        };
+
         beforeAll(function () {
             Portal.signIn(user);
         });
@@ -67,8 +71,8 @@ describe('Workflow', function () {
           
         it('should newly created cert has appeared in the domain configuration window',
             function () {
-                var testSslCert = DataProvider.generateSSLCertData();
-                testSslCert.account = ['API QA Reseller Company'];
+
+                var testSslCert = DataProvider.generateSSLCertData(sslCertData);
 
                 usedCerts.push(testSslCert); // TODO: Remove this line when Portal.deleteSSLCert()
                                              // is fixed for user, admin and reseller
@@ -95,8 +99,7 @@ describe('Workflow', function () {
           
         it('should create an ssl certificate and add to domain successfully',
             function () {
-                var testSslCert = DataProvider.generateSSLCertData();
-                testSslCert.account = ['API QA Reseller Company'];
+                var testSslCert = DataProvider.generateSSLCertData(sslCertData);
 
                 usedCerts.push(testSslCert); // TODO: Remove this line when Portal.deleteSSLCert()
                                              // is fixed for user, admin and reseller

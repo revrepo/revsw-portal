@@ -33,6 +33,10 @@ describe('Workflow', function () {
         describe('With user: ' + user.role, function () {
             describe('Edit SSL Cert', function () {
 
+                var sslCertData = {
+                        account: ['API QA Reseller Company']
+                };
+
                 beforeAll(function () {
                     Portal.signIn(user);
                 });
@@ -50,8 +54,8 @@ describe('Workflow', function () {
 
                 it('should be possible to edit certificate which is in use',
                     function () {
-                        var testSslCert = DataProvider.generateSSLCertData();
-                        testSslCert.account = ['API QA Reseller Company'];
+                        var testSslCert = DataProvider.generateSSLCertData(sslCertData);
+
                         var testDomain = DataProvider.generateDomain('sslTestDomain');
                         Portal.createSSLCert(testSslCert);
                         Portal.goToDomains();
@@ -85,8 +89,8 @@ describe('Workflow', function () {
 
                 it('should disappear from domain form when sslCert account changed',
                     function () {
-                        var testSslCert = DataProvider.generateSSLCertData();
-                        testSslCert.account = ['API QA Reseller Company'];
+                        var testSslCert = DataProvider.generateSSLCertData(sslCertData);
+
                         var testDomain = DataProvider.generateDomain('sslTestDomain');
                         Portal.createSSLCert(testSslCert);
                         Portal.goToDomains();
@@ -118,8 +122,8 @@ describe('Workflow', function () {
 
                 it('should update sslCert name on domain form when sslCert name changed',
                     function () {
-                        var testSslCert = DataProvider.generateSSLCertData();
-                        testSslCert.account = ['API QA Reseller Company'];
+                        var testSslCert = DataProvider.generateSSLCertData(sslCertData);
+
                         var testDomain = DataProvider.generateDomain('sslTestDomain');
                         Portal.createSSLCert(testSslCert);
                         Portal.goToDomains();
@@ -152,8 +156,8 @@ describe('Workflow', function () {
 
                 it('should be able to change to default SSL',
                     function () {
-                        var testSslCert = DataProvider.generateSSLCertData();
-                        testSslCert.account = ['API QA Reseller Company'];
+                        var testSslCert = DataProvider.generateSSLCertData(sslCertData);
+
                         var testDomain = DataProvider.generateDomain('sslTestDomain');
                         Portal.createSSLCert(testSslCert);
                         Portal.goToDomains();
@@ -181,11 +185,8 @@ describe('Workflow', function () {
 
                 it('should be able to use a private SSL and after that to use another',
                     function () {
-                        var firstTestSslCert = DataProvider.generateSSLCertData();
-                        var secondTestSslCert = DataProvider.generateSSLCertData();
-
-                        firstTestSslCert.account = ['API QA Reseller Company'];
-                        secondTestSslCert.account = ['API QA Reseller Company'];
+                        var firstTestSslCert = DataProvider.generateSSLCertData(sslCertData);
+                        var secondTestSslCert = DataProvider.generateSSLCertData(sslCertData);
 
                         var testDomain = DataProvider.generateDomain('sslTestDomain');
                         Portal.createSSLCert(firstTestSslCert);
