@@ -149,6 +149,35 @@ describe('Workflow', function () {
                         Portal.goToSslCert();
                         Portal.deleteSSLCert(testSslCert);
                     });
+
+                it('should be able to change to default SSL',
+                    function () {
+                        var testSslCert = DataProvider.generateSSLCertData();
+                        testSslCert.account = ['API QA Reseller Company'];
+                        var testDomain = DataProvider.generateDomain('sslTestDomain');
+                        Portal.createSSLCert(testSslCert);
+                        Portal.goToDomains();
+                        Portal.domains.listPage.clickAddNewDomain();
+                        Portal.domains.addPage.createDomain(testDomain);
+                        Portal.domains.addPage.clickBackToList();
+                        Portal.domains.listPage.searchAndClickEdit(testDomain.name);
+                        Portal.domains.editPage.form.setSslCert(testSslCert.name);
+                        Portal.domains.editPage.clickUpdateDomain();
+                        Portal.dialog.clickOk();
+                        Portal.domains.editPage.clickBackToList();
+                        Portal.domains.listPage.searchAndClickEdit(testDomain.name);
+                        Portal.domains.editPage.form.setSslCert('Default RevAPM SSL Certificate');
+                        Portal.domains.editPage.clickUpdateDomain();
+                        Portal.dialog.clickOk();
+                        Portal.domains.editPage.clickBackToList();
+                        Portal.domains.listPage.searchAndClickEdit(testDomain.name);
+                        var sslCertText = Portal.domains.editPage.form.getSslCert();
+                        expect(sslCertText).toEqual('Default RevAPM SSL Certificate');
+                        Portal.domains.editPage.clickBackToList();
+                        Portal.deleteDomain(testDomain);
+                        Portal.goToSslCert();
+                        Portal.deleteSSLCert(testSslCert);
+                    });
             });
         });
     });
