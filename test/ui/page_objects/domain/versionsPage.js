@@ -28,6 +28,9 @@ var DomainVersions = {
     labels: {
       title: {
         css: 'h2'
+      },
+      domainConfigVersionWarning: {
+        className: 'text-info'
       }
     },
     buttons: {
@@ -38,6 +41,9 @@ var DomainVersions = {
     dropDowns: {
       domainConfigVersion: {
         model: 'currentVersion'
+      },
+      domainCompareVersion: {
+        model: 'compareVersion'
       }
     }
   },
@@ -45,6 +51,18 @@ var DomainVersions = {
   // ## Methods to retrieve references to UI elements (Selenium WebDriver
   // Element)
 
+  /**
+   * ### DomainStats.getDomainConfigVersionWarning()
+   *
+   * Returns the reference to the `Config Version Warning` label element (Selenium WebDriver
+   * Element) from the Domain Versions page from the Portal app.
+   *
+   * @returns {Selenium WebDriver Element}
+   */
+  getDomainConfigVersionWarning: function () {
+    return element(by.className(this.locators.labels.domainConfigVersionWarning.className));
+  },  
+  
   /**
    * ### DomainStats.getTitleLbl()
    *
@@ -79,6 +97,17 @@ var DomainVersions = {
    */
   getDomainConfigVersionDDown: function () {
     return element(by.model(this.locators.dropDowns.domainConfigVersion.model));
+  },
+
+  /**
+   * ### DomainVersions.getDomainCompareVersionDDown()
+   *
+   * Returns the reference to the 'Domain Compare Version' drop-down
+   *
+   * @returns {Selenium WebDriver Element}
+   */
+  getDomainCompareVersionDDown: function () {
+    return element(by.model(this.locators.dropDowns.domainCompareVersion.model));
   },
 
   // ## Methods to interact with the Edit Domain Page components
