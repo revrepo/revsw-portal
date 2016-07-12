@@ -92,19 +92,54 @@ describe('Workflow', function () {
                         Portal.domains.listPage.searchAndGetFirstRow(testDomain.name)
                             .clickVersions();
 
-                        Portal.domains.versionsPage.getDomainConfigVersionLastAddedItem()
-                            .getText().then(function (text) {
+                        var dDownItems = [
+                            Portal.domains.versionsPage.getDomainConfigVersionLastAddedItem(),
+                            Portal.domains.versionsPage.getDomainCompareVersionLastAddedItem()
+                        ];
+
+                        dDownItems.forEach(function (item) {
+                            item.getText().then(function (text) {
                                 expect(text.indexOf('Version 0 Last updated')).toBe(0);
                             });
-
-                        Portal.domains.versionsPage.getDomainCompareVersionLastAddedItem()
-                            .getText().then(function (text) {
-                                expect(text.indexOf('Version 0 Last updated')).toBe(0);
                         });
-                        
+
                         Portal.goToDomains();
                         Portal.deleteDomain(testDomain);
                     });
+
+                it('should appear new version after publish', function () {
+                    var testDomain = DataProvider.generateDomain('versTestDomain');
+
+                    Portal.domains.listPage.clickAddNewDomain();
+                    Portal.domains.addPage.createDomain(testDomain);
+                    Portal.domains.addPage.clickBackToList();
+
+                    Portal.domains.listPage.searchAndClickEdit(testDomain.name);
+                    Portal.domains.editPage.form.setOriginHostHeader('.upd');
+
+                    Portal.domains.editPage.clickPublishDomain();
+                    Portal.dialog.clickOk();
+
+                    Portal.domains.editPage.waitForPublish();
+                    Portal.domains.addPage.clickBackToList();
+
+                    Portal.domains.listPage.searchAndGetFirstRow(testDomain.name)
+                        .clickVersions();
+
+                    var dDownItems = [
+                        Portal.domains.versionsPage.getDomainConfigVersionLastAddedItem(),
+                        Portal.domains.versionsPage.getDomainCompareVersionLastAddedItem()
+                    ];
+
+                    dDownItems.forEach(function (item) {
+                        item.getText().then(function (text) {
+                            expect(text.indexOf('Version 2 Last updated')).toBe(0);
+                        });
+                    });
+
+                    Portal.goToDomains();
+                    Portal.deleteDomain(testDomain);
+                });
             });
         });
     });
