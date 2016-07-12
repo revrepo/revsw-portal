@@ -48,7 +48,7 @@ describe('Workflow', function () {
                     Portal.goToDomains();
                 });
 
-                it('should the Version "0" message appears for modified domain',
+                xit('should the Version "0" message appears for modified domain',
                     function () {
                         var message = 'Version "0" is the currently modified but ' +
                             'not yet published domain configuration';
@@ -71,6 +71,37 @@ describe('Workflow', function () {
                         expect(Portal.domains.versionsPage.getDomainConfigVersionWarning()
                             .getText()).toBe(message);
 
+                        Portal.goToDomains();
+                        Portal.deleteDomain(testDomain);
+                    });
+
+                it('should the Version "0" item appear in comparison drop-downs',
+                    function () {
+                        var testDomain = DataProvider.generateDomain('versTestDomain');
+
+                        Portal.domains.listPage.clickAddNewDomain();
+                        Portal.domains.addPage.createDomain(testDomain);
+                        Portal.domains.addPage.clickBackToList();
+
+                        Portal.domains.listPage.searchAndClickEdit(testDomain.name);
+                        Portal.domains.editPage.form.setOriginHostHeader('.upd');
+                        Portal.domains.editPage.clickUpdateDomain();
+                        Portal.dialog.clickOk();
+                        Portal.domains.addPage.clickBackToList();
+
+                        Portal.domains.listPage.searchAndGetFirstRow(testDomain.name)
+                            .clickVersions();
+
+                        Portal.domains.versionsPage.getDomainConfigVersionLastAddedItem()
+                            .getText().then(function (text) {
+                                expect(text.indexOf('Version 0 Last updated')).toBe(0);
+                            });
+
+                        Portal.domains.versionsPage.getDomainCompareVersionLastAddedItem()
+                            .getText().then(function (text) {
+                                expect(text.indexOf('Version 0 Last updated')).toBe(0);
+                        });
+                        
                         Portal.goToDomains();
                         Portal.deleteDomain(testDomain);
                     });
