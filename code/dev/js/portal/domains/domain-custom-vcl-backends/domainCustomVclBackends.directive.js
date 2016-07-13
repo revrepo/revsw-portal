@@ -91,6 +91,9 @@
          * @return
          */
         this.prepareDate = function() {
+          if (!angular.isArray($ctrl.customVclBackends)) {
+            $ctrl.customVclBackends = [];
+          }
           angular.forEach($ctrl.customVclBackends, function(item) {
             // NOTE: add parameter for collapsed item in custom_vcl.backends
             angular.extend(item, {
