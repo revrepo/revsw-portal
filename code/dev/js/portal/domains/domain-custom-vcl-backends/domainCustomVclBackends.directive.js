@@ -59,6 +59,96 @@
               AlertService.success('Backend Block was deleted');
             });
         };
+
+        /**
+         * @name  onCollapsAllBackendsBlock
+         * @description
+         *
+         * @return
+         */
+        this.onCollapsAllBackendsBlock = function() {
+          var _rules = $ctrl.customVclBackends;
+          angular.forEach(_rules, function(item) {
+            item.$$backendBlockState.isCollapsed = true;
+          });
+        };
+        /**
+         * @name  onExpandAllBackendsBlock
+         * @description
+         *
+         * @return
+         */
+        this.onExpandAllBackendsBlock = function() {
+          var _rules = $ctrl.customVclBackends;
+          angular.forEach(_rules, function(item) {
+            item.$$backendBlockState.isCollapsed = false;
+          });
+        };
+        /**
+         * @name  prepareDate
+         * @description
+         *   Prepare custom Backends data for view
+         * @return
+         */
+        this.prepareDate = function() {
+          angular.forEach($ctrl.customVclBackends, function(item) {
+            // NOTE: add parameter for collapsed item in custom_vcl.backends
+            angular.extend(item, {
+              $$backendBlockState: {
+                isCollapsed: true
+              }
+            });
+          });
+        };
+        //
+        this.prepareDate();
+        /**
+         * @name  onUpBackendBlock
+         * @description
+         *
+         * @param  {Object} element - Backend Block Object
+         * @return {Boolean|Integer}
+         */
+        this.onUpBackendBlock = function(element) {
+          var array = $ctrl.customVclBackends;
+          var index = array.indexOf(element);
+          // Item non-existent?
+          if (index === -1) {
+            return false;
+          }
+          // If there is a previous element in sections
+          if (array[index - 1]) {
+            // Swap elements
+            array.splice(index - 1, 2, array[index], array[index - 1]);
+          } else {
+            // Do nothing
+            return 0;
+          }
+        };
+        /**
+         * @name  onDownBackendBlock
+         * @description
+         *
+         * @param  {Object} element - Backend Block Object
+         * @return {Boolean|Integer}
+         */
+        this.onDownBackendBlock = function(element) {
+          var array = $ctrl.customVclBackends;
+          var index = array.indexOf(element);
+          // Item non-existent?
+          if (index === -1) {
+            return false;
+          }
+          // If there is a next element in sections
+          if (array[index + 1]) {
+            // Swap elements
+            array.splice(index, 2, array[index + 1], array[index]);
+          } else {
+            // Do nothing
+            return 0;
+          }
+        };
+
       }
     };
   }

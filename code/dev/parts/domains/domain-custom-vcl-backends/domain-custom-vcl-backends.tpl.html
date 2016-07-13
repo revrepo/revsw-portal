@@ -1,14 +1,14 @@
 <div class="domain-custom-vcl-backend  panel panel-default">
   <div class="panel-heading">
     <!-- TODO: delete or release ???-->
-    <!-- <span class="pull-left panel-buttons-left">
-            <a class="btn btn-default btn-md " ng-click="onCollapsAllCachingRule()" title="Collapse All Rules" ng-show="!isCollapsedAll">
+    <span class="pull-left panel-buttons-left">
+            <a class="btn btn-default btn-md " ng-click="$ctrl.onCollapsAllBackendsBlock()" title="Collapse All Rules" ng-show="!isCollapsedAll">
               <i class="glyphicon glyphicon-chevron-up "></i>
             </a>
-            <a class="btn btn-default btn-md " ng-click="onExpandAllCachingRule()" title="Expand All Rules">
+            <a class="btn btn-default btn-md " ng-click="$ctrl.onExpandAllBackendsBlock()" title="Expand All Rules">
               <i class="glyphicon glyphicon-chevron-down"></i>
             </a>
-          </span> -->
+          </span>
     <span ng-click="$ctrl.onAddNewBackendBlock()" class="btn btn-primary btn-sm pull-right" title="Add New Backend Block"><i class="glyphicon glyphicon-plus"></i></span>
     <h4><b>Backends</b></h4>
   </div>
@@ -18,16 +18,16 @@
         <div class="domain-custom-vcl-backends-block__header row">
           <div class="col-sm-12">
             <!-- TODO: delete or release ???-->
-            <!--         <div class="pull-left panel-buttons-left">
-              <a class="btn btn-default btn-xs" href="" title="Collapse Block" ng-show="!caching_rule.$$cachingRuleState.isCollapsed" ng-click="caching_rule.$$cachingRuleState.isCollapsed = !caching_rule.$$cachingRuleState.isCollapsed">
+            <div class="pull-left panel-buttons-left">
+              <a class="btn btn-default btn-xs" href="" title="Collapse Block" ng-show="!item.$$backendBlockState.isCollapsed" ng-click="item.$$backendBlockState.isCollapsed = !item.$$backendBlockState.isCollapsed">
                 <i class="glyphicon glyphicon-chevron-up"></i>
               </a>
-              <a class="btn btn-default btn-xs" href="" title="Expand Block" ng-show="caching_rule.$$cachingRuleState.isCollapsed" ng-click="caching_rule.$$cachingRuleState.isCollapsed = !caching_rule.$$cachingRuleState.isCollapsed">
+              <a class="btn btn-default btn-xs" href="" title="Expand Block" ng-show="item.$$backendBlockState.isCollapsed" ng-click="item.$$backendBlockState.isCollapsed = !item.$$backendBlockState.isCollapsed">
                 <i class="glyphicon glyphicon-chevron-down"></i>
               </a>
-              <a class="btn btn-default btn-xs" href="" ng-click="onUpCachingRule(caching_rule)"><i class="glyphicon glyphicon glyphicon-arrow-up " title="Move One Position Up"></i></a>
-              <a class="btn btn-default btn-xs" href="" ng-click="onDownCachingRule(caching_rule)"><i class="glyphicon glyphicon glyphicon-arrow-down" title="Move One Position Down"></i></a>
-            </div> -->
+              <a class="btn btn-default btn-xs" href="" ng-click="$ctrl.onUpBackendBlock(item)"><i class="glyphicon glyphicon glyphicon-arrow-up " title="Move One Position Up"></i></a>
+              <a class="btn btn-default btn-xs" href="" ng-click="$ctrl.onDownBackendBlock(item)"><i class="glyphicon glyphicon glyphicon-arrow-down" title="Move One Position Down"></i></a>
+            </div>
             <div class="pull-right panel-button-right">
               <!-- remove widget -->
               <a href="" title="Remove Rule" ng-click="$ctrl.onRemoveBackendBlock($index)" ng-if="!editMode">
@@ -40,7 +40,7 @@
           </div>
         </div>
       </div>
-      <div class="panel-body">
+      <div class="panel-body" ng-hide="item.$$backendBlockState.isCollapsed">
         <!-- Backend Name -->
         <div class="form-group" ng-class="{'has-error': customVclBackendForm.backendName.$invalid && customVclBackendForm.backendName.$dirty}">
           <label for="backendName" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Use the field to name the backend. In VCL functions the backend can be referenced using RevAPM internal function “REV_BACKEND()">
@@ -89,11 +89,12 @@
             </div>
           </div>
         </div>
+        <!-- -->
         <div class="form-group" ng-class="{'has-error': customVclBackendForm.originHostHeader.$invalid && customVclBackendForm.originHostHeader.$dirty}">
           <label for="originHostHeader" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Enter here a domain name to be used in 'Host' header in requests sent from RevAPM to the origin server">
             Origin Host *</label>
           <div class="col-sm-9">
-            <input type="text" validate-domain-name class="form-control" ng-model="item.host" ng-disabled="_loading" id="origin_host_header" name="originHostHeader" placeholder="Origin Host Header" ng-maxlength="63" required>
+            <input type="text" validate-domain-name class="form-control" ng-model="item.host" ng-disabled="_loading" id="origin_host_header" name="originHostHeader" placeholder="Origin Host Header" ng-maxlength="255" required>
             <div class="error-messages" ng-messages="customVclBackendForm.originHostHeader.$error" role="alert" ng-messages-multiple>
               <div ng-messages-include="parts/shared/error-messages.html"></div>
             </div>
