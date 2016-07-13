@@ -112,6 +112,19 @@ var DomainVersions = {
         .all(by.css('option'))
         .last();
   },
+
+  /**
+   * ### DomainVersions.getDomainConfigVersionDDownItems()
+   *
+   * Returns the reference to the all items from 'Domain Config Version' drop-down
+   *
+   * @returns {Selenium WebDriver Element}
+   */
+  getDomainConfigVersionDDownItems: function () {
+    return this
+        .getDomainConfigVersionDDown()
+        .all(by.css('option'));
+  },
   
   /**
    * ### DomainVersions.getDomainCompareVersionDDown()
@@ -137,7 +150,20 @@ var DomainVersions = {
         .all(by.css('option'))
         .last();
   },
-  
+
+  /**
+   * ### DomainVersions.getDomainCompareVersionDDownItems()
+   *
+   * Returns the reference to the all items from 'Domain Compare Version' drop-down
+   *
+   * @returns {Selenium WebDriver Element}
+   */
+  getDomainCompareVersionDDownItems: function () {
+    return this
+        .getDomainCompareVersionDDown()
+        .all(by.css('option'));
+  },
+
   // ## Methods to interact with the Edit Domain Page components
 
   /**

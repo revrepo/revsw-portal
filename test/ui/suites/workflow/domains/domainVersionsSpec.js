@@ -22,12 +22,14 @@ var Portal = require('./../../../page_objects/portal');
 
 describe('Workflow', function () {
 
+
+
     // Defining set of users for which all below tests will be run
     var users = [
-        //config.get('portal.users.user'),
-        //config.get('portal.users.admin'),
-        config.get('portal.users.revAdmin')
-        //config.get('portal.users.reseller')
+        config.get('portal.users.user'),
+        config.get('portal.users.admin'),
+        config.get('portal.users.revAdmin'),
+        config.get('portal.users.reseller')
     ];
 
     users.forEach(function (user) {
@@ -52,7 +54,7 @@ describe('Workflow', function () {
                     function () {
                         var message = 'Version "0" is the currently modified but ' +
                             'not yet published domain configuration';
-                        
+
                         var testDomain = DataProvider.generateDomain('versTestDomain');
 
                         Portal.domains.listPage.clickAddNewDomain();
@@ -135,6 +137,61 @@ describe('Workflow', function () {
                         item.getText().then(function (text) {
                             expect(text.indexOf('Version 2 Last updated')).toBe(0);
                         });
+                    });
+
+                    Portal.goToDomains();
+                    Portal.deleteDomain(testDomain);
+                });
+
+                it('should the Version 0 disappear from drop-downs after publish', function () {
+                    var testDomain = DataProvider.generateDomain('versTestDomain');
+
+                    Portal.domains.listPage.clickAddNewDomain();
+                    Portal.domains.addPage.createDomain(testDomain);
+                    Portal.domains.addPage.clickBackToList();
+
+                    Portal.domains.listPage.searchAndClickEdit(testDomain.name);
+                    Portal.domains.editPage.form.setOriginHostHeader('.upd');
+                    Portal.domains.editPage.clickUpdateDomain();
+                    Portal.dialog.clickOk();
+                    Portal.domains.addPage.clickBackToList();
+
+                    Portal.domains.listPage.searchAndGetFirstRow(testDomain.name)
+                        .clickVersions();
+
+                    var dDownItems = [
+                        Portal.domains.versionsPage.getDomainConfigVersionLastAddedItem(),
+                        Portal.domains.versionsPage.getDomainCompareVersionLastAddedItem()
+                    ];
+
+                    dDownItems.forEach(function (item) {
+                        item.getText().then(function (text) {
+                            expect(text.indexOf('Version 0 Last updated')).toBe(0);
+                        });
+                    });
+
+                    Portal.goToDomains();
+
+                    Portal.domains.listPage.searchAndClickEdit(testDomain.name);
+                    Portal.domains.editPage.clickPublishDomain();
+                    Portal.dialog.clickOk();
+
+                    Portal.domains.editPage.waitForPublish();
+                    Portal.domains.addPage.clickBackToList();
+
+                    Portal.domains.listPage.searchAndGetFirstRow(testDomain.name)
+                        .clickVersions();
+
+
+                    var dDowns = [
+                        Portal.domains.versionsPage.getDomainConfigVersionDDown(),
+                        Portal.domains.versionsPage.getDomainCompareVersionDDown()
+                    ];
+
+                    dDowns.forEach(function (dDown) {
+                        var item = dDown.element(by.xpath('.//*[contains(text(),' +
+                            '"Version 0 Last updated")]'));
+                        expect(item.isPresent()).toBeFalsy();
                     });
 
                     Portal.goToDomains();

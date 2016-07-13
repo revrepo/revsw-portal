@@ -323,7 +323,7 @@ var EditDomain = {
    */
   waitForPublish: function () {
     return browser.wait(protractor.ExpectedConditions.presenceOf(
-        element(by.css(this.locators.icons.published.css))), 80000); //TODO: read from config
+        element(by.css(this.locators.icons.published.css))), 160000); //TODO: read from config
   }
 };
 
