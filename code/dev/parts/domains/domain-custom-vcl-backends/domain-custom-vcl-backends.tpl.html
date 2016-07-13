@@ -89,13 +89,13 @@
             </div>
           </div>
         </div>
-        <!-- -->
-        <div class="form-group" ng-class="{'has-error': customVclBackendForm.originHostHeader.$invalid && customVclBackendForm.originHostHeader.$dirty}">
-          <label for="originHostHeader" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Enter here a domain name to be used in 'Host' header in requests sent from RevAPM to the origin server">
+        <!-- Origin Host -->
+        <div class="form-group" ng-class="{'has-error': customVclBackendForm.originHost.$invalid && customVclBackendForm.originHost.$dirty}">
+          <label for="originHost" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Enter here a domain name to be used in 'Host' header in requests sent from RevAPM to the origin server">
             Origin Host *</label>
           <div class="col-sm-9">
-            <input type="text" validate-domain-name class="form-control" ng-model="item.host" ng-disabled="_loading" id="origin_host_header" name="originHostHeader" placeholder="Origin Host Header" ng-maxlength="255" required>
-            <div class="error-messages" ng-messages="customVclBackendForm.originHostHeader.$error" role="alert" ng-messages-multiple>
+            <input type="text" validate-origin-server-name class="form-control" ng-disabled="_loading" ng-model="item.host" id="originHost" name="originHost" placeholder="Origin Host" ng-maxlength="50" required>
+            <div class="error-messages" ng-messages="customVclBackendForm.originHost.$error" role="alert" ng-messages-multiple>
               <div ng-messages-include="parts/shared/error-messages.html"></div>
             </div>
           </div>

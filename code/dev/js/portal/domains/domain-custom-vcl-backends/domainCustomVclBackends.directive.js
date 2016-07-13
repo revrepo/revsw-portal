@@ -34,9 +34,9 @@
         this.onAddNewBackendBlock = function() {
           var newBlock = {
             name: '',
-            host: 0,
-            port: 3000,
-            dynamic: false,
+            host: '',
+            port: 80,
+            dynamic: true,
             vcl: ''
           };
           $ctrl.customVclBackends.unshift(newBlock);
@@ -91,6 +91,9 @@
          * @return
          */
         this.prepareDate = function() {
+          if (!angular.isArray($ctrl.customVclBackends)) {
+            $ctrl.customVclBackends = [];
+          }
           angular.forEach($ctrl.customVclBackends, function(item) {
             // NOTE: add parameter for collapsed item in custom_vcl.backends
             angular.extend(item, {

@@ -20,7 +20,7 @@
               "Recv" Function
             </label>
             <div class="col-md-10">
-              <textarea id="vclRecv" name="vclRecv" ng-model="$ctrl.customVcl.recv" placeholder="" class="form-control text--courier" _ngmaxlength="750" ng-disabled="_loading">
+              <textarea id="vclRecv" name="vclRecv" ng-model="$ctrl.customVcl.recv" placeholder="" class="form-control text--courier" ng-maxlength="10000" ng-disabled="_loading">
               </textarea>
               <div class="error-messages" ng-messages="customVCLForm.vclRecv.$error" role="alert" ng-messages-multiple>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
@@ -35,7 +35,7 @@
               "Hit" Function
             </label>
             <div class="col-md-10">
-              <textarea id="vclHit" name="vclHit" ng-model="$ctrl.customVcl.hit" placeholder="" class="form-control text--courier" _ngmaxlength="750" ng-disabled="_loading">
+              <textarea id="vclHit" name="vclHit" ng-model="$ctrl.customVcl.hit" placeholder="" class="form-control text--courier" ng-maxlength="10000" ng-disabled="_loading">
               </textarea>
               <div class="error-messages" ng-messages="customVCLForm.vclHit.$error" role="alert" ng-messages-multiple>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
@@ -50,7 +50,7 @@
               "Miss" Function
             </label>
             <div class="col-md-10">
-              <textarea id="vclMiss" name="vclMiss" ng-model="$ctrl.customVcl.miss" placeholder="" class="form-control text--courier" _ngmaxlength="750" ng-disabled="_loading">
+              <textarea id="vclMiss" name="vclMiss" ng-model="$ctrl.customVcl.miss" placeholder="" class="form-control text--courier" ng-maxlength="10000" ng-disabled="_loading">
               </textarea>
               <div class="error-messages" ng-messages="customVCLForm.vclMiss.$error" role="alert" ng-messages-multiple>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
@@ -65,7 +65,7 @@
               "Deliver" Function
             </label>
             <div class="col-md-10">
-              <textarea id="vclDeliver" name="vclDeliver" ng-model="$ctrl.customVcl.deliver" placeholder="" class="form-control text--courier" _ngmaxlength="750" ng-disabled="_loading">
+              <textarea id="vclDeliver" name="vclDeliver" ng-model="$ctrl.customVcl.deliver" placeholder="" class="form-control text--courier" ng-maxlength="10000" ng-disabled="_loading">
               </textarea>
               <div class="error-messages" ng-messages="customVCLForm.vclDeliver.$error" role="alert" ng-messages-multiple>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
@@ -80,7 +80,7 @@
               "Pass" Function
             </label>
             <div class="col-md-10">
-              <textarea id="vclPass" name="vclPass" ng-model="$ctrl.customVcl.pass" placeholder="" class="form-control text--courier" _ngmaxlength="750" ng-disabled="_loading">
+              <textarea id="vclPass" name="vclPass" ng-model="$ctrl.customVcl.pass" placeholder="" class="form-control text--courier" ng-maxlength="10000" ng-disabled="_loading">
               </textarea>
               <div class="error-messages" ng-messages="customVCLForm.vclPass.$error" role="alert" ng-messages-multiple>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
@@ -95,7 +95,7 @@
               "Pipe" Function
             </label>
             <div class="col-md-10">
-              <textarea id="vclPipe" name="vclPipe" ng-model="$ctrl.customVcl.pipe" placeholder="" class="form-control text--courier" _ngmaxlength="750" ng-disabled="_loading">
+              <textarea id="vclPipe" name="vclPipe" ng-model="$ctrl.customVcl.pipe" placeholder="" class="form-control text--courier" ng-maxlength="10000" ng-disabled="_loading">
               </textarea>
               <div class="error-messages" ng-messages="customVCLForm.vclPipe.$error" role="alert" ng-messages-multiple>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
@@ -110,7 +110,7 @@
               "Hash" Function
             </label>
             <div class="col-md-10">
-              <textarea id="vclHash" name="vclHash" ng-model="$ctrl.customVcl.hash" placeholder="" class="form-control text--courier" _ngmaxlength="750" ng-disabled="_loading">
+              <textarea id="vclHash" name="vclHash" ng-model="$ctrl.customVcl.hash" placeholder="" class="form-control text--courier" ng-maxlength="10000" ng-disabled="_loading">
               </textarea>
               <div class="error-messages" ng-messages="customVCLForm.vclHash.$error" role="alert" ng-messages-multiple>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
@@ -125,7 +125,7 @@
               "Synch" Function
             </label>
             <div class="col-md-10">
-              <textarea id="vclSynch" name="vclSynch" ng-model="$ctrl.customVcl.synch" placeholder="" class="form-control text--courier" _ngmaxlength="750" ng-disabled="_loading">
+              <textarea id="vclSynch" name="vclSynch" ng-model="$ctrl.customVcl.synch" placeholder="" class="form-control text--courier" ng-maxlength="10000" ng-disabled="_loading">
               </textarea>
               <div class="error-messages" ng-messages="customVCLForm.vclSynch.$error" role="alert" ng-messages-multiple>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
@@ -140,7 +140,7 @@
               "Backend Response" Function
             </label>
             <div class="col-md-10">
-              <textarea id="vclBackendResponse" name="vclBackendResponse" ng-model="$ctrl.customVcl.backend_response" placeholder="" class="form-control text--courier" _ngmaxlength="750" ng-disabled="_loading">
+              <textarea id="vclBackendResponse" name="vclBackendResponse" ng-model="$ctrl.customVcl.backend_response" placeholder="" class="form-control text--courier" ng-maxlength="10000" ng-disabled="_loading">
               </textarea>
               <div class="error-messages" ng-messages="customVCLForm.vclBackendResponse.$error" role="alert" ng-messages-multiple>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
@@ -155,7 +155,7 @@
               "Backend Error" Function
             </label>
             <div class="col-md-10">
-              <textarea id="vclBackendError" name="vclBackendError" ng-model="$ctrl.customVcl.backend_error" placeholder="" class="form-control text--courier" _ngmaxlength="750" ng-disabled="_loading">
+              <textarea id="vclBackendError" name="vclBackendError" ng-model="$ctrl.customVcl.backend_error" placeholder="" class="form-control text--courier" ng-maxlength="10000" ng-disabled="_loading">
               </textarea>
               <div class="error-messages" ng-messages="customVCLForm.vclBackendError.$error" role="alert" ng-messages-multiple>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
