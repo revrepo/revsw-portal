@@ -56,6 +56,11 @@ var EditDomain = {
       cancel: {
         linkText: 'Cancel'
       }
+    },
+    icons: {
+      published: {
+        css: 'i[uib-tooltip="Global Status: Published"]'
+      }
     }
   },
 
@@ -307,6 +312,18 @@ var EditDomain = {
   updateDomain: function (domain) {
     this.form.fill(domain);
     return this.clickUpdateDomain();
+  },
+
+  /**
+   * ### EditDomain.waitForPublish()
+   *
+   * Waits until domain is not published
+   *
+   * @returns {Selenium WebDriver Element}
+   */
+  waitForPublish: function () {
+    return browser.wait(protractor.ExpectedConditions.presenceOf(
+        element(by.css(this.locators.icons.published.css))), 160000); //TODO: read from config
   }
 };
 
