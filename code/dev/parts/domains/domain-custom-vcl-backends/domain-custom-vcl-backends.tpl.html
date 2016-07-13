@@ -1,0 +1,106 @@
+<div class="domain-custom-vcl-backend  panel panel-default">
+  <div class="panel-heading">
+    <!-- TODO: delete or release ???-->
+    <span class="pull-left panel-buttons-left">
+            <a class="btn btn-default btn-md " ng-click="$ctrl.onCollapsAllBackendsBlock()" title="Collapse All Rules" ng-show="!isCollapsedAll">
+              <i class="glyphicon glyphicon-chevron-up "></i>
+            </a>
+            <a class="btn btn-default btn-md " ng-click="$ctrl.onExpandAllBackendsBlock()" title="Expand All Rules">
+              <i class="glyphicon glyphicon-chevron-down"></i>
+            </a>
+          </span>
+    <span ng-click="$ctrl.onAddNewBackendBlock()" class="btn btn-primary btn-sm pull-right" title="Add New Backend Block"><i class="glyphicon glyphicon-plus"></i></span>
+    <h4><b>Backends</b></h4>
+  </div>
+  <div class="panel-body">
+    <div class=" panel panel-default" ng-repeat="item in $ctrl.customVclBackends" ng-form="customVclBackendForm">
+      <div class="panel-heading">
+        <div class="domain-custom-vcl-backends-block__header row">
+          <div class="col-sm-12">
+            <!-- TODO: delete or release ???-->
+            <div class="pull-left panel-buttons-left">
+              <a class="btn btn-default btn-xs" href="" title="Collapse Block" ng-show="!item.$$backendBlockState.isCollapsed" ng-click="item.$$backendBlockState.isCollapsed = !item.$$backendBlockState.isCollapsed">
+                <i class="glyphicon glyphicon-chevron-up"></i>
+              </a>
+              <a class="btn btn-default btn-xs" href="" title="Expand Block" ng-show="item.$$backendBlockState.isCollapsed" ng-click="item.$$backendBlockState.isCollapsed = !item.$$backendBlockState.isCollapsed">
+                <i class="glyphicon glyphicon-chevron-down"></i>
+              </a>
+              <a class="btn btn-default btn-xs" href="" ng-click="$ctrl.onUpBackendBlock(item)"><i class="glyphicon glyphicon glyphicon-arrow-up " title="Move One Position Up"></i></a>
+              <a class="btn btn-default btn-xs" href="" ng-click="$ctrl.onDownBackendBlock(item)"><i class="glyphicon glyphicon glyphicon-arrow-down" title="Move One Position Down"></i></a>
+            </div>
+            <div class="pull-right panel-button-right">
+              <!-- remove widget -->
+              <a href="" title="Remove Rule" ng-click="$ctrl.onRemoveBackendBlock($index)" ng-if="!editMode">
+                <i class="glyphicon glyphicon-remove"></i>
+              </a>
+            </div>
+            <div class="panel-title">
+              <b> {{item.name}}</b>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel-body" ng-hide="item.$$backendBlockState.isCollapsed">
+        <!-- Backend Name -->
+        <div class="form-group" ng-class="{'has-error': customVclBackendForm.backendName.$invalid && customVclBackendForm.backendName.$dirty}">
+          <label for="backendName" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Use the field to name the backend. In VCL functions the backend can be referenced using RevAPM internal function “REV_BACKEND()">
+            Backend Name *</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" ng-model="item.name" ng-disabled="_loading" id="origin_host_header" name="backendName" placeholder="" ng-maxlength="255" required>
+            <div class="error-messages" ng-messages="customVclBackendForm.backendName.$error" role="alert" ng-messages-multiple>
+              <div ng-messages-include="parts/shared/error-messages.html"></div>
+            </div>
+          </div>
+        </div>
+        <!-- Backend VCL Code-->
+        <div class="form-group" ng-class="{'has-error': customVclBackendForm.backendVcl.$invalid && customVclBackendForm.backendVcl.$dirty}">
+          <label for="backendVcl" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Use the text field to specify Varnish’s 'backend' code">
+            Backend VCL Code</label>
+          <div class="col-sm-9">
+            <textarea id="vclHit" name="vclHit" ng-model="item.vcl" placeholder="" class="form-control text--courier" ng-disabled="_loading">
+            </textarea>
+            <!-- <input type="text" validate-domain-name class="form-control" ng-model="item.name" ng-disabled="_loading" id="origin_host_header" name="backendVcl" placeholder="" ng-maxlength="255" required> -->
+            <div class="error-messages" ng-messages="customVclBackendForm.backendVcl.$error" role="alert" ng-messages-multiple>
+              <div ng-messages-include="parts/shared/error-messages.html"></div>
+            </div>
+          </div>
+        </div>
+        <!-- Dynamic Origin DNS Name Lookups -->
+        <div class="form-group" ng-class="{'has-error': customVclBackendForm.backendVcl.$invalid && customVclBackendForm.backendVcl.$dirty}">
+          <label for="backendVcl" popover-append-to-body="{{true}}" class="col-sm-3 control-label">
+            Dynamic Origin DNS Name Lookups</label>
+          <div class="col-sm-9">
+            <toggle-switch is-disabled="_loading" ng-model="item.dynamic" on-label="On" off-label="Off">
+            </toggle-switch>
+            <div class="error-messages" ng-messages="customVclBackendForm.backendVcl.$error" role="alert" ng-messages-multiple>
+              <div ng-messages-include="parts/shared/error-messages.html"></div>
+            </div>
+          </div>
+        </div>
+        <!-- Origin TCP Port -->
+        <div class="form-group form-inline" ng-class="{'has-error': customVclBackendForm.backendOriginTCPPort.$invalid && customVclBackendForm.backendOriginTCPPort.$dirty}">
+          <label for="backendOriginTCPPort" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="The Origin TCP Port (range 1-65536)">
+            Origin TCP Port
+          </label>
+          <div class="col-md-9">
+            <input type="number" id="proxy_timeout" name="backendOriginTCPPort" class="form-control" ng-disabled="_loading" ng-model="item.port" ng-min="1" ng-max="65536" required>
+            <div class="error-messages" ng-messages="customVclBackendForm.backendOriginTCPPort.$error" role="alert" ng-messages-multiple>
+              <div ng-messages-include="parts/shared/error-messages.html"></div>
+            </div>
+          </div>
+        </div>
+        <!-- -->
+        <div class="form-group" ng-class="{'has-error': customVclBackendForm.originHostHeader.$invalid && customVclBackendForm.originHostHeader.$dirty}">
+          <label for="originHostHeader" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Enter here a domain name to be used in 'Host' header in requests sent from RevAPM to the origin server">
+            Origin Host *</label>
+          <div class="col-sm-9">
+            <input type="text" validate-domain-name class="form-control" ng-model="item.host" ng-disabled="_loading" id="origin_host_header" name="originHostHeader" placeholder="Origin Host Header" ng-maxlength="255" required>
+            <div class="error-messages" ng-messages="customVclBackendForm.originHostHeader.$error" role="alert" ng-messages-multiple>
+              <div ng-messages-include="parts/shared/error-messages.html"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

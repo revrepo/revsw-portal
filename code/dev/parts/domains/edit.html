@@ -435,6 +435,18 @@
               </div>
             </div>
           </div>
+          <!--  “Custom VCL Rules” -->
+          <div class="form-group form-inline">
+            <label for="customVcl" class="col-sm-3 control-label" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enables you to configure custom Varnish Configuration Language (VCL) rules to be executed by RevAPM edge proxy servers. The feature requires that “Edge Caching” switch will be in ON position">
+              Custom VCL Rules
+            </label>
+            <div class="col-md-9">
+              <toggle-switch name="customVcl" is-disabled="_loading || model.rev_component_bp.enable_cache==false" ng-model="model.rev_component_bp.custom_vcl.enabled" on-label="On" off-label="Off">
+              </toggle-switch>
+            </div>
+          </div>
+          <domain-custom-vcl ng-if="model.rev_component_bp.enable_cache&&model.rev_component_bp.custom_vcl.enabled" class="" ng-model="model.rev_component_bp.custom_vcl"></domain-custom-vcl>
+          <!-- //  “Custom VCL Rules” -->
           <hr>
           <!--  Third-party integrtions -->
           <div class="form-group" ng-class="{'has-error': editForm.bttKey.$invalid && editForm.bttKey.$dirty}">
@@ -464,7 +476,7 @@
               <button class="btn btn-success" ng-disabled="disableSubmit(model, true) || editForm.$invalid" ng-click="updateDomain(model)" uib-tooltip="{{domain_update_help_info}}">
                 <i class="glyphicon" ng-class="_loading ? 'glyphicon-refresh spin':'glyphicon-file'"></i>&nbsp; Update
               </button>
-              <button class="btn btn-success" ng-disabled="disableSubmit(model, true)|| editForm.$invalid" ng-click="publishDomain(model)"  uib-tooltip="{{domain_publish_help_info}}">
+              <button class="btn btn-success" ng-disabled="disableSubmit(model, true)|| editForm.$invalid" ng-click="publishDomain(model)" uib-tooltip="{{domain_publish_help_info}}">
                 <i class="glyphicon" ng-class="_loading ? 'glyphicon-refresh spin':'glyphicon-ok'"></i>&nbsp; Publish
               </button>
             </div>

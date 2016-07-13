@@ -153,6 +153,13 @@
             delete item.$$cachingRuleState;
           });
         }
+        // NOTE: delete UI elements not for saving
+        // $$backendBlockState - added in domain-custom-vcl-backends
+        if (model.rev_component_bp.custom_vcl && !!model.rev_component_bp.custom_vcl.backends) {
+          angular.forEach(model.rev_component_bp.custom_vcl.backends, function(item) {
+            delete item.$$backendBlockState;
+          });
+        }
       }
       if (model.domain_name) {
         delete model.domain_name;
@@ -295,6 +302,7 @@
             item.edge_caching.query_string_keep_or_remove_list = [];
           }
         });
+
       }
       /**
        * @name  saveNoChangingValue
