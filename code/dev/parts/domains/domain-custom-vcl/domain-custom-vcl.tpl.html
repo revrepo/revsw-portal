@@ -10,7 +10,7 @@
           </label>
         </div>
       </div>
-    <div class="form-group" ng-form="customVCLForm form">
+    <div class="form-group" ng-form="customVCLForm">
 
       <uib-accordion close-others="oneAtATime" class="col-sm-12">
         <uib-accordion-group heading="'Recv' Function" is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
@@ -163,8 +163,11 @@
             </div>
           </div>
         </uib-accordion-group>
-        <uib-accordion-group heading="'Backends' Function">
-          <pre>{{$ctrl.customVcl.backends| json}}</pre>
+        <!-- <uib-accordion-group heading="'Backends' Function"> -->
+<!--
+                <domain-custom-vcl-backends ng-model="$ctrl.customVcl.backends"></domain-custom-vcl-backends> -->
+
+          <!-- <pre>{{$ctrl.customVcl.backends| json}}</pre> -->
           <!--“Backends" (JSON array “rev_component_bp.custom_vcl.backends") - this bookmark/page is more complicated comparing to previous pretty simple text editing bookmarks. It should be possible to add more blocks like the following:
   “Backend Name" - string input field (no special chars, max length 150 chars). JSON attr “rev_component_bp.custom_vcl.backends[X].name". Tooltip message: “Use the field to name the backend. In VCL functions the backend can be referenced using RevAPM internal function “REV_BACKEND()". For example, if the backend is named “my_backend" it can be used as “REV_BACKEND(my_backend)".
   “Backend VCL Code" - a text area input field - JSON attribute “rev_component_bp.custom_vcl.backends[X].vcl". Tooltip: “Use the text field to specify Varnish’s “backend" code"
@@ -173,8 +176,11 @@
   “Origin Host" - string input field (the same checks as for origin field in domain configuration). JSON attr “rev_component_bp.custom_vcl.backends[X].host"
 
 -->
-        </uib-accordion-group>
+        <!-- </uib-accordion-group> -->
       </uib-accordion>
+<div class="col-sm-12">
+                <domain-custom-vcl-backends ng-model="$ctrl.customVcl.backends"></domain-custom-vcl-backends>
+</div>
     </div>
   </div>
 </div>

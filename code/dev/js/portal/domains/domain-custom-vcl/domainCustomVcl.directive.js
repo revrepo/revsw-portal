@@ -25,9 +25,10 @@
       controller: function domainCustomVclController($scope) {
         'ngInject';
         var $ctrl = this;
+        // accordion settings
         this.status = {
           isCustomHeaderOpen: false,
-          isFirstOpen: true,
+          isFirstOpen: false,
           isFirstDisabled: false
         };
 
