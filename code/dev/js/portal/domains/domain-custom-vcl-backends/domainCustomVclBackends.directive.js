@@ -35,8 +35,8 @@
           var newBlock = {
             name: '',
             host: 0,
-            port: 3000,
-            dynamic: false,
+            port: 80,
+            dynamic: true,
             vcl: ''
           };
           $ctrl.customVclBackends.unshift(newBlock);
