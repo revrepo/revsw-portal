@@ -55,7 +55,7 @@
         <!-- Backend VCL Code-->
         <div class="form-group" ng-class="{'has-error': customVclBackendForm.backendVcl.$invalid && customVclBackendForm.backendVcl.$dirty}">
           <label for="backendVcl" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Use the text field to specify Varnish’s 'backend' code">
-            Backend VCL Code</label>
+            Backend VCL Code *</label>
           <div class="col-sm-9">
             <textarea id="vclHit" name="vclHit" ng-model="item.vcl" placeholder="" class="form-control text--courier" ng-disabled="_loading">
             </textarea>
@@ -79,8 +79,8 @@
         </div>
         <!-- Origin TCP Port -->
         <div class="form-group form-inline" ng-class="{'has-error': customVclBackendForm.backendOriginTCPPort.$invalid && customVclBackendForm.backendOriginTCPPort.$dirty}">
-          <label for="backendOriginTCPPort" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="The Origin TCP Port (range 1-65536)">
-            Origin TCP Port
+          <label for="backendOriginTCPPort" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Origin TCP Port (range 1-65536)">
+            Origin TCP Port *
           </label>
           <div class="col-md-9">
             <input type="number" id="proxy_timeout" name="backendOriginTCPPort" class="form-control" ng-disabled="_loading" ng-model="item.port" ng-min="1" ng-max="65536" required>
@@ -91,7 +91,7 @@
         </div>
         <!-- Origin Host -->
         <div class="form-group" ng-class="{'has-error': customVclBackendForm.originHost.$invalid && customVclBackendForm.originHost.$dirty}">
-          <label for="originHost" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Enter here a domain name to be used in 'Host' header in requests sent from RevAPM to the origin server">
+          <label for="originHost" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Enter here a domain name or IPv4 address of the origin server">
             Origin Host *</label>
           <div class="col-sm-9">
             <input type="text" validate-origin-server-name class="form-control" ng-disabled="_loading" ng-model="item.host" id="originHost" name="originHost" placeholder="Origin Host" ng-maxlength="50" required>
