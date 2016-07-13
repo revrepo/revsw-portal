@@ -265,6 +265,12 @@
           only_overall: true,
           keep_samples: false,
         }
+      },
+
+      usage_web_stats: {
+        method: 'GET',
+        url: $config.API_URL + '/usage_reports/web/stats',
+        params: {}
       }
     });
   }
