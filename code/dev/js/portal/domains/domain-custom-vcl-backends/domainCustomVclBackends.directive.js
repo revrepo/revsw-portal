@@ -34,7 +34,7 @@
         this.onAddNewBackendBlock = function() {
           var newBlock = {
             name: '',
-            host: 0,
+            host: '',
             port: 80,
             dynamic: true,
             vcl: ''
