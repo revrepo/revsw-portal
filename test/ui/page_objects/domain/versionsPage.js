@@ -45,12 +45,30 @@ var DomainVersions = {
       domainCompareVersion: {
         model: 'compareVersion'
       }
+    },
+    panels: {
+      domainComparisonResults: {
+        className: 'col-md-12'
+      }
     }
+    
   },
 
   // ## Methods to retrieve references to UI elements (Selenium WebDriver
   // Element)
 
+  /**
+   * ### DomainStats.getDomainComparisonResultsPanel()
+   *
+   * Returns the reference to the `Domain Comparison Results` frame element (Selenium WebDriver
+   * Element) from the Domain Versions page from the Portal app.
+   *
+   * @returns {Selenium WebDriver Element}
+   */
+  getDomainComparisonResultsPanel: function () {
+    return element(by.className(this.locators.panels.domainComparisonResults.className));
+  },
+  
   /**
    * ### DomainStats.getDomainConfigVersionWarning()
    *
@@ -165,6 +183,70 @@ var DomainVersions = {
   },
 
   // ## Methods to interact with the Edit Domain Page components
+
+  /**
+   * ### DomainVersions.setDomainConfigVersion()
+   *
+   * Sets a new value for 'Domain Config Version' drop-down
+   *
+   */
+  setDomainConfigVersion: function (value) {
+    return this.getDomainConfigVersionDDown()
+        .click()
+        .sendKeys(value)
+        .sendKeys(protractor.Key.ENTER);
+  },
+
+  /**
+   * ### DomainVersions.setDomainCompareVersion()
+   *
+   * Sets a new value for 'Domain Compare Version' drop-down
+   *
+   */
+  setDomainCompareVersion: function (value) {
+    return this.getDomainCompareVersionDDown()
+        .click()
+        .sendKeys(value)
+        .sendKeys(protractor.Key.ENTER);
+  },
+
+  /**
+   * ### DomainVersions.getResultOriginString()
+   *
+   * Returns the field's value from the comparison results panel
+   * which corresponds to the first drop-down and shows
+   * what was the original value
+   *
+   * @param {String} fieldName
+   *
+   * @returns {Promise}
+   */
+  getResultOriginString: function (fieldName) {
+    return this.getDomainComparisonResultsPanel()
+    .all(by.xpath('.//*[contains(text(),' +
+        '"' + fieldName + '")]'))
+        .get(1)
+        .getText();
+  },
+
+  /**
+   * ### DomainVersions.getResultComparedString()
+   *
+   * Returns the field's value from the comparison results panel
+   * which corresponds to the second drop-down and shows what was changed
+   * in that version of domain
+   *
+   * @param {String} fieldName
+   *
+   * @returns {Promise}
+   */
+  getResultComparedString: function (fieldName){
+    return this.getDomainComparisonResultsPanel()
+        .all(by.xpath('.//*[contains(text(),' +
+            '"' + fieldName + '")]'))
+        .get(2)
+        .getText();
+  },
 
   /**
    * ### DomainVersions.clickBackToList()

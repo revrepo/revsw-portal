@@ -197,6 +197,41 @@ describe('Workflow', function () {
                     Portal.goToDomains();
                     Portal.deleteDomain(testDomain);
                 });
+
+                it('should reflect the changes made on domain form', function () {
+                    var testDomain = DataProvider.generateDomain('versTestDomain');
+
+                    Portal.domains.listPage.clickAddNewDomain();
+                    Portal.domains.addPage.createDomain(testDomain);
+                    Portal.domains.addPage.clickBackToList();
+
+                    Portal.domains.listPage.searchAndClickEdit(testDomain.name);
+                    Portal.domains.editPage.form.setOriginHostHeader('.upd');
+                    Portal.domains.editPage.clickPublishDomain();
+                    Portal.dialog.clickOk();
+
+                    Portal.domains.editPage.waitForPublish();
+                    Portal.domains.addPage.clickBackToList();
+
+                    Portal.domains.listPage.searchAndGetFirstRow(testDomain.name)
+                        .clickVersions();
+
+                    Portal.domains.versionsPage.setDomainConfigVersion('Version 1');
+                    Portal.domains.versionsPage.setDomainCompareVersion('Version 2');
+
+                    var prevVersionOrigHostHeader = Portal.domains.versionsPage
+                        .getResultOriginString('origin_host_header');
+                    var newVersionOrigHostHeader = Portal.domains.versionsPage
+                        .getResultComparedString('origin_host_header');
+
+                    expect(prevVersionOrigHostHeader)
+                        .toBe('origin_host_header: "' + testDomain.originHostHeader +'"');
+                    expect(newVersionOrigHostHeader)
+                        .toBe('origin_host_header: "' + testDomain.originHostHeader +'.upd"');
+
+                    Portal.goToDomains();
+                    Portal.deleteDomain(testDomain);
+                });
             });
         });
     });
