@@ -18,7 +18,8 @@
     $injector,
     $state,
     $config,
-    $stateParams) {
+    $stateParams,
+    DNSZones) {
     $scope.countries = Countries.query();
     $scope.billing_plans = [{
       id: null,
@@ -121,22 +122,26 @@
      * @description
      *
      *  Delete Account
-     *
+     *  check
      * @param  {[type]} company [description]
      * @return {[type]}         [description]
      */
     $scope.deleteCompanyProfile = function(company) {
       $scope._loading = true;
-      $q.all([User.getUserDomains(true), Apps.query().$promise, BillingPlans.get({
-          id: company.billing_plan
-        }).$promise]).then(
+      $q.all([
+          User.getUserDomains(true),
+          Apps.query().$promise,
+          BillingPlans.get({
+          id: company.billing_plan}).$promise,
+          DNSZones.query().$promise]).then(
           function(results) {
             var _model = {
               company: company,
               domains: results[0],
               apps: results[1],
               bp: results[2],
-              isCanBeDeleted: (results[0].length === 0 && results[1].length === 0) ? true : false
+              dnszones: results[3],
+              isCanBeDeleted: (results[0].length === 0 && results[1].length === 0 && results[3] === 0) ? true : false
             };
             $scope.confirm('confirmDeleteModal.html', _model)
               .then(function(data) {
@@ -175,6 +180,9 @@
      */
     $scope.isCanDeleteCompanyProfile = function() {
       var model = $scope.model;
+      if(!model){
+        return false;
+      }
       return (model.self_registered === true && model.billing_plan.length > 0 &&
         (model.subscription_state === 'trialing' ||
           (model.subscription_state !== 'trialing' && model.valid_payment_method_configured === true)));
