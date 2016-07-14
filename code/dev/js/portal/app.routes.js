@@ -36,8 +36,8 @@
         views: {
           layout: {
             templateUrl: 'parts/layout.html',
-            controller: function($scope, $state, $window, User) {
-              'ngInject';
+            controller: /*ngInject*/function($scope, $state, $window, User) {
+
               resizeBinding($scope, $window);
               $scope.toggle = function() {
                 $scope.isHide = $scope.isHide === false ? true : false;
@@ -56,8 +56,7 @@
           }
         },
         resolve: {
-          isUserActive: function(User, $location) {
-            'ngInject';
+          isUserActive: /*ngInject*/ function(User, $location) {
             //if its password reset disable reloadUser
             if (($location.path() || '').indexOf('password/reset') >= 0) {
               return;
