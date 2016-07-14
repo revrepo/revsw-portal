@@ -5,8 +5,27 @@
     .module('revapm.Portal')
     .config(routesConfig);
 
-  /*@ngInject*/
+  function resizeBinding($scope, $window) {
+    var w = angular.element($window);
+    $scope.previousWidth = $window.innerWidth;
+    w.bind('resize', function() {
+      if ($window.innerWidth <= 980 && $scope.previousWidth > 980) {
+        $scope.$apply(function() {
+          $scope.isHide = true;
+        });
+        $scope.previousWidth = $window.innerWidth;
+      } else if ($window.innerWidth > 980 && $scope.previousWidth <= 980) {
+        $scope.$apply(function() {
+          $scope.isHide = false;
+        });
+        $scope.previousWidth = $window.innerWidth;
+      }
+    });
+    $scope.isHide = $window.innerWidth <= 980 ? true : false;
+  }
+
   function routesConfig($stateProvider, $urlRouterProvider) {
+    'ngInject';
     $urlRouterProvider.otherwise('/users');
 
     $stateProvider
@@ -17,7 +36,11 @@
           layout: {
             templateUrl: 'parts/layout.html',
             /*@ngInject*/
-            controller: function($scope, $state, User) {
+            controller: function($scope, $state, $window, User) {
+              resizeBinding($scope, $window);
+              $scope.toggle = function() {
+                $scope.isHide = $scope.isHide === false ? true : false;
+              };
               $scope.userService = User;
               if (!User.isAuthed() &&
                 $state.current.name !== 'index.restore' &&
@@ -34,7 +57,7 @@
         resolve: {
           isUserActive: function(User, $location) {
             //if its password reset disable reloadUser
-            if(($location.path() || '').indexOf('password/reset') >= 0){
+            if (($location.path() || '').indexOf('password/reset') >= 0) {
               return;
             }
 

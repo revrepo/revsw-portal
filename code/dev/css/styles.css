@@ -66,9 +66,67 @@ body {
 .page-title {
   margin-bottom: 24px;
 }
+.left-panel {
+  transition: left ease-in-out 0.3s, padding ease-in-out 0.3s;
+  position: absolute;
+  left: 210px;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
 section[main] {
   overflow: auto;
   background-color: #eeeeee;
+  height: 100%;
+}
+section[main] .drop-shadow {
+  position: absolute;
+  top: 0;
+  bottom: -6px;
+  right: 0;
+  left: 0;
+  box-shadow: inset 0px 5px 6px -3px rgba(0, 0, 0, 0.4);
+  height: 6px;
+  pointer-events: none;
+  -webkit-transition: opacity 0.5s;
+  transition: opacity 0.5s;
+  opacity: 1;
+}
+section[main] #mainPanel {
+  display: -ms-flexbox;
+  /* display: -webkit-flex; */
+  display: flex;
+  -ms-flex-direction: column;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+  -ms-flex: 1 1 0.000000001px;
+  -webkit-flex: 1;
+  flex: 1;
+  -webkit-flex-basis: 0.000000001px;
+  flex-basis: 0.000000001px;
+  position: relative;
+}
+section[main] .paper-container {
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -ms-flex-direction: column;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+  position: relative;
+  height: 100%;
+}
+section[main] #mainContainer {
+  width: 100%;
+  -ms-flex: 1 1 0.000000001px;
+  -webkit-flex: 1;
+  flex: 1;
+  -webkit-flex-basis: 0.000000001px;
+  flex-basis: 0.000000001px;
+  position: relative;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
 }
 .max-height-pre {
   max-height: 400px;
@@ -270,16 +328,6 @@ textarea.text--courier {
 .text--courier {
   font-family: Courier;
 }
-form .has-error .form-control.ng-valid,
-.form .has-error .form-control.ng-valid {
-  border-color: #2b542c;
-}
-form .has-error .form-control.ng-valid:focus,
-.form .has-error .form-control.ng-valid:focus {
-  border-color: #2b542c;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #67b168;
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #67b168;
-}
 form .error-messages,
 .form .error-messages {
   display: none;
@@ -389,6 +437,21 @@ form .error-messages.ng-active,
 }
 .modal-title--success {
   color: #ffffff;
+}
+@media (max-width: 980px) {
+  #scrim {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity ease-in-out 0.38s, visibility ease-in-out 0.38s;
+    background-color: rgba(0, 0, 0, 0.3);
+  }
+  .left-panel {
+    left: 0 !important;
+  }
 }
 input[type="text"],
 input[type="email"],
@@ -582,8 +645,15 @@ form.new-user-form .form-group {
 }
 #drawer {
   z-index: 999;
+  width: 210px;
 }
 section[drawer] {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 210px;
+  overflow: hidden;
+  min-height: 100%;
   background-color: #fff;
   border-right: 1px solid #ddd;
 }
@@ -598,6 +668,11 @@ section[drawer] #logo img {
   vertical-align: middle;
   margin-left: 25%;
   width: 50%;
+}
+section[drawer] .side-menu {
+  position: absolute;
+  width: 210px;
+  height: 100%;
 }
 section[drawer] .side-menu .side-menu-item {
   cursor: pointer;
@@ -670,6 +745,18 @@ section[drawer] .side-menu .active-side-menu-item .side-menu-sub-item {
 .introjs-helperNumberLayer {
   line-height: 12px;
 }
+@media (max-width: 980px) {
+  section[drawer] {
+    z-index: 99999;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.15);
+    will-change: transform;
+    transition: -webkit-transform ease-in-out 0.3s, width ease-in-out 0.3s, visibility 0.3s;
+    transition: transform ease-in-out 0.3s, width ease-in-out 0.3s, visibility 0.3s;
+  }
+  section[drawer].ng-hide {
+    transform: translateX(-210px);
+  }
+}
 .navbar {
   margin: 0;
   border: none;
@@ -727,6 +814,16 @@ section[drawer] .side-menu .active-side-menu-item .side-menu-sub-item {
 }
 .flex {
   width: 100%;
+}
+@media (min-width: 768px) {
+  div[user-login-logout] {
+    display: none;
+  }
+}
+@media (max-width: 980px) {
+  .menu-toggle {
+    padding: 20px 0 10px 20px;
+  }
 }
 .land {
   fill: #222;
@@ -1446,4 +1543,24 @@ form.dns-zone-records--new-form input[name="subdomain"] {
   color: #f4006f;
   font-size: 0.7em;
   vertical-align: top;
+}
+.footer-content {
+  padding: 30px 10px;
+}
+.footer-content .copyright,
+.footer-content .version {
+  font-size: 11px;
+  color: gray;
+}
+.footer-content .version {
+  margin-right: 110px;
+}
+.footer-content a {
+  display: block;
+  margin: 10px 0;
+}
+@media (max-width: 768px) {
+  .footer-content .version {
+    margin-right: 0;
+  }
 }
