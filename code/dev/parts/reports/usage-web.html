@@ -318,10 +318,13 @@
                   <tr ng-repeat-start="( domain, usage ) in report.domains_usage" name="{{domain}}">
                     <td>
                       <a ng-if="usage.count !== '0'" role="button" data-toggle="collapse" data-target="#domain-{{$index}}" >
-                        <i class="glyphicon glyphicon-plus-sign"></i>
+                        <i class="glyphicon glyphicon-plus-sign"></i> <!-- glyphicon-remove-circle  glyphicon-fire -->
                       </a>
                     </td>
-                    <td>{{domain}}</td>
+                    <td>
+                      <span ng-if="usage.deleted" style="color:darkred;"><i class="glyphicon glyphicon-exclamation-sign"></i></span>
+                      {{domain}}
+                    </td>
                     <td class="text-right">{{usage.count}}</td>
                     <td class="text-right">{{usage.sent_bytes}}</td>
                     <td class="text-right">{{usage.received_bytes}}</td>
