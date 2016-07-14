@@ -218,7 +218,7 @@ var SSLCertFormForm = {
    *
    * @returns {Object} Promise
    */
-  setAccount: function (accounts) {
+  setAccount: function (accounts) { 
     for (var i = 0, len = accounts.length; i < len; i++) {
       var account = accounts[i];
       var option = this
@@ -287,12 +287,23 @@ var SSLCertFormForm = {
     if (sslCert.name !== undefined) {
       this.setCertName(sslCert.name);
     }
-    if (sslCert.account !== undefined) {
-      this.setAccount(sslCert.account);
-    }
-    if (sslCert.type !== undefined) {
-      this.setCertType(sslCert.type);
-    }
+
+    // Fill Company name if data provided and if element is visible/available
+    var me = this;
+    element.all(by.id(this.locators.dropDowns.company.id))
+        .then(function (elements) {
+          if (sslCert.account !== undefined && elements.length > 0) {
+            me.setAccount(sslCert.account);
+          }
+        });
+
+    element.all(by.model(this.locators.dropDowns.certType.model))
+        .then(function (elements) {
+          if (sslCert.type !== undefined && elements.length > 0) {
+            me.setCertType(sslCert.type);
+          }
+        });
+
     if (sslCert.publicSSLCert !== undefined) {
       this.setPublicSSLCert(sslCert.publicSSLCert);
     }

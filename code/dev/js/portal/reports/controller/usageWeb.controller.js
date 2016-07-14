@@ -6,7 +6,7 @@
     .controller('UsageWebController', UsageWebController);
 
   /*@ngInject*/
-  function UsageWebController($scope, User, DTOptionsBuilder, DTColumnDefBuilder, AlertService, Stats, Util) {
+  function UsageWebController($scope, $q, User, DTOptionsBuilder, DTColumnDefBuilder, AlertService, Stats, Util) {
 
     $scope._loading = true;
     $scope.accounts = [];
@@ -14,7 +14,10 @@
     $scope.month_year = new Date();
     $scope.month_year_symbol = $scope.month_year.toISOString().slice( 0, 7 );
     $scope.report = null;
+    $scope.traffic = null;
+
     var pageLength = 10;
+    var tickInterval_ = 2;
 
     $scope.accountsDtOptions = DTOptionsBuilder.newOptions()
       .withPaginationType('full_numbers')
@@ -33,6 +36,48 @@
       targets: [2,3,4,5],
       orderable: false
     }];
+
+    $scope.chartOptions = {
+      chart: {
+        type: 'column'
+      },
+      yAxis: {
+        title: {
+          text: 'GBT'
+        },
+        labels: {
+          formatter: function() {
+            return Util.humanFileSizeInGB( this.value );
+          }
+        }
+      },
+      xAxis: {
+        crosshair: {
+          width: 1,
+          color: '#000000'
+        },
+        tickInterval: tickInterval_,
+        labels: {
+          autoRotation: false,
+          useHTML: true,
+          formatter: function() {
+            return this.value.label;
+          }
+        }
+      },
+      tooltip: {
+        formatter: function() {
+          return this.key.tooltip + '<br/>' +
+            this.series.name + ': <strong>' + Util.humanFileSizeInGB(this.y, 3) + '</strong>';
+        }
+      },
+      plotOptions: {
+          series: {
+              pointWidth: 20 //width of the column bars irrespective of the chart size
+          }
+      }
+    };
+
 
     //  ---------------------------------
     $scope.onAccountSelect = function ( acc ) {
@@ -118,19 +163,97 @@
       if ( data.domains_usage !== undefined &&
            data.domains.list ) {
         data.domains.list.forEach( function( domain ) {
-          if ( !data.domains_usage[domain] ) {
-            data.domains_usage[domain] = {
+          if ( !data.domains_usage[domain.name] ) {
+            data.domains_usage[domain.name] = {
               count: '0',
               received_bytes: '0 GB',
               sent_bytes: '0 GB',
               billable_received_bps: '0 Mbps',
-              billable_sent_bps: '0 Mbps'
+              billable_sent_bps: '0 Mbps',
+              deleted: domain.deleted
             };
+          } else {
+            data.domains_usage[domain.name].deleted = domain.deleted;
           }
         });
       }
     };
 
+    var updateUsage_ = function( from, to, aid ) {
+      var q = {
+        account_id: aid,
+        from: from.toISOString().slice( 0, 10 ),
+        to: to.toISOString().slice( 0, 10 )
+      };
+      return Stats.usage_web( q )
+        .$promise
+        .then( function( data ) {
+          var overall = data.data[data.data.length - 1/*overall summary*/];
+          format_( overall );
+          $scope.report = overall;
+          // console.log( overall );
+        });
+    };
+
+    var updateStats_ = function( from, to, aid ) {
+      var q = {
+        account_id: aid,
+        from_timestamp: from.valueOf(),
+        to_timestamp: to.valueOf()
+      };
+      return Stats.usage_web_stats( q )
+        .$promise
+        .then(function(data) {
+          var series = [{
+            name: 'GBT',
+            data: []
+          }];
+          if ( data.data && data.data.length > 0 ) {
+            var labels = [];
+            var offset = data.metadata.interval;
+
+            // console.log( data );
+            data.data.forEach(function(item, idx, items) {
+
+              var st = moment(item.time),
+                en = moment(item.time + offset - 1),
+                val = moment(item.time),
+                label;
+
+              if (idx % tickInterval_) {
+                label = '';
+              } else {
+                label = val.format('[<span style="color: #000; font-weight: bold;">]MMM D[</span>]');
+              }
+
+              labels.push({
+                tooltip: val.format('[<span style="color: #000; font-weight: bold;">]MMMM Do YYYY[</span>]'),
+                label: label
+              });
+
+              if (item.count) {
+                series[0].data.push(item.sent_bytes);
+              } else {
+                series[0].data.push(null);
+              }
+
+            });
+
+            $scope.traffic = {
+              labels: labels,
+              series: series
+            };
+
+          } else {
+            $scope.traffic = {
+              labels: [],
+              series: series
+            };
+          }
+        });
+    };
+
+    //  ---------------------------------
     $scope.onUpdate = function () {
 
       if ( $scope.accounts.length === 0 || !$scope.selected.val ) {
@@ -139,32 +262,28 @@
       }
 
       $scope._loading = true;
-      var q = {
-        from: moment($scope.month_year).utc().startOf( 'month' ).toISOString().slice( 0, 10 ),
-        to: moment($scope.month_year).utc().endOf( 'month' ).toISOString().slice( 0, 10 )
-      };
-      //  not 'All Accounts'
-      if ( $scope.selected.val.acc_id ) {
-        q.account_id = $scope.selected.val.acc_id;
-      }
-      Stats.usage_web( q )
-        .$promise
-        .then( function( data ) {
-          var overall = data.data[data.data.length - 1/*overall summary*/];
-          format_( overall );
-          $scope.report = overall;
-        })
-        .catch($scope.alertService.danger)
-        .finally( function() {
-          $scope._loading = false;
-          $scope.accountsDtOptions = DTOptionsBuilder.newOptions()
-            .withPaginationType('full_numbers')
-            .withDisplayLength(pageLength)
-            .withBootstrap()
-            .withDOM('<<"pull-left"pl>f<t>i<"pull-left"p>>')
-            .withOption('paging', ($scope.report.accounts.length > pageLength))
-            .withOption('order', [[1, 'desc']]);
-        });
+      var from = new Date($scope.month_year );
+      from.setDate( 1 );
+      from.setHours( 0, 0, 0, 0 );  //  very beginning of the month
+      var to = new Date( from );
+      to.setMonth( to.getMonth() + 1 ); //  very beginning of the next month
+      var aid = $scope.selected.val.acc_id || '';
+
+      $q.all([
+        updateUsage_( from, to, aid ),
+        updateStats_( from, to, aid )
+      ])
+      .catch($scope.alertService.danger)
+      .finally(function() {
+        $scope._loading = false;
+        $scope.accountsDtOptions = DTOptionsBuilder.newOptions()
+          .withPaginationType('full_numbers')
+          .withDisplayLength(pageLength)
+          .withBootstrap()
+          .withDOM('<<"pull-left"pl>f<t>i<"pull-left"p>>')
+          .withOption('paging', ($scope.report.accounts.length > pageLength))
+          .withOption('order', [[1, 'desc']]);
+      });
     };
 
     //  ---------------------------------

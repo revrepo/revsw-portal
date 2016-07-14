@@ -69,7 +69,8 @@ var Constants = {
     },
     web: {
       DOMAINS: 'Domains',
-      PURGE_CACHE: 'Purge Cache'
+      PURGE_CACHE: 'Purge Cache',
+      SSL_CERTIFICATES: 'SSL Certificates'
     },
     analytics: {
       PROXY_TRAFFIC: 'Proxy Traffic',
@@ -214,6 +215,10 @@ var Constants = {
       MSG_SUCCESS_DELETE: 'The domain has been scheduled for removal',
       MSG_FAIL_VERIFY: 'Failed to verify domain configuration',
       MSG_FAIL_ADD_DUPLICATE_NAME: 'The domain name is already registered in the system'
+    },
+    sslCerts:{
+      MSG_FAIL_DELETE: 'The SSL certificate is in use by active domain(s) ' +
+      '- please update the domain(s) before removing the SSL certificate'
     }
   }
 };

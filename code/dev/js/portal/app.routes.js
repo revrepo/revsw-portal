@@ -6,6 +6,7 @@
     .config(routesConfig);
 
   function resizeBinding($scope, $window) {
+    'ngInject';
     var w = angular.element($window);
     $scope.previousWidth = $window.innerWidth;
     w.bind('resize', function() {
@@ -35,8 +36,8 @@
         views: {
           layout: {
             templateUrl: 'parts/layout.html',
-            /*@ngInject*/
             controller: function($scope, $state, $window, User) {
+              'ngInject';
               resizeBinding($scope, $window);
               $scope.toggle = function() {
                 $scope.isHide = $scope.isHide === false ? true : false;
@@ -56,11 +57,11 @@
         },
         resolve: {
           isUserActive: function(User, $location) {
+            'ngInject';
             //if its password reset disable reloadUser
             if (($location.path() || '').indexOf('password/reset') >= 0) {
               return;
             }
-
             return User.reloadUser();
           }
         }
