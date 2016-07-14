@@ -2,7 +2,8 @@
   <a href="https://www.revapm.com/" id="logo" target="_blank">
     <img src="images/logo_color.png" alt="Logo" />
   </a>
-  <div class="side-menu" style="height: 92%; overflow: auto;" ng-nicescroll nice-option="{cursorcolor: '#f7941e',cursorwidth: '8px',zindex: '9999999'}">
+  <ul class="side-menu" style="height: 92%; overflow: auto;" ng-nicescroll nice-option="{cursorcolor: '#f7941e',cursorwidth: '8px',zindex: '9999999'}">
+
     <dashboard-nav-menu></dashboard-nav-menu>
     <li ui-sref-active-if="{class: 'active-side-menu-item', state: 'index.apps'}" , ng-class="{'active-side-menu-item': menuExpanded('index.apps')}" style="margin-top: 8px;">
       <a id="side-menu-apps-item" class="side-menu-item" ng-click="goToState('index.apps.ios')">
@@ -204,7 +205,7 @@
         <i class="sub-menu-icon fa fa-heartbeat"></i> Network Status
       </a>
     </li>
-  </div>
+  </ul>
 </section>
 <div id="main" class="left-panel" style="{{isHide ? 'left: 0px' : 'left: 210px'}}">
   <section main>

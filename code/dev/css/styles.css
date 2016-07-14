@@ -673,6 +673,8 @@ section[drawer] .side-menu {
   position: absolute;
   width: 210px;
   height: 100%;
+  padding-left: 12px;
+  list-style-type: none;
 }
 section[drawer] .side-menu .side-menu-item {
   cursor: pointer;
