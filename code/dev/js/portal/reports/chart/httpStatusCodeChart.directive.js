@@ -136,6 +136,9 @@
             return;
           }
 
+          // debug
+          // console.log( 'reload' );
+
           var promises = {};
           var series = [];
           var labels = [];
@@ -231,14 +234,10 @@
                 item.percent = item.requests / bigTotal;
               });
 
-              // console.log( $scope.traffic );
-              // console.log( series );
-              // console.log( labels );
               $scope.traffic = {
                 labels: labels,
                 series: series
               };
-              // console.log( $scope.traffic );
 
             })
             .finally(function() {
@@ -246,12 +245,23 @@
             });
         };
 
-        $scope.$watch('ngDomain', function() {
-          $scope.reload();
-        });
         $scope.$watch('statusCodes', function() {
+          // debug
+          // console.log( 'statusCodes' );
           $scope.reload();
         });
+
+        //  the code below commented out _intentionally_ to avoid redundant heavy API requests and graph re-renderings
+        //  the point is that the 'ngDomain' update event always followed by the 'statusCodes' event, around 1s later
+        //  (the same applied to the dashboards widgets too)
+        //  so the one above watcher is enough
+        //  uncomment debug logging and see it by yourself
+
+        // $scope.$watch('ngDomain', function() {
+        //   // debug
+        //   console.log( 'ngDomain' );
+        //   $scope.reload();
+        // });
       }
     };
   }
