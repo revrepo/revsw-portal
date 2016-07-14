@@ -238,9 +238,6 @@
             });
         };
 
-
-
-
         $scope.$watch('ngDomain', function() {
           if (!$scope.ngDomain) {
             return;

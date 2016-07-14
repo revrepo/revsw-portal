@@ -1,9 +1,8 @@
-<section drawer ng-intro-options="IntroOptions" ng-intro-method="CallGlobalIntro" ng-intro-oncomplete="onIntroCompletedEvent" ng-intro-onexit="ExitEvent" ng-intro-onchange="ChangeEvent" ng-intro-onbeforechange="BeforeChangeEvent" ng-intro-onafterchange="AfterChangeEvent" ng-intro-autostart="(isShowMainIntro==false || isShowMainIntro =='false')&& userService.isAuthed()" ng-hide = "isHide">
+<section drawer ng-intro-options="IntroOptions" ng-intro-method="CallGlobalIntro" ng-intro-oncomplete="onIntroCompletedEvent" ng-intro-onexit="ExitEvent" ng-intro-onchange="ChangeEvent" ng-intro-onbeforechange="BeforeChangeEvent" ng-intro-onafterchange="AfterChangeEvent" ng-intro-autostart="(isShowMainIntro==false || isShowMainIntro =='false')&& userService.isAuthed()" ng-hide="isHide">
   <a href="https://www.revapm.com/" id="logo" target="_blank">
     <img src="images/logo_color.png" alt="Logo" />
   </a>
   <ul class="side-menu" style="height: 92%; overflow: auto;" ng-nicescroll nice-option="{cursorcolor: '#f7941e',cursorwidth: '8px',zindex: '9999999'}">
-
     <dashboard-nav-menu></dashboard-nav-menu>
     <li ui-sref-active-if="{class: 'active-side-menu-item', state: 'index.apps'}" , ng-class="{'active-side-menu-item': menuExpanded('index.apps')}" style="margin-top: 8px;">
       <a id="side-menu-apps-item" class="side-menu-item" ng-click="goToState('index.apps.ios')">
@@ -106,14 +105,6 @@
         <i class="sub-menu-icon fa fa-exchange"></i> RTT Heatmaps
       </a>
     </li>
-    <!--  <li  ui-sref-active-if="{class: 'active-side-menu-item', state: 'index.security'}", ng-class="{'active-side-menu-item': menuExpanded('index.security')}">
-            <a class="side-menu-item", ng-click="goToState('index.security')">
-                    Security
-                    <i ng-click="expandMenu('index.security', $event)" class="pull-right {{ menuExpanded('index.security') ? 'fa fa-caret-down' : 'fa fa-caret-up' }}"></i>
-                </a>
-                <a href="#" class="side-menu-sub-item" ng-disabled="true"  >WAF</a>
-                <a href="#" class="side-menu-sub-item" ng-disabled="true"  >DDoS Protection</a>
-            </li> -->
     <li ui-sref-active-if="{class: 'active-side-menu-item', state: 'index.dnsServices'}" , ng-class="{'active-side-menu-item': menuExpanded('index.dnsServices')}">
       <a class="side-menu-item" , ng-click="goToState('index.dnsServices.dns_zones')">
         <div class="left-menu-start">
@@ -122,15 +113,15 @@
         DNS Service
         <i ng-click="expandMenu('index.dnsServices', $event)" class="pull-right {{ menuExpanded('index.dnsServices') ? 'fa fa-caret-down' : 'fa fa-caret-up' }}"></i>
       </a>
-      <a ui-sref-active="active" ui-sref-active-if="{class: 'active', state: 'index.dnsServices.dns_zone_records'}" ui-sref="index.dnsServices.dns_zones" class="side-menu-sub-item" ng-if="!userService.isUser()">
+      <a ui-sref-active="active" ui-sref-active-if="{class: 'active', state: 'index.dnsServices.dns_zone_records'}" ui-sref="index.dnsServices.dns_zones" class="side-menu-sub-item">
         <i class="sub-menu-icon fa fa-tasks"></i> DNS Zones
       </a>
       <!-- TODO: delete style color: gerey after release module-->
-      <a ui-sref-active="active" style="color:grey" uisref="index.dnsServices.dns_monitors" class="side-menu-sub-item" ng-if="!userService.isUser()">
+      <a ui-sref-active="active" style="color:grey" uisref="index.dnsServices.dns_monitors" class="side-menu-sub-item">
         <i class="sub-menu-icon fa fa-eye"></i> Monitors <i class="fa fa-hourglass-half comming-soon" aria-hidden="true" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Coming Soon "></i>
       </a>
       <!-- TODO: delete style color: gerey after release module-->
-      <a ui-sref-active="active" style="color:grey" uisref="index.dnsServices.dns_datasources" class="side-menu-sub-item" ng-if="!userService.isUser()">
+      <a ui-sref-active="active" style="color:grey" uisref="index.dnsServices.dns_datasources" class="side-menu-sub-item">
         <i class="sub-menu-icon fa fa-upload"></i> Data Sources <i class="fa fa-hourglass-half comming-soon" aria-hidden="true" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Coming Soon "></i>
       </a>
     </li>

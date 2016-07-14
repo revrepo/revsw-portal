@@ -49,6 +49,9 @@ var DomainForm = {
       },
       originServerLocation: {
         model: 'model.origin_server_location_id'
+      },
+      sslCert: {
+        model: 'model.ssl_cert_id'
       }
     }
   },
@@ -81,6 +84,33 @@ var DomainForm = {
       by.model(this.locators.dropDowns.companyName.model));
   },
 
+  /**
+   * ### DomainForm.getSslCertDDown()
+   *
+   * Returns the reference to the `SSL Certificate` drop-down (Selenium WebDriver
+   * Element)
+   *
+   * @returns {Selenium WebDriver Element}
+   */
+  getSslCertDDown: function () {
+    return element(
+        by.model(this.locators.dropDowns.sslCert.model));
+  },
+
+  /**
+   * ### DomainForm.getSslCertDDownItems()
+   *
+   * Returns the reference to the `SSL Certificate` drop-down items (Selenium WebDriver
+   * Element)
+   *
+   * @returns {Selenium WebDriver Element}
+   */
+  getSslCertDDownItems: function () {
+    return this
+        .getSslCertDDown()
+          .all(by.css('option'));
+  },
+  
   /**
    * ### DomainForm.getOriginServerTxtIn()
    *
@@ -172,6 +202,21 @@ var DomainForm = {
   },
 
   /**
+   * ### DomainForm.getSslCert()
+   *
+   * Gets the current value set for SSL Certificate.
+   *
+   * @returns {Promise}
+   */
+  getSslCert: function () {
+    return this
+        .getSslCertDDown()
+          .all(by.css('option[selected="selected"]'))
+            .last()
+              .getText();
+  },
+
+  /**
    * ### DomainForm.setDomainName()
    *
    * Sets a new value for `Domain Name` text field
@@ -185,7 +230,7 @@ var DomainForm = {
       .getDomainNameTxtIn()
       .sendKeys(domainName);
   },
-
+  
   /**
    * ### DomainForm.setCompanyName()
    *
@@ -201,6 +246,21 @@ var DomainForm = {
       .setValue(companyName);
   },
 
+  /**
+   * ### DomainForm.setSslCert()
+   *
+   * Sets a new value for `SSL Certificate` drop-down
+   *
+   * @param {String} companyName
+   *
+   * @returns {Promise}
+   */
+  setSslCert: function (sslCert) {
+    return this
+        .getSslCertDDown()
+        .sendKeys(sslCert);
+  },
+  
   /**
    * ### DomainForm.setOriginServer()
    *
