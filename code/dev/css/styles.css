@@ -1092,6 +1092,9 @@ input[name="destinationPassword"] {
 form.domain-edit-form input[type="number"] {
   max-width: 120px;
 }
+form.domain-edit-form .tab-pane {
+  margin: 20px 0px;
+}
 .btn-copy--cname {
   margin-left: 10px;
 }
