@@ -246,9 +246,9 @@
             });
         };
 
-        // $scope.$watch('ngDomain', function() {
-        //   $scope.reload();
-        // });
+        $scope.$watch('ngDomain', function() {
+          $scope.reload();
+        });
         $scope.$watch('statusCodes', function() {
           $scope.reload();
         });
