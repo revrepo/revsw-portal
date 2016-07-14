@@ -163,14 +163,17 @@
       if ( data.domains_usage !== undefined &&
            data.domains.list ) {
         data.domains.list.forEach( function( domain ) {
-          if ( !data.domains_usage[domain] ) {
-            data.domains_usage[domain] = {
+          if ( !data.domains_usage[domain.name] ) {
+            data.domains_usage[domain.name] = {
               count: '0',
               received_bytes: '0 GB',
               sent_bytes: '0 GB',
               billable_received_bps: '0 Mbps',
-              billable_sent_bps: '0 Mbps'
+              billable_sent_bps: '0 Mbps',
+              deleted: domain.deleted
             };
+          } else {
+            data.domains_usage[domain.name].deleted = domain.deleted;
           }
         });
       }
@@ -188,6 +191,7 @@
           var overall = data.data[data.data.length - 1/*overall summary*/];
           format_( overall );
           $scope.report = overall;
+          // console.log( overall );
         });
     };
 
@@ -208,8 +212,7 @@
             var labels = [];
             var offset = data.metadata.interval;
 
-            console.log( data );
-
+            // console.log( data );
             data.data.forEach(function(item, idx, items) {
 
               var st = moment(item.time),
@@ -219,16 +222,11 @@
 
               if (idx % tickInterval_) {
                 label = '';
-              // } else if (idx === 0 ||
-              //   (new Date(item.time + offset)).getDate() !== (new Date(items[idx - tickInterval_].time + offset)).getDate()) {
-              //   label = val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span><br>]MMM D');
               } else {
                 label = val.format('[<span style="color: #000; font-weight: bold;">]MMM D[</span>]');
               }
 
               labels.push({
-                // tooltip: ( st.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span>]÷') +
-                //   en.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span>] MMMM Do YYYY') ),
                 tooltip: val.format('[<span style="color: #000; font-weight: bold;">]MMMM Do YYYY[</span>]'),
                 label: label
               });
@@ -264,7 +262,6 @@
       }
 
       $scope._loading = true;
-      // console.log( $scope.month_year );
       var from = new Date($scope.month_year );
       from.setDate( 1 );
       from.setHours( 0, 0, 0, 0 );  //  very beginning of the month
