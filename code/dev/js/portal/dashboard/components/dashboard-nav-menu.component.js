@@ -12,8 +12,8 @@
       replace: true,
       template:
       // TODO: make template as file
-        '<li id="left-menu-dashboard-section" class="dashboard_menu list"  ui-sref-active-if="{class: \'active-side-menu-item\', state: \'index.dashboard\'}", ' +
-        'ng-class="{\'active-side-menu-item\': menuExpanded(\'index.dashboard\')}">' +
+        '<li id="left-menu-dashboard-section" class="dashboard_menu list"  ui-sref-active-if="{class: \'open-side-menu-item\', state: \'index.dashboard\'}", ' +
+        'ng-class="{\'open-side-menu-item\': menuExpanded(\'index.dashboard\'),\'active-side-menu-item\': $state.includes(\'index.dashboard\')}">' +
         '<a class="side-menu-item" ng-if="vm.dashboardsList.length>0" ng-click="goToState(\'dashboard\', vm.dashboardsList[0].id)"  >' +
         '<div class="left-menu-start" style="margin-right: 3px;"><i class="fa fa-tachometer"></i> </div>' +
         'Dashboards' +

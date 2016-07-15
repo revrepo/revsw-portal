@@ -9,7 +9,7 @@
   function runApp($rootScope, $http, $location, AlertService, $state) {
     $rootScope.alertService = AlertService;
     $rootScope.contactUsLink = 'https://revapm.zendesk.com/hc/en-us/requests/new';
-
+    $rootScope.$state = $state;
     $rootScope.$on('$stateChangeStart',
       function(event){
         // Clear alerts when routes change
@@ -39,13 +39,14 @@
 
     $rootScope.expandMenu = function(menuState, event){
 
-      if($rootScope.menuExpandedNodes.current === menuState) {
-        event.stopPropagation();
-        return;
-      }
+      // if($rootScope.menuExpandedNodes.current === menuState) {
+      //   // event.stopPropagation();
+      //   $rootScope.menuExpandedNodes[menuState] = false;
+      //   return;
+      // }
 
       if($rootScope.menuExpandedNodes[menuState]) {
-        delete $rootScope.menuExpandedNodes[menuState];
+        $rootScope.menuExpandedNodes[menuState]= false;
       }
       else {
         $rootScope.menuExpandedNodes[menuState] = true;
