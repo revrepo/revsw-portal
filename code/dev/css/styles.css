@@ -1095,6 +1095,15 @@ form.domain-edit-form input[type="number"] {
 form.domain-edit-form .tab-pane {
   margin: 20px 0px;
 }
+form.domain-edit-form .nav-tabs > li {
+  margin-bottom: -6px;
+}
+form.domain-edit-form .nav-tabs > li > a {
+  color: #515253;
+}
+form.domain-edit-form .nav-tabs > li.active > a {
+  color: #f7941e;
+}
 .btn-copy--cname {
   margin-left: 10px;
 }
