@@ -728,7 +728,11 @@ section[drawer] .side-menu .active-side-menu-item {
 section[drawer] .side-menu .active-side-menu-item .side-menu-item {
   color: #FF8A00;
 }
-section[drawer] .side-menu .active-side-menu-item .side-menu-sub-item {
+section[drawer] .side-menu .open-side-menu-item {
+  background-color: #fcfcfc;
+  margin-left: 2px;
+}
+section[drawer] .side-menu .open-side-menu-item .side-menu-sub-item {
   display: block;
 }
 .left-menu-start {

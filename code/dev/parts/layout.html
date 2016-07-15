@@ -4,7 +4,7 @@
   </a>
   <ul class="side-menu" style="height: 92%; overflow: auto;" ng-nicescroll nice-option="{cursorcolor: '#f7941e',cursorwidth: '8px',zindex: '9999999'}">
     <dashboard-nav-menu></dashboard-nav-menu>
-    <li ui-sref-active-if="{class: 'active-side-menu-item', state: 'index.apps'}" , ng-class="{'active-side-menu-item': menuExpanded('index.apps')}" style="margin-top: 8px;">
+    <li ui-sref-active-if="{class: 'open-side-menu-item', state: 'index.apps'}" , ng-class="{'open-side-menu-item ': menuExpanded('index.apps'),'active-side-menu-item': $state.includes('index.apps')}" style="margin-top: 8px;">
       <a id="side-menu-apps-item" class="side-menu-item" ng-click="goToState('index.apps.ios')">
         <div class="left-menu-start">
           <i class="fa fa-mobile" style="font-size: 28px; margin-top: -14px !important;"></i>
@@ -22,7 +22,7 @@
         <i class="sub-menu-icon fa fa-windows"></i> Windows Mobile
       </a>
     </li>
-    <li ui-sref-active-if="{class: 'active-side-menu-item', state: 'index.mobile'}" , ng-class="{'active-side-menu-item': menuExpanded('index.mobile')}">
+    <li ui-sref-active-if="{class: 'open-side-menu-item', state: 'index.mobile'}" , ng-class="{'open-side-menu-item': menuExpanded('index.mobile'),'active-side-menu-item': $state.includes('index.mobile')}">
       <a id="side-menu-mobile-analytics-item" class="side-menu-item" ng-click="goToState('index.mobile.traffic')">
         <div class="left-menu-start">
           <i class="fa fa-signal"></i>
@@ -46,7 +46,7 @@
         <i class="sub-menu-icon glyphicon glyphicon-stats"></i> A/B Reports
       </a>
     </li>
-    <li ui-sref-active-if="{class: 'active-side-menu-item', state: 'index.webApp'}" , ng-class="{'active-side-menu-item': menuExpanded('index.webApp')}">
+    <li ui-sref-active-if="{class: 'open-side-menu-item', state: 'index.webApp'}" , ng-class="{'open-side-menu-item': menuExpanded('index.webApp'),'active-side-menu-item': $state.includes('index.webApp')}">
       <a id="side-menu-web-item" class="side-menu-item" , ng-click="goToState('index.webApp.domains')">
         <div class="left-menu-start">
           <i class="fa fa-desktop"></i>
@@ -77,7 +77,7 @@
       <!--Domains Advanced-->
       <!--</a>-->
     </li>
-    <li ui-sref-active-if="{class: 'active-side-menu-item', state: 'index.reports'}" , ng-class="{'active-side-menu-item': menuExpanded('index.reports')}">
+    <li ui-sref-active-if="{class: 'open-side-menu-item', state: 'index.reports'}" , ng-class="{'open-side-menu-item': menuExpanded('index.reports'),'active-side-menu-item': $state.includes('index.reports')}">
       <a id="side-menu-web-analytics-item" class="side-menu-item" , ng-click="goToState('index.reports.proxy')">
         <div class="left-menu-start">
           <i class="fa fa-line-chart"></i>
@@ -105,7 +105,7 @@
         <i class="sub-menu-icon fa fa-exchange"></i> RTT Heatmaps
       </a>
     </li>
-    <li ui-sref-active-if="{class: 'active-side-menu-item', state: 'index.dnsServices'}" , ng-class="{'active-side-menu-item': menuExpanded('index.dnsServices')}">
+    <li ui-sref-active-if="{class: 'open-side-menu-item', state: 'index.dnsServices'}" , ng-class="{'open-side-menu-item': menuExpanded('index.dnsServices'), 'active-side-menu-item': $state.includes('index.dnsServices')}">
       <a class="side-menu-item" , ng-click="goToState('index.dnsServices.dns_zones')">
         <div class="left-menu-start">
           <i class="glyphicon glyphicon-list-alt"></i>
@@ -125,7 +125,7 @@
         <i class="sub-menu-icon fa fa-upload"></i> Data Sources <i class="fa fa-hourglass-half comming-soon" aria-hidden="true" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Coming Soon "></i>
       </a>
     </li>
-    <li ui-sref-active-if="{class: 'active-side-menu-item', state: 'index.accountSettings'}" , ng-class="{'active-side-menu-item': menuExpanded('index.accountSettings')}">
+    <li ui-sref-active-if="{class: 'open-side-menu-item', state: 'index.accountSettings'}" , ng-class="{'open-side-menu-item': menuExpanded('index.accountSettings'), 'active-side-menu-item': $state.includes('index.accountSettings')}">
       <a class="side-menu-item" , ng-click="goToState('index.accountSettings.users')">
         <div class="left-menu-start">
           <i class="fa fa-gears"></i>
@@ -154,7 +154,7 @@
         <i class="sub-menu-icon fa fa-tasks"></i> Activity Log
       </a>
     </li>
-    <li ng-if="!userService.isUser()" ui-sref-active-if="{class: 'active-side-menu-item', state: 'index.billing'}" , ng-class="{'active-side-menu-item': menuExpanded('index.billing')}">
+    <li ng-if="!userService.isUser()" ui-sref-active-if="{class: 'open-side-menu-item', state: 'index.billing'}" , ng-class="{'open-side-menu-item': menuExpanded('index.billing') ,'active-side-menu-item': $state.includes('index.billing')}">
       <a class="side-menu-item" , ng-click="goToState('index.billing.usage')">
         <div class="left-menu-start">
           <i class="fa fa-credit-card"></i>
@@ -175,7 +175,7 @@
         <i class="sub-menu-icon fa fa-money"></i> Billing Statements
       </a>
     </li>
-    <li ui-sref-active-if="{class: 'active-side-menu-item', state: 'index.help'}" , ng-class="{'active-side-menu-item': menuExpanded('index.help')}">
+    <li ui-sref-active-if="{class: 'open-side-menu-item', state: 'index.help'}" , ng-class="{'open-side-menu-item': menuExpanded('index.help') ,'active-side-menu-item': $state.includes('index.help')}">
       <a class="side-menu-item" , ng-click="goToState('index.help')">
         <div class="left-menu-start">
           <i class="fa fa-support"></i>
