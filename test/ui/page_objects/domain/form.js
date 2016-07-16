@@ -53,12 +53,83 @@ var DomainForm = {
       sslCert: {
         model: 'model.ssl_cert_id'
       }
+    },
+    tabs:{
+      generalSettings: {
+        css: '.domain-edit-form .nav.nav-tabs>li:nth-child(1) a'
+      },
+      originHealthMonitoring: {
+        css: '.domain-edit-form .nav.nav-tabs>li:nth-child(2) a'
+      },
+      edgeCaching: {
+        css: '.domain-edit-form .nav.nav-tabs>li:nth-child(3) a'
+      },
+      sslConfiguration: {
+        css: '.domain-edit-form .nav.nav-tabs>li:nth-child(4) a'
+      },
+      customVCLRules:{
+        css: '.domain-edit-form .nav.nav-tabs>li:nth-child(5) a'
+      }
     }
   },
 
   // ## Methods to retrieve references to UI elements (Selenium WebDriver
   // Element)
-
+  /**
+   * ### DomainForm.getGeneralSettingsTab()
+   *
+   * Returns the reference to the `General Settings` tab (Selenium WebDriver
+   * Element)
+   *
+   * @returns {Selenium WebDriver Element}
+   */
+  getGeneralSettingsTab: function () {
+    return element(by.css(this.locators.tabs.generalSettings.css));
+  },
+  /**
+   * ### DomainForm.getOriginHealthMonitoringTab()
+   *
+   * Returns the reference to the `Origin Health Monitoring` tab (Selenium WebDriver
+   * Element)
+   *
+   * @returns {Selenium WebDriver Element}
+   */
+  getOriginHealthMonitoringTab: function () {
+    return element(by.css(this.locators.tabs.originHealthMonitoring.css));
+  },
+  /**
+   * ### DomainForm.getEdgeCachingTab()
+   *
+   * Returns the reference to the `Edge Caching` tab (Selenium WebDriver
+   * Element)
+   *
+   * @returns {Selenium WebDriver Element}
+   */
+  getEdgeCachingTab: function () {
+    return element(by.css(this.locators.tabs.edgeCaching.css));
+  },
+  /**
+   * ### DomainForm.getSSLConfigurationTab()
+   *
+   * Returns the reference to the `SSL Certificate` tab (Selenium WebDriver
+   * Element)
+   *
+   * @returns {Selenium WebDriver Element}
+   */
+  getSSLConfigurationTab: function () {
+    return element(by.css(this.locators.tabs.sslConfiguration.css));
+  },
+  /**
+   * ### DomainForm.getCustomVCLRulesTab()
+   *
+   * Returns the reference to the `Custom VCL Rules` tab (Selenium WebDriver
+   * Element)
+   *
+   * @returns {Selenium WebDriver Element}
+   */
+  getCustomVCLRulesTab: function () {
+    return element(by.css(this.locators.tabs.customVCLRules.css));
+  },
   /**
    * ### DomainForm.getDomainNameTxtIn()
    *
@@ -105,12 +176,14 @@ var DomainForm = {
    *
    * @returns {Selenium WebDriver Element}
    */
-  getSslCertDDownItems: function () {
+  getSslCertDDownItems: function() {
+    this.getSSLConfigurationTab()
+      .click();
     return this
-        .getSslCertDDown()
-          .all(by.css('option'));
+      .getSslCertDDown()
+      .all(by.css('option'));
   },
-  
+
   /**
    * ### DomainForm.getOriginServerTxtIn()
    *
@@ -208,13 +281,16 @@ var DomainForm = {
    *
    * @returns {Promise}
    */
-  getSslCert: function () {
+  getSslCert: function() {
+    this.getSSLConfigurationTab()
+      .click();
     return this
-        .getSslCertDDown()
-          .all(by.css('option[selected="selected"]'))
-            .last()
-              .getText();
+      .getSslCertDDown()
+      .all(by.css('option[selected="selected"]'))
+      .last()
+      .getText();
   },
+
 
   /**
    * ### DomainForm.setDomainName()
@@ -230,7 +306,7 @@ var DomainForm = {
       .getDomainNameTxtIn()
       .sendKeys(domainName);
   },
-  
+
   /**
    * ### DomainForm.setCompanyName()
    *
@@ -255,12 +331,16 @@ var DomainForm = {
    *
    * @returns {Promise}
    */
-  setSslCert: function (sslCert) {
-    return this
-        .getSslCertDDown()
-        .sendKeys(sslCert);
+  setSslCert: function(sslCert) {
+    var me = this;
+    return this.getSSLConfigurationTab()
+      .click().then(function() {
+        return me
+          .getSslCertDDown()
+          .sendKeys(sslCert);
+      });
   },
-  
+
   /**
    * ### DomainForm.setOriginServer()
    *

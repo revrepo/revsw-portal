@@ -9,7 +9,7 @@
  *
  * or as string (then default 'active' class will used)
  * <div ui-sref='some.state' ui-sref-active-if='some' ui-sref-active-if-params='{id:"1"}'></div>
- * 
+ *
  */
 
 (function(angular) {

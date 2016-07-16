@@ -451,9 +451,9 @@ var Portal = {
   },
 
   /**
-   * ### Portal.goToDomains()
+   * ### Portal.goToSslCert()
    *
-   * Navigation helper method that executes all steps to navigate to `Domains`
+   * Navigation helper method that executes all steps to navigate to `SSL Certificates`
    * page
    *
    * @returns {Promise}
