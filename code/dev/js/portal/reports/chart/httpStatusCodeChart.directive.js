@@ -56,7 +56,7 @@
 
         $scope.traffic = {
           labels: [],
-          series: []
+          series: [{ name: '200', data: [] }]
         };
 
         //  ---------------------------------
@@ -132,7 +132,12 @@
 
         //  ---------------------------------
         $scope.reload = function() {
+
           if (!$scope.ngDomain || !$scope.ngDomain.id || !$scope.statusCodes || !$scope.statusCodes.length) {
+            $scope.traffic = {
+              labels: [],
+              series: [{ name: '200', data: [] }]
+            };
             return;
           }
 
@@ -142,11 +147,6 @@
           var promises = {};
           var series = [];
           var labels = [];
-          $scope.traffic = {
-            labels: [],
-            series: []
-          };
-
           $scope.statusCodes.forEach(function(code) {
             if (!code) {
               return;
@@ -238,6 +238,7 @@
                 labels: labels,
                 series: series
               };
+              // console.log( '$scope.traffic updated 2' );
 
             })
             .finally(function() {
