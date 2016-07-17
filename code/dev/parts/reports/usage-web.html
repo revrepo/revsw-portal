@@ -322,7 +322,9 @@
                       </a>
                     </td>
                     <td>
-                      <span ng-if="usage.deleted" style="color:darkred;"><i class="glyphicon glyphicon-exclamation-sign"></i></span>
+                      <span ng-if="usage.deleted" style="color:darkred;">
+                        <i class="glyphicon glyphicon-exclamation-sign" uib-tooltip="Domain is deleted!"></i>
+                      </span>
                       {{domain}}
                     </td>
                     <td class="text-right">{{usage.count}}</td>
@@ -336,6 +338,9 @@
                       <div class="panel-body" style="padding: 10px; padding-bottom: 0;">
 
                         <div class="row">
+                          <h3 style="margin-top: 0; margin-bottom: 0; padding-left: 15px; padding-bottom: 0.3em; border-bottom: 1px solid white;">
+                            {{domain}}
+                          </h3>
 
                           <div class="col-md-6">
 
