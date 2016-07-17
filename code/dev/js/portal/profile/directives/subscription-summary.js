@@ -3,11 +3,6 @@
 
   angular
     .module('revapm.Portal.Profile')
-    .filter('firstUpper', function() {
-      return function(input, scope) {
-        return input ? input.substring(0, 1).toUpperCase() + input.substring(1).toLowerCase() : '';
-      };
-    })
     .directive('subscriptionSummary', function() {
       return {
         restrict: 'EA',
@@ -16,6 +11,9 @@
           subscription: '=ngModel'
         },
         templateUrl: '/parts/profile/directives/subscription-summary.tpl.html',
+        controller: /*ngInject*/ function($scope, $config) {
+          $scope.SudscriptionStates = $config.SUBSCRIPTION_STATES;
+        }
       };
     });
 })(angular);
