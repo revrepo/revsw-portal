@@ -213,7 +213,7 @@
         'trialing': 'Trialing',
         'trial_ended': 'Trial Ended',
         'Active': 'active',
-        'soft_ailure': 'Soft Ailure',
+        'soft_failure': 'Soft Failure',
         'past_due': 'Past Due',
         'canceled': 'Canceled',
         'unpaid': 'Unpaid',
@@ -222,7 +222,7 @@
         'pending': 'Pending',
         'suspended': 'Suspended',
         'paused': 'Paused',
-        'ailed_to_create': 'Ailed To Create',
+        'failed_to_create': 'Failed To Create',
       }
 
     });
