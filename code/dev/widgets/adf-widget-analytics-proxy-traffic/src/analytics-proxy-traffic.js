@@ -584,11 +584,14 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
                 var newData = [];
                 angular.forEach(data.data, function(val) {
 
-                  var name = $scope.countries[val.key.toUpperCase()] || 'Unknown';
-                  newData.push({
-                    name: name,
-                    y: val.count
-                  });
+                  var name = $scope.countries[val.key.toUpperCase()];
+                  if ( name ) {
+                    newData.push({
+                      name: name,
+                      y: val.count
+                    });
+                  }
+
                 });
                 $scope.country = newData;
               }

@@ -2,7 +2,7 @@
  *
  * REV SOFTWARE CONFIDENTIAL
  *
- * [2013] - [2015] Rev Software, Inc.
+ * [2013] - [2016] Rev Software, Inc.
  * All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains
@@ -65,9 +65,7 @@ describe('Functional', function () {
             expect(title).toEqual('Usage Report');
         });
 
-      
-        // TODO: Dima please fix the Page Object and enable all disabled tests
-        xit('should check Domains form with correct report data', function() {
+        it('should check Domains form with correct report data', function() {
           var reportData = DataProvider.generateUsageReportData(user);
           var domains = {
             title: 'Domains',
@@ -85,7 +83,7 @@ describe('Functional', function () {
           expect(result).toContain(domains.total);
         });
 
-        xit('should check Mobile Apps form with correct report data', function() {
+        it('should check Mobile Apps form with correct report data', function() {
           var reportData = DataProvider.generateUsageReportData(user);
           var mobileApps = {
             active: 'Active',
@@ -99,7 +97,7 @@ describe('Functional', function () {
           expect(result).toContain(mobileApps.total);
         });
 
-        xit('should check API Keys form with correct report data', function() {
+        it('should check API Keys form with correct report data', function() {
           var reportData = DataProvider.generateUsageReportData(user);
           var apiKeys = {
             active: 'Active',
@@ -113,7 +111,7 @@ describe('Functional', function () {
           expect(result).toContain(apiKeys.total);
         });
 
-        xit('should check Total Traffic form with correct report data', function() {
+        it('should check Total Traffic form with correct report data', function() {
           var reportData = DataProvider.generateUsageReportData(user);
           var totalTraffic = {
             hits: 'Hits',
@@ -131,7 +129,7 @@ describe('Functional', function () {
           expect(result).toContain(totalTraffic.bwReceived);
         });
 
-        xit('should check Edge Cache Usage form with correct report', function() {
+        it('should check Edge Cache Usage form with correct report', function() {
           var reportData = DataProvider.generateUsageReportData(user);
           var edgeCacheUsage = {
             hit: 'HIT',
@@ -143,7 +141,7 @@ describe('Functional', function () {
           expect(result).toContain(edgeCacheUsage.miss);
         });
 
-        xit('should check HTTP HTTPS Requests form with correct report', function() {
+        it('should check HTTP HTTPS Requests form with correct report', function() {
           var reportData = DataProvider.generateUsageReportData(user);
           var httpHttpsRequests = {
             http: 'HTTP',
