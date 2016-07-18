@@ -64,87 +64,77 @@
       };
 
       var chart = new Highcharts.Chart(angular.merge(chartOptions, ($scope.ngChartOptions || {})));
+      var colors = Highcharts.getOptions().colors;
+      var colorsNum = colors.length;
+      // ["#7cb5ec", "#434348", "#90ed7d", "#f7a35c", "#8085e9", "#f15c80", "#e4d354", "#2b908f", "#f45b5b", "#91e8e1"]
+
 
       /**
-       * Redraw current chart
-       */
-      $scope.reload = function() {
-        chart.redraw();
-      };
-
-      /**
-       * Clear current chart
-       */
-      $scope.clearChart = function() {
-        chart.series.forEach(function(series) {
-          // series.remove();
-          series.setData([]);
-        });
-        $scope.reload();
-      };
-
-      /**
-       *
+       *  watchers
        */
       $scope.$watch('ngData', function(value) {
         if (!value || !_.isObject(value)) {
           return;
         }
+
+        // Update series
+        if (_.isArray(value.series)) {
+
+          //  clear series
+          var i = chart.series.length;
+          while ( i-- ) {
+            chart.series[i].remove();
+          }
+
+          //  Set new data (add new or reset exists)
+          value.series.forEach(function(val, key) {
+            if (!!value.pointStart) {
+              val.pointStart = value.pointStart;
+            }
+            if (!!value.pointInterval) {
+              val.pointInterval = value.pointInterval;
+            }
+            if ( !val.color ) {
+              val.color = colors[key % colorsNum];
+            }
+            chart.addSeries(val);
+          });
+        }
+
         // update labels
         if (_.isArray(value.labels)) {
           if (value.labels.length === 0) {
-            $scope.clearChart();
-            return;
+
+            chart.series.forEach(function(series) {
+              series.setData([]);
+            });
+
           }
           // Set new data
           chart.xAxis[0].setCategories(value.labels);
-        }
-        // Update series
-        if (_.isArray(value.series)) {
-          if (value.series.length === 0) {
-            chart.series.forEach(function(val, key) {
-              chart.series[key].setData([]);
-              //chart.series[key].series.remove();
-            });
-            return;
-          }
-          // Set new data (add new or reset exists)
-          value.series.forEach(function(val, key) {
-            if (!chart.series[key]) {
-              if (!!value.pointStart) {
-                val.pointStart = value.pointStart;
-              }
-              if (!!value.pointInterval) {
-                val.pointInterval = value.pointInterval;
-              }
-              chart.addSeries(val);
-            } else {
-              if (!!value.pointStart) {
-                val.pointStart = value.pointStart;
-              }
-              if (!!value.pointInterval) {
-                val.pointInterval = value.pointInterval;
-              }
-              chart.series[key].update(val, false);
-            }
-          });
         }
         if (!!value.plotLines) {
           value.plotLines.forEach(function(val, key) {
             chart.xAxis[0].addPlotLine(val);
           });
         }
-        $scope.reload();
+
+        chart.redraw();
       }, true);
+
 
       $scope.$watch('xAxis', function(value) {
         if (!value || !_.isArray(value)) {
           return;
         }
         if (value.length === 0) {
-          $scope.clearChart();
+          chart.series.forEach(function(series) {
+            series.setData([]);
+          });
+          chart.redraw();
           return;
         }
+
         chart.xAxis[0].update(value);
       }, true);
     }

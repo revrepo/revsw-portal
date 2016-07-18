@@ -87,17 +87,6 @@ gulp.task('fonts', function() {
     .pipe(gulp.dest(destFolder + 'fonts'));
 });
 
-gulp.task('vulcanize', function() {
-  return gulp.src(devFolder + 'polymer/elements.html')
-    .pipe(vulcanize({
-      stripExcludes: false,
-      stripComments: true,
-      inlineScripts: true,
-      inlineCss: true
-    }))
-    .pipe(gulp.dest(destFolder + 'polymer/'));
-});
-
 gulp.task('dist', function() {
   var assets = useref.assets();
 
@@ -145,7 +134,6 @@ gulp.task('serve:dev', function() {
 
   gulp.watch([devFolder + '**/*.html'], reload);
   gulp.watch([devFolder + 'less/**/*.less'], ['less']);
-  gulp.watch([devFolder + 'polymer/**/*.html', '!./polymer/dist/*'], ['vulcanize', reload]);
 
   gulp.watch([devFolder + 'js/**/*.js'], ['lintjs', reload]);
   gulp.watch([devFolder + 'js/**/*.html'], reload);
@@ -168,7 +156,7 @@ gulp.task('serve:public', function() {
 
 
 gulp.task('copy', ['copyCss', 'copyParts', 'copyFaviconIcon', 'copyImages', 'copyJson', 'copyFonts', 'fonts', 'widgetsCopy', 'copyConfig']);
-gulp.task('build', ['copy', 'dist', 'vulcanize']);
+gulp.task('build', ['copy', 'dist']);
 gulp.task('default', ['serve', 'less', 'widgets:build']);
 gulp.task('serve', ['serve:dev']);
 gulp.task('public', ['serve:public']);

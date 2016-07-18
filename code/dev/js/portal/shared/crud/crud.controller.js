@@ -440,6 +440,12 @@
         //fetching data
         return $scope.resource
           .query(data, function(data) {
+            // NOTE: control data type
+            if(!angular.isArray(data)){
+              // no data for display in a list
+              $scope.records = null;
+              return null;
+            }
             if (!$scope._baseFilter) {
               $scope.records = data;
             } else {
@@ -448,6 +454,9 @@
             $scope.filterList(); // Apply filters
             $scope._checkPagination();
             return data; // Send data to future promise
+          },function(){
+            $scope.records = null;
+            return null;
           }).$promise
           .finally(function() {
             $scope.loading(false);

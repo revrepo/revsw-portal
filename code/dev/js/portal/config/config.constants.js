@@ -198,10 +198,31 @@
         'InProgress': 'In Progress',
         'Success': 'Successful'
       },
-      SSL_NAMES_VERIFICATION_METHODS:{
-        'email':'Email',
-        'dns':'DNS',
-        'url':'URL'
+      SSL_NAMES_VERIFICATION_METHODS: {
+        'email': 'Email',
+        'dns': 'DNS',
+        'url': 'URL'
+      },
+      /**
+       * @name SUBSCRIPTION_STATES
+       * @description
+       * @see https://help.chargify.com/subscriptions/subscription-states.html
+       * @type {Object}
+       */
+      SUBSCRIPTION_STATES: {
+        'trialing': 'Trialing',
+        'trial_ended': 'Trial Ended',
+        'active': 'Active',
+        'soft_failure': 'Soft Failure',
+        'past_due': 'Past Due',
+        'canceled': 'Canceled',
+        'unpaid': 'Unpaid',
+        'expired': 'Expired',
+        'assessing': 'Assessing',
+        'pending': 'Pending',
+        'suspended': 'Suspended',
+        'paused': 'Paused',
+        'failed_to_create': 'Failed To Create',
       }
 
     });

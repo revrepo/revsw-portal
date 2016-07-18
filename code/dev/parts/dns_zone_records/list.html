@@ -70,6 +70,9 @@
           <div class="alert alert-info" ng-if="records.length == 0 && !_loading">
             Currently you don't have any DNS zones registered in the system. You can click on "Add New DNS Zone" button above to add an DNS Zone.
           </div>
+          <div class="alert alert-warning" ng-if="records == null && !_loading">
+            Failed to retrieve a list of resources - please try again later
+          </div>
           <div class="alert alert-info" ng-if="_loading">
             <i class="glyphicon glyphicon-refresh spin" ng-if="record.loading"></i>&nbsp; Loading...
           </div>

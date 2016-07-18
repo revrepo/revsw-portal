@@ -1,10 +1,20 @@
 #drawer {
   z-index: 999;
+  width:210px;
 }
 
 section[drawer] {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 210px;
+  overflow: hidden;
+  min-height: 100%;
+  background-color: #fff;
+  border-right: 1px solid #ddd;
   background-color: @app-side-menu-background;
   border-right: 1px solid #ddd;
+
   #logo {
     background-color: @app-side-menu-background-logo;
     height: @app-top-menu-height;
@@ -18,6 +28,11 @@ section[drawer] {
     }
   }
   .side-menu {
+    position: absolute;
+    width: 210px;
+    height: 100%;
+    padding-left: 12px;
+    list-style-type: none;
     .side-menu-item {
       cursor: pointer;
       display: block;
@@ -42,9 +57,9 @@ section[drawer] {
     .side-menu-sub-item {
       display: block;
       padding: 10px 0;
-      padding-left: 10px;;
+      padding-left: 10px;
       margin-right: 10px;
-      margin-left: 30px;
+      margin-left: 15px;
       font-size: 13px;
 
       border-left: 3px solid transparent;
@@ -73,7 +88,10 @@ section[drawer] {
       .side-menu-item{
         color: #FF8A00;
       }
-
+    }
+    .open-side-menu-item {
+      background-color: #fcfcfc;
+      margin-left: 2px;
       .side-menu-sub-item {
         display: block;
       }
@@ -106,4 +124,16 @@ section[drawer] {
   // &-helperLayer {
   //   background-color: @app-color-orange;
   // }
+}
+@media (max-width: 980px){
+  section[drawer] {
+   z-index: 99999;
+   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.15);
+   will-change: transform;
+   transition: -webkit-transform ease-in-out 0.3s, width ease-in-out 0.3s, visibility 0.3s;
+   transition: transform ease-in-out 0.3s, width ease-in-out 0.3s, visibility 0.3s;
+   &.ng-hide {
+      transform: translateX(-210px);
+   }
+ }
 }

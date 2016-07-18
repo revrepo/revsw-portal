@@ -23,6 +23,7 @@
     'ui.bootstrap.tpls',
     'ui.bootstrap.tooltip',
     'ui.bootstrap.popover',
+    'ui.bootstrap.accordion',
     'hljs',
     'revapm.Portal.Dashboard',
     'datatables',

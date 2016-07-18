@@ -2,7 +2,7 @@
  *
  * REV SOFTWARE CONFIDENTIAL
  *
- * [2013] - [2015] Rev Software, Inc.
+ * [2013] - [2016] Rev Software, Inc.
  * All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains
@@ -184,7 +184,7 @@ var UsageReport = {
    * @returns {Promise}
    */
   getDomainsForm: function () {
-    return this.getForm(0, 0).getText();
+    return this.getForm(1, 0).getText();
   },
 
   /**
@@ -195,7 +195,7 @@ var UsageReport = {
    * @returns {Promise}
    */
   getMobileAppsForm: function () {
-    return this.getForm(0, 1).getText();
+    return this.getForm(1, 1).getText();
   },
 
   /**
@@ -206,7 +206,7 @@ var UsageReport = {
    * @returns {Promise}
    */
   getApiKeysForm: function () {
-    return this.getForm(0, 2).getText();
+    return this.getForm(1, 2).getText();
   },
 
   /**
@@ -217,7 +217,7 @@ var UsageReport = {
    * @returns {Promise}
    */
   getTotalTrafficForm: function () {
-    return this.getForm(1, 0).getText();
+    return this.getForm(2, 0).getText();
   },
 
   /**
@@ -228,7 +228,7 @@ var UsageReport = {
    * @returns {Promise}
    */
   getEdgeCacheUsageForm: function () {
-    return this.getForm(1, 1).getText();
+    return this.getForm(2, 1).getText();
   },
 
   /**
@@ -239,7 +239,7 @@ var UsageReport = {
    * @returns {Promise}
    */
   getHTTPHTTPSRequestsForm: function () {
-    return this.getForm(1, 2).getText();
+    return this.getForm(2, 2).getText();
   },
 
   // ## Helper Methods

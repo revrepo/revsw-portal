@@ -50,259 +50,280 @@
             </div>
           </div>
         </div>
-        <!-- Display data in Basic Mode -->
         <form class="form-horizontal domain-edit-form" name="editForm" novalidate ng-show="!isAdvancedMode">
-          <div class="form-group" ng-class="{'has-error': editForm.app_name.$invalid && editForm.app_name.$dirty}">
-            <label for="domainName" class="col-sm-3 control-label" popover-trigger="mouseenter">Domain Name</label>
-            <div class="col-sm-9">
-              <input type="text" class="form-control" disabled autofocus ng-model="modelInfo.domain_name" id="domain_name" name="domainName" placeholder="Domain Name">
-            </div>
-          </div>
-          <div class="form-group" ng-class="{'has-error': editForm.cname.$invalid && editForm.cname.$dirty}">
-            <label for="cname" class="col-sm-3 control-label" popover-trigger="mouseenter">Domain CNAME</label>
-            <div class="col-sm-9">
-              <input type="text" class="form-control" disabled ng-model="modelInfo.cname" id="cname" name="cname" placeholder="Domain CNAME" style="float:left">
-              <button class="btn btn-primary btn-copy--cname" clipboard text="modelInfo.cname" on-copied="copyCallback()" on-error="copyCallback(err)" style="vertical-align: initial;" uib-tooltip="Click to copy the CNAME to the clipboard" tooltip-placement="top"><i class="fa fa-files-o"></i></button>
-            </div>
-          </div>
-          <div class="form-group" ng-class="{'has-error': editForm.accountId.$invalid && editForm.accountId.$dirty}" ng-if="auth.isReseller() || auth.isRevadmin()">
-            <label for="accountId" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Select company name the domain should be associated with">Account</label>
-            <div class="col-sm-9">
-              <ui-select ng-model="model.account_id" theme="select2" ng-animate-disabled ng-disabled="_loading" on-select="onAccountSelect($model)" style="min-width: 550px;" id="account_id" name="accountId" required>
-                <ui-select-match placeholder="Select Account">{{$select.selected.companyName}}</ui-select-match>
-                <ui-select-choices repeat="item.id as item in companies | filter: {companyName: $select.search}">
-                  <div ng-bind-html="item.companyName|highlight: $select.search"></div>
-                </ui-select-choices>
-              </ui-select>
-              <div class="error-messages" ng-messages="editForm.accountId.$error" role="alert" ng-messages-multiple>
-                <div ng-messages-include="parts/shared/error-messages.html"></div>
+          <!-- Display data in Basic Mode -->
+          <uib-tabset active="active">
+            <uib-tab index="0" heading="General Settings" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Use the tab to configure general domain settings like name and location of web origin, data transfer timeouts, etc">
+               <div class="form-group" ng-class="{'has-error': editForm.app_name.$invalid && editForm.app_name.$dirty}">
+                <label for="domainName" class="col-sm-3 control-label" popover-trigger="mouseenter">Domain Name</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" disabled autofocus ng-model="modelInfo.domain_name" id="domain_name" name="domainName" placeholder="Domain Name">
+                </div>
               </div>
-            </div>
-          </div>
-          <div class="form-group" ng-class="{'has-error': editForm.originServer.$invalid && editForm.originServer.$dirty}">
-            <label for="originServer" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Enter here domain name or IP address of origin web server">Origin Server Name/IP *</label>
-            <div class="col-sm-9">
-              <input type="text" validate-origin-server-name class="form-control" ng-disabled="_loading" ng-model="model.origin_server" id="origin_server" name="originServer" placeholder="Origin Server Name" ng-maxlength="50" required>
-              <div class="error-messages" ng-messages="editForm.originServer.$error" role="alert" ng-messages-multiple>
-                <div ng-messages-include="parts/shared/error-messages.html"></div>
+              <div class="form-group" ng-class="{'has-error': editForm.cname.$invalid && editForm.cname.$dirty}">
+                <label for="cname" class="col-sm-3 control-label" popover-trigger="mouseenter">Domain CNAME</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" disabled ng-model="modelInfo.cname" id="cname" name="cname" placeholder="Domain CNAME" style="float:left">
+                  <button class="btn btn-primary btn-copy--cname" clipboard text="modelInfo.cname" on-copied="copyCallback()" on-error="copyCallback(err)" style="vertical-align: initial;" uib-tooltip="Click to copy the CNAME to the clipboard" tooltip-placement="top"><i class="fa fa-files-o"></i></button>
+                </div>
               </div>
-            </div>
-          </div>
-          <div class="form-group" ng-class="{'has-error': editForm.originHostHeader.$invalid && editForm.originHostHeader.$dirty}">
-            <label for="originHostHeader" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Enter here a domain name to be used in 'Host' header in requests sent from RevAPM to the origin server">Origin Host Header *</label>
-            <div class="col-sm-9">
-              <input type="text" validate-domain-name class="form-control" ng-model="model.origin_host_header" ng-disabled="_loading" id="origin_host_header" name="originHostHeader" placeholder="Origin Host Header" ng-maxlength="63" required>
-              <div class="error-messages" ng-messages="editForm.originHostHeader.$error" role="alert" ng-messages-multiple>
-                <div ng-messages-include="parts/shared/error-messages.html"></div>
-              </div>
-            </div>
-          </div>
-          <div class="form-group" ng-class="{'has-error': editForm.originServerLocationId.$invalid && editForm.originServerLocationId.$dirty}">
-            <label for="originServerLocationId" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Select a RevAPM location closest to the location of the origin server">Domain Origin Location</label>
-            <div class="col-sm-9">
-              <select class="form-control" ng-disabled="_loading" ng-model="model.origin_server_location_id" id="origin_server_location_id" name="originServerLocationId" ng-options="obj.id as obj.locationName for obj in locations | orderBy:'locationName'" required="">
-                <option value="">--- Select Location ---</option>
-              </select>
-              <div class="error-messages" ng-messages="editForm.originServerLocationId.$error" role="alert" ng-messages-multiple>
-                <div ng-messages-include="parts/shared/error-messages.html"></div>
-              </div>
-            </div>
-          </div>
-          <!-- Origin Communication Protocol -->
-          <div class="form-group form-inline">
-            <label for="origin_secure_protocol" class="col-sm-3 control-label">
-              Origin Communication Protocol
-            </label>
-            <div class="col-md-9">
-              <label class="radio-inline">
-                <input type="radio" ng-disabled="_loading" ng-model="model.origin_secure_protocol" value="use_end_user_protocol">Use End User Protocol
-              </label>
-              <label class="radio-inline">
-                <input type="radio" ng-disabled="_loading" ng-model="model.origin_secure_protocol" value="https_only">HTTPS Only
-              </label>
-              <label class="radio-inline">
-                <input type="radio" ng-disabled="_loading" ng-model="model.origin_secure_protocol" value="http_only">HTTP Only
-              </label>
-            </div>
-          </div>
-          <!-- // -->
-          <!-- "Non-Wildcard Domain Aliases" -->
-          <div class="form-group" ng-class="{'has-error': editForm.domainAliases.$invalid && editForm.domainAliases.$dirty}">
-            <label for="domainAliases" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Non-Wildcard Domain Aliases">Non-Wildcard Domain Aliases</label>
-            <div class="col-sm-9">
-              <ui-select validate-domains-list tagging tagging-label="Add New Domain" multiple tagging-tokens="SPACE|," theme="bootstrap" class="form-control" ng-disabled="_loading" ng-model="model.domain_aliases" name="domainAliases" id="domain_aliases">
-                <ui-select-match placeholder="Add domains...">{{$item}}</ui-select-match>
-                <ui-select-choices repeat="domain in model.domain_aliases">
-                  {{domain}}
-                </ui-select-choices>
-              </ui-select>
-              <div class="error-messages" ng-messages="editForm.domainAliases.$error" role="alert" ng-messages-multiple>
-                <div ng-messages-include="parts/shared/error-messages.html"></div>
-              </div>
-            </div>
-          </div>
-          <!-- // -->
-          <!-- Wildcard Domain Alias -->
-          <div class="form-group" ng-class="{'has-error': editForm.domainWildcardAlias.$invalid && editForm.domainWildcardAlias.$dirty}">
-            <label for="domainWildcardAlias" class="col-sm-3 control-label">
-              Wildcard Domain Alias
-            </label>
-            <div class="col-md-9">
-              <input validate-wildcard-domain-field type="text" class="form-control" ng-disabled="_loading" id="domain_wildcard_alias" name="domainWildcardAlias" ng-model="model.domain_wildcard_alias" ng-maxlength="50" placeholder="Wildcard Domain Alias">
-              <div class="error-messages" ng-messages="editForm.domainWildcardAlias.$error" role="alert" ng-messages-multiple>
-                <div ng-messages-include="parts/shared/error-messages.html"></div>
-              </div>
-            </div>
-          </div>
-          <!-- -->
-          <!-- Data Read Timeout, seconds -->
-          <div class="form-group form-inline" ng-class="{'has-error': editForm.proxyTimeout.$invalid && editForm.proxyTimeout.$dirty}">
-            <label for="proxyTimeout" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Proxy data read timeout in seconds (1-3600 range)">
-              Data Read Timeout
-            </label>
-            <div class="col-md-9">
-              <input type="number" id="proxy_timeout" name="proxyTimeout" class="form-control" ng-disabled="_loading" ng-model="model.proxy_timeout" ng-min="1" ng-max="3600" required> second(s)
-              <div class="error-messages" ng-messages="editForm.proxyTimeout.$error" role="alert" ng-messages-multiple>
-                <div ng-messages-include="parts/shared/error-messages.html"></div>
-              </div>
-            </div>
-          </div>
-          <!-- -->
-          <!-- Last Mile QUIC Protocol -->
-          <div class="form-group form-inline">
-            <label for="rev_component_bp_enable_quic" class="col-sm-3 control-label">
-              Last Mile QUIC Protocol
-            </label>
-            <div class="col-md-9">
-              <toggle-switch is-disabled="_loading" ng-model="model.rev_component_bp.enable_quic" on-label="On" off-label="Off">
-              </toggle-switch>
-            </div>
-          </div>
-          <!-- Block All Web Crawlers  -->
-          <div class="form-group form-inline">
-            <label for="block_crawlers" class="col-sm-3 control-label">
-              Block All Web Crawlers
-            </label>
-            <div class="col-md-9">
-              <toggle-switch is-disabled="_loading" ng-model="model.rev_component_bp.block_crawlers" on-label="On" off-label="Off">
-              </toggle-switch>
-            </div>
-          </div>
-          <!-- RUM Data Collection  -->
-          <div class="form-group form-inline">
-            <label for="block_crawlers" class="col-sm-3 control-label">
-              RUM Data Collection
-            </label>
-            <div class="col-md-9">
-              <toggle-switch is-disabled="_loading" ng-model="model.rev_component_co.enable_rum" on-label="On" off-label="Off">
-              </toggle-switch>
-            </div>
-          </div>
-          <!-- Edge Caching -->
-          <div class="form-group form-inline">
-            <label for="enable_cache" class="col-sm-3 control-label">
-              Edge Caching
-            </label>
-            <div class="col-md-9">
-              <toggle-switch is-disabled="_loading" ng-model="model.rev_component_bp.enable_cache" on-label="On" off-label="Off">
-              </toggle-switch>
-            </div>
-          </div>
-          <!-- BLOCK Origin Health Monitoring -->
-          <div class="form-group form-inline">
-            <label for="enable_cache" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Enables regular monitoring of origin health and fine-grained control on serving of expired (stale) cached objects in case of origin failures. This functionality requires Edge Caching feature enabled.">
-              Origin Health Monitoring
-            </label>
-            <div class="col-md-9">
-              <toggle-switch is-disabled="_loading || (model.rev_component_bp.enable_cache==false || model.rev_component_bp.enable_cache=='false')" ng-model="model.enable_origin_health_probe" on-label="On" off-label="Off">
-              </toggle-switch>
-            </div>
-          </div>
-          <div class="panel panel-default" ng-if="model.enable_origin_health_probe == true && model.rev_component_bp.enable_cache == true">
-            <div class="panel-body">
-              <!--  Origin Monitoring HTTP Request-->
-              <div class="form-group" ng-class="{'has-error': editForm.originHealthProbeHTTP_REQUEST.$invalid && editForm.originHealthProbeHTTP_REQUEST.$dirty}">
-                <label for="third-party-integrations" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="This string will be sent to the origin HTTP server after connecting to ports 80 and 443. Default value ‘GET / HTTP/1.1’ will work in majority of cases.">
-                  Origin Monitoring HTTP Request
-                </label>
-                <div class="col-md-9">
-                  <input type="text" class="form-control" ng-disabled="_loading" name="originHealthProbeHTTP_REQUEST" ng-model="model.origin_health_probe.HTTP_REQUEST" placeholder="Text like 'GET / HTTP/1.1' (300 characters max)" ng-maxlength="300" characters required>
-                  <div class="error-messages" ng-messages="editForm.originHealthProbeHTTP_REQUEST.$error" role="alert" ng-messages-multiple>
+              <div class="form-group" ng-class="{'has-error': editForm.accountId.$invalid && editForm.accountId.$dirty}" ng-if="auth.isReseller() || auth.isRevadmin()">
+                <label for="accountId" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Select company name the domain should be associated with">Account</label>
+                <div class="col-sm-9">
+                  <ui-select ng-model="model.account_id" theme="select2" ng-animate-disabled ng-disabled="_loading" on-select="onAccountSelect($model)" style="min-width: 550px;" id="account_id" name="accountId" required>
+                    <ui-select-match placeholder="Select Account">{{$select.selected.companyName}}</ui-select-match>
+                    <ui-select-choices repeat="item.id as item in companies | filter: {companyName: $select.search}">
+                      <div ng-bind-html="item.companyName|highlight: $select.search"></div>
+                    </ui-select-choices>
+                  </ui-select>
+                  <div class="error-messages" ng-messages="editForm.accountId.$error" role="alert" ng-messages-multiple>
                     <div ng-messages-include="parts/shared/error-messages.html"></div>
                   </div>
                 </div>
               </div>
-              <!--  // Origin Monitoring HTTP Request-->
-              <!--  Probe Timeout-->
-              <div class="form-group form-inline" ng-class="{'has-error': editForm.originHealthProbePROBE_TIMEOUT.$invalid && editForm.originHealthProbePROBE_TIMEOUT.$dirty}">
-                <label for="originHealthProbePROBE_TIMEOUT" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Defines for how long the proxy will wait for the origin to respond on monitoring HTTP request (1-60 range)">
-                  Probe Timeout
-                </label>
-                <div class="col-md-9">
-                  <input type="number" id="proxy_timeout" name="originHealthProbePROBE_TIMEOUT" class="form-control" ng-disabled="_loading" ng-model="model.origin_health_probe.PROBE_TIMEOUT" ng-min="1" ng-max="60" required> second(s)
-                  <div class="error-messages" ng-messages="editForm.originHealthProbePROBE_TIMEOUT.$error" role="alert" ng-messages-multiple>
+              <div class="form-group" ng-class="{'has-error': editForm.originServer.$invalid && editForm.originServer.$dirty}">
+                <label for="originServer" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Enter here domain name or IP address of origin web server">Origin Server Name/IP *</label>
+                <div class="col-sm-9">
+                  <input type="text" validate-origin-server-name class="form-control" ng-disabled="_loading" ng-model="model.origin_server" id="origin_server" name="originServer" placeholder="Origin Server Name" ng-maxlength="50" required>
+                  <div class="error-messages" ng-messages="editForm.originServer.$error" role="alert" ng-messages-multiple>
                     <div ng-messages-include="parts/shared/error-messages.html"></div>
                   </div>
                 </div>
               </div>
-              <!--  Probe Interval -->
-              <div class="form-group form-inline" ng-class="{'has-error': editForm.originHealthProbePROBE_INTERVAL.$invalid && editForm.originHealthProbePROBE_INTERVAL.$dirty}">
-                <label for="originHealthProbePROBE_INTERVAL" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Defines the interval in seconds between origin monitoring checks (1-1800 range)">
-                  Probe Interval
-                </label>
-                <div class="col-md-9">
-                  <input type="number" id="origin_health_probe_PROBE_INTERVAL" name="originHealthProbePROBE_INTERVAL" class="form-control" ng-disabled="_loading" ng-model="model.origin_health_probe.PROBE_INTERVAL" ng-min="1" ng-max="1800" required> second(s)
-                  <div class="error-messages" ng-messages="editForm.originHealthProbePROBE_INTERVAL.$error" role="alert" ng-messages-multiple>
+              <div class="form-group" ng-class="{'has-error': editForm.originHostHeader.$invalid && editForm.originHostHeader.$dirty}">
+                <label for="originHostHeader" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Enter here a domain name to be used in 'Host' header in requests sent from RevAPM to the origin server">Origin Host Header *</label>
+                <div class="col-sm-9">
+                  <input type="text" validate-domain-name class="form-control" ng-model="model.origin_host_header" ng-disabled="_loading" id="origin_host_header" name="originHostHeader" placeholder="Origin Host Header" ng-maxlength="63" required>
+                  <div class="error-messages" ng-messages="editForm.originHostHeader.$error" role="alert" ng-messages-multiple>
                     <div ng-messages-include="parts/shared/error-messages.html"></div>
                   </div>
                 </div>
               </div>
-              <!--  Expected HTTP Response Code-->
-              <div class="form-group form-inline" ng-class="{'has-error': editForm.originHealthProbeHTTP_STATUS.$invalid && editForm.originHealthProbeHTTP_STATUS.$dirty}">
-                <label for="originHealthProbeHTTP_STATUS" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="The origin server should respond with this HTTP status code to be considered healthy (range 100-599)">
-                  Expected HTTP Response Code
-                </label>
-                <div class="col-md-9">
-                  <input type="number" id="proxy_timeout" name="originHealthProbeHTTP_STATUS" class="form-control" ng-disabled="_loading" ng-model="model.origin_health_probe.HTTP_STATUS" ng-min="100" ng-max="599" required>
-                  <div class="error-messages" ng-messages="editForm.originHealthProbeHTTP_STATUS.$error" role="alert" ng-messages-multiple>
+              <div class="form-group" ng-class="{'has-error': editForm.originServerLocationId.$invalid && editForm.originServerLocationId.$dirty}">
+                <label for="originServerLocationId" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Select a RevAPM location closest to the location of the origin server">Domain Origin Location</label>
+                <div class="col-sm-9">
+                  <select class="form-control" ng-disabled="_loading" ng-model="model.origin_server_location_id" id="origin_server_location_id" name="originServerLocationId" ng-options="obj.id as obj.locationName for obj in locations | orderBy:'locationName'" required="">
+                    <option value="">--- Select Location ---</option>
+                  </select>
+                  <div class="error-messages" ng-messages="editForm.originServerLocationId.$error" role="alert" ng-messages-multiple>
                     <div ng-messages-include="parts/shared/error-messages.html"></div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-          <!--  //BLOCK Origin Health Monitoring -->
-          <div class="form-group" ng-class="{ 'has-error': editForm.comment.$invalid &&  editForm.comment.$dirty }">
-            <label for="comment" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Comment">Comment</label>
-            <div class="col-md-6">
-              <textarea id="comment" name="comment" placeholder="Comment (300 characters max)" ng-maxlength="300" class="form-control" name="comment" ng-model="model.comment" ng-pattern="COMMENT_NO_SPECIAL_CHARS" ng-disabled="_loading">
-              </textarea>
-              <div class="error-messages" ng-messages="editForm.comment.$error" role="alert" ng-messages-multiple>
-                <div ng-messages-include="parts/shared/error-messages.html"></div>
+              <!-- Origin Communication Protocol -->
+              <div class="form-group form-inline">
+                <label for="origin_secure_protocol" class="col-sm-3 control-label">
+                  Origin Communication Protocol
+                </label>
+                <div class="col-md-9">
+                  <label class="radio-inline">
+                    <input type="radio" ng-disabled="_loading" ng-model="model.origin_secure_protocol" value="use_end_user_protocol">Use End User Protocol
+                  </label>
+                  <label class="radio-inline">
+                    <input type="radio" ng-disabled="_loading" ng-model="model.origin_secure_protocol" value="https_only">HTTPS Only
+                  </label>
+                  <label class="radio-inline">
+                    <input type="radio" ng-disabled="_loading" ng-model="model.origin_secure_protocol" value="http_only">HTTP Only
+                  </label>
+                </div>
               </div>
-            </div>
-          </div>
-          <hr>
-          <!-- Cache Bypass Locations -->
-          <div class="form-group" ng-if="model.rev_component_bp.enable_cache" ng-class="{'has-error': editForm.cacheBypassLocations.$invalid && editForm.cacheBypassLocations.$dirty}">
-            <label for="cacheBypassLocations" class="col-sm-3 control-label">Cache Bypass Locations</label>
-            <div class="col-sm-9">
-              <ui-select validate-cache-bypass-locations tagging tagging-label="Add Cache Bypass Locations" multiple tagging-tokens="SPACE|," theme="bootstrap" class="form-control" ng-disabled="_loading" ng-model="model.rev_component_bp.cache_bypass_locations" name="cacheBypassLocations" id="cacheBypassLocations">
-                <ui-select-match placeholder="Add Cache Bypass Locations...">{{$item}}</ui-select-match>
-                <ui-select-choices repeat="bypass_locations in model.rev_component_bp.cache_bypass_locations">
-                  {{bypass_locations}}
-                </ui-select-choices>
-              </ui-select>
-              <div class="error-messages" ng-messages="editForm.cacheBypassLocations.$error" role="alert" ng-messages-multiple>
-                <div ng-messages-include="parts/shared/error-messages.html"></div>
+              <!-- // -->
+              <!-- "Non-Wildcard Domain Aliases" -->
+              <div class="form-group" ng-class="{'has-error': editForm.domainAliases.$invalid && editForm.domainAliases.$dirty}">
+                <label for="domainAliases" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Non-Wildcard Domain Aliases">Non-Wildcard Domain Aliases</label>
+                <div class="col-sm-9">
+                  <ui-select validate-domains-list tagging tagging-label="Add New Domain" multiple tagging-tokens="SPACE|," theme="bootstrap" class="form-control" ng-disabled="_loading" ng-model="model.domain_aliases" name="domainAliases" id="domain_aliases">
+                    <ui-select-match placeholder="Add domains...">{{$item}}</ui-select-match>
+                    <ui-select-choices repeat="domain in model.domain_aliases">
+                      {{domain}}
+                    </ui-select-choices>
+                  </ui-select>
+                  <div class="error-messages" ng-messages="editForm.domainAliases.$error" role="alert" ng-messages-multiple>
+                    <div ng-messages-include="parts/shared/error-messages.html"></div>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-          <!-- -->
-          <!-- Caching Rules -->
-          <div class="panel panel-default caching-rules-list" ng-if="model.rev_component_bp.enable_cache">
-            <div class="panel-heading">
-              <span class="pull-left panel-buttons-left">
+              <!-- // -->
+              <!-- Wildcard Domain Alias -->
+              <div class="form-group" ng-class="{'has-error': editForm.domainWildcardAlias.$invalid && editForm.domainWildcardAlias.$dirty}">
+                <label for="domainWildcardAlias" class="col-sm-3 control-label">
+                  Wildcard Domain Alias
+                </label>
+                <div class="col-md-9">
+                  <input validate-wildcard-domain-field type="text" class="form-control" ng-disabled="_loading" id="domain_wildcard_alias" name="domainWildcardAlias" ng-model="model.domain_wildcard_alias" ng-maxlength="50" placeholder="Wildcard Domain Alias">
+                  <div class="error-messages" ng-messages="editForm.domainWildcardAlias.$error" role="alert" ng-messages-multiple>
+                    <div ng-messages-include="parts/shared/error-messages.html"></div>
+                  </div>
+                </div>
+              </div>
+              <!-- -->
+              <!-- Data Read Timeout, seconds -->
+              <div class="form-group form-inline" ng-class="{'has-error': editForm.proxyTimeout.$invalid && editForm.proxyTimeout.$dirty}">
+                <label for="proxyTimeout" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Proxy data read timeout in seconds (1-3600 range)">
+                  Data Read Timeout
+                </label>
+                <div class="col-md-9">
+                  <input type="number" id="proxy_timeout" name="proxyTimeout" class="form-control" ng-disabled="_loading" ng-model="model.proxy_timeout" ng-min="1" ng-max="3600" required> second(s)
+                  <div class="error-messages" ng-messages="editForm.proxyTimeout.$error" role="alert" ng-messages-multiple>
+                    <div ng-messages-include="parts/shared/error-messages.html"></div>
+                  </div>
+                </div>
+              </div>
+              <!-- -->
+              <!-- Last Mile QUIC Protocol -->
+              <div class="form-group form-inline">
+                <label for="rev_component_bp_enable_quic" class="col-sm-3 control-label">
+                  Last Mile QUIC Protocol
+                </label>
+                <div class="col-md-9">
+                  <toggle-switch is-disabled="_loading" ng-model="model.rev_component_bp.enable_quic" on-label="On" off-label="Off">
+                  </toggle-switch>
+                </div>
+              </div>
+              <!-- Block All Web Crawlers  -->
+              <div class="form-group form-inline">
+                <label for="block_crawlers" class="col-sm-3 control-label">
+                  Block All Web Crawlers
+                </label>
+                <div class="col-md-9">
+                  <toggle-switch is-disabled="_loading" ng-model="model.rev_component_bp.block_crawlers" on-label="On" off-label="Off">
+                  </toggle-switch>
+                </div>
+              </div>
+              <!-- RUM Data Collection  -->
+              <div class="form-group form-inline">
+                <label for="block_crawlers" class="col-sm-3 control-label">
+                  RUM Data Collection
+                </label>
+                <div class="col-md-9">
+                  <toggle-switch is-disabled="_loading" ng-model="model.rev_component_co.enable_rum" on-label="On" off-label="Off">
+                  </toggle-switch>
+                </div>
+              </div>
+              <div class="form-group" ng-class="{ 'has-error': editForm.comment.$invalid &&  editForm.comment.$dirty }">
+                <label for="comment" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Comment">Comment</label>
+                <div class="col-md-6">
+                  <textarea id="comment" name="comment" placeholder="Comment (300 characters max)" ng-maxlength="300" class="form-control" name="comment" ng-model="model.comment" ng-pattern="COMMENT_NO_SPECIAL_CHARS" ng-disabled="_loading">
+                  </textarea>
+                  <div class="error-messages" ng-messages="editForm.comment.$error" role="alert" ng-messages-multiple>
+                    <div ng-messages-include="parts/shared/error-messages.html"></div>
+                  </div>
+                </div>
+              </div>
+              <hr>
+              <!--  Third-party integrtions -->
+              <div class="form-group" ng-class="{'has-error': editForm.bttKey.$invalid && editForm.bttKey.$dirty}">
+                <label for="third-party-integrations" class="col-sm-3 control-label">
+                  Blue Triangle Tech. Key
+                </label>
+                <div class="col-md-9">
+                  <input type="text" class="form-control" ng-disabled="_loading" name="bttKey" ng-model="model.btt_key" placeholder="BTT API key for the domain" ng-pattern="/^[0-9a-fA-F]{32}$/">
+                  <div class="error-messages" ng-messages="editForm.bttKey.$error" role="alert" ng-messages-multiple>
+                    <div ng-message="pattern" class="alert-text alert-text--pattern">The BTT key format is not correct</div>
+                    <div ng-messages-include="parts/shared/error-messages.html"></div>
+                  </div>
+                </div>
+              </div>
+              <hr>
+            </uib-tab>
+            <uib-tab index="1" heading="Origin Health Monitoring" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="You can manage here whether we should monitor the origin health status and what monitoring parameters to use">
+              <!-- BLOCK Origin Health Monitoring -->
+              <div class="form-group form-inline">
+                <label for="enable_cache" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Enables regular monitoring of origin health and fine-grained control on serving of expired (stale) cached objects in case of origin failures. This functionality requires Edge Caching feature enabled.">
+                  Origin Health Monitoring
+                </label>
+                <div class="col-md-9">
+                  <toggle-switch is-disabled="_loading || (model.rev_component_bp.enable_cache==false || model.rev_component_bp.enable_cache=='false')" ng-model="model.enable_origin_health_probe" on-label="On" off-label="Off">
+                  </toggle-switch>
+                </div>
+              </div>
+              <div class="panel panel-default" ng-if="model.enable_origin_health_probe == true && model.rev_component_bp.enable_cache == true">
+                <div class="panel-body">
+                  <!--  Origin Monitoring HTTP Request-->
+                  <div class="form-group" ng-class="{'has-error': editForm.originHealthProbeHTTP_REQUEST.$invalid && editForm.originHealthProbeHTTP_REQUEST.$dirty}">
+                    <label for="third-party-integrations" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="This string will be sent to the origin HTTP server after connecting to ports 80 and 443. Default value ‘GET / HTTP/1.1’ will work in majority of cases.">
+                      Origin Monitoring HTTP Request
+                    </label>
+                    <div class="col-md-9">
+                      <input type="text" class="form-control" ng-disabled="_loading" name="originHealthProbeHTTP_REQUEST" ng-model="model.origin_health_probe.HTTP_REQUEST" placeholder="Text like 'GET / HTTP/1.1' (300 characters max)" ng-maxlength="300" characters required>
+                      <div class="error-messages" ng-messages="editForm.originHealthProbeHTTP_REQUEST.$error" role="alert" ng-messages-multiple>
+                        <div ng-messages-include="parts/shared/error-messages.html"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <!--  // Origin Monitoring HTTP Request-->
+                  <!--  Probe Timeout-->
+                  <div class="form-group form-inline" ng-class="{'has-error': editForm.originHealthProbePROBE_TIMEOUT.$invalid && editForm.originHealthProbePROBE_TIMEOUT.$dirty}">
+                    <label for="originHealthProbePROBE_TIMEOUT" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Defines for how long the proxy will wait for the origin to respond on monitoring HTTP request (1-60 range)">
+                      Probe Timeout
+                    </label>
+                    <div class="col-md-9">
+                      <input type="number" id="proxy_timeout" name="originHealthProbePROBE_TIMEOUT" class="form-control" ng-disabled="_loading" ng-model="model.origin_health_probe.PROBE_TIMEOUT" ng-min="1" ng-max="60" required> second(s)
+                      <div class="error-messages" ng-messages="editForm.originHealthProbePROBE_TIMEOUT.$error" role="alert" ng-messages-multiple>
+                        <div ng-messages-include="parts/shared/error-messages.html"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <!--  Probe Interval -->
+                  <div class="form-group form-inline" ng-class="{'has-error': editForm.originHealthProbePROBE_INTERVAL.$invalid && editForm.originHealthProbePROBE_INTERVAL.$dirty}">
+                    <label for="originHealthProbePROBE_INTERVAL" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Defines the interval in seconds between origin monitoring checks (1-1800 range)">
+                      Probe Interval
+                    </label>
+                    <div class="col-md-9">
+                      <input type="number" id="origin_health_probe_PROBE_INTERVAL" name="originHealthProbePROBE_INTERVAL" class="form-control" ng-disabled="_loading" ng-model="model.origin_health_probe.PROBE_INTERVAL" ng-min="1" ng-max="1800" required> second(s)
+                      <div class="error-messages" ng-messages="editForm.originHealthProbePROBE_INTERVAL.$error" role="alert" ng-messages-multiple>
+                        <div ng-messages-include="parts/shared/error-messages.html"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <!--  Expected HTTP Response Code-->
+                  <div class="form-group form-inline" ng-class="{'has-error': editForm.originHealthProbeHTTP_STATUS.$invalid && editForm.originHealthProbeHTTP_STATUS.$dirty}">
+                    <label for="originHealthProbeHTTP_STATUS" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="The origin server should respond with this HTTP status code to be considered healthy (range 100-599)">
+                      Expected HTTP Response Code
+                    </label>
+                    <div class="col-md-9">
+                      <input type="number" id="proxy_timeout" name="originHealthProbeHTTP_STATUS" class="form-control" ng-disabled="_loading" ng-model="model.origin_health_probe.HTTP_STATUS" ng-min="100" ng-max="599" required>
+                      <div class="error-messages" ng-messages="editForm.originHealthProbeHTTP_STATUS.$error" role="alert" ng-messages-multiple>
+                        <div ng-messages-include="parts/shared/error-messages.html"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--  //BLOCK Origin Health Monitoring -->
+              <hr>
+            </uib-tab>
+            <uib-tab index="2" heading="Edge Caching" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="This tab allows you to manage edge caching rules for acceleration of static content like images, video, JS and CSS files">
+              <!-- Edge Caching -->
+              <div class="form-group form-inline">
+                <label for="enable_cache" class="col-sm-3 control-label">
+                  Edge Caching
+                </label>
+                <div class="col-md-9">
+                  <toggle-switch is-disabled="_loading" ng-model="model.rev_component_bp.enable_cache" on-label="On" off-label="Off">
+                  </toggle-switch>
+                </div>
+              </div>
+              <!-- Cache Bypass Locations -->
+              <div class="form-group" ng-if="model.rev_component_bp.enable_cache" ng-class="{'has-error': editForm.cacheBypassLocations.$invalid && editForm.cacheBypassLocations.$dirty}">
+                <label for="cacheBypassLocations" class="col-sm-3 control-label">Cache Bypass Locations</label>
+                <div class="col-sm-9">
+                  <ui-select validate-cache-bypass-locations tagging tagging-label="Add Cache Bypass Locations" multiple tagging-tokens="SPACE|," theme="bootstrap" class="form-control" ng-disabled="_loading" ng-model="model.rev_component_bp.cache_bypass_locations" name="cacheBypassLocations" id="cacheBypassLocations">
+                    <ui-select-match placeholder="Add Cache Bypass Locations...">{{$item}}</ui-select-match>
+                    <ui-select-choices repeat="bypass_locations in model.rev_component_bp.cache_bypass_locations">
+                      {{bypass_locations}}
+                    </ui-select-choices>
+                  </ui-select>
+                  <div class="error-messages" ng-messages="editForm.cacheBypassLocations.$error" role="alert" ng-messages-multiple>
+                    <div ng-messages-include="parts/shared/error-messages.html"></div>
+                  </div>
+                </div>
+              </div>
+              <!-- -->
+              <!-- Caching Rules -->
+              <div class="panel panel-default caching-rules-list" ng-if="model.rev_component_bp.enable_cache">
+                <div class="panel-heading">
+                  <span class="pull-left panel-buttons-left">
                 <a class="btn btn-default btn-md " ng-click="onCollapsAllCachingRule()" title="Collapse All Rules" ng-show="!isCollapsedAll">
                   <i class="glyphicon glyphicon-chevron-up "></i>
                 </a>
@@ -310,145 +331,152 @@
                   <i class="glyphicon glyphicon-chevron-down"></i>
                 </a>
               </span>
-              <span ng-click="onAddNewCachingRule()" class="btn btn-primary btn-sm pull-right" title="Add New Caching Rule"><i class="glyphicon glyphicon-plus"></i></span>
-              <h4><b>Caching Rules</b></h4>
-            </div>
-            <div class="panel-body">
-              <!-- TODO: creater directive -->
-              <div class="panel panel-default domain-caching-rules" ng-repeat="caching_rule in model.rev_component_bp.caching_rules">
-                <div class="panel-heading">
-                  <div class="domain-caching-rules__info">
-                    <div class="pull-left panel-buttons-left">
-                      <!-- collapse -->
-                      <a class="btn btn-default btn-xs" href="" title="Collapse Caching Rule" ng-show="!caching_rule.$$cachingRuleState.isCollapsed" ng-click="caching_rule.$$cachingRuleState.isCollapsed = !caching_rule.$$cachingRuleState.isCollapsed">
-                        <i class="glyphicon glyphicon-chevron-up"></i>
-                      </a>
-                      <!-- expend -->
-                      <a class="btn btn-default btn-xs" href="" title="Expand Caching Rule" ng-show="caching_rule.$$cachingRuleState.isCollapsed" ng-click="caching_rule.$$cachingRuleState.isCollapsed = !caching_rule.$$cachingRuleState.isCollapsed">
-                        <i class="glyphicon glyphicon-chevron-down"></i>
-                      </a>
-                      <!--  Caching Rule Up  -->
-                      <a class="btn btn-default btn-xs" href="" ng-click="onUpCachingRule(caching_rule)"><i class="glyphicon glyphicon glyphicon-arrow-up " title="Move One Position Up"></i></a>
-                      <!--  Caching Rule Down  -->
-                      <a class="btn btn-default btn-xs" href="" ng-click="onDownCachingRule(caching_rule)"><i class="glyphicon glyphicon glyphicon-arrow-down" title="Move One Position Down"></i></a>
-                      <!-- // -->
+                  <span ng-click="onAddNewCachingRule()" class="btn btn-primary btn-sm pull-right" title="Add New Caching Rule"><i class="glyphicon glyphicon-plus"></i></span>
+                  <h4><b>Caching Rules</b></h4>
+                </div>
+                <div class="panel-body">
+                  <!-- TODO: creater directive -->
+                  <div class="panel panel-default domain-caching-rules" ng-repeat="caching_rule in model.rev_component_bp.caching_rules">
+                    <div class="panel-heading">
+                      <div class="domain-caching-rules__info">
+                        <div class="pull-left panel-buttons-left">
+                          <!-- collapse -->
+                          <a class="btn btn-default btn-xs" href="" title="Collapse Caching Rule" ng-show="!caching_rule.$$cachingRuleState.isCollapsed" ng-click="caching_rule.$$cachingRuleState.isCollapsed = !caching_rule.$$cachingRuleState.isCollapsed">
+                            <i class="glyphicon glyphicon-chevron-up"></i>
+                          </a>
+                          <!-- expend -->
+                          <a class="btn btn-default btn-xs" href="" title="Expand Caching Rule" ng-show="caching_rule.$$cachingRuleState.isCollapsed" ng-click="caching_rule.$$cachingRuleState.isCollapsed = !caching_rule.$$cachingRuleState.isCollapsed">
+                            <i class="glyphicon glyphicon-chevron-down"></i>
+                          </a>
+                          <!--  Caching Rule Up  -->
+                          <a class="btn btn-default btn-xs" href="" ng-click="onUpCachingRule(caching_rule)"><i class="glyphicon glyphicon glyphicon-arrow-up " title="Move One Position Up"></i></a>
+                          <!--  Caching Rule Down  -->
+                          <a class="btn btn-default btn-xs" href="" ng-click="onDownCachingRule(caching_rule)"><i class="glyphicon glyphicon glyphicon-arrow-down" title="Move One Position Down"></i></a>
+                          <!-- // -->
+                        </div>
+                        <div class="pull-right panel-button-right">
+                          <!-- remove widget -->
+                          <a href="" title="Remove Rule" ng-click="onRemoveCachingRule($index)" ng-if="!editMode">
+                            <i class="glyphicon glyphicon-remove"></i>
+                          </a>
+                        </div>
+                        <div class="panel-title">
+                          <i class="icon-revapm-icon-regex" ng-if="!caching_rule.url.is_wildcard"></i>
+                          <i class="icon-revapm-files-empty" ng-if="caching_rule.url.is_wildcard"></i>
+                          <b>URL</b>: </i> {{caching_rule.url.value}}
+                        </div>
+                      </div>
                     </div>
-                    <div class="pull-right panel-button-right">
-                      <!-- remove widget -->
-                      <a href="" title="Remove Rule" ng-click="onRemoveCachingRule($index)" ng-if="!editMode">
-                        <i class="glyphicon glyphicon-remove"></i>
-                      </a>
-                    </div>
-                    <div class="panel-title">
-                      <i class="icon-revapm-icon-regex" ng-if="!caching_rule.url.is_wildcard"></i>
-                      <i class="icon-revapm-files-empty" ng-if="caching_rule.url.is_wildcard"></i>
-                      <b>URL</b>: </i> {{caching_rule.url.value}}
-                    </div>
+                    <domain-caching-rule class="panel-body" ng-model="caching_rule" ng-show="!caching_rule.$$cachingRuleState.isCollapsed"></domain-caching-rule>
                   </div>
                 </div>
-                <domain-caching-rule class="panel-body" ng-model="caching_rule" ng-show="!caching_rule.$$cachingRuleState.isCollapsed"></domain-caching-rule>
               </div>
-            </div>
-          </div>
-          <hr>
-          <!--  “SSL Configuration” -->
-          <div class="form-group form-inline">
-            <label for="enable_ssl" class="col-sm-3 control-label">
-              Accept SSL Requests
-            </label>
-            <div class="col-md-9">
-              <toggle-switch name="enable_ssl" ng-disabled="_loading" ng-model="model.enable_ssl" on-label="On" off-label="Off">
-              </toggle-switch>
-            </div>
-          </div>
-          <!-- //  “SSL Configuration” -->
-          <!-- Attached SSL Certificate-->
-          <div class="form-group" ng-class="{'has-error': editForm.sslCertId.$invalid && editForm.sslCertId.$dirty}">
-            <label for="sslCertId" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Select SSL certificate which should be associated with the domain">SSL Certificate</label>
-            <div class="col-sm-9">
-              <select class="form-control" ng-disabled="_loading" ng-model="model.ssl_cert_id" id="ssl_cert_id" name="sslCertId" ng-options="obj.id as obj.cert_name for obj in SSL_certs | filter :{account_id:model.account_id}" style="float: left;">
-                <option value="">Default RevAPM SSL Certificate</option>
-              </select>
-              <a ui-sref="index.webApp.ssl_certs" class="btn btn-primary pull-right"><i class="fa fa-lock"></i> Manage SSL Certificates</a>
-            </div>
-          </div>
-          <!-- -->
-          <div class="ssl-certificate-configuration">
-            <div class="panel panel-default ">
-              <div class="panel-body form">
-                <div class="col-md-5">
-                  <div class="form-group ">
-                    <div class="col-sm-12">
+              <hr>
+            </uib-tab>
+
+            <uib-tab index="3" heading="SSL Configuration" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Use the tab to enable/disable SSL support for the domain and manage which SSL certificate to use and which SSL protocols and cipher settings to apply for received SSL requests">
+              <!--  “SSL Configuration” -->
+              <div class="form-group form-inline">
+                <label for="enable_ssl" class="col-sm-3 control-label">
+                  Accept SSL Requests
+                </label>
+                <div class="col-md-9">
+                  <toggle-switch name="enable_ssl" ng-disabled="_loading" ng-model="model.enable_ssl" on-label="On" off-label="Off">
+                  </toggle-switch>
+                </div>
+              </div>
+              <!-- //  “SSL Configuration” -->
+              <!-- Attached SSL Certificate-->
+              <div class="form-group" ng-class="{'has-error': editForm.sslCertId.$invalid && editForm.sslCertId.$dirty}">
+                <label for="sslCertId" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Select SSL certificate which should be associated with the domain">SSL Certificate</label>
+                <div class="col-sm-9">
+                  <select class="form-control" ng-disabled="_loading" ng-model="model.ssl_cert_id" id="ssl_cert_id" name="sslCertId" ng-options="obj.id as obj.cert_name for obj in SSL_certs | filter :{account_id:model.account_id}" style="float: left;">
+                    <option value="">Default RevAPM SSL Certificate</option>
+                  </select>
+                  <a ui-sref="index.webApp.ssl_certs" class="btn btn-primary pull-right"><i class="fa fa-lock"></i> Manage SSL Certificates</a>
+                </div>
+              </div>
+              <!-- -->
+              <div class="ssl-certificate-configuration">
+                <div class="panel panel-default ">
+                  <div class="panel-body form">
+                    <div class="col-md-5">
+                      <div class="form-group ">
+                        <div class="col-sm-12">
+                          <div class="checkbox">
+                            <label>
+                              <input type="radio" ng-model="isCustomSSL_conf_profile" ng-value="false"> Predefined SSL Configuration Profile
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group form-inline" ng-class="{'has-error': editForm.sslConfProfile.$invalid && editForm.sslConfProfile.$dirty}">
+                        <select class="form-control col-sm-offset-3" ng-disabled="_loading|| (isCustomSSL_conf_profile == true)" ng-model="model.ssl_conf_profile" id="ssl_conf_profile" name="sslConfProfile" ng-options="obj.id as obj.profile_name for obj in SSL_conf_profiles" style="float: left;" required>
+                        </select>
+                        <div class="error-messages" ng-messages="editForm.sslConfProfile.$error" role="alert" ng-messages-multiple>
+                          <div ng-messages-include="parts/shared/error-messages.html"></div>
+                        </div>
+                      </div>
+                      <div class="form-group ">
+                        <div class="col-sm-12">
+                          <div class="checkbox">
+                            <label>
+                              <input type="radio" ng-model="isCustomSSL_conf_profile" ng-value="true"> Custom SSL Configuration Profile
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- Right section -->
+                    <div class="col-md-7">
+                      <div class="form-group" ng-disabled="isCustomSSL_conf_profile" ng-class="{'has-error': editForm.sslProtocols.$invalid && editForm.sslProtocols.$dirty}">
+                        <label for="sslProtocols" popover-append-to-body="{{true}}" class="col-sm-12" popover-trigger="mouseenter" uib-popover="Allowed SSL protocols">
+                          Allowed SSL Protocols <small>(in Nginx format)</small></label>
+                        <div class="col-sm-12">
+                          <input type="text" class="form-control" ng-disabled="!isCustomSSL_conf_profile" ng-model="model.ssl_protocols" id="ssl_protocols" name="sslProtocols" ng-maxlength="200" placeholder="SSL Protocols" required>
+                          <div class="error-messages" ng-messages="editForm.sslProtocols.$error" role="alert" ng-messages-multiple>
+                            <div ng-messages-include="parts/shared/error-messages.html"></div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group" ng-class="{'has-error': editForm.sslCiphers.$invalid && editForm.sslCiphers.$dirty}">
+                        <label for="sslCiphers" popover-append-to-body="{{true}}" class="col-sm-12" popover-trigger="mouseenter" uib-popover="Allowed SSL ciphers">
+                          Allowed SSL Ciphers
+                          <small>(in Nginx format)</small></label>
+                        <div class="col-sm-12">
+                          <input type="text" class="form-control" ng-disabled="!isCustomSSL_conf_profile" ng-model="model.ssl_ciphers" id="ssl_ciphers" name="sslCiphers" ng-maxlength="200" placeholder="SSL Ciphers" required>
+                          <div class="error-messages" ng-messages="editForm.sslCiphers.$error" role="alert" ng-messages-multiple>
+                            <div ng-messages-include="parts/shared/error-messages.html"></div>
+                          </div>
+                        </div>
+                      </div>
                       <div class="checkbox">
-                        <label>
-                          <input type="radio" ng-model="isCustomSSL_conf_profile" ng-value="false"> Predefined SSL Configuration Profile
-                        </label>
+                        <label popover-trigger="mouseenter">
+                          <input type="checkbox" ng-disabled="!isCustomSSL_conf_profile" ng-model="model.ssl_prefer_server_ciphers" id="ssl_prefer_server_ciphers" placeholder="Prefer Server-Side Ciphers"><strong> Prefer Server-Side Ciphers</strong></label>
                       </div>
                     </div>
-                  </div>
-                  <div class="form-group form-inline" ng-class="{'has-error': editForm.sslConfProfile.$invalid && editForm.sslConfProfile.$dirty}">
-                    <select class="form-control col-sm-offset-3" ng-disabled="_loading|| (isCustomSSL_conf_profile == true)" ng-model="model.ssl_conf_profile" id="ssl_conf_profile" name="sslConfProfile" ng-options="obj.id as obj.profile_name for obj in SSL_conf_profiles" style="float: left;" required>
-                    </select>
-                    <div class="error-messages" ng-messages="editForm.sslConfProfile.$error" role="alert" ng-messages-multiple>
-                      <div ng-messages-include="parts/shared/error-messages.html"></div>
-                    </div>
-                  </div>
-                  <div class="form-group ">
-                    <div class="col-sm-12">
-                      <div class="checkbox">
-                        <label>
-                          <input type="radio" ng-model="isCustomSSL_conf_profile" ng-value="true"> Custom SSL Configuration Profile
-                        </label>
-                      </div>
-                    </div>
+                    <!-- // Right section-->
                   </div>
                 </div>
-                <!-- Right section -->
-                <div class="col-md-7">
-                  <div class="form-group" ng-disabled="isCustomSSL_conf_profile" ng-class="{'has-error': editForm.sslProtocols.$invalid && editForm.sslProtocols.$dirty}">
-                    <label for="sslProtocols" popover-append-to-body="{{true}}" class="col-sm-12" popover-trigger="mouseenter" uib-popover="Allowed SSL protocols">
-                      Allowed SSL Protocols <small>(in Nginx format)</small></label>
-                    <div class="col-sm-12">
-                      <input type="text" class="form-control" ng-disabled="!isCustomSSL_conf_profile" ng-model="model.ssl_protocols" id="ssl_protocols" name="sslProtocols" ng-maxlength="200" placeholder="SSL Protocols" required>
-                      <div class="error-messages" ng-messages="editForm.sslProtocols.$error" role="alert" ng-messages-multiple>
-                        <div ng-messages-include="parts/shared/error-messages.html"></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group" ng-class="{'has-error': editForm.sslCiphers.$invalid && editForm.sslCiphers.$dirty}">
-                    <label for="sslCiphers" popover-append-to-body="{{true}}" class="col-sm-12" popover-trigger="mouseenter" uib-popover="Allowed SSL ciphers">
-                      Allowed SSL Ciphers
-                      <small>(in Nginx format)</small></label>
-                    <div class="col-sm-12">
-                      <input type="text" class="form-control" ng-disabled="!isCustomSSL_conf_profile" ng-model="model.ssl_ciphers" id="ssl_ciphers" name="sslCiphers" ng-maxlength="200" placeholder="SSL Ciphers" required>
-                      <div class="error-messages" ng-messages="editForm.sslCiphers.$error" role="alert" ng-messages-multiple>
-                        <div ng-messages-include="parts/shared/error-messages.html"></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="checkbox">
-                    <label popover-trigger="mouseenter">
-                      <input type="checkbox" ng-disabled="!isCustomSSL_conf_profile" ng-model="model.ssl_prefer_server_ciphers" id="ssl_prefer_server_ciphers" placeholder="Prefer Server-Side Ciphers"><strong> Prefer Server-Side Ciphers</strong></label>
-                  </div>
+              </div>
+              <hr>
+            </uib-tab>
+            <uib-tab index="4" heading="Custom VCL Rules" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="This tab allows Varnish VCL experts to configure custom VCL rules to be applied for the domain configuration">
+              <!--  “Custom VCL Rules” -->
+              <div class="form-group form-inline">
+                <label for="customVcl" class="col-sm-3 control-label" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enables you to configure custom Varnish Configuration Language (VCL) rules to be executed by RevAPM edge proxy servers. The feature requires that “Edge Caching” switch will be in ON position">
+                  Custom VCL Rules
+                </label>
+                <div class="col-md-9">
+                  <toggle-switch name="customVcl" is-disabled="_loading || model.rev_component_bp.enable_cache==false" ng-model="model.rev_component_bp.custom_vcl.enabled" on-label="On" off-label="Off">
+                  </toggle-switch>
                 </div>
-                <!-- // Right section-->
               </div>
-            </div>
-          </div>
-          <hr>
-          <!--  Third-party integrtions -->
-          <div class="form-group" ng-class="{'has-error': editForm.bttKey.$invalid && editForm.bttKey.$dirty}">
-            <label for="third-party-integrations" class="col-sm-3 control-label">
-              Blue Triangle Tech. Key
-            </label>
-            <div class="col-md-9">
-              <input type="text" class="form-control" ng-disabled="_loading" name="bttKey" ng-model="model.btt_key" placeholder="BTT API key for the domain" ng-pattern="/^[0-9a-fA-F]{32}$/">
-              <div class="error-messages" ng-messages="editForm.bttKey.$error" role="alert" ng-messages-multiple>
-                <div ng-message="pattern" class="alert-text alert-text--pattern">The BTT key format is not correct</div>
-                <div ng-messages-include="parts/shared/error-messages.html"></div>
-              </div>
-            </div>
-          </div>
+              <domain-custom-vcl ng-if="model.rev_component_bp.enable_cache&&model.rev_component_bp.custom_vcl.enabled" class="" ng-model="model.rev_component_bp.custom_vcl"></domain-custom-vcl>
+              <!-- //  “Custom VCL Rules” -->
+              <hr>
+            </uib-tab>
+          </uib-tabset>
           <div class="form-group">
             <label class="col-sm-3 control-label">Current Publishing Status</label>
             <div class="col-md-9 control-label" style="text-align:left" interval="DOMAIN_STATUS_REFRESH_INTERVAL_EDIT_FORM" domain-staging-status ng-id="modelInfo.status_domain_id"></div>
@@ -464,7 +492,7 @@
               <button class="btn btn-success" ng-disabled="disableSubmit(model, true) || editForm.$invalid" ng-click="updateDomain(model)" uib-tooltip="{{domain_update_help_info}}">
                 <i class="glyphicon" ng-class="_loading ? 'glyphicon-refresh spin':'glyphicon-file'"></i>&nbsp; Update
               </button>
-              <button class="btn btn-success" ng-disabled="disableSubmit(model, true)|| editForm.$invalid" ng-click="publishDomain(model)"  uib-tooltip="{{domain_publish_help_info}}">
+              <button class="btn btn-success" ng-disabled="disableSubmit(model, true)|| editForm.$invalid" ng-click="publishDomain(model)" uib-tooltip="{{domain_publish_help_info}}">
                 <i class="glyphicon" ng-class="_loading ? 'glyphicon-refresh spin':'glyphicon-ok'"></i>&nbsp; Publish
               </button>
             </div>

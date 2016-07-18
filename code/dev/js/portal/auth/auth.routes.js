@@ -18,12 +18,13 @@
           }
         }
       })
-      .state('index.restore', {
+      .state('restore', {
         url: '/password/reset/:token',
         views: {
-          page: {
+          layout: {
             controller: 'PasswordRestoreController',
-            templateUrl: 'parts/auth/reset-password.html'
+            templateUrl: 'parts/auth/page-reset-password.html',
+            controllerAs: '$ctrl'
           }
         }
       });

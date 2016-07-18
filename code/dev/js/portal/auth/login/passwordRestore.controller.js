@@ -7,18 +7,17 @@
 
   /*@ngInject*/
   function PasswordRestoreController($scope, User, $stateParams, AlertService, $timeout, $state) {
+    var $ctrl = this;
+    var token = $stateParams.token;
 
-    $scope.alerts = AlertService;
-    $scope.token = $stateParams.token;
+    this.password = '';
+    this.passwordRepeat = '';
+    this.loading = false;
 
-    $scope.password = '';
-    $scope.passwordRepeat = '';
-    $scope.loading = false;
-
-    $scope.reset = function() {
+    this.reset = function(formData) {
       AlertService.clear();
-      $scope.loading = true;
-      User.resetPassword($scope.token, $scope.password)
+      $ctrl.loading = true;
+      User.resetPassword(token, formData.password)
         .then(function(data) {
           AlertService.success(data);
           $timeout(function() {
@@ -27,7 +26,7 @@
         })
         .catch(AlertService.danger)
         .finally(function() {
-          $scope.loading = false;
+          $ctrl.loading = false;
         });
     };
   }
