@@ -212,7 +212,7 @@
       SUBSCRIPTION_STATES: {
         'trialing': 'Trialing',
         'trial_ended': 'Trial Ended',
-        'Active': 'active',
+        'active': 'Active',
         'soft_failure': 'Soft Failure',
         'past_due': 'Past Due',
         'canceled': 'Canceled',

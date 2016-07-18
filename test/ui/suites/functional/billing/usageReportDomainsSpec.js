@@ -69,7 +69,7 @@ describe('Functional', function () {
           // console.log( 'sent ' + sent );
           var unit = parseInt( config.get( 'portal.usageReport.sent_unit' ) );
           var sentEst = totalHits * unit / 1024 / 1024 / 1024;
-          expect(sentEst.toFixed(3)).toEqual(sent);
+          expect(sentEst.toFixed(1)).toEqual(sent);
         });
 
     });
@@ -84,7 +84,7 @@ describe('Functional', function () {
           // console.log( 'received ' + received );
           var unit = parseInt( config.get( 'portal.usageReport.received_unit' ) );
           var receivedEst = totalHits * unit / 1024 / 1024 / 1024;
-          expect(receivedEst.toFixed(3)).toEqual(received);
+          expect(receivedEst.toFixed(2)).toEqual(received);
         });
     });
 
