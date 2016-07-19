@@ -4,7 +4,6 @@
       <h2>Top Objects Reports</h2>
     </div>
   </div>
-
   <div class="row">
     <div class="col-md-12">
       <div class="panel panel-default">
@@ -12,7 +11,6 @@
           <div class="row">
             <div class="col-md-12">
               <div class="pull-left">
-
                 <form class="form-inline">
                   <div class="form-group">
                     <div app-select ng-model="application" on-select="reloadDirs()"></div>
@@ -21,133 +19,63 @@
                     <time-note-display></time-note-display>
                   </div>
                 </form>
-
               </div>
             </div>
           </div>
         </div>
         <div class="panel-body">
-
-          <div class="row">
-            <div class="col-lg-12">
-              <div mobile-top-objects
-                   ng-account="account"
-                   ng-app="application.app_id"
-                   fl-oses="oses"
-                   fl-devices="devices"
-                   fl-countries="countries"
-                   fl-operators="operators"
-                   fl-networks="networks"
-                   fl-disabled="_loading || !application"
-                   heading="Top Most Requested Objects"></div>
-            </div>
-          </div>
-          <hr>
-
-          <div class="row">
-            <div class="col-lg-12">
-              <div mobile-top-objects-time
-                   ng-account="account"
-                   ng-app="application.app_id"
-                   fl-oses="oses"
-                   fl-devices="devices"
-                   fl-countries="countries"
-                   fl-operators="operators"
-                   fl-networks="networks"
-                   fl-disabled="_loading || !application"
-                   report-type="full"
-                   heading="Top Objects With Slowest Response Time"></div>
-            </div>
-          </div>
-          <hr>
-
-          <div class="row">
-            <div class="col-lg-12">
-              <div mobile-top-objects-time
-                   ng-account="account"
-                   ng-app="application.app_id"
-                   fl-oses="oses"
-                   fl-devices="devices"
-                   fl-countries="countries"
-                   fl-operators="operators"
-                   fl-networks="networks"
-                   fl-disabled="_loading || !application"
-                   report-type="first_byte"
-                   heading="Top Objects With Slowest First Byte Time"></div>
-            </div>
-          </div>
-          <hr>
-
-          <div class="row">
-            <div class="col-lg-12">
-              <div mobile-top-objects
-                   ng-account="account"
-                   ng-app="application.app_id"
-                   fl-oses="oses"
-                   fl-devices="devices"
-                   fl-countries="countries"
-                   fl-operators="operators"
-                   fl-networks="networks"
-                   fl-disabled="_loading || !application"
-                   report-type="not_found"
-                   heading="Top Objects With 404 Responses"></div>
-            </div>
-          </div>
-          <hr>
-
-          <div class="row">
-            <div class="col-lg-12">
-              <div mobile-top-objects
-                   ng-account="account"
-                   ng-app="application.app_id"
-                   fl-oses="oses"
-                   fl-devices="devices"
-                   fl-countries="countries"
-                   fl-operators="operators"
-                   fl-networks="networks"
-                   fl-disabled="_loading || !application"
-                   report-type="cache_missed"
-                   heading="Top Objects With Cache Misses"></div>
-            </div>
-          </div>
-          <hr>
-
-          <div class="row">
-            <div class="col-lg-12">
-              <div mobile-top-objects
-                   ng-account="account"
-                   ng-app="application.app_id"
-                   fl-oses="oses"
-                   fl-devices="devices"
-                   fl-countries="countries"
-                   fl-operators="operators"
-                   fl-networks="networks"
-                   fl-disabled="_loading || !application"
-                   report-type="failed"
-                   heading="Top Objects With Completion Failures"></div>
-            </div>
-          </div>
-          <hr>
-
-          <div class="row">
-            <div class="col-lg-12">
-              <div mobile-top-objects-5xx
-                   ng-account="account"
-                   ng-app="application.app_id"
-                   fl-oses="oses"
-                   fl-devices="devices"
-                   fl-countries="countries"
-                   fl-operators="operators"
-                   fl-networks="networks"
-                   fl-disabled="_loading || !application"
-                   heading="Top Objects With 5XX Error Codes"></div>
-            </div>
-          </div>
-          <hr>
-
+          <uib-tabset active="mobileTopObjects" justified="false" id="topObjectsReportsTabs">
+            <uib-tab index="mobileTopObjects" heading="Top Most Requested Objects" select="isOpened['mobileTopObjects']=true">
+              <div class="row">
+                <div class="col-md-12">
+                  <div ng-if="isOpened['mobileTopObjects']==true" mobile-top-objects ng-account="account" ng-app="application.app_id" fl-oses="oses" fl-devices="devices" fl-countries="countries" fl-operators="operators" fl-networks="networks" fl-disabled="_loading || !application" heading="Top Most Requested Objects"></div>
+                </div>
+              </div>
+            </uib-tab>
+            <uib-tab index="mobileTopObjectsTimeFull" heading="Top Objects With Slowest Response Time" select="isOpened['mobileTopObjectsTimeFull']=true">
+              <div class="row">
+                <div class="col-md-12">
+                  <div ng-if="isOpened['mobileTopObjectsTimeFull']==true" mobile-top-objects-time ng-account="account" ng-app="application.app_id" fl-oses="oses" fl-devices="devices" fl-countries="countries" fl-operators="operators" fl-networks="networks" fl-disabled="_loading || !application" report-type="full" heading="Top Objects With Slowest Response Time"></div>
+                </div>
+              </div>
+            </uib-tab>
+            <uib-tab index="mobileTopObjectsTimeFirstByte" heading="Top Objects With Slowest First Byte Time" select="isOpened['mobileTopObjectsTimeFirstByte']=true">
+              <div class="row">
+                <div class="col-md-12">
+                  <div ng-if="isOpened['mobileTopObjectsTimeFirstByte']==true" mobile-top-objects-time ng-account="account" ng-app="application.app_id" fl-oses="oses" fl-devices="devices" fl-countries="countries" fl-operators="operators" fl-networks="networks" fl-disabled="_loading || !application" report-type="first_byte" heading="Top Objects With Slowest First Byte Time"></div>
+                </div>
+              </div>
+            </uib-tab>
+            <uib-tab index="mobileTopObjectsNotFound" heading="Top Objects With 404 Responses" select="isOpened['mobileTopObjectsNotFound']=true">
+              <div class="row">
+                <div class="col-md-12">
+                  <div ng-if="isOpened['mobileTopObjectsNotFound']==true" mobile-top-objects ng-account="account" ng-app="application.app_id" fl-oses="oses" fl-devices="devices" fl-countries="countries" fl-operators="operators" fl-networks="networks" fl-disabled="_loading || !application" report-type="not_found" heading="Top Objects With 404 Responses"></div>
+                </div>
+              </div>
+            </uib-tab>
+            <uib-tab index="mobileTopObjectsCacheMissed" heading="Top Objects With Cache Misses" select="isOpened['mobileTopObjectsCacheMissed']=true">
+              <div class="row">
+                <div class="col-md-12">
+                  <div ng-if="isOpened['mobileTopObjectsCacheMissed']==true" mobile-top-objects ng-account="account" ng-app="application.app_id" fl-oses="oses" fl-devices="devices" fl-countries="countries" fl-operators="operators" fl-networks="networks" fl-disabled="_loading || !application" report-type="cache_missed" heading="Top Objects With Cache Misses"></div>
+                </div>
+              </div>
+            </uib-tab>
+            <uib-tab index="mobileTopObjectsFailed" heading="Top Objects With Completion Failures" select="isOpened['mobileTopObjectsFailed']=true">
+              <div class="row">
+                <div class="col-md-12">
+                  <div ng-if="isOpened['mobileTopObjectsFailed']==true" mobile-top-objects ng-account="account" ng-app="application.app_id" fl-oses="oses" fl-devices="devices" fl-countries="countries" fl-operators="operators" fl-networks="networks" fl-disabled="_loading || !application" report-type="failed" heading="Top Objects With Completion Failures"></div>
+                </div>
+              </div>
+            </uib-tab>
+            <uib-tab index="mobileTopObjects5xx" heading="Top Objects With 5XX Error Codes" select="isOpened['mobileTopObjects5xx']=true">
+              <div class="row">
+                <div class="col-md-12">
+                  <div ng-if="isOpened['mobileTopObjects5xx']==true" mobile-top-objects-5xx ng-account="account" ng-app="application.app_id" fl-oses="oses" fl-devices="devices" fl-countries="countries" fl-operators="operators" fl-networks="networks" fl-disabled="_loading || !application" heading="Top Objects With 5XX Error Codes"></div>
+                </div>
+              </div>
+          </uib-tabset>
         </div>
       </div>
     </div>
   </div>
-
 </div>
