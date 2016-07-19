@@ -59,7 +59,7 @@
       DNSZones.query().$promise.then(function(data) {
         data.forEach(function(item) {
           var name_ = item.zone + '(DNS Zone)';
-          service.data.push({ id: item.id, name: name_, targetType: 'dnszones' });
+          service.data.push({ id: item.id, name: name_, targetType: 'dnszone' });
         });
       });
       // TODO: not released auditlog
