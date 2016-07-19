@@ -1,0 +1,7 @@
+<div class="activity-target-select">
+  <!-- <label class="activity-target-select--label">Activity Target</label> -->
+  <select class="activity-target-select--select form-control" ng-model="$ctrl.activityTarget"
+  ng-options="item as item.name for item in $ctrl.activityTargetList | filter : $ctrl.targetType">
+    <option value="">All Activity Target</option>
+  </select>
+</div>

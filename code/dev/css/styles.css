@@ -1582,3 +1582,9 @@ form.dns-zone-records--new-form input[name="subdomain"] {
     margin-right: 0;
   }
 }
+.filter-activity-log select.form-control {
+  max-width: none;
+}
+.filter-activity-log input.form-control {
+  max-width: none;
+}

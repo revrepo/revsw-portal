@@ -1,0 +1,48 @@
+<form name="filterActivityLogForm" class="filter-activity-log" ng-submit="$ctrl.onSetFilter($ctrl.newFilterState)">
+  <div class="form-horizontal col-sm-12">
+    <div class="col-sm-12 ">
+      <label class=" col-xs-12 col-sm-4 col-md-4">Who performed an operation</label>
+      <div class="col-xs-12 col-sm-8 col-md-8">
+
+
+        <div class="row  ">
+          <activity-who-performed-select style="margin-left: 10px;"class="" ng-model="$ctrl.newFilterState.whoPerformed"></activity-who-performed-select>
+        </div>
+
+      </div>
+    </div>
+    <!-- Filter By Action Taker -->
+    <div class="col-sm-12">
+      <label class="col-sm-12"> On what an operation was performed
+      </label>
+      <div class="row form-group">
+        <div class="col-xs-12 col-sm-12 col-md-4">
+          <div class="date-picker-wrapper">
+            <input date-range-picker="" ng-model="$ctrl.datePicker.date" options="::$ctrl.datePicker.options" min="$ctrl.datePicker.minDate" max="$ctrl.datePicker.maxDate" class="form-control date-picker select2" type="text" readonly/>
+            <!-- TODO: fix show data info-->
+            <!--       <input ng-show="$ctrl.datePicker.overlay.show" ng-focus="$ctrl.handlers.overlayClickHandler()" ng-model="$ctrl.datePicker.overlay.val" class="over form-control select2" type="text" /> -->
+          </div>
+        </div>
+        <div class=" col-xs-12 col-sm-12 col-md-4">
+          <select class="form-control" name="targetType" ng-options="key as value for (key , value) in $ctrl.targetTypeList" ng-model="$ctrl.newFilterState.target_type">
+            <option value="">All Target Types</option>
+          </select>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-4">
+          <select class="form-control" name="targetType" ng-options="key as value for (key , value) in $ctrl.activityTypeList" ng-model="$ctrl.newFilterState.activity_type">
+            <option value="">All Activity Types</option>
+          </select>
+        </div>
+      </div>
+      <div class="row form-group">
+        <div class="col-xs-12 col-sm-12 col-md-8">
+          <activity-target-select target-type="{{$ctrl.newFilterState.target_type}}" ng-model="$ctrl.newFilterState.activityTarget"></activity-target-select>
+        </div>
+        <div class=" col-xs-6 col-md-4 form-horizontal  ">
+          <button class="btn  col-xs-6 btn-primary" type="submit">Filter</button>
+          <button type="button" class="btn  col-xs-6 btn-default" ng-click="$ctrl.onCancel()">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
