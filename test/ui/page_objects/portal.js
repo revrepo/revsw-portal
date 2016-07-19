@@ -75,6 +75,9 @@ var SSLCertListPage = require('./sslCerts/listPage');
 var SSLCertAddPage = require('./sslCerts/addPage');
 var SSLCertEditPage = require('./sslCerts/editPage');
 
+var SSLNamesListPage = require('./sslNames/listPage');
+var SSLNamesAddPage = require('./sslNames/addPage');
+
 var PlansPage = require('./signUp/plansPage');
 var SignUpPage = require('./signUp/signUpPage');
 
@@ -153,7 +156,10 @@ var Portal = {
     addPage: SSLCertAddPage,
     editPage: SSLCertEditPage
   },
-
+  sslNames: {
+    listPage: SSLNamesListPage,
+    addPage: SSLNamesAddPage
+  },
   // ## Authentication Helper methods
 
   /**
@@ -362,7 +368,7 @@ var Portal = {
       .goTo(Constants.header.appMenu.ACCOUNT_SETTINGS,
       Constants.sideBar.menu.USERS);
   },
-
+  
   /**
    * ### Portal.goToMobileApps()
    *
@@ -464,6 +470,20 @@ var Portal = {
             Constants.sideBar.web.SSL_CERTIFICATES);
   },
 
+  /**
+   * ### Portal.goToSSLNames()
+   *
+   * Navigation helper method that executes all steps to navigate to `SSL Names
+   * List` page
+   *
+   * @returns {Promise}
+   */
+  goToSSLNames: function () {
+    return this
+        .goTo(Constants.header.appMenu.WEB,
+            Constants.sideBar.web.SSL_NAMES);
+  },
+  
   // ## User Helper methods
 
   /**
