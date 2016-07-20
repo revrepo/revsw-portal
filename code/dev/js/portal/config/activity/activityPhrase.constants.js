@@ -36,12 +36,11 @@
         'domain': 'Domain',
         'purge': 'Cache',
         'apikey': 'API Key',
-        'team': 'Team',
         'app': 'App',
         'sslcert': 'SSL Certificate',
         'logshippingjob': 'Log Shipping Job',
         'sslname': 'SSL Name',
-        'object': 'Object',
+//        'object': 'Object',
         'dnszone':'DNS Zone',
         'dnsrecord': 'DNS Zone Record'
       },

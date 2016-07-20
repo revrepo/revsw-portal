@@ -1,7 +1,7 @@
 <form name="filterActivityLogForm" class="filter-activity-log" ng-submit="$ctrl.onSetFilter($ctrl.newFilterState)">
   <div class="form-horizontal col-sm-12">
     <div class="col-sm-12 ">
-      <label class=" col-xs-12 col-sm-4 col-md-4">Who performed an operation</label>
+      <label class=" col-xs-12 col-sm-4 col-md-4">Action Taker</label>
       <div class="col-xs-12 col-sm-8 col-md-8">
         <div class="row  ">
           <activity-who-performed-select style="margin-left: 10px;" ng-model="$ctrl.newFilterState.whoPerformed"></activity-who-performed-select>
@@ -10,7 +10,7 @@
     </div>
     <!-- Filter By Action Taker -->
     <div class="col-sm-12">
-      <label class="col-sm-12"> On what an operation was performed
+      <label class="col-sm-12"> Action Target Object
       </label>
       <div class="row form-group">
         <div class="col-xs-12 col-sm-12 col-md-4">
