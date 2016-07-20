@@ -1074,6 +1074,63 @@ var Portal = {
   },
 
   /**
+   * ### Portal.createSSLName(sslName)
+   *
+   * Helper method that executes all steps required to create
+   * new SSL Name in the Portal
+   *
+   * @param {Object} sslName, data applying the schema defined in
+   * `DataProvider.generateSSLNameData()`
+   *
+   * @returns {Object} Promise
+   */
+  createSSLName: function (sslName) {
+    var me = this;
+    return browser.getCurrentUrl().then(function (initialUrl) {
+      me.goToSSLNames();
+      Portal.sslNames.listPage.clickAddNewSSLName();
+      Portal.sslNames.addPage.form.fill(sslName);
+      Portal.sslNames.addPage.clickAddSSLName();
+      me.dialog.clickOk();
+      me.dialog.clickCancel();
+      browser.getCurrentUrl().then(function (currentUrl) {
+        if (initialUrl !== currentUrl) {
+          browser.get(initialUrl);
+        }
+      });
+    });
+  },
+
+  /**
+   * ### Portal.deleteSSLName()
+   *
+   * Helper method that executes all steps required to delete a SSL Name from
+   * Portal app.
+   *
+   * @param {Object} sslName , data applying the schema defined in
+   * `DataProvider.generateSSLNameData()`
+   *
+   * @returns {Object} Promise
+   */
+  deleteSSLName: function (sslName) {
+    var me = this;
+    return browser.getCurrentUrl().then(function (initialUrl) {
+      me.goToSSLNames();
+      me.sslNames.listPage.searcher.clearSearchCriteria();
+      me.sslNames.listPage.searcher.setSearchCriteria(sslName.domainName);
+      me.sslNames.listPage.table
+          .getFirstRow()
+          .clickDelete();
+      me.dialog.clickOk();
+      browser.getCurrentUrl().then(function (currentUrl) {
+        if (initialUrl !== currentUrl) {
+          browser.get(initialUrl);
+        }
+      });
+    });
+  },
+
+  /**
    * Timeout of for `waiter` functions/methods
    */
   waitTimeout: 30000, // 30 secs

@@ -18,6 +18,8 @@
 
 // # Add SSL Name Page Object
 
+var Dialog = require('.././common/dialog');
+
 // Requiring `ssl-name form` component page object
 var SSLNameForm = require('./form');
 
@@ -46,6 +48,8 @@ var AddSSLName = {
       }
     }
   },
+
+  dialog: Dialog,
 
   // `Add SSL Name` Page is compound mainly by a form. This property makes
   // reference to the SSLNameForm Page Object to interact with it.
@@ -188,7 +192,10 @@ var AddSSLName = {
    */
   createSSLName: function (sslName) {
     this.form.fill(sslName);
-    return this.clickCreateSSLName();
+    var me = this;
+    return this.clickAddSSLName().then(function () {
+      me.dialog.clickOk();
+    });
   }
 };
 

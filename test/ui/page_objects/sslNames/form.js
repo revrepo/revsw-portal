@@ -68,7 +68,7 @@ var SSLNameForm = {
    * @returns {Object} Selenium WebDriver Element
    */
   getURLVerificationRadioButton: function () {
-    return element(by.model(this.locators.radioButtons.urlVerification.css));
+    return element(by.css(this.locators.radioButtons.urlVerification.css));
   },
 
   /**
@@ -80,7 +80,7 @@ var SSLNameForm = {
    * @returns {Object} Selenium WebDriver Element
    */
   getDNSVerificationRadioButton: function () {
-    return element(by.model(this.locators.radioButtons.urlVerification.css));
+    return element(by.css(this.locators.radioButtons.dnsVerification.css));
   },
 
   /**
@@ -92,7 +92,7 @@ var SSLNameForm = {
    * @returns {Object} Selenium WebDriver Element
    */
   getEmailVerificationRadioButton: function () {
-    return element(by.model(this.locators.radioButtons.emailVerification.css));
+    return element(by.css(this.locators.radioButtons.emailVerification.css));
   },
 
   /**
@@ -209,9 +209,9 @@ var SSLNameForm = {
     return this
         .getDomainNameNameTxtIn()
         .isPresent();
-  }
+  },
 
-/*  /!**
+  /**
    * ### SSLNameForm.fill()
    *
    * Helper method that fills the SSL Name Form given specified SSL Name
@@ -220,10 +220,28 @@ var SSLNameForm = {
    * @param {object} sslName, user data with the following schema
    *
    *    {
+   *      domainName: String,
+   *      account: String,
+   *      verificationMethod: String
    *    }
-   *!/
+   */
   fill: function (sslName) {
-  }*/
+    if (sslName.domainName !== undefined) {
+      this.setDomainName(sslName.domainName);
+    }
+
+    if (sslName.verificationMethod === 'DNS') {
+      this.clickDNSVerificationRadio();
+    }else if (sslName.verificationMethod === 'Email') {
+      this.clickEmailVerificationRadio();
+    }else if (sslName.verificationMethod === 'URL') {
+      this.clickURLVerificationRadio();
+    }
+
+    if (sslName.account !== undefined) {
+      this.setAccount(sslName.account);
+    }
+  }
 
 };
 

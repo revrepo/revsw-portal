@@ -19,7 +19,8 @@
 var config = require('config');
 var Portal = require('./../../../page_objects/portal');
 
-xdescribe('Smoke', function () {    //TODO: Since we need more than 25 items in the list to show pagination
+xdescribe('Smoke', function () {    //TODO: Since we need more than 25 items
+                                    // in the list to show pagination
                                     //I will temorarly disable this
 
     // Defining set of users for which all below tests will be run

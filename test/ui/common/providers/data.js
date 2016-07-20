@@ -676,8 +676,27 @@ var DataProvider = {
         comment: 'Comment ' + name
       }
     }
+  },
 
+  generateSSLNameData: function (data) {
+    var timestamp = Date.now();
+    var name = 'qa' + timestamp + '.revsw.com';
+
+    if (data){
+      return {
+        domainName: (data.domainName === undefined) ? name : data.domainName,
+        account: (data.account === undefined) ? ['Portal UI QA Company'] : data.account,
+        verificationMethod: (data.verificationMethod === undefined) ? 'DNS' : data.verificationMethod
+      }
+    } else {
+      return {
+        domainName: name,
+        account: ['Portal UI QA Company'],
+        verificationMethod: 'DNS'
+      }
+    }
   }
+
 };
 
 module.exports = DataProvider;
