@@ -373,7 +373,6 @@
               </div>
               <hr>
             </uib-tab>
-
             <uib-tab index="3" heading="SSL Configuration" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Use the tab to enable/disable SSL support for the domain and manage which SSL certificate to use and which SSL protocols and cipher settings to apply for received SSL requests">
               <!--  “SSL Configuration” -->
               <div class="form-group form-inline">
@@ -474,6 +473,10 @@
               </div>
               <domain-custom-vcl ng-if="model.rev_component_bp.enable_cache&&model.rev_component_bp.custom_vcl.enabled" class="" ng-model="model.rev_component_bp.custom_vcl"></domain-custom-vcl>
               <!-- //  “Custom VCL Rules” -->
+              <hr>
+            </uib-tab>
+            <uib-tab index="5" heading="LUA Scripting" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="This section allows you to enhance the RevAPM service by running custom Lua code snippets on RevAPM proxies">
+              <domain-lua-scripting class="form-group" ng-model="model"></domain-lua-scripting>
               <hr>
             </uib-tab>
           </uib-tabset>
