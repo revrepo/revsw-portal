@@ -352,6 +352,9 @@
        * @private
        */
       $scope._checkPagination = function() {
+        if(!$scope.filteredRecords){
+          return;
+        }
         if ($scope.filteredRecords.length < ($scope.filter.limit + $scope.filter.skip)) {
           $scope.page.hasNextPage = false;
         } else {
