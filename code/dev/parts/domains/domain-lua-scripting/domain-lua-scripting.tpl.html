@@ -16,7 +16,7 @@
   <div class="domain-lua-scripting--block-bp col-sm-12">
     <div class="form-group">
       <label for="bpLuaEnableAll" class="col-sm-3 control-label" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enable or disable at once all Lua scripts executed on RevAPM edge proxies for the domain">
-        Enable LUA Scripting On Edge (Last Mile) Proxies
+        Enable Lua Scripting On Edge (Last Mile) Proxies
       </label>
       <div class="col-md-9">
         <toggle-switch name="bpLuaEnableAll" is-disabled="_loading" ng-model="$ctrl.domain.bp_lua_enable_all" on-label="On" off-label="Off">
@@ -34,8 +34,8 @@
               <i class="glyphicon glyphicon-chevron-down"></i>
             </a>
           </span>
-        <span ng-click="$ctrl.onAddNewItemBP()" class="btn btn-primary btn-sm pull-right" title="Add New LUA Block"><i class="glyphicon glyphicon-plus"></i></span>
-        <h4><b>  The Lua scripts executed on Edge (Last Mile) Proxies</b></h4>
+        <span ng-click="$ctrl.onAddNewItemBP()" class="btn btn-primary btn-sm pull-right" title="Add New Lua Block"><i class="glyphicon glyphicon-plus"></i></span>
+        <h4><b>  Lua Scripts Executed On Edge (Last Mile) Proxies</b></h4>
         </div>
       </div>
       <div class="panel-body">
@@ -59,7 +59,7 @@
               </div>
               <div class="pull-right panel-button-right">
                 <!-- remove widget -->
-                <a href="" title="Remove Block" ng-click="$ctrl.onRemoveItemBP($index)">
+                <a href="" title="Remove The Lua Block" ng-click="$ctrl.onRemoveItemBP($index)">
                   <i class="glyphicon glyphicon-remove"></i>
                 </a>
               </div>
@@ -77,7 +77,7 @@
   <div class="domain-lua-scripting--block-co col-sm-12">
     <div class="form-group">
       <label for="coLuaEnableAll" class="col-sm-3 control-label" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enable or disable at once all Lua scripts executed on RevAPM origin (first-mile) proxies">
-        Enable LUA Scripting On Origin (First Mile) Proxies
+        Enable Lua Scripting On Origin (First Mile) Proxies
       </label>
       <div class="col-md-9">
         <toggle-switch name="coLuaEnableAll" is-disabled="_loading" ng-model="$ctrl.domain.co_lua_enable_all" on-label="On" off-label="Off">
@@ -94,8 +94,8 @@
               <i class="glyphicon glyphicon-chevron-down"></i>
             </a>
           </span>
-        <span ng-click="$ctrl.onAddNewItemCO()" class="btn btn-primary btn-sm pull-right" title="Add New LUA Block"><i class="glyphicon glyphicon-plus"></i></span>
-        <h4><b>  The Lua scripts executed on Origin (First Mile) Proxies</b></h4>
+        <span ng-click="$ctrl.onAddNewItemCO()" class="btn btn-primary btn-sm pull-right" title="Add New Lua Block"><i class="glyphicon glyphicon-plus"></i></span>
+        <h4><b>  Lua Scripts Executed On Origin (First Mile) Proxies</b></h4>
       </div>
       <div class="panel-body">
         <div class="panel panel-default domain-lua-scripting--item" ng-repeat="lua_block in $ctrl.domain.co_lua">
@@ -118,7 +118,7 @@
               </div>
               <div class="pull-right panel-button-right">
                 <!-- remove widget -->
-                <a href="" title="Remove Block" ng-click="$ctrl.onRemoveItemCO($index)" ng-if="!editMode">
+                <a href="" title="Remove The Lua Block" ng-click="$ctrl.onRemoveItemCO($index)" ng-if="!editMode">
                   <i class="glyphicon glyphicon-remove"></i>
                 </a>
               </div>
