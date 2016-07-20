@@ -1,0 +1,135 @@
+<div class="domain-lua-scripting form form-horizontal">
+  <div class="domain-lua-scripting--information col-sm-12 col-md-12 col-lg-6">
+    <div class="well panel panel-default">
+      <div class="panel-body">
+        <p>
+          The Lua scripting functionality allows you to code custom Lua snippets to be executed on RevAPM edge or origin proxy servers.
+        </p>
+        <ul>
+          <li>The Lua support is implemented using Nginx module “lua-nginx-module” - please see <a target="_blank" href="https://github.com/openresty/lua-nginx-module"> https://github.com/openresty/lua-nginx-module</a> for additional details</li>
+          <li>Please note that the Lua code is manually reviewed and approved by RevAPM customer support engineers before deploying it in the global network. RevAPM engineers are notified automatically about submitted Lua code changes so there is no need to open a separate support ticket asking to approve the code.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!-- Enable LUA Scripting On Edge (Last Mile) Proxies -->
+  <div class="domain-lua-scripting--block-bp col-sm-12">
+    <div class="form-group">
+      <label for="bpLuaEnableAll" class="col-sm-3 control-label" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enable or disable at once all Lua scripts executed on RevAPM edge proxies for the domain">
+        Enable LUA Scripting On Edge (Last Mile) Proxies
+      </label>
+      <div class="col-md-9">
+        <toggle-switch name="bpLuaEnableAll" is-disabled="_loading" ng-model="$ctrl.domain.bp_lua_enable_all" on-label="On" off-label="Off">
+        </toggle-switch>
+      </div>
+    </div>
+    <div class="panel panel-default domain-lua-scripting--list" ng-if="$ctrl.domain.bp_lua_enable_all">
+      <div class="panel-heading">
+      <div>
+        <span class="pull-left panel-buttons-left">
+            <a class="btn btn-default btn-md " ng-click="$ctrl.onCollapsAllBPLuaBlock()" title="Collapse All Blocks" ng-show="!isCollapsedAll">
+              <i class="glyphicon glyphicon-chevron-up "></i>
+            </a>
+            <a class="btn btn-default btn-md " ng-click="$ctrl.onExpandAllBPLuaBlock()" title="Expand All Blocks">
+              <i class="glyphicon glyphicon-chevron-down"></i>
+            </a>
+          </span>
+        <span ng-click="$ctrl.onAddNewItemBP()" class="btn btn-primary btn-sm pull-right" title="Add New LUA Block"><i class="glyphicon glyphicon-plus"></i></span>
+        <h4><b>  The Lua scripts executed on Edge (Last Mile) Proxies</b></h4>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="panel panel-default domain-lua-scripting--item" ng-repeat="lua_block in $ctrl.domain.bp_lua">
+          <div class="panel-heading">
+            <div>
+              <div class="pull-left panel-buttons-left">
+                <!-- collapse -->
+                <a class="btn btn-default btn-xs" href="" title="Collapse Block" ng-show="!lua_block.$$itemState.isCollapsed" ng-click="lua_block.$$itemState.isCollapsed = !lua_block.$$itemState.isCollapsed">
+                  <i class="glyphicon glyphicon-chevron-up"></i>
+                </a>
+                <!-- expend -->
+                <a class="btn btn-default btn-xs" href="" title="Expand Block" ng-show="lua_block.$$itemState.isCollapsed" ng-click="lua_block.$$itemState.isCollapsed = !lua_block.$$itemState.isCollapsed">
+                  <i class="glyphicon glyphicon-chevron-down"></i>
+                </a>
+                <!--  Block Up  -->
+                <a class="btn btn-default btn-xs" href="" ng-click="$ctrl.onUpItemBP(lua_block)"><i class="glyphicon glyphicon glyphicon-arrow-up " title="Move One Position Up"></i></a>
+                <!--  Block Down  -->
+                <a class="btn btn-default btn-xs" href="" ng-click="$ctrl.onDownItemBP(lua_block)"><i class="glyphicon glyphicon glyphicon-arrow-down" title="Move One Position Down"></i></a>
+                <!-- // -->
+              </div>
+              <div class="pull-right panel-button-right">
+                <!-- remove widget -->
+                <a href="" title="Remove Block" ng-click="$ctrl.onRemoveItemBP($index)">
+                  <i class="glyphicon glyphicon-remove"></i>
+                </a>
+              </div>
+              <div class="panel-title">
+                <strong> {{lua_block.location}}</strong>
+              </div>
+            </div>
+          </div>
+          <domain-lua-code-block ng-show="!lua_block.$$itemState.isCollapsed" class="panel-body" ng-model="lua_block"></domain-lua-code-block>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Enable LUA Scripting On Origin (First Mile) Proxies-->
+  <div class="domain-lua-scripting--block-co col-sm-12">
+    <div class="form-group">
+      <label for="coLuaEnableAll" class="col-sm-3 control-label" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enable or disable at once all Lua scripts executed on RevAPM origin (first-mile) proxies">
+        Enable LUA Scripting On Origin (First Mile) Proxies
+      </label>
+      <div class="col-md-9">
+        <toggle-switch name="coLuaEnableAll" is-disabled="_loading" ng-model="$ctrl.domain.co_lua_enable_all" on-label="On" off-label="Off">
+        </toggle-switch>
+      </div>
+    </div>
+    <div class="panel panel-default domain-lua-scripting--list" ng-if="$ctrl.domain.co_lua_enable_all">
+      <div class="panel-heading">
+        <span class="pull-left panel-buttons-left">
+            <a class="btn btn-default btn-md " ng-click="$ctrl.onCollapsAllCOLuaBlock()" title="Collapse All Blocks" ng-show="!isCollapsedAll">
+              <i class="glyphicon glyphicon-chevron-up "></i>
+            </a>
+            <a class="btn btn-default btn-md " ng-click="$ctrl.onExpandAllCOLuaBlock()" title="Expand All Blocks">
+              <i class="glyphicon glyphicon-chevron-down"></i>
+            </a>
+          </span>
+        <span ng-click="$ctrl.onAddNewItemCO()" class="btn btn-primary btn-sm pull-right" title="Add New LUA Block"><i class="glyphicon glyphicon-plus"></i></span>
+        <h4><b>  The Lua scripts executed on Origin (First Mile) Proxies</b></h4>
+      </div>
+      <div class="panel-body">
+        <div class="panel panel-default domain-lua-scripting--item" ng-repeat="lua_block in $ctrl.domain.co_lua">
+          <div class="panel-heading">
+            <div>
+              <div class="pull-left panel-buttons-left">
+                <!-- collapse -->
+                <a class="btn btn-default btn-xs" href="" title="Collapse Block" ng-show="!lua_block.$$itemState.isCollapsed" ng-click="lua_block.$$itemState.isCollapsed = !lua_block.$$itemState.isCollapsed">
+                  <i class="glyphicon glyphicon-chevron-up"></i>
+                </a>
+                <!-- expend -->
+                <a class="btn btn-default btn-xs" href="" title="Expand Block" ng-show="lua_block.$$itemState.isCollapsed" ng-click="lua_block.$$itemState.isCollapsed = !lua_block.$$itemState.isCollapsed">
+                  <i class="glyphicon glyphicon-chevron-down"></i>
+                </a>
+                <!--  Block Up  -->
+                <a class="btn btn-default btn-xs" href="" ng-click="$ctrl.onUpItemCO(lua_block)"><i class="glyphicon glyphicon glyphicon-arrow-up " title="Move One Position Up"></i></a>
+                <!--  Block Down  -->
+                <a class="btn btn-default btn-xs" href="" ng-click="$ctrl.onDownItemCO(lua_block)"><i class="glyphicon glyphicon glyphicon-arrow-down" title="Move One Position Down"></i></a>
+                <!-- // -->
+              </div>
+              <div class="pull-right panel-button-right">
+                <!-- remove widget -->
+                <a href="" title="Remove Block" ng-click="$ctrl.onRemoveItemCO($index)" ng-if="!editMode">
+                  <i class="glyphicon glyphicon-remove"></i>
+                </a>
+              </div>
+              <div class="panel-title">
+                <strong> {{lua_block.location}}</strong>
+              </div>
+            </div>
+          </div>
+          <domain-lua-code-block ng-show="!lua_block.$$itemState.isCollapsed" class="panel-body" ng-model="lua_block"></domain-lua-code-block>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

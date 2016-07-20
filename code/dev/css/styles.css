@@ -1603,3 +1603,15 @@ form.dns-zone-records--new-form input[name="subdomain"] {
 .filter-activity-log input.form-control {
   max-width: none;
 }
+.domain-lua-scripting--block-bp {
+  padding-right: 20px;
+}
+.domain-lua-scripting--block-co {
+  padding-right: 20px;
+}
+.domain-lua-scripting--list .panel-buttons-left {
+  padding-right: 30px;
+}
+.domain-lua-scripting--item .panel-buttons-left {
+  padding-right: 20px;
+}
