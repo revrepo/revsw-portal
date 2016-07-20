@@ -39,7 +39,7 @@ var SSLNamesList = {
     buttons: {
       addNewSSLName: {
         linkText: 'Add New SSL Name',
-        className: 'btn-success'
+        css: 'i.glyphicon.glyphicon-plus'
       }
     }
   },
@@ -76,7 +76,7 @@ var SSLNamesList = {
    */
   getAddNewSSLNameBtn: function () {
     return element(
-      by.className(this.locators.buttons.addNewSSLName.className));
+      by.css(this.locators.buttons.addNewSSLName.css));
   },
 
   // ## Methods to interact with the SSL Cert List page components
