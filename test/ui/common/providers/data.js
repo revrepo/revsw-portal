@@ -685,13 +685,13 @@ var DataProvider = {
     if (data){
       return {
         domainName: (data.domainName === undefined) ? name : data.domainName,
-        account: (data.account === undefined) ? ['Portal UI QA Company'] : data.account,
+        account: (data.account === undefined) ? ['API QA Reseller Company'] : data.account,
         verificationMethod: (data.verificationMethod === undefined) ? 'DNS' : data.verificationMethod
       }
     } else {
       return {
         domainName: name,
-        account: ['Portal UI QA Company'],
+        account: ['API QA Reseller Company'],
         verificationMethod: 'DNS'
       }
     }

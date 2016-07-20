@@ -238,9 +238,13 @@ var SSLNameForm = {
       this.clickURLVerificationRadio();
     }
 
-    if (sslName.account !== undefined) {
-      this.setAccount(sslName.account);
-    }
+    var me = this;
+    element.all(by.id(this.locators.dropDowns.company.id))
+        .then(function (elements) {
+          if (sslName.account !== undefined && elements.length > 0) {
+            me.setAccount(sslName.account);
+          }
+        });
   }
 
 };
