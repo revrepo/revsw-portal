@@ -57,18 +57,50 @@ describe('Smoke', function () {
                     expect(Portal.sslNames.addPage.form.isDisplayed()).toBeTruthy();
                 });
 
-                it('should allow to cancel a SSL name edition', function () {
+                it('should allow to cancel a SSL name addition', function () {
                     Portal.sslNames.addPage.form.setDomainName('something');
                     Portal.sslNames.addPage.clickCancel();
                     expect(Portal.sslNames.listPage.isDisplayed()).toBeTruthy();
                 });
 
-                it('should create a SSL Name successfully when filling all required ' +
-                    'data',
+                it('should create a SSL Name with DNS verification successfully ' +
+                    'when filling all required data',
                     function () {
                         var sslName = DataProvider.generateSSLNameData();
                         Portal.sslNames.addPage.createSSLName(sslName);
-                        Portal.dialog.clickCancel();
+
+                        expect(Portal.sslNames.listPage
+                            .searchAndGetFirstRow(sslName.domainName)
+                            .getDomainName()).toEqual(sslName.domainName);
+                        Portal.deleteSSLName(sslName);
+                    });
+
+                it('should allow create a SSL Name with URL verification',
+                    function () {
+                        var sslData = {
+                            verificationMethod: 'URL',
+                            verificationString: 'http://monitor.revsw.net',
+                            postfix: '.monitor.revsw.net'
+                        };
+
+                        var sslName = DataProvider.generateSSLNameData(sslData);
+                        Portal.sslNames.addPage.createSSLName(sslName);
+                        expect(Portal.sslNames.listPage
+                            .searchAndGetFirstRow(sslName.domainName)
+                            .getDomainName()).toEqual(sslName.domainName);
+                        Portal.deleteSSLName(sslName);
+                    });
+
+                it('should allow create a SSL Name with Email verification',
+                    function () {
+                        var sslData = {
+                            verificationMethod: 'Email',
+                            verificationString: 'admin@revapm.com',
+                            postfix: '.revapm.com'
+                        };
+
+                        var sslName = DataProvider.generateSSLNameData(sslData);
+                        Portal.sslNames.addPage.createSSLName(sslName);
                         expect(Portal.sslNames.listPage
                             .searchAndGetFirstRow(sslName.domainName)
                             .getDomainName()).toEqual(sslName.domainName);

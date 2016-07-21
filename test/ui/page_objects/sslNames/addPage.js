@@ -180,6 +180,18 @@ var AddSSLName = {
   },
 
   /**
+   * ### AddSSLName.closeSuccessDialog()
+   *
+   * Triggers a click on the `Close` button from the Success dialog on Add SSL Name page.
+   *
+   * @returns {Object} Promise
+   */
+  closeSuccessDialog: function () {
+    return element(by.css(this.dialog.locators.modal.buttons.ok.css))
+        .click();
+  },
+
+  /**
    * ### AddSSLName.createSSLName()
    *
    * Creates a new SSL Name using given data by filling it in the form and
@@ -193,9 +205,29 @@ var AddSSLName = {
   createSSLName: function (sslName) {
     this.form.fill(sslName);
     var me = this;
-    return this.clickAddSSLName().then(function () {
-      me.dialog.clickOk();
-    });
+    if (sslName.verificationMethod !== 'Email'){
+      return this.clickAddSSLName().then(function () {
+        me.dialog.clickOk().then(function () {
+          me.dialog.getModalEl()
+              .element(by.css('input[value="'+ sslName.verificationString +'"]'))
+              .click().then(function () {
+            me.dialog.clickVerify().then(function () {
+              me.closeSuccessDialog();
+            });
+          });
+        });
+      });
+    }else {
+      return this.clickAddSSLName().then(function () {
+        me.dialog.getModalEl()
+            .element(by.css('input[value="'+ sslName.verificationString +'"]'))
+            .click().then(function () {
+          me.dialog.clickOk().then(function () {
+            me.closeSuccessDialog();
+          });
+        });
+      });
+    }
   }
 };
 
