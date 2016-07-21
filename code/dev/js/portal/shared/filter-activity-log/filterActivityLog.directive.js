@@ -4,6 +4,7 @@
     .module('revapm.Portal.Shared')
     .directive('filterActivityLog', filterActivityLog)
     .service('ActivityLogFilterInfoService', ActivityLogFilterInfoService);
+
   /**
    * @name  ActivityLogFilterInfoService
    * @description
@@ -43,17 +44,19 @@
       templateUrl: 'parts/shared/filter-activity-log/filter-activity-log.tpl.html',
       controller: /*ngInject*/ function($scope, ActivityPhrase, ActivityLogFilterInfoService) {
         var $ctrl = this;
-        var FILTER_EVENT_TIMEOUT = 2000,
-          DATE_PICKER_SELECTOR = '.date-picker',
+
+        var
           LAST_DAY = 'Last 1 Day',
           LAST_WEEK = 'Last 7 Days ',
           LAST_MONTH = 'Last 30 Days';
+
         //datepicker ranges
-        var ranges = {};
+        this.ranges = {};
         //Default valuew is Last 1 Day!
-        ranges[LAST_DAY] = [moment().subtract(1, 'days'), moment()];
-        ranges[LAST_WEEK] = [moment().subtract(7, 'days'), moment()];
-        ranges[LAST_MONTH] = [moment().subtract(30, 'days'), moment()];
+        this.ranges[LAST_DAY] = [moment().subtract(1, 'days'), moment()];
+        this.ranges[LAST_WEEK] = [moment().subtract(7, 'days'), moment()];
+        this.ranges[LAST_MONTH] = [moment().subtract(30, 'days'), moment()];
+
         //date picker params
         this.datePicker = {
           overlay: {
@@ -63,7 +66,7 @@
           options: {
             timePicker: true,
             timePickerIncrement: 30,
-            ranges: ranges,
+            ranges: $ctrl.ranges,
             minDate: moment().subtract(6, 'months'),
             maxDate: moment(),
             dateLimit: {
@@ -71,8 +74,8 @@
             }
           },
           date: {
-            startDate: ranges[LAST_DAY][0],
-            endDate: ranges[LAST_DAY][1]
+            startDate: $ctrl.ranges[LAST_DAY][0],
+            endDate: $ctrl.ranges[LAST_DAY][1]
           }
         };
 
@@ -127,7 +130,7 @@
           this.onApply();
         };
 
-        //
+        // conver datepiker values
         $scope.$watch(function() {
           return $ctrl.datePicker.date;
         }, function(newVal) {

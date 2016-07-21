@@ -1599,12 +1599,29 @@ form.dns-zone-records--new-form input[name="subdomain"] {
 }
 .filter-activity-log__help ul {
   list-style-type: none;
+  margin-bottom: 0px;
+}
+.filter-activity-log__help p {
+  margin-bottom: 0px;
 }
 .filter-activity-log select.form-control {
   max-width: none;
 }
 .filter-activity-log input.form-control {
   max-width: none;
+}
+.filter-activity-log .form-control.date-picker.select2,
+.filter-activity-log .date-picker-wrapper {
+  position: relative;
+}
+.filter-activity-log .form-control.date-picker.select2 .over,
+.filter-activity-log .date-picker-wrapper .over {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
 }
 .domain-lua-scripting--block-bp {
   padding-right: 20px;
