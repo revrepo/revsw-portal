@@ -16,9 +16,18 @@
           intro: 'The "Domains" section allows you to manage the way how your websites (domains) are accelerated by RevAPM.',
           position: 'right'
         }, {
+          element: '#side-menu-sub-item__webApp-staging-environment',
+          intro: 'We provide an easy and safe way to test your RevAPM domain configuration changes before making them available for all your website users - please ' +
+            'see the "Staging Env." page for full details about our configuration staging workflow.',
+          position: 'right'
+        }, {
           element: '#side-menu-sub-item__webApp-ssl_certs',
           intro: 'We highly recommend to use SSL protocol for your websites - it will increase the website security and also allow your visitors to use modern and ' +
             'fast HTTP/2 protocol',
+          position: 'right'
+        }, {
+          element: '#side-menu-sub-item__webApp-ssl_names',
+          intro: 'When using RevAPM\'s shared SSL certificate managed by GlobalSign CA you can use this section to manage SSL domain names protected by the certificate',
           position: 'right'
         }, {
           element: '#side-menu-sub-item__webApp-cache ',
@@ -30,6 +39,12 @@
           element: '#side-menu-web-analytics-item',
           intro: 'The "Web Analytics" section will provide you with a lot of insights about your website\'s performance, avaiability, user geography, popular content ' +
             'and many other important metrics!',
+          position: 'right'
+        },
+        {
+          element: '#side-menu-dns-service-item',
+          intro: 'We also offer an integrated DNS service powered by our partner NS1. This section allows you to manage your DNS resources without leaving our ' +
+            'customer portal!',
           position: 'right'
         },
         {
