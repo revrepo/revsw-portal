@@ -130,7 +130,7 @@
               <!-- // -->
               <!-- "Non-Wildcard Domain Aliases" -->
               <div class="form-group" ng-class="{'has-error': editForm.domainAliases.$invalid && editForm.domainAliases.$dirty}">
-                <label for="domainAliases" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Non-Wildcard Domain Aliases">Non-Wildcard Domain Aliases</label>
+                <label for="domainAliases" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Specify here one or more aliases of the domain. For example, if the domain name is 'example.com' and you specify here alias 'www.example.com' our network will accept requests for the both domains and apply to them the same domain configuration.">Non-Wildcard Domain Aliases</label>
                 <div class="col-sm-9">
                   <ui-select validate-domains-list tagging tagging-label="Add New Domain" multiple tagging-tokens="SPACE|," theme="bootstrap" class="form-control" ng-disabled="_loading" ng-model="model.domain_aliases" name="domainAliases" id="domain_aliases">
                     <ui-select-match placeholder="Add domains...">{{$item}}</ui-select-match>
@@ -146,7 +146,7 @@
               <!-- // -->
               <!-- Wildcard Domain Alias -->
               <div class="form-group" ng-class="{'has-error': editForm.domainWildcardAlias.$invalid && editForm.domainWildcardAlias.$dirty}">
-                <label for="domainWildcardAlias" class="col-sm-3 control-label">
+                <label for="domainWildcardAlias" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="You can specify here a domain alias in wildcard format. For example, if you specify here '*.example.com' name we will accept and apply the same configuration for domains like 'www.example.com', 'www2.example.com', 'app.example.com', etc. Please note that we will not show Web Analytics stats for domains matching the wildcard alias but will count the traffic for billing purposes.">
                   Wildcard Domain Alias
                 </label>
                 <div class="col-md-9">
