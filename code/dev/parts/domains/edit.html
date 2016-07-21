@@ -376,7 +376,7 @@
             <uib-tab index="3" heading="SSL Configuration" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Use the tab to enable/disable SSL support for the domain and manage which SSL certificate to use and which SSL protocols and cipher settings to apply for received SSL requests">
               <!--  “SSL Configuration” -->
               <div class="form-group form-inline">
-                <label for="enable_ssl" class="col-sm-3 control-label">
+                <label for="enable_ssl" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Select whether we should accept HTTPS (SSL) requests for the domain" >
                   Accept SSL Requests
                 </label>
                 <div class="col-md-9">
@@ -387,7 +387,7 @@
               <!-- //  “SSL Configuration” -->
               <!-- Attached SSL Certificate-->
               <div class="form-group" ng-class="{'has-error': editForm.sslCertId.$invalid && editForm.sslCertId.$dirty}">
-                <label for="sslCertId" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Select SSL certificate which should be associated with the domain">SSL Certificate</label>
+                <label for="sslCertId" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Select SSL certificate which should be associated with the domain. Option 'Default RevAPM SSL Certificate' provides you with ability to use RevAPM's shared SSL certificate issued by GlobalSign CA and managed in section 'SSL Names'.">SSL Certificate</label>
                 <div class="col-sm-9">
                   <select class="form-control" ng-disabled="_loading" ng-model="model.ssl_cert_id" id="ssl_cert_id" name="sslCertId" ng-options="obj.id as obj.cert_name for obj in SSL_certs | filter :{account_id:model.account_id}" style="float: left;">
                     <option value="">Default RevAPM SSL Certificate</option>

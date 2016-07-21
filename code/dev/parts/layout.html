@@ -106,7 +106,7 @@
       </a>
     </li>
     <li ui-sref-active-if="{class: 'open-side-menu-item', state: 'index.dnsServices'}" , ng-class="{'open-side-menu-item': menuExpanded('index.dnsServices'), 'active-side-menu-item': $state.includes('index.dnsServices')}">
-      <a class="side-menu-item" , ng-click="goToState('index.dnsServices.dns_zones')">
+      <a id="side-menu-dns-service-item" class="side-menu-item" , ng-click="goToState('index.dnsServices.dns_zones')">
         <div class="left-menu-start">
           <i class="glyphicon glyphicon-list-alt"></i>
         </div>
