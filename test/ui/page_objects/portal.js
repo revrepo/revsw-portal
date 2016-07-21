@@ -75,6 +75,9 @@ var SSLCertListPage = require('./sslCerts/listPage');
 var SSLCertAddPage = require('./sslCerts/addPage');
 var SSLCertEditPage = require('./sslCerts/editPage');
 
+var SSLNamesListPage = require('./sslNames/listPage');
+var SSLNamesAddPage = require('./sslNames/addPage');
+
 var PlansPage = require('./signUp/plansPage');
 var SignUpPage = require('./signUp/signUpPage');
 
@@ -153,7 +156,10 @@ var Portal = {
     addPage: SSLCertAddPage,
     editPage: SSLCertEditPage
   },
-
+  sslNames: {
+    listPage: SSLNamesListPage,
+    addPage: SSLNamesAddPage
+  },
   // ## Authentication Helper methods
 
   /**
@@ -362,7 +368,7 @@ var Portal = {
       .goTo(Constants.header.appMenu.ACCOUNT_SETTINGS,
       Constants.sideBar.menu.USERS);
   },
-
+  
   /**
    * ### Portal.goToMobileApps()
    *
@@ -464,6 +470,20 @@ var Portal = {
             Constants.sideBar.web.SSL_CERTIFICATES);
   },
 
+  /**
+   * ### Portal.goToSSLNames()
+   *
+   * Navigation helper method that executes all steps to navigate to `SSL Names
+   * List` page
+   *
+   * @returns {Promise}
+   */
+  goToSSLNames: function () {
+    return this
+        .goTo(Constants.header.appMenu.WEB,
+            Constants.sideBar.web.SSL_NAMES);
+  },
+  
   // ## User Helper methods
 
   /**
@@ -1044,6 +1064,63 @@ var Portal = {
       me.sslCerts.listPage.table
         .getFirstRow()
         .clickDelete();
+      me.dialog.clickOk();
+      browser.getCurrentUrl().then(function (currentUrl) {
+        if (initialUrl !== currentUrl) {
+          browser.get(initialUrl);
+        }
+      });
+    });
+  },
+
+  /**
+   * ### Portal.createSSLName(sslName)
+   *
+   * Helper method that executes all steps required to create
+   * new SSL Name in the Portal
+   *
+   * @param {Object} sslName, data applying the schema defined in
+   * `DataProvider.generateSSLNameData()`
+   *
+   * @returns {Object} Promise
+   */
+  createSSLName: function (sslName) {
+    var me = this;
+    return browser.getCurrentUrl().then(function (initialUrl) {
+      me.goToSSLNames();
+      Portal.sslNames.listPage.clickAddNewSSLName();
+      Portal.sslNames.addPage.form.fill(sslName);
+      Portal.sslNames.addPage.clickAddSSLName();
+      me.dialog.clickOk();
+      me.dialog.clickCancel();
+      browser.getCurrentUrl().then(function (currentUrl) {
+        if (initialUrl !== currentUrl) {
+          browser.get(initialUrl);
+        }
+      });
+    });
+  },
+
+  /**
+   * ### Portal.deleteSSLName()
+   *
+   * Helper method that executes all steps required to delete a SSL Name from
+   * Portal app.
+   *
+   * @param {Object} sslName , data applying the schema defined in
+   * `DataProvider.generateSSLNameData()`
+   *
+   * @returns {Object} Promise
+   */
+  deleteSSLName: function (sslName) {
+    var me = this;
+    return browser.getCurrentUrl().then(function (initialUrl) {
+      me.goToSSLNames();
+      me.sslNames.listPage.searcher.clearSearchCriteria();
+      me.sslNames.listPage.searcher.setSearchCriteria(sslName.domainName);
+      me.sslNames.listPage.table
+          .getFirstRow()
+          .clickDelete();
       me.dialog.clickOk();
       browser.getCurrentUrl().then(function (currentUrl) {
         if (initialUrl !== currentUrl) {
