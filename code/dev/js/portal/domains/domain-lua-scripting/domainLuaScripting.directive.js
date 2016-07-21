@@ -104,7 +104,7 @@
             }
           };
           $ctrl.domain.bp_lua.push(newLuaBlockCode_);
-          AlertService.success('A new default block has been added to the end of the list. Please configure the LUA code before saving the configuration.');
+          AlertService.success('A new default block has been added to the end of the list. Please configure the Lua code before saving the configuration.');
         };
 
         /**
@@ -121,7 +121,7 @@
             })
             .then(function() {
               $ctrl.domain.bp_lua.splice(index, 1);
-              AlertService.success('LUA Block was deleted');
+              AlertService.success('Lua code block has been deleted');
             });
         };
 
@@ -204,7 +204,7 @@
             }
           };
           $ctrl.domain.co_lua.push(newLuaBlockCode_);
-          AlertService.success('A new default block has been added to the end of the list. Please configure the LUA code before saving the configuration.');
+          AlertService.success('A new default block has been added to the end of the list. Please configure the Lua code before saving the configuration.');
         };
 
         /**
@@ -221,7 +221,7 @@
             })
             .then(function() {
               $ctrl.domain.co_lua.splice(index, 1);
-              AlertService.success('LUA Block was deleted');
+              AlertService.success('Lua code block has been deleted');
             });
         };
 

@@ -18,8 +18,8 @@
     </div>
   </div>
   <div class="form-group" ng-class="{'has-error': blockEditForm.luaBlockCode.$invalid && blockEditForm.luaBlockCode.$dirty}">
-    <label for="luaBlockCode" class="col-sm-3 control-label" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Provide here a Lua code which should be executed for specific website location">
-      LUA Code *</label>
+    <label for="luaBlockCode" class="col-sm-3 control-label" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Provide here a Lua code which should be executed for the specific website location">
+      Lua Code *</label>
     <div class="col-sm-9">
       <textarea name="luaBlockCode" ng-model="$ctrl.luaBlock.code" placeholder="" class="form-control text--courier" ng-disabled="_loading" required=>
       </textarea>
