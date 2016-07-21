@@ -64,7 +64,7 @@
             timePicker: true,
             timePickerIncrement: 30,
             ranges: ranges,
-            minDate: moment().subtract(1, 'months'),
+            minDate: moment().subtract(6, 'months'),
             maxDate: moment(),
             dateLimit: {
               months: 6
@@ -75,9 +75,17 @@
             endDate: ranges[LAST_DAY][1]
           }
         };
-        this.activityTypeList = ActivityPhrase.ACTIVITY_TYPE;
-        this.targetTypeList = ActivityPhrase.ACTIVITY_TARGET;
-        // TODO: fix sets
+
+        this.activityTypeList = [{ id: null, name: 'All Activity Types' }];
+        _.map(ActivityPhrase.ACTIVITY_TYPE, function(item, key) {
+          $ctrl.activityTypeList.push({ id: key, name: item });
+        });
+
+        this.targetTypeList = [{ id: null, name: 'All Target Types' }];
+        _.map(ActivityPhrase.ACTIVITY_TARGET, function(item, key) {
+          $ctrl.targetTypeList.push({ id: key, name: item });
+        });
+        // NOTE: Each time then open page the filter set as empty
         this.newFilterState = {}; //ActivityLogFilterInfoService.getFilterState() || {};
         /**
          * @name  onCancel
@@ -110,7 +118,7 @@
             from_timestamp: $ctrl.newFilterState.from_timestamp,
             to_timestamp: $ctrl.newFilterState.to_timestamp
           });
-          if ($ctrl.newFilterState.activityTarget) {
+          if (!!$ctrl.newFilterState.activityTarget && !!$ctrl.newFilterState.activityTarget.id) {
             filter_.target_type = $ctrl.newFilterState.activityTarget.targetType;
             filter_.target_id = $ctrl.newFilterState.activityTarget.id;
           }
