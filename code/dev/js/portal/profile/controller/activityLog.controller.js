@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
 
   angular
@@ -6,35 +6,34 @@
     .controller('ActivityLogController', ActivityLogController);
 
   /*@ngInject*/
-  function ActivityLogController($scope, CRUDController, Activity, $injector, $stateParams, ActivityPhrase, $uibModal) {
+  function ActivityLogController($scope, CRUDController, Activity, $injector, $stateParams, ActivityPhrase, $uibModal, $state, ActivityLogFilterInfoService) {
     //Invoking crud actions
-    $injector.invoke(CRUDController, this, {$scope: $scope, $stateParams: $stateParams});
+    $injector.invoke(CRUDController, this, { $scope: $scope, $stateParams: $stateParams });
 
     // Set resource to work with data
     $scope.setResource(Activity);
     //Set state (ui.router)
-    $scope.setState('index.accountSettings.companies');
-
-    $scope.list = function () {
-      if (!$scope.resource) {
-        throw new Error('No resource provided.');
-      }
-      $scope.loading(true);
-      //fetching data
-      return $scope.resource
-        .query(function (data) {
-          $scope.records = data.data;
-          $scope.filterList();
-          $scope._checkPagination();
-          return data; // Send data to future promise
-        }).$promise
-        .finally(function () {
-          $scope.loading(false);
-        });
-    };
+    $scope.setState('index.accountSettings.activitylog');
 
     // Fetch a list of activity records
-    $scope.list();
+    $scope.$on('$stateChangeSuccess', function(state) {
+      if ($state.is($scope.state)) {
+        // NOTE: open list with default filter
+        var filter = {
+          from_timestamp: moment().subtract(1, 'days').toDate().getTime(),
+          to_timestamp: moment().toDate().getTime()
+        };
+        $scope.list(filter)
+          .then(function() {
+            if ($scope.elementIndexForAnchorScroll !== undefined) {
+              setTimeout(function() {
+                $anchorScroll('anchor' + $scope.elementIndexForAnchorScroll);
+                $scope.$digest();
+              }, 500);
+            }
+          });
+      }
+    });
 
     /**
      * Get readable activity type
@@ -67,6 +66,34 @@
       return ActivityPhrase.ACTIVITY_TARGET[log.activity_target] + target;
     };
 
+    $scope.list = function(filter) {
+      if (!$scope.resource) {
+        throw new Error('No resource provided.');
+      }
+      $scope.loading(true);
+      var filter_ = ActivityLogFilterInfoService.getCurrentFilterData();
+      var _filterParam = filter || filter_;
+      if (!!_filterParam.activityTarget) {
+        _filterParam.target_id = _filterParam.activityTarget.id;
+        _filterParam.target_type = _filterParam.activityTarget.targetType;
+      }
+      //fetching data
+      return $scope.resource
+        .page(_filterParam, function(data) {
+          $scope.records = data;
+          $scope.filterList();
+          $scope._checkPagination();
+          return data; // Send data to future promise
+        }, function() {
+          $scope.records = null;
+          $scope.filterList();
+          $scope._checkPagination();
+        }).$promise
+
+        .finally(function() {
+        $scope.loading(false);
+      });
+    };
     /**
      * Show modal dialog with log details
      *
@@ -96,7 +123,7 @@
       return modalInstance.result;
     };
 
-    $scope.getRelativeDate = function (datetime) {
+    $scope.getRelativeDate = function(datetime) {
       return moment.utc(datetime).fromNow();
     };
 

@@ -453,6 +453,21 @@ form .error-messages.ng-active,
     left: 0 !important;
   }
 }
+#topObjectsReportsTabs .tab-pane {
+  margin: 20px 0px;
+}
+#topObjectsReportsTabs .nav-tabs > li {
+  margin-bottom: -6px;
+}
+#topObjectsReportsTabs .nav-tabs > li > a {
+  color: #515253;
+}
+#topObjectsReportsTabs .nav-tabs > li.active > a {
+  color: #f7941e;
+}
+.clearfix {
+  margin-bottom: 8px;
+}
 input[type="text"],
 input[type="email"],
 input[type="password"],
@@ -1581,4 +1596,22 @@ form.dns-zone-records--new-form input[name="subdomain"] {
   .footer-content .version {
     margin-right: 0;
   }
+}
+.filter-activity-log select.form-control {
+  max-width: none;
+}
+.filter-activity-log input.form-control {
+  max-width: none;
+}
+.domain-lua-scripting--block-bp {
+  padding-right: 20px;
+}
+.domain-lua-scripting--block-co {
+  padding-right: 20px;
+}
+.domain-lua-scripting--list .panel-buttons-left {
+  padding-right: 30px;
+}
+.domain-lua-scripting--item .panel-buttons-left {
+  padding-right: 20px;
 }

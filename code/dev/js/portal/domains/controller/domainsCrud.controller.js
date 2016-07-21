@@ -160,6 +160,12 @@
             delete item.$$backendBlockState;
           });
         }
+        // $$itemState - added for domain-lua-code-block
+        if (model.bp_lua && angular.isArray(model.bp_lua)) {
+          angular.forEach(model.bp_lua, function(item) {
+            delete item.$$itemState;
+          });
+        }
       }
       if (model.domain_name) {
         delete model.domain_name;
@@ -302,7 +308,22 @@
             item.edge_caching.query_string_keep_or_remove_list = [];
           }
         });
-
+        angular.forEach($scope.model.bp_lua, function(item) {
+          // NOTE: add parameter for collapsed item
+          angular.extend(item, {
+            $$itemState: {
+              isCollapsed: true
+            }
+          });
+        });
+        angular.forEach($scope.model.co_lua, function(item) {
+          // NOTE: add parameter for collapsed item
+          angular.extend(item, {
+            $$itemState: {
+              isCollapsed: true
+            }
+          });
+        });
       }
       /**
        * @name  saveNoChangingValue
@@ -553,7 +574,7 @@
         })
         .then(function() {
           $scope.model.rev_component_bp.caching_rules.splice(index, 1);
-          $scope.alertService.success('Caching Rule was deleted.');
+          $scope.alertService.success('Caching Rule was deleted');
         });
     };
     /**

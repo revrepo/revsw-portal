@@ -36,6 +36,9 @@ var TopObjectsForm = {
       device: 'ngFilters.device',
       browser: 'ngFilters.browser',
       count: 'ngFilters.count'
+    },
+    tabs:{
+      id: 'topObjectsReportsTabs'
     }
   },
 
@@ -50,8 +53,18 @@ var TopObjectsForm = {
   getChartsTableObj: function () {
     return element.all(by.css(this.locators.chartsTable.css));
   },
-
- /**
+  /**
+   * ### TopObjectsForm.getTabs().
+   *
+   * Returns the reference to the `Tabs Panel` (Selenium
+   * WebDriver Element) from the Top Reports page from the Portal app.
+   *
+   * @returns {Selenium WebDriver Element}
+   */
+  getTabs: function () {
+    return element(by.id(this.locators.tabs.id));
+  },
+  /**
   * ### TopObjectsForm.getTopObjects().
   *
   * Selects a `Report` in the Top Objects page.
@@ -62,9 +75,12 @@ var TopObjectsForm = {
   * @returns {Promise}
   */
   getTopObjects: function (indexChart, indexForm) {
+    this.getTabs()
+      .element(by.css('.nav.nav-tabs>li:nth-child('+(1+indexChart)+') a'))
+      .click();
     return this
       .getChartsTableObj()
-      .all(by.css('.row .col-md-12'))
+      .all(by.css('.tab-pane'))
       .get(indexChart)
       .all(by.css('.form-group'))
       .get(indexForm);

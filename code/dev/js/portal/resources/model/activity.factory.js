@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
 
   angular
@@ -8,9 +8,21 @@
   /*@ngInject*/
   function ActivityResource(Resource, $config) {
 
-    return Resource($config.API_URL + '/activity/:action', {action: ''}, {
-      query: {method: 'GET', isArray: false},
-      summary: {method: 'GET', isArray: false}
+    return Resource($config.API_URL + '/activity/:action', { action: '' }, {
+      page: {
+        method: 'GET',
+        isArray: true,
+        transformResponse: function(data, headersGetter) {
+          // NOTE: transform response data to array (for use default methods from CRUDController)
+          try {
+            data = angular.fromJson(data).data;
+          } catch (e) {
+            data = null;
+          }
+          return data;
+        }
+      },
+      summary: { method: 'GET', isArray: false }
     });
 
   }
