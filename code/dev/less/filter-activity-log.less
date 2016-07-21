@@ -1,8 +1,32 @@
 .filter-activity-log {
+  &__help {
+    & ul {
+      list-style-type: none;
+      margin-bottom: 0px;
+    }
+    & p{
+       margin-bottom: 0px;
+    }
+  }
   & select.form-control {
     max-width: none;
   }
   & input.form-control {
     max-width: none;
+  }
+  & .activity-target-select {}
+  & .form-control.date-picker.select2,
+  & .date-picker-wrapper {
+    // margin: 10px;
+    position: relative;
+    .over {
+      // margin-top: 5px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+    }
   }
 }

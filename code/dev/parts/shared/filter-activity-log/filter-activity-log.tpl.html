@@ -1,44 +1,63 @@
 <form name="filterActivityLogForm" class="filter-activity-log" ng-submit="$ctrl.onSetFilter($ctrl.newFilterState)">
-  <div class="form-horizontal col-sm-12">
-    <div class="col-sm-12 ">
-      <label class=" col-xs-12 col-sm-4 col-md-4">Action Taker</label>
-      <div class="col-xs-12 col-sm-8 col-md-8">
+  <div class="col-sm-6 ">
+    <div class="panel panel-info panel-body">
+      <div class="text text-info filter-activity-log__help">
+        <p><b>You can filter the audit records by:</b></p>
+        <ul>
+          <li>a) Who performed an action and/or</li>
+          <li>b) What was the target object of performed action</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 ">
+    <div class="panel panel-info panel-body">
+      <label class="text text-info col-xs-12 col-sm-12 col-md-12">a) Action Taker</label>
+      <div class="col-xs-12 col-sm-12 col-md-12">
         <div class="row  ">
           <activity-who-performed-select style="margin-left: 10px;" ng-model="$ctrl.newFilterState.whoPerformed"></activity-who-performed-select>
         </div>
       </div>
     </div>
-    <!-- Filter By Action Taker -->
-    <div class="col-sm-12">
-      <label class="col-sm-12"> Action Target Object
-      </label>
+  </div>
+  <!-- Filter By Action Taker -->
+  <div class="form-horizontal col-sm-12">
+    <!-- Filter By Action Target Object -->
+    <div class="panel panel-info panel-body">
+      <label class="text text-info col-sm-12">b) Action Target Object</label>
       <div class="row form-group">
         <div class="col-xs-12 col-sm-12 col-md-4">
-          <div class="date-picker-wrapper">
-            <input date-range-picker="" ng-model="$ctrl.datePicker.date" options="::$ctrl.datePicker.options" min="$ctrl.datePicker.minDate" max="$ctrl.datePicker.maxDate" class="form-control date-picker select2" type="text" readonly/>
-            <!-- TODO: fix show data info-->
-            <!--       <input ng-show="$ctrl.datePicker.overlay.show" ng-focus="$ctrl.handlers.overlayClickHandler()" ng-model="$ctrl.datePicker.overlay.val" class="over form-control select2" type="text" /> -->
-          </div>
+          <filter-activity-log-daterangepicker ranges="$ctrl.ranges" ng-model="$ctrl.datePicker"></filter-activity-log-daterangepicker>
         </div>
         <div class=" col-xs-12 col-sm-12 col-md-4">
-          <select class="form-control" name="targetType" ng-options="key as value for (key , value) in $ctrl.targetTypeList" ng-model="$ctrl.newFilterState.target_type">
-            <option value="">All Target Types</option>
-          </select>
+          <ui-select ng-model="$ctrl.newFilterState.target_type" theme="select2" ng-animate-disabled ng-disabled="_loading" style="min-width: 100%;" name="targetType">
+            <ui-select-match placeholder="All Target Types">{{$select.selected.name}}</ui-select-match>
+            <ui-select-choices repeat="item.id as item in $ctrl.targetTypeList | filter: {name: $select.search}">
+              <div ng-bind-html="item.name|highlight: $select.search"></div>
+            </ui-select-choices>
+          </ui-select>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-4">
-          <select class="form-control" name="targetType" ng-options="key as value for (key , value) in $ctrl.activityTypeList" ng-model="$ctrl.newFilterState.activity_type">
-            <option value="">All Activity Types</option>
-          </select>
+          <ui-select ng-model="$ctrl.newFilterState.activity_type" theme="select2" ng-animate-disabled ng-disabled="_loading" style="min-width: 100%;" name="targetType">
+            <ui-select-match placeholder="All Activity Types">{{$select.selected.name}}</ui-select-match>
+            <ui-select-choices repeat="item.id as item in $ctrl.activityTypeList| filter: {name: $select.search}">
+              <div ng-bind-html="item.name|highlight: $select.search"></div>
+            </ui-select-choices>
+          </ui-select>
         </div>
       </div>
-      <div class="row form-group">
+      <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-8">
           <activity-target-select target-type="{{$ctrl.newFilterState.target_type}}" ng-model="$ctrl.newFilterState.activityTarget"></activity-target-select>
         </div>
-        <div class=" col-xs-6 col-md-4 form-horizontal  ">
-          <button class="btn  col-xs-6 btn-primary" type="submit">Filter</button>
-          <button type="button" class="btn  col-xs-6 btn-default" ng-click="$ctrl.onCancel()">Cancel</button>
-        </div>
+      </div>
+    </div>
+    <div class=" col-xs-12 col-md-12 col-lg-6">
+      <div class=" col-xs-12 col-sm-6 col-md-6 col-lg-3">
+        <button class="btn btn-primary btn-block" type="submit"><i class="fa fa-filter"> </i> Filter</button>
+      </div>
+      <div class=" col-xs-12 col-sm-6 col-md-6 col-lg-3">
+        <button type="button" class="btn btn-default btn-block" ng-click="$ctrl.onCancel()"><i class="glyphicon glyphicon-remove"></i> Cancel</button>
       </div>
     </div>
   </div>

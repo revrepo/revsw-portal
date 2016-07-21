@@ -18,6 +18,7 @@
     this.init = function() {
       var def = $q.defer();
       service.data.lenght = 0;
+      service.data.push({ id: null, name: 'All Users and All API Keys', userType: 'all' });
       if (!User.isAuthed()) {
         return $q.when(service.data);
       }
