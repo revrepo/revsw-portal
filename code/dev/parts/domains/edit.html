@@ -130,7 +130,7 @@
               <!-- // -->
               <!-- "Non-Wildcard Domain Aliases" -->
               <div class="form-group" ng-class="{'has-error': editForm.domainAliases.$invalid && editForm.domainAliases.$dirty}">
-                <label for="domainAliases" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Non-Wildcard Domain Aliases">Non-Wildcard Domain Aliases</label>
+                <label for="domainAliases" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Specify here one or more aliases of the domain. For example, if the domain name is 'example.com' and you specify here alias 'www.example.com' our network will accept requests for the both domains and apply to them the same domain configuration.">Non-Wildcard Domain Aliases</label>
                 <div class="col-sm-9">
                   <ui-select validate-domains-list tagging tagging-label="Add New Domain" multiple tagging-tokens="SPACE|," theme="bootstrap" class="form-control" ng-disabled="_loading" ng-model="model.domain_aliases" name="domainAliases" id="domain_aliases">
                     <ui-select-match placeholder="Add domains...">{{$item}}</ui-select-match>
@@ -146,7 +146,7 @@
               <!-- // -->
               <!-- Wildcard Domain Alias -->
               <div class="form-group" ng-class="{'has-error': editForm.domainWildcardAlias.$invalid && editForm.domainWildcardAlias.$dirty}">
-                <label for="domainWildcardAlias" class="col-sm-3 control-label">
+                <label for="domainWildcardAlias" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="You can specify here a domain alias in wildcard format. For example, if you specify here '*.example.com' name we will accept and apply the same configuration for domains like 'www.example.com', 'www2.example.com', 'app.example.com', etc. Please note that we will not show Web Analytics stats for domains matching the wildcard alias but will count the traffic for billing purposes.">
                   Wildcard Domain Alias
                 </label>
                 <div class="col-md-9">
@@ -376,7 +376,7 @@
             <uib-tab index="3" heading="SSL Configuration" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Use the tab to enable/disable SSL support for the domain and manage which SSL certificate to use and which SSL protocols and cipher settings to apply for received SSL requests">
               <!--  “SSL Configuration” -->
               <div class="form-group form-inline">
-                <label for="enable_ssl" class="col-sm-3 control-label">
+                <label for="enable_ssl" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Select whether we should accept HTTPS (SSL) requests for the domain" >
                   Accept SSL Requests
                 </label>
                 <div class="col-md-9">
@@ -387,7 +387,7 @@
               <!-- //  “SSL Configuration” -->
               <!-- Attached SSL Certificate-->
               <div class="form-group" ng-class="{'has-error': editForm.sslCertId.$invalid && editForm.sslCertId.$dirty}">
-                <label for="sslCertId" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Select SSL certificate which should be associated with the domain">SSL Certificate</label>
+                <label for="sslCertId" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Select SSL certificate which should be associated with the domain. Option 'Default RevAPM SSL Certificate' provides you with ability to use RevAPM's shared SSL certificate issued by GlobalSign CA and managed in section 'SSL Names'.">SSL Certificate</label>
                 <div class="col-sm-9">
                   <select class="form-control" ng-disabled="_loading" ng-model="model.ssl_cert_id" id="ssl_cert_id" name="sslCertId" ng-options="obj.id as obj.cert_name for obj in SSL_certs | filter :{account_id:model.account_id}" style="float: left;">
                     <option value="">Default RevAPM SSL Certificate</option>
