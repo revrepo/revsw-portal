@@ -82,6 +82,8 @@ var MailinatorHelper = require('./../mailinator/helper');
 
 var DataProvider = require('./../common/providers/data');
 
+var PortalHelpers = require('./../common/helpers/portal');
+
 // This `Portal` Page Object is the entry point to use all other Page Objects
 // that abstract all components from the Portal App.
 var Portal = {
@@ -155,6 +157,8 @@ var Portal = {
   },
 
   // ## Authentication Helper methods
+
+  helpers: PortalHelpers,
 
   /**
    * ### Portal.signIn()
