@@ -676,7 +676,31 @@ var DataProvider = {
         comment: 'Comment ' + name
       }
     }
+  },
 
+  generateSSLNameData: function (data) {
+    var timestamp = Date.now();
+    var postfix = '.revsw.com';
+    if (data !== undefined && data.postfix !== undefined){
+      postfix = data.postfix;
+    }
+    var name = 'ssltest-' + timestamp + postfix;
+
+    if (data){
+      return {
+        domainName: (data.domainName === undefined) ? name : data.domainName,
+        account: (data.account === undefined) ? ['API QA Reseller Company'] : data.account,
+        verificationMethod: (data.verificationMethod === undefined) ? 'DNS' : data.verificationMethod,
+        verificationString: (data.verificationString === undefined) ? 'revsw.com' : data.verificationString
+      }
+    } else {
+      return {
+        domainName: name,
+        account: ['API QA Reseller Company'],
+        verificationMethod: 'DNS',
+        verificationString: 'revsw.com'
+      }
+    }
   }
 };
 

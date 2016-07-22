@@ -1,0 +1,4 @@
+<div class="date-picker-wrapper">
+  <input date-range-picker="" ng-model="datePicker.date" options="::datePicker.options" min="datePicker.minDate" max="datePicker.maxDate" class="form-control date-picker select2" type="text" readonly/>
+  <input ng-show="datePicker.overlay.show" ng-focus="handlers.overlayClickHandler()" ng-model="datePicker.overlay.val" class="over form-control select2" type="text" />
+</div>

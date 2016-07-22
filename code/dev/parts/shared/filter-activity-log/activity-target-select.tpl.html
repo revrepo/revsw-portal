@@ -1,5 +1,8 @@
 <div class="activity-target-select">
-  <select class="activity-target-select--select form-control" ng-model="$ctrl.activityTarget" ng-options="item as item.name for item in $ctrl.activityTargetList | filter : $ctrl.targetType">
-    <option value="">All Activity Targets</option>
-  </select>
+  <ui-select ng-model="$ctrl.activityTarget" theme="select2" ng-animate-disabled ng-disabled="_loading" style="min-width: 100%;"  name="activityTarget">
+    <ui-select-match placeholder="All Activity Targets">{{$select.selected.name}}</ui-select-match>
+    <ui-select-choices repeat="item as item in $ctrl.activityTargetList | filter : $ctrl.targetType | filter: {name: $select.search}">
+      <div ng-bind-html="item.name|highlight: $select.search"></div>
+    </ui-select-choices>
+  </ui-select>
 </div>

@@ -18,6 +18,8 @@
     this.init = function() {
       var def = $q.defer();
       service.data.lenght = 0;
+      service.data.push({ id: null, name: 'All Activity Targets', targetType: null });
+
       if (!User.isAuthed()) {
         return $q.when(service.data);
       }
@@ -25,7 +27,7 @@
       DomainsConfig.query().$promise.then(function(data) {
         data.forEach(function(item) {
           var name_ = item.domain_name + ' (Domain Configuration)';
-          service.data.push({ id: item.user_id, name: name_, targetType: 'domain' });
+          service.data.push({ id: item.id, name: name_, targetType: 'domain' });
         });
       });
 
@@ -102,6 +104,16 @@
         if ($ctrl.activityTargetList.length === 0) {
           ActivityTargetListService.init();
         }
+
+        // if changing targetType then need to change activityTarget
+        $scope.$watch(function() {
+            return $ctrl.targetType;
+          },
+          function(newVal) {
+            if (newVal === '' || (!!$ctrl.activityTarget && $ctrl.activityTarget.targetType !== newVal)) {
+              $ctrl.activityTarget = null;
+            }
+          });
       }
     };
   }
