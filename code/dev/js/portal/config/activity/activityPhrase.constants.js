@@ -34,7 +34,6 @@
         'user': 'User',
         'account': 'Company',
         'domain': 'Domain',
-        'purge': 'Cache',
         'apikey': 'API Key',
         'app': 'App',
         'sslcert': 'SSL Certificate',

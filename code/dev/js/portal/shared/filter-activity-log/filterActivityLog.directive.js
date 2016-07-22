@@ -42,7 +42,7 @@
       },
       controllerAs: '$ctrl',
       templateUrl: 'parts/shared/filter-activity-log/filter-activity-log.tpl.html',
-      controller: /*ngInject*/ function($scope, ActivityPhrase, ActivityLogFilterInfoService) {
+      controller: /*ngInject*/ function($scope, Companies, ActivityPhrase, ActivityLogFilterInfoService) {
         var $ctrl = this;
 
         var
@@ -113,14 +113,17 @@
         this.onSetFilter = function(data) {
           var filter_ = {};
           angular.extend(filter_, {
-            user_id: $ctrl.newFilterState.user_id,
-            api_key: $ctrl.newFilterState.api_key,
+            account_id: $ctrl.newFilterState.account_id,
+            // user_id: $ctrl.newFilterState.whoPerformed.id, //NOTE: can be User.user_id or APIKey.id - autodetect by server side
             target_type: $ctrl.newFilterState.target_type,
             target_id: $ctrl.newFilterState.target_id,
             activity_type: $ctrl.newFilterState.activity_type,
             from_timestamp: $ctrl.newFilterState.from_timestamp,
             to_timestamp: $ctrl.newFilterState.to_timestamp
           });
+          if(!!$ctrl.newFilterState.whoPerformed){
+             filter_.user_id = $ctrl.newFilterState.whoPerformed.id;
+          }
           if (!!$ctrl.newFilterState.activityTarget && !!$ctrl.newFilterState.activityTarget.id) {
             filter_.target_type = $ctrl.newFilterState.activityTarget.targetType;
             filter_.target_id = $ctrl.newFilterState.activityTarget.id;
@@ -141,21 +144,19 @@
             });
           }
         }, true);
+        $ctrl.accountList = [];
 
-        $scope.$watch(function() {
-          return $ctrl.newFilterState.whoPerformed;
-        }, function(newVal) {
-          $ctrl.newFilterState.user_id = null;
-          $ctrl.newFilterState.api_key = null;
-          if (newVal) {
-            if (newVal.userType === 'user') {
-              $ctrl.newFilterState.user_id = newVal.id;
-            }
-            if (newVal.userType === 'apikey') {
-              $ctrl.newFilterState.api_key = newVal.id;
-            }
-          }
-        }, true);
+        Companies.query(function(data) {
+          $ctrl.accountList.length = 0;
+          $ctrl.accountList.push({id: null, name: 'All Accounts'});
+          _.forEach(data, function(item) {
+            var account_ = {
+              id: item.id,
+              name: item.companyName
+            };
+            $ctrl.accountList.push(account_);
+          });
+        });
 
         $scope.$watch(function() {
           return $ctrl.newFilterState.activityTarget;

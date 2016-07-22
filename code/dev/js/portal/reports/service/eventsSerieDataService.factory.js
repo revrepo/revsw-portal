@@ -110,7 +110,8 @@
             from_timestamp: options.from_timestamp,
             to_timestamp: options.to_timestamp,
             target_id: options.domain_id,
-            target_type: 'purge'
+            target_type: 'domain',
+            activity_type: 'purge'
           };
           def.resolve(Activity.query(domainQueryPrams).$promise);
         } else {
@@ -196,6 +197,7 @@
                   id: item.activity_target + '_' + item.datetime,
                   name: item.activity_target,
                   activity_target: item.activity_target,
+                  activity_type: item.activity_type,
                   user_type: item.user_type,
                   total: item,
                   title: item.activity_target[0].toUpperCase(),

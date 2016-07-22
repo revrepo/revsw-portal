@@ -58,7 +58,8 @@
       scope: true,
       replace: true,
       bindToController: {
-        whoPerformed: '=ngModel'
+        whoPerformed: '=ngModel',
+        accountId: '@'
       },
       controllerAs: '$ctrl',
       controller: /*@ngInject*/ function($scope, ActivityWhoPerformedListService) {
@@ -67,7 +68,15 @@
         if ($ctrl.whoPerformedList.length === 0) {
           ActivityWhoPerformedListService.init();
         }
-
+        // if changing accountId then need to change whoPerformed
+        $scope.$watch(function() {
+            return $ctrl.accountId;
+          },
+          function(newVal) {
+            if (newVal === '' || (!!$ctrl.whoPerformed && $ctrl.whoPerformed.accountId !== newVal)) {
+              $ctrl.whoPerformed = null;
+            }
+          });
       }
     };
   }
