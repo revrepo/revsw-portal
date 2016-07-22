@@ -64,100 +64,87 @@
         <div class="panel-body">
 
           <div class="row">
+
             <div class="col-md-6">
               <h3>Edge Cache Hit/Miss Ratio</h3>
-
-             <!--  <div class="alert alert-info" ng-if="!cacheStatus || !cacheStatus.length">
-                No data to display
-              </div> -->
-              <div><!--  ng-hide="!cacheStatus || !cacheStatus.length"> -->
+              <div>
                 <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="cacheStatus"></div>
               </div>
             </div>
+
             <div class="col-md-6">
               <h3>HTTP Status Codes Ratio</h3>
-
-             <!--  <div class="alert alert-info" ng-if="!statusCode || !statusCode.length">
-                No data to display
-              </div> -->
-              <div><!--  ng-hide="!statusCode || !statusCode.length"> -->
+              <div>
                 <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="statusCode"></div>
               </div>
             </div>
+
           </div>
           <hr>
 
           <div class="row">
-            <div class="col-md-6">
-              <h3>HTTP/HTTPS Requests Ratio</h3>
 
-             <!--  <div class="alert alert-info" ng-if="!protocol || !protocol.length">
-                No data to display
-              </div> -->
-              <div><!--  ng-hide="!protocol || !protocol.length"> -->
-                <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="protocol"></div>
-              </div>
-            </div>
             <div class="col-md-6">
               <h3>Top 10 Countries</h3>
-
-             <!--  <div class="alert alert-info" ng-if="!country || !country.length">
-                No data to display
-              </div> -->
-              <div><!--  ng-hide="!country || !country.length"> -->
+              <div>
                 <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="country"></div>
               </div>
             </div>
+
+            <div class="col-md-6">
+              <h3>Top 20 US States By Traffic</h3>
+              <div>
+                <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="usa_states" ng-chart-options="stateTraffChartOptions"></div>
+              </div>
+            </div>
+
           </div>
           <hr>
           <div class="row">
+
+            <div class="col-md-6">
+              <h3>HTTP/HTTPS Requests Ratio</h3>
+              <div>
+                <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="protocol"></div>
+              </div>
+            </div>
+
             <div class="col-md-6">
               <h3>HTTP Methods</h3>
-
-              <!-- <div class="alert alert-info" ng-if="!httpMethod || !httpMethod.length">
-                No data to display
-              </div> -->
-              <div><!--  ng-hide="!httpMethod || !httpMethod.length"> -->
+              <div>
                 <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="httpMethod"></div>
               </div>
             </div>
+
+          </div>
+          <hr>
+          <div class="row">
+
             <div class="col-md-6">
               <h3>Top 10 HTTP Content Types</h3>
-
-              <!-- <div class="alert alert-info" ng-if="!contentType || !contentType.length">
-                No data to display
-              </div> -->
-              <div><!--  ng-hide="!contentType || !contentType.length"> -->
+              <div>
                 <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="contentType"></div>
               </div>
             </div>
-          </div>
-          <hr>
-          <div class="row">
+
             <div class="col-md-6">
               <h3>Top 10 OS</h3>
-
-           <!--    <div class="alert alert-info" ng-if="!os || !os.length">
-                No data to display
-              </div> -->
-              <div><!--  ng-hide="!os || !os.length"> -->
+              <div>
                 <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="os"></div>
               </div>
             </div>
-            <div class="col-md-6">
-              <h3>Top 10 Devices</h3>
 
-              <!-- <div class="alert alert-info" ng-if="!device || !device.length">
-                No data to display
-              </div> -->
-              <div><!--  ng-hide="!device || !device.length"> -->
-                <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="device"></div>
-              </div>
-            </div>
           </div>
           <hr>
 
           <div class="row">
+
+            <div class="col-md-6">
+              <h3>Top 10 Devices</h3>
+              <div>
+                <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="device"></div>
+              </div>
+            </div>
 
             <div class="col-md-6">
               <h3>Top 10 Browsers</h3>
@@ -166,45 +153,39 @@
               </div>
             </div>
 
+          </div>
+          <hr>
+          <div class="row">
+
             <div class="col-md-6">
               <h3>QUIC/Non-QUIC Ratio</h3>
-
-             <!--  <div class="alert alert-info" ng-if="!quic || !quic.length">
-                No data to display
-              </div> -->
-              <div><!--  ng-hide="!quic || !quic.length"> -->
+              <div>
                 <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="quic"></div>
               </div>
             </div>
-          </div>
-          <hr>
 
-          <div class="row">
             <div class="col-md-6">
               <h3>H2/H2C/Non-HTTP2 Ratio</h3>
-
-             <!--  <div class="alert alert-info" ng-if="!http2 || !http2.length">
-                No data to display
-              </div> -->
-              <div><!--  ng-hide="!http2 || !http2.length"> -->
+              <div>
                 <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="http2"></div>
               </div>
             </div>
+
+          </div>
+          <hr>
+          <div class="row">
+
             <div class="col-md-6">
               <h3>Request Completion Success/Failure Ratio</h3>
-
-             <!--  <div class="alert alert-info" ng-if="!requestStatus || !requestStatus.length">
-                No data to display
-              </div> -->
-              <div><!--  ng-hide="!requestStatus || !requestStatus.length"> -->
+              <div>
                 <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="requestStatus"></div>
               </div>
             </div>
+
           </div>
 
         </div>
       </div>
     </div>
   </div>
-
 </div>

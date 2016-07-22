@@ -6,7 +6,7 @@
     .controller('TopReportsTrafficController', TopReportsTrafficController);
 
   /*@ngInject*/
-  function TopReportsTrafficController($scope, User, AlertService, Stats, Countries) {
+  function TopReportsTrafficController($scope, User, AlertService, Stats, Countries, Util) {
     $scope.userService = User;
 
     $scope._loading = true;
@@ -21,6 +21,7 @@
     $scope.device = [];
     $scope.browser = [];
     $scope.country = [];
+    $scope.usa_states = [];
     $scope.statusCode = [];
     $scope.requestStatus = [];
 
@@ -247,18 +248,45 @@
     };
 
     /**
-     * List of countries
+     * Countries' data including traff
      *
      * @param {object} common parameters(domainId, from, to)
      */
+    $scope.stateTraffChartOptions = {
+      tooltip: {
+        formatter: function() {
+          return '<b>'+ this.point.name +': </b>'+
+            Util.humanFileSize( this.y, 2 );
+        }
+      }
+    };
+
     $scope.reloadCountry = function(filters) {
-      Stats.country(filters)
+      Stats.gbt_country(filters)
         .$promise
         .then(function(data) {
+
+          // console.log( data.data );
+          $scope.usa_states = [];
           $scope.country = data.data.filter( function( item ) {
               return item.key !== '--';
             })
             .map( function( item ) {
+              if ( item.key === 'US' ) {
+                var states = item.regions.filter( function( reg ) {
+                  return reg.key !== '--';
+                })
+                .map( function( reg ) {
+                  return {
+                    name: reg.key,
+                    y: reg.sent_bytes
+                  };
+                });
+                if ( states.length > 20 ) {
+                  states.length = 20;
+                }
+                $scope.usa_states = states;
+              }
               return {
                 name: $scope.countries[item.key],
                 y: item.count
