@@ -27,14 +27,14 @@
       DomainsConfig.query().$promise.then(function(data) {
         data.forEach(function(item) {
           var name_ = item.domain_name + ' (Domain Configuration)';
-          service.data.push({ id: item.id, name: name_, targetType: 'domain' });
+          service.data.push({ id: item.id, accountId: item.account_id, name: name_, targetType: 'domain' });
         });
       });
 
       Companies.query().$promise.then(function(data) {
         data.forEach(function(item) {
           var name_ = item.companyName + ' (Account)';
-          service.data.push({ id: item.id, name: name_, targetType: 'account' });
+          service.data.push({ id: item.id, accountId: item.account_id, name: name_, targetType: 'account' });
         });
       });
 
@@ -48,20 +48,20 @@
       Apps.query().$promise.then(function(data) {
         data.forEach(function(item) {
           var name_ = item.app_name + ' (App)';
-          service.data.push({ id: item.id, name: name_, targetType: 'app' });
+          service.data.push({ id: item.id, accountId: item.account_id, name: name_, targetType: 'app' });
         });
       });
 
       ApiKeys.query().$promise.then(function(data) {
         data.forEach(function(item) {
           var name_ = item.key_name + ' (API Key)';
-          service.data.push({ id: item.id, name: name_, targetType: 'apikey' });
+          service.data.push({ id: item.id, accountId: item.account_id, name: name_, targetType: 'apikey' });
         });
       });
       DNSZones.query().$promise.then(function(data) {
         data.forEach(function(item) {
           var name_ = item.zone + '(DNS Zone)';
-          service.data.push({ id: item.id, name: name_, targetType: 'dnszone' });
+          service.data.push({ id: item.id, accountId: item.account_id, name: name_, targetType: 'dnszone' });
         });
       });
       // TODO: not released auditlog
@@ -95,6 +95,7 @@
       bindToController: {
         activityTarget: '=ngModel',
         targetType: '@',
+        accountId: '@',
         onSelect: '&'
       },
       controllerAs: '$ctrl',
@@ -111,6 +112,15 @@
           },
           function(newVal) {
             if (newVal === '' || (!!$ctrl.activityTarget && $ctrl.activityTarget.targetType !== newVal)) {
+              $ctrl.activityTarget = null;
+            }
+          });
+        // if changing accountId then need to change activityTarget
+        $scope.$watch(function() {
+            return $ctrl.accountId;
+          },
+          function(newVal) {
+            if (newVal === '' || (!!$ctrl.activityTarget && $ctrl.activityTarget.accountId !== newVal)) {
               $ctrl.activityTarget = null;
             }
           });
