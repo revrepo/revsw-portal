@@ -32,7 +32,8 @@
                    popover-append-to-body="{{true}}"
                    class="col-sm-2 control-label"
                    popover-trigger="mouseenter"
-                   uib-popover="Enter here a website/API domain name to be served by RevAPM"
+                   uib-popover="Enter here a website/API domain name to be served by RevAPM. Duplicate domain names are not allowed.
+                    If the system will complain about a duplicate domain name but you are the rightful domain owner please contact the RevAPM Customer Support service."
                    >Domain Name *</label>
 
             <div class="col-sm-10">
@@ -99,7 +100,9 @@
                    popover-append-to-body="{{true}}"
                    class="col-sm-2 control-label"
                    popover-trigger="mouseenter"
-                   uib-popover="Enter here a domain name to be used in 'Host' header in requests sent from RevAPM to the origin server">Origin Host Header *</label>
+                   uib-popover="Enter here a domain name to be used in 'Host' header of requests sent from RevAPM to
+ the origin server. The name might be different from origin server name/IP specified above. For example, if origin server IP is 11.11.11.11 and the origin HTTP server recognizes web requests for domain 'www.example.com' you will need to 
+specify '11.11.11.11' in origin server name field above and 'www.example.com' in this field.">Origin Host Header *</label>
 
             <div class="col-sm-10">
               <input type="text"

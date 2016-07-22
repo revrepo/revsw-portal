@@ -23,7 +23,8 @@
       <div class="panel-body">
         <form class="form-horizontal" name="createForm">
           <div class="form-group" ng-class="{ 'has-error': createForm.dnsZone.$invalid && createForm.dnsZone.$dirty }">
-            <label for="dns_zone" popover-append-to-body="{{true}}" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Enter a fully qualified domain name, e.g. 'mydomain.com'.  You may enter a subdomain like 'sub.mydomain.com' but you need to control the DNS for the first-level domain.">Domain *</label>
+            <label for="dns_zone" popover-append-to-body="{{true}}" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Enter a fully qualified domain name, e.g. 'domain.com'.  You may enter
+               a subdomain like 'sub.domain.com' but you need to control the DNS for the first-level domain. Duplicate zone names are not allowed.">Domain *</label>
             <div class="col-sm-10">
               <input type="text" autofocus class="form-control" ng-disabled="_loading" ng-model="model.zone" name="dnsZone" id="dns_zone" placeholder="Domain Name" validate-domain-name ng-maxlength="50" required>
               <div class="error-messages" ng-messages="createForm.dnsZone.$error" role="alert" ng-messages-multiple>

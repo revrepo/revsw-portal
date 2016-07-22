@@ -33,6 +33,9 @@ var Dialog = {
         ok: {
           css: 'button[ng-click="ok()"]'
         },
+        verifyTxtRecord: {
+          css: 'button[ng-click="ok(model)"]'
+        },
         proceed: {
           css: '.modal-footer .btn-danger'
         },
@@ -92,6 +95,20 @@ var Dialog = {
     return this
       .getModalEl()
       .element(by.css(this.locators.modal.buttons.ok.css));
+  },
+
+  /**
+   * ### Dialog.getVerifyTxtRecord()
+   *
+   * Return the reference to the `Verify Txt Record` button (Selenium WebDriver Element) from
+   * the Modal Dialog component from Portal app
+   *
+   * @returns {Object} Selenium WebDriver Element
+   */
+  getVerifyTxtRecord: function () {
+    return this
+        .getModalEl()
+        .element(by.css(this.locators.modal.buttons.verifyTxtRecord.css));
   },
 
   /**
@@ -161,6 +178,19 @@ var Dialog = {
     return this
       .getOkBtn()
       .click();
+  },
+
+  /**
+   * ### Dialog.clickVerifyTxtRecord()
+   *
+   * Triggers a click action on the `OK` button fro the Modal Dialog component
+   *
+   * @returns {Object} Promise
+   */
+  clickVerify: function () {
+    return this
+        .getVerifyTxtRecord()
+        .click();
   },
 
   /**
