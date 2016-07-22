@@ -79,7 +79,7 @@ var SSLNamesList = {
       by.css(this.locators.buttons.addNewSSLName.css));
   },
 
-  // ## Methods to interact with the SSL Cert List page components
+  // ## Methods to interact with the SSL Names List page components
 
   /**
    * ### SSLNamesList.clickAddNewSSLName()

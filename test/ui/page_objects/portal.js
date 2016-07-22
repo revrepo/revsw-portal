@@ -78,6 +78,9 @@ var SSLCertEditPage = require('./sslCerts/editPage');
 var SSLNamesListPage = require('./sslNames/listPage');
 var SSLNamesAddPage = require('./sslNames/addPage');
 
+var LogShippingListPage = require('./logShipping/listPage');
+var LogShippingAddPage = require('./logShipping/addPage');
+
 var PlansPage = require('./signUp/plansPage');
 var SignUpPage = require('./signUp/signUpPage');
 
@@ -160,6 +163,11 @@ var Portal = {
     listPage: SSLNamesListPage,
     addPage: SSLNamesAddPage
   },
+  logShipping: {
+    listPage: LogShippingListPage,
+    addPage: LogShippingAddPage
+  },
+
   // ## Authentication Helper methods
 
   /**
@@ -483,7 +491,21 @@ var Portal = {
         .goTo(Constants.header.appMenu.WEB,
             Constants.sideBar.web.SSL_NAMES);
   },
-  
+
+  /**
+   * ### Portal.goToLogShipping()
+   *
+   * Navigation helper method that executes all steps to navigate to `Log Shipping
+   * List` page
+   *
+   * @returns {Promise}
+   */
+  goToLogShipping: function () {
+    return this
+        .goTo(Constants.header.appMenu.ACCOUNT_SETTINGS,
+            Constants.sideBar.web.LOG_SHIPPING);
+  },
+
   // ## User Helper methods
 
   /**
@@ -1119,6 +1141,61 @@ var Portal = {
       me.sslNames.listPage.searcher.clearSearchCriteria();
       me.sslNames.listPage.searcher.setSearchCriteria(sslName.domainName);
       me.sslNames.listPage.table
+          .getFirstRow()
+          .clickDelete();
+      me.dialog.clickOk();
+      browser.getCurrentUrl().then(function (currentUrl) {
+        if (initialUrl !== currentUrl) {
+          browser.get(initialUrl);
+        }
+      });
+    });
+  },
+
+  /**
+   * ### Portal.createLogShippingJob(logShippingJob)
+   *
+   * Helper method that executes all steps required to create
+   * new Log Shipping Job in the Portal
+   *
+   * @param {Object} logShippingJob, data applying the schema defined in
+   * `DataProvider.generateLogShippingJobData()`
+   *
+   * @returns {Object} Promise
+   */
+  createLogShippingJob: function (logShippingJob) {
+    var me = this;
+    return browser.getCurrentUrl().then(function (initialUrl) {
+      me.goToLogShipping();
+      Portal.logShipping.listPage.clickAddNewLogShippingJob();
+      Portal.logShipping.addPage.form.fill(logShippingJob);
+      Portal.logShipping.addPage.clickCreateJobBtn();
+      browser.getCurrentUrl().then(function (currentUrl) {
+        if (initialUrl !== currentUrl) {
+          browser.get(initialUrl);
+        }
+      });
+    });
+  },
+
+  /**
+   * ### Portal.deleteLogShippingJob()
+   *
+   * Helper method that executes all steps required to delete a Log Shipping Job from
+   * Portal app.
+   *
+   * @param {Object} logShippingJob , data applying the schema defined in
+   * `DataProvider.generateLogShippingJobData()`
+   *
+   * @returns {Object} Promise
+   */
+  deleteLogShippingJob: function (logShippingJob) {
+    var me = this;
+    return browser.getCurrentUrl().then(function (initialUrl) {
+      me.goToLogShipping();
+      me.logShipping.listPage.searcher.clearSearchCriteria();
+      me.logShipping.listPage.searcher.setSearchCriteria(logShippingJob.name);
+      me.logShipping.listPage.table
           .getFirstRow()
           .clickDelete();
       me.dialog.clickOk();

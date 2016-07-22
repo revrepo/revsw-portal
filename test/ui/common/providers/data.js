@@ -678,6 +678,19 @@ var DataProvider = {
     }
   },
 
+  /**
+   * ### DataProvider.generateSSLNameData()
+   *
+   * Generates SSL Name data object
+   *
+   * @returns {Object}, generate SSL Name data with the following schema:
+   *
+   *    {
+   *      domainName: String,
+   *      account: String,
+   *      verificationMethod: String
+   *    }
+   */
   generateSSLNameData: function (data) {
     var timestamp = Date.now();
     var postfix = '.revsw.com';
@@ -699,6 +712,34 @@ var DataProvider = {
         account: ['API QA Reseller Company'],
         verificationMethod: 'DNS',
         verificationString: 'revsw.com'
+      }
+    }
+  },
+
+  /**
+   * ### DataProvider.generateLogShippingJobData()
+   *
+   * Generates Log Shipping Job data object
+   *
+   * @returns {Object}, generate Log Shipping Job Data with the following schema:
+   *
+   *    {
+   *      name: String,
+   *      account: String,
+   *    }
+   */
+  generateLogShippingJobData: function (data) {
+    var timestamp = Date.now();
+    var name = 'logshippingtest-' + timestamp;
+    if (data) {
+      return {
+        name: (data.name === undefined) ? name : data.name,
+        account: (data.account === undefined) ? ['Rev Test'] : data.account
+      }
+    }else {
+      return {
+        name: name,
+        account: ['Rev Test']
       }
     }
   }
