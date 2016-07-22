@@ -734,12 +734,34 @@ var DataProvider = {
     if (data) {
       return {
         name: (data.name === undefined) ? name : data.name,
-        account: (data.account === undefined) ? ['Rev Test'] : data.account
+        account: (data.account === undefined) ? ['Rev Test'] : data.account,
+        currentMode: (data.currentMode === undefined) ?  'Pause Log Shipping And Hold Log Files' : data.currentMode,
+        sourceType: (data.sourceType === undefined) ?  'Domain' : data.sourceType,
+        sourceDomain: (data.sourceDomain === undefined) ?  'test-proxy-cache-config.revsw.net' : data.sourceDomain,
+        destination: (data.destination === undefined) ?  'FTP' : data.destination,
+        host: (data.host === undefined) ?  'testsjc20-ls01.revsw.net' : data.host,
+        port: (data.port === undefined) ?  '21' : data.port,
+        secretKey: (data.secretKey === undefined) ?  '' : data.secretKey,
+        userName: (data.userName === undefined) ?  'ftptest' : data.userName,
+        password: (data.password === undefined) ?  'disaster-257' : data.password,
+        email: (data.email === undefined) ?  name + '@revsw.com' : data.email,
+        comment: (data.comment === undefined) ?  'test comment ' + timestamp : data.comment
       }
     }else {
       return {
         name: name,
-        account: ['Rev Test']
+        account: ['Rev Test'],
+        currentMode: 'Pause Log Shipping And Hold Log Files',
+        sourceType: 'Domain',
+        sourceDomain: 'test-proxy-cache-config.revsw.net',
+        destination: 'FTP',
+        host: 'testsjc20-ls01.revsw.net',
+        port: '21',
+        secretKey: '',
+        userName: 'ftptest',
+        password: 'disaster-257',
+        email: name + '@revsw.com',
+        comment: 'test comment ' + timestamp
       }
     }
   }

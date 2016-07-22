@@ -80,6 +80,7 @@ var SSLNamesAddPage = require('./sslNames/addPage');
 
 var LogShippingListPage = require('./logShipping/listPage');
 var LogShippingAddPage = require('./logShipping/addPage');
+var LogShippingEditPage = require('./logShipping/editPage');
 
 var PlansPage = require('./signUp/plansPage');
 var SignUpPage = require('./signUp/signUpPage');
@@ -165,7 +166,8 @@ var Portal = {
   },
   logShipping: {
     listPage: LogShippingListPage,
-    addPage: LogShippingAddPage
+    addPage: LogShippingAddPage,
+    editPage: LogShippingEditPage
   },
 
   // ## Authentication Helper methods
