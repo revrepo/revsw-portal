@@ -187,6 +187,12 @@
         params: {}
       },
 
+      mobile_desktop: {
+        method: 'GET',
+        url: $config.API_URL + '/stats/mobile_desktop/:domainId',
+        params: {}
+      },
+
       sdk_dirs: {
         method: 'GET',
         url: $config.API_URL + '/stats/sdk/dirs',
