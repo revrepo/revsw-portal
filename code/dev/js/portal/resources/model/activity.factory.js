@@ -9,6 +9,9 @@
   function ActivityResource(Resource, $config) {
 
     return Resource($config.API_URL + '/activity/:action', { action: '' }, {
+      query:{
+        isArray: false,
+      },
       page: {
         method: 'GET',
         isArray: true,
