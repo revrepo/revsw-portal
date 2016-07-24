@@ -24,6 +24,7 @@
     $scope.usa_states = [];
     $scope.statusCode = [];
     $scope.requestStatus = [];
+    $scope.mobileDesktopRatio = [];
 
     $scope.countries = Countries.query();
     $scope.delay = '24';
@@ -55,7 +56,7 @@
      *
      * @param {object} common parameters(domainId, from, to)
      */
-    $scope.reloadOS = function(filters) {
+    var reloadOS_ = function(filters) {
       Stats.os(filters)
         .$promise
         .then(function(data) {
@@ -71,7 +72,7 @@
      *
      * @param {object} common parameters(domainId, from, to)
      */
-    $scope.reloadDevice = function(filters) {
+    var reloadDevice_ = function(filters) {
       Stats.device(filters)
         .$promise
         .then(function(data) {
@@ -87,7 +88,7 @@
      *
      * @param {object} common parameters(domainId, from, to)
      */
-    $scope.reloadBrowser = function(filters) {
+    var reloadBrowser_ = function(filters) {
       Stats.browser(filters)
         .$promise
         .then(function(data) {
@@ -103,7 +104,7 @@
      *
      * @param {object} common parameters(domainId, from, to)
      */
-    $scope.reloadProtocol = function(filters) {
+    var reloadProtocol_ = function(filters) {
       Stats.protocol(filters)
         .$promise
         .then(function(data) {
@@ -124,7 +125,7 @@
      *
      * @param {object} common parameters(domainId, from, to)
      */
-    $scope.reloadHttpMethod = function(filters) {
+    var reloadHttpMethod_ = function(filters) {
       Stats.httpMethod(filters)
         .$promise
         .then(function(data) {
@@ -140,7 +141,7 @@
      *
      * @param {object}
      */
-    $scope.reloadHttpProtocol = function(filters) {
+    var reloadHttpProtocol_ = function(filters) {
       Stats.httpProtocol(filters)
         .$promise
         .then(function(data) {
@@ -156,7 +157,7 @@
      *
      * @param {object} common parameters(domainId, from, to)
      */
-    $scope.reloadStatusCode = function(filters) {
+    var reloadStatusCode_ = function(filters) {
       Stats.statusCode(filters)
         .$promise
         .then(function(data) {
@@ -172,7 +173,7 @@
      *
      * @param {object} common parameters(domainId, from, to)
      */
-    $scope.reloadContentType = function(filters) {
+    var reloadContentType_ = function(filters) {
       Stats.contentType(filters)
         .$promise
         .then(function(data) {
@@ -188,7 +189,7 @@
      *
      * @param {object} common parameters(domainId, from, to)
      */
-    $scope.reloadCacheStatus = function(filters) {
+    var reloadCacheStatus_ = function(filters) {
       Stats.cacheStatus(filters)
         .$promise
         .then(function(data) {
@@ -210,7 +211,7 @@
      *
      * @param {object} common parameters(domainId, from, to)
      */
-    $scope.reloadQUIC = function(filters) {
+    var reloadQUIC_ = function(filters) {
       Stats.quic(filters)
         .$promise
         .then(function(data) {
@@ -231,7 +232,7 @@
      *
      * @param {object} common parameters(domainId, from, to)
      */
-    $scope.reloadHTTP2 = function(filters) {
+    var reloadHTTP2_ = function(filters) {
       Stats.http2(filters)
         .$promise
         .then(function(data) {
@@ -261,7 +262,7 @@
       }
     };
 
-    $scope.reloadCountry = function(filters) {
+    var reloadCountry_ = function(filters) {
       Stats.gbt_country(filters)
         .$promise
         .then(function(data) {
@@ -303,7 +304,7 @@
      *
      * @param {object} common parameters(domainId, from, to)
      */
-    $scope.reloadRequestStatus = function(filters) {
+    var reloadRequestStatus_ = function(filters) {
       Stats.requestStatus(filters)
         .$promise
         .then(function(data) {
@@ -332,6 +333,27 @@
     };
 
     /**
+     * requests distribution by mobile/desktop clients
+     *
+     * @param {object} common parameters(domainId, from, to)
+     */
+    var reloadMobileDesktopRatio_ = function(filters) {
+      Stats.mobile_desktop(filters)
+        .$promise
+        .then(function(data) {
+          $scope.mobileDesktopRatio = [
+            { name: 'Mobile', y: data.data.mobile },
+            { name: 'Desktop', y: data.data.desktop },
+            { name: 'Spiders', y: data.data.spiders }
+          ]
+        })
+        .catch(function() {
+          $scope.mobileDesktopRatio = [];
+        });
+    };
+
+
+    /**
      * reload everything
      */
     $scope.reload = function() {
@@ -345,19 +367,20 @@
         filters.country = $scope.country_filter;
       }
 
-      $scope.reloadOS(filters);
-      $scope.reloadDevice(filters);
-      $scope.reloadBrowser(filters);
-      $scope.reloadCountry(filters);
-      $scope.reloadProtocol(filters);
-      $scope.reloadHttpMethod(filters);
-      $scope.reloadHttpProtocol(filters);
-      $scope.reloadStatusCode(filters);
-      $scope.reloadContentType(filters);
-      $scope.reloadCacheStatus(filters);
-      $scope.reloadQUIC(filters);
-      $scope.reloadHTTP2(filters);
-      $scope.reloadRequestStatus(filters);
+      reloadOS_(filters);
+      reloadDevice_(filters);
+      reloadBrowser_(filters);
+      reloadCountry_(filters);
+      reloadProtocol_(filters);
+      reloadHttpMethod_(filters);
+      reloadHttpProtocol_(filters);
+      reloadStatusCode_(filters);
+      reloadContentType_(filters);
+      reloadCacheStatus_(filters);
+      reloadQUIC_(filters);
+      reloadHTTP2_(filters);
+      reloadRequestStatus_(filters);
+      reloadMobileDesktopRatio_(filters);
     };
 
     // Load user domains

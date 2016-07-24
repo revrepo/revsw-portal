@@ -66,11 +66,23 @@
           <div class="row">
 
             <div class="col-md-6">
+              <h3>Mobile/Desktop Ratio</h3>
+              <div>
+                <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="mobileDesktopRatio"></div>
+              </div>
+            </div>
+
+            <div class="col-md-6">
               <h3>Edge Cache Hit/Miss Ratio</h3>
               <div>
                 <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="cacheStatus"></div>
               </div>
             </div>
+
+          </div>
+          <hr>
+
+          <div class="row">
 
             <div class="col-md-6">
               <h3>HTTP Status Codes Ratio</h3>
@@ -79,17 +91,17 @@
               </div>
             </div>
 
-          </div>
-          <hr>
-
-          <div class="row">
-
             <div class="col-md-6">
               <h3>Top 10 Countries</h3>
               <div>
                 <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="country"></div>
               </div>
             </div>
+
+          </div>
+          <hr>
+
+          <div class="row">
 
             <div class="col-md-6">
               <h3>Top 20 US States By Traffic</h3>
@@ -98,16 +110,16 @@
               </div>
             </div>
 
-          </div>
-          <hr>
-          <div class="row">
-
             <div class="col-md-6">
               <h3>HTTP/HTTPS Requests Ratio</h3>
               <div>
                 <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="protocol"></div>
               </div>
             </div>
+
+          </div>
+          <hr>
+          <div class="row">
 
             <div class="col-md-6">
               <h3>HTTP Methods</h3>
@@ -116,16 +128,16 @@
               </div>
             </div>
 
-          </div>
-          <hr>
-          <div class="row">
-
             <div class="col-md-6">
               <h3>Top 10 HTTP Content Types</h3>
               <div>
                 <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="contentType"></div>
               </div>
             </div>
+
+          </div>
+          <hr>
+          <div class="row">
 
             <div class="col-md-6">
               <h3>Top 10 OS</h3>
@@ -134,17 +146,17 @@
               </div>
             </div>
 
-          </div>
-          <hr>
-
-          <div class="row">
-
             <div class="col-md-6">
               <h3>Top 10 Devices</h3>
               <div>
                 <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="device"></div>
               </div>
             </div>
+
+          </div>
+          <hr>
+
+          <div class="row">
 
             <div class="col-md-6">
               <h3>Top 10 Browsers</h3>
@@ -153,10 +165,6 @@
               </div>
             </div>
 
-          </div>
-          <hr>
-          <div class="row">
-
             <div class="col-md-6">
               <h3>QUIC/Non-QUIC Ratio</h3>
               <div>
@@ -164,16 +172,16 @@
               </div>
             </div>
 
+          </div>
+          <hr>
+          <div class="row">
+
             <div class="col-md-6">
               <h3>H2/H2C/Non-HTTP2 Ratio</h3>
               <div>
                 <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="http2"></div>
               </div>
             </div>
-
-          </div>
-          <hr>
-          <div class="row">
 
             <div class="col-md-6">
               <h3>Request Completion Success/Failure Ratio</h3>
