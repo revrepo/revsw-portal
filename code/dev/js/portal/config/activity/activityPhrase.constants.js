@@ -43,6 +43,12 @@
         'dnszone':'DNS Zone',
         'dnsrecord': 'DNS Zone Record'
       },
+      /**
+       * @name  EVENT_TYPES
+       * @description
+       *   Name Event in graphs
+       * @type {Object}
+       */
       EVENT_TYPES:{
         'domain': 'Domain Config Modification',
         'purge': 'Object Purge',

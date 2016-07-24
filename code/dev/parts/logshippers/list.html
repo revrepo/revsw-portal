@@ -42,7 +42,9 @@
   <div class="row">
     <div class="col-sm-12">
       <h2 class="pull-left page-title">
-        Log Shipping Jobs
+        Log Shipping Jobs  <span>
+                <button class="btn btn-primary btn-sm" uib-tooltip="Refresh" ng-click="list()" ng-disabled="_load"><i class="glyphicon" ng-class="_loading ? 'glyphicon-refresh spin': 'glyphicon-refresh'"></i></button>
+              </span>
       </h2>
     </div>
   </div>
@@ -79,7 +81,7 @@
           <div class="alert alert-info" ng-if="_loading">
             <i class="glyphicon glyphicon-refresh spin" ng-if="item.loading"></i>&nbsp; Loading...
           </div>
-          <crud-pagination></crud-pagination>
+          <crud-pagination ng-if="records !== null"></crud-pagination>
           <table class="table">
             <thead>
               <tr>
