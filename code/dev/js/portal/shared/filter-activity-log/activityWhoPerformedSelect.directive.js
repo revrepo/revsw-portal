@@ -18,6 +18,7 @@
     this.init = function() {
       var def = $q.defer();
       service.data.lenght = 0;
+      service.data.push({ id: null, name: 'All Users and All API Keys', userType: 'all' });
       if (!User.isAuthed()) {
         return $q.when(service.data);
       }
@@ -57,7 +58,8 @@
       scope: true,
       replace: true,
       bindToController: {
-        whoPerformed: '=ngModel'
+        whoPerformed: '=ngModel',
+        accountId: '@'
       },
       controllerAs: '$ctrl',
       controller: /*@ngInject*/ function($scope, ActivityWhoPerformedListService) {
@@ -66,7 +68,32 @@
         if ($ctrl.whoPerformedList.length === 0) {
           ActivityWhoPerformedListService.init();
         }
+        // if changing accountId then need to change whoPerformed
+        $scope.$watch(function() {
+            return $ctrl.accountId;
+          },
+          function(newVal) {
+            if (newVal === '' || (!!$ctrl.whoPerformed && $ctrl.whoPerformed.accountId !== newVal)) {
+              $ctrl.whoPerformed = null;
+            }
+          });
 
+        $ctrl.filterAccountAndAllItem = function(item) {
+          // item 'All Users and All API Keys' need to be in always in list
+          if (item.id === null) {
+            return true;
+          }
+          if ($ctrl.accountId !== '') {
+            if (angular.isArray(item.accountId)) {
+              return (item.accountId.indexOf($ctrl.accountId) !== -1);
+            } else {
+              return item.accountId === $ctrl.accountId;
+            }
+          } else {
+            return true;
+          }
+          return false;
+        };
       }
     };
   }

@@ -7,7 +7,7 @@
   "newcap": true,
   "quotmark": "single",
   "maxdepth": 5,
-  "maxstatements": 33,
+  "maxstatements": 41,
   "maxlen": 100,
   "eqnull": true,
   "funcscope": true,

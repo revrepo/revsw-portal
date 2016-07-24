@@ -16,7 +16,10 @@
 
     $scope.country_hits = [];
     $scope.country_users = [];
+
     $scope.country_gbt = [];
+    $scope.usa_states_gbt = [];
+
     $scope.os_hits = [];
     $scope.os_users = [];
     $scope.os_gbt = [];
@@ -62,7 +65,7 @@
     };
 
     //  ---------------------------------
-    $scope.reloadOne = function(type, name, count, filters) {
+    var reloadOne_ = function(type, name, count, filters) {
       filters.report_type = name;
       filters.count = count;
       return Stats['sdk_top_' + type](filters)
@@ -70,9 +73,25 @@
         .then(function(data) {
           if (data.data && data.data.length > 0) {
             var newData = [];
-            angular.forEach(data.data, function(item) {
+
+            // debug
+            // if (name === 'country') {
+            //   console.log( data.data );
+            // }
+            // debug
+
+            data.data.forEach( function(item) {
 
               if (name === 'country') {
+                if ( item.key === 'US' && type === 'gbt' && item.regions ) {
+                  //  usa states
+                  $scope.usa_states_gbt = item.regions.map( function( r ) {
+                    return {
+                      name: r.key,
+                      y: r.received_bytes
+                    };
+                  });
+                }
                 item.key = $scope.countries[item.key.toUpperCase()] || item.key;
               }
               newData.push({
@@ -91,8 +110,7 @@
     };
 
     //  ---------------------------------
-    $scope.reloadOther = function(type, name, count, filters) {
-
+    var reloadOther_ = function(type, name, count, filters) {
 
       filters.report_type = name;
       filters.count = count;
@@ -100,14 +118,12 @@
         .$promise
         .then(function(data) {
           if (data.data && data.data.length > 0) {
-            var newData = [];
-            angular.forEach(data.data, function(item) {
-              newData.push({
+            $scope[name + '_' + type] = data.data.map( function(item) {
+              return {
                 name: item.key,
                 y: (type === 'gbt' ? (item.received_bytes + item.sent_bytes) : item.count)
-              });
+              };
             });
-            $scope[name + '_' + type] = newData;
 
             // debug
             // if ( type === 'gbt' && name === 'domain' ) {
@@ -140,24 +156,24 @@
 
       $scope._loading = true;
       return $q.all([
-          $scope.reloadOne('hits', 'country', 20, filters),
-          $scope.reloadOne('users', 'country', 20, filters),
-          $scope.reloadOne('gbt', 'country', 20, filters),
-          $scope.reloadOne('hits', 'os', 10, filters),
-          $scope.reloadOne('users', 'os', 10, filters),
-          $scope.reloadOne('gbt', 'os', 10, filters),
-          $scope.reloadOne('hits', 'device', 20, filters),
-          $scope.reloadOne('users', 'device', 20, filters),
-          $scope.reloadOne('gbt', 'device', 20, filters),
-          $scope.reloadOne('hits', 'operator', 20, filters),
-          $scope.reloadOne('users', 'operator', 20, filters),
-          $scope.reloadOne('gbt', 'operator', 20, filters),
-          $scope.reloadOne('hits', 'network', 2, filters),
-          $scope.reloadOne('users', 'network', 2, filters),
-          $scope.reloadOne('gbt', 'network', 2, filters),
-          $scope.reloadOther('gbt', 'domain', 10, filters),
-          $scope.reloadOther('hits', 'domain', 10, filters),
-          $scope.reloadOther('hits', 'status_code', 10, filters)
+          reloadOne_('hits', 'country', 20, filters),
+          reloadOne_('users', 'country', 20, filters),
+          reloadOne_('gbt', 'country', 20, filters),
+          reloadOne_('hits', 'os', 10, filters),
+          reloadOne_('users', 'os', 10, filters),
+          reloadOne_('gbt', 'os', 10, filters),
+          reloadOne_('hits', 'device', 20, filters),
+          reloadOne_('users', 'device', 20, filters),
+          reloadOne_('gbt', 'device', 20, filters),
+          reloadOne_('hits', 'operator', 20, filters),
+          reloadOne_('users', 'operator', 20, filters),
+          reloadOne_('gbt', 'operator', 20, filters),
+          reloadOne_('hits', 'network', 2, filters),
+          reloadOne_('users', 'network', 2, filters),
+          reloadOne_('gbt', 'network', 2, filters),
+          reloadOther_('gbt', 'domain', 10, filters),
+          reloadOther_('hits', 'domain', 10, filters),
+          reloadOther_('hits', 'status_code', 10, filters)
         ])
         .catch(function(err) {
           AlertService.danger('Oops! Something went wrong');

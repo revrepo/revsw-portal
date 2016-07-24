@@ -34,7 +34,6 @@
         'user': 'User',
         'account': 'Company',
         'domain': 'Domain',
-        'purge': 'Cache',
         'apikey': 'API Key',
         'app': 'App',
         'sslcert': 'SSL Certificate',
@@ -44,6 +43,12 @@
         'dnszone':'DNS Zone',
         'dnsrecord': 'DNS Zone Record'
       },
+      /**
+       * @name  EVENT_TYPES
+       * @description
+       *   Name Event in graphs
+       * @type {Object}
+       */
       EVENT_TYPES:{
         'domain': 'Domain Config Modification',
         'purge': 'Object Purge',

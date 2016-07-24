@@ -70,7 +70,9 @@ var Constants = {
     web: {
       DOMAINS: 'Domains',
       PURGE_CACHE: 'Purge Cache',
-      SSL_CERTIFICATES: 'SSL Certificates'
+      SSL_CERTIFICATES: 'SSL Certificates',
+      SSL_NAMES: 'SSL Names',
+      LOG_SHIPPING: 'Log Shipping'
     },
     analytics: {
       PROXY_TRAFFIC: 'Proxy Traffic',

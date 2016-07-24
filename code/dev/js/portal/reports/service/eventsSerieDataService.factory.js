@@ -85,7 +85,8 @@
             from_timestamp: options.from_timestamp,
             to_timestamp: options.to_timestamp,
             target_id: options.domain_id,
-            target_type: 'domain'
+            target_type: 'domain',
+            activity_type: 'publish'
           };
           def.resolve(Activity.query(domainQueryPrams).$promise);
         } else {
@@ -110,7 +111,8 @@
             from_timestamp: options.from_timestamp,
             to_timestamp: options.to_timestamp,
             target_id: options.domain_id,
-            target_type: 'purge'
+            target_type: 'domain',
+            activity_type: 'purge'
           };
           def.resolve(Activity.query(domainQueryPrams).$promise);
         } else {
@@ -124,18 +126,6 @@
           actionPreparingRequestSSLCertEvents(options),
           actionPreparingRequestPurgeEvents(options)
         ])
-        .then(function clearData(requests) {
-          return $q.all(requests).then(function(results) {
-            if (results[0] !== null && !!results[0].data) {
-              results[0].data = _.filter(results[0].data, function(item) {
-                if (item.activity_target === 'domain' && item.activity_type === 'publish') {
-                  return item;
-                }
-              });
-            }
-            return results;
-          });
-        })
         .then(function(dataAllRequests) {
           // NOTE: create series data
           var serie = {
@@ -165,8 +155,16 @@
               pointFormatter: function eventPointFormatter() {
                 var _text = 'Event ';
                 switch (this.options.name) {
-                  case 'purge':
+                  // case 'purge':
                   case 'domain':
+                    var _name_ = 'domain';
+                    if (this.total.activity_type === 'purge') {
+                      _name_ = 'purge';
+                    }
+                    _text = '<b>' + this.series.name + '</b> ' + ActivityPhrase.EVENT_TYPES[_name_] +
+                      '<br>' + moment(this.x).format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span>] MMM D') + '';
+                    _text += '<br> performed by ' + this.total.user_name + '';
+                    break;
                   case 'sslcert':
                     _text = '<b>' + this.series.name + '</b> ' + ActivityPhrase.EVENT_TYPES[this.options.name] +
                       '<br>' + moment(this.x).format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span>] MMM D') + '';
@@ -178,11 +176,7 @@
                 }
                 return _text;
               }
-            },
-            // showInLegend: false,
-            // style: { // text style
-            //   color: 'white'
-            // },
+            }
           };
           angular.forEach(dataAllRequests, function(data) {
             if (data !== null) {
@@ -192,19 +186,27 @@
                   fillColor: constEventsColor[item.activity_target],
                   radius: 6
                 };
+                var title_ = item.activity_target[0].toUpperCase();
+                // Event 'Object Purge' is Activity Domain
+                if (item.activity_target === 'domain') {
+                  if (item.activity_type === 'purge') {
+                    title_ = 'P';
+                    marker.fillColor = constEventsColor[item.activity_type];
+                  }
+                }
                 var eventPointData = {
                   id: item.activity_target + '_' + item.datetime,
                   name: item.activity_target,
                   activity_target: item.activity_target,
+                  activity_type: item.activity_type,
                   user_type: item.user_type,
                   total: item,
-                  title: item.activity_target[0].toUpperCase(),
+                  title: title_,
                   y: 0,
                   x: item.datetime,
                   marker: marker
                 };
                 serie.data.push(eventPointData);
-
               });
             }
           });
