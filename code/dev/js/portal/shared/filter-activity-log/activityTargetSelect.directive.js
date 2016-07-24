@@ -105,7 +105,25 @@
         if ($ctrl.activityTargetList.length === 0) {
           ActivityTargetListService.init();
         }
-
+        $ctrl.filterAccountAndAllItem = function(item) {
+          // item 'All Activity Targets' need to be in always in list
+          if (item.id === null) {
+            return true;
+          }
+          if ($ctrl.targetType !== '' && $ctrl.targetType !== item.targetType) {
+            return false;
+          }
+          if ($ctrl.accountId !== '') {
+            if (angular.isArray(item.accountId)) {
+              return (item.accountId.indexOf($ctrl.accountId) !== -1);
+            } else {
+              return item.accountId === $ctrl.accountId;
+            }
+          } else {
+            return true;
+          }
+          return false;
+        };
         // if changing targetType then need to change activityTarget
         $scope.$watch(function() {
             return $ctrl.targetType;

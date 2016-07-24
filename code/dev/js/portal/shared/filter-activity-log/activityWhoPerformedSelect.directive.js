@@ -77,6 +77,23 @@
               $ctrl.whoPerformed = null;
             }
           });
+
+        $ctrl.filterAccountAndAllItem = function(item) {
+          // item 'All Users and All API Keys' need to be in always in list
+          if (item.id === null) {
+            return true;
+          }
+          if ($ctrl.accountId !== '') {
+            if (angular.isArray(item.accountId)) {
+              return (item.accountId.indexOf($ctrl.accountId) !== -1);
+            } else {
+              return item.accountId === $ctrl.accountId;
+            }
+          } else {
+            return true;
+          }
+          return false;
+        };
       }
     };
   }

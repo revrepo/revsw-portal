@@ -1,7 +1,7 @@
 <div class="activity-who-performed-select">
-  <ui-select ng-model="$ctrl.whoPerformed" theme="select2" ng-animate-disabled ng-disabled="_loading" style="width: 100%;"  name="whoPerformed">
+  <ui-select ng-model="$ctrl.whoPerformed" theme="select2" ng-animate-disabled ng-disabled="_loading" style="width: 100%;" name="whoPerformed">
     <ui-select-match placeholder="All Users and All API Keys">{{$select.selected.name}}</ui-select-match>
-    <ui-select-choices repeat="item as item in $ctrl.whoPerformedList | filter: {name: $select.search}| filter : {accountId:$ctrl.accountId}">
+    <ui-select-choices repeat="item as item in $ctrl.whoPerformedList | filter: {name: $select.search}| filter : $ctrl.filterAccountAndAllItem">
       <div ng-bind-html="item.name|highlight: $select.search"></div>
     </ui-select-choices>
   </ui-select>
