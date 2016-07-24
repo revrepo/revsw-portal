@@ -158,7 +158,6 @@
                   // case 'purge':
                   case 'domain':
                     var _name_ = 'domain';
-                    console.log(this.total.activity_type)
                     if (this.total.activity_type === 'purge') {
                       _name_ = 'purge';
                     }
@@ -192,7 +191,7 @@
                 if (item.activity_target === 'domain') {
                   if (item.activity_type === 'purge') {
                     title_ = 'P';
-                    marker.fillColor = constEventsColor['purge'];
+                    marker.fillColor = constEventsColor[item.activity_type];
                   }
                 }
                 var eventPointData = {
