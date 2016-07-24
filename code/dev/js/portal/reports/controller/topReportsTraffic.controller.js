@@ -344,7 +344,7 @@
           $scope.mobileDesktopRatio = [
             { name: 'Mobile', y: data.data.mobile },
             { name: 'Desktop', y: data.data.desktop },
-            { name: 'Spiders', y: data.data.spiders }
+            { name: 'Web Crawlers', y: data.data.spiders }
           ];
         })
         .catch(function() {
