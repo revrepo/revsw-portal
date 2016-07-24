@@ -14,7 +14,7 @@
     <div class="panel panel-info panel-body">
       <label class="text text-info col-xs-12 col-sm-12 col-md-12">a) Action Taker</label>
       <div class="col-xs-12 col-sm-12 col-md-12">
-         <div class="row form-group" ng-if="auth.isReseller() || auth.isRevadmin()">
+        <div class="row form-group" ng-if="auth.isReseller() || auth.isRevadmin()">
           <div style="margin-left: 10px;">
             <ui-select ng-model="$ctrl.newFilterState.account_id" theme="select2" ng-animate-disabled ng-disabled="_loading" style="width:100%;" id="account_id" name="accountId">
               <ui-select-match placeholder="Select Account">{{$select.selected.name}}</ui-select-match>
