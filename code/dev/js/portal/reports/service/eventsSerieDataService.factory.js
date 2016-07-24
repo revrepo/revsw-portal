@@ -85,7 +85,8 @@
             from_timestamp: options.from_timestamp,
             to_timestamp: options.to_timestamp,
             target_id: options.domain_id,
-            target_type: 'domain'
+            target_type: 'domain',
+            activity_type :'publish'
           };
           def.resolve(Activity.query(domainQueryPrams).$promise);
         } else {
@@ -125,18 +126,6 @@
           actionPreparingRequestSSLCertEvents(options),
           actionPreparingRequestPurgeEvents(options)
         ])
-        .then(function clearData(requests) {
-          return $q.all(requests).then(function(results) {
-            if (results[0] !== null && !!results[0].data) {
-              results[0].data = _.filter(results[0].data, function(item) {
-                if (item.activity_target === 'domain' && item.activity_type === 'publish') {
-                  return item;
-                }
-              });
-            }
-            return results;
-          });
-        })
         .then(function(dataAllRequests) {
           // NOTE: create series data
           var serie = {
