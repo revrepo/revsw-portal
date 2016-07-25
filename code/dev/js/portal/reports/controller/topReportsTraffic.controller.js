@@ -274,12 +274,13 @@
             })
             .map( function( item ) {
               if ( item.key === 'US' ) {
+                var statesCodes2Names = Util.statesCodes2Names();
                 var states = item.regions.filter( function( reg ) {
                   return reg.key !== '--';
                 })
                 .map( function( reg ) {
                   return {
-                    name: reg.key,
+                    name: statesCodes2Names[reg.key] || reg.key,
                     y: reg.sent_bytes
                   };
                 });
@@ -341,11 +342,15 @@
       Stats.mobile_desktop(filters)
         .$promise
         .then(function(data) {
-          $scope.mobileDesktopRatio = [
-            { name: 'Mobile', y: data.data.mobile },
-            { name: 'Desktop', y: data.data.desktop },
-            { name: 'Web Crawlers', y: data.data.spiders }
-          ];
+          if ( data.data.mobile + data.data.desktop + data.data.spiders === 0 ) {
+            $scope.mobileDesktopRatio = [];
+          } else {
+            $scope.mobileDesktopRatio = [
+              { name: 'Mobile', y: data.data.mobile },
+              { name: 'Desktop', y: data.data.desktop },
+              { name: 'Spiders', y: data.data.spiders }
+            ]
+          }
         })
         .catch(function() {
           $scope.mobileDesktopRatio = [];
