@@ -25,9 +25,9 @@ describe('Smoke', function () {
 
     // Defining set of users for which all below tests will be run
     var users = [
-        config.get('portal.users.revAdmin') // TODO: add other roles
-                                            // getting problem with setting some field on Edit form
-                                            // with other roles.
+        config.get('portal.users.revAdmin'),
+        config.get('portal.users.reseller'),
+        config.get('portal.users.admin')
     ];
 
     users.forEach(function (user) {
@@ -55,7 +55,14 @@ describe('Smoke', function () {
 
                 it('should display edit Log Shipping button',
                     function () {
-                        var job = DataProvider.generateLogShippingJobData();
+                        var data;
+                        if (user.role === 'Reseller'){
+                            data = {
+                                account: ['API QA Reseller Company']
+                            };
+                        }
+
+                        var job = DataProvider.generateLogShippingJobData(data);
                         Portal.createLogShippingJob(job);
 
                         var editButton = Portal.logShipping.listPage.table
@@ -68,7 +75,14 @@ describe('Smoke', function () {
 
                 it('should display "Edit Log Shipping" form',
                     function () {
-                        var job = DataProvider.generateLogShippingJobData();
+                        var data;
+                        if (user.role === 'Reseller'){
+                            data = {
+                                account: ['API QA Reseller Company']
+                            };
+                        }
+
+                        var job = DataProvider.generateLogShippingJobData(data);
                         Portal.createLogShippingJob(job);
 
                         Portal.logShipping.listPage.table
@@ -81,7 +95,14 @@ describe('Smoke', function () {
 
                 it('should allow to cancel an Log Shipping Job edition',
                     function () {
-                        var job = DataProvider.generateLogShippingJobData();
+                        var data;
+                        if (user.role === 'Reseller'){
+                            data = {
+                                account: ['API QA Reseller Company']
+                            };
+                        }
+
+                        var job = DataProvider.generateLogShippingJobData(data);
                         Portal.createLogShippingJob(job);
 
                         Portal.logShipping.listPage.table
@@ -96,8 +117,19 @@ describe('Smoke', function () {
 
                 it('should update Log Shipping when filling all required data',
                     function () {
-                        var job = DataProvider.generateLogShippingJobData();
-                        var updatedJob = DataProvider.generateLogShippingJobData();
+                        var data;
+                        if (user.role === 'Reseller'){
+                            data = {
+                                account: ['API QA Reseller Company']
+                            };
+                        }else if(user.role === 'Admin'){
+                            data = {
+                                sourceDomain: 'qa-admin-10-portal-ui-test.com'
+                            };
+                        }
+
+                        var job = DataProvider.generateLogShippingJobData(data);
+                        var updatedJob = DataProvider.generateLogShippingJobData(data);
 
                         Portal.createLogShippingJob(job);
 
@@ -108,6 +140,7 @@ describe('Smoke', function () {
                             .clickEdit();
 
                         Portal.logShipping.editPage.updateLogShippingJob(updatedJob);
+
                         Portal.dialog.clickOk();
                         Portal.logShipping.editPage.clickBackToList();
 
