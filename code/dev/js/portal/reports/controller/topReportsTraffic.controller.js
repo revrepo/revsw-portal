@@ -274,12 +274,13 @@
             })
             .map( function( item ) {
               if ( item.key === 'US' ) {
+                var statesCodes2Names = Util.statesCodes2Names();
                 var states = item.regions.filter( function( reg ) {
                   return reg.key !== '--';
                 })
                 .map( function( reg ) {
                   return {
-                    name: reg.key,
+                    name: statesCodes2Names[reg.key] || reg.key,
                     y: reg.sent_bytes
                   };
                 });
@@ -309,22 +310,26 @@
         .$promise
         .then(function(data) {
 
-          var st = [{
-            name: 'Successfull',
-            y: 0
-          }, {
-            name: 'Failed',
-            y: 0
-          }];
-
+          var ok = 0,
+            failed = 0;
           data.data.forEach( function(item) {
             if (item.key === 'OK') {
-              st[0].y = item.count;
+              ok = item.count;
             } else {
-              st[1].y += item.count;
+              failed += item.count;
             }
           });
-          $scope.requestStatus = st;
+          if ( ( ok + failed ) === 0 ) {
+            $scope.requestStatus = [];
+          } else {
+            $scope.requestStatus = [{
+              name: 'Successfull',
+              y: ok
+            }, {
+              name: 'Failed',
+              y: failed
+            }];
+          }
         })
         .catch(function() {
           $scope.requestStatus = [];
@@ -341,11 +346,15 @@
       Stats.mobile_desktop(filters)
         .$promise
         .then(function(data) {
-          $scope.mobileDesktopRatio = [
-            { name: 'Mobile', y: data.data.mobile },
-            { name: 'Desktop', y: data.data.desktop },
-            { name: 'Web Crawlers', y: data.data.spiders }
-          ];
+          if ( data.data.mobile + data.data.desktop + data.data.spiders === 0 ) {
+            $scope.mobileDesktopRatio = [];
+          } else {
+            $scope.mobileDesktopRatio = [
+              { name: 'Mobile', y: data.data.mobile },
+              { name: 'Desktop', y: data.data.desktop },
+              { name: 'Spiders', y: data.data.spiders }
+            ]
+          }
         })
         .catch(function() {
           $scope.mobileDesktopRatio = [];
