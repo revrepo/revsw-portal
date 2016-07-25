@@ -78,6 +78,8 @@ var SSLCertEditPage = require('./sslCerts/editPage');
 var SSLNamesListPage = require('./sslNames/listPage');
 var SSLNamesAddPage = require('./sslNames/addPage');
 
+var StagingEnvPage = require('./stagingEnv/stagingEnvPage');
+
 var LogShippingListPage = require('./logShipping/listPage');
 var LogShippingAddPage = require('./logShipping/addPage');
 var LogShippingEditPage = require('./logShipping/editPage');
@@ -168,6 +170,9 @@ var Portal = {
     listPage: LogShippingListPage,
     addPage: LogShippingAddPage,
     editPage: LogShippingEditPage
+  },
+  stagingEnv: {
+    page: StagingEnvPage
   },
 
   // ## Authentication Helper methods
@@ -506,6 +511,19 @@ var Portal = {
     return this
         .goTo(Constants.header.appMenu.ACCOUNT_SETTINGS,
             Constants.sideBar.web.LOG_SHIPPING);
+  },
+
+  /**
+   * ### Portal.goToStagingEnv()
+   *
+   * Navigation helper method that executes all steps to navigate to `Staging Env.` page
+   *
+   * @returns {Promise}
+   */
+  goToStagingEnv: function () {
+    return this
+        .goTo(Constants.header.appMenu.WEB,
+            Constants.sideBar.web.STAGING_ENV);
   },
 
   // ## User Helper methods

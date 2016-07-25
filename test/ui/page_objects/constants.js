@@ -72,7 +72,8 @@ var Constants = {
       PURGE_CACHE: 'Purge Cache',
       SSL_CERTIFICATES: 'SSL Certificates',
       SSL_NAMES: 'SSL Names',
-      LOG_SHIPPING: 'Log Shipping'
+      LOG_SHIPPING: 'Log Shipping',
+      STAGING_ENV: 'Staging Env.'
     },
     analytics: {
       PROXY_TRAFFIC: 'Proxy Traffic',
