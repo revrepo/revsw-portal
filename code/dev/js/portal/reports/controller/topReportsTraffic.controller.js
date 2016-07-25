@@ -310,22 +310,26 @@
         .$promise
         .then(function(data) {
 
-          var st = [{
-            name: 'Successfull',
-            y: 0
-          }, {
-            name: 'Failed',
-            y: 0
-          }];
-
+          var ok = 0,
+            failed = 0;
           data.data.forEach( function(item) {
             if (item.key === 'OK') {
-              st[0].y = item.count;
+              ok = item.count;
             } else {
-              st[1].y += item.count;
+              failed += item.count;
             }
           });
-          $scope.requestStatus = st;
+          if ( ( ok + failed ) === 0 ) {
+            $scope.requestStatus = [];
+          } else {
+            $scope.requestStatus = [{
+              name: 'Successfull',
+              y: ok
+            }, {
+              name: 'Failed',
+              y: failed
+            }];
+          }
         })
         .catch(function() {
           $scope.requestStatus = [];
