@@ -59,18 +59,12 @@ users.forEach(function (user) {
             it('should display staging server ip address in etc/hosts config',
                 function () {
                     var configString = Portal.stagingEnv.page.getConfigString();
-                    configString.then(function (str) {
-                        console.log(str);
-                    });
                     expect(configString).toContain(expectedIpAddress);
                 });
 
             it('should display staging server ip address in example string',
                 function () {
                     var exampleString = Portal.stagingEnv.page.getExampleString();
-                    exampleString.then(function (str) {
-                        console.log(str);
-                    });
                     expect(exampleString).toContain(expectedIpAddress);
                 });
         });
