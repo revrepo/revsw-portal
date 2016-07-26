@@ -72,7 +72,6 @@ var Constants = {
       PURGE_CACHE: 'Purge Cache',
       SSL_CERTIFICATES: 'SSL Certificates',
       SSL_NAMES: 'SSL Names',
-      LOG_SHIPPING: 'Log Shipping',
       STAGING_ENV: 'Staging Env.'
     },
     analytics: {
@@ -90,7 +89,8 @@ var Constants = {
       API_KEYS: 'API Keys',
       UPDATE_PASSWORD: 'Update Password',
       SECURITY_SETTINGS: 'Security Settings',
-      ACTIVITY_LOG: 'Activity Log'
+      ACTIVITY_LOG: 'Activity Log',
+      LOG_SHIPPING: 'Log Shipping'
     },
     billing: {
       BILLING: 'Billing',
