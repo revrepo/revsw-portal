@@ -47,6 +47,9 @@ describe('Functional', function () {
       describe('With user: ' + user.role, function () {
         beforeAll(function () {
           Portal.signIn(user);
+          if (user.role === 'Reseller'){
+            Portal.sideBar.collapseDashboard();
+          }
           Portal.goToUsageReport();
         });
 
@@ -55,6 +58,7 @@ describe('Functional', function () {
         });
 
         beforeEach(function () {
+
         });
 
         afterEach(function () {

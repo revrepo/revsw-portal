@@ -510,7 +510,7 @@ var Portal = {
   goToLogShipping: function () {
     return this
         .goTo(Constants.header.appMenu.ACCOUNT_SETTINGS,
-            Constants.sideBar.web.LOG_SHIPPING);
+            Constants.sideBar.admin.LOG_SHIPPING);
   },
 
   /**

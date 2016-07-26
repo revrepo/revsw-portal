@@ -41,6 +41,9 @@ var SideBar = {
     arrow: {
       className: 'fa-caret-up'
     },
+    arrowDown: {
+      className: 'fa-caret-down'
+    },
     menu: {
       className: 'side-menu',
       options: {
@@ -163,6 +166,22 @@ var SideBar = {
   },
 
   /**
+   * ### SideBar.getCollapseArrowElement()
+   *
+   * Returns the reference to the collapse arrow (Selenium WebDriver
+   * Element)
+   *
+   * @param {String} menuHeader, the label of header from the menu option
+   *
+   * @returns {Selenium WebDriver Element}
+   */
+  getCollapseArrowElement: function (menuHeader) {
+    return menuHeader
+        .all(by.className(this.locators.arrowDown.className))
+        .get(0);
+  },
+
+  /**
    * ### SideBar.expandBlockIfNotExpanded()
    *
    * Clicks on expand arrow if block is not expanded
@@ -193,6 +212,38 @@ var SideBar = {
             .click();
       }
     });
+  },
+
+  /**
+   *### SideBar.collapseDashboard()
+   *
+   * Check if Dashboard is expanded and performs click on it
+   *
+   * @returns {Promise}
+   */
+  collapseDashboard: function () {
+    var container = this.getHeaderElem('Dashboards');
+    this.clickCollapseArrowIfDisplayed(container);
+  },
+
+  /**
+   *### SideBar.clickCollapseArrowIfDisplayed()
+   *
+   * Check if collapse arrow is available and perform click on it
+   *
+   * @param {Selenium WebDriver Element} container, current left side menu block to work with
+   *
+   * @returns {Promise}
+   */
+  clickCollapseArrowIfDisplayed: function (container) {
+    var me = this;
+    return container.all(by.className(this.locators.arrowDown.className)).count()
+        .then(function (result) {
+          if (result === 1) {
+            me.getCollapseArrowElement(container)
+                .click();
+          }
+        });
   },
 
   /**

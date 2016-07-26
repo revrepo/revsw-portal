@@ -48,6 +48,11 @@ var UsageReport = {
       companyName: {
         css: '[ng-click=\"$select.toggle($event)\"]'
       }
+    },
+    labels: {
+      formTitle: {
+        css: 'div.col-md-4 h4'
+      }
     }
   },
 
@@ -177,69 +182,92 @@ var UsageReport = {
   },
 
   /**
+   * ### UsageReport.getFormByName(formName)
+   *
+   * Gets the reference to form element by its name.
+   *
+   * @param {String} formName, form name.
+   *
+   * @returns {Promise}
+   */
+  getFormByName: function (formName) {
+    return this.getPanelBodyElem().all(by.css(this.locators.labels.formTitle.css))
+        .filter(function(elem, index) {
+          return elem.getText().then(function(text) {
+            return text === formName;
+          });
+        }).first()
+        .element(by.xpath('..'));
+  },
+
+  getFormTextByFormName: function (formName) {
+    return this.getFormByName(formName).getText();
+  },
+
+  /**
    * ### UsageReport.getDomainsForm()
    *
-   * Gets the reference to `Domains` form element.
+   * Gets the reference to `Domains` form element core/text.
    *
    * @returns {Promise}
    */
   getDomainsForm: function () {
-    return this.getForm(1, 0).getText();
+    return this.getFormTextByFormName('Domains');
   },
 
   /**
    * ### UsageReport.getMobileAppsForm()
    *
-   * Gets the reference to `Mobile Apps` form element.
+   * Gets the reference to `Mobile Apps` form element core/text.
    *
    * @returns {Promise}
    */
   getMobileAppsForm: function () {
-    return this.getForm(1, 1).getText();
+    return this.getFormTextByFormName('Mobile Apps');
   },
 
   /**
    * ### UsageReport.getApiKeysForm()
    *
-   * Gets the reference to `Api Keys` form element.
+   * Gets the reference to `API Keys` form element core/text.
    *
    * @returns {Promise}
    */
   getApiKeysForm: function () {
-    return this.getForm(1, 2).getText();
+    return this.getFormTextByFormName('API Keys');
   },
 
   /**
    * ### UsageReport.getTotalTrafficForm()
    *
-   * Gets the reference to `Total Traffic` form element.
+   * Gets the reference to `Traffic Total` form element core/text.
    *
    * @returns {Promise}
    */
   getTotalTrafficForm: function () {
-    return this.getForm(2, 0).getText();
+    return this.getFormTextByFormName('Traffic Total');
   },
 
   /**
    * ### UsageReport.getEdgeCacheUsageForm()
    *
-   * Gets the reference to `Edge Cache Usage` form element.
+   * Gets the reference to `Edge Cache Usage` form element core/text.
    *
    * @returns {Promise}
    */
   getEdgeCacheUsageForm: function () {
-    return this.getForm(2, 1).getText();
+    return this.getFormTextByFormName('Edge Cache Usage');
   },
 
   /**
    * ### UsageReport.getHTTPHTTPSRequestsForm()
    *
-   * Gets the reference to `HTTP/HTTPS Requests` form element.
+   * Gets the reference to `HTTP/HTTPS Requests` form element core/text.
    *
    * @returns {Promise}
    */
   getHTTPHTTPSRequestsForm: function () {
-    return this.getForm(2, 2).getText();
+    return this.getFormTextByFormName('HTTP/HTTPS Requests');
   },
 
   // ## Helper Methods
