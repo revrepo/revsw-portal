@@ -353,6 +353,7 @@ var Portal = {
    *  @returns {Promise}
    */
   goTo: function (menuHeader, menuItem) {
+    this.sideBar.collapseDashboard();
     return this
       .sideBar.selectItemFromExpandedBlock(menuHeader,
       menuItem);
