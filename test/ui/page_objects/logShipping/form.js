@@ -69,7 +69,8 @@ var LogShippingForm = {
         id: 'source_type'
       },
       sourceDomain: {
-        model: 'selectedDomainSourceId'
+        model: 'selectedDomainSourceId',
+        css: 'div[name="sourceId"]'
       },
       destination: {
         id: 'destination_type'
@@ -221,7 +222,7 @@ var LogShippingForm = {
    * @returns {Object} Selenium WebDriver Element
    */
   getSourceDomainDDown: function () {
-    return element(by.model(this.locators.dropDowns.sourceDomain.model));
+    return element(by.css(this.locators.dropDowns.sourceDomain.css));
   },
 
   /**
@@ -433,8 +434,14 @@ var LogShippingForm = {
    * @returns {Object} Promise
    */
   setSourceDomain: function (value) {
-    this.getSourceDomainDDown()
-        .sendKeys(value);
+    var me = this;
+    return this.getSourceDomainDDown()
+        .click().then(function () {
+        browser.actions().sendKeys(value)
+            .perform();
+          browser.actions().sendKeys(protractor.Key.ENTER)
+              .perform();
+      });
   },
 
   /**
@@ -472,102 +479,102 @@ var LogShippingForm = {
    * Helper method that fills the Log Shipping Form given specified Log Shipping
    * data object
    *
-   * @param {object} jobName, user data with the following schema
+   * @param {object} job, user data with the following schema
    *
    *    {
    *      name: String,
    *      account: String,
    *    }
    */
-  fill: function (jobName) {
-    if (jobName.name !== undefined) {
+  fill: function (job) {
+    if (job.name !== undefined) {
       this.clearJobName();
-      this.setJobName(jobName.name);
+      this.setJobName(job.name);
     }
 
     var me = this;
 
     element.all(by.id(this.locators.dropDowns.account.id))
         .then(function (elements) {
-          if (jobName.account !== undefined && elements.length > 0) {
-            me.setAccount(jobName.account);
+          if (job.account !== undefined && elements.length > 0) {
+            me.setAccount(job.account);
           }
         });
 
     element.all(by.id(this.locators.dropDowns.setCurrentMode.id))
         .then(function (elements) {
-          if (jobName.currentMode !== undefined && elements.length > 0) {
-            me.setCurrentMode(jobName.currentMode);
+          if (job.currentMode !== undefined && elements.length > 0) {
+            me.setCurrentMode(job.currentMode);
           }
         });
 
     element.all(by.id(this.locators.dropDowns.sourceType.id))
         .then(function (elements) {
-          if (jobName.sourceType !== undefined && elements.length > 0) {
-            me.setSourceType(jobName.sourceType);
+          if (job.sourceType !== undefined && elements.length > 0) {
+            me.setSourceType(job.sourceType);
           }
         });
 
     element.all(by.id(this.locators.dropDowns.destination.id))
         .then(function (elements) {
-          if (jobName.destination !== undefined && elements.length > 0) {
-            me.setDestination(jobName.destination);
+          if (job.destination !== undefined && elements.length > 0) {
+            me.setDestination(job.destination);
           }
         });
 
     element.all(by.id(this.locators.textInputs.host.id))
         .then(function (elements) {
-          if (jobName.host !== undefined && elements.length > 0) {
-            me.setHost(jobName.host);
+          if (job.host !== undefined && elements.length > 0) {
+            me.setHost(job.host);
           }
         });
 
     element.all(by.id(this.locators.textInputs.port.id))
         .then(function (elements) {
-          if (jobName.port !== undefined && elements.length > 0) {
-            me.setPort(jobName.port);
+          if (job.port !== undefined && elements.length > 0) {
+            me.setPort(job.port);
           }
         });
 
     element.all(by.id(this.locators.textInputs.secretKey.id))
         .then(function (elements) {
-          if (jobName.secretKey !== undefined && elements.length > 0) {
-            me.setSecretKey(jobName.secretKey);
+          if (job.secretKey !== undefined && elements.length > 0) {
+            me.setSecretKey(job.secretKey);
           }
         });
 
     element.all(by.id(this.locators.textInputs.userName.id))
         .then(function (elements) {
-          if (jobName.userName !== undefined && elements.length > 0) {
-            me.setUserName(jobName.userName);
+          if (job.userName !== undefined && elements.length > 0) {
+            me.setUserName(job.userName);
           }
         });
 
     element.all(by.id(this.locators.textInputs.password.id))
         .then(function (elements) {
-          if (jobName.password !== undefined && elements.length > 0) {
-            me.setPassword(jobName.password);
+          if (job.password !== undefined && elements.length > 0) {
+            me.setPassword(job.password);
           }
         });
 
     element.all(by.id(this.locators.textInputs.emailForProblemNotification.id))
         .then(function (elements) {
-          if (jobName.email !== undefined && elements.length > 0) {
-            me.setEmail(jobName.email);
+          if (job.email !== undefined && elements.length > 0) {
+            me.setEmail(job.email);
           }
         });
 
     element.all(by.id(this.locators.textInputs.comment.id))
         .then(function (elements) {
-          if (jobName.comment !== undefined && elements.length > 0) {
-            me.setComment(jobName.comment);
+          if (job.comment !== undefined && elements.length > 0) {
+            me.setComment(job.comment);
           }
         });
 
-    element.all(by.model(this.locators.dropDowns.sourceDomain.model))
+    element.all(by.css(this.locators.dropDowns.sourceDomain.css))
         .then(function (elements) {
-          if (jobName.sourceDomain !== undefined && elements.length > 0) {
-            me.setSourceDomain(jobName.sourceDomain);
+          if (job.sourceDomain !== undefined && elements.length > 0) {
+            me.setSourceDomain(job.sourceDomain);
           }
         });
   }

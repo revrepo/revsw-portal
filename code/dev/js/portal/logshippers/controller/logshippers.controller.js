@@ -462,6 +462,20 @@
             });
         });
     };
-
+    /**
+     * @name onClickRefresh
+     * @description
+     *   Refresh data in table
+     * @return
+     */
+    $scope.onClickRefresh = function() {
+      $scope._loading = true;
+      $scope.list()
+        .then(setAccountName)
+        .then(setMappingInformation)
+        .finally(function() {
+          $scope._loading = false;
+        });
+    };
   }
 })();
