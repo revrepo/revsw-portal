@@ -104,6 +104,10 @@ var Constants = {
       API_DOCUMENTATION: 'API Documentation',
       KNOWLEDGE_BASE: 'Knowledge Base',
       NETWORK_STATUS: 'Network Status'
+    },
+    dnsService: {
+      DNS_SERVICE: 'DNS Service',
+      DNS_ZONES: 'DNS Zones'
     }
   },
   user: {

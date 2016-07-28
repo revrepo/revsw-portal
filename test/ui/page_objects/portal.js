@@ -84,6 +84,10 @@ var LogShippingListPage = require('./logShipping/listPage');
 var LogShippingAddPage = require('./logShipping/addPage');
 var LogShippingEditPage = require('./logShipping/editPage');
 
+var DNSZonesListPage = require('./dnsZones/listPage');
+var DNSZonesAddPage = require('./dnsZones/addPage');
+var DNSZonesEditPage = require('./dnsZones/editPage');
+
 var PlansPage = require('./signUp/plansPage');
 var SignUpPage = require('./signUp/signUpPage');
 
@@ -173,6 +177,11 @@ var Portal = {
   },
   stagingEnv: {
     page: StagingEnvPage
+  },
+  dnsZones: {
+    listPage: DNSZonesListPage,
+    addPage: DNSZonesAddPage,
+    editPage: DNSZonesEditPage
   },
 
   // ## Authentication Helper methods
@@ -384,7 +393,7 @@ var Portal = {
       .goTo(Constants.header.appMenu.ACCOUNT_SETTINGS,
       Constants.sideBar.menu.USERS);
   },
-  
+
   /**
    * ### Portal.goToMobileApps()
    *
@@ -525,6 +534,19 @@ var Portal = {
     return this
         .goTo(Constants.header.appMenu.WEB,
             Constants.sideBar.web.STAGING_ENV);
+  },
+
+  /**
+   * ### Portal.goToDNSZones()
+   *
+   * Navigation helper method that executes all steps to navigate to `DNS Zones` page
+   *
+   * @returns {Promise}
+   */
+  goToDNSZones: function () {
+    return this
+      .goTo(Constants.sideBar.dnsService.DNS_SERVICE,
+        Constants.sideBar.dnsService.DNS_ZONES);
   },
 
   // ## User Helper methods
@@ -1219,6 +1241,61 @@ var Portal = {
       me.logShipping.listPage.table
           .getFirstRow()
           .clickDelete();
+      me.dialog.clickOk();
+      browser.getCurrentUrl().then(function (currentUrl) {
+        if (initialUrl !== currentUrl) {
+          browser.get(initialUrl);
+        }
+      });
+    });
+  },
+
+  /**
+   * ### Portal.createDNSZone(zone)
+   *
+   * Helper method that executes all steps required to create
+   * new DNS Zone in the Portal
+   *
+   * @param {Object} zone, data applying the schema defined in
+   * `DataProvider.generateDNSZoneData()`
+   *
+   * @returns {Object} Promise
+   */
+  createDNSZone: function (zone) {
+    var me = this;
+    return browser.getCurrentUrl().then(function (initialUrl) {
+      me.goToDNSZones();
+      Portal.dnsZones.listPage.clickAddNewDNSZone();
+      Portal.dnsZones.addPage.form.fill(zone);
+      Portal.dnsZones.addPage.clickCreateDNSZone();
+      browser.getCurrentUrl().then(function (currentUrl) {
+        if (initialUrl !== currentUrl) {
+          browser.get(initialUrl);
+        }
+      });
+    });
+  },
+
+  /**
+   * ### Portal.deleteDNSZone()
+   *
+   * Helper method that executes all steps required to delete a DNS Zone from
+   * Portal app.
+   *
+   * @param {Object} zone , data applying the schema defined in
+   * `DataProvider.generateDNSZoneData()`
+   *
+   * @returns {Object} Promise
+   */
+  deleteDNSZone: function (zone) {
+    var me = this;
+    return browser.getCurrentUrl().then(function (initialUrl) {
+      me.goToDNSZones();
+      me.dnsZones.listPage.searcher.clearSearchCriteria();
+      me.dnsZones.listPage.searcher.setSearchCriteria(zone.domain);
+      me.dnsZones.listPage.table
+        .getFirstRow()
+        .clickDelete();
       me.dialog.clickOk();
       browser.getCurrentUrl().then(function (currentUrl) {
         if (initialUrl !== currentUrl) {
