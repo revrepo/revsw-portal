@@ -18,6 +18,9 @@
 
 // # SideBar Page Object
 
+// Requiring third party libraries
+var Promise = require('bluebird');
+
 // Requiring constant values
 //var Constants = require('./../constants');
 
@@ -183,15 +186,13 @@ var SideBar = {
   },
 
   collapseAll: function () {
-    var downArrows = element.all(by.css(this.locators.arrows.down));
-    for (var i = 0; i < downArrows.length; i++) {
-      var arrow = downArrows[i];
-      arrow.click();
-      console.log('ARROW collapsed:', i);
-    }
-    //return Promise.all(downArrows).then(function (arrow) {
-    //  arrow.click();
-    //});
+    var downArrows = element.all(by.css(this.locators.arrows.down.css));
+    downArrows
+      .then(function () {
+        return Promise.each(downArrows, function (arrow) {
+          return arrow.click();
+        });
+      });
   },
 
   select: function (option) {
