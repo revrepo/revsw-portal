@@ -21,47 +21,13 @@
 // Requiring third party libraries
 var Promise = require('bluebird');
 
-// Requiring constant values
-//var Constants = require('./../constants');
-
-// This `Searcher` Page Object abstracts all operations or actions that a common
+// This `SideBar` Page Object abstracts all operations or actions that a common
 // user could do with the SideBar menu component from Portal app/site.
 var SideBar = {
 
   // ## Properties
 
   // Locators specific to HTML elements from this page object
-  //locators: {
-  //  headers: {
-  //    className: 'side-menu-item'
-  //  },
-  //  items: {
-  //    className: 'side-menu-sub-item'
-  //  },
-  //  activeContainer: {
-  //    className: 'active-side-menu-item'
-  //  },
-  //  arrow: {
-  //    className: 'fa-caret-up'
-  //  },
-  //  menu: {
-  //    className: 'side-menu',
-  //    options: {
-  //      users: {
-  //        linkText: Constants.sideBar.menu.USERS
-  //      },
-  //      updatePassword: {
-  //        linkText: Constants.sideBar.menu.UPDATE_PASSWORD
-  //      },
-  //      securitySettings: {
-  //        linkText: Constants.sideBar.menu.SECURITY_SETTINGS
-  //      },
-  //      activityLog: {
-  //        linkText: Constants.sideBar.menu.ACTIVITY_LOG
-  //      }
-  //    }
-  //  }
-  //},
   locators: {
     arrows: {
       down: {
@@ -114,10 +80,21 @@ var SideBar = {
     }
   },
 
+  // ## Methods
+
+  /**
+   * Returns SideBar container
+   * @returns {*}
+   */
   getContainerEl: function () {
     return element(by.css(this.locators.container.css));
   },
 
+  /**
+   * Returns specified Menu Item
+   * @param option
+   * @returns {*}
+   */
   getMenuItem: function (option) {
     if (option.ROOT) {
       option = option.ROOT;
@@ -136,6 +113,43 @@ var SideBar = {
       .element(by.id(locator.id));
   },
 
+  /**
+   * Returns the `up-arrow` element
+   * @param option
+   * @returns {*}
+   */
+  getUpArrow: function (option) {
+    if (!this.isMenu(option)) {
+      throw 'API ERROR!';
+    }
+    // First check arrow exists
+    return this
+      .getMenuItem(option)
+      .element(by.css(this.locators.arrows.up.css));
+  },
+
+  /**
+   * Returns the `down-arrow` element
+   * @param option
+   * @returns {*}
+   */
+  getDownArrow: function (option) {
+    if (!this.isMenu(option)) {
+      throw 'API ERROR!';
+    }
+    // First check arrow exists
+    return this
+      .getMenuItem(option)
+      .element(by.css(this.locators.arrows.down.css));
+  },
+
+  // ## Methods to interact with the Searcher/Filter component
+
+  /**
+   * Checks whether specified Menu Item is a `menu` or not.
+   * @param option
+   * @returns {*}
+   */
   isMenu: function (option) {
     var me = this;
     return this
@@ -147,26 +161,11 @@ var SideBar = {
       });
   },
 
-  getUpArrow: function (option) {
-    if (!this.isMenu(option)) {
-      throw 'API ERROR!';
-    }
-    // First check arrow exists
-    return this
-      .getMenuItem(option)
-      .element(by.css(this.locators.arrows.up.css));
-  },
-
-  getDownArrow: function (option) {
-    if (!this.isMenu(option)) {
-      throw 'API ERROR!';
-    }
-    // First check arrow exists
-    return this
-      .getMenuItem(option)
-      .element(by.css(this.locators.arrows.down.css));
-  },
-
+  /**
+   * Expands a `menu-item`
+   * @param option
+   * @returns {*}
+   */
   expand: function (option) {
     if (!this.isMenu(option)) {
       throw 'API ERROR!';
@@ -176,6 +175,11 @@ var SideBar = {
       .click();
   },
 
+  /**
+   * Collapses a `menu-item`
+   * @param option
+   * @returns {*}
+   */
   collapse: function (option) {
     if (!this.isMenu(option)) {
       throw 'API ERROR!';
@@ -185,6 +189,9 @@ var SideBar = {
       .click();
   },
 
+  /**
+   * Collapses all opened `menu-item`
+   */
   collapseAll: function () {
     var downArrows = element.all(by.css(this.locators.arrows.down.css));
     downArrows
@@ -195,6 +202,12 @@ var SideBar = {
       });
   },
 
+  /**
+   * Selects a specified menu-item by collapsing all opened menu-items and
+   * expanding the parent menu-item.
+   * @param option
+   * @returns {*}
+   */
   select: function (option) {
     this.collapseAll();
     this.expand(this.locators.menu.options[option].area);
