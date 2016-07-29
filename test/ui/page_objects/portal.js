@@ -88,6 +88,10 @@ var DNSZonesListPage = require('./dnsZones/listPage');
 var DNSZonesAddPage = require('./dnsZones/addPage');
 var DNSZonesEditPage = require('./dnsZones/editPage');
 
+var ZoneRecordsListPage = require('./dnsZones/zoneRecords/listPage');
+var ZoneRecordsAddPage = require('./dnsZones/zoneRecords/addPage');
+var ZoneRecordsEditPage = require('./dnsZones/zoneRecords/editPage');
+
 var PlansPage = require('./signUp/plansPage');
 var SignUpPage = require('./signUp/signUpPage');
 
@@ -183,7 +187,11 @@ var Portal = {
     addPage: DNSZonesAddPage,
     editPage: DNSZonesEditPage
   },
-
+  zoneRecords: {
+    listPage: ZoneRecordsListPage,
+    addPage: ZoneRecordsAddPage,
+    editPage: ZoneRecordsEditPage
+  },
   // ## Authentication Helper methods
 
   /**
@@ -1268,6 +1276,40 @@ var Portal = {
       Portal.dnsZones.listPage.clickAddNewDNSZone();
       Portal.dnsZones.addPage.form.fill(zone);
       Portal.dnsZones.addPage.clickCreateDNSZone();
+      browser.getCurrentUrl().then(function (currentUrl) {
+        if (initialUrl !== currentUrl) {
+          browser.get(initialUrl);
+        }
+      });
+    });
+  },
+
+  /**
+   * ### Portal.createDNSZoneRecord(record)
+   *
+   * Helper method that executes all steps required to create
+   * new DNS Zone Record in the Portal
+   *
+   * * @param {Object} dnsZone, dns zone to which the record is connected
+   *
+   * @param {Object} record, data applying the schema defined in
+   * `DataProvider.generateDNSZoneRecordData()`
+   *
+   * @returns {Object} Promise
+   */
+  createDNSZoneRecord: function (dnsZone, record) {
+    var me = this;
+    return browser.getCurrentUrl().then(function (initialUrl) {
+      me.goToDNSZones();
+      Portal.dnsZones.listPage.searcher.clearSearchCriteria();
+      Portal.dnsZones.listPage.searcher.setSearchCriteria(dnsZone.domain);
+      Portal.dnsZones.listPage.table
+        .getFirstRow()
+        .clickManageRecords();
+
+      Portal.zoneRecords.listPage.clickAddNewRecord();
+      Portal.zoneRecords.addPage.form.fill(record);
+      Portal.zoneRecords.addPage.clickAddNewRecord();
       browser.getCurrentUrl().then(function (currentUrl) {
         if (initialUrl !== currentUrl) {
           browser.get(initialUrl);
