@@ -89,7 +89,7 @@ var ZoneRecordsList = {
    *
    * @returns {Object} Promise
    */
-  clickAddNewRecordBtn: function () {
+  clickAddNewRecord: function () {
     return this
       .getAddNewRecordBtn()
       .click();

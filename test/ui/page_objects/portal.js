@@ -88,6 +88,10 @@ var DNSZonesListPage = require('./dnsZones/listPage');
 var DNSZonesAddPage = require('./dnsZones/addPage');
 var DNSZonesEditPage = require('./dnsZones/editPage');
 
+var ZoneRecordsListPage = require('./dnsZones/zoneRecords/listPage');
+var ZoneRecordsAddPage = require('./dnsZones/zoneRecords/addPage');
+var ZoneRecordsEditPage = require('./dnsZones/zoneRecords/editPage');
+
 var PlansPage = require('./signUp/plansPage');
 var SignUpPage = require('./signUp/signUpPage');
 
@@ -183,7 +187,11 @@ var Portal = {
     addPage: DNSZonesAddPage,
     editPage: DNSZonesEditPage
   },
-
+  zoneRecords: {
+    listPage: ZoneRecordsListPage,
+    addPage: ZoneRecordsAddPage,
+    editPage: ZoneRecordsEditPage
+  },
   // ## Authentication Helper methods
 
   /**

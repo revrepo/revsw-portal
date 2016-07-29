@@ -20,11 +20,11 @@
 
 var Dialog = require('.././common/dialog');
 
-// Requiring `log-shipping form` component page object
+// Requiring `DNS zone form` component page object
 var DNSZoneForm = require('./form');
 
-// This `Add Log Shipping` Page Object abstracts all operations or actions that a
-// common user could do in the Add Log Shipping page from the Portal app/site.
+// This `Add DNS Zone` Page Object abstracts all operations or actions that a
+// common user could do in the Add DNS Zone page from the Portal app/site.
 var AddDNSZone = {
 
   // ## Properties

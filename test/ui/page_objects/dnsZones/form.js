@@ -180,7 +180,7 @@ var DNSZoneForm = {
   },
 
   /**
-   * ### DNSZoneForm.getDomain()
+   * ### DNSZoneForm.getSOAttl()
    *
    * Gets the value from the SOA TTL Txt In
    *
