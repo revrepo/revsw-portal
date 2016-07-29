@@ -755,6 +755,34 @@ var DataProvider = {
   },
 
   /**
+   * ### DataProvider.generateDNSZoneRecordData()
+   *
+   * Generates DNS Zone Recorddata object
+   *
+   * @returns {Object}, generate DNS Zone Record Data with the following schema:
+   *
+   *    {
+   *      name: String,
+   *      answer: String,
+   *    }
+   */
+  generateDNSZoneRecordData: function (data) {
+    var timestamp = Date.now();
+    var name = 'dnszonerecordtest-' + timestamp;
+    if (data) {
+      return {
+        name: (data.name === undefined) ? name : data.name,
+        answer: (data.answer === undefined) ? '12.34.56.78' : data.answer
+      }
+    } else {
+      return {
+        name: name,
+        answer: '12.34.56.78'
+      }
+    }
+  },
+
+  /**
    * ### DataProvider.generateLogShippingJobData()
    *
    * Generates Log Shipping Job data object

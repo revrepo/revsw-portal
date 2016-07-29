@@ -21,7 +21,7 @@ var tableLocators = {
     css: 'table thead tr'
   },
   rows: {
-    repeater: 'item in filteredRecords'
+    repeater: 'record in filteredRecords'
   }
 };
 

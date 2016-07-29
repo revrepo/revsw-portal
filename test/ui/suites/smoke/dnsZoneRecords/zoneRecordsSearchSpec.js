@@ -18,7 +18,6 @@
 
 var config = require('config');
 var Portal = require('./../../../page_objects/portal');
-var Constants = require('./../../../page_objects/constants');
 var DataProvider = require('./../../../common/providers/data');
 
 describe('Smoke', function () {
@@ -35,75 +34,68 @@ describe('Smoke', function () {
 
     describe('With user: ' + user.role, function () {
 
-      describe('Zone Records list', function () {
+      describe('DNS Zone Records search', function () {
 
         beforeAll(function () {
+
+        });
+
+        afterAll(function () {
+
+        });
+
+        beforeEach(function () {
           Portal.load();//TODO: Got the problem when tests are failed when executed all in one scope
                         //Looks like it is not reproducible when doing Portal.load() before SignIn
                         //SignIn func needs to be investigated
 
           Portal.signIn(user);
+          Portal.goToDNSZones();
         });
 
-        afterAll(function () {
+        afterEach(function () {
           Portal.signOut();
         });
 
-        beforeEach(function () {
-
-        });
-
-        it('should be displayed when clicking "Manage Records" button on DNS Zone entity',
+        it('should be displayed when displaying DNS Zones Records List page',
           function () {
-            Portal.goToDNSZones();
             var zone = DataProvider.generateDNSZoneData();
             Portal.createDNSZone(zone);
 
-            Portal.dnsZones.listPage.searcher.clearSearchCriteria();
             Portal.dnsZones.listPage.searcher.setSearchCriteria(zone.domain);
             Portal.dnsZones.listPage.table
               .getFirstRow()
               .clickManageRecords();
-            expect(Portal.zoneRecords.listPage.isDisplayed()).toBeTruthy();
+
+            var searchField = Portal.zoneRecords.listPage.searcher
+              .getSearchCriteriaTxtIn();
+
+            expect(searchField.isPresent()).toBeTruthy();
+
             Portal.deleteDNSZone(zone);
           });
 
-        it('should be displayed when "Back to list" button is clicked from ' +
-          '"Add Zone Record" page',
+        it('should filter items according to text filled',
           function () {
-            Portal.goToDNSZones();
-            var zone = DataProvider.generateDNSZoneData();
-            Portal.createDNSZone(zone);
-
+            var dnsZone = DataProvider.generateDNSZoneData();
+            Portal.createDNSZone(dnsZone);
+            var dnsRecord = DataProvider.generateDNSZoneRecordData();
             Portal.dnsZones.listPage.searcher.clearSearchCriteria();
-            Portal.dnsZones.listPage.searcher.setSearchCriteria(zone.domain);
+            Portal.dnsZones.listPage.searcher.setSearchCriteria(dnsZone.domain);
             Portal.dnsZones.listPage.table
               .getFirstRow()
               .clickManageRecords();
 
             Portal.zoneRecords.listPage.clickAddNewRecord();
-            Portal.zoneRecords.addPage.clickBackToList();
-            expect(Portal.zoneRecords.listPage.isDisplayed()).toBeTruthy();
-            Portal.deleteDNSZone(zone);
-          });
+            Portal.zoneRecords.addPage.form.fill(dnsRecord);
+            Portal.zoneRecords.addPage.clickAddNewRecord();
 
-        it('should be displayed when "Cancel" button is clicked from ' +
-          '"Add DNS Zone Record" page',
-          function () {
-            Portal.goToDNSZones();
-            var zone = DataProvider.generateDNSZoneData();
-            Portal.createDNSZone(zone);
+            Portal.zoneRecords.listPage.searcher
+              .setSearchCriteria(dnsRecord.name);
 
-            Portal.dnsZones.listPage.searcher.clearSearchCriteria();
-            Portal.dnsZones.listPage.searcher.setSearchCriteria(zone.domain);
-            Portal.dnsZones.listPage.table
-              .getFirstRow()
-              .clickManageRecords();
-
-            Portal.zoneRecords.listPage.clickAddNewRecord();
-            Portal.zoneRecords.addPage.clickCancel();
-            expect(Portal.zoneRecords.listPage.isDisplayed()).toBeTruthy();
-            Portal.deleteDNSZone(zone);
+            var allRows = Portal.zoneRecords.listPage.table.getRows();
+            expect(allRows.count()).toEqual(1);
+            Portal.deleteDNSZone(dnsZone);
           });
       });
     });
