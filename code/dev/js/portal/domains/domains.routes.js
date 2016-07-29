@@ -43,6 +43,17 @@
             templateUrl: 'parts/domains/versions.html'
           }
         }
-      });
+      })
+      //domainCheckIntegration
+      .state('index.webApp.domains.checkintegration', {
+        url: '/checkintegration/:id',
+        views: {
+          page: {
+            controller: 'DomainCheckIntegrationPageController',
+            templateUrl: 'parts/domains/domain-check-integration-page.html'
+          }
+        }
+      })
+      ;
   }
 })();
