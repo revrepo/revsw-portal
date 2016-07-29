@@ -734,12 +734,22 @@ var DataProvider = {
     if (data) {
       return {
         domain: (data.domain === undefined) ? name : data.domain,
-        account: (data.account === undefined) ? ['API QA Reseller Company'] : data.account
+        account: (data.account === undefined) ? ['API QA Reseller Company'] : data.account,
+        soaTTL: (data.soaTTL === undefined) ? '3599' : data.soaTTL,
+        refresh: (data.refresh === undefined) ? '43199' : data.refresh,
+        retry: (data.retry === undefined) ? '7199' : data.retry,
+        expire: (data.expire === undefined) ? '1209599' : data.expire,
+        nxTTL: (data.nxTTL === undefined) ? '3599' : data.nxTTL
       }
     } else {
       return {
         domain: name,
-        account: ['API QA Reseller Company']
+        account: ['API QA Reseller Company'],
+        soaTTL: '3599',
+        refresh: '43199',
+        retry: '7199',
+        expire: '1209599',
+        nxTTL: '3599'
       }
     }
   },

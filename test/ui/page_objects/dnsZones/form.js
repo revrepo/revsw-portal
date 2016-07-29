@@ -46,7 +46,7 @@ var DNSZoneForm = {
         model: 'model.retry'
       },
       expire: {
-        model: 'model.expire'
+        model: 'model.expiry'
       },
       nxTTL: {
         model: 'model.nx_ttl'
@@ -158,25 +158,90 @@ var DNSZoneForm = {
    * @returns {Object} Promise
    */
   setDomain: function (value) {
-    return this
-      .getDomainTxtIn()
-      .sendKeys(value);
-  },
-
-  clearDomain: function () {
     var me = this;
     return this
-      .getDomainTxtIn()
-      .sendKeys(protractor.Key.chord(protractor.Key.CONTROL, 'a'))
-      .then(function () {
-        me.getDomainTxtIn().sendKeys(protractor.Key.BACK_SPACE);
+      .getDomainTxtIn().clear().then(function () {
+        me.getDomainTxtIn()
+          .sendKeys(value);
       });
   },
 
+  /**
+   * ### DNSZoneForm.getDomain()
+   *
+   * Gets the value from the Domain Txt In
+   *
+   * @returns {Object} Promise
+   */
   getDomain: function () {
     return this
       .getDomainTxtIn()
-      .getText();
+      .getAttribute('value');
+  },
+
+  /**
+   * ### DNSZoneForm.getDomain()
+   *
+   * Gets the value from the SOA TTL Txt In
+   *
+   * @returns {Object} Promise
+   */
+  getSOAttl: function () {
+    return this
+      .getSOAttlTxtIn()
+      .getAttribute('value');
+  },
+
+  /**
+   * ### DNSZoneForm.getRefresh()
+   *
+   * Gets the value from the Refresh Txt In
+   *
+   * @returns {Object} Promise
+   */
+  getRefresh: function () {
+    return this
+      .getRefreshTxtIn()
+      .getAttribute('value');
+  },
+
+  /**
+   * ### DNSZoneForm.getRetry()
+   *
+   * Gets the value from the Retry Txt In
+   *
+   * @returns {Object} Promise
+   */
+  getRetry: function () {
+    return this
+      .getRetryTxtIn()
+      .getAttribute('value');
+  },
+
+  /**
+   * ### DNSZoneForm.getExpire()
+   *
+   * Gets the value from the Expire Txt In
+   *
+   * @returns {Object} Promise
+   */
+  getExpire: function () {
+    return this
+      .getExpireTxtIn()
+      .getAttribute('value');
+  },
+
+  /**
+   * ### DNSZoneForm.getNXttl()
+   *
+   * Gets the value from the NX TTL Txt In
+   *
+   * @returns {Object} Promise
+   */
+  getNXttl: function () {
+    return this
+      .getNXttlTxtIn()
+      .getAttribute('value');
   },
 
   /**
@@ -189,9 +254,12 @@ var DNSZoneForm = {
    * @returns {Object} Promise
    */
   setSOAttl: function (value) {
+    var me = this;
     return this
-      .getSOAttlTxtIn()
-      .sendKeys(value);
+      .getSOAttlTxtIn().clear().then(function () {
+        me.getSOAttlTxtIn()
+          .sendKeys(value);
+      });
   },
 
   /**
@@ -204,9 +272,12 @@ var DNSZoneForm = {
    * @returns {Object} Promise
    */
   setRefresh: function (value) {
+    var me = this;
     return this
-      .getRefreshTxtIn()
-      .sendKeys(value);
+      .getRefreshTxtIn().clear().then(function () {
+        me.getRefreshTxtIn()
+          .sendKeys(value);
+      });
   },
 
   /**
@@ -219,9 +290,12 @@ var DNSZoneForm = {
    * @returns {Object} Promise
    */
   setRetry: function (value) {
+    var me = this;
     return this
-      .getRetryTxtIn()
-      .sendKeys(value);
+      .getRetryTxtIn().clear().then(function () {
+        me.getRetryTxtIn()
+          .sendKeys(value);
+      });
   },
 
   /**
@@ -234,9 +308,12 @@ var DNSZoneForm = {
    * @returns {Object} Promise
    */
   setExpire: function (value) {
+    var me = this;
     return this
-      .getExpireTxtIn()
-      .sendKeys(value);
+      .getExpireTxtIn().clear().then(function () {
+        me.getExpireTxtIn()
+          .sendKeys(value);
+      });
   },
 
   /**
@@ -249,9 +326,12 @@ var DNSZoneForm = {
    * @returns {Object} Promise
    */
   setNXttl: function (value) {
+    var me = this;
     return this
-      .getNXttlTxtIn()
-      .sendKeys(value);
+      .getNXttlTxtIn().clear().then(function () {
+        me.getNXttlTxtIn()
+          .sendKeys(value);
+      });
   },
 
   /**
@@ -304,12 +384,49 @@ var DNSZoneForm = {
    *    }
    */
   fill: function (zone) {
-    if (zone.domain !== undefined) {
-      this.clearDomain();
-      this.setDomain(zone.domain);
-    }
-
     var me = this;
+
+    element.all(by.model(this.locators.textInputs.domain.model))
+      .then(function (elements) {
+        if (zone.domain !== undefined && elements.length > 0) {
+          me.setDomain(zone.domain);
+        }
+      });
+
+    element.all(by.model(this.locators.textInputs.soaTTL.model))
+      .then(function (elements) {
+        if (zone.soaTTL !== undefined && elements.length > 0) {
+          me.setSOAttl(zone.soaTTL);
+        }
+      });
+
+    element.all(by.model(this.locators.textInputs.refresh.model))
+      .then(function (elements) {
+        if (zone.refresh !== undefined && elements.length > 0) {
+          me.setRefresh(zone.refresh);
+        }
+      });
+
+    element.all(by.model(this.locators.textInputs.retry.model))
+      .then(function (elements) {
+        if (zone.retry !== undefined && elements.length > 0) {
+          me.setRetry(zone.retry);
+        }
+      });
+
+    element.all(by.model(this.locators.textInputs.expire.model))
+      .then(function (elements) {
+        if (zone.expire !== undefined && elements.length > 0) {
+          me.setExpire(zone.expire);
+        }
+      });
+
+    element.all(by.model(this.locators.textInputs.nxTTL.model))
+      .then(function (elements) {
+        if (zone.nxTTL !== undefined && elements.length > 0) {
+          me.setNXttl(zone.nxTTL);
+        }
+      });
 
     element.all(by.id(this.locators.dropDowns.account.id))
       .then(function (elements) {
@@ -317,6 +434,7 @@ var DNSZoneForm = {
           me.setAccount(zone.account);
         }
       });
+
   }
 };
 
