@@ -717,6 +717,34 @@ var DataProvider = {
   },
 
   /**
+   * ### DataProvider.generateDNSZoneData()
+   *
+   * Generates DNS Zone data object
+   *
+   * @returns {Object}, generate DNS Zone Data with the following schema:
+   *
+   *    {
+   *      domain: String,
+   *      account: String,
+   *    }
+   */
+  generateDNSZoneData: function (data) {
+    var timestamp = Date.now();
+    var name = 'dnszonetest-' + timestamp + '.zonetest.com';
+    if (data) {
+      return {
+        domain: (data.domain === undefined) ? name : data.domain,
+        account: (data.account === undefined) ? ['API QA Reseller Company'] : data.account
+      }
+    } else {
+      return {
+        domain: name,
+        account: ['API QA Reseller Company']
+      }
+    }
+  },
+
+  /**
    * ### DataProvider.generateLogShippingJobData()
    *
    * Generates Log Shipping Job data object
