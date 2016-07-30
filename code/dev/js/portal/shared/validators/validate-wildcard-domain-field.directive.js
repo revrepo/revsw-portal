@@ -13,7 +13,7 @@
   function validateWildcardDomainField($config) {
     'ngInject';
     var _name = 'wildcard-domain-field';
-    var WILDCARD_DOMAIN_FIELD = $config.PATTERNS.WILDCARD_DOMAIN_FIELD;
+    var WILDCARD_DOMAIN_FIELD = $config.PATTERNS.WILDCARD_DOMAINS_FIELDS;
 
     function link(scope, element, attrs, ngModel) {
 
