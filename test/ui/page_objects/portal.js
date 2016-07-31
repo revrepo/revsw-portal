@@ -309,17 +309,6 @@ var Portal = {
   },
 
   /**
-   * ### Portal.getUsersPage()
-   *
-   * Loads the hash fragment for the User List page
-   *
-   * @returns {Promise}
-   */
-  getUsersPage: function () {
-    return this.getPage(Constants.hashFragments.users);
-  },
-
-  /**
    * ### Portal.getUpdatePasswordPage()
    *
    * Loads the hash fragment for the Update Password page
@@ -600,7 +589,7 @@ var Portal = {
   createUserIfNotExist: function (user) {
     var me = this;
     return browser.getCurrentUrl().then(function (initialUrl) {
-      me.getUsersPage();
+      me.helpers.nav.goToUsers();
       me.userListPage.searcher.setSearchCriteria(user.email);
       me.userListPage.table
         .getRows()
