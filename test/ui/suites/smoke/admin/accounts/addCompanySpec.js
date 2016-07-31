@@ -40,7 +40,6 @@ describe('Smoke', function () {
 
         beforeAll(function () {
           Portal.signIn(user);
-          Portal.getAdminPage();
         });
 
         afterAll(function () {
@@ -48,7 +47,7 @@ describe('Smoke', function () {
         });
 
         beforeEach(function () {
-          Portal.header.goTo(Constants.sideBar.admin.ACCOUNTS);
+          Portal.helpers.nav.goToAccounts();
         });
 
         it('should "Add Company" in accounts page', function () {

@@ -287,17 +287,6 @@ var Portal = {
   },
 
   /**
-   * ### Portal.getAdminPage()
-   *
-   * Loads the hash fragment for the Admin page.
-   *
-   * @returns {Promise}
-   */
-  getAdminPage: function () {
-    return this.getPage(Constants.hashFragments.admin.users);
-  },
-
-  /**
    * ### Portal.getApiKeysPage()
    *
    * Loads the hash fragment for the API Keys page.
@@ -864,8 +853,7 @@ var Portal = {
    */
   createAccounts: function (accounts) {
     var me = this;
-    me.getAdminPage();
-    me.header.goTo(Constants.sideBar.admin.ACCOUNTS);
+    me.helpers.nav.goToAccounts();
     me.admin.accounts.listPage.clickAddNewCompany();
     return browser.getCurrentUrl().then(function (initialUrl) {
       accounts.forEach(function (account) {
@@ -895,10 +883,9 @@ var Portal = {
    */
   deleteAccounts: function (accounts) {
     var me = this;
-    me.getAdminPage();
     return browser.getCurrentUrl().then(function (initialUrl) {
       accounts.forEach(function (account) {
-        me.header.goTo(Constants.sideBar.admin.ACCOUNTS);
+        me.helpers.nav.goToAccounts();
         me.admin.accounts.listPage.searchAndClickDelete(account.companyName);
         Portal.dialog.clickOk();
       });

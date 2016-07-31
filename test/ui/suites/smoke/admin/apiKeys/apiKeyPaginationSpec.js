@@ -34,8 +34,7 @@ describe('Smoke', function () {
     });
 
     beforeEach(function () {
-      Portal.getAdminPage();
-      Portal.getApiKeysPage();
+      Portal.helpers.nav.goToAPIKeys();
     });
 
     afterEach(function () {
