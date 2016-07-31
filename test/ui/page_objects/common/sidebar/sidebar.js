@@ -48,34 +48,6 @@ var SideBar = {
         final: {
           className: 'side-menu-sub-item'
         }
-      },
-      options: {
-        MOBILEAPPS: {
-          id: 'side-menu-apps-item'
-        },
-        MOBILEAPPS_IOS: {
-          id: 'side-menu-sub-item__apps-ios',
-          area: 'MOBILEAPPS'
-        },
-        MOBILEAPPS_ANDROID: {
-          id: 'side-menu-sub-item__apps-android',
-          area: 'MOBILEAPPS'
-        },
-        MOBILEAPPS_WINDOWSMOBILE: {
-          id: 'side-menu-sub-item__apps-windows',
-          area: 'MOBILEAPPS'
-        },
-        WEB: {
-          id: 'side-menu-web-item'
-        },
-        WEB_DOMAINS: {
-          id: 'side-menu-sub-item__webApp-domains',
-          area: 'WEB'
-        },
-        WEB_SSLCERTIFICATES: {
-          id: 'side-menu-sub-item__webApp-ssl_certs',
-          area: 'WEB'
-        }
       }
     }
   },
@@ -92,16 +64,16 @@ var SideBar = {
 
   /**
    * Returns specified Menu Item
-   * @param option
+   * @param locator
    * @returns {*}
    */
-  getMenuItem: function (option) {
-    if (option.ROOT) {
+  getMenuItem: function (locator) {
+    /*if (option.ROOT) {
       option = option.ROOT;
-    }
-    var locator = this.locators.menu.options[option];
+    }*/
+    //var locator = option;
     if (locator.area) {
-      var areaLocator = this.locators.menu.options[locator.area];
+      var areaLocator = locator.area;
       return this
         .getContainerEl()
         .element(by.id(areaLocator.id))
@@ -115,31 +87,31 @@ var SideBar = {
 
   /**
    * Returns the `up-arrow` element
-   * @param option
+   * @param locator
    * @returns {*}
    */
-  getUpArrow: function (option) {
-    if (!this.isMenu(option)) {
+  getUpArrow: function (locator) {
+    if (!this.isMenu(locator)) {
       throw 'API ERROR!';
     }
     // First check arrow exists
     return this
-      .getMenuItem(option)
+      .getMenuItem(locator)
       .element(by.css(this.locators.arrows.up.css));
   },
 
   /**
    * Returns the `down-arrow` element
-   * @param option
+   * @param locator
    * @returns {*}
    */
-  getDownArrow: function (option) {
-    if (!this.isMenu(option)) {
+  getDownArrow: function (locator) {
+    if (!this.isMenu(locator)) {
       throw 'API ERROR!';
     }
     // First check arrow exists
     return this
-      .getMenuItem(option)
+      .getMenuItem(locator)
       .element(by.css(this.locators.arrows.down.css));
   },
 
@@ -147,13 +119,13 @@ var SideBar = {
 
   /**
    * Checks whether specified Menu Item is a `menu` or not.
-   * @param option
+   * @param locator
    * @returns {*}
    */
-  isMenu: function (option) {
+  isMenu: function (locator) {
     var me = this;
     return this
-      .getMenuItem(option)
+      .getMenuItem(locator)
       .getAttribute('className')
       .then(function (className) {
         return className
@@ -163,29 +135,29 @@ var SideBar = {
 
   /**
    * Expands a `menu-item`
-   * @param option
+   * @param locator
    * @returns {*}
    */
-  expand: function (option) {
-    if (!this.isMenu(option)) {
+  expand: function (locator) {
+    if (!this.isMenu(locator)) {
       throw 'API ERROR!';
     }
     return this
-      .getUpArrow(option)
+      .getUpArrow(locator)
       .click();
   },
 
   /**
    * Collapses a `menu-item`
-   * @param option
+   * @param locator
    * @returns {*}
    */
-  collapse: function (option) {
-    if (!this.isMenu(option)) {
+  collapse: function (locator) {
+    if (!this.isMenu(locator)) {
       throw 'API ERROR!';
     }
     return this
-      .getDownArrow(option)
+      .getDownArrow(locator)
       .click();
   },
 
@@ -205,14 +177,14 @@ var SideBar = {
   /**
    * Selects a specified menu-item by collapsing all opened menu-items and
    * expanding the parent menu-item.
-   * @param option
+   * @param locator
    * @returns {*}
    */
-  select: function (option) {
+  select: function (locator) {
     this.collapseAll();
-    this.expand(this.locators.menu.options[option].area);
+    this.expand(locator.area);
     return this
-      .getMenuItem(option)
+      .getMenuItem(locator)
       .click();
   }
 };
