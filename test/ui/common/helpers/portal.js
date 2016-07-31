@@ -22,5 +22,5 @@ var NavHelper = require('./nav');
 
 // Abstracts common functionality for the Portal.
 module.exports = {
-  nav: NavHelper,
+  nav: NavHelper
 };

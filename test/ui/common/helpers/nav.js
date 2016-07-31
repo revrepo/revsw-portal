@@ -30,9 +30,261 @@ module.exports = {
   },
 
   /**
-   * Goes to Domains
+   * Navigates to Mobile Apps > iOS
    */
-  goToDomains: function () {
+  goToIOS: function () {
     return;
-  }
+  },
+
+  /**
+   * Navigates to Mobile Apps > Android
+   */
+  goToAndroid: function () {
+    return;
+  },
+
+  /**
+   * Navigates to Mobile Apps > Windows Mobile
+   */
+  goToWindowsMobile: function () {
+    return;
+  },
+
+  /**
+   * Navigates to  >
+   */
+  goTo: function () {
+    return;
+  },
+
+  /**
+   * Navigates to  >
+   */
+  goTo: function () {
+    return;
+  },
+
+  /**
+   * Navigates to  >
+   */
+  goTo: function () {
+    return;
+  },
+
+  /**
+   * Navigates to  >
+   */
+  goTo: function () {
+    return;
+  },
+
+  /**
+   * Navigates to  >
+   */
+  goTo: function () {
+    return;
+  },
+
+  /**
+   * Navigates to  >
+   */
+  goTo: function () {
+    return;
+  },
+
+  /**
+   * Navigates to  >
+   */
+  goTo: function () {
+    return;
+  },
+
+  /**
+   * Navigates to  >
+   */
+  goTo: function () {
+    return;
+  },
+
+  /**
+   * Navigates to  >
+   */
+  goTo: function () {
+    return;
+  },
+
+  /**
+   * Navigates to  >
+   */
+  goTo: function () {
+    return;
+  },
+
+  /**
+   * Navigates to  >
+   */
+  goTo: function () {
+    return;
+  },
+
+  /**
+   * Navigates to  >
+   */
+  goTo: function () {
+    return;
+  },
+
+  /**
+   * Navigates to  >
+   */
+  goTo: function () {
+    return;
+  },
+
+  /**
+   * Navigates to  >
+   */
+  goTo: function () {
+    return;
+  },
+
+  /**
+   * Navigates to  >
+   */
+  goTo: function () {
+    return;
+  },
+
+  /**
+   * Navigates to  >
+   */
+  goTo: function () {
+    return;
+  },
+
+  /**
+   * Navigates to  >
+   */
+  goTo: function () {
+    return;
+  },
+
+  /**
+   * Navigates to  >
+   */
+  goTo: function () {
+    return;
+  },
+
+  /**
+   * Navigates to  >
+   */
+  goTo: function () {
+    return;
+  },
+
+  /**
+   * Navigates to  >
+   */
+  goTo: function () {
+    return;
+  },
+
+  /**
+   * Navigates to  >
+   */
+  goTo: function () {
+    return;
+  },
+
+  /**
+   * Navigates to  >
+   */
+  goTo: function () {
+    return;
+  },
+
+  /**
+   * Navigates to  >
+   */
+  goTo: function () {
+    return;
+  },
+
+  /**
+   * Navigates to  >
+   */
+  goTo: function () {
+    return;
+  },
+
+  /**
+   * Navigates to  >
+   */
+  goTo: function () {
+    return;
+  },
+
+  /**
+   * Navigates to  >
+   */
+  goTo: function () {
+    return;
+  },
+
+  /**
+   * Navigates to  >
+   */
+  goTo: function () {
+    return;
+  },
+
+  /**
+   * Navigates to  >
+   */
+  goTo: function () {
+    return;
+  },
+
+  /**
+   * Navigates to  >
+   */
+  goTo: function () {
+    return;
+  },
+
+  /**
+   * Navigates to  >
+   */
+  goTo: function () {
+    return;
+  },
+
+  /**
+   * Navigates to  >
+   */
+  goTo: function () {
+    return;
+  },
+
+  /**
+   * Navigates to  >
+   */
+  goTo: function () {
+    return;
+  },
+
+  /**
+   * Navigates to  >
+   */
+  goTo: function () {
+    return;
+  },
+
+  /**
+   * Navigates to  >
+   */
+  goTo: function () {
+    return;
+  },
 };
