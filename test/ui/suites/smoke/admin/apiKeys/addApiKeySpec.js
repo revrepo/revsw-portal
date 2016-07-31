@@ -38,12 +38,12 @@ describe('Smoke', function () {
     });
 
     beforeEach(function () {
-      // Portal.getApiKeysPage();
+      // Portal.helpers.nav.goToAPIKeys();
     });
 
     it('should create an API Key with "Admin" user', function () {
       Portal.signIn(adminUser);
-      Portal.getApiKeysPage();
+      Portal.helpers.nav.goToAPIKeys();
 
       var defaultName = 'New API Key';
       var keyData = DataProvider.generateApiKeyData();
@@ -69,7 +69,7 @@ describe('Smoke', function () {
 
     it('should create an API Key with "Seller" user', function () {
       Portal.signIn(sellerUser);
-      Portal.getApiKeysPage();
+      Portal.helpers.nav.goToAPIKeys();
 
       var defaultName = 'New API Key';
       var account = 'API QA Reseller Company';

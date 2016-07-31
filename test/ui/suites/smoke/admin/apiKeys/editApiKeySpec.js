@@ -38,7 +38,7 @@ describe('Smoke', function () {  // jshint ignore:line
     });
 
     beforeEach(function () {
-      Portal.getApiKeysPage();
+      Portal.helpers.nav.goToAPIKeys();
     });
 
     afterEach(function () {

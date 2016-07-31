@@ -43,7 +43,7 @@ describe('Smoke', function () {
         });
 
         beforeEach(function () {
-          Portal.getApiKeysPage();
+          Portal.helpers.nav.goToAPIKeys();
         });
 
         it('should display the Search input text in "API Keys List" page',

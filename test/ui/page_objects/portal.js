@@ -287,17 +287,6 @@ var Portal = {
   },
 
   /**
-   * ### Portal.getApiKeysPage()
-   *
-   * Loads the hash fragment for the API Keys page.
-   *
-   * @returns {Promise}
-   */
-  getApiKeysPage: function () {
-    return this.getPage(Constants.hashFragments.admin.apiKeys);
-  },
-
-  /**
    * ### Portal.getUpdatePasswordPage()
    *
    * Loads the hash fragment for the Update Password page
@@ -1030,7 +1019,7 @@ var Portal = {
   createApiKey: function (apiKey, isUserAdmin, account) {
     var me = this;
     return browser.getCurrentUrl().then(function (initialUrl) {
-      me.getApiKeysPage();
+      me.helpers.nav.goToAPIKeys();
       me.admin.apiKeys.listPage.clickAddNewApiKey();
 
       if (isUserAdmin && account) {
@@ -1067,7 +1056,7 @@ var Portal = {
   deleteAPIKey: function (apiKey) {
     var me = this;
     return browser.getCurrentUrl().then(function (initialUrl) {
-      me.getApiKeysPage();
+      me.helpers.nav.goToAPIKeys();
       Portal.admin.apiKeys.listPage.searchAndClickDelete(apiKey.name);
       Portal.dialog.clickOk();
       browser.getCurrentUrl().then(function (currentUrl) {
