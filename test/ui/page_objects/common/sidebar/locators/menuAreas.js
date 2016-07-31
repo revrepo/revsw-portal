@@ -16,18 +16,34 @@
  * from Rev Software, Inc.
  */
 
-var MenuData = {
+var MenuAreas = {
+  DASHBOARDS: {
+    linkText: 'Dashboards'
+  },
   MOBILE_APPS: {
-    ROOT          : 'MOBILEAPPS',
-    IOS           : 'MOBILEAPPS_IOS',
-    ANDROID       : 'MOBILEAPPS_ANDROID',
-    WINDOWS_MOBILE: 'MOBILEAPPS_WINDOWSMOBILE'
+    id: 'side-menu-apps-item'
+  },
+  MOBILE_ANALYTICS: {
+    id: 'side-menu-mobile-analytics-item'
   },
   WEB: {
-    ROOT: 'WEB',
-    DOMAINS: 'WEB_DOMAINS',
-    SSL_CERTIFICATES: 'WEB_SSLCERTIFICATES'
+    id: 'side-menu-web-item'
+  },
+  WEB_ANALYTICS: {
+    id: 'side-menu-web-analytics-item'
+  },
+  DNS_SERVICE: {
+    id: 'side-menu-dns-service-item'
+  },
+  ADMIN: {
+    linkText: 'Admin'
+  },
+  BILLING: {
+    linkText: 'Billing'
+  },
+  SUPPORT: {
+    linkText: 'Support'
   }
 };
 
-module.exports = MenuData;
+module.exports = MenuAreas;
