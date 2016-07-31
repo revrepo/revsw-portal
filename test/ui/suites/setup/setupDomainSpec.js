@@ -37,7 +37,7 @@ xdescribe('Setup', function () { // jshint ignore:line
 
         beforeEach(function () {
           Portal.signIn(user);
-          Portal.getDomainsPage();
+          Portal.helpers.nav.goToDomains();
         });
 
         afterEach(function () {

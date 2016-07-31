@@ -275,10 +275,6 @@ var Portal = {
     });
   },
 
-  getDomainsPage: function () {
-    return this.getPage(Constants.hashFragments.domains.list);
-  },
-
   /**
    * ### Portal.getDashboardsPage()
    *
@@ -695,7 +691,7 @@ var Portal = {
   createDomainIfNotExist: function (domain) {
     var me = this;
     return browser.getCurrentUrl().then(function (initialUrl) {
-      me.getDomainsPage();
+      me.helpers.nav.goToDomains();
       me.domains.listPage.searcher.setSearchCriteria(domain.name);
       me.domains.listPage.table
         .getRows()
@@ -729,7 +725,7 @@ var Portal = {
   updateDomain: function (domain) {
     var me = this;
     return browser.getCurrentUrl().then(function (initialUrl) {
-      me.getDomainsPage();
+      me.helpers.nav.goToDomains();
       me.domains.listPage.searchAndClickEdit(domain.name);
       delete domain.name;
       me.domains.editPage.updateDomain(domain);

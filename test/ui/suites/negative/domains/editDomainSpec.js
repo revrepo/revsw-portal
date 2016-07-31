@@ -40,7 +40,7 @@ describe('Negative', function () {
 
     beforeEach(function () {
       Portal.signIn(adminUser);
-      Portal.getDomainsPage();
+      Portal.helpers.nav.goToDomains();
     });
 
     afterEach(function () {

@@ -45,7 +45,7 @@ describe('Negative', function () {
 
     it('should have both Create buttons disabled on fresh new domain form',
       function () {
-        Portal.getDomainsPage();
+        Portal.helpers.nav.goToDomains();
         Portal.domains.listPage.clickAddNewDomain();
         var addBtn = Portal.domains.addPage.getCreateDomainBtn();
         expect(addBtn.isEnabled()).toBeFalsy();
@@ -57,7 +57,7 @@ describe('Negative', function () {
       function () {
         var myDomain = DataProvider.generateDomain('mydomain');
         myDomain.name = ' ';
-        Portal.getDomainsPage();
+        Portal.helpers.nav.goToDomains();
         Portal.domains.listPage.clickAddNewDomain();
         Portal.domains.addPage.fillForm(myDomain);
         var addBtn = Portal.domains.addPage.getCreateDomainBtn();
@@ -68,7 +68,7 @@ describe('Negative', function () {
       function () {
         var myDomain = DataProvider.generateDomain('mydomain');
         myDomain.originServer = ' ';
-        Portal.getDomainsPage();
+        Portal.helpers.nav.goToDomains();
         Portal.domains.listPage.clickAddNewDomain();
         Portal.domains.addPage.fillForm(myDomain);
         var addBtn = Portal.domains.addPage.getCreateDomainBtn();
@@ -79,7 +79,7 @@ describe('Negative', function () {
       function () {
         var myDomain = DataProvider.generateDomain('mydomain');
         myDomain.originHostHeader = ' ';
-        Portal.getDomainsPage();
+        Portal.helpers.nav.goToDomains();
         Portal.domains.listPage.clickAddNewDomain();
         Portal.domains.addPage.fillForm(myDomain);
         var addBtn = Portal.domains.addPage.getCreateDomainBtn();
@@ -90,7 +90,7 @@ describe('Negative', function () {
       function () {
         var myDomain = DataProvider.generateDomain('mydomain');
         myDomain.originLocation = '--- Select Location ---';
-        Portal.getDomainsPage();
+        Portal.helpers.nav.goToDomains();
         Portal.domains.listPage.clickAddNewDomain();
         Portal.domains.addPage.fillForm(myDomain);
         var addBtn = Portal.domains.addPage.getCreateDomainBtn();
@@ -100,7 +100,7 @@ describe('Negative', function () {
     it('should not create domain when all fields have white spaces',
       function () {
         var myDomain = DataProvider.generateDomain();
-        Portal.getDomainsPage();
+        Portal.helpers.nav.goToDomains();
         Portal.domains.listPage.clickAddNewDomain();
         Portal.domains.addPage.fillForm(myDomain);
         var addBtn = Portal.domains.addPage.getCreateDomainBtn();
@@ -111,7 +111,7 @@ describe('Negative', function () {
       function () {
         var myDomain = DataProvider.generateDomain('mydomain');
         myDomain.name = '';
-        Portal.getDomainsPage();
+        Portal.helpers.nav.goToDomains();
         Portal.domains.listPage.clickAddNewDomain();
         Portal.domains.addPage.fillForm(myDomain);
         var addBtn = Portal.domains.addPage.getCreateDomainBtn();
@@ -122,7 +122,7 @@ describe('Negative', function () {
       function () {
         var myDomain = DataProvider.generateDomain('mydomain');
         myDomain.originServer = '';
-        Portal.getDomainsPage();
+        Portal.helpers.nav.goToDomains();
         Portal.domains.listPage.clickAddNewDomain();
         Portal.domains.addPage.fillForm(myDomain);
         var addBtn = Portal.domains.addPage.getCreateDomainBtn();
@@ -133,7 +133,7 @@ describe('Negative', function () {
       function () {
         var myDomain = DataProvider.generateDomain('mydomain');
         myDomain.originHostHeader = '';
-        Portal.getDomainsPage();
+        Portal.helpers.nav.goToDomains();
         Portal.domains.listPage.clickAddNewDomain();
         Portal.domains.addPage.fillForm(myDomain);
         var addBtn = Portal.domains.addPage.getCreateDomainBtn();
