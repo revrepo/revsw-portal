@@ -16,6 +16,9 @@
  * from Rev Software, Inc.
  */
 
+var SideBar = require('./../../page_objects/common/sidebar/sidebar');
+var MenuItems = require('./../../page_objects/common/sidebar/locators/menuItems');
+
 // # Navigator Helper
 // Abstracts common functionality for the navigation through Portal UI.
 module.exports = {
@@ -33,258 +36,258 @@ module.exports = {
    * Navigates to Mobile Apps > iOS
    */
   goToIOS: function () {
-    return;
+    return SideBar.select(MenuItems.MOBILE_APPS.IOS);
   },
 
   /**
    * Navigates to Mobile Apps > Android
    */
   goToAndroid: function () {
-    return;
+    return SideBar.select(MenuItems.MOBILE_APPS.ANDROID);
   },
 
   /**
    * Navigates to Mobile Apps > Windows Mobile
    */
   goToWindowsMobile: function () {
-    return;
+    return SideBar.select(MenuItems.MOBILE_APPS.WINDOWS_MOBILE);
   },
 
   /**
-   * Navigates to  >
+   * Navigates to Mobile Analytics > Traffic Levels
    */
-  goTo: function () {
-    return;
+  goToMATrafficLevels: function () {
+    return SideBar.select(MenuItems.MOBILE_ANALYTICS.TRAFFIC_LEVELS);
   },
 
   /**
-   * Navigates to  >
+   * Navigates to Mobile Analytics > Top Reports
    */
-  goTo: function () {
-    return;
+  goToMATopReports: function () {
+    return SideBar.select(MenuItems.MOBILE_ANALYTICS.TOP_REPORTS);
   },
 
   /**
-   * Navigates to  >
+   * Navigates to Mobile Analytics > Top Objects
    */
-  goTo: function () {
-    return;
+  goToMATopObjects: function () {
+    return SideBar.select(MenuItems.MOBILE_ANALYTICS.TOP_OBJECTS);
   },
 
   /**
-   * Navigates to  >
+   * Navigates to Mobile Analytics > Traffic Distributions
    */
-  goTo: function () {
-    return;
+  goToMATrafficDistributions: function () {
+    return SideBar.select(MenuItems.MOBILE_ANALYTICS.TRAFFIC_DISTRIBUTIONS);
   },
 
   /**
-   * Navigates to  >
+   * Navigates to Mobile Analytics > A/B Reports
    */
-  goTo: function () {
-    return;
+  goToMAABReports: function () {
+    return SideBar.select(MenuItems.MOBILE_ANALYTICS.AB_REPORTS);
   },
 
   /**
-   * Navigates to  >
+   * Navigates to Web > Domains
    */
-  goTo: function () {
-    return;
+  goToDomains: function () {
+    return SideBar.select(MenuItems.WEB.DOMAINS);
   },
 
   /**
-   * Navigates to  >
+   * Navigates to Web > SSL Certificates
    */
-  goTo: function () {
-    return;
+  goToSSLCertificates: function () {
+    return SideBar.select(MenuItems.WEB.SSL_CERTIFICATES);
   },
 
   /**
-   * Navigates to  >
+   * Navigates to Web > SSL Names
    */
-  goTo: function () {
-    return;
+  goToSSLNames: function () {
+    return SideBar.select(MenuItems.WEB.SSL_NAMES);
   },
 
   /**
-   * Navigates to  >
+   * Navigates to Web > Staging Environment
    */
-  goTo: function () {
-    return;
+  goToStagingEnvironment: function () {
+    return SideBar.select(MenuItems.WEB.STAGING_ENVIRONMENT);
   },
 
   /**
-   * Navigates to  >
+   * Navigates to Web > Purge Cache
    */
-  goTo: function () {
-    return;
+  goToPurgeCache: function () {
+    return SideBar.select(MenuItems.WEB.PURGE_CACHE);
   },
 
   /**
-   * Navigates to  >
+   * Navigates to Web > Upload Config
    */
-  goTo: function () {
-    return;
+  goToUploadConfig: function () {
+    return SideBar.select(MenuItems.WEB.UPLOAD_CONFIG);
   },
 
   /**
-   * Navigates to  >
+   * Navigates to Web Analytics > Proxy Traffic
    */
-  goTo: function () {
-    return;
+  goToWAProxyTraffic: function () {
+    return SideBar.select(MenuItems.WEB_ANALYTICS.PROXY_TRAFFIC);
   },
 
   /**
-   * Navigates to  >
+   * Navigates to Web Analytics > Top Reports
    */
-  goTo: function () {
-    return;
+  goToWATopReports: function () {
+    return SideBar.select(MenuItems.WEB_ANALYTICS.TOP_REPORTS);
   },
 
   /**
-   * Navigates to  >
+   * Navigates to Web Analytics > Top Objects
    */
-  goTo: function () {
-    return;
+  goToWATopObjects: function () {
+    return SideBar.select(MenuItems.WEB_ANALYTICS.TOP_OBJECTS);
   },
 
   /**
-   * Navigates to  >
+   * Navigates to Web Analytics > FBT Reports
    */
-  goTo: function () {
-    return;
+  goToWAFBTReports: function () {
+    return SideBar.select(MenuItems.WEB_ANALYTICS.FBT_REPORTS);
   },
 
   /**
-   * Navigates to  >
+   * Navigates to Web Analytics > Traffic Heatmaps
    */
-  goTo: function () {
-    return;
+  goToWATrafficHeatmaps: function () {
+    return SideBar.select(MenuItems.WEB_ANALYTICS.TRAFFIC_HEAT_MAPS);
   },
 
   /**
-   * Navigates to  >
+   * Navigates to Web Analytics > RTT Heatmaps
    */
-  goTo: function () {
-    return;
+  goToWARTTHeatmaps: function () {
+    return SideBar.select(MenuItems.WEB_ANALYTICS.RTT_HEAT_MAPS);
   },
 
   /**
-   * Navigates to  >
+   * Navigates to DNS Service > DNS Zones
    */
-  goTo: function () {
-    return;
+  goToDNSZones: function () {
+    return SideBar.select(MenuItems.DNS_SERVICE.DNS_ZONES);
   },
 
   /**
-   * Navigates to  >
+   * Navigates to DNS Service > Monitors
    */
-  goTo: function () {
-    return;
+  goToMonitors: function () {
+    return SideBar.select(MenuItems.DNS_SERVICE.MONITORS);
   },
 
   /**
-   * Navigates to  >
+   * Navigates to DNS Service > Data Sources
    */
-  goTo: function () {
-    return;
+  goToDataSources: function () {
+    return SideBar.select(MenuItems.DNS_SERVICE.DATA_SOURCES);
   },
 
   /**
-   * Navigates to  >
+   * Navigates to Admin > Users
    */
-  goTo: function () {
-    return;
+  goToUsers: function () {
+    return SideBar.select(MenuItems.ADMIN.USERS);
   },
 
   /**
-   * Navigates to  >
+   * Navigates to Admin > Accounts
    */
-  goTo: function () {
-    return;
+  goToAccounts: function () {
+    return SideBar.select(MenuItems.ADMIN.ACCOUNTS);
   },
 
   /**
-   * Navigates to  >
+   * Navigates to Admin > API Keys
    */
-  goTo: function () {
-    return;
+  goToAPIKeys: function () {
+    return SideBar.select(MenuItems.ADMIN.API_KEYS);
   },
 
   /**
-   * Navigates to  >
+   * Navigates to Admin > Log Shipping
    */
-  goTo: function () {
-    return;
+  goToLogShipping: function () {
+    return SideBar.select(MenuItems.ADMIN.LOG_SHIPPING);
   },
 
   /**
-   * Navigates to  >
+   * Navigates to Admin > Update Password
    */
-  goTo: function () {
-    return;
+  goToUpdatePassword: function () {
+    return SideBar.select(MenuItems.ADMIN.UPDATE_PASSWORD);
   },
 
   /**
-   * Navigates to  >
+   * Navigates to Admin > Security Settings
    */
-  goTo: function () {
-    return;
+  goToSecuritySettings: function () {
+    return SideBar.select(MenuItems.ADMIN.SECURITY_SETTINGS);
   },
 
   /**
-   * Navigates to  >
+   * Navigates to Admin > Activity Log
    */
-  goTo: function () {
-    return;
+  goToActivityLog: function () {
+    return SideBar.select(MenuItems.ADMIN.ACTIVITY_LOG);
   },
 
   /**
-   * Navigates to  >
+   * Navigates to Billing > Usage Report
    */
-  goTo: function () {
-    return;
+  goToUsageReport: function () {
+    return SideBar.select(MenuItems.BILLING.USAGE_REPORT);
   },
 
   /**
-   * Navigates to  >
+   * Navigates to Billing > Change Billing Plan
    */
-  goTo: function () {
-    return;
+  goToChangeBillingPlan: function () {
+    return SideBar.select(MenuItems.BILLING.CHANGE_BILLING_PLAN);
   },
 
   /**
-   * Navigates to  >
+   * Navigates to Billing > Billing Statements
    */
-  goTo: function () {
-    return;
+  goToBillingStatements: function () {
+    return SideBar.select(MenuItems.BILLING.BILLING_STATEMENTS);
   },
 
   /**
-   * Navigates to  >
+   * Navigates to Support > API Documentation
    */
-  goTo: function () {
-    return;
+  goToAPIDocumentation: function () {
+    return SideBar.select(MenuItems.SUPPORT.API_DOCUMENTATION);
   },
 
   /**
-   * Navigates to  >
+   * Navigates to Support > Knowledge Base
    */
-  goTo: function () {
-    return;
+  goToKnowledgeBase: function () {
+    return SideBar.select(MenuItems.SUPPORT.KNOWLEDGE_BASE);
   },
 
   /**
-   * Navigates to  >
+   * Navigates to Support > Open Ticket
    */
-  goTo: function () {
-    return;
+  goToOpenTicket: function () {
+    return SideBar.select(MenuItems.SUPPORT.OPEN_TICKET);
   },
 
   /**
-   * Navigates to  >
+   * Navigates to Support > Network Status
    */
-  goTo: function () {
-    return;
-  },
+  goToNetworkStatus: function () {
+    return SideBar.select(MenuItems.SUPPORT.NETWORK_STATUS);
+  }
 };

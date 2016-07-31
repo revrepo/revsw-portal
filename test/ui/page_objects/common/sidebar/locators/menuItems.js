@@ -146,7 +146,7 @@ var MenuItems = {
       linkText: 'Security Settings',
       area: MenuAreas.ADMIN
     },
-    ACTIVITY_LOGS: {
+    ACTIVITY_LOG: {
       linkText: 'Activity Log',
       area: MenuAreas.ADMIN
     }
@@ -176,6 +176,10 @@ var MenuItems = {
     },
     OPEN_TICKET: {
       linkText: 'Open Ticket',
+      area: MenuAreas.SUPPORT
+    },
+    NETWORK_STATUS: {
+      linkText: 'Network Status',
       area: MenuAreas.SUPPORT
     }
   }
