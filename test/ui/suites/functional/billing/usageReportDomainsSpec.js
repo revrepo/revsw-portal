@@ -32,8 +32,7 @@ describe('Functional', function () {
 
     beforeAll(function () {
       Portal.signIn(user);
-      Portal.goToBilling();
-      Portal.header.goTo(USAGE_REPORT);
+      Portal.helpers.nav.goToUsageReport();
     });
 
     afterAll(function () {

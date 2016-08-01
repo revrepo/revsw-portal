@@ -367,30 +367,15 @@ var Portal = {
     return Portal.sideBar.goTo(Constants.sideBar.mobileApps.MOBILE_APPS);
   },
 
-  /**
-   * ### Portal.goToBilling()
-   *
-   * Navigation helper method that executes all steps to navigate to `Billing`
-   * page.
-   *
-   * @returns {Promise}
-   */
-  goToBilling: function () {
-    return Portal.sideBar.goTo(Constants.sideBar.billing.BILLING);
-  },
-
   goToAccountProfile: function () {
-    this.goToBilling();
     return Portal.sideBar.goTo(Constants.sideBar.billing.ACCOUNT_PROFILE);
   },
 
   goToChangeBillingPlan: function () {
-    this.goToBilling();
     return Portal.sideBar.goTo(Constants.sideBar.billing.CHANGE_BILLING_PLAN);
   },
 
   goToBillingStatements: function () {
-    this.goToBilling();
     return Portal.sideBar.goTo(Constants.sideBar.billing.BILLING_STATEMENTS);
   },
 
