@@ -47,7 +47,7 @@ describe('Smoke', function () {
         });
 
         beforeEach(function () {
-          Portal.goToDNSZones();
+          Portal.helpers.nav.goToDNSZones();
         });
 
         afterEach(function () {

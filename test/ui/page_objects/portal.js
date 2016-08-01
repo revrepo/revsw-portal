@@ -371,32 +371,6 @@ var Portal = {
     return Portal.sideBar.goTo(Constants.sideBar.billing.ACCOUNT_PROFILE);
   },
 
-  /**
-   * ### Portal.goToStagingEnv()
-   *
-   * Navigation helper method that executes all steps to navigate to `Staging Env.` page
-   *
-   * @returns {Promise}
-   */
-  goToStagingEnv: function () {
-    return this
-        .goTo(Constants.header.appMenu.WEB,
-            Constants.sideBar.web.STAGING_ENV);
-  },
-
-  /**
-   * ### Portal.goToDNSZones()
-   *
-   * Navigation helper method that executes all steps to navigate to `DNS Zones` page
-   *
-   * @returns {Promise}
-   */
-  goToDNSZones: function () {
-    return this
-      .goTo(Constants.sideBar.dnsService.DNS_SERVICE,
-        Constants.sideBar.dnsService.DNS_ZONES);
-  },
-
   // ## User Helper methods
 
   /**
@@ -1110,7 +1084,7 @@ var Portal = {
   createDNSZone: function (zone) {
     var me = this;
     return browser.getCurrentUrl().then(function (initialUrl) {
-      me.goToDNSZones();
+      me.helpers.nav.goToDNSZones();
       Portal.dnsZones.listPage.clickAddNewDNSZone();
       Portal.dnsZones.addPage.form.fill(zone);
       Portal.dnsZones.addPage.clickCreateDNSZone();
@@ -1138,7 +1112,7 @@ var Portal = {
   createDNSZoneRecord: function (dnsZone, record) {
     var me = this;
     return browser.getCurrentUrl().then(function (initialUrl) {
-      me.goToDNSZones();
+      me.helpers.nav.goToDNSZones();
       Portal.dnsZones.listPage.searcher.clearSearchCriteria();
       Portal.dnsZones.listPage.searcher.setSearchCriteria(dnsZone.domain);
       Portal.dnsZones.listPage.table
@@ -1170,7 +1144,7 @@ var Portal = {
   deleteDNSZone: function (zone) {
     var me = this;
     return browser.getCurrentUrl().then(function (initialUrl) {
-      me.goToDNSZones();
+      me.helpers.nav.goToDNSZones();
       me.dnsZones.listPage.searcher.clearSearchCriteria();
       me.dnsZones.listPage.searcher.setSearchCriteria(zone.domain);
       me.dnsZones.listPage.table
