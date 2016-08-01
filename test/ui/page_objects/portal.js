@@ -372,20 +372,6 @@ var Portal = {
   },
 
   /**
-   * ### Portal.goToLogShipping()
-   *
-   * Navigation helper method that executes all steps to navigate to `Log Shipping
-   * List` page
-   *
-   * @returns {Promise}
-   */
-  goToLogShipping: function () {
-    return this
-        .goTo(Constants.header.appMenu.ACCOUNT_SETTINGS,
-            Constants.sideBar.admin.LOG_SHIPPING);
-  },
-
-  /**
    * ### Portal.goToStagingEnv()
    *
    * Navigation helper method that executes all steps to navigate to `Staging Env.` page
@@ -1069,7 +1055,7 @@ var Portal = {
   createLogShippingJob: function (logShippingJob) {
     var me = this;
     return browser.getCurrentUrl().then(function (initialUrl) {
-      me.goToLogShipping();
+      me.helpers.nav.goToLogShipping();
       Portal.logShipping.listPage.clickAddNewLogShippingJob();
       Portal.logShipping.addPage.form.fill(logShippingJob);
       Portal.logShipping.addPage.clickCreateJobBtn();
@@ -1095,7 +1081,7 @@ var Portal = {
   deleteLogShippingJob: function (logShippingJob) {
     var me = this;
     return browser.getCurrentUrl().then(function (initialUrl) {
-      me.goToLogShipping();
+      me.helpers.nav.goToLogShipping();
       me.logShipping.listPage.searcher.clearSearchCriteria();
       me.logShipping.listPage.searcher.setSearchCriteria(logShippingJob.name);
       me.logShipping.listPage.table

@@ -43,7 +43,7 @@ describe('Smoke', function () {
                 });
 
                 beforeEach(function () {
-                    Portal.goToLogShipping();
+                    Portal.helpers.nav.goToLogShipping();
                     Portal.logShipping.listPage.clickAddNewLogShippingJob();
                 });
 
