@@ -64,54 +64,57 @@ var SideBar = {
 
   /**
    * Returns specified Menu Item
-   * @param locator
+   * @param locatorData
    * @returns {*}
    */
-  getMenuItem: function (locator) {
-    /*if (option.ROOT) {
-      option = option.ROOT;
-    }*/
-    //var locator = option;
-    if (locator.area) {
-      var areaLocator = locator.area;
+  getMenuItem: function (locatorData) {
+    var locator;
+    if (locatorData.id) {
+      locator = by.id(locatorData.id);
+    }
+    else {
+      locator = by.partialLinkText(locatorData.linkText);
+    }
+    if (locatorData.area) {
+      var areaLocator = locatorData.area;
       return this
         .getContainerEl()
         .element(by.id(areaLocator.id))
         .element(by.xpath('..')) // Get parent
-        .element(by.id(locator.id));
+        .element(locator);
     }
     return this
       .getContainerEl()
-      .element(by.id(locator.id));
+      .element(locator);
   },
 
   /**
    * Returns the `up-arrow` element
-   * @param locator
+   * @param locatorData
    * @returns {*}
    */
-  getUpArrow: function (locator) {
-    if (!this.isMenu(locator)) {
+  getUpArrow: function (locatorData) {
+    if (!this.isMenu(locatorData)) {
       throw 'API ERROR!';
     }
     // First check arrow exists
     return this
-      .getMenuItem(locator)
+      .getMenuItem(locatorData)
       .element(by.css(this.locators.arrows.up.css));
   },
 
   /**
    * Returns the `down-arrow` element
-   * @param locator
+   * @param locatorData
    * @returns {*}
    */
-  getDownArrow: function (locator) {
-    if (!this.isMenu(locator)) {
+  getDownArrow: function (locatorData) {
+    if (!this.isMenu(locatorData)) {
       throw 'API ERROR!';
     }
     // First check arrow exists
     return this
-      .getMenuItem(locator)
+      .getMenuItem(locatorData)
       .element(by.css(this.locators.arrows.down.css));
   },
 
@@ -119,13 +122,13 @@ var SideBar = {
 
   /**
    * Checks whether specified Menu Item is a `menu` or not.
-   * @param locator
+   * @param locatorData
    * @returns {*}
    */
-  isMenu: function (locator) {
+  isMenu: function (locatorData) {
     var me = this;
     return this
-      .getMenuItem(locator)
+      .getMenuItem(locatorData)
       .getAttribute('className')
       .then(function (className) {
         return className
@@ -135,29 +138,29 @@ var SideBar = {
 
   /**
    * Expands a `menu-item`
-   * @param locator
+   * @param locatorData
    * @returns {*}
    */
-  expand: function (locator) {
-    if (!this.isMenu(locator)) {
+  expand: function (locatorData) {
+    if (!this.isMenu(locatorData)) {
       throw 'API ERROR!';
     }
     return this
-      .getUpArrow(locator)
+      .getUpArrow(locatorData)
       .click();
   },
 
   /**
    * Collapses a `menu-item`
-   * @param locator
+   * @param locatorData
    * @returns {*}
    */
-  collapse: function (locator) {
-    if (!this.isMenu(locator)) {
+  collapse: function (locatorData) {
+    if (!this.isMenu(locatorData)) {
       throw 'API ERROR!';
     }
     return this
-      .getDownArrow(locator)
+      .getDownArrow(locatorData)
       .click();
   },
 
@@ -177,14 +180,14 @@ var SideBar = {
   /**
    * Selects a specified menu-item by collapsing all opened menu-items and
    * expanding the parent menu-item.
-   * @param locator
+   * @param locatorData
    * @returns {*}
    */
-  select: function (locator) {
+  select: function (locatorData) {
     this.collapseAll();
-    this.expand(locator.area);
+    this.expand(locatorData.area);
     return this
-      .getMenuItem(locator)
+      .getMenuItem(locatorData)
       .click();
   }
 };
