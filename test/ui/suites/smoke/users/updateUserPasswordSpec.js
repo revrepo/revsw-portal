@@ -51,7 +51,7 @@ describe('Smoke', function () {
         });
 
         beforeEach(function () {
-          Portal.goToUpdatePassword();
+          Portal.helpers.nav.goToUpdatePassword();
         });
 
         it('should display updated password form', function () {
@@ -65,7 +65,7 @@ describe('Smoke', function () {
           Portal.createUser(carl);
           Portal.signOut();
           Portal.signIn(carl);
-          Portal.goToUpdatePassword();
+          Portal.helpers.nav.goToUpdatePassword();
           Portal.updatePasswordPage.setCurrentPassword(carl.password);
           Portal.updatePasswordPage.setNewPassword(newPassword);
           Portal.updatePasswordPage.setPasswordConfirm(newPassword);

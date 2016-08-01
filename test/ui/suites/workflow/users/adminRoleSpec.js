@@ -163,7 +163,7 @@ describe('Workflow', function () {
       function () {
         var oldPassword = adminUser.password;
         var newPassword = 'pwd123456';
-        Portal.goToUpdatePassword();
+        Portal.helpers.nav.goToUpdatePassword();
         Portal.updatePasswordPage.update(adminUser.password, newPassword);
         Portal.signOut();
         Portal.signIn({email: adminUser.email, password: newPassword});

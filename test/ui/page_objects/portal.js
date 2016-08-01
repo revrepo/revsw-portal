@@ -372,20 +372,6 @@ var Portal = {
   },
 
   /**
-   * ### Portal.goToUpdatePassword()
-   *
-   * Navigation helper method that executes all steps to navigate to `Update
-   * Password` page
-   *
-   * @returns {Promise}
-   */
-  goToUpdatePassword: function () {
-    return this
-      .goTo(Constants.header.appMenu.ACCOUNT_SETTINGS,
-      Constants.sideBar.menu.UPDATE_PASSWORD);
-  },
-
-  /**
    * ### Portal.goToDomains()
    *
    * Navigation helper method that executes all steps to navigate to `Domains`

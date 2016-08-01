@@ -35,7 +35,7 @@ describe('Functional', function () {
     });
 
     beforeEach(function () {
-      Portal.goToUpdatePassword();
+      Portal.helpers.nav.goToUpdatePassword();
     });
 
     it('should go to "User List" page when clicking "Back" button',
@@ -53,7 +53,7 @@ describe('Functional', function () {
         Portal.signOut();
         // Update password using new user
         Portal.signIn(andrew);
-        Portal.goToUpdatePassword();
+        Portal.helpers.nav.goToUpdatePassword();
         Portal.updatePasswordPage.setCurrentPassword(andrew.password);
         Portal.updatePasswordPage.setNewPassword(newPassword);
         Portal.updatePasswordPage.setPasswordConfirm(newPassword);
@@ -74,7 +74,7 @@ describe('Functional', function () {
         Portal.signOut();
         // Update password using new user
         Portal.signIn(mathew);
-        Portal.goToUpdatePassword();
+        Portal.helpers.nav.goToUpdatePassword();
         Portal.updatePasswordPage.setCurrentPassword(mathew.password);
         Portal.updatePasswordPage.setNewPassword(newPassword);
         Portal.updatePasswordPage.setPasswordConfirm(newPassword);
