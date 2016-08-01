@@ -35,7 +35,7 @@ describe('Functional', function () {
     });
 
     beforeEach(function () {
-      Portal.goToDomains();
+      Portal.helpers.nav.goToDomains();
     });
 
     afterEach(function () {

@@ -35,7 +35,7 @@ describe('Workflow', function () {
     });
 
     beforeEach(function () {
-      Portal.goToDomains();
+      Portal.helpers.nav.goToDomains();
     });
 
     afterEach(function () {

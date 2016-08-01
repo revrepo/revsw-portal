@@ -372,34 +372,6 @@ var Portal = {
   },
 
   /**
-   * ### Portal.goToDomains()
-   *
-   * Navigation helper method that executes all steps to navigate to `Domains`
-   * page
-   *
-   * @returns {Promise}
-   */
-  goToDomains: function () {
-    return this
-      .goTo(Constants.header.appMenu.WEB,
-      Constants.sideBar.web.DOMAINS);
-  },
-
-  /**
-   * ### Portal.goToSslCert()
-   *
-   * Navigation helper method that executes all steps to navigate to `SSL Certificates`
-   * page
-   *
-   * @returns {Promise}
-   */
-  goToSslCert: function () {
-    return this
-        .goTo(Constants.header.appMenu.WEB,
-            Constants.sideBar.web.SSL_CERTIFICATES);
-  },
-
-  /**
    * ### Portal.goToSSLNames()
    *
    * Navigation helper method that executes all steps to navigate to `SSL Names
@@ -560,7 +532,7 @@ var Portal = {
   createDomain: function (newDomain) {
     var me = this;
     return browser.getCurrentUrl().then(function (initialUrl) {
-      me.goToDomains();
+      me.helpers.nav.goToDomains();
       me.domains.listPage.clickAddNewDomain();
       me.domains.addPage.createDomain(newDomain);
       me.domains.addPage.clickBackToList();
@@ -648,7 +620,7 @@ var Portal = {
   deleteDomain: function (domain) {
     var me = this;
     return browser.getCurrentUrl().then(function (initialUrl) {
-      me.goToDomains();
+      me.helpers.nav.goToDomains();
       me.domains.listPage.searcher.clearSearchCriteria();
       me.domains.listPage.searcher.setSearchCriteria(domain.name);
       me.domains.listPage.table
