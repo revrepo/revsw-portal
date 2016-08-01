@@ -371,10 +371,6 @@ var Portal = {
     return Portal.sideBar.goTo(Constants.sideBar.billing.ACCOUNT_PROFILE);
   },
 
-  goToChangeBillingPlan: function () {
-    return Portal.sideBar.goTo(Constants.sideBar.billing.CHANGE_BILLING_PLAN);
-  },
-
   goToBillingStatements: function () {
     return Portal.sideBar.goTo(Constants.sideBar.billing.BILLING_STATEMENTS);
   },
