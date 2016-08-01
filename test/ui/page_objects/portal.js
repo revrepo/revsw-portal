@@ -356,20 +356,6 @@ var Portal = {
   },
 
   /**
-   * ### Portal.goToUsers()
-   *
-   * Navigation helper method that executes all steps to navigate to `Users
-   * List` page
-   *
-   * @returns {Promise}
-   */
-  goToUsers: function () {
-    return this
-      .goTo(Constants.header.appMenu.ACCOUNT_SETTINGS,
-      Constants.sideBar.menu.USERS);
-  },
-
-  /**
    * ### Portal.goToMobileApps()
    *
    * Navigation helper method that executes all steps to navigate to `Mobile
@@ -540,7 +526,7 @@ var Portal = {
   createUser: function (newUser) {
     var me = this;
     return browser.getCurrentUrl().then(function (initialUrl) {
-      me.goToUsers();
+      me.helpers.nav.goToUsers();
       me.userListPage.clickAddNewUser();
       me.addUserPage.createUser(newUser);
       me.addUserPage.clickBackToList();
@@ -601,7 +587,7 @@ var Portal = {
   deleteUser: function (user) {
     var me = this;
     return browser.getCurrentUrl().then(function (initialUrl) {
-      me.goToUsers();
+      me.helpers.nav.goToUsers();
       me.userListPage.searcher.clearSearchCriteria();
       me.userListPage.searcher.setSearchCriteria(user.email);
       me.userListPage.table

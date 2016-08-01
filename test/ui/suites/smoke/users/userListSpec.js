@@ -43,7 +43,7 @@ describe('Smoke', function () {
         });
 
         beforeEach(function () {
-          Portal.goToUsers();
+          Portal.helpers.nav.goToUsers();
         });
 
         it('should be displayed when clicking "Users" from sidebar',

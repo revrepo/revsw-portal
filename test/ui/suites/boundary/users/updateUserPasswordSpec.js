@@ -34,7 +34,7 @@ describe('Boundary', function () {
     });
 
     beforeEach(function () {
-      Portal.goToUsers();
+      Portal.helpers.nav.goToUsers();
     });
 
     it('should not update the password when it is less than 8 chars length.',

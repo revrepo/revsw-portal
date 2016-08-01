@@ -46,7 +46,7 @@ describe('Workflow', function () {
 
     beforeEach(function () {
       Portal.signIn(adminUser);
-      Portal.goToUsers();
+      Portal.helpers.nav.goToUsers();
     });
 
     afterEach(function () {
@@ -104,7 +104,7 @@ describe('Workflow', function () {
       Portal.signOut();
       // Check new user is visible to other admin
       Portal.signIn(adminUser);
-      Portal.goToUsers();
+      Portal.helpers.nav.goToUsers();
       Portal.userListPage.searcher.setSearchCriteria(andrew.email);
       var newTotalRows = Portal.userListPage.table.getRows().count();
       expect(newTotalRows).toEqual(1);
@@ -121,7 +121,7 @@ describe('Workflow', function () {
       // Check new user is visible to other admin
       Portal.signIn(adminUser);
       Portal.deleteUser(bruce);
-      Portal.goToUsers();
+      Portal.helpers.nav.goToUsers();
       Portal.userListPage.searcher.setSearchCriteria(bruce.email);
       var newTotalRows = Portal.userListPage.table.getRows().count();
       expect(newTotalRows).toEqual(0);
@@ -136,7 +136,7 @@ describe('Workflow', function () {
       Portal.signOut();
       // Check new user is visible to other admin
       Portal.signIn(adminUser);
-      Portal.goToUsers();
+      Portal.helpers.nav.goToUsers();
       Portal.userListPage.searchAndClickEdit(steve.email);
       Portal.editUserPage.updateUser({firstName: 'updated'});
       Portal.editUserPage.clickBackToList();

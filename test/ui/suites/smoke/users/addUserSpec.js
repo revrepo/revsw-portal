@@ -44,7 +44,7 @@ describe('Smoke', function () {
         });
 
         beforeEach(function () {
-          Portal.goToUsers();
+          Portal.helpers.nav.goToUsers();
           Portal.userListPage.clickAddNewUser();
         });
 
