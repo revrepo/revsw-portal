@@ -372,20 +372,6 @@ var Portal = {
   },
 
   /**
-   * ### Portal.goToSSLNames()
-   *
-   * Navigation helper method that executes all steps to navigate to `SSL Names
-   * List` page
-   *
-   * @returns {Promise}
-   */
-  goToSSLNames: function () {
-    return this
-        .goTo(Constants.header.appMenu.WEB,
-            Constants.sideBar.web.SSL_NAMES);
-  },
-
-  /**
    * ### Portal.goToLogShipping()
    *
    * Navigation helper method that executes all steps to navigate to `Log Shipping
@@ -1026,7 +1012,7 @@ var Portal = {
   createSSLName: function (sslName) {
     var me = this;
     return browser.getCurrentUrl().then(function (initialUrl) {
-      me.goToSSLNames();
+      me.helpers.nav.goToSSLNames();
       Portal.sslNames.listPage.clickAddNewSSLName();
       Portal.sslNames.addPage.form.fill(sslName);
       Portal.sslNames.addPage.clickAddSSLName();
@@ -1054,7 +1040,7 @@ var Portal = {
   deleteSSLName: function (sslName) {
     var me = this;
     return browser.getCurrentUrl().then(function (initialUrl) {
-      me.goToSSLNames();
+      me.helpers.nav.goToSSLNames();
       me.sslNames.listPage.searcher.clearSearchCriteria();
       me.sslNames.listPage.searcher.setSearchCriteria(sslName.domainName);
       me.sslNames.listPage.table
