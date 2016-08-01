@@ -16,16 +16,16 @@
  * from Rev Software, Inc.
  */
 
-// # Add Log Shipping Name Page Object
+// # Add DNS Zone Page Object
 
 var Dialog = require('.././common/dialog');
 
-// Requiring `log-shipping form` component page object
-var LogShippingForm = require('./form');
+// Requiring `DNS zone form` component page object
+var DNSZoneForm = require('./form');
 
-// This `Add Log Shipping` Page Object abstracts all operations or actions that a
-// common user could do in the Add Log Shipping page from the Portal app/site.
-var AddLogShipping = {
+// This `Add DNS Zone` Page Object abstracts all operations or actions that a
+// common user could do in the Add DNS Zone page from the Portal app/site.
+var AddDNSZone = {
 
   // ## Properties
 
@@ -43,7 +43,7 @@ var AddLogShipping = {
       cancel: {
         linkText: 'Cancel'
       },
-      createJob: {
+      createDNSZone: {
         css: 'i.glyphicon-ok'
       }
     }
@@ -51,18 +51,18 @@ var AddLogShipping = {
 
   dialog: Dialog,
 
-  // `Add Log Shipping` Page is compound mainly by a form. This property makes
-  // reference to the LogShippingForm Page Object to interact with it.
-  form: LogShippingForm,
+  // `Add DNS Zone` Page is compound mainly by a form. This property makes
+  // reference to the DNSZoneForm Page Object to interact with it.
+  form: DNSZoneForm,
 
   // ## Methods to retrieve references to UI elements (Selenium WebDriver
   // Element)
 
   /**
-   * ### AddLogShipping.getTitleLbl()
+   * ### AddDNSZone.getTitleLbl()
    *
    * Returns the reference to the `Title` label element (Selenium WebDriver
-   * Element) from the Add Log Shipping page from the Portal app.
+   * Element) from the Add DNS Zone page from the Portal app.
    *
    * @returns {Object} Selenium WebDriver Element
    */
@@ -71,7 +71,7 @@ var AddLogShipping = {
   },
 
   /**
-   * ### AddLogShipping.getBackToListBtn()
+   * ### AddDNSZone.getBackToListBtn()
    *
    * Returns the reference to the `Back To List` button (Selenium WebDriver
    * Element) from the Add LogS hipping page from the Portal app.
@@ -84,22 +84,22 @@ var AddLogShipping = {
   },
 
   /**
-   * ### AddLogShipping.getCreateJobBtn()
+   * ### AddDNSZone.getCreateDNSZoneBtn()
    *
-   * Returns the reference to the `Create Job` button (Selenium WebDriver
-   * Element) from the Add Log Shipping page from the Portal app.
+   * Returns the reference to the `Create DNS Zone` button (Selenium WebDriver
+   * Element) from the Add DNS Zone page from the Portal app.
    *
    * @returns {Object} Selenium WebDriver Element
    */
-  getCreateJobBtn: function () {
-    return element(by.css(this.locators.buttons.createJob.css));
+  getCreateDNSZoneBtn: function () {
+    return element(by.css(this.locators.buttons.createDNSZone.css));
   },
 
   /**
-   * ### AddLogShipping.getCancelBtn()
+   * ### AddDNSZone.getCancelBtn()
    *
    * Returns the reference to the `Cancel` button (Selenium WebDriver
-   * Element) from the Add Log Shipping page from the Portal app.
+   * Element) from the Add DNS Zone page from the Portal app.
    *
    * @returns {Object} Selenium WebDriver Element
    */
@@ -107,14 +107,15 @@ var AddLogShipping = {
     return element(by.partialLinkText(this.locators.buttons.cancel.linkText));
   },
 
-  // ## Methods to interact with the Add Log Shipping page components
+  // ## Methods to interact with the Add DNS Zone page components
 
   /**
-   * ### AddLogShipping.clickBackToList()
+   * ### AddDNSZone.clickBackToList()
    *
-   * Triggers a click on the `Back To List` button from the Add Log Shipping page
+   * Triggers a click on the `Back To List` button from the Add DNS Zone page
    * from the Portal app
    *
+
    */
   clickBackToList: function () {
     return this
@@ -123,23 +124,23 @@ var AddLogShipping = {
   },
 
   /**
-   * ### AddLogShipping.clickCreateJobBtn()
+   * ### AddDNSZone.clickCreateDNSZone()
    *
-   * Triggers a click on the `Create Job` button from the Add Log Shipping page
+   * Triggers a click on the `Create DNS Zone` button from the Add DNS Zone page
    * from the Portal app
    *
    * @returns {Object} Promise
    */
-  clickCreateJobBtn: function () {
+  clickCreateDNSZone: function () {
     return this
-      .getCreateJobBtn()
+      .getCreateDNSZoneBtn()
       .click();
   },
 
   /**
-   * ### AddLogShipping.clickCancel()
+   * ### AddDNSZone.clickCancel()
    *
-   * Triggers a click on the `Cancel` button from the Add Log Shipping page from
+   * Triggers a click on the `Cancel` button from the Add DNS Zone page from
    * the Portal app
    *
    * @returns {Object} Promise
@@ -153,9 +154,9 @@ var AddLogShipping = {
   // ## Helper Methods
 
   /**
-   * ### AddLogShipping.isDisplayed()
+   * ### AddDNSZone.isDisplayed()
    *
-   * Checks whether the Add Log Shipping page is being displayed in the UI or not.
+   * Checks whether the Add DNS Zone page is being displayed in the UI or not.
    *
    * @returns {Object} Promise
    */
@@ -166,9 +167,9 @@ var AddLogShipping = {
   },
 
   /**
-   * ### AddLogShipping.getTitle()
+   * ### AddDNSZone.getTitle()
    *
-   * Gets the `Title` label from the Add Log Shipping page
+   * Gets the `Title` label from the Add DNS Zone page
    *
    * @returns {Object} Promise
    */
@@ -179,20 +180,20 @@ var AddLogShipping = {
   },
 
   /**
-   * ### AddLogShipping.createLogShippingJob()
+   * ### AddDNSZone.createDNSZone()
    *
-   * Creates a new Log Shipping Job using given data by filling it in the form and
-   * clicking on the `Create Job` button from the Add Log Shipping page
+   * Creates a new DNS Zone using given data by filling it in the form and
+   * clicking on the `Create DNS Zone` button from the Add DNS Zone page
    *
-   * @param {Object} logShippingJob, Log Shipping Job data with the schema specified in
-   * DataProvider.generateLogShippingJob()
+   * @param {Object} zone, DNS Zone data with the schema specified in
+   * DataProvider.generateDNSZone()
    *
    * @returns {Object} Promise
    */
-  createLogShippingJob: function (logShippingJob) {
-    this.form.fill(logShippingJob);
-    return this.clickCreateJobBtn();
+  createDNSZone: function (zone) {
+    this.form.fill(zone);
+    return this.clickCreateDNSZone();
   }
 };
 
-module.exports = AddLogShipping;
+module.exports = AddDNSZone;

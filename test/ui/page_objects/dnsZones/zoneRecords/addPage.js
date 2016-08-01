@@ -16,16 +16,16 @@
  * from Rev Software, Inc.
  */
 
-// # Add Log Shipping Name Page Object
+// # Add Zone Records Page Object
 
-var Dialog = require('.././common/dialog');
+//var Dialog = require('.././common/dialog');
 
-// Requiring `log-shipping form` component page object
-var LogShippingForm = require('./form');
+// Requiring `zone-record form` component page object
+var ZoneRecordForm = require('./form');
 
-// This `Add Log Shipping` Page Object abstracts all operations or actions that a
-// common user could do in the Add Log Shipping page from the Portal app/site.
-var AddLogShipping = {
+// This `Add Zone Record` Page Object abstracts all operations or actions that a
+// common user could do in the Add Zone Record page from the Portal app/site.
+var AddZoneRecord = {
 
   // ## Properties
 
@@ -43,26 +43,26 @@ var AddLogShipping = {
       cancel: {
         linkText: 'Cancel'
       },
-      createJob: {
+      addNewRecord: {
         css: 'i.glyphicon-ok'
       }
     }
   },
 
-  dialog: Dialog,
+  //dialog: Dialog,
 
-  // `Add Log Shipping` Page is compound mainly by a form. This property makes
-  // reference to the LogShippingForm Page Object to interact with it.
-  form: LogShippingForm,
+  // `Add Zone Records` Page is compound mainly by a form. This property makes
+  // reference to the Zone Record Form Page Object to interact with it.
+  form: ZoneRecordForm,
 
   // ## Methods to retrieve references to UI elements (Selenium WebDriver
   // Element)
 
   /**
-   * ### AddLogShipping.getTitleLbl()
+   * ### AddZoneRecord.getTitleLbl()
    *
    * Returns the reference to the `Title` label element (Selenium WebDriver
-   * Element) from the Add Log Shipping page from the Portal app.
+   * Element) from the Add Zone Records page from the Portal app.
    *
    * @returns {Object} Selenium WebDriver Element
    */
@@ -71,7 +71,7 @@ var AddLogShipping = {
   },
 
   /**
-   * ### AddLogShipping.getBackToListBtn()
+   * ### AddZoneRecord.getBackToListBtn()
    *
    * Returns the reference to the `Back To List` button (Selenium WebDriver
    * Element) from the Add LogS hipping page from the Portal app.
@@ -84,22 +84,22 @@ var AddLogShipping = {
   },
 
   /**
-   * ### AddLogShipping.getCreateJobBtn()
+   * ### AddZoneRecord.getCreateZoneRecordBtn()
    *
-   * Returns the reference to the `Create Job` button (Selenium WebDriver
-   * Element) from the Add Log Shipping page from the Portal app.
+   * Returns the reference to the `Create Zone Record` button (Selenium WebDriver
+   * Element) from the Add Zone Records page from the Portal app.
    *
    * @returns {Object} Selenium WebDriver Element
    */
-  getCreateJobBtn: function () {
-    return element(by.css(this.locators.buttons.createJob.css));
+  getAddNewRecordBtn: function () {
+    return element(by.css(this.locators.buttons.addNewRecord.css));
   },
 
   /**
-   * ### AddLogShipping.getCancelBtn()
+   * ### AddZoneRecord.getCancelBtn()
    *
    * Returns the reference to the `Cancel` button (Selenium WebDriver
-   * Element) from the Add Log Shipping page from the Portal app.
+   * Element) from the Add Zone Records page from the Portal app.
    *
    * @returns {Object} Selenium WebDriver Element
    */
@@ -107,14 +107,15 @@ var AddLogShipping = {
     return element(by.partialLinkText(this.locators.buttons.cancel.linkText));
   },
 
-  // ## Methods to interact with the Add Log Shipping page components
+  // ## Methods to interact with the Add Zone Records page components
 
   /**
-   * ### AddLogShipping.clickBackToList()
+   * ### AddZoneRecord.clickBackToList()
    *
-   * Triggers a click on the `Back To List` button from the Add Log Shipping page
+   * Triggers a click on the `Back To List` button from the Add Zone Records page
    * from the Portal app
    *
+
    */
   clickBackToList: function () {
     return this
@@ -123,23 +124,23 @@ var AddLogShipping = {
   },
 
   /**
-   * ### AddLogShipping.clickCreateJobBtn()
+   * ### AddZoneRecord.clickCreateZoneRecord()
    *
-   * Triggers a click on the `Create Job` button from the Add Log Shipping page
+   * Triggers a click on the `Create Zone Record` button from the Add Zone Records page
    * from the Portal app
    *
    * @returns {Object} Promise
    */
-  clickCreateJobBtn: function () {
+  clickAddNewRecord: function () {
     return this
-      .getCreateJobBtn()
+      .getAddNewRecordBtn()
       .click();
   },
 
   /**
-   * ### AddLogShipping.clickCancel()
+   * ### AddZoneRecord.clickCancel()
    *
-   * Triggers a click on the `Cancel` button from the Add Log Shipping page from
+   * Triggers a click on the `Cancel` button from the Add Zone Records page from
    * the Portal app
    *
    * @returns {Object} Promise
@@ -153,9 +154,9 @@ var AddLogShipping = {
   // ## Helper Methods
 
   /**
-   * ### AddLogShipping.isDisplayed()
+   * ### AddZoneRecord.isDisplayed()
    *
-   * Checks whether the Add Log Shipping page is being displayed in the UI or not.
+   * Checks whether the Add Zone Records page is being displayed in the UI or not.
    *
    * @returns {Object} Promise
    */
@@ -166,9 +167,9 @@ var AddLogShipping = {
   },
 
   /**
-   * ### AddLogShipping.getTitle()
+   * ### AddZoneRecord.getTitle()
    *
-   * Gets the `Title` label from the Add Log Shipping page
+   * Gets the `Title` label from the Add Zone Records page
    *
    * @returns {Object} Promise
    */
@@ -179,20 +180,20 @@ var AddLogShipping = {
   },
 
   /**
-   * ### AddLogShipping.createLogShippingJob()
+   * ### AddZoneRecord.createZoneRecord()
    *
-   * Creates a new Log Shipping Job using given data by filling it in the form and
-   * clicking on the `Create Job` button from the Add Log Shipping page
+   * Creates a new Zone Record using given data by filling it in the form and
+   * clicking on the `Create Zone Record` button from the Add Zone Records page
    *
-   * @param {Object} logShippingJob, Log Shipping Job data with the schema specified in
-   * DataProvider.generateLogShippingJob()
+   * @param {Object} zone, Zone Record data with the schema specified in
+   * DataProvider.generateZoneRecord()
    *
    * @returns {Object} Promise
    */
-  createLogShippingJob: function (logShippingJob) {
-    this.form.fill(logShippingJob);
-    return this.clickCreateJobBtn();
+  createZoneRecord: function (zone) {
+    this.form.fill(zone);
+    return this.clickCreateZoneRecord();
   }
 };
 
-module.exports = AddLogShipping;
+module.exports = AddZoneRecord;
