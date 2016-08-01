@@ -29,8 +29,7 @@ describe('Functional', function () {
 
     beforeAll(function () {
       Portal.signIn(adminUser);
-      Portal.header.goTo(Constants.header.appMenu.WEB_ANALYTICS);
-      Portal.header.goTo(Constants.sideBar.analytics.PROXY_TRAFFIC);
+      Portal.helpers.nav.goToWAProxyTraffic();
       Portal.proxyTrafficPage.selectDomain(myDomain);
     });
 

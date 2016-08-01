@@ -55,13 +55,13 @@ describe('Smoke', function () {
           expect(Portal.alerts.getAll().count()).toEqual(1);
           expect(Portal.alerts.getFirst().getText())
             .toContain(Constants.alertMessages.accounts.MSG_SUCCESS_ADD);
-          Portal.header.goTo(Constants.sideBar.admin.ACCOUNTS);
+          Portal.helpers.nav.goToAccounts();
           var result = Portal.admin.accounts
             .listPage
             .searchAndGetFirstRow(criteria);
           expect(result.getCompanyName()).toBe(criteria);
 
-          Portal.header.goTo(Constants.sideBar.admin.ACCOUNTS);
+          Portal.helpers.nav.goToAccounts();
           Portal.admin.accounts.listPage.searchAndClickDelete(criteria);
           Portal.dialog.clickOk();
         });

@@ -36,8 +36,7 @@ describe('Smoke', function () {
     });
 
     beforeEach(function () {
-      Portal.header.goTo(Constants.header.appMenu.WEB);
-      Portal.header.goTo(Constants.sideBar.web.PURGE_CACHE);
+      Portal.helpers.nav.goToPurgeCache();
     });
 
     it('should display Purge Cached Objects page',

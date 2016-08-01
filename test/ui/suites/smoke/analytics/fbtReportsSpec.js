@@ -30,8 +30,7 @@ describe('Smoke', function () {
       Portal.signIn(adminUser);
       // TODO: It looks like protractor has a problem finding elements
       // which ara present on a page but below the viewport
-      Portal.header.goTo(Constants.header.appMenu.WEB_ANALYTICS);
-      Portal.header.goTo(Constants.sideBar.analytics.FBT_REPORTS);
+      Portal.helpers.nav.goToWAFBTReports();
     });
 
     afterAll(function () {

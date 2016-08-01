@@ -61,7 +61,7 @@ describe('Smoke', function () {
           function () {
             var accountProfile = DataProvider.generateAccountProfileData();
             Portal.createAccounts([accountProfile]);
-            Portal.header.goTo(Constants.sideBar.admin.ACCOUNTS);
+            Portal.helpers.nav.goToAccounts();
 
             var account = accountProfile.companyName;
             Portal.admin.accounts.listPage.searchAndClickDelete(account);
@@ -80,7 +80,7 @@ describe('Smoke', function () {
             // Create account
             var accountProfile = DataProvider.generateAccountProfileData();
             Portal.createAccounts([accountProfile]);
-            Portal.header.goTo(Constants.sideBar.admin.ACCOUNTS);
+            Portal.helpers.nav.goToAccounts();
 
             var account = accountProfile.companyName;
             Portal.admin.accounts.listPage.searcher.setSearchCriteria(account);

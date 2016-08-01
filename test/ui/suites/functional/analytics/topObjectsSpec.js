@@ -29,8 +29,7 @@ describe('Functional', function () {
 
     beforeAll(function () {
       Portal.signIn(adminUser);
-      Portal.header.goTo(Constants.header.appMenu.WEB_ANALYTICS);
-      Portal.header.goTo(Constants.sideBar.analytics.TOP_OBJECTS);
+      Portal.helpers.nav.goToWATopObjects();
       Portal.topObjectsPage.selectDomain(myDomain);
     });
 

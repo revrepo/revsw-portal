@@ -24,7 +24,6 @@ describe('Functional', function () {
   describe('Usage Report/Domains', function () {
 
     var user = config.get('portal.users.admin');
-    var USAGE_REPORT = Constants.sideBar.billing.USAGE_REPORT;
     var testDomain = config.get('portal.usageReport.testDomain');
 
     //  cached

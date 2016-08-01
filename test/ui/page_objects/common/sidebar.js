@@ -23,6 +23,8 @@ var Constants = require('./../constants');
 
 // This `Searcher` Page Object abstracts all operations or actions that a common
 // user could do with the SideBar menu component from Portal app/site.
+//
+// @deprecated, please use sidebar.js from sidebar folder instead.
 var SideBar = {
 
   // ## Properties
@@ -72,6 +74,7 @@ var SideBar = {
    * Return the reference to the `Sidebar Menu` container (Selenium WebDriver
    * Element) from the Portal app
    *
+   * @deprecated
    * @returns {Selenium WebDriver Element}
    */
   getMenu: function () {
@@ -85,8 +88,8 @@ var SideBar = {
    *
    * Triggers a click on the specified sidebar `menu option`
    *
+   * @deprecated
    * @param {String} menuOption, the label from the menu option to click
-   *
    * @returns {Promise}
    */
   goTo: function (menuOption) {
@@ -101,9 +104,9 @@ var SideBar = {
    *
    * Triggers a click on the specified sidebar `menu option` avoiding using by.linkText
    *
+   * @deprecated
    * @param {String} headerName, the header's label from the menu option to click
    * @param {String} itemName, the item's label from the menu option to click
-   *
    * @returns {Promise}
    */
   selectItemFromExpandedBlock: function(headerName, itemName) {
@@ -120,8 +123,8 @@ var SideBar = {
    * Return the reference to the menu header (Selenium WebDriver
    * Element)
    *
+   * @deprecated
    * @param {String} menuHeader, the label of header from the menu option
-   *
    * @returns {Selenium WebDriver Element}
    */
   getHeaderElem: function (menuHeader) {
@@ -138,8 +141,8 @@ var SideBar = {
    *
    * Check Existence of the Header menu element
    *
+   * @deprecated
    * @param {String} menuHeader, the label of header from the menu option
-   *
    * @returns {Promise}
    */
   isHeaderElemExists: function (menuHeader) {
@@ -155,8 +158,8 @@ var SideBar = {
    * Returns the reference to the expand arrow (Selenium WebDriver
    * Element)
    *
+   * @deprecated
    * @param {String} menuHeader, the label of header from the menu option
-   *
    * @returns {Selenium WebDriver Element}
    */
   getArrowElement: function (container) {
@@ -171,8 +174,8 @@ var SideBar = {
    * Returns the reference to the collapse arrow (Selenium WebDriver
    * Element)
    *
+   * @deprecated
    * @param {String} menuHeader, the label of header from the menu option
-   *
    * @returns {Selenium WebDriver Element}
    */
   getCollapseArrowElement: function (menuHeader) {
@@ -186,8 +189,8 @@ var SideBar = {
    *
    * Clicks on expand arrow if block is not expanded
    *
+   * @deprecated
    * @param {Selenium WebDriver Element} container, current left side menu block to work with
-   *
    * @returns {Promise}
    */
   expandBlockIfNotExpanded: function (container) {
@@ -199,8 +202,8 @@ var SideBar = {
    *
    * Check if expand arrow is available and perform click on it
    *
+   * @deprecated
    * @param {Selenium WebDriver Element} container, current left side menu block to work with
-   *
    * @returns {Promise}
    */
   clickArrowIfDisplayed: function (container) {
@@ -219,6 +222,7 @@ var SideBar = {
    *
    * Check if Dashboard is expanded and performs click on it
    *
+   * @deprecated
    * @returns {Promise}
    */
   collapseDashboard: function () {
@@ -231,8 +235,8 @@ var SideBar = {
    *
    * Check if collapse arrow is available and perform click on it
    *
+   * @deprecated
    * @param {Selenium WebDriver Element} container, current left side menu block to work with
-   *
    * @returns {Promise}
    */
   clickCollapseArrowIfDisplayed: function (container) {
@@ -252,9 +256,9 @@ var SideBar = {
    * Return the reference to the item within given container (Selenium WebDriver
    * Element)
    *
+   * @deprecated
    * @param {Selenium WebDriver Element} container, current left side menu block to work with
    * @param {String} menuOption, the label of item within active container
-   *
    * @returns {Selenium WebDriver Element}
    */
   getItemWithinContainer: function (container, menuOption) {
