@@ -28,7 +28,7 @@
         <div uib-accordion-group is-open="$ctrl.accordionStatus.isCnameHeaderOpen" is-disabled="!$ctrl.resultChecks.cname">
           <uib-accordion-heading>
             <i ng-animate-disabled ng-class="$ctrl.getClassStatusIcon($ctrl.resultChecks.cname.check_status_code)"></i>
-            <span ng-class="$ctrl.getStatusClass($ctrl.resultChecks.cname.check_status_code)">Check the domain’s CNAME record
+            <span ng-class="$ctrl.getStatusClass($ctrl.resultChecks.cname.check_status_code)">Check that the assigned CNAME record can be resolved to IP address
           <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': $ctrl.accordionStatus.isCnameHeaderOpen, 'glyphicon-chevron-right': !$ctrl.accordionStatus.isCnameHeaderOpen}"></i>
           </span>
           </uib-accordion-heading>
@@ -39,7 +39,8 @@
           <uib-accordion-heading>
             <span ng-class="$ctrl.getStatusClass($ctrl.resultChecks.domain_name.check_status_code)">
           <i ng-animate-disabled ng-class="$ctrl.getClassStatusIcon($ctrl.resultChecks.domain_name.check_status_code)"></i>
-          Check the domain name<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': $ctrl.accordionStatus.isDomainNameHeaderOpen, 'glyphicon-chevron-right': !$ctrl.accordionStatus.isDomainNameHeaderOpen}"></i>
+          Check that the domain name is pointing to the assigned CNAME record
+          <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': $ctrl.accordionStatus.isDomainNameHeaderOpen, 'glyphicon-chevron-right': !$ctrl.accordionStatus.isDomainNameHeaderOpen}"></i>
           </span>
           </uib-accordion-heading>
           <domain-check-integration-panel domain-id="$ctrl.domainId" type-check="domain_name" domain-config="$ctrl.domainConfig" status="$ctrl.resultChecks.domain_name"></domain-check-integration-panel>
@@ -50,7 +51,7 @@
             <span ng-class="$ctrl.getStatusClass($ctrl.resultChecks.domain_aliases.check_status_code)">
           <i ng-animate-disabled ng-class="$ctrl.getClassStatusIcon($ctrl.resultChecks.domain_aliases.check_status_code)"></i>
 
-          Check domain alias names<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': $ctrl.accordionStatus.isDomainAliasesHeaderOpen, 'glyphicon-chevron-right': !$ctrl.accordionStatus.isDomainAliasesHeaderOpen}"></i>
+          Check that configured domain alias names are pointing to the assigned CNAME record<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': $ctrl.accordionStatus.isDomainAliasesHeaderOpen, 'glyphicon-chevron-right': !$ctrl.accordionStatus.isDomainAliasesHeaderOpen}"></i>
          </span>
           </uib-accordion-heading>
           <domain-check-integration-panel domain-id="$ctrl.domainId" type-check="domain_aliases" domain-config="$ctrl.domainConfig" status="$ctrl.resultChecks.domain_aliases"></domain-check-integration-panel>
@@ -59,7 +60,9 @@
         <div uib-accordion-group is-open="$ctrl.accordionStatus.isDomainWildcardAliasHeaderOpen" is-disabled="false">
           <uib-accordion-heading>
             <span ng-class="$ctrl.getStatusClass($ctrl.resultChecks.domain_wildcard_alias.check_status_code)">
-          <i ng-animate-disabled ng-class="$ctrl.getClassStatusIcon($ctrl.resultChecks.domain_wildcard_alias.check_status_code)"></i> Check the domain wildcard alias<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': $ctrl.accordionStatus.isDomainWildcardAliasHeaderOpen, 'glyphicon-chevron-right': !$ctrl.accordionStatus.isDomainWildcardAliasHeaderOpen}"></i>
+          <i ng-animate-disabled ng-class="$ctrl.getClassStatusIcon($ctrl.resultChecks.domain_wildcard_alias.check_status_code)"></i>
+          Check the domain wildcard alias is pointing to the assigned CNAME record
+          <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': $ctrl.accordionStatus.isDomainWildcardAliasHeaderOpen, 'glyphicon-chevron-right': !$ctrl.accordionStatus.isDomainWildcardAliasHeaderOpen}"></i>
           </span>
           </uib-accordion-heading>
           <domain-check-integration-panel domain-id="$ctrl.domainId" type-check="domain_wildcard_alias" domain-config="$ctrl.domainConfig" status="$ctrl.resultChecks.domain_wildcard_alias"></domain-check-integration-panel>
@@ -68,7 +71,9 @@
         <div uib-accordion-group is-open="$ctrl.accordionStatus.isStagingProxyServerHeaderOpen" is-disabled="false">
           <uib-accordion-heading>
             <span ng-class="$ctrl.getStatusClass($ctrl.resultChecks.stagin_proxy_server.check_status_code)">
-          <i ng-animate-disabled ng-class="$ctrl.getClassStatusIcon($ctrl.resultChecks.stagin_proxy_server.check_status_code)"></i> Check the domain to a staging proxy server<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': $ctrl.accordionStatus.isStagingProxyServerHeaderOpen, 'glyphicon-chevron-right': !$ctrl.accordionStatus.isStagingProxyServerHeaderOpen}"></i>
+          <i ng-animate-disabled ng-class="$ctrl.getClassStatusIcon($ctrl.resultChecks.stagin_proxy_server.check_status_code)"></i>
+          Check that the web domain is properly provisioned on a staging proxy server
+          <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': $ctrl.accordionStatus.isStagingProxyServerHeaderOpen, 'glyphicon-chevron-right': !$ctrl.accordionStatus.isStagingProxyServerHeaderOpen}"></i>
           </span>
           </uib-accordion-heading>
           <domain-check-integration-panel domain-id="$ctrl.domainId" type-check="stagin_proxy_server" domain-config="$ctrl.domainConfig" status="$ctrl.resultChecks.stagin_proxy_server"></domain-check-integration-panel>
@@ -77,7 +82,9 @@
         <div uib-accordion-group is-open="$ctrl.accordionStatus.isProductionProxyServerHeaderOpen" is-disabled="false">
           <uib-accordion-heading>
             <span ng-class="$ctrl.getStatusClass($ctrl.resultChecks.production_proxy_server.check_status_code)">
-          <i ng-animate-disabled ng-class="$ctrl.getClassStatusIcon($ctrl.resultChecks.production_proxy_server.check_status_code)"></i> Check the domain to a production proxy server<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': $ctrl.accordionStatus.isProductionProxyServerHeaderOpen, 'glyphicon-chevron-right': !$ctrl.accordionStatus.isProductionProxyServerHeaderOpen}"></i>
+          <i ng-animate-disabled ng-class="$ctrl.getClassStatusIcon($ctrl.resultChecks.production_proxy_server.check_status_code)"></i>
+          Check that the web domain is properly provisioned on a global proxy server
+          <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': $ctrl.accordionStatus.isProductionProxyServerHeaderOpen, 'glyphicon-chevron-right': !$ctrl.accordionStatus.isProductionProxyServerHeaderOpen}"></i>
           </span>
           </uib-accordion-heading>
           <domain-check-integration-panel domain-id="$ctrl.domainId" type-check="production_proxy_server" domain-config="$ctrl.domainConfig" status="$ctrl.resultChecks.production_proxy_server"></domain-check-integration-panel>
