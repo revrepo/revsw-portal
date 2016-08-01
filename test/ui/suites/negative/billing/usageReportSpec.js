@@ -30,7 +30,7 @@ describe('Negative: ', function () {
 
     beforeAll(function () {
       Portal.signIn(adminUser);
-      Portal.goToUsageReport();
+      Portal.helpers.nav.goToUsageReport();
     });
 
     afterAll(function () {

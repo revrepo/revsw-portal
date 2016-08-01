@@ -371,12 +371,6 @@ var Portal = {
     return Portal.sideBar.goTo(Constants.sideBar.billing.ACCOUNT_PROFILE);
   },
 
-  goToUsageReport: function () {
-    return this
-      .goTo(Constants.sideBar.billing.BILLING,
-      Constants.sideBar.billing.USAGE_REPORT);
-  },
-
   /**
    * ### Portal.goToSecuritySettings()
    *

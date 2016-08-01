@@ -47,7 +47,7 @@ describe('Functional', function () {
       describe('With user: ' + user.role, function () {
         beforeAll(function () {
           Portal.signIn(user);
-          Portal.goToUsageReport();
+          Portal.helpers.nav.goToUsageReport();
         });
 
         afterAll(function () {
