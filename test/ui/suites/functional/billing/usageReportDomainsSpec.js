@@ -78,7 +78,7 @@ describe('Functional', function () {
           domain: domain,
           rows: r,
           tds: tds
-        }
+        };
       });
       expect(rows.length).toEqual(testDomains.length);
     });
