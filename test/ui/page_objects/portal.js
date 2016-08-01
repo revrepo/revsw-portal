@@ -372,20 +372,6 @@ var Portal = {
   },
 
   /**
-   * ### Portal.goToSecuritySettings()
-   *
-   * Navigation helper method that executes all steps to navigate to `Security
-   * Settings` page
-   *
-   * @returns {Promise}
-   */
-  goToSecuritySettings: function () {
-    return this
-      .goTo(Constants.header.appMenu.ACCOUNT_SETTINGS,
-      Constants.sideBar.menu.SECURITY_SETTINGS);
-  },
-
-  /**
    * ### Portal.goToUpdatePassword()
    *
    * Navigation helper method that executes all steps to navigate to `Update
