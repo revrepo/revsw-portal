@@ -557,6 +557,27 @@ var Portal = {
         Constants.sideBar.dnsService.DNS_ZONES);
   },
 
+  /**
+   * ### Portal.goToDNSZoneRecords()
+   *
+   * Navigation helper method that executes all steps to navigate to `DNS Zone Records` page
+   *
+   * @param {user} zone, DNS zone to manage
+   *
+   * @returns {Promise}
+   */
+  goToDNSZoneRecords: function (zone) {
+    var me = this;
+    return this.goToDNSZones()
+      .then(function () {
+      me.dnsZones.listPage.searcher.setSearchCriteria(zone.domain);
+      me.dnsZones.listPage.table
+        .getFirstRow()
+        .clickManageRecords();
+    })
+
+  },
+
   // ## User Helper methods
 
   /**
