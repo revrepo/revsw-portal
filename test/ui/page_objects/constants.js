@@ -36,7 +36,8 @@ var Constants = {
     admin: {
       users: '#/users',
       companies: '#/companies',
-      apiKeys: '#/keys'
+      apiKeys: '#/keys',
+      activityLog: '#/activitylog'
     },
     mobileApps: '#/apps/',
     sslCerts: '#/ssl_certs'

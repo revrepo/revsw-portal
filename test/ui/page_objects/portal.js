@@ -307,7 +307,16 @@ var Portal = {
   getApiKeysPage: function () {
     return this.getPage(Constants.hashFragments.admin.apiKeys);
   },
-
+  /**
+   * ### Portal.getActivityLogPage()
+   *
+   * Loads the hash fragment for the Activity Log page.
+   *
+   * @returns {Promise}
+   */
+  getActivityLogPage: function () {
+    return this.getPage(Constants.hashFragments.admin.activityLog);
+  },
   /**
    * ### Portal.getUsersPage()
    *

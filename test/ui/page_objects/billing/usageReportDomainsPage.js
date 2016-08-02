@@ -29,6 +29,15 @@ var UsageReportDomains = module.exports = {
     domainsTable: {
       repeater: '( domain, usage ) in report.domains_usage'
     },
+    views: {
+      container: '.container-fluid .row',
+      panelHeading: {
+        css: '.col-md-12 .panel .panel-heading',
+        pullLeft: '.pull-left'
+      },
+      panelBody: '.col-md-12 .panel .panel-body',
+      panelBodyRootDivs: '.col-md-12 .panel .panel-body > div'
+    },
   },
 
   /**
@@ -55,7 +64,25 @@ var UsageReportDomains = module.exports = {
   getDomainRows: function( domain ) {
     return element
       .all(by.name(domain));
+  },
+
+  /**
+   * ### UsageReport.getTitle()
+   *
+   * Returns the reference to the `Title` label element (Selenium WebDriver
+   * Element) from the Usage Report page from the Portal app.
+   *
+   * @returns {Selenium WebDriver Element}
+   */
+  getTitle: function() {
+    return element
+      .all(by.css(this.locators.views.panelBodyRootDivs))
+      .get(3)
+      .all(by.css('h4'))
+      .get(1)
+      .getText();
   }
+
 
 };
 
