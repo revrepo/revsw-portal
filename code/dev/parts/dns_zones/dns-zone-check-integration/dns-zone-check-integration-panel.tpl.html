@@ -1,0 +1,17 @@
+<div class="dns-zone-check-integration-panel ">
+  <div class="text text-info" ng-if="$ctrl.handler">
+    <i class="fa fa-check-circle" ng-animate-disabled ng-class="$ctrl.getClassStatusIcon($ctrl.checkResults.check_status_code)"> </i> {{$ctrl.handler}}
+  </div>
+  <div class="title">
+    <button type="button" class="btn btn-xs btn-primary" title="Start check" ng-disabled="$ctrl._loading" ng-click="$ctrl.onStartCheck()"><i ng-animate-disabled class="" ng-class="$ctrl._loading ? 'glyphicon glyphicon-refresh spin':'fa fa-play'"></i></button>
+    <span>{{$ctrl.checkResults.message}}</span>
+<span ng-if="!$ctrl.checkResults.message" class="alert"> In progress..</span>
+
+    </div>
+  <div class="form-group" ng-if="!!$ctrl.checkResults  ">
+    <!--   <button type="button" class="btn btn-xs" title="Start" ng-disabled="$ctrl._loading" ng-click="$ctrl.onStartCheck()"><i ng-animate-disabled class="" ng-class="$ctrl._loading ? 'glyphicon glyphicon-refresh spin':'fa fa-play'"></i></button>  -->
+    <div class="row panel">
+      <ng-include src="'parts/dns_zones/dns-zone-check-integration/dns-zone-check-integration-details-' +$ctrl.checkResults.check_type_+'.tpl.html'"></ng-include>
+    </div>
+  </div>
+</div>
