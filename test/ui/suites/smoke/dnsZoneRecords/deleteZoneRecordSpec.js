@@ -43,7 +43,7 @@ describe('Smoke', function () {
 
     describe('With user: ' + user.role, function () {
 
-      // Defining suite for deleting a DNS Zone
+      // Defining suite for deleting a DNS Zone Record
       describe('Delete DNS Zone Record', function () {
 
         beforeAll(function () {
@@ -97,7 +97,7 @@ describe('Smoke', function () {
           Portal.deleteDNSZone(zone);
         });
 
-        it('should display a confirmation message when deleting a DNS Zone',
+        it('should display a confirmation message when deleting a DNS Zone record',
           function () {
             var zone = DataProvider.generateDNSZoneData();
 

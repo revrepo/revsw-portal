@@ -583,8 +583,7 @@ var Portal = {
       me.dnsZones.listPage.table
         .getFirstRow()
         .clickManageRecords();
-    })
-
+    });
   },
 
   // ## User Helper methods
