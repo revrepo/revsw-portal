@@ -146,8 +146,8 @@
                   <a ui-sref=".versions({id: item.id})" ng-if="!item.loading" uib-tooltip="Previous Versions">
                     <i class="glyphicon glyphicon-book"></i>
                   </a>
-                  <a ui-sref=".checkintegration({id: item.id})" ng-if="!item.loading" uib-tooltip="Check Integration">
-                    <i class="fa fa-share-square-o"></i>
+                  <a ui-sref=".checkintegration({id: item.id})" ng-if="!item.loading" uib-tooltip="Check Domain Integration Configuration">
+                    <i class="glyphicon glyphicon-check"></i>
                   </a>
                 </td>
                 <td ng-if="auth.isReseller() ||  auth.isRevadmin()">

@@ -7,7 +7,7 @@
       "protocol": "http",
       "name": "localhost",
       "port": 3000,
-      "path": null// "portal/www/revsw-portal"
+      "path": null
     },
     "users": {
       "revAdmin": {
@@ -44,8 +44,14 @@
       }
     },
     "usageReport": {
-      "testDomain": "www.google-test.com",
-      "hits_denominator": 120000,
+      "testDomains": [
+        "black.google-test.com",
+        "white.google-test.com",
+        "gray.google-test.com",
+        "yellow.google-disaster.com",
+        "green.google-disaster.com"
+      ],
+      "hits_denominator": 20000,
       "sent_unit": 2000,
       "received_unit": 200
     }
