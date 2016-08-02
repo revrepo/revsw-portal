@@ -82,7 +82,6 @@
 
     // $scope.filterKeys = ['zone', 'companyName', 'records_count', 'updated_by', 'updated_at'];
 
-    $scope.locations = [];
     $scope.companies = [];
     $scope.model = {};
 
@@ -119,7 +118,7 @@
       delete model.expires_at;
       delete model.zone;
       delete model.records;
-      delete model.account_id; 
+      delete model.account_id;
       return model;
     };
 

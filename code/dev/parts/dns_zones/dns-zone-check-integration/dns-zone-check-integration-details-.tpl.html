@@ -1,0 +1,11 @@
+<div class="col-sm-12">
+  <table class="table table-condensed" ngif="$ctrl.checkResults.check_reports.length >1">
+    <tbody>
+      <tr ng-repeat="row in $ctrl.checkResults.check_reports">
+        <td width="10%" class="text-center"><i class="" ng-animate-disabled ng-class="$ctrl.getClassStatusIcon(row.check_status_code)"></i> </td>
+        <td>{{row.message}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <!-- <div><pre>{{$ctrl.checkResults | json}}</pre></div> -->
+</div>

@@ -2,7 +2,7 @@
   'use strict';
 
   angular.module('revapm.Portal.Domains')
-    .directive('domainCheckIntegration', domainCheckIntegration)
+    .directive('dnsZoneCheckIntegration', dnsZoneCheckIntegration)
     .constant('checkStatusCode', {
       OK: 'OK',
       ERROR: 'ERROR',
@@ -11,36 +11,31 @@
     })
     .run(function($templateRequest) {
       'ngInject';
-      $templateRequest('parts/domains/domain-check-integration/domain-check-integration.tpl.html', true);
+      $templateRequest('parts/dns_zones/dns-zone-check-integration/dns-zone-check-integration.tpl.html', true);
     });
   /**
-   * @name  domainCheckIntegration
+   * @name  dnsZoneCheckIntegration
    * @description
    * @return {Object}
    */
-  function domainCheckIntegration() {
+  function dnsZoneCheckIntegration() {
     return {
       restrict: 'E',
       replace: true,
       scope: true,
       bindToController: {
-        domainId: '=',
-        domainConfig: '=',
-        //TODO: cache parameter
+        zoneId: '=',
+        zoneConfig: '='
       },
-      templateUrl: 'parts/domains/domain-check-integration/domain-check-integration.tpl.html',
+      templateUrl: 'parts/dns_zones/dns-zone-check-integration/dns-zone-check-integration.tpl.html',
       controllerAs: '$ctrl',
-      controller: function domainCheckIntegrationController($scope, checkStatusCode) {
+      controller: function dnsZoneCheckIntegrationController($scope, checkStatusCode) {
         'ngInject';
         var $ctrl = this;
         this.checkStatusCode = checkStatusCode;
         this.accordionState_ = {
-          isCnameHeaderOpen: true,
-          isDomainNameHeaderOpen: true,
-          isDomainAliasesHeaderOpen: true,
-          isDomainWildcardAliasHeaderOpen: true,
-          isStaginProxyServerHeaderOpen: true,
-          isProductionProxyServerHeaderOpen: true
+          isDNSServersHeaderOpen: true,
+          isDNSRecordHeaderOpen: true,
         };
 
         this.getStatusClass = function(checkStatusCode) {

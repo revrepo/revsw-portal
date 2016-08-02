@@ -33,6 +33,15 @@
             controller: 'DNSZonesCrudController'
           }
         }
+      })
+      .state('index.dnsServices.dns_zones.checkintegration', {
+        url: '/checkintegration/:id',
+        views: {
+          page: {
+            controller: 'DNSZoneCheckIntegrationPageController',
+            templateUrl: 'parts/dns_zones/dns_zone-check-integration-page.html'
+          }
+        }
       });
   }
 })();
