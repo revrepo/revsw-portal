@@ -25,66 +25,66 @@
     <div class="col-sm-12">
       <!-- <div class="h4">List Types Check Integtarion</div> -->
       <uib-accordion close-others="false">
-        <div uib-accordion-group is-open="$ctrl.accordionStatus.isCnameHeaderOpen" is-disabled="!$ctrl.resultChecks.cname">
+        <div uib-accordion-group is-open="$ctrl.accordionState.isCnameHeaderOpen" is-disabled="!$ctrl.resultChecks.cname">
           <uib-accordion-heading>
             <i ng-animate-disabled ng-class="$ctrl.getClassStatusIcon($ctrl.resultChecks.cname.check_status_code)"></i>
             <span ng-class="$ctrl.getStatusClass($ctrl.resultChecks.cname.check_status_code)">Check that the assigned CNAME record can be resolved to IP address
-          <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': $ctrl.accordionStatus.isCnameHeaderOpen, 'glyphicon-chevron-right': !$ctrl.accordionStatus.isCnameHeaderOpen}"></i>
+          <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': $ctrl.accordionState.isCnameHeaderOpen, 'glyphicon-chevron-right': !$ctrl.accordionState.isCnameHeaderOpen}"></i>
           </span>
           </uib-accordion-heading>
           <domain-check-integration-panel domain-id="$ctrl.domainId" type-check="cname" domain-config="$ctrl.domainConfig" status="$ctrl.resultChecks.cname"></domain-check-integration-panel>
         </div>
         <!-- -->
-        <div uib-accordion-group is-open="$ctrl.accordionStatus.isDomainNameHeaderOpen" _heading="Check" is-disabled="false">
+        <div uib-accordion-group is-open="$ctrl.accordionState.isDomainNameHeaderOpen" _heading="Check" is-disabled="false">
           <uib-accordion-heading>
             <span ng-class="$ctrl.getStatusClass($ctrl.resultChecks.domain_name.check_status_code)">
           <i ng-animate-disabled ng-class="$ctrl.getClassStatusIcon($ctrl.resultChecks.domain_name.check_status_code)"></i>
           Check that the domain name is pointing to the assigned CNAME record
-          <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': $ctrl.accordionStatus.isDomainNameHeaderOpen, 'glyphicon-chevron-right': !$ctrl.accordionStatus.isDomainNameHeaderOpen}"></i>
+          <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': $ctrl.accordionState.isDomainNameHeaderOpen, 'glyphicon-chevron-right': !$ctrl.accordionState.isDomainNameHeaderOpen}"></i>
           </span>
           </uib-accordion-heading>
           <domain-check-integration-panel domain-id="$ctrl.domainId" type-check="domain_name" domain-config="$ctrl.domainConfig" status="$ctrl.resultChecks.domain_name"></domain-check-integration-panel>
         </div>
         <!-- domain_aliases -->
-        <div uib-accordion-group is-open="$ctrl.accordionStatus.isDomainAliasesHeaderOpen" _heading="Check" is-disabled="false">
+        <div uib-accordion-group is-open="$ctrl.accordionState.isDomainAliasesHeaderOpen" _heading="Check" is-disabled="false">
           <uib-accordion-heading>
             <span ng-class="$ctrl.getStatusClass($ctrl.resultChecks.domain_aliases.check_status_code)">
           <i ng-animate-disabled ng-class="$ctrl.getClassStatusIcon($ctrl.resultChecks.domain_aliases.check_status_code)"></i>
 
-          Check that configured domain alias names are pointing to the assigned CNAME record<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': $ctrl.accordionStatus.isDomainAliasesHeaderOpen, 'glyphicon-chevron-right': !$ctrl.accordionStatus.isDomainAliasesHeaderOpen}"></i>
+          Check that configured domain alias names are pointing to the assigned CNAME record<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': $ctrl.accordionState.isDomainAliasesHeaderOpen, 'glyphicon-chevron-right': !$ctrl.accordionState.isDomainAliasesHeaderOpen}"></i>
          </span>
           </uib-accordion-heading>
           <domain-check-integration-panel domain-id="$ctrl.domainId" type-check="domain_aliases" domain-config="$ctrl.domainConfig" status="$ctrl.resultChecks.domain_aliases"></domain-check-integration-panel>
         </div>
         <!-- domain_wildcard_alias-->
-        <div uib-accordion-group is-open="$ctrl.accordionStatus.isDomainWildcardAliasHeaderOpen" is-disabled="false">
+        <div uib-accordion-group is-open="$ctrl.accordionState.isDomainWildcardAliasHeaderOpen" is-disabled="false">
           <uib-accordion-heading>
             <span ng-class="$ctrl.getStatusClass($ctrl.resultChecks.domain_wildcard_alias.check_status_code)">
           <i ng-animate-disabled ng-class="$ctrl.getClassStatusIcon($ctrl.resultChecks.domain_wildcard_alias.check_status_code)"></i>
           Check the domain wildcard alias is pointing to the assigned CNAME record
-          <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': $ctrl.accordionStatus.isDomainWildcardAliasHeaderOpen, 'glyphicon-chevron-right': !$ctrl.accordionStatus.isDomainWildcardAliasHeaderOpen}"></i>
+          <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': $ctrl.accordionState.isDomainWildcardAliasHeaderOpen, 'glyphicon-chevron-right': !$ctrl.accordionState.isDomainWildcardAliasHeaderOpen}"></i>
           </span>
           </uib-accordion-heading>
           <domain-check-integration-panel domain-id="$ctrl.domainId" type-check="domain_wildcard_alias" domain-config="$ctrl.domainConfig" status="$ctrl.resultChecks.domain_wildcard_alias"></domain-check-integration-panel>
         </div>
         <!-- stagin_proxy_server-->
-        <div uib-accordion-group is-open="$ctrl.accordionStatus.isStagingProxyServerHeaderOpen" is-disabled="false">
+        <div uib-accordion-group is-open="$ctrl.accordionState.isStagingProxyServerHeaderOpen" is-disabled="false">
           <uib-accordion-heading>
             <span ng-class="$ctrl.getStatusClass($ctrl.resultChecks.stagin_proxy_server.check_status_code)">
           <i ng-animate-disabled ng-class="$ctrl.getClassStatusIcon($ctrl.resultChecks.stagin_proxy_server.check_status_code)"></i>
           Check that the web domain is properly provisioned on a staging proxy server
-          <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': $ctrl.accordionStatus.isStagingProxyServerHeaderOpen, 'glyphicon-chevron-right': !$ctrl.accordionStatus.isStagingProxyServerHeaderOpen}"></i>
+          <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': $ctrl.accordionState.isStagingProxyServerHeaderOpen, 'glyphicon-chevron-right': !$ctrl.accordionState.isStagingProxyServerHeaderOpen}"></i>
           </span>
           </uib-accordion-heading>
           <domain-check-integration-panel domain-id="$ctrl.domainId" type-check="stagin_proxy_server" domain-config="$ctrl.domainConfig" status="$ctrl.resultChecks.stagin_proxy_server"></domain-check-integration-panel>
         </div>
         <!-- production_proxy_server-->
-        <div uib-accordion-group is-open="$ctrl.accordionStatus.isProductionProxyServerHeaderOpen" is-disabled="false">
+        <div uib-accordion-group is-open="$ctrl.accordionState.isProductionProxyServerHeaderOpen" is-disabled="false">
           <uib-accordion-heading>
             <span ng-class="$ctrl.getStatusClass($ctrl.resultChecks.production_proxy_server.check_status_code)">
           <i ng-animate-disabled ng-class="$ctrl.getClassStatusIcon($ctrl.resultChecks.production_proxy_server.check_status_code)"></i>
           Check that the web domain is properly provisioned on a global proxy server
-          <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': $ctrl.accordionStatus.isProductionProxyServerHeaderOpen, 'glyphicon-chevron-right': !$ctrl.accordionStatus.isProductionProxyServerHeaderOpen}"></i>
+          <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': $ctrl.accordionState.isProductionProxyServerHeaderOpen, 'glyphicon-chevron-right': !$ctrl.accordionState.isProductionProxyServerHeaderOpen}"></i>
           </span>
           </uib-accordion-heading>
           <domain-check-integration-panel domain-id="$ctrl.domainId" type-check="production_proxy_server" domain-config="$ctrl.domainConfig" status="$ctrl.resultChecks.production_proxy_server"></domain-check-integration-panel>

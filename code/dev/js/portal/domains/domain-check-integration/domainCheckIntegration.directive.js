@@ -34,7 +34,7 @@
         'ngInject';
         var $ctrl = this;
         this.checkStatusCode = checkStatusCode;
-        this.accordionStatus_ = {
+        this.accordionState_ = {
           isCnameHeaderOpen: true,
           isDomainNameHeaderOpen: true,
           isDomainAliasesHeaderOpen: true,
