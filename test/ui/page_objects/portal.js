@@ -320,18 +320,6 @@ var Portal = {
   },
 
   /**
-   * ### Portal.goToAccountSettings()
-   *
-   * Navigation helper method that executes all steps to navigate to `Account
-   * Settings` section.
-   *
-   * @returns {Promise}
-   */
-  goToAccountSettings: function () {
-    return Portal.header.goTo(Constants.header.appMenu.ACCOUNT_SETTINGS);
-  },
-
-  /**
    * ### Portal.goToMobileApps()
    *
    * Navigation helper method that executes all steps to navigate to `Mobile
