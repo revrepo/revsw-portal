@@ -312,27 +312,32 @@ var TopObjectsForm = {
 
   getDelay: function () {
     return this.getDelayDropDown()
-      .getAttribute('value');
+      .$('option:checked')
+      .getText();
   },
 
   getCountry: function () {
     return this.getCountryDropDown()
-      .getAttribute('value');
+      .$('option:checked')
+      .getText();
   },
 
   getOS: function () {
     return this.getOSDropDown()
-      .getAttribute('value');
+      .$('option:checked')
+      .getText();
   },
 
   getDevice: function () {
     return this.getDeviceDropDown()
-      .getAttribute('value');
+      .$('option:checked')
+      .getText();
   },
 
   getCount: function () {
     return this.getCountDropDown()
-      .getAttribute('value');
+      .$('option:checked')
+      .getText();
   },
 
   setDelay: function (value) {

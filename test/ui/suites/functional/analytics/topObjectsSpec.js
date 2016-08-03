@@ -171,7 +171,6 @@ describe('Functional', function () {
       function () {
         var dataReport = DataProvider.generateAnalyticsInfo();
         dataReport.delay = 'Last 12 Hours';
-        dataReport.country = 'Mexico';
         dataReport.count = 'Top 5 Records';
         Portal.topObjectsPage.createTopMostRequestedObjectsReport(dataReport);
 
@@ -187,7 +186,6 @@ describe('Functional', function () {
       function () {
         var dataReport = DataProvider.generateAnalyticsInfo();
         dataReport.delay = 'Last 24 Hours';
-        dataReport.country = 'France';
         dataReport.count = 'Top 10 Records';
         Portal.topObjectsPage.createTopReferersReport(dataReport);
 
@@ -203,7 +201,6 @@ describe('Functional', function () {
       function () {
         var dataReport = DataProvider.generateAnalyticsInfo();
         dataReport.delay = 'Last 12 Hours';
-        dataReport.country = 'India';
         dataReport.count = 'Top 50 Records';
         Portal.topObjectsPage.createTopEdgeCacheHitsReport(dataReport);
 
@@ -219,7 +216,6 @@ describe('Functional', function () {
       function () {
         var dataReport = DataProvider.generateAnalyticsInfo();
         dataReport.delay = 'Last 12 Hours';
-        dataReport.country = 'India';
         dataReport.count = 'Top 50 Records';
         Portal.topObjectsPage.createTopEdgeCacheMissesReport(dataReport);
 
@@ -235,7 +231,6 @@ describe('Functional', function () {
       function () {
         var dataReport = DataProvider.generateAnalyticsInfo();
         dataReport.delay = 'Last 24 Hours';
-        dataReport.country = 'Bolivia';
         dataReport.count = 'Top 100 Records';
         Portal.topObjectsPage.createTop404NotFoundObjectsReport(dataReport);
 
@@ -251,7 +246,6 @@ describe('Functional', function () {
       function () {
         var dataReport = DataProvider.generateAnalyticsInfo();
         dataReport.delay = 'Last 12 Hours';
-        dataReport.country = 'Angola';
         dataReport.count = 'Top 250 Records';
         Portal.topObjectsPage.createTopObjects5XXErrorCodesReport(dataReport);
 
@@ -267,7 +261,6 @@ describe('Functional', function () {
       function () {
         var dataReport = DataProvider.generateAnalyticsInfo();
         dataReport.delay = 'Last 12 Hours';
-        dataReport.country = 'Mexico';
         dataReport.count = 'Top 5 Records';
         Portal.topObjectsPage.createTopFailedObjectsReport(dataReport);
 
@@ -283,7 +276,6 @@ describe('Functional', function () {
       function () {
         var dataReport = DataProvider.generateAnalyticsInfo();
         dataReport.delay = 'Last 12 Hours';
-        dataReport.country = 'Angola';
         dataReport.count = 'Top 250 Records';
         Portal.topObjectsPage.createObjectsWithSlowestFBTReport(dataReport);
 
@@ -299,7 +291,6 @@ describe('Functional', function () {
       function () {
         var dataReport = DataProvider.generateAnalyticsInfo();
         dataReport.delay = 'Last 12 Hours';
-        dataReport.country = 'India';
         dataReport.count = 'Top 50 Records';
         Portal.topObjectsPage.createObjectsWithSlowestDownTimeReport(dataReport);
 
