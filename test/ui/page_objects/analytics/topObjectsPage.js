@@ -180,9 +180,7 @@ var TopObjects = {
   */
   getChartTitle: function () {
     return this
-      .getReportsObj()
-      .get(1)
-      .getText();
+      .form.getReportTitle();
   },
 
  /**
@@ -215,6 +213,25 @@ var TopObjects = {
     me.setSelectSearchDomain(domain.name);
   },
 
+  createReport: function (dataReport) {
+    this.form.setDelay(dataReport.delay);
+    this.form.setCountry(dataReport.country);
+    this.form.setOS(dataReport.os);
+    this.form.setDevice(dataReport.device);
+    this.form.setCount(dataReport.count);
+    this.form.clickUpdateReport();
+  },
+
+  getReport: function () {
+    return {
+      delay: this.form.getDelay(),
+      country: this.form.getCountry(),
+      os: this.form.getOS(),
+      device: this.form.getDevice(),
+      count: this.form.getCount()
+    };
+  },
+
  /**
   * ### TopObjects.createTopMostRequestedObjects()
   *
@@ -224,13 +241,12 @@ var TopObjects = {
   *
   * @returns {Promise}
   */
-  createTopMostRequestedObjects: function (dataReport) {
-    this.form.setDelay(0, 0, dataReport.delay);
-    this.form.setCountry(0, 1, dataReport.country);
-    this.form.setOS(0, 2, dataReport.os);
-    this.form.setDevice(0, 3, dataReport.device);
-    this.form.setCount(0, 5, dataReport.count);
-    this.form.clickCreateReport(0, 6);
+  createTopMostRequestedObjectsReport: function (dataReport) {
+    var me = this;
+    return this.form.clickTopMostRequestedTab()
+      .then(function () {
+        me.createReport(dataReport);
+      });
   },
 
  /**
@@ -242,13 +258,29 @@ var TopObjects = {
   *
   * @returns {Promise}
   */
-  createTopReferers: function (dataReport) {
-    this.form.setDelay(2, 0, dataReport.delay);
-    this.form.setCountry(2, 1, dataReport.country);
-    this.form.setOS(2, 2, dataReport.os);
-    this.form.setDevice(2, 3, dataReport.device);
-    this.form.setCount(2, 5, dataReport.count);
-    this.form.clickCreateReport(2, 6);
+  createTopReferersReport: function (dataReport) {
+   var me = this;
+   return this.form.clickTopRefersTab()
+     .then(function () {
+       me.createReport(dataReport);
+     });
+  },
+
+  /**
+   * ### TopObjects.createTopEdgeCacheHits()
+   *
+   * Selects the report `Top Edge Cache Misses` in the Top Objects page.
+   *
+   * @param {String} dataReport of values to fill report.
+   *
+   * @returns {Promise}
+   */
+  createTopEdgeCacheHitsReport: function (dataReport) {
+    var me = this;
+    return this.form.clickTopEdgeCacheHitsTab()
+      .then(function () {
+        me.createReport(dataReport);
+      });
   },
 
   /**
@@ -260,13 +292,12 @@ var TopObjects = {
    *
    * @returns {Promise}
    */
-  createTopEdgeCacheMisses: function (dataReport) {
-    this.form.setDelay(4, 0, dataReport.delay);
-    this.form.setCountry(4, 1, dataReport.country);
-    this.form.setOS(4, 2, dataReport.os);
-    this.form.setDevice(4, 3, dataReport.device);
-    this.form.setCount(4, 5, dataReport.count);
-    this.form.clickCreateReport(4, 6);
+  createTopEdgeCacheMissesReport: function (dataReport) {
+    var me = this;
+    return this.form.clickTopEdgeCacheMissesTab()
+      .then(function () {
+        me.createReport(dataReport);
+      });
   },
 
   /**
@@ -278,13 +309,12 @@ var TopObjects = {
    *
    * @returns {Promise}
    */
-  createTop404NotFoundObjects: function (dataReport) {
-    this.form.setDelay(6, 0, dataReport.delay);
-    this.form.setCountry(6, 1, dataReport.country);
-    this.form.setOS(6, 2, dataReport.os);
-    this.form.setDevice(6, 3, dataReport.device);
-    this.form.setCount(6, 5, dataReport.count);
-    this.form.clickCreateReport(6, 6);
+  createTop404NotFoundObjectsReport: function (dataReport) {
+    var me = this;
+    return this.form.clickTop404Tab()
+      .then(function () {
+        me.createReport(dataReport);
+      });
   },
 
   /**
@@ -296,99 +326,135 @@ var TopObjects = {
    *
    * @returns {Promise}
    */
-  createTopObjects5XXErrorCodes: function (dataReport) {
-    this.form.setDelay(8, 0, dataReport.delay);
-    this.form.setCountry(8, 1, dataReport.country);
-    this.form.setOS(8, 2, dataReport.os);
-    this.form.setDevice(8, 3, dataReport.device);
-    this.form.setCount(8, 5, dataReport.count);
-    this.form.clickCreateReport(8, 6);
+  createTopObjects5XXErrorCodesReport: function (dataReport) {
+    var me = this;
+    return this.form.clickTop5XXTab()
+      .then(function () {
+        me.createReport(dataReport);
+      });
   },
 
   /**
-   * ### TopObjects.getTopMostRequestedObjects()
+   * ### TopObjects.createTopFailedObjectsReport()
    *
-   * Gets the report `The Most Requested Objects` in the Top Objects page.
+   * Selects report `Top Objects With Unsuccessful Completion Status` in the Top Objects page.
+   *
+   * @param {String} dataReport of values to fill report.
    *
    * @returns {Promise}
    */
-  getTopMostRequestedObjects: function () {
-    var dataReport = {};
-    dataReport.delay = this.form.getDelay(0, 0);
-    dataReport.country = this.form.getCountry(0, 1);
-    dataReport.os = this.form.getOS(0, 2);
-    dataReport.device = this.form.getDevice(0, 3);
-    dataReport.count = this.form.getCount(0, 5);
-    return dataReport;
+  createTopFailedObjectsReport: function (dataReport) {
+    var me = this;
+    return this.form.clickTopObjetcsWithUnsuccessfulStatusTab()
+      .then(function () {
+        me.createReport(dataReport);
+      });
   },
 
   /**
-   * ### TopObjects.createTopReferers()
+   * ### TopObjects.createObjectsWithSlowestFBTReport()
    *
-   * Gets the report `Top Referers` in the Top Objects page.
+   * Selects report `Objects With Slowest FBT` in the Top Objects page.
+   *
+   * @param {String} dataReport of values to fill report.
    *
    * @returns {Promise}
    */
-  getTopReferers: function () {
-    var dataReport = {};
-    dataReport.delay = this.form.getDelay(1, 0);
-    dataReport.country = this.form.getCountry(1, 1);
-    dataReport.os = this.form.getOS(1, 2);
-    dataReport.device = this.form.getDevice(1, 3);
-    dataReport.count = this.form.getCount(1, 5);
-    return dataReport;
+  createObjectsWithSlowestFBTReport: function (dataReport) {
+    var me = this;
+    return this.form.clickObjectsWithSlowestFBTtab()
+      .then(function () {
+        me.createReport(dataReport);
+      });
   },
 
   /**
-   * ### TopObjects.getTopEdgeCacheMisses()
+   * ### TopObjects.createObjectsWithSlowestDownTimeReport()
    *
-   * Gets the report `Top Edge Cache Misses` in the Top Objects page.
+   * Selects report `Objects With Slowest Download Time` in the Top Objects page.
    *
-   * @returns {Promise}
-   */
-  getTopEdgeCacheMisses: function () {
-    var dataReport = {};
-    dataReport.delay = this.form.getDelay(2, 0);
-    dataReport.country = this.form.getCountry(2, 1);
-    dataReport.os = this.form.getOS(2, 2);
-    dataReport.device = this.form.getDevice(2, 3);
-    dataReport.count = this.form.getCount(2, 5);
-    return dataReport;
-  },
-
-  /**
-   * ### TopObjects.getTop404NotFoundObjects()
-   *
-   * Gets the report `Top 404 Not Found Objects` in the Top Objects page.
+   * @param {String} dataReport of values to fill report.
    *
    * @returns {Promise}
    */
-  getTop404NotFoundObjects: function () {
-    var dataReport = {};
-    dataReport.delay = this.form.getDelay(3, 0);
-    dataReport.country = this.form.getCountry(3, 1);
-    dataReport.os = this.form.getOS(3, 2);
-    dataReport.device = this.form.getDevice(3, 3);
-    dataReport.count = this.form.getCount(3, 5);
-    return dataReport;
-  },
-
-  /**
-   * ### TopObjects.getTopObjects5XXErrorCodes()
-   *
-   * Gets the report `Top Objects 5XX Error Codes` in the Top Objects page.
-   *
-   * @returns {Promise}
-   */
-  getTopObjects5XXErrorCodes: function () {
-    var dataReport = {};
-    dataReport.delay = this.form.getDelay(4, 0);
-    dataReport.country = this.form.getCountry(4, 1);
-    dataReport.os = this.form.getOS(4, 2);
-    dataReport.device = this.form.getDevice(4, 3);
-    dataReport.count = this.form.getCount(4, 5);
-    return dataReport;
+  createObjectsWithSlowestDownTimeReport: function (dataReport) {
+    var me = this;
+    return this.form.clickObjectsWithSlowestDownTimeTab()
+      .then(function () {
+        me.createReport(dataReport);
+      });
   }
+  //
+  // /**
+  //  * ### TopObjects.getTopMostRequestedObjects()
+  //  *
+  //  * Gets the report `The Most Requested Objects` in the Top Objects page.
+  //  *
+  //  * @returns {Promise}
+  //  */
+  // getTopMostRequestedObjects: function () {
+  //   return this.getReport();
+  // },
+  //
+  // /**
+  //  * ### TopObjects.createTopReferers()
+  //  *
+  //  * Gets the report `Top Referers` in the Top Objects page.
+  //  *
+  //  * @returns {Promise}
+  //  */
+  // getTopReferers: function () {
+  //   var me = this;
+  //   return this.form.clickTopRefersTab()
+  //     .then(function () {
+  //       return me.getReport();
+  //     });
+  // },
+  //
+  // /**
+  //  * ### TopObjects.getTopEdgeCacheMisses()
+  //  *
+  //  * Gets the report `Top Edge Cache Misses` in the Top Objects page.
+  //  *
+  //  * @returns {Promise}
+  //  */
+  // getTopEdgeCacheMisses: function () {
+  //   var me = this;
+  //   return this.form.clickTopEdgeCacheMissesTab()
+  //     .then(function () {
+  //       return me.getReport();
+  //     });
+  // },
+  //
+  // /**
+  //  * ### TopObjects.getTop404NotFoundObjects()
+  //  *
+  //  * Gets the report `Top 404 Not Found Objects` in the Top Objects page.
+  //  *
+  //  * @returns {Promise}
+  //  */
+  // getTop404NotFoundObjects: function () {
+  //   var me = this;
+  //   return this.form.clickTop404Tab()
+  //     .then(function () {
+  //       return me.getReport();
+  //     });
+  // },
+  //
+  // /**
+  //  * ### TopObjects.getTopObjects5XXErrorCodes()
+  //  *
+  //  * Gets the report `Top Objects 5XX Error Codes` in the Top Objects page.
+  //  *
+  //  * @returns {Promise}
+  //  */
+  // getTopObjects5XXErrorCodes: function () {
+  //   var me = this;
+  //   return this.form.clickTop5XXTab()
+  //     .then(function () {
+  //       return me.getReport();
+  //     });
+  // }
 };
 
 module.exports = TopObjects;

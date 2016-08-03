@@ -45,51 +45,127 @@ describe('Functional', function () {
       function () {
         var dataReport = DataProvider.generateAnalyticsInfo();
         dataReport.delay = 'Last 1 Hour';
-        Portal.topObjectsPage.createTopMostRequestedObjects(dataReport);
+        Portal.topObjectsPage.createTopMostRequestedObjectsReport(dataReport);
+        var getData = Portal.topObjectsPage.getReport();
 
-        var getData = Portal.topObjectsPage.getTopMostRequestedObjects();
-        expect(getData.delay).toContain(dataReport.delay);
-    });
+        expect(getData.delay).toEqual(dataReport.delay);
+        expect(getData.country).toEqual(dataReport.country);
+        expect(getData.os).toEqual(dataReport.os);
+        expect(getData.device).toEqual(dataReport.device);
+        expect(getData.count).toEqual(dataReport.count);
+      });
 
     it('should create a default report for Top Referers report',
       function () {
         var dataReport = DataProvider.generateAnalyticsInfo();
         dataReport.delay = 'Last 1 Hour';
-        Portal.topObjectsPage.createTopReferers(dataReport);
+        Portal.topObjectsPage.createTopReferersReport(dataReport);
 
-        var getData = Portal.topObjectsPage.getTopReferers();
-        expect(getData.delay).toContain(dataReport.delay);
-    });
+        var getData = Portal.topObjectsPage.getReport();
+        expect(getData.delay).toEqual(dataReport.delay);
+        expect(getData.country).toEqual(dataReport.country);
+        expect(getData.os).toEqual(dataReport.os);
+        expect(getData.device).toEqual(dataReport.device);
+        expect(getData.count).toEqual(dataReport.count);
+      });
+
+    it('should create a default report for Top Edge Cache Hits report',
+      function () {
+        var dataReport = DataProvider.generateAnalyticsInfo();
+        dataReport.delay = 'Last 1 Hour';
+        Portal.topObjectsPage.createTopEdgeCacheHitsReport(dataReport);
+
+        var getData = Portal.topObjectsPage.getReport();
+        expect(getData.delay).toEqual(dataReport.delay);
+        expect(getData.country).toEqual(dataReport.country);
+        expect(getData.os).toEqual(dataReport.os);
+        expect(getData.device).toEqual(dataReport.device);
+        expect(getData.count).toEqual(dataReport.count);
+      });
 
     it('should create a default report for Top Edge Cache Misses report',
       function () {
         var dataReport = DataProvider.generateAnalyticsInfo();
         dataReport.delay = 'Last 1 Hour';
-        Portal.topObjectsPage.createTopEdgeCacheMisses(dataReport);
+        Portal.topObjectsPage.createTopEdgeCacheMissesReport(dataReport);
 
-        var getData = Portal.topObjectsPage.getTopEdgeCacheMisses();
-        expect(getData.delay).toContain(dataReport.delay);
-    });
+        var getData = Portal.topObjectsPage.getReport();
+        expect(getData.delay).toEqual(dataReport.delay);
+        expect(getData.country).toEqual(dataReport.country);
+        expect(getData.os).toEqual(dataReport.os);
+        expect(getData.device).toEqual(dataReport.device);
+        expect(getData.count).toEqual(dataReport.count);
+      });
 
     it('should create a default report for Top 404 Not Found Objects report',
       function () {
         var dataReport = DataProvider.generateAnalyticsInfo();
         dataReport.delay = 'Last 1 Hour';
-        Portal.topObjectsPage.createTop404NotFoundObjects(dataReport);
+        Portal.topObjectsPage.createTop404NotFoundObjectsReport(dataReport);
 
-        var getData = Portal.topObjectsPage.getTop404NotFoundObjects();
-        expect(getData.delay).toContain(dataReport.delay);
-    });
+        var getData = Portal.topObjectsPage.getReport();
+        expect(getData.delay).toEqual(dataReport.delay);
+        expect(getData.country).toEqual(dataReport.country);
+        expect(getData.os).toEqual(dataReport.os);
+        expect(getData.device).toEqual(dataReport.device);
+        expect(getData.count).toEqual(dataReport.count);
+      });
 
     it('should create a default report for Top Objects with 5XX Error Codes',
       function () {
         var dataReport = DataProvider.generateAnalyticsInfo();
         dataReport.delay = 'Last 1 Hour';
-        Portal.topObjectsPage.createTopObjects5XXErrorCodes(dataReport);
+        Portal.topObjectsPage.createTopObjects5XXErrorCodesReport(dataReport);
 
-        var getData = Portal.topObjectsPage.getTopObjects5XXErrorCodes();
-        expect(getData.delay).toContain(dataReport.delay);
-    });
+        var getData = Portal.topObjectsPage.getReport();
+        expect(getData.delay).toEqual(dataReport.delay);
+        expect(getData.country).toEqual(dataReport.country);
+        expect(getData.os).toEqual(dataReport.os);
+        expect(getData.device).toEqual(dataReport.device);
+        expect(getData.count).toEqual(dataReport.count);
+      });
+
+    it('should create a default report for Top Objects With Unsuccessful Completion Status',
+      function () {
+        var dataReport = DataProvider.generateAnalyticsInfo();
+        dataReport.delay = 'Last 1 Hour';
+        Portal.topObjectsPage.createTopFailedObjectsReport(dataReport);
+
+        var getData = Portal.topObjectsPage.getReport();
+        expect(getData.delay).toEqual(dataReport.delay);
+        expect(getData.country).toEqual(dataReport.country);
+        expect(getData.os).toEqual(dataReport.os);
+        expect(getData.device).toEqual(dataReport.device);
+        expect(getData.count).toEqual(dataReport.count);
+      });
+
+    it('should create a default report for Top Objects With Slowest FBT',
+      function () {
+        var dataReport = DataProvider.generateAnalyticsInfo();
+        dataReport.delay = 'Last 1 Hour';
+        Portal.topObjectsPage.createObjectsWithSlowestFBTReport(dataReport);
+
+        var getData = Portal.topObjectsPage.getReport();
+        expect(getData.delay).toEqual(dataReport.delay);
+        expect(getData.country).toEqual(dataReport.country);
+        expect(getData.os).toEqual(dataReport.os);
+        expect(getData.device).toEqual(dataReport.device);
+        expect(getData.count).toEqual(dataReport.count);
+      });
+
+    it('should create a default report for Top Objects With Slowest Download Time',
+      function () {
+        var dataReport = DataProvider.generateAnalyticsInfo();
+        dataReport.delay = 'Last 1 Hour';
+        Portal.topObjectsPage.createObjectsWithSlowestDownTimeReport(dataReport);
+
+        var getData = Portal.topObjectsPage.getReport();
+        expect(getData.delay).toEqual(dataReport.delay);
+        expect(getData.country).toEqual(dataReport.country);
+        expect(getData.os).toEqual(dataReport.os);
+        expect(getData.device).toEqual(dataReport.device);
+        expect(getData.count).toEqual(dataReport.count);
+      });
 
     it('should create a custom report for Top Most Requested Objects',
       function () {
@@ -97,11 +173,15 @@ describe('Functional', function () {
         dataReport.delay = 'Last 12 Hours';
         dataReport.country = 'Mexico';
         dataReport.count = 'Top 5 Records';
-        Portal.topObjectsPage.createTopMostRequestedObjects(dataReport);
+        Portal.topObjectsPage.createTopMostRequestedObjectsReport(dataReport);
 
-        var getData = Portal.topObjectsPage.getTopMostRequestedObjects();
-        expect(getData.delay).toContain(dataReport.delay);
-    });
+        var getData = Portal.topObjectsPage.getReport();
+        expect(getData.delay).toEqual(dataReport.delay);
+        expect(getData.country).toEqual(dataReport.country);
+        expect(getData.os).toEqual(dataReport.os);
+        expect(getData.device).toEqual(dataReport.device);
+        expect(getData.count).toEqual(dataReport.count);
+      });
 
     it('should create a custom report for Top Referers',
       function () {
@@ -109,11 +189,31 @@ describe('Functional', function () {
         dataReport.delay = 'Last 24 Hours';
         dataReport.country = 'France';
         dataReport.count = 'Top 10 Records';
-        Portal.topObjectsPage.createTopReferers(dataReport);
+        Portal.topObjectsPage.createTopReferersReport(dataReport);
 
-        var getData = Portal.topObjectsPage.getTopReferers();
-        expect(getData.delay).toContain(dataReport.delay);
-    });
+        var getData = Portal.topObjectsPage.getReport();
+        expect(getData.delay).toEqual(dataReport.delay);
+        expect(getData.country).toEqual(dataReport.country);
+        expect(getData.os).toEqual(dataReport.os);
+        expect(getData.device).toEqual(dataReport.device);
+        expect(getData.count).toEqual(dataReport.count);
+      });
+
+    it('should create a custom report for Top Edge Cache Hits',
+      function () {
+        var dataReport = DataProvider.generateAnalyticsInfo();
+        dataReport.delay = 'Last 12 Hours';
+        dataReport.country = 'India';
+        dataReport.count = 'Top 50 Records';
+        Portal.topObjectsPage.createTopEdgeCacheHitsReport(dataReport);
+
+        var getData = Portal.topObjectsPage.getReport();
+        expect(getData.delay).toEqual(dataReport.delay);
+        expect(getData.country).toEqual(dataReport.country);
+        expect(getData.os).toEqual(dataReport.os);
+        expect(getData.device).toEqual(dataReport.device);
+        expect(getData.count).toEqual(dataReport.count);
+      });
 
     it('should create a custom report for Top Edge Cache Misses',
       function () {
@@ -121,11 +221,15 @@ describe('Functional', function () {
         dataReport.delay = 'Last 12 Hours';
         dataReport.country = 'India';
         dataReport.count = 'Top 50 Records';
-        Portal.topObjectsPage.createTopEdgeCacheMisses(dataReport);
+        Portal.topObjectsPage.createTopEdgeCacheMissesReport(dataReport);
 
-        var getData = Portal.topObjectsPage.getTopEdgeCacheMisses();
-        expect(getData.delay).toContain(dataReport.delay);
-    });
+        var getData = Portal.topObjectsPage.getReport();
+        expect(getData.delay).toEqual(dataReport.delay);
+        expect(getData.country).toEqual(dataReport.country);
+        expect(getData.os).toEqual(dataReport.os);
+        expect(getData.device).toEqual(dataReport.device);
+        expect(getData.count).toEqual(dataReport.count);
+      });
 
     it('should create a custom report for Top 404 Not Found Objects',
       function () {
@@ -133,11 +237,15 @@ describe('Functional', function () {
         dataReport.delay = 'Last 24 Hours';
         dataReport.country = 'Bolivia';
         dataReport.count = 'Top 100 Records';
-        Portal.topObjectsPage.createTop404NotFoundObjects(dataReport);
+        Portal.topObjectsPage.createTop404NotFoundObjectsReport(dataReport);
 
-        var getData = Portal.topObjectsPage.getTop404NotFoundObjects();
-        expect(getData.delay).toContain(dataReport.delay);
-    });
+        var getData = Portal.topObjectsPage.getReport();
+        expect(getData.delay).toEqual(dataReport.delay);
+        expect(getData.country).toEqual(dataReport.country);
+        expect(getData.os).toEqual(dataReport.os);
+        expect(getData.device).toEqual(dataReport.device);
+        expect(getData.count).toEqual(dataReport.count);
+      });
 
     it('should create a custom report for Top Objects with 5XX Error Codes',
       function () {
@@ -145,10 +253,62 @@ describe('Functional', function () {
         dataReport.delay = 'Last 12 Hours';
         dataReport.country = 'Angola';
         dataReport.count = 'Top 250 Records';
-        Portal.topObjectsPage.createTopObjects5XXErrorCodes(dataReport);
+        Portal.topObjectsPage.createTopObjects5XXErrorCodesReport(dataReport);
 
-        var getData = Portal.topObjectsPage.getTopObjects5XXErrorCodes();
-        expect(getData.delay).toContain(dataReport.delay);
-    });
+        var getData = Portal.topObjectsPage.getReport();
+        expect(getData.delay).toEqual(dataReport.delay);
+        expect(getData.country).toEqual(dataReport.country);
+        expect(getData.os).toEqual(dataReport.os);
+        expect(getData.device).toEqual(dataReport.device);
+        expect(getData.count).toEqual(dataReport.count);
+      });
+
+    it('should create a custom report for Top Objects With Unsuccessful Completion Status',
+      function () {
+        var dataReport = DataProvider.generateAnalyticsInfo();
+        dataReport.delay = 'Last 12 Hours';
+        dataReport.country = 'Mexico';
+        dataReport.count = 'Top 5 Records';
+        Portal.topObjectsPage.createTopFailedObjectsReport(dataReport);
+
+        var getData = Portal.topObjectsPage.getReport();
+        expect(getData.delay).toEqual(dataReport.delay);
+        expect(getData.country).toEqual(dataReport.country);
+        expect(getData.os).toEqual(dataReport.os);
+        expect(getData.device).toEqual(dataReport.device);
+        expect(getData.count).toEqual(dataReport.count);
+      });
+
+    it('should create a custom report for Top Objects With Slowest FBT',
+      function () {
+        var dataReport = DataProvider.generateAnalyticsInfo();
+        dataReport.delay = 'Last 12 Hours';
+        dataReport.country = 'Angola';
+        dataReport.count = 'Top 250 Records';
+        Portal.topObjectsPage.createObjectsWithSlowestFBTReport(dataReport);
+
+        var getData = Portal.topObjectsPage.getReport();
+        expect(getData.delay).toEqual(dataReport.delay);
+        expect(getData.country).toEqual(dataReport.country);
+        expect(getData.os).toEqual(dataReport.os);
+        expect(getData.device).toEqual(dataReport.device);
+        expect(getData.count).toEqual(dataReport.count);
+      });
+
+    it('should create a custom report for Objects With Slowest Download Time',
+      function () {
+        var dataReport = DataProvider.generateAnalyticsInfo();
+        dataReport.delay = 'Last 12 Hours';
+        dataReport.country = 'India';
+        dataReport.count = 'Top 50 Records';
+        Portal.topObjectsPage.createObjectsWithSlowestDownTimeReport(dataReport);
+
+        var getData = Portal.topObjectsPage.getReport();
+        expect(getData.delay).toEqual(dataReport.delay);
+        expect(getData.country).toEqual(dataReport.country);
+        expect(getData.os).toEqual(dataReport.os);
+        expect(getData.device).toEqual(dataReport.device);
+        expect(getData.count).toEqual(dataReport.count);
+      });
   });
 });
