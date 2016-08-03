@@ -169,7 +169,7 @@ describe('Workflow', function () {
         Portal.signIn({email: adminUser.email, password: newPassword});
         var userInfoEl = Portal.header.getUserInfoEl();
         expect(userInfoEl.isDisplayed()).toBeTruthy();
-        Portal.getUpdatePasswordPage();
+        Portal.helpers.nav.goToUpdatePassword();
         Portal.updatePasswordPage.update(newPassword, oldPassword);
       });
   });

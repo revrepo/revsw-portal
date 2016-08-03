@@ -73,7 +73,7 @@ describe('Workflow', function () {
         Portal.signOut();
         // Sign in with new user and change password
         Portal.signIn(peter);
-        Portal.getUpdatePasswordPage();
+        Portal.helpers.nav.goToUpdatePassword();
         Portal.updatePasswordPage.update(peter.password, newPassword);
         Portal.signOut();
         // Sign-in using new password and validate

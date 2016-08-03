@@ -287,17 +287,6 @@ var Portal = {
   },
 
   /**
-   * ### Portal.getUpdatePasswordPage()
-   *
-   * Loads the hash fragment for the Update Password page
-   *
-   * @returns {Promise}
-   */
-  getUpdatePasswordPage: function () {
-    return this.getPage(Constants.hashFragments.profile);
-  },
-
-  /**
    * ### Portal.getMobileApps()
    *
    * Loads the hash fragment for the Mobile Apps page.
@@ -308,19 +297,6 @@ var Portal = {
    */
   getMobileApps: function (appName) {
     return this.getPage(Constants.hashFragments.mobileApps + appName);
-  },
-
-  /**
-   * ### Portal.getSSLCertsPage()
-   *
-   * Loads the hash fragment for the SSL Cert page.
-   *
-   * TODO: Need to improve navigation to reduce tests execution time
-   *
-   * @returns {Promise}
-   */
-  getSSLCertsPage: function () {
-    return this.getPage(Constants.hashFragments.sslCerts);
   },
 
   // ## Portal APP navigation Helper methods
@@ -917,7 +893,7 @@ var Portal = {
   createSSLCert: function (sslCert) {
     var me = this;
     return browser.getCurrentUrl().then(function (initialUrl) {
-      me.getSSLCertsPage();
+      me.helpers.nav.goToSSLCertificates();
       Portal.sslCerts.listPage.clickAddNewSSLCert();
       Portal.sslCerts.addPage.form.fill(sslCert);
       Portal.sslCerts.addPage.clickCreateSSLCert();
@@ -943,7 +919,7 @@ var Portal = {
   deleteSSLCert: function (sslCert) {
     var me = this;
     return browser.getCurrentUrl().then(function (initialUrl) {
-      me.getSSLCertsPage();
+      me.helpers.nav.goToSSLCertificates();
       me.sslCerts.listPage.searcher.clearSearchCriteria();
       me.sslCerts.listPage.searcher.setSearchCriteria(sslCert.name);
       me.sslCerts.listPage.table
