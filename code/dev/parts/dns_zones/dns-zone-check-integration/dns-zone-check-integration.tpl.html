@@ -1,0 +1,13 @@
+<div class="dns-zone-check-integration">
+
+  <uib-accordion close-others="false">
+    <div uib-accordion-group is-open="$ctrl.accordionState.isDNSServersHeaderOpen" is-disabled="!$ctrl.resultChecks.dns_servers">
+      <uib-accordion-heading>
+        <i ng-animate-disabled ng-class="$ctrl.getClassStatusIcon($ctrl.resultChecks.dns_servers.check_status_code)"></i>
+        <span ng-class="$ctrl.getStatusClass($ctrl.resultChecks.dns_servers.check_status_code)">Check that the domain's NS records are pointing to expected name servers
+          <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': $ctrl.accordionState.isDNSServersHeaderOpen, 'glyphicon-chevron-right': !$ctrl.accordionState.isDNSServersHeaderOpen}"></i>
+          </span>
+      </uib-accordion-heading>
+      <dns-zone-check-integration-panel zone-id="$ctrl.zoneId" type-check="dns_servers" zone-config="$ctrl.zoneConfig" status="$ctrl.resultChecks.dns_servers"></dns-zone-check-integration-panel>
+    </div>
+  </uib-accordion>
