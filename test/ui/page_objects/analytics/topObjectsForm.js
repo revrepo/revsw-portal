@@ -26,33 +26,87 @@ var TopObjectsForm = {
 
   // Locators specific to HTML elements from this page object
   locators: {
-    chartsTable: {
-      css: '.panel-body'
-    },
-    models: {
-      delay: 'delay',
-      country: 'ngFilters.country',
-      os: 'ngFilters.os',
-      device: 'ngFilters.device',
-      browser: 'ngFilters.browser',
-      count: 'ngFilters.count'
-    },
     tabs:{
-      id: 'topObjectsReportsTabs'
+      id: 'topObjectsReportsTabs',
+      topMostRequested: {
+        css: 'li[index="topRequests"]'
+      },
+      topRefers: {
+        css: 'li[index="topReferer"]'
+      },
+      topEdgeCacheHits: {
+        css: 'li[index="topCacheHit"]'
+      },
+      topEdgeCacheMisses: {
+        css: 'li[index="topCacheMiss"]'
+      },
+      top404NotFound: {
+        css: 'li[index="top404"]'
+      },
+      top5XX: {
+        css: 'li[index="top5xx"]'
+      },
+      topFailed: {
+        css: 'li[index="topFailed"]'
+      },
+      topSlowestFBT: {
+        css: 'li[index="slowestFBT"]'
+      },
+      topSlowestDownload: {
+        css: 'li[index="slowestDownload"]'
+      }
+    },
+    panels: {
+      activePanel: {
+        css: 'div.tab-pane.ng-scope.active',
+        labels: {
+          reportTitle: {
+            css: 'h3'
+          }
+        },
+        dropdowns: {
+          delay:{
+            model: 'delay'
+          },
+          country:{
+            model: 'ngFilters.country'
+          },
+          os:{
+            model: 'ngFilters.os'
+          },
+          device:{
+            model: 'ngFilters.device'
+          },
+          browser:{
+            model: 'ngFilters.browser'
+          },
+          count:{
+            model: 'ngFilters.count'
+          }
+        },
+        buttons: {
+          updateReport: {
+            css: '[ng-click="updateFilters()"]'
+          }
+        }
+      }
     }
   },
 
-  /**
-   * ### TopObjectsForm.getChartsTableObj().
-   *
-   * Returns the reference to the `Reports` charts table object (Selenium
-   * WebDriver Element) from the Top Reports page from the Portal app.
-   *
-   * @returns {Selenium WebDriver Element}
-   */
-  getChartsTableObj: function () {
-    return element.all(by.css(this.locators.chartsTable.css));
+  getActivePanel: function () {
+    return element(by.css(this.locators.panels.activePanel.css));
   },
+
+  getReportTitleLabel: function () {
+    return this.getActivePanel()
+      .element(by.css(this.locators.panels.activePanel.labels.reportTitle.css));
+  },
+
+  getReportTitle: function() {
+    return this.getReportTitleLabel()
+      .getText();
+  },
+
   /**
    * ### TopObjectsForm.getTabs().
    *
@@ -64,202 +118,251 @@ var TopObjectsForm = {
   getTabs: function () {
     return element(by.id(this.locators.tabs.id));
   },
-  /**
-  * ### TopObjectsForm.getTopObjects().
-  *
-  * Selects a `Report` in the Top Objects page.
-  *
-  * @param {String} indexChart of Top Objects report panel.
-  * @param {String} indexForm of Top Objects report panel.
-  *
-  * @returns {Promise}
-  */
-  getTopObjects: function (indexChart, indexForm) {
-    this.getTabs()
-      .element(by.css('.nav.nav-tabs>li:nth-child('+(1+indexChart)+') a'))
+
+  getTopMostRequestedTab: function () {
+    return this
+      .getTabs()
+      .element(by.css(this.locators.tabs.topMostRequested.css));
+  },
+
+  getTopRefersTab: function () {
+    return this
+      .getTabs()
+      .element(by.css(this.locators.tabs.topRefers.css));
+  },
+
+  getTopEdgeCacheHitsTab: function () {
+    return this
+      .getTabs()
+      .element(by.css(this.locators.tabs.topEdgeCacheHits.css));
+  },
+
+  getTopEdgeCacheMissesTab: function () {
+    return this
+      .getTabs()
+      .element(by.css(this.locators.tabs.topEdgeCacheMisses.css));
+  },
+
+  getTop404Tab: function () {
+    return this
+      .getTabs()
+      .element(by.css(this.locators.tabs.top404NotFound.css));
+  },
+
+  getTop5XXTab: function () {
+    return this
+      .getTabs()
+      .element(by.css(this.locators.tabs.top5XX.css));
+  },
+
+  getTopObjetcsWithUnsuccessfulStatusTab: function () {
+    return this
+      .getTabs()
+      .element(by.css(this.locators.tabs.topFailed.css));
+  },
+
+  getObjectsWithSlowestFBTtab: function (){
+    return this
+      .getTabs()
+      .element(by.css(this.locators.tabs.topSlowestFBT.css));
+  },
+
+  getObjectsWithSlowestDownTimeTab: function (){
+    return this
+      .getTabs()
+      .element(by.css(this.locators.tabs.topSlowestDownload.css));
+  },
+
+  clickTopMostRequestedTab: function () {
+    return this.getTopMostRequestedTab()
       .click();
-    return this
-      .getChartsTableObj()
-      .all(by.css('.tab-pane'))
-      .get(indexChart)
-      .all(by.css('.form-group'))
-      .get(indexForm);
   },
 
-  /**
-   * ### TopObjectsForm.setDelay().
-   *
-   * Sets value for `Delay` text field.
-   *
-   * @param {String} indexChart of Top Objects report panel.
-   * @param {String} indexForm of Top Objects report panel.
-   * @param {String} value of Top Objects report panel.
-   *
-   * @returns {Promise}
-   */
-  setDelay: function (indexChart, indexForm, value) {
-    return this
-      .getTopObjects(indexChart, indexForm) // (0, 0)
-      .element(by.model(this.locators.models.delay))
-      .sendKeys(value); // 'Last 1 day'
+  clickTopRefersTab: function () {
+    return this.getTopRefersTab()
+      .click();
   },
 
-  /**
-   * ### TopObjectsForm.setCountry()
-   *
-   * Sets value for `Country` text field.
-   *
-   * @param {String} indexChart of Top Objects report panel.
-   * @param {String} indexForm of Top Objects report panel.
-   * @param {String} value of Top Objects report panel.
-   *
-   * @returns {Promise}
-   */
-  setCountry: function (indexChart, indexForm, value) {
-    return this
-      .getTopObjects(indexChart, indexForm) // (0, 1)
-      .element(by.model(this.locators.models.country))
-      .sendKeys(value);
+  clickTopEdgeCacheHitsTab: function () {
+    return this.getTopEdgeCacheHitsTab()
+      .click();
   },
 
-  /**
-   * ### TopObjectsForm.setOS()
-   *
-   * Sets value for `OS` text field
-   *
-   * @param {String} indexChart of Top Objects report panel.
-   * @param {String} indexForm of Top Objects report panel.
-   * @param {String} value of Top Objects report panel.
-   *
-   * @returns {Promise}
-   */
-  setOS: function (indexChart, indexForm, value) {
-    return this
-      .getTopObjects(indexChart, indexForm) // (0, 2)
-      .element(by.model(this.locators.models.os))
-      .sendKeys(value);
+  clickTopEdgeCacheMissesTab: function () {
+    return this.getTopEdgeCacheMissesTab()
+      .click();
   },
 
-  /**
-   * ### TopObjectsForm.setDevice()
-   *
-   * Sets value for `Device` text field
-   *
-   * @param {String} indexChart of Top Objects report panel.
-   * @param {String} indexForm of Top Objects report panel.
-   * @param {String} value of Top Objects report panel.
-   *
-   * @returns {Promise}
-   */
-  setDevice: function (indexChart, indexForm, value) {
-    return this
-      .getTopObjects(indexChart, indexForm) // (0, 3)
-      .element(by.model(this.locators.models.device))
-      .sendKeys(value);
+  clickTop404Tab: function () {
+    return this.getTop404Tab()
+      .click();
   },
 
-  /**
-   * ### TopObjectsForm.setCount()
-   *
-   * Sets value for `Count` text field
-   *
-   * @param {String} indexChart of Top Objects report panel.
-   * @param {String} indexForm of Top Objects report panel.
-   * @param {String} value of Top Objects report panel.
-   *
-   * @returns {Promise}
-   */
-  setCount: function (indexChart, indexForm, value) {
-    return this
-      .getTopObjects(indexChart, indexForm) // (0, 4)
-      .element(by.model(this.locators.models.count))
-      .sendKeys(value);
+  clickTop5XXTab: function () {
+    return this.getTop5XXTab()
+      .click();
   },
 
-  /**
-   * ### TopObjectsForm.clickCreateReport().
-   *
-   * Clicks on `Create Report` button in report forms.
-   *
-   * @param {String} indexChart of Top Objects report panel.
-   * @param {String} indexForm of Top Objects report panel.
-   *
-   * @returns {Promise}
-   */
-  clickCreateReport: function (indexChart, indexForm) {
-    return this
-      .getTopObjects(indexChart, indexForm) // (0, 4)
+  clickTopObjetcsWithUnsuccessfulStatusTab: function () {
+    return this.getTopObjetcsWithUnsuccessfulStatusTab()
+      .click();
+  },
+
+  clickObjectsWithSlowestFBTtab: function () {
+    return this.getObjectsWithSlowestFBTtab()
+      .click();
+  },
+
+  clickObjectsWithSlowestDownTimeTab: function () {
+    return this.getObjectsWithSlowestDownTimeTab()
       .click();
   },
 
   /**
-   * ### TopObjectsForm.getDelay().
+   * ### TopObjectsForm.getDelayDropDown().
    *
-   * Gets the value from `Delay` combo box.
+   * Gets the link to the `Delay` drop-down element.
    *
-   * @returns {Promise}
+   * @returns {Web Element}
    */
-  getDelay: function (indexChart, indexForm) {
+  getDelayDropDown: function () {
     return this
-      .getTopObjects(indexChart, indexForm)
-      .element(by.model(this.locators.models.delay))
-      .getText();
+      .getActivePanel()
+      .element(by.model(this.locators.panels.activePanel.dropdowns.delay.model));
   },
 
   /**
-   * ### TopObjectsForm.getCountry()
+   * ### TopObjectsForm.getCountryDropDown().
    *
-   * Gets the value from `Country` combo box.
+   * Gets the link to the `Country` drop-down element.
    *
-   * @returns {Promise}
+   * @returns {Web Element}
    */
-  getCountry: function (indexChart, indexForm) {
+  getCountryDropDown: function () {
     return this
-      .getTopObjects(indexChart, indexForm)
-      .element(by.model(this.locators.models.country))
-      .getText();
+      .getActivePanel()
+      .element(by.model(this.locators.panels.activePanel.dropdowns.country.model));
   },
 
   /**
-   * ### TopObjectsForm.getOS()
+   * ### TopObjectsForm.getOSDropDown().
    *
-   * Gets the value from `OS` combo box.
+   * Gets the link to the `OS` drop-down element.
    *
-   * @returns {Promise}
+   * @returns {Web Element}
    */
-  getOS: function (indexChart, indexForm) {
+  getOSDropDown: function () {
     return this
-      .getTopObjects(indexChart, indexForm)
-      .element(by.model(this.locators.models.os))
-      .getText();
+      .getActivePanel()
+      .element(by.model(this.locators.panels.activePanel.dropdowns.os.model));
   },
 
   /**
-   * ### TopObjectsForm.getDevice()
+   * ### TopObjectsForm.getDeviceDropDown().
    *
-   * Gets the value from `Device` combo box.
+   * Gets the link to the `Device` drop-down element.
    *
-   * @returns {Promise}
+   * @returns {Web Element}
    */
-  getDevice: function (indexChart, indexForm) {
+  getDeviceDropDown: function () {
     return this
-      .getTopObjects(indexChart, indexForm)
-      .element(by.model(this.locators.models.device))
-      .getText();
+      .getActivePanel()
+      .element(by.model(this.locators.panels.activePanel.dropdowns.device.model));
   },
 
   /**
-   * ### TopObjectsForm.getCount()
+   * ### TopObjectsForm.getCountDropDown().
    *
-   * Gets the value from `Count` combo box.
+   * Gets the link to the `Count` drop-down element.
    *
-   * @returns {Promise}
+   * @returns {Web Element}
    */
-  getCount: function (indexChart, indexForm) {
+  getCountDropDown: function () {
     return this
-      .getTopObjects(indexChart, indexForm)
-      .element(by.model(this.locators.models.count))
+      .getActivePanel()
+      .element(by.model(this.locators.panels.activePanel.dropdowns.count.model));
+  },
+
+
+  /**
+   * ### TopObjectsForm.getUpdateReportBtn().
+   *
+   * Gets the link to the `Update` btn element.
+   *
+   * @returns {Web Element}
+   */
+  getUpdateReportBtn: function () {
+    return this
+      .getActivePanel()
+      .element(by.css(this.locators.panels.activePanel.buttons.updateReport.css));
+  },
+
+  /**
+   * ### TopObjectsForm.clickUpdateReport().
+   *
+   * Performs click on the `Update` btn element.
+   *
+   * @returns {Web Element}
+   */
+  clickUpdateReport: function () {
+    return this
+      .getUpdateReportBtn()
+      .click();
+  },
+
+  getDelay: function () {
+    return this.getDelayDropDown()
+      .$('option:checked')
       .getText();
+  },
+
+  getCountry: function () {
+    return this.getCountryDropDown()
+      .$('option:checked')
+      .getText();
+  },
+
+  getOS: function () {
+    return this.getOSDropDown()
+      .$('option:checked')
+      .getText();
+  },
+
+  getDevice: function () {
+    return this.getDeviceDropDown()
+      .$('option:checked')
+      .getText();
+  },
+
+  getCount: function () {
+    return this.getCountDropDown()
+      .$('option:checked')
+      .getText();
+  },
+
+  setDelay: function (value) {
+    return this.getDelayDropDown()
+      .sendKeys(value);
+  },
+
+  setCountry: function (value) {
+    return this.getCountryDropDown()
+      .sendKeys(value);
+  },
+
+  setOS: function (value) {
+    return this.getOSDropDown()
+      .sendKeys(value);
+  },
+
+  setDevice: function (value) {
+    return this.getDeviceDropDown()
+      .sendKeys(value);
+  },
+
+  setCount: function (value) {
+    return this.getCountDropDown()
+      .sendKeys(value);
   }
 };
 

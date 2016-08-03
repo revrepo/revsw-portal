@@ -164,9 +164,13 @@ var Constants = {
     TITLE: 'Top Objects Reports',
     TOP_MOST_REQUESTED_OBJECTS: 'Top Most Requested Objects',
     TOP_REFERERS: 'Top Referers',
+    TOP_EDGE_CACHE_HITS: 'Top Edge Cache Hits',
     TOP_EDGE_CACHE_MISSES: 'Top Edge Cache Misses',
     TOP_404_NOT_FOUND_OBJECTS: 'Top \'404 Not Found\' Objects',
-    TOP_OBJECTS_WITH_5XX_ERROR_CODES: 'Top Objects With 5XX Error Codes'
+    TOP_OBJECTS_WITH_5XX_ERROR_CODES: 'Top Objects With 5XX Error Codes',
+    TOP_FAILED: 'Top Objects With Unsuccessful Completion Status',
+    TOP_SLOWEST_FBT: 'Objects With Slowest FBT',
+    TOP_SLOWEST_DOWNLOAD_TIME: 'Objects With Slowest Download Time'
   },
   fbtReports: {
     TITLE: 'First Byte Time Reports',
