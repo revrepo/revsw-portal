@@ -26,16 +26,15 @@ describe('Functional', function () {
 
     var adminUser = config.get('portal.users.admin');
     var platforms = Portal.constants.mobileApps.platforms;
-    var platforms = Portal.constants.mobileApps.platforms;
     var iosApps = DataProvider.generateMobileAppData(platforms.ios, 1);
     var androidApps = DataProvider.generateMobileAppData(platforms.android, 1);
     var apps = iosApps.concat(androidApps);//.concat(windowsMobileApps);
 
     beforeAll(function () {
       Portal.signIn(adminUser);
-      Portal.createMobileApps('iOS', iosApps);
-      Portal.createMobileApps('Android', androidApps);
-      // Portal.createMobileApps('Windows_Mobile', windowsMobileApps);
+      Portal.createMobileApps(platforms.ios, iosApps);
+      Portal.createMobileApps(platforms.android, androidApps);
+      //Portal.createMobileApps(platforms.windowsMobile, windowsMobileApps);
     });
 
     afterAll(function () {

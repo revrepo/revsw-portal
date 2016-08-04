@@ -26,17 +26,16 @@ describe('Boundary', function () {
 
     var adminUser = config.get('portal.users.admin');
     var length51Characters = new Array(52).join('x');
-    var iosApps = DataProvider
-      .generateMobileAppData(Portal.constants.mobileApps.platforms.ios, 1);
-    var androidApps = DataProvider
-      .generateMobileAppData(Portal.constants.mobileApps.platforms.android, 1);
+    var platforms = Portal.constants.mobileApps.platforms;
+    var iosApps = DataProvider.generateMobileAppData(platforms.ios, 1);
+    var androidApps = DataProvider.generateMobileAppData(platforms.android, 1);
     //var apps = iosApps.concat(androidApps);
     var apps = iosApps;
 
     beforeAll(function () {
       Portal.signIn(adminUser);
-      Portal.createMobileApps('iOS', iosApps);
-      Portal.createMobileApps('Android', androidApps);
+      Portal.createMobileApps(platforms.ios, iosApps);
+      Portal.createMobileApps(platforms.android, androidApps);
     });
 
     afterAll(function () {

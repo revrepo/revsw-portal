@@ -538,7 +538,6 @@ var Portal = {
    */
   createMobileApps: function (platform, apps) {
     var me = this;
-    me.helpers.nav.goToMobileAppsMenuItem(platform);
     return browser.getCurrentUrl().then(function (initialUrl) {
       apps.forEach(function (app) {
         me.helpers.nav.goToMobileAppsMenuItem(platform);

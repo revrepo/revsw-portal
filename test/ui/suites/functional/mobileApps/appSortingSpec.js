@@ -31,8 +31,8 @@ describe('Functional', function () {
 
     beforeAll(function () {
       Portal.signIn(adminUser);
-      Portal.createMobileApps('iOS', iosApps);
-      Portal.createMobileApps('Android', androidApps);
+      Portal.createMobileApps(platforms.ios, iosApps);
+      Portal.createMobileApps(platforms.android, androidApps);
     });
 
     afterAll(function () {
