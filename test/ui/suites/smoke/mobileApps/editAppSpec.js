@@ -33,9 +33,10 @@ describe('Smoke', function () {
     config.get('portal.users.revAdmin')
   ];
   var platforms = [
-    config.get('portal.mobileApps.platforms.ios'),
-    config.get('portal.mobileApps.platforms.android')
-    //config.get('portal.mobileApps.platforms.windows_mobile').replace('_', ' ') //TODO: Test are not working for win mobile
+    Portal.constants.mobileApps.platforms.ios,
+    Portal.constants.mobileApps.platforms.android
+    // TODO: Test are not working for win mobile
+    // Portal.constants.mobileApps.platforms.windowsMobile
   ];
 
   users.forEach(function (user) {

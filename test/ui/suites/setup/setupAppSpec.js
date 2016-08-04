@@ -29,8 +29,8 @@ xdescribe('Setup', function () {
     config.get('portal.users.admin')
   ];
   var platforms = [
-    config.get('portal.mobileApps.platforms.ios'),
-    config.get('portal.mobileApps.platforms.android')
+    Portal.constants.mobileApps.platforms.ios,
+    Portal.constants.mobileApps.platforms.android
   ];
 
   users.forEach(function (user) {
