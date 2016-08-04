@@ -25,8 +25,9 @@ describe('Functional', function () {
   describe('Basic Edit App And Update', function () {
 
     var adminUser = config.get('portal.users.admin');
-    var iosApps = DataProvider.generateMobileAppData('iOS', 1);
-    var androidApps = DataProvider.generateMobileAppData('Android', 1);
+    var platforms = Portal.constants.mobileApps.platforms;
+    var iosApps = DataProvider.generateMobileAppData(platforms.ios, 1);
+    var androidApps = DataProvider.generateMobileAppData(platforms.android, 1);
     var apps = iosApps.concat(androidApps);
 
     beforeAll(function () {
@@ -85,8 +86,7 @@ describe('Functional', function () {
             var expectedMsg = Constants.alertMessages.app.MSG_SUCCESS_UPDATE;
             expect(alert.getText()).toContain(expectedMsg);
 
-            Portal.goToMobileApps();
-            Portal.header.goTo(app.platform);
+            Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
             var findApp = Portal.mobileApps.listPage.findApp(app);
             expect(findApp).toBe(1);
         });
@@ -103,8 +103,7 @@ describe('Functional', function () {
             var expectedMsg = Constants.alertMessages.app.MSG_SUCCESS_UPDATE;
             expect(alert.getText()).toContain(expectedMsg);
 
-            Portal.goToMobileApps();
-            Portal.header.goTo(app.platform);
+            Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
             var findApp = Portal.mobileApps.listPage.findApp(app);
             expect(findApp).toBe(1);
         });
@@ -122,8 +121,7 @@ describe('Functional', function () {
             var expectedMsg = Constants.alertMessages.app.MSG_SUCCESS_VERIFY;
             expect(alert.getText()).toContain(expectedMsg);
 
-            Portal.goToMobileApps();
-            Portal.header.goTo(app.platform);
+            Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
             app.name = tempAppName;
             var findApp = Portal.mobileApps.listPage.findApp(app);
             expect(findApp).toBe(1);
@@ -142,8 +140,7 @@ describe('Functional', function () {
             var expectedMsg =  Constants.alertMessages.app.MSG_SUCCESS_UPDATE;
             expect(alert.getText()).toContain(expectedMsg);
 
-            Portal.goToMobileApps();
-            Portal.header.goTo(app.platform);
+            Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
             app.name = tempAppName; //TODO: Remove this line, once edit is fixed
             var findApp = Portal.mobileApps.listPage.findApp(app);
             expect(findApp).toBe(1);
@@ -163,8 +160,7 @@ describe('Functional', function () {
             var expectedMsg =  Constants.alertMessages.app.MSG_SUCCESS_UPDATE;
             expect(alert.getText()).toContain(expectedMsg);
 
-            Portal.goToMobileApps();
-            Portal.header.goTo(app.platform);
+            Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
             app.name = tempAppName; //TODO: Remove this line, once edit is fixed
             var findApp = Portal.mobileApps.listPage.findApp(app);
             expect(findApp).toBe(1);
@@ -182,8 +178,7 @@ describe('Functional', function () {
             var expectedMsg = Constants.alertMessages.app.MSG_SUCCESS_UPDATE;
             expect(alert.getText()).toContain(expectedMsg);
 
-            Portal.goToMobileApps();
-            Portal.header.goTo(app.platform);
+            Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
             var findApp = Portal.mobileApps.listPage.findApp(app);
             expect(findApp).toBe(1);
             var row = Portal.mobileApps.listPage.table.getFirstRow();
@@ -203,8 +198,7 @@ describe('Functional', function () {
             var expectedMsg = Constants.alertMessages.app.MSG_SUCCESS_UPDATE;
             expect(alert.getText()).toContain(expectedMsg);
 
-            Portal.goToMobileApps();
-            Portal.header.goTo(app.platform);
+            Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
             var findApp = Portal.mobileApps.listPage.findApp(app);
             expect(findApp).toBe(1);
             var row = Portal.mobileApps.listPage.table.getFirstRow();

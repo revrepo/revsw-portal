@@ -26,8 +26,10 @@ describe('Boundary', function () {
 
     var adminUser = config.get('portal.users.admin');
     var length51Characters = new Array(52).join('x');
-    var iosApps = DataProvider.generateMobileAppData('iOS', 1);
-    var androidApps = DataProvider.generateMobileAppData('Android', 1);
+    var iosApps = DataProvider
+      .generateMobileAppData(Portal.constants.mobileApps.platforms.ios, 1);
+    var androidApps = DataProvider
+      .generateMobileAppData(Portal.constants.mobileApps.platforms.android, 1);
     var apps = iosApps.concat(androidApps);
 
     beforeAll(function () {
@@ -47,8 +49,7 @@ describe('Boundary', function () {
     apps.forEach(function (app) {
       it('should check Register button is disabled when app name have more ' +
         'than 51 characters - ' + app.platform, function () {
-        Portal.goToMobileApps();
-        Portal.header.goTo(app.platform);
+        Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
 
         Portal.mobileApps.listPage.clickAddNewApp();
         app.name = length51Characters;
@@ -59,8 +60,7 @@ describe('Boundary', function () {
 
       it('should check Register button is disabled when app name have zero ' +
         'characters - ' + app.platform, function () {
-        Portal.goToMobileApps();
-        Portal.header.goTo(app.platform);
+        Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
 
         Portal.mobileApps.listPage.clickAddNewApp();
         app.name = '';
@@ -71,8 +71,7 @@ describe('Boundary', function () {
 
       it('should check Register button is disabled when app name have ' +
         'empty characters - ' + app.platform, function () {
-        Portal.goToMobileApps();
-        Portal.header.goTo(app.platform);
+        Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
 
         Portal.mobileApps.listPage.clickAddNewApp();
         app.name = '       ';
@@ -83,8 +82,7 @@ describe('Boundary', function () {
 
       it('should check Register button is disabled when app name have ' + // jshint ignore:line
         'special characters - ' + app.platform, function () {
-        Portal.goToMobileApps();
-        Portal.header.goTo(app.platform);
+        Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
 
         Portal.mobileApps.listPage.clickAddNewApp();
         app.name = '& ^ $ @ # % ( ) _ +  / \\ ~ ` , . ; :';

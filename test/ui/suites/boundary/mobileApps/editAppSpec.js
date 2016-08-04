@@ -26,8 +26,10 @@ describe('Boundary', function () {
 
     var adminUser = config.get('portal.users.admin');
     var length51Characters = new Array(52).join('x');
-    var iosApps = DataProvider.generateMobileAppData('iOS', 1);
-    var androidApps = DataProvider.generateMobileAppData('Android', 1);
+    var iosApps = DataProvider
+      .generateMobileAppData(Portal.constants.mobileApps.platforms.ios, 1);
+    var androidApps = DataProvider
+      .generateMobileAppData(Portal.constants.mobileApps.platforms.android, 1);
     //var apps = iosApps.concat(androidApps);
     var apps = iosApps;
 
@@ -57,8 +59,7 @@ describe('Boundary', function () {
       it('should check "Verify" button is disabled when app name have more ' +
         'than 51 characters - ' + app.platform, function () {
         app.name = tempAppName;
-        Portal.goToMobileApps();
-        Portal.header.goTo(app.platform);
+        Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
         Portal.mobileApps.listPage.searchAndEdit(app);
         app.name = length51Characters;
         Portal.mobileApps.editPage.form.fill(app);
@@ -69,8 +70,7 @@ describe('Boundary', function () {
       it('should click "Verify" button and validate app name with zero ' +
         'characters - ' + app.platform, function () {
         app.name = tempAppName;
-        Portal.goToMobileApps();
-        Portal.header.goTo(app.platform);
+        Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
         Portal.mobileApps.listPage.searchAndEdit(app);
         app.name = '';
         Portal.mobileApps.editPage.form.fill(app);
@@ -81,8 +81,7 @@ describe('Boundary', function () {
       it('should click "Verify" button and validate app name with empty ' +
         'and space characters - ' + app.platform, function () {
         app.name = tempAppName;
-        Portal.goToMobileApps();
-        Portal.header.goTo(app.platform);
+        Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
         Portal.mobileApps.listPage.searchAndEdit(app);
         app.name = '       ';
         Portal.mobileApps.editPage.form.fill(app);
@@ -93,8 +92,7 @@ describe('Boundary', function () {
       it('should click "Verify" button and validate app name with special ' +
         'characters - ' + app.platform, function () {
         app.name = tempAppName;
-        Portal.goToMobileApps();
-        Portal.header.goTo(app.platform);
+        Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
         Portal.mobileApps.listPage.searchAndEdit(app);
         app.name = '& ^ $ @ # % ( ) _ +  / \\ ~ ` , . ; :';
         Portal.mobileApps.editPage.form.fill(app);
@@ -107,8 +105,7 @@ describe('Boundary', function () {
       it('should check "Update" button is disabled when app name have more ' +
         'than 51 characters - ' + app.platform, function () {
         app.name = tempAppName;
-        Portal.goToMobileApps();
-        Portal.header.goTo(app.platform);
+        Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
         Portal.mobileApps.listPage.searchAndEdit(app);
         app.name = length51Characters;
         Portal.mobileApps.editPage.form.fill(app);
@@ -120,8 +117,7 @@ describe('Boundary', function () {
       it('should click "Update" button and validate app name with zero ' +
         'or none characters - ' + app.platform, function () {
         app.name = tempAppName;
-        Portal.goToMobileApps();
-        Portal.header.goTo(app.platform);
+        Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
         Portal.mobileApps.listPage.searchAndEdit(app);
         app.name = '';
         Portal.mobileApps.editPage.form.fill(app);
@@ -132,8 +128,7 @@ describe('Boundary', function () {
       it('should click "Update" button and validate app name with empty ' +
         'and space characters - ' + app.platform, function () {
         app.name = tempAppName;
-        Portal.goToMobileApps();
-        Portal.header.goTo(app.platform);
+        Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
         Portal.mobileApps.listPage.searchAndEdit(app);
         app.name = '       ';
         Portal.mobileApps.editPage.form.fill(app);
@@ -144,8 +139,7 @@ describe('Boundary', function () {
       it('should click "Update" button and validate app name with special ' +
         'characters - ' + app.platform, function () {
         app.name = tempAppName;
-        Portal.goToMobileApps();
-        Portal.header.goTo(app.platform);
+        Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
         Portal.mobileApps.listPage.searchAndEdit(app);
         app.name = '& ^ $ @ # % ( ) _ +  / \\ ~ ` , . ; :';
         Portal.mobileApps.editPage.form.fill(app);
@@ -158,8 +152,7 @@ describe('Boundary', function () {
       it('should check "Publish" button is disabled when app name have more ' +
         'than 51 characters - ' + app.platform, function () {
         app.name = tempAppName;
-        Portal.goToMobileApps();
-        Portal.header.goTo(app.platform);
+        Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
         Portal.mobileApps.listPage.searchAndEdit(app);
         app.name = length51Characters;
         Portal.mobileApps.editPage.form.fill(app);
@@ -171,8 +164,7 @@ describe('Boundary', function () {
       it('should click "Publish" button and validate app name with zero ' +
         'characters - ' + app.platform, function () {
         app.name = tempAppName;
-        Portal.goToMobileApps();
-        Portal.header.goTo(app.platform);
+        Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
         Portal.mobileApps.listPage.searchAndEdit(app);
         app.name = '';
         Portal.mobileApps.editPage.form.fill(app);
@@ -184,8 +176,7 @@ describe('Boundary', function () {
       it('should click "Publish" button and validate app name with empty ' +
         'and space characters - ' + app.platform, function () {
         app.name = tempAppName;
-        Portal.goToMobileApps();
-        Portal.header.goTo(app.platform);
+        Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
         Portal.mobileApps.listPage.searchAndEdit(app);
         app.name = '       ';
         Portal.mobileApps.editPage.form.fill(app);
@@ -197,8 +188,7 @@ describe('Boundary', function () {
       it('should click "Publish" button and validate app name with special ' +
         'characters - ' + app.platform, function () {
         app.name = tempAppName;
-        Portal.goToMobileApps();
-        Portal.header.goTo(app.platform);
+        Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
         Portal.mobileApps.listPage.searchAndEdit(app);
         app.name = '& ^ $ @ # % ( ) _ +  / \\ ~ ` , . ; :';
         Portal.mobileApps.editPage.form.fill(app);

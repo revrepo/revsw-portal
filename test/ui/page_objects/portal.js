@@ -105,6 +105,8 @@ var PortalHelpers = require('./../common/helpers/portal');
 // that abstract all components from the Portal App.
 var Portal = {
 
+  constants: Constants,
+
   // Properties
   baseUrl: Utils.getBaseUrl(),
 
@@ -317,18 +319,6 @@ var Portal = {
     return this
       .sideBar.selectItemFromExpandedBlock(menuHeader,
       menuItem);
-  },
-
-  /**
-   * ### Portal.goToMobileApps()
-   *
-   * Navigation helper method that executes all steps to navigate to `Mobile
-   * Apps` page.
-   *
-   * @returns {Promise}
-   */
-  goToMobileApps: function () {
-    return Portal.sideBar.goTo(Constants.sideBar.mobileApps.MOBILE_APPS);
   },
 
   goToAccountProfile: function () {
@@ -619,8 +609,7 @@ var Portal = {
   createMobileAppIfNotExist: function (app) {
     var me = this;
     return browser.getCurrentUrl().then(function (initialUrl) {
-      me.goToMobileApps();
-      me.header.goTo(app.platform);
+      me.helpers.nav.goToMobileAppsMenuItem(app.platform);
       me.mobileApps.listPage.setSearch(app.name);
       me.mobileApps.listPage.table
         .countTotalRows()

@@ -25,8 +25,9 @@ describe('Negative', function () {
   describe('Edit App Advanced Mode', function () {
 
     var adminUser = config.get('portal.users.admin');
-    var iosApps = DataProvider.generateMobileAppData('iOS', 1);
-    var androidApps = DataProvider.generateMobileAppData('Android', 1);
+    var platforms = Portal.constants.mobileApps.platforms;
+    var iosApps = DataProvider.generateMobileAppData(platforms.ios, 1);
+    var androidApps = DataProvider.generateMobileAppData(platforms.android, 1);
     var apps = iosApps.concat(androidApps);
 
     beforeAll(function () {
@@ -49,8 +50,7 @@ describe('Negative', function () {
     apps.forEach(function (app) {
       it('should edit advanced mode & "cancel" json editor - ' + app.platform,
         function () {
-          Portal.goToMobileApps();
-          Portal.header.goTo(app.platform);
+          Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
           Portal.mobileApps.listPage.searchAndAdvancedEdit(app);
           Portal.mobileApps.advancedEditPage.cancel();
 

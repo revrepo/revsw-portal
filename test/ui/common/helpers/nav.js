@@ -16,6 +16,7 @@
  * from Rev Software, Inc.
  */
 
+var Constants = require('./../../page_objects/constants');
 var SideBar = require('./../../page_objects/common/sidebar/sidebar');
 var MenuItems = require('./../../page_objects/common/sidebar/locators/menuItems');
 
@@ -30,6 +31,24 @@ module.exports = {
    */
   goTo: function (menuName) {
     return menuName;
+  },
+
+  /**
+   * Goes to specified menu item from Mobile Apps section.
+   * @param menuItem
+   * @returns {*}
+   */
+  goToMobileAppsMenuItem: function (menuItem) {
+    switch (menuItem) {
+      case Constants.mobileApps.platforms.ios:
+        return this.goToIOS();
+      case Constants.mobileApps.platforms.android:
+        return this.goToAndroid();
+      case Constants.mobileApps.platforms.windowsMobile:
+        return this.goToWindowsMobile();
+      default:
+        throw 'API: Menu option does not exist (' + menuItem + ').'
+    }
   },
 
   /**

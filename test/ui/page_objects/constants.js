@@ -228,6 +228,16 @@ var Constants = {
       MSG_FAIL_DELETE: 'The SSL certificate is in use by active domain(s) ' +
       '- please update the domain(s) before removing the SSL certificate'
     }
+  },
+
+  // Everything before this needs revision/clean up
+
+  mobileApps: {
+    platforms: {
+      ios: 'iOS',
+      android: 'Android',
+      windowsMobile: 'Windows Mobile'
+    }
   }
 };
 

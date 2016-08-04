@@ -25,8 +25,9 @@ describe('Negavive', function () {
   describe('Add New App', function () {
 
     var adminUser = config.get('portal.users.admin');
-    var iosApps = DataProvider.generateMobileAppData('iOS', 1);
-    var androidApps = DataProvider.generateMobileAppData('Android', 1);
+    var platforms = Portal.constants.mobileApps.platforms;
+    var iosApps = DataProvider.generateMobileAppData(platforms.ios, 1);
+    var androidApps = DataProvider.generateMobileAppData(platforms.android, 1);
     var apps = iosApps.concat(androidApps);
 
     beforeAll(function () {
@@ -50,10 +51,8 @@ describe('Negavive', function () {
 
     apps.forEach(function (app){
       it('should not add a duplicated app - ' + app.platform, function () {
-        Portal.goToMobileApps();
-        Portal.header.goTo(app.platform);
+        Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
         Portal.mobileApps.listPage.addNew(app);
-
         var alert = Portal.alerts.getFirst();
         var s = '×\nThe app name and platform is already registered in the system';
         expect(alert.getText()).toEqual(s);

@@ -32,8 +32,8 @@ describe('Smoke', function () {
   ];
 
   // Platforms
-  var ios = config.get('portal.mobileApps.platforms.ios');
-  var android = config.get('portal.mobileApps.platforms.android');
+  var ios = Portal.constants.mobileApps.platforms.ios;
+  var android = Portal.constants.mobileApps.platforms.android;
   var platforms = [
     ios,
     android
@@ -69,7 +69,6 @@ describe('Smoke', function () {
 
         beforeAll(function () {
           Portal.signIn(user);
-          Portal.goToMobileApps();
         });
 
         afterAll(function () {

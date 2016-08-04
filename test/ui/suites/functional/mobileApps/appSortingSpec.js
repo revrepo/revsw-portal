@@ -25,8 +25,9 @@ describe('Functional', function () {
   xdescribe('Sorting List App', function () {
 
     var adminUser = config.get('portal.users.admin');
-    var iosApps = DataProvider.generateMobileAppData('iOS', 3);
-    var androidApps = DataProvider.generateMobileAppData('Android', 3);
+    var platforms = Portal.constants.mobileApps.platforms;
+    var iosApps = DataProvider.generateMobileAppData(platforms.ios, 3);
+    var androidApps = DataProvider.generateMobileAppData(platforms.android, 3);
 
     beforeAll(function () {
       Portal.signIn(adminUser);
@@ -47,8 +48,7 @@ describe('Functional', function () {
     });
 
     it('should sorted list apps ascendent and descendant - iOS', function () {
-      Portal.goToMobileApps();
-      Portal.header.goTo('iOS');
+      Portal.helpers.nav.goToMobileAppsMenuItem(platforms.ios);
       Portal.mobileApps.listPage.table.sortByName();
       var firstApp = Portal.mobileApps.listPage.table.getFirstRow();
       var appName1 = firstApp.name;
@@ -66,8 +66,7 @@ describe('Functional', function () {
     });
 
     it('should sorted list apps ascendent & descendant - Android', function () {
-      Portal.goToMobileApps();
-      Portal.header.goTo('Android');
+      Portal.helpers.nav.goToMobileAppsMenuItem(platforms.android);
       Portal.mobileApps.listPage.table.sortByName();
       var firstApp = Portal.mobileApps.listPage.table.getFirstRow();
       var appName1 = firstApp.name;
@@ -86,8 +85,7 @@ describe('Functional', function () {
 
     it('should list apps sorted descendant by default - iOS',
       function () {
-        Portal.goToMobileApps();
-        Portal.header.goTo('iOS');
+        Portal.helpers.nav.goToMobileAppsMenuItem(platforms.ios);
 
         var firstApp = Portal.mobileApps.listPage.table.getFirstRow();
         var appName1 = firstApp.name;
@@ -100,8 +98,7 @@ describe('Functional', function () {
 
     it('should list apps sorted descendant by default - Android',
       function () {
-        Portal.goToMobileApps();
-        Portal.header.goTo('Android');
+        Portal.helpers.nav.goToMobileAppsMenuItem(platforms.android);
 
         var firstApp = Portal.mobileApps.listPage.table.getFirstRow();
         var appName1 = firstApp.name;
