@@ -230,13 +230,13 @@ var Constants = {
     }
   },
 
-  // Everything before this needs revision/clean up
+  // TODO: Everything above this line needs revision/clean up
 
   mobileApps: {
     platforms: {
-      ios: 'iOS',
-      android: 'Android',
-      windowsMobile: 'Windows Mobile'
+      ios: 'ios',
+      android: 'android',
+      windowsMobile: 'windows-mobile'
     }
   }
 };
