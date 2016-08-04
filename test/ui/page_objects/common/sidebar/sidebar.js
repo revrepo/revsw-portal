@@ -76,10 +76,17 @@ var SideBar = {
       locator = by.partialLinkText(locatorData.linkText);
     }
     if (locatorData.area) {
-      var areaLocator = locatorData.area;
+      var areaLocator;
+      var areaLocatorData = locatorData.area;
+      if (areaLocatorData.id) {
+        areaLocator = by.id(areaLocatorData.id);
+      }
+      else {
+        areaLocator = by.partialLinkText(areaLocatorData.linkText);
+      }
       return this
         .getContainerEl()
-        .element(by.id(areaLocator.id))
+        .element(areaLocator)
         .element(by.xpath('..')) // Get parent
         .element(locator);
     }
