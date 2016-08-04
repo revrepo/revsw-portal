@@ -288,19 +288,6 @@ var Portal = {
     return this.getPage(Constants.hashFragments.dashboard);
   },
 
-  /**
-   * ### Portal.getMobileApps()
-   *
-   * Loads the hash fragment for the Mobile Apps page.
-   *
-   * @param {String} appName, name of app like ios, android and wm.
-   *
-   * @returns {Promise}
-   */
-  getMobileApps: function (appName) {
-    return this.getPage(Constants.hashFragments.mobileApps + appName);
-  },
-
   // ## Portal APP navigation Helper methods
 
   /**
@@ -551,7 +538,7 @@ var Portal = {
    */
   createMobileApps: function (platform, apps) {
     var me = this;
-    me.getMobileApps(platform.toLowerCase());
+    me.helpers.nav.goToMobileAppsMenuItem(platform);
     return browser.getCurrentUrl().then(function (initialUrl) {
       apps.forEach(function (app) {
         me.header.goTo(platform);
@@ -580,7 +567,7 @@ var Portal = {
     var me = this;
     browser.getCurrentUrl().then(function (initialUrl) {
       apps.forEach(function (app) {
-        me.getMobileApps(app.platform.toLowerCase());
+        me.helpers.nav.goToMobileAppsMenuItem(app.platform);
         me.header.goTo(app.platform);
         me.mobileApps.listPage.searchAndDelete(app);
         me.dialog.clickOk();
