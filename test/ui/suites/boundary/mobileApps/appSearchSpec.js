@@ -58,7 +58,7 @@ describe('Boundary', function () {
             app.name = longString;
 
             Portal.mobileApps.listPage.addNew(app);
-            Portal.header.goTo(platform);
+            Portal.helpers.nav.goToMobileAppsMenuItem(platform);
             var countApps = Portal.mobileApps.listPage.findApp(app);
             expect(countApps).toBe(1);
 

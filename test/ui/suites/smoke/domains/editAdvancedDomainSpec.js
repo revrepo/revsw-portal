@@ -49,7 +49,7 @@ describe('Smoke', function () {
         });
 
         beforeEach(function () {
-          Portal.header.goTo(Constants.header.appMenu.WEB);
+          Portal.helpers.nav.goToDomains();
         });
 
         it('should display "Advanced Edit" domain page',

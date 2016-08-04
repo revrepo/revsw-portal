@@ -541,7 +541,7 @@ var Portal = {
     me.helpers.nav.goToMobileAppsMenuItem(platform);
     return browser.getCurrentUrl().then(function (initialUrl) {
       apps.forEach(function (app) {
-        me.header.goTo(platform);
+        me.helpers.nav.goToMobileAppsMenuItem(platform);
         me.mobileApps.listPage.addNew(app);
       });
       browser.getCurrentUrl().then(function (currentUrl) {
@@ -568,7 +568,6 @@ var Portal = {
     browser.getCurrentUrl().then(function (initialUrl) {
       apps.forEach(function (app) {
         me.helpers.nav.goToMobileAppsMenuItem(app.platform);
-        me.header.goTo(app.platform);
         me.mobileApps.listPage.searchAndDelete(app);
         me.dialog.clickOk();
         browser.sleep(3000);

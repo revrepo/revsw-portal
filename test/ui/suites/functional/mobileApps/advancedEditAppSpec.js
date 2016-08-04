@@ -26,6 +26,7 @@ describe('Functional', function () {
 
     var adminUser = config.get('portal.users.admin');
     var platforms = Portal.constants.mobileApps.platforms;
+    var platforms = Portal.constants.mobileApps.platforms;
     var iosApps = DataProvider.generateMobileAppData(platforms.ios, 1);
     var androidApps = DataProvider.generateMobileAppData(platforms.android, 1);
     var apps = iosApps.concat(androidApps);//.concat(windowsMobileApps);
@@ -54,7 +55,7 @@ describe('Functional', function () {
           Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
           Portal.mobileApps.listPage.searchAndAdvancedEdit(app);
           Portal.mobileApps.advancedEditPage.verify();
-          Portal.header.goTo(app.platform);
+          Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
           var findApp = Portal.mobileApps.listPage.findApp(app);
           expect(findApp).toBe(1);
       });
@@ -66,7 +67,7 @@ describe('Functional', function () {
           Portal.mobileApps.advancedEditPage.update();
           Portal.dialog.clickOk();
 
-          Portal.header.goTo(app.platform);
+          Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
           var findApp = Portal.mobileApps.listPage.findApp(app);
           expect(findApp).toBe(1);
       });
@@ -78,7 +79,7 @@ describe('Functional', function () {
           Portal.mobileApps.advancedEditPage.publish();
           Portal.dialog.clickOk();
 
-          Portal.header.goTo(app.platform);
+          Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
           var findApp = Portal.mobileApps.listPage.findApp(app);
           expect(findApp).toBe(1);
       });

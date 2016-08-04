@@ -28,7 +28,7 @@ describe('Smoke', function () {
 
     beforeAll(function () {
       Portal.signIn(adminUser);
-      Portal.header.goTo(Constants.header.appMenu.WEB_ANALYTICS);
+      Portal.helpers.nav.goToWAProxyTraffic();
     });
 
     afterAll(function () {
