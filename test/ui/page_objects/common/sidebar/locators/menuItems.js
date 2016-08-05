@@ -156,6 +156,10 @@ var MenuItems = {
       linkText: 'Usage Report',
       area: MenuAreas.BILLING
     },
+    ACCOUNT_PROFILE: {
+      linkText: 'Account Profile',
+      area: MenuAreas.BILLING
+    },
     CHANGE_BILLING_PLAN: {
       linkText: 'Change Billing Plan',
       area: MenuAreas.BILLING

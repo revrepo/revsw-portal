@@ -38,7 +38,7 @@ describe('Smoke', function () {
     });
 
     beforeEach(function () {
-      Portal.goToAccountProfile();
+      Portal.helpers.nav.goToAccountProfile();
     });
 
     it('should be displayed.',

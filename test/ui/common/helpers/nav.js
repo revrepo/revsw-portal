@@ -269,6 +269,13 @@ module.exports = {
   },
 
   /**
+   * Navigates to Billing > Account Profile
+   */
+  goToAccountProfile: function () {
+    return SideBar.select(MenuItems.BILLING.ACCOUNT_PROFILE);
+  },
+
+  /**
    * Navigates to Billing > Change Billing Plan
    */
   goToChangeBillingPlan: function () {
