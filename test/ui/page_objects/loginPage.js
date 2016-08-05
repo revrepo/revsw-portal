@@ -46,11 +46,90 @@ var Login = {
       password: {
         model: 'pass'
       }
+    },
+    dialogs: {
+      forgotPassword: {
+        css: 'div.modal-dialog.modal-md',
+        textInputs: {
+          email: {
+            model: 'data.email'
+          }
+        },
+        labels: {
+          title: {
+            css: 'h3.modal-title'
+          }
+        }
+      }
     }
   },
 
   // ## Methods to retrieve references to UI elements (Selenium WebDriver
   // Element)
+
+  /**
+   * ### Login.getForgotPasswordDialog()
+   *
+   * Returns the reference to the `Forgot Password` dialog (Selenium WebDriver
+   * Element) from the Login page from the Portal app.
+   *
+   * @returns {Object} Selenium WebDriver Element
+   */
+  getForgotPasswordDialog: function () {
+    return element(by.css(this.locators.dialogs.forgotPassword.css));
+  },
+
+  /**
+   * ### Login.getYouStillNeedToConfirmDialog()
+   *
+   * Returns the reference to the `You Still Need To Confirm` dialog (Selenium WebDriver
+   * Element) from the Login page from the Portal app.
+   *
+   * @returns {Object} Selenium WebDriver Element
+   */
+  getYouStillNeedToConfirmDialog: function () {
+    return element.all(by.css(this.locators.dialogs.forgotPassword.css))
+      .get(1);
+  },
+
+  /**
+   * ### Login.getRecoveryEmailTxtIn()
+   *
+   * Returns the reference to the `Recovery Email` TXT Input (Selenium WebDriver
+   * Element) from the Login page from the Portal app.
+   *
+   * @returns {Object} Selenium WebDriver Element
+   */
+  getRecoveryEmailTxtIn: function () {
+    return this.getForgotPasswordDialog()
+      .element(by.model(this.locators.dialogs.forgotPassword.textInputs.email.model));
+  },
+
+  /**
+   * ### Login.getRecoveryDialogTitleLabel()
+   *
+   * Returns the reference to the `Recovery Dialog Title` label (Selenium WebDriver
+   * Element) from the Login page from the Portal app.
+   *
+   * @returns {Object} Selenium WebDriver Element
+   */
+  getRecoveryDialogTitleLabel: function () {
+    return this.getYouStillNeedToConfirmDialog()
+      .element(by.css(this.locators.dialogs.forgotPassword.labels.title.css));
+  },
+
+  /**
+   * ### Login.getRecoveryDialogTitle()
+   *
+   * Returns the text from the `Recovery Dialog Title` label (Selenium WebDriver
+   * Element) from the Login page from the Portal app.
+   *
+   * @returns {Object} Selenium WebDriver Element
+   */
+  getRecoveryDialogTitle: function () {
+    return this.getRecoveryDialogTitleLabel()
+      .getText()
+  },
 
   /**
    * ### Login.getEmailTxtIn()
@@ -126,6 +205,21 @@ var Login = {
   setEmail: function (email) {
     return this
       .getEmailTxtIn()
+      .sendKeys(email);
+  },
+
+  /**
+   * ### Login.setRecoveryEmail()
+   *
+   * Sets a new value for the `Recovery Email` text input field
+   *
+   * @param {String} email
+   *
+   * @returns {Object} Promise
+   */
+  setRecoveryEmail: function (email) {
+    return this
+      .getRecoveryEmailTxtIn()
       .sendKeys(email);
   },
 

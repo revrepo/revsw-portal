@@ -94,7 +94,22 @@ var MailinatorHelper = {
         var tokenUrlRegExp = /http.*[0-9a-f]{40}/;
         return msgBody.match(tokenUrlRegExp)[0];
       });
-  }
+  },
+
+  getTokenFromEmail: function (emailAddress) {
+      return MailinatorHelper.getLastMessage(emailAddress)
+        .then(function (msg) {
+          return MailinatorResource.getEmail(msg.id);
+        })
+        .then(function (fullMsg) {
+          var msgBody = fullMsg.data.parts[0].body;
+          var tokenUrlRegExp = /http.*[0-9a-f]{40}/;
+          return msgBody.match(tokenUrlRegExp)[0];
+        }).then(function (token) {
+          return token;
+        });
+    }
+
 };
 
 module.exports = MailinatorHelper;
