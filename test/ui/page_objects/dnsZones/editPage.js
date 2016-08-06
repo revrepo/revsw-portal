@@ -36,7 +36,8 @@ var EditDNSZone = {
     },
     buttons: {
       backToList: {
-        linkText: 'Back To List'
+        linkText: 'Back To List',
+        className: 'glyphicon-arrow-left'
       },
       cancel: {
         linkText: 'Cancel'
@@ -76,7 +77,7 @@ var EditDNSZone = {
    */
   getBackToListBtn: function () {
     return element(
-      by.partialLinkText(this.locators.buttons.backToList.linkText));
+      by.className(this.locators.buttons.backToList.className));
   },
 
   /**

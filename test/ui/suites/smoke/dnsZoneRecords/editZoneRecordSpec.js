@@ -36,7 +36,7 @@ describe('Smoke', function () {
 
     describe('With user: ' + user.role, function () {
 
-      describe('Edit DNS Zone', function () {
+      describe('Edit DNS Zone record', function () {
 
         beforeAll(function () {
 
@@ -58,12 +58,13 @@ describe('Smoke', function () {
           Portal.signOut();
         });
 
-        it('should display edit DNS Zone button',
+        it('should display edit DNS Zone record button',
           function () {
             var zone = DataProvider.generateDNSZoneData();
             Portal.createDNSZone(zone);
+            Portal.goToDNSZoneRecords(zone);
 
-            var editButton = Portal.dnsZones.listPage.table
+            var editButton = Portal.zoneRecords.listPage.table
               .getFirstRow()
               .getEditBtn();
             expect(editButton.isPresent()).toBeTruthy();
@@ -71,70 +72,71 @@ describe('Smoke', function () {
             Portal.deleteDNSZone(zone);
           });
 
-        it('should display "Edit DNS Zone" form',
+        it('should display "Edit DNS Zone record" form',
           function () {
             var zone = DataProvider.generateDNSZoneData();
             Portal.createDNSZone(zone);
+            Portal.goToDNSZoneRecords(zone);
 
-            Portal.dnsZones.listPage.table
+            Portal.zoneRecords.listPage.table
               .getFirstRow()
               .clickEdit();
-            expect(Portal.dnsZones.editPage.isDisplayed()).toBeTruthy();
+            expect(Portal.zoneRecords.editPage.isDisplayed()).toBeTruthy();
 
             Portal.deleteDNSZone(zone);
           });
 
-        it('should allow to cancel an DNS Zone edition',
+        it('should allow to cancel an DNS Zone record edition',
           function () {
             var zone = DataProvider.generateDNSZoneData();
             Portal.createDNSZone(zone);
+            Portal.goToDNSZoneRecords(zone);
 
-            Portal.dnsZones.listPage.searcher.clearSearchCriteria();
-            Portal.dnsZones.listPage.searcher.setSearchCriteria(zone.domain);
-            Portal.dnsZones.listPage.table
+            Portal.zoneRecords.listPage.table
               .getFirstRow()
               .clickEdit();
-            Portal.dnsZones.editPage.form.setRefresh('1000000');
-            Portal.dnsZones.editPage.clickCancel();
-            expect(Portal.dnsZones.listPage.isDisplayed()).toBeTruthy();
+            Portal.zoneRecords.editPage.form.setTTL('3601');
+            Portal.zoneRecords.editPage.clickCancel();
+            expect(Portal.zoneRecords.listPage.isDisplayed()).toBeTruthy();
 
             Portal.deleteDNSZone(zone);
           });
 
-        it('should update DNS Zone when filling all required data',
+        it('should update DNS Zone record when filling all required data',
           function () {
             var zone = DataProvider.generateDNSZoneData();
-
             Portal.createDNSZone(zone);
+            Portal.goToDNSZoneRecords(zone);
 
-            Portal.dnsZones.listPage.searcher.clearSearchCriteria();
-            Portal.dnsZones.listPage.searcher.setSearchCriteria(zone.domain);
-            Portal.dnsZones.listPage.table
+            Portal.zoneRecords.listPage.table
               .getFirstRow()
               .clickEdit();
 
-            Portal.dnsZones.editPage.updateDNSZone(zone);
+            Portal.zoneRecords.editPage.form.setTTL('3601');
+            Portal.zoneRecords.editPage.form.setAnswerById(0,'dns11.p03.nsone.net');
+            Portal.zoneRecords.editPage.form.setAnswerById(1,'dns12.p03.nsone.net');
+            Portal.zoneRecords.editPage.form.setAnswerById(2,'dns13.p03.nsone.net');
+            Portal.zoneRecords.editPage.form.setAnswerById(3,'dns14.p03.nsone.net');
 
+            Portal.zoneRecords.editPage.clickUpdate();
             Portal.dialog.clickOk();
-            Portal.dnsZones.editPage.clickBackToList();
+            Portal.zoneRecords.editPage.clickBackToList();
 
-            Portal.dnsZones.listPage.searcher.clearSearchCriteria();
-            Portal.dnsZones.listPage.searcher.setSearchCriteria(zone.domain);
-            Portal.dnsZones.listPage.table
+            Portal.zoneRecords.listPage.table
               .getFirstRow()
               .clickEdit();
 
-            expect(Portal.dnsZones.editPage.form.getSOAttl())
-              .toBe(zone.soaTTL);
-            expect(Portal.dnsZones.editPage.form.getRefresh())
-              .toBe(zone.refresh);
-            expect(Portal.dnsZones.editPage.form.getRetry())
-              .toBe(zone.retry);
-            expect(Portal.dnsZones.editPage.form.getExpire())
-              .toBe(zone.expire);
-            expect(Portal.dnsZones.editPage.form.getNXttl())
-              .toBe(zone.nxTTL);
+            expect(Portal.zoneRecords.editPage.form.getTTL()).toBe('3601');
+            expect(Portal.zoneRecords.editPage.form.getAnswerById(0))
+              .toBe('dns11.p03.nsone.net');
+            expect(Portal.zoneRecords.editPage.form.getAnswerById(1))
+              .toBe('dns12.p03.nsone.net');
+            expect(Portal.zoneRecords.editPage.form.getAnswerById(2))
+              .toBe('dns13.p03.nsone.net');
+            expect(Portal.zoneRecords.editPage.form.getAnswerById(3))
+              .toBe('dns14.p03.nsone.net');
 
+            Portal.zoneRecords.editPage.clickBackToList();
             Portal.dnsZones.editPage.clickBackToList();
             Portal.deleteDNSZone(zone);
           });

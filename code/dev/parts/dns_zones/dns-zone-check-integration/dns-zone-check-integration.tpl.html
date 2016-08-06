@@ -4,7 +4,7 @@
     <div uib-accordion-group is-open="$ctrl.accordionState.isDNSServersHeaderOpen" is-disabled="!$ctrl.resultChecks.dns_servers">
       <uib-accordion-heading>
         <i ng-animate-disabled ng-class="$ctrl.getClassStatusIcon($ctrl.resultChecks.dns_servers.check_status_code)"></i>
-        <span ng-class="$ctrl.getStatusClass($ctrl.resultChecks.dns_servers.check_status_code)">Check DNS Servers Configuration
+        <span ng-class="$ctrl.getStatusClass($ctrl.resultChecks.dns_servers.check_status_code)">Check that the domain's NS records are pointing to expected name servers
           <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': $ctrl.accordionState.isDNSServersHeaderOpen, 'glyphicon-chevron-right': !$ctrl.accordionState.isDNSServersHeaderOpen}"></i>
           </span>
       </uib-accordion-heading>

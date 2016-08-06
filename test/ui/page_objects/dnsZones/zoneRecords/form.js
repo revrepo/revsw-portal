@@ -36,14 +36,44 @@ var ZoneRecordForm = {
       domain: {
         model: 'model.idomain'
       },
+      ttl: {
+        model: 'record.ttl'
+      },
       answer: {
         model: 'model.newanswer.value'
+      }
+    },
+    buttons: {
+      addAnswer: {
+        className: 'glyphicon-plus'
+      }
+    },
+    panels: {
+      answers:{
+        id: 'answers',
+        textInputs: {
+          answer: {
+            css: 'input[name="recordType_NS"]'
+          }
+        }
       }
     }
   },
 
   // ## Methods to retrieve references to UI elements (Selenium WebDriver
   // Element)
+
+  /**
+   * ### ZoneRecordForm.getAddAnswerBtn()
+   *
+   * Returns the reference to the `Add Answer` btn (Selenium WebDriver
+   * Element)
+   *
+   * @returns {Object} Selenium WebDriver Element
+   */
+  getAddAnswerBtn: function () {
+    return element(by.className(this.locators.buttons.addAnswer.className));
+  },
 
   /**
    * ### ZoneRecordForm.getDomainTxtIn()
@@ -58,6 +88,18 @@ var ZoneRecordForm = {
   },
 
   /**
+   * ### ZoneRecordForm.getAnswersPanel()
+   *
+   * Returns the reference to the `Answers` panel (Selenium WebDriver
+   * Element)
+   *
+   * @returns {Object} Selenium WebDriver Element
+   */
+  getAnswersPanel: function () {
+    return element(by.id(this.locators.panels.answers.id));
+  },
+
+  /**
    * ### ZoneRecordForm.getAnswerTxtIn()
    *
    * Returns the reference to the `Answer` text field (Selenium WebDriver
@@ -67,6 +109,18 @@ var ZoneRecordForm = {
    */
   getAnswerTxtIn: function () {
     return element(by.model(this.locators.textInputs.answer.model));
+  },
+
+  /**
+   * ### ZoneRecordForm.getTTLTxtIn()
+   *
+   * Returns the reference to the `TTL` text field (Selenium WebDriver
+   * Element)
+   *
+   * @returns {Object} Selenium WebDriver Element
+   */
+  getTTLTxtIn: function () {
+    return element(by.model(this.locators.textInputs.ttl.model));
   },
 
   // ## Methods to interact with the Zone Record Form components
@@ -116,6 +170,38 @@ var ZoneRecordForm = {
   },
 
   /**
+   * ### ZoneRecordForm.getTTL()
+   *
+   * Gets the value from the TTL Txt In
+   *
+   * @returns {Object} Selenium WebDriver Element
+   */
+  getTTL: function () {
+    return this
+      .getTTLTxtIn()
+      .getAttribute('value');
+  },
+
+  /**
+   * ### ZoneRecordForm.setTTL()
+   *
+   * Sets the value for TTL Txt In
+   *
+   * @param {String} value, new value to set
+   *
+   * @returns {Object} Promise
+   */
+  setTTL: function (value) {
+    var me = this;
+    return this
+      .getTTLTxtIn().clear()
+      .then(function () {
+        me.getTTLTxtIn()
+          .sendKeys(value);
+      });
+  },
+
+  /**
    * ### ZoneRecordForm.setAnswer()
    *
    * Sets the value for SOA TTL Txt In
@@ -133,7 +219,72 @@ var ZoneRecordForm = {
       });
   },
 
+  /**
+   * ### ZoneRecordForm.clickAddAnswerButton()
+   *
+   * Perform click on the click answer button
+   *
+   * @returns {Object} Promise
+   */
+  clickAddAnswerButton: function () {
+    return this
+      .getAnswerTxtIn()
+      .click();
+  },
+
   // ## Helper Methods
+
+  /**
+   * ### ZoneRecordForm.getAnswerTxtInById()
+   *
+   * Return the reference to answer Txt Input from the Answers panel
+   * by its id
+   *
+   * @returns {Object} Promise
+   */
+  getAnswerTxtInById: function (id) {
+    var me = this;
+    return this
+      .getAnswersPanel()
+      .all(by.css(me.locators.panels.answers.textInputs.answer.css))
+      .get(id);
+  },
+
+  /**
+   * ### ZoneRecordForm.setAnswerById()
+   *
+   * Sets the value for given answer
+   *
+   * @param {Number} id, answer id within the Answers panel
+   * @param {String} value, new value to set
+   *
+   * @returns {Object} Promise
+   */
+  setAnswerById: function (id, value) {
+    var me = this;
+    return this
+      .getAnswerTxtInById(id)
+      .clear()
+      .then(function(){
+        me.getAnswerTxtInById(id)
+          .sendKeys(value);
+      });
+  },
+
+  /**
+   * ### ZoneRecordForm.setAnswerById()
+   *
+   * Sets the value for given answer
+   *
+   * @param {Number} id, answer id within the Answers panel
+   *
+   * @returns {Object} Promise
+   */
+  getAnswerById: function (id) {
+    return this
+      .getAnswerTxtInById(id)
+      .getAttribute('value');
+  },
 
   /**
    * ### ZoneRecordForm.isDisplayed()
