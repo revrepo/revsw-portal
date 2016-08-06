@@ -185,6 +185,8 @@
               traffic_avg_ += sent_bw;
             });
 
+            series[1].data.push(0);
+            series[0].data.push(0);
             traffic_avg_ /= data.data.length;
             if (traffic_avg_ === 0) {
               series[0].data.length = 0;
