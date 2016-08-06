@@ -46,6 +46,11 @@
             origin_sick_ttl: 15
           };
         }
+
+        if (!$ctrl.rule.enable_esi) {
+          // set default value
+          $ctrl.rule.enable_esi = false;
+        }
       }
     };
   }
