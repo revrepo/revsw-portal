@@ -32,6 +32,9 @@ var SignUp = {
       },
       signUp: {
         buttonText: 'Sign Up'
+      },
+      didntReceive: {
+        css: 'button.btn.btn-warning.pull-right'
       }
     },
     textInputs: {
@@ -118,6 +121,18 @@ var SignUp = {
   getSignUpBtn: function () {
     return element(
       by.partialButtonText(this.locators.buttons.signUp.buttonText));
+  },
+
+  /**
+   * ### SignUpForm.getDidntReceiveBtn()
+   *
+   * Gets the Didn't Receive button from sign up form.
+   *
+   * @returns {Object} Selenium WebDriver Element
+   */
+  getDidntReceiveBtn: function () {
+    return element(
+      by.css(this.locators.buttons.didntReceive.css));
   },
 
   // ## Methods to interact with the User List Page components

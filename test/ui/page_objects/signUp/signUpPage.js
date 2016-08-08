@@ -172,6 +172,13 @@ var SignUp = {
       return this
         .getEmailAddressEl()
         .getText();
+    },
+
+    waitToDisplay: function () {
+      var me = this;
+      return browser.wait(function () {
+        return browser.isElementPresent(by.css(me.locators.labels.email.css));
+      }, 16000);
     }
   }
 
