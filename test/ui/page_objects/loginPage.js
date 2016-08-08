@@ -128,7 +128,7 @@ var Login = {
    */
   getRecoveryDialogTitle: function () {
     return this.getRecoveryDialogTitleLabel()
-      .getText()
+      .getText();
   },
 
   /**
@@ -278,6 +278,20 @@ var Login = {
   },
 
   // ## Helper Methods
+
+  /**
+   * ### Login.waitToDisplay()
+   *
+   * Helper method that waits till Login Page is displayed
+   *
+   * @returns {Promise}
+   */
+  waitToDisplay: function () {
+    var me = this;
+    return browser.wait(function () {
+      return browser.isElementPresent(by.model(me.locators.textInputs.email.model));
+    }, 16000);
+  },
 
   /**
    * ### Login.signIn()

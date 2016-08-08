@@ -143,19 +143,19 @@ var ResetPassword = {
    *
    * @returns {Object} Selenium WebDriver Element
    */
-  clickResetPassword: function () {
+  clickReset: function () {
     return this.getResetBtn()
       .click();
   },
 
   /**
-   * ### ResetPasswordPage.setRepeatPassword()
+   * ### ResetPasswordPage.getTitle()
    *
    * Gets the inner text from the 'Title' label
    *
    * @returns {Promise}
    */
-  getTitle: function (value) {
+  getTitle: function () {
     return this.getTitleLabel()
       .getText();
   },
@@ -163,6 +163,20 @@ var ResetPassword = {
   isDisplayed: function () {
     return this.getTitleLabel()
       .isDisplayed();
+  },
+
+  waitToDisplay: function () {
+    var me = this;
+    return browser.wait(function () {
+      return browser.isElementPresent(by.id(me.locators.textInputs.repeatNewPass.id));
+    }, 16000);
+  },
+
+  resetPassword: function(newPassword) {
+    this.waitToDisplay();
+    this.setNewPassword(newPassword);
+    this.setRepeatPassword(newPassword);
+    this.clickReset();
   }
 };
 

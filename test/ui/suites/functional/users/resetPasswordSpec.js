@@ -17,26 +17,35 @@
  */
 
 var user = {};
+var cleanupList = [];
 var config = require('config');
+var revAdmin = config.get('portal.users.revAdmin');
 var Portal = require('./../../../page_objects/portal');
 var DataProvider = require('./../../../common/providers/data');
 
 var MailinatorHelper = require('./../../../mailinator/helper');
 
-describe('Smoke', function () {
+describe('Functional', function () {
 
   describe('Forgot Password', function () {
 
-    beforeAll(function () {
-      Portal.signUpUser('Gold').then(function (tmpUser) {
-        expect(Portal.signUp.formPage.form.getDidntReceiveBtn() //TODO: add appropriate waiter on helper/PO level
-          .isDisplayed()).toBeTruthy();
-        user.email = tmpUser.email;
-      });
+    beforeAll(function (done) {
+      Portal
+        .signUpAndVerifyUser()
+        .then(function (newUser) {
+          user = newUser;
+          cleanupList.push(user);
+          Portal.signOut();
+          done();
+        });
     });
 
     afterAll(function () {
       Portal.signOut();
+      Portal.signIn(revAdmin);
+      cleanupList.forEach(function (usr) {
+        Portal.deleteUser(usr);
+      });
     });
 
     beforeEach(function () {
@@ -53,79 +62,39 @@ describe('Smoke', function () {
           .isDisplayed()).toBeTruthy();
       });
 
+    it('should successfully send change-password request.',
+      function () {
+        Portal.loginPage.clickForgotPassword();
+        Portal.dialog.setEmail(user.email);
+        Portal.dialog.clickSubmit();
+        expect(Portal.alerts
+          .getFirst()
+          .getText()).toEqual('An e-mail has been sent to ' + user.email +
+          ' with further instructions');
+      });
+
     it('should display message for unverified user when doing recovery',
       function () {
-        Portal.loginPage.clickForgotPassword();
-        Portal.loginPage.setRecoveryEmail(user.email);
-        Portal.dialog.clickSubmit();
-        expect(Portal.loginPage.getRecoveryDialogTitle())
-          .toBe('You still need to confirm your email address');
-      });
-
-    it('should be able to submit forgot password request after verification',
-      function () {
-        console.log(user.email);
-        MailinatorHelper.getTokenFromEmail(user.email).then(function (token) {
-          console.log(token);
-          browser.get(token);
-          browser.wait(protractor.ExpectedConditions.presenceOf(
-            element(by.css(Portal.header.locators.labels.userInfo.css))), 16000); //TODO: add appropriate waiter on helper/PO level
+        Portal.signUpUser('Gold').then(function (tmpUsr) {
+          cleanupList.push(tmpUsr);
+          Portal.signUp.formPage.verificationMessage.waitToDisplay();
+          Portal.load();
+          Portal.loginPage.clickForgotPassword();
+          Portal.loginPage.setRecoveryEmail(tmpUsr.email);
+          Portal.dialog.clickSubmit();
+          expect(Portal.loginPage.getRecoveryDialogTitle())
+            .toBe('You still need to confirm your email address');
         });
-
-        Portal.signOut();
-        Portal.loginPage.clickForgotPassword();
-        Portal.loginPage.setRecoveryEmail(user.email);
-        Portal.dialog.clickSubmit();
       });
 
-    it('should proper message appear when doing password recovery',
+    it('should be able to reset the password and login',
       function () {
-        var mess = 'An e-mail has been sent to '
-          + user.email + ' with further instructions';
-        Portal.loginPage.clickForgotPassword();
-        Portal.loginPage.setRecoveryEmail(user.email);
-        Portal.dialog.clickSubmit();
-        expect(Portal.alerts.getAll().count()).toEqual(1);
-        expect(Portal.alerts.getFirst().getText())
-          .toEqual(mess);
-      });
-
-    xit('should appear reset password form after applying reset URL',
-      function () {
-
-        MailinatorHelper.getTokenFromEmail(user.email).then(function (token) {
-          console.log(token);
-          user.token = token;
-          browser.get(token);
-        });
-
-        browser.wait(protractor.ExpectedConditions.presenceOf(
-          element(by.css(Portal.resetPasswordPage.locators.labels.title.css))), 16000); //TODO: add appropriate waiter on helper/PO level
-      });
-
-    it('should be able to reset',
-      function () {
-        var mess = 'Your password has been changed';
-        MailinatorHelper.getTokenFromEmail(user.email).then(function (token) {
-          console.log(token);
-          browser.get(token);
-        });
-
-        browser.wait(protractor.ExpectedConditions.presenceOf(
-          element(by.css(Portal.resetPasswordPage.locators.labels.title.css))), 16000); //TODO: add appropriate waiter on helper/PO level
-
         user.password = '12345678';
-        Portal.resetPasswordPage.setNewPassword(user.password);
-        Portal.resetPasswordPage.setRepeatPassword(user.password);
-        Portal.resetPasswordPage.clickResetPassword();
-
-        expect(Portal.alerts.getFirst().getText())
-          .toEqual(mess);
-      });
-
-    it('should be able to login with the new pass',
-      function () {
+        Portal.applyResetURL(user);
+        Portal.resetPasswordPage.resetPassword(user.password);
+        Portal.loginPage.waitToDisplay();
         Portal.signIn(user);
+        expect(Portal.header.getUserInfoEl().isDisplayed()).toBeTruthy();
       });
   });
 });
