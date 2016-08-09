@@ -54,7 +54,7 @@
           <!-- Display data in Basic Mode -->
           <uib-tabset active="active">
             <uib-tab index="0" heading="General Settings" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Use the tab to configure general domain settings like name and location of web origin, data transfer timeouts, etc">
-               <div class="form-group" ng-class="{'has-error': editForm.app_name.$invalid && editForm.app_name.$dirty}">
+              <div class="form-group" ng-class="{'has-error': editForm.app_name.$invalid && editForm.app_name.$dirty}">
                 <label for="domainName" class="col-sm-3 control-label" popover-trigger="mouseenter">Domain Name</label>
                 <div class="col-sm-9">
                   <input type="text" class="form-control" disabled autofocus ng-model="modelInfo.domain_name" id="domain_name" name="domainName" placeholder="Domain Name">
@@ -331,7 +331,12 @@
                   <i class="glyphicon glyphicon-chevron-down"></i>
                 </a>
               </span>
-                  <span ng-click="onAddNewCachingRule()" class="btn btn-primary btn-sm pull-right" title="Add New Caching Rule"><i class="glyphicon glyphicon-plus"></i></span>
+                  <div class="form-group pull-right">
+                    <div class="col-sm-12">
+                      <a ng-click="onAddNewCachingRule($event,true)" class="btn btn-primary btn-sm " uib-tooltip="Use the button to add a new caching rule to cache JPG, JPEG, PNG, GIF, WEBP, JS, CSS, WOFF, WOFF2, MPEG and MOV objects for period of 2 weeks. You can modify the rule to suit your needs."><i class="glyphicon glyphicon-plus"></i> Cache Static Objects</a>
+                      <a ng-click="onAddNewCachingRule($event)" class="btn btn-primary btn-sm " title="Add New Caching Rule"><i class="glyphicon glyphicon-plus"></i>&nbsp;</a>
+                    </div>
+                  </div>
                   <h4><b>Caching Rules</b></h4>
                 </div>
                 <div class="panel-body">
@@ -376,7 +381,7 @@
             <uib-tab index="3" heading="SSL Configuration" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Use the tab to enable/disable SSL support for the domain and manage which SSL certificate to use and which SSL protocols and cipher settings to apply for received SSL requests">
               <!--  “SSL Configuration” -->
               <div class="form-group form-inline">
-                <label for="enable_ssl" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Select whether we should accept HTTPS (SSL) requests for the domain" >
+                <label for="enable_ssl" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Select whether we should accept HTTPS (SSL) requests for the domain">
                   Accept SSL Requests
                 </label>
                 <div class="col-md-9">
