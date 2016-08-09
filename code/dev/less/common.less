@@ -25,14 +25,26 @@ button, input, select, textarea {
 .form-divider {
 
 }
-.btn.btn-success {
-  background-color: #FF8A00;
-  border-color: #FF8A00;
+.btn {
+  &.btn-download.btn-success {
+    background-color: @app-color-green;
+    border-color: @app-color-green;
+    &:hover {
+      background-color: @app-color-green-100;
+      border-color: @app-color-green-100;
+    }
+  }
+  &.btn-success {
+    background-color: #FF8A00;
+    border-color: #FF8A00;
+  }
+  &.btn-success:hover {
+    background-color: rgba(255, 138, 0, 0.70);
+    border-color: #FF8A00;
+  }
 }
-.btn.btn-success:hover {
-  background-color: rgba(255, 138, 0, 0.70);
-  border-color: #FF8A00;
-}
+
+
 .btn.btn-warning:hover ,.btn.btn-warning:focus {
   border-color: #FF8A00;
 }

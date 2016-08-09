@@ -18,7 +18,8 @@
     $stateParams,
     $config,
     $localStorage,
-    $q) {
+    $q,
+    $values) {
     //Invoking crud actions
     $injector.invoke(CRUDController,
       this, {
@@ -33,7 +34,7 @@
 
     $scope.NO_SPECIAL_CHARS = $config.PATTERNS.NO_SPECIAL_CHARS;
     $scope.COMMENT_NO_SPECIAL_CHARS = $config.PATTERNS.COMMENT_NO_SPECIAL_CHARS;
-
+    $scope.downloadLinks = $values.downloadLinks;
     /**
      * @name setAccountName
      * @description

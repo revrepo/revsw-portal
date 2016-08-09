@@ -1,4 +1,4 @@
-(function(window) {
+(function(angular, window) {
   'use strict';
   angular
     .module('revapm.Portal.Config')
@@ -227,4 +227,4 @@
 
     });
 
-})(window);
+})(angular, window);

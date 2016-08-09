@@ -19,7 +19,7 @@
   <button class="btn btn-default" type="button" ng-click="close()">
     <i class="glyphicon glyphicon-remove"></i>&nbsp; Cancel
   </button>
-  <button class="btn btn-primary" type="submit" ng-disabled="editForm.$invalid || data.loading">
+  <button class="btn btn-primary" type="submit" ng-disabled="editForm.$invalid || data.loading" ng-click="login(editForm)">
     <i class="glyphicon " ng-class="data.loading ? 'glyphicon-refresh spin': 'glyphicon-log-in'"></i> Submit
   </button>
 </div>
