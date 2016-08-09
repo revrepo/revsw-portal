@@ -502,6 +502,14 @@ textarea {
   line-height: 20px;
   word-wrap: break-word;
 }
+.btn.btn-download.btn-success {
+  background-color: #9bbb5a;
+  border-color: #9bbb5a;
+}
+.btn.btn-download.btn-success:hover {
+  background-color: #7fa838;
+  border-color: #7fa838;
+}
 .btn.btn-success {
   background-color: #FF8A00;
   border-color: #FF8A00;

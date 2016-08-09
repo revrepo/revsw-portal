@@ -192,6 +192,20 @@
     </div>
   </div>
   <hr>
+  <!-- Edge Side Includes -->
+  <div class="form-group">
+    <label class="col-sm-3 ">Edge Side Includes</label>
+  </div>
+  <div class="form-group form-inline">
+    <label for="override_origin" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Use the switch to control whether the edge proxy will process Edge Side Includes (ESI) commands in served web objects">
+      Enable ESI
+    </label>
+    <div class="col-md-9">
+      <toggle-switch ng-model="$ctrl.rule.enable_esi" on-label="On" off-label="Off">
+      </toggle-switch>
+    </div>
+  </div>
+  <hr>
   <div class="form-group">
     <label class="col-sm-3">Manage Origin Request Headers</label>
   </div>

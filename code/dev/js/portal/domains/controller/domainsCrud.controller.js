@@ -521,7 +521,11 @@
      *
      * @return
      */
-    $scope.onAddNewCachingRule = function() {
+    $scope.onAddNewCachingRule = function(e, isChacheStatic) {
+      if (e) {
+        e.preventDefault();
+      }
+
       var _newCachingRule = {
         version: 1,
         url: {
@@ -557,8 +561,24 @@
           isCollapsed: true
         }
       };
+      var _text_msg = '';
+      // NOTE: Set “Cache Static Objects” parameters
+      if (isChacheStatic === true) {
+        _newCachingRule.url = {
+          is_wildcard: false,
+          value: '\\.(jpg|jpeg|png|gif|webp|js|css|woff|woff2|mp4|swf|avi|mpeg|mov)(\\?.*)?$'
+        };
+        angular.extend(_newCachingRule.edge_caching, {
+          new_ttl: 604800,
+          override_origin: true,
+          override_no_cc: true
+        });
+        _text_msg = 'A new custom caching rule has been added to the end of the list';
+      } else {
+        _text_msg = 'A new default caching rule has been added to the end of the list. Please configure the rule before saving the configuration.';
+      }
       $scope.model.rev_component_bp.caching_rules.push(_newCachingRule);
-      $scope.alertService.success('A new default caching rule has been added to the end of the list. Please configure the rule before saving the configuration.');
+      $scope.alertService.success(_text_msg);
     };
     /**
      * @name  onRemoveCachingRule

@@ -95,6 +95,8 @@ var ZoneRecordsEditPage = require('./dnsZones/zoneRecords/editPage');
 var PlansPage = require('./signUp/plansPage');
 var SignUpPage = require('./signUp/signUpPage');
 
+var ResetPasswordPage = require('./resetPassword/resetPasswordPage');
+
 var MailinatorHelper = require('./../mailinator/helper');
 
 var DataProvider = require('./../common/providers/data');
@@ -144,6 +146,7 @@ var Portal = {
   purgeCacheAdvancedPage: PurgeCacheAdvancedPage,
   helpSupportPage: HelpSupportPage,
   helpPage: HelpPage,
+  resetPasswordPage: ResetPasswordPage,
   mobileApps: {
     listPage: MobileAppListPage,
     addPage: MobileAppAddPage,
@@ -785,6 +788,24 @@ var Portal = {
                   });
               });
           });
+      });
+  },
+
+  /**
+   * ### Portal.applyResetURL()
+   *
+   * Gets the verification URL and navigates to it
+   *
+   * @param {String} user
+   *
+   * @returns {Object} user signed up and verified
+   */
+  applyResetURL: function (user) {
+    return MailinatorHelper
+      .getVerificationTokenUrl(user.email)
+      .then(function (verificationUrl) {
+        return browser
+          .get(verificationUrl);
       });
   },
 
