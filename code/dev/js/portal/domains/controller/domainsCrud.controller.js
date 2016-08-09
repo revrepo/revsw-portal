@@ -561,6 +561,7 @@
           isCollapsed: true
         }
       };
+      var _text_msg = '';
       // NOTE: Set “Cache Static Objects” parameters
       if (isChacheStatic === true) {
         _newCachingRule.url = {
@@ -572,9 +573,12 @@
           override_origin: true,
           override_no_cc: true
         });
+        _text_msg = 'A new custom caching rule has been added to the end of the list';
+      } else {
+        _text_msg = 'A new default caching rule has been added to the end of the list. Please configure the rule before saving the configuration.';
       }
       $scope.model.rev_component_bp.caching_rules.push(_newCachingRule);
-      $scope.alertService.success('A new default caching rule has been added to the end of the list. Please configure the rule before saving the configuration.');
+      $scope.alertService.success(_text_msg);
     };
     /**
      * @name  onRemoveCachingRule
