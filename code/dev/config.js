@@ -24,3 +24,6 @@ window.gaAccount = 'UA-68856309-2'; // testing environment
 // Intro configuration flag (true=on, false=off)
 // should be disabled in the testing env and enabled in production
 // window.intro = false;
+
+// Configuration parameter for set timeoute for POST and PUT request me
+window.resourcePostPutTimeout = 60 * 1000;

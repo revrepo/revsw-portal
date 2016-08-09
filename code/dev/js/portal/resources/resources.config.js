@@ -1,4 +1,4 @@
-(function () {
+(function(angular) {
   'use strict';
 
   angular
@@ -7,7 +7,7 @@
 
   /*@ngInject*/
   function ResourceConfig($httpProvider) {
-
     $httpProvider.interceptors.push('revAPIHttpInterceptor');
+    $httpProvider.interceptors.push('timeoutHttpIntercept');
   }
-})();
+})(angular);
