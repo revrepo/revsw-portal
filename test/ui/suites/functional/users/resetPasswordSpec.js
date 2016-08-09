@@ -46,6 +46,7 @@ describe('Functional', function () {
       cleanupList.forEach(function (usr) {
         Portal.deleteUser(usr);
       });
+      Portal.signOut();
     });
 
     beforeEach(function () {
