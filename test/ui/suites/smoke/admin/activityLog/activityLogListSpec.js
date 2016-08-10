@@ -43,7 +43,7 @@ describe('Smoke', function() {
         });
 
         beforeEach(function() {
-          Portal.getActivityLogPage();
+          Portal.helpers.nav.goToActivityLog();
         });
 
         it('should display the Search input text in "Activity Log" page',
