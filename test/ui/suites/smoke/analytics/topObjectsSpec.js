@@ -50,6 +50,7 @@ describe('Smoke', function () {
       function () {
         var titleChart = Constants.topObjects.TOP_MOST_REQUESTED_OBJECTS;
         Portal.topObjectsPage.form.clickTopMostRequestedTab();
+        browser.sleep(2000);
         expect(Portal.topObjectsPage.getSelectedDomain()).toEqual(noDomain);
         expect(Portal.topObjectsPage.getChartTitle()).toEqual(titleChart);
       });
@@ -58,6 +59,7 @@ describe('Smoke', function () {
       function () {
         var titleChart = Constants.topObjects.TOP_REFERERS;
         Portal.topObjectsPage.form.clickTopRefersTab();
+        browser.sleep(2000);
         expect(Portal.topObjectsPage.getSelectedDomain()).toEqual(noDomain);
         expect(Portal.topObjectsPage.getChartTitle()).toEqual(titleChart);
       });
@@ -66,6 +68,7 @@ describe('Smoke', function () {
       function () {
         var titleChart = Constants.topObjects.TOP_EDGE_CACHE_HITS;
         Portal.topObjectsPage.form.clickTopEdgeCacheHitsTab();
+        browser.sleep(2000);
         expect(Portal.topObjectsPage.getSelectedDomain()).toEqual(noDomain);
         expect(Portal.topObjectsPage.getChartTitle()).toEqual(titleChart);
       });
@@ -74,6 +77,7 @@ describe('Smoke', function () {
       function () {
         var titleChart = Constants.topObjects.TOP_EDGE_CACHE_MISSES;
         Portal.topObjectsPage.form.clickTopEdgeCacheMissesTab();
+        browser.sleep(2000);
         expect(Portal.topObjectsPage.getSelectedDomain()).toEqual(noDomain);
         expect(Portal.topObjectsPage.getChartTitle()).toEqual(titleChart);
       });
@@ -82,6 +86,7 @@ describe('Smoke', function () {
       function () {
         var titleChart = Constants.topObjects.TOP_404_NOT_FOUND_OBJECTS;
         Portal.topObjectsPage.form.clickTop404Tab();
+        browser.sleep(2000);
         expect(Portal.topObjectsPage.getSelectedDomain()).toEqual(noDomain);
         expect(Portal.topObjectsPage.getChartTitle()).toEqual(titleChart);
       });
@@ -90,6 +95,7 @@ describe('Smoke', function () {
       function () {
         var titleChart = Constants.topObjects.TOP_OBJECTS_WITH_5XX_ERROR_CODES;
         Portal.topObjectsPage.form.clickTop5XXTab();
+        browser.sleep(2000);
         expect(Portal.topObjectsPage.getSelectedDomain()).toEqual(noDomain);
         expect(Portal.topObjectsPage.getChartTitle()).toEqual(titleChart);
       });
@@ -98,6 +104,7 @@ describe('Smoke', function () {
       function () {
         var titleChart = Constants.topObjects.TOP_FAILED;
         Portal.topObjectsPage.form.clickTopObjetcsWithUnsuccessfulStatusTab();
+        browser.sleep(2000);
         expect(Portal.topObjectsPage.getSelectedDomain()).toEqual(noDomain);
         expect(Portal.topObjectsPage.getChartTitle()).toEqual(titleChart);
       });
@@ -106,6 +113,7 @@ describe('Smoke', function () {
       function () {
         var titleChart = Constants.topObjects.TOP_SLOWEST_FBT;
         Portal.topObjectsPage.form.clickObjectsWithSlowestFBTtab();
+        browser.sleep(2000);
         expect(Portal.topObjectsPage.getSelectedDomain()).toEqual(noDomain);
         expect(Portal.topObjectsPage.getChartTitle()).toEqual(titleChart);
       });
@@ -114,6 +122,7 @@ describe('Smoke', function () {
       function () {
         var titleChart = Constants.topObjects.TOP_SLOWEST_DOWNLOAD_TIME;
         Portal.topObjectsPage.form.clickObjectsWithSlowestDownTimeTab();
+        browser.sleep(2000);
         expect(Portal.topObjectsPage.getSelectedDomain()).toEqual(noDomain);
         expect(Portal.topObjectsPage.getChartTitle()).toEqual(titleChart);
       });
