@@ -29,31 +29,31 @@ var TopObjectsForm = {
     tabs:{
       id: 'topObjectsReportsTabs',
       topMostRequested: {
-        css: 'li:nth-of-type(1)'
+        css: 'li:nth-of-type(1) a'
       },
       topRefers: {
-        css: 'li:nth-of-type(2)'
+        css: 'li:nth-of-type(2) a'
       },
       topEdgeCacheHits: {
-        css: 'li:nth-of-type(3)'
+        css: 'li:nth-of-type(3) a'
       },
       topEdgeCacheMisses: {
-        css: 'li:nth-of-type(4)'
+        css: 'li:nth-of-type(4) a'
       },
       top404NotFound: {
-        css: 'li:nth-of-type(5)'
+        css: 'li:nth-of-type(5) a'
       },
       top5XX: {
-        css: 'li:nth-of-type(6)'
+        css: 'li:nth-of-type(6) a'
       },
       topFailed: {
-        css: 'li:nth-of-type(7)'
+        css: 'li:nth-of-type(7) a'
       },
       topSlowestFBT: {
-        css: 'li:nth-of-type(8)'
+        css: 'li:nth-of-type(8) a'
       },
       topSlowestDownload: {
-        css: 'li:nth-of-type(9)'
+        css: 'li:nth-of-type(9) a'
       }
     },
     panels: {
