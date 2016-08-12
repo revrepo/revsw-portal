@@ -28,4 +28,4 @@ window.gaAccount = 'UA-68856309-2'; // testing environment
 //
 
 // Configuration parameter to set timeout value for POST and PUT requests to the API
-window.resourcePostPutTimeout = 60 * 1000;
+window.resourcePostPutTimeout = 120 * 1000;
