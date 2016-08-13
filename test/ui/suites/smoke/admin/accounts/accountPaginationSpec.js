@@ -35,6 +35,7 @@ describe('Smoke', function () {
 
     beforeEach(function () {
       Portal.helpers.nav.goToAccounts();
+      Portal.admin.accounts.listPage.pager.clickPageIndex(1);
     });
 
     afterEach(function () {
