@@ -1138,7 +1138,26 @@ var Portal = {
           return handles.length === numOfWindows;
         });
     }, this.waitTimeout);
-  }
+  },
+
+  /**
+   * ### Portal.goToDNSZoneRecords()
+   *
+   * Navigation helper method that executes all steps to navigate to `DNS Zone Records` page
+   * TODO: This method should be refactored
+   * @param {user} zone, DNS zone to manage
+   * @returns {Promise}
+   */
+  goToDNSZoneRecords: function (zone) {
+    var me = this;
+    return this.helpers.nav.goToDNSZones()
+      .then(function () {
+        me.dnsZones.listPage.searcher.setSearchCriteria(zone.domain);
+        me.dnsZones.listPage.table
+          .getFirstRow()
+          .clickManageRecords();
+      });
+  },
 };
 
 module.exports = Portal;

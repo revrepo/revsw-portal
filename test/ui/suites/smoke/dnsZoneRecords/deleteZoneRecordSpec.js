@@ -51,7 +51,7 @@ describe('Smoke', function () {
                         //Looks like it is not reproducible when doing Portal.load() before SignIn
                         //SignIn func needs to be investigated
           Portal.signIn(user);
-          Portal.goToDNSZones();
+          Portal.helpers.nav.goToDNSZones();
         });
 
         afterAll(function () {
