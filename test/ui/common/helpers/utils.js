@@ -56,8 +56,9 @@ var Utils = {
     return textInput
       .getAttribute('value').then(function (text) {
         var len = text.length;
+        var delChars = new Array(len + 1).join(protractor.Key.DELETE);
         var backspaces = new Array(len + 1).join(protractor.Key.BACK_SPACE);
-        return textInput.sendKeys(backspaces);
+        textInput.sendKeys(delChars + backspaces);
       });
   }
 };
