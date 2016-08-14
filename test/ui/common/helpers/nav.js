@@ -19,6 +19,7 @@
 var Constants = require('./../../page_objects/constants');
 var SideBar = require('./../../page_objects/common/sidebar/sidebar');
 var MenuItems = require('./../../page_objects/common/sidebar/locators/menuItems');
+var MenuAreas = require('./../../page_objects/common/sidebar/locators/menuAreas')
 
 // # Navigator Helper
 // Abstracts common functionality for the navigation through Portal UI.
@@ -287,6 +288,13 @@ module.exports = {
    */
   goToBillingStatements: function () {
     return SideBar.select(MenuItems.BILLING.BILLING_STATEMENTS);
+  },
+
+  /**
+   * Navigates to Support Area
+   */
+  goToSupport: function () {
+    return SideBar.select(MenuAreas.SUPPORT);
   },
 
   /**

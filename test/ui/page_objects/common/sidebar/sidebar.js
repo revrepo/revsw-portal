@@ -192,7 +192,9 @@ var SideBar = {
    */
   select: function (locatorData) {
     this.collapseAll();
-    this.expand(locatorData.area);
+    if (locatorData.area) {
+      this.expand(locatorData.area);
+    }
     return this
       .getMenuItem(locatorData)
       .click();

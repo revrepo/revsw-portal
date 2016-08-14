@@ -29,7 +29,7 @@ describe('Smoke', function () {
 
     beforeAll(function () {
       Portal.signIn(adminUser);
-      Portal.helpers.nav.goToAPIDocumentation();
+      Portal.helpers.nav.goToSupport();
     });
 
     afterAll(function () {
