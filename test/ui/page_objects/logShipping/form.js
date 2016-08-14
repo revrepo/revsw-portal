@@ -20,6 +20,7 @@
 
 // Requiring constant values
 var Constants = require('./../constants');
+var Utils = require('./../../common/helpers/utils');
 
 var DropDownWidget = require('./../common/dropDownWidget');
 
@@ -255,13 +256,7 @@ var LogShippingForm = {
   },
 
   clearJobName: function () {
-    var me = this;
-    return this
-        .getJobNameTxtIn()
-        .sendKeys(protractor.Key.chord(protractor.Key.CONTROL, 'a'))
-        .then(function () {
-          me.getJobNameTxtIn().sendKeys(protractor.Key.BACK_SPACE);
-        });
+    return Utils.clearTextInput(this.getJobNameTxtIn());
   },
 
   getJobName: function () {
