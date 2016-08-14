@@ -35,6 +35,14 @@ module.exports = {
   },
 
   /**
+   * Goes to Mobile Apps Area
+   * @returns {*}
+   */
+  goToMobileApps: function () {
+    return SideBar.select(MenuAreas.MOBILE_APPS);
+  },
+
+  /**
    * Goes to specified menu item from Mobile Apps section.
    * @param menuItem
    * @returns {*}

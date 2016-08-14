@@ -57,8 +57,7 @@ describe('Smoke', function () {
           describe('Platform: ' + platform, function () {
 
             beforeEach(function () {
-              Portal.goTo(Constants.sideBar.mobileApps.MOBILE_APPS,
-                platform);
+              Portal.helpers.nav.goToMobileAppsMenuItem(platform);
             });
 
             afterEach(function () {
