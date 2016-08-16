@@ -35,7 +35,7 @@ describe('Workflow', function () {
 
     beforeEach(function () {
       Portal.signIn(resellerUser);
-      Portal.getUsersPage();
+      Portal.helpers.nav.goToUsers();
     });
 
     afterEach(function () {
@@ -49,7 +49,7 @@ describe('Workflow', function () {
           .getEmail();
         Portal.signOut();
         Portal.signIn(secondResellerUser);
-        Portal.getUsersPage();
+        Portal.helpers.nav.goToUsers();
         Portal.userListPage.searcher.setSearchCriteria(userEmail);
         var filteredRows = Portal.userListPage.table.getRows();
         expect(filteredRows.count()).toEqual(0);
@@ -66,7 +66,7 @@ describe('Workflow', function () {
         expect(filteredRows.count()).toEqual(1);
         Portal.signOut();
         Portal.signIn(secondResellerUser);
-        Portal.getUsersPage();
+        Portal.helpers.nav.goToUsers();
         Portal.userListPage.searcher.setSearchCriteria(userEmail);
         var newFilteredRows = Portal.userListPage.table.getRows();
         expect(newFilteredRows.count()).toEqual(0);

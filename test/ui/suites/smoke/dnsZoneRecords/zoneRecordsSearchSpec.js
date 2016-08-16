@@ -50,7 +50,7 @@ describe('Smoke', function () {
                         //SignIn func needs to be investigated
 
           Portal.signIn(user);
-          Portal.goToDNSZones();
+          Portal.helpers.nav.goToDNSZones();
         });
 
         afterEach(function () {

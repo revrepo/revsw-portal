@@ -34,7 +34,7 @@ describe('Boundary', function () {
     });
 
     beforeEach(function () {
-      Portal.getDomainsPage();
+      Portal.helpers.nav.goToDomains();
     });
 
     it('should apply filters only when typing 1 char in "Search" field',

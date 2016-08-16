@@ -101,9 +101,13 @@ var MailinatorHelper = require('./../mailinator/helper');
 
 var DataProvider = require('./../common/providers/data');
 
+var PortalHelpers = require('./../common/helpers/portal');
+
 // This `Portal` Page Object is the entry point to use all other Page Objects
 // that abstract all components from the Portal App.
 var Portal = {
+
+  constants: Constants,
 
   // Properties
   baseUrl: Utils.getBaseUrl(),
@@ -197,6 +201,8 @@ var Portal = {
   },
   // ## Authentication Helper methods
 
+  helpers: PortalHelpers,
+
   /**
    * ### Portal.signIn()
    *
@@ -274,10 +280,6 @@ var Portal = {
     });
   },
 
-  getDomainsPage: function () {
-    return this.getPage(Constants.hashFragments.domains.list);
-  },
-
   /**
    * ### Portal.getDashboardsPage()
    *
@@ -287,85 +289,6 @@ var Portal = {
    */
   getDashboardsPage: function () {
     return this.getPage(Constants.hashFragments.dashboard);
-  },
-
-  /**
-   * ### Portal.getAdminPage()
-   *
-   * Loads the hash fragment for the Admin page.
-   *
-   * @returns {Promise}
-   */
-  getAdminPage: function () {
-    return this.getPage(Constants.hashFragments.admin.users);
-  },
-
-  /**
-   * ### Portal.getApiKeysPage()
-   *
-   * Loads the hash fragment for the API Keys page.
-   *
-   * @returns {Promise}
-   */
-  getApiKeysPage: function () {
-    return this.getPage(Constants.hashFragments.admin.apiKeys);
-  },
-  /**
-   * ### Portal.getActivityLogPage()
-   *
-   * Loads the hash fragment for the Activity Log page.
-   *
-   * @returns {Promise}
-   */
-  getActivityLogPage: function () {
-    return this.getPage(Constants.hashFragments.admin.activityLog);
-  },
-  /**
-   * ### Portal.getUsersPage()
-   *
-   * Loads the hash fragment for the User List page
-   *
-   * @returns {Promise}
-   */
-  getUsersPage: function () {
-    return this.getPage(Constants.hashFragments.users);
-  },
-
-  /**
-   * ### Portal.getUpdatePasswordPage()
-   *
-   * Loads the hash fragment for the Update Password page
-   *
-   * @returns {Promise}
-   */
-  getUpdatePasswordPage: function () {
-    return this.getPage(Constants.hashFragments.profile);
-  },
-
-  /**
-   * ### Portal.getMobileApps()
-   *
-   * Loads the hash fragment for the Mobile Apps page.
-   *
-   * @param {String} appName, name of app like ios, android and wm.
-   *
-   * @returns {Promise}
-   */
-  getMobileApps: function (appName) {
-    return this.getPage(Constants.hashFragments.mobileApps + appName);
-  },
-
-  /**
-   * ### Portal.getSSLCertsPage()
-   *
-   * Loads the hash fragment for the SSL Cert page.
-   *
-   * TODO: Need to improve navigation to reduce tests execution time
-   *
-   * @returns {Promise}
-   */
-  getSSLCertsPage: function () {
-    return this.getPage(Constants.hashFragments.sslCerts);
   },
 
   // ## Portal APP navigation Helper methods
@@ -388,205 +311,8 @@ var Portal = {
       menuItem);
   },
 
-  /**
-   * ### Portal.goToAccountSettings()
-   *
-   * Navigation helper method that executes all steps to navigate to `Account
-   * Settings` section.
-   *
-   * @returns {Promise}
-   */
-  goToAccountSettings: function () {
-    return Portal.header.goTo(Constants.header.appMenu.ACCOUNT_SETTINGS);
-  },
-
-  /**
-   * ### Portal.goToUsers()
-   *
-   * Navigation helper method that executes all steps to navigate to `Users
-   * List` page
-   *
-   * @returns {Promise}
-   */
-  goToUsers: function () {
-    return this
-      .goTo(Constants.header.appMenu.ACCOUNT_SETTINGS,
-      Constants.sideBar.menu.USERS);
-  },
-
-  /**
-   * ### Portal.goToMobileApps()
-   *
-   * Navigation helper method that executes all steps to navigate to `Mobile
-   * Apps` page.
-   *
-   * @returns {Promise}
-   */
-  goToMobileApps: function () {
-    return Portal.sideBar.goTo(Constants.sideBar.mobileApps.MOBILE_APPS);
-  },
-
-  /**
-   * ### Portal.goToBilling()
-   *
-   * Navigation helper method that executes all steps to navigate to `Billing`
-   * page.
-   *
-   * @returns {Promise}
-   */
-  goToBilling: function () {
-    return Portal.sideBar.goTo(Constants.sideBar.billing.BILLING);
-  },
-
   goToAccountProfile: function () {
-    this.goToBilling();
     return Portal.sideBar.goTo(Constants.sideBar.billing.ACCOUNT_PROFILE);
-  },
-
-  goToChangeBillingPlan: function () {
-    this.goToBilling();
-    return Portal.sideBar.goTo(Constants.sideBar.billing.CHANGE_BILLING_PLAN);
-  },
-
-  goToBillingStatements: function () {
-    this.goToBilling();
-    return Portal.sideBar.goTo(Constants.sideBar.billing.BILLING_STATEMENTS);
-  },
-
-  goToUsageReport: function () {
-    return this
-      .goTo(Constants.sideBar.billing.BILLING,
-      Constants.sideBar.billing.USAGE_REPORT);
-  },
-
-  /**
-   * ### Portal.goToSecuritySettings()
-   *
-   * Navigation helper method that executes all steps to navigate to `Security
-   * Settings` page
-   *
-   * @returns {Promise}
-   */
-  goToSecuritySettings: function () {
-    return this
-      .goTo(Constants.header.appMenu.ACCOUNT_SETTINGS,
-      Constants.sideBar.menu.SECURITY_SETTINGS);
-  },
-
-  /**
-   * ### Portal.goToUpdatePassword()
-   *
-   * Navigation helper method that executes all steps to navigate to `Update
-   * Password` page
-   *
-   * @returns {Promise}
-   */
-  goToUpdatePassword: function () {
-    return this
-      .goTo(Constants.header.appMenu.ACCOUNT_SETTINGS,
-      Constants.sideBar.menu.UPDATE_PASSWORD);
-  },
-
-  /**
-   * ### Portal.goToDomains()
-   *
-   * Navigation helper method that executes all steps to navigate to `Domains`
-   * page
-   *
-   * @returns {Promise}
-   */
-  goToDomains: function () {
-    return this
-      .goTo(Constants.header.appMenu.WEB,
-      Constants.sideBar.web.DOMAINS);
-  },
-
-  /**
-   * ### Portal.goToSslCert()
-   *
-   * Navigation helper method that executes all steps to navigate to `SSL Certificates`
-   * page
-   *
-   * @returns {Promise}
-   */
-  goToSslCert: function () {
-    return this
-        .goTo(Constants.header.appMenu.WEB,
-            Constants.sideBar.web.SSL_CERTIFICATES);
-  },
-
-  /**
-   * ### Portal.goToSSLNames()
-   *
-   * Navigation helper method that executes all steps to navigate to `SSL Names
-   * List` page
-   *
-   * @returns {Promise}
-   */
-  goToSSLNames: function () {
-    return this
-        .goTo(Constants.header.appMenu.WEB,
-            Constants.sideBar.web.SSL_NAMES);
-  },
-
-  /**
-   * ### Portal.goToLogShipping()
-   *
-   * Navigation helper method that executes all steps to navigate to `Log Shipping
-   * List` page
-   *
-   * @returns {Promise}
-   */
-  goToLogShipping: function () {
-    return this
-        .goTo(Constants.header.appMenu.ACCOUNT_SETTINGS,
-            Constants.sideBar.admin.LOG_SHIPPING);
-  },
-
-  /**
-   * ### Portal.goToStagingEnv()
-   *
-   * Navigation helper method that executes all steps to navigate to `Staging Env.` page
-   *
-   * @returns {Promise}
-   */
-  goToStagingEnv: function () {
-    return this
-        .goTo(Constants.header.appMenu.WEB,
-            Constants.sideBar.web.STAGING_ENV);
-  },
-
-  /**
-   * ### Portal.goToDNSZones()
-   *
-   * Navigation helper method that executes all steps to navigate to `DNS Zones` page
-   *
-   * @returns {Promise}
-   */
-  goToDNSZones: function () {
-    return this
-      .goTo(Constants.sideBar.dnsService.DNS_SERVICE,
-        Constants.sideBar.dnsService.DNS_ZONES);
-  },
-
-  /**
-   * ### Portal.goToDNSZoneRecords()
-   *
-   * Navigation helper method that executes all steps to navigate to `DNS Zone Records` page
-   *
-   * @param {user} zone, DNS zone to manage
-   *
-   * @returns {Promise}
-   */
-  goToDNSZoneRecords: function (zone) {
-    var me = this;
-    return this.goToDNSZones()
-      .then(function () {
-      me.dnsZones.listPage.searcher.setSearchCriteria(zone.domain);
-      me.dnsZones.listPage.table
-        .getFirstRow()
-        .clickManageRecords();
-    });
   },
 
   // ## User Helper methods
@@ -605,7 +331,7 @@ var Portal = {
   createUser: function (newUser) {
     var me = this;
     return browser.getCurrentUrl().then(function (initialUrl) {
-      me.goToUsers();
+      me.helpers.nav.goToUsers();
       me.userListPage.clickAddNewUser();
       me.addUserPage.createUser(newUser);
       me.addUserPage.clickBackToList();
@@ -632,7 +358,7 @@ var Portal = {
   createUserIfNotExist: function (user) {
     var me = this;
     return browser.getCurrentUrl().then(function (initialUrl) {
-      me.getUsersPage();
+      me.helpers.nav.goToUsers();
       me.userListPage.searcher.setSearchCriteria(user.email);
       me.userListPage.table
         .getRows()
@@ -666,7 +392,7 @@ var Portal = {
   deleteUser: function (user) {
     var me = this;
     return browser.getCurrentUrl().then(function (initialUrl) {
-      me.goToUsers();
+      me.helpers.nav.goToUsers();
       me.userListPage.searcher.clearSearchCriteria();
       me.userListPage.searcher.setSearchCriteria(user.email);
       me.userListPage.table
@@ -696,7 +422,7 @@ var Portal = {
   createDomain: function (newDomain) {
     var me = this;
     return browser.getCurrentUrl().then(function (initialUrl) {
-      me.goToDomains();
+      me.helpers.nav.goToDomains();
       me.domains.listPage.clickAddNewDomain();
       me.domains.addPage.createDomain(newDomain);
       me.domains.addPage.clickBackToList();
@@ -723,7 +449,7 @@ var Portal = {
   createDomainIfNotExist: function (domain) {
     var me = this;
     return browser.getCurrentUrl().then(function (initialUrl) {
-      me.getDomainsPage();
+      me.helpers.nav.goToDomains();
       me.domains.listPage.searcher.setSearchCriteria(domain.name);
       me.domains.listPage.table
         .getRows()
@@ -757,7 +483,7 @@ var Portal = {
   updateDomain: function (domain) {
     var me = this;
     return browser.getCurrentUrl().then(function (initialUrl) {
-      me.getDomainsPage();
+      me.helpers.nav.goToDomains();
       me.domains.listPage.searchAndClickEdit(domain.name);
       delete domain.name;
       me.domains.editPage.updateDomain(domain);
@@ -784,7 +510,7 @@ var Portal = {
   deleteDomain: function (domain) {
     var me = this;
     return browser.getCurrentUrl().then(function (initialUrl) {
-      me.goToDomains();
+      me.helpers.nav.goToDomains();
       me.domains.listPage.searcher.clearSearchCriteria();
       me.domains.listPage.searcher.setSearchCriteria(domain.name);
       me.domains.listPage.table
@@ -815,10 +541,9 @@ var Portal = {
    */
   createMobileApps: function (platform, apps) {
     var me = this;
-    me.getMobileApps(platform.toLowerCase());
     return browser.getCurrentUrl().then(function (initialUrl) {
       apps.forEach(function (app) {
-        me.header.goTo(platform);
+        me.helpers.nav.goToMobileAppsMenuItem(platform);
         me.mobileApps.listPage.addNew(app);
       });
       browser.getCurrentUrl().then(function (currentUrl) {
@@ -844,8 +569,7 @@ var Portal = {
     var me = this;
     browser.getCurrentUrl().then(function (initialUrl) {
       apps.forEach(function (app) {
-        me.getMobileApps(app.platform.toLowerCase());
-        me.header.goTo(app.platform);
+        me.helpers.nav.goToMobileAppsMenuItem(app.platform);
         me.mobileApps.listPage.searchAndDelete(app);
         me.dialog.clickOk();
         browser.sleep(3000);
@@ -873,8 +597,7 @@ var Portal = {
   createMobileAppIfNotExist: function (app) {
     var me = this;
     return browser.getCurrentUrl().then(function (initialUrl) {
-      me.goToMobileApps();
-      me.header.goTo(app.platform);
+      me.helpers.nav.goToMobileAppsMenuItem(app.platform);
       me.mobileApps.listPage.setSearch(app.name);
       me.mobileApps.listPage.table
         .countTotalRows()
@@ -907,8 +630,7 @@ var Portal = {
    */
   createAccounts: function (accounts) {
     var me = this;
-    me.getAdminPage();
-    me.header.goTo(Constants.sideBar.admin.ACCOUNTS);
+    me.helpers.nav.goToAccounts();
     me.admin.accounts.listPage.clickAddNewCompany();
     return browser.getCurrentUrl().then(function (initialUrl) {
       accounts.forEach(function (account) {
@@ -938,10 +660,9 @@ var Portal = {
    */
   deleteAccounts: function (accounts) {
     var me = this;
-    me.getAdminPage();
     return browser.getCurrentUrl().then(function (initialUrl) {
       accounts.forEach(function (account) {
-        me.header.goTo(Constants.sideBar.admin.ACCOUNTS);
+        me.helpers.nav.goToAccounts();
         me.admin.accounts.listPage.searchAndClickDelete(account.companyName);
         Portal.dialog.clickOk();
       });
@@ -1104,7 +825,7 @@ var Portal = {
   createApiKey: function (apiKey, isUserAdmin, account) {
     var me = this;
     return browser.getCurrentUrl().then(function (initialUrl) {
-      me.getApiKeysPage();
+      me.helpers.nav.goToAPIKeys();
       me.admin.apiKeys.listPage.clickAddNewApiKey();
 
       if (isUserAdmin && account) {
@@ -1141,7 +862,7 @@ var Portal = {
   deleteAPIKey: function (apiKey) {
     var me = this;
     return browser.getCurrentUrl().then(function (initialUrl) {
-      me.getApiKeysPage();
+      me.helpers.nav.goToAPIKeys();
       Portal.admin.apiKeys.listPage.searchAndClickDelete(apiKey.name);
       Portal.dialog.clickOk();
       browser.getCurrentUrl().then(function (currentUrl) {
@@ -1155,7 +876,7 @@ var Portal = {
   createSSLCert: function (sslCert) {
     var me = this;
     return browser.getCurrentUrl().then(function (initialUrl) {
-      me.getSSLCertsPage();
+      me.helpers.nav.goToSSLCertificates();
       Portal.sslCerts.listPage.clickAddNewSSLCert();
       Portal.sslCerts.addPage.form.fill(sslCert);
       Portal.sslCerts.addPage.clickCreateSSLCert();
@@ -1181,7 +902,7 @@ var Portal = {
   deleteSSLCert: function (sslCert) {
     var me = this;
     return browser.getCurrentUrl().then(function (initialUrl) {
-      me.getSSLCertsPage();
+      me.helpers.nav.goToSSLCertificates();
       me.sslCerts.listPage.searcher.clearSearchCriteria();
       me.sslCerts.listPage.searcher.setSearchCriteria(sslCert.name);
       me.sslCerts.listPage.table
@@ -1210,7 +931,7 @@ var Portal = {
   createSSLName: function (sslName) {
     var me = this;
     return browser.getCurrentUrl().then(function (initialUrl) {
-      me.goToSSLNames();
+      me.helpers.nav.goToSSLNames();
       Portal.sslNames.listPage.clickAddNewSSLName();
       Portal.sslNames.addPage.form.fill(sslName);
       Portal.sslNames.addPage.clickAddSSLName();
@@ -1238,7 +959,7 @@ var Portal = {
   deleteSSLName: function (sslName) {
     var me = this;
     return browser.getCurrentUrl().then(function (initialUrl) {
-      me.goToSSLNames();
+      me.helpers.nav.goToSSLNames();
       me.sslNames.listPage.searcher.clearSearchCriteria();
       me.sslNames.listPage.searcher.setSearchCriteria(sslName.domainName);
       me.sslNames.listPage.table
@@ -1267,7 +988,7 @@ var Portal = {
   createLogShippingJob: function (logShippingJob) {
     var me = this;
     return browser.getCurrentUrl().then(function (initialUrl) {
-      me.goToLogShipping();
+      me.helpers.nav.goToLogShipping();
       Portal.logShipping.listPage.clickAddNewLogShippingJob();
       Portal.logShipping.addPage.form.fill(logShippingJob);
       Portal.logShipping.addPage.clickCreateJobBtn();
@@ -1293,7 +1014,7 @@ var Portal = {
   deleteLogShippingJob: function (logShippingJob) {
     var me = this;
     return browser.getCurrentUrl().then(function (initialUrl) {
-      me.goToLogShipping();
+      me.helpers.nav.goToLogShipping();
       me.logShipping.listPage.searcher.clearSearchCriteria();
       me.logShipping.listPage.searcher.setSearchCriteria(logShippingJob.name);
       me.logShipping.listPage.table
@@ -1322,7 +1043,7 @@ var Portal = {
   createDNSZone: function (zone) {
     var me = this;
     return browser.getCurrentUrl().then(function (initialUrl) {
-      me.goToDNSZones();
+      me.helpers.nav.goToDNSZones();
       Portal.dnsZones.listPage.clickAddNewDNSZone();
       Portal.dnsZones.addPage.form.fill(zone);
       Portal.dnsZones.addPage.clickCreateDNSZone();
@@ -1350,7 +1071,7 @@ var Portal = {
   createDNSZoneRecord: function (dnsZone, record) {
     var me = this;
     return browser.getCurrentUrl().then(function (initialUrl) {
-      me.goToDNSZones();
+      me.helpers.nav.goToDNSZones();
       Portal.dnsZones.listPage.searcher.clearSearchCriteria();
       Portal.dnsZones.listPage.searcher.setSearchCriteria(dnsZone.domain);
       Portal.dnsZones.listPage.table
@@ -1382,7 +1103,7 @@ var Portal = {
   deleteDNSZone: function (zone) {
     var me = this;
     return browser.getCurrentUrl().then(function (initialUrl) {
-      me.goToDNSZones();
+      me.helpers.nav.goToDNSZones();
       me.dnsZones.listPage.searcher.clearSearchCriteria();
       me.dnsZones.listPage.searcher.setSearchCriteria(zone.domain);
       me.dnsZones.listPage.table
@@ -1417,7 +1138,26 @@ var Portal = {
           return handles.length === numOfWindows;
         });
     }, this.waitTimeout);
-  }
+  },
+
+  /**
+   * ### Portal.goToDNSZoneRecords()
+   *
+   * Navigation helper method that executes all steps to navigate to `DNS Zone Records` page
+   * TODO: This method should be refactored
+   * @param {user} zone, DNS zone to manage
+   * @returns {Promise}
+   */
+  goToDNSZoneRecords: function (zone) {
+    var me = this;
+    return this.helpers.nav.goToDNSZones()
+      .then(function () {
+        me.dnsZones.listPage.searcher.setSearchCriteria(zone.domain);
+        me.dnsZones.listPage.table
+          .getFirstRow()
+          .clickManageRecords();
+      });
+  },
 };
 
 module.exports = Portal;

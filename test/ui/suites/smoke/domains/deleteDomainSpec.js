@@ -46,7 +46,7 @@ describe('Smoke', function () {
         });
 
         beforeEach(function () {
-          Portal.getDomainsPage();
+          Portal.helpers.nav.goToDomains();
           Portal.domains.listPage.searcher.clearSearchCriteria();
         });
 

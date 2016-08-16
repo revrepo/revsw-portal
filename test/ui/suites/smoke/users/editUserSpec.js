@@ -45,7 +45,7 @@ describe('Smoke', function () {
         });
 
         beforeEach(function () {
-          Portal.goToUsers();
+          Portal.helpers.nav.goToUsers();
         });
 
         it('should display edit user button', function () {

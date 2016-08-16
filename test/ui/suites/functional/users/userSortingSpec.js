@@ -46,7 +46,7 @@ describe('Functional', function () {
 
     beforeEach(function () {
       Portal.signIn(adminUser);
-      Portal.goToUsers();
+      Portal.helpers.nav.goToUsers();
       Portal.userListPage.searcher.setSearchCriteria(prefix);
     });
 

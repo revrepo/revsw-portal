@@ -42,7 +42,7 @@ describe('Smoke', function () {
 
         beforeEach(function () {
           Portal.signIn(user);
-          Portal.getSSLCertsPage();
+          Portal.helpers.nav.goToSSLCertificates();
         });
 
         afterEach(function () {

@@ -40,7 +40,7 @@ describe('Functional', function () {
 
     beforeEach(function () {
       Portal.signIn(adminUser);
-      Portal.getDomainsPage();
+      Portal.helpers.nav.goToDomains();
       Portal.domains.listPage.searcher.setSearchCriteria(prefix);
     });
 

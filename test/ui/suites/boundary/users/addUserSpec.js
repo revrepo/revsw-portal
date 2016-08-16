@@ -27,7 +27,7 @@ describe('Boundary', function () {
     // NOTE: All test on one open form
     beforeAll(function () {
       Portal.signIn(adminUser);
-      Portal.goToUsers();
+      Portal.helpers.nav.goToUsers();
       Portal.userListPage.clickAddNewUser();
     });
 

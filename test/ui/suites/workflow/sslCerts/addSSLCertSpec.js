@@ -49,7 +49,7 @@ describe('Workflow', function () {
         });
 
         beforeEach(function () {
-            Portal.goToSslCert();
+            Portal.helpers.nav.goToSSLCertificates();
         });
 
         afterEach(function () {
@@ -62,7 +62,7 @@ describe('Workflow', function () {
                 var testSslCert = DataProvider.generateSSLCertData(sslCertData);
                 var testDomain = DataProvider.generateDomain('sslTestDomain');
                 Portal.createSSLCert(testSslCert);
-                Portal.goToDomains();
+                Portal.helpers.nav.goToDomains();
                 Portal.domains.listPage.clickAddNewDomain();
                 Portal.domains.addPage.createDomain(testDomain);
                 Portal.domains.addPage.clickBackToList();
@@ -73,7 +73,7 @@ describe('Workflow', function () {
                 Portal.domains.editPage.clickBackToList();
                 Portal.deleteDomain(testDomain);
 
-                Portal.goToSslCert();
+                Portal.helpers.nav.goToSSLCertificates();
                 Portal.deleteSSLCert(testSslCert);
             });          
           
@@ -82,7 +82,7 @@ describe('Workflow', function () {
                 var testSslCert = DataProvider.generateSSLCertData(sslCertData);
                 var testDomain = DataProvider.generateDomain('sslTestDomain');
                 Portal.createSSLCert(testSslCert);
-                Portal.goToDomains();
+                Portal.helpers.nav.goToDomains();
                 Portal.domains.listPage.clickAddNewDomain();
                 Portal.domains.addPage.createDomain(testDomain);
                 Portal.domains.addPage.clickBackToList();
@@ -97,7 +97,7 @@ describe('Workflow', function () {
                 Portal.domains.editPage.clickBackToList();
                 Portal.deleteDomain(testDomain);
 
-                Portal.goToSslCert();
+                Portal.helpers.nav.goToSSLCertificates();
                 Portal.deleteSSLCert(testSslCert);
             });
       });

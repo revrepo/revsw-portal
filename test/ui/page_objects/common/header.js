@@ -128,9 +128,8 @@ var Header = {
    *
    * Helper method that executes all required steps to go and click the
    * specified Portal App menu option from the header component.
-   *
+   * @deprecated
    * @param {String} menuOption, the option to click
-   *
    * @returns {Object} Promise
    */
   goTo: function (menuOption) {

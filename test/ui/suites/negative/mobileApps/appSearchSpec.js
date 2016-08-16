@@ -24,8 +24,8 @@ describe('Negative', function () {
 
     var user = config.get('portal.users.admin');
     var platforms = [
-      config.get('portal.mobileApps.platforms.ios'),
-      config.get('portal.mobileApps.platforms.android')
+      Portal.constants.mobileApps.platforms.ios,
+      Portal.constants.mobileApps.platforms.android
     ];
     platforms.forEach(function (platform) {
 
@@ -41,8 +41,7 @@ describe('Negative', function () {
         });
 
         beforeEach(function () {
-          Portal.goToMobileApps();
-          Portal.header.goTo(platform);
+          Portal.helpers.nav.goToMobileAppsMenuItem(platform);
         });
 
         afterEach(function () {

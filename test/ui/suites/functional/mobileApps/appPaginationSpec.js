@@ -28,8 +28,9 @@ describe('Functional', function () {
 
     var searchValue = 'qa-' + user.role.toLowerCase().replace(/\W/g, '-');
 
-    var iosApps = DataProvider.generateMobileAppData('iOS', 1);
-    var androidApps = DataProvider.generateMobileAppData('Android', 1);
+    var platforms = Portal.constants.mobileApps.platforms;
+    var iosApps = DataProvider.generateMobileAppData(platforms.ios, 1);
+    var androidApps = DataProvider.generateMobileAppData(platforms.android, 1);
     var apps = iosApps.concat(androidApps);
 
     apps.forEach(function (app) {
@@ -38,8 +39,7 @@ describe('Functional', function () {
 
         beforeAll(function () {
           Portal.signIn(user);
-          Portal.goToMobileApps();
-          Portal.header.goTo(app.platform);
+          Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
           Portal.mobileApps.listPage.setSearch(searchValue);
         });
 

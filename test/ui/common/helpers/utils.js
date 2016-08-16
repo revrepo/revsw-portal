@@ -45,6 +45,21 @@ var Utils = {
       baseUrl += basePath;
     }
     return baseUrl + '/';
+  },
+
+  /**
+   * TODO: Move this to a Class specific for handling Selenium WebDriver Element
+   * @param textInput, Selenium WebDriver Element
+   * @returns {Object} Promise
+   */
+  clearTextInput: function (textInput) {
+    return textInput
+      .getAttribute('value').then(function (text) {
+        var len = text.length;
+        var delChars = new Array(len + 1).join(protractor.Key.DELETE);
+        var backspaces = new Array(len + 1).join(protractor.Key.BACK_SPACE);
+        return textInput.sendKeys(delChars + backspaces);
+      });
   }
 };
 

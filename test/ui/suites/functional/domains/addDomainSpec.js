@@ -44,7 +44,7 @@ describe('Functional', function () {
 
     it('should create a domain and display a successful message',
       function () {
-        Portal.getDomainsPage();
+        Portal.helpers.nav.goToDomains();
         Portal.domains.listPage.clickAddNewDomain();
         Portal.domains.addPage.createDomain(myDomain);
 
@@ -55,7 +55,7 @@ describe('Functional', function () {
 
     // TODO: move the test to negative suite?
     it('should not create a domain with duplicate values', function () {
-      Portal.getDomainsPage();
+      Portal.helpers.nav.goToDomains();
       Portal.domains.listPage.clickAddNewDomain();
       Portal.domains.addPage.createDomain(myDomain);
 

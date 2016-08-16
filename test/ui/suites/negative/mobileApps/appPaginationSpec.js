@@ -25,8 +25,9 @@ describe('Negative', function () {
   describe('Apps Pagination', function () {
 
     var user = config.get('portal.users.admin');
-    var iosApps = DataProvider.generateMobileAppData('iOS', 1);
-    var androidApps = DataProvider.generateMobileAppData('Android', 1);
+    var platforms = Portal.constants.mobileApps.platforms;
+    var iosApps = DataProvider.generateMobileAppData(platforms.ios, 1);
+    var androidApps = DataProvider.generateMobileAppData(platforms.android, 1);
     var apps = iosApps.concat(androidApps);
 
     apps.forEach(function (app) {
@@ -42,8 +43,7 @@ describe('Negative', function () {
         });
 
         beforeEach(function () {
-          Portal.goToMobileApps();
-          Portal.header.goTo(app.platform);
+          Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
         });
 
         afterEach(function () {

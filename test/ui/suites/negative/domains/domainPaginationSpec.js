@@ -33,7 +33,7 @@ describe('Negative', function () {
     });
 
     beforeEach(function () {
-      Portal.getDomainsPage();
+      Portal.helpers.nav.goToDomains();
     });
 
     it('should not display pagination when there is not any domain to show',

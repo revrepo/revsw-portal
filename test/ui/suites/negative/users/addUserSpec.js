@@ -36,7 +36,7 @@ describe('Negative', function () {
 
     beforeEach(function () {
       Portal.signIn(adminUser);
-      Portal.goToUsers();
+      Portal.helpers.nav.goToUsers();
     });
 
     afterEach(function () {

@@ -26,8 +26,8 @@ describe('Boundary', function () {
 
     var user = config.get('portal.users.admin');
     var platforms = [
-      config.get('portal.mobileApps.platforms.ios'),
-      config.get('portal.mobileApps.platforms.android')
+      Portal.constants.mobileApps.platforms.ios,
+      Portal.constants.mobileApps.platforms.android
     ];
 
     platforms.forEach(function (platform) {
@@ -43,8 +43,7 @@ describe('Boundary', function () {
         });
 
         beforeEach(function () {
-          Portal.goToMobileApps();
-          Portal.header.goTo(platform);
+          Portal.helpers.nav.goToMobileAppsMenuItem(platform);
           Portal.mobileApps.listPage.searcher.clearSearchCriteria();
         });
 
@@ -59,7 +58,7 @@ describe('Boundary', function () {
             app.name = longString;
 
             Portal.mobileApps.listPage.addNew(app);
-            Portal.header.goTo(platform);
+            Portal.helpers.nav.goToMobileAppsMenuItem(platform);
             var countApps = Portal.mobileApps.listPage.findApp(app);
             expect(countApps).toBe(1);
 
@@ -80,8 +79,7 @@ describe('Boundary', function () {
 
         xit('should search text field accept special characters',
           function () {
-            Portal.goToMobileApps();
-            Portal.header.goTo(platform);
+            Portal.helpers.nav.goToMobileAppsMenuItem(platform);
 
             var app = {
               name: '& ^ $ @ # % ( ) _ +  / \\ ~ ` , . ; :'

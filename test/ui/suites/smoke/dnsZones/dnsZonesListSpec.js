@@ -45,7 +45,7 @@ describe('Smoke', function () {
         });
 
         beforeEach(function () {
-          Portal.goToDNSZones();
+          Portal.helpers.nav.goToDNSZones();
         });
 
         it('should be displayed when clicking "DNS Zones" from sidebar',

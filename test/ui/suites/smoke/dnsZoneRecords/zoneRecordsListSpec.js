@@ -55,7 +55,7 @@ describe('Smoke', function () {
 
         it('should be displayed when clicking "Manage Records" button on DNS Zone entity',
           function () {
-            Portal.goToDNSZones();
+            Portal.helpers.nav.goToDNSZones();
             var zone = DataProvider.generateDNSZoneData();
             Portal.createDNSZone(zone);
 
@@ -71,7 +71,7 @@ describe('Smoke', function () {
         it('should be displayed when "Back to list" button is clicked from ' +
           '"Add Zone Record" page',
           function () {
-            Portal.goToDNSZones();
+            Portal.helpers.nav.goToDNSZones();
             var zone = DataProvider.generateDNSZoneData();
             Portal.createDNSZone(zone);
 
@@ -90,7 +90,7 @@ describe('Smoke', function () {
         it('should be displayed when "Cancel" button is clicked from ' +
           '"Add DNS Zone Record" page',
           function () {
-            Portal.goToDNSZones();
+            Portal.helpers.nav.goToDNSZones();
             var zone = DataProvider.generateDNSZoneData();
             Portal.createDNSZone(zone);
 

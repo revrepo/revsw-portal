@@ -44,7 +44,7 @@ describe('Smoke', function () {
                 });
 
                 beforeEach(function () {
-                    Portal.goToLogShipping();
+                    Portal.helpers.nav.goToLogShipping();
                 });
 
                 it('should be displayed when displaying Log Shipping List page',

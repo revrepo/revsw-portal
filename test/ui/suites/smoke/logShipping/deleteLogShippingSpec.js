@@ -47,7 +47,7 @@ describe('Smoke', function () {
 
                 beforeAll(function () {
                     Portal.signIn(user);
-                    Portal.goToLogShipping();
+                    Portal.helpers.nav.goToLogShipping();
                 });
 
                 afterAll(function () {

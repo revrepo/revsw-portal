@@ -25,13 +25,14 @@ describe('Negative', function () {
   describe('Sorting List App', function () {
 
     var adminUser = config.get('portal.users.admin');
-    var iosApps = DataProvider.generateMobileAppData('iOS', 3);
-    var androidApps = DataProvider.generateMobileAppData('Android', 3);
+    var platforms = Portal.constants.mobileApps.platforms;
+    var iosApps = DataProvider.generateMobileAppData(platforms.ios, 3);
+    var androidApps = DataProvider.generateMobileAppData(platforms.android, 3);
 
     beforeAll(function () {
       Portal.signIn(adminUser);
-      Portal.createMobileApps('iOS', iosApps);
-      Portal.createMobileApps('Android', androidApps);
+      Portal.createMobileApps(platforms.ios, iosApps);
+      Portal.createMobileApps(platforms.android, androidApps);
     });
 
     afterAll(function () {
@@ -47,18 +48,17 @@ describe('Negative', function () {
     });
 
     it('should sorted list apps ascendent and descendant - iOS', function () {
-      Portal.goToMobileApps();
-      Portal.header.goTo('iOS');
+      Portal.helpers.nav.goToMobileAppsMenuItem(platforms.ios);
       var totalRows = Portal.mobileApps.listPage.table.countTotalRows();
       Portal.mobileApps.listPage.setSearch('Something weird');
       Portal.mobileApps.listPage.table.sortByName();
       var appsCount1 = Portal.mobileApps.listPage.table.countTotalRows();
 
-      Portal.header.goTo('iOS');
+      Portal.helpers.nav.goToMobileAppsMenuItem(platforms.ios);
       Portal.mobileApps.listPage.table.sortByName();
       var appsCount2 = Portal.mobileApps.listPage.table.countTotalRows();
 
-      Portal.header.goTo('iOS');
+      Portal.helpers.nav.goToMobileAppsMenuItem(platforms.ios);
       Portal.mobileApps.listPage.setSearch(' ');
       Portal.mobileApps.listPage.table.sortByName();
       var appsCount3 = Portal.mobileApps.listPage.table.countTotalRows();
@@ -69,18 +69,17 @@ describe('Negative', function () {
     });
 
     it('should sorted list apps ascendent & descendant - Android', function () {
-      Portal.goToMobileApps();
-      Portal.header.goTo('Android');
+      Portal.helpers.nav.goToMobileAppsMenuItem(platforms.android);
       var totalRows = Portal.mobileApps.listPage.table.countTotalRows();
       Portal.mobileApps.listPage.setSearch('Something weird');
       Portal.mobileApps.listPage.table.sortByName();
       var appsCount1 = Portal.mobileApps.listPage.table.countTotalRows();
 
-      Portal.header.goTo('Android');
+      Portal.helpers.nav.goToMobileAppsMenuItem(platforms.android);
       Portal.mobileApps.listPage.table.sortByName();
       var appsCount2 = Portal.mobileApps.listPage.table.countTotalRows();
 
-      Portal.header.goTo('Android');
+      Portal.helpers.nav.goToMobileAppsMenuItem(platforms.android);
       Portal.mobileApps.listPage.setSearch(' ');
       Portal.mobileApps.listPage.table.sortByName();
       var appsCount3 = Portal.mobileApps.listPage.table.countTotalRows();

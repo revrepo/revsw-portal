@@ -39,7 +39,7 @@ describe('Boundary', function () {
     });
 
     beforeEach(function () {
-      Portal.header.goTo(Constants.header.appMenu.WEB);
+      Portal.helpers.nav.goToDomains();
     });
 
     afterEach(function () {

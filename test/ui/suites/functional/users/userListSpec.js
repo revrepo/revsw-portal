@@ -35,7 +35,7 @@ describe('Functional', function () {
     });
 
     beforeEach(function () {
-      Portal.goToUsers();
+      Portal.helpers.nav.goToUsers();
     });
 
     it('should display N items maximum in the page (25 items by default)',

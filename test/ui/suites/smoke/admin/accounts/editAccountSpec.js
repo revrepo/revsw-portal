@@ -39,7 +39,7 @@ describe('Smoke', function () {  // jshint ignore:line
     });
 
     beforeEach(function () {
-      Portal.header.goTo(Constants.sideBar.admin.ACCOUNTS);
+      Portal.helpers.nav.goToAccounts();
     });
 
     afterEach(function () {
@@ -56,7 +56,7 @@ describe('Smoke', function () {  // jshint ignore:line
           .updateAccountProfile(accountProfile, billingContact);
         Portal.dialog.clickOk();
 
-        Portal.header.goTo(Constants.sideBar.admin.ACCOUNTS);
+        Portal.helpers.nav.goToAccounts();
         Portal.admin.accounts.listPage.searcher.clearSearchCriteria();
         Portal.admin.accounts.listPage.searcher.setSearchCriteria(account2);
         var allRows = Portal.admin.accounts.listPage.table.getRows();

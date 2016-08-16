@@ -30,9 +30,9 @@ describe('Smoke', function () {
     config.get('portal.users.revAdmin')
   ];
   var platforms = [
-    config.get('portal.mobileApps.platforms.ios'),
-    config.get('portal.mobileApps.platforms.android'),
-    config.get('portal.mobileApps.platforms.windows_mobile').replace('_', ' ')
+    Portal.constants.mobileApps.platforms.ios,
+    Portal.constants.mobileApps.platforms.android,
+    Portal.constants.mobileApps.platforms.windowsMobile
   ];
 
   users.forEach(function (user) {
@@ -42,7 +42,6 @@ describe('Smoke', function () {
 
         beforeAll(function () {
           Portal.signIn(user);
-          Portal.goToMobileApps();
         });
 
         afterAll(function () {
@@ -54,7 +53,7 @@ describe('Smoke', function () {
           describe('Platform: ' + platform, function () {
 
             beforeEach(function () {
-              Portal.header.goTo(platform);
+              Portal.helpers.nav.goToMobileAppsMenuItem(platform);
             });
 
             afterEach(function () {
