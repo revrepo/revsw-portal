@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
 
   angular
@@ -15,6 +15,15 @@
           layout: {
             controller: 'LoginController',
             templateUrl: 'parts/auth/login.html'
+          }
+        }
+      })
+      .state('azure-sso', {
+        url: '/azure-sso?:token',
+        views: {
+          layout: {
+            controller: 'AzureSSOController as $ctrl',
+            templateUrl: 'parts/auth/azure-sso/azure-sso.tpl.html'
           }
         }
       })
