@@ -28,8 +28,7 @@ describe('Smoke', function () {
 
     beforeAll(function () {
       Portal.signIn(adminUser);
-      Portal.header.goTo(Constants.header.appMenu.WEB_ANALYTICS);
-      Portal.header.goTo(Constants.sideBar.analytics.RTT_HEATMAPS);
+      Portal.helpers.nav.goToWARTTHeatmaps();
     });
 
     afterAll(function () {

@@ -26,7 +26,7 @@ describe('Functional', function () {
 
     beforeAll(function () {
       Portal.signIn(adminUser);
-      Portal.getDomainsPage();
+      Portal.helpers.nav.goToDomains();
     });
 
     afterAll(function () {

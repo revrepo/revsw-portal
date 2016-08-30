@@ -34,8 +34,8 @@ describe('Smoke', function () {
     });
 
     beforeEach(function () {
-      Portal.getAdminPage();
-      Portal.header.goTo(Constants.sideBar.admin.ACCOUNTS);
+      Portal.helpers.nav.goToAccounts();
+      Portal.admin.accounts.listPage.pager.clickPageIndex(1);
     });
 
     afterEach(function () {

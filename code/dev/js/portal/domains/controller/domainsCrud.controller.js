@@ -566,7 +566,7 @@
       if (isChacheStatic === true) {
         _newCachingRule.url = {
           is_wildcard: false,
-          value: '\.(jpg|jpeg|png|gif|webp|js|css|woff|woff2)(\?.*)?$'
+          value: '\\.(jpg|jpeg|png|gif|webp|js|css|woff|woff2|mp4|swf|avi|mpeg|mov)(\\?.*)?$'
         };
         angular.extend(_newCachingRule.edge_caching, {
           new_ttl: 604800,

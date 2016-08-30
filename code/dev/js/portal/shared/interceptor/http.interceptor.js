@@ -52,7 +52,7 @@
       'request': function(config) {
         // NOTE: change default timeoute for requests
         if (config.method === 'POST' || config.method === 'PUT') {
-          config.timeout = $window.resourcePostPutTimeout || 60000;
+          config.timeout = window.resourcePostPutTimeout || 60000;
         }
         return config;
       }

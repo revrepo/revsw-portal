@@ -34,7 +34,7 @@ describe('Functional', function () {
     });
 
     beforeEach(function () {
-      Portal.goToDomains();
+      Portal.helpers.nav.goToDomains();
     });
 
     it('should display domain with a Staging Status',

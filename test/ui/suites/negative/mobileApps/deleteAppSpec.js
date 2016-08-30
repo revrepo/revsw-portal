@@ -25,14 +25,15 @@ describe('Negative', function () {
   describe('Delete App', function () {
 
     var adminUser = config.get('portal.users.admin');
-    var iosApps = DataProvider.generateMobileAppData('iOS', 1);
-    var androidApps = DataProvider.generateMobileAppData('Android', 1);
+    var platforms = Portal.constants.mobileApps.platforms;
+    var iosApps = DataProvider.generateMobileAppData(platforms.ios, 1);
+    var androidApps = DataProvider.generateMobileAppData(platforms.android, 1);
     var apps = iosApps.concat(androidApps);
 
     beforeAll(function () {
       Portal.signIn(adminUser);
-      Portal.createMobileApps('iOS', iosApps);
-      Portal.createMobileApps('Android', androidApps);
+      Portal.createMobileApps(platforms.ios, iosApps);
+      Portal.createMobileApps(platforms.android, androidApps);
     });
 
     afterAll(function () {
@@ -48,8 +49,7 @@ describe('Negative', function () {
     apps.forEach(function (app) {
       it('should cancel when try to delete delete an app - ' + app.platform,
         function () {
-          Portal.goToMobileApps();
-          Portal.header.goTo(app.platform);
+          Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
 
           Portal.mobileApps.listPage.searchAndDelete(app);
           Portal.dialog.clickCancel();

@@ -25,14 +25,15 @@ describe('Functional', function () {
   describe('Add New App', function () {
 
     var adminUser = config.get('portal.users.admin');
-    var iosApps = DataProvider.generateMobileAppData('iOS', 1);
-    var androidApps = DataProvider.generateMobileAppData('Android', 1);
-    var windowsMobileApps = DataProvider.generateMobileAppData('Windows_Mobile', 1);
+    var platforms = Portal.constants.mobileApps.platforms;
+    var iosApps = DataProvider.generateMobileAppData(platforms.ios, 1);
+    var androidApps = DataProvider.generateMobileAppData(platforms.android, 1);
+    var windowsMobileApps = DataProvider
+      .generateMobileAppData(platforms.windowsMobile, 1);
     var apps = iosApps.concat(androidApps).concat(windowsMobileApps);
 
     beforeAll(function () {
       Portal.signIn(adminUser);
-      Portal.goToMobileApps();
     });
 
     afterAll(function () {
@@ -46,25 +47,27 @@ describe('Functional', function () {
     afterEach(function () {
     });
 
-    apps.forEach(function (app){
-      it('should get title from list app page - ' + app.platform, function() {
-          Portal.header.goTo(app.platform);
+    apps.forEach(function (app) {
+      it('should get title from list app page - ' + app.platform,
+        function () {
+          Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
           var title = Portal.mobileApps.listPage.getTitle();
           expect(title).toEqual(app.title);
-      });
+        });
 
-      it('should add a new app - ' + app.platform, function () {
-        Portal.header.goTo(app.platform);
-        Portal.mobileApps.listPage.addNew(app);
+      it('should add a new app - ' + app.platform,
+        function () {
+          Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
+          Portal.mobileApps.listPage.addNew(app);
 
-        var alert = Portal.alerts.getFirst();
-        var expectedMsg = Constants.alertMessages.app.MSG_SUCCESS_ADD;
-        expect(alert.getText()).toContain(expectedMsg);
+          var alert = Portal.alerts.getFirst();
+          var expectedMsg = Constants.alertMessages.app.MSG_SUCCESS_ADD;
+          expect(alert.getText()).toContain(expectedMsg);
 
-        Portal.header.goTo(app.platform);
-        var findApp = Portal.mobileApps.listPage.findApp(app);
-        expect(findApp).toBe(1);
-      });
+          Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
+          var findApp = Portal.mobileApps.listPage.findApp(app);
+          expect(findApp).toBe(1);
+        });
     });
   });
 });

@@ -36,7 +36,7 @@ users.forEach(function (user) {
 
             beforeAll(function () {
                 Portal.signIn(user);
-                Portal.goToStagingEnv();
+                Portal.helpers.nav.goToStagingEnvironment();
             });
 
             afterAll(function () {

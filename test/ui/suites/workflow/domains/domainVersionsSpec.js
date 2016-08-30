@@ -47,7 +47,7 @@ describe('Workflow', function () {
                 });
 
                 beforeEach(function () {
-                    Portal.goToDomains();
+                    Portal.helpers.nav.goToDomains();
                 });
 
                 it('should the Version "0" message appears for modified domain',
@@ -73,7 +73,7 @@ describe('Workflow', function () {
                         expect(Portal.domains.versionsPage.getDomainConfigVersionWarning()
                             .getText()).toBe(message);
 
-                        Portal.goToDomains();
+                        Portal.helpers.nav.goToDomains();
                         Portal.deleteDomain(testDomain);
                     });
 
@@ -105,7 +105,7 @@ describe('Workflow', function () {
                             });
                         });
 
-                        Portal.goToDomains();
+                        Portal.helpers.nav.goToDomains();
                         Portal.deleteDomain(testDomain);
                     });
 
@@ -139,7 +139,7 @@ describe('Workflow', function () {
                         });
                     });
 
-                    Portal.goToDomains();
+                    Portal.helpers.nav.goToDomains();
                     Portal.deleteDomain(testDomain);
                 });
 
@@ -170,7 +170,7 @@ describe('Workflow', function () {
                         });
                     });
 
-                    Portal.goToDomains();
+                    Portal.helpers.nav.goToDomains();
 
                     Portal.domains.listPage.searchAndClickEdit(testDomain.name);
                     Portal.domains.editPage.clickPublishDomain();
@@ -194,7 +194,7 @@ describe('Workflow', function () {
                         expect(item.isPresent()).toBeFalsy();
                     });
 
-                    Portal.goToDomains();
+                    Portal.helpers.nav.goToDomains();
                     Portal.deleteDomain(testDomain);
                 });
 
@@ -229,7 +229,7 @@ describe('Workflow', function () {
                     expect(newVersionOrigHostHeader)
                         .toBe('origin_host_header: "' + testDomain.originHostHeader +'.upd"');
 
-                    Portal.goToDomains();
+                    Portal.helpers.nav.goToDomains();
                     Portal.deleteDomain(testDomain);
                 });
             });

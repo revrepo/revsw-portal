@@ -46,7 +46,7 @@ xdescribe('Smoke', function () {    //TODO: Since we need more than 25 items
                 });
 
                 beforeEach(function () {
-                    Portal.goToSSLNames();
+                    Portal.helpers.nav.goToSSLNames();
                 });
 
                 it('should be displayed when displaying SSL Certs List page',

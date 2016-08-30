@@ -46,7 +46,7 @@ describe('Smoke', function () {
         });
 
         beforeEach(function () {
-          Portal.getApiKeysPage();
+          Portal.helpers.nav.goToAPIKeys();
         });
 
         afterEach(function () {
@@ -62,7 +62,7 @@ describe('Smoke', function () {
         it('should filter API Key according to criteria filled in Search field',
           function () {
             Portal.createApiKey(keyData);
-            Portal.getApiKeysPage();
+            Portal.helpers.nav.goToAPIKeys();
             Portal.admin.apiKeys.listPage.searcher.clearSearchCriteria();
             Portal.admin.apiKeys.listPage.searcher
               .setSearchCriteria(keyData.name);

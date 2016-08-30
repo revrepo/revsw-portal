@@ -46,7 +46,7 @@ describe('Workflow', function () {
 
     beforeEach(function () {
       Portal.signIn(adminUser);
-      Portal.goToUsers();
+      Portal.helpers.nav.goToUsers();
     });
 
     afterEach(function () {
@@ -104,7 +104,7 @@ describe('Workflow', function () {
       Portal.signOut();
       // Check new user is visible to other admin
       Portal.signIn(adminUser);
-      Portal.goToUsers();
+      Portal.helpers.nav.goToUsers();
       Portal.userListPage.searcher.setSearchCriteria(andrew.email);
       var newTotalRows = Portal.userListPage.table.getRows().count();
       expect(newTotalRows).toEqual(1);
@@ -121,7 +121,7 @@ describe('Workflow', function () {
       // Check new user is visible to other admin
       Portal.signIn(adminUser);
       Portal.deleteUser(bruce);
-      Portal.goToUsers();
+      Portal.helpers.nav.goToUsers();
       Portal.userListPage.searcher.setSearchCriteria(bruce.email);
       var newTotalRows = Portal.userListPage.table.getRows().count();
       expect(newTotalRows).toEqual(0);
@@ -136,7 +136,7 @@ describe('Workflow', function () {
       Portal.signOut();
       // Check new user is visible to other admin
       Portal.signIn(adminUser);
-      Portal.goToUsers();
+      Portal.helpers.nav.goToUsers();
       Portal.userListPage.searchAndClickEdit(steve.email);
       Portal.editUserPage.updateUser({firstName: 'updated'});
       Portal.editUserPage.clickBackToList();
@@ -163,13 +163,13 @@ describe('Workflow', function () {
       function () {
         var oldPassword = adminUser.password;
         var newPassword = 'pwd123456';
-        Portal.goToUpdatePassword();
+        Portal.helpers.nav.goToUpdatePassword();
         Portal.updatePasswordPage.update(adminUser.password, newPassword);
         Portal.signOut();
         Portal.signIn({email: adminUser.email, password: newPassword});
         var userInfoEl = Portal.header.getUserInfoEl();
         expect(userInfoEl.isDisplayed()).toBeTruthy();
-        Portal.getUpdatePasswordPage();
+        Portal.helpers.nav.goToUpdatePassword();
         Portal.updatePasswordPage.update(newPassword, oldPassword);
       });
   });

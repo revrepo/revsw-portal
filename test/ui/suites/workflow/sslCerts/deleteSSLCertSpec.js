@@ -46,7 +46,7 @@ describe('Workflow', function () {
                 });
 
                 beforeEach(function () {
-                    Portal.goToSslCert();
+                    Portal.helpers.nav.goToSSLCertificates();
                 });
 
                 afterEach(function () {
@@ -58,7 +58,7 @@ describe('Workflow', function () {
 
                         var testDomain = DataProvider.generateDomain('sslTestDomain');
                         Portal.createSSLCert(testSslCert);
-                        Portal.goToDomains();
+                        Portal.helpers.nav.goToDomains();
                         Portal.domains.listPage.clickAddNewDomain();
                         Portal.domains.addPage.createDomain(testDomain);
                         Portal.domains.addPage.clickBackToList();
@@ -67,7 +67,7 @@ describe('Workflow', function () {
                         Portal.domains.editPage.clickUpdateDomain();
                         Portal.dialog.clickOk();
                         Portal.domains.editPage.clickBackToList();
-                        Portal.goToSslCert();
+                        Portal.helpers.nav.goToSSLCertificates();
                         Portal.deleteSSLCert(testSslCert);
                         var alert = Portal.alerts.getFirst();
                         var expectedMsg = Constants.alertMessages.sslCerts.MSG_FAIL_DELETE;
@@ -80,7 +80,7 @@ describe('Workflow', function () {
 
                         var testDomain = DataProvider.generateDomain('sslTestDomain');
                         Portal.createSSLCert(testSslCert);
-                        Portal.goToDomains();
+                        Portal.helpers.nav.goToDomains();
                         Portal.domains.listPage.clickAddNewDomain();
                         Portal.domains.addPage.createDomain(testDomain);
                         Portal.domains.addPage.clickBackToList();
@@ -90,7 +90,7 @@ describe('Workflow', function () {
                         Portal.dialog.clickOk();
                         Portal.domains.editPage.clickBackToList();
                         Portal.deleteDomain(testDomain);
-                        Portal.goToSslCert();
+                        Portal.helpers.nav.goToSSLCertificates();
                         Portal.deleteSSLCert(testSslCert);
                         Portal.sslCerts.listPage.searcher.setSearchCriteria(testSslCert.name);
                         var tableRows = Portal.sslCerts.listPage.table.getRows();

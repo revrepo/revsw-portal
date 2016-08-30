@@ -43,7 +43,7 @@ describe('Smoke', function () {
 
     it('should display delete API Key button', function () {
       Portal.signIn(userAdmin);
-      Portal.getApiKeysPage();
+      Portal.helpers.nav.goToAPIKeys();
       var deleteButton = Portal.admin.apiKeys.listPage.table
         .getFirstRow()
         .getDeleteBtn();
@@ -55,7 +55,7 @@ describe('Smoke', function () {
       var apiKey = DataProvider.generateApiKeyData('API-Key-Delete');
       Portal.signIn(userAdmin);
       Portal.createApiKey(apiKey);
-      Portal.getApiKeysPage();
+      Portal.helpers.nav.goToAPIKeys();
       Portal.admin.apiKeys.listPage.searchAndClickDelete(apiKey.name);
       Portal.dialog.clickOk();
       Portal.admin.apiKeys.listPage.searcher.setSearchCriteria(apiKey.name);
@@ -72,7 +72,7 @@ describe('Smoke', function () {
       var account = 'API QA Reseller Company';
       Portal.createApiKey(apiKey, isAdminUser, account);
 
-      Portal.getApiKeysPage();
+      Portal.helpers.nav.goToAPIKeys();
       Portal.admin.apiKeys.listPage.searchAndClickDelete(apiKey.name);
       Portal.dialog.clickOk();
       Portal.admin.apiKeys.listPage.searcher.setSearchCriteria(apiKey.name);
@@ -87,7 +87,7 @@ describe('Smoke', function () {
       Portal.signIn(userAdmin);
       Portal.createApiKey(apiKey);
       
-      Portal.getApiKeysPage();
+      Portal.helpers.nav.goToAPIKeys();
       Portal.admin.apiKeys.listPage.searcher.setSearchCriteria(apiKey.name);
       Portal.admin.apiKeys.listPage.table.getFirstRow().clickDelete();
       expect(Portal.dialog.isDisplayed()).toBeTruthy();

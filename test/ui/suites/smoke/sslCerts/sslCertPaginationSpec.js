@@ -41,7 +41,7 @@ describe('Smoke', function () {
         });
 
         beforeEach(function () {
-          Portal.getSSLCertsPage();
+          Portal.helpers.nav.goToSSLCertificates();
         });
 
         it('should be displayed when displaying SSL Certs List page',

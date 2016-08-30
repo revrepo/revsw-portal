@@ -34,7 +34,7 @@ describe('Boundary', function () {
     });
 
     beforeEach(function () {
-      Portal.goToUsers();
+      Portal.helpers.nav.goToUsers();
     });
 
     it('should not update the password when it is less than 8 chars length.',
@@ -44,7 +44,7 @@ describe('Boundary', function () {
         Portal.createUser(bret);
         Portal.signOut();
         Portal.signIn(bret);
-        Portal.goToUpdatePassword();
+        Portal.helpers.nav.goToUpdatePassword();
         Portal.updatePasswordPage.setCurrentPassword(bret.password);
         Portal.updatePasswordPage.setNewPassword(newPassword);
         Portal.updatePasswordPage.setPasswordConfirm(newPassword);
@@ -64,7 +64,7 @@ describe('Boundary', function () {
         Portal.createUser(bruno);
         Portal.signOut();
         Portal.signIn(bruno);
-        Portal.goToUpdatePassword();
+        Portal.helpers.nav.goToUpdatePassword();
         Portal.updatePasswordPage.setCurrentPassword(bruno.password);
         Portal.updatePasswordPage.setNewPassword(newPassword);
         Portal.updatePasswordPage.setPasswordConfirm(newPassword);
@@ -83,7 +83,7 @@ describe('Boundary', function () {
         Portal.createUser(carol);
         Portal.signOut();
         Portal.signIn(carol);
-        Portal.goToUpdatePassword();
+        Portal.helpers.nav.goToUpdatePassword();
         Portal.updatePasswordPage.setCurrentPassword(carol.password);
         Portal.updatePasswordPage.setNewPassword(newPassword);
         Portal.updatePasswordPage.setPasswordConfirm(newPassword);

@@ -44,7 +44,7 @@ describe('Smoke', function () {
         });
 
         beforeEach(function () {
-          Portal.getDomainsPage();
+          Portal.helpers.nav.goToDomains();
         });
 
         it('should be displayed when clicking "Versions" icon for specific ' +

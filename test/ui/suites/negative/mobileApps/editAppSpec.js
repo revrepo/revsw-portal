@@ -25,14 +25,15 @@ describe('Negative', function () {
   describe('Basic Edit App', function () {
 
     var adminUser = config.get('portal.users.admin');
-    var iosApps = DataProvider.generateMobileAppData('iOS', 1);
-    var androidApps = DataProvider.generateMobileAppData('Android', 1);
+    var platforms = Portal.constants.mobileApps.platforms;
+    var iosApps = DataProvider.generateMobileAppData(platforms.ios, 1);
+    var androidApps = DataProvider.generateMobileAppData(platforms.android, 1);
     var apps = iosApps.concat(androidApps);
 
     beforeAll(function () {
       Portal.signIn(adminUser);
-      Portal.createMobileApps('iOS', iosApps);
-      Portal.createMobileApps('Android', androidApps);
+      Portal.createMobileApps(platforms.ios, iosApps);
+      Portal.createMobileApps(platforms.android, androidApps);
     });
 
     afterAll(function () {
@@ -52,8 +53,7 @@ describe('Negative', function () {
           'set to empty characters - ' +
           app.platform,
           function () {
-            Portal.goToMobileApps();
-            Portal.header.goTo(app.platform);
+            Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
             Portal.mobileApps.listPage.searchAndEdit(app);
             var tempAppName = app.name;
             app.name = ' ';
@@ -66,8 +66,7 @@ describe('Negative', function () {
           'set to empty characters - ' +
           app.platform,
           function () {
-            Portal.goToMobileApps();
-            Portal.header.goTo(app.platform);
+            Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
             Portal.mobileApps.listPage.searchAndEdit(app);
             var tempAppName = app.name;
             app.name = ' ';
@@ -80,8 +79,7 @@ describe('Negative', function () {
           'set to empty characters - ' +
           app.platform,
           function () {
-            Portal.goToMobileApps();
-            Portal.header.goTo(app.platform);
+            Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
             Portal.mobileApps.listPage.searchAndEdit(app);
             var tempAppName = app.name;
             app.name = ' ';

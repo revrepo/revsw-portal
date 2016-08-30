@@ -29,7 +29,7 @@ describe('Functional', function () {
 
     beforeAll(function () {
       Portal.signIn(adminUser);
-      Portal.header.goTo(Constants.header.appMenu.HELP_SUPPORT);
+      Portal.helpers.nav.goToAPIDocumentation();
     });
 
     afterAll(function () {

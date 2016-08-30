@@ -45,7 +45,7 @@ describe('Boundary', function () {
       function () {
         var myDomain = DataProvider.generateDomain('mydomain');
         myDomain.name = lengthString100;
-        Portal.getDomainsPage();
+        Portal.helpers.nav.goToDomains();
         Portal.domains.listPage.clickAddNewDomain();
         Portal.domains.addPage.fillForm(myDomain);
         var addBtn = Portal.domains.addPage.getCreateDomainBtn();
@@ -56,7 +56,7 @@ describe('Boundary', function () {
       function () {
         var myDomain = DataProvider.generateDomain('mydomain2');
         myDomain.originServer = lengthString100;
-        Portal.getDomainsPage();
+        Portal.helpers.nav.goToDomains();
         Portal.domains.listPage.clickAddNewDomain();
         Portal.domains.addPage.fillForm(myDomain);
         var addBtn = Portal.domains.addPage.getCreateDomainBtn();
@@ -67,7 +67,7 @@ describe('Boundary', function () {
       function () {
         var myDomain = DataProvider.generateDomain('mydomain');
         myDomain.originHostHeader = lengthString100;
-        Portal.getDomainsPage();
+        Portal.helpers.nav.goToDomains();
         Portal.domains.listPage.clickAddNewDomain();
         Portal.domains.addPage.fillForm(myDomain);
         var addBtn = Portal.domains.addPage.getCreateDomainBtn();

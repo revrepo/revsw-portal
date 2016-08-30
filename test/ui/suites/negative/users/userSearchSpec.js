@@ -33,7 +33,7 @@ describe('Negative', function () {
     });
 
     beforeEach(function () {
-      Portal.getUsersPage();
+      Portal.helpers.nav.goToUsers();
     });
 
     it('should not apply filters when typing spaces in "Search" field',

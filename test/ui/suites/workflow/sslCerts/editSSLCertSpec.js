@@ -46,7 +46,7 @@ describe('Workflow', function () {
                 });
 
                 beforeEach(function () {
-                    Portal.goToSslCert();
+                    Portal.helpers.nav.goToSSLCertificates();
                 });
 
                 afterEach(function () {
@@ -58,7 +58,7 @@ describe('Workflow', function () {
 
                         var testDomain = DataProvider.generateDomain('sslTestDomain');
                         Portal.createSSLCert(testSslCert);
-                        Portal.goToDomains();
+                        Portal.helpers.nav.goToDomains();
                         Portal.domains.listPage.clickAddNewDomain();
                         Portal.domains.addPage.createDomain(testDomain);
                         Portal.domains.addPage.clickBackToList();
@@ -66,7 +66,7 @@ describe('Workflow', function () {
                         Portal.domains.editPage.form.setSslCert(testSslCert.name);
                         Portal.domains.editPage.clickUpdateDomain();
                         Portal.dialog.clickOk();
-                        Portal.goToSslCert();
+                        Portal.helpers.nav.goToSSLCertificates();
                         Portal.sslCerts.listPage.searcher.setSearchCriteria(testSslCert.name);
                         Portal.sslCerts.listPage.table
                             .getFirstRow()
@@ -76,14 +76,14 @@ describe('Workflow', function () {
                         Portal.sslCerts.editPage.clickUpdate();
                         Portal.dialog.clickOk();
                         var updatedCertName = Portal.sslCerts.editPage.form.getCertName();
-                        Portal.goToSslCert();
+                        Portal.helpers.nav.goToSSLCertificates();
                         Portal.sslCerts.listPage.searcher.clearSearchCriteria();
                         Portal.sslCerts.listPage.searcher.setSearchCriteria(updatedCertName);
                         var tableRows = Portal.sslCerts.listPage.table.getRows();
                         expect(tableRows.count()).toEqual(1);
-                        Portal.goToDomains();
+                        Portal.helpers.nav.goToDomains();
                         Portal.deleteDomain(testDomain);
-                        Portal.goToSslCert();
+                        Portal.helpers.nav.goToSSLCertificates();
                         Portal.deleteSSLCert(testSslCert);
                     });
 
@@ -93,7 +93,7 @@ describe('Workflow', function () {
 
                         var testDomain = DataProvider.generateDomain('sslTestDomain');
                         Portal.createSSLCert(testSslCert);
-                        Portal.goToDomains();
+                        Portal.helpers.nav.goToDomains();
                         Portal.domains.listPage.clickAddNewDomain();
                         Portal.domains.addPage.createDomain(testDomain);
                         Portal.domains.addPage.clickBackToList();
@@ -101,7 +101,7 @@ describe('Workflow', function () {
                         Portal.domains.editPage.form.setSslCert(testSslCert.name);
                         Portal.domains.editPage.clickUpdateDomain();
                         Portal.dialog.clickOk();
-                        Portal.goToSslCert();
+                        Portal.helpers.nav.goToSSLCertificates();
                         Portal.sslCerts.listPage.searcher.setSearchCriteria(testSslCert.name);
                         Portal.sslCerts.listPage.table
                             .getFirstRow()
@@ -110,13 +110,13 @@ describe('Workflow', function () {
                         Portal.sslCerts.editPage.form.setAccount(changedAccName);
                         Portal.sslCerts.editPage.clickUpdate();
                         Portal.dialog.clickOk();
-                        Portal.goToDomains();
+                        Portal.helpers.nav.goToDomains();
                         Portal.domains.listPage.searchAndClickEdit(testDomain.name);
                         var sslCertText = Portal.domains.editPage.form.getSslCert();
                         expect(sslCertText).toEqual('Default RevAPM SSL Certificate');
                         Portal.domains.editPage.clickBackToList();
                         Portal.deleteDomain(testDomain);
-                        Portal.goToSslCert();
+                        Portal.helpers.nav.goToSSLCertificates();
                         Portal.deleteSSLCert(testSslCert);
                     });
 
@@ -126,7 +126,7 @@ describe('Workflow', function () {
 
                         var testDomain = DataProvider.generateDomain('sslTestDomain');
                         Portal.createSSLCert(testSslCert);
-                        Portal.goToDomains();
+                        Portal.helpers.nav.goToDomains();
                         Portal.domains.listPage.clickAddNewDomain();
                         Portal.domains.addPage.createDomain(testDomain);
                         Portal.domains.addPage.clickBackToList();
@@ -134,7 +134,7 @@ describe('Workflow', function () {
                         Portal.domains.editPage.form.setSslCert(testSslCert.name);
                         Portal.domains.editPage.clickUpdateDomain();
                         Portal.dialog.clickOk();
-                        Portal.goToSslCert();
+                        Portal.helpers.nav.goToSSLCertificates();
                         Portal.sslCerts.listPage.searcher.setSearchCriteria(testSslCert.name);
                         Portal.sslCerts.listPage.table
                             .getFirstRow()
@@ -144,13 +144,13 @@ describe('Workflow', function () {
                         Portal.sslCerts.editPage.clickUpdate();
                         Portal.dialog.clickOk();
                         var updatedCertName = Portal.sslCerts.editPage.form.getCertName();
-                        Portal.goToDomains();
+                        Portal.helpers.nav.goToDomains();
                         Portal.domains.listPage.searchAndClickEdit(testDomain.name);
                         var sslCertText = Portal.domains.editPage.form.getSslCert();
                         expect(sslCertText).toEqual(updatedCertName);
                         Portal.domains.editPage.clickBackToList();
                         Portal.deleteDomain(testDomain);
-                        Portal.goToSslCert();
+                        Portal.helpers.nav.goToSSLCertificates();
                         Portal.deleteSSLCert(testSslCert);
                     });
 
@@ -160,7 +160,7 @@ describe('Workflow', function () {
 
                         var testDomain = DataProvider.generateDomain('sslTestDomain');
                         Portal.createSSLCert(testSslCert);
-                        Portal.goToDomains();
+                        Portal.helpers.nav.goToDomains();
                         Portal.domains.listPage.clickAddNewDomain();
                         Portal.domains.addPage.createDomain(testDomain);
                         Portal.domains.addPage.clickBackToList();
@@ -179,7 +179,7 @@ describe('Workflow', function () {
                         expect(sslCertText).toEqual('Default RevAPM SSL Certificate');
                         Portal.domains.editPage.clickBackToList();
                         Portal.deleteDomain(testDomain);
-                        Portal.goToSslCert();
+                        Portal.helpers.nav.goToSSLCertificates();
                         Portal.deleteSSLCert(testSslCert);
                     });
 
@@ -191,7 +191,7 @@ describe('Workflow', function () {
                         var testDomain = DataProvider.generateDomain('sslTestDomain');
                         Portal.createSSLCert(firstTestSslCert);
                         Portal.createSSLCert(secondTestSslCert);
-                        Portal.goToDomains();
+                        Portal.helpers.nav.goToDomains();
                         Portal.domains.listPage.clickAddNewDomain();
                         Portal.domains.addPage.createDomain(testDomain);
                         Portal.domains.addPage.clickBackToList();
@@ -210,7 +210,7 @@ describe('Workflow', function () {
                         expect(sslCertText).toEqual(secondTestSslCert.name);
                         Portal.domains.editPage.clickBackToList();
                         Portal.deleteDomain(testDomain);
-                        Portal.goToSslCert();
+                        Portal.helpers.nav.goToSSLCertificates();
                         Portal.deleteSSLCert(firstTestSslCert);
                         Portal.deleteSSLCert(secondTestSslCert);
                     });

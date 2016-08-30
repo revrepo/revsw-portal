@@ -48,7 +48,7 @@ describe('Smoke', function () {
 
         beforeAll(function () {
           Portal.signIn(user);
-          Portal.goToDNSZones();
+          Portal.helpers.nav.goToDNSZones();
         });
 
         afterAll(function () {

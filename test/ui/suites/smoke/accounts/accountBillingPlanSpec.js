@@ -42,7 +42,7 @@ describe('Smoke', function () {
     });
 
     beforeEach(function () {
-      Portal.goToChangeBillingPlan();
+      Portal.helpers.nav.goToChangeBillingPlan();
     });
 
     it('should be displayed.',

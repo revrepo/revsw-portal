@@ -71,7 +71,7 @@ describe('Smoke', function () {
                 });
 
                 beforeEach(function () {
-                    Portal.goToLogShipping();
+                    Portal.helpers.nav.goToLogShipping();
                 });
 
                 it('should be displayed when clicking "Log Shipping" from sidebar',

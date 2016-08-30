@@ -44,7 +44,7 @@ describe('Smoke', function () {
 
                 beforeEach(function () {
                     Portal.signIn(user);
-                    Portal.goToSSLNames();
+                    Portal.helpers.nav.goToSSLNames();
                     Portal.sslNames.listPage.clickAddNewSSLName();
                 });
 

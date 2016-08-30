@@ -33,7 +33,7 @@ describe('Negative', function () {
     });
 
     beforeEach(function () {
-      Portal.getUsersPage();
+      Portal.helpers.nav.goToUsers();
     });
 
     it('should not display pagination when there is not any user to show',

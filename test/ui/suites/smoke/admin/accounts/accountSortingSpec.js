@@ -28,7 +28,6 @@ describe('Smoke', function () {
 
     beforeAll(function () {
       Portal.signIn(revAdminUser);
-      Portal.getAdminPage();
     });
 
     afterAll(function () {
@@ -36,7 +35,7 @@ describe('Smoke', function () {
     });
 
     beforeEach(function () {
-      Portal.header.goTo(Constants.sideBar.admin.ACCOUNTS);
+      Portal.helpers.nav.goToAccounts();
     });
 
     afterEach(function () {

@@ -24,8 +24,8 @@ describe('Functional', function () {
 
     var user = config.get('portal.users.admin');
     var platforms = [
-      config.get('portal.mobileApps.platforms.ios'),
-      config.get('portal.mobileApps.platforms.android')
+      Portal.constants.mobileApps.platforms.ios,
+      Portal.constants.mobileApps.platforms.android
     ];
 
     var buildPrefix = function (user, platform) {
@@ -46,8 +46,7 @@ describe('Functional', function () {
         });
 
         beforeEach(function () {
-          Portal.goToMobileApps();
-          Portal.header.goTo(platform);
+          Portal.helpers.nav.goToMobileAppsMenuItem(platform);
         });
 
         afterEach(function () {

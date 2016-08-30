@@ -35,7 +35,7 @@ describe('Smoke', function () {
         .signUpAndVerifyUser(currentPlan)
         .then(function (newUser) {
           user = newUser;
-          return Portal.goToBillingStatements();
+          return Portal.helpers.nav.goToBillingStatements();
         })
         .then(function () {
           done();
@@ -47,7 +47,7 @@ describe('Smoke', function () {
     });
 
     beforeEach(function () {
-      //Portal.goToBillingStatements();
+      //Portal.helpers.nav.goToBillingStatements();
     });
 
     it('should check that Billing Summary area exists.',
