@@ -9,12 +9,13 @@
      'ngInject';
      var $ctrl = this;
      var token = $stateParams.token;
+     var resourceId = $stateParams.resourceId;
      this.loading = false;
      $ctrl.authState = 'progress';
      this.initAuth = function(formData) {
        AlertService.clear();
        $ctrl.loading = true;
-       User.authAzureSSO(token)
+       User.authAzureSSO(token, resourceId)
          .then(function(userData) {
            // NOTE: no message - only redirect
            $ctrl.authState = 'success';

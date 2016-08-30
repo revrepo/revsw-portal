@@ -511,8 +511,8 @@
      * @param {string} token
      * @returns {Promise}
      */
-    function authAzureSSO(token) {
-      return $http.post($config.API_URL + '/authenticate-sso-azure', { token: token })
+    function authAzureSSO(token, resourceId) {
+      return $http.post($config.API_URL + '/authenticate-sso-azure', { token: token, resourceId: resourceId })
         .then(function(data) {
           if (data && data.status !== $config.STATUS.OK) {
             // Something went wrong

@@ -19,7 +19,7 @@
         }
       })
       .state('azure-sso', {
-        url: '/azure-sso?:token',
+        url: '/azure-sso?:token:resourceId',
         views: {
           layout: {
             controller: 'AzureSSOController as $ctrl',
