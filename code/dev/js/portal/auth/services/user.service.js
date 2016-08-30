@@ -505,6 +505,25 @@
       return def.promise;
     }
 
+    /**
+     * Azure SSO authentication
+     *
+     * @param {string} token
+     * @returns {Promise}
+     */
+    function authAzureSSO(token) {
+      return $http.post($config.API_URL + '/authenticate-sso-azure', { token: token })
+        .then(function(data) {
+          if (data && data.status !== $config.STATUS.OK) {
+            // Something went wrong
+            throw new Error(data.response);
+          }
+          return updateToken(data.data.token).then(function(userData) {
+            return userData;
+          });
+        });
+    }
+
     return {
 
       getToken: getToken,
@@ -557,7 +576,9 @@
 
       hasBillingPlan: hasBillingPlan,
 
-      deleteAccountProfile: deleteAccountProfile
+      deleteAccountProfile: deleteAccountProfile,
+
+      authAzureSSO: authAzureSSO
     };
   }
 })();

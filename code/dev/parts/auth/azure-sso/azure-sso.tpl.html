@@ -1,0 +1,34 @@
+<div id="top" class="azure-sso"></div>
+<div class="azure-sso-wrapper">
+  <div class="azure-sso-container">
+    <header>
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="text-center col-xs-4">
+            <div class="header-logo">
+              <a href="https://www.revapm.com/" target="_blank">
+                <img class="img-responsive" src="images/logo_color.png" alt="Logo" />
+              </a>
+            </div>
+          </div>
+          <div class="col-xs-4 text-center">
+            <h1 class="azure-sso-title">SSO Authentication</h1>
+          </div>
+          <div class="col-xs-4 text-right">
+            <h4 class="login-link">Go to <a ui-sref="index">Login</a></h4>
+          </div>
+        </div>
+      </div>
+    </header>
+    <section class="form-body row">
+      <div class="col-sm-12 text text-center" ng-switch="$ctrl.authState">
+        <div class="h4 text text-primary" ng-switch-when="progress">
+          <i class="glyphicon" ng-class="$ctrl.loading ? 'glyphicon-refresh spin': 'glyphicon-refresh'"></i> Please waiting...
+          <br>Authentication process is doing now
+        </div>
+        <div class="h4 text text-danger" ng-switch-when="failed"><i class="glyphicon "></i>Access denied</div>
+        <div class="h4 text text-success" ng-switch-when="success">Authentication success</div>
+      </div>
+    </section>
+  </div>
+</div>
