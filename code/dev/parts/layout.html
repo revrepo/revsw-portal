@@ -154,7 +154,22 @@
         <i class="sub-menu-icon fa fa-tasks"></i> Activity Log
       </a>
     </li>
-    <li ng-if="!userService.isUser()" ui-sref-active-if="{class: 'open-side-menu-item', state: 'index.billing'}" , ng-class="{'open-side-menu-item': menuExpanded('index.billing') ,'active-side-menu-item': $state.includes('index.billing')}">
+    <li  ng-if="userService.isRevadmin()" ui-sref-active-if="{class: 'open-side-menu-item', state: 'index.azureMarketplace'}" , ng-class="{'open-side-menu-item': menuExpanded('index.azureMarketplace'), 'active-side-menu-item': $state.includes('index.azureMarketplace')}">
+      <a class="side-menu-item" , ng-click="goToState('index.azureMarketplace.subscriptions')">
+        <div class="left-menu-start">
+          <i class="fa fa-windows"></i>
+        </div>
+        Azure Marketplace
+        <i ng-click="expandMenu('index.azureMarketplace', $event)" class="pull-right {{ menuExpanded('index.azureMarketplace') ? 'fa fa-caret-down' : 'fa fa-caret-up' }}"></i>
+      </a>
+      <a ui-sref-active="active" ui-sref="index.azureMarketplace.subscriptions" class="side-menu-sub-item" ng-if="!userService.isUser()">
+        <i class="sub-menu-icon fa fa-users"></i> Subscriptions
+      </a>
+      <a ui-sref-active="active" ui-sref="index.azureMarketplace.resources" class="side-menu-sub-item" ng-if="!userService.isUser()">
+        <i class="sub-menu-icon fa fa-users"></i> Resources
+      </a>
+    </li>
+    <li ng-if="userService.isRevadmin()" ui-sref-active-if="{class: 'open-side-menu-item', state: 'index.billing'}" , ng-class="{'open-side-menu-item': menuExpanded('index.billing') ,'active-side-menu-item': $state.includes('index.billing')}">
       <a class="side-menu-item" , ng-click="goToState('index.billing.usage')">
         <div class="left-menu-start">
           <i class="fa fa-credit-card"></i>
@@ -162,10 +177,10 @@
         Billing
         <i ng-click="expandMenu('index.billing', $event)" class="pull-right {{ menuExpanded('index.billing') ? 'fa fa-caret-down' : 'fa fa-caret-up' }}"></i>
       </a>
-      <a ui-sref-active="active" ui-sref="index.billing.usage" class="side-menu-sub-item" ng-if="!userService.isUser()">
+      <a ui-sref-active="active" ui-sref="index.billing.usage" class="side-menu-sub-item" ng-if="userService.isRevadmin()">
         <i class="sub-menu-icon fa fa-balance-scale"></i> Usage Report
       </a>
-      <a ui-sref-active="active" ui-sref="index.billing.company" class="side-menu-sub-item" ng-if="userService.isAdmin()">
+      <a ui-sref-active="active" ui-sref="index.billing.company" class="side-menu-sub-item" ng-if="userService.isRevadmin()">
         <i class="sub-menu-icon fa fa-gear"></i> Account Profile
       </a>
       <a ui-sref-active="active" ui-sref="index.billing.plans" class="side-menu-sub-item" ng-if="(userService.isAdmin() && userService.hasBillingPlan()) || userService.isReseller() || userService.isRevadmin()">
