@@ -169,7 +169,7 @@
         <i class="sub-menu-icon fa fa-users"></i> Resources
       </a>
     </li>
-    <li ng-if="userService.isRevadmin()" ui-sref-active-if="{class: 'open-side-menu-item', state: 'index.billing'}" , ng-class="{'open-side-menu-item': menuExpanded('index.billing') ,'active-side-menu-item': $state.includes('index.billing')}">
+    <li ng-if="!userService.isUser()" ui-sref-active-if="{class: 'open-side-menu-item', state: 'index.billing'}" , ng-class="{'open-side-menu-item': menuExpanded('index.billing') ,'active-side-menu-item': $state.includes('index.billing')}">
       <a class="side-menu-item" , ng-click="goToState('index.billing.usage')">
         <div class="left-menu-start">
           <i class="fa fa-credit-card"></i>
