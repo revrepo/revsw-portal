@@ -154,6 +154,21 @@
         <i class="sub-menu-icon fa fa-tasks"></i> Activity Log
       </a>
     </li>
+    <li  ng-if="userService.isRevadmin()" ui-sref-active-if="{class: 'open-side-menu-item', state: 'index.azureMarketplace'}" , ng-class="{'open-side-menu-item': menuExpanded('index.azureMarketplace'), 'active-side-menu-item': $state.includes('index.azureMarketplace')}">
+      <a class="side-menu-item" , ng-click="goToState('index.azureMarketplace.subscriptions')">
+        <div class="left-menu-start">
+          <i class="fa fa-windows"></i>
+        </div>
+        Azure Marketplace
+        <i ng-click="expandMenu('index.azureMarketplace', $event)" class="pull-right {{ menuExpanded('index.azureMarketplace') ? 'fa fa-caret-down' : 'fa fa-caret-up' }}"></i>
+      </a>
+      <a ui-sref-active="active" ui-sref="index.azureMarketplace.subscriptions" class="side-menu-sub-item" ng-if="!userService.isUser()">
+        <i class="sub-menu-icon fa fa-users"></i> Subscriptions
+      </a>
+      <a ui-sref-active="active" ui-sref="index.azureMarketplace.resources" class="side-menu-sub-item" ng-if="!userService.isUser()">
+        <i class="sub-menu-icon fa fa-users"></i> Resources
+      </a>
+    </li>
     <li ng-if="!userService.isUser()" ui-sref-active-if="{class: 'open-side-menu-item', state: 'index.billing'}" , ng-class="{'open-side-menu-item': menuExpanded('index.billing') ,'active-side-menu-item': $state.includes('index.billing')}">
       <a class="side-menu-item" , ng-click="goToState('index.billing.usage')">
         <div class="left-menu-start">

@@ -36,7 +36,7 @@
         views: {
           layout: {
             templateUrl: 'parts/layout.html',
-            controller: /*ngInject*/function($scope, $state, $window, User) {
+            controller: /*ngInject*/ function($scope, $state, $window, User) {
 
               resizeBinding($scope, $window);
               $scope.toggle = function() {
@@ -131,6 +131,15 @@
       })
       .state('index.dnsServices', {
         url: '',
+        views: {
+          page: {
+            templateUrl: 'parts/layout/page.html'
+          }
+        }
+      })
+      // Azure Marketplace
+      .state('index.azureMarketplace', {
+        url: '/azure',
         views: {
           page: {
             templateUrl: 'parts/layout/page.html'

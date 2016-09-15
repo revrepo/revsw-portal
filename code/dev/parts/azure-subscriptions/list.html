@@ -1,0 +1,83 @@
+<!-- Note that element contain ui-view child page will be added here -->
+<div class="container-fluid" ui-view="page">
+  <div class="row">
+    <div class="col-sm-12">
+      <h2 class="pull-left page-title">
+        Subscriptions List
+      </h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="pull-right">
+                <form class="form-inline">
+                  <div class="form-group">
+                    <label for="search">Search:&nbsp;</label>
+                    <input type="text" class="form-control" id="search" placeholder="" ng-model="filter.filter" ng-change="checkFilterPage()">&nbsp;&nbsp;
+                    <i class="glyphicon glyphicon-remove" ng-show="filter.filter != ''" ng-click="filter.filter = ''"></i>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="panel-body">
+          <div class="alert alert-info" ng-if="records.length == 0 && !_loading">
+            Currently you don't have any subscriptions registered in the system.
+          </div>
+          <div class="alert alert-warning" ng-if="records == null && !_loading">
+            Failed to retrieve a list of resources - please try again later
+          </div>
+          <div class="alert alert-info" ng-if="_loading">
+            <i class="glyphicon glyphicon-refresh spin" ng-if="item.loading"></i>&nbsp; Loading...
+          </div>
+          <crud-pagination></crud-pagination>
+          <table class="table">
+            <thead>
+              <tr>
+                <th class="col-sm-5">
+                  <a href="" ng-click="order('subscription_id')">Subscription ID</a>
+                  <span class="sortorder" ng-show="filter.predicate === 'subscription_id'" ng-class="{reverse: filter.reverse}"></span>
+                </th>
+                <th class="col-sm-3">
+                  <a href="" ng-click="order('created_at')">Registration Date</a>
+                  <span class="sortorder" ng-show="filter.predicate === 'created_at'" ng-class="{reverse: filter.reverse}"></span>
+                </th>
+                <th class="col-sm-2">
+                  <a href="" ng-click="order('subscription_state')">State</a>
+                  <span class="sortorder" ng-show="filter.predicate === 'subscription_state'" ng-class="{reverse: filter.reverse}"></span>
+                </th>
+                <th class="col-sm-2 text-center">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr id="anchor{{::$index}}" ng-click="saveAnchorScrollIndex($index)" ng-repeat="item in filteredRecords | limitTo:filter.limit:filter.skip track by $index">
+                <td>
+                  <a ngclick="goToResources(item.id)" ui-sref="index.azureMarketplace.resources({subscriptionId: item.subscription_id})" ng-if="!item.loading" uib-tooltip="View Resources">
+                  {{item.subscription_id}}
+                </a>
+                </td>
+                <td>{{ getRelativeDate(item.created_at) }}</td>
+                <td>
+                  <span title="{{item.subscription_state}}"> {{item.subscription_state}} </span>
+                </td>
+                <td class="actions text-center">
+                  <i class="glyphicon glyphicon-refresh spin" ng-if="item.loading"></i>
+                  <a ng-click="openChangeStatusDialog(item)" _uisref=".edit({id: item.id})" ng-if="!item.loading" uib-tooltip="Change Status">
+                    <i class="glyphicon glyphicon-pencil"></i>
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <hr>
+          <crud-pagination></crud-pagination>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

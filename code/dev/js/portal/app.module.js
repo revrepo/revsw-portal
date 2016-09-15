@@ -36,7 +36,9 @@
     'toaster',
     'angular-loading-bar',
     'revapm.Portal.DNSZoneRecords',
-    'revapm.Portal.DNSZones'
+    'revapm.Portal.DNSZones',
+    'revapm.Portal.AzureResources',
+    'revapm.Portal.AzureSubscriptions'
   ]);
 
 })();

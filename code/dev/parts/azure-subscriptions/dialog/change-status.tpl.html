@@ -1,0 +1,15 @@
+<div class="modal-header">
+  <h3 class="modal-title">Change Status</h3>
+</div>
+<div class="modal-body">
+  <ui-select ng-model="editCurrentSubscriptionState" theme="select2" ng-animate-disabled on-select="onSelectSubscriptionState($model)" style="min-width: 100%;">
+    <ui-select-match placeholder="Select Status">{{$select.selected.statusName}}</ui-select-match>
+    <ui-select-choices repeat="item.id as item in subscriptionStatusList | filter: {statusName: $select.search}">
+      <small ng-bind-html="item.statusName|highlight: $select.search"></small>
+    </ui-select-choices>
+  </ui-select>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+  <button class="btn btn-success" type="button" ng-click="ok(editCurrentSubscriptionState)" ng-disabled="!editCurrentSubscriptionState">Save</button>
+</div>
