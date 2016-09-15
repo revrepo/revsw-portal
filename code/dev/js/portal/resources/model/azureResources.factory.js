@@ -7,8 +7,9 @@
 
   /*@ngInject*/
   function AzureResourcesResource(Resource, $config) {
-
-    return Resource($config.API_URL + '/azure/subscriptions/:subscription_id/providers/RevAPM.MobileCDN/accounts', {
+    var API_URL =  $config.API_URL;
+    API_URL = API_URL.replace('/v1','');
+    return Resource(API_URL + '/subscriptions/:subscription_id/providers/RevAPM.MobileCDN/accounts', {
       subscription_id: '@subscription_id'
     }, {
       query: {

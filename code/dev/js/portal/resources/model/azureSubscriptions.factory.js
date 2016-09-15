@@ -7,12 +7,13 @@
 
   /*@ngInject*/
   function AzureSubscriptionsResource(Resource, $config) {
-
-    return Resource($config.API_URL + '/azure/subscriptions/:id', {
+    var API_URL = $config.API_URL;
+    API_URL = API_URL.replace('/v1', '');
+    return Resource(API_URL + '/subscriptions/:id', {
       id: '@subscription_id'
     }, {
       updateState: {
-        url: $config.API_URL + '/azure/subscriptions/:id',
+        url: API_URL + '/subscriptions/:id',
         method: 'PUT',
         isArray: false,
         transformRequest: function transformRequestUpdateState(data) {
