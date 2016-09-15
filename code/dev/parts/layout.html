@@ -177,7 +177,7 @@
         Billing
         <i ng-click="expandMenu('index.billing', $event)" class="pull-right {{ menuExpanded('index.billing') ? 'fa fa-caret-down' : 'fa fa-caret-up' }}"></i>
       </a>
-      <a ui-sref-active="active" ui-sref="index.billing.usage" class="side-menu-sub-item" ng-if="userService.isUser()">
+      <a ui-sref-active="active" ui-sref="index.billing.usage" class="side-menu-sub-item" ng-if="!userService.isUser()">
         <i class="sub-menu-icon fa fa-balance-scale"></i> Usage Report
       </a>
       <a ui-sref-active="active" ui-sref="index.billing.company" class="side-menu-sub-item" ng-if="userService.isAdmin()">
