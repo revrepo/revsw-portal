@@ -23,11 +23,11 @@
     <section class="form-body row">
       <div class="col-sm-12 text text-center" ng-switch="$ctrl.authState">
         <div class="h4 text text-primary" ng-switch-when="progress">
-          <i class="glyphicon" ng-class="$ctrl.loading ? 'glyphicon-refresh spin': 'glyphicon-refresh'"></i> Please waiting...
-          <br>Authentication process is doing now
+          <i class="glyphicon" ng-class="$ctrl.loading ? 'glyphicon-refresh spin': 'glyphicon-refresh'"></i> Please wait...
+          <br>The authentication is in progress
         </div>
         <div class="h4 text text-danger" ng-switch-when="failed"><i class="glyphicon "></i>Access denied</div>
-        <div class="h4 text text-success" ng-switch-when="success">Authentication success</div>
+        <div class="h4 text text-success" ng-switch-when="success">Access granted</div>
       </div>
     </section>
   </div>
