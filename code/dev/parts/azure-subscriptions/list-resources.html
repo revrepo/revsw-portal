@@ -1,0 +1,89 @@
+<div class="container-fluid" ui-view="page">
+  <div class="row">
+    <div class="col-sm-12">
+      <h2 class="pull-left page-title">
+              Resources Per Subscription
+            </h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-heading" ng-if="userService.isRevadmin()">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="pull-left">
+                <a ng-disabled="_loading" ui-sref="index.azureMarketplace.subscriptions" class="btn btn-default">
+                  <i class="glyphicon glyphicon-arrow-left"></i>&nbsp; Back
+                </a>
+              </div>
+              <div class="pull-left">
+                <form class="form-inline">
+                  <div class="form-group">
+                    <ui-select ng-model="subscriptionId" theme="select2" ng-animate-disabled ng-disabled="" on-select="onSubscriptionSelect($model)" style="min-width: 300px;">
+                      <ui-select-match placeholder="Select Subscription">{{$select.selected.subscription_id}}</ui-select-match>
+                      <ui-select-choices repeat="item.subscription_id as item in subscriptionsList | filter: {id: $select.search}">
+                        <div ng-bind-html="item.subscription_id|highlight: $select.search"></div>
+                      </ui-select-choices>
+                    </ui-select>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+       <!--  <div class="panel-heading">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="pull-left">
+                <h2>Resources in the subscription</h2>
+              </div>
+            </div>
+          </div>
+        </div> -->
+        <div class="panel-body">
+          <div class="alert alert-info" ng-if="_loading">
+            <i class="glyphicon glyphicon-refresh spin" ng-if="item.loading"></i>&nbsp; Loading...
+          </div>
+          <div class="alert alert-danger" ng-if="!_loading && _error">
+            {{_error.message}}
+          </div>
+          <table datatable="ng" dt-options="subscriptionResourcesDtOptions" dt-instance="dtInstanceTransactions" class="table order-column table-striped" ng-if="!_loading && !_error">
+            <thead>
+              <tr>
+                <th>
+                  <p>Name</p>
+                </th>
+                <th>
+                  <p>Type</p>
+                </th>
+                <th>
+                  <p>Location</p>
+                </th>
+                <th>
+                  <p>Plan</p>
+                </th>
+                <th>
+                  <p>Resource Group</p>
+                </th>
+                <!--    <th>
+                  <p>Actions</p>
+                </th> -->
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="item in subresources">
+                <td>{{item.name}}</td>
+                <td>{{item.type}}</td>
+                <td>{{item.location}}</td>
+                <td>{{item.plan.name}}</td>
+                <td>{{item.plan.name}}</td>
+                <!-- <td><a>Delete</a></td> -->
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
