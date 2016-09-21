@@ -2,10 +2,10 @@
   'use strict';
 
   angular
-    .module('revapm.Portal.AzureResources')
-    .controller('AzureResourcesController', AzureResourcesController);
+    .module('revapm.Portal.AzureSubscriptions')
+    .controller('AzureSubscriptionResourcesController', AzureSubscriptionResourcesController);
 
-  function AzureResourcesController($scope, $localStorage, AlertService, DTOptionsBuilder, AzureSubscriptions, AzureResources, $stateParams, $state) {
+  function AzureSubscriptionResourcesController($scope, $localStorage, AlertService, DTOptionsBuilder, AzureSubscriptions, AzureResources, $stateParams, $state) {
     'ngInject';
     var pageLength = 10;
     // List Subscriptions
@@ -21,7 +21,7 @@
     $scope.initResources = function(subscriptionId) {
       if (subscriptionId) {
         $scope._loading = true;
-        AzureResources.query({ subscription_id: subscriptionId }).$promise
+        AzureSubscriptions.resources({ subscription_id: subscriptionId }).$promise
           .then(function(data) {
             $scope.subresources = data;
           })

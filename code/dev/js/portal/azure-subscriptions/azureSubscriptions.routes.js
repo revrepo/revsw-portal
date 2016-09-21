@@ -17,6 +17,16 @@
             templateUrl: 'parts/azure-subscriptions/list.html'
           }
         }
+      })
+      .state('index.azureMarketplace.subscription_resources', {
+        url: '/subscription_resources?subscriptionId',
+        views: {
+          main: {
+            controller: 'AzureSubscriptionResourcesController',
+            templateUrl: 'parts/azure-subscriptions/list-resources.html'
+          }
+        }
       });
   }
 })();
+

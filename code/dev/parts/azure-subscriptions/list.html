@@ -57,7 +57,7 @@
             <tbody>
               <tr id="anchor{{::$index}}" ng-click="saveAnchorScrollIndex($index)" ng-repeat="item in filteredRecords | limitTo:filter.limit:filter.skip track by $index">
                 <td>
-                  <a ngclick="goToResources(item.id)" ui-sref="index.azureMarketplace.resources({subscriptionId: item.subscription_id})" ng-if="!item.loading" uib-tooltip="View Resources">
+                  <a ngclick="goToResources(item.id)" ui-sref="index.azureMarketplace.subscription_resources({subscriptionId: item.subscription_id})" ng-if="!item.loading" uib-tooltip="View Resources Per Subscription">
                   {{item.subscription_id}}
                 </a>
                 </td>
