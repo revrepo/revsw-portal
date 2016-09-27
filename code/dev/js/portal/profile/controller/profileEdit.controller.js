@@ -31,7 +31,7 @@
      */
     $scope.updatePassword = function() {
       if (!_.trim($scope.pass.current_password) || !_.trim($scope.pass.new_password)) {
-        AlertService.danger('Please fill all fields. (New password should be at least 8 charecters length)', 5000);
+        AlertService.danger('Please fill all fields. (New password should be at least 8 characters length)', 5000);
         return;
       }
       if ($scope.pass.new_password !== $scope.pass.confirm_password) {
