@@ -1141,14 +1141,14 @@ var Portal = {
   },
 
   /**
-   * ### Portal.goToDNSZoneRecords()
+   * ### Portal.openDNSZoneRecords()
    *
-   * Navigation helper method that executes all steps to navigate to `DNS Zone Records` page
-   * TODO: This method should be refactored
+   * Executes all steps to navigate to `Records` page for specified `DNS Zone`
+   *
    * @param {user} zone, DNS zone to manage
    * @returns {Promise}
    */
-  goToDNSZoneRecords: function (zone) {
+  openDNSZoneRecords: function (zone) {
     var me = this;
     return this.helpers.nav.goToDNSZones()
       .then(function () {
@@ -1157,7 +1157,7 @@ var Portal = {
           .getFirstRow()
           .clickManageRecords();
       });
-  },
+  }
 };
 
 module.exports = Portal;

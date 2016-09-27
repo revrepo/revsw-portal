@@ -67,7 +67,7 @@ describe('Smoke', function () {
         it('should display delete DNS Zone Record button', function () {
           var zone = DataProvider.generateDNSZoneData();
           Portal.createDNSZone(zone);
-          Portal.goToDNSZoneRecords(zone);
+          Portal.openDNSZoneRecords(zone);
 
           var deleteButton = Portal.zoneRecords.listPage.table
             .getFirstRow()
@@ -82,7 +82,7 @@ describe('Smoke', function () {
           var zone = DataProvider.generateDNSZoneData();
 
           Portal.createDNSZone(zone);
-          Portal.goToDNSZoneRecords(zone);
+          Portal.openDNSZoneRecords(zone);
 
           var deleteButton = Portal.zoneRecords.listPage.table
             .getFirstRow()
@@ -102,7 +102,7 @@ describe('Smoke', function () {
             var zone = DataProvider.generateDNSZoneData();
 
             Portal.createDNSZone(zone);
-            Portal.goToDNSZoneRecords(zone);
+            Portal.openDNSZoneRecords(zone);
 
             var deleteButton = Portal.zoneRecords.listPage.table
               .getFirstRow()

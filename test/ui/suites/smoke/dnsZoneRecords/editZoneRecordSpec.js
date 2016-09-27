@@ -62,7 +62,7 @@ describe('Smoke', function () {
           function () {
             var zone = DataProvider.generateDNSZoneData();
             Portal.createDNSZone(zone);
-            Portal.goToDNSZoneRecords(zone);
+            Portal.openDNSZoneRecords(zone);
 
             var editButton = Portal.zoneRecords.listPage.table
               .getFirstRow()
@@ -76,7 +76,7 @@ describe('Smoke', function () {
           function () {
             var zone = DataProvider.generateDNSZoneData();
             Portal.createDNSZone(zone);
-            Portal.goToDNSZoneRecords(zone);
+            Portal.openDNSZoneRecords(zone);
 
             Portal.zoneRecords.listPage.table
               .getFirstRow()
@@ -90,7 +90,7 @@ describe('Smoke', function () {
           function () {
             var zone = DataProvider.generateDNSZoneData();
             Portal.createDNSZone(zone);
-            Portal.goToDNSZoneRecords(zone);
+            Portal.openDNSZoneRecords(zone);
 
             Portal.zoneRecords.listPage.table
               .getFirstRow()
@@ -106,7 +106,7 @@ describe('Smoke', function () {
           function () {
             var zone = DataProvider.generateDNSZoneData();
             Portal.createDNSZone(zone);
-            Portal.goToDNSZoneRecords(zone);
+            Portal.openDNSZoneRecords(zone);
 
             Portal.zoneRecords.listPage.table
               .getFirstRow()
