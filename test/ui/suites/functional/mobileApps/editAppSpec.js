@@ -112,8 +112,7 @@ describe('Functional', function () {
           function () {
             Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
             Portal.mobileApps.listPage.searchAndEdit(app);
-            var tempAppName = app.name;
-            //app.name = app.name + 'UPDATED';
+            app.name = app.name + 'UPDATED';
             var updatedApp = DataProvider.generateUpdateMobileApp(app);
             Portal.mobileApps.editPage.verify(updatedApp);
 
@@ -122,7 +121,6 @@ describe('Functional', function () {
             expect(alert.getText()).toContain(expectedMsg);
 
             Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
-            app.name = tempAppName;
             var findApp = Portal.mobileApps.listPage.findApp(app);
             expect(findApp).toBe(1);
         });
@@ -131,7 +129,7 @@ describe('Functional', function () {
           function () {
             Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
             Portal.mobileApps.listPage.searchAndEdit(app);
-            var tempAppName = app.name;
+            app.name = app.name + 'UPDATED';
             var updatedApp = DataProvider.generateUpdateMobileApp(app);
             Portal.mobileApps.editPage.update(updatedApp);
             Portal.dialog.clickOk();
@@ -141,7 +139,6 @@ describe('Functional', function () {
             expect(alert.getText()).toContain(expectedMsg);
 
             Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
-            app.name = tempAppName; //TODO: Remove this line, once edit is fixed
             var findApp = Portal.mobileApps.listPage.findApp(app);
             expect(findApp).toBe(1);
         });
@@ -150,8 +147,7 @@ describe('Functional', function () {
           function () {
             Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
             Portal.mobileApps.listPage.searchAndEdit(app);
-            var tempAppName = app.name;
-            /*app.name = app.name + 'UPDATED';*/
+            app.name = app.name + 'UPDATED';
             var updatedApp = DataProvider.generateUpdateMobileApp(app);
             Portal.mobileApps.editPage.publish(updatedApp);
             Portal.dialog.clickOk();
@@ -161,7 +157,6 @@ describe('Functional', function () {
             expect(alert.getText()).toContain(expectedMsg);
 
             Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
-            app.name = tempAppName; //TODO: Remove this line, once edit is fixed
             var findApp = Portal.mobileApps.listPage.findApp(app);
             expect(findApp).toBe(1);
         });
