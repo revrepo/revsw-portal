@@ -27,8 +27,7 @@ describe('Smoke', function () {
   var currentPlan = 'Gold';
   var billingPortal = /www\.billingportal\.com/;
 
-  // TODO: please fix the test
-  xdescribe('Billing Statements', function () {
+  describe('Billing Statements', function () {
 
     beforeAll(function (done) {
       Portal
@@ -119,40 +118,18 @@ describe('Smoke', function () {
           });
       });
 
-    it('should `View Details` button open BillingPortal in new tab.',
+    it('should `View Details` button be disabled.',
       function () {
-        Portal.accounts.billingStatements.summary
-          .clickViewDetails()
-          .then(function () {
-            Portal.waitForNumberOfWindowsToEqual(2);
-            browser.getAllWindowHandles().then(function (handles) {
-              var oldWindowHandle = handles[0]; // this is the new window
-              var newWindowHandle = handles[1]; // this is the new window
-              browser.switchTo().window(newWindowHandle).then(function () {
-                expect(browser.driver.getCurrentUrl()).toMatch(billingPortal);
-                browser.driver.close();
-                browser.driver.switchTo().window(oldWindowHandle);
-              });
-            });
-          });
+        expect(Portal.accounts.billingStatements.summary
+          .getViewDetailsBtn()
+          .getAttribute('disabled')).toBeTruthy();
       });
 
-    it('should `Update Payment Profile` open BillingPortal in new tab.',
+    it('should `Update Payment Profile` button be disabled.',
       function () {
-        Portal.accounts.billingStatements.summary
-          .clickUpdatePaymentProfile()
-          .then(function () {
-            Portal.waitForNumberOfWindowsToEqual(2);
-            browser.getAllWindowHandles().then(function (handles) {
-              var oldWindowHandle = handles[0]; // this is the parent window
-              var newWindowHandle = handles[1]; // this is the new window
-              browser.switchTo().window(newWindowHandle).then(function () {
-                expect(browser.driver.getCurrentUrl()).toMatch(billingPortal);
-                browser.driver.close();
-                browser.driver.switchTo().window(oldWindowHandle);
-              });
-            });
-          });
+        expect(Portal.accounts.billingStatements.summary
+          .getUpdatePaymentProfileBtn()
+          .getAttribute('disabled')).toBeTruthy();
       });
 
     it('should `Change Billing Plan` display billing plans page.',

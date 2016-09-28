@@ -17,7 +17,7 @@ module.exports = {
     print: function() {} // Disable default reporter
   },
   onPrepare: function () {
-    browser.manage().window().setSize(1024, 768);
+    browser.manage().window().setSize(1280, 1024);
     var disableNgAnimate = function() {
         angular
             .module('disableNgAnimate', [])
