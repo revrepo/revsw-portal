@@ -25,7 +25,7 @@
     "jasmine-spec-reporter": "^2.4.0",
     "jshint-stylish": "^2.0.1",
     "moment": "^2.13.0",
-    "protractor": "4.0.0",
+    "protractor": "^2.5.1",
     "protractor-jasmine2-html-reporter": "0.0.5",
     "revsw-api-test": "git+ssh://git@github.com:leo-fcx/revsw-api.git",
     "supertest": "^1.1.0",
