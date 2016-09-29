@@ -163,7 +163,7 @@ var EditAppForm = {
    * Returns the reference to the `Panel Body` element (Selenium WebDriver
    * Element) from the Edit App page in the Portal app.
    *
-   * @returns {Selenium WebDriver Element}
+   * @returns {Object} Selenium WebDriver Element
    */
   getPanelBodyElem: function () {
     return element
@@ -512,13 +512,6 @@ var EditAppForm = {
     return this
       .getSDKOperationModeDDown()
       .sendKeys(value);
-  },
-
-  setAccount: function (value) {
-    this
-      .getAccountDown()
-      .click();
-//TODO:
   },
 
   setSDKKey: function (value) {

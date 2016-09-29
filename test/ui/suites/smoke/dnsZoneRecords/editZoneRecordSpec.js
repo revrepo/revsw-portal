@@ -47,9 +47,7 @@ describe('Smoke', function () {
         });
 
         beforeEach(function () {
-          Portal.load();//TODO: Got the problem when tests are failed when executed all in one scope
-                        //Looks like it is not reproducible when doing Portal.load() before SignIn
-                        //SignIn func needs to be investigated
+          Portal.load();
           Portal.signIn(user);
           Portal.helpers.nav.goToDNSZones();
         });

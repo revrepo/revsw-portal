@@ -27,7 +27,7 @@ var Header = {
 
   // ## Properties
 
-  waitTimeout: 20000, // TODO: read from config file
+  waitTimeout: 20000,
 
   // Locators specific to HTML elements from this page object
   locators: {

@@ -37,7 +37,7 @@ var Alerts = {
       repeater: 'toaster in toasters'
     }
   },
-  waitTimeout: 10000, // TODO: read from config file
+  waitTimeout: 10000,
 
   // ## Methods
 
@@ -61,7 +61,7 @@ var Alerts = {
    * Returns all Alerts (Selenium WebDriver Elements) that are displayed in the
    * notifications area from the Portal app.
    *
-   * @returns [{Selenium WebDriver Element}]
+   * @returns {Object} Array of Selenium WebDriver Element
    */
   getAll: function () {
     return element.all(by.repeater(this.locators.alertGroup.repeater));
@@ -73,7 +73,7 @@ var Alerts = {
    * Returns the first Alert (Selenium WebDriver Element) that is displayed in
    * the notifications area from the Portal app.
    *
-   * @returns [{Selenium WebDriver Element}]
+   * @returns {Object} Array of Selenium WebDriver Element
    */
   getFirst: function () {
     return this

@@ -36,9 +36,7 @@ describe('Smoke', function () {
       describe('Add DNS Zone Record', function () {
 
         beforeAll(function () {
-          Portal.load();//TODO: Got the problem when tests are failed when executed all in one scope
-                        //Looks like it is not reproducible when doing Portal.load() before SignIn
-                        //SignIn func needs to be investigated
+          Portal.load();
           Portal.signIn(user);
         });
 
