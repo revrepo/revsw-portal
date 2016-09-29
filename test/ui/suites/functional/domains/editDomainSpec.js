@@ -38,7 +38,7 @@ xdescribe('Functional', function () {  // jshint ignore:line
     });
 
     beforeEach(function () {
-      Portal.header.clickWeb();
+      Portal.helpers.nav.goToDomains();
     });
 
     afterEach(function () {
