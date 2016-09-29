@@ -34,7 +34,6 @@ var DashboardList = {
     },
     labels: {
       title: {
-        // css: 'page-title'
         css: '.h2.ng-binding'
       }
     },
@@ -88,7 +87,7 @@ var DashboardList = {
    * Returns the reference to the `Dashboard Container` element (Selenium
    * WebDriver Element) from the Dashboard List page from the Portal app.
    *
-   * @returns {Selenium WebDriver Element}
+   * @returns {Object} Selenium WebDriver Element
    */
   getDashboardContainerElem: function () {
     return element(by.css(this.locators.views.container));
@@ -100,7 +99,7 @@ var DashboardList = {
    * Returns the reference to the `Title` label element (Selenium WebDriver
    * Element) from the Dashboard List page from the Portal app.
    *
-   * @returns {Selenium WebDriver Element}
+   * @returns {Object} Selenium WebDriver Element
    */
   getTitleLbl: function () {
     return element(by.css(this.locators.labels.title.css));
@@ -112,7 +111,7 @@ var DashboardList = {
    * Returns the reference to the `Add New Dashboard` button (Selenium WebDriver
    * Element) from the Dashboard List page from the Portal app.
    *
-   * @returns {Selenium WebDriver Element}
+   * @returns {Object} Selenium WebDriver Element
    */
   getAddNewDashboardBtn: function () {
     return element
@@ -126,7 +125,7 @@ var DashboardList = {
    * Returns the reference to the `Refresh Now` button (Selenium WebDriver
    * Element) from the Dashboard List page from the Portal app.
    *
-   * @returns {Selenium WebDriver Element}
+   * @returns {Object} Selenium WebDriver Element
    */
   getRefreshNowBtn: function () {
     return element(by.css(this.locators.buttons.refreshNow.css));
@@ -138,7 +137,7 @@ var DashboardList = {
    * Returns the reference to the `Modify Dashboard` button (Selenium WebDriver
    * Element) from the Dashboard List page from the Portal app.
    *
-   * @returns {Selenium WebDriver Element}
+   * @returns {Object} Selenium WebDriver Element
    */
   getModifyDashboardBtn: function () {
     return element
@@ -152,7 +151,7 @@ var DashboardList = {
    * Returns the reference to the `Add New Widget` button (Selenium WebDriver
    * Element) from the Dashboard List page from the Portal app.
    *
-   * @returns {Selenium WebDriver Element}
+   * @returns {Object} Selenium WebDriver Element
    */
   getAddNewWidgetBtn: function () {
     return element(by.css(this.locators.buttons.addNewWidget.css));
@@ -164,7 +163,7 @@ var DashboardList = {
    * Returns the reference to the `Edit Dashboard` button (Selenium WebDriver
    * Element) from the Dashboard List page from the Portal app.
    *
-   * @returns {Selenium WebDriver Element}
+   * @returns {Object} Selenium WebDriver Element
    */
   getEditDashboardPropertiesBtn: function () {
     return element(by.css(this.locators.buttons.editDashboardProperties.css));
@@ -176,7 +175,7 @@ var DashboardList = {
    * Returns the reference to the `Save Changes` button (Selenium WebDriver
    * Element) from the Dashboard List page from the Portal app.
    *
-   * @returns {Selenium WebDriver Element}
+   * @returns {Object} Selenium WebDriver Element
    */
   getSaveChangesBtn: function () {
     return element(by.css(this.locators.buttons.saveChanges.css));
@@ -188,7 +187,7 @@ var DashboardList = {
    * Returns the reference to the `Undo Changes` button (Selenium WebDriver
    * Element) from the Dashboard List page from the Portal app.
    *
-   * @returns {Selenium WebDriver Element}
+   * @returns {Object} Selenium WebDriver Element
    */
   getUndoChangesBtn: function () {
     return element(by.css(this.locators.buttons.undoChanges.css));
@@ -200,7 +199,7 @@ var DashboardList = {
    * Returns the reference to the `Refresh Frequency` drop down (Selenium
    * WebDriver Element) from the Dashboard List page from the Portal app.
    *
-   * @returns {Selenium WebDriver Element}
+   * @returns {Object} Selenium WebDriver Element
    */
   getAutoRefreshDDown: function () {
     return element(by.model(this.locators.dropDowns.autoRefresh.model));
@@ -212,7 +211,7 @@ var DashboardList = {
    * Returns the reference to the `Dashboards` dashboards (Selenium WebDriver
    * Element) from the Dashboard List page from the Portal app.
    *
-   * @returns {Selenium WebDriver Element}
+   * @returns {Object} Selenium WebDriver Element
    */
   getDashboardsElem: function () {
     return element(by.css(this.locators.dashboards.css));
@@ -224,7 +223,7 @@ var DashboardList = {
    * Returns the reference to the `Dashboards Left Menu` dashboards (Selenium
    * WebDriver Element) from the Dashboard List page from the Portal app.
    *
-   * @returns {Selenium WebDriver Element}
+   * @returns {Object} Selenium WebDriver Element
    */
   getLeftMenuDashboardsElem: function () {
     return element(by.id(this.locators.dashboards.leftMenu.id));

@@ -25,11 +25,9 @@ describe('Smoke', function () {
 
   // Defining set of users for which all below tests will be run
   var users = [
-    config.get('portal.users.admin'),
-    // config.get('portal.users.revAdmin'),
-    // config.get('portal.users.reseller')
+    config.get('portal.users.admin')
   ];
-  
+
   users.forEach(function (user) {
 
     describe('With user: ' + user.role, function () {
@@ -48,19 +46,17 @@ describe('Smoke', function () {
         beforeEach(function () {
         });
 
-        // it('should default "Dashboard" exist in Dasboards page', function () {
-        //   var defaultDashboardName = 'Dashboard';
-        //   var defaultDashboardAutoRefresh = 'Every 15 Minute';
+        it('should default "Dashboard" exist in Dasboards page', function () {
+          var defaultDashboardName = 'Dashboard';
 
-        //   var createdDashboard = Portal.dashboards.listPage.getTitle();
-        //   var leftMenu = Portal.dashboards.listPage.getLeftMenuDashboards();
-        //   var existDashChart = Portal.dashboards.listPage.existDashboardChart();
+          var createdDashboard = Portal.dashboards.listPage.getTitle();
+          var leftMenu = Portal.dashboards.listPage.getLeftMenuDashboards();
+          var existDashChart = Portal.dashboards.listPage.existDashboardChart();
 
-        //   expect(createdDashboard).toContain(defaultDashboardName);
-        //   expect(createdDashboard).toContain(defaultDashboardAutoRefresh);
-        //   expect(leftMenu).toContain(defaultDashboardName);
-        //   expect(existDashChart).toBe(true);
-        // });
+          expect(createdDashboard).toContain(defaultDashboardName);
+          expect(leftMenu).toContain(defaultDashboardName);
+          expect(existDashChart).toBe(true);
+        });
 
         it('should "Add Dashboard" in Dashboard Page - Structure - ' +
           'Two Columns Of Equal Width - Every 15 Minutes',
@@ -69,20 +65,17 @@ describe('Smoke', function () {
             dashboard.structure = 2;
 
             Portal.dashboards.listPage.addNewDashboard(dashboard);
-            var createdDashboard = Portal.dashboards.listPage.getTitle();
+            var dashboardTitle = Portal.dashboards.listPage.getTitle();
             var leftMenu = Portal.dashboards.listPage.getLeftMenuDashboards();
             var existChart = Portal.dashboards.listPage.existDashboardChart();
-            
-            expect(createdDashboard).toContain(dashboard.title);
-            // TODO: Leo, could you please have a look at the code - not sure
-            // how the auto-refresh data could be found in dashboard title string..
-            // expect(createdDashboard).toContain(dashboard.autoRefresh);
+
+            expect(dashboardTitle).toContain(dashboard.title);
             expect(leftMenu).toContain(dashboard.title);
             expect(existChart).toBe(true);
 
             Portal.dashboards.listPage.deleteDashboard(dashboard);
             Portal.dashboards.dialogPage.clickDelete();
-        });
+          });
 
         it('should "Add Dashboard" in Dashboard Page - Structure - ' +
           'One Wide Column - Every 1 Minute',
@@ -94,16 +87,14 @@ describe('Smoke', function () {
             var createdDashboard = Portal.dashboards.listPage.getTitle();
             var leftMenu = Portal.dashboards.listPage.getLeftMenuDashboards();
             var existChart = Portal.dashboards.listPage.existDashboardChart();
-            
+
             expect(createdDashboard).toContain(dashboard.title);
-            // TODO - the same issue as before
-            // expect(createdDashboard).toContain(dashboard.autoRefresh);
             expect(leftMenu).toContain(dashboard.title);
             expect(existChart).toBe(true);
 
             Portal.dashboards.listPage.deleteDashboard(dashboard);
             Portal.dashboards.dialogPage.clickDelete();
-        });
+          });
 
         it('should "Add Dashboard" in Dashboard Page - Structure - ' +
           'Four Columns Of Equal Width - No Auto-Refresh',
@@ -115,16 +106,14 @@ describe('Smoke', function () {
             var createdDashboard = Portal.dashboards.listPage.getTitle();
             var leftMenu = Portal.dashboards.listPage.getLeftMenuDashboards();
             var existChart = Portal.dashboards.listPage.existDashboardChart();
-            
+
             expect(createdDashboard).toContain(dashboard.title);
-            // TODO - the same issue as before
-            // expect(createdDashboard).toContain(dashboard.autoRefresh);
             expect(leftMenu).toContain(dashboard.title);
             expect(existChart).toBe(true);
 
             Portal.dashboards.listPage.deleteDashboard(dashboard);
             Portal.dashboards.dialogPage.clickDelete();
-        });
+          });
       });
     });
   });
