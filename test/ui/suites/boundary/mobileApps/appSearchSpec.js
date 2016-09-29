@@ -66,7 +66,7 @@ describe('Boundary', function () {
             Portal.dialog.clickOk();
           });
 
-        it('should search field support more higher or equal to 200 characters',
+        it('should search field accept higher or equal to 200 characters to filter.',
           function () {
 
             var longString = new Array(200).join('x');
@@ -77,7 +77,7 @@ describe('Boundary', function () {
             expect(countApps).toBe(0);
           });
 
-        xit('should search text field accept special characters',
+        it('should search text field accept special characters to filter.',
           function () {
             Portal.helpers.nav.goToMobileAppsMenuItem(platform);
 
