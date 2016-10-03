@@ -19,9 +19,9 @@
 var config = require('config');
 var Portal = require('./../../../page_objects/portal');
 
-xdescribe('Smoke', function () {    //TODO: Since we need more than 25 items
-                                    // in the list to show pagination
-                                    //I will temorarly disable this
+//TODO: We have limitation with SSL cert (50 names), We need more than
+// 25 items per user to test pagination
+xdescribe('Smoke', function () {
 
     // Defining set of users for which all below tests will be run
     var users = [
