@@ -1,7 +1,7 @@
 var smoke = require('./base');
 
 smoke.specs = [
-  '../suites/functional/mobileApps/appSortingSpec.js'
+  '../suites/smoke/**/*Spec.js'
 ];
 
 exports.config = smoke;
