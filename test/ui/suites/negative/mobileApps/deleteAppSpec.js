@@ -40,12 +40,6 @@ describe('Negative', function () {
       Portal.signOut();
     });
 
-    beforeEach(function () {
-    });
-
-    afterEach(function () {
-    });
-
     apps.forEach(function (app) {
       it('should cancel when try to delete delete an app - ' + app.platform,
         function () {

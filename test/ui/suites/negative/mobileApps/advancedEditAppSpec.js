@@ -41,12 +41,6 @@ describe('Negative', function () {
       Portal.signOut();
     });
 
-    beforeEach(function () {
-    });
-
-    afterEach(function () {
-    });
-
     apps.forEach(function (app) {
       it('should edit advanced mode & "cancel" json editor - ' + app.platform,
         function () {

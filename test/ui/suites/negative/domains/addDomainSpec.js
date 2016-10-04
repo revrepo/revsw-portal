@@ -36,13 +36,6 @@ describe('Negative', function () {
       Portal.signOut();
     });
 
-    beforeEach(function () {
-    });
-
-    afterEach(function () {
-    });
-
-
     it('should have both Create buttons disabled on fresh new domain form',
       function () {
         Portal.helpers.nav.goToDomains();

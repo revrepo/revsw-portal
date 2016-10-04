@@ -42,12 +42,6 @@ describe('Negative', function () {
       Portal.signOut();
     });
 
-    beforeEach(function () {
-    });
-
-    afterEach(function () {
-    });
-
     apps.forEach(function (app) {
         it('should not allow to "verify" an app in Basic Edit mode with app name ' +
           'set to empty characters - ' +

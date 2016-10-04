@@ -30,21 +30,18 @@ describe('Negative', function () {
       Portal.signIn(adminUser);
       Portal.createUser(tom);
       Portal.signOut();
+      Portal.signIn(tom);
     });
 
     afterAll(function () {
+      Portal.signOut();
       Portal.signIn(adminUser);
       Portal.deleteUser(tom);
       Portal.signOut();
     });
 
     beforeEach(function () {
-      Portal.signIn(tom);
       Portal.helpers.nav.goToUpdatePassword();
-    });
-
-    afterEach(function () {
-      Portal.signOut();
     });
 
     it('should not enable the Update Password button when no fields are filled',

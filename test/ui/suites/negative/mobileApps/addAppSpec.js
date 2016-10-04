@@ -37,16 +37,9 @@ describe('Negavive', function () {
     });
 
     afterAll(function () {
-      //Portal.deleteMobileApps(apps);
       Portal.deleteMobileApps(iosApps);
       Portal.deleteMobileApps(androidApps);
       Portal.signOut();
-    });
-
-    beforeEach(function () {
-    });
-
-    afterEach(function () {
     });
 
     apps.forEach(function (app){

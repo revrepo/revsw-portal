@@ -29,7 +29,6 @@ describe('Negative', function () {
     beforeAll(function () {
       Portal.signIn(adminUser);
       Portal.createUser(carl);
-      Portal.signOut();
     });
 
     afterAll(function () {
@@ -39,12 +38,7 @@ describe('Negative', function () {
     });
 
     beforeEach(function () {
-      Portal.signIn(adminUser);
       Portal.helpers.nav.goToUsers();
-    });
-
-    afterEach(function () {
-      Portal.signOut();
     });
 
     it('should not allow to edit the user\'s email', function () {

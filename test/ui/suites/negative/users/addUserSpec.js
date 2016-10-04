@@ -29,18 +29,15 @@ describe('Negative', function () {
     var adminUser = config.get('portal.users.admin');
 
     beforeAll(function () {
+      Portal.signIn(adminUser);
     });
 
     afterAll(function () {
+      Portal.signOut();
     });
 
     beforeEach(function () {
-      Portal.signIn(adminUser);
       Portal.helpers.nav.goToUsers();
-    });
-
-    afterEach(function () {
-      Portal.signOut();
     });
 
     it('should not create user when a required field is filled with blank ' +

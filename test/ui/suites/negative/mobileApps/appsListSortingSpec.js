@@ -41,12 +41,6 @@ describe('Negative', function () {
       Portal.signOut();
     });
 
-    beforeEach(function () {
-    });
-
-    afterEach(function () {
-    });
-
     it('should sorted list apps ascendent and descendant - iOS', function () {
       Portal.helpers.nav.goToMobileAppsMenuItem(platforms.ios);
       var totalRows = Portal.mobileApps.listPage.table.countTotalRows();
