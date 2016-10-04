@@ -25,6 +25,14 @@
                   <i class="glyphicon glyphicon-cloud-download "></i>&nbsp; Download SDK
                 </a>
               </div>
+              <div class="form-group hidden-xs  " ng-if="$state.current.data.platform_code == 'iOS'">
+                <div class="col-xs-12"></div>
+              </div>
+              <div class="form-group" ng-if="$state.current.data.platform_code == 'iOS'">
+                <a href="{{introductionVideoLinks[$state.current.data.platform_code]}}" class="btn btn-download btn-success" ng-disabled="_loading" uib-tooltip="Click to view Introduction Video" target="_blank">
+                  <i class="fa fa-youtube"></i>&nbsp; Introduction Video
+                </a>
+              </div>
             </div>
           </div>
         </div>
