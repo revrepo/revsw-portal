@@ -40,12 +40,6 @@ describe('Boundary', function () {
       Portal.signOut();
     });
 
-    beforeEach(function () {
-    });
-
-    afterEach(function () {
-    });
-
     apps.forEach(function (app) {
       it('should check Register button is disabled when app name have more ' +
         'than 51 characters - ' + app.platform, function () {

@@ -29,7 +29,6 @@ describe('Boundary', function () {
     var platforms = Portal.constants.mobileApps.platforms;
     var iosApps = DataProvider.generateMobileAppData(platforms.ios, 1);
     var androidApps = DataProvider.generateMobileAppData(platforms.android, 1);
-    //var apps = iosApps.concat(androidApps);
     var apps = iosApps;
 
     beforeAll(function () {
@@ -42,12 +41,6 @@ describe('Boundary', function () {
       Portal.deleteMobileApps(iosApps);
       Portal.deleteMobileApps(androidApps);
       Portal.signOut();
-    });
-
-    beforeEach(function () {
-    });
-
-    afterEach(function () {
     });
 
     apps.forEach(function (app) {

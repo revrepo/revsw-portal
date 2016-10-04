@@ -47,9 +47,6 @@ describe('Boundary', function () {
           Portal.mobileApps.listPage.searcher.clearSearchCriteria();
         });
 
-        afterEach(function () {
-        });
-
         it('should search apps with 50 characters',
           function () {
 

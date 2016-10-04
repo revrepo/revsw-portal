@@ -42,9 +42,6 @@ describe('Boundary', function () {
       Portal.helpers.nav.goToDomains();
     });
 
-    afterEach(function () {
-    });
-
     it('should have action buttons disabled when trying to update domain with ' +
       'long value in origin server field (100)',
       function () {

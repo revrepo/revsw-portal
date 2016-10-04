@@ -35,9 +35,6 @@ describe('Boundary', function () {
       Portal.signOut();
     });
 
-    beforeEach(function () {
-    });
-
     afterEach(function () {
       Portal.addUserPage.form.clear(adminUser);
     });
