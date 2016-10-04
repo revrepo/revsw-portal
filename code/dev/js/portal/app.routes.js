@@ -39,8 +39,9 @@
             controller: /*ngInject*/ function($scope, $rootScope, $state, $window, $timeout, $config, $localStorage, User) {
               // NOTE: auto start Intor.js in each (page)state
               var timeout_ = null;
+              // console.log(User.isAuthed(),$rootScope.isShowMainIntro);
               $scope.$on('$stateChangeSuccess', function(state) {
-                if (userService.isAuthed()) {
+                if (User.isAuthed()) {
                   if (!!timeout_) {
                     $timeout.cancel(timeout_);
                   }
@@ -51,7 +52,9 @@
                   }
                 }
               });
-
+              $scope.introSkip = function(){
+                alert();
+              }
               resizeBinding($scope, $window);
               $scope.toggle = function() {
                 $scope.isHide = $scope.isHide === false ? true : false;
