@@ -36,7 +36,21 @@
         views: {
           layout: {
             templateUrl: 'parts/layout.html',
-            controller: /*ngInject*/ function($scope, $state, $window, User) {
+            controller: /*ngInject*/ function($scope, $rootScope, $state, $window, $timeout, $config, $localStorage, User) {
+              // NOTE: auto start Intor.js in each (page)state
+              var timeout_ = null;
+              $scope.$on('$stateChangeSuccess', function(state) {
+                if (userService.isAuthed()) {
+                  if (!!timeout_) {
+                    $timeout.cancel(timeout_);
+                  }
+                  if ($rootScope.isShowMainIntro === false || $rootScope.isShowMainIntro === 'false') {
+                    timeout_ = $timeout(function() {
+                      $scope.introOpen();
+                    }, 100);
+                  }
+                }
+              });
 
               resizeBinding($scope, $window);
               $scope.toggle = function() {
