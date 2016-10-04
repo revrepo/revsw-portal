@@ -38,9 +38,6 @@ describe('Functional', function () {
       Portal.helpers.nav.goToUsers();
     });
 
-    afterEach(function () {
-    });
-
     it('should display a successful message when creating user', function () {
       var bret = DataProvider.generateUser('Bret');
       Portal.userListPage.clickAddNewUser();

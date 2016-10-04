@@ -35,9 +35,6 @@ describe('Functional', function () {
       Portal.signOut();
     });
 
-    afterAll(function () {
-    });
-
     beforeEach(function () {
       Portal.signIn(adminUser);
       Portal.helpers.nav.goToDomains();

@@ -35,12 +35,6 @@ describe('Functional', function () {
       Portal.signOut();
     });
 
-    beforeEach(function () {
-    });
-
-    afterEach(function () {
-    });
-
     it('should sort list in ascendant and descendant directions - iOS', function () {
       Portal.helpers.nav.goToMobileAppsMenuItem(platforms.ios);
       Portal.mobileApps.listPage.table.sortByName();

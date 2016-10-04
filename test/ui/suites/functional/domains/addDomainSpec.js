@@ -55,7 +55,8 @@ describe('Functional', function () {
                 Portal.domains.addPage.createDomain(myDomain);
 
                 var alert = Portal.alerts.getFirst();
-                var expectedMsg = Constants.alertMessages.domains.MSG_FAIL_RO_USER_CANNOT_ADD;
+                var expectedMsg = Constants.alertMessages.domains
+                  .MSG_FAIL_RO_USER_CANNOT_ADD;
                 expect(alert.getText()).toContain(expectedMsg);
               });
 
@@ -70,7 +71,8 @@ describe('Functional', function () {
                 Portal.domains.addPage.createDomain(myDomain);
 
                 var alert = Portal.alerts.getFirst();
-                var expectedMsg = Constants.alertMessages.domains.MSG_SUCCESS_ADD;
+                var expectedMsg = Constants.alertMessages.domains
+                  .MSG_SUCCESS_ADD;
                 expect(alert.getText()).toContain(expectedMsg);
               });
         }

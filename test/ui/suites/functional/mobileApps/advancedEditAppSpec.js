@@ -28,24 +28,17 @@ describe('Functional', function () {
     var platforms = Portal.constants.mobileApps.platforms;
     var iosApps = DataProvider.generateMobileAppData(platforms.ios, 1);
     var androidApps = DataProvider.generateMobileAppData(platforms.android, 1);
-    var apps = iosApps.concat(androidApps);//.concat(windowsMobileApps);
+    var apps = iosApps.concat(androidApps);
 
     beforeAll(function () {
       Portal.signIn(adminUser);
       Portal.createMobileApps(platforms.ios, iosApps);
       Portal.createMobileApps(platforms.android, androidApps);
-      //Portal.createMobileApps(platforms.windowsMobile, windowsMobileApps);
     });
 
     afterAll(function () {
       Portal.deleteMobileApps(apps);
       Portal.signOut();
-    });
-
-    beforeEach(function () {
-    });
-
-    afterEach(function () {
     });
 
     apps.forEach(function (app) {

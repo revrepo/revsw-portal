@@ -38,9 +38,6 @@ describe('Functional', function () {
       Portal.helpers.nav.goToUsers();
     });
 
-    afterEach(function () {
-    });
-
     it('should delete successfully a user with "admin" role', function () {
       var tom = DataProvider.generateUser('Tom');
       tom.role = Constants.user.roles.USER;

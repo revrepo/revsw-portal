@@ -26,18 +26,12 @@ describe('Functional', function () {
 
   describe('Sign Up user', function () {
 
-    beforeAll(function () {
-    });
-
     afterAll(function () {
       Portal.signOut();
     });
 
     beforeEach(function () {
       Portal.load();
-    });
-
-    afterEach(function () {
     });
 
     it('should send verification token after success sign up.',

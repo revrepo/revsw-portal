@@ -39,9 +39,6 @@ describe('Functional', function () {
         Portal.helpers.nav.goToUsers();
       });
 
-      afterEach(function () {
-      });
-
       it('should update successfully an "admin-role" user to "user-role" user',
         function () {
           var tom = DataProvider.generateUser('Tom');

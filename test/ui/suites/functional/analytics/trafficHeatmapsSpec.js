@@ -37,9 +37,6 @@ describe('Functional', function () {
       Portal.signOut();
     });
 
-    beforeEach(function () {
-    });
-
     it('should create a Hits Heatmap report with default values',
       function () {
         var dataReport = DataProvider.generateAnalyticsInfo();

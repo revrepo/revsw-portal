@@ -43,9 +43,6 @@ xdescribe('Functional', function () {  // jshint ignore:line
       Portal.helpers.nav.goToDomains();
     });
 
-    afterEach(function () {
-    });
-
     it('should edit a domain and validate the domain successfully',
       function () {
         Portal.domains.listPage.searchAndClickEdit(myDomain.name);

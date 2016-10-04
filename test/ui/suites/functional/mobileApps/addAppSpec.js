@@ -41,12 +41,6 @@ describe('Functional', function () {
       Portal.signOut();
     });
 
-    beforeEach(function () {
-    });
-
-    afterEach(function () {
-    });
-
     apps.forEach(function (app) {
       it('should get title from list app page - ' + app.platform,
         function () {

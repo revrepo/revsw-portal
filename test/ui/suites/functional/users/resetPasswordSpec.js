@@ -53,9 +53,6 @@ describe('Functional', function () {
       Portal.load();
     });
 
-    afterEach(function () {
-    });
-
     it('should display Password Recovery dialog',
       function () {
         Portal.loginPage.clickForgotPassword();

@@ -38,10 +38,6 @@ describe('Functional', function () {
       Portal.helpers.nav.goToDomains();
     });
 
-    afterEach(function () {
-
-    });
-
     it('should delete successfully a domain',
       function () {
         var domain = DataProvider.generateDomain('domain-01');
