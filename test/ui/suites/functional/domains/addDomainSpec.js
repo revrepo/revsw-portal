@@ -22,35 +22,59 @@ var DataProvider = require('./../../../common/providers/data');
 var Constants = require('./../../../page_objects/constants');
 
 describe('Functional', function () {
-  describe('Add domain', function () {
 
-    var adminUser = config.get('portal.users.admin');
-    var myDomain = DataProvider.generateDomain('mydomain');
+  var users = [
+    config.get('portal.users.admin'),
+    config.get('portal.users.roUser')
+  ];
 
-    beforeAll(function () {
-      Portal.signIn(adminUser);
-    });
+  users.forEach(function (user) {
 
-    afterAll(function () {
-      Portal.deleteDomain(myDomain);
-      Portal.signOut();
-    });
+    describe('With user: ' + user.role, function () {
 
-    beforeEach(function () {
-    });
+      describe('Add domain', function () {
 
-    afterEach(function () {
-    });
+        var myDomain = DataProvider.generateDomain('my-domain');
 
-    it('should create a domain and display a successful message',
-      function () {
-        Portal.helpers.nav.goToDomains();
-        Portal.domains.listPage.clickAddNewDomain();
-        Portal.domains.addPage.createDomain(myDomain);
+        beforeAll(function () {
+          Portal.signIn(user);
+        });
 
-        var alert = Portal.alerts.getFirst();
-        var expectedMsg = Constants.alertMessages.domains.MSG_SUCCESS_ADD;
-        expect(alert.getText()).toContain(expectedMsg);
+        afterAll(function () {
+          Portal.signOut();
+        });
+
+        switch (user.role) {
+
+          case 'RO User':
+
+            it('RO user should not be able to create a domain',
+              function () {
+                Portal.helpers.nav.goToDomains();
+                Portal.domains.listPage.clickAddNewDomain();
+                Portal.domains.addPage.createDomain(myDomain);
+
+                var alert = Portal.alerts.getFirst();
+                var expectedMsg = Constants.alertMessages.domains.MSG_FAIL_RO_USER_CANNOT_ADD;
+                expect(alert.getText()).toContain(expectedMsg);
+              });
+
+            break;
+
+          default:
+
+            it('should create a domain and display a successful message',
+              function () {
+                Portal.helpers.nav.goToDomains();
+                Portal.domains.listPage.clickAddNewDomain();
+                Portal.domains.addPage.createDomain(myDomain);
+
+                var alert = Portal.alerts.getFirst();
+                var expectedMsg = Constants.alertMessages.domains.MSG_SUCCESS_ADD;
+                expect(alert.getText()).toContain(expectedMsg);
+              });
+        }
+      });
     });
   });
 });
