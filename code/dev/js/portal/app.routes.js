@@ -36,7 +36,29 @@
         views: {
           layout: {
             templateUrl: 'parts/layout.html',
-            controller: /*ngInject*/ function($scope, $state, $window, User) {
+            controller: /*ngInject*/ function($scope, $rootScope, $state, $window, $timeout, $config, $localStorage, User) {
+              // NOTE: auto start Intor.js in each (page)state
+              var timeout_ = null;
+              // console.log(User.isAuthed(),$rootScope.isShowMainIntro);
+              $scope.$on('$stateChangeSuccess', function(state) {
+                if (User.isAuthed()) {
+                  if (!!timeout_) {
+                    $timeout.cancel(timeout_);
+                  }
+                  if (($rootScope.isShowMainIntro === false || $rootScope.isShowMainIntro === 'false')&&$rootScope.isSkipIntro===false) {
+                    timeout_ = $timeout(function() {
+                      $scope.introOpen();
+                    }, 100);
+                  }
+                }
+              });
+              // NOTE: user skip intor on this session work
+              $scope.onIntroSkipEvent = function(){
+                 var intro  = $localStorage.intro;
+                 intro.isSkipIntro = true;
+                 $rootScope.isSkipIntro= true;
+                 $localStorage.intro = intro;
+              };
 
               resizeBinding($scope, $window);
               $scope.toggle = function() {

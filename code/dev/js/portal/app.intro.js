@@ -69,15 +69,19 @@
     // NOTE: Main Menu Introduction
     $rootScope.IntroOptions = introduction_application;
     if ($config.INTRO_IS_ACTIVE === true) {
-      if ($localStorage.intro === undefined) {
+      console.log($localStorage.intro);
+      var intro_ = $localStorage.intro;
+      if (!intro_) {
         $localStorage.intro = {
           isShowMainIntro: false,
-          pages: {}
+          isSkipIntro: false
         };
         $rootScope.menuExpandedNodes = {};
         $rootScope.isShowMainIntro = false;
+        $rootScope.isSkipIntro = false;
       } else {
         $rootScope.isShowMainIntro = false;
+        $rootScope.isSkipIntro = $localStorage.intro.isSkipIntro;
         $rootScope.isShowMainIntro = $localStorage.intro.isShowMainIntro;
       }
       if ($rootScope.isShowMainIntro === false) {

@@ -19,7 +19,7 @@
          .then(function(userData) {
            // NOTE: no message - only redirect
            $ctrl.authState = 'success';
-           $state.go('index.dashboard.main');
+           $state.go('index');
          })
          .catch(function(err) {
            AlertService.danger(err);

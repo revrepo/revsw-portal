@@ -34,7 +34,9 @@
 
     $scope.NO_SPECIAL_CHARS = $config.PATTERNS.NO_SPECIAL_CHARS;
     $scope.COMMENT_NO_SPECIAL_CHARS = $config.PATTERNS.COMMENT_NO_SPECIAL_CHARS;
-    $scope.downloadLinks = $values.downloadLinks;
+    $scope.downloadLinks = $values.SDKDownloadLinks;
+    $scope.introductionVideoYoutubeIDs = $values.SDKIntroductionVideoYoutubeIDs;
+
     /**
      * @name setAccountName
      * @description
@@ -358,6 +360,11 @@
       } else {
         $scope.alertService.success('The SDK key has been copied to the clipboard', 2000);
       }
+    };
+
+    $scope.onShowVideo = function(e,item){
+       var model = item;
+       $scope.confirm('videoModal.html', model);
     };
   }
 })();

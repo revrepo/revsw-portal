@@ -39,7 +39,6 @@
                             <div>
                                 <div>{{statement.customer_first_name}} {{statement.customer_last_name}}</div>
                                 <div>{{statement.customer_organization}}</div>
-                                <div id="billing_statement_customer_email">{{user.email}}</div>
                                 <div class="tel" id="billing_statement_customer_phone"><span class="value">{{statement.customer_phone}}</span></div>
 
 
@@ -48,9 +47,9 @@
                                     <div>{{statement.customer_billing_address}}</div>
                                     <div>{{statement.customer_billing_address_2}}</div>
                                     <div>
-                                        <span >{{statement.customer_billing_city}}</span>,
-                                        <abbr >{{statement.customer_billing_state}}</abbr>
-                                        <span >{{statement.customer_billing_zip}}</span>
+                                        <span ng-show="statement.customer_billing_city" >{{statement.customer_billing_city}},</span>
+                                        <abbr>{{statement.customer_billing_state}}</abbr>
+                                        <span>{{statement.customer_billing_zip}}</span>
                                     </div>
                                     <div>{{statement.customer_billing_country}}</div>
                                 </div>
