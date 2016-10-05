@@ -40,10 +40,20 @@
      * Clear all details from localstorage
      */
     function clearAll() {
-      if (!localStorage) {
+      if (!$localStorage) {
         return;
       }
-      localStorage.clear();
+      var intro_ = $localStorage.intro;
+      intro_.isSkipIntro = false;
+      $localStorage.$reset({
+        user: null,
+        isLoggedIn: false,
+        isCAdmin: false,
+        last_user_id: null,
+        selectedAccount: null,
+        selectedApplication: null,
+        intro: intro_
+      });
     }
 
     /**
@@ -240,7 +250,7 @@
      * @returns {boolean}
      */
     function hasBillingPlan() {
-      var account = getSelectedAccount();
+      var account = getSelectedAccount() || {};
       return Boolean(account.billing_plan);
     }
 

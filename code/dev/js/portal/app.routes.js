@@ -45,16 +45,21 @@
                   if (!!timeout_) {
                     $timeout.cancel(timeout_);
                   }
-                  if ($rootScope.isShowMainIntro === false || $rootScope.isShowMainIntro === 'false') {
+                  if (($rootScope.isShowMainIntro === false || $rootScope.isShowMainIntro === 'false')&&$rootScope.isSkipIntro===false) {
                     timeout_ = $timeout(function() {
                       $scope.introOpen();
                     }, 100);
                   }
                 }
               });
-              $scope.introSkip = function(){
-                alert();
-              }
+              // NOTE: user skip intor on this session work
+              $scope.onIntroSkipEvent = function(){
+                 var intro  = $localStorage.intro;
+                 intro.isSkipIntro = true;
+                 $rootScope.isSkipIntro= true;
+                 $localStorage.intro = intro;
+              };
+
               resizeBinding($scope, $window);
               $scope.toggle = function() {
                 $scope.isHide = $scope.isHide === false ? true : false;

@@ -38,7 +38,8 @@
     'revapm.Portal.DNSZoneRecords',
     'revapm.Portal.DNSZones',
     'revapm.Portal.AzureResources',
-    'revapm.Portal.AzureSubscriptions'
+    'revapm.Portal.AzureSubscriptions',
+    'youtube-embed'
   ]);
 
 })();
