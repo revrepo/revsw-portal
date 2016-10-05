@@ -9,8 +9,8 @@
   <div class="col-md-12">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <div class="row">
-          <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
+        <div class="row form-group">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div class="pull-left form-inline">
               <div class="form-group">
                 <a ui-sref="^" ng-disabled="_loading" class="btn btn-default">
@@ -38,6 +38,8 @@
               </div>
             </div>
           </div>
+        </div>
+        <div class="row">
           <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 row">
             <div class="form-group form-horizontal">
               <label for="sdk_release_version" class="col-sm-6 col-md-7 control-label">SDK Release Version</label>
@@ -47,7 +49,7 @@
               </div>
             </div>
           </div>
-          <div class="col-sm-12 col-md-3 col-md-offset-9 col-lg-offset-0 col-lg-4">
+          <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
             <div class="btn-group pull-left">
               <button type="button" class="btn btn-primary" ng-class="{'disabled': !availableSDKVersions.length}">
                 Add New Version
