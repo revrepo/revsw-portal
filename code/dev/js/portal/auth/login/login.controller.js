@@ -39,13 +39,8 @@
       try {
         User.login(email, pass)
           .then(function(data) {
-            DashboardSrv.getAll().then(function(dashboards) {
-              if (dashboards && dashboards.length) {
-                $location.path('dashboard/' + dashboards[0].id);
-              } else {
-                $state.go('index.reports.proxy');
-              }
-            });
+            // NOTE: call event - user signin
+            $scope.$emit('user.signin');
           })
           .catch(function(err) {
             $scope._loading = false;
@@ -92,7 +87,9 @@
       });
 
       modalInstance.result.then(function(data) {
-        $state.go('index');
+        if (data.status === 200) {
+          $scope.$emit('user.signin');
+        }
       });
     };
 
@@ -132,7 +129,7 @@
 
       modalInstance.result.then(function(data) {
         // $state.go('index');
-         // $uibModalInstance.close();
+        // $uibModalInstance.close();
       });
     };
   }
