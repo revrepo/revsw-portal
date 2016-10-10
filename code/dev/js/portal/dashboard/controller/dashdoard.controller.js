@@ -189,11 +189,20 @@
      if (!!timeout_) {
        $timeout.cancel(timeout_);
      }
-     var intro = $localStorage.intro || { isShowMainIntro: false, isSkipIntro: false };
-     if ((intro.isShowMainIntro === false || intro.isShowMainIntro === 'false') && intro.isSkipIntro === false) {
-       timeout_ = $timeout(function() {
-         $scope.introOpen();
-       }, 3000);
+
+     if ($config.INTRO_IS_ACTIVE) {
+       var intro = $localStorage.intro || { isShowMainIntro: false, isSkipIntro: false };
+       if ((intro.isShowMainIntro === false || intro.isShowMainIntro === 'false') && intro.isSkipIntro === false) {
+         // NOTE: open menu items
+         ['index.apps', 'index.reports', 'index.webApp', 'index.accountSettings'].forEach(function(menuState) {
+           $rootScope.menuExpandedNodes[menuState] = true;
+         });
+
+         timeout_ = $timeout(function() {
+           $scope.introOpen();
+           $localStorage.intro = intro;
+         }, 2000);
+       }
      }
      // NOTE: user skip intor on this session work
      vm.onIntroSkipEvent = function() {
