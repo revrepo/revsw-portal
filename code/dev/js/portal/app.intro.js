@@ -66,10 +66,10 @@
         },
       ]
     };
-    // NOTE: Main Menu Introduction
+    // NOTE: Main Menu Introduction (intro.js)
     $rootScope.IntroOptions = introduction_application;
+
     if ($config.INTRO_IS_ACTIVE === true) {
-      console.log($localStorage.intro);
       var intro_ = $localStorage.intro;
       if (!intro_) {
         $localStorage.intro = {
@@ -85,6 +85,7 @@
         $rootScope.isShowMainIntro = $localStorage.intro.isShowMainIntro;
       }
       if ($rootScope.isShowMainIntro === false) {
+        // NOTE: open menu items
         ['index.apps', 'index.reports', 'index.webApp', 'index.accountSettings'].forEach(function(menuState) {
           $rootScope.menuExpandedNodes[menuState] = true;
         });
