@@ -228,7 +228,9 @@ var AppsList = {
    */
   findApp: function (app) {
     this.setSearch(app.name);
-    return this.table.countTotalRows();
+    return this.table
+      .getRows()
+      .count();
   },
 
   /**
@@ -242,7 +244,9 @@ var AppsList = {
    */
   searchAndDelete: function (app) {
     this.setSearch(app.name);
-    this.table.clickDeleteApp();
+    this.table
+      .getFirstRow()
+      .clickDelete();
   },
 
   /**
@@ -256,7 +260,9 @@ var AppsList = {
    */
   searchAndEdit: function (app) {
     this.setSearch(app.name);
-    this.table.clickEditApp();
+    return this.table
+      .getFirstRow()
+      .clickEdit();
   },
 
   /**
@@ -270,7 +276,23 @@ var AppsList = {
    */
   searchAndAdvancedEdit: function (app) {
     this.setSearch(app.name);
-    this.table.clickAdvancedEditApp();
+    this.table
+      .getFirstRow()
+      .clickConfigure();
+  },
+
+  /**
+   * ### AppsList.sortByName()
+   *
+   * Clicks on `Name Column` header element from apps table, in Apps List page.
+   *
+   * @returns {Object} Promise
+   */
+  sortByName: function () {
+    return this.table
+      .getHeader()
+      .getNameLink()
+      .click();
   }
 };
 
