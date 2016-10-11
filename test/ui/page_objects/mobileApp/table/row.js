@@ -16,7 +16,7 @@
  * from Rev Software, Inc.
  */
 
-var DomainTableRow = function (rowEl, locators) {
+var AppTableRow = function (rowEl, locators) {
 
   // Properties
   this.rowEl = rowEl;
@@ -179,4 +179,4 @@ var DomainTableRow = function (rowEl, locators) {
 
 };
 
-module.exports = DomainTableRow;
+module.exports = AppTableRow;
