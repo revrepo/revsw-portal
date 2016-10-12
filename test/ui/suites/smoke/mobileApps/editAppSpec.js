@@ -66,20 +66,25 @@ describe('Smoke', function () {
             it('should display edit app button',
               function () {
                 var editButton = Portal.mobileApps.listPage.table
-                  .getEditApp();
+                  .getFirstRow()
+                  .getEditBtn();
                 expect(editButton.isPresent()).toBeTruthy();
               });
 
             it('should display `Edit app` form',
               function () {
-                Portal.mobileApps.listPage.table.clickEditApp();
+                Portal.mobileApps.listPage.table
+                  .getFirstRow()
+                  .clickEdit();
                 expect(Portal.mobileApps.editPage.isDisplayed())
                   .toBeTruthy();
               });
 
             it('should allow to cancel an app edition',
               function () {
-                Portal.mobileApps.listPage.table.clickEditApp();
+                Portal.mobileApps.listPage.table
+                  .getFirstRow()
+                  .clickEdit();
                 Portal.mobileApps.editPage.form.setAppName('something');
                 Portal.mobileApps.editPage.form.clickCancel();
                 expect(Portal.mobileApps.listPage.isDisplayed()).toBeTruthy();
@@ -88,7 +93,9 @@ describe('Smoke', function () {
             // TODO: Paste (ctrl + v is not working)
             xit('should save SDKKey to clipboard',
               function () {
-                Portal.mobileApps.listPage.table.clickEditApp();
+                Portal.mobileApps.listPage.table
+                  .getFirstRow()
+                  .clickEdit();
                 Portal.mobileApps.editPage.form.clickSDKKeyClipboardButton();
                 Portal.mobileApps.editPage.form.clickShowSDKKeyButton();
                 Portal.mobileApps.editPage.form

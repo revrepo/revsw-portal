@@ -64,7 +64,8 @@ describe('Smoke', function () {
             it('should display delete app button',
               function () {
                 var editButton = Portal.mobileApps.listPage.table
-                  .getDeleteApp();
+                  .getFirstRow()
+                  .getDeleteBtn();
                 expect(editButton.isPresent()).toBeTruthy();
               });
 
@@ -88,7 +89,8 @@ describe('Smoke', function () {
                 Portal.dialog.clickOk();
                 Portal.mobileApps.listPage.setSearch(app.name);
                 var count = Portal.mobileApps.listPage.table
-                  .countTotalRows();
+                  .getRows()
+                  .count();
                 expect(count).toBe(0);
               });
           });
