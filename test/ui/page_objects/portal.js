@@ -103,9 +103,17 @@ var DataProvider = require('./../common/providers/data');
 
 var PortalHelpers = require('./../common/helpers/portal');
 
+var MobileAppsDP = require('./../common/providers/mobileApps')
+
+var API = require('revsw-api/test/rest_api/common/api');
+
 // This `Portal` Page Object is the entry point to use all other Page Objects
 // that abstract all components from the Portal App.
 var Portal = {
+
+  providers: {
+    mobileApps: MobileAppsDP
+  },
 
   constants: Constants,
 
@@ -540,18 +548,29 @@ var Portal = {
    * @returns {Object} Promise
    */
   createMobileApps: function (platform, apps) {
-    var me = this;
-    return browser.getCurrentUrl().then(function (initialUrl) {
-      apps.forEach(function (app) {
-        me.helpers.nav.goToMobileAppsMenuItem(platform);
-        me.mobileApps.listPage.addNew(app);
+    var config = require('config');
+    var user = config.get('portal.users.admin');
+    return API.helpers
+      .authenticateUser(user)
+      .then(function () {
+        return API.helpers.apps.createOne(user.account.id);
       });
-      browser.getCurrentUrl().then(function (currentUrl) {
-        if (initialUrl !== currentUrl) {
-          browser.get(initialUrl);
-        }
-      });
-    });
+      //.catch(function (err) {
+      //  console.log('Error while creating app', err);
+      //});
+
+    //var me = this;
+    //return browser.getCurrentUrl().then(function (initialUrl) {
+    //  apps.forEach(function (app) {
+    //    me.helpers.nav.goToMobileAppsMenuItem(platform);
+    //    me.mobileApps.listPage.addNew(app);
+    //  });
+    //  browser.getCurrentUrl().then(function (currentUrl) {
+    //    if (initialUrl !== currentUrl) {
+    //      browser.get(initialUrl);
+    //    }
+    //  });
+    //});
   },
 
   /**
@@ -600,7 +619,8 @@ var Portal = {
       me.helpers.nav.goToMobileAppsMenuItem(app.platform);
       me.mobileApps.listPage.setSearch(app.name);
       me.mobileApps.listPage.table
-        .countTotalRows()
+        .getRows()
+        .count()
         .then(function (totalResults) {
           if (totalResults === 0) {
             me.mobileApps.listPage.addNew(app);

@@ -101,6 +101,20 @@ var AppTableRow = function (rowEl, locators) {
       .getText();
   };
 
+  this.getStagingStatusTooltip = function () {
+    return this
+      .getStagingStatusIcon()
+      .getAttribute('uib-tooltip')
+      .getText();
+  };
+
+  this.getGlobalStatusTooltip = function () {
+    return this
+      .getGlobalStatusIcon()
+      .getAttribute('uib-tooltip')
+      .getText();
+  };
+
   if (this.locators.actions && this.locators.actions.buttons.pencil) {
 
     this.getEditBtn = function () {

@@ -18,10 +18,9 @@
 
 // # Apps List Page Object
 
-// Requiring `Apps List Table` component page object.
-var AppsTable = require('./table');
-// Requiring `Add New App` component page object.
-var AddAppPage = require('./addPage');
+// Requiring other Page Objects that compound the Apps List Page
+var AppsTable = require('./table/table');
+var AddAppPage = require('./addPage'); // TODO: AddPage is not part of ListPage
 var Pager = require('./../common/pager');
 var Searcher = require('./../common/searcher');
 
