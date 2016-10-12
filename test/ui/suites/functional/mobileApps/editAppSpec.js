@@ -170,9 +170,10 @@ describe('Functional', function () {
             Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
             var findApp = Portal.mobileApps.listPage.findApp(app);
             expect(findApp).toBe(1);
-            var row = Portal.mobileApps.listPage.table.getFirstRow();
-            expect(row.stagingStatus).toEqual('Staging Status: Published');
-            expect(row.globalStatus).toEqual('Global Status: Published');
+            var row = Portal.mobileApps.listPage.table
+              .getFirstRow();
+            expect(row.getStagingStatusTooltip()).toEqual('Staging Status: Published');
+            expect(row.getGlobalStatusIcon()).toEqual('Global Status: Published');
         });
 
         it('should verify global status after "update" - ' + app.platform,
@@ -190,9 +191,10 @@ describe('Functional', function () {
             Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
             var findApp = Portal.mobileApps.listPage.findApp(app);
             expect(findApp).toBe(1);
-            var row = Portal.mobileApps.listPage.table.getFirstRow();
-            expect(row.stagingStatus).toEqual('Staging Status: Published');
-            expect(row.globalStatus).toEqual('Global Status: Modified');
+            var row = Portal.mobileApps.listPage.table
+              .getFirstRow();
+            expect(row.getStagingStatusTooltip()).toEqual('Staging Status: Published');
+            expect(row.getGlobalStatusIcon()).toEqual('Global Status: Modified');
         });
     });
   });

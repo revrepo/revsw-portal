@@ -66,11 +66,11 @@ describe('Functional', function () {
           function () {
             var firstAppName = Portal.mobileApps.listPage.table
               .getFirstRow()
-              .name;
+              .getName();
             Portal.mobileApps.listPage.pager.clickNext();
             var nextFirstAppName = Portal.mobileApps.listPage.table
               .getFirstRow()
-              .name;
+              .getName();
             expect(firstAppName).not.toEqual(nextFirstAppName);
           });
 
@@ -79,15 +79,15 @@ describe('Functional', function () {
           function () {
             var firstAppName = Portal.mobileApps.listPage.table
               .getFirstRow()
-              .name;
+              .getName();
             Portal.mobileApps.listPage.pager.clickNext();
             var nextFirstAppName = Portal.mobileApps.listPage.table
               .getFirstRow()
-              .name;
+              .getName();
             Portal.mobileApps.listPage.pager.clickPrevious();
             var newFirstAppName = Portal.mobileApps.listPage.table
               .getFirstRow()
-              .name;
+              .getName();
             expect(newFirstAppName).not.toEqual(nextFirstAppName);
             expect(newFirstAppName).toEqual(firstAppName);
           });
@@ -96,11 +96,11 @@ describe('Functional', function () {
           function () {
             var firstAppName = Portal.mobileApps.listPage.table
               .getFirstRow()
-              .name;
+              .getName();
             Portal.mobileApps.listPage.pager.clickPageIndex(2);
             var nextFirstAppName = Portal.mobileApps.listPage.table
               .getFirstRow()
-              .name;
+              .getName();
             expect(firstAppName).not.toEqual(nextFirstAppName);
           });
 
