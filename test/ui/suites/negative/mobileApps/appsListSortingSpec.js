@@ -43,19 +43,27 @@ describe('Negative', function () {
 
     it('should sorted list apps ascendent and descendant - iOS', function () {
       Portal.helpers.nav.goToMobileAppsMenuItem(platforms.ios);
-      var totalRows = Portal.mobileApps.listPage.table.countTotalRows();
+      var totalRows = Portal.mobileApps.listPage.table
+        .getRows()
+        .count();
       Portal.mobileApps.listPage.setSearch('Something weird');
-      Portal.mobileApps.listPage.table.sortByName();
-      var appsCount1 = Portal.mobileApps.listPage.table.countTotalRows();
+      Portal.mobileApps.listPage.sortByName();
+      var appsCount1 = Portal.mobileApps.listPage.table
+        .getRows()
+        .count();
 
       Portal.helpers.nav.goToMobileAppsMenuItem(platforms.ios);
-      Portal.mobileApps.listPage.table.sortByName();
-      var appsCount2 = Portal.mobileApps.listPage.table.countTotalRows();
+      Portal.mobileApps.listPage.sortByName();
+      var appsCount2 = Portal.mobileApps.listPage.table
+        .getRows()
+        .count();
 
       Portal.helpers.nav.goToMobileAppsMenuItem(platforms.ios);
       Portal.mobileApps.listPage.setSearch(' ');
-      Portal.mobileApps.listPage.table.sortByName();
-      var appsCount3 = Portal.mobileApps.listPage.table.countTotalRows();
+      Portal.mobileApps.listPage.sortByName();
+      var appsCount3 = Portal.mobileApps.listPage.table
+        .getRows()
+        .count();
 
       expect(appsCount1).toBe(0);
       expect(appsCount2).toBe(0);
@@ -64,19 +72,27 @@ describe('Negative', function () {
 
     it('should sorted list apps ascendent & descendant - Android', function () {
       Portal.helpers.nav.goToMobileAppsMenuItem(platforms.android);
-      var totalRows = Portal.mobileApps.listPage.table.countTotalRows();
+      var totalRows = Portal.mobileApps.listPage.table
+        .getRows()
+        .count();
       Portal.mobileApps.listPage.setSearch('Something weird');
-      Portal.mobileApps.listPage.table.sortByName();
-      var appsCount1 = Portal.mobileApps.listPage.table.countTotalRows();
+      Portal.mobileApps.listPage.sortByName();
+      var appsCount1 = Portal.mobileApps.listPage.table
+        .getRows()
+        .count();
 
       Portal.helpers.nav.goToMobileAppsMenuItem(platforms.android);
-      Portal.mobileApps.listPage.table.sortByName();
-      var appsCount2 = Portal.mobileApps.listPage.table.countTotalRows();
+      Portal.mobileApps.listPage.sortByName();
+      var appsCount2 = Portal.mobileApps.listPage.table
+        .getRows()
+        .count();
 
       Portal.helpers.nav.goToMobileAppsMenuItem(platforms.android);
       Portal.mobileApps.listPage.setSearch(' ');
-      Portal.mobileApps.listPage.table.sortByName();
-      var appsCount3 = Portal.mobileApps.listPage.table.countTotalRows();
+      Portal.mobileApps.listPage.sortByName();
+      var appsCount3 = Portal.mobileApps.listPage.table
+        .getRows()
+        .count();
 
       expect(appsCount1).toBe(0);
       expect(appsCount2).toBe(0);
