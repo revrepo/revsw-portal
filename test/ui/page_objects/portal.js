@@ -103,17 +103,11 @@ var DataProvider = require('./../common/providers/data');
 
 var PortalHelpers = require('./../common/helpers/portal');
 
-var MobileAppsDP = require('./../common/providers/mobileApps')
-
 var API = require('revsw-api/test/rest_api/common/api');
 
 // This `Portal` Page Object is the entry point to use all other Page Objects
 // that abstract all components from the Portal App.
 var Portal = {
-
-  providers: {
-    mobileApps: MobileAppsDP
-  },
 
   constants: Constants,
 
