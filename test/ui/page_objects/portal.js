@@ -103,8 +103,6 @@ var DataProvider = require('./../common/providers/data');
 
 var PortalHelpers = require('./../common/helpers/portal');
 
-var API = require('revsw-api/test/rest_api/common/api');
-
 // This `Portal` Page Object is the entry point to use all other Page Objects
 // that abstract all components from the Portal App.
 var Portal = {
@@ -201,9 +199,10 @@ var Portal = {
     addPage: ZoneRecordsAddPage,
     editPage: ZoneRecordsEditPage
   },
-  // ## Authentication Helper methods
 
   helpers: PortalHelpers,
+
+  // ## Authentication Helper methods
 
   /**
    * ### Portal.signIn()
@@ -542,29 +541,18 @@ var Portal = {
    * @returns {Object} Promise
    */
   createMobileApps: function (platform, apps) {
-    var config = require('config');
-    var user = config.get('portal.users.admin');
-    return API.helpers
-      .authenticateUser(user)
-      .then(function () {
-        return API.helpers.apps.createOne(user.account.id);
+    var me = this;
+    return browser.getCurrentUrl().then(function (initialUrl) {
+      apps.forEach(function (app) {
+        me.helpers.nav.goToMobileAppsMenuItem(platform);
+        me.mobileApps.listPage.addNew(app);
       });
-      //.catch(function (err) {
-      //  console.log('Error while creating app', err);
-      //});
-
-    //var me = this;
-    //return browser.getCurrentUrl().then(function (initialUrl) {
-    //  apps.forEach(function (app) {
-    //    me.helpers.nav.goToMobileAppsMenuItem(platform);
-    //    me.mobileApps.listPage.addNew(app);
-    //  });
-    //  browser.getCurrentUrl().then(function (currentUrl) {
-    //    if (initialUrl !== currentUrl) {
-    //      browser.get(initialUrl);
-    //    }
-    //  });
-    //});
+      browser.getCurrentUrl().then(function (currentUrl) {
+        if (initialUrl !== currentUrl) {
+          browser.get(initialUrl);
+        }
+      });
+    });
   },
 
   /**
