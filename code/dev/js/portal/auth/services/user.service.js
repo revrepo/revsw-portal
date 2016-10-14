@@ -40,7 +40,7 @@
      * Clear all details from localstorage
      */
     function clearAll() {
-      if (!$localStorage) {
+      if (!$localStorage || $localStorage.intro === undefined) {
         return;
       }
       var intro_ = $localStorage.intro;
