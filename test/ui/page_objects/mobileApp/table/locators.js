@@ -92,7 +92,10 @@ var rowLocators = {
         css: 'i:nth-of-type(2)',
         type: {
           published: {
-            css: 'i:nth-of-type(2).glyphicon-ok-circle'
+            css: 'i:nth-of-type(2).glyphicon-ok-circle.text-success'
+          },
+          modified: {
+            css: 'i:nth-of-type(2).glyphicon-ok-circle.text-primary'
           },
           error: {
             css: 'i:nth-of-type(2).glyphicon-remove'

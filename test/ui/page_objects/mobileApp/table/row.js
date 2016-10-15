@@ -65,10 +65,52 @@ var AppTableRow = function (rowEl, locators) {
       .element(by.css(this.locators.status.icons.staging.css));
   };
 
+  this.getPublishedStagingStatusIcon = function () {
+    return this
+      .getStatusCell()
+      .element(by.css(this.locators.status.icons.staging.type.published.css));
+  };
+
+  this.getErrorStagingStatusIcon = function () {
+    return this
+      .getStatusCell()
+      .element(by.css(this.locators.status.icons.staging.type.error.css));
+  };
+
+  this.getInProgressStagingStatusIcon = function () {
+    return this
+      .getStatusCell()
+      .element(by.css(this.locators.status.icons.staging.type.inProgress.css));
+  };
+
   this.getGlobalStatusIcon = function () {
     return this
       .getStatusCell()
       .element(by.css(this.locators.status.icons.global.css));
+  };
+
+  this.getPublishedGlobalStatusIcon = function () {
+    return this
+      .getStatusCell()
+      .element(by.css(this.locators.status.icons.global.type.published.css));
+  };
+
+  this.getModifiedGlobalStatusIcon = function () {
+    return this
+      .getStatusCell()
+      .element(by.css(this.locators.status.icons.global.type.modified.css));
+  };
+
+  this.getErrorGlobalStatusIcon = function () {
+    return this
+      .getStatusCell()
+      .element(by.css(this.locators.status.icons.global.type.error.css));
+  };
+
+  this.getInProgressGlobalStatusIcon = function () {
+    return this
+      .getStatusCell()
+      .element(by.css(this.locators.status.icons.global.type.inProgress.css));
   };
 
   this.getName = function () {
