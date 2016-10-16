@@ -18,7 +18,6 @@
 
 var config = require('config');
 var Portal = require('./../../../page_objects/portal');
-var DataProvider = require('./../../../common/providers/data');
 var Constants = require('./../../../page_objects/constants');
 
 describe('Functional', function () {
@@ -31,7 +30,6 @@ describe('Functional', function () {
       Portal.constants.mobileApps.platforms.android,
       Portal.constants.mobileApps.platforms.ios
     ];
-    var length51Characters = new Array(52).join('x');
 
     users.forEach(function (user) {
 
@@ -74,24 +72,5 @@ describe('Functional', function () {
         });
       });
     });
-
-    // var adminUser = config.get('portal.users.admin');
-    // var platforms = Portal.constants.mobileApps.platforms;
-    // var iosApps = DataProvider.generateMobileAppData(platforms.ios, 1);
-    // var androidApps = DataProvider.generateMobileAppData(platforms.android, 1);
-    // var apps = iosApps.concat(androidApps);
-    //
-    // beforeAll(function () {
-    //   Portal.signIn(adminUser);
-    //   Portal.createMobileApps(platforms.ios, iosApps);
-    //   Portal.createMobileApps(platforms.android, androidApps);
-    // });
-    //
-    // afterAll(function () {
-    //   Portal.signOut();
-    // });
-
-    // apps.forEach(function (app) {
-    // });
   });
 });
