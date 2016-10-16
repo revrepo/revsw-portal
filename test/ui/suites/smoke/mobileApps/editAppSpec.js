@@ -133,7 +133,7 @@ describe('Smoke', function () {
                 expect(Portal.alerts.getFirst().getText())
                   .toContain(Constants.alertMessages.app.MSG_SUCCESS_ADD);
                 Portal.mobileApps.addPage.clickBackToList();
-                Portal.mobileApps.listPage.searchAndEdit(app);
+                Portal.mobileApps.listPage.searchAndEdit(app.name);
                 app = DataProvider.generateUpdateMobileApp(app);
                 Portal.mobileApps.editPage.update(app);
                 browser.ignoreSynchronization = true;

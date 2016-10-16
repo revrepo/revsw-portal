@@ -48,11 +48,11 @@ describe('Negative', function () {
           app.platform,
           function () {
             Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
-            Portal.mobileApps.listPage.searchAndEdit(app);
+            Portal.mobileApps.listPage.searchAndEdit(app.name);
             var tempAppName = app.name;
             app.name = ' ';
             Portal.mobileApps.editPage.form.fill(app);
-            var enabled = Portal.mobileApps.editPage.form.isEnabledVerify();
+            var enabled = Portal.mobileApps.editPage.form.isVerifyBtnEnabled();
             expect(enabled).toBe(false);
         });
 
@@ -61,11 +61,11 @@ describe('Negative', function () {
           app.platform,
           function () {
             Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
-            Portal.mobileApps.listPage.searchAndEdit(app);
+            Portal.mobileApps.listPage.searchAndEdit(app.name);
             var tempAppName = app.name;
             app.name = ' ';
             Portal.mobileApps.editPage.form.fill(app);
-            var enabled = Portal.mobileApps.editPage.form.isEnabledUpdate();
+            var enabled = Portal.mobileApps.editPage.form.isUpdateBtnEnabled();
             expect(enabled).toBe(false);
         });
 
@@ -74,11 +74,11 @@ describe('Negative', function () {
           app.platform,
           function () {
             Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
-            Portal.mobileApps.listPage.searchAndEdit(app);
+            Portal.mobileApps.listPage.searchAndEdit(app.name);
             var tempAppName = app.name;
             app.name = ' ';
             Portal.mobileApps.editPage.form.fill(app);
-            var enabled = Portal.mobileApps.editPage.form.isEnabledPublish();
+            var enabled = Portal.mobileApps.editPage.form.isPublishBtnEnabled();
             expect(enabled).toBe(false);
         });
     });

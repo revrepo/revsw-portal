@@ -46,7 +46,7 @@ describe('Functional', function () {
         it('should get the title from basic edited app - ' + app.platform,
           function () {
             Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
-            Portal.mobileApps.listPage.searchAndEdit(app);
+            Portal.mobileApps.listPage.searchAndEdit(app.name);
 
             var title = Portal.mobileApps.editPage.getTitle();
             expect(title).toContain('Edit App');
@@ -55,7 +55,7 @@ describe('Functional', function () {
         it('should basic edit and "verify" an existing app - ' + app.platform,
           function () {
             Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
-            Portal.mobileApps.listPage.searchAndEdit(app);
+            Portal.mobileApps.listPage.searchAndEdit(app.name);
             var updatedApp = DataProvider.generateUpdateMobileApp(app);
             Portal.mobileApps.editPage.verify(updatedApp);
           
@@ -71,7 +71,7 @@ describe('Functional', function () {
         it('should basic edit and "update" an existing app - ' + app.platform,
           function () {
             Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
-            Portal.mobileApps.listPage.searchAndEdit(app);
+            Portal.mobileApps.listPage.searchAndEdit(app.name);
             var updatedApp = DataProvider.generateUpdateMobileApp(app);
             Portal.mobileApps.editPage.update(updatedApp);
             Portal.dialog.clickOk();
@@ -88,7 +88,7 @@ describe('Functional', function () {
         it('should basic edit and "publish" an existing app - ' + app.platform,
           function () {
             Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
-            Portal.mobileApps.listPage.searchAndEdit(app);
+            Portal.mobileApps.listPage.searchAndEdit(app.name);
              var updatedApp = DataProvider.generateUpdateMobileApp(app);
             Portal.mobileApps.editPage.publish(updatedApp);
             Portal.dialog.clickOk();
@@ -105,7 +105,7 @@ describe('Functional', function () {
         it('should basic edit and "verify" the app name - ' + app.platform,
           function () {
             Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
-            Portal.mobileApps.listPage.searchAndEdit(app);
+            Portal.mobileApps.listPage.searchAndEdit(app.name);
             app.name = app.name + 'UPDATED';
             var updatedApp = DataProvider.generateUpdateMobileApp(app);
             Portal.mobileApps.editPage.verify(updatedApp);
@@ -122,7 +122,7 @@ describe('Functional', function () {
         it('should basic edit and "update" the app name - ' + app.platform,
           function () {
             Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
-            Portal.mobileApps.listPage.searchAndEdit(app);
+            Portal.mobileApps.listPage.searchAndEdit(app.name);
             app.name = app.name + 'UPDATED';
             var updatedApp = DataProvider.generateUpdateMobileApp(app);
             Portal.mobileApps.editPage.update(updatedApp);
@@ -140,7 +140,7 @@ describe('Functional', function () {
         it('should basic edit and "publish" the app name - ' + app.platform,
           function () {
             Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
-            Portal.mobileApps.listPage.searchAndEdit(app);
+            Portal.mobileApps.listPage.searchAndEdit(app.name);
             app.name = app.name + 'UPDATED';
             var updatedApp = DataProvider.generateUpdateMobileApp(app);
             Portal.mobileApps.editPage.publish(updatedApp);
@@ -158,7 +158,7 @@ describe('Functional', function () {
         it('should verify staging status after "publish" - ' + app.platform,
           function () {
             Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
-            Portal.mobileApps.listPage.searchAndEdit(app);
+            Portal.mobileApps.listPage.searchAndEdit(app.name);
             var updatedApp = DataProvider.generateUpdateMobileApp(app);
             Portal.mobileApps.editPage.publish(updatedApp);
             Portal.dialog.clickOk();
@@ -179,7 +179,7 @@ describe('Functional', function () {
         it('should verify global status after "update" - ' + app.platform,
           function () {
             Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
-            Portal.mobileApps.listPage.searchAndEdit(app);
+            Portal.mobileApps.listPage.searchAndEdit(app.name);
             var updatedApp = DataProvider.generateUpdateMobileApp(app);
             Portal.mobileApps.editPage.update(updatedApp);
             Portal.dialog.clickOk();
