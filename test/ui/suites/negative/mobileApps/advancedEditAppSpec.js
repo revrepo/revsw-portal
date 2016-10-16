@@ -45,11 +45,11 @@ describe('Negative', function () {
       it('should edit advanced mode & "cancel" json editor - ' + app.platform,
         function () {
           Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
-          Portal.mobileApps.listPage.searchAndAdvancedEdit(app);
+          Portal.mobileApps.listPage.searchAndAdvancedEdit(app.name);
           Portal.mobileApps.advancedEditPage.cancel();
 
           Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
-          var findApp = Portal.mobileApps.listPage.findApp(app);
+          var findApp = Portal.mobileApps.listPage.searchAndCount(app.name);
           expect(findApp).toBe(1);
       });
     });

@@ -219,14 +219,16 @@ var AppsList = {
   },
 
   /**
-   * ### AppsList.findApp(app)
+   * ### AppsList.searchAndCount(criteria)
    *
-   * Finds an app in the `Apps List App` Page.
+   * Searches an app in the `Apps List App` Page given a search criteria
+   * and return the count of the results.
    *
+   * @param criteria, search criteria
    * @returns {Promise}
    */
-  findApp: function (app) {
-    this.setSearch(app.name);
+  searchAndCount: function (criteria) {
+    this.searcher.setSearchCriteria(criteria)
     return this.table
       .getRows()
       .count();
@@ -258,7 +260,6 @@ var AppsList = {
    * @returns {Promise}
    */
   searchAndEdit: function (name) {
-    // this.setSearch(name);
     this.searcher.setSearchCriteria(name)
     return this.table
       .getFirstRow()
@@ -266,16 +267,16 @@ var AppsList = {
   },
 
   /**
-   * ### AppsList.searchAndAdvancedEdit(app)
+   * ### AppsList.searchAndAdvancedEdit(name)
    *
-   * Advanced Edits an existing app in the `Apps List App` Page.
+   * Advanced Edits an existing name in the `Apps List App` Page.
    *
-   * @param {object} app, app data.
+   * @param {String} name, app name.
    *
    * @returns {Promise}
    */
-  searchAndAdvancedEdit: function (app) {
-    this.setSearch(app.name);
+  searchAndAdvancedEdit: function (name) {
+    this.searcher.setSearchCriteria(name)
     this.table
       .getFirstRow()
       .clickConfigure();

@@ -64,7 +64,7 @@ describe('Functional', function () {
             expect(alert.getText()).toEqual(expectedMsg);
 
             Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
-            var findApp = Portal.mobileApps.listPage.findApp(app);
+            var findApp = Portal.mobileApps.listPage.searchAndCount(app.name);
             expect(findApp).toBe(1);
         });
 
@@ -81,7 +81,7 @@ describe('Functional', function () {
             expect(alert.getText()).toContain(expectedMsg);
 
             Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
-            var findApp = Portal.mobileApps.listPage.findApp(app);
+            var findApp = Portal.mobileApps.listPage.searchAndCount(app.name);
             expect(findApp).toBe(1);
         });
 
@@ -98,7 +98,7 @@ describe('Functional', function () {
             expect(alert.getText()).toContain(expectedMsg);
 
             Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
-            var findApp = Portal.mobileApps.listPage.findApp(app);
+            var findApp = Portal.mobileApps.listPage.searchAndCount(app.name);
             expect(findApp).toBe(1);
         });
 
@@ -115,7 +115,7 @@ describe('Functional', function () {
             expect(alert.getText()).toContain(expectedMsg);
 
             Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
-            var findApp = Portal.mobileApps.listPage.findApp(app);
+            var findApp = Portal.mobileApps.listPage.searchAndCount(app.name);
             expect(findApp).toBe(1);
         });
 
@@ -133,7 +133,7 @@ describe('Functional', function () {
             expect(alert.getText()).toContain(expectedMsg);
 
             Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
-            var findApp = Portal.mobileApps.listPage.findApp(app);
+            var findApp = Portal.mobileApps.listPage.searchAndCount(app.name);
             expect(findApp).toBe(1);
         });
 
@@ -151,7 +151,7 @@ describe('Functional', function () {
             expect(alert.getText()).toContain(expectedMsg);
 
             Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
-            var findApp = Portal.mobileApps.listPage.findApp(app);
+            var findApp = Portal.mobileApps.listPage.searchAndCount(app.name);
             expect(findApp).toBe(1);
         });
 
@@ -168,7 +168,7 @@ describe('Functional', function () {
             expect(alert.getText()).toContain(expectedMsg);
 
             Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
-            var findApp = Portal.mobileApps.listPage.findApp(app);
+            var findApp = Portal.mobileApps.listPage.searchAndCount(app.name);
             expect(findApp).toBe(1);
             var row = Portal.mobileApps.listPage.table
               .getFirstRow();
@@ -189,7 +189,7 @@ describe('Functional', function () {
             expect(alert.getText()).toContain(expectedMsg);
 
             Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
-            var findApp = Portal.mobileApps.listPage.findApp(app);
+            var findApp = Portal.mobileApps.listPage.searchAndCount(app.name);
             expect(findApp).toBe(1);
             var row = Portal.mobileApps.listPage.table
               .getFirstRow();

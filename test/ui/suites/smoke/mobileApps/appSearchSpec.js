@@ -73,7 +73,7 @@ describe('Smoke', function () {
 
             it('should search and filter an existing app',
               function () {
-                var appsFound = Portal.mobileApps.listPage.findApp(app);
+                var appsFound = Portal.mobileApps.listPage.searchAndCount(app.name);
                 expect(appsFound).toBe(1);
               });
 
@@ -82,7 +82,7 @@ describe('Smoke', function () {
                 var neApp = {
                   name: 'Non existing app ' + Date.now()
                 };
-                var appsFound = Portal.mobileApps.listPage.findApp(neApp);
+                var appsFound = Portal.mobileApps.listPage.searchAndCount(neApp.name);
                 expect(appsFound).toBe(0);
               });
           });

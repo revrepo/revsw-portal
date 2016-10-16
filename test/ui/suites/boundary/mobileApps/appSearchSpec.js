@@ -56,7 +56,7 @@ describe('Boundary', function () {
 
             Portal.mobileApps.listPage.addNew(app);
             Portal.helpers.nav.goToMobileAppsMenuItem(platform);
-            var countApps = Portal.mobileApps.listPage.findApp(app);
+            var countApps = Portal.mobileApps.listPage.searchAndCount(app.name);
             expect(countApps).toBe(1);
 
             Portal.mobileApps.listPage.searchAndDelete(app);
@@ -70,7 +70,7 @@ describe('Boundary', function () {
             var app = {
               name: longString
             };
-            var countApps = Portal.mobileApps.listPage.findApp(app);
+            var countApps = Portal.mobileApps.listPage.searchAndCount(app.name);
             expect(countApps).toBe(0);
           });
 
@@ -81,7 +81,7 @@ describe('Boundary', function () {
             var app = {
               name: '& ^ $ @ # % ( ) _ +  / \\ ~ ` , . ; :'
             };
-            var countApps = Portal.mobileApps.listPage.findApp(app);
+            var countApps = Portal.mobileApps.listPage.searchAndCount(app.name);
             expect(countApps).toBe(0);
           });
       });

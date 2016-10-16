@@ -47,7 +47,7 @@ describe('Negative', function () {
 
           Portal.mobileApps.listPage.searchAndDelete(app);
           Portal.dialog.clickCancel();
-          var findApp = Portal.mobileApps.listPage.findApp(app);
+          var findApp = Portal.mobileApps.listPage.searchAndCount(app.name);
           expect(findApp).toBe(1);
       });
     });
