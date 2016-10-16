@@ -239,9 +239,9 @@ var Constants = {
 
   mobileApps: {
     platforms: {
-      ios: 'ios',
-      android: 'android',
-      windowsMobile: 'windows-mobile'
+      ios: 'iOS',
+      android: 'Android',
+      windowsMobile: 'Windows_Mobile'
     }
   }
 };

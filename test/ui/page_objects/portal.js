@@ -20,6 +20,7 @@
 
 // Requiring config and constants
 var Constants = require('./constants');
+var Session = require('./../common/session');
 var Utils = require('./../common/helpers/utils');
 
 // Requiring components
@@ -108,6 +109,8 @@ var PortalHelpers = require('./../common/helpers/portal');
 var Portal = {
 
   constants: Constants,
+
+  session: Session,
 
   // Properties
   baseUrl: Utils.getBaseUrl(),
@@ -231,7 +234,11 @@ var Portal = {
           // There is not any session created yet.
           me.load();
         }
-        return me.loginPage.signIn(user);
+        return me.loginPage
+          .signIn(user)
+          .then(function () {
+            me.session.setCurrentUser(user);
+          });
       });
   },
 
