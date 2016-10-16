@@ -249,16 +249,17 @@ var AppsList = {
   },
 
   /**
-   * ### AppsList.searchAndEdit(app)
+   * ### AppsList.searchAndEdit(app.name)
    *
    * Edits an existing app in the `Apps List App` Page.
    *
-   * @param {object} app, app data.
+   * @param {String} name, app name.
    *
    * @returns {Promise}
    */
-  searchAndEdit: function (app) {
-    this.setSearch(app.name);
+  searchAndEdit: function (name) {
+    // this.setSearch(name);
+    this.searcher.setSearchCriteria(name)
     return this.table
       .getFirstRow()
       .clickEdit();
