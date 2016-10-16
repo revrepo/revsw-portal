@@ -77,14 +77,14 @@ describe('Smoke', function () {
                 expect(Portal.alerts.getFirst().getText())
                   .toContain(Constants.alertMessages.app.MSG_SUCCESS_ADD);
                 Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
-                Portal.mobileApps.listPage.searchAndDelete(app);
+                Portal.mobileApps.listPage.searchAndDelete(app.name);
                 expect(Portal.dialog.isDisplayed()).toBeTruthy();
                 Portal.dialog.clickCancel();
               });
 
             it('should allow to delete an app',
               function () {
-                Portal.mobileApps.listPage.searchAndDelete(app);
+                Portal.mobileApps.listPage.searchAndDelete(app.name);
                 expect(Portal.dialog.isDisplayed()).toBeTruthy();
                 Portal.dialog.clickOk();
                 Portal.mobileApps.listPage.setSearch(app.name);

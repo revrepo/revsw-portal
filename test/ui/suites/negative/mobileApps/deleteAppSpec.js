@@ -45,7 +45,7 @@ describe('Negative', function () {
         function () {
           Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
 
-          Portal.mobileApps.listPage.searchAndDelete(app);
+          Portal.mobileApps.listPage.searchAndDelete(app.name);
           Portal.dialog.clickCancel();
           var findApp = Portal.mobileApps.listPage.searchAndCount(app.name);
           expect(findApp).toBe(1);

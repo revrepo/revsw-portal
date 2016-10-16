@@ -235,16 +235,15 @@ var AppsList = {
   },
 
   /**
-   * ### AppsList.searchAndDelete(app)
+   * ### AppsList.searchAndDelete(name)
    *
    * Deletes an app in the `Apps List App` Page.
    *
-   * @param {object} app, app data.
-   *
+   * @param {String} name, app name.
    * @returns {Promise}
    */
-  searchAndDelete: function (app) {
-    this.setSearch(app.name);
+  searchAndDelete: function (name) {
+    this.searcher.setSearchCriteria(name)
     this.table
       .getFirstRow()
       .clickDelete();

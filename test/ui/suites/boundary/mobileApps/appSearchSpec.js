@@ -59,7 +59,7 @@ describe('Boundary', function () {
             var countApps = Portal.mobileApps.listPage.searchAndCount(app.name);
             expect(countApps).toBe(1);
 
-            Portal.mobileApps.listPage.searchAndDelete(app);
+            Portal.mobileApps.listPage.searchAndDelete(app.name);
             Portal.dialog.clickOk();
           });
 

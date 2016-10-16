@@ -578,7 +578,7 @@ var Portal = {
     browser.getCurrentUrl().then(function (initialUrl) {
       apps.forEach(function (app) {
         me.helpers.nav.goToMobileAppsMenuItem(app.platform);
-        me.mobileApps.listPage.searchAndDelete(app);
+        me.mobileApps.listPage.searchAndDelete(app.name);
         me.dialog.clickOk();
         browser.sleep(3000);
       });
