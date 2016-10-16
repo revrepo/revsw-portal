@@ -18,37 +18,55 @@
 
 var config = require('config');
 var Portal = require('./../../../page_objects/portal');
-var DataProvider = require('./../../../common/providers/data');
-var Constants = require('./../../../page_objects/constants');
 
 describe('Negative', function () {
   describe('Delete App', function () {
 
-    var adminUser = config.get('portal.users.admin');
-    var platforms = Portal.constants.mobileApps.platforms;
-    var iosApps = DataProvider.generateMobileAppData(platforms.ios, 1);
-    var androidApps = DataProvider.generateMobileAppData(platforms.android, 1);
-    var apps = iosApps.concat(androidApps);
+    var users = [
+      config.get('portal.users.admin')
+    ];
+    var platforms = [
+      Portal.constants.mobileApps.platforms.android,
+      Portal.constants.mobileApps.platforms.ios
+    ];
 
-    beforeAll(function () {
-      Portal.signIn(adminUser);
-      Portal.createMobileApps(platforms.ios, iosApps);
-      Portal.createMobileApps(platforms.android, androidApps);
-    });
+    users.forEach(function (user) {
 
-    afterAll(function () {
-      Portal.signOut();
-    });
+      describe('With user: ' + user.role, function () {
 
-    apps.forEach(function (app) {
-      it('should cancel when try to delete delete an app - ' + app.platform,
-        function () {
-          Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+        platforms.forEach(function (platform) {
 
-          Portal.mobileApps.listPage.searchAndDelete(app.name);
-          Portal.dialog.clickCancel();
-          var findApp = Portal.mobileApps.listPage.searchAndCount(app.name);
-          expect(findApp).toBe(1);
+          describe('For platform: ' + platform, function () {
+
+            beforeAll(function (done) {
+              Portal
+                .signIn(user)
+                .then(function () {
+                  return Portal.helpers.mobileApps
+                    .createOne({platform: platform})
+                    .then(function (newApp) {
+                      app = newApp;
+                      done();
+                    })
+                    .catch(done);
+                })
+                .catch(done);
+            });
+
+            afterAll(function () {
+              Portal.signOut();
+            });
+
+            it('should allow to cancel when trying to delete delete an app.',
+              function () {
+                Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+                Portal.mobileApps.listPage.searchAndDelete(app.name);
+                Portal.dialog.clickCancel();
+                var count = Portal.mobileApps.listPage.searchAndCount(app.name);
+                expect(count).toBe(1);
+              });
+          });
+        });
       });
     });
   });

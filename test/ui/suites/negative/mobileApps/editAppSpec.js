@@ -18,69 +18,74 @@
 
 var config = require('config');
 var Portal = require('./../../../page_objects/portal');
-var DataProvider = require('./../../../common/providers/data');
-var Constants = require('./../../../page_objects/constants');
 
 describe('Negative', function () {
   describe('Basic Edit App', function () {
 
-    var adminUser = config.get('portal.users.admin');
-    var platforms = Portal.constants.mobileApps.platforms;
-    var iosApps = DataProvider.generateMobileAppData(platforms.ios, 1);
-    var androidApps = DataProvider.generateMobileAppData(platforms.android, 1);
-    var apps = iosApps.concat(androidApps);
+    var users = [
+      config.get('portal.users.admin')
+    ];
+    var platforms = [
+      Portal.constants.mobileApps.platforms.android,
+      Portal.constants.mobileApps.platforms.ios
+    ];
 
-    beforeAll(function () {
-      Portal.signIn(adminUser);
-      Portal.createMobileApps(platforms.ios, iosApps);
-      Portal.createMobileApps(platforms.android, androidApps);
-    });
+    users.forEach(function (user) {
 
-    afterAll(function () {
-      Portal.deleteMobileApps(iosApps);
-      Portal.deleteMobileApps(androidApps);
-      Portal.signOut();
-    });
+      describe('With user: ' + user.role, function () {
 
-    apps.forEach(function (app) {
-        it('should not allow to "verify" an app in Basic Edit mode with app name ' +
-          'set to empty characters - ' +
-          app.platform,
-          function () {
-            Portal.helpers.nav.goToMobileAppsMenuItem(platform);
-            Portal.mobileApps.listPage.searchAndEdit(app.name);
-            var tempAppName = app.name;
-            app.name = ' ';
-            Portal.mobileApps.editPage.form.fill(app);
-            var enabled = Portal.mobileApps.editPage.form.isVerifyBtnEnabled();
-            expect(enabled).toBe(false);
+        platforms.forEach(function (platform) {
+
+          describe('For platform: ' + platform, function () {
+
+            beforeAll(function (done) {
+              Portal
+                .signIn(user)
+                .then(function () {
+                  return Portal.helpers.mobileApps
+                    .createOne({platform: platform})
+                    .then(function (newApp) {
+                      app = newApp;
+                      done();
+                    })
+                    .catch(done);
+                })
+                .catch(done);
+            });
+
+            afterAll(function () {
+              Portal.signOut();
+            });
+
+            it('should not allow to "verify" an app in Basic Edit mode with app name ' +
+              'set to empty characters', function () {
+              Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+              Portal.mobileApps.listPage.searchAndEdit(app.name);
+              Portal.mobileApps.editPage.form.setAppName(' ');
+              var enabled = Portal.mobileApps.editPage.form.isVerifyBtnEnabled();
+              expect(enabled).toBe(false);
+            });
+
+            it('should not allow to "update" an app in Basic Edit mode with app name ' +
+              'set to empty characters', function () {
+              Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+              Portal.mobileApps.listPage.searchAndEdit(app.name);
+              Portal.mobileApps.editPage.form.setAppName(' ');
+              var enabled = Portal.mobileApps.editPage.form.isUpdateBtnEnabled();
+              expect(enabled).toBe(false);
+            });
+
+            it('should not allow to "publish" an app in Basic Edit mode with app name ' +
+              'set to empty characters', function () {
+              Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+              Portal.mobileApps.listPage.searchAndEdit(app.name);
+              Portal.mobileApps.editPage.form.setAppName(' ');
+              var enabled = Portal.mobileApps.editPage.form.isPublishBtnEnabled();
+              expect(enabled).toBe(false);
+            });
+          });
         });
-
-        it('should not alow to "update" an app in Basic Edit mode with app name ' +
-          'set to empty characters - ' +
-          app.platform,
-          function () {
-            Portal.helpers.nav.goToMobileAppsMenuItem(platform);
-            Portal.mobileApps.listPage.searchAndEdit(app.name);
-            var tempAppName = app.name;
-            app.name = ' ';
-            Portal.mobileApps.editPage.form.fill(app);
-            var enabled = Portal.mobileApps.editPage.form.isUpdateBtnEnabled();
-            expect(enabled).toBe(false);
-        });
-
-        it('should not alow to "publish" an app in Basic Edit mode with app name ' +
-          'set to empty characters - ' +
-          app.platform,
-          function () {
-            Portal.helpers.nav.goToMobileAppsMenuItem(platform);
-            Portal.mobileApps.listPage.searchAndEdit(app.name);
-            var tempAppName = app.name;
-            app.name = ' ';
-            Portal.mobileApps.editPage.form.fill(app);
-            var enabled = Portal.mobileApps.editPage.form.isPublishBtnEnabled();
-            expect(enabled).toBe(false);
-        });
+      });
     });
   });
 });

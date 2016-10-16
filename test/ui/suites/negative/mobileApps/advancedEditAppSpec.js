@@ -24,33 +24,51 @@ var Constants = require('./../../../page_objects/constants');
 describe('Negative', function () {
   describe('Edit App Advanced Mode', function () {
 
-    var adminUser = config.get('portal.users.admin');
-    var platforms = Portal.constants.mobileApps.platforms;
-    var iosApps = DataProvider.generateMobileAppData(platforms.ios, 1);
-    var androidApps = DataProvider.generateMobileAppData(platforms.android, 1);
-    var apps = iosApps.concat(androidApps);
+    var users = [
+      config.get('portal.users.admin')
+    ];
+    var platforms = [
+      Portal.constants.mobileApps.platforms.android,
+      Portal.constants.mobileApps.platforms.ios
+    ];
 
-    beforeAll(function () {
-      Portal.signIn(adminUser);
-      Portal.createMobileApps(platforms.ios, iosApps);
-      Portal.createMobileApps(platforms.android, androidApps);
-    });
+    users.forEach(function (user) {
 
-    afterAll(function () {
-      Portal.deleteMobileApps(apps);
-      Portal.signOut();
-    });
+      describe('With user: ' + user.role, function () {
 
-    apps.forEach(function (app) {
-      it('should edit advanced mode & "cancel" json editor - ' + app.platform,
-        function () {
-          Portal.helpers.nav.goToMobileAppsMenuItem(platform);
-          Portal.mobileApps.listPage.searchAndAdvancedEdit(app.name);
-          Portal.mobileApps.advancedEditPage.cancel();
+        platforms.forEach(function (platform) {
 
-          Portal.helpers.nav.goToMobileAppsMenuItem(platform);
-          var findApp = Portal.mobileApps.listPage.searchAndCount(app.name);
-          expect(findApp).toBe(1);
+          describe('For platform: ' + platform, function () {
+
+            beforeAll(function (done) {
+              Portal
+                .signIn(user)
+                .then(function () {
+                  return Portal.helpers.mobileApps
+                    .createOne({platform: platform})
+                    .then(function (newApp) {
+                      app = newApp;
+                      done();
+                    })
+                    .catch(done);
+                })
+                .catch(done);
+            });
+
+            afterAll(function () {
+              Portal.signOut();
+            });
+
+            it('should allow to cancel advanced edition.', function () {
+              Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+              Portal.mobileApps.listPage.searchAndAdvancedEdit(app.name);
+              Portal.mobileApps.advancedEditPage.cancel();
+              Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+              var count = Portal.mobileApps.listPage.searchAndCount(app.name);
+              expect(count).toBe(1);
+            });
+          });
+        });
       });
     });
   });

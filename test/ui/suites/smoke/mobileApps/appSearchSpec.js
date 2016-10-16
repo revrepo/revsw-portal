@@ -18,42 +18,44 @@
 
 var config = require('config');
 var Portal = require('./../../../page_objects/portal');
-var DataProvider = require('./../../../common/providers/data');
-var Constants = require('./../../../page_objects/constants');
 
 describe('Smoke', function () {
+  describe('Search App', function () {
 
-  // Defining set of users for which all below tests will be run
-  var users = [
-    config.get('portal.users.admin'),
-    config.get('portal.users.reseller'),
-    config.get('portal.users.revAdmin')
-  ];
-  var platforms = [
-    Portal.constants.mobileApps.platforms.ios,
-    Portal.constants.mobileApps.platforms.android
-  ];
+    var users = [
+      config.get('portal.users.admin'),
+      config.get('portal.users.reseller'),
+      config.get('portal.users.revAdmin')
+    ];
+    var platforms = [
+      Portal.constants.mobileApps.platforms.android,
+      Portal.constants.mobileApps.platforms.ios
+    ];
 
-  users.forEach(function (user) {
+    users.forEach(function (user) {
 
-    describe('With user: ' + user.role, function () {
-
-      describe('Search App', function () {
+      describe('With user: ' + user.role, function () {
 
         platforms.forEach(function (platform) {
 
-          describe('Platform: ' + platform, function () {
+          describe('For platform: ' + platform, function () {
 
-            var app;
-
-            beforeAll(function () {
-              Portal.signIn(user);
-              app = DataProvider.generateMobileApp(platform);
-              Portal.createMobileApps(platform, [app]);
+            beforeAll(function (done) {
+              Portal
+                .signIn(user)
+                .then(function () {
+                  return Portal.helpers.mobileApps
+                    .createOne({platform: platform})
+                    .then(function (newApp) {
+                      app = newApp;
+                      done();
+                    })
+                    .catch(done);
+                })
+                .catch(done);
             });
 
             afterAll(function () {
-              Portal.deleteMobileApps([app]);
               Portal.signOut();
             });
 
@@ -61,30 +63,24 @@ describe('Smoke', function () {
               Portal.helpers.nav.goToMobileAppsMenuItem(platform);
             });
 
-            afterEach(function () {
+            it('should be displayed in `App List` page', function () {
+              var searchField = Portal.mobileApps.listPage.searcher
+                .getSearchCriteriaTxtIn();
+              expect(searchField.isPresent()).toBeTruthy();
             });
 
-            it('should be displayed when displaying `App List` page',
-              function () {
-                var searchField = Portal.mobileApps.listPage.searcher
-                  .getSearchCriteriaTxtIn();
-                expect(searchField.isPresent()).toBeTruthy();
-              });
+            it('should search and filter an existing app', function () {
+              var count = Portal.mobileApps.listPage.searchAndCount(app.name);
+              expect(count).toBe(1);
+            });
 
-            it('should search and filter an existing app',
-              function () {
-                var appsFound = Portal.mobileApps.listPage.searchAndCount(app.name);
-                expect(appsFound).toBe(1);
-              });
-
-            it('should search and filter a non-existing app',
-              function () {
-                var neApp = {
-                  name: 'Non existing app ' + Date.now()
-                };
-                var appsFound = Portal.mobileApps.listPage.searchAndCount(neApp.name);
-                expect(appsFound).toBe(0);
-              });
+            it('should search and filter a non-existing app', function () {
+              var neApp = {
+                name: 'Non existing app ' + Date.now()
+              };
+              var count = Portal.mobileApps.listPage.searchAndCount(neApp.name);
+              expect(count).toBe(0);
+            });
           });
         });
       });
