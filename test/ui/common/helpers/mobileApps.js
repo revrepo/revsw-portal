@@ -16,13 +16,29 @@
  * from Rev Software, Inc.
  */
 
-// # Main Portal Helper
 
-var NavHelper = require('./nav');
-var MobileAppsHelper = require('./mobileApps');
+var API = require('./../api');
+var Session = require('./../session');
 
-// Abstracts common functionality for the Portal.
-module.exports = {
-  nav: NavHelper,
-  mobileApps: MobileAppsHelper
+var MobileAppsHelper = {
+
+  createOne: function (appData) {
+    var user = Session.getCurrentUser();
+    return API.helpers
+      .authenticateUser(user)
+      .then(function () {
+        return API.helpers.apps.createOne(user.account.id, appData)
+      })
+      .then(function (newApp) {
+        return {
+          name: newApp.app_name,
+          platform: newApp.app_platform,
+          title: '>>> APP TITLE <<<',
+          comment: newApp.comment,
+          companyName: newApp.account_id
+        };
+      });
+  }
 };
+
+module.exports = MobileAppsHelper;
