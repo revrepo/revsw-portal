@@ -43,7 +43,7 @@ describe('Negative', function () {
         });
 
         beforeEach(function () {
-          Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
+          Portal.helpers.nav.goToMobileAppsMenuItem(platform);
         });
 
         afterEach(function () {

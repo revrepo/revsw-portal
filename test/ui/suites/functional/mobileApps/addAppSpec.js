@@ -44,21 +44,21 @@ describe('Functional', function () {
     apps.forEach(function (app) {
       it('should get title from list app page - ' + app.platform,
         function () {
-          Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
+          Portal.helpers.nav.goToMobileAppsMenuItem(platform);
           var title = Portal.mobileApps.listPage.getTitle();
           expect(title).toEqual(app.title);
         });
 
       it('should add a new app - ' + app.platform,
         function () {
-          Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
+          Portal.helpers.nav.goToMobileAppsMenuItem(platform);
           Portal.mobileApps.listPage.addNew(app);
 
           var alert = Portal.alerts.getFirst();
           var expectedMsg = Constants.alertMessages.app.MSG_SUCCESS_ADD;
           expect(alert.getText()).toContain(expectedMsg);
 
-          Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
+          Portal.helpers.nav.goToMobileAppsMenuItem(platform);
           var findApp = Portal.mobileApps.listPage.searchAndCount(app.name);
           expect(findApp).toBe(1);
         });

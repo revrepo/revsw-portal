@@ -44,7 +44,7 @@ describe('Negavive', function () {
 
     apps.forEach(function (app){
       it('should not add a duplicated app - ' + app.platform, function () {
-        Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
+        Portal.helpers.nav.goToMobileAppsMenuItem(platform);
         Portal.mobileApps.listPage.addNew(app);
         var alert = Portal.alerts.getFirst();
         var s = '×\nThe app name and platform is already registered in the system';

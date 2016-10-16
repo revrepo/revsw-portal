@@ -43,7 +43,7 @@ describe('Boundary', function () {
     apps.forEach(function (app) {
       it('should check Register button is disabled when app name have more ' +
         'than 51 characters - ' + app.platform, function () {
-        Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
+        Portal.helpers.nav.goToMobileAppsMenuItem(platform);
 
         Portal.mobileApps.listPage.clickAddNewApp();
         app.name = length51Characters;
@@ -54,7 +54,7 @@ describe('Boundary', function () {
 
       it('should check Register button is disabled when app name have zero ' +
         'characters - ' + app.platform, function () {
-        Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
+        Portal.helpers.nav.goToMobileAppsMenuItem(platform);
 
         Portal.mobileApps.listPage.clickAddNewApp();
         app.name = '';
@@ -65,7 +65,7 @@ describe('Boundary', function () {
 
       it('should check Register button is disabled when app name have ' +
         'empty characters - ' + app.platform, function () {
-        Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
+        Portal.helpers.nav.goToMobileAppsMenuItem(platform);
 
         Portal.mobileApps.listPage.clickAddNewApp();
         app.name = '       ';
@@ -76,7 +76,7 @@ describe('Boundary', function () {
 
       it('should check Register button is disabled when app name have ' + // jshint ignore:line
         'special characters - ' + app.platform, function () {
-        Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
+        Portal.helpers.nav.goToMobileAppsMenuItem(platform);
 
         Portal.mobileApps.listPage.clickAddNewApp();
         app.name = '& ^ $ @ # % ( ) _ +  / \\ ~ ` , . ; :';

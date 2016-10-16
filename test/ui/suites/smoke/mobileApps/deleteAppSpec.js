@@ -76,7 +76,7 @@ describe('Smoke', function () {
                 expect(Portal.alerts.getAll().count()).toEqual(1);
                 expect(Portal.alerts.getFirst().getText())
                   .toContain(Constants.alertMessages.app.MSG_SUCCESS_ADD);
-                Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
+                Portal.helpers.nav.goToMobileAppsMenuItem(platform);
                 Portal.mobileApps.listPage.searchAndDelete(app.name);
                 expect(Portal.dialog.isDisplayed()).toBeTruthy();
                 Portal.dialog.clickCancel();

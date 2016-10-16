@@ -44,11 +44,11 @@ describe('Negative', function () {
     apps.forEach(function (app) {
       it('should edit advanced mode & "cancel" json editor - ' + app.platform,
         function () {
-          Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
+          Portal.helpers.nav.goToMobileAppsMenuItem(platform);
           Portal.mobileApps.listPage.searchAndAdvancedEdit(app.name);
           Portal.mobileApps.advancedEditPage.cancel();
 
-          Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
+          Portal.helpers.nav.goToMobileAppsMenuItem(platform);
           var findApp = Portal.mobileApps.listPage.searchAndCount(app.name);
           expect(findApp).toBe(1);
       });

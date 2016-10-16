@@ -39,7 +39,7 @@ describe('Functional', function () {
 
         beforeAll(function () {
           Portal.signIn(user);
-          Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
+          Portal.helpers.nav.goToMobileAppsMenuItem(platform);
           Portal.mobileApps.listPage.setSearch(searchValue);
         });
 

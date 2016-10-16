@@ -43,7 +43,7 @@ describe('Negative', function () {
     apps.forEach(function (app) {
       it('should cancel when try to delete delete an app - ' + app.platform,
         function () {
-          Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
+          Portal.helpers.nav.goToMobileAppsMenuItem(platform);
 
           Portal.mobileApps.listPage.searchAndDelete(app.name);
           Portal.dialog.clickCancel();

@@ -47,7 +47,7 @@ describe('Negative', function () {
           'set to empty characters - ' +
           app.platform,
           function () {
-            Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
+            Portal.helpers.nav.goToMobileAppsMenuItem(platform);
             Portal.mobileApps.listPage.searchAndEdit(app.name);
             var tempAppName = app.name;
             app.name = ' ';
@@ -60,7 +60,7 @@ describe('Negative', function () {
           'set to empty characters - ' +
           app.platform,
           function () {
-            Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
+            Portal.helpers.nav.goToMobileAppsMenuItem(platform);
             Portal.mobileApps.listPage.searchAndEdit(app.name);
             var tempAppName = app.name;
             app.name = ' ';
@@ -73,7 +73,7 @@ describe('Negative', function () {
           'set to empty characters - ' +
           app.platform,
           function () {
-            Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
+            Portal.helpers.nav.goToMobileAppsMenuItem(platform);
             Portal.mobileApps.listPage.searchAndEdit(app.name);
             var tempAppName = app.name;
             app.name = ' ';

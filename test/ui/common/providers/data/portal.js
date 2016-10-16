@@ -18,13 +18,7 @@
 
 // # Main Portal Helper
 
-var NavHelper = require('./nav');
-var MobileAppsHelper = require('./mobileApps');
-
 // Abstracts common functionality for the Portal.
-var PortalHelpers = {
-  nav: NavHelper,
-  mobileApps: MobileAppsHelper
-};
+var PortalDataProviders = {};
 
-module.exports = PortalHelpers;
+module.exports = PortalDataProviders;

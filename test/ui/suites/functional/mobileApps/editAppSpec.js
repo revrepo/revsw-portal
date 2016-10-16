@@ -24,178 +24,196 @@ var Constants = require('./../../../page_objects/constants');
 describe('Functional', function () {
   describe('Basic Edit App And Update', function () {
 
-    var adminUser = config.get('portal.users.admin');
-    var platforms = Portal.constants.mobileApps.platforms;
-    var iosApps = DataProvider.generateMobileAppData(platforms.ios, 1);
-    var androidApps = DataProvider.generateMobileAppData(platforms.android, 1);
-    var apps = iosApps.concat(androidApps);
+    var users = [
+      config.get('portal.users.admin')
+    ];
+    var platforms = [
+      Portal.constants.mobileApps.platforms.android,
+      Portal.constants.mobileApps.platforms.ios
+    ];
 
-    beforeAll(function () {
-      Portal.signIn(adminUser);
-      Portal.createMobileApps(platforms.ios, iosApps);
-      Portal.createMobileApps(platforms.android, androidApps);
-    });
+    users.forEach(function (user) {
 
-    afterAll(function () {
-      Portal.deleteMobileApps(iosApps);
-      Portal.deleteMobileApps(androidApps);
-      Portal.signOut();
-    });
+      describe('With user: ' + user.role, function () {
 
-    apps.forEach(function (app) {
-        it('should get the title from basic edited app - ' + app.platform,
-          function () {
-            Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
-            Portal.mobileApps.listPage.searchAndEdit(app.name);
+        platforms.forEach(function (platform) {
 
-            var title = Portal.mobileApps.editPage.getTitle();
-            expect(title).toContain('Edit App');
+          describe('For platform: ' + platform, function () {
+
+            beforeAll(function (done) {
+              Portal
+                .signIn(user)
+                .then(function () {
+                  return Portal.helpers.mobileApps
+                    .createOne({platform: platform})
+                    .then(function (newApp) {
+                      app = newApp;
+                      done();
+                    })
+                    .catch(done);
+                })
+                .catch(done);
+            });
+
+            afterAll(function () {
+              Portal.signOut();
+            });
+
+            it('should get the title from basic edited app',
+              function () {
+                Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+                Portal.mobileApps.listPage.searchAndEdit(app.name);
+
+                var title = Portal.mobileApps.editPage.getTitle();
+                expect(title).toContain('Edit App');
+              });
+
+            it('should basic edit and "verify" an existing app',
+              function () {
+                Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+                Portal.mobileApps.listPage.searchAndEdit(app.name);
+                var updatedApp = DataProvider.generateUpdateMobileApp(app);
+                Portal.mobileApps.editPage.verify(updatedApp);
+                var alert = Portal.alerts.getFirst();
+                var expectedMsg = 'The configuration has been successfully verified';
+                expect(alert.getText()).toEqual(expectedMsg);
+                Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+                var count = Portal.mobileApps.listPage.searchAndCount(app.name);
+                expect(count).toBe(1);
+              });
+
+            it('should basic edit and "update" an existing app',
+              function () {
+                Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+                Portal.mobileApps.listPage.searchAndEdit(app.name);
+                var updatedApp = DataProvider.generateUpdateMobileApp(app);
+                Portal.mobileApps.editPage.update(updatedApp);
+                Portal.dialog.clickOk();
+
+                var alert = Portal.alerts.getFirst();
+                var expectedMsg = Constants.alertMessages.app.MSG_SUCCESS_UPDATE;
+                expect(alert.getText()).toContain(expectedMsg);
+
+                Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+                var count = Portal.mobileApps.listPage.searchAndCount(app.name);
+                expect(count).toBe(1);
+              });
+
+            it('should basic edit and "publish" an existing app',
+              function () {
+                Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+                Portal.mobileApps.listPage.searchAndEdit(app.name);
+                var updatedApp = DataProvider.generateUpdateMobileApp(app);
+                Portal.mobileApps.editPage.publish(updatedApp);
+                Portal.dialog.clickOk();
+
+                var alert = Portal.alerts.getFirst();
+                var expectedMsg = Constants.alertMessages.app.MSG_SUCCESS_UPDATE;
+                expect(alert.getText()).toContain(expectedMsg);
+
+                Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+                var count = Portal.mobileApps.listPage.searchAndCount(app.name);
+                expect(count).toBe(1);
+              });
+
+            it('should basic edit and "verify" the app name',
+              function () {
+                Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+                Portal.mobileApps.listPage.searchAndEdit(app.name);
+                app.name = app.name + 'UPDATED';
+                var updatedApp = DataProvider.generateUpdateMobileApp(app);
+                Portal.mobileApps.editPage.verify(updatedApp);
+
+                var alert = Portal.alerts.getFirst();
+                var expectedMsg = Constants.alertMessages.app.MSG_SUCCESS_VERIFY;
+                expect(alert.getText()).toContain(expectedMsg);
+
+                Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+                var count = Portal.mobileApps.listPage.searchAndCount(app.name);
+                expect(count).toBe(1);
+              });
+
+            it('should basic edit and "update" the app name',
+              function () {
+                Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+                Portal.mobileApps.listPage.searchAndEdit(app.name);
+                app.name = app.name + 'UPDATED';
+                var updatedApp = DataProvider.generateUpdateMobileApp(app);
+                Portal.mobileApps.editPage.update(updatedApp);
+                Portal.dialog.clickOk();
+
+                var alert = Portal.alerts.getFirst();
+                var expectedMsg = Constants.alertMessages.app.MSG_SUCCESS_UPDATE;
+                expect(alert.getText()).toContain(expectedMsg);
+
+                Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+                var count = Portal.mobileApps.listPage.searchAndCount(app.name);
+                expect(count).toBe(1);
+              });
+
+            it('should basic edit and "publish" the app name',
+              function () {
+                Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+                Portal.mobileApps.listPage.searchAndEdit(app.name);
+                app.name = app.name + 'UPDATED';
+                var updatedApp = DataProvider.generateUpdateMobileApp(app);
+                Portal.mobileApps.editPage.publish(updatedApp);
+                Portal.dialog.clickOk();
+
+                var alert = Portal.alerts.getFirst();
+                var expectedMsg = Constants.alertMessages.app.MSG_SUCCESS_UPDATE;
+                expect(alert.getText()).toContain(expectedMsg);
+
+                Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+                var count = Portal.mobileApps.listPage.searchAndCount(app.name);
+                expect(count).toBe(1);
+              });
+
+            it('should verify staging status after "publish"',
+              function () {
+                Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+                Portal.mobileApps.listPage.searchAndEdit(app.name);
+                var updatedApp = DataProvider.generateUpdateMobileApp(app);
+                Portal.mobileApps.editPage.publish(updatedApp);
+                Portal.dialog.clickOk();
+
+                var alert = Portal.alerts.getFirst();
+                var expectedMsg = Constants.alertMessages.app.MSG_SUCCESS_UPDATE;
+                expect(alert.getText()).toContain(expectedMsg);
+
+                Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+                var count = Portal.mobileApps.listPage.searchAndCount(app.name);
+                expect(count).toBe(1);
+                var row = Portal.mobileApps.listPage.table
+                  .getFirstRow();
+                expect(row.getPublishedStagingStatusIcon().isPresent()).toBeTruthy();
+                expect(row.getPublishedGlobalStatusIcon().isPresent()).toBeTruthy();
+              });
+
+            it('should verify global status after "update"',
+              function () {
+                Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+                Portal.mobileApps.listPage.searchAndEdit(app.name);
+                var updatedApp = DataProvider.generateUpdateMobileApp(app);
+                Portal.mobileApps.editPage.update(updatedApp);
+                Portal.dialog.clickOk();
+
+                var alert = Portal.alerts.getFirst();
+                var expectedMsg = Constants.alertMessages.app.MSG_SUCCESS_UPDATE;
+                expect(alert.getText()).toContain(expectedMsg);
+
+                Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+                var count = Portal.mobileApps.listPage.searchAndCount(app.name);
+                expect(count).toBe(1);
+                var row = Portal.mobileApps.listPage.table
+                  .getFirstRow();
+                expect(row.getPublishedStagingStatusIcon().isPresent()).toBeTruthy();
+                expect(row.getModifiedGlobalStatusIcon().isPresent()).toBeTruthy();
+              });
+
+          });
         });
-
-        it('should basic edit and "verify" an existing app - ' + app.platform,
-          function () {
-            Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
-            Portal.mobileApps.listPage.searchAndEdit(app.name);
-            var updatedApp = DataProvider.generateUpdateMobileApp(app);
-            Portal.mobileApps.editPage.verify(updatedApp);
-          
-            var alert = Portal.alerts.getFirst();
-            var expectedMsg = 'The configuration has been successfully verified';
-            expect(alert.getText()).toEqual(expectedMsg);
-
-            Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
-            var findApp = Portal.mobileApps.listPage.searchAndCount(app.name);
-            expect(findApp).toBe(1);
-        });
-
-        it('should basic edit and "update" an existing app - ' + app.platform,
-          function () {
-            Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
-            Portal.mobileApps.listPage.searchAndEdit(app.name);
-            var updatedApp = DataProvider.generateUpdateMobileApp(app);
-            Portal.mobileApps.editPage.update(updatedApp);
-            Portal.dialog.clickOk();
-
-            var alert = Portal.alerts.getFirst();
-            var expectedMsg = Constants.alertMessages.app.MSG_SUCCESS_UPDATE;
-            expect(alert.getText()).toContain(expectedMsg);
-
-            Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
-            var findApp = Portal.mobileApps.listPage.searchAndCount(app.name);
-            expect(findApp).toBe(1);
-        });
-
-        it('should basic edit and "publish" an existing app - ' + app.platform,
-          function () {
-            Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
-            Portal.mobileApps.listPage.searchAndEdit(app.name);
-             var updatedApp = DataProvider.generateUpdateMobileApp(app);
-            Portal.mobileApps.editPage.publish(updatedApp);
-            Portal.dialog.clickOk();
-
-            var alert = Portal.alerts.getFirst();
-            var expectedMsg = Constants.alertMessages.app.MSG_SUCCESS_UPDATE;
-            expect(alert.getText()).toContain(expectedMsg);
-
-            Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
-            var findApp = Portal.mobileApps.listPage.searchAndCount(app.name);
-            expect(findApp).toBe(1);
-        });
-
-        it('should basic edit and "verify" the app name - ' + app.platform,
-          function () {
-            Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
-            Portal.mobileApps.listPage.searchAndEdit(app.name);
-            app.name = app.name + 'UPDATED';
-            var updatedApp = DataProvider.generateUpdateMobileApp(app);
-            Portal.mobileApps.editPage.verify(updatedApp);
-
-            var alert = Portal.alerts.getFirst();
-            var expectedMsg = Constants.alertMessages.app.MSG_SUCCESS_VERIFY;
-            expect(alert.getText()).toContain(expectedMsg);
-
-            Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
-            var findApp = Portal.mobileApps.listPage.searchAndCount(app.name);
-            expect(findApp).toBe(1);
-        });
-
-        it('should basic edit and "update" the app name - ' + app.platform,
-          function () {
-            Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
-            Portal.mobileApps.listPage.searchAndEdit(app.name);
-            app.name = app.name + 'UPDATED';
-            var updatedApp = DataProvider.generateUpdateMobileApp(app);
-            Portal.mobileApps.editPage.update(updatedApp);
-            Portal.dialog.clickOk();
-
-            var alert = Portal.alerts.getFirst();
-            var expectedMsg =  Constants.alertMessages.app.MSG_SUCCESS_UPDATE;
-            expect(alert.getText()).toContain(expectedMsg);
-
-            Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
-            var findApp = Portal.mobileApps.listPage.searchAndCount(app.name);
-            expect(findApp).toBe(1);
-        });
-
-        it('should basic edit and "publish" the app name - ' + app.platform,
-          function () {
-            Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
-            Portal.mobileApps.listPage.searchAndEdit(app.name);
-            app.name = app.name + 'UPDATED';
-            var updatedApp = DataProvider.generateUpdateMobileApp(app);
-            Portal.mobileApps.editPage.publish(updatedApp);
-            Portal.dialog.clickOk();
-
-            var alert = Portal.alerts.getFirst();
-            var expectedMsg =  Constants.alertMessages.app.MSG_SUCCESS_UPDATE;
-            expect(alert.getText()).toContain(expectedMsg);
-
-            Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
-            var findApp = Portal.mobileApps.listPage.searchAndCount(app.name);
-            expect(findApp).toBe(1);
-        });
-
-        it('should verify staging status after "publish" - ' + app.platform,
-          function () {
-            Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
-            Portal.mobileApps.listPage.searchAndEdit(app.name);
-            var updatedApp = DataProvider.generateUpdateMobileApp(app);
-            Portal.mobileApps.editPage.publish(updatedApp);
-            Portal.dialog.clickOk();
-
-            var alert = Portal.alerts.getFirst();
-            var expectedMsg = Constants.alertMessages.app.MSG_SUCCESS_UPDATE;
-            expect(alert.getText()).toContain(expectedMsg);
-
-            Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
-            var findApp = Portal.mobileApps.listPage.searchAndCount(app.name);
-            expect(findApp).toBe(1);
-            var row = Portal.mobileApps.listPage.table
-              .getFirstRow();
-            expect(row.getPublishedStagingStatusIcon().isPresent()).toBeTruthy();
-            expect(row.getPublishedGlobalStatusIcon().isPresent()).toBeTruthy();
-        });
-
-        it('should verify global status after "update" - ' + app.platform,
-          function () {
-            Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
-            Portal.mobileApps.listPage.searchAndEdit(app.name);
-            var updatedApp = DataProvider.generateUpdateMobileApp(app);
-            Portal.mobileApps.editPage.update(updatedApp);
-            Portal.dialog.clickOk();
-
-            var alert = Portal.alerts.getFirst();
-            var expectedMsg = Constants.alertMessages.app.MSG_SUCCESS_UPDATE;
-            expect(alert.getText()).toContain(expectedMsg);
-
-            Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
-            var findApp = Portal.mobileApps.listPage.searchAndCount(app.name);
-            expect(findApp).toBe(1);
-            var row = Portal.mobileApps.listPage.table
-              .getFirstRow();
-            expect(row.getPublishedStagingStatusIcon().isPresent()).toBeTruthy();
-            expect(row.getModifiedGlobalStatusIcon().isPresent()).toBeTruthy();
-        });
+      });
     });
   });
 });
