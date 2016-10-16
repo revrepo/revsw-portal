@@ -24,33 +24,74 @@ var Constants = require('./../../../page_objects/constants');
 describe('Functional', function () {
   describe('Delete App', function () {
 
-    var adminUser = config.get('portal.users.admin');
-    var platforms = Portal.constants.mobileApps.platforms;
-    var iosApps = DataProvider.generateMobileAppData(platforms.ios, 1);
-    var androidApps = DataProvider.generateMobileAppData(platforms.android, 1);
-    var apps = iosApps.concat(androidApps);
+    var users = [
+      config.get('portal.users.admin')
+    ];
+    var platforms = [
+      Portal.constants.mobileApps.platforms.android,
+      Portal.constants.mobileApps.platforms.ios
+    ];
+    var length51Characters = new Array(52).join('x');
 
-    beforeAll(function () {
-      Portal.signIn(adminUser);
-      Portal.createMobileApps(platforms.ios, iosApps);
-      Portal.createMobileApps(platforms.android, androidApps);
-    });
+    users.forEach(function (user) {
 
-    afterAll(function () {
-      Portal.signOut();
-    });
+      describe('With user: ' + user.role, function () {
 
-    apps.forEach(function (app) {
-      it('should delete an app - ' + app.platform, function () {
-        Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
-        Portal.mobileApps.listPage.searchAndDelete(app);
-        Portal.dialog.clickOk();
-        var alert = Portal.alerts.getFirst();
-        var expectedMsg = Constants.alertMessages.app.MSG_SUCCESS_DELETE;
-        expect(alert.getText()).toContain(expectedMsg);
-        var findApp = Portal.mobileApps.listPage.searchAndCount(app.name);
-        expect(findApp).toBe(0);
+        platforms.forEach(function (platform) {
+
+          describe('For platform: ' + platform, function () {
+
+            beforeAll(function (done) {
+              Portal
+                .signIn(user)
+                .then(function () {
+                  return Portal.helpers.mobileApps
+                    .createOne({platform: platform})
+                    .then(function (newApp) {
+                      app = newApp;
+                      done();
+                    })
+                    .catch(done);
+                })
+                .catch(done);
+            });
+
+            afterAll(function () {
+              Portal.signOut();
+            });
+
+            it('should delete an app', function () {
+              Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+              Portal.mobileApps.listPage.searchAndDelete(app.name);
+              Portal.dialog.clickOk();
+              var alert = Portal.alerts.getFirst();
+              var expectedMsg = Constants.alertMessages.app.MSG_SUCCESS_DELETE;
+              expect(alert.getText()).toContain(expectedMsg);
+              var total = Portal.mobileApps.listPage.searchAndCount(app.name);
+              expect(total).toBe(0);
+            });
+          });
+        });
       });
     });
+
+    // var adminUser = config.get('portal.users.admin');
+    // var platforms = Portal.constants.mobileApps.platforms;
+    // var iosApps = DataProvider.generateMobileAppData(platforms.ios, 1);
+    // var androidApps = DataProvider.generateMobileAppData(platforms.android, 1);
+    // var apps = iosApps.concat(androidApps);
+    //
+    // beforeAll(function () {
+    //   Portal.signIn(adminUser);
+    //   Portal.createMobileApps(platforms.ios, iosApps);
+    //   Portal.createMobileApps(platforms.android, androidApps);
+    // });
+    //
+    // afterAll(function () {
+    //   Portal.signOut();
+    // });
+
+    // apps.forEach(function (app) {
+    // });
   });
 });
