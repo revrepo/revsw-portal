@@ -17,6 +17,7 @@
  */
 
 // # Portal App object
+var Promise = require("bluebird");
 
 // Requiring config and constants
 var Constants = require('./constants');
@@ -226,7 +227,7 @@ var Portal = {
    */
   signIn: function (user) {
     var me = this;
-    return this.header
+    var promise = this.header
       .isPresent()
       .then(function (isPresent) {
         if (isPresent) {
@@ -244,6 +245,7 @@ var Portal = {
             me.session.setCurrentUser(user);
           });
       });
+    return Promise.resolve(promise);
   },
 
   /**
