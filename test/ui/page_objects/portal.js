@@ -567,40 +567,6 @@ var Portal = {
   },
 
   /**
-   * ### Portal.createMobileAppIfNotExist()
-   *
-   * Helper method that executes all steps required to create a new App from
-   * Portal app. This method creates the Mobile App only if it does not exist
-   * (it validates the existence by doing a search by the domain name).
-   *
-   * @param {Object} app, data applying the schema defined in
-   * `DataProvider.generateMobileApp()`
-   *
-   * @returns {Object} Promise
-   */
-  createMobileAppIfNotExist: function (app) {
-    var me = this;
-    return browser.getCurrentUrl().then(function (initialUrl) {
-      me.helpers.nav.goToMobileAppsMenuItem(app.platform);
-      me.mobileApps.listPage.setSearch(app.name);
-      me.mobileApps.listPage.table
-        .getRows()
-        .count()
-        .then(function (totalResults) {
-          if (totalResults === 0) {
-            me.mobileApps.listPage.addNew(app);
-            me.mobileApps.addPage.clickBackToList();
-          }
-          browser.getCurrentUrl().then(function (currentUrl) {
-            if (initialUrl !== currentUrl) {
-              browser.get(initialUrl);
-            }
-          });
-        });
-    });
-  },
-
-  /**
    * ### Portal.createAccounts()
    *
    * Helper method that executes all steps required to create
