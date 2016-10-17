@@ -28,7 +28,9 @@ var AppTableRow = function (rowEl, locators) {
   };
 
   this.getNameLink = function () {
-    return this.getNameCell().element(by.css(this.locators.name.links.css));
+    return this
+      .getNameCell()
+      .element(by.css(this.locators.name.links.css));
   };
 
   this.getPlatformCell = function () {
@@ -157,7 +159,8 @@ var AppTableRow = function (rowEl, locators) {
       .getText();
   };
 
-  if (this.locators.actions && this.locators.actions.buttons.pencil) {
+  if (this.locators.actions && this.locators.actions.buttons &&
+    this.locators.actions.buttons.pencil) {
 
     this.getEditBtn = function () {
       return this.rowEl
@@ -172,7 +175,8 @@ var AppTableRow = function (rowEl, locators) {
     };
   }
 
-  if (this.locators.actions && this.locators.actions.buttons.cog) {
+  if (this.locators.actions && this.locators.actions.buttons &&
+    this.locators.actions.buttons.cog) {
 
     this.getConfigureBtn = function () {
       return this.rowEl
@@ -187,7 +191,8 @@ var AppTableRow = function (rowEl, locators) {
     };
   }
 
-  if (this.locators.actions && this.locators.actions.buttons.trash) {
+  if (this.locators.actions && this.locators.actions.buttons &&
+    this.locators.actions.buttons.trash) {
 
     this.getDeleteBtn = function () {
       return this.rowEl
@@ -203,7 +208,8 @@ var AppTableRow = function (rowEl, locators) {
   }
 
 
-  if (this.locators.actions && this.locators.actions.buttons.stats) {
+  if (this.locators.actions && this.locators.actions.buttons &&
+    this.locators.actions.buttons.stats) {
 
     this.getStatsBtn = function () {
       return this.rowEl
@@ -218,7 +224,8 @@ var AppTableRow = function (rowEl, locators) {
     };
   }
 
-  if (this.locators.actions && this.locators.actions.buttons.book) {
+  if (this.locators.actions && this.locators.actions.buttons &&
+    this.locators.actions.buttons.book) {
 
     this.getVersionsBtn = function () {
       return this.rowEl

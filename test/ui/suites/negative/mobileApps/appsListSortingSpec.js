@@ -18,85 +18,65 @@
 
 var config = require('config');
 var Portal = require('./../../../page_objects/portal');
-var DataProvider = require('./../../../common/providers/data');
-var Constants = require('./../../../page_objects/constants');
 
 describe('Negative', function () {
   describe('Sorting List App', function () {
 
-    var adminUser = config.get('portal.users.admin');
-    var platforms = Portal.constants.mobileApps.platforms;
-    var iosApps = DataProvider.generateMobileAppData(platforms.ios, 3);
-    var androidApps = DataProvider.generateMobileAppData(platforms.android, 3);
+    var users = [
+      config.get('portal.users.admin')
+    ];
+    var platforms = [
+      Portal.constants.mobileApps.platforms.android,
+      Portal.constants.mobileApps.platforms.ios
+    ];
 
-    beforeAll(function () {
-      Portal.signIn(adminUser);
-      Portal.createMobileApps(platforms.ios, iosApps);
-      Portal.createMobileApps(platforms.android, androidApps);
-    });
+    users.forEach(function (user) {
 
-    afterAll(function () {
-      Portal.deleteMobileApps(iosApps);
-      Portal.deleteMobileApps(androidApps);
-      Portal.signOut();
-    });
+      describe('With user: ' + user.role, function () {
 
-    it('should sorted list apps ascendent and descendant - iOS', function () {
-      Portal.helpers.nav.goToMobileAppsMenuItem(platforms.ios);
-      var totalRows = Portal.mobileApps.listPage.table
-        .getRows()
-        .count();
-      Portal.mobileApps.listPage.setSearch('Something weird');
-      Portal.mobileApps.listPage.sortByName();
-      var appsCount1 = Portal.mobileApps.listPage.table
-        .getRows()
-        .count();
+        platforms.forEach(function (platform) {
 
-      Portal.helpers.nav.goToMobileAppsMenuItem(platforms.ios);
-      Portal.mobileApps.listPage.sortByName();
-      var appsCount2 = Portal.mobileApps.listPage.table
-        .getRows()
-        .count();
+          describe('For platform: ' + platform, function () {
 
-      Portal.helpers.nav.goToMobileAppsMenuItem(platforms.ios);
-      Portal.mobileApps.listPage.setSearch(' ');
-      Portal.mobileApps.listPage.sortByName();
-      var appsCount3 = Portal.mobileApps.listPage.table
-        .getRows()
-        .count();
+            beforeAll(function () {
+              Portal.signIn(user);
+            });
 
-      expect(appsCount1).toBe(0);
-      expect(appsCount2).toBe(0);
-      expect(appsCount3).toBe(totalRows);
-    });
+            afterAll(function () {
+              Portal.signOut();
+            });
 
-    it('should sorted list apps ascendent & descendant - Android', function () {
-      Portal.helpers.nav.goToMobileAppsMenuItem(platforms.android);
-      var totalRows = Portal.mobileApps.listPage.table
-        .getRows()
-        .count();
-      Portal.mobileApps.listPage.setSearch('Something weird');
-      Portal.mobileApps.listPage.sortByName();
-      var appsCount1 = Portal.mobileApps.listPage.table
-        .getRows()
-        .count();
+            it('should sorted list apps ascendant and descendant', function () {
+              Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+              var totalRows = Portal.mobileApps.listPage.table
+                .getRows()
+                .count();
+              Portal.mobileApps.listPage.searcher
+                .setSearchCriteria('Something weird');
+              Portal.mobileApps.listPage.sortByName();
+              var appsCount1 = Portal.mobileApps.listPage.table
+                .getRows()
+                .count();
+              Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+              Portal.mobileApps.listPage.sortByName();
+              var appsCount2 = Portal.mobileApps.listPage.table
+                .getRows()
+                .count();
+              Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+              Portal.mobileApps.listPage.searcher
+                .setSearchCriteria(' ');
+              Portal.mobileApps.listPage.sortByName();
+              var appsCount3 = Portal.mobileApps.listPage.table
+                .getRows()
+                .count();
 
-      Portal.helpers.nav.goToMobileAppsMenuItem(platforms.android);
-      Portal.mobileApps.listPage.sortByName();
-      var appsCount2 = Portal.mobileApps.listPage.table
-        .getRows()
-        .count();
-
-      Portal.helpers.nav.goToMobileAppsMenuItem(platforms.android);
-      Portal.mobileApps.listPage.setSearch(' ');
-      Portal.mobileApps.listPage.sortByName();
-      var appsCount3 = Portal.mobileApps.listPage.table
-        .getRows()
-        .count();
-
-      expect(appsCount1).toBe(0);
-      expect(appsCount2).toBe(0);
-      expect(appsCount3).toBe(totalRows);
+              expect(appsCount1).toBe(0);
+              expect(appsCount2).toBe(0);
+              expect(appsCount3).toBe(totalRows);
+            });
+          });
+        });
+      });
     });
   });
 });

@@ -539,34 +539,6 @@ var Portal = {
   },
 
   /**
-   * ### Portal.createMobileApps()
-   *
-   * Helper method that executes all steps required to create
-   * new Mobile Apps from Portal app.
-   *
-   * @param {String} platform, platform name of Mobile App.
-   *
-   * @param {Object} apps, data applying the schema defined in
-   * `DataProvider.generateMobileApps()`
-   *
-   * @returns {Object} Promise
-   */
-  createMobileApps: function (platform, apps) {
-    var me = this;
-    return browser.getCurrentUrl().then(function (initialUrl) {
-      apps.forEach(function (app) {
-        me.helpers.nav.goToMobileAppsMenuItem(platform);
-        me.mobileApps.listPage.addNew(app);
-      });
-      browser.getCurrentUrl().then(function (currentUrl) {
-        if (initialUrl !== currentUrl) {
-          browser.get(initialUrl);
-        }
-      });
-    });
-  },
-
-  /**
    * ### Portal.deleteMobileApps()
    *
    * Helper method that executes all steps required to delete
