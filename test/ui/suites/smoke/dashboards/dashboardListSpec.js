@@ -44,7 +44,6 @@ describe('Smoke', function () {
         });
 
         afterAll(function () {
-          Portal.deleteDashboard([dashboard]);
           Portal.signOut();
         });
 

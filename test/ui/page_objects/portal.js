@@ -570,36 +570,6 @@ var Portal = {
   },
 
   /**
-   * ### Portal.deleteDashboard(arrayDashboards)
-   *
-   * Helper method that executes all steps required to delete an existing
-   * Dashboard from Portal Dashboards.
-   *
-   * @param {String} arrayDashboards, arrayDashboards objects.
-   *
-   * @param {Object} arrayDashboards, data applying the schema defined in
-   * `DataProvider.generateDashboardData()`
-   *
-   * @returns {Object} Promise
-   */
-  deleteDashboard: function (arrayDashboards) {
-    var me = this;
-    me.getDashboardsPage();
-    return browser.getCurrentUrl().then(function (initialUrl) {
-      arrayDashboards.forEach(function (dashboard) {
-        me.getDashboardsPage();
-        me.dashboards.listPage.deleteDashboard(dashboard);
-        me.dashboards.dialogPage.clickDelete();
-      });
-      browser.getCurrentUrl().then(function (currentUrl) {
-        if (initialUrl !== currentUrl) {
-          browser.get(initialUrl);
-        }
-      });
-    });
-  },
-
-  /**
    * ### Portal.signUpUser()
    *
    * Signs up a test (auto-generated) user
