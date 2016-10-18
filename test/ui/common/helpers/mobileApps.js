@@ -22,7 +22,13 @@ var Session = require('./../session');
 
 var MobileAppsHelper = {
 
-  createOne: function (appData) {
+  /**
+   * Creates a user (pre-requisite) using API test code
+   *
+   * @param appData, mobileApp data
+   * @returns {Object} Promise
+   */
+  create: function (appData) {
     var user = Session.getCurrentUser();
     return API.helpers
       .authenticateUser(user)

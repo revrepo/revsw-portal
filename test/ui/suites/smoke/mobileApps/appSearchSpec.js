@@ -45,7 +45,7 @@ describe('Smoke', function () {
                 .signIn(user)
                 .then(function () {
                   return Portal.helpers.mobileApps
-                    .createOne({platform: platform})
+                    .create({platform: platform})
                     .then(function (newApp) {
                       app = newApp;
                       done();
