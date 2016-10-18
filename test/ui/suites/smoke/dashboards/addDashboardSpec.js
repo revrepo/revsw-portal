@@ -36,7 +36,7 @@ describe('Smoke', function () {
 
         beforeAll(function () {
           Portal.signIn(user);
-          Portal.helpers.nav.goToDashboards()();
+          Portal.helpers.nav.goToDashboards();
         });
 
         afterAll(function () {
