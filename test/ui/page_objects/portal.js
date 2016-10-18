@@ -481,36 +481,6 @@ var Portal = {
   },
 
   /**
-   * ### Portal.deleteDomain()
-   *
-   * Helper method that executes all steps required to delete a Domain from
-   * Portal app.
-   *
-   * @param {Object} domain, data applying the schema defined in
-   * `DataProvider.generateDomain()`
-   *
-   * @returns {Object} Promise
-   */
-  deleteDomain: function (domain) {
-    var me = this;
-    return browser.getCurrentUrl().then(function (initialUrl) {
-      me.helpers.nav.goToDomains();
-      me.domains.listPage.searcher.clearSearchCriteria();
-      me.domains.listPage.searcher.setSearchCriteria(domain.name);
-      me.domains.listPage.table
-        .getFirstRow()
-        .clickDelete();
-      me.dialog.clickOk();
-      me.domains.listPage.searcher.clearSearchCriteria();
-      browser.getCurrentUrl().then(function (currentUrl) {
-        if (initialUrl !== currentUrl) {
-          browser.get(initialUrl);
-        }
-      });
-    });
-  },
-
-  /**
    * ### Portal.createAccounts()
    *
    * Helper method that executes all steps required to create

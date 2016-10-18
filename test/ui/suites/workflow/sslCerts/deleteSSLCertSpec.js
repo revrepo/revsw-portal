@@ -93,7 +93,8 @@ describe('Workflow', function () {
             Portal.domains.editPage.clickUpdateDomain();
             Portal.dialog.clickOk();
             Portal.domains.editPage.clickBackToList();
-            Portal.deleteDomain(testDomain);
+            Portal.domains.listPage.searchAndClickDelete(testDomain.name);
+            Portal.dialog.clickOk();
             Portal.helpers.nav.goToSSLCertificates();
             Portal.sslCerts.listPage.searcher.setSearchCriteria(testSslCert.name);
             Portal.sslCerts.listPage.table
