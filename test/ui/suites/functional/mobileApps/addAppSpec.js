@@ -18,50 +18,56 @@
 
 var config = require('config');
 var Portal = require('./../../../page_objects/portal');
-var DataProvider = require('./../../../common/providers/data');
 var Constants = require('./../../../page_objects/constants');
 
 describe('Functional', function () {
   describe('Add New App', function () {
 
-    var adminUser = config.get('portal.users.admin');
-    var platforms = Portal.constants.mobileApps.platforms;
-    var iosApps = DataProvider.generateMobileAppData(platforms.ios, 1);
-    var androidApps = DataProvider.generateMobileAppData(platforms.android, 1);
-    var windowsMobileApps = DataProvider
-      .generateMobileAppData(platforms.windowsMobile, 1);
-    var apps = iosApps.concat(androidApps).concat(windowsMobileApps);
+    var users = [
+      config.get('portal.users.admin')
+    ];
+    var platforms = [
+      Portal.constants.mobileApps.platforms.android,
+      Portal.constants.mobileApps.platforms.ios
+    ];
 
-    beforeAll(function () {
-      Portal.signIn(adminUser);
-    });
+    users.forEach(function (user) {
 
-    afterAll(function () {
-      Portal.deleteMobileApps(apps);
-      Portal.signOut();
-    });
+      describe('With user: ' + user.role, function () {
 
-    apps.forEach(function (app) {
-      it('should get title from list app page - ' + app.platform,
-        function () {
-          Portal.helpers.nav.goToMobileAppsMenuItem(platform);
-          var title = Portal.mobileApps.listPage.getTitle();
-          expect(title).toEqual(app.title);
+        platforms.forEach(function (platform) {
+
+          describe('For platform: ' + platform, function () {
+
+            beforeAll(function () {
+              Portal.signIn(user);
+            });
+
+            afterAll(function () {
+              Portal.signOut();
+            });
+
+            beforeEach(function () {
+              Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+            });
+
+            it('should get title from list app page', function () {
+              var title = Portal.mobileApps.listPage.getTitle();
+              expect(title).toEqual(app.title);
+            });
+
+            it('should add a new app', function () {
+              Portal.mobileApps.listPage.addNew(app);
+              var alert = Portal.alerts.getFirst();
+              var expectedMsg = Constants.alertMessages.app.MSG_SUCCESS_ADD;
+              expect(alert.getText()).toContain(expectedMsg);
+              Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+              var findApp = Portal.mobileApps.listPage.searchAndCount(app.name);
+              expect(findApp).toBe(1);
+            });
+          });
         });
-
-      it('should add a new app - ' + app.platform,
-        function () {
-          Portal.helpers.nav.goToMobileAppsMenuItem(platform);
-          Portal.mobileApps.listPage.addNew(app);
-
-          var alert = Portal.alerts.getFirst();
-          var expectedMsg = Constants.alertMessages.app.MSG_SUCCESS_ADD;
-          expect(alert.getText()).toContain(expectedMsg);
-
-          Portal.helpers.nav.goToMobileAppsMenuItem(platform);
-          var findApp = Portal.mobileApps.listPage.searchAndCount(app.name);
-          expect(findApp).toBe(1);
-        });
+      });
     });
   });
 });
