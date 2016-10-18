@@ -18,71 +18,75 @@
 
 var config = require('config');
 var Portal = require('./../../../page_objects/portal');
-var DataProvider = require('./../../../common/providers/data');
-var Constants = require('./../../../page_objects/constants');
 
 describe('Boundary', function () {
   describe('Add New App', function () {
 
-    var adminUser = config.get('portal.users.admin');
-    var length51Characters = new Array(52).join('x');
-    var iosApps = DataProvider
-      .generateMobileAppData(Portal.constants.mobileApps.platforms.ios, 1);
-    var androidApps = DataProvider
-      .generateMobileAppData(Portal.constants.mobileApps.platforms.android, 1);
-    var apps = iosApps.concat(androidApps);
+    var users = [
+      config.get('portal.users.admin')
+    ];
+    var platforms = [
+      Portal.constants.mobileApps.platforms.android,
+      Portal.constants.mobileApps.platforms.ios
+    ];
 
-    beforeAll(function () {
-      Portal.signIn(adminUser);
-    });
+    users.forEach(function (user) {
 
-    afterAll(function () {
-      Portal.signOut();
-    });
+      describe('With user: ' + user.role, function () {
 
-    apps.forEach(function (app) {
-      it('should check Register button is disabled when app name have more ' +
-        'than 51 characters - ' + app.platform, function () {
-        Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+        platforms.forEach(function (platform) {
 
-        Portal.mobileApps.listPage.clickAddNewApp();
-        app.name = length51Characters;
-        Portal.mobileApps.addPage.fill(app);
-        var enabled = Portal.mobileApps.addPage.isEnabledRegister();
-        expect(enabled).toBe(false);
-      });
+          describe('For platform: ' + platform, function () {
 
-      it('should check Register button is disabled when app name have zero ' +
-        'characters - ' + app.platform, function () {
-        Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+            beforeAll(function () {
+              Portal.signIn(user);
+            });
 
-        Portal.mobileApps.listPage.clickAddNewApp();
-        app.name = '';
-        Portal.mobileApps.addPage.fill(app);
-        var enabled = Portal.mobileApps.addPage.isEnabledRegister();
-        expect(enabled).toBe(false);
-      });
+            afterAll(function () {
+              Portal.signOut();
+            });
 
-      it('should check Register button is disabled when app name have ' +
-        'empty characters - ' + app.platform, function () {
-        Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+            beforeEach(function () {
+              Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+            });
 
-        Portal.mobileApps.listPage.clickAddNewApp();
-        app.name = '       ';
-        Portal.mobileApps.addPage.fill(app);
-        var enabled = Portal.mobileApps.addPage.isEnabledRegister();
-        expect(enabled).toBe(false);
-      });
+            it('should check Register button is disabled when app name have ' +
+              'more than 51 characters', function () {
+              Portal.mobileApps.listPage.clickAddNewApp();
+              app.name = length51Characters;
+              Portal.mobileApps.addPage.fill(app);
+              var enabled = Portal.mobileApps.addPage.isEnabledRegister();
+              expect(enabled).toBe(false);
+            });
 
-      it('should check Register button is disabled when app name have ' + // jshint ignore:line
-        'special characters - ' + app.platform, function () {
-        Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+            it('should check Register button is disabled when app name have ' +
+              'zero characters', function () {
+              Portal.mobileApps.listPage.clickAddNewApp();
+              app.name = '';
+              Portal.mobileApps.addPage.fill(app);
+              var enabled = Portal.mobileApps.addPage.isEnabledRegister();
+              expect(enabled).toBe(false);
+            });
 
-        Portal.mobileApps.listPage.clickAddNewApp();
-        app.name = '& ^ $ @ # % ( ) _ +  / \\ ~ ` , . ; :';
-        Portal.mobileApps.addPage.fill(app);
-        var enabled = Portal.mobileApps.addPage.isEnabledRegister();
-        expect(enabled).toBe(false);
+            it('should check Register button is disabled when app name have ' +
+              'empty characters', function () {
+              Portal.mobileApps.listPage.clickAddNewApp();
+              app.name = '       ';
+              Portal.mobileApps.addPage.fill(app);
+              var enabled = Portal.mobileApps.addPage.isEnabledRegister();
+              expect(enabled).toBe(false);
+            });
+
+            it('should check Register button is disabled when app name have ' + // jshint ignore:line
+              'special characters', function () {
+              Portal.mobileApps.listPage.clickAddNewApp();
+              app.name = '& ^ $ @ # % ( ) _ +  / \\ ~ ` , . ; :';
+              Portal.mobileApps.addPage.fill(app);
+              var enabled = Portal.mobileApps.addPage.isEnabledRegister();
+              expect(enabled).toBe(false);
+            });
+          });
+        });
       });
     });
   });
