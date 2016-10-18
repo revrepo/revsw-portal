@@ -33,7 +33,6 @@ describe('Smoke', function () {  // jshint ignore:line
     });
 
     afterAll(function () {
-      Portal.deleteAPIKey(apiKeyData);
       Portal.signOut();
     });
 

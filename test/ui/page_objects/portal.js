@@ -682,33 +682,6 @@ var Portal = {
     });
   },
 
-  /**
-   * ### Portal.deleteAPIKey()
-   *
-   * Helper method that executes all steps required to delete an existing
-   * Dashboard from Portal Dashboards.
-   *
-   * @param {String} apiKey, apiKey objects.
-   *
-   * @param {Object} apiKey, data applying the schema defined in
-   * `DataProvider.generateApiKeyData()`
-   *
-   * @returns {Object} Promise
-   */
-  deleteAPIKey: function (apiKey) {
-    var me = this;
-    return browser.getCurrentUrl().then(function (initialUrl) {
-      me.helpers.nav.goToAPIKeys();
-      Portal.admin.apiKeys.listPage.searchAndClickDelete(apiKey.name);
-      Portal.dialog.clickOk();
-      browser.getCurrentUrl().then(function (currentUrl) {
-        if (initialUrl !== currentUrl) {
-          browser.get(initialUrl);
-        }
-      });
-    });
-  },
-
   createSSLCert: function (sslCert) {
     var me = this;
     return browser.getCurrentUrl().then(function (initialUrl) {
