@@ -46,7 +46,6 @@ describe('Functional', function () {
       expect(alert.getText())
         .toContain(Constants.alertMessages.users.MSG_SUCCESS_ADD);
       Portal.addUserPage.clickBackToList();
-      Portal.deleteUser(bret);
     });
 
     it('should create a new user with "user" role', function () {
@@ -56,7 +55,6 @@ describe('Functional', function () {
       Portal.userListPage.searcher.setSearchCriteria(carl.email);
       var user = Portal.userListPage.table.getFirstRow();
       expect(user.getRole()).toEqual(Constants.user.roles.USER);
-      Portal.deleteUser(carl);
     });
 
     it('should create a new user with "admin" role', function () {
@@ -66,7 +64,6 @@ describe('Functional', function () {
       Portal.userListPage.searcher.setSearchCriteria(tom.email);
       var user = Portal.userListPage.table.getFirstRow();
       expect(user.getRole()).toEqual(Constants.user.roles.ADMIN);
-      Portal.deleteUser(tom);
     });
   });
 });

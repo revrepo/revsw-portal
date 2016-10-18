@@ -29,7 +29,7 @@ describe('Workflow', function () {
 
     it('should be able to sign-in once it is created by a reseller user',
       function () {
-        var joe = DataProvider.generateUser('Joe', null, resellerUser);
+        var joe = DataProvider.generateUser('Joe', false, resellerUser);
         // Create user
         Portal.signIn(resellerUser);
         Portal.createUser(joe);
@@ -38,10 +38,6 @@ describe('Workflow', function () {
         Portal.signIn(joe);
         var userInfoEl = Portal.header.getUserInfoEl();
         expect(userInfoEl.isDisplayed()).toBeTruthy();
-        Portal.signOut();
-        // Delete user
-        Portal.signIn(resellerUser);
-        Portal.deleteUser(joe);
         Portal.signOut();
       });
 
@@ -56,10 +52,6 @@ describe('Workflow', function () {
         Portal.signIn(paul);
         var userInfoEl = Portal.header.getUserInfoEl();
         expect(userInfoEl.isDisplayed()).toBeTruthy();
-        Portal.signOut();
-        // Delete user
-        Portal.signIn(adminUser);
-        Portal.deleteUser(paul);
         Portal.signOut();
       });
 
@@ -80,10 +72,6 @@ describe('Workflow', function () {
         Portal.signIn({email: peter.email, password: newPassword});
         var userInfoEl = Portal.header.getUserInfoEl();
         expect(userInfoEl.isDisplayed()).toBeTruthy();
-        Portal.signOut();
-        // Delete user created
-        Portal.signIn(adminUser);
-        Portal.deleteUser(peter);
         Portal.signOut();
       });
   });

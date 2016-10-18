@@ -70,8 +70,6 @@ describe('Smoke', function () {
             expect(Portal.alerts.getAll().count()).toEqual(1);
             expect(Portal.alerts.getFirst().getText())
               .toContain(Constants.alertMessages.users.MSG_SUCCESS_ADD);
-            // Delete created user
-            Portal.deleteUser(bruce);
           });
       });
     });

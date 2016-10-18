@@ -50,10 +50,6 @@ describe('Boundary', function () {
         Portal.updatePasswordPage.setPasswordConfirm(newPassword);
         var updateBtn = Portal.updatePasswordPage.getUpdatePasswordBtn();
         expect(updateBtn.isEnabled()).toBeFalsy();
-
-        Portal.signOut();
-        Portal.signIn(adminUser);
-        Portal.deleteUser(bret);
       });
 
     it('should not update the password when it is greater than 15 chars ' +
@@ -70,10 +66,6 @@ describe('Boundary', function () {
         Portal.updatePasswordPage.setPasswordConfirm(newPassword);
         var updateBtn = Portal.updatePasswordPage.getUpdatePasswordBtn();
         expect(updateBtn.isEnabled()).toBeFalsy();
-
-        Portal.signOut();
-        Portal.signIn(adminUser);
-        Portal.deleteUser(bruno);
       });
 
     it('should not update the password when filling only blank spaces',
@@ -92,9 +84,6 @@ describe('Boundary', function () {
         var expectedMessage = '×\nPlease fill all fields. (New password should ' +
             'be at least 8 characters length)';
         expect(alert.getText()).toEqual(expectedMessage);
-        Portal.signOut();
-        Portal.signIn(adminUser);
-        Portal.deleteUser(carol);
       });
   });
 });

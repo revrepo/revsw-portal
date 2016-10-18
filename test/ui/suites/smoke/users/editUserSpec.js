@@ -92,8 +92,6 @@ describe('Smoke', function () {
           expect(updatedFirstName).toContain(valueAdded);
           expect(updatedLastName).toContain(valueAdded);
           Portal.editUserPage.clickBackToList();
-          // Delete created user
-          Portal.deleteUser(joe);
         });
       });
     });

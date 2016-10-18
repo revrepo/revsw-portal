@@ -17,13 +17,9 @@
  */
 
 var user = {};
-var cleanupList = [];
 var config = require('config');
 var revAdmin = config.get('portal.users.revAdmin');
 var Portal = require('./../../../page_objects/portal');
-var DataProvider = require('./../../../common/providers/data');
-
-var MailinatorHelper = require('./../../../mailinator/helper');
 
 describe('Functional', function () {
 
@@ -34,18 +30,12 @@ describe('Functional', function () {
         .signUpAndVerifyUser()
         .then(function (newUser) {
           user = newUser;
-          cleanupList.push(user);
           Portal.signOut();
           done();
         });
     });
 
     afterAll(function () {
-      Portal.signOut();
-      Portal.signIn(revAdmin);
-      cleanupList.forEach(function (usr) {
-        Portal.deleteUser(usr);
-      });
       Portal.signOut();
     });
 
@@ -74,7 +64,6 @@ describe('Functional', function () {
     it('should display message for unverified user when doing recovery',
       function () {
         Portal.signUpUser('Gold').then(function (tmpUsr) {
-          cleanupList.push(tmpUsr);
           Portal.signUp.formPage.verificationMessage.waitToDisplay();
           Portal.load();
           Portal.loginPage.clickForgotPassword();

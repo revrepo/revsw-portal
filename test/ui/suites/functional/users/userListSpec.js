@@ -55,8 +55,6 @@ describe('Functional', function () {
       expect(user.getLastName()).toEqual(andrew.lastName);
       expect(user.getEmail()).toEqual(andrew.email);
       expect(user.getRole()).toEqual(andrew.role);
-      // Delete user
-      Portal.deleteUser(andrew);
     });
 
     it('should list all child users created by an specific "Admin" user',
@@ -78,9 +76,6 @@ describe('Functional', function () {
         expect(user.getLastName()).toEqual(frank.lastName);
         expect(user.getEmail()).toEqual(frank.email);
         expect(user.getRole()).toEqual(frank.role);
-        // Delete users
-        Portal.deleteUser(scott);
-        Portal.deleteUser(frank);
       });
   });
 });

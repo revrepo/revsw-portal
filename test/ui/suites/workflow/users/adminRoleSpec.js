@@ -25,22 +25,15 @@ describe('Workflow', function () {
   describe('Admin role user', function () {
 
     var resellerUser = config.get('portal.users.reseller');
-    var adminUser = DataProvider.generateUser('Admin', null, resellerUser);
+    var adminUser = DataProvider.generateUser('Admin', false, resellerUser);
     adminUser.role = Constants.user.roles.ADMIN;
-    var anotherAdmin = DataProvider.generateUser('OtherAdmin', null, resellerUser);
+    var anotherAdmin = DataProvider.generateUser('OtherAdmin', false, resellerUser);
     anotherAdmin.role = Constants.user.roles.ADMIN;
 
     beforeAll(function () {
       Portal.signIn(resellerUser);
       Portal.createUser(adminUser);
       Portal.createUser(anotherAdmin);
-      Portal.signOut();
-    });
-
-    afterAll(function () {
-      Portal.signIn(resellerUser);
-      Portal.deleteUser(adminUser);
-      Portal.deleteUser(anotherAdmin);
       Portal.signOut();
     });
 
@@ -63,7 +56,6 @@ describe('Workflow', function () {
         expect(user.getFirstName()).toEqual(tom.firstName);
         expect(user.getLastName()).toEqual(tom.lastName);
         expect(user.getRole()).toEqual(tom.role);
-        Portal.deleteUser(tom);
       });
 
     it('should be able to update/edit other user after it was created by a ' +
@@ -79,7 +71,6 @@ describe('Workflow', function () {
         expect(user.getFirstName()).toContain('updated');
         expect(user.getLastName()).toEqual(scott.lastName);
         expect(user.getRole()).toEqual(scott.role);
-        Portal.deleteUser(scott);
       });
 
     it('should be able to delete other user after it was created by a ' +
@@ -89,7 +80,11 @@ describe('Workflow', function () {
         Portal.createUser(frank);
         var user = Portal.userListPage.searchAndGetFirstRow(frank.email);
         expect(user.getEmail()).toEqual(frank.email);
-        Portal.deleteUser(frank);
+        // Delete user
+        Portal.userListPage.table
+          .getFirstRow()
+          .clickDelete();
+        Portal.dialog.clickOk();
         Portal.userListPage.searcher.setSearchCriteria(frank.email);
         var totalRows = Portal.userListPage.table.getRows().count();
         expect(totalRows).toEqual(0);
@@ -108,7 +103,6 @@ describe('Workflow', function () {
       Portal.userListPage.searcher.setSearchCriteria(andrew.email);
       var newTotalRows = Portal.userListPage.table.getRows().count();
       expect(newTotalRows).toEqual(1);
-      Portal.deleteUser(andrew);
     });
 
     it('should delete users created by other admin', function () {
@@ -120,7 +114,14 @@ describe('Workflow', function () {
       Portal.signOut();
       // Check new user is visible to other admin
       Portal.signIn(adminUser);
-      Portal.deleteUser(bruce);
+      // Delete user
+      Portal.helpers.nav.goToUsers();
+      Portal.userListPage.searcher.clearSearchCriteria();
+      Portal.userListPage.searcher.setSearchCriteria(user.email);
+      Portal.userListPage.table
+        .getFirstRow()
+        .clickDelete();
+      Portal.dialog.clickOk();
       Portal.helpers.nav.goToUsers();
       Portal.userListPage.searcher.setSearchCriteria(bruce.email);
       var newTotalRows = Portal.userListPage.table.getRows().count();
@@ -143,7 +144,6 @@ describe('Workflow', function () {
       var user = Portal.userListPage.searchAndGetFirstRow(steve.email);
       expect(user.getEmail()).toEqual(steve.email);
       expect(user.getFirstName()).toContain('updated');
-      Portal.deleteUser(steve);
     });
 
     it('should not see reseller user', function () {

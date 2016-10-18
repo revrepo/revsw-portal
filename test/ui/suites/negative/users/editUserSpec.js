@@ -32,8 +32,6 @@ describe('Negative', function () {
     });
 
     afterAll(function () {
-      Portal.signIn(adminUser);
-      Portal.deleteUser(carl);
       Portal.signOut();
     });
 

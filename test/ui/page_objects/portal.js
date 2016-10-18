@@ -393,36 +393,6 @@ var Portal = {
   },
 
   /**
-   * ### Portal.deleteUser()
-   *
-   * Helper method that executes all steps required to delete a User from
-   * Portal app.
-   *
-   * @param {Object} user, data applying the schema defined in
-   * `DataProvider.generateUser()`
-   *
-   * @returns {Object} Promise
-   */
-  deleteUser: function (user) {
-    var me = this;
-    return browser.getCurrentUrl().then(function (initialUrl) {
-      me.helpers.nav.goToUsers();
-      me.userListPage.searcher.clearSearchCriteria();
-      me.userListPage.searcher.setSearchCriteria(user.email);
-      me.userListPage.table
-        .getFirstRow()
-        .clickDelete();
-      me.dialog.clickOk();
-      me.userListPage.searcher.clearSearchCriteria();
-      browser.getCurrentUrl().then(function (currentUrl) {
-        if (initialUrl !== currentUrl) {
-          browser.get(initialUrl);
-        }
-      });
-    });
-  },
-
-  /**
    * ### Portal.createDomain()
    *
    * Helper method that executes all steps required to create a new Domain from

@@ -75,7 +75,6 @@ describe('Smoke', function () {
             .toContain(Constants.alertMessages.users.MSG_SUCCESS_UPDATE_PASSWORD);
           Portal.signOut();
           Portal.signIn(user);
-          Portal.deleteUser(carl);
         });
       });
     });

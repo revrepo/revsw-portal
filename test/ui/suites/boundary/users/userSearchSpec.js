@@ -46,7 +46,6 @@ describe('Negative', function () {
         var tableRows = Portal.userListPage.table.getRows();
         expect(tableRows.count()).toEqual(1);
         Portal.userListPage.searcher.clearSearchCriteria();
-        Portal.deleteUser(bret);
       });
   });
 });
