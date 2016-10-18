@@ -726,35 +726,6 @@ var Portal = {
   },
 
   /**
-   * ### Portal.deleteSSLName()
-   *
-   * Helper method that executes all steps required to delete a SSL Name from
-   * Portal app.
-   *
-   * @param {Object} sslName , data applying the schema defined in
-   * `DataProvider.generateSSLNameData()`
-   *
-   * @returns {Object} Promise
-   */
-  deleteSSLName: function (sslName) {
-    var me = this;
-    return browser.getCurrentUrl().then(function (initialUrl) {
-      me.helpers.nav.goToSSLNames();
-      me.sslNames.listPage.searcher.clearSearchCriteria();
-      me.sslNames.listPage.searcher.setSearchCriteria(sslName.domainName);
-      me.sslNames.listPage.table
-          .getFirstRow()
-          .clickDelete();
-      me.dialog.clickOk();
-      browser.getCurrentUrl().then(function (currentUrl) {
-        if (initialUrl !== currentUrl) {
-          browser.get(initialUrl);
-        }
-      });
-    });
-  },
-
-  /**
    * ### Portal.createLogShippingJob(logShippingJob)
    *
    * Helper method that executes all steps required to create
