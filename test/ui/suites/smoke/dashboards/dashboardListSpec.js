@@ -48,7 +48,7 @@ describe('Smoke', function () {
         });
 
         beforeEach(function () {
-          Portal.getDashboardsPage();
+          Portal.helpers.nav.goToDashboards()();
           Portal.header.goTo(dashboard.title);
         });
 

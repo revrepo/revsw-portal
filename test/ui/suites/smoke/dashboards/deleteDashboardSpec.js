@@ -48,7 +48,7 @@ describe('Smoke', function () {
         });
 
         beforeEach(function () {
-          Portal.getDashboardsPage();
+          Portal.helpers.nav.goToDashboards()();
         });
 
         afterEach(function () {
@@ -56,7 +56,7 @@ describe('Smoke', function () {
 
         it('should selected dashboard and "Delete" from edited Dashboard page',
           function () {
-            Portal.getDashboardsPage();
+            Portal.helpers.nav.goToDashboards()();
             Portal.dashboards.listPage.addNewDashboard(dashboard);
 
             var title = Portal.dashboards.listPage.getTitle();

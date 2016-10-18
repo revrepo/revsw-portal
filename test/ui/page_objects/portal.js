@@ -272,39 +272,6 @@ var Portal = {
     return browser.get(this.baseUrl);
   },
 
-  /**
-   * ### Portal.getPage()
-   *
-   * Loads specified URL or hash fragment in the active browser window
-   *
-   * @param {String} location, URL or hash fragment to load
-   *
-   * @returns {Promise}
-   */
-  getPage: function (location) {
-    return browser.getCurrentUrl().then(function (currentUrl) {
-      var hashFragmentRegExp = new RegExp('^.*' + location + '$');
-      if (hashFragmentRegExp.test(currentUrl)) {
-        return;
-      }
-      if (location.substring(0, 4) === 'http') {
-        return browser.get(location);
-      }
-      return browser.get(Utils.getBaseUrl() + location);
-    });
-  },
-
-  /**
-   * ### Portal.getDashboardsPage()
-   *
-   * Loads the hash fragment for the Dashboards page.
-   *
-   * @returns {Promise}
-   */
-  getDashboardsPage: function () {
-    return this.getPage(Constants.hashFragments.dashboard);
-  },
-
   // ## Portal APP navigation Helper methods
 
   /**
@@ -525,10 +492,10 @@ var Portal = {
    */
   createDashboard: function (arrayDashboards) {
     var me = this;
-    me.getDashboardsPage();
+    me.helpers.nav.goToDashboards();
     return browser.getCurrentUrl().then(function (initialUrl) {
       arrayDashboards.forEach(function (dashboard) {
-        me.getDashboardsPage();
+        me.helpers.nav.goToDashboards();
         me.dashboards.listPage.addNewDashboard(dashboard);
       });
       browser.getCurrentUrl().then(function (currentUrl) {
