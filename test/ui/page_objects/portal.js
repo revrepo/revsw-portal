@@ -541,35 +541,6 @@ var Portal = {
   },
 
   /**
-   * ### Portal.deleteAccounts()
-   *
-   * Helper method that executes all steps required to delete
-   * new Accounts from Portal Admin.
-   *
-   * @param {String} accounts, accounts objects.
-   *
-   * @param {Object} accounts, data applying the schema defined in
-   * `DataProvider.generateAccountProfileData()`
-   *
-   * @returns {Object} Promise
-   */
-  deleteAccounts: function (accounts) {
-    var me = this;
-    return browser.getCurrentUrl().then(function (initialUrl) {
-      accounts.forEach(function (account) {
-        me.helpers.nav.goToAccounts();
-        me.admin.accounts.listPage.searchAndClickDelete(account.companyName);
-        Portal.dialog.clickOk();
-      });
-      browser.getCurrentUrl().then(function (currentUrl) {
-        if (initialUrl !== currentUrl) {
-          browser.get(initialUrl);
-        }
-      });
-    });
-  },
-
-  /**
    * ### Portal.createDashboard(arrayDashboards)
    *
    * Helper method that executes all steps required to create
