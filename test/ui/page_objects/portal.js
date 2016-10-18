@@ -161,13 +161,13 @@ var Portal = {
   },
   signUp: {
     plansPage: PlansPage,
-    formPage: SignUpPage,
+    formPage: SignUpPage
   },
   admin: {
     accounts: Accounts,
     apiKeys: ApiKeysListPage,
     settingsPage: AdminSettingsPage,
-    activityLog: ActivityLogPage,
+    activityLog: ActivityLogPage
   },
   accounts: {
     profilePage: AccountProfilePage,
@@ -270,30 +270,6 @@ var Portal = {
    */
   load: function () {
     return browser.get(this.baseUrl);
-  },
-
-  // ## Portal APP navigation Helper methods
-
-  /**
-   * ### Portal.goTo()
-   *
-   * Navigation helper method that executes all steps to expand the appropriate
-   * header section from the sidebar menu and select an item from it
-   *
-   * @param {String} menuHeader, the header's label from the menu option to click
-   * @param {String} menuItem, the item's label from the menu option to click
-   *
-   *  @returns {Promise}
-   */
-  goTo: function (menuHeader, menuItem) {
-    this.sideBar.collapseDashboard();
-    return this
-      .sideBar.selectItemFromExpandedBlock(menuHeader,
-      menuItem);
-  },
-
-  goToAccountProfile: function () {
-    return Portal.sideBar.goTo(Constants.sideBar.billing.ACCOUNT_PROFILE);
   },
 
   // ## User Helper methods
