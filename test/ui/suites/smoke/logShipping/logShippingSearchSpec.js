@@ -22,54 +22,52 @@ var DataProvider = require('./../../../common/providers/data');
 
 describe('Smoke', function () {
 
-    // Defining set of users for which all below tests will be run
-    var users = [
-        config.get('portal.users.revAdmin'),
-        config.get('portal.users.admin'),
-        config.get('portal.users.reseller')
-    ];
+  // Defining set of users for which all below tests will be run
+  var users = [
+    config.get('portal.users.revAdmin'),
+    config.get('portal.users.admin'),
+    config.get('portal.users.reseller')
+  ];
 
-    users.forEach(function (user) {
+  users.forEach(function (user) {
 
-        describe('With user: ' + user.role, function () {
+    describe('With user: ' + user.role, function () {
 
-            describe('Log Shipping search', function () {
+      describe('Log Shipping search', function () {
 
-                beforeAll(function () {
-                    Portal.signIn(user);
-                });
-
-                afterAll(function () {
-                    Portal.signOut();
-                });
-
-                beforeEach(function () {
-                    Portal.helpers.nav.goToLogShipping();
-                });
-
-                it('should be displayed when displaying Log Shipping List page',
-                    function () {
-                        var searchField = Portal.logShipping.listPage.searcher
-                            .getSearchCriteriaTxtIn();
-                        expect(searchField.isPresent()).toBeTruthy();
-                    });
-
-                it('should filter items according to text filled',
-                    function () {
-                        var logShippingJobToSearch = DataProvider.generateLogShippingJobData();
-
-                        if (user.role === 'Reseller'){
-                            logShippingJobToSearch.account = ['API QA Reseller Company'];
-                        }
-
-                        Portal.createLogShippingJob(logShippingJobToSearch);
-                        Portal.logShipping.listPage.searcher
-                            .setSearchCriteria(logShippingJobToSearch.name);
-                        var allRows = Portal.logShipping.listPage.table.getRows();
-                        expect(allRows.count()).toEqual(1);
-                        Portal.deleteLogShippingJob(logShippingJobToSearch);
-                    });
-            });
+        beforeAll(function () {
+          Portal.signIn(user);
         });
+
+        afterAll(function () {
+          Portal.signOut();
+        });
+
+        beforeEach(function () {
+          Portal.helpers.nav.goToLogShipping();
+        });
+
+        it('should be displayed when displaying Log Shipping List page',
+          function () {
+            var searchField = Portal.logShipping.listPage.searcher
+              .getSearchCriteriaTxtIn();
+            expect(searchField.isPresent()).toBeTruthy();
+          });
+
+        it('should filter items according to text filled',
+          function () {
+            var logShippingJobToSearch = DataProvider.generateLogShippingJobData();
+
+            if (user.role === 'Reseller') {
+              logShippingJobToSearch.account = ['API QA Reseller Company'];
+            }
+            Portal.createLogShippingJob(logShippingJobToSearch);
+            Portal.logShipping.listPage.searcher
+              .setSearchCriteria(logShippingJobToSearch.name);
+            var allRows = Portal.logShipping.listPage.table.getRows();
+            expect(allRows.count()).toEqual(1);
+          });
+      });
     });
+  });
 });

@@ -752,35 +752,6 @@ var Portal = {
   },
 
   /**
-   * ### Portal.deleteLogShippingJob()
-   *
-   * Helper method that executes all steps required to delete a Log Shipping Job from
-   * Portal app.
-   *
-   * @param {Object} logShippingJob , data applying the schema defined in
-   * `DataProvider.generateLogShippingJobData()`
-   *
-   * @returns {Object} Promise
-   */
-  deleteLogShippingJob: function (logShippingJob) {
-    var me = this;
-    return browser.getCurrentUrl().then(function (initialUrl) {
-      me.helpers.nav.goToLogShipping();
-      me.logShipping.listPage.searcher.clearSearchCriteria();
-      me.logShipping.listPage.searcher.setSearchCriteria(logShippingJob.name);
-      me.logShipping.listPage.table
-          .getFirstRow()
-          .clickDelete();
-      me.dialog.clickOk();
-      browser.getCurrentUrl().then(function (currentUrl) {
-        if (initialUrl !== currentUrl) {
-          browser.get(initialUrl);
-        }
-      });
-    });
-  },
-
-  /**
    * ### Portal.createDNSZone(zone)
    *
    * Helper method that executes all steps required to create
