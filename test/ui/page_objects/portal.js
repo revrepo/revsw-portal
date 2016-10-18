@@ -541,34 +541,6 @@ var Portal = {
   },
 
   /**
-   * ### Portal.deleteMobileApps()
-   *
-   * Helper method that executes all steps required to delete
-   * an existing Mobile Apps from Portal app.
-   *
-   * @param {Object} apps, data applying the schema defined in
-   * `DataProvider.generateMobileApps()`
-   *
-   * @returns {Object} Promise
-   */
-  deleteMobileApps: function (apps) {
-    var me = this;
-    browser.getCurrentUrl().then(function (initialUrl) {
-      apps.forEach(function (app) {
-        me.helpers.nav.goToMobileAppsMenuItem(app.platform);
-        me.mobileApps.listPage.searchAndDelete(app.name);
-        me.dialog.clickOk();
-        browser.sleep(3000);
-      });
-      browser.getCurrentUrl().then(function (currentUrl) {
-        if (initialUrl !== currentUrl) {
-          browser.get(initialUrl);
-        }
-      });
-    });
-  },
-
-  /**
    * ### Portal.createAccounts()
    *
    * Helper method that executes all steps required to create

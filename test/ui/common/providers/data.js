@@ -378,38 +378,6 @@ var DataProvider = {
   },
 
   /**
-   * ### DataProvider.generateMobileAppData()
-   *
-   * Generates mobile app data objects based on the unique para that it requires
-   *
-   * @param {String} platform, the prefix value to use in all domain data fields
-   * @param {Number} numApps, total objects to create.
-   *
-   * @returns {Object}, generate mobile apps with the following schema:
-   *
-   *     [{
-   *         name: string,
-   *         platform: string,
-   *         comment: string,
-   *         title: string,
-   *         companyName: string
-   *     }, ...]
-   */
-  generateMobileAppData: function (platform, numApps) {
-    var apps = [];
-    var i;
-    for (i = 0; i < numApps; i++) {
-      var app = {};
-      app.name = platform + '-' + Date.now() + '-' + (i + 1);
-      app.platform = platform.replace('_', ' ');
-      app.title = platform.replace('_', ' ') + ' Apps List';
-      app.comment = 'My comment just for testing proposal';
-      app.companyName = 'API QA Reseller Company';
-      apps.push(app);
-    }
-    return apps;
-  },
-  /**
    * ### DataProvider.generateUsageReportData()
    *
    * Generates usage report data object based on the unique para that it
