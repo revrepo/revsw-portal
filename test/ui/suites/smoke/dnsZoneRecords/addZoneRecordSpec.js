@@ -48,45 +48,31 @@ describe('Smoke', function () {
           Portal.helpers.nav.goToDNSZones();
         });
 
-        afterEach(function () {
-
-        });
-
         it('should display "Add DNS Zone Record" form', function () {
           var dnsZone = DataProvider.generateDNSZoneData();
           Portal.createDNSZone(dnsZone);
-          var dnsRecord = DataProvider.generateDNSZoneRecordData();
           Portal.dnsZones.listPage.searcher.clearSearchCriteria();
           Portal.dnsZones.listPage.searcher.setSearchCriteria(dnsZone.domain);
           Portal.dnsZones.listPage.table
             .getFirstRow()
             .clickManageRecords();
-
           Portal.zoneRecords.listPage.clickAddNewRecord();
-
           expect(Portal.zoneRecords.addPage.isDisplayed()).toBeTruthy();
           expect(Portal.zoneRecords.addPage.form.isDisplayed()).toBeTruthy();
-
-          Portal.deleteDNSZone(dnsZone);
         });
 
         it('should allow to cancel a DNS Zone Record addition', function () {
           var dnsZone = DataProvider.generateDNSZoneData();
           Portal.createDNSZone(dnsZone);
-          var dnsRecord = DataProvider.generateDNSZoneRecordData();
           Portal.dnsZones.listPage.searcher.clearSearchCriteria();
           Portal.dnsZones.listPage.searcher.setSearchCriteria(dnsZone.domain);
           Portal.dnsZones.listPage.table
             .getFirstRow()
             .clickManageRecords();
-
           Portal.zoneRecords.listPage.clickAddNewRecord();
-
           Portal.zoneRecords.addPage.form.setDomain('something');
           Portal.zoneRecords.addPage.clickCancel();
           expect(Portal.zoneRecords.listPage.isDisplayed()).toBeTruthy();
-
-          Portal.deleteDNSZone(dnsZone);
         });
 
         it('should create a DNS Zone when filling all required data',
@@ -99,19 +85,14 @@ describe('Smoke', function () {
             Portal.dnsZones.listPage.table
               .getFirstRow()
               .clickManageRecords();
-
             Portal.zoneRecords.listPage.clickAddNewRecord();
             Portal.zoneRecords.addPage.form.fill(dnsRecord);
             Portal.zoneRecords.addPage.clickAddNewRecord();
-
             Portal.zoneRecords.listPage.searcher
               .setSearchCriteria(dnsRecord.name);
-
             expect(Portal.zoneRecords.listPage
               .searchAndGetFirstRow(dnsRecord.name)
               .getRecord()).toEqual(dnsRecord.name + '.' + dnsZone.domain);
-
-            Portal.deleteDNSZone(dnsZone);
           });
       });
     });

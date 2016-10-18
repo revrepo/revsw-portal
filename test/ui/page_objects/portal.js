@@ -812,35 +812,6 @@ var Portal = {
   },
 
   /**
-   * ### Portal.deleteDNSZone()
-   *
-   * Helper method that executes all steps required to delete a DNS Zone from
-   * Portal app.
-   *
-   * @param {Object} zone , data applying the schema defined in
-   * `DataProvider.generateDNSZoneData()`
-   *
-   * @returns {Object} Promise
-   */
-  deleteDNSZone: function (zone) {
-    var me = this;
-    return browser.getCurrentUrl().then(function (initialUrl) {
-      me.helpers.nav.goToDNSZones();
-      me.dnsZones.listPage.searcher.clearSearchCriteria();
-      me.dnsZones.listPage.searcher.setSearchCriteria(zone.domain);
-      me.dnsZones.listPage.table
-        .getFirstRow()
-        .clickDelete();
-      me.dialog.clickOk();
-      browser.getCurrentUrl().then(function (currentUrl) {
-        if (initialUrl !== currentUrl) {
-          browser.get(initialUrl);
-        }
-      });
-    });
-  },
-
-  /**
    * Timeout of for `waiter` functions/methods
    */
   waitTimeout: 30000, // 30 secs
