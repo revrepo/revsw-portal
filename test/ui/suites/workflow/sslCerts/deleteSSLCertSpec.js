@@ -23,80 +23,88 @@ var Constants = require('./../../../page_objects/constants');
 
 describe('Workflow', function () {
 
-    // Defining set of users for which all below tests will be run
-    var users = [
-        config.get('portal.users.revAdmin')
-    ];
+  // Defining set of users for which all below tests will be run
+  var users = [
+    config.get('portal.users.revAdmin')
+  ];
 
-    users.forEach(function (user) {
+  users.forEach(function (user) {
 
-        describe('With user: ' + user.role, function () {
-            describe('Delete SSL Cert', function () {
+    describe('With user: ' + user.role, function () {
+      describe('Delete SSL Cert', function () {
 
-                var sslCertData = {
-                    account: ['API QA Reseller Company']
-                };
+        var sslCertData = {
+          account: ['API QA Reseller Company']
+        };
 
-                beforeAll(function () {
-                    Portal.signIn(user);
-                });
-
-                afterAll(function () {
-                    Portal.signOut();
-                });
-
-                beforeEach(function () {
-                    Portal.helpers.nav.goToSSLCertificates();
-                });
-
-                afterEach(function () {
-                });
-
-                it('should not delete a certificate which is in use/released',
-                    function () {
-                        var testSslCert = DataProvider.generateSSLCertData(sslCertData);
-
-                        var testDomain = DataProvider.generateDomain('sslTestDomain');
-                        Portal.createSSLCert(testSslCert);
-                        Portal.helpers.nav.goToDomains();
-                        Portal.domains.listPage.clickAddNewDomain();
-                        Portal.domains.addPage.createDomain(testDomain);
-                        Portal.domains.addPage.clickBackToList();
-                        Portal.domains.listPage.searchAndClickEdit(testDomain.name);
-                        Portal.domains.editPage.form.setSslCert(testSslCert.name);
-                        Portal.domains.editPage.clickUpdateDomain();
-                        Portal.dialog.clickOk();
-                        Portal.domains.editPage.clickBackToList();
-                        Portal.helpers.nav.goToSSLCertificates();
-                        Portal.deleteSSLCert(testSslCert);
-                        var alert = Portal.alerts.getFirst();
-                        var expectedMsg = Constants.alertMessages.sslCerts.MSG_FAIL_DELETE;
-                        expect(alert.getText()).toContain(expectedMsg);
-                    });
-                
-                it('should delete a certificate which is not in use/released',
-                    function () {
-                        var testSslCert = DataProvider.generateSSLCertData(sslCertData);
-
-                        var testDomain = DataProvider.generateDomain('sslTestDomain');
-                        Portal.createSSLCert(testSslCert);
-                        Portal.helpers.nav.goToDomains();
-                        Portal.domains.listPage.clickAddNewDomain();
-                        Portal.domains.addPage.createDomain(testDomain);
-                        Portal.domains.addPage.clickBackToList();
-                        Portal.domains.listPage.searchAndClickEdit(testDomain.name);
-                        Portal.domains.editPage.form.setSslCert(testSslCert.name);
-                        Portal.domains.editPage.clickUpdateDomain();
-                        Portal.dialog.clickOk();
-                        Portal.domains.editPage.clickBackToList();
-                        Portal.deleteDomain(testDomain);
-                        Portal.helpers.nav.goToSSLCertificates();
-                        Portal.deleteSSLCert(testSslCert);
-                        Portal.sslCerts.listPage.searcher.setSearchCriteria(testSslCert.name);
-                        var tableRows = Portal.sslCerts.listPage.table.getRows();
-                        expect(tableRows.count()).toEqual(0);
-                    });
-            });
+        beforeAll(function () {
+          Portal.signIn(user);
         });
+
+        afterAll(function () {
+          Portal.signOut();
+        });
+
+        beforeEach(function () {
+          Portal.helpers.nav.goToSSLCertificates();
+        });
+
+        afterEach(function () {
+        });
+
+        it('should not delete a certificate which is in use/released',
+          function () {
+            var testSslCert = DataProvider.generateSSLCertData(sslCertData);
+
+            var testDomain = DataProvider.generateDomain('sslTestDomain');
+            Portal.createSSLCert(testSslCert);
+            Portal.helpers.nav.goToDomains();
+            Portal.domains.listPage.clickAddNewDomain();
+            Portal.domains.addPage.createDomain(testDomain);
+            Portal.domains.addPage.clickBackToList();
+            Portal.domains.listPage.searchAndClickEdit(testDomain.name);
+            Portal.domains.editPage.form.setSslCert(testSslCert.name);
+            Portal.domains.editPage.clickUpdateDomain();
+            Portal.dialog.clickOk();
+            Portal.domains.editPage.clickBackToList();
+            Portal.helpers.nav.goToSSLCertificates();
+            Portal.sslCerts.listPage.searcher.setSearchCriteria(testSslCert.name);
+            Portal.sslCerts.listPage.table
+              .getFirstRow()
+              .clickDelete();
+            Portal.dialog.clickOk();
+            var alert = Portal.alerts.getFirst();
+            var expectedMsg = Constants.alertMessages.sslCerts.MSG_FAIL_DELETE;
+            expect(alert.getText()).toContain(expectedMsg);
+          });
+
+        it('should delete a certificate which is not in use/released',
+          function () {
+            var testSslCert = DataProvider.generateSSLCertData(sslCertData);
+
+            var testDomain = DataProvider.generateDomain('sslTestDomain');
+            Portal.createSSLCert(testSslCert);
+            Portal.helpers.nav.goToDomains();
+            Portal.domains.listPage.clickAddNewDomain();
+            Portal.domains.addPage.createDomain(testDomain);
+            Portal.domains.addPage.clickBackToList();
+            Portal.domains.listPage.searchAndClickEdit(testDomain.name);
+            Portal.domains.editPage.form.setSslCert(testSslCert.name);
+            Portal.domains.editPage.clickUpdateDomain();
+            Portal.dialog.clickOk();
+            Portal.domains.editPage.clickBackToList();
+            Portal.deleteDomain(testDomain);
+            Portal.helpers.nav.goToSSLCertificates();
+            Portal.sslCerts.listPage.searcher.setSearchCriteria(testSslCert.name);
+            Portal.sslCerts.listPage.table
+              .getFirstRow()
+              .clickDelete();
+            Portal.dialog.clickOk();
+            Portal.sslCerts.listPage.searcher.setSearchCriteria(testSslCert.name);
+            var tableRows = Portal.sslCerts.listPage.table.getRows();
+            expect(tableRows.count()).toEqual(0);
+          });
+      });
     });
+  });
 });

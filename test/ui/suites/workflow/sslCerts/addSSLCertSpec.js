@@ -72,10 +72,7 @@ describe('Workflow', function () {
                 expect(newAddedSSLItemText).toBe(testSslCert.name);
                 Portal.domains.editPage.clickBackToList();
                 Portal.deleteDomain(testDomain);
-
-                Portal.helpers.nav.goToSSLCertificates();
-                Portal.deleteSSLCert(testSslCert);
-            });          
+            });
           
         it('should create an ssl certificate and add to domain successfully',
             function () {
@@ -96,9 +93,6 @@ describe('Workflow', function () {
                 expect(sslCertText).toEqual(testSslCert.name);
                 Portal.domains.editPage.clickBackToList();
                 Portal.deleteDomain(testDomain);
-
-                Portal.helpers.nav.goToSSLCertificates();
-                Portal.deleteSSLCert(testSslCert);
             });
       });
     });

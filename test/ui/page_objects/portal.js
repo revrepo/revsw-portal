@@ -698,35 +698,6 @@ var Portal = {
   },
 
   /**
-   * ### Portal.deleteSSLCert()
-   *
-   * Helper method that executes all steps required to delete a SSL Cert from
-   * Portal app.
-   *
-   * @param {Object} sslCert, data applying the schema defined in
-   * `DataProvider.generateSSLCertData()`
-   *
-   * @returns {Object} Promise
-   */
-  deleteSSLCert: function (sslCert) {
-    var me = this;
-    return browser.getCurrentUrl().then(function (initialUrl) {
-      me.helpers.nav.goToSSLCertificates();
-      me.sslCerts.listPage.searcher.clearSearchCriteria();
-      me.sslCerts.listPage.searcher.setSearchCriteria(sslCert.name);
-      me.sslCerts.listPage.table
-        .getFirstRow()
-        .clickDelete();
-      me.dialog.clickOk();
-      browser.getCurrentUrl().then(function (currentUrl) {
-        if (initialUrl !== currentUrl) {
-          browser.get(initialUrl);
-        }
-      });
-    });
-  },
-
-  /**
    * ### Portal.createSSLName(sslName)
    *
    * Helper method that executes all steps required to create

@@ -83,8 +83,6 @@ describe('Workflow', function () {
                         expect(tableRows.count()).toEqual(1);
                         Portal.helpers.nav.goToDomains();
                         Portal.deleteDomain(testDomain);
-                        Portal.helpers.nav.goToSSLCertificates();
-                        Portal.deleteSSLCert(testSslCert);
                     });
 
                 it('should disappear from domain form when sslCert account changed',
@@ -116,8 +114,6 @@ describe('Workflow', function () {
                         expect(sslCertText).toEqual('Default RevAPM SSL Certificate');
                         Portal.domains.editPage.clickBackToList();
                         Portal.deleteDomain(testDomain);
-                        Portal.helpers.nav.goToSSLCertificates();
-                        Portal.deleteSSLCert(testSslCert);
                     });
 
                 it('should update sslCert name on domain form when sslCert name changed',
@@ -150,8 +146,6 @@ describe('Workflow', function () {
                         expect(sslCertText).toEqual(updatedCertName);
                         Portal.domains.editPage.clickBackToList();
                         Portal.deleteDomain(testDomain);
-                        Portal.helpers.nav.goToSSLCertificates();
-                        Portal.deleteSSLCert(testSslCert);
                     });
 
                 it('should be able to change to default SSL',
@@ -179,8 +173,6 @@ describe('Workflow', function () {
                         expect(sslCertText).toEqual('Default RevAPM SSL Certificate');
                         Portal.domains.editPage.clickBackToList();
                         Portal.deleteDomain(testDomain);
-                        Portal.helpers.nav.goToSSLCertificates();
-                        Portal.deleteSSLCert(testSslCert);
                     });
 
                 it('should be able to use a private SSL and after that to use another',
@@ -210,9 +202,6 @@ describe('Workflow', function () {
                         expect(sslCertText).toEqual(secondTestSslCert.name);
                         Portal.domains.editPage.clickBackToList();
                         Portal.deleteDomain(testDomain);
-                        Portal.helpers.nav.goToSSLCertificates();
-                        Portal.deleteSSLCert(firstTestSslCert);
-                        Portal.deleteSSLCert(secondTestSslCert);
                     });
             });
         });

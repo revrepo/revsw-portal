@@ -68,7 +68,6 @@ describe('Smoke', function () {
             expect(Portal.sslCerts.listPage
               .searchAndGetFirstRow(sslCert.name)
               .getCertName()).toEqual(sslCert.name);
-            Portal.deleteSSLCert(sslCert);
           });
       });
     });
