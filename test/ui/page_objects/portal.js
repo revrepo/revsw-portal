@@ -19,6 +19,8 @@
 // # Portal App object
 var Promise = require("bluebird");
 
+var BROWSER_WAIT_TIMEOUT = 30000; // 30 secs
+
 // Requiring config and constants
 var Constants = require('./constants');
 var Session = require('./../common/session');
@@ -725,11 +727,6 @@ var Portal = {
   },
 
   /**
-   * Timeout of for `waiter` functions/methods
-   */
-  waitTimeout: 30000, // 30 secs
-
-  /**
    * Waits for specified number of browser windows/tabs are displayed/opened.
    * It times out if there are not the amount specified of windows.
    *
@@ -743,7 +740,7 @@ var Portal = {
         .then(function (handles) {
           return handles.length === numOfWindows;
         });
-    }, this.waitTimeout);
+    }, BROWSER_WAIT_TIMEOUT);
   },
 
   /**

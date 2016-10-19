@@ -52,13 +52,15 @@ var DataProvider = {
    *     }
    */
   generateUser: function (data) {
+    if (data === undefined) {
+      data = {};
+    }
     var firstName = data.firstName || faker.name.firstName();
     var lastName = data.lastName || faker.name.lastName();
     var currentUser = Session.getCurrentUser();
 
-
     // Special case when the portal user is creating a new user
-    // is a resller or revadmin which require the specify the
+    // is a reseller or rev-admin which require the specify the
     // company the new user should be associated with
     if (currentUser.role !== 'Admin') {
       data.company = ['API QA Reseller Company'];
