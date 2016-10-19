@@ -2,7 +2,7 @@
  *
  * REV SOFTWARE CONFIDENTIAL
  *
- * [2013] - [2015] Rev Software, Inc.
+ * [2013] - [2016] Rev Software, Inc.
  * All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains
@@ -18,34 +18,38 @@
 
 var config = require('config');
 var Portal = require('./../../../page_objects/portal');
-var DataProvider = require('./../../../common/providers/data');
 
 describe('Negative', function () {
   describe('User search', function () {
 
-    var adminUser = config.get('portal.users.admin');
+    var users = [
+      config.get('portal.users.admin')
+    ];
 
-    beforeAll(function () {
-      Portal.signIn(adminUser);
-    });
+    users.forEach(function (user) {
 
-    afterAll(function () {
-      Portal.signOut();
-    });
+      describe('With user: ' + user.role, function () {
 
-    beforeEach(function () {
-      Portal.helpers.nav.goToUsers();
-    });
+        beforeAll(function () {
+          Portal.signIn(user);
+        });
 
-    it('should apply filters only when typing 1 char in "Search" field',
-      function () {
-        var bret = DataProvider.generateUser();
-        bret.email = 'kk' + bret.email;
-        Portal.createUser(bret);
-        Portal.userListPage.searcher.setSearchCriteria('k');
-        var tableRows = Portal.userListPage.table.getRows();
-        expect(tableRows.count()).toEqual(1);
-        Portal.userListPage.searcher.clearSearchCriteria();
+        afterAll(function () {
+          Portal.signOut();
+        });
+
+        beforeEach(function () {
+          Portal.helpers.nav.goToUsers();
+        });
+
+        it('should apply filters only when typing 1 char in "Search" field',
+          function () {
+            Portal.userListPage.searcher.setSearchCriteria('*');
+            var tableRows = Portal.userListPage.table.getRows();
+            expect(tableRows.count()).toEqual(0);
+            Portal.userListPage.searcher.clearSearchCriteria();
+          });
       });
+    });
   });
 });

@@ -218,7 +218,7 @@ var Portal = {
    * ### Portal.signIn()
    *
    * Signs in the specified user into the Portal app
-   * @param {user} user, object with the following schema
+   * @param {Object} user, object with the following schema
    *
    *     {
    *         email: String,
