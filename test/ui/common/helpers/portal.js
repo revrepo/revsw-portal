@@ -20,11 +20,13 @@
 
 var NavHelper = require('./nav');
 var MobileAppsHelper = require('./mobileApps');
+var UsersHelper = require('./users');
 
 // Abstracts common functionality for the Portal.
 var PortalHelpers = {
   nav: NavHelper,
-  mobileApps: MobileAppsHelper
+  mobileApps: MobileAppsHelper,
+  users: UsersHelper
 };
 
 module.exports = PortalHelpers;
