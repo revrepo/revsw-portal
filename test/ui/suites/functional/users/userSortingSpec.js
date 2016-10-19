@@ -30,9 +30,9 @@ describe('Functional', function () {
     var prefix = 'qa-user-sort-';
 
     beforeAll(function () {
-      var firstUser = DataProvider.generateUser(prefix + '1', true);
+      var firstUser = DataProvider.generateUser({firstName: prefix + '1-'});
       firstUser.role = Constants.user.roles.ADMIN;
-      var secondUser = DataProvider.generateUser(prefix + '2', true);
+      var secondUser = DataProvider.generateUser({firstName: prefix + '2-'});
       Portal.signIn(adminUser);
       Portal.createUserIfNotExist(firstUser);
       Portal.signOut();

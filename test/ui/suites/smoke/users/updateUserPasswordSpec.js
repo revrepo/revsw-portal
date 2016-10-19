@@ -59,7 +59,7 @@ describe('Smoke', function () {
         });
 
         it('should update password successfully', function () {
-          var carl = DataProvider.generateUser('Carl', null, user);
+          var carl = DataProvider.generateUser();
           var newPassword = 'password2';
 
           Portal.createUser(carl);

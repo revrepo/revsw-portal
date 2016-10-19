@@ -46,7 +46,7 @@ describe('Functional', function () {
       });
 
     it('should display a new user created', function () {
-      var andrew = DataProvider.generateUser('Andrew');
+      var andrew = DataProvider.generateUser();
       // Create user
       Portal.createUser(andrew);
       // Check user is in list
@@ -59,8 +59,8 @@ describe('Functional', function () {
 
     it('should list all child users created by an specific "Admin" user',
       function () {
-        var scott = DataProvider.generateUser('Scott');
-        var frank = DataProvider.generateUser('Frank');
+        var scott = DataProvider.generateUser();
+        var frank = DataProvider.generateUser();
         frank.role = Constants.user.roles.ADMIN;
         // Create users
         Portal.createUser(scott);

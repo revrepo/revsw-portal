@@ -23,7 +23,7 @@ var Session = require('./../session');
 var MobileAppsHelper = {
 
   /**
-   * Creates a user (pre-requisite) using API test code
+   * Creates a new Mobile App (pre-requisite) through REST API end-point.
    *
    * @param appData, mobileApp data
    * @returns {Object} Promise
@@ -33,13 +33,14 @@ var MobileAppsHelper = {
     return API.helpers
       .authenticateUser(user)
       .then(function () {
-        return API.helpers.apps.createOne(user.account.id, appData)
+        appData.accountId = user.account.id;
+        return API.helpers.apps.create(appData);
       })
       .then(function (newApp) {
         return {
           name: newApp.app_name,
           platform: newApp.app_platform,
-          title: '>>> APP TITLE <<<',
+          // title: '>>> APP TITLE <<<',
           comment: newApp.comment,
           companyName: newApp.account_id
         };

@@ -72,7 +72,7 @@ describe('Smoke', function () {
         });
 
         it('should update user when filling all required data', function () {
-          var joe = DataProvider.generateUser('Joe', null, user);
+          var joe = DataProvider.generateUser();
           Portal.createUser(joe);
           // Edit user name and last name
           Portal.userListPage.searcher.setSearchCriteria(joe.email);

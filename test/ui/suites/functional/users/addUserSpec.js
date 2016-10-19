@@ -39,7 +39,7 @@ describe('Functional', function () {
     });
 
     it('should display a successful message when creating user', function () {
-      var bret = DataProvider.generateUser('Bret');
+      var bret = DataProvider.generateUser();
       Portal.userListPage.clickAddNewUser();
       Portal.addUserPage.createUser(bret);
       var alert = Portal.alerts.getFirst();
@@ -49,7 +49,7 @@ describe('Functional', function () {
     });
 
     it('should create a new user with "user" role', function () {
-      var carl = DataProvider.generateUser('Carl');
+      var carl = DataProvider.generateUser();
       carl.role = Constants.user.roles.USER;
       Portal.createUser(carl);
       Portal.userListPage.searcher.setSearchCriteria(carl.email);
@@ -58,7 +58,7 @@ describe('Functional', function () {
     });
 
     it('should create a new user with "admin" role', function () {
-      var tom = DataProvider.generateUser('Tom');
+      var tom = DataProvider.generateUser();
       tom.role = Constants.user.roles.ADMIN;
       Portal.createUser(tom);
       Portal.userListPage.searcher.setSearchCriteria(tom.email);

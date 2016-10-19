@@ -63,7 +63,7 @@ describe('Smoke', function () {
         it('should create an user successfully when filling all required data',
           function () {
             // Create user
-            var bruce = DataProvider.generateUser('Bruce', null, user);
+            var bruce = DataProvider.generateUser();
             // console.log('bruce = ' + JSON.stringify(bruce));
             Portal.addUserPage.createUser(bruce);
             // Check App alert notifications

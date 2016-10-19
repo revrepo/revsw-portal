@@ -39,7 +39,7 @@ describe('Boundary', function () {
 
     it('should not update the password when it is less than 8 chars length.',
       function () {
-        var bret = DataProvider.generateUser('Bret');
+        var bret = DataProvider.generateUser();
         var newPassword = '123';
         Portal.createUser(bret);
         Portal.signOut();
@@ -55,7 +55,7 @@ describe('Boundary', function () {
     it('should not update the password when it is greater than 15 chars ' +
       'length.',
       function () {
-        var bruno = DataProvider.generateUser('Bruno');
+        var bruno = DataProvider.generateUser();
         var newPassword = '01234567890123456789';
         Portal.createUser(bruno);
         Portal.signOut();
@@ -70,7 +70,7 @@ describe('Boundary', function () {
 
     it('should not update the password when filling only blank spaces',
       function () {
-        var carol = DataProvider.generateUser('Carol');
+        var carol = DataProvider.generateUser();
         var newPassword = '        '; // 8 spaces
         Portal.createUser(carol);
         Portal.signOut();

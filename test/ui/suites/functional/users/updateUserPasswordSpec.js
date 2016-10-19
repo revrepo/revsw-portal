@@ -46,7 +46,7 @@ describe('Functional', function () {
 
     it('should update password successfully using only letter values',
       function () {
-        var andrew = DataProvider.generateUser('Andrew');
+        var andrew = DataProvider.generateUser();
         var newPassword = 'newpassword';
         // Create user
         Portal.createUser(andrew);
@@ -67,7 +67,7 @@ describe('Functional', function () {
 
     it('should update password successfully  using only numbers',
       function () {
-        var mathew = DataProvider.generateUser('Andrew');
+        var mathew = DataProvider.generateUser();
         var newPassword = '12345678';
         // Create user
         Portal.createUser(mathew);

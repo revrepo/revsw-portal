@@ -39,7 +39,7 @@ describe('Functional', function () {
     });
 
     it('should delete successfully a user with "admin" role', function () {
-      var tom = DataProvider.generateUser('Tom');
+      var tom = DataProvider.generateUser();
       tom.role = Constants.user.roles.USER;
       Portal.createUser(tom);
       Portal.userListPage.searchAndClickDelete(tom.email);
@@ -50,7 +50,7 @@ describe('Functional', function () {
     });
 
     it('should delete successfully a user with "user" role', function () {
-      var carl = DataProvider.generateUser('Carl');
+      var carl = DataProvider.generateUser();
       carl.role = Constants.user.roles.ADMIN;
       Portal.createUser(carl);
       Portal.userListPage.searchAndClickDelete(carl.email);
@@ -61,7 +61,7 @@ describe('Functional', function () {
     });
 
     it('should confirm user deletion when clicking "Ok" button', function () {
-      var sam = DataProvider.generateUser('Sam');
+      var sam = DataProvider.generateUser();
       Portal.createUser(sam);
       Portal.userListPage.searchAndClickDelete(sam.email);
       var okBtn = Portal.dialog.getOkBtn();
@@ -73,7 +73,7 @@ describe('Functional', function () {
     });
 
     it('should cancel the deletion when clicking "Cancel" button', function () {
-      var bruce = DataProvider.generateUser('Bruce');
+      var bruce = DataProvider.generateUser();
       Portal.createUser(bruce);
       Portal.userListPage.searchAndClickDelete(bruce.email);
       var okBtn = Portal.dialog.getCancelBtn();
@@ -86,7 +86,7 @@ describe('Functional', function () {
     });
 
     it('should cancel the deletion after pressing "ESCAPE" key', function () {
-      var bruce = DataProvider.generateUser('Bruce');
+      var bruce = DataProvider.generateUser();
       Portal.createUser(bruce);
       Portal.userListPage.searchAndClickDelete(bruce.email);
       Portal.dialog.getModalEl().sendKeys(protractor.Key.ESCAPE);

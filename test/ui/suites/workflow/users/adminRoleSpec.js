@@ -25,9 +25,9 @@ describe('Workflow', function () {
   describe('Admin role user', function () {
 
     var resellerUser = config.get('portal.users.reseller');
-    var adminUser = DataProvider.generateUser('Admin', false, resellerUser);
+    var adminUser = DataProvider.generateUser();
     adminUser.role = Constants.user.roles.ADMIN;
-    var anotherAdmin = DataProvider.generateUser('OtherAdmin', false, resellerUser);
+    var anotherAdmin = DataProvider.generateUser();
     anotherAdmin.role = Constants.user.roles.ADMIN;
 
     beforeAll(function () {
@@ -49,7 +49,7 @@ describe('Workflow', function () {
     it('should be able to create other user after it was created by a ' +
       'reseller user',
       function () {
-        var tom = DataProvider.generateUser('Tom');
+        var tom = DataProvider.generateUser();
         Portal.createUser(tom);
         var user = Portal.userListPage.searchAndGetFirstRow(tom.email);
         expect(user.getEmail()).toEqual(tom.email);
@@ -61,7 +61,7 @@ describe('Workflow', function () {
     it('should be able to update/edit other user after it was created by a ' +
       'reseller user',
       function () {
-        var scott = DataProvider.generateUser('Scott');
+        var scott = DataProvider.generateUser();
         Portal.createUser(scott);
         Portal.userListPage.searchAndClickEdit(scott.email);
         Portal.editUserPage.updateUser({firstName: 'updated'});
@@ -76,7 +76,7 @@ describe('Workflow', function () {
     it('should be able to delete other user after it was created by a ' +
       'reseller user',
       function () {
-        var frank = DataProvider.generateUser('Frank');
+        var frank = DataProvider.generateUser();
         Portal.createUser(frank);
         var user = Portal.userListPage.searchAndGetFirstRow(frank.email);
         expect(user.getEmail()).toEqual(frank.email);
@@ -94,7 +94,7 @@ describe('Workflow', function () {
       Portal.signOut();
       // Use new ADMIN to create new USER
       Portal.signIn(anotherAdmin);
-      var andrew = DataProvider.generateUser('Andrew');
+      var andrew = DataProvider.generateUser();
       Portal.createUser(andrew);
       Portal.signOut();
       // Check new user is visible to other admin
@@ -109,7 +109,7 @@ describe('Workflow', function () {
       Portal.signOut();
       // Use new ADMIN to create new USER
       Portal.signIn(anotherAdmin);
-      var bruce = DataProvider.generateUser('Bruce');
+      var bruce = DataProvider.generateUser();
       Portal.createUser(bruce);
       Portal.signOut();
       // Check new user is visible to other admin
@@ -132,7 +132,7 @@ describe('Workflow', function () {
       Portal.signOut();
       // Use new ADMIN to create new USER
       Portal.signIn(anotherAdmin);
-      var steve = DataProvider.generateUser('Steve');
+      var steve = DataProvider.generateUser();
       Portal.createUser(steve);
       Portal.signOut();
       // Check new user is visible to other admin

@@ -26,6 +26,7 @@ var moment = require('moment');
 
 // Requiring constants object
 var Constants = require('./../../page_objects/constants');
+var Session = require('./../session');
 
 // This `DataProvider` object abstracts all data generation process for all
 // object-data used in the application. In this way, we facilitate the test
@@ -37,7 +38,7 @@ var DataProvider = {
    *
    * Generates user data object based on the unique para that it requires.
    *
-   * @param {string} prefix, the prefix value to use in all user data fields
+   * @param {Object} prefix, the prefix value to use in all user data fields
    *
    * @returns {Object}, generate user data with the following schema:
    *
@@ -50,34 +51,29 @@ var DataProvider = {
    *         passwordConfirm: string
    *     }
    */
-  generateUser: function (prefix, skipTimestamp, portalUser) {
-    var prefixEmail = prefix.toLowerCase().replace(' ', '_');
-    var names = prefix.split(' ');
-    var prefixFirstName = names[0];
-    var prefixLastName = names[1] || names[0];
-    var timestamp = '';
-    if (skipTimestamp === undefined || skipTimestamp === false) {
-      prefixFirstName = 'FName' + prefix;
-      prefixLastName = 'LName' + prefix;
-      timestamp = '-' + Date.now();
-    }
+  generateUser: function (data) {
+    var firstName = data.firstName || faker.name.firstName();
+    var lastName = data.lastName || faker.name.lastName();
+    var currentUser = Session.getCurrentUser();
+
 
     // Special case when the portal user is creating a new user
     // is a resller or revadmin which require the specify the
     // company the new user should be associated with
-    var company;
-    if (portalUser && portalUser.role && portalUser.role !== 'Admin') {
-      company = ['API QA Reseller Company'];
+    if (currentUser.role !== 'Admin') {
+      data.company = ['API QA Reseller Company'];
     }
 
     return {
-      email: prefixEmail + timestamp + '@portal-ui-test-email.com',
-      firstName: prefixFirstName + ' FName',
-      lastName: prefixLastName + ' LName',
+      email: [firstName, Date.now() + '@mailinator.com']
+        .join('-')
+        .toLowerCase(),
+      firstName: firstName,
+      lastName: lastName,
       role: Constants.user.roles.USER,
       password: 'password1',
       passwordConfirm: 'password1',
-      company: company
+      company: data.company
     };
   },
 

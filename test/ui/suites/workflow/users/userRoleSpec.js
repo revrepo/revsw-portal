@@ -29,7 +29,6 @@ describe('Workflow', function () {
 
     it('should be able to sign-in once it is created by a reseller user',
       function () {
-        var joe = DataProvider.generateUser('Joe', false, resellerUser);
         // Create user
         Portal.signIn(resellerUser);
         Portal.createUser(joe);
@@ -43,7 +42,7 @@ describe('Workflow', function () {
 
     it('should be able to sign-in once it is created by an admin user',
       function () {
-        var paul = DataProvider.generateUser('Paul');
+        var paul = DataProvider.generateUser();
         // Create user
         Portal.signIn(adminUser);
         Portal.createUser(paul);
@@ -57,7 +56,7 @@ describe('Workflow', function () {
 
     it('should be able to sign-in after a successful password update',
       function () {
-        var peter = DataProvider.generateUser('Peter');
+        var peter = DataProvider.generateUser();
         var newPassword = 'password3';
         // Create user
         Portal.signIn(adminUser);

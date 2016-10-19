@@ -39,7 +39,7 @@ describe('Negative', function () {
 
     it('should apply filters only when typing 1 char in "Search" field',
       function () {
-        var bret = DataProvider.generateUser('Bret');
+        var bret = DataProvider.generateUser();
         bret.email = 'kk' + bret.email;
         Portal.createUser(bret);
         Portal.userListPage.searcher.setSearchCriteria('k');

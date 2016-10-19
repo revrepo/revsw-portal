@@ -80,7 +80,7 @@ describe('Smoke', function () {
         // This is another spec
         it('should allow to delete user', function () {
           // Generate 'Tom' user data
-          var tom = DataProvider.generateUser('Tom', null, user);
+          var tom = DataProvider.generateUser();
 
           // Create user Tom in portal app.
           // This is a Helper method that internally executes some other steps
@@ -112,7 +112,7 @@ describe('Smoke', function () {
         it('should display a confirmation message when deleting a user',
           function () {
             // Generate user data using 'Chris' as prefix
-            var chris = DataProvider.generateUser('Chris', null, user);
+            var chris = DataProvider.generateUser();
 
             // Using helper method to create the user Chris
             Portal.createUser(chris);

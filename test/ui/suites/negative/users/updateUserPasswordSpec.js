@@ -24,7 +24,7 @@ describe('Negative', function () {
   describe('Update user password', function () {
 
     var adminUser = config.get('portal.users.admin');
-    var tom = DataProvider.generateUser('Tom');
+    var tom = DataProvider.generateUser();
 
     beforeAll(function () {
       Portal.signIn(adminUser);

@@ -41,7 +41,7 @@ describe('Functional', function () {
 
       it('should update successfully an "admin-role" user to "user-role" user',
         function () {
-          var tom = DataProvider.generateUser('Tom');
+          var tom = DataProvider.generateUser();
           tom.role = Constants.user.roles.ADMIN;
           // Add user
           Portal.createUser(tom);
@@ -64,7 +64,7 @@ describe('Functional', function () {
 
       it('should update successfully an "user-role" user to "admin-role" user',
         function () {
-          var joe = DataProvider.generateUser('Joe');
+          var joe = DataProvider.generateUser();
           joe.role = Constants.user.roles.USER;
           // Add user
           Portal.createUser(joe);
@@ -86,7 +86,7 @@ describe('Functional', function () {
 
       it('should update successfully the "first name" of an "admin-role" user',
         function () {
-          var mark = DataProvider.generateUser('Mark');
+          var mark = DataProvider.generateUser();
           var valueToAdd = 'updated';
           mark.role = Constants.user.roles.ADMIN;
           // Add user
@@ -111,7 +111,7 @@ describe('Functional', function () {
 
       it('should update successfully the "last name" of an "admin-role" user',
         function () {
-          var adele = DataProvider.generateUser('Adele');
+          var adele = DataProvider.generateUser();
           var valueToAdd = 'updated';
           adele.role = Constants.user.roles.ADMIN;
           // Add user
@@ -136,7 +136,7 @@ describe('Functional', function () {
 
       it('should update successfully the "role" of an "admin-role" user',
         function () {
-          var andrew = DataProvider.generateUser('Andrew');
+          var andrew = DataProvider.generateUser();
           andrew.role = Constants.user.roles.ADMIN;
           // Add user
           Portal.createUser(andrew);
@@ -160,7 +160,7 @@ describe('Functional', function () {
       it('should update successfully the "access controls" of an "admin-' +
         'role" user',
         function () {
-          var frank = DataProvider.generateUser('Frank');
+          var frank = DataProvider.generateUser();
           frank.role = Constants.user.roles.ADMIN;
           // Add user
           Portal.createUser(frank);
@@ -188,7 +188,7 @@ describe('Functional', function () {
 
       it('should update successfully the "first name" of an "user-role" user',
         function () {
-          var mark = DataProvider.generateUser('Mark');
+          var mark = DataProvider.generateUser();
           var valueToAdd = 'updated';
           // Add user
           Portal.createUser(mark);
@@ -212,7 +212,7 @@ describe('Functional', function () {
 
       it('should update successfully the "last name" of an "user-role" user',
         function () {
-          var adele = DataProvider.generateUser('Adele');
+          var adele = DataProvider.generateUser();
           var valueToAdd = 'updated';
           // Add user
           Portal.createUser(adele);
@@ -236,7 +236,7 @@ describe('Functional', function () {
 
       it('should update successfully the "role" of an "user-role" user',
         function () {
-          var mathew = DataProvider.generateUser('Mathew');
+          var mathew = DataProvider.generateUser();
           mathew.role = Constants.user.roles.USER;
           // Add user
           Portal.createUser(mathew);
@@ -260,7 +260,7 @@ describe('Functional', function () {
       it('should update successfully the "access controls" of an "user-role" ' +
         'user',
         function () {
-          var scott = DataProvider.generateUser('Scott');
+          var scott = DataProvider.generateUser();
           scott.role = Constants.user.roles.USER;
           // Add user
           Portal.createUser(scott);
