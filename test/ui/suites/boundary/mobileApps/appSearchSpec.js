@@ -29,6 +29,7 @@ describe('Boundary', function () {
       Portal.constants.mobileApps.platforms.android,
       Portal.constants.mobileApps.platforms.ios
     ];
+    var app;
 
     users.forEach(function (user) {
 

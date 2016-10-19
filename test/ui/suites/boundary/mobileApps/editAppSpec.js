@@ -30,6 +30,7 @@ describe('Boundary', function () {
       Portal.constants.mobileApps.platforms.ios
     ];
     var length51Characters = new Array(52).join('x');
+    var app;
 
     users.forEach(function (user) {
 
