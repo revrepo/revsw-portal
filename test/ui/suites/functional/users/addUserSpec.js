@@ -2,7 +2,7 @@
  *
  * REV SOFTWARE CONFIDENTIAL
  *
- * [2013] - [2015] Rev Software, Inc.
+ * [2013] - [2016] Rev Software, Inc.
  * All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains
@@ -24,46 +24,67 @@ var Constants = require('./../../../page_objects/constants');
 describe('Functional', function () {
   describe('Add user', function () {
 
-    var adminUser = config.get('portal.users.admin');
+    var users = [
+      config.get('portal.users.admin')
+    ];
 
-    beforeAll(function () {
-      Portal.signIn(adminUser);
-    });
+    users.forEach(function (user) {
 
-    afterAll(function () {
-      Portal.signOut();
-    });
+      describe('With user: ' + user.role, function () {
 
-    beforeEach(function () {
-      Portal.helpers.nav.goToUsers();
-    });
+        beforeAll(function () {
+          Portal.signIn(user);
+        });
 
-    it('should display a successful message when creating user', function () {
-      var bret = DataProvider.generateUser();
-      Portal.userListPage.clickAddNewUser();
-      Portal.addUserPage.createUser(bret);
-      var alert = Portal.alerts.getFirst();
-      expect(alert.getText())
-        .toContain(Constants.alertMessages.users.MSG_SUCCESS_ADD);
-      Portal.addUserPage.clickBackToList();
-    });
+        afterAll(function () {
+          Portal.signOut();
+        });
 
-    it('should create a new user with "user" role', function () {
-      var carl = DataProvider.generateUser();
-      carl.role = Constants.user.roles.USER;
-      Portal.createUser(carl);
-      Portal.userListPage.searcher.setSearchCriteria(carl.email);
-      var user = Portal.userListPage.table.getFirstRow();
-      expect(user.getRole()).toEqual(Constants.user.roles.USER);
-    });
+        beforeEach(function () {
+          Portal.helpers.nav.goToUsers();
+        });
 
-    it('should create a new user with "admin" role', function () {
-      var tom = DataProvider.generateUser();
-      tom.role = Constants.user.roles.ADMIN;
-      Portal.createUser(tom);
-      Portal.userListPage.searcher.setSearchCriteria(tom.email);
-      var user = Portal.userListPage.table.getFirstRow();
-      expect(user.getRole()).toEqual(Constants.user.roles.ADMIN);
+        it('should display a successful message when creating ' +
+          'user', function () {
+          var bret = DataProvider.generateUser();
+          Portal.userListPage.clickAddNewUser();
+          Portal.addUserPage.createUser(bret);
+          var alert = Portal.alerts.getFirst();
+          expect(alert.getText())
+            .toContain(Constants.alertMessages.users.MSG_SUCCESS_ADD);
+          Portal.addUserPage.clickBackToList();
+        });
+
+        it('should create a new user with "user" role', function (done) {
+          Portal.helpers.users
+            .create({
+              firstName: 'Carl',
+              role: Constants.user.roles.USER
+            })
+            .then(function (carl) {
+              Portal.userListPage.searcher.setSearchCriteria(carl.email);
+              var firstUser = Portal.userListPage.table.getFirstRow();
+              expect(firstUser.getRole()).toEqual(Constants.user.roles.USER);
+              done();
+            })
+            .catch(done);
+        });
+
+        it('should create a new user with "admin" role', function (done) {
+          Portal.helpers.users
+            .create({
+              firstName: 'Tom',
+              role: Constants.user.roles.ADMIN
+            })
+            .then(function (tom) {
+              Portal.userListPage.searcher.setSearchCriteria(tom.email);
+              var firstUser = Portal.userListPage.table.getFirstRow();
+              expect(firstUser.getRole()).toEqual(Constants.user.roles.ADMIN);
+              done();
+            })
+            .catch(done);
+        });
+      });
     });
   });
 });

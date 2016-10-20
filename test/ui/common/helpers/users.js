@@ -25,15 +25,18 @@ var UsersHelper = {
   /**
    * Creates a new User (pre-requisite) through REST API end-point.
    *
-   * @param userData, user data
+   * @param data, user data
    * @returns {Object} Promise
    */
-  create: function (userData) {
+  create: function (data) {
+    if (data === undefined) {
+      data = {};
+    }
     var user = Session.getCurrentUser();
     return API.helpers
       .authenticateUser(user)
       .then(function () {
-        return API.helpers.users.create(userData);
+        return API.helpers.users.create(data);
       });
   }
 };

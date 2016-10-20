@@ -18,64 +18,82 @@
 
 var config = require('config');
 var Portal = require('./../../../page_objects/portal');
-var DataProvider = require('./../../../common/providers/data');
 var Constants = require('./../../../page_objects/constants');
 
 describe('Functional', function () {
   describe('User list', function () {
 
-    var adminUser = config.get('portal.users.admin');
+    var users = [
+      config.get('portal.users.admin')
+    ];
 
-    beforeAll(function () {
-      Portal.signIn(adminUser);
-    });
+    users.forEach(function (user) {
 
-    afterAll(function () {
-      Portal.signOut();
-    });
+      describe('With user: ' + user.role, function () {
 
-    beforeEach(function () {
-      Portal.helpers.nav.goToUsers();
-    });
+        beforeAll(function () {
+          Portal.signIn(user);
+        });
 
-    it('should display N items maximum in the page (25 items by default)',
-      function () {
-        var expectedUsersPerPage = 25;
-        var tableRows = Portal.userListPage.table.getRows();
-        expect(tableRows.count()).not.toBeGreaterThan(expectedUsersPerPage);
+        afterAll(function () {
+          Portal.signOut();
+        });
+
+        afterEach(function () {
+          Portal.helpers.nav.goToDashboards();
+        });
+
+        it('should display N items maximum in the page (25 items by default)',
+          function () {
+            var expectedUsersPerPage = 25;
+            Portal.helpers.nav.goToUsers();
+            var tableRows = Portal.userListPage.table.getRows();
+            expect(tableRows.count()).not.toBeGreaterThan(expectedUsersPerPage);
+          });
+
+        it('should display a new user created', function (done) {
+          Portal.helpers.users
+            .create()
+            .then(function (andrew) {
+              Portal.helpers.nav.goToUsers();
+              var user = Portal.userListPage.searchAndGetFirstRow(andrew.email);
+              expect(user.getFirstName()).toEqual(andrew.firstName);
+              // expect(user.getLastName()).toEqual(andrew.lastName);
+              // expect(user.getEmail()).toEqual(andrew.email);
+              // expect(user.getRole()).toEqual(andrew.role);
+              done();
+            })
+            .catch(done);
+        });
+
+        it('should list all child users created by an specific "Admin" user',
+          function (done) {
+            Portal.helpers.users
+              .create()
+              .then(function (scott) {
+                Portal.helpers.users
+                  .create({
+                    role: Constants.user.roles.ADMIN
+                  })
+                  .then(function (frank) {
+                    Portal.helpers.nav.goToUsers();
+                    var firstUser = Portal.userListPage.searchAndGetFirstRow(scott.email);
+                    expect(firstUser.getFirstName()).toEqual(scott.firstName);
+                    // expect(firstUser.getLastName()).toEqual(scott.lastName);
+                    // expect(firstUser.getEmail()).toEqual(scott.email);
+                    // expect(firstUser.getRole()).toEqual(scott.role);
+                    firstUser = Portal.userListPage.searchAndGetFirstRow(frank.email);
+                    expect(firstUser.getFirstName()).toEqual(frank.firstName);
+                    // expect(firstUser.getLastName()).toEqual(frank.lastName);
+                    // expect(firstUser.getEmail()).toEqual(frank.email);
+                    // expect(firstUser.getRole()).toEqual(frank.role);
+                    done();
+                  })
+                  .catch(done);
+              })
+              .catch(done);
+          });
       });
-
-    it('should display a new user created', function () {
-      var andrew = DataProvider.generateUser();
-      // Create user
-      Portal.createUser(andrew);
-      // Check user is in list
-      var user = Portal.userListPage.searchAndGetFirstRow(andrew.email);
-      expect(user.getFirstName()).toEqual(andrew.firstName);
-      expect(user.getLastName()).toEqual(andrew.lastName);
-      expect(user.getEmail()).toEqual(andrew.email);
-      expect(user.getRole()).toEqual(andrew.role);
     });
-
-    it('should list all child users created by an specific "Admin" user',
-      function () {
-        var scott = DataProvider.generateUser();
-        var frank = DataProvider.generateUser();
-        frank.role = Constants.user.roles.ADMIN;
-        // Create users
-        Portal.createUser(scott);
-        Portal.createUser(frank);
-        // Check users are in list
-        var user = Portal.userListPage.searchAndGetFirstRow(scott.email);
-        expect(user.getFirstName()).toEqual(scott.firstName);
-        expect(user.getLastName()).toEqual(scott.lastName);
-        expect(user.getEmail()).toEqual(scott.email);
-        expect(user.getRole()).toEqual(scott.role);
-        user = Portal.userListPage.searchAndGetFirstRow(frank.email);
-        expect(user.getFirstName()).toEqual(frank.firstName);
-        expect(user.getLastName()).toEqual(frank.lastName);
-        expect(user.getEmail()).toEqual(frank.email);
-        expect(user.getRole()).toEqual(frank.role);
-      });
   });
 });
