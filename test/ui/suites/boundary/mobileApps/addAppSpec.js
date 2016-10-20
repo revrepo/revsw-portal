@@ -54,36 +54,33 @@ describe('Boundary', function () {
             it('should check Register button is disabled when app name have ' +
               'more than 51 characters', function () {
               Portal.mobileApps.listPage.clickAddNewApp();
-              app.name = length51Characters;
-              Portal.mobileApps.addPage.fill(app);
-              var enabled = Portal.mobileApps.addPage.isEnabledRegister();
+              Portal.mobileApps.addPage.setAppName(length51Characters);
+              var enabled = Portal.mobileApps.addPage.isRegisterBtnEnabled();
               expect(enabled).toBe(false);
             });
 
             it('should check Register button is disabled when app name have ' +
               'zero characters', function () {
               Portal.mobileApps.listPage.clickAddNewApp();
-              app.name = '';
-              Portal.mobileApps.addPage.fill(app);
-              var enabled = Portal.mobileApps.addPage.isEnabledRegister();
+              Portal.mobileApps.addPage.setAppName('');
+              var enabled = Portal.mobileApps.addPage.isRegisterBtnEnabled();
               expect(enabled).toBe(false);
             });
 
             it('should check Register button is disabled when app name have ' +
               'empty characters', function () {
               Portal.mobileApps.listPage.clickAddNewApp();
-              app.name = '       ';
-              Portal.mobileApps.addPage.fill(app);
-              var enabled = Portal.mobileApps.addPage.isEnabledRegister();
+              Portal.mobileApps.addPage.setAppName('       ');
+              var enabled = Portal.mobileApps.addPage.isRegisterBtnEnabled();
               expect(enabled).toBe(false);
             });
 
             it('should check Register button is disabled when app name have ' + // jshint ignore:line
               'special characters', function () {
               Portal.mobileApps.listPage.clickAddNewApp();
-              app.name = '& ^ $ @ # % ( ) _ +  / \\ ~ ` , . ; :';
-              Portal.mobileApps.addPage.fill(app);
-              var enabled = Portal.mobileApps.addPage.isEnabledRegister();
+              Portal.mobileApps.addPage
+                .setAppName('& ^ $ @ # % ( ) _ +  / \\ ~ ` , . ; :');
+              var enabled = Portal.mobileApps.addPage.isRegisterBtnEnabled();
               expect(enabled).toBe(false);
             });
           });

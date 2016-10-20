@@ -19,6 +19,7 @@
 var config = require('config');
 var Portal = require('./../../../page_objects/portal');
 var Constants = require('./../../../page_objects/constants');
+var DataProvider = require('./../../../common/providers/data');
 
 describe('Functional', function () {
   describe('Add New App', function () {
@@ -53,10 +54,11 @@ describe('Functional', function () {
 
             it('should get title from list app page', function () {
               var title = Portal.mobileApps.listPage.getTitle();
-              expect(title).toEqual(app.title);
+              expect(title.isPresent()).toBeTruthy();
             });
 
             it('should add a new app', function () {
+              var app = DataProvider.generateMobileApp(platform);
               Portal.mobileApps.listPage.addNew(app);
               var alert = Portal.alerts.getFirst();
               var expectedMsg = Constants.alertMessages.app.MSG_SUCCESS_ADD;
