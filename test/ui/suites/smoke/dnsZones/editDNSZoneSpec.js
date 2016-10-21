@@ -37,14 +37,22 @@ describe('Smoke', function () {
 
       describe('Edit DNS Zone', function () {
 
-        beforeEach(function () {
-          Portal.load();
+        beforeAll(function () {
           Portal.signIn(user);
-          Portal.helpers.nav.goToDNSZones();
         });
 
-        afterEach(function () {
-          Portal.signOut();
+        afterAll(function (done) {
+          Portal.helpers.dnsZones
+            .cleanup()
+            .then(function () {
+              Portal.signOut();
+              done();
+            })
+            .catch(done);
+        });
+
+        beforeEach(function () {
+          Portal.helpers.nav.goToDNSZones();
         });
 
         it('should display edit DNS Zone button',

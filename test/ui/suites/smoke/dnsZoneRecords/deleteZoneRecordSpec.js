@@ -51,8 +51,14 @@ describe('Smoke', function () {
           Portal.helpers.nav.goToDNSZones();
         });
 
-        afterAll(function () {
-          Portal.signOut();
+        afterAll(function (done) {
+          Portal.helpers.dnsZones
+            .cleanup()
+            .then(function () {
+              Portal.signOut();
+              done();
+            })
+            .catch(done);
         });
 
         it('should display delete DNS Zone Record button', function () {

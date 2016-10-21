@@ -40,8 +40,14 @@ describe('Smoke', function () {
           Portal.signIn(user);
         });
 
-        afterAll(function () {
-          Portal.signOut();
+        afterAll(function (done) {
+          Portal.helpers.dnsZones
+            .cleanup()
+            .then(function () {
+              Portal.signOut();
+              done();
+            })
+            .catch(done);
         });
 
         beforeEach(function () {

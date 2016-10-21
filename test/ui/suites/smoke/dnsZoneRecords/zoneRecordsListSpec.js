@@ -41,8 +41,14 @@ describe('Smoke', function () {
           Portal.signIn(user);
         });
 
-        afterAll(function () {
-          Portal.signOut();
+        afterAll(function (done) {
+          Portal.helpers.dnsZones
+            .cleanup()
+            .then(function () {
+              Portal.signOut();
+              done();
+            })
+            .catch(done);
         });
 
         it('should be displayed when clicking "Manage Records" button on DNS Zone entity',
