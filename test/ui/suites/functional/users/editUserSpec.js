@@ -50,8 +50,6 @@ describe('Functional', function () {
                 role: Constants.user.roles.ADMIN
               })
               .then(function (testUser) {
-                // Add user
-                Portal.createUser(testUser);
                 // Edit user
                 Portal.userListPage.searchAndClickEdit(testUser.email);
                 Portal.editUserPage.form.setRole(Constants.user.roles.USER);
@@ -76,8 +74,6 @@ describe('Functional', function () {
                 role: Constants.user.roles.USER
               })
               .then(function (testUser) {
-                // Add user
-                Portal.createUser(testUser);
                 // Edit user
                 Portal.userListPage.searchAndClickEdit(testUser.email);
                 Portal.editUserPage.form.setRole(Constants.user.roles.ADMIN);
@@ -102,8 +98,6 @@ describe('Functional', function () {
               })
               .then(function (testUser) {
                 var valueToAdd = 'updated';
-                // Add user
-                Portal.createUser(testUser);
                 // Edit user
                 Portal.userListPage.searchAndClickEdit(testUser.email);
                 Portal.editUserPage.form.setFirstName(valueToAdd);
@@ -130,8 +124,6 @@ describe('Functional', function () {
               })
               .then(function (testUser) {
                 var valueToAdd = 'updated';
-                // Add user
-                Portal.createUser(testUser);
                 // Edit user
                 Portal.userListPage.searchAndClickEdit(testUser.email);
                 Portal.editUserPage.form.setLastName(valueToAdd);
@@ -157,8 +149,6 @@ describe('Functional', function () {
                 role: Constants.user.roles.ADMIN
               })
               .then(function (testUser) {
-                // Add user
-                Portal.createUser(testUser);
                 // Edit user
                 Portal.userListPage.searchAndClickEdit(testUser.email);
                 Portal.editUserPage.form.setRole(Constants.user.roles.USER);
@@ -184,8 +174,6 @@ describe('Functional', function () {
                 role: Constants.user.roles.ADMIN
               })
               .then(function (testUser) {
-                // Add user
-                Portal.createUser(testUser);
                 // Edit user
                 Portal.userListPage.searchAndClickEdit(testUser.email);
                 Portal.editUserPage.form.setAccessControls([
@@ -215,8 +203,6 @@ describe('Functional', function () {
               })
               .then(function (testUser) {
                 var valueToAdd = 'updated';
-                // Add user
-                Portal.createUser(testUser);
                 // Edit user
                 Portal.userListPage.searchAndClickEdit(testUser.email);
                 Portal.editUserPage.form.setFirstName(valueToAdd);
@@ -242,8 +228,6 @@ describe('Functional', function () {
                 role: Constants.user.roles.USER
               })
               .then(function (testUser) {
-                // Add user
-                Portal.createUser(testUser);
                 // Edit user
                 Portal.userListPage.searchAndClickEdit(testUser.email);
                 Portal.editUserPage.form.setLastName(valueToAdd);
@@ -269,8 +253,6 @@ describe('Functional', function () {
                 role: Constants.user.roles.USER
               })
               .then(function (testUser) {
-                // Add user
-                Portal.createUser(testUser);
                 // Edit user
                 Portal.userListPage.searchAndClickEdit(testUser.email);
                 Portal.editUserPage.form.setRole(Constants.user.roles.ADMIN);
@@ -296,8 +278,6 @@ describe('Functional', function () {
                 role: Constants.user.roles.USER
               })
               .then(function (testUser) {
-                // Add user
-                Portal.createUser(testUser);
                 // Edit user
                 Portal.userListPage.searchAndClickEdit(testUser.email);
                 Portal.editUserPage.form.setAccessControls([
