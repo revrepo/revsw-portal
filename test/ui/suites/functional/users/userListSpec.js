@@ -58,9 +58,9 @@ describe('Functional', function () {
               Portal.helpers.nav.goToUsers();
               var user = Portal.userListPage.searchAndGetFirstRow(andrew.email);
               expect(user.getFirstName()).toEqual(andrew.firstName);
-              // expect(user.getLastName()).toEqual(andrew.lastName);
-              // expect(user.getEmail()).toEqual(andrew.email);
-              // expect(user.getRole()).toEqual(andrew.role);
+              expect(user.getLastName()).toEqual(andrew.lastName);
+              expect(user.getEmail()).toEqual(andrew.email);
+              expect(user.getRole()).toEqual(andrew.role);
               done();
             })
             .catch(done);
@@ -79,14 +79,14 @@ describe('Functional', function () {
                     Portal.helpers.nav.goToUsers();
                     var firstUser = Portal.userListPage.searchAndGetFirstRow(scott.email);
                     expect(firstUser.getFirstName()).toEqual(scott.firstName);
-                    // expect(firstUser.getLastName()).toEqual(scott.lastName);
-                    // expect(firstUser.getEmail()).toEqual(scott.email);
-                    // expect(firstUser.getRole()).toEqual(scott.role);
+                    expect(firstUser.getLastName()).toEqual(scott.lastName);
+                    expect(firstUser.getEmail()).toEqual(scott.email);
+                    expect(firstUser.getRole()).toEqual(scott.role);
                     firstUser = Portal.userListPage.searchAndGetFirstRow(frank.email);
                     expect(firstUser.getFirstName()).toEqual(frank.firstName);
-                    // expect(firstUser.getLastName()).toEqual(frank.lastName);
-                    // expect(firstUser.getEmail()).toEqual(frank.email);
-                    // expect(firstUser.getRole()).toEqual(frank.role);
+                    expect(firstUser.getLastName()).toEqual(frank.lastName);
+                    expect(firstUser.getEmail()).toEqual(frank.email);
+                    expect(firstUser.getRole()).toEqual(frank.role);
                     done();
                   })
                   .catch(done);

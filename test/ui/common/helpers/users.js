@@ -37,6 +37,17 @@ var UsersHelper = {
       .authenticateUser(user)
       .then(function () {
         return API.helpers.users.create(data);
+      })
+      .then(function (user) {
+        return {
+          email: user.email,
+          firstName: user.firstname,
+          lastName: user.lastname,
+          role: user.role,
+          password: user.password,
+          passwordConfirm: user.password
+          // company: ??
+        };
       });
   }
 };
