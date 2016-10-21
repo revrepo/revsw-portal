@@ -23,9 +23,6 @@ var config = require('config');
 // objects that our specs are goint to need.
 var Portal = require('./../../../page_objects/portal');
 
-// Requiring Data Provider to generate test data. In this case we need it to
-// generate test user data
-var DataProvider = require('./../../../common/providers/data');
 var Constants = require('./../../../page_objects/constants');
 
 // Defining smoke suite
@@ -78,66 +75,69 @@ describe('Smoke', function () {
         });
 
         // This is another spec
-        it('should allow to delete user', function () {
-          // Generate 'Tom' user data
-          var tom = DataProvider.generateUser();
-
+        it('should allow to delete user', function (done) {
           // Create user Tom in portal app.
           // This is a Helper method that internally executes some other steps
           // required to create a user in portal app using the given user
           // information.
-          Portal.createUser(tom);
+          Portal.helpers.users
+            .create()
+            .then(function (testUser) {
+              // Another helper method to search/filter the list by the provided
+              // filter criteria (in this case an email) and then licks on the
+              // delete button of the first user displayed after the filter is
+              // applied.
+              Portal.userListPage.searchAndClickDelete(testUser.email);
 
-          // Another helper method to search/filter the list by the provided
-          // filter criteria (in this case an email) and then licks on the
-          // delete button of the first user displayed after the filter is
-          // applied.
-          Portal.userListPage.searchAndClickDelete(tom.email);
+              // Clicks on OK button from the displayed modal dialog
+              Portal.dialog.clickOk();
 
-          // Clicks on OK button from the displayed modal dialog
-          Portal.dialog.clickOk();
+              // Applies another search criteria to the list by filling the
+              // search text input field
+              Portal.userListPage.searcher.setSearchCriteria(testUser.email);
 
-          // Applies another search criteria to the list by filling the search
-          // text input field
-          Portal.userListPage.searcher.setSearchCriteria(tom.email);
+              // Gets reference to all rows from the list
+              var tableRows = Portal.userListPage.table.getRows();
 
-          // Gets reference to all rows from the list
-          var tableRows = Portal.userListPage.table.getRows();
-
-          // Validates the size of all rows
-          expect(tableRows.count()).toEqual(0);
+              // Validates the size of all rows
+              expect(tableRows.count()).toEqual(0);
+              done();
+            })
+            .catch(done);
         });
 
         // Our last spec
         it('should display a confirmation message when deleting a user',
-          function () {
-            // Generate user data using 'Chris' as prefix
-            var chris = DataProvider.generateUser();
-
+          function (done) {
             // Using helper method to create the user Chris
-            Portal.createUser(chris);
+            Portal.helpers.users
+              .create()
+              .then(function (testUser) {
+                // Apply Chris' email as filter criteria in the search component
+                Portal.userListPage.searcher.setSearchCriteria(testUser.email);
 
-            // Apply Chris' email as filter criteria in the search component
-            Portal.userListPage.searcher.setSearchCriteria(chris.email);
+                // Click on `delete` button of the first row from the list
+                Portal.userListPage.table
+                  .getFirstRow()
+                  .clickDelete();
 
-            // Click on `delete` button of the first row from the list
-            Portal.userListPage.table
-              .getFirstRow()
-              .clickDelete();
+                // Validate `modal dialog` is displayed after the click on
+                // `delete` button
+                expect(Portal.dialog.isDisplayed()).toBeTruthy();
 
-            // Validate `modal dialog` is displayed after the click on `delete`
-            // button
-            expect(Portal.dialog.isDisplayed()).toBeTruthy();
-
-            // Confirm the deletion. Note that this is a post action. It is
-            // always important to leave the test environment as it was before
-            // the test/spec started. Since this test/spec created a user, then
-            // it should delete it once all validations were made.
-            Portal.dialog.clickOk();
-            // Check App alert notifications
-            expect(Portal.alerts.getAll().count()).toEqual(1);
-            expect(Portal.alerts.getFirst().getText())
-              .toContain(Constants.alertMessages.users.MSG_SUCCESS_DELETE);
+                // Confirm the deletion. Note that this is a post action. It is
+                // always important to leave the test environment as it was
+                // before the test/spec started. Since this test/spec created
+                // a user, then it should delete it once all validations were
+                // made.
+                Portal.dialog.clickOk();
+                // Check App alert notifications
+                expect(Portal.alerts.getAll().count()).toEqual(1);
+                expect(Portal.alerts.getFirst().getText())
+                  .toContain(Constants.alertMessages.users.MSG_SUCCESS_DELETE);
+                done();
+              })
+              .catch(done);
           });
       });
     });
