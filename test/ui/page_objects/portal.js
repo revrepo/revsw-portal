@@ -277,67 +277,6 @@ var Portal = {
   // ## User Helper methods
 
   /**
-   * ### Portal.createUser()
-   *
-   * Helper method that executes all steps required to create a new User from
-   * Portal app.
-   *
-   * @param {user} newUser, data applying the schema defined in
-   * `DataProvider.generateUser()`
-   *
-   * @returns {Object} Promise
-   */
-  createUser: function (newUser) {
-    var me = this;
-    return browser.getCurrentUrl().then(function (initialUrl) {
-      me.helpers.nav.goToUsers();
-      me.userListPage.clickAddNewUser();
-      me.addUserPage.createUser(newUser);
-      me.addUserPage.clickBackToList();
-      browser.getCurrentUrl().then(function (currentUrl) {
-        if (initialUrl !== currentUrl) {
-          browser.get(initialUrl);
-        }
-      });
-    });
-  },
-
-  /**
-   * ### Portal.createUserIfNotExist()
-   *
-   * Helper method that executes all steps required to create a new User from
-   * Portal app. This method creates the user only if it does not exist (it
-   * validates the existence by doing a search by the user email).
-   *
-   * @param {Object} user, data applying the schema defined in
-   * `DataProvider.generateUser()`
-   *
-   * @returns {Object} Promise
-   */
-  createUserIfNotExist: function (user) {
-    var me = this;
-    return browser.getCurrentUrl().then(function (initialUrl) {
-      me.helpers.nav.goToUsers();
-      me.userListPage.searcher.setSearchCriteria(user.email);
-      me.userListPage.table
-        .getRows()
-        .count()
-        .then(function (totalResults) {
-          if (totalResults === 0) {
-            me.userListPage.clickAddNewUser();
-            me.addUserPage.createUser(user);
-            me.addUserPage.clickBackToList();
-          }
-          browser.getCurrentUrl().then(function (currentUrl) {
-            if (initialUrl !== currentUrl) {
-              browser.get(initialUrl);
-            }
-          });
-        });
-    });
-  },
-
-  /**
    * ### Portal.createDomain()
    *
    * Helper method that executes all steps required to create a new Domain from

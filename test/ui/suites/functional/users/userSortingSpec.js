@@ -17,135 +17,147 @@
  */
 
 var config = require('config');
-
 var Portal = require('./../../../page_objects/portal');
-var DataProvider = require('./../../../common/providers/data');
-
 var Constants = require('./../../../page_objects/constants');
 
 describe('Functional', function () {
   describe('User sorting', function () {
 
-    var adminUser = config.get('portal.users.admin');
+    var users = [
+      config.get('portal.users.admin')
+    ];
     var prefix = 'qa-user-sort-';
+    var firstUser;
+    var secondUser;
 
-    beforeAll(function () {
-      var firstUser = DataProvider.generateUser({firstName: prefix + '1-'});
-      firstUser.role = Constants.user.roles.ADMIN;
-      var secondUser = DataProvider.generateUser({firstName: prefix + '2-'});
-      Portal.signIn(adminUser);
-      Portal.createUserIfNotExist(firstUser);
-      Portal.signOut();
-      Portal.signIn(adminUser);
-      Portal.createUserIfNotExist(secondUser);
-      Portal.signOut();
+    users.forEach(function (user) {
+
+      describe('With user: ' + user.role, function () {
+
+        beforeAll(function (done) {
+          Portal.session.setCurrentUser(user);
+          Portal.helpers.users
+            .create({
+              firstName: prefix + '1-',
+              role: Constants.user.roles.ADMIN
+            })
+            .then(function (newUser) {
+              firstUser = newUser;
+              Portal.helpers.users
+                .create({firstName: prefix + '2-'})
+                .then(function (otherUser) {
+                  secondUser = otherUser;
+                  done();
+                })
+                .catch(done);
+            })
+            .catch(done);
+        });
+
+        beforeEach(function () {
+          Portal.signIn(user);
+          Portal.helpers.nav.goToUsers();
+          Portal.userListPage.searcher.setSearchCriteria(prefix);
+        });
+
+        afterEach(function () {
+          Portal.signOut();
+        });
+
+        it('should apply `ascendant` sorting by `first name` column',
+          function () {
+            expect(Portal.userListPage.table.getRows().count()).toEqual(2);
+            Portal.userListPage.table
+              .getHeader()
+              .getFirstNameCell()
+              .click();
+            var row = Portal.userListPage.table.getFirstRow();
+            expect(row.getFirstNameCell().getText()).toContain(prefix + '1');
+          });
+
+        it('should apply `descendant` sorting by `first name` column',
+          function () {
+            expect(Portal.userListPage.table.getRows().count()).toEqual(2);
+            Portal.userListPage.table
+              .getHeader()
+              .getFirstNameCell()
+              .click()
+              .click();
+            var row = Portal.userListPage.table.getFirstRow();
+            expect(row.getFirstNameCell().getText()).toContain(prefix + '2');
+          });
+
+        it('should apply `ascendant` sorting by `last name` column',
+          function () {
+            expect(Portal.userListPage.table.getRows().count()).toEqual(2);
+            Portal.userListPage.table
+              .getHeader()
+              .getLastNameCell()
+              .click();
+            var row = Portal.userListPage.table.getFirstRow();
+            expect(row.getLastNameCell().getText()).toContain(prefix + '1');
+          });
+
+        it('should apply `descendant` sorting by `last name` column',
+          function () {
+            expect(Portal.userListPage.table.getRows().count()).toEqual(2);
+            Portal.userListPage.table
+              .getHeader()
+              .getLastNameCell()
+              .click()
+              .click();
+            var row = Portal.userListPage.table.getFirstRow();
+            expect(row.getLastNameCell().getText()).toContain(prefix + '2');
+          });
+
+        it('should apply `ascendant` sorting by `email` column',
+          function () {
+            expect(Portal.userListPage.table.getRows().count()).toEqual(2);
+            Portal.userListPage.table
+              .getHeader()
+              .getEmailCell()
+              .click();
+            var row = Portal.userListPage.table.getFirstRow();
+            expect(row.getEmailCell().getText()).toContain(prefix + '1');
+          });
+
+        it('should apply `descendant` sorting by `email` column',
+          function () {
+            expect(Portal.userListPage.table.getRows().count()).toEqual(2);
+            Portal.userListPage.table
+              .getHeader()
+              .getEmailCell()
+              .click()
+              .click();
+            var row = Portal.userListPage.table.getFirstRow();
+            expect(row.getEmailCell().getText()).toContain(prefix + '2');
+          });
+
+        it('should apply `ascendant` sorting by `role` column',
+          function () {
+            expect(Portal.userListPage.table.getRows().count()).toEqual(2);
+            Portal.userListPage.table
+              .getHeader()
+              .getRoleCell()
+              .click();
+            var row = Portal.userListPage.table.getFirstRow();
+            var userRole = row.getRoleCell().getText();
+            expect(userRole).toContain(Constants.user.roles.ADMIN);
+          });
+
+        it('should apply `descendant` sorting by `role` column',
+          function () {
+            expect(Portal.userListPage.table.getRows().count()).toEqual(2);
+            Portal.userListPage.table
+              .getHeader()
+              .getRoleCell()
+              .click()
+              .click();
+            var row = Portal.userListPage.table.getFirstRow();
+            var userRole = row.getRoleCell().getText();
+            expect(userRole).toContain(Constants.user.roles.USER);
+          });
+      });
     });
-
-    afterAll(function () {
-    });
-
-    beforeEach(function () {
-      Portal.signIn(adminUser);
-      Portal.helpers.nav.goToUsers();
-      Portal.userListPage.searcher.setSearchCriteria(prefix);
-    });
-
-    afterEach(function () {
-      Portal.signOut();
-    });
-
-    it('should apply `ascendant` sorting by `first name` column',
-      function () {
-        expect(Portal.userListPage.table.getRows().count()).toEqual(2);
-        Portal.userListPage.table
-          .getHeader()
-          .getFirstNameCell()
-          .click();
-        var firstRow = Portal.userListPage.table.getFirstRow();
-        expect(firstRow.getFirstNameCell().getText()).toContain(prefix + '1');
-      });
-
-    it('should apply `descendant` sorting by `first name` column',
-      function () {
-        expect(Portal.userListPage.table.getRows().count()).toEqual(2);
-        Portal.userListPage.table
-          .getHeader()
-          .getFirstNameCell()
-          .click()
-          .click();
-        var firstRow = Portal.userListPage.table.getFirstRow();
-        expect(firstRow.getFirstNameCell().getText()).toContain(prefix + '2');
-      });
-
-    it('should apply `ascendant` sorting by `last name` column',
-      function () {
-        expect(Portal.userListPage.table.getRows().count()).toEqual(2);
-        Portal.userListPage.table
-          .getHeader()
-          .getLastNameCell()
-          .click();
-        var firstRow = Portal.userListPage.table.getFirstRow();
-        expect(firstRow.getLastNameCell().getText()).toContain(prefix + '1');
-      });
-
-    it('should apply `descendant` sorting by `last name` column',
-      function () {
-        expect(Portal.userListPage.table.getRows().count()).toEqual(2);
-        Portal.userListPage.table
-          .getHeader()
-          .getLastNameCell()
-          .click()
-          .click();
-        var firstRow = Portal.userListPage.table.getFirstRow();
-        expect(firstRow.getLastNameCell().getText()).toContain(prefix + '2');
-      });
-
-    it('should apply `ascendant` sorting by `email` column',
-      function () {
-        expect(Portal.userListPage.table.getRows().count()).toEqual(2);
-        Portal.userListPage.table
-          .getHeader()
-          .getEmailCell()
-          .click();
-        var firstRow = Portal.userListPage.table.getFirstRow();
-        expect(firstRow.getEmailCell().getText()).toContain(prefix + '1');
-      });
-
-    it('should apply `descendant` sorting by `email` column',
-      function () {
-        expect(Portal.userListPage.table.getRows().count()).toEqual(2);
-        Portal.userListPage.table
-          .getHeader()
-          .getEmailCell()
-          .click()
-          .click();
-        var firstRow = Portal.userListPage.table.getFirstRow();
-        expect(firstRow.getEmailCell().getText()).toContain(prefix + '2');
-      });
-
-    it('should apply `ascendant` sorting by `role` column',
-      function () {
-        expect(Portal.userListPage.table.getRows().count()).toEqual(2);
-        Portal.userListPage.table
-          .getHeader()
-          .getRoleCell()
-          .click();
-        var firstRow = Portal.userListPage.table.getFirstRow();
-        var userRole = firstRow.getRoleCell().getText();
-        expect(userRole).toContain(Constants.user.roles.ADMIN);
-      });
-
-    it('should apply `descendant` sorting by `role` column',
-      function () {
-        expect(Portal.userListPage.table.getRows().count()).toEqual(2);
-        Portal.userListPage.table
-          .getHeader()
-          .getRoleCell()
-          .click()
-          .click();
-        var firstRow = Portal.userListPage.table.getFirstRow();
-        var userRole = firstRow.getRoleCell().getText();
-        expect(userRole).toContain(Constants.user.roles.USER);
-      });
   });
 });
