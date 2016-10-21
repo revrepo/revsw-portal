@@ -16,19 +16,31 @@
  * from Rev Software, Inc.
  */
 
-// # Main Portal Helper
 
-var NavHelper = require('./nav');
+var API = require('./../api');
+var Session = require('./../session');
 
-var DNSZonesHelper = require('./dnsZones');
-var MobileAppsHelper = require('./mobileApps');
+var DNSZonesHelper = {
 
-// Abstracts common functionality for the Portal.
-var PortalHelpers = {
-  nav: NavHelper,
-
-  dnsZones: DNSZonesHelper,
-  mobileApps: MobileAppsHelper
+  /**
+   * ### DNSZonesHelper.cleanup(namePattern)
+   *
+   * Cleans up all DNS Zones that matches with the given name pattern.
+   *
+   * @param namePattern, name pattern of the DNS zones to delete
+   * @returns {Object} Promise
+   */
+  cleanup: function (namePattern) {
+    if (namePattern === undefined) {
+      namePattern = /[0-9]{13}/;
+    }
+    var user = Session.getCurrentUser();
+    return API.helpers
+      .authenticateUser(user)
+      .then(function () {
+        return API.helpers.dnsZones.cleanup(namePattern);
+      });
+  }
 };
 
-module.exports = PortalHelpers;
+module.exports = DNSZonesHelper;
