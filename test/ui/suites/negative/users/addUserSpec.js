@@ -40,7 +40,7 @@ describe('Negative', function () {
       Portal.helpers.nav.goToUsers();
     });
 
-    xit('should not create user when a required field is filled with blank ' +
+    it('should not create user when a required field is filled with blank ' +
       'space chars',
       function () {
         var emptyUserData = {};
@@ -79,7 +79,7 @@ describe('Negative', function () {
         expect(addBtn.isEnabled()).toBeFalsy();
       });
 
-    xit('should not allow to create a user without first name',
+    it('should not allow to create a user without first name',
       function () {
         var mathew = DataProvider.generateUser();
         mathew.firstName = '';
@@ -89,7 +89,7 @@ describe('Negative', function () {
         expect(addBtn.isEnabled()).toBeFalsy();
       });
 
-    xit('should not allow to create a user without last name',
+    it('should not allow to create a user without last name',
       function () {
         var mathew = DataProvider.generateUser();
         mathew.lastName = '';
@@ -99,7 +99,7 @@ describe('Negative', function () {
         expect(addBtn.isEnabled()).toBeFalsy();
       });
 
-    xit('should not allow to create a user without any role',
+    it('should not allow to create a user without any role',
       function () {
         var scott = DataProvider.generateUser();
         delete scott.role;
@@ -109,7 +109,7 @@ describe('Negative', function () {
         expect(addBtn.isEnabled()).toBeFalsy();
       });
 
-    xit('should not allow to create a user without password',
+    it('should not allow to create a user without password',
       function () {
         var brian = DataProvider.generateUser();
         delete brian.password;
@@ -119,7 +119,7 @@ describe('Negative', function () {
         expect(addBtn.isEnabled()).toBeFalsy();
       });
 
-    xit('should not allow to create a user without confirmation password',
+    it('should not allow to create a user without confirmation password',
       function () {
         var brian = DataProvider.generateUser();
         delete brian.passwordConfirm;
@@ -129,7 +129,7 @@ describe('Negative', function () {
         expect(addBtn.isEnabled()).toBeFalsy();
       });
 
-    xit('should display an error message when creating user when "Password" ' +
+    it('should display an error message when creating user when "Password" ' +
       'and "Confirmation Password" do not match',
       function () {
         var vincent = DataProvider.generateUser();
