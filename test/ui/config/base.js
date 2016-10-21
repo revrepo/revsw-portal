@@ -18,6 +18,7 @@ module.exports = {
   },
   onPrepare: function () {
     browser.manage().window().setSize(1280, 1024);
+    browser.manage().window().setPosition(400, 0);
     var disableNgAnimate = function() {
         angular
             .module('disableNgAnimate', [])

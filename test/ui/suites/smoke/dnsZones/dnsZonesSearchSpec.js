@@ -64,7 +64,6 @@ describe('Smoke', function () {
               .setSearchCriteria(dnsZoneToSearch.domain);
             var allRows = Portal.dnsZones.listPage.table.getRows();
             expect(allRows.count()).toEqual(1);
-            Portal.deleteDNSZone(dnsZoneToSearch);
           });
       });
     });

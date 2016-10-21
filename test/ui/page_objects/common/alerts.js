@@ -18,6 +18,8 @@
 
 // # Alerts Page Object
 
+var BROWSER_WAIT_TIMEOUT = 10000;
+
 // This `Alerts` Page Object abstracts all actions and operations that we
 // could do with an Portal Alert notification element.
 //
@@ -37,7 +39,6 @@ var Alerts = {
       repeater: 'toaster in toasters'
     }
   },
-  waitTimeout: 10000,
 
   // ## Methods
 
@@ -52,7 +53,7 @@ var Alerts = {
     var me = this;
     return browser.wait(function () {
       return browser.isElementPresent(by.css(me.locators.alert.css));
-    }, this.waitTimeout);
+    }, BROWSER_WAIT_TIMEOUT);
   },
 
   /**

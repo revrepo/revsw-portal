@@ -19,6 +19,8 @@
 // # Portal App object
 var Promise = require("bluebird");
 
+var BROWSER_WAIT_TIMEOUT = 30000; // 30 secs
+
 // Requiring config and constants
 var Constants = require('./constants');
 var Session = require('./../common/session');
@@ -161,13 +163,13 @@ var Portal = {
   },
   signUp: {
     plansPage: PlansPage,
-    formPage: SignUpPage,
+    formPage: SignUpPage
   },
   admin: {
     accounts: Accounts,
     apiKeys: ApiKeysListPage,
     settingsPage: AdminSettingsPage,
-    activityLog: ActivityLogPage,
+    activityLog: ActivityLogPage
   },
   accounts: {
     profilePage: AccountProfilePage,
@@ -216,7 +218,7 @@ var Portal = {
    * ### Portal.signIn()
    *
    * Signs in the specified user into the Portal app
-   * @param {user} user, object with the following schema
+   * @param {Object} user, object with the following schema
    *
    *     {
    *         email: String,
@@ -272,155 +274,7 @@ var Portal = {
     return browser.get(this.baseUrl);
   },
 
-  /**
-   * ### Portal.getPage()
-   *
-   * Loads specified URL or hash fragment in the active browser window
-   *
-   * @param {String} location, URL or hash fragment to load
-   *
-   * @returns {Promise}
-   */
-  getPage: function (location) {
-    return browser.getCurrentUrl().then(function (currentUrl) {
-      var hashFragmentRegExp = new RegExp('^.*' + location + '$');
-      if (hashFragmentRegExp.test(currentUrl)) {
-        return;
-      }
-      if (location.substring(0, 4) === 'http') {
-        return browser.get(location);
-      }
-      return browser.get(Utils.getBaseUrl() + location);
-    });
-  },
-
-  /**
-   * ### Portal.getDashboardsPage()
-   *
-   * Loads the hash fragment for the Dashboards page.
-   *
-   * @returns {Promise}
-   */
-  getDashboardsPage: function () {
-    return this.getPage(Constants.hashFragments.dashboard);
-  },
-
-  // ## Portal APP navigation Helper methods
-
-  /**
-   * ### Portal.goTo()
-   *
-   * Navigation helper method that executes all steps to expand the appropriate
-   * header section from the sidebar menu and select an item from it
-   *
-   * @param {String} menuHeader, the header's label from the menu option to click
-   * @param {String} menuItem, the item's label from the menu option to click
-   *
-   *  @returns {Promise}
-   */
-  goTo: function (menuHeader, menuItem) {
-    this.sideBar.collapseDashboard();
-    return this
-      .sideBar.selectItemFromExpandedBlock(menuHeader,
-      menuItem);
-  },
-
-  goToAccountProfile: function () {
-    return Portal.sideBar.goTo(Constants.sideBar.billing.ACCOUNT_PROFILE);
-  },
-
   // ## User Helper methods
-
-  /**
-   * ### Portal.createUser()
-   *
-   * Helper method that executes all steps required to create a new User from
-   * Portal app.
-   *
-   * @param {user} newUser, data applying the schema defined in
-   * `DataProvider.generateUser()`
-   *
-   * @returns {Object} Promise
-   */
-  createUser: function (newUser) {
-    var me = this;
-    return browser.getCurrentUrl().then(function (initialUrl) {
-      me.helpers.nav.goToUsers();
-      me.userListPage.clickAddNewUser();
-      me.addUserPage.createUser(newUser);
-      me.addUserPage.clickBackToList();
-      browser.getCurrentUrl().then(function (currentUrl) {
-        if (initialUrl !== currentUrl) {
-          browser.get(initialUrl);
-        }
-      });
-    });
-  },
-
-  /**
-   * ### Portal.createUserIfNotExist()
-   *
-   * Helper method that executes all steps required to create a new User from
-   * Portal app. This method creates the user only if it does not exist (it
-   * validates the existence by doing a search by the user email).
-   *
-   * @param {Object} user, data applying the schema defined in
-   * `DataProvider.generateUser()`
-   *
-   * @returns {Object} Promise
-   */
-  createUserIfNotExist: function (user) {
-    var me = this;
-    return browser.getCurrentUrl().then(function (initialUrl) {
-      me.helpers.nav.goToUsers();
-      me.userListPage.searcher.setSearchCriteria(user.email);
-      me.userListPage.table
-        .getRows()
-        .count()
-        .then(function (totalResults) {
-          if (totalResults === 0) {
-            me.userListPage.clickAddNewUser();
-            me.addUserPage.createUser(user);
-            me.addUserPage.clickBackToList();
-          }
-          browser.getCurrentUrl().then(function (currentUrl) {
-            if (initialUrl !== currentUrl) {
-              browser.get(initialUrl);
-            }
-          });
-        });
-    });
-  },
-
-  /**
-   * ### Portal.deleteUser()
-   *
-   * Helper method that executes all steps required to delete a User from
-   * Portal app.
-   *
-   * @param {Object} user, data applying the schema defined in
-   * `DataProvider.generateUser()`
-   *
-   * @returns {Object} Promise
-   */
-  deleteUser: function (user) {
-    var me = this;
-    return browser.getCurrentUrl().then(function (initialUrl) {
-      me.helpers.nav.goToUsers();
-      me.userListPage.searcher.clearSearchCriteria();
-      me.userListPage.searcher.setSearchCriteria(user.email);
-      me.userListPage.table
-        .getFirstRow()
-        .clickDelete();
-      me.dialog.clickOk();
-      me.userListPage.searcher.clearSearchCriteria();
-      browser.getCurrentUrl().then(function (currentUrl) {
-        if (initialUrl !== currentUrl) {
-          browser.get(initialUrl);
-        }
-      });
-    });
-  },
 
   /**
    * ### Portal.createDomain()
@@ -511,64 +365,6 @@ var Portal = {
   },
 
   /**
-   * ### Portal.deleteDomain()
-   *
-   * Helper method that executes all steps required to delete a Domain from
-   * Portal app.
-   *
-   * @param {Object} domain, data applying the schema defined in
-   * `DataProvider.generateDomain()`
-   *
-   * @returns {Object} Promise
-   */
-  deleteDomain: function (domain) {
-    var me = this;
-    return browser.getCurrentUrl().then(function (initialUrl) {
-      me.helpers.nav.goToDomains();
-      me.domains.listPage.searcher.clearSearchCriteria();
-      me.domains.listPage.searcher.setSearchCriteria(domain.name);
-      me.domains.listPage.table
-        .getFirstRow()
-        .clickDelete();
-      me.dialog.clickOk();
-      me.domains.listPage.searcher.clearSearchCriteria();
-      browser.getCurrentUrl().then(function (currentUrl) {
-        if (initialUrl !== currentUrl) {
-          browser.get(initialUrl);
-        }
-      });
-    });
-  },
-
-  /**
-   * ### Portal.deleteMobileApps()
-   *
-   * Helper method that executes all steps required to delete
-   * an existing Mobile Apps from Portal app.
-   *
-   * @param {Object} apps, data applying the schema defined in
-   * `DataProvider.generateMobileApps()`
-   *
-   * @returns {Object} Promise
-   */
-  deleteMobileApps: function (apps) {
-    var me = this;
-    browser.getCurrentUrl().then(function (initialUrl) {
-      apps.forEach(function (app) {
-        me.helpers.nav.goToMobileAppsMenuItem(app.platform);
-        me.mobileApps.listPage.searchAndDelete(app.name);
-        me.dialog.clickOk();
-        browser.sleep(3000);
-      });
-      browser.getCurrentUrl().then(function (currentUrl) {
-        if (initialUrl !== currentUrl) {
-          browser.get(initialUrl);
-        }
-      });
-    });
-  },
-
-  /**
    * ### Portal.createAccounts()
    *
    * Helper method that executes all steps required to create
@@ -599,35 +395,6 @@ var Portal = {
   },
 
   /**
-   * ### Portal.deleteAccounts()
-   *
-   * Helper method that executes all steps required to delete
-   * new Accounts from Portal Admin.
-   *
-   * @param {String} accounts, accounts objects.
-   *
-   * @param {Object} accounts, data applying the schema defined in
-   * `DataProvider.generateAccountProfileData()`
-   *
-   * @returns {Object} Promise
-   */
-  deleteAccounts: function (accounts) {
-    var me = this;
-    return browser.getCurrentUrl().then(function (initialUrl) {
-      accounts.forEach(function (account) {
-        me.helpers.nav.goToAccounts();
-        me.admin.accounts.listPage.searchAndClickDelete(account.companyName);
-        Portal.dialog.clickOk();
-      });
-      browser.getCurrentUrl().then(function (currentUrl) {
-        if (initialUrl !== currentUrl) {
-          browser.get(initialUrl);
-        }
-      });
-    });
-  },
-
-  /**
    * ### Portal.createDashboard(arrayDashboards)
    *
    * Helper method that executes all steps required to create
@@ -642,41 +409,11 @@ var Portal = {
    */
   createDashboard: function (arrayDashboards) {
     var me = this;
-    me.getDashboardsPage();
+    me.helpers.nav.goToDashboards();
     return browser.getCurrentUrl().then(function (initialUrl) {
       arrayDashboards.forEach(function (dashboard) {
-        me.getDashboardsPage();
+        me.helpers.nav.goToDashboards();
         me.dashboards.listPage.addNewDashboard(dashboard);
-      });
-      browser.getCurrentUrl().then(function (currentUrl) {
-        if (initialUrl !== currentUrl) {
-          browser.get(initialUrl);
-        }
-      });
-    });
-  },
-
-  /**
-   * ### Portal.deleteDashboard(arrayDashboards)
-   *
-   * Helper method that executes all steps required to delete an existing
-   * Dashboard from Portal Dashboards.
-   *
-   * @param {String} arrayDashboards, arrayDashboards objects.
-   *
-   * @param {Object} arrayDashboards, data applying the schema defined in
-   * `DataProvider.generateDashboardData()`
-   *
-   * @returns {Object} Promise
-   */
-  deleteDashboard: function (arrayDashboards) {
-    var me = this;
-    me.getDashboardsPage();
-    return browser.getCurrentUrl().then(function (initialUrl) {
-      arrayDashboards.forEach(function (dashboard) {
-        me.getDashboardsPage();
-        me.dashboards.listPage.deleteDashboard(dashboard);
-        me.dashboards.dialogPage.clickDelete();
       });
       browser.getCurrentUrl().then(function (currentUrl) {
         if (initialUrl !== currentUrl) {
@@ -799,33 +536,6 @@ var Portal = {
     });
   },
 
-  /**
-   * ### Portal.deleteAPIKey()
-   *
-   * Helper method that executes all steps required to delete an existing
-   * Dashboard from Portal Dashboards.
-   *
-   * @param {String} apiKey, apiKey objects.
-   *
-   * @param {Object} apiKey, data applying the schema defined in
-   * `DataProvider.generateApiKeyData()`
-   *
-   * @returns {Object} Promise
-   */
-  deleteAPIKey: function (apiKey) {
-    var me = this;
-    return browser.getCurrentUrl().then(function (initialUrl) {
-      me.helpers.nav.goToAPIKeys();
-      Portal.admin.apiKeys.listPage.searchAndClickDelete(apiKey.name);
-      Portal.dialog.clickOk();
-      browser.getCurrentUrl().then(function (currentUrl) {
-        if (initialUrl !== currentUrl) {
-          browser.get(initialUrl);
-        }
-      });
-    });
-  },
-
   createSSLCert: function (sslCert) {
     var me = this;
     return browser.getCurrentUrl().then(function (initialUrl) {
@@ -833,35 +543,6 @@ var Portal = {
       Portal.sslCerts.listPage.clickAddNewSSLCert();
       Portal.sslCerts.addPage.form.fill(sslCert);
       Portal.sslCerts.addPage.clickCreateSSLCert();
-      browser.getCurrentUrl().then(function (currentUrl) {
-        if (initialUrl !== currentUrl) {
-          browser.get(initialUrl);
-        }
-      });
-    });
-  },
-
-  /**
-   * ### Portal.deleteSSLCert()
-   *
-   * Helper method that executes all steps required to delete a SSL Cert from
-   * Portal app.
-   *
-   * @param {Object} sslCert, data applying the schema defined in
-   * `DataProvider.generateSSLCertData()`
-   *
-   * @returns {Object} Promise
-   */
-  deleteSSLCert: function (sslCert) {
-    var me = this;
-    return browser.getCurrentUrl().then(function (initialUrl) {
-      me.helpers.nav.goToSSLCertificates();
-      me.sslCerts.listPage.searcher.clearSearchCriteria();
-      me.sslCerts.listPage.searcher.setSearchCriteria(sslCert.name);
-      me.sslCerts.listPage.table
-        .getFirstRow()
-        .clickDelete();
-      me.dialog.clickOk();
       browser.getCurrentUrl().then(function (currentUrl) {
         if (initialUrl !== currentUrl) {
           browser.get(initialUrl);
@@ -899,35 +580,6 @@ var Portal = {
   },
 
   /**
-   * ### Portal.deleteSSLName()
-   *
-   * Helper method that executes all steps required to delete a SSL Name from
-   * Portal app.
-   *
-   * @param {Object} sslName , data applying the schema defined in
-   * `DataProvider.generateSSLNameData()`
-   *
-   * @returns {Object} Promise
-   */
-  deleteSSLName: function (sslName) {
-    var me = this;
-    return browser.getCurrentUrl().then(function (initialUrl) {
-      me.helpers.nav.goToSSLNames();
-      me.sslNames.listPage.searcher.clearSearchCriteria();
-      me.sslNames.listPage.searcher.setSearchCriteria(sslName.domainName);
-      me.sslNames.listPage.table
-          .getFirstRow()
-          .clickDelete();
-      me.dialog.clickOk();
-      browser.getCurrentUrl().then(function (currentUrl) {
-        if (initialUrl !== currentUrl) {
-          browser.get(initialUrl);
-        }
-      });
-    });
-  },
-
-  /**
    * ### Portal.createLogShippingJob(logShippingJob)
    *
    * Helper method that executes all steps required to create
@@ -945,35 +597,6 @@ var Portal = {
       Portal.logShipping.listPage.clickAddNewLogShippingJob();
       Portal.logShipping.addPage.form.fill(logShippingJob);
       Portal.logShipping.addPage.clickCreateJobBtn();
-      browser.getCurrentUrl().then(function (currentUrl) {
-        if (initialUrl !== currentUrl) {
-          browser.get(initialUrl);
-        }
-      });
-    });
-  },
-
-  /**
-   * ### Portal.deleteLogShippingJob()
-   *
-   * Helper method that executes all steps required to delete a Log Shipping Job from
-   * Portal app.
-   *
-   * @param {Object} logShippingJob , data applying the schema defined in
-   * `DataProvider.generateLogShippingJobData()`
-   *
-   * @returns {Object} Promise
-   */
-  deleteLogShippingJob: function (logShippingJob) {
-    var me = this;
-    return browser.getCurrentUrl().then(function (initialUrl) {
-      me.helpers.nav.goToLogShipping();
-      me.logShipping.listPage.searcher.clearSearchCriteria();
-      me.logShipping.listPage.searcher.setSearchCriteria(logShippingJob.name);
-      me.logShipping.listPage.table
-          .getFirstRow()
-          .clickDelete();
-      me.dialog.clickOk();
       browser.getCurrentUrl().then(function (currentUrl) {
         if (initialUrl !== currentUrl) {
           browser.get(initialUrl);
@@ -1043,40 +666,6 @@ var Portal = {
   },
 
   /**
-   * ### Portal.deleteDNSZone()
-   *
-   * Helper method that executes all steps required to delete a DNS Zone from
-   * Portal app.
-   *
-   * @param {Object} zone , data applying the schema defined in
-   * `DataProvider.generateDNSZoneData()`
-   *
-   * @returns {Object} Promise
-   */
-  deleteDNSZone: function (zone) {
-    var me = this;
-    return browser.getCurrentUrl().then(function (initialUrl) {
-      me.helpers.nav.goToDNSZones();
-      me.dnsZones.listPage.searcher.clearSearchCriteria();
-      me.dnsZones.listPage.searcher.setSearchCriteria(zone.domain);
-      me.dnsZones.listPage.table
-        .getFirstRow()
-        .clickDelete();
-      me.dialog.clickOk();
-      browser.getCurrentUrl().then(function (currentUrl) {
-        if (initialUrl !== currentUrl) {
-          browser.get(initialUrl);
-        }
-      });
-    });
-  },
-
-  /**
-   * Timeout of for `waiter` functions/methods
-   */
-  waitTimeout: 30000, // 30 secs
-
-  /**
    * Waits for specified number of browser windows/tabs are displayed/opened.
    * It times out if there are not the amount specified of windows.
    *
@@ -1090,7 +679,7 @@ var Portal = {
         .then(function (handles) {
           return handles.length === numOfWindows;
         });
-    }, this.waitTimeout);
+    }, BROWSER_WAIT_TIMEOUT);
   },
 
   /**

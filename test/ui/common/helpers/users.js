@@ -20,32 +20,36 @@
 var API = require('./../api');
 var Session = require('./../session');
 
-var MobileAppsHelper = {
+var UsersHelper = {
 
   /**
-   * Creates a new Mobile App (pre-requisite) through REST API end-point.
+   * Creates a new User (pre-requisite) through REST API end-point.
    *
-   * @param appData, mobileApp data
+   * @param data, user data
    * @returns {Object} Promise
    */
-  create: function (appData) {
+  create: function (data) {
+    if (data === undefined) {
+      data = {};
+    }
     var user = Session.getCurrentUser();
     return API.helpers
       .authenticateUser(user)
       .then(function () {
-        appData.accountId = user.account.id;
-        return API.helpers.apps.create(appData);
+        return API.helpers.users.create(data);
       })
-      .then(function (newApp) {
+      .then(function (user) {
         return {
-          name: newApp.app_name,
-          platform: newApp.app_platform,
-          // title: '>>> APP TITLE <<<',
-          comment: newApp.comment,
-          companyName: newApp.account_id
+          email: user.email,
+          firstName: user.firstname,
+          lastName: user.lastname,
+          role: user.role,
+          password: user.password,
+          passwordConfirm: user.password
+          // company: ??
         };
       });
   }
 };
 
-module.exports = MobileAppsHelper;
+module.exports = UsersHelper;

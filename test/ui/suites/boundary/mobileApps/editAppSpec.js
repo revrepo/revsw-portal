@@ -30,6 +30,7 @@ describe('Boundary', function () {
       Portal.constants.mobileApps.platforms.ios
     ];
     var length51Characters = new Array(52).join('x');
+    var app;
 
     users.forEach(function (user) {
 
@@ -44,7 +45,7 @@ describe('Boundary', function () {
                 .signIn(user)
                 .then(function () {
                   return Portal.helpers.mobileApps
-                    .createOne({platform: platform})
+                    .create({platform: platform})
                     .then(function (newApp) {
                       app = newApp;
                       done();

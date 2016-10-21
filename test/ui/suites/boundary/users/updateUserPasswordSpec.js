@@ -18,83 +18,80 @@
 
 var config = require('config');
 var Portal = require('./../../../page_objects/portal');
-var DataProvider = require('./../../../common/providers/data');
 
 describe('Boundary', function () {
   describe('Update user password', function () {
 
-    var adminUser = config.get('portal.users.admin');
+    var tom;
+    var users = [
+      config.get('portal.users.admin')
+    ];
 
-    beforeAll(function () {
-      Portal.signIn(adminUser);
-    });
+    users.forEach(function (user) {
 
-    afterAll(function () {
-      Portal.signOut();
-    });
+      describe('With user: ' + user.role, function () {
 
-    beforeEach(function () {
-      Portal.helpers.nav.goToUsers();
-    });
+        beforeAll(function (done) {
+          Portal
+            .signIn(user)
+            .then(function () {
+              Portal.helpers.users
+                .create({firstName: 'Tom'})
+                .then(function (user) {
+                  tom = user;
+                  Portal.signOut();
+                  Portal.signIn(tom);
+                  done();
+                })
+                .catch(done);
+            })
+            .catch(done);
+        });
 
-    it('should not update the password when it is less than 8 chars length.',
-      function () {
-        var bret = DataProvider.generateUser('Bret');
-        var newPassword = '123';
-        Portal.createUser(bret);
-        Portal.signOut();
-        Portal.signIn(bret);
-        Portal.helpers.nav.goToUpdatePassword();
-        Portal.updatePasswordPage.setCurrentPassword(bret.password);
-        Portal.updatePasswordPage.setNewPassword(newPassword);
-        Portal.updatePasswordPage.setPasswordConfirm(newPassword);
-        var updateBtn = Portal.updatePasswordPage.getUpdatePasswordBtn();
-        expect(updateBtn.isEnabled()).toBeFalsy();
+        afterAll(function () {
+          Portal.signOut();
+        });
 
-        Portal.signOut();
-        Portal.signIn(adminUser);
-        Portal.deleteUser(bret);
+        beforeEach(function () {
+          Portal.helpers.nav.goToDashboards();
+          Portal.helpers.nav.goToUpdatePassword();
+        });
+
+        it('should not update the password when it is less than 8 chars ' +
+          'length.',
+          function () {
+            var newPassword = '123';
+            Portal.updatePasswordPage.setCurrentPassword(tom.password);
+            Portal.updatePasswordPage.setNewPassword(newPassword);
+            Portal.updatePasswordPage.setPasswordConfirm(newPassword);
+            var updateBtn = Portal.updatePasswordPage.getUpdatePasswordBtn();
+            expect(updateBtn.isEnabled()).toBeFalsy();
+          });
+
+        it('should not update the password when it is greater than 15 chars ' +
+          'length.',
+          function () {
+            var newPassword = '01234567890123456789';
+            Portal.updatePasswordPage.setCurrentPassword(tom.password);
+            Portal.updatePasswordPage.setNewPassword(newPassword);
+            Portal.updatePasswordPage.setPasswordConfirm(newPassword);
+            var updateBtn = Portal.updatePasswordPage.getUpdatePasswordBtn();
+            expect(updateBtn.isEnabled()).toBeFalsy();
+          });
+
+        it('should not update the password when filling only blank spaces',
+          function () {
+            var newPassword = '        '; // 8 spaces
+            Portal.updatePasswordPage.setCurrentPassword(tom.password);
+            Portal.updatePasswordPage.setNewPassword(newPassword);
+            Portal.updatePasswordPage.setPasswordConfirm(newPassword);
+            Portal.updatePasswordPage.clickUpdatePassword();
+            var alert = Portal.alerts.getFirst();
+            var expectedMessage = 'Please fill all fields. (New password ' +
+              'should be at least 8 characters length)';
+            expect(alert.getText()).toContain(expectedMessage);
+          });
       });
-
-    it('should not update the password when it is greater than 15 chars ' +
-      'length.',
-      function () {
-        var bruno = DataProvider.generateUser('Bruno');
-        var newPassword = '01234567890123456789';
-        Portal.createUser(bruno);
-        Portal.signOut();
-        Portal.signIn(bruno);
-        Portal.helpers.nav.goToUpdatePassword();
-        Portal.updatePasswordPage.setCurrentPassword(bruno.password);
-        Portal.updatePasswordPage.setNewPassword(newPassword);
-        Portal.updatePasswordPage.setPasswordConfirm(newPassword);
-        var updateBtn = Portal.updatePasswordPage.getUpdatePasswordBtn();
-        expect(updateBtn.isEnabled()).toBeFalsy();
-
-        Portal.signOut();
-        Portal.signIn(adminUser);
-        Portal.deleteUser(bruno);
-      });
-
-    it('should not update the password when filling only blank spaces',
-      function () {
-        var carol = DataProvider.generateUser('Carol');
-        var newPassword = '        '; // 8 spaces
-        Portal.createUser(carol);
-        Portal.signOut();
-        Portal.signIn(carol);
-        Portal.helpers.nav.goToUpdatePassword();
-        Portal.updatePasswordPage.setCurrentPassword(carol.password);
-        Portal.updatePasswordPage.setNewPassword(newPassword);
-        Portal.updatePasswordPage.setPasswordConfirm(newPassword);
-        Portal.updatePasswordPage.clickUpdatePassword();
-        var alert = Portal.alerts.getFirst();
-        var expectedMessage = '×\nPlease fill all fields. (New password should ' +
-            'be at least 8 characters length)';
-        expect(alert.getText()).toEqual(expectedMessage);
-        Portal.signOut();
-        Portal.signIn(adminUser);
-        Portal.deleteUser(carol);
-      });
+    });
   });
 });

@@ -29,6 +29,7 @@ describe('Negative', function () {
       Portal.constants.mobileApps.platforms.android,
       Portal.constants.mobileApps.platforms.ios
     ];
+    var app;
 
     users.forEach(function (user) {
 
@@ -43,7 +44,7 @@ describe('Negative', function () {
                 .signIn(user)
                 .then(function () {
                   return Portal.helpers.mobileApps
-                    .createOne({platform: platform})
+                    .create({platform: platform})
                     .then(function (newApp) {
                       app = newApp;
                       done();

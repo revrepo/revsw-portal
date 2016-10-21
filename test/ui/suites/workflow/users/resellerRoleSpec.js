@@ -18,59 +18,63 @@
 
 var config = require('config');
 var Portal = require('./../../../page_objects/portal');
-var DataProvider = require('./../../../common/providers/data');
-var Constants = require('./../../../page_objects/constants');
 
 describe('Workflow', function () {
   describe('Reseller role user', function () {
 
-    var resellerUser = config.get('portal.users.reseller');
+    var users = [
+      config.get('portal.users.reseller')
+    ];
     var secondResellerUser = config.get('portal.users.secondReseller');
 
-    beforeAll(function () {
-    });
+    users.forEach(function (user) {
 
-    afterAll(function () {
-    });
+      describe('With user: ' + user.role, function () {
 
-    beforeEach(function () {
-      Portal.signIn(resellerUser);
-      Portal.helpers.nav.goToUsers();
-    });
+        beforeEach(function () {
+          Portal.signIn(user);
+          Portal.helpers.nav.goToUsers();
+        });
 
-    afterEach(function () {
-      Portal.signOut();
-    });
+        afterEach(function () {
+          Portal.signOut();
+        });
 
-    it('should display a user only for one reseller user',
-      function () {
-        var userEmail = Portal.userListPage.table
-          .getFirstRow()
-          .getEmail();
-        Portal.signOut();
-        Portal.signIn(secondResellerUser);
-        Portal.helpers.nav.goToUsers();
-        Portal.userListPage.searcher.setSearchCriteria(userEmail);
-        var filteredRows = Portal.userListPage.table.getRows();
-        expect(filteredRows.count()).toEqual(0);
+        it('should display a user only for one reseller user',
+          function () {
+            var userEmail = Portal.userListPage.table
+              .getFirstRow()
+              .getEmail();
+            Portal.signOut();
+            Portal.signIn(secondResellerUser);
+            Portal.helpers.nav.goToUsers();
+            Portal.userListPage.searcher.setSearchCriteria(userEmail);
+            var filteredRows = Portal.userListPage.table.getRows();
+            expect(filteredRows.count()).toEqual(0);
+          });
+
+        it('should display new created user only for the reseller who ' +
+          'created it',
+          function (done) {
+            Portal.helpers.users
+              .create()
+              .then(function (testUser) {
+                var userEmail = Portal.userListPage
+                  .searchAndGetFirstRow(testUser.email)
+                  .getEmail();
+                var filteredRows = Portal.userListPage.table.getRows();
+                expect(filteredRows.count()).toEqual(1);
+                Portal.signOut();
+                Portal.signIn(secondResellerUser);
+                Portal.helpers.nav.goToUsers();
+                Portal.userListPage.searcher.setSearchCriteria(userEmail);
+                var newFilteredRows = Portal.userListPage.table.getRows();
+                expect(newFilteredRows.count()).toEqual(0);
+                done();
+              })
+              .catch(done);
+          });
       });
-
-    it('should display new created user only for the reseller who created it',
-      function () {
-        var tom = DataProvider.generateUser('Tom', null, resellerUser);
-        Portal.createUser(tom);
-        var userEmail = Portal.userListPage
-          .searchAndGetFirstRow(tom.email)
-          .getEmail();
-        var filteredRows = Portal.userListPage.table.getRows();
-        expect(filteredRows.count()).toEqual(1);
-        Portal.signOut();
-        Portal.signIn(secondResellerUser);
-        Portal.helpers.nav.goToUsers();
-        Portal.userListPage.searcher.setSearchCriteria(userEmail);
-        var newFilteredRows = Portal.userListPage.table.getRows();
-        expect(newFilteredRows.count()).toEqual(0);
-      });
-
+    });
   });
 });

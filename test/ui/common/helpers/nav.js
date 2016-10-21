@@ -35,6 +35,14 @@ module.exports = {
   },
 
   /**
+   * Goes to Dashboards Area
+   * @returns {*}
+   */
+  goToDashboards: function () {
+    return SideBar.select(MenuAreas.DASHBOARDS);
+  },
+
+  /**
    * Goes to Mobile Apps Area
    * @returns {*}
    */

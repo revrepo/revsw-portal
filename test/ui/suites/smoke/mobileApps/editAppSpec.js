@@ -24,6 +24,8 @@ var Portal = require('./../../../page_objects/portal');
 var DataProvider = require('./../../../common/providers/data');
 var Constants = require('./../../../page_objects/constants');
 
+var BROWSER_WAIT_TIMEOUT = 20000;
+
 describe('Smoke', function () {
 
   // Defining set of users for which all below tests will be run
@@ -138,7 +140,11 @@ describe('Smoke', function () {
                 Portal.mobileApps.editPage.update(app);
                 browser.ignoreSynchronization = true;
                 Portal.dialog.clickOk();
-                browser.wait(protractor.ExpectedConditions.visibilityOf(element(by.xpath('.//*[contains(text(),"' + Constants.alertMessages.app.MSG_SUCCESS_UPDATE + '")]'))), 20000);
+                browser.wait(
+                  protractor.ExpectedConditions.visibilityOf(
+                    element(by.xpath('.//*[contains(text(),"' + Constants.alertMessages.app.MSG_SUCCESS_UPDATE + '")]'))
+                  ), BROWSER_WAIT_TIMEOUT
+                );
                 expect(Portal.alerts.getAll().count()).toEqual(1);
                 expect(Portal.alerts.getFirst().getText())
                   .toEqual(Constants.alertMessages.app.MSG_SUCCESS_UPDATE);

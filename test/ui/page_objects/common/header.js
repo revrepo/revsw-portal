@@ -18,6 +18,8 @@
 
 // # Header Page Object
 
+var BROWSER_WAIT_TIMEOUT = 20000;
+
 // Requiring constant values object
 var Constants = require('./../constants');
 
@@ -26,8 +28,6 @@ var Constants = require('./../constants');
 var Header = {
 
   // ## Properties
-
-  waitTimeout: 20000,
 
   // Locators specific to HTML elements from this page object
   locators: {
@@ -223,7 +223,7 @@ var Header = {
     var me = this;
     return browser.wait(function () {
       return browser.isElementPresent(by.css(me.locators.menu.user.css));
-    }, this.waitTimeout);
+    }, BROWSER_WAIT_TIMEOUT);
   },
 
   /**

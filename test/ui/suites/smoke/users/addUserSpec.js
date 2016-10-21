@@ -63,15 +63,13 @@ describe('Smoke', function () {
         it('should create an user successfully when filling all required data',
           function () {
             // Create user
-            var bruce = DataProvider.generateUser('Bruce', null, user);
+            var bruce = DataProvider.generateUser();
             // console.log('bruce = ' + JSON.stringify(bruce));
             Portal.addUserPage.createUser(bruce);
             // Check App alert notifications
             expect(Portal.alerts.getAll().count()).toEqual(1);
             expect(Portal.alerts.getFirst().getText())
               .toContain(Constants.alertMessages.users.MSG_SUCCESS_ADD);
-            // Delete created user
-            Portal.deleteUser(bruce);
           });
       });
     });

@@ -73,7 +73,6 @@ describe('Smoke', function () {
             expect(Portal.alerts.getAll().count()).toEqual(1);
             expect(Portal.alerts.getFirst().getText())
               .toContain(Constants.alertMessages.domains.MSG_SUCCESS_ADD);
-            Portal.deleteDomain(smoketest);
           });
       });
     });

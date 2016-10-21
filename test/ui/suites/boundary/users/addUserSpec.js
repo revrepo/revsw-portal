@@ -41,7 +41,7 @@ describe('Boundary', function () {
 
     it('should not allow to create user with long email address (> 64 chars).',
       function () {
-        var tommy = DataProvider.generateUser('Tommy');
+        var tommy = DataProvider.generateUser();
         tommy.email = 'email678901234567890123456789012345678901234567890' +
           '123456789012345@ui-test-email.com';
         Portal.addUserPage.form.fill(tommy);
@@ -50,7 +50,7 @@ describe('Boundary', function () {
       });
 
     it('should not allow to create user with long First Name.', function () {
-      var rocky = DataProvider.generateUser('Rocky');
+      var rocky = DataProvider.generateUser();
       rocky.firstName += ' is an invalid name longer than thirty characters.';
       Portal.addUserPage.form.fill(rocky);
       var addBtn = Portal.addUserPage.getCreateUserBtn();
@@ -58,7 +58,7 @@ describe('Boundary', function () {
     });
 
     it('should not allow to create user with long Last Name.', function () {
-      var paul = DataProvider.generateUser('Paul');
+      var paul = DataProvider.generateUser();
       paul.lastName += ' is an invalid name longer than thirty characters.';
       Portal.addUserPage.form.fill(paul);
       var addBtn = Portal.addUserPage.getCreateUserBtn();
@@ -68,7 +68,7 @@ describe('Boundary', function () {
     it('should not create user when the "Password" value is not 8 characters ' +
       'long',
       function () {
-        var michael = DataProvider.generateUser('Michael');
+        var michael = DataProvider.generateUser();
         michael.password = '123';
         michael.passwordConfirm = '123';
         Portal.addUserPage.form.fill(michael);
@@ -79,7 +79,7 @@ describe('Boundary', function () {
     it('should not create user when the "Password" value is greater than ' +
       '15 characters long',
       function () {
-        var vincent = DataProvider.generateUser('Vincent');
+        var vincent = DataProvider.generateUser();
         vincent.password = '1234567890123456789012345678901234567890';
         vincent.passwordConfirm = '1234567890123456789012345678901234567890';
         Portal.addUserPage.form.fill(vincent);

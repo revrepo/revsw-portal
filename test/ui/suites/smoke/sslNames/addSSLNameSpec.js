@@ -72,7 +72,6 @@ describe('Smoke', function () {
                         expect(Portal.sslNames.listPage
                             .searchAndGetFirstRow(sslName.domainName)
                             .getDomainName()).toEqual(sslName.domainName);
-                        Portal.deleteSSLName(sslName);
                     });
 
                 it('should allow create a SSL Name with URL verification',
@@ -88,7 +87,6 @@ describe('Smoke', function () {
                         expect(Portal.sslNames.listPage
                             .searchAndGetFirstRow(sslName.domainName)
                             .getDomainName()).toEqual(sslName.domainName);
-                        Portal.deleteSSLName(sslName);
                     });
 
                 it('should allow create a SSL Name with Email verification',
@@ -104,7 +102,6 @@ describe('Smoke', function () {
                         expect(Portal.sslNames.listPage
                             .searchAndGetFirstRow(sslName.domainName)
                             .getDomainName()).toEqual(sslName.domainName);
-                        Portal.deleteSSLName(sslName);
                     });
             });
         });

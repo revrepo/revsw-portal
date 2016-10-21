@@ -28,7 +28,8 @@ var PortalHelpers = {
   nav: NavHelper,
 
   dnsZones: DNSZonesHelper,
-  mobileApps: MobileAppsHelper
+  mobileApps: MobileAppsHelper,
+  users: UsersHelper
 };
 
 module.exports = PortalHelpers;

@@ -48,10 +48,6 @@ describe('Smoke', function () {
           Portal.dnsZones.listPage.clickAddNewDNSZone();
         });
 
-        afterEach(function () {
-
-        });
-
         it('should display "Add DNS Zone" form', function () {
           expect(Portal.dnsZones.addPage.isDisplayed()).toBeTruthy();
           expect(Portal.dnsZones.addPage.form.isDisplayed()).toBeTruthy();
@@ -66,16 +62,12 @@ describe('Smoke', function () {
         it('should create a DNS Zone when filling all required data',
           function () {
             var dnsZoneToSearch = DataProvider.generateDNSZoneData();
-
             Portal.dnsZones.addPage.createDNSZone(dnsZoneToSearch);
             Portal.dnsZones.listPage.searcher
               .setSearchCriteria(dnsZoneToSearch.domain);
-
             expect(Portal.dnsZones.listPage
               .searchAndGetFirstRow(dnsZoneToSearch.domain)
               .getZoneName()).toEqual(dnsZoneToSearch.domain);
-
-            Portal.deleteDNSZone(dnsZoneToSearch);
           });
       });
     });

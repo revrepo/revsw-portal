@@ -21,7 +21,7 @@
 // Requiring `domain form` component page object
 var DomainForm = require('./form');
 
-var WAIT_FOR_ELEMENT_TIMEOUT = 160000;
+var BROWSER_WAIT_TIMEOUT = 200000;
 
 // This `Edit Domain` Page Object abstracts all operations or actions that a
 // common domain could do in the Edit Domain page from the Portal app/site.
@@ -324,8 +324,11 @@ var EditDomain = {
    * @returns {Object} Selenium WebDriver Element
    */
   waitForPublish: function () {
-    return browser.wait(protractor.ExpectedConditions.presenceOf(
-        element(by.css(this.locators.icons.published.css))), WAIT_FOR_ELEMENT_TIMEOUT);
+    return browser.wait(
+      protractor.ExpectedConditions.presenceOf(
+        element(by.css(this.locators.icons.published.css))
+      ), BROWSER_WAIT_TIMEOUT
+    );
   }
 };
 

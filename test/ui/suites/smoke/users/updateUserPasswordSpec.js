@@ -58,24 +58,24 @@ describe('Smoke', function () {
           expect(Portal.updatePasswordPage.isDisplayed()).toBeTruthy();
         });
 
-        it('should update password successfully', function () {
-          var carl = DataProvider.generateUser('Carl', null, user);
-          var newPassword = 'password2';
-
-          Portal.createUser(carl);
-          Portal.signOut();
-          Portal.signIn(carl);
-          Portal.helpers.nav.goToUpdatePassword();
-          Portal.updatePasswordPage.setCurrentPassword(carl.password);
-          Portal.updatePasswordPage.setNewPassword(newPassword);
-          Portal.updatePasswordPage.setPasswordConfirm(newPassword);
-          Portal.updatePasswordPage.clickUpdatePassword();
-          var alert = Portal.alerts.getFirst();
-          expect(alert.getText())
-            .toContain(Constants.alertMessages.users.MSG_SUCCESS_UPDATE_PASSWORD);
-          Portal.signOut();
-          Portal.signIn(user);
-          Portal.deleteUser(carl);
+        it('should update password successfully', function (done) {
+          Portal.helpers.users
+            .create()
+            .then(function (testUser) {
+              var newPassword = 'password2';
+              Portal.signOut();
+              Portal.signIn(testUser);
+              Portal.helpers.nav.goToUpdatePassword();
+              Portal.updatePasswordPage.setCurrentPassword(testUser.password);
+              Portal.updatePasswordPage.setNewPassword(newPassword);
+              Portal.updatePasswordPage.setPasswordConfirm(newPassword);
+              Portal.updatePasswordPage.clickUpdatePassword();
+              var alert = Portal.alerts.getFirst();
+              expect(alert.getText())
+                .toContain(Constants.alertMessages.users.MSG_SUCCESS_UPDATE_PASSWORD);
+              done();
+            })
+            .catch(done);
         });
       });
     });
