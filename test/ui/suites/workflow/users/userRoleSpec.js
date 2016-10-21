@@ -18,60 +18,73 @@
 
 var config = require('config');
 var Portal = require('./../../../page_objects/portal');
-var DataProvider = require('./../../../common/providers/data');
-var Constants = require('./../../../page_objects/constants');
 
 describe('Workflow', function () {
   describe('User-role user', function () {
 
-    var resellerUser = config.get('portal.users.reseller');
+    var users = [
+      config.get('portal.users.reseller')
+    ];
     var adminUser = config.get('portal.users.admin');
 
-    it('should be able to sign-in once it is created by a reseller user',
-      function () {
-        // Create user
-        Portal.signIn(resellerUser);
-        Portal.createUser(joe);
-        Portal.signOut();
-        // Check new user can sign in
-        Portal.signIn(joe);
-        var userInfoEl = Portal.header.getUserInfoEl();
-        expect(userInfoEl.isDisplayed()).toBeTruthy();
-        Portal.signOut();
-      });
+    users.forEach(function (user) {
 
-    it('should be able to sign-in once it is created by an admin user',
-      function () {
-        var paul = DataProvider.generateUser();
-        // Create user
-        Portal.signIn(adminUser);
-        Portal.createUser(paul);
-        Portal.signOut();
-        // Check new user can sign in
-        Portal.signIn(paul);
-        var userInfoEl = Portal.header.getUserInfoEl();
-        expect(userInfoEl.isDisplayed()).toBeTruthy();
-        Portal.signOut();
-      });
+      describe('With user: ' + user.role, function () {
 
-    it('should be able to sign-in after a successful password update',
-      function () {
-        var peter = DataProvider.generateUser();
-        var newPassword = 'password3';
-        // Create user
-        Portal.signIn(adminUser);
-        Portal.createUser(peter);
-        Portal.signOut();
-        // Sign in with new user and change password
-        Portal.signIn(peter);
-        Portal.helpers.nav.goToUpdatePassword();
-        Portal.updatePasswordPage.update(peter.password, newPassword);
-        Portal.signOut();
-        // Sign-in using new password and validate
-        Portal.signIn({email: peter.email, password: newPassword});
-        var userInfoEl = Portal.header.getUserInfoEl();
-        expect(userInfoEl.isDisplayed()).toBeTruthy();
-        Portal.signOut();
+        it('should be able to sign-in once it is created by a reseller user',
+          function (done) {
+            Portal.session.setCurrentUser(user);
+            Portal.helpers.users
+              .create()
+              .then(function (testUser) {
+                // Check new user can sign in
+                Portal.signIn(testUser);
+                var userInfoEl = Portal.header.getUserInfoEl();
+                expect(userInfoEl.isDisplayed()).toBeTruthy();
+                Portal.signOut();
+                done();
+              })
+              .catch(done);
+          });
+
+        it('should be able to sign-in once it is created by an admin user',
+          function (done) {
+            Portal.session.setCurrentUser(adminUser);
+            Portal.helpers.users
+              .create()
+              .then(function (testUser) {
+                // Check new user can sign in
+                Portal.signIn(testUser);
+                var userInfoEl = Portal.header.getUserInfoEl();
+                expect(userInfoEl.isDisplayed()).toBeTruthy();
+                Portal.signOut();
+                done();
+              })
+              .catch(done);
+          });
+
+        it('should be able to sign-in after a successful password update',
+          function (done) {
+            Portal.session.setCurrentUser(adminUser);
+            Portal.helpers.users
+              .create()
+              .then(function (testUser) {
+                var newPwd = 'password3';
+                // Sign in with new user and change password
+                Portal.signIn(testUser);
+                Portal.helpers.nav.goToUpdatePassword();
+                Portal.updatePasswordPage.update(testUser.password, newPwd);
+                Portal.signOut();
+                // Sign-in using new password and validate
+                Portal.signIn({email: testUser.email, password: newPwd});
+                var userInfoEl = Portal.header.getUserInfoEl();
+                expect(userInfoEl.isDisplayed()).toBeTruthy();
+                Portal.signOut();
+                done();
+              })
+              .catch(done);
+          });
       });
+    });
   });
 });
