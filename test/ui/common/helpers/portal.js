@@ -22,6 +22,7 @@ var NavHelper = require('./nav');
 
 var DNSZonesHelper = require('./dnsZones');
 var MobileAppsHelper = require('./mobileApps');
+var UsersHelper = require('./users');
 
 // Abstracts common functionality for the Portal.
 var PortalHelpers = {
