@@ -23,50 +23,68 @@ var DataProvider = require('./../../../common/providers/data');
 describe('Negative', function () {
   describe('Edit user', function () {
 
-    var adminUser = config.get('portal.users.admin');
-    var carl = DataProvider.generateUser();
+    var user = config.get('portal.users.admin');
+    var testUser = DataProvider.generateUser();
 
-    beforeAll(function () {
-      Portal.signIn(adminUser);
-      Portal.createUser(carl);
-    });
+    var users = [
+      config.get('portal.users.admin')
+    ];
 
-    afterAll(function () {
-      Portal.signOut();
-    });
+    users.forEach(function (user) {
 
-    beforeEach(function () {
-      Portal.helpers.nav.goToUsers();
-    });
+      describe('With user: ' + user.role, function () {
 
-    it('should not allow to edit the user\'s email', function () {
-      Portal.userListPage.searchAndClickEdit(carl.email);
-      var emailField = Portal.editUserPage.form.getEmailTxtIn();
-      expect(emailField.isEnabled()).toBeFalsy();
-    });
+        beforeAll(function (done) {
+          Portal
+            .signIn(user)
+            .then(function () {
+              Portal.helpers.users
+                .create({
+                  role: Constants.user.roles.USER
+                })
+                .then(function (newUser) {
+                  testUser = newUser;
+                })
+                .catch(done);
+            })
+            .catch(done);
+        });
 
-    it('should not allow to update a user without "First Name"',
-      function () {
-        Portal.userListPage.searchAndClickEdit(carl.email);
-        Portal.editUserPage.form.clearFirstName();
-        var addBtn = Portal.editUserPage.getUpdateUserBtn();
-        expect(addBtn.isEnabled()).toBeFalsy();
+        afterAll(function () {
+          Portal.signOut();
+        });
+
+        beforeEach(function () {
+          Portal.helpers.nav.goToUsers();
+          Portal.userListPage.searchAndClickEdit(testUser.email);
+        });
+
+        it('should not allow to edit the user\'s email', function () {
+          var emailField = Portal.editUserPage.form.getEmailTxtIn();
+          expect(emailField.isEnabled()).toBeFalsy();
+        });
+
+        it('should not allow to update a user without "First Name"',
+          function () {
+            Portal.editUserPage.form.clearFirstName();
+            var addBtn = Portal.editUserPage.getUpdateUserBtn();
+            expect(addBtn.isEnabled()).toBeFalsy();
+          });
+
+        it('should not allow to update a user without "Last Name"',
+          function () {
+            Portal.editUserPage.form.clearLastName();
+            var addBtn = Portal.editUserPage.getUpdateUserBtn();
+            expect(addBtn.isEnabled()).toBeFalsy();
+          });
+
+        it('should not allow to update a user without role',
+          function () {
+            Portal.editUserPage.form.setRole('--- Select Role ---');
+            var addBtn = Portal.editUserPage.getUpdateUserBtn();
+            expect(addBtn.isEnabled()).toBeFalsy();
+          });
       });
-
-    it('should not allow to update a user without "Last Name"',
-      function () {
-        Portal.userListPage.searchAndClickEdit(carl.email);
-        Portal.editUserPage.form.clearLastName();
-        var addBtn = Portal.editUserPage.getUpdateUserBtn();
-        expect(addBtn.isEnabled()).toBeFalsy();
-      });
-
-    it('should not allow to update a user without role',
-      function () {
-        Portal.userListPage.searchAndClickEdit(carl.email);
-        Portal.editUserPage.form.setRole('--- Select Role ---');
-        var addBtn = Portal.editUserPage.getUpdateUserBtn();
-        expect(addBtn.isEnabled()).toBeFalsy();
-      });
+    });
   });
 });
