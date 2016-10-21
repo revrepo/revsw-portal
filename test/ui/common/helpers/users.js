@@ -36,6 +36,12 @@ var UsersHelper = {
     return API.helpers
       .authenticateUser(user)
       .then(function () {
+        // Special case when the portal user is creating a new user
+        // is a rev-admin which require the specify the
+        // company the new user should be associated with
+        if (user.role === 'Rev Admin') {
+          data.companyId = [user.account.id];
+        }
         return API.helpers.users.create(data);
       })
       .then(function (user) {

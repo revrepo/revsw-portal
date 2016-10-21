@@ -118,18 +118,24 @@ describe('Smoke', function () {
           });
       });
 
-    it('should `View Details` button be disabled.',
+    it('should `View Details` button be enabled.',
       function () {
-        expect(Portal.accounts.billingStatements.summary
+        Portal.accounts.billingStatements.summary
           .getViewDetailsBtn()
-          .getAttribute('disabled')).toBeTruthy();
+          .getAttribute('disabled')
+          .then(function (isDisabled) {
+            expect(isDisabled).toBeNull();
+          });
       });
 
-    it('should `Update Payment Profile` button be disabled.',
+    it('should `Update Payment Profile` button be enabled.',
       function () {
-        expect(Portal.accounts.billingStatements.summary
+        Portal.accounts.billingStatements.summary
           .getUpdatePaymentProfileBtn()
-          .getAttribute('disabled')).toBeTruthy();
+          .getAttribute('disabled')
+          .then(function (isDisabled) {
+            expect(isDisabled).toBeNull();
+          });
       });
 
     it('should `Change Billing Plan` display billing plans page.',
