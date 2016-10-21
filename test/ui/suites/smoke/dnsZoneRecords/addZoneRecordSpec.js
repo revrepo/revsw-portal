@@ -90,9 +90,11 @@ describe('Smoke', function () {
             Portal.zoneRecords.addPage.clickAddNewRecord();
             Portal.zoneRecords.listPage.searcher
               .setSearchCriteria(dnsRecord.name);
-            expect(Portal.zoneRecords.listPage
-              .searchAndGetFirstRow(dnsRecord.name)
-              .getRecord()).toEqual(dnsRecord.name + '.' + dnsZone.domain);
+            var zoneRecord = Portal.zoneRecords.listPage
+              .searchAndGetFirstRow(dnsRecord.name);
+            expect(zoneRecord.getRecord())
+              .toEqual(dnsRecord.name + '.' + dnsZone.domain);
+            zoneRecord.clickDelete();
           });
       });
     });
