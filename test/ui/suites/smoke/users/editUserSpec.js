@@ -75,6 +75,8 @@ describe('Smoke', function () {
           Portal.helpers.users
             .create()
             .then(function (testUser) {
+              Portal.helpers.nav.goToDashboards();
+              Portal.helpers.nav.goToUsers();
               // Edit user name and last name
               Portal.userListPage.searcher.setSearchCriteria(testUser.email);
               Portal.userListPage.table

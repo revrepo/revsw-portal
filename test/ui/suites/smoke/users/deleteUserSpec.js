@@ -54,8 +54,6 @@ describe('Smoke', function () {
 
         // Use this block to run some code before each spec is run
         beforeEach(function () {
-          Portal.helpers.nav.goToUsers();
-          Portal.userListPage.searcher.clearSearchCriteria();
         });
 
         // Use this block to run some code after each spec is run
@@ -64,6 +62,7 @@ describe('Smoke', function () {
 
         // This is an spec
         it('should display delete user button', function () {
+          Portal.helpers.nav.goToUsers();
           // Getting reference to the delete button of the first user from the
           // list
           var deleteButton = Portal.userListPage.table
@@ -83,6 +82,8 @@ describe('Smoke', function () {
           Portal.helpers.users
             .create()
             .then(function (testUser) {
+              Portal.helpers.nav.goToDashboards();
+              Portal.helpers.nav.goToUsers();
               // Another helper method to search/filter the list by the provided
               // filter criteria (in this case an email) and then licks on the
               // delete button of the first user displayed after the filter is
@@ -113,6 +114,8 @@ describe('Smoke', function () {
             Portal.helpers.users
               .create()
               .then(function (testUser) {
+                Portal.helpers.nav.goToDashboards();
+                Portal.helpers.nav.goToUsers();
                 // Apply Chris' email as filter criteria in the search component
                 Portal.userListPage.searcher.setSearchCriteria(testUser.email);
 
