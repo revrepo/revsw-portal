@@ -18,17 +18,14 @@
 
 var config = require('config');
 var Portal = require('./../../../page_objects/portal');
-var DataProvider = require('./../../../common/providers/data');
 
 describe('Negative', function () {
   describe('Edit user', function () {
 
-    var user = config.get('portal.users.admin');
-    var testUser = DataProvider.generateUser();
-
     var users = [
       config.get('portal.users.admin')
     ];
+    var testUser;
 
     users.forEach(function (user) {
 
@@ -39,11 +36,10 @@ describe('Negative', function () {
             .signIn(user)
             .then(function () {
               Portal.helpers.users
-                .create({
-                  role: Constants.user.roles.USER
-                })
+                .create()
                 .then(function (newUser) {
                   testUser = newUser;
+                  done();
                 })
                 .catch(done);
             })
