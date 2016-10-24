@@ -6,9 +6,7 @@ module.exports = {
   directConnect: false,
   seleniumAddress: config.get('protractor.seleniumAddress'),
   capabilities: {
-    browserName: 'firefox',
-    shardTestFiles: true,
-    maxInstances: 3
+    browserName: 'firefox'
   },
   getPageTimeout: 120000,
   allScriptsTimeout: 360000,
