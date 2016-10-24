@@ -6,13 +6,15 @@ module.exports = {
   directConnect: false,
   seleniumAddress: config.get('protractor.seleniumAddress'),
   capabilities: {
-    browserName: 'firefox'
+    browserName: 'firefox',
+    shardTestFiles: true,
+    maxInstances: 3
   },
   getPageTimeout: 120000,
-  allScriptsTimeout: 300000,
+  allScriptsTimeout: 360000,
   framework: 'jasmine2',
   jasmineNodeOpts: {
-    defaultTimeoutInterval: 360000,
+    defaultTimeoutInterval: 420000,
     showColors: true,
     print: function() {} // Disable default reporter
   },
