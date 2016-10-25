@@ -33,20 +33,17 @@ describe('Functional', function () {
 
         beforeAll(function () {
           Portal.signIn(user);
+          Portal.helpers.nav.goToUsers();
         });
 
         afterAll(function () {
           Portal.signOut();
         });
 
-        afterEach(function () {
-          Portal.helpers.nav.goToDashboards();
-        });
-
         it('should display N items maximum in the page (25 items by default)',
           function () {
             var expectedUsersPerPage = 25;
-            Portal.helpers.nav.goToUsers();
+            Portal.userListPage.refresh();
             var tableRows = Portal.userListPage.table.getRows();
             expect(tableRows.count()).not.toBeGreaterThan(expectedUsersPerPage);
           });
@@ -55,7 +52,7 @@ describe('Functional', function () {
           Portal.helpers.users
             .create()
             .then(function (andrew) {
-              Portal.helpers.nav.goToUsers();
+              Portal.userListPage.refresh();
               var user = Portal.userListPage.searchAndGetFirstRow(andrew.email);
               expect(user.getFirstName()).toEqual(andrew.firstName);
               expect(user.getLastName()).toEqual(andrew.lastName);
@@ -76,7 +73,7 @@ describe('Functional', function () {
                     role: Constants.user.roles.ADMIN
                   })
                   .then(function (frank) {
-                    Portal.helpers.nav.goToUsers();
+                    Portal.userListPage.refresh();
                     var firstUser = Portal.userListPage.searchAndGetFirstRow(scott.email);
                     expect(firstUser.getFirstName()).toEqual(scott.firstName);
                     expect(firstUser.getLastName()).toEqual(scott.lastName);

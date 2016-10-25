@@ -41,6 +41,7 @@ describe('Boundary', function () {
                   tom = user;
                   Portal.signOut();
                   Portal.signIn(tom);
+                  Portal.helpers.nav.goToUpdatePassword();
                   done();
                 })
                 .catch(done);
@@ -53,7 +54,6 @@ describe('Boundary', function () {
         });
 
         beforeEach(function () {
-          Portal.helpers.nav.goToDashboards();
           Portal.helpers.nav.goToUpdatePassword();
         });
 

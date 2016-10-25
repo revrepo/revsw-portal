@@ -35,6 +35,7 @@ describe('Functional', function () {
 
         beforeAll(function () {
           Portal.signIn(user);
+          Portal.helpers.nav.goToUsers();
         });
 
         afterAll(function () {
@@ -46,14 +47,13 @@ describe('Functional', function () {
             .create()
             .then(function (newUser) {
               testUser = newUser;
-              Portal.helpers.nav.goToUsers();
+              Portal.userListPage.refresh();
               done();
             })
             .catch(done);
         });
 
         afterEach(function () {
-          Portal.helpers.nav.goToDashboards();
           testUser = undefined;
         });
 

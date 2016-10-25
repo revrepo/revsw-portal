@@ -34,14 +34,11 @@ describe('Functional', function () {
 
         beforeAll(function () {
           Portal.signIn(user);
+          Portal.helpers.nav.goToUsers();
         });
 
         afterAll(function () {
           Portal.signOut();
-        });
-
-        beforeEach(function () {
-          Portal.helpers.nav.goToUsers();
         });
 
         it('should display a successful message when creating ' +
@@ -62,6 +59,7 @@ describe('Functional', function () {
               role: Constants.user.roles.USER
             })
             .then(function (carl) {
+              Portal.userListPage.refresh();
               Portal.userListPage.searcher.setSearchCriteria(carl.email);
               var firstUser = Portal.userListPage.table.getFirstRow();
               expect(firstUser.getRole()).toEqual(Constants.user.roles.USER);

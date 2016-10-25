@@ -82,8 +82,7 @@ describe('Smoke', function () {
           Portal.helpers.users
             .create()
             .then(function (testUser) {
-              Portal.helpers.nav.goToDashboards();
-              Portal.helpers.nav.goToUsers();
+              Portal.userListPage.refresh();
               // Another helper method to search/filter the list by the provided
               // filter criteria (in this case an email) and then licks on the
               // delete button of the first user displayed after the filter is
@@ -114,8 +113,7 @@ describe('Smoke', function () {
             Portal.helpers.users
               .create()
               .then(function (testUser) {
-                Portal.helpers.nav.goToDashboards();
-                Portal.helpers.nav.goToUsers();
+                Portal.userListPage.refresh();
                 // Apply Chris' email as filter criteria in the search component
                 Portal.userListPage.searcher.setSearchCriteria(testUser.email);
 
