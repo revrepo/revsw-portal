@@ -21,7 +21,7 @@
 // Requiring `domain form` component page object
 var DomainForm = require('./form');
 
-var BROWSER_WAIT_TIMEOUT = 200000;
+var BROWSER_WAIT_TIMEOUT = 420000; // 7 mins
 
 // This `Edit Domain` Page Object abstracts all operations or actions that a
 // common domain could do in the Edit Domain page from the Portal app/site.

@@ -33,7 +33,6 @@ describe('Workflow', function () {
 
         beforeEach(function () {
           Portal.signIn(user);
-          Portal.helpers.nav.goToUsers();
         });
 
         afterEach(function () {
@@ -59,6 +58,7 @@ describe('Workflow', function () {
             Portal.helpers.users
               .create()
               .then(function (testUser) {
+                Portal.userListPage.refresh();
                 var userEmail = Portal.userListPage
                   .searchAndGetFirstRow(testUser.email)
                   .getEmail();

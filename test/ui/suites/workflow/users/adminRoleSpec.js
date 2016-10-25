@@ -52,7 +52,6 @@ describe('Workflow', function () {
 
         beforeEach(function () {
           Portal.signIn(adminUser);
-          Portal.helpers.nav.goToUsers();
         });
 
         afterEach(function () {
@@ -65,6 +64,7 @@ describe('Workflow', function () {
             Portal.helpers.users
               .create()
               .then(function (testUser) {
+                Portal.userListPage.refresh();
                 var user = Portal.userListPage.searchAndGetFirstRow(testUser.email);
                 expect(user.getEmail()).toEqual(testUser.email);
                 expect(user.getFirstName()).toEqual(testUser.firstName);
@@ -81,6 +81,7 @@ describe('Workflow', function () {
             Portal.helpers.users
               .create()
               .then(function (testUser) {
+                Portal.userListPage.refresh();
                 Portal.userListPage.searchAndClickEdit(testUser.email);
                 Portal.editUserPage.updateUser({firstName: 'updated'});
                 Portal.editUserPage.clickBackToList();
@@ -101,6 +102,7 @@ describe('Workflow', function () {
             Portal.helpers.users
               .create()
               .then(function (testUser) {
+                Portal.userListPage.refresh();
                 var user = Portal.userListPage
                   .searchAndGetFirstRow(testUser.email);
                 expect(user.getEmail()).toEqual(testUser.email);
@@ -126,7 +128,7 @@ describe('Workflow', function () {
             .then(function (testUser) {
               Portal.session.setCurrentUser(currentUser);
               // Check new user is visible to other admin
-              Portal.helpers.nav.goToUsers();
+              Portal.userListPage.refresh();
               Portal.userListPage.searcher.setSearchCriteria(testUser.email);
               var newTotalRows = Portal.userListPage.table.getRows().count();
               expect(newTotalRows).toEqual(1);
@@ -143,7 +145,7 @@ describe('Workflow', function () {
             .then(function (testUser) {
               Portal.session.setCurrentUser(currentUser);
               // Delete user
-              Portal.helpers.nav.goToUsers();
+              Portal.userListPage.refresh();
               Portal.userListPage.searcher.clearSearchCriteria();
               Portal.userListPage.searcher.setSearchCriteria(testUser.email);
               Portal.userListPage.table
@@ -167,7 +169,7 @@ describe('Workflow', function () {
             .then(function (testUser) {
               Portal.session.setCurrentUser(currentUser);
               // Check new user is visible to other admin
-              Portal.helpers.nav.goToUsers();
+              Portal.userListPage.refresh();
               Portal.userListPage.searchAndClickEdit(testUser.email);
               Portal.editUserPage.updateUser({firstName: 'updated'});
               Portal.editUserPage.clickBackToList();
