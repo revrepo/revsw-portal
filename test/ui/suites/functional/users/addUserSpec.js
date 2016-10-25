@@ -34,7 +34,6 @@ describe('Functional', function () {
 
         beforeAll(function () {
           Portal.signIn(user);
-          Portal.helpers.nav.goToUsers();
         });
 
         afterAll(function () {
@@ -44,6 +43,7 @@ describe('Functional', function () {
         it('should display a successful message when creating ' +
           'user', function () {
           var bret = DataProvider.generateUser();
+          Portal.helpers.nav.goToUsers();
           Portal.userListPage.clickAddNewUser();
           Portal.addUserPage.createUser(bret);
           var alert = Portal.alerts.getFirst();
@@ -75,6 +75,7 @@ describe('Functional', function () {
               role: Constants.user.roles.ADMIN
             })
             .then(function (tom) {
+              Portal.userListPage.refresh();
               Portal.userListPage.searcher.setSearchCriteria(tom.email);
               var firstUser = Portal.userListPage.table.getFirstRow();
               expect(firstUser.getRole()).toEqual(Constants.user.roles.ADMIN);

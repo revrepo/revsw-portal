@@ -41,6 +41,7 @@ describe('Workflow', function () {
 
         it('should display a user only for one reseller user',
           function () {
+            Portal.helpers.nav.goToUsers();
             var userEmail = Portal.userListPage.table
               .getFirstRow()
               .getEmail();
