@@ -20,6 +20,7 @@ var config = require('config');
 var Portal = require('./../../../page_objects/portal');
 var DataProvider = require('./../../../common/providers/data');
 var Constants = require('./../../../page_objects/constants');
+var Utils= require('./../../../common/helpers/utils');
 
 describe('Functional', function () {
   describe('Basic Edit App And Update', function () {
@@ -119,10 +120,11 @@ describe('Functional', function () {
 
             it('should basic edit and "verify" the app name',
               function () {
+                var cApp = Utils.clone(app);
                 Portal.helpers.nav.goToMobileAppsMenuItem(platform);
-                Portal.mobileApps.listPage.searchAndEdit(app.name);
-                app.name = app.name + 'UPDATED';
-                var updatedApp = DataProvider.generateUpdateMobileApp(app);
+                Portal.mobileApps.listPage.searchAndEdit(cApp.name);
+                cApp.name = cApp.name + 'UPDATED';
+                var updatedApp = DataProvider.generateUpdateMobileApp(cApp);
                 Portal.mobileApps.editPage.verify(updatedApp);
 
                 var alert = Portal.alerts.getFirst();
@@ -130,16 +132,17 @@ describe('Functional', function () {
                 expect(alert.getText()).toContain(expectedMsg);
 
                 Portal.helpers.nav.goToMobileAppsMenuItem(platform);
-                var count = Portal.mobileApps.listPage.searchAndCount(app.name);
+                var count = Portal.mobileApps.listPage.searchAndCount(cApp.name);
                 expect(count).toBe(1);
               });
 
             it('should basic edit and "update" the app name',
               function () {
+                var cApp = Utils.clone(app);
                 Portal.helpers.nav.goToMobileAppsMenuItem(platform);
-                Portal.mobileApps.listPage.searchAndEdit(app.name);
-                app.name = app.name + 'UPDATED';
-                var updatedApp = DataProvider.generateUpdateMobileApp(app);
+                Portal.mobileApps.listPage.searchAndEdit(cApp.name);
+                cApp.name = cApp.name + 'UPDATED';
+                var updatedApp = DataProvider.generateUpdateMobileApp(cApp);
                 Portal.mobileApps.editPage.update(updatedApp);
                 Portal.dialog.clickOk();
 
@@ -148,16 +151,17 @@ describe('Functional', function () {
                 expect(alert.getText()).toContain(expectedMsg);
 
                 Portal.helpers.nav.goToMobileAppsMenuItem(platform);
-                var count = Portal.mobileApps.listPage.searchAndCount(app.name);
+                var count = Portal.mobileApps.listPage.searchAndCount(cApp.name);
                 expect(count).toBe(1);
               });
 
             it('should basic edit and "publish" the app name',
               function () {
+                var cApp = Utils.clone(app);
                 Portal.helpers.nav.goToMobileAppsMenuItem(platform);
-                Portal.mobileApps.listPage.searchAndEdit(app.name);
-                app.name = app.name + 'UPDATED';
-                var updatedApp = DataProvider.generateUpdateMobileApp(app);
+                Portal.mobileApps.listPage.searchAndEdit(cApp.name);
+                cApp.name = cApp.name + 'UPDATED';
+                var updatedApp = DataProvider.generateUpdateMobileApp(cApp);
                 Portal.mobileApps.editPage.publish(updatedApp);
                 Portal.dialog.clickOk();
 
@@ -166,15 +170,16 @@ describe('Functional', function () {
                 expect(alert.getText()).toContain(expectedMsg);
 
                 Portal.helpers.nav.goToMobileAppsMenuItem(platform);
-                var count = Portal.mobileApps.listPage.searchAndCount(app.name);
+                var count = Portal.mobileApps.listPage.searchAndCount(cApp.name);
                 expect(count).toBe(1);
               });
 
             it('should verify staging status after "publish"',
               function () {
+                var cApp = Utils.clone(app);
                 Portal.helpers.nav.goToMobileAppsMenuItem(platform);
-                Portal.mobileApps.listPage.searchAndEdit(app.name);
-                var updatedApp = DataProvider.generateUpdateMobileApp(app);
+                Portal.mobileApps.listPage.searchAndEdit(cApp.name);
+                var updatedApp = DataProvider.generateUpdateMobileApp(cApp);
                 Portal.mobileApps.editPage.publish(updatedApp);
                 Portal.dialog.clickOk();
 
@@ -183,7 +188,7 @@ describe('Functional', function () {
                 expect(alert.getText()).toContain(expectedMsg);
 
                 Portal.helpers.nav.goToMobileAppsMenuItem(platform);
-                var count = Portal.mobileApps.listPage.searchAndCount(app.name);
+                var count = Portal.mobileApps.listPage.searchAndCount(cApp.name);
                 expect(count).toBe(1);
                 var row = Portal.mobileApps.listPage.table
                   .getFirstRow();
@@ -193,9 +198,10 @@ describe('Functional', function () {
 
             it('should verify global status after "update"',
               function () {
+                var cApp = Utils.clone(app);
                 Portal.helpers.nav.goToMobileAppsMenuItem(platform);
-                Portal.mobileApps.listPage.searchAndEdit(app.name);
-                var updatedApp = DataProvider.generateUpdateMobileApp(app);
+                Portal.mobileApps.listPage.searchAndEdit(cApp.name);
+                var updatedApp = DataProvider.generateUpdateMobileApp(cApp);
                 Portal.mobileApps.editPage.update(updatedApp);
                 Portal.dialog.clickOk();
 
@@ -204,7 +210,7 @@ describe('Functional', function () {
                 expect(alert.getText()).toContain(expectedMsg);
 
                 Portal.helpers.nav.goToMobileAppsMenuItem(platform);
-                var count = Portal.mobileApps.listPage.searchAndCount(app.name);
+                var count = Portal.mobileApps.listPage.searchAndCount(cApp.name);
                 expect(count).toBe(1);
                 var row = Portal.mobileApps.listPage.table
                   .getFirstRow();

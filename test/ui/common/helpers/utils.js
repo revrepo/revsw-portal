@@ -45,6 +45,15 @@ var Utils = {
       baseUrl += basePath;
     }
     return baseUrl + '/';
+  },
+
+  /**
+   * Clones a given JSON object.
+   * \
+   * @param {Object} obj, object to clone
+   */
+  clone: function(obj) {
+    return JSON.parse(JSON.stringify(obj));
   }
 };
 
