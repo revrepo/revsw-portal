@@ -1,8 +1,8 @@
 {
-  "name": "portal-ui-tests",
+  "name": "revsw-portal-test",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "page_objects/portal.js",
   "scripts": {
     "lint": "find suites/ page_objects/ common/ -name '*js' -print -exec jshint '{}' \\;",
     "test": "NODE_ENV=qa node node_modules/.bin/protractor config/regression.js",
