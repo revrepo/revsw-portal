@@ -18,6 +18,8 @@
 
 // # Dialog Page Object
 
+var BROWSER_WAIT_TIMEOUT = 30000;
+
 // Portal app has the ability to display confirm dialogs while doing several
 // operations in the whole app. This Dialog PAge Objects abstracts those
 // operations or actions that an common user could do in this kind of object.
@@ -73,6 +75,20 @@ var Dialog = {
   },
 
   /**
+   * Waits for Modal Element to be visible
+   *
+   * @returns {Object} Promise
+   */
+  waitForModalEl: function () {
+    var me = this;
+    return browser.wait(
+      protractor.ExpectedConditions.visibilityOf(
+        element(by.className(me.locators.modal.className))
+      ), BROWSER_WAIT_TIMEOUT
+    );
+  },
+
+  /**
    * ### Dialog.getModalEl()
    *
    * Return the reference to the Modal Dialog (Selenium WebDriver Element)
@@ -80,6 +96,7 @@ var Dialog = {
    * @returns {Object} Selenium WebDriver Element
    */
   getModalEl: function () {
+    this.waitForModalEl();
     return element(by.className(this.locators.modal.className));
   },
 
