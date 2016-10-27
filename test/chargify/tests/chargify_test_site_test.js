@@ -4,6 +4,8 @@
 var assert = require('assert');
 var config = require('config');
 
+var uiTimeoutMs = config.get('ui_timeout_ms');
+
 describe('Chargify  site ', function() {
   var loginPage, dashboardPage, subscriptionsCanceledPage, subscriptionSummaryPage, subscriptionDeletePage;
   var rows = [];
@@ -40,7 +42,7 @@ describe('Chargify  site ', function() {
       .setValue('@password', password)
       .assert.visible('@submit')
       .click('@submit')
-      .waitForElementVisible('body', 3000)
+      .waitForElementVisible('body', uiTimeoutMs)
       .assert.title('(Chargify) Rev Software, Inc. | Your Sites');
   });
 
@@ -53,7 +55,7 @@ describe('Chargify  site ', function() {
   it('must show subscription list', function(client) {
     subscriptionsCanceledPage = client.page.chargify.subscriptionsCanceledPage();
     subscriptionsCanceledPage.navigate()
-      .waitForElementVisible('body', 3000)
+      .waitForElementVisible('body', uiTimeoutMs)
       .assert.title('(Chargify) Rev Software, Inc. ~ RevAPM Test | Subscriptions');
   });
 
@@ -70,20 +72,20 @@ describe('Chargify  site ', function() {
         while (i < filteredAmount) {
           rows[i] = ++i;
           subscriptionsCanceledPage.navigate()
-            .waitForElementVisible('body', 3000)
+            .waitForElementVisible('body', uiTimeoutMs)
             .clickFirstCustomer()
-            .waitForElementVisible('body', 3000);
+            .waitForElementVisible('body', uiTimeoutMs);
 
           subscriptionSummaryPage
             .clickActionsDropdown()
             .section.actionsDropdown.clickDelete()
-            .waitForElementVisible('body', 3000);
+            .waitForElementVisible('body', uiTimeoutMs);
  
            subscriptionDeletePage
-            .waitForElementVisible('body', 3000)
+            .waitForElementVisible('body', uiTimeoutMs)
             .assert.title('(Chargify) Rev Software, Inc. ~ RevAPM Test | Delete Subscription')
             .clickToSubmit()
-            .waitForElementVisible('body', 3000);
+            .waitForElementVisible('body', uiTimeoutMs);
 
         }
       });
