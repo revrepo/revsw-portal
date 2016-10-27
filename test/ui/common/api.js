@@ -16,4 +16,4 @@
  * from Rev Software, Inc.
  */
 
-module.exports = require('revsw-api/test/rest_api/common/api');
+module.exports = require('revsw-api-test/common/api');
