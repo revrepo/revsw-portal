@@ -58,7 +58,7 @@
     $scope.selected = null;
 
     /**
-     * Current kay object
+     * Current key object
      *
      * @type {null}
      */
@@ -129,7 +129,7 @@
      * @returns {Object}
      */
     function clearUpdateData(data) {
-      var fields = ['key_name', 'account_id', 'domains', 'allowed_ops', 'read_only_status', 'active'];
+      var fields = ['key_name', 'account_id', 'domains', 'allowed_ops', 'read_only_status', 'active','managed_account_ids'];
       return _.pick(_.clone(data), fields);
     }
 
