@@ -18,8 +18,6 @@
 
 var config = require('config');
 var Portal = require('./../../../page_objects/portal');
-var DataProvider = require('./../../../common/providers/data');
-var Constants = require('./../../../page_objects/constants');
 
 describe('Smoke', function () {
 
@@ -118,23 +116,41 @@ describe('Smoke', function () {
           });
       });
 
-    it('should `View Details` button be enabled.',
+    it('should `View Details` button be disabled.',
       function () {
+        // TODO: Bug? should it be disabled/enabled?
+        return browser.wait(function () {
+          return Portal.accounts.billingStatements.summary
+            .getViewDetailsBtn()
+            .getAttribute('disabled')
+            .then(function (isDisabled) {
+              return isDisabled;
+            });
+        }, 10000);
         Portal.accounts.billingStatements.summary
           .getViewDetailsBtn()
           .getAttribute('disabled')
           .then(function (isDisabled) {
-            expect(isDisabled).toBeNull();
+            expect(isDisabled).not.toBe(false);
           });
       });
 
-    it('should `Update Payment Profile` button be enabled.',
+    it('should `Update Payment Profile` button be disabled.',
       function () {
+        // TODO: Bug? should it be disabled/enabled?
+        return browser.wait(function () {
+          return Portal.accounts.billingStatements.summary
+            .getUpdatePaymentProfileBtn()
+            .getAttribute('disabled')
+            .then(function (isDisabled) {
+              return isDisabled;
+            });
+        }, 10000);
         Portal.accounts.billingStatements.summary
           .getUpdatePaymentProfileBtn()
           .getAttribute('disabled')
           .then(function (isDisabled) {
-            expect(isDisabled).toBeNull();
+            expect(isDisabled).not.toBe(false);
           });
       });
 

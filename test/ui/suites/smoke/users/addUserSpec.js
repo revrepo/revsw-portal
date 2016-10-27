@@ -56,7 +56,6 @@ describe('Smoke', function () {
         it('should allow to cancel an user edition', function () {
           Portal.addUserPage.form.setEmail('something');
           Portal.addUserPage.clickCancel();
-//          Portal.addUserPage.clickLeavePage();
           expect(Portal.userListPage.isDisplayed()).toBeTruthy();
         });
 
