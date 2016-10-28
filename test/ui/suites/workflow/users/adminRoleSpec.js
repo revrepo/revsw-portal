@@ -183,6 +183,7 @@ describe('Workflow', function () {
         });
 
         it('should not see reseller user', function () {
+          Portal.helpers.nav.goToUsers();
           Portal.userListPage.searcher.setSearchCriteria(user.email);
           var totalRows = Portal.userListPage.table.getRows().count();
           expect(totalRows).toEqual(0);
