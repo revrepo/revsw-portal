@@ -79,9 +79,6 @@ describe('Functional', function () {
                 var alert = Portal.alerts.getFirst();
                 var expectedMsg = 'The configuration has been successfully verified';
                 expect(alert.getText()).toEqual(expectedMsg);
-                Portal.helpers.nav.goToMobileAppsMenuItem(platform);
-                var count = Portal.mobileApps.listPage.searchAndCount(app.name);
-                expect(count).toBe(1);
               });
 
             it('should basic edit and "update" an existing app',
@@ -95,10 +92,6 @@ describe('Functional', function () {
                 var alert = Portal.alerts.getFirst();
                 var expectedMsg = Constants.alertMessages.app.MSG_SUCCESS_UPDATE;
                 expect(alert.getText()).toContain(expectedMsg);
-
-                Portal.helpers.nav.goToMobileAppsMenuItem(platform);
-                var count = Portal.mobileApps.listPage.searchAndCount(app.name);
-                expect(count).toBe(1);
               });
 
             it('should basic edit and "publish" an existing app',
@@ -112,10 +105,6 @@ describe('Functional', function () {
                 var alert = Portal.alerts.getFirst();
                 var expectedMsg = Constants.alertMessages.app.MSG_SUCCESS_UPDATE;
                 expect(alert.getText()).toContain(expectedMsg);
-
-                Portal.helpers.nav.goToMobileAppsMenuItem(platform);
-                var count = Portal.mobileApps.listPage.searchAndCount(app.name);
-                expect(count).toBe(1);
               });
 
             it('should basic edit and "verify" the app name',
@@ -130,10 +119,6 @@ describe('Functional', function () {
                 var alert = Portal.alerts.getFirst();
                 var expectedMsg = Constants.alertMessages.app.MSG_SUCCESS_VERIFY;
                 expect(alert.getText()).toContain(expectedMsg);
-
-                Portal.helpers.nav.goToMobileAppsMenuItem(platform);
-                var count = Portal.mobileApps.listPage.searchAndCount(cApp.name);
-                expect(count).toBe(1);
               });
 
             it('should basic edit and "update" the app name',
@@ -149,10 +134,6 @@ describe('Functional', function () {
                 var alert = Portal.alerts.getFirst();
                 var expectedMsg = Constants.alertMessages.app.MSG_SUCCESS_UPDATE;
                 expect(alert.getText()).toContain(expectedMsg);
-
-                Portal.helpers.nav.goToMobileAppsMenuItem(platform);
-                var count = Portal.mobileApps.listPage.searchAndCount(cApp.name);
-                expect(count).toBe(1);
               });
 
             it('should basic edit and "publish" the app name',
@@ -168,10 +149,6 @@ describe('Functional', function () {
                 var alert = Portal.alerts.getFirst();
                 var expectedMsg = Constants.alertMessages.app.MSG_SUCCESS_UPDATE;
                 expect(alert.getText()).toContain(expectedMsg);
-
-                Portal.helpers.nav.goToMobileAppsMenuItem(platform);
-                var count = Portal.mobileApps.listPage.searchAndCount(cApp.name);
-                expect(count).toBe(1);
               });
 
             it('should verify staging status after "publish"',
