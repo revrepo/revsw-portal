@@ -115,7 +115,6 @@ var AddSSLName = {
    * Triggers a click on the `Back To List` button from the Add SSL Name page
    * from the Portal app
    *
-   
    */
   clickBackToList: function () {
     return this
@@ -188,7 +187,7 @@ var AddSSLName = {
    */
   closeSuccessDialog: function () {
     return element(by.css(this.dialog.locators.modal.buttons.ok.css))
-        .click();
+      .click();
   },
 
   /**
@@ -205,29 +204,41 @@ var AddSSLName = {
   createSSLName: function (sslName) {
     this.form.fill(sslName);
     var me = this;
-    if (sslName.verificationMethod !== 'Email'){
-      return this.clickAddSSLName().then(function () {
-        me.dialog.clickOk().then(function () {
-          me.dialog.getModalEl()
-              .element(by.css('input[value="'+ sslName.verificationString +'"]'))
-              .click().then(function () {
-            me.dialog.clickVerify().then(function () {
-              me.closeSuccessDialog();
-            });
-          });
+    if (sslName.verificationMethod !== 'Email') {
+
+      return this
+        .clickAddSSLName()
+        .then(function () {
+          return me.dialog.clickOk();
+        })
+        .then(function () {
+          return me.dialog
+            .getModalEl()
+            .element(by.css('input[value="' + sslName.verificationString + '"]'))
+            .click();
+        })
+        .then(function () {
+          return me.dialog.clickVerify();
+        })
+        .then(function () {
+          return me.closeSuccessDialog();
         });
-      });
-    }else {
-      return this.clickAddSSLName().then(function () {
-        me.dialog.getModalEl()
-            .element(by.css('input[value="'+ sslName.verificationString +'"]'))
-            .click().then(function () {
-          me.dialog.clickOk().then(function () {
-            me.closeSuccessDialog();
-          });
-        });
-      });
     }
+    // else
+    return this
+      .clickAddSSLName()
+      .then(function () {
+        return me.dialog
+          .getModalEl()
+          .element(by.css('input[value="' + sslName.verificationString + '"]'))
+          .click();
+      })
+      .then(function () {
+        return me.dialog.clickOk();
+      })
+      .then(function () {
+        return me.closeSuccessDialog();
+      });
   }
 };
 
