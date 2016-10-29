@@ -320,7 +320,6 @@ var DomainForm = {
   setCompanyName: function (companyName) {
     return this
       .getCompanyNameDDown()
-      .clear()
       .setValue(companyName);
   },
 
