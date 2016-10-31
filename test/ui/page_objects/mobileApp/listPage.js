@@ -228,7 +228,7 @@ var AppsList = {
    * @returns {Promise}
    */
   searchAndCount: function (criteria) {
-    this.searcher.setSearchCriteria(criteria)
+    this.searcher.setSearchCriteria(criteria);
     return this.table
       .getRows()
       .count();
@@ -243,7 +243,7 @@ var AppsList = {
    * @returns {Promise}
    */
   searchAndDelete: function (name) {
-    this.searcher.setSearchCriteria(name)
+    this.searcher.setSearchCriteria(name);
     this.table
       .getFirstRow()
       .clickDelete();
@@ -259,7 +259,7 @@ var AppsList = {
    * @returns {Promise}
    */
   searchAndEdit: function (name) {
-    this.searcher.setSearchCriteria(name)
+    this.searcher.setSearchCriteria(name);
     return this.table
       .getFirstRow()
       .clickEdit();
@@ -275,7 +275,7 @@ var AppsList = {
    * @returns {Promise}
    */
   searchAndAdvancedEdit: function (name) {
-    this.searcher.setSearchCriteria(name)
+    this.searcher.setSearchCriteria(name);
     this.table
       .getFirstRow()
       .clickConfigure();

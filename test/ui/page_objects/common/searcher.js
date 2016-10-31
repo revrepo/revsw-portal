@@ -90,7 +90,7 @@ var Searcher = {
             .getSearchCriteriaTxtIn()
             .sendKeys(criteria);
         }
-      })
+      });
   },
 
   /**

@@ -38,11 +38,13 @@ var MobileAppsHelper = {
       })
       .then(function (newApp) {
         return {
+          /* jshint ignore:start */
           name: newApp.app_name,
           platform: newApp.app_platform,
           // title: '>>> APP TITLE <<<',
           comment: newApp.comment,
           companyName: newApp.account_id
+          /* jshint ignore:end */
         };
       });
   }
