@@ -38,10 +38,6 @@ describe('Workflow', function () {
       Portal.helpers.nav.goToDomains();
     });
 
-    afterEach(function () {
-
-    });
-
     it('should allow to create a domain right after creating other domain',
       function () {
         var firstDomain = DataProvider.generateDomain('first-domain');
@@ -69,7 +65,6 @@ describe('Workflow', function () {
           .getAttribute('uib-tooltip')
           .then(function (tooltip) {
             expect(tooltip).toEqual('Staging Status: InProgress');
-            Portal.deleteDomain(myDomain);
           });
       });
 
@@ -86,7 +81,6 @@ describe('Workflow', function () {
           .getAttribute('uib-tooltip')
           .then(function (tooltip) {
             expect(tooltip).toEqual('Global Status: InProgress');
-            Portal.deleteDomain(myDomain);
           });
       });
 
@@ -105,7 +99,6 @@ describe('Workflow', function () {
           .getAttribute('uib-tooltip')
           .then(function (tooltip) {
             expect(tooltip).toEqual('Staging Status: Published');
-            Portal.deleteDomain(myDomain);
           });
       });
 
@@ -124,7 +117,6 @@ describe('Workflow', function () {
           .getAttribute('uib-tooltip')
           .then(function (tooltip) {
             expect(tooltip).toEqual('Global Status: Published');
-            Portal.deleteDomain(myDomain);
           });
       });
 
@@ -150,7 +142,6 @@ describe('Workflow', function () {
           .getAttribute('uib-tooltip')
           .then(function (tooltip) {
             expect(tooltip).toEqual('Global Status: Modified');
-            Portal.deleteDomain(myDomain);
           });
       });
   });

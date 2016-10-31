@@ -22,91 +22,89 @@ var DataProvider = require('./../../../common/providers/data');
 var Constants = require('./../../../page_objects/constants');
 
 describe('Functional', function () {
-  xdescribe('Sorting List App', function () {
+  describe('Sorting List App', function () {
 
     var adminUser = config.get('portal.users.admin');
     var platforms = Portal.constants.mobileApps.platforms;
-    var iosApps = DataProvider.generateMobileAppData(platforms.ios, 3);
-    var androidApps = DataProvider.generateMobileAppData(platforms.android, 3);
 
     beforeAll(function () {
       Portal.signIn(adminUser);
-      Portal.createMobileApps(platforms.ios, iosApps);
-      Portal.createMobileApps(platforms.android, androidApps);
     });
 
     afterAll(function () {
-      Portal.deleteMobileApps(iosApps);
-      Portal.deleteMobileApps(androidApps);
       Portal.signOut();
     });
 
-    beforeEach(function () {
-    });
-
-    afterEach(function () {
-    });
-
-    it('should sorted list apps ascendent and descendant - iOS', function () {
+    it('should sort list in ascendant and descendant directions - iOS', function () {
       Portal.helpers.nav.goToMobileAppsMenuItem(platforms.ios);
-      Portal.mobileApps.listPage.table.sortByName();
-      var firstApp = Portal.mobileApps.listPage.table.getFirstRow();
-      var appName1 = firstApp.name;
+      Portal.mobileApps.listPage.sortByName();
+      var appName1 = Portal.mobileApps.listPage.table
+        .getFirstRow()
+        .getName();
 
-      Portal.mobileApps.listPage.table.sortByName();
-      firstApp = Portal.mobileApps.listPage.table.getFirstRow();
-      var appName2 = firstApp.name;
+      Portal.mobileApps.listPage.sortByName();
+      var appName2 = Portal.mobileApps.listPage.table
+        .getFirstRow()
+        .getName();
       expect(appName1).toBeLessThan(appName2);
       expect(appName2).toBeGreaterThan(appName1);
 
-      Portal.mobileApps.listPage.table.sortByName();
-      firstApp = Portal.mobileApps.listPage.table.getFirstRow();
-      var appName3 = firstApp.name;
+      Portal.mobileApps.listPage.sortByName();
+      var appName3 = Portal.mobileApps.listPage.table
+        .getFirstRow()
+        .getName();
       expect(appName1).toEqual(appName3);
     });
 
-    it('should sorted list apps ascendent & descendant - Android', function () {
+    it('should sort list in ascendant and descendant directions - Android', function () {
       Portal.helpers.nav.goToMobileAppsMenuItem(platforms.android);
-      Portal.mobileApps.listPage.table.sortByName();
-      var firstApp = Portal.mobileApps.listPage.table.getFirstRow();
-      var appName1 = firstApp.name;
+      Portal.mobileApps.listPage.sortByName();
+      var appName1 = Portal.mobileApps.listPage.table
+        .getFirstRow()
+        .getName();
 
-      Portal.mobileApps.listPage.table.sortByName();
-      firstApp = Portal.mobileApps.listPage.table.getFirstRow();
-      var appName2 = firstApp.name;
+      Portal.mobileApps.listPage.sortByName();
+      var appName2 = Portal.mobileApps.listPage.table
+        .getFirstRow()
+        .getName();
       expect(appName1).toBeLessThan(appName2);
       expect(appName2).toBeGreaterThan(appName1);
 
-      Portal.mobileApps.listPage.table.sortByName();
-      firstApp = Portal.mobileApps.listPage.table.getFirstRow();
-      var appName3 = firstApp.name;
+      Portal.mobileApps.listPage.sortByName();
+      var appName3 = Portal.mobileApps.listPage.table
+        .getFirstRow()
+        .getName();
       expect(appName1).toEqual(appName3);
     });
 
-    it('should list apps sorted descendant by default - iOS',
+    it('should list be sorted in descendant direction by default - iOS',
       function () {
         Portal.helpers.nav.goToMobileAppsMenuItem(platforms.ios);
 
-        var firstApp = Portal.mobileApps.listPage.table.getFirstRow();
-        var appName1 = firstApp.name;
-        Portal.mobileApps.listPage.table.sortByName();
-        Portal.mobileApps.listPage.table.sortByName();
-        firstApp = Portal.mobileApps.listPage.table.getFirstRow();
-        var appName2 = firstApp.name;
+        var appName1 = Portal.mobileApps.listPage.table
+          .getFirstRow()
+          .getName();
+        Portal.mobileApps.listPage.sortByName();
+        Portal.mobileApps.listPage.sortByName();
+        var appName2 = Portal.mobileApps.listPage.table
+          .getFirstRow()
+          .getName();
         expect(appName1).toBeLessThan(appName2);
-    });
+      });
 
-    it('should list apps sorted descendant by default - Android',
+    it('should list be sorted in descendant direction by default - Android',
       function () {
         Portal.helpers.nav.goToMobileAppsMenuItem(platforms.android);
 
-        var firstApp = Portal.mobileApps.listPage.table.getFirstRow();
-        var appName1 = firstApp.name;
-        Portal.mobileApps.listPage.table.sortByName();
-        Portal.mobileApps.listPage.table.sortByName();
-        firstApp = Portal.mobileApps.listPage.table.getFirstRow();
-        var appName2 = firstApp.name;
+        var appName1 = Portal.mobileApps.listPage.table
+          .getFirstRow()
+          .getName();
+        Portal.mobileApps.listPage.sortByName();
+        Portal.mobileApps.listPage.sortByName();
+        var appName2 = Portal.mobileApps.listPage.table
+          .getFirstRow()
+          .getName();
         expect(appName1).toBeLessThan(appName2);
-    });
+      });
   });
 });

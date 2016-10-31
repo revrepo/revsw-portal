@@ -56,22 +56,17 @@ describe('Smoke', function () {
         it('should allow to cancel an user edition', function () {
           Portal.addUserPage.form.setEmail('something');
           Portal.addUserPage.clickCancel();
-//          Portal.addUserPage.clickLeavePage();
           expect(Portal.userListPage.isDisplayed()).toBeTruthy();
         });
 
         it('should create an user successfully when filling all required data',
           function () {
             // Create user
-            var bruce = DataProvider.generateUser('Bruce', null, user);
-            // console.log('bruce = ' + JSON.stringify(bruce));
+            var bruce = DataProvider.generateUser();
             Portal.addUserPage.createUser(bruce);
             // Check App alert notifications
-            expect(Portal.alerts.getAll().count()).toEqual(1);
             expect(Portal.alerts.getFirst().getText())
               .toContain(Constants.alertMessages.users.MSG_SUCCESS_ADD);
-            // Delete created user
-            Portal.deleteUser(bruce);
           });
       });
     });

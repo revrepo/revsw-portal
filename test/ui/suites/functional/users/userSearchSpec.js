@@ -36,9 +36,6 @@ describe('Functional', function () {
       Portal.helpers.nav.goToUsers();
     });
 
-    afterEach(function () {
-    });
-
     it('should filter items according to email search criteria', function () {
       var emailToSearch = Portal.userListPage.table
         .getFirstRow()

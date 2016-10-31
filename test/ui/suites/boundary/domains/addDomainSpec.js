@@ -28,24 +28,21 @@ describe('Boundary', function () {
     var lengthString100 = new Array(100).join('x');
 
     beforeAll(function () {
-    });
-
-    afterAll(function () {
-    });
-
-    beforeEach(function () {
       Portal.signIn(adminUser);
     });
 
-    afterEach(function () {
+    afterAll(function () {
       Portal.signOut();
+    });
+
+    beforeEach(function () {
+      Portal.helpers.nav.goToDomains();
     });
 
     it('should not create domain with long value in domain name field (100)',
       function () {
         var myDomain = DataProvider.generateDomain('mydomain');
         myDomain.name = lengthString100;
-        Portal.helpers.nav.goToDomains();
         Portal.domains.listPage.clickAddNewDomain();
         Portal.domains.addPage.fillForm(myDomain);
         var addBtn = Portal.domains.addPage.getCreateDomainBtn();
@@ -56,7 +53,6 @@ describe('Boundary', function () {
       function () {
         var myDomain = DataProvider.generateDomain('mydomain2');
         myDomain.originServer = lengthString100;
-        Portal.helpers.nav.goToDomains();
         Portal.domains.listPage.clickAddNewDomain();
         Portal.domains.addPage.fillForm(myDomain);
         var addBtn = Portal.domains.addPage.getCreateDomainBtn();
@@ -67,7 +63,6 @@ describe('Boundary', function () {
       function () {
         var myDomain = DataProvider.generateDomain('mydomain');
         myDomain.originHostHeader = lengthString100;
-        Portal.helpers.nav.goToDomains();
         Portal.domains.listPage.clickAddNewDomain();
         Portal.domains.addPage.fillForm(myDomain);
         var addBtn = Portal.domains.addPage.getCreateDomainBtn();

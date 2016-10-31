@@ -18,6 +18,8 @@
 
 // # Login Page Object
 
+var BROWSER_WAIT_TIMEOUT = 16000;
+
 // This `Login` Page Object abstracts all operations or actions that a
 // common user could do in the User List page from the Portal app/site.
 var Login = {
@@ -289,8 +291,9 @@ var Login = {
   waitToDisplay: function () {
     var me = this;
     return browser.wait(function () {
-      return browser.isElementPresent(by.model(me.locators.textInputs.email.model));
-    }, 16000);
+      return browser.isElementPresent(
+        by.model(me.locators.textInputs.email.model));
+    }, BROWSER_WAIT_TIMEOUT);
   },
 
   /**

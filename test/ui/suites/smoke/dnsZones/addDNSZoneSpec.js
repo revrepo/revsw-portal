@@ -39,17 +39,19 @@ describe('Smoke', function () {
           Portal.signIn(user);
         });
 
-        afterAll(function () {
-          Portal.signOut();
+        afterAll(function (done) {
+          Portal.helpers.dnsZones
+            .cleanup()
+            .then(function () {
+              Portal.signOut();
+              done();
+            })
+            .catch(done);
         });
 
         beforeEach(function () {
           Portal.helpers.nav.goToDNSZones();
           Portal.dnsZones.listPage.clickAddNewDNSZone();
-        });
-
-        afterEach(function () {
-
         });
 
         it('should display "Add DNS Zone" form', function () {
@@ -66,16 +68,12 @@ describe('Smoke', function () {
         it('should create a DNS Zone when filling all required data',
           function () {
             var dnsZoneToSearch = DataProvider.generateDNSZoneData();
-
             Portal.dnsZones.addPage.createDNSZone(dnsZoneToSearch);
             Portal.dnsZones.listPage.searcher
               .setSearchCriteria(dnsZoneToSearch.domain);
-
             expect(Portal.dnsZones.listPage
               .searchAndGetFirstRow(dnsZoneToSearch.domain)
               .getZoneName()).toEqual(dnsZoneToSearch.domain);
-
-            Portal.deleteDNSZone(dnsZoneToSearch);
           });
       });
     });

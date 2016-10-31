@@ -36,13 +36,6 @@ describe('Negative', function () {
       Portal.signOut();
     });
 
-    beforeEach(function () {
-    });
-
-    afterEach(function () {
-    });
-
-
     it('should have both Create buttons disabled on fresh new domain form',
       function () {
         Portal.helpers.nav.goToDomains();
@@ -139,5 +132,17 @@ describe('Negative', function () {
         var addBtn = Portal.domains.addPage.getCreateDomainBtn();
         expect(addBtn.isEnabled()).toBeFalsy();
       });
+
+    it('should not create a domain with duplicate values', function () {
+      var dupeDomain = DataProvider.generateDomain('dupedomain');
+      Portal.helpers.nav.goToDomains();
+      Portal.domains.listPage.clickAddNewDomain();
+      Portal.domains.addPage.createDomain(dupeDomain);
+      Portal.domains.addPage.createDomain(dupeDomain);
+
+      var alert = Portal.alerts.getFirst();
+      var expectedMsg = Constants.alertMessages.domains.MSG_FAIL_ADD_DUPLICATE_NAME;
+      expect(alert.getText()).toContain(expectedMsg);
+    });
   });
 });

@@ -24,12 +24,6 @@ describe('Functional', function () {
 
     var adminUser = config.get('portal.users.revAdmin');
 
-    beforeAll(function () {
-    });
-
-    afterAll(function () {
-    });
-
     beforeEach(function () {
       Portal.signIn(adminUser);
       Portal.helpers.nav.goToUsers();

@@ -21,6 +21,8 @@
 // Requiring `domain form` component page object
 var DomainForm = require('./form');
 
+var BROWSER_WAIT_TIMEOUT = 420000; // 7 mins
+
 // This `Edit Domain` Page Object abstracts all operations or actions that a
 // common domain could do in the Edit Domain page from the Portal app/site.
 var EditDomain = {
@@ -77,7 +79,7 @@ var EditDomain = {
    * Returns the reference to the `Title` label element (Selenium WebDriver
    * Element) from the Edit Domain page from the Portal app.
    *
-   * @returns {Selenium WebDriver Element}
+   * @returns {Object} Selenium WebDriver Element
    */
   getTitleLbl: function () {
     return element(by.className(this.locators.labels.title.className));
@@ -89,7 +91,7 @@ var EditDomain = {
    * Returns the reference to the `Back To List` button (Selenium WebDriver
    * Element) from the Edit Domain page from the Portal app.
    *
-   * @returns {Selenium WebDriver Element}
+   * @returns {Object} Selenium WebDriver Element
    */
   getBackToListBtn: function () {
     return element(
@@ -102,7 +104,7 @@ var EditDomain = {
    * Returns the reference to the `Advanced mode` button (Selenium WebDriver
    * Element) from the Edit Advanced Domain page from the Portal app.
    *
-   * @returns {Selenium WebDriver Element}
+   * @returns {Object} Selenium WebDriver Element
    */
   getAdvancedModeBtn: function () {
     return element(
@@ -115,7 +117,7 @@ var EditDomain = {
    * Returns the reference to the `Basic mode` button (Selenium WebDriver
    * Element) from the Edit Basic Domain page from the Portal app.
    *
-   * @returns {Selenium WebDriver Element}
+   * @returns {Object} Selenium WebDriver Element
    */
   getBasicModeBtn: function () {
     return element(
@@ -128,7 +130,7 @@ var EditDomain = {
    * Returns the reference to the `Validate Domain` button (Selenium WebDriver
    * Element) from the Edit Domain page from the Portal app.
    *
-   * @returns {Selenium WebDriver Element}
+   * @returns {Object} Selenium WebDriver Element
    */
   getValidateDomainBtn: function () {
     return element(by.css(this.locators.buttons.validateDomain.css));
@@ -140,7 +142,7 @@ var EditDomain = {
    * Returns the reference to the `Update Domain` button (Selenium WebDriver
    * Element) from the Edit Domain page from the Portal app.
    *
-   * @returns {Selenium WebDriver Element}
+   * @returns {Object} Selenium WebDriver Element
    */
   getUpdateDomainBtn: function () {
     return element(by.css(this.locators.buttons.updateDomain.css));
@@ -152,7 +154,7 @@ var EditDomain = {
    * Returns the reference to the `Publish Domain` button (Selenium WebDriver
    * Element) from the Edit Domain page from the Portal app.
    *
-   * @returns {Selenium WebDriver Element}
+   * @returns {Object} Selenium WebDriver Element
    */
   getPublishDomainBtn: function () {
     return element(by.css(this.locators.buttons.publishDomain.css));
@@ -164,7 +166,7 @@ var EditDomain = {
    * Returns the reference to the `Cancel` button (Selenium WebDriver Element)
    * from the Edit Domain page from the Portal app.
    *
-   * @returns {Selenium WebDriver Element}
+   * @returns {Object} Selenium WebDriver Element
    */
   getCancelBtn: function () {
     return element(by.partialLinkText(this.locators.buttons.cancel.linkText));
@@ -319,11 +321,14 @@ var EditDomain = {
    *
    * Waits until domain is not published
    *
-   * @returns {Selenium WebDriver Element}
+   * @returns {Object} Selenium WebDriver Element
    */
   waitForPublish: function () {
-    return browser.wait(protractor.ExpectedConditions.presenceOf(
-        element(by.css(this.locators.icons.published.css))), 160000); //TODO: read from config
+    return browser.wait(
+      protractor.ExpectedConditions.presenceOf(
+        element(by.css(this.locators.icons.published.css))
+      ), BROWSER_WAIT_TIMEOUT
+    );
   }
 };
 

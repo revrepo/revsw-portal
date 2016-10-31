@@ -34,15 +34,11 @@ describe('Boundary', function () {
     });
 
     afterAll(function () {
-        Portal.deleteDomain(myDomain);
-        Portal.signOut();
+      Portal.signOut();
     });
 
     beforeEach(function () {
       Portal.helpers.nav.goToDomains();
-    });
-
-    afterEach(function () {
     });
 
     it('should have action buttons disabled when trying to update domain with ' +
@@ -56,7 +52,7 @@ describe('Boundary', function () {
         expect(updateBtn.isEnabled()).toBeFalsy();
         var publishBtn = Portal.domains.editPage.getPublishDomainBtn();
         expect(publishBtn.isEnabled()).toBeFalsy();
-    });
+      });
 
     it('should have action buttons disabled when trying to update domain with ' +
       'with value in origin host header field (100)',
@@ -69,10 +65,10 @@ describe('Boundary', function () {
         expect(updateBtn.isEnabled()).toBeFalsy();
         var publishBtn = Portal.domains.editPage.getPublishDomainBtn();
         expect(publishBtn.isEnabled()).toBeFalsy();
-    });
+      });
 
     it('should not alow to validate/update/publish a domain with value in origin ' +
-        'server location field',
+      'server location field',
       function () {
         var location = '--- Select Location ---';
         Portal.domains.listPage.searchAndClickEdit(myDomain.name);
@@ -83,6 +79,6 @@ describe('Boundary', function () {
         expect(updateBtn.isEnabled()).toBeFalsy();
         var publishBtn = Portal.domains.editPage.getPublishDomainBtn();
         expect(publishBtn.isEnabled()).toBeFalsy();
-    });
+      });
   });
 });
