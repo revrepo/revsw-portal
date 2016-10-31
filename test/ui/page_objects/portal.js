@@ -17,7 +17,7 @@
  */
 
 // # Portal App object
-var Promise = require("bluebird");
+var Promise = require('bluebird');
 
 var BROWSER_WAIT_TIMEOUT = 30000; // 30 secs
 

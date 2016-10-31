@@ -233,6 +233,7 @@ describe('Functional', function () {
               })
               .then(function (testUser) {
                 Portal.userListPage.refresh();
+                var valueToAdd = 'updated';
                 // Edit user
                 Portal.userListPage.searchAndClickEdit(testUser.email);
                 Portal.editUserPage.form.setLastName(valueToAdd);

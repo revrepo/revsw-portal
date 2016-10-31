@@ -119,7 +119,7 @@ describe('Smoke', function () {
     xit('should `View Details` button be disabled.',
       function () {
         // TODO: Bug? should it be disabled/enabled?
-        return browser.wait(function () {
+        browser.wait(function () {
           return Portal.accounts.billingStatements.summary
             .getViewDetailsBtn()
             .getAttribute('disabled')
@@ -127,7 +127,7 @@ describe('Smoke', function () {
               return isDisabled;
             });
         }, 10000);
-        Portal.accounts.billingStatements.summary
+        return Portal.accounts.billingStatements.summary
           .getViewDetailsBtn()
           .getAttribute('disabled')
           .then(function (isDisabled) {
@@ -138,7 +138,7 @@ describe('Smoke', function () {
     xit('should `Update Payment Profile` button be disabled.',
       function () {
         // TODO: Bug? should it be disabled/enabled?
-        return browser.wait(function () {
+        browser.wait(function () {
           return Portal.accounts.billingStatements.summary
             .getUpdatePaymentProfileBtn()
             .getAttribute('disabled')
@@ -146,7 +146,7 @@ describe('Smoke', function () {
               return isDisabled;
             });
         }, 10000);
-        Portal.accounts.billingStatements.summary
+        return Portal.accounts.billingStatements.summary
           .getUpdatePaymentProfileBtn()
           .getAttribute('disabled')
           .then(function (isDisabled) {
