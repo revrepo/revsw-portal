@@ -3,7 +3,7 @@ var smoke = require('./base');
 smoke.capabilities = {
   browserName: 'firefox',
   shardTestFiles: true,
-  maxInstances: 3
+  maxInstances: 2
 };
 
 smoke.specs = [
