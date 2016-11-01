@@ -1,6 +1,6 @@
 var smoke = require('./base');
 
-somoke.capabilities = {
+smoke.capabilities = {
   browserName: 'firefox',
   shardTestFiles: true,
   maxInstances: 3
