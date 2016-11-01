@@ -6,7 +6,7 @@
     .controller('LoginController', LoginController);
 
   /*@ngInject*/
-  function LoginController($scope, User, $state, AlertService, DashboardSrv, $config, $uibModal, $location) {
+  function LoginController($scope, User, $state, AlertService, DashboardSrv, $config, $uibModal, $location, $auth) {
 
     document.querySelector('body').style.paddingTop = '0';
 
@@ -32,7 +32,14 @@
     $scope.randomImageStyle = {
       'background-image': 'url(' + $scope.randomImage + ')'
     };
+    $scope.authenticate = function(provider) {
+     User.authenticate(provider)
+       .then(function(data) {
+        // NOTE: call event - user signin
+        $scope.$emit('user.signin');
+      });
 
+    };
     $scope.login = function(email, pass) {
       AlertService.clear();
       $scope._loading = true;
