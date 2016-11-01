@@ -23,6 +23,10 @@ gulp.task('smokeTest', shell.task([
   'node node_modules/.bin/protractor config/smoke.js'
 ]));
 
+gulp.task('smokeTestDomains', shell.task([
+  'node node_modules/.bin/protractor config/smokeDomains.js'
+]));
+
 gulp.task('regressionTest', shell.task([
   'node node_modules/.bin/protractor config/regression.js'
 ]));
