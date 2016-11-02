@@ -39,7 +39,8 @@
     'revapm.Portal.DNSZones',
     'revapm.Portal.AzureResources',
     'revapm.Portal.AzureSubscriptions',
-    'youtube-embed'
+    'youtube-embed',
+    'satellizer'
   ]);
 
 })();
