@@ -33,11 +33,11 @@
       'background-image': 'url(' + $scope.randomImage + ')'
     };
     $scope.authenticate = function(provider) {
-     User.authenticate(provider)
-       .then(function(data) {
-        // NOTE: call event - user signin
-        $scope.$emit('user.signin');
-      });
+      User.authenticate(provider)
+        .then(function(data) {
+          // NOTE: call event - user signin
+          $scope.$emit('user.signin', data.data);
+        });
 
     };
     $scope.login = function(email, pass) {
@@ -47,7 +47,7 @@
         User.login(email, pass)
           .then(function(data) {
             // NOTE: call event - user signin
-            $scope.$emit('user.signin');
+            $scope.$emit('user.signin', data.data);
           })
           .catch(function(err) {
             $scope._loading = false;
@@ -95,7 +95,7 @@
 
       modalInstance.result.then(function(data) {
         if (data.status === 200) {
-          $scope.$emit('user.signin');
+          $scope.$emit('user.signin', data.data);
         }
       });
     };

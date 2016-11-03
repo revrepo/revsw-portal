@@ -16,10 +16,11 @@
        AlertService.clear();
        $ctrl.loading = true;
        User.authAzureSSO(token, resourceId)
-         .then(function(userData) {
+         .then(function(results) {
+           var userInfo = results.data;
            // NOTE: no message
            $ctrl.authState = 'success';
-           $scope.$emit('user.signin');
+           $scope.$emit('user.signin', userInfo);
          })
          .catch(function(err) {
            AlertService.danger(err);

@@ -18,6 +18,7 @@
     $injector,
     $state,
     $config,
+    $localStorage,
     $stateParams,
     DNSZones) {
     $scope.countries = Countries.query();
@@ -76,6 +77,12 @@
             }, company)
             .then(function(data) {
               $scope.alertService.success('Successfully updated company profile');
+            })
+            .then(function() {
+              if ($scope.isAskedContactInfo) {
+                $scope.alertService.clear();
+                $scope.$emit('user.fill_company_profile');
+              }
             })
             .catch($scope.alertService.danger)
             .finally(function() {
@@ -188,6 +195,28 @@
         (model.subscription_state === 'trialing' ||
           (model.subscription_state !== 'trialing' && model.valid_payment_method_configured === true)));
     };
+    $scope.isAskedContactInfo = $localStorage.isNeedContactInfo;
+    /**
+     * @name  welcomeInfo
+     * @description
+     *
+     *   Welcome information for user
+     *
+     * @return
+     */
+    $scope.welcomeInfo = function() {
+      var data = {};
+      var isNeedContactInfo = $localStorage.isNeedContactInfo;
+      if (isNeedContactInfo === true) {
+        $scope.confirm('confirmWelcomeInfoModal.html', data)
+          .then(function() {
+            $localStorage.isNeedContactInfo = false;
+            console.log('show welcome info');
+          });
+      }
+    };
+
+    $scope.welcomeInfo();
 
   }
 })();
