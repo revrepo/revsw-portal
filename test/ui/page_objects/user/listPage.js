@@ -22,6 +22,7 @@
 var UserTable = require('./table/table');
 var Pager = require('./../common/pager');
 var Searcher = require('./../common/searcher');
+var NavHelper = require('./../../common/helpers/nav');
 
 // This `User List` Page Object abstracts all operations or actions that a
 // common user could do in the User List page from the Portal app/site.
@@ -109,6 +110,15 @@ var UserList = {
   },
 
   // ## Helper Methods
+
+  /**
+   * Simulates a refresh of users list page by going to other view and returning
+   * to users list.
+   */
+  refresh: function () {
+    NavHelper.goToDashboards();
+    NavHelper.goToUsers();
+  },
 
   /**
    * ### UserList.isDisplayed()

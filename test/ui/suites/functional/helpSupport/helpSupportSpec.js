@@ -25,7 +25,6 @@ describe('Functional', function () {
   describe('Help and Support', function () {
 
     var adminUser = config.get('portal.users.admin');
-    var myDomain = Constants.domain;
 
     beforeAll(function () {
       Portal.signIn(adminUser);

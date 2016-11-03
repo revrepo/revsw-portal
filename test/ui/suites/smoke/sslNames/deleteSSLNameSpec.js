@@ -31,62 +31,64 @@ var Constants = require('./../../../page_objects/constants');
 // Defining smoke suite
 describe('Smoke', function () {
 
-    // Defining set of users for which all below tests will be run
-    var users = [
-        config.get('portal.users.revAdmin'),
-        config.get('portal.users.reseller'),
-        config.get('portal.users.admin'),
-        config.get('portal.users.user')
-    ];
+  // Defining set of users for which all below tests will be run
+  var users = [
+    config.get('portal.users.revAdmin'),
+    config.get('portal.users.reseller'),
+    config.get('portal.users.admin'),
+    config.get('portal.users.user')
+  ];
 
-    users.forEach(function (user) {
+  users.forEach(function (user) {
 
-        describe('With user: ' + user.role, function () {
+    describe('With user: ' + user.role, function () {
 
-            // Defining suite for deleting a SSL Cert
-            describe('Delete SSL Name', function () {
+      // Defining suite for deleting a SSL Cert
+      describe('Delete SSL Name', function () {
 
-                beforeAll(function () {
-                    Portal.signIn(user);
-                    Portal.helpers.nav.goToSSLNames();
-                });
-
-                afterAll(function () {
-                    Portal.signOut();
-                });
-
-                beforeEach(function () {
-                });
-
-                afterEach(function () {
-                });
-
-                it('should display delete SSL Name button', function () {
-                    var deleteButton = Portal.sslNames.listPage.table
-                        .getFirstRow()
-                        .getDeleteBtn();
-                    expect(deleteButton.isDisplayed()).toBeTruthy();
-                });
-
-                it('should allow to delete SSL Name', function () {
-                    var sslName = DataProvider.generateSSLNameData();
-                    Portal.createSSLName(sslName);
-                    Portal.deleteSSLName(sslName);
-                    Portal.sslNames.listPage.searcher.setSearchCriteria(sslName.domainName);
-                    var tableRows = Portal.sslNames.listPage.table.getRows();
-                    expect(tableRows.count()).toEqual(0);
-                });
-
-                it('should display a confirmation message when deleting a SSL Name',
-                    function () {
-                        var sslName = DataProvider.generateSSLNameData();
-                        Portal.createSSLName(sslName);
-                        Portal.deleteSSLName(sslName);
-                        expect(Portal.alerts.getAll().count()).toEqual(1);
-                        expect(Portal.alerts.getFirst().getText())
-                            .toContain('Successfully deleted the SSL name');
-                    });
-            });
+        beforeAll(function () {
+          Portal.signIn(user);
+          Portal.helpers.nav.goToSSLNames();
         });
+
+        afterAll(function () {
+          Portal.signOut();
+        });
+
+        beforeEach(function () {
+        });
+
+        afterEach(function () {
+        });
+
+        it('should display delete SSL Name button', function () {
+          var deleteButton = Portal.sslNames.listPage.table
+            .getFirstRow()
+            .getDeleteBtn();
+          expect(deleteButton.isDisplayed()).toBeTruthy();
+        });
+
+        it('should allow to delete SSL Name', function () {
+          var sslName = DataProvider.generateSSLNameData();
+          Portal.createSSLName(sslName);
+          Portal.sslNames.listPage.searchAndClickDelete(sslName.domainName);
+          Portal.dialog.clickOk();
+          Portal.sslNames.listPage.searcher.setSearchCriteria(sslName.domainName);
+          var tableRows = Portal.sslNames.listPage.table.getRows();
+          expect(tableRows.count()).toEqual(0);
+        });
+
+        it('should display a confirmation message when deleting a SSL Name',
+          function () {
+            var sslName = DataProvider.generateSSLNameData();
+            Portal.createSSLName(sslName);
+            Portal.sslNames.listPage.searchAndClickDelete(sslName.domainName);
+            Portal.dialog.clickOk();
+            expect(Portal.alerts.getAll().count()).toEqual(1);
+            expect(Portal.alerts.getFirst().getText())
+              .toContain('Successfully deleted the SSL name');
+          });
+      });
     });
+  });
 });

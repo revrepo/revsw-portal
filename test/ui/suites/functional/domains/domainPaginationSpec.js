@@ -37,9 +37,6 @@ describe('Functional', function () {
       Portal.domains.listPage.pager.clickPageIndex(1);
     });
 
-    afterEach(function () {
-    });
-
     it('should be displayed when the amount of items exceeds the maximum ' +
       'amount configured to displayed in one page',
       function () {

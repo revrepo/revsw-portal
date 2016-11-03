@@ -65,30 +65,6 @@ describe('Smoke', function () {
           .getText()).toEqual('Successfully updated company profile');
       });
 
-    it('should init `update profile payment` process.',
-      function () {
-        var expectedUrlRExp = /www\.billingportal\.com/;
-        Portal.accounts.profilePage
-          .clickUpdatePaymentProfile()
-          .then(function () {
-            browser.getAllWindowHandles().then(function (handles) {
-              var portalAppWindowHandle = handles[0];
-              var billingPortalWindowHandle = handles[1];
-              browser
-                .switchTo()
-                .window(billingPortalWindowHandle)
-                .then(function () {
-                  expect(browser.driver.getCurrentUrl())
-                    .toMatch(expectedUrlRExp);
-                  browser.driver.close();
-                  return browser.driver
-                    .switchTo()
-                    .window(portalAppWindowHandle);
-                });
-            });
-          });
-      });
-
     it('should be able to cancel `delete company profile` process.',
       function () {
         Portal.accounts.profilePage
@@ -96,17 +72,6 @@ describe('Smoke', function () {
           .then(function () {
             expect(Portal.dialog.getCancelBtn().isDisplayed()).toBeTruthy();
             Portal.dialog.clickCancel();
-          });
-      });
-
-    // TODO: BUG: new company profile cannot be deleted
-    xit('should be able to confirm `delete company profile` process.',
-      function () {
-        Portal.accounts.profilePage
-          .clickDeleteCompanyProfile()
-          .then(function () {
-            Portal.dialog.clickProceed();
-            expect(Portal.goodByePage.getTitleLbl().isDisplayed()).toBeTruthy();
           });
       });
   });

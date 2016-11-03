@@ -18,6 +18,8 @@
 
 // # Summary Page Object
 
+var BROWSER_WAIT_TIMEOUT = 30000;
+
 // Requiring other Page Objects that compound the Sumamry Page one
 //var StatementTable = require('./table/table');
 //var Pager = require('./../../../common/pager');
@@ -151,16 +153,33 @@ var Summary = {
       .getContainer()
       .element(by.css(this.locators.buttons.changeBillingPlan.css));
   },
-  getViewDetailsBtn: function () {
-    return this
-      .getContainer()
-      .element(by.css(this.locators.buttons.viewDetails.css));
 
-  },
-  getUpdatePaymentProfileBtn: function () {
-    return this
+  getViewDetailsBtn: function () {
+    var me = this;
+    browser.wait(
+      protractor.ExpectedConditions.visibilityOf(
+        me
+          .getContainer()
+          .element(by.css(me.locators.buttons.viewDetails.css))
+      ), BROWSER_WAIT_TIMEOUT
+    );
+    return me
       .getContainer()
-      .element(by.css(this.locators.buttons.updatePaymentProfile.css));
+      .element(by.css(me.locators.buttons.viewDetails.css));
+  },
+
+  getUpdatePaymentProfileBtn: function () {
+    var me = this;
+    browser.wait(
+      protractor.ExpectedConditions.visibilityOf(
+        me
+          .getContainer()
+          .element(by.css(me.locators.buttons.updatePaymentProfile.css))
+      ), BROWSER_WAIT_TIMEOUT
+    );
+    return me
+      .getContainer()
+      .element(by.css(me.locators.buttons.updatePaymentProfile.css));
   },
 
   // ## Methods to interact with the Summary Page components

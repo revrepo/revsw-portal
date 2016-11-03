@@ -18,6 +18,8 @@
 
 // # Reset Password Page Object
 
+var BROWSER_WAIT_TIMEOUT = 16000;
+
 // This `Reset Password` Page Object abstracts all operations or actions that a
 // common user could do in the Reset Password page from the Portal app/site.
 var ResetPassword = {
@@ -168,11 +170,12 @@ var ResetPassword = {
   waitToDisplay: function () {
     var me = this;
     return browser.wait(function () {
-      return browser.isElementPresent(by.id(me.locators.textInputs.repeatNewPass.id));
-    }, 16000);
+      return browser
+        .isElementPresent(by.id(me.locators.textInputs.repeatNewPass.id));
+    }, BROWSER_WAIT_TIMEOUT);
   },
 
-  resetPassword: function(newPassword) {
+  resetPassword: function (newPassword) {
     this.waitToDisplay();
     this.setNewPassword(newPassword);
     this.setRepeatPassword(newPassword);

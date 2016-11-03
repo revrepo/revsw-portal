@@ -18,6 +18,8 @@
 
 // # Update Password Page Object
 
+var NavHelper = require('./../../common/helpers/nav');
+
 // This `Update Password` Page Object abstracts all operations or actions
 // that a common user could do in that page from the Portal app/site.
 var UpdatePassword = {
@@ -180,6 +182,16 @@ var UpdatePassword = {
   },
 
   // ## Helper Methods
+
+
+  /**
+   * Simulates a refresh of update password by going to other view and returning
+   * to the same view.
+   */
+  refresh: function () {
+    NavHelper.goToDashboards();
+    NavHelper.goToUpdatePassword();
+  },
 
   /**
    * ### UpdatePassword.isDisplayed()

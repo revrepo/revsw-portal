@@ -23,7 +23,7 @@ var MenuAreas = require('./../../page_objects/common/sidebar/locators/menuAreas'
 
 // # Navigator Helper
 // Abstracts common functionality for the navigation through Portal UI.
-module.exports = {
+var NavHelper = {
 
   /**
    * Goes to specified menu entry from Sidebar
@@ -32,6 +32,14 @@ module.exports = {
    */
   goTo: function (menuName) {
     return menuName;
+  },
+
+  /**
+   * Goes to Dashboards Area
+   * @returns {*}
+   */
+  goToDashboards: function () {
+    return SideBar.select(MenuAreas.DASHBOARDS);
   },
 
   /**
@@ -333,3 +341,5 @@ module.exports = {
     return SideBar.select(MenuItems.SUPPORT.NETWORK_STATUS);
   }
 };
+
+module.exports = NavHelper;

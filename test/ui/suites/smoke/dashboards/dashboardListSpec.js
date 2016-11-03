@@ -44,12 +44,11 @@ describe('Smoke', function () {
         });
 
         afterAll(function () {
-          Portal.deleteDashboard([dashboard]);
           Portal.signOut();
         });
 
         beforeEach(function () {
-          Portal.getDashboardsPage();
+          Portal.helpers.nav.goToDashboards();
           Portal.header.goTo(dashboard.title);
         });
 

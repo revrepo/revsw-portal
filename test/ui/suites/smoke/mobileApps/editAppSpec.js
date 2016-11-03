@@ -24,6 +24,8 @@ var Portal = require('./../../../page_objects/portal');
 var DataProvider = require('./../../../common/providers/data');
 var Constants = require('./../../../page_objects/constants');
 
+var BROWSER_WAIT_TIMEOUT = 20000;
+
 describe('Smoke', function () {
 
   // Defining set of users for which all below tests will be run
@@ -66,20 +68,25 @@ describe('Smoke', function () {
             it('should display edit app button',
               function () {
                 var editButton = Portal.mobileApps.listPage.table
-                  .getEditApp();
+                  .getFirstRow()
+                  .getEditBtn();
                 expect(editButton.isPresent()).toBeTruthy();
               });
 
             it('should display `Edit app` form',
               function () {
-                Portal.mobileApps.listPage.table.clickEditApp();
+                Portal.mobileApps.listPage.table
+                  .getFirstRow()
+                  .clickEdit();
                 expect(Portal.mobileApps.editPage.isDisplayed())
                   .toBeTruthy();
               });
 
             it('should allow to cancel an app edition',
               function () {
-                Portal.mobileApps.listPage.table.clickEditApp();
+                Portal.mobileApps.listPage.table
+                  .getFirstRow()
+                  .clickEdit();
                 Portal.mobileApps.editPage.form.setAppName('something');
                 Portal.mobileApps.editPage.form.clickCancel();
                 expect(Portal.mobileApps.listPage.isDisplayed()).toBeTruthy();
@@ -88,7 +95,9 @@ describe('Smoke', function () {
             // TODO: Paste (ctrl + v is not working)
             xit('should save SDKKey to clipboard',
               function () {
-                Portal.mobileApps.listPage.table.clickEditApp();
+                Portal.mobileApps.listPage.table
+                  .getFirstRow()
+                  .clickEdit();
                 Portal.mobileApps.editPage.form.clickSDKKeyClipboardButton();
                 Portal.mobileApps.editPage.form.clickShowSDKKeyButton();
                 Portal.mobileApps.editPage.form
@@ -126,12 +135,16 @@ describe('Smoke', function () {
                 expect(Portal.alerts.getFirst().getText())
                   .toContain(Constants.alertMessages.app.MSG_SUCCESS_ADD);
                 Portal.mobileApps.addPage.clickBackToList();
-                Portal.mobileApps.listPage.searchAndEdit(app);
+                Portal.mobileApps.listPage.searchAndEdit(app.name);
                 app = DataProvider.generateUpdateMobileApp(app);
                 Portal.mobileApps.editPage.update(app);
                 browser.ignoreSynchronization = true;
                 Portal.dialog.clickOk();
-                browser.wait(protractor.ExpectedConditions.visibilityOf(element(by.xpath('.//*[contains(text(),"' + Constants.alertMessages.app.MSG_SUCCESS_UPDATE + '")]'))), 20000);
+                browser.wait(
+                  protractor.ExpectedConditions.visibilityOf(
+                    element(by.xpath('.//*[contains(text(),"' + Constants.alertMessages.app.MSG_SUCCESS_UPDATE + '")]'))
+                  ), BROWSER_WAIT_TIMEOUT
+                );
                 expect(Portal.alerts.getAll().count()).toEqual(1);
                 expect(Portal.alerts.getFirst().getText())
                   .toEqual(Constants.alertMessages.app.MSG_SUCCESS_UPDATE);

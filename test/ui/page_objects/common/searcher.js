@@ -79,9 +79,18 @@ var Searcher = {
    * @returns {Object} Promise
    */
   setSearchCriteria: function (criteria) {
-    return this
+    var me = this;
+    return me
       .getSearchCriteriaTxtIn()
-      .sendKeys(criteria);
+      .getAttribute('value')
+      .then(function (value) {
+        if (value !== criteria) {
+          me.clearSearchCriteria();
+          return me
+            .getSearchCriteriaTxtIn()
+            .sendKeys(criteria);
+        }
+      });
   },
 
   /**
@@ -111,13 +120,7 @@ var Searcher = {
     var me = this;
     return this
       .getSearchCriteriaTxtIn()
-      .getAttribute('value').then(function (text) {
-        var len = text.length;
-        var backspaces = new Array(len + 1).join(protractor.Key.BACK_SPACE);
-        return me
-          .getSearchCriteriaTxtIn()
-          .sendKeys(backspaces);
-      });
+      .clear();
   },
 
   /**
