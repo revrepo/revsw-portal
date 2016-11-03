@@ -44,11 +44,11 @@
 
     $rootScope.$on('user.signin', function(e, data) {
       // NOTE: event - user signin. Can add additional rules
-      // Get User Account Profile
-      if (data.role === 'admin') {
+      // Get User Account Profile only if Azure SSO signin
+      if (!!data.isAzureSSO && data.isAzureSSO === true) {
         var accountId = data.companyId[0];
         Companies.get({ id: accountId }, function(data) {
-          // TODO: change
+          // NOTE: validation fill account profile
           if (!!data.address1 && data.address1 !== '') {
             defaultLoginWorkFlow();
           } else {
