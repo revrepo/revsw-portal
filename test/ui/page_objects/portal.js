@@ -587,10 +587,7 @@ var Portal = {
     return browser.getCurrentUrl().then(function (initialUrl) {
       me.helpers.nav.goToSSLNames();
       Portal.sslNames.listPage.clickAddNewSSLName();
-      Portal.sslNames.addPage.form.fill(sslName);
-      Portal.sslNames.addPage.clickAddSSLName();
-      me.dialog.clickOk();
-      me.dialog.clickCancel();
+      Portal.sslNames.addPage.createSSLName(sslName);
       browser.getCurrentUrl().then(function (currentUrl) {
         if (initialUrl !== currentUrl) {
           browser.get(initialUrl);
