@@ -59,33 +59,17 @@ var Dialog = {
   // ## Methods
 
   /**
-   * ### Dialog.isDisplayed()
-   *
-   * Checks whether the Dialog is displayed in the UI or not
-   *
-   * @returns {Promise}
-   */
-  isDisplayed: function () {
-    return this
-        .getModalEl()
-        .isPresent() &&
-      this
-        .getOkBtn()
-        .isPresent();
-  },
-
-  /**
    * Waits for Modal Element to be visible
    *
    * @returns {Object} Promise
    */
   waitForModalEl: function () {
     var me = this;
-    return browser.wait(
-      protractor.ExpectedConditions.visibilityOf(
-        element(by.className(me.locators.modal.className))
-      ), BROWSER_WAIT_TIMEOUT
-    );
+    return browser.wait(function () {
+      // console.log('Waiting for modal ...');
+      return browser
+        .isElementPresent(by.className(me.locators.modal.className));
+    }, BROWSER_WAIT_TIMEOUT);
   },
 
   /**
@@ -96,8 +80,31 @@ var Dialog = {
    * @returns {Object} Selenium WebDriver Element
    */
   getModalEl: function () {
-    this.waitForModalEl();
     return element(by.className(this.locators.modal.className));
+  },
+
+  /**
+   * ### Dialog.isDisplayed()
+   *
+   * Checks whether the Dialog is displayed in the UI or not
+   *
+   * @returns {Promise}
+   */
+  isDisplayed: function () {
+    return browser
+      .isElementPresent(by.className(this.locators.modal.className));
+  },
+
+  /**
+   * ### Dialog.getModal()
+   *
+   * Gets the modal. In case modal is not visible waits for it until timeouts.
+   *
+   * @returns {Object} Selenium WebDriver Element
+   */
+  getModal: function () {
+    this.waitForModalEl();
+    return this.getModalEl();
   },
 
   /**
@@ -110,7 +117,7 @@ var Dialog = {
    */
   getOkBtn: function () {
     return this
-      .getModalEl()
+      .getModal()
       .element(by.css(this.locators.modal.buttons.ok.css));
   },
 
@@ -124,8 +131,8 @@ var Dialog = {
    */
   getVerifyTxtRecord: function () {
     return this
-        .getModalEl()
-        .element(by.css(this.locators.modal.buttons.verifyTxtRecord.css));
+      .getModal()
+      .element(by.css(this.locators.modal.buttons.verifyTxtRecord.css));
   },
 
   /**
@@ -138,7 +145,7 @@ var Dialog = {
    */
   getProceedBtn: function () {
     return this
-      .getModalEl()
+      .getModal()
       .element(by.css(this.locators.modal.buttons.proceed.css));
   },
 
@@ -152,7 +159,7 @@ var Dialog = {
    */
   getCancelBtn: function () {
     return this
-      .getModalEl()
+      .getModal()
       .element(by.css(this.locators.modal.buttons.cancel.css));
   },
 
@@ -166,7 +173,7 @@ var Dialog = {
    */
   getSubmitBtn: function () {
     return this
-      .getModalEl()
+      .getModal()
       .element(by.css(this.locators.modal.buttons.submit.css));
   },
 
@@ -180,7 +187,7 @@ var Dialog = {
    */
   getEmailTxtIn: function () {
     return this
-      .getModalEl()
+      .getModal()
       .element(by.id(this.locators.modal.textInputs.email.id));
   },
 
@@ -218,8 +225,8 @@ var Dialog = {
    */
   clickVerify: function () {
     return this
-        .getVerifyTxtRecord()
-        .click();
+      .getVerifyTxtRecord()
+      .click();
   },
 
   /**
@@ -233,6 +240,21 @@ var Dialog = {
   clickProceed: function () {
     return this
       .getProceedBtn()
+      .click();
+  },
+
+  /**
+   * ### Dialog.clickRadioButton()
+   *
+   * Clicks on a radio button by its value/label
+   *
+   * @param value, radio button's label
+   * @returns {Object} Promise
+   */
+  clickRadioButton: function (value) {
+    return this
+      .getModal()
+      .element(by.css('input[value="' + value + '"]'))
       .click();
   },
 

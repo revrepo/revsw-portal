@@ -258,7 +258,27 @@ var Portal = {
    * @returns {Promise}
    */
   signOut: function () {
+    this.closeUnexpectedModal();
     return this.header.clickLogout();
+  },
+
+  /**
+   * ### Portal.closeUnexpectedModal()
+   *
+   * Closes unexpected modal windows that prevents to trigger click events to
+   * logout user from the Portal App.
+   *
+   * @returns {Object} Promise if modal found, undefined otherwise
+   */
+  closeUnexpectedModal: function () {
+    var me = this;
+    return this.dialog
+      .isDisplayed()
+      .then(function (isPresent) {
+        if (isPresent) {
+          return me.dialog.getModalEl().sendKeys(protractor.Key.ESCAPE);
+        }
+      });
   },
 
   // ## URL navigation Helper methods
