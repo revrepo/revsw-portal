@@ -148,7 +148,9 @@
      * @param {object} options to override maps config
      */
     Drawer.prototype.drawWorldMap = function ( data, opts ) {
-
+      if (!data) {
+        return;
+      }
       this.currentData = data;
       this.currentOpts = opts;
       var conf = getConfig_();
