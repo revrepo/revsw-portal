@@ -18,7 +18,8 @@
 
 // # Add SSL Name Page Object
 
-var Dialog = require('.././common/dialog');
+var Dialog = require('./../common/dialog');
+var Alerts = require('./../common/alerts');
 
 // Requiring `ssl-name form` component page object
 var SSLNameForm = require('./form');
@@ -212,6 +213,11 @@ var AddSSLName = {
           return me.dialog.clickOk();
         })
         .then(function () {
+          browser.wait(function () {
+            return Alerts
+              .getAll()
+              .count() === 0;
+          }, 30000);
           return me.dialog
             .getModalEl()
             .element(by.css('input[value="' + sslName.verificationString + '"]'))
@@ -221,11 +227,11 @@ var AddSSLName = {
           return me.dialog.clickVerify();
         })
         .then(function () {
-          return me.closeSuccessDialog();
+          return me.dialog.clickOk();
         });
     }
     // else
-    return this
+    return me
       .clickAddSSLName()
       .then(function () {
         return me.dialog
@@ -237,7 +243,7 @@ var AddSSLName = {
         return me.dialog.clickOk();
       })
       .then(function () {
-        return me.closeSuccessDialog();
+        return me.dialog.clickClose();
       });
   }
 };

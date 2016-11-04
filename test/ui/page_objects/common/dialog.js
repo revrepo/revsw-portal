@@ -198,6 +198,18 @@ var Dialog = {
   },
 
   /**
+   * ### Dialog.clickClose()
+   *
+   * Triggers a click action on the `Close` button from the Modal Dialog
+   * component
+   *
+   * @returns {*|Object}
+   */
+  clickClose: function () {
+    return this.clickOk();
+  },
+
+  /**
    * ### Dialog.clickVerifyTxtRecord()
    *
    * Triggers a click action on the `OK` button fro the Modal Dialog component

@@ -19,6 +19,10 @@ gulp.task('lint', function () {
     .pipe(jshint.reporter('jshint-stylish'));
 });
 
+gulp.task('debugTest', shell.task([
+  'node node_modules/.bin/protractor config/debug.js'
+]));
+
 gulp.task('smokeTest', shell.task([
   'node node_modules/.bin/protractor config/smoke.js'
 ]));
