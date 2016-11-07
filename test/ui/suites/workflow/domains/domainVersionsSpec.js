@@ -48,7 +48,7 @@ describe('Workflow', function () {
           Portal.helpers.nav.goToDomains();
         });
 
-        it('should the Version "0" message appears for modified domain',
+        fit('should the Version "0" message appears for modified domain',
           function () {
             var message = 'Version "0" is the currently modified but ' +
               'not yet published domain configuration';
@@ -57,7 +57,8 @@ describe('Workflow', function () {
             Portal.domains.addPage.createDomain(testDomain);
             Portal.domains.addPage.clickBackToList();
             Portal.domains.listPage.searchAndClickEdit(testDomain.name);
-            Portal.domains.editPage.form.setOriginHostHeader('.upd');
+            Portal.domains.editPage.form
+              .setOriginHostHeader(testDomain.originHostHeader + '.upd');
             Portal.domains.editPage.clickUpdateDomain();
             Portal.dialog.clickOk();
             Portal.domains.addPage.clickBackToList();
@@ -74,7 +75,8 @@ describe('Workflow', function () {
             Portal.domains.addPage.createDomain(testDomain);
             Portal.domains.addPage.clickBackToList();
             Portal.domains.listPage.searchAndClickEdit(testDomain.name);
-            Portal.domains.editPage.form.setOriginHostHeader('.upd');
+            Portal.domains.editPage.form
+              .setOriginHostHeader(testDomain.originHostHeader + '.upd');
             Portal.domains.editPage.clickUpdateDomain();
             Portal.dialog.clickOk();
             Portal.domains.addPage.clickBackToList();
@@ -97,7 +99,8 @@ describe('Workflow', function () {
           Portal.domains.addPage.createDomain(testDomain);
           Portal.domains.addPage.clickBackToList();
           Portal.domains.listPage.searchAndClickEdit(testDomain.name);
-          Portal.domains.editPage.form.setOriginHostHeader('.upd');
+          Portal.domains.editPage.form
+            .setOriginHostHeader(testDomain.originHostHeader + '.upd');
           Portal.domains.editPage.clickPublishDomain();
           Portal.dialog.clickOk();
           Portal.domains.editPage.waitForPublish();
@@ -121,7 +124,8 @@ describe('Workflow', function () {
           Portal.domains.addPage.createDomain(testDomain);
           Portal.domains.addPage.clickBackToList();
           Portal.domains.listPage.searchAndClickEdit(testDomain.name);
-          Portal.domains.editPage.form.setOriginHostHeader('.upd');
+          Portal.domains.editPage.form
+            .setOriginHostHeader(testDomain.originHostHeader + '.upd');
           Portal.domains.editPage.clickUpdateDomain();
           Portal.dialog.clickOk();
           Portal.domains.addPage.clickBackToList();
@@ -161,7 +165,8 @@ describe('Workflow', function () {
           Portal.domains.addPage.createDomain(testDomain);
           Portal.domains.addPage.clickBackToList();
           Portal.domains.listPage.searchAndClickEdit(testDomain.name);
-          Portal.domains.editPage.form.setOriginHostHeader('.upd');
+          Portal.domains.editPage.form
+            .setOriginHostHeader(testDomain.originHostHeader + '.upd');
           Portal.domains.editPage.clickPublishDomain();
           Portal.dialog.clickOk();
           Portal.domains.editPage.waitForPublish();
