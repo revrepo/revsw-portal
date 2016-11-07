@@ -171,7 +171,7 @@ var DomainList = {
    * @param domain, which will be observed
    * @returns {Object} Promise
    */
-  waitForGlobalStatusToChange: function () {
+  waitForGlobalStatusToChange: function (domain) {
     var me = this;
     var previousTooltip;
     return browser.wait(function () {
