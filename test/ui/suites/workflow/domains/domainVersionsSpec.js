@@ -48,7 +48,7 @@ describe('Workflow', function () {
           Portal.helpers.nav.goToDomains();
         });
 
-        fit('should the Version "0" message appears for modified domain',
+        it('should the Version "0" message appears for modified domain',
           function () {
             var message = 'Version "0" is the currently modified but ' +
               'not yet published domain configuration';
