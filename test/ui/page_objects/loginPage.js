@@ -207,6 +207,7 @@ var Login = {
   setEmail: function (email) {
     return this
       .getEmailTxtIn()
+      .clear()
       .sendKeys(email);
   },
 
@@ -237,6 +238,7 @@ var Login = {
   setPassword: function (password) {
     return this
       .getPasswordTxtIn()
+      .clear()
       .sendKeys(password);
   },
 
