@@ -291,7 +291,7 @@ var Portal = {
    * @returns {Promise}
    */
   load: function () {
-    return browser.get(me.baseUrl);
+    return browser.get(this.baseUrl);
   },
 
   // ## User Helper methods
