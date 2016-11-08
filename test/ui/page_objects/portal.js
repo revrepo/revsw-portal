@@ -291,12 +291,7 @@ var Portal = {
    * @returns {Promise}
    */
   load: function () {
-    var me = this;
-    return browser.driver.getCurrentUrl().then(function (currentUrl) {
-      if (currentUrl !== me.baseUrl + '#/login') {
-        return browser.get(me.baseUrl);
-      }
-    });
+    return browser.get(me.baseUrl);
   },
 
   // ## User Helper methods
