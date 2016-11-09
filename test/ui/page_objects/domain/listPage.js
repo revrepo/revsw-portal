@@ -156,7 +156,7 @@ var DomainList = {
         .getAttribute('uib-tooltip')
         .then(function (newTooltip) {
           if (previousTooltip === undefined) {
-            previousTooltip = newTooltip
+            previousTooltip = newTooltip;
           }
           browser.sleep(3000); // 3 seconds
           return previousTooltip !== newTooltip;
@@ -182,7 +182,7 @@ var DomainList = {
         .getAttribute('uib-tooltip')
         .then(function (newTooltip) {
           if (previousTooltip === undefined) {
-            previousTooltip = newTooltip
+            previousTooltip = newTooltip;
           }
           browser.sleep(3000); // 3 seconds
           return previousTooltip !== newTooltip;
