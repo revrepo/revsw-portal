@@ -48,12 +48,17 @@ var Alerts = {
    * Waits/Delays the execution until Alert element is displayed in the UI.
    * If it is not displayed until the given timeout, it throws an error which
    * makes the spec/test to fail.
+   *
+   * @param milliseconds, to wait
+   * @returns {Object} Promise
    */
-  waitToDisplay: function () {
+  waitToDisplay: function (milliseconds) {
+    var timeout = milliseconds || BROWSER_WAIT_TIMEOUT;
     var me = this;
     return browser.wait(function () {
+      // console.log('Waiting for alert ...');
       return browser.isElementPresent(by.css(me.locators.alert.css));
-    }, BROWSER_WAIT_TIMEOUT);
+    }, timeout);
   },
 
   /**

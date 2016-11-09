@@ -18,7 +18,10 @@
 
 // # Add SSL Name Page Object
 
-var Dialog = require('.././common/dialog');
+var Promise = require('bluebird');
+
+var Dialog = require('./../common/dialog');
+var Alerts = require('./../common/alerts');
 
 // Requiring `ssl-name form` component page object
 var SSLNameForm = require('./form');
@@ -204,40 +207,42 @@ var AddSSLName = {
   createSSLName: function (sslName) {
     this.form.fill(sslName);
     var me = this;
-    if (sslName.verificationMethod !== 'Email') {
-
-      return this
+    if (sslName.verificationMethod === 'Email') {
+      return me
         .clickAddSSLName()
         .then(function () {
+          me.dialog.clickRadioButton(sslName.verificationString);
           return me.dialog.clickOk();
         })
         .then(function () {
-          return me.dialog
-            .getModalEl()
-            .element(by.css('input[value="' + sslName.verificationString + '"]'))
-            .click();
-        })
-        .then(function () {
-          return me.dialog.clickVerify();
-        })
-        .then(function () {
-          return me.closeSuccessDialog();
+          return me.dialog.clickClose();
         });
     }
     // else
     return this
       .clickAddSSLName()
       .then(function () {
-        return me.dialog
-          .getModalEl()
-          .element(by.css('input[value="' + sslName.verificationString + '"]'))
-          .click();
-      })
-      .then(function () {
         return me.dialog.clickOk();
       })
       .then(function () {
-        return me.closeSuccessDialog();
+        Alerts.waitToDisplay();
+        return Alerts
+          .getFirst()
+          .getText()
+          .then(function (act) {
+            var exp = 'Successfully added new SSL name';
+            if (act === exp)
+              return;
+            return Promise
+              .reject('Failed: Expected "' + act + '" to be "' + exp + '"');
+          });
+      })
+      .then(function () {
+        me.dialog.clickRadioButton(sslName.verificationString);
+        return me.dialog.clickVerify();
+      })
+      .then(function () {
+        return me.dialog.clickOk();
       });
   }
 };

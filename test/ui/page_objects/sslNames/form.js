@@ -184,7 +184,8 @@ var SSLNameForm = {
    *
    * @returns {Object} Promise
    */
-  setAccount: function (accounts) { 
+  setAccount: function (accounts) {
+    // TODO: Is not it better to use forEach?
     for (var i = 0, len = accounts.length; i < len; i++) {
       var account = accounts[i];
       var option = this

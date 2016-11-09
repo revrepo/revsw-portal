@@ -73,6 +73,8 @@ describe('Smoke', function () {
           Portal.createSSLName(sslName);
           Portal.sslNames.listPage.searchAndClickDelete(sslName.domainName);
           Portal.dialog.clickOk();
+          expect(Portal.alerts.getFirst().getText())
+            .toContain('Successfully deleted the SSL name');
           Portal.sslNames.listPage.searcher.setSearchCriteria(sslName.domainName);
           var tableRows = Portal.sslNames.listPage.table.getRows();
           expect(tableRows.count()).toEqual(0);
@@ -84,7 +86,6 @@ describe('Smoke', function () {
             Portal.createSSLName(sslName);
             Portal.sslNames.listPage.searchAndClickDelete(sslName.domainName);
             Portal.dialog.clickOk();
-            expect(Portal.alerts.getAll().count()).toEqual(1);
             expect(Portal.alerts.getFirst().getText())
               .toContain('Successfully deleted the SSL name');
           });

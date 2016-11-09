@@ -290,7 +290,8 @@ var AppsList = {
    */
   sortByName: function () {
     return this.table
-      .getHeaderEl()
+      .getHeader()
+      .getName()
       .click();
   }
 };

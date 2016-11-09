@@ -40,8 +40,6 @@ describe('Boundary', function () {
                 .then(function (user) {
                   tom = user;
                   Portal.signOut();
-                  Portal.signIn(tom);
-                  Portal.helpers.nav.goToUpdatePassword();
                   done();
                 })
                 .catch(done);
@@ -49,12 +47,14 @@ describe('Boundary', function () {
             .catch(done);
         });
 
-        afterAll(function () {
-          Portal.signOut();
+        beforeEach(function () {
+          Portal.signIn(tom);
+          Portal.helpers.nav.goToUpdatePassword();
+          Portal.helpers.nav.goToUpdatePassword();
         });
 
-        beforeEach(function () {
-          Portal.helpers.nav.goToUpdatePassword();
+        afterEach(function () {
+          Portal.signOut();
         });
 
         it('should not update the password when it is less than 8 chars ' +

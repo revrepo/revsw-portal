@@ -258,7 +258,27 @@ var Portal = {
    * @returns {Promise}
    */
   signOut: function () {
+    this.closeUnexpectedModal();
     return this.header.clickLogout();
+  },
+
+  /**
+   * ### Portal.closeUnexpectedModal()
+   *
+   * Closes unexpected modal windows that prevents to trigger click events to
+   * logout user from the Portal App.
+   *
+   * @returns {Object} Promise if modal found, undefined otherwise
+   */
+  closeUnexpectedModal: function () {
+    var me = this;
+    return this.dialog
+      .isDisplayed()
+      .then(function (isPresent) {
+        if (isPresent) {
+          return me.dialog.getModalEl().sendKeys(protractor.Key.ESCAPE);
+        }
+      });
   },
 
   // ## URL navigation Helper methods
@@ -567,10 +587,7 @@ var Portal = {
     return browser.getCurrentUrl().then(function (initialUrl) {
       me.helpers.nav.goToSSLNames();
       Portal.sslNames.listPage.clickAddNewSSLName();
-      Portal.sslNames.addPage.form.fill(sslName);
-      Portal.sslNames.addPage.clickAddSSLName();
-      me.dialog.clickOk();
-      me.dialog.clickCancel();
+      Portal.sslNames.addPage.createSSLName(sslName);
       browser.getCurrentUrl().then(function (currentUrl) {
         if (initialUrl !== currentUrl) {
           browser.get(initialUrl);

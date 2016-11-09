@@ -122,6 +122,7 @@ var UpdatePassword = {
   setCurrentPassword: function (password) {
     return this
       .getCurrentPasswordTxtIn()
+      .clear()
       .sendKeys(password);
   },
 
@@ -137,6 +138,7 @@ var UpdatePassword = {
   setNewPassword: function (password) {
     return this
       .getNewPasswordTxtIn()
+      .clear()
       .sendKeys(password);
   },
 
@@ -152,6 +154,7 @@ var UpdatePassword = {
   setPasswordConfirm: function (password) {
     return this
       .getNewPasswordConfirmTxtIn()
+      .clear()
       .sendKeys(password);
   },
 

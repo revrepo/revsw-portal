@@ -133,10 +133,61 @@ var DomainList = {
    * @returns {TableRow}
    */
   searchAndGetFirstRow: function (criteria) {
-    this.searcher.clearSearchCriteria();
     this.searcher.setSearchCriteria(criteria);
     return this.table
       .getFirstRow();
+  },
+
+  /**
+   * ### DomainList.searchAndWaitForTooltipToChange()
+   *
+   * Searches a given domain and waits for its staging status to change
+   * @param domain, which will be observed
+   * @returns {Object} Promise
+   */
+  waitForStagingStatusToChange: function (domain) {
+    var me = this;
+    var previousTooltip;
+    return browser.wait(function () {
+      // Check domain is in list
+      return me
+        .searchAndGetFirstRow(domain.name)
+        .getStagingStatusIcon()
+        .getAttribute('uib-tooltip')
+        .then(function (newTooltip) {
+          if (previousTooltip === undefined) {
+            previousTooltip = newTooltip
+          }
+          browser.sleep(3000); // 3 seconds
+          return previousTooltip !== newTooltip;
+        });
+    }, 360000); // Wait 6 minutes to change tooltip
+  },
+
+  /**
+   * ### DomainList.waitForGlobalStatusToChange()
+   *
+   * Searches a given domain and waits for its global status to change
+   * @param domain, which will be observed
+   * @returns {Object} Promise
+   */
+  waitForGlobalStatusToChange: function (domain) {
+    var me = this;
+    var previousTooltip;
+    return browser.wait(function () {
+      // Check domain is in list
+      return me
+        .searchAndGetFirstRow(domain.name)
+        .getGlobalStatusIcon()
+        .getAttribute('uib-tooltip')
+        .then(function (newTooltip) {
+          if (previousTooltip === undefined) {
+            previousTooltip = newTooltip
+          }
+          browser.sleep(3000); // 3 seconds
+          return previousTooltip !== newTooltip;
+        });
+    }, 360000); // Wait 6 minutes to change tooltip
   },
 
   /**

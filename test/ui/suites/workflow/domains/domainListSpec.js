@@ -91,8 +91,7 @@ describe('Workflow', function () {
         // Create domain
         Portal.createDomain(myDomain);
         // Wait for some period of time to get the domain Published
-        browser.sleep(30000);
-        // Check domain is in list
+        Portal.domains.listPage.waitForStagingStatusToChange(myDomain);
         Portal.domains.listPage
           .searchAndGetFirstRow(myDomain.name)
           .getStagingStatusIcon()
@@ -109,7 +108,7 @@ describe('Workflow', function () {
         // Create domain
         Portal.createDomain(myDomain);
         // Wait for some period of time to get the domain Published
-        browser.sleep(80000);
+        Portal.domains.listPage.waitForGlobalStatusToChange(myDomain);
         // Check domain is in list
         Portal.domains.listPage
           .searchAndGetFirstRow(myDomain.name)
@@ -134,7 +133,7 @@ describe('Workflow', function () {
         // Update domain
         Portal.updateDomain(updatedDomain);
         // Wait for the domain to get global status as Modified
-        browser.sleep(60000);
+        Portal.domains.listPage.waitForGlobalStatusToChange(myDomain);
         // Verify updated domain is in list
         Portal.domains.listPage
           .searchAndGetFirstRow(myDomain.name)
