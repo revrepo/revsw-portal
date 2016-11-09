@@ -231,8 +231,9 @@ var AddSSLName = {
           .getText()
           .then(function (act) {
             var exp = 'Successfully added new SSL name';
-            if (act === exp)
+            if (act === exp) {
               return;
+            }
             return Promise
               .reject('Failed: Expected "' + act + '" to be "' + exp + '"');
           });
