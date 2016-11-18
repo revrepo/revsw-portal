@@ -1109,9 +1109,7 @@ var Portal = {
       me.dnsZones.listPage.table
         .getFirstRow()
         .clickDelete();
-      me.dialog.clickOk().then(function() {
-        if (cb) cb();
-      });
+      me.dialog.clickOk();
       browser.getCurrentUrl().then(function (currentUrl) {
         if (initialUrl !== currentUrl) {
           browser.get(initialUrl);
