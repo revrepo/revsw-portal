@@ -150,7 +150,6 @@
 
     function  authenticate(provider) {
      return $auth.authenticate(provider).then(function (data) {
-      console.log(data);
         if (data.status === $config.STATUS.OK) {
           setToken(data.data.token);
           addAuthHeaderForAPI(data.data.token);
@@ -479,7 +478,7 @@
             }
           })
           .catch( function( err ) {
-            console.log( err );
+            // console.log( err );
           });
       });
     }

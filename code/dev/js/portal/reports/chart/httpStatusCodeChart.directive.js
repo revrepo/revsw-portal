@@ -141,9 +141,6 @@
             return;
           }
 
-          // debug
-          // console.log( 'reload' );
-
           var promises = {};
           var series = [];
           var labels = [];
@@ -238,8 +235,6 @@
                 labels: labels,
                 series: series
               };
-              // console.log( '$scope.traffic updated 2' );
-
             })
             .finally(function() {
               $scope._loading = false;
@@ -247,8 +242,6 @@
         };
 
         $scope.$watch('statusCodes', function() {
-          // debug
-          // console.log( 'statusCodes' );
           $scope.reload();
         });
 

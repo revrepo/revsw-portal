@@ -211,7 +211,6 @@
         $scope.confirm('confirmWelcomeInfoModal.html', data)
           .then(function() {
             $localStorage.isNeedContactInfo = false;
-            console.log('show welcome info');
           });
       }
     };
