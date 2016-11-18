@@ -1100,7 +1100,7 @@ var Portal = {
    *
    * @returns {Object} Promise
    */
-  deleteDNSZone: function (zone, cb) {
+  deleteDNSZone: function (zone) {
     var me = this;
     return browser.getCurrentUrl().then(function (initialUrl) {
       me.helpers.nav.goToDNSZones();
