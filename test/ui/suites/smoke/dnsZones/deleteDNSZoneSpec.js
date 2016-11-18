@@ -85,12 +85,13 @@ describe('Smoke', function () {
         it('should display a confirmation message when deleting a DNS Zone',
           function () {
             var zone = DataProvider.generateDNSZoneData();
-
             Portal.createDNSZone(zone);
-            Portal.deleteDNSZone(zone);
-            expect(Portal.alerts.getAll().count()).toEqual(1);
-            expect(Portal.alerts.getFirst().getText())
-              .toContain('Successfully deleted the DNS zone');
+            Portal.deleteDNSZone(zone, function() {
+              expect(Portal.alerts.getAll().count()).toEqual(1);
+              expect(Portal.alerts.getFirst().getText())
+                .toContain('Successfully deleted the DNS zone');
+            });
+
           });
       });
     });
