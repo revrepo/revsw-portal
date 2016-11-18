@@ -9,7 +9,7 @@
   function AuthRun($rootScope, $state, $location, DashboardSrv, User, Companies, $localStorage) {
 
     $rootScope.$on('unauthorized', function() {
-      console.log('No logged in');
+      // console.log('No logged in');
       $state.go('login');
     });
 
@@ -57,7 +57,7 @@
             $state.go('index.billing.company');
           }
         }, function(err) {
-          console.log('Error get account information', err);
+          // console.log('Error get account information', err);
         });
       } else {
         defaultLoginWorkFlow();
