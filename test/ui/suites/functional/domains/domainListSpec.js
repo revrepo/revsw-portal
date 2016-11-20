@@ -123,8 +123,6 @@ describe('Functional', function () {
         var newDomain = Portal.domains.listPage
           .searchAndGetFirstRow(myDomain.name);
         expect(newDomain.getName()).toEqual(myDomain.name);
-        // Delete domain
-        Portal.deleteDomain(myDomain);
       });
 
     it('should not list domain-config right after deleting it',

@@ -18,44 +18,56 @@
 
 var config = require('config');
 var Portal = require('./../../../page_objects/portal');
-var DataProvider = require('./../../../common/providers/data');
-var Constants = require('./../../../page_objects/constants');
 
-describe('Negavive', function () {
+describe('Negative', function () {
   describe('Add New App', function () {
 
-    var adminUser = config.get('portal.users.admin');
-    var platforms = Portal.constants.mobileApps.platforms;
-    var iosApps = DataProvider.generateMobileAppData(platforms.ios, 1);
-    var androidApps = DataProvider.generateMobileAppData(platforms.android, 1);
-    var apps = iosApps.concat(androidApps);
+    var users = [
+      config.get('portal.users.admin')
+    ];
+    var platforms = [
+      Portal.constants.mobileApps.platforms.android,
+      Portal.constants.mobileApps.platforms.ios
+    ];
+    var app;
 
-    beforeAll(function () {
-      Portal.signIn(adminUser);
-      Portal.createMobileApps(platforms.ios, iosApps);
-      Portal.createMobileApps(platforms.android, androidApps);
-    });
+    users.forEach(function (user) {
 
-    afterAll(function () {
-      //Portal.deleteMobileApps(apps);
-      Portal.deleteMobileApps(iosApps);
-      Portal.deleteMobileApps(androidApps);
-      Portal.signOut();
-    });
+      describe('With user: ' + user.role, function () {
 
-    beforeEach(function () {
-    });
+        platforms.forEach(function (platform) {
 
-    afterEach(function () {
-    });
+          describe('For platform: ' + platform, function () {
 
-    apps.forEach(function (app){
-      it('should not add a duplicated app - ' + app.platform, function () {
-        Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
-        Portal.mobileApps.listPage.addNew(app);
-        var alert = Portal.alerts.getFirst();
-        var s = '×\nThe app name and platform is already registered in the system';
-        expect(alert.getText()).toEqual(s);
+            beforeAll(function (done) {
+              Portal
+                .signIn(user)
+                .then(function () {
+                  return Portal.helpers.mobileApps
+                    .create({platform: platform})
+                    .then(function (newApp) {
+                      app = newApp;
+                      done();
+                    })
+                    .catch(done);
+                })
+                .catch(done);
+            });
+
+            afterAll(function () {
+              Portal.signOut();
+            });
+
+            it('should not be able to add a duplicated app.', function () {
+              Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+              Portal.mobileApps.listPage.addNew(app);
+              var alert = Portal.alerts.getFirst();
+              var expectedMessage = 'The app name and platform is already ' +
+                'registered in the system';
+              expect(alert.getText()).toContain(expectedMessage);
+            });
+          });
+        });
       });
     });
   });

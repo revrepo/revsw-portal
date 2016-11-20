@@ -20,7 +20,17 @@
 
 var NavHelper = require('./nav');
 
+var DNSZonesHelper = require('./dnsZones');
+var MobileAppsHelper = require('./mobileApps');
+var UsersHelper = require('./users');
+
 // Abstracts common functionality for the Portal.
-module.exports = {
-  nav: NavHelper
+var PortalHelpers = {
+  nav: NavHelper,
+
+  dnsZones: DNSZonesHelper,
+  mobileApps: MobileAppsHelper,
+  users: UsersHelper
 };
+
+module.exports = PortalHelpers;

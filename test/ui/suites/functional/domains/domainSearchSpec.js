@@ -37,9 +37,6 @@ describe('Functional', function () {
       Portal.domains.listPage.searcher.clearSearchCriteria();
     });
 
-    afterEach(function () {
-    });
-
     it('should filter domain-configs according to name search criteria',
       function () {
         var domainNameToSearch = Portal.domains.listPage.table

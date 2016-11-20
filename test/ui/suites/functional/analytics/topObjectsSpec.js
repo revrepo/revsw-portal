@@ -37,9 +37,6 @@ describe('Functional', function () {
       Portal.signOut();
     });
 
-    beforeEach(function () {
-    });
-
     it('should create a default report for Top Most Requested Objects report',
       function () {
         var dataReport = DataProvider.generateAnalyticsInfo();

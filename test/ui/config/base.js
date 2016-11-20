@@ -9,15 +9,16 @@ module.exports = {
     browserName: 'firefox'
   },
   getPageTimeout: 120000,
-  allScriptsTimeout: 300000,
+  allScriptsTimeout: 360000,
   framework: 'jasmine2',
   jasmineNodeOpts: {
-    defaultTimeoutInterval: 360000,
+    defaultTimeoutInterval: 420000,
     showColors: true,
     print: function() {} // Disable default reporter
   },
   onPrepare: function () {
-    browser.manage().window().setSize(1024, 768);
+    browser.manage().window().setSize(1280, 1024);
+    browser.manage().window().setPosition(400, 0);
     var disableNgAnimate = function() {
         angular
             .module('disableNgAnimate', [])

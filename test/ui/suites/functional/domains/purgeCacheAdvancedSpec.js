@@ -46,33 +46,33 @@ describe('Functional', function () {
         Portal.purgeCacheAdvancedPage.selectDomain(myDomain);
         var purgeBtn = Portal.purgeCacheAdvancedPage.getPurgeBtn();
         expect(purgeBtn.isEnabled()).toBeFalsy();
-    });
+      });
 
+    // TODO: Need to find a way to get current ACE editor session and manipulate it (set/get value)
     xit('should purge an object in Code mode',
       function () {
-   
-
-var object = {
-purges: [
-  {
-    url: {
-      is_wildcard: true,   // jshint ignore:line
-      expression: '/images/*.png'
-    }
-  }
-]
-};
+        var jsonObject = {
+          purges: [
+            {
+              url: {
+                is_wildcard: true,   // jshint ignore:line
+                expression: '/images/*.png'
+              }
+            }
+          ]
+        };
 
         Portal.purgeCacheAdvancedPage.clickAdvancedMode();
         Portal.purgeCacheAdvancedPage.selectDomain(myDomain);
-        Portal.purgeCacheAdvancedPage.setAceContent('{}');
+        Portal.purgeCacheAdvancedPage.setAceContent(jsonObject.toString());
         Portal.purgeCacheAdvancedPage.clickPurge();
 
         var alert = Portal.alerts.getFirst();
         var expectedMsg = 'The request has been successfully submitted';
         expect(alert.getText()).toEqual(expectedMsg);
-    });
+      });
 
+    // TODO: Need to find a way to get current ACE editor session and manipulate it (set/get value)
     xit('should purge a default json data in Ace Editor in View mode',
       function () {
         Portal.purgeCacheAdvancedPage.clickAdvancedMode();
@@ -83,7 +83,7 @@ purges: [
         var alert = Portal.alerts.getFirst();
         var expectedMsg = 'Oops something went wrong';
         expect(alert.getText()).toEqual(expectedMsg);
-    });
+      });
 
     it('should cancel in "Ace Editor" go to "List Domains" Page',
       function () {
@@ -93,6 +93,6 @@ purges: [
 
         var title = 'Domains List';
         expect(Portal.domains.listPage.getTitle()).toEqual(title);
-    });
+      });
   });
 });

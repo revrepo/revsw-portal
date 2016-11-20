@@ -37,9 +37,6 @@ describe('Functional', function () {
       Portal.signOut();
     });
 
-    beforeEach(function () {
-    });
-
     it('should create an Average FBT report with default values',
       function () {
         var dataReport = DataProvider.generateFBTAnalyticsInfo();

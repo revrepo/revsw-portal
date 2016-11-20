@@ -67,7 +67,6 @@
               $scope.startRefresh();
             })
             .catch(function (err) {
-              console.log(err);
               $scope.iconStaging = 'glyphicon-remove text-danger';
               $scope.tooltipStaging = 'Staging Status: Error';
               $scope.iconGlobal = 'glyphicon-remove text-danger';

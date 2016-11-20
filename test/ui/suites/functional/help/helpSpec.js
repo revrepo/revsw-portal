@@ -24,18 +24,6 @@ var Constants = require('./../../../page_objects/constants');
 describe('Functional', function () {
   describe('Help', function () {
 
-    var adminUser = config.get('portal.users.admin');
-    var myDomain = Constants.domain;
-
-    beforeAll(function () {
-    });
-
-    afterAll(function () {
-    });
-
-    beforeEach(function () {
-    });
-
     it('should click on Help button and open the Help form in Portal',
       function() {
         Portal.load()

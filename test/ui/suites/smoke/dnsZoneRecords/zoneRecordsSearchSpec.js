@@ -37,42 +37,34 @@ describe('Smoke', function () {
       describe('DNS Zone Records search', function () {
 
         beforeAll(function () {
-
+          Portal.signIn(user);
         });
 
-        afterAll(function () {
-
+        afterAll(function (done) {
+          Portal.helpers.dnsZones
+            .cleanup()
+            .then(function () {
+              Portal.signOut();
+              done();
+            })
+            .catch(done);
         });
 
         beforeEach(function () {
-          Portal.load();//TODO: Got the problem when tests are failed when executed all in one scope
-                        //Looks like it is not reproducible when doing Portal.load() before SignIn
-                        //SignIn func needs to be investigated
-
-          Portal.signIn(user);
           Portal.helpers.nav.goToDNSZones();
-        });
-
-        afterEach(function () {
-          Portal.signOut();
         });
 
         it('should be displayed when displaying DNS Zones Records List page',
           function () {
             var zone = DataProvider.generateDNSZoneData();
             Portal.createDNSZone(zone);
-
             Portal.dnsZones.listPage.searcher.setSearchCriteria(zone.domain);
             Portal.dnsZones.listPage.table
               .getFirstRow()
               .clickManageRecords();
-
             var searchField = Portal.zoneRecords.listPage.searcher
               .getSearchCriteriaTxtIn();
-
             expect(searchField.isPresent()).toBeTruthy();
-
-            Portal.deleteDNSZone(zone);
           });
 
         it('should filter items according to text filled',
@@ -85,17 +77,13 @@ describe('Smoke', function () {
             Portal.dnsZones.listPage.table
               .getFirstRow()
               .clickManageRecords();
-
             Portal.zoneRecords.listPage.clickAddNewRecord();
             Portal.zoneRecords.addPage.form.fill(dnsRecord);
             Portal.zoneRecords.addPage.clickAddNewRecord();
-
             Portal.zoneRecords.listPage.searcher
               .setSearchCriteria(dnsRecord.name);
-
             var allRows = Portal.zoneRecords.listPage.table.getRows();
             expect(allRows.count()).toEqual(1);
-            Portal.deleteDNSZone(dnsZone);
           });
       });
     });

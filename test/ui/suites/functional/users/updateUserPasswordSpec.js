@@ -2,7 +2,7 @@
  *
  * REV SOFTWARE CONFIDENTIAL
  *
- * [2013] - [2015] Rev Software, Inc.
+ * [2013] - [2016] Rev Software, Inc.
  * All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains
@@ -18,72 +18,70 @@
 
 var config = require('config');
 var Portal = require('./../../../page_objects/portal');
-var DataProvider = require('./../../../common/providers/data');
 var Constants = require('./../../../page_objects/constants');
 
 describe('Functional', function () {
   describe('Update user password', function () {
 
-    var admin = config.get('portal.users.admin');
+    var users = [
+      config.get('portal.users.admin')
+    ];
+    var testUser;
 
-    beforeAll(function () {
-      Portal.signIn(admin);
-    });
+    users.forEach(function (user) {
 
-    afterAll(function () {
-      Portal.signOut();
-    });
+      describe('With user: ' + user.role, function () {
 
-    beforeEach(function () {
-      Portal.helpers.nav.goToUpdatePassword();
-    });
+        beforeEach(function (done) {
+          Portal.session.setCurrentUser(user);
+          Portal.helpers.users
+            .create()
+            .then(function (newUser) {
+              testUser = newUser;
+              done();
+            })
+            .catch(done);
+        });
 
-    it('should go to "User List" page when clicking "Back" button',
-      function () {
-        Portal.updatePasswordPage.clickBackToList();
-        expect(Portal.userListPage.isDisplayed()).toBeTruthy();
+        it('should go to "User List" page when clicking "Back" button',
+          function () {
+            Portal.signIn(user);
+            Portal.helpers.nav.goToUpdatePassword();
+            Portal.updatePasswordPage.clickBackToList();
+            expect(Portal.userListPage.isDisplayed()).toBeTruthy();
+            Portal.signOut();
+          });
+
+        it('should update password successfully using only letter values',
+          function () {
+            var newPassword = 'newpassword';
+            Portal.signIn(testUser);
+            Portal.helpers.nav.goToUpdatePassword();
+            Portal.updatePasswordPage.setCurrentPassword(testUser.password);
+            Portal.updatePasswordPage.setNewPassword(newPassword);
+            Portal.updatePasswordPage.setPasswordConfirm(newPassword);
+            Portal.updatePasswordPage.clickUpdatePassword();
+            var alert = Portal.alerts.getFirst();
+            expect(alert.getText())
+              .toContain(Constants.alertMessages.users.MSG_SUCCESS_UPDATE_PASSWORD);
+            Portal.signOut();
+          });
+
+        it('should update password successfully  using only numbers',
+          function () {
+            var newPassword = '12345678';
+            Portal.signIn(testUser);
+            Portal.helpers.nav.goToUpdatePassword();
+            Portal.updatePasswordPage.setCurrentPassword(testUser.password);
+            Portal.updatePasswordPage.setNewPassword(newPassword);
+            Portal.updatePasswordPage.setPasswordConfirm(newPassword);
+            Portal.updatePasswordPage.clickUpdatePassword();
+            var alert = Portal.alerts.getFirst();
+            expect(alert.getText())
+              .toContain(Constants.alertMessages.users.MSG_SUCCESS_UPDATE_PASSWORD);
+            Portal.signOut();
+          });
       });
-
-    it('should update password successfully using only letter values',
-      function () {
-        var andrew = DataProvider.generateUser('Andrew');
-        var newPassword = 'newpassword';
-        // Create user
-        Portal.createUser(andrew);
-        Portal.signOut();
-        // Update password using new user
-        Portal.signIn(andrew);
-        Portal.helpers.nav.goToUpdatePassword();
-        Portal.updatePasswordPage.setCurrentPassword(andrew.password);
-        Portal.updatePasswordPage.setNewPassword(newPassword);
-        Portal.updatePasswordPage.setPasswordConfirm(newPassword);
-        Portal.updatePasswordPage.clickUpdatePassword();
-        var alert = Portal.alerts.getFirst();
-        expect(alert.getText())
-          .toContain(Constants.alertMessages.users.MSG_SUCCESS_UPDATE_PASSWORD);
-        Portal.signOut();
-        Portal.signIn(admin);
-      });
-
-    it('should update password successfully  using only numbers',
-      function () {
-        var mathew = DataProvider.generateUser('Andrew');
-        var newPassword = '12345678';
-        // Create user
-        Portal.createUser(mathew);
-        Portal.signOut();
-        // Update password using new user
-        Portal.signIn(mathew);
-        Portal.helpers.nav.goToUpdatePassword();
-        Portal.updatePasswordPage.setCurrentPassword(mathew.password);
-        Portal.updatePasswordPage.setNewPassword(newPassword);
-        Portal.updatePasswordPage.setPasswordConfirm(newPassword);
-        Portal.updatePasswordPage.clickUpdatePassword();
-        var alert = Portal.alerts.getFirst();
-        expect(alert.getText())
-          .toContain(Constants.alertMessages.users.MSG_SUCCESS_UPDATE_PASSWORD);
-        Portal.signOut();
-        Portal.signIn(admin);
-      });
+    });
   });
 });

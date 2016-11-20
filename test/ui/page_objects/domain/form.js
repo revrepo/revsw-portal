@@ -304,6 +304,7 @@ var DomainForm = {
   setDomainName: function (domainName) {
     return this
       .getDomainNameTxtIn()
+      .clear()
       .sendKeys(domainName);
   },
 
@@ -353,6 +354,7 @@ var DomainForm = {
   setOriginServer: function (originServer) {
     return this
       .getOriginServerTxtIn()
+      .clear()
       .sendKeys(originServer);
   },
 
@@ -368,6 +370,7 @@ var DomainForm = {
   setOriginHostHeader: function (originHostHeader) {
     return this
       .getOriginHostHeaderTxtIn()
+      .clear()
       .sendKeys(originHostHeader);
   },
 
@@ -495,10 +498,16 @@ var DomainForm = {
    *
    * @returns {Promise}
    */
-  clearForm: function () {
-    this.clearDomainName();
-    this.clearOriginServer();
-    this.clearOriginHostHeader();
+  clear: function () {
+    this
+      .getDomainNameTxtIn()
+      .clear();
+    this
+      .getOriginServerTxtIn()
+      .clear();
+    return this
+      .getOriginHostHeaderTxtIn()
+      .clear();
   },
 
   /**
@@ -517,7 +526,6 @@ var DomainForm = {
    */
   fill: function (domain) {
     if (domain.name !== undefined) {
-      this.clearDomainName();
       this.setDomainName(domain.name);
     }
     // Fill Company name if data provided and if element is visible/available
@@ -529,11 +537,9 @@ var DomainForm = {
         }
       });
     if (domain.originServer !== undefined) {
-      this.clearOriginServer();
       this.setOriginServer(domain.originServer);
     }
     if (domain.originHostHeader !== undefined) {
-      this.clearOriginHostHeader();
       this.setOriginHostHeader(domain.originHostHeader);
     }
     if (domain.originLocation !== undefined) {

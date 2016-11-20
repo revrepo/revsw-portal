@@ -92,9 +92,6 @@ describe('Smoke', function () {
           Portal.dialog.clickOk();
           var updatedCertName = Portal.sslCerts.editPage.form.getCertName();
           expect(updatedCertName).toContain(valueAdded);
-          Portal.sslCerts.editPage.clickBackToList();
-          // Delete created SSL Cert
-          Portal.deleteSSLCert(sslCert);
         });
       });
     });

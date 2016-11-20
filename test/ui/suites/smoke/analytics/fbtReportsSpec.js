@@ -28,8 +28,6 @@ describe('Smoke', function () {
 
     beforeAll(function () {
       Portal.signIn(adminUser);
-      // TODO: It looks like protractor has a problem finding elements
-      // which ara present on a page but below the viewport
       Portal.helpers.nav.goToWAFBTReports();
     });
 

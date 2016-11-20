@@ -54,13 +54,6 @@ describe('Functional', function () {
           Portal.signOut();
         });
 
-        beforeEach(function () {
-
-        });
-
-        afterEach(function () {
-        });
-
         it('should get title from Usage Report page', function() {
             var title = Portal.billing.usageReportPage.getTitle();
             expect(title).toEqual('Usage Report');
