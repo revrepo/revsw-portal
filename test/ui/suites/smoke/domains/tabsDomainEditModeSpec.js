@@ -1,5 +1,4 @@
 /*************************************************************************
-
  */
 
 var config = require('config');
@@ -11,10 +10,10 @@ describe('Smoke', function () {
 
   // Defining set of users for which all below tests will be run
   var users = [
-    // config.get('portal.users.user'),
-    // config.get('portal.users.admin'),
-    config.get('portal.users.revAdmin')
-    // config.get('portal.users.reseller')
+    config.get('portal.users.user'),
+    config.get('portal.users.admin'),
+    config.get('portal.users.revAdmin'),
+    config.get('portal.users.reseller')
   ];
 
   users.forEach(function (user) {
@@ -37,7 +36,9 @@ describe('Smoke', function () {
 
         it('should display Edit Domain page', function () {
           element.all(by.css('#anchor0 td:first-child a[uib-tooltip="Edit Domain"]')).click();
-          expect(element(by.binding('modelInfo.domain_name')).getText()).toEqual(element.all(by.css('.page-title strong')).getText());
+          element.all(by.css('.page-title strong')).getText().then(function(value) {
+            expect(element(by.binding('modelInfo.domain_name')).getText()).toEqual(value[0]);
+          });
         });
 
         it('should display tabs to Edit Domain page', function () {
