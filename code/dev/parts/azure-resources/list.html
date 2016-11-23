@@ -11,7 +11,6 @@
     <button class="btn btn-danger" type="button" ng-click="ok()">OK</button>
   </div>
 </script>
-
 <div class="container-fluid" ui-view="page">
   <div class="row">
     <div class="col-sm-12">
@@ -32,21 +31,19 @@
                 </a>
               </div>
               <div class="pull-left">
-
+              </div>
+              <div class="pull-right">
+                <form class="form-inline">
+                  <div class="form-group">
+                    <label for="search">Search:&nbsp;</label>
+                    <input type="text" class="form-control" id="search" placeholder="" ng-model="filter.filter" ng-change="checkFilterPage()">&nbsp;&nbsp;
+                    <i class="glyphicon glyphicon-remove" ng-show="filter.filter != ''" ng-click="filter.filter = ''"></i>
+                  </div>
+                </form>
               </div>
             </div>
           </div>
         </div>
-       <!--  <div class="panel-heading">
-          <div class="row">
-            <div class="col-md-12">
-              <div class="pull-left">
-                <h2>Resources in the subscription</h2>
-              </div>
-            </div>
-          </div>
-        </div> -->
-
         <div class="panel-body">
           <div class="alert alert-info" ng-if="records.length == 0 && !_loading">
             Currently you don't have any Azure Resources registered in the system.
@@ -69,10 +66,8 @@
                   <a href="" ng-click="order('subscription_id')"> Subscription ID</a>
                   <span class="sortorder" ng-show="filter.predicate === 'subscription_id'" ng-class="{reverse: filter.reverse}"></span>
                 </th>
-
                 <th><a href="" ng-click="order('original_object.type')">Type</a>
                   <span class="sortorder" ng-show="filter.predicate === 'original_object.type'" ng-class="{reverse: filter.reverse}"></span></th>
-
                 <th>
                   <a href="" ng-click="order('location')">Location</a>
                   <span class="sortorder" ng-show="filter.predicate === 'location'" ng-class="{reverse: filter.reverse}"></span>
@@ -82,9 +77,8 @@
                 <th>
                   <a href="" ng-click="order('resource_group_name')">Resource Group</a>
                   <span class="sortorder" ng-show="filter.predicate === 'resource_group_name'" ng-class="{reverse: filter.reverse}"></span>
-              </th>
-            <th>Actions</th>
-
+                </th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -94,17 +88,16 @@
                 </td>
                 <td>{{item.subscription_id}}</td>
                 <td>
-                   {{item.original_object.type}}
+                  {{item.original_object.type}}
                 </td>
                 <td>{{item.original_object.location}} </td>
                 <td>{{item.original_object.plan.name}}</td>
-
-                <td >
+                <td>
                   <div>{{item.resource_group_name}}</div>
                 </td>
                 <td class="actions">
                   <i class="glyphicon glyphicon-refresh spin" ng-if="item.loading"></i>
-                  <a  ng-click="onViewResource($event,item)" ng-if="!item.loading" uib-tooltip="View">
+                  <a ng-click="onViewResource($event,item)" ng-if="!item.loading" uib-tooltip="View">
                     <i class="fa fa-eye"></i>
                   </a>
                 </td>

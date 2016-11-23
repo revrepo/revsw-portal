@@ -29,18 +29,15 @@ describe('Negative', function () {
     var adminUser = config.get('portal.users.admin');
 
     beforeAll(function () {
+      Portal.signIn(adminUser);
     });
 
     afterAll(function () {
+      Portal.signOut();
     });
 
     beforeEach(function () {
-      Portal.signIn(adminUser);
       Portal.helpers.nav.goToUsers();
-    });
-
-    afterEach(function () {
-      Portal.signOut();
     });
 
     it('should not create user when a required field is filled with blank ' +
@@ -56,8 +53,8 @@ describe('Negative', function () {
     it('should not create user when the filled email is already used by ' +
       'another user',
       function () {
-        var tom = DataProvider.generateUser('Tom');
-        var jerry = DataProvider.generateUser('Jerry');
+        var tom = DataProvider.generateUser();
+        var jerry = DataProvider.generateUser();
         jerry.email = tom.email;
         Portal.userListPage.clickAddNewUser();
         Portal.addUserPage.createUser(tom);
@@ -68,11 +65,13 @@ describe('Negative', function () {
         var alert = Portal.alerts.getFirst();
         var expectedMessage = Constants.alertMessages.users.MSG_FAIL_ADD_EMAIL_EXISTS;
         expect(alert.getText()).toContain(expectedMessage);
+        Portal.addUserPage.clickBackToList();
+        browser.sleep(5);
       });
 
     it('should not allow to create a user without email',
       function () {
-        var derek = DataProvider.generateUser('Derek');
+        var derek = DataProvider.generateUser();
         derek.email = '';
         Portal.userListPage.clickAddNewUser();
         Portal.addUserPage.form.fill(derek);
@@ -82,7 +81,7 @@ describe('Negative', function () {
 
     it('should not allow to create a user without first name',
       function () {
-        var mathew = DataProvider.generateUser('Mathew');
+        var mathew = DataProvider.generateUser();
         mathew.firstName = '';
         Portal.userListPage.clickAddNewUser();
         Portal.addUserPage.form.fill(mathew);
@@ -92,7 +91,7 @@ describe('Negative', function () {
 
     it('should not allow to create a user without last name',
       function () {
-        var mathew = DataProvider.generateUser('Mathew');
+        var mathew = DataProvider.generateUser();
         mathew.lastName = '';
         Portal.userListPage.clickAddNewUser();
         Portal.addUserPage.form.fill(mathew);
@@ -102,7 +101,7 @@ describe('Negative', function () {
 
     it('should not allow to create a user without any role',
       function () {
-        var scott = DataProvider.generateUser('Scott');
+        var scott = DataProvider.generateUser();
         delete scott.role;
         Portal.userListPage.clickAddNewUser();
         Portal.addUserPage.form.fill(scott);
@@ -112,7 +111,7 @@ describe('Negative', function () {
 
     it('should not allow to create a user without password',
       function () {
-        var brian = DataProvider.generateUser('Brian');
+        var brian = DataProvider.generateUser();
         delete brian.password;
         Portal.userListPage.clickAddNewUser();
         Portal.addUserPage.form.fill(brian);
@@ -122,7 +121,7 @@ describe('Negative', function () {
 
     it('should not allow to create a user without confirmation password',
       function () {
-        var brian = DataProvider.generateUser('Brian');
+        var brian = DataProvider.generateUser();
         delete brian.passwordConfirm;
         Portal.userListPage.clickAddNewUser();
         Portal.addUserPage.form.fill(brian);
@@ -133,7 +132,7 @@ describe('Negative', function () {
     it('should display an error message when creating user when "Password" ' +
       'and "Confirmation Password" do not match',
       function () {
-        var vincent = DataProvider.generateUser('Vincent');
+        var vincent = DataProvider.generateUser();
         vincent.password = 'something';
         vincent.passwordConfirm = 'different';
         Portal.userListPage.clickAddNewUser();

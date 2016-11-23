@@ -19,7 +19,6 @@
 var config = require('config');
 var Portal = require('./../../../page_objects/portal');
 var DataProvider = require('./../../../common/providers/data');
-var Constants = require('./../../../page_objects/constants');
 
 describe('Smoke', function () {
 
@@ -44,7 +43,6 @@ describe('Smoke', function () {
         });
 
         afterAll(function () {
-          Portal.deleteDomain(myDomain);
           Portal.signOut();
         });
 

@@ -195,6 +195,9 @@ var SideBar = {
     if (locatorData.area) {
       this.expand(locatorData.area);
     }
+    else {
+      this.expand(locatorData);
+    }
     return this
       .getMenuItem(locatorData)
       .click();

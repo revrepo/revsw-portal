@@ -64,7 +64,7 @@
               $scope.currentState = $scope.operationalModeName;
             })
             .catch(function (err) {
-              console.log(err);
+              // console.log(err);
               $scope.iconStaging = 'glyphicon-remove text-danger';
               $scope.tooltipStaging = 'Log Shipping Status: Error';
               $scope.stopRefresh();

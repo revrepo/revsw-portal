@@ -163,7 +163,7 @@ var EditAppForm = {
    * Returns the reference to the `Panel Body` element (Selenium WebDriver
    * Element) from the Edit App page in the Portal app.
    *
-   * @returns {Selenium WebDriver Element}
+   * @returns {Object} Selenium WebDriver Element
    */
   getPanelBodyElem: function () {
     return element
@@ -514,13 +514,6 @@ var EditAppForm = {
       .sendKeys(value);
   },
 
-  setAccount: function (value) {
-    this
-      .getAccountDown()
-      .click();
-//TODO:
-  },
-
   setSDKKey: function (value) {
     var me = this;
     return me
@@ -846,39 +839,39 @@ var EditAppForm = {
   },
 
   /**
-   * ### EditAppForm.isEnabledVerify()
+   * ### EditAppForm.isVerifyBtnEnabled()
    *
    * Checks if Verify button is enabled in `Edit App` Page.
    *
    * @returns {Promise}
    */
-  isEnabledVerify: function () {
+  isVerifyBtnEnabled: function () {
     return this
       .getVerifyBtn()
       .isEnabled();
   },
 
   /**
-   * ### EditAppForm.isEnabledUpdate()
+   * ### EditAppForm.isUpdateBtnEnabled()
    *
    * Checks if Update button is enabled in `Edit App` Page.
    *
    * @returns {Promise}
    */
-  isEnabledUpdate: function () {
+  isUpdateBtnEnabled: function () {
     return this
       .getUpdateBtn()
       .isEnabled();
   },
 
   /**
-   * ### EditAppForm.isEnabledPublish()
+   * ### EditAppForm.isPublishBtnEnabled()
    *
    * Checks if Publish button is enabled in `Edit App` Page.
    *
    * @returns {Promise}
    */
-  isEnabledPublish: function () {
+  isPublishBtnEnabled: function () {
     return this
       .getPublishBtn()
       .isEnabled();

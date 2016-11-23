@@ -24,79 +24,90 @@ var Constants = require('./../../../page_objects/constants');
 describe('Functional', function () {
   describe('Delete user', function () {
 
-    var adminUser = config.get('portal.users.admin');
+    var users = [
+      config.get('portal.users.admin')
+    ];
+    var testUser;
 
-    beforeAll(function () {
-      Portal.signIn(adminUser);
-    });
+    users.forEach(function (user) {
 
-    afterAll(function () {
-      Portal.signOut();
-    });
+      describe('With user: ' + user.role, function () {
 
-    beforeEach(function () {
-      Portal.helpers.nav.goToUsers();
-    });
+        beforeAll(function () {
+          Portal.signIn(user);
+          Portal.helpers.nav.goToUsers();
+        });
 
-    afterEach(function () {
-    });
+        afterAll(function () {
+          Portal.signOut();
+        });
 
-    it('should delete successfully a user with "admin" role', function () {
-      var tom = DataProvider.generateUser('Tom');
-      tom.role = Constants.user.roles.USER;
-      Portal.createUser(tom);
-      Portal.userListPage.searchAndClickDelete(tom.email);
-      Portal.dialog.clickOk();
-      Portal.userListPage.searcher.setSearchCriteria(tom.email);
-      var tableRows = Portal.userListPage.table.getRows();
-      expect(tableRows.count()).toEqual(0);
-    });
+        beforeEach(function (done) {
+          Portal.helpers.users
+            .create()
+            .then(function (newUser) {
+              testUser = newUser;
+              Portal.userListPage.refresh();
+              done();
+            })
+            .catch(done);
+        });
 
-    it('should delete successfully a user with "user" role', function () {
-      var carl = DataProvider.generateUser('Carl');
-      carl.role = Constants.user.roles.ADMIN;
-      Portal.createUser(carl);
-      Portal.userListPage.searchAndClickDelete(carl.email);
-      Portal.dialog.clickOk();
-      Portal.userListPage.searcher.setSearchCriteria(carl.email);
-      var tableRows = Portal.userListPage.table.getRows();
-      expect(tableRows.count()).toEqual(0);
-    });
+        afterEach(function () {
+          testUser = undefined;
+        });
 
-    it('should confirm user deletion when clicking "Ok" button', function () {
-      var sam = DataProvider.generateUser('Sam');
-      Portal.createUser(sam);
-      Portal.userListPage.searchAndClickDelete(sam.email);
-      var okBtn = Portal.dialog.getOkBtn();
-      expect(okBtn.isDisplayed()).toBeTruthy();
-      Portal.dialog.clickOk();
-      Portal.userListPage.searcher.setSearchCriteria(sam.email);
-      var tableRows = Portal.userListPage.table.getRows();
-      expect(tableRows.count()).toEqual(0);
-    });
+        it('should delete successfully a user with "admin" role',
+          function () {
+            Portal.userListPage.searchAndClickDelete(testUser.email);
+            Portal.dialog.clickOk();
+            Portal.userListPage.searcher.setSearchCriteria(testUser.email);
+            var tableRows = Portal.userListPage.table.getRows();
+            expect(tableRows.count()).toEqual(0);
+          });
 
-    it('should cancel the deletion when clicking "Cancel" button', function () {
-      var bruce = DataProvider.generateUser('Bruce');
-      Portal.createUser(bruce);
-      Portal.userListPage.searchAndClickDelete(bruce.email);
-      var okBtn = Portal.dialog.getCancelBtn();
-      expect(okBtn.isDisplayed()).toBeTruthy();
-      Portal.dialog.clickCancel();
-      var tableRows = Portal.userListPage.table.getRows();
-      expect(tableRows.count()).toEqual(1);
-      Portal.userListPage.searchAndClickDelete(bruce.email);
-      Portal.dialog.clickOk();
-    });
+        it('should delete successfully a user with "user" role',
+          function () {
+            Portal.userListPage.searchAndClickDelete(testUser.email);
+            Portal.dialog.clickOk();
+            Portal.userListPage.searcher.setSearchCriteria(testUser.email);
+            var tableRows = Portal.userListPage.table.getRows();
+            expect(tableRows.count()).toEqual(0);
+          });
 
-    it('should cancel the deletion after pressing "ESCAPE" key', function () {
-      var bruce = DataProvider.generateUser('Bruce');
-      Portal.createUser(bruce);
-      Portal.userListPage.searchAndClickDelete(bruce.email);
-      Portal.dialog.getModalEl().sendKeys(protractor.Key.ESCAPE);
-      var tableRows = Portal.userListPage.table.getRows();
-      expect(tableRows.count()).toEqual(1);
-      Portal.userListPage.searchAndClickDelete(bruce.email);
-      Portal.dialog.clickOk();
+        it('should confirm user deletion when clicking "Ok" button',
+          function () {
+            Portal.userListPage.searchAndClickDelete(testUser.email);
+            var okBtn = Portal.dialog.getOkBtn();
+            expect(okBtn.isDisplayed()).toBeTruthy();
+            Portal.dialog.clickOk();
+            Portal.userListPage.searcher.setSearchCriteria(testUser.email);
+            var tableRows = Portal.userListPage.table.getRows();
+            expect(tableRows.count()).toEqual(0);
+          });
+
+        it('should cancel the deletion when clicking "Cancel" button',
+          function () {
+            Portal.userListPage.searchAndClickDelete(testUser.email);
+            var okBtn = Portal.dialog.getCancelBtn();
+            expect(okBtn.isDisplayed()).toBeTruthy();
+            Portal.dialog.clickCancel();
+            var tableRows = Portal.userListPage.table.getRows();
+            expect(tableRows.count()).toEqual(1);
+            Portal.userListPage.searchAndClickDelete(testUser.email);
+            Portal.dialog.clickOk();
+          });
+
+        it('should cancel the deletion after pressing "ESCAPE" key',
+          function () {
+            Portal.userListPage.searchAndClickDelete(testUser.email);
+            Portal.dialog.getModalEl().sendKeys(protractor.Key.ESCAPE);
+            var tableRows = Portal.userListPage.table.getRows();
+            expect(tableRows.count()).toEqual(1);
+            Portal.userListPage.searchAndClickDelete(testUser.email);
+            Portal.dialog.clickOk();
+          });
+      });
     });
   });
 });

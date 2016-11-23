@@ -34,7 +34,6 @@ describe('Smoke', function () {  // jshint ignore:line
     });
 
     afterAll(function () {
-      Portal.deleteAccounts([accountProfile]);
       Portal.signOut();
     });
 

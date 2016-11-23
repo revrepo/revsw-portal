@@ -18,182 +18,162 @@
 
 var config = require('config');
 var Portal = require('./../../../page_objects/portal');
-var DataProvider = require('./../../../common/providers/data');
-var Constants = require('./../../../page_objects/constants');
 
 describe('Boundary', function () {
   describe('Basic Edit App', function () {
 
-    var adminUser = config.get('portal.users.admin');
+    var users = [
+      config.get('portal.users.admin')
+    ];
+    var platforms = [
+      Portal.constants.mobileApps.platforms.android,
+      Portal.constants.mobileApps.platforms.ios
+    ];
     var length51Characters = new Array(52).join('x');
-    var platforms = Portal.constants.mobileApps.platforms;
-    var iosApps = DataProvider.generateMobileAppData(platforms.ios, 1);
-    var androidApps = DataProvider.generateMobileAppData(platforms.android, 1);
-    //var apps = iosApps.concat(androidApps);
-    var apps = iosApps;
+    var app;
 
-    beforeAll(function () {
-      Portal.signIn(adminUser);
-      Portal.createMobileApps(platforms.ios, iosApps);
-      Portal.createMobileApps(platforms.android, androidApps);
-    });
+    users.forEach(function (user) {
 
-    afterAll(function () {
-      Portal.deleteMobileApps(iosApps);
-      Portal.deleteMobileApps(androidApps);
-      Portal.signOut();
-    });
+      describe('With user: ' + user.role, function () {
 
-    beforeEach(function () {
-    });
+        platforms.forEach(function (platform) {
 
-    afterEach(function () {
-    });
+          describe('For platform: ' + platform, function () {
 
-    apps.forEach(function (app) {
-      var tempAppName = app.name;
+            beforeAll(function (done) {
+              Portal
+                .signIn(user)
+                .then(function () {
+                  return Portal.helpers.mobileApps
+                    .create({platform: platform})
+                    .then(function (newApp) {
+                      app = newApp;
+                      done();
+                    })
+                    .catch(done);
+                })
+                .catch(done);
+            });
 
-      /* Verify tests: */
+            afterAll(function () {
+              Portal.signOut();
+            });
 
-      it('should check "Verify" button is disabled when app name have more ' +
-        'than 51 characters - ' + app.platform, function () {
-        app.name = tempAppName;
-        Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
-        Portal.mobileApps.listPage.searchAndEdit(app);
-        app.name = length51Characters;
-        Portal.mobileApps.editPage.form.fill(app);
-        var enabled = Portal.mobileApps.editPage.form.isEnabledVerify();
-        expect(enabled).toBe(false);
-      });
+            it('should check "Verify" button is disabled when app name have more ' +
+              'than 51 characters.', function () {
+              Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+              Portal.mobileApps.listPage.searchAndEdit(app.name);
+              Portal.mobileApps.editPage.form.setAppName(length51Characters);
+              expect(Portal.mobileApps.editPage.form.isVerifyBtnEnabled()).toBe(false);
+            });
 
-      it('should click "Verify" button and validate app name with zero ' +
-        'characters - ' + app.platform, function () {
-        app.name = tempAppName;
-        Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
-        Portal.mobileApps.listPage.searchAndEdit(app);
-        app.name = '';
-        Portal.mobileApps.editPage.form.fill(app);
-        var enabled = Portal.mobileApps.editPage.form.isEnabledVerify();
-        expect(enabled).toBe(false);
-      });
+            it('should click "Verify" button and validate app name with zero ' +
+              'characters.', function () {
+              Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+              Portal.mobileApps.listPage.searchAndEdit(app.name);
+              Portal.mobileApps.editPage.form.setAppName('');
+              var enabled = Portal.mobileApps.editPage.form.isVerifyBtnEnabled();
+              expect(enabled).toBe(false);
+            });
 
-      it('should click "Verify" button and validate app name with empty ' +
-        'and space characters - ' + app.platform, function () {
-        app.name = tempAppName;
-        Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
-        Portal.mobileApps.listPage.searchAndEdit(app);
-        app.name = '       ';
-        Portal.mobileApps.editPage.form.fill(app);
-        var enabled = Portal.mobileApps.editPage.form.isEnabledVerify();
-        expect(enabled).toBe(false);
-      });
+            it('should click "Verify" button and validate app name with empty ' +
+              'and space characters.', function () {
+              Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+              Portal.mobileApps.listPage.searchAndEdit(app.name);
+              Portal.mobileApps.editPage.form.setAppName('       ');
+              var enabled = Portal.mobileApps.editPage.form.isVerifyBtnEnabled();
+              expect(enabled).toBe(false);
+            });
 
-      it('should click "Verify" button and validate app name with special ' +
-        'characters - ' + app.platform, function () {
-        app.name = tempAppName;
-        Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
-        Portal.mobileApps.listPage.searchAndEdit(app);
-        app.name = '& ^ $ @ # % ( ) _ +  / \\ ~ ` , . ; :';
-        Portal.mobileApps.editPage.form.fill(app);
-        var enabled = Portal.mobileApps.editPage.form.isEnabledVerify();
-        expect(enabled).toBe(false);
-      });
+            it('should click "Verify" button and validate app name with special ' +
+              'characters.', function () {
+              Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+              Portal.mobileApps.listPage.searchAndEdit(app.name);
+              Portal.mobileApps.editPage.form
+                .setAppName('& ^ $ @ # % ( ) _ +  / \\ ~ ` , . ; :');
+              var enabled = Portal.mobileApps.editPage.form.isVerifyBtnEnabled();
+              expect(enabled).toBe(false);
+            });
 
-      /* Update tests: */
+            /* Update tests: */
 
-      it('should check "Update" button is disabled when app name have more ' +
-        'than 51 characters - ' + app.platform, function () {
-        app.name = tempAppName;
-        Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
-        Portal.mobileApps.listPage.searchAndEdit(app);
-        app.name = length51Characters;
-        Portal.mobileApps.editPage.form.fill(app);
+            it('should check "Update" button is disabled when app name have more ' +
+              'than 51 characters.', function () {
+              Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+              Portal.mobileApps.listPage.searchAndEdit(app.name);
+              Portal.mobileApps.editPage.form.setAppName(length51Characters);
+              var enabled = Portal.mobileApps.editPage.form.isVerifyBtnEnabled();
+              expect(enabled).toBe(false);
+            });
 
-        var enabled = Portal.mobileApps.editPage.form.isEnabledVerify();
-        expect(enabled).toBe(false);
-      });
+            it('should click "Update" button and validate app name with zero ' +
+              'or none characters.', function () {
+              Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+              Portal.mobileApps.listPage.searchAndEdit(app.name);
+              Portal.mobileApps.editPage.form.setAppName('');
+              var enabled = Portal.mobileApps.editPage.form.isUpdateBtnEnabled();
+              expect(enabled).toBe(false);
+            });
 
-      it('should click "Update" button and validate app name with zero ' +
-        'or none characters - ' + app.platform, function () {
-        app.name = tempAppName;
-        Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
-        Portal.mobileApps.listPage.searchAndEdit(app);
-        app.name = '';
-        Portal.mobileApps.editPage.form.fill(app);
-        var enabled = Portal.mobileApps.editPage.form.isEnabledUpdate();
-        expect(enabled).toBe(false);
-      });
+            it('should click "Update" button and validate app name with empty ' +
+              'and space characters.', function () {
+              Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+              Portal.mobileApps.listPage.searchAndEdit(app.name);
+              Portal.mobileApps.editPage.form.setAppName('       ');
+              var enabled = Portal.mobileApps.editPage.form.isUpdateBtnEnabled();
+              expect(enabled).toBe(false);
+            });
 
-      it('should click "Update" button and validate app name with empty ' +
-        'and space characters - ' + app.platform, function () {
-        app.name = tempAppName;
-        Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
-        Portal.mobileApps.listPage.searchAndEdit(app);
-        app.name = '       ';
-        Portal.mobileApps.editPage.form.fill(app);
-        var enabled = Portal.mobileApps.editPage.form.isEnabledUpdate();
-        expect(enabled).toBe(false);
-      });
+            it('should click "Update" button and validate app name with special ' +
+              'characters.', function () {
+              Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+              Portal.mobileApps.listPage.searchAndEdit(app.name);
+              Portal.mobileApps.editPage.form
+                .setAppName('& ^ $ @ # % ( ) _ +  / \\ ~ ` , . ; :');
+              var enabled = Portal.mobileApps.editPage.form.isUpdateBtnEnabled();
+              expect(enabled).toBe(false);
+            });
 
-      it('should click "Update" button and validate app name with special ' +
-        'characters - ' + app.platform, function () {
-        app.name = tempAppName;
-        Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
-        Portal.mobileApps.listPage.searchAndEdit(app);
-        app.name = '& ^ $ @ # % ( ) _ +  / \\ ~ ` , . ; :';
-        Portal.mobileApps.editPage.form.fill(app);
-        var enabled = Portal.mobileApps.editPage.form.isEnabledUpdate();
-        expect(enabled).toBe(false);
-      });
+            /* Publish tests: */
 
-      /* Publish tests: */
+            it('should check "Publish" button is disabled when app name have more ' +
+              'than 51 characters.', function () {
+              Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+              Portal.mobileApps.listPage.searchAndEdit(app.name);
+              Portal.mobileApps.editPage.form.setAppName(length51Characters);
+              var enabled = Portal.mobileApps.editPage.form.isPublishBtnEnabled();
+              expect(enabled).toBe(false);
+            });
 
-      it('should check "Publish" button is disabled when app name have more ' +
-        'than 51 characters - ' + app.platform, function () {
-        app.name = tempAppName;
-        Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
-        Portal.mobileApps.listPage.searchAndEdit(app);
-        app.name = length51Characters;
-        Portal.mobileApps.editPage.form.fill(app);
+            it('should click "Publish" button and validate app name with zero ' +
+              'characters.', function () {
+              Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+              Portal.mobileApps.listPage.searchAndEdit(app.name);
+              Portal.mobileApps.editPage.form.setAppName('');
+              var enabled = Portal.mobileApps.editPage.form.isPublishBtnEnabled();
+              expect(enabled).toBe(false);
+            });
 
-        var enabled = Portal.mobileApps.editPage.form.isEnabledPublish();
-        expect(enabled).toBe(false);
-      });
+            it('should click "Publish" button and validate app name with empty ' +
+              'and space characters.', function () {
+              Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+              Portal.mobileApps.listPage.searchAndEdit(app.name);
+              Portal.mobileApps.editPage.form.setAppName('       ');
+              var enabled = Portal.mobileApps.editPage.form.isPublishBtnEnabled();
+              expect(enabled).toBe(false);
+            });
 
-      it('should click "Publish" button and validate app name with zero ' +
-        'characters - ' + app.platform, function () {
-        app.name = tempAppName;
-        Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
-        Portal.mobileApps.listPage.searchAndEdit(app);
-        app.name = '';
-        Portal.mobileApps.editPage.form.fill(app);
-
-        var enabled = Portal.mobileApps.editPage.form.isEnabledPublish();
-        expect(enabled).toBe(false);
-      });
-
-      it('should click "Publish" button and validate app name with empty ' +
-        'and space characters - ' + app.platform, function () {
-        app.name = tempAppName;
-        Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
-        Portal.mobileApps.listPage.searchAndEdit(app);
-        app.name = '       ';
-        Portal.mobileApps.editPage.form.fill(app);
-
-        var enabled = Portal.mobileApps.editPage.form.isEnabledPublish();
-        expect(enabled).toBe(false);
-      });
-
-      it('should click "Publish" button and validate app name with special ' +
-        'characters - ' + app.platform, function () {
-        app.name = tempAppName;
-        Portal.helpers.nav.goToMobileAppsMenuItem(app.platform);
-        Portal.mobileApps.listPage.searchAndEdit(app);
-        app.name = '& ^ $ @ # % ( ) _ +  / \\ ~ ` , . ; :';
-        Portal.mobileApps.editPage.form.fill(app);
-
-        var enabled = Portal.mobileApps.editPage.form.isEnabledPublish();
-        expect(enabled).toBe(false);
+            it('should click "Publish" button and validate app name with special ' +
+              'characters.', function () {
+              Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+              Portal.mobileApps.listPage.searchAndEdit(app.name);
+              Portal.mobileApps.editPage.form
+                .setAppName('& ^ $ @ # % ( ) _ +  / \\ ~ ` , . ; :');
+              var enabled = Portal.mobileApps.editPage.form.isPublishBtnEnabled();
+              expect(enabled).toBe(false);
+            });
+          });
+        });
       });
     });
   });

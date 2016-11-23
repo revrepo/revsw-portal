@@ -26,7 +26,6 @@ var Portal = require('./../../../page_objects/portal');
 // Requiring Data Provider to generate test data. In this case we need it to
 // generate test user data
 var DataProvider = require('./../../../common/providers/data');
-var Constants = require('./../../../page_objects/constants');
 
 // Defining smoke suite
 describe('Smoke', function () {
@@ -51,32 +50,30 @@ describe('Smoke', function () {
           Portal.helpers.nav.goToDNSZones();
         });
 
-        afterAll(function () {
-          Portal.signOut();
-        });
-
-        beforeEach(function () {
-        });
-
-        afterEach(function () {
+        afterAll(function (done) {
+          Portal.helpers.dnsZones
+            .cleanup()
+            .then(function () {
+              Portal.signOut();
+              done();
+            })
+            .catch(done);
         });
 
         it('should display delete DNS Zone button', function () {
           var zone = DataProvider.generateDNSZoneData();
-
           Portal.createDNSZone(zone);
           var deleteButton = Portal.dnsZones.listPage.table
             .getFirstRow()
             .getDeleteBtn();
           expect(deleteButton.isDisplayed()).toBeTruthy();
-          Portal.deleteDNSZone(zone);
         });
 
         it('should allow to delete DNS Zone', function () {
           var zone = DataProvider.generateDNSZoneData();
-
           Portal.createDNSZone(zone);
-          Portal.deleteDNSZone(zone);
+          Portal.dnsZones.listPage.searchAndClickDelete(zone.domain);
+          Portal.dialog.clickOk();
           Portal.dnsZones.listPage.searcher.setSearchCriteria(zone.domain);
           var tableRows = Portal.dnsZones.listPage.table.getRows();
           expect(tableRows.count()).toEqual(0);
@@ -85,12 +82,13 @@ describe('Smoke', function () {
         it('should display a confirmation message when deleting a DNS Zone',
           function () {
             var zone = DataProvider.generateDNSZoneData();
-
             Portal.createDNSZone(zone);
-            Portal.deleteDNSZone(zone);
-            expect(Portal.alerts.getAll().count()).toEqual(1);
-            expect(Portal.alerts.getFirst().getText())
-              .toContain('Successfully deleted the DNS zone');
+            Portal.deleteDNSZone(zone, function() {            
+              expect(Portal.alerts.getAll().count()).toEqual(1);
+              expect(Portal.alerts.getFirst().getText())
+                .toContain('Successfully deleted the DNS zone');
+            });
+            
           });
       });
     });

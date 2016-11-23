@@ -36,9 +36,6 @@ describe('Functional', function () {
       Portal.signOut();
     });
 
-    beforeEach(function () {
-    });
-
     it('should verify that "Purge" button is disabled if the input text area is empty',
       function () {
         var dataPurge = DataProvider.generatePurgeCachedInfo();

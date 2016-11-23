@@ -58,11 +58,13 @@ describe('Functional', function () {
             var appNameToSearch = buildPrefix(user, platform) + '10';
             Portal.mobileApps.listPage.searcher
               .setSearchCriteria(appNameToSearch);
-            var allRows = Portal.mobileApps.listPage.table.countTotalRows();
+            var allRows = Portal.mobileApps.listPage.table
+              .getRows()
+              .count();
             expect(allRows).toEqual(1);
             var appNameDisplayed = Portal.mobileApps.listPage.table
               .getFirstRow()
-              .name;
+              .getName();
             expect(appNameDisplayed).toEqual(appNameToSearch);
           });
 
@@ -70,7 +72,7 @@ describe('Functional', function () {
           function () {
             var appNameToSearch = Portal.mobileApps.listPage.table
               .getFirstRow()
-              .name;
+              .getName();
             Portal.mobileApps.listPage.searcher
               .setSearchCriteria(appNameToSearch);
             Portal.mobileApps.listPage.searcher.clickReset();
@@ -85,11 +87,13 @@ describe('Functional', function () {
             Portal.mobileApps.listPage.searcher
               .setSearchCriteria(appNameToSearch);
             var totalRows = Portal.mobileApps.listPage.table
-              .countTotalRows();
+              .getRows()
+              .count();
             expect(totalRows).toEqual(1);
             Portal.mobileApps.listPage.searcher.clickReset();
             var newTotalRows = Portal.mobileApps.listPage.table
-              .countTotalRows();
+              .getRows()
+              .count();
             expect(newTotalRows).not.toEqual(totalRows);
             expect(newTotalRows).toBeGreaterThan(totalRows);
           });

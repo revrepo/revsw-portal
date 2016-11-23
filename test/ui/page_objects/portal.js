@@ -1011,7 +1011,7 @@ var Portal = {
    *
    * @returns {Object} Promise
    */
-  deleteLogShippingJob: function (logShippingJob) {
+  deleteLogShippingJob: function (logShippingJob, cb) {
     var me = this;
     return browser.getCurrentUrl().then(function (initialUrl) {
       me.helpers.nav.goToLogShipping();
@@ -1020,7 +1020,9 @@ var Portal = {
       me.logShipping.listPage.table
           .getFirstRow()
           .clickDelete();
-      me.dialog.clickOk();
+      me.dialog.clickOk().then(function() {
+        if (cb) cb();
+      });
       browser.getCurrentUrl().then(function (currentUrl) {
         if (initialUrl !== currentUrl) {
           browser.get(initialUrl);
@@ -1109,7 +1111,9 @@ var Portal = {
       me.dnsZones.listPage.table
         .getFirstRow()
         .clickDelete();
-      me.dialog.clickOk();
+      me.dialog.clickOk().then(function() {
+        if (cb) cb();
+      });
       browser.getCurrentUrl().then(function (currentUrl) {
         if (initialUrl !== currentUrl) {
           browser.get(initialUrl);

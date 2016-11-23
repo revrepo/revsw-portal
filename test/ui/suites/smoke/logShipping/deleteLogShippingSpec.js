@@ -81,20 +81,37 @@ describe('Smoke', function () {
                     expect(tableRows.count()).toEqual(0);
                 });
 
-                it('should display a confirmation message when deleting a Log Shipping Job',
-                    function () {
-                        var job = DataProvider.generateLogShippingJobData();
+                it('should show a confirmation block when deleting a Log Shipping Job',
+                function () {
+                  var job = DataProvider.generateLogShippingJobData();
 
-                        if (user.role === 'Reseller'){
-                            job.account = ['API QA Reseller Company'];
-                        }
+                  if (user.role === 'Reseller'){
+                      job.account = ['API QA Reseller Company'];
+                  }
 
-                        Portal.createLogShippingJob(job);
-                        Portal.deleteLogShippingJob(job);
-                        expect(Portal.alerts.getAll().count()).toEqual(1);
-                        expect(Portal.alerts.getFirst().getText())
-                            .toContain('Successfully deleted the log shipping job');
-                    });
+                  Portal.createLogShippingJob(job);
+                  Portal.deleteLogShippingJob(job, function() {
+                    expect(Portal.alerts.getAll().count()).toEqual(1);
+                  });
+
+                });
+
+                it('block should contain a confirmation message when deleting a Log Shipping Job',
+                function () {
+                  var job = DataProvider.generateLogShippingJobData();
+
+                  if (user.role === 'Reseller'){
+                      job.account = ['API QA Reseller Company'];
+                  }
+
+                  Portal.createLogShippingJob(job);
+                  Portal.deleteLogShippingJob(job, function() {
+                    expect(Portal.alerts.getFirst().getText())
+                        .toContain('Successfully deleted the log shipping job');
+                  });
+                  
+                });
+
             });
         });
     });
