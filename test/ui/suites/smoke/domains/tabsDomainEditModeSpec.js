@@ -35,16 +35,13 @@ describe('Smoke', function () {
         });
 
         it('should display Edit Domain page', function () {
-          element.all(by.css('#anchor0 td:first-child a[uib-tooltip="Edit Domain"]')).click();
-          element.all(by.css('.page-title strong')).getText().then(function(value) {
-            expect(element(by.binding('modelInfo.domain_name')).getText()).toEqual(value[0]);
-          });
+          Portal.domains.editPage.clickEditDomain();
+          expect(Portal.domains.editPage.isDisplayed()).toEqual(true);
         });
 
         it('should display tabs to Edit Domain page', function () {
-          element.all(by.css('#anchor0 td:first-child a[uib-tooltip="Edit Domain"]')).click();
-          var lastTab = element.all(by.css('.nav-tabs li:last-child'));
-          expect(lastTab.getAttribute('index')).toEqual(['5']);
+          Portal.domains.editPage.clickEditDomain();
+          expect(Portal.domains.editPage.getAllTabsCountDomain()).toEqual('5');
         });
 
       });
