@@ -83,11 +83,12 @@ describe('Smoke', function () {
           function () {
             var zone = DataProvider.generateDNSZoneData();
             Portal.createDNSZone(zone);
-            Portal.dnsZones.listPage.searchAndClickDelete(zone.domain);
-            Portal.dialog.clickOk();
-            expect(Portal.alerts.getAll().count()).toEqual(1);
-            expect(Portal.alerts.getFirst().getText())
-              .toContain('Successfully deleted the DNS zone');
+            Portal.deleteDNSZone(zone, function() {            
+              expect(Portal.alerts.getAll().count()).toEqual(1);
+              expect(Portal.alerts.getFirst().getText())
+                .toContain('Successfully deleted the DNS zone');
+            });
+            
           });
       });
     });
