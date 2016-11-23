@@ -68,7 +68,7 @@ describe('Smoke', function () {
           expect(deleteButton.isDisplayed()).toBeTruthy();
         });
 
-        it('should allow to delete SSL Name', function () {
+        xit('should allow to delete SSL Name', function () {
           var sslName = DataProvider.generateSSLNameData();
           Portal.createSSLName(sslName);
           Portal.sslNames.listPage.searchAndClickDelete(sslName.domainName);
@@ -80,7 +80,7 @@ describe('Smoke', function () {
           expect(tableRows.count()).toEqual(0);
         });
 
-        it('should display a confirmation message when deleting a SSL Name',
+        xit('should display a confirmation message when deleting a SSL Name',
           function () {
             var sslName = DataProvider.generateSSLNameData();
             Portal.createSSLName(sslName);
