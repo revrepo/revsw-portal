@@ -49,6 +49,19 @@
   </div>
 </script>
 <!-- -->
+<script type="text/ng-template" id="confirmWelcomeInfoModal.html">
+  <div class="modal-header">
+    <h3 class="modal-title">Welcome!</h3>
+  </div>
+  <div class="modal-body">
+    <p>Welcome to the RevAPM customer portal. In order to use the platform we kindly ask you to provide necessary customer contact information.</p>
+    <p> Please click OK and fill out the provided form.</p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+  </div>
+</script>
+<!-- -->
 <script type="text/ng-template" id="confirmCreateBillingProfileModal.html">
   <div class="modal-header">
     <h3 class="modal-title">Confirm</h3>
@@ -352,7 +365,7 @@
             <hr>
             <div class="form-group">
               <div class="col-sm-offset-2 col-sm-10">
-                <a ui-sref="^" ng-disabled="_loading" class="btn btn-default">
+                <a ui-sref="^" ng-disabled="_loading" class="btn btn-default" ng-hide="isAskedContactInfo">
                   <i class="glyphicon glyphicon-remove"></i>&nbsp; Cancel
                 </a>
                 <button type="submit" class="btn btn-success" ng-disabled="_loading || _disabled || !editForm.$valid" value="Update Company Profile">

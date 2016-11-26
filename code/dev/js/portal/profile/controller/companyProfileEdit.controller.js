@@ -18,6 +18,7 @@
     $injector,
     $state,
     $config,
+    $localStorage,
     $stateParams,
     DNSZones) {
     $scope.countries = Countries.query();
@@ -38,7 +39,6 @@
 
     $scope.user = User.getUser();
     $scope.user.isAdmin = User.isAdmin();
-    // console.log($scope.user.access_control_list.readOnly)
     $scope._disabled = ($scope.user.access_control_list.readOnly) ? $scope.user.access_control_list.readOnly : false;
     $injector.invoke(CRUDController, this, {
       $scope: $scope,
@@ -77,6 +77,12 @@
             }, company)
             .then(function(data) {
               $scope.alertService.success('Successfully updated company profile');
+            })
+            .then(function() {
+              if ($scope.isAskedContactInfo) {
+                $scope.alertService.clear();
+                $scope.$emit('user.fill_company_profile');
+              }
             })
             .catch($scope.alertService.danger)
             .finally(function() {
@@ -132,8 +138,10 @@
           User.getUserDomains(true),
           Apps.query().$promise,
           BillingPlans.get({
-          id: company.billing_plan}).$promise,
-          DNSZones.query().$promise]).then(
+            id: company.billing_plan
+          }).$promise,
+          DNSZones.query().$promise
+        ]).then(
           function(results) {
             var _model = {
               company: company,
@@ -141,7 +149,7 @@
               apps: results[1],
               bp: results[2],
               dnszones: results[3],
-              isCanBeDeleted: (results[0].length === 0 && results[1].length === 0 && results[3] === 0) ? true : false
+              isCanBeDeleted: (results[0].length === 0 && results[1].length === 0 && results[3].length === 0) ? true : false
             };
             $scope.confirm('confirmDeleteModal.html', _model)
               .then(function(data) {
@@ -180,13 +188,34 @@
      */
     $scope.isCanDeleteCompanyProfile = function() {
       var model = $scope.model;
-      if(!model){
+      if (!model) {
         return false;
       }
       return (model.self_registered === true && model.billing_plan.length > 0 &&
         (model.subscription_state === 'trialing' ||
           (model.subscription_state !== 'trialing' && model.valid_payment_method_configured === true)));
     };
+    $scope.isAskedContactInfo = $localStorage.isNeedContactInfo;
+    /**
+     * @name  welcomeInfo
+     * @description
+     *
+     *   Welcome information for user
+     *
+     * @return
+     */
+    $scope.welcomeInfo = function() {
+      var data = {};
+      var isNeedContactInfo = $localStorage.isNeedContactInfo;
+      if (isNeedContactInfo === true) {
+        $scope.confirm('confirmWelcomeInfoModal.html', data)
+          .then(function() {
+            $localStorage.isNeedContactInfo = false;
+          });
+      }
+    };
+
+    $scope.welcomeInfo();
 
   }
 })();

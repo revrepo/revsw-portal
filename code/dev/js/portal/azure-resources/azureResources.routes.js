@@ -9,10 +9,10 @@
   function routesConfig($stateProvider) {
     $stateProvider
       .state('index.azureMarketplace.resources', {
-        url: '/resources?subscriptionId',
+        url: '/resources',
         views: {
           main: {
-            controller: 'AzureResourcesController',
+            controller: 'AzureResourcesCrudController',
             templateUrl: 'parts/azure-resources/list.html'
           }
         }

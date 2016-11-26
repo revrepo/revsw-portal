@@ -5,7 +5,7 @@
      .module('revapm.Portal.Dashboard')
      .controller('DashdoardController', DashdoardController);
 
-   function DashdoardController($scope, $state, $window, $interval, $timeout, $config, $localStorage, DashboardSrv, $stateParams, AlertService) {
+   function DashdoardController($scope, $rootScope, $state, $window, $interval, $timeout, $config, $localStorage, DashboardSrv, $stateParams, AlertService) {
      'ngInject';
      var vm = this;
 
@@ -110,7 +110,7 @@
        },
        function(newVal, oldVal) {
          if (newVal !== oldVal && newVal === true) {
-          $timeout(function() {
+           $timeout(function() {
              vm.model.refreshNow = false;
            }, $config.REFRESH_NOW_TIMEOUT);
 
@@ -184,5 +184,31 @@
        });
        return wc;
      };
+     // NOTE: auto start Intor.js in dashboard page(state)
+     var timeout_ = null;
+     if (!!timeout_) {
+       $timeout.cancel(timeout_);
+     }
+
+     if ($config.INTRO_IS_ACTIVE) {
+       var intro = $localStorage.intro || { isShowMainIntro: false, isSkipIntro: false };
+       if ((intro.isShowMainIntro === false || intro.isShowMainIntro === 'false') && intro.isSkipIntro === false) {
+         // NOTE: open menu items
+         ['index.apps', 'index.reports', 'index.webApp', 'index.accountSettings'].forEach(function(menuState) {
+           $rootScope.menuExpandedNodes[menuState] = true;
+         });
+
+         timeout_ = $timeout(function() {
+           $scope.introOpen();
+           $localStorage.intro = intro;
+         }, 2000);
+       }
+     }
+     // NOTE: user skip intor on this session work
+     vm.onIntroSkipEvent = function() {
+       intro.isSkipIntro = true;
+       $localStorage.intro = intro;
+     };
+
    }
  })();

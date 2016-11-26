@@ -18,7 +18,6 @@
 
 var config = require('config');
 var Portal = require('./../../../page_objects/portal');
-var Constants = require('./../../../page_objects/constants');
 var DataProvider = require('./../../../common/providers/data');
 
 describe('Smoke', function () {
@@ -38,19 +37,18 @@ describe('Smoke', function () {
       describe('Zone Records list', function () {
 
         beforeAll(function () {
-          Portal.load();//TODO: Got the problem when tests are failed when executed all in one scope
-                        //Looks like it is not reproducible when doing Portal.load() before SignIn
-                        //SignIn func needs to be investigated
-
+          Portal.load();
           Portal.signIn(user);
         });
 
-        afterAll(function () {
-          Portal.signOut();
-        });
-
-        beforeEach(function () {
-
+        afterAll(function (done) {
+          Portal.helpers.dnsZones
+            .cleanup()
+            .then(function () {
+              Portal.signOut();
+              done();
+            })
+            .catch(done);
         });
 
         it('should be displayed when clicking "Manage Records" button on DNS Zone entity',
@@ -58,14 +56,12 @@ describe('Smoke', function () {
             Portal.helpers.nav.goToDNSZones();
             var zone = DataProvider.generateDNSZoneData();
             Portal.createDNSZone(zone);
-
             Portal.dnsZones.listPage.searcher.clearSearchCriteria();
             Portal.dnsZones.listPage.searcher.setSearchCriteria(zone.domain);
             Portal.dnsZones.listPage.table
               .getFirstRow()
               .clickManageRecords();
             expect(Portal.zoneRecords.listPage.isDisplayed()).toBeTruthy();
-            Portal.deleteDNSZone(zone);
           });
 
         it('should be displayed when "Back to list" button is clicked from ' +
@@ -74,17 +70,14 @@ describe('Smoke', function () {
             Portal.helpers.nav.goToDNSZones();
             var zone = DataProvider.generateDNSZoneData();
             Portal.createDNSZone(zone);
-
             Portal.dnsZones.listPage.searcher.clearSearchCriteria();
             Portal.dnsZones.listPage.searcher.setSearchCriteria(zone.domain);
             Portal.dnsZones.listPage.table
               .getFirstRow()
               .clickManageRecords();
-
             Portal.zoneRecords.listPage.clickAddNewRecord();
             Portal.zoneRecords.addPage.clickBackToList();
             expect(Portal.zoneRecords.listPage.isDisplayed()).toBeTruthy();
-            Portal.deleteDNSZone(zone);
           });
 
         it('should be displayed when "Cancel" button is clicked from ' +
@@ -93,17 +86,14 @@ describe('Smoke', function () {
             Portal.helpers.nav.goToDNSZones();
             var zone = DataProvider.generateDNSZoneData();
             Portal.createDNSZone(zone);
-
             Portal.dnsZones.listPage.searcher.clearSearchCriteria();
             Portal.dnsZones.listPage.searcher.setSearchCriteria(zone.domain);
             Portal.dnsZones.listPage.table
               .getFirstRow()
               .clickManageRecords();
-
             Portal.zoneRecords.listPage.clickAddNewRecord();
             Portal.zoneRecords.addPage.clickCancel();
             expect(Portal.zoneRecords.listPage.isDisplayed()).toBeTruthy();
-            Portal.deleteDNSZone(zone);
           });
       });
     });

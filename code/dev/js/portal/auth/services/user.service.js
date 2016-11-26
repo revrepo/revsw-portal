@@ -6,7 +6,7 @@
     .factory('User', User);
 
   /*@ngInject*/
-  function User($localStorage, $http, $config, $q, DomainsConfig) {
+  function User($localStorage, $http, $config, $q, DomainsConfig, $auth) {
 
     /**
      * List of Users domains
@@ -40,10 +40,20 @@
      * Clear all details from localstorage
      */
     function clearAll() {
-      if (!localStorage) {
+      if (!$localStorage || $localStorage.intro === undefined) {
         return;
       }
-      localStorage.clear();
+      var intro_ = $localStorage.intro;
+      intro_.isSkipIntro = false;
+      $localStorage.$reset({
+        user: null,
+        isLoggedIn: false,
+        isCAdmin: false,
+        last_user_id: null,
+        selectedAccount: null,
+        selectedApplication: null,
+        intro: intro_
+      });
     }
 
     /**
@@ -137,6 +147,21 @@
               }
               return data;
             }
+
+    function  authenticate(provider) {
+     return $auth.authenticate(provider).then(function (data) {
+        if (data.status === $config.STATUS.OK) {
+          setToken(data.data.token);
+          addAuthHeaderForAPI(data.data.token);
+          return $http.get($config.API_URL + '/users/myself')
+            .then(_successGetUserMyself );
+        }
+        return data;
+      }).catch(function (err) {
+        clearAuthHeaderForAPI();
+        return $q.reject(err);
+      });
+    }
     /**
      * Method to login
      *
@@ -240,7 +265,7 @@
      * @returns {boolean}
      */
     function hasBillingPlan() {
-      var account = getSelectedAccount();
+      var account = getSelectedAccount() || {};
       return Boolean(account.billing_plan);
     }
 
@@ -453,7 +478,7 @@
             }
           })
           .catch( function( err ) {
-            console.log( err );
+            // console.log( err );
           });
       });
     }
@@ -578,7 +603,9 @@
 
       deleteAccountProfile: deleteAccountProfile,
 
-      authAzureSSO: authAzureSSO
+      authAzureSSO: authAzureSSO,
+
+      authenticate: authenticate
     };
   }
 })();

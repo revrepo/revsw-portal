@@ -26,7 +26,6 @@ var Portal = require('./../../../page_objects/portal');
 // Requiring Data Provider to generate test data. In this case we need it to
 // generate test user data
 var DataProvider = require('./../../../common/providers/data');
-var Constants = require('./../../../page_objects/constants');
 
 // Defining smoke suite
 describe('Smoke', function () {
@@ -47,75 +46,57 @@ describe('Smoke', function () {
       describe('Delete DNS Zone Record', function () {
 
         beforeAll(function () {
-          Portal.load();//TODO: Got the problem when tests are failed when executed all in one scope
-                        //Looks like it is not reproducible when doing Portal.load() before SignIn
-                        //SignIn func needs to be investigated
+          Portal.load();
           Portal.signIn(user);
           Portal.helpers.nav.goToDNSZones();
         });
 
-        afterAll(function () {
-          Portal.signOut();
-        });
-
-        beforeEach(function () {
-        });
-
-        afterEach(function () {
+        afterAll(function (done) {
+          Portal.helpers.dnsZones
+            .cleanup()
+            .then(function () {
+              Portal.signOut();
+              done();
+            })
+            .catch(done);
         });
 
         it('should display delete DNS Zone Record button', function () {
           var zone = DataProvider.generateDNSZoneData();
           Portal.createDNSZone(zone);
-          Portal.goToDNSZoneRecords(zone);
-
+          Portal.openDNSZoneRecords(zone);
           var deleteButton = Portal.zoneRecords.listPage.table
             .getFirstRow()
             .getDeleteBtn();
-
           expect(deleteButton.isDisplayed()).toBeTruthy();
-
-          Portal.deleteDNSZone(zone);
         });
 
         it('should allow to delete DNS Zone Record', function () {
           var zone = DataProvider.generateDNSZoneData();
-
           Portal.createDNSZone(zone);
-          Portal.goToDNSZoneRecords(zone);
-
+          Portal.openDNSZoneRecords(zone);
           var deleteButton = Portal.zoneRecords.listPage.table
             .getFirstRow()
             .getDeleteBtn();
-
           deleteButton.click();
           Portal.dialog.clickOk();
-
           var tableRows = Portal.dnsZones.listPage.table.getRows();
           expect(tableRows.count()).toEqual(0);
-
-          Portal.deleteDNSZone(zone);
         });
 
         it('should display a confirmation message when deleting a DNS Zone record',
           function () {
             var zone = DataProvider.generateDNSZoneData();
-
             Portal.createDNSZone(zone);
-            Portal.goToDNSZoneRecords(zone);
-
+            Portal.openDNSZoneRecords(zone);
             var deleteButton = Portal.zoneRecords.listPage.table
               .getFirstRow()
               .getDeleteBtn();
-
             deleteButton.click();
             Portal.dialog.clickOk();
-
             expect(Portal.alerts.getAll().count()).toEqual(1);
             expect(Portal.alerts.getFirst().getText())
               .toContain('Successfully deleted the DNS zone record');
-
-            Portal.deleteDNSZone(zone);
           });
       });
     });

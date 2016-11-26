@@ -223,8 +223,11 @@
         'suspended': 'Suspended',
         'paused': 'Paused',
         'failed_to_create': 'Failed To Create',
+      },
+      OAUTH: {
+        GOOGLE_CLIENT_ID: '673633214510-oaj5a4e1vo7fnspj87vth3o81275vr3f.apps.googleusercontent.com',
+        GITHUB_CLIENT_ID: '4ee21d3f0ff9b112dc0e'
       }
-
     });
 
 })(angular, window);

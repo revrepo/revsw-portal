@@ -36,8 +36,7 @@
         views: {
           layout: {
             templateUrl: 'parts/layout.html',
-            controller: /*ngInject*/ function($scope, $state, $window, User) {
-
+            controller: /*ngInject*/ function($scope, $rootScope, $state, $window, $timeout, $config, $localStorage, User) {
               resizeBinding($scope, $window);
               $scope.toggle = function() {
                 $scope.isHide = $scope.isHide === false ? true : false;

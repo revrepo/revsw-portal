@@ -60,13 +60,11 @@ describe('Functional', function () {
     // });
 
 
-    //  ---------------------------------
     it('should get title "Domains Usage" from Usage Report page', function() {
       var title = Portal.billing.usageReportDomainsPage.getTitle();
       expect(title).toEqual('Domains Usage');
     });
 
-    //  ---------------------------------
     it('should contain testing domains data', function() {
       rows = testDomains.map( function( domain ) {
         var r = Portal.billing.usageReportDomainsPage.getDomainRows( domain );
@@ -81,7 +79,6 @@ describe('Functional', function () {
       expect(rows.length).toEqual(testDomains.length);
     });
 
-    //  ---------------------------------
     it('should contain correct total hits num', function() {
 
       rows.forEach( function( r ) {
@@ -95,7 +92,6 @@ describe('Functional', function () {
 
     });
 
-    //  ---------------------------------
     it('should contain correct sent traffic volume', function() {
 
       var unit = parseInt( config.get( 'portal.usageReport.sent_unit' ) );
@@ -110,7 +106,6 @@ describe('Functional', function () {
 
     });
 
-    //  ---------------------------------
     it('should contain correct received traffic volume', function() {
 
       var unit = parseInt( config.get( 'portal.usageReport.received_unit' ) );
@@ -125,7 +120,6 @@ describe('Functional', function () {
 
     });
 
-    //  ---------------------------------
     it('should contain correct cache HIT/MISS hits number', function() {
 
       rows.forEach( function( r ) {
@@ -146,7 +140,6 @@ describe('Functional', function () {
 
     });
 
-    //  ---------------------------------
     it('should contain correct HTTP/HTTPS hits number', function() {
 
       rows.forEach( function( r ) {

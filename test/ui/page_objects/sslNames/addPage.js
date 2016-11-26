@@ -18,7 +18,10 @@
 
 // # Add SSL Name Page Object
 
-var Dialog = require('.././common/dialog');
+var Promise = require('bluebird');
+
+var Dialog = require('./../common/dialog');
+var Alerts = require('./../common/alerts');
 
 // Requiring `ssl-name form` component page object
 var SSLNameForm = require('./form');
@@ -115,7 +118,6 @@ var AddSSLName = {
    * Triggers a click on the `Back To List` button from the Add SSL Name page
    * from the Portal app
    *
-   
    */
   clickBackToList: function () {
     return this
@@ -188,7 +190,7 @@ var AddSSLName = {
    */
   closeSuccessDialog: function () {
     return element(by.css(this.dialog.locators.modal.buttons.ok.css))
-        .click();
+      .click();
   },
 
   /**
@@ -205,29 +207,44 @@ var AddSSLName = {
   createSSLName: function (sslName) {
     this.form.fill(sslName);
     var me = this;
-    if (sslName.verificationMethod !== 'Email'){
-      return this.clickAddSSLName().then(function () {
-        me.dialog.clickOk().then(function () {
-          me.dialog.getModalEl()
-              .element(by.css('input[value="'+ sslName.verificationString +'"]'))
-              .click().then(function () {
-            me.dialog.clickVerify().then(function () {
-              me.closeSuccessDialog();
-            });
-          });
+    if (sslName.verificationMethod === 'Email') {
+      return me
+        .clickAddSSLName()
+        .then(function () {
+          me.dialog.clickRadioButton(sslName.verificationString);
+          return me.dialog.clickOk();
+        })
+        .then(function () {
+          return me.dialog.clickClose();
         });
-      });
-    }else {
-      return this.clickAddSSLName().then(function () {
-        me.dialog.getModalEl()
-            .element(by.css('input[value="'+ sslName.verificationString +'"]'))
-            .click().then(function () {
-          me.dialog.clickOk().then(function () {
-            me.closeSuccessDialog();
-          });
-        });
-      });
     }
+    // else
+    return this
+      .clickAddSSLName()
+      .then(function () {
+        return me.dialog.clickOk();
+      })
+      .then(function () {
+        Alerts.waitToDisplay();
+        return Alerts
+          .getFirst()
+          .getText()
+          .then(function (act) {
+            var exp = 'Successfully added new SSL name';
+            if (act === exp) {
+              return;
+            }
+            return Promise
+              .reject('Failed: Expected "' + act + '" to be "' + exp + '"');
+          });
+      })
+      .then(function () {
+        me.dialog.clickRadioButton(sslName.verificationString);
+        return me.dialog.clickVerify();
+      })
+      .then(function () {
+        return me.dialog.clickOk();
+      });
   }
 };
 

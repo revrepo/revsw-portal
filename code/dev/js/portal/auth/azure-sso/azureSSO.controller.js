@@ -5,7 +5,7 @@
      .module('revapm.Portal.Auth')
      .controller('AzureSSOController', AzureSSOController);
 
-   function AzureSSOController($scope, User, $stateParams, AlertService, $timeout, $state) {
+   function AzureSSOController($scope, User, $stateParams, AlertService, $timeout, $state, DashboardSrv) {
      'ngInject';
      var $ctrl = this;
      var token = $stateParams.token;
@@ -16,10 +16,12 @@
        AlertService.clear();
        $ctrl.loading = true;
        User.authAzureSSO(token, resourceId)
-         .then(function(userData) {
-           // NOTE: no message - only redirect
+         .then(function(results) {
+           var userInfo = results.data;
+           userInfo.isAzureSSO = true;
+           // NOTE: no message
            $ctrl.authState = 'success';
-           $state.go('index.dashboard.main');
+           $scope.$emit('user.signin', userInfo);
          })
          .catch(function(err) {
            AlertService.danger(err);

@@ -594,6 +594,9 @@ textarea {
 .login_form .input-sm {
   height: 30px;
 }
+.login_form .btn-social i {
+  font-size: 2.5rem;
+}
 .logo {
   display: block;
   height: 68px;

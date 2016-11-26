@@ -226,7 +226,8 @@ var Constants = {
       MSG_SUCCESS_UPDATE: 'Successfully saved the domain configuration',
       MSG_SUCCESS_DELETE: 'The domain has been scheduled for removal',
       MSG_FAIL_VERIFY: 'Failed to verify domain configuration',
-      MSG_FAIL_ADD_DUPLICATE_NAME: 'The domain name is already registered in the system'
+      MSG_FAIL_ADD_DUPLICATE_NAME: 'The domain name is already registered in the system',
+      MSG_FAIL_RO_USER_CANNOT_ADD: 'Access denied. Do you have a read-only user account?'
     },
     sslCerts:{
       MSG_FAIL_DELETE: 'The SSL certificate is in use by active domain(s) ' +
@@ -238,9 +239,9 @@ var Constants = {
 
   mobileApps: {
     platforms: {
-      ios: 'ios',
-      android: 'android',
-      windowsMobile: 'windows-mobile'
+      ios: 'iOS',
+      android: 'Android',
+      windowsMobile: 'Windows_Mobile'
     }
   }
 };

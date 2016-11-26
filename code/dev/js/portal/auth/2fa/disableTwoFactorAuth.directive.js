@@ -53,7 +53,7 @@
         $scope.loadUserDetails = function() {
           $scope.isMyUser = false;
           if (!$scope.ngUserId) {
-            console.log('You did not provide userId. User ng-user-id for directive !');
+            // console.log('You did not provide userId. User ng-user-id for directive !');
             return;
           }
           // Disable till load complete
@@ -90,7 +90,7 @@
           //}
           // Check user Id existence
           if (!$scope.ngUserId) {
-            console.log('You did not provide userId. User ng-user-id for directive !');
+            // console.log('You did not provide userId. User ng-user-id for directive !');
             return;
           }
           // Set loading flag

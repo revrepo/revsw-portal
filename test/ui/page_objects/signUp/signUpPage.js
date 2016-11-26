@@ -18,6 +18,8 @@
 
 // # Sign Up Page Object
 
+var BROWSER_WAIT_TIMEOUT = 16000;
+
 var SignUpForm = require('./signUpForm');
 
 // This `Sign Up` Page Object abstracts all operations or actions that a
@@ -178,7 +180,7 @@ var SignUp = {
       var me = this;
       return browser.wait(function () {
         return browser.isElementPresent(by.css(me.locators.labels.email.css));
-      }, 16000);
+      }, BROWSER_WAIT_TIMEOUT);
     }
   }
 

@@ -212,7 +212,7 @@ var AddDomain = {
     * Helper method that executes all steps required to create a new Domain from
     * AddDomain app.
     *
-    * @param {domain} domain, data applying the schema defined in
+    * @param {Object} domain, data applying the schema defined in
     * `DataProvider.generateDomainUser()`
     *
     * @returns {Promise}

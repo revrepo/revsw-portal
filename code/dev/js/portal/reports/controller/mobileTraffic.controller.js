@@ -49,7 +49,7 @@
         })
         .catch( function( err ) {
           AlertService.danger('Oops! Something went wrong');
-          console.log( err );
+          // console.log( err );
         })
         .finally( function() {
           $scope._loading = false;

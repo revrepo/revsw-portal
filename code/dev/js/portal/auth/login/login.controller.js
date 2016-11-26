@@ -6,7 +6,7 @@
     .controller('LoginController', LoginController);
 
   /*@ngInject*/
-  function LoginController($scope, User, $state, AlertService, DashboardSrv, $config, $uibModal, $location) {
+  function LoginController($scope, User, $state, AlertService, DashboardSrv, $config, $uibModal, $location, $auth) {
 
     document.querySelector('body').style.paddingTop = '0';
 
@@ -32,20 +32,22 @@
     $scope.randomImageStyle = {
       'background-image': 'url(' + $scope.randomImage + ')'
     };
+    $scope.authenticate = function(provider) {
+      User.authenticate(provider)
+        .then(function(data) {
+          // NOTE: call event - user signin
+          $scope.$emit('user.signin', data.data);
+        });
 
+    };
     $scope.login = function(email, pass) {
       AlertService.clear();
       $scope._loading = true;
       try {
         User.login(email, pass)
           .then(function(data) {
-            DashboardSrv.getAll().then(function(dashboards) {
-              if (dashboards && dashboards.length) {
-                $location.path('dashboard/' + dashboards[0].id);
-              } else {
-                $state.go('index.reports.proxy');
-              }
-            });
+            // NOTE: call event - user signin
+            $scope.$emit('user.signin', data.data);
           })
           .catch(function(err) {
             $scope._loading = false;
@@ -92,7 +94,9 @@
       });
 
       modalInstance.result.then(function(data) {
-        $state.go('index');
+        if (data.status === 200) {
+          $scope.$emit('user.signin', data.data);
+        }
       });
     };
 
@@ -132,7 +136,7 @@
 
       modalInstance.result.then(function(data) {
         // $state.go('index');
-         // $uibModalInstance.close();
+        // $uibModalInstance.close();
       });
     };
   }

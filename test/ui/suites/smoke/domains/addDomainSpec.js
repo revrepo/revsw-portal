@@ -58,7 +58,7 @@ describe('Smoke', function () {
         it('should allow to cancel a domain edition in domain form',
           function () {
             Portal.domains.listPage.clickAddNewDomain();
-            Portal.domains.addPage.form.clearForm();
+            Portal.domains.addPage.form.clear();
             Portal.domains.addPage.form.setDomainName('smoke.test.com');
             Portal.domains.addPage.clickCancel();
             expect(Portal.domains.listPage.isDisplayed()).toBeTruthy();
@@ -68,12 +68,11 @@ describe('Smoke', function () {
           function () {
             var smoketest = DataProvider.generateDomain('smoketest');
             Portal.domains.listPage.clickAddNewDomain();
-            Portal.domains.addPage.form.clearForm();
+            Portal.domains.addPage.form.clear();
             Portal.domains.addPage.createDomain(smoketest);
             expect(Portal.alerts.getAll().count()).toEqual(1);
             expect(Portal.alerts.getFirst().getText())
               .toContain(Constants.alertMessages.domains.MSG_SUCCESS_ADD);
-            Portal.deleteDomain(smoketest);
           });
       });
     });

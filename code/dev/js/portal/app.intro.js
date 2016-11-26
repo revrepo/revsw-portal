@@ -66,47 +66,11 @@
         },
       ]
     };
-    // NOTE: Main Menu Introduction
+    // NOTE: Main Menu Introduction (intro.js)
     $rootScope.IntroOptions = introduction_application;
-    if ($config.INTRO_IS_ACTIVE === true) {
-      if ($localStorage.intro === undefined) {
-        $localStorage.intro = {
-          isShowMainIntro: false,
-          pages: {}
-        };
-        $rootScope.menuExpandedNodes = {};
-        $rootScope.isShowMainIntro = false;
-      } else {
-        $rootScope.isShowMainIntro = false;
-        $rootScope.isShowMainIntro = $localStorage.intro.isShowMainIntro;
-      }
-      if ($rootScope.isShowMainIntro === false) {
-        ['index.apps', 'index.reports', 'index.webApp', 'index.accountSettings'].forEach(function(menuState) {
-          $rootScope.menuExpandedNodes[menuState] = true;
-        });
-      }
-    } else {
-      $rootScope.isShowMainIntro = true;
-    }
+
     /**
-     * @name  BeforeChangeEvent
-     * @description
-     *
-     * @param {[type]} e     [description]
-     * @param {[type]} scope [description]
-     */
-    $rootScope.BeforeChangeEvent = function(e, scope) {
-      var el = angular.element(e);
-      el.addClass('.intro-active');
-      return el.focus();
-    };
-    $rootScope.AfterChangeEvent = function(e, scope) {
-      var el = angular.element(e);
-      el.removeClass('intro-active');
-      return;
-    };
-    /**
-     * @name CompletedEvent
+     * @name onIntroCompletedEvent
      * @description
      *
      * @param {Object} e
@@ -114,16 +78,11 @@
     $rootScope.onIntroCompletedEvent = function(e) {
       if (!!$localStorage.intro && $localStorage.intro.isShowMainIntro === false) {
         $localStorage.intro.isShowMainIntro = true;
-        $rootScope.isShowMainIntro = true;
         $state.transitionTo($state.current, $stateParams, {
-          reload: true,
+          reload: false,
           inherit: true,
           notify: true
         });
-      } else {
-        if (!!$localStorage.intro.pages && $localStorage.intro.pages[$state.current.name] !== true) {
-          $localStorage.intro.pages[$state.current.name] = true;
-        }
       }
     };
   }

@@ -38,10 +38,6 @@ describe('Workflow', function () {
       Portal.helpers.nav.goToDomains();
     });
 
-    afterEach(function () {
-
-    });
-
     it('should allow to create a domain right after creating other domain',
       function () {
         var firstDomain = DataProvider.generateDomain('first-domain');
@@ -69,7 +65,6 @@ describe('Workflow', function () {
           .getAttribute('uib-tooltip')
           .then(function (tooltip) {
             expect(tooltip).toEqual('Staging Status: InProgress');
-            Portal.deleteDomain(myDomain);
           });
       });
 
@@ -86,7 +81,6 @@ describe('Workflow', function () {
           .getAttribute('uib-tooltip')
           .then(function (tooltip) {
             expect(tooltip).toEqual('Global Status: InProgress');
-            Portal.deleteDomain(myDomain);
           });
       });
 
@@ -97,15 +91,13 @@ describe('Workflow', function () {
         // Create domain
         Portal.createDomain(myDomain);
         // Wait for some period of time to get the domain Published
-        browser.sleep(30000);
-        // Check domain is in list
+        Portal.domains.listPage.waitForStagingStatusToChange(myDomain);
         Portal.domains.listPage
           .searchAndGetFirstRow(myDomain.name)
           .getStagingStatusIcon()
           .getAttribute('uib-tooltip')
           .then(function (tooltip) {
             expect(tooltip).toEqual('Staging Status: Published');
-            Portal.deleteDomain(myDomain);
           });
       });
 
@@ -116,7 +108,7 @@ describe('Workflow', function () {
         // Create domain
         Portal.createDomain(myDomain);
         // Wait for some period of time to get the domain Published
-        browser.sleep(80000);
+        Portal.domains.listPage.waitForGlobalStatusToChange(myDomain);
         // Check domain is in list
         Portal.domains.listPage
           .searchAndGetFirstRow(myDomain.name)
@@ -124,7 +116,6 @@ describe('Workflow', function () {
           .getAttribute('uib-tooltip')
           .then(function (tooltip) {
             expect(tooltip).toEqual('Global Status: Published');
-            Portal.deleteDomain(myDomain);
           });
       });
 
@@ -142,7 +133,7 @@ describe('Workflow', function () {
         // Update domain
         Portal.updateDomain(updatedDomain);
         // Wait for the domain to get global status as Modified
-        browser.sleep(60000);
+        Portal.domains.listPage.waitForGlobalStatusToChange(myDomain);
         // Verify updated domain is in list
         Portal.domains.listPage
           .searchAndGetFirstRow(myDomain.name)
@@ -150,7 +141,6 @@ describe('Workflow', function () {
           .getAttribute('uib-tooltip')
           .then(function (tooltip) {
             expect(tooltip).toEqual('Global Status: Modified');
-            Portal.deleteDomain(myDomain);
           });
       });
   });
