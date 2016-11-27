@@ -1,3 +1,14 @@
+<script type="text/ng-template" id="viewModal.html">
+  <div class="modal-header">
+    <h3 class="modal-title">View Subscription {{model.subscription_id}}</h3>
+  </div>
+  <div class="modal-body">
+    <pre>{{model | json}}</pre>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-danger" type="button" ng-click="ok()">Close</button>
+  </div>
+</script>
 <!-- Note that element contain ui-view child page will be added here -->
 <div class="container-fluid" ui-view="page">
   <div class="row">
@@ -67,6 +78,9 @@
                 </td>
                 <td class="actions text-center">
                   <i class="glyphicon glyphicon-refresh spin" ng-if="item.loading"></i>
+                  <a ng-click="onViewSubscription($event,item)" ng-if="!item.loading" uib-tooltip="View">
+                    <i class="fa fa-eye"></i>
+                  </a>
                   <a ng-click="openChangeStatusDialog(item)" _uisref=".edit({id: item.id})" ng-if="!item.loading" uib-tooltip="Change Status">
                     <i class="glyphicon glyphicon-pencil"></i>
                   </a>
