@@ -33,7 +33,8 @@ var EditDomain = {
   locators: {
     labels: {
       title: {
-        className: 'page-title'
+        className: 'page-title',
+        binding: 'modelInfo.domain_name' 
       }
     },
     buttons: {
@@ -59,15 +60,15 @@ var EditDomain = {
         linkText: 'Cancel'
       }
     },
-    tabs: {
-      css: '.nav-tabs li',
-      attrs: {
-        index: 'index'
-      }
-    },
     links: {
       editDomain: {
         css:  '#anchor'
+      }
+    },
+    tabs: {
+      cssCount: '.domain-edit-form .nav.nav-tabs>li:last-child',
+      attrs: {
+        index: 'index'
       }
     },
     icons: {
@@ -94,6 +95,10 @@ var EditDomain = {
    */
   getTitleLbl: function () {
     return element(by.className(this.locators.labels.title.className));
+  },
+
+  getTitleTxtIn: function () {
+    return element(by.binding(this.locators.labels.title.binding));
   },
 
   /**
@@ -164,19 +169,9 @@ var EditDomain = {
   },
 
 
-/*  getTabDomain: function (numberTab) {
-    return element(by.css(this.locators.tabs.tab.css)).get(numberTab || 0);
+  getAllTabsCountDomain: function () {
+    return element(by.css(this.locators.tabs.cssCount)).getAttribute(this.locators.tabs.attrs.index);
   },
-*/
-
-  getTabDomain: function (numberTab) {
-    return element(by.css(this.locators.tabs.css + '[index="'+ (numberTab || 0) +'"]'));
-  },
-
-  getAllTabsCountDomain: function (numberTab) {
-    return this.getTabDomain(numberTab || 5).getAttribute(this.locators.tabs.attrs.index);
-  },
-
   /**
    * ### EditDomain.getPublishDomainBtn()
    *
@@ -216,6 +211,29 @@ var EditDomain = {
       .getAdvancedModeBtn()
       .click();
   },
+
+
+
+  /**
+   *
+   * switchBtns
+   * 'ON' or 'off'
+   *
+   */
+  switchBtns: function(getCbElement, cb) {
+    var check = function(value) {
+      if (cb) cb(value);
+    };
+    getCbElement.click();
+    getCbElement.getAttribute('aria-checked').then(function(data) {
+      check(data);
+    });
+    getCbElement.click();
+    getCbElement.getAttribute('aria-checked').then(function(data) {
+      check(data);
+    });
+  },
+
 
   /**
    * ### EditDomain.clickBasicMode()
@@ -279,6 +297,130 @@ var EditDomain = {
       .click();
   },
 
+
+  /**
+   *
+   * For Tabs Active
+   *
+   */
+
+  tabIsActive: function (methodTab) {
+    return element(by.css(this.form.locators.tabs[methodTab].li + '.active')).isPresent();
+  },
+
+
+
+  /**
+   *
+   * Tab "General Settings"
+   *
+   */
+
+  // Click to tab "General Settings"
+  clickTabGeneralSettings: function () {
+    return this.form
+      .getGeneralSettingsTab()
+      .click();
+  },
+
+
+
+  /**
+   *
+   * Tab "Origin Health Monitoring"
+   *
+   */
+
+  // Click to tab "Origin Health Monitoring"
+  clickTabOriginHealthMonitoring: function (numberLink) {
+    return this.form
+      .getOriginHealthMonitoringTab()
+      .click();
+  },
+
+
+  /**
+   *
+   * Tab "SSL Configuration"
+   *
+   */
+
+  // Click to tab "SSL Configuration"
+  clickTabSSLconfiguration: function (numberLink) {
+    return this.form
+      .getSSLConfigurationTab()
+      .click();
+  },
+
+
+  /**
+   *
+   * Tab "Custom VCL Rules"
+   *
+   */
+
+  // Click to tab "Custom VCL Rules"
+  clickTabVCL: function () {
+    return this.form
+      .getCustomVCLRulesTab()
+      .click();
+  },
+  clickOnAddNewBackendBlock: function () {
+    return this.form
+      .getOnAddNewBackendBlock()
+      .click();
+  },
+
+
+  /**
+   *
+   * Tab "Lua Scripting"
+   *
+   */
+
+  // Click to tab "Lua Scripting"
+  clickTabLuaScripting: function () {
+    return this.form
+      .getLuaScriptingTab()
+      .click();
+  },
+  clickOnAddNewItemBP: function () {
+    return this.form
+      .getOnAddNewItemBP()
+      .click();
+  },
+
+  clickOnAddNewItemCO: function () {
+    return this.form
+      .getOnAddNewItemCO()
+      .click();
+  },
+
+  
+
+  /**
+   *
+   * Tab "Edge Caching"
+   *
+   */
+
+  // Click to tab "Edge Caching"
+  clickTabEdgeCaching: function () {
+    return this.form
+      .getEdgeCachingTab()
+      .click();
+  },
+
+  clickAddNewCachingRule: function() {
+    return this.form
+      .getOnAddNewCachingRule()
+      .click();
+  },
+
+
+
+
+
   /**
    * ### EditDomain.clickPublishDomain()
    *
@@ -322,6 +464,10 @@ var EditDomain = {
       .isPresent();
   },
 
+  elementIsDisplayed: function(elem, value) {
+    var element = this.form[elem](value);
+    return element.isPresent();
+  },
   /**
    * ### EditDomain.getTitle()
    *

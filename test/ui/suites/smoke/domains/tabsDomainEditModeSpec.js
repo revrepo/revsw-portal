@@ -22,6 +22,12 @@ describe('Smoke', function () {
 
       describe('Tabs switching', function () {
 
+        var EditPage = Portal.domains.editPage;
+        var form = EditPage.form;
+        var checkDisplay = function(elem) {
+          return EditPage.elementIsDisplayed(elem);
+        };
+
         beforeAll(function () {
           Portal.signIn(user);
         });
@@ -32,18 +38,52 @@ describe('Smoke', function () {
 
         beforeEach(function () {
           Portal.helpers.nav.goToDomains();
+          EditPage.clickEditDomain();
         });
 
         it('should display Edit Domain page', function () {
-          Portal.domains.editPage.clickEditDomain();
-          expect(Portal.domains.editPage.isDisplayed()).toEqual(true);
+          browser.getLocationAbsUrl().then(function(url) {
+            var arrayUrl = url.split('/');
+            var idCountSymbols = arrayUrl[arrayUrl.length - 1].length;
+            expect(idCountSymbols).toBe(24);
+          });
         });
 
         it('should display tabs to Edit Domain page', function () {
-          Portal.domains.editPage.clickEditDomain();
-          expect(Portal.domains.editPage.getAllTabsCountDomain()).toEqual('5');
+          expect(EditPage.getAllTabsCountDomain()).toEqual('5');
         });
 
+        it('click tab "General Settings"', function () {
+          EditPage.clickTabGeneralSettings();
+          expect(EditPage.tabIsActive('generalSettings')).toEqual(true);
+        });
+
+        it('click tab "Origin Health Monitoring"', function () {
+          EditPage.clickTabOriginHealthMonitoring();
+          expect(EditPage.tabIsActive('originHealthMonitoring')).toEqual(true);
+        });
+
+        it('click tab "Edge Caching"', function () {
+          EditPage.clickTabEdgeCaching();
+          expect(EditPage.tabIsActive('edgeCaching')).toEqual(true);
+        });
+
+        it('click tab "SSL Configuration"', function () {
+          EditPage.clickTabSSLconfiguration();
+          expect(EditPage.tabIsActive('sslConfiguration')).toEqual(true);
+        });
+
+        it('click tab "Custom VCL Rules"', function () {
+          EditPage.clickTabVCL();
+          expect(EditPage.tabIsActive('customVCLRules')).toEqual(true);
+        });
+
+        it('click tab "Lua Scripting"', function () {
+          EditPage.clickTabLuaScripting();
+          expect(EditPage.tabIsActive('luaScripting')).toEqual(true);
+        });
+
+        
       });
     });
   });
