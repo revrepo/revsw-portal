@@ -19,7 +19,6 @@
 var config = require('config');
 var Portal = require('./../../../page_objects/portal');
 var DataProvider = require('./../../../common/providers/data');
-var Constants = require('./../../../page_objects/constants');
 
 describe('Smoke', function () {
 
@@ -39,93 +38,77 @@ describe('Smoke', function () {
       describe('Edit DNS Zone record', function () {
 
         beforeAll(function () {
-
+          Portal.signIn(user);
         });
 
-        afterAll(function () {
-
+        afterAll(function (done) {
+          Portal.helpers.dnsZones
+            .cleanup()
+            .then(function () {
+              Portal.signOut();
+              done();
+            })
+            .catch(done);
         });
 
         beforeEach(function () {
-          Portal.load();//TODO: Got the problem when tests are failed when executed all in one scope
-                        //Looks like it is not reproducible when doing Portal.load() before SignIn
-                        //SignIn func needs to be investigated
-          Portal.signIn(user);
           Portal.helpers.nav.goToDNSZones();
-        });
-
-        afterEach(function () {
-          Portal.signOut();
         });
 
         it('should display edit DNS Zone record button',
           function () {
             var zone = DataProvider.generateDNSZoneData();
             Portal.createDNSZone(zone);
-            Portal.goToDNSZoneRecords(zone);
-
+            Portal.openDNSZoneRecords(zone);
             var editButton = Portal.zoneRecords.listPage.table
               .getFirstRow()
               .getEditBtn();
             expect(editButton.isPresent()).toBeTruthy();
-
-            Portal.deleteDNSZone(zone);
           });
 
         it('should display "Edit DNS Zone record" form',
           function () {
             var zone = DataProvider.generateDNSZoneData();
             Portal.createDNSZone(zone);
-            Portal.goToDNSZoneRecords(zone);
-
+            Portal.openDNSZoneRecords(zone);
             Portal.zoneRecords.listPage.table
               .getFirstRow()
               .clickEdit();
             expect(Portal.zoneRecords.editPage.isDisplayed()).toBeTruthy();
-
-            Portal.deleteDNSZone(zone);
           });
 
         it('should allow to cancel an DNS Zone record edition',
           function () {
             var zone = DataProvider.generateDNSZoneData();
             Portal.createDNSZone(zone);
-            Portal.goToDNSZoneRecords(zone);
-
+            Portal.openDNSZoneRecords(zone);
             Portal.zoneRecords.listPage.table
               .getFirstRow()
               .clickEdit();
             Portal.zoneRecords.editPage.form.setTTL('3601');
             Portal.zoneRecords.editPage.clickCancel();
             expect(Portal.zoneRecords.listPage.isDisplayed()).toBeTruthy();
-
-            Portal.deleteDNSZone(zone);
           });
 
         it('should update DNS Zone record when filling all required data',
           function () {
             var zone = DataProvider.generateDNSZoneData();
             Portal.createDNSZone(zone);
-            Portal.goToDNSZoneRecords(zone);
-
+            Portal.openDNSZoneRecords(zone);
             Portal.zoneRecords.listPage.table
               .getFirstRow()
               .clickEdit();
-
             Portal.zoneRecords.editPage.form.setTTL('3601');
-            Portal.zoneRecords.editPage.form.setAnswerById(0,'dns11.p03.nsone.net');
-            Portal.zoneRecords.editPage.form.setAnswerById(1,'dns12.p03.nsone.net');
-            Portal.zoneRecords.editPage.form.setAnswerById(2,'dns13.p03.nsone.net');
-            Portal.zoneRecords.editPage.form.setAnswerById(3,'dns14.p03.nsone.net');
-
+            Portal.zoneRecords.editPage.form.setAnswerById(0, 'dns11.p03.nsone.net');
+            Portal.zoneRecords.editPage.form.setAnswerById(1, 'dns12.p03.nsone.net');
+            Portal.zoneRecords.editPage.form.setAnswerById(2, 'dns13.p03.nsone.net');
+            Portal.zoneRecords.editPage.form.setAnswerById(3, 'dns14.p03.nsone.net');
             Portal.zoneRecords.editPage.clickUpdate();
             Portal.dialog.clickOk();
             Portal.zoneRecords.editPage.clickBackToList();
-
             Portal.zoneRecords.listPage.table
               .getFirstRow()
               .clickEdit();
-
             expect(Portal.zoneRecords.editPage.form.getTTL()).toBe('3601');
             expect(Portal.zoneRecords.editPage.form.getAnswerById(0))
               .toBe('dns11.p03.nsone.net');
@@ -135,10 +118,6 @@ describe('Smoke', function () {
               .toBe('dns13.p03.nsone.net');
             expect(Portal.zoneRecords.editPage.form.getAnswerById(3))
               .toBe('dns14.p03.nsone.net');
-
-            Portal.zoneRecords.editPage.clickBackToList();
-            Portal.dnsZones.editPage.clickBackToList();
-            Portal.deleteDNSZone(zone);
           });
       });
     });

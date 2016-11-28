@@ -37,12 +37,6 @@ describe('Negative: ', function () {
       Portal.signOut();
     });
 
-    beforeEach(function () {
-    });
-
-    afterEach(function () {
-    });
-
     it('should check that Update Report fails with invalid date', function() {
       data.companyName = 'Wrong Company 01';
       Portal.billing.usageReportPage.updateReport(data);

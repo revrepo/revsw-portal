@@ -40,8 +40,14 @@ describe('Smoke', function () {
           Portal.signIn(user);
         });
 
-        afterAll(function () {
-          Portal.signOut();
+        afterAll(function (done) {
+          Portal.helpers.dnsZones
+            .cleanup()
+            .then(function () {
+              Portal.signOut();
+              done();
+            })
+            .catch(done);
         });
 
         beforeEach(function () {
@@ -64,7 +70,6 @@ describe('Smoke', function () {
               .setSearchCriteria(dnsZoneToSearch.domain);
             var allRows = Portal.dnsZones.listPage.table.getRows();
             expect(allRows.count()).toEqual(1);
-            Portal.deleteDNSZone(dnsZoneToSearch);
           });
       });
     });

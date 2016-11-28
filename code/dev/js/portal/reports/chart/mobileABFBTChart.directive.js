@@ -201,7 +201,7 @@
                 var interval = data.metadata.interval_sec || 1800;
                 var offset = interval * 1000;
                 var labels_filled = false;
-                // console.log( data );
+
                 data.data.forEach(function(dest) {
                   dest.items.forEach(function(item, idx, items) {
                     if (!labels_filled) {

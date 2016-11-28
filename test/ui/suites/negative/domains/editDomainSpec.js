@@ -32,12 +32,6 @@ describe('Negative', function () {
       Portal.signOut();
     });
 
-    afterAll(function () {
-      Portal.signIn(adminUser);
-      Portal.deleteDomain(myDomain);
-      Portal.signOut();
-    });
-
     beforeEach(function () {
       Portal.signIn(adminUser);
       Portal.helpers.nav.goToDomains();

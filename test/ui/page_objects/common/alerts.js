@@ -18,6 +18,8 @@
 
 // # Alerts Page Object
 
+var BROWSER_WAIT_TIMEOUT = 10000;
+
 // This `Alerts` Page Object abstracts all actions and operations that we
 // could do with an Portal Alert notification element.
 //
@@ -37,7 +39,6 @@ var Alerts = {
       repeater: 'toaster in toasters'
     }
   },
-  waitTimeout: 10000, // TODO: read from config file
 
   // ## Methods
 
@@ -47,12 +48,17 @@ var Alerts = {
    * Waits/Delays the execution until Alert element is displayed in the UI.
    * If it is not displayed until the given timeout, it throws an error which
    * makes the spec/test to fail.
+   *
+   * @param milliseconds, to wait
+   * @returns {Object} Promise
    */
-  waitToDisplay: function () {
+  waitToDisplay: function (milliseconds) {
+    var timeout = milliseconds || BROWSER_WAIT_TIMEOUT;
     var me = this;
     return browser.wait(function () {
+      // console.log('Waiting for alert ...');
       return browser.isElementPresent(by.css(me.locators.alert.css));
-    }, this.waitTimeout);
+    }, timeout);
   },
 
   /**
@@ -61,7 +67,7 @@ var Alerts = {
    * Returns all Alerts (Selenium WebDriver Elements) that are displayed in the
    * notifications area from the Portal app.
    *
-   * @returns [{Selenium WebDriver Element}]
+   * @returns {Object} Array of Selenium WebDriver Element
    */
   getAll: function () {
     return element.all(by.repeater(this.locators.alertGroup.repeater));
@@ -73,7 +79,7 @@ var Alerts = {
    * Returns the first Alert (Selenium WebDriver Element) that is displayed in
    * the notifications area from the Portal app.
    *
-   * @returns [{Selenium WebDriver Element}]
+   * @returns {Object} Array of Selenium WebDriver Element
    */
   getFirst: function () {
     return this

@@ -2,10 +2,11 @@
   'use strict';
 
   angular
-    .module('revapm.Portal.AzureResources')
-    .controller('AzureResourcesController', AzureResourcesController);
+    .module('revapm.Portal.AzureSubscriptions')
+    .controller('AzureSubscriptionResourcesController', AzureSubscriptionResourcesController);
 
-  function AzureResourcesController($scope, $localStorage, AlertService, DTOptionsBuilder, AzureSubscriptions, AzureResources, $stateParams, $state) {
+  function AzureSubscriptionResourcesController($scope, $localStorage, AlertService, DTOptionsBuilder, AzureSubscriptions,
+    AzureResources, $stateParams, $state, $uibModal) {
     'ngInject';
     var pageLength = 10;
     // List Subscriptions
@@ -21,7 +22,7 @@
     $scope.initResources = function(subscriptionId) {
       if (subscriptionId) {
         $scope._loading = true;
-        AzureResources.query({ subscription_id: subscriptionId }).$promise
+        AzureSubscriptions.resources({ subscription_id: subscriptionId }).$promise
           .then(function(data) {
             $scope.subresources = data;
           })
@@ -58,6 +59,48 @@
         inherit: false,
         notify: true
       });
+    };
+    /**
+     * Confirmation dialog
+     *
+     * @param {String} [template]
+     * @param {Object} [resolve]
+     * @returns {Promise}
+     */
+    $scope.confirm = function(template, resolve) {
+      if (angular.isObject(template)) {
+        resolve = template;
+        template = '';
+      }
+      if (angular.isObject(resolve)) {
+        resolve = {
+          model: resolve
+        };
+      }
+      var modalInstance = $uibModal.open({
+        animation: false,
+        templateUrl: template || 'parts/modal/confirmDelete.html',
+        controller: 'ConfirmModalInstanceCtrl',
+        size: 'md',
+        resolve: resolve || {}
+      });
+
+      return modalInstance.result;
+    };
+
+    /**
+     * @name  onViewResourceSubscription
+     * @description
+     *
+     *   View JSON object in modal window
+     *
+     * @param  {Event} event
+     * @param  {Object} model
+     * @return
+     */
+    $scope.onViewResourceSubscription = function(event, model) {
+      $scope.confirm('viewModal.html', model)
+        .then(function() {});
     };
   }
 })();

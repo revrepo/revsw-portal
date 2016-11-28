@@ -19,8 +19,9 @@
 var config = require('config');
 var Portal = require('./../../../page_objects/portal');
 var DataProvider = require('./../../../common/providers/data');
-var Constants = require('./../../../page_objects/constants');
 
+//TODO: Commenting out all tests as there is not possible to get reference to
+//alert component. This might be related to usage of setTimeout/timeInterval
 xdescribe('Functional', function () {  // jshint ignore:line
   describe('Edit domain', function () {
 
@@ -33,15 +34,11 @@ xdescribe('Functional', function () {  // jshint ignore:line
     });
 
     afterAll(function () {
-      Portal.deleteDomain(myDomain);
       Portal.signOut();
     });
 
     beforeEach(function () {
-      Portal.header.clickWeb();
-    });
-
-    afterEach(function () {
+      Portal.helpers.nav.goToDomains();
     });
 
     it('should edit a domain and validate the domain successfully',

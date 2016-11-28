@@ -20,7 +20,7 @@
 
 // This `Usage Report Domains` Page Object abstracts all operations or actions
 // that a common Usage Report could do in the Portal app/site.
-var UsageReportDomains = module.exports = {
+var UsageReportDomainsPage = {
 
   // ## Properties
 
@@ -82,7 +82,6 @@ var UsageReportDomains = module.exports = {
       .get(1)
       .getText();
   }
-
-
 };
 
+module.exports =  UsageReportDomainsPage;

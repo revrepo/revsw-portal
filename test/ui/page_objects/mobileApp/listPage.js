@@ -18,10 +18,9 @@
 
 // # Apps List Page Object
 
-// Requiring `Apps List Table` component page object.
-var AppsTable = require('./table');
-// Requiring `Add New App` component page object.
-var AddAppPage = require('./addPage');
+// Requiring other Page Objects that compound the Apps List Page
+var AppsTable = require('./table/table');
+var AddAppPage = require('./addPage'); // TODO: AddPage is not part of ListPage
 var Pager = require('./../common/pager');
 var Searcher = require('./../common/searcher');
 
@@ -220,57 +219,80 @@ var AppsList = {
   },
 
   /**
-   * ### AppsList.findApp(app)
+   * ### AppsList.searchAndCount(criteria)
    *
-   * Finds an app in the `Apps List App` Page.
+   * Searches an app in the `Apps List App` Page given a search criteria
+   * and return the count of the results.
    *
+   * @param criteria, search criteria
    * @returns {Promise}
    */
-  findApp: function (app) {
-    this.setSearch(app.name);
-    return this.table.countTotalRows();
+  searchAndCount: function (criteria) {
+    this.searcher.setSearchCriteria(criteria);
+    return this.table
+      .getRows()
+      .count();
   },
 
   /**
-   * ### AppsList.searchAndDelete(app)
+   * ### AppsList.searchAndDelete(name)
    *
    * Deletes an app in the `Apps List App` Page.
    *
-   * @param {object} app, app data.
-   *
+   * @param {String} name, app name.
    * @returns {Promise}
    */
-  searchAndDelete: function (app) {
-    this.setSearch(app.name);
-    this.table.clickDeleteApp();
+  searchAndDelete: function (name) {
+    this.searcher.setSearchCriteria(name);
+    this.table
+      .getFirstRow()
+      .clickDelete();
   },
 
   /**
-   * ### AppsList.searchAndEdit(app)
+   * ### AppsList.searchAndEdit(app.name)
    *
    * Edits an existing app in the `Apps List App` Page.
    *
-   * @param {object} app, app data.
+   * @param {String} name, app name.
    *
    * @returns {Promise}
    */
-  searchAndEdit: function (app) {
-    this.setSearch(app.name);
-    this.table.clickEditApp();
+  searchAndEdit: function (name) {
+    this.searcher.setSearchCriteria(name);
+    return this.table
+      .getFirstRow()
+      .clickEdit();
   },
 
   /**
-   * ### AppsList.searchAndAdvancedEdit(app)
+   * ### AppsList.searchAndAdvancedEdit(name)
    *
-   * Advanced Edits an existing app in the `Apps List App` Page.
+   * Advanced Edits an existing name in the `Apps List App` Page.
    *
-   * @param {object} app, app data.
+   * @param {String} name, app name.
    *
    * @returns {Promise}
    */
-  searchAndAdvancedEdit: function (app) {
-    this.setSearch(app.name);
-    this.table.clickAdvancedEditApp();
+  searchAndAdvancedEdit: function (name) {
+    this.searcher.setSearchCriteria(name);
+    this.table
+      .getFirstRow()
+      .clickConfigure();
+  },
+
+  /**
+   * ### AppsList.sortByName()
+   *
+   * Clicks on `Name Column` header element from apps table, in Apps List page.
+   *
+   * @returns {Object} Promise
+   */
+  sortByName: function () {
+    return this.table
+      .getHeader()
+      .getName()
+      .click();
   }
 };
 

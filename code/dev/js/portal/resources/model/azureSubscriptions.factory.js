@@ -21,6 +21,18 @@
             state: data.subscription_state
           });
         }
+      },
+      resources: {
+        url: API_URL+  '/subscriptions/:subscription_id/providers/RevAPM.MobileCDN/accounts',
+        isArray: true,
+        transformResponse: function transformResponseResource(data, head, status) {
+          var res = angular.fromJson(data);
+          var result = res;
+          if (status === 200) {
+            result = res.value;
+          }
+          return result;
+        }
       }
     });
   }

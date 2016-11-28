@@ -19,7 +19,6 @@
 var config = require('config');
 var Portal = require('./../../../page_objects/portal');
 var DataProvider = require('./../../../common/providers/data');
-var Constants = require('./../../../page_objects/constants');
 
 describe('Functional', function () {
   describe('Delete domain', function () {
@@ -36,10 +35,6 @@ describe('Functional', function () {
 
     beforeEach(function () {
       Portal.helpers.nav.goToDomains();
-    });
-
-    afterEach(function () {
-
     });
 
     it('should delete successfully a domain',
@@ -76,7 +71,6 @@ describe('Functional', function () {
         Portal.dialog.clickCancel();
         var domainTableRows = Portal.domains.listPage.table.getRows();
         expect(domainTableRows.count()).toEqual(1);
-        Portal.deleteDomain(domain);
       });
 
     it('should cancel domain deletion after pressing "ESCAPE" key',
@@ -88,7 +82,6 @@ describe('Functional', function () {
         Portal.dialog.getModalEl().sendKeys(protractor.Key.ESCAPE);
         var tableRows = Portal.domains.listPage.table.getRows();
         expect(tableRows.count()).toEqual(1);
-        Portal.deleteDomain(domain);
       });
   });
 });

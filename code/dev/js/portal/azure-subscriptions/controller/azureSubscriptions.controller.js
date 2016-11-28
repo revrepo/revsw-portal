@@ -78,6 +78,20 @@
     $scope.getRelativeDate = function(datetime) {
       return moment.utc(datetime).fromNow();
     };
-
+    /**
+     * @name  onViewSubscription
+     * @description
+     *
+     *   View JSON object in modal window
+     *
+     * @param  {Event} event
+     * @param  {Object} model
+     * @return
+     */
+    $scope.onViewSubscription = function(event,model) {
+      $scope.confirm('viewModal.html', model)
+      .then(function() {
+      });
+    };
   }
 })();

@@ -82,9 +82,9 @@
         .then(function() {
           return $scope
             .delete(model)
-            .then($scope.alertService.success);
-        })
-        .catch($scope.alertService.danger);
+            .then($scope.alertService.success)
+            .catch($scope.alertService.danger);
+        });
     };
     /**
      * @name  createCompany

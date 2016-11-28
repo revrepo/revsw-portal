@@ -37,9 +37,6 @@ describe('Functional', function () {
       Portal.signOut();
     });
 
-    beforeEach(function () {
-    });
-
     it('should create a default proxy traffic report for Bandwidth Usage',
       function () {
         var dataReport = DataProvider.generateAnalyticsInfo();
