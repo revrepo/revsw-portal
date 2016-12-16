@@ -52,13 +52,13 @@
               <a ui-sref="^" class="btn btn-default">
                 <i class="glyphicon glyphicon-remove"></i>&nbsp; Cancel
               </a>
-              <button class="btn btn-success" id="create_dns_zone" ng-disabled="createForm.$invalid" ng-click="createDNSZone(model,false)">
+              <button class="btn btn-success" id="create_dns_zone" ng-disabled="disableSubmit(model) ||createForm.$invalid" ng-click="createDNSZone(model,false)">
                 <i class="glyphicon" ng-class="_loading?'glyphicon-refresh spin':'glyphicon-ok'"></i> &nbsp; Create DNS Zone
               </button>
-              <!-- <button class="btn btn-success" id="create_dns_zone_and_add_more" ng-disabled="disableSubmit(model)" ng-click="createSSLCert(model,true);createForm.$setPristine()">
-                <i class="glyphicon glyphicon-refresh spin" ng-if="_loading"></i>
-                <i class="glyphicon glyphicon-ok" ng-if="!_loading"></i>&nbsp; Create And Add More
-              </button> -->
+              <button class="btn btn-success" id="create_dns_zone_and_add_more" ng-disabled="disableSubmit(model) || createForm.$invalid" ng-click="createDNSZone(model,true);createForm.$setPristine()">
+                <i class="glyphicon" ng-class="_loading?'glyphicon-refresh spin':'glyphicon-ok'"></i>
+                &nbsp; Create And Add More
+              </button>
             </div>
           </div>
         </form>

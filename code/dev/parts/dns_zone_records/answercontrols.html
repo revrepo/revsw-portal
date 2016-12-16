@@ -34,7 +34,7 @@
   <p>Mail is handled by</p>
   <p><input ng-required="!create_linked&&model.rec.type=='MX'" type="text" class="form-control" placeholder="mail.{{zone_name}}" ng-model="model.newanswer.host" ng-change="updatefromlong(model.newanswer, origanswer)"></p>
   <p>With priority</p>
-  <p><input ng-required="!create_linked&&model.rec.type=='MX'" type="number" class="form-control" placeholder="10" ng-model="model.newanswer.priority" ng-change="updatefromlong(model.newanswer, origanswer)"></p>
+  <p><input ngrequired="!create_linked&&model.rec.type=='MX'" type="number" class="form-control" placeholder="{{DNS_DEFAULT_VALUES.MX_PRIORITY}}" ng-model="model.newanswer.priority" ng-change="updatefromlong(model.newanswer, origanswer)"></p>
 </div>
 <div class="col-sm-9" ng-show="model.rec.type=='NAPTR'">
   <p>Order for processing this answer</p>
@@ -70,11 +70,11 @@
 </div>
 <div class="col-sm-9" ng-show="model.rec.type=='SRV'">
   <p>Priority of target host is</p>
-  <p><input ng-required="!create_linked&&model.rec.type=='SRV'" type="number" class="form-control" placeholder="10" ng-model="model.newanswer.priority" ng-change="updatefromlong(model.newanswer, origanswer)"></p>
+  <p><input ngrequired="!create_linked&&model.rec.type=='SRV'" type="number" class="form-control" placeholder="{{DNS_DEFAULT_VALUES.SRV_PRIORITY}}" ng-model="model.newanswer.priority" ng-change="updatefromlong(model.newanswer, origanswer)"></p>
   <p>Relative weight for hosts with same priority is</p>
-  <p><input ng-required="!create_linked&&model.rec.type=='SRV'" type="number" class="form-control" placeholder="5" ng-model="model.newanswer.weight" ng-change="updatefromlong(model.newanswer, origanswer)"></p>
+  <p><input ngrequired="!create_linked&&model.rec.type=='SRV'" type="number" class="form-control" placeholder="{{DNS_DEFAULT_VALUES.SRV_WEIGHT}}" ng-model="model.newanswer.weight" ng-change="updatefromlong(model.newanswer, origanswer)"></p>
   <p>TCP/UDP service port is</p>
-  <p><input ng-required="!create_linked&&model.rec.type=='SRV'" type="number" class="form-control" placeholder="5060" ng-model="model.newanswer.port" ng-change="updatefromlong(model.newanswer, origanswer)"></p>
+  <p><input ngrequired="!create_linked&&model.rec.type=='SRV'" type="number" class="form-control" placeholder="{{DNS_DEFAULT_VALUES.SRV_PORT}}" ng-model="model.newanswer.port" ng-change="updatefromlong(model.newanswer, origanswer)"></p>
   <p>Host providing service is</p>
   <p><input ng-required="!create_linked&&model.rec.type=='SRV'" type="text" class="form-control" placeholder="sip.{{zone_name}}" ng-model="model.newanswer.host" ng-change="updatefromlong(model.newanswer, origanswer)"></p>
 </div>
