@@ -7,6 +7,13 @@
 
   /*@ngInject*/
   function AuthRun($rootScope, $state, $location, DashboardSrv, User, Companies, $localStorage) {
+    // NOTE: save last url for User
+    $rootScope.$on('$stateChangeSuccess',
+      function(event,stateTo,stateFrom){
+        if(User.isAuthed() === true && stateTo.name !== 'login'){
+          $localStorage.lastUrl = stateTo.url;
+        }
+    });
 
     $rootScope.$on('unauthorized', function() {
       // console.log('No logged in');
@@ -27,14 +34,19 @@
      * @return
      */
     function defaultLoginWorkFlow() {
-      DashboardSrv.getAll()
-        .then(function(dashboards) {
-          if (dashboards && dashboards.length) {
-            $location.path('dashboard/' + dashboards[0].id);
-          } else {
-            $state.go('index.reports.proxy');
-          }
-        });
+      var lastUrl_ = $localStorage.lastUrl;
+      if(!!lastUrl_ && lastUrl_.length > 0){
+        $location.url(lastUrl_);
+      }else{
+        DashboardSrv.getAll()
+          .then(function(dashboards) {
+            if (dashboards && dashboards.length) {
+              $location.path('dashboard/' + dashboards[0].id);
+            } else {
+              $state.go('index.reports.proxy');
+            }
+          });
+      }
     }
 
     $rootScope.$on('user.fill_company_profile', function(e) {
