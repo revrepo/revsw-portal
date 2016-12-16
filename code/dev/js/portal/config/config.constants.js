@@ -227,6 +227,18 @@
       OAUTH: {
         GOOGLE_CLIENT_ID: '673633214510-oaj5a4e1vo7fnspj87vth3o81275vr3f.apps.googleusercontent.com',
         GITHUB_CLIENT_ID: '4ee21d3f0ff9b112dc0e'
+      },
+      /**
+       * @name  DNS_DEFAULT_VALUES
+       * @description
+       *   Default values for DNS Zone Records
+       * @type {Object}
+       */
+      DNS_DEFAULT_VALUES: {
+        MX_PRIORITY: 10,
+        SRV_PRIORITY: 10,
+        SRV_WEIGHT: 5,
+        SRV_PORT: 5060
       }
     });
 
