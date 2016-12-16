@@ -217,15 +217,12 @@
     $scope.disableSubmit = function(model, isEdit) {
       if (!isEdit) {
         return $scope._loading ||
-          !model.cert_name ||
-          (!model.account_id && !$scope.model.account_id) ||
-          !model.public_ssl_cert ||
-          !model.private_ssl_key;
+          !model.zone ||
+          (!model.account_id && !$scope.model.account_id);
       } else {
         return $scope._loading ||
-          (!model.account_id && !$scope.model.account_id) ||
-          !model.public_ssl_cert ||
-          !model.private_ssl_key;
+          !model.zone ||
+          (!model.account_id && !$scope.model.account_id);
       }
     };
 
