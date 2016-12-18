@@ -10,13 +10,13 @@
 
     var startOpenUrl = $location.url();
     // NOTE: save first open url for not uth user
-    if ((User.isAuthed() === false) && (startOpenUrl.indexOf('signup') == -1) && (startOpenUrl.indexOf('login') == -1)) {
+    if ((User.isAuthed() === false) && (startOpenUrl.indexOf('signup') === -1) && (startOpenUrl.indexOf('login') === -1)) {
       $localStorage.lastUrl = startOpenUrl;
     }
 
     // NOTE: save last open url for auth user
     $rootScope.$on('$stateChangeSuccess', function(event, stateTo, stateFrom) {
-      if ((User.isAuthed() === true) && (startOpenUrl.indexOf('signup') == -1) && (startOpenUrl.indexOf('login') == -1)) {
+      if ((User.isAuthed() === true) && (startOpenUrl.indexOf('signup') === -1) && (startOpenUrl.indexOf('login') === -1)) {
         $localStorage.lastUrl = $location.url();
       }
     });
