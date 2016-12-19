@@ -7,21 +7,33 @@
 
   /*@ngInject*/
   function AuthRun($rootScope, $state, $location, DashboardSrv, User, Companies, $localStorage) {
-
     var startOpenUrl = $location.url();
-    // NOTE: save first open url for not uth user
-    if ((User.isAuthed() === false) && (startOpenUrl.indexOf('signup') === -1) && (startOpenUrl.indexOf('login') === -1)) {
-      $localStorage.lastUrl = startOpenUrl;
+    // NOTE: validation url
+    function isValidReOpenUrl(url) {
+      if ((url.indexOf('signup') === -1) && (url.indexOf('login') === -1) && (url.indexOf('/azure-sso') === -1)) {
+        return true;
+      }
+      return false;
     }
-
+    // NOTE: save first open url for not auth user
+    if (User.isAuthed() === false) {
+      if (isValidReOpenUrl(startOpenUrl)) {
+        $localStorage.lastUrl = startOpenUrl;
+      }
+    }
     // NOTE: save last open url for auth user
     $rootScope.$on('$stateChangeSuccess', function(event, stateTo, stateFrom) {
-      if ((User.isAuthed() === true) && (startOpenUrl.indexOf('signup') === -1) && (startOpenUrl.indexOf('login') === -1)) {
+      var currentUrl = $location.url();
+      if ((User.isAuthed() === true) && isValidReOpenUrl(currentUrl)) {
         $localStorage.lastUrl = $location.url();
       }
     });
 
     $rootScope.$on('unauthorized', function() {
+      var currentUrl = $location.url();
+      if (isValidReOpenUrl(currentUrl)) {
+        $localStorage.lastUrl = currentUrl;
+      }
       // console.log('No logged in');
       $state.go('login');
     });
@@ -41,9 +53,9 @@
      */
     function defaultLoginWorkFlow() {
       var lastUrl_ = $localStorage.lastUrl;
-      if(!!lastUrl_ && lastUrl_.length > 0){
+      if (!!lastUrl_ && lastUrl_.length > 0 && (lastUrl_.indexOf('login')===-1)) {
         $location.url(lastUrl_);
-      }else{
+      } else {
         DashboardSrv.getAll()
           .then(function(dashboards) {
             if (dashboards && dashboards.length) {
