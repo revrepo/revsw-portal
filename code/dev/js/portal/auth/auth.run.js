@@ -10,7 +10,7 @@
     var startOpenUrl = $location.url();
     // NOTE: validation url
     function isValidReOpenUrl(url) {
-      if ((url.indexOf('signup') === -1) && (url.indexOf('login') === -1) && (url.indexOf('/azure-sso') === -1)) {
+      if ((url.indexOf('signup') === -1) && (url.indexOf('login') === -1) && (url.indexOf('/azure-sso') === -1) && (url.indexOf('/password/reset') === -1)) {
         return true;
       }
       return false;
@@ -53,7 +53,7 @@
      */
     function defaultLoginWorkFlow() {
       var lastUrl_ = $localStorage.lastUrl;
-      if (!!lastUrl_ && lastUrl_.length > 0 && (lastUrl_.indexOf('login')===-1)) {
+      if (!!lastUrl_ && lastUrl_.length > 0 && (lastUrl_.indexOf('login') === -1)) {
         $location.url(lastUrl_);
       } else {
         DashboardSrv.getAll()
