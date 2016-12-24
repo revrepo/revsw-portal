@@ -53,7 +53,7 @@
      */
     function defaultLoginWorkFlow() {
       var lastUrl_ = $localStorage.lastUrl;
-      if (!!lastUrl_ && lastUrl_.length > 0 && (lastUrl_.indexOf('login') === -1)) {
+      if (!!lastUrl_ && lastUrl_.length > 0 && isValidReOpenUrl(lastUrl_)) {
         $location.url(lastUrl_);
       } else {
         DashboardSrv.getAll()
