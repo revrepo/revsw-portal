@@ -124,5 +124,13 @@
         });
     };
 
+    /**
+     * @name onClickRefresh
+     * @description update data on page
+     */
+    $scope.onClickRefresh = function() {
+      $scope.initStatements();
+    };
+
   }
 })();
