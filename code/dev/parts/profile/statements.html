@@ -12,8 +12,8 @@
             <div class="panel panel-default">
                 <div class="panel-heading" ng-if="!userService.isAdmin()">
                     <div class="row">
-                        <div class="col-md-12">
-                            <div class="pull-left">
+                        <div class="col-md-12 form-inline">
+                            <div class="form-group">
                                 <a ng-disabled="_loading"
                                    ui-sref="index.accountSettings.users"
                                    class="btn btn-default">
@@ -21,27 +21,24 @@
                                     Back
                                 </a>
                             </div>
-                            <div class="pull-left">
-
-                                <form class="form-inline">
-                                    <div class="form-group">
-
-                                        <!-- <div app-select ng-model="application" on-select="reloadDirs()"></div> -->
-                                        <ui-select ng-model="account"
-                                                   theme="select2" ng-animate-disabled
-                                                   ng-disabled=""
-                                                   on-select="onAccountSelect($model)"
-                                                   style="min-width: 300px;" >
-                                            <ui-select-match placeholder="Select Account">{{$select.selected.acc_name}}</ui-select-match>
-                                            <ui-select-choices repeat="item in accounts | filter: {acc_name: $select.search}">
-                                                <div ng-bind-html="item.acc_name|highlight: $select.search"></div>
-                                            </ui-select-choices>
-                                        </ui-select>
-
-                                    </div>
+                            <form class=" form-group">
+                                    <!-- <div app-select ng-model="application" on-select="reloadDirs()"></div> -->
+                                    <ui-select ng-model="account"
+                                                theme="select2" ng-animate-disabled
+                                                ng-disabled=""
+                                                on-select="onAccountSelect($model)"
+                                                style="min-width: 300px;" >
+                                        <ui-select-match placeholder="Select Account">{{$select.selected.acc_name}}</ui-select-match>
+                                        <ui-select-choices repeat="item in accounts | filter: {acc_name: $select.search}">
+                                            <div ng-bind-html="item.acc_name|highlight: $select.search"></div>
+                                        </ui-select-choices>
+                                    </ui-select>
                                 </form>
-
-                            </div>
+                                <div class="form-group">
+                                    <button class="btn btn-success" ng-disabled="_loading" ng-click="onClickRefresh()">
+                                      <i class="glyphicon glyphicon-refresh" ng-class="_loading ? 'spin' : ''"></i>&nbsp; Refresh
+                                    </button>
+                               </div>
                         </div>
                     </div>
                 </div>
