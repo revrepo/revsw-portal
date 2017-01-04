@@ -29,7 +29,7 @@
                 Domain </label>
               <div class="col-sm-10">
                 <!-- NOTE: all validation rules implement to hidden fild-->
-                <input type="hidden" id="subdomainFull" name="subdomainFull" validate-domain-name-regular-or-wildcard-domains ng-model="newDomainName" ng-maxlength="225">
+                <input type="hidden" id="subdomainFull" name="subdomainFull" validate-dns-record-domain-name-regular-or-wildcard-domains ng-model="newDomainName" ng-maxlength="225">
                 <input  type="text" id="subdomain" name="subdomain" autofocus class="form-control" placeholder="my.subdomain" ng-model="model.idomain" ng-change="newDomainName = (model.idomain.length>0)? model.idomain+'.'+zone_name:null">
                 <label class="add-on" ng-if="zone_name">.{{zone_name}}</label>
                 <div class="error-messages" ng-messages="createForm.subdomainFull.$error" role="alert" ng-messages-multiple>
