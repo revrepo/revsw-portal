@@ -129,7 +129,7 @@
      * @description update data on page
      */
     $scope.onClickRefresh = function() {
-      $scope.initStatements();
+      $state.reload();
     };
 
   }
