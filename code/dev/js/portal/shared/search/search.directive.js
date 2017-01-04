@@ -129,7 +129,7 @@
                 case 'billing':
                   if ((item.acc_name || '').toLowerCase().indexOf(term) >= 0) {
                     item.searchDisplayText = item.acc_name;
-                    item.searchBarText = item.acc_name + ' (Billing Statement)';
+                    item.searchBarText = item.acc_name + ' (Billing Statements)';
                     item.searchAction = 'billing';
                     results.push(item);
                   }
