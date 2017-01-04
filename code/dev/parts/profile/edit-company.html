@@ -257,7 +257,7 @@
                 <div class="form-group col-md-6" ng-class="{ 'has-error': editForm.billingFirstName.$invalid && editForm.billingFirstName.$dirty }">
                   <label for="billingFirstName" class="col-sm-4 control-label" popover-trigger="mouseenter" uib-popover="First Name (30 characters max)">First Name *</label>
                   <div class="col-sm-8">
-                    <input type="text" class="form-control" required id="first_name" name="billingFirstName" placeholder="First Name" ng-model="model.billing_info.first_name" ng-maxlength="30" ng-pattern="NO_SPECIAL_CHARS" ng-disabled="_loading">
+                    <input type="text" class="form-control" required id="first_name" name="billingFirstName" placeholder="First Name" ng-model="model.billing_info.first_name" ng-maxlength="30" ng-pattern="CONTACT_DATA" ng-disabled="_loading">
                     <div class="error-messages" ng-messages="editForm.billingFirstName.$error" role="alert" ng-messages-multiple>
                       <div ng-messages-include="parts/shared/error-messages.html"></div>
                     </div>
@@ -267,7 +267,7 @@
                 <div class="form-group col-md-6" ng-class="{ 'has-error': editForm.billingLastName.$invalid &&  editForm.billingLastName.$dirty }">
                   <label for="billingLastName" class="col-sm-4 control-label" popover-trigger="mouseenter" uib-popover="Last Name (30 characters max)">Last Name *</label>
                   <div class="col-sm-8">
-                    <input type="text" class="form-control" required id="last_name" name="billingLastName" placeholder="Last Name" ng-model="model.billing_info.last_name" ng-maxlength="30" ng-pattern="NO_SPECIAL_CHARS" ng-disabled="_loading">
+                    <input type="text" class="form-control" required id="last_name" name="billingLastName" placeholder="Last Name" ng-model="model.billing_info.last_name" ng-maxlength="30" ng-pattern="CONTACT_DATA" ng-disabled="_loading">
                     <div class="error-messages" ng-messages="editForm.billingLastName.$error" role="alert" ng-messages-multiple>
                       <div ng-messages-include="parts/shared/error-messages.html"></div>
                     </div>
