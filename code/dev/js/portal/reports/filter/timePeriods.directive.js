@@ -34,6 +34,7 @@
       LAST_DAY = 'Last 1 Day',
       LAST_WEEK = 'Last 7 Days ',
       LAST_MONTH = 'Last 30 Days';
+    var countDays = 1;
     //datepicker ranges
     var ranges = {};
     //Default valuew is Last 1 Day!
@@ -48,7 +49,7 @@
         val: LAST_DAY
       },
       options: {
-        timePicker: true,
+        timePicker: false,
         timePickerIncrement: 30,
         ranges: ranges,
         minDate: moment().subtract(1, 'months'),
@@ -119,15 +120,16 @@
      */
     function updateOverlayValue(datePicker) {
       var key = _.findKey(ranges, function(obj) {
+        countDays = scope.datePicker.date.endDate.diff(scope.datePicker.date.startDate, 'day');
         //range date
         var objStartDate = obj[0].toDate().getTime(),
           objEndDate = obj[1].toDate().getTime(),
           // selected date
           selStartDate = scope.datePicker.date.startDate.toDate().getTime(),
           selEndDate = scope.datePicker.date.endDate.toDate().getTime();
-        return (objStartDate === selStartDate) && (objEndDate === selEndDate);
+        return (countDays === obj[1].diff(obj[0], 'day')) &&
+          (obj[0].diff(scope.datePicker.date.startDate, 'day') === 0 && obj[1].diff(scope.datePicker.date.endDate, 'day') === 0);
       });
-
       if (!key) {
         key = datePicker.val();
       }
@@ -137,6 +139,7 @@
       }
       scope.datePicker.overlay.val = key;
       scope.datePicker.overlay.show = true;
+      scope.updateFilters();
     }
   }
 
@@ -193,10 +196,10 @@
       if (!$scope.ngFilters) {
         $scope.ngFilters = {};
       }
-      // $scope.ngFilters.from_timestamp = moment(Date.now()).subtract(parseInt($scope.delay), 'days').valueOf();
-      // $scope.ngFilters.to_timestamp = Date.now();
-      $scope.ngFilters.from_timestamp = $scope.datePicker.date.startDate.toDate().getTime();
-      $scope.ngFilters.to_timestamp = $scope.datePicker.date.endDate.toDate().getTime();
+      var from_timestamp = moment().add($scope.datePicker.date.startDate.diff(moment(), 'days'), 'days');
+      var to_timestamp = moment().add($scope.datePicker.date.endDate.diff(moment(), 'days'), 'days');
+      $scope.ngFilters.from_timestamp = from_timestamp.toDate().getTime();
+      $scope.ngFilters.to_timestamp = to_timestamp.toDate().getTime();
       $scope.onFilter();
     }
   }
