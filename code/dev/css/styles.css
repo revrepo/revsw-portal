@@ -700,6 +700,7 @@ section[drawer] .side-menu {
   height: 100%;
   padding-left: 12px;
   list-style-type: none;
+  overflow-y: auto;
 }
 section[drawer] .side-menu .side-menu-item {
   cursor: pointer;
@@ -759,6 +760,17 @@ section[drawer] .side-menu .open-side-menu-item {
 }
 section[drawer] .side-menu .open-side-menu-item .side-menu-sub-item {
   display: block;
+}
+.side-menu::-webkit-scrollbar {
+  width: 6px;
+}
+.side-menu::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px #fff;
+  border-radius: 6px;
+}
+.side-menu::-webkit-scrollbar-thumb {
+  -webkit-box-shadow: inset 8px 6px #f7941e;
+  border-radius: 6px;
 }
 .left-menu-start {
   display: inline-block;
