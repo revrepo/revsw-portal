@@ -44,7 +44,6 @@
         return;
       }
       var intro_ = $localStorage.intro;
-      var lastUrl_ = $localStorage.lastUrl;
       intro_.isSkipIntro = false;
       $localStorage.$reset({
         user: null,
@@ -54,7 +53,7 @@
         selectedAccount: null,
         selectedApplication: null,
         intro: intro_,
-        lastUrl:lastUrl_
+        lastUrl: null
       });
     }
 
