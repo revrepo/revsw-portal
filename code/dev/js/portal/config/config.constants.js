@@ -150,7 +150,7 @@
       // PATTERNS
       PATTERNS: {
         NO_SPECIAL_CHARS: /^[A-Za-z0-9//_.' -]+$/,
-        COMMENT_NO_SPECIAL_CHARS: /^[A-Za-z0-9//_.' \n\r-]+$/,
+        COMMENT_NO_SPECIAL_CHARS: /^[A-Za-zÀÈÌÒÙàèìòùÁÉÍÓÚÝáéíóúýÂÊÎÔÛâêîôûÃÑÕãñõÄËÏÖÜŸäëïöüŸ¡¿çÇŒœßØøÅåÆæÞþÐð""\w\d\s-'.,&#@:?!()$\/\n\r-]+$/,
         IP_ADDRESS: /^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$/,
         WILDCARD_DOMAIN_FIELD: /(^(\*\.[a-zA-Z0-9-\_]{0,62}[a-zA-Z0-9]\.)+[a-zA-Z]{2,63}$)/,
         WILDCARD_DOMAINS_FIELDS: /(^\*\.(([a-zA-Z0-9-\_]{0,62})[a-zA-Z0-9]\.)+[a-zA-Z]{2,63}$)/,
@@ -160,7 +160,9 @@
         DNS_RECORD_DOMAIN: /(?=^.{4,253}$)(^((?!-)[a-zA-Z0-9-\_]{0,62}[a-zA-Z0-9]\.)+[a-zA-Z]{2,63}$)/,
         COOKIE: /^[A-Za-z0-9.' -]+$/,
         CACHE_BYPASS_LOCATION: /^[A-Za-z0-9//.' -]+$/,
-        QUERY_STRINGS_OPTION: /^[A-Za-z0-9.' -]+$/
+        QUERY_STRINGS_OPTION: /^[A-Za-z0-9.' -]+$/,
+        CONTACT_DATA: /^[A-Za-zÀÈÌÒÙàèìòùÁÉÍÓÚÝáéíóúýÂÊÎÔÛâêîôûÃÑÕãñõÄËÏÖÜŸäëïöüŸ¡¿çÇŒœßØøÅåÆæÞþÐð$\/]+$/,
+        COMPANY_DATA: /^[A-Za-zÀÈÌÒÙ àèìòù ÁÉÍÓÚ Ý áéíóúý ÂÊÎÔÛ âêîôû ÃÑÕ ãñõ ÄËÏÖÜŸ äëïöüŸ ¡¿çÇŒœ ßØøÅå ÆæÞþ Ðð ""\w\d\s-'.,&#@:?!()$\/]+$/,
       },
       // HEADER OPERATION FOR DOMAIN CACHING RULE
       HEADER_OPERATIONS: {
