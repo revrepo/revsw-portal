@@ -32,7 +32,6 @@
     });
 
     $scope.NO_SPECIAL_CHARS = $config.PATTERNS.NO_SPECIAL_CHARS;
-    $scope.CONTACT_DATA = $config.PATTERNS.CONTACT_DATA;
 
     /**
      * @name chooseBillingPlan
