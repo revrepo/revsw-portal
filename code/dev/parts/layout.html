@@ -2,7 +2,7 @@
   <a href="https://www.revapm.com/" id="logo" target="_blank">
     <img src="images/logo_color.png" alt="Logo" />
   </a>
-  <ul class="side-menu" style="height: 92%; overflow: auto;" ng-nicescroll nice-option="{cursorcolor: '#f7941e',cursorwidth: '8px',zindex: '9999999'}">
+  <ul class="side-menu">
     <dashboard-nav-menu></dashboard-nav-menu>
     <li ui-sref-active-if="{class: 'open-side-menu-item', state: 'index.apps'}" , ng-class="{'open-side-menu-item ': menuExpanded('index.apps'),'active-side-menu-item': $state.includes('index.apps')}" style="margin-top: 8px;">
       <a id="side-menu-apps-item" class="side-menu-item" ng-click="goToState('index.apps.ios')">
