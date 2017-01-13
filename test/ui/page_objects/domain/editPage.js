@@ -225,11 +225,11 @@ var EditDomain = {
       if (cb) cb(value);
     };
     getCbElement.click();
-    getCbElement.getAttribute('aria-checked').then(function(data) {
+    getCbElement.getAttribute(this.form.locators.switches.mainAttrs.ariaChecked).then(function(data) {
       check(data);
     });
     getCbElement.click();
-    getCbElement.getAttribute('aria-checked').then(function(data) {
+    getCbElement.getAttribute(this.form.locators.switches.mainAttrs.ariaChecked).then(function(data) {
       check(data);
     });
   },

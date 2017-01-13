@@ -152,6 +152,9 @@ var DomainForm = {
       }
     },
     switches: {
+      mainAttrs: {
+        ariaChecked: 'aria-checked'
+      },
       lastMileQUICprotocol: {
         css: 'div[ng-model="model.rev_component_bp.enable_quic"]'
       },
@@ -692,6 +695,8 @@ var DomainForm = {
   getOnAddNewItemCO: function () {
     return element(by.css(this.locators.buttons.onAddNewItemCO.css));
   },
+
+
 
   /**
    * ### DomainForm.getDomainOriginLocationDDown()
