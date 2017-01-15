@@ -21,11 +21,21 @@
       },
       /*@ngInject*/
       controller: function($scope, filterGeneratorService) {
-        $scope.delay = '24';
         if (!$scope.ngFilters) {
-          $scope.ngFilters = {};
+          // NOTE: set defaults values for empty filter
+          $scope.ngFilters = {
+            delay: '24',
+            count: '20'
+          };
+        } else {
+          // NOTE: set default value for not exisit properties
+          if (!$scope.ngFilters.delay) {
+            $scope.ngFilters.delay = '24';
+          }
+          if (!$scope.ngFilters.count) {
+            $scope.ngFilters.count = '20';
+          }
         }
-        $scope.ngFilters.count = '20';
 
         filterGeneratorService.subscribeOnFilterChangeEvent($scope, callbackOnGlobalFilterChange);
 
@@ -68,7 +78,7 @@
 
         $scope.updateFilters = function() {
 
-          $scope.ngFilters.from_timestamp = moment(Date.now()).subtract(parseInt($scope.delay), 'hours').valueOf();
+          $scope.ngFilters.from_timestamp = moment(Date.now()).subtract(parseInt($scope.ngFilters.delay), 'hours').valueOf();
           $scope.ngFilters.to_timestamp = Date.now();
 
           $scope.onFilter();

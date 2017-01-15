@@ -15,15 +15,16 @@
         flCountry: '=',
         flOs: '=',
         flDevice: '=',
-        flBrowser: '='
+        flBrowser: '=',
+        flStoreName: '@'
       },
       /*@ngInject*/
-      controller: function ($scope, Stats) {
+      controller: function ($scope, Stats, $localStorage) {
         $scope._loading = false;
-        $scope.filters = {
+        $scope.filters = !$scope.flStoreName ? _.assign({
           from_timestamp: moment().subtract(24, 'hours').valueOf(),
           to_timestamp: Date.now()
-        };
+        }, {}) : $localStorage[$scope.flStoreName];
 
         $scope.loadDetails = function () {
           if (!$scope.ngDomain || !$scope.ngDomain.id) {
@@ -34,7 +35,7 @@
           var params = angular.merge({
             domainId: $scope.ngDomain.id
           }, $scope.filters);
-
+          delete params.delay;
           var http_codes = {
             '500': 'Internal Server Error',
             '501': 'Not Implemented',
@@ -72,6 +73,12 @@
         $scope.$watch('ngDomain', function () {
           $scope.loadDetails();
         });
+        // NOTE: watch fitlers and save to localstorage
+        $scope.$watch('filters', function () {
+          if ($scope.flStoreName) {
+            $localStorage[$scope.flStoreName] = $scope.filters;
+          }
+        }, true);
       }
     };
   }

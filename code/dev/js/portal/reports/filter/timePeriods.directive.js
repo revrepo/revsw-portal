@@ -50,7 +50,7 @@
       },
       options: {
         timePicker: false,
-        timePickerIncrement: 30,
+        timePickerIncrement: 1,
         ranges: ranges,
         minDate: moment().subtract(1, 'months'),
         maxDate: moment(),
@@ -119,15 +119,31 @@
      * @param {Object} - datePicker object
      */
     function updateOverlayValue(datePicker) {
+      var now_ = moment();
+      var h = now_.hours();
+      var m = now_.minutes();
+      var s = now_.seconds();
+      var ms = now_.millisecond();
+      // NOTE: if endDate is today
+      if (now_.diff(scope.datePicker.date.endDate, 'day') === 0) {
+        // NOTE: set current time
+        scope.datePicker.date.endDate.hours(h).minutes(m).seconds(s).millisecond(ms);
+        if (scope.datePicker.date.endDate.diff(scope.datePicker.date.startDate, 'day') === 0) {
+          // NOTE: if start day and end day is equals set start of day
+          scope.datePicker.date.startDate = moment(scope.datePicker.date.startDate.format('YYYY-MM-DD')).startOf('day');
+        } else {
+          // NOTE: if start day is not equal end day - set current time
+          scope.datePicker.date.startDate.hours(h).minutes(m).seconds(s).millisecond(ms);
+        }
+      } else {
+        scope.datePicker.date.startDate = moment(scope.datePicker.date.startDate.format('YYYY-MM-DD')).startOf('day');
+        scope.datePicker.date.endDate = moment(scope.datePicker.date.endDate.format('YYYY-MM-DD')).endOf('day');
+      }
       var key = _.findKey(ranges, function(obj) {
+        // fix time in DatePiker
         countDays = scope.datePicker.date.endDate.diff(scope.datePicker.date.startDate, 'day');
         //range date
-        var objStartDate = obj[0].toDate().getTime(),
-          objEndDate = obj[1].toDate().getTime(),
-          // selected date
-          selStartDate = scope.datePicker.date.startDate.toDate().getTime(),
-          selEndDate = scope.datePicker.date.endDate.toDate().getTime();
-        return (countDays === obj[1].diff(obj[0], 'day')) &&
+        return (countDays === obj[1].diff(obj[0], 'day')) && (scope.datePicker.date.endDate.isSame(now_)) &&
           (obj[0].diff(scope.datePicker.date.startDate, 'day') === 0 && obj[1].diff(scope.datePicker.date.endDate, 'day') === 0);
       });
       if (!key) {
@@ -196,8 +212,21 @@
       if (!$scope.ngFilters) {
         $scope.ngFilters = {};
       }
-      var from_timestamp = moment().add($scope.datePicker.date.startDate.diff(moment(), 'days'), 'days');
-      var to_timestamp = moment().add($scope.datePicker.date.endDate.diff(moment(), 'days'), 'days');
+      var now_ = moment();
+      var h = now_.hours();
+      var m = now_.minutes();
+      var s = now_.seconds();
+      var ms = now_.millisecond();
+      var from_timestamp = moment($scope.datePicker.date.startDate.format('YYYY-MM-DD')).startOf('day');
+      var to_timestamp = moment($scope.datePicker.date.endDate.format('YYYY-MM-DD')).endOf('day');
+      if (now_.diff(to_timestamp, 'day') === 0) {
+        // NOTE: set current time if endDay is today
+        to_timestamp.hours(h).minutes(m).seconds(s).millisecond(ms);
+        if (to_timestamp.diff(from_timestamp, 'day') !== 0) {
+          // NOTE: not full day
+          from_timestamp.hours(h).minutes(m).seconds(s).millisecond(ms);
+        }
+      }
       $scope.ngFilters.from_timestamp = from_timestamp.toDate().getTime();
       $scope.ngFilters.to_timestamp = to_timestamp.toDate().getTime();
       $scope.onFilter();
