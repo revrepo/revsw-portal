@@ -20,7 +20,7 @@
             <i class="glyphicon glyphicon-cog"></i>
           </a>
           <a href="" ng-if="options.editable" class="btn btn-link" title="{{editMode ? 'Save Changes' : 'Modify This Dashboard'}}" ng-click="toggleEditMode()">
-            <i class="glyphicon" x-ng-class="{'glyphicon-edit' : !editMode, 'glyphicon-floppy-disk' : editMode}"></i>
+            <i class="glyphicon" x-ng-class="{'glyphicon-edit' : !editMode, 'fa fa-floppy-o' : editMode}"></i>
           </a>
           <a href="" ng-if="editMode" class="btn btn-link" title="Undo Changes" ng-click="cancelEditMode()">
             <i class="glyphicon glyphicon-repeat adf-flip"></i>

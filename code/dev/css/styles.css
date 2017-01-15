@@ -1039,6 +1039,9 @@ section[drawer] .side-menu .dashboard_menu .side-menu-item.item-title a {
 .dashboard__title .dashboard-btn-new:focus {
   outline: none;
 }
+.dashboard__title .fa {
+  top: -2px;
+}
 .dashboard-structure-select-item {
   display: block;
   padding: 5px;
