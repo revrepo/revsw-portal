@@ -20,7 +20,7 @@
         filtersSets: '='
       },
       /*@ngInject*/
-      controller: function($scope, Stats, Util) {
+      controller: function($scope, $q, Stats, Util) {
         var _filters_field_list = ['from_timestamp', 'to_timestamp', 'country', 'device', 'os', 'browser'];
 
         function generateFilterParams(filters) {
@@ -56,13 +56,21 @@
         }
 
         $scope.traffic = {
-          labels: [],
           series: [{
             name: 'Total',
-            data: []
+            data: [],
+            tooltip: {
+              headerFormat: '',
+              pointFormatter: defaultPointFormatter
+            }
           }]
         };
 
+        function defaultPointFormatter() {
+          var val = moment(this.x).format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span><br>]MMM D');
+          return val + '<br/>' +
+            this.series.name + ': ' + Util.convertTraffic(this.y);
+        }
         //  ---------------------------------
         var info_ = null,
           rps_avg_ = 0,
@@ -72,18 +80,21 @@
 
         $scope.chartOptions = {
           chart: {
+            zoomType: 'x',
             events: {
               redraw: function() {
                 if (info_) {
                   info_.destroy();
                   info_ = null;
                 }
+                var x = this.xAxis[0].toPixels(this.xAxis[0].min)+3;
+
                 info_ = this /*chart*/ .renderer
                   .label('RPS Avg <span style="font-weight: bold; color: #3c65ac;">' + (Math.round(rps_avg_ * 1000) / 1000) +
                     '</span> Max <span style="font-weight: bold; color: #3c65ac;">' + (Math.round(rps_max_ * 1000) / 1000) +
                     '</span><br>Hits Total <span style="font-weight: bold; color: #3c65ac;">' + Util.formatNumber(hits_total_) +
                     '</span>',
-                    this.xAxis[0].toPixels(0), 3, '', 0, 0, true /*html*/ )
+                    x /*x*/, 3 /*y*/, '', 0, 0, true /*html*/ )
                   .css({
                     color: '#444'
                   })
@@ -110,66 +121,52 @@
             }
           },
           xAxis: {
-            crosshair: {
-              width: 1,
-              color: '#000000'
-            },
-            tickInterval: tickInterval_,
-            labels: {
-              autoRotation: false,
-              useHTML: true,
-              formatter: function() {
-                return this.value.label;
-              }
-            }
+            type: 'datetime',
+            pointInterval: 24 * 60 * 60 * 10000,
           },
           tooltip: {
-            formatter: function() {
-              return this.key.tooltip + '<br/>' +
-                this.series.name + ': <strong>' + Util.formatNumber(this.y, 3) + '</strong>';
-            }
-          }
+            shared: true,
+            pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y:.3f}</b> ({point.percentage:.3f}%)<br/>',
+          },
         };
 
         //  ---------------------------------
         $scope.reload = function() {
           if (!$scope.ngDomain || !$scope.ngDomain.id) {
+            $scope.traffic = {
+              series: [{
+                name: 'Total',
+                data: [],
+                tooltip: {
+                  headerFormat: '',
+                  pointFormatter: defaultPointFormatter
+                }
+              }]
+            };
             return;
           }
           $scope._loading = true;
+          var series = [{
+            name: 'Total',
+            data: [],
+            tooltip: {
+              headerFormat: '',
+              pointFormatter: defaultPointFormatter
+            }
+          }];
+          var _xAxisPointStart = null;
+          var _xAxisPointInterval = null;
           Stats.traffic(angular.merge({
               domainId: $scope.ngDomain.id
             }, generateFilterParams($scope.filters)))
             .$promise
             .then(function(data) {
-
               rps_avg_ = rps_max_ = hits_total_ = 0;
               if (data.data && data.data.length > 0) {
-                var interval = data.metadata.interval_sec || 1800;
-                var offset = interval * 1000;
-                var series = [{
-                  name: 'Total',
-                  data: []
-                }];
-                var labels = [];
+                var interval = parseInt(data.metadata.interval_sec || 1800);
+                _xAxisPointStart = parseInt(data.metadata.start_timestamp);
+                _xAxisPointInterval = parseInt(data.metadata.interval_sec) * 1000;
                 data.data.forEach(function(item, idx, items) {
-
-                  var val = moment(item.time + offset);
-                  var label;
-                  if (idx % tickInterval_) {
-                    label = '';
-                  } else if (idx === 0 ||
-                    (new Date(item.time + offset)).getDate() !== (new Date(items[idx - tickInterval_].time + offset)).getDate()) {
-                    label = val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span><br>]MMM D');
-                  } else {
-                    label = val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span>]');
-                  }
-
-                  labels.push({
-                    tooltip: val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span>] MMMM Do YYYY'),
-                    label: label
-                  });
-
                   var rps = item.requests / interval;
                   rps_avg_ += rps;
                   if (rps > rps_max_) {
@@ -182,11 +179,18 @@
                 if (rps_avg_ === 0) {
                   series[0].data.length = 0;
                 }
-                $scope.traffic = {
-                  labels: labels,
-                  series: series
-                };
+                return $q.when(series);
+              } else {
+                return $q.when(series);
               }
+            })
+            .then(function setNewData(data) {
+              // model better to update once
+              $scope.traffic = {
+                pointStart: _xAxisPointStart,
+                pointInterval: _xAxisPointInterval,
+                series: series
+              };
             })
             .finally(function() {
               $scope._loading = false;

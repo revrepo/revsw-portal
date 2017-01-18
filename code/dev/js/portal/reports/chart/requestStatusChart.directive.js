@@ -55,16 +55,28 @@
           _.extend($scope.filters, $scope.filtersSets);
         }
         $scope.traffic = {
-          labels: [],
           series: [{
             name: 'Successful',
-            data: []
+            data: [],
+            tooltip: {
+              headerFormat: '',
+              pointFormatter: defaultPointFormatter
+            }
           }, {
             name: 'Failed',
-            data: []
+            data: [],
+            tooltip: {
+              headerFormat: '',
+              pointFormatter: defaultPointFormatter
+            }
           }]
         };
 
+        function defaultPointFormatter() {
+          var val = moment(this.x).format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span><br>]MMM D');
+          return val + '<br/>' +
+            this.series.name + ': ' + Util.convertTraffic(this.y);
+        }
         //  ---------------------------------
         var info_ = null,
           success_ = 0,
@@ -73,12 +85,14 @@
 
         $scope.chartOptions = {
           chart: {
+            zoomType: 'x',
             events: {
               redraw: function() {
                 if (info_) {
                   info_.destroy();
                   info_ = null;
                 }
+                var x = this.xAxis[0].toPixels(this.xAxis[0].min) + 3;
                 var rel_success = 0,
                   rel_failure = 0;
                 if ((failure_ + success_) !== 0) {
@@ -91,7 +105,7 @@
                     '</span>%<br> Failed <span style="font-weight: bold; color: darkred;">' + Util.formatNumber(failure_) +
                     '</span> Requests, <span style="font-weight: bold; color: darkred;">' + rel_failure +
                     '</span>%',
-                    this.xAxis[0].toPixels(0), 3, '', 0, 0, true /*html*/ )
+                    x /* x */ , 3 /* y */ , '', 0, 0, true /*html*/ )
                   .css({
                     color: '#444'
                   })
@@ -118,34 +132,64 @@
             }
           },
           xAxis: {
-            crosshair: {
-              width: 1,
-              color: '#000000'
-            },
-            tickInterval: tickInterval_,
-            labels: {
-              autoRotation: false,
-              useHTML: true,
-              formatter: function() {
-                return this.value.label;
-              }
-            }
+            type: 'datetime',
+            pointInterval: 24 * 60 * 60 * 10000,
           },
           tooltip: {
-            formatter: function() {
-              return this.key.tooltip + '<br/>' +
-                this.series.name + ': <strong>' + Util.formatNumber(this.y, 3) + '</strong>';
+            shared: true,
+            pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y:.3f}</b> ({point.percentage:.3f}%)<br/>',
+          },
+          plotOptions: {
+            areaspline: {
+              marker: {
+                enabled: false
+              },
+              // @see http://api.highcharts.com/highcharts/plotOptions.areaspline.stacking
+              stacking: 'normal'
             }
-          }
+          },
         };
 
         //  ---------------------------------
         $scope.reload = function() {
           if (!$scope.ngDomain || !$scope.ngDomain.id) {
+            $scope.traffic = {
+              series: [{
+                name: 'Successful',
+                data: [],
+                tooltip: {
+                  headerFormat: '',
+                  pointFormatter: defaultPointFormatter
+                }
+              }, {
+                name: 'Failed',
+                data: [],
+                tooltip: {
+                  headerFormat: '',
+                  pointFormatter: defaultPointFormatter
+                }
+              }]
+            };
             return;
           }
           $scope._loading = true;
-
+          var _xAxisPointStart = null;
+          var _xAxisPointInterval = null;
+          var series = [{
+            name: 'Successful',
+            data: [],
+            tooltip: {
+              headerFormat: '',
+              pointFormatter: defaultPointFormatter
+            }
+          }, {
+            name: 'Failed',
+            data: [],
+            tooltip: {
+              headerFormat: '',
+              pointFormatter: defaultPointFormatter
+            }
+          }];
           $q.all([
 
               Stats.traffic(angular.merge({
@@ -163,35 +207,11 @@
             ])
             .then(function(data) {
               var interval = data[0].metadata.interval_sec || 1800;
-              var offset = interval * 1000;
-              var labels = [];
-              var series = [{
-                name: 'Successful',
-                data: []
-              }, {
-                name: 'Failed',
-                data: []
-              }];
-
+              _xAxisPointStart = parseInt(data[0].metadata.start_timestamp);
+              _xAxisPointInterval = parseInt(data[0].metadata.interval_sec) * 1000;
               success_ = failure_ = 0;
               if (data[0].data && data[0].data.length > 0) {
                 data[0].data.forEach(function(item, idx, items) {
-
-                  var val = moment(item.time + offset);
-                  var label;
-                  if (idx % tickInterval_) {
-                    label = '';
-                  } else if (idx === 0 ||
-                    (new Date(item.time + offset)).getDate() !== (new Date(items[idx - tickInterval_].time + offset)).getDate()) {
-                    label = val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span><br>]MMM D');
-                  } else {
-                    label = val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span>]');
-                  }
-
-                  labels.push({
-                    tooltip: val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span>] MMMM Do YYYY'),
-                    label: label
-                  });
 
                   success_ += item.requests;
                   series[0].data.push(item.requests / interval);
@@ -209,8 +229,13 @@
                   series[1].data.length = 0;
                 }
               }
+              return $q.when(series);
+            })
+            .then(function setNewData(data) {
+              // model better to update once
               $scope.traffic = {
-                labels: labels,
+                pointStart: _xAxisPointStart,
+                pointInterval: _xAxisPointInterval,
                 series: series
               };
             })
