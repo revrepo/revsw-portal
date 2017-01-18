@@ -46,7 +46,8 @@ describe('Smoke', function () {
           expect(checkDisplay('getCustomVCLrulesTxtIn')).toBe(true);
         }); 
 
-        it('if "Custom VCL Rules" is "ON" then should display block "Custom VCL Rules"', function () {
+        it('if "Custom VCL Rules" is "ON" then should '+
+          'display block "Custom VCL Rules"', function () {
           
           EditPage.switchBtns(form.getCustomVCLrulesTxtIn(),
           function(value) {
@@ -57,7 +58,8 @@ describe('Smoke', function () {
 
         }); 
 
-        it('if "Custom VCL Rules" is "ON" then should display "Open only one rule at a time"', function () {
+        it('if "Custom VCL Rules" is "ON" then should '+
+          'display "Open only one rule at a time"', function () {
           EditPage.switchBtns(form.getCustomVCLrulesTxtIn(),
           function(value) {
             if (value === 'true') {
@@ -138,7 +140,8 @@ describe('Smoke', function () {
           });
         }); 
 
-        it('if "Custom VCL Rules" is "ON" then should display "\'Backend Error\' Function"', function () {
+        it('if "Custom VCL Rules" is "ON" then should'+
+          ' display "\'Backend Error\' Function"', function () {
           EditPage.switchBtns(form.getCustomVCLrulesTxtIn(),
           function(value) {
             if (value === 'true') {
@@ -157,7 +160,8 @@ describe('Smoke', function () {
           });
         });
 
-        it('if "Custom VCL Rules" is "ON" then should display "Backend Name" in "Backends"', function () {
+        it('if "Custom VCL Rules" is "ON" then should '+
+          'display "Backend Name" in "Backends"', function () {
           EditPage.switchBtns(form.getCustomVCLrulesTxtIn(),
           function(value) {
             if (value === 'true') {
@@ -167,7 +171,8 @@ describe('Smoke', function () {
           });
         });
 
-        it('if "Custom VCL Rules" is "ON" then should display "Backend VCL Code" in "Backends"', function () {
+        it('if "Custom VCL Rules" is "ON" then should '+
+          'display "Backend VCL Code" in "Backends"', function () {
           EditPage.switchBtns(form.getCustomVCLrulesTxtIn(),
           function(value) {
             if (value === 'true') {
@@ -177,7 +182,8 @@ describe('Smoke', function () {
           });
         });
 
-        it('if "Custom VCL Rules" is "ON" then should display "Dynamic Origin DNS Name Lookups" in "Backends"', function () {
+        it('if "Custom VCL Rules" is "ON" then should display '+
+          '"Dynamic Origin DNS Name Lookups" in "Backends"', function () {
           EditPage.switchBtns(form.getCustomVCLrulesTxtIn(),
           function(value) {
             if (value === 'true') {
@@ -187,7 +193,8 @@ describe('Smoke', function () {
           });
         });
 
-        it('if "Custom VCL Rules" is "ON" then should display "Origin TCP Port" in "Backends"', function () {
+        it('if "Custom VCL Rules" is "ON" then should display'+
+          ' "Origin TCP Port" in "Backends"', function () {
           EditPage.switchBtns(form.getCustomVCLrulesTxtIn(),
           function(value) {
             if (value === 'true') {
@@ -197,7 +204,8 @@ describe('Smoke', function () {
           });
         });
 
-        it('if "Custom VCL Rules" is "ON" then should display "Origin Host" in "Backends"', function () {
+        it('if "Custom VCL Rules" is "ON" then should display'+
+          ' "Origin Host" in "Backends"', function () {
           EditPage.switchBtns(form.getCustomVCLrulesTxtIn(),
           function(value) {
             if (value === 'true') {

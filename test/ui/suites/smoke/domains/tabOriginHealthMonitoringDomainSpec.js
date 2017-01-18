@@ -46,7 +46,8 @@ describe('Smoke', function () {
           expect(checkDisplay('getOriginHealthMonitoringTxtIn')).toBe(true);
         });
       
-        it('if "Origin Health Monitoring" is "ON" then should display "Origin Monitoring HTTP Request"', function () {
+        it('if "Origin Health Monitoring" is "ON" then should '+
+          'display "Origin Monitoring HTTP Request"', function () {
           EditPage.switchBtns(form.getOriginHealthMonitoringTxtIn(),
           function(value) {
             if (value === 'true') {
@@ -55,7 +56,8 @@ describe('Smoke', function () {
           });
         });
 
-        it('if "Origin Health Monitoring" is "ON" then should display "Probe Timeout"', function () {
+        it('if "Origin Health Monitoring" is "ON" then'+
+          ' should display "Probe Timeout"', function () {
           EditPage.switchBtns(form.getOriginHealthMonitoringTxtIn(),
           function(value) {
             if (value === 'true') {
@@ -64,7 +66,8 @@ describe('Smoke', function () {
           });
         });
 
-        it('if "Origin Health Monitoring" is "ON" then should display "Probe Interval"', function () {
+        it('if "Origin Health Monitoring" is "ON" then'+
+          ' should display "Probe Interval"', function () {
           EditPage.switchBtns(form.getOriginHealthMonitoringTxtIn(),
           function(value) {
             if (value === 'true') {
@@ -73,7 +76,8 @@ describe('Smoke', function () {
           });
         });
 
-        it('if "Origin Health Monitoring" is "ON" then should display "Expected HTTP Response Code"', function () {
+        it('if "Origin Health Monitoring" is "ON" then should'+
+          ' display "Expected HTTP Response Code"', function () {
           EditPage.switchBtns(form.getOriginHealthMonitoringTxtIn(),
           function(value) {
             if (value === 'true') {

@@ -667,7 +667,8 @@ var DomainForm = {
   },
 
   getBlockFunctionBlock: function (name) {
-    return element(by.css(this.locators.blocks.functionBlock.css + '[heading="\'' + name + '\' Function"]'));
+    return element(by.css(this.locators.blocks.functionBlock.css +
+      '[heading="\'' + name + '\' Function"]'));
   },
   getOneAtATimeTxtIn: function () {
     return element(by.css(this.locators.checkboxes.oneAtATime.css));

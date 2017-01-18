@@ -52,7 +52,8 @@ describe('Smoke', function () {
         });
 
 
-        it('if "Enable Lua Scripting On Edge (Last Mile) Proxies" is "ON" then should display "Lua Scripts Executed On Edge (Last Mile) Proxies"', function () {
+        it('if "Enable Lua Scripting On Edge (Last Mile) Proxies" is "ON" then should'+
+          ' display "Lua Scripts Executed On Edge (Last Mile) Proxies"', function () {
           EditPage.switchBtns(form.getEnableLuaScriptingOnEdgeLastMile(),
           function(value) {
             if (value === 'true') {
@@ -63,7 +64,8 @@ describe('Smoke', function () {
 
 
 
-        it('if "Enable Lua Scripting On Edge (Last Mile) Proxies" is "ON" then should display "Enable This Code Block" in "Last Mile"', function () {
+        it('if "Enable Lua Scripting On Edge (Last Mile) Proxies" is "ON" then should'+
+          ' display "Enable This Code Block" in "Last Mile"', function () {
           EditPage.switchBtns(form.getEnableLuaScriptingOnEdgeLastMile(),
           function(value) {
             if (value === 'true') {
@@ -73,7 +75,8 @@ describe('Smoke', function () {
           });
         });
 
-        it('if "Enable Lua Scripting On Edge (Last Mile) Proxies" is "ON" then should display "URL Location" in "Last Mile"', function () {
+        it('if "Enable Lua Scripting On Edge (Last Mile) Proxies" is "ON" then '+
+          'should display "URL Location" in "Last Mile"', function () {
           EditPage.switchBtns(form.getEnableLuaScriptingOnEdgeLastMile(),
           function(value) {
             if (value === 'true') {
@@ -83,7 +86,8 @@ describe('Smoke', function () {
           });
         });
 
-        it('if "Enable Lua Scripting On Edge (Last Mile) Proxies" is "ON" then should display "Lua Code" in "Last Mile"', function () {
+        it('if "Enable Lua Scripting On Edge (Last Mile) Proxies" is "ON" then'+
+          ' should display "Lua Code" in "Last Mile"', function () {
           EditPage.switchBtns(form.getEnableLuaScriptingOnEdgeLastMile(),
           function(value) {
             if (value === 'true') {
@@ -93,7 +97,8 @@ describe('Smoke', function () {
           });
         });
 
-        it('if "Enable Lua Scripting On Edge (Last Mile) Proxies" is "ON" then should display "RevAPM Admin Approval" in "Last Mile"', function () {
+        it('if "Enable Lua Scripting On Edge (Last Mile) Proxies" is "ON" then should'+
+          ' display "RevAPM Admin Approval" in "Last Mile"', function () {
           EditPage.switchBtns(form.getEnableLuaScriptingOnEdgeLastMile(),
           function(value) {
             if (value === 'true') {
@@ -106,7 +111,8 @@ describe('Smoke', function () {
 
 
 
-        it('if "Enable Lua Scripting On Origin (First Mile) Proxies" is "ON" then should display "Lua Scripts Executed On Origin (First Mile) Proxies"', function () {
+        it('if "Enable Lua Scripting On Origin (First Mile) Proxies" is "ON" then should'+
+          ' display "Lua Scripts Executed On Origin (First Mile) Proxies"', function () {
           EditPage.switchBtns(form.getEnableLuaScriptingOriginFirstMile(),
           function(value) {
             if (value === 'true') {
@@ -116,7 +122,8 @@ describe('Smoke', function () {
           });
         });
 
-        it('if "Enable Lua Scripting On Origin (First Mile) Proxies" is "ON" then should display "Enable This Code Block" in "First Mile"', function () {
+        it('if "Enable Lua Scripting On Origin (First Mile) Proxies" is "ON" then should'+
+          ' display "Enable This Code Block" in "First Mile"', function () {
           EditPage.switchBtns(form.getEnableLuaScriptingOriginFirstMile(),
           function(value) {
             if (value === 'true') {
@@ -126,7 +133,8 @@ describe('Smoke', function () {
           });
         });
 
-        it('if "Enable Lua Scripting On Origin (First Mile) Proxies" is "ON" then should display "URL Location" in "First Mile"', function () {
+        it('if "Enable Lua Scripting On Origin (First Mile) Proxies" is "ON" then should '+
+          'display "URL Location" in "First Mile"', function () {
           EditPage.switchBtns(form.getEnableLuaScriptingOriginFirstMile(),
           function(value) {
             if (value === 'true') {
@@ -136,7 +144,8 @@ describe('Smoke', function () {
           });
         });
 
-        it('if "Enable Lua Scripting On Origin (First Mile) Proxies" is "ON" then should display "Lua Code" in "First Mile"', function () {
+        it('if "Enable Lua Scripting On Origin (First Mile) Proxies" is "ON" then '+
+          'should display "Lua Code" in "First Mile"', function () {
           EditPage.switchBtns(form.getEnableLuaScriptingOriginFirstMile(),
           function(value) {
             if (value === 'true') {
@@ -146,7 +155,8 @@ describe('Smoke', function () {
           });
         });
 
-        it('if "Enable Lua Scripting On Origin (First Mile) Proxies" is "ON" then should display "RevAPM Admin Approval" in "First Mile"', function () {
+        it('if "Enable Lua Scripting On Origin (First Mile) Proxies" is "ON" then should '+
+          'display "RevAPM Admin Approval" in "First Mile"', function () {
           EditPage.switchBtns(form.getEnableLuaScriptingOriginFirstMile(),
           function(value) {
             if (value === 'true') {
