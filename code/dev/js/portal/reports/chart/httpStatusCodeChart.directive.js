@@ -177,7 +177,6 @@
                   var interval = parseInt(data[idx].metadata.interval_sec || 1800);
                   _xAxisPointStart = parseInt(data[idx].metadata.start_timestamp);
                   _xAxisPointInterval = parseInt(data[idx].metadata.interval_sec) * 1000;
-                  var offset = interval * 1000;
                   var results = [];
                   var total = 0;
                   if (data[idx].data && data[idx].data.length > 0) {
