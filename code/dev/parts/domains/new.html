@@ -28,18 +28,11 @@
       <div class="panel-body">
         <form class="form-horizontal" name="createForm" novalidate>
           <div class="form-group" ng-class="{'has-error': createForm.domain_name.$invalid && createForm.domain_name.$dirty}">
-            <label for="domain_name"
-                   popover-append-to-body="{{true}}"
-                   class="col-sm-2 control-label"
-                   popover-trigger="mouseenter"
-                   uib-popover="Enter here a website/API domain name to be served by RevAPM. Duplicate domain names are not allowed.
-                    If the system will complain about a duplicate domain name but you are the rightful domain owner please contact the RevAPM Customer Support service."
-                   >Domain Name *</label>
-
-            <div class="col-sm-10">
+            <label for="domain_name" class="col-sm-2 control-label">Domain Name *</label>
+            <div class="col-sm-9">
               <input type="text"
                      autofocus
-                     class="form-control"
+                     class="form-control inline-block"
                      ng-disabled="_loading"
                      ng-model="model.domain_name"
                      id="domain_name"
@@ -48,18 +41,17 @@
                      ng-maxlength="50"
                      placeholder="Domain Name"
                      required>
+                <label class="form-group-inline text-info" popover-trigger="mouseenter"  popover-append-to-body="true" uib-popover="Enter here a website/API domain name to be served by RevAPM. Duplicate domain names are not allowed. If the system will complain about a duplicate domain name but you are the rightful domain owner please contact the RevAPM Customer Support service." >
+                  <i class="fa fa-question-circle"></i>
+                </label>
               <div class="error-messages" ng-messages="createForm.domain_name.$error" role="alert" ng-messages-multiple>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
               </div>
             </div>
+
           </div>
           <div class="form-group" ng-class="{'has-error': createForm.accountId.$invalid && createForm.accountId.$dirty}"  ng-if="companies.length > 1">
-            <label for="account_id"
-                   popover-append-to-body="{{true}}"
-                   class="col-sm-2 control-label"
-                   popover-trigger="mouseenter"
-                   uib-popover="Select company name the domain should be associated with">Account</label>
-
+            <label for="account_id" class="col-sm-2 control-label">Account</label>
             <div class="col-sm-10">
                <ui-select ng-model="model.account_id" theme="select2" ng-animate-disabled ng-disabled="_loading" on-select="onAccountSelect($model)" style="min-width: 550px;" id="account_id" name="accountId" required>
                 <ui-select-match placeholder="Select Account">{{$select.selected.companyName}}</ui-select-match>
@@ -67,21 +59,19 @@
                   <div ng-bind-html="item.companyName|highlight: $select.search"></div>
                 </ui-select-choices>
               </ui-select>
+              <label for="account_id"  class=" form-group-inline text-info" popover-trigger="mouseenter"  popover-append-to-body="true" uib-popover="Select company name the domain should be associated with" >
+                <i class="fa fa-question-circle"></i>
+              </label>
               <div class="error-messages" ng-messages="createForm.accountId.$error" role="alert" ng-messages-multiple>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
               </div>
             </div>
           </div>
           <div class="form-group" ng-class="{'has-error': createForm.origin_server.$invalid && createForm.origin_server.$dirty}">
-            <label for="origin_server"
-                   popover-append-to-body="{{true}}"
-                   class="col-sm-2 control-label"
-                   popover-trigger="mouseenter"
-                   uib-popover="Enter here domain name or IP address of origin web server">Origin Server Name/IP *</label>
-
+            <label for="origin_server" class="col-sm-2 control-label">Origin Server Name/IP *</label>
             <div class="col-sm-10">
               <input type="text"
-                     class="form-control"
+                     class="form-control inline-block"
                      ng-disabled="_loading"
                      ng-model="model.origin_server"
                      id="origin_server"
@@ -90,23 +80,19 @@
                      ng-maxlength="50"
                      placeholder="Origin Server name"
                      required>
+              <label class="form-group-inline text-info" popover-trigger="mouseenter"  popover-append-to-body="true" uib-popover="Enter here domain name or IP address of origin web server">
+                <i class="fa fa-question-circle"></i>
+              </label>
               <div class="error-messages" ng-messages="createForm.origin_server.$error" role="alert" ng-messages-multiple>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
               </div>
             </div>
           </div>
           <div class="form-group"  ng-class="{'has-error': createForm.origin_host_header.$invalid && createForm.origin_host_header.$dirty}">
-            <label for="origin_host_header"
-                   popover-append-to-body="{{true}}"
-                   class="col-sm-2 control-label"
-                   popover-trigger="mouseenter"
-                   uib-popover="Enter here a domain name to be used in 'Host' header of requests sent from RevAPM to
- the origin server. The name might be different from origin server name/IP specified above. For example, if origin server IP is 11.11.11.11 and the origin HTTP server recognizes web requests for domain 'www.example.com' you will need to 
-specify '11.11.11.11' in origin server name field above and 'www.example.com' in this field.">Origin Host Header *</label>
-
+            <label for="origin_host_header" class="col-sm-2 control-label" >Origin Host Header *</label>
             <div class="col-sm-10">
               <input type="text"
-                     class="form-control"
+                     class="form-control inline-block"
                      ng-model="model.origin_host_header"
                      ng-disabled="_loading"
                      id="origin_host_header"
@@ -115,20 +101,21 @@ specify '11.11.11.11' in origin server name field above and 'www.example.com' in
                      validate-domain-name
                      placeholder="Origin Host Header"
                      required>
+              <label class="form-group-inline text-info" popover-trigger="mouseenter"  popover-append-to-body="true" uib-popover="Enter here a domain name to be used in 'Host' header of requests sent from RevAPM to
+ the origin server. The name might be different from origin server name/IP specified above. For example, if origin server IP is 11.11.11.11 and the origin HTTP server recognizes web requests for domain 'www.example.com' you will need to
+specify '11.11.11.11' in origin server name field above and 'www.example.com' in this field.">
+                <i class="fa fa-question-circle"></i>
+              </label>
               <div class="error-messages" ng-messages="createForm.origin_host_header.$error" role="alert" ng-messages-multiple>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
               </div>
             </div>
           </div>
           <div class="form-group" ng-class="{'has-error': createForm.origin_server_location_id.$invalid && createForm.origin_server_location_id.$dirty}">
-            <label for="origin_server_location_id"
-                   popover-append-to-body="{{true}}"
-                   class="col-sm-2 control-label"
-                   popover-trigger="mouseenter"
-                   uib-popover="Select a RevAPM location closest to the location of the origin server">Domain Origin Location</label>
+            <label for="origin_server_location_id" class="col-sm-2 control-label">Domain Origin Location</label>
 
             <div class="col-sm-10">
-              <select class="form-control"
+              <select class="form-control inline-block"
                       ng-disabled="_loading"
                       ng-model="model.origin_server_location_id"
                       id="origin_server_location_id"
@@ -136,6 +123,9 @@ specify '11.11.11.11' in origin server name field above and 'www.example.com' in
                       ng-options="obj.id as obj.locationName for obj in locations | orderBy:'locationName'" required>
                 <option value="">--- Select Location ---</option>
               </select>
+              <label class="form-group-inline text-info" for="origin_server_location_id" popover-append-to-body="{{true}}"  popover-trigger="mouseenter" uib-popover="Select a RevAPM location closest to the location of the origin server">
+                   <i class="fa fa-question-circle"></i>
+              </label>
               <div class="error-messages" ng-messages="createForm.origin_server_location_id.$error" role="alert" ng-messages-multiple>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
               </div>
@@ -160,10 +150,13 @@ specify '11.11.11.11' in origin server name field above and 'www.example.com' in
           </div>
           -->
           <div class="form-group" ng-class="{ 'has-error': createForm.comment.$invalid && createForm.comment.$dirty }">
-            <label for="comment" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Comment">Comment</label>
+            <label for="comment" class="col-sm-2 control-label">Comment</label>
             <div class="col-md-10">
-              <textarea id="comment" placeholder="Comment (300 characters max)" ng-maxlength="300" class="form-control" name="comment" ng-model="model.comment" ng-pattern="COMMENT_NO_SPECIAL_CHARS" ng-disabled="_loading">
+              <textarea id="comment" placeholder="Comment (300 characters max)" ng-maxlength="300" class="form-control " name="comment" ng-model="model.comment" ng-pattern="COMMENT_NO_SPECIAL_CHARS" ng-disabled="_loading" style="margin-right: 4px;">
               </textarea>
+              <!--<label for="comment" class="form-group-inline text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Comment">
+                   <i class="fa fa-question-circle"></i>
+              </label>-->
               <div class="error-messages" ng-messages="createForm.comment.$error" role="alert" ng-messages-multiple>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
               </div>
