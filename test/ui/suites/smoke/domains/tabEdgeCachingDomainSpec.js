@@ -58,43 +58,53 @@ describe('Smoke', function () {
 
         });
 
-        it('if "Edge Caching" is "ON" then should display "Override Origin Caching Headers" in "Caching Rules"', function () {
+        it('if "Edge Caching" is "ON" then should display '+
+          '"Override Origin Caching Headers" in "Caching Rules"', function () {
           expect(checkDisplay('getOverrideOriginCachingHeadersTxtIn')).toBe(true); 
         });
 
-        it('if "Edge Caching" is "ON" then should display "Edge Cache TTL" in "Caching Rules"', function () {
+        it('if "Edge Caching" is "ON" then should display '+
+          '"Edge Cache TTL" in "Caching Rules"', function () {
           expect(checkDisplay('getEdgeCacheTTLTxtIn')).toBe(true); 
         });
 
-        it('if "Edge Caching" is "ON" then should display "Enforce New Edge Cache TTL If Origin Caching Headers Are Missing" in "Caching Rules"', function () {
+        it('if "Edge Caching" is "ON" then should display "Enforce New'+
+          ' Edge Cache TTL If Origin Caching Headers Are Missing" in "Caching Rules"', function () {
           expect(checkDisplay('getEdgeCachingHeadersMissingTxtIn')).toBe(true); 
         });
 
-        it('if "Edge Caching" is "ON" then should display "Keep Or Drop Query String Parameters" in "Caching Rules"', function () {
+        it('if "Edge Caching" is "ON" then should display "Keep Or Drop'+
+          ' Query String Parameters" in "Caching Rules"', function () {
           expect(checkDisplay('getKeepOrDropQueryStringParametersTxtIn')).toBe(true);
         });
 
-        it('if "Edge Caching" is "ON" then should display "Query String Parameters To Drop/Keep" in "Caching Rules"', function () {
+        it('if "Edge Caching" is "ON" then should display "Query String '+
+          'Parameters To Drop/Keep" in "Caching Rules"', function () {
           expect(checkDisplay('getQueryStringParametersToDropKeepTxtIn')).toBe(true);
         });
 
-        it('if "Edge Caching" is "ON" then should display "Override HTTP Cookies" in "Caching Rules"', function () {
+        it('if "Edge Caching" is "ON" then should display "Override'+
+          ' HTTP Cookies" in "Caching Rules"', function () {
           expect(checkDisplay('getOverrideHTTPcookiesTxtIn')).toBe(true);
         });
 
-        it('if "Edge Caching" is "ON" then should display "Override Edge Caching" in "Caching Rules"', function () {
+        it('if "Edge Caching" is "ON" then should display "Override '+
+          'Edge Caching" in "Caching Rules"', function () {
           expect(checkDisplay('getOverrideEdgeCachingTxtIn')).toBe(true);
         });
 
-        it('if "Edge Caching" is "ON" then should display "Force Revalidation" in "Caching Rules"', function () {
+        it('if "Edge Caching" is "ON" then should display "Force'+
+          ' Revalidation" in "Caching Rules"', function () {
           expect(checkDisplay('getForceRevalidationTxtIn')).toBe(true);
         });
 
-        it('if "Edge Caching" is "ON" then should display "Enable The Serving of Stale Content" in "Caching Rules"', function () {
+        it('if "Edge Caching" is "ON" then should display "Enable The '+
+          'Serving of Stale Content" in "Caching Rules"', function () {
           expect(checkDisplay('getEnableServingStaleContentTxtIn')).toBe(true);
         });
 
-        it('if "Edge Caching" is "ON" then should display "Enable ESI" in "Caching Rules"', function () {
+        it('if "Edge Caching" is "ON" then should display '+
+          '"Enable ESI" in "Caching Rules"', function () {
           expect(checkDisplay('getEnableESITxtIn')).toBe(true);
         });
 

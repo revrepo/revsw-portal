@@ -165,12 +165,14 @@ var EditDomain = {
   },
 
   getEditDomainLink: function (numberLink) {
-    return element(by.css(this.locators.links.editDomain.css + (numberLink) + ' td:first-child [uib-tooltip="Edit Domain"]'));
+    return element(by.css(this.locators.links.editDomain.css +
+      (numberLink) + ' td:first-child [uib-tooltip="Edit Domain"]'));
   },
 
 
   getAllTabsCountDomain: function () {
-    return element(by.css(this.locators.tabs.cssCount)).getAttribute(this.locators.tabs.attrs.index);
+    return element(by.css(this.locators.tabs.cssCount))
+      .getAttribute(this.locators.tabs.attrs.index);
   },
   /**
    * ### EditDomain.getPublishDomainBtn()
@@ -222,15 +224,21 @@ var EditDomain = {
    */
   switchBtns: function(getCbElement, cb) {
     var check = function(value) {
-      if (cb) cb(value);
+      if (cb) {
+        cb(value);
+      }
     };
     getCbElement.click();
-    getCbElement.getAttribute(this.form.locators.switches.mainAttrs.ariaChecked).then(function(data) {
-      check(data);
+    getCbElement
+      .getAttribute(this.form.locators.switches.mainAttrs.ariaChecked)
+        .then(function(data) {
+          check(data);
     });
     getCbElement.click();
-    getCbElement.getAttribute(this.form.locators.switches.mainAttrs.ariaChecked).then(function(data) {
-      check(data);
+    getCbElement
+      .getAttribute(this.form.locators.switches.mainAttrs.ariaChecked)
+        .then(function(data) {
+          check(data);
     });
   },
 
