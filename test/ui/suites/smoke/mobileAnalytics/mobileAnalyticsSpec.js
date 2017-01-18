@@ -77,7 +77,7 @@ describe('Smoke', function () {
 	it('should btn Update Report be enabled after selecting Filters and' +
        'selecting Company Name', 
 	  function () {
-		var companyName = "qa";
+		var companyName = 'qa';
 		Portal.helpers.nav.goToMATrafficLevels();
 		Portal.mobileAnalytics.trafficLevelsPage.selectFilterDay();
 		Portal.mobileAnalytics.trafficLevelsPage.selectFilterNetwork();
@@ -138,19 +138,19 @@ describe('Smoke', function () {
 		  .getText()
 		  .then( function (tabsNames) {
 		    expect(tabsNames[0])
-			  .toEqual("Top Most Requested Objects");
+			  .toEqual('Top Most Requested Objects');
 			expect(tabsNames[1])
-			  .toEqual("Top Objects With Slowest Response Time");
+			  .toEqual('Top Objects With Slowest Response Time');
 			expect(tabsNames[2])
-			  .toEqual("Top Objects With Slowest First Byte Time");
+			  .toEqual('Top Objects With Slowest First Byte Time');
 			expect(tabsNames[3])
-			  .toEqual("Top Objects With 404 Responses");
+			  .toEqual('Top Objects With 404 Responses');
 			expect(tabsNames[4])
-			  .toEqual("Top Objects With Cache Misses");
+			  .toEqual('Top Objects With Cache Misses');
 			expect(tabsNames[5])
-			  .toEqual("Top Objects With Completion Failures");
+			  .toEqual('Top Objects With Completion Failures');
 			expect(tabsNames[6])
-			  .toEqual("Top Objects With 5XX Error Codes");
+			  .toEqual('Top Objects With 5XX Error Codes');
 		   });
 	});
 	
@@ -162,7 +162,7 @@ describe('Smoke', function () {
 		  .clickTabTopObjectsWith5XXErrorCodes();  
 		expect(Portal.mobileAnalytics.topObjectsPage
 		  .getTopTabsHeaderText())
-		  .toEqual("Top Objects With 5XX Error Codes");
+		  .toEqual('Top Objects With 5XX Error Codes');
 	});
 	
 	});
