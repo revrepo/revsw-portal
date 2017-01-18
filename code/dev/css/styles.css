@@ -1699,3 +1699,6 @@ form.dns-zone-records--new-form input[name="subdomain"] {
   color: #A1A2A5;
   padding: 25px;
 }
+.inline-block {
+  display: inline-block;
+}
