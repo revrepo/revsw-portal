@@ -123,19 +123,24 @@ var DomainForm = {
     },
     radioInputs: {
       useEndUserProtocol: {
-        css: '[for="origin_secure_protocol"] + div > .radio-inline:nth-child(1) input[ng-model="model.origin_secure_protocol"]'
+        css: '[for="origin_secure_protocol"] + div > .radio-inline:nth-child(1)' +
+          ' input[ng-model="model.origin_secure_protocol"]'
       },
       httpsOnly: {
-        css: '[for="origin_secure_protocol"] + div > .radio-inline:nth-child(2) input[ng-model="model.origin_secure_protocol"]'
+        css: '[for="origin_secure_protocol"] + div > .radio-inline:nth-child(2)' +
+          ' input[ng-model="model.origin_secure_protocol"]'
       },
       httpOnly: {
-        css: '[for="origin_secure_protocol"] + div > .radio-inline:nth-child(3) input[ng-model="model.origin_secure_protocol"]'
+        css: '[for="origin_secure_protocol"] + div > .radio-inline:nth-child(3)' +
+          ' input[ng-model="model.origin_secure_protocol"]'
       },
       predefinedSSLconfigurationProfile: {
-        css: '.ssl-certificate-configuration .col-md-5 .form-group:first-child input[ng-model="isCustomSSL_conf_profile"]'
+        css: '.ssl-certificate-configuration .col-md-5 .form-group:first-child' +
+          ' input[ng-model="isCustomSSL_conf_profile"]'
       },
       customSSLconfigurationProfile: {
-        css: '.ssl-certificate-configuration .col-md-5 .form-group:last-child input[ng-model="isCustomSSL_conf_profile"]'
+        css: '.ssl-certificate-configuration .col-md-5 .form-group:last-child' +
+          ' input[ng-model="isCustomSSL_conf_profile"]'
       }
     },
     selects: {
