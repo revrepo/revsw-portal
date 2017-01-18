@@ -221,7 +221,6 @@
                 codeStats.forEach(function(item) {
                   item.percent = item.requests / bigTotal;
                 });
-                console.log(codeStats)
                 return $q.when(series);
               } else {
                 return $q.when(series);
