@@ -61,12 +61,11 @@ describe('Smoke', function () {
 	
 	it('should display selectors(filters) of charts', 
 	  function () {
-		var amountOfOptionsForFilters = 18;
 		Portal.helpers.nav.goToMATrafficLevels();
 		Portal.mobileAnalytics.trafficLevelsPage
 		  .getFilters()
 		  .then(function (filters) {
-		     for(var index = 0; index < amountOfOptionsForFilters; index++) {
+		     for(var index = 0; index < filters.length; index++) {
 				expect(filters[index]
 				  .isDisplayed())
 				  .toBeTruthy();
@@ -90,7 +89,6 @@ describe('Smoke', function () {
 	
 	it('should display options(PNG,JPEG,XLS...) of Chart Context Menu', 
 	  function () {
-		var amountOfContextMenuOptions = 8;
 		Portal.helpers.nav.goToMATrafficLevels();
 		Portal.mobileAnalytics.trafficLevelsPage
 		  .getChartContextMenuBtn()
@@ -104,7 +102,7 @@ describe('Smoke', function () {
 		Portal.mobileAnalytics.trafficLevelsPage
 		  .getChartContextMenu()
 		  .then( function (options) {
-			for(var index = 0; index < amountOfContextMenuOptions; index++) {
+			for(var index = 0; index < options.length; index++) {
 				expect(options[index]
 				  .isDisplayed())
 				  .toBeTruthy();
@@ -116,7 +114,6 @@ describe('Smoke', function () {
 	
 	it('should display tabs and their names at Top Objects page', 
 	  function () {
-		var amountOfTabs = 6;
 		Portal.helpers.nav.goToMATopObjects();
      // expecting that tabs are displayed
 		expect(Portal.mobileAnalytics.topObjectsPage
@@ -126,7 +123,7 @@ describe('Smoke', function () {
 		Portal.mobileAnalytics.topObjectsPage
 		  .getTopTabs()
 		  .then( function (tabs) {
-		    for(var index = 0; index < amountOfTabs; index++) {
+		    for(var index = 0; index < tabs.length; index++) {
 				expect(tabs[index]
 				  .isDisplayed())
 				  .toBeTruthy();
