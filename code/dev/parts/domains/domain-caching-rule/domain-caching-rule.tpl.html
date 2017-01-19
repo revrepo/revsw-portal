@@ -30,9 +30,12 @@
     </div>
   </div>
   <div class="form-group form-inline" ng-class="{'has-error': editForm.newTTL.$invalid && editForm.newTTL.$dirty}">
-    <label class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Defines how long a cached objected will be consider frash (range 0-10,000,000)">Edge Cache TTL</label>
+    <label for="newTTL" class="col-sm-3 control-label">Edge Cache TTL</label>
     <div class="col-md-9">
-      <input type="number" class="form-control" name="newTTL" ng-model="$ctrl.rule.edge_caching.new_ttl" min="0" max="10000000" ng-min="0" ng-max="10000000" required> second(s)
+      <input type="number" class="form-control inline-block" name="newTTL" ng-model="$ctrl.rule.edge_caching.new_ttl" min="0" max="10000000" ng-min="0" ng-max="10000000" required> second(s)
+      <label for="newTTL" class="text-info" popover-trigger="mouseenter" uib-popover="Defines how long a cached objected will be consider frash (range 0-10,000,000)">
+        <i class="fa fa-question-circle"></i>
+      </label>
       <div class="error-messages" ng-messages="editForm.newTTL.$error" role="alert" ng-messages-multiple>
         <div ng-messages-include="parts/shared/error-messages.html"></div>
       </div>
@@ -142,18 +145,19 @@
     </div>
   </div>
   <div class="form-group form-inline" ng-class="{'has-error': editForm.browserCachingNewTTL.$invalid && editForm.browserCachingNewTTL.$dirty}" ng-show="$ctrl.rule.browser_caching.override_edge">
-    <label class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Defines for now long objects will be cached in browser cache (range 0-10,000,000 seconds)">Browser Caching TTL</label>
+    <label for="browserCachingNewTTL" class="col-sm-3 control-label">Browser Caching TTL</label>
     <div class="col-md-9">
-      <input type="number" class="form-control" name="browserCachingNewTTL" ng-model="$ctrl.rule.browser_caching.new_ttl" ng-min="0" ng-max="10000000" required> second(s)
+      <input type="number" class="form-control inline-block" name="browserCachingNewTTL" ng-model="$ctrl.rule.browser_caching.new_ttl" ng-min="0" ng-max="10000000" required> second(s)
+      <label for="browserCachingNewTTL" class="text-info" popover-trigger="mouseenter" uib-popover="Defines for now long objects will be cached in browser cache (range 0-10,000,000 seconds)">
+        <i class="fa fa-question-circle"></i>
+      </label>
       <div class="error-messages" ng-messages="editForm.browserCachingNewTTL.$error" role="alert" ng-messages-multiple>
         <div ng-messages-include="parts/shared/error-messages.html"></div>
       </div>
     </div>
   </div>
   <div class="form-group form-inline">
-    <label for="override_origin" class="col-sm-3 control-label">
-      Force Revalidation
-    </label>
+    <label for="override_origin" class="col-sm-3 control-label">Force Revalidation</label>
     <div class="col-md-9">
       <toggle-switch ng-model="$ctrl.rule.browser_caching.force_revalidate" on-label="On" off-label="Off">
       </toggle-switch>
@@ -165,27 +169,36 @@
     <label class="col-sm-3 ">Serving of Stale Content</label>
   </div>
   <div class="form-group form-inline">
-    <label for="override_origin" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Define whether the edge proxy will serve end users with expired objects in case of origin slowness or downtime">
+    <label for="override_origin" class="col-sm-3 control-label">
       Enable The Serving of Stale Content
     </label>
     <div class="col-md-9">
       <toggle-switch ng-model="$ctrl.rule.serve_stale.enable" on-label="On" off-label="Off">
       </toggle-switch>
+      <label for="override_origin" class="text-info" popover-trigger="mouseenter" uib-popover="Define whether the edge proxy will serve end users with expired objects in case of origin slowness or downtime">
+        <i class="fa fa-question-circle"></i>
+      </label>
     </div>
   </div>
   <div class="form-group form-inline" ng-class="{'has-error': editForm.serveStaleWhileFetchingTTL.$invalid && editForm.serveStaleWhileFetchingTTL.$dirty}" ng-if="$ctrl.rule.serve_stale.enable">
-    <label class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Sets the time period in seconds when stale objects are still served to end users while fetching new objects from the origin server (range 0-10,000,000)">Stale Object TTL While Fetching New Object</label>
+    <label class="col-sm-3 control-label">Stale Object TTL While Fetching New Object</label>
     <div class="col-md-9">
-      <input type="number" class="form-control" name="serveStaleWhileFetchingTTL" ng-model="$ctrl.rule.serve_stale.while_fetching_ttl" ng-min="0" ng-max="10000000" required> second(s)
+      <input type="number" class="form-control inline-block" name="serveStaleWhileFetchingTTL" ng-model="$ctrl.rule.serve_stale.while_fetching_ttl" ng-min="0" ng-max="10000000" required> second(s)
+      <label class="text-info" popover-trigger="mouseenter" uib-popover="Sets the time period in seconds when stale objects are still served to end users while fetching new objects from the origin server (range 0-10,000,000)">
+        <i class="fa fa-question-circle"></i>
+      </label>
       <div class="error-messages" ng-messages="editForm.serveStaleWhileFetchingTTL.$error" role="alert" ng-messages-multiple>
         <div ng-messages-include="parts/shared/error-messages.html"></div>
       </div>
     </div>
   </div>
   <div class="form-group form-inline" ng-class="{'has-error': editForm.serveStaleOriginSickTTL.$invalid && editForm.serveStaleOriginSickTTL.$dirty}" ng-if="$ctrl.rule.serve_stale.enable">
-    <label class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Sets the time period in seconds when stale objects are still served to end users if origin server is down as detected by the origin health monitoring probe (range 0-10,000,000)">Stale Object TTL When Origin Is Down</label>
+    <label class="col-sm-3 control-label">Stale Object TTL When Origin Is Down</label>
     <div class="col-md-9">
-      <input type="number" class="form-control" name="serveStaleOriginSickTTL" ng-model="$ctrl.rule.serve_stale.origin_sick_ttl" ng-min="0" ng-max="10000000" required> second(s)
+      <input type="number" class="form-control inline-block" name="serveStaleOriginSickTTL" ng-model="$ctrl.rule.serve_stale.origin_sick_ttl" ng-min="0" ng-max="10000000" required> second(s)
+      <label class="text-info" popover-trigger="mouseenter" uib-popover="Sets the time period in seconds when stale objects are still served to end users if origin server is down as detected by the origin health monitoring probe (range 0-10,000,000)">
+        <i class="fa fa-question-circle"></i>
+      </label>
       <div class="error-messages" ng-messages="editForm.serveStaleOriginSickTTL.$error" role="alert" ng-messages-multiple>
         <div ng-messages-include="parts/shared/error-messages.html"></div>
       </div>
@@ -197,12 +210,15 @@
     <label class="col-sm-3 ">Edge Side Includes</label>
   </div>
   <div class="form-group form-inline">
-    <label for="override_origin" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Use the switch to control whether the edge proxy will process Edge Side Includes (ESI) commands in served web objects">
+    <label for="override_origin" class="col-sm-3 control-label">
       Enable ESI
     </label>
     <div class="col-md-9">
       <toggle-switch ng-model="$ctrl.rule.enable_esi" on-label="On" off-label="Off">
       </toggle-switch>
+      <label for="override_origin" class="text-info" popover-trigger="mouseenter" uib-popover="Use the switch to control whether the edge proxy will process Edge Side Includes (ESI) commands in served web objects">
+        <i class="fa fa-question-circle"></i>
+      </label>
     </div>
   </div>
   <hr>
