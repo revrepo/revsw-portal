@@ -82,29 +82,38 @@
                 </div>
               </div>
               <div class="form-group" ng-class="{'has-error': editForm.originServer.$invalid && editForm.originServer.$dirty}">
-                <label for="originServer" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Enter here domain name or IP address of origin web server">Origin Server Name/IP *</label>
+                <label for="originServer" class="col-sm-3 control-label">Origin Server Name/IP *</label>
                 <div class="col-sm-9">
-                  <input type="text" validate-origin-server-name class="form-control" ng-disabled="_loading" ng-model="model.origin_server" id="origin_server" name="originServer" placeholder="Origin Server Name" ng-maxlength="50" required>
+                  <input type="text" validate-origin-server-name class="form-control inline-block" ng-disabled="_loading" ng-model="model.origin_server" id="origin_server" name="originServer" placeholder="Origin Server Name" ng-maxlength="50" required>
+                  <label for="originServer" class="text-info" popover-append-to-body="{{true}}"   popover-trigger="mouseenter" uib-popover="Enter here domain name or IP address of origin web server">
+                    <i class="fa fa-question-circle"></i>
+                  </label>
                   <div class="error-messages" ng-messages="editForm.originServer.$error" role="alert" ng-messages-multiple>
                     <div ng-messages-include="parts/shared/error-messages.html"></div>
                   </div>
                 </div>
               </div>
               <div class="form-group" ng-class="{'has-error': editForm.originHostHeader.$invalid && editForm.originHostHeader.$dirty}">
-                <label for="originHostHeader" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Enter here a domain name to be used in 'Host' header of requests sent from RevAPM to the origin server. The name might be different from origin server name/IP specified above. For example, if origin server IP is 11.11.11.11 and the origin HTTP server recognizes web requests for domain 'www.example.com' you will need to specify '11.11.11.11' in origin server name field above and 'www.example.com' in this field.">Origin Host Header *</label>
+                <label class="col-sm-3 control-label" for="originHostHeader">Origin Host Header *</label>
                 <div class="col-sm-9">
-                  <input type="text" validate-domain-name class="form-control" ng-model="model.origin_host_header" ng-disabled="_loading" id="origin_host_header" name="originHostHeader" placeholder="Origin Host Header" ng-maxlength="63" required>
+                  <input type="text" validate-domain-name class="form-control inline-block" ng-model="model.origin_host_header" ng-disabled="_loading" id="origin_host_header" name="originHostHeader" placeholder="Origin Host Header" ng-maxlength="63" required>
+                  <label for="originHostHeader" class="text-info"  popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enter here a domain name to be used in 'Host' header of requests sent from RevAPM to the origin server. The name might be different from origin server name/IP specified above. For example, if origin server IP is 11.11.11.11 and the origin HTTP server recognizes web requests for domain 'www.example.com' you will need to specify '11.11.11.11' in origin server name field above and 'www.example.com' in this field.">
+                    <i class="fa fa-question-circle"></i>
+                  </label>
                   <div class="error-messages" ng-messages="editForm.originHostHeader.$error" role="alert" ng-messages-multiple>
                     <div ng-messages-include="parts/shared/error-messages.html"></div>
                   </div>
                 </div>
               </div>
               <div class="form-group" ng-class="{'has-error': editForm.originServerLocationId.$invalid && editForm.originServerLocationId.$dirty}">
-                <label for="originServerLocationId" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Select a RevAPM location closest to the location of the origin server">Domain Origin Location</label>
+                <label for="originServerLocationId" class="col-sm-3 control-label">Domain Origin Location</label>
                 <div class="col-sm-9">
-                  <select class="form-control" ng-disabled="_loading" ng-model="model.origin_server_location_id" id="origin_server_location_id" name="originServerLocationId" ng-options="obj.id as obj.locationName for obj in locations | orderBy:'locationName'" required="">
+                  <select class="form-control inline-block" ng-disabled="_loading" ng-model="model.origin_server_location_id" id="origin_server_location_id" name="originServerLocationId" ng-options="obj.id as obj.locationName for obj in locations | orderBy:'locationName'" required="">
                     <option value="">--- Select Location ---</option>
                   </select>
+                  <label for="originServerLocationId" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Select a RevAPM location closest to the location of the origin server">
+                    <i class="fa fa-question-circle"></i>
+                  </label>
                   <div class="error-messages" ng-messages="editForm.originServerLocationId.$error" role="alert" ng-messages-multiple>
                     <div ng-messages-include="parts/shared/error-messages.html"></div>
                   </div>
@@ -130,14 +139,17 @@
               <!-- // -->
               <!-- "Non-Wildcard Domain Aliases" -->
               <div class="form-group" ng-class="{'has-error': editForm.domainAliases.$invalid && editForm.domainAliases.$dirty}">
-                <label for="domainAliases" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Specify here one or more aliases of the domain. For example, if the domain name is 'example.com' and you specify here alias 'www.example.com' our network will accept requests for the both domains and apply to them the same domain configuration.">Non-Wildcard Domain Aliases</label>
+                <label for="domainAliases" class="col-sm-3 control-label">Non-Wildcard Domain Aliases</label>
                 <div class="col-sm-9">
-                  <ui-select validate-domains-list tagging tagging-label="Add New Domain" multiple tagging-tokens="SPACE|," theme="bootstrap" class="form-control" ng-disabled="_loading" ng-model="model.domain_aliases" name="domainAliases" id="domain_aliases">
+                  <ui-select validate-domains-list tagging tagging-label="Add New Domain" multiple tagging-tokens="SPACE|," theme="bootstrap" class="form-control inline-block" ng-disabled="_loading" ng-model="model.domain_aliases" name="domainAliases" id="domain_aliases">
                     <ui-select-match placeholder="Add domains...">{{$item}}</ui-select-match>
                     <ui-select-choices repeat="domain in model.domain_aliases">
                       {{domain}}
                     </ui-select-choices>
                   </ui-select>
+                  <label for="domainAliases" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Specify here one or more aliases of the domain. For example, if the domain name is 'example.com' and you specify here alias 'www.example.com' our network will accept requests for the both domains and apply to them the same domain configuration.">
+                    <i class="fa fa-question-circle"></i>
+                  </label>
                   <div class="error-messages" ng-messages="editForm.domainAliases.$error" role="alert" ng-messages-multiple>
                     <div ng-messages-include="parts/shared/error-messages.html"></div>
                   </div>
@@ -146,11 +158,12 @@
               <!-- // -->
               <!-- Wildcard Domain Alias -->
               <div class="form-group" ng-class="{'has-error': editForm.domainWildcardAlias.$invalid && editForm.domainWildcardAlias.$dirty}">
-                <label for="domainWildcardAlias" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="You can specify here a domain alias in wildcard format. For example, if you specify here '*.example.com' name we will accept and apply the same configuration for domains like 'www.example.com', 'www2.example.com', 'app.example.com', etc. Please note that we will not show Web Analytics stats for domains matching the wildcard alias but will count the traffic for billing purposes.">
-                  Wildcard Domain Alias
-                </label>
+                <label for="domainWildcardAlias" class="col-sm-3 control-label">Wildcard Domain Alias</label>
                 <div class="col-md-9">
-                  <input validate-wildcard-domain-field type="text" class="form-control" ng-disabled="_loading" id="domain_wildcard_alias" name="domainWildcardAlias" ng-model="model.domain_wildcard_alias" ng-maxlength="50" placeholder="Wildcard Domain Alias">
+                  <input validate-wildcard-domain-field type="text" class="form-control inline-block" ng-disabled="_loading" id="domain_wildcard_alias" name="domainWildcardAlias" ng-model="model.domain_wildcard_alias" ng-maxlength="50" placeholder="Wildcard Domain Alias">
+                  <label for="domainWildcardAlias" class="text-info" popover-trigger="mouseenter" uib-popover="You can specify here a domain alias in wildcard format. For example, if you specify here '*.example.com' name we will accept and apply the same configuration for domains like 'www.example.com', 'www2.example.com', 'app.example.com', etc. Please note that we will not show Web Analytics stats for domains matching the wildcard alias but will count the traffic for billing purposes.">
+                    <i class="fa fa-question-circle"></i>
+                  </label>
                   <div class="error-messages" ng-messages="editForm.domainWildcardAlias.$error" role="alert" ng-messages-multiple>
                     <div ng-messages-include="parts/shared/error-messages.html"></div>
                   </div>
@@ -159,11 +172,12 @@
               <!-- -->
               <!-- Data Read Timeout, seconds -->
               <div class="form-group form-inline" ng-class="{'has-error': editForm.proxyTimeout.$invalid && editForm.proxyTimeout.$dirty}">
-                <label for="proxyTimeout" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Proxy data read timeout in seconds (1-3600 range)">
-                  Data Read Timeout
-                </label>
+                <label for="proxyTimeout" class="col-sm-3 control-label">Data Read Timeout</label>
                 <div class="col-md-9">
-                  <input type="number" id="proxy_timeout" name="proxyTimeout" class="form-control" ng-disabled="_loading" ng-model="model.proxy_timeout" ng-min="1" ng-max="3600" required> second(s)
+                  <input type="number" id="proxy_timeout" name="proxyTimeout" class="form-control inline-block" ng-disabled="_loading" ng-model="model.proxy_timeout" ng-min="1" ng-max="3600" required> second(s)
+                  <label for="proxyTimeout" class="text-info" popover-trigger="mouseenter" uib-popover="Proxy data read timeout in seconds (1-3600 range)">
+                  <i class="fa fa-question-circle"></i>
+                </label>
                   <div class="error-messages" ng-messages="editForm.proxyTimeout.$error" role="alert" ng-messages-multiple>
                     <div ng-messages-include="parts/shared/error-messages.html"></div>
                   </div>
@@ -201,10 +215,15 @@
                 </div>
               </div>
               <div class="form-group" ng-class="{ 'has-error': editForm.comment.$invalid &&  editForm.comment.$dirty }">
-                <label for="comment" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Comment">Comment</label>
+                <label for="comment" class="col-sm-3 control-label">Comment</label>
                 <div class="col-md-6">
-                  <textarea id="comment" name="comment" placeholder="Comment (300 characters max)" ng-maxlength="300" class="form-control" name="comment" ng-model="model.comment" ng-pattern="COMMENT_NO_SPECIAL_CHARS" ng-disabled="_loading">
+                  <div class="col-sm-12 form-group">
+                  <textarea id="comment" name="comment" placeholder="Comment (300 characters max)" ng-maxlength="300" class="form-control inline-block" name="comment" ng-model="model.comment" ng-pattern="COMMENT_NO_SPECIAL_CHARS" ng-disabled="_loading">
                   </textarea>
+                   <label for="comment" class="text-info" popover-trigger="mouseenter" uib-popover="Comment">
+                    <i class="fa fa-question-circle"></i>
+                  </label>
+                  </div>
                   <div class="error-messages" ng-messages="editForm.comment.$error" role="alert" ng-messages-multiple>
                     <div ng-messages-include="parts/shared/error-messages.html"></div>
                   </div>
@@ -229,23 +248,25 @@
             <uib-tab index="1" heading="Origin Health Monitoring" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="You can manage here whether we should monitor the origin health status and what monitoring parameters to use">
               <!-- BLOCK Origin Health Monitoring -->
               <div class="form-group form-inline">
-                <label for="enable_cache" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Enables regular monitoring of origin health and fine-grained control on serving of expired (stale) cached objects in case of origin failures. This functionality requires Edge Caching feature enabled.">
-                  Origin Health Monitoring
-                </label>
+                <label for="enable_cache" class="col-sm-3 control-label">Origin Health Monitoring</label>
                 <div class="col-md-9">
                   <toggle-switch is-disabled="_loading || (model.rev_component_bp.enable_cache==false || model.rev_component_bp.enable_cache=='false')" ng-model="model.enable_origin_health_probe" on-label="On" off-label="Off">
                   </toggle-switch>
+                  <label for="enable_cache" class="text-info" popover-trigger="mouseenter" uib-popover="Enables regular monitoring of origin health and fine-grained control on serving of expired (stale) cached objects in case of origin failures. This functionality requires Edge Caching feature enabled.">
+                    <i class="fa fa-question-circle"></i>
+                  </label>
                 </div>
               </div>
               <div class="panel panel-default" ng-if="model.enable_origin_health_probe == true && model.rev_component_bp.enable_cache == true">
                 <div class="panel-body">
                   <!--  Origin Monitoring HTTP Request-->
                   <div class="form-group" ng-class="{'has-error': editForm.originHealthProbeHTTP_REQUEST.$invalid && editForm.originHealthProbeHTTP_REQUEST.$dirty}">
-                    <label for="third-party-integrations" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="This string will be sent to the origin HTTP server after connecting to ports 80 and 443. Default value ‘GET / HTTP/1.1’ will work in majority of cases.">
-                      Origin Monitoring HTTP Request
-                    </label>
+                    <label for="third-party-integrations" class="col-sm-3 control-label">Origin Monitoring HTTP Request</label>
                     <div class="col-md-9">
-                      <input type="text" class="form-control" ng-disabled="_loading" name="originHealthProbeHTTP_REQUEST" ng-model="model.origin_health_probe.HTTP_REQUEST" placeholder="Text like 'GET / HTTP/1.1' (300 characters max)" ng-maxlength="300" characters required>
+                      <input type="text" class="form-control inline-block" ng-disabled="_loading" name="originHealthProbeHTTP_REQUEST" ng-model="model.origin_health_probe.HTTP_REQUEST" placeholder="Text like 'GET / HTTP/1.1' (300 characters max)" ng-maxlength="300" characters required>
+                      <label for="third-party-integrations" class="text-info" popover-trigger="mouseenter" uib-popover="This string will be sent to the origin HTTP server after connecting to ports 80 and 443. Default value ‘GET / HTTP/1.1’ will work in majority of cases.">
+                        <i class="fa fa-question-circle"></i>
+                      </label>
                       <div class="error-messages" ng-messages="editForm.originHealthProbeHTTP_REQUEST.$error" role="alert" ng-messages-multiple>
                         <div ng-messages-include="parts/shared/error-messages.html"></div>
                       </div>
@@ -254,11 +275,12 @@
                   <!--  // Origin Monitoring HTTP Request-->
                   <!--  Probe Timeout-->
                   <div class="form-group form-inline" ng-class="{'has-error': editForm.originHealthProbePROBE_TIMEOUT.$invalid && editForm.originHealthProbePROBE_TIMEOUT.$dirty}">
-                    <label for="originHealthProbePROBE_TIMEOUT" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Defines for how long the proxy will wait for the origin to respond on monitoring HTTP request (1-60 range)">
-                      Probe Timeout
-                    </label>
+                    <label for="originHealthProbePROBE_TIMEOUT" class="col-sm-3 control-label">Probe Timeout</label>
                     <div class="col-md-9">
-                      <input type="number" id="proxy_timeout" name="originHealthProbePROBE_TIMEOUT" class="form-control" ng-disabled="_loading" ng-model="model.origin_health_probe.PROBE_TIMEOUT" ng-min="1" ng-max="60" required> second(s)
+                      <input type="number" id="proxy_timeout" name="originHealthProbePROBE_TIMEOUT" class="form-control inline-block" ng-disabled="_loading" ng-model="model.origin_health_probe.PROBE_TIMEOUT" ng-min="1" ng-max="60" required> second(s)
+                      <label for="originHealthProbePROBE_TIMEOUT" class="text-info" popover-trigger="mouseenter" uib-popover="Defines for how long the proxy will wait for the origin to respond on monitoring HTTP request (1-60 range)">
+                        <i class="fa fa-question-circle"></i>
+                      </label>
                       <div class="error-messages" ng-messages="editForm.originHealthProbePROBE_TIMEOUT.$error" role="alert" ng-messages-multiple>
                         <div ng-messages-include="parts/shared/error-messages.html"></div>
                       </div>
@@ -266,11 +288,12 @@
                   </div>
                   <!--  Probe Interval -->
                   <div class="form-group form-inline" ng-class="{'has-error': editForm.originHealthProbePROBE_INTERVAL.$invalid && editForm.originHealthProbePROBE_INTERVAL.$dirty}">
-                    <label for="originHealthProbePROBE_INTERVAL" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Defines the interval in seconds between origin monitoring checks (1-1800 range)">
-                      Probe Interval
-                    </label>
+                    <label for="originHealthProbePROBE_INTERVAL" class="col-sm-3 control-label">Probe Interval</label>
                     <div class="col-md-9">
-                      <input type="number" id="origin_health_probe_PROBE_INTERVAL" name="originHealthProbePROBE_INTERVAL" class="form-control" ng-disabled="_loading" ng-model="model.origin_health_probe.PROBE_INTERVAL" ng-min="1" ng-max="1800" required> second(s)
+                      <input type="number" id="origin_health_probe_PROBE_INTERVAL" name="originHealthProbePROBE_INTERVAL" class="form-control inline-block" ng-disabled="_loading" ng-model="model.origin_health_probe.PROBE_INTERVAL" ng-min="1" ng-max="1800" required> second(s)
+                      <label for="originHealthProbePROBE_INTERVAL" class="text-info" popover-trigger="mouseenter" uib-popover="Defines the interval in seconds between origin monitoring checks (1-1800 range)">
+                        <i class="fa fa-question-circle"></i>
+                      </label>
                       <div class="error-messages" ng-messages="editForm.originHealthProbePROBE_INTERVAL.$error" role="alert" ng-messages-multiple>
                         <div ng-messages-include="parts/shared/error-messages.html"></div>
                       </div>
@@ -278,11 +301,12 @@
                   </div>
                   <!--  Expected HTTP Response Code-->
                   <div class="form-group form-inline" ng-class="{'has-error': editForm.originHealthProbeHTTP_STATUS.$invalid && editForm.originHealthProbeHTTP_STATUS.$dirty}">
-                    <label for="originHealthProbeHTTP_STATUS" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="The origin server should respond with this HTTP status code to be considered healthy (range 100-599)">
-                      Expected HTTP Response Code
-                    </label>
+                    <label for="originHealthProbeHTTP_STATUS" class="col-sm-3 control-label">Expected HTTP Response Code</label>
                     <div class="col-md-9">
-                      <input type="number" id="proxy_timeout" name="originHealthProbeHTTP_STATUS" class="form-control" ng-disabled="_loading" ng-model="model.origin_health_probe.HTTP_STATUS" ng-min="100" ng-max="599" required>
+                      <input type="number" id="proxy_timeout" name="originHealthProbeHTTP_STATUS" class="form-control inline-block" ng-disabled="_loading" ng-model="model.origin_health_probe.HTTP_STATUS" ng-min="100" ng-max="599" required>
+                      <label for="originHealthProbeHTTP_STATUS" class="text-info" popover-trigger="mouseenter" uib-popover="The origin server should respond with this HTTP status code to be considered healthy (range 100-599)">
+                        <i class="fa fa-question-circle"></i>
+                      </label>
                       <div class="error-messages" ng-messages="editForm.originHealthProbeHTTP_STATUS.$error" role="alert" ng-messages-multiple>
                         <div ng-messages-include="parts/shared/error-messages.html"></div>
                       </div>
@@ -381,22 +405,28 @@
             <uib-tab index="3" heading="SSL Configuration" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Use the tab to enable/disable SSL support for the domain and manage which SSL certificate to use and which SSL protocols and cipher settings to apply for received SSL requests">
               <!--  “SSL Configuration” -->
               <div class="form-group form-inline">
-                <label for="enable_ssl" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Select whether we should accept HTTPS (SSL) requests for the domain">
+                <label for="enable_ssl" class="col-sm-3 control-label">
                   Accept SSL Requests
                 </label>
                 <div class="col-md-9">
                   <toggle-switch name="enable_ssl" ng-disabled="_loading" ng-model="model.enable_ssl" on-label="On" off-label="Off">
                   </toggle-switch>
+                  <label for="enable_ssl" class="text-info" popover-trigger="mouseenter" uib-popover="Select whether we should accept HTTPS (SSL) requests for the domain">
+                    <i class="fa fa-question-circle"></i>
+                  </label>
                 </div>
               </div>
               <!-- //  “SSL Configuration” -->
               <!-- Attached SSL Certificate-->
               <div class="form-group" ng-class="{'has-error': editForm.sslCertId.$invalid && editForm.sslCertId.$dirty}">
-                <label for="sslCertId" popover-append-to-body="{{true}}" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Select SSL certificate which should be associated with the domain. Option 'Default RevAPM SSL Certificate' provides you with ability to use RevAPM's shared SSL certificate issued by GlobalSign CA and managed in section 'SSL Names'.">SSL Certificate</label>
+                <label for="sslCertId" class="col-sm-3 control-label">SSL Certificate</label>
                 <div class="col-sm-9">
-                  <select class="form-control" ng-disabled="_loading" ng-model="model.ssl_cert_id" id="ssl_cert_id" name="sslCertId" ng-options="obj.id as obj.cert_name for obj in SSL_certs | filter :{account_id:model.account_id}" style="float: left;">
+                  <select class="form-control inline-block" ng-disabled="_loading" ng-model="model.ssl_cert_id" id="ssl_cert_id" name="sslCertId" ng-options="obj.id as obj.cert_name for obj in SSL_certs | filter :{account_id:model.account_id}">
                     <option value="">Default RevAPM SSL Certificate</option>
                   </select>
+                   <label for="sslCertId" popover-append-to-body="{{true}}" class="text-info" popover-trigger="mouseenter" uib-popover="Select SSL certificate which should be associated with the domain. Option 'Default RevAPM SSL Certificate' provides you with ability to use RevAPM's shared SSL certificate issued by GlobalSign CA and managed in section 'SSL Names'.">
+                    <i class="fa fa-question-circle"></i>
+                  </label>
                   <a ui-sref="index.webApp.ssl_certs" class="btn btn-primary pull-right"><i class="fa fa-lock"></i> Manage SSL Certificates</a>
                 </div>
               </div>
@@ -415,7 +445,7 @@
                         </div>
                       </div>
                       <div class="form-group form-inline" ng-class="{'has-error': editForm.sslConfProfile.$invalid && editForm.sslConfProfile.$dirty}">
-                        <select class="form-control col-sm-offset-3" ng-disabled="_loading|| (isCustomSSL_conf_profile == true)" ng-model="model.ssl_conf_profile" id="ssl_conf_profile" name="sslConfProfile" ng-options="obj.id as obj.profile_name for obj in SSL_conf_profiles" style="float: left;" required>
+                        <select class="form-control col-sm-offset-3" ng-disabled="_loading|| (isCustomSSL_conf_profile == true)" ng-model="model.ssl_conf_profile" id="ssl_conf_profile" name="sslConfProfile" ng-options="obj.id as obj.profile_name for obj in SSL_conf_profiles"required>
                         </select>
                         <div class="error-messages" ng-messages="editForm.sslConfProfile.$error" role="alert" ng-messages-multiple>
                           <div ng-messages-include="parts/shared/error-messages.html"></div>
@@ -434,21 +464,27 @@
                     <!-- Right section -->
                     <div class="col-md-7">
                       <div class="form-group" ng-disabled="isCustomSSL_conf_profile" ng-class="{'has-error': editForm.sslProtocols.$invalid && editForm.sslProtocols.$dirty}">
-                        <label for="sslProtocols" popover-append-to-body="{{true}}" class="col-sm-12" popover-trigger="mouseenter" uib-popover="Allowed SSL protocols">
+                        <label for="sslProtocols" class="col-sm-12">
                           Allowed SSL Protocols <small>(in Nginx format)</small></label>
                         <div class="col-sm-12">
-                          <input type="text" class="form-control" ng-disabled="!isCustomSSL_conf_profile" ng-model="model.ssl_protocols" id="ssl_protocols" name="sslProtocols" ng-maxlength="200" placeholder="SSL Protocols" required>
+                          <input type="text" class="form-control inline-block" ng-disabled="!isCustomSSL_conf_profile" ng-model="model.ssl_protocols" id="ssl_protocols" name="sslProtocols" ng-maxlength="200" placeholder="SSL Protocols" required>
+                          <label for="sslProtocols" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Allowed SSL protocols">
+                            <i class="fa fa-question-circle"></i>
+                          </label>
                           <div class="error-messages" ng-messages="editForm.sslProtocols.$error" role="alert" ng-messages-multiple>
                             <div ng-messages-include="parts/shared/error-messages.html"></div>
                           </div>
                         </div>
                       </div>
                       <div class="form-group" ng-class="{'has-error': editForm.sslCiphers.$invalid && editForm.sslCiphers.$dirty}">
-                        <label for="sslCiphers" popover-append-to-body="{{true}}" class="col-sm-12" popover-trigger="mouseenter" uib-popover="Allowed SSL ciphers">
+                        <label for="sslCiphers" class="col-sm-12">
                           Allowed SSL Ciphers
                           <small>(in Nginx format)</small></label>
                         <div class="col-sm-12">
-                          <input type="text" class="form-control" ng-disabled="!isCustomSSL_conf_profile" ng-model="model.ssl_ciphers" id="ssl_ciphers" name="sslCiphers" ng-maxlength="200" placeholder="SSL Ciphers" required>
+                          <input type="text" class="form-control inline-block" ng-disabled="!isCustomSSL_conf_profile" ng-model="model.ssl_ciphers" id="ssl_ciphers" name="sslCiphers" ng-maxlength="200" placeholder="SSL Ciphers" required>
+                          <label for="sslCiphers" popover-append-to-body="{{true}}" class="text-info" popover-trigger="mouseenter" uib-popover="Allowed SSL ciphers">
+                            <i class="fa fa-question-circle"></i>
+                          </label>
                           <div class="error-messages" ng-messages="editForm.sslCiphers.$error" role="alert" ng-messages-multiple>
                             <div ng-messages-include="parts/shared/error-messages.html"></div>
                           </div>
@@ -468,12 +504,13 @@
             <uib-tab index="4" heading="Custom VCL Rules" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="This tab allows Varnish VCL experts to configure custom VCL rules to be applied for the domain configuration">
               <!--  “Custom VCL Rules” -->
               <div class="form-group form-inline">
-                <label for="customVcl" class="col-sm-3 control-label" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enables you to configure custom Varnish Configuration Language (VCL) rules to be executed by RevAPM edge proxy servers. The feature requires that “Edge Caching” switch will be in ON position">
-                  Custom VCL Rules
-                </label>
+                <label for="customVcl" class="col-sm-3 control-label">Custom VCL Rules</label>
                 <div class="col-md-9">
                   <toggle-switch name="customVcl" is-disabled="_loading || model.rev_component_bp.enable_cache==false" ng-model="model.rev_component_bp.custom_vcl.enabled" on-label="On" off-label="Off">
                   </toggle-switch>
+                  <label for="customVcl" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enables you to configure custom Varnish Configuration Language (VCL) rules to be executed by RevAPM edge proxy servers. The feature requires that “Edge Caching” switch will be in ON position">
+                   <i class="fa fa-question-circle"></i>
+                  </label>
                 </div>
               </div>
               <domain-custom-vcl ng-if="model.rev_component_bp.enable_cache&&model.rev_component_bp.custom_vcl.enabled" class="" ng-model="model.rev_component_bp.custom_vcl"></domain-custom-vcl>

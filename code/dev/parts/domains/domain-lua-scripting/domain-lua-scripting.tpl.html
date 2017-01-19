@@ -15,18 +15,21 @@
   <!-- Enable LUA Scripting On Edge (Last Mile) Proxies -->
   <div class="domain-lua-scripting--block-bp col-sm-12">
     <div class="form-group">
-      <label for="bpLuaEnableAll" class="col-sm-3 control-label" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enable or disable at once all Lua scripts executed on RevAPM edge proxies for the domain">
+      <label for="bpLuaEnableAll" class="col-sm-3 control-label">
         Enable Lua Scripting On Edge (Last Mile) Proxies
       </label>
       <div class="col-md-9">
         <toggle-switch name="bpLuaEnableAll" is-disabled="_loading" ng-model="$ctrl.domain.bp_lua_enable_all" on-label="On" off-label="Off">
         </toggle-switch>
+        <label for="bpLuaEnableAll" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enable or disable at once all Lua scripts executed on RevAPM edge proxies for the domain">
+          <i class="fa fa-question-circle"></i>
+        </label>
       </div>
     </div>
     <div class="panel panel-default domain-lua-scripting--list" ng-if="$ctrl.domain.bp_lua_enable_all">
       <div class="panel-heading">
-      <div>
-        <span class="pull-left panel-buttons-left">
+        <div>
+          <span class="pull-left panel-buttons-left">
             <a class="btn btn-default btn-md " ng-click="$ctrl.onCollapsAllBPLuaBlock()" title="Collapse All Blocks" ng-show="!isCollapsedAll">
               <i class="glyphicon glyphicon-chevron-up "></i>
             </a>
@@ -34,8 +37,8 @@
               <i class="glyphicon glyphicon-chevron-down"></i>
             </a>
           </span>
-        <span ng-click="$ctrl.onAddNewItemBP()" class="btn btn-primary btn-sm pull-right" title="Add New Lua Block"><i class="glyphicon glyphicon-plus"></i></span>
-        <h4><b>  Lua Scripts Executed On Edge (Last Mile) Proxies</b></h4>
+          <span ng-click="$ctrl.onAddNewItemBP()" class="btn btn-primary btn-sm pull-right" title="Add New Lua Block"><i class="glyphicon glyphicon-plus"></i></span>
+          <h4><b>  Lua Scripts Executed On Edge (Last Mile) Proxies</b></h4>
         </div>
       </div>
       <div class="panel-body">
@@ -76,12 +79,15 @@
   <!-- Enable LUA Scripting On Origin (First Mile) Proxies-->
   <div class="domain-lua-scripting--block-co col-sm-12">
     <div class="form-group">
-      <label for="coLuaEnableAll" class="col-sm-3 control-label" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enable or disable at once all Lua scripts executed on RevAPM origin (first-mile) proxies">
+      <label for="coLuaEnableAll" class="col-sm-3 control-label">
         Enable Lua Scripting On Origin (First Mile) Proxies
       </label>
       <div class="col-md-9">
         <toggle-switch name="coLuaEnableAll" is-disabled="_loading" ng-model="$ctrl.domain.co_lua_enable_all" on-label="On" off-label="Off">
         </toggle-switch>
+        <label for="coLuaEnableAll" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enable or disable at once all Lua scripts executed on RevAPM origin (first-mile) proxies">
+          <i class="fa fa-question-circle"></i>
+        </label>
       </div>
     </div>
     <div class="panel panel-default domain-lua-scripting--list" ng-if="$ctrl.domain.co_lua_enable_all">

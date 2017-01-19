@@ -1702,3 +1702,8 @@ form.dns-zone-records--new-form input[name="subdomain"] {
 .inline-block {
   display: inline-block;
 }
+textarea.inline-block {
+  display: inline-block;
+  float: left;
+  margin-right: 3px;
+}
