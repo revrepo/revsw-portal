@@ -23,17 +23,20 @@
       <div class="panel-body">
         <form class="form-horizontal" name="createForm">
           <div class="form-group" ng-class="{ 'has-error': createForm.dnsZone.$invalid && createForm.dnsZone.$dirty }">
-            <label for="dns_zone" popover-append-to-body="{{true}}" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Enter a fully qualified domain name, e.g. 'domain.com'.  You may enter
-               a subdomain like 'sub.domain.com' but you need to control the DNS for the first-level domain. Duplicate zone names are not allowed.">Domain *</label>
+            <label for="dns_zone" class="col-sm-2 control-label">Domain *</label>
             <div class="col-sm-10">
-              <input type="text" autofocus class="form-control" ng-disabled="_loading" ng-model="model.zone" name="dnsZone" id="dns_zone" placeholder="Domain Name" validate-domain-name ng-maxlength="50" required>
+              <input type="text" autofocus class="form-control inline-block" ng-disabled="_loading" ng-model="model.zone" name="dnsZone" id="dns_zone" placeholder="Domain Name" validate-domain-name ng-maxlength="50" required>
+              <label for="dns_zone" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enter a fully qualified domain name, e.g. 'domain.com'.  You may enter
+               a subdomain like 'sub.domain.com' but you need to control the DNS for the first-level domain. Duplicate zone names are not allowed.">
+                <i class="fa fa-question-circle"></i>
+              </label>
               <div class="error-messages" ng-messages="createForm.dnsZone.$error" role="alert" ng-messages-multiple>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
               </div>
             </div>
           </div>
           <div class="form-group" ng-if="auth.isReseller() || auth.isRevadmin()" ng-class="{ 'has-error': createForm.accountId.$invalid && createForm.accountId.$dirty }">
-            <label for="account_id" popover-append-to-body="{{true}}" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Select account name the SSL certificate should be associated with">Account *</label>
+            <label for="account_id" class="col-sm-2 control-label">Account *</label>
             <div class="col-sm-10">
               <ui-select ng-model="model.account_id" theme="select2" ng-animate-disabled ng-disabled="_loading" on-select="onAccountSelect($model)" style="min-width: 550px;" id="account_id" name="accountId">
                 <ui-select-match placeholder="Select Account">{{$select.selected.companyName}}</ui-select-match>
@@ -41,6 +44,9 @@
                   <div ng-bind-html="item.companyName|highlight: $select.search"></div>
                 </ui-select-choices>
               </ui-select>
+              <label for="account_id" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Select account name the SSL certificate should be associated with">
+                <i class="fa fa-question-circle"></i>
+              </label>
               <div class="error-messages" ng-messages="createForm.accountId.$error" role="alert" ng-messages-multiple>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
               </div>
@@ -56,8 +62,7 @@
                 <i class="glyphicon" ng-class="_loading?'glyphicon-refresh spin':'glyphicon-ok'"></i> &nbsp; Create DNS Zone
               </button>
               <button class="btn btn-success" id="create_dns_zone_and_add_more" ng-disabled="disableSubmit(model) || createForm.$invalid" ng-click="createDNSZone(model,true);createForm.$setPristine()">
-                <i class="glyphicon" ng-class="_loading?'glyphicon-refresh spin':'glyphicon-ok'"></i>
-                &nbsp; Create And Add More
+                <i class="glyphicon" ng-class="_loading?'glyphicon-refresh spin':'glyphicon-ok'"></i> &nbsp; Create And Add More
               </button>
             </div>
           </div>
