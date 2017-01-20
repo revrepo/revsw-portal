@@ -1557,9 +1557,6 @@ del.diff span {
   background-color: black;
   opacity: 0.85;
 }
-.ssl-names--new-form .fa-question-circle {
-  color: #66b2bf;
-}
 .ssl-names--table .actions .disabled {
   opacity: 0.4;
 }
@@ -1701,6 +1698,9 @@ form.dns-zone-records--new-form input[name="subdomain"] {
 }
 .inline-block {
   display: inline-block;
+}
+label i.fa-question-circle {
+  color: #66b2bf;
 }
 textarea.inline-block {
   display: inline-block;
