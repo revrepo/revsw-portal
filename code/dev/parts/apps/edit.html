@@ -168,15 +168,19 @@
           <!-- #begin allowed-transport-protocols -->
           <div class="form-group">
             <label for="allowed_transport_protocols" class="col-sm-2 control-label">Allowed Transport Protocols And Selection Priority</label>
+
             <!-- Use directive ng-sortable -->
-            <div class="col-sm-9" id="allowed-transport-protocols" ng-sortable="protocolOrder">
-              <div ng-repeat="protocol in protocols" class="protocolbox inline-block">
+            <div class="col-sm-3 inline-block" id="allowed-transport-protocols" ng-sortable="protocolOrder">
+              <div ng-repeat="protocol in protocols" class="protocolbox">
                 <input type="checkbox" value="{{protocol}}" ng-checked="configuration.allowed_transport_protocols.indexOf(protocol) > -1" ng-click="toggleProtocolSelection(protocol, configuration)"> {{protocol.toUpperCase()}}
               </div>
-              <label for="allowed_transport_protocols" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Rev SDK allowed last mile transport protocols">
+            </div>
+            <div class="form-group">
+            <label for="allowed_transport_protocols" class="text-info " popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Rev SDK allowed last mile transport protocols">
                 <i class="fa fa-question-circle"></i>
               </label>
-            </div>
+              </div>
+
           </div>
           <!-- #end allowed-transport-protocols -->
           <div class="form-group">
