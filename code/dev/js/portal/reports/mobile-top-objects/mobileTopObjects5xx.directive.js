@@ -19,12 +19,12 @@
         flOperators: '=',
         flNetworks: '=',
         flDisabled: '=',
-        heading: '@'
+        heading: '@',
+        flStoreName: '@'
       },
       /*@ngInject*/
-      controller: function ($scope, Stats) {
+      controller: function ($scope, Stats, $localStorage) {
 
-        $scope.span = '24';
         $scope._loading = false;
         var http_codes = {
           '500': 'Internal Server Error',
@@ -41,26 +41,29 @@
         };
 
         $scope.items = [];
-        $scope.filters = {
+        $scope.filters = (!$scope.flStoreName || !$localStorage[$scope.flStoreName])? _.assign({
+          delay: '24',
+          count: '10',
           from_timestamp: moment().subtract(1, 'days').valueOf(),
           to_timestamp: Date.now(),
           os: null,
           device: null,
           country: null,
           operator: null,
-          network: null,
-          count: 10
-        };
+          network: null
+        }, {}) : $localStorage[$scope.flStoreName];
 
         //  ---------------------------------
         $scope.reload = function() {
 
           $scope._loading = true;
-          $scope.filters.account_id = $scope.ngAccount;
-          $scope.filters.app_id = ( $scope.ngApp || null );
           $scope.items = [];
-
-          return Stats.sdk_top_objects_5xx( $scope.filters )
+          var params = angular.merge({
+            account_id : $scope.ngAccount,
+            app_id :( $scope.ngApp || null )
+          }, $scope.filters);
+          delete params.delay;
+          return Stats.sdk_top_objects_5xx(params)
             .$promise
             .then( function( data ) {
               var items = [];
@@ -85,8 +88,12 @@
             $scope.reload();
           }
         });
-
-
+        // NOTE: watch fitlers and save to localstorage
+        $scope.$watch('filters', function () {
+          if ($scope.flStoreName) {
+            $localStorage[$scope.flStoreName] = $scope.filters;
+          }
+        }, true);
       }
     };
   }
