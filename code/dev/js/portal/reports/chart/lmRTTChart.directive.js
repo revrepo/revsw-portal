@@ -20,7 +20,7 @@
         filtersSets: '='
       },
       /*@ngInject*/
-      controller: function($scope, Stats, Util) {
+      controller: function($scope, $q, Stats, Util) {
 
         var _filters_field_list = ['from_timestamp', 'to_timestamp', 'country', 'device', 'os', 'browser'];
 
@@ -56,7 +56,6 @@
         }
 
         $scope.traffic = {
-          labels: [],
           series: [
             { name: 'Average', data: [] },
             { name: 'Min', data: [] },
@@ -75,19 +74,21 @@
         $scope.chartOptions = {
           chart: {
             type: 'column',
+            zoomType: 'x',
             events: {
               redraw: function() {
                 if (info_) {
                   info_.destroy();
                   info_ = null;
                 }
+                var x = this.xAxis[0].toPixels(this.xAxis[0].min) + 3;
                 info_ = this /*chart*/ .renderer
                   .label('LM RTT Avg <span style="font-weight: bold; color: #3c65ac;">' + Util.formatNumber(Math.round(lm_rtt_avg_)) +
                     '</span>ms, Max <span style="font-weight: bold; color: #3c65ac;">' + Util.formatNumber(Math.round(lm_rtt_max_)) +
                     '</span>ms, Min <span style="font-weight: bold; color: #3c65ac;">' + Util.formatNumber(Math.round(lm_rtt_min_)) +
                     '</span>ms<br>Hits Total <span style="font-weight: bold; color: #3c65ac;">' + Util.formatNumber(hits_total_) +
                     '</span>',
-                    this.xAxis[0].toPixels(0), 3, '', 0, 0, true /*html*/ )
+                    x /* x */ , 3 /* y */ , '', 0, 0, true /*html*/ )
                   .css({
                     color: '#444'
                   })
@@ -114,33 +115,37 @@
             }
           },
           xAxis: {
-            crosshair: {
-              width: 1,
-              color: '#000000'
-            },
-            tickInterval: tickInterval_,
-            labels: {
-              autoRotation: false,
-              useHTML: true,
-              formatter: function() {
-                return this.value.label;
-              }
-            }
+            type: 'datetime',
+            pointInterval: 24 * 60 * 60 * 10000,
           },
           tooltip: {
-            formatter: function() {
-              return this.key.tooltip + '<br/>' +
-                this.series.name + ': <strong>' + Util.formatNumber(this.y) + '</strong>ms';
-            }
-          }
+            xDateFormat: '<span style="color: #000; font-weight: bold;">%H:%M</span> %b %d %Y',
+            shared: false,
+            headerFormat: '{point.key}<br>',
+            pointFormat: '<span style="color:{series.color}">{series.name}</span>: <strong>{point.y:.0f}</strong>ms<br/>',
+          },
         };
 
         //  ---------------------------------
         $scope.reload = function() {
           if (!$scope.ngDomain || !$scope.ngDomain.id) {
+            $scope.traffic = {
+              series: [
+                { name: 'Average', data: [] },
+                { name: 'Min', data: [], visible: false },
+                { name: 'Max', data: [], visible: false }
+              ]
+            };
             return;
           }
           $scope._loading = true;
+          var _xAxisPointStart = null;
+          var _xAxisPointInterval = null;
+          var series = [
+            { name: 'Average', data: [] },
+            { name: 'Min', data: [], visible: false },
+            { name: 'Max', data: [], visible: false }
+          ];
           Stats.lm_rtt_stats(angular.merge({
               domainId: $scope.ngDomain.id
             }, generateFilterParams($scope.filters)))
@@ -149,33 +154,12 @@
 
               lm_rtt_avg_ = lm_rtt_max_ = hits_total_ = 0;
               if (data.data && data.data.length > 0) {
-
                 lm_rtt_min_ = 1000000;
                 var interval = data.metadata.interval_sec || 1800;
-                var offset = interval * 1000;
-                var series = [
-                  { name: 'Average', data: [] },
-                  { name: 'Min', data: [], visible: false },
-                  { name: 'Max', data: [], visible: false }
-                ];
-                var labels = [];
+                _xAxisPointStart = parseInt(data.metadata.start_timestamp);
+                _xAxisPointInterval = parseInt(data.metadata.interval_sec) * 1000;
+
                 data.data.forEach(function(item, idx, items) {
-
-                  var val = moment(item.time + offset);
-                  var label;
-                  if (idx % tickInterval_) {
-                    label = '';
-                  } else if (idx === 0 ||
-                    (new Date(item.time + offset)).getDate() !== (new Date(items[idx - tickInterval_].time + offset)).getDate()) {
-                    label = val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span><br>]MMM D');
-                  } else {
-                    label = val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span>]');
-                  }
-
-                  labels.push({
-                    tooltip: val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span>] MMMM Do YYYY'),
-                    label: label
-                  });
 
                   lm_rtt_avg_ += item.lm_rtt_avg_ms;
                   if (item.lm_rtt_max_ms > lm_rtt_max_) {
@@ -185,23 +169,30 @@
                     lm_rtt_min_ = item.lm_rtt_min_ms;
                   }
                   hits_total_ += item.requests;
-                  if ( item.requests ) {
+                  if (item.requests) {
                     series[0].data.push(item.lm_rtt_avg_ms);
                     series[1].data.push(item.lm_rtt_min_ms);
                     series[2].data.push(item.lm_rtt_max_ms);
                   } else {
-                    series[0].data.push( null );
-                    series[1].data.push( null );
-                    series[2].data.push( null );
+                    series[0].data.push(null);
+                    series[1].data.push(null);
+                    series[2].data.push(null);
                   }
 
                 });
                 lm_rtt_avg_ /= data.data.length;
-                $scope.traffic = {
-                  labels: labels,
-                  series: series
-                };
+                return $q.when(series);
+              } else {
+                return $q.when(series);
               }
+            })
+            .then(function setNewData(data) {
+              // model better to update once
+              $scope.traffic = {
+                pointStart: _xAxisPointStart,
+                pointInterval: _xAxisPointInterval,
+                series: series
+              };
             })
             .finally(function() {
               $scope._loading = false;
