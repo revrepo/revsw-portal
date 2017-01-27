@@ -2,7 +2,7 @@
   <form class="form-inline">
     <div class="form-group">
       <select class="form-control fixed"
-              ng-model="span">
+              ng-model="ngFilters.delay">
         <option value="1">Last 1 Hour</option>
         <option value="6">Last 6 Hours</option>
         <option value="12">Last 12 Hours</option>
@@ -52,7 +52,7 @@
 
     <div class="form-group">
       <select class="form-control fixed"
-              ng-model="count">
+              ng-model="ngFilters.count">
         <option value="5">Top 5 Records</option>
         <option value="10">Top 10 Records</option>
         <option value="20">Top 20 Records</option>

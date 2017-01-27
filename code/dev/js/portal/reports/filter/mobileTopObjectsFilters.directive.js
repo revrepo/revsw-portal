@@ -23,16 +23,17 @@
       },
       /*@ngInject*/
       controller: function ($scope) {
-        $scope.span = '24';
-        $scope.count = '10';
 
         $scope.update = function () {
 
           if (!$scope.ngFilters) {
-            $scope.ngFilters = {};
+            $scope.ngFilters = {
+                delay: '24',
+                count: '10'
+            };
           }
-          $scope.ngFilters.count = parseInt( $scope.count );
-          $scope.ngFilters.from_timestamp = moment().subtract( $scope.span, 'hours' ).valueOf();
+          $scope.ngFilters.count = $scope.ngFilters.count;
+          $scope.ngFilters.from_timestamp = moment().subtract( $scope.ngFilters.delay, 'hours' ).valueOf();
           $scope.ngFilters.to_timestamp = Date.now();
           $scope.onFilter();
         };
