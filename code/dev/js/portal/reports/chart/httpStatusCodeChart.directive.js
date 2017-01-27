@@ -75,7 +75,7 @@
                   info_.destroy();
                   info_ = null;
                 }
-                var x = this.xAxis[0].toPixels(this.xAxis[0].min)+3;
+                var x = this.xAxis[0].toPixels(this.xAxis[0].min) + 3;
                 info_ = this /*chart*/ .renderer
                   .label(codeStats.reduce(function(prev, item) {
                       return prev +
@@ -84,7 +84,7 @@
                         '</span> Requests or <span style="font-weight: bold">' + item.percent.toFixed(2) +
                         '</span> %<br>';
                     }, ''),
-                    x /* x */, 3 /*y*/, '', 0, 0, true /*html*/ )
+                    x /* x */ , 3 /*y*/ , '', 0, 0, true /*html*/ )
                   .css({
                     color: '#444'
                   })
@@ -115,7 +115,9 @@
             pointInterval: 24 * 60 * 60 * 10000,
           },
           tooltip: {
+            xDateFormat: '<span style="color: #000; font-weight: bold;">%H:%M</span> %b %Y',
             shared: true,
+            headerFormat: '{point.key}<br>',
             pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y:.3f}</b> ({point.percentage:.3f}%)<br/>',
           },
           plotOptions: {
@@ -129,11 +131,6 @@
           },
         };
 
-        function defaultPointFormatter() {
-          var val = moment(this.x).format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span><br>]MMM D');
-          return val + '<br/>' +
-            this.series.name + ': ' + Util.convertTraffic(this.y);
-        }
         //  ---------------------------------
         $scope.reload = function() {
 
@@ -141,11 +138,7 @@
             $scope.traffic = {
               series: [{
                 name: '200',
-                data: [],
-                tooltip: {
-                  headerFormat: '',
-                  pointFormatter: defaultPointFormatter
-                }
+                data: []
               }]
             };
             return;

@@ -58,19 +58,10 @@
         $scope.traffic = {
           series: [{
             name: 'Total',
-            data: [],
-            tooltip: {
-              headerFormat: '',
-              pointFormatter: defaultPointFormatter
-            }
+            data: []
           }]
         };
 
-        function defaultPointFormatter() {
-          var val = moment(this.x).format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span><br>]MMM D');
-          return val + '<br/>' +
-            this.series.name + ': ' + Util.convertTraffic(this.y);
-        }
         //  ---------------------------------
         var info_ = null,
           rps_avg_ = 0,
@@ -87,14 +78,14 @@
                   info_.destroy();
                   info_ = null;
                 }
-                var x = this.xAxis[0].toPixels(this.xAxis[0].min)+3;
+                var x = this.xAxis[0].toPixels(this.xAxis[0].min) + 3;
 
                 info_ = this /*chart*/ .renderer
                   .label('RPS Avg <span style="font-weight: bold; color: #3c65ac;">' + (Math.round(rps_avg_ * 1000) / 1000) +
                     '</span> Max <span style="font-weight: bold; color: #3c65ac;">' + (Math.round(rps_max_ * 1000) / 1000) +
                     '</span><br>Hits Total <span style="font-weight: bold; color: #3c65ac;">' + Util.formatNumber(hits_total_) +
                     '</span>',
-                    x /*x*/, 3 /*y*/, '', 0, 0, true /*html*/ )
+                    x /*x*/ , 3 /*y*/ , '', 0, 0, true /*html*/ )
                   .css({
                     color: '#444'
                   })
@@ -125,9 +116,11 @@
             pointInterval: 24 * 60 * 60 * 10000,
           },
           tooltip: {
+            xDateFormat: '<span style="color: #000; font-weight: bold;">%H:%M</span> %b %Y',
             shared: true,
-            pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y:.3f}</b> ({point.percentage:.3f}%)<br/>',
-          },
+            headerFormat: '{point.key}<br/>',
+            pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y:.3f}</b><br/>'
+          }
         };
 
         //  ---------------------------------
@@ -136,11 +129,7 @@
             $scope.traffic = {
               series: [{
                 name: 'Total',
-                data: [],
-                tooltip: {
-                  headerFormat: '',
-                  pointFormatter: defaultPointFormatter
-                }
+                data: []
               }]
             };
             return;
@@ -148,11 +137,7 @@
           $scope._loading = true;
           var series = [{
             name: 'Total',
-            data: [],
-            tooltip: {
-              headerFormat: '',
-              pointFormatter: defaultPointFormatter
-            }
+            data: []
           }];
           var _xAxisPointStart = null;
           var _xAxisPointInterval = null;

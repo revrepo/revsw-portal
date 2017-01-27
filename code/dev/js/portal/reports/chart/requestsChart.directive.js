@@ -85,7 +85,7 @@
               '</span> Max <span style="font-weight: bold; color: #3c65ac;">' + Util.convertTraffic(traffic_max_) +
               '</span><br>Traffic Total <span style="font-weight: bold; color: #3c65ac;">' + Util.humanFileSizeInGB(traffic_total_, 3) +
               '</span>';
-            var x = this.xAxis[0].toPixels(this.xAxis[0].min)+3;
+            var x = this.xAxis[0].toPixels(this.xAxis[0].min) + 3;
             info_ = this /*chart*/ .renderer
               .label(_text,
                 x /*x*/ , 3 /*y*/ , '' /*img*/ , 0, 0, true /*html*/ )
@@ -117,13 +117,18 @@
       xAxis: {
         type: 'datetime',
         pointInterval: 24 * 60 * 60 * 1000,
+      },
+      tooltip: {
+        xDateFormat: '<span style="color: #000; font-weight: bold;">%H:%M</span> %b %Y',
+        shared: true,
+        headerFormat: '{point.key}<br/>',
+        pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y:.3f}</b><br/>',
+        pointFormatter: defaultPointFormatter
       }
     };
-
+    // NOTE: specific format for data - use Util.convertTraffic
     function defaultPointFormatter() {
-      var val = moment(this.x).format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span><br>]MMM D');
-      return val + '<br/>' +
-        this.series.name + ': ' + Util.convertTraffic(this.y);
+      return '<span style="color:' + this.series.color + '">' + this.series.name + '</span>: ' + Util.convertTraffic(this.y) + '<br/>';
     }
 
     $scope.$watch('ngDomain', function() {
@@ -141,6 +146,15 @@
      */
     function reload() {
       if (!$scope.ngDomain || !$scope.ngDomain.id) {
+        $scope.traffic = {
+          series: [{
+            name: 'Incoming Bandwidth',
+            data: []
+          }, {
+            name: 'Outgoing Bandwidth',
+            data: []
+          }]
+        };
         return;
       }
       $scope._loading = true;
@@ -148,18 +162,10 @@
       var _xAxisPointInterval = null;
       var series = [{
         name: 'Incoming Bandwidth',
-        data: [],
-        tooltip: {
-          headerFormat: '',
-          pointFormatter: defaultPointFormatter
-        }
+        data: []
       }, {
         name: 'Outgoing Bandwidth',
-        data: [],
-        tooltip: {
-          headerFormat: '',
-          pointFormatter: defaultPointFormatter
-        }
+        data: []
       }];
       Stats.traffic(angular.merge({
           domainId: $scope.ngDomain.id
