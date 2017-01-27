@@ -124,7 +124,7 @@
             pointInterval: 24 * 60 * 60 * 10000,
           },
           tooltip: {
-            xDateFormat: '<span style="color: #000; font-weight: bold;">%H:%M</span> %b %Y',
+            xDateFormat: '<span style="color: #000; font-weight: bold;">%H:%M</span> %b %d %Y',
             shared: true,
             headerFormat: '{point.key}<br>',
             pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y:.3f}</b> ({point.percentage:.3f}%)<br/>',
