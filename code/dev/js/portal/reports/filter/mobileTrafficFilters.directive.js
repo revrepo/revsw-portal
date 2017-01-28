@@ -23,15 +23,11 @@
       },
       /*@ngInject*/
       controller: function ($scope) {
-
+        $scope.delay ='1';
         $scope.update = function () {
+          var delay = $scope.delay;
 
-          if (!$scope.ngFilters) {
-            $scope.ngFilters = {
-              delay: '1'
-            };
-          }
-          $scope.ngFilters.from_timestamp = moment().subtract( $scope.ngFilters.delay, 'days' ).valueOf();
+          $scope.ngFilters.from_timestamp = moment().subtract( delay, 'days' ).valueOf();
           $scope.ngFilters.to_timestamp = Date.now();
           $scope.onFilter();
         };

@@ -58,24 +58,24 @@
           series: [{
             name: 'HTTP',
             data: [],
-            tooltip: {
-              headerFormat: '',
-              pointFormatter: defaultPointFormatter
-            }
+            // tooltip: {
+            //   // headerFormat: '',
+            //   pointFormatter: defaultPointFormatter
+            // }
           }, {
             name: 'HTTPS',
             data: [],
-            tooltip: {
-              headerFormat: '',
-              pointFormatter: defaultPointFormatter
-            }
+            // tooltip: {
+            //   // headerFormat: '',
+            //   pointFormatter: defaultPointFormatter
+            // }
           }]
         };
 
         function defaultPointFormatter() {
-          var val = moment(this.x).format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span><br>]MMM D');
-          return val + '<br/>' +
-            this.series.name + ': ' + Util.convertTraffic(this.y);
+          // var val = moment(this.x).format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span>] MMM D');
+          // return val + '<br/>' +
+          return this.series.name + '<span style="color:{series.color}">{series.name}</span> : ' + '<strong>' + Util.formatNumber(this.y, 3) + '</strong><br>';
         }
         //  ---------------------------------
         var info_ = null,
@@ -136,7 +136,9 @@
             pointInterval: 24 * 60 * 60 * 10000,
           },
           tooltip: {
+            xDateFormat: '<span style="color: #000; font-weight: bold;">%H:%M</span> %b %d',
             shared: true,
+            headerFormat: '{point.key}<br>',
             pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y:.3f}</b> ({point.percentage:.3f}%)<br/>',
           },
           plotOptions: {
@@ -156,18 +158,10 @@
             $scope.traffic = {
               series: [{
                 name: 'HTTP',
-                data: [],
-                tooltip: {
-                  headerFormat: '',
-                  pointFormatter: defaultPointFormatter
-                }
+                data: []
               }, {
                 name: 'HTTPS',
-                data: [],
-                tooltip: {
-                  headerFormat: '',
-                  pointFormatter: defaultPointFormatter
-                }
+                data: []
               }]
             };
             return;
@@ -177,18 +171,10 @@
           var _xAxisPointInterval = null;
           var series = [{
             name: 'HTTP',
-            data: [],
-            tooltip: {
-              headerFormat: '',
-              pointFormatter: defaultPointFormatter
-            }
+            data: []
           }, {
             name: 'HTTPS',
-            data: [],
-            tooltip: {
-              headerFormat: '',
-              pointFormatter: defaultPointFormatter
-            }
+            data: []
           }];
           $q.all([
 
