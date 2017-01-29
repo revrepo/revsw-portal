@@ -550,6 +550,21 @@
         });
     }
 
+    /**
+     * @name getACL
+     * @return {Object} user permission
+     */
+    function getACL(){
+      var user = getUser();
+      var defaultACL = {
+        readOnly :true,
+        test :false,
+        configure :false,
+        reports :false,
+        dashBoard :true
+      };
+      return (!!user)  ? user.access_control_list :  defaultACL;
+    }
     return {
 
       getToken: getToken,
@@ -606,7 +621,9 @@
 
       authAzureSSO: authAzureSSO,
 
-      authenticate: authenticate
+      authenticate: authenticate,
+
+      getACL: getACL
     };
   }
 })();
