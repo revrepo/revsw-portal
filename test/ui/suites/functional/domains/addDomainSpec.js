@@ -48,16 +48,23 @@ describe('Functional', function () {
 
           case 'RO User':
 
-            it('RO user should not be able to create a domain',
+            it('RO user should not be able to create a domain if open "Add New Domain Page" manually',
               function () {
                 Portal.helpers.nav.goToDomains();
-                Portal.domains.listPage.clickAddNewDomain();
+                Portal.goToCustomUrl('#/domains/new');
                 Portal.domains.addPage.createDomain(myDomain);
 
                 var alert = Portal.alerts.getFirst();
                 var expectedMsg = Constants.alertMessages.domains
                   .MSG_FAIL_RO_USER_CANNOT_ADD;
                 expect(alert.getText()).toContain(expectedMsg);
+              });
+
+            it('RO user should not be able to go for create a new domain',
+              function () {
+                Portal.helpers.nav.goToDomains();
+                var btnAddNewDamian = Portal.domains.listPage.getAddNewDomainBtn();
+                expect(btnAddNewDamian.isEnabled()).toBe(true);
               });
 
             break;
