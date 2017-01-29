@@ -1,9 +1,21 @@
+<script type="text/ng-template" id="viewModal.html">
+  <div class="modal-header">
+    <h3 class="modal-title">View Resource {{model.name}}</h3>
+  </div>
+  <div class="modal-body">
+    <pre>{{model | json}}</pre>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-danger" type="button" ng-click="ok()">Close</button>
+  </div>
+</script>
+<!-- -->
 <div class="container-fluid" ui-view="page">
   <div class="row">
     <div class="col-sm-12">
       <h2 class="pull-left page-title">
-              Resources Per Subscription
-            </h2>
+        Resources Per Subscription
+      </h2>
     </div>
   </div>
   <div class="row">
@@ -32,15 +44,6 @@
             </div>
           </div>
         </div>
-       <!--  <div class="panel-heading">
-          <div class="row">
-            <div class="col-md-12">
-              <div class="pull-left">
-                <h2>Resources in the subscription</h2>
-              </div>
-            </div>
-          </div>
-        </div> -->
         <div class="panel-body">
           <div class="alert alert-info" ng-if="_loading">
             <i class="glyphicon glyphicon-refresh spin" ng-if="item.loading"></i>&nbsp; Loading...
@@ -66,9 +69,9 @@
                 <th>
                   <p>Resource Group</p>
                 </th>
-                <!--    <th>
+                <th class="actions">
                   <p>Actions</p>
-                </th> -->
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -78,7 +81,12 @@
                 <td>{{item.location}}</td>
                 <td>{{item.plan.name}}</td>
                 <td>{{item.plan.name}}</td>
-                <!-- <td><a>Delete</a></td> -->
+                <td class="actions">
+                  <i class="glyphicon glyphicon-refresh spin" ng-if="item.loading"></i>
+                  <a ng-click="onViewResourceSubscription($event,item)" ng-if="!item.loading" uib-tooltip="View">
+                    <i class="fa fa-eye"></i>
+                  </a>
+                </td>
               </tr>
             </tbody>
           </table>
