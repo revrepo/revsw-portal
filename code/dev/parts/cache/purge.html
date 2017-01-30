@@ -52,11 +52,11 @@
                     <i class="glyphicon glyphicon-remove"></i>&nbsp; Cancel
                   </a>
                   &nbsp;
-                  <button class="btn btn-danger" ng-disabled="_loading || !domain" ng-click="purgeDefaultText()">
+                  <button class="btn btn-danger" ng-class="{'btn-disabled':isReadOnly()}" ng-disabled="_loading || !domain || isReadOnly()" ng-click="purgeDefaultText()">
                     <i class="glyphicon" ng-class="_loading ? 'glyphicon-refresh spin': 'glyphicon-trash'"></i>&nbsp; Purge All Objects
                   </button>
                   &nbsp;
-                  <button class="btn btn-danger" ng-disabled="_loading || !domain || !text" ng-click="purgeText()">
+                  <button class="btn btn-danger" ng-class="{'btn-disabled':isReadOnly()}" ng-disabled="_loading || !domain || !text || isReadOnly()" ng-click="purgeText()">
                     <i class="glyphicon" ng-class="_loading ? 'glyphicon-refresh spin': 'glyphicon-trash'"></i> &nbsp; Purge
                   </button>
                 </div>
