@@ -65,7 +65,7 @@
           <div class="row">
             <div class="col-md-12">
               <div class="pull-left">
-                <a ui-sref="{{user.getACL().readOnly ?'.': '.new'}}" class="btn btn-success" ng-disabled="_loading || user.getACL().readOnly">
+                <a ui-sref="{{isReadOnly() ?'.': '.new'}}" class="btn btn-success" ng-class="{'btn-disabled':isReadOnly()}" ng-disabled="_loading || isReadOnly()">
                   <i class="glyphicon glyphicon-plus"></i>&nbsp; Add New Domain
                 </a>
               </div>

@@ -673,6 +673,17 @@
           $scope.companies = data;
         });
       };
+      /**
+       * @name isReadOnly
+       * @description
+       *
+       * @return {Boolean}
+       */
+      $scope.isReadOnly = function(){
+        var userACL = $scope.auth.getACL();
+        var isReadOnly = (userACL.readOnly === true);
+        return isReadOnly;
+      };
     }
 
     return CRUDControllerImpl;

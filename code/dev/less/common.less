@@ -33,14 +33,21 @@ button, input, select, textarea {
       background-color: @app-color-green-100;
       border-color: @app-color-green-100;
     }
+
   }
   &.btn-success {
     background-color: #FF8A00;
     border-color: #FF8A00;
+
   }
   &.btn-success:hover {
     background-color: rgba(255, 138, 0, 0.70);
     border-color: #FF8A00;
+  }
+  &.btn-disabled, &.btn-disabled[disabled]{
+    cursor: not-allowed ;
+    background-color: #ccc;
+    border-color: #ccc;
   }
 }
 
