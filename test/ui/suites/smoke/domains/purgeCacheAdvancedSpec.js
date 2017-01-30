@@ -24,11 +24,22 @@ var Constants = require('./../../../page_objects/constants');
 describe('Smoke', function () {
   describe('Purge Cached Objects - Advanced', function () {
 
-    var adminUser = config.get('portal.users.admin');
+    var users = [
+      config.get('portal.users.revAdmin'),
+      config.get('portal.users.admin'),
+      config.get('portal.users.reseller'),
+      config.get('portal.users.secondReseller'),
+      config.get('portal.users.user'),
+      config.get('portal.users.roUser')
+    ];
+
+    users.forEach(function (user) {
+
+    describe('With user: ' + user.role, function () {
     var myDomain = Constants.domain;
 
     beforeAll(function () {
-      Portal.signIn(adminUser);
+      Portal.signIn(user);
     });
 
     afterAll(function () {
@@ -102,6 +113,35 @@ describe('Smoke', function () {
         expect(jsonExample).toContain(expectedMsg2);
         expect(jsonExample).toContain(expectedMsg3);
     });
+    switch (user.role) {
 
+      case 'RO User':
+        it('should "Purge" button is disabled',
+          function () {
+            var btnPurge = Portal.purgeCacheBasicPage.getPurgeBtn();
+            expect(btnPurge.getAttribute('class')).toMatch('btn-disabled');
+          });
+        it('should "Purge All Objects" button is disabled',
+          function () {
+            var btnPurgeAllObjects = Portal.purgeCacheBasicPage.getPurgeAllObjectsBtn();
+            expect(btnPurgeAllObjects.getAttribute('class')).toMatch('btn-disabled');
+          });
+        break;
+
+      default:
+        it('should "Purge" button is not disabled',
+          function () {
+            var btnPurge = Portal.purgeCacheBasicPage.getPurgeBtn();
+            expect(btnPurge.getAttribute('class')).not.toMatch('btn-disabled');
+          });
+        it('should "Purge All Objects" button is not disabled',
+          function () {
+            var btnPurgeAllObjects = Portal.purgeCacheBasicPage.getPurgeAllObjectsBtn();
+            expect(btnPurgeAllObjects.getAttribute('class')).not.toMatch('btn-disabled');
+          });
+        break;
+    }
+  });
+  });
   });
 });

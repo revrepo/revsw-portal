@@ -34,6 +34,7 @@ var PurgeCacheAdvanced = {
     dropDown: {
       domain: '[ng-click="$select.toggle($event)"]',
       models: {
+        domain: 'domain',
         searchDomain: '$select.search'
       }
     },
@@ -50,7 +51,8 @@ var PurgeCacheAdvanced = {
     },
     buttons: {
       advancedMode: {
-        linkText: 'Advanced Mode'
+        linkText: 'Advanced Mode',
+        id: 'btn-advanced-mode'
       },
       basicMode: {
         linkText: 'Basic Mode'
@@ -118,8 +120,7 @@ var PurgeCacheAdvanced = {
   getAdvancedModeBtn: function () {
     return this
       .getPanelHeadingElem()
-      .element(by.css(this.locators.pullRight))
-      .element(by.partialLinkText(this.locators.buttons.advancedMode.linkText));
+      .element(by.id(this.locators.buttons.advancedMode.id));
   },
 
   /**
@@ -172,8 +173,7 @@ var PurgeCacheAdvanced = {
   getDomainDDown: function () {
     return this
       .getPanelHeadingElem()
-      .element(by.css(this.locators.pullLeft))
-      .element(by.css(this.locators.dropDown.domain));
+      .element(by.model(this.locators.dropDown.models.domain));
   },
 
   /**
@@ -184,7 +184,8 @@ var PurgeCacheAdvanced = {
    * @returns {Promise}
    */
   getSearchDomainTxtIn: function () {
-    return element(by.model(this.locators.dropDown.models.searchDomain));
+    return this.getDomainDDown()
+      .element(by.model(this.locators.dropDown.models.searchDomain));
   },
 
   /**
