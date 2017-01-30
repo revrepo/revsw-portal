@@ -557,14 +557,27 @@
     function getACL(){
       var user = getUser();
       var defaultACL = {
-        readOnly :true,
-        test :false,
-        configure :false,
-        reports :false,
-        dashBoard :true
+        readOnly: true,
+        test: false,
+        configure: false,
+        reports: false,
+        dashBoard: true
       };
       return (!!user)  ? user.access_control_list :  defaultACL;
     }
+
+    /**
+     * @name isReadOnly
+     * @description
+     *
+     * @return {Boolean}
+     */
+    function isReadOnly(){
+        var userACL = getACL();
+        var isReadOnly = (userACL.readOnly === true);
+        return isReadOnly;
+    }
+
     return {
 
       getToken: getToken,
@@ -623,7 +636,9 @@
 
       authenticate: authenticate,
 
-      getACL: getACL
+      getACL: getACL,
+
+      isReadOnly: isReadOnly
     };
   }
 })();
