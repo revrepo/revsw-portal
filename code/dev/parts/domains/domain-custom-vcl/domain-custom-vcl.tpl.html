@@ -6,7 +6,7 @@
       <div class="form-group form-inline">
         <div class="checkbox col-sm-12">
           <label>
-            <input type="checkbox" ng-model="oneAtATime"> Open only one rule at a time
+            <input id="openOnlyOneRuleAtTime" type="checkbox" ng-model="oneAtATime"> Open only one rule at a time
           </label>
         </div>
       </div>
@@ -179,7 +179,7 @@
         <!-- </uib-accordion-group> -->
       </uib-accordion>
 <div class="col-sm-12">
-                <domain-custom-vcl-backends ng-model="$ctrl.customVcl.backends"></domain-custom-vcl-backends>
+                <domain-custom-vcl-backends id="backendsBlock" ng-model="$ctrl.customVcl.backends"></domain-custom-vcl-backends>
 </div>
     </div>
   </div>

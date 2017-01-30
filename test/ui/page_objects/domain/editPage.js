@@ -222,23 +222,17 @@ var EditDomain = {
    * 'ON' or 'off'
    *
    */
-  switchBtns: function(getCbElement, cb) {
-    var check = function(value) {
-      if (cb) {
-        cb(value);
-      }
-    };
-    getCbElement.click();
+  switchBtns: function(getCbElement, onOff) {
     getCbElement
       .getAttribute(this.form.locators.switches.mainAttrs.ariaChecked)
         .then(function(data) {
-          check(data);
-    });
-    getCbElement.click();
-    getCbElement
-      .getAttribute(this.form.locators.switches.mainAttrs.ariaChecked)
-        .then(function(data) {
-          check(data);
+          if (onOff && data !== 'true') {
+            getCbElement.click();
+          }
+
+          if (!onOff && data === 'false') {
+            getCbElement.click();
+          }
     });
   },
 
@@ -373,11 +367,6 @@ var EditDomain = {
       .getCustomVCLRulesTab()
       .click();
   },
-  clickOnAddNewBackendBlock: function () {
-    return this.form
-      .getOnAddNewBackendBlock()
-      .click();
-  },
 
 
   /**
@@ -422,6 +411,13 @@ var EditDomain = {
   clickAddNewCachingRule: function() {
     return this.form
       .getOnAddNewCachingRule()
+      .click();
+  },
+
+
+  clickOpenUrlOfCachingRule: function() {
+    return this.form
+      .getOpenUrlOfCachingRule()
       .click();
   },
 

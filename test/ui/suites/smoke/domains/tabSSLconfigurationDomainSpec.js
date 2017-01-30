@@ -11,9 +11,9 @@ describe('Smoke', function () {
   // Defining set of users for which all below tests will be run
   var users = [
     config.get('portal.users.user'),
-    config.get('portal.users.admin'),
-    config.get('portal.users.revAdmin'),
-    config.get('portal.users.reseller')
+    // config.get('portal.users.admin'),
+    // config.get('portal.users.revAdmin'),
+    // config.get('portal.users.reseller')
   ];
 
   users.forEach(function (user) {
@@ -24,16 +24,13 @@ describe('Smoke', function () {
 
         beforeAll(function () {
           Portal.signIn(user);
+          Portal.helpers.nav.goToDomains();
+          Portal.domains.editPage.clickEditDomain();
+          Portal.domains.editPage.clickTabSSLconfiguration();
         });
 
         afterAll(function () {
           Portal.signOut();
-        });
-
-        beforeEach(function () {
-          Portal.helpers.nav.goToDomains();
-          Portal.domains.editPage.clickEditDomain();
-          Portal.domains.editPage.clickTabSSLconfiguration();
         });
 
         var checkDisplay = function(elem) {
