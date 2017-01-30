@@ -84,6 +84,11 @@ describe('Smoke', function () {
         switch (user.role) {
 
           case 'RO User':
+            it('should "Purge" button is disabled',
+              function () {
+                var btnPurge = Portal.purgeCacheBasicPage.getPurgeBtn();
+                expect(btnPurge.getAttribute('class')).toMatch('btn-disabled');
+              });
             it('should "Purge All Objects" button is disabled',
               function () {
                 var btnPurgeAllObjects = Portal.purgeCacheBasicPage.getPurgeAllObjectsBtn();
@@ -92,6 +97,11 @@ describe('Smoke', function () {
             break;
 
           default:
+            it('should "Purge" button is not disabled',
+              function () {
+                var btnPurge = Portal.purgeCacheBasicPage.getPurgeBtn();
+                expect(btnPurge.getAttribute('class')).not.toMatch('btn-disabled');
+              });
             it('should "Purge All Objects" button is not disabled',
               function () {
                 var btnPurgeAllObjects = Portal.purgeCacheBasicPage.getPurgeAllObjectsBtn();
