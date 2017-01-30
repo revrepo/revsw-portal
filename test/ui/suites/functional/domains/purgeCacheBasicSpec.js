@@ -24,11 +24,22 @@ var Constants = require('./../../../page_objects/constants');
 describe('Functional', function () {
   describe('Purge Cached Objects', function () {
 
-    var adminUser = config.get('portal.users.admin');
+    var users = [
+      config.get('portal.users.revAdmin'),
+      config.get('portal.users.admin'),
+      config.get('portal.users.reseller'),
+      config.get('portal.users.secondReseller'),
+      config.get('portal.users.user'),
+      config.get('portal.users.roUser')
+    ];
+
+    users.forEach(function (user) {
+
+    describe('With user: ' + user.role, function () {
     var myDomain = Constants.domain;
 
     beforeAll(function () {
-      Portal.signIn(adminUser);
+      Portal.signIn(user);
       Portal.helpers.nav.goToPurgeCache();
     });
 
@@ -85,4 +96,7 @@ describe('Functional', function () {
         expect(Portal.domains.listPage.getTitle()).toEqual(title);
     });
   });
+  });
+  });
+
 });

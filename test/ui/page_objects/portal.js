@@ -293,7 +293,17 @@ var Portal = {
   load: function () {
     return browser.get(this.baseUrl);
   },
-
+  /**
+   * ### Portal.goToCustomUrl()
+   *
+   * Loads the URL for Portal App under test (like manual user set)
+   *
+   * @param {String} appPathUrl app path url
+   * @returns {Promise}
+   */
+  goToCustomUrl: function (appPathUrl) {
+    return browser.get(this.baseUrl+appPathUrl);
+  },
   // ## User Helper methods
 
   /**
