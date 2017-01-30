@@ -7,8 +7,33 @@
 
   /*@ngInject*/
   function AuthRun($rootScope, $state, $location, DashboardSrv, User, Companies, $localStorage) {
+    var startOpenUrl = $location.url();
+    // NOTE: validation url
+    function isValidReOpenUrl(url) {
+      if ((url.indexOf('signup') === -1) && (url.indexOf('login') === -1) && (url.indexOf('/azure-sso') === -1) && (url.indexOf('/password/reset') === -1)) {
+        return true;
+      }
+      return false;
+    }
+    // NOTE: save first open url for not auth user
+    if (User.isAuthed() === false) {
+      if (isValidReOpenUrl(startOpenUrl)) {
+        $localStorage.lastUrl = startOpenUrl;
+      }
+    }
+    // NOTE: save last open url for auth user
+    $rootScope.$on('$stateChangeSuccess', function(event, stateTo, stateFrom) {
+      var currentUrl = $location.url();
+      if ((User.isAuthed() === true) && isValidReOpenUrl(currentUrl)) {
+        $localStorage.lastUrl = $location.url();
+      }
+    });
 
     $rootScope.$on('unauthorized', function() {
+      var currentUrl = $location.url();
+      if (isValidReOpenUrl(currentUrl)) {
+        $localStorage.lastUrl = currentUrl;
+      }
       // console.log('No logged in');
       $state.go('login');
     });
@@ -27,14 +52,19 @@
      * @return
      */
     function defaultLoginWorkFlow() {
-      DashboardSrv.getAll()
-        .then(function(dashboards) {
-          if (dashboards && dashboards.length) {
-            $location.path('dashboard/' + dashboards[0].id);
-          } else {
-            $state.go('index.reports.proxy');
-          }
-        });
+      var lastUrl_ = $localStorage.lastUrl;
+      if (!!lastUrl_ && lastUrl_.length > 0 && isValidReOpenUrl(lastUrl_)) {
+        $location.url(lastUrl_);
+      } else {
+        DashboardSrv.getAll()
+          .then(function(dashboards) {
+            if (dashboards && dashboards.length) {
+              $location.path('dashboard/' + dashboards[0].id);
+            } else {
+              $state.go('index.reports.proxy');
+            }
+          });
+      }
     }
 
     $rootScope.$on('user.fill_company_profile', function(e) {

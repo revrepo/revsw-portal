@@ -3,25 +3,29 @@
     <div class="h4"> Custom VCL Rules</div>
   </div>
   <div class="panel-body">
-      <div class="form-group form-inline">
-        <div class="checkbox col-sm-12">
-          <label>
-            <input id="openOnlyOneRuleAtTime" type="checkbox" ng-model="oneAtATime"> Open only one rule at a time
-          </label>
-        </div>
+    <div class="form-group form-inline">
+      <div class="checkbox col-sm-12">
+        <label>
+          <input id="openOnlyOneRuleAtTime" type="checkbox" ng-model="oneAtATime"> Open only one rule at a time
+        </label>
       </div>
+    </div>
     <div class="form-group" ng-form="customVCLForm">
-
       <uib-accordion close-others="oneAtATime" class="col-sm-12">
         <uib-accordion-group heading="'Recv' Function" is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
           <!-- “"Recv" Function" - attribute “rev_component_bp.custom_vcl.recv" -->
           <div class="form-group" ng-class="{ 'has-error': customVCLForm.vclRecv.$invalid && customVCLForm.vclRecv.$dirty }">
-            <label for="vclRecv" class="col-sm-2 control-label" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enter here a VCL code to be used in Varnish 'vcl_recv' subroutine">
+            <label for="vclRecv" class="col-sm-2 control-label">
               "Recv" Function *
             </label>
             <div class="col-md-10">
-              <textarea id="vclRecv" name="vclRecv" ng-model="$ctrl.customVcl.recv" placeholder="" class="form-control text--courier" ng-maxlength="10000" ng-disabled="_loading" required>
-              </textarea>
+              <div class="form-group">
+                <textarea id="vclRecv" name="vclRecv" ng-model="$ctrl.customVcl.recv" placeholder="" class="form-control text--courier inline-block" ng-maxlength="10000" ng-disabled="_loading" required>
+                </textarea>
+                <label for="vclRecv" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enter here a VCL code to be used in Varnish 'vcl_recv' subroutine">
+                  <i class="fa fa-question-circle"></i>
+                </label>
+              </div>
               <div class="error-messages" ng-messages="customVCLForm.vclRecv.$error" role="alert" ng-messages-multiple>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
               </div>
@@ -31,12 +35,17 @@
         <uib-accordion-group heading="'Hit' Function">
           <!-- “"Hit" Function" - attribute “rev_component_bp.custom_vcl.hit" -->
           <div class="form-group" ng-class="{ 'has-error': customVCLForm.vclHit.$invalid && customVCLForm.vclHit.$dirty }">
-            <label for="vclHit" class="col-sm-2 control-label" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enter here a VCL code to be used in Varnish 'vcl_hit' subroutine">
+            <label for="vclHit" class="col-sm-2 control-label">
               "Hit" Function *
             </label>
             <div class="col-md-10">
-              <textarea id="vclHit" name="vclHit" ng-model="$ctrl.customVcl.hit" placeholder="" class="form-control text--courier" ng-maxlength="10000" ng-disabled="_loading" required>
-              </textarea>
+              <div class="form-group">
+                <textarea id="vclHit" name="vclHit" ng-model="$ctrl.customVcl.hit" placeholder="" class="form-control text--courier inline-block" ng-maxlength="10000" ng-disabled="_loading" required>
+                </textarea>
+                <label for="vclHit" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enter here a VCL code to be used in Varnish 'vcl_hit' subroutine">
+                  <i class="fa fa-question-circle"></i>
+                </label>
+              </div>
               <div class="error-messages" ng-messages="customVCLForm.vclHit.$error" role="alert" ng-messages-multiple>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
               </div>
@@ -46,12 +55,17 @@
         <uib-accordion-group heading="'Miss' Function">
           <!-- “"Miss" Function" - attribute “rev_component_bp.custom_vcl.miss" -->
           <div class="form-group" ng-class="{ 'has-error': customVCLForm.vclMiss.$invalid && customVCLForm.vclMiss.$dirty }">
-            <label for="vclMiss" class="col-sm-2 control-label" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enter here a VCL code to be used in Varnish 'vcl_miss' subroutine">
+            <label for="vclMiss" class="col-sm-2 control-label">
               "Miss" Function *
             </label>
             <div class="col-md-10">
-              <textarea id="vclMiss" name="vclMiss" ng-model="$ctrl.customVcl.miss" placeholder="" class="form-control text--courier" ng-maxlength="10000" ng-disabled="_loading" required>
-              </textarea>
+              <div class="form-group">
+                <textarea id="vclMiss" name="vclMiss" ng-model="$ctrl.customVcl.miss" placeholder="" class="form-control text--courier inline-block" ng-maxlength="10000" ng-disabled="_loading" required>
+                </textarea>
+                <label for="vclMiss" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enter here a VCL code to be used in Varnish 'vcl_miss' subroutine">
+                  <i class="fa fa-question-circle"></i>
+                </label>
+              </div>
               <div class="error-messages" ng-messages="customVCLForm.vclMiss.$error" role="alert" ng-messages-multiple>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
               </div>
@@ -61,12 +75,17 @@
         <uib-accordion-group heading="'Deliver' Function">
           <!--“"Deliver" Function" - attribute “rev_component_bp.custom_vcl.deliver"-->
           <div class="form-group" ng-class="{ 'has-error': customVCLForm.vclDeliver.$invalid && customVCLForm.vclDeliver.$dirty }">
-            <label for="vclDeliver" class="col-sm-2 control-label" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enter here a VCL code to be used in Varnish 'vcl_deliver' subroutine">
+            <label for="vclDeliver" class="col-sm-2 control-label">
               "Deliver" Function *
             </label>
             <div class="col-md-10">
-              <textarea id="vclDeliver" name="vclDeliver" ng-model="$ctrl.customVcl.deliver" placeholder="" class="form-control text--courier" ng-maxlength="10000" ng-disabled="_loading" required>
-              </textarea>
+              <div class="form-group">
+                <textarea id="vclDeliver" name="vclDeliver" ng-model="$ctrl.customVcl.deliver" placeholder="" class="form-control text--courier inline-block" ng-maxlength="10000" ng-disabled="_loading" required>
+                </textarea>
+                <label for="vclDeliver" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enter here a VCL code to be used in Varnish 'vcl_deliver' subroutine">
+                  <i class="fa fa-question-circle"></i>
+                </label>
+              </div>
               <div class="error-messages" ng-messages="customVCLForm.vclDeliver.$error" role="alert" ng-messages-multiple>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
               </div>
@@ -76,12 +95,17 @@
         <uib-accordion-group heading="'Pass' Function">
           <!--“"Pass" Function" - attribute “rev_component_bp.custom_vcl.pass"-->
           <div class="form-group" ng-class="{ 'has-error': customVCLForm.vclPass.$invalid && customVCLForm.vclPass.$dirty }">
-            <label for="vclPass" class="col-sm-2 control-label" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enter here a VCL code to be used in Varnish 'vcl_pass' subroutine">
+            <label for="vclPass" class="col-sm-2 control-label">
               "Pass" Function *
             </label>
             <div class="col-md-10">
-              <textarea id="vclPass" name="vclPass" ng-model="$ctrl.customVcl.pass" placeholder="" class="form-control text--courier" ng-maxlength="10000" ng-disabled="_loading" required>
-              </textarea>
+              <div class="form-group">
+                <textarea id="vclPass" name="vclPass" ng-model="$ctrl.customVcl.pass" placeholder="" class="form-control text--courier inline-block" ng-maxlength="10000" ng-disabled="_loading" required>
+                </textarea>
+                <label for="vclPass" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enter here a VCL code to be used in Varnish 'vcl_pass' subroutine">
+                  <i class="fa fa-question-circle"></i>
+                </label>
+              </div>
               <div class="error-messages" ng-messages="customVCLForm.vclPass.$error" role="alert" ng-messages-multiple>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
               </div>
@@ -91,12 +115,17 @@
         <uib-accordion-group heading="'Pipe' Function">
           <!--“"Pipe" Function" - attribute “rev_component_bp.custom_vcl.pipe"-->
           <div class="form-group" ng-class="{ 'has-error': customVCLForm.vclPipe.$invalid && customVCLForm.vclPipe.$dirty }">
-            <label for="vclPipe" class="col-sm-2 control-label" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enter here a VCL code to be used in Varnish 'vcl_pipe' subroutine">
+            <label for="vclPipe" class="col-sm-2 control-label">
               "Pipe" Function *
             </label>
             <div class="col-md-10">
-              <textarea id="vclPipe" name="vclPipe" ng-model="$ctrl.customVcl.pipe" placeholder="" class="form-control text--courier" ng-maxlength="10000" ng-disabled="_loading" required>
-              </textarea>
+              <div class="form-group">
+                <textarea id="vclPipe" name="vclPipe" ng-model="$ctrl.customVcl.pipe" placeholder="" class="form-control text--courier inline-block" ng-maxlength="10000" ng-disabled="_loading" required>
+                </textarea>
+                <label for="vclPipe" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enter here a VCL code to be used in Varnish 'vcl_pipe' subroutine">
+                  <i class="fa fa-question-circle"></i>
+                </label>
+              </div>
               <div class="error-messages" ng-messages="customVCLForm.vclPipe.$error" role="alert" ng-messages-multiple>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
               </div>
@@ -106,12 +135,17 @@
         <uib-accordion-group heading="'Hash' Function">
           <!--“"Hash" Function" - attribute “rev_component_bp.custom_vcl.hash"-->
           <div class="form-group" ng-class="{ 'has-error': customVCLForm.vclHash.$invalid && customVCLForm.vclHash.$dirty }">
-            <label for="vclHash" class="col-sm-2 control-label" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enter here a VCL code to be used in Varnish 'vcl_hash' subroutine">
+            <label for="vclHash" class="col-sm-2 control-label">
               "Hash" Function *
             </label>
             <div class="col-md-10">
-              <textarea id="vclHash" name="vclHash" ng-model="$ctrl.customVcl.hash" placeholder="" class="form-control text--courier" ng-maxlength="10000" ng-disabled="_loading" required>
-              </textarea>
+              <div class="form-group">
+                <textarea id="vclHash" name="vclHash" ng-model="$ctrl.customVcl.hash" placeholder="" class="form-control text--courier inline-block" ng-maxlength="10000" ng-disabled="_loading" required>
+                </textarea>
+                <label for="vclHash" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enter here a VCL code to be used in Varnish 'vcl_hash' subroutine">
+                  <i class="fa fa-question-circle"></i>
+                </label>
+              </div>
               <div class="error-messages" ng-messages="customVCLForm.vclHash.$error" role="alert" ng-messages-multiple>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
               </div>
@@ -121,12 +155,17 @@
         <uib-accordion-group heading="'Synth' Function">
           <!--“"Sync" Function" - attribute “rev_component_bp.custom_vcl.synth"-->
           <div class="form-group" ng-class="{ 'has-error': customVCLForm.vclSynth.$invalid && customVCLForm.vclSynth.$dirty }">
-            <label for="vclSynth" class="col-sm-2 control-label" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enter here a VCL code to be used in Varnish 'vcl_synth' subroutine">
+            <label for="vclSynth" class="col-sm-2 control-label">
               "Synth" Function *
             </label>
             <div class="col-md-10">
-              <textarea id="vclSynth" name="vclSynth" ng-model="$ctrl.customVcl.synth" placeholder="" class="form-control text--courier" ng-maxlength="10000" ng-disabled="_loading" required>
-              </textarea>
+              <div class="form-group">
+                <textarea id="vclSynth" name="vclSynth" ng-model="$ctrl.customVcl.synth" placeholder="" class="form-control text--courier inline-block" ng-maxlength="10000" ng-disabled="_loading" required>
+                </textarea>
+                <label for="vclSynth" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enter here a VCL code to be used in Varnish 'vcl_synth' subroutine">
+                  <i class="fa fa-question-circle"></i>
+                </label>
+              </div>
               <div class="error-messages" ng-messages="customVCLForm.vclSynth.$error" role="alert" ng-messages-multiple>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
               </div>
@@ -136,12 +175,17 @@
         <uib-accordion-group heading="'Backend Response' Function">
           <!--“"Backend Response" Function" - attribute “rev_component_bp.custom_vcl.backend_response"-->
           <div class="form-group" ng-class="{ 'has-error': customVCLForm.vclBackendResponse.$invalid && customVCLForm.vclBackendResponse.$dirty }">
-            <label for="vclBackendResponse" class="col-sm-2 control-label" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enter here a VCL code to be used in Varnish 'vcl_backend_response' subroutine">
+            <label for="vclBackendResponse" class="col-sm-2 control-label">
               "Backend Response" Function *
             </label>
             <div class="col-md-10">
-              <textarea id="vclBackendResponse" name="vclBackendResponse" ng-model="$ctrl.customVcl.backend_response" placeholder="" class="form-control text--courier" ng-maxlength="10000" ng-disabled="_loading" required>
-              </textarea>
+              <div class="form-group">
+                <textarea id="vclBackendResponse" name="vclBackendResponse" ng-model="$ctrl.customVcl.backend_response" placeholder="" class="form-control text--courier inline-block" ng-maxlength="10000" ng-disabled="_loading" required>
+                </textarea>
+                <label for="vclBackendResponse" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enter here a VCL code to be used in Varnish 'vcl_backend_response' subroutine">
+                  <i class="fa fa-question-circle"></i>
+                </label>
+              </div>
               <div class="error-messages" ng-messages="customVCLForm.vclBackendResponse.$error" role="alert" ng-messages-multiple>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
               </div>
@@ -151,12 +195,17 @@
         <uib-accordion-group heading="'Backend Error' Function">
           <!--“"Backend Error" Function" - attribute “rev_component_bp.custom_vcl.backend_error"-->
           <div class="form-group" ng-class="{ 'has-error': customVCLForm.vclBackendError.$invalid && customVCLForm.vclBackendError.$dirty }">
-            <label for="vclBackendError" class="col-sm-2 control-label" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enter here a VCL code to be used in Varnish 'vcl_backend_response' subroutine">
+            <label for="vclBackendError" class="col-sm-2 control-label">
               "Backend Error" Function *
             </label>
             <div class="col-md-10">
-              <textarea id="vclBackendError" name="vclBackendError" ng-model="$ctrl.customVcl.backend_error" placeholder="" class="form-control text--courier" ng-maxlength="10000" ng-disabled="_loading" required>
-              </textarea>
+              <div class="form-group">
+                <textarea id="vclBackendError" name="vclBackendError" ng-model="$ctrl.customVcl.backend_error" placeholder="" class="form-control text--courier inline-block" ng-maxlength="10000" ng-disabled="_loading" required>
+                </textarea>
+                <label for="vclBackendError" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enter here a VCL code to be used in Varnish 'vcl_backend_response' subroutine">
+                  <i class="fa fa-question-circle"></i>
+                </label>
+              </div>
               <div class="error-messages" ng-messages="customVCLForm.vclBackendError.$error" role="alert" ng-messages-multiple>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
               </div>
@@ -164,11 +213,10 @@
           </div>
         </uib-accordion-group>
         <!-- <uib-accordion-group heading="'Backends' Function"> -->
-<!--
+        <!--
                 <domain-custom-vcl-backends ng-model="$ctrl.customVcl.backends"></domain-custom-vcl-backends> -->
-
-          <!-- <pre>{{$ctrl.customVcl.backends| json}}</pre> -->
-          <!--“Backends" (JSON array “rev_component_bp.custom_vcl.backends") - this bookmark/page is more complicated comparing to previous pretty simple text editing bookmarks. It should be possible to add more blocks like the following:
+        <!-- <pre>{{$ctrl.customVcl.backends| json}}</pre> -->
+        <!--“Backends" (JSON array “rev_component_bp.custom_vcl.backends") - this bookmark/page is more complicated comparing to previous pretty simple text editing bookmarks. It should be possible to add more blocks like the following:
   “Backend Name" - string input field (no special chars, max length 150 chars). JSON attr “rev_component_bp.custom_vcl.backends[X].name". Tooltip message: “Use the field to name the backend. In VCL functions the backend can be referenced using RevAPM internal function “REV_BACKEND()". For example, if the backend is named “my_backend" it can be used as “REV_BACKEND(my_backend)".
   “Backend VCL Code" - a text area input field - JSON attribute “rev_component_bp.custom_vcl.backends[X].vcl". Tooltip: “Use the text field to specify Varnish’s “backend" code"
   “Dynamic Origin DNS Name Lookups" - On/Off switch - JSON attr “rev_component_bp.custom_vcl.backends[X].dynamic"
@@ -178,9 +226,9 @@
 -->
         <!-- </uib-accordion-group> -->
       </uib-accordion>
-<div class="col-sm-12">
-                <domain-custom-vcl-backends id="backendsBlock" ng-model="$ctrl.customVcl.backends"></domain-custom-vcl-backends>
-</div>
+      <div class="col-sm-12">
+        <domain-custom-vcl-backends id="backendsBlock" ng-model="$ctrl.customVcl.backends"></domain-custom-vcl-backends>
+      </div>
     </div>
   </div>
 </div>

@@ -34,6 +34,14 @@
               });
             });
 
+            User.getUserAccounts().then(function(data) {
+              data.forEach(function(item) {
+                item.searchType = 'billing';
+                item.acc_name += ' ';
+                scope.list.push(item);
+              });
+            });
+
             Users.query().$promise.then(function(data) {
               data.forEach(function(item) {
                 item.searchType = 'user';
@@ -116,6 +124,14 @@
                     companyCopy.searchBarText = companyCopy.companyName + ' (Usage Report)';
                     companyCopy.searchAction = 'usage';
                     results.push(companyCopy);
+                  }
+                  break;
+                case 'billing':
+                  if ((item.acc_name || '').toLowerCase().indexOf(term) >= 0) {
+                    item.searchDisplayText = item.acc_name;
+                    item.searchBarText = item.acc_name + ' (Billing Statements)';
+                    item.searchAction = 'billing';
+                    results.push(item);
                   }
                   break;
                 case 'user':
@@ -207,6 +223,12 @@
                   } else {
                     $location.path('usage');
                   }
+                }
+                break;
+              case 'billing':
+                if (item.searchAction === 'billing') {
+                  User.selectAccount(item);
+                  $state.go('index.billing.statements',{},{reload:true,inherit: false, notify: true});
                 }
                 break;
               case 'user':

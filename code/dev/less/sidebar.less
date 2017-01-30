@@ -4,7 +4,6 @@
 }
 
 section[drawer] {
-  position: fixed;
   top: 0;
   left: 0;
   width: 210px;
@@ -29,10 +28,11 @@ section[drawer] {
   }
   .side-menu {
     position: absolute;
-    width: 210px;
+    width: 209px;
     height: 100%;
     padding-left: 12px;
     list-style-type: none;
+    overflow-y: auto;
     .side-menu-item {
       cursor: pointer;
       display: block;
@@ -97,6 +97,20 @@ section[drawer] {
       }
     }
   }
+}
+
+.side-menu::-webkit-scrollbar {
+  width: 6px;
+}
+
+.side-menu::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px #fff;
+  border-radius: 6px;
+}
+
+.side-menu::-webkit-scrollbar-thumb {
+  -webkit-box-shadow: inset 8px 6px #f7941e;
+  border-radius: 6px;
 }
 
 //

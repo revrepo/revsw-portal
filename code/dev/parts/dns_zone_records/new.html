@@ -25,23 +25,24 @@
           <!-- <p>Set up the basics of your record here — you can do additional configuration after creating a basic record.</p> -->
           <div class="form-horizontal">
             <div class="form-group  form-inline" ng-class="{ 'has-error': createForm.subdomainFull.$invalid && createForm.subdomain.$dirty }">
-              <label for="subdomain" class="control-label col-sm-2 " popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enter a subdomain within the {{zone_name}} zone.  You may enter &#39;*&#39; as the first component of the subdomain to create a wildcard record.  For example, &#39;*.{{zone_name}}&#39; will match &#39;foo.{{zone_name}}&#39;, &#39;bar.{{zone_name}}&#39;, &#39;foo.bar.{{zone_name}}&#39;, and so on.  You may also leave the subdomain blank to create a record for {{zone_name}}.">
-                Domain </label>
+              <label for="subdomain" class="control-label col-sm-2">Domain </label>
               <div class="col-sm-10">
                 <!-- NOTE: all validation rules implement to hidden fild-->
-                <input type="hidden" id="subdomainFull" name="subdomainFull" validate-domain-name-regular-or-wildcard-domains ng-model="newDomainName" ng-maxlength="225">
-                <input  type="text" id="subdomain" name="subdomain" autofocus class="form-control" placeholder="my.subdomain" ng-model="model.idomain" ng-change="newDomainName = (model.idomain.length>0)? model.idomain+'.'+zone_name:null">
+                <input type="hidden" id="subdomainFull" name="subdomainFull" validate-dns-record-domain-name-regular-or-wildcard-domains ng-model="newDomainName" ng-maxlength="225">
+                <input type="text" id="subdomain" name="subdomain" autofocus class="form-control" placeholder="my.subdomain" ng-model="model.idomain" ng-change="newDomainName = (model.idomain.length>0)? model.idomain+'.'+zone_name:null">
                 <label class="add-on" ng-if="zone_name">.{{zone_name}}</label>
+                <label for="subdomain" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enter a subdomain within the {{zone_name}} zone.  You may enter &#39;*&#39; as the first component of the subdomain to create a wildcard record.  For example, &#39;*.{{zone_name}}&#39; will match &#39;foo.{{zone_name}}&#39;, &#39;bar.{{zone_name}}&#39;, &#39;foo.bar.{{zone_name}}&#39;, and so on.  You may also leave the subdomain blank to create a record for {{zone_name}}.">
+                  <i class="fa fa-question-circle"></i>
+                </label>
                 <div class="error-messages" ng-messages="createForm.subdomainFull.$error" role="alert" ng-messages-multiple>
                   <div ng-messages-include="parts/shared/error-messages.html"></div>
                 </div>
               </div>
             </div>
             <div class="form-group" ng-class="{ 'has-error': createForm.recordType.$invalid && createForm.recordType.$dirty }">
-              <label for="recordType" class="control-label col-sm-2" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Choose from among the supported DNS record types">
-                Record Type *</label>
+              <label for="recordType" class="control-label col-sm-2">Record Type *</label>
               <div class="col-sm-10">
-                <select required class="form-control fixed" id="recordType" name="recordType" ng-model="model.rec.type" ng-init="model.rec.type=&#39;A&#39;">
+                <select required class="form-control fixed inline-block" id="recordType" name="recordType" ng-model="model.rec.type" ng-init="model.rec.type=&#39;A&#39;">
                   <option selected="selected">A</option>
                   <option>AAAA</option>
                   <option>ALIAS</option>
@@ -59,25 +60,33 @@
                   <option>TXT</option>
                   <!-- SRV, NAPTR, AFSDB, RP -->
                 </select>
+                <label for="recordType" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Choose from among the supported DNS record types">
+                  <i class="fa fa-question-circle"></i>
+                </label>
                 <div class="error-messages" ng-messages="createForm.recordType.$error" role="alert" ng-messages-multiple>
                   <div ng-messages-include="parts/shared/error-messages.html"></div>
                 </div>
               </div>
             </div>
             <div class="form-group" ng-class="{ 'has-error': createForm.recordType.$invalid && createForm.recordType.$dirty }">
-              <label class="control-label col-sm-2 " popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Optionally check this to link the configuration (answers, filters, TTL, etc) to another record in NS1. Linked records cannot be changed to non-linked records after creation.">
-                Linked Record</label>
+              <label class="control-label col-sm-2">Linked Record</label>
               <div class="col-sm-10">
                 <toggle-switch is-disabled="_loading" ng-model="create_linked" on-label="Yes" off-label="No">
                 </toggle-switch>
+                <label class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Optionally check this to link the configuration (answers, filters, TTL, etc) to another record in NS1. Linked records cannot be changed to non-linked records after creation.">
+                  <i class="fa fa-question-circle"></i>
+                </label>
               </div>
             </div>
             <hr>
             <div class="form-group  form-inline" ng-show="!create_linked" ng-class="{'has-error': createForm.recTtl.$invalid && createForm.recTtl.$dirty}">
-              <label for="recTtl" class="control-label col-sm-2 " popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Optional; if not set, the default TTL for the {{zone_name}} zone will be used">
+              <label for="recTtl" class="control-label col-sm-2">
                 TTL </label>
               <div class="col-md-10">
-                <input type="number" placeholder="3600" id="proxy_timeout" name="recTtl" class="form-control" ng-disabled="_loading" ng-model="model.rec.ttl" ng-min="1" ng-max="3600"> second(s)
+                <input type="number" placeholder="3600" id="proxy_timeout" name="recTtl" class="form-control inline-block" ng-disabled="_loading" ng-model="model.rec.ttl" ng-min="1" ng-max="3600"> second(s)
+                <label for="recTtl" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Optional; if not set, the default TTL for the {{zone_name}} zone will be used">
+                  <i class="fa fa-question-circle"></i>
+                </label>
                 <div class="error-messages" ng-messages="createForm.recTtl.$error" role="alert" ng-messages-multiple>
                   <div ng-messages-include="parts/shared/error-messages.html"></div>
                 </div>
@@ -85,10 +94,12 @@
             </div>
             <hr ng-show="!create_linked">
             <div class="form-group" ng-show="create_linked">
-              <label class="control-label col-sm-2 " popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="The FQDN of the record (in NS1 platform) holding the configuration the new record should be linked to. Record type must be the same type (A, MX, etc) as the target record.">
-                Link Target (FQDN)</label>
+              <label class="control-label col-sm-2">Link Target (FQDN)</label>
               <div class="col-sm-10">
-                <input ng-required="create_linked" type="text" class="form-control" placeholder="target.{{zone_name}}" ng-model="model.newanswer.link">
+                <input ng-required="create_linked" type="text" class="form-control inline-block" placeholder="target.{{zone_name}}" ng-model="model.newanswer.link">
+                <label class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="The FQDN of the record (in NS1 platform) holding the configuration the new record should be linked to. Record type must be the same type (A, MX, etc) as the target record.">
+                  <i class="fa fa-question-circle"></i>
+                </label>
                 <p>
                   <br><i><b>Note:</b> A link uses the exact configuration of the record to which it links.  When changes are made to the link target's configuration, they will also apply to this linked record.  You can change a link's target at a later point but cannot change it to a non-linked record (you must delete it).</i></p>
               </div>
@@ -96,12 +107,11 @@
             <div class="form-group" ng-show="!create_linked">
               <label class="control-label col-sm-2 " popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Set here the value (answer) for the DNS record. If you need to configure more than one answer for the new record you can add them later in Edit form of the record.">
                 Answer *</label>
-                <!-- TODO: replace directive-->
+              <!-- TODO: replace directive-->
               <ng:include src="'parts/dns_zone_records/answercontrols.html'"></ng:include>
             </div>
-
-          <!-- TODO: not used eat -->
-          <!-- <div class="control-group"ng-show="!create_linked &amp;&amp; reverse_permitted(model.rec.type)">
+            <!-- TODO: not used eat -->
+            <!-- <div class="control-group"ng-show="!create_linked &amp;&amp; reverse_permitted(model.rec.type)">
             <label class="control-label col-sm-2 ">
               Also create reverse PTR record
             </label>
@@ -110,19 +120,22 @@
                Also create reverse PTR record
             </div>
           </div> -->
+          </div>
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+              <a ui-sref="^" class="btn btn-default">
+                <i class="glyphicon glyphicon-remove"></i>&nbsp; Cancel
+              </a>
+              <button class="btn btn-success" id="create_dns_zone_record" ng-disabled="createForm.$invalid|| _loading" ng-click="createDNSZoneRecord(model,false)">
+                <i class="glyphicon" ng-class="_loading?'glyphicon-refresh spin':'glyphicon-ok'"></i>&nbsp; Create Record
+              </button>
+              <button class="btn btn-success" id="create_dns_zone_record_and_add_more" ng-disabled="createForm.$invalid|| _loading" ng-click="createDNSZoneRecord(model,true);createForm.$setPristine();">
+                <i class="glyphicon" ng-class="_loading?'glyphicon-refresh spin':'glyphicon-ok'"></i>&nbsp; Create And Add More
+              </button>
+            </div>
+          </div>
+        </form>
       </div>
-      <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-          <a ui-sref="^" class="btn btn-default">
-            <i class="glyphicon glyphicon-remove"></i>&nbsp; Cancel
-          </a>
-          <button class="btn btn-success" id="create_ssr_cert" ng-disabled="createForm.$invalid|| _loading" ng-click="createDNSZoneRecord(model,false)">
-            <i class="glyphicon" ng-class="_loading?'glyphicon-refresh spin':'glyphicon-ok'"></i>&nbsp; Add Record
-          </button>
-        </div>
-      </div>
-      </form>
     </div>
   </div>
-</div>
 </div>

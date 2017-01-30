@@ -533,6 +533,9 @@ textarea {
   -moz-box-shadow: none;
   box-shadow: none;
 }
+.hide-vertical-scroll {
+  overflow-y: hidden !important;
+}
 .main_img_container {
   left: 50%;
   position: absolute;
@@ -674,7 +677,6 @@ form.new-user-form .form-group {
   width: 210px;
 }
 section[drawer] {
-  position: fixed;
   top: 0;
   left: 0;
   width: 210px;
@@ -697,10 +699,11 @@ section[drawer] #logo img {
 }
 section[drawer] .side-menu {
   position: absolute;
-  width: 210px;
+  width: 209px;
   height: 100%;
   padding-left: 12px;
   list-style-type: none;
+  overflow-y: auto;
 }
 section[drawer] .side-menu .side-menu-item {
   cursor: pointer;
@@ -760,6 +763,17 @@ section[drawer] .side-menu .open-side-menu-item {
 }
 section[drawer] .side-menu .open-side-menu-item .side-menu-sub-item {
   display: block;
+}
+.side-menu::-webkit-scrollbar {
+  width: 6px;
+}
+.side-menu::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px #fff;
+  border-radius: 6px;
+}
+.side-menu::-webkit-scrollbar-thumb {
+  -webkit-box-shadow: inset 8px 6px #f7941e;
+  border-radius: 6px;
 }
 .left-menu-start {
   display: inline-block;
@@ -1024,6 +1038,9 @@ section[drawer] .side-menu .dashboard_menu .side-menu-item.item-title a {
 }
 .dashboard__title .dashboard-btn-new:focus {
   outline: none;
+}
+.dashboard__title .fa {
+  top: -2px;
 }
 .dashboard-structure-select-item {
   display: block;
@@ -1540,9 +1557,6 @@ del.diff span {
   background-color: black;
   opacity: 0.85;
 }
-.ssl-names--new-form .fa-question-circle {
-  color: #66b2bf;
-}
 .ssl-names--table .actions .disabled {
   opacity: 0.4;
 }
@@ -1681,4 +1695,15 @@ form.dns-zone-records--new-form input[name="subdomain"] {
 .azure-sso .login-link {
   color: #A1A2A5;
   padding: 25px;
+}
+.inline-block {
+  display: inline-block;
+}
+label i.fa-question-circle {
+  color: #66b2bf;
+}
+textarea.inline-block {
+  display: inline-block;
+  float: left;
+  margin-right: 3px;
 }

@@ -150,16 +150,19 @@
       // PATTERNS
       PATTERNS: {
         NO_SPECIAL_CHARS: /^[A-Za-z0-9//_.' -]+$/,
-        COMMENT_NO_SPECIAL_CHARS: /^[A-Za-z0-9//_.' \n\r-]+$/,
+        COMMENT_NO_SPECIAL_CHARS: /^[A-Za-zÀÈÌÒÙàèìòùÁÉÍÓÚÝáéíóúýÂÊÎÔÛâêîôûÃÑÕãñõÄËÏÖÜŸäëïöüŸ¡¿çÇŒœßØøÅåÆæÞþÐð""\w\d\s-'.,“”&#@:?!()$\/\n\r-]+$/,
         IP_ADDRESS: /^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$/,
         WILDCARD_DOMAIN_FIELD: /(^(\*\.[a-zA-Z0-9-\_]{0,62}[a-zA-Z0-9]\.)+[a-zA-Z]{2,63}$)/,
         WILDCARD_DOMAINS_FIELDS: /(^\*\.(([a-zA-Z0-9-\_]{0,62})[a-zA-Z0-9]\.)+[a-zA-Z]{2,63}$)/,
         URL: /(https?:)?\/\/.+/,
         HEADER_VALUE: /^[A-Za-z0-9.' -]+$/,
         DOMAIN: /(?=^.{4,253}$)(^((?!-)(?!\_)[a-zA-Z0-9-\_]{0,62}[a-zA-Z0-9]\.)+[a-zA-Z]{2,63}$)/,
+        DNS_RECORD_DOMAIN: /(?=^.{4,253}$)(^((?!-)[a-zA-Z0-9-\_]{0,62}[a-zA-Z0-9]\.)+[a-zA-Z]{2,63}$)/,
         COOKIE: /^[A-Za-z0-9.' -]+$/,
         CACHE_BYPASS_LOCATION: /^[A-Za-z0-9//.' -]+$/,
-        QUERY_STRINGS_OPTION: /^[A-Za-z0-9.' -]+$/
+        QUERY_STRINGS_OPTION: /^[A-Za-z0-9.' -]+$/,
+        CONTACT_DATA: /^[A-Za-zÀÈÌÒÙàèìòùÁÉÍÓÚÝáéíóúýÂÊÎÔÛâêîôûÃÑÕãñõÄËÏÖÜŸäëïöüŸ¡¿çÇŒœßØøÅåÆæÞþÐð$\/]+$/,
+        COMPANY_DATA: /^[A-Za-zÀÈÌÒÙ àèìòù ÁÉÍÓÚ Ý áéíóúý ÂÊÎÔÛ âêîôû ÃÑÕ ãñõ ÄËÏÖÜŸ äëïöüŸ ¡¿çÇŒœ ßØøÅå ÆæÞþ Ðð ""\w\d\s-'.,&#@:?!()$\/]+$/,
       },
       // HEADER OPERATION FOR DOMAIN CACHING RULE
       HEADER_OPERATIONS: {
@@ -227,6 +230,18 @@
       OAUTH: {
         GOOGLE_CLIENT_ID: '673633214510-oaj5a4e1vo7fnspj87vth3o81275vr3f.apps.googleusercontent.com',
         GITHUB_CLIENT_ID: '4ee21d3f0ff9b112dc0e'
+      },
+      /**
+       * @name  DNS_DEFAULT_VALUES
+       * @description
+       *   Default values for DNS Zone Records
+       * @type {Object}
+       */
+      DNS_DEFAULT_VALUES: {
+        MX_PRIORITY: 10,
+        SRV_PRIORITY: 10,
+        SRV_WEIGHT: 5,
+        SRV_PORT: 5060
       }
     });
 
