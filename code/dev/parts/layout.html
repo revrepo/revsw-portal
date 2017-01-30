@@ -2,7 +2,7 @@
   <a href="https://www.revapm.com/" id="logo" target="_blank">
     <img src="images/logo_color.png" alt="Logo" />
   </a>
-  <ul class="side-menu" style="height: 92%; overflow: auto;" ng-nicescroll nice-option="{cursorcolor: '#f7941e',cursorwidth: '8px',zindex: '9999999'}">
+  <ul class="side-menu">
     <dashboard-nav-menu></dashboard-nav-menu>
     <li ui-sref-active-if="{class: 'open-side-menu-item', state: 'index.apps'}" , ng-class="{'open-side-menu-item ': menuExpanded('index.apps'),'active-side-menu-item': $state.includes('index.apps')}" style="margin-top: 8px;">
       <a id="side-menu-apps-item" class="side-menu-item" ng-click="goToState('index.apps.ios')">
@@ -27,7 +27,7 @@
         <div class="left-menu-start">
           <i class="fa fa-signal"></i>
         </div>
-        Mobile Analytics
+        Apps Analytics
         <i ng-click="expandMenu('index.mobile', $event)" class="pull-right {{ menuExpanded('index.mobile') ? 'fa fa-caret-down' : 'fa fa-caret-up' }}"></i>
       </a>
       <a ui-sref-active="active" ui-sref="index.mobile.traffic" class="side-menu-sub-item">
@@ -69,7 +69,7 @@
       <a id="side-menu-sub-item__webApp-cache" ui-sref-active="active" ui-sref="index.webApp.cache" class="side-menu-sub-item">
         <i class="sub-menu-icon fa fa-trash"></i> Purge Cache
       </a>
-      <a ui-sref-active="active" ui-sref="index.webApp.importConfig" class="side-menu-sub-item" ng-if="userService.isReseller() || userService.isRevadmin()">
+      <a ui-sref-active="active" ui-sref="index.webApp.importConfig" class="side-menu-sub-item" ng-if="userService.isRevadmin()">
         <i class="sub-menu-icon fa fa-arrow-right"></i> Upload Config
       </a>
       <!--<a ui-sref="index.webApp.domainConfig" class="side-menu-item">-->
@@ -244,8 +244,10 @@
           </div>
           <div class="col-md-12 footer-content">
             <a href="{{contactUsLink}}" target="_blank">Contact Us</a>
-            <span class="pull-left copyright">Copyright Rev Software, Inc. 2015-2016</span>
-            <span class="pull-right version">Version {{portalVersion}}/{{apiVersion}} </span>
+            <span class="pull-left copyright">Copyright Rev Software, Inc. 2015-2017
+            <br>Version {{portalVersion}}/{{apiVersion}}
+            </span>
+            <!-- <span class="pull-right version">Version {{portalVersion}}/{{apiVersion}} </span> -->
           </div>
         </div>
       </div>

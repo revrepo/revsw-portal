@@ -30,16 +30,13 @@ describe('Smoke', function () {
 
         beforeAll(function () {
           Portal.signIn(user);
+          Portal.helpers.nav.goToDomains();
+          Portal.domains.editPage.clickEditDomain();
+          Portal.domains.editPage.clickTabGeneralSettings();
         });
 
         afterAll(function () {
           Portal.signOut();
-        });
-
-        beforeEach(function () {
-          Portal.helpers.nav.goToDomains();
-          Portal.domains.editPage.clickEditDomain();
-          Portal.domains.editPage.clickTabGeneralSettings();
         });
 
         it('should display "Domain Name"', function () {

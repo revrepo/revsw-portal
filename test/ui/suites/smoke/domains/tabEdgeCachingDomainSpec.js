@@ -30,38 +30,40 @@ describe('Smoke', function () {
 
         beforeAll(function () {
           Portal.signIn(user);
+          Portal.helpers.nav.goToDomains();
+          EditPage.clickEditDomain();
+          EditPage.clickTabEdgeCaching();
         });
 
         afterAll(function () {
           Portal.signOut();
         });
 
-        beforeEach(function () {
-          Portal.helpers.nav.goToDomains();
-          EditPage.clickEditDomain();
-          EditPage.clickTabEdgeCaching();
-        });
-
         it('should display "Edge Caching"', function () {
           expect(checkDisplay('getEdgeCachingTxtIn')).toBe(true);
         });
 
-        it('if "Edge Caching" is "ON" then should display "URL" in "Caching Rules"', function () {
-          
-          EditPage.switchBtns(form.getEdgeCachingTxtIn(),
-          function(value) {
-            if (value === 'true') {
-              EditPage.clickAddNewCachingRule();
-              expect(checkDisplay('getURLtxtIn')).toBe(true);  
-            }
-          });
-
+        it('if "Edge Caching" is "ON" then should display "Cache Bypass Locations"', function () {
+          EditPage.switchBtns(form.getEdgeCachingTxtIn(), true);
+          expect(checkDisplay('getCacheBypassLocationsTxtIn')).toBe(true);  
         });
+
+        it('if "Edge Caching" is "ON" then should display "Caching Rules block"', function () {
+          expect(checkDisplay('getCachingRulesBlock')).toBe(true);  
+        });
+
+        it('if "Edge Caching" is "ON" then should display "URL" in "Caching Rules"', function () {
+          expect(checkDisplay('getURLtxtIn')).toBe(true);  
+          EditPage.clickAddNewCachingRule();
+          EditPage.clickOpenUrlOfCachingRule();
+        });
+
 
         it('if "Edge Caching" is "ON" then should display '+
           '"Override Origin Caching Headers" in "Caching Rules"', function () {
           expect(checkDisplay('getOverrideOriginCachingHeadersTxtIn')).toBe(true); 
         });
+
 
         it('if "Edge Caching" is "ON" then should display '+
           '"Edge Cache TTL" in "Caching Rules"', function () {
@@ -86,27 +88,83 @@ describe('Smoke', function () {
         it('if "Edge Caching" is "ON" then should display "Override'+
           ' HTTP Cookies" in "Caching Rules"', function () {
           expect(checkDisplay('getOverrideHTTPcookiesTxtIn')).toBe(true);
+          EditPage.switchBtns(form.getOverrideHTTPcookiesTxtIn(), true);
+        });
+
+
+        it('if "Edge Caching" is "ON" then should display "'+
+          ' Ignore All HTTP Cookies" in "Caching Rules"', function () {
+          expect(checkDisplay('getIgnoreAllHTTPcookiesTxtIn')).toBe(true);
+        });
+
+
+        it('if "Edge Caching" is "ON" then should display "'+
+          'Keep or Drop Specific HTTP Cookies" in "Caching Rules"', function () {
+          expect(checkDisplay('getKeepOrDropSpecificHTTPcookiesTxtIn')).toBe(true);
+        });
+
+        it('if "Edge Caching" is "ON" then should display "'+
+          'List Of Cookies To Drop" in "Caching Rules"', function () {
+          expect(checkDisplay('getListOfCookiesToDrop')).toBe(true);
+          EditPage.switchBtns(form.getIgnoreAllHTTPcookiesTxtIn(), true);
+        });
+
+        it('if "Edge Caching" is "ON" then should display "'+
+          'Remove Ignored Cookies From Origin Requests" in "Caching Rules"', function () {
+          expect(checkDisplay('getRemoveIgnoredCookiesFromOriginRequests')).toBe(true);
+        });
+
+        it('if "Edge Caching" is "ON" then should display "'+
+          'Remove Ignored Cookies From Edge Responses" in "Caching Rules"', function () {
+          expect(checkDisplay('getRemoveIgnoredCookiesFromEdgeResponses')).toBe(true);
         });
 
         it('if "Edge Caching" is "ON" then should display "Override '+
           'Edge Caching" in "Caching Rules"', function () {
           expect(checkDisplay('getOverrideEdgeCachingTxtIn')).toBe(true);
+          EditPage.switchBtns(form.getOverrideEdgeCachingTxtIn(), true);
         });
 
-        it('if "Edge Caching" is "ON" then should display "Force'+
-          ' Revalidation" in "Caching Rules"', function () {
-          expect(checkDisplay('getForceRevalidationTxtIn')).toBe(true);
+        it('if "Edge Caching" is "ON" then should display "'+
+          ' Browser Caching TTL" in "Caching Rules"', function () {
+          expect(checkDisplay('getBrowserCachingTTL')).toBe(true);
         });
 
-        it('if "Edge Caching" is "ON" then should display "Enable The '+
-          'Serving of Stale Content" in "Caching Rules"', function () {
+        it('if "Edge Caching" is "ON" then should display "'+
+          ' Force Revalidation" in "Caching Rules"', function () {
+          expect(checkDisplay('getForceRevalidation')).toBe(true);
+        });
+
+        it('if "Edge Caching" is "ON" then should display "'+
+          'Enable The Serving of Stale Content" in "Caching Rules"', function () {
           expect(checkDisplay('getEnableServingStaleContentTxtIn')).toBe(true);
+          EditPage.switchBtns(form.getEnableServingStaleContentTxtIn(), true);
+        });
+
+        it('if "Edge Caching" is "ON" then should display "'+
+          ' Stale Object TTL While Fetching New Object" in "Caching Rules"', function () {
+          expect(checkDisplay('getStaleObjectTTLwhileFetchingNewObject')).toBe(true);
+        });
+
+        it('if "Edge Caching" is "ON" then should display "'+
+          ' Stale Object TTL When Origin Is Down" in "Caching Rules"', function () {
+          expect(checkDisplay('getStaleObjectTTLwhenOriginIsDown')).toBe(true);
         });
 
         it('if "Edge Caching" is "ON" then should display '+
           '"Enable ESI" in "Caching Rules"', function () {
           expect(checkDisplay('getEnableESITxtIn')).toBe(true);
         });
+
+        it('if "Edge Caching" is "ON" then should display '+
+          '"Manage Origin Request Headers" in "Caching Rules"', function () {
+          expect(checkDisplay('getManageOriginRequestHeaders')).toBe(true);
+        });
+
+        it('if "Edge Caching" is "ON" then should display '+
+          '"Manage End User Response Headers" in "Caching Rules"', function () {
+          expect(checkDisplay('getManageEndUserResponseHeaders')).toBe(true);
+        });       
 
 
       });

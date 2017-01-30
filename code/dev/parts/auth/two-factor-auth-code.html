@@ -5,7 +5,7 @@
   <form class="form-horizontal" name="editForm" novalidate ng-submit="login(editForm)">
     <div class="form-group" ng-class="{ 'has-error': editForm.code.$invalid && editForm.code.$dirty }">
       <div class="col-sm-8 col-sm-offset-2">
-        <input type="text" class="form-control" ng-model="data.code" id="code" name="code" placeholder="Enter Your Code here" ng-disabled="data.loading" pattern="^\d{6}$" required autofocus>
+        <input type="text" focus-me="!data.loading" class="form-control" ng-model="data.code" id="code" name="code" placeholder="Enter Your Code here" ng-disabled="data.loading" pattern="^\d{6}$" required autofocus>
         <div class="error-messages" ng-messages="editForm.code.$error" role="alert" ng-messages-multiple>
           <div ng-message="pattern">Please enter six digits of your one-time password</div>
           <div ng-message="required">Please enter six digits of your one-time password</div>

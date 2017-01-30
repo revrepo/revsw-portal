@@ -20,6 +20,8 @@
     $q,
     $state,
     $anchorScroll) {
+
+    $scope.DNS_DEFAULT_VALUES = $config.DNS_DEFAULT_VALUES;
     //Invoking crud actions
     $injector.invoke(CRUDController, this, {
       $scope: $scope,
@@ -189,6 +191,14 @@
       $scope
         .create(newDNSZoneRecord, isStay)
         .then(function(data) {
+          if(isStay===true){
+            // NOTE: set default values
+            model.rec.ttl = null;
+            model.rec.type = 'A';
+            model.idomain = '';
+            model.rec.answers = [];
+            model.newanswer = null;
+          }
           $scope.alertService.success(data);
         })
         .catch($scope.alertService.danger);

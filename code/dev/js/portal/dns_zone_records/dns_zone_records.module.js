@@ -37,8 +37,9 @@
       };
     }]);
 
-  function DNSZoneRecordsAnswerParser() {
+  function DNSZoneRecordsAnswerParser($config) {
     'ngInject';
+    var DNS_CONST = $config.DNS_DEFAULT_VALUES;
     return {
       parse: function(type, answer) {
         switch (type) {
@@ -47,13 +48,13 @@
           case 'HINFO':
             return new Array(answer.hardware, answer.os);
           case 'MX':
-            return new Array(answer.priority, answer.host);
+            return new Array(answer.priority || DNS_CONST.MX_PRIORITY, answer.host);
           case 'NAPTR':
             return new Array(answer.order, answer.preference, answer.flags, answer.service, answer.regexp, answer.replacement);
           case 'RP':
             return new Array(answer.email, answer.txt_dname);
           case 'SRV':
-            return new Array(answer.priority, answer.weight, answer.port, answer.host);
+            return new Array(answer.priority || DNS_CONST.SRV_PRIORITY, answer.weight || DNS_CONST.SRV_WEIGHT, answer.port || DNS_CONST.SRV_PORT, answer.host);
           default:
             return new Array(answer.value);
         }

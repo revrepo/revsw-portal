@@ -2,15 +2,15 @@
   <div class="form-group" ng-class="{'has-error': editForm.url_value.$invalid && editForm.url_value.$dirty}">
     <div class="col-md-offset-3  col-md-9">
       <label class="radio-inline">
-        <input type="radio" ng-model="$ctrl.rule.url.is_wildcard" ng-value="false">Regular Expression
+        <input id="regularExpression" type="radio" ng-model="$ctrl.rule.url.is_wildcard" ng-value="false">Regular Expression
       </label>
       <label class="radio-inline">
-        <input type="radio" ng-model="$ctrl.rule.url.is_wildcard" ng-value="true">Wildcard Pattern
+        <input id="wildcardPattern" type="radio" ng-model="$ctrl.rule.url.is_wildcard" ng-value="true">Wildcard Pattern
       </label>
     </div>
     <label class="col-md-3 control-label">URL *</label>
     <div class="col-md-9">
-      <input type="text" validate-caching-rule-url name="url_value" class="form-control" ng-model="$ctrl.rule.url.value" required>
+      <input id="urlOfURLblock" type="text" validate-caching-rule-url name="url_value" class="form-control" ng-model="$ctrl.rule.url.value" required>
       <div class="error-messages" ng-messages="editForm.url_value.$error" role="alert" ng-messages-multiple>
         <div ng-messages-include="parts/shared/error-messages.html"></div>
       </div>
@@ -25,14 +25,17 @@
       Override Origin Caching Headers
     </label>
     <div class="col-md-9">
-      <toggle-switch ng-model="$ctrl.rule.edge_caching.override_origin" on-label="On" off-label="Off">
+      <toggle-switch id="overrideOriginCachingHeaders" ng-model="$ctrl.rule.edge_caching.override_origin" on-label="On" off-label="Off">
       </toggle-switch>
     </div>
   </div>
   <div class="form-group form-inline" ng-class="{'has-error': editForm.newTTL.$invalid && editForm.newTTL.$dirty}">
-    <label class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Defines how long a cached objected will be consider frash (range 0-10,000,000)">Edge Cache TTL</label>
+    <label for="newTTL" class="col-sm-3 control-label">Edge Cache TTL</label>
     <div class="col-md-9">
-      <input type="number" class="form-control" name="newTTL" ng-model="$ctrl.rule.edge_caching.new_ttl" min="0" max="10000000" ng-min="0" ng-max="10000000" required> second(s)
+      <input id="edgeCacheTTL" type="number" class="form-control inline-block" name="newTTL" ng-model="$ctrl.rule.edge_caching.new_ttl" min="0" max="10000000" ng-min="0" ng-max="10000000" required> second(s)
+      <label for="newTTL" class="text-info" popover-trigger="mouseenter" uib-popover="Defines how long a cached objected will be consider frash (range 0-10,000,000)">
+        <i class="fa fa-question-circle"></i>
+      </label>
       <div class="error-messages" ng-messages="editForm.newTTL.$error" role="alert" ng-messages-multiple>
         <div ng-messages-include="parts/shared/error-messages.html"></div>
       </div>
@@ -43,14 +46,14 @@
       Enforce New Edge Cache TTL If Origin Caching Headers Are Missing
     </label>
     <div class="col-md-9">
-      <toggle-switch ng-model="$ctrl.rule.edge_caching.override_no_cc" on-label="On" off-label="Off">
+      <toggle-switch id="newEdgeTTLifOriginMissing" ng-model="$ctrl.rule.edge_caching.override_no_cc" on-label="On" off-label="Off">
       </toggle-switch>
     </div>
   </div>
   <div class="form-group ">
     <label class="col-sm-3 control-label">Keep Or Drop Query String Parameters</label>
     <div class="col-sm-9">
-      <toggle-switch ng-model="$ctrl.rule.edge_caching.query_string_list_is_keep" on-label="Keep" off-label="Drop">
+      <toggle-switch id="keepOrDropQueryStringParameters" ng-model="$ctrl.rule.edge_caching.query_string_list_is_keep" on-label="Keep" off-label="Drop">
       </toggle-switch>
     </div>
   </div>
@@ -73,7 +76,7 @@
   <div class="form-group ">
     <label class="col-sm-3 control-label">Override HTTP Cookies</label>
     <div class="col-sm-9">
-      <toggle-switch ng-model="$ctrl.rule.cookies.override" on-label="Yes" off-label="No">
+      <toggle-switch id="overrideHTTPcookies" ng-model="$ctrl.rule.cookies.override" on-label="Yes" off-label="No">
       </toggle-switch>
     </div>
   </div>
@@ -81,14 +84,14 @@
     <div class="form-group">
       <label class="col-sm-3 control-label">Ignore All HTTP Cookies</label>
       <div class="col-sm-9">
-        <toggle-switch ng-model="$ctrl.rule.cookies.ignore_all" on-label="Yes" off-label="No">
+        <toggle-switch id="ignoreAllHTTPcookies" ng-model="$ctrl.rule.cookies.ignore_all" on-label="Yes" off-label="No">
         </toggle-switch>
       </div>
     </div>
     <div class="form-group" ng-if="$ctrl.rule.cookies.ignore_all == false">
       <label class="col-sm-3 control-label">Keep or Drop Specific HTTP Cookies</label>
       <div class="col-sm-9">
-        <toggle-switch ng-model="$ctrl.rule.cookies.list_is_keep" on-label="Keep" off-label="Drop">
+        <toggle-switch id="keepOrDropSpecificHTTPcookies" ng-model="$ctrl.rule.cookies.list_is_keep" on-label="Keep" off-label="Drop">
         </toggle-switch>
       </div>
     </div>
@@ -112,7 +115,7 @@
       <label class="col-sm-3 control-label" ng-if="$ctrl.rule.cookies.ignore_all == false" ng-switch="$ctrl.rule.cookies.list_is_keep">
         Remove <span ng-switch-when="false">Ignored</span><span ng-switch-when="true">Kept</span> Cookies From Origin Requests</label>
       <div class="col-sm-9">
-        <toggle-switch ng-model="$ctrl.rule.cookies.remove_ignored_from_request" on-label="Yes" off-label="No">
+        <toggle-switch id="removeIgnoredCookiesFromOriginRequests" ng-model="$ctrl.rule.cookies.remove_ignored_from_request" on-label="Yes" off-label="No">
         </toggle-switch>
       </div>
     </div>
@@ -121,7 +124,7 @@
       <label class="col-sm-3 control-label" ng-if="$ctrl.rule.cookies.ignore_all == false" ng-switch="$ctrl.rule.cookies.list_is_keep">
         Remove <span ng-switch-when="false">Ignored</span><span ng-switch-when="true">Kept</span> Cookies From Edge Responses</label>
       <div class="col-sm-9">
-        <toggle-switch ng-model="$ctrl.rule.cookies.remove_ignored_from_response" on-label="Yes" off-label="No">
+        <toggle-switch id="removeIgnoredCookiesFromEdgeResponses" ng-model="$ctrl.rule.cookies.remove_ignored_from_response" on-label="Yes" off-label="No">
         </toggle-switch>
       </div>
     </div>
@@ -137,25 +140,26 @@
       Override Edge Caching
     </label>
     <div class="col-md-9">
-      <toggle-switch ng-model="$ctrl.rule.browser_caching.override_edge" on-label="On" off-label="Off">
+      <toggle-switch id="overrideEdgeCaching" ng-model="$ctrl.rule.browser_caching.override_edge" on-label="On" off-label="Off">
       </toggle-switch>
     </div>
   </div>
   <div class="form-group form-inline" ng-class="{'has-error': editForm.browserCachingNewTTL.$invalid && editForm.browserCachingNewTTL.$dirty}" ng-show="$ctrl.rule.browser_caching.override_edge">
-    <label class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Defines for now long objects will be cached in browser cache (range 0-10,000,000 seconds)">Browser Caching TTL</label>
+    <label for="browserCachingNewTTL" class="col-sm-3 control-label">Browser Caching TTL</label>
     <div class="col-md-9">
-      <input type="number" class="form-control" name="browserCachingNewTTL" ng-model="$ctrl.rule.browser_caching.new_ttl" ng-min="0" ng-max="10000000" required> second(s)
+      <input id="browserCachingTTL" type="number" class="form-control inline-block" name="browserCachingNewTTL" ng-model="$ctrl.rule.browser_caching.new_ttl" ng-min="0" ng-max="10000000" required> second(s)
+      <label for="browserCachingNewTTL" class="text-info" popover-trigger="mouseenter" uib-popover="Defines for now long objects will be cached in browser cache (range 0-10,000,000 seconds)">
+        <i class="fa fa-question-circle"></i>
+      </label>
       <div class="error-messages" ng-messages="editForm.browserCachingNewTTL.$error" role="alert" ng-messages-multiple>
         <div ng-messages-include="parts/shared/error-messages.html"></div>
       </div>
     </div>
   </div>
   <div class="form-group form-inline">
-    <label for="override_origin" class="col-sm-3 control-label">
-      Force Revalidation
-    </label>
+    <label for="override_origin" class="col-sm-3 control-label">Force Revalidation</label>
     <div class="col-md-9">
-      <toggle-switch ng-model="$ctrl.rule.browser_caching.force_revalidate" on-label="On" off-label="Off">
+      <toggle-switch id="forceRevalidation" ng-model="$ctrl.rule.browser_caching.force_revalidate" on-label="On" off-label="Off">
       </toggle-switch>
     </div>
   </div>
@@ -165,27 +169,36 @@
     <label class="col-sm-3 ">Serving of Stale Content</label>
   </div>
   <div class="form-group form-inline">
-    <label for="override_origin" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Define whether the edge proxy will serve end users with expired objects in case of origin slowness or downtime">
+    <label for="override_origin" class="col-sm-3 control-label">
       Enable The Serving of Stale Content
     </label>
     <div class="col-md-9">
-      <toggle-switch ng-model="$ctrl.rule.serve_stale.enable" on-label="On" off-label="Off">
+      <toggle-switch id="enableTheServingOfStaleContent" ng-model="$ctrl.rule.serve_stale.enable" on-label="On" off-label="Off">
       </toggle-switch>
+      <label for="override_origin" class="text-info" popover-trigger="mouseenter" uib-popover="Define whether the edge proxy will serve end users with expired objects in case of origin slowness or downtime">
+        <i class="fa fa-question-circle"></i>
+      </label>
     </div>
   </div>
   <div class="form-group form-inline" ng-class="{'has-error': editForm.serveStaleWhileFetchingTTL.$invalid && editForm.serveStaleWhileFetchingTTL.$dirty}" ng-if="$ctrl.rule.serve_stale.enable">
-    <label class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Sets the time period in seconds when stale objects are still served to end users while fetching new objects from the origin server (range 0-10,000,000)">Stale Object TTL While Fetching New Object</label>
+    <label class="col-sm-3 control-label">Stale Object TTL While Fetching New Object</label>
     <div class="col-md-9">
-      <input type="number" class="form-control" name="serveStaleWhileFetchingTTL" ng-model="$ctrl.rule.serve_stale.while_fetching_ttl" ng-min="0" ng-max="10000000" required> second(s)
+      <input id="staleObjectTTLwhileFetchingNewObject" type="number" class="form-control inline-block" name="serveStaleWhileFetchingTTL" ng-model="$ctrl.rule.serve_stale.while_fetching_ttl" ng-min="0" ng-max="10000000" required> second(s)
+      <label class="text-info" popover-trigger="mouseenter" uib-popover="Sets the time period in seconds when stale objects are still served to end users while fetching new objects from the origin server (range 0-10,000,000)">
+        <i class="fa fa-question-circle"></i>
+      </label>
       <div class="error-messages" ng-messages="editForm.serveStaleWhileFetchingTTL.$error" role="alert" ng-messages-multiple>
         <div ng-messages-include="parts/shared/error-messages.html"></div>
       </div>
     </div>
   </div>
   <div class="form-group form-inline" ng-class="{'has-error': editForm.serveStaleOriginSickTTL.$invalid && editForm.serveStaleOriginSickTTL.$dirty}" ng-if="$ctrl.rule.serve_stale.enable">
-    <label class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Sets the time period in seconds when stale objects are still served to end users if origin server is down as detected by the origin health monitoring probe (range 0-10,000,000)">Stale Object TTL When Origin Is Down</label>
+    <label class="col-sm-3 control-label">Stale Object TTL When Origin Is Down</label>
     <div class="col-md-9">
-      <input type="number" class="form-control" name="serveStaleOriginSickTTL" ng-model="$ctrl.rule.serve_stale.origin_sick_ttl" ng-min="0" ng-max="10000000" required> second(s)
+      <input id="staleObjectTTLwhenOriginIsDown" type="number" class="form-control inline-block" name="serveStaleOriginSickTTL" ng-model="$ctrl.rule.serve_stale.origin_sick_ttl" ng-min="0" ng-max="10000000" required> second(s)
+      <label class="text-info" popover-trigger="mouseenter" uib-popover="Sets the time period in seconds when stale objects are still served to end users if origin server is down as detected by the origin health monitoring probe (range 0-10,000,000)">
+        <i class="fa fa-question-circle"></i>
+      </label>
       <div class="error-messages" ng-messages="editForm.serveStaleOriginSickTTL.$error" role="alert" ng-messages-multiple>
         <div ng-messages-include="parts/shared/error-messages.html"></div>
       </div>
@@ -197,12 +210,15 @@
     <label class="col-sm-3 ">Edge Side Includes</label>
   </div>
   <div class="form-group form-inline">
-    <label for="override_origin" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Use the switch to control whether the edge proxy will process Edge Side Includes (ESI) commands in served web objects">
+    <label for="override_origin" class="col-sm-3 control-label">
       Enable ESI
     </label>
     <div class="col-md-9">
-      <toggle-switch ng-model="$ctrl.rule.enable_esi" on-label="On" off-label="Off">
+      <toggle-switch id="enableESI" ng-model="$ctrl.rule.enable_esi" on-label="On" off-label="Off">
       </toggle-switch>
+      <label for="override_origin" class="text-info" popover-trigger="mouseenter" uib-popover="Use the switch to control whether the edge proxy will process Edge Side Includes (ESI) commands in served web objects">
+        <i class="fa fa-question-circle"></i>
+      </label>
     </div>
   </div>
   <hr>
@@ -210,13 +226,13 @@
     <label class="col-sm-3">Manage Origin Request Headers</label>
   </div>
   <div class="form-group">
-    <origin-request-headers class="col-sm-12" ng-model="$ctrl.rule.origin_request_headers"></origin-request-headers>
+    <origin-request-headers id="manageOriginRequestHeaders" class="col-sm-12" ng-model="$ctrl.rule.origin_request_headers"></origin-request-headers>
   </div>
   <hr>
   <div class="form-group">
     <label class="col-sm-3">Manage End User Response Headers</label>
   </div>
   <div class="form-group">
-    <end-user-response-headers class="col-sm-12" ng-model="$ctrl.rule.end_user_response_headers "></end-user-response-headers>
+    <end-user-response-headers id="manageEndUserResponseHeaders" class="col-sm-12" ng-model="$ctrl.rule.end_user_response_headers "></end-user-response-headers>
   </div>
 </div>

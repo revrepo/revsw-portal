@@ -52,7 +52,8 @@
         last_user_id: null,
         selectedAccount: null,
         selectedApplication: null,
-        intro: intro_
+        intro: intro_,
+        lastUrl: null
       });
     }
 

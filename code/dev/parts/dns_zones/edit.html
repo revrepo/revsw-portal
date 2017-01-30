@@ -53,11 +53,12 @@
           </div> -->
           <!-- SOA TTL (seconds) -->
           <div class="form-group form-inline" ng-class="{'has-error': editForm.ttl.$invalid && editForm.ttl.$dirty}">
-            <label for="ttl" class="col-sm-2 control-label" popover-append-to-body="{{true}}"  popover-trigger="mouseenter" uib-popover="TTL for the SOA record for this zone (1-7200 range)">
-              SOA TTL *
-            </label>
+            <label for="ttl" class="col-sm-2 control-label">SOA TTL *</label>
             <div class="col-md-10">
-              <input type="number" placeholder="3600" id="proxy_timeout" name="ttl" class="form-control" ng-disabled="_loading" ng-model="model.ttl" ng-min="1" ng-max="7200" required> second(s)
+              <input type="number" placeholder="3600" id="proxy_timeout" name="ttl" class="form-control inline-block" ng-disabled="_loading" ng-model="model.ttl" ng-min="1" ng-max="7200" required> second(s)
+              <label for="ttl" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="TTL for the SOA record for this zone (1-7200 range)">
+                <i class="fa fa-question-circle"></i>
+              </label>
               <div class="error-messages" ng-messages="editForm.ttl.$error" role="alert" ng-messages-multiple>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
               </div>
@@ -66,11 +67,12 @@
           <!-- //SOA TTL (seconds) -->
           <!-- Refresh (seconds) -->
           <div class="form-group form-inline" ng-class="{'has-error': editForm.refresh.$invalid && editForm.refresh.$dirty}">
-            <label for="refresh" class="col-sm-2 control-label" popover-append-to-body="{{true}}"  popover-trigger="mouseenter" uib-popover="Frequency at which slave nameservers will try to refresh the zone from our servers (1-43200 range)">
-              Refresh *
-            </label>
+            <label for="refresh" class="col-sm-2 control-label">Refresh *</label>
             <div class="col-md-10">
-              <input type="number" placeholder="7200" id="proxy_timeout" name="refresh" class="form-control" ng-disabled="_loading" ng-model="model.refresh" ng-min="1" ng-max="43200" placeholder="3600" required> second(s)
+              <input type="number" placeholder="7200" id="proxy_timeout" name="refresh" class="form-control inline-block" ng-disabled="_loading" ng-model="model.refresh" ng-min="1" ng-max="43200" placeholder="3600" required> second(s)
+              <label for="refresh" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Frequency at which slave nameservers will try to refresh the zone from our servers (1-43200 range)">
+                <i class="fa fa-question-circle"></i>
+              </label>
               <div class="error-messages" ng-messages="editForm.refresh.$error" role="alert" ng-messages-multiple>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
               </div>
@@ -79,11 +81,12 @@
           <!-- //Refresh (seconds) -->
           <!-- Retry (seconds) -->
           <div class="form-group form-inline" ng-class="{'has-error': editForm.retry.$invalid && editForm.retry.$dirty}">
-            <label for="retry" class="col-sm-2 control-label" popover-append-to-body="{{true}}"  popover-trigger="mouseenter" uib-popover="Time between retries if a slave fails to contact our servers when 'refresh' has expired (1-7200 range)">
-              Retry *
-            </label>
+            <label for="retry" class="col-sm-2 control-label">Retry *</label>
             <div class="col-md-10">
-              <input type="number" placeholder="3600" id="proxy_timeout" name="retry" class="form-control" ng-disabled="_loading" ng-model="model.retry" ng-min="1" ng-max="7200" required> second(s)
+              <input type="number" placeholder="3600" id="proxy_timeout" name="retry" class="form-control inline-control" ng-disabled="_loading" ng-model="model.retry" ng-min="1" ng-max="7200" required> second(s)
+              <label for="retry" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Time between retries if a slave fails to contact our servers when 'refresh' has expired (1-7200 range)">
+                <i class="fa fa-question-circle"></i>
+              </label>
               <div class="error-messages" ng-messages="editForm.retry.$error" role="alert" ng-messages-multiple>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
               </div>
@@ -92,11 +95,12 @@
           <!-- //Retry (seconds) -->
           <!-- Expire (seconds) -->
           <div class="form-group form-inline" ng-class="{'has-error': editForm.expiry.$invalid && editForm.expiry.$dirty}">
-            <label for="expiry" class="col-sm-2 control-label" popover-append-to-body="{{true}}"  popover-trigger="mouseenter" uib-popover="Time after a 'refresh' expiration to keep 'retrying' SOA refresh until giving up and assuming our servers are no longer authoritative (1-2419200 range)">
-              Expire *
-            </label>
+            <label for="expiry" class="col-sm-2 control-label">Expire *</label>
             <div class="col-md-10">
-              <input type="number" placeholder="1209600" id="proxy_timeout" name="expiry" class="form-control" ng-disabled="_loading" ng-model="model.expiry" ng-min="1" ng-max="2419200" required> second(s)
+              <input type="number" placeholder="1209600" id="proxy_timeout" name="expiry" class="form-control inline-block" ng-disabled="_loading" ng-model="model.expiry" ng-min="1" ng-max="2419200" required> second(s)
+              <label for="expiry" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Time after a 'refresh' expiration to keep 'retrying' SOA refresh until giving up and assuming our servers are no longer authoritative (1-2419200 range)">
+                <i class="fa fa-question-circle"></i>
+              </label>
               <div class="error-messages" ng-messages="editForm.expiry.$error" role="alert" ng-messages-multiple>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
               </div>
@@ -105,11 +109,12 @@
           <!-- //Expire (seconds) -->
           <!-- NX TTL (seconds) -->
           <div class="form-group form-inline" ng-class="{'has-error': editForm.nx_ttl.$invalid && editForm.nx_ttl.$dirty}">
-            <label for="nx_ttl" class="col-sm-2 control-label" popover-append-to-body="{{true}}"  popover-trigger="mouseenter" uib-popover="Time for which a resolver may cache a negative lookup result (NXDOMAIN) from this zone; also used as the default TTL for records without an explicitly set TTL (1-10800 range)">
-              NX TTL *
-            </label>
+            <label for="nx_ttl" class="col-sm-2 control-label">NX TTL *</label>
             <div class="col-md-10">
-              <input type="number" placeholder="10800" id="proxy_timeout" name="nx_ttl" class="form-control" ng-disabled="_loading" ng-model="model.nx_ttl" ng-min="1" ng-max="10800" required> second(s)
+              <input type="number" placeholder="10800" id="proxy_timeout" name="nx_ttl" class="form-control inline-block" ng-disabled="_loading" ng-model="model.nx_ttl" ng-min="1" ng-max="10800" required> second(s)
+              <label for="nx_ttl" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Time for which a resolver may cache a negative lookup result (NXDOMAIN) from this zone; also used as the default TTL for records without an explicitly set TTL (1-10800 range)">
+                <i class="fa fa-question-circle"></i>
+              </label>
               <div class="error-messages" ng-messages="editForm.nx_ttl.$error" role="alert" ng-messages-multiple>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
               </div>

@@ -55,7 +55,6 @@
         }
 
         $scope.traffic = {
-          labels: [],
           series: [{ name: '200', data: [] }]
         };
 
@@ -68,21 +67,23 @@
 
         $scope.chartOptions = {
           chart: {
+            zoomType: 'x',
             events: {
               redraw: function() {
                 if (info_) {
                   info_.destroy();
                   info_ = null;
                 }
+                var x = this.xAxis[0].toPixels(this.xAxis[0].min) + 3;
                 info_ = this /*chart*/ .renderer
-                  .label( codeStats.reduce( function( prev, item ) {
+                  .label(codeStats.reduce(function(prev, item) {
                       return prev +
                         'Code <span style="font-weight: bold; color: #3c65ac;">' + item.code +
-                        '</span>: <span style="font-weight: bold">' + Util.formatNumber( item.requests ) +
-                        '</span> Requests or <span style="font-weight: bold">' + item.percent.toFixed( 2 ) +
+                        '</span>: <span style="font-weight: bold">' + Util.formatNumber(item.requests) +
+                        '</span> Requests or <span style="font-weight: bold">' + item.percent.toFixed(2) +
                         '</span> %<br>';
-                      }, '' ),
-                    this.xAxis[0].toPixels(0), 3, '', 0, 0, true /*html*/ )
+                    }, ''),
+                    x /* x */ , 3 /*y*/ , '', 0, 0, true /*html*/ )
                   .css({
                     color: '#444'
                   })
@@ -96,7 +97,7 @@
                   })
                   .add();
               }
-            }
+            },
           },
           yAxis: {
             title: {
@@ -109,25 +110,24 @@
             }
           },
           xAxis: {
-            crosshair: {
-              width: 1,
-              color: '#000000'
-            },
-            tickInterval: tickInterval_,
-            labels: {
-              autoRotation: false,
-              useHTML: true,
-              formatter: function() {
-                return this.value.label;
-              }
-            }
+            type: 'datetime',
+            pointInterval: 24 * 60 * 60 * 10000,
           },
           tooltip: {
-            formatter: function() {
-              return this.key.tooltip + '<br/>' +
-                this.series.name + ': <strong>' + Util.formatNumber(this.y, 3) + '</strong>';
+            xDateFormat: '<span style="color: #000; font-weight: bold;">%H:%M</span> %b %d',
+            shared: true,
+            headerFormat: '{point.key}<br>',
+            pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y:.3f}</b> ({point.percentage:.3f}%)<br/>',
+          },
+          plotOptions: {
+            areaspline: {
+              marker: {
+                enabled: false
+              },
+              // @see http://api.highcharts.com/highcharts/plotOptions.areaspline.stacking
+              stacking: 'normal'
             }
-          }
+          },
         };
 
         //  ---------------------------------
@@ -135,15 +135,18 @@
 
           if (!$scope.ngDomain || !$scope.ngDomain.id || !$scope.statusCodes || !$scope.statusCodes.length) {
             $scope.traffic = {
-              labels: [],
-              series: [{ name: '200', data: [] }]
+              series: [{
+                name: '200',
+                data: []
+              }]
             };
             return;
           }
 
           var promises = {};
           var series = [];
-          var labels = [];
+          var _xAxisPointStart = null;
+          var _xAxisPointInterval = null;
           $scope.statusCodes.forEach(function(code) {
             if (!code) {
               return;
@@ -155,84 +158,70 @@
             })).$promise;
           });
           $scope._loading = true;
-          var timeSet = false;
+          var timeSet = !false;
           codeStats = [];
           bigTotal = 0;
 
           $q.all(promises)
             .then(function(data) {
-              labels = [];
-              var interval = 1800;
-              _.forEach(data, function(val, idx) {
-                if (data[idx].metadata.interval_sec) {
-                  interval = data[idx].metadata.interval_sec;
-                }
-                var offset = interval * 1000;
-                var results = [];
-                var total = 0;
-                if (data[idx].data && data[idx].data.length > 0) {
-                  data[idx].data.forEach(function(item, idx, items) {
-                    if (!timeSet) {
-
-                      var val = moment(item.time + offset);
-                      var label;
-                      if (idx % tickInterval_) {
-                        label = '';
-                      } else if (idx === 0 ||
-                        (new Date(item.time + offset)).getDate() !== (new Date(items[idx - tickInterval_].time + offset)).getDate()) {
-                        label = val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span><br>]MMM D');
-                      } else {
-                        label = val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span>]');
-                      }
-
-                      labels.push({
-                        tooltip: val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span>] MMMM Do YYYY'),
-                        label: label
-                      });
-                    }
-                    total += item.requests;
-                    results.push(item.requests / interval);
-                  });
-
-                  timeSet = true;
-                  if (total === 0) {
-                    results.length = 0;
-                  } else {
-                    codeStats.push({
-                      code: idx,
-                      requests: total
+              if (data) {
+                _.forEach(data, function(val, idx) {
+                  var interval = parseInt(data[idx].metadata.interval_sec || 1800);
+                  _xAxisPointStart = parseInt(data[idx].metadata.start_timestamp);
+                  _xAxisPointInterval = parseInt(data[idx].metadata.interval_sec) * 1000;
+                  var results = [];
+                  var total = 0;
+                  if (data[idx].data && data[idx].data.length > 0) {
+                    data[idx].data.forEach(function(item, idx, items) {
+                      total += item.requests;
+                      results.push(item.requests / interval);
                     });
-                    bigTotal += total;
+                    timeSet = true;
+                    if (total === 0) {
+                      results.length = 0;
+                    } else {
+                      codeStats.push({
+                        code: idx,
+                        requests: total
+                      });
+                      bigTotal += total;
+                    }
                   }
-                }
 
-                series.push({
-                  name: idx,
-                  data: results
+                  series.push({
+                    name: idx,
+                    data: results
+                  });
                 });
-              });
 
-              codeStats.sort( function( lhs, rhs) {
-                return rhs.requests - lhs.requests;
-              });
-              if ( codeStats.length > CODES_NUM ) {
-                var total = 0;
-                for ( var i = CODES_NUM - 1, len = codeStats.length; i < len; ++i ) {
-                  total += codeStats[i].requests;
-                }
-                codeStats.length = CODES_NUM - 1;
-                codeStats.push({
-                  code: 'Others',
-                  requests: total
+                codeStats.sort(function(lhs, rhs) {
+                  return rhs.requests - lhs.requests;
                 });
+                if (codeStats.length > CODES_NUM) {
+                  var total = 0;
+                  for (var i = CODES_NUM - 1, len = codeStats.length; i < len; ++i) {
+                    total += codeStats[i].requests;
+                  }
+                  codeStats.length = CODES_NUM - 1;
+                  codeStats.push({
+                    code: 'Others',
+                    requests: total
+                  });
+                }
+                bigTotal /= 100;
+                codeStats.forEach(function(item) {
+                  item.percent = item.requests / bigTotal;
+                });
+                return $q.when(series);
+              } else {
+                return $q.when(series);
               }
-              bigTotal /= 100;
-              codeStats.forEach( function( item ) {
-                item.percent = item.requests / bigTotal;
-              });
-
+            })
+            .then(function setNewData(data) {
+              // model better to update once
               $scope.traffic = {
-                labels: labels,
+                pointStart: _xAxisPointStart,
+                pointInterval: _xAxisPointInterval,
                 series: series
               };
             })
