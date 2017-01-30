@@ -48,23 +48,25 @@ describe('Functional', function () {
 
           case 'RO User':
 
+            it('RO user should not be able to go for create a new domain',
+              function () {
+                Portal.helpers.nav.goToDomains();
+                var btnAddNewDomain = Portal.domains.listPage.getAddNewDomainBtn();
+                //NOTE: now "button" is link and can`t be disabled
+                expect(btnAddNewDomain.isEnabled()).toBe(true);
+                Portal.domains.listPage.clickAddNewDomain();
+                expect(Portal.domains.listPage.isDisplayed()).toBeTruthy();
+              });
+
             it('RO user should not be able to create a domain if open "Add New Domain Page" manually',
               function () {
                 Portal.helpers.nav.goToDomains();
                 Portal.goToCustomUrl('#/domains/new');
                 Portal.domains.addPage.createDomain(myDomain);
-
-                var alert = Portal.alerts.getFirst();
-                var expectedMsg = Constants.alertMessages.domains
-                  .MSG_FAIL_RO_USER_CANNOT_ADD;
-                expect(alert.getText()).toContain(expectedMsg);
-              });
-
-            it('RO user should not be able to go for create a new domain',
-              function () {
-                Portal.helpers.nav.goToDomains();
-                var btnAddNewDamian = Portal.domains.listPage.getAddNewDomainBtn();
-                expect(btnAddNewDamian.isEnabled()).toBe(true);
+                var btnCreateDomain = Portal.domains.addPage.getCreateDomainBtn();
+                expect(btnCreateDomain.isEnabled()).toBe(false);
+                var btnCreateDomainAndAddMore = Portal.domains.addPage.getCreateDomainAndAddMoreBtn();
+                expect(btnCreateDomainAndAddMore.isEnabled()).toBe(false);
               });
 
             break;
