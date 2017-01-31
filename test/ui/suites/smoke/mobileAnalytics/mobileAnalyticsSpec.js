@@ -13,7 +13,7 @@ describe('Smoke', function () {
 	afterAll(function () {
 		Portal.signOut();
 	});
-	/*
+	
 	it('should display Traffic Levels page',
   	  function () {
 		var pageTitle = 'Traffic Levels';
@@ -150,7 +150,7 @@ describe('Smoke', function () {
 			  .toEqual('Top Objects With 5XX Error Codes');
 		   });
 	});
-	*/
+	
 	it('should display tab "Top Objects With 5XX Error Codes"' +
 	  'at Top Objects page', 
 	  function () {
