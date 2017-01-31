@@ -1,7 +1,7 @@
 var smoke = require('./base');
 
 smoke.capabilities = {
-  browserName: 'chrome'
+  browserName: 'firefox'
 };
 
 smoke.specs = [
