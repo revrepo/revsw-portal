@@ -1,8 +1,4 @@
 
-// # TopObjects Page Object
-
-// This `TopObjects` Page Object abstracts all operations or actions
-// that a common TopObjects could do in the Portal app/site.
 var TopObjects = {
   locators: {
     views: {
