@@ -7,11 +7,11 @@
 
   /*@ngInject*/
   function CachePurgeController($scope, $state, Cache, DomainsConfig, AlertService, $timeout, $uibModal,
-    $q, DTOptionsBuilder, DTColumnDefBuilder, $config
+    $q, DTOptionsBuilder, DTColumnDefBuilder, $config, User
   ) {
     $scope._loading = false;
     $scope.environment = $config.PURGE_JOB_ENVIRONMENTS_CHOICE[2].key;
-
+    $scope.isReadOnly = User.isReadOnly;
     // $scope.domain;
     $scope.json = {
       purges: [{
