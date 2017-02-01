@@ -2,7 +2,7 @@
   <li class="user-info fit" data-ng-if="isAuthorized">
     <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
       <strong>{{user.firstname}} {{user.lastname}}</strong>
-      <span>({{user.role}}<em ng-if="userACL.readOnly" id="msg-is-read-only"> READ-ONLY</em>)</span>
+      <span>(<em ng-if="userACL.readOnly" id="msg-is-read-only">READ-ONLY </em>{{user.role}})</span>
       <span class="caret"></span>
     </a>
     <ul class="dropdown-menu">
