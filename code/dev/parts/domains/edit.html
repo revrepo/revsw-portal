@@ -93,7 +93,7 @@
               <div class="form-group" ng-class="{'has-error': editForm.originServer.$invalid && editForm.originServer.$dirty}">
                 <label for="originServer" class="col-sm-3 control-label">Origin Server Name/IP *</label>
                 <div class="col-sm-9">
-                  <input type="text" validate-origin-server-name class="form-control inline-block" ng-disabled="_loading" ng-model="model.origin_server" id="origin_server" name="originServer" placeholder="Origin Server Name" ng-maxlength="50" required>
+                  <input type="text" validate-origin-server-name class="form-control inline-block" ng-disabled="_loading" ng-model="model.origin_server" id="originServer" name="originServer" placeholder="Origin Server Name" ng-maxlength="50" required>
                   <label for="originServer" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enter here domain name or IP address of origin web server">
                     <i class="fa fa-question-circle"></i>
                   </label>
@@ -135,13 +135,13 @@
                 </label>
                 <div class="col-md-9">
                   <label class="radio-inline">
-                    <input type="radio" ng-disabled="_loading" ng-model="model.origin_secure_protocol" value="use_end_user_protocol">Use End User Protocol
+                    <input id="useEndUserProtocol" type="radio" ng-disabled="_loading" ng-model="model.origin_secure_protocol" value="use_end_user_protocol">Use End User Protocol
                   </label>
                   <label class="radio-inline">
-                    <input type="radio" ng-disabled="_loading" ng-model="model.origin_secure_protocol" value="https_only">HTTPS Only
+                    <input id="httpsOnly" type="radio" ng-disabled="_loading" ng-model="model.origin_secure_protocol" value="https_only">HTTPS Only
                   </label>
                   <label class="radio-inline">
-                    <input type="radio" ng-disabled="_loading" ng-model="model.origin_secure_protocol" value="http_only">HTTP Only
+                    <input id="httpOnly" type="radio" ng-disabled="_loading" ng-model="model.origin_secure_protocol" value="http_only">HTTP Only
                   </label>
                   <label for="origin_secure_protocol" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="TODO text">
                     <i class="fa fa-question-circle"></i>
@@ -153,7 +153,8 @@
               <div class="form-group" ng-class="{'has-error': editForm.domainAliases.$invalid && editForm.domainAliases.$dirty}">
                 <label for="domainAliases" class="col-sm-3 control-label">Non-Wildcard Domain Aliases</label>
                 <div class="col-sm-9">
-                  <ui-select validate-domains-list tagging tagging-label="Add New Domain" multiple tagging-tokens="SPACE|," theme="bootstrap" class="form-control inline-block" ng-disabled="_loading" ng-model="model.domain_aliases" name="domainAliases" id="domain_aliases">
+
+                  <ui-select id="non-Wildcard-Domain-Aliases" validate-domains-list tagging tagging-label="Add New Domain" multiple tagging-tokens="SPACE|," theme="bootstrap" class="form-control inline-block" ng-disabled="_loading" ng-model="model.domain_aliases" name="domainAliases" id="domain_aliases">
                     <ui-select-match placeholder="Add domains...">{{$item}}</ui-select-match>
                     <ui-select-choices repeat="domain in model.domain_aliases">
                       {{domain}}
@@ -202,7 +203,7 @@
                   Last Mile QUIC Protocol
                 </label>
                 <div class="col-md-9">
-                  <toggle-switch is-disabled="_loading" ng-model="model.rev_component_bp.enable_quic" on-label="On" off-label="Off">
+                  <toggle-switch id="lastMileQUICprotocol" is-disabled="_loading" ng-model="model.rev_component_bp.enable_quic" on-label="On" off-label="Off">
                   </toggle-switch>
                   <label for="enable_quic" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="TODO text">
                     <i class="fa fa-question-circle"></i>
@@ -215,7 +216,7 @@
                   Block All Web Crawlers
                 </label>
                 <div class="col-md-9">
-                  <toggle-switch is-disabled="_loading" ng-model="model.rev_component_bp.block_crawlers" on-label="On" off-label="Off">
+                  <toggle-switch id="blockAllWebCrawlers" is-disabled="_loading" ng-model="model.rev_component_bp.block_crawlers" on-label="On" off-label="Off">
                   </toggle-switch>
                   <label for="block_crawlers" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="TODO text">
                     <i class="fa fa-question-circle"></i>
@@ -228,7 +229,7 @@
                   RUM Data Collection
                 </label>
                 <div class="col-md-9">
-                  <toggle-switch is-disabled="_loading" ng-model="model.rev_component_co.enable_rum" on-label="On" off-label="Off">
+                  <toggle-switch id="runDataCollection" is-disabled="_loading" ng-model="model.rev_component_co.enable_rum" on-label="On" off-label="Off">
                   </toggle-switch>
                   <label for="enable_rum" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="TODO text">
                     <i class="fa fa-question-circle"></i>
@@ -257,7 +258,7 @@
                   Blue Triangle Tech. Key
                 </label>
                 <div class="col-md-9">
-                  <input type="text" class="form-control inline-block" ng-disabled="_loading" name="bttKey" ng-model="model.btt_key" placeholder="BTT API key for the domain" ng-pattern="/^[0-9a-fA-F]{32}$/">
+                  <input id="blueTriangleTechKey" type="text" class="form-control inline-block" ng-disabled="_loading" name="bttKey" ng-model="model.btt_key" placeholder="BTT API key for the domain" ng-pattern="/^[0-9a-fA-F]{32}$/">
                   <label for="bttKey" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="TODO text">
                     <i class="fa fa-question-circle"></i>
                   </label>
@@ -274,7 +275,7 @@
               <div class="form-group form-inline">
                 <label for="enable_cache" class="col-sm-3 control-label">Origin Health Monitoring</label>
                 <div class="col-md-9">
-                  <toggle-switch is-disabled="_loading || (model.rev_component_bp.enable_cache==false || model.rev_component_bp.enable_cache=='false')" ng-model="model.enable_origin_health_probe" on-label="On" off-label="Off">
+                  <toggle-switch id="originHealthMonitoring" is-disabled="_loading || (model.rev_component_bp.enable_cache==false || model.rev_component_bp.enable_cache=='false')" ng-model="model.enable_origin_health_probe" on-label="On" off-label="Off">
                   </toggle-switch>
                   <label for="enable_cache" class="text-info" popover-trigger="mouseenter" uib-popover="Enables regular monitoring of origin health and fine-grained control on serving of expired (stale) cached objects in case of origin failures. This functionality requires Edge Caching feature enabled.">
                     <i class="fa fa-question-circle"></i>
@@ -287,7 +288,8 @@
                   <div class="form-group" ng-class="{'has-error': editForm.originHealthProbeHTTP_REQUEST.$invalid && editForm.originHealthProbeHTTP_REQUEST.$dirty}">
                     <label for="third-party-integrations" class="col-sm-3 control-label">Origin Monitoring HTTP Request</label>
                     <div class="col-md-9">
-                      <input type="text" class="form-control inline-block" ng-disabled="_loading" name="originHealthProbeHTTP_REQUEST" ng-model="model.origin_health_probe.HTTP_REQUEST" placeholder="Text like 'GET / HTTP/1.1' (300 characters max)" ng-maxlength="300" characters required>
+
+                      <input id="originMonitoringHTTPrequest" type="text" class="form-control inline-block" ng-disabled="_loading" name="originHealthProbeHTTP_REQUEST" ng-model="model.origin_health_probe.HTTP_REQUEST" placeholder="Text like 'GET / HTTP/1.1' (300 characters max)" ng-maxlength="300" characters required>
                       <label for="third-party-integrations" class="text-info" popover-trigger="mouseenter" uib-popover="This string will be sent to the origin HTTP server after connecting to ports 80 and 443. Default value ‘GET / HTTP/1.1’ will work in majority of cases.">
                         <i class="fa fa-question-circle"></i>
                       </label>
@@ -301,7 +303,7 @@
                   <div class="form-group form-inline" ng-class="{'has-error': editForm.originHealthProbePROBE_TIMEOUT.$invalid && editForm.originHealthProbePROBE_TIMEOUT.$dirty}">
                     <label for="originHealthProbePROBE_TIMEOUT" class="col-sm-3 control-label">Probe Timeout</label>
                     <div class="col-md-9">
-                      <input type="number" id="proxy_timeout" name="originHealthProbePROBE_TIMEOUT" class="form-control inline-block" ng-disabled="_loading" ng-model="model.origin_health_probe.PROBE_TIMEOUT" ng-min="1" ng-max="60" required> second(s)
+                      <input type="number" id="probe_timeout" name="originHealthProbePROBE_TIMEOUT" class="form-control inline-block" ng-disabled="_loading" ng-model="model.origin_health_probe.PROBE_TIMEOUT" ng-min="1" ng-max="60" required> second(s)
                       <label for="originHealthProbePROBE_TIMEOUT" class="text-info" popover-trigger="mouseenter" uib-popover="Defines for how long the proxy will wait for the origin to respond on monitoring HTTP request (1-60 range)">
                         <i class="fa fa-question-circle"></i>
                       </label>
@@ -327,7 +329,7 @@
                   <div class="form-group form-inline" ng-class="{'has-error': editForm.originHealthProbeHTTP_STATUS.$invalid && editForm.originHealthProbeHTTP_STATUS.$dirty}">
                     <label for="originHealthProbeHTTP_STATUS" class="col-sm-3 control-label">Expected HTTP Response Code</label>
                     <div class="col-md-9">
-                      <input type="number" id="proxy_timeout" name="originHealthProbeHTTP_STATUS" class="form-control inline-block" ng-disabled="_loading" ng-model="model.origin_health_probe.HTTP_STATUS" ng-min="100" ng-max="599" required>
+                      <input type="number" id="expectedHTTPresponseCode" name="originHealthProbeHTTP_STATUS" class="form-control inline-block" ng-disabled="_loading" ng-model="model.origin_health_probe.HTTP_STATUS" ng-min="100" ng-max="599" required>
                       <label for="originHealthProbeHTTP_STATUS" class="text-info" popover-trigger="mouseenter" uib-popover="The origin server should respond with this HTTP status code to be considered healthy (range 100-599)">
                         <i class="fa fa-question-circle"></i>
                       </label>
@@ -348,7 +350,7 @@
                   Edge Caching
                 </label>
                 <div class="col-md-9">
-                  <toggle-switch is-disabled="_loading" ng-model="model.rev_component_bp.enable_cache" on-label="On" off-label="Off">
+                  <toggle-switch id="edgeCaching" is-disabled="_loading" ng-model="model.rev_component_bp.enable_cache" on-label="On" off-label="Off">
                   </toggle-switch>
                   <label for="enableb_cache" class="text-info" popover-trigger="mouseenter" uib-popover="TODO text">
                     <i class="fa fa-question-circle"></i>
@@ -359,7 +361,7 @@
               <div class="form-group" ng-if="model.rev_component_bp.enable_cache" ng-class="{'has-error': editForm.cacheBypassLocations.$invalid && editForm.cacheBypassLocations.$dirty}">
                 <label for="cacheBypassLocations" class="col-sm-3 control-label">Cache Bypass Locations</label>
                 <div class="col-sm-9">
-                  <ui-select validate-cache-bypass-locations tagging tagging-label="Add Cache Bypass Locations" multiple tagging-tokens="SPACE|," theme="bootstrap" class="form-control inline-block" ng-disabled="_loading" ng-model="model.rev_component_bp.cache_bypass_locations" name="cacheBypassLocations" id="cacheBypassLocations">
+                  <ui-select id="cacheBypassLocations" validate-cache-bypass-locations tagging tagging-label="Add Cache Bypass Locations" multiple tagging-tokens="SPACE|," theme="bootstrap" class="form-control inline-block" ng-disabled="_loading" ng-model="model.rev_component_bp.cache_bypass_locations" name="cacheBypassLocations" id="cacheBypassLocations">
                     <ui-select-match placeholder="Add Cache Bypass Locations...">{{$item}}</ui-select-match>
                     <ui-select-choices repeat="bypass_locations in model.rev_component_bp.cache_bypass_locations">
                       {{bypass_locations}}
@@ -375,7 +377,7 @@
               </div>
               <!-- -->
               <!-- Caching Rules -->
-              <div class="panel panel-default caching-rules-list" ng-if="model.rev_component_bp.enable_cache">
+              <div id="cachingRulesBlock" class="panel panel-default caching-rules-list" ng-if="model.rev_component_bp.enable_cache">
                 <div class="panel-heading">
                   <span class="pull-left panel-buttons-left">
                 <a class="btn btn-default btn-md " ng-click="onCollapsAllCachingRule()" title="Collapse All Rules" ng-show="!isCollapsedAll">
@@ -388,14 +390,14 @@
                   <div class="form-group pull-right">
                     <div class="col-sm-12">
                       <a ng-click="onAddNewCachingRule($event,true)" class="btn btn-primary btn-sm " uib-tooltip="Use the button to add a new caching rule to cache JPG, JPEG, PNG, GIF, WEBP, JS, CSS, WOFF, WOFF2, MP4, SWF, AVI, MPEG and MOV objects for period of 2 weeks. You can modify the rule to suit your needs."><i class="glyphicon"></i>Cache Static Objects</a>
-                      <a ng-click="onAddNewCachingRule($event)" class="btn btn-primary btn-sm " title="Add New Caching Rule"><i class="glyphicon glyphicon-plus"></i>&nbsp;</a>
+                      <a id="addNewBackendBlock" ng-click="onAddNewCachingRule($event)" class="btn btn-primary btn-sm " title="Add New Caching Rule addNewBackendBlock"><i class="glyphicon glyphicon-plus"></i>&nbsp;</a>
                     </div>
                   </div>
                   <h4><b>Caching Rules</b></h4>
                 </div>
                 <div class="panel-body">
                   <!-- TODO: creater directive -->
-                  <div class="panel panel-default domain-caching-rules" ng-repeat="caching_rule in model.rev_component_bp.caching_rules">
+                  <div class="panel panel-default domain-caching-rules cachingRulesURLblock" ng-repeat="caching_rule in model.rev_component_bp.caching_rules">
                     <div class="panel-heading">
                       <div class="domain-caching-rules__info">
                         <div class="pull-left panel-buttons-left">
@@ -439,7 +441,7 @@
                   Accept SSL Requests
                 </label>
                 <div class="col-md-9">
-                  <toggle-switch name="enable_ssl" ng-disabled="_loading" ng-model="model.enable_ssl" on-label="On" off-label="Off">
+                  <toggle-switch id="acceptSSLrequests" name="enable_ssl" ng-disabled="_loading" ng-model="model.enable_ssl" on-label="On" off-label="Off">
                   </toggle-switch>
                   <label for="enable_ssl" class="text-info" popover-trigger="mouseenter" uib-popover="Select whether we should accept HTTPS (SSL) requests for the domain">
                     <i class="fa fa-question-circle"></i>
@@ -457,7 +459,7 @@
                   <label for="sslCertId" popover-append-to-body="{{true}}" class="text-info" popover-trigger="mouseenter" uib-popover="Select SSL certificate which should be associated with the domain. Option 'Default RevAPM SSL Certificate' provides you with ability to use RevAPM's shared SSL certificate issued by GlobalSign CA and managed in section 'SSL Names'.">
                     <i class="fa fa-question-circle"></i>
                   </label>
-                  <a ui-sref="index.webApp.ssl_certs" class="btn btn-primary pull-right"><i class="fa fa-lock"></i> Manage SSL Certificates</a>
+                  <a id="manageSSLcertificates" ui-sref="index.webApp.ssl_certs" class="btn btn-primary pull-right"><i class="fa fa-lock"></i> Manage SSL Certificates</a>
                 </div>
               </div>
               <!-- -->
@@ -469,7 +471,8 @@
                         <div class="col-sm-12">
                           <div class="checkbox">
                             <label>
-                              <input type="radio" class="inline-block" name="isCustomSSL_conf_profile" ng-model="isCustomSSL_conf_profile" ng-value="false"> Predefined SSL Configuration Profile
+
+                              <input id="predefinedSSLconfigurationProfile" type="radio" class="inline-block" name="isCustomSSL_conf_profile" ng-model="isCustomSSL_conf_profile" ng-value="false"> Predefined SSL Configuration Profile
                               <label for="isCustomSSL_conf_profile" popover-append-to-body="{{true}}" class="text-info" popover-trigger="mouseenter" uib-popover="TODO text">
                                 <i class="fa fa-question-circle"></i>
                               </label>
@@ -488,7 +491,7 @@
                         <div class="col-sm-12">
                           <div class="checkbox">
                             <label>
-                              <input type="radio" ng-model="isCustomSSL_conf_profile" name="isCustomSSL_conf_profile" ng-value="true"> Custom SSL Configuration Profile
+                              <input id="customSSLconfigurationProfile" type="radio" ng-model="isCustomSSL_conf_profile" name="isCustomSSL_conf_profile" ng-value="true"> Custom SSL Configuration Profile
                               <label for="isCustomSSL_conf_profile" popover-append-to-body="{{true}}" class="text-info" popover-trigger="mouseenter" uib-popover="TODO text">
                                 <i class="fa fa-question-circle"></i>
                               </label>
@@ -545,14 +548,14 @@
               <div class="form-group form-inline">
                 <label for="customVcl" class="col-sm-3 control-label">Custom VCL Rules</label>
                 <div class="col-md-9">
-                  <toggle-switch name="customVcl" is-disabled="_loading || model.rev_component_bp.enable_cache==false" ng-model="model.rev_component_bp.custom_vcl.enabled" on-label="On" off-label="Off">
+                  <toggle-switch id="customVCLrules" name="customVcl" is-disabled="_loading || model.rev_component_bp.enable_cache==false" ng-model="model.rev_component_bp.custom_vcl.enabled" on-label="On" off-label="Off">
                   </toggle-switch>
                   <label for="customVcl" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enables you to configure custom Varnish Configuration Language (VCL) rules to be executed by RevAPM edge proxy servers. The feature requires that “Edge Caching” switch will be in ON position">
                     <i class="fa fa-question-circle"></i>
                   </label>
                 </div>
               </div>
-              <domain-custom-vcl ng-if="model.rev_component_bp.enable_cache&&model.rev_component_bp.custom_vcl.enabled" class="" ng-model="model.rev_component_bp.custom_vcl"></domain-custom-vcl>
+              <domain-custom-vcl id="customVCLrulesBlock" ng-if="model.rev_component_bp.enable_cache&&model.rev_component_bp.custom_vcl.enabled" class="" ng-model="model.rev_component_bp.custom_vcl"></domain-custom-vcl>
               <!-- //  “Custom VCL Rules” -->
               <hr>
             </uib-tab>

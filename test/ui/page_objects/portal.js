@@ -69,6 +69,10 @@ var MobileAppListPage = require('./mobileApp/listPage');
 var MobileAppAddPage = require('./mobileApp/addPage');
 var MobileAppEditPage = require('./mobileApp/editPage');
 var MobileAppAdvancedEditPage = require('./mobileApp/advancedEditPage');
+var MobileAnalyticsTrafficLevelsPage = require('./mobileAnalytics/trafficLevelsPage');
+var MobileAnalyticsTopReportsPage = require('./mobileAnalytics/topReportsPage');
+var MobileAnalyticsTopObjectsPage = require('./mobileAnalytics/topObjectsPage');
+var MobileAnalyticsTrafficDistributionsPage = require('./mobileAnalytics/trafficDistributionsPage');
 var UsageReportPage = require('./billing/usageReportPage');
 var UsageReportDomainsPage = require('./billing/usageReportDomainsPage');
 var AccountProfilePage = require('./account/profile/page');
@@ -206,6 +210,12 @@ var Portal = {
     listPage: ZoneRecordsListPage,
     addPage: ZoneRecordsAddPage,
     editPage: ZoneRecordsEditPage
+  },
+  mobileAnalytics: {
+	  trafficLevelsPage: MobileAnalyticsTrafficLevelsPage,
+	  topReportsPage: MobileAnalyticsTopReportsPage,
+	  topObjectsPage : MobileAnalyticsTopObjectsPage,
+	  trafficDistributions: MobileAnalyticsTrafficDistributionsPage,
   },
 
   helpers: PortalHelpers,

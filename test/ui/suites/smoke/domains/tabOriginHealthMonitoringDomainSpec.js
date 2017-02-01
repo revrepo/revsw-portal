@@ -30,60 +30,38 @@ describe('Smoke', function () {
 
         beforeAll(function () {
           Portal.signIn(user);
+          Portal.helpers.nav.goToDomains();
+          EditPage.clickEditDomain();
+          EditPage.clickTabOriginHealthMonitoring();
         });
 
         afterAll(function () {
           Portal.signOut();
         });
 
-        beforeEach(function () {
-          Portal.helpers.nav.goToDomains();
-          EditPage.clickEditDomain();
-          EditPage.clickTabOriginHealthMonitoring();
-        });
-
         it('should display "Origin Health Monitoring"', function () {
           expect(checkDisplay('getOriginHealthMonitoringTxtIn')).toBe(true);
+          EditPage.switchBtns(form.getOriginHealthMonitoringTxtIn(), true);
         });
       
         it('if "Origin Health Monitoring" is "ON" then should '+
           'display "Origin Monitoring HTTP Request"', function () {
-          EditPage.switchBtns(form.getOriginHealthMonitoringTxtIn(),
-          function(value) {
-            if (value === 'true') {
-              expect(checkDisplay('getOriginMonitoringHTTPrequestTxtIn')).toBe(true);
-            }
-          });
+          expect(checkDisplay('getOriginMonitoringHTTPrequestTxtIn')).toBe(true);
         });
 
         it('if "Origin Health Monitoring" is "ON" then'+
           ' should display "Probe Timeout"', function () {
-          EditPage.switchBtns(form.getOriginHealthMonitoringTxtIn(),
-          function(value) {
-            if (value === 'true') {
-              expect(checkDisplay('getProbeTimeoutTxtIn')).toBe(true);
-            }
-          });
+          expect(checkDisplay('getProbeTimeoutTxtIn')).toBe(true);
         });
 
         it('if "Origin Health Monitoring" is "ON" then'+
           ' should display "Probe Interval"', function () {
-          EditPage.switchBtns(form.getOriginHealthMonitoringTxtIn(),
-          function(value) {
-            if (value === 'true') {
-              expect(checkDisplay('getProbeIntervalTxtIn')).toBe(true);
-            }
-          });
+          expect(checkDisplay('getProbeIntervalTxtIn')).toBe(true);
         });
 
         it('if "Origin Health Monitoring" is "ON" then should'+
           ' display "Expected HTTP Response Code"', function () {
-          EditPage.switchBtns(form.getOriginHealthMonitoringTxtIn(),
-          function(value) {
-            if (value === 'true') {
-              expect(checkDisplay('getExpectedHTTPresponseCodeTxtIn')).toBe(true);
-            }
-          });
+          expect(checkDisplay('getExpectedHTTPresponseCodeTxtIn')).toBe(true);
         });
         
 
