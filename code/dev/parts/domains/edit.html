@@ -67,7 +67,7 @@
                 <label for="cname" class="col-sm-3 control-label" popover-trigger="mouseenter">Domain CNAME</label>
                 <div class="col-sm-9">
                   <input type="text" class="form-control inline-block" disabled ng-model="modelInfo.cname" id="cname" name="cname" placeholder="Domain CNAME">
-                 <label for="cname" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="TODO text">
+                  <label for="cname" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="TODO text">
                     <i class="fa fa-question-circle"></i>
                   </label>
                   <button class="btn btn-primary btn-copy--cname" clipboard text="modelInfo.cname" on-copied="copyCallback()" on-error="copyCallback(err)" style="vertical-align: initial;" uib-tooltip="Click to copy the CNAME to the clipboard" tooltip-placement="top"><i class="fa fa-files-o"></i></button>
@@ -94,7 +94,7 @@
                 <label for="originServer" class="col-sm-3 control-label">Origin Server Name/IP *</label>
                 <div class="col-sm-9">
                   <input type="text" validate-origin-server-name class="form-control inline-block" ng-disabled="_loading" ng-model="model.origin_server" id="origin_server" name="originServer" placeholder="Origin Server Name" ng-maxlength="50" required>
-                  <label for="originServer" class="text-info" popover-append-to-body="{{true}}"   popover-trigger="mouseenter" uib-popover="Enter here domain name or IP address of origin web server">
+                  <label for="originServer" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enter here domain name or IP address of origin web server">
                     <i class="fa fa-question-circle"></i>
                   </label>
                   <div class="error-messages" ng-messages="editForm.originServer.$error" role="alert" ng-messages-multiple>
@@ -106,7 +106,7 @@
                 <label class="col-sm-3 control-label" for="originHostHeader">Origin Host Header *</label>
                 <div class="col-sm-9">
                   <input type="text" validate-domain-name class="form-control inline-block" ng-model="model.origin_host_header" ng-disabled="_loading" id="origin_host_header" name="originHostHeader" placeholder="Origin Host Header" ng-maxlength="63" required>
-                  <label for="originHostHeader" class="text-info"  popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enter here a domain name to be used in 'Host' header of requests sent from RevAPM to the origin server. The name might be different from origin server name/IP specified above. For example, if origin server IP is 11.11.11.11 and the origin HTTP server recognizes web requests for domain 'www.example.com' you will need to specify '11.11.11.11' in origin server name field above and 'www.example.com' in this field.">
+                  <label for="originHostHeader" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enter here a domain name to be used in 'Host' header of requests sent from RevAPM to the origin server. The name might be different from origin server name/IP specified above. For example, if origin server IP is 11.11.11.11 and the origin HTTP server recognizes web requests for domain 'www.example.com' you will need to specify '11.11.11.11' in origin server name field above and 'www.example.com' in this field.">
                     <i class="fa fa-question-circle"></i>
                   </label>
                   <div class="error-messages" ng-messages="editForm.originHostHeader.$error" role="alert" ng-messages-multiple>
@@ -188,8 +188,8 @@
                 <div class="col-md-9">
                   <input type="number" id="proxy_timeout" name="proxyTimeout" class="form-control inline-block" ng-disabled="_loading" ng-model="model.proxy_timeout" ng-min="1" ng-max="3600" required> second(s)
                   <label for="proxyTimeout" class="text-info" popover-trigger="mouseenter" uib-popover="Proxy data read timeout in seconds (1-3600 range)">
-                  <i class="fa fa-question-circle"></i>
-                </label>
+                    <i class="fa fa-question-circle"></i>
+                  </label>
                   <div class="error-messages" ng-messages="editForm.proxyTimeout.$error" role="alert" ng-messages-multiple>
                     <div ng-messages-include="parts/shared/error-messages.html"></div>
                   </div>
@@ -239,11 +239,11 @@
                 <label for="comment" class="col-sm-3 control-label">Comment</label>
                 <div class="col-md-9">
                   <div class="col-sm-12 form-group">
-                  <textarea id="comment" name="comment" placeholder="Comment (300 characters max)" ng-maxlength="300" class="form-control inline-block" name="comment" ng-model="model.comment" ng-pattern="COMMENT_NO_SPECIAL_CHARS" ng-disabled="_loading">
-                  </textarea>
-                   <label for="comment" class="text-info" popover-trigger="mouseenter" uib-popover="Comment">
-                    <i class="fa fa-question-circle"></i>
-                  </label>
+                    <textarea id="comment" name="comment" placeholder="Comment (300 characters max)" ng-maxlength="300" class="form-control inline-block" name="comment" ng-model="model.comment" ng-pattern="COMMENT_NO_SPECIAL_CHARS" ng-disabled="_loading">
+                    </textarea>
+                    <label for="comment" class="text-info" popover-trigger="mouseenter" uib-popover="Comment">
+                      <i class="fa fa-question-circle"></i>
+                    </label>
                   </div>
                   <div class="error-messages" ng-messages="editForm.comment.$error" role="alert" ng-messages-multiple>
                     <div ng-messages-include="parts/shared/error-messages.html"></div>
@@ -454,7 +454,7 @@
                   <select class="form-control inline-block" ng-disabled="_loading" ng-model="model.ssl_cert_id" id="ssl_cert_id" name="sslCertId" ng-options="obj.id as obj.cert_name for obj in SSL_certs | filter :{account_id:model.account_id}">
                     <option value="">Default RevAPM SSL Certificate</option>
                   </select>
-                   <label for="sslCertId" popover-append-to-body="{{true}}" class="text-info" popover-trigger="mouseenter" uib-popover="Select SSL certificate which should be associated with the domain. Option 'Default RevAPM SSL Certificate' provides you with ability to use RevAPM's shared SSL certificate issued by GlobalSign CA and managed in section 'SSL Names'.">
+                  <label for="sslCertId" popover-append-to-body="{{true}}" class="text-info" popover-trigger="mouseenter" uib-popover="Select SSL certificate which should be associated with the domain. Option 'Default RevAPM SSL Certificate' provides you with ability to use RevAPM's shared SSL certificate issued by GlobalSign CA and managed in section 'SSL Names'.">
                     <i class="fa fa-question-circle"></i>
                   </label>
                   <a ui-sref="index.webApp.ssl_certs" class="btn btn-primary pull-right"><i class="fa fa-lock"></i> Manage SSL Certificates</a>
@@ -475,7 +475,7 @@
                         </div>
                       </div>
                       <div class="form-group form-inline" ng-class="{'has-error': editForm.sslConfProfile.$invalid && editForm.sslConfProfile.$dirty}">
-                        <select class="form-control col-sm-offset-3" ng-disabled="_loading|| (isCustomSSL_conf_profile == true)" ng-model="model.ssl_conf_profile" id="ssl_conf_profile" name="sslConfProfile" ng-options="obj.id as obj.profile_name for obj in SSL_conf_profiles"required>
+                        <select class="form-control col-sm-offset-3" ng-disabled="_loading|| (isCustomSSL_conf_profile == true)" ng-model="model.ssl_conf_profile" id="ssl_conf_profile" name="sslConfProfile" ng-options="obj.id as obj.profile_name for obj in SSL_conf_profiles" required>
                         </select>
                         <div class="error-messages" ng-messages="editForm.sslConfProfile.$error" role="alert" ng-messages-multiple>
                           <div ng-messages-include="parts/shared/error-messages.html"></div>
@@ -523,6 +523,9 @@
                       <div class="checkbox">
                         <label popover-trigger="mouseenter">
                           <input type="checkbox" ng-disabled="!isCustomSSL_conf_profile" ng-model="model.ssl_prefer_server_ciphers" id="ssl_prefer_server_ciphers" placeholder="Prefer Server-Side Ciphers"><strong> Prefer Server-Side Ciphers</strong></label>
+                        <label for="ssl_prefer_server_ciphers" class="text-info" popover-trigger="mouseenter" uib-popover="TODO text">
+                          <i class="fa fa-question-circle"></i>
+                        </label>
                       </div>
                     </div>
                     <!-- // Right section-->
@@ -539,7 +542,7 @@
                   <toggle-switch name="customVcl" is-disabled="_loading || model.rev_component_bp.enable_cache==false" ng-model="model.rev_component_bp.custom_vcl.enabled" on-label="On" off-label="Off">
                   </toggle-switch>
                   <label for="customVcl" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enables you to configure custom Varnish Configuration Language (VCL) rules to be executed by RevAPM edge proxy servers. The feature requires that “Edge Caching” switch will be in ON position">
-                   <i class="fa fa-question-circle"></i>
+                    <i class="fa fa-question-circle"></i>
                   </label>
                 </div>
               </div>
