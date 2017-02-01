@@ -22,80 +22,92 @@
       <div class="panel-body">
         <form class="form-horizontal form--user" name="editForm" novalidate>
           <div class="form-group" ng-class="{'has-error': editForm.email.$invalid && editForm.email.$dirty}">
-            <label for="email" class="col-sm-2 control-label" popover-trigger="mouseenter">Email *</label>
+            <label for="email" class="col-sm-2 control-label">Email *</label>
             <div class="col-sm-10">
-              <input type="text" autofocus class="form-control" id="email" placeholder="Email" ng-model="model.email" disabled required>
+              <input type="text" autofocus class="form-control inline-block" id="email" placeholder="Email" ng-model="model.email" disabled required>
+              <label for="email" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="New user's email address - the address should be unique across the system">
+                <i class="fa fa-question-circle"></i>
+              </label>
             </div>
           </div>
           <div class="form-group" ng-class="{'has-error': editForm.firstName.$invalid && editForm.firstName.$dirty}">
-            <label for="firstName" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="First name (30 characters max)">First Name *</label>
+            <label for="firstName" class="col-sm-2 control-label">First Name *</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="firstname" name="firstName" placeholder="First Name" ng-model="model.firstname" ng-disabled="_loading" ng-maxlength="30" ng-pattern="CONTACT_DATA" required>
+              <input type="text" class="form-control inline-block" id="firstname" name="firstName" placeholder="First Name" ng-model="model.firstname" ng-disabled="_loading" ng-maxlength="30" ng-pattern="CONTACT_DATA" required>
+              <label for="firstname" class="text text-info" popover-trigger="mouseenter" uib-popover="First name (30 characters max)">
+                <i class="fa fa-question-circle"></i>
+              </label>
               <div class="error-messages" ng-messages="editForm.firstName.$error" role="alert" ng-messages-multiple>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
               </div>
             </div>
           </div>
           <div class="form-group" ng-class="{'has-error': editForm.lastName.$invalid && editForm.lastName.$dirty}">
-            <label for="lastName" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Last name (30 characters max)">Last Name *</label>
+            <label for="lastName" class="col-sm-2 control-label">Last Name *</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Last Name" ng-model="model.lastname" ng-disabled="_loading" ng-maxlength="30" ng-pattern="CONTACT_DATA" required="">
+              <input type="text" class="form-control inline-block" id="lastName" name="lastName" placeholder="Last Name" ng-model="model.lastname" ng-disabled="_loading" ng-maxlength="30" ng-pattern="CONTACT_DATA" required="">
+              <label for="lastName" class="text text-info" popover-trigger="mouseenter" uib-popover="Last name (30 characters max)">
+                <i class="fa fa-question-circle"></i>
+              </label>
               <div class="error-messages" ng-messages="editForm.lastName.$error" role="alert" ng-messages-multiple>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
               </div>
             </div>
           </div>
           <div class="form-group" ng-class="{'has-error': editForm.role.$invalid && editForm.role.$dirty}">
-            <label for="role" popover-append-to-body="{{true}}" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Select here the user's role in management of the account">Role *</label>
+            <label for="role" class="col-sm-2 control-label">Role *</label>
             <div class="col-sm-10">
-              <select class="form-control" id="role" name="role" ng-model="model.role" ng-options="role for role in roles" required>
+              <select class="form-control inline-block" id="role" name="role" ng-model="model.role" ng-options="role for role in roles" required>
                 <option value="">--- Select Role ---</option>
               </select>
+              <label for="role" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Select here the user's role in management of the account">
+                <i class="fa fa-question-circle"></i>
+              </label>
               <div class="error-messages" ng-messages="editForm.role.$error" role="alert" ng-messages-multiple>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
               </div>
             </div>
           </div>
           <div class="form-group" ng-class="{'has-error': editForm.accountId.$invalid && editForm.accountId.$dirty}" ng-if="auth.isReseller() || auth.isRevadmin()">
-            <label for="company" popover-append-to-body="{{true}}" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Select here accounts the user should be associated with">Account *</label>
+            <label for="company" class="col-sm-2 control-label">Account *</label>
             <div class="col-sm-10">
-            <div class="row">
-             <div class="col-sm-7">
               <!-- For "admin" and "user" select only one account-->
-                <span ng-show="!_loading && companies.length==0" class="loader--waite-company" ><i class="glyphicon glyphicon-refresh spin"></i> Please wait...</span>
-                <ui-select ng-if="!_loading && companies.length>0 && model.role !='reseller' &&!!model.companyId" ng-animate-disabled theme="select2" ng-disabled="_loading" ng-model="model.companyId[0]" id="company" name="accountId" on-select="onOneAccountSelect($model)">
-                  <ui-select-match placeholder="Select Account">{{$select.selected.companyName}}</ui-select-match>
-                  <ui-select-choices repeat="item.id as  item in companies | filter: {companyName: $select.search}">
-                    <div ng-bind-html="item.companyName|highlight: $select.search"></div>
-                  </ui-select-choices>
-                </ui-select>
-                <!-- For "reseller" multiple select accounts-->
-                <ui-select ng-if="!_loading && companies.length>0 && model.role=='reseller'" multiple ng-animate-disabled theme="bootstrap" class="form-control" ng-disabled="_loading" ng-model="model.companyId" id="company" name="accountId" on-select="onAccountSelect($model)">
-                  <ui-select-match placeholder="Add account...">{{$item.companyName}}</ui-select-match>
-                  <ui-select-choices repeat="item.id as  item in companies | filter: {companyName: $select.search}">
-                    <div ng-bind-html="item.companyName|highlight: $select.search"></div>
-                  </ui-select-choices>
-                </ui-select>
-                <div class="error-messages" ng-messages="editForm.accountId.$error" role="alert" ng-messages-multiple>
-                  <div ng-messages-include="parts/shared/error-messages.html"></div>
-                </div>
-                </div>
-              <div class="form-group col-sm-4 visible-lg-block">
-                <a ui-sref="index.accountSettings.companies" class="btn btn-sm btn-primary pull-left" uib-tooltip="Manage Accounts" ng-disabled="_loading"><i class="fa fa-list-alt"></i> Manage Accounts</a>
-              </div>
+              <span ng-show="!_loading && companies.length==0" class="loader--waite-company"><i class="glyphicon glyphicon-refresh spin"></i> Please wait...</span>
+              <ui-select ng-if="!_loading && companies.length>0 && model.role !='reseller' &&!!model.companyId" ng-animate-disabled theme="select2" ng-disabled="_loading" ng-model="model.companyId[0]" id="company" name="accountId" on-select="onOneAccountSelect($model)">
+                <ui-select-match placeholder="Select Account">{{$select.selected.companyName}}</ui-select-match>
+                <ui-select-choices repeat="item.id as  item in companies | filter: {companyName: $select.search}">
+                  <div ng-bind-html="item.companyName|highlight: $select.search"></div>
+                </ui-select-choices>
+              </ui-select>
+              <!-- For "reseller" multiple select accounts-->
+              <ui-select ng-if="!_loading && companies.length>0 && model.role=='reseller'" multiple ng-animate-disabled theme="bootstrap" class="form-control inline-block" ng-disabled="_loading" ng-model="model.companyId" id="company" name="accountId" on-select="onAccountSelect($model)">
+                <ui-select-match placeholder="Add account...">{{$item.companyName}}</ui-select-match>
+                <ui-select-choices repeat="item.id as  item in companies | filter: {companyName: $select.search}">
+                  <div ng-bind-html="item.companyName|highlight: $select.search"></div>
+                </ui-select-choices>
+              </ui-select>
+              <label for="company" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Select here account the user should be associated with">
+                <i class="fa fa-question-circle"></i>
+              </label>
+              <a ui-sref="index.accountSettings.companies" class="btn btn-sm btn-primary" uib-tooltip="Manage Accounts" ng-disabled="_loading"><i class="fa fa-list-alt"></i> Manage Accounts</a>
+              <div class="error-messages" ng-messages="editForm.accountId.$error" role="alert" ng-messages-multiple>
+                <div ng-messages-include="parts/shared/error-messages.html"></div>
               </div>
             </div>
           </div>
           <div class="form-group" ng-class="{'has-error': editForm.domain.$invalid && editForm.domain.$dirty}">
-            <label for="domain" popover-append-to-body="{{true}}" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Select domain names the user should be allowed to manage">Domains</label>
+            <label for="domain" class="col-sm-2 control-label">Domains</label>
             <div class="col-sm-10">
               <span ng-show="!_loading && (getAccountDomainNameList().length==0 && companies.length==0)"><i class="glyphicon glyphicon-refresh spin"></i> Please wait...</span>
-              <ui-select multiple ng-show="!_loading && (getAccountDomainNameList().length>0 || companies.length>0)" theme="bootstrap" class="form-control" ng-disabled="_loading" ng-model="model.domain" id="domain" name="domain">
+              <ui-select multiple ng-show="!_loading && (getAccountDomainNameList().length>0 || companies.length>0)" theme="bootstrap" class="form-control inline-block" ng-disabled="_loading" ng-model="model.domain" id="domain" name="domain">
                 <ui-select-match placeholder="{{getDomainPlaceholder()}}">{{$item.domain_name}}</ui-select-match>
                 <ui-select-choices repeat="item.domain_name as item  in getAccountDomainNameList()| filter: {domain_name: $select.search}">
                   <span ng-bind-html="item.domain_name|highlight: $select.search"></span>
                 </ui-select-choices>
               </ui-select>
+              <label for="domain" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Select domain names the user should be allowed to manage">
+                <i class="fa fa-question-circle"></i>
+              </label>
               <div class="error-messages" ng-messages="editForm.domain.$error" role="alert" ng-messages-multiple>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
               </div>
@@ -103,22 +115,37 @@
           </div>
           <hr>
           <div class="form-group">
-            <label for="access_control_list" popover-append-to-body="{{true}}" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Set here the new user's access control permissions">Access Control List</label>
+            <label for="access_control_list" class="col-sm-2 control-label">Access Control List</label>
             <div class="col-sm-10">
               <div>
-                <input type="checkbox" disabled ng-model="model.access_control_list.dashBoard"> Dashboard
+                <input type="checkbox" name="access_control_list_dashBoard" class="inline-block" disabled ng-model="model.access_control_list.dashBoard"> Dashboard
+                <label for="access_control_list_dashBoard" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="TODO text Set here the new user's access control permissions">
+                  <i class="fa fa-question-circle"></i>
+                </label>
               </div>
               <div>
-                <input type="checkbox" ng-model="model.access_control_list.reports"> Reports
+                <input type="checkbox" name="access_control_list_reports" class="inline-block" ng-model="model.access_control_list.reports"> Reports
+                <label for="access_control_list_reports" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="TODO text">
+                  <i class="fa fa-question-circle"></i>
+                </label>
               </div>
               <div>
-                <input type="checkbox" ng-model="model.access_control_list.configure"> Configure
+                <input type="checkbox" name="access_control_list_configure" class="inline-block" ng-model="model.access_control_list.configure"> Configure
+                <label for="access_control_list_configure" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="TODO text">
+                  <i class="fa fa-question-circle"></i>
+                </label>
               </div>
               <div>
-                <input type="checkbox" ng-model="model.access_control_list.test"> Test
+                <input type="checkbox" name="access_control_list_test" class="inline-block" ng-model="model.access_control_list.test"> Test
+                <label for="access_control_list_test" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="TODO text">
+                  <i class="fa fa-question-circle"></i>
+                </label>
               </div>
               <div>
-                <input type="checkbox" ng-model="model.access_control_list.readOnly"> Read Only
+                <input type="checkbox" name="access_control_list_readOnly" class="inline-block" ng-model="model.access_control_list.readOnly"> Read Only
+                <label for="access_control_list_readOnly" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="TODO text">
+                  <i class="fa fa-question-circle"></i>
+                </label>
               </div>
             </div>
           </div>
@@ -128,15 +155,23 @@
               <strong>Two-Factor Authentication</strong>
             </div>
             <div class="col-sm-10" ng-class="{'has-error': editForm.email.$invalid && editForm.email.$dirty}">
-              <div disable-two-factor-auth ng-user-id="params.id"></div>
+              <div disable-two-factor-auth ng-user-id="params.id" class="inline-block"></div>
+              <label for="disable-two-factor-auth" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="TODO text">
+                <i class="fa fa-question-circle"></i>
+              </label>
             </div>
           </div>
           <hr>
           <div class="form-group" ng-class="{ 'has-error': editForm.comment.$invalid && editForm.comment.$dirty }">
-            <label for="comment" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Comment about the user (300 characters max)">Comment</label>
+            <label for="comment" class="col-sm-2 control-label">Comment</label>
             <div class="col-sm-10">
-              <textarea id="comment" placeholder="Comment (300 characters max)" ng-maxlength="300" class="form-control" name="comment" ng-model="model.comment" ng-pattern="COMMENT_NO_SPECIAL_CHARS" ng-disabled="_loading">
-              </textarea>
+              <div class="form-group col-md-12">
+                <textarea id="comment" placeholder="Comment (300 characters max)" ng-maxlength="300" class="form-control inline-block" name="comment" ng-model="model.comment" ng-pattern="COMMENT_NO_SPECIAL_CHARS" ng-disabled="_loading">
+                </textarea>
+                <label for="comment" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Comment about the user (300 characters max)">
+                  <i class="fa fa-question-circle"></i>
+                </label>
+              </div>
               <div class="error-messages" ng-messages="editForm.comment.$error" role="alert" ng-messages-multiple>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
               </div>
