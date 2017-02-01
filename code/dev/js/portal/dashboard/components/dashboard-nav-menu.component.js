@@ -18,7 +18,7 @@
         '<div class="left-menu-start" style="margin-right: 3px;"><i class="fa fa-tachometer"></i> </div>' +
         'Dashboards' +
         '<i ng-click="expandMenu(\'index.dashboard\', $event)" ng-if="vm.dashboardsList.length > 0"' +
-        ' class="pull-right {{ menuExpanded(\'index.dashboard\') ? \'fa fa-caret-down\' : \'fa fa-caret-up\' }}"></i>' +
+        ' class="pull-right {{ menuExpanded(\'index.dashboard\') ? \'fa fa-caret-up\' : \'fa fa-caret-down\' }}"></i>' +
         '</a>' +
         '<span ng-if="vm.dashboardsList.length==0"  class="side-menu-item item-title">' +
         '<div class="left-menu-start"><i class="fa fa-tachometer"></i> </div>' +

@@ -62,14 +62,16 @@ describe('Functional', function () {
                 expect(Portal.domains.listPage.isDisplayed()).toBeTruthy();
               });
 
-            it('RO user should not be able to create a domain if open "Add New Domain Page" manually',
+            it('RO user should not be able to create a domain if open ' +
+              ' "Add New Domain Page" manually',
               function () {
                 Portal.helpers.nav.goToDomains();
                 Portal.goToCustomUrl('#/domains/new');
                 Portal.domains.addPage.createDomain(myDomain);
                 var btnCreateDomain = Portal.domains.addPage.getCreateDomainBtn();
                 expect(btnCreateDomain.isEnabled()).toBe(false);
-                var btnCreateDomainAndAddMore = Portal.domains.addPage.getCreateDomainAndAddMoreBtn();
+                var btnCreateDomainAndAddMore = Portal.domains.addPage
+                  .getCreateDomainAndAddMoreBtn();
                 expect(btnCreateDomainAndAddMore.isEnabled()).toBe(false);
               });
 
