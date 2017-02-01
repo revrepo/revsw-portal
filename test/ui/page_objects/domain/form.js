@@ -850,7 +850,9 @@ var DomainForm = {
 
 
   getLuaScriptsExecutedEdgeLastFirstMilesProxies: function () {
-    return element.all(by.css(this.locators.blocks.luaScriptsExecutedEdgeLastFirstMilesProxies.css));
+    return element
+      .all(by.css(this.locators.blocks
+          .luaScriptsExecutedEdgeLastFirstMilesProxies.css));
   },
 
 

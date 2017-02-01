@@ -52,7 +52,6 @@ describe('Smoke', function () {
         });
 
         if (user.role !== 'Normal User' && user.role !== 'Admin') {
-          console.log(user.role)
           it('should display "Account"', function () {
             expect(checkDisplay('getCompanyNameDDownTxtIn')).toBe(true);
           });
