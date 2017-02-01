@@ -475,7 +475,7 @@
                         </div>
                       </div>
                       <div class="form-group form-inline" ng-class="{'has-error': editForm.sslConfProfile.$invalid && editForm.sslConfProfile.$dirty}">
-                        <select class="form-control col-sm-offset-3" ng-disabled="_loading|| (isCustomSSL_conf_profile == true)" ng-model="model.ssl_conf_profile" id="ssl_conf_profile" name="sslConfProfile" ng-options="obj.id as obj.profile_name for obj in SSL_conf_profiles" required>
+                        <select class="form-control col-sm-offset-3" ng-disabled="_loading|| (isCustomSSL_conf_profile == true)" ng-model="model.ssl_conf_profile" id="ssl_conf_profile" name="sslConfProfile" ng-options="obj.id as obj.profile_name for obj in SSL_conf_profiles"required>
                         </select>
                         <div class="error-messages" ng-messages="editForm.sslConfProfile.$error" role="alert" ng-messages-multiple>
                           <div ng-messages-include="parts/shared/error-messages.html"></div>
