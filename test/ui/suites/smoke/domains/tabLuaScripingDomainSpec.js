@@ -59,28 +59,37 @@ describe('Smoke', function () {
 
 
 
-        it('if "Enable Lua Scripting On Edge (Last Mile, First Mile) Proxies" is "ON" then should'+
-          ' display "Lua Scripts Executed On Edge (Last Mile, First Mile) Proxies"', function () {
-          form.getLuaScriptsExecutedEdgeLastFirstMilesProxies().getAttribute('id').then(function(idBlocks) {
-            expect(idBlocks).toEqual(['luaScriptingLastMileBlock', 'luaScriptingFirstMileBlock']);
+        it('if "Enable Lua Scripting On Edge (Last Mile, First Mile)'+
+          ' Proxies" is "ON" then should'+
+          ' display "Lua Scripts Executed On Edge'+
+          ' (Last Mile, First Mile) Proxies"', function () {
+          form.getLuaScriptsExecutedEdgeLastFirstMilesProxies()
+            .getAttribute('id').then(function(idBlocks) {
+              expect(idBlocks).toEqual(['luaScriptingLastMileBlock', 'luaScriptingFirstMileBlock']);
           });
         });
 
 
-        it('if "Enable Lua Scripting On Edge (Last Mile) Proxies" is "ON" then should'+
-          ' display FIELDS "Lua Scripts Executed On Edge (Last Mile) Proxies"', function () {
+        it('if "Enable Lua Scripting On Edge (Last Mile) '+
+          'Proxies" is "ON" then should'+
+          ' display FIELDS "Lua Scripts Executed On Edge'+
+          ' (Last Mile) Proxies"', function () {
           EditPage.clickOnAddNewItemBP();
-          form.getLuaScriptsExecutedEdgeLastMilefields().getAttribute('name').then(function(fieldsName) {
-            expect(fieldsName).toEqual(resultLuaScriptsLastFirstMilesProxies(user));
+          form.getLuaScriptsExecutedEdgeLastMilefields()
+            .getAttribute('name').then(function(fieldsName) {
+              expect(fieldsName).toEqual(resultLuaScriptsLastFirstMilesProxies(user));
           });
 
         });
 
 
-        it('if "Enable Lua Scripting On Edge (First Mile) Proxies" is "ON" then should'+
-          ' display FIELDS "Lua Scripts Executed On Edge (First Mile) Proxies"', function () {
-          form.getLuaScriptsExecutedEdgeFirstMilefields().getAttribute('name').then(function(fieldsName) {
-            expect(fieldsName).toEqual(resultLuaScriptsLastFirstMilesProxies(user));
+        it('if "Enable Lua Scripting On Edge (First Mile)'+
+          ' Proxies" is "ON" then should'+
+          ' display FIELDS "Lua Scripts Executed On Edge '+
+          '(First Mile) Proxies"', function () {
+          form.getLuaScriptsExecutedEdgeFirstMilefields()
+            .getAttribute('name').then(function(fieldsName) {
+              expect(fieldsName).toEqual(resultLuaScriptsLastFirstMilesProxies(user));
           });
 
         });

@@ -24,7 +24,7 @@ var TopObjects = {
 	  .click();
   },
   getTopTabsHeader: function () {
-	return element(by.css(this.locators.headers.css))
+	  return element(by.css(this.locators.headers.css));
   },
    getTopTabsHeaderText: function () {
 	return this.getTopTabsHeader()
