@@ -29,13 +29,11 @@ var SideBar = {
 
   // Locators specific to HTML elements from this page object
   locators: {
-    arrows: {
-      down: {
-        css: '.fa-caret-down'
-      },
-      up: {
+    arrowUp: {
         css: '.fa-caret-up'
-      }
+    },
+    arrowDown: {
+        css: '.fa-caret-down'
     },
     container: {
       css: 'ul.side-menu'
@@ -107,7 +105,7 @@ var SideBar = {
     // First check arrow exists
     return this
       .getMenuItem(locatorData)
-      .element(by.css(this.locators.arrows.up.css));
+      .element(by.css(this.locators.arrowUp.css));
   },
 
   /**
@@ -122,7 +120,7 @@ var SideBar = {
     // First check arrow exists
     return this
       .getMenuItem(locatorData)
-      .element(by.css(this.locators.arrows.down.css));
+      .element(by.css(this.locators.arrowDown.css));
   },
 
   // ## Methods to interact with the Searcher/Filter component
@@ -153,7 +151,7 @@ var SideBar = {
       throw 'API ERROR!';
     }
     return this
-      .getUpArrow(locatorData)
+      .getDownArrow(locatorData)
       .click();
   },
 
@@ -167,7 +165,7 @@ var SideBar = {
       throw 'API ERROR!';
     }
     return this
-      .getDownArrow(locatorData)
+      .getUpArrow(locatorData)
       .click();
   },
 
@@ -175,10 +173,10 @@ var SideBar = {
    * Collapses all opened `menu-item`
    */
   collapseAll: function () {
-    var downArrows = element.all(by.css(this.locators.arrows.down.css));
-    downArrows
+    var upArrows = element.all(by.css(this.locators.arrowUp.css));
+    upArrows
       .then(function () {
-        return Promise.each(downArrows, function (arrow) {
+        return Promise.each(upArrows, function (arrow) {
           return arrow.click();
         });
       });

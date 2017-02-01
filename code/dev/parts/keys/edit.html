@@ -69,7 +69,7 @@
                   <div ng-bind-html="item.companyName|highlight: $select.search"></div>
                 </ui-select-choices>
               </ui-select>
-              <label for="account_id"  class="text-info" popover-trigger="mouseenter"  popover-append-to-body="true" uib-popover="Select company name the API key should be associated with TODO REVIEW TEXT">
+              <label for="account_id"  class="text-info" popover-trigger="mouseenter"  popover-append-to-body="true" uib-popover="Select the company the API key should be associated with">
                 <i class="fa fa-question-circle"></i>
               </label>
               <div class="error-messages" ng-messages="editForm.accountId.$error" role="alert" ng-messages-multiple>
@@ -88,7 +88,7 @@
                   <div ng-bind-html="item.companyName|highlight: $select.search"></div>
                 </ui-select-choices>
               </ui-select>
-              <label for="domains" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Additional Accounts To Manage TODO REVIEW TEXT">
+              <label for="domains" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Additional accounts the key should have permissions to manage">
                     <i class="fa fa-question-circle"></i>
               </label>
 
@@ -110,7 +110,7 @@
                      class="inline-block"
                      ng-model="key.active"
                      ng-disabled="_loading">
-              <label for="active" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Active">
+              <label for="active" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Uncheck the box to deactive the API key. The key configuration will stay untouched but the API will not authorize the key.">
                 <i class="fa fa-question-circle"></i>
               </label>
             </div>
@@ -127,7 +127,7 @@
                      class="inline-block"
                      ng-model="key.read_only_status"
                      ng-disabled="_loading">
-              <label for="read_only_status" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Read Only">
+              <label for="read_only_status" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Check the box to switch read-only mode for the key.">
                 <i class="fa fa-question-circle"></i>
               </label>
             </div>
@@ -147,7 +147,7 @@
                   <small>{{item.domain_name}}</small>
                 </ui-select-choices>
               </ui-select>
-              <label for="domains" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Managed Domains">
+              <label for="domains" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="List of web domains the key should have access to. If the list is empty the key will be able to manage all domains for the account.">
                     <i class="fa fa-question-circle"></i>
               </label>
             </div>

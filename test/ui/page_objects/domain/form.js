@@ -39,7 +39,7 @@ var DomainForm = {
         id: 'cname'
       },
       originServer: {
-        id: 'origin_server'
+        id: 'originServer'
       },
       originHostHeader: {
         id: 'origin_host_header'
@@ -190,11 +190,11 @@ var DomainForm = {
         id:'keepOrDropQueryStringParameters'
       },
       overrideHTTPcookies: {
-        id: 'overrideHTTPcookies'
+        css: '.cachingRulesURLblock:first-child .overrideHTTPcookies'
       },
 
       ignoreAllHTTPcookies: {
-        id: 'ignoreAllHTTPcookies'
+        css: '.cachingRulesURLblock:first-child .ignoreAllHTTPcookies'
       },
       keepOrDropSpecificHTTPcookies: {
         id: 'keepOrDropSpecificHTTPcookies'
@@ -206,19 +206,19 @@ var DomainForm = {
         id: 'removeIgnoredCookiesFromEdgeResponses'
       },  
       overrideEdgeCaching: {
-        id: 'overrideEdgeCaching'
+        css: '.cachingRulesURLblock:first-child .overrideEdgeCaching'
       },
       forceRevalidation: {
         id: 'forceRevalidation'
       },
       enableServingStaleContent: {
-        id: 'enableTheServingOfStaleContent'
+        css: '.cachingRulesURLblock:first-child .enableTheServingOfStaleContent'
       },
       staleObjectTTLwhileFetchingNewObject: {
-        id: 'staleObjectTTLwhileFetchingNewObject'
+        css: '.cachingRulesURLblock:first-child .staleObjectTTLwhileFetchingNewObject'
       },
       staleObjectTTLwhenOriginIsDown: {
-        id: 'staleObjectTTLwhenOriginIsDown'
+        css: '.cachingRulesURLblock:first-child .staleObjectTTLwhenOriginIsDown'
       },
 
 
@@ -281,7 +281,7 @@ var DomainForm = {
       },
 
       openUrlOfCachingRule: {
-        css: '#cachingRulesURLblock a[title="Expand Caching Rule"]'
+        css: '.cachingRulesURLblock:first-child a[title="Expand Caching Rule"]'
       },
       onAddNewBackendBlock: {
         css: '[title="Add New Backend Block"]'
@@ -328,7 +328,7 @@ var DomainForm = {
         id: 'cachingRulesBlock'
       },
       URL: {
-        id: 'cachingRulesURLblock'
+        css: '.cachingRulesURLblock:first-child'
       },
 
       manageOriginRequestHeaders: {
@@ -397,7 +397,7 @@ var DomainForm = {
   },
 
   getOpenUrlOfCachingRule: function () {
-    return element(by.css(this.locators.buttons.openUrlOfCachingRule.css));
+    return element.all(by.css(this.locators.buttons.openUrlOfCachingRule.css));
   },
 
 
@@ -575,7 +575,7 @@ var DomainForm = {
   },
 
   getURLtxtIn: function () {
-    return element(by.id(this.locators.blocks.URL.id));
+    return element(by.css(this.locators.blocks.URL.css));
   },
 
   getQueryStringParametersToDropKeepTxtIn: function () {
@@ -677,11 +677,11 @@ var DomainForm = {
   },
 
   getOverrideHTTPcookiesTxtIn: function () {
-    return element(by.id(this.locators.switches.overrideHTTPcookies.id));
+    return element(by.css(this.locators.switches.overrideHTTPcookies.css));
   },
 
   getIgnoreAllHTTPcookiesTxtIn: function () {
-    return element(by.id(this.locators.switches.ignoreAllHTTPcookies.id));
+    return element(by.css(this.locators.switches.ignoreAllHTTPcookies.css));
   },
 
   getKeepOrDropSpecificHTTPcookiesTxtIn: function () {
@@ -700,7 +700,7 @@ var DomainForm = {
   }, 
 
   getOverrideEdgeCachingTxtIn: function () {
-    return element(by.id(this.locators.switches.overrideEdgeCaching.id));
+    return element(by.css(this.locators.switches.overrideEdgeCaching.css));
   },
 
   getBrowserCachingTTL: function () {
@@ -712,15 +712,15 @@ var DomainForm = {
   },
 
   getEnableServingStaleContentTxtIn: function () {
-    return element(by.id(this.locators.switches.enableServingStaleContent.id));
+    return element(by.css(this.locators.switches.enableServingStaleContent.css));
   },
 
   getStaleObjectTTLwhileFetchingNewObject: function () {
-    return element(by.id(this.locators.switches.staleObjectTTLwhileFetchingNewObject.id));
+    return element(by.css(this.locators.switches.staleObjectTTLwhileFetchingNewObject.css));
   },
 
   getStaleObjectTTLwhenOriginIsDown: function () {
-    return element(by.id(this.locators.switches.staleObjectTTLwhenOriginIsDown.id));
+    return element(by.css(this.locators.switches.staleObjectTTLwhenOriginIsDown.css));
   },
 
   getEnableESITxtIn: function () {
@@ -850,7 +850,9 @@ var DomainForm = {
 
 
   getLuaScriptsExecutedEdgeLastFirstMilesProxies: function () {
-    return element.all(by.css(this.locators.blocks.luaScriptsExecutedEdgeLastFirstMilesProxies.css));
+    return element
+      .all(by.css(this.locators.blocks
+          .luaScriptsExecutedEdgeLastFirstMilesProxies.css));
   },
 
 

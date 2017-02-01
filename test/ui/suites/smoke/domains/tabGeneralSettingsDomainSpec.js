@@ -51,9 +51,11 @@ describe('Smoke', function () {
           expect(checkDisplay('getBtnCopyCname')).toBe(true);
         });
 
-        it('should display "Account"', function () {
-          expect(checkDisplay('getCompanyNameDDownTxtIn')).toBe(true);
-        });
+        if (user.role !== 'Normal User' && user.role !== 'Admin') {
+          it('should display "Account"', function () {
+            expect(checkDisplay('getCompanyNameDDownTxtIn')).toBe(true);
+          });
+        }
 
         it('should display "Origin Server Name/IP"', function () {
           expect(checkDisplay('getOriginServerTxtIn')).toBe(true);

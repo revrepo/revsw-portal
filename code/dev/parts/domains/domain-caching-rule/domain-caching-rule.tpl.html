@@ -10,7 +10,10 @@
     </div>
     <label class="col-md-3 control-label">URL *</label>
     <div class="col-md-9">
-      <input id="urlOfURLblock" type="text" validate-caching-rule-url name="url_value" class="form-control" ng-model="$ctrl.rule.url.value" required>
+      <input id="urlOfURLblock" type="text" validate-caching-rule-url name="url_value" class="form-control inline-block" ng-model="$ctrl.rule.url.value" required>
+      <label for="cache_url" class="text-info" popover-trigger="mouseenter" uib-popover="TODO text">
+        <i class="fa fa-question-circle"></i>
+      </label>
       <div class="error-messages" ng-messages="editForm.url_value.$error" role="alert" ng-messages-multiple>
         <div ng-messages-include="parts/shared/error-messages.html"></div>
       </div>
@@ -27,6 +30,9 @@
     <div class="col-md-9">
       <toggle-switch id="overrideOriginCachingHeaders" ng-model="$ctrl.rule.edge_caching.override_origin" on-label="On" off-label="Off">
       </toggle-switch>
+      <label for="override_origin" class="text-info" popover-trigger="mouseenter" uib-popover="TODO text">
+        <i class="fa fa-question-circle"></i>
+      </label>
     </div>
   </div>
   <div class="form-group form-inline" ng-class="{'has-error': editForm.newTTL.$invalid && editForm.newTTL.$dirty}">
@@ -48,6 +54,9 @@
     <div class="col-md-9">
       <toggle-switch id="newEdgeTTLifOriginMissing" ng-model="$ctrl.rule.edge_caching.override_no_cc" on-label="On" off-label="Off">
       </toggle-switch>
+      <label for="override_no_cc" class="text-info" popover-trigger="mouseenter" uib-popover="TODO text">
+        <i class="fa fa-question-circle"></i>
+      </label>
     </div>
   </div>
   <div class="form-group ">
@@ -55,17 +64,23 @@
     <div class="col-sm-9">
       <toggle-switch id="keepOrDropQueryStringParameters" ng-model="$ctrl.rule.edge_caching.query_string_list_is_keep" on-label="Keep" off-label="Drop">
       </toggle-switch>
+      <label for="query_string_list_is_keep" class="text-info" popover-trigger="mouseenter" uib-popover="TODO text">
+        <i class="fa fa-question-circle"></i>
+      </label>
     </div>
   </div>
   <div class="form-group" ng-class="{'has-error': editForm.queryStringKeepOrRemoveList.$invalid && editForm.queryStringKeepOrRemoveList.$dirty}">
     <label class="col-sm-3 control-label">Query String Parameters To Drop/Keep</label>
     <div class="col-sm-9">
-      <ui-select validate-query-strings-options tagging tagging-label="Add New Query String" multiple tagging-tokens="SPACE|," theme="bootstrap" class="form-control" ng-disabled="_loading" ng-model="$ctrl.rule.edge_caching.query_string_keep_or_remove_list" id="query_str" name="queryStringKeepOrRemoveList">
+      <ui-select validate-query-strings-options tagging tagging-label="Add New Query String" multiple tagging-tokens="SPACE|," theme="bootstrap" class="form-control inline-block" ng-disabled="_loading" ng-model="$ctrl.rule.edge_caching.query_string_keep_or_remove_list" id="query_str" name="queryStringKeepOrRemoveList">
         <ui-select-match placeholder="Add Query String...">{{$item}}</ui-select-match>
         <ui-select-choices repeat="query_str in $ctrl.rule.edge_caching.query_string_keep_or_remove_list">
           {{query_str}}
         </ui-select-choices>
       </ui-select>
+      <label for="query_string_keep_or_remove_list" class="text-info" popover-trigger="mouseenter" uib-popover="TODO text">
+        <i class="fa fa-question-circle"></i>
+      </label>
       <div class="error-messages" ng-messages="editForm.queryStringKeepOrRemoveList.$error" role="alert" ng-messages-multiple>
         <div ng-messages-include="parts/shared/error-messages.html"></div>
       </div>
@@ -76,8 +91,11 @@
   <div class="form-group ">
     <label class="col-sm-3 control-label">Override HTTP Cookies</label>
     <div class="col-sm-9">
-      <toggle-switch id="overrideHTTPcookies" ng-model="$ctrl.rule.cookies.override" on-label="Yes" off-label="No">
+      <toggle-switch ng-model="$ctrl.rule.cookies.override overrideHTTPcookies" on-label="Yes" off-label="No">
       </toggle-switch>
+      <label for="override" class="text-info" popover-trigger="mouseenter" uib-popover="TODO text">
+        <i class="fa fa-question-circle"></i>
+      </label>
     </div>
   </div>
   <div class="block-override--true" ng-if="$ctrl.rule.cookies.override == true">
@@ -86,6 +104,9 @@
       <div class="col-sm-9">
         <toggle-switch id="ignoreAllHTTPcookies" ng-model="$ctrl.rule.cookies.ignore_all" on-label="Yes" off-label="No">
         </toggle-switch>
+        <label for="ignore_all" class="text-info" popover-trigger="mouseenter" uib-popover="TODO text">
+          <i class="fa fa-question-circle"></i>
+        </label>
       </div>
     </div>
     <div class="form-group" ng-if="$ctrl.rule.cookies.ignore_all == false">
@@ -93,18 +114,24 @@
       <div class="col-sm-9">
         <toggle-switch id="keepOrDropSpecificHTTPcookies" ng-model="$ctrl.rule.cookies.list_is_keep" on-label="Keep" off-label="Drop">
         </toggle-switch>
+        <label for="list_is_keep" class="text-info" popover-trigger="mouseenter" uib-popover="TODO text">
+          <i class="fa fa-question-circle"></i>
+        </label>
       </div>
     </div>
     <div class="form-group" ng-class="{'has-error': editForm.keepOrIgnoreList.$invalid && editForm.keepOrIgnoreList.$dirty}" ng-if="$ctrl.rule.cookies.ignore_all == false">
       <label class="col-sm-3 control-label" ng-if="$ctrl.rule.cookies.list_is_keep == true">List Of Cookies To Keep</label>
       <label class="col-sm-3 control-label" ng-if="$ctrl.rule.cookies.list_is_keep == false">List Of Cookies To Drop</label>
       <div class="col-sm-9">
-        <ui-select validate-cookies-options tagging tagging-label="Add New Cookie String" multiple tagging-tokens="SPACE|," theme="bootstrap" class="form-control" ng-disabled="_loading" ng-model="$ctrl.rule.cookies.keep_or_ignore_list" id="keep_or_ignore_list_str" name="keepOrIgnoreList">
+        <ui-select validate-cookies-options tagging tagging-label="Add New Cookie String" multiple tagging-tokens="SPACE|," theme="bootstrap" class="form-control inline-block" ng-disabled="_loading" ng-model="$ctrl.rule.cookies.keep_or_ignore_list" id="keep_or_ignore_list_str" name="keepOrIgnoreList">
           <ui-select-match placeholder="Add Cookies String...">{{$item}}</ui-select-match>
           <ui-select-choices repeat="keep_or_ignore_list_str in $ctrl.rule.cookies.keep_or_ignore_list">
             {{keep_or_ignore_list_str}}
           </ui-select-choices>
         </ui-select>
+        <label for="keep_or_ignore_list" class="text-info" popover-trigger="mouseenter" uib-popover="TODO text">
+          <i class="fa fa-question-circle"></i>
+        </label>
         <div class="error-messages" ng-messages="editForm.keepOrIgnoreList.$error" role="alert" ng-messages-multiple>
           <div ng-messages-include="parts/shared/error-messages.html"></div>
         </div>
@@ -117,6 +144,9 @@
       <div class="col-sm-9">
         <toggle-switch id="removeIgnoredCookiesFromOriginRequests" ng-model="$ctrl.rule.cookies.remove_ignored_from_request" on-label="Yes" off-label="No">
         </toggle-switch>
+        <label for="remove_ignored_from_request" class="text-info" popover-trigger="mouseenter" uib-popover="TODO text">
+          <i class="fa fa-question-circle"></i>
+        </label>
       </div>
     </div>
     <div class="form-group">
@@ -126,6 +156,9 @@
       <div class="col-sm-9">
         <toggle-switch id="removeIgnoredCookiesFromEdgeResponses" ng-model="$ctrl.rule.cookies.remove_ignored_from_response" on-label="Yes" off-label="No">
         </toggle-switch>
+        <label for="remove_ignored_from_response" class="text-info" popover-trigger="mouseenter" uib-popover="TODO text">
+          <i class="fa fa-question-circle"></i>
+        </label>
       </div>
     </div>
     <!-- // Keep or Drop Specific HTTP Cookies -->
@@ -142,6 +175,9 @@
     <div class="col-md-9">
       <toggle-switch id="overrideEdgeCaching" ng-model="$ctrl.rule.browser_caching.override_edge" on-label="On" off-label="Off">
       </toggle-switch>
+       <label for="override_edge" class="text-info" popover-trigger="mouseenter" uib-popover="TODO text">
+          <i class="fa fa-question-circle"></i>
+        </label>
     </div>
   </div>
   <div class="form-group form-inline" ng-class="{'has-error': editForm.browserCachingNewTTL.$invalid && editForm.browserCachingNewTTL.$dirty}" ng-show="$ctrl.rule.browser_caching.override_edge">
@@ -161,6 +197,9 @@
     <div class="col-md-9">
       <toggle-switch id="forceRevalidation" ng-model="$ctrl.rule.browser_caching.force_revalidate" on-label="On" off-label="Off">
       </toggle-switch>
+       <label for="force_revalidate" class="text-info" popover-trigger="mouseenter" uib-popover="TODO text">
+          <i class="fa fa-question-circle"></i>
+        </label>
     </div>
   </div>
   <hr>
