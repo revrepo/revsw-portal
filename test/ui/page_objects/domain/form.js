@@ -83,7 +83,7 @@ var DomainForm = {
         css: 'div[ng-if="$ctrl.domain.co_lua_enable_all"] input[ng-model="$ctrl.luaBlock.location"]'
       },
       listOfCookiesToDrop: {
-        id: 'keep_or_ignore_list_str'
+        css: '.cachingRulesURLblock:first-child .listOfCookiesToDrop'
       }
 
     },
@@ -688,7 +688,7 @@ var DomainForm = {
     return element(by.id(this.locators.switches.keepOrDropSpecificHTTPcookies.id));
   }, 
   getListOfCookiesToDrop: function () {
-    return element(by.id(this.locators.textInputs.listOfCookiesToDrop.id));
+    return element(by.css(this.locators.textInputs.listOfCookiesToDrop.css));
   }, 
 
   getRemoveIgnoredCookiesFromOriginRequests: function () {

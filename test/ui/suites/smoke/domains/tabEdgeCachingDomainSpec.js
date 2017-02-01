@@ -106,11 +106,11 @@ describe('Smoke', function () {
         it('if "Edge Caching" is "ON" then should display "'+
           'List Of Cookies To Drop" in "Caching Rules"', function () {
           expect(checkDisplay('getListOfCookiesToDrop')).toBe(true);
-          EditPage.switchBtns(form.getIgnoreAllHTTPcookiesTxtIn(), true);
         });
 
         it('if "Edge Caching" is "ON" then should display "'+
           'Remove Ignored Cookies From Origin Requests" in "Caching Rules"', function () {
+          EditPage.switchBtns(form.getIgnoreAllHTTPcookiesTxtIn(), true);
           expect(checkDisplay('getRemoveIgnoredCookiesFromOriginRequests')).toBe(true);
         });
 
@@ -122,11 +122,11 @@ describe('Smoke', function () {
         it('if "Edge Caching" is "ON" then should display "Override '+
           'Edge Caching" in "Caching Rules"', function () {
           expect(checkDisplay('getOverrideEdgeCachingTxtIn')).toBe(true);
-          EditPage.switchBtns(form.getOverrideEdgeCachingTxtIn(), true);
         });
 
         it('if "Edge Caching" is "ON" then should display "'+
           ' Browser Caching TTL" in "Caching Rules"', function () {
+          EditPage.switchBtns(form.getOverrideEdgeCachingTxtIn(), true);
           expect(checkDisplay('getBrowserCachingTTL')).toBe(true);
         });
 
@@ -138,11 +138,11 @@ describe('Smoke', function () {
         it('if "Edge Caching" is "ON" then should display "'+
           'Enable The Serving of Stale Content" in "Caching Rules"', function () {
           expect(checkDisplay('getEnableServingStaleContentTxtIn')).toBe(true);
-          EditPage.switchBtns(form.getEnableServingStaleContentTxtIn(), true);
         });
 
         it('if "Edge Caching" is "ON" then should display "'+
           ' Stale Object TTL While Fetching New Object" in "Caching Rules"', function () {
+          EditPage.switchBtns(form.getEnableServingStaleContentTxtIn(), true);
           expect(checkDisplay('getStaleObjectTTLwhileFetchingNewObject')).toBe(true);
         });
 
