@@ -84,7 +84,7 @@
               <div class="form-group" ng-class="{'has-error': editForm.originServer.$invalid && editForm.originServer.$dirty}">
                 <label for="originServer" class="col-sm-3 control-label">Origin Server Name/IP *</label>
                 <div class="col-sm-9">
-                  <input type="text" validate-origin-server-name class="form-control inline-block" ng-disabled="_loading" ng-model="model.origin_server" id="origin_server" name="originServer" placeholder="Origin Server Name" ng-maxlength="50" required>
+                  <input type="text" validate-origin-server-name class="form-control inline-block" ng-disabled="_loading" ng-model="model.origin_server" id="originServer" name="originServer" placeholder="Origin Server Name" ng-maxlength="50" required>
                   <label for="originServer" class="text-info" popover-append-to-body="{{true}}"   popover-trigger="mouseenter" uib-popover="Enter here domain name or IP address of origin web server">
                     <i class="fa fa-question-circle"></i>
                   </label>
@@ -360,14 +360,14 @@
                   <div class="form-group pull-right">
                     <div class="col-sm-12">
                       <a ng-click="onAddNewCachingRule($event,true)" class="btn btn-primary btn-sm " uib-tooltip="Use the button to add a new caching rule to cache JPG, JPEG, PNG, GIF, WEBP, JS, CSS, WOFF, WOFF2, MP4, SWF, AVI, MPEG and MOV objects for period of 2 weeks. You can modify the rule to suit your needs."><i class="glyphicon"></i>Cache Static Objects</a>
-                      <a ng-click="onAddNewCachingRule($event)" class="btn btn-primary btn-sm " title="Add New Caching Rule"><i class="glyphicon glyphicon-plus"></i>&nbsp;</a>
+                      <a id="addNewBackendBlock" ng-click="onAddNewCachingRule($event)" class="btn btn-primary btn-sm " title="Add New Caching Rule addNewBackendBlock"><i class="glyphicon glyphicon-plus"></i>&nbsp;</a>
                     </div>
                   </div>
                   <h4><b>Caching Rules</b></h4>
                 </div>
                 <div class="panel-body">
                   <!-- TODO: creater directive -->
-                  <div id="cachingRulesURLblock" class="panel panel-default domain-caching-rules" ng-repeat="caching_rule in model.rev_component_bp.caching_rules">
+                  <div class="panel panel-default domain-caching-rules cachingRulesURLblock" ng-repeat="caching_rule in model.rev_component_bp.caching_rules">
                     <div class="panel-heading">
                       <div class="domain-caching-rules__info">
                         <div class="pull-left panel-buttons-left">

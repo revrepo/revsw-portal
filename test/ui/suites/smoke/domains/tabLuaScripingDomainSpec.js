@@ -27,7 +27,15 @@ describe('Smoke', function () {
         var checkDisplay = function(elem) {
           return EditPage.elementIsDisplayed(elem);
         };
-
+        var resultLuaScriptsLastFirstMilesProxies = function(user) {
+          var result = [];
+          if (user.role === 'Rev Admin') {
+            result = ['customVcl', 'luaBPlocation', 'luaBlockCode', 'customVcl'];
+          } else {
+            result = ['customVcl', 'luaBPlocation', 'luaBlockCode'];
+          }
+          return result;
+        };
         beforeAll(function () {
           Portal.signIn(user);
           Portal.helpers.nav.goToDomains();
@@ -63,7 +71,7 @@ describe('Smoke', function () {
           ' display FIELDS "Lua Scripts Executed On Edge (Last Mile) Proxies"', function () {
           EditPage.clickOnAddNewItemBP();
           form.getLuaScriptsExecutedEdgeLastMilefields().getAttribute('name').then(function(fieldsName) {
-            expect(fieldsName).toEqual(['customVcl', 'luaBPlocation', 'luaBlockCode']);
+            expect(fieldsName).toEqual(resultLuaScriptsLastFirstMilesProxies(user));
           });
 
         });
@@ -72,7 +80,7 @@ describe('Smoke', function () {
         it('if "Enable Lua Scripting On Edge (First Mile) Proxies" is "ON" then should'+
           ' display FIELDS "Lua Scripts Executed On Edge (First Mile) Proxies"', function () {
           form.getLuaScriptsExecutedEdgeFirstMilefields().getAttribute('name').then(function(fieldsName) {
-            expect(fieldsName).toEqual(['customVcl', 'luaBPlocation', 'luaBlockCode']);
+            expect(fieldsName).toEqual(resultLuaScriptsLastFirstMilesProxies(user));
           });
 
         });

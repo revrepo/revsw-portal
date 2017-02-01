@@ -54,13 +54,13 @@ describe('Smoke', function () {
 
         it('if "Edge Caching" is "ON" then should display "URL" in "Caching Rules"', function () {
           expect(checkDisplay('getURLtxtIn')).toBe(true);  
-          EditPage.clickAddNewCachingRule();
-          EditPage.clickOpenUrlOfCachingRule();
         });
 
 
         it('if "Edge Caching" is "ON" then should display '+
           '"Override Origin Caching Headers" in "Caching Rules"', function () {
+          EditPage.clickAddNewCachingRule();
+          EditPage.clickOpenUrlOfCachingRule();
           expect(checkDisplay('getOverrideOriginCachingHeadersTxtIn')).toBe(true); 
         });
 
@@ -88,12 +88,12 @@ describe('Smoke', function () {
         it('if "Edge Caching" is "ON" then should display "Override'+
           ' HTTP Cookies" in "Caching Rules"', function () {
           expect(checkDisplay('getOverrideHTTPcookiesTxtIn')).toBe(true);
-          EditPage.switchBtns(form.getOverrideHTTPcookiesTxtIn(), true);
         });
 
 
         it('if "Edge Caching" is "ON" then should display "'+
           ' Ignore All HTTP Cookies" in "Caching Rules"', function () {
+          EditPage.switchBtns(form.getOverrideHTTPcookiesTxtIn(), true);
           expect(checkDisplay('getIgnoreAllHTTPcookiesTxtIn')).toBe(true);
         });
 
