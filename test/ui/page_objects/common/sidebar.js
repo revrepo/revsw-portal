@@ -40,8 +40,8 @@ var SideBar = {
     activeContainer: {
       className: 'active-side-menu-item'
     },
-    arrow: {
-      className: 'fa-caret-down'
+    arrowUp: {
+      className: 'fa-caret-up'
     },
     arrowDown: {
       className: 'fa-caret-down'
@@ -164,7 +164,7 @@ var SideBar = {
    */
   getArrowElement: function (container) {
     return container
-      .all(by.className(this.locators.arrow.className))
+      .all(by.className(this.locators.arrowDown.className))
       .get(0);
   },
 
@@ -180,7 +180,7 @@ var SideBar = {
    */
   getCollapseArrowElement: function (menuHeader) {
     return menuHeader
-        .all(by.className(this.locators.arrowDown.className))
+        .all(by.className(this.locators.arrowUp.className))
         .get(0);
   },
 
@@ -208,7 +208,7 @@ var SideBar = {
    */
   clickArrowIfDisplayed: function (container) {
     var me = this;
-    return container.all(by.className(this.locators.arrow.className)).count()
+    return container.all(by.className(this.locators.arrowDown.className)).count()
       .then(function (result) {
         if (result === 1) {
           me.getArrowElement(container)
@@ -241,7 +241,7 @@ var SideBar = {
    */
   clickCollapseArrowIfDisplayed: function (container) {
     var me = this;
-    return container.all(by.className(this.locators.arrowDown.className)).count()
+    return container.all(by.className(this.locators.arrowUp.className)).count()
         .then(function (result) {
           if (result === 1) {
             me.getCollapseArrowElement(container)
