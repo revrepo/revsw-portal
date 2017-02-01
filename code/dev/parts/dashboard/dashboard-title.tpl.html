@@ -22,8 +22,8 @@
           <a href="" ng-if="options.editable" class="btn btn-link" title="{{editMode ? 'Save Changes' : 'Modify This Dashboard'}}" ng-click="toggleEditMode()">
             <i class="glyphicon" x-ng-class="{'glyphicon-edit' : !editMode, 'fa fa-floppy-o' : editMode}"></i>
           </a>
-          <a href="" ng-if="editMode" class="btn btn-link" title="Undo Changes" ng-click="cancelEditMode()">
-            <i class="glyphicon glyphicon-repeat adf-flip"></i>
+          <a href="" ng-if="editMode" class="btn btn-link" title="Undo Changes" ng-click="cancelEditMode()" style="padding-top: 6px !important;">
+            <i class="fa fa-undo adf-flip"></i>
           </a>
         </div>
         <div class="form-group h2 pull-right">
