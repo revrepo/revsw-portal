@@ -6,7 +6,8 @@
     .run(runApp);
 
   /*@ngInject*/
-  function runApp($rootScope, $http, $location, AlertService, $state) {
+  function runApp($rootScope, $http, $location, AlertService, $state, User) {
+    $rootScope.user = User;
     $rootScope.alertService = AlertService;
     $rootScope.contactUsLink = 'https://revapm.zendesk.com/hc/en-us/requests/new';
     $rootScope.$state = $state;

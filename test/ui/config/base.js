@@ -18,7 +18,7 @@ module.exports = {
   },
   onPrepare: function () {
     browser.manage().window().setSize(1280, 1024);
-    browser.manage().window().setPosition(400, 0);
+    browser.manage().window().setPosition(0, 0);
     var disableNgAnimate = function() {
         angular
             .module('disableNgAnimate', [])
@@ -43,7 +43,18 @@ module.exports = {
                 document.getElementsByTagName('head')[0].appendChild(style);
             });
     };
-
+    // NOTE: open browser on full screen
+    setTimeout(function() {
+        browser.driver.executeScript(function() {
+            return {
+                width: window.screen.availWidth,
+                height: window.screen.availHeight
+            };
+        })
+        .then(function(result) {
+            browser.driver.manage().window().setSize(result.width, result.height);
+        });
+    });
     browser.addMockModule('disableNgAnimate', disableNgAnimate);
     browser.addMockModule('disableCssAnimate', disableCssAnimate);
     // add jasmine html reporter

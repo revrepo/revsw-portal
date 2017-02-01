@@ -31,10 +31,10 @@ var SideBar = {
   locators: {
     arrows: {
       down: {
-        css: '.fa-caret-down'
+        css: '.fa-caret-up'  // TODO need to fix the sidebar code to use proper up/down arrows
       },
       up: {
-        css: '.fa-caret-up'
+        css: '.fa-caret-down'
       }
     },
     container: {

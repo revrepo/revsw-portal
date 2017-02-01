@@ -47,10 +47,14 @@ var PurgeCacheBasic = {
         linkText: 'Advanced Mode'
       },
       basicMode: {
-        linkText: 'Basic Mode'
+        linkText: 'Basic Mode',
+        id: 'btn-advanced-mode'
       },
       purge: {
         css: '[ng-click="purgeText()"]'
+      },
+      purgeAllObjects: {
+        css: '[ng-click="purgeDefaultText()"]'
       },
       cancel: {
         linkText: 'Cancel'
@@ -126,8 +130,7 @@ var PurgeCacheBasic = {
   getBasicModeBtn: function () {
     return this
       .getPanelHeadingElem()
-      .element(by.css(this.locators.pullRight))
-      .element(by.partialLinkText(this.locators.buttons.basicMode.linkText));
+      .element(by.id(this.locators.buttons.basicMode.id));
   },
 
   /**
@@ -168,6 +171,18 @@ var PurgeCacheBasic = {
     return this
       .getPanelBodyElem()
       .element(by.css(this.locators.buttons.purge.css));
+  },
+  /**
+   * ### PurgeCacheBasic.getPurgeAllObjectsBtn()
+   *
+   * Gets the reference to `Purge All Objects` button element.
+   *
+   * @returns {Promise}
+   */
+  getPurgeAllObjectsBtn: function () {
+    return this
+      .getPanelBodyElem()
+      .element(by.css(this.locators.buttons.purgeAllObjects.css));
   },
 
   /**
@@ -327,6 +342,18 @@ var PurgeCacheBasic = {
   clickPurge: function () {
     return this
       .getPurgeBtn()
+      .click();
+  },
+  /**
+   * ### PurgeCacheBasic.clickPurgeAllObjects()
+   *
+   * Clicks on the `Purge All Objects` button element.
+   *
+   * @returns {Promise}
+   */
+  clickPurgeAllObjects: function () {
+    return this
+      .getPurgeAllObjectsBtn()
       .click();
   },
 

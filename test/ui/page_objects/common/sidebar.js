@@ -41,7 +41,7 @@ var SideBar = {
       className: 'active-side-menu-item'
     },
     arrow: {
-      className: 'fa-caret-up'
+      className: 'fa-caret-down'
     },
     arrowDown: {
       className: 'fa-caret-down'
