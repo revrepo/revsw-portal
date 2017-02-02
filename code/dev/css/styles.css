@@ -1560,9 +1560,6 @@ del.diff span {
   background-color: black;
   opacity: 0.85;
 }
-.ssl-names--table .actions .disabled {
-  opacity: 0.4;
-}
 .approvers-email-list {
   max-height: 30vh;
   overflow-y: auto;
@@ -1709,4 +1706,7 @@ textarea.inline-block {
   display: inline-block;
   float: left;
   margin-right: 3px;
+}
+table .actions .disabled {
+  opacity: 0.4;
 }

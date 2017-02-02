@@ -183,6 +183,10 @@
      * @return
      */
     $scope.deleteSSLCert = function(model) {
+      // NOTE: not delete if RO user
+      if($scope.isReadOnly() === true){
+        return;
+      }
       $scope.confirm('confirmModal.html', model).then(function() {
         var certName = model.cert_name;
         $scope
