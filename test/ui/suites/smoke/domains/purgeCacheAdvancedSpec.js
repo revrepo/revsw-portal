@@ -28,7 +28,6 @@ describe('Smoke', function () {
       config.get('portal.users.revAdmin'),
       config.get('portal.users.admin'),
       config.get('portal.users.reseller'),
-      config.get('portal.users.secondReseller'),
       config.get('portal.users.user'),
       config.get('portal.users.roUser')
     ];
@@ -50,7 +49,7 @@ describe('Smoke', function () {
       Portal.helpers.nav.goToPurgeCache();
     });
 
-    it('should display Purge Cached Objects page',
+    it('should display Purge Cached Objects Advanced Mode page',
       function () {
         Portal.purgeCacheAdvancedPage.clickAdvancedMode();
         Portal.purgeCacheAdvancedPage.selectDomain(myDomain);

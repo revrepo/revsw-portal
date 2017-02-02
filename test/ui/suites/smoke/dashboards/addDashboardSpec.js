@@ -46,8 +46,8 @@ describe('Smoke', function () {
         beforeEach(function () {
         });
 
-        it('should default "Dashboard" exist in Dasboards page', function () {
-          var defaultDashboardName = 'Dashboard';
+        it('should default "My Dashboard" exist in Dasboards page', function () {
+          var defaultDashboardName = 'My Dashboard';
 
           var createdDashboard = Portal.dashboards.listPage.getTitle();
           var leftMenu = Portal.dashboards.listPage.getLeftMenuDashboards();

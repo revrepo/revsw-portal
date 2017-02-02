@@ -30,189 +30,117 @@ describe('Smoke', function () {
 
         beforeAll(function () {
           Portal.signIn(user);
+          Portal.helpers.nav.goToDomains();
+          EditPage.clickEditDomain();
+          EditPage.clickTabVCL();
         });
 
         afterAll(function () {
           Portal.signOut();
         });
 
-        beforeEach(function () {
-          Portal.helpers.nav.goToDomains();
-          EditPage.clickEditDomain();
-          EditPage.clickTabVCL();
-        });
-
         it('should display "Custom VCL Rules"', function () {
           expect(checkDisplay('getCustomVCLrulesTxtIn')).toBe(true);
+          EditPage.switchBtns(form.getCustomVCLrulesTxtIn(), true);
         }); 
 
         it('if "Custom VCL Rules" is "ON" then should '+
           'display block "Custom VCL Rules"', function () {
-          
-          EditPage.switchBtns(form.getCustomVCLrulesTxtIn(),
-          function(value) {
-            if (value === 'true') {
-              expect(checkDisplay('getBlockCustomVCLrulesTxtIn')).toBe(true);
-            }
-          });
-
+          expect(checkDisplay('getBlockCustomVCLrulesTxtIn')).toBe(true);
         }); 
 
         it('if "Custom VCL Rules" is "ON" then should '+
           'display "Open only one rule at a time"', function () {
-          EditPage.switchBtns(form.getCustomVCLrulesTxtIn(),
-          function(value) {
-            if (value === 'true') {
-              expect(checkDisplay('getOneAtATimeTxtIn')).toBe(true);
-            }
-          });
+          expect(checkDisplay('getOneAtATimeTxtIn')).toBe(true);
         }); 
 
-        it('if "Custom VCL Rules" is "ON" then should display "\'Recv\' Function"', function () {
-          EditPage.switchBtns(form.getCustomVCLrulesTxtIn(),
-          function(value) {
-            if (value === 'true') {
-              expect(checkDisplay('getBlockFunctionBlock', 'Recv')).toBe(true);
-            }
-          });
+
+
+        it('if "Custom VCL Rules" is "ON" then should display "'+
+          '\'Recv, '+
+          'Hit, '+
+          'Miss, '+
+          'Deliver, '+
+          'Pass, '+
+          'Pipe, '+
+          'Hash, '+
+          'Synth, '+
+          'Backend Error\' Functions"', function () {
+
+            form.getCustomVCLrulesBlocks().getAttribute('heading').then(function(blocks) {
+              expect(blocks).toEqual([
+                '\'Recv\' Function',
+                '\'Hit\' Function',
+                '\'Miss\' Function',
+                '\'Deliver\' Function',
+                '\'Pass\' Function',
+                '\'Pipe\' Function',
+                '\'Hash\' Function',
+                '\'Synth\' Function',
+                '\'Backend Response\' Function',
+                '\'Backend Error\' Function' 
+              ]);
+            });
         });
 
-        it('if "Custom VCL Rules" is "ON" then should display "\'Hit\' Function"', function () {
-          EditPage.switchBtns(form.getCustomVCLrulesTxtIn(),
-          function(value) {
-            if (value === 'true') {             
-              expect(checkDisplay('getBlockFunctionBlock', 'Hit')).toBe(true);
-            }
-          });
-        }); 
+        it('if "Custom VCL Rules" is "ON" then should display textarea: "'+
+          '\'Recv, '+
+          'Hit, '+
+          'Miss, '+
+          'Deliver, '+
+          'Pass, '+
+          'Pipe, '+
+          'Hash, '+
+          'Synth, '+
+          'Backend Error\' Functions"', function () {
+            form.getLinkFromListCustomVCLrulesBlocks().click();
+            form.getCustomVCLrulesListFunctions().getAttribute('id').then(function(idTextarea) {
+              expect(idTextarea).toEqual([
+                'vclRecv',
+                'vclHit',
+                'vclMiss',
+                'vclDeliver',
+                'vclPass',
+                'vclPipe',
+                'vclHash',
+                'vclSynth',
+                'vclBackendResponse',
+                'vclBackendError' 
+              ]);
+            });
 
-        it('if "Custom VCL Rules" is "ON" then should display "\'Miss\' Function"', function () {
-          EditPage.switchBtns(form.getCustomVCLrulesTxtIn(),
-          function(value) {
-            if (value === 'true') {
-              expect(checkDisplay('getBlockFunctionBlock', 'Miss')).toBe(true);
-            }
-          });
-        }); 
-
-        it('if "Custom VCL Rules" is "ON" then should display "\'Deliver\' Function"', function () {
-          EditPage.switchBtns(form.getCustomVCLrulesTxtIn(),
-          function(value) {
-            if (value === 'true') {
-              expect(checkDisplay('getBlockFunctionBlock', 'Deliver')).toBe(true);
-            }
-          });
-        }); 
-       
-        it('if "Custom VCL Rules" is "ON" then should display "\'Pass\' Function"', function () {
-          EditPage.switchBtns(form.getCustomVCLrulesTxtIn(),
-          function(value) {
-            if (value === 'true') {
-              expect(checkDisplay('getBlockFunctionBlock', 'Pass')).toBe(true);
-            }
-          });        
-        }); 
-
-        it('if "Custom VCL Rules" is "ON" then should display "\'Pipe\' Function"', function () {
-          EditPage.switchBtns(form.getCustomVCLrulesTxtIn(),
-          function(value) {
-            if (value === 'true') {
-              expect(checkDisplay('getBlockFunctionBlock', 'Pipe')).toBe(true);
-            }
-          });
-        }); 
-
-        it('if "Custom VCL Rules" is "ON" then should display "\'Hash\' Function"', function () {
-          EditPage.switchBtns(form.getCustomVCLrulesTxtIn(),
-          function(value) {
-            if (value === 'true') {
-              expect(checkDisplay('getBlockFunctionBlock', 'Hash')).toBe(true);
-            }
-          });
-        }); 
-
-        it('if "Custom VCL Rules" is "ON" then should display "\'Synth\' Function"', function () {
-          EditPage.switchBtns(form.getCustomVCLrulesTxtIn(),
-          function(value) {
-            if (value === 'true') {
-              expect(checkDisplay('getBlockFunctionBlock', 'Synth')).toBe(true);
-            }
-          });
-        }); 
-
-        it('if "Custom VCL Rules" is "ON" then should'+
-          ' display "\'Backend Error\' Function"', function () {
-          EditPage.switchBtns(form.getCustomVCLrulesTxtIn(),
-          function(value) {
-            if (value === 'true') {
-              expect(checkDisplay('getBlockFunctionBlock', 'Backend Error')).toBe(true);
-            }
-          });
         });
 
 
-        it('if "Custom VCL Rules" is "ON" then should display "Backends"', function () {
-          EditPage.switchBtns(form.getCustomVCLrulesTxtIn(),
-          function(value) {
-            if (value === 'true') {
-              expect(checkDisplay('getBackends')).toBe(true);
-            }
-          });
+        it('if "Custom VCL Rules" is "ON" then should display "Backends" block', function () {
+            expect(checkDisplay('getBackendsBlock')).toBe(true);
         });
 
-        it('if "Custom VCL Rules" is "ON" then should '+
+        xit('if "Custom VCL Rules" is "ON" then should '+      
+         // TODO need to actually click on "Add Backend" button
           'display "Backend Name" in "Backends"', function () {
-          EditPage.switchBtns(form.getCustomVCLrulesTxtIn(),
-          function(value) {
-            if (value === 'true') {
-              EditPage.clickOnAddNewBackendBlock();
-              expect(checkDisplay('getBackends')).toBe(true);
-            }
-          });
+          EditPage.clickAddNewCachingRule();
+          expect(checkDisplay('getOriginHostHeaderTxtIn')).toBe(true);
         });
 
-        it('if "Custom VCL Rules" is "ON" then should '+
+        xit('if "Custom VCL Rules" is "ON" then should '+
           'display "Backend VCL Code" in "Backends"', function () {
-          EditPage.switchBtns(form.getCustomVCLrulesTxtIn(),
-          function(value) {
-            if (value === 'true') {
-              EditPage.clickOnAddNewBackendBlock();
-              expect(checkDisplay('getBackendVCLcode')).toBe(true);
-            }
-          });
+          expect(checkDisplay('getBackendVCLcode')).toBe(true);
         });
 
-        it('if "Custom VCL Rules" is "ON" then should display '+
+        xit('if "Custom VCL Rules" is "ON" then should display '+
           '"Dynamic Origin DNS Name Lookups" in "Backends"', function () {
-          EditPage.switchBtns(form.getCustomVCLrulesTxtIn(),
-          function(value) {
-            if (value === 'true') {
-              EditPage.clickOnAddNewBackendBlock();
-              expect(checkDisplay('getDynamicOriginDNSnameLookupsTxtIn')).toBe(true);
-            }
-          });
+          expect(checkDisplay('getDynamicOriginDNSnameLookupsTxtIn')).toBe(true);
         });
 
-        it('if "Custom VCL Rules" is "ON" then should display'+
+        xit('if "Custom VCL Rules" is "ON" then should display'+
           ' "Origin TCP Port" in "Backends"', function () {
-          EditPage.switchBtns(form.getCustomVCLrulesTxtIn(),
-          function(value) {
-            if (value === 'true') {
-              EditPage.clickOnAddNewBackendBlock();
-              expect(checkDisplay('getOriginTCPportTxtIn')).toBe(true);
-            }
-          });
+          expect(checkDisplay('getOriginTCPportTxtIn')).toBe(true);
         });
 
-        it('if "Custom VCL Rules" is "ON" then should display'+
+        xit('if "Custom VCL Rules" is "ON" then should display'+
           ' "Origin Host" in "Backends"', function () {
-          EditPage.switchBtns(form.getCustomVCLrulesTxtIn(),
-          function(value) {
-            if (value === 'true') {
-              EditPage.clickOnAddNewBackendBlock();
-              expect(checkDisplay('getOriginHostTxtIn')).toBe(true);
-            }
-          });
+          expect(checkDisplay('getOriginHostTxtIn')).toBe(true);
         });
 
       });

@@ -9,7 +9,7 @@
               <i class="glyphicon glyphicon-chevron-down"></i>
             </a>
           </span>
-    <span ng-click="$ctrl.onAddNewBackendBlock()" class="btn btn-primary btn-sm pull-right" title="Add New Backend Block"><i class="glyphicon glyphicon-plus"></i></span>
+    <span id="addNewBackendBlock" ng-click="$ctrl.onAddNewBackendBlock()" class="btn btn-primary btn-sm pull-right" title="Add New Backend Block"><i class="glyphicon glyphicon-plus"></i></span>
     <h4><b>Backends</b></h4>
   </div>
   <div class="panel-body">
@@ -77,7 +77,7 @@
           <label for="backendVcl" class="col-sm-3 control-label">
             Dynamic Origin DNS Name Lookups</label>
           <div class="col-sm-9">
-            <toggle-switch is-disabled="_loading" ng-model="item.dynamic" on-label="On" off-label="Off">
+            <toggle-switch id="dynamicOriginDNSnameLookups" is-disabled="_loading" ng-model="item.dynamic" on-label="On" off-label="Off">
             </toggle-switch>
             <label for="dynamic" class="text-info" popover-trigger="mouseenter" uib-popover="TODO text">
               <i class="fa fa-question-circle"></i>

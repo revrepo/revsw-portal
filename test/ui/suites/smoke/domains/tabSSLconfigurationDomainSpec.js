@@ -24,16 +24,13 @@ describe('Smoke', function () {
 
         beforeAll(function () {
           Portal.signIn(user);
+          Portal.helpers.nav.goToDomains();
+          Portal.domains.editPage.clickEditDomain();
+          Portal.domains.editPage.clickTabSSLconfiguration();
         });
 
         afterAll(function () {
           Portal.signOut();
-        });
-
-        beforeEach(function () {
-          Portal.helpers.nav.goToDomains();
-          Portal.domains.editPage.clickEditDomain();
-          Portal.domains.editPage.clickTabSSLconfiguration();
         });
 
         var checkDisplay = function(elem) {

@@ -30,16 +30,13 @@ describe('Smoke', function () {
 
         beforeAll(function () {
           Portal.signIn(user);
+          Portal.helpers.nav.goToDomains();
+          Portal.domains.editPage.clickEditDomain();
+          Portal.domains.editPage.clickTabGeneralSettings();
         });
 
         afterAll(function () {
           Portal.signOut();
-        });
-
-        beforeEach(function () {
-          Portal.helpers.nav.goToDomains();
-          Portal.domains.editPage.clickEditDomain();
-          Portal.domains.editPage.clickTabGeneralSettings();
         });
 
         it('should display "Domain Name"', function () {
@@ -54,9 +51,11 @@ describe('Smoke', function () {
           expect(checkDisplay('getBtnCopyCname')).toBe(true);
         });
 
-        it('should display "Account"', function () {
-          expect(checkDisplay('getCompanyNameDDownTxtIn')).toBe(true);
-        });
+        if (user.role !== 'Normal User' && user.role !== 'Admin') {
+          it('should display "Account"', function () {
+            expect(checkDisplay('getCompanyNameDDownTxtIn')).toBe(true);
+          });
+        }
 
         it('should display "Origin Server Name/IP"', function () {
           expect(checkDisplay('getOriginServerTxtIn')).toBe(true);

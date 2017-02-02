@@ -173,7 +173,7 @@ var PurgeCacheAdvanced = {
   getDomainDDown: function () {
     return this
       .getPanelHeadingElem()
-      .element(by.model(this.locators.dropDown.models.domain));
+      .element(by.css(this.locators.dropDown.domain));
   },
 
   /**
@@ -184,8 +184,10 @@ var PurgeCacheAdvanced = {
    * @returns {Promise}
    */
   getSearchDomainTxtIn: function () {
-    return this.getDomainDDown()
-      .element(by.model(this.locators.dropDown.models.searchDomain));
+
+    return element(by.model(this.locators.dropDown.models.searchDomain));
+    // return this.getDomainDDown()
+    //  .element(by.model(this.locators.dropDown.models.searchDomain));
   },
 
   /**

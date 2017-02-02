@@ -39,31 +39,32 @@ var DomainForm = {
         id: 'cname'
       },
       originServer: {
-        model: 'model.origin_server'
+        id: 'originServer'
       },
       originHostHeader: {
-        model: 'model.origin_host_header'
+        id: 'origin_host_header'
       },
       blueTriangleTechKey: {
-        css: 'input[ng-model="model.btt_key"]'
+        id: 'blueTriangleTechKey'
       },
       wildcardDomainAlias: {
         id: 'domain_wildcard_alias'
       },
       nonWildcardDomainAliases: {
-        css: '#domain_aliases input[ng-model="$select.search"]'
+        id: 'non-Wildcard-Domain-Aliases'
       },
       originMonitoringHTTPrequest: {
-        css: 'input[ng-model="model.origin_health_probe.HTTP_REQUEST"]'
+        id: 'originMonitoringHTTPrequest'
       },
-      URL: {
-        css: '.domain-caching-rules:first-child input[ng-model="$ctrl.rule.url.value"]'
-      },
+      
+      cacheBypassLocations: {
+        id: 'cacheBypassLocations'
+      }, 
       queryStringParametersToDropKeep: {
-        css: 'div[name="queryStringKeepOrRemoveList"] input'
+        id: 'query_str'
       },
       allowedSSLprotocols: {
-        css: 'input[ng-model="model.ssl_protocols"]'
+        id: 'ssl_protocols'
       },
       allowedSSLciphers: {
         id: 'ssl_ciphers'
@@ -72,7 +73,7 @@ var DomainForm = {
         css: 'div[ng-form="customVclBackendForm"]:first-child input[name="backendName"]'
       },
       originHost: {
-        css: 'div[ng-form="customVclBackendForm"]:first-child input[name="originHost"]'
+        id: 'originHost'
       },
 
       urlLocationBP: {
@@ -80,12 +81,15 @@ var DomainForm = {
       },
       urlLocationCO: {
         css: 'div[ng-if="$ctrl.domain.co_lua_enable_all"] input[ng-model="$ctrl.luaBlock.location"]'
+      },
+      listOfCookiesToDrop: {
+        css: '.cachingRulesURLblock:first-child .listOfCookiesToDrop'
       }
 
     },
     textareas: {
       backendVCLcode: {
-        css: 'div[ng-form="customVclBackendForm"]:first-child #vclHit'
+        id: 'vclHit'
       },
       comment: {
         id: 'comment'
@@ -99,53 +103,54 @@ var DomainForm = {
       },      
       luaCodeCO: {
         css: 'div[ng-if="$ctrl.domain.co_lua_enable_all"] textarea[name="luaBlockCode"]'
+      },
+      customVCLrulesListFunctions: {
+        css: '#customVCLrulesBlock .panel-group .text--courier'
       }
     },
     numberInputs: {
       dataReadTimeout: {
-        css: 'input[name="proxyTimeout"]'
+        id: 'proxy_timeout'
       },
       probeTimeout: {
-        css: 'input[name="originHealthProbePROBE_TIMEOUT"]'
+        id: 'probe_timeout'
       },
       probeInterval: {
-        css: 'input[name="originHealthProbePROBE_INTERVAL"]'
+        id: 'origin_health_probe_PROBE_INTERVAL'
       },
       expectedHTTPresponseCode: {
-        css: 'input[name="originHealthProbeHTTP_STATUS"]'
+        id: 'expectedHTTPresponseCode'
       },
       edgeCacheTTL: {
-        css: 'input[name="newTTL"]'
+        id: 'edgeCacheTTL'
       },
       originTCPport: {
-        css: 'div[ng-form="customVclBackendForm"]:first-child input[name="backendOriginTCPPort"]'
-      } 
+        id: 'proxy_timeout'
+      } ,
+      browserCachingTTL: {
+        id: 'browserCachingTTL'
+      }
     },
     radioInputs: {
       useEndUserProtocol: {
-        css: '[for="origin_secure_protocol"] + div > .radio-inline:nth-child(1)' +
-          ' input[ng-model="model.origin_secure_protocol"]'
+        id: 'useEndUserProtocol'
       },
       httpsOnly: {
-        css: '[for="origin_secure_protocol"] + div > .radio-inline:nth-child(2)' +
-          ' input[ng-model="model.origin_secure_protocol"]'
+        id: 'httpsOnly'
       },
       httpOnly: {
-        css: '[for="origin_secure_protocol"] + div > .radio-inline:nth-child(3)' +
-          ' input[ng-model="model.origin_secure_protocol"]'
+        id: 'httpOnly'
       },
       predefinedSSLconfigurationProfile: {
-        css: '.ssl-certificate-configuration .col-md-5 .form-group:first-child' +
-          ' input[ng-model="isCustomSSL_conf_profile"]'
+        id: 'predefinedSSLconfigurationProfile'
       },
       customSSLconfigurationProfile: {
-        css: '.ssl-certificate-configuration .col-md-5 .form-group:last-child' +
-          ' input[ng-model="isCustomSSL_conf_profile"]'
+        id: 'customSSLconfigurationProfile'
       }
     },
     selects: {
       sslConfProfile: {
-        css: 'select[ng-model="model.ssl_conf_profile"]'
+        id: 'ssl_conf_profile'
       }
     },
     checkboxes: {
@@ -153,7 +158,7 @@ var DomainForm = {
         id: 'ssl_prefer_server_ciphers'
       },
       oneAtATime: {
-        css: 'input[ng-model="oneAtATime"]'
+        id: 'openOnlyOneRuleAtTime'
       }
     },
     switches: {
@@ -161,62 +166,82 @@ var DomainForm = {
         ariaChecked: 'aria-checked'
       },
       lastMileQUICprotocol: {
-        css: 'div[ng-model="model.rev_component_bp.enable_quic"]'
+        id: 'lastMileQUICprotocol'
       },
       blockAllWebCrawlers: {
-        css: 'div[ng-model="model.rev_component_bp.block_crawlers"]'
+        id: 'blockAllWebCrawlers'
       },
       RUMdataCollection: {
-        css: 'div[ng-model="model.rev_component_co.enable_rum"]'
+        id: 'runDataCollection'
       },
       originHealthMonitoring: {
-        css: 'div[ng-model="model.enable_origin_health_probe"]'
+        id: 'originHealthMonitoring'
       },
       edgeCaching: {
-        css: 'div[ng-model="model.rev_component_bp.enable_cache"]'
+        id: 'edgeCaching'
       },
       overrideOriginCachingHeaders: {
-        css: 'div[ng-model="$ctrl.rule.edge_caching.override_origin"]'
+        id: 'overrideOriginCachingHeaders'
       },
       edgeCachingHeadersMissing: {
-        css: 'div[ng-model="$ctrl.rule.edge_caching.override_no_cc"]'
+        id: 'newEdgeTTLifOriginMissing'
       },
       keepOrDropQueryStringParameters: {
-        css:'div[ng-model="$ctrl.rule.edge_caching.query_string_list_is_keep"]'
+        id:'keepOrDropQueryStringParameters'
       },
       overrideHTTPcookies: {
-        css: 'div[ng-model="$ctrl.rule.cookies.override"]'
+        css: '.cachingRulesURLblock:first-child .overrideHTTPcookies'
       },
+
+      ignoreAllHTTPcookies: {
+        css: '.cachingRulesURLblock:first-child .ignoreAllHTTPcookies'
+      },
+      keepOrDropSpecificHTTPcookies: {
+        id: 'keepOrDropSpecificHTTPcookies'
+      },
+      removeIgnoredCookiesFromOriginRequests: {
+        id: 'removeIgnoredCookiesFromOriginRequests'
+      },   
+      removeIgnoredCookiesFromEdgeResponses: {
+        id: 'removeIgnoredCookiesFromEdgeResponses'
+      },  
       overrideEdgeCaching: {
-        css: 'div[ng-model="$ctrl.rule.browser_caching.override_edge"]'
+        css: '.cachingRulesURLblock:first-child .overrideEdgeCaching'
       },
       forceRevalidation: {
-        css: 'div[ng-model="$ctrl.rule.browser_caching.force_revalidate"]'
+        id: 'forceRevalidation'
       },
       enableServingStaleContent: {
-        css: 'div[ng-model="$ctrl.rule.serve_stale.enable"]'
+        css: '.cachingRulesURLblock:first-child .enableTheServingOfStaleContent'
       },
+      staleObjectTTLwhileFetchingNewObject: {
+        css: '.cachingRulesURLblock:first-child .staleObjectTTLwhileFetchingNewObject'
+      },
+      staleObjectTTLwhenOriginIsDown: {
+        css: '.cachingRulesURLblock:first-child .staleObjectTTLwhenOriginIsDown'
+      },
+
+
       enableESI: {
-        css: 'div[ng-model="$ctrl.rule.enable_esi"]'
+        id: 'enableESI'
       },
+
+
       acceptSSLrequests: {
-        css: 'div[ng-model="model.enable_ssl"]'
+        id: 'acceptSSLrequests'
       },
       customVCLrules: {
         css: 'div[ng-model="model.rev_component_bp.custom_vcl.enabled"]'
       },
       dynamicOriginDNSnameLookups: {
-        css: 'div[ng-form="customVclBackendForm"]:first-child div[ng-model="item.dynamic"]'
+        id: 'dynamicOriginDNSnameLookups'
       },
       enableLuaScriptingOnEdgeLastMile: {
-        css: 'div[ng-model="$ctrl.domain.bp_lua_enable_all"]'
+        id: 'luaScriptingLastMile'
       },
       enableLuaScriptingOriginFirstMile: {
-        css: 'div[ng-model="$ctrl.domain.co_lua_enable_all"]'
+        id: 'luaScriptingFirstMile'
       },
-
-
-
 
       enableThisCodeBlockBP: {
         css: 'div[ng-model="$ctrl.luaBlock.enable"]'
@@ -236,20 +261,27 @@ var DomainForm = {
 
     },
     dropDowns: {
+      account: {
+        id: 'account_id'
+      },
       companyName: {
         model: 'model.account_id'
       },
       originServerLocation: {
-        model: 'model.origin_server_location_id'
+        id: 'origin_server_location_id'
       },
       sslCert: {
-        model: 'model.ssl_cert_id'
+        id: 'ssl_cert_id'
       }
     },
 
     buttons: {
       onAddNewCachingRule: {
-        css: '[title="Add New Caching Rule"]'
+        id: 'addNewBackendBlock'
+      },
+
+      openUrlOfCachingRule: {
+        css: '.cachingRulesURLblock:first-child a[title="Expand Caching Rule"]'
       },
       onAddNewBackendBlock: {
         css: '[title="Add New Backend Block"]'
@@ -258,18 +290,26 @@ var DomainForm = {
         css: '.btn-copy--cname'
       },
       manageSSLcertificates: {
-        css: '[ui-sref="index.webApp.ssl_certs"]'
+        id: 'manageSSLcertificates'
       },
       onAddNewItemBP: {
-        css: '[ng-click="$ctrl.onAddNewItemBP()"]'
+        css: '.addNewLuaBlock'
       },
       onAddNewItemCO: {
         css: '[ng-click="$ctrl.onAddNewItemCO()"]'
       }
     },
+    elementsForm: {
+      elementsLuaScriptsLastMile: {
+        css: '#luaScriptingLastMileBlock .elemLastFirstMile'
+      },
+      elementsLuaScriptsFirstMile: {
+        css: '#luaScriptingFirstMileBlock .elemLastFirstMile'
+      }
+    },
     blocks: {
       customVCLrules: {
-        css: 'div[ng-model="model.rev_component_bp.custom_vcl"]'
+        id: 'customVCLrulesBlock'
       },
       functionBlock: {
         css: 'div[ng-model="model.rev_component_bp.custom_vcl"] .panel-default'
@@ -282,7 +322,39 @@ var DomainForm = {
       },
       luaScriptsExecutedFirstMile: {
         css: 'div[ng-if="$ctrl.domain.co_lua_enable_all"]' 
-      }
+      },
+
+      cachingRulesBlock: {
+        id: 'cachingRulesBlock'
+      },
+      URL: {
+        css: '.cachingRulesURLblock:first-child'
+      },
+
+      manageOriginRequestHeaders: {
+        id: 'manageOriginRequestHeaders'
+      },
+
+      manageEndUserResponseHeaders: {
+        id: 'manageEndUserResponseHeaders'
+      },
+
+      customVCLrulesBlocks: {
+        css: '#customVCLrulesBlock .panel-group > .panel-default'
+      },
+
+      linkFromListCustomVCLrulesBlocks: {
+        css: '#customVCLrulesBlock .panel-default .accordion-toggle'
+      },
+
+      backendsBlock: {
+        id: 'backendsBlock'
+      },
+
+      luaScriptsExecutedEdgeLastFirstMilesProxies: {
+        css: '.domain-lua-scripting--list'
+      }      
+
     },
     tabs:{
       generalSettings: {
@@ -315,13 +387,17 @@ var DomainForm = {
 
 
   getOnAddNewCachingRule: function () {
-    return element(by.css(this.locators.buttons.onAddNewCachingRule.css));
+    return element(by.id(this.locators.buttons.onAddNewCachingRule.id));
   },
   getOnAddNewBackendBlock: function () {
     return element(by.css(this.locators.buttons.onAddNewBackendBlock.css));
   },
   getBtnCopyCname: function () {
     return element(by.css(this.locators.buttons.btnCopyCname.css));
+  },
+
+  getOpenUrlOfCachingRule: function () {
+    return element.all(by.css(this.locators.buttons.openUrlOfCachingRule.css));
   },
 
 
@@ -418,7 +494,7 @@ var DomainForm = {
   },
 
   getCompanyNameDDownTxtIn: function () {
-    return element(by.model(this.locators.dropDowns.companyName.model));
+    return element(by.id(this.locators.dropDowns.account.id));
   },
 
   /**
@@ -430,8 +506,7 @@ var DomainForm = {
    * @returns {Selenium WebDriver Element}
    */
   getSslCertDDown: function () {
-    return element(
-        by.model(this.locators.dropDowns.sslCert.model));
+    return element(by.id(this.locators.dropDowns.sslCert.id));
   },
 
   /**
@@ -459,7 +534,7 @@ var DomainForm = {
    * @returns {Selenium WebDriver Element}
    */
   getOriginServerTxtIn: function () {
-    return element(by.model(this.locators.textInputs.originServer.model));
+    return element(by.id(this.locators.textInputs.originServer.id));
   },
 
   /**
@@ -471,11 +546,11 @@ var DomainForm = {
    * @returns {Selenium WebDriver Element}
    */
   getOriginHostHeaderTxtIn: function () {
-    return element(by.model(this.locators.textInputs.originHostHeader.model));
+    return element(by.id(this.locators.textInputs.originHostHeader.id));
   },
 
   getBlueTriangleTechKeyTxtIn: function () {
-    return element(by.css(this.locators.textInputs.blueTriangleTechKey.css));
+    return element(by.id(this.locators.textInputs.blueTriangleTechKey.id));
   },
 
   getWildcardDomainAliasTxtIn: function () {
@@ -483,23 +558,32 @@ var DomainForm = {
   },
 
   getNonWildcardDomainAliasesTxtIn: function () {
-    return element(by.css(this.locators.textInputs.nonWildcardDomainAliases.css));
+    return element(by.id(this.locators.textInputs.nonWildcardDomainAliases.id));
   },
 
   getOriginMonitoringHTTPrequestTxtIn: function () {
-    return element(by.css(this.locators.textInputs.originMonitoringHTTPrequest.css));
+    return element(by.id(this.locators.textInputs.originMonitoringHTTPrequest.id));
+  },
+
+
+  getCacheBypassLocationsTxtIn: function () {
+    return element(by.id(this.locators.textInputs.cacheBypassLocations.id));
+  },
+
+  getCachingRulesBlock: function () {
+    return element(by.id(this.locators.blocks.cachingRulesBlock.id));
   },
 
   getURLtxtIn: function () {
-    return element(by.css(this.locators.textInputs.URL.css));
+    return element(by.css(this.locators.blocks.URL.css));
   },
 
   getQueryStringParametersToDropKeepTxtIn: function () {
-    return element(by.css(this.locators.textInputs.queryStringParametersToDropKeep.css));
+    return element(by.id(this.locators.textInputs.queryStringParametersToDropKeep.id));
   },
 
   getAllowedSSLprotocolsTxtIn: function () {
-    return element(by.css(this.locators.textInputs.allowedSSLprotocols.css));
+    return element(by.id(this.locators.textInputs.allowedSSLprotocols.id));
   },
 
   getAllowedSSLciphersTxtIn: function () {
@@ -511,7 +595,7 @@ var DomainForm = {
   },
 
   getOriginHostTxtIn: function () {
-    return element(by.css(this.locators.textInputs.originHost.css));
+    return element(by.id(this.locators.textInputs.originHost.id));
   },
 
   getUrlLocationBP: function () {
@@ -538,90 +622,136 @@ var DomainForm = {
   },
 
   getDataReadTimeoutTxtIn: function () {
-    return element(by.css(this.locators.numberInputs.dataReadTimeout.css));
+    return element(by.id(this.locators.numberInputs.dataReadTimeout.id));
   },
   getProbeTimeoutTxtIn: function () {
-    return element(by.css(this.locators.numberInputs.probeTimeout.css));
+    return element(by.id(this.locators.numberInputs.probeTimeout.id));
   },
 
   getProbeIntervalTxtIn: function () {
-    return element(by.css(this.locators.numberInputs.probeInterval.css));
+    return element(by.id(this.locators.numberInputs.probeInterval.id));
   },
 
   getExpectedHTTPresponseCodeTxtIn: function () {
-    return element(by.css(this.locators.numberInputs.expectedHTTPresponseCode.css));
+    return element(by.id(this.locators.numberInputs.expectedHTTPresponseCode.id));
   },
 
   getEdgeCacheTTLTxtIn: function () {
-    return element(by.css(this.locators.numberInputs.edgeCacheTTL.css));
+    return element(by.id(this.locators.numberInputs.edgeCacheTTL.id));
   },
 
   getOriginTCPportTxtIn: function () {
-    return element(by.css(this.locators.numberInputs.originTCPport.css));
+    return element(by.id(this.locators.numberInputs.originTCPport.id));
   },
 
   getLastMileQUICprotocolTxtIn: function () {
-    return element(by.css(this.locators.switches.lastMileQUICprotocol.css));
+    return element(by.id(this.locators.switches.lastMileQUICprotocol.id));
   },
 
   getBlockAllWebCrawlersTxtIn: function () {
-    return element(by.css(this.locators.switches.blockAllWebCrawlers.css));
+    return element(by.id(this.locators.switches.blockAllWebCrawlers.id));
   },
 
   getRUMdataCollectionTxtIn: function () {
-    return element(by.css(this.locators.switches.RUMdataCollection.css));
+    return element(by.id(this.locators.switches.RUMdataCollection.id));
   },
 
   getOriginHealthMonitoringTxtIn: function () {
-    return element(by.css(this.locators.switches.originHealthMonitoring.css));
+    return element(by.id(this.locators.switches.originHealthMonitoring.id));
   },
 
   getEdgeCachingTxtIn: function () {
-    return element(by.css(this.locators.switches.edgeCaching.css));
+    return element(by.id(this.locators.switches.edgeCaching.id));
   },
 
   getOverrideOriginCachingHeadersTxtIn: function () {
-    return element(by.css(this.locators.switches.overrideOriginCachingHeaders.css));
+    return element(by.id(this.locators.switches.overrideOriginCachingHeaders.id));
   },
 
   getEdgeCachingHeadersMissingTxtIn: function () {
-    return element(by.css(this.locators.switches.edgeCachingHeadersMissing.css));
+    return element(by.id(this.locators.switches.edgeCachingHeadersMissing.id));
   },
 
   getKeepOrDropQueryStringParametersTxtIn: function () {
-    return element(by.css(this.locators.switches.keepOrDropQueryStringParameters.css));
+    return element(by.id(this.locators.switches.keepOrDropQueryStringParameters.id));
   },
 
   getOverrideHTTPcookiesTxtIn: function () {
     return element(by.css(this.locators.switches.overrideHTTPcookies.css));
   },
+
+  getIgnoreAllHTTPcookiesTxtIn: function () {
+    return element(by.css(this.locators.switches.ignoreAllHTTPcookies.css));
+  },
+
+  getKeepOrDropSpecificHTTPcookiesTxtIn: function () {
+    return element(by.id(this.locators.switches.keepOrDropSpecificHTTPcookies.id));
+  }, 
+  getListOfCookiesToDrop: function () {
+    return element(by.css(this.locators.textInputs.listOfCookiesToDrop.css));
+  }, 
+
+  getRemoveIgnoredCookiesFromOriginRequests: function () {
+    return element(by.id(this.locators.switches.removeIgnoredCookiesFromOriginRequests.id));
+  }, 
+
+  getRemoveIgnoredCookiesFromEdgeResponses: function () {
+    return element(by.id(this.locators.switches.removeIgnoredCookiesFromEdgeResponses.id));
+  }, 
+
   getOverrideEdgeCachingTxtIn: function () {
     return element(by.css(this.locators.switches.overrideEdgeCaching.css));
   },
 
-  getForceRevalidationTxtIn: function () {
-    return element(by.css(this.locators.switches.forceRevalidation.css));
+  getBrowserCachingTTL: function () {
+    return element(by.id(this.locators.numberInputs.browserCachingTTL.id));
   },
+
+  getForceRevalidation: function () {
+    return element(by.id(this.locators.switches.forceRevalidation.id));
+  },
+
   getEnableServingStaleContentTxtIn: function () {
     return element(by.css(this.locators.switches.enableServingStaleContent.css));
   },
-  getEnableESITxtIn: function () {
-    return element(by.css(this.locators.switches.enableESI.css));
+
+  getStaleObjectTTLwhileFetchingNewObject: function () {
+    return element(by.css(this.locators.switches.staleObjectTTLwhileFetchingNewObject.css));
   },
+
+  getStaleObjectTTLwhenOriginIsDown: function () {
+    return element(by.css(this.locators.switches.staleObjectTTLwhenOriginIsDown.css));
+  },
+
+  getEnableESITxtIn: function () {
+    return element(by.id(this.locators.switches.enableESI.id));
+  },
+
+  getManageOriginRequestHeaders: function () {
+    return element(by.id(this.locators.blocks.manageOriginRequestHeaders.id));
+  },
+
+
+
+  getManageEndUserResponseHeaders: function () {
+    return element(by.id(this.locators.blocks.manageEndUserResponseHeaders.id));
+  },
+
+
   getAcceptSSLrequestsTxtIn: function () {
-    return element(by.css(this.locators.switches.acceptSSLrequests.css));
+    return element(by.id(this.locators.switches.acceptSSLrequests.id));
   },
   getCustomVCLrulesTxtIn: function () {
     return element(by.css(this.locators.switches.customVCLrules.css));
   },
   getDynamicOriginDNSnameLookupsTxtIn: function () {
-    return element(by.css(this.locators.switches.dynamicOriginDNSnameLookups.css));
+    return element(by.id(this.locators.switches.dynamicOriginDNSnameLookups.id));
   },
   getEnableLuaScriptingOnEdgeLastMile: function () {
-    return element(by.css(this.locators.switches.enableLuaScriptingOnEdgeLastMile.css));
+    return element(by.id(this.locators.switches.enableLuaScriptingOnEdgeLastMile.id));
   },
   getEnableLuaScriptingOriginFirstMile: function () {
-    return element(by.css(this.locators.switches.enableLuaScriptingOriginFirstMile.css));
+    return element(by.id(this.locators.switches.enableLuaScriptingOriginFirstMile.id));
   },
   getEnableThisCodeBlockBP: function () {
     return element(by.css(this.locators.switches.enableThisCodeBlockBP.css));
@@ -637,30 +767,30 @@ var DomainForm = {
   },
 
   getUseEndUserProtocolTxtIn: function () {
-    return element(by.css(this.locators.radioInputs.useEndUserProtocol.css));
+    return element(by.id(this.locators.radioInputs.useEndUserProtocol.id));
   },
   getHttpsOnlyTxtIn: function () {
-    return element(by.css(this.locators.radioInputs.httpsOnly.css));
+    return element(by.id(this.locators.radioInputs.httpsOnly.id));
   },
   getHttpOnlyTxtIn: function () {
-    return element(by.css(this.locators.radioInputs.httpOnly.css));
+    return element(by.id(this.locators.radioInputs.httpOnly.id));
   },
 
 
   getPredefinedSSLconfigurationTxtIn: function () {
-    return element(by.css(this.locators.radioInputs.predefinedSSLconfigurationProfile.css));
+    return element(by.id(this.locators.radioInputs.predefinedSSLconfigurationProfile.id));
   },
   getCustomSSLconfigurationTxtIn: function () {
-    return element(by.css(this.locators.radioInputs.customSSLconfigurationProfile.css));
+    return element(by.id(this.locators.radioInputs.customSSLconfigurationProfile.id));
   },
 
 
   getManageSSLcertificatesTxtIn: function () {
-    return element(by.css(this.locators.buttons.manageSSLcertificates.css));
+    return element(by.id(this.locators.buttons.manageSSLcertificates.id));
   },
 
   getSslConfProfileTxtIn: function () {
-    return element(by.css(this.locators.selects.sslConfProfile.css));
+    return element(by.id(this.locators.selects.sslConfProfile.id));
   },
 
   getPreferServerSideCiphersTxtIn: function () {
@@ -668,15 +798,11 @@ var DomainForm = {
   },
 
   getBlockCustomVCLrulesTxtIn: function () {
-    return element(by.css(this.locators.blocks.customVCLrules.css));
+    return element(by.id(this.locators.blocks.customVCLrules.id));
   },
 
-  getBlockFunctionBlock: function (name) {
-    return element(by.css(this.locators.blocks.functionBlock.css +
-      '[heading="\'' + name + '\' Function"]'));
-  },
   getOneAtATimeTxtIn: function () {
-    return element(by.css(this.locators.checkboxes.oneAtATime.css));
+    return element(by.id(this.locators.checkboxes.oneAtATime.id));
   },
 
   getBackends: function () {
@@ -684,7 +810,7 @@ var DomainForm = {
   },
 
   getBackendVCLcode: function () {
-    return element(by.css(this.locators.textareas.backendVCLcode.css));
+    return element(by.id(this.locators.textareas.backendVCLcode.id));
   },
 
   getLuaScriptsExecutedLastMile: function () {
@@ -696,12 +822,47 @@ var DomainForm = {
   },
 
   getOnAddNewItemBP: function () {
-    return element(by.css(this.locators.buttons.onAddNewItemBP.css));
+    return element.all(by.css(this.locators.buttons.onAddNewItemBP.css));
   },
   getOnAddNewItemCO: function () {
     return element(by.css(this.locators.buttons.onAddNewItemCO.css));
   },
 
+
+  getCustomVCLrulesBlocks: function () {
+    return element.all(by.css(this.locators.blocks.customVCLrulesBlocks.css));
+  },
+
+
+  getLinkFromListCustomVCLrulesBlocks: function () {
+    return element.all(by.css(this.locators.blocks.linkFromListCustomVCLrulesBlocks.css));
+  },
+
+
+  getCustomVCLrulesListFunctions: function () {
+    return element.all(by.css(this.locators.textareas.customVCLrulesListFunctions.css));
+  },
+
+
+  getBackendsBlock: function () {
+    return element(by.id(this.locators.blocks.backendsBlock.id));
+  },
+
+
+  getLuaScriptsExecutedEdgeLastFirstMilesProxies: function () {
+    return element
+      .all(by.css(this.locators.blocks
+          .luaScriptsExecutedEdgeLastFirstMilesProxies.css));
+  },
+
+
+  getLuaScriptsExecutedEdgeLastMilefields: function () {
+    return element.all(by.css(this.locators.elementsForm.elementsLuaScriptsLastMile.css));
+  },
+
+  getLuaScriptsExecutedEdgeFirstMilefields: function () {
+    return element.all(by.css(this.locators.elementsForm.elementsLuaScriptsFirstMile.css));
+  },
 
 
   /**
@@ -714,7 +875,7 @@ var DomainForm = {
    */
   getDomainOriginLocationDDown: function () {
     return element(
-      by.model(this.locators.dropDowns.originServerLocation.model));
+      by.id(this.locators.dropDowns.originServerLocation.id));
   },
 
   // ## Methods to interact with the Domain form components
