@@ -65,6 +65,9 @@
                       </div>
                       <input type="text" class="form-control" name="oneTimePassword" id="one-time-password" placeholder="One-Time Password" ng-model="oneTimePassword" pattern="^\d{6}$" required>
                     </div>
+                    <label for="oneTimePassword" class="text text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="TODO text">
+                      <i class="fa fa-question-circle"></i>
+                    </label>
                   </div>
                   <button type="submit" class="btn btn-primary" ng-disabled="!oneTimePassword || _loading" ng-click="enable(oneTimePassword)">
                     <i class="glyphicon glyphicon-ok"></i>&nbsp; Enable 2FA
