@@ -40,7 +40,7 @@
             <div class="col-md-12">
               <div class="pull-left form-inline">
                 <div class="form-group">
-                  <a ui-sref=".new" class="btn btn-success" ng-disabled="_loading">
+                  <a ui-sref="{{isReadOnly() ?'.': '.new'}}" class="btn btn-success" ng-class="{'btn-disabled':isReadOnly()}" ng-disabled="_loading || isReadOnly()">
                     <i class="glyphicon glyphicon-plus"></i>&nbsp; Add New SSL Name
                   </a>
                 </div>
@@ -113,10 +113,10 @@
                 </td>
                 <td class="actions">
                   <i class="glyphicon glyphicon-refresh spin" ng-if="item.loading"></i>
-                  <a href="" ng-class="item.verified?'disabled':''" ng-disabled="item.verified" ng-if="!item.loading" uib-tooltip="{{item.verified?'Already Verified':'Verify Domain Control'}}" ng-click="onVerifyDomain($event,item)">
+                  <a href="" ng-class="(item.verified ||isReadOnly())?'disabled':''" ng-disabled="item.verified ||isReadOnly()" ng-if="!item.loading" uib-tooltip="{{item.verified?'Already Verified':'Verify Domain Control'}}" ng-click="onVerifyDomain($event,item)">
                     <i class="glyphicon glyphicon-check"></i>
                   </a>
-                  <a href="" ng-if="!item.loading" ng-click="deleteSSLName(item)" uib-tooltip="Delete SSL Name">
+                  <a href="" ng-class="(item.verified ||isReadOnly())?'disabled':''" ng-if="!item.loading" ng-click="deleteSSLName(item)" uib-tooltip="Delete SSL Name">
                     <i class="glyphicon glyphicon-trash"></i>
                   </a>
                 </td>
