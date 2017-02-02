@@ -48,7 +48,7 @@ var PurgeCacheBasic = {
       },
       basicMode: {
         linkText: 'Basic Mode',
-        id: 'btn-advanced-mode'
+        id: 'btn-basic-mode'
       },
       purge: {
         css: '[ng-click="purgeText()"]'
