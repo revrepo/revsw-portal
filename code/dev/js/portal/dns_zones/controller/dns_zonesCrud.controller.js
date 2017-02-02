@@ -156,6 +156,10 @@
      * @return
      */
     $scope.deleteDNSZone = function(model) {
+      // NOTE: not delete if RO user
+      if($scope.isReadOnly() === true){
+        return;
+      }
       $scope.confirm('confirmModal.html', model).then(function() {
         var zone = model.zone;
         $scope

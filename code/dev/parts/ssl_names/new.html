@@ -88,7 +88,7 @@
               <a ui-sref="^" class="btn btn-default">
                 <i class="glyphicon glyphicon-remove"></i>&nbsp; Cancel
               </a>
-              <button class="btn btn-success" id="create_ssr_cert" ng-disabled="createForm.$invalid|| _loading" ng-click="onCreateSSLName(model,false)">
+              <button class="btn btn-success" ng-class="{'btn-disabled':isReadOnly()}"  id="create_ssr_cert" ng-disabled="createForm.$invalid|| _loading || isReadOnly()" ng-click="onCreateSSLName(model,false)">
                 <i class="glyphicon" ng-class="_loading?'glyphicon-refresh spin':'glyphicon-ok'"></i>&nbsp; Add SSL Name
               </button>
             </div>

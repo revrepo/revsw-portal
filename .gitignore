@@ -10,6 +10,7 @@ sftp-config.json
 local.js
 code/public/
 code/dev/config.js
+code/dev/css/*
 *npm-debug.log
 
 

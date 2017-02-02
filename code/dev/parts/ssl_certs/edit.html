@@ -132,13 +132,13 @@
               <a ui-sref="^" class="btn btn-default">
                 <i class="glyphicon glyphicon-remove"></i>&nbsp; Cancel
               </a>
-              <button class="btn btn-info" ng-disabled="disableSubmit(model, true) || editForm.$invalid" ng-click="validateSSLCert(model)">
+              <button class="btn btn-info" ng-class="{'btn-disabled':isReadOnly()}" ng-disabled="disableSubmit(model, true) || editForm.$invalid || isReadOnly()" ng-click="validateSSLCert(model)">
                 <i class="glyphicon" ng-class="_loading ? 'glyphicon-refresh spin':'glyphicon-check'"></i>&nbsp; Verify
               </button>
-              <button class="btn btn-success" ng-disabled="disableSubmit(model, true) || editForm.$invalid" ng-click="updateSSLCert(model)" uib-tooltip="{{sslCert_update_help_info}}">
+              <button class="btn btn-success" ng-class="{'btn-disabled':isReadOnly()}" ng-disabled="disableSubmit(model, true) || editForm.$invalid || isReadOnly()" ng-click="updateSSLCert(model)" uib-tooltip="{{sslCert_update_help_info}}">
                 <i class="glyphicon" ng-class="_loading ? 'glyphicon-refresh spin':'glyphicon-file'"></i>&nbsp; Update
               </button>
-              <button class="btn btn-success" ng-disabled="disableSubmit(model, true) || editForm.$invalid" ng-click="publishSSLCert(model)" uib-tooltip="{{sslCert_publish_help_info}}">
+              <button class="btn btn-success" ng-class="{'btn-disabled':isReadOnly()}" ng-disabled="disableSubmit(model, true) || editForm.$invalid || isReadOnly()" ng-click="publishSSLCert(model)" uib-tooltip="{{sslCert_publish_help_info}}">
                 <i class="glyphicon" ng-class="_loading ? 'glyphicon-refresh spin':'glyphicon-ok'"></i> &nbsp; Publish
               </button>
             </div>

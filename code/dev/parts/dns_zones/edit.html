@@ -127,7 +127,7 @@
               <a ui-sref="^" class="btn btn-default">
                 <i class="glyphicon glyphicon-remove"></i>&nbsp; Cancel
               </a>
-              <button class="btn btn-success" ng-disabled="editForm.$invalid" ng-click="updateDNSZone(model)" uib-tooltip="{{dnsZone_update_help_info}}">
+              <button class="btn btn-success" ng-class="{'btn-disabled':isReadOnly()}" ng-disabled="editForm.$invalid || isReadOnly()" ng-click="updateDNSZone(model)" uib-tooltip="{{dnsZone_update_help_info}}">
                 <i class="glyphicon" ng-class="_loading ? 'glyphicon-refresh spin':'glyphicon-file'"></i>&nbsp; Update
               </button>
             </div>

@@ -133,13 +133,11 @@
               <a ui-sref="^" class="btn btn-default">
                 <i class="glyphicon glyphicon-remove"></i>&nbsp; Cancel
               </a>
-              <button class="btn btn-success" id="create_ssr_cert" ng-disabled="disableSubmit(model)" ng-click="createSSLCert(model,false)">
-                <i class="glyphicon glyphicon-refresh spin" ng-if="_loading"></i>
-                <i class="glyphicon glyphicon-ok" ng-if="!_loading"></i>&nbsp; Create SSL Certificate
+              <button class="btn btn-success" id="create_ssr_cert" ng-class="{'btn-disabled':isReadOnly()}" ng-disabled="disableSubmit(model) || isReadOnly()" ng-click="createSSLCert(model,false)">
+                <i class="glyphicon" ng-class="_loading ? 'glyphicon-refresh spin':'glyphicon-ok'"></i>&nbsp; Create SSL Certificate
               </button>
-              <button class="btn btn-success" id="create_ssr_cert_and_add_more" ng-disabled="disableSubmit(model)" ng-click="createSSLCert(model,true);createForm.$setPristine()">
-                <i class="glyphicon glyphicon-refresh spin" ng-if="_loading"></i>
-                <i class="glyphicon glyphicon-ok" ng-if="!_loading"></i>&nbsp; Create And Add More
+              <button class="btn btn-success" id="create_ssr_cert_and_add_more" ng-class="{'btn-disabled':isReadOnly()}" ng-disabled="disableSubmit(model) || isReadOnly()" ng-click="createSSLCert(model,true);createForm.$setPristine()">
+                <i class="glyphicon" ng-class="_loading ? 'glyphicon-refresh spin':'glyphicon-ok'"></i>&nbsp; Create And Add More
               </button>
             </div>
           </div>
