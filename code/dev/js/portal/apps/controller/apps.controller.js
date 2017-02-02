@@ -240,6 +240,10 @@
     };
 
     $scope.updateApp = function(model) {
+      // NOTE: not update if RO User
+      if($scope.isReadOnly() === true){
+        return;
+      }
       $scope.confirm('confirmUpdateModal.html', model).then(function() {
         $scope._loading = true;
         var params = {
@@ -277,6 +281,10 @@
     };
 
     $scope.publish = function(model) {
+      // NOTE: not publish if RO User
+      if($scope.isReadOnly() === true){
+        return;
+      }
       if (!$scope.model.id) {
         $scope.alertService.danger('Please select app first');
         return;
@@ -298,6 +306,10 @@
     };
 
     $scope.deleteApp = function(model) {
+      // NOTE: not delete if RO User
+      if($scope.isReadOnly() === true){
+        return;
+      }
       $scope.confirm('confirmModal.html', model).then(function() {
         var appName = model.app_name;
         $scope
