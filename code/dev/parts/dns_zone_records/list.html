@@ -49,7 +49,7 @@
                   </a>
                 </div>
                 <div class="form-group">
-                  <a ui-sref=".new" class="btn btn-success" ng-disabled="_loading">
+                  <a ui-sref="{{isReadOnly() ?'.': '.new'}}" ng-class="{'btn-disabled':isReadOnly()}" class="btn btn-success" ng-disabled="_loading || isReadOnly()">
                     <i class="glyphicon glyphicon-plus"></i>&nbsp; Add New Record
                   </a>
                 </div>
@@ -115,7 +115,7 @@
                   <a ui-sref=".edit({id: record.id})" ng-if="!record.loading" uib-tooltip="Edit Record">
                     <i class="glyphicon glyphicon-pencil"></i>
                   </a>
-                  <a href="" ng-if="!record.loading" ng-click="deleteDNSZoneRecord(record)" uib-tooltip="Delete Record">
+                  <a href="" ng-if="!record.loading" ng-class="{'disabled':isReadOnly()}" ng-click="deleteDNSZoneRecord(record)" uib-tooltip="Delete Record">
                     <i class="glyphicon glyphicon-trash"></i>
                   </a>
                 </td>
