@@ -66,7 +66,7 @@ var TopObjectsForm = {
         },
         dropdowns: {
           delay:{
-            model: 'delay'
+            model: 'ngFilters.delay'
           },
           country:{
             model: 'ngFilters.country'

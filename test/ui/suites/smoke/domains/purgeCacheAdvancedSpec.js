@@ -52,7 +52,7 @@ describe('Smoke', function () {
     it('should display Purge Cached Objects Advanced Mode page',
       function () {
         Portal.purgeCacheAdvancedPage.clickAdvancedMode();
-//        Portal.purgeCacheAdvancedPage.selectDomain(myDomain);   TODO need to fix the function
+        Portal.purgeCacheAdvancedPage.selectDomain(myDomain);
         var isDisplayed = Portal.purgeCacheAdvancedPage.isDisplayed();
         expect(isDisplayed).toBe(true);
     });
@@ -60,7 +60,7 @@ describe('Smoke', function () {
     it('should navigate from Advanded mode to Basic mode pages',
       function () {
         Portal.purgeCacheAdvancedPage.clickAdvancedMode();
-//  Portal.purgeCacheAdvancedPage.selectDomain(myDomain);     TODO need to fix the function
+        Portal.purgeCacheAdvancedPage.selectDomain(myDomain);
         Portal.purgeCacheAdvancedPage.clickBasicMode();
         Portal.purgeCacheAdvancedPage.clickAdvancedMode();
 
@@ -71,7 +71,7 @@ describe('Smoke', function () {
     it('should display the first example textarea with json example',
       function () {
         Portal.purgeCacheAdvancedPage.clickAdvancedMode();
-//        Portal.purgeCacheAdvancedPage.selectDomain(myDomain);   TODO need to fix the function
+        Portal.purgeCacheAdvancedPage.selectDomain(myDomain);
 
         var jsonExample = Portal.purgeCacheAdvancedPage.getJsonExample(0);
         var expectedMsg1 = 'Purge all PNG files under /images, non-recursive';
@@ -86,7 +86,7 @@ describe('Smoke', function () {
     it('should display the 2nd example textarea with json example',
       function () {
         Portal.purgeCacheAdvancedPage.clickAdvancedMode();
-//        Portal.purgeCacheAdvancedPage.selectDomain(myDomain);   TODO need to fix the function
+        Portal.purgeCacheAdvancedPage.selectDomain(myDomain);
 
         var jsonExample = Portal.purgeCacheAdvancedPage.getJsonExample(1);
         var expectedMsg1 = 'Purge all PNG files under /images, recursive';
@@ -101,7 +101,7 @@ describe('Smoke', function () {
     it('should display the 3rd example textarea with json example',
       function () {
         Portal.purgeCacheAdvancedPage.clickAdvancedMode();
-//        Portal.purgeCacheAdvancedPage.selectDomain(myDomain);   TODO need to fix the function
+        Portal.purgeCacheAdvancedPage.selectDomain(myDomain);
 
         var jsonExample = Portal.purgeCacheAdvancedPage.getJsonExample(2);
         var expectedMsg1 = 'Purge everything, recursively, for current domain';
