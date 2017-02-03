@@ -32,10 +32,10 @@ var PurgeCacheAdvanced = {
     pullLeft: '.pull-left',
     pullRight: '.pull-right',
     dropDown: {
-      domain: '[ng-click="$select.toggle($event)"]',
+      domain: '#domain_selected [ng-click="$select.toggle($event)"]',
+      searchDomain: '#domain_selected input.ui-select-search',
       models: {
-        domain: 'domain',
-        searchDomain: '$select.search'
+        domain: 'domain'
       }
     },
     jsonEditor: {
@@ -185,9 +185,7 @@ var PurgeCacheAdvanced = {
    */
   getSearchDomainTxtIn: function () {
 
-    return element(by.model(this.locators.dropDown.models.searchDomain));
-    // return this.getDomainDDown()
-    //  .element(by.model(this.locators.dropDown.models.searchDomain));
+    return element(by.css(this.locators.dropDown.searchDomain));
   },
 
   /**
