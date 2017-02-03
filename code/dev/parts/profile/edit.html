@@ -29,7 +29,7 @@
               <label for="current_password" class="col-sm-2 control-label">Current Password *</label>
               <div class="col-sm-10">
                 <input type="password" class="form-control inline-block" name="current_password" ng-minlength="8" ng-maxlength="15" ng-disabled="_loading" ng-model="pass.current_password" id="current_password" autocomplete="off" autofocus required>
-                <label for="current_password" class="text text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="TODO text">
+                <label for="current_password" class="text text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enter here your current password to verify your identify">
                   <i class="fa fa-question-circle"></i>
                 </label>
                 <div class="error-messages" ng-messages="editForm.current_password.$error" role="alert" ng-messages-multiple>
@@ -43,7 +43,7 @@
               <label for="new_password" class="control-label col-sm-2">New Password *</label>
               <div class="col-sm-10">
                 <input type="password" class="form-control inline-block" name="new_password" ng-minlength="8" ng-maxlength="15" ng-disabled="_loading" ng-model="pass.new_password" autocomplete="off" id="new_password" required>
-                <label for="new_password" class="text text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="TODO text">
+                <label for="new_password" class="text text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enter here your new password">
                   <i class="fa fa-question-circle"></i>
                 </label>
                 <div class="error-messages" ng-messages="editForm.new_password.$error" role="alert" ng-messages-multiple>
@@ -57,7 +57,7 @@
               <label for="confirm_password" class="control-label col-sm-2">Confirm New Password *</label>
               <div class="col-sm-10">
                 <input type="password" class="form-control inline-block" name="confirm_password" validate-compare-to="pass.new_password" ng-disabled="_loading" ng-model="pass.confirm_password" autocomplete="off" id="confirm_password">
-                <label for="confirm_password" class="text text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="TODO text">
+                <label for="confirm_password" class="text text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Re-enter here your new password">
                   <i class="fa fa-question-circle"></i>
                 </label>
                 <div class="error-messages" ng-messages="editForm.confirm_password.$error" role="alert" ng-messages-multiple>
