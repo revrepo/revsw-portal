@@ -271,14 +271,10 @@
               <label for="domains_provisioned_list" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="'Provisioned' domains which are registered in the 'Web' section of the portal and provide full middle-mile acceleration">
                 <i class="fa fa-question-circle"></i>
               </label>
+              <a ui-sref="index.webApp.domains" id="btn-manage-domains"class="btn btn-sm btn-primary" uib-tooltip="Manage Domains" ng-disabled="_loading"><i class="fa fa-list"></i> Manage Domains</a>
               <div class="error-messages" ng-messages="editForm.domainsBlackList.$error" role="alert" ng-messages-multiple>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
               </div>
-            </div>
-            <div class="col-xs-12 col-sm-4">
-              <a ui-sref="index.webApp.domains" class="btn btn-sm btn-primary pull-left" uib-tooltip="Manage Domains" ng-disabled="_loading"><i class="fa fa-list"></i> Manage Domains</a>
-              <!--    </div>
-              </div> -->
             </div>
           </div>
           <div class="form-group" ng-class="{ 'has-error': editForm.ratio.$invalid &&
