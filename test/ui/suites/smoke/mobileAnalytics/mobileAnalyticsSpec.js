@@ -56,7 +56,7 @@ describe('Smoke', function() {
               .toEqual(pageTitle);
           });
 
-        it('should display Top Objects page',
+        it('should display Mobile Traffic Distributions page',
           function() {
             var pageTitle = 'Mobile Traffic Distributions';
             Portal.helpers.nav.goToMATrafficDistributions();
