@@ -1120,6 +1120,9 @@ section[drawer] .side-menu .dashboard_menu .side-menu-item.item-title a {
 input[name="destinationPassword"] {
   max-width: 510px;
 }
+.domain-select {
+  min-width: 300px;
+}
 .domain-caching-rules__info .panel-buttons-left {
   padding-right: 30px;
 }

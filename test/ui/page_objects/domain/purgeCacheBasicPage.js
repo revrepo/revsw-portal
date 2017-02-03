@@ -32,10 +32,8 @@ var PurgeCacheBasic = {
     pullLeft: '.pull-left',
     pullRight: '.pull-right',
     dropDown: {
-      domain: '[ng-click="$select.toggle($event)"]',
-      models: {
-        searchDomain: '$select.search'
-      }
+      domain: '#domain [ng-click="$select.toggle($event)"]',
+      searchDomain: '#domain input.ui-select-search',
     },
     textArea: {
       models: {
@@ -206,7 +204,7 @@ var PurgeCacheBasic = {
    * @returns {Promise}
    */
   getSearchDomainTxtIn: function () {
-    return element(by.model(this.locators.dropDown.models.searchDomain));
+    return element(by.css(this.locators.dropDown.searchDomain));
   },
 
   /**
