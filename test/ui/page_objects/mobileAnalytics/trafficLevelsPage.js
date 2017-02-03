@@ -31,17 +31,21 @@ var TrafficLevels = {
 		css: '.highcharts-contextmenu div div'
 	}
   },
-  
+
    /**
    * ### TrafficLevels.getChartContextMenu()
    *
    * Returns the ref to 'ChartContextMenu'
    *
+   * @param {String} id name parent container id
    * @returns {Object} Selenium WebDriver Element
    */
-  getChartContextMenu: function () {
-    return element
-	  .all(by.css(this.locators.contextMenu.css));
+  getChartContextMenu: function (id) {
+    if(!id){
+      return element.all(by.css(this.locators.contextMenu.css));
+    }
+    return element(by.id(id))
+	    .all(by.css(this.locators.contextMenu.css));
   },
 
    /**
@@ -49,12 +53,16 @@ var TrafficLevels = {
    *
    * Returns the ref to 'ChartContextMenu' Btn
    *
+   * @param {String} id id name parent element
    * @returns {Object} Selenium WebDriver Element
    */
-  getChartContextMenuBtn: function () {
-    return element(by.css(this.locators.buttons.chartContextMenu.css));
+  getChartContextMenuBtn: function (id) {
+    if(!id){
+      return element(by.css(this.locators.buttons.chartContextMenu.css));
+    }
+    return element(by.id(id)).element(by.css(this.locators.buttons.chartContextMenu.css));
   },
-  
+
    /**
    * ### TrafficLevels.getUpdateReportBtn()
    *
@@ -65,7 +73,7 @@ var TrafficLevels = {
   getUpdateReportBtn: function () {
     return element.all(by.css(this.locators.buttons.updateReport.css)).get(0);
   },
-  
+
    /**
    * ### TrafficLevels.getFilters()
    *
@@ -77,31 +85,41 @@ var TrafficLevels = {
 	return element
 	  .all(by.css(this.locators.dropDowns.chartFilters.css));
   },
-  
+
    /**
    * ### TrafficLevels.selectFilterDay()
    *
    * Selects the option '7' in Chart Filter Day
    *
+   * @param {String} id  id name parent element
    * @returns {Object} Selenium WebDriver Element
    */
-  selectFilterDay: function() {
-	return element(by.cssContainingText('option', '7'))
-	  .click();
+  selectFilterDay: function(id) {
+    if(!id){
+      return element(by.cssContainingText('option', '7'))
+        .click();
+    }
+    return element(by.id(id)).element(by.cssContainingText('option', '7'))
+      .click();
   },
-  
+
    /**
    * ### TrafficLevels.selectFilterDay()
    *
    * Selects the option 'Cellurar' in Chart Filter Network
    *
+   * @param {String} id  id name parent element
    * @returns {Object} Selenium WebDriver Element
    */
-  selectFilterNetwork: function() {
-     return element(by.cssContainingText('option', 'Cellular'))
-	   .click();
+  selectFilterNetwork: function(id) {
+     if(!id){
+      return  element(by.cssContainingText('option', 'Cellular'))
+	      .click();
+     }
+     return element(by.id(id)).element(by.cssContainingText('option', 'Cellular'))
+	    .click();
   },
-  
+
    /**
    * ### TrafficLevels.selectCompanyName(companyName)
    *
@@ -114,7 +132,7 @@ var TrafficLevels = {
     this.clickSelectSearchCompanyName();
     this.setSelectSearchCompanyName(companyName);
   },
-  
+
    /**
    * ### TrafficLevels.clickSelectCompanyName()
    *
@@ -126,7 +144,7 @@ var TrafficLevels = {
     return this.getCompanyNameDDown()
       .click();
   },
-  
+
    /**
    * ### TrafficLevels.clickSelectSearchCompanyName()
    *
@@ -138,7 +156,7 @@ var TrafficLevels = {
     return this.getSelectSearchInput()
       .click();
   },
-  
+
    /**
    * ### TrafficLevels.getSelectSearchInput()
    *
@@ -149,7 +167,7 @@ var TrafficLevels = {
   getSelectSearchInput: function () {
     return element(by.model(this.locators.selectSearch.textBox));
   },
-  
+
   /**
    * ### TrafficLevels.setSelectSearchCompanyName()
    *
@@ -162,8 +180,8 @@ var TrafficLevels = {
       .sendKeys(companyName)
       .sendKeys(protractor.Key.ENTER);
   },
-  
-  
+
+
   /**
    * ### TrafficLevels.getTitleLbl()
    *
@@ -178,7 +196,7 @@ var TrafficLevels = {
       .get(0);
   },
 
- 
+
   /**
    * ### TrafficLevels.getTitle()
    *
@@ -191,7 +209,7 @@ var TrafficLevels = {
       .getTitleLbl()
       .getText();
   },
-  
+
    /**
    * ### TrafficLevels.getCompanyNameDDown()
    *
@@ -201,6 +219,17 @@ var TrafficLevels = {
    */
   getCompanyNameDDown: function () {
     return element(by.css(this.locators.dropDowns.companyName.css));
+  },
+
+   /**
+   * ### TrafficLevels.scrollToElementById()
+   *
+   * @param {Strting} id id name parent element
+   * @returns {Object} Selenium WebDriver Element
+   */
+    scrollToElementById: function(id){
+    return  browser.executeScript('arguments[0].scrollIntoView(true);',
+     element(by.id(id)).getWebElement());
   }
 };
 
