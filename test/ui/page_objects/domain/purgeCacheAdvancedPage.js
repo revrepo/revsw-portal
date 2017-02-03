@@ -32,8 +32,8 @@ var PurgeCacheAdvanced = {
     pullLeft: '.pull-left',
     pullRight: '.pull-right',
     dropDown: {
-      domain: '#domain_selected [ng-click="$select.toggle($event)"]',
-      searchDomain: '#domain_selected input.ui-select-search',
+      domain: '#domain [ng-click="$select.toggle($event)"]',
+      searchDomain: '#domain input.ui-select-search',
       models: {
         domain: 'domain'
       }
