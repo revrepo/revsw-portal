@@ -2,18 +2,15 @@
   <h3 class="modal-title">Please Select Account</h3>
 </div>
 <div class="modal-body">
-
-  <ui-select ng-model="selected"
-             theme="select2" ng-animate-disabled
-             on-select="onModelSelect($model)"
-             style="min-width: 300px;" >
+  <ui-select ng-model="selected" name="account_selected" id="account-select" theme="select2" ng-animate-disabled on-select="onModelSelect($model)" style="min-width: 300px;">
     <ui-select-match placeholder="Select account">{{$select.selected.companyName}}</ui-select-match>
     <ui-select-choices repeat="item in companies | filter: {companyName: $select.search}">
       <small ng-bind-html="item.companyName|highlight: $select.search"></small>
     </ui-select-choices>
   </ui-select>
-
-
+  <label for="account_selected" class="text text-info" popover-append-to-body="false" popover-trigger="mouseenter" uib-popover="TODO text">
+    <i class="fa fa-question-circle"></i>
+  </label>
 </div>
 <div class="modal-footer">
   <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
