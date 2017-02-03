@@ -11,7 +11,7 @@
     <label class="col-md-3 control-label">URL *</label>
     <div class="col-md-9">
       <input id="urlOfURLblock" type="text" validate-caching-rule-url name="url_value" class="form-control inline-block" ng-model="$ctrl.rule.url.value" required>
-      <label for="cache_url" class="text-info" popover-trigger="mouseenter" uib-popover="TODO text">
+      <label for="cache_url" class="text-info" popover-trigger="mouseenter" uib-popover="Specify here a regular expression or wildcard pattern the caching rule should be applied to">
         <i class="fa fa-question-circle"></i>
       </label>
       <div class="error-messages" ng-messages="editForm.url_value.$error" role="alert" ng-messages-multiple>
@@ -30,7 +30,7 @@
     <div class="col-md-9">
       <toggle-switch id="overrideOriginCachingHeaders" ng-model="$ctrl.rule.edge_caching.override_origin" on-label="On" off-label="Off">
       </toggle-switch>
-      <label for="override_origin" class="text-info" popover-trigger="mouseenter" uib-popover="TODO text">
+      <label for="override_origin" class="text-info" popover-trigger="mouseenter" uib-popover="If the option is enabled then the edge cache NOT respect caching headers set by the origin server. Otherwise the cache will parse and follow content caching instructions set by the origin.">
         <i class="fa fa-question-circle"></i>
       </label>
     </div>
@@ -54,7 +54,7 @@
     <div class="col-md-9">
       <toggle-switch id="newEdgeTTLifOriginMissing" ng-model="$ctrl.rule.edge_caching.override_no_cc" on-label="On" off-label="Off">
       </toggle-switch>
-      <label for="override_no_cc" class="text-info" popover-trigger="mouseenter" uib-popover="TODO text">
+      <label for="override_no_cc" class="text-info" popover-trigger="mouseenter" uib-popover="Instructs the edge cache to set new edge cachng TTL if caching headers are missing in origin responses">
         <i class="fa fa-question-circle"></i>
       </label>
     </div>
@@ -64,7 +64,7 @@
     <div class="col-sm-9">
       <toggle-switch id="keepOrDropQueryStringParameters" ng-model="$ctrl.rule.edge_caching.query_string_list_is_keep" on-label="Keep" off-label="Drop">
       </toggle-switch>
-      <label for="query_string_list_is_keep" class="text-info" popover-trigger="mouseenter" uib-popover="TODO text">
+      <label for="query_string_list_is_keep" class="text-info" popover-trigger="mouseenter" uib-popover="Controls whether specified query string parameters will be kept or dropped in cached objects">
         <i class="fa fa-question-circle"></i>
       </label>
     </div>
@@ -78,7 +78,7 @@
           {{query_str}}
         </ui-select-choices>
       </ui-select>
-      <label for="query_string_keep_or_remove_list" class="text-info" popover-trigger="mouseenter" uib-popover="TODO text">
+      <label for="query_string_keep_or_remove_list" class="text-info" popover-trigger="mouseenter" uib-popover="Provide here a list of query string parameters which should be manipulated by the edge cache">
         <i class="fa fa-question-circle"></i>
       </label>
       <div class="error-messages" ng-messages="editForm.queryStringKeepOrRemoveList.$error" role="alert" ng-messages-multiple>
@@ -93,7 +93,7 @@
     <div class="col-sm-9">
       <toggle-switch class="overrideHTTPcookies" ng-model="$ctrl.rule.cookies.override" on-label="Yes" off-label="No">
       </toggle-switch>
-      <label for="override" class="text-info" popover-trigger="mouseenter" uib-popover="TODO text">
+      <label for="override" class="text-info" popover-trigger="mouseenter" uib-popover="The switch controls whether the edge cache will manipulate HTTP cookies set in origin responses">
         <i class="fa fa-question-circle"></i>
       </label>
     </div>
@@ -104,7 +104,7 @@
       <div class="col-sm-9">
         <toggle-switch class="ignoreAllHTTPcookies" ng-model="$ctrl.rule.cookies.ignore_all" on-label="Yes" off-label="No">
         </toggle-switch>
-        <label for="ignore_all" class="text-info" popover-trigger="mouseenter" uib-popover="TODO text">
+        <label for="ignore_all" class="text-info" popover-trigger="mouseenter" uib-popover="if the switch is enabled the edge cache will ignore all HTTP cookies while making caching decisions (this affects caching ratio)">
           <i class="fa fa-question-circle"></i>
         </label>
       </div>
@@ -114,7 +114,7 @@
       <div class="col-sm-9">
         <toggle-switch id="keepOrDropSpecificHTTPcookies" ng-model="$ctrl.rule.cookies.list_is_keep" on-label="Keep" off-label="Drop">
         </toggle-switch>
-        <label for="list_is_keep" class="text-info" popover-trigger="mouseenter" uib-popover="TODO text">
+        <label for="list_is_keep" class="text-info" popover-trigger="mouseenter" uib-popover="This switch controls whether specified HTTP cookies will be kept or dropped in cached objects">
           <i class="fa fa-question-circle"></i>
         </label>
       </div>
@@ -129,7 +129,7 @@
             {{keep_or_ignore_list_str}}
           </ui-select-choices>
         </ui-select>
-        <label for="keep_or_ignore_list" class="text-info" popover-trigger="mouseenter" uib-popover="TODO text">
+        <label for="keep_or_ignore_list" class="text-info" popover-trigger="mouseenter" uib-popover="Use the field to specify a list of HTTP cookies to be kept or dropped in edge-cached objects">
           <i class="fa fa-question-circle"></i>
         </label>
         <div class="error-messages" ng-messages="editForm.keepOrIgnoreList.$error" role="alert" ng-messages-multiple>
@@ -144,7 +144,7 @@
       <div class="col-sm-9">
         <toggle-switch id="removeIgnoredCookiesFromOriginRequests" ng-model="$ctrl.rule.cookies.remove_ignored_from_request" on-label="Yes" off-label="No">
         </toggle-switch>
-        <label for="remove_ignored_from_request" class="text-info" popover-trigger="mouseenter" uib-popover="TODO text">
+        <label for="remove_ignored_from_request" class="text-info" popover-trigger="mouseenter" uib-popover="The switch instructs the edge cache whether it should keep/ignore specified HTTP cookies in origin requests">
           <i class="fa fa-question-circle"></i>
         </label>
       </div>
@@ -156,7 +156,7 @@
       <div class="col-sm-9">
         <toggle-switch id="removeIgnoredCookiesFromEdgeResponses" ng-model="$ctrl.rule.cookies.remove_ignored_from_response" on-label="Yes" off-label="No">
         </toggle-switch>
-        <label for="remove_ignored_from_response" class="text-info" popover-trigger="mouseenter" uib-popover="TODO text">
+        <label for="remove_ignored_from_response" class="text-info" popover-trigger="mouseenter" uib-popover="The switch instructs the edge cache whether it should keep/ignore specified HTTP cookies in edge responses">
           <i class="fa fa-question-circle"></i>
         </label>
       </div>
@@ -175,7 +175,7 @@
     <div class="col-md-9">
       <toggle-switch class="overrideEdgeCaching" ng-model="$ctrl.rule.browser_caching.override_edge" on-label="On" off-label="Off">
       </toggle-switch>
-       <label for="override_edge" class="text-info" popover-trigger="mouseenter" uib-popover="TODO text">
+       <label for="override_edge" class="text-info" popover-trigger="mouseenter" uib-popover="If OFF the edge cache will pass to the browser HTTP caching headers set by the origin. If ON the edge cache will set browser caching headers as configured below.">
           <i class="fa fa-question-circle"></i>
         </label>
     </div>
@@ -197,7 +197,7 @@
     <div class="col-md-9">
       <toggle-switch id="forceRevalidation" ng-model="$ctrl.rule.browser_caching.force_revalidate" on-label="On" off-label="Off">
       </toggle-switch>
-       <label for="force_revalidate" class="text-info" popover-trigger="mouseenter" uib-popover="TODO text">
+       <label for="force_revalidate" class="text-info" popover-trigger="mouseenter" uib-popover="Instructs the browser that a stale cache item in the browser cache can not be used without revalidation with the edge cache first">
           <i class="fa fa-question-circle"></i>
         </label>
     </div>
