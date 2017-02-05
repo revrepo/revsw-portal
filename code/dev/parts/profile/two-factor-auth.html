@@ -36,57 +36,63 @@
             <div class="col-md-6">
               <i class="glyphicon glyphicon-phone"></i>
               <strong>Two-Factor Authentication</strong>
+              <span class="label label-success" ng-if="twoFAEnabled">Enabled</span>
+              <span class="label label-danger" ng-if="!twoFAEnabled">Disabled</span>
               <br>
               <div class="margin-top">
-                Two-factor authentication (2FA) improves the security of your account. In addition to your normal credentials, you'll also need to provide a one time password (authentication code) when logging in. Please take the following steps to enable 2FA for your account:
-                <ol type="1"> 
+                Two-factor authentication (2FA) improves the security of your account. In addition to your normal credentials, you'll also need to provide a one time password (authentication code) when logging in.
+                <!--   Please take the following steps to enable 2FA for your account:
+                <ol type="1">
                   <li>Install <a href="https://support.google.com/accounts/answer/1066447" target="_blank">Google Authenticator</a> application on your mobile device.</li>
                   <li>Click on "Set Up Two-Factor Authentication" button below. A QR code will be displayed on the right side of the screen.</li>
                   <li>In the "Google Authenticator" app add a new account and scan the QR code. The account will be added with label "RevAPM" and your email address. The app will also start displaying one-time six-digit passwords.</li>
                   <li>To confirm the correctness of the app configuration enter the current six-digit one-time password in the field below and click "Enable 2FA". This step will complete the 2FA activation process.</li>
-                </ol>
+                </ol> -->
               </div>
             </div>
             <div class="col-md-6">
-              <span class="label label-success" ng-if="twoFAEnabled">Enabled</span>
-              <span class="label label-danger" ng-if="!twoFAEnabled">Disabled</span>
+              <p ng-if="!twoFAEnabled">Please take the following steps to enable 2FA for your account:</p>
+              <ol type="1" ng-if="!twoFAEnabled">
+                <li>Install <a href="https://support.google.com/accounts/answer/1066447" target="_blank">Google Authenticator</a> application on your mobile device.</li>
+                <li>Click on "Set Up Two-Factor Authentication" button below. A QR code will be displayed on the right side of the screen.</li>
+                <li>In the "Google Authenticator" app add a new account and scan the QR code. The account will be added with label "RevAPM" and your email address. The app will also start displaying one-time six-digit passwords.</li>
+                <li>To confirm the correctness of the app configuration enter the current six-digit one-time password in the field below and click "Enable 2FA". This step will complete the 2FA activation process.</li>
+              </ol>
             </div>
           </div>
           <div class="margin-top row" ng-hide="qrImg || twoFAEnabled">
             <div class="col-md-6">
               <button class="btn btn-default" ng-click="init()">
-                <i class="glyphicon glyphicon-lock"></i>&nbsp; Set Up Two-Factor Authentication
+                <i class="text-success glyphicon" ng-class="_loading ? 'glyphicon-refresh spin': 'glyphicon-lock'"></i>&nbsp; Set Up Two-Factor Authentication
               </button>
             </div>
           </div>
           <div class="margin-top row" ng-if="qrImg">
             <div class="col-md-6">
-              <form class="form-inline" name="editForm">
-                <div class="col-sm-12">
-                  <div class="form-group">
-                    <div class="input-group" ng-class="{'has-error': editForm.oneTimePassword.$invalid && editForm.oneTimePassword.$dirty}">
-                      <div class="input-group-addon">
-                        <i class="glyphicon" ng-class="oneTimePassword && 'glyphicon-ok-circle' || 'glyphicon-exclamation-sign'"></i>
-                      </div>
-                      <input type="text" class="form-control" name="oneTimePassword" id="one-time-password" placeholder="One-Time Password" ng-model="oneTimePassword" pattern="^\d{6}$" required>
+              <form class="col-sm-12" name="editForm">
+                <div class="form-group has-success" ng-class="{'has-error': editForm.oneTimePassword.$invalid && editForm.oneTimePassword.$dirty}">
+                  <div class="input-group">
+                    <div class="input-group-addon">
+                      <i class="glyphicon" ng-class="oneTimePassword && 'glyphicon-ok-circle' || 'glyphicon-exclamation-sign'"></i>
                     </div>
-                    <label for="oneTimePassword" class="text text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="To verify the 2FA configuration enter here a six-digit code generated by your 'Google Authenticator' app and click 'Enable 2FA' button">
-                      <i class="fa fa-question-circle"></i>
-                    </label>
+                    <input type="text" class="form-control" name="oneTimePassword" id="one-time-password" placeholder="Enter One-Time Password To Active 2FA" ng-model="oneTimePassword" pattern="^\d{6}$" required autofocus focus-me="editForm.oneTimePassword">
+                    <label class="input-group-addon text" for="oneTimePassword" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="To verify the 2FA configuration enter here a six-digit code generated by your 'Google Authenticator' app and click 'Enable 2FA' button"><i class="fa fa-question-circle"></i></label>
                   </div>
-                  <button type="submit" class="btn btn-primary" ng-disabled="!oneTimePassword || _loading" ng-click="enable(oneTimePassword)">
-                    <i class="glyphicon glyphicon-ok"></i>&nbsp; Enable 2FA
-                  </button>
+                  <div class=" error-messages" ngclass="{'has-error': editForm.oneTimePassword.$invalid && editForm.oneTimePassword.$dirty}">
+                    <div class="error-messages" ng-messages="editForm.oneTimePassword.$error" role="alert" ng-messages-multiple>
+                      <div ng-message="pattern">Please enter six digits of your one-time password</div>
+                      <div ng-message="required">Please enter six digits of your one-time password</div>
+                      <div ng-messages-include="parts/shared/error-messages.html"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
                   <button type="submit" class="btn btn-default" ng-click="clearCodes()">
                     <i class="glyphicon glyphicon-remove"></i>&nbsp; Cancel
                   </button>
-                </div>
-                <div class="col-sm-12 form-group" ng-class="{'has-error': editForm.oneTimePassword.$invalid && editForm.oneTimePassword.$dirty}">
-                  <div class="error-messages"  ng-messages="editForm.oneTimePassword.$error" role="alert" ng-messages-multiple>
-                    <div ng-message="pattern">Please enter six digits of your one-time password</div>
-                    <div ng-message="required">Please enter six digits of your one-time password</div>
-                    <div ng-messages-include="parts/shared/error-messages.html"></div>
-                  </div>
+                  <button type="submit" class="btn btn-primary" ng-disabled="!oneTimePassword || _loading" ng-click="enable(oneTimePassword)">
+                    <i class="glyphicon glyphicon-ok"></i>&nbsp; Enable 2FA
+                  </button>
                 </div>
               </form>
             </div>
