@@ -116,7 +116,7 @@
                 <label for="destinationTypes" class="col-sm-2 control-label">Destination *</label>
                 <div class="col-sm-10">
                   <select class="form-control inline-block" id="destination_type" name="destinationTypes" ng-model="model.destination_type" ng-disabled="_loading" ng-options="key as value for (key,value) in destinationTypes" required></select>
-                  <label for="destinationTypes" class="text text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Select Destination ">
+                  <label for="destinationTypes" class="text text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Select the type of destination for shipped log records. For S3 you will need to specify S3 bucket name in field 'Host' and S3 API key in field 'Secret Key'. For destination FTP and SFTP you will need to specify host, TCP port, username and password parameters. For destination ElasticSearch you need to specify host and port parameters as well as the target ElasticSearch index name in field 'Secret Key'">
                     <i class="fa fa-question-circle"></i>
                   </label>
                   <div class="error-messages" ng-messages="editForm.destinationTypes.$error" role="alert" ng-messages-multiple>
@@ -129,7 +129,7 @@
                 <label for="destinationHost" class="col-sm-2 control-label">Host *</label>
                 <div class="col-sm-10">
                   <input type="text" class="form-control inline-block" id="Host" name="destinationHost" placeholder="Host" ng-model="model.destination_host" ng-maxlength="150" ng-disabled="_loading" required>
-                  <label for="destinationHost" class="text text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Host">
+                  <label for="destinationHost" class="text text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Host name for FTP, SFTP and ElasticSearch destinations, S3 bucket name for S3 destination">
                     <i class="fa fa-question-circle"></i>
                   </label>
                   <div class="error-messages" ng-messages="editForm.destinationHost.$error" role="alert" ng-messages-multiple>
@@ -141,7 +141,7 @@
                 <label for="destinationPort" class="col-sm-2 control-label">Port</label>
                 <div class="col-sm-10">
                   <input type="text" class="form-control inline-block" id="destination_port" name="destinationPort" placeholder="Port" ng-model="model.destination_port" ng-maxlength="10" ng-disabled="_loading">
-                  <label for="destinationPort" class="text text-info" popover-trigger="mouseenter" uib-popover="Port">
+                  <label for="destinationPort" class="text text-info" popover-trigger="mouseenter" uib-popover="Optional TCP port number for FTP (defaults to 21), SFTP (defaults to 22) and ElasticSearch (defaults to 9300) destination types">
                     <i class="fa fa-question-circle"></i>
                   </label>
                   <div class="error-messages" ng-messages="editForm.destinationPort.$error" role="alert" ng-messages-multiple>
@@ -153,7 +153,7 @@
                 <label for="destinationKey" class="col-sm-2 control-label">Secret Key<span ng-if="model.destination_type ==='s3'"> *</span></label>
                 <div class="col-sm-10">
                   <input type="text" class="form-control inline-block" id="destination_key" name="destinationKey" placeholder="Secret Key" ng-model="model.destination_key" ng-maxlength="150" ng-disabled="_loading" ng-required="model.destination_type ==='s3'">
-                  <label for="destinationKey" class="text text-info" popover-trigger="mouseenter" uib-popover="Secret Key">
+                  <label for="destinationKey" class="text text-info" popover-trigger="mouseenter" uib-popover="Amazon Secret Access Key ID for S3 destination, database index name for ElasticSearch destination">
                     <i class="fa fa-question-circle"></i>
                   </label>
                   <div class="error-messages" ng-messages="editForm.destinationKey.$error" role="alert" ng-messages-multiple>
@@ -165,7 +165,7 @@
                 <label for="destinationUsername" class="col-sm-2 control-label">Username<span ng-if="model.destination_type ==='sftp' ||model.destination_type ==='ftp'"> *</span></label>
                 <div class="col-sm-10">
                   <input type="text" class="form-control inline-block" id="destination_username" name="destinationUsername" placeholder="Username" ng-model="model.destination_username" ng-maxlength="150" ng-pattern="NO_SPECIAL_CHARS" ng-disabled="_loading" ng-required="model.destination_type ==='sftp' ||model.destination_type ==='ftp'">
-                  <label for="destinationUsername" class="text text-info" popover-trigger="mouseenter" uib-popover="Username">
+                  <label for="destinationUsername" class="text text-info" popover-trigger="mouseenter" uib-popover="Username for FTP and SFTP destination types">
                     <i class="fa fa-question-circle"></i>
                   </label>
                   <div class="error-messages" ng-messages="editForm.destinationUsername.$error" role="alert" ng-messages-multiple>
@@ -180,7 +180,7 @@
                     <span id="spnPassword" class="add-on input-group-addon" style="cursor:pointer;" ng-click="isShowPassw= !isShowPassw" popover-trigger="mouseenter" uib-popover="Click to show/hide the password">
                    <i id="icnPassword" class="glyphicon" ng-class="isShowPassw?'glyphicon-eye-open':'glyphicon-eye-close'"></i></span>
                     <input type="{{isShowPassw?'text':'password'}}" class="form-control inline-block" id="destination_password" name="destinationPassword" placeholder="Password" ng-model="model.destination_password" ng-maxlength="150" ng-disabled="_loading" ng-required="model.destination_type ==='sftp' ||model.destination_type ==='ftp'">
-                    <label for="destinationPassword" class="text text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Password " style="padding-left: 3px;">
+                    <label for="destinationPassword" class="text text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Password for FTP and SFTP destination types" style="padding-left: 4px;">
                       <i class="fa fa-question-circle"></i>
                     </label>
                   </div>
@@ -197,7 +197,7 @@
             <label for="notificationEmail" class="col-sm-2 control-label">Email For Problem Notifications</label>
             <div class="col-sm-10">
               <input type="email" class="form-control inline-block" id="notification_email" name="notificationEmail" placeholder="Username" ng-model="model.notification_email" ng-disabled="_loading">
-              <label for="notificationEmail" class="text text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Email For Problem Notifications">
+              <label for="notificationEmail" class="text text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Email address to send notificaitons about any issues with the log shipping job">
                 <i class="fa fa-question-circle"></i>
               </label>
               <div class="error-messages" ng-messages="editForm.notificationEmail.$error" role="alert" ng-messages-multiple>
@@ -211,7 +211,7 @@
               <div class="col-sm-12 form-group">
                 <textarea id="comment" name="comment" placeholder="Comment (300 characters max)" ng-maxlength="300" class="form-control inline-block" ng-model="model.comment" ng-pattern="COMMENT_NO_SPECIAL_CHARS" ng-disabled="_loading">
                 </textarea>
-                <label for="comment" class="text text-info" popover-append-to-body="{{true}}" popover-trigger=" mouseenter " uib-popover="Comment ">
+                <label for="comment" class="text text-info" popover-append-to-body="{{true}}" popover-trigger=" mouseenter " uib-popover="Free-text comment about the configuration (300 characters max)">
                   <i class="fa fa-question-circle "></i>
                 </label>
               </div>

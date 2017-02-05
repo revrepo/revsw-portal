@@ -84,6 +84,10 @@ describe('Smoke', function () {
               var valueAdded = 'user-updated';
               Portal.editUserPage.form.setFirstName(valueAdded);
               Portal.editUserPage.form.setLastName(valueAdded);
+
+              var addBtn = Portal.editUserPage.getUpdateUserBtn();
+              expect(addBtn.isEnabled()).toBeTruthy();
+
               Portal.editUserPage.clickUpdateUser();
               // Check alert message and data updated
               var alert = Portal.alerts.getFirst();
