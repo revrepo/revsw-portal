@@ -57,16 +57,7 @@ var SecuritySettings = {
   getTitleLbl: function () {
     return element(by.css(this.locators.labels.title.css));
   },
-  /**
-   * ### SecuritySettings.getSetUpTwoFactorAuthBtn()
-   *
-   * Returns the reference to the `Set Up Two Factor Authentication` button
-   *
-   * @returns {Selenium WebDriver Element}
-   */
-  getSetUpTwoFactorAuthBtn: function() {
-    return element(by.id(this.locators.buttons.setUpTwoFactorAuth.id));
-  },
+
   /**
    * ### SecuritySettings.getSetUpTwoFactorAuthBtn()
    *
