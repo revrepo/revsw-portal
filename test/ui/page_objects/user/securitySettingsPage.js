@@ -26,16 +26,37 @@ var SecuritySettings = {
 
   // Locators specific to HTML elements from this page object
   locators: {
+    labels: {
+      title: {
+        css: '.page-title'
+      }
+    },
     buttons: {
       setUpTwoFactorAuth: {
-        css: 'button.btn-default .glyphicon-lock'
+        id: 'btn-set-up-2fa'
+      },
+      cancel2fa: {
+        id: 'btn-cancel-2fa'
+      },
+      enable2fa: {
+        id: 'btn-enable-2fa'
       }
     }
   },
 
   // ## Methods to retrieve references to UI elements (Selenium WebDriver
   // Element)
-
+  /**
+   * ### SecuritySettings.getTitleLbl()
+   *
+   * Returns the reference to the `Title` label element (Selenium WebDriver
+   * Element) from the Edit Company page from the Portal app.
+   *
+   * @returns {Selenium WebDriver Element}
+   */
+  getTitleLbl: function () {
+    return element(by.css(this.locators.labels.title.css));
+  },
   /**
    * ### SecuritySettings.getSetUpTwoFactorAuthBtn()
    *
@@ -43,10 +64,41 @@ var SecuritySettings = {
    *
    * @returns {Selenium WebDriver Element}
    */
-  getSetUpTwoFactorAuthBtn: function () {
-    return element(by.css(this.locators.buttons.setUpTwoFactorAuth.css));
+  getSetUpTwoFactorAuthBtn: function() {
+    return element(by.id(this.locators.buttons.setUpTwoFactorAuth.id));
+  },
+  /**
+   * ### SecuritySettings.getSetUpTwoFactorAuthBtn()
+   *
+   * Returns the reference to the `Set Up Two Factor Authentication` button
+   *
+   * @returns {Selenium WebDriver Element}
+   */
+  getSetUpTwoFactorAuthBtn: function() {
+    return element(by.id(this.locators.buttons.setUpTwoFactorAuth.id));
   },
 
+  /**
+   * ### SecuritySettings.getCancelBtn()
+   *
+   * Returns the reference to the `Cancel` button
+   *
+   * @returns {Selenium WebDriver Element}
+   */
+  getCancelBtn: function() {
+    return element(by.id(this.locators.buttons.cancel2fa.id));
+  },
+
+  /**
+   * ### SecuritySettings.getEnableBtn()
+   *
+   * Returns the reference to the `Cancel` button
+   *
+   * @returns {Selenium WebDriver Element}
+   */
+  getEnableBtn: function() {
+    return element(by.id(this.locators.buttons.enable2fa.id));
+  },
   // ## Helper Methods
 
   /**
@@ -57,9 +109,9 @@ var SecuritySettings = {
    *
    * @returns {Promise}
    */
-  isDisplayed: function () {
+  isDisplayed: function() {
     return this
-      .getSetUpTwoFactorAuthBtn()
+      .getTitleLbl()
       .isDisplayed();
   }
 };

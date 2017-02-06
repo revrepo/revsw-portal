@@ -19,38 +19,60 @@
 var config = require('config');
 var Portal = require('./../../../page_objects/portal');
 
-describe('Smoke', function () {
+describe('Smoke', function() {
 
   // Defining set of users for which all below tests will be run
   var users = [
     config.get('portal.users.user'),
+    config.get('portal.users.roUser'),
     config.get('portal.users.admin'),
     config.get('portal.users.reseller'),
     config.get('portal.users.revAdmin')
   ];
 
-  users.forEach(function (user) {
+  users.forEach(function(user) {
 
-    describe('With user: ' + user.role, function () {
+    describe('With user: ' + user.role, function() {
 
-      describe('User security settings', function () {
+      describe('User security settings', function() {
 
-        beforeAll(function () {
+        beforeAll(function() {
           Portal.signIn(user);
         });
 
-        afterAll(function () {
+        afterAll(function() {
           Portal.signOut();
         });
 
-        beforeEach(function () {
+        beforeEach(function() {
           Portal.helpers.nav.goToSecuritySettings();
         });
 
         it('should display "Security Settings" by selecting option from ' +
           'sidebar',
-          function () {
+          function() {
             expect(Portal.securitySettingsPage.isDisplayed()).toBeTruthy();
+          });
+        it('should display page title with text "Two-Factor Authentication"',
+          function() {
+            expect(Portal.securitySettingsPage.isDisplayed()).toBeTruthy();
+            expect(Portal.securitySettingsPage.getTitleLbl().getText())
+              .toEqual("Two-Factor Authentication");
+
+          });
+        it('should display "Activation One-Time Password" form with buttons',
+          function() {
+            expect(Portal.securitySettingsPage.getSetUpTwoFactorAuthBtn().isDisplayed())
+              .toBeTruthy();
+            expect(Portal.securitySettingsPage.getSetUpTwoFactorAuthBtn().isEnabled())
+              .toBeTruthy();
+
+            Portal.securitySettingsPage.getSetUpTwoFactorAuthBtn().click();
+
+            expect(Portal.securitySettingsPage.getCancelBtn().isDisplayed())
+              .toBeTruthy();
+            expect(Portal.securitySettingsPage.getEnableBtn().isDisplayed())
+              .toBeTruthy();
           });
       });
     });
