@@ -57,7 +57,7 @@ describe('Smoke', function() {
           function() {
             expect(Portal.securitySettingsPage.isDisplayed()).toBeTruthy();
             expect(Portal.securitySettingsPage.getTitleLbl().getText())
-              .toEqual("Two-Factor Authentication");
+              .toEqual('Two-Factor Authentication');
 
           });
         it('should display "Activation One-Time Password" form with buttons',
