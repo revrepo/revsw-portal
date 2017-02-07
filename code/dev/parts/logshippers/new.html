@@ -56,7 +56,7 @@
               <a ui-sref="^" class="btn btn-default">
                 <i class="glyphicon glyphicon-remove"></i>&nbsp; Cancel
               </a>
-              <button class="btn btn-success" ng-disabled="disableSubmit(model)">
+              <button class="btn btn-success" ng-class="{'btn-disabled':isReadOnly()}" id="btnCreateJob"  ng-disabled="disableSubmit(model) || isReadOnly()">
                 <i class="glyphicon" ng-class="_loading ? 'glyphicon-refresh spin':'glyphicon-ok'"></i>&nbsp; Create Job
               </button>
             </div>

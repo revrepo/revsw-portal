@@ -266,6 +266,9 @@
      * @return
      */
     $scope.deleteJob = function(model) {
+      if($scope.isReadOnly() === true) {
+        return;
+      }
       $scope.confirm('confirmModal.html', model).then(function() {
         var jobName = model.job_name;
         $scope
