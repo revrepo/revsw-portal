@@ -144,6 +144,9 @@
      * @return {[type]}       [description]
      */
     $scope.deleteUser = function(model) {
+      if($scope.isReadOnly() === true) {
+        return;
+      }
       model.id = model.user_id; // NOTE: extend model for CRUD Controller operation
       $scope.confirm('confirmModal.html', model)
         .then(function() {

@@ -123,7 +123,7 @@
                 <a ui-sref=".edit({id: item.id})" ng-if="!item.loading" uib-tooltip="Edit Company">
                   <i class="glyphicon glyphicon-pencil"></i>
                 </a>
-                <a href="" ng-if="!item.loading" ng-click="deleteCompany(item)" uib-tooltip="Delete Company">
+                <a href="" ng-if="!item.loading" ng-class="{'disabled':isReadOnly()}" ng-click="deleteCompany(item)" uib-tooltip="Delete Company">
                   <i class="glyphicon glyphicon-trash"></i>
                 </a>
               </td>
