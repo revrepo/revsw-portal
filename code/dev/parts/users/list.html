@@ -29,7 +29,7 @@
           <div class="row">
             <div class="col-md-12">
               <div class="pull-left">
-                <a ui-sref=".new" class="btn btn-success" ng-disabled="_loading">
+                <a ui-sref="{{isReadOnly() ?'.': '.new'}}" class="btn btn-success" ng-class="{'btn-disabled':isReadOnly()}" ng-disabled="_loading || isReadOnly()">
                   <i class="glyphicon glyphicon-plus"></i>&nbsp;
                   Add New User
                 </a>
@@ -115,7 +115,7 @@
                 <a ui-sref=".edit({id: user.user_id})" uib-tooltip="Edit User Profile">
                   <i class="glyphicon glyphicon-pencil"></i>
                 </a>
-                <a href="" ng-click="deleteUser(user)" uib-tooltip="Delete User">
+                <a href="" ng-click="deleteUser(user)" ng-class="{'disabled':isReadOnly()}"  uib-tooltip="Delete User">
                   <i class="glyphicon glyphicon-trash"></i>
                 </a>
               </td>

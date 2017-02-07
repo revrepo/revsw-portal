@@ -100,7 +100,9 @@
      * @return
      */
     $scope.createBillingProfile = function(company) {
-
+      if($scope.isReadOnly() === true) {
+        return;
+      }
       $scope.confirm('confirmCreateBillingProfileModal.html', company)
         .then(function() {
           $scope._loading = true;

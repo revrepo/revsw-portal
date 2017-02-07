@@ -1605,6 +1605,9 @@ form.dns-zone-records--new-form input[name="subdomain"] {
   font-size: 0.7em;
   vertical-align: top;
 }
+.modal-body .dns-zone-record-answer .form-control {
+  max-width: 90%;
+}
 .footer-content {
   padding: 30px 10px;
 }
@@ -1698,6 +1701,10 @@ form.dns-zone-records--new-form input[name="subdomain"] {
 .azure-sso .login-link {
   color: #A1A2A5;
   padding: 25px;
+}
+.container-billing-zones-details {
+  max-height: 50vh;
+  overflow-y: overlay;
 }
 .inline-block {
   display: inline-block;

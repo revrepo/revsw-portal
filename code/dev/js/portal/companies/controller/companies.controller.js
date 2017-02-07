@@ -77,6 +77,9 @@
      * @return
      */
     $scope.deleteCompany = function(model) {
+      if($scope.isReadOnly() === true){
+        return;
+      }
       $scope
         .confirm('confirmModal.html', model)
         .then(function() {

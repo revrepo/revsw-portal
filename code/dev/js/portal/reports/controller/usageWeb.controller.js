@@ -6,7 +6,7 @@
     .controller('UsageWebController', UsageWebController);
 
   /*@ngInject*/
-  function UsageWebController($scope, $q, User, DTOptionsBuilder, DTColumnDefBuilder, AlertService, Stats, Util) {
+  function UsageWebController($scope, $q, User, DTOptionsBuilder, DTColumnDefBuilder, AlertService, Stats, Util, Locations, $uibModal) {
 
     $scope._loading = true;
     $scope.accounts = [];
@@ -304,6 +304,56 @@
       .finally(function(){
         $scope._loading = false;
       });
+
+     Locations.billingZones().$promise
+      .then(function(data){
+        $scope.billingZones = data;
+        $scope.billingZonesGroup = _.chain(data).sortBy('billing_zone').groupBy('billing_zone').value();
+      });
+
+       /**
+       * Confirmation dialog
+       *
+       * @param {string=} [template]
+       * @param {Object=} [resolve]
+       * @returns {*}
+       */
+      $scope.confirm = function(template, resolve) {
+        if (angular.isObject(template)) {
+          resolve = template;
+          template = '';
+        }
+        if (angular.isObject(resolve)) {
+          resolve = {
+            model: resolve
+          };
+        }
+        var modalInstance = $uibModal.open({
+          animation: false,
+          templateUrl: template || 'parts/modal/confirmDelete.html',
+          controller: 'ConfirmModalInstanceCtrl',
+          size: 'md',
+          resolve: resolve || {}
+        });
+
+        return modalInstance.result;
+      };
+
+      /**
+       * @name onGetBillingZonesDetails
+       * @description show modal window with Billing Zones
+       *
+       * @return
+       */
+      $scope.onGetBillingZonesDetails = function() {
+        var model = {
+          billingZones: $scope.billingZonesGroup
+        };
+        $scope.confirm('billingZonesDetailsModal.html', model)
+          .then(function() {
+
+          });
+      };
 
   }
 })();

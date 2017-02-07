@@ -183,8 +183,8 @@
               <a ui-sref="^" class="btn btn-default">
                 <i class="glyphicon glyphicon-remove"></i>&nbsp; Cancel
               </a>
-              <button class="btn btn-success" type="button" ng-disabled="disableSubmit(model, true)||editForm.$invalid" ng-click="updateUser(model)">
-                <i class="glyphicon glyphicon-ok"></i>&nbsp; Update
+              <button class="btn btn-success" ng-class="{'btn-disabled':isReadOnly()}"  type="button" ng-disabled="disableSubmit(model, true)||editForm.$invalid || isReadOnly()" ng-click="updateUser(model)">
+                <i class="glyphicon" ng-class="_loading ? 'glyphicon-refresh spin':'glyphicon-ok'"></i>&nbsp; Update
               </button>
             </div>
           </div>

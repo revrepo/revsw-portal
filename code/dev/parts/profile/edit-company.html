@@ -409,16 +409,16 @@
                 <a ui-sref="^" ng-disabled="_loading" class="btn btn-default" ng-hide="isAskedContactInfo">
                   <i class="glyphicon glyphicon-remove"></i>&nbsp; Cancel
                 </a>
-                <button type="submit" class="btn btn-success" ng-disabled="_loading || _disabled || !editForm.$valid" value="Update Company Profile">
+                <button type="submit" class="btn btn-success" ng-class="{'btn-disabled':isReadOnly()}" id="btnUpdateCompanyProfile" ng-disabled="_loading || _disabled || !editForm.$valid || isReadOnly()" value="Update Company Profile">
                   <i class="glyphicon " ng-class="_loading?'glyphicon-refresh spin':'glyphicon-save'"></i>&nbsp; Update Company Profile
                 </button>
-                <a ng-if="model.billing_id && !!model.billing_portal_link.url && !!model.subscription_id" href="{{model.billing_portal_link.url}}" class="btn btn-primary" target="_blank" ng-disabled="_loading || _disabled" popover-trigger="mouseenter" uib-popover="Click here to update your payment details - you will be taken to our billing portal which uses a separate URL">
+                <a ng-if="(isReadOnly()!==true) && model.billing_id && !!model.billing_portal_link.url && !!model.subscription_id" href="{{model.billing_portal_link.url}}" class="btn btn-primary" ng-class="{'btn-disabled':isReadOnly()}"  target="_blank" ng-disabled="_loading || _disabled || isReadOnly()" popover-trigger="mouseenter" uib-popover="Click here to update your payment details - you will be taken to our billing portal which uses a separate URL">
                   <i class="glyphicon " ng-class="_loading?'glyphicon-refresh spin':'glyphicon-lock'"></i>&nbsp; Update Payment Profile</a>
                 <!-- Create Billing Profile -->
-                <a href="" class="btn btn-primary" ng-disabled="_loading || _disabled || !editForm.$valid" ng-if="!model.billing_id && (userService.isRevadmin() || userService.isReseller())" ng-click="createBillingProfile(model)">
+                <a href="" class="btn btn-primary" ng-class="{'btn-disabled':isReadOnly()}" ng-disabled="_loading || _disabled || !editForm.$valid || isReadOnly()" ng-if="!model.billing_id && (userService.isRevadmin() || userService.isReseller())" ng-click="createBillingProfile(model)">
                   <i class="glyphicon " ng-class="_loading?'glyphicon-refresh spin':'glyphicon-credit-card'"></i>&nbsp; Create Billing Profile
                 </a>
-                <button type="button" ng-if="user.isAdmin" ng-click="deleteCompanyProfile(model)" class="btn btn-danger pull-right" ng-disabled="_loading || _disabled || !isCanDeleteCompanyProfile()">
+                <button type="button" ng-if="user.isAdmin" ng-click="deleteCompanyProfile(model)" class="btn btn-danger pull-right" ng-class="{'btn-disabled':isReadOnly()}" id="btnDeleteCompanyProfile" ng-disabled="_loading || _disabled || !isCanDeleteCompanyProfile() || isReadOnly()">
                   <i class="glyphicon " ng-class="_loading?'glyphicon-refresh spin':'glyphicon-remove'"></i>&nbsp; Delete Company Profile
                 </button>
               </div>

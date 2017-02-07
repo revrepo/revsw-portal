@@ -194,10 +194,11 @@
                 <i class="glyphicon glyphicon-remove"></i>&nbsp;
                 Cancel
               </a>
-              <button class="btn btn-success"
-                      ng-disabled="_loading || editForm.$invalid"
+              <button class="btn btn-success" ng-class="{'btn-disabled':isReadOnly()}"
+                      id="btnUpdate"
+                      ng-disabled="_loading || editForm.$invalid || isReadOnly()"
                       ng-click="update()">
-                <i class="glyphicon glyphicon-ok"></i>&nbsp;
+                <i class="glyphicon" ng-class="_loading ? 'glyphicon-refresh spin':'glyphicon-ok'"></i>&nbsp;
                 Update
               </button>
             </div>

@@ -221,12 +221,12 @@
             </div>
           </div>
           <hr>
-          <div class="form-group ">
-            <div class="col-sm-offset-2 col-sm-10 ">
-              <a ui-sref="^ " class="btn btn-default ">
-                <i class="glyphicon glyphicon-remove "></i>&nbsp; Cancel
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+              <a ui-sref="^" class="btn btn-default">
+                <i class="glyphicon glyphicon-remove"></i>&nbsp; Cancel
               </a>
-              <button class="btn btn-success " ng-disabled="disableSubmit(model, true)|| editForm.$invalid " ng-click="updateJob(model) ">
+              <button class="btn btn-success" ng-class="{'btn-disabled':isReadOnly()}" id="btnUpdate" ng-disabled="disableSubmit(model, true)|| editForm.$invalid || isReadOnly()" ng-click="updateJob(model) ">
                 <i class="glyphicon " ng-class="_loading ? 'glyphicon-refresh spin': 'glyphicon-ok' "></i>&nbsp; Update
               </button>
             </div>
