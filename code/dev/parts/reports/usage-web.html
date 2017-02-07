@@ -25,7 +25,7 @@
           <td>{{key}}</td>
           <td>
             <div ng-repeat="itm in item">
-              {{itm.city}} {{itm.state}} {{itm.country}}
+              {{itm.city}} {{itm.state}} {{itm.country}}<em ng-if="!$last">,</em>
             </div>
           </td>
         </tr>
@@ -34,7 +34,7 @@
   </div>
 </div>
 <div class="modal-footer">
-  <button class="btn btn-success" type="button" ng-click="ok()">OK</button>
+  <button class="btn btn-success" type="button" ng-click="cancel()">Close</button>
 </div>
 
 </script>
@@ -315,7 +315,7 @@
             <div ng-if="showDomainsUsage()" id="domains_usage">
 
               <hr>
-              <h4>Traffic Total Per Billing Zone</h4>
+              <h4 class="list-title">Traffic Total Per Billing Zone  <button class="btn btn-xs btn-primary btn-billing-zones-details" uib-tooltip="Click the button to get information about which our locations are included in reported billing zones" ng-click="onGetBillingZonesDetails()">Billing Zones Details</button></h4>
               <table class="table table-stripped table-condensed">
                 <thead>
                   <tr>
@@ -340,7 +340,7 @@
               </table>
 
               <hr>
-              <h4>Domains Usage <button id="btnDomainUsageBillingZonesDetails" class="btn btn-xs btn-primary" uib-tooltip="Click the button to get information about which our locations are included in reported billing zones" ng-click="onGetBillingZonesDetails()"><i></i>Billing Zones Details</button></h4>
+              <h4 class="title-list">Domains Usage</h4>
 
               <table class="table table-stripped table-condensed">
                 <thead>
@@ -425,7 +425,7 @@
                         </div>
 
                         <hr>
-                        <h4>Traffic Per Billing Zone <button id="btnTrafficBillingZonesDetails" class="btn btn-xs btn-primary" uib-tooltip="Click the button to get information about which our locations are included in reported billing zones" ng-click="onGetBillingZonesDetails()"><i></i>Billing Zones Details</button></h4>
+                        <h4 class="title-traffic-per-billing-zone">Traffic Per Billing Zone <button class="btn btn-xs btn-primary btn-billing-zones-details" uib-tooltip="Click the button to get information about which our locations are included in reported billing zones" ng-click="onGetBillingZonesDetails()">Billing Zones Details</button></h4>
                         <table class="table table-stripped table-condensed">
                           <thead>
                             <tr>
