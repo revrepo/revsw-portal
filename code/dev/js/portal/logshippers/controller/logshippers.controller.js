@@ -435,7 +435,7 @@
      * @return
      */
     $scope.onChangeLogShippingState = function(model, state) {
-      if (!model || model.operational_mode === state) {
+      if (!model || model.operational_mode === state || $scope.isReadOnly() === true) {
         return;
       }
       if (!model.id) {

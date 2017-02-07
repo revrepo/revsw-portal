@@ -153,15 +153,15 @@
                     <i class="glyphicon glyphicon-trash"></i>
                   </a>
                   <!-- “Pause With Log Piling” -->
-                  <a href="" ng-class="{'not-active':item.operational_mode=='pause'}" ng-if="!item.loading" ng-click="onChangeLogShippingState(item,'pause')" uib-tooltip="Pause With Log Piling">
+                  <a href="" ng-class="{'not-active':item.operational_mode=='pause','disabled':isReadOnly()}" ng-if="!item.loading" ng-click="onChangeLogShippingState(item,'pause')" uib-tooltip="Pause With Log Piling">
                     <i class="glyphicon glyphicon-pause"></i>
                   </a>
                   <!--   “Start”  -->
-                  <a href="" ng-class="{'not-active':item.operational_mode=='active'}" ng-if="!item.loading" ng-click="onChangeLogShippingState(item,'active')" uib-tooltip="Start">
+                  <a href="" ng-class="{'not-active':item.operational_mode=='active','disabled':isReadOnly()}" ng-if="!item.loading" ng-click="onChangeLogShippingState(item,'active')" uib-tooltip="Start">
                     <i class="glyphicon glyphicon-play"></i>
                   </a>
                   <!-- “Stop” / “Start”  -->
-                  <a href="" ng-class="{'not-active':item.operational_mode=='stop'}" ng-if="!item.loading" ng-click="onChangeLogShippingState(item,'stop')" uib-tooltip="Stop">
+                  <a href="" ng-class="{'not-active':item.operational_mode=='stop','disabled':isReadOnly()}" ng-if="!item.loading" ng-click="onChangeLogShippingState(item,'stop')" uib-tooltip="Stop">
                     <i class="glyphicon glyphicon-stop"></i>
                   </a>
                 </td>
