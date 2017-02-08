@@ -349,10 +349,7 @@
         var model = {
           billingZones: $scope.billingZonesGroup
         };
-        $scope.confirm('billingZonesDetailsModal.html', model)
-          .then(function() {
-
-          });
+        $scope.confirm('parts/reports/modal/modal-billing-zones-details.tpl.html', model);
       };
 
   }
