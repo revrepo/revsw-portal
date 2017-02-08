@@ -2,7 +2,7 @@
   <p>Domain points to</p>
   <p>
     <input ng-required="!create_linked&&model.rec.type=='A'" type="text" class="form-control inline-block" placeholder="12.34.56.78" ng-model="model.newanswer.value" ng-change="updatefromlong(model.newanswer, origanswer)">
-    <label class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Set here the value (answer) TODO HELP INFO">
+    <label class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Specify the field value depending on the selected record type">
       <i class="fa fa-question-circle"></i>
     </label>
   </p>
@@ -11,7 +11,7 @@
   <p>Domain points to</p>
   <p>
     <input ng-required="!create_linked&&model.rec.type=='AAAA'" type="text" class="form-control inline-block" placeholder="2001::beef" ng-model="model.newanswer.value" ng-change="updatefromlong(model.newanswer, origanswer)">
-    <label class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Set here the value (answer) TODO HELP INFO">
+    <label class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Specify the field value depending on the selected record type">
       <i class="fa fa-question-circle"></i>
     </label>
   </p>
@@ -27,7 +27,7 @@
   <p>With AFS cell server</p>
   <p>
     <input ng-required="!create_linked&&model.rec.type=='AFSDB'" type="text" class="form-control inline-block" placeholder="afs.{{zone_name}}" ng-model="model.newanswer.host" ng-change="updatefromlong(model.newanswer, origanswer)">
-    <label class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Set here the value (answer) TODO HELP INFO">
+    <label class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Specify the field value depending on the selected record type">
       <i class="fa fa-question-circle"></i>
     </label>
   </p>
@@ -36,7 +36,7 @@
   <p>Domain is an alias for</p>
   <p>
     <input ng-required="!create_linked&&model.rec.type=='ALIAS'" type="text" class="form-control inline-block" placeholder="alias.example.com" ng-model="model.newanswer.value" ng-change="updatefromlong(model.newanswer, origanswer)">
-    <label class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Set here the value (answer) TODO HELP INFO">
+    <label class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Specify the field value depending on the selected record type">
       <i class="fa fa-question-circle"></i>
     </label>
   </p>
@@ -45,7 +45,7 @@
   <p>Domain is an alias for</p>
   <p>
     <input ng-required="!create_linked&&model.rec.type=='CNAME'" type="text" class="form-control inline-block" placeholder="cname.{{zone_name}}" ng-model="model.newanswer.value" ng-change="updatefromlong(model.newanswer, origanswer)">
-    <label class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Set here the value (answer) TODO HELP INFO">
+    <label class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Specify the field value depending on the selected record type">
       <i class="fa fa-question-circle"></i>
     </label>
   </p>
@@ -54,7 +54,7 @@
   <p>DNS tree is an alias for</p>
   <p>
     <input ng-required="!create_linked&&model.rec.type=='DNAME'" type="text" class="form-control inline-block" placeholder="dname.{{zone_name}}" ng-model="model.newanswer.value" ng-change="updatefromlong(model.newanswer, origanswer)">
-    <label class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Set here the value (answer) TODO HELP INFO">
+    <label class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Specify the field value depending on the selected record type">
       <i class="fa fa-question-circle"></i>
     </label>
   </p>
@@ -63,14 +63,14 @@
   <p>Host hardware is</p>
   <p>
     <input ng-required="!create_linked&&model.rec.type=='HINFO'" type="text" class="form-control inline-block" placeholder="PC-Intel-3200mhz" ng-model="model.newanswer.hardware" ng-change="updatefromlong(model.newanswer, origanswer)">
-    <label class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Set here the value (answer) TODO HELP INFO">
+    <label class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Specify the field value depending on the selected record type">
       <i class="fa fa-question-circle"></i>
     </label>
   </p>
   <p>With operating system</p>
   <p>
     <input ng-required="!create_linked&&model.rec.type=='HINFO'" type="text" class="form-control inline-block" placeholder="Ubuntu 13.04" ng-model="model.newanswer.os" ng-change="updatefromlong(model.newanswer, origanswer)">
-    <label class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Set here the value (answer) TODO HELP INFO">
+    <label class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Specify the field value depending on the selected record type">
       <i class="fa fa-question-circle"></i>
     </label>
   </p>
@@ -79,14 +79,14 @@
   <p>Mail is handled by</p>
   <p>
     <input ng-required="!create_linked&&model.rec.type=='MX'" type="text" class="form-control inline-block" placeholder="mail.{{zone_name}}" ng-model="model.newanswer.host" ng-change="updatefromlong(model.newanswer, origanswer)">
-    <label class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Set here the value (answer) TODO HELP INFO">
+    <label class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Specify the field value depending on the selected record type">
       <i class="fa fa-question-circle"></i>
     </label>
   </p>
   <p>With priority</p>
   <p>
     <input ngrequired="!create_linked&&model.rec.type=='MX'" type="number" class="form-control inline-block" placeholder="{{DNS_DEFAULT_VALUES.MX_PRIORITY}}" ng-model="model.newanswer.priority" ng-change="updatefromlong(model.newanswer, origanswer)">
-    <label class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Set here the value (answer) TODO HELP INFO">
+    <label class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Specify the field value depending on the selected record type">
       <i class="fa fa-question-circle"></i>
     </label>
   </p>
@@ -95,42 +95,42 @@
   <p>Order for processing this answer</p>
   <p>
     <input ng-required="!create_linked&&model.rec.type=='NAPTR'" type="number" class="form-control inline-block" placeholder="100" ng-model="model.newanswer.order" ng-change="updatefromlong(model.newanswer, origanswer)">
-    <label class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Set here the value (answer) TODO HELP INFO">
+    <label class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Specify the field value depending on the selected record type">
       <i class="fa fa-question-circle"></i>
     </label>
   </p>
   <p>Preference in case other answers have equal values</p>
   <p>
     <input ng-required="!create_linked&&model.rec.type=='NAPTR'" type="number" class="form-control inline-block" placeholder="10" ng-model="model.newanswer.preference" ng-change="updatefromlong(model.newanswer, origanswer)">
-    <label class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Set here the value (answer) TODO HELP INFO">
+    <label class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Specify the field value depending on the selected record type">
       <i class="fa fa-question-circle"></i>
     </label>
   </p>
   <p>Flags</p>
   <p>
     <input ng-required="!create_linked&&model.rec.type=='NAPTR'" type="text" class="form-control inline-block" placeholder="u" ng-model="model.newanswer.flags" ng-change="updatefromlong(model.newanswer, origanswer)">
-    <label class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Set here the value (answer) TODO HELP INFO">
+    <label class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Specify the field value depending on the selected record type">
       <i class="fa fa-question-circle"></i>
     </label>
   </p>
   <p>Service(s) available down this rewrite path</p>
   <p>
     <input ng-required="!create_linked&&model.rec.type=='NAPTR'" type="text" class="form-control inline-block" placeholder="sip+E2U" ng-model="model.newanswer.service" ng-change="updatefromlong(model.newanswer, origanswer)">
-    <label class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Set here the value (answer) TODO HELP INFO">
+    <label class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Specify the field value depending on the selected record type">
       <i class="fa fa-question-circle"></i>
     </label>
   </p>
   <p>Regexp</p>
   <p>
     <input ng-required="!create_linked&&model.rec.type=='NAPTR'" type="text" class="form-control inline-block" placeholder="!^.*$!sip:information@{{zone_name}}!" ng-model="model.newanswer.regexp" ng-change="updatefromlong(model.newanswer, origanswer)">
-    <label class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Set here the value (answer) TODO HELP INFO">
+    <label class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Specify the field value depending on the selected record type">
       <i class="fa fa-question-circle"></i>
     </label>
   </p>
   <p>Replacement FQDN</p>
   <p>
     <input ng-required="!create_linked&&model.rec.type=='NAPTR'" type="text" class="form-control inline-block" placeholder="." ng-model="model.newanswer.replacement" ng-change="updatefromlong(model.newanswer, origanswer)">
-    <label class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Set here the value (answer) TODO HELP INFO">
+    <label class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Specify the field value depending on the selected record type">
       <i class="fa fa-question-circle"></i>
     </label>
   </p>
@@ -139,7 +139,7 @@
   <p>DNS is handled by</p>
   <p>
     <input ng-required="!create_linked&&model.rec.type=='NS'" type="text" class="form-control inline-block" placeholder="ns1.{{zone_name}}" ng-model="model.newanswer.value" ng-change="updatefromlong(model.newanswer, origanswer)">
-    <label class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Set here the value (answer) TODO HELP INFO">
+    <label class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Specify the field value depending on the selected record type">
       <i class="fa fa-question-circle"></i>
     </label>
   </p>
@@ -148,7 +148,7 @@
   <p>Reverse DNS points to</p>
   <p>
     <input ng-required="!create_linked&&model.rec.type=='PTR'" type="text" class="form-control inline-block" placeholder="host.{{zone_name}}" ng-model="model.newanswer.value" ng-change="updatefromlong(model.newanswer, origanswer)">
-    <label class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Set here the value (answer) TODO HELP INFO">
+    <label class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Specify the field value depending on the selected record type">
       <i class="fa fa-question-circle"></i>
     </label>
   </p>
@@ -157,14 +157,14 @@
   <p>Email of person responsible for this host is</p>
   <p>
     <input ng-required="!create_linked&&model.rec.type=='RP'" type="email" class="input inline-block" placeholder="host.{{zone_name}}" ng-model="model.newanswer.email" ng-change="updatefromlong(model.newanswer, origanswer)">
-    <label class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Set here the value (answer) TODO HELP INFO">
+    <label class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Specify the field value depending on the selected record type">
       <i class="fa fa-question-circle"></i>
     </label>
   </p>
   <p>Domain for which <span class="badge">TXT</span> record exists is</p>
   <p>
     <input ng-required="!create_linked&&model.rec.type=='RP'" type="text" class="form-control inline-block" placeholder="{{zone_name}}" ng-model="model.newanswer.txt_dname" ng-change="updatefromlong(model.newanswer, origanswer)">
-    <label class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Set here the value (answer) TODO HELP INFO">
+    <label class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Specify the field value depending on the selected record type">
       <i class="fa fa-question-circle"></i>
     </label>
   </p>
@@ -173,7 +173,7 @@
   <p>Sender Policy Framework configuration is</p>
   <p>
     <textarea ng-required="!create_linked&&model.rec.type=='SPF'" rows="1" class="input inline-block" placeholder="v=spf1 +mx a:mail.{{zone_name}}/28 -all" ng-model="model.newanswer.value" ng-change="updatefromlong(model.newanswer, origanswer)"></textarea>
-    <label class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Set here the value (answer) TODO HELP INFO">
+    <label class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Specify the field value depending on the selected record type">
       <i class="fa fa-question-circle"></i>
     </label>
   </p>
@@ -182,28 +182,28 @@
   <p>Priority of target host is</p>
   <p>
     <input ngrequired="!create_linked&&model.rec.type=='SRV'" type="number" class="form-control inline-block" placeholder="{{DNS_DEFAULT_VALUES.SRV_PRIORITY}}" ng-model="model.newanswer.priority" ng-change="updatefromlong(model.newanswer, origanswer)">
-    <label class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Set here the value (answer) TODO HELP INFO">
+    <label class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Specify the field value depending on the selected record type">
       <i class="fa fa-question-circle"></i>
     </label>
   </p>
   <p>Relative weight for hosts with same priority is</p>
   <p>
     <input ngrequired="!create_linked&&model.rec.type=='SRV'" type="number" class="form-control inline-block" placeholder="{{DNS_DEFAULT_VALUES.SRV_WEIGHT}}" ng-model="model.newanswer.weight" ng-change="updatefromlong(model.newanswer, origanswer)">
-    <label class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Set here the value (answer) TODO HELP INFO">
+    <label class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Specify the field value depending on the selected record type">
       <i class="fa fa-question-circle"></i>
     </label>
   </p>
   <p>TCP/UDP service port is</p>
   <p>
     <input ngrequired="!create_linked&&model.rec.type=='SRV'" type="number" class="form-control inline-block" placeholder="{{DNS_DEFAULT_VALUES.SRV_PORT}}" ng-model="model.newanswer.port" ng-change="updatefromlong(model.newanswer, origanswer)">
-    <label class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Set here the value (answer) TODO HELP INFO">
+    <label class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Specify the field value depending on the selected record type">
       <i class="fa fa-question-circle"></i>
     </label>
   </p>
   <p>Host providing service is</p>
   <p>
     <input ng-required="!create_linked&&model.rec.type=='SRV'" type="text" class="form-control inline-block" placeholder="sip.{{zone_name}}" ng-model="model.newanswer.host" ng-change="updatefromlong(model.newanswer, origanswer)">
-    <label class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Set here the value (answer) TODO HELP INFO">
+    <label class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Specify the field value depending on the selected record type">
       <i class="fa fa-question-circle"></i>
     </label>
   </p>
@@ -212,7 +212,7 @@
   <p>Text value is</p>
   <p>
     <textarea ng-required="!create_linked&&model.rec.type=='TXT'" rows="1" class="form-control inline-block" placeholder="Freeform text" ng-model="model.newanswer.value" ng-change="updatefromlong(model.newanswer, origanswer)"></textarea>
-    <label class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Set here the value (answer) TODO HELP INFO">
+    <label class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Specify the field value depending on the selected record type">
       <i class="fa fa-question-circle"></i>
     </label>
   </p>

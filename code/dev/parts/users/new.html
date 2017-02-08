@@ -25,7 +25,7 @@
             <label for="email" class="col-sm-2 control-label">Email *</label>
             <div class="col-sm-10">
               <input type="email" autofocus class="form-control inline-block" id="email" name="email" placeholder="Email" ng-model="model.email" ng-maxlength="64" ng-disabled="_loading" required>
-              <label for="email" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="New user's email address - the address should be unique across the system">
+              <label for="email" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="New user's email address - the address should be unique across the system. The email address is also the user's login name to the customer portal.">
                 <i class="fa fa-question-circle"></i>
               </label>
               <div class="error-messages" ng-messages="createForm.email.$error" role="alert" ng-messages-multiple>
@@ -116,21 +116,23 @@
           <div class="form-group">
             <label for="access_control_list" class="col-sm-2 control-label">Access Control List</label>
             <div class="col-sm-10">
+
+<!--
               <div>
                 <input type="checkbox" name="access_control_list_dashBoard" class="inline-block" disabled ng-model="model.access_control_list.dashBoard"> Dashboard
-                <label for="access_control_list_dashBoard" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="TODO text Set here the new user's access control permissions">
+                <label for="access_control_list_dashBoard" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Grants permission to manage the Dashboards section">
                   <i class="fa fa-question-circle"></i>
                 </label>
               </div>
               <div>
                 <input type="checkbox" name="access_control_list_reports" class="inline-block" ng-model="model.access_control_list.reports"> Reports
-                <label for="access_control_list_reports" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="TODO text">
+                <label for="access_control_list_reports" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Grants permission to see traffic analytic reports (currently not supported)">
                   <i class="fa fa-question-circle"></i>
                 </label>
               </div>
               <div>
                 <input type="checkbox" name="access_control_list_configure" class="inline-block" ng-model="model.access_control_list.configure"> Configure
-                <label for="access_control_list_configure" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="TODO text">
+                <label for="access_control_list_configure" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Grants permission to manage account configuration (currently not supported)">
                   <i class="fa fa-question-circle"></i>
                 </label>
               </div>
@@ -140,9 +142,10 @@
                   <i class="fa fa-question-circle"></i>
                 </label>
               </div>
+-->
               <div>
                 <input type="checkbox" name="access_control_list_readOnly" class="inline-block" ng-model="model.access_control_list.readOnly"> Read Only
-                <label for="access_control_list_readOnly" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="TODO text">
+                <label for="access_control_list_readOnly" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Enables read-only access for the user account (the user still can change his password, enabled/disable 2FA and manage dashboards)">
                   <i class="fa fa-question-circle"></i>
                 </label>
               </div>
@@ -153,7 +156,7 @@
             <label for="userPassword" class="col-sm-2 control-label">Password *</label>
             <div class="col-sm-10">
               <input type="password" class="form-control inline-block" id="password" name="userPassword" ng-model="model.password" ng-disabled="_loading" ng-minlength="8" ng-maxlength="15" required>
-              <label for="userPassword" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="TODO text">
+              <label for="userPassword" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Enter the new user's password">
                 <i class="fa fa-question-circle"></i>
               </label>
               <div class="error-messages" ng-messages="createForm.password.$error" role="alert" ng-messages-multiple>
@@ -167,7 +170,7 @@
             <label for="userPasswordConfirm" class="col-sm-2 control-label">Confirm Password *</label>
             <div class="col-sm-10">
               <input type="password" class="form-control inline-block" id="passwordConfirm" name="userPasswordConfirm" ng-model="model.passwordConfirm" ng-disabled="_loading" validate-compare-to="model.password">
-              <label for="userPasswordConfirm" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="TODO text">
+              <label for="userPasswordConfirm" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Re-enter the new user's password">
                 <i class="fa fa-question-circle"></i>
               </label>
               <div class="error-messages" ng-messages="createForm.passwordConfirm.$error" role="alert" ng-messages-multiple>
