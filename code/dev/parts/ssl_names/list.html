@@ -116,7 +116,7 @@
                   <a href="" ng-class="(item.verified ||isReadOnly())?'disabled':''" ng-disabled="item.verified ||isReadOnly()" ng-if="!item.loading" uib-tooltip="{{item.verified?'Already Verified':'Verify Domain Control'}}" ng-click="onVerifyDomain($event,item)">
                     <i class="glyphicon glyphicon-check"></i>
                   </a>
-                  <a href="" ng-class="(item.verified ||isReadOnly())?'disabled':''" ng-if="!item.loading" ng-click="deleteSSLName(item)" uib-tooltip="Delete SSL Name">
+                  <a href="" ng-class="(isReadOnly())?'disabled':''" ng-if="!item.loading" ng-click="deleteSSLName(item)" uib-tooltip="Delete SSL Name">
                     <i class="glyphicon glyphicon-trash"></i>
                   </a>
                 </td>

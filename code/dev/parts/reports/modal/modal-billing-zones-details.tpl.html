@@ -2,7 +2,9 @@
   <h3 class="modal-title">Billing Zones Details</h3>
 </div>
 <div class="modal-body" id="billing-zones-details-content">
-  <p>This table details the allocation of our edge locations per traffic billing zones</p>
+  <p>This table details the allocation of our edge locations per traffic billing zone. Please note that when assigning end user traffic to a billing zone we look at which our edge
+    site served the end user and not what is the actual location of the user. For example, if for a reason a user in Brazil was served from one of our US locations the traffic is marked as in
+    "North America" billing zone and not as in "South America" zone.</p>
   <table class="table">
     <thead>
       <tr>
@@ -10,7 +12,7 @@
           Billing Zone Name
         </th>
         <th>
-          Included Countries/Locations
+          Included Edge Locations/Sites
         </th>
       </tr>
     </thead>
@@ -24,7 +26,7 @@
           <td>{{key}}</td>
           <td>
             <div ng-repeat="itm in item">
-              {{itm.city}} {{itm.state}} {{itm.country}}<em ng-if="!$last">,</em>
+              {{itm.city}},<em ng-if="itm.state"> {{itm.state}},</em> {{itm.country}}
             </div>
           </td>
         </tr>
