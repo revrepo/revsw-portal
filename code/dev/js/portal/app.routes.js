@@ -116,7 +116,34 @@
         url: '/help',
         views: {
           page: {
-            templateUrl: 'parts/help/contactus.html'
+            templateUrl: 'parts/help/contactus.html',
+            controller: /*ngInject*/ function($scope, Locations, $uibModal) {
+              Locations.billingZones().$promise
+                .then(function(data) {
+                  $scope.billingZonesGroup = _.chain(data).sortBy('billing_zone').groupBy('billing_zone').value();
+                });
+              /**
+               * @name onGetBillingZonesDetails
+               * @description show modal window with Billing Zones
+               *
+               * @return
+               */
+              $scope.onGetBillingZonesDetails = function(e) {
+                e.preventDefault();
+                var model = {
+                  billingZones: $scope.billingZonesGroup
+                };
+                var modalInstance = $uibModal.open({
+                  animation: false,
+                  templateUrl: 'parts/reports/modal/modal-billing-zones-details.tpl.html',
+                  controller: 'ConfirmModalInstanceCtrl',
+                  size: 'md',
+                  resolve: {
+                    model: model
+                  } || {}
+                });
+              };
+            }
           }
         }
       })
