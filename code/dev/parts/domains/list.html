@@ -137,7 +137,7 @@
                   <a ui-sref=".edit({id: item.id,isAdvanced:true})" ng-if="!item.loading" uib-tooltip="Advanced Edit Domain">
                     <i class="glyphicon glyphicon-cog"></i>
                   </a>
-                  <a href="" ng-if="!item.loading" ng-click="deleteDomain(item)" uib-tooltip="Delete Domain">
+                  <a href="" ng-if="!item.loading" ng-class="{'disabled': isReadOnly() }" ng-click="deleteDomain(item)" uib-tooltip="Delete Domain">
                     <i class="glyphicon glyphicon-trash"></i>
                   </a>
                   <a href="#/reports/proxy" ng-if="!item.loading" ng-click="storeToStorage(item)" uib-tooltip="Stats">
