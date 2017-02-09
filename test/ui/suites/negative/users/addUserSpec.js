@@ -2,7 +2,7 @@
  *
  * REV SOFTWARE CONFIDENTIAL
  *
- * [2013] - [2015] Rev Software, Inc.
+ * [2013] - [2017] Rev Software, Inc.
  * All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains
@@ -61,7 +61,7 @@ describe('Negative', function () {
         Portal.addUserPage.clickBackToList();
         Portal.userListPage.clickAddNewUser();
         Portal.addUserPage.createUser(jerry);
-        expect(Portal.alerts.getAll().count()).toEqual(1);
+        expect(Portal.alerts.getAll().count()).not.toEqual(0);
         var alert = Portal.alerts.getFirst();
         var expectedMessage = Constants.alertMessages.users.MSG_FAIL_ADD_EMAIL_EXISTS;
         expect(alert.getText()).toContain(expectedMessage);
