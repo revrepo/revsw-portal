@@ -199,11 +199,11 @@
               <!-- -->
               <!-- Last Mile QUIC Protocol -->
               <div class="form-group form-inline">
-                <label for="rev_component_bp_enable_quic" class="col-sm-3 control-label">
+                <label for="enable_quic" class="col-sm-3 control-label">
                   Last Mile QUIC Protocol
                 </label>
                 <div class="col-md-9">
-                  <toggle-switch id="lastMileQUICprotocol" is-disabled="_loading" ng-model="model.rev_component_bp.enable_quic" on-label="On" off-label="Off">
+                  <toggle-switch id="lastMileQUICprotocol" name="enable_quic" is-disabled="_loading" ng-model="model.rev_component_bp.enable_quic" on-label="On" off-label="Off">
                   </toggle-switch>
                   <label for="enable_quic" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="This switch controls whether QUIC-enabled browsers (like Google's Chrome) will be allowed to use for data transfer modern QUIC protocol instead of HTTP2. QUIC protocol provides significant network performance benefits.">
                     <i class="fa fa-question-circle"></i>
@@ -216,7 +216,7 @@
                   Block All Web Crawlers
                 </label>
                 <div class="col-md-9">
-                  <toggle-switch id="blockAllWebCrawlers" is-disabled="_loading" ng-model="model.rev_component_bp.block_crawlers" on-label="On" off-label="Off">
+                  <toggle-switch id="blockAllWebCrawlers" name="block_crawlers" is-disabled="_loading" ng-model="model.rev_component_bp.block_crawlers" on-label="On" off-label="Off">
                   </toggle-switch>
                   <label for="block_crawlers" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Use the switch to force the CDN to override the origin-provided /robots.txt file with a file disabling all web crawlers to access the website. This feature might be useful if you board a website on the platform but use a different domain name - this will prevent search engines to catalog the same content under different domain names.">
                     <i class="fa fa-question-circle"></i>
@@ -225,17 +225,31 @@
               </div>
               <!-- RUM Data Collection  -->
               <div class="form-group form-inline">
-                <label for="block_crawlers" class="col-sm-3 control-label">
+                <label for="enable_rum" class="col-sm-3 control-label">
                   RUM Data Collection
                 </label>
                 <div class="col-md-9">
-                  <toggle-switch id="runDataCollection" is-disabled="_loading" ng-model="model.rev_component_co.enable_rum" on-label="On" off-label="Off">
+                  <toggle-switch id="runDataCollection" name="enable_rum" is-disabled="_loading" ng-model="model.rev_component_co.enable_rum" on-label="On" off-label="Off">
                   </toggle-switch>
                   <label for="enable_rum" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Use the switch the enable the injection of RUM data collection JavaScript into served HTML pages">
                     <i class="fa fa-question-circle"></i>
                   </label>
                 </div>
               </div>
+            <!-- RUM Data Collection  -->
+              <div class="form-group form-inline">
+                <label for="enable_decompression" class="col-sm-3 control-label">
+                  Decompress Objects Fetched <br/>From The Origin
+                </label>
+                <div class="col-md-9">
+                  <toggle-switch id="enableDecompression" name="enable_decompression" is-disabled="_loading" ng-model="model.rev_component_co.enable_decompression" on-label="On" off-label="Off">
+                  </toggle-switch>
+                  <label for="enable_decompression" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Controls whether first-mile proxy servers should decompress content fetched from the origin server. The default value of Off. The switch should be in On position for 'RUM Data Collection' and '3rd-party Links' features to work.">
+                    <i class="fa fa-question-circle"></i>
+                  </label>
+                </div>
+              </div>
+
               <div class="form-group" ng-class="{ 'has-error': editForm.comment.$invalid &&  editForm.comment.$dirty }">
                 <label for="comment" class="col-sm-3 control-label">Comment</label>
                 <div class="col-md-9">
