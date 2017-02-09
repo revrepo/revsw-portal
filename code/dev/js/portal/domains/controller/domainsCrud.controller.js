@@ -69,6 +69,7 @@
               item.companyName = list[index].companyName;
             }
           });
+          $scope._applyFilter(); // NOTE: apply current filter for new data in Account column
         });
       } else {
         return $q.when();
