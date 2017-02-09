@@ -44,9 +44,9 @@ module.exports = {
             });
     };
 
-    var allertTimeout = function() {
+    var alertTimeout = function() {
         angular
-            .module('allertTimeout', ['revapm.Portal.Config'])
+            .module('alertTimeout', ['revapm.Portal.Config'])
             .run(function($config){
               // NOTE: fix for tests with checking allerts messages
               // Up time show toaster messages
@@ -67,7 +67,7 @@ module.exports = {
     });
     browser.addMockModule('disableNgAnimate', disableNgAnimate);
     browser.addMockModule('disableCssAnimate', disableCssAnimate);
-    browser.addMockModule('allertTimeout', allertTimeout);
+    browser.addMockModule('alertTimeout', alertTimeout);
     // add jasmine html reporter
     var htmlReporter = new Jasmine2HtmlReporter({
       savePath: './results/tests/',
