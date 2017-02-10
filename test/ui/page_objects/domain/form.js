@@ -245,7 +245,9 @@ var DomainForm = {
       enableLuaScriptingOriginFirstMile: {
         id: 'luaScriptingFirstMile'
       },
-
+      enableAccelerateThirdPartyLinksEmbeddedInHTMLCode:{
+        id: 'enable3rdPartyRewrite'
+      },
       enableThisCodeBlockBP: {
         css: 'div[ng-model="$ctrl.luaBlock.enable"]'
       },
@@ -383,6 +385,10 @@ var DomainForm = {
       luaScripting:{
         li: '.domain-edit-form .nav.nav-tabs>li:nth-child(6)',
         css: '.domain-edit-form .nav.nav-tabs>li:nth-child(6) a'
+      },
+      thirdPartyLinks:{
+        li: '.domain-edit-form .nav.nav-tabs>li:nth-child(7)',
+        css: '.domain-edit-form .nav.nav-tabs>li:nth-child(7) a'
       }
     }
   },
@@ -464,6 +470,17 @@ var DomainForm = {
 
   getLuaScriptingTab: function () {
     return element(by.css(this.locators.tabs.luaScripting.css));
+  },
+  /**
+   * ### DomainForm.getThirdPartyLinksTab()
+   *
+   * Returns the reference to the `Third-Party Links` tab
+   * (Selenium WebDriver Element)
+   *
+   * @returns {Selenium WebDriver Element}
+   */
+  getThirdPartyLinksTab: function () {
+    return element(by.css(this.locators.tabs.thirdPartyLinks.css));
   },
 
 
@@ -766,6 +783,10 @@ var DomainForm = {
   },
   getEnableLuaScriptingOriginFirstMile: function () {
     return element(by.id(this.locators.switches.enableLuaScriptingOriginFirstMile.id));
+  },
+  getEnableAccelerateThirdPartyLinksEmbeddedInHTMLCode: function () {
+    return element(by.id(this.locators.switches
+      .enableAccelerateThirdPartyLinksEmbeddedInHTMLCode.id));
   },
   getEnableThisCodeBlockBP: function () {
     return element(by.css(this.locators.switches.enableThisCodeBlockBP.css));
