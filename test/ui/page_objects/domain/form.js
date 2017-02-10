@@ -245,8 +245,14 @@ var DomainForm = {
       enableLuaScriptingOriginFirstMile: {
         id: 'luaScriptingFirstMile'
       },
-      enableAccelerateThirdPartyLinksEmbeddedInHTMLCode:{
+      enable3rdPartyRewrite:{
         id: 'enable3rdPartyRewrite'
+      },
+      enable3rdPartyRootRewrite:{
+        id: 'enable3rdPartyRootRewrite'
+      },
+      enable3rdPartyRuntimeRewrite:{
+        id: 'enable3rdPartyRuntimeRewrite'
       },
       enableThisCodeBlockBP: {
         css: 'div[ng-model="$ctrl.luaBlock.enable"]'
@@ -784,9 +790,17 @@ var DomainForm = {
   getEnableLuaScriptingOriginFirstMile: function () {
     return element(by.id(this.locators.switches.enableLuaScriptingOriginFirstMile.id));
   },
-  getEnableAccelerateThirdPartyLinksEmbeddedInHTMLCode: function () {
+  getEnable3rdPartyRewrite: function () {
     return element(by.id(this.locators.switches
-      .enableAccelerateThirdPartyLinksEmbeddedInHTMLCode.id));
+      .enable3rdPartyRewrite.id));
+  },
+  getEnable3rdPartyRootRewrite: function () {
+    return element(by.id(this.locators.switches
+      .enable3rdPartyRootRewrite.id));
+  },
+  getEnable3rdPartyRuntimeRewrite: function () {
+    return element(by.id(this.locators.switches
+      .enable3rdPartyRuntimeRewrite.id));
   },
   getEnableThisCodeBlockBP: function () {
     return element(by.css(this.locators.switches.enableThisCodeBlockBP.css));
