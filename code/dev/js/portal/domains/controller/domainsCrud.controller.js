@@ -290,7 +290,7 @@
           origin_secure_protocol: 'use_end_user_protocol',
           rev_component_co: {
             enable_rum: false,
-            enable_decompression: false
+            enable_decompression: true
           }
         };
         // NOTE: set default properties
