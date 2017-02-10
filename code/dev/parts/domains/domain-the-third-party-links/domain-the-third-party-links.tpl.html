@@ -1,0 +1,14 @@
+<div class="domain-caching-rule form" ng-form="editForm">
+  <div class="form-group form-inline">
+    <label for="enable_3rd_party_rewrite" class="col-sm-3 control-label">
+      Accelerate Third-Party Links Embedded In HTML Code
+    </label>
+    <div class="col-md-9">
+      <toggle-switch id="enable3rdPartyRewrite" ng-model="model['3rd_party_rewrite'].enable_3rd_party_rewrite" on-label="On" off-label="Off">
+      </toggle-switch>
+      <label for="enable_3rd_party_rewrite" class="text-info" popover-trigger="mouseenter" uib-popover="This switch control the acceleration of objects/links embedded directly in HTML code using 'src' statement (normally used for images and JavaScript scripts)">
+        <i class="fa fa-question-circle"></i>
+      </label>
+    </div>
+  </div>
+</div>

@@ -574,7 +574,12 @@
               <hr>
             </uib-tab>
             <uib-tab index="5" heading="Lua Scripting" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="This section allows you to enhance the RevAPM service by running custom Lua code snippets on RevAPM proxy servers">
-              <domain-lua-scripting class="form-group" ng-model="model"></domain-lua-scripting>
+              <domain-lua-scripting class="form-group" ng-model="model.enable_3rd_party_rewrite"></domain-lua-scripting>
+              <hr>
+            </uib-tab>
+            <!-- Third-Party Links-->
+            <uib-tab index="6" heading="Third-Party Links" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="This section allows you to accelerate your website by redirecting to the CDN platform embedded objects/scripts served by potentially slow third-party vendors">
+              <domain-the-third-party-links class="form-group" ng-model="model"></domain-the-third-party-links>
               <hr>
             </uib-tab>
           </uib-tabset>
