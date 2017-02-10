@@ -577,6 +577,11 @@
               <domain-lua-scripting class="form-group" ng-model="model"></domain-lua-scripting>
               <hr>
             </uib-tab>
+            <!-- Third-Party Links-->
+            <uib-tab index="6" heading="Third-Party Links" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="This section allows you to accelerate your website by redirecting to the CDN platform external objects/scripts served by potentially slow third-party vendors">
+              <domain-the-third-party-links class="form-group" ng-model="$thirdPartyLinks"></domain-the-third-party-links>
+              <hr>
+            </uib-tab>
           </uib-tabset>
           <div class="form-group">
             <label class="col-sm-3 control-label">Current Publishing Status</label>

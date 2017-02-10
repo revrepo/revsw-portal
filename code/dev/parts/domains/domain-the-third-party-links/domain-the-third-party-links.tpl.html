@@ -1,0 +1,105 @@
+<div class="domain-the-third-party-links form col-sm-12" ng-form="editForm">
+  <!--Accelerate Third-Party Links Specified In HTML Code-->
+  <div class="form-group form-inline">
+    <label for="enable_3rd_party_rewrite" class="col-sm-3 control-label">
+      Accelerate Third-Party Links Specified In HTML Code
+    </label>
+    <div class="col-md-9">
+      <toggle-switch id="enable3rdPartyRewrite" ng-model="$ctrl.model.enable_3rd_party_rewrite" on-label="On" off-label="Off">
+      </toggle-switch>
+      <label for="enable_3rd_party_rewrite" class="text-info" popover-trigger="mouseenter" uib-popover="This switch enables/disables the acceleration of objects/links specified directly in HTML code using “src” statements (normally used for images and JavaScript scripts). Specific domain names or URLs of third-party links should be provided in the next configuration field.">
+        <i class="fa fa-question-circle"></i>
+      </label>
+    </div>
+  </div>
+  <!--  Third-Party Links Specified in HTML Code -->
+  <div class="form-group" ng-class="{'has-error': editForm.thirdPartyUrls.$invalid && editForm.thirdPartyUrls.$dirty}">
+    <label for="thirdPartyUrls" class="col-sm-3 control-label">
+      Third-Party Links Specified in HTML Code
+    </label>
+    <div class="col-sm-9">
+      <ui-select name="thirdPartyUrls" id="thirdPartyUrls" validate-domain-name-or-url tagging tagging-label="Add TODO TEXT" multiple tagging-tokens="SPACE|," theme="bootstrap" class="form-control inline-block" ng-disabled="_loading" ng-model="$ctrl.model['3rd_party_urls']">
+        <ui-select-match placeholder="Add TODO TEXT...">{{$item}}</ui-select-match>
+        <ui-select-choices repeat="party_urls in $ctrl.model['3rd_party_urls']">
+          {{party_urls}}
+        </ui-select-choices>
+      </ui-select>
+      <label for="thirdPartyUrls" class="text-info" popover-trigger="mouseenter" uib-popover="Provide here a list of third-party domain names or URLs as they are specified in the HTML code. For example: ‘https://images-eu.ssl-images-amazon.com’.">
+        <i class="fa fa-question-circle"></i>
+      </label>
+      <div class="error-messages" ng-messages="editForm.thirdPartyUrls.$error" role="alert" ng-messages-multiple>
+        <div ng-messages-include="parts/shared/error-messages.html"></div>
+      </div>
+    </div>
+  </div>
+  <!-- -->
+  <!-- Accelerate Third-Party Links Embedded In HTML Code -->
+  <div class="form-group form-inline">
+    <label for="enable_3rd_party_root_rewrite" class="col-sm-3 control-label">
+      Accelerate Third-Party Links Generated Runtime in Inline JavaScript Code
+    </label>
+    <div class="col-md-9">
+      <toggle-switch id="enable3rdPartyRootRewrite" name="enable_3rd_party_root_rewrite" ng-model="$ctrl.model.enable_3rd_party_root_rewrite" on-label="On" off-label="Off">
+      </toggle-switch>
+      <label for="enable_3rd_party_root_rewrite" class="text-info" popover-trigger="mouseenter" uib-popover="Use the switch to enable/disable the acceleration of third-party objects fetched in runtime by inline Javascript code mentioned directly in HTML code">
+        <i class="fa fa-question-circle"></i>
+      </label>
+    </div>
+  </div>
+  <!-- -->
+  <!--  Third-Party Links Generated Runtime By Inline Javascript Code -->
+  <div class="form-group" ng-class="{'has-error': editForm.thirdPartyRootRewriteDomains.$invalid && editForm.thirdPartyRootRewriteDomains.$dirty}">
+    <label for="thirdPartyRootRewriteDomains" class="col-sm-3 control-label">
+      Third-Party Links Generated Runtime By Inline Javascript Code
+    </label>
+    <div class="col-sm-9">
+      <ui-select id="thirdPartyRootRewriteDomains" name="thirdPartyRootRewriteDomains" validate-domain-name-or-url tagging tagging-label="Add TODO TEXT" multiple tagging-tokens="SPACE|," theme="bootstrap" class="form-control inline-block" ng-disabled="_loading" ng-model="$ctrl.model['3rd_party_root_rewrite_domains']">
+        <ui-select-match placeholder="Add TODO TEXT...">{{$item}}</ui-select-match>
+        <ui-select-choices repeat="rewrite_domain in $ctrl.model['3rd_party_root_rewrite_domains']">
+          {{rewrite_domain}}
+        </ui-select-choices>
+      </ui-select>
+      <label for="thirdPartyRootRewriteDomains" class="text-info" popover-trigger="mouseenter" uib-popover="Provide here a list of third-party domain names or URLs as they are specified in the HTML code. For example: ‘https://images-eu.ssl-images-amazon.com’.">
+        <i class="fa fa-question-circle"></i>
+      </label>
+      <div class="error-messages" ng-messages="editForm.thirdPartyRootRewriteDomains.$error" role="alert" ng-messages-multiple>
+        <div ng-messages-include="parts/shared/error-messages.html"></div>
+      </div>
+    </div>
+  </div>
+  <!-- -->
+  <!-- Accelerate Third-Party Links Generated Runtime in Third-Party JavaScript Code -->
+  <div class="form-group form-inline">
+    <label for="enable_3rd_party_runtime_rewrite" class="col-sm-3 control-label">
+      Accelerate Third-Party Links Generated Runtime in Third-Party JavaScript Code
+    </label>
+    <div class="col-md-9">
+      <toggle-switch id="enable3rdPartyRuntimeRewrite" ng-model="$ctrl.model.enable_3rd_party_runtime_rewrite" on-label="On" off-label="Off">
+      </toggle-switch>
+      <label for="enable_3rd_party_runtime_rewrite" class="text-info" popover-trigger="mouseenter" uib-popover="Use the switch to enable/disable the acceleration of third-party objects referenced in runtime by third-party Javascript scripts loaded in HTML page">
+        <i class="fa fa-question-circle"></i>
+      </label>
+    </div>
+  </div>
+  <!--  Third-Party Links Generated Runtime By Third-Party Javascript Code -->
+  <div class="form-group" ng-class="{'has-error': editForm.thirdPartyRuntimeDomains.$invalid && editForm.thirdPartyRuntimeDomains.$dirty}">
+    <label for="thirdPartyRuntimeDomains" class="col-sm-3 control-label">
+      Third-Party Links Generated Runtime By Third-Party Javascript Code
+    </label>
+    <div class="col-sm-9">
+      <ui-select id="thirdPartyRuntimeDomains" name="thirdPartyRuntimeDomains" validate-domain-name-or-url tagging tagging-label="Add TODO TEXT" multiple tagging-tokens="SPACE|," theme="bootstrap" class="form-control inline-block" ng-disabled="_loading" ng-model="$ctrl.model['3rd_party_runtime_domains']">
+        <ui-select-match placeholder="Add TODO TEXT...">{{$item}}</ui-select-match>
+        <ui-select-choices repeat="runtime_domain in $ctrl.model['3rd_party_runtime_domains']">
+          {{runtime_domain}}
+        </ui-select-choices>
+      </ui-select>
+      <label for="thirdPartyRuntimeDomains" class="text-info" popover-trigger="mouseenter" uib-popover="Provide here a list of third-party domain names or URLs as they are mentioned in third-party Javascript codes. For example: ‘https://images-eu.ssl-images-amazon.com">
+        <i class="fa fa-question-circle"></i>
+      </label>
+      <div class="error-messages" ng-messages="editForm.thirdPartyRuntimeDomains.$error" role="alert" ng-messages-multiple>
+        <div ng-messages-include="parts/shared/error-messages.html"></div>
+      </div>
+    </div>
+  </div>
+  <!-- -->
+</div>

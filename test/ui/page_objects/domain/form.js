@@ -84,6 +84,15 @@ var DomainForm = {
       },
       listOfCookiesToDrop: {
         css: '.cachingRulesURLblock:first-child .listOfCookiesToDrop'
+      },
+      thirdPartyUrls: {
+        id: 'thirdPartyUrls'
+      },
+      thirdPartyRootRewriteDomains: {
+        id: 'thirdPartyRootRewriteDomains'
+      },
+      thirdPartyRuntimeDomains: {
+        id: 'thirdPartyRuntimeDomains'
       }
 
     },
@@ -245,7 +254,15 @@ var DomainForm = {
       enableLuaScriptingOriginFirstMile: {
         id: 'luaScriptingFirstMile'
       },
-
+      enable3rdPartyRewrite:{
+        id: 'enable3rdPartyRewrite'
+      },
+      enable3rdPartyRootRewrite:{
+        id: 'enable3rdPartyRootRewrite'
+      },
+      enable3rdPartyRuntimeRewrite:{
+        id: 'enable3rdPartyRuntimeRewrite'
+      },
       enableThisCodeBlockBP: {
         css: 'div[ng-model="$ctrl.luaBlock.enable"]'
       },
@@ -383,6 +400,10 @@ var DomainForm = {
       luaScripting:{
         li: '.domain-edit-form .nav.nav-tabs>li:nth-child(6)',
         css: '.domain-edit-form .nav.nav-tabs>li:nth-child(6) a'
+      },
+      thirdPartyLinks:{
+        li: '.domain-edit-form .nav.nav-tabs>li:nth-child(7)',
+        css: '.domain-edit-form .nav.nav-tabs>li:nth-child(7) a'
       }
     }
   },
@@ -464,6 +485,17 @@ var DomainForm = {
 
   getLuaScriptingTab: function () {
     return element(by.css(this.locators.tabs.luaScripting.css));
+  },
+  /**
+   * ### DomainForm.getThirdPartyLinksTab()
+   *
+   * Returns the reference to the `Third-Party Links` tab
+   * (Selenium WebDriver Element)
+   *
+   * @returns {Selenium WebDriver Element}
+   */
+  getThirdPartyLinksTab: function () {
+    return element(by.css(this.locators.tabs.thirdPartyLinks.css));
   },
 
 
@@ -766,6 +798,27 @@ var DomainForm = {
   },
   getEnableLuaScriptingOriginFirstMile: function () {
     return element(by.id(this.locators.switches.enableLuaScriptingOriginFirstMile.id));
+  },
+  getEnable3rdPartyRewrite: function () {
+    return element(by.id(this.locators.switches
+      .enable3rdPartyRewrite.id));
+  },
+  getEnable3rdPartyRootRewrite: function () {
+    return element(by.id(this.locators.switches
+      .enable3rdPartyRootRewrite.id));
+  },
+  getEnable3rdPartyRuntimeRewrite: function () {
+    return element(by.id(this.locators.switches
+      .enable3rdPartyRuntimeRewrite.id));
+  },
+  getThirdPartyUrlsTxtIn: function () {
+    return element(by.id(this.locators.textInputs.thirdPartyUrls.id));
+  },
+  getThirdPartyRootRewriteDomainsTxtIn: function () {
+    return element(by.id(this.locators.textInputs.thirdPartyRootRewriteDomains.id));
+  },
+  getThirdPartyRuntimeDomainsTxtIn: function () {
+    return element(by.id(this.locators.textInputs.thirdPartyRuntimeDomains.id));
   },
   getEnableThisCodeBlockBP: function () {
     return element(by.css(this.locators.switches.enableThisCodeBlockBP.css));
