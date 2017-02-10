@@ -26,10 +26,11 @@ describe('Smoke', function() {
 
   // Defining set of users for which all below tests will be run
   var users = [
-    config.get('portal.users.user'),
-    config.get('portal.users.admin'),
     config.get('portal.users.revAdmin'),
-    config.get('portal.users.reseller')
+    config.get('portal.users.admin'),
+    config.get('portal.users.reseller'),
+    config.get('portal.users.user'),
+    config.get('portal.users.roUser')
   ];
 
   users.forEach(function(user) {
@@ -68,21 +69,34 @@ describe('Smoke', function() {
               EditPage.switchBtns(form.getEnable3rdPartyRewrite(), true);
               expect(checkDisplay('getEnable3rdPartyRewrite')).toBe(true);
             });
-          // TODO: 3rd_party_urls
+
+          it('should display "Third-Party Links Specified in HTML Code"', function() {
+            expect(checkDisplay('getThirdPartyUrlsTxtIn')).toBe(true);
+          });
+
           it('should display switch "Accelerate Third-Party Links Generated Runtime ' +
             'in Inline JavaScript Code"',
             function() {
               EditPage.switchBtns(form.getEnable3rdPartyRootRewrite(), true);
               expect(checkDisplay('getEnable3rdPartyRootRewrite')).toBe(true);
             });
-          // TODO: 3rd_party_root_rewrite_domains
+
+          it('should display "Third-Party Links Generated Runtime By Inline Javascript Code"',
+            function() {
+              expect(checkDisplay('getThirdPartyRootRewriteDomainsTxtIn')).toBe(true);
+            });
+
           it('should display switch "Accelerate Third-Party Links Generated Runtime ' +
             ' in Third-Party JavaScript Code"',
             function() {
               EditPage.switchBtns(form.getEnable3rdPartyRuntimeRewrite(), true);
               expect(checkDisplay('getEnable3rdPartyRuntimeRewrite')).toBe(true);
             });
-           // TODO: 3rd_party_runtime_domains
+
+          it('should display "Third-Party Links Generated Runtime By Third-Party Javascript Code"',
+            function() {
+              expect(checkDisplay('getThirdPartyRuntimeDomainsTxtIn')).toBe(true);
+            });
         });
 
       });

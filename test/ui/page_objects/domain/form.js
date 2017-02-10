@@ -84,6 +84,15 @@ var DomainForm = {
       },
       listOfCookiesToDrop: {
         css: '.cachingRulesURLblock:first-child .listOfCookiesToDrop'
+      },
+      thirdPartyUrls: {
+        id: 'thirdPartyUrls'
+      },
+      thirdPartyRootRewriteDomains: {
+        id: 'thirdPartyRootRewriteDomains'
+      },
+      thirdPartyRuntimeDomains: {
+        id: 'thirdPartyRuntimeDomains'
       }
 
     },
@@ -801,6 +810,15 @@ var DomainForm = {
   getEnable3rdPartyRuntimeRewrite: function () {
     return element(by.id(this.locators.switches
       .enable3rdPartyRuntimeRewrite.id));
+  },
+  getThirdPartyUrlsTxtIn: function () {
+    return element(by.id(this.locators.textInputs.thirdPartyUrls.id));
+  },
+  getThirdPartyRootRewriteDomainsTxtIn: function () {
+    return element(by.id(this.locators.textInputs.thirdPartyRootRewriteDomains.id));
+  },
+  getThirdPartyRuntimeDomainsTxtIn: function () {
+    return element(by.id(this.locators.textInputs.thirdPartyRuntimeDomains.id));
   },
   getEnableThisCodeBlockBP: function () {
     return element(by.css(this.locators.switches.enableThisCodeBlockBP.css));
