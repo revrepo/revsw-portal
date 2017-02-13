@@ -2,7 +2,7 @@
  *
  * REV SOFTWARE CONFIDENTIAL
  *
- * [2013] - [2015] Rev Software, Inc.
+ * [2013] - [2017] Rev Software, Inc.
  * All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains
@@ -17,9 +17,9 @@
  */
 
 // # Help and Support Page Object
-
-// This `Help and Support` Page Object abstracts all operations or actions that
-// a common Help and Support could do in the Portal app/site.
+var dialogBilligZonesDetailsPage = require('./dialogBilligZonesDetailsPage')
+  // This `Help and Support` Page Object abstracts all operations or actions that
+  // a common Help and Support could do in the Portal app/site.
 var HelpAndSupport = {
 
   // ## Properties
@@ -28,8 +28,21 @@ var HelpAndSupport = {
   locators: {
     container: '.container-fluid .row',
     panelBody: '.col-md-12 .panel .panel-body',
+    modal: {
+      className: 'modal-dialog',
+      buttons: {
+        close: {
+          css: '[ng-click=\"closeDialog()\"]'
+        }
+      }
+    },
+    buttons: {
+      detailedInformationBillingZones: {
+        css: 'ng-click="onGetBillingZonesDetails($event)"'
+      }
+    }
   },
-
+  dialogBilligZones: dialogBilligZonesDetailsPage,
   /**
    * ### HelpAndSupport.getTitleLbl()
    *
@@ -38,7 +51,7 @@ var HelpAndSupport = {
    *
    * @returns {Selenium WebDriver Element}
    */
-  getTitleLbl: function () {
+  getTitleLbl: function() {
     return element
       .all(by.css(this.locators.container))
       .get(0);
@@ -52,7 +65,7 @@ var HelpAndSupport = {
    *
    * @returns {Selenium WebDriver Element}
    */
-  getPanelBodyElem: function () {
+  getPanelBodyElem: function() {
     return element
       .all(by.css(this.locators.container))
       .get(1)
@@ -67,7 +80,7 @@ var HelpAndSupport = {
    *
    * @returns {Selenium WebDriver Element}
    */
-  getTitle: function () {
+  getTitle: function() {
     return this
       .getTitleLbl()
       .getText();
@@ -82,12 +95,22 @@ var HelpAndSupport = {
    *
    * @returns {Promise}
    */
-  isDisplayed: function () {
+  isDisplayed: function() {
     return this
       .getTitle()
       .isPresent();
   },
-
+  /**
+   * ### HelpAndSupport.isDisplayedDialogBilligZones()
+   *
+   * Checks whether the Help and Support page is displayed in the UI or not.
+   *
+   * @returns {Promise}
+   */
+  isDisplayedDialogBilligZones: function() {
+    return this.dialogBilligZones
+      .isDisplayed();
+  },
   /**
    * ### HelpAndSupport.existLink()
    *
@@ -97,9 +120,26 @@ var HelpAndSupport = {
    *
    * @returns {Promise}
    */
-  existLink: function (linkText) {
+  existLink: function(linkText) {
     var exist = element(by.linkText(linkText));
     return exist.isPresent();
+  },
+
+  /**
+   * ### HelpAndSupport.getLink()
+   *
+   * Get the link in the Help and Support page.
+   *
+   * @param String linkText, link text specified in the 'Help And Support page'.
+   *
+   * @returns {Promise}
+   */
+  getLink: function(linkText) {
+    if (this.existLink(linkText)) {
+      return element(by.linkText(linkText));
+    } else {
+      return null;
+    }
   },
 
   /**
@@ -118,6 +158,20 @@ var HelpAndSupport = {
     } else {
       return null;
     }
+  },
+
+  /**
+   * ### HelpAndSupport.clickBillingZonesDetails()
+   *
+   * Triggers a click action on the `Detailed Information About Billing Zones`
+   * link from the 'Help and Support' page.
+   *
+   * @returns {Promise}
+   */
+  clickBillingZonesDetails: function() {
+    return this
+      .getDeleteBtn()
+      .click();
   }
 };
 
