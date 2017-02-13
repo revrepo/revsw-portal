@@ -18,8 +18,8 @@
       Third-Party Links Specified in HTML Code
     </label>
     <div class="col-sm-9">
-      <ui-select name="thirdPartyUrls" id="thirdPartyUrls" validate-domain-name-or-url tagging tagging-label="Add TODO TEXT" multiple tagging-tokens="SPACE|," theme="bootstrap" class="form-control inline-block" ng-disabled="_loading" ng-model="$ctrl.model['3rd_party_urls']">
-        <ui-select-match placeholder="Add TODO TEXT...">{{$item}}</ui-select-match>
+      <ui-select name="thirdPartyUrls" id="thirdPartyUrls" validate-domain-name-or-url tagging tagging-label="Add Third-Party Domain Names Or URLs" multiple tagging-tokens="SPACE|," theme="bootstrap" class="form-control inline-block" ng-disabled="_loading" ng-model="$ctrl.model['3rd_party_urls']">
+        <ui-select-match placeholder="Add Third-Party Domain Names Or URLs...">{{$item}}</ui-select-match>
         <ui-select-choices repeat="party_urls in $ctrl.model['3rd_party_urls']">
           {{party_urls}}
         </ui-select-choices>
@@ -53,8 +53,8 @@
       Third-Party Links Generated Runtime By Inline Javascript Code
     </label>
     <div class="col-sm-9">
-      <ui-select id="thirdPartyRootRewriteDomains" name="thirdPartyRootRewriteDomains" validate-domain-name-or-url tagging tagging-label="Add TODO TEXT" multiple tagging-tokens="SPACE|," theme="bootstrap" class="form-control inline-block" ng-disabled="_loading" ng-model="$ctrl.model['3rd_party_root_rewrite_domains']">
-        <ui-select-match placeholder="Add TODO TEXT...">{{$item}}</ui-select-match>
+      <ui-select id="thirdPartyRootRewriteDomains" name="thirdPartyRootRewriteDomains" validate-domain-name-or-url tagging tagging-label="Add Third-Party Domain Names Or URLs" multiple tagging-tokens="SPACE|," theme="bootstrap" class="form-control inline-block" ng-disabled="_loading" ng-model="$ctrl.model['3rd_party_root_rewrite_domains']">
+        <ui-select-match placeholder="Add Third-Party Domain Names Or URLs...">{{$item}}</ui-select-match>
         <ui-select-choices repeat="rewrite_domain in $ctrl.model['3rd_party_root_rewrite_domains']">
           {{rewrite_domain}}
         </ui-select-choices>
@@ -87,8 +87,8 @@
       Third-Party Links Generated Runtime By Third-Party Javascript Code
     </label>
     <div class="col-sm-9">
-      <ui-select id="thirdPartyRuntimeDomains" name="thirdPartyRuntimeDomains" validate-domain-name-or-url tagging tagging-label="Add TODO TEXT" multiple tagging-tokens="SPACE|," theme="bootstrap" class="form-control inline-block" ng-disabled="_loading" ng-model="$ctrl.model['3rd_party_runtime_domains']">
-        <ui-select-match placeholder="Add TODO TEXT...">{{$item}}</ui-select-match>
+      <ui-select id="thirdPartyRuntimeDomains" name="thirdPartyRuntimeDomains" validate-domain-name-or-url tagging tagging-label="Add Third-Party Domain Names Or URLs" multiple tagging-tokens="SPACE|," theme="bootstrap" class="form-control inline-block" ng-disabled="_loading" ng-model="$ctrl.model['3rd_party_runtime_domains']">
+        <ui-select-match placeholder="Add Third-Party Domain Names Or URLs...">{{$item}}</ui-select-match>
         <ui-select-choices repeat="runtime_domain in $ctrl.model['3rd_party_runtime_domains']">
           {{runtime_domain}}
         </ui-select-choices>
