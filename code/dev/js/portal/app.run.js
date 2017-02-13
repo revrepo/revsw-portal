@@ -6,7 +6,7 @@
     .run(runApp);
 
   /*@ngInject*/
-  function runApp($rootScope, $http, $location, AlertService, $state, User) {
+  function runApp($rootScope, $http, $location, AlertService, $state, User, Vendors) {
     $rootScope.user = User;
     $rootScope.alertService = AlertService;
     $rootScope.contactUsLink = 'https://revapm.zendesk.com/hc/en-us/requests/new';
@@ -69,5 +69,21 @@
         });
       });
     } initFooterInfo();
+
+    function checkVendor() {
+      var vendor = '';
+      var url = 'http://portal.revapm.net';//window.location.origin;
+      var urlParts = url.split('.');
+      vendor = urlParts[urlParts.length - 2];
+
+
+      Vendors.get({
+        vendor: vendor
+      }).$promise.then(function(response){
+        console.log(response);
+
+        $rootScope.vendor = response.vendor;
+      });
+    } checkVendor();
   }
 })();
