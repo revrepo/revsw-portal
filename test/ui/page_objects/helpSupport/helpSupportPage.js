@@ -17,7 +17,7 @@
  */
 
 // # Help and Support Page Object
-var dialogBilligZonesDetailsPage = require('./dialogBilligZonesDetailsPage')
+var dialogBilligZonesDetailsPage = require('./dialogBilligZonesDetailsPage');
   // This `Help and Support` Page Object abstracts all operations or actions that
   // a common Help and Support could do in the Portal app/site.
 var HelpAndSupport = {
