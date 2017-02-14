@@ -48,6 +48,9 @@ var Dialog = {
           css: '.btn-primary'
         }
       },
+      body: {
+        css: '.modal-body'
+      },
       textInputs: {
         email: {
           id: 'email'
@@ -176,7 +179,18 @@ var Dialog = {
       .getModal()
       .element(by.css(this.locators.modal.buttons.submit.css));
   },
-
+  /**
+   * ### Dialog.getBodyText()
+   *
+   * Return a promise that will be resolved with the element's visible text
+   * (Selenium WebDriver Element) from the Modal Dialog component from Portal app.
+   *
+   * @returns {Promise}
+   */
+  getBodyText: function() {
+    var text = element(by.css(this.locators.modal.body.css)).getText();
+    return text;
+  },
   /**
    * ### Dialog.getEmailTxtIn()
    *
