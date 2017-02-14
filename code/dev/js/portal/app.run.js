@@ -71,14 +71,8 @@
     } initFooterInfo();
 
     function checkVendor() {
-      var vendor = '';
-      var url = 'http://portal.revapm.net';//window.location.origin;
-      var urlParts = url.split('.');
-      vendor = urlParts[urlParts.length - 2];
-
-
       Vendors.get({
-        vendor: vendor
+        vendorUrl: window.location.origin
       }).$promise.then(function(response){
         console.log(response);
 

@@ -8,9 +8,9 @@
   /*@ngInject*/
   function VendorsResource(Resource, $config) {
 
-    return Resource($config.API_URL + '/vendor_profiles/:vendor', {vendor: '@vendor'}, {
+    return Resource($config.API_URL + '/vendor_profiles/:vendorUrl', {vendorUrl: '@vendorUrl'}, {
       get: {
-        url: $config.API_URL + '/vendor_profiles/:vendor',
+        url: $config.API_URL + '/vendor_profiles/:vendorUrl',
         method: 'GET'
       }
     });
