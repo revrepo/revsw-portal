@@ -113,10 +113,7 @@ describe('Smoke', function() {
               expect(text).toContain(textDisplay);
             });
           });
-      })
-
-    })
-
-
+      });
+    });
   });
 });
