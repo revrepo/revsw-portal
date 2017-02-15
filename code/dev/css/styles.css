@@ -1606,7 +1606,7 @@ form.dns-zone-records--new-form input[name="subdomain"] {
   vertical-align: top;
 }
 .modal-body .dns-zone-record-answer .form-control {
-  max-width: 90%;
+  max-width: 70%;
 }
 .footer-content {
   padding: 30px 10px;
@@ -1705,6 +1705,58 @@ form.dns-zone-records--new-form input[name="subdomain"] {
 .container-billing-zones-details {
   max-height: 50vh;
   overflow-y: overlay;
+}
+.revapm .navbar {
+  background-color: rgba(255, 140, 0, 0.7);
+}
+.revapm .active-side-menu-item .side-menu-item {
+  color: #FF8A00 !important;
+}
+.revapm .side-menu-sub-item.active {
+  color: #FF8A00 !important;
+  border-color: #FF8A00 !important;
+}
+.revapm .btn-vendor-new-app {
+  background-color: #FF8A00 !important;
+  border-color: #FF8A00 !important;
+}
+.revapm .btn-vendor-download {
+  background-color: #9bbb5a !important;
+  border-color: #9bbb5a !important;
+}
+.revapm .btn-vendor-introduction {
+  background-color: #9bbb5a !important;
+  border-color: #9bbb5a !important;
+}
+.revapm .btn-sdk-key {
+  background-color: #337ab7 !important;
+  border-color: #337ab7 !important;
+}
+.nuubit .navbar {
+  background-color: #003056;
+}
+.nuubit .active-side-menu-item .side-menu-item {
+  color: #FF8300 !important;
+}
+.nuubit .side-menu-sub-item.active {
+  color: #FF8300 !important;
+  border-color: #FF8300 !important;
+}
+.nuubit .btn-vendor-new-app {
+  background-color: #FF8300 !important;
+  border-color: #FF8300 !important;
+}
+.nuubit .btn-vendor-download {
+  background-color: #97C93D !important;
+  border-color: #97C93D !important;
+}
+.nuubit .btn-vendor-introduction {
+  background-color: #97C93D !important;
+  border-color: #97C93D !important;
+}
+.nuubit .btn-sdk-key {
+  background-color: #77777A !important;
+  border-color: #77777A !important;
 }
 .inline-block {
   display: inline-block;

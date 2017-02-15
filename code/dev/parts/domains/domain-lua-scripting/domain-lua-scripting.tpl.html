@@ -3,11 +3,11 @@
     <div class="well panel panel-default">
       <div class="panel-body">
         <p>
-          The Lua scripting functionality allows you to code custom Lua snippets to be executed on RevAPM edge or origin proxy servers.
+          The Lua scripting functionality allows you to code custom Lua snippets to be executed on edge or origin proxy servers.
         </p>
         <ul>
           <li>The Lua support is implemented using Nginx module “lua-nginx-module” - please see <a target="_blank" href="https://github.com/openresty/lua-nginx-module"> https://github.com/openresty/lua-nginx-module</a> for additional details</li>
-          <li>Please note that the Lua code is manually reviewed and approved by RevAPM customer support engineers before deploying it in the global network. RevAPM engineers are notified automatically about submitted Lua code changes so there is no need to open a separate support ticket asking to approve the code.</li>
+          <li>Please note that the Lua code is manually reviewed and approved by customer support engineers before deploying it in the global network. Engineers are notified automatically about submitted Lua code changes so there is no need to open a separate support ticket asking to approve the code.</li>
         </ul>
       </div>
     </div>
@@ -21,7 +21,7 @@
       <div class="col-md-9">
         <toggle-switch id="luaScriptingLastMile" name="bpLuaEnableAll" is-disabled="_loading" ng-model="$ctrl.domain.bp_lua_enable_all" on-label="On" off-label="Off">
         </toggle-switch>
-        <label for="bpLuaEnableAll" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enable or disable at once all Lua scripts executed on RevAPM edge proxies for the domain">
+        <label for="bpLuaEnableAll" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enable or disable at once all Lua scripts executed on edge proxies for the domain">
           <i class="fa fa-question-circle"></i>
         </label>
       </div>
@@ -85,7 +85,7 @@
       <div class="col-md-9">
         <toggle-switch id="luaScriptingFirstMile" name="coLuaEnableAll" is-disabled="_loading" ng-model="$ctrl.domain.co_lua_enable_all" on-label="On" off-label="Off">
         </toggle-switch>
-        <label for="coLuaEnableAll" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enable or disable at once all Lua scripts executed on RevAPM origin (first-mile) proxies">
+        <label for="coLuaEnableAll" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enable or disable at once all Lua scripts executed on origin (first-mile) proxies">
           <i class="fa fa-question-circle"></i>
         </label>
       </div>

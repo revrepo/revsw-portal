@@ -77,6 +77,7 @@
         console.log(response);
 
         $rootScope.vendor = response.vendor;
+        $rootScope.vendorConfig = response;
       });
     } checkVendor();
   }
