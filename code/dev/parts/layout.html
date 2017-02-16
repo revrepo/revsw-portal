@@ -1,6 +1,6 @@
 <section drawer ng-hide="isHide">
   <a href="https://www.revapm.com/" id="logo" target="_blank">
-    <img src="images/logo_color.png" alt="Logo" />
+    <img src="images/{{vendor}}/logo.png" alt="Logo" />
   </a>
   <ul class="side-menu">
     <dashboard-nav-menu></dashboard-nav-menu>
@@ -201,7 +201,7 @@
         Support
         <i ng-click="expandMenu('index.help', $event)" class="pull-right {{ menuExpanded('index.help') ? 'fa fa-caret-up' : 'fa fa-caret-down' }}"></i>
       </a>
-      <a href="https://api.revapm.net/" class="side-menu-sub-item" target="_blank">
+      <a href="{{vendorConfig.apiUrl}}" class="side-menu-sub-item" target="_blank">
         <i class="sub-menu-icon fa fa-wrench"></i> API Documentation
       </a>
       <a href="https://revapm.zendesk.com/hc/en-us" class="side-menu-sub-item" target="_blank">
@@ -210,7 +210,7 @@
       <a href="{{contactUsLink}}" class="side-menu-sub-item" target="_blank">
         <i class="sub-menu-icon fa fa-envelope"></i> Open Ticket
       </a>
-      <a href="http://status.revapm.net/" class="side-menu-sub-item" target="_blank">
+      <a href="{{vendorConfig.networkStatusUrl}}" class="side-menu-sub-item" target="_blank">
         <i class="sub-menu-icon fa fa-heartbeat"></i> Network Status
       </a>
     </li>
@@ -244,7 +244,7 @@
           </div>
           <div class="col-md-12 footer-content">
             <a href="{{contactUsLink}}" target="_blank">Contact Us</a>
-            <span class="pull-left copyright">Copyright Rev Software, Inc. 2015-2017
+            <span class="pull-left copyright">Copyright {{vendorConfig.companyNameFull}} 2015-2017
             <br>Version {{portalVersion}}/{{apiVersion}}
             </span>
             <!-- <span class="pull-right version">Version {{portalVersion}}/{{apiVersion}} </span> -->

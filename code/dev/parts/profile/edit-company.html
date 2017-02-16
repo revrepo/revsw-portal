@@ -24,7 +24,7 @@
           <ul>
             <li>Your credit card will be not charged after the cancellation will take affect</li>
             <li>No refunds or prorations will be made</li>
-            <li>All your RevAPM users accounts, API keys and SSL certificates will be removed from the system</li>
+            <li>All your users accounts, API keys and SSL certificates will be removed from the system</li>
           </ul>
         </div>
         <div class="form-group" ng-class="{ 'has-error': accountDeleteForm.cancellationMessage.$invalid && accountDeleteForm.cancellationMessage.$dirty }">
@@ -37,7 +37,7 @@
       </div>
       <!-- isCanBeDeleted = false -->
       <div class="col-sm-12" ng-if="!model.isCanBeDeleted">
-        <p class="text-center">Your RevAPM account has active web domain and/or mobile app and/or DNS zone configurations. To ensure that the account cancellation will not affect your end users please review your RevAPM configuration and manually delete the resources before proceeding with account cancellation.
+        <p class="text-center">Your account has active web domain and/or mobile app and/or DNS zone configurations. To ensure that the account cancellation will not affect your end users please review your configuration and manually delete the resources before proceeding with account cancellation.
         </p>
       </div>
     </div>
@@ -54,7 +54,7 @@
     <h3 class="modal-title">Welcome!</h3>
   </div>
   <div class="modal-body">
-    <p>Welcome to the RevAPM customer portal. In order to use the platform we kindly ask you to provide necessary customer contact information.</p>
+    <p>Welcome to the customer portal. In order to use the platform we kindly ask you to provide necessary customer contact information.</p>
     <p> Please click OK and fill out the provided form.</p>
   </div>
   <div class="modal-footer">
@@ -262,7 +262,7 @@
               </div>
             </div>
             <div class="form-group" ng-if="model.billing_id && model.subscription_id">
-              <p class="col-md-12 text text-center"> To update your billing address (as it will appears on your RevAPM statements) please click on “Update Payment Profile” button and provide the information together with credit card details.</p>
+              <p class="col-md-12 text text-center"> To update your billing address (as it will appears on your {{vendorConfig.companyNameShort}} statements) please click on “Update Payment Profile” button and provide the information together with credit card details.</p>
             </div>
             <!--
             <div class="form-group" ng-if="model.billing_id && (userService.isReseller() || userService.isRevadmin())">

@@ -6,10 +6,9 @@
     .run(runApp);
 
   /*@ngInject*/
-  function runApp($rootScope, $http, $location, AlertService, $state, User) {
+  function runApp($rootScope, $http, $location, AlertService, $state, User, Vendors) {
     $rootScope.user = User;
     $rootScope.alertService = AlertService;
-    $rootScope.contactUsLink = 'https://revapm.zendesk.com/hc/en-us/requests/new';
     $rootScope.$state = $state;
     $rootScope.$on('$stateChangeStart',
       function(event){
@@ -69,5 +68,17 @@
         });
       });
     } initFooterInfo();
+
+    function checkVendor() {
+      Vendors.get({
+        vendorUrl: window.location.origin
+      }).$promise.then(function(response){
+        console.log(response);
+
+        $rootScope.vendor = response.vendor;
+        $rootScope.vendorConfig = response;
+        $rootScope.contactUsLink = response.contactUsLink;
+      });
+    } checkVendor();
   }
 })();

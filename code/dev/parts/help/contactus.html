@@ -16,20 +16,20 @@
             <br>
           </p>
           <p>
-            You can also email us at <a href="mailto:support@revapm.com">support@revapm.com</a> or call <a href="tel:+14084771738">+1 (408) 477-1738</a>
+            You can also email us at <a href="mailto:{{vendorConfig.support_email}}">{{vendorConfig.support_email}}</a> or call <a href="tel:{{vendorConfig.contactPhone}}">{{vendorConfig.contactPhone}}</a>
           </p>
           <ul>
             <li>
-              <a href="https://api.revapm.net/" target="_blank">
+              <a href="{{vendorConfig.apiUrl}}" target="_blank">
                 <i class="glyphicon glyphicon-new-window"></i> Full documentation on the API service</a>
             </li>
             <li>
               <a href="https://revapm.zendesk.com/hc/en-us" target="_blank">
-                <i class="glyphicon glyphicon-new-window"></i> RevAPM Knowledge Base</a>
+                <i class="glyphicon glyphicon-new-window"></i> {{vendorConfig.companyNameShort}} Knowledge Base</a>
             </li>
             <li>
-              <a href="http://status.revapm.net/" target="_blank">
-                <i class="glyphicon glyphicon-new-window"></i> RevAPM Network Status</a>
+              <a href="{{vendorConfig.networkStatusUrl}}" target="_blank">
+                <i class="glyphicon glyphicon-new-window"></i> Network Status</a>
             </li>
             <li>
               <a href="" ng-click="onGetBillingZonesDetails($event)">Detailed Information About Billing Zones</a>
