@@ -231,7 +231,7 @@
                   {{domain}}
                 </ui-select-choices>
               </ui-select>
-              <label for="domains_white_list" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="'White list' of domains which are allowed to be served (all other domains will be served directly from the customer origin server)">
+              <label for="domains_white_list" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="'White list' of domains which are allowed to be served via CDN (all other domains will be served directly from the customer origin server)">
                 <i class="fa fa-question-circle"></i>
               </label>
               <div class="error-messages" ng-messages="editForm.domainsWhiteList.$error" role="alert" ng-messages-multiple>

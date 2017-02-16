@@ -50,7 +50,7 @@
                 info_ = this /*chart*/ .renderer
                   .label('Origin Avg <span style="font-weight: bold; color: #3c65ac;">' + origin_avg_ +
                     '</span> Median <span style="font-weight: bold; color: #3c65ac;">' + origin_median_ +
-                    '</span> ms<br>Avg <span style="font-weight: bold; color: black;">' + rev_avg_ +
+                    '</span> ms<br>CDN/Avg <span style="font-weight: bold; color: black;">' + rev_avg_ +
                     '</span> Median <span style="font-weight: bold; color: black;">' + rev_median_ +
                     '</span> ms<br>Improvement Avg <span style="font-weight: bold; color: darkred;">' + imp_avg_ +
                     '</span> Median <span style="font-weight: bold; color: darkred;">' + imp_median_ +
@@ -135,7 +135,7 @@
             },
             visible: false
           }, {
-            name: 'Avg',
+            name: 'CDN/Avg',
             data: [],
             color: '#000000',
             marker: {
@@ -152,7 +152,7 @@
             },
             visible: false
           }, {
-            name: 'Max',
+            name: 'CDN/Max',
             data: [],
             color: '#808080',
             marker: {

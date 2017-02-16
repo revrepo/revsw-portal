@@ -130,7 +130,22 @@ gulp.task('lintjs', function() {
 });
 
 gulp.task('serve:dev', function() {
-  browserSync({
+  var bs1 = require("browser-sync").create();
+  var bs2 = require("browser-sync").create();
+  bs1.init({
+    port: 3000,
+    server: {
+      baseDir: './dev',
+      routes: {
+        '/bower_components': 'bower_components',
+        //'/portal': '/',
+        '/widgets': '/../widgets',
+      }
+    }
+  });
+
+  bs2.init({
+    port: 4000,
     server: {
       baseDir: './dev',
       routes: {
