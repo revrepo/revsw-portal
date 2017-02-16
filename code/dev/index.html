@@ -5,7 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-  <title>RevAPM Customer Portal</title>
+  <title>Customer Portal</title>
 
   <!-- build:css css/vendor.css -->
   <!--<link rel="stylesheet" href="bower_components/PACE/themes/orange/pace-theme-minimal.css" rel="stylesheet">-->
@@ -40,8 +40,10 @@
 
 </head>
 <body data-ng-app="revapm.Portal" class="hide-vertical-scroll">
+<link rel="stylesheet" href="css/{{vendor}}.css">
+
 <toaster-container toaster-options="{'animation-class': 'toast-top-center'}"></toaster-container>
-<div ui-view="layout" class="layout"></div>
+<div ui-view="layout" class="layout {{vendor}}"></div>
 
 
 <!--<script>

@@ -38,6 +38,15 @@ gulp.task('less', function() {
     .pipe(browserSync.stream());
 });
 
+gulp.task('lessVendor', function() {
+  return gulp.src(devFolder + 'less/vendors/**.less')
+    .pipe(less({
+      paths: [path.join(__dirname, 'less')]
+    }))
+    .pipe(gulp.dest(devFolder + 'css'))
+    .pipe(browserSync.stream());
+});
+
 gulp.task('copyCss', function() {
   console.log(destFolder + 'css');
   return gulp.src([devFolder + 'css/**/*.css', devFolder + 'css/**/*.{png,gif}'])
@@ -134,6 +143,7 @@ gulp.task('serve:dev', function() {
 
   gulp.watch([devFolder + '**/*.html'], reload);
   gulp.watch([devFolder + 'less/**/*.less'], ['less']);
+  gulp.watch([devFolder + 'less/vendors/**.less'], ['lessVendor']);
 
   gulp.watch([devFolder + 'js/**/*.js'], ['lintjs', reload]);
   gulp.watch([devFolder + 'js/**/*.html'], reload);
