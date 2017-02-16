@@ -17,7 +17,7 @@
  */
 
 
-var API = require('./../api');
+var API = require('./../api').API;
 var Session = require('./../session');
 
 var DNSZonesHelper = {

@@ -16,4 +16,9 @@
  * from Rev Software, Inc.
  */
 
-module.exports = require('revsw-api-test/common/api');
+module.exports = {
+  API: require('revsw-api-test/common/api'),
+  DataProvider: require('revsw-api-test/common/providers/data'),
+  AccountsDP: require('revsw-api-test/common/providers/data/accounts'),
+  APIKeyDP: require('revsw-api-test/common/providers/data/apiKeys')
+};

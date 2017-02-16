@@ -53,5 +53,31 @@ describe('Smoke: ', function () {
       Portal.dialog.getCancelBtn().click();
     });
 
+    describe('Dialog "Billing Zones Details"', function () {
+      beforeAll(function () {
+        var btnGetBillingZonesDetails = Portal.billing.usageReportPage.getBillingZonesDetailsBtn();
+        expect(btnGetBillingZonesDetails.isDisplayed()).toBeTruthy();
+        btnGetBillingZonesDetails.click();
+      });
+
+      var arrayText = [
+        'Asia',
+        'Europe',
+        'North America',
+        'South America',
+        'San Jose, California, USA'
+      ];
+
+      arrayText.forEach(function (textDisplay) {
+        it('should display text "' + textDisplay + '"',
+          function () {
+            var bodyText = Portal.dialog.getBodyText();
+            expect(bodyText.isPresent()).toBe(true);
+            bodyText.then(function (text) {
+              expect(text).toContain(textDisplay);
+            });
+          });
+      });
+    });
   });
 });
