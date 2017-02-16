@@ -130,8 +130,8 @@ gulp.task('lintjs', function() {
 });
 
 gulp.task('serve:dev', function() {
-  var bs1 = require("browser-sync").create();
-  var bs2 = require("browser-sync").create();
+  var bs1 = require('browser-sync').create();
+  var bs2 = require('browser-sync').create();
   bs1.init({
     port: 3000,
     server: {

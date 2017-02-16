@@ -135,7 +135,7 @@
             },
             visible: false
           }, {
-            name: 'CDN/Avg',
+            name: 'CDN Avg',
             data: [],
             color: '#000000',
             marker: {
@@ -143,7 +143,7 @@
               symbol: 'diamond'
             }
           }, {
-            name: 'Min',
+            name: 'CDN, Min',
             data: [],
             color: '#808080',
             marker: {
