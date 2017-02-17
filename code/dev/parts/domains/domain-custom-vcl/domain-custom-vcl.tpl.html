@@ -217,7 +217,7 @@
                 <domain-custom-vcl-backends ng-model="$ctrl.customVcl.backends"></domain-custom-vcl-backends> -->
         <!-- <pre>{{$ctrl.customVcl.backends| json}}</pre> -->
         <!--“Backends" (JSON array “rev_component_bp.custom_vcl.backends") - this bookmark/page is more complicated comparing to previous pretty simple text editing bookmarks. It should be possible to add more blocks like the following:
-  “Backend Name" - string input field (no special chars, max length 150 chars). JSON attr “rev_component_bp.custom_vcl.backends[X].name". Tooltip message: “Use the field to name the backend. In VCL functions the backend can be referenced using RevAPM internal function “REV_BACKEND()". For example, if the backend is named “my_backend" it can be used as “REV_BACKEND(my_backend)".
+  “Backend Name" - string input field (no special chars, max length 150 chars). JSON attr “rev_component_bp.custom_vcl.backends[X].name". Tooltip message: “Use the field to name the backend. In VCL functions the backend can be referenced using {{vendorConfig.companyNameShort}} internal function “REV_BACKEND()". For example, if the backend is named “my_backend" it can be used as “REV_BACKEND(my_backend)".
   “Backend VCL Code" - a text area input field - JSON attribute “rev_component_bp.custom_vcl.backends[X].vcl". Tooltip: “Use the text field to specify Varnish’s “backend" code"
   “Dynamic Origin DNS Name Lookups" - On/Off switch - JSON attr “rev_component_bp.custom_vcl.backends[X].dynamic"
   “Origin TCP Port" - numeric input field in range 1-65536. JSON attr “rev_component_bp.custom_vcl.backends[X].port"

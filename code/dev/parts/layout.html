@@ -1,6 +1,6 @@
 <section drawer ng-hide="isHide">
   <a href="https://www.revapm.com/" id="logo" target="_blank">
-    <img src="images/{{vendor}}/logo.png" alt="Logo" />
+    <img src="images/{{vendor}}/logo_color.png" alt="Logo" />
   </a>
   <ul class="side-menu">
     <dashboard-nav-menu></dashboard-nav-menu>
@@ -204,10 +204,10 @@
       <a href="{{vendorConfig.apiUrl}}" class="side-menu-sub-item" target="_blank">
         <i class="sub-menu-icon fa fa-wrench"></i> API Documentation
       </a>
-      <a href="https://revapm.zendesk.com/hc/en-us" class="side-menu-sub-item" target="_blank">
+      <a href="{{vendorConfig.knowledgeBaseLink}}" class="side-menu-sub-item" target="_blank">
         <i class="sub-menu-icon fa fa-book"></i> Knowledge Base
       </a>
-      <a href="{{contactUsLink}}" class="side-menu-sub-item" target="_blank">
+      <a href="{{vendorConfig.contactUsLink}}" class="side-menu-sub-item" target="_blank">
         <i class="sub-menu-icon fa fa-envelope"></i> Open Ticket
       </a>
       <a href="{{vendorConfig.networkStatusUrl}}" class="side-menu-sub-item" target="_blank">

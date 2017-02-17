@@ -134,6 +134,8 @@ gulp.task('serve:dev', function() {
   var bs2 = require('browser-sync').create();
   bs1.init({
     port: 3000,
+    // Disable UI completely
+    ui: false,
     server: {
       baseDir: './dev',
       routes: {
@@ -146,6 +148,8 @@ gulp.task('serve:dev', function() {
 
   bs2.init({
     port: 4000,
+    // Disable UI completely
+    ui: false,
     server: {
       baseDir: './dev',
       routes: {
@@ -154,7 +158,7 @@ gulp.task('serve:dev', function() {
         '/widgets': '/../widgets',
       }
     }
-  });
+  });  
 
   gulp.watch([devFolder + '**/*.html'], reload);
   gulp.watch([devFolder + 'less/**/*.less'], ['less']);
@@ -181,7 +185,7 @@ gulp.task('serve:public', function() {
 
 
 gulp.task('copy', ['copyCss', 'copyParts', 'copyFaviconIcon', 'copyImages', 'copyJson', 'copyFonts', 'fonts', 'widgetsCopy', 'copyConfig']);
-gulp.task('build', ['copy', 'dist']);
+gulp.task('build', ['less', 'lessVendor', 'copy', 'dist']);
 gulp.task('default', ['serve', 'less', 'widgets:build']);
 gulp.task('serve', ['serve:dev']);
 gulp.task('public', ['serve:public']);
