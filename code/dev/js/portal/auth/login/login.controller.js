@@ -6,7 +6,7 @@
     .controller('LoginController', LoginController);
 
   /*@ngInject*/
-  function LoginController($scope, User, $state, AlertService, DashboardSrv, $config, $uibModal, $location, $auth) {
+  function LoginController($scope, $rootScope, User, Vendors, $state, AlertService, DashboardSrv, $config, $uibModal, $location, $auth) {
 
     document.querySelector('body').style.paddingTop = '0';
 
@@ -46,8 +46,16 @@
       try {
         User.login(email, pass)
           .then(function(data) {
-            // NOTE: call event - user signin
-            $scope.$emit('user.signin', data.data);
+            if (data.data.vendor === $rootScope.vendor) {
+              // NOTE: call event - user signin
+              $scope.$emit('user.signin', data.data);
+            } else {
+              Vendors.getByName({
+                vendor: data.data.vendor
+              }).$promise.then(function(response){
+                window.location.href = response.vendorUrl;
+              });
+            }
           })
           .catch(function(err) {
             $scope._loading = false;
