@@ -78,6 +78,8 @@
         $rootScope.vendor = response.vendor;
         $rootScope.vendorConfig = response;
         $rootScope.contactUsLink = response.contactUsLink;
+
+        window.document.title = $rootScope.vendorConfig.companyNameShort + 'Customer Portal';
       });
     } checkVendor();
   }
