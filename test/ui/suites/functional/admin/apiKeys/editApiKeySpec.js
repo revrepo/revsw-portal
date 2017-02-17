@@ -57,6 +57,7 @@ describe('Functional ', function () { // jshint ignore:line
           return API.resources.accounts
             .createOne(accountSecond)
             .then(function (response) {
+              /*jshint camelcase: false */
               accountSecond.id = response.body.object_id;
               return accountSecond;
             });
@@ -64,6 +65,7 @@ describe('Functional ', function () { // jshint ignore:line
         .then(function () {
           // create user with role "resseler" and access to Account First and Account Second
           userReseller.companyId = [accountFirst.id + '', accountSecond.id + ''];
+          /*jshint camelcase: false */
           userReseller.access_control_list.readOnly = false;
           return API.resources.users
             .createOne(userReseller);
@@ -141,7 +143,8 @@ describe('Functional ', function () { // jshint ignore:line
           .editPage.form.getAdditionalAccountsToManageInputTxt();
         expect(additionalAccounts.getText())
           .toContain(accountSecond.companyName);
-        expect(checkDisplay('getAdditionalAccountsToManageInputTxt'), accountSecond.companyName).toBe(true);
+        expect(checkDisplay('getAdditionalAccountsToManageInputTxt'), accountSecond.companyName)
+          .toBe(true);
       });
     });
 
