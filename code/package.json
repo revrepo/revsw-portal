@@ -37,7 +37,7 @@
     "jshint-stylish": "^2.1.0",
     "less-plugin-clean-css": "^1.5.1",
     "ng-annotate-adf-plugin": "^0.1.2",
-    "browser-sync": "^2.18.8",
+    "browser-sync": "^2.18.8"
   },
   "dependencies": {
     "gulp": "^3.9.1",
