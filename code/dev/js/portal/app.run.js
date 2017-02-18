@@ -88,7 +88,10 @@
 
         window.document.title = $rootScope.vendorConfig.companyNameShort + ' Customer Portal';
       })
-      .finally($urlRouter.sync);
+      .finally(function(){
+        $urlRouter.sync();
+        $urlRouter.listen();
+      });
     } checkVendor();
   }
 })();
