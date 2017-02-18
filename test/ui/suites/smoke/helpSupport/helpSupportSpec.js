@@ -69,9 +69,9 @@ describe('Smoke', function() {
         expect(Portal.helpSupportPage.existLink(expectedLink)).toBe(true);
       });
 
-    it('should check "RevAPM Network Status" link exist in "Help And Support"',
+    it('should check "Network Status" link exist in "Help And Support"',
       function() {
-        var expectedLink = 'RevAPM Network Status';
+        var expectedLink = 'Network Status';
         expect(Portal.helpSupportPage.existLink(expectedLink)).toBe(true);
       });
 
