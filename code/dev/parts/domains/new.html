@@ -41,7 +41,7 @@
                      ng-maxlength="50"
                      placeholder="Domain Name"
                      required>
-                <label class=text-info" popover-trigger="mouseenter"  popover-append-to-body="true" uib-popover="Enter here a website/API domain name to be served by RevAPM. Duplicate domain names are not allowed. If the system will complain about a duplicate domain name but you are the rightful domain owner please contact the RevAPM Customer Support service." >
+                <label class=text-info" popover-trigger="mouseenter"  popover-append-to-body="true" uib-popover="Enter here a website/API domain name to be served. Duplicate domain names are not allowed. If the system will complain about a duplicate domain name but you are the rightful domain owner please contact the Customer Support service." >
                   <i class="fa fa-question-circle"></i>
                 </label>
               <div class="error-messages" ng-messages="createForm.domain_name.$error" role="alert" ng-messages-multiple>
@@ -101,7 +101,7 @@
                      validate-domain-name
                      placeholder="Origin Host Header"
                      required>
-              <label class=text-info" popover-trigger="mouseenter"  popover-append-to-body="true" uib-popover="Enter here a domain name to be used in 'Host' header of requests sent from RevAPM to
+              <label class=text-info" popover-trigger="mouseenter"  popover-append-to-body="true" uib-popover="Enter here a domain name to be used in 'Host' header of requests sent from the CDN to
  the origin server. The name might be different from origin server name/IP specified above. For example, if origin server IP is 11.11.11.11 and the origin HTTP server recognizes web requests for domain 'www.example.com' you will need to
 specify '11.11.11.11' in origin server name field above and 'www.example.com' in this field.">
                 <i class="fa fa-question-circle"></i>
@@ -123,7 +123,7 @@ specify '11.11.11.11' in origin server name field above and 'www.example.com' in
                       ng-options="obj.id as obj.locationName for obj in locations | orderBy:'locationName'" required>
                 <option value="">--- Select Location ---</option>
               </select>
-              <label class=text-info" for="origin_server_location_id" popover-append-to-body="{{true}}"  popover-trigger="mouseenter" uib-popover="Select a RevAPM location closest to the location of the origin server">
+              <label class=text-info" for="origin_server_location_id" popover-append-to-body="{{true}}"  popover-trigger="mouseenter" uib-popover="Select a location closest to the location of the origin server">
                    <i class="fa fa-question-circle"></i>
               </label>
               <div class="error-messages" ng-messages="createForm.origin_server_location_id.$error" role="alert" ng-messages-multiple>

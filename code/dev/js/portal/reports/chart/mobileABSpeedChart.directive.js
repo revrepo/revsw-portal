@@ -46,7 +46,7 @@
                 }
                 lbl_ = this /*chart*/ .renderer
                   .label('Origin Avg <span style="font-weight: bold; color: #3c65ac;">' + origin_avg_ +
-                    '</span><br>RevAPM Avg <span style="font-weight: bold; color: black;">' + rev_avg_ +
+                    '</span><br>CDN Avg <span style="font-weight: bold; color: black;">' + rev_avg_ +
                     '</span><br>Improvement <span style="font-weight: bold; color: darkred;">' + imp_avg_ +
                     '</span> %',
                     this.xAxis[0].toPixels(0), 0, '', 0, 0, true /*html*/ )
@@ -108,7 +108,7 @@
               symbol: 'circle'
             }
           }, {
-            name: 'RevAPM',
+            name: 'CDN',
             data: [],
             color: Highcharts.getOptions().colors[1],
             marker: {

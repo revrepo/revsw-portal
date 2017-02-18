@@ -95,7 +95,7 @@
     // TODO: Change to real types
     $scope.certs_types = [{
       id: 'shared',
-      typeName: 'Shared RevAPM Certificate'
+      typeName: 'Shared CDN Certificate'
     }, {
       id: 'private',
       typeName: 'Private With Customer-Provided Key'

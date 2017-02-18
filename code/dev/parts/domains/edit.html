@@ -106,7 +106,7 @@
                 <label class="col-sm-3 control-label" for="originHostHeader">Origin Host Header *</label>
                 <div class="col-sm-9">
                   <input type="text" validate-domain-name class="form-control inline-block" ng-model="model.origin_host_header" ng-disabled="_loading" id="origin_host_header" name="originHostHeader" placeholder="Origin Host Header" ng-maxlength="63" required>
-                  <label for="originHostHeader" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enter here a domain name to be used in 'Host' header of requests sent from RevAPM to the origin server. The name might be different from origin server name/IP specified above. For example, if origin server IP is 11.11.11.11 and the origin HTTP server recognizes web requests for domain 'www.example.com' you will need to specify '11.11.11.11' in origin server name field above and 'www.example.com' in this field.">
+                  <label for="originHostHeader" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enter here a domain name to be used in 'Host' header of requests sent to the origin server. The name might be different from origin server name/IP specified above. For example, if origin server IP is 11.11.11.11 and the origin HTTP server recognizes web requests for domain 'www.example.com' you will need to specify '11.11.11.11' in origin server name field above and 'www.example.com' in this field.">
                     <i class="fa fa-question-circle"></i>
                   </label>
                   <div class="error-messages" ng-messages="editForm.originHostHeader.$error" role="alert" ng-messages-multiple>
@@ -120,7 +120,7 @@
                   <select class="form-control inline-block" ng-disabled="_loading" ng-model="model.origin_server_location_id" id="origin_server_location_id" name="originServerLocationId" ng-options="obj.id as obj.locationName for obj in locations | orderBy:'locationName'" required="">
                     <option value="">--- Select Location ---</option>
                   </select>
-                  <label for="originServerLocationId" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Select a RevAPM location closest to the location of the origin server">
+                  <label for="originServerLocationId" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Select location closest to the location of the origin server">
                     <i class="fa fa-question-circle"></i>
                   </label>
                   <div class="error-messages" ng-messages="editForm.originServerLocationId.$error" role="alert" ng-messages-multiple>
@@ -273,7 +273,7 @@
                 </label>
                 <div class="col-md-9">
                   <input id="blueTriangleTechKey" type="text" class="form-control inline-block" ng-disabled="_loading" name="bttKey" ng-model="model.btt_key" placeholder="BTT API key for the domain" ng-pattern="/^[0-9a-fA-F]{32}$/">
-                  <label for="bttKey" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="If the domain is also provisioned in Blue Triangle Technologies' platform it is possible to specify here the domain's BTT ID - this will allow you to see the domain's business reports in RevAPM's Dashboard section">
+                  <label for="bttKey" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="If the domain is also provisioned in Blue Triangle Technologies' platform it is possible to specify here the domain's BTT ID - this will allow you to see the domain's business reports in Dashboard section">
                     <i class="fa fa-question-circle"></i>
                   </label>
                   <div class="error-messages" ng-messages="editForm.bttKey.$error" role="alert" ng-messages-multiple>
@@ -468,9 +468,9 @@
                 <label for="sslCertId" class="col-sm-3 control-label">SSL Certificate</label>
                 <div class="col-sm-9">
                   <select class="form-control inline-block" ng-disabled="_loading" ng-model="model.ssl_cert_id" id="ssl_cert_id" name="sslCertId" ng-options="obj.id as obj.cert_name for obj in SSL_certs | filter :{account_id:model.account_id}">
-                    <option value="">Default RevAPM SSL Certificate</option>
+                    <option value="">Default SSL Certificate</option>
                   </select>
-                  <label for="sslCertId" popover-append-to-body="{{true}}" class="text-info" popover-trigger="mouseenter" uib-popover="Select SSL certificate which should be associated with the domain. Option 'Default RevAPM SSL Certificate' provides you with ability to use RevAPM's shared SSL certificate issued by GlobalSign CA and managed in section 'SSL Names'.">
+                  <label for="sslCertId" popover-append-to-body="{{true}}" class="text-info" popover-trigger="mouseenter" uib-popover="Select SSL certificate which should be associated with the domain. Option 'Default SSL Certificate' provides you with ability to use shared SSL certificate issued by GlobalSign CA and managed in section 'SSL Names'.">
                     <i class="fa fa-question-circle"></i>
                   </label>
                   <a id="manageSSLcertificates" ui-sref="index.webApp.ssl_certs" class="btn btn-primary pull-right"><i class="fa fa-lock"></i> Manage SSL Certificates</a>
@@ -564,7 +564,7 @@
                 <div class="col-md-9">
                   <toggle-switch id="customVCLrules" name="customVcl" is-disabled="_loading || model.rev_component_bp.enable_cache==false" ng-model="model.rev_component_bp.custom_vcl.enabled" on-label="On" off-label="Off">
                   </toggle-switch>
-                  <label for="customVcl" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enables you to configure custom Varnish Configuration Language (VCL) rules to be executed by RevAPM edge proxy servers. The feature requires that “Edge Caching” switch will be in ON position">
+                  <label for="customVcl" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enables you to configure custom Varnish Configuration Language (VCL) rules to be executed by edge proxy servers. The feature requires that “Edge Caching” switch will be in ON position">
                     <i class="fa fa-question-circle"></i>
                   </label>
                 </div>
@@ -573,7 +573,7 @@
               <!-- //  “Custom VCL Rules” -->
               <hr>
             </uib-tab>
-            <uib-tab index="5" heading="Lua Scripting" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="This section allows you to enhance the RevAPM service by running custom Lua code snippets on RevAPM proxy servers">
+            <uib-tab index="5" heading="Lua Scripting" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="This section allows you to enhance the service by running custom Lua code snippets on proxy servers">
               <domain-lua-scripting class="form-group" ng-model="model"></domain-lua-scripting>
               <hr>
             </uib-tab>

@@ -47,6 +47,7 @@ describe('Functional ', function () { // jshint ignore:line
           return API.resources.accounts
             .createOne(accountFirst)
             .then(function (response) {
+              /*jshint camelcase: false */
               accountFirst.id = response.body.object_id;
               return accountFirst;
             });

@@ -48,7 +48,7 @@
               <ol type="1" ng-if="!twoFAEnabled">
                 <li>Install <a href="https://support.google.com/accounts/answer/1066447" target="_blank">Google Authenticator</a> application on your mobile device.</li>
                 <li>Click on "Set Up Two-Factor Authentication" button below. A QR code will be displayed on the right side of the screen.</li>
-                <li>In the "Google Authenticator" app add a new account and scan the QR code. The account will be added with label "RevAPM" and your email address. The app will also start displaying one-time six-digit passwords.</li>
+                <li>In the "Google Authenticator" app add a new account and scan the QR code. The account will be added with label "{{vendorConfig.companyNameShort}}" and your email address. The app will also start displaying one-time six-digit passwords.</li>
                 <li>To confirm the correctness of the app configuration enter the current six-digit one-time password in the field below and click "Enable 2FA". This step will complete the 2FA activation process.</li>
               </ol>
             </div>
