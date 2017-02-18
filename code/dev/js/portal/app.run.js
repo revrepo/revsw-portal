@@ -3,10 +3,18 @@
 
   angular
     .module('revapm.Portal')
+    .config(stopLocationChanges)
     .run(runApp);
 
   /*@ngInject*/
-  function runApp($rootScope, $http, $location, AlertService, $state, User, Vendors) {
+  function stopLocationChanges($urlRouterProvider){
+      // Prevent $urlRouter from automatically intercepting URL changes;
+      // this allows you to configure custom behavior in between
+      // location changes and route synchronization:
+      $urlRouterProvider.deferIntercept();
+  }
+  /*@ngInject*/
+  function runApp($rootScope, $http, $location, AlertService, $state, User, Vendors, $urlRouter) {
     $rootScope.user = User;
     $rootScope.alertService = AlertService;
     $rootScope.$state = $state;
@@ -73,14 +81,14 @@
       Vendors.get({
         vendorUrl: window.location.origin
       }).$promise.then(function(response){
-        console.log(response);
 
         $rootScope.vendor = response.vendor;
         $rootScope.vendorConfig = response;
         $rootScope.contactUsLink = response.contactUsLink;
 
         window.document.title = $rootScope.vendorConfig.companyNameShort + ' Customer Portal';
-      });
+      })
+      .finally($urlRouter.sync);
     } checkVendor();
   }
 })();
