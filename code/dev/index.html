@@ -40,7 +40,7 @@
 
 </head>
 <body data-ng-app="revapm.Portal" class="hide-vertical-scroll">
-<link ng-if="vendor" rel="stylesheet" href="css/{{vendor}}.css">
+<link ng-if="vendor" rel="stylesheet" ng-href="css/{{vendor}}.css">
 
 <toaster-container toaster-options="{'animation-class': 'toast-top-center'}"></toaster-container>
 <div ui-view="layout" class="layout {{vendor}}"></div>
