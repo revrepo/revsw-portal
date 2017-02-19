@@ -82,11 +82,15 @@
         vendorUrl: window.location.origin
       }).$promise.then(function(response){
 
+        console.log(response)
+
         $rootScope.vendor = response.vendor;
         $rootScope.vendorConfig = response;
         $rootScope.contactUsLink = response.contactUsLink;
 
         window.document.title = $rootScope.vendorConfig.companyNameShort + ' Customer Portal';
+
+        $rootScope.IntroOptions.steps[0].intro = $rootScope.IntroOptions.steps[0].intro.replace('{{companyNameShort}}', $rootScope.vendorConfig.companyNameShort);
       })
       .finally(function(){
         $urlRouter.sync();
