@@ -82,8 +82,6 @@
         vendorUrl: window.location.origin
       }).$promise.then(function(response){
 
-        console.log(response)
-
         $rootScope.vendor = response.vendor;
         $rootScope.vendorConfig = response;
         $rootScope.contactUsLink = response.contactUsLink;
