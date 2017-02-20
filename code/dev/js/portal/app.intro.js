@@ -8,9 +8,10 @@
   function runIntro($config, $rootScope, $localStorage, $timeout, $window, $state, $stateParams) {
     'ngInject';
     $rootScope.menuExpandedNodes = {};
+
     var introduction_application = {
       steps: [{
-          intro: 'Welcome to the {{vendorConfig.companyNameShort}} Customer Portal! It looks like you are a new user of the service, and we would ' +
+          intro: 'Welcome to the {{companyNameShort}} Customer Portal! It looks like you are a new user of the service, and we would ' +
             'like to run for you a quick introduction tour.',
         }, {
           element: '#side-menu-sub-item__webApp-domains',
