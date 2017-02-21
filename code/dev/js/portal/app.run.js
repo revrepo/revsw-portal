@@ -86,6 +86,7 @@
         $rootScope.vendorConfig = response;
         $rootScope.contactUsLink = response.contactUsLink;
 
+        window.vendorConfig = response;
         window.document.title = $rootScope.vendorConfig.companyNameShort + ' Customer Portal';
 
         $rootScope.IntroOptions.steps[0].intro = $rootScope.IntroOptions.steps[0].intro.replace('{{companyNameShort}}', $rootScope.vendorConfig.companyNameShort);
