@@ -6,7 +6,7 @@
     .controller('CompaniesCrudController', CompaniesCrudController);
 
   /*@ngInject*/
-  function CompaniesCrudController($scope, CRUDController, Companies, User, BillingPlans, $injector, $stateParams, $config, $state, $anchorScroll) {
+  function CompaniesCrudController($scope, CRUDController, Companies, User, BillingPlans, Vendors, $injector, $stateParams, $config, $state, $anchorScroll) {
     //Invoking crud actions
     $injector.invoke(CRUDController, this, {
       $scope: $scope,
@@ -48,8 +48,16 @@
               r.subscription_name = 'Manual';
               return r;
             });
+
+            console.log($scope.auth.isRevadmin())
+
+            console.log($scope.records)
           });
       }
+
+      Vendors.query().$promise.then(function(response){
+        $scope.vendorProfiles = response;
+      });
     });
 
     $scope.filterKeys = ['companyName', 'comment', 'createdBy', 'updated_at', 'subscription_name', 'subscription_state', 'created_at'];
