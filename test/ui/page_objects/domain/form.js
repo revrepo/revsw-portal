@@ -297,14 +297,14 @@ var DomainForm = {
 
     buttons: {
       onAddNewCachingRule: {
-        id: 'addNewBackend'
+        id: 'addNewCachingRulesBlock'
       },
 
       openUrlOfCachingRule: {
         css: '.cachingRulesURLblock:first-child a[title="Expand Caching Rule"]'
       },
       onAddNewBackendBlock: {
-        css: '[title="Add New Backend Block"]'
+        id: 'addNewBackendBlock'
       },
       btnCopyCname: {
         css: '.btn-copy--cname'
@@ -413,9 +413,11 @@ var DomainForm = {
   getOnAddNewCachingRule: function () {
     return element(by.id(this.locators.buttons.onAddNewCachingRule.id));
   },
+
   getOnAddNewBackendBlock: function () {
-    return element(by.css(this.locators.buttons.onAddNewBackendBlock.css));
+    return element(by.id(this.locators.buttons.addNewBackendBlock.id));
   },
+  
   getBtnCopyCname: function () {
     return element(by.css(this.locators.buttons.btnCopyCname.css));
   },

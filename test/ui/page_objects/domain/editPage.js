@@ -427,6 +427,11 @@ var EditDomain = {
       .click();
   },
 
+  clickAddNewBackendBlock: function() {
+    return this.form
+      .getOnAddNewBackendBlock()
+      .click();
+  },
 
   clickOpenUrlOfCachingRule: function() {
     return this.form

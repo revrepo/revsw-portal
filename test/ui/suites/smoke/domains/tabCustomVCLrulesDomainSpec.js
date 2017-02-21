@@ -119,7 +119,7 @@ describe('Smoke', function () {
         it('if "Custom VCL Rules" is "ON" then should '+      
          // TODO need to actually click on "Add Backend" button
           'display "Backend Name" in "Backends"', function () {
-          EditPage.clickAddNewCachingRule();
+          EditPage.clickAddNewBackendBlock();
           expect(checkDisplay('getOriginHostHeaderTxtIn')).toBe(true);
         });
 
