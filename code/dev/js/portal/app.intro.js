@@ -15,11 +15,11 @@
             'like to run for you a quick introduction tour.',
         }, {
           element: '#side-menu-sub-item__webApp-domains',
-          intro: 'The "Domains" section allows you to manage the way how your websites (domains) are accelerated by {{vendorConfig.companyNameShort}}.',
+          intro: 'The "Domains" section allows you to manage the way how your websites (domains) are accelerated by {{companyNameShort}}.',
           position: 'right'
         }, {
           element: '#side-menu-sub-item__webApp-staging-environment',
-          intro: 'We provide an easy and safe way to test your {{vendorConfig.companyNameShort}} domain configuration changes before making them ' +
+          intro: 'We provide an easy and safe way to test your {{companyNameShort}} domain configuration changes before making them ' +
             'available for all your website users - please ' +
             'see the "Staging Env." page for full details about our configuration staging workflow.',
           position: 'right'
@@ -30,7 +30,7 @@
           position: 'right'
         }, {
           element: '#side-menu-sub-item__webApp-ssl_names',
-          intro: 'When using {{vendorConfig.companyNameShort}}\'s shared SSL certificate managed by GlobalSign CA you can use this section to manage SSL ' +
+          intro: 'When using {{companyNameShort}}\'s shared SSL certificate managed by GlobalSign CA you can use this section to manage SSL ' +
             'domain names protected by the certificate',
           position: 'right'
         }, {
@@ -55,7 +55,7 @@
           element: '#side-menu-apps-item',
           intro: 'The "Mobile Apps" section is the right place to supercharge your mobile application with RevSDK. In the section your can create new SDK ' +
             'keys and manage ' +
-            '{{vendorConfig.companyNameShort}} acceleration options.',
+            '{{companyNameShort}} acceleration options.',
           position: 'right'
         },
         {
