@@ -243,7 +243,7 @@ var DomainForm = {
         id: 'acceptSSLrequests'
       },
       customVCLrules: {
-        css: 'div[ng-model="model.rev_component_bp.custom_vcl.enabled"]'
+        id: 'customVCLrules'
       },
       dynamicOriginDNSnameLookups: {
         id: 'dynamicOriginDNSnameLookups'
@@ -297,7 +297,7 @@ var DomainForm = {
 
     buttons: {
       onAddNewCachingRule: {
-        id: 'addNewBackendBlock'
+        id: 'addNewBackend'
       },
 
       openUrlOfCachingRule: {
@@ -788,7 +788,7 @@ var DomainForm = {
     return element(by.id(this.locators.switches.acceptSSLrequests.id));
   },
   getCustomVCLrulesTxtIn: function () {
-    return element(by.css(this.locators.switches.customVCLrules.css));
+    return element(by.id(this.locators.switches.customVCLrules.id));
   },
   getDynamicOriginDNSnameLookupsTxtIn: function () {
     return element(by.id(this.locators.switches.dynamicOriginDNSnameLookups.id));

@@ -116,29 +116,29 @@ describe('Smoke', function () {
             expect(checkDisplay('getBackendsBlock')).toBe(true);
         });
 
-        xit('if "Custom VCL Rules" is "ON" then should '+      
+        it('if "Custom VCL Rules" is "ON" then should '+      
          // TODO need to actually click on "Add Backend" button
           'display "Backend Name" in "Backends"', function () {
           EditPage.clickAddNewCachingRule();
           expect(checkDisplay('getOriginHostHeaderTxtIn')).toBe(true);
         });
 
-        xit('if "Custom VCL Rules" is "ON" then should '+
+        it('if "Custom VCL Rules" is "ON" then should '+
           'display "Backend VCL Code" in "Backends"', function () {
           expect(checkDisplay('getBackendVCLcode')).toBe(true);
         });
 
-        xit('if "Custom VCL Rules" is "ON" then should display '+
+        it('if "Custom VCL Rules" is "ON" then should display '+
           '"Dynamic Origin DNS Name Lookups" in "Backends"', function () {
           expect(checkDisplay('getDynamicOriginDNSnameLookupsTxtIn')).toBe(true);
         });
 
-        xit('if "Custom VCL Rules" is "ON" then should display'+
+        it('if "Custom VCL Rules" is "ON" then should display'+
           ' "Origin TCP Port" in "Backends"', function () {
           expect(checkDisplay('getOriginTCPportTxtIn')).toBe(true);
         });
 
-        xit('if "Custom VCL Rules" is "ON" then should display'+
+        it('if "Custom VCL Rules" is "ON" then should display'+
           ' "Origin Host" in "Backends"', function () {
           expect(checkDisplay('getOriginHostTxtIn')).toBe(true);
         });
