@@ -89,7 +89,10 @@
         window.vendorConfig = response;
         window.document.title = $rootScope.vendorConfig.companyNameShort + ' Customer Portal';
 
-        $rootScope.IntroOptions.steps[0].intro = $rootScope.IntroOptions.steps[0].intro.replace('{{companyNameShort}}', $rootScope.vendorConfig.companyNameShort);
+        $rootScope.IntroOptions.steps = $rootScope.IntroOptions.steps.map(function (obj) { 
+          obj.intro = obj.intro.replace('{{companyNameShort}}', $rootScope.vendorConfig.companyNameShort);
+          return obj;
+        });
       })
       .finally(function(){
         $urlRouter.sync();
