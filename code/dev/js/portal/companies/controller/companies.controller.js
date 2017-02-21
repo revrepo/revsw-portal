@@ -48,10 +48,6 @@
               r.subscription_name = 'Manual';
               return r;
             });
-
-            console.log($scope.auth.isRevadmin())
-
-            console.log($scope.records)
           });
       }
 
