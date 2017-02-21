@@ -37,6 +37,9 @@ var UsageReport = {
     buttons: {
       updateReport: {
         css: '[ng-click=\"onUpdate()\"]'
+      },
+      billingZonesDetails:{
+        css: '#billingZonesDetails.btn-billing-zones-details'
       }
     },
     inputs: {
@@ -52,6 +55,16 @@ var UsageReport = {
     labels: {
       formTitle: {
         css: 'div.col-md-4 h4'
+      }
+    },
+    dialogs: {
+      billingZonesDetails: {
+        css: 'div.modal-dialog.modal-md',
+        labels: {
+          title: {
+            css: 'h3.modal-title'
+          }
+        }
       }
     }
   },
@@ -161,6 +174,28 @@ var UsageReport = {
     return element(by.css(this.locators.buttons.updateReport.css));
   },
 
+  /**
+   * ### UsageReport.getBillingZonesDetailsBtn()
+   *
+   * Gets the reference to `Billing Zones Details` button element.
+   *
+   * @returns {Promise}
+   */
+  getBillingZonesDetailsBtn: function () {
+    return element(by.css(this.locators.buttons.billingZonesDetails.css));
+  },
+
+   /**
+   * ### UsageReport.getBillingZonesDetailsDialog()
+   *
+   * Returns the reference to the `Billing Zones Details` dialog
+   * (Selenium WebDriver Element) from the Usage Report page from the Portal app.
+   *
+   * @returns {Object} Selenium WebDriver Element
+   */
+  getBillingZonesDetailsDialog: function () {
+    return element(by.css(this.locators.dialogs.billingZonesDetails.css));
+  },
   /**
    * ### UsageReport.getForm()
    *

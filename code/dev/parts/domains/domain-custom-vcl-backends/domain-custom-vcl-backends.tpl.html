@@ -9,7 +9,7 @@
               <i class="glyphicon glyphicon-chevron-down"></i>
             </a>
           </span>
-    <span id="addNewBackendBlock" ng-click="$ctrl.onAddNewBackendBlock()" class="btn btn-primary btn-sm pull-right" title="Add New Backend Block"><i class="glyphicon glyphicon-plus"></i></span>
+    <span id="addNewBackend" ng-click="$ctrl.onAddNewBackendBlock()" class="btn btn-primary btn-sm pull-right" title="Add New Backend Block"><i class="glyphicon glyphicon-plus"></i></span>
     <h4><b>Backends</b></h4>
   </div>
   <div class="panel-body">
@@ -47,7 +47,7 @@
             Backend Name *</label>
           <div class="col-sm-9">
             <input type="text" class="form-control inline-block" ng-model="item.name" ng-disabled="_loading" id="origin_host_header" name="backendName" placeholder="" ng-maxlength="255" required>
-            <label for="backendName" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Use the field to name the backend. In VCL functions the backend can be referenced using RevAPM internal function “REV_BACKEND()">
+            <label for="backendName" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Use the field to name the backend. In VCL functions the backend can be referenced using internal function “REV_BACKEND()">
               <i class="fa fa-question-circle"></i>
             </label>
             <div class="error-messages" ng-messages="customVclBackendForm.backendName.$error" role="alert" ng-messages-multiple>
@@ -79,7 +79,7 @@
           <div class="col-sm-9">
             <toggle-switch id="dynamicOriginDNSnameLookups" is-disabled="_loading" ng-model="item.dynamic" on-label="On" off-label="Off">
             </toggle-switch>
-            <label for="dynamic" class="text-info" popover-trigger="mouseenter" uib-popover="TODO text">
+            <label for="dynamic" class="text-info" popover-trigger="mouseenter" uib-popover="Enables/disables dynamic DNS lookups (respecting of DNS TTL) of origin host DNS names">
               <i class="fa fa-question-circle"></i>
               <div class="error-messages" ng-messages="customVclBackendForm.backendVcl.$error" role="alert" ng-messages-multiple>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>

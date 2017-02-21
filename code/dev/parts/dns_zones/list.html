@@ -41,7 +41,7 @@
           <div class="row">
             <div class="col-md-12">
               <div class="pull-left">
-                <a ui-sref=".new" class="btn btn-success" ng-disabled="_loading">
+                <a ui-sref="{{isReadOnly() ?'.': '.new'}}" class="btn btn-success" ng-class="{'btn-disabled':isReadOnly()}" ng-disabled="_loading || isReadOnly()">
                   <i class="glyphicon glyphicon-plus"></i>&nbsp; Add New DNS Zone
                 </a>
               </div>
@@ -112,7 +112,7 @@
                   <a ui-sref=".edit({id: item.id})" ng-if="!item.loading" uib-tooltip="Edit Zone Properties">
                     <i class="glyphicon glyphicon-pencil"></i>
                   </a>
-                  <a href="" ng-if="!item.loading" ng-click="deleteDNSZone(item)" uib-tooltip="Delete Zone">
+                  <a href="" ng-if="!item.loading" ng-class="{'disabled': isReadOnly()}" ng-click="deleteDNSZone(item)" uib-tooltip="Delete Zone">
                     <i class="glyphicon glyphicon-trash"></i>
                   </a>
                   <a ui-sref=".checkintegration({id: item.id})" ng-if="!item.loading" uib-tooltip="Check DNS Zone Integration Configuration">

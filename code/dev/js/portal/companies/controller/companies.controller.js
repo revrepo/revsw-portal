@@ -6,7 +6,7 @@
     .controller('CompaniesCrudController', CompaniesCrudController);
 
   /*@ngInject*/
-  function CompaniesCrudController($scope, CRUDController, Companies, User, BillingPlans, $injector, $stateParams, $config, $state, $anchorScroll) {
+  function CompaniesCrudController($scope, CRUDController, Companies, User, BillingPlans, Vendors, $injector, $stateParams, $config, $state, $anchorScroll) {
     //Invoking crud actions
     $injector.invoke(CRUDController, this, {
       $scope: $scope,
@@ -50,6 +50,10 @@
             });
           });
       }
+
+      Vendors.query().$promise.then(function(response){
+        $scope.vendorProfiles = response;
+      });
     });
 
     $scope.filterKeys = ['companyName', 'comment', 'createdBy', 'updated_at', 'subscription_name', 'subscription_state', 'created_at'];
@@ -77,6 +81,9 @@
      * @return
      */
     $scope.deleteCompany = function(model) {
+      if($scope.isReadOnly() === true){
+        return;
+      }
       $scope
         .confirm('confirmModal.html', model)
         .then(function() {

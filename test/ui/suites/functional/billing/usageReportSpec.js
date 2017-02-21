@@ -108,7 +108,7 @@ describe('Functional', function () {
         it('should check Total Traffic form with correct report data', function() {
           var reportData = DataProvider.generateUsageReportData(user);
           var totalTraffic = {
-            hits: 'Hits',
+            hits: 'Requests',
             sent: 'Sent',
             received: 'Received',
             bwSent: 'BW Sent',
@@ -126,8 +126,8 @@ describe('Functional', function () {
         it('should check Edge Cache Usage form with correct report', function() {
           var reportData = DataProvider.generateUsageReportData(user);
           var edgeCacheUsage = {
-            hit: 'HIT',
-            miss: 'MISS'
+            hit: 'Cache HIT',
+            miss: 'Cache MISS'
           };
           Portal.billing.usageReportPage.updateReport(reportData);
           var result = Portal.billing.usageReportPage.getEdgeCacheUsageForm();

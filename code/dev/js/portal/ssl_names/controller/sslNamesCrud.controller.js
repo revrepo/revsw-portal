@@ -104,7 +104,10 @@
       if (e) {
         e.preventDefault();
       }
-
+      // NOTE: no verify for RO user
+      if($scope.isReadOnly() === true){
+        return;
+      }
       if (!!model.verified && model.verified === true) {
         return;
       }
@@ -352,6 +355,10 @@
      * @return
      */
     $scope.deleteSSLName = function(model) {
+      // NOTE: no delete if RO user
+      if($scope.isReadOnly() === true){
+        return;
+      }
       $scope.confirm('confirmModal.html', model)
         .then(function() {
           var certName = model.ssl_name;

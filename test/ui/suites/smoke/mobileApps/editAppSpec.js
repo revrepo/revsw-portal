@@ -5,7 +5,7 @@
  *
  * REV SOFTWARE CONFIDENTIAL
  *
- * [2013] - [2016] Rev Software, Inc.
+ * [2013] - [2017] Rev Software, Inc.
  * All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains
@@ -131,7 +131,7 @@ describe('Smoke', function () {
                  browser.sleep(10000);*/
 
                 Portal.mobileApps.listPage.addNew(app);
-                expect(Portal.alerts.getAll().count()).toEqual(1);
+                expect(Portal.alerts.getAll().count()).not.toEqual(0);
                 expect(Portal.alerts.getFirst().getText())
                   .toContain(Constants.alertMessages.app.MSG_SUCCESS_ADD);
                 Portal.mobileApps.addPage.clickBackToList();
@@ -145,7 +145,7 @@ describe('Smoke', function () {
                     element(by.xpath('.//*[contains(text(),"' + Constants.alertMessages.app.MSG_SUCCESS_UPDATE + '")]'))
                   ), BROWSER_WAIT_TIMEOUT
                 );
-                expect(Portal.alerts.getAll().count()).toEqual(1);
+                expect(Portal.alerts.getAll().count()).not.toEqual(0);
                 expect(Portal.alerts.getFirst().getText())
                   .toEqual(Constants.alertMessages.app.MSG_SUCCESS_UPDATE);
                 element(by.xpath('.//body')).getAttribute('class').then(function () {
@@ -203,7 +203,7 @@ describe('Smoke', function () {
                   });
 
 
-                /*              expect(Portal.alerts.getAll().count()).toEqual(1);
+                /*              expect(Portal.alerts.getAll().count()).not.toEqual(0);
                  expect(Portal.alerts.getFirst().getText())
                  .toEqual(Constants.alertMessages.app.MSG_SUCCESS_UPDATE);*/
               });

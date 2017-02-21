@@ -13,7 +13,7 @@
                             <div class="pull-left">
                                 <form class="form-inline">
                                     <div class="form-group">
-                                        <div domain-select ng-model="vm.model.domain" on-select="vm.actions.onDomainChange()" select-one="true"></div>
+                                        <div domain-select id="domain" ng-model="vm.model.domain" on-select="vm.actions.onDomainChange()" select-one="true"></div>
                                     </div>
                                     <div class="form-group" ng-if="vm.model.domain">
                                         <filter-generator domain="vm.model.domain" ng-model="vm.model.filtersList"></filter-generator>

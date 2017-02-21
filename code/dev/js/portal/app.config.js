@@ -5,6 +5,7 @@
     .module('revapm.Portal')
     .config(configure)
     .config(configureSatellizer)
+    .config(configUibTooltipProvider)
     .run(setHighchartsOptions);
 
   /*@ngInject*/
@@ -35,6 +36,13 @@
       global: {
         useUTC: false
       }
+    });
+  }
+
+  /*@ngInject*/
+  function configUibTooltipProvider($uibTooltipProvider) {
+    $uibTooltipProvider.options({
+      appendToBody: true
     });
   }
 })();

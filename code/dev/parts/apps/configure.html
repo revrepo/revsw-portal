@@ -24,7 +24,7 @@
                 <div class="col-xs-12 "></div>
               </div>
               <div class="form-group " ng-if="$state.current.data.platform_code=='iOS' ">
-                <a download="RevSDK.framework.zip " href="{{downloadLinks[$state.current.data.platform_code]}} " class="btn btn-download btn-success " ng-disabled="_loading " uib-tooltip="Click to download the latest version of RevAPM mobile SDK">
+                <a download="RevSDK.framework.zip " href="{{vendorConfig.sdk.download_links[$state.current.data.platform_code]}}" class="btn btn-download btn-success " ng-disabled="_loading " uib-tooltip="Click to download the latest version of mobile SDK">
                   <i class="glyphicon glyphicon-cloud-download "></i>&nbsp; Download SDK
                 </a>
               </div>
@@ -40,17 +40,14 @@
               <a ui-sref="^" ng-disabled="_loading" class="btn btn-default">
                 <i class="glyphicon glyphicon-remove"></i>&nbsp; Cancel
               </a>
-              <button class="btn btn-info" ng-disabled="_loading || jsonIsInvalid" ng-click="verify(copyForEditor)">
-                <i class="glyphicon glyphicon-refresh spin" ng-if="_loading"></i>
-                <i class="glyphicon glyphicon-check" ng-if="!_loading"></i>&nbsp; Verify
+              <button class="btn btn-info" ng-class="{'btn-disabled':isReadOnly()}"  ng-disabled="_loading || jsonIsInvalid || isReadOnly()" ng-click="verify(copyForEditor)">
+                <i class="glyphicon" ng-class="_loading?'glyphicon-refresh spin':'glyphicon-check'"></i> &nbsp; Verify
               </button>
-              <button class="btn btn-success" ng-disabled="_loading || jsonIsInvalid" ng-click="updateApp(copyForEditor)">
-                <i class="glyphicon glyphicon-refresh spin" ng-if="_loading"></i>
-                <i class="glyphicon glyphicon-file" ng-if="!_loading"></i>&nbsp; Update
+              <button class="btn btn-success" ng-class="{'btn-disabled':isReadOnly()}" ng-disabled="_loading || jsonIsInvalid || isReadOnly()" ng-click="updateApp(copyForEditor)">
+                <i class="glyphicon" ng-class="_loading?'glyphicon-refresh spin':'glyphicon-file'"></i>&nbsp; Update
               </button>
-              <button class="btn btn-success" ng-disabled="_loading || jsonIsInvalid" ng-click="publish(copyForEditor)">
-                <i class="glyphicon glyphicon-refresh spin" ng-if="_loading"></i>
-                <i class="glyphicon glyphicon-ok" ng-if="!_loading"></i>&nbsp; Publish
+              <button class="btn btn-success" ng-class="{'btn-disabled':isReadOnly()}" ng-disabled="_loading || jsonIsInvalid || isReadOnly()" ng-click="publish(copyForEditor)">
+                <i class="glyphicon" ng-class="_loading?'glyphicon-refresh spin':'glyphicon-ok'"></i>&nbsp; Publish
               </button>
             </div>
           </div>

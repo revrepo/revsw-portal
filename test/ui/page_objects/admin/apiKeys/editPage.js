@@ -37,6 +37,9 @@ var EditApiKey = {
     buttons: {
       backToList: {
         linkText: 'Back To List'
+      },
+      update: {
+        css: '#btnUpdate'
       }
     }
   },
@@ -73,6 +76,18 @@ var EditApiKey = {
       by.partialLinkText(this.locators.buttons.backToList.linkText));
   },
 
+  /**
+   * ### EditApiKey.getUpdateBtn()
+   *
+   * Returns the reference to the `Update` button (Selenium WebDriver
+   * Element) from the Edit API Key page from the Portal app.
+   *
+   * @returns {Selenium WebDriver Element}
+   */
+  getUpdateBtn: function () {
+    return element(
+      by.css(this.locators.buttons.update.css));
+  },
   // ## Methods to interact with the Edit API Key Page components
 
   /**
@@ -86,6 +101,19 @@ var EditApiKey = {
   clickBackToList: function () {
     return this
       .getBackToListBtn()
+      .click();
+  },
+  /**
+   * ### EditApiKey.clickUpdate()
+   *
+   * Triggers a click on the `Update` button from the Edit API Key page
+   * from the Portal app.
+   *
+   * @returns {Promise}
+   */
+  clickUpdate: function () {
+    return this
+      .getUpdateBtn()
       .click();
   },
 
@@ -102,6 +130,18 @@ var EditApiKey = {
     return this
       .getTitleLbl()
       .isPresent();
+  },
+  /**
+   * ### EditApiKey.elementIsDisplayed()
+   *
+   * Checks whether the Edit API Key page is displayed elememt
+   * in the UI or not.
+   *
+   * @returns {Promise}
+   */
+  elementIsDisplayed: function(elem, value) {
+    var element = this.form[elem](value);
+    return element.isPresent();
   },
 
   /**

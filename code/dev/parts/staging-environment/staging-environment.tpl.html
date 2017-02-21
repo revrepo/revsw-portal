@@ -11,7 +11,7 @@
       <div class="panel panel-default">
         <div class="panel-heading">
           <div class="panel-body">
-            <p>Before sending ("publishing" in our terms) your updated domain configuration to the global network (and making it available for all end users of your website) you have a simple way to test the configuration in a "sandbox" ("staging" in our terms) environment. The environment is available for RevAPM customers, similar to the global network configuration but is not used to serve real end users.</p>
+            <p>Before sending ("publishing" in our terms) your updated domain configuration to the global network (and making it available for all end users of your website) you have a simple way to test the configuration in a "sandbox" ("staging" in our terms) environment. The environment is available for customers, similar to the global network configuration but is not used to serve real end users.</p>
             <!--  <div class="alert alert-info" ng-if="$ctrl._loading">
               <i class="glyphicon glyphicon-refresh spin" ng-if="$ctrl._loading"></i>&nbsp; Please waite few moment...
               </div> -->
@@ -37,8 +37,15 @@
                   <p> For example:</p>
                   <pre class="console"> curl -x {{$ctrl.stagingServers[0].server_ip}}:80 -v http://www.test-domain.com/</pre>
                 </li>
+                <li>
+                  <p>Using curl's '--resolve' option to redirect requests for a specific domain/port pair to a staging IP address.</p>
+                  <p> An example of HTTP request:</p>
+                  <pre class="console"> curl --resolve "www.test-domain.com:80:{{$ctrl.stagingServers[0].server_ip}}" -v http://www.test-domain.com/</pre>
+                  <p> An example of HTTPS request:</p>
+                  <pre class="console"> curl --resolve "www.test-domain.com:443:{{$ctrl.stagingServers[0].server_ip}}" -v https://www.test-domain.com/</pre>
+                </li>
               </ol>
-              <p>After verifying that the new configuration is working as expected you are welcome to send the configuration to the global network (and make available for your end users) by using <strong>"Publish"</strong> button in domain/SSL configuration forms.</p>
+              <p>After verifying that the new configuration is working as expected you are welcome to send the configuration to the global network (and make available for your end users) by using <strong>"Publish"</strong> button in domain/SSL configuration form.</p>
           </div>
         </div>
       </div>

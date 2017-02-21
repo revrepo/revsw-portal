@@ -32,10 +32,10 @@ var PurgeCacheAdvanced = {
     pullLeft: '.pull-left',
     pullRight: '.pull-right',
     dropDown: {
-      domain: '[ng-click="$select.toggle($event)"]',
+      domain: '#domain [ng-click="$select.toggle($event)"]',
+      searchDomain: '#domain input.ui-select-search',
       models: {
-        domain: 'domain',
-        searchDomain: '$select.search'
+        domain: 'domain'
       }
     },
     jsonEditor: {
@@ -173,7 +173,7 @@ var PurgeCacheAdvanced = {
   getDomainDDown: function () {
     return this
       .getPanelHeadingElem()
-      .element(by.model(this.locators.dropDown.models.domain));
+      .element(by.css(this.locators.dropDown.domain));
   },
 
   /**
@@ -184,8 +184,8 @@ var PurgeCacheAdvanced = {
    * @returns {Promise}
    */
   getSearchDomainTxtIn: function () {
-    return this.getDomainDDown()
-      .element(by.model(this.locators.dropDown.models.searchDomain));
+
+    return element(by.css(this.locators.dropDown.searchDomain));
   },
 
   /**

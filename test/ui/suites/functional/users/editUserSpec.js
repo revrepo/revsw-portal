@@ -24,6 +24,8 @@ describe('Functional', function () {
   describe('Edit user', function () {
 
     var users = [
+//      config.get('portal.users.revAdmin'),
+//      config.get('portal.users.reseller'),
       config.get('portal.users.admin')
     ];
 
@@ -180,7 +182,7 @@ describe('Functional', function () {
                 // Edit user
                 Portal.userListPage.searchAndClickEdit(testUser.email);
                 Portal.editUserPage.form.setAccessControls([
-                  Constants.user.accessControls.REPORTS
+                  Constants.user.accessControls.READ_ONLY
                 ]);
                 Portal.editUserPage.clickUpdateUser();
                 var alert = Portal.alerts.getFirst();
@@ -191,8 +193,8 @@ describe('Functional', function () {
                 Portal.userListPage.searchAndClickEdit(testUser.email);
                 var role = Portal.editUserPage.form.getRole();
                 expect(role).toEqual(Constants.user.roles.ADMIN);
-                var reportsCheckBox = Portal.editUserPage.form.getReportsChBox();
-                expect(reportsCheckBox.isSelected()).toBeTruthy();
+                var readOnlyCheckBox = Portal.editUserPage.form.getReadOnlyChBox();
+                expect(readOnlyCheckBox.isSelected()).toBeTruthy();
                 done();
               })
               .catch(done);
@@ -289,7 +291,7 @@ describe('Functional', function () {
                 // Edit user
                 Portal.userListPage.searchAndClickEdit(testUser.email);
                 Portal.editUserPage.form.setAccessControls([
-                  Constants.user.accessControls.TEST
+                  Constants.user.accessControls.READ_ONLY
                 ]);
                 Portal.editUserPage.clickUpdateUser();
                 var alert = Portal.alerts.getFirst();
@@ -300,8 +302,8 @@ describe('Functional', function () {
                 Portal.userListPage.searchAndClickEdit(testUser.email);
                 var role = Portal.editUserPage.form.getRole();
                 expect(role).toEqual(Constants.user.roles.USER);
-                var reportsCheckBox = Portal.editUserPage.form.getTestChBox();
-                expect(reportsCheckBox.isSelected()).toBeTruthy();
+                var readOnlyCheckBox = Portal.editUserPage.form.getReadOnlyChBox();
+                expect(readOnlyCheckBox.isSelected()).toBeTruthy();
                 done();
               })
               .catch(done);

@@ -2,7 +2,7 @@
  *
  * REV SOFTWARE CONFIDENTIAL
  *
- * [2013] - [2016] Rev Software, Inc.
+ * [2013] - [2017] Rev Software, Inc.
  * All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains
@@ -17,7 +17,7 @@
  */
 
 
-var API = require('./../api');
+var API = require('./../api').API;
 var Session = require('./../session');
 
 var MobileAppsHelper = {

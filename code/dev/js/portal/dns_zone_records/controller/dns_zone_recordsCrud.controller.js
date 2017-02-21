@@ -126,6 +126,10 @@
      * @return
      */
     $scope.deleteDNSZoneRecord = function(model) {
+      // NOTE: not delete if RO user
+      if($scope.isReadOnly() === true){
+        return;
+      }
       var model_ = {
         delrec: model,
         zone: $scope.zone_name
@@ -273,6 +277,10 @@
     };
     // confirmDeleteModal
     $scope.onRemoveAnswer = function($index) {
+      // NOTE: not delete if RO user
+      if($scope.isReadOnly() === true){
+        return;
+      }
       var model_ = {
         record: $scope.model,
         zone: $scope.zone_name,
@@ -312,6 +320,10 @@
     };
     // Override method
     $scope.delete = function(model) {
+      // NOTE: not delete if RO user
+      if($scope.isReadOnly() === true){
+        return;
+      }
       if (!model) {
         return;
       }

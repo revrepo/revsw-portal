@@ -19,8 +19,8 @@
   background-color: #39b54a
 }
 
-.ns1-logo{
-  &--title{
+.ns1-logo {
+  &--title {
     // background-image: url('image/ns1/white-pb-ns1.svg');
     line-height: 1.1;
     vertical-align: top;
@@ -29,17 +29,25 @@
 }
 
 // dns_zone_record
-form.dns-zone-records--new-form{
-  &  input[type="number"] {
+form.dns-zone-records--new-form {
+  & input[type="number"] {
     max-width: 120px;
   }
-  &  input[name="subdomain"] {
+  & input[name="subdomain"] {
     max-width: 360px;
   }
-
 }
-.comming-soon{
+
+.comming-soon {
   color: #f4006f;
   font-size: 0.7em;
   vertical-align: top;
+}
+
+.modal-body {
+  & .dns-zone-record-answer {
+    & .form-control {
+      max-width: 70%;
+    }
+  }
 }

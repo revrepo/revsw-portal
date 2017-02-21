@@ -69,6 +69,7 @@
               item.companyName = list[index].companyName;
             }
           });
+          $scope._applyFilter(); // NOTE: apply current filter for new data in Account column
         });
       } else {
         return $q.when();
@@ -199,6 +200,19 @@
       if (!model.rev_component_bp.enable_cache || model.rev_component_bp.enable_cache === false) {
         model.enable_origin_health_probe = false;
       }
+      if ($scope.$thirdPartyLinks) {
+        model['3rd_party_rewrite'] = {
+          '3rd_party_root_rewrite_domains': (!!$scope.$thirdPartyLinks['3rd_party_root_rewrite_domains'] &&
+            $scope.$thirdPartyLinks['3rd_party_root_rewrite_domains'].length > 0) ? $scope.$thirdPartyLinks['3rd_party_root_rewrite_domains'].join(',') : '',
+          '3rd_party_runtime_domains': (!!$scope.$thirdPartyLinks['3rd_party_runtime_domains'] &&
+            $scope.$thirdPartyLinks['3rd_party_runtime_domains'].length > 0) ? $scope.$thirdPartyLinks['3rd_party_runtime_domains'].join(',') : '',
+          '3rd_party_urls': (!!$scope.$thirdPartyLinks['3rd_party_urls'] &&
+            $scope.$thirdPartyLinks['3rd_party_urls'].length > 0) ? $scope.$thirdPartyLinks['3rd_party_urls'].join(',') : '',
+          'enable_3rd_party_rewrite': $scope.$thirdPartyLinks.enable_3rd_party_rewrite || false,
+          'enable_3rd_party_root_rewrite': $scope.$thirdPartyLinks.enable_3rd_party_root_rewrite || false,
+          'enable_3rd_party_runtime_rewrite': $scope.$thirdPartyLinks.enable_3rd_party_runtime_rewrite || false
+        };
+      }
       return model;
     };
 
@@ -261,6 +275,18 @@
           } else {
             $scope.isCustomSSL_conf_profile = true;
           }
+          var data_ = $scope.model['3rd_party_rewrite'];
+          $scope.$thirdPartyLinks = {
+            '3rd_party_root_rewrite_domains': (!!data_['3rd_party_root_rewrite_domains'] &&
+              data_['3rd_party_root_rewrite_domains'].length > 0) ? data_['3rd_party_root_rewrite_domains'].split(',') : [],
+            '3rd_party_runtime_domains': (!!data_['3rd_party_runtime_domains'] &&
+              data_['3rd_party_runtime_domains'].length > 0) ? data_['3rd_party_runtime_domains'].split(',') : [],
+            '3rd_party_urls': (!!data_['3rd_party_urls'] &&
+              data_['3rd_party_urls'].length > 0) ? data_['3rd_party_urls'].split(',') : [],
+            'enable_3rd_party_rewrite': data_.enable_3rd_party_rewrite || false,
+            'enable_3rd_party_root_rewrite': data_.enable_3rd_party_root_rewrite || false,
+            'enable_3rd_party_runtime_rewrite': data_.enable_3rd_party_runtime_rewrite || false
+          };
           return $q.all([fetchSSL_certificates(), fetchSSL_conf_profiles()]);
         })
         .catch(function(err) {
@@ -288,7 +314,8 @@
           domain_aliases: [],
           origin_secure_protocol: 'use_end_user_protocol',
           rev_component_co: {
-            enable_rum: false
+            enable_rum: false,
+            enable_decompression: true
           }
         };
         // NOTE: set default properties

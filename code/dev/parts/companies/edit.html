@@ -57,8 +57,8 @@
                 <i class="glyphicon glyphicon-remove"></i>&nbsp;
                 Cancel
               </a>
-              <button class="btn btn-success" ng-disabled="_loading || !model.companyName">
-                <i class="glyphicon glyphicon-ok"></i>&nbsp;
+              <button class="btn btn-success" ng-class="{'btn-disabled':isReadOnly()}" id="btnUpdateAccount" ng-disabled="_loading || !model.companyName || isReadOnly()">
+                <i class="glyphicon" ng-class="_loading ? 'glyphicon-refresh spin':'glyphicon-ok'"></i>&nbsp;
                 Update
               </button>
             </div>

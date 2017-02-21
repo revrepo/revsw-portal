@@ -129,11 +129,10 @@
                   </div>
                 </div>
                 <footer class="billing-plan-action">
-                  <!--   <button href="" ng-click="chooseBillingPlan(item)" class="btn btn-success btn-lg">Subscribe</button> -->
-                  <button ng-disabled="_loading" ng-show="item.id !== account.plan_id" ng-click="chooseBillingPlan(item, account)" class="btn btn-success btn-lg">
+                  <button ng-disabled="_loading || isReadOnly()" ng-class="{'btn-disabled':isReadOnly()}" ng-show="item.id !== account.plan_id" ng-click="chooseBillingPlan(item, account)" class="btn btn-success btn-lg">
                     <i class="glyphicon glyphicon-refresh spin" ng-if="_loading"></i> Subscribe
                   </button>
-                  <button ng-show="item.id === account.plan_id" ng-click="chooseBillingPlan(item.id, account)" class="btn btn-success btn-lg" disabled>
+                  <button ng-show="item.id === account.plan_id" class="btn btn-success btn-lg" disabled>
                     <i class="glyphicon glyphicon-refresh spin" ng-if="_loading"></i> Your Current Plan
                   </button>
                 </footer>

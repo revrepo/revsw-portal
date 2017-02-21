@@ -9,6 +9,7 @@
   function StatementsController($scope, $state, FileSaver, User, Companies, DTOptionsBuilder, DTColumnDefBuilder, AlertService, $stateParams) {
     $scope.params = $stateParams;
     $scope.user = User.getUser();
+    $scope.isReadOnly = User.isReadOnly;
     $scope._error = false;
     $scope.account = User.getSelectedAccount();
     var pageLength = 10;

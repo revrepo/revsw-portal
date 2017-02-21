@@ -58,7 +58,7 @@
                 <label for="domainName" class="col-sm-3 control-label" popover-trigger="mouseenter">Domain Name</label>
                 <div class="col-sm-9">
                   <input type="text" class="form-control inline-block" disabled autofocus ng-model="modelInfo.domain_name" id="domain_name" name="domainName" placeholder="Domain Name">
-                  <label for="domainName" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="TODO text">
+                  <label for="domainName" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="The is the primary domain name associated with the configuration. The name cannot be changed. You can specify additional domain names (aliases) in fields 'Non-Wildcard Domain Aliases' and 'Wildcard Domain Alias' below.">
                     <i class="fa fa-question-circle"></i>
                   </label>
                 </div>
@@ -67,7 +67,7 @@
                 <label for="cname" class="col-sm-3 control-label" popover-trigger="mouseenter">Domain CNAME</label>
                 <div class="col-sm-9">
                   <input type="text" class="form-control inline-block" disabled ng-model="modelInfo.cname" id="cname" name="cname" placeholder="Domain CNAME">
-                  <label for="cname" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="TODO text">
+                  <label for="cname" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="The DNS name is managed by the CDN and should be used by the customer to point to the CDN the primary domain name and domain aliases.">
                     <i class="fa fa-question-circle"></i>
                   </label>
                   <button class="btn btn-primary btn-copy--cname" clipboard text="modelInfo.cname" on-copied="copyCallback()" on-error="copyCallback(err)" style="vertical-align: initial;" uib-tooltip="Click to copy the CNAME to the clipboard" tooltip-placement="top"><i class="fa fa-files-o"></i></button>
@@ -106,7 +106,7 @@
                 <label class="col-sm-3 control-label" for="originHostHeader">Origin Host Header *</label>
                 <div class="col-sm-9">
                   <input type="text" validate-domain-name class="form-control inline-block" ng-model="model.origin_host_header" ng-disabled="_loading" id="origin_host_header" name="originHostHeader" placeholder="Origin Host Header" ng-maxlength="63" required>
-                  <label for="originHostHeader" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enter here a domain name to be used in 'Host' header of requests sent from RevAPM to the origin server. The name might be different from origin server name/IP specified above. For example, if origin server IP is 11.11.11.11 and the origin HTTP server recognizes web requests for domain 'www.example.com' you will need to specify '11.11.11.11' in origin server name field above and 'www.example.com' in this field.">
+                  <label for="originHostHeader" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enter here a domain name to be used in 'Host' header of requests sent to the origin server. The name might be different from origin server name/IP specified above. For example, if origin server IP is 11.11.11.11 and the origin HTTP server recognizes web requests for domain 'www.example.com' you will need to specify '11.11.11.11' in origin server name field above and 'www.example.com' in this field.">
                     <i class="fa fa-question-circle"></i>
                   </label>
                   <div class="error-messages" ng-messages="editForm.originHostHeader.$error" role="alert" ng-messages-multiple>
@@ -120,7 +120,7 @@
                   <select class="form-control inline-block" ng-disabled="_loading" ng-model="model.origin_server_location_id" id="origin_server_location_id" name="originServerLocationId" ng-options="obj.id as obj.locationName for obj in locations | orderBy:'locationName'" required="">
                     <option value="">--- Select Location ---</option>
                   </select>
-                  <label for="originServerLocationId" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Select a RevAPM location closest to the location of the origin server">
+                  <label for="originServerLocationId" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Select location closest to the location of the origin server">
                     <i class="fa fa-question-circle"></i>
                   </label>
                   <div class="error-messages" ng-messages="editForm.originServerLocationId.$error" role="alert" ng-messages-multiple>
@@ -143,7 +143,7 @@
                   <label class="radio-inline">
                     <input id="httpOnly" type="radio" ng-disabled="_loading" ng-model="model.origin_secure_protocol" value="http_only">HTTP Only
                   </label>
-                  <label for="origin_secure_protocol" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="TODO text">
+                  <label for="origin_secure_protocol" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Ths option controls whether SSL/TLS protection will be applied to origin requests. Default option 'Use End User Protocol' will instruct the CDN to use for origin communication the same security protocol used by end user (if end user sends a plain unprotected HTTP request the origin call will be also in plain HTTP; if end user sends HTTPS request the origin call will be also in HTTPS). Option 'HTTPS Only' forces all origin requests to be make using HTTPS protocol. Option 'HTTP Only' forces the CDN to use plain HTTP even if end user requests are encrypted.">
                     <i class="fa fa-question-circle"></i>
                   </label>
                 </div>
@@ -199,13 +199,13 @@
               <!-- -->
               <!-- Last Mile QUIC Protocol -->
               <div class="form-group form-inline">
-                <label for="rev_component_bp_enable_quic" class="col-sm-3 control-label">
+                <label for="enable_quic" class="col-sm-3 control-label">
                   Last Mile QUIC Protocol
                 </label>
                 <div class="col-md-9">
-                  <toggle-switch id="lastMileQUICprotocol" is-disabled="_loading" ng-model="model.rev_component_bp.enable_quic" on-label="On" off-label="Off">
+                  <toggle-switch id="lastMileQUICprotocol" name="enable_quic" is-disabled="_loading" ng-model="model.rev_component_bp.enable_quic" on-label="On" off-label="Off">
                   </toggle-switch>
-                  <label for="enable_quic" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="TODO text">
+                  <label for="enable_quic" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="This switch controls whether QUIC-enabled browsers (like Google's Chrome) will be allowed to use for data transfer modern QUIC protocol instead of HTTP2. QUIC protocol provides significant network performance benefits.">
                     <i class="fa fa-question-circle"></i>
                   </label>
                 </div>
@@ -216,33 +216,47 @@
                   Block All Web Crawlers
                 </label>
                 <div class="col-md-9">
-                  <toggle-switch id="blockAllWebCrawlers" is-disabled="_loading" ng-model="model.rev_component_bp.block_crawlers" on-label="On" off-label="Off">
+                  <toggle-switch id="blockAllWebCrawlers" name="block_crawlers" is-disabled="_loading" ng-model="model.rev_component_bp.block_crawlers" on-label="On" off-label="Off">
                   </toggle-switch>
-                  <label for="block_crawlers" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="TODO text">
+                  <label for="block_crawlers" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Use the switch to force the CDN to override the origin-provided /robots.txt file with a file disabling all web crawlers to access the website. This feature might be useful if you board a website on the platform but use a different domain name - this will prevent search engines to catalog the same content under different domain names.">
                     <i class="fa fa-question-circle"></i>
                   </label>
                 </div>
               </div>
               <!-- RUM Data Collection  -->
               <div class="form-group form-inline">
-                <label for="block_crawlers" class="col-sm-3 control-label">
+                <label for="enable_rum" class="col-sm-3 control-label">
                   RUM Data Collection
                 </label>
                 <div class="col-md-9">
-                  <toggle-switch id="runDataCollection" is-disabled="_loading" ng-model="model.rev_component_co.enable_rum" on-label="On" off-label="Off">
+                  <toggle-switch id="runDataCollection" name="enable_rum" is-disabled="_loading" ng-model="model.rev_component_co.enable_rum" on-label="On" off-label="Off">
                   </toggle-switch>
-                  <label for="enable_rum" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="TODO text">
+                  <label for="enable_rum" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Use the switch the enable the injection of RUM data collection JavaScript into served HTML pages">
                     <i class="fa fa-question-circle"></i>
                   </label>
                 </div>
               </div>
+            <!-- RUM Data Collection  -->
+              <div class="form-group form-inline">
+                <label for="enable_decompression" class="col-sm-3 control-label">
+                  Decompress Objects Fetched <br/>From The Origin
+                </label>
+                <div class="col-md-9">
+                  <toggle-switch id="enableDecompression" name="enable_decompression" is-disabled="_loading" ng-model="model.rev_component_co.enable_decompression" on-label="On" off-label="Off">
+                  </toggle-switch>
+                  <label for="enable_decompression" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Controls whether first-mile proxy servers should decompress content fetched from the origin server. The default value of On. The switch should be in On position for 'RUM Data Collection' and '3rd-party Links' features to work.">
+                    <i class="fa fa-question-circle"></i>
+                  </label>
+                </div>
+              </div>
+
               <div class="form-group" ng-class="{ 'has-error': editForm.comment.$invalid &&  editForm.comment.$dirty }">
                 <label for="comment" class="col-sm-3 control-label">Comment</label>
                 <div class="col-md-9">
                   <div class="col-sm-12 form-group">
                     <textarea id="comment" name="comment" placeholder="Comment (300 characters max)" ng-maxlength="300" class="form-control inline-block" name="comment" ng-model="model.comment" ng-pattern="COMMENT_NO_SPECIAL_CHARS" ng-disabled="_loading">
                     </textarea>
-                    <label for="comment" class="text-info" popover-trigger="mouseenter" uib-popover="Comment">
+                    <label for="comment" class="text-info" popover-trigger="mouseenter" uib-popover="Enter a free-text comment about the web domain (300 characters max)">
                       <i class="fa fa-question-circle"></i>
                     </label>
                   </div>
@@ -259,7 +273,7 @@
                 </label>
                 <div class="col-md-9">
                   <input id="blueTriangleTechKey" type="text" class="form-control inline-block" ng-disabled="_loading" name="bttKey" ng-model="model.btt_key" placeholder="BTT API key for the domain" ng-pattern="/^[0-9a-fA-F]{32}$/">
-                  <label for="bttKey" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="TODO text">
+                  <label for="bttKey" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="If the domain is also provisioned in Blue Triangle Technologies' platform it is possible to specify here the domain's BTT ID - this will allow you to see the domain's business reports in Dashboard section">
                     <i class="fa fa-question-circle"></i>
                   </label>
                   <div class="error-messages" ng-messages="editForm.bttKey.$error" role="alert" ng-messages-multiple>
@@ -352,7 +366,7 @@
                 <div class="col-md-9">
                   <toggle-switch id="edgeCaching" is-disabled="_loading" ng-model="model.rev_component_bp.enable_cache" on-label="On" off-label="Off">
                   </toggle-switch>
-                  <label for="enableb_cache" class="text-info" popover-trigger="mouseenter" uib-popover="TODO text">
+                  <label for="enableb_cache" class="text-info" popover-trigger="mouseenter" uib-popover="This switch controls whether edge caching functionality will be enabled for the domain. It is not enough just to enable the switch - you also need to specify proper caching rules (the default caching rule will properly handle the majority of use-cases). Edge caching is also required to support ESI feature.">
                     <i class="fa fa-question-circle"></i>
                   </label>
                 </div>
@@ -367,7 +381,7 @@
                       {{bypass_locations}}
                     </ui-select-choices>
                   </ui-select>
-                  <label for="cache_bypass_locations" class="text-info" popover-trigger="mouseenter" uib-popover="TODO text">
+                  <label for="cache_bypass_locations" class="text-info" popover-trigger="mouseenter" uib-popover="Specify here global URLs/locations which should not have any of the edge caching rules applied to them. Please note that ESI feature will be not available for the locations.">
                     <i class="fa fa-question-circle"></i>
                   </label>
                   <div class="error-messages" ng-messages="editForm.cacheBypassLocations.$error" role="alert" ng-messages-multiple>
@@ -454,9 +468,9 @@
                 <label for="sslCertId" class="col-sm-3 control-label">SSL Certificate</label>
                 <div class="col-sm-9">
                   <select class="form-control inline-block" ng-disabled="_loading" ng-model="model.ssl_cert_id" id="ssl_cert_id" name="sslCertId" ng-options="obj.id as obj.cert_name for obj in SSL_certs | filter :{account_id:model.account_id}">
-                    <option value="">Default RevAPM SSL Certificate</option>
+                    <option value="">Default SSL Certificate</option>
                   </select>
-                  <label for="sslCertId" popover-append-to-body="{{true}}" class="text-info" popover-trigger="mouseenter" uib-popover="Select SSL certificate which should be associated with the domain. Option 'Default RevAPM SSL Certificate' provides you with ability to use RevAPM's shared SSL certificate issued by GlobalSign CA and managed in section 'SSL Names'.">
+                  <label for="sslCertId" popover-append-to-body="{{true}}" class="text-info" popover-trigger="mouseenter" uib-popover="Select SSL certificate which should be associated with the domain. Option 'Default SSL Certificate' provides you with ability to use shared SSL certificate issued by GlobalSign CA and managed in section 'SSL Names'.">
                     <i class="fa fa-question-circle"></i>
                   </label>
                   <a id="manageSSLcertificates" ui-sref="index.webApp.ssl_certs" class="btn btn-primary pull-right"><i class="fa fa-lock"></i> Manage SSL Certificates</a>
@@ -473,7 +487,7 @@
                             <label>
 
                               <input id="predefinedSSLconfigurationProfile" type="radio" class="inline-block" name="isCustomSSL_conf_profile" ng-model="isCustomSSL_conf_profile" ng-value="false"> Predefined SSL Configuration Profile
-                              <label for="isCustomSSL_conf_profile" popover-append-to-body="{{true}}" class="text-info" popover-trigger="mouseenter" uib-popover="TODO text">
+                              <label for="isCustomSSL_conf_profile" popover-append-to-body="{{true}}" class="text-info" popover-trigger="mouseenter" uib-popover="Select the radio-button to use one of the pre-defined SSL configuration profiles (recommended)">
                                 <i class="fa fa-question-circle"></i>
                               </label>
                             </label>
@@ -492,7 +506,7 @@
                           <div class="checkbox">
                             <label>
                               <input id="customSSLconfigurationProfile" type="radio" ng-model="isCustomSSL_conf_profile" name="isCustomSSL_conf_profile" ng-value="true"> Custom SSL Configuration Profile
-                              <label for="isCustomSSL_conf_profile" popover-append-to-body="{{true}}" class="text-info" popover-trigger="mouseenter" uib-popover="TODO text">
+                              <label for="isCustomSSL_conf_profile" popover-append-to-body="{{true}}" class="text-info" popover-trigger="mouseenter" uib-popover="Select the option to define your own SSL configuration options">
                                 <i class="fa fa-question-circle"></i>
                               </label>
                             </label>
@@ -532,7 +546,7 @@
                       <div class="checkbox">
                         <label popover-trigger="mouseenter">
                           <input type="checkbox" ng-disabled="!isCustomSSL_conf_profile" ng-model="model.ssl_prefer_server_ciphers" id="ssl_prefer_server_ciphers" placeholder="Prefer Server-Side Ciphers"><strong> Prefer Server-Side Ciphers</strong></label>
-                        <label for="ssl_prefer_server_ciphers" class="text-info" popover-trigger="mouseenter" uib-popover="TODO text">
+                        <label for="ssl_prefer_server_ciphers" class="text-info" popover-trigger="mouseenter" uib-popover="Specifies that server ciphers should be preferred over client ciphers">
                           <i class="fa fa-question-circle"></i>
                         </label>
                       </div>
@@ -550,7 +564,7 @@
                 <div class="col-md-9">
                   <toggle-switch id="customVCLrules" name="customVcl" is-disabled="_loading || model.rev_component_bp.enable_cache==false" ng-model="model.rev_component_bp.custom_vcl.enabled" on-label="On" off-label="Off">
                   </toggle-switch>
-                  <label for="customVcl" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enables you to configure custom Varnish Configuration Language (VCL) rules to be executed by RevAPM edge proxy servers. The feature requires that “Edge Caching” switch will be in ON position">
+                  <label for="customVcl" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enables you to configure custom Varnish Configuration Language (VCL) rules to be executed by edge proxy servers. The feature requires that “Edge Caching” switch will be in ON position">
                     <i class="fa fa-question-circle"></i>
                   </label>
                 </div>
@@ -559,8 +573,13 @@
               <!-- //  “Custom VCL Rules” -->
               <hr>
             </uib-tab>
-            <uib-tab index="5" heading="Lua Scripting" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="This section allows you to enhance the RevAPM service by running custom Lua code snippets on RevAPM proxy servers">
+            <uib-tab index="5" heading="Lua Scripting" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="This section allows you to enhance the service by running custom Lua code snippets on proxy servers">
               <domain-lua-scripting class="form-group" ng-model="model"></domain-lua-scripting>
+              <hr>
+            </uib-tab>
+            <!-- Third-Party Links-->
+            <uib-tab index="6" heading="Third-Party Links" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="This section allows you to accelerate your website by redirecting to the CDN platform external objects/scripts served by potentially slow third-party vendors">
+              <domain-the-third-party-links class="form-group" ng-model="$thirdPartyLinks"></domain-the-third-party-links>
               <hr>
             </uib-tab>
           </uib-tabset>

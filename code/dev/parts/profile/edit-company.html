@@ -24,7 +24,7 @@
           <ul>
             <li>Your credit card will be not charged after the cancellation will take affect</li>
             <li>No refunds or prorations will be made</li>
-            <li>All your RevAPM users accounts, API keys and SSL certificates will be removed from the system</li>
+            <li>All your users accounts, API keys and SSL certificates will be removed from the system</li>
           </ul>
         </div>
         <div class="form-group" ng-class="{ 'has-error': accountDeleteForm.cancellationMessage.$invalid && accountDeleteForm.cancellationMessage.$dirty }">
@@ -37,7 +37,7 @@
       </div>
       <!-- isCanBeDeleted = false -->
       <div class="col-sm-12" ng-if="!model.isCanBeDeleted">
-        <p class="text-center">Your RevAPM account has active web domain and/or mobile app and/or DNS zone configurations. To ensure that the account cancellation will not affect your end users please review your RevAPM configuration and manually delete the resources before proceeding with account cancellation.
+        <p class="text-center">Your account has active web domain and/or mobile app and/or DNS zone configurations. To ensure that the account cancellation will not affect your end users please review your configuration and manually delete the resources before proceeding with account cancellation.
         </p>
       </div>
     </div>
@@ -54,7 +54,7 @@
     <h3 class="modal-title">Welcome!</h3>
   </div>
   <div class="modal-body">
-    <p>Welcome to the RevAPM customer portal. In order to use the platform we kindly ask you to provide necessary customer contact information.</p>
+    <p>Welcome to the customer portal. In order to use the platform we kindly ask you to provide necessary customer contact information.</p>
     <p> Please click OK and fill out the provided form.</p>
   </div>
   <div class="modal-footer">
@@ -104,11 +104,33 @@
           <form class="form-horizontal" name="editForm" ng-submit="updateCompany(model)" novalidate>
             <div class="form-group" ng-class="{ 'has-error': editForm.companyName.$invalid &&
                             editForm.companyName.$dirty }">
-              <label for="companyName" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Company name (150 characters max)">
+              <label for="companyName" class="col-sm-2 control-label">
                 Company Name * &nbsp;</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="companyName" name="companyName" placeholder="Company Name" ng-maxlength="150" ng-model="model.companyName" ng-pattern="NO_SPECIAL_CHARS" ng-disabled="_loading" required>
+                <input type="text" class="form-control inline-block" id="companyName" name="companyName" placeholder="Company Name" ng-maxlength="150" ng-model="model.companyName" ng-pattern="NO_SPECIAL_CHARS" ng-disabled="_loading" required>
+                <label for="companyName" class="text text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Company name (150 characters max)">
+                  <i class="fa fa-question-circle"></i>
+                </label>
                 <div class="error-messages" ng-messages="editForm.companyName.$error" role="alert" ng-messages-multiple>
+                  <div ng-messages-include="parts/shared/error-messages.html"></div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group" ng-if="auth.isRevadmin()" ng-class="{ 'has-error': createForm.vendor_profile.$invalid && createForm.comment.$dirty }">
+              <label for="vendor_profile" class="col-sm-2 control-label">Vendor Profile</label>
+              <div class="col-sm-10">
+                <div class="col-sm-12 form-group">
+                  <ui-select ng-model="model.vendor_profile" theme="select2" search-enabled="false" ng-animate-disabled ng-disabled="_loading" style="min-width: 550px;" id="vendor_profile" name="vendor_profile">
+                    <ui-select-match placeholder="Select Vendor Profile">{{model.vendor_profile}}</ui-select-match>
+                    <ui-select-choices repeat="item in vendorProfiles">
+                      <div ng-bind-html="item"></div>
+                    </ui-select-choices>
+                  </ui-select>
+                  <label for="vendor_profile" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Vendor Profile TODO REVIEW TEXT">
+                    <i class="fa fa-question-circle"></i>
+                  </label>
+                </div>
+                <div class="error-messages" ng-messages="createForm.vendor_profile.$error" role="alert" ng-messages-multiple>
                   <div ng-messages-include="parts/shared/error-messages.html"></div>
                 </div>
               </div>
@@ -116,9 +138,12 @@
             <hr>
             <!-- first_name-->
             <div class="form-group" ng-class="{ 'has-error': editForm.firstName.$invalid && editForm.firstName.$dirty }">
-              <label for="firstName" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Contact person first name (30 characters max)">First Name *</label>
+              <label for="firstName" class="col-sm-2 control-label">First Name *</label>
               <div class="col-sm-10 ">
-                <input type="text" class="form-control" required id="firstName" name="firstName" placeholder="First Name" ng-maxlength="30" ng-model="model.first_name" ng-pattern="NO_SPECIAL_CHARS" ng-disabled="_loading" required>
+                <input type="text" class="form-control inline-block" required id="firstName" name="firstName" placeholder="First Name" ng-maxlength="30" ng-model="model.first_name" ng-pattern="NO_SPECIAL_CHARS" ng-disabled="_loading" required>
+                <label for="firstName" class="text text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Contact person first name (30 characters max)">
+                  <i class="fa fa-question-circle"></i>
+                </label>
                 <div class="error-messages" ng-messages="editForm.firstName.$error" role="alert" ng-messages-multiple>
                   <div ng-messages-include="parts/shared/error-messages.html"></div>
                 </div>
@@ -126,9 +151,12 @@
             </div>
             <!-- last_name-->
             <div class="form-group" ng-class="{ 'has-error': editForm.lastName.$invalid && editForm.lastName.$dirty }">
-              <label for="lastName" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Contact person last name (30 characters max)">Last Name *</label>
-              <div class="col-sm-10 ">
-                <input type="text" class="form-control" required id="lastName" name="lastName" placeholder="Last Name" ng-maxlength="30" ng-model="model.last_name" ng-pattern="NO_SPECIAL_CHARS" ng-disabled="_loading" required>
+              <label for="lastName" class="col-sm-2 control-label">Last Name *</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control inline-block" required id="lastName" name="lastName" placeholder="Last Name" ng-maxlength="30" ng-model="model.last_name" ng-pattern="NO_SPECIAL_CHARS" ng-disabled="_loading" required>
+                <label for="lastName" class="text text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Contact person last name (30 characters max)">
+                  <i class="fa fa-question-circle"></i>
+                </label>
                 <div class="error-messages" ng-messages="editForm.lastName.$error" role="alert" ng-messages-multiple>
                   <div ng-messages-include="parts/shared/error-messages.html"></div>
                 </div>
@@ -136,43 +164,55 @@
             </div>
             <div class="form-group" ng-class="{ 'has-error': editForm.phoneNumber.$invalid &&
                             editForm.phoneNumber.$dirty }">
-              <label for="phoneNumber" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Contact phone number">Phone Number *</label>
+              <label for="phoneNumber" class="col-sm-2 control-label">Phone Number *</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" required id="phoneNumber" name="phoneNumber" placeholder="Phone Number" ng-maxlength="30" ng-model="model.phone_number" ng-disabled="_loading" required>
+                <input type="text" class="form-control inline-block" required id="phoneNumber" name="phoneNumber" placeholder="Phone Number" ng-maxlength="30" ng-model="model.phone_number" ng-disabled="_loading" required>
+                <label for="phoneNumber" class="text text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Contact phone number">
+                  <i class="fa fa-question-circle"></i>
+                </label>
                 <div class="error-messages" ng-messages="editForm.phoneNumber.$error" role="alert" ng-messages-multiple>
                   <div ng-messages-include="parts/shared/error-messages.html"></div>
                 </div>
               </div>
             </div>
             <div class="form-group" ng-class="{ 'has-error': editForm.contactEmail.$invalid &&  editForm.contactEmail.$dirty }">
-              <label for="phoneNumber" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Contact Email">Contact Email *</label>
+              <label for="phoneNumber" class="col-sm-2 control-label">Contact Email *</label>
               <div class="col-sm-10">
-                <input type="email" class="form-control" required id="contactEmail" name="contactEmail" placeholder="Contact Email" ng-model="model.contact_email" ng-disabled="_loading" required>
+                <input type="email" class="form-control inline-block" required id="contactEmail" name="contactEmail" placeholder="Contact Email" ng-model="model.contact_email" ng-disabled="_loading" required>
+                <label for="phoneNumber" class="text text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Contact Email">
+                  <i class="fa fa-question-circle"></i>
+                </label>
                 <div class="error-messages" ng-messages="editForm.contactEmail.$error" role="alert" ng-messages-multiple>
                   <div ng-messages-include="parts/shared/error-messages.html"></div>
                 </div>
               </div>
             </div>
             <div class="form-group" ng-class="{'has-error': editForm.address1.$invalid && editForm.address1.$dirty }">
-              <label for="address1" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Contact street address (150 characters max)">Address *</label>
+              <label for="address1" class="col-sm-2 control-label">Address *</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" required id="address1" name="address1" placeholder="Address 1" ng-maxlength="150" ng-model="model.address1" ng-pattern="NO_SPECIAL_CHARS" ng-disabled="_loading">
+                <input type="text" class="form-control inline-block" required id="address1" name="address1" placeholder="Address 1" ng-maxlength="150" ng-model="model.address1" ng-pattern="NO_SPECIAL_CHARS" ng-disabled="_loading">
+                <label for="address1" class="text text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Contact street address (150 characters max)">
+                  <i class="fa fa-question-circle"></i>
+                </label>
                 <div class="error-messages" ng-messages="editForm.address1.$error" role="alert" ng-messages-multiple>
                   <div ng-messages-include="parts/shared/error-messages.html"></div>
                 </div>
               </div>
             </div>
             <div class="form-group" ng-class="{ 'has-error': editForm.address2.$invalid && editForm.address2.$dirty }">
-              <label for="address2" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Optional second line of street address (150 characters max)">Address (Line 2) &nbsp;</label>
+              <label for="address2" class="col-sm-2 control-label">Address (Line 2) &nbsp;</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="address2" name="address2" placeholder="Address (Line 2)" ng-maxlength="150" ng-model="model.address2" ng-pattern="NO_SPECIAL_CHARS" ng-disabled="_loading">
+                <input type="text" class="form-control inline-block" id="address2" name="address2" placeholder="Address (Line 2)" ng-maxlength="150" ng-model="model.address2" ng-pattern="NO_SPECIAL_CHARS" ng-disabled="_loading">
+                <label for="address2" class="text text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Optional second line of street address (150 characters max)">
+                  <i class="fa fa-question-circle"></i>
+                </label>
                 <div class="error-messages" ng-messages="editForm.address2.$error" role="alert" ng-messages-multiple>
                   <div ng-messages-include="parts/shared/error-messages.html"></div>
                 </div>
               </div>
             </div>
             <div class="form-group" ng-class="{ 'has-error': editForm.country.$invalid && editForm.country.$dirty }">
-              <label for="Country" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Country">Country *</label>
+              <label for="Country" class="col-sm-2 control-label">Country *</label>
               <div class="col-sm-10">
                 <ui-select ng-model="model.country" id="Country" name="country" theme="select2" ng-animate-disabled ng-disabled="_loading" onselect="onModelSelect($model)">
                   <ui-select-match placeholder="Select Country">{{$select.selected.value}}</ui-select-match>
@@ -180,33 +220,45 @@
                     <div ng-bind-html="value.value|highlight: $select.search"></div>
                   </ui-select-choices>
                 </ui-select>
+                <label for="Country" class="text text-info inline-block" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Country">
+                  <i class="fa fa-question-circle"></i>
+                </label>
                 <div class="error-messages" ng-messages="editForm.country.$error" role="alert" ng-messages-multiple>
                   <div ng-messages-include="parts/shared/error-messages.html"></div>
                 </div>
               </div>
             </div>
             <div class="form-group" ng-class="{ 'has-error': editForm.state.$invalid && editForm.state.$dirty }">
-              <label for="state" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="State (150 characters max)">State *</label>
+              <label for="state" class="col-sm-2 control-label">State *</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="state" name="state" required placeholder="State" ng-model="model.state" ng-maxlength="150" ng-pattern="NO_SPECIAL_CHARS" ng-disabled="_loading">
+                <input type="text" class="form-control inline-block" id="state" name="state" required placeholder="State" ng-model="model.state" ng-maxlength="150" ng-pattern="NO_SPECIAL_CHARS" ng-disabled="_loading">
+                <label for="state" class="text text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="State (150 characters max)">
+                  <i class="fa fa-question-circle"></i>
+                </label>
                 <div class="error-messages" ng-messages="editForm.state.$error" role="alert" ng-messages-multiple>
                   <div ng-messages-include="parts/shared/error-messages.html"></div>
                 </div>
               </div>
             </div>
             <div class="form-group" ng-class="{ 'has-error': editForm.city.$invalid && editForm.city.$dirty }">
-              <label for="City" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="City name (150 characters max)">City *</label>
+              <label for="City" class="col-sm-2 control-label">City *</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="city" name="city" required placeholder="City" ng-model="model.city" ng-maxlength="150" ng-pattern="NO_SPECIAL_CHARS" ng-disabled="_loading">
+                <input type="text" class="form-control inline-block" id="city" name="city" required placeholder="City" ng-model="model.city" ng-maxlength="150" ng-pattern="NO_SPECIAL_CHARS" ng-disabled="_loading">
+                <label for="City" class="text text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="City name (150 characters max)">
+                  <i class="fa fa-question-circle"></i>
+                </label>
                 <div class="error-messages" ng-messages="editForm.city.$error" role="alert" ng-messages-multiple>
                   <div ng-messages-include="parts/shared/error-messages.html"></div>
                 </div>
               </div>
             </div>
             <div class="form-group" ng-class="{ 'has-error': editForm.Zipcode.$invalid && editForm.Zipcode.$dirty }">
-              <label for="Zipcode" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Zip code (30 characters max)">Zip Code *</label>
+              <label for="Zipcode" class="col-sm-2 control-label">Zip Code *</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="Zipcode" name="Zipcode" ng-maxlength="30" required placeholder="Zip Code" ng-model="model.zipcode" ng-pattern="NO_SPECIAL_CHARS" ng-disabled="_loading">
+                <input type="text" class="form-control inline-block" id="Zipcode" name="Zipcode" ng-maxlength="30" required placeholder="Zip Code" ng-model="model.zipcode" ng-pattern="NO_SPECIAL_CHARS" ng-disabled="_loading">
+                <label for="Zipcode" class="text text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Zip code (30 characters max)">
+                  <i class="fa fa-question-circle"></i>
+                </label>
                 <div class="error-messages" ng-messages="editForm.Zipcode.$error" role="alert" ng-messages-multiple>
                   <div ng-messages-include="parts/shared/error-messages.html"></div>
                 </div>
@@ -214,17 +266,22 @@
             </div>
             <hr>
             <div class="form-group" ng-class="{ 'has-error': editForm.comment.$invalid && editForm.comment.$dirty }">
-              <label for="comment" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Comment (300 characters max)">Comment</label>
+              <label for="comment" class="col-sm-2 control-label">Comment</label>
               <div class="col-sm-10">
-                <textarea id="comment" class="form-control" name="comment" ng-model="model.comment" placeholder="Comment (300 characters max) " ng-maxlength="300" ng-pattern="COMMENT_NO_SPECIAL_CHARS" ng-disabled="_loading">
-                </textarea>
+                <div class="col-sm-12 form-group">
+                  <textarea id="comment" class="form-control inline-block" name="comment" ng-model="model.comment" placeholder="Comment (300 characters max) " ng-maxlength="300" ng-pattern="COMMENT_NO_SPECIAL_CHARS" ng-disabled="_loading">
+                  </textarea>
+                  <label for="comment" class="text text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Comment (300 characters max)">
+                    <i class="fa fa-question-circle"></i>
+                  </label>
+                </div>
                 <div class="error-messages" ng-messages="editForm.comment.$error" role="alert" ng-messages-multiple>
                   <div ng-messages-include="parts/shared/error-messages.html"></div>
                 </div>
               </div>
             </div>
             <div class="form-group" ng-if="model.billing_id && model.subscription_id">
-              <p class="col-md-12 text text-center"> To update your billing address (as it will appears on your RevAPM statements) please click on “Update Payment Profile” button and provide the information together with credit card details.</p>
+              <p class="col-md-12 text text-center"> To update your billing address (as it will appears on your {{vendorConfig.companyNameShort}} statements) please click on “Update Payment Profile” button and provide the information together with credit card details.</p>
             </div>
             <!--
             <div class="form-group" ng-if="model.billing_id && (userService.isReseller() || userService.isRevadmin())">
@@ -250,6 +307,9 @@
                 <div class="col-sm-8">
                   <toggle-switch name="useContactInfoAsBillingInfo" ng-model="model.use_contact_info_as_billing_info" on-label="Yes" off-label="No">
                   </toggle-switch>
+                  <label for="useContactInfoAsBillingInfo" class="text text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="TODO text text-info">
+                    <i class="fa fa-question-circle"></i>
+                  </label>
                 </div>
               </div>
               <div class="row contact_info" ng-if="!model.use_contact_info_as_billing_info">
@@ -368,16 +428,16 @@
                 <a ui-sref="^" ng-disabled="_loading" class="btn btn-default" ng-hide="isAskedContactInfo">
                   <i class="glyphicon glyphicon-remove"></i>&nbsp; Cancel
                 </a>
-                <button type="submit" class="btn btn-success" ng-disabled="_loading || _disabled || !editForm.$valid" value="Update Company Profile">
+                <button type="submit" class="btn btn-success" ng-class="{'btn-disabled':isReadOnly()}" id="btnUpdateCompanyProfile" ng-disabled="_loading || _disabled || !editForm.$valid || isReadOnly()" value="Update Company Profile">
                   <i class="glyphicon " ng-class="_loading?'glyphicon-refresh spin':'glyphicon-save'"></i>&nbsp; Update Company Profile
                 </button>
-                <a ng-if="model.billing_id && !!model.billing_portal_link.url && !!model.subscription_id" href="{{model.billing_portal_link.url}}" class="btn btn-primary" target="_blank" ng-disabled="_loading || _disabled" popover-trigger="mouseenter" uib-popover="Click here to update your payment details - you will be taken to our billing portal which uses a separate URL">
+                <a ng-if="(isReadOnly()!==true) && model.billing_id && !!model.billing_portal_link.url && !!model.subscription_id" href="{{model.billing_portal_link.url}}" class="btn btn-primary" ng-class="{'btn-disabled':isReadOnly()}"  target="_blank" ng-disabled="_loading || _disabled || isReadOnly()" popover-trigger="mouseenter" uib-popover="Click here to update your payment details - you will be taken to our billing portal which uses a separate URL">
                   <i class="glyphicon " ng-class="_loading?'glyphicon-refresh spin':'glyphicon-lock'"></i>&nbsp; Update Payment Profile</a>
                 <!-- Create Billing Profile -->
-                <a href="" class="btn btn-primary" ng-disabled="_loading || _disabled || !editForm.$valid" ng-if="!model.billing_id && (userService.isRevadmin() || userService.isReseller())" ng-click="createBillingProfile(model)">
+                <a href="" class="btn btn-primary" ng-class="{'btn-disabled':isReadOnly()}" ng-disabled="_loading || _disabled || !editForm.$valid || isReadOnly()" ng-if="!model.billing_id && (userService.isRevadmin() || userService.isReseller())" ng-click="createBillingProfile(model)">
                   <i class="glyphicon " ng-class="_loading?'glyphicon-refresh spin':'glyphicon-credit-card'"></i>&nbsp; Create Billing Profile
                 </a>
-                <button type="button" ng-if="user.isAdmin" ng-click="deleteCompanyProfile(model)" class="btn btn-danger pull-right" ng-disabled="_loading || _disabled || !isCanDeleteCompanyProfile()">
+                <button type="button" ng-if="user.isAdmin" ng-click="deleteCompanyProfile(model)" class="btn btn-danger pull-right" ng-class="{'btn-disabled':isReadOnly()}" id="btnDeleteCompanyProfile" ng-disabled="_loading || _disabled || !isCanDeleteCompanyProfile() || isReadOnly()">
                   <i class="glyphicon " ng-class="_loading?'glyphicon-refresh spin':'glyphicon-remove'"></i>&nbsp; Delete Company Profile
                 </button>
               </div>

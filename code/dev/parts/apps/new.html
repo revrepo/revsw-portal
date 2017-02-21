@@ -21,7 +21,7 @@
                 <div class="col-xs-12 "></div>
               </div>
               <div class="form-group " ng-if="$state.current.data.platform_code=='iOS' ">
-                <a download="RevSDK.framework.zip " href="{{downloadLinks[$state.current.data.platform_code]}} " class="btn btn-download btn-success " ng-disabled="_loading " uib-tooltip="Click to download the latest version of RevAPM mobile SDK">
+                <a download="RevSDK.framework.zip " href="{{vendorConfig.sdk.download_links[$state.current.data.platform_code]}}" class="btn btn-download btn-success " ng-disabled="_loading " uib-tooltip="Click to download the latest version of the mobile SDK">
                   <i class="glyphicon glyphicon-cloud-download "></i>&nbsp; Download SDK
                 </a>
               </div>
@@ -29,7 +29,7 @@
                 <div class="col-xs-12"></div>
               </div>
               <div class="form-group" ng-if="$state.current.data.platform_code == 'iOS'">
-                <a _href="{{introductionVideoLinks[$state.current.data.platform_code]}}" class="btn btn-download btn-success" ng-disabled="_loading" uib-tooltip="Click to view SDK Introduction Video" _target="_blank" ng-click="onShowVideo($event, {youtubeId:introductionVideoYoutubeIDs[$state.current.data.platform_code]})">
+                <a _href="{{introductionVideoLinks[$state.current.data.platform_code]}}" class="btn btn-download btn-success" ng-disabled="_loading" uib-tooltip="Click to view SDK Introduction Video" _target="_blank" ng-click="onShowVideo($event, {youtubeId:vendorConfig.sdk.introduction_video_youtube_ids[$state.current.data.platform_code]})">
                   <i class="fa fa-youtube"></i>&nbsp; Introduction Video
                 </a>
               </div>
@@ -91,7 +91,7 @@
           </div>
 -->
           <div class="form-group" ng-class="{ 'has-error': createForm.comment.$invalid && createForm.comment.$dirty }">
-            <label for="comment" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Enter a free-text comment about the app (300 characters max)">Comment</label>
+            <label for="comment" class="col-sm-2 control-label">Comment</label>
             <div class="col-sm-10">
               <div class="col-sm-12 form-group">
                 <textarea id="comment" placeholder="Comment" ng-maxlength="300" class="form-control inline-block" name="comment" ng-model="model.comment" ng-pattern="COMMENT_NO_SPECIAL_CHARS" ng-disabled="_loading">
@@ -111,13 +111,11 @@
               <a ui-sref="^" class="btn btn-default">
                 <i class="glyphicon glyphicon-remove"></i>&nbsp; Cancel
               </a>
-              <button class="btn btn-success" id="create_app" ng-disabled="_loading || createForm.$invalid" ng-click="createApp(model,false)">
-                <i class="glyphicon glyphicon-refresh spin" ng-if="_loading"></i>
-                <i class="glyphicon glyphicon-ok" ng-if="!_loading"></i>&nbsp; Create App
+              <button class="btn btn-success" ng-class="{'btn-disabled':isReadOnly()}" id="create_app" ng-disabled="_loading || createForm.$invalid || isReadOnly()" ng-click="createApp(model,false)">
+                <i class="glyphicon" ng-class="_loading?'glyphicon-refresh spin':'glyphicon-ok'"></i>&nbsp; Create App
               </button>
-              <button class="btn btn-success" id="create_app_and_more" ng-disabled="_loading || createForm.$invalid" ng-click="createApp(model,true); createForm.$setPristine()">
-                <i class="glyphicon glyphicon-refresh spin" ng-if="_loading"></i>
-                <i class="glyphicon glyphicon-ok" ng-if="!_loading"></i>&nbsp; Create And Add More
+              <button class="btn btn-success" ng-class="{'btn-disabled':isReadOnly()}" id="create_app_and_more" ng-disabled="_loading || createForm.$invalid || isReadOnly()" ng-click="createApp(model,true); createForm.$setPristine()">
+                <i class="glyphicon" ng-class="_loading?'glyphicon-refresh spin':'glyphicon-ok'"></i>&nbsp; Create And Add More
               </button>
             </div>
           </div>

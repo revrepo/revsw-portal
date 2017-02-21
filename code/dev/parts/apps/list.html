@@ -65,7 +65,7 @@
             <div class="col-md-12">
               <div class="pull-left form-inline">
                 <div class="form-group">
-                  <a ui-sref=".new" class="btn btn-success" ng-disabled="_loading">
+                  <a ui-sref="{{isReadOnly() ?'.': '.new'}}" class="btn btn-success btn-vendor-new-app" ng-class="{'btn-disabled':isReadOnly()}" ng-disabled="_loading || isReadOnly()">
                     <i class="glyphicon glyphicon-plus"></i>&nbsp; Add New App
                   </a>
                 </div>
@@ -73,7 +73,7 @@
                   <div class="col-xs-12"></div>
                 </div>
                 <div class="form-group" ng-if="$state.current.data.platform_code == 'iOS'">
-                  <a download="RevSDK.framework.zip" href="{{downloadLinks[$state.current.data.platform_code]}}" class="btn btn-download btn-success" ng-disabled="_loading" uib-tooltip="Click to download the latest version of RevAPM mobile SDK">
+                  <a download="RevSDK.framework.zip" href="{{vendorConfig.sdk.download_links[$state.current.data.platform_code]}}" class="btn btn-download btn-success btn-vendor-download" ng-disabled="_loading" uib-tooltip="Click to download the latest version of mobile SDK">
                     <i class="glyphicon glyphicon-cloud-download"></i>&nbsp; Download SDK
                   </a>
                 </div>
@@ -81,7 +81,7 @@
                   <div class="col-xs-12"></div>
                 </div>
                 <div class="form-group" ng-if="$state.current.data.platform_code == 'iOS'">
-                  <a __href="{{introductionVideoLinks[$state.current.data.platform_code]}}" class="btn btn-download btn-success" ng-disabled="_loading" uib-tooltip="Click to view SDK Introduction Video" __target="_blank" ng-click="onShowVideo($event, {youtubeId:introductionVideoYoutubeIDs[$state.current.data.platform_code]})">
+                  <a __href="{{introductionVideoLinks[$state.current.data.platform_code]}}" class="btn btn-download btn-success btn-vendor-introduction" ng-disabled="_loading" uib-tooltip="Click to view SDK Introduction Video" __target="_blank" ng-click="onShowVideo($event, {youtubeId:vendorConfig.sdk.introduction_video_youtube_ids[$state.current.data.platform_code]})">
                     <i class="fa fa-youtube"></i>&nbsp; Introduction Video
                   </a>
                 </div>
@@ -148,8 +148,8 @@
                 <td>{{item.last_app_published_version}}</td>
                 <td>{{ getRelativeDate(item.updated_at) }}</td>
                 <td>
-                  <button class="btn btn-primary" clipboard text="item.sdk_key" on-copied="copyCallback()" on-error="copyCallback(err)" style="vertical-align: initial;" uib-tooltip="Click to copy the key to the clipboard" tooltip-placement="top"><i class="fa fa-files-o"></i></button>
-                  <button class="btn btn-primary" ng-click="switchKeyVisibility(item)" ng-hide="item.showKey" style="vertical-align: initial;">Show SDK Key</button>
+                  <button class="btn btn-primary btn-sdk-key" clipboard text="item.sdk_key" on-copied="copyCallback()" on-error="copyCallback(err)" style="vertical-align: initial;" uib-tooltip="Click to copy the key to the clipboard" tooltip-placement="top"><i class="fa fa-files-o"></i></button>
+                  <button class="btn btn-primary btn-sdk-key" ng-click="switchKeyVisibility(item)" ng-hide="item.showKey" style="vertical-align: initial;">Show SDK Key</button>
                   <input ng-if="item.showKey" ng-blur="switchKeyVisibility(item)" class="form-control" value="{{item.sdk_key}}" style="width: 300px; display: inline-block; position: absolute; z-index: 999; margin-left: 4px;" focus-me="item.showKey">
                   <!--<input class="list-input" disabled ng-hide="item.show" type="password" value="{{item.sdk_key}}" />-->
                   <!--<input class=""  ng-show="item.show" type="text" value="{{item.sdk_key}}"  />-->
@@ -169,7 +169,7 @@
                   <a ui-sref=".configure({id: item.id})" ng-if="!item.loading" uib-tooltip="Advanced Edit App">
                     <i class="glyphicon glyphicon-cog"></i>
                   </a>
-                  <a href="" ng-if="!item.loading" ng-click="deleteApp(item)" uib-tooltip="Delete App">
+                  <a href="" ng-if="!item.loading" ng-class="{'disabled': isReadOnly() }"ng-click="deleteApp(item)" uib-tooltip="Delete App">
                     <i class="glyphicon glyphicon-trash"></i>
                   </a>
                   <a href="#/mobile/traffic" ng-if="!item.loading" ng-click="storeToStorage(item)" uib-tooltip="Stats">

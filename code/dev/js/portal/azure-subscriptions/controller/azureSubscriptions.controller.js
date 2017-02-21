@@ -30,6 +30,9 @@
     var modalInstance = null;
     $scope.editCurrentSubscriptionState = null;
     $scope.openChangeStatusDialog = function(item) {
+      if($scope.isReadOnly() === true){
+        return;
+      }
       $scope.alertService.clear();
       $scope.editCurrentSubscriptionState = item.subscription_state;
       modalInstance = $uibModal.open({

@@ -8,16 +8,19 @@
   function runIntro($config, $rootScope, $localStorage, $timeout, $window, $state, $stateParams) {
     'ngInject';
     $rootScope.menuExpandedNodes = {};
+
     var introduction_application = {
       steps: [{
-          intro: 'Welcome to the RevAPM Customer Portal! It looks like you are a new user of the service, and we would like to run for you a quick introduction tour.',
+          intro: 'Welcome to the {{companyNameShort}} Customer Portal! It looks like you are a new user of the service, and we would ' +
+            'like to run for you a quick introduction tour.',
         }, {
           element: '#side-menu-sub-item__webApp-domains',
-          intro: 'The "Domains" section allows you to manage the way how your websites (domains) are accelerated by RevAPM.',
+          intro: 'The "Domains" section allows you to manage the way how your websites (domains) are accelerated by {{companyNameShort}}.',
           position: 'right'
         }, {
           element: '#side-menu-sub-item__webApp-staging-environment',
-          intro: 'We provide an easy and safe way to test your RevAPM domain configuration changes before making them available for all your website users - please ' +
+          intro: 'We provide an easy and safe way to test your {{companyNameShort}} domain configuration changes before making them ' +
+            'available for all your website users - please ' +
             'see the "Staging Env." page for full details about our configuration staging workflow.',
           position: 'right'
         }, {
@@ -27,7 +30,8 @@
           position: 'right'
         }, {
           element: '#side-menu-sub-item__webApp-ssl_names',
-          intro: 'When using RevAPM\'s shared SSL certificate managed by GlobalSign CA you can use this section to manage SSL domain names protected by the certificate',
+          intro: 'When using {{companyNameShort}}\'s shared SSL certificate managed by GlobalSign CA you can use this section to manage SSL ' +
+            'domain names protected by the certificate',
           position: 'right'
         }, {
           element: '#side-menu-sub-item__webApp-cache ',
@@ -51,7 +55,7 @@
           element: '#side-menu-apps-item',
           intro: 'The "Mobile Apps" section is the right place to supercharge your mobile application with RevSDK. In the section your can create new SDK ' +
             'keys and manage ' +
-            'RevAPM acceleration options.',
+            '{{companyNameShort}} acceleration options.',
           position: 'right'
         },
         {

@@ -32,6 +32,9 @@
 @import "filter-activity-log";
 @import "domain-lua-scripting";
 @import "azure-sso";
+@import "usage-web";
+@import "loader";
+
 // NOTE: global class
 .inline-block {
   display: inline-block;
@@ -45,4 +48,12 @@ textarea.inline-block {
   display: inline-block;
   float: left;
   margin-right: 3px;
+}
+
+table {
+  & .actions {
+    & .disabled {
+      opacity: 0.4;
+    }
+  }
 }

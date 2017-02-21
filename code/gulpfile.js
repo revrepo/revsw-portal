@@ -38,6 +38,15 @@ gulp.task('less', function() {
     .pipe(browserSync.stream());
 });
 
+gulp.task('lessVendor', function() {
+  return gulp.src(devFolder + 'less/vendors/**.less')
+    .pipe(less({
+      paths: [path.join(__dirname, 'less')]
+    }))
+    .pipe(gulp.dest(devFolder + 'css'))
+    .pipe(browserSync.stream());
+});
+
 gulp.task('copyCss', function() {
   console.log(destFolder + 'css');
   return gulp.src([devFolder + 'css/**/*.css', devFolder + 'css/**/*.{png,gif}'])
@@ -121,7 +130,12 @@ gulp.task('lintjs', function() {
 });
 
 gulp.task('serve:dev', function() {
-  browserSync({
+  var bs1 = require('browser-sync').create();
+  var bs2 = require('browser-sync').create();
+  bs1.init({
+    port: 3000,
+    // Disable UI completely
+    ui: false,
     server: {
       baseDir: './dev',
       routes: {
@@ -132,8 +146,23 @@ gulp.task('serve:dev', function() {
     }
   });
 
+  bs2.init({
+    port: 4000,
+    // Disable UI completely
+    ui: false,
+    server: {
+      baseDir: './dev',
+      routes: {
+        '/bower_components': 'bower_components',
+        //'/portal': '/',
+        '/widgets': '/../widgets',
+      }
+    }
+  });  
+
   gulp.watch([devFolder + '**/*.html'], reload);
   gulp.watch([devFolder + 'less/**/*.less'], ['less']);
+  gulp.watch([devFolder + 'less/vendors/**.less'], ['lessVendor']);
 
   gulp.watch([devFolder + 'js/**/*.js'], ['lintjs', reload]);
   gulp.watch([devFolder + 'js/**/*.html'], reload);
@@ -156,7 +185,7 @@ gulp.task('serve:public', function() {
 
 
 gulp.task('copy', ['copyCss', 'copyParts', 'copyFaviconIcon', 'copyImages', 'copyJson', 'copyFonts', 'fonts', 'widgetsCopy', 'copyConfig']);
-gulp.task('build', ['copy', 'dist']);
+gulp.task('build', ['less', 'lessVendor', 'copy', 'dist']);
 gulp.task('default', ['serve', 'less', 'widgets:build']);
 gulp.task('serve', ['serve:dev']);
 gulp.task('public', ['serve:public']);
