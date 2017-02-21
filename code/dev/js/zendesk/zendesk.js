@@ -23,4 +23,4 @@ try{o=s}catch(c){n=document.domain,
     this.body.appendChild(o)},
     o.write('<body onload="document._l();">'),
     o.close()}("https://assets.zendesk.com/embeddable_framework/main.js",
-    "revapm.zendesk.com");
+  window.vendorConfig.zendesk_support_site);
