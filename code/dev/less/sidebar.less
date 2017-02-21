@@ -8,7 +8,9 @@ section[drawer] {
   left: 0;
   width: 210px;
   overflow: hidden;
-  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  // min-height: 100%;
   background-color: #fff;
   border-right: 1px solid #ddd;
   background-color: @app-side-menu-background;
@@ -26,10 +28,18 @@ section[drawer] {
       width: 50%;
     }
   }
+  .navbar-logo{
+    background-color: @app-side-menu-background-logo;
+    height: @app-top-menu-height;
+  }
+  .panel-menu{
+    display: flex;
+    flex-direction: column;
+  }
   .side-menu {
-    position: absolute;
+    // position: absolute;
     width: 209px;
-    height: 100%;
+    // height: 100%;
     padding-left: 12px;
     list-style-type: none;
     overflow-y: auto;
