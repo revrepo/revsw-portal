@@ -40,6 +40,7 @@
 
 </head>
 <body data-ng-app="revapm.Portal" class="hide-vertical-scroll">
+<div ng-hide="!!vendor" class="loader"></div>
 <link ng-if="vendor" rel="stylesheet" ng-href="css/{{vendor}}.css">
 
 <toaster-container toaster-options="{'animation-class': 'toast-top-center'}"></toaster-container>
@@ -402,6 +403,7 @@ ga('create',  window.gaAccount, 'auto');
 <script type="text/javascript" src="js/portal/keys/controller/keysEdit.controller.js"></script>
 
 <script type="text/javascript" src="js/portal/dashboard/dashboard.module.js"></script>
+<script type="text/javascript" src="js/portal/dashboard/dashboard.config.js"></script>
 <script type="text/javascript" src="js/portal/dashboard/dashboard.routes.js"></script>
 <script type="text/javascript" src="js/portal/dashboard/filters/dashboard.filters.js"></script>
 <script type="text/javascript" src="js/portal/dashboard/services/dashboard.service.js"></script>
@@ -409,6 +411,14 @@ ga('create',  window.gaAccount, 'auto');
 <script type="text/javascript" src="js/portal/dashboard/components/dashboard-nav-menu.component.js"></script>
 <script type="text/javascript" src="js/portal/dashboard/components/dashboard-btn-new.component.js"></script>
 <script type="text/javascript" src="js/portal/dashboard/components/dashboard-btn-delete.conmponent.js"></script>
+<!-- Apps Analytic -->
+<script type="text/javascript" src="js/portal/dashboard/widgets/apps-analytics/widgetsAppsAnalytics.module.js"></script>
+<script type="text/javascript" src="js/portal/dashboard/widgets/apps-analytics/widgetsAppsAnalyticsEditConfig.controller.js"></script>
+<script type="text/javascript" src="js/portal/dashboard/widgets/apps-analytics/mobile-rps-chart/widgetMobileRPSChart.config.js"></script>
+<script type="text/javascript" src="js/portal/dashboard/widgets/apps-analytics/mobile-tops/widgetMobileTops.config.js"></script>
+<script type="text/javascript" src="js/portal/dashboard/widgets/apps-analytics/mobile-tops/widgetsAppsTopReportsDomains.controller.js"></script>
+<script type="text/javascript" src="js/portal/dashboard/widgets/apps-analytics/mobile-tops/widgetsMobileTopsEditConfig.controller.js"></script>
+<!-- //Apps Analytic -->
 <!-- Web Analytic -->
 <script type="text/javascript" src="js/portal/dashboard/widgets/web-analytics/widgetsWebAnalytics.module.js"></script>
 <script type="text/javascript" src="js/portal/dashboard/widgets/web-analytics/widgetsWebAnalyticsEditConfig.controller.js"></script>

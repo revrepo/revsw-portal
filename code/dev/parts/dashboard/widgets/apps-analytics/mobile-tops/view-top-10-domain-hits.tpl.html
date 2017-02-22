@@ -1,0 +1,9 @@
+<div class="col-md-12 widgets--top-10-domain-hits auto-scroll">
+  <!--<h3>Top 10 Domains By Requests</h3> -->
+  <div class="alert alert-info" ng-if="!config.account_id && !config.app_id">
+    Please click on <i class="glyphicon glyphicon-cog"></i> icon to configure the widget
+  </div>
+  <div ng-if="!!config.account_id || !!config.app_id">
+    <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="vm.domain_hits" ng-chart-options="hitsChartOpts"></div>
+  </div>
+</div>

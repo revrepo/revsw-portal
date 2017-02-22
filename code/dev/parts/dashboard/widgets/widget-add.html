@@ -2,18 +2,62 @@
   <button type="button" class="close" ng-click="closeDialog()" aria-hidden="true">&times;</button>
   <h4 class="modal-title">Add New Widget</h4>
 </div>
-<div class="modal-body">
-  <div style="display: inline-block;">
-    <dl class="dl-horizontal">
-      <dt ng-repeat-start="(key, widget) in widgets | orderWidgets ">
-        <a href="" ng-click="addWidget(key)">
-          {{widget.title}}
-        </a>
-      </dt>
-      <dd ng-repeat-end ng-if="widget.description">
-        {{widget.description}}
-      </dd>
-    </dl>
+<div class="widgets-list modal-body">
+  <div class="widget-list-container" _style="display: inline-block;">
+    <uib-accordion close-others="true">
+      <div uib-accordion-group is-open="accordionState.isWebHeaderOpen">
+        <uib-accordion-heading>
+          <span class="widget-group-title h5">Web Analytics
+          <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': accordionState.isWebHeaderOpen, 'glyphicon-chevron-right': !accordionState.isWebHeaderOpen}"></i>
+          </span>
+        </uib-accordion-heading>
+        <dl class="dl-horizontal widget-group-content">
+          <dt ng-repeat-start="(key, widget) in widgets | orderWidgets: 'web' ">
+            <a href="" ng-click="addWidget(key)">{{::widget.title}}</a>
+          </dt>
+          <dd ng-repeat-end ng-if="widget.description">{{::widget.description}}</dd>
+        </dl>
+      </div>
+      <div uib-accordion-group is-open="accordionState.isAppsHeaderOpen">
+        <uib-accordion-heading>
+          <span class="widget-group-title h5">Apps Analytics
+          <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': accordionState.isAppsHeaderOpen, 'glyphicon-chevron-right': !accordionState.isAppsHeaderOpen}"></i>
+          </span>
+        </uib-accordion-heading>
+        <dl class="dl-horizontal">
+          <dt ng-repeat-start="(key, widget) in ::widgets | orderWidgets: 'apps' ">
+            <a href="" ng-click="addWidget(key)">{{::widget.title}}</a>
+          </dt>
+          <dd ng-repeat-end ng-if="widget.description">{{::widget.description}}</dd>
+        </dl>
+      </div>
+      <div uib-accordion-group is-open="accordionState.isBusinessHeaderOpen">
+        <uib-accordion-heading>
+          <span class="widget-group-title h5">Business Analytics
+          <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': accordionState.isBusinessHeaderOpen, 'glyphicon-chevron-right': !accordionState.isBusinessHeaderOpen}"></i>
+          </span>
+        </uib-accordion-heading>
+        <dl class="dl-horizontal">
+          <dt ng-repeat-start="(key, widget) in widgets | orderWidgets: 'business' ">
+            <a href="" ng-click="addWidget(key)">{{::widget.title}}</a>
+          </dt>
+          <dd ng-repeat-end ng-if="widget.description">{{::widget.description}}</dd>
+        </dl>
+      </div>
+      <div uib-accordion-group is-open="accordionState.isSecurityHeaderOpen">
+        <uib-accordion-heading>
+          <span class="widget-group-title h5">Security Analytics
+          <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': accordionState.isSecurityHeaderOpen, 'glyphicon-chevron-right': !accordionState.isSecurityHeaderOpen}"></i>
+          </span>
+        </uib-accordion-heading>
+        <dl class="dl-horizontal">
+          <dt ng-repeat-start="(key, widget) in widgets | orderWidgets: 'security' ">
+            <a href="" ng-click="addWidget(key)">{{::widget.title}}</a>
+          </dt>
+          <dd ng-repeat-end ng-if="widget.description">{{::widget.description}}</dd>
+        </dl>
+      </div>
+    </uib-accordion>
   </div>
 </div>
 <div class="modal-footer">

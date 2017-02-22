@@ -1,0 +1,30 @@
+body{
+  background-color: @app-color-grey-100;
+}
+.loader {
+  height: 4px;
+  min-width: 100%;
+  position: relative;
+  overflow: hidden;
+  background-color: @app-color-grey-100;
+  z-index: 500;
+}
+.loader:before{
+  display: block;
+  position: absolute;
+  content: "";
+  left: -200px;
+  width: 200px;
+  height: 4px;
+  background-color: @app-color-orange-logo;
+  animation: loading 2s linear infinite;
+}
+
+@keyframes loading {
+    from {left: -200px; width: 30%;}
+    50% {width: 50%;}
+    70% {width: 70%;}
+    80% { left: 50%;}
+    95% {left: 120%;}
+    to {left: 100%;}
+}
