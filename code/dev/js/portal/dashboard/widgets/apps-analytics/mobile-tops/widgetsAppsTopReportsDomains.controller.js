@@ -8,6 +8,8 @@
    * @name widgetsAppsTopReportsDomainsController
    * @description controller for view all Mobile Top Reports for Domains
    *
+   * This widget controller based on code/dev/js/portal/mobileTops.controller.js
+   *
    * @param {any} config
    */
   function widgetsAppsTopReportsDomainsController(config, Stats) {
