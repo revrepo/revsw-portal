@@ -112,7 +112,9 @@
                   {{item.cert_name}}
                 </a>
                 </td>
-                <td>{{item.domains}}</td>
+                <td>
+                  <div class="domains-alternative-names">{{item.domains}}</div>
+                </td>
                 <td ng-if="auth.isRevadmin()">{{item.cert_type}}</td>
                 <td>{{getRelativeDate(item.expires_at)}}</td>
                 <td>{{getRelativeDate(item.updated_at) }}</td>
