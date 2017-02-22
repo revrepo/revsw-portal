@@ -12,7 +12,6 @@
       restrict: 'A',
       link: function (scope, element, attr) {
         // This solution is implemented to support different zendesk's urls for different vendor profiles
-        // jshint ignore: start
         var zendeskJS = ' window.zEmbed||function(e,t){ ' +
           'var n,o,d,i,s,a=[],r=document.createElement("iframe"); '+
           'window.zEmbed=function(){a.push(arguments)}, '+
