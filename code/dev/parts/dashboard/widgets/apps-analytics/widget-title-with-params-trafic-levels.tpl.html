@@ -1,6 +1,6 @@
 <h3 class=panel-title>{{definition.title}}
   <span ng-if="!!definition.config.application">
-      (<strong>{{definition.config.application.app_name}}</strong>)
+      (<strong>{{definition.config.application.app_name}} <small>{{definition.config.application.app_platform.replace('_',' ')}}</small></strong>)
   </span>
   <span class=pull-right>
 <a href title="reload widget content" ng-if=widget.reload ng-click=reload()>
