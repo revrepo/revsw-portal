@@ -146,6 +146,46 @@
           type: 'hits',
           count: 10
         }
+      })
+      // "Origin/CDN Traffic Distribution By Requests"
+      .widget('widget-apps-traffic-dist-cache-hits', {
+        title: 'Origin/CDN Dist. By Req.',
+        description: 'Apps Top Reports - Origin/CDN Traffic Distribution By Requests',
+        templateUrl: 'parts/dashboard/widgets/apps-analytics/traffic-distributions/view-distributions-hits.tpl.html',
+        titleTemplateUrl: 'parts/dashboard/widgets/apps-analytics/mobile-tops/widget-title-with-params-mobile-top-reports.tpl.html',
+        controller: 'widgetsAppsSDKDestributionsReportsController',
+        controllerAs: 'vm',
+        edit: {
+          templateUrl: 'parts/dashboard/widgets/apps-analytics/mobile-tops/edit-config-mobile-top-reports.tpl.html',
+          controller: 'widgetsMobileTopsEditConfigController',
+          controllerAs: 'vm',
+        },
+        config: {
+          delay: '24',
+          name: 'destination',
+          type: 'hits',
+          count: 10
+        }
+      })
+      // "Origin/CDN Traffic Distribution By Traffic"
+      .widget('widget-apps-traffic-dist-cache-gbt', {
+        title: 'Origin/CDN Dist. By Traffic',
+        description: 'Apps Top Reports - Origin/CDN Traffic Distribution By Traffic',
+        templateUrl: 'parts/dashboard/widgets/apps-analytics/traffic-distributions/view-distributions-gbt.tpl.html',
+        titleTemplateUrl: 'parts/dashboard/widgets/apps-analytics/mobile-tops/widget-title-with-params-mobile-top-reports.tpl.html',
+        controller: 'widgetsAppsSDKDestributionsReportsController',
+        controllerAs: 'vm',
+        edit: {
+          templateUrl: 'parts/dashboard/widgets/apps-analytics/mobile-tops/edit-config-mobile-top-reports.tpl.html',
+          controller: 'widgetsMobileTopsEditConfigController',
+          controllerAs: 'vm',
+        },
+        config: {
+          delay: '24',
+          name: 'destination',
+          type: 'gbt',
+          count: 10
+        }
       });
   }
 
