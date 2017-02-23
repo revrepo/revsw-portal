@@ -106,6 +106,26 @@
           type: 'hits',
           count: 20
         }
+      })
+      // "WiFi/Cellular Distribution By Requests"
+      .widget('widget-apps-mobile-top-networks-hits', {
+        title: 'WiFi/Cell. Dist. By Requests',
+        description: 'Apps Top Reports - WiFi/Cellular Distribution By Requests',
+        templateUrl: 'parts/dashboard/widgets/apps-analytics/mobile-tops/view-top-networks-hits.tpl.html',
+        titleTemplateUrl: 'parts/dashboard/widgets/apps-analytics/mobile-tops/widget-title-with-params-mobile-top-reports.tpl.html',
+        controller: 'widgetsAppsSDKTopsReportsController',
+        controllerAs: 'vm',
+        edit: {
+          templateUrl: 'parts/dashboard/widgets/apps-analytics/mobile-tops/edit-config-mobile-top-reports.tpl.html',
+          controller: 'widgetsMobileTopsEditConfigController',
+          controllerAs: 'vm',
+        },
+        config: {
+          delay: '24',
+          name: 'network',
+          type: 'hits',
+          count: 2
+        }
       });
   }
 

@@ -40,7 +40,8 @@
         'widget-apps-mobile-top-10-domains-gbt',
         'widget-apps-mobile-top-countries-hits',
         'widget-apps-mobile-top-countries-users',
-        'widget-apps-mobile-top-operators-hits'
+        'widget-apps-mobile-top-operators-hits',
+        'widget-apps-mobile-top-networks-hits'
       ]
     },
     web: {
