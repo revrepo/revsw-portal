@@ -41,7 +41,8 @@
         'widget-apps-mobile-top-countries-hits',
         'widget-apps-mobile-top-countries-users',
         'widget-apps-mobile-top-operators-hits',
-        'widget-apps-mobile-top-networks-hits'
+        'widget-apps-mobile-top-networks-hits',
+        'widget-apps-traffic-dist-cache-hits'
       ]
     },
     web: {

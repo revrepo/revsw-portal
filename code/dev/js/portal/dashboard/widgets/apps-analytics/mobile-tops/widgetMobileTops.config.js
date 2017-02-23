@@ -126,6 +126,26 @@
           type: 'hits',
           count: 2
         }
+      })
+      // "Edge Cache Hit Ratio By Requests"
+      .widget('widget-apps-traffic-dist-cache-hits', {
+        title: 'Edge Cache Hit Ratio By Req.',
+        description: 'Apps Top Reports - Edge Cache Hit Ratio By Requests',
+        templateUrl: 'parts/dashboard/widgets/apps-analytics/traffic-distributions/view-cache-hits.tpl.html',
+        titleTemplateUrl: 'parts/dashboard/widgets/apps-analytics/mobile-tops/widget-title-with-params-mobile-top-reports.tpl.html',
+        controller: 'widgetsAppsSDKDestributionsReportsController',
+        controllerAs: 'vm',
+        edit: {
+          templateUrl: 'parts/dashboard/widgets/apps-analytics/mobile-tops/edit-config-mobile-top-reports.tpl.html',
+          controller: 'widgetsMobileTopsEditConfigController',
+          controllerAs: 'vm',
+        },
+        config: {
+          delay: '24',
+          name: 'cache',
+          type: 'hits',
+          count: 10
+        }
       });
   }
 
