@@ -93,7 +93,8 @@
       if (!vm.config.account_id && !vm.config.app_id) {
         return;
       }
-      reloadOther_(vm.config.type, vm.config.name, vm.config.count | 10, angular.merge({
+      var count_ = !!vm.config.count ? vm.config.count : 10;
+      reloadOther_(vm.config.type, vm.config.name, count_, angular.merge({
         account_id: vm.config.account_id,
         app_id: vm.config.app_id || null
       }, generateFilterParams(vm.config.filters)));

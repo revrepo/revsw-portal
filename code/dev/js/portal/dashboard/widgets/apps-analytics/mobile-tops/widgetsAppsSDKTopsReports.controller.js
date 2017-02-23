@@ -68,27 +68,21 @@
       return params;
     }
 
-   var reloadOne_ = function(type, name, count, filters) {
+    var reloadOne_ = function (type, name, count, filters) {
       filters.report_type = name;
       filters.count = count;
       return Stats['sdk_top_' + type](filters)
         .$promise
-        .then(function(data) {
+        .then(function (data) {
           if (data.data && data.data.length > 0) {
             var newData = [];
 
-            // debug
-            // if (name === 'country') {
-            //   console.log( data.data );
-            // }
-            // debug
-
-            data.data.forEach( function(item) {
+            data.data.forEach(function (item) {
 
               if (name === 'country') {
-                if ( item.key === 'US' && type === 'gbt' && item.regions ) {
+                if (item.key === 'US' && type === 'gbt' && item.regions) {
                   //  usa states
-                  vm.usa_states_gbt = item.regions.map( function( r ) {
+                  vm.usa_states_gbt = item.regions.map(function (r) {
                     return {
                       name: r.key,
                       y: r.received_bytes
@@ -107,7 +101,7 @@
             vm[name + '_' + type] = [];
           }
         })
-        .catch(function() {
+        .catch(function () {
           vm[name + '_' + type] = [];
         });
     };
@@ -117,7 +111,8 @@
       if (!vm.config.account_id && !vm.config.app_id) {
         return;
       }
-      reloadOne_(vm.config.type, vm.config.name, vm.config.count | 20, angular.merge({
+      var count_ = !!vm.config.count ? vm.config.count : 20;
+      reloadOne_(vm.config.type, vm.config.name, count_, angular.merge({
         account_id: vm.config.account_id,
         app_id: vm.config.app_id || null
       }, generateFilterParams(vm.config.filters)));
