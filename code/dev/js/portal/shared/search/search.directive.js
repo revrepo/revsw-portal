@@ -149,8 +149,7 @@
                   if ((item.app_name || '').toLowerCase().indexOf(term) >= 0) {
                     item.searchBarText = item.app_name +
                       '<i>'+item.app_platform.replace('_',' ')+'</i> (Edit App)';
-                    item.searchDisplayText = item.app_name +
-                      item.app_platform.replace('_',' ');
+                    item.searchDisplayText = item.app_name;
                     item.searchAction = 'edit';
                     results.push(item);
 
