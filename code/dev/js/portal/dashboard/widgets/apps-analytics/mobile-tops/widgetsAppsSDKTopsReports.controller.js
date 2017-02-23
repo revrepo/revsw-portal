@@ -2,22 +2,24 @@
   'use strict';
 
   angular.module('revapm.Portal.Dashboard.Widgets.AppsAnalytics')
-    .controller('widgetsAppsTopReportsDomainsController', widgetsAppsTopReportsDomainsController);
+    .controller('widgetsAppsSDKTopsReportsController', widgetsAppsSDKTopsReportsController);
 
   /**
-   * @name widgetsAppsTopReportsDomainsController
-   * @description controller for view all Mobile Top Reports for Domains
+   * @name widgetsAppsSDKTopsReportsController
+   * @description controller for view all Mobile Top Reports
    *
    * This widget controller based on code/dev/js/portal/mobileTops.controller.js
    *
    * @param {any} config
    */
-  function widgetsAppsTopReportsDomainsController(config, Stats) {
+  function widgetsAppsSDKTopsReportsController(config, Stats, Countries) {
+    'ngInject';
     var _filters_field_list = ['from_timestamp', 'to_timestamp', 'app_id', 'account_id'];
     var vm = this;
     vm.config = config;
     vm.delay = '24'; // NOTE:  default delay
-
+    vm[config.name + '_' + config.type] = [];
+    vm.countries = Countries.query();
     vm.gbtChartOpts = {
       tooltip: {
         formatter: function () {
@@ -66,20 +68,35 @@
       return params;
     }
 
-    //  ---------------------------------
-    var reloadOther_ = function (type, name, count, filters) {
+    var reloadOne_ = function (type, name, count, filters) {
       filters.report_type = name;
       filters.count = count;
-      return Stats.sdk_distributions(filters)
+      return Stats['sdk_top_' + type](filters)
         .$promise
         .then(function (data) {
           if (data.data && data.data.length > 0) {
-            vm[name + '_' + type] = data.data.map(function (item) {
-              return {
+            var newData = [];
+
+            data.data.forEach(function (item) {
+
+              if (name === 'country') {
+                if (item.key === 'US' && type === 'gbt' && item.regions) {
+                  //  usa states
+                  vm.usa_states_gbt = item.regions.map(function (r) {
+                    return {
+                      name: r.key,
+                      y: r.received_bytes
+                    };
+                  });
+                }
+                item.key = vm.countries[item.key.toUpperCase()] || item.key;
+              }
+              newData.push({
                 name: item.key,
-                y: (type === 'gbt' ? (item.received_bytes + item.sent_bytes) : item.count)
-              };
+                y: (type === 'gbt' ? item.received_bytes : item.count)
+              });
             });
+            vm[name + '_' + type] = newData;
           } else {
             vm[name + '_' + type] = [];
           }
@@ -88,12 +105,14 @@
           vm[name + '_' + type] = [];
         });
     };
+    //  ---------------------------------
 
     vm.reload = function () {
       if (!vm.config.account_id && !vm.config.app_id) {
         return;
       }
-      reloadOther_(vm.config.type, vm.config.name, 10, angular.merge({
+      var count_ = !!vm.config.count ? vm.config.count : 20;
+      reloadOne_(vm.config.type, vm.config.name, count_, angular.merge({
         account_id: vm.config.account_id,
         app_id: vm.config.app_id || null
       }, generateFilterParams(vm.config.filters)));

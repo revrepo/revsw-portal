@@ -404,6 +404,7 @@
             if (data && data.status === $config.STATUS.OK) {
               apps = data.data.map( function( item ) {
                   return {
+                    app_platform: item.app_platform,
                     app_name: item.app_name,
                     app_id: item.id,
                     id: item.id,

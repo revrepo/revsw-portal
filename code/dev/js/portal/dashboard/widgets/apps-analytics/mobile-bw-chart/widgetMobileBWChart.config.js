@@ -2,19 +2,19 @@
   'use strict';
 
   angular.module('revapm.Portal.Dashboard.Widgets.AppsAnalytics')
-    .config(configWidgetAppsMobileRPSChat)
-    .controller('widgeAppsMobileRPSController',widgeAppsMobileRPSController);
+    .config(configWidgetAppsMobileBWChat)
+    .controller('widgeAppsMobileBWController', widgeAppsMobileBWController);
 
-  function configWidgetAppsMobileRPSChat(dashboardProvider) {
+  function configWidgetAppsMobileBWChat(dashboardProvider) {
     'ngInject';
     dashboardProvider
-      // “Requests Per Second Graph”
-      .widget('widget-apps-mobile-rps-chart', {
-        title: 'Requests Per Second Graph',
-        description: 'Apps Analitycs - Requests Per Second Graph',
-        templateUrl: 'parts/dashboard/widgets/apps-analytics/mobile-rps-chart/view-mobile-rps-chart.tpl.html',
+      // “Bandwidth Usage Graph”
+      .widget('widget-apps-mobile-bw-chart', {
+        title: 'Bandwidth Usage Graph',
+        description: 'Apps Analitycs - Bandwidth Usage Graph',
+        templateUrl: 'parts/dashboard/widgets/apps-analytics/mobile-bw-chart/view-mobile-bw-chart.tpl.html',
         titleTemplateUrl: 'parts/dashboard/widgets/apps-analytics/widget-title-with-params-trafic-levels.tpl.html',
-        controller: 'widgeAppsMobileRPSController',
+        controller: 'widgeAppsMobileBWController',
         controllerAs: 'vm',
         edit: {
           templateUrl: 'parts/dashboard/widgets/apps-analytics/edit-config-apps-analytics.tpl.html',
@@ -28,7 +28,7 @@
       });
   }
 
-  function widgeAppsMobileRPSController(config) {
+  function widgeAppsMobileBWController(config) {
     var vm = this;
     vm.config = config;
   }
