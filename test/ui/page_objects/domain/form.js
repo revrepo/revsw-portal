@@ -243,7 +243,7 @@ var DomainForm = {
         id: 'acceptSSLrequests'
       },
       customVCLrules: {
-        css: 'div[ng-model="model.rev_component_bp.custom_vcl.enabled"]'
+        id: 'customVCLrules'
       },
       dynamicOriginDNSnameLookups: {
         id: 'dynamicOriginDNSnameLookups'
@@ -296,15 +296,15 @@ var DomainForm = {
     },
 
     buttons: {
-      onAddNewCachingRule: {
-        id: 'addNewBackendBlock'
+      addNewCachingRule: {
+        id: 'addNewCachingRulesBlock'
       },
 
       openUrlOfCachingRule: {
         css: '.cachingRulesURLblock:first-child a[title="Expand Caching Rule"]'
       },
-      onAddNewBackendBlock: {
-        css: '[title="Add New Backend Block"]'
+      addNewBackendBlock: {
+        id: 'addNewBackendBlock'
       },
       btnCopyCname: {
         css: '.btn-copy--cname'
@@ -411,11 +411,13 @@ var DomainForm = {
 
 
   getOnAddNewCachingRule: function () {
-    return element(by.id(this.locators.buttons.onAddNewCachingRule.id));
+    return element(by.id(this.locators.buttons.addNewCachingRule.id));
   },
+
   getOnAddNewBackendBlock: function () {
-    return element(by.css(this.locators.buttons.onAddNewBackendBlock.css));
+    return element(by.id(this.locators.buttons.addNewBackendBlock.id));
   },
+
   getBtnCopyCname: function () {
     return element(by.css(this.locators.buttons.btnCopyCname.css));
   },
@@ -788,7 +790,7 @@ var DomainForm = {
     return element(by.id(this.locators.switches.acceptSSLrequests.id));
   },
   getCustomVCLrulesTxtIn: function () {
-    return element(by.css(this.locators.switches.customVCLrules.css));
+    return element(by.id(this.locators.switches.customVCLrules.id));
   },
   getDynamicOriginDNSnameLookupsTxtIn: function () {
     return element(by.id(this.locators.switches.dynamicOriginDNSnameLookups.id));

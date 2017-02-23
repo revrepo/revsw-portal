@@ -103,7 +103,7 @@ describe('Workflow', function () {
             Portal.helpers.nav.goToDomains();
             Portal.domains.listPage.searchAndClickEdit(testDomain.name);
             var sslCertText = Portal.domains.editPage.form.getSslCert();
-            expect(sslCertText).toEqual('Default RevAPM SSL Certificate');
+            expect(sslCertText).toEqual('Default SSL Certificate');
           });
 
         it('should update sslCert name on domain form when sslCert name changed',
@@ -150,13 +150,13 @@ describe('Workflow', function () {
             Portal.dialog.clickOk();
             Portal.domains.editPage.clickBackToList();
             Portal.domains.listPage.searchAndClickEdit(testDomain.name);
-            Portal.domains.editPage.form.setSslCert('Default RevAPM SSL Certificate');
+            Portal.domains.editPage.form.setSslCert('Default SSL Certificate');
             Portal.domains.editPage.clickUpdateDomain();
             Portal.dialog.clickOk();
             Portal.domains.editPage.clickBackToList();
             Portal.domains.listPage.searchAndClickEdit(testDomain.name);
             var sslCertText = Portal.domains.editPage.form.getSslCert();
-            expect(sslCertText).toEqual('Default RevAPM SSL Certificate');
+            expect(sslCertText).toEqual('Default SSL Certificate');
           });
 
         it('should be able to use a private SSL and after that to use another',

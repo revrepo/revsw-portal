@@ -132,7 +132,9 @@
                 </a>
               </td>
               <td ng-if="auth.isRevadmin()">
-                {{item.vendor_profile}}
+                <a ng-click="onVendorUpdate(item)">
+                  {{item.vendor_profile}}
+                </a>
               </td>
             </tr>
             </tbody>
