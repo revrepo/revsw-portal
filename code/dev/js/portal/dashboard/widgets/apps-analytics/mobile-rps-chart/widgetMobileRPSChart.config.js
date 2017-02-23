@@ -3,7 +3,7 @@
 
   angular.module('revapm.Portal.Dashboard.Widgets.AppsAnalytics')
     .config(configWidgetAppsMobileRPSChat)
-    .controller(widgeAppsMobileRPSController);
+    .controller('widgeAppsMobileRPSController',widgeAppsMobileRPSController);
 
   function configWidgetAppsMobileRPSChat(dashboardProvider) {
     'ngInject';
@@ -13,9 +13,8 @@
         title: 'Requests Per Second Graph',
         description: 'Apps Analitycs - Requests Per Second Graph',
         templateUrl: 'parts/dashboard/widgets/apps-analytics/mobile-rps-chart/view-mobile-rps-chart.tpl.html',
-        // TODO: fix title
         titleTemplateUrl: 'parts/dashboard/widgets/apps-analytics/widget-title-with-params-trafic-levels.tpl.html',
-        controller: 'widgetFTBAverageController',
+        controller: 'widgeAppsMobileRPSController',
         controllerAs: 'vm',
         edit: {
           templateUrl: 'parts/dashboard/widgets/apps-analytics/edit-config-apps-analytics.tpl.html',

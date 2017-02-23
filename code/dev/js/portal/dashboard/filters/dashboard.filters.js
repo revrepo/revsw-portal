@@ -35,6 +35,7 @@
       widgets_list: [
         'widget-apps-mobile-rps-chart',
         'widget-apps-mobile-bw-chart',
+        'widget-apps-mobile-http-codes-chart',
         'widget-apps-mobile-top-10-domains-hits',
         'widget-apps-mobile-top-10-domains-gbt'
       ]
