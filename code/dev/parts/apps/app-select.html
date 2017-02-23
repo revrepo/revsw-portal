@@ -3,8 +3,8 @@
            theme="select2"  ng-animate-disabled
            ng-disabled="_loading"
            on-select="onAppSelect($model)">
-  <ui-select-match placeholder="Select Application">{{$select.selected.app_name}}</ui-select-match>
+  <ui-select-match placeholder="Select Application">{{$select.selected.app_name}} <i>({{$select.selected.app_platform}})</i></ui-select-match>
   <ui-select-choices repeat="item in apps | filter: {app_name: $select.search}">
-    <div ng-bind-html="item.app_name|highlight: $select.search"></div>
+    <div ng-bind-html="item.app_name + '<i> ('+item.app_platform.replace('_',' ')+')</i>' |highlight: $select.search"> </div>
   </ui-select-choices>
 </ui-select>

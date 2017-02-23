@@ -147,13 +147,16 @@
                   break;
                 case 'app':
                   if ((item.app_name || '').toLowerCase().indexOf(term) >= 0) {
-                    item.searchBarText = item.app_name + ' (Edit App)';
-                    item.searchDisplayText = item.app_name;
+                    item.searchBarText = item.app_name +
+                      '<i>'+item.app_platform.replace('_',' ')+'</i> (Edit App)';
+                    item.searchDisplayText = item.app_name +
+                      item.app_platform.replace('_',' ');
                     item.searchAction = 'edit';
                     results.push(item);
 
                     var appCopy = angular.copy(item);
-                    appCopy.searchBarText = appCopy.app_name + ' (Mobile Analytics)';
+                    appCopy.searchBarText = appCopy.app_name +
+                      '<i>'+item.app_platform.replace('_',' ')+'</i>  (Mobile Analytics)';
                     appCopy.searchAction = 'analytics';
                     results.push(appCopy);
                   }
@@ -285,14 +288,7 @@
           }
 
           function selectApp(app) {
-            var newApp = {
-              app_id: app.id,
-              id: app.id,
-              app_name: app.app_name,
-              sdk_key: app.sdk_key
-            };
-
-            $localStorage.selectedApplication = newApp;
+            User.selectApplication(app);
           }
 
           function selectAccount(account) {
