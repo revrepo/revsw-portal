@@ -6,7 +6,7 @@
     <div class="row">
       <div class="col-md-12">
         <p class="lead">
-          We have sent an email with verification link to your email address <b>{{$ctrl.model.email}}</b> - please continue the RevAPM registration process by following the link. Please also check your Spam mailbox.
+          We have sent an email with verification link to your email address <b>{{$ctrl.model.email}}</b> - please continue the registration process by following the link. Please also check your Spam mailbox.
         </p>
         <p class="lead">
           <!-- Now you can close the browser window. -->
@@ -133,9 +133,9 @@
         <div class="col-md-8">
           <div class="pull-right" style="margin-bottom: 10px">
             By clicking on Sign Up you agree with our
-            <a href="https://www.revapm.com/tos/" target="_blank">Terms Of Service</a>,
-            <a href="https://www.revapm.com/aup/" target="_blank">Acceptable Use Policy</a> and
-            <a href="https://www.revapm.com/privacy/" target="_blank">Privacy Policy</a>
+            <a href="{{vendorConfig.terms_of_service_link}}" target="_blank">Terms Of Service</a>,
+            <a href="{{vendorConfig.acceptable_use_policy_link}}" target="_blank">Acceptable Use Policy</a> and
+            <a href="{{vendorConfig.privacy_policy_link}}" target="_blank">Privacy Policy</a>
           </div>
           <br>
           <div class="pull-right">

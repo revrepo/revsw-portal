@@ -2,7 +2,7 @@
  *
  * REV SOFTWARE CONFIDENTIAL
  *
- * [2013] - [2015] Rev Software, Inc.
+ * [2013] - [2017] Rev Software, Inc.
  * All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains
@@ -21,12 +21,16 @@ var Portal = require('./../../../../page_objects/portal');
 var DataProvider = require('./../../../../common/providers/data');
 var Constants = require('./../../../../page_objects/constants');
 
-describe('Smoke', function () {  // jshint ignore:line
+describe('Smoke', function () { // jshint ignore:line
   describe('Edit API Keys', function () {
 
     var admin = config.get('portal.users.admin');
     var apiKeyData = DataProvider.generateApiKeyData();
-
+    var EditPage = Portal.admin.apiKeys.editPage;
+    var form = EditPage.form;
+    var checkDisplay = function (elem) {
+      return EditPage.elementIsDisplayed(elem);
+    };
     beforeAll(function () {
       Portal.signIn(admin);
       Portal.createApiKey(apiKeyData);
@@ -40,8 +44,7 @@ describe('Smoke', function () {  // jshint ignore:line
       Portal.helpers.nav.goToAPIKeys();
     });
 
-    afterEach(function () {
-    });
+    afterEach(function () {});
 
     it('should edit an API Key and Update its Name', function () {
       Portal.admin.apiKeys.listPage.searchAndClickEdit(apiKeyData.name);
@@ -69,6 +72,12 @@ describe('Smoke', function () {  // jshint ignore:line
       var allRows = Portal.admin.apiKeys.listPage.table.getRows();
       expect(allRows.count()).toEqual(0);
       apiKeyData.name = apiKeyName;
+    });
+    // TODO: need to check "Additional Accounts To Manage"
+    // for roles resseler and revAdmin
+    xit('should display "Additional Accounts To Manage"', function () {
+      Portal.admin.apiKeys.listPage.searchAndClickEdit(apiKeyData.name);
+      expect(checkDisplay('getAdditionalAccountsToManageInputTxt')).toBe(true);
     });
   });
 });

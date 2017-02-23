@@ -266,6 +266,9 @@
      * @return
      */
     $scope.deleteJob = function(model) {
+      if($scope.isReadOnly() === true) {
+        return;
+      }
       $scope.confirm('confirmModal.html', model).then(function() {
         var jobName = model.job_name;
         $scope
@@ -432,7 +435,7 @@
      * @return
      */
     $scope.onChangeLogShippingState = function(model, state) {
-      if (!model || model.operational_mode === state) {
+      if (!model || model.operational_mode === state || $scope.isReadOnly() === true) {
         return;
       }
       if (!model.id) {

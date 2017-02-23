@@ -74,7 +74,7 @@
               symbol: 'circle'
             }
           }, {
-            name: 'RevAPM',
+            name: 'CDN',
             data: [],
             color: Highcharts.getOptions().colors[1],
             marker: {

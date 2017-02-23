@@ -117,7 +117,7 @@
               <div class="col-sm-12 form-group">
                 <textarea id="comment" placeholder="Comment (max 300 symbol)" class="form-control inline-block" name="comment" ng-model="model.comment" ng-disabled="_loading" ng-pattern="COMMENT_NO_SPECIAL_CHARS" ng-maxlength="300">
                 </textarea>
-                <label for="comment" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enter a free-text comment about the app (300 characters max)">
+                <label for="comment" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enter a free-text comment about the SSL certificate (300 characters max)">
                   <i class="fa fa-question-circle"></i>
                 </label>
               </div>
@@ -132,13 +132,13 @@
               <a ui-sref="^" class="btn btn-default">
                 <i class="glyphicon glyphicon-remove"></i>&nbsp; Cancel
               </a>
-              <button class="btn btn-info" ng-disabled="disableSubmit(model, true) || editForm.$invalid" ng-click="validateSSLCert(model)">
+              <button class="btn btn-info" ng-class="{'btn-disabled':isReadOnly()}" ng-disabled="disableSubmit(model, true) || editForm.$invalid || isReadOnly()" ng-click="validateSSLCert(model)">
                 <i class="glyphicon" ng-class="_loading ? 'glyphicon-refresh spin':'glyphicon-check'"></i>&nbsp; Verify
               </button>
-              <button class="btn btn-success" ng-disabled="disableSubmit(model, true) || editForm.$invalid" ng-click="updateSSLCert(model)" uib-tooltip="{{sslCert_update_help_info}}">
+              <button class="btn btn-success" ng-class="{'btn-disabled':isReadOnly()}" ng-disabled="disableSubmit(model, true) || editForm.$invalid || isReadOnly()" ng-click="updateSSLCert(model)" uib-tooltip="{{sslCert_update_help_info}}">
                 <i class="glyphicon" ng-class="_loading ? 'glyphicon-refresh spin':'glyphicon-file'"></i>&nbsp; Update
               </button>
-              <button class="btn btn-success" ng-disabled="disableSubmit(model, true) || editForm.$invalid" ng-click="publishSSLCert(model)" uib-tooltip="{{sslCert_publish_help_info}}">
+              <button class="btn btn-success" ng-class="{'btn-disabled':isReadOnly()}" ng-disabled="disableSubmit(model, true) || editForm.$invalid || isReadOnly()" ng-click="publishSSLCert(model)" uib-tooltip="{{sslCert_publish_help_info}}">
                 <i class="glyphicon" ng-class="_loading ? 'glyphicon-refresh spin':'glyphicon-ok'"></i> &nbsp; Publish
               </button>
             </div>

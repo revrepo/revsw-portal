@@ -26,12 +26,12 @@
           <div class="row">
             <div class="col-md-12">
               <div class="pull-left">
-                <div domain-select ng-model="domain" on-select="onDomainSelected()"></div>
+                <div domain-select id="domain" ng-model="domain" on-select="onDomainSelected()"></div>
               </div>
               <div class="pull-left">
                 <div class="col-md-12 form-inline">
                   <div class="form-group"> Target Environment:</div>
-                  <cache-environment-drop-down-menu environment="environment" class="form-group"></cache-environment-drop-down-meu>
+                  <cache-environment-drop-down-menu id="target-environment" environment="environment" class="form-group"></cache-environment-drop-down-meu>
                 </div>
               </div>
               <div class="pull-right">

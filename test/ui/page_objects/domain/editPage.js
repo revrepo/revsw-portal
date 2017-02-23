@@ -34,7 +34,7 @@ var EditDomain = {
     labels: {
       title: {
         className: 'page-title',
-        binding: 'modelInfo.domain_name' 
+        binding: 'modelInfo.domain_name'
       }
     },
     buttons: {
@@ -381,6 +381,19 @@ var EditDomain = {
       .getLuaScriptingTab()
       .click();
   },
+
+  /**
+   *
+   * Tab "Third-Party Links"
+   *
+   */
+
+  // Click to tab "Third-Party Links"
+  clickTabThirdPartyLinks: function () {
+    return this.form
+      .getThirdPartyLinksTab()
+      .click();
+  },
   clickOnAddNewItemBP: function () {
     return this.form
       .getOnAddNewItemBP()
@@ -393,7 +406,7 @@ var EditDomain = {
       .click();
   },
 
-  
+
 
   /**
    *
@@ -414,6 +427,11 @@ var EditDomain = {
       .click();
   },
 
+  clickAddNewBackendBlock: function() {
+    return this.form
+      .getOnAddNewBackendBlock()
+      .click();
+  },
 
   clickOpenUrlOfCachingRule: function() {
     return this.form

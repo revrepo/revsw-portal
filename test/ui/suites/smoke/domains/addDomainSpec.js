@@ -2,7 +2,7 @@
  *
  * REV SOFTWARE CONFIDENTIAL
  *
- * [2013] - [2016] Rev Software, Inc.
+ * [2013] - [2017] Rev Software, Inc.
  * All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains
@@ -70,7 +70,7 @@ describe('Smoke', function () {
             Portal.domains.listPage.clickAddNewDomain();
             Portal.domains.addPage.form.clear();
             Portal.domains.addPage.createDomain(smoketest);
-            expect(Portal.alerts.getAll().count()).toEqual(1);
+            expect(Portal.alerts.getAll().count()).not.toEqual(0);
             expect(Portal.alerts.getFirst().getText())
               .toContain(Constants.alertMessages.domains.MSG_SUCCESS_ADD);
           });

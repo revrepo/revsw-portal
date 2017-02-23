@@ -208,6 +208,9 @@ var Constants = {
       MSG_ALREADY_EXISTS: 'The application name and platform is' +
         ' already registered in the system',
     },
+    apiKeys:{
+      MSG_SUCCESS_UPDATE: 'Successfully updated the API key'
+    },
     users: {
       MSG_SUCCESS_ADD: 'Successfully created new user',
       MSG_SUCCESS_UPDATE: 'Successfully updated the user',

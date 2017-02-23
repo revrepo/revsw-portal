@@ -33,6 +33,9 @@ var KeyForm = {
       managedDomains: {
         css: '.ui-select-search'
       },
+      managedAccounts: {
+        css: '#managed_account_ids'
+      },
       keyGuid: {
         id: 'key'
       }
@@ -114,7 +117,18 @@ var KeyForm = {
   getManagedDomainInputTxt: function () {
     return element(by.css(this.locators.inputTexts.managedDomains.css));
   },
-
+  /**
+   * ### KeyForm.getAdditionalAccountsToManagedInputTxt()
+   *
+   * Returns the reference to the `Additional Accounts To Manage` input text
+   * (Selenium WebDriver Element) from the Edit API Key Form Page
+   * from the Portal app.
+   *
+   * @returns {Selenium WebDriver Element}
+   */
+  getAdditionalAccountsToManageInputTxt: function () {
+    return element(by.css(this.locators.inputTexts.managedAccounts.css));
+  },
   /**
    * ### KeyForm.getActiveChekBox()
    *
@@ -392,7 +406,23 @@ var KeyForm = {
       .getManagedDomainInputTxt()
       .sendKeys(domain);
   },
-
+  /**
+   * ### KeyForm.setAdditionalAccounts(accountName)
+   *
+   * Selects a account name in the `Additional Accounts To Manage` input text
+   * of Edit API Key Form.
+   *
+   * @param {String} accountName, account name.
+   *
+   * @returns {Promise}
+   */
+  setAdditionalAccounts: function (accountName) {
+    return this
+      .getAdditionalAccountsToManageInputTxt()
+      .element(by.css('.ui-select-search'))
+      .sendKeys(accountName)
+      .sendKeys(protractor.Key.ENTER);
+  },
   /**
    * ### KeyForm.clickShowApiKey()
    *
@@ -452,6 +482,10 @@ var KeyForm = {
     return input1 && input2 && button1 && button2;
   },
 
+  elementIsDisplayed: function(elem, value) {
+    var element = this.form[elem](value);
+    return element.isPresent();
+  },
   /**
    * ### KeyForm.fill(apiKey)
    *

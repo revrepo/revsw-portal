@@ -5,7 +5,7 @@
   <div class="modal-body">
     <form name="newAnswerForm" class="form row">
       <div class="form-group">
-        <label class="control-label col-sm-3" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Set values for each of the fields of this DNS record, depending on the record type">
+        <label class="control-label col-sm-3">
           Answer Fields *
         </label>
         <dns-zone-record-answer class="col-sm-9" record-type="{{model.record.type}}" ng-model="model.newanswer"></dns-zone-record-answer>
@@ -111,7 +111,7 @@
                 <div class="panel-body container-fluid">
                   <div class="form">
                     <div class="form-group">
-                      <label class="control-label col-sm-2" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Specify answer fields depending on the record type">
+                      <label class="control-label col-sm-2">
                         <h4 style="color: #777; display: inline-block;">Answer *</h4>
                       </label>
                       <dns-zone-record-answer class="col-sm-10" record-type="{{record.type}}" ng-model="answer"></dns-zone-record-answer>
@@ -136,7 +136,7 @@
               <a ui-sref="^" class="btn btn-default">
                 <i class="glyphicon glyphicon-remove"></i>&nbsp; Cancel
               </a>
-              <button class="btn btn-success" ng-disabled="editForm.$invalid" ng-click="updateDNSZoneRecord(model)" uib-tooltip="{{dnsZone_update_help_info}}">
+              <button class="btn btn-success"  ng-class="{'btn-disabled':isReadOnly()}" ng-disabled="editForm.$invalid || isReadOnly()" ng-click="updateDNSZoneRecord(model)" uib-tooltip="{{dnsZone_update_help_info}}">
                 <i class="glyphicon" ng-class="_loading ? 'glyphicon-refresh spin':'glyphicon-file'"></i>&nbsp; Update
               </button>
             </div>

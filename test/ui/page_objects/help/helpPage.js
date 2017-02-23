@@ -2,7 +2,7 @@
  *
  * REV SOFTWARE CONFIDENTIAL
  *
- * [2013] - [2015] Rev Software, Inc.
+ * [2013] - [2017] Rev Software, Inc.
  * All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains
@@ -28,7 +28,7 @@ var Help = {
   locators: {
     launcher: {
       iframe: 'launcher',
-      button: '.Button--launcher'
+      button: '#Embed'
     },
     help: {
       iframe: 'helpCenterForm',
@@ -42,7 +42,7 @@ var Help = {
       email: 'email',
       description: 'description',
       submit: '//input[@type="submit"]',
-      title: '.ScrollContainer-header'
+      title: '.src-component-container-ScrollContainer-header'
     }
   },
 

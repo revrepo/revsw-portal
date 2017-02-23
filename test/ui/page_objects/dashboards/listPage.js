@@ -57,7 +57,7 @@ var DashboardList = {
         css: '.glyphicon.glyphicon-save'
       },
       undoChanges: {
-        css: '.glyphicon.glyphicon-repeat.adf-flip'
+        css: '.fa-undo'
       }
     },
     dropDowns: {

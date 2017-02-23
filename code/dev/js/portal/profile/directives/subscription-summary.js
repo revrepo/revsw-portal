@@ -11,7 +11,8 @@
           subscription: '=ngModel'
         },
         templateUrl: '/parts/profile/directives/subscription-summary.tpl.html',
-        controller: /*ngInject*/ function($scope, $config) {
+        controller: /*ngInject*/ function($scope, $config, User) {
+          $scope.isReadOnly = User.isReadOnly;
           $scope.SudscriptionStates = $config.SUBSCRIPTION_STATES;
         }
       };

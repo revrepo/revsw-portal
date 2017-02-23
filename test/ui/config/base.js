@@ -43,6 +43,16 @@ module.exports = {
                 document.getElementsByTagName('head')[0].appendChild(style);
             });
     };
+
+    var alertTimeout = function() {
+        angular
+            .module('alertTimeout', ['revapm.Portal.Config'])
+            .run(function($config){
+              // NOTE: fix for tests with checking allerts messages
+              // Up time show toaster messages
+              $config.SUCCESS_MESSAGE_DISPLAY_TIMEOUT = 50000;
+            });
+    };
     // NOTE: open browser on full screen
     setTimeout(function() {
         browser.driver.executeScript(function() {
@@ -57,6 +67,7 @@ module.exports = {
     });
     browser.addMockModule('disableNgAnimate', disableNgAnimate);
     browser.addMockModule('disableCssAnimate', disableCssAnimate);
+    browser.addMockModule('alertTimeout', alertTimeout);
     // add jasmine html reporter
     var htmlReporter = new Jasmine2HtmlReporter({
       savePath: './results/tests/',

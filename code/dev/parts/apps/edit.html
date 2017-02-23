@@ -24,7 +24,7 @@
                 <div class="col-xs-12 "></div>
               </div>
               <div class="form-group " ng-if="$state.current.data.platform_code=='iOS' ">
-                <a download="RevSDK.framework.zip " href="{{downloadLinks[$state.current.data.platform_code]}} " class="btn btn-download btn-success " ng-disabled="_loading " uib-tooltip="Click to download the latest version of RevAPM mobile SDK">
+                <a download="RevSDK.framework.zip " href="{{vendorConfig.sdk.download_links[$state.current.data.platform_code]}}" class="btn btn-download btn-success " ng-disabled="_loading " uib-tooltip="Click to download the latest version of mobile SDK">
                   <i class="glyphicon glyphicon-cloud-download "></i>&nbsp; Download SDK
                 </a>
               </div>
@@ -32,7 +32,7 @@
                 <div class="col-xs-12"></div>
               </div>
               <div class="form-group" ng-if="$state.current.data.platform_code == 'iOS'">
-                <a __href="{{introductionVideoLinks[$state.current.data.platform_code]}}" class="btn btn-download btn-success" ng-disabled="_loading" uib-tooltip="Click to view SDK Introduction Video" _target="_blank" ng-click="onShowVideo($event, {youtubeId:introductionVideoYoutubeIDs[$state.current.data.platform_code]})">
+                <a __href="{{introductionVideoLinks[$state.current.data.platform_code]}}" class="btn btn-download btn-success" ng-disabled="_loading" uib-tooltip="Click to view SDK Introduction Video" _target="_blank" ng-click="onShowVideo($event, {youtubeId:vendorConfig.sdk.introduction_video_youtube_ids[$state.current.data.platform_code]})">
                   <i class="fa fa-youtube"></i>&nbsp; Introduction Video
                 </a>
               </div>
@@ -115,7 +115,7 @@
                 <option value="report_only">Report Only</option>
                 <option value="off">Off</option>
               </select>
-              <label for="operation_mode" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Rev SDK operation mode">
+              <label for="operation_mode" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="SDK operation mode">
                 <i class="fa fa-question-circle"></i>
               </label>
             </div>
@@ -176,7 +176,7 @@
               </div>
             </div>
             <div class="form-group">
-            <label for="allowed_transport_protocols" class="text-info " popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Rev SDK allowed last mile transport protocols">
+            <label for="allowed_transport_protocols" class="text-info " popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="SDK allowed last mile transport protocols">
                 <i class="fa fa-question-circle"></i>
               </label>
               </div>
@@ -191,7 +191,7 @@
                 <option value="quic">QUIC</option>
                 <option value="rmp">RMP</option>
               </select>
-              <label for="initial_transport_protocol" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Rev SDK initial last mile transport protocol">
+              <label for="initial_transport_protocol" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="SDK initial last mile transport protocol">
                 <i class="fa fa-question-circle"></i>
               </label>
             </div>
@@ -231,7 +231,7 @@
                   {{domain}}
                 </ui-select-choices>
               </ui-select>
-              <label for="domains_white_list" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="'White list' of domains which are allowed to be served via RevAPM (all other domains will be served directly from the customer origin server)">
+              <label for="domains_white_list" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="'White list' of domains which are allowed to be served via CDN (all other domains will be served directly from the customer origin server)">
                 <i class="fa fa-question-circle"></i>
               </label>
               <div class="error-messages" ng-messages="editForm.domainsWhiteList.$error" role="alert" ng-messages-multiple>
@@ -271,14 +271,10 @@
               <label for="domains_provisioned_list" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="'Provisioned' domains which are registered in the 'Web' section of the portal and provide full middle-mile acceleration">
                 <i class="fa fa-question-circle"></i>
               </label>
+              <a ui-sref="index.webApp.domains" id="btn-manage-domains"class="btn btn-sm btn-primary" uib-tooltip="Manage Domains" ng-disabled="_loading"><i class="fa fa-list"></i> Manage Domains</a>
               <div class="error-messages" ng-messages="editForm.domainsBlackList.$error" role="alert" ng-messages-multiple>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
               </div>
-            </div>
-            <div class="col-xs-12 col-sm-4">
-              <a ui-sref="index.webApp.domains" class="btn btn-sm btn-primary pull-left" uib-tooltip="Manage Domains" ng-disabled="_loading"><i class="fa fa-list"></i> Manage Domains</a>
-              <!--    </div>
-              </div> -->
             </div>
           </div>
           <div class="form-group" ng-class="{ 'has-error': editForm.ratio.$invalid &&
@@ -314,17 +310,14 @@
             <a ui-sref="^" ng-disabled="_loading" class="btn btn-default">
               <i class="glyphicon glyphicon-remove"></i>&nbsp; Cancel
             </a>
-            <button class="btn btn-info" ng-disabled="_loading || editForm.$invalid" ng-click="verify(model, configuration)">
-              <i class="glyphicon glyphicon-refresh spin" ng-if="_loading"></i>
-              <i class="glyphicon glyphicon-check" ng-if="!_loading"></i>&nbsp; Verify
+            <button class="btn btn-info" ng-class="{'btn-disabled':isReadOnly()}" ng-disabled="_loading || editForm.$invalid || isReadOnly()" ng-click="verify(model, configuration)">
+              <i class="glyphicon" ng-class="_loading?'glyphicon-refresh spin':'glyphicon-check'"></i>&nbsp; Verify
             </button>
-            <button class="btn btn-success" ng-disabled="_loading || editForm.$invalid" ng-click="updateConfig(model, configuration)">
-              <i class="glyphicon glyphicon-refresh spin" ng-if="_loading"></i>
-              <i class="glyphicon glyphicon-file" ng-if="!_loading"></i>&nbsp; Update
+            <button class="btn btn-success" ng-class="{'btn-disabled':isReadOnly()}" ng-disabled="_loading || editForm.$invalid || isReadOnly()" ng-click="updateConfig(model, configuration)">
+              <i class="glyphicon" ng-class="_loading?'glyphicon-refresh spin':'glyphicon-file'"></i>&nbsp; Update
             </button>
-            <button class="btn btn-success" ng-disabled="_loading || editForm.$invalid" ng-click="publish(model, configuration)">
-              <i class="glyphicon glyphicon-refresh spin" ng-if="_loading"></i>
-              <i class="glyphicon glyphicon-ok" ng-if="!_loading"></i>&nbsp; Publish
+            <button class="btn btn-success" ng-class="{'btn-disabled':isReadOnly()}" ng-disabled="_loading || editForm.$invalid || isReadOnly()" ng-click="publish(model, configuration)">
+              <i class="glyphicon" ng-class="_loading?'glyphicon-refresh spin':'glyphicon-ok'"></i>&nbsp; Publish
             </button>
           </div>
         </form>

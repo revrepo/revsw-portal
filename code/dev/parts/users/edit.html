@@ -25,7 +25,7 @@
             <label for="email" class="col-sm-2 control-label">Email *</label>
             <div class="col-sm-10">
               <input type="text" autofocus class="form-control inline-block" id="email" placeholder="Email" ng-model="model.email" disabled required>
-              <label for="email" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="New user's email address - the address should be unique across the system">
+              <label for="email" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="The user's email address is also the user's login name to the portal">
                 <i class="fa fa-question-circle"></i>
               </label>
             </div>
@@ -117,6 +117,8 @@
           <div class="form-group">
             <label for="access_control_list" class="col-sm-2 control-label">Access Control List</label>
             <div class="col-sm-10">
+
+<!--
               <div>
                 <input type="checkbox" name="access_control_list_dashBoard" class="inline-block" disabled ng-model="model.access_control_list.dashBoard"> Dashboard
                 <label for="access_control_list_dashBoard" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="TODO text Set here the new user's access control permissions">
@@ -141,9 +143,11 @@
                   <i class="fa fa-question-circle"></i>
                 </label>
               </div>
+-->
               <div>
                 <input type="checkbox" name="access_control_list_readOnly" class="inline-block" ng-model="model.access_control_list.readOnly"> Read Only
-                <label for="access_control_list_readOnly" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="TODO text">
+                <label for="access_control_list_readOnly" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Enables read-only access for the user account (the user still can change his pas
+sword, enabled/disable 2FA and manage dashboards)">
                   <i class="fa fa-question-circle"></i>
                 </label>
               </div>
@@ -156,7 +160,7 @@
             </div>
             <div class="col-sm-10" ng-class="{'has-error': editForm.email.$invalid && editForm.email.$dirty}">
               <div disable-two-factor-auth ng-user-id="params.id" class="inline-block"></div>
-              <label for="disable-two-factor-auth" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="TODO text">
+              <label for="disable-two-factor-auth" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Shows the current of status of 2FA configuration for the user account">
                 <i class="fa fa-question-circle"></i>
               </label>
             </div>
@@ -183,8 +187,8 @@
               <a ui-sref="^" class="btn btn-default">
                 <i class="glyphicon glyphicon-remove"></i>&nbsp; Cancel
               </a>
-              <button class="btn btn-success" type="button" ng-disabled="disableSubmit(model, true)||editForm.$invalid" ng-click="updateUser(model)">
-                <i class="glyphicon glyphicon-ok"></i>&nbsp; Update
+              <button class="btn btn-success" ng-class="{'btn-disabled':isReadOnly()}"  type="button" ng-disabled="disableSubmit(model, true)||editForm.$invalid || isReadOnly()" ng-click="updateUser(model)">
+                <i class="glyphicon" ng-class="_loading ? 'glyphicon-refresh spin':'glyphicon-ok'"></i>&nbsp; Update
               </button>
             </div>
           </div>
