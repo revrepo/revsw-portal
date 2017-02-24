@@ -17,6 +17,15 @@
           }
         }
       })
+     .state('index.accountSettings.accountresources', {
+        url: '/information',
+        views: {
+          main: {
+            controller: 'AccountResourcesController',
+            templateUrl: 'parts/companies/account-resources.html'
+          }
+        }
+      })
       .state('index.accountSettings.companies.new', {
         url: '/new',
         views: {

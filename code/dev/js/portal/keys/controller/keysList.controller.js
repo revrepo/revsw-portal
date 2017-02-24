@@ -6,7 +6,8 @@
     .controller('KeysListController', KeysListController);
 
   // @ngInject
-  function KeysListController($scope, $rootScope, $q, CRUDController, ApiKeys, $injector, $stateParams, Companies, DomainsConfig, $state, $uibModal, clipboard) {
+  function KeysListController($scope, $rootScope, $q, CRUDController, ApiKeys, $injector, $stateParams, Companies, DomainsConfig, $state, $uibModal, clipboard,
+   User) {
 
     //Invoking crud actions
     $injector.invoke(CRUDController, this, {
@@ -180,8 +181,34 @@
     };
 
     // Fetch list of users
-    $scope.list()
-      .then(setAccountName);
+    $scope.$on('$stateChangeSuccess', function(state, stateTo, stateParam) {
+      var data = null;
+      // NOTE: set filter params for specific state
+      if($state.is('index.accountSettings.accountresources')){
+        $scope.filter.limit = 5;
+        var filters = {
+          accountId: !User.getSelectedAccount()? null: User.getSelectedAccount().acc_id
+        };
+        data = {
+          filters: filters
+        };
+        $scope.list(data).then(setAccountName);
+        return;
+      }
+      if ($state.is($scope.state)) {
+        $scope.list(data)
+          .then(setAccountName)
+          .then(function() {
+            // TODO: add archor into template
+            if ($scope.elementIndexForAnchorScroll) {
+              setTimeout(function() {
+                $anchorScroll('anchor' + $scope.elementIndexForAnchorScroll);
+                $scope.$digest();
+              }, 500);
+            }
+          });
+      }
+    });
 
     $scope.getRelativeDate = function(datetime) {
       return moment.utc(datetime).fromNow();
