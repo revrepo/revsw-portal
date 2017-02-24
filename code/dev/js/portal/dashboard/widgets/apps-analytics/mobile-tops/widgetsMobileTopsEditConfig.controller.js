@@ -26,6 +26,7 @@
     _.defaultsDeep($scope.config, _defaultConfig);
     var u = User.getUser();
     $scope.accountId = u.companyId[0] || null;
+    $scope.application = $scope.config.application;
 
     $scope.onApplicationSelected = function () {
       if (!$scope.application && !$scope.accountId) {

@@ -21,7 +21,7 @@
       </select>
     </div>
     <div class="form-group">
-      <select class="form-control fixed" ng-model="config.filters.os" ngoptions="item for item in flOses">
+      <select class="form-control fixed" ng-model="config.filters.os" ng-disabled="!application">
         <option value="-">All OS</option>
          <option ng-repeat="item in flOses" value="{{item}}">{{item}}</option>
       </select>
@@ -33,13 +33,13 @@
       </select>
     </div>
     <div class="form-group">
-      <select class="form-control fixed" ng-model="config.filters.operator">
+      <select class="form-control fixed" ng-model="config.filters.operator" ng-disabled="!application">
         <option value="-">All Operators</option>
         <option ng-repeat="item in flOperators" value="{{item}}">{{item}}</option>
       </select>
     </div>
     <div class="form-group">
-      <select class="form-control fixed" ng-model="config.filters.network">
+      <select class="form-control fixed" ng-model="config.filters.network" ng-disabled="!application">
         <option value="-">All Networks</option>
         <option ng-repeat="item in flNetworks" value="{{item}}">{{item}}</option>
       </select>
