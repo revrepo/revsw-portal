@@ -245,7 +245,7 @@
         $scope.filter.limit = 5;
         data = {
           filters: {
-              accountId: !User.getSelectedAccount()? null: User.getSelectedAccount().acc_id
+              account_id: !User.getSelectedAccount()? null: User.getSelectedAccount().acc_id
             }
         };
       }

@@ -141,7 +141,7 @@
       if($state.is('index.accountSettings.accountresources')){
         $scope.filter.limit = 5;
         var filters = {
-          accountId: !User.getSelectedAccount() ? null: User.getSelectedAccount().acc_id
+          account_id: !User.getSelectedAccount() ? null: User.getSelectedAccount().acc_id
         };
         data = {
           filters:filters
