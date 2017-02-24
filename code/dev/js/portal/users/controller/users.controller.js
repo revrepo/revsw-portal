@@ -239,8 +239,18 @@
 
     // Fetch list of users
     $scope.$on('$stateChangeSuccess', function(state) {
+      var data = null;
+      // NOTE: set filter params for specific state
+      if($state.is('index.accountSettings.accountresources')){
+        $scope.filter.limit = 5;
+        data = {
+          filters: {
+              account_id: !User.getSelectedAccount()? null: User.getSelectedAccount().acc_id
+            }
+        };
+      }
       $scope
-        .list()
+        .list(data)
         .then(dependencies)
         .then(function setCompaniesName() {
           if ($scope.auth.isReseller() || $scope.auth.isRevadmin()) {
@@ -277,7 +287,7 @@
           }
         })
         .then(function() {
-          if ($scope.elementIndexForAnchorScroll) {
+          if ($scope.elementIndexForAnchorScroll && !$state.is('index.accountSettings.accountresources')) {
             setTimeout(function() {
               $anchorScroll('anchor' + $scope.elementIndexForAnchorScroll);
               $scope.$digest();

@@ -17,7 +17,8 @@
     $http,
     $q,
     $state,
-    $anchorScroll) {
+    $anchorScroll,
+    User) {
     //Invoking crud actions
     $injector.invoke(CRUDController, this, {
       $scope: $scope,
@@ -73,8 +74,21 @@
 
     // Fetch list of records
     $scope.$on('$stateChangeSuccess', function(state) {
+      var data = null;
+      // NOTE: set filter params for specific state
+      if($state.is('index.accountSettings.accountresources')){
+        $scope.filter.limit = 5;
+        var filters = {
+          account_id: !User.getSelectedAccount()? null: User.getSelectedAccount().acc_id
+        };
+        data = {
+          filters: filters
+        };
+        $scope.list(data).then(setAccountName);
+        return;
+      }
       if ($state.is($scope.state)) {
-        $scope.list()
+        $scope.list(data)
           .then(setAccountName)
           .then(function() {
             if ($scope.elementIndexForAnchorScroll) {

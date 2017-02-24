@@ -60,14 +60,30 @@
 
     $scope.$state = $state;
     //// Fetch list of records
-    $scope._baseFilter = {
-      app_platform: $state.current.data.platform_code
-    };
-
     $scope.$on('$stateChangeSuccess', function(event, stateTo, stateParam) {
-      if (!!stateTo.data && (stateTo.data.list !== undefined && stateTo.data.list === true)) {
+      var data = null;
+      if($state.is('index.accountSettings.accountresources')){
+        $scope.filter.limit = 5;
+        var filters = {
+          account_id: !User.getSelectedAccount()? null: User.getSelectedAccount().acc_id
+        };
+        data = {
+          filters: filters
+        };
+        // NOTE: call all types applications with filter
         $scope
-          .list()
+          .list(data)
+          .then(setAccountName);
+         return;
+      }
+
+      if (!!stateTo.data && (stateTo.data.list !== undefined && stateTo.data.list === true)) {
+        $scope._baseFilter = {
+          app_platform: $state.current.data.platform_code
+        };
+
+        $scope
+          .list(data)
           .then(setAccountName)
           .then(function() {
             if ($scope.elementIndexForAnchorScroll) {

@@ -149,6 +149,16 @@
       $state.go('index.billing.statements');
     };
 
+    $scope.onGoToAccountInformation = function(model) {
+      // NOTE: make data format for using into state 'index.accountSettings.companies_information'
+      model.acc_id = model.id;
+      model.acc_name = model.companyName;
+      model.plan_id = model.billing_plan;
+      model.billing_plan = model.billing_plan;
+      User.selectAccount(model);
+      $state.go('index.accountSettings.accountresources');
+    };
+
     $scope.onVendorUpdate = function(account) {
 
       var modalInstance = $uibModal.open({
