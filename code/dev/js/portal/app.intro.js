@@ -53,7 +53,7 @@
         },
         {
           element: '#side-menu-apps-item',
-          intro: 'The "Mobile Apps" section is the right place to supercharge your mobile application with RevSDK. In the section your can create new SDK ' +
+          intro: 'The "Mobile Apps" section is the right place to supercharge your mobile application with our mobile SDK. In the section your can create new SDK ' +
             'keys and manage ' +
             '{{companyNameShort}} acceleration options.',
           position: 'right'
