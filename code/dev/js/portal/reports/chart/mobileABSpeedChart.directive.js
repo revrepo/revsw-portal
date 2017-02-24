@@ -184,7 +184,7 @@
                 });
                 origin_avg_ = avg_t.reduce(function(prev, curr) {
                   return prev + curr;
-                });
+                }, 0);
                 origin_avg_ /= avg_t.length;
 
                 //  rev_edge avg
@@ -193,7 +193,7 @@
                 });
                 rev_avg_ = avg_t.reduce(function(prev, curr) {
                   return prev + curr;
-                });
+                }, 0);
                 rev_avg_ /= avg_t.length;
 
                 //  rounds
