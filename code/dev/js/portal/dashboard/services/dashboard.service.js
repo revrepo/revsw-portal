@@ -23,6 +23,7 @@
       $http.get(API_URL + '/dashboards')
         .success(function(data) {
           dashboardsList.length = 0;
+          data = _.sortBy(data, 'title');
           angular.forEach(data, function(item) {
             dashboardsList.push(item);
           });
