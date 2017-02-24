@@ -30,7 +30,7 @@
           position: 'right'
         }, {
           element: '#side-menu-sub-item__webApp-ssl_names',
-          intro: 'When using {{companyNameShort}}\'s shared SSL certificate managed by GlobalSign CA you can use this section to manage SSL ' +
+          intro: 'When using {{companyNameShort}} shared SSL certificate managed by GlobalSign CA you can use this section to manage SSL ' +
             'domain names protected by the certificate',
           position: 'right'
         }, {
@@ -41,7 +41,7 @@
         },
         {
           element: '#side-menu-web-analytics-item',
-          intro: 'The "Web Analytics" section will provide you with a lot of insights about your website\'s performance, avaiability, user geography, popular content ' +
+          intro: 'The "Web Analytics" section will provide you with a lot of insights about your website\'s performance, availability, user geography, popular content ' +
             'and many other important metrics!',
           position: 'right'
         },
