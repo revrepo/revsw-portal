@@ -18,7 +18,7 @@
         }
       })
      .state('index.accountSettings.accountresources', {
-        url: '/information',
+        url: '/accountresources',
         views: {
           main: {
             controller: 'AccountResourcesController',
@@ -31,7 +31,6 @@
         views: {
           page: {
             templateUrl: 'parts/companies/new.html'
-            //controller: 'DomainsNewController'
           }
         }
       })
