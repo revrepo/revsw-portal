@@ -40,7 +40,8 @@ var Constants = {
       activityLog: '#/activitylog'
     },
     mobileApps: '#/apps/',
-    sslCerts: '#/ssl_certs'
+    sslCerts: '#/ssl_certs',
+    accountResources: '#/accountresources'
   },
   header: {
     appMenu: {
