@@ -66,7 +66,7 @@ describe('Functional', function () {
               ' "Add New Domain Page" manually',
               function () {
                 Portal.helpers.nav.goToDomains();
-                Portal.goToCustomUrl('#/domains/new');
+                Portal.goToCustomUrl(Portal.constants.hashFragments.domains.new);
                 Portal.domains.addPage.createDomain(myDomain);
                 var btnCreateDomain = Portal.domains.addPage.getCreateDomainBtn();
                 expect(btnCreateDomain.isEnabled()).toBe(false);
