@@ -149,7 +149,7 @@ gulp.task('serve:dev', function() {
   bs2.init({
     port: 4000,
     // Disable UI completely
-    ui: false,
+    // ui: false,
     server: {
       baseDir: './dev',
       routes: {
