@@ -158,6 +158,10 @@ section[main] {
   margin-bottom: 1em;
 }
 
+.table-responsive .table{
+   min-width: 100%;
+   width: auto;
+}
 table {
   table-layout: fixed !important;
 }
@@ -187,11 +191,16 @@ table {
       }
     }
     .actions {
+      overflow: hidden;
       a {
         margin-right: 10px;
       }
       .not-active {
         opacity: 0.65;
+      }
+      &--wrap{
+        width: 100%;
+        overflow: auto;
       }
     }
     .company-names,

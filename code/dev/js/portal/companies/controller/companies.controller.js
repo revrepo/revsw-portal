@@ -148,8 +148,13 @@
       User.selectAccount(model);
       $state.go('index.billing.statements');
     };
-
-    $scope.onGoToAccountInformation = function(model) {
+    /**
+     * @name onGoToAccountInformation
+     * @description action for go to page "All Account Resources"
+     *
+     */
+    $scope.onGoToAccountInformation = function(e, model) {
+      e.preventDefault();
       // NOTE: make data format for using into state 'index.accountSettings.companies_information'
       model.acc_id = model.id;
       model.acc_name = model.companyName;
