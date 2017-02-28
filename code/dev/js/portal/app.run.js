@@ -86,10 +86,11 @@
         $rootScope.vendorConfig = response;
         $rootScope.contactUsLink = response.contactUsLink;
 
+        window.gaAccount = response.googleAnalyticsAccount;
         window.vendorConfig = response;
         window.document.title = $rootScope.vendorConfig.companyNameShort + ' Customer Portal';
 
-        $rootScope.IntroOptions.steps = $rootScope.IntroOptions.steps.map(function (obj) { 
+        $rootScope.IntroOptions.steps = $rootScope.IntroOptions.steps.map(function (obj) {
           obj.intro = obj.intro.replace('{{companyNameShort}}', $rootScope.vendorConfig.companyNameShort);
           return obj;
         });
