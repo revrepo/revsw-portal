@@ -38,28 +38,28 @@ describe('Functional', function () {
     it('should get "Customer Support" url and open the page',
       function () {
         var customerSupport = 'Open Ticket';
-        var url = 'https://revapm.zendesk.com/hc/en-us/requests/new';
+        var url = 'https://support.nuubit.net/hc/en-us/requests/new';
         expect(Portal.helpSupportPage.openUrl(customerSupport)).toEqual(url);
     });
 
     it('should get "API Documentation" url and open the page',
       function () {
         var customerSupport = 'API Documentation';
-        var url = 'https://api.revapm.net/';
+        var url = 'https://testsjc20-api01.revsw.net/';
         expect(Portal.helpSupportPage.openUrl(customerSupport)).toEqual(url);
     });
 
     it('should get "Knowledge Base" url and open the page',
       function () {
         var customerSupport = 'Knowledge Base';
-        var url = 'https://revapm.zendesk.com/hc/en-us';
+        var url = 'https://support.nuubit.net/hc/en-us';
         expect(Portal.helpSupportPage.openUrl(customerSupport)).toEqual(url);
     });
 
     it('should get "Network Status" url and open the page',
       function () {
         var customerSupport = 'Network Status';
-        var url = 'http://status.revapm.net/';
+        var url = 'http://www.nuubitstatus.net/';
         expect(Portal.helpSupportPage.openUrl(customerSupport)).toEqual(url);
     });
   });
