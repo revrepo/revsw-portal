@@ -12,7 +12,8 @@
       restrict: 'A',
       link: function (scope, element, attr) {
         // This solution is implemented to support different zendesk's urls for different vendor profiles
-        var zendeskJS = ' window.zEmbed||function(e,t){ ' +
+        var zendeskJS = '<script>' +
+          ' window.zEmbed||function(e,t){ ' +
           'var n,o,d,i,s,a=[],r=document.createElement("iframe"); '+
           'window.zEmbed=function(){a.push(arguments)}, '+
           'window.zE=window.zE||window.zEmbed, '+
@@ -35,14 +36,13 @@
           'this.body.appendChild(o)}, '+
           'o.write("<body onload=document._l();>"), '+
           'o.close()}("https://assets.zendesk.com/embeddable_framework/main.js", '+
-          'window.vendorConfig.zendesk_support_site)';
-
-
+          'window.vendorConfig.zendesk_support_site)' +
+           '</script>';
 
 
         scope.$watch('vendorConfig', function(val){
           if (val) {
-            element[0].text = zendeskJS;
+            element.html(zendeskJS);
           }
         });
       }
