@@ -6,10 +6,10 @@
     .controller('GoodByeController', GoodByeController);
 
   /*@ngInject*/
-  function GoodByeController($scope, $config) {
+  function GoodByeController($scope, $rootScope, $config) {
 
-    $scope.websiteUrl = $config.LINKS.WEBSITE_URL;
-    $scope.contactSupportUrl = $config.LINKS.CONTACT_SUPPORT_URL;
+    $scope.websiteUrl = vendorConfig.companyWebsiteURL;
+    $scope.contactSupportUrl = vendorConfig.contactUsLink;
 
   }
 })();
