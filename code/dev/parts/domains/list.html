@@ -92,78 +92,80 @@
             <i class="glyphicon glyphicon-refresh spin" ng-if="item.loading"></i>&nbsp; Loading...
           </div>
           <crud-pagination></crud-pagination>
-          <table class="table">
-            <thead>
-              <tr>
-                <th>
-                  <a href="" ng-click="order('domain_name')">Name</a>
-                  <span class="sortorder" ng-show="filter.predicate === 'domain_name'" ng-class="{reverse: filter.reverse}"></span>
-                </th>
-                <th>
-                  <a href="" ng-click="order('cname')">CNAME</a>
-                  <span class="sortorder" ng-show="filter.predicate === 'cname'" ng-class="{reverse: filter.reverse}"></span>
-                </th>
-                <th>
-                  <a href="" ng-click="order('updated_at')">Last Update</a>
-                  <span class="sortorder" ng-show="filter.predicate === 'updated_at'" ng-class="{reverse: filter.reverse}"></span>
-                </th>
-                <th class="thin">Status</th>
-                <th>Actions</th>
-                <th class="account" ng-if="auth.isReseller() ||  auth.isRevadmin()">
-                  <a href="" ng-click="order('companyName')">Account</a>
-                  <span class="sortorder" ng-show="filter.predicate === 'companyName'" ng-class="{reverse: filter.reverse}"></span>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr id="anchor{{::$index}}" ng-click="saveAnchorScrollIndex($index)" ng-repeat="item in filteredRecords | limitTo:filter.limit:filter.skip track by $index">
-                <td>
-                  <a ui-sref=".edit({id: item.id})" ng-if="!item.loading" uib-tooltip="Edit Domain">
-                  {{item.domain_name}}
-                </a>
-                </td>
-                <td>
-                  <button class="btn  btn-xs btn-primary" clipboard text="item.cname" on-copied="copyCallback()" on-error="copyCallback(err)" style="vertical-align: initial;" uib-tooltip="Click to copy the CNAME to the clipboard" tooltip-placement="top"><i class="fa fa-files-o"></i></button>
-                  <span title="{{item.cname}}"> {{item.cname}} </span></td>
-                <td>{{ getRelativeDate(item.updated_at) }}</td>
-                <td>
-                  <div domain-staging-status ng-id="item.id"></div>
-                </td>
-                <td class="actions">
-                  <i class="glyphicon glyphicon-refresh spin" ng-if="item.loading"></i>
-                  <a ui-sref=".edit({id: item.id})" ng-if="!item.loading" uib-tooltip="Edit Domain">
-                    <i class="glyphicon glyphicon-pencil"></i>
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>
+                    <a href="" ng-click="order('domain_name')">Name</a>
+                    <span class="sortorder" ng-show="filter.predicate === 'domain_name'" ng-class="{reverse: filter.reverse}"></span>
+                  </th>
+                  <th>
+                    <a href="" ng-click="order('cname')">CNAME</a>
+                    <span class="sortorder" ng-show="filter.predicate === 'cname'" ng-class="{reverse: filter.reverse}"></span>
+                  </th>
+                  <th>
+                    <a href="" ng-click="order('updated_at')">Last Update</a>
+                    <span class="sortorder" ng-show="filter.predicate === 'updated_at'" ng-class="{reverse: filter.reverse}"></span>
+                  </th>
+                  <th class="thin">Status</th>
+                  <th>Actions</th>
+                  <th class="account" ng-if="auth.isReseller() ||  auth.isRevadmin()">
+                    <a href="" ng-click="order('companyName')">Account</a>
+                    <span class="sortorder" ng-show="filter.predicate === 'companyName'" ng-class="{reverse: filter.reverse}"></span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr id="anchor{{::$index}}" ng-click="saveAnchorScrollIndex($index)" ng-repeat="item in filteredRecords | limitTo:filter.limit:filter.skip track by $index">
+                  <td>
+                    <a ui-sref=".edit({id: item.id})" ng-if="!item.loading" uib-tooltip="Edit Domain">
+                    {{item.domain_name}}
                   </a>
-                  <a ui-sref=".edit({id: item.id,isAdvanced:true})" ng-if="!item.loading" uib-tooltip="Advanced Edit Domain">
-                    <i class="glyphicon glyphicon-cog"></i>
-                  </a>
-                  <a href="" ng-if="!item.loading" ng-class="{'disabled': isReadOnly() }" ng-click="deleteDomain(item)" uib-tooltip="Delete Domain">
-                    <i class="glyphicon glyphicon-trash"></i>
-                  </a>
-                  <a href="#/reports/proxy" ng-if="!item.loading" ng-click="storeToStorage(item)" uib-tooltip="Stats">
-                    <i class="glyphicon glyphicon-stats"></i>
-                  </a>
-                  <a ui-sref=".versions({id: item.id})" ng-if="!item.loading" uib-tooltip="Previous Versions">
-                    <i class="glyphicon glyphicon-book"></i>
-                  </a>
-                  <a ui-sref=".checkintegration({id: item.id})" ng-if="!item.loading" uib-tooltip="Check Domain Integration Configuration">
-                    <i class="glyphicon glyphicon-check"></i>
-                  </a>
-                </td>
-                <td ng-if="auth.isReseller() ||  auth.isRevadmin()">
-                  <div>{{item.companyName}}</div>
-                </td>
-              </tr>
-              <!--<tr class="disabled loading">-->
-              <!--<td>John</td>-->
-              <!--<td>Doe</td>-->
-              <!--<td>Monday, Aug 10, 2015, 8:31 PM</td>-->
-              <!--<td class="actions">-->
-              <!--<i class="glyphicon glyphicon-refresh spin"></i>-->
-              <!--</td>-->
-              <!--</tr>-->
-            </tbody>
-          </table>
+                  </td>
+                  <td>
+                    <button class="btn  btn-xs btn-primary" clipboard text="item.cname" on-copied="copyCallback()" on-error="copyCallback(err)" style="vertical-align: initial;" uib-tooltip="Click to copy the CNAME to the clipboard" tooltip-placement="top"><i class="fa fa-files-o"></i></button>
+                    <span title="{{item.cname}}"> {{item.cname}} </span></td>
+                  <td>{{ getRelativeDate(item.updated_at) }}</td>
+                  <td>
+                    <div domain-staging-status ng-id="item.id"></div>
+                  </td>
+                  <td class="actions">
+                    <i class="glyphicon glyphicon-refresh spin" ng-if="item.loading"></i>
+                    <a ui-sref=".edit({id: item.id})" ng-if="!item.loading" uib-tooltip="Edit Domain">
+                      <i class="glyphicon glyphicon-pencil"></i>
+                    </a>
+                    <a ui-sref=".edit({id: item.id,isAdvanced:true})" ng-if="!item.loading" uib-tooltip="Advanced Edit Domain">
+                      <i class="glyphicon glyphicon-cog"></i>
+                    </a>
+                    <a href="" ng-if="!item.loading" ng-class="{'disabled': isReadOnly() }" ng-click="deleteDomain(item)" uib-tooltip="Delete Domain">
+                      <i class="glyphicon glyphicon-trash"></i>
+                    </a>
+                    <a href="#/reports/proxy" ng-if="!item.loading" ng-click="storeToStorage(item)" uib-tooltip="Stats">
+                      <i class="glyphicon glyphicon-stats"></i>
+                    </a>
+                    <a ui-sref=".versions({id: item.id})" ng-if="!item.loading" uib-tooltip="Previous Versions">
+                      <i class="glyphicon glyphicon-book"></i>
+                    </a>
+                    <a ui-sref=".checkintegration({id: item.id})" ng-if="!item.loading" uib-tooltip="Check Domain Integration Configuration">
+                      <i class="glyphicon glyphicon-check"></i>
+                    </a>
+                  </td>
+                  <td ng-if="auth.isReseller() ||  auth.isRevadmin()">
+                    <div>{{item.companyName}}</div>
+                  </td>
+                </tr>
+                <!--<tr class="disabled loading">-->
+                <!--<td>John</td>-->
+                <!--<td>Doe</td>-->
+                <!--<td>Monday, Aug 10, 2015, 8:31 PM</td>-->
+                <!--<td class="actions">-->
+                <!--<i class="glyphicon glyphicon-refresh spin"></i>-->
+                <!--</td>-->
+                <!--</tr>-->
+              </tbody>
+            </table>
+          </div>
           <hr>
           <crud-pagination></crud-pagination>
         </div>
