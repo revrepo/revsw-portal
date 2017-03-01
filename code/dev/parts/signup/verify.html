@@ -4,8 +4,8 @@
       <div class="panel-body">
         <div class="row">
           <div class="text-center col-md-4">
-            <a href="{{vendorConfig.companyWebsiteURL}}" target="_blank">
-              <img class="img-responsive" src="images/{{vendor}}/logo_color.png" alt="Logo" />
+            <a ng-href="{{vendorConfig.companyWebsiteURL}}" target="_blank">
+              <img class="img-responsive" ng-src="images/{{vendor}}/logo_color.png" alt="Logo" />
             </a>
           </div>
           <div class="col-md-4 text-center ">
@@ -62,7 +62,7 @@
                 </div>
               </form>
               <p class="lead pull-right">
-                If the problem persist please contact us at <a href="mailto:{{vendorConfig.support_email}}?&subject=Verification%20Problem">{{vendorConfig.support_email}}</a>.
+                If the problem persist please contact us at <a ng-href="mailto:{{vendorConfig.support_email}}?&subject=Verification%20Problem">{{vendorConfig.support_email}}</a>.
               </p>
             </div>
           </div>

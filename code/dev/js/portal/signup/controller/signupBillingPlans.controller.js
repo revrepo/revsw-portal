@@ -16,7 +16,7 @@
    * @param {[type]} $localStorage [description]
    * @param {[type]} Countries     [description]
    */
-  function SignupBillingPlansController($scope, Users, AlertService, $stateParams, $localStorage, Countries, $config, $uibModal) {
+  function SignupBillingPlansController($scope, $rootScope, Users, AlertService, $stateParams, $localStorage, Countries, $config, $uibModal) {
     'ngInject';
     var billing_plan_handler = $stateParams.billing_plan_handler;
     var $ctrl = this;
@@ -29,7 +29,8 @@
 
     this.model = {
       'billing_plan': billing_plan_handler,
-      'country': 'US'
+      'country': 'US',
+      'vendor': $rootScope.vendorConfig.vendor
     };
     /**
      * @name  onSignUp
