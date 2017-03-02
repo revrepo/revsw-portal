@@ -46,10 +46,7 @@
       if (!model) {
         return;
       }
-      if (model.passwordConfirm !== model.password) {
-        AlertService.danger('Passwords did not match', 5000);
-        return;
-      }
+      model.passwordConfirm = model.password;
       $scope.userData = _.clone(model);
       AlertService.clear();
 

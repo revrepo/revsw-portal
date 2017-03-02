@@ -27,7 +27,7 @@
 
   function routesConfig($stateProvider, $urlRouterProvider) {
     'ngInject';
-    $urlRouterProvider.otherwise('/users');
+    $urlRouterProvider.otherwise('/dashboards');
 
     $stateProvider
     // Base 3 layout
