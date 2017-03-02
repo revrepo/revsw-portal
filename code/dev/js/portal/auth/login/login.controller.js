@@ -16,6 +16,7 @@
       height: document.documentElement.clientHeight + 'px'
     };
 
+/* 
     var images = [
       'images/bg/bay_bridge.jpg',
       'images/bg/burney_falls.jpg',
@@ -26,6 +27,16 @@
       'images/bg/twin_peaks.jpg',
       'images/bg/yosemite_hill.jpg',
       'images/bg/yosemite_valley.jpg',
+    ];
+
+*/
+
+    var images = [
+      'images/bg/pic1.jpg',
+      'images/bg/pic2.jpg',
+      'images/bg/pic3.jpg',
+      'images/bg/pic4.jpg',
+      'images/bg/pic5.jpg',
     ];
 
     $scope.randomImage = images[Math.floor(Math.random() * images.length)];
