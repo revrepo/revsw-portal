@@ -6,7 +6,7 @@
     .controller('SignupController', SignupController);
 
   /*@ngInject*/
-  function SignupController($scope,
+  function SignupController($scope, $rootScope,
     Users,
     $localStorage,
     User,
@@ -51,7 +51,7 @@
     $scope.initBillingPlans = function() {
       $scope.newUser = {};
       $scope.setResource(BillingPlans);
-      $scope.list();
+      $scope.list({vendor: $rootScope.vendorConfig.vendor});
     };
 
     $scope.initLoginRedirect = function() {
@@ -84,5 +84,34 @@
         });
     };
     $scope._loading = false;
+
+    $scope.getColumnsClasses = function(index,cnt){
+      var classes = 'col-xs-12 col-sm-6 col-md-2';
+      if(cnt === 1){
+        classes = 'col-xs-12 col-sm-6 col-md-4 col-lg-3';
+        if (index===0){
+          classes += ' col-xs-offset-0  col-sm-offset-3 col-md-offset-4  col-lg-offset-4';
+        }
+      }
+      if(cnt === 2){
+        classes = 'col-xs-12 col-sm-4 col-md-4';
+        if (index===0){
+          classes += ' col-xs-offset-0 col-sm-offset-2 col-md-offset-2  col-lg-offset-2';
+        }
+      }
+      if(cnt === 3){
+        classes = 'col-xs-12 col-sm-6 col-md-4';
+      }
+      if(cnt === 4){
+        classes = 'col-xs-12 col-sm-6 col-md-3';
+      }
+      if(cnt === 5){
+        classes = 'col-xs-12 col-sm-6 col-md-2';
+        if (index===0){
+          classes += ' col-md-offset-1';
+        }
+      }
+      return  classes;
+    };
   }
 })();

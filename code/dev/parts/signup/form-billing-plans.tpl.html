@@ -1,59 +1,61 @@
 <div class="row" ng-init="initBillingPlans()">
   <div class="col-md-12">
     <div class="plans-heading center-block">
-        <div class="text-center">
-          <h2 class="text-capitalize">{{vendorConfig.companyNameShort}} Billing plans</h2>
-          <p class="text-muted">The world of mobile app and web acceleration is just a few minutes away.</p>
+      <div class="text-center">
+        <h2 class="text">{{vendorConfig.companyNameShort}} Billing Plans</h2>
+        <p class="text-muted">The world of mobile app and web acceleration is just a few minutes away.</p>
 
-          <h4 class="text-info"><b>One month free trial - NO CREDIT CARD REQUIRED</b></h4>
-        </div>
+        <h4 class="text-info"><b>One month free trial - NO CREDIT CARD REQUIRED</b></h4>
+      </div>
     </div>
 
-     <div class="plans-body">
-        <div class="row">
-          <div class="col-sm-6 col-md-3 individual-plan" ng-repeat="item in records | orderBy: 'monthly_fee'">
-            <div class="billing-plan">
-              <div class="billing-plan-header">
-                <h2 class="billing-plan-title">{{item.name}}</h2>
-              </div>
-              <div class="billing-plan-price">
-                <h1 class=""><span class="billing-plan-ammount">${{item.monthly_fee}}</span>/mon</h1>
-              </div>
-              <div class="billing-plan-details">
-                <p class="billing-plan-description">{{item.description}}</p>
-                <h4>Overage Charges</h4>
-                <div class="billing-plan-services" ng-repeat="service in item.services">
-                  <div>${{service.cost | number:2}} per {{service.measurement_unit}}</div>
-                </div>
-              </div>
-              <footer class="billing-plan-action">
-                <button href="" ng-click="chooseBillingPlan(item)" class="btn btn-success btn-lg">Subscribe</button>
-              </footer>
+    <div class="plans-body">
+      <div class="row">
+        <div class="individual-plan" ng-class="getColumnsClasses($index,records.length)" ng-repeat="item in records | orderBy: 'monthly_fee'">
+          <div class="billing-plan">
+            <div class="billing-plan-header">
+              <h2 class="billing-plan-title">{{item.name}}</h2>
             </div>
-          </div>
-          <hr/>
-        </div>
-        <br>
-        <div class="row" ng-show="records.length">
-          <div class=" col-sm-offset-3 col-md-offset-4 col-sm-6 col-md-4  text-center " _style="max-height: 280px">
-            <div class="billing-plan">
-              <div class="billing-plan-header">
-                <h2 class="billing-plan-title">Enterprise</h2>
+            <div class="billing-plan-price">
+              <h1 class=""><span class="billing-plan-ammount">${{item.monthly_fee}}</span>/mon</h1>
+            </div>
+            <div class="billing-plan-details">
+              <p class="billing-plan-description">{{item.description}}</p>
+              <h4>Overage Charges</h4>
+              <div class="billing-plan-services" ng-repeat="service in item.services">
+                <div>${{service.cost | number:2}} per {{service.measurement_unit}}</div>
               </div>
-              <br>
-              <div class="billing-plan-details">Get a billing plan customized to meet your specific needs</div>
+            </div>
+            <footer class="billing-plan-action">
+              <button href="" ng-click="chooseBillingPlan(item)" class="btn btn-success btn-lg">Subscribe</button>
+            </footer>
+          </div>
+        </div>
 
-              <footer class="billing-plan-action">
-                <a ng-href="{{vendorConfig.contactSalesLink}}" class="btn btn-success btn-lg">Contact Us</a>
-              </footer>
-            </div>
-          </div>
-        </div>
-        <br>
-        <div class="panel-footer row text-center">
-        <p class="lead">Not sure which plan to choose? <a ng-href="{{vendorConfig.contactSalesLink}}" class="alert-link"><!-- <i class="glyphicon glyphicon-envelope"></i> -->Talk to an expert</a></p>
-        </div>
       </div>
 
+      <div class="row" ng-show="records.length">
+        <hr/>
+        <br>
+        <div class=" col-sm-offset-3 col-md-offset-4 col-sm-6 col-md-4  text-center " _style="max-height: 280px">
+          <div class="billing-plan">
+            <div class="billing-plan-header">
+              <h2 class="billing-plan-title">Enterprise</h2>
+            </div>
+            <br>
+            <div class="billing-plan-details">Get a billing plan customized to meet your specific needs</div>
+
+            <footer class="billing-plan-action">
+              <a ng-href="{{vendorConfig.contactSalesLink}}" class="btn btn-success btn-lg">Contact Us</a>
+            </footer>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="panel-footer row text-center">
+        <p class="lead">Not sure which plan to choose? <a ng-href="{{vendorConfig.contactSalesLink}}" class="alert-link"><!-- <i class="glyphicon glyphicon-envelope"></i> -->Talk to an expert</a></p>
+      </div>
     </div>
+
   </div>
+</div>

@@ -22,16 +22,6 @@
     $stateParams,
     DNSZones) {
     $scope.countries = Countries.query();
-    $scope.billing_plans = [{
-      id: null,
-      name: 'Manual'
-    }];
-    BillingPlans.query().$promise
-      .then(function(bp) {
-        angular.forEach(bp, function(item) {
-          $scope.billing_plans.push(item);
-        });
-      });
     $scope.zipRegex = '[0-9]{1,10}';
     $scope.phoneRegex = '[0-9, \\s, \\+, \\-, \\(, \\)]{1,20}';
     $scope.NO_SPECIAL_CHARS = $config.PATTERNS.NO_SPECIAL_CHARS;
@@ -47,13 +37,6 @@
     $scope.setResource(Companies);
     $scope.getCompany = function(id) {
       $scope.get(id)
-        .then(function() {
-          if (!$scope.model.subscription_id) {
-            $scope.billing_plans.selected = $scope.billing_plans[0];
-          } else {
-            $scope.billing_plans.shift();
-          }
-        })
         .catch(function(err) {
           $scope.alertService.danger('Could not load company details');
         });
