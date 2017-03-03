@@ -6,7 +6,7 @@
     .controller('SignupController', SignupController);
 
   /*@ngInject*/
-  function SignupController($scope,
+  function SignupController($scope, $rootScope,
     Users,
     $localStorage,
     User,
@@ -51,7 +51,7 @@
     $scope.initBillingPlans = function() {
       $scope.newUser = {};
       $scope.setResource(BillingPlans);
-      $scope.list();
+      $scope.list({vendor: $rootScope.vendorConfig.vendor});
     };
 
     $scope.initLoginRedirect = function() {
