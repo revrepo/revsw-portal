@@ -75,8 +75,8 @@
         </div>
       </form>
       <!-- Full form registration -->
-      <div class="row col-sm-12">
-        <div class="col-xs-offset-1 col-sm-11 col-md-5">
+      <div class="row col-sm-12" ng-if="vendorConfig.enable_simplified_signup_process === false" >
+        <div class="affix col-sm-offset-1 col-sm-11 col-md-5">
           <p><strong> Discover how <em>fast</em> fast can be when accelerating your business at the edge with nuu:bit</strong></p>
           <p><strong>To Get Started:</strong></p>
           <ol class="list-instruction">
@@ -90,8 +90,8 @@
           </ol>
           <hr>
         </div>
-        <div class="col-sm-12 col-md-6">
-          <form ng-if="vendorConfig.enable_simplified_signup_process === false" class="col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-0 col-lg-11 col-xs-11 col-sm-11 col-md-11  form-horizontal form-contact-info--full"
+        <div class="col-md-offset-6 col-sm-12 col-md-6">
+          <form class="col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-0 col-lg-11 col-xs-11 col-sm-11 col-md-11  form-horizontal form-contact-info--full"
             name="newUser" novalidate>
             <div class="form-group " ng-class="{ 'has-error': newUser.email.$invalid && newUser.email.$dirty }">
               <label for="email" class="col-sm-3 control-label">Email *</label>
