@@ -145,7 +145,7 @@
                     {{item.app_name}}
                   </a>
                   </td>
-                  <td>{{item.app_platform}}</td>
+                  <td>{{::item.app_platform.replace('_',' ')}}</td>
                   <td>{{item.last_app_published_version}}</td>
                   <td>{{ getRelativeDate(item.updated_at) }}</td>
                   <td>
