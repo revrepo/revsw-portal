@@ -1,80 +1,99 @@
 .signup {
-  padding: 25px 0 15px;
-  &-wrapper {
-    background-color: #F6F6F6;
-    padding-top: 30px;
-    padding-bottom: 30px;
-    min-height: 100%;
-    width: 100%;
-    .panel-footer {
-      background-color: #fff;
-      margin-top: 20px;
+    padding: 25px 0 15px;
+    &-wrapper {
+        background-color: #F6F6F6;
+        padding-top: 30px;
+        padding-bottom: 30px;
+        min-height: 100%;
+        width: 100%;
+        .panel-footer {
+            background-color: #fff;
+            margin-top: 20px;
+        }
+        .lead {
+            margin-top: 30px;
+            font-size: 18px;
+            color: #777;
+        }
+        header {
+            border-bottom: 1px solid #EAEAEA;
+        }
+        @media (min-width: 992px) {
+            & .affix {
+                position: fixed;
+            }
+        }
+        @media (max-width: 992px) {
+            & .affix {
+                position: static;
+            }
+        }
     }
-    .lead {
-      margin-top: 30px;
-      font-size: 18px;
-      color: #777;
+    &-container {
+        background-color: #fff;
+        margin: 0 30px;
     }
+    &-plans {
+        margin-top: 10px;
+    }
+    &-form {
+        .form-control {
+            height: 40px;
+        }
+    }
+}
 
-    header{
-      border-bottom: 1px solid #EAEAEA;
-    }
-  }
-  &-container{
-    background-color: #fff;
-    margin: 0 30px;
-  }
-  &-plans {
-    margin-top: 10px;
-  }
-  &-form {
-    .form-control {
-      height: 40px;
-    }
-  }
-}
 form {
-  .control-label, label {
-    color: #777;
-  }
+    .control-label,
+    label {
+        color: #777;
+    }
 }
+
 form.new-user-form {
-  .form-group {
-    margin: 10px;
-    //h4 {
-    //  color: #FF8A00;
-    //  font-style: italic;
-    //}
-  }
+    .form-group {
+        margin: 10px;
+        //h4 {
+        //  color: #FF8A00;
+        //  font-style: italic;
+        //}
+    }
 }
-.header-logo img{
-  padding: 20px;
-  width: 200px;
+
+.header-logo img {
+    padding: 20px;
+    width: 200px;
 }
 
 .login-link {
-  color: #A1A2A5;
-  padding: 25px;
+    color: #A1A2A5;
+    padding: 25px;
 }
+
 .plans-body {
-  padding: 10px 45px;
+    padding: 10px 45px;
 }
+
 .plans-heading h2 {
-  color: #424242;
+    color: #424242;
 }
+
 .form-body {
-  margin-top: 25px;
+    margin-top: 25px;
 }
+
 .form-action {
-  padding: 12.5px 0;
+    padding: 12.5px 0;
 }
-.form-contact-info{
-  &--full{
-    .form-control.inline-block{
-      width: 95%;
+
+.form-contact-info {
+    &--full {
+        .form-control.inline-block {
+            width: 95%;
+        }
     }
-  }
 }
-ol.list-instruction{
-  text-align: justify;
+
+ol.list-instruction {
+    text-align: justify;
 }
