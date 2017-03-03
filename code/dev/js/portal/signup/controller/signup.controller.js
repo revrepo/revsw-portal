@@ -96,7 +96,7 @@
       if(cnt === 2){
         classes = 'col-xs-12 col-sm-4 col-md-4';
         if (index===0){
-          classes += ' col-xs-offset-0 col-sm-offset-0 col-md-offset-2  col-lg-offset-2';
+          classes += ' col-xs-offset-0 col-sm-offset-2 col-md-offset-2  col-lg-offset-2';
         }
       }
       if(cnt === 3){
