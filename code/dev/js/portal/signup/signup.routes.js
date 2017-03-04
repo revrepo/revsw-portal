@@ -38,7 +38,18 @@
           }
         }
       })
-      // step 3 - enter contact information
+      // page - for registration with promocode
+      .state('signup.vs_promo', {
+        url: '/vs2017-promo',
+        views: {
+          form: {
+            controller: 'SignupBillingPlansController',
+            controllerAs: '$ctrl',
+            templateUrl: 'parts/signup/form-signup-vs-promo.tpl.html'
+          }
+        }
+      })
+      // step 2 - enter contact information
       .state('signup.contact_info2', {
         url: '/:billing_plan_handler',
         views: {
