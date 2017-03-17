@@ -1,0 +1,247 @@
+<div class="signup-form" ng-init="$ctrl.model.promocode='VS2017'; bp_='billing-plan-startup';">
+  <div class="verification-msg" ng-if="$ctrl.isRegistryFinish">
+    <div class="row">
+      <div class="col-xs-offset-1 col-xs-10">
+        <h4>Please finish your registration</h4>
+        <p class="lead">
+          We have sent an email with verification link to email address <b>{{$ctrl.model.email}}</b> - please continue the
+          registration process by following the link (don't forget to check your Spam mailbox too).
+        </p>
+        <div class="clearfix">
+          <button type="text" class="btn btn-warning pull-right" ng-click="$ctrl.onRepeatSendRegistrationEmail($ctrl.model.email,$ctrl.model.password)">Didn’t receive the email?</button>
+          <!-- Now you can close the browser window. -->
+        </div>
+        <br>
+      </div>
+    </div>
+  </div>
+  <div class="form-body" ng-if="!$ctrl.isRegistryFinish">
+    <div class="row">
+      <!-- Full form registration with PROMOCODE -->
+      <div class="row col-xs-12 col-sm-12">
+        <div class="affix affix-top col-sm-offset-1 col-xs-offset-1 col-xs-11 col-sm-11 col-md-5">
+          <div class="h4 text text-center text-info">OPEN EDGE 90-DAY FAST PASS OFFER <br>FOR VISUAL STUDIO COMMUNITY</div>
+          <br>
+          <p><strong>Still running your digital content over delivery platforms built for wired devices?</strong></p>
+          <p class="information">Our OpenEdge™ Global Delivery Platform brings together our smart, next-generation CDN + open source approach to
+            edge computing for companies competing in the digital economy. Special, limited time,
+            OpenEdge™ 90-Day Fast Pass offer* includes:</strong>
+          </p>
+
+          <ul class="list-information">
+            <li>Global Network (30+ locations)</li>
+            <li>400GB web or mobile app traffic</li>
+            <li>1M requests per month</li>
+            <li>5 apps</li>
+            <li>5 web domains</li>
+            <li>5 wildcard SSL name</li>
+            <li>Analytics Portal</li>
+          </ul>
+          <p><em>*Offer ends June 7, 2017.</em></p>
+          <br>
+          <p><strong> Unlock Your Access to Our OpenEdge™ Global Delivery Platform Today</strong></p>
+          <p><strong>To Get Started:</strong></p>
+          <ol class="list-instruction">
+            <li>Create an nuu:bit account by completing the Sign Up form on the right.
+              Use Promo Code <b>VS2017</b>.</li>
+            <li>A confirmation email will be sent to the email address provided.</li>
+            <li>Click on the link in the email, which will take you to our nuu:bit customer portal where you'll be prompted to
+              enter your payment information.
+              <em> Your credit card will not be billed for the duration of your offer.</em></li>
+            <li>Test drive your content on our <strong>OpenEdge™ Global Delivery Platform</strong> and see how fast you can accelerate your content and your revenues.</li>
+          </ol>
+          <br>
+          <div class="text text-center">
+            <a href="mailto:info@nuubit.com?subject=Visual Studio Promotion Feedback" class="btn btn-primary">WE'D LOVE YOUR FEEDBACK!</a>
+          </div>
+          <hr>
+
+        </div>
+        <div class="col-md-offset-6 col-xs-12 col-sm-12 col-md-6">
+          <form class="col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-0 col-lg-11 col-xs-11 col-sm-11 col-md-11  form-horizontal form-contact-info--full"
+            name="newUser" novalidate>
+            <div class="form-group " ng-class="{ 'has-error': newUser.email.$invalid && newUser.email.$dirty }">
+              <label for="email" class="col-sm-3 control-label">Email *</label>
+              <div class="col-sm-9">
+                <input type="email" autofocus class="form-control inline-block" id="email" name="email" placeholder="Email" ng-model="$ctrl.model.email"
+                  required ng-disabled="$ctrl._loading">
+                <label for="email" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="New user's email address - the address should be unique across the system">
+                <i class="fa fa-question-circle"></i>
+              </label>
+                <div ng-show="!!newUser['email'].$error.email" style="color:red">Please use format example@example.com</div>
+              </div>
+            </div>
+            <div class="form-group" ng-class="{ 'has-error': newUser.password.$invalid &&
+                            newUser.password.$dirty }">
+              <label for="password" class="col-sm-3 control-label">Password *</label>
+              <div class="col-sm-9">
+                <input type="password" class="form-control inline-block" id="password" name="password" ng-model="$ctrl.model.password" ng-minlength="8"
+                  ng-maxlength="15" required ng-disabled="$ctrl._loading">
+                <label for="password" popover-append-to-body="{{true}}" class="text-info" popover-trigger="mouseenter" uib-popover="At least eight symbols">
+              <i class="fa fa-question-circle"></i>
+           </label>
+                <div ng-show="!!newUser['password'].$error.minlength" style="color:red">Password must contain at least 8 characters</div>
+                <div ng-show="!!newUser['password'].$error.maxlength" style="color:red">Password must contain 15 characters max</div>
+              </div>
+            </div>
+            <hr>
+            <div class="form-group" ng-class="{ 'has-error': newUser.firstName.$invalid &&
+                            newUser.firstName.$dirty }">
+              <label for="firstName" class="col-sm-3 control-label">First Name *</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control inline-block" id="firstName" name="firstName" placeholder="First Name" required ng-maxlength="150"
+                  ng-model="$ctrl.model.first_name" ng-disabled="$ctrl._loading">
+                <label for="firstName" class="text-info" popover-trigger="mouseenter" uib-popover="First name">
+              <i class="fa fa-question-circle"></i>
+          </label>
+                <div ng-show="!!newUser['firstName'].$error.maxlength" style="color:red">150 characters max</div>
+              </div>
+            </div>
+            <div class="form-group" ng-class="{ 'has-error': newUser.lastName.$invalid &&
+                            newUser.lastName.$dirty }">
+              <label for="lastName" class="col-sm-3 control-label">Last Name *</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control inline-block" id="lastName" name="lastName" placeholder="Last Name" ng-model="$ctrl.model.last_name"
+                  required ng-maxlength="150" ng-disabled="$ctrl._loading">
+                <label for="lastName" class="text-info" popover-trigger="mouseenter" uib-popover="Last name">
+              <i class="fa fa-question-circle"></i>
+          </label>
+                <div ng-show="!!newUser['lastName'].$error.maxlength" style="color:red">150 characters max</div>
+              </div>
+            </div>
+            <div class="form-group" ng-class="{ 'has-error': newUser.phoneNumber.$invalid &&
+                            newUser.phoneNumber.$dirty }">
+              <label for="phoneNumber" class="col-sm-3 control-label">Phone Number *</label>
+              <div class="col-sm-9">
+                <input type="text" ng-pattern="phoneRegex" class="form-control inline-block" required id="phoneNumber" name="phoneNumber"
+                  placeholder="Phone Number" ng-maxlength="30" ng-model="$ctrl.model.phone_number" ng-disabled="$ctrl._loading">
+                <label for="phoneNumber" class="text-info" popover-trigger="mouseenter" uib-popover="Contact phone number">
+              <i class="fa fa-question-circle"></i>
+          </label>
+                <div ng-show="!!newUser['phoneNumber'].$error.maxlength" style="color:red">30 characters max</div>
+              </div>
+            </div>
+            <div class="form-group" ng-class="{ 'has-error': newUser.companyName.$invalid &&
+                            newUser.companyName.$dirty }">
+              <label for="companyName" class="col-sm-3 control-label">
+          Company Name &nbsp;</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control inline-block" id="companyName" name="companyName" placeholder="Company Name" ng-maxlength="150"
+                  ng-model="$ctrl.model.company_name" ng-disabled="$ctrl._loading">
+                <label for="companyName" class="text-info" popover-trigger="mouseenter" uib-popover="Will be generated from your first and last name if left empty.">
+          <i class="fa fa-question-circle"></i>
+          </label>
+                <div ng-show="!!newUser['companyName'].$error.maxlength" style="color:red">150 characters max</div>
+              </div>
+            </div>
+            <hr>
+            <div class="form-group" ng-class="{ 'has-error': newUser.address1.$invalid &&
+                            newUser.address1.$dirty }">
+              <label for="address1" class="col-sm-3 control-label">Address *</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control inline-block" required id="address1" name="address1" placeholder="Address" ng-model="$ctrl.model.address1"
+                  ng-maxlength="150" ng-disabled="$ctrl._loading">
+                <label for="address1" class="text-info" popover-trigger="mouseenter" uib-popover="Could be used as a billing address later.">
+          <i class="fa fa-question-circle"></i>
+          </label>
+                <div ng-show="!!newUser['address1'].$error.maxlength" style="color:red">150 characters max</div>
+              </div>
+            </div>
+            <div class="form-group" ng-class="{ 'has-error': newUser.address2.$invalid &&
+                            newUser.address2.$dirty }">
+              <label for="address2" class="col-sm-3 control-label">Address (Line 2) &nbsp;</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control inline-block" id="address2" name="address2" placeholder="Address (Line 2)" ng-model="$ctrl.model.address2"
+                  ng-maxlength="150" ng-disabled="$ctrl._loading">
+                <label for="address2" class="text-info" popover-trigger="mouseenter" uib-popover="Could be used as a billing address later.">
+          <i class="fa fa-question-circle"></i>
+          </label>
+                <div ng-show="!!newUser['address2'].$error.maxlength" style="color:red">150 characters max</div>
+              </div>
+            </div>
+            <div class="form-group" ng-class="{ 'has-error': newUser.country.$invalid &&
+                            newUser.country.$dirty }">
+              <label for="country" class="col-sm-3 control-label">Country *</label>
+              <div class="col-sm-9">
+                <select type="text" name="country" class="form-control inline-block" id="country" placeholder="Country" required ng-model="$ctrl.model.country"
+                  ng-options="key as value for (key , value) in  $ctrl.countries" ng-disabled="$ctrl._loading">
+          </select>
+                <label for="country" class="text-info" popover-trigger="mouseenter" uib-popover="Could be used in a billing address later.">
+          <i class="fa fa-question-circle"></i>
+          </label>
+              </div>
+            </div>
+            <div class="form-group" ng-class="{ 'has-error': newUser.state.$invalid &&
+                            newUser.state.$dirty }">
+              <label for="state" class="col-sm-3 control-label">State *</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control inline-block" id="state" name="state" required placeholder="State" ng-model="$ctrl.model.state"
+                  ng-maxlength="150" ng-disabled="$ctrl._loading">
+                <label for="state" class="text-info" popover-trigger="mouseenter" uib-popover="Could be used in a billing address later.">
+            <i class="fa fa-question-circle"></i>
+            </label>
+                <div ng-show="!!newUser['state'].$error.maxlength" style="color:red">150 characters max</div>
+              </div>
+            </div>
+            <div class="form-group" ng-class="{ 'has-error': newUser.city.$invalid &&
+                            newUser.city.$dirty }">
+              <label for="city" class="col-sm-3 control-label">City *</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control inline-block" id="City" name="city" required placeholder="City" ng-model="$ctrl.model.city"
+                  ng-maxlength="150" ng-disabled="$ctrl._loading">
+                <label for="city" class="text-info" popover-trigger="mouseenter" uib-popover="Could be used in a billing address later.">
+          <i class="fa fa-question-circle"></i>
+          </label>
+                <div ng-show="!!newUser['city'].$error.maxlength" style="color:red">150 characters max</div>
+              </div>
+            </div>
+            <div class="form-group" ng-class="{ 'has-error': newUser.zipcode.$invalid &&
+                            newUser.zipcode.$dirty }">
+              <label for="zipcode" class="col-sm-3 control-label">Zip Code *</label>
+              <div class="col-sm-9">
+                <input type="text" ng-pattern="zipRegex" class="form-control inline-block" id="zipcode" name="zipcode" ng-maxlength="30"
+                  required placeholder="Zip Code" ng-model="$ctrl.model.zipcode" ng-maxlength="30" ng-disabled="$ctrl._loading">
+                <label for="zipcode" class="text-info" popover-trigger="mouseenter" uib-popover="Could be used in a billing address later.">
+            <i class="fa fa-question-circle"></i>
+          </label>
+                <div ng-show="!!newUser['zipcode'].$error.maxlength" style="color:red">30 characters max</div>
+              </div>
+            </div>
+            <div class="form-group" ng-class="{ 'has-error': newUser.promocode.$invalid &&
+                            newUser.promocode.$dirty }">
+            <label for="promocode" class="col-sm-3 control-label">Promo Code</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control inline-block" id="promocode" name="promocode" ng-maxlength="30"
+                placeholder="Promocode" ng-model="$ctrl.model.promocode" ng-maxlength="30" ng-disabled="$ctrl._loading">
+              <label for="promocode" class="text-info" popover-trigger="mouseenter" uib-popover="Enter here any promo code you might have">
+            <i class="fa fa-question-circle"></i>
+          </label>
+                <div ng-show="!!newUser['promocode'].$error.maxlength" style="color:red">30 characters max</div>
+              </div>
+            </div>
+            <hr>
+            <div class="form-group">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="text text-center" style="margin-bottom: 10px">
+                  By clicking on Sign Up you agree with our
+                  <a ng-href="{{vendorConfig.terms_of_service_link}}" target="_blank">Terms Of Service</a>,
+                  <a ng-href="{{vendorConfig.acceptable_use_policy_link}}" target="_blank">Acceptable Use Policy</a> and
+                  <a ng-href="{{vendorConfig.privacy_policy_link}}" target="_blank">Privacy Policy</a>
+                </div>
+                <br>
+                <div class="text text-center">
+                  <a ui-sref="^" class="btn btn-default">
+                    <i class="glyphicon glyphicon-remove"></i>&nbsp; Cancel
+                  </a>
+                  <button class="btn btn-success" ng-disabled="_loading || newUser.$invalid ||(($ctrl.model.password != $ctrl.model.passwordConfirm ||newUser.passwordConfirm.$invalid) &&newUser.passwordConfirm.$dirty )"
+                    ng-click="$ctrl.model.billing_plan = bp_;  $ctrl.onSignUp($ctrl.model)">
+              <i class="glyphicon" ng-class="_loading ? 'glyphicon-refresh spin':'glyphicon-log-in'"></i>  Sign Up
+            </button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>

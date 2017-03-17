@@ -19,11 +19,12 @@
         flCountries: '=',
         flOperators: '=',
         flNetworks: '=',
-        flDisabled: '='
+        flDisabled: '=',
+        filtersSets: '='
       },
       /*@ngInject*/
       controller: function($scope, Stats, Util) {
-
+        var _filters_field_list = ['from_timestamp', 'to_timestamp', 'country', 'device', 'os', 'browser','network','operator','account_id','app_id'];
         $scope.heading = 'Requests Per Second Graph';
         $scope.span = '1';
         $scope._loading = false;
@@ -46,6 +47,29 @@
           network: null
         };
 
+        function generateFilterParams(filters) {
+          var params = {
+            from_timestamp: moment().subtract(1, 'days').valueOf(),
+            to_timestamp: Date.now()
+          };
+          _.forEach(filters, function(val, key) {
+            if (_.indexOf(_filters_field_list, key) !== -1) {
+              if (val !== '-' && val !== '') {
+                params[key] = val;
+              }
+            } else {
+              if (key === 'count_last_day') {
+                params.from_timestamp = moment().subtract(val, 'days').valueOf();
+                params.to_timestamp = Date.now();
+                delete params.count_last_day;
+              }
+            }
+          });
+          return params;
+        }
+        if ($scope.filtersSets) {
+          _.extend($scope.filters, $scope.filtersSets);
+        }
         //  ---------------------------------
         var info_ = null,
           rps_avg_ = 0,
@@ -121,7 +145,7 @@
 
           $scope.filters.account_id = $scope.ngAccount;
           $scope.filters.app_id = ($scope.ngApp || null);
-          return Stats.sdk_flow($scope.filters)
+          return Stats.sdk_flow(generateFilterParams($scope.filters))
             .$promise
             .then(function(data) {
 

@@ -1,0 +1,48 @@
+<div role="form" class='edit-web-analytics-config'>
+  <div class="form-group">
+    <label for="domain">Application</label>
+    <div app-select ng-model="application" on-select="onApplicationSelected()"></div>
+  </div>
+  <div class="form-group">
+    <label for="domain">Filters</label>
+  </div>
+  <div class="form-inline">
+    <div class="form-group">
+      <select class="form-control fixed" ng-model="config.filters.count_last_day" ng-disabled="!application">
+        <option value="1">Last 1 Day</option>
+        <option value="7">Last 7 Days</option>
+        <option value="30">Last 30 Days</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <select id="country" class="form-control fixed" ng-model="config.filters.country" ng-disabled="!application">
+        <option value="-">All Countries</option>
+        <option ng-repeat="(key, item) in flCountries" value="{{key}}">{{item}}</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <select class="form-control fixed" ng-model="config.filters.os" ng-disabled="!application">
+        <option value="-">All OS</option>
+         <option ng-repeat="item in flOses" value="{{item}}">{{item}}</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <select id="device" class="form-control fixed" ng-model="config.filters.device" ng-disabled="!application">
+        <option value="-">All Devices</option>
+        <option ng-repeat="item in flDevices" value="{{item}}">{{item}}</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <select class="form-control fixed" ng-model="config.filters.operator" ng-disabled="!application">
+        <option value="-">All Operators</option>
+        <option ng-repeat="item in flOperators" value="{{item}}">{{item}}</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <select class="form-control fixed" ng-model="config.filters.network" ng-disabled="!application">
+        <option value="-">All Networks</option>
+        <option ng-repeat="item in flNetworks" value="{{item}}">{{item}}</option>
+      </select>
+    </div>
+  </div>
+</div>

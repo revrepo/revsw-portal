@@ -2,33 +2,39 @@
   .navbar {
     background-color: #003056;
   }
-
   .active-side-menu-item .side-menu-item {
-    color: #FF8300 !important;
+    color: #97C748 !important;
   }
-
   .side-menu-sub-item.active {
-    color: #FF8300 !important;
-    border-color: #FF8300 !important;
+    color: #97C748 !important;
+    border-color: #97C748 !important;
   }
-
+  .side-menu::-webkit-scrollbar-thumb {
+    -webkit-box-shadow: inset 8px 6px #003056;
+    border-radius: 6px;
+  }
   .btn-vendor-new-app {
     background-color: #FF8300 !important;
     border-color: #FF8300 !important;
   }
-
   .btn-vendor-download {
     background-color: #97C93D !important;
     border-color: #97C93D !important;
   }
-
   .btn-vendor-introduction {
     background-color: #97C93D !important;
     border-color: #97C93D !important;
   }
-
   .btn-sdk-key {
     background-color: #77777A !important;
     border-color: #77777A !important;
+  }
+  .logo {
+    &--link {
+      img {
+        width: 180px;
+        padding: 0px;
+      }
+    }
   }
 }

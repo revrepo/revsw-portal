@@ -404,6 +404,7 @@
             if (data && data.status === $config.STATUS.OK) {
               apps = data.data.map( function( item ) {
                   return {
+                    app_platform: item.app_platform,
                     app_name: item.app_name,
                     app_id: item.id,
                     id: item.id,
@@ -458,8 +459,8 @@
                     acc_name: item.companyName,
                     acc_id: item.id,
                     plan_id: item.billing_plan,// TODO:delete property name
-                    billing_plan: item.billing_plan
-
+                    billing_plan: item.billing_plan,
+                    vendor_profile: item.vendor_profile
                   };
                 })
                 .sort( function( lhs, rhs ) {

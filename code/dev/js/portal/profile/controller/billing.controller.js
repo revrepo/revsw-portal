@@ -47,7 +47,7 @@
           }
           $scope.user = User.getUser();
           $scope.setResource(BillingPlans);
-          return $scope.list();
+          return $scope.list({vendor: $scope.account.vendor_profile});
         })
         .catch($scope.alertService.danger)
         .finally(function() {

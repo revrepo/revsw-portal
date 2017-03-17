@@ -2,33 +2,39 @@
   .navbar {
     background-color: rgba(255, 140, 0, 0.7);
   }
-
   .active-side-menu-item .side-menu-item {
     color: #FF8A00 !important;
   }
-
   .side-menu-sub-item.active {
     color: #FF8A00 !important;
     border-color: #FF8A00 !important;
   }
-
+  .side-menu::-webkit-scrollbar-thumb {
+    -webkit-box-shadow: inset 8px 6px #f7941e;
+    border-radius: 6px;
+  }
   .btn-vendor-new-app {
     background-color: #FF8A00 !important;
     border-color: #FF8A00 !important;
   }
-
   .btn-vendor-download {
     background-color: #9bbb5a !important;
     border-color: #9bbb5a !important;
   }
-
   .btn-vendor-introduction {
     background-color: #9bbb5a !important;
     border-color: #9bbb5a !important;
   }
-
   .btn-sdk-key {
     background-color: #337ab7 !important;
     border-color: #337ab7 !important;
+  }
+  .logo {
+    &--link {
+      img {
+        width: 160px;
+        padding: 0px;
+      }
+    }
   }
 }

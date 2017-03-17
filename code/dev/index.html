@@ -61,9 +61,9 @@
     }
   };
 </script>-->
-<script src="https://www.youtube.com/iframe_api"></script>
+<div zendesk-include></div>
+
 <!-- build:js scripts/vendor.js -->
-<script zendesc-include></script>
 
 <!--<script type="text/javascript" src="bower_components/PACE/pace.js"></script>-->
 
@@ -97,7 +97,7 @@
 <script type="text/javascript" src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
 
 <script type="text/javascript" src="bower_components/angular-intro.js/build/angular-intro.min.js"></script>
-<script type="text/javascript" src="bower_components/angular-youtube-mb/dist/angular-youtube-embed.min.js"></script>
+<script type="text/javascript" src="bower_components/ng-youtube-embed/build/ng-youtube-embed.min.js"></script>
 <script type="text/javascript" src='bower_components/Sortable/Sortable.min.js'></script>
 <script type="text/javascript" src='bower_components/Sortable/ng-sortable.js'></script>
 <!-- <script type="text/javascript" src='bower_components/angular-dashboard-framework/dist/angular-dashboard-framework.min.js'></script> -->
@@ -146,13 +146,8 @@
 
 <script src="config.js"></script>
 <!-- Google Analytics -->
-<script>
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-ga('create',  window.gaAccount, 'auto');
-</script>
+<script google-analytics-include></script>
+
 <!-- End Google Analytics -->
 <!-- build:js scripts/compiled.js -->
 <script type="text/javascript" src="js/portal/config/config.module.js"></script>
@@ -168,6 +163,7 @@ ga('create',  window.gaAccount, 'auto');
 <script type="text/javascript" src="js/portal/shared/crud/pagination.directive.js"></script>
 <script type="text/javascript" src="js/portal/shared/filter/filter.directive.js"></script>
 <script type="text/javascript" src="js/portal/shared/directives/zendesk-include.directive.js"></script>
+<script type="text/javascript" src="js/portal/shared/directives/google-analytics-include.directive.js"></script>
 <script type="text/javascript" src="js/portal/shared/util/util.factory.js"></script>
 <script type="text/javascript" src="js/portal/shared/directives/ui-sref-active-if.directive.js"></script>
 <script type="text/javascript" src="js/portal/shared/directives/menu-toggle.directive.js"></script>
@@ -315,6 +311,8 @@ ga('create',  window.gaAccount, 'auto');
 <script type="text/javascript" src="js/portal/companies/companies.module.js"></script>
 <script type="text/javascript" src="js/portal/companies/companies.routes.js"></script>
 <script type="text/javascript" src="js/portal/companies/controller/companies.controller.js"></script>
+<script type="text/javascript" src="js/portal/companies/controller/accountResources.controller.js"></script>
+<script type="text/javascript" src="js/portal/companies/controller/changeAccountVendorModalController.js"></script>
 
 <script type="text/javascript" src="js/portal/cache/cache.module.js"></script>
 <script type="text/javascript" src="js/portal/cache/cache.routes.js"></script>
@@ -402,6 +400,7 @@ ga('create',  window.gaAccount, 'auto');
 <script type="text/javascript" src="js/portal/keys/controller/keysEdit.controller.js"></script>
 
 <script type="text/javascript" src="js/portal/dashboard/dashboard.module.js"></script>
+<script type="text/javascript" src="js/portal/dashboard/dashboard.config.js"></script>
 <script type="text/javascript" src="js/portal/dashboard/dashboard.routes.js"></script>
 <script type="text/javascript" src="js/portal/dashboard/filters/dashboard.filters.js"></script>
 <script type="text/javascript" src="js/portal/dashboard/services/dashboard.service.js"></script>
@@ -409,6 +408,17 @@ ga('create',  window.gaAccount, 'auto');
 <script type="text/javascript" src="js/portal/dashboard/components/dashboard-nav-menu.component.js"></script>
 <script type="text/javascript" src="js/portal/dashboard/components/dashboard-btn-new.component.js"></script>
 <script type="text/javascript" src="js/portal/dashboard/components/dashboard-btn-delete.conmponent.js"></script>
+<!-- Apps Analytic -->
+<script type="text/javascript" src="js/portal/dashboard/widgets/apps-analytics/widgetsAppsAnalytics.module.js"></script>
+<script type="text/javascript" src="js/portal/dashboard/widgets/apps-analytics/widgetsAppsAnalyticsEditConfig.controller.js"></script>
+<script type="text/javascript" src="js/portal/dashboard/widgets/apps-analytics/mobile-bw-chart/widgetMobileBWChart.config.js"></script>
+<script type="text/javascript" src="js/portal/dashboard/widgets/apps-analytics/mobile-http-codes-chart/widgetMobileHTTPCodesChart.config.js"></script>
+<script type="text/javascript" src="js/portal/dashboard/widgets/apps-analytics/mobile-rps-chart/widgetMobileRPSChart.config.js"></script>
+<script type="text/javascript" src="js/portal/dashboard/widgets/apps-analytics/mobile-tops/widgetMobileTops.config.js"></script>
+<script type="text/javascript" src="js/portal/dashboard/widgets/apps-analytics/mobile-tops/widgetsAppsSDKDestributionsReports.controller.js"></script>
+<script type="text/javascript" src="js/portal/dashboard/widgets/apps-analytics/mobile-tops/widgetsAppsSDKTopsReports.controller.js"></script>
+<script type="text/javascript" src="js/portal/dashboard/widgets/apps-analytics/mobile-tops/widgetsMobileTopsEditConfig.controller.js"></script>
+<!-- //Apps Analytic -->
 <!-- Web Analytic -->
 <script type="text/javascript" src="js/portal/dashboard/widgets/web-analytics/widgetsWebAnalytics.module.js"></script>
 <script type="text/javascript" src="js/portal/dashboard/widgets/web-analytics/widgetsWebAnalyticsEditConfig.controller.js"></script>

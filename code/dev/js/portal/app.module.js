@@ -39,7 +39,7 @@
     'revapm.Portal.DNSZones',
     'revapm.Portal.AzureResources',
     'revapm.Portal.AzureSubscriptions',
-    'youtube-embed',
+    'ngYoutubeEmbed',
     'satellizer'
   ]);
 

@@ -8,9 +8,16 @@
   /*@ngInject*/
   function AuthRun($rootScope, $state, $location, DashboardSrv, User, Companies, $localStorage) {
     var startOpenUrl = $location.url();
-    // NOTE: validation url
+    /**
+     * @name isValidReOpenUrl
+     *
+     * @param {String} url
+     * @returns
+     */
     function isValidReOpenUrl(url) {
-      if ((url.indexOf('signup') === -1) && (url.indexOf('login') === -1) && (url.indexOf('/azure-sso') === -1) && (url.indexOf('/password/reset') === -1)) {
+      if ((url.indexOf('signup') === -1) && (url.indexOf('login') === -1) &&
+        (url.indexOf('/azure-sso') === -1) && (url.indexOf('/password/reset') === -1) &&
+        (url.indexOf('/profile/verify/') === -1)) {
         return true;
       }
       return false;

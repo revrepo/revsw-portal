@@ -116,25 +116,6 @@
                 </div>
               </div>
             </div>
-            <div class="form-group" ng-if="auth.isRevadmin()" ng-class="{ 'has-error': createForm.vendor_profile.$invalid && createForm.comment.$dirty }">
-              <label for="vendor_profile" class="col-sm-2 control-label">Vendor Profile</label>
-              <div class="col-sm-10">
-                <div class="col-sm-12 form-group">
-                  <ui-select ng-model="model.vendor_profile" theme="select2" search-enabled="false" ng-animate-disabled ng-disabled="_loading" style="min-width: 550px;" id="vendor_profile" name="vendor_profile">
-                    <ui-select-match placeholder="Select Vendor Profile">{{model.vendor_profile}}</ui-select-match>
-                    <ui-select-choices repeat="item in vendorProfiles">
-                      <div ng-bind-html="item"></div>
-                    </ui-select-choices>
-                  </ui-select>
-                  <label for="vendor_profile" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Vendor Profile TODO REVIEW TEXT">
-                    <i class="fa fa-question-circle"></i>
-                  </label>
-                </div>
-                <div class="error-messages" ng-messages="createForm.vendor_profile.$error" role="alert" ng-messages-multiple>
-                  <div ng-messages-include="parts/shared/error-messages.html"></div>
-                </div>
-              </div>
-            </div>
             <hr>
             <!-- first_name-->
             <div class="form-group" ng-class="{ 'has-error': editForm.firstName.$invalid && editForm.firstName.$dirty }">
@@ -283,19 +264,6 @@
             <div class="form-group" ng-if="model.billing_id && model.subscription_id">
               <p class="col-md-12 text text-center"> To update your billing address (as it will appears on your {{vendorConfig.companyNameShort}} statements) please click on “Update Payment Profile” button and provide the information together with credit card details.</p>
             </div>
-            <!--
-            <div class="form-group" ng-if="model.billing_id && (userService.isReseller() || userService.isRevadmin())">
-              <label for="comment" class="col-sm-2 control-label" popover-trigger="mouseenter" uib-popover="Billing plan">Billing Plan</label>
-              <div class="col-sm-10">
-                <ui-select ng-model="model.billing_plan" theme="select2" ng-animate-disabled ng-disabled="_loading" on-select="" style="min-width: 300px;">
-                  <ui-select-match placeholder="Select Billing Plan">{{$select.selected.name}}</ui-select-match>
-                  <ui-select-choices repeat="item.id as item in billing_plans | filter: {name: $select.search}">
-                    <div ng-bind-html="item.name|highlight: $select.search"></div>
-                  </ui-select-choices>
-                </ui-select>
-              </div>
-            </div>
-            -->
             <!--  Section “Billing Contact Details” only for accounts without chagify_id -->
             <section class="row billing_contact_details" ng-if="!model.billing_id">
               <hr>

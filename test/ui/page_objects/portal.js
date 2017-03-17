@@ -62,6 +62,7 @@ var RTTHeatmapsPage = require('./analytics/rttHeatmapsPage');
 var HelpSupportPage = require('./helpSupport/helpSupportPage');
 var HelpPage = require('./help/helpPage');
 var Accounts = require('./admin/accounts');
+var AccountResourcesPage = require('./accountresources');
 var AdminSettingsPage = require('./admin/securitySettings');
 var ApiKeysListPage = require('./admin/apiKeys');
 var ActivityLogPage = require('./admin/activityLog');
@@ -217,6 +218,7 @@ var Portal = {
 	  topObjectsPage : MobileAnalyticsTopObjectsPage,
 	  trafficDistributions: MobileAnalyticsTrafficDistributionsPage,
   },
+  accountResourcesPage: AccountResourcesPage,
 
   helpers: PortalHelpers,
 

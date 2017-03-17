@@ -1,0 +1,9 @@
+<div class="col-md-12 widgets--top-countries-users auto-scroll">
+  <!--<h3>Top 20 Countries By Users</h3>-->
+  <div class="alert alert-info" ng-if="!config.account_id && !config.app_id">
+    Please click on <i class="glyphicon glyphicon-cog"></i> icon to configure the widget
+  </div>
+  <div ng-if="!!config.account_id || !!config.app_id">
+    <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="vm.country_users" ng-chart-options="usersChartOpts"></div>
+  </div>
+</div>

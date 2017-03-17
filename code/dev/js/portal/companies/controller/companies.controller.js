@@ -6,7 +6,7 @@
     .controller('CompaniesCrudController', CompaniesCrudController);
 
   /*@ngInject*/
-  function CompaniesCrudController($scope, CRUDController, Companies, User, BillingPlans, Vendors, $injector, $stateParams, $config, $state, $anchorScroll) {
+  function CompaniesCrudController($scope, CRUDController, Companies, User, BillingPlans, Vendors, $injector, $stateParams, $config, $state, $anchorScroll, $uibModal) {
     //Invoking crud actions
     $injector.invoke(CRUDController, this, {
       $scope: $scope,
@@ -147,6 +147,48 @@
       model.billing_plan = model.billing_plan;
       User.selectAccount(model);
       $state.go('index.billing.statements');
+    };
+    /**
+     * @name onGoToAccountInformation
+     * @description action for go to page "All Account Resources"
+     *
+     */
+    $scope.onGoToAccountInformation = function(e, model) {
+      e.preventDefault();
+      // NOTE: make data format for using into state 'index.accountSettings.companies_information'
+      model.acc_id = model.id;
+      model.acc_name = model.companyName;
+      model.plan_id = model.billing_plan;
+      model.billing_plan = model.billing_plan;
+      User.selectAccount(model);
+      $state.go('index.accountSettings.accountresources');
+    };
+
+    $scope.onVendorUpdate = function(account) {
+
+      var modalInstance = $uibModal.open({
+        templateUrl: 'parts/companies/change-vendor.html',
+        controller: 'ChangeAccountVendorModalController',
+        size: 'md',
+        resolve: {
+          model: {
+            vendorProfiles: $scope.vendorProfiles,
+            currentVendor: account.vendor_profile
+          }
+        }
+      });
+
+      modalInstance.result.then(function(result) {
+        Vendors.updateAccountVendor({
+          account_id: account.id,
+          vendor: result
+        }).$promise
+          .then(function(respnse) {
+            account.vendor_profile = result;
+            $scope.alertService.success(respnse.message);
+          })
+          .catch($scope.alertService.danger);
+      });
     };
   }
 })();

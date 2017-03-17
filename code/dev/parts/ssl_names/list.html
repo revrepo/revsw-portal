@@ -73,59 +73,61 @@
             <i class="glyphicon glyphicon-refresh spin" ng-if="item.loading"></i>&nbsp; Loading...
           </div>
           <crud-pagination></crud-pagination>
-          <table class="table ssl-names--table ">
-            <thead>
-              <tr>
-                <th><a href="" ng-click="order('ssl_name')">Domain Name</a>
-                  <span class="sortorder" ng-show="filter.predicate === 'ssl_name'" ng-class="{reverse: filter.reverse}"></span></th>
-                <th><a href="" ng-click="order('verification_method')">Verification Method</a>
-                  <span class="sortorder" ng-show="filter.predicate === 'verification_method'" ng-class="{reverse: filter.reverse}"></span></th>
-                <th>
-                  <a href="" ng-click="order('updated_at')">Last Update</a>
-                  <span class="sortorder" ng-show="filter.predicate === 'updated_at'" ng-class="{reverse: filter.reverse}"></span>
-                </th>
-                <th> <a href="" ng-click="order('updated_by')">Updated By</a>
-                  <span class="sortorder" ng-show="filter.predicate === 'updated_by'" ng-class="{reverse: filter.reverse}"></span></th>
-                <th class="status status--verification">
-                  <a href="" ng-click="order('verified')">Verification Status</a>
-                  <span class="sortorder" ng-show="filter.predicate === 'verified'" ng-class="{reverse: filter.reverse}"></span></th>
-                <th class="status status--publishing">
-                  <a href="" ng-click="order('published')">Publishing Status</a>
-                  <span class="sortorder" ng-show="filter.predicate === 'published'" ng-class="{reverse: filter.reverse}"></span></th>
-                <th>Actions</th>
-                <th class="account" ng-if="auth.isReseller() ||  auth.isRevadmin()">
-                  <a href="" ng-click="order('companyName')">Account</a>
-                  <span class="sortorder" ng-show="filter.predicate === 'companyName'" ng-class="{reverse: filter.reverse}"></span>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr id="anchor{{::$index}}" ng-click="saveAnchorScrollIndex($index)" ng-repeat="item in filteredRecords | limitTo:filter.limit:filter.skip track by $index">
-                <td> {{item.ssl_name}} </td>
-                <td>{{SSL_NAMES_VERIFICATION_METHODS[item.verification_method]}}</td>
-                <td>{{getRelativeDate(item.updated_at) }}</td>
-                <td>{{item.updated_by}}</td>
-                <td>
-                  <label class="label" ng-class="item.verified? 'label-primary':'label-warning'" ng-bind="item.verified ? 'Verified':'Not Verified'">{{item.verified}}</label>
-                </td>
-                <td>
-                  <label class="label" ng-class="item.published ? 'label-primary':'label-warning'" ng-bind="item.published ? 'Published':'Not Published'">{{item.published}}</label>
-                </td>
-                <td class="actions">
-                  <i class="glyphicon glyphicon-refresh spin" ng-if="item.loading"></i>
-                  <a href="" ng-class="(item.verified ||isReadOnly())?'disabled':''" ng-disabled="item.verified ||isReadOnly()" ng-if="!item.loading" uib-tooltip="{{item.verified?'Already Verified':'Verify Domain Control'}}" ng-click="onVerifyDomain($event,item)">
-                    <i class="glyphicon glyphicon-check"></i>
-                  </a>
-                  <a href="" ng-class="(isReadOnly())?'disabled':''" ng-if="!item.loading" ng-click="deleteSSLName(item)" uib-tooltip="Delete SSL Name">
-                    <i class="glyphicon glyphicon-trash"></i>
-                  </a>
-                </td>
-                <td ng-if="auth.isReseller() ||  auth.isRevadmin()">
-                  <div>{{item.companyName}}</div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <div class="table-responsive">
+            <table class="table ssl-names--table ">
+              <thead>
+                <tr>
+                  <th><a href="" ng-click="order('ssl_name')">Domain Name</a>
+                    <span class="sortorder" ng-show="filter.predicate === 'ssl_name'" ng-class="{reverse: filter.reverse}"></span></th>
+                  <th><a href="" ng-click="order('verification_method')">Verification Method</a>
+                    <span class="sortorder" ng-show="filter.predicate === 'verification_method'" ng-class="{reverse: filter.reverse}"></span></th>
+                  <th>
+                    <a href="" ng-click="order('updated_at')">Last Update</a>
+                    <span class="sortorder" ng-show="filter.predicate === 'updated_at'" ng-class="{reverse: filter.reverse}"></span>
+                  </th>
+                  <th> <a href="" ng-click="order('updated_by')">Updated By</a>
+                    <span class="sortorder" ng-show="filter.predicate === 'updated_by'" ng-class="{reverse: filter.reverse}"></span></th>
+                  <th class="status status--verification">
+                    <a href="" ng-click="order('verified')">Verification Status</a>
+                    <span class="sortorder" ng-show="filter.predicate === 'verified'" ng-class="{reverse: filter.reverse}"></span></th>
+                  <th class="status status--publishing">
+                    <a href="" ng-click="order('published')">Publishing Status</a>
+                    <span class="sortorder" ng-show="filter.predicate === 'published'" ng-class="{reverse: filter.reverse}"></span></th>
+                  <th>Actions</th>
+                  <th class="account" ng-if="auth.isReseller() ||  auth.isRevadmin()">
+                    <a href="" ng-click="order('companyName')">Account</a>
+                    <span class="sortorder" ng-show="filter.predicate === 'companyName'" ng-class="{reverse: filter.reverse}"></span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr id="anchor{{::$index}}" ng-click="saveAnchorScrollIndex($index)" ng-repeat="item in filteredRecords | limitTo:filter.limit:filter.skip track by $index">
+                  <td> {{item.ssl_name}} </td>
+                  <td>{{SSL_NAMES_VERIFICATION_METHODS[item.verification_method]}}</td>
+                  <td>{{getRelativeDate(item.updated_at) }}</td>
+                  <td>{{item.updated_by}}</td>
+                  <td>
+                    <label class="label" ng-class="item.verified? 'label-primary':'label-warning'" ng-bind="item.verified ? 'Verified':'Not Verified'">{{item.verified}}</label>
+                  </td>
+                  <td>
+                    <label class="label" ng-class="item.published ? 'label-primary':'label-warning'" ng-bind="item.published ? 'Published':'Not Published'">{{item.published}}</label>
+                  </td>
+                  <td class="actions">
+                    <i class="glyphicon glyphicon-refresh spin" ng-if="item.loading"></i>
+                    <a href="" ng-class="(item.verified ||isReadOnly())?'disabled':''" ng-disabled="item.verified ||isReadOnly()" ng-if="!item.loading" uib-tooltip="{{item.verified?'Already Verified':'Verify Domain Control'}}" ng-click="onVerifyDomain($event,item)">
+                      <i class="glyphicon glyphicon-check"></i>
+                    </a>
+                    <a href="" ng-class="(isReadOnly())?'disabled':''" ng-if="!item.loading" ng-click="deleteSSLName(item)" uib-tooltip="Delete SSL Name">
+                      <i class="glyphicon glyphicon-trash"></i>
+                    </a>
+                  </td>
+                  <td ng-if="auth.isReseller() ||  auth.isRevadmin()">
+                    <div>{{item.companyName}}</div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
           <hr>
           <crud-pagination></crud-pagination>
         </div>
