@@ -220,6 +220,41 @@
           </div>
 
           <hr>
+         <!-- Section with data SSL Certificates-->
+          <div class="row">
+            <div class="col-sm-12" id="ssl_certs__container">
+              <div class="h4">SSL Certs</div>
+              <table class="table">
+                <thead>
+                  <th></th>
+                  <th>All Types</th>
+                  <th>Private</th>
+                  <th>Shared</th>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Active</td>
+                    <td>{{report.ssl_certs.active}}</td>
+                    <td>{{report.ssl_certs_per_type['private'].active}}</td>
+                    <td>{{report.ssl_certs_per_type['shared'].active}}</td>
+                  </tr>
+                  <tr>
+                    <td>Deleted</td>
+                    <td>{{report.ssl_certs.deleted}}</td>
+                    <td>{{report.ssl_certs_per_type['private'].deleted}}</td>
+                    <td>{{report.ssl_certs_per_type['shared'].deleted}}</td>
+                  </tr>
+                  <tr>
+                    <td>Total</td>
+                    <td>{{report.ssl_certs.total}}</td>
+                    <td>{{report.ssl_certs_per_type['private'].total}}</td>
+                    <td>{{report.ssl_certs_per_type['shared'].total}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <hr>
           <div class="row">
 
             <div class="col-md-4">
