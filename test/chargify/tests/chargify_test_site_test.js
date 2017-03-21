@@ -43,20 +43,20 @@ describe('Chargify  site ', function() {
       .assert.visible('@submit')
       .click('@submit')
       .waitForElementVisible('body', uiTimeoutMs)
-      .assert.title('(Chargify) Rev Software, Inc. | Your Sites');
+      .assert.title('(Chargify) nuu:bit, Inc. | Your Sites');
   });
 
   it('must open dashboard page', function(client) {
     dashboardPage = client.page.chargify.dashboardPage();
     dashboardPage.navigate()
-      .assert.title('(Chargify) Rev Software, Inc. ~ RevAPM Test | Show Dashboard');
+      .assert.title('(Chargify) nuu:bit, Inc. ~ nuu:bit Test | Show Dashboard');
   });
 
   it('must show subscription list', function(client) {
     subscriptionsCanceledPage = client.page.chargify.subscriptionsCanceledPage();
     subscriptionsCanceledPage.navigate()
       .waitForElementVisible('body', uiTimeoutMs)
-      .assert.title('(Chargify) Rev Software, Inc. ~ RevAPM Test | Subscriptions');
+      .assert.title('(Chargify) nuu:bit, Inc. ~ nuu:bit Test | Subscriptions');
   });
 
   it('must show subscription with state \'canceled\' and delete each Subscription', function(client) {
@@ -83,7 +83,7 @@ describe('Chargify  site ', function() {
  
            subscriptionDeletePage
             .waitForElementVisible('body', uiTimeoutMs)
-            .assert.title('(Chargify) Rev Software, Inc. ~ RevAPM Test | Delete Subscription')
+            .assert.title('(Chargify) nuu:bit, Inc. ~ nuu:bit Test | Delete Subscription')
             .clickToSubmit()
             .waitForElementVisible('body', uiTimeoutMs);
 

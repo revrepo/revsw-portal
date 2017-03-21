@@ -115,8 +115,8 @@
               </form>
 
             </div>
-
-            <div class="col-md-4">
+            <!-- TODO: delete "Mobile Apps" section after check table "Mobile Apps" -->
+            <!--<div class="col-md-4">
 
               <h4>Mobile Apps</h4>
 
@@ -145,7 +145,7 @@
 
               </form>
 
-            </div>
+            </div>-->
 
             <div class="col-md-4">
 
@@ -180,7 +180,81 @@
 
           </div>
           <hr>
+          <!-- New version display Mobile Apps data-->
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="h4">Mobile Apps</div>
+              <table class="table">
+                <thead>
+                  <th></th>
+                  <th>All Platforms</th>
+                  <th>Android</th>
+                  <th>iOS</th>
+                  <th>Window Mobile</th>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Active</td>
+                    <td>{{report.applications.active}}</td>
+                    <td>{{report.apps_per_platform['Android'].active}}</td>
+                    <td>{{report.apps_per_platform['iOS'].active}}</td>
+                    <td>{{report.apps_per_platform['Windows_Mobile'].active}}</td>
+                  </tr>
+                  <tr>
+                    <td>Deleted</td>
+                    <td>{{report.applications.deleted}}</td>
+                    <td>{{report.apps_per_platform['Android'].deleted}}</td>
+                    <td>{{report.apps_per_platform['iOS'].deleted}}</td>
+                    <td>{{report.apps_per_platform['Windows_Mobile'].deleted}}</td>
+                  </tr>
+                  <tr>
+                    <td>Total</td>
+                    <td>{{report.applications.total}}</td>
+                    <td>{{report.apps_per_platform['Android'].total}}</td>
+                    <td>{{report.apps_per_platform['iOS'].total}}</td>
+                    <td>{{report.apps_per_platform['Windows_Mobile'].total}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
 
+          <hr>
+         <!-- Section with data SSL Certificates-->
+          <div class="row">
+            <div class="col-sm-12" id="ssl_certs__container">
+              <div class="h4">SSL Certs</div>
+              <table class="table">
+                <thead>
+                  <th></th>
+                  <th>All Types</th>
+                  <th>Private</th>
+                  <th>Shared</th>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Active</td>
+                    <td>{{report.ssl_certs.active}}</td>
+                    <td>{{report.ssl_certs_per_type['private'].active}}</td>
+                    <td>{{report.ssl_certs_per_type['shared'].active}}</td>
+                  </tr>
+                  <tr>
+                    <td>Deleted</td>
+                    <td>{{report.ssl_certs.deleted}}</td>
+                    <td>{{report.ssl_certs_per_type['private'].deleted}}</td>
+                    <td>{{report.ssl_certs_per_type['shared'].deleted}}</td>
+                  </tr>
+                  <tr>
+                    <td>Total</td>
+                    <td>{{report.ssl_certs.total}}</td>
+                    <td>{{report.ssl_certs_per_type['private'].total}}</td>
+                    <td>{{report.ssl_certs_per_type['shared'].total}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <hr>
           <div class="row">
 
             <div class="col-md-4">
@@ -300,7 +374,7 @@
               </table>
 
               <hr>
-              <h4 class="title-list">Domains Usage</h4>
+              <h4 class="list-title">Domains Usage</h4>
 
               <table class="table table-stripped table-condensed">
                 <thead>
