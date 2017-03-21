@@ -48,13 +48,13 @@ var EditDomain = {
         linkText: 'Basic Mode'
       },
       validateDomain: {
-        css: '[ng-click="validateDomain(model)"]'
+        id: 'verifyDomain'
       },
       updateDomain: {
-        css: '[ng-click="updateDomain(model)"]'
+        id: 'updateDomain'
       },
       publishDomain: {
-        css: '[ng-click="publishDomain(model)"]'
+        id: 'publishDomain'
       },
       cancel: {
         linkText: 'Cancel'
@@ -149,7 +149,7 @@ var EditDomain = {
    * @returns {Object} Selenium WebDriver Element
    */
   getValidateDomainBtn: function () {
-    return element(by.css(this.locators.buttons.validateDomain.css));
+    return element(by.id(this.locators.buttons.validateDomain.id));
   },
 
   /**
@@ -161,7 +161,7 @@ var EditDomain = {
    * @returns {Object} Selenium WebDriver Element
    */
   getUpdateDomainBtn: function () {
-    return element(by.css(this.locators.buttons.updateDomain.css));
+    return element(by.id(this.locators.buttons.updateDomain.id));
   },
 
   getEditDomainLink: function (numberLink) {
@@ -183,7 +183,7 @@ var EditDomain = {
    * @returns {Object} Selenium WebDriver Element
    */
   getPublishDomainBtn: function () {
-    return element(by.css(this.locators.buttons.publishDomain.css));
+    return element(by.id(this.locators.buttons.publishDomain.id));
   },
 
   /**
