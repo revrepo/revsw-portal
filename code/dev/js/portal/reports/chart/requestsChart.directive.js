@@ -86,7 +86,7 @@
               '</span><br>Traffic Total <span style="font-weight: bold; color: #3c65ac;">' + Util.humanFileSizeInGB(traffic_total_, 3) +
               '</span>';
             // NOTE: information about error
-            if( $scope.isFailData === true){
+            if( $scope.hasFailedToLoadData === true){
               _text = '<strong style="color: red;"> Failed to retrieve the data - please try again later </strong>';
             }
             var x = this.xAxis[0].toPixels(this.xAxis[0].min) + 3;
@@ -98,7 +98,7 @@
               })
               .attr({
                 fill: 'rgba(240, 240, 240, 0.6)',
-                stroke: $scope.isFailData ? 'red' : '#3c65ac', // NOTE: border color
+                stroke: $scope.hasFailedToLoadData ? 'red' : '#3c65ac', // NOTE: border color
                 'stroke-width': 1,
                 padding: 6,
                 r: 2,
@@ -162,7 +162,7 @@
         return;
       }
       $scope._loading = true;
-      $scope.isFailData = false;
+      $scope.hasFailedToLoadData = false;
       var _xAxisPointStart = null;
       var _xAxisPointInterval = null;
       var series = [{
@@ -224,7 +224,7 @@
             pointInterval: _xAxisPointInterval,
             series: series
           };
-          $scope.isFailData = true;
+          $scope.hasFailedToLoadData = true;
         })
         .finally(function() {
           $scope._loading = false;

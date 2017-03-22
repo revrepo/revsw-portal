@@ -84,7 +84,7 @@
                   '</span><br>Hits Total <span style="font-weight: bold; color: #3c65ac;">' + Util.formatNumber(hits_total_) +
                   '</span>';
                 // NOTE: information about error
-                if( $scope.isFailData === true){
+                if( $scope.hasFailedToLoadData === true){
                   _text = '<strong style="color: red;"> Failed to retrieve the data - please try again later </strong>';
                 }
                 info_ = this /*chart*/ .renderer
@@ -95,7 +95,7 @@
                   })
                   .attr({
                     fill: 'rgba(240, 240, 240, 0.6)',
-                    stroke: $scope.isFailData ? 'red' : '#3c65ac',
+                    stroke: $scope.hasFailedToLoadData ? 'red' : '#3c65ac',
                     'stroke-width': 1,
                     padding: 6,
                     r: 2,
@@ -139,7 +139,7 @@
             return;
           }
           $scope._loading = true;
-          $scope.isFailData = false;
+          $scope.hasFailedToLoadData = false;
           var series = [{
             name: 'Total',
             data: []
@@ -188,7 +188,7 @@
                 pointInterval: _xAxisPointInterval,
                 series: series
               };
-              $scope.isFailData = true;
+              $scope.hasFailedToLoadData = true;
             })
             .finally(function() {
               $scope._loading = false;
