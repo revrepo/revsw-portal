@@ -20,21 +20,17 @@ var config = require('config');
 var Portal = require('./../../../page_objects/portal');
 var DataProvider = require('./../../../common/providers/data');
 var Constants = require('./../../../page_objects/constants');
+var dataUsers = require('./../../../config/default');
 
 describe('Smoke', function () {
 
   // Defining set of users for which all below tests will be run
   var users = [
-//    config.get('portal.users.user'),  // TODO: somehow the test script is looking
-// for "Add New User" element and cannot find it for user role (and should not)
+    config.get('portal.users.user'),
     config.get('portal.users.admin'),
     config.get('portal.users.reseller'),
-//    config.get('portal.users.revAdmin') // TODO: need to fix user creation process
-// for revadmin role
+    config.get('portal.users.revAdmin')
   ];
-
-  // TODO: need to fix the script to create users with different roles instead of using
-  // different roles to create the same test user
 
   users.forEach(function (user) {
 
@@ -58,24 +54,21 @@ describe('Smoke', function () {
           expect(Portal.updatePasswordPage.isDisplayed()).toBeTruthy();
         });
 
-        it('should update password successfully', function (done) {
-          Portal.helpers.users
-            .create()
-            .then(function (testUser) {
-              var newPassword = 'password2';
-              Portal.signOut();
-              Portal.signIn(testUser);
-              Portal.helpers.nav.goToUpdatePassword();
-              Portal.updatePasswordPage.setCurrentPassword(testUser.password);
-              Portal.updatePasswordPage.setNewPassword(newPassword);
-              Portal.updatePasswordPage.setPasswordConfirm(newPassword);
-              Portal.updatePasswordPage.clickUpdatePassword();
-              var alert = Portal.alerts.getFirst();
-              expect(alert.getText())
-                .toContain(Constants.alertMessages.users.MSG_SUCCESS_UPDATE_PASSWORD);
-              done();
-            })
-            .catch(done);
+        it('should update password successfully', function () {
+
+          var testPassword = 'test_password';
+
+          for (var key in dataUsers.portal.users) {
+            if (dataUsers.portal.users[key].role === user.role) {     
+              Portal.updatePasswordPage.update(dataUsers.portal.users[key].password, testPassword).then(function() {
+                  var alert = Portal.alerts.getFirst();
+                  expect(alert.getText()).toContain(Constants.alertMessages.users.MSG_SUCCESS_UPDATE_PASSWORD);
+                  Portal.updatePasswordPage.update(testPassword, dataUsers.portal.users[key].password)
+              });
+            }          
+          }
+
+
         });
       });
     });

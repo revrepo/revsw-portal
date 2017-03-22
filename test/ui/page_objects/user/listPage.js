@@ -32,6 +32,11 @@ var UserList = {
 
   // Locators specific to HTML elements from this page object
   locators: {
+    views: {
+      listItems: {
+        css: '.users-list tbody tr'
+      }
+    },
     labels: {
       title: {
         className: 'page-title'
@@ -66,6 +71,19 @@ var UserList = {
   getTitleLbl: function () {
     return element(by.className(this.locators.labels.title.className));
   },
+
+  /**
+   * ### getListItems()
+   *
+   * Returns all elements on one page (Selenium WebDriver
+   * Element) from the Apps List page from the Portal app.
+   *
+   * @returns {Selenium WebDriver Element}
+   */
+  getListItems: function() {
+    return element.all(by.css(this.locators.views.listItems.css));
+  },
+
 
   /**
    * ### UserList.getAddNewUserBtn()

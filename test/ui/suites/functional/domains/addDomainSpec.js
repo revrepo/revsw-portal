@@ -25,10 +25,8 @@ describe('Functional', function () {
 
   var users = [
     config.get('portal.users.admin'),
-    // TODO: run for all users
-    // config.get('portal.users.reseller'),
-    // config.get('portal.users.secondReseller'),
-    // config.get('portal.users.user'),
+    config.get('portal.users.reseller'),
+    config.get('portal.users.user'),
     config.get('portal.users.roUser')
   ];
 
@@ -55,9 +53,6 @@ describe('Functional', function () {
             it('RO user should not be able to go for create a new domain',
               function () {
                 Portal.helpers.nav.goToDomains();
-                var btnAddNewDomain = Portal.domains.listPage.getAddNewDomainBtn();
-                //NOTE: now "button" is link and can`t be disabled
-                expect(btnAddNewDomain.isEnabled()).toBe(true);
                 Portal.domains.listPage.clickAddNewDomain();
                 expect(Portal.domains.listPage.isDisplayed()).toBeTruthy();
               });
