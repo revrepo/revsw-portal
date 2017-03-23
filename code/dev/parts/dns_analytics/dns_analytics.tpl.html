@@ -1,0 +1,90 @@
+<div class="container-fluid dns_analytics">
+  <div class="row">
+    <div class="col-md-12">
+      <h2 id="title-page">DNS Analytics</h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="pull-left">
+                <form class="form-inline">
+                  <div class="form-group">
+                    <div dns-zone-select id="page-dns-zone-select" ng-model="vm.selectedZone" on-select="vm.onDNSZoneSelected()" select-one="true"></div>
+                  </div>
+                  <div class="form-group">
+                    <!--<time-note-display></time-note-display>-->
+                  </div>
+                </form>
+              </div>
+              <div class="pull-right">
+                <form class="form-inline">
+                  <div class="form-group">
+                    <select class="form-control fixed" ng-model="vm.period">
+                      <option value="1h">Last 1 Hour</option>
+                      <option value="24h">Last 24 Hours</option>
+                      <option value="30d">Last 30 Days</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <button class="btn btn-info" ng-click="vm.reload()" ng-disabled="vm._loading || !vm.selectedZone">
+                      <i class="glyphicon glyphicon-refresh"></i>&nbsp;
+                      Update Reports
+                    </button>
+                  </div>
+                </form>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="panel-body">
+          <div class="row   text-center dns_zones_total__view_container">
+            <div class="col-sm-12 col-md-4">
+              <div class="panel">
+                <div class="panel-heading">
+                  <label class="title h4"> Total  DNS Zones<br>&nbsp</label>
+                </div>
+                <div class="panel-body"> {{vm.accountTotalDNSZones || 0}} </div>
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-4 ">
+              <div class="panel">
+                <div class="panel-heading">
+                  <label class="title h4"> DNS Records <br>For This Domain
+                   </label>
+                </div>
+                <div class="panel-body">{{vm.totalDNSZoneRecords || 0}}</div>
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-4">
+              <div class="panel">
+                <div class="panel-heading ">
+                  <label class="title h4"> DNS Queries <br> For Last 30 Days</label>
+                </div>
+                <div class="panel-body">{{vm.totalDNSZoneQueries30d || 0}}</div>
+              </div>
+            </div>
+
+          </div>
+          <div class="row  dns_zones_line_chart__view_container">
+            <div class="col-sm-12">
+              <div class="panel">
+                <div class="panel-heading text-center">
+                  <label class="title h4">DNS Queries Per Second</label>
+                  <div class="panel-body">
+                    <div style="min-width: 500px; min-height: 350px" line-chart ng-data="vm.dnsZoneData" ng-chart-options="vm.chartOptions"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
