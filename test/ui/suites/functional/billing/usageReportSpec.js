@@ -77,7 +77,7 @@ describe('Functional', function () {
           expect(result).toContain(domains.total);
         });
 
-        it('should check Mobile Apps form with correct report data', function() {
+        it('should display Mobile Apps section with correct report properties', function() {
           var reportData = DataProvider.generateUsageReportData(user);
           var mobileApps = {
             active: 'Active',
@@ -85,7 +85,7 @@ describe('Functional', function () {
             total: 'Total'
           };
           Portal.billing.usageReportPage.updateReport(reportData);
-          var result = Portal.billing.usageReportPage.getMobileAppsForm();
+          var result = Portal.billing.usageReportPage.getMobileAppsViewText();
           expect(result).toContain(mobileApps.active);
           expect(result).toContain(mobileApps.deleted);
           expect(result).toContain(mobileApps.total);

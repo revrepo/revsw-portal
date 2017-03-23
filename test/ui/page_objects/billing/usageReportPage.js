@@ -2,7 +2,7 @@
  *
  * REV SOFTWARE CONFIDENTIAL
  *
- * [2013] - [2016] Rev Software, Inc.
+ * [2013] - [2017] Rev Software, Inc.
  * All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains
@@ -32,7 +32,10 @@ var UsageReport = {
         css: '.col-md-12 .panel .panel-heading',
         pullLeft: '.pull-left'
       },
-      panelBody: '.col-md-12 .panel .panel-body'
+      panelBody: '.col-md-12 .panel .panel-body',
+      mobileApps: {
+        id: 'apps__view_container'
+      }
     },
     buttons: {
       updateReport: {
@@ -260,7 +263,26 @@ var UsageReport = {
   getMobileAppsForm: function () {
     return this.getFormTextByFormName('Mobile Apps');
   },
-
+    /**
+   * ### UsageReport.getMobileAppsView()
+   *
+   * Gets the reference to `Mobile Apps` block view element.
+   *
+   * @returns {Promise}
+   */
+  getMobileAppsView: function () {
+    return element(by.id(this.locators.views.mobileApps.id));
+  },
+    /**
+   * ### UsageReport.getMobileAppsViewText()
+   *
+   * Gets the text  from `Mobile Apps` block view element core/text.
+   *
+   * @returns {Promise}
+   */
+  getMobileAppsViewText: function () {
+    return this.getMobileAppsView().getText();
+  },
   /**
    * ### UsageReport.getApiKeysForm()
    *
