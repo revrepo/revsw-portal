@@ -35,7 +35,7 @@ var LogShippingForm = {
   locators: {
     textInputs: {
       jobName: {
-        model: 'model.job_name'
+        id: 'job_name'
       },
       host: {
         id: 'Host'
@@ -71,7 +71,7 @@ var LogShippingForm = {
       },
       sourceDomain: {
         model: 'selectedDomainSourceId',
-        css: 'div[name="sourceId"]'
+        css: 'div[name="sourceId"] a[aria-label="Select box select"]'
       },
       destination: {
         id: 'destination_type'
@@ -91,7 +91,7 @@ var LogShippingForm = {
    * @returns {Object} Selenium WebDriver Element
    */
   getJobNameTxtIn: function () {
-    return element(by.model(this.locators.textInputs.jobName.model));
+    return element(by.id(this.locators.textInputs.jobName.id));
   },
 
   /**

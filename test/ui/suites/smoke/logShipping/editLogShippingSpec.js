@@ -25,7 +25,7 @@ describe('Smoke', function () {
 
   // Defining set of users for which all below tests will be run
   var users = [
-    config.get('portal.users.revAdmin'),
+     config.get('portal.users.revAdmin'),
     config.get('portal.users.reseller'),
     config.get('portal.users.admin')
   ];
@@ -37,20 +37,19 @@ describe('Smoke', function () {
       describe('Edit Log Shipping Job', function () {
 
         beforeAll(function () {
-
+          Portal.signIn(user);
         });
 
         afterAll(function () {
-
+          Portal.signOut();
         });
 
         beforeEach(function () {
-          Portal.signIn(user);
           Portal.helpers.nav.goToLogShipping();
         });
 
         afterEach(function () {
-          Portal.signOut();
+          
         });
 
         it('should display edit Log Shipping button',
@@ -103,7 +102,7 @@ describe('Smoke', function () {
             expect(Portal.logShipping.listPage.isDisplayed()).toBeTruthy();
           });
 
-        if (user.role !== 'Admin') { // TODO: Not working for admin-role user.
+
           it('should update Log Shipping when filling all required data',
             function () {
               var data;
@@ -134,7 +133,7 @@ describe('Smoke', function () {
                 .getJobName();
               expect(updatedJobName).toBe(updatedJob.name);
             });
-        }
+        
       });
     });
   });
