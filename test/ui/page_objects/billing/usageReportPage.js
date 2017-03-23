@@ -254,16 +254,6 @@ var UsageReport = {
   },
 
   /**
-   * ### UsageReport.getMobileAppsForm()
-   *
-   * Gets the reference to `Mobile Apps` form element core/text.
-   *
-   * @returns {Promise}
-   */
-  getMobileAppsForm: function () {
-    return this.getFormTextByFormName('Mobile Apps');
-  },
-    /**
    * ### UsageReport.getMobileAppsView()
    *
    * Gets the reference to `Mobile Apps` block view element.
