@@ -127,6 +127,9 @@
           <a ui-sref-active="active" style="color:grey" uisref="index.dnsServices.dns_datasources" class="side-menu-sub-item">
             <i class="sub-menu-icon fa fa-upload"></i> Data Sources <i class="fa fa-hourglass-half comming-soon" aria-hidden="true" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Coming Soon "></i>
           </a>
+          <a ui-sref-active="active"   ui-sref="index.dnsServices.dns_analytics" class="side-menu-sub-item">
+            <i class="sub-menu-icon fa fa-line-chart"></i> DNS Analytics </i>
+          </a>
         </li>
         <li ui-sref-active-if="{class: 'open-side-menu-item', state: 'index.accountSettings'}" , ng-class="{'open-side-menu-item': menuExpanded('index.accountSettings'), 'active-side-menu-item': $state.includes('index.accountSettings')}">
           <a class="side-menu-item" , ng-click="goToState('index.accountSettings.users')">
