@@ -66,6 +66,9 @@
           <a id="side-menu-sub-item__webApp-ssl_names" ui-sref-active="active" ui-sref="index.webApp.ssl_names" class="side-menu-sub-item">
             <i class="sub-menu-icon fa fa-lock"></i> SSL Names
           </a>
+          <a id="side-menu-sub-item__webApp-waf_rules" style="color:grey"  ui-sref-active="active" uisref="index.webApp.ssl_names" class="side-menu-sub-item">
+            <i class="sub-menu-icon fa fa-lock"></i> WAF Rules <i class="fa fa-hourglass-half comming-soon" aria-hidden="true" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Coming Soon "></i>
+          </a>
           <a id="side-menu-sub-item__webApp-staging-environment" ui-sref-active="active" ui-sref="index.webApp.staging-environment" class="side-menu-sub-item">
             <i class="sub-menu-icon fa fa-eye"></i> Staging Env.
           </a>
@@ -108,6 +111,19 @@
             <i class="sub-menu-icon fa fa-exchange"></i> RTT Heatmaps
           </a>
         </li>
+        <!--Security Analytics -->
+        <li ui-sref-active-if="{class: 'open-side-menu-item', state: 'index.security'}" , ng-class="{'open-side-menu-item': menuExpanded('index.security'),'active-side-menu-item': $state.includes('index.security')}">
+          <a id="side-menu-security-analytics-item" class="side-menu-item" , ng-click="goToState('index.security.waf_analytics')">
+            <div class="left-menu-start">
+              <i class="fa fa-bomb"></i>
+            </div>
+            Security Analytics
+            <i ng-click="expandMenu('index.security', $event)" class="pull-right {{ menuExpanded('index.security') ? 'fa fa-caret-up' : 'fa fa-caret-down' }}"></i>
+          </a>
+          <a id="side-menu-sub-item__waf-analytics" style="color:grey"  ui-sref-active="active" uisref="index.security.waf_analytics" class="side-menu-sub-item">
+            <i class="sub-menu-icon fa fa-area-chart"></i> WAF Analytics<i class="fa fa-hourglass-half comming-soon" aria-hidden="true" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Coming Soon "></i>
+          </a>
+        </li>
         <li ui-sref-active-if="{class: 'open-side-menu-item', state: 'index.dnsServices'}" , ng-class="{'open-side-menu-item': menuExpanded('index.dnsServices'), 'active-side-menu-item': $state.includes('index.dnsServices')}">
           <a id="side-menu-dns-service-item" class="side-menu-item" , ng-click="goToState('index.dnsServices.dns_zones')">
             <div class="left-menu-start">
@@ -127,7 +143,7 @@
           <a ui-sref-active="active" style="color:grey" uisref="index.dnsServices.dns_datasources" class="side-menu-sub-item">
             <i class="sub-menu-icon fa fa-upload"></i> Data Sources <i class="fa fa-hourglass-half comming-soon" aria-hidden="true" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Coming Soon "></i>
           </a>
-          <a ui-sref-active="active"   ui-sref="index.dnsServices.dns_analytics" class="side-menu-sub-item">
+          <a ui-sref-active="active" ui-sref="index.dnsServices.dns_analytics" class="side-menu-sub-item">
             <i class="sub-menu-icon fa fa-line-chart"></i> DNS Analytics </i>
           </a>
         </li>

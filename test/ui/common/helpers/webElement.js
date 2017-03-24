@@ -2,7 +2,7 @@
  *
  * REV SOFTWARE CONFIDENTIAL
  *
- * [2013] - [2016] Rev Software, Inc.
+ * [2013] - [2017] Rev Software, Inc.
  * All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains
@@ -36,6 +36,27 @@ var WebElement = {
         var backspaces = new Array(len + 1).join(protractor.Key.BACK_SPACE);
         return textInput.sendKeys(delChars + backspaces);
       });
+  },
+  /**
+   * Scroll to the top a web element by id
+   *
+   * @param string, Selenium WebDriver Element
+   * @returns {Object} Promise
+   */
+  scrollToElementById: function(id){
+    return  browser.executeScript('arguments[0].scrollIntoView(true);',
+     element(by.id(id)).getWebElement());
+  },
+
+   /**
+   * Scroll to the top a given web element
+   *
+   * @param string, Selenium WebDriver Element
+   * @returns {Object} Promise
+   */
+  scrollToElement: function(element_){
+    return  browser.executeScript('arguments[0].scrollIntoView(true);',
+      element_.getWebElement());
   }
 };
 

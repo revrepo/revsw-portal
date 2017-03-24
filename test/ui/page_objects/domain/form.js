@@ -313,10 +313,10 @@ var DomainForm = {
         id: 'manageSSLcertificates'
       },
       onAddNewItemBP: {
-        css: '.addNewLuaBlock'
+        css: '#luaScriptingLastMileBlock .addNewLuaBlock'
       },
       onAddNewItemCO: {
-        css: '[ng-click="$ctrl.onAddNewItemCO()"]'
+        css: '#luaScriptingFirstMileBlock .addNewLuaBlock'
       }
     },
     elementsForm: {
@@ -393,17 +393,21 @@ var DomainForm = {
         li: '.domain-edit-form .nav.nav-tabs>li:nth-child(4)',
         css: '.domain-edit-form .nav.nav-tabs>li:nth-child(4) a'
       },
-      customVCLRules:{
+      wafConfiguration: {
         li: '.domain-edit-form .nav.nav-tabs>li:nth-child(5)',
         css: '.domain-edit-form .nav.nav-tabs>li:nth-child(5) a'
       },
-      luaScripting:{
+      customVCLRules:{
         li: '.domain-edit-form .nav.nav-tabs>li:nth-child(6)',
         css: '.domain-edit-form .nav.nav-tabs>li:nth-child(6) a'
       },
-      thirdPartyLinks:{
+      luaScripting:{
         li: '.domain-edit-form .nav.nav-tabs>li:nth-child(7)',
         css: '.domain-edit-form .nav.nav-tabs>li:nth-child(7) a'
+      },
+      thirdPartyLinks:{
+        li: '.domain-edit-form .nav.nav-tabs>li:nth-child(8)',
+        css: '.domain-edit-form .nav.nav-tabs>li:nth-child(8) a'
       }
     }
   },
@@ -891,7 +895,7 @@ var DomainForm = {
   },
 
   getOnAddNewItemBP: function () {
-    return element.all(by.css(this.locators.buttons.onAddNewItemBP.css));
+    return element(by.css(this.locators.buttons.onAddNewItemBP.css));
   },
   getOnAddNewItemCO: function () {
     return element(by.css(this.locators.buttons.onAddNewItemCO.css));

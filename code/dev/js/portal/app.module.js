@@ -40,6 +40,7 @@
     'revapm.Portal.DNSZones',
     'revapm.Portal.AzureResources',
     'revapm.Portal.AzureSubscriptions',
+    'revapm.Portal.WAFAnalytics',
     'ngYoutubeEmbed',
     'satellizer'
   ]);

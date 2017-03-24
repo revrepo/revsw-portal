@@ -115,6 +115,9 @@
                   <a href="" ng-if="!item.loading" ng-class="{'disabled': isReadOnly()}" ng-click="deleteDNSZone(item)" uib-tooltip="Delete Zone">
                     <i class="glyphicon glyphicon-trash"></i>
                   </a>
+                  <a href="#/dns/analytics" ng-if="!item.loading" ng-click="storeToStorage(item)" uib-tooltip="Stats">
+                    <i class="glyphicon glyphicon-stats"></i>
+                  </a>
                   <a ui-sref=".checkintegration({id: item.id})" ng-if="!item.loading" uib-tooltip="Check DNS Zone Integration Configuration">
                     <i class="glyphicon glyphicon-check"></i>
                   </a>

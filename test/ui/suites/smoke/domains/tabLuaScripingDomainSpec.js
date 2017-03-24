@@ -12,7 +12,7 @@ describe('Smoke', function () {
   var users = [
     config.get('portal.users.user'),
     config.get('portal.users.admin'),
-     config.get('portal.users.revAdmin'),
+    config.get('portal.users.revAdmin'),
     config.get('portal.users.reseller')
   ];
 
@@ -87,6 +87,7 @@ describe('Smoke', function () {
           ' Proxies" is "ON" then should'+
           ' display FIELDS "Lua Scripts Executed On Edge '+
           '(First Mile) Proxies"', function () {
+          EditPage.clickOnAddNewItemCO();
           form.getLuaScriptsExecutedEdgeFirstMilefields()
             .getAttribute('name').then(function(fieldsName) {
               expect(fieldsName).toEqual(resultLuaScriptsLastFirstMilesProxies(user));
