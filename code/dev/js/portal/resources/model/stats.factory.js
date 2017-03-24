@@ -289,7 +289,7 @@
       dns_stats_usage_zone: {
         isArray: false,
         method: 'GET',
-        url: $config.API_URL + '/dns_zones/stats/usage/:zone',
+        url: $config.API_URL + '/dns_zones/:id/stats/usage',
         params: {}
       }
     });
