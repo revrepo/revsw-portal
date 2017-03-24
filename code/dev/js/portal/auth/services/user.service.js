@@ -37,6 +37,12 @@
 
 
     /**
+     * List of Users DNS Zones
+     * @type {Array}
+     */
+    var DNSZoneList = [];
+    var dnsZoneSelected = null;
+    /**
      * Clear all details from localstorage
      */
     function clearAll() {
@@ -494,6 +500,46 @@
       return accSelected || $localStorage.selectedAccount;
     }
 
+    /**
+     * @name getUserDNSZones
+     * @description get all DNS Zones available for current User
+     * @param {Boolean} reload
+     * @returns
+     */
+    function getUserDNSZones(reload) {
+      return $q(function (resolve, reject) {
+        if (DNSZoneList.length > 0 && !reload) {
+          return resolve(DNSZoneList);
+        }
+        $http.get($config.API_URL + '/dns_zones')
+          .then( function (data) {
+
+            if (data && data.status === $config.STATUS.OK) {
+              DNSZoneList = data.data.map( function( item ) {
+                  return {
+                    zone: item.zone,
+                    id: item.id,
+                    account_id: item.account_id
+                  };
+                });
+              var user = getUser();
+              if ( DNSZoneList.length > 1 && user ) {
+                DNSZoneList.unshift({
+                  acc_id: '',
+                  acc_name: 'All DNS Zones'
+                });
+              }
+              resolve( DNSZoneList );
+            } else {
+              reject( new Error(data.response) );
+            }
+          })
+          .catch( function( err ) {
+            // console.log( err );
+          });
+      });
+    }
+
     function updateToken(token) {
       var def = $q.defer();
       if (!!token) {
@@ -639,7 +685,9 @@
 
       getACL: getACL,
 
-      isReadOnly: isReadOnly
+      isReadOnly: isReadOnly,
+
+      getUserDNSZones: getUserDNSZones
     };
   }
 })();

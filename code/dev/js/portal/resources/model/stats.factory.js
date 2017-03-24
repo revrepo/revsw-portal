@@ -277,6 +277,20 @@
         method: 'GET',
         url: $config.API_URL + '/usage_reports/web/stats',
         params: {}
+      },
+
+      dns_stats_usage: {
+        isArray: true,
+        method: 'GET',
+        url: $config.API_URL + '/dns_zones/stats/usage',
+        params: {}
+      },
+
+      dns_stats_usage_zone: {
+        isArray: false,
+        method: 'GET',
+        url: $config.API_URL + '/dns_zones/:id/stats/usage',
+        params: {}
       }
     });
   }

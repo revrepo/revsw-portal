@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid usage-web">
   <div class="row">
     <div class="col-md-12">
       <h2>Usage Report</h2>
@@ -181,7 +181,7 @@
           </div>
           <hr>
           <!-- New version display Mobile Apps data-->
-          <div class="row">
+          <div class="row" id="apps__view_container">
             <div class="col-sm-12">
               <div class="h4">Mobile Apps</div>
               <table class="table">
@@ -255,6 +255,42 @@
             </div>
           </div>
           <hr>
+          <!-- New version display DNS Domains data-->
+          <!--div class="row">
+            <div class="col-sm-12" id="dns_domains__container">
+              <div class="h4">DNS Domains</div>
+              <table class="table">
+                <thead>
+                  <th></th>
+                  <th>All Platforms</th>
+
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Active</td>
+                    <td>{{report.applications.active}}</td>
+                    <td>{{report.apps_per_platform['Android'].active}}</td>
+                    <td>{{report.apps_per_platform['iOS'].active}}</td>
+                    <td>{{report.apps_per_platform['Windows_Mobile'].active}}</td>
+                  </tr>
+                  <tr>
+                    <td>Deleted</td>
+                    <td>{{report.applications.deleted}}</td>
+                    <td>{{report.apps_per_platform['Android'].deleted}}</td>
+                    <td>{{report.apps_per_platform['iOS'].deleted}}</td>
+                    <td>{{report.apps_per_platform['Windows_Mobile'].deleted}}</td>
+                  </tr>
+                  <tr>
+                    <td>Total</td>
+                    <td>{{report.applications.total}}</td>
+                    <td>{{report.apps_per_platform['Android'].total}}</td>
+                    <td>{{report.apps_per_platform['iOS'].total}}</td>
+                    <td>{{report.apps_per_platform['Windows_Mobile'].total}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div-->
           <div class="row">
 
             <div class="col-md-4">
