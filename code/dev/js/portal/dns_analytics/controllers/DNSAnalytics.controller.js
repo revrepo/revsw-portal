@@ -42,7 +42,7 @@
             var x = this.xAxis[0].toPixels(this.xAxis[0].min) + 3;
             totalDNSZoneQueries_ = parseFloat(totalDNSZoneQueries_.toFixed(2));
             info_ = this /*chart*/ .renderer
-              .label('Total: <span style="font-weight: bold; color: #3c65ac;">' + Util.formatNumber(totalDNSZoneQueries_) + '</span> QPS',
+              .label('Total: <span style="font-weight: bold; color: #3c65ac;">' + Util.formatNumber(totalDNSZoneQueries_) + '</span> Queries',
                 x /* x */ , 3 /* y */ , '', 0, 0, true /*html*/ )
               .css({
                 color: '#444'
@@ -61,7 +61,7 @@
       },
       yAxis: {
         title: {
-          text: 'Queries Per Second'
+          text: 'Queries'
         },
         labels: {
           formatter: function () {
@@ -71,13 +71,13 @@
       },
       xAxis: {
         type: 'datetime',
-        pointInterval: 24 * 60 * 60 * 10000,
+        pointInterval: 3 * 60 * 1000, // 3 min
       },
       tooltip: {
         xDateFormat: '<span style="color: #000; font-weight: bold;">%H:%M:%S</span> %b %d',
         shared: false,
         headerFormat: '{point.key}<br>',
-        pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y:.3f} QPS</b><br/>',
+        pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y:.3f}</b><br/>',
       },
       plotOptions: {
         areaspline: {
@@ -118,7 +118,7 @@
       vm._loading = true;
 
       var optionsDNSZone = angular.merge({
-        zone: vm.selectedZone.zone
+        id: vm.selectedZone.id
       }, {
         period: vm.period
       }, {});
@@ -159,13 +159,10 @@
           _xAxisPointInterval = parseInt(data.metadata.interval_sec) * 1000;
           totalDNSZoneQueries_ = 0;
           if (data.data && data.data.length > 0) {
-            data.data.forEach(function (item, idx, items) {
-              totalDNSZoneQueries_ += item[1];
-            });
             series[0].data = data.data;
-            if (totalDNSZoneQueries_ === 0) {
-              series[0].data.length = 0;
-            }
+            totalDNSZoneQueries_ = data.metadata.queries;
+          } else {
+            series[0].data = [];
           }
           return $q.when(series);
         })
