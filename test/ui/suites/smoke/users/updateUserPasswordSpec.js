@@ -57,14 +57,15 @@ describe('Smoke', function () {
         it('should update password successfully', function () {
 
           var testPassword = 'test_password';
+          var alertMessages = Constants.alertMessages.users.MSG_SUCCESS_UPDATE_PASSWORD;
+          var alertFirst = Portal.alerts.getFirst();
 
           for (var key in dataUsers.portal.users) {
-            if (dataUsers.portal.users[key].role === user.role) {     
-              Portal.updatePasswordPage.update(dataUsers.portal.users[key].password, testPassword).then(function() {
-                  var alert = Portal.alerts.getFirst();
-                  expect(alert.getText()).toContain(Constants.alertMessages.users.MSG_SUCCESS_UPDATE_PASSWORD);
-                  Portal.updatePasswordPage.update(testPassword, dataUsers.portal.users[key].password)
-              });
+            if (dataUsers.portal.users[key].role === user.role) {
+              var defaultPassword = dataUsers.portal.users[key].password;     
+              Portal.updatePasswordPage.update(defaultPassword, testPassword);
+              expect(alertFirst.getText()).toContain(alertMessages);
+              Portal.updatePasswordPage.update(testPassword, defaultPassword);
             }          
           }
 

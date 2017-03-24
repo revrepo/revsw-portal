@@ -57,8 +57,9 @@ describe('Negative', function () {
             it('should not display pagination when there is not any app to ' +
               'show', function () {
               var uniqueString = 'unique_string_' + (new Date()).getTime();
+              var paginationButtons = Portal.mobileApps.listPage.pager.getPaginationButtons();
               Portal.mobileApps.listPage.setSearch(uniqueString);
-              expect(Portal.mobileApps.listPage.pager.getPaginationButtons().isDisplayed()).toEqual([false, false]);
+              expect(paginationButtons.isDisplayed()).toEqual([false, false]);
             });
 
             it('should not show pagination buttons when the search criteria ' +
