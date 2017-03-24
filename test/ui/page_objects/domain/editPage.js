@@ -394,13 +394,16 @@ var EditDomain = {
       .getThirdPartyLinksTab()
       .click();
   },
+  // Click on button
   clickOnAddNewItemBP: function () {
-    return this.form
-      .getOnAddNewItemBP()
-      .click();
+    var el = this.form.getOnAddNewItemBP();
+    WebElement.scrollToElement(el);
+    return el.click();
   },
 
   clickOnAddNewItemCO: function () {
+    var el = this.form.getOnAddNewItemCO();
+    WebElement.scrollToElement(el);
     return this.form
       .getOnAddNewItemCO()
       .click();
