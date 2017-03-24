@@ -41,7 +41,8 @@
     'revapm.Portal.AzureResources',
     'revapm.Portal.AzureSubscriptions',
     'ngYoutubeEmbed',
-    'satellizer'
+    'satellizer',
+    'revapm.Portal.ReportToDashboard'
   ]);
 
 })();
