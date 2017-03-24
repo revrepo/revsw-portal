@@ -147,11 +147,12 @@
           }
         }
       })
+      // Security Analytics
       .state('index.security', {
         url: '/security',
         views: {
           page: {
-            template: '<span></span>'
+             templateUrl: 'parts/layout/page.html'
           }
         }
       })
