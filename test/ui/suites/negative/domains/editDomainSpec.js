@@ -61,24 +61,23 @@ describe('Negative', function () {
         expect(publishBtn.isEnabled()).toBeFalsy();
       });
 
-    // it('should edit and update the domain without "Origin Host Header"',
-    //   function () {
-    //     Portal.userListPage.searchAndClickEdit(myDomain.email);
-    //     Portal.domains.editPage.form.clearOriginHostHeader();
-    //     Portal.domains.editPage.clickUpdateDomain();
-    //   });
-    //
-    // it('should display an error message when trying to edit domain without '+
-    //   '"Domain Origin Location"',
-    //   function () {
-    //     Portal.userListPage.searchAndClickEdit(myDomain.email);
-    //     Portal.domains.editPage.form.
-    //       setDomainOriginLocation('--- Select role ---');
-    //     Portal.domains.editPage.clickUpdateDomain();
-    //     var alert = Portal.alerts.getFirst();
-    //     var expectedMessage = 'child "origin_server_location_id" fails ' +
-    //       'because ["origin_server_location_id" must be a string]';
-    //     expect(alert.getText()).toEqual(expectedMessage);
-    //   });
+    it('should edit and update the domain without "Origin Host Header"',
+      function () {
+        Portal.domains.listPage.searchAndClickEdit(myDomain.name);
+        Portal.domains.editPage.form.clearOriginHostHeader();
+        expect(Portal.domains.editPage.getDisabledUpdateDomainBtn()).toBeTruthy();
+
+      });
+
+    it('should edit and publish the domain without "Origin Host Header"',
+      function () {
+        Portal.domains.listPage.searchAndClickEdit(myDomain.name);
+        Portal.domains.editPage.form.clearOriginHostHeader();
+        expect(Portal.domains.editPage.getDisabledPublishDomainBtn()).toBeTruthy();
+
+      });
+    
+
+
   });
 });

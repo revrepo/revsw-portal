@@ -25,8 +25,9 @@ describe('Smoke', function () {
 
   var users = [
     config.get('portal.users.admin'),
-    // config.get('portal.users.reseller')
-    // config.get('portal.users.revAdmin'),
+    // TODO: For this role when go to 'Dashboards' item you will see problem with encoding of text. I think maybe it is problem with back-end.
+    //config.get('portal.users.reseller'),
+    config.get('portal.users.revAdmin')
   ];
 
   users.forEach(function (user) {
@@ -35,15 +36,14 @@ describe('Smoke', function () {
 
       describe('Delete Dashboards', function () {
 
+        
         var dashboard = DataProvider.generateDashboardData();
 
         beforeAll(function () {
           Portal.signIn(user);
-          // Portal.createDashboard([dashboard]);
         });
 
         afterAll(function () {
-          //Portal.deleteDashboard([dashboard]);
           Portal.signOut();
         });
 
@@ -73,22 +73,35 @@ describe('Smoke', function () {
             expect(leftSide).not.toContain(dashboard.title);
           });
 
-        // it('should display "Delete Dashboard" button in edited dashboard form',
-        //   function () {
-        //     var button = Portal.dashboards.editPage.form.getDeleteBtn();
-        //     expect(button.isPresent()).toBeTruthy();
-        //   });
+        it('should display "Delete Dashboard" button in edited dashboard form',
+          function () {
+            var button = Portal.dashboards.editPage.form.getDeleteBtn();
 
-        // it('should update form after clicking on dashboard name',
-        //   function () {
-        //     var tempTitle = dashboard.title;
-        //     dashboard.title = dashboard.title + '-UPDATED';
-        //     Portal.dashboards.editPage.form.fill(dashboard);
-        //     Portal.dashboards.editPage.form.clickCreate();
+            Portal.dashboards.listPage.clickModifyDashboard();
+            Portal.dashboards.listPage.clickEditDashboardProperties();
+
+            expect(button.isPresent()).toBeTruthy();
+
+            Portal.dashboards.editPage.form.clickCreate();
+          });
+
+        it('should update form after clicking on dashboard name',
+          function () {
             
-        //     var updatedTitle = Portal.dashboards.listPage.getTitle();
-        //     expect(updatedTitle).toContain(dashboard.title);
-        //   });
+            var exampleTitle = new Date().toISOString().replace(/-|:|\./g, '');
+
+            Portal.dashboards.listPage.clickModifyDashboard();
+            Portal.dashboards.listPage.clickEditDashboardProperties();
+
+            Portal.dashboards.editPage.form.setTitle(exampleTitle);
+            Portal.dashboards.editPage.form.clickCreate();
+            
+            var updatedTitle = Portal.dashboards.listPage.getTitle();
+
+            expect(updatedTitle).toContain(exampleTitle);
+          });
+
+
       });
     });
   });
