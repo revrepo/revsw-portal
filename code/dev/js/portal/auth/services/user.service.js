@@ -58,6 +58,7 @@
         last_user_id: null,
         selectedAccount: null,
         selectedApplication: null,
+        selectedDNSZone: null,
         intro: intro_,
         lastUrl: null
       });
@@ -447,6 +448,24 @@
     }
 
     /**
+     * @name selectDNSZone
+     * @description save data about selected DNS Zone
+     * @returns
+     */
+    function selectDNSZone( zone ) {
+      $localStorage.selectedDNSZone = zone;
+      dnsZoneSelected = zone;
+    }
+    /**
+     * @name getSelectedDNSZone
+     * @description get data a last selected DNS Zone
+     * @returns {null| Object}
+     */
+    function getSelectedDNSZone() {
+      return $localStorage.selectedDNSZone || dnsZoneSelected;
+    }
+
+    /**
      * Load user Companies/Accounts
      * @param {boolean} reload
      * @returns {Promise}
@@ -687,7 +706,11 @@
 
       isReadOnly: isReadOnly,
 
-      getUserDNSZones: getUserDNSZones
+      getUserDNSZones: getUserDNSZones,
+
+      selectDNSZone: selectDNSZone,
+
+      getSelectedDNSZone: getSelectedDNSZone
     };
   }
 })();
