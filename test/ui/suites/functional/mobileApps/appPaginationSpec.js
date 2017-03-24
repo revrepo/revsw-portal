@@ -61,8 +61,8 @@ describe('Functional', function () {
                 });
               });
 
-            it('should be displayed when the amount of items exceeds the ' +
-              'maximum amount configured to displayed in one page',
+            it('should display next-btn if full list and should ' +
+              'not display if clean list',
               function () {
                 var uniqueString = 'unique_string_' + (new Date()).getTime();
                 Portal.mobileApps.listPage.setSearch(uniqueString);
@@ -133,6 +133,8 @@ describe('Functional', function () {
                       .toBeTruthy();
                   });
               });
+
+
           });
         });
       });

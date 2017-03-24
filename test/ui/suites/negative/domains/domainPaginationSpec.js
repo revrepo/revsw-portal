@@ -40,7 +40,7 @@ describe('Negative', function () {
       function () {
         var uniqueString = 'unique_string_' + (new Date()).getTime();
         Portal.domains.listPage.searcher.setSearchCriteria(uniqueString);
-        expect(Portal.domains.listPage.pager.isDisplayed()).toBe(false);
+        expect(Portal.domains.listPage.pager.getPaginationButtons().isDisplayed()).toEqual([false, false]);
         Portal.domains.listPage.searcher.clearSearchCriteria();
       });
 
@@ -66,7 +66,7 @@ describe('Negative', function () {
       function () {
         var uniqueString = 'unique_string_' + (new Date()).getTime();
         Portal.domains.listPage.searcher.setSearchCriteria(uniqueString);
-        expect(Portal.domains.listPage.pager.isDisplayed()).toBe(false);
+        expect(Portal.domains.listPage.pager.getPreviousBtn().isDisplayed()).toBe(false);
         Portal.domains.listPage.searcher.clearSearchCriteria();
       });
 
@@ -75,7 +75,7 @@ describe('Negative', function () {
       function () {
         var uniqueString = 'unique_string_' + (new Date()).getTime();
         Portal.domains.listPage.searcher.setSearchCriteria(uniqueString);
-        expect(Portal.domains.listPage.pager.isDisplayed()).toBe(false);
+        expect(Portal.domains.listPage.pager.getNextBtn().isDisplayed()).toBe(false);
         Portal.domains.listPage.searcher.clearSearchCriteria();
       });
   });

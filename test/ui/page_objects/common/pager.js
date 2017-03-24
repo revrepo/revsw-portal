@@ -34,6 +34,9 @@ var Pager = {
   // Locators specific to HTML elements from this page object
   locators: {
     buttons: {
+      pagination: {
+        css: 'crud-pagination nav'
+      },
       allPages: {
         css: 'hr + crud-pagination li.pointer span'
       },
@@ -83,6 +86,17 @@ var Pager = {
     return element(by.css(this.locators.listItems.nextPage.css));
   },
 
+  /**
+   * ### Pager.getPaginationButtons()
+   *
+   * Return the reference to the `Pagination` ListItem (Selenium WebDriver
+   * Element) from a specific pagination component from the Portal app
+   *
+   * @returns {Selenium WebDriver Element}
+   */
+  getPaginationButtons: function () {
+    return element.all(by.css(this.locators.buttons.pagination.css));
+  },
   /**
    * ### Pager.getAllPageIndexButtons()
    *
