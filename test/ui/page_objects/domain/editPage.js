@@ -20,7 +20,7 @@
 
 // Requiring `domain form` component page object
 var DomainForm = require('./form');
-
+var WebElement = require('./../../common/helpers/webElement');
 var BROWSER_WAIT_TIMEOUT = 420000; // 7 mins
 
 // This `Edit Domain` Page Object abstracts all operations or actions that a
@@ -428,9 +428,9 @@ var EditDomain = {
   },
 
   clickAddNewBackendBlock: function() {
-    return this.form
-      .getOnAddNewBackendBlock()
-      .click();
+    var el = this.form.getOnAddNewBackendBlock();
+    WebElement.scrollToElement(el);
+    return el.click();
   },
 
   clickOpenUrlOfCachingRule: function() {
