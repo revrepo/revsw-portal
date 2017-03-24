@@ -149,10 +149,10 @@
             dataMonth = arraysData[1];
           }
           if (dataMonth) {
-            vm.totalDNSZoneQueries30d = dataMonth.metadata.queries;
+            vm.totalDNSZoneQueries30d = Util.formatNumber(dataMonth.metadata.queries);
           }
           if (data.metadata) {
-            vm.totalDNSZoneRecords = data.metadata.records;
+            vm.totalDNSZoneRecords = Util.formatNumber(data.metadata.records);
           }
           var interval = data.metadata.interval_sec || 1800;
           _xAxisPointStart = parseInt(data.metadata.start_timestamp);
