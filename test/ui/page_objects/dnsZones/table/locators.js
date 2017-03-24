@@ -74,6 +74,9 @@ var rowLocators = {
       trash: {
         className: 'glyphicon-trash'
       },
+      stats: {
+        className: 'glyphicon-stats'
+      },
       manageRecords: {
         className: 'glyphicon-tasks'
       }

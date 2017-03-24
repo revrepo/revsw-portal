@@ -155,6 +155,21 @@ var dnsZonesTableRow = function (rowEl, locators) {
     };
   }
 
+  if (this.locators.actions && this.locators.actions.buttons.stats) {
+
+    this.getStatsBtn = function () {
+      return this.rowEl
+        .element(by.css(this.locators.actions.css))
+        .element(by.className(this.locators.actions.buttons.stats.className));
+    };
+
+    this.clickStats = function () {
+      return this
+        .getStatsBtn()
+        .click();
+    };
+  }
+
   if (this.locators.actions && this.locators.actions.buttons.manageRecords) {
 
     this.getManageRecordsBtn = function () {

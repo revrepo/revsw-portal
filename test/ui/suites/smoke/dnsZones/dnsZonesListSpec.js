@@ -74,6 +74,39 @@ describe('Smoke', function () {
             Portal.dnsZones.addPage.clickCancel();
             expect(Portal.dnsZones.listPage.isDisplayed()).toBeTruthy();
           });
+
+        it('should display a `edit` icon for the zone',
+          function () {
+            Portal.dnsZones.listPage.table
+              .getRow(0)
+              .getEditBtn()
+              .isDisplayed()
+              .then(function (isDisplayed) {
+                expect(isDisplayed).toBeTruthy();
+              });
+          });
+
+        it('should display a `delete` icon for the zone',
+          function () {
+            Portal.dnsZones.listPage.table
+              .getRow(0)
+              .getDeleteBtn()
+              .isDisplayed()
+              .then(function (isDisplayed) {
+                expect(isDisplayed).toBeTruthy();
+              });
+          });
+
+        it('should display a `stats` icon for the zone',
+          function () {
+            Portal.dnsZones.listPage.table
+              .getRow(0)
+              .getStatsBtn()
+              .isDisplayed()
+              .then(function (isDisplayed) {
+                expect(isDisplayed).toBeTruthy();
+              });
+          });
       });
     });
   });
