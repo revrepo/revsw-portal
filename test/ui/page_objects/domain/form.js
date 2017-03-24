@@ -313,10 +313,10 @@ var DomainForm = {
         id: 'manageSSLcertificates'
       },
       onAddNewItemBP: {
-        css: '.addNewLuaBlock'
+        css: '#luaScriptingLastMileBlock .addNewLuaBlock'
       },
       onAddNewItemCO: {
-        css: '[ng-click="$ctrl.onAddNewItemCO()"]'
+        css: '#luaScriptingFirstMileBlock .addNewLuaBlock'
       }
     },
     elementsForm: {
@@ -895,7 +895,7 @@ var DomainForm = {
   },
 
   getOnAddNewItemBP: function () {
-    return element.all(by.css(this.locators.buttons.onAddNewItemBP.css));
+    return element(by.css(this.locators.buttons.onAddNewItemBP.css));
   },
   getOnAddNewItemCO: function () {
     return element(by.css(this.locators.buttons.onAddNewItemCO.css));
