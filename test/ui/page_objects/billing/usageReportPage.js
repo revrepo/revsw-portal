@@ -35,6 +35,9 @@ var UsageReport = {
       panelBody: '.col-md-12 .panel .panel-body',
       mobileApps: {
         id: 'apps__view_container'
+      },
+      sslCerts:{
+        id: 'ssl_certs__container'
       }
     },
     buttons: {
@@ -273,6 +276,27 @@ var UsageReport = {
   getMobileAppsViewText: function () {
     return this.getMobileAppsView().getText();
   },
+  /**
+   * ### UsageReport.getSSLCertsView()
+   *
+   * Gets the reference to `SSL Certificates` block view element.
+   *
+   * @returns {Promise}
+   */
+  getSSLCertsView: function () {
+    return element(by.id(this.locators.views.sslCerts.id));
+  },
+    /**
+   * ### UsageReport.getSSLCertsViewText()
+   *
+   * Gets the text  from `SSL Certificates` block view element core/text.
+   *
+   * @returns {Promise}
+   */
+  getSSLCertsViewText: function () {
+    return this.getSSLCertsView().getText();
+  },
+
   /**
    * ### UsageReport.getApiKeysForm()
    *
