@@ -115,37 +115,37 @@
               </form>
 
             </div>
-            <!-- TODO: delete "Mobile Apps" section after check table "Mobile Apps" -->
-            <!--<div class="col-md-4">
+            <!-- Section with data SSL Certificates-->
+            <div class="col-md-4" id="ssl_certs__container">
 
-              <h4>Mobile Apps</h4>
+              <h4>SSL Certs</h4>
 
               <form class="form-horizontal">
 
                 <div class="form-group">
                   <label class="col-sm-6 control-label" >Active</label>
                   <div class="col-sm-6">
-                    <div class="form-control text-right">{{ report.applications.active }}</div>
+                    <div class="form-control text-right">{{ report.ssl_certs.active }}</div>
                   </div>
                 </div>
 
                 <div class="form-group">
                   <label class="col-sm-6 control-label" >Deleted</label>
                   <div class="col-sm-6">
-                    <div class="form-control text-right">{{ report.applications.deleted }}</div>
+                    <div class="form-control text-right">{{ report.ssl_certs.deleted }}</div>
                   </div>
                 </div>
 
                 <div class="form-group">
                   <label class="col-sm-6 control-label">Total</label>
                   <div class="col-sm-6">
-                    <div class="form-control text-right">{{ report.applications.total }}</div>
+                    <div class="form-control text-right">{{ report.ssl_certs.total }}</div>
                   </div>
                 </div>
 
               </form>
 
-            </div>-->
+            </div>
 
             <div class="col-md-4">
 
@@ -154,7 +154,7 @@
               <form class="form-horizontal">
 
                 <div class="form-group">
-                  <label class="col-sm-6 control-label" >Active</label>
+                  <label class="col-sm-6 control-label">Active</label>
                   <div class="col-sm-6">
                     <div class="form-control text-right">{{ report.api_keys.active }}</div>
                   </div>
@@ -219,41 +219,6 @@
             </div>
           </div>
 
-          <hr>
-         <!-- Section with data SSL Certificates-->
-          <div class="row">
-            <div class="col-sm-12" id="ssl_certs__container">
-              <div class="h4">SSL Certs</div>
-              <table class="table">
-                <thead>
-                  <th></th>
-                  <th>All Types</th>
-                  <th>Private</th>
-                  <th>Shared</th>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Active</td>
-                    <td>{{report.ssl_certs.active}}</td>
-                    <td>{{report.ssl_certs_per_type['private'].active}}</td>
-                    <td>{{report.ssl_certs_per_type['shared'].active}}</td>
-                  </tr>
-                  <tr>
-                    <td>Deleted</td>
-                    <td>{{report.ssl_certs.deleted}}</td>
-                    <td>{{report.ssl_certs_per_type['private'].deleted}}</td>
-                    <td>{{report.ssl_certs_per_type['shared'].deleted}}</td>
-                  </tr>
-                  <tr>
-                    <td>Total</td>
-                    <td>{{report.ssl_certs.total}}</td>
-                    <td>{{report.ssl_certs_per_type['private'].total}}</td>
-                    <td>{{report.ssl_certs_per_type['shared'].total}}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
           <hr>
           <!-- New version display DNS Domains data-->
           <!--div class="row">

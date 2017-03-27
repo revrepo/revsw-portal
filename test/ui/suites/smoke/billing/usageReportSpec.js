@@ -79,5 +79,20 @@ describe('Smoke: ', function () {
           });
       });
     });
+
+    // NOTE: smoke test check only display text, but do not validate values
+    it('should display SSL Certs section with correct report properties', function() {
+
+          var reportPropertiesSSLCerts = {
+            active: 'Active',
+            deleted: 'Deleted',
+            total: 'Total'
+          };
+
+          var result = Portal.billing.usageReportPage.getSSLCertsViewText();
+          expect(result).toContain(reportPropertiesSSLCerts.active);
+          expect(result).toContain(reportPropertiesSSLCerts.deleted);
+          expect(result).toContain(reportPropertiesSSLCerts.total);
+        });
   });
 });
