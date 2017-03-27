@@ -54,7 +54,11 @@ describe('Functional', function () {
               function () {
                 Portal.helpers.nav.goToDomains();
                 Portal.domains.listPage.clickAddNewDomain();
-                expect(Portal.domains.listPage.isDisplayed()).toBeTruthy();
+
+                browser.getCurrentUrl().then(function(actualUrl) {
+                  expect(actualUrl.replace(/.*(#.*)/g, '$1') !== Portal.constants.hashFragments.domains.new).toBe(true);
+                });
+
               });
 
             it('RO user should not be able to create a domain if open ' +
@@ -79,7 +83,6 @@ describe('Functional', function () {
                 Portal.helpers.nav.goToDomains();
                 Portal.domains.listPage.clickAddNewDomain();
                 Portal.domains.addPage.createDomain(myDomain);
-
                 var alert = Portal.alerts.getFirst();
                 var expectedMsg = Constants.alertMessages.domains
                   .MSG_SUCCESS_ADD;
