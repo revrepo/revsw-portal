@@ -2,7 +2,7 @@
  *
  * REV SOFTWARE CONFIDENTIAL
  *
- * [2013] - [2015] Rev Software, Inc.
+ * [2013] - [2017] Rev Software, Inc.
  * All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains
@@ -93,6 +93,7 @@ var LogShippingListPage = require('./logShipping/listPage');
 var LogShippingAddPage = require('./logShipping/addPage');
 var LogShippingEditPage = require('./logShipping/editPage');
 
+var DNSAnalyticsPage = require('./dnsAnalytics/dnsAnalyticsPage');
 var DNSZonesListPage = require('./dnsZones/listPage');
 var DNSZonesAddPage = require('./dnsZones/addPage');
 var DNSZonesEditPage = require('./dnsZones/editPage');
@@ -202,6 +203,7 @@ var Portal = {
   stagingEnv: {
     page: StagingEnvPage
   },
+  dnsAnalyticsPage: DNSAnalyticsPage,
   dnsZones: {
     listPage: DNSZonesListPage,
     addPage: DNSZonesAddPage,

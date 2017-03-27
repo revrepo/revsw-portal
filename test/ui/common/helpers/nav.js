@@ -209,6 +209,13 @@ var NavHelper = {
   },
 
   /**
+   * Navigates to DNS Service > DNS Analytics
+   */
+  goToDNSAnalytics: function () {
+    return SideBar.select(MenuItems.DNS_SERVICE.DNS_ANALYTICS);
+  },
+
+  /**
    * Navigates to DNS Service > DNS Zones
    */
   goToDNSZones: function () {
