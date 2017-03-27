@@ -56,7 +56,8 @@ describe('Functional', function () {
                 Portal.domains.listPage.clickAddNewDomain();
 
                 browser.getCurrentUrl().then(function(actualUrl) {
-                  expect(actualUrl.replace(/.*(#.*)/g, '$1') !== Portal.constants.hashFragments.domains.new).toBe(true);
+                  expect(actualUrl.replace(/.*(#.*)/g, '$1') !== Portal.constants.hashFragments
+                    .domains.new).toBe(true);
                 });
 
               });
