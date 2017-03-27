@@ -115,7 +115,7 @@
         <li ui-sref-active-if="{class: 'open-side-menu-item', state: 'index.security'}" , ng-class="{'open-side-menu-item': menuExpanded('index.security'),'active-side-menu-item': $state.includes('index.security')}">
           <a id="side-menu-security-analytics-item" class="side-menu-item" , ng-click="goToState('index.security.waf_analytics')">
             <div class="left-menu-start">
-              <i class="fa fa-bomb"></i>
+              <i class="fa fa-shield"></i>
             </div>
             Security Analytics
             <i ng-click="expandMenu('index.security', $event)" class="pull-right {{ menuExpanded('index.security') ? 'fa fa-caret-up' : 'fa fa-caret-down' }}"></i>
