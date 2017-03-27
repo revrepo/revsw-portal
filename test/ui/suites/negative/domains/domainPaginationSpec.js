@@ -39,8 +39,9 @@ describe('Negative', function () {
     it('should not display pagination when there is not any domain to show',
       function () {
         var uniqueString = 'unique_string_' + (new Date()).getTime();
+        var paginationButtons = Portal.domains.listPage.pager.getPaginationButtons().isDisplayed();
         Portal.domains.listPage.searcher.setSearchCriteria(uniqueString);
-        expect(Portal.domains.listPage.pager.isDisplayed()).toBe(false);
+        expect(paginationButtons).toEqual([false, false]);
         Portal.domains.listPage.searcher.clearSearchCriteria();
       });
 
@@ -66,7 +67,7 @@ describe('Negative', function () {
       function () {
         var uniqueString = 'unique_string_' + (new Date()).getTime();
         Portal.domains.listPage.searcher.setSearchCriteria(uniqueString);
-        expect(Portal.domains.listPage.pager.isDisplayed()).toBe(false);
+        expect(Portal.domains.listPage.pager.getPreviousBtn().isDisplayed()).toBe(false);
         Portal.domains.listPage.searcher.clearSearchCriteria();
       });
 
@@ -75,7 +76,7 @@ describe('Negative', function () {
       function () {
         var uniqueString = 'unique_string_' + (new Date()).getTime();
         Portal.domains.listPage.searcher.setSearchCriteria(uniqueString);
-        expect(Portal.domains.listPage.pager.isDisplayed()).toBe(false);
+        expect(Portal.domains.listPage.pager.getNextBtn().isDisplayed()).toBe(false);
         Portal.domains.listPage.searcher.clearSearchCriteria();
       });
   });

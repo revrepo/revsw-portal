@@ -20,8 +20,6 @@ var config = require('config');
 var Portal = require('./../../../page_objects/portal');
 var DataProvider = require('./../../../common/providers/data');
 
-//TODO: Commenting out all tests as there is not possible to get reference to
-//alert component. This might be related to usage of setTimeout/timeInterval
 describe('Functional', function () {  // jshint ignore:line
   describe('Edit domain', function () {
 
