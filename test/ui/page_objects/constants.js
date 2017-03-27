@@ -109,7 +109,8 @@ var Constants = {
     },
     dnsService: {
       DNS_SERVICE: 'DNS Service',
-      DNS_ZONES: 'DNS Zones'
+      DNS_ZONES: 'DNS Zones',
+      DNS_ANALYTICS: 'DNS Analytics'
     }
   },
   user: {

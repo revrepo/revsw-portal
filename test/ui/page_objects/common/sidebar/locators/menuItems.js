@@ -119,6 +119,10 @@ var MenuItems = {
     DATA_SOURCES: {
       linkText: 'Data Sources',
       area: MenuAreas.DNS_SERVICE
+    },
+    DNS_ANALYTICS:{
+      linkText: 'DNS Analytics',
+      area: MenuAreas.DNS_SERVICE
     }
   },
   ADMIN: {
