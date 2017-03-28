@@ -44,21 +44,13 @@ describe('Functional', function () {
     });
 
 
-    // it('should get some Usage Report page', function() {
-    //   var tr = Portal.billing.usageReportDomainsPage.getSome();
-    //   expect(tr.count()).toEqual( 4 );
-
-    //   // var some = tr.all(by.css('td')).get(1).getText();
-    //   // expect(some).toEqual( testDomain );
-
-    //   // var tr = Portal.billing.usageReportDomainsPage.getNamedTr( testDomains[0] );
-    //   // var t = tr.getText();
-    //   // expect(t).toEqual( 'no' );
-
-    //   // var some = tr.all(by.css('td')).get(1).getText();
-    //   // expect(some).toEqual( testDomain );
-    // });
-
+    it('should get some Usage Report page', function() {
+      Portal.billing.usageReportPage.setCompanyName('API QA Account');
+      Portal.billing.usageReportPage.clickUpdateReport();
+      Portal.billing.usageReportDomainsPage.getDomainsList().then(function(list) {
+        expect(list.length > 0).toBe(true);
+      });
+    });
 
     it('should get title "Domains Usage" from Usage Report page', function() {
       var title = Portal.billing.usageReportDomainsPage.getTitle();
