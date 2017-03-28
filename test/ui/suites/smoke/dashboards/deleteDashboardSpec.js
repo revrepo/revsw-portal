@@ -25,7 +25,10 @@ describe('Smoke', function () {
 
   var users = [
     config.get('portal.users.admin'),
-    // TODO: For this role when go to 'Dashboards' item you will see problem with encoding of text. I think maybe it is problem with back-end.
+    
+    // TODO: For this role when go to 'Dashboards' 
+    // ***** item you will see problem with encoding of text.
+
     //config.get('portal.users.reseller'),
     config.get('portal.users.revAdmin')
   ];
