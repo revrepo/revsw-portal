@@ -56,12 +56,6 @@ describe('Smoke', function () {
           expect(Portal.logShipping.addPage.form.isDisplayed()).toBeTruthy();
         });
 
-        it('should allow to cancel a Log Shipping Job addition', function () {
-          Portal.logShipping.addPage.form.setJobName('something');
-          Portal.logShipping.addPage.clickCancel();
-          expect(Portal.logShipping.listPage.isDisplayed()).toBeTruthy();
-        });
-
         it('should create a Log Shipping Job when filling all required data',
           function () {
             var logShippingJobToSearch = DataProvider.generateLogShippingJobData();
@@ -75,6 +69,12 @@ describe('Smoke', function () {
               .searchAndGetFirstRow(logShippingJobToSearch.name)
               .getJobName()).toEqual(logShippingJobToSearch.name);
           });
+
+        it('should allow to cancel a Log Shipping Job addition', function () {
+          Portal.logShipping.addPage.form.setJobName('something');
+          Portal.logShipping.addPage.clickCancel();
+          expect(Portal.logShipping.listPage.isDisplayed()).toBeTruthy();
+        });
       });
     });
   });
