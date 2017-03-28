@@ -61,7 +61,7 @@ var DashboardForm = {
         css: '.btn.btn-default'
       },
       delete: {
-        css: '.btn.btn-danger'
+        css: '.modal-dialog .btn-danger'
       }
     }
   },
