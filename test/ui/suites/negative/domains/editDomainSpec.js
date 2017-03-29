@@ -65,16 +65,16 @@ describe('Negative', function () {
       function () {
         Portal.domains.listPage.searchAndClickEdit(myDomain.name);
         Portal.domains.editPage.form.clearOriginHostHeader();
-        expect(Portal.domains.editPage.getDisabledUpdateDomainBtn()).toBeTruthy();
-
+        var updateBtn = Portal.domains.editPage.getUpdateDomainBtn();
+        expect(updateBtn.isEnabled()).toBeFalsy();
       });
 
     it('should not be able to publish a domain without "Origin Host Header" value',
       function () {
         Portal.domains.listPage.searchAndClickEdit(myDomain.name);
         Portal.domains.editPage.form.clearOriginHostHeader();
-        expect(Portal.domains.editPage.getDisabledPublishDomainBtn()).toBeTruthy();
-
+        var publishBtn = Portal.domains.editPage.getPublishDomainBtn();
+        expect(publishBtn.isEnabled()).toBeFalsy();
       });
     
 

@@ -174,7 +174,6 @@ var EditDomain = {
     return element(by.id(this.locators.buttons.updateDomain.id));
   },
 
-
   /**
    * ### EditDomain.getDisabledPublishDomainBtn()
    *
