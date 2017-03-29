@@ -38,11 +38,11 @@ var NavHelper = {
    * Goes to Dashboards Area
    * @returns {*}
    */
-  goToDashboards: function (text) {
+  goToDashboards: function () {
     return SideBar.select(MenuAreas.DASHBOARDS);
   },
 
-  getDashboardsItems: function (text) {
+  getDashboardsItems: function () {
     return element.all(by.css(MenuAreas.DASHBOARDS.css));
   },
 
