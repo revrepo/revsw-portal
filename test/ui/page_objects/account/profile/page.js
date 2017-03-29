@@ -2,7 +2,7 @@
  *
  * REV SOFTWARE CONFIDENTIAL
  *
- * [2013] - [2016] Rev Software, Inc.
+ * [2013] - [2017] Rev Software, Inc.
  * All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains
@@ -17,6 +17,7 @@
  */
 
 // # Account Profile Page Object
+var WebElement = require('./../../../common/helpers/webElement');
 
 var AccountProfileForm = require('./form');
 
@@ -28,6 +29,9 @@ var AccountProfilePage = {
 
   // Locators specific to HTML elements from this page object
   locators: {
+    container:{
+      id: 'account_profile__container'
+    },
     buttons: {
       updatePaymentProfile: {
         linkText: 'Update Payment Profile'
@@ -95,10 +99,20 @@ var AccountProfilePage = {
    */
   getTitle: function () {
     return this
-      .getTitleLbl()
-      .click();
+      .getTitleLbl();
   },
 
+  // ## Helper Methods
+  /**
+   * ### AccountProfilePage.isPresent()
+   *
+   * Check existing this PO on display
+   *
+   * @reurns {Boolean}
+   */
+  isPresent: function(){
+    return element(by.id(this.locators.container.id)).isPresent();
+  },
   /**
    * ### AccountProfilePage.clickUpdatePaymentProfile()
    *
@@ -115,18 +129,15 @@ var AccountProfilePage = {
   /**
    * ### AccountProfilePage.clickDeleteCompanyProfile()
    *
-   * Clicks `Delete Company Profile` link
+   * Clicks `Delete Company Profile` link after scroll screen to top
    *
    * @returns {Object} Promise
    */
   clickDeleteCompanyProfile: function () {
-    return this
-      .getDeleteCompanyProfileBtn()
-      .click();
+    var el = this.getDeleteCompanyProfileBtn();
+    WebElement.scrollToElement(el);
+    return el.click();
   }
-
-  // ## Helper Methods
-
 };
 
 module.exports = AccountProfilePage;
