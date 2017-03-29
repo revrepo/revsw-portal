@@ -71,15 +71,25 @@ var Summary = {
         css: 'table:nth-of-type(2) tr:nth-of-type(4) td:nth-of-type(2)'
       }
     },
+    inputText: {
+      selectSearch: {
+        css: '.ui-select-container .ui-select-search'
+      }
+    },
     buttons: {
       changeBillingPlan: {
         css: 'table:nth-of-type(1) tr:nth-of-type(1) td:nth-of-type(2) a'
       },
       viewDetails: {
-        css: 'table:nth-of-type(1) tr:nth-of-type(5) td:nth-of-type(2) a'
+        css: 'a[uib-tooltip="View Details"]'
       },
       updatePaymentProfile: {
-        css: 'table tr:nth-of-type(3) td:nth-of-type(2) a'
+        css: 'a[uib-tooltip="Update Payment Profile"]'
+      }
+    },
+    dropDowns: {
+      accountName: {
+        css: '.ui-select-container[ng-model="account"] > a'
       }
     }
   },
@@ -92,9 +102,7 @@ var Summary = {
   },
 
   getCurrentBillingPlanEl: function () {
-    return this
-      .getContainer()
-      .element(by.css(this.locators.elements.currentBillingPlan.css));
+    return element.all(by.css(this.locators.elements.currentBillingPlan.css));
   },
   getTotalPaymentsEl: function () {
     return this
@@ -152,6 +160,14 @@ var Summary = {
     return this
       .getContainer()
       .element(by.css(this.locators.buttons.changeBillingPlan.css));
+  },
+
+  getAccountSelectEl: function() {
+    return element(by.css(this.locators.dropDowns.accountName.css));
+  },
+
+  getAccountInputEl: function() {
+    return element(by.css(this.locators.inputText.selectSearch.css));
   },
 
   getViewDetailsBtn: function () {
@@ -239,6 +255,14 @@ var Summary = {
     return this
       .getCardExpDateEl()
       .getText();
+  },
+
+  setAccountSelect: function (value) {
+    this.getAccountSelectEl().click();
+    this.getAccountInputEl().sendKeys(value);
+    return this
+      .getAccountInputEl()
+      .sendKeys(protractor.Key.ENTER);
   },
 
   clickChangeBillingPlan: function () {

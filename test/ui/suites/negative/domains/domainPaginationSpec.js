@@ -39,8 +39,8 @@ describe('Negative', function () {
     it('should not display pagination when there is not any domain to show',
       function () {
         var uniqueString = 'unique_string_' + (new Date()).getTime();
-        var paginationButtons = Portal.domains.listPage.pager.getPaginationButtons().isDisplayed();
         Portal.domains.listPage.searcher.setSearchCriteria(uniqueString);
+        var paginationButtons = Portal.domains.listPage.pager.getPaginationButtons().isDisplayed();
         expect(paginationButtons).toEqual([false, false]);
         Portal.domains.listPage.searcher.clearSearchCriteria();
       });

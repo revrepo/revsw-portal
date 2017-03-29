@@ -16,36 +16,25 @@
  * from Rev Software, Inc.
  */
 
+
 var config = require('config');
 var Portal = require('./../../../page_objects/portal');
 
-describe('Smoke', function () {
+describe('Functional', function () {
+  describe('Domain pagination', function () {
 
-  var user;
-  var currentPlan = 'Gold';
-  var billingPortal = /www\.billingportal\.com/;
+    var revAdmin = config.get('portal.users.revAdmin');
 
-  describe('Billing Statements', function () {
-
-    beforeAll(function (done) {
-      Portal
-        .signUpAndVerifyUser(currentPlan)
-        .then(function (newUser) {
-          user = newUser;
-          return Portal.helpers.nav.goToBillingStatements();
-        })
-        .then(function () {
-          done();
-        });
+    beforeAll(function () {
+      Portal.signIn(revAdmin);
+      Portal.helpers.nav.goToBillingStatements();
     });
 
     afterAll(function () {
       Portal.signOut();
     });
 
-    beforeEach(function () {
-      //Portal.helpers.nav.goToBillingStatements();
-    });
+    beforeEach(function () {});
 
     it('should check that Billing Summary area exists.',
       function () {
@@ -116,43 +105,38 @@ describe('Smoke', function () {
           });
       });
 
-    xit('should `View Details` button be disabled.',
+
+    it('should `View Details` button be disabled/enabled.',
       function () {
-        // TODO: Bug? should it be disabled/enabled?
-        browser.wait(function () {
-          return Portal.accounts.billingStatements.summary
-            .getViewDetailsBtn()
-            .getAttribute('disabled')
-            .then(function (isDisabled) {
-              return isDisabled;
-            });
-        }, 10000);
-        return Portal.accounts.billingStatements.summary
-          .getViewDetailsBtn()
-          .getAttribute('disabled')
-          .then(function (isDisabled) {
-            expect(isDisabled).not.toBe(false);
-          });
+        var summary = Portal.accounts.billingStatements.summary;
+        summary.setAccountSelect('API QA Account');
+        summary.getViewDetailsBtn().getAttribute('disabled').then(function (isDisabled) {
+            expect(isDisabled).toBe('true');
+        });
+        
+        summary.setAccountSelect('Amira Schumm');
+        summary.getViewDetailsBtn().getAttribute('disabled').then(function (isDisabled) {
+            expect(isDisabled).toBe(null);
+        });
+
       });
 
-    xit('should `Update Payment Profile` button be disabled.',
+
+    it('should `Update Payment Profile` button be disabled/enabled.',
       function () {
-        // TODO: Bug? should it be disabled/enabled?
-        browser.wait(function () {
-          return Portal.accounts.billingStatements.summary
-            .getUpdatePaymentProfileBtn()
-            .getAttribute('disabled')
-            .then(function (isDisabled) {
-              return isDisabled;
-            });
-        }, 10000);
-        return Portal.accounts.billingStatements.summary
-          .getUpdatePaymentProfileBtn()
-          .getAttribute('disabled')
-          .then(function (isDisabled) {
-            expect(isDisabled).not.toBe(false);
-          });
+        var summary = Portal.accounts.billingStatements.summary;
+        summary.setAccountSelect('API QA Account');
+        summary.getUpdatePaymentProfileBtn().getAttribute('disabled').then(function (isDisabled) {
+            expect(isDisabled).toBe('true');
+        });
+        
+        summary.setAccountSelect('Amira Schumm');
+        summary.getUpdatePaymentProfileBtn().getAttribute('disabled').then(function (isDisabled) {
+            expect(isDisabled).toBe(null);
+        });
       });
+
+
 
     it('should `Change Billing Plan` display billing plans page.',
       function () {
@@ -166,6 +150,6 @@ describe('Smoke', function () {
               });
           });
       });
+
   });
-})
-;
+});
