@@ -25,11 +25,7 @@ describe('Smoke', function () {
 
   var users = [
     config.get('portal.users.admin'),
-    
-    // TODO: For this role when go to 'Dashboards' 
-    // ***** item you will see problem with encoding of text.
-
-    //config.get('portal.users.reseller'),
+    config.get('portal.users.reseller'),
     config.get('portal.users.revAdmin')
   ];
 
@@ -44,6 +40,7 @@ describe('Smoke', function () {
 
         beforeAll(function () {
           Portal.signIn(user);
+          Portal.helpers.nav.goToDashboards();
         });
 
         afterAll(function () {
@@ -51,30 +48,51 @@ describe('Smoke', function () {
         });
 
         beforeEach(function () {
-          Portal.helpers.nav.goToDashboards();
         });
 
         afterEach(function () {
         });
 
-        it('should selected dashboard and "Delete" from edited Dashboard page',
+        it('should selected dashboard and "Delete" from edited Dashboard page (title page)',
           function () {
-            Portal.helpers.nav.goToDashboards();
+
             Portal.dashboards.listPage.addNewDashboard(dashboard);
 
             var title = Portal.dashboards.listPage.getTitle();
-            var leftSide = Portal.dashboards.listPage.getLeftMenuDashboards();
             expect(title).toContain(dashboard.title);
-            expect(leftSide).toContain(dashboard.title);
 
-            Portal.dashboards.listPage.deleteDashboard(dashboard);
-            Portal.dashboards.dialogPage.clickDelete();
+            Portal.dashboards.listPage.deleteDashboard();
 
             title = Portal.dashboards.listPage.getTitle();
-            leftSide = Portal.dashboards.listPage.getLeftMenuDashboards();
             expect(title).not.toContain(dashboard.title);
-            expect(leftSide).not.toContain(dashboard.title);
+
           });
+          it('should selected dashboard and "Delete" from edited Dashboard page (left SideBar)',
+            function () {
+
+              Portal.dashboards.listPage.addNewDashboard(dashboard);
+
+              var leftSideBar = Portal.helpers.nav.getDashboardsItems().getText();
+              leftSideBar.then(function(elements) {
+                elements.forEach(function(text) {
+                  if (text === dashboard.title) {
+                    expect(text).toContain(dashboard.title);
+                  }
+                });
+              });
+
+              Portal.dashboards.listPage.deleteDashboard();
+
+              leftSideBar = Portal.helpers.nav.getDashboardsItems().getText();
+              leftSideBar.then(function(elements) {
+                elements.forEach(function(text) {
+                  if (text === dashboard.title) {
+                    expect(text).toContain(dashboard.title);
+                  }
+                });
+              });
+
+            });
 
         it('should display "Delete Dashboard" button in edited dashboard form',
           function () {
@@ -85,23 +103,19 @@ describe('Smoke', function () {
 
             expect(button.isPresent()).toBeTruthy();
 
-            Portal.dashboards.editPage.form.clickCreate();
+            Portal.dialog.clickCloseBtn();
           });
 
         it('should update form after clicking on dashboard name',
           function () {
-            
-            var exampleTitle = new Date().toISOString().replace(/-|:|\./g, '');
-
             Portal.dashboards.listPage.clickModifyDashboard();
             Portal.dashboards.listPage.clickEditDashboardProperties();
-
-            Portal.dashboards.editPage.form.setTitle(exampleTitle);
+            Portal.dashboards.editPage.form.setTitle(dashboard.title);
             Portal.dashboards.editPage.form.clickCreate();
             
             var updatedTitle = Portal.dashboards.listPage.getTitle();
 
-            expect(updatedTitle).toContain(exampleTitle);
+            expect(updatedTitle).toContain(dashboard.title);
           });
 
 

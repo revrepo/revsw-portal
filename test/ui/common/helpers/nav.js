@@ -38,9 +38,14 @@ var NavHelper = {
    * Goes to Dashboards Area
    * @returns {*}
    */
-  goToDashboards: function () {
+  goToDashboards: function (text) {
     return SideBar.select(MenuAreas.DASHBOARDS);
   },
+
+  getDashboardsItems: function (text) {
+    return element.all(by.css(MenuAreas.DASHBOARDS.css));
+  },
+
 
   /**
    * Goes to Mobile Apps Area

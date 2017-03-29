@@ -453,10 +453,10 @@ var Portal = {
    */
   createDashboard: function (arrayDashboards) {
     var me = this;
-    me.helpers.nav.goToDashboards();
+    //me.helpers.nav.goToDashboards();
     return browser.getCurrentUrl().then(function (initialUrl) {
       arrayDashboards.forEach(function (dashboard) {
-        me.helpers.nav.goToDashboards();
+        //me.helpers.nav.goToDashboards();
         me.dashboards.listPage.addNewDashboard(dashboard);
       });
       browser.getCurrentUrl().then(function (currentUrl) {

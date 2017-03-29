@@ -61,7 +61,7 @@ describe('Negative', function () {
         expect(publishBtn.isEnabled()).toBeFalsy();
       });
 
-    it('should edit and update the domain without "Origin Host Header"',
+    it('should not be able to update a domain without "Origin Host Header" value',
       function () {
         Portal.domains.listPage.searchAndClickEdit(myDomain.name);
         Portal.domains.editPage.form.clearOriginHostHeader();
@@ -69,7 +69,7 @@ describe('Negative', function () {
 
       });
 
-    it('should edit and publish the domain without "Origin Host Header"',
+    it('should not be able to publish a domain without "Origin Host Header" value',
       function () {
         Portal.domains.listPage.searchAndClickEdit(myDomain.name);
         Portal.domains.editPage.form.clearOriginHostHeader();

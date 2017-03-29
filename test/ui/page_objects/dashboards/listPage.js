@@ -21,6 +21,10 @@
 // Requiring other Page Objects that compound the Dashboards List Page:
 var DashboardForm = require('./form');
 
+var MenuAreas = require('../common/sidebar/locators/menuAreas');
+
+var Dialog = require('../common/dialog');
+
 // This `Dashboard List` Page Object abstracts all operations or actions that a
 // common user could do in the Dashboard List page from the Portal app/site.
 var DashboardList = {
@@ -39,7 +43,7 @@ var DashboardList = {
     },
     buttons: {
       addDashboard: {
-        css: '.glyphicon.glyphicon-plus'
+        css: '.dashboard-btn-new'
       },
       refreshNow: {
         css: '.btn.btn-info'
@@ -68,7 +72,7 @@ var DashboardList = {
     dashboards: {
       css: '.dashboard-preview-background',
       leftMenu: {
-        id: 'left-menu-dashboard-section'
+        css: '#left-menu-dashboard-section .side-menu-sub-item'
         // repeater: 'dash in vm.dashboardsList'
       }
     }
@@ -226,7 +230,7 @@ var DashboardList = {
    * @returns {Object} Selenium WebDriver Element
    */
   getLeftMenuDashboardsElem: function () {
-    return element(by.id(this.locators.dashboards.leftMenu.id));
+    return element(by.css(this.locators.dashboards.leftMenu.css));
     // return element.all(by.repeater(this.locators.dashboards.leftMenu.repeater));
   },
 
@@ -458,6 +462,27 @@ var DashboardList = {
   },
 
   /**
+   * ### DashboardList.deleteAllDashboardExceptFirst(dashboard)
+   *
+   * Delete all dashboard from Dashboard form except first (if there is a first).
+   *
+   * @param {String} dashboard, to delete dashboard.
+   *
+   * @returns {Promise}
+   */
+  deleteAllDashboardExceptFirst: function() {
+    var me = this;
+    element.all(by.css(MenuAreas.DASHBOARDS.css)).then(function(elements) {
+      if (elements.length > 2) {      
+        for (var i = 0; i < elements.length; i++) {
+          if (i !== 0 && i !== 1) {
+            me.deleteDashboard();
+          }
+        }
+      }
+    });
+  },
+  /**
    * ### DashboardList.deleteDashboard(dashboard)
    *
    * Deletes a dashboard from Dashboard form.
@@ -468,10 +493,15 @@ var DashboardList = {
    */
   deleteDashboard: function (dashboard) {
     var me = this;
-    me.selectDashboard(dashboard.title);
+
+    if (dashboard) {
+      me.selectDashboard(dashboard.title);
+    }
+
     me.clickModifyDashboard();
     me.clickEditDashboardProperties();
     me.form.clickDelete();
+    Dialog.clickDeleteBtn();
   }
 };
 
