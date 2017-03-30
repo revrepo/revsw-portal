@@ -23,6 +23,7 @@
 var FormProfile = require('./formProfile');
 var FormBilling = require('./formBilling');
 
+var WebElement = require('./../../../common/helpers/webElement');
 // This `Edit Company` Page Object abstracts all operations or actions that a
 // common company could do in the Edit Company page from the Portal app/site.
 var EditCompany = {
@@ -194,9 +195,9 @@ var EditCompany = {
    * @returns {Promise}
    */
   clickUpdateCompanyProfile: function () {
-    return this
-      .getUpdateCompanyProfileBtn()
-      .click();
+    var el = this.getUpdateCompanyProfileBtn();
+    WebElement.scrollToElement(el);
+    return el.click();
   },
 
   /**
