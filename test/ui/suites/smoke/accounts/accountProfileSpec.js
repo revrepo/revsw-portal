@@ -51,7 +51,8 @@ describe('Smoke', function () {
     it('should leave account profile edition page after cancel.',
       function () {
         Portal.accounts.profilePage.form.clickCancel();
-        expect(Portal.accounts.profilePage.isPresent()).toBeFalsy();
+        expect(Portal.accounts.profilePage.isDisplayed()).toBeFalsy();
+        expect(Portal.dashboards.listPage.isDisplayed()).toBeTruthy();
       });
 
     it('should update company profile.',

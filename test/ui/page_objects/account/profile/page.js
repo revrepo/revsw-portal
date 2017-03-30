@@ -104,13 +104,13 @@ var AccountProfilePage = {
 
   // ## Helper Methods
   /**
-   * ### AccountProfilePage.isPresent()
+   * ### AccountProfilePage.isDisplayed()
    *
    * Check existing this PO on display
    *
    * @reurns {Boolean}
    */
-  isPresent: function(){
+  isDisplayed: function(){
     return element(by.id(this.locators.container.id)).isPresent();
   },
   /**
