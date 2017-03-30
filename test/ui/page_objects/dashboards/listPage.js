@@ -462,27 +462,6 @@ var DashboardList = {
   },
 
   /**
-   * ### DashboardList.deleteAllDashboardExceptFirst(dashboard)
-   *
-   * Delete all dashboard from Dashboard form except first (if there is a first).
-   *
-   * @param {String} dashboard, to delete dashboard.
-   *
-   * @returns {Promise}
-   */
-  deleteAllDashboardExceptFirst: function() {
-    var me = this;
-    element.all(by.css(MenuAreas.DASHBOARDS.css)).then(function(elements) {
-      if (elements.length > 2) {      
-        for (var i = 0; i < elements.length; i++) {
-          if (i !== 0 && i !== 1) {
-            me.deleteDashboard();
-          }
-        }
-      }
-    });
-  },
-  /**
    * ### DashboardList.deleteDashboard(dashboard)
    *
    * Deletes a dashboard from Dashboard form.
