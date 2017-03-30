@@ -42,6 +42,9 @@ var PurgeCacheAdvanced = {
       aceEditor: {
         css: '.ace_editor'
       },
+      aceEditorTextarea: {
+        css: '.ace_editor .ace_text-input'
+      },
       aceContent: {
         css: '.ace_content'
       },
@@ -59,6 +62,9 @@ var PurgeCacheAdvanced = {
       },
       purge: {
         css: '[ng-click="purge()"]'
+      },
+      useThisExample: {
+        css: 'button[ng-click="copyToJsonEditor(item)"]'
       },
       cancel: {
         linkText: 'Cancel'
@@ -150,6 +156,18 @@ var PurgeCacheAdvanced = {
       .element(by.css(this.locators.buttons.purge.css));
   },
 
+
+  /**
+   * ### PurgeCacheAdvanced.getUseThisExampleBtn()
+   *
+   * Gets the reference to `Use This Example` button element.
+   *
+   * @returns {Promise}
+   */
+  getUseThisExampleBtn: function () {
+    return element.all(by.css(this.locators.buttons.useThisExample.css));
+  },
+
   /**
    * ### PurgeCacheAdvanced.getCancelBtn()
    *
@@ -199,6 +217,20 @@ var PurgeCacheAdvanced = {
     return this
       .getPanelBodyElem()
       .element(by.css(this.locators.jsonEditor.aceEditor.css));
+  },
+
+
+  /**
+   * ### PurgeCacheAdvanced.getAceEditorTextareaElem()
+   *
+   * Gets the reference to `Ace Editor` element.
+   *
+   * @returns {Promise}
+   */
+  getAceEditorTextareaElem: function () {
+    return this
+      .getPanelBodyElem()
+      .element(by.css(this.locators.jsonEditor.aceEditorTextarea.css));
   },
 
   /**
@@ -280,6 +312,22 @@ var PurgeCacheAdvanced = {
   setAceContent: function (value) {
     return this
       .getAceContentElem()
+      .sendKeys(value);
+  },
+
+
+  /**
+   * ### PurgeCacheAdvanced.setAceEditor()
+   *
+   * Sets value in `Ace Content` from Ace Editor element.
+   *
+   * @param {String} Value to Text Area in Purge Cached Objects page.
+   *
+   * @returns {Promise}
+   */
+  setAceEditor: function (value) {
+    return this
+      .getAceEditorTextareaElem()
       .sendKeys(value);
   },
 
@@ -387,6 +435,19 @@ var PurgeCacheAdvanced = {
   clickPurge: function () {
     return this
       .getPurgeBtn()
+      .click();
+  },
+
+  /**
+   * ### PurgeCacheAdvanced.clickUseThisExample()
+   *
+   * Clicks on the `Use This Example` button element.
+   *
+   * @returns {Promise}
+   */
+  clickUseThisExample: function (number) {
+    return this
+      .getUseThisExampleBtn().get(number)
       .click();
   },
 
