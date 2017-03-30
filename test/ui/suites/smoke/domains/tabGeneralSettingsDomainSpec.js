@@ -69,6 +69,10 @@ describe('Smoke', function () {
           expect(checkDisplay('getDomainOriginLocationDDown')).toBe(true);
         });
 
+        it('should display "Enhanced Traffic Analytics"', function () {
+          expect(checkDisplay('getEnableEnhancedAnalytics')).toBe(true);
+        });
+
         it('should display "Use End User Protocol" (input-radio)', function () {
           expect(checkDisplay('getUseEndUserProtocolTxtIn')).toBe(true);
         });
@@ -108,7 +112,7 @@ describe('Smoke', function () {
         });
 
         it('should display "Decompress Objects Fetched From The Origin"', function () {
-          expect(checkDisplay('getRUMdataCollectionTxtIn')).toBe(true);
+          expect(checkDisplay('getDecompressObjectsFetchedFromTheOriginTxtIn')).toBe(true);
         });
 
         it('should display "comment"', function () {

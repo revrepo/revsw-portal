@@ -174,6 +174,9 @@ var DomainForm = {
       mainAttrs: {
         ariaChecked: 'aria-checked'
       },
+      enableEnhancedAnalytics:{
+        id: 'enableEnhancedAnalytics'
+      },
       lastMileQUICprotocol: {
         id: 'lastMileQUICprotocol'
       },
@@ -637,6 +640,10 @@ var DomainForm = {
 
   getOriginHostTxtIn: function () {
     return element(by.id(this.locators.textInputs.originHost.id));
+  },
+
+  getEnableEnhancedAnalytics: function () {
+    return element(by.id(this.locators.switches.enableEnhancedAnalytics.id));
   },
 
   getUrlLocationBP: function () {
