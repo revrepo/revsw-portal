@@ -88,7 +88,7 @@
       title: 'Third-Party Integrations',
       order: 6,
       widgets_list: [
-        'bluetriangletech-traffic-info'
+        'third-party-iframe-page'
       ]
     },
   };
