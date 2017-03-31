@@ -78,11 +78,19 @@
     },
     security: {
       title: 'Security Analytics',
-      order: 5,
+      order: 4,
       widgets_list: [
         'widget-norse-live-attack-map', //"Norse Live Attack Map"
       ]
-    }
+    },
+    // “Third-Party Integrations”
+    thirdPartyIntegrations: {
+      title: 'Third-Party Integrations',
+      order: 6,
+      widgets_list: [
+        'bluetriangletech-traffic-info'
+      ]
+    },
   };
   /**
    * @name  orderWidgets
