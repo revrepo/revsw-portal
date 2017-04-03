@@ -122,15 +122,21 @@ describe('Smoke', function () {
             });
         });
 
-      
-      it('should `View Details` button be disabled/enabled.',
+
+      it('should `View Details` button be disabled.',
         function () {
           var summary = Portal.accounts.billingStatements.summary;
           summary.setAccountSelect('API QA Account');
           summary.getViewDetailsBtn().getAttribute('disabled').then(function (isDisabled) {
               expect(isDisabled).toBe('true');
           });
-          
+
+        });
+
+
+      it('should `View Details` button be enabled.',
+        function () {
+          var summary = Portal.accounts.billingStatements.summary;
           summary.setAccountSelect(userCustom.firstName + ' ' + userCustom.lastName);
           summary.getViewDetailsBtn().getAttribute('disabled').then(function (isDisabled) {
               expect(isDisabled).toBe(null);
@@ -138,7 +144,8 @@ describe('Smoke', function () {
 
         });
 
-      it('should `Update Payment Profile` button be disabled/enabled.',
+
+      it('should `Update Payment Profile` button be disabled.',
         function () {
 
           var summary = Portal.accounts.billingStatements.summary;
@@ -147,7 +154,14 @@ describe('Smoke', function () {
             .getAttribute('disabled').then(function (isDisabled) {
                 expect(isDisabled).toBe('true');
           });
-          
+
+        });
+
+
+      it('should `Update Payment Profile` button be enabled.',
+        function () {
+
+          var summary = Portal.accounts.billingStatements.summary;         
           summary.setAccountSelect(userCustom.firstName + ' ' + userCustom.lastName);
           summary.getUpdatePaymentProfileBtn()
             .getAttribute('disabled').then(function (isDisabled) {

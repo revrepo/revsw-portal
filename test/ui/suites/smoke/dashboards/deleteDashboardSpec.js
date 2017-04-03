@@ -54,7 +54,7 @@ describe('Smoke', function () {
         afterEach(function () {
         });
 
-        it('should selected dashboard and "Delete" from edited Dashboard page (title page)',
+        it('should selected dashboard and "Delete" from edited Dashboard page (for checking with the main title)',
           function () {
 
             Portal.dashboards.listPage.addNewDashboard(dashboard);
@@ -68,7 +68,7 @@ describe('Smoke', function () {
             expect(title).not.toContain(dashboard.title);
 
           });
-          it('should selected dashboard and "Delete" from edited Dashboard page (left SideBar)',
+          it('should selected dashboard and "Delete" from edited Dashboard page (for checking with the sideBar item)',
             function () {
 
               Portal.dashboards.listPage.addNewDashboard(dashboard);
@@ -112,7 +112,7 @@ describe('Smoke', function () {
             Portal.dashboards.listPage.clickModifyDashboard();
             Portal.dashboards.listPage.clickEditDashboardProperties();
             Portal.dashboards.editPage.form.setTitle(dashboard.title);
-            Portal.dashboards.editPage.form.clickCreate();
+            Portal.dashboards.editPage.form.clickSave();
             
             var updatedTitle = Portal.dashboards.listPage.getTitle();
 
