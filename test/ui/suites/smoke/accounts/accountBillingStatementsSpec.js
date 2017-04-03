@@ -19,6 +19,7 @@
 
 var config = require('config');
 var Portal = require('./../../../page_objects/portal');
+var Contants = require('./../../../page_objects/constants.js');
 
 describe('Smoke', function () {
 
@@ -126,7 +127,8 @@ describe('Smoke', function () {
       it('should `View Details` button be disabled.',
         function () {
           var summary = Portal.accounts.billingStatements.summary;
-          summary.setAccountSelect('API QA Account');
+          summary.setAccountSelect(Contants.selectedItems.billing.SELECTED_API_QA_ACCOUNT);
+
           summary.getViewDetailsBtn().getAttribute('disabled').then(function (isDisabled) {
               expect(isDisabled).toBe('true');
           });
@@ -149,7 +151,7 @@ describe('Smoke', function () {
         function () {
 
           var summary = Portal.accounts.billingStatements.summary;
-          summary.setAccountSelect('API QA Account');
+          summary.setAccountSelect(Contants.selectedItems.billing.SELECTED_API_QA_ACCOUNT);
           summary.getUpdatePaymentProfileBtn()
             .getAttribute('disabled').then(function (isDisabled) {
                 expect(isDisabled).toBe('true');
