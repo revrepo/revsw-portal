@@ -171,6 +171,20 @@ var CompanyTableRow = function (rowElem, locators) {
         .click();
     };
   }
+
+  if (this.locators.actions && this.locators.actions.buttons.equalizer) {
+    this.getViewAccountResourcesBtn = function () {
+      return this.rowElem
+        .element(by.css(this.locators.actions.css))
+        .element(by.className(this.locators.actions.buttons.equalizer.className));
+    };
+    this.clickViewAccountResources = function () {
+      return this
+        .getViewAccountResourcesBtn()
+        .click();
+    };
+  }
+
 };
 
 module.exports = CompanyTableRow;
