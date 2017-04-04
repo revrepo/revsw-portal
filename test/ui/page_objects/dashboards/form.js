@@ -57,11 +57,14 @@ var DashboardForm = {
       create: {
         css: '.btn.btn-primary'
       },
+      save: {
+        css: 'button[ng-click="toggleEditMode(model); closeDialog()"]'
+      },
       cancel: {
         css: '.btn.btn-default'
       },
       delete: {
-        css: '.btn.btn-danger'
+        css: '.modal-dialog .btn-danger'
       }
     }
   },
@@ -116,6 +119,18 @@ var DashboardForm = {
    */
   getCreateBtn: function () {
     return element(by.css(this.locators.buttons.create.css));
+  },
+
+
+  /**
+   * ### DashboardForm.getSaveBtn()
+   *
+   * Returns the reference to the `Save` button (Selenium WebDriver Element).
+   *
+   * @returns {Selenium WebDriver Element}
+   */
+  getSaveBtn: function () {
+    return element(by.css(this.locators.buttons.save.css));
   },
 
   /**
@@ -226,6 +241,20 @@ var DashboardForm = {
   clickCreate: function () {
     return this
       .getCreateBtn()
+      .click();
+  },
+
+
+  /**
+   * ### DashboardForm.clickSave()
+   *
+   * Clicks on `Save` button.
+   *
+   * @returns {Promise}
+   */
+  clickSave: function () {
+    return this
+      .getSaveBtn()
       .click();
   },
 

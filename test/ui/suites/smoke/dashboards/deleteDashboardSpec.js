@@ -25,8 +25,9 @@ describe('Smoke', function () {
 
   var users = [
     config.get('portal.users.admin'),
-    // config.get('portal.users.reseller')
-    // config.get('portal.users.revAdmin'),
+    config.get('portal.users.reseller'),
+    config.get('portal.users.user'),
+    config.get('portal.users.revAdmin')
   ];
 
   users.forEach(function (user) {
@@ -35,60 +36,92 @@ describe('Smoke', function () {
 
       describe('Delete Dashboards', function () {
 
+        
         var dashboard = DataProvider.generateDashboardData();
 
         beforeAll(function () {
           Portal.signIn(user);
-          // Portal.createDashboard([dashboard]);
+          Portal.helpers.nav.goToDashboards();
         });
 
         afterAll(function () {
-          //Portal.deleteDashboard([dashboard]);
           Portal.signOut();
         });
 
         beforeEach(function () {
-          Portal.helpers.nav.goToDashboards();
         });
 
         afterEach(function () {
         });
 
-        it('should selected dashboard and "Delete" from edited Dashboard page',
+        it('should selected dashboard and "Delete" from edited Dashboard page '+
+           ' (for checking with the main title)',
           function () {
-            Portal.helpers.nav.goToDashboards();
+
             Portal.dashboards.listPage.addNewDashboard(dashboard);
 
             var title = Portal.dashboards.listPage.getTitle();
-            var leftSide = Portal.dashboards.listPage.getLeftMenuDashboards();
             expect(title).toContain(dashboard.title);
-            expect(leftSide).toContain(dashboard.title);
 
-            Portal.dashboards.listPage.deleteDashboard(dashboard);
-            Portal.dashboards.dialogPage.clickDelete();
+            Portal.dashboards.listPage.deleteDashboard();
 
             title = Portal.dashboards.listPage.getTitle();
-            leftSide = Portal.dashboards.listPage.getLeftMenuDashboards();
             expect(title).not.toContain(dashboard.title);
-            expect(leftSide).not.toContain(dashboard.title);
+
+          });
+          it('should selected dashboard and "Delete" from edited Dashboard page'+
+             ' (for checking with the sideBar item)',
+            function () {
+
+              Portal.dashboards.listPage.addNewDashboard(dashboard);
+
+              var leftSideBar = Portal.helpers.nav.getDashboardsItems().getText();
+              leftSideBar.then(function(elements) {
+                elements.forEach(function(text) {
+                  if (text === dashboard.title) {
+                    expect(text).toContain(dashboard.title);
+                  }
+                });
+              });
+
+              Portal.dashboards.listPage.deleteDashboard();
+
+              leftSideBar = Portal.helpers.nav.getDashboardsItems().getText();
+              leftSideBar.then(function(elements) {
+                elements.forEach(function(text) {
+                  if (text === dashboard.title) {
+                    expect(text).toContain(dashboard.title);
+                  }
+                });
+              });
+
+            });
+
+        it('should display "Delete Dashboard" button in edited dashboard form',
+          function () {
+            var button = Portal.dashboards.editPage.form.getDeleteBtn();
+
+            Portal.dashboards.listPage.clickModifyDashboard();
+            Portal.dashboards.listPage.clickEditDashboardProperties();
+
+            expect(button.isPresent()).toBeTruthy();
+
+            Portal.dialog.clickCloseBtn();
           });
 
-        // it('should display "Delete Dashboard" button in edited dashboard form',
-        //   function () {
-        //     var button = Portal.dashboards.editPage.form.getDeleteBtn();
-        //     expect(button.isPresent()).toBeTruthy();
-        //   });
-
-        // it('should update form after clicking on dashboard name',
-        //   function () {
-        //     var tempTitle = dashboard.title;
-        //     dashboard.title = dashboard.title + '-UPDATED';
-        //     Portal.dashboards.editPage.form.fill(dashboard);
-        //     Portal.dashboards.editPage.form.clickCreate();
+        it('should update form after clicking on dashboard name',
+          function () {
+            Portal.dashboards.listPage.clickModifyDashboard();
+            Portal.dashboards.listPage.clickEditDashboardProperties();
+            Portal.dashboards.editPage.form.setTitle(dashboard.title);
+            Portal.dashboards.editPage.form.clickSave();
             
-        //     var updatedTitle = Portal.dashboards.listPage.getTitle();
-        //     expect(updatedTitle).toContain(dashboard.title);
-        //   });
+            var updatedTitle = Portal.dashboards.listPage.getTitle();
+
+            expect(updatedTitle).toContain(dashboard.title);
+          });
+
+
       });
     });
   });
