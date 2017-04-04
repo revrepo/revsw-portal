@@ -26,25 +26,51 @@ describe('Smoke', function () {
   var userCustom;
   var currentPlan = 'Gold';
   var billingPortal = /www\.billingportal\.com/;
-  var user = config.get('portal.users.revAdmin');
+  var selfRegistration = function(done, user) {
 
-  describe('With user: ' + user.role, function () {
+    Portal
+      .signUpAndVerifyUser(currentPlan)
+      .then(function (newUser) {
+
+        if (!user) {
+          userCustom = newUser;
+        } else {
+          user();
+        }
+
+        return Portal.helpers.nav.goToBillingStatements();
+
+      })
+      .then(function () {
+        done();
+      });
+
+  };
+
+  var users = [
+    'self registration',
+    config.get('portal.users.revAdmin')
+  ];
+
+  users.forEach(function(user) {
+
+
+
+  describe('With user: ' + (typeof user !== 'object' ? 'Admin' : user.role), function () {
 
     describe('Billing Statements', function () {
 
       beforeAll(function (done) {
-        Portal
-          .signUpAndVerifyUser(currentPlan)
-          .then(function (newUser) {
-            userCustom = newUser;
 
+        if (typeof user !== 'object') {
+          selfRegistration(done);
+        } else {
+          selfRegistration(done, function() {
             Portal.signIn(user);
-
-            return Portal.helpers.nav.goToBillingStatements();
-          })
-          .then(function () {
-            done();
           });
+        }
+
+
       });
 
       afterAll(function () {
@@ -123,54 +149,57 @@ describe('Smoke', function () {
             });
         });
 
+      if (typeof user === 'object') {
 
-      it('should `View Details` button be disabled.',
-        function () {
-          var summary = Portal.accounts.billingStatements.summary;
-          summary.setAccountSelect(Contants.selectedItems.billing.SELECTED_API_QA_ACCOUNT);
+        it('should `View Details` button be disabled.',
+          function () {
+            var summary = Portal.accounts.billingStatements.summary;
+            summary.setAccountSelect(Contants.selectedItems.billing.SELECTED_API_QA_ACCOUNT);
 
-          summary.getViewDetailsBtn().getAttribute('disabled').then(function (isDisabled) {
-              expect(isDisabled).toBe('true');
-          });
-
-        });
-
-
-      it('should `View Details` button be enabled.',
-        function () {
-          var summary = Portal.accounts.billingStatements.summary;
-          summary.setAccountSelect(userCustom.firstName + ' ' + userCustom.lastName);
-          summary.getViewDetailsBtn().getAttribute('disabled').then(function (isDisabled) {
-              expect(isDisabled).toBe(null);
-          });
-
-        });
-
-
-      it('should `Update Payment Profile` button be disabled.',
-        function () {
-
-          var summary = Portal.accounts.billingStatements.summary;
-          summary.setAccountSelect(Contants.selectedItems.billing.SELECTED_API_QA_ACCOUNT);
-          summary.getUpdatePaymentProfileBtn()
-            .getAttribute('disabled').then(function (isDisabled) {
+            summary.getViewDetailsBtn().getAttribute('disabled').then(function (isDisabled) {
                 expect(isDisabled).toBe('true');
+            });
+
           });
 
-        });
 
+        it('should `View Details` button be enabled.',
+          function () {
+            var summary = Portal.accounts.billingStatements.summary;
+            summary.setAccountSelect(userCustom.firstName + ' ' + userCustom.lastName);
+            summary.getViewDetailsBtn().getAttribute('disabled').then(function (isDisabled) {
+                expect(isDisabled).toBe(null);
+            });
 
-      it('should `Update Payment Profile` button be enabled.',
-        function () {
-
-          var summary = Portal.accounts.billingStatements.summary;         
-          summary.setAccountSelect(userCustom.firstName + ' ' + userCustom.lastName);
-          summary.getUpdatePaymentProfileBtn()
-            .getAttribute('disabled').then(function (isDisabled) {
-              expect(isDisabled).toBe(null);
           });
 
-        });
+
+        it('should `Update Payment Profile` button be disabled.',
+          function () {
+
+            var summary = Portal.accounts.billingStatements.summary;
+            summary.setAccountSelect(Contants.selectedItems.billing.SELECTED_API_QA_ACCOUNT);
+            summary.getUpdatePaymentProfileBtn()
+              .getAttribute('disabled').then(function (isDisabled) {
+                  expect(isDisabled).toBe('true');
+            });
+
+          });
+
+
+        it('should `Update Payment Profile` button be enabled.',
+          function () {
+
+            var summary = Portal.accounts.billingStatements.summary;         
+            summary.setAccountSelect(userCustom.firstName + ' ' + userCustom.lastName);
+            summary.getUpdatePaymentProfileBtn()
+              .getAttribute('disabled').then(function (isDisabled) {
+                expect(isDisabled).toBe(null);
+            });
+
+          });
+
+      }
 
       it('should `Change Billing Plan` display billing plans page.',
         function () {
@@ -186,6 +215,8 @@ describe('Smoke', function () {
         });
 
 
+
+      });
     });
 
   });
