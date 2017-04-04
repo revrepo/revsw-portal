@@ -64,14 +64,6 @@ describe('Smoke', function () {
             expect(button.isDisplayed()).toBeTruthy();
           });
 
-        it('should display the table of API Keys in "API Keys List" page',
-          function () {
-            Portal.admin.apiKeys.listPage.table.getFirstRow().clickEdit();
-            Portal.admin.apiKeys.editPage.clickBackToList();
-            var displayed = Portal.admin.apiKeys.listPage.isDisplayed();
-            expect(displayed).toBeTruthy();
-          });
-
         it('should display the list of API Keys in "API Keys List" page',
           function () {
             Portal.admin.apiKeys.listPage.table.getFirstRow().clickEdit();
