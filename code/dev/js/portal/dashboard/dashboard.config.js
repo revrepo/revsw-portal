@@ -132,6 +132,33 @@
         config: {
           url: 'https://map.norsecorp.com/#/'
         }
+      })
+      // Widget ““Third-Party iFrame Page” ”
+      .widget('third-party-iframe-page', {
+        title: 'Third-Party iFrame Page',
+        description: 'Display Third-Party iFrame Page',
+        templateUrl: 'parts/dashboard/widgets/third-party-iframe/view-iframe-third-party-iframe.tpl.html',
+        titleTemplateUrl: 'parts/dashboard/widgets/third-party-iframe/widget-title-with-params-third-party-iframe.html',
+        controller: function widget3dPartyIframeController($sce, config) {
+          'ngInject';
+          var vm = this;
+          if (config.url) {
+            // TODO: add security key for API call
+            vm.url = $sce.trustAsResourceUrl(window.API_URL+'/curl?url='+config.url);
+          }
+        },
+        controllerAs: 'iframe',
+        edit: {
+          templateUrl: 'parts/dashboard/widgets/third-party-iframe/edit-third-party-iframe.html',
+          controller: function widgetEdit3dPartyIframeController($sce, config) {
+            'ngInject';
+            var vm = this;
+          },
+          controllerAs: 'vm',
+        },
+        config: {
+          url: null // 'https://www.statuspage.io/'
+        }
       });
   }
 })();
