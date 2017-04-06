@@ -36,6 +36,7 @@ describe('Smoke', function () {
 
         beforeAll(function () {
           Portal.signIn(user);
+          Portal.helpers.nav.goToAccounts();
         });
 
         afterAll(function () {
@@ -43,18 +44,18 @@ describe('Smoke', function () {
         });
 
         beforeEach(function () {
-          Portal.helpers.nav.goToAccounts();
         });
 
         afterEach(function () {
         });
 
+
         it('should display "Usage Report" button from the first account',
           function () {
-            var deleteButton = Portal.admin.accounts.listPage.table
+            var usageReportButton = Portal.admin.accounts.listPage.table
               .getFirstRow()
-              .getDeleteCompanyBtn();
-            expect(deleteButton.isDisplayed()).toBeTruthy();
+              .getUsageReportBtn();
+            expect(usageReportButton.isDisplayed()).toBeTruthy();
           });
 
         it('should display "Change Billing Plan" button from the first account',
@@ -72,6 +73,31 @@ describe('Smoke', function () {
               .getStatementsBtn();
             expect(deleteButton.isDisplayed()).toBeTruthy();
           });
+
+        it('should display "Edit Company" button from the first selected account',
+          function () {
+            var editCompanyButton = Portal.admin.accounts.listPage.table
+              .getFirstRow()
+              .getEditCompanyBtn();
+            expect(editCompanyButton.isDisplayed()).toBeTruthy();
+          });
+
+        it('should display "Delete Company" button from the first account',
+          function () {
+            var deleteButton = Portal.admin.accounts.listPage.table
+              .getFirstRow()
+              .getDeleteCompanyBtn();
+            expect(deleteButton.isDisplayed()).toBeTruthy();
+          });
+
+        it('should display "View Account Resources" button from the first account',
+          function () {
+            var viewAccountResourcesButton = Portal.admin.accounts.listPage.table
+              .getFirstRow()
+              .getViewAccountResourcesBtn();
+            expect(viewAccountResourcesButton.isDisplayed()).toBeTruthy();
+          });
+
       });
     });
   });
