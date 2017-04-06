@@ -94,7 +94,7 @@ var UserList = {
    * @returns {Selenium WebDriver Element}
    */
   getAddNewUserBtn: function () {
-    return element(
+    return element.all(
       by.className(this.locators.buttons.addNewUser.className));
   },
   
