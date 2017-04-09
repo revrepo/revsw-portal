@@ -407,13 +407,13 @@
               <div id="cachingRulesBlock" class="panel panel-default caching-rules-list" ng-if="model.rev_component_bp.enable_cache">
                 <div class="panel-heading">
                   <span class="pull-left panel-buttons-left">
-                <a class="btn btn-default btn-md " ng-click="onCollapsAllCachingRule()" title="Collapse All Rules" ng-show="!isCollapsedAll">
-                  <i class="glyphicon glyphicon-chevron-up "></i>
-                </a>
-                <a class="btn btn-default btn-md " ng-click="onExpandAllCachingRule()" title="Expand All Rules">
-                  <i class="glyphicon glyphicon-chevron-down"></i>
-                </a>
-              </span>
+                    <a class="btn btn-default btn-md " ng-click="onCollapsAllCachingRule()" title="Collapse All Rules" ng-show="!isCollapsedAll">
+                      <i class="glyphicon glyphicon-chevron-up "></i>
+                    </a>
+                    <a class="btn btn-default btn-md " ng-click="onExpandAllCachingRule()" title="Expand All Rules">
+                      <i class="glyphicon glyphicon-chevron-down"></i>
+                    </a>
+                  </span>
                   <div class="form-group pull-right">
                     <div class="col-sm-12">
                       <a ng-click="onAddNewCachingRule($event,true)" class="btn btn-primary btn-sm " uib-tooltip="Use the button to add a new caching rule to cache JPG, JPEG, PNG, GIF, WEBP, JS, CSS, WOFF, WOFF2, MP4, SWF, AVI, MPEG and MOV objects for period of 2 weeks. You can modify the rule to suit your needs."><i class="glyphicon"></i>Cache Static Objects</a>
@@ -575,10 +575,18 @@
               <uib-tab-heading>WAF<i class="fa fa-hourglass-half comming-soon" aria-hidden="true" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Coming Soon"><!-- TODO: delete --></i>
               </uib-tab-heading>
               <div class="form-group form-inline">
-                <label for="enable_waf" class="col-sm-3 control-label">
-                   Coming Soon!
-                </label>
+                <label for="enableWafRules" class="col-sm-3 control-label">Enable WAF Functionality For The Domain</label>
+                <div class="col-md-9">
+                  <toggle-switch id="enable_waf_rules" name="enableWafRules" is-disabled="_loading" ng-model="model.rev_component_bp.enable_waf" on-label="On" off-label="Off">
+                  </toggle-switch>
+                  <label for="enableWafRules" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="This switch controls the global WAF functionality for the domain. If you move it to OFF state the WAF feature will be completely disabled for the domain (but all existing WAF configuration will stay in place so you can easily re-enable it later). If you enable WAF for the first time you still need to do additional configuration steps for WAF to actually protect the website.">
+                    <i class="fa fa-question-circle"></i>
+                  </label>
+                </div>
               </div>
+              <!-- WAF Locations list-->
+              <domain-waf-locations id="wafLocationsBlock" ng-if="model.rev_component_bp.enable_waf" ng-model="model.rev_component_bp.waf"></domain-waf-locations>
+              <!-- TODO: delete <pre> {{model.rev_component_bp.waf | json}}</pre>-->
               <!-- //  “WAF” -->
               <hr>
             </uib-tab>

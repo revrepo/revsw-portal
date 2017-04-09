@@ -1,0 +1,141 @@
+<div id="domainWAFLocationsBlock" class="panel panel-default domain-waf-locations">
+  <div class="panel-heading">
+    <div class="pull-left panel-buttons-left block-inline">
+      <a class="btn btn-default btn-md " ng-click="onCollapsAllWAFLocation()" title="Collapse All Rules" ng-show="!isCollapsedAll">
+        <i class="glyphicon glyphicon-chevron-up "></i>
+      </a>
+      <a class="btn btn-default btn-md " ng-click="onExpandAllWAFLocation()" title="Expand All Rules">
+        <i class="glyphicon glyphicon-chevron-down"></i>
+      </a>
+    </div>
+    <div class="form-group pull-right">
+      <div class="col-sm-12">
+        <a id="addNewWAFLocationBtn" ng-click="$ctrl.onAddNewWAFLocation($event)" class="btn btn-primary btn-sm " title="Add New WAF Location"
+          opover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Add New WAF Location"><i class="glyphicon glyphicon-plus"></i></a>
+      </div>
+    </div>
+    <h4><b> Locations </b></h4>
+  </div>
+  <div class="panel-body">
+    <div class="form-group" ng-form="locationEditForm">
+      <div class="panel panel-default" title="{{item.location}}" ng-repeat="item in $ctrl.waf">
+        <div class="panel-heading">
+          <div class="domain-waf-location__info">
+            <div class="pull-left panel-buttons-left">
+              <!-- collapse -->
+              <a class="btn btn-default btn-xs" href="" title="Collapse WAF Location" ng-show="!item.$$wafLocationState.isCollapsed" ng-click="item.$$wafLocationState.isCollapsed = !item.$$wafLocationState.isCollapsed">
+                <i class="glyphicon glyphicon-chevron-up"></i>
+              </a>
+              <!-- expend -->
+              <a class="btn btn-default btn-xs" href="" title="Expand WAF Location" ng-show="item.$$wafLocationState.isCollapsed" ng-click="item.$$wafLocationState.isCollapsed = !item.$$wafLocationState.isCollapsed">
+                <i class="glyphicon glyphicon-chevron-down"></i>
+              </a>
+              <!--  TODO WAF Location Up  -->
+              <a class="btn btn-default btn-xs" href="" ng-click="onUpWAFLocation(item)"><i class="glyphicon glyphicon glyphicon-arrow-up " title="Move One Position Up"></i></a>
+              <!--  TODO WAF Location Down  -->
+              <a class="btn btn-default btn-xs" href="" ng-click="onDownWAFLocation(item)"><i class="glyphicon glyphicon glyphicon-arrow-down" title="Move One Position Down"></i></a>
+              <!-- // -->
+            </div>
+            <div class="pull-right panel-button-right">
+              <!-- Actions -->
+              <a ng-click="$ctrl.onDuplicateWAFLocation($event)" class="btn btn-primary btn-xs duplicateWAFLocationBtn" opover-append-to-body="{{true}}"
+                popover-trigger="mouseenter" uib-popover="Duplicate WAF Location"><i class="fa fa-clone"></i> Duplicate Location</a>
+              <a href="" title="Remove Rule" title="Delete Location" ng-click="$ctrl.onDeleteWAFLocation($event,$index)">
+                <i class="glyphicon glyphicon-remove"></i>
+              </a>
+            </div>
+            <div class="panel-title">
+              <b>Location</b>: </i> {{item.location}}
+            </div>
+          </div>
+        </div>
+
+        <div class="panel-body">
+
+          <div class="form-group" ng-class="{'has-error': locationEditForm.wafLocation.$invalid && locationEditForm.wafLocation.$dirty}">
+            <label for="wafLocation" class="col-sm-3 control-label">Location *</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control inline-block elemLastFirstMile" ng-disabled="_loading" ng-model="item.location" name="wafLocation"
+                placeholder="like '/my_url/'" ng-maxlength="150" required>
+              <label for="wafLocation" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Specify here a website path (like “/my_url/”) the WAF configuration should be executed for">
+                <i class="fa fa-question-circle"></i>
+              </label>
+              <div class="error-messages" ng-messages="locationEditForm.wafLocation.$error" role="alert" ng-messages-multiple>
+                <div ng-messages-include="parts/shared/error-messages.html"></div>
+              </div>
+            </div>
+          </div>
+          <!--WAF Status waf.enable_waf-->
+          <div class="form-group form-inline">
+            <label for="enableWafStatus" class="col-sm-3 control-label">WAF Status For This Location</label>
+            <div class="col-md-9">
+              <toggle-switch name="enableWafStatus" is-disabled="_loading" ng-model="item.enable_waf" on-label="On" off-label="Off">
+              </toggle-switch>
+              <label for="enableWafStatus" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="This switch controls the global WAF functionality for the domain. If you move it to OFF state the WAF feature will be completely disabled for the domain (but all existing WAF configuration will stay in place so you can easily re-enable it later). If you enable WAF for the first time you still need to do additional configuration steps for WAF to actually protect the website.">
+                    <i class="fa fa-question-circle"></i>
+                  </label>
+            </div>
+          </div>
+          <!-- Configured Rules -->
+          <div class="form-group form-inline">
+            <label for="countWafRules" class="col-sm-3 control-label">Configured Rules</label>
+            <div class="col-md-9">
+              <label for="countWafRules" class="control-label"> {{item.waf_rules.length}}</label>
+              <label for="countWafRules" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="TODO text ">
+                    <i class="fa fa-question-circle"></i>
+                  </label>
+            </div>
+          </div>
+          <!-- Configured Actions -->
+          <div class="form-group form-inline">
+            <label for="configuredWafActions" class="col-sm-3 control-label">Configured Actions</label>
+            <div class="col-md-9">
+              <label for="configuredWafActions" class="control-label">  {{item.waf_actions.length}}</label>
+              <label for="configuredWafActions" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover=" TODO text ">
+                    <i class="fa fa-question-circle"></i>
+                  </label>
+            </div>
+          </div>
+          <!-- Learning Mode -->
+          <div class="form-group form-inline">
+            <label for="enableWafLearnMode" class="col-sm-3 control-label">Learning Mode</label>
+            <div class="col-md-9">
+              <toggle-switch name="enableWafLearnMode" is-disabled="_loading" ng-model="$ctrl.enable_learning_mode" on-label="On" off-label="Off">
+              </toggle-switch>
+              <label for="enableWafLearnMode" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="TODO text">
+                    <i class="fa fa-question-circle"></i>
+                  </label>
+            </div>
+          </div>
+          <!-- Enable Analysis for SQL Injection -->
+          <div class="form-group form-inline">
+            <label for="enableSQLInjectionLib" class="col-sm-3 control-label">Enable Analysis for SQL Injection</label>
+            <div class="col-md-9">
+              <toggle-switch name="enableSQLInjectionLib" is-disabled="_loading" ng-model="item.enable_sql_injection_lib" on-label="On"
+                off-label="Off">
+              </toggle-switch>
+              <label for="enableSQLInjectionLib" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="TODO text">
+                    <i class="fa fa-question-circle"></i>
+                  </label>
+            </div>
+          </div>
+          <!-- Enable Analysis for XSS Injection -->
+          <div class="form-group form-inline">
+            <label for="enableXSSInjectionLib" class="col-sm-3 control-label">Enable Analysis for XSS Injection</label>
+            <div class="col-md-9">
+              <toggle-switch name="enableXSSInjectionLib" is-disabled="_loading" ng-model="item.enable_xss_injection_lib" on-label="On"
+                off-label="Off">
+              </toggle-switch>
+              <label for="enableXSSInjectionLib" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="TODO text">
+                    <i class="fa fa-question-circle"></i>
+                  </label>
+            </div>
+          </div>
+          <!-- TODO: waf-rules-->
+          <!--<hr>-->
+          <!--<domain-waf-rules id="wafRulesBlock" ng-model="item.waf-rules">waf</domain-waf-rules>-->
+          <hr>
+          <domain-waf-actions-list ng-model="item.waf_actions"></domain-waf-actions-list>
+        </div>
+      </div>
+    </div>
