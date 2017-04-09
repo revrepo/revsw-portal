@@ -1,6 +1,6 @@
-<div class="waf-rules-list__custom">
+<div class="waf-rules-list__biltin" ng-controller="wafRulesBiultInListController" ng-init="initList()">
   <div class="alert alert-info" ng-if="records.length == 0 && !_loading">
-    There are no any custom WAF rules configured in the system
+    There are no any built-in WAF rules configured in the system
   </div>
   <div class="alert alert-warning" ng-if="records == null && !_loading">
     Failed to retrieve a list of resources - please try again later
@@ -23,20 +23,24 @@
           <th><a href="" ng-click="order('updated_at')">Updated At</a>
             <span class="sortorder" ng-show="filter.predicate === 'updated_at'" ng-class="{reverse: filter.reverse}"></span>
           </th>
-          <th><a href="" ng-click="order('updated_by')">Updated By</a>
-            <span class="sortorder" ng-show="filter.predicate === 'updated_by'" ng-class="{reverse: filter.reverse}"></span>
-          </th>
-          <!--<th ng-if="auth.isRevadmin()"> <a href="" ng-click="order('domains')">Used By Domains</a>
-            <span class="sortorder" ng-show="filter.predicate === 'domains'" ng-class="{reverse: filter.reverse}"></span></th>-->
+          <!--TODO: later <th><a href="" ng-click="order('updated_by')">Updated By</a>
+                    <span class="sortorder" ng-show="filter.predicate === 'updated_by'" ng-class="{reverse: filter.reverse}"></span>
+                  </th>-->
+          <th ng-if="auth.isRevadmin()"> <a href="" ng-click="order('domains')">Used By</a>
+            <span class="sortorder" ng-show="filter.predicate === 'domains'" ng-class="{reverse: filter.reverse}"></span></th>
           <th class="thin">Status</th>
           <th>Actions</th>
+          <!--<th class="account" ng-if="auth.isReseller() ||  auth.isRevadmin()">
+                    <a href="" ng-click="order('companyName')">Account</a>
+                    <span class="sortorder" ng-show="filter.predicate === 'companyName'" ng-class="{reverse: filter.reverse}"></span>
+                  </th>-->
         </tr>
       </thead>
       <tbody>
         <tr id="anchor{{::$index}}" ng-click="saveAnchorScrollIndex($index)" ng-repeat="item in filteredRecords | limitTo:filter.limit:filter.skip track by $index">
           <td> {{item.rule_name}} </td>
           <td> {{item.comment}} </td>
-          <td> {{getRelativeDate(item.updated_at) }}</td>
+          <td>{{getRelativeDate(item.updated_at) }}</td>
           <td ng-if="auth.isRevadmin()">{{item.updated_by}}</td>
           <!--TODO: later
                   <td>
@@ -47,24 +51,29 @@
           </td>
           <td class="actions">
             <i class="glyphicon glyphicon-refresh spin" ng-if="item.loading"></i>
-            <a href="" ng-click="openViewDialogRule($event,item)" ng-if="!item.loading" uib-tooltip="View WAF Rule">
+            <a href="" ng-click="openViewDialogBuitInRule(e,item)" ng-if="!item.loading" uib-tooltip="View WAF Rule">
               <i class="fa fa-eye"></i>
             </a>
-            <a ui-sref=".edit({id: item.id})" ng-class="{'disabled':isReadOnly()}" ng-if="!item.loading && auth.isRevadmin()" uib-tooltip="Edit WAF Rule">
+            <a ui-sref=".edit({id: item.id})" ng-if="!item.loading && auth.isRevadmin()" uib-tooltip="Edit WAF Rule">
               <i class="glyphicon glyphicon-pencil"></i>
             </a>
-            <a href="" ng-if="!item.loading" ng-click="duplicateWAFRule(item)" ng-class="{'disabled':isReadOnly()}" uib-tooltip="Duplicate WAF Rule">
+            <a href="" ng-if="!item.loading && auth.isRevadmin()" ng-click="duplicateWAFRule(item)" ng-class="{'disabled':isReadOnly()}"
+              uib-tooltip="Duplicate WAF Rule">
               <i class="fa fa-clone"></i>
             </a>
-            <a href="" ng-if="!item.loading" ng-click="deleteWAFRule(item)" ng-class="{'disabled':isReadOnly()}" uib-tooltip="Delete WAF Rule">
+            <a href="" ng-if="!item.loading && auth.isRevadmin()" ng-click="deleteWAFRule(item)" ng-class="{'disabled':isReadOnly()}"
+              uib-tooltip="Delete WAF Rule">
               <i class="glyphicon glyphicon-trash"></i>
             </a>
 
           </td>
+          <!--<td ng-if="auth.isReseller() ||  auth.isRevadmin()">
+                    <div>{{item.companyName}}</div>
+                  </td>-->
         </tr>
       </tbody>
     </table>
   </div>
-
   <crud-pagination></crud-pagination>
+  <hr>
 </div>

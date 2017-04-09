@@ -3,10 +3,10 @@
 
   angular
     .module('revapm.Portal.WAFRules')
-    .controller('wafRulesCustomListController', wafRulesCustomListController);
+    .controller('wafRulesBiultInListController', wafRulesBiultInListController);
 
   /*@ngInject*/
-  function wafRulesCustomListController($scope, $timeout,
+  function wafRulesBiultInListController($scope, $timeout,
     $localStorage,
     CRUDController,
     WAF_Rules,
@@ -32,16 +32,15 @@
     $scope.model = {};
 
     $scope.$on('$stateChangeSuccess', function (state) {
-      var data = null;
       if ($state.is($scope.state)) {
-        $scope.list(data);
+        $scope.initList();
       }
     });
 
     $scope.initList = function () {
       var data = {
         filters: {
-          rule_type: 'customer'
+          rule_type: 'builtin'
         }
       };
       $scope.list(data);
@@ -65,10 +64,28 @@
           .delete(model)
           .then(function (data) {
             $scope.alertService.success(data);
-            $scope.list();
+            $scope.initList();
           })
           .catch($scope.alertService.danger);
       });
+    };
+
+
+    /**
+     * @name namepath openViewDialogRule
+     */
+    $scope.openViewDialogRule = function (e, item) {
+      $scope._loading = true;
+      $scope.alertService.clear();
+      $scope.get(item.id)
+        .then(function (data) {
+          $scope.model = data;
+          $scope.confirm('parts/waf_rules/dialog/view-waf-rule.tpl.html', $scope.model);
+        })
+        .catch($scope.alertService.danger)
+        .finally(function () {
+          $scope._loading = false;
+        });
     };
   }
 })();

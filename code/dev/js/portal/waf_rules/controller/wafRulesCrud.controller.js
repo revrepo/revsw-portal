@@ -33,13 +33,6 @@
 
     $scope.NO_SPECIAL_CHARS = $config.PATTERNS.NO_SPECIAL_CHARS;
     $scope.COMMENT_NO_SPECIAL_CHARS = $config.PATTERNS.COMMENT_NO_SPECIAL_CHARS;
-    $scope.sslCert_update_help_info = 'Use the button to send the modified configuration to the staging environment ' +
-      'which can be used to test the new configuration before sending it to the global network (and making it ' +
-      'available for all your end users). Please see “Web -> Staging Env.” section for details about the staging ' +
-      'environment and how to use it.';
-    $scope.sslCert_publish_help_info = 'Once you have tested the updated configuration in the staging environment ' +
-      '(using “Update” button) are you welcome to publish the configuration in the global network (and make it ' +
-      'available to all your end users)';
 
     /**
      * @name setAccountName
@@ -68,36 +61,31 @@
     $scope.$on('$stateChangeSuccess', function (state) {
       var data = null;
       // NOTE: set filter params for specific state
-      if ($state.is('index.accountSettings.accountresources')) {
-        $scope.filter.limit = 5;
-        var filters = {
-          rule_type: 'builtin',
-          account_id: !User.getSelectedAccount() ? null : User.getSelectedAccount().acc_id
-        };
-        data = {
-          filters: filters
-        };
-        $scope.list(data).then(setAccountName);
-        return;
-      }
       if ($state.is($scope.state)) {
-         data = {
-          filters: {
-            rule_type: 'builtin'
-          }
-        };
-        $scope.list(data)
-          .then(setAccountName)
-          .then(function () {
-            if ($scope.elementIndexForAnchorScroll) {
-              setTimeout(function () {
-                $anchorScroll('anchor' + $scope.elementIndexForAnchorScroll);
-                $scope.$digest();
-              }, 500);
-            }
-          });
+        $scope.initList();
       }
     });
+    /**
+     * @name initList
+     * @description method init call data
+     */
+    $scope.initList = function () {
+      var data = {
+        filters: {
+          rule_type: 'customer'
+        }
+      };
+      $scope.list(data)
+        .then(setAccountName)
+        .then(function () {
+          if ($scope.elementIndexForAnchorScroll) {
+            setTimeout(function () {
+              $anchorScroll('anchor' + $scope.elementIndexForAnchorScroll);
+              $scope.$digest();
+            }, 500);
+          }
+        });
+    };
 
     $scope.filterKeys = ['rule_name', 'companyName', 'expires_at', 'domains', 'updated_at'];
 
@@ -209,12 +197,12 @@
         return;
       }
       $scope.confirm('confirmModal.html', model).then(function () {
-        var certName = model.rule_name;
+        var ruleName = model.rule_name;
         $scope
           .delete(model)
           .then(function (data) {
             $scope.alertService.success(data);
-            $scope.list();
+            $scope.initList();
           })
           .catch($scope.alertService.danger);
       });
@@ -239,15 +227,15 @@
         })
         .catch($scope.alertService.danger);
     };
-    /**
-     * @name  publishSSL_cert
+  /**
+     * @name  publishWAFRule
      * @description
      *
      *
      * @param  {[type]} model [description]
      * @return {[type]}       [description]
      */
-    $scope.publishSSLCert = function (model) {
+    $scope.publishWAFRule = function(model) {
       if (!model) {
         return;
       }
@@ -255,7 +243,7 @@
         model.id = $stateParams.id;
       }
       var modelId = model.id;
-      $scope.confirm('confirmPublishModal.html', model).then(function () {
+      $scope.confirm('confirmPublishModal.html', model).then(function() {
         model = $scope.prepareWARRuleToUpdate(model);
         $scope.update({
             id: modelId,
@@ -314,9 +302,7 @@
       });
     };
 
-    $scope.storeToStorage = function (model) {
-      $localStorage.selectedDomain = model;
-    };
+
     /**
      * @name disableSubmit
      * @description check model
@@ -341,38 +327,20 @@
     };
 
     /**
-     * Should open dialog for change status
+     * @name openViewDialogRule
      */
-    var modalInstance = null;
-    $scope.editCurrentSubscriptionState = null;
-    $scope.openViewDialogBuitInRule = function (item) {
+    $scope.openViewDialogRule = function (e, item) {
       $scope._loading = true;
       $scope.alertService.clear();
       $scope.get(item.id)
         .then(function (data) {
           $scope.model = data;
-          modalInstance = $uibModal.open({
-            animation: true,
-            scope: $scope,
-            templateUrl: 'parts/waf_rules/dialog/view-built-in-rule.tpl.html',
-            size: 'md'
-          });
-          /**
-           * Handle close modal window
-           */
-          modalInstance.result
-            .then(function (data) {
-              if (data) {
-                // TODO: delete
-              }
-            });
+          $scope.confirm('parts/waf_rules/dialog/view-waf-rule.tpl.html', $scope.model);
         })
+        .catch($scope.alertService.danger)
         .finally(function () {
           $scope._loading = false;
         });
-
-
-
     };
   }
 })();
