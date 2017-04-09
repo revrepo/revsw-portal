@@ -1,36 +1,13 @@
-// TODO: Rebuitl ALL CODE - NOT FINISHED
-(function() {
+(function () {
   'use strict';
 
   angular.module('revapm.Portal.Domains')
     .directive('domainWafRules', domainWafRules)
-    .run(function($templateRequest) {
+    .run(function ($templateRequest) {
       'ngInject';
       $templateRequest('parts/domains/domain-waf-rules/domain-waf-rules.tpl.html', true);
     });
   /**
-   * @name  domainWafRules
-   * @description
-   * @return {Object}
-   */
-  function domainWafRules_() {
-    return {
-      restrict: 'E',
-      replace: true,
-      scope: true,
-      bindToController: {
-        wafRules: '=ngModel'
-      },
-      templateUrl: 'parts/domains/domain-waf-rules/domain-waf-rules.tpl.html',
-      controllerAs: '$ctrl',
-      controller: function domainWafRules_Controller($scope) {
-        'ngInject';
-        var $ctrl = this;
-
-      }
-    };
-  }
-    /**
    * @name  domainWafRules
    * @description
    * @return {Object}
@@ -41,102 +18,50 @@
       replace: true,
       scope: true,
       bindToController: {
-        wafList: '=ngModel'
+        domainWAFRules: '=ngModel',
+        wafRulesList: '=wafRulesList'
       },
       templateUrl: 'parts/domains/domain-waf-rules/domain-waf-rules.tpl.html',
       controllerAs: '$ctrl',
-      controller: function domainWafController($scope, AlertService) {
+      controller: function domainWafRules_Controller($scope) {
         'ngInject';
         var $ctrl = this;
-        /**
-         * @name  onAddNewBackendBlock
-         * @description
-         *    Add new block in Backends array
-         * @return
-         */
-        this.onAddNewBackendBlock = function() {
-          var newBlock = {
-            name: '',
-            host: '',
-            port: 80,
-            dynamic: true,
-            vcl: ''
-          };
-          $ctrl.wafList.unshift(newBlock);
-          AlertService.success('A new default bakend block has been added to the top of the list. Please configure the block before saving the configuration.');
-        };
-        /**
-         * @name  onRemoveBackendBlock
-         * @description
-         *   Delete item from Backends array
-         *
-         * @param  {Integer} index
-         * @return
-         */
-        this.onRemoveBackendBlock = function(index) {
-          $scope.confirm('parts/domains/domain-custom-vcl-backends/modal/confirmModalDeleteBackenBlock.tpl.html', {
-              name: $ctrl.wafList[index].name
-            })
-            .then(function() {
-              $ctrl.wafList.splice(index, 1);
-              AlertService.success('Backend Block was deleted');
-            });
-        };
+        var isFirstOrder = true;
+        this.orderRecords = [];
 
         /**
-         * @name  onCollapsAllBackendsBlock
-         * @description
-         *
-         * @return
+         * @name initList
+         * @description Method Init data in list on WAF Rules
          */
-        this.onCollapsAllBackendsBlock = function() {
-          var _rules = $ctrl.wafList;
-          angular.forEach(_rules, function(item) {
-            item.$$backendBlockState.isCollapsed = true;
+        this.initList = function (isReOrder) {
+          $ctrl.orderRecords = angular.copy($ctrl.wafRulesList);
+          // Aplay infrormation about using WAF Rule in domain config
+          _.map($ctrl.orderRecords, function (item) {
+            item.isChecked = !!(_.find($ctrl.domainWAFRules, function (itemRule) {
+              return itemRule === item.id;
+            }));
+            return item;
           });
-        };
-        /**
-         * @name  onExpandAllBackendsBlock
-         * @description
-         *
-         * @return
-         */
-        this.onExpandAllBackendsBlock = function() {
-          var _rules = $ctrl.wafList;
-          angular.forEach(_rules, function(item) {
-            item.$$backendBlockState.isCollapsed = false;
-          });
-        };
-        /**
-         * @name  prepareDate
-         * @description
-         *   Prepare custom Backends data for view
-         * @return
-         */
-        this.prepareDate = function() {
-          if (!angular.isArray($ctrl.wafList)) {
-            $ctrl.wafList = [];
+          if (!!isReOrder) {
+            isFirstOrder = isReOrder;
           }
-          angular.forEach($ctrl.wafList, function(item) {
-            // NOTE: add parameter for collapsed item in custom_vcl.backends
-            angular.extend(item, {
-              $$backendBlockState: {
-                isCollapsed: true
-              }
+          if (isFirstOrder) {
+            // NOTE: need order records only once - when first load directive (show in screen)
+            $ctrl.orderRecords = _.sortBy($ctrl.orderRecords, function (item) {
+              return ($ctrl.domainWAFRules.indexOf(item.id) < 0);
             });
-          });
+            isFirstOrder = false;
+          }
         };
-        //
-        this.prepareDate();
         /**
-         * @name  onUpBackendBlock
+         * @name  onUpWAFRule
          * @description
          *
-         * @param  {Object} element - Backend Block Object
+         * @param  {Object} element - WAF Rule Object
          * @return {Boolean|Integer}
          */
-        this.onUpBackendBlock = function(element) {
-          var array = $ctrl.wafList;
+        this.onUpWAFRule = function (element) {
+          var array = $ctrl.orderRecords;
           var index = array.indexOf(element);
           // Item non-existent?
           if (index === -1) {
@@ -152,14 +77,14 @@
           }
         };
         /**
-         * @name  onDownBackendBlock
+         * @name  onDownWAFRule
          * @description
          *
-         * @param  {Object} element - Backend Block Object
+         * @param  {Object} element - WAF Rule Object
          * @return {Boolean|Integer}
          */
-        this.onDownBackendBlock = function(element) {
-          var array = $ctrl.wafList;
+        this.onDownWAFRule = function (element) {
+          var array = $ctrl.orderRecords;
           var index = array.indexOf(element);
           // Item non-existent?
           if (index === -1) {
@@ -174,7 +99,29 @@
             return 0;
           }
         };
+        // NOTE: watch change collection in paret scope
+        $scope.$watch(function () {
+          return $ctrl.wafRulesList;
+        }, function (newVal, oldVal) {
+          if (!!newVal) {
+            $ctrl.initList(true);
+          }
+        }, true);
 
+        // NOTE: changes in working list of WAF Rules
+        $scope.$watch(function () {
+          return $ctrl.orderRecords;
+        }, function (newVal, oldVal) {
+          if (newVal !== oldVal) {
+            // NOTE: update current information about selected WAF Rules
+            $ctrl.domainWAFRules = _.filter($ctrl.orderRecords, function (item) {
+                return item.isChecked;
+              })
+              .map(function (item) {
+                return item.id;
+              });
+          }
+        }, true);
       }
     };
   }

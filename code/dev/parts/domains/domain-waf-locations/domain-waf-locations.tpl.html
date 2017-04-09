@@ -1,10 +1,10 @@
 <div id="domainWAFLocationsBlock" class="panel panel-default domain-waf-locations">
   <div class="panel-heading">
     <div class="pull-left panel-buttons-left block-inline">
-      <a class="btn btn-default btn-md " ng-click="onCollapsAllWAFLocation()" title="Collapse All Rules" ng-show="!isCollapsedAll">
+      <a class="btn btn-default btn-md " ng-click="$ctrl.onCollapsAllWAFLocations()" title="Collapse All Locations" ng-show="!isCollapsedAll">
         <i class="glyphicon glyphicon-chevron-up "></i>
       </a>
-      <a class="btn btn-default btn-md " ng-click="onExpandAllWAFLocation()" title="Expand All Rules">
+      <a class="btn btn-default btn-md " ng-click="$ctrl.onExpandAllWAFLocations()" title="Expand All Locations">
         <i class="glyphicon glyphicon-chevron-down"></i>
       </a>
     </div>
@@ -16,18 +16,18 @@
     </div>
     <h4><b> Locations </b></h4>
   </div>
-  <div class="panel-body">
+  <div class="panel panel-body">
     <div class="form-group" ng-form="locationEditForm">
       <div class="panel panel-default" title="{{item.location}}" ng-repeat="item in $ctrl.waf">
         <div class="panel-heading">
           <div class="domain-waf-location__info">
             <div class="pull-left panel-buttons-left">
               <!-- collapse -->
-              <a class="btn btn-default btn-xs" href="" title="Collapse WAF Location" ng-show="!item.$$wafLocationState.isCollapsed" ng-click="item.$$wafLocationState.isCollapsed = !item.$$wafLocationState.isCollapsed">
+              <a class="btn btn-default btn-xs" href="" title="Collapse WAF Location" ng-show="!item.$$wafLocationBlockState.isCollapsed" ng-click="item.$$wafLocationBlockState.isCollapsed = !item.$$wafLocationBlockState.isCollapsed">
                 <i class="glyphicon glyphicon-chevron-up"></i>
               </a>
               <!-- expend -->
-              <a class="btn btn-default btn-xs" href="" title="Expand WAF Location" ng-show="item.$$wafLocationState.isCollapsed" ng-click="item.$$wafLocationState.isCollapsed = !item.$$wafLocationState.isCollapsed">
+              <a class="btn btn-default btn-xs" href="" title="Expand WAF Location" ng-show="item.$$wafLocationBlockState.isCollapsed" ng-click="item.$$wafLocationBlockState.isCollapsed = !item.$$wafLocationBlockState.isCollapsed">
                 <i class="glyphicon glyphicon-chevron-down"></i>
               </a>
               <!--  TODO WAF Location Up  -->
@@ -37,20 +37,20 @@
               <!-- // -->
             </div>
             <div class="pull-right panel-button-right">
+               <div class="location-panel-into--totals inline-block">Rules:<strong> {{item.waf_rules.length}}</strong>, Actions: <strong>{{item.waf_actions.length}}</strong> </div>
               <!-- Actions -->
-              <a ng-click="$ctrl.onDuplicateWAFLocation($event)" class="btn btn-primary btn-xs duplicateWAFLocationBtn" opover-append-to-body="{{true}}"
+              <a ng-click="$ctrl.onDuplicateWAFLocation($event,item)" class="btn btn-primary btn-xs duplicateWAFLocationBtn" opover-append-to-body="{{true}}"
                 popover-trigger="mouseenter" uib-popover="Duplicate WAF Location"><i class="fa fa-clone"></i> Duplicate Location</a>
               <a href="" title="Remove Rule" title="Delete Location" ng-click="$ctrl.onDeleteWAFLocation($event,$index)">
                 <i class="glyphicon glyphicon-remove"></i>
               </a>
             </div>
             <div class="panel-title">
-              <b>Location</b>: </i> {{item.location}}
+                <b>Location</b>: {{item.location}}</div>
             </div>
           </div>
-        </div>
 
-        <div class="panel-body">
+        <div class="panel-body" ng-show="!item.$$wafLocationBlockState.isCollapsed">
 
           <div class="form-group" ng-class="{'has-error': locationEditForm.wafLocation.$invalid && locationEditForm.wafLocation.$dirty}">
             <label for="wafLocation" class="col-sm-3 control-label">Location *</label>
@@ -72,26 +72,6 @@
               <toggle-switch name="enableWafStatus" is-disabled="_loading" ng-model="item.enable_waf" on-label="On" off-label="Off">
               </toggle-switch>
               <label for="enableWafStatus" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="This switch controls the global WAF functionality for the domain. If you move it to OFF state the WAF feature will be completely disabled for the domain (but all existing WAF configuration will stay in place so you can easily re-enable it later). If you enable WAF for the first time you still need to do additional configuration steps for WAF to actually protect the website.">
-                    <i class="fa fa-question-circle"></i>
-                  </label>
-            </div>
-          </div>
-          <!-- Configured Rules -->
-          <div class="form-group form-inline">
-            <label for="countWafRules" class="col-sm-3 control-label">Configured Rules</label>
-            <div class="col-md-9">
-              <label for="countWafRules" class="control-label"> {{item.waf_rules.length}}</label>
-              <label for="countWafRules" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="TODO text ">
-                    <i class="fa fa-question-circle"></i>
-                  </label>
-            </div>
-          </div>
-          <!-- Configured Actions -->
-          <div class="form-group form-inline">
-            <label for="configuredWafActions" class="col-sm-3 control-label">Configured Actions</label>
-            <div class="col-md-9">
-              <label for="configuredWafActions" class="control-label">  {{item.waf_actions.length}}</label>
-              <label for="configuredWafActions" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover=" TODO text ">
                     <i class="fa fa-question-circle"></i>
                   </label>
             </div>
@@ -131,9 +111,8 @@
                   </label>
             </div>
           </div>
-          <!-- TODO: waf-rules-->
-          <!--<hr>-->
-          <!--<domain-waf-rules id="wafRulesBlock" ng-model="item.waf-rules">waf</domain-waf-rules>-->
+          <hr>
+          <domain-waf-rules ng-model="item.waf_rules" waf-rules-list="$ctrl.wafRulesList"></domain-waf-rules>
           <hr>
           <domain-waf-actions-list ng-model="item.waf_actions"></domain-waf-actions-list>
         </div>

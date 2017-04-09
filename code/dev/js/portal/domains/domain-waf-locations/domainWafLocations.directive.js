@@ -17,17 +17,16 @@
       },
       templateUrl: 'parts/domains/domain-waf-locations/domain-waf-locations.tpl.html',
       controllerAs: '$ctrl',
-      controller: function domainWafLocationsController($scope, $uibModal, $config, AlertService) {
+      controller: function domainWafLocationsController($scope, $uibModal, $config, AlertService, WAF_Rules) {
         'ngInject';
         var $ctrl = this;
-        this.headerOperations = $config.HEADER_OPERATIONS;
-
-        this.status = {
-          isCustomHeaderOpen: false,
-          isFirstOpen: true,
-          isFirstDisabled: false
-        };
-
+        $ctrl.wafRulesList = [];
+        // NOTE: Get list actuals WAF Rules
+        WAF_Rules.query().$promise
+          .then(function (data) {
+            $ctrl.wafRulesList = data;
+          })
+          .catch(AlertService.error);
         /**
          * @name  onAddNew
          * @description add new Item of WAF Location
@@ -46,10 +45,13 @@
             'enable_sql_injection_lib': true,
             'enable_xss_injection_lib': true,
             'waf_rules': [],
-            'waf_actions': []
+            'waf_actions': [],
+            '$$wafLocationBlockState': {
+              'isCollapsed': false
+            }
           };
           $ctrl.waf.push(_.clone(newWAFLocation));
-          AlertService.success('A new default location block has been added to the top of the list. Please configure the block before saving the configuration.');
+          AlertService.success('A new default location block has been added to the bottom of the list. Please configure the block before saving the configuration.');
         };
         /**
          * @name  onDelete
@@ -57,7 +59,7 @@
          * @param  {Integer} index
          * @return
          */
-        this.onDeleteWAFLocation = function (e,index) {
+        this.onDeleteWAFLocation = function (e, index) {
           e.preventDefault();
           e.stopPropagation();
           var modalInstance = $uibModal.open({
@@ -83,6 +85,57 @@
             .then(function () {
               $ctrl.waf.splice(index, 1);
             });
+        };
+
+        /**
+         * @name  onCollapsAllWAFLocations
+         * @description
+         *
+         * @return
+         */
+        this.onCollapsAllWAFLocations = function () {
+          var _rules = $ctrl.waf;
+          angular.forEach(_rules, function (item) {
+            item.$$wafLocationBlockState.isCollapsed = true;
+          });
+        };
+
+        /**
+         * @name  onExpandAllWAFLocations
+         * @description
+         *
+         * @return
+         */
+        this.onExpandAllWAFLocations = function () {
+          var _rules = $ctrl.waf;
+          angular.forEach(_rules, function (item) {
+            item.$$wafLocationBlockState.isCollapsed = false;
+          });
+        };
+
+        /**
+         * @name onDuplicateWAFLocation
+         * @description method  Duplicate WAF Location
+         */
+        this.onDuplicateWAFLocation = function (e, item) {
+          if (!_.isArray($ctrl.waf)) {
+            $ctrl.waf = [];
+          }
+          var duplicateWAFLocation = {
+            'location': item.location || '/',
+            'enable_waf': item.enable_waf || true,
+            'enable_learning_mode': item.enable_learning_mode || true,
+            'enable_sql_injection_lib': item.enable_sql_injection_lib || true,
+            'enable_xss_injection_lib': item.enable_xss_injection_lib || true,
+            'waf_rules': item.waf_rules || [],
+            'waf_actions': item.waf_actions || [],
+            '$$wafLocationBlockState': item.$$wafLocationBlockState || {
+              'isCollapsed': false
+            }
+          };
+
+          $ctrl.waf.push(_.clone(duplicateWAFLocation));
+          AlertService.success('The location block has duplicated to the bottom of the list. Please configure the block before saving the configuration.');
         };
       }
     };

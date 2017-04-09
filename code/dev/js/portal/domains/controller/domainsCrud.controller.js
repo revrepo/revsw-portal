@@ -181,6 +181,12 @@
             delete item.$$itemState;
           });
         }
+        // $$wafLocationBlockState
+         if (model.rev_component_bp.waf && angular.isArray(model.rev_component_bp.waf)) {
+          angular.forEach(model.rev_component_bp.waf, function(item) {
+            delete item.$$wafLocationBlockState;
+          });
+        }
       }
       if (model.domain_name) {
         delete model.domain_name;
@@ -365,6 +371,15 @@
             }
           });
         });
+        angular.forEach($scope.model.rev_component_bp.waf, function(item) {
+          // NOTE: add parameter for collapsed item
+          angular.extend(item, {
+            $$wafLocationBlockState: {
+              isCollapsed: true
+            }
+          });
+        });
+
       }
       /**
        * @name  saveNoChangingValue
