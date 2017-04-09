@@ -23,9 +23,9 @@
           <th><a href="" ng-click="order('updated_at')">Updated At</a>
             <span class="sortorder" ng-show="filter.predicate === 'updated_at'" ng-class="{reverse: filter.reverse}"></span>
           </th>
-          <!--TODO: later <th><a href="" ng-click="order('updated_by')">Updated By</a>
-                    <span class="sortorder" ng-show="filter.predicate === 'updated_by'" ng-class="{reverse: filter.reverse}"></span>
-                  </th>-->
+          <th ng-if="auth.isRevadmin()"><a href="" ng-click="order('updated_by')">Updated By</a>
+            <span class="sortorder" ng-show="filter.predicate === 'updated_by'" ng-class="{reverse: filter.reverse}"></span>
+          </th>
           <th ng-if="auth.isRevadmin()"> <a href="" ng-click="order('domains')">Used By</a>
             <span class="sortorder" ng-show="filter.predicate === 'domains'" ng-class="{reverse: filter.reverse}"></span></th>
           <th class="thin">Status</th>
@@ -51,7 +51,7 @@
           </td>
           <td class="actions">
             <i class="glyphicon glyphicon-refresh spin" ng-if="item.loading"></i>
-            <a href="" ng-click="openViewDialogBuitInRule(e,item)" ng-if="!item.loading" uib-tooltip="View WAF Rule">
+            <a href="" ng-click="openViewDialogRule(e,item)" ng-if="!item.loading" uib-tooltip="View WAF Rule">
               <i class="fa fa-eye"></i>
             </a>
             <a ui-sref=".edit({id: item.id})" ng-if="!item.loading && auth.isRevadmin()" uib-tooltip="Edit WAF Rule">

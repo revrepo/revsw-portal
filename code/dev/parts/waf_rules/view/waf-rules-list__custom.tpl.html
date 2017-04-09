@@ -23,7 +23,7 @@
           <th><a href="" ng-click="order('updated_at')">Updated At</a>
             <span class="sortorder" ng-show="filter.predicate === 'updated_at'" ng-class="{reverse: filter.reverse}"></span>
           </th>
-          <th ng-if="auth.isRevadmin()"><a href="" ng-click="order('updated_by')">Updated By</a>
+          <th><a href="" ng-click="order('updated_by')">Updated By</a>
             <span class="sortorder" ng-show="filter.predicate === 'updated_by'" ng-class="{reverse: filter.reverse}"></span>
           </th>
           <!--<th ng-if="auth.isRevadmin()"> <a href="" ng-click="order('domains')">Used By Domains</a>
@@ -41,7 +41,7 @@
           <td> {{item.rule_name}} </td>
           <td> {{item.comment}} </td>
           <td> {{getRelativeDate(item.updated_at) }}</td>
-          <td ng-if="auth.isRevadmin()">{{item.updated_by}}</td>
+          <td> {{item.updated_by}}</td>
           <!--TODO: later
                   <td>
                     <div class="waf-rule-used-by">{{item.domains}}</div>
@@ -54,13 +54,15 @@
             <a href="" ng-click="openViewDialogRule($event,item)" ng-if="!item.loading" uib-tooltip="View WAF Rule">
               <i class="fa fa-eye"></i>
             </a>
-            <a ui-sref=".edit({id: item.id})" ng-class="{'disabled':isReadOnly()}" ng-if="!item.loading && auth.isRevadmin()" uib-tooltip="Edit WAF Rule">
+            <a ui-sref=".edit({id: item.id})" ng-class="{'disabled':isReadOnly()}" ng-if="!item.loading" ng-show="!auth.isUser()" uib-tooltip="Edit WAF Rule">
               <i class="glyphicon glyphicon-pencil"></i>
             </a>
-            <a href="" ng-if="!item.loading" ng-click="onDuplicateWAFRule($event,item)" ng-class="{'disabled':isReadOnly()}" uib-tooltip="Duplicate WAF Rule">
+            <a href="" ng-if="!item.loading" ng-show="!auth.isUser()" ng-click="onDuplicateWAFRule($event,item)" ng-class="{'disabled':isReadOnly()}"
+              uib-tooltip="Duplicate WAF Rule">
               <i class="fa fa-clone"></i>
             </a>
-            <a href="" ng-if="!item.loading" ng-click="deleteWAFRule(item)" ng-class="{'disabled':isReadOnly()}" uib-tooltip="Delete WAF Rule">
+            <a href="" ng-if="!item.loading" ng-show="!auth.isUser()" ng-click="deleteWAFRule(item)" ng-class="{'disabled':isReadOnly()}"
+              uib-tooltip="Delete WAF Rule">
               <i class="glyphicon glyphicon-trash"></i>
             </a>
           </td>

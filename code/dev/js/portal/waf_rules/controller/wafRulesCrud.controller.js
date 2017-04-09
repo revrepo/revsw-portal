@@ -63,6 +63,8 @@
       // NOTE: set filter params for specific state
       if ($state.is($scope.state)) {
         $scope.initList();
+      } else {
+        $scope.clearModel();
       }
     });
     /**
@@ -85,6 +87,14 @@
             }, 500);
           }
         });
+    };
+
+    $scope.initNew = function () {
+      if ($scope.auth.isRevadmin() !== true) {
+        $scope.model.rule_type = 'customer';
+        $scope.model.visibility = 'public';
+      }
+      $scope.setAccountId();
     };
 
     $scope.filterKeys = ['rule_name', 'companyName', 'expires_at', 'domains', 'updated_at'];
@@ -142,6 +152,7 @@
       delete model.expires_at;
       delete model.domains;
       delete model.operation;
+      delete model.newRuleName;
 
       return model;
     };
@@ -220,14 +231,16 @@
         return false;
       }
       $scope._loading = true;
-      if ($scope.auth.isRevadmin() !== true) {
-        model.rule_type = 'customer';
-      }
+      var createModel = $scope.prepareWARRuleToUpdate(model);
       $scope
-        .create(model, isStay)
+        .create(createModel, isStay)
         .then(function (data) {
           $scope.alertService.success(data);
           $scope.setAccountId();
+          if (isStay === true) {
+            $scope.clearModel();
+            $scope.initNew();
+          }
         })
         .catch($scope.alertService.danger);
     };
