@@ -34,6 +34,7 @@ describe('Negative', function () {
 
       beforeAll(function () {
         Portal.signIn(user);
+        Portal.helpers.nav.goToUsers();
       });
 
       afterAll(function () {
@@ -41,7 +42,6 @@ describe('Negative', function () {
       });
 
       beforeEach(function () {
-        Portal.helpers.nav.goToUsers();
       });
 
       it('should not create user when a required field is filled with blank ' +

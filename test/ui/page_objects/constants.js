@@ -188,6 +188,11 @@ var Constants = {
   rttHeatmaps: {
     TITLE: 'Global Last Mile RTT Heatmap'
   },
+  selectedItems: {
+    billing: {
+      SELECTED_API_QA_ACCOUNT: 'API QA Account'
+    }
+  },
   alertMessages: {
     // @see revsw-cds/lib/handlers/appHandlers.js
     app: {

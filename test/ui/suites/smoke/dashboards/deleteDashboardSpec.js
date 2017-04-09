@@ -54,46 +54,59 @@ describe('Smoke', function () {
         afterEach(function () {
         });
 
-        it('should selected dashboard and "Delete" from edited Dashboard page (title page)',
+        it('should selected dashboard and "Delete" from edited Dashboard page '+
+           ' (for checking with the main title)',
           function () {
 
             Portal.dashboards.listPage.addNewDashboard(dashboard);
-
-            var title = Portal.dashboards.listPage.getTitle();
-            expect(title).toContain(dashboard.title);
-
             Portal.dashboards.listPage.deleteDashboard();
-
-            title = Portal.dashboards.listPage.getTitle();
+            
+            var title = Portal.dashboards.listPage.getTitle();
             expect(title).not.toContain(dashboard.title);
 
           });
-          it('should selected dashboard and "Delete" from edited Dashboard page (left SideBar)',
-            function () {
 
-              Portal.dashboards.listPage.addNewDashboard(dashboard);
+        it('should selected dashboard and "Delete" from edited Dashboard page'+
+           ' (for checking with the sideBar item)',
+          function () {
 
-              var leftSideBar = Portal.helpers.nav.getDashboardsItems().getText();
-              leftSideBar.then(function(elements) {
-                elements.forEach(function(text) {
-                  if (text === dashboard.title) {
-                    expect(text).toContain(dashboard.title);
-                  }
-                });
-              });
+            Portal.dashboards.listPage.addNewDashboard(dashboard);
+            Portal.dashboards.listPage.deleteDashboard();
 
-              Portal.dashboards.listPage.deleteDashboard();
+            var leftSideBar = Portal.helpers.nav.getDashboardsItems().getText();
+            var hasElementWithText = function(textElements) {
+              var result = false;
+              textElements.forEach(function(text) {
+                if (text === dashboard.title) {
+                  result = true;
+                }
+              });   
+              return result;
+            };
 
-              leftSideBar = Portal.helpers.nav.getDashboardsItems().getText();
-              leftSideBar.then(function(elements) {
-                elements.forEach(function(text) {
-                  if (text === dashboard.title) {
-                    expect(text).toContain(dashboard.title);
-                  }
-                });
-              });
+            leftSideBar.then(function(textElements) {
+              
+              expect(hasElementWithText(textElements)).toBe(false);
 
             });
+
+          });
+
+
+        it('should update form after clicking on dashboard name',
+          function () {
+            Portal.dashboards.listPage.addNewDashboard(dashboard);
+
+            Portal.dashboards.listPage.clickModifyDashboard();
+            Portal.dashboards.listPage.clickEditDashboardProperties();
+            Portal.dashboards.editPage.form.setTitle(dashboard.title);
+            Portal.dashboards.editPage.form.clickSave();
+            
+            var updatedTitle = Portal.dashboards.listPage.getTitle();
+            expect(updatedTitle).toContain(dashboard.title);
+            
+            Portal.dashboards.listPage.deleteDashboard();
+          });
 
         it('should display "Delete Dashboard" button in edited dashboard form',
           function () {
@@ -106,19 +119,6 @@ describe('Smoke', function () {
 
             Portal.dialog.clickCloseBtn();
           });
-
-        it('should update form after clicking on dashboard name',
-          function () {
-            Portal.dashboards.listPage.clickModifyDashboard();
-            Portal.dashboards.listPage.clickEditDashboardProperties();
-            Portal.dashboards.editPage.form.setTitle(dashboard.title);
-            Portal.dashboards.editPage.form.clickCreate();
-            
-            var updatedTitle = Portal.dashboards.listPage.getTitle();
-
-            expect(updatedTitle).toContain(dashboard.title);
-          });
-
 
       });
     });

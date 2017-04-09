@@ -56,16 +56,6 @@ var EditDomain = {
       publishDomain: {
         id: 'publishDomain'
       },
-
-
-      disabledPublishDomain: {
-        css: '#publishDomain[disabled="Disabled"]'
-      },
-      disabledUpdateDomain: {
-        css: '#updateDomain[disabled="Disabled"]'
-      },
-
-      
       cancel: {
         linkText: 'Cancel'
       }
@@ -174,18 +164,6 @@ var EditDomain = {
     return element(by.id(this.locators.buttons.updateDomain.id));
   },
 
-  /**
-   * ### EditDomain.getDisabledPublishDomainBtn()
-   *
-   * Returns the reference to the `Update Domain` button when is disabled (Selenium WebDriver
-   * Element) from the Edit Domain page from the Portal app.
-   *
-   * @returns {Object} Selenium WebDriver Element
-   */
-  getDisabledUpdateDomainBtn: function () {
-    return element(by.css(this.locators.buttons.disabledUpdateDomain.css));
-  },
-
 
   getEditDomainLink: function (numberLink) {
     return element(by.css(this.locators.links.editDomain.css +
@@ -209,17 +187,6 @@ var EditDomain = {
     return element(by.id(this.locators.buttons.publishDomain.id));
   },
 
-  /**
-   * ### EditDomain.getDisabledPublishDomainBtn()
-   *
-   * Returns the reference to the `Publish Domain` button when is disabled (Selenium WebDriver
-   * Element) from the Edit Domain page from the Portal app.
-   *
-   * @returns {Object} Selenium WebDriver Element
-   */
-  getDisabledPublishDomainBtn: function () {
-    return element(by.css(this.locators.buttons.disabledPublishDomain.css));
-  },
 
   /**
    * ### EditDomain.getCancelBtn()
