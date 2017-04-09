@@ -57,7 +57,7 @@
             <a ui-sref=".edit({id: item.id})" ng-if="!item.loading && auth.isRevadmin()" uib-tooltip="Edit WAF Rule">
               <i class="glyphicon glyphicon-pencil"></i>
             </a>
-            <a href="" ng-if="!item.loading && auth.isRevadmin()" ng-click="duplicateWAFRule(item)" ng-class="{'disabled':isReadOnly()}"
+            <a href="" ng-if="!item.loading && auth.isRevadmin()" ng-click="onDuplicateWAFRule(item)" ng-class="{'disabled':isReadOnly()}"
               uib-tooltip="Duplicate WAF Rule">
               <i class="fa fa-clone"></i>
             </a>
@@ -65,7 +65,6 @@
               uib-tooltip="Delete WAF Rule">
               <i class="glyphicon glyphicon-trash"></i>
             </a>
-
           </td>
           <!--<td ng-if="auth.isReseller() ||  auth.isRevadmin()">
                     <div>{{item.companyName}}</div>

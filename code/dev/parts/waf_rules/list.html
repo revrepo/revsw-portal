@@ -38,6 +38,32 @@
     <button class="btn btn-success" type="button" ng-click="ok()">OK</button>
   </div>
 </script>
+<script type="text/ng-template" id="confirmDuplicateModal.html">
+  <div class="modal-header">
+    <h3 class="modal-title">Confirm</h3>
+  </div>
+  <div class="modal-body">
+    <form class="form-horizontal" name="duplicateForm">
+      <div class="form-group"><label class="col-sm-12"> Please enter new WAF Rule Name for duplicate <strong> {{model.rule_name}}</strong>:</label></div>
+      <div class="form-group" ng-class="{ 'has-error': duplicateForm.rule_name.$invalid && duplicateForm.rule_name.$dirty }">
+        <div class="col-sm-12">
+          <input type="text" autofocus class="form-control inline-block" ng-disabled="_loading" ng-model="model.newRuleName" name="rule_name"
+            id="rule_name" placeholder="New WAF Rule Name" ng-pattern="NO_SPECIAL_CHARS" ng-maxlength="50" required>
+            <label for="rule_name" class="text-info" popover-append-to-body="{{false}}" popover-trigger="mouseenter" uib-popover="WAF Rule name (50 characters max)">
+              <i class="fa fa-question-circle"></i>
+            </label>
+          <div class="error-messages" ng-messages="duplicateForm.rule_name.$error" role="alert" ng-messages-multiple>
+            <div ng-messages-include="parts/shared/error-messages.html"></div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+    <button class="btn btn-success" type="button" ng-disabled="duplicateForm.$invalid" ng-click="ok(newRuleName)">OK</button>
+  </div>
+</script>
 <div class="container-fluid waf-rules__page" ui-view="page">
   <div class="row">
     <div class="col-sm-12">
@@ -55,7 +81,7 @@
               <div class="pull-left form-inline">
                 <div class="form-group">
                   <a ui-sref="{{isReadOnly() ?'.': '.new'}}" class="btn btn-success" ng-class="{'btn-disabled':isReadOnly()}" ng-disabled="_loading || isReadOnly()"
-                    popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Click to add a new WAF rule. Later the rule can be used in WAF settings of your web domains.">
+                    popover-append-to-body="{{false}}" popover-trigger="mouseenter" uib-popover="Click to add a new WAF rule. Later the rule can be used in WAF settings of your web domains.">
                     <i class="glyphicon glyphicon-plus"></i>&nbsp; Add New Custom WAF Rule
                   </a>
                 </div>
