@@ -14,21 +14,27 @@
       },
       templateUrl: 'parts/domains/domain-waf-actions-list/domain-waf-actions-list.tpl.html',
       controllerAs: '$ctrl',
-      controller: function domainWafActionsListController($scope, $uibModal, $config) {
+      controller: function domainWafActionsListController($scope, $uibModal, $config, AlertService) {
         'ngInject';
         var $ctrl = this;
         this.wafActions = $config.WAF_ACTIONS;
         /**
          * @name  onAddNew
          * @description
-         * @param  {Object} newWAFAction
+         *  Add new default Action
+         * @param  {Event} e
          * @return
          */
-        this.onAddNew = function(newWAFAction) {
+        this.onAddNew = function(e) {
+          $ctrl.loading = true;
+          e.preventDefault();
           if (!_.isArray($ctrl.waf_actions)) {
             $ctrl.waf_actions = [];
           }
+          var newWAFAction = $config.WAF_ACTIONS_DEFAULT;
           $ctrl.waf_actions.push(_.clone(newWAFAction));
+          AlertService.success('WAF Action is added');
+          $ctrl.loading = false;
         };
         /**
          * @name  onDelete

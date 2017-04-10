@@ -261,6 +261,48 @@
         SRV_PRIORITY: 10,
         SRV_WEIGHT: 5,
         SRV_PORT: 5060
+      },
+      /**
+       * @name WAF_ACTIONS_DEFAULT
+       * @type {Array}
+       */
+      WAF_ACTIONS_DEFAULT: {
+        'condition': '$SQL >= 8', // TODO: set valid value
+        'action': 'BLOCK'
+      },
+      WAF_LOCATION_DEFAULT: {
+        'location': '/',
+        'enable_waf': true,
+        'enable_learning_mode': true,
+        'enable_sql_injection_lib': true,
+        'enable_xss_injection_lib': true,
+        'waf_rules': [],
+        'waf_actions': [
+            {
+              'condition': '$SQL >= 8',
+              'action': 'BLOCK'
+            },
+            {
+              'condition': '$UWA >= 4',
+              'action': 'DROP'
+            },
+            {
+              'condition': '$XSS >= 8',
+              'action': 'BLOCK'
+            },
+            {
+              'condition': '$EVADE >= 4',
+              'action': 'BLOCK'
+            },
+            {
+              'condition': '$LIBINJECTION_XSS >= 8',
+              'action': 'BLOCK'
+            },
+            {
+              'condition': '$LIBINJECTION_SQL >= 8',
+              'action': 'BLOCK'
+            }
+        ]
       }
     });
 

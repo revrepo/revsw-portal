@@ -38,18 +38,12 @@
           if (!_.isArray($ctrl.waf)) {
             $ctrl.waf = [];
           }
-          var newWAFLocation = {
-            'location': '/new',
-            'enable_waf': true,
-            'enable_learning_mode': true,
-            'enable_sql_injection_lib': true,
-            'enable_xss_injection_lib': true,
-            'waf_rules': [],
-            'waf_actions': [],
+          var newWAFLocation = angular.copy($config.WAF_LOCATION_DEFAULT);
+          angular.merge(newWAFLocation, {
             '$$wafLocationBlockState': {
               'isCollapsed': false
             }
-          };
+          });
           $ctrl.waf.push(_.clone(newWAFLocation));
           AlertService.success('A new default location block has been added to the bottom of the list. Please configure the block before saving the configuration.');
         };

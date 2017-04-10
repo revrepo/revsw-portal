@@ -31,9 +31,9 @@
                 <i class="glyphicon glyphicon-chevron-down"></i>
               </a>
               <!--  TODO WAF Location Up  -->
-              <a class="btn btn-default btn-xs" href="" ng-click="onUpWAFLocation(item)"><i class="glyphicon glyphicon glyphicon-arrow-up " title="Move One Position Up"></i></a>
+              <a class="btn btn-default btn-xs" href="" ng-click="onUpWAFLocation(item)"><i class="glyphicon glyphicon-arrow-up " title="Move One Position Up"></i></a>
               <!--  TODO WAF Location Down  -->
-              <a class="btn btn-default btn-xs" href="" ng-click="onDownWAFLocation(item)"><i class="glyphicon glyphicon glyphicon-arrow-down" title="Move One Position Down"></i></a>
+              <a class="btn btn-default btn-xs" href="" ng-click="onDownWAFLocation(item)"><i class="glyphicon glyphicon-arrow-down" title="Move One Position Down"></i></a>
               <!-- // -->
             </div>
             <div class="pull-right panel-button-right">
@@ -80,7 +80,7 @@
           <div class="form-group form-inline">
             <label for="enableWafLearnMode" class="col-sm-3 control-label">Learning Mode</label>
             <div class="col-md-9">
-              <toggle-switch name="enableWafLearnMode" is-disabled="_loading" ng-model="$ctrl.enable_learning_mode" on-label="On" off-label="Off">
+              <toggle-switch name="enableWafLearnMode" is-disabled="_loading" ng-model="item.enable_learning_mode" on-label="On" off-label="Off">
               </toggle-switch>
               <label for="enableWafLearnMode" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="TODO text">
                     <i class="fa fa-question-circle"></i>

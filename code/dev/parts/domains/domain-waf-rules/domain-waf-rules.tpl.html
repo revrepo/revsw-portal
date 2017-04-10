@@ -5,35 +5,42 @@
     <table class="table">
       <thead>
         <tr>
-          <th>Use This Rule</th>
           <th>Rule Name </th>
           <th> Rule Type</th>
+          <th> Description</th>
           <th> Updated At</th>
           <th> Updated By </th>
-          <th class="thin">Status</th>
+          <th class="thin_">Status</th>
+          <th>Use This Rule</th>
         </tr>
       </thead>
       <tbody>
         <tr ng-repeat="item in $ctrl.orderRecords track by $index">
-          <td class="actions">
-           <i class="glyphicon glyphicon-refresh spin" ng-if="item.loading"></i>
-            <input type="checkbox" class="" ng-model="item.isChecked">
-
-            <a href="" ng-click="$ctrl.onUpWAFRule(item)" ng-if="!item.loading" uib-tooltip="Up WAF Rule">
-              <i class="glyphicon glyphicon-chevron-up "></i>
-            </a>
-            <a href="" ng-click="$ctrl.onDownWAFRule(item)" ng-if="!item.loading" uib-tooltip="Down WAF Rule">
-              <i class="glyphicon glyphicon-chevron-down "></i>
-            </a>
-          </td>
           <td> {{item.rule_name}} </td>
-          <td> {{item.comment}} </td>
+          <td> {{item.rule_type}} </td>
+          <td class="description"> {{item.comment}} </td>
           <td> {{getRelativeDate(item.updated_at) }}</td>
           <td ng-if="auth.isRevadmin()">{{item.updated_by}}</td>
           <td>
             <div waf-rule-staging-status ng-id="item.id"></div>
           </td>
-
+          <td class="actions">
+            <i class="glyphicon glyphicon-refresh spin" ng-if="item.loading"></i>
+            <!--<input type="checkbox" class="" ng-model="item.isChecked"> TODO: delete if used toggle-switch-->
+            <div class="pull-right">
+              <a href="" class="" ng-click="$ctrl.onViewWAFRule($event,item)" ng-if="!item.loading" uib-tooltip="View WAF Rule">
+                <i class="fa fa-eye"></i>
+              </a>
+              <a href="" class="btn btn-default btn-xs" ng-click="$ctrl.onUpWAFRule(item)" ng-if="!item.loading" uib-tooltip="Up WAF Rule">
+                <i class="glyphicon glyphicon-arrow-up"></i>
+              </a>
+              <a href="" class="btn btn-default btn-xs" ng-click="$ctrl.onDownWAFRule(item)" ng-if="!item.loading" uib-tooltip="Down WAF Rule">
+                <i class="glyphicon glyphicon-arrow-down"></i>
+              </a>
+              <toggle-switch class="is-checked--toggle-switch" name="isChecked" ng-model="item.isChecked" on-label="On" off-label="Off">
+              </toggle-switch>
+            </div>
+          </td>
         </tr>
       </tbody>
     </table>
