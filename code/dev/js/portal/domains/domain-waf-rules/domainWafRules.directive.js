@@ -23,7 +23,7 @@
       },
       templateUrl: 'parts/domains/domain-waf-rules/domain-waf-rules.tpl.html',
       controllerAs: '$ctrl',
-      controller: function domainWafRules_Controller($scope) {
+      controller: function domainWafRules_Controller($scope, WAF_Rules, AlertService, $uibModal) {
         'ngInject';
         var $ctrl = this;
         var isFirstOrder = true;
@@ -99,6 +99,39 @@
             return 0;
           }
         };
+        /**
+         * @name onViewWAFRule
+         * @description method show WAF Rule information
+         *
+         */
+        this.onViewWAFRule = function (e, item) {
+          var resolve;
+          if($ctrl.loading){
+            return false;
+          }
+          $ctrl.loading = true;
+          WAF_Rules.get({
+              id: item.id
+            }).$promise
+            .then(function (data) {
+              resolve = {
+                model: data
+              };
+              console.log(resolve);
+              var modalInstance = $uibModal.open({
+                animation: false,
+                templateUrl: 'parts/domains/modals/viewWAFRuleInfo.tpl.html',
+                controller: 'ConfirmModalInstanceCtrl',
+                size: 'md',
+                resolve: resolve || {}
+              });
+            })
+            .catch(AlertService.error)
+            .finally(function(){
+               $ctrl.loading = false;
+            });
+        };
+
         // NOTE: watch change collection in paret scope
         $scope.$watch(function () {
           return $ctrl.wafRulesList;
