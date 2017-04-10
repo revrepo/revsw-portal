@@ -33,7 +33,7 @@
           }
           var newWAFAction = $config.WAF_ACTIONS_DEFAULT;
           $ctrl.waf_actions.push(_.clone(newWAFAction));
-          AlertService.success('WAF Action is added');
+          AlertService.success('New WAF Action is added'); // TODO: set correct text
           $ctrl.loading = false;
         };
         /**

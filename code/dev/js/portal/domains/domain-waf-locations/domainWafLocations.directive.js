@@ -44,7 +44,7 @@
               'isCollapsed': false
             }
           });
-          $ctrl.waf.push(_.clone(newWAFLocation));
+          $ctrl.waf.push(newWAFLocation);
           AlertService.success('A new default location block has been added to the bottom of the list. Please configure the block before saving the configuration.');
         };
         /**
