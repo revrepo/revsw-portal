@@ -90,6 +90,23 @@
        * Interval delay for refreshing SSL Certificate staging/global status
        */
       SSL_CERT_STATUS_REFRESH_INTERVAL: 15000,
+       /**
+       * Interval delay for refreshing WAF Rules Status staging/global status
+       */
+      WAF_RULE_STATUS_REFRESH_INTERVAL: 15000,
+      /**
+       * List of icon classes for WAF Rule  statuses
+       */
+      WAF_RULE_STAGING_STATUS_ICONS: {
+        InProgress: 'glyphicon-refresh spin',
+        Published: 'glyphicon-ok-sign text-success',
+        Modified: 'glyphicon-ok-sign text-primary'
+      },
+      WAF_RULE_PRODUCTION_STATUS_ICONS: {
+        InProgress: 'glyphicon-refresh spin',
+        Published: 'glyphicon-ok-circle text-success',
+        Modified: 'glyphicon-ok-circle text-primary'
+      },
       /**
        * [LOGSHIPPERS_SOURCE_TYPES description]
        * @type {Object}
@@ -169,6 +186,13 @@
         'add': 'Add',
         'remove': 'Remove',
         'replace': 'Replace'
+      },
+      // DOMAIN WAF ACTIONS
+      WAF_ACTIONS:{
+        'ALLOW': 'ALLOW',
+        'BLOCK': 'BLOCK',
+        'LOG': 'LOG',
+        'DROP': 'DROP'
       },
       TIME_NOTE_DISPLAY: {
         MESSAGE: 'All times are shown in the computer’s local time zone'
