@@ -106,7 +106,7 @@
          */
         this.onViewWAFRule = function (e, item) {
           var resolve;
-          if($ctrl.loading){
+          if ($ctrl.loading) {
             return false;
           }
           $ctrl.loading = true;
@@ -117,7 +117,7 @@
               resolve = {
                 model: data
               };
-              console.log(resolve);
+
               var modalInstance = $uibModal.open({
                 animation: false,
                 templateUrl: 'parts/domains/modals/viewWAFRuleInfo.tpl.html',
@@ -127,8 +127,8 @@
               });
             })
             .catch(AlertService.error)
-            .finally(function(){
-               $ctrl.loading = false;
+            .finally(function () {
+              $ctrl.loading = false;
             });
         };
 
