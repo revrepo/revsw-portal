@@ -18,7 +18,7 @@
       },
       templateUrl: 'parts/domains/domain-waf-locations/domain-waf-locations.tpl.html',
       controllerAs: '$ctrl',
-      controller: function domainWafLocationsController($uibModal, $scope, $config, AlertService, WAF_Rules) {
+      controller: function domainWafLocationsController($q, $uibModal, $scope, $config, AlertService, WAF_Rules) {
         'ngInject';
         var $ctrl = this;
         $ctrl.wafRulesList = [];
@@ -34,7 +34,7 @@
           .then(function (data) {
             $ctrl.wafRulesList = data;
           })
-          .catch(AlertService.error);
+          .catch(AlertService.danger);
         /**
          * @name  onAddNew
          * @description add new Item of WAF Location
@@ -42,19 +42,71 @@
          * @param  {Object} newWAFLocation
          * @return
          */
-        this.onAddNewWAFLocation = function () {
+        this.onAddNewWAFLocation = function (isAsk) {
           if (!_.isArray($ctrl.waf)) {
             $ctrl.waf = [];
           }
-          var newWAFLocation = angular.copy($config.WAF_LOCATION_DEFAULT);
-          angular.merge(newWAFLocation, {
-            '$$wafLocationBlockState': {
-              'isCollapsed': false
+          if ($ctrl.loading) {
+            return false;
+          }
+          $ctrl.loading = true;
+          var modalInstance = {
+            result: $q.when()
+          };
+          var resolve = {
+            model: {
+              newLocationName: ''
             }
-          });
-          $ctrl.waf.push(newWAFLocation);
-          AlertService.success('A new default location block has been added to the bottom of the list. Please configure the block before saving the configuration.');
+          };
+          if (!!isAsk || isAsk === true) {
+            modalInstance = $uibModal.open({
+              animation: false,
+              templateUrl: 'parts/domains/modals/confirmAddNewLocation.tpl.html',
+              controller: 'ConfirmModalInstanceCtrl',
+              size: 'md',
+              resolve: resolve || {}
+            });
+          } else {
+            resolve.model.newLocationName = $config.WAF_LOCATION_DEFAULT.location;
+          }
+
+          modalInstance.result.then(function (data) {
+              // TODO: add validation rule to form confirmAddNewLocation.tpl.html
+              if (!$ctrl.wafLocationNameVaivation(resolve.model.newLocationName)) {
+                AlertService.danger('Sorry! Can`t create Location with exists name.');
+                return false;
+              }
+              var newWAFLocation = angular.copy($config.WAF_LOCATION_DEFAULT);
+              angular.merge(newWAFLocation, {
+                '$$wafLocationBlockState': {
+                  'isCollapsed': false
+                }
+              }, {
+                location: resolve.model.newLocationName
+              });
+              $ctrl.waf.push(newWAFLocation);
+
+              AlertService.success('A new default location block has been added to the bottom of the list. Please configure the block before saving the configuration.');
+            })
+            .finally(function () {
+              $ctrl.loading = false;
+            });
         };
+        /**
+         * @name wafLocationNameVaivation
+         * @description method validate uniqum location name
+         */
+        this.wafLocationNameVaivation = function (value) {
+          var location_ = _.find($ctrl.waf, function (location) {
+            return location.location === value;
+          });
+          if (location_) {
+            return false;
+          } else {
+            return true;
+          }
+        };
+
         /**
          * @name  onDelete
          * @description delete one item from array property 'waf'
