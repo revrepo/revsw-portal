@@ -17,7 +17,7 @@
       },
       templateUrl: 'parts/domains/domain-waf-locations/domain-waf-locations.tpl.html',
       controllerAs: '$ctrl',
-      controller: function domainWafLocationsController($scope, $uibModal, $config, AlertService, WAF_Rules) {
+      controller: function domainWafLocationsController($uibModal, $scope, $config, AlertService, WAF_Rules) {
         'ngInject';
         var $ctrl = this;
         $ctrl.wafRulesList = [];
@@ -110,26 +110,44 @@
         /**
          * @name onDuplicateWAFLocation
          * @description method  Duplicate WAF Location
+         * Ask new Location Name
          */
         this.onDuplicateWAFLocation = function (e, item) {
-          if (!_.isArray($ctrl.waf)) {
-            $ctrl.waf = [];
+          if ($ctrl.loading) {
+            return false;
           }
-          var duplicateWAFLocation = {
-            'location': item.location || '/',
-            'enable_waf': item.enable_waf || true,
-            'enable_learning_mode': item.enable_learning_mode || true,
-            'enable_sql_injection_lib': item.enable_sql_injection_lib || true,
-            'enable_xss_injection_lib': item.enable_xss_injection_lib || true,
-            'waf_rules': item.waf_rules || [],
-            'waf_actions': item.waf_actions || [],
-            '$$wafLocationBlockState': item.$$wafLocationBlockState || {
-              'isCollapsed': false
-            }
+          $ctrl.loading = true;
+          var resolve = {
+            model: angular.copy(item)
           };
-
-          $ctrl.waf.push(_.clone(duplicateWAFLocation));
-          AlertService.success('The location block has duplicated to the bottom of the list. Please configure the block before saving the configuration.');
+          var modalInstance = $uibModal.open({
+            animation: false,
+            templateUrl: 'parts/domains/modals/confirmDuplicateLocation.tpl.html',
+            controller: 'ConfirmModalInstanceCtrl',
+            size: 'md',
+            resolve: resolve || {}
+          });
+          modalInstance.result.then(function (data) {
+              if (data) {
+                var duplicateWAFLocation = {
+                  'location': resolve.model.newLocationName,
+                  'enable_waf': item.enable_waf || true,
+                  'enable_learning_mode': item.enable_learning_mode || true,
+                  'enable_sql_injection_lib': item.enable_sql_injection_lib || true,
+                  'enable_xss_injection_lib': item.enable_xss_injection_lib || true,
+                  'waf_rules': item.waf_rules || [],
+                  'waf_actions': item.waf_actions || [],
+                  '$$wafLocationBlockState': item.$$wafLocationBlockState || {
+                    'isCollapsed': false
+                  }
+                };
+                $ctrl.waf.push(_.clone(duplicateWAFLocation));
+                AlertService.success('The location block has duplicated to the bottom of the list. Please configure the block before saving the configuration.');
+              }
+            })
+            .finally(function () {
+              $ctrl.loading = false;
+            });
         };
       }
     };
