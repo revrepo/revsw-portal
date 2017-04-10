@@ -202,6 +202,18 @@
             return 0;
           }
         };
+        /**
+         * @name init
+         * @description method check exists WAF block and create it
+         */
+        this.init = function () {
+          if (!!!$ctrl.waf) {
+            $ctrl.waf = [];
+            $ctrl.onAddNewWAFLocation();
+          }
+        };
+        // NOTE: auto init
+        this.init();
       }
     };
   }
