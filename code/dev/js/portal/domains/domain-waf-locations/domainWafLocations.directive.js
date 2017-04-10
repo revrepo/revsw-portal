@@ -24,11 +24,13 @@
         $ctrl.wafRulesList = [];
         // NOTE: when we send account_id - we get all WAF rules for this account and can add WAF Rule with type 'builtin'
         var filters = {
-          rule_type:  'builtin',
+          rule_type: 'builtin',
           account_id: $ctrl.accountId
         };
         // NOTE: Get list actuals WAF Rules
-        WAF_Rules.query({filters:filters}).$promise
+        WAF_Rules.query({
+            filters: filters
+          }).$promise
           .then(function (data) {
             $ctrl.wafRulesList = data;
           })
@@ -154,6 +156,51 @@
             .finally(function () {
               $ctrl.loading = false;
             });
+        };
+        /**
+         * @name onUpWAFLocation
+         * @description method Up Location in list
+         */
+        this.onUpWAFLocation = function (e, element) {
+          e.preventDefault();
+          e.stopPropagation();
+          console.log(e, element)
+          var array = $ctrl.waf;
+          var index = array.indexOf(element);
+          // Item non-existent?
+          if (index === -1) {
+            return false;
+          }
+          // If there is a previous element in sections
+          if (array[index - 1]) {
+            // Swap elements
+            array.splice(index - 1, 2, array[index], array[index - 1]);
+          } else {
+            // Do nothing
+            return 0;
+          }
+        };
+        /**
+         * @name onDownWAFLocation
+         * @description method Down Location in list
+         */
+        this.onDownWAFLocation = function (e, element) {
+          e.preventDefault();
+          e.stopPropagation();
+          var array = $ctrl.waf;
+          var index = array.indexOf(element);
+          // Item non-existent?
+          if (index === -1) {
+            return false;
+          }
+          // If there is a next element in sections
+          if (array[index + 1]) {
+            // Swap elements
+            array.splice(index, 2, array[index + 1], array[index]);
+          } else {
+            // Do nothing
+            return 0;
+          }
         };
       }
     };

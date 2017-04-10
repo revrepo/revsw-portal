@@ -30,10 +30,10 @@
               <a class="btn btn-default btn-xs" href="" title="Expand WAF Location" ng-show="item.$$wafLocationBlockState.isCollapsed" ng-click="item.$$wafLocationBlockState.isCollapsed = !item.$$wafLocationBlockState.isCollapsed">
                 <i class="glyphicon glyphicon-chevron-down"></i>
               </a>
-              <!--  TODO WAF Location Up  -->
-              <a class="btn btn-default btn-xs" href="" ng-click="onUpWAFLocation(item)"><i class="glyphicon glyphicon-arrow-up " title="Move One Position Up"></i></a>
-              <!--  TODO WAF Location Down  -->
-              <a class="btn btn-default btn-xs" href="" ng-click="onDownWAFLocation(item)"><i class="glyphicon glyphicon-arrow-down" title="Move One Position Down"></i></a>
+              <!-- WAF Location Up  -->
+              <a class="btn btn-default btn-xs" href="" ng-click="$ctrl.onUpWAFLocation($event,item)"><i class="glyphicon glyphicon-arrow-up " title="Move One Position Up"></i></a>
+              <!--  WAF Location Down  -->
+              <a class="btn btn-default btn-xs" href="" ng-click="$ctrl.onDownWAFLocation($event,item)"><i class="glyphicon glyphicon-arrow-down" title="Move One Position Down"></i></a>
               <!-- // -->
             </div>
             <div class="pull-right panel-button-right">
