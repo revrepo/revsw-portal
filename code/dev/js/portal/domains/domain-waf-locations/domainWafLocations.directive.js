@@ -164,7 +164,6 @@
         this.onUpWAFLocation = function (e, element) {
           e.preventDefault();
           e.stopPropagation();
-          console.log(e, element)
           var array = $ctrl.waf;
           var index = array.indexOf(element);
           // Item non-existent?
