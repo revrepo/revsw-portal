@@ -13,7 +13,8 @@
       replace: true,
       scope: true,
       bindToController: {
-        waf: '=ngModel'
+        waf: '=ngModel',
+        accountId: '@'
       },
       templateUrl: 'parts/domains/domain-waf-locations/domain-waf-locations.tpl.html',
       controllerAs: '$ctrl',
@@ -21,8 +22,13 @@
         'ngInject';
         var $ctrl = this;
         $ctrl.wafRulesList = [];
+        // NOTE: when we send account_id - we get all WAF rules for this account and can add WAF Rule with type 'builtin'
+        var filters = {
+          rule_type:  'builtin',
+          account_id: $ctrl.accountId
+        };
         // NOTE: Get list actuals WAF Rules
-        WAF_Rules.query().$promise
+        WAF_Rules.query({filters:filters}).$promise
           .then(function (data) {
             $ctrl.wafRulesList = data;
           })

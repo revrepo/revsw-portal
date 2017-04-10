@@ -584,7 +584,7 @@
                 </div>
               </div>
               <!-- WAF Locations list-->
-              <domain-waf-locations id="wafLocationsBlock" ng-if="model.rev_component_bp.enable_waf" ng-model="model.rev_component_bp.waf"></domain-waf-locations>
+              <domain-waf-locations id="wafLocationsBlock" account-id="{{model.account_id}}" ng-if="model.rev_component_bp.enable_waf" ng-model="model.rev_component_bp.waf"></domain-waf-locations>
               <!-- TODO: delete <pre> {{model.rev_component_bp.waf | json}}</pre>-->
               <!-- //  “WAF” -->
               <hr>

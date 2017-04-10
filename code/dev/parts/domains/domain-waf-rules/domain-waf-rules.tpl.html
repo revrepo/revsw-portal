@@ -9,9 +9,9 @@
           <th> Rule Type</th>
           <th> Description</th>
           <th> Updated At</th>
-          <th> Updated By </th>
+          <th ng-if="auth.isRevadmin()">Updated By </th>
           <th class="thin_">Status</th>
-          <th>Use This Rule</th>
+          <th class="text-center">Use This Rule</th>
         </tr>
       </thead>
       <tbody>
