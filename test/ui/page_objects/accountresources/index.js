@@ -24,14 +24,6 @@ var AllAccountResourcesPage = {
 
   // Locators specific to HTML elements from this page object
   locators: {
-    // section: {
-    //   mobileApps: '.accountresource--apps',
-    //   domains: '.accountresource--domains',
-    //   SSLCerts: '.accountresources--ssl_certs',
-    //   SSLNames: '.accountresources--ssl_names',
-    //   DNSZones: '.accountresources--dns_zones',
-    //   logShippingJobs: '.accountresources--logshippingjobs'
-    // },
     buttons: {
       back: {
         linkText: 'Back'

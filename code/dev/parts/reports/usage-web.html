@@ -16,8 +16,11 @@
                 <form class="form-inline">
                   <div class="form-group">
 
-                    <ui-select ng-model="selected.val" theme="select2" ng-animate-disabled ng-disabled="_loading" on-select="onAccountSelect($model)"
-                      style="min-width: 300px;">
+                    <ui-select ng-model="selected.val"
+                               theme="select2" ng-animate-disabled
+                               ng-disabled="_loading"
+                               on-select="onAccountSelect($model)"
+                               style="min-width: 300px;" >
                       <ui-select-match placeholder="Select Account">{{$select.selected.acc_name}}</ui-select-match>
                       <ui-select-choices repeat="item in accounts | filter: {acc_name: $select.search}">
                         <div ng-bind-html="item.acc_name|highlight: $select.search"></div>
@@ -35,8 +38,11 @@
                         </div>
                       </a>
                       <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                        <datetimepicker data-ng-model="month_year" data-datetimepicker-config="{ dropdownSelector: '#month-dd', startView: 'month', minView: 'month', modelType: 'milliseconds' }"
-                          data-on-set-time="onTimeSet(newDate)" />
+                        <datetimepicker
+                          data-ng-model="month_year"
+                          data-datetimepicker-config="{ dropdownSelector: '#month-dd', startView: 'month', minView: 'month', modelType: 'milliseconds' }"
+                          data-on-set-time="onTimeSet(newDate)"
+                          />
                       </ul>
                     </div>
                   </div>
@@ -51,7 +57,7 @@
                 </form>
               </div>
 
-              <div class="pull-right" ng-if="_loading">
+              <div class="pull-right" ng-if="_loading" >
                 <i style="font-size: 34px;" class="glyphicon glyphicon-refresh spin"></i>
               </div>
 
@@ -60,15 +66,13 @@
         </div>
 
         <div class="panel-body">
-          <div class="row" ng-include="'parts/reports/dns_usage/dns_usage_account.tpl.html'">
-            <!-- DNS Usage-->
-          </div>
+
           <div class="row">
             <div class="col-md-12">
               <h4>Monthly Traffic Usage Trend</h4>
-              <div>
-                <div style="min-width: 500px; min-height: 350px" line-chart ng-data="traffic" ng-chart-options="chartOptions"></div>
-              </div>
+                <div>
+                  <div style="min-width: 500px; min-height: 350px" line-chart ng-data="traffic" ng-chart-options="chartOptions"></div>
+                </div>
             </div>
           </div>
 
@@ -81,21 +85,21 @@
               <form class="form-horizontal">
 
                 <div class="form-group">
-                  <label class="col-sm-6 control-label">Active</label>
+                  <label class="col-sm-6 control-label" >Active</label>
                   <div class="col-sm-6">
                     <div class="form-control text-right">{{ report.domains.active }}</div>
                   </div>
                 </div>
 
                 <div class="form-group">
-                  <label class="col-sm-6 control-label">Deleted</label>
+                  <label class="col-sm-6 control-label" >Deleted</label>
                   <div class="col-sm-6">
                     <div class="form-control text-right">{{ report.domains.deleted }}</div>
                   </div>
                 </div>
 
                 <div class="form-group">
-                  <label class="col-sm-6 control-label">SSL Enabled</label>
+                  <label class="col-sm-6 control-label" >SSL Enabled</label>
                   <div class="col-sm-6">
                     <div class="form-control text-right">{{ report.domains.ssl_enabled }}</div>
                   </div>
@@ -108,69 +112,39 @@
                   </div>
                 </div>
 
+              </form>
+
+            </div>
+            <!-- Section with data SSL Certificates-->
+            <div class="col-md-4" id="ssl_certs__container">
+
+              <h4>SSL Certs</h4>
+
+              <form class="form-horizontal">
+
                 <div class="form-group">
-                  <label class="col-sm-6 control-label">Custom VCL Rules</label>
+                  <label class="col-sm-6 control-label" >Active</label>
                   <div class="col-sm-6">
-                    <div class="form-control text-right">{{ report.total_custom_vcl_feature }}</div>
+                    <div class="form-control text-right">{{ report.ssl_certs.active }}</div>
                   </div>
                 </div>
+
                 <div class="form-group">
-                  <label class="col-sm-6 control-label">Cache Purge Commands</label>
+                  <label class="col-sm-6 control-label" >Deleted</label>
                   <div class="col-sm-6">
-                    <div class="form-control text-right">{{ report.total_object_purge_commands }}</div>
+                    <div class="form-control text-right">{{ report.ssl_certs.deleted }}</div>
                   </div>
                 </div>
+
                 <div class="form-group">
-                  <label class="col-sm-6 control-label">Enhanced Analytics</label>
+                  <label class="col-sm-6 control-label">Total</label>
                   <div class="col-sm-6">
-                    <div class="form-control text-right">{{ report.total_enhanced_web_analytics }}</div>
+                    <div class="form-control text-right">{{ report.ssl_certs.total }}</div>
                   </div>
                 </div>
 
               </form>
-            </div>
 
-            <div class="col-md-4">
-              <!-- Section with data SSL Certificates -->
-              <div class="col-md-12 " id="ssl_certs__container">
-                <h4>SSL Certs</h4>
-
-                <form class="form-horizontal">
-
-                  <div class="form-group">
-                    <label class="col-sm-6 control-label">Active</label>
-                    <div class="col-sm-6">
-                      <div class="form-control text-right">{{ report.ssl_certs.active }}</div>
-                    </div>
-                  </div>
-
-                  <div class="form-group">
-                    <label class="col-sm-6 control-label">Deleted</label>
-                    <div class="col-sm-6">
-                      <div class="form-control text-right">{{ report.ssl_certs.deleted }}</div>
-                    </div>
-                  </div>
-
-                  <div class="form-group">
-                    <label class="col-sm-6 control-label">Total</label>
-                    <div class="col-sm-6">
-                      <div class="form-control text-right">{{ report.ssl_certs.total }}</div>
-                    </div>
-                  </div>
-
-                </form>
-              </div>
-              <!-- Section with data SSL Names -->
-              <div class="col-md-12" id="ssl_names__container">
-                <form class="form-horizontal">
-                  <div class="form-group">
-                    <label class="col-sm-6 h4">SSL Names</label>
-                    <div class="col-sm-6">
-                      <div class="form-control text-right">{{ report.total_ssl_names }}</div>
-                    </div>
-                  </div>
-                </form>
-              </div>
             </div>
 
             <div class="col-md-4">
@@ -187,7 +161,7 @@
                 </div>
 
                 <div class="form-group">
-                  <label class="col-sm-6 control-label">Inactive</label>
+                  <label class="col-sm-6 control-label" >Inactive</label>
                   <div class="col-sm-6">
                     <div class="form-control text-right">{{ report.api_keys.inactive }}</div>
                   </div>
@@ -206,36 +180,6 @@
 
           </div>
           <hr>
-          <!--“DNS Service” -->
-          <div class="row">
-            <div class="col-md-4">
-              <h4>DNS Service</h4>
-              <form class="form-horizontal">
-                <div class="form-group">
-                  <label class="col-sm-6 control-label">Total DNS Zones</label>
-                  <div class="col-sm-6">
-                    <div class="form-control text-right">{{ report.total_dns_zones }}</div>
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label class="col-sm-6 control-label">Total DNS Records</label>
-                  <div class="col-sm-6">
-                    <div class="form-control text-right">{{ report.total_dns_records }}</div>
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label class="col-sm-6 control-label">Total DNS Queries</label>
-                  <div class="col-sm-6">
-                    <div class="form-control text-right">{{ report.total_dns_queries }}</div>
-                  </div>
-                </div>
-
-              </form>
-
-            </div>
-          </div>
           <!-- New version display Mobile Apps data-->
           <div class="row" id="apps__view_container">
             <div class="col-sm-12">
@@ -321,14 +265,14 @@
               <form class="form-horizontal">
 
                 <div class="form-group">
-                  <label class="col-sm-6 control-label">Requests</label>
+                  <label class="col-sm-6 control-label" >Requests</label>
                   <div class="col-sm-6">
                     <div class="form-control text-right">{{ report.traffic.count }}</div>
                   </div>
                 </div>
 
                 <div class="form-group">
-                  <label class="col-sm-6 control-label">Sent</label>
+                  <label class="col-sm-6 control-label" >Sent</label>
                   <div class="col-sm-6">
                     <div class="form-control text-right">{{ report.traffic.sent_bytes }}</div>
                   </div>
@@ -366,14 +310,14 @@
               <form class="form-horizontal">
 
                 <div class="form-group">
-                  <label class="col-sm-6 control-label">Cache HIT</label>
+                  <label class="col-sm-6 control-label" >Cache HIT</label>
                   <div class="col-sm-6">
                     <div class="form-control text-right">{{ report.cache_hits.HIT }}</div>
                   </div>
                 </div>
 
                 <div class="form-group">
-                  <label class="col-sm-6 control-label">Cache MISS</label>
+                  <label class="col-sm-6 control-label" >Cache MISS</label>
                   <div class="col-sm-6">
                     <div class="form-control text-right">{{ report.cache_hits.MISS }}</div>
                   </div>
@@ -390,7 +334,7 @@
               <form class="form-horizontal">
 
                 <div class="form-group" ng-repeat="( port, hits ) in report.port_hits">
-                  <label class="col-sm-6 control-label">{{ port === '80' ? 'HTTP' : 'HTTPS' }}</label>
+                  <label class="col-sm-6 control-label" >{{ port === '80' ? 'HTTP' : 'HTTPS' }}</label>
                   <div class="col-sm-6">
                     <div class="form-control text-right">{{ hits }}</div>
                   </div>
@@ -406,9 +350,7 @@
             <div ng-if="showDomainsUsage()" id="domains_usage">
 
               <hr>
-              <h4 class="list-title">Traffic Total Per Billing Zone <button class="btn btn-xs btn-primary btn-billing-zones-details" id="billingZonesDetails"
-                  uib-tooltip="Click the button to get information about which our edge locations are included in reported billing zones"
-                  ng-click="onGetBillingZonesDetails()">Billing Zones Details</button></h4>
+              <h4 class="list-title">Traffic Total Per Billing Zone  <button class="btn btn-xs btn-primary btn-billing-zones-details" id="billingZonesDetails" uib-tooltip="Click the button to get information about which our edge locations are included in reported billing zones" ng-click="onGetBillingZonesDetails()">Billing Zones Details</button></h4>
               <table class="table table-stripped table-condensed">
                 <thead>
                   <tr>
@@ -445,35 +387,29 @@
                     <th class="text-right">Traffic Received</th>
                     <th class="text-right">BW Sent</th>
                     <th class="text-right">BW Received</th>
-                    <th class="text-right">Custom VCL Rules</th>
-                    <th class="text-right">Cache Purge Commands </th>
-
-
                   </tr>
                 </thead>
                 <tbody>
                   <tr ng-repeat-start="( domain, usage ) in report.domains_usage" name="{{domain}}">
                     <td>
-                      <a ng-if="usage.count !== '0'" role="button" data-toggle="collapse" data-target="#domain-{{$index}}">
-                        <i class="glyphicon glyphicon-plus-sign"></i>
-                        <!-- glyphicon-remove-circle  glyphicon-fire -->
+                      <a ng-if="usage.count !== '0'" role="button" data-toggle="collapse" data-target="#domain-{{$index}}" >
+                        <i class="glyphicon glyphicon-plus-sign"></i> <!-- glyphicon-remove-circle  glyphicon-fire -->
                       </a>
                     </td>
                     <td>
                       <span ng-if="usage.deleted" style="color:darkred;">
                         <i class="glyphicon glyphicon-exclamation-sign" uib-tooltip="Deleted Domain"></i>
-                      </span> {{domain}}
+                      </span>
+                      {{domain}}
                     </td>
                     <td class="text-right">{{usage.count}}</td>
                     <td class="text-right">{{usage.sent_bytes}}</td>
                     <td class="text-right">{{usage.received_bytes}}</td>
                     <td class="text-right">{{usage.billable_sent_bps}}</td>
                     <td class="text-right">{{usage.billable_received_bps}}</td>
-                    <td class="text-right">{{usage.custom_vcl_feature}}</td>
-                    <td class="text-right">{{usage.object_purge_commands}}</td>
                   </tr>
                   <tr ng-repeat-end id="domain-{{$index}}" class="panel-collapse collapse" role="tabpanel" name="{{domain}}">
-                    <td colspan="8" style="background-color: #d0d0e0; padding-left: 25px;">
+                    <td colspan="7" style="background-color: #d0d0e0; padding-left: 25px;">
                       <div class="panel-body" style="padding: 10px; padding-bottom: 0;">
 
                         <div class="row">
@@ -488,14 +424,14 @@
                             <form class="form-horizontal">
 
                               <div class="form-group">
-                                <label class="col-sm-6 control-label">Cache HIT</label>
+                                <label class="col-sm-6 control-label" >Cache HIT</label>
                                 <div class="col-sm-6">
                                   <div class="form-control text-right" id="cache_hit">{{ usage.cache_hits.HIT }}</div>
                                 </div>
                               </div>
 
                               <div class="form-group">
-                                <label class="col-sm-6 control-label">Cache MISS</label>
+                                <label class="col-sm-6 control-label" >Cache MISS</label>
                                 <div class="col-sm-6">
                                   <div class="form-control text-right" id="cache_miss">{{ usage.cache_hits.MISS }}</div>
                                 </div>
@@ -512,7 +448,7 @@
                             <form class="form-horizontal">
 
                               <div class="form-group" ng-repeat="( port, hits ) in usage.port_hits">
-                                <label class="col-sm-6 control-label">{{ port === '80' ? 'HTTP' : 'HTTPS' }}</label>
+                                <label class="col-sm-6 control-label" >{{ port === '80' ? 'HTTP' : 'HTTPS' }}</label>
                                 <div class="col-sm-6">
                                   <div class="form-control text-right" id="port_{{port}}">{{ hits }}</div>
                                 </div>
@@ -524,8 +460,7 @@
                         </div>
 
                         <hr>
-                        <h4 class="title-traffic-per-billing-zone">Traffic Per Billing Zone <button class="btn btn-xs btn-primary btn-billing-zones-details" uib-tooltip="Click the button to get information about which our edge locations are included in reported billing zones"
-                            ng-click="onGetBillingZonesDetails()">Billing Zones Details</button></h4>
+                        <h4 class="title-traffic-per-billing-zone">Traffic Per Billing Zone <button class="btn btn-xs btn-primary btn-billing-zones-details" uib-tooltip="Click the button to get information about which our edge locations are included in reported billing zones" ng-click="onGetBillingZonesDetails()">Billing Zones Details</button></h4>
                         <table class="table table-stripped table-condensed">
                           <thead>
                             <tr>
@@ -555,14 +490,10 @@
                 </tbody>
               </table>
             </div>
-            <div class="row">
-              <!-- TODO: DNS Usage-->
-              <div ng-template="'parts/reports/dns_usage/dns_usage_account.tpl.html'"></div>
-            </div>
+
             <div ng-if="showAccounts()">
               <hr>
-              <h4>Accounts Usage <button id="btnAccountUsageBillingZonesDetails" class="btn btn-xs btn-primary" uib-tooltip="Click the button to get information about which our edge locations are included in reported billing zones"
-                  ng-click="onGetBillingZonesDetails()"><i></i>Billing Zones Details</button></h4>
+              <h4>Accounts Usage <button id="btnAccountUsageBillingZonesDetails" class="btn btn-xs btn-primary" uib-tooltip="Click the button to get information about which our edge locations are included in reported billing zones" ng-click="onGetBillingZonesDetails()"><i></i>Billing Zones Details</button></h4>
 
               <table datatable="ng" dt-options="accountsDtOptions" dt-column-defs="colDefs" class="table table-stripped table-condensed order-column">
                 <thead>

@@ -17,9 +17,6 @@
             <a href="" ng-click="order('rule_name')">Rule Name</a>
             <span class="sortorder" ng-show="filter.predicate === 'rule_name'" ng-class="{reverse: filter.reverse}"></span>
           </th>
-          <th ng-if="auth.isRevadmin()"><a href="" ng-click="order('visibility')">Visibility</a>
-            <span class="sortorder" ng-show="filter.predicate === 'visibility'" ng-class="{reverse: filter.reverse}"></span>
-          </th>
           <th><a href="" ng-click="order('comment')">Rule Description</a>
             <span class="sortorder" ng-show="filter.predicate === 'comment'" ng-class="{reverse: filter.reverse}"></span>
           </th>
@@ -29,8 +26,8 @@
           <th ng-if="auth.isRevadmin()"><a href="" ng-click="order('updated_by')">Updated By</a>
             <span class="sortorder" ng-show="filter.predicate === 'updated_by'" ng-class="{reverse: filter.reverse}"></span>
           </th>
-          <!--TODO: not ready <th ng-if="auth.isRevadmin()"> <a href="" ng-click="order('domains')">Used By</a>
-            <span class="sortorder" ng-show="filter.predicate === 'domains'" ng-class="{reverse: filter.reverse}"></span></th>-->
+          <th ng-if="auth.isRevadmin()"> <a href="" ng-click="order('domains')">Used By</a>
+            <span class="sortorder" ng-show="filter.predicate === 'domains'" ng-class="{reverse: filter.reverse}"></span></th>
           <th class="thin">Status</th>
           <th>Actions</th>
           <!--<th class="account" ng-if="auth.isReseller() ||  auth.isRevadmin()">
@@ -42,7 +39,6 @@
       <tbody>
         <tr id="anchor{{::$index}}" ng-click="saveAnchorScrollIndex($index)" ng-repeat="item in filteredRecords | limitTo:filter.limit:filter.skip track by $index">
           <td> {{item.rule_name}} </td>
-          <td ng-if="auth.isRevadmin()"> {{item.visibility}} </td>
           <td class="description"> {{item.comment}} </td>
           <td>{{getRelativeDate(item.updated_at) }}</td>
           <td ng-if="auth.isRevadmin()">{{item.updated_by}}</td>
