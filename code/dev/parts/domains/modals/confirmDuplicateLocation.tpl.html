@@ -3,11 +3,11 @@
 </div>
 <div class="modal-body">
   <form class="form-horizontal" name="duplicateForm">
-    <div class="form-group"><label class="col-sm-12"> Please enter new Location Name for duplicate <strong> {{model.location}} </strong>:</label></div>
+    <div class="form-group"><label class="col-sm-12"> Please enter new Location Name for duplicate<strong ng-if="!!model.location"> {{model.location}}</strong>:</label></div>
     <div class="form-group" ng-class="{ 'has-error': duplicateForm.wafLocation.$invalid && duplicateForm.wafLocation.$dirty }">
       <div class="col-sm-12">
-        <input type="text" autofocus class="form-control inline-block" ng-disabled="_loading" ng-model="model.newLocationName" name="wafLocation"
-          id="wafLocation" placeholder="New Location Name" validate-waf-location-name ng-maxlength="50" required>
+        <input type="text" autofocus class="form-control inline-block" ng-disabled="_loading" ng-model="newLocationName" name="wafLocation"
+          id="wafLocation" placeholder="New Location Name" validate-waf-location-name validate-uniqueness-in-array="exists_names" ng-maxlength="50" required>
         <label for="wafLocation" class="text-info" popover-append-to-body="{{false}}" popover-trigger="mouseenter" uib-popover="Location name (50 characters max)">
               <i class="fa fa-question-circle"></i>
             </label>

@@ -17,7 +17,7 @@
 
     function link(scope, element, attrs, ngModel) {
 
-      ngModel.$validators.domainWafLocationName = function (value) {
+      ngModel.$validators.wafLocationName = function (value) {
         ngModel.$setValidity(_name, true);
 
         if (value !== undefined && (WAF_LOCATION_NAME.test(value) === false)) {

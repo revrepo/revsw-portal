@@ -18,7 +18,7 @@
       },
       templateUrl: 'parts/domains/domain-waf-locations/domain-waf-locations.tpl.html',
       controllerAs: '$ctrl',
-      controller: function domainWafLocationsController($q, $uibModal, $scope, $config, AlertService, WAF_Rules) {
+      controller: function domainWafLocationsController($uibModal, $scope, $q, $config, AlertService, WAF_Rules) {
         'ngInject';
         var $ctrl = this;
         $ctrl.wafRulesList = [];
@@ -49,40 +49,51 @@
           if ($ctrl.loading) {
             return false;
           }
-          $ctrl.loading = true;
           var modalInstance = {
-            result: $q.when()
+            result: $q.when($config.WAF_LOCATION_DEFAULT.location)
           };
+
           var resolve = {
-            model: {
-              newLocationName: ''
+            model: function () {
+              return {};
+            },
+            exists_names: function () {
+              return _.map($ctrl.waf, function (itemWaf) {
+                return itemWaf.location;
+              });
             }
           };
+          var newLocationName_ = '';
           if (!!isAsk || isAsk === true) {
             modalInstance = $uibModal.open({
               animation: false,
               templateUrl: 'parts/domains/modals/confirmAddNewLocation.tpl.html',
-              controller: 'ConfirmModalInstanceCtrl',
-              size: 'md',
-              resolve: resolve || {}
+              controller: /*ngInject*/ function ($scope, $uibModalInstance, model, exists_names) {
+                $scope.model = model;
+                $scope.exists_names = exists_names || [];
+                $scope.newLocationName = '';
+                $scope.ok = function (newLocationName) {
+                  $uibModalInstance.close(newLocationName);
+                };
+                $scope.cancel = function () {
+                  $uibModalInstance.dismiss('cancel');
+                };
+              },
+              resolve: resolve
             });
           } else {
             resolve.model.newLocationName = $config.WAF_LOCATION_DEFAULT.location;
           }
-
-          modalInstance.result.then(function (data) {
-              // TODO: add validation rule to form confirmAddNewLocation.tpl.html
-              if (!$ctrl.wafLocationNameVaivation(resolve.model.newLocationName)) {
-                AlertService.danger('Sorry! Can`t create Location with exists name.');
-                return false;
-              }
+          $ctrl.loading = true;
+          modalInstance.result.then(function (dataNewLocationName) {
               var newWAFLocation = angular.copy($config.WAF_LOCATION_DEFAULT);
+              var newLocationName_ = _.trim(dataNewLocationName);
               angular.merge(newWAFLocation, {
                 '$$wafLocationBlockState': {
                   'isCollapsed': false
                 }
               }, {
-                location: resolve.model.newLocationName
+                location: newLocationName_
               });
               $ctrl.waf.push(newWAFLocation);
 
@@ -91,20 +102,6 @@
             .finally(function () {
               $ctrl.loading = false;
             });
-        };
-        /**
-         * @name wafLocationNameVaivation
-         * @description method validate uniqum location name
-         */
-        this.wafLocationNameVaivation = function (value) {
-          var location_ = _.find($ctrl.waf, function (location) {
-            return location.location === value;
-          });
-          if (location_) {
-            return false;
-          } else {
-            return true;
-          }
         };
 
         /**
@@ -173,24 +170,45 @@
          * Ask new Location Name
          */
         this.onDuplicateWAFLocation = function (e, item) {
+          e.preventDefault();
+          e.stopPropagation();
           if ($ctrl.loading) {
             return false;
           }
-          $ctrl.loading = true;
           var resolve = {
-            model: angular.copy(item)
+            model: function () {
+              return angular.copy(item);
+            },
+            exists_names: function () {
+              return _.map($ctrl.waf, function (itemWaf) {
+                return itemWaf.location;
+              });
+            }
           };
+
           var modalInstance = $uibModal.open({
             animation: false,
             templateUrl: 'parts/domains/modals/confirmDuplicateLocation.tpl.html',
-            controller: 'ConfirmModalInstanceCtrl',
-            size: 'md',
-            resolve: resolve || {}
+            controller: /*ngInject*/ function ($scope, $uibModalInstance, model, exists_names) {
+              $scope.model = model;
+              $scope.exists_names = exists_names || [];
+              $scope.newLocationName = '';
+              $scope.ok = function (newLocationName) {
+                $uibModalInstance.close(newLocationName);
+              };
+              $scope.cancel = function () {
+                $uibModalInstance.dismiss('cancel');
+              };
+            },
+            resolve: resolve
           });
-          modalInstance.result.then(function (data) {
-              if (data) {
+
+          $ctrl.loading = !true;
+          modalInstance.result.then(function (dataNewLocationName) {
+              if (dataNewLocationName) {
+                var newLocationName_ = _.trim(dataNewLocationName);
                 var duplicateWAFLocation = {
-                  'location': resolve.model.newLocationName,
+                  'location': newLocationName_,
                   'enable_waf': item.enable_waf || true,
                   'enable_learning_mode': item.enable_learning_mode || true,
                   'enable_sql_injection_lib': item.enable_sql_injection_lib || true,
