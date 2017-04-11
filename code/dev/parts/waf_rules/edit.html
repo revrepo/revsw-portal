@@ -96,12 +96,12 @@
             </div>
           </div>
           <div class="form-group" ng-class="{'has-error': editForm.comment.$invalid && editForm.comment.$dirty }">
-            <label for="comment" class="col-sm-2 control-label">Comment</label>
+            <label for="comment" class="col-sm-2 control-label">Description</label>
             <div class="col-md-10">
               <div class="col-sm-12 form-group">
-                <textarea id="comment" placeholder="Comment (max 300 symbol)" class="form-control inline-block" name="comment" ng-model="model.comment" ng-disabled="_loading" ng-pattern="COMMENT_NO_SPECIAL_CHARS" ng-maxlength="300">
+                <textarea id="comment" placeholder="Description (max 300 symbol)" class="form-control inline-block" name="comment" ng-model="model.comment" ng-disabled="_loading" ng-pattern="COMMENT_NO_SPECIAL_CHARS" ng-maxlength="300">
                 </textarea>
-                <label for="comment" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enter a free-text comment about the SSL WAF Rule (300 characters max)">
+                <label for="comment" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enter a free-text description for the WAF Rule (300 characters max)">
                   <i class="fa fa-question-circle"></i>
                 </label>
               </div>
