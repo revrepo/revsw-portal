@@ -7,7 +7,7 @@
     <div class="form-group" ng-class="{ 'has-error': duplicateForm.wafLocation.$invalid && duplicateForm.wafLocation.$dirty }">
       <div class="col-sm-12">
         <input type="text" autofocus class="form-control inline-block" ng-disabled="_loading" ng-model="model.newLocationName" name="wafLocation"
-          id="wafLocation" placeholder="New Location Name" ng-pattern="NO_SPECIAL_CHARS" ng-maxlength="50" required>
+          id="wafLocation" placeholder="New Location Name" validate-waf-location-name ng-maxlength="50" required>
         <label for="wafLocation" class="text-info" popover-append-to-body="{{false}}" popover-trigger="mouseenter" uib-popover="Location name (50 characters max)">
               <i class="fa fa-question-circle"></i>
             </label>
