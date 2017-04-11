@@ -39,7 +39,7 @@
       <tbody>
         <tr id="anchor{{::$index}}" ng-click="saveAnchorScrollIndex($index)" ng-repeat="item in filteredRecords | limitTo:filter.limit:filter.skip track by $index">
           <td> {{item.rule_name}} </td>
-          <td> {{item.comment}} </td>
+          <td class="description"> {{item.comment}} </td>
           <td> {{getRelativeDate(item.updated_at) }}</td>
           <td> {{item.updated_by}}</td>
           <!--TODO: later
