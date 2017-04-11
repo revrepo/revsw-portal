@@ -2,7 +2,7 @@
  *
  * REV SOFTWARE CONFIDENTIAL
  *
- * [2013] - [2016] Rev Software, Inc.
+ * [2013] - [2017] Rev Software, Inc.
  * All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains
@@ -32,7 +32,7 @@ describe('Smoke', function () {
 
   users.forEach(function (user) {
 
-    describe('With user: ' + user.role, function () {
+    xdescribe('With user: ' + user.role, function () {
       describe('Add user', function () {
 
         beforeAll(function () {
@@ -48,18 +48,18 @@ describe('Smoke', function () {
           Portal.userListPage.clickAddNewUser();
         });
 
-        it('should display "Add user" form', function () {
+        xit('should display "Add user" form', function () {
           expect(Portal.addUserPage.isDisplayed()).toBeTruthy();
           expect(Portal.addUserPage.form.isDisplayed()).toBeTruthy();
         });
 
-        it('should allow to cancel an user edition', function () {
+        xit('should allow to cancel an user edition', function () {
           Portal.addUserPage.form.setEmail('something');
           Portal.addUserPage.clickCancel();
           expect(Portal.userListPage.isDisplayed()).toBeTruthy();
         });
 
-        it('should create an user successfully when filling all required data',
+        xit('should create an user successfully when filling all required data',
           function () {
             // Create user
             var bruce = DataProvider.generateUser();
@@ -71,4 +71,35 @@ describe('Smoke', function () {
       });
     });
   });
+  // Tests for users with READ-ONLY permissions
+  var roUsers = [
+    config.get('portal.users.roResseler')
+  ];
+
+  roUsers.forEach(function (user) {
+    describe('With user: ' + user.role, function () {
+      describe('Add user', function () {
+        beforeAll(function () {
+          Portal.signIn(user);
+        });
+
+        afterAll(function () {
+          Portal.signOut();
+        });
+
+         beforeEach(function () {
+          Portal.helpers.nav.goToUsers();
+        });
+
+        it('should button "Add new User" is no active',function(){
+           browser.sleep(5000);
+          expect(Portal.userListPage.isDisplayed()).toBeTruthy();
+          Portal.userListPage.clickAddNewUser();
+          expect(Portal.userListPage.isDisplayed()).toBeTruthy();
+
+        });
+      });
+    });
+  });
+
 });

@@ -1,0 +1,12 @@
+Feature: Work with WAF functionality
+  As a user with role (revAdmi,admin, user)
+  I can make configuration WAF for domain
+
+  Scenario: Open configuration settings
+   Given I open portal "https://127.0.0.1:3000"
+    When I login as user with role "[revAdmin|user]"
+    When I create new domain configuration with name "demo.com"
+    When I open created domain
+    When I select tab with name "WAF"
+    Then I should see text "Coming Soon!!!"
+

@@ -1,0 +1,19 @@
+{
+  "name": "futures",
+  "version": "1.0.0",
+  "description": "Cucumber.js tests",
+  "main": "protractor.conf.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "NIkolay Gerzhan <nikolay.gerzhan@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "config": "^1.25.1"
+  },
+  "devDependencies": {
+    "protractor-cucumber-framework": "^1.0.2",
+    "q": "^1.5.0"
+  }
+}
