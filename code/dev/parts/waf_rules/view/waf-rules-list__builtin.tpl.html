@@ -41,7 +41,10 @@
       </thead>
       <tbody>
         <tr id="anchor{{::$index}}" ng-click="saveAnchorScrollIndex($index)" ng-repeat="item in filteredRecords | limitTo:filter.limit:filter.skip track by $index">
-          <td> {{item.rule_name}} </td>
+          <td>
+            <a href="" ui-sref=".edit({id: item.id})" ng-if="auth.isRevadmin()" uib-tooltip="Edit WAF Rule">{{item.rule_name}}</a>
+            <a href="" ng-click="openViewDialogRule(e,item)" ng-if="!auth.isRevadmin()" uib-tooltip="View WAF Rule">{{item.rule_name}}</a>
+          </td>
           <td> {{item.visibility}} </td>
           <td class="description"> {{item.comment}} </td>
           <td>{{getRelativeDate(item.updated_at) }}</td>
@@ -58,7 +61,7 @@
             <a href="" ng-click="openViewDialogRule(e,item)" ng-if="!item.loading" uib-tooltip="View WAF Rule">
               <i class="fa fa-eye"></i>
             </a>
-            <a ui-sref=".edit({id: item.id})" ng-if="!item.loading && auth.isRevadmin()" uib-tooltip="Edit WAF Rule">
+            <a href="" ui-sref=".edit({id: item.id})" ng-if="!item.loading && auth.isRevadmin()" uib-tooltip="Edit WAF Rule">
               <i class="glyphicon glyphicon-pencil"></i>
             </a>
             <a href="" ng-if="!item.loading && auth.isRevadmin()" ng-click="onDuplicateWAFRule(e,item)" ng-class="{'disabled':isReadOnly()}"
