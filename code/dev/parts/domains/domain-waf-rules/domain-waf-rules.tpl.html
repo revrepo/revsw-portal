@@ -17,7 +17,7 @@
       <tbody>
         <tr ng-repeat="item in $ctrl.orderRecords track by $index">
           <td> {{item.rule_name}} </td>
-          <td> {{item.rule_type}} </td>
+          <td class="waf-rule-type"> {{::item.rule_type}} </td>
           <td class="description"> {{item.comment}}</td>
           <td> {{getRelativeDate(item.updated_at) }}</td>
           <td ng-if="auth.isRevadmin()">{{item.updated_by}}</td>
