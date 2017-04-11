@@ -180,7 +180,8 @@
         QUERY_STRINGS_OPTION: /^[A-Za-z0-9.' -]+$/,
         CONTACT_DATA: /^[A-Za-zÀÈÌÒÙàèìòùÁÉÍÓÚÝáéíóúýÂÊÎÔÛâêîôûÃÑÕãñõÄËÏÖÜŸäëïöüŸ¡¿çÇŒœßØøÅåÆæÞþÐð$\/-]+$/,
         COMPANY_DATA: /^[A-Za-zÀÈÌÒÙ àèìòù ÁÉÍÓÚ Ý áéíóúý ÂÊÎÔÛ âêîôû ÃÑÕ ãñõ ÄËÏÖÜŸ äëïöüŸ ¡¿çÇŒœ ßØøÅå ÆæÞþ Ðð ""\w\d\s-'.,&#@:?!()$\/-]+$/,
-      },
+        WAF_LOCATION_NAME: /\/\w+/ // TODO: set correct RegExp
+     },
       // HEADER OPERATION FOR DOMAIN CACHING RULE
       HEADER_OPERATIONS: {
         'add': 'Add',
@@ -261,6 +262,53 @@
         SRV_PRIORITY: 10,
         SRV_WEIGHT: 5,
         SRV_PORT: 5060
+      },
+      /**
+       * @name WAF_ACTIONS_DEFAULT
+       * @description default WAF Action Rule for add
+       * @type {Array}
+       */
+      WAF_ACTIONS_DEFAULT: {
+        'condition': '$SQL >= 8', // TODO: set valid value
+        'action': 'BLOCK'
+      },
+      /**
+       * @name WAF_LOCATION_DEFAULT
+       * @description default WAF Location Block for add
+       */
+      WAF_LOCATION_DEFAULT: {
+        'location': '/',
+        'enable_waf': true,
+        'enable_learning_mode': true,
+        'enable_sql_injection_lib': true,
+        'enable_xss_injection_lib': true,
+        'waf_rules': [],
+        'waf_actions': [
+            {
+              'condition': '$SQL >= 8',
+              'action': 'BLOCK'
+            },
+            {
+              'condition': '$UWA >= 4',
+              'action': 'DROP'
+            },
+            {
+              'condition': '$XSS >= 8',
+              'action': 'BLOCK'
+            },
+            {
+              'condition': '$EVADE >= 4',
+              'action': 'BLOCK'
+            },
+            {
+              'condition': '$LIBINJECTION_XSS >= 8',
+              'action': 'BLOCK'
+            },
+            {
+              'condition': '$LIBINJECTION_SQL >= 8',
+              'action': 'BLOCK'
+            }
+        ]
       }
     });
 
