@@ -34,7 +34,7 @@ var KeyForm = {
         css: '.ui-select-search'
       },
       managedAccounts: {
-        css: '#managed_account_ids'
+        id: 'managed_account_ids'
       },
       keyGuid: {
         id: 'key'
@@ -127,7 +127,7 @@ var KeyForm = {
    * @returns {Selenium WebDriver Element}
    */
   getAdditionalAccountsToManageInputTxt: function () {
-    return element(by.css(this.locators.inputTexts.managedAccounts.css));
+    return element(by.id(this.locators.inputTexts.managedAccounts.id));
   },
   /**
    * ### KeyForm.getActiveChekBox()
@@ -259,7 +259,7 @@ var KeyForm = {
    * @returns {Selenium WebDriver Element}
    */
   getUpdateBtn: function () {
-    return element(by.css(this.locators.buttons.update.css));
+    return element.all(by.css(this.locators.buttons.update.css));
   },
 
   // ## Methods to interact with the Edit API Key Form Page components.
