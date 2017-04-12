@@ -26,29 +26,26 @@ describe('Smoke', function () {
   var userCustom;
   var currentPlan = 'Gold';
   var billingPortal = /www\.billingportal\.com/;
-  var selfRegistration = function(done, user) {
-
-    Portal
-      .signUpAndVerifyUser(currentPlan)
-      .then(function (newUser) {
-
-        if (!user) {
-          userCustom = newUser;
-        } else {
-          user();
-        }
-
-        return Portal.helpers.nav.goToBillingStatements();
-
-      })
-      .then(function () {
-        done();
-      });
-
-  };
 
   var users = [
-    'self registration',
+    function(done, user) {
+      Portal
+        .signUpAndVerifyUser(currentPlan)
+        .then(function (newUser) {
+
+          if (!user) {
+            userCustom = newUser;
+          } else {
+            user();
+          }
+
+          return Portal.helpers.nav.goToBillingStatements();
+
+        })
+        .then(function () {
+          done();
+        });
+    },
     config.get('portal.users.revAdmin')
   ];
 
@@ -63,13 +60,17 @@ describe('Smoke', function () {
       beforeAll(function (done) {
 
         if (typeof user !== 'object') {
-          selfRegistration(done);
+          user(done);
+          console.log(typeof user);
         } else {
-          selfRegistration(done, function() {
+          users[0](done, function() {
             Portal.goToCustomUrl('#/');
             Portal.signIn(user);
+            console.log(userCustom);
+            console.log(typeof user);
           });
         }
+
 
 
       });
@@ -149,6 +150,7 @@ describe('Smoke', function () {
               expect(statementValue.length).toBeGreaterThan(0);
             });
         });
+
 
       if (typeof user === 'object') {
 
