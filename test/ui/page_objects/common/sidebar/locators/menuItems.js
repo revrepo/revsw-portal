@@ -68,6 +68,10 @@ var MenuItems = {
       id: 'side-menu-sub-item__webApp-ssl_names',
       area: MenuAreas.WEB
     },
+    WAF_RULES: {
+      id: 'side-menu-sub-item__webApp-waf_rules',
+      area: MenuAreas.WEB
+    },
     STAGING_ENVIRONMENT: {
       id: 'side-menu-sub-item__webApp-staging-environment',
       area: MenuAreas.WEB

@@ -149,7 +149,12 @@ var NavHelper = {
   goToSSLNames: function () {
     return SideBar.select(MenuItems.WEB.SSL_NAMES);
   },
-
+  /**
+   * Navigates to Web > WAF Rules
+   */
+  goToWAFRules: function () {
+    return SideBar.select(MenuItems.WEB.WAF_RULES);
+  },
   /**
    * Navigates to Web > Staging Environment
    */
