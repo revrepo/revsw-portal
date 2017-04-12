@@ -355,7 +355,18 @@ var EditDomain = {
       .getSSLConfigurationTab()
       .click();
   },
+  /**
+   *
+   * Tab "WAF"
+   *
+   */
 
+  // Click to tab "WAF"
+  clickTabWAF: function (numberLink) {
+    return this.form
+      .getWAFTab()
+      .click();
+  },
 
   /**
    *

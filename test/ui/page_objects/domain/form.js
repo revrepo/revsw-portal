@@ -245,6 +245,9 @@ var DomainForm = {
       acceptSSLrequests: {
         id: 'acceptSSLrequests'
       },
+      wafFunctionalityForTheDomain:{
+        id: 'enable_waf_rules'
+      },
       customVCLrules: {
         id: 'customVCLrules'
       },
@@ -396,7 +399,7 @@ var DomainForm = {
         li: '.domain-edit-form .nav.nav-tabs>li:nth-child(4)',
         css: '.domain-edit-form .nav.nav-tabs>li:nth-child(4) a'
       },
-      wafConfiguration: {
+      waf: {
         li: '.domain-edit-form .nav.nav-tabs>li:nth-child(5)',
         css: '.domain-edit-form .nav.nav-tabs>li:nth-child(5) a'
       },
@@ -479,6 +482,17 @@ var DomainForm = {
    */
   getSSLConfigurationTab: function () {
     return element(by.css(this.locators.tabs.sslConfiguration.css));
+  },
+  /**
+   * ### DomainForm.getWAFTab()
+   *
+   * Returns the reference to the `WAF` tab (Selenium WebDriver
+   * Element)
+   *
+   * @returns {Selenium WebDriver Element}
+   */
+  getWAFTab: function () {
+    return element(by.css(this.locators.tabs.waf.css));
   },
   /**
    * ### DomainForm.getCustomVCLRulesTab()
@@ -799,6 +813,9 @@ var DomainForm = {
 
   getAcceptSSLrequestsTxtIn: function () {
     return element(by.id(this.locators.switches.acceptSSLrequests.id));
+  },
+  getWAFFunctionalityForTheDomain: function () {
+    return element(by.id(this.locators.switches.wafFunctionalityForTheDomain.id));
   },
   getCustomVCLrulesTxtIn: function () {
     return element(by.id(this.locators.switches.customVCLrules.id));
