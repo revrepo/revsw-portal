@@ -204,7 +204,7 @@
     $scope.deleteWAFRule = function (model) {
       // NOTE: not delete if RO user
       if ($scope.isReadOnly() === true) {
-        return;
+        return false;
       }
       $scope.confirm('confirmModal.html', model).then(function () {
         var ruleName = model.rule_name;
@@ -368,7 +368,7 @@
      * @description method for create duplicate WAR Rule
      */
     $scope.onDuplicateWAFRule = function (e, item) {
-      if ($scope._loading) {
+      if ($scope._loading || $scope.isReadOnly()) { // NOTE: not duplicate if RO user
         return false;
       }
       $scope._loading = true;

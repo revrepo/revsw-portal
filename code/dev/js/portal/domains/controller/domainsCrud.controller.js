@@ -420,11 +420,14 @@
     /**
      * @name deleteDomain
      * @description
-     *   Delete domain
-     * @param  {Object} model [description]
-     * @return
+     *   Delete domain after confirm
+     * @param  {Object} model Information about domain
+     * @return {Boolean}
      */
     $scope.deleteDomain = function(model) {
+      if($scope.isReadOnly()){
+        return false;
+      }
       $scope.confirm('confirmModal.html', model)
         .then(function() {
           $scope
