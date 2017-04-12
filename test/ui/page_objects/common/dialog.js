@@ -41,8 +41,14 @@ var Dialog = {
         proceed: {
           css: '.modal-footer .btn-danger'
         },
+        delete: {
+          css: 'button[ng-click="deleteDialog(model)"]'
+        },
         cancel: {
           css: 'button[ng-click="cancel()"]'
+        },
+        close: {
+          css: '.close[ng-click="closeDialog()"]'
         },
         submit: {
           css: '.btn-primary'
@@ -125,6 +131,18 @@ var Dialog = {
   },
 
   /**
+   * ### Dialog.getDeleteBtn()
+   *
+   * Return the reference to the `Delete` button (Selenium WebDriver Element) from
+   * the Modal Dialog component from Portal app
+   *
+   * @returns {Object} Selenium WebDriver Element
+   */
+  getDeleteBtn: function () {
+    return element(by.css(this.locators.modal.buttons.delete.css));
+  },
+
+  /**
    * ### Dialog.getVerifyTxtRecord()
    *
    * Return the reference to the `Verify Txt Record` button (Selenium WebDriver Element) from
@@ -164,6 +182,21 @@ var Dialog = {
     return this
       .getModal()
       .element(by.css(this.locators.modal.buttons.cancel.css));
+  },
+
+
+  /**
+   * ### Dialog.getCloseBtn()
+   *
+   * Return the reference to the `Cancel` button (Selenium WebDriver Element)
+   * from the Modal Dialog component from Portal app
+   *
+   * @returns {Object} Selenium WebDriver Element
+   */
+  getCloseBtn: function () {
+    return this
+      .getModal()
+      .element(by.css(this.locators.modal.buttons.close.css));
   },
 
   /**
@@ -215,6 +248,19 @@ var Dialog = {
   clickOk: function () {
     return this
       .getOkBtn()
+      .click();
+  },
+
+  /**
+   * ### Dialog.clickDelete()
+   *
+   * Triggers a click action on the `Delete` button fro the Modal Dialog component
+   *
+   * @returns {Object} Promise
+   */
+  clickDeleteBtn: function () {
+    return this
+      .getDeleteBtn()
       .click();
   },
 
@@ -283,6 +329,20 @@ var Dialog = {
   clickCancel: function () {
     return this
       .getCancelBtn()
+      .click();
+  },
+
+  /**
+   * ### Dialog.clickClose()
+   *
+   * Triggers a click action on the `Cancel` button from the Modal Dialog
+   * component
+   *
+   * @returns {Object} Promise
+   */
+  clickCloseBtn: function () {
+    return this
+      .getCloseBtn()
       .click();
   },
 

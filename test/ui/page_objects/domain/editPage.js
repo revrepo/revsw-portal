@@ -164,6 +164,7 @@ var EditDomain = {
     return element(by.id(this.locators.buttons.updateDomain.id));
   },
 
+
   getEditDomainLink: function (numberLink) {
     return element(by.css(this.locators.links.editDomain.css +
       (numberLink) + ' td:first-child [uib-tooltip="Edit Domain"]'));
@@ -185,6 +186,7 @@ var EditDomain = {
   getPublishDomainBtn: function () {
     return element(by.id(this.locators.buttons.publishDomain.id));
   },
+
 
   /**
    * ### EditDomain.getCancelBtn()

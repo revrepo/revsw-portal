@@ -33,10 +33,12 @@ describe('Functional', function () {
       Portal.signOut();
     });
 
-    it('should be displayed when the amount of items exceed the maximum ' +
-      'amount configured to displayed in one page',
+    it('should be not more than 25 apps on one page',
       function () {
-        // Functional?
+        Portal.userListPage.getListItems().then(function(elements) {
+          console.log(elements.length);
+          expect(elements.length > 25).toBe(false);
+        });
       });
 
     it('should display the next page with next users when clicking "Next page"',

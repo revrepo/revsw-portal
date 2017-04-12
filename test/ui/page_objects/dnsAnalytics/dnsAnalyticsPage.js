@@ -79,6 +79,6 @@ var DNSAnalytics = {
     return this.getTitleLbl()
       .isPresent();
   },
-}
+};
 
 module.exports = DNSAnalytics;

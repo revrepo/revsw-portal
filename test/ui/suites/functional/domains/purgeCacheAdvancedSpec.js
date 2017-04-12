@@ -47,42 +47,25 @@ describe('Functional', function () {
         var purgeBtn = Portal.purgeCacheAdvancedPage.getPurgeBtn();
         expect(purgeBtn.isEnabled()).toBeFalsy();
       });
-
-    // TODO: Need to find a way to get current ACE editor session and manipulate it (set/get value)
-    xit('should purge an object in Code mode',
+    
+    it('should purge an object in Code mode',
       function () {
-        var jsonObject = {
-          purges: [
-            {
-              url: {
-                is_wildcard: true,   // jshint ignore:line
-                expression: '/images/*.png'
-              }
-            }
-          ]
-        };
-
         Portal.purgeCacheAdvancedPage.clickAdvancedMode();
         Portal.purgeCacheAdvancedPage.selectDomain(myDomain);
-        Portal.purgeCacheAdvancedPage.setAceContent(jsonObject.toString());
+        Portal.purgeCacheAdvancedPage.clickUseThisExample(0);
         Portal.purgeCacheAdvancedPage.clickPurge();
-
         var alert = Portal.alerts.getFirst();
-        var expectedMsg = 'The request has been successfully submitted';
+        var expectedMsg = 'The purge request has been successfully queued';
         expect(alert.getText()).toEqual(expectedMsg);
       });
 
-    // TODO: Need to find a way to get current ACE editor session and manipulate it (set/get value)
-    xit('should purge a default json data in Ace Editor in View mode',
+    it('should purge a default json data in Ace Editor in View mode',
       function () {
         Portal.purgeCacheAdvancedPage.clickAdvancedMode();
         Portal.purgeCacheAdvancedPage.selectDomain(myDomain);
         Portal.purgeCacheAdvancedPage.changeToView();
         Portal.purgeCacheAdvancedPage.clickPurge();
-
-        var alert = Portal.alerts.getFirst();
-        var expectedMsg = 'Oops something went wrong';
-        expect(alert.getText()).toEqual(expectedMsg);
+        expect(Portal.purgeCacheAdvancedPage.getPurgeBtn().isEnabled()).toBeFalsy();
       });
 
     it('should cancel in "Ace Editor" go to "List Domains" Page',

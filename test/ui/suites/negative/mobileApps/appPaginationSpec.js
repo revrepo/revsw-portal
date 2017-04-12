@@ -57,8 +57,9 @@ describe('Negative', function () {
             it('should not display pagination when there is not any app to ' +
               'show', function () {
               var uniqueString = 'unique_string_' + (new Date()).getTime();
+              var paginationButtons = Portal.mobileApps.listPage.pager.getPaginationButtons();
               Portal.mobileApps.listPage.setSearch(uniqueString);
-              expect(Portal.mobileApps.listPage.pager.isDisplayed()).toBe(false);
+              expect(paginationButtons.isDisplayed()).toEqual([false, false]);
             });
 
             it('should not show pagination buttons when the search criteria ' +
@@ -80,15 +81,16 @@ describe('Negative', function () {
               'does not return any apps in the `App List`', function () {
               var uniqueString = 'unique_string_' + (new Date()).getTime();
               Portal.mobileApps.listPage.setSearch(uniqueString);
-              expect(Portal.mobileApps.listPage.pager.isDisplayed()).toBe(false);
+              expect(Portal.mobileApps.listPage.pager.getPreviousBtn().isDisplayed()).toBe(false);
             });
 
             it('should not display the `Next Page` after filtering does not ' +
               'return any apps in the `App List`', function () {
               var uniqueString = 'unique_string_' + (new Date()).getTime();
               Portal.mobileApps.listPage.setSearch(uniqueString);
-              expect(Portal.mobileApps.listPage.pager.isDisplayed()).toBe(false);
+              expect(Portal.mobileApps.listPage.pager.getNextBtn().isDisplayed()).toBe(false);
             });
+
           });
         });
       });

@@ -35,7 +35,7 @@
           newDashboardScope._isLoading = false;
           newDashboardScope.structures = dashboard.structures;
           newDashboardScope.model = {
-            title: 'Dashboard',
+            title: 'My Dashboard',
             structure: '6-6',
             options: {
               autorefresh: '1'

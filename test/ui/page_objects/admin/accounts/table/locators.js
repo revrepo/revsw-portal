@@ -86,6 +86,9 @@ var rowLocators = {
       trash: {
         className: 'glyphicon-trash'
       },
+      equalizer: {
+        className: 'glyphicon-equalizer'
+      }
     }
   }
 };

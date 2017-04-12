@@ -37,8 +37,15 @@ describe('Functional', function () {
       Portal.domains.listPage.pager.clickPageIndex(1);
     });
 
-    it('should be displayed when the amount of items exceeds the maximum ' +
-      'amount configured to displayed in one page',
+    it('should be not more than 25 apps on one page',
+      function () {
+        Portal.domains.listPage.getListItems().then(function(elements) {
+          expect(elements.length > 25).toBe(false);
+        });
+      });
+
+    it('should display next-btn if full list and should ' +
+       'not display if clean list',
       function () {
         var uniqueString = 'unique_string_' + (new Date()).getTime();
         Portal.domains.listPage.searcher.setSearchCriteria(uniqueString);
