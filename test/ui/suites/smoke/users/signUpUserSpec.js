@@ -53,7 +53,7 @@ describe('Smoke', function () {
           .isDisplayed()).toBeTruthy();
       });
 
-    it('should display Enterprise plan',
+    it('should display a request to contact sales for a custom plan',
       function () {
         Portal.loginPage.clickSignUp();
         expect(Portal.signUp.plansPage

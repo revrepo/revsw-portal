@@ -21,63 +21,80 @@ var Portal = require('./../../../../page_objects/portal');
 var DataProvider = require('./../../../../common/providers/data');
 var Constants = require('./../../../../page_objects/constants');
 
-describe('Smoke', function () { // jshint ignore:line
-  describe('Edit API Keys', function () {
+describe('Smoke', function () {
 
-    var admin = config.get('portal.users.admin');
-    var apiKeyData = DataProvider.generateApiKeyData();
-    var EditPage = Portal.admin.apiKeys.editPage;
-    var form = EditPage.form;
-    var checkDisplay = function (elem) {
-      return EditPage.elementIsDisplayed(elem);
-    };
-    beforeAll(function () {
-      Portal.signIn(admin);
-      Portal.createApiKey(apiKeyData);
-    });
+  // Defining set of users for which all below tests will be run
+  var users = [
+    config.get('portal.users.admin'),
+    config.get('portal.users.revAdmin'),
+    config.get('portal.users.reseller')
+  ];
 
-    afterAll(function () {
-      Portal.signOut();
-    });
+  users.forEach(function (user) {
 
-    beforeEach(function () {
-      Portal.helpers.nav.goToAPIKeys();
-    });
+    describe('With user: ' + user.role, function () {
 
-    afterEach(function () {});
+      describe('Edit API Keys', function () {
 
-    it('should edit an API Key and Update its Name', function () {
-      Portal.admin.apiKeys.listPage.searchAndClickEdit(apiKeyData.name);
+        var apiKeyData = DataProvider.generateApiKeyData();
+        var EditPage = Portal.admin.apiKeys.editPage;
+        var form = EditPage.form;
+        var checkDisplay = function (elem) {
+          return EditPage.elementIsDisplayed(elem);
+        };
 
-      apiKeyData.name = apiKeyData.name + '_NEW';
-      Portal.admin.apiKeys.editPage.updateKey(apiKeyData);
-      Portal.admin.apiKeys.editPage.clickBackToList();
+        beforeAll(function () {
+          Portal.signIn(user);
+          Portal.createApiKey(apiKeyData);
+        });
 
-      Portal.admin.apiKeys.listPage.searcher.clearSearchCriteria();
-      Portal.admin.apiKeys.listPage.searcher.setSearchCriteria(apiKeyData.name);
-      var allRows = Portal.admin.apiKeys.listPage.table.getRows();
-      expect(allRows.count()).toEqual(1);
-    });
+        afterAll(function () {
+          Portal.signOut();
+        });
 
-    it('should not update API Key name with 30 characters max', function () {
-      Portal.admin.apiKeys.listPage.searchAndClickEdit(apiKeyData.name);
+        beforeEach(function () {
+          Portal.helpers.nav.goToAPIKeys();
+        });
 
-      var apiKeyName = apiKeyData.name;
-      apiKeyData.name = apiKeyData.name + '_LONG_CHARACTERS';
-      Portal.admin.apiKeys.editPage.updateKey(apiKeyData);
-      Portal.admin.apiKeys.editPage.clickBackToList();
+        afterEach(function () {});
 
-      Portal.admin.apiKeys.listPage.searcher.clearSearchCriteria();
-      Portal.admin.apiKeys.listPage.searcher.setSearchCriteria(apiKeyData.name);
-      var allRows = Portal.admin.apiKeys.listPage.table.getRows();
-      expect(allRows.count()).toEqual(0);
-      apiKeyData.name = apiKeyName;
-    });
-    // TODO: need to check "Additional Accounts To Manage"
-    // for roles resseler and revAdmin
-    xit('should display "Additional Accounts To Manage"', function () {
-      Portal.admin.apiKeys.listPage.searchAndClickEdit(apiKeyData.name);
-      expect(checkDisplay('getAdditionalAccountsToManageInputTxt')).toBe(true);
+        it('should edit an API Key and Update its Name', function () {
+          Portal.admin.apiKeys.listPage.searchAndClickEdit(apiKeyData.name);
+
+          apiKeyData.name = apiKeyData.name + '_NEW';
+          Portal.admin.apiKeys.editPage.updateKey(apiKeyData);
+          Portal.admin.apiKeys.editPage.clickBackToList();
+
+          Portal.admin.apiKeys.listPage.searcher.clearSearchCriteria();
+          Portal.admin.apiKeys.listPage.searcher.setSearchCriteria(apiKeyData.name);
+          var allRows = Portal.admin.apiKeys.listPage.table.getRows();
+          expect(allRows.count()).toEqual(1);
+        });
+
+        it('should not update API Key name with 30 characters max', function () {
+          Portal.admin.apiKeys.listPage.searchAndClickEdit(apiKeyData.name);
+
+          var apiKeyName = apiKeyData.name;
+          apiKeyData.name = apiKeyData.name + '_LONG_CHARACTERS';
+          Portal.admin.apiKeys.editPage.updateKey(apiKeyData);
+          Portal.admin.apiKeys.editPage.clickBackToList();
+
+          Portal.admin.apiKeys.listPage.searcher.clearSearchCriteria();
+          Portal.admin.apiKeys.listPage.searcher.setSearchCriteria(apiKeyData.name);
+          var allRows = Portal.admin.apiKeys.listPage.table.getRows();
+          expect(allRows.count()).toEqual(0);
+          apiKeyData.name = apiKeyName;
+        });
+
+        if (user.role !== 'Admin') {
+          it('should display "Additional Accounts To Manage"', function () {
+            Portal.admin.apiKeys.listPage.searchAndClickEdit(apiKeyData.name);
+            expect(checkDisplay('getAdditionalAccountsToManageInputTxt')).toBe(true);
+          });
+        }
+        
+
+      });
     });
   });
 });

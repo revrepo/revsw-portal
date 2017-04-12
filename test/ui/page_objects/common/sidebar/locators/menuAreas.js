@@ -18,7 +18,8 @@
 
 var MenuAreas = {
   DASHBOARDS: {
-    linkText: 'Dashboards'
+    linkText: 'Dashboards',
+    css: '#left-menu-dashboard-section .side-menu-sub-item'
   },
   MOBILE_APPS: {
     id: 'side-menu-apps-item'

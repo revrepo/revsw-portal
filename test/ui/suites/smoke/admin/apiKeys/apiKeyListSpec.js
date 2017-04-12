@@ -24,8 +24,8 @@ describe('Smoke', function () {
   // Defining set of users for which all below tests will be run
   var users = [
     config.get('portal.users.admin'),
-    config.get('portal.users.reseller')
-    // config.get('portal.users.revAdmin'),
+    config.get('portal.users.reseller'),
+    config.get('portal.users.revAdmin')
   ];
 
   users.forEach(function (user) {
@@ -62,14 +62,6 @@ describe('Smoke', function () {
           function () {
             var button = Portal.admin.apiKeys.listPage.getAddNewApiKeyBtn();
             expect(button.isDisplayed()).toBeTruthy();
-          });
-
-        it('should display the table of API Keys in "API Keys List" page',
-          function () {
-            Portal.admin.apiKeys.listPage.table.getFirstRow().clickEdit();
-            Portal.admin.apiKeys.editPage.clickBackToList();
-            var displayed = Portal.admin.apiKeys.listPage.isDisplayed();
-            expect(displayed).toBeTruthy();
           });
 
         it('should display the list of API Keys in "API Keys List" page',
