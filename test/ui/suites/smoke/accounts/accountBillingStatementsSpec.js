@@ -66,6 +66,7 @@ describe('Smoke', function () {
           selfRegistration(done);
         } else {
           selfRegistration(done, function() {
+            Portal.goToCustomUrl('#/');
             Portal.signIn(user);
           });
         }
