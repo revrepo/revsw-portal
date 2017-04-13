@@ -182,25 +182,10 @@ var WAFRuleNameForm = {
    *    }
    */
   fill: function (wafRule) {
-    if (wafRule.rule_name !== undefined) {
-      this.setWAFRuleName(wafRule.rule_name);
-    }
-
-    if (wafRule.verificationMethod === 'DNS') {
-      this.clickDNSVerificationRadio();
-    }else if (wafRule.verificationMethod === 'Email') {
-      this.clickEmailVerificationRadio();
-    }else if (wafRule.verificationMethod === 'URL') {
-      this.clickURLVerificationRadio();
-    }
-
-    var me = this;
-    element.all(by.id(this.locators.dropDowns.company.id))
-        .then(function (elements) {
-          if (wafRule.account !== undefined && elements.length > 0) {
-            me.setAccount(wafRule.account);
-          }
-        });
+    // TODO: make correct fill
+    // if (wafRule.rule_name !== undefined) {
+    //   this.setWAFRuleName(wafRule.rule_name);
+    // }
   }
 
 };
