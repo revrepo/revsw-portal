@@ -38,7 +38,7 @@
       </thead>
       <tbody>
         <tr id="anchor{{::$index}}" ng-click="saveAnchorScrollIndex($index)" ng-repeat="item in filteredRecords | limitTo:filter.limit:filter.skip track by $index">
-          <td> <a href="" ui-sref="{{isReadOnly() ? '.':'.edit({id: item.id})'}}" ng-class="{'disabled':isReadOnly()}" ng-if="!item.loading" ng-show="!auth.isUser()"
+          <td> <a href="" ui-sref="{{isReadOnly() ? '.':'.edit({id: item.id})'}}" ng-class="{'disabled':isReadOnly()}" ng-if="!item.loading"
               uib-tooltip="{{isReadOnly() ?'View WAF Rule':'Edit WAF Rule'}}">
              {{item.rule_name}}</a>
              </td>
@@ -57,15 +57,15 @@
             <a href="" ng-click="openViewDialogRule($event,item)" ng-if="!item.loading" uib-tooltip="View WAF Rule">
               <i class="fa fa-eye"></i>
             </a>
-            <a href="" ui-sref="{{isReadOnly() ?'.':'.edit({id: item.id})'}}" ng-class="{'disabled':isReadOnly()}" ng-if="!item.loading" ng-show="!auth.isUser()"
+            <a href="" ui-sref="{{isReadOnly() ?'.':'.edit({id: item.id})'}}" ng-class="{'disabled':isReadOnly()}" ng-if="!item.loading"
               uib-tooltip="Edit WAF Rule">
               <i class="glyphicon glyphicon-pencil"></i>
             </a>
-            <a href="" ng-if="!item.loading" ng-show="!auth.isUser()" ng-click="onDuplicateWAFRule($event,item)" ng-class="{'disabled':isReadOnly()}"
+            <a href="" ng-if="!item.loading" ng-click="onDuplicateWAFRule($event,item)" ng-class="{'disabled':isReadOnly()}"
               uib-tooltip="Duplicate WAF Rule">
               <i class="fa fa-clone"></i>
             </a>
-            <a href="" ng-if="!item.loading" ng-show="!auth.isUser()" ng-click="deleteWAFRule(item)" ng-class="{'disabled':isReadOnly()}"
+            <a href="" ng-if="!item.loading" ng-click="deleteWAFRule(item)" ng-class="{'disabled':isReadOnly()}"
               uib-tooltip="Delete WAF Rule">
               <i class="glyphicon glyphicon-trash"></i>
             </a>
