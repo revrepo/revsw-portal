@@ -63,7 +63,7 @@ describe('Smoke', function () {
           user(done);
         } else {
           users[0](done, function() {
-            Portal.goToCustomUrl('#/');
+            //Portal.goToCustomUrl('#/');
             Portal.signIn(user);
           });
         }
