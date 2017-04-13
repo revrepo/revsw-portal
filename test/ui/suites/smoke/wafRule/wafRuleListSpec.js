@@ -53,10 +53,17 @@ describe('Smoke', function () {
             expect(Portal.wafRules.listPage.isDisplayed()).toBeTruthy();
           });
 
-        it('should be displayed when "Back to list" button is clicked from ' +
-          '"Add New Custom WAF Rule" page',
+        it('should be displayed button with text "Add New WAF Rule"',
           function () {
-            Portal.wafRules.listPage.clickAddNewCustomWAFRule();
+            expect(Portal.wafRules.listPage.getAddNewWAFRuleBtn().isDisplayed()).toBeTruthy();
+            expect(Portal.wafRules.listPage.getAddNewWAFRuleBtn().getText())
+              .toContain('Add New WAF Rule');
+          });
+
+        it('should be displayed when "Back to list" button is clicked from ' +
+          '"Add New WAF Rule" page',
+          function () {
+            Portal.wafRules.listPage.clickAddNewWAFRule();
             Portal.wafRules.addPage.clickBackToList();
             expect(Portal.wafRules.listPage.isDisplayed()).toBeTruthy();
           });

@@ -3,7 +3,7 @@
 
   angular
     .module('revapm.Portal.Shared')
-    .directive('search', function($location, $localStorage, $state, $rootScope, DomainsConfig, Companies, Users, User, Apps, DashboardSrv, ApiKeys, DNSZones) {
+    .directive('search', function($location, $localStorage, $state, $rootScope, DomainsConfig, Companies, Users, User, Apps, DashboardSrv, ApiKeys, DNSZones, WAF_Rules) {
       return {
         restrict: 'AE',
         templateUrl: 'parts/shared/search/search.html',
@@ -79,6 +79,21 @@
                 scope.list.push(item);
               });
             });
+
+            if (!User.isRevadmin()) {
+              var  filters = {
+                rule_type: 'customer'
+              };
+
+              WAF_Rules.query({filters:filters}).$promise
+                .then(function(data) {
+                  data.forEach(function(item) {
+                    item.searchType = 'wafRule';
+                    item.title += ' ';
+                    scope.list.push(item);
+                  });
+                });
+            }
           }
 
           if (User.isAuthed()) {
@@ -184,6 +199,14 @@
                     results.push(item);
                   }
                   break;
+               case 'wafRule':
+                  if ((item.rule_name || '').toLowerCase().indexOf(term) >= 0) {
+                    item.searchBarText = item.rule_name + ' (Edit WAF Rule)';
+                    item.searchDisplayText = item.rule_name;
+                    item.searchAction = 'edit';
+                    results.push(item);
+                  }
+                  break;
               }
             });
 
@@ -264,6 +287,11 @@
               case 'zones':
                 if (item.searchAction === 'edit') {
                   $location.path('dns/zones/' + item.id+'/records');
+                }
+                break;
+              case 'wafRule':
+                if (item.searchAction === 'edit') {
+                  $location.path('waf_rules/edit/' + item.id);
                 }
                 break;
             }

@@ -56,7 +56,7 @@
             <label for="wafLocation" class="col-sm-3 control-label">Location *</label>
             <div class="col-sm-9">
               <input type="text" class="form-control inline-block elemLastFirstMile" ng-disabled="_loading" ng-model="item.location" name="wafLocation"
-                placeholder="like '/my_url/'" ng-maxlength="150" required>
+                placeholder="like '/my_url/'" ng-maxlength="150" validate-waf-location-name required>
               <label for="wafLocation" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Specify here a website path (like “/my_url/”) the WAF configuration should be executed for">
                 <i class="fa fa-question-circle"></i>
               </label>
