@@ -180,7 +180,7 @@
         QUERY_STRINGS_OPTION: /^[A-Za-z0-9.' -]+$/,
         CONTACT_DATA: /^[A-Za-zÀÈÌÒÙàèìòùÁÉÍÓÚÝáéíóúýÂÊÎÔÛâêîôûÃÑÕãñõÄËÏÖÜŸäëïöüŸ¡¿çÇŒœßØøÅåÆæÞþÐð$\/-]+$/,
         COMPANY_DATA: /^[A-Za-zÀÈÌÒÙ àèìòù ÁÉÍÓÚ Ý áéíóúý ÂÊÎÔÛ âêîôû ÃÑÕ ãñõ ÄËÏÖÜŸ äëïöüŸ ¡¿çÇŒœ ßØøÅå ÆæÞþ Ðð ""\w\d\s-'.,&#@:?!()$\/-]+$/,
-        WAF_LOCATION_NAME: /^\/{1}(([A-Za-z0-9]+)\/{1})*$/
+        WAF_LOCATION_NAME: /^\/{1}(([A-Za-z0-9]+)(\/?){1})*$/
      },
       // HEADER OPERATION FOR DOMAIN CACHING RULE
       HEADER_OPERATIONS: {
