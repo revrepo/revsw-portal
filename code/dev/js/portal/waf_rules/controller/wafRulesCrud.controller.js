@@ -7,7 +7,7 @@
     .controller('WAFRulesCrudController', WAFRulesCrudController);
 
   /*@ngInject*/
-  function WAFRulesCrudController($scope, $timeout,
+  function WAFRulesCrudController($scope, $timeout, $rootScope,
     $localStorage,
     CRUDController,
     WAF_Rules,
