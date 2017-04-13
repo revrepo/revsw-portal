@@ -87,8 +87,8 @@ var SSLCertEditPage = require('./sslCerts/editPage');
 var SSLNamesListPage = require('./sslNames/listPage');
 var SSLNamesAddPage = require('./sslNames/addPage');
 
-var WAFRulePage = require('./WAFRule/listPage');
-var WAFRuleAddPage = require('./WAFRule/addPage');
+var WAFRulePage = require('./wafRule/listPage');
+var WAFRuleAddPage = require('./wafRule/addPage');
 
 var StagingEnvPage = require('./stagingEnv/stagingEnvPage');
 
