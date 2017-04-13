@@ -33,6 +33,12 @@
         User.getUserApps(true)
           .then(function ( apps ) {
             $scope.apps = apps;
+            // NOTE: auto select App if exists only one
+            if (apps.length <= 2) {
+              // NOTE: first item can be 'All Applications'
+              User.selectApplication(apps[apps.length-1]);
+              $scope.ngModel = User.getSelectedApplication();
+            }
           })
           .catch(AlertService.danger)
           .finally(function () {

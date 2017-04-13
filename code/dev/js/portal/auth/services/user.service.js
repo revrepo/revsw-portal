@@ -402,6 +402,7 @@
      * @returns {Promise}
      */
     function getUserApps(reload) {
+      var self = this;
       return $q(function (resolve, reject) {
         if (apps.length > 0 && !reload) {
           return resolve(apps);
@@ -423,6 +424,10 @@
                 });
 
               var user = getUser();
+              // NOTE: auto select App if exists only one
+              if(apps.length && apps.length === 1){
+                 self.selectApplication(apps[apps.length-1]);
+              }
               if ( apps.length && user && user.companyId[0] ) {
                 apps.unshift({
                   app_id: '',
