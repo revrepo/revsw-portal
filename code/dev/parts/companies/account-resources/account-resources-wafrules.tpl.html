@@ -1,4 +1,14 @@
-<div class="waf-rules-list__customer">
+<div class="panel-heading">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="pull-left">
+        <h2>WAF Rules</h2>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="panel-body waf-rules-list__customer">
+
   <div class="alert alert-info" ng-if="records.length == 0 && !_loading">
     There are no any customer WAF rules configured in the system
   </div>
@@ -28,7 +38,7 @@
           </th>
           <!--<th ng-if="auth.isRevadmin()"> <a href="" ng-click="order('domains')">Used By Domains</a>
             <span class="sortorder" ng-show="filter.predicate === 'domains'" ng-class="{reverse: filter.reverse}"></span></th>-->
-          <th class="thin">Status</th>
+          <!--<th class="thin">Status</th>-->
           <th>Actions</th>
           <th class="account" ng-if="auth.isReseller() ||  auth.isRevadmin()">
             <a href="" ng-click="order('companyName')">Account</a>
@@ -41,34 +51,25 @@
           <td> <a href="" ui-sref="{{isReadOnly() ? '.':'.edit({id: item.id})'}}" ng-class="{'disabled':isReadOnly()}" ng-if="!item.loading"
               uib-tooltip="{{isReadOnly() ?'View WAF Rule':'Edit WAF Rule'}}">
              {{item.rule_name}}</a>
-             </td>
+          </td>
           <td class="description"> {{item.comment}} </td>
           <td> {{getRelativeDate(item.updated_at) }}</td>
           <td> {{item.updated_by}}</td>
-          <!--TODO: later
-                  <td>
-                    <div class="waf-rule-used-by">{{item.domains}}</div>
-                  </td>-->
-          <td>
+          <!--<td>
             <div waf-rule-staging-status ng-id="item.id"></div>
-          </td>
+          </td>-->
           <td class="actions">
             <i class="glyphicon glyphicon-refresh spin" ng-if="item.loading"></i>
             <a href="" ng-click="openViewDialogRule($event,item)" ng-if="!item.loading" uib-tooltip="View WAF Rule">
               <i class="fa fa-eye"></i>
             </a>
-            <a href="" ui-sref="{{isReadOnly() ?'.':'.edit({id: item.id})'}}" ng-class="{'disabled':isReadOnly()}" ng-if="!item.loading"
-              uib-tooltip="Edit WAF Rule">
+            <a href="" ui-sref="{{isReadOnly() ?'.':'index.webApp.waf_rules.edit({id: item.id})'}}" ng-class="{'disabled':isReadOnly()}"
+              ng-if="!item.loading" uib-tooltip="Edit WAF Rule">
               <i class="glyphicon glyphicon-pencil"></i>
             </a>
-            <a href="" ng-if="!item.loading" ng-click="onDuplicateWAFRule($event,item)" ng-class="{'disabled':isReadOnly()}"
-              uib-tooltip="Duplicate WAF Rule">
+            <!--<a href="" ng-if="!item.loading" ng-click="onDuplicateWAFRule($event,item)" ng-class="{'disabled':isReadOnly()}" uib-tooltip="Duplicate WAF Rule">
               <i class="fa fa-clone"></i>
-            </a>
-            <a href="" ng-if="!item.loading" ng-click="deleteWAFRule(item)" ng-class="{'disabled':isReadOnly()}"
-              uib-tooltip="Delete WAF Rule">
-              <i class="glyphicon glyphicon-trash"></i>
-            </a>
+            </a>-->
           </td>
           <td ng-if="auth.isReseller() ||  auth.isRevadmin()">
             <div>{{item.companyName}}</div>

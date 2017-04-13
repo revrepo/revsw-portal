@@ -60,12 +60,26 @@
     // Fetch list of records
     $scope.$on('$stateChangeSuccess', function (state) {
       var data = null;
-      // NOTE: set filter params for specific state
-      if ($state.is($scope.state)) {
-        $scope.initList();
+      // NOTE: set filter params for specific state - @see All Account Resources Page
+      if ($state.is('index.accountSettings.accountresources')) {
+        $scope.filter.limit = 5;
+        data = {
+          filters: {
+            rule_type: 'customer',
+            account_id: !User.getSelectedAccount() ? null : User.getSelectedAccount().acc_id
+          }
+        };
+        $scope.list(data).then(setAccountName);
+        return;
       } else {
-        $scope.clearModel();
+        // NOTE: set filter params for specific state
+        if ($state.is($scope.state)) {
+          $scope.initList();
+        } else {
+          $scope.clearModel();
+        }
       }
+
     });
     /**
      * @name  create

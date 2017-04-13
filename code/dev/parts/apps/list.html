@@ -69,22 +69,7 @@
                     <i class="glyphicon glyphicon-plus"></i>&nbsp; Add New App
                   </a>
                 </div>
-                <div class="form-group hidden-xs  " ng-if="$state.current.data.platform_code == 'iOS'">
-                  <div class="col-xs-12"></div>
-                </div>
-                <div class="form-group" ng-if="$state.current.data.platform_code == 'iOS' && vendorConfig.sdk.download_links[$state.current.data.platform_code]">
-                  <a download="RevSDK.framework.zip" ng-href="{{vendorConfig.sdk.download_links[$state.current.data.platform_code]}}" class="btn btn-download btn-success btn-vendor-download" ng-disabled="_loading" uib-tooltip="Click to download the latest version of mobile SDK">
-                    <i class="glyphicon glyphicon-cloud-download"></i>&nbsp; Download SDK
-                  </a>
-                </div>
-                <div class="form-group hidden-xs  " ng-if="$state.current.data.platform_code == 'iOS'">
-                  <div class="col-xs-12"></div>
-                </div>
-                <div class="form-group" ng-if="$state.current.data.platform_code == 'iOS' && !!vendorConfig.sdk.introduction_video_youtube_ids[$state.current.data.platform_code]">
-                  <a __href="{{introductionVideoLinks[$state.current.data.platform_code]}}" class="btn btn-download btn-success btn-vendor-introduction" ng-disabled="_loading" uib-tooltip="Click to view SDK Introduction Video" __target="_blank" ng-click="onShowVideo($event, {youtubeId:vendorConfig.sdk.introduction_video_youtube_ids[$state.current.data.platform_code]})">
-                    <i class="fa fa-youtube"></i>&nbsp; Introduction Video
-                  </a>
-                </div>
+                 <span ng-include="'parts/apps/app-panel-sdk-buttons.tpl.html'"></span>
               </div>
               <div class="pull-right">
                 <form class="form-inline">

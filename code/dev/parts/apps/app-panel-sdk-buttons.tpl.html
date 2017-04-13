@@ -1,0 +1,27 @@
+<div class="form-group hidden-xs" ng-if="!!vendorConfig.sdk.download_links[appPlatform] && vendorConfig.sdk.download_links[appPlatform].length>0">
+  <div class="col-xs-12"></div>
+</div>
+<div class="form-group" ng-if="!!vendorConfig.sdk.download_links[appPlatform] && vendorConfig.sdk.download_links[appPlatform].length>0">
+  <a download="RevSDK.framework.zip" ng-href="{{vendorConfig.sdk.download_links[appPlatform]}}" class="btn btn-download btn-success btn-vendor-download"
+    ng-disabled="_loading" uib-tooltip="Click to download the latest version of mobile SDK">
+    <i class="glyphicon glyphicon-cloud-download"></i>&nbsp; Download SDK
+  </a>
+</div>
+<div class="form-group hidden-xs" ng-if="!!vendorConfig.sdk.introduction_video_youtube_ids[appPlatform] && vendorConfig.sdk.introduction_video_youtube_ids[appPlatform].length>0">
+  <div class="col-xs-12"></div>
+</div>
+<div class="form-group" ng-if="!!vendorConfig.sdk.introduction_video_youtube_ids[appPlatform] && vendorConfig.sdk.introduction_video_youtube_ids[appPlatform].length>0">
+  <a class="btn btn-download btn-success btn-vendor-introduction" ng-disabled="_loading" uib-tooltip="Click to view SDK Introduction Video"
+    ng-click="onShowVideo($event, {youtubeId:vendorConfig.sdk.introduction_video_youtube_ids[appPlatform]})">
+    <i class="fa fa-youtube"></i>&nbsp; Introduction Video
+  </a>
+</div>
+<div class="form-group hidden-xs">
+  <div class="col-xs-12"></div>
+</div>
+<div class="form-group" ng-if="vendorConfig.sdk.quick_start_guide[appPlatform] && vendorConfig.sdk.quick_start_guide[appPlatform].length>0">
+  <a ng-href="{{vendorConfig.sdk.quick_start_guide[appPlatform]}}" id="btn-guide" class="btn btn-vendor-guide btn-success"
+    ng-disabled="_loading" uib-tooltip="Click to open 'Quick Start Guide' in new window" target="_blank">
+    <i class="fa fa-graduation-cap"></i>&nbsp; Quick Start Guide
+  </a>
+</div>
