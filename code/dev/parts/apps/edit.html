@@ -36,6 +36,14 @@
                   <i class="fa fa-youtube"></i>&nbsp; Introduction Video
                 </a>
               </div>
+              <div class="form-group hidden-xs  " ng-if="$state.current.data.platform_code == 'iOS'">
+                <div class="col-xs-12"></div>
+              </div>
+              <div class="form-group" ng-if="vendorConfig.sdk.quick_start_guide[$state.current.data.platform_code] && vendorConfig.sdk.quick_start_guide[$state.current.data.platform_code].length>0">
+                <a ng-href="{{vendorConfig.sdk.quick_start_guide[$state.current.data.platform_code]}}" id="btn-guide"  class="btn btn-vendor-guide btn-success" ng-disabled="_loading" uib-tooltip="Click to open 'Quick Start Guide' in new window" target="_blank">
+                  <i class="fa fa-graduation-cap"></i>&nbsp; Quick Start Guide
+                </a>
+              </div>
             </div>
           </div>
         </div>
