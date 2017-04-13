@@ -69,7 +69,7 @@
             account_id: !User.getSelectedAccount() ? null : User.getSelectedAccount().acc_id
           }
         };
-        $scope.initList(data).then(setAccountName);
+        $scope.list(data).then(setAccountName);
         return;
       } else {
         // NOTE: set filter params for specific state
