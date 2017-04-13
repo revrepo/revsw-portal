@@ -61,17 +61,12 @@ describe('Smoke', function () {
 
         if (typeof user !== 'object') {
           user(done);
-          console.log(typeof user);
         } else {
           users[0](done, function() {
             Portal.goToCustomUrl('#/');
             Portal.signIn(user);
-            console.log(userCustom);
-            console.log(typeof user);
           });
         }
-
-
 
       });
 
