@@ -7,7 +7,7 @@
     .controller('WAFRulesCrudController', WAFRulesCrudController);
 
   /*@ngInject*/
-  function WAFRulesCrudController($scope, $timeout,
+  function WAFRulesCrudController($scope, $timeout, $rootScope,
     $localStorage,
     CRUDController,
     WAF_Rules,
@@ -68,6 +68,48 @@
       }
     });
     /**
+     * @name  create
+     * @description
+     *
+     *  Override method from CRUDController for Create a new record
+     *
+     * @param  {Object}  model
+     * @param  {Boolean} isStay
+     * @return {Promise}
+     */
+    $scope.create = function (model, isStay) {
+      if (!$scope.resource) {
+        throw new Error('No resource provided.');
+      }
+      $scope.loading(true);
+      var record = new $scope.resource(model);
+      return record.$save()
+        .then(function (data) {
+          $rootScope.$broadcast('update:searchData');
+          $scope.clearModel(model);
+          if (isStay === true) {
+            return $q.resolve(data); // Send data next to promise handlers
+          } else {
+            $state.go('.^'); // NOTE: go to up to list from new state
+            return $scope.initList().then(function () {
+              // NOTE: set sort for see new record on top of list
+              $scope.filter.predicate = 'updated_at';
+              $scope.filter.reverse = true;
+              $scope.goToPage(1);
+              $scope.elementIndexForAnchorScroll = 'anchor0';
+              return $q.resolve(data);
+            }); // Update list
+          }
+        })
+        .catch(function (data) {
+          return $q.reject(data);
+        })
+        .finally(function () {
+          $scope.loading(false);
+        });
+    };
+
+    /**
      * @name initList
      * @description method init call data
      */
@@ -77,7 +119,7 @@
           rule_type: 'customer'
         }
       };
-      $scope.list(data)
+      return $scope.list(data)
         .then(setAccountName)
         .then(function () {
           if ($scope.elementIndexForAnchorScroll) {
@@ -204,7 +246,7 @@
     $scope.deleteWAFRule = function (model) {
       // NOTE: not delete if RO user
       if ($scope.isReadOnly() === true) {
-        return;
+        return false;
       }
       $scope.confirm('confirmModal.html', model).then(function () {
         var ruleName = model.rule_name;
@@ -368,7 +410,7 @@
      * @description method for create duplicate WAR Rule
      */
     $scope.onDuplicateWAFRule = function (e, item) {
-      if ($scope._loading) {
+      if ($scope._loading || $scope.isReadOnly()) { // NOTE: not duplicate if RO user
         return false;
       }
       $scope._loading = true;

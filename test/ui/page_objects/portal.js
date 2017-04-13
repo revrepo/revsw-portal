@@ -87,6 +87,9 @@ var SSLCertEditPage = require('./sslCerts/editPage');
 var SSLNamesListPage = require('./sslNames/listPage');
 var SSLNamesAddPage = require('./sslNames/addPage');
 
+var WAFRulePage = require('./wafRule/listPage');
+var WAFRuleAddPage = require('./wafRule/addPage');
+
 var StagingEnvPage = require('./stagingEnv/stagingEnvPage');
 
 var LogShippingListPage = require('./logShipping/listPage');
@@ -194,6 +197,10 @@ var Portal = {
   sslNames: {
     listPage: SSLNamesListPage,
     addPage: SSLNamesAddPage
+  },
+  wafRules:{
+    listPage: WAFRulePage,
+    addPage: WAFRuleAddPage
   },
   logShipping: {
     listPage: LogShippingListPage,

@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('revapm.Portal.Domains')
+    .module('revapm.Portal.SSL_certs')
     .directive('certStagingStatus', ssl_certStagingStatus);
 
   /*@ngInject*/

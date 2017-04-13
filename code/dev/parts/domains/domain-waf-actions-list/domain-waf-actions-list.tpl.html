@@ -2,15 +2,22 @@
   <div class="panel panel-default">
     <!-- Default panel contents -->
     <div class="panel-heading"> WAF Actions
-      <button type="button" class="btn btn-xs btn-success pull-right" ng-click="$ctrl.onAddNew({action:'BLOCK',condition:''})" title="Add New Action"><i class="glyphicon glyphicon-plus"></i> Add New</button>
+      <button type="button" class="btn btn-xs btn-success pull-right" ng-disable="$ctrl.loading" ng-click="$ctrl.onAddNew($event)"
+        title="Add New Action"><i class="glyphicon glyphicon-plus"></i> Add New</button>
     </div>
     <!-- Table -->
     <p ng-show="!$ctrl.waf_actions || $ctrl.waf_actions.length==0" class="text text-center">No records</p>
     <table class="table table-headers-info" ng-show="!!$ctrl.waf_actions && $ctrl.waf_actions.length>0">
       <thead>
         <tr>
-          <th style="width: 50%">Condition</th>
-          <th class="table-title--operation">Action</th>
+          <th style="width: 50%"> Condition <label for="coLuaEnableAll" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter"
+              uib-popover="TODO text">
+          <i class="fa fa-question-circle"></i>
+        </label></th>
+          <th class="table-title--operation"> Action <label for="coLuaEnableAll" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter"
+              uib-popover="TODO text ">
+          <i class="fa fa-question-circle"></i>
+        </label></th>
           <th></th>
         </tr>
       </thead>
@@ -18,7 +25,7 @@
         <tr ng-animate-disabled ng-repeat="line in $ctrl.waf_actions" ng-form="editRow">
           <td ng-animate-disabled ng-click="editRow.isSelectedIndex = $index" ng-class="{'has-error': editRow.condition.$invalid}">
             <span ng-animate-disabled ng-show="editRow.isSelectedIndex!==$index">{{line.condition}} </span>
-            <input type="text" ng-animate-disabled  name="condition" class="form-control" ng-model="line.condition" placeholder="New Condition"
+            <input type="text" ng-animate-disabled name="condition" class="form-control" ng-model="line.condition" placeholder="New Condition"
               ng-maxlength="128" ng-show="editRow.isSelectedIndex==$index" required>
             <div class="error-messages" ng-messages="editRow.condition.$error" role="alert" ng-messages-multiple="false">
               <div ng-messages-include="parts/shared/error-messages.html"></div>
@@ -30,10 +37,12 @@
             </select>
           </td>
           <td>
-            <button class="btn btn-primary btn-sm btn-edit-origin_request_header" type="button" ng-click="editRow.isSelectedIndex=$index" title="Edit Header" ng-if="editRow.isSelectedIndex!==$index">
+            <button class="btn btn-primary btn-sm btn-edit-origin_request_header" type="button" ng-click="editRow.isSelectedIndex=$index"
+              title="Edit Header" ng-if="editRow.isSelectedIndex!==$index">
               <i class="glyphicon glyphicon-remove"> Edit </i>
             </button>
-            <button class="btn btn-success btn-sm btn-edit-origin_request_header" type="button" ng-click="editRow.isSelectedIndex =null" title="Save Header" ng-if="editRow.isSelectedIndex==$index" ng-disabled="editRow.$invalid">
+            <button class="btn btn-success btn-sm btn-edit-origin_request_header" type="button" ng-click="editRow.isSelectedIndex =null"
+              title="Save Header" ng-if="editRow.isSelectedIndex==$index" ng-disabled="editRow.$invalid">
               <i class="glyphicon glyphicon-ok">  Ok  </i>
             </button>
             <button class="btn btn-warning btn-sm btn-delete-origin_request_header" type="button" ng-click="$ctrl.onDelete($index)" title="Delete Header">
