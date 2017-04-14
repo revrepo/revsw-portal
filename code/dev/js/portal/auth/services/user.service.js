@@ -424,11 +424,7 @@
                 });
 
               var user = getUser();
-              // NOTE: auto select App if exists only one
-              if(apps.length && apps.length === 1){
-                 self.selectApplication(apps[apps.length-1]);
-              }
-              if ( apps.length && user && user.companyId[0] ) {
+              if ( apps.length && !self.isRevadmin()) {
                 apps.unshift({
                   app_id: '',
                   app_name: 'All Applications'
