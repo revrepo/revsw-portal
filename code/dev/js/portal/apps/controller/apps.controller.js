@@ -59,7 +59,7 @@
     }
 
     $scope.$state = $state;
-    $scope.appPlatform = $state.current.data.platform_code;
+    $scope.appPlatform = !!$state.current.data ? $state.current.data.platform_code : '';
     //// Fetch list of records
     $scope.$on('$stateChangeSuccess', function(event, stateTo, stateParam) {
       var data = null;

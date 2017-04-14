@@ -52,9 +52,9 @@
               uib-tooltip="{{isReadOnly() ?'View WAF Rule':'Edit WAF Rule'}}">
              {{item.rule_name}}</a>
           </td>
-          <td class="description"> {{item.comment}} </td>
+          <td class="description">{{item.comment}}&nbsp;</td>
           <td> {{getRelativeDate(item.updated_at) }}</td>
-          <td> {{item.updated_by}}</td>
+          <td> {{item.updated_by}}&nbsp;</td>
           <!--<td>
             <div waf-rule-staging-status ng-id="item.id"></div>
           </td>-->
