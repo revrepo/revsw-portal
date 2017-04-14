@@ -65,7 +65,7 @@ describe('Smoke', function () {
           user(done);
         } else { 
           users[0](done, function() {
-            Portal.goToCustomUrl('#/');
+            //Portal.goToCustomUrl('#/');
             // Rev Admin role
             Portal.signIn(user);
           });
