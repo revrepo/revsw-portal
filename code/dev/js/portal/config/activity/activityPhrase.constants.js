@@ -41,7 +41,8 @@
         'sslname': 'SSL Name',
 //        'object': 'Object',
         'dnszone':'DNS Zone',
-        'dnsrecord': 'DNS Zone Record'
+        'dnsrecord': 'DNS Zone Record',
+        'wafrule': 'WAF Rule'
       },
       /**
        * @name  EVENT_TYPES
