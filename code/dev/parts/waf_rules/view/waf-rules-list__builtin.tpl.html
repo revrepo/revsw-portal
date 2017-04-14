@@ -45,7 +45,7 @@
             <a href="" ng-click="openViewDialogRule(e,item)" ng-if="!auth.isRevadmin()" uib-tooltip="View WAF Rule">{{item.rule_name}}</a>
           </td>
           <td ng-if="auth.isRevadmin()">{{item.visibility}} </td>
-          <td class="description">&nbsp;{{item.comment}} </td>
+          <td class="description">{{item.comment}}&nbsp;</td>
           <td>{{getRelativeDate(item.updated_at) }}</td>
           <td ng-if="auth.isRevadmin()">{{item.updated_by}}</td>
           <td class="description">
