@@ -32,10 +32,10 @@ describe('Smoke', function () {
     config.get('portal.users.roUser')
   ];
   var dashboard = DataProvider.generateDashboardData();
-  var hasElementWithText = function(textElements) {
+  var hasElementWithText = function(textElements, customTitle) {
     var result = false;
     textElements.forEach(function(text) {
-      if (text === dashboard.title) {
+      if (text === (customTitle || dashboard.title)) {
         result = text;
       }
     });   
@@ -63,10 +63,14 @@ describe('Smoke', function () {
         it('should default "My Dashboard" exist in Dasboards page', function () {
           var defaultDashboardName = 'My Dashboard';
           var createdDashboard = Portal.dashboards.listPage.getTitle();
-          var leftMenu = Portal.dashboards.listPage.getLeftMenuDashboards();
+          var leftMenu = Portal.helpers.nav.getDashboardsItems().getText();
           var existDashChart = Portal.dashboards.listPage.existDashboardChart();
 
-          expect(leftMenu).toContain(defaultDashboardName);
+          leftMenu.then(function(elementText) {
+            expect(hasElementWithText(elementText, defaultDashboardName))
+              .toContain(defaultDashboardName);
+          });
+
           expect(existDashChart).toBe(true);
         });
 
