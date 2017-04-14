@@ -28,6 +28,7 @@ describe('Smoke', function () {
   var billingPortal = /www\.billingportal\.com/;
 
   var users = [
+    // Admin role (self-registration user)
     function(done, user) {
       Portal
         .signUpAndVerifyUser(currentPlan)
@@ -59,11 +60,13 @@ describe('Smoke', function () {
 
       beforeAll(function (done) {
 
-        if (typeof user !== 'object') {
+        if (typeof user !== 'object') { 
+          // Admin role (self-registration user)
           user(done);
-        } else {
+        } else { 
           users[0](done, function() {
-            //Portal.goToCustomUrl('#/');
+            Portal.goToCustomUrl('#/');
+            // Rev Admin role
             Portal.signIn(user);
           });
         }
@@ -76,6 +79,17 @@ describe('Smoke', function () {
 
       beforeEach(function () {});
 
+      // Rev Admin role
+      if (typeof user === 'object') {
+        it('should select self-registration user',
+          function () {
+              var summary = Portal.accounts.billingStatements.summary;
+              summary.setAccountSelect(userCustom.firstName + ' ' + userCustom.lastName);
+              summary.getAccountSelectEl().getText().then(function(text) {
+                expect(text).toBe(userCustom.firstName + ' ' + userCustom.lastName);
+              });
+          });
+      }
 
       it('should check that Billing Summary area exists.',
         function () {
@@ -146,7 +160,7 @@ describe('Smoke', function () {
             });
         });
 
-
+      // Rev Admin role
       if (typeof user === 'object') {
 
         it('should `View Details` button be disabled.',
