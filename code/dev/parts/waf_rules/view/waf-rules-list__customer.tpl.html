@@ -26,7 +26,7 @@
           <th><a href="" ng-click="order('updated_by')">Updated By</a>
             <span class="sortorder" ng-show="filter.predicate === 'updated_by'" ng-class="{reverse: filter.reverse}"></span>
           </th>
-          <th ng-if="auth.isRevadmin()">Used By Domains</th>
+          <th>Used By Domains</th>
           <th class="thin">Status</th>
           <th>Actions</th>
           <th class="account" ng-if="auth.isReseller() ||  auth.isRevadmin()">
