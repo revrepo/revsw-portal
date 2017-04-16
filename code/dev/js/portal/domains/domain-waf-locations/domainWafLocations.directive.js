@@ -215,7 +215,7 @@
                   'enable_xss_injection_lib': item.enable_xss_injection_lib || true,
                   'waf_rules': item.waf_rules || [],
                   'waf_actions': item.waf_actions || [],
-                  '$$wafLocationBlockState': item.$$wafLocationBlockState || {
+                  '$$wafLocationBlockState': {
                     'isCollapsed': false
                   }
                 };
