@@ -47,10 +47,10 @@
           <td ng-if="auth.isRevadmin()">{{item.visibility}} </td>
           <td class="description">{{item.comment}}&nbsp;</td>
           <td>{{getRelativeDate(item.updated_at) }}</td>
-          <td ng-if="auth.isRevadmin()">{{item.updated_by}}</td>
+          <td>{{item.updated_by}}</td>
           <td class="description">
             <span class="waf-rule-used-by" ng-repeat="domain in item.domains">
-               <a ui-sref="index.webApp.domains.edit({id:domain.id})">{{domain.domain}}</a><span ng-if="!$last">,</span></span>&nbsp;
+               <a ui-sref="index.webApp.domains.edit({id:domain.id})">{{domain.domain_name}}</a><span ng-if="!$last">,</span></span>&nbsp;
           </td>
           <td>
             <div waf-rule-staging-status ng-id="item.id"></div>

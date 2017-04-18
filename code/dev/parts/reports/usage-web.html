@@ -77,43 +77,8 @@
           </div>
 
           <div class="row">
-
-            <div class="col-md-4">
-
-              <h4>Domains</h4>
-
-              <form class="form-horizontal">
-
-                <div class="form-group">
-                  <label class="col-sm-6 control-label" >Active</label>
-                  <div class="col-sm-6">
-                    <div class="form-control text-right">{{ report.domains.active }}</div>
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label class="col-sm-6 control-label" >Deleted</label>
-                  <div class="col-sm-6">
-                    <div class="form-control text-right">{{ report.domains.deleted }}</div>
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label class="col-sm-6 control-label" >SSL Enabled</label>
-                  <div class="col-sm-6">
-                    <div class="form-control text-right">{{ report.domains.ssl_enabled }}</div>
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label class="col-sm-6 control-label">Total</label>
-                  <div class="col-sm-6">
-                    <div class="form-control text-right">{{ report.domains.total }}</div>
-                  </div>
-                </div>
-
-              </form>
-
+            <!-- Block Domains -->
+            <div class="col-md-4 usage-web__block_domains" ng-include="'parts/reports/usage-web/usage-web__domains.tpl.html'">
             </div>
             <!-- Section with data SSL Certificates-->
             <div class="col-md-4" id="ssl_certs__container">
@@ -144,7 +109,8 @@
                 </div>
 
               </form>
-
+               <div  class="usage-web__ssl_names" ng-include="'parts/reports/usage-web/usage-web__ssl_names.tpl.html'">
+               </div>
             </div>
 
             <div class="col-md-4">
@@ -180,6 +146,10 @@
 
           </div>
           <hr>
+          <!-- DNS Service-->
+          <div class="row usage-web__dns_service_block">
+            <div class="col-md-4" ng-include="'parts/reports/usage-web/usage-web__dns_service.tpl.html'"></div>
+          </div>
           <!-- New version display Mobile Apps data-->
           <div class="row" id="apps__view_container">
             <div class="col-sm-12">
@@ -525,7 +495,10 @@
             </div>
 
           </div>
-
+          <!-- DNS Usage-->{{report.dns_usage.lenght}}
+          <div class="row" ng-if="report.dns_usage.length>0">
+            <div class="col-sm-12" ng-include="'parts/reports/usage-web/usage-web__dns_usage.tpl.html'"></div>
+          </div>
         </div>
 
       </div>
