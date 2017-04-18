@@ -20,7 +20,7 @@
 
 // Requiring constant values
 var Constants = require('./../constants');
-
+var WebElement = require('./../../common/helpers/webElement');
 var DropDownWidget = require('./../common/dropDownWidget');
 
 // This `WAF Rule Form` Page Object abstracts all operations or actions that a
@@ -34,18 +34,29 @@ var WAFRuleNameForm = {
   locators: {
     textInputs: {
       wafRuleName: {
-        model: 'model.rule_name'
+        id: 'rule_name'
+      },
+      wafRuleDescription: {
+        id: 'comment'
+      },
+      wafRuleStatements: {
+        id: 'ruleStatements'
       }
     },
     dropDowns: {
-      company: {
+      account: {
         id: 'account_id'
+      },
+      wafRuleType: {
+        id: 'ruleType'
+      },
+      wafRuleVisibility: {
+        id: 'typeVisibility'
       }
     }
   },
 
-  // ## Methods to retrieve references to UI elements (Selenium WebDriver
-  // Element)
+  //## Methods to retrieve references to UI elements (Selenium WebDriver Element)
 
 
   /**
@@ -57,66 +68,70 @@ var WAFRuleNameForm = {
    * @returns {Object} Selenium WebDriver Element
    */
   getWAFRuleNameTxtIn: function () {
-    return element(by.model(this.locators.textInputs.ruleName.model));
+    return element(by.id(this.locators.textInputs.wafRuleName.id));
+  },
+  /**
+   * ### WAFRuleNameForm.getWAFRuleDescriptionTxtIn()
+   *
+   * Returns the reference to the `Description` text field (Selenium WebDriver
+   * Element)
+   *
+   * @returns {Object} Selenium WebDriver Element
+   */
+  getWAFRuleDescriptionTxtIn: function () {
+    return element(by.id(this.locators.textInputs.wafRuleDescription.id));
+  },
+  /**
+   * ### WAFRuleNameForm.getWAFRuleStatementsTxtIn()
+   *
+   * Returns the reference to the `Rule Statements` text field (Selenium WebDriver
+   * Element)
+   *
+   * @returns {Object} Selenium WebDriver Element
+   */
+  getWAFRuleStatementsTxtIn: function () {
+    return element(by.id(this.locators.textInputs.wafRuleStatements.id));
   },
 
-   /**
-   * ### WAFRuleNameForm.getCompanyDDown()
+  /**
+   * ### WAFRuleNameForm.getAccountDDown()
    *
    * Returns the reference to the `Account` drop-down (Selenium WebDriver
    * Element)
    *
    * @returns {Object} Selenium WebDriver Element
    */
-  getCompanyDDown: function () {
-    return new DropDownWidget(by.id(this.locators.dropDowns.company.id));
+  getAccountDDown: function () {
+    return new DropDownWidget(by.id(this.locators.dropDowns.account.id));
   },
-
+  /**
+   * ### WAFRuleNameForm.getWAFRuleTypeDDown()
+   *
+   * Returns the reference to the `WAF Rule Type` drop-down (Selenium WebDriver
+   * Element)
+   *
+   * @returns {Object} Selenium WebDriver Element
+   */
+  getWAFRuleTypeDDown: function () {
+    return element(by.id(this.locators.dropDowns.wafRuleType.id));
+  },
+  /**
+   * ### WAFRuleNameForm.getAccountDDown()
+   *
+   * Returns the reference to the `WAF Rule Type` drop-down (Selenium WebDriver
+   * Element)
+   *
+   * @returns {Object} Selenium WebDriver Element
+   */
+  getWAFRuleVisibilityDDown: function () {
+    return element(by.id(this.locators.dropDowns.wafRuleVisibility.id));
+  },
   // ## Methods to interact with the WAF Rule Form components
-
-  /**
-   * ### WAFRuleNameForm.clickURLVerificationRadio()
-   *
-   * Performs a click on 'URL Verification' radio-button
-   *
-   * @returns {Object} Promise
-   */
-  clickURLVerificationRadio: function () {
-    return this
-        .getURLVerificationRadioButton()
-        .click();
-  },
-
-  /**
-   * ### WAFRuleNameForm.clickURLVerificationRadio()
-   *
-   * Performs a click on 'DNS Verification' radio-button
-   *
-   * @returns {Object} Promise
-   */
-  clickDNSVerificationRadio: function () {
-    return this
-        .getDNSVerificationRadioButton()
-        .click();
-  },
-
-  /**
-   * ### WAFRuleNameForm.clickURLVerificationRadio()
-   *
-   * Performs a click on 'Email Verification' radio-button
-   *
-   * @returns {Object} Promise
-   */
-  clickEmailVerificationRadio: function () {
-    return this
-        .getEmailVerificationRadioButton()
-        .click();
-  },
 
   /**
    * ### WAFRuleNameForm.setWAFRuleName()
    *
-   * Sets the value for Domain Name
+   * Sets the value for WAF Rule Name``
    *
    * @param {String} value, new value to set
    *
@@ -127,7 +142,72 @@ var WAFRuleNameForm = {
       .getWAFRuleNameTxtIn()
       .sendKeys(value);
   },
+  /**
+   * @name clearWAFRuleName
+   */
+  clearWAFRuleName: function () {
+    return WebElement.clearTextInput(this.getWAFRuleNameTxtIn());
+  },
+  /**
+   * ### WAFRuleNameForm.setgetWAFRuleDescription()
+   *
+   * Sets the value for `Description`
+   *
+   * @param {String} value, new value to set
+   *
+   * @returns {Object} Promise
+   */
+  setWAFRuleDescription: function (value) {
+    return this
+      .getWAFRuleDescriptionTxtIn()
+      .sendKeys(value);
+  },
+  /**
+   * ### WAFRuleNameForm.setWAFRuleType()
+   *
+   * Sets a new value for `WAF Rule Type` drop-down
+   *
+   * @param {String} value
+   *
+   * @returns {Object} Promise
+   */
+  setWAFRuleType: function (value) {
+    return this
+      .getWAFRuleTypeDDown()
+      .element(by.cssContainingText('option', value))
+      .click();
+  },
 
+  /**
+   * ### WAFRuleNameForm.setgWAFRuleVisibility()
+   *
+   * Sets a new value for `WAF Rule Visibility` drop-down
+   *
+   * @param {String} value
+   *
+   * @returns {Object} Promise
+   */
+  setWAFRuleVisibility: function (value) {
+    return this
+      .getWAFRuleVisibilityDDown()
+      .element(by.cssContainingText('option', value))
+      .click();
+  },
+
+  /**
+   * ### WAFRuleNameForm.setgetWAFRuleDescription()
+   *
+   * Sets the value for `WAF Rule Statements`
+   *
+   * @param {String} value, new value to set
+   *
+   * @returns {Object} Promise
+   */
+  setWAFRuleStatements: function (value) {
+    return this
+      .getWAFRuleStatementsTxtIn()
+      .sendKeys(value);
+  },
   /**
    * ### WAFRuleNameForm.setAccount()
    *
@@ -149,7 +229,20 @@ var WAFRuleNameForm = {
       }
     }
   },
-
+  /**
+   * ### DomainForm.setAccountName()
+   *
+   * Sets a new value for `Account Name` drop-down
+   *
+   * @param {String} accountName
+   *
+   * @returns {Promise}
+   */
+  setAccountName: function (accountName) {
+    return this
+      .getAccountDDown()
+      .setValue(accountName);
+  },
   // ## Helper Methods
 
   /**
@@ -161,8 +254,8 @@ var WAFRuleNameForm = {
    */
   isDisplayed: function () {
     return this
-        .getWAFRuleNameTxtIn()
-        .isPresent();
+      .getWAFRuleNameTxtIn()
+      .isPresent();
   },
 
   /**
@@ -174,18 +267,50 @@ var WAFRuleNameForm = {
    * @param {object} WAFRule, user data with the following schema
    *
    *    {
-   *      rule_name: String,
-   *      rule_type: String,
+   *      ruleName: String,
+   *      ruleType: String,
    *
    *      comment: String,
    *      visibility: String
    *    }
    */
-  fill: function (wafRule) {
-    // TODO: make correct fill
-    // if (wafRule.rule_name !== undefined) {
-    //   this.setWAFRuleName(wafRule.rule_name);
-    // }
+  fill: function (wafRuleData) {
+    var self = this;
+    if (wafRuleData.ruleName !== undefined) {
+      self.clearWAFRuleName();
+      self.setWAFRuleName(wafRuleData.ruleName);
+    }
+
+    if (wafRuleData.comment !== undefined) {
+      self.setWAFRuleDescription(wafRuleData.comment);
+    }
+
+    // Fill Company name if data provided and if element is visible/available
+    element.all(by.id(this.locators.dropDowns.account.id))
+      .then(function (elements) {
+        if (wafRuleData.accountName !== undefined && elements.length > 0) {
+          self.setAccountName(wafRuleData.accountName);
+        }
+      });
+
+    element.all(by.id(this.locators.dropDowns.wafRuleType.id))
+      .then(function (elements) {
+        if (wafRuleData.ruleType !== undefined && elements.length > 0) {
+          self.setWAFRuleType(wafRuleData.ruleType);
+        }
+      });
+
+    element.all(by.id(this.locators.dropDowns.wafRuleVisibility.id))
+      .then(function (elements) {
+        if (wafRuleData.visibility !== undefined && elements.length > 0) {
+          self.setWAFRuleVisibility(wafRuleData.visibility);
+        }
+      });
+
+    if (wafRuleData.ruleBody !== undefined) {
+      this.setWAFRuleStatements(wafRuleData.ruleBody);
+    }
+    browser.sleep(9000);
   }
 
 };
