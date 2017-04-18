@@ -112,6 +112,7 @@ describe('Smoke: ', function () {
     it('should display DNS Service section with correct report properties', function() {
 
         var reportPropertiesDNSService = {
+          title: 'DNS Service',
           totalZones: 'Total DNS Zones',
           totalRecords: 'Total DNS Records',
           totalQueries: 'Total DNS Queries'
@@ -120,6 +121,7 @@ describe('Smoke: ', function () {
         var result = Portal.billing.usageReportPage.getDNSServiceViewText();
 
         result.then(function(dataText){
+          expect(dataText).toContain(reportPropertiesDNSService.title);
           expect(dataText).toContain(reportPropertiesDNSService.totalZones);
           expect(dataText).toContain(reportPropertiesDNSService.totalRecords);
           expect(dataText).toContain(reportPropertiesDNSService.totalQueries);
@@ -138,6 +140,34 @@ describe('Smoke: ', function () {
         result.then(function(dataText){
           expect(dataText).toContain(reportPropertiesLogShippingJob.title);
           expect(dataText).toContain(reportPropertiesLogShippingJob.total);
+        });
+      });
+
+      describe('Display report titles for Domains', function(){
+        var result;
+        var domainsTitles = {
+            title: 'Domains',
+            active: 'Active',
+            deleted: 'Deleted',
+            sslEnabled: 'SSL Enabled',
+            customVCLrules: 'Custom VCL Rules',
+            enhancedAnalytics: 'Enhanced Analytics',
+            waf: 'WAF',
+            cachePurgeCommands:'Cache Purge Commands'
+          };
+
+        beforeAll(function(done){
+          Portal.billing.usageReportPage.getDomainsForm()
+            .then(function(dataText){
+              result = dataText;
+              done();
+          });
+        });
+
+        Object.keys(domainsTitles).forEach(function(key){
+          it('should display title "'+domainsTitles[key]+ '"', function() {
+            expect(result).toContain(domainsTitles[key]);
+          });
         });
       });
 
