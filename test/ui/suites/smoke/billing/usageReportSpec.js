@@ -85,14 +85,28 @@ describe('Smoke: ', function () {
 
           var reportPropertiesSSLCerts = {
             active: 'Active',
-            deleted: 'Deleted',
-            total: 'Total'
+            deleted: 'Deleted'
           };
 
           var result = Portal.billing.usageReportPage.getSSLCertsViewText();
-          expect(result).toContain(reportPropertiesSSLCerts.active);
-          expect(result).toContain(reportPropertiesSSLCerts.deleted);
-          expect(result).toContain(reportPropertiesSSLCerts.total);
+
+          result.then(function(dataText){
+            expect(dataText).toContain(reportPropertiesSSLCerts.active);
+            expect(dataText).toContain(reportPropertiesSSLCerts.deleted);
+          });
+        });
+
+      it('should display SSL Names section with correct report property', function() {
+
+          var reportPropertiesSSLNames = {
+            total: 'Total'
+          };
+
+          var result = Portal.billing.usageReportPage.getSSLNamesViewText();
+
+          result.then(function(dataText){
+            expect(dataText).toContain(reportPropertiesSSLNames.total);
+          });
         });
   });
 });

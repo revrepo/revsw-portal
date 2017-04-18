@@ -37,7 +37,10 @@ var UsageReport = {
         id: 'apps__view_container'
       },
       sslCerts:{
-        id: 'ssl_certs__container'
+        id: 'ssl_certs__view_container'
+      },
+      sslNames:{
+        id: 'ssl_names__view_container'
       }
     },
     buttons: {
@@ -296,7 +299,26 @@ var UsageReport = {
   getSSLCertsViewText: function () {
     return this.getSSLCertsView().getText();
   },
-
+/**
+   * ### UsageReport.getSSLNamesView()
+   *
+   * Gets the reference to `SSL Names` block view element.
+   *
+   * @returns {Promise}
+   */
+  getSSLNamesView: function () {
+    return element(by.id(this.locators.views.sslNames.id));
+  },
+    /**
+   * ### UsageReport.getSSLNamesViewText()
+   *
+   * Gets the text  from `SSL Names` block view element core/text.
+   *
+   * @returns {Promise}
+   */
+  getSSLNamesViewText: function () {
+    return this.getSSLNamesView().getText();
+  },
   /**
    * ### UsageReport.getApiKeysForm()
    *
