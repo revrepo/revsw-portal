@@ -27,8 +27,8 @@ describe('Functional', function () {
     // Defining set of users for which all below tests will be run
     var users = [
       config.get('portal.users.admin'),
-      // config.get('portal.users.reseller'),
-      // config.get('portal.users.revAdmin')
+      config.get('portal.users.reseller'),
+      config.get('portal.users.revAdmin')
     ];
 
     var normalUser = config.get('portal.users.user');

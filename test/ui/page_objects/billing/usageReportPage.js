@@ -41,6 +41,9 @@ var UsageReport = {
       },
       sslNames:{
         id: 'ssl_names__view_container'
+      },
+      dnsService: {
+        id: 'dns_service__view_container'
       }
     },
     buttons: {
@@ -299,7 +302,7 @@ var UsageReport = {
   getSSLCertsViewText: function () {
     return this.getSSLCertsView().getText();
   },
-/**
+  /**
    * ### UsageReport.getSSLNamesView()
    *
    * Gets the reference to `SSL Names` block view element.
@@ -309,7 +312,7 @@ var UsageReport = {
   getSSLNamesView: function () {
     return element(by.id(this.locators.views.sslNames.id));
   },
-    /**
+  /**
    * ### UsageReport.getSSLNamesViewText()
    *
    * Gets the text  from `SSL Names` block view element core/text.
@@ -318,6 +321,26 @@ var UsageReport = {
    */
   getSSLNamesViewText: function () {
     return this.getSSLNamesView().getText();
+  },
+  /**
+   * ### UsageReport.getDNSServiceView()
+   *
+   * Gets the reference to `DNS Service` block view element.
+   *
+   * @returns {Promise}
+   */
+  getDNSServiceView: function () {
+    return element(by.id(this.locators.views.dnsService.id));
+  },
+  /**
+   * ### UsageReport.getDNSServiceViewText()
+   *
+   * Gets the text  from `DNS Service` block view element core/text.
+   *
+   * @returns {Promise}
+   */
+  getDNSServiceViewText: function () {
+    return this.getDNSServiceView().getText();
   },
   /**
    * ### UsageReport.getApiKeysForm()

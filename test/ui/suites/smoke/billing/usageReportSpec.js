@@ -96,17 +96,34 @@ describe('Smoke: ', function () {
           });
         });
 
-      it('should display SSL Names section with correct report property', function() {
+    it('should display SSL Names section with correct report property', function() {
 
-          var reportPropertiesSSLNames = {
-            total: 'Total'
-          };
+        var reportPropertiesSSLNames = {
+          total: 'Total'
+        };
 
-          var result = Portal.billing.usageReportPage.getSSLNamesViewText();
+        var result = Portal.billing.usageReportPage.getSSLNamesViewText();
 
-          result.then(function(dataText){
-            expect(dataText).toContain(reportPropertiesSSLNames.total);
-          });
+        result.then(function(dataText){
+          expect(dataText).toContain(reportPropertiesSSLNames.total);
         });
+      });
+
+    it('should display DNS Service section with correct report properties', function() {
+
+        var reportPropertiesDNSService = {
+          totalZones: 'Total DNS Zones',
+          totalRecords: 'Total DNS Records',
+          totalQueries: 'Total DNS Queries'
+        };
+
+        var result = Portal.billing.usageReportPage.getDNSServiceViewText();
+
+        result.then(function(dataText){
+          expect(dataText).toContain(reportPropertiesDNSService.totalZones);
+          expect(dataText).toContain(reportPropertiesDNSService.totalRecords);
+          expect(dataText).toContain(reportPropertiesDNSService.totalQueries);
+        });
+      });
   });
 });
