@@ -125,5 +125,21 @@ describe('Smoke: ', function () {
           expect(dataText).toContain(reportPropertiesDNSService.totalQueries);
         });
       });
+
+    it('should display Log Shipping Jobs section with correct report properties', function() {
+
+        var reportPropertiesLogShippingJob = {
+          title: 'Log Shipping Jobs',
+          total: 'Total'
+        };
+
+        var result = Portal.billing.usageReportPage.getLogSippingJobViewText();
+
+        result.then(function(dataText){
+          expect(dataText).toContain(reportPropertiesLogShippingJob.title);
+          expect(dataText).toContain(reportPropertiesLogShippingJob.total);
+        });
+      });
+
   });
 });

@@ -44,6 +44,9 @@ var UsageReport = {
       },
       dnsService: {
         id: 'dns_service__view_container'
+      },
+      logShippingJob:{
+        id: 'log_shipping_jobs__view_container'
       }
     },
     buttons: {
@@ -341,6 +344,26 @@ var UsageReport = {
    */
   getDNSServiceViewText: function () {
     return this.getDNSServiceView().getText();
+  },
+  /**
+   * ### UsageReport.getLogShippingJobView()
+   *
+   * Gets the reference to `Log Shipping Job` block view element.
+   *
+   * @returns {Promise}
+   */
+  getLogShippingJobView: function () {
+    return element(by.id(this.locators.views.logShippingJob.id));
+  },
+  /**
+   * ### UsageReport.getLogSippingJobViewText()
+   *
+   * Gets the text  from `Log Shipping Job` block view element core/text.
+   *
+   * @returns {Promise}
+   */
+  getLogSippingJobViewText: function () {
+    return this.getLogShippingJobView().getText();
   },
   /**
    * ### UsageReport.getApiKeysForm()
