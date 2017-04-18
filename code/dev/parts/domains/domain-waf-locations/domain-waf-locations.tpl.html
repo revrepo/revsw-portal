@@ -57,7 +57,7 @@
             <div class="col-sm-9">
               <input type="text" class="form-control inline-block elemLastFirstMile" ng-disabled="_loading" ng-model="item.location" name="wafLocation"
                 placeholder="like '/my_url/'" ng-maxlength="150" validate-waf-location-name required>
-              <label for="wafLocation" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Specify here a website path (like “/my_url/”) the WAF configuration should be executed for">
+              <label for="wafLocation" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Specify here a website path (like “/my_url/”) the WAF configuration should be applied to">
                 <i class="fa fa-question-circle"></i>
               </label>
               <div class="error-messages" ng-messages="locationEditForm.wafLocation.$error" role="alert" ng-messages-multiple>
@@ -67,11 +67,11 @@
           </div>
           <!--WAF Status waf.enable_waf-->
           <div class="form-group form-inline">
-            <label for="enableWafStatus" class="col-sm-3 control-label">WAF Status For This Location</label>
+            <label for="enableWafStatus" class="col-sm-3 control-label">WAF Protection For This Location</label>
             <div class="col-md-9">
               <toggle-switch name="enableWafStatus" is-disabled="_loading" ng-model="item.enable_waf" on-label="On" off-label="Off">
               </toggle-switch>
-              <label for="enableWafStatus" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="This switch controls the global WAF functionality for the domain. If you move it to OFF state the WAF feature will be completely disabled for the domain (but all existing WAF configuration will stay in place so you can easily re-enable it later). If you enable WAF for the first time you still need to do additional configuration steps for WAF to actually protect the website.">
+              <label for="enableWafStatus" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="The switch controls WAF protection status for this specific location">
                     <i class="fa fa-question-circle"></i>
                   </label>
             </div>
@@ -82,7 +82,7 @@
             <div class="col-md-9">
               <toggle-switch name="enableWafLearnMode" is-disabled="_loading" ng-model="item.enable_learning_mode" on-label="On" off-label="Off">
               </toggle-switch>
-              <label for="enableWafLearnMode" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="TODO text">
+              <label for="enableWafLearnMode" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="The Learning Mode allows to collect security exceptions on real customer traffic without actually blocking flagged requests. Later the collected infomation can be used to automatically generate white-listing WAF rules for this specific web application.">
                     <i class="fa fa-question-circle"></i>
                   </label>
             </div>
@@ -94,7 +94,7 @@
               <toggle-switch name="enableSQLInjectionLib" is-disabled="_loading" ng-model="item.enable_sql_injection_lib" on-label="On"
                 off-label="Off">
               </toggle-switch>
-              <label for="enableSQLInjectionLib" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="TODO text">
+              <label for="enableSQLInjectionLib" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="This switch enables automatic detection of possible SQL Injection attacks">
                     <i class="fa fa-question-circle"></i>
                   </label>
             </div>
@@ -106,7 +106,7 @@
               <toggle-switch name="enableXSSInjectionLib" is-disabled="_loading" ng-model="item.enable_xss_injection_lib" on-label="On"
                 off-label="Off">
               </toggle-switch>
-              <label for="enableXSSInjectionLib" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="TODO text">
+              <label for="enableXSSInjectionLib" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="This switch enables automatic detection of XSS Injection attacks">
                     <i class="fa fa-question-circle"></i>
                   </label>
             </div>

@@ -26,7 +26,7 @@
             <div class="col-sm-10">
               <input type="text" autofocus class="form-control inline-block" ng-disabled="_loading" ng-model="model.rule_name" name="ruleName"
                 id="rule_name" placeholder="WAR Rule Name" ng-pattern="NO_SPECIAL_CHARS" ng-maxlength="150" required>
-              <label for="rule_name" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enter here a WAF Rule name (150 characters max)">
+              <label for="rule_name" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enter here a short WAF Rule name (150 characters max)">
                 <i class="fa fa-question-circle"></i>
               </label>
               <div class="error-messages" ng-messages="createForm.wafRuleName.$error" role="alert" ng-messages-multiple>
@@ -75,7 +75,7 @@
                 ng-options="obj.id as obj.typeName for obj in rule_types" required>
                 <option value="">--- Select WAF Rule Type ---</option>
               </select>
-              <label for="rule_type" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Select WAF Rule Type">
+              <label for="rule_type" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Select WAF Rule Type. Built-In rules are available for all customers, Customer rules are available for specific customers only">
                 <i class="fa fa-question-circle"></i>
               </label>
               <div class="error-messages" ng-messages="createForm.rule_type.$error" role="alert" ng-messages-multiple>
@@ -91,7 +91,7 @@
                 ng-options="obj.id as obj.typeName for obj in visibility_types" required>
                 <option value="">--- Select WAF Rule Visibility ---</option>
               </select>
-              <label for="rule_type" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Select WAF Rule Type">
+              <label for="rule_type" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Select the visibility status of the new WAF Rule. Public rules are visible for customers with proper permissions, Hidden rules are visible for Revadmin role only">
                 <i class="fa fa-question-circle"></i>
               </label>
               <div class="error-messages" ng-messages="createForm.visibility.$error" role="alert" ng-messages-multiple>
@@ -109,7 +109,7 @@
                 <textarea id="ruleStatements" placeholder="WAF Rule Statements" class="form-control text--courier inline-block" name="rule_body"
                   ng-model="model.rule_body" ng-disabled="_loading" ng-maxlength="10000" required>
                 </textarea>
-                <label for="rule_body" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="TODO text">
+                <label for="rule_body" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Specify here WAF rule statements in defined format">
                   <i class="fa fa-question-circle"></i>
                 </label>
               </div>

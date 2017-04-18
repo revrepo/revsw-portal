@@ -44,7 +44,7 @@
   </div>
   <div class="modal-body">
     <form class="form-horizontal" name="duplicateForm">
-      <div class="form-group"><label class="col-sm-12"> Please enter new WAF Rule Name for duplicate <strong> {{model.rule_name}}</strong>:</label></div>
+      <div class="form-group"><label class="col-sm-12"> We are going to create a copy of WAF Rule <strong>"{{model.rule_name}}"</strong>. Please enter a new WAF Rule name:</label></div>
       <div class="form-group" ng-class="{ 'has-error': duplicateForm.rule_name.$invalid && duplicateForm.rule_name.$dirty }">
         <div class="col-sm-12">
           <input type="text" autofocus class="form-control inline-block" ng-disabled="_loading" ng-model="model.newRuleName" name="rule_name"
@@ -108,10 +108,10 @@
         </div>
         <div class="panel-body">
           <uib-tabset active="active" class="waf-rules__tabs">
-            <uib-tab index="1" heading="Customer Rules" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="TODO text">
+            <uib-tab index="1" heading="Customer Rules" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Customer Rules are managed by you and are application-specific">
               <div id="waf-rules-list__custom" ng-include="'parts/waf_rules/view/waf-rules-list__customer.tpl.html'"></div>
             </uib-tab>
-            <uib-tab index="2" heading="Built-In Rules" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="TODO text">
+            <uib-tab index="2" heading="Built-In Rules" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Built-In Rules are pre-configured and managed by the WAF vendor and can be used in your web applications as the basis for WAF configuration">
               <div id="waf-rules-list__builtin" ng-include="'parts/waf_rules/view/waf-rules-list__builtin.tpl.html'"></div>
             </uib-tab>
           </uib-tabset>

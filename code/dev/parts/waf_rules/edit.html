@@ -92,7 +92,7 @@
                 ng-options="obj.id as obj.typeName for obj in visibility_types" required>
                 <option value="">--- Select WAF Rule Visibility ---</option>
               </select>
-              <label for="rule_type" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Select WAF Rule Type">
+              <label for="rule_type" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Select WAF Rule visibility level">
                 <i class="fa fa-question-circle"></i>
               </label>
               <div class="error-messages" ng-messages="editForm.visibility.$error" role="alert" ng-messages-multiple>
@@ -107,7 +107,7 @@
                 <textarea id="rule_body" placeholder="Public WAF Rule" class="form-control text--courier inline-block" name="rule_body" ng-model="model.rule_body"
                   ng-disabled="_loading" ng-maxlength="10000" required>
                 </textarea>
-                <label for="rule_body" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="WAF Rule Statements">
+                <label for="rule_body" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Specify here WAF rule statements in defined format">
                   <i class="fa fa-question-circle"></i>
                 </label>
               </div>

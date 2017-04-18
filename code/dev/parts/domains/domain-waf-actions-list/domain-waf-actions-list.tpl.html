@@ -11,11 +11,11 @@
       <thead>
         <tr>
           <th style="width: 50%"> Condition <label for="coLuaEnableAll" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter"
-              uib-popover="TODO text">
+              uib-popover="Conditions define per-request criteria and are based on WAF score assigned to a request. If a request meets a condition the WAF takes the action defined for the conditition.">
           <i class="fa fa-question-circle"></i>
         </label></th>
           <th class="table-title--operation"> Action <label for="coLuaEnableAll" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter"
-              uib-popover="TODO text ">
+              uib-popover="Once the WAF has flagged a request with one of the defined condition it can take one of the following actions: ALLOW (will allow the request), BLOCK (will block the request if WAF is not in Learning Mode, DROP (will block the request even if the WAF is in Learning Mode, LOG (will allow the request and log the incident)">
           <i class="fa fa-question-circle"></i>
         </label></th>
           <th></th>
@@ -38,14 +38,14 @@
           </td>
           <td>
             <button class="btn btn-primary btn-sm btn-edit-origin_request_header" type="button" ng-click="editRow.isSelectedIndex=$index"
-              title="Edit Header" ng-if="editRow.isSelectedIndex!==$index">
+              title="Edit The Action" ng-if="editRow.isSelectedIndex!==$index">
               <i class="glyphicon glyphicon-remove"> Edit </i>
             </button>
             <button class="btn btn-success btn-sm btn-edit-origin_request_header" type="button" ng-click="editRow.isSelectedIndex =null"
-              title="Save Header" ng-if="editRow.isSelectedIndex==$index" ng-disabled="editRow.$invalid">
+              title="Save The Action" ng-if="editRow.isSelectedIndex==$index" ng-disabled="editRow.$invalid">
               <i class="glyphicon glyphicon-ok">  Ok  </i>
             </button>
-            <button class="btn btn-warning btn-sm btn-delete-origin_request_header" type="button" ng-click="$ctrl.onDelete($index)" title="Delete Header">
+            <button class="btn btn-warning btn-sm btn-delete-origin_request_header" type="button" ng-click="$ctrl.onDelete($index)" title="Delete The Action">
               <i class="glyphicon glyphicon-remove"> Delete</i>
             </button>
           </td>
