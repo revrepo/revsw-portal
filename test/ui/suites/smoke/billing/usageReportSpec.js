@@ -151,8 +151,8 @@ describe('Smoke: ', function () {
             deleted: 'Deleted',
             sslEnabled: 'SSL Enabled',
             customVCLrules: 'Custom VCL Rules',
-            enhancedAnalytics: 'Enhanced Analytics',
-            waf: 'WAF',
+            enhancedAnalytics: 'Enhanced Analytics Enabled',
+            waf: 'WAF Enabled',
             cachePurgeCommands:'Cache Purge Commands'
           };
 
