@@ -242,6 +242,9 @@ var Constants = {
     sslCerts:{
       MSG_FAIL_DELETE: 'The SSL certificate is in use by active domain(s) ' +
       '- please update the domain(s) before removing the SSL certificate'
+    },
+    wafRules:{
+      MSG_SUCCESS_ADD: 'The WAF rule has been successfully created'
     }
   },
 
