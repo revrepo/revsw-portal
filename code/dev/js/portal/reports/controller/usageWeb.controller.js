@@ -15,6 +15,7 @@
     $scope.month_year_symbol = $scope.month_year.toISOString().slice( 0, 7 );
     $scope.report = null;
     $scope.traffic = null;
+    $scope.formatNumber = Util.formatNumber;
 
     var pageLength = 10;
     var tickInterval_ = 2;

@@ -25,7 +25,8 @@
         };
 
         if (!$scope.ngModel && User.getSelectedApplication()) {
-          $scope.ngModel = User.getSelectedApplication();
+          // $scope.ngModel = User.getSelectedApplication();
+          $scope.onAppSelect(User.getSelectedApplication());
         }
 
         //  ---------------------------------
@@ -34,7 +35,7 @@
           .then(function (apps) {
             $scope.apps = apps;
             // NOTE: auto select App if exists only one
-            if (!$scope.ngModel) {
+            if (!User.getSelectedApplication()) {
               // NOTE: one of items can be 'All Applications'
               var appsOnly = _.filter(apps, function (itemApp) {
                 return itemApp.app_id.length > 0;

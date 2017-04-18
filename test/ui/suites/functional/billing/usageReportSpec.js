@@ -65,8 +65,7 @@ describe('Functional', function () {
             title: 'Domains',
             active: 'Active',
             deleted: 'Deleted',
-            sslEnabled: 'SSL Enabled',
-            total: 'Total'
+            sslEnabled: 'SSL Enabled'
           };
           Portal.billing.usageReportPage.updateReport(reportData);
           var result = Portal.billing.usageReportPage.getDomainsForm();
@@ -74,35 +73,30 @@ describe('Functional', function () {
           expect(result).toContain(domains.active);
           expect(result).toContain(domains.deleted);
           expect(result).toContain(domains.sslEnabled);
-          expect(result).toContain(domains.total);
         });
 
         it('should display Mobile Apps section with correct report properties', function() {
           var reportData = DataProvider.generateUsageReportData(user);
           var mobileApps = {
             active: 'Active',
-            deleted: 'Deleted',
-            total: 'Total'
+            deleted: 'Deleted'
           };
           Portal.billing.usageReportPage.updateReport(reportData);
           var result = Portal.billing.usageReportPage.getMobileAppsViewText();
           expect(result).toContain(mobileApps.active);
           expect(result).toContain(mobileApps.deleted);
-          expect(result).toContain(mobileApps.total);
         });
 
         it('should check API Keys form with correct report data', function() {
           var reportData = DataProvider.generateUsageReportData(user);
           var apiKeys = {
             active: 'Active',
-            inactive: 'Inactive',
-            total: 'Total'
+            inactive: 'Inactive'
           };
           Portal.billing.usageReportPage.updateReport(reportData);
           var result = Portal.billing.usageReportPage.getApiKeysForm();
           expect(result).toContain(apiKeys.active);
           expect(result).toContain(apiKeys.inactive);
-          expect(result).toContain(apiKeys.total);
         });
 
         it('should check Total Traffic form with correct report data', function() {

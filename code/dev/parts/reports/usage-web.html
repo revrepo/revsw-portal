@@ -80,37 +80,16 @@
             <!-- Block Domains -->
             <div class="col-md-4 usage-web__block_domains" ng-include="'parts/reports/usage-web/usage-web__domains.tpl.html'">
             </div>
-            <!-- Section with data SSL Certificates-->
-            <div class="col-md-4" id="ssl_certs__container">
-
-              <h4>SSL Certs</h4>
-
-              <form class="form-horizontal">
-
-                <div class="form-group">
-                  <label class="col-sm-6 control-label" >Active</label>
-                  <div class="col-sm-6">
-                    <div class="form-control text-right">{{ report.ssl_certs.active }}</div>
-                  </div>
+            <div class="col-md-4">
+                <!-- Section with data SSL Certificates-->
+                <div id="ssl_certs__view_container" ng-include="'parts/reports/usage-web/usage-web__ssl_certs.tpl.html'">
                 </div>
-
-                <div class="form-group">
-                  <label class="col-sm-6 control-label" >Deleted</label>
-                  <div class="col-sm-6">
-                    <div class="form-control text-right">{{ report.ssl_certs.deleted }}</div>
-                  </div>
+                 <!-- Section with data SSL Names-->
+                <div id="ssl_names__view_container" ng-include="'parts/reports/usage-web/usage-web__ssl_names.tpl.html'">
                 </div>
-
-                <div class="form-group">
-                  <label class="col-sm-6 control-label">Total</label>
-                  <div class="col-sm-6">
-                    <div class="form-control text-right">{{ report.ssl_certs.total }}</div>
-                  </div>
+                <!-- Section with data Log Shipping Jobs-->
+                <div id="log_shipping_jobs__view_container" ng-include="'parts/reports/usage-web/usage-web__log_shipping_jobs.tpl.html'">
                 </div>
-
-              </form>
-               <div  class="usage-web__ssl_names" ng-include="'parts/reports/usage-web/usage-web__ssl_names.tpl.html'">
-               </div>
             </div>
 
             <div class="col-md-4">
@@ -133,13 +112,6 @@
                   </div>
                 </div>
 
-                <div class="form-group">
-                  <label class="col-sm-6 control-label">Total</label>
-                  <div class="col-sm-6">
-                    <div class="form-control text-right">{{ report.api_keys.total }}</div>
-                  </div>
-                </div>
-
               </form>
 
             </div>
@@ -147,8 +119,8 @@
           </div>
           <hr>
           <!-- DNS Service-->
-          <div class="row usage-web__dns_service_block">
-            <div class="col-md-4" ng-include="'parts/reports/usage-web/usage-web__dns_service.tpl.html'"></div>
+          <div class="row">
+            <div id="dns_service__view_container" class="col-md-4" ng-include="'parts/reports/usage-web/usage-web__dns_service.tpl.html'"></div>
           </div>
           <!-- New version display Mobile Apps data-->
           <div class="row" id="apps__view_container">
@@ -176,13 +148,6 @@
                     <td>{{report.apps_per_platform['Android'].deleted}}</td>
                     <td>{{report.apps_per_platform['iOS'].deleted}}</td>
                     <td>{{report.apps_per_platform['Windows_Mobile'].deleted}}</td>
-                  </tr>
-                  <tr>
-                    <td>Total</td>
-                    <td>{{report.applications.total}}</td>
-                    <td>{{report.apps_per_platform['Android'].total}}</td>
-                    <td>{{report.apps_per_platform['iOS'].total}}</td>
-                    <td>{{report.apps_per_platform['Windows_Mobile'].total}}</td>
                   </tr>
                 </tbody>
               </table>

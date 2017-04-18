@@ -29,7 +29,7 @@
     'ngInject';
     // NOTE: open by default the first configured dashboard or go to Web Analytics -> Proxy Traffic page
     $urlRouterProvider.otherwise(/*ngInject*/function($injector, $location){
-      var state = $injector.get('$state');
+      var $state = $injector.get('$state');
       var DashboardSrv =  $injector.get('DashboardSrv');
       DashboardSrv.getAll()
           .then(function(dashboards) {

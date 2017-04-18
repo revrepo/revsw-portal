@@ -37,7 +37,16 @@ var UsageReport = {
         id: 'apps__view_container'
       },
       sslCerts:{
-        id: 'ssl_certs__container'
+        id: 'ssl_certs__view_container'
+      },
+      sslNames:{
+        id: 'ssl_names__view_container'
+      },
+      dnsService: {
+        id: 'dns_service__view_container'
+      },
+      logShippingJob:{
+        id: 'log_shipping_jobs__view_container'
       }
     },
     buttons: {
@@ -296,7 +305,66 @@ var UsageReport = {
   getSSLCertsViewText: function () {
     return this.getSSLCertsView().getText();
   },
-
+  /**
+   * ### UsageReport.getSSLNamesView()
+   *
+   * Gets the reference to `SSL Names` block view element.
+   *
+   * @returns {Promise}
+   */
+  getSSLNamesView: function () {
+    return element(by.id(this.locators.views.sslNames.id));
+  },
+  /**
+   * ### UsageReport.getSSLNamesViewText()
+   *
+   * Gets the text  from `SSL Names` block view element core/text.
+   *
+   * @returns {Promise}
+   */
+  getSSLNamesViewText: function () {
+    return this.getSSLNamesView().getText();
+  },
+  /**
+   * ### UsageReport.getDNSServiceView()
+   *
+   * Gets the reference to `DNS Service` block view element.
+   *
+   * @returns {Promise}
+   */
+  getDNSServiceView: function () {
+    return element(by.id(this.locators.views.dnsService.id));
+  },
+  /**
+   * ### UsageReport.getDNSServiceViewText()
+   *
+   * Gets the text  from `DNS Service` block view element core/text.
+   *
+   * @returns {Promise}
+   */
+  getDNSServiceViewText: function () {
+    return this.getDNSServiceView().getText();
+  },
+  /**
+   * ### UsageReport.getLogShippingJobView()
+   *
+   * Gets the reference to `Log Shipping Job` block view element.
+   *
+   * @returns {Promise}
+   */
+  getLogShippingJobView: function () {
+    return element(by.id(this.locators.views.logShippingJob.id));
+  },
+  /**
+   * ### UsageReport.getLogSippingJobViewText()
+   *
+   * Gets the text  from `Log Shipping Job` block view element core/text.
+   *
+   * @returns {Promise}
+   */
+  getLogSippingJobViewText: function () {
+    return this.getLogShippingJobView().getText();
+  },
   /**
    * ### UsageReport.getApiKeysForm()
    *
