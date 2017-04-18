@@ -29,13 +29,9 @@
           <th ng-if="auth.isRevadmin()"><a href="" ng-click="order('updated_by')">Updated By</a>
             <span class="sortorder" ng-show="filter.predicate === 'updated_by'" ng-class="{reverse: filter.reverse}"></span>
           </th>
-          <th ng-if="auth.isRevadmin()"> Used By Domains </th>
+          <th> Used By Domains </th>
           <th class="thin">Status</th>
           <th>Actions</th>
-          <!--<th class="account" ng-if="auth.isReseller() ||  auth.isRevadmin()">
-                    <a href="" ng-click="order('companyName')">Account</a>
-                    <span class="sortorder" ng-show="filter.predicate === 'companyName'" ng-class="{reverse: filter.reverse}"></span>
-                  </th>-->
         </tr>
       </thead>
       <tbody>
@@ -47,7 +43,7 @@
           <td ng-if="auth.isRevadmin()">{{item.visibility}} </td>
           <td class="description">{{item.comment}}&nbsp;</td>
           <td>{{getRelativeDate(item.updated_at) }}</td>
-          <td>{{item.updated_by}}</td>
+          <td ng-if="auth.isRevadmin()">{{item.updated_by}}</td>
           <td class="description">
             <span class="waf-rule-used-by" ng-repeat="domain in item.domains">
                <a ui-sref="index.webApp.domains.edit({id:domain.id})">{{domain.domain_name}}</a><span ng-if="!$last">,</span></span>&nbsp;
@@ -72,9 +68,6 @@
               <i class="glyphicon glyphicon-trash"></i>
             </a>
           </td>
-          <!--<td ng-if="auth.isReseller() ||  auth.isRevadmin()">
-                    <div>{{item.companyName}}</div>
-                  </td>-->
         </tr>
       </tbody>
     </table>
