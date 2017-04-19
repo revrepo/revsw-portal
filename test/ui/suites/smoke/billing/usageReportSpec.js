@@ -152,6 +152,7 @@ describe('Smoke: ', function () {
             sslEnabled: 'SSL Enabled',
             customVCLrules: 'Custom VCL Rules',
             enhancedAnalytics: 'Enhanced Analytics Enabled',
+            luaFeature: 'Lua Feature Enabled',
             waf: 'WAF Enabled',
             cachePurgeCommands:'Cache Purge Commands'
           };
