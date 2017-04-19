@@ -161,7 +161,7 @@
 
     $scope.rule_types = [{
       id: 'builtin',
-      typeName: 'NUUBIT WAF Rule'
+      typeName: 'Built-In WAF Rule'
     }, {
       id: 'customer',
       typeName: 'Customer WAF Rule'
