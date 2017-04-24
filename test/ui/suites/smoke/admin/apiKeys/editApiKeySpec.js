@@ -38,6 +38,8 @@ describe('Smoke', function () {
 
         var apiKeyData = DataProvider.generateApiKeyData();
         var EditPage = Portal.admin.apiKeys.editPage;
+        var account = 'API QA Reseller Company';
+        var isUserAdmin = true;
         var form = EditPage.form;
         var checkDisplay = function (elem) {
           return EditPage.elementIsDisplayed(elem);
@@ -45,7 +47,7 @@ describe('Smoke', function () {
 
         beforeAll(function () {
           Portal.signIn(user);
-          Portal.createApiKey(apiKeyData);
+          Portal.createApiKey(apiKeyData, isUserAdmin, account);
         });
 
         afterAll(function () {
