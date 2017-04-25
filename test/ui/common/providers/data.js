@@ -798,6 +798,7 @@ var DataProvider = {
     }
   },
   generateCustomWAFRule: function(data){
+    var prefix = 'qa-test-wafrule-';
     var timestamp = Date.now();
     var wafRuleDescription = [
       'Description'
@@ -853,7 +854,7 @@ var DataProvider = {
         '"rx:\.ph|\.asp|\.ht" "msg:asp/php file upload" "mz:FILE_EXT" "s:$UPLOAD:8" id:1500;'
     ];
     var wafRule = {
-      ruleName: 'waf_rule-'+timestamp,
+      ruleName: prefix+timestamp,
       accountName: (data.account === undefined) ? ['Rev Test'] : data.account.companyName,
       comment: data.comment || wafRuleDescription,
       ruleType: data.rule_type || 'Customer',
