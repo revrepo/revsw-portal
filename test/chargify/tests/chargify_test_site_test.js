@@ -43,7 +43,7 @@ describe('Chargify  site ', function() {
       .assert.visible('@submit')
       .click('@submit')
       .waitForElementVisible('body', uiTimeoutMs)
-      .assert.title('nuu:bit, Inc. | Your Sites');
+      .assert.title('nuu:bit, Inc.: Your Sites | Chargify');
   });
 
   it('must open dashboard page', function(client) {
