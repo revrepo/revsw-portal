@@ -569,9 +569,12 @@ var Portal = {
       me.helpers.nav.goToAPIKeys();
       me.admin.apiKeys.listPage.clickAddNewApiKey();
 
-      if (isUserAdmin && account) {
-        me.admin.apiKeys.addPage.createAccount(account);
-      }
+      me.admin.apiKeys.addPage.getModalEl().isPresent()
+        .then(function(value) {
+          if (isUserAdmin && account && value) {
+            me.admin.apiKeys.addPage.createAccount(account);
+          }
+      });
 
       me.admin.apiKeys.listPage.searcher.clearSearchCriteria();
       me.admin.apiKeys.listPage.searchAndClickEdit('New API Key');
