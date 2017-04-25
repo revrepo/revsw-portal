@@ -48,7 +48,7 @@ describe('Functional', function () {
           function () {
             var customWAFRule = DataProvider.generateCustomWAFRule(user);
             Portal.helpers.nav.goToWAFRules();
-            Portal.wafRules.listPage.clickAddNewWAFRule(user);
+            Portal.wafRules.listPage.clickAddNewWAFRule();
             Portal.wafRules.addPage.createCustomWAFRule(customWAFRule);
             var alert = Portal.alerts.getFirst();
             expect(alert.getText())
