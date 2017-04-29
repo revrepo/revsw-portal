@@ -19,8 +19,8 @@
 var config = require('config');
 var Portal = require('./../../../page_objects/portal');
 var Constants = require('./../../../page_objects/constants');
+var DataProvider = require('./../../../common/providers/data');
 
-// TODO: Nikolay please review and fix the issue
 describe('Functional', function() {
   describe('Usage Report/Domains', function() {
 
@@ -60,9 +60,8 @@ describe('Functional', function() {
       var rows, tds, row1, totalHits;
 
       beforeAll(function(done) {
-        Portal.billing.usageReportPage.setCompanyName('API QA Account');
-        Portal.billing.usageReportPage.setMonthDD('2016-12');
-        Portal.billing.usageReportPage.clickUpdateReport();
+        var reportData = DataProvider.generateUsageReportData(user);
+        Portal.billing.usageReportPage.updateReport(reportData);
         rows = testDomains.map(function(domain) {
           var r = Portal.billing.usageReportDomainsPage.getDomainRows(domain);
           var tds = r.get(0).all(by.css('td'));

@@ -508,9 +508,8 @@ var UsageReport = {
    * @returns {Promise}
    */
   fill: function (data) {
-    return this.setCompanyName(data.companyName);
-    // TODO need to find a way how to properly set a data in usage reporting screen
-    //return this.setMonthDD(data.monthDD);
+    this.setCompanyName(data.companyName);
+    return this.setMonthDD(data.monthDD);
   },
 
   /**

@@ -393,7 +393,7 @@ var DataProvider = {
   generateUsageReportData: function (user) {
     return {
       companyName: (user.role === 'Reseller') ? 'API QA Reseller Company' : 'API QA Account',
-      monthDD: '2016-01'
+      monthDD: '2017-01'
     };
   },
 
