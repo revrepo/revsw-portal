@@ -106,6 +106,15 @@
       $scope.month_year = newDate;
       $scope.month_year_symbol = newDate.toISOString().slice( 0, 7 );
     };
+    // NOTE: hand date update
+    $scope.$watch('month_year_symbol',function(newVal,oldVal){
+      if(newVal !== oldVal && newVal.length === 7){
+        if(moment(newVal,'YYYY-MM').isValid()){
+        var newDateVal = moment(newVal).valueOf();
+          $scope.onTimeSet(newDateVal);
+        }
+      }
+    });
 
     $scope.showTraffic = function() {
       return !$scope._loading && $scope.report && $scope.report.traffic.count !== '0';

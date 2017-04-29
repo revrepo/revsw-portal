@@ -2,7 +2,7 @@
  *
  * REV SOFTWARE CONFIDENTIAL
  *
- * [2013] - [2016] Rev Software, Inc.
+ * [2013] - [2017] Rev Software, Inc.
  * All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains
@@ -19,10 +19,10 @@
 var config = require('config');
 var Portal = require('./../../../page_objects/portal');
 var Constants = require('./../../../page_objects/constants');
+var DataProvider = require('./../../../common/providers/data');
 
-// TODO: Nikolay please review and fix the issue
-xdescribe('Functional', function () {
-  describe('Usage Report/Domains', function () {
+describe('Functional', function() {
+  describe('Usage Report/Domains', function() {
 
     var user = config.get('portal.users.admin');
     var USAGE_REPORT = Constants.sideBar.billing.USAGE_REPORT;
@@ -30,17 +30,14 @@ xdescribe('Functional', function () {
     var testDomain = 'www.google-test.com';
     var testDomains = config.get('portal.usageReport.testDomains');
     var testDomainsNum = testDomains.length;
-    var denom = parseInt( config.get('portal.usageReport.hits_denominator') );
+    var denom = parseInt(config.get('portal.usageReport.hits_denominator'));
 
-    //  cached
-    var rows, tds, row1, totalHits;
-
-    beforeAll(function () {
+    beforeAll(function() {
       Portal.signIn(user);
       Portal.helpers.nav.goToUsageReport();
     });
 
-    afterAll(function () {
+    afterAll(function() {
       Portal.signOut();
     });
 
@@ -58,101 +55,117 @@ xdescribe('Functional', function () {
       expect(title).toEqual('Domains Usage');
     });
 
-    it('should contain testing domains data', function() {
-      rows = testDomains.map( function( domain ) {
-        var r = Portal.billing.usageReportDomainsPage.getDomainRows( domain );
-        var tds = r.get(0).all(by.css('td'));
-        expect(tds.count()).toEqual(7);
-        return {
-          domain: domain,
-          rows: r,
-          tds: tds
-        };
-      });
-      expect(rows.length).toEqual(testDomains.length);
-    });
+    describe('Domains data ', function() {
+      //  cached
+      var rows, tds, row1, totalHits;
 
-    it('should contain correct total hits num', function() {
-
-      rows.forEach( function( r ) {
-        r.tds.get(2).getText()
-          .then( function( hits ) {
-            r.hits = parseInt( hits.replace( /'/g, '' ) );
-            expect( r.hits ).not.toEqual( 0 );
-            expect( r.hits % denom ).toEqual( 0 );
-          });
+      beforeAll(function(done) {
+        var reportData = DataProvider.generateUsageReportData(user);
+        Portal.billing.usageReportPage.updateReport(reportData);
+        rows = testDomains.map(function(domain) {
+          var r = Portal.billing.usageReportDomainsPage.getDomainRows(domain);
+          var tds = r.get(0).all(by.css('td'));
+          return {
+            domain: domain,
+            rows: r,
+            tds: tds
+          };
+        });
+        done();
       });
 
-    });
-
-    it('should contain correct sent traffic volume', function() {
-
-      var unit = parseInt( config.get( 'portal.usageReport.sent_unit' ) );
-      rows.forEach( function( r ) {
-        r.tds.get(3).getText()
-          .then( function( sent ) {
-            sent = parseFloat( sent.slice(0,-3).replace( /'/g, '' ) );
-            r.sent = Math.round( r.hits * unit / 1024 / 1024 / 1024 * 1000 ) / 1000;
-            expect(r.sent).toEqual(sent);
-          });
+      it('should contain data for each testing domain', function() {
+        expect(rows.length).toEqual(testDomains.length);
       });
 
-    });
-
-    it('should contain correct received traffic volume', function() {
-
-      var unit = parseInt( config.get( 'portal.usageReport.received_unit' ) );
-      rows.forEach( function( r ) {
-        r.tds.get(4).getText()
-          .then( function( received ) {
-            received = parseFloat( received.slice(0,-3).replace( /'/g, '' ) );
-            r.received = Math.round( r.hits * unit / 1024 / 1024 / 1024 * 1000 ) / 1000;
-            expect(r.received).toEqual(received);
-          });
+      it('should contain equals reporting data properties(columns)', function() {
+        var colCount = 7;
+        testDomains.forEach(function(domain) {
+          var r = Portal.billing.usageReportDomainsPage.getDomainRows(domain);
+          var tds = r.get(0).all(by.css('td'));
+          expect(tds.count()).toEqual(colCount);
+        });
       });
 
-    });
-
-    it('should contain correct cache HIT/MISS hits number', function() {
-
-      rows.forEach( function( r ) {
-        r.tds.get(0).element(by.css('a')).click()
-          .then( function() {
-            r.rows.get(1).element(by.id('cache_miss')).getText()
-              .then( function( hits ) {
-                hits = parseInt( hits.replace( /'/g, '' ) );
-                expect( hits ).toEqual( r.hits / 2 );
-              });
-            r.rows.get(1).element(by.id('cache_hit')).getText()
-              .then( function( hits ) {
-                hits = parseInt( hits.replace( /'/g, '' ) );
-                expect( hits ).toEqual( r.hits / 2 );
-              });
-          });
+      it('should contain correct total hits num', function() {
+        rows.forEach(function(r) {
+          r.tds.get(2).getText()
+            .then(function(hits) {
+              r.hits = parseInt(hits.replace(/'/g, ''));
+              expect(r.hits).not.toEqual(0);
+              // TODO : проверить правило возврата на UI чисел заканчивающихся на 000
+              expect(r.hits % denom).toEqual(0);
+            });
+        });
       });
 
-    });
+      it('should contain correct sent traffic volume', function() {
 
-    it('should contain correct HTTP/HTTPS hits number', function() {
+        var unit = parseInt(config.get('portal.usageReport.sent_unit'));
+        rows.forEach(function(r) {
+          r.tds.get(3).getText()
+            .then(function(sent) {
+              sent = parseFloat(sent.slice(0, -3).replace(/'/g, ''));
+              r.sent = Math.round(r.hits * unit / 1024 / 1024 / 1024 * 1000) / 1000;
+              expect(r.sent).toEqual(sent);
+            });
+        });
 
-      rows.forEach( function( r ) {
-        //  must be clicked in the previous test:
-        // r.tds.get(0).element(by.css('a')).click()
-        //   .then( function() { .........
-        r.rows.get(1).element(by.id('port_80')).getText()
-          .then( function( hits ) {
-            hits = parseInt( hits.replace( /'/g, '' ) );
-            expect( hits ).toEqual( r.hits / 2 );
-          });
-        r.rows.get(1).element(by.id('port_443')).getText()
-          .then( function( hits ) {
-            hits = parseInt( hits.replace( /'/g, '' ) );
-            expect( hits ).toEqual( r.hits / 2 );
-          });
       });
 
-    });
+      it('should contain correct received traffic volume', function() {
 
+        var unit = parseInt(config.get('portal.usageReport.received_unit'));
+        rows.forEach(function(r) {
+          r.tds.get(4).getText()
+            .then(function(received) {
+              received = parseFloat(received.slice(0, -3).replace(/'/g, ''));
+              r.received = Math.round(r.hits * unit / 1024 / 1024 / 1024 * 1000) / 1000;
+              expect(r.received).toEqual(received);
+            });
+        });
+
+      });
+
+      it('should contain correct cache HIT/MISS hits number', function() {
+
+        rows.forEach(function(r) {
+          r.tds.get(0).element(by.css('a')).click()
+            .then(function() {
+              r.rows.get(1).element(by.id('cache_miss')).getText()
+                .then(function(hits) {
+                  hits = parseInt(hits.replace(/'/g, ''));
+                  expect(hits).toEqual(r.hits / 2);
+                });
+              r.rows.get(1).element(by.id('cache_hit')).getText()
+                .then(function(hits) {
+                  hits = parseInt(hits.replace(/'/g, ''));
+                  expect(hits).toEqual(r.hits / 2);
+                });
+            });
+        });
+
+      });
+
+      it('should contain correct HTTP/HTTPS hits number', function() {
+
+        rows.forEach(function(r) {
+          //  must be clicked in the previous test:
+          // r.tds.get(0).element(by.css('a')).click()
+          //   .then( function() { .........
+          r.rows.get(1).element(by.id('port_80')).getText()
+            .then(function(hits) {
+              hits = parseInt(hits.replace(/'/g, ''));
+              expect(hits).toEqual(r.hits / 2);
+            });
+          r.rows.get(1).element(by.id('port_443')).getText()
+            .then(function(hits) {
+              hits = parseInt(hits.replace(/'/g, ''));
+              expect(hits).toEqual(r.hits / 2);
+            });
+        });
+
+      });
+    });
   });
 });
-
