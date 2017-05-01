@@ -12,7 +12,8 @@
         url: '/waf',
         views: {
           main: {
-            templateUrl: 'parts/waf-analytics/waf-analytics.tpl.html'
+            templateUrl: 'parts/waf-analytics/waf-analytics.tpl.html',
+            controller: 'WAFAnalyticsController',
           }
         }
       })

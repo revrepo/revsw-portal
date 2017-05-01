@@ -1,0 +1,24 @@
+<div class="clearfix"
+     waf-filter-tops
+     ng-disabled="!ngDomain"
+     ng-domain="domain"
+     ng-filters="filtersTops"
+     on-filter="reloadTops()" > </div>
+<div class="col-md-4 graph">
+  <h3 class="graph-title">Top 20 Countries</h3>
+  <div class="graph-container">
+    <div _style="min-width: 480px; min-height: 350px" pie-chart ng-data="topCountries"></div>
+  </div>
+</div>
+<div class="col-md-4">
+  <h3 class="graph-title">Top 20 Rule IDs</h3>
+  <div>
+    <div _style="min-width: 480px; min-height: 350px" pie-chart ng-data="topRulesIds"></div>
+  </div>
+</div>
+<div class="col-md-4">
+  <h3 class="graph-title">Attacks By Target Request Zones</h3>
+  <div>
+    <div _style="min-width: 480px; min-height: 350px" pie-chart ng-data="topTargetZones"></div>
+  </div>
+</div>

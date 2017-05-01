@@ -1,0 +1,21 @@
+<div class="top-attacks">
+  <uib-tabset active="topActiveAttackerIP" justified="false" id="topAttacksTabs">
+    <uib-tab index="topAttackedURLs" heading="Top Attacked URLs" select="isOpened['topAttackedURLs']=true">
+      <div class="row">
+        <div class="col-md-12">
+          <div ng-if="isOpened['topAttackedURLs']==true" fl-store-name='filterTopAttack' top-referer fl-os="os" fl-device="device"
+            fl-country="country" fl-browser="browser" ng-domain="domain"></div>
+        </div>
+      </div>
+    </uib-tab>
+    <uib-tab index="topActiveAttackerIP" heading="Most Active Attacker IP Addresses" select="isOpened['topActiveAttackerIP']=true">
+      <div class="row">
+        <div class="col-md-12">
+          <div ng-if="isOpened['topActiveAttackerIP']==true" fl-store-name='filterTopAttack' top-requests fl-os="os" fl-device="device"
+            fl-country="country" fl-browser="browser" ng-domain="domain"></div>
+        </div>
+      </div>
+    </uib-tab>
+
+  </uib-tabset>
+</div>
