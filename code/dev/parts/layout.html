@@ -123,6 +123,12 @@
           <a id="side-menu-sub-item__waf-analytics" style="color:grey"  ui-sref-active="active" uisref="index.security.waf_analytics" class="side-menu-sub-item">
             <i class="sub-menu-icon fa fa-area-chart"></i> WAF Analytics<i class="fa fa-hourglass-half comming-soon" aria-hidden="true" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Coming Soon "></i>
           </a>
+          <a id="side-menu-sub-item__waf-events" style="color:grey"  ui-sref-active="active" uisref="index.security.waf_events" class="side-menu-sub-item">
+            <i class="sub-menu-icon fa fa-area-chart"></i> WAF Events<i class="fa fa-hourglass-half comming-soon" aria-hidden="true" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Coming Soon "></i>
+          </a>
+          <a id="side-menu-sub-item__waf-heatmaps" style="color:grey"  ui-sref-active="active" uisref="index.security.waf_heatmaps" class="side-menu-sub-item">
+            <i class="sub-menu-icon fa fa-area-chart"></i> WAF Heatmaps<i class="fa fa-hourglass-half comming-soon" aria-hidden="true" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Coming Soon "></i>
+          </a>
         </li>
         <li ui-sref-active-if="{class: 'open-side-menu-item', state: 'index.dnsServices'}" , ng-class="{'open-side-menu-item': menuExpanded('index.dnsServices'), 'active-side-menu-item': $state.includes('index.dnsServices')}">
           <a id="side-menu-dns-service-item" class="side-menu-item" , ng-click="goToState('index.dnsServices.dns_zones')">
