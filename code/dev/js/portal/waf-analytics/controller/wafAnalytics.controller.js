@@ -31,10 +31,10 @@
     $scope.filtersTops = {};
     // TODO: ?? rebase to domain
     $scope.zonesList = {
-      'args': 'ARGS',
-      'header': 'HEADER',
-      'body': 'BODY',
-      'url': 'URL'
+      'ARGS': 'Request Arguments',
+      'HEADER': 'Request Header',
+      'BODY': 'Request Body',
+      'URL': 'Request URL'
     };
 
     var u = User.getUser();
