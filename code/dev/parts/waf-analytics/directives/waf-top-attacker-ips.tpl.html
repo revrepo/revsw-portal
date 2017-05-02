@@ -1,0 +1,29 @@
+<h3>Most Active Attacker IP Addresses</h3>
+<div class="clearfix" style="margin-bottom: 8px;" waf-filter-top-objects ng-disabled="!ngDomain" fl-country="flCountry" ng-filters="filters"
+  on-filter="loadDetails()"></div>
+<div class="alert alert-info" ng-if="!_loading && !items.length">
+  No data to display
+</div>
+<div class="alert alert-info" ng-if="_loading">
+  <i class="glyphicon glyphicon-refresh spin"></i>&nbsp; Loading
+</div>
+<div class="row margin-top" ng-if="ngDomain && items.length">
+  <div class="col-md-12">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>IP Address</th>
+          <th style="width: 10%;">Count</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="item in items">
+          <td>
+            {{item.key}}
+          </td>
+          <td class="text-right">{{item.count}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

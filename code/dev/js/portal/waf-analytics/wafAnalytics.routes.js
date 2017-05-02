@@ -12,7 +12,25 @@
         url: '/waf',
         views: {
           main: {
+            templateUrl: 'parts/waf-analytics/waf-analytics.tpl.html',
+            controller: 'WAFAnalyticsController',
+          }
+        }
+      })
+      .state('index.security.waf_events', {
+        url: '/waf',
+        views: {
+          main: {
             templateUrl: 'parts/waf-analytics/waf.tpl.html'
+          }
+        }
+      })
+      .state('index.security.waf_heatmaps', {
+        url: '/waf-heatmap',
+        views: {
+          main: {
+            templateUrl: 'parts/waf-analytics/waf-heatmap/waf-heatmap.tpl.html',
+            controller: 'WAFHeatmapsController'
           }
         }
       });
