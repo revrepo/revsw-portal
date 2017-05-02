@@ -3,7 +3,7 @@
   'use strict';
 
   angular
-    .module('revapm.Portal.Reports')
+    .module('revapm.Portal.WAFAnalytics')
     .directive('wafFilterTops', wafFilterTops);
 
   /*@ngInject*/
