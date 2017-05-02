@@ -47,7 +47,7 @@
       $scope._loading = true;
       return StatsWAF.topReport({
           domainId: domainId,
-          count: 300,
+          count: 250,
           report_type: 'country',
           from_timestamp: moment().subtract($scope.delay || 1, 'hours').valueOf(),
           to_timestamp: Date.now()
@@ -65,10 +65,7 @@
                 name: ($scope.countries[key] || item.key),
                 id: key,
                 value: item.count,
-                tooltip: ( 'Count Events: <strong>' + item.count + '</strong>')
-                // Min: <strong>' +
-                // tooltip: ( 'Avg: <strong>' + item.lm_rtt_avg_ms + '</strong> Min: <strong>' +
-                //   item.lm_rtt_min_ms + '</strong> Max: <strong>' + item.lm_rtt_max_ms + '</strong> ms' )
+                tooltip: ('WAF Events: <strong>' + item.count + '</strong>')
               });
 
               if (key === 'US' && item.regions) {
@@ -80,10 +77,8 @@
               return {
                 id: item.key,
                 name: item.key,
-                value: item.count
-                // value: item.lm_rtt_avg_ms,
-                // tooltip: ( 'Avg: <strong>' + item.lm_rtt_avg_ms + '</strong> Min: <strong>' +
-                // item.lm_rtt_min_ms + '</strong> Max: <strong>' + item.lm_rtt_max_ms + '</strong> ms' )
+                value: item.count,
+                tooltip: ('WAF Events: <strong>' + item.count + '</strong>')
               };
             });
           }
