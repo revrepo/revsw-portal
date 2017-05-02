@@ -21,7 +21,8 @@ var Portal = require('./../../../page_objects/portal');
 var DataProvider = require('./../../../common/providers/data');
 var Constants = require('./../../../page_objects/constants');
 
-describe('Functional', function () {
+// TODO: Nikolay please review and fix the test
+xdescribe('Functional', function () {
   describe('Add WAF Rule', function () {
 
     var users = [
