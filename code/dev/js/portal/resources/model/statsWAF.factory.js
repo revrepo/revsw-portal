@@ -16,12 +16,11 @@
         method: 'GET'
       },
       // Actions
-      country: {
+      topReport: {
         method: 'GET',
         url: $config.API_URL + '/stats/waf/top/:domainId',
         params: {
-          report_type: 'country',
-          count: 10
+          count: 20
         }
       },
       topObjects: {
