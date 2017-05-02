@@ -24,11 +24,13 @@
             templateUrl: 'parts/waf-analytics/waf.tpl.html'
           }
         }
-      }).state('index.security.waf_heatmaps', {
-        url: '/waf',
+      })
+      .state('index.security.waf_heatmaps', {
+        url: '/waf-heatmap',
         views: {
           main: {
-            templateUrl: 'parts/waf-analytics/waf.tpl.html'
+            templateUrl: 'parts/waf-analytics/waf-heatmap/waf-heatmap.tpl.html',
+            controller: 'WAFHeatmapsController'
           }
         }
       });
