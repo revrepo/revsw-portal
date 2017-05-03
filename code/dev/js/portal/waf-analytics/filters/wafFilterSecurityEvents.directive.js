@@ -16,7 +16,9 @@
         onFilter: '&',
         flCountry: '=',
         ruleId: '=',
-        flZones: '='
+        flZones: '=',
+        isShowCount: '@',
+        isLoading: '='
       },
       link: {
         post: link
@@ -41,7 +43,6 @@
     ranges[LAST_DAY] = [moment().subtract(1, 'days'), moment()];
     ranges[LAST_WEEK] = [moment().subtract(7, 'days'), moment()];
     ranges[LAST_MONTH] = [moment().subtract(30, 'days'), moment()];
-
     //date picker params
     scope.datePicker = {
       overlay: {
@@ -167,6 +168,7 @@
     $scope
   ) {
     $scope.delay = '1';
+
     $scope.updateFilters = updateFilters;
     /**
      * @name updateFilters

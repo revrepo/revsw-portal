@@ -15,6 +15,13 @@
       traffic: {
         method: 'GET'
       },
+      events:{
+        method: 'GET',
+        url: $config.API_URL + '/stats/waf/events/:domainId',
+        params: {
+         count: 25
+        }
+      },
       // Actions
       topReport: {
         method: 'GET',

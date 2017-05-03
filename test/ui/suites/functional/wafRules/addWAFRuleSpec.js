@@ -21,8 +21,8 @@ var Portal = require('./../../../page_objects/portal');
 var DataProvider = require('./../../../common/providers/data');
 var Constants = require('./../../../page_objects/constants');
 
-// TODO: Nikolay please review and fix the test
-xdescribe('Functional', function () {
+// TODO: Check work in  testsjc20-portal01.revsw.net
+describe('Functional', function () {
   describe('Add WAF Rule', function () {
 
     var users = [
@@ -36,12 +36,17 @@ xdescribe('Functional', function () {
 
       describe('With user: ' + user.role, function () {
 
-        beforeAll(function () {
-          Portal.signIn(user);
+        beforeAll(function (done) {
+          Portal.signIn(user)
+            .then(function () {
+              done();
+            })
+            .catch(done);
         });
 
-        afterAll(function () {
+        afterAll(function (done) {
           Portal.signOut();
+          done();
         });
 
         it('should display a successful message when creating ' +

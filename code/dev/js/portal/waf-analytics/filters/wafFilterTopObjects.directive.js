@@ -49,32 +49,6 @@
           $scope.onFilter();
         };
 
-
-        $scope.items = [];
-        $scope.loadDetails = function () {
-          if (!$scope.ngDomain || !$scope.ngDomain.id) {
-            return;
-          }
-          $scope._loading = true;
-          var params = angular.merge({
-            domainId: $scope.ngDomain.id,
-            report_type: 'url'
-          }, $scope.filters);
-          delete params.delay;
-          StatsWAF
-            .topObjects(params)
-            .$promise
-            .then(function (res) {
-              $scope.items = res.data;
-            })
-            .finally(function () {
-              $scope._loading = false;
-            });
-        };
-
-        $scope.$watch('ngDomain', function () {
-          $scope.loadDetails();
-        });
         // NOTE: watch fitlers and save to localstorage
         $scope.$watch('filters', function () {
           if ($scope.flStoreName) {

@@ -13,7 +13,8 @@
       templateUrl: 'parts/waf-analytics/filters/waf-filter-tops.tpl.html',
       scope: {
         ngFilters: '=',
-        onFilter: '&'
+        onFilter: '&',
+        ngDomain: '='
       },
       link: {
         post: link
