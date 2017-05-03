@@ -29,14 +29,7 @@
     };
     $scope.countries = Countries.query();
     $scope.filtersTops = {};
-    // TODO: ?? rebase to domain
-    $scope.zonesList = {
-      'ARGS': 'Request Arguments',
-      'HEADER': 'Request Header',
-      'BODY': 'Request Body',
-      'URL': 'Request URL'
-    };
-
+    $scope.zonesList = $config.WAF_REQUEST_ZONES;
     var u = User.getUser();
     $scope.account = u.companyId[0] || null;
 

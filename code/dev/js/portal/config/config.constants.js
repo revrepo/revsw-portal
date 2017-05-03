@@ -309,6 +309,12 @@
               'action': 'BLOCK'
             }
         ]
+      },
+      WAF_REQUEST_ZONES: {
+        'ARGS': 'Request Arguments',
+        'HEADER': 'Request Header',
+        'BODY': 'Request Body',
+        'URL': 'Request URL'
       }
     });
 

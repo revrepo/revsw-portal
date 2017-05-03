@@ -18,15 +18,16 @@
         }
       })
       .state('index.security.waf_events', {
-        url: '/waf',
+        url: '/waf-events',
         views: {
           main: {
-            templateUrl: 'parts/waf-analytics/waf.tpl.html'
+            templateUrl: 'parts/waf-analytics/waf-events/waf-events.tpl.html',
+            controller: 'WAFEventsListController'
           }
         }
       })
       .state('index.security.waf_heatmaps', {
-        url: '/waf-heatmap',
+        url: '/waf_heatmap',
         views: {
           main: {
             templateUrl: 'parts/waf-analytics/waf-heatmap/waf-heatmap.tpl.html',
