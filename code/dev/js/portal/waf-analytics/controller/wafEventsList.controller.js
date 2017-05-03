@@ -15,12 +15,12 @@
   ) {
     var vm = this;
     $scope.vm = vm;
-    vm.domain = {};
+    vm.domain = null;
     vm.countries = Countries.query();
     vm.zonesList = $config.WAF_REQUEST_ZONES;
 
     vm.userService = User;
-    vm._loading = true;
+    vm._loading = false;
 
     vm.wafEventsList = [];
     vm.currentPage = 1;

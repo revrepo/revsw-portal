@@ -30,7 +30,7 @@
           <div class="alert alert-info" ng-if="vm._loading && vm.totalItems==0">
             <i class="glyphicon glyphicon-refresh spin" ng-if="vm._loading"></i>&nbsp; Loading...
           </div>
-          <div ng-if="vm.totalItems>0" ng-disabled="vm._loading" pagination total-items="vm.totalItems" ng-model="vm.currentPage" boundary-link-numbers="true"
+          <div ng-if="vm.totalItems>0" ng-disabled="vm._loading" uib-pagination total-items="vm.totalItems" ng-model="vm.currentPage" boundary-link-numbers="true"
             force-ellipses="true" ng-change="vm.pageChanged()" max-size="10" items-per-page="vm.filters.count"></div>
 
           <table class="table ">
@@ -68,7 +68,7 @@
               </tr>
             </tbody>
           </table>
-          <div ng-if="vm.totalItems>10" ng-disabled="vm._loading" pagination total-items="vm.totalItems" ng-model="vm.currentPage"
+          <div ng-if="vm.totalItems>10" ng-disabled="vm._loading" uib-pagination total-items="vm.totalItems" ng-model="vm.currentPage"
             boundary-link-numbers="true" force-ellipses="true" ng-change="vm.pageChanged()" max-size="10" items-per-page="vm.filters.count">
           </div>
         </div>
