@@ -13,13 +13,14 @@
       <thead>
         <tr>
           <th>URL</th>
-          <th style="width: 10%;">Count</th>
+          <th style="width: 10%;" class="text-right">Count</th>
         </tr>
       </thead>
       <tbody>
         <tr ng-repeat="item in items">
           <td>
-            <a target="_blank" ng-href="{{item.key}}">{{item.key}}</a>
+            <!-- TODO: change when key will contain full path -->
+            <a target="_blank" ng-href="http://{{ngDomain.domain_name}}{{item.key}}">{{item.key}}</a>
           </td>
           <td class="text-right">{{item.count}}</td>
         </tr>
