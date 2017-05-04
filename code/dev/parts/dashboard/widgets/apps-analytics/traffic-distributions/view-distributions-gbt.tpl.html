@@ -4,6 +4,6 @@
     Please click on <i class="glyphicon glyphicon-cog"></i> icon to configure the widget
   </div>
   <div ng-if="!!config.account_id || !!config.app_id">
-    <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="vm.destination_gbt" ng-chart-options="gbtChartOpts"></div>
+    <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="vm.destination_gbt" ng-chart-options="vm.gbtChartOpts"></div>
   </div>
 </div>
