@@ -2,7 +2,7 @@
  *
  * REV SOFTWARE CONFIDENTIAL
  *
- * [2013] - [2016] Rev Software, Inc.
+ * [2013] - [2017] Rev Software, Inc.
  * All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains
@@ -20,5 +20,6 @@ module.exports = {
   API: require('revsw-api-test/common/api'),
   DataProvider: require('revsw-api-test/common/providers/data'),
   AccountsDP: require('revsw-api-test/common/providers/data/accounts'),
-  APIKeyDP: require('revsw-api-test/common/providers/data/apiKeys')
+  APIKeyDP: require('revsw-api-test/common/providers/data/apiKeys'),
+  WAFRulesDP: require('revsw-api-test/common/providers/data/wafRules')
 };
