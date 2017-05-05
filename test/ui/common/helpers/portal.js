@@ -2,7 +2,7 @@
  *
  * REV SOFTWARE CONFIDENTIAL
  *
- * [2013] - [2016] Rev Software, Inc.
+ * [2013] - [2017] Rev Software, Inc.
  * All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains
@@ -23,6 +23,7 @@ var NavHelper = require('./nav');
 var DNSZonesHelper = require('./dnsZones');
 var MobileAppsHelper = require('./mobileApps');
 var UsersHelper = require('./users');
+var WAFRulesHelper = require('./wafRules');
 
 // Abstracts common functionality for the Portal.
 var PortalHelpers = {
@@ -30,7 +31,8 @@ var PortalHelpers = {
 
   dnsZones: DNSZonesHelper,
   mobileApps: MobileAppsHelper,
-  users: UsersHelper
+  users: UsersHelper,
+  wafRules: WAFRulesHelper
 };
 
 module.exports = PortalHelpers;

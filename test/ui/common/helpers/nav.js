@@ -156,6 +156,24 @@ var NavHelper = {
     return SideBar.select(MenuItems.WEB.WAF_RULES);
   },
   /**
+   * Navigates to Security Analytics > WAF Analytics
+   */
+  goToWAFAnalytics: function () {
+    return SideBar.select(MenuItems.SECURITY_ANALYTICS.WAF_ANALYTICS);
+  },
+  /**
+   * Navigates to Security Analytics > WAF Events
+   */
+  goToWAFEvents: function () {
+    return SideBar.select(MenuItems.SECURITY_ANALYTICS.WAF_EVENS);
+  },
+  /**
+   * Navigates to Security Analytics > WAF Heatmaps
+   */
+  goToWAFHeatmaps: function () {
+    return SideBar.select(MenuItems.SECURITY_ANALYTICS.WAF_HEAT_MAPS);
+  },
+  /**
    * Navigates to Web > Staging Environment
    */
   goToStagingEnvironment: function () {

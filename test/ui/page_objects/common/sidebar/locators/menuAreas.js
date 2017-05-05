@@ -33,6 +33,9 @@ var MenuAreas = {
   WEB_ANALYTICS: {
     id: 'side-menu-web-analytics-item'
   },
+  SECURITY_ANALYTICS:{
+    id: 'side-menu-security-analytics-item'
+  },
   DNS_SERVICE: {
     id: 'side-menu-dns-service-item'
   },
