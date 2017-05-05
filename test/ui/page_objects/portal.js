@@ -91,6 +91,7 @@ var WAFRulePage = require('./wafRule/listPage');
 var WAFRuleAddPage = require('./wafRule/addPage');
 
 var WAFEventsList = require('./wafEvents/listPage');
+var WAFHeatmaps = require('./wafHeatmaps/wafHeatmapPage');
 
 var StagingEnvPage = require('./stagingEnv/stagingEnvPage');
 
@@ -205,6 +206,8 @@ var Portal = {
     addPage: WAFRuleAddPage
   },
   wafEvents: WAFEventsList,
+  wafHeatmaps: WAFHeatmaps,
+
   logShipping: {
     listPage: LogShippingListPage,
     addPage: LogShippingAddPage,
