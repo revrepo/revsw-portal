@@ -111,6 +111,20 @@ var MenuItems = {
       area: MenuAreas.WEB_ANALYTICS
     }
   },
+  SECURITY_ANALYTICS:{
+    WAF_ANALYTICS:{
+      linkText: 'WAF Analytics',
+      area: MenuAreas.SECURITY_ANALYTICS
+    },
+    WAF_EVENS:{
+      linkText: 'WAF Events',
+      area: MenuAreas.SECURITY_ANALYTICS
+    },
+    WAF_HEAT_MAPS: {
+      linkText: 'WAF Heatmaps',
+      area: MenuAreas.SECURITY_ANALYTICS
+    }
+  },
   DNS_SERVICE: {
     DNS_ZONES: {
       linkText: 'DNS Zones',
