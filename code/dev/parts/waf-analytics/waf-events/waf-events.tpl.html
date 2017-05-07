@@ -30,46 +30,50 @@
           <div class="alert alert-info" ng-if="vm._loading && vm.totalItems==0">
             <i class="glyphicon glyphicon-refresh spin" ng-if="vm._loading"></i>&nbsp; Loading...
           </div>
-          <div ng-if="vm.totalItems>0" ng-disabled="vm._loading" uib-pagination total-items="vm.totalItems" ng-model="vm.currentPage" boundary-link-numbers="true"
-            force-ellipses="true" rotate="false" ng-change="vm.pageChanged()" max-size="10" items-per-page="vm.filters.count"></div>
-
-          <table class="table ">
-            <thead>
-              <tr>
-                <th>+</th>
-                <th>Date/time</th>
-                <th>URL</th>
-                <th>IP address</th>
-                <th>Request Zone</th>
-                <th>Triggered Rule Id</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr ng-repeat-start="item in vm.wafEventsList">
-                <td>
-                  <a role="button" data-toggle="collapse" data-target="#events-{{$index}}">
-                    <i class="glyphicon glyphicon-plus-sign"></i>
-                  </a>
-                </td>
-                <td>{{ vm.getRelativeDate(item.date) }}</td>
-                <td>{{ item.uri }}</td>
-                <td>{{ item.ip }}</td>
-                <td>{{ item.zone }}</td>
-                <td>{{ item.id }}</td>
-              </tr>
-              <tr ng-repeat-end id="events-{{$index}}" class="panel-collapse collapse" role="tabpanel">
-                <td colspan="6" style="background-color: #d0d0e0; padding-left: 25px;">
-                  <div class="panel-body" style="padding: 10px; padding-bottom: 0;">
-                    <!-- TODO: add details info-->
-                    <div> {{item.uri}} </div>
-                    <div> {{item.coords[0]}}:{{item.coords[1]}}</div>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <div class="alert alert-info" ng-if="!vm._loading && !vm.wafEventsList.length">
+            No data to display
+          </div>
+          <div ng-if="vm.totalItems>0" ng-disabled="vm._loading" uib-pagination total-items="vm.totalItems" ng-model="vm.currentPage"
+            boundary-link-numbers="true" force-ellipses="true" rotate="false" ng-change="vm.pageChanged()" max-size="10" items-per-page="vm.filters.count"></div>
+          <div class="table-responsive">
+            <table class="table ">
+              <thead>
+                <tr>
+                  <th>+</th>
+                  <th>Date/time</th>
+                  <th>URL</th>
+                  <th>IP address</th>
+                  <th>Request Zone</th>
+                  <th>Triggered Rule Id</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat-start="item in vm.wafEventsList">
+                  <td>
+                    <a role="button" data-toggle="collapse" data-target="#events-{{$index}}">
+                      <i class="glyphicon glyphicon-plus-sign"></i>
+                    </a>
+                  </td>
+                  <td>{{ vm.getRelativeDate(item.date) }}</td>
+                  <td>{{ item.uri }}</td>
+                  <td>{{ item.ip }}</td>
+                  <td>{{ item.zone }}</td>
+                  <td>{{ item.id }}</td>
+                </tr>
+                <tr ng-repeat-end id="events-{{$index}}" class="panel-collapse collapse" role="tabpanel">
+                  <td colspan="6" style="background-color: #d0d0e0; padding-left: 25px;">
+                    <div class="panel-body" style="padding: 10px; padding-bottom: 0;">
+                      <!-- TODO: add details info-->
+                      <div> {{item.uri}} </div>
+                      <div> {{item.coords[0]}}:{{item.coords[1]}}</div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
           <div ng-if="vm.totalItems>10" ng-disabled="vm._loading" uib-pagination total-items="vm.totalItems" ng-model="vm.currentPage"
-            boundary-link-numbers="true" rotate="false"  force-ellipses="true" ng-change="vm.pageChanged()" max-size="10" items-per-page="vm.filters.count">
+            boundary-link-numbers="true" rotate="false" force-ellipses="true" ng-change="vm.pageChanged()" max-size="10" items-per-page="vm.filters.count">
           </div>
         </div>
       </div>
