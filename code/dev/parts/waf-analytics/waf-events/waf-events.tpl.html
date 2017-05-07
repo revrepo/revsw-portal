@@ -30,6 +30,9 @@
           <div class="alert alert-info" ng-if="vm._loading && vm.totalItems==0">
             <i class="glyphicon glyphicon-refresh spin" ng-if="vm._loading"></i>&nbsp; Loading...
           </div>
+          <div class="alert alert-info" ng-if="!vm._loading && !vm.wafEventsList.length">
+            No data to display
+          </div>
           <div ng-if="vm.totalItems>0" ng-disabled="vm._loading" uib-pagination total-items="vm.totalItems" ng-model="vm.currentPage"
             boundary-link-numbers="true" force-ellipses="true" rotate="false" ng-change="vm.pageChanged()" max-size="10" items-per-page="vm.filters.count"></div>
           <div class="table-responsive">
