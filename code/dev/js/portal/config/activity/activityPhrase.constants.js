@@ -23,7 +23,7 @@
         'resetpassword': 'Password Reset',
         'signup': 'Signed Up',
         'verify': 'Verified Domain Control',
-        'verify_email': 'Verified User Email'
+        'verify_email': 'Verified By Email'
       },
 
       /**
