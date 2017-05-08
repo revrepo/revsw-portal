@@ -19,7 +19,7 @@
     vm.countries = Countries.query();
     vm.zonesList = $config.WAF_REQUEST_ZONES;
 
-    vm.userService = User;
+    vm.user = User;
     vm._loading = false;
 
     vm.wafEventsList = [];

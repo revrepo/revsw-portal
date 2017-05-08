@@ -39,7 +39,7 @@
             <table class="table ">
               <thead>
                 <tr>
-                  <th>+</th>
+                  <th></th>
                   <th>Date/time</th>
                   <th>URL</th>
                   <th>IP address</th>
@@ -50,7 +50,10 @@
               <tbody>
                 <tr ng-repeat-start="item in vm.wafEventsList">
                   <td>
-                    <a role="button" data-toggle="collapse" data-target="#events-{{$index}}">
+                    <a ng-if="vm.user.isRevadmin()" role="button" data-toggle="collapse" data-target="#events-{{$index}}">
+                      <i class="glyphicon glyphicon-plus-sign"></i>
+                    </a>
+                    <a ng-if="!vm.user.isRevadmin()">
                       <i class="glyphicon glyphicon-plus-sign"></i>
                     </a>
                   </td>
