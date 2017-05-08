@@ -72,7 +72,7 @@ var WAFHeatmaps = {
   /**
    * ### WAFHeatmaps.getUpdateReportsBtn()
    *
-   * Returns the reference to the `Add New WAF Events` button (Selenium WebDriver
+   * Returns the reference to the `Update Report` button (Selenium WebDriver
    * Element) from the WAF Heatmaps page from the Portal app.
    *
    * @returns {Object} Selenium WebDriver Element
