@@ -75,7 +75,7 @@ var WAFEventsList = {
   /**
    * ### WAFEventsList.getUpdateReportsBtn()
    *
-   * Returns the reference to the `Add New WAF Events` button (Selenium WebDriver
+   * Returns the reference to the `Update Report` button (Selenium WebDriver
    * Element) from the WAF Events List page from the Portal app.
    *
    * @returns {Object} Selenium WebDriver Element
@@ -100,14 +100,14 @@ var WAFEventsList = {
   /**
    * ### WAFEventsList.clickUpdateReport()
    *
-   * Triggers a click to the `Add New SSL Name` button from the WAF Events List
+   * Triggers a click to the `Update Report` button from the WAF Events List
    * page from the Portal app
    *
    * @returns {Object} Promise
    */
   clickUpdateReport: function () {
     return this
-      .getupdateReportBtn()
+      .getUpdateReportBtn()
       .click();
   },
 
