@@ -18,7 +18,7 @@
 
 // # Add WAF Rules Page Object
 
-// Requiring `ssl-cert form` component page object
+// Requiring `WAF Rule form` component page object
 var WAFRuleForm = require('./form');
 
 // This `Add WAF Rules` Page Object abstracts all operations or actions that a
