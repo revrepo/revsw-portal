@@ -89,6 +89,7 @@ var SSLNamesAddPage = require('./sslNames/addPage');
 
 var WAFRulePage = require('./wafRule/listPage');
 var WAFRuleAddPage = require('./wafRule/addPage');
+var WAFRuleEditPage = require('./wafRule/editPage');
 
 var WAFAnalitycs = require('./wafAnalytics/wafAnalyticsPage');
 var WAFEventsList = require('./wafEvents/listPage');
@@ -204,7 +205,8 @@ var Portal = {
   },
   wafRules:{
     listPage: WAFRulePage,
-    addPage: WAFRuleAddPage
+    addPage: WAFRuleAddPage,
+    editPage: WAFRuleEditPage
   },
 
   wafAnalitycs: WAFAnalitycs,
