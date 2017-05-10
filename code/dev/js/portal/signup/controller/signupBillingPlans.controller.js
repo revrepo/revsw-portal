@@ -37,7 +37,8 @@
     this.model = {
       'billing_plan': billing_plan_handler,
       'country': 'US',
-      'vendor': $rootScope.vendorConfig.vendor
+      'vendor': $rootScope.vendorConfig.vendor,
+      'promocode': $stateParams.promo
     };
     /**
      * @name  onSignUp
