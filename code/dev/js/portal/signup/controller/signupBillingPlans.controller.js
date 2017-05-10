@@ -16,7 +16,7 @@
    * @param {[type]} $localStorage [description]
    * @param {[type]} Countries     [description]
    */
-  function SignupBillingPlansController($scope, $rootScope, Users, AlertService, $stateParams, $localStorage, Countries, $config, $uibModal) {
+  function SignupBillingPlansController($scope, $rootScope, Users, AlertService, $state, $stateParams, $localStorage, Countries, $config, $uibModal) {
     'ngInject';
     var billing_plan_handler = $stateParams.billing_plan_handler;
     var $ctrl = this;
@@ -24,8 +24,15 @@
     this.isRegistryFinish = false;
     $scope.NO_SPECIAL_CHARS = $config.PATTERNS.NO_SPECIAL_CHARS;
     $scope.CONTACT_DATA = $config.PATTERNS.CONTACT_DATA;
-
-    this.countries = Countries.query();
+    $ctrl.countries = [];
+    // NOTE: Countries is used only on form  /vs2017-promo
+    $scope.$on('$stateChangeSuccess', function (state) {
+      if ($state.is('signup.vs_promo')) {
+        Countries.query().$promise.then(function (data) {
+          $ctrl.countries = data;
+        });
+      }
+    });
 
     this.model = {
       'billing_plan': billing_plan_handler,
@@ -58,6 +65,7 @@
         })
         .catch(function(err) {
           AlertService.danger(err);
+          $ctrl._loading = false;
         });
     };
     /**
@@ -90,9 +98,10 @@
         })
         .catch(function(err) {
           AlertService.danger(err);
-        })
-        .finally(function() {
           $ctrl._loading = false;
+        })
+        .finally(function () {
+          // $ctrl._loading = false;
         });
     };
     /**
