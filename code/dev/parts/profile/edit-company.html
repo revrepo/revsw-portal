@@ -265,7 +265,7 @@
               <p class="col-md-12 text text-center"> To update your billing address (as it will appears on your {{vendorConfig.companyNameShort}} statements) please click on “Update Payment Profile” button and provide the information together with credit card details.</p>
             </div>
             <!--  Section “Billing Contact Details” only for accounts without chagify_id -->
-            <section class="row billing_contact_details" ng-if="!model.billing_id">
+            <section class="row billing_contact_details" ng-if="!model.billing_id && !_loading">
               <hr>
               <div class="col-md-12 ">
                 <h3 class="col-md-12 text-center"> Billing Contact Details</h3>
