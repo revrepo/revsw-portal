@@ -53,6 +53,12 @@
         // Set new data
         chart.series[0].setData(value);
       });
+
+      // NOTE: new Highcharts object must be destroyed
+      $scope.$on('$destroy', function () {
+        chart.destroy();
+      });
+
     }
 
     return {
