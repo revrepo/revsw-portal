@@ -12,6 +12,8 @@
       templateUrl: 'parts/reports/filters/time-period.html',
       scope: {
         ngFilters: '=',
+        ngDisabled: '=',
+        isLoading: '=',
         onFilter: '&',
         flCountry: '=',
         flOs: '=',
