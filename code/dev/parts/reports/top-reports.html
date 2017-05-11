@@ -51,7 +51,7 @@
 
                   <div class="form-group">
                     <button class="btn btn-info" ng-click="onDomainSelected()" ng-disabled="_loading || !domain">
-                      <i class="glyphicon glyphicon-refresh"></i>&nbsp;
+                      <i class="glyphicon glyphicon-refresh" ng-class="_loading?'spin':''"></i>&nbsp;
                       Update Reports
                     </button>
                   </div>

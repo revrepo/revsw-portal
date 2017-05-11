@@ -6,7 +6,9 @@
     .controller('TopReportsTrafficController', TopReportsTrafficController);
 
   /*@ngInject*/
-  function TopReportsTrafficController($scope, User, AlertService, Stats, Countries, Util) {
+  function TopReportsTrafficController($q, $scope, User, AlertService, Stats, Countries, Util, $timeout, $config) {
+    var timeoutUserActionLock = $config.TIMEOUT_USER_ACTIONS_LOCK || 1000;
+    var allStatRequests = [];
     $scope.userService = User;
 
     $scope._loading = true;
@@ -57,10 +59,11 @@
      * @param {object} common parameters(domainId, from, to)
      */
     var reloadOS_ = function(filters) {
-      Stats.os(filters)
+      return Stats.os(filters)
         .$promise
         .then(function(data) {
           $scope.os = filter_( data.data );
+          return;
         })
         .catch(function() {
           $scope.os = [];
@@ -73,7 +76,7 @@
      * @param {object} common parameters(domainId, from, to)
      */
     var reloadDevice_ = function(filters) {
-      Stats.device(filters)
+      return Stats.device(filters)
         .$promise
         .then(function(data) {
           $scope.device = filter_( data.data );
@@ -89,7 +92,7 @@
      * @param {object} common parameters(domainId, from, to)
      */
     var reloadBrowser_ = function(filters) {
-      Stats.browser(filters)
+      return Stats.browser(filters)
         .$promise
         .then(function(data) {
           $scope.browser = filter_( data.data );
@@ -105,7 +108,7 @@
      * @param {object} common parameters(domainId, from, to)
      */
     var reloadProtocol_ = function(filters) {
-      Stats.protocol(filters)
+      return Stats.protocol(filters)
         .$promise
         .then(function(data) {
           $scope.protocol = data.data.map( function( item ) {
@@ -126,7 +129,7 @@
      * @param {object} common parameters(domainId, from, to)
      */
     var reloadHttpMethod_ = function(filters) {
-      Stats.httpMethod(filters)
+      return Stats.httpMethod(filters)
         .$promise
         .then(function(data) {
           $scope.httpMethod = direct_( data.data );
@@ -142,7 +145,7 @@
      * @param {object}
      */
     var reloadHttpProtocol_ = function(filters) {
-      Stats.httpProtocol(filters)
+      return Stats.httpProtocol(filters)
         .$promise
         .then(function(data) {
           $scope.httpProtocol = direct_( data.data );
@@ -158,7 +161,7 @@
      * @param {object} common parameters(domainId, from, to)
      */
     var reloadStatusCode_ = function(filters) {
-      Stats.statusCode(filters)
+      return Stats.statusCode(filters)
         .$promise
         .then(function(data) {
           $scope.statusCode = direct_( data.data );
@@ -174,7 +177,7 @@
      * @param {object} common parameters(domainId, from, to)
      */
     var reloadContentType_ = function(filters) {
-      Stats.contentType(filters)
+      return Stats.contentType(filters)
         .$promise
         .then(function(data) {
           $scope.contentType = filter_( data.data );
@@ -190,7 +193,7 @@
      * @param {object} common parameters(domainId, from, to)
      */
     var reloadCacheStatus_ = function(filters) {
-      Stats.cacheStatus(filters)
+      return Stats.cacheStatus(filters)
         .$promise
         .then(function(data) {
           var newData = direct_( data.data );
@@ -212,7 +215,7 @@
      * @param {object} common parameters(domainId, from, to)
      */
     var reloadQUIC_ = function(filters) {
-      Stats.quic(filters)
+      return Stats.quic(filters)
         .$promise
         .then(function(data) {
           $scope.quic = data.data.map( function( item ) {
@@ -233,7 +236,7 @@
      * @param {object} common parameters(domainId, from, to)
      */
     var reloadHTTP2_ = function(filters) {
-      Stats.http2(filters)
+      return Stats.http2(filters)
         .$promise
         .then(function(data) {
           $scope.http2 = data.data.map( function( item ) {
@@ -263,7 +266,7 @@
     };
 
     var reloadCountry_ = function(filters) {
-      Stats.gbt_country(filters)
+      return Stats.gbt_country(filters)
         .$promise
         .then(function(data) {
 
@@ -306,7 +309,7 @@
      * @param {object} common parameters(domainId, from, to)
      */
     var reloadRequestStatus_ = function(filters) {
-      Stats.requestStatus(filters)
+      return Stats.requestStatus(filters)
         .$promise
         .then(function(data) {
 
@@ -343,7 +346,7 @@
      * @param {object} common parameters(domainId, from, to)
      */
     var reloadMobileDesktopRatio_ = function(filters) {
-      Stats.mobile_desktop(filters)
+      return Stats.mobile_desktop(filters)
         .$promise
         .then(function(data) {
           if ( data.data.mobile + data.data.desktop + data.data.spiders === 0 ) {
@@ -375,21 +378,33 @@
       if ($scope.country_filter) {
         filters.country = $scope.country_filter;
       }
+      // NOTE: lock UI before finish all requests
+      $scope._loading = true;
 
-      reloadOS_(filters);
-      reloadDevice_(filters);
-      reloadBrowser_(filters);
-      reloadCountry_(filters);
-      reloadProtocol_(filters);
-      reloadHttpMethod_(filters);
-      reloadHttpProtocol_(filters);
-      reloadStatusCode_(filters);
-      reloadContentType_(filters);
-      reloadCacheStatus_(filters);
-      reloadQUIC_(filters);
-      reloadHTTP2_(filters);
-      reloadRequestStatus_(filters);
-      reloadMobileDesktopRatio_(filters);
+      allStatRequests.length = 0;
+
+      allStatRequests.push(reloadOS_(filters));
+      allStatRequests.push(reloadDevice_(filters));
+      allStatRequests.push(reloadBrowser_(filters));
+      allStatRequests.push(reloadCountry_(filters));
+      allStatRequests.push(reloadProtocol_(filters));
+      allStatRequests.push(reloadHttpMethod_(filters));
+      allStatRequests.push(reloadHttpProtocol_(filters));
+      allStatRequests.push(reloadStatusCode_(filters));
+      allStatRequests.push(reloadContentType_(filters));
+      allStatRequests.push(reloadCacheStatus_(filters));
+      allStatRequests.push(reloadQUIC_(filters));
+      allStatRequests.push(reloadHTTP2_(filters));
+      allStatRequests.push(reloadRequestStatus_(filters));
+      allStatRequests.push(reloadMobileDesktopRatio_(filters));
+      // NOTE: wait resole all promises
+      $q.all(allStatRequests)
+        .finally(function(){
+           // NOTE: add additional timeout for unlock UI for user actions
+           $timeout(function(){
+            $scope._loading = false;
+           }, timeoutUserActionLock);
+        });
     };
 
     // Load user domains
