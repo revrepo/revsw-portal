@@ -22,11 +22,12 @@ var DataProvider = require('./../../../common/providers/data');
 var Constants = require('./../../../page_objects/constants');
 
 // TODO: Check work in  testsjc20-portal01.revsw.net
-// TODO: Disabling the test for now - it results in browser getting too busy 
-// (message "A script on this page may be busy, or it may have stopped responding. 
-// You can stop the script now, or you can continue to see if the script will 
+// TODO: Disabling the test for now - it results in browser getting too busy
+// (message "A script on this page may be busy, or it may have stopped responding.
+// You can stop the script now, or you can continue to see if the script will
 // complete. Script: https://testsjc20-portal01.revsw.net/scripts/vendor.js:25"
-xdescribe('Functional', function () {
+// TODO: delete this todo if fix is work - fix in file common/providers/data.js line 821
+describe('Functional', function () {
   describe('Add WAF Rule', function () {
 
     var users = [
