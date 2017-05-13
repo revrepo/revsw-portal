@@ -110,9 +110,7 @@
           $scope.filters.app_id = ($scope.ngApp || null);
 
           return Stats.sdk_agg_flow(generateFilterParams($scope.filters))
-          // return Stats.sdk_agg_flow( $scope.filters)
-
-            .$promise
+          .$promise
             .then(function(data) {
 
               if (data.data && data.data.length > 0) {
