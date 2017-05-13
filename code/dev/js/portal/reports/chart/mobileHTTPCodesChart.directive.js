@@ -78,7 +78,7 @@
             }
           }
         };
-        var _filters_field_list = ['from_timestamp', 'to_timestamp', 'country', 'device', 'os', 'browser','network','operator','account_id','app_id'];
+        var _filters_field_list = ['report_type','from_timestamp', 'to_timestamp', 'country', 'device', 'os', 'browser','network','operator','account_id','app_id'];
         function generateFilterParams(filters) {
             var params = {
               from_timestamp: moment().subtract(1, 'days').valueOf(),
@@ -110,6 +110,8 @@
           $scope.filters.app_id = ($scope.ngApp || null);
 
           return Stats.sdk_agg_flow(generateFilterParams($scope.filters))
+          // return Stats.sdk_agg_flow( $scope.filters)
+
             .$promise
             .then(function(data) {
 
