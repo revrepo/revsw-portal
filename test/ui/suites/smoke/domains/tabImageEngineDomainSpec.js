@@ -64,6 +64,28 @@ describe('Smoke', function () {
             });
 
         });
+
+        describe('Then  switch "ImageEngine" is "OFF"', function () {
+          beforeAll(function () {
+             EditPage.switchBtns(form.getImageEngineSw(), false);
+          });
+
+          it('should not display input for "ImageEngine Token"',
+            function () {
+              expect(checkDisplay('getImageEngineTokenTxtIn')).toBe(false);
+            });
+
+          it('should not display input for "ImageEngine Purge API Secret Key"',
+            function () {
+              expect(checkDisplay('getImageEngineAPIKeyTxtIn')).toBe(false);
+            });
+
+          it('should not display input for "Origin Server"',
+            function () {
+              expect(checkDisplay('getImageEngineOriginServerTxtIn')).toBe(false);
+            });
+
+        });
       });
     });
   });

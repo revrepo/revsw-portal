@@ -232,7 +232,7 @@ var EditDomain = {
             getCbElement.click();
           }
 
-          if (!onOff && data === 'false') {
+          if (!onOff && data !== 'false') {
             getCbElement.click();
           }
     });
