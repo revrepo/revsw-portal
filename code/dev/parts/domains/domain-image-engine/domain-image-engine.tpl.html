@@ -1,0 +1,65 @@
+<div class="domain-the-third-party-links form col-sm-12" ng-form="editForm">
+  <!--ImageEngine-->
+  <div class="form-group form-inline">
+    <label for="enableImageEngine" class="col-sm-3 control-label">
+      ImageEngine
+    </label>
+    <div class="col-md-9">
+      <toggle-switch name="enableImageEngine" id="enableImageEngine" ng-model="model.image_engine.enable_image_engine" on-label="On"
+        off-label="Off">
+      </toggle-switch>
+      <label for="enableImageEngine" class="text-info" popover-trigger="mouseenter" uib-popover="TODO text">
+        <i class="fa fa-question-circle"></i>
+      </label>
+    </div>
+  </div>
+  <div ng-if="model.image_engine.enable_image_engine" class="row col-md-12">
+    <!--Inage Engine Token-->
+    <div class="form-group" ng-class="{'has-error': editForm.imageEngineToken.$invalid && editForm.imageEngineToken.$dirty}">
+      <label for="imageEngineToken" class="col-sm-3 control-label">
+          ImageEngine Token *
+    </label>
+      <div class="col-md-9">
+        <input id="imageEngineToken" type="text" class="form-control inline-block" ng-disabled="_loading" name="imageEngineToken"
+          ng-model="model.image_engine.image_engine_token" placeholder="ImageEngine Token" required>
+        <label for="imageEngineToken" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="TODO text">
+                    <i class="fa fa-question-circle"></i>
+       </label>
+        <div class="error-messages" ng-messages="editForm.imageEngineToken.$error" role="alert" ng-messages-multiple>
+          <div ng-messages-include="parts/shared/error-messages.html"></div>
+        </div>
+      </div>
+    </div>
+    <!--// Image Engine Toke-->
+    <!-- ImageEngine Purge API Secret Key-->
+    <div class="form-group" ng-class="{'has-error': editForm.imageEngineAPIKey.$invalid && editForm.imageEngineAPIKey.$dirty}">
+      <label for="imageEngineAPIKey" class="col-sm-3 control-label">
+         ImageEngine Purge API Secret Key
+    </label>
+      <div class="col-md-9">
+        <input id="imageEngineAPIKey" type="text" class="form-control inline-block" ng-disabled="_loading" name="imageEngineAPIKey"
+          ng-model="model.image_engine.image_engine_api_key" placeholder="API Key">
+        <label for="imageEngineAPIKey" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="TODO text">
+                    <i class="fa fa-question-circle"></i>
+       </label>
+        <div class="error-messages" ng-messages="editForm.imageEngineAPIKey.$error" role="alert" ng-messages-multiple>
+          <div ng-messages-include="parts/shared/error-messages.html"></div>
+        </div>
+      </div>
+    </div>
+    <!--image_engine_origin_server -->
+    <div class="form-group" ng-class="{'has-error': editForm.imageEngineOriginServer.$invalid && editForm.imageEngineOriginServer.$dirty}">
+      <label for="imageEngineOriginServer" class="col-sm-3 control-label">Origin Server</label>
+      <div class="col-sm-9">
+        <input type="text" validate-origin-server-name class="form-control inline-block" ng-disabled="_loading" ng-model="model.image_engine.image_engine_origin_server"
+          id="imageEngineOriginServer" name="imageEngineOriginServer" placeholder="Origin Server Name" ng-maxlength="50">
+        <label for="imageEngineOriginServer" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="TODO text">
+                    <i class="fa fa-question-circle"></i>
+                  </label>
+        <div class="error-messages" ng-messages="editForm.imageEngineOriginServer.$error" role="alert" ng-messages-multiple>
+          <div ng-messages-include="parts/shared/error-messages.html"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
