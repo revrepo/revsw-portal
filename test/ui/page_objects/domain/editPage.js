@@ -407,6 +407,20 @@ var EditDomain = {
       .getThirdPartyLinksTab()
       .click();
   },
+
+   /**
+   *
+   * Tab "ImageEngine"
+   *
+   */
+
+  // Click to tab "ImageEngine"
+  clickTabImageEngine: function (numberLink) {
+    return this.form
+      .getImageEngineTab()
+      .click();
+  },
+
   // Click on button
   clickOnAddNewItemBP: function () {
     var el = this.form.getOnAddNewItemBP();

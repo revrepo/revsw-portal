@@ -93,6 +93,15 @@ var DomainForm = {
       },
       thirdPartyRuntimeDomains: {
         id: 'thirdPartyRuntimeDomains'
+      },
+      imageEngineToken: {
+        id: 'imageEngineToken'
+      },
+      imageEngineAPIKey: {
+        id: 'imageEngineAPIKey'
+      },
+      imageEngineOriginServer: {
+        id: 'imageEngineOriginServer'
       }
 
     },
@@ -283,6 +292,9 @@ var DomainForm = {
       revAPMadminApprovalCO: {
         css: 'div[ng-if="$ctrl.domain.co_lua_enable_all"] div[name="customVcl"]'
       },
+      imageEngine:{
+        id: 'enableImageEngine'
+      }
 
 
     },
@@ -414,6 +426,10 @@ var DomainForm = {
       thirdPartyLinks:{
         li: '.domain-edit-form .nav.nav-tabs>li:nth-child(8)',
         css: '.domain-edit-form .nav.nav-tabs>li:nth-child(8) a'
+      },
+      imageEngine:{
+        li: '.domain-edit-form .nav.nav-tabs>li:nth-child(9)',
+        css: '.domain-edit-form .nav.nav-tabs>li:nth-child(9) a'
       }
     }
   },
@@ -521,6 +537,17 @@ var DomainForm = {
     return element(by.css(this.locators.tabs.thirdPartyLinks.css));
   },
 
+  /**
+   * ### DomainForm.getImageEngineTab()
+   *
+   * Returns the reference to the `ImageEngine` tab
+   * (Selenium WebDriver Element)
+   *
+   * @returns {Selenium WebDriver Element}
+   */
+  getImageEngineTab: function () {
+    return element(by.css(this.locators.tabs.imageEngine.css));
+  },
 
   /**
    * ### DomainForm.getDomainNameTxtIn()
@@ -861,6 +888,18 @@ var DomainForm = {
   },
   getRevAPMadminApprovalCO: function () {
     return element(by.css(this.locators.switches.revAPMadminApprovalCO.css));
+  },
+  getImageEngineSw: function () {
+    return element(by.id(this.locators.switches.imageEngine.id));
+  },
+  getImageEngineTokenTxtIn: function () {
+    return element(by.id(this.locators.textInputs.imageEngineToken.id));
+  },
+  getImageEngineAPIKeyTxtIn: function () {
+    return element(by.id(this.locators.textInputs.imageEngineAPIKey.id));
+  },
+  getImageEngineOriginServerTxtIn: function () {
+    return element(by.id(this.locators.textInputs.imageEngineOriginServer.id));
   },
 
   getUseEndUserProtocolTxtIn: function () {
