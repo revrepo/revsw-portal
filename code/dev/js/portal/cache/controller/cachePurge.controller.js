@@ -12,6 +12,7 @@
     $scope._loading = false;
     $scope.environment = $config.PURGE_JOB_ENVIRONMENTS_CHOICE[2].key;
     $scope.isReadOnly = User.isReadOnly;
+    $scope.enablePurgeImageEngine = true;
     // $scope.domain;
     $scope.json = {
       purges: [{
@@ -82,7 +83,10 @@
       json.domainName = $scope.domain.domain_name;
       json.environment = $scope.environment;
       $scope._loading = true;
-      Cache.purge({}, json)
+      var params = {
+        enable_purge_image_engine: $scope.enablePurgeImageEngine
+      };
+      Cache.purge(params, json)
         .$promise
         .then(AlertService.success)
         .catch(AlertService.danger)
@@ -110,7 +114,10 @@
         });
       });
       $scope._loading = true;
-      Cache.purge({}, json)
+      var params = {
+        enable_purge_image_engine: $scope.enablePurgeImageEngine
+      };
+      Cache.purge(params, json)
         .$promise
         .then(AlertService.success)
         .catch(AlertService.danger)
@@ -140,7 +147,10 @@
         .then(function() {
           var domainName = $scope.domain.domain_name;
           $scope._loading = true;
-          Cache.purge({}, json)
+          var params = {
+            enable_purge_image_engine: $scope.enablePurgeImageEngine
+          };
+          Cache.purge(params, json)
             .$promise
             .then(AlertService.success)
             .catch(AlertService.danger)
