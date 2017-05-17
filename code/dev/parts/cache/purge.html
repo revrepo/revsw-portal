@@ -92,6 +92,7 @@
               <span>
                 <button class="btn btn-primary btn-sm" uib-tooltip="Refresh" ng-click="refreshPurgeJobTable(domain)" ng-disabled="_load"><i class="glyphicon" ng-class="_loading ? 'glyphicon-refresh spin': 'glyphicon-refresh'"></i></button>
               </span>
+              <div class="h4"><small>(Last 100 Submitted Purge Requests)</small></div>
             </div>
             <div ng-include="'parts/cache/purge-job-table.tpl.html'"></div>
           </div>
