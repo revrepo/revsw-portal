@@ -8,7 +8,7 @@
       <toggle-switch name="enableImageEngine" id="enableImageEngine" ng-model="model.image_engine.enable_image_engine" on-label="On"
         off-label="Off">
       </toggle-switch>
-      <label for="enableImageEngine" class="text-info" popover-trigger="mouseenter" uib-popover="TODO text">
+      <label for="enableImageEngine" class="text-info" popover-trigger="mouseenter" uib-popover="This switch controls whether ImageEngine image optimization feature should be enabled for the domain. Once enabled ImageEngine will automatically resize served images depending on the maximum screen resolution of end users' devices.">
         <i class="fa fa-question-circle"></i>
       </label>
     </div>
@@ -22,7 +22,7 @@
       <div class="col-md-9">
         <input id="imageEngineToken" type="text" class="form-control inline-block" ng-disabled="_loading" name="imageEngineToken"
           ng-model="model.image_engine.image_engine_token" placeholder="ImageEngine Token" required>
-        <label for="imageEngineToken" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="TODO text">
+        <label for="imageEngineToken" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="The token value is required for our ImageEngine feature to properly communicate with the image optimization backend">
                     <i class="fa fa-question-circle"></i>
        </label>
         <div class="error-messages" ng-messages="editForm.imageEngineToken.$error" role="alert" ng-messages-multiple>
@@ -39,7 +39,7 @@
       <div class="col-md-9">
         <input id="imageEngineAPIKey" type="text" class="form-control inline-block" ng-disabled="_loading" name="imageEngineAPIKey"
           ng-model="model.image_engine.image_engine_api_key" placeholder="API Key">
-        <label for="imageEngineAPIKey" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="TODO text">
+        <label for="imageEngineAPIKey" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Optional API key value is used for purging of objects from ImageEngine secondary cache storage">
                     <i class="fa fa-question-circle"></i>
        </label>
         <div class="error-messages" ng-messages="editForm.imageEngineAPIKey.$error" role="alert" ng-messages-multiple>
@@ -52,8 +52,8 @@
       <label for="imageEngineOriginServer" class="col-sm-3 control-label">Origin Server</label>
       <div class="col-sm-9">
         <input type="text" validate-origin-server-name class="form-control inline-block" ng-disabled="_loading" ng-model="model.image_engine.image_engine_origin_server"
-          id="imageEngineOriginServer" name="imageEngineOriginServer" placeholder="Origin Server Name" ng-maxlength="50">
-        <label for="imageEngineOriginServer" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="TODO text">
+          id="imageEngineOriginServer" name="imageEngineOriginServer" placeholder="Origin Server Name" ng-maxlength="150">
+        <label for="imageEngineOriginServer" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Optional customer origin server name to be used by the ImageEngine service">
                     <i class="fa fa-question-circle"></i>
                   </label>
         <div class="error-messages" ng-messages="editForm.imageEngineOriginServer.$error" role="alert" ng-messages-multiple>
