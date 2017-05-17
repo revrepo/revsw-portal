@@ -39,8 +39,7 @@
               </div>
               <div class="pull-right">
                 <a ui-sref="^.cache" class="btn btn-info" id="btn-basic-mode">
-                  <i class="glyphicon glyphicon-pencil"></i>&nbsp;
-                  Basic Mode
+                  <i class="glyphicon glyphicon-pencil"></i>&nbsp; Basic Mode
                 </a>
               </div>
             </div>
@@ -52,26 +51,25 @@
 
             <div class="form-group">
               <div class="col-md-7">
-                <div name="json"
-                     id="json"
-                     ng-model="json"
-                     options="options"
-                     ng-jsoneditor="jsonEditorEvent"
-                     style="height: 252px"></div>
-
+                <div name="json" id="json" ng-model="json" options="options" ng-jsoneditor="jsonEditorEvent" style="height: 252px"></div>
+                <div style="margin-top: 15px" class="row">
+                  <input type="checkbox" class="inline-block" name="enablePurgeImageEngineSecondaryCache" ng-model="purgeImageEngineSecondaryCache">                  Purge ImageEngine Secondary Cache
+                  <label for="enablePurgeImageEngineSecondaryCache" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter"
+                    uib-popover="Domains with enabled ImageEngine feature use a secondary object caching storage, and in majority of cases when purging content for such domains objects should be removed from all caching tiers. You can uncheck the option if for a reason you don’t want to clear the secondary cache storage.">
+                    <i class="fa fa-question-circle"></i>
+                  </label>
+                </div>
                 <div style="margin-top: 15px">
                   <a ui-sref="^.domains" class="btn btn-default">
-                    <i class="glyphicon glyphicon-remove"></i>&nbsp;
-                    Cancel
+                    <i class="glyphicon glyphicon-remove"></i>&nbsp; Cancel
                   </a>
                   &nbsp;
-                  <button class="btn btn-danger" ng-class="{'btn-disabled':isReadOnly()}" ng-disabled="_loading || !domain || isReadOnly()" ng-click="purgeDefaultText()">
+                  <button class="btn btn-danger" ng-class="{'btn-disabled':isReadOnly()}" ng-disabled="_loading || !domain || isReadOnly()"
+                    ng-click="purgeDefaultText()">
                     <i class="glyphicon" ng-class="_loading ? 'glyphicon-refresh spin':'glyphicon-ok'"></i>&nbsp; Purge All Objects
-                  </button>
-                  &nbsp;
-                  <button class="btn btn-danger" ng-class="{'btn-disabled':isReadOnly()}"
-                          ng-disabled="_loading || !domain || jsonIsInvalid || isReadOnly()"
-                          ng-click="purge()">
+                  </button> &nbsp;
+                  <button class="btn btn-danger" ng-class="{'btn-disabled':isReadOnly()}" ng-disabled="_loading || !domain || jsonIsInvalid || isReadOnly()"
+                    ng-click="purge()">
                           <i class="glyphicon" ng-class="_loading ? 'glyphicon-refresh spin':'glyphicon-ok'"></i>&nbsp;
                     Purge
                   </button>
