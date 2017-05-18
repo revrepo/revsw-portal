@@ -333,7 +333,7 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
       };
       _.defaultsDeep($scope.config, _defaultConfig);
 
-      $scope.elId = (new Date()).getTime();
+      $scope.elId = (new Date()).getTime() +'_'+ Math.floor(Math.random() * (10000 - 1)) + 1;
       $scope._loading = false;
       $scope._data = false;
 
@@ -358,6 +358,9 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
         $scope.reloadGBTCountry(filters)
           .then(function(gbt_data) {
             $scope._data = true;
+            if(!$scope.$parent.model){
+              return;
+            }
 
             var wid = $scope.$parent.model.wid; //  is it a legal way to get some context or just dirty hack ??
             //  (re)draw map using received data
