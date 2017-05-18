@@ -333,7 +333,7 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
       };
       _.defaultsDeep($scope.config, _defaultConfig);
 
-      $scope.elId = (new Date()).getTime();
+      $scope.elId = (new Date()).getTime() +'_'+ Math.floor(Math.random() * (10000 - 1)) + 1;
       $scope._loading = false;
       $scope._data = false;
 
@@ -358,6 +358,9 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
         $scope.reloadGBTCountry(filters)
           .then(function(gbt_data) {
             $scope._data = true;
+            if(!$scope.$parent.model){
+              return;
+            }
 
             var wid = $scope.$parent.model.wid; //  is it a legal way to get some context or just dirty hack ??
             //  (re)draw map using received data
@@ -608,6 +611,7 @@ angular.module('adf.widget.analytics-proxy-traffic', ['adf.provider'])
 
     }
   }]);
+
 
 angular.module("adf.widget.analytics-proxy-traffic").run(["$templateCache", function($templateCache) {$templateCache.put("{widgetsPath}/analytics-proxy-traffic/src/edit.html","<form role=form><div class=form-group><label for=domain>Domain</label><div domain-select id=domain ng-model=domain on-select=onDomainSelected() select-one=true></div></div><div class=form-group><label for=domain>Filters</label>{{config.filters}}</div><div class=form-inline><div class=form-group><select id=country class=\"form-control fixed\" ng-model=config.filters.country ng-disabled=!domain><option value=->All Countries</option><option ng-repeat=\"(key, item) in flCountry\" value={{key}}>{{item}}</option></select></div><div class=form-group><select id=os class=\"form-control fixed\" ng-model=config.filters.os ng-disabled=!domain><option value=->All OS</option><option ng-repeat=\"item in flOs.labels\" value={{item}}>{{item}}</option></select></div><div class=form-group><select id=device class=\"form-control fixed\" ng-model=config.filters.device ng-disabled=!domain><option value=->All Devices</option><option ng-repeat=\"item in flDevice.labels\" value={{item}}>{{item}}</option></select></div></div><div class=form-group><label for=domain>Time Period</label></div><div class=form-group></div></form>");
 $templateCache.put("{widgetsPath}/analytics-proxy-traffic/src/view.html","<div><h1>Widget view</h1><p>Content of {{config.sample}}</p></div>");
