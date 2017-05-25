@@ -2,7 +2,7 @@
  *
  * REV SOFTWARE CONFIDENTIAL
  *
- * [2013] - [2015] Rev Software, Inc.
+ * [2013] - [2017] Rev Software, Inc.
  * All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains
@@ -47,7 +47,7 @@ describe('Functional', function () {
         var purgeBtn = Portal.purgeCacheAdvancedPage.getPurgeBtn();
         expect(purgeBtn.isEnabled()).toBeFalsy();
       });
-    
+
     it('should purge an object in Code mode',
       function () {
         Portal.purgeCacheAdvancedPage.clickAdvancedMode();
@@ -77,5 +77,17 @@ describe('Functional', function () {
         var title = 'Domains List';
         expect(Portal.domains.listPage.getTitle()).toEqual(title);
       });
+
+    it('should change value of "Purge Image Engine Secondary Cache" checkbox '+
+      'after click to this checkbox',
+      function () {
+        Portal.purgeCacheAdvancedPage.setPurgeImageEngineSecondaryCache(true);
+        Portal.purgeCacheAdvancedPage.clickPurgeImageEngineSecondaryCache();
+        var ChBoxPurgeImageEngineSecondaryCache = Portal.purgeCacheAdvancedPage
+          .getPurgeImageEngineSecondaryCacheChBox();
+        expect(ChBoxPurgeImageEngineSecondaryCache.isSelected()).toBeFalsy();
+        Portal.purgeCacheAdvancedPage.clickPurgeImageEngineSecondaryCache();
+        expect(ChBoxPurgeImageEngineSecondaryCache.isSelected()).toBeTruthy();
+    });
   });
 });
