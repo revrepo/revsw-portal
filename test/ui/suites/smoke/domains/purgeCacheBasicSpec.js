@@ -80,6 +80,13 @@ describe('Smoke', function () {
             expect(exampleText).toContain(paragraph3);
           });
 
+        it('should "Purge Image Engine Secondary Cache" checkbox is exists and checked by default',
+          function () {
+            var ChBoxPurgeImageEngineSecondaryCache  = Portal.purgeCacheBasicPage.getPurgeImageEngineSecondaryCacheChBox();
+            expect(ChBoxPurgeImageEngineSecondaryCache.isPresent()).toBe(true);
+            expect(ChBoxPurgeImageEngineSecondaryCache.isSelected()).toBeTruthy();
+          });
+
         switch (user.role) {
 
           case 'RO User':
