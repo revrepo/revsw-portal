@@ -372,6 +372,18 @@ var PurgeCacheBasic = {
       .getPurgeAllObjectsBtn()
       .click();
   },
+  /**
+   * ### PurgeCacheBasic.clickPurgeImageEngineSecondaryCache()
+   *
+   * Clicks on the `PurgeImageEngineSecondaryCache` checkbox element.
+   *
+   * @returns {Promise}
+   */
+  clickPurgeImageEngineSecondaryCache: function () {
+    return this
+      .getPurgeImageEngineSecondaryCacheChBox()
+      .click();
+  },
 
   /**
    * ### PurgeCacheBasic.clickCancel()
