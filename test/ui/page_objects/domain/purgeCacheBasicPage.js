@@ -2,7 +2,7 @@
  *
  * REV SOFTWARE CONFIDENTIAL
  *
- * [2013] - [2015] Rev Software, Inc.
+ * [2013] - [2017] Rev Software, Inc.
  * All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains
@@ -17,6 +17,7 @@
  */
 
 // # Purge Cache Form Page Object
+var WebElement = require('./../../common/helpers/webElement');
 
 // This `Purge Cache` Page Object abstracts all operations or actions that
 // a common Purge Cached Objects could do in the Portal app/site.
@@ -39,6 +40,11 @@ var PurgeCacheBasic = {
       models: {
         text: 'text'
       }
+    },
+    checkBoxes: {
+      purgeImageEngineSecondaryCache: {
+        css: 'input[name="enablePurgeImageEngineSecondaryCache"]'
+      },
     },
     buttons: {
       advancedMode: {
@@ -289,6 +295,18 @@ var PurgeCacheBasic = {
       .getText();
   },
 
+  /**
+   * ### PurgeCacheBasic.getPurgeImageEngineSecondaryCacheChBox()
+   *
+   * Returns the reference to the `Purge Image Engine Secondary Cache` checkbox (Selenium WebDriver
+   * Element)
+   *
+   * @returns {Object} Selenium WebDriver Element
+   */
+  getPurgeImageEngineSecondaryCacheChBox: function () {
+    return element(by.css(this.locators.checkBoxes.purgeImageEngineSecondaryCache.css));
+  },
+
   // ## Helper Methods
 
   /**
@@ -393,6 +411,18 @@ var PurgeCacheBasic = {
   selectDomain: function (domain) {
     this.clickDomain();
     return this.setSearchDomain(domain.name);
+  },
+
+  /**
+   * ### PurgeCacheBasic.setPurgeImageEngineSecondaryCache()
+   *
+   * Checks/un-checks the `Purge Image Engine Secondary Cache` checkbox element
+   *
+   * @param {Boolean} checked, whether check or not the element
+   * @returns {Object} Promise
+   */
+  setPurgeImageEngineSecondaryCache: function (checked) {
+    return WebElement.changeCheckBox(this.getPurgeImageEngineSecondaryCacheChBox(), checked);
   }
 };
 
