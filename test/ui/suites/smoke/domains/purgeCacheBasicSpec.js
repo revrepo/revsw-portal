@@ -27,10 +27,10 @@ describe('Smoke', function () {
 
     var users = [
       config.get('portal.users.revAdmin'),
-      config.get('portal.users.admin'),
-      config.get('portal.users.reseller'),
-      config.get('portal.users.user'),
-      config.get('portal.users.roUser')
+      // config.get('portal.users.admin'),
+      // config.get('portal.users.reseller'),
+      // config.get('portal.users.user'),
+      // config.get('portal.users.roUser')
     ];
 
     users.forEach(function (user) {
@@ -78,6 +78,13 @@ describe('Smoke', function () {
             expect(exampleText).toContain(paragraph1);
             expect(exampleText).toContain(paragraph2);
             expect(exampleText).toContain(paragraph3);
+          });
+
+        it('should "Purge Image Engine Secondary Cache" checkbox is exists and checked by default',
+          function () {
+            var ChBoxPurgeImageEngineSecondaryCache  = Portal.purgeCacheBasicPage.getPurgeImageEngineSecondaryCacheChBox();
+            expect(ChBoxPurgeImageEngineSecondaryCache.isPresent()).toBe(true);
+            expect(ChBoxPurgeImageEngineSecondaryCache.isSelected()).toBeTruthy();
           });
 
         switch (user.role) {
