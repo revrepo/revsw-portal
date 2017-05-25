@@ -57,6 +57,24 @@ var WebElement = {
   scrollToElement: function(element_){
     return  browser.executeScript('arguments[0].scrollIntoView(true);',
       element_.getWebElement());
+  },
+   /**
+   *
+   * Checks/un-checks the specified checkbox element
+   *
+   * @param {Object} chBox, Selenium WebDriver Element, reference to checkbox
+   * to change
+   * @param {Boolean} checked
+   * @returns {Object} Promise
+   */
+  changeCheckBox: function (chBox, checked) {
+    return chBox
+      .isSelected()
+      .then(function (isSelected) {
+        if (isSelected !== checked) {
+          return chBox.click();
+        }
+      });
   }
 };
 
