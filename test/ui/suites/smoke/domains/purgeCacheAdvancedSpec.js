@@ -115,7 +115,8 @@ describe('Smoke', function () {
 
     it('should "Purge Image Engine Secondary Cache" checkbox is exists and checked by default',
         function () {
-          var ChBoxPurgeImageEngineSecondaryCache  = Portal.purgeCacheAdvancedPage.getPurgeImageEngineSecondaryCacheChBox();
+          var ChBoxPurgeImageEngineSecondaryCache  = Portal.purgeCacheAdvancedPage
+            .getPurgeImageEngineSecondaryCacheChBox();
           expect(ChBoxPurgeImageEngineSecondaryCache.isPresent()).toBe(true);
           expect(ChBoxPurgeImageEngineSecondaryCache.isSelected()).toBeTruthy();
     });
