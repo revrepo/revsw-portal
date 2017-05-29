@@ -51,7 +51,7 @@
     <div class="form-group" ng-class="{'has-error': editForm.imageEngineOriginServer.$invalid && editForm.imageEngineOriginServer.$dirty}">
       <label for="imageEngineOriginServer" class="col-sm-3 control-label">Origin Server</label>
       <div class="col-sm-9">
-        <input type="text" validate-origin-server-name class="form-control inline-block" ng-disabled="_loading" ng-model="model.image_engine.image_engine_origin_server"
+        <input type="text" validate-origin-server-name-optional class="form-control inline-block" ng-disabled="_loading" ng-model="model.image_engine.image_engine_origin_server"
           id="imageEngineOriginServer" name="imageEngineOriginServer" placeholder="Origin Server Name" ng-maxlength="150">
         <label for="imageEngineOriginServer" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Optional customer origin server name to be used by the ImageEngine service">
                     <i class="fa fa-question-circle"></i>
@@ -59,6 +59,21 @@
         <div class="error-messages" ng-messages="editForm.imageEngineOriginServer.$error" role="alert" ng-messages-multiple>
           <div ng-messages-include="parts/shared/error-messages.html"></div>
         </div>
+      </div>
+    </div>
+    <!-- Set Default ImageEngine Configuration -->
+    <div class="form-group">
+      <label for="refreshImageEngineConfiguration" class="col-sm-3 control-label">
+        Set Default ImageEngine Configuration
+      </label>
+      <div class="col-md-9">
+        <toggle-switch id="refreshImageEngineConfigurationChBox" name="refreshImageEngineConfiguration" is-disabled="_loading" ng-model="model.image_engine.refresh_image_engine_configuration"
+          on-label="Yes" off-label="No">
+        </toggle-switch>
+        <label for="refreshImageEngineConfiguration" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter"
+          uib-popover="TODO text">
+          <i class="fa fa-question-circle"></i>
+        </label>
       </div>
     </div>
   </div>
