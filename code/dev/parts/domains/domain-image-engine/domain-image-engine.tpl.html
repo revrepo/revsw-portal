@@ -17,11 +17,11 @@
     <!--Inage Engine Token-->
     <div class="form-group" ng-class="{'has-error': editForm.imageEngineToken.$invalid && editForm.imageEngineToken.$dirty}">
       <label for="imageEngineToken" class="col-sm-3 control-label">
-          ImageEngine Token *
+          ImageEngine Token
     </label>
       <div class="col-md-9">
         <input id="imageEngineToken" type="text" class="form-control inline-block" ng-disabled="_loading" name="imageEngineToken"
-          ng-model="model.image_engine.image_engine_token" placeholder="ImageEngine Token" required>
+          ng-model="model.image_engine.image_engine_token" placeholder="ImageEngine Token" >
         <label for="imageEngineToken" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="The token value is required for our ImageEngine feature to properly communicate with the image optimization backend">
                     <i class="fa fa-question-circle"></i>
        </label>
