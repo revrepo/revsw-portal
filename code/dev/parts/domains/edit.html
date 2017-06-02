@@ -93,7 +93,7 @@
               <div class="form-group" ng-class="{'has-error': editForm.originServer.$invalid && editForm.originServer.$dirty}">
                 <label for="originServer" class="col-sm-3 control-label">Origin Server Name/IP *</label>
                 <div class="col-sm-9">
-                  <input type="text" validate-origin-server-name class="form-control inline-block" ng-disabled="_loading" ng-model="model.origin_server" id="originServer" name="originServer" placeholder="Origin Server Name" ng-maxlength="50" required>
+                  <input type="text" validate-origin-server-name class="form-control inline-block" ng-disabled="_loading" ng-model="model.origin_server" id="originServer" name="originServer" placeholder="Origin Server Name" ng-maxlength="150" required>
                   <label for="originServer" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enter here domain name or IP address of origin web server">
                     <i class="fa fa-question-circle"></i>
                   </label>
@@ -105,7 +105,7 @@
               <div class="form-group" ng-class="{'has-error': editForm.originHostHeader.$invalid && editForm.originHostHeader.$dirty}">
                 <label class="col-sm-3 control-label" for="originHostHeader">Origin Host Header *</label>
                 <div class="col-sm-9">
-                  <input type="text" validate-domain-name class="form-control inline-block" ng-model="model.origin_host_header" ng-disabled="_loading" id="origin_host_header" name="originHostHeader" placeholder="Origin Host Header" ng-maxlength="63" required>
+                  <input type="text" validate-domain-name class="form-control inline-block" ng-model="model.origin_host_header" ng-disabled="_loading" id="origin_host_header" name="originHostHeader" placeholder="Origin Host Header" ng-maxlength="150" required>
                   <label for="originHostHeader" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enter here a domain name to be used in 'Host' header of requests sent to the origin server. The name might be different from origin server name/IP specified above. For example, if origin server IP is 11.11.11.11 and the origin HTTP server recognizes web requests for domain 'www.example.com' you will need to specify '11.11.11.11' in origin server name field above and 'www.example.com' in this field.">
                     <i class="fa fa-question-circle"></i>
                   </label>
@@ -186,7 +186,7 @@
               <div class="form-group" ng-class="{'has-error': editForm.domainWildcardAlias.$invalid && editForm.domainWildcardAlias.$dirty}">
                 <label for="domainWildcardAlias" class="col-sm-3 control-label">Wildcard Domain Alias</label>
                 <div class="col-md-9">
-                  <input validate-wildcard-domain-field type="text" class="form-control inline-block" ng-disabled="_loading" id="domain_wildcard_alias" name="domainWildcardAlias" ng-model="model.domain_wildcard_alias" ng-maxlength="50" placeholder="Wildcard Domain Alias">
+                  <input validate-wildcard-domain-field type="text" class="form-control inline-block" ng-disabled="_loading" id="domain_wildcard_alias" name="domainWildcardAlias" ng-model="model.domain_wildcard_alias" ng-maxlength="150" placeholder="Wildcard Domain Alias">
                   <label for="domainWildcardAlias" class="text-info" popover-trigger="mouseenter" uib-popover="You can specify here a domain alias in wildcard format. For example, if you specify here '*.example.com' name we will accept and apply the same configuration for domains like 'www.example.com', 'www2.example.com', 'app.example.com', etc. Please note that we will not show Web Analytics stats for domains matching the wildcard alias but will count the traffic for billing purposes.">
                     <i class="fa fa-question-circle"></i>
                   </label>
