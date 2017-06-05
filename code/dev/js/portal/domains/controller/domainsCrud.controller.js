@@ -28,7 +28,8 @@
       $scope: $scope,
       $stateParams: $stateParams
     });
-    $scope.isAdvancedMode = $stateParams.isAdvanced || false;
+    $scope.isAdvancedMode = ($stateParams.isAdvanced === 'true')? true: false;
+    $state._loading = true;
     $scope.jsoneditor = {
       options: {
         mode: 'code',
@@ -217,7 +218,7 @@
         delete model.domain_wildcard_alias;
       }
       // NOTE:  "Origin Health Monitoring" should be active if “Edge Caching” is ON(true)
-      if (!model.rev_component_bp.enable_cache || model.rev_component_bp.enable_cache === false) {
+      if (!!model.rev_component_bp &&(!model.rev_component_bp.enable_cache || model.rev_component_bp.enable_cache === false)) {
         model.enable_origin_health_probe = false;
       }
       if ($scope.$thirdPartyLinks) {
@@ -311,6 +312,9 @@
         })
         .catch(function(err) {
           $scope.alertService.danger('Could not load domain details');
+        })
+        .finally(function(){
+          $scope._loading = false;
         });
 
       /**
@@ -836,6 +840,54 @@
       } else {
         $scope.alertService.success('The CNAME has been copied to the clipboard', 2000);
       }
+    };
+    /**
+     * @name onEnableImageEngineChanged
+     * @description method for controll change EnableImageEngine
+     * @param {Event} e
+     * @param {Boolean} isEnabled
+     */
+    $scope.onEnableImageEngineChanged = function (e, isEnabled) {
+      var customVCLenabled = $scope.model.rev_component_bp.custom_vcl.enabled;
+      if (isEnabled === false && customVCLenabled === true) {
+        $scope.confirm('confirmChangeVCLModal.html', {
+            domain_name: $scope.modelInfo.domain_name
+          })
+          .then(function (data) {
+            // NOTE: change on UI
+            $scope.model.rev_component_bp.custom_vcl.enabled = false;
+          })
+          .catch(function (err) {
+            // NOTE: cancel change this property
+            $scope.model.image_engine.enable_image_engine = true;
+          });
+      }
+      // NOTE: Auto enable custom VCL
+      if (isEnabled === true && customVCLenabled === false) {
+        $scope.model.rev_component_bp.custom_vcl.enabled = true;
+      }
+    };
+    /**
+     * @name refreshPage
+     * @description method for refresh data on the Page (reload the state)
+     */
+    $scope.refreshPage = function (e, id) {
+      $scope._loading = true;
+      $timeout(function () {
+        var isAdvanced = $scope.isAdvancedMode;
+        var state = $state.$current;
+        var params = {
+          id: id
+        };
+        if (isAdvanced === true) {
+          params.isAdvanced = isAdvanced;
+        }
+        $state.transitionTo($state.$current, params, {
+          reload: true,
+          inherit: false,
+          notify: true
+        });
+      }, 200);
     };
   }
 
