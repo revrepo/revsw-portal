@@ -116,7 +116,7 @@ describe('Functional', function () {
               expect(alert.getText()).toEqual(expectedMsg);
             });
 
-          it('should verify success with enadled "Set Default ImageEngine Configuration"',
+          it('should verify success with enabled "Set Default ImageEngine Configuration"',
             function () {
               EditPage.switchBtns(form.getSetImageEngineConfigurationSw(), true);
               EditPage.clickValidateDomain();
@@ -135,7 +135,8 @@ describe('Functional', function () {
             done();
           });
 
-          it('should display confirmation window when disable ImageEngine and Custom VCL Rules is enadled',
+          it('should display confirmation window when disable ' +
+            'ImageEngine and Custom VCL Rules is enabled',
             function () {
               EditPage.clickTabImageEngine();
               EditPage.form.clickImageEngine();
