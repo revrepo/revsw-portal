@@ -2,7 +2,7 @@
  *
  * REV SOFTWARE CONFIDENTIAL
  *
- * [2013] - [2015] Rev Software, Inc.
+ * [2013] - [2017] Rev Software, Inc.
  * All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains
@@ -199,6 +199,19 @@ var EditDomain = {
   getCancelBtn: function () {
     return element(by.partialLinkText(this.locators.buttons.cancel.linkText));
   },
+  /**
+   *### EditDomain.getSwitchBtnValue()
+   *
+   *  Return the value from switch element
+   * @return {String} value as string ('true','false')
+   */
+  getSwitchBtnValue: function (getCbElement) {
+    return getCbElement
+      .getAttribute(this.form.locators.switches.mainAttrs.ariaChecked)
+      .then(function (data) {
+        return data;
+      });
+  },
 
   // ## Methods to interact with the Edit Domain Page components
 
@@ -227,15 +240,15 @@ var EditDomain = {
   switchBtns: function(getCbElement, onOff) {
     getCbElement
       .getAttribute(this.form.locators.switches.mainAttrs.ariaChecked)
-        .then(function(data) {
-          if (onOff && data !== 'true') {
-            getCbElement.click();
-          }
+      .then(function(data) {
+        if (onOff && data !== 'true') {
+          getCbElement.click();
+        }
 
-          if (!onOff && data !== 'false') {
-            getCbElement.click();
-          }
-    });
+        if (!onOff && data !== 'false') {
+          getCbElement.click();
+        }
+      });
   },
 
 
@@ -408,7 +421,7 @@ var EditDomain = {
       .click();
   },
 
-   /**
+  /**
    *
    * Tab "ImageEngine"
    *

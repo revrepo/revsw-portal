@@ -294,6 +294,9 @@ var DomainForm = {
       },
       imageEngine:{
         id: 'enableImageEngine'
+      },
+      refreshImageEngineConfigurationChBox:{
+        id: 'refreshImageEngineConfigurationChBox'
       }
 
 
@@ -844,7 +847,7 @@ var DomainForm = {
   getWAFFunctionalityForTheDomain: function () {
     return element(by.id(this.locators.switches.wafFunctionalityForTheDomain.id));
   },
-  getCustomVCLrulesTxtIn: function () {
+  getCustomVCLrulesSw: function () {
     return element(by.id(this.locators.switches.customVCLrules.id));
   },
   getDynamicOriginDNSnameLookupsTxtIn: function () {
@@ -889,19 +892,38 @@ var DomainForm = {
   getRevAPMadminApprovalCO: function () {
     return element(by.css(this.locators.switches.revAPMadminApprovalCO.css));
   },
+   /**
+   * ### DomainForm.getImageEngineSw()
+   *
+   * Returns the reference to the `ImageEngine` switch
+   * (Selenium WebDriver Element)
+   *
+   * @returns {Selenium WebDriver Element}
+   */
   getImageEngineSw: function () {
     return element(by.id(this.locators.switches.imageEngine.id));
   },
   getImageEngineTokenTxtIn: function () {
     return element(by.id(this.locators.textInputs.imageEngineToken.id));
   },
+  getImageEngineTokenValue: function () {
+    return this.getImageEngineTokenTxtIn().getAttribute('value');
+  },
   getImageEngineAPIKeyTxtIn: function () {
     return element(by.id(this.locators.textInputs.imageEngineAPIKey.id));
+  },
+  getImageEngineAPIKeyValue: function () {
+    return this.getImageEngineAPIKeyTxtIn().getAttribute('value');
   },
   getImageEngineOriginServerTxtIn: function () {
     return element(by.id(this.locators.textInputs.imageEngineOriginServer.id));
   },
-
+  getImageEngineOriginServerValue: function () {
+    return this.getImageEngineOriginServerTxtIn().getAttribute('value');
+  },
+  getSetImageEngineConfigurationSw: function () {
+    return element(by.id(this.locators.switches.refreshImageEngineConfigurationChBox.id));
+  },
   getUseEndUserProtocolTxtIn: function () {
     return element(by.id(this.locators.radioInputs.useEndUserProtocol.id));
   },
@@ -1182,6 +1204,52 @@ var DomainForm = {
       .element(by.cssContainingText('option', domainOriginLocation))
       .click();
   },
+   /**
+   * ### DomainForm.setImageEngineTokenTxtIn()
+   *
+   * Sets a new value for `ImageEngine Token` text field
+   *
+   * @param {String} imageEngineTokenValue
+   *
+   * @returns {Promise}
+   */
+  setImageEngineTokenTxtIn: function (imageEngineTokenValue) {
+    var el = this
+      .getImageEngineTokenTxtIn()
+      .clear()
+      .sendKeys(imageEngineTokenValue);
+    return  el;
+  },
+  /**
+   * ### DomainForm.setImageEngineAPIKeyTxtIn()
+   *
+   * Sets a new value for `ImageEngine Purge API Secret Key` text field
+   *
+   * @param {String} imageEngineAPIKeyValue
+   *
+   * @returns {Promise}
+   */
+  setImageEngineAPIKeyTxtIn: function (imageEngineAPIKeyValue) {
+    return this
+      .getImageEngineAPIKeyTxtIn()
+      .clear()
+      .sendKeys(imageEngineAPIKeyValue);
+  },
+   /**
+   * ### DomainForm.setImageEngineAPIKeyTxtIn()
+   *
+   * Sets a new value for `Origin Server` text field
+   *
+   * @param {String} ImageEngineTokenTxtIn
+   *
+   * @returns {Promise}
+   */
+  setImageEngineOriginServerTxtIn: function (imageEngineOriginServerValue) {
+    return this
+      .getImageEngineOriginServerTxtIn()
+      .clear()
+      .sendKeys(imageEngineOriginServerValue);
+  },
 
   /**
    * ### DomainForm.clearDomainName()
@@ -1302,7 +1370,37 @@ var DomainForm = {
       .getOriginHostHeaderTxtIn()
       .clear();
   },
-
+ /**
+   * ### DomainForm.clearInputsImageEngineForm()
+   *
+   * Clean the Domain Config ImageEngine Form inputs elemenst in the UI.
+   *
+   * @returns {Promise}
+   */
+  clearInputsImageEngineForm: function () {
+    this
+      .getImageEngineTokenTxtIn()
+      .clear();
+    this
+      .getImageEngineAPIKeyTxtIn()
+      .clear();
+    return this
+      .getImageEngineOriginServerTxtIn()
+      .clear();
+  },
+  /**
+   * ### DomainForm.clickImageEngine()
+   *
+   * Triggers a click on the `ImageEngine` switch from the Edit Domain page
+   * from the Portal app.
+   *
+   * @returns {Promise}
+   */
+  clickImageEngine: function(){
+    this
+      .getImageEngineSw()
+      .click();
+  },
   /**
    * ### DomainForm.fill()
    *

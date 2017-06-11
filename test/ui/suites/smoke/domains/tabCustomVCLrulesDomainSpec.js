@@ -40,19 +40,19 @@ describe('Smoke', function () {
         });
 
         it('should display "Custom VCL Rules"', function () {
-          expect(checkDisplay('getCustomVCLrulesTxtIn')).toBe(true);
-          EditPage.switchBtns(form.getCustomVCLrulesTxtIn(), true);
-        }); 
+          expect(checkDisplay('getCustomVCLrulesSw')).toBe(true);
+          EditPage.switchBtns(form.getCustomVCLrulesSw(), true);
+        });
 
         it('if "Custom VCL Rules" is "ON" then should '+
           'display block "Custom VCL Rules"', function () {
           expect(checkDisplay('getBlockCustomVCLrulesTxtIn')).toBe(true);
-        }); 
+        });
 
         it('if "Custom VCL Rules" is "ON" then should '+
           'display "Open only one rule at a time"', function () {
           expect(checkDisplay('getOneAtATimeTxtIn')).toBe(true);
-        }); 
+        });
 
 
 
@@ -78,7 +78,7 @@ describe('Smoke', function () {
                 '\'Hash\' Function',
                 '\'Synth\' Function',
                 '\'Backend Response\' Function',
-                '\'Backend Error\' Function' 
+                '\'Backend Error\' Function'
               ]);
             });
         });
@@ -105,7 +105,7 @@ describe('Smoke', function () {
                 'vclHash',
                 'vclSynth',
                 'vclBackendResponse',
-                'vclBackendError' 
+                'vclBackendError'
               ]);
             });
 
@@ -116,7 +116,7 @@ describe('Smoke', function () {
             expect(checkDisplay('getBackendsBlock')).toBe(true);
         });
 
-        it('if "Custom VCL Rules" is "ON" then should '+      
+        it('if "Custom VCL Rules" is "ON" then should '+
          // TODO need to actually click on "Add Backend" button
           'display "Backend Name" in "Backends"', function () {
           EditPage.clickAddNewBackendBlock();

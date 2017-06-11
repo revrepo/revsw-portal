@@ -848,7 +848,7 @@
      * @param {Boolean} isEnabled
      */
     $scope.onEnableImageEngineChanged = function (e, isEnabled) {
-      var customVCLenabled = $scope.model.rev_component_bp.custom_vcl.enabled;
+      var customVCLenabled = (!!$scope.model.rev_component_bp.custom_vcl) ? $scope.model.rev_component_bp.custom_vcl.enabled: false;
       if (isEnabled === false && customVCLenabled === true) {
         $scope.confirm('confirmChangeVCLModal.html', {
             domain_name: $scope.modelInfo.domain_name
@@ -861,10 +861,6 @@
             // NOTE: cancel change this property
             $scope.model.image_engine.enable_image_engine = true;
           });
-      }
-      // NOTE: Auto enable custom VCL
-      if (isEnabled === true && customVCLenabled === false) {
-        $scope.model.rev_component_bp.custom_vcl.enabled = true;
       }
     };
     /**
