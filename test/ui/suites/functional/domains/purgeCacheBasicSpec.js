@@ -103,6 +103,7 @@ describe('Functional', function () {
     it('should change value of "Purge Image Engine Secondary Cache" checkbox '+
       'after click to this checkbox',
       function () {
+        Portal.helpers.nav.goToPurgeCache();
         Portal.purgeCacheBasicPage.setPurgeImageEngineSecondaryCache(true);
         Portal.purgeCacheBasicPage.clickPurgeImageEngineSecondaryCache();
         var ChBoxPurgeImageEngineSecondaryCache = Portal.purgeCacheBasicPage
