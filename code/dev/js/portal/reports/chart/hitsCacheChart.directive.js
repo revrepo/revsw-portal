@@ -18,7 +18,8 @@
         flDevice: '=',
         flBrowser: '=',
         filtersSets: '=',
-        hideFilters: '='
+        hideFilters: '=',
+        isAutoReload: '@?'
       },
       /*@ngInject*/
       controller: function($scope, Stats, $q, Util, filterGeneratorService) {
@@ -252,7 +253,7 @@
         };
 
         $scope.$watch('ngDomain', function() {
-          if (!$scope.ngDomain) {
+          if (!$scope.ngDomain || $scope.isAutoReload === 'false') {
             return;
           }
           $scope.reload();

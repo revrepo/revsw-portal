@@ -16,7 +16,8 @@
         flOs: '=',
         flDevice: '=',
         flBrowser: '=',
-        filtersSets: '='
+        filtersSets: '=',
+        isAutoReload: '@?isAutoReload' // NOTE: optional property. if not equ no
       },
       /*@ngInject*/
       controller: RequestsChartCtrl
@@ -136,7 +137,7 @@
     }
 
     $scope.$watch('ngDomain', function() {
-      if (!$scope.ngDomain) {
+      if (!$scope.ngDomain || $scope.isAutoReload === 'false') {
         return;
       }
       reload();
