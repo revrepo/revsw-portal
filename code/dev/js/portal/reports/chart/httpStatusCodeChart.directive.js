@@ -18,7 +18,8 @@
         flOs: '=',
         flDevice: '=',
         flBrowser: '=',
-        filtersSets: '='
+        filtersSets: '=',
+        isAutoReload: '@?'
       },
       /*@ngInject*/
       controller: function($scope, Stats, $q, Util) {
@@ -231,6 +232,9 @@
         };
 
         $scope.$watch('statusCodes', function() {
+          if ($scope.isAutoReload === 'false') {
+            return;
+          }
           $scope.reload();
         });
 

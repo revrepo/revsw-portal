@@ -17,7 +17,8 @@
         flOs: '=',
         flDevice: '=',
         flBrowser: '=',
-        filtersSets: '='
+        filtersSets: '=',
+        isAutoReload: '@?'
       },
       /*@ngInject*/
       controller: function($scope, $q, Stats, Util) {
@@ -196,7 +197,7 @@
         };
 
         $scope.$watch('ngDomain', function() {
-          if (!$scope.ngDomain) {
+          if (!$scope.ngDomain || $scope.isAutoReload === 'false') {
             return;
           }
           $scope.reload();
