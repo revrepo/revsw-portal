@@ -207,7 +207,8 @@
      }
      // NOTE: user skip intor on this session work
      vm.onIntroSkipEvent = function() {
-       intro.isSkipIntro = true;
+       intro.isSkipIntro = true; // NOTE: store information about Intor was shows.
+       intro.isShowMainIntro = true;
        $localStorage.intro = intro;
      };
 

@@ -293,9 +293,9 @@
       }
       return def.promise;
     };
-
+    // NOTE: @see date formats in /js/datatables.net/date-moment-ext.js
     vm.dtColumnDefs = [
-      DTColumnDefBuilder.newColumnDef([0]).withOption('type', 'date')
+      DTColumnDefBuilder.newColumnDef([0]).withOption('type', 'moment-MM/DD/YYYY HH:mm a')
     ];
 
     vm.purgeJobsDtOptions = DTOptionsBuilder.newOptions()
@@ -305,6 +305,10 @@
       .withOption('paging', true)
       .withOption('lengthChange', true)
       .withOption('order', [0, 'desc'])
+      .withOption('columnDefs',
+      [
+        { 'type': 'moment-MM/DD/YYYY HH:mm a', 'targets': 0 }
+      ])
       .withBootstrap()
       .withDOM('<<"pull-left"pl>f<t>i<"pull-left"p>>');
 

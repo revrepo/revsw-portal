@@ -10,6 +10,7 @@
     $rootScope.menuExpandedNodes = {};
 
     var introduction_application = {
+      exitOnOverlayClick: false, // NOTE: close intor windows only by buttons "Skip" and "Done"
       steps: [{
           intro: 'Welcome to the {{companyNameShort}} Customer Portal! It looks like you are a new user of the service, and we would ' +
             'like to run for you a quick introduction tour.',
@@ -75,13 +76,13 @@
 
     /**
      * @name onIntroCompletedEvent
-     * @description
+     * @description method will call when clicked button "Done"
      *
      * @param {Object} e
      */
     $rootScope.onIntroCompletedEvent = function(e) {
       if (!!$localStorage.intro && $localStorage.intro.isShowMainIntro === false) {
-        $localStorage.intro.isShowMainIntro = true;
+        $localStorage.intro.isShowMainIntro = true; // NOTE: store information about Intor was shows
         $state.transitionTo($state.current, $stateParams, {
           reload: false,
           inherit: true,

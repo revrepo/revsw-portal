@@ -9,7 +9,7 @@
   </thead>
   <tbody>
     <tr ng-repeat="row in vm.purgeJobsList">
-      <td><div uib-tooltip="{{ vm.getRelativeDate(row.create_date_time)}}">{{  row.create_date_time | date: 'dd/MM/yyyy hh:mm a'}}</div></td>
+      <td><div uib-tooltip="{{ vm.getRelativeDate(row.create_date_time)}}">{{ row.create_date_time | date: 'MM/dd/yyyy hh:mm a'}}</div></td>
       <td><span>{{row.req_id}}</span></td>
       <td>
         <div class="purge-job-snippets"><span ng-repeat="item in row.snippets">"{{item}}"<span ng-if="!$last">, </span></span>
