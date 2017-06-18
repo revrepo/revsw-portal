@@ -1,0 +1,105 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <h2>ImageEngine Analytics</h2>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="pull-left">
+
+                <form class="form-inline">
+                  <div class="form-group">
+                    <div domain-select id="domain" ng-model="domain" on-select="onDomainSelected()" select-one="true"></div>
+                  </div>
+                  <div class="form-group">
+                    <time-note-display></time-note-display>
+                  </div>
+                </form>
+
+              </div>
+
+              <div class="pull-right">
+
+                <form class="form-inline">
+                  <div class="form-group">
+                    <!--<select class="form-control fixed" ng-model="delay">
+                      <option value="1">Last 1 Day</option>
+                      <option value="7">Last 7 Days</option>
+                      <option value="30">Last 30 Days</option>
+                    </select>-->
+                    <!-- TODO: rebase this filter panel  -->
+                    <!--<div class="clearfix" filter-time-periods ng-disabled="_loading ||!domain" is-loading="_loading" fl-os="os" fl-country="country"
+                      fl-device="device" fl-browser="browser" ng-filters="filters" on-filter="onDomainSelected()" filters-sets="filters"></div-->
+                  </div>
+
+                  <!--<div class="form-group">
+                    <select class="form-control fixed" ng-options="key as item for (key, item) in countries" ng-model="country_filter">
+                      <option value="">All Countries</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <button class="btn btn-info" ng-click="onDomainSelected()" ng-disabled="_loading || !domain">
+                      <i class="glyphicon glyphicon-refresh" ng-class="_loading?'spin':''"></i>&nbsp;
+                      Update Reports
+                    </button>
+                  </div>-->
+                </form>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <div class="panel-body">
+          <div class="row ">
+            <div class="clearfix_ col-md-12" filter-time-periods ng-disabled="_loading ||!domain" is-loading="_loading" fl-os="os" fl-country="country"
+              fl-device="device" fl-browser="browser" ng-filters="filters" on-filter="onDomainSelected()" filters-sets="filters"></div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <h3>Bytes Saved</h3>
+              <div>
+                <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="dataImageEngineBytesSaved"></div>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <!--TODO: make graph -->
+              <h3>Image Format Changes</h3>
+              <!--<div>
+                <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="dataImageEngineFotmatChanges"></div>
+              </div>-->
+            </div>
+          </div>
+          <hr>
+
+          <div class="row">
+
+            <div class="col-md-6">
+              <!--<h3>Bytes Saved By ImageEngine</h3>-->
+              <div imageengine-linechart-bytes-saved fl-os="os" fl-device="device" fl-browser="browser" fl-country="country" ng-domain="domain"
+                is-auto-reload="false"></div>
+            </div>
+
+            <div class="col-md-6">
+              <h3>Image Format Changes</h3>
+              <!-- TODO: make graph -->
+              <!--<div>
+                <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="country"></div>
+              </div>-->
+            </div>
+          </div>
+          <hr>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

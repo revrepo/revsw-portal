@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -88,6 +88,15 @@
           main: {
             controller: 'LMRTTHeatmapsController',
             templateUrl: 'parts/reports/lm-rtt-heatmaps.html'
+          }
+        }
+      })
+      .state('index.reports.imageengine-analytics', {
+        url: '/reports/imageengine',
+        views: {
+          main: {
+            controller: 'imageEngineAnalyticsController',
+            templateUrl: 'parts/reports/imageengine-analytics.tpl.html'
           }
         }
       });
