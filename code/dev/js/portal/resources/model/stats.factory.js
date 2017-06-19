@@ -291,6 +291,24 @@
         method: 'GET',
         url: $config.API_URL + '/dns_zones/:id/stats/usage',
         params: {}
+      },
+
+      ie_format_changes: {
+        method: 'GET',
+        url: $config.API_URL + '/stats/top/:domainId',
+        params: {
+          report_type: 'ie_format_changes',
+          count: 10
+        }
+      },
+
+      ie_resolution_changes: {
+        method: 'GET',
+        url: $config.API_URL + '/stats/top/:domainId',
+        params: {
+          report_type: 'ie_resolution_changes',
+          count: 10
+        }
       }
     });
   }
