@@ -315,6 +315,12 @@
     $scope.$watch('domain', function(newVal, oldVal) {
       if (newVal !== undefined) {
         vm._loading = true;
+        // NOTE: check for auto disable Purge ImageEngine Secondary Cache checkbox
+        if (!!newVal.image_engine && newVal.image_engine.enable_image_engine !== true){
+          $scope.purgeImageEngineSecondaryCache = false;
+        }else{
+          $scope.purgeImageEngineSecondaryCache = true;
+        }
         vm.getPurgeJobs(newVal)
           .then(function(data) {
             vm.purgeJobsList = data;
