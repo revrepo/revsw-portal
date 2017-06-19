@@ -53,7 +53,7 @@
     }
 
     $scope._loading = false;
-    $scope.heading = 'Bytes Saved By ImageEngine';
+    $scope.heading = 'Bandwidth Saved By ImageEngine';
     $scope.reload = reload;
 
     $scope.filters = {
@@ -81,7 +81,7 @@
               info_.destroy();
               info_ = null;
             }
-
+            // TODO: update content legent
             var _text = 'Traffic Level Avg <span style="font-weight: bold; color: #3c65ac;">' + Util.convertTraffic(traffic_avg_) +
               '</span> Max <span style="font-weight: bold; color: #3c65ac;">' + Util.convertTraffic(traffic_max_) +
               '</span><br>Traffic Total <span style="font-weight: bold; color: #3c65ac;">' + Util.humanFileSizeInGB(traffic_total_, 3) +
@@ -89,23 +89,24 @@
             // NOTE: information about error
             if ($scope.hasFailedToLoadData === true) {
               _text = '<strong style="color: red;"> Failed to retrieve the data - please try again later </strong>';
+              // TODO: rebase info_ after fix text for legend
+              var x = this.xAxis[0].toPixels(this.xAxis[0].min) + 3;
+              info_ = this /*chart*/.renderer
+                .label(_text,
+                x /*x*/, 3 /*y*/, '' /*img*/, 0, 0, true /*html*/)
+                .css({
+                  color: '#444'
+                })
+                .attr({
+                  fill: 'rgba(240, 240, 240, 0.6)',
+                  stroke: $scope.hasFailedToLoadData ? 'red' : '#3c65ac', // NOTE: border color
+                  'stroke-width': 1,
+                  padding: 6,
+                  r: 2,
+                  zIndex: 5
+                })
+                .add();
             }
-            var x = this.xAxis[0].toPixels(this.xAxis[0].min) + 3;
-            info_ = this /*chart*/.renderer
-              .label(_text,
-              x /*x*/, 3 /*y*/, '' /*img*/, 0, 0, true /*html*/)
-              .css({
-                color: '#444'
-              })
-              .attr({
-                fill: 'rgba(240, 240, 240, 0.6)',
-                stroke: $scope.hasFailedToLoadData ? 'red' : '#3c65ac', // NOTE: border color
-                'stroke-width': 1,
-                padding: 6,
-                r: 2,
-                zIndex: 5
-              })
-              .add();
           }
         }
       },
@@ -153,10 +154,10 @@
       if (!$scope.ngDomain || !$scope.ngDomain.id) {
         $scope.traffic = {
           series: [{
-            name: 'Incoming Bandwidth',
+            name: 'Theoretical Bandwidth Usage For Non-optimized Requests',
             data: []
           }, {
-            name: 'Outgoing Bandwidth',
+            name: 'Actual Bandwidth Usage For Optimized Requests',
             data: []
           }]
         };
@@ -167,10 +168,10 @@
       var _xAxisPointStart = null;
       var _xAxisPointInterval = null;
       var series = [{
-        name: 'Incoming Bandwidth',
+        name: 'Theoretical Bandwidth Usage For Non-optimized Requests',
         data: []
       }, {
-        name: 'Outgoing Bandwidth',
+        name: 'Actual Bandwidth Usage For Optimized Requests',
         data: []
       }];
       StatsImageEngine.imageEngineSavedBytes(angular.merge({

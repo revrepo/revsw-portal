@@ -4,8 +4,7 @@ body {
 }
 
 body {
-  display: flex;
-  //padding-top: 60px;
+  display: flex; //padding-top: 60px;
 }
 
 .main-layout {
@@ -35,30 +34,32 @@ body {
 .page-title {
   margin-bottom: 24px;
 }
+
 .left-panel {
   transition: left ease-in-out 0.3s, padding ease-in-out 0.3s;
   position: absolute;
   left: 210px;
-  right:0;
-  top:0;
+  right: 0;
+  top: 0;
   bottom: 0;
 }
+
 section[main] {
   overflow: auto;
   background-color: @app-color-grey-200;
   height: 100%;
   .drop-shadow {
-     position: absolute;
-     top: 0;
-     bottom: -6px;
-     right: 0;
-     left: 0;
-     box-shadow: inset 0px 5px 6px -3px rgba(0, 0, 0, 0.4);
-     height: 6px;
-     pointer-events: none;
-     -webkit-transition: opacity 0.5s;
-     transition: opacity 0.5s;
-     opacity: 1;
+    position: absolute;
+    top: 0;
+    bottom: -6px;
+    right: 0;
+    left: 0;
+    box-shadow: inset 0px 5px 6px -3px rgba(0, 0, 0, 0.4);
+    height: 6px;
+    pointer-events: none;
+    -webkit-transition: opacity 0.5s;
+    transition: opacity 0.5s;
+    opacity: 1;
   }
   #mainPanel {
     display: -ms-flexbox;
@@ -74,7 +75,7 @@ section[main] {
     flex-basis: 0.000000001px;
     position: relative;
   }
-  .paper-container{
+  .paper-container {
     display: -ms-flexbox;
     display: -webkit-flex;
     display: flex;
@@ -158,9 +159,9 @@ section[main] {
   margin-bottom: 1em;
 }
 
-.table-responsive .table{
-   min-width: 100%;
-   width: auto;
+.table-responsive .table {
+  min-width: 100%;
+  width: auto;
 }
 table {
   table-layout: fixed !important;
@@ -198,7 +199,7 @@ table {
       .not-active {
         opacity: 0.65;
       }
-      &--wrap{
+      &--wrap {
         width: 100%;
         overflow: auto;
       }
@@ -360,6 +361,10 @@ textarea {
   font-family: Courier;
 }
 
+.text--disabled {
+  color: @app-color-text-disabled;
+}
+
 // Users List Page
 .table {
   &.users-list {
@@ -460,7 +465,7 @@ form,
 // directiver "filter-time-period"
 .filter-time-period {
   .form-control.date-picker.select2,
-  &.date-picker-wrapper > input[type="text"] {
+  &.date-picker-wrapper>input[type="text"] {
     margin-top: 5px;
   }
   & .date-picker-wrapper {
@@ -499,14 +504,14 @@ form,
 // side-menu
 @media (max-width: 980px) {
   #scrim {
-     position: absolute;
-     top: 0;
-     right: 0;
-     bottom: 0;
-     left: 0;
-     opacity: 0;
-     transition: opacity ease-in-out 0.38s, visibility ease-in-out 0.38s;
-     background-color: rgba(0, 0, 0, 0.3);
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity ease-in-out 0.38s, visibility ease-in-out 0.38s;
+    background-color: rgba(0, 0, 0, 0.3);
   }
   .left-panel {
     left: 0!important
@@ -514,13 +519,12 @@ form,
 }
 // Tabs on Top Object Reports Pages
 #topObjectsReportsTabs {
-
   & .tab-pane {
     margin: 20px 0px;
   }
   .nav-tabs>li {
     margin-bottom: -6px;
-    > a {
+    >a {
       color: @app-side-menu-text-color;
     }
     &.active>a {
@@ -528,6 +532,7 @@ form,
     }
   }
 }
-.clearfix{
+
+.clearfix {
   margin-bottom: 8px;
 }
