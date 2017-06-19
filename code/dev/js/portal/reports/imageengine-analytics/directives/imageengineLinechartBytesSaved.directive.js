@@ -154,10 +154,10 @@
       if (!$scope.ngDomain || !$scope.ngDomain.id) {
         $scope.traffic = {
           series: [{
-            name: 'Theoretical Bandwidth Usage For Non-optimized Requests',
+            name: 'Theoretical Bandwidth Usage For Non-Optimized Objects',
             data: []
           }, {
-            name: 'Actual Bandwidth Usage For Optimized Requests',
+            name: 'Actual Bandwidth Usage For Optimized Objects',
             data: []
           }]
         };
@@ -168,10 +168,10 @@
       var _xAxisPointStart = null;
       var _xAxisPointInterval = null;
       var series = [{
-        name: 'Theoretical Bandwidth Usage For Non-optimized Requests',
+        name: 'Theoretical Bandwidth Usage For Non-Optimized Objects',
         data: []
       }, {
-        name: 'Actual Bandwidth Usage For Optimized Requests',
+        name: 'Actual Bandwidth Usage For Optimized Objects',
         data: []
       }];
       StatsImageEngine.imageEngineSavedBytes(angular.merge({
