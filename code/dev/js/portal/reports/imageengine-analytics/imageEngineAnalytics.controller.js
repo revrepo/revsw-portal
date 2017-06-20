@@ -125,7 +125,7 @@
         return;
       }
       $scope.reload(); // NOTE: reload data
-
+      $scope.reloadDataBytesSaved(); //
       //  reload all lists
       var now = Date.now();
 
@@ -179,7 +179,11 @@
           $scope.dataImageEngineBytesSaved[0] = 0;
           if (traffic_origin_ > 0) {
             // NOTE: calculate value for display Bytes Saved
-            $scope.dataImageEngineBytesSaved[0] = 100 - ((traffic_total_ / traffic_origin_) * 100);
+            var result_ = 100 - ((traffic_total_ / traffic_origin_) * 100);
+            if (result_>0){
+              // NOTE: display only a positive value
+              $scope.dataImageEngineBytesSaved[0] = result_ ;
+            }
           }
         })
         .catch(function () {
@@ -194,14 +198,14 @@
      * @return {Promise}
      */
     $scope.reloadDataFormatChanges = function (filters) {
-      $scope.dataImageEngineFotmatChanges.lenght = 0;
+      $scope.dataImageEngineFotmatChanges  = [];
       return Stats.ie_format_changes(filters)
         .$promise
         .then(function (data) {
           $scope.dataImageEngineFotmatChanges = direct_to_(data.data);
         })
         .catch(function (err) {
-          $scope.dataImageEngineFotmatChanges = [];
+          $scope.dataImageEngineFotmatChanges.lenght = [];
         });
     };
     /**
@@ -212,7 +216,7 @@
      * @return {Promise}
      */
     $scope.reloadDataResolutionChanges = function (filters) {
-      $scope.dataImageEngineResolutionChanges.lenght = 0;
+      $scope.dataImageEngineResolutionChanges = [];
       return Stats.ie_resolution_changes(filters)
         .$promise
         .then(function (data) {
