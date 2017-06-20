@@ -42,7 +42,10 @@
       //  reload all lists
       Stats.topLists({
         domainId: $scope.domain.id,
-        from_timestamp: ( now - 30*86400000/*day in ms*/ ),
+        // NOTE: in production we can get data only for last 24 hours,
+        // but graphs can show data for last 1/7/30 days
+        // from_timestamp: ( now - 30*86400000/*day in ms*/ ),
+        from_timestamp: (now - 86400000/*day in ms*/),
         to_timestamp: now,
         status_codes: true
       }).$promise.then(function(data) {
