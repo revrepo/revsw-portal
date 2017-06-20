@@ -154,7 +154,7 @@
       if (!$scope.ngDomain || !$scope.ngDomain.id) {
         $scope.traffic = {
           series: [{
-            name: 'Theoretical Bandwidth Usage For Non-Optimized Objects',
+            name: 'Original Bandwidth Usage For Non-Optimized Objects',
             data: []
           }, {
             name: 'Actual Bandwidth Usage For Optimized Objects',
@@ -168,7 +168,7 @@
       var _xAxisPointStart = null;
       var _xAxisPointInterval = null;
       var series = [{
-        name: 'Theoretical Bandwidth Usage For Non-Optimized Objects',
+        name: 'Original Bandwidth Usage For Non-Optimized Objects',
         data: []
       }, {
         name: 'Actual Bandwidth Usage For Optimized Objects',
