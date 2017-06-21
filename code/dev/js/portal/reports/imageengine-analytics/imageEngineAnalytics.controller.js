@@ -17,6 +17,7 @@
     $scope.os = [];
     $scope.device = [];
     $scope.browser = [];
+    // $scope.flCountry = Countries.query(); // TODO: show into country filter all contry
     $scope.filters = {};
     $scope.dataImageEngineFotmatChanges = [];
     $scope.dataImageEngineResolutionChanges = [];
@@ -31,7 +32,7 @@
     function generateFilterParams(filters) {
       var params = {
         domainId: $scope.domain.id, // NOTE: required property
-        from_timestamp: moment().subtract(1, 'days').valueOf(),
+        from_timestamp: moment().subtract(24, 'hours').valueOf(),
         to_timestamp: Date.now()
       };
       _.forEach(filters, function (val, key) {
@@ -40,10 +41,10 @@
             params[key] = val;
           }
         } else {
-          if (key === 'count_last_day') {
-            params.from_timestamp = moment().subtract(val, 'days').valueOf();
+          if (key === 'delay') {
+            params.from_timestamp = moment().subtract(val, 'hours').valueOf();
             params.to_timestamp = Date.now();
-            delete params.count_last_day;
+            delete params.delay;
           }
         }
       });

@@ -1,6 +1,6 @@
 <h3 class="reports_charts_title">{{ heading }}</h3>
-<div class="clearfix" filter-time-periods ng-disabled="!ngDomain" is-loading="_loading" fl-os="os" fl-country="country" fl-device="device"
-  fl-browser="browser" ng-filters="filters" on-filter="reload()"></div>
+<div class="clearfix" filter-hours-periods ng-disabled="!ngDomain" is-loading="_loading" fl-os="flOs" fl-country="flCountry"
+  fl-device="flDevice" fl-browser="flBrowser" ng-filters="filters" on-filter="reload()"></div>
 <div class="auto-scroll">
   <div style="min-width: 480px; min-height: 350px" solidgauge-chart ng-data="chartData" ng-chart-options="chartOptions"></div>
 </div>
