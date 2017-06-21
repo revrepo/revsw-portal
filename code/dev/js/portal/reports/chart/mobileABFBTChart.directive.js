@@ -54,7 +54,7 @@
                     '</span> Median <span style="font-weight: bold; color: black;">' + rev_median_ +
                     '</span> ms<br>Improvement Avg <span style="font-weight: bold; color: darkred;">' + imp_avg_ +
                     '</span> Median <span style="font-weight: bold; color: darkred;">' + imp_median_ +
-                    '</span> %',
+                    '</span>%',
                     this.xAxis[0].toPixels(0), 0, '', 0, 0, true /*html*/ )
                   .css({
                     color: '#444'
