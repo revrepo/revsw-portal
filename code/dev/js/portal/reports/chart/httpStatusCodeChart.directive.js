@@ -82,7 +82,7 @@
                         'Code <span style="font-weight: bold; color: #3c65ac;">' + item.code +
                         '</span>: <span style="font-weight: bold">' + Util.formatNumber(item.requests) +
                         '</span> Requests or <span style="font-weight: bold">' + item.percent.toFixed(2) +
-                        '</span> %<br>';
+                        '</span>%<br>';
                     }, ''),
                     x /* x */ , 3 /*y*/ , '', 0, 0, true /*html*/ )
                   .css({
