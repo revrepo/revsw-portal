@@ -85,7 +85,7 @@
               info_ = null;
             }
             var _text = 'Original Traffic <span style="font-weight: bold; color: #3c65ac;">' + Util.humanFileSizeInGB(traffic_original_, 3) +
-              '</span><br>Actual Traffic <span style="font-weight: bold; color: #3c65ac;">' + Util.humanFileSizeInGB(traffic_total_, 3) + //Util.convertTraffic(traffic_total_) +
+              '</span><br>Actual Traffic <span style="font-weight: bold; color: #3c65ac;">' + Util.humanFileSizeInGB(traffic_total_, 3) +
               '</span><br>Requests Total <span style="font-weight: bold; color: #3c65ac;">' + requests_total_ +
               '</span>';
             // NOTE: information about error
