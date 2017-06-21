@@ -70,7 +70,10 @@
       traffic_avg_ = 0,
       traffic_max_ = 0,
       traffic_total_ = 0,
+      traffic_original_ = 0,
+      requests_total_ = 0,
       tickInterval_ = 10;
+
 
     $scope.chartOptions = {
       chart: {
@@ -81,32 +84,30 @@
               info_.destroy();
               info_ = null;
             }
-            // TODO: update content legent
-            var _text = 'Traffic Level Avg <span style="font-weight: bold; color: #3c65ac;">' + Util.convertTraffic(traffic_avg_) +
-              '</span> Max <span style="font-weight: bold; color: #3c65ac;">' + Util.convertTraffic(traffic_max_) +
-              '</span><br>Traffic Total <span style="font-weight: bold; color: #3c65ac;">' + Util.humanFileSizeInGB(traffic_total_, 3) +
+            var _text = 'Original Traffic <span style="font-weight: bold; color: #3c65ac;">' + Util.humanFileSizeInGB(traffic_original_, 3) +
+              '</span><br>Actual Traffic <span style="font-weight: bold; color: #3c65ac;">' + Util.humanFileSizeInGB(traffic_total_, 3) + //Util.convertTraffic(traffic_total_) +
+              '</span><br>Requests Total <span style="font-weight: bold; color: #3c65ac;">' + requests_total_ +
               '</span>';
             // NOTE: information about error
             if ($scope.hasFailedToLoadData === true) {
               _text = '<strong style="color: red;"> Failed to retrieve the data - please try again later </strong>';
-              // TODO: rebase info_ after fix text for legend
-              var x = this.xAxis[0].toPixels(this.xAxis[0].min) + 3;
-              info_ = this /*chart*/.renderer
-                .label(_text,
-                x /*x*/, 3 /*y*/, '' /*img*/, 0, 0, true /*html*/)
-                .css({
-                  color: '#444'
-                })
-                .attr({
-                  fill: 'rgba(240, 240, 240, 0.6)',
-                  stroke: $scope.hasFailedToLoadData ? 'red' : '#3c65ac', // NOTE: border color
-                  'stroke-width': 1,
-                  padding: 6,
-                  r: 2,
-                  zIndex: 5
-                })
-                .add();
             }
+            var x = this.xAxis[0].toPixels(this.xAxis[0].min) + 3;
+            info_ = this /*chart*/ .renderer
+              .label(_text,
+                x /*x*/ , 3 /*y*/ , '' /*img*/ , 0, 0, true /*html*/ )
+              .css({
+                color: '#444'
+              })
+              .attr({
+                fill: 'rgba(240, 240, 240, 0.6)',
+                stroke: $scope.hasFailedToLoadData ? 'red' : '#3c65ac', // NOTE: border color
+                'stroke-width': 1,
+                padding: 6,
+                r: 2,
+                zIndex: 5
+              })
+              .add();
           }
         }
       },
@@ -175,11 +176,11 @@
         data: []
       }];
       StatsImageEngine.imageEngineSavedBytes(angular.merge({
-        domainId: $scope.ngDomain.id
-      }, generateFilterParams($scope.filters)))
+          domainId: $scope.ngDomain.id
+        }, generateFilterParams($scope.filters)))
         .$promise
         .then(function getData(data) {
-          traffic_avg_ = traffic_max_ = traffic_total_ = 0;
+          traffic_avg_ = traffic_max_ = traffic_total_ = requests_total_ = traffic_original_ = 0;
           if (data.data && data.data.length > 0) {
             _xAxisPointStart = parseInt(data.metadata.start_timestamp);
             _xAxisPointInterval = parseInt(data.metadata.interval_sec) * 1000;
@@ -188,9 +189,11 @@
 
             data.data.forEach(function (item, idx, items) {
 
-              var sent_bw = item.sent_bytes * 8 / interval /*BITS per second*/;
+              var sent_bw = item.sent_bytes * 8 / interval /*BITS per second*/ ;
               series[1].data.push(sent_bw);
-              series[0].data.push(item.original_bytes / interval * 8 /*BITS per second*/);
+              series[0].data.push(item.original_bytes / interval * 8 /*BITS per second*/ );
+              requests_total_ += item.requests;
+              traffic_original_ += item.original_bytes;
               traffic_total_ += item.sent_bytes;
               if (traffic_max_ < sent_bw) {
                 traffic_max_ = sent_bw;
