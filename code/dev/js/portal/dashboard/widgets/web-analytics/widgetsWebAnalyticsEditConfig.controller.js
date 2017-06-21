@@ -91,7 +91,9 @@
      */
     $scope.reloadOS = function (domainId) {
       Stats.os({
-        domainId: domainId
+        domainId: domainId,
+        from_timestamp: moment().subtract(24, 'hours').valueOf(),
+        to_timestamp: Date.now()
       }).$promise.then(function (data) {
         $scope.flOs.labels.length = 0;
         $scope.flOs.data.length = 0;
@@ -122,7 +124,9 @@
     $scope.reloadDevice = function (domainId) {
 
       Stats.device({
-        domainId: domainId
+        domainId: domainId,
+        from_timestamp: moment().subtract(24, 'hours').valueOf(),
+        to_timestamp: Date.now()
       }).$promise.then(function (data) {
         $scope.flDevice.labels.length = 0;
         $scope.flDevice.data.length = 0;
@@ -146,7 +150,9 @@
      */
     $scope.reloadStatusCode = function (domainId) {
       return Stats.statusCode({
-        domainId: domainId
+        domainId: domainId,
+        from_timestamp: moment().subtract(24, 'hours').valueOf(),
+        to_timestamp: Date.now()
       }).$promise.then(function (data) {
         $scope.statusCode.labels.length = 0;
         $scope.statusCode.data.length = 0;
@@ -161,10 +167,10 @@
     };
 
     /**
-       * @name flBrowser
-       * @description List devices for selected domain
-       * @type {Object}
-       */
+     * @name flBrowser
+     * @description List devices for selected domain
+     * @type {Object}
+     */
     $scope.flBrowser = {
       labels: [],
       data: []
@@ -178,7 +184,9 @@
     $scope.reloadBrowser = function (domainId) {
 
       Stats.browser({
-        domainId: domainId
+        domainId: domainId,
+        from_timestamp: moment().subtract(24, 'hours').valueOf(),
+        to_timestamp: Date.now()
       }).$promise.then(function (data) {
         $scope.flBrowser.labels.length = 0;
         $scope.flBrowser.data.length = 0;

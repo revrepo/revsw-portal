@@ -17,33 +17,10 @@
     $scope.os = [];
     $scope.device = [];
     $scope.browser = [];
+    // $scope.flCountry = Countries.query(); // TODO: show into country filter all contry
     $scope.filters = {};
     $scope.dataImageEngineFotmatChanges = [];
     $scope.dataImageEngineResolutionChanges = [];
-    $scope.dataImageEngineBytesSaved = [0];
-    // NOTE: options for chart "Bytes Saved"
-    $scope.dataImageEngineBytesSavedChartOptions = {
-      yAxis: {
-        min: 0,
-        max: 100,
-        title: {
-          text: ''
-        }
-      },
-      series: [{
-        name: ' ',
-        data: [0],
-        dataLabels: {
-          format: '<div style="text-align:center"><span style="font-size:25px;color:' +
-            ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y:.1f}%</span><br/>' +
-            '<span style="font-size:12px;color:silver">Traffic Saved</span></div>'
-        },
-        tooltip: {
-          valueSuffix: null //' revolutions/min'
-        }
-      }]
-
-    };
 
     var _filters_field_list = ['from_timestamp', 'to_timestamp', 'country', 'device', 'os', 'browser'];
     /**
@@ -55,7 +32,7 @@
     function generateFilterParams(filters) {
       var params = {
         domainId: $scope.domain.id, // NOTE: required property
-        from_timestamp: moment().subtract(1, 'days').valueOf(),
+        from_timestamp: moment().subtract(24, 'hours').valueOf(),
         to_timestamp: Date.now()
       };
       _.forEach(filters, function (val, key) {
@@ -64,10 +41,10 @@
             params[key] = val;
           }
         } else {
-          if (key === 'count_last_day') {
-            params.from_timestamp = moment().subtract(val, 'days').valueOf();
+          if (key === 'delay') {
+            params.from_timestamp = moment().subtract(val, 'hours').valueOf();
             params.to_timestamp = Date.now();
-            delete params.count_last_day;
+            delete params.delay;
           }
         }
       });
@@ -125,8 +102,8 @@
         return;
       }
       $scope.reload(); // NOTE: reload data
-      $scope.reloadDataBytesSaved(); //
-      //  reload all lists
+
+      //  reload all lists for filters
       var now = Date.now();
 
       Stats.topLists({
@@ -145,51 +122,7 @@
       });
 
     };
-    /**
-     * @name  reloadDataBytesSaved
-     * @description method call for update data Bytes Saved
-     */
-    $scope.reloadDataBytesSaved = function () {
-      // NOTE: lock UI before finish all requests
-      $scope._loadingBytesSaved = true;
-      $scope.loadDataBytesSaved(generateFilterParams($scope.filtersBytesSaved))
-        .finally(function () {
-          $scope._loadingBytesSaved = false;
-        });
-    };
-    /**
-     * @name loadDataBytesSaved
-     * @description method reload data for ImageEngine Butes Send
-     * @param {Object} filters
-     *
-     * @return {Promise}
-     */
-    $scope.loadDataBytesSaved = function (filters) {
-      $scope.dataImageEngineBytesSaved[0] = 0;
-      return StatsImageEngine.imageEngineSavedBytes(filters)
-        .$promise
-        .then(function (data) {
-          var traffic_total_ = 0;
-          var traffic_origin_ = 0;
-          data.data.map(function (item) {
-            traffic_total_ += item.sent_bytes;
-            traffic_origin_ += item.original_bytes;
-          });
 
-          $scope.dataImageEngineBytesSaved[0] = 0;
-          if (traffic_origin_ > 0) {
-            // NOTE: calculate value for display Bytes Saved
-            var result_ = 100 - ((traffic_total_ / traffic_origin_) * 100);
-            if (result_>0){
-              // NOTE: display only a positive value
-              $scope.dataImageEngineBytesSaved[0] = result_ ;
-            }
-          }
-        })
-        .catch(function () {
-          $scope.dataImageEngineBytesSaved[0] = 0;
-        });
-    };
     /**
      * @name reloadDataFormatChanges
      * @description method reload data for ImageEngine Format Changes

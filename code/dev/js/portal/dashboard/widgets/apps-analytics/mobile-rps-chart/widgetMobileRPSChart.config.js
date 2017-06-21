@@ -11,7 +11,7 @@
       // “Requests Per Second Graph”
       .widget('widget-apps-mobile-rps-chart', {
         title: 'Requests Per Second Graph',
-        description: 'Apps Analitycs - Requests Per Second Graph',
+        description: 'Apps Analytics - Requests Per Second Graph',
         templateUrl: 'parts/dashboard/widgets/apps-analytics/mobile-rps-chart/view-mobile-rps-chart.tpl.html',
         titleTemplateUrl: 'parts/dashboard/widgets/apps-analytics/widget-title-with-params-trafic-levels.tpl.html',
         controller: 'widgeAppsMobileRPSController',

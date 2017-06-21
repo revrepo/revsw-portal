@@ -11,7 +11,7 @@
     // “Edge Cache Hit/Miss Ratio”
       .widget('widget-web-analytics-edge-cache-hit-miss-ratio', {
       title: 'Edge Cache Hit/Miss Ratio',
-      description: 'Web Analitycs - Edge Cache Hit/Miss Ratio',
+      description: 'Display Edge Cache Hit/Miss Ratio',
       templateUrl: 'parts/dashboard/widgets/web-analytics/edge-cache-hit-miss-ratio/view-edge-cache-hit-miss-ratio.tpl.html',
       titleTemplateUrl: 'parts/dashboard/widgets/web-analytics/widget-title-with-params-hours.tpl.html',
       controller: 'widgetEdgeCacheHitMissRatioController',

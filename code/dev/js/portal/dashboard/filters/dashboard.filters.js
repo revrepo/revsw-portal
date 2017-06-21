@@ -18,6 +18,7 @@
     'widget-web-analytics-http-https-request-ratio', //Web Analytics Pie chart “HTTP/HTTPS Requests Ratio”
     'widget-web-analytics-ftb-average', //Web Analytics - Average FBT
     'widget-web-analytics-imageengine-linechart-bytes-saved', // Web Analytics - Bandwidth Saved By ImageEngine Graph
+    'widget-web-analytics-imageengine-solidgauge-performance-improvement',// Web Analytics -  Performance Improvement By ImageEngine
 
     'bluetriangletech-conversions-subcategories', //"Conversion Rate"
     'bluetriangletech-bounce-rate', //"Bounce Rate"
@@ -27,11 +28,11 @@
     'widget-norse-live-attack-map', //"Norse Live Attack Map"
     'widget-apps-mobile-top-10-domains-hits', // TODO: rebase to Apps Analytics
     'widget-apps-mobile-top-10-domains-hits', // TODO: rebase to Apps Analytics
-    'widget-apps-mobile-rps-chart', // TODO: rebase to Apps Analityc group
+    'widget-apps-mobile-rps-chart', // TODO: rebase to Apps Analytics group
   ];
   var _group_widgets = {
     apps: {
-      title: 'Apps Analitycs',
+      title: 'Apps Analytics',
       order: 1,
       widgets_list: [
         'widget-apps-mobile-rps-chart',
@@ -64,7 +65,8 @@
         'widget-web-analytics-http-status-codes-ratio', //Web Analytics “HTTP Status Codes Ratio”
         'widget-web-analytics-http-https-request-ratio', //Web Analytics Pie chart “HTTP/HTTPS Requests Ratio”
         'widget-web-analytics-ftb-average', //Web Analytics - Average FBT
-        'widget-web-analytics-imageengine-linechart-bytes-saved' // Web Analytics - Bandwidth Saved By ImageEngine Graph
+        'widget-web-analytics-imageengine-linechart-bytes-saved', // Web Analytics - Bandwidth Saved By ImageEngine Graph
+        'widget-web-analytics-imageengine-solidgauge-performance-improvement',// Web Analytics - Performance Improvement By ImageEngine
       ]
     },
     business: {

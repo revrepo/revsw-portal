@@ -30,10 +30,16 @@
   function imageengineLinechartBytesSavedCtrl($scope, StatsImageEngine, Util, EventsSerieDataService, $q) {
 
     var _filters_field_list = ['from_timestamp', 'to_timestamp', 'country', 'device', 'os', 'browser'];
-
+    /**
+     * @name generateFilterParams
+     * @description check and prepare filter data
+     *
+     * @param {Object} filters
+     * @returns
+     */
     function generateFilterParams(filters) {
       var params = {
-        from_timestamp: moment().subtract(1, 'days').valueOf(),
+        from_timestamp: moment().subtract('24', 'hours').valueOf(),
         to_timestamp: Date.now()
       };
       _.forEach(filters, function (val, key) {
@@ -42,22 +48,21 @@
             params[key] = val;
           }
         } else {
-          if (key === 'count_last_day') {
-            params.from_timestamp = moment().subtract(val, 'days').valueOf();
+          if (key === 'delay') {
+            params.from_timestamp = moment().subtract(val, 'hours').valueOf();
             params.to_timestamp = Date.now();
-            delete params.count_last_day;
+            delete params.delay;
           }
         }
       });
       return params;
     }
-
     $scope._loading = false;
     $scope.heading = 'Bandwidth Saved By ImageEngine';
     $scope.reload = reload;
 
     $scope.filters = {
-      from_timestamp: moment().subtract(1, 'days').valueOf(),
+      from_timestamp: moment().subtract(24, 'hours').valueOf(),
       to_timestamp: Date.now()
     };
 

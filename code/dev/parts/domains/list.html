@@ -38,6 +38,23 @@
     <button class="btn btn-success" type="button" ng-click="ok()">OK</button>
   </div>
 </script>
+<script type="text/ng-template" id="confirmEnableImageEngineModal.html">
+  <div class="modal-header">
+    <h3 class="modal-title">Confirm</h3>
+  </div>
+  <div class="modal-body">
+    ImageEngine feature should be enabled only for web domains serving image objects. Non-image objects (like HTML pages, JavaScript/CSS
+    files, etc) requested from ImageEngine-enabled domain will be rejected with HTTP error code 412 (Precondition Failed).
+    Before enabling ImageEngine feature for the domain please make sure that it will be used only to serve image objects
+    (PNG/JPG/GIF/WEBP/BMP).
+  </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+    <button class="btn btn-success" type="button" ng-click="ok()">Continue</button>
+  </div>
+</script>
+
 <script type="text/ng-template" id="confirmPublishModal.html">
   <div class="modal-header">
     <h3 class="modal-title">Confirm</h3>

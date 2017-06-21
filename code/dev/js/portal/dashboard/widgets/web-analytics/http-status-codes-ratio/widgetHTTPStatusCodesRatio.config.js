@@ -11,7 +11,7 @@
     // “HTTP Status Codes Ratio”
       .widget('widget-web-analytics-http-status-codes-ratio', {
       title: 'HTTP Status Codes Ratio',
-      description: 'Web Analitycs - HTTP Status Codes Ratio',
+      description: 'Display HTTP Status Codes Ratio',
       templateUrl: 'parts/dashboard/widgets/web-analytics/http-status-codes-ratio/view-http-status-codes-ratio.tpl.html',
       titleTemplateUrl: 'parts/dashboard/widgets/web-analytics/widget-title-with-params-hours.tpl.html',
       controller: 'widgetHTTPStatusCodesRatioController',
