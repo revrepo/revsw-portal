@@ -1,4 +1,4 @@
-(function() {
+(function () {
   angular.module('revapm.Portal.Dashboard.Widgets.WebAnalytics')
     .controller('widgetsWebAnalyticsEditConfigController', widgetsWebAnalyticsEditConfigController);
 
@@ -11,7 +11,8 @@
         os: '-',
         device: '-',
         count_last_day: '1',
-        delay: '1'
+        delay: '1',
+        browser: '-'
       },
       info: {
         country: 'All countries',
@@ -22,7 +23,7 @@
 
     $scope.domain = $scope.config.domain;
 
-    $scope.$watch('config.filters', function(newVal, oldVal) {
+    $scope.$watch('config.filters', function (newVal, oldVal) {
       if (!!newVal && !!newVal.country) {
         if (newVal.country === '-') {
           angular.extend($scope.config.info, {
@@ -36,7 +37,7 @@
       }
     }, true);
 
-    $scope.onDomainSelected = function() {
+    $scope.onDomainSelected = function () {
       if (!$scope.domain || !$scope.domain.id) {
         return;
       }
@@ -45,10 +46,12 @@
     };
     /**
      * @name  reload
-     * @description Reload data
+     * @description Reload data for filters
+     * by default will back data for last hour
+     *
      * @return
      */
-    $scope.reload = function() {
+    $scope.reload = function () {
       angular.extend($scope.config, {
         domain: angular.copy($scope.domain)
       });
@@ -56,6 +59,7 @@
       $scope.reloadOS($scope.domain.id);
       $scope.reloadDevice($scope.domain.id);
       $scope.reloadStatusCode($scope.domain.id);
+      $scope.reloadBrowser($scope.domain.id);
     };
 
     $scope.flCountry = {};
@@ -65,7 +69,7 @@
      * @param  {String|Number} domainId
      * @return {[type]}          [description]
      */
-    $scope.reloadCountry = function(domainId) {
+    $scope.reloadCountry = function (domainId) {
       $scope.flCountry = Countries.query();
     };
 
@@ -85,14 +89,14 @@
      * @param {string|number} domainId
      * @return
      */
-    $scope.reloadOS = function(domainId) {
+    $scope.reloadOS = function (domainId) {
       Stats.os({
         domainId: domainId
-      }).$promise.then(function(data) {
+      }).$promise.then(function (data) {
         $scope.flOs.labels.length = 0;
         $scope.flOs.data.length = 0;
         if (data.data && data.data.length > 0) {
-          angular.forEach(data.data, function(item) {
+          angular.forEach(data.data, function (item) {
             $scope.flOs.labels.push(item.key);
             $scope.flOs.data.push(item.count);
           });
@@ -115,15 +119,15 @@
      * @description Reload list of devices for domain
      * @param   {string|number}  domainId
      */
-    $scope.reloadDevice = function(domainId) {
+    $scope.reloadDevice = function (domainId) {
 
       Stats.device({
         domainId: domainId
-      }).$promise.then(function(data) {
+      }).$promise.then(function (data) {
         $scope.flDevice.labels.length = 0;
         $scope.flDevice.data.length = 0;
         if (data.data && data.data.length > 0) {
-          angular.forEach(data.data, function(item) {
+          angular.forEach(data.data, function (item) {
             $scope.flDevice.labels.push(item.key);
             $scope.flDevice.data.push(item.count);
           });
@@ -140,18 +144,49 @@
      *
      * @param {string|number} domainId
      */
-    $scope.reloadStatusCode = function(domainId) {
+    $scope.reloadStatusCode = function (domainId) {
       return Stats.statusCode({
         domainId: domainId
-      }).$promise.then(function(data) {
+      }).$promise.then(function (data) {
         $scope.statusCode.labels.length = 0;
         $scope.statusCode.data.length = 0;
         if (data.data && data.data.length > 0) {
-          angular.forEach(data.data, function(item) {
+          angular.forEach(data.data, function (item) {
             $scope.statusCode.labels.push(item.key);
             $scope.statusCode.data.push(item.count);
           });
           $scope.config.statusCode = $scope.statusCode.labels;
+        }
+      });
+    };
+
+    /**
+       * @name flBrowser
+       * @description List devices for selected domain
+       * @type {Object}
+       */
+    $scope.flBrowser = {
+      labels: [],
+      data: []
+    };
+
+    /**
+     * @name reloadBrowser
+     * @description Reload list of top browsers for domain
+     * @param   {string|number}  domainId
+     */
+    $scope.reloadBrowser = function (domainId) {
+
+      Stats.browser({
+        domainId: domainId
+      }).$promise.then(function (data) {
+        $scope.flBrowser.labels.length = 0;
+        $scope.flBrowser.data.length = 0;
+        if (data.data && data.data.length > 0) {
+          angular.forEach(data.data, function (item) {
+            $scope.flBrowser.labels.push(item.key);
+            $scope.flBrowser.data.push(item.count);
+          });
         }
       });
     };
