@@ -128,7 +128,7 @@
         .finally(function () {
           $scope._loading = false;
         });
-    };
+    }
     /**
      * @name loadData
      * @description method reload data for ImageEngine Butes Send
