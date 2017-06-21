@@ -28,11 +28,11 @@
     'widget-norse-live-attack-map', //"Norse Live Attack Map"
     'widget-apps-mobile-top-10-domains-hits', // TODO: rebase to Apps Analytics
     'widget-apps-mobile-top-10-domains-hits', // TODO: rebase to Apps Analytics
-    'widget-apps-mobile-rps-chart', // TODO: rebase to Apps Analityc group
+    'widget-apps-mobile-rps-chart', // TODO: rebase to Apps Analytics group
   ];
   var _group_widgets = {
     apps: {
-      title: 'Apps Analitycs',
+      title: 'Apps Analytics',
       order: 1,
       widgets_list: [
         'widget-apps-mobile-rps-chart',

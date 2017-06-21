@@ -3,7 +3,7 @@
 
   angular
     .module('revapm.Portal')
-    .run(runGoogleAnalitic)
+    .run(runGoogleAnalytics)
     .service('Analytics', Analytics);
 
 
@@ -15,7 +15,7 @@
     };
   }
 
-  function runGoogleAnalitic($rootScope, $location, Analytics) {
+  function runGoogleAnalytics($rootScope, $location, Analytics) {
     'ngInject';
     $rootScope.$on('$stateChangeSuccess', function() {
       Analytics.recordPageview($location.url());
