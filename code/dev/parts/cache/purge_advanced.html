@@ -34,7 +34,12 @@
               <div class="pull-left">
                 <div class="col-md-12 form-inline">
                   <div class="form-group"> Target Environment:</div>
-                  <cache-environment-drop-down-menu environment="environment" class="form-group"></cache-environment-drop-down-meu>
+                  <cache-environment-drop-down-menu environment="environment" class="form-group"></cache-environment-drop-down-menu>
+                  <label for="environment" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Since the system allows you to test your new domain configuration in a separate so called Staging environment it is also
+                    possible to purge cached objects separately in the Staging or Global (production) environments only or
+                    both of them at the same time" popover-placement="right">
+                    <i class="fa fa-question-circle"></i>
+                  </label>
                 </div>
               </div>
               <div class="pull-right">
