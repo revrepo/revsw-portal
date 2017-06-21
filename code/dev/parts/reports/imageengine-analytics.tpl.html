@@ -30,12 +30,9 @@
           <!-- TODO: make common filter for both graphs -->
           <div class="row">
             <div class="col-md-6">
-              <h3 class="text-left">Performance Improvement By ImageEngine</h3>
-              <div>
-                <div class="clearfix" filter-time-periods ng-disabled="!domain" is-loading="_loadingBytesSaved" fl-os="os" fl-country="country"
-                  fl-device="device" fl-browser="browser" ng-filters="filtersBytesSaved" on-filter="reloadDataBytesSaved()"></div>
-                <div style="min-width: 480px; min-height: 350px" solidgauge-chart ng-data="dataImageEngineBytesSaved" ng-chart-options="dataImageEngineBytesSavedChartOptions"></div>
-              </div>
+              <!--<h3 class="text-left">Performance Improvement By ImageEngine</h3>-->
+              <div imageengine-solidgauge-performance-improvement fl-os="os" fl-device="device" fl-browser="browser" fl-country="country"
+                ng-domain="domain" is-auto-reload="true"> </div>
             </div>
             <div class="col-md-6">
               <!--<h3>Bytes Saved By ImageEngine</h3>-->
