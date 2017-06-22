@@ -37,10 +37,43 @@
       targets: [2,3,4,5],
       orderable: false
     }];
-
+    var traffic_total_ = 0;
+    var info_ = null;
     $scope.chartOptions = {
       chart: {
-        type: 'column'
+        type: 'column',
+        // NOTE: used for debug data in graph and table
+        // zoomType: 'x',
+        // events: {
+        //   redraw: function () {
+        //     if (info_) {
+        //       info_.destroy();
+        //       info_ = null;
+        //     }
+        //     var _text = '</span>Traffic Total <span style="font-weight: bold; color: #3c65ac;">' + Util.humanFileSizeInGB(traffic_total_, 3) +
+        //       '</span>';
+        //     // NOTE: information about error
+        //     if ($scope.hasFailedToLoadData === true) {
+        //       _text = '<strong style="color: red;"> Failed to retrieve the data - please try again later </strong>';
+        //     }
+        //     var x = this.xAxis[0].toPixels(this.xAxis[0].min) + 3;
+        //     info_ = this /*chart*/.renderer
+        //       .label(_text,
+        //       x /*x*/, 3 /*y*/, '' /*img*/, 0, 0, true /*html*/)
+        //       .css({
+        //         color: '#444'
+        //       })
+        //       .attr({
+        //         fill: 'rgba(240, 240, 240, 0.6)',
+        //         stroke: $scope.hasFailedToLoadData ? 'red' : '#3c65ac', // NOTE: border color
+        //         'stroke-width': 1,
+        //         padding: 6,
+        //         r: 2,
+        //         zIndex: 5
+        //       })
+        //       .add();
+        //   }
+        // }
       },
       yAxis: {
         title: {
@@ -218,13 +251,14 @@
             name: 'GBT',
             data: []
           }];
+          traffic_total_ = 0;
           if ( data.data && data.data.length > 0 ) {
             var labels = [];
             var offset = data.metadata.interval;
 
             // console.log( data );
             data.data.forEach(function(item, idx, items) {
-
+              traffic_total_ += item.sent_bytes;
               var st = moment(item.time),
                 en = moment(item.time + offset - 1),
                 val = moment(item.time),
@@ -273,10 +307,10 @@
 
       $scope._loading = true;
       var from = new Date($scope.month_year );
-      from.setDate( 1 );
-      from.setHours( 0, 0, 0, 0 );  //  very beginning of the month
+      from.setUTCDate( 1 );
+      from.setUTCHours( 0, 0, 0, 0 );  //  very beginning of the month
       var to = new Date( from );
-      to.setMonth( to.getMonth() + 1 ); //  very beginning of the next month
+      to.setUTCMonth( to.getUTCMonth() + 1 ); //  very beginning of the next month
       var aid = $scope.selected.val.acc_id || '';
 
       $q.all([
