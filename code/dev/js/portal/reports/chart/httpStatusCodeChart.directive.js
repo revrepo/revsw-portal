@@ -47,6 +47,7 @@
         }
         $scope.heading = 'HTTP Status Code Hits';
         $scope._loading = false;
+        $scope.hasFailedToLoadData = false;
         $scope.filters = {
           from_timestamp: moment().subtract(1, 'days').valueOf(),
           to_timestamp: Date.now()
@@ -76,21 +77,26 @@
                   info_ = null;
                 }
                 var x = this.xAxis[0].toPixels(this.xAxis[0].min) + 3;
+                var _text = codeStats.reduce(function(prev, item) {
+                  return prev +
+                    'Code <span style="font-weight: bold; color: #3c65ac;">' + item.code +
+                    '</span>: <span style="font-weight: bold">' + Util.formatNumber(item.requests) +
+                    '</span> Requests or <span style="font-weight: bold">' + item.percent.toFixed(2) +
+                    '</span>%<br>';
+                }, '');
+                // NOTE: information about error
+                if($scope.hasFailedToLoadData === true) {
+                  _text = '<strong style="color: red;"> Failed to retrieve the data - please try again later </strong>';
+                }
                 info_ = this /*chart*/ .renderer
-                  .label(codeStats.reduce(function(prev, item) {
-                      return prev +
-                        'Code <span style="font-weight: bold; color: #3c65ac;">' + item.code +
-                        '</span>: <span style="font-weight: bold">' + Util.formatNumber(item.requests) +
-                        '</span> Requests or <span style="font-weight: bold">' + item.percent.toFixed(2) +
-                        '</span>%<br>';
-                    }, ''),
+                  .label(_text,
                     x /* x */ , 3 /*y*/ , '', 0, 0, true /*html*/ )
                   .css({
                     color: '#444'
                   })
                   .attr({
                     fill: 'rgba(240, 240, 240, 0.6)',
-                    stroke: '#3c65ac',
+                    stroke: $scope.hasFailedToLoadData ? 'red' : '#3c65ac', // NOTE: border color
                     'stroke-width': 1,
                     padding: 6,
                     r: 2,
@@ -146,6 +152,8 @@
 
           var promises = {};
           var series = [];
+          $scope._loading = true;
+          $scope.hasFailedToLoadData = false;
           var _xAxisPointStart = null;
           var _xAxisPointInterval = null;
           $scope.statusCodes.forEach(function(code) {
@@ -225,6 +233,14 @@
                 pointInterval: _xAxisPointInterval,
                 series: series
               };
+            })
+            .catch(function(err) {
+              $scope.traffic = {
+                pointStart: _xAxisPointStart,
+                pointInterval: _xAxisPointInterval,
+                series: series
+              };
+              $scope.hasFailedToLoadData = true;
             })
             .finally(function() {
               $scope._loading = false;

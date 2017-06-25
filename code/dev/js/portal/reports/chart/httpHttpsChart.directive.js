@@ -25,6 +25,7 @@
         var _filters_field_list = ['from_timestamp', 'to_timestamp', 'country', 'device', 'os', 'browser'];
         $scope.heading = 'HTTP/HTTPS Hits';
         $scope._loading = false;
+        $scope.hasFailedToLoadData = false;
         $scope.filters = {
           from_timestamp: moment().subtract(1, 'days').valueOf(),
           to_timestamp: Date.now()
@@ -100,19 +101,24 @@
                   rel_http = Math.round(http_ * 1000 / (https_ + http_)) / 10;
                   rel_https = Math.round(https_ * 1000 / (https_ + http_)) / 10;
                 }
+                var _text = '!HTTPS <span style="font-weight: bold; color: #3c65ac;">' + Util.formatNumber(https_) +
+                  '</span> Requests, <span style="font-weight: bold; color: #3c65ac;">' + rel_https +
+                  '</span>%<br> HTTP <span style="font-weight: bold; color: black;">' + Util.formatNumber(http_) +
+                  '</span> Requests, <span style="font-weight: bold; color: black;">' + rel_http +
+                  '</span>%';
+                // NOTE: information about error
+                if($scope.hasFailedToLoadData === true) {
+                  _text = '<strong style="color: red;"> Failed to retrieve the data - please try again later </strong>';
+                }
                 info_ = this /*chart*/ .renderer
-                  .label('HTTPS <span style="font-weight: bold; color: #3c65ac;">' + Util.formatNumber(https_) +
-                    '</span> Requests, <span style="font-weight: bold; color: #3c65ac;">' + rel_https +
-                    '</span>%<br> HTTP <span style="font-weight: bold; color: black;">' + Util.formatNumber(http_) +
-                    '</span> Requests, <span style="font-weight: bold; color: black;">' + rel_http +
-                    '</span>%',
+                  .label( _text,
                     x /* x */ , 3, '', 0, 0, true /*html*/ )
                   .css({
                     color: '#444'
                   })
                   .attr({
                     fill: 'rgba(240, 240, 240, 0.6)',
-                    stroke: '#3c65ac',
+                    stroke: $scope.hasFailedToLoadData ? 'red' : '#3c65ac', // NOTE: border color
                     'stroke-width': 1,
                     padding: 6,
                     r: 2,
@@ -168,6 +174,7 @@
             return;
           }
           $scope._loading = true;
+          $scope.hasFailedToLoadData = false;
           var _xAxisPointStart = null;
           var _xAxisPointInterval = null;
           var series = [{
@@ -217,12 +224,6 @@
                 }
               }
               return $q.when(series);
-            }, function() {
-              $scope.traffic = {
-                pointStart: _xAxisPointStart,
-                pointInterval: _xAxisPointInterval,
-                series: []
-              };
             })
             .then(function setNewData(data) {
               // model better to update once
@@ -231,6 +232,14 @@
                 pointInterval: _xAxisPointInterval,
                 series: series
               };
+            })
+            .catch(function(err) {
+              $scope.traffic = {
+                pointStart: _xAxisPointStart,
+                pointInterval: _xAxisPointInterval,
+                series: series
+              };
+              $scope.hasFailedToLoadData = true;
             })
             .finally(function() {
               $scope._loading = false;
