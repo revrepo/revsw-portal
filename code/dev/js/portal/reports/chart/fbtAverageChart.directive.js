@@ -35,7 +35,7 @@
                 params[key] = val;
               }
             } else {
-              if (key === 'count_last_day' || key === 'delay') {
+              if (key === 'count_last_day') {
                 params.from_timestamp = moment().subtract(val, 'days').valueOf();
                 params.to_timestamp = Date.now();
                 delete params[key];
@@ -45,11 +45,6 @@
           return params;
         }
 
-        $scope.delay = '1';
-        $scope.os = '';
-        $scope.country = '';
-        $scope.device = '';
-        $scope.browser = '';
         $scope._loading = false;
         $scope.hasFailedToLoadData = false;
 
@@ -73,11 +68,11 @@
                   '</span> Median <span style="font-weight: bold; color: #3c65ac;">' + Util.formatNumber(median_ / 1000, 1) +
                   '</span> Max <span style="font-weight: bold; color: black;">' + Util.formatNumber(max_ / 1000, 1) +
                   '</span> ms';
-                if($scope.hasFailedToLoadData === true) {
+                if ($scope.hasFailedToLoadData === true) {
                   _text = '<strong style="color: red;"> Failed to retrieve the data - please try again later </strong>';
                 }
                 info_ = this /*chart*/ .renderer
-                  .label( _text ,
+                  .label(_text,
                     this.xAxis[0].toPixels(0), 0, '', 0, 0, true /*html*/ )
                   .css({
                     color: '#444'
@@ -134,7 +129,13 @@
 
         $scope.filters = {
           from_timestamp: moment().subtract(1, 'days').valueOf(),
-          to_timestamp: Date.now()
+          to_timestamp: Date.now(),
+          // NOTE: default filtee values
+          count_last_day: '1',
+          os: '',
+          country: '',
+          device: '',
+          browser: '',
         };
 
         if ($scope.filtersSets) {
@@ -154,21 +155,6 @@
             name: 'Average FBT',
             data: []
           }];
-          if ($scope.delay !== '') {
-            $scope.filters.count_last_day = $scope.delay;
-          }
-          if ($scope.country !== '') {
-            $scope.filters.country = $scope.country;
-          }
-          if ($scope.device !== '') {
-            $scope.filters.device = $scope.device;
-          }
-          if ($scope.os !== '') {
-            $scope.filters.os = $scope.os;
-          }
-          if ( $scope.browser !== '' ) {
-            $scope.filters.browser = $scope.browser;
-          }
 
           Stats.fbt_average(angular.merge({
               domainId: $scope.ngDomain.id
