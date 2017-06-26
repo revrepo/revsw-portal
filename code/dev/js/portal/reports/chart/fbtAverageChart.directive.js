@@ -21,7 +21,7 @@
         isAutoReload: '@?'
       },
       /*@ngInject*/
-      controller: function($scope, Stats, Util) {
+      controller: function($q, $scope, Stats, Util) {
         var _filters_field_list = ['from_timestamp', 'to_timestamp', 'country', 'device', 'os', 'browser'];
 
         function generateFilterParams(filters) {
@@ -35,7 +35,7 @@
                 params[key] = val;
               }
             } else {
-              if (key === 'count_last_day' || key === 'delay') {
+              if (key === 'count_last_day') {
                 params.from_timestamp = moment().subtract(val, 'days').valueOf();
                 params.to_timestamp = Date.now();
                 delete params[key];
@@ -45,12 +45,8 @@
           return params;
         }
 
-        $scope.delay = '1';
-        $scope.os = '';
-        $scope.country = '';
-        $scope.device = '';
-        $scope.browser = '';
         $scope._loading = false;
+        $scope.hasFailedToLoadData = false;
 
         //  ---------------------------------
         var info_ = null,
@@ -68,18 +64,22 @@
                   info_.destroy();
                   info_ = null;
                 }
+                var _text = 'FBT Avg <span style="font-weight: bold; color: #3c65ac;">' + Util.formatNumber(avg_ / 1000, 1) +
+                  '</span> Median <span style="font-weight: bold; color: #3c65ac;">' + Util.formatNumber(median_ / 1000, 1) +
+                  '</span> Max <span style="font-weight: bold; color: black;">' + Util.formatNumber(max_ / 1000, 1) +
+                  '</span> ms';
+                if ($scope.hasFailedToLoadData === true) {
+                  _text = '<strong style="color: red;"> Failed to retrieve the data - please try again later </strong>';
+                }
                 info_ = this /*chart*/ .renderer
-                  .label('FBT Avg <span style="font-weight: bold; color: #3c65ac;">' + Util.formatNumber(avg_ / 1000, 1) +
-                    '</span> Median <span style="font-weight: bold; color: #3c65ac;">' + Util.formatNumber(median_ / 1000, 1) +
-                    '</span> Max <span style="font-weight: bold; color: black;">' + Util.formatNumber(max_ / 1000, 1) +
-                    '</span> ms',
+                  .label(_text,
                     this.xAxis[0].toPixels(0), 0, '', 0, 0, true /*html*/ )
                   .css({
                     color: '#444'
                   })
                   .attr({
                     fill: 'rgba(240, 240, 240, 0.6)',
-                    stroke: '#3c65ac',
+                    stroke: $scope.hasFailedToLoadData ? 'red' : '#3c65ac', // NOTE: border color
                     'stroke-width': 1,
                     padding: 6,
                     r: 2,
@@ -129,7 +129,13 @@
 
         $scope.filters = {
           from_timestamp: moment().subtract(1, 'days').valueOf(),
-          to_timestamp: Date.now()
+          to_timestamp: Date.now(),
+          // NOTE: default filtee values
+          count_last_day: '1',
+          os: '',
+          country: '',
+          device: '',
+          browser: '',
         };
 
         if ($scope.filtersSets) {
@@ -143,35 +149,20 @@
           }
 
           $scope._loading = true;
-
-          if ($scope.delay !== '') {
-            $scope.filters.count_last_day = $scope.delay;
-          }
-          if ($scope.country !== '') {
-            $scope.filters.country = $scope.country;
-          }
-          if ($scope.device !== '') {
-            $scope.filters.device = $scope.device;
-          }
-          if ($scope.os !== '') {
-            $scope.filters.os = $scope.os;
-          }
-          if ( $scope.browser !== '' ) {
-            $scope.filters.browser = $scope.browser;
-          }
+          $scope.hasFailedToLoadData = false;
+          var labels = [];
+          var series = [{
+            name: 'Average FBT',
+            data: []
+          }];
 
           Stats.fbt_average(angular.merge({
               domainId: $scope.ngDomain.id
             }, generateFilterParams($scope.filters)))
             .$promise
             .then(function(data) {
-              var series = [{
-                name: 'Average FBT',
-                data: []
-              }];
               if (data.data && data.data.length > 0) {
                 avg_ = max_ = median_ = 0;
-                var labels = [];
                 var offset = (data.metadata.interval_sec || 1800) * 1000;
                 var cnt_ = 0;
                 // console.log( data );
@@ -205,11 +196,6 @@
                   }
                 });
 
-                $scope.traffic = {
-                  labels: labels,
-                  series: series
-                };
-
                 if (cnt_) {
                   avg_ /= cnt_;
 
@@ -226,13 +212,24 @@
                   idx0 = Math.floor(idx0 / 2);
                   median_ = (idx0 === idx1) ? avg_t[idx0] : (avg_t[idx0] + avg_t[idx1]) / 2;
                 }
-
+                return $q.when(series);
               } else {
-                $scope.traffic = {
-                  labels: [],
-                  series: series
-                };
+                return $q.when(series);
               }
+            })
+            .then(function setNewData(data) {
+              // model better to update once
+              $scope.traffic = {
+                labels: labels,
+                series: series
+              };
+            })
+            .catch(function(err) {
+              $scope.traffic = {
+                labels: labels,
+                series: series
+              };
+              $scope.hasFailedToLoadData = true;
             })
             .finally(function() {
               $scope._loading = false;
