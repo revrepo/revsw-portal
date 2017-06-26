@@ -13,8 +13,8 @@
     $scope.selected = {
       val: null
     };
-    $scope.month_year = new moment().endOf('month').endOf('day'); //new Date();
-    $scope.month_year_symbol = $scope.month_year.format('YYYY-MM'); //.toISOString().slice( 0, 7 );
+    $scope.month_year = new moment().utc();
+    $scope.month_year_symbol = $scope.month_year.format('YYYY-MM');
     $scope.report = null;
     $scope.traffic = null;
     $scope.formatNumber = Util.formatNumber;
@@ -49,7 +49,7 @@
         // NOTE: used for debug data in graph and table
         // zoomType: 'x',
         // events: {
-        //   redraw: function () {
+        //   redraw: function() {
         //     if (info_) {
         //       info_.destroy();
         //       info_ = null;
@@ -61,9 +61,9 @@
         //       _text = '<strong style="color: red;"> Failed to retrieve the data - please try again later </strong>';
         //     }
         //     var x = this.xAxis[0].toPixels(this.xAxis[0].min) + 3;
-        //     info_ = this /*chart*/.renderer
+        //     info_ = this /*chart*/ .renderer
         //       .label(_text,
-        //       x /*x*/, 3 /*y*/, '' /*img*/, 0, 0, true /*html*/)
+        //         x /*x*/ , 3 /*y*/ , '' /*img*/ , 0, 0, true /*html*/ )
         //       .css({
         //         color: '#444'
         //       })
@@ -144,19 +144,18 @@
      * @return {[type]}         [description]
      */
     $scope.onTimeSet = function(newDate) {
-      var newDate_ = new moment(newDate).endOf('month').endOf('day');
-      // new Date( newDate + 86400000 ); //  add one day to avoid glitches with timezones
+      var newDate_ = new moment(newDate).utc().add(1, 'day');//  add one day to avoid glitches with timezones
       $scope.month_year = newDate_;
       $scope.month_year_symbol = newDate_.format('YYYY-MM');
     };
     // NOTE: hand date update
     $scope.$watch('month_year_symbol', function(newVal, oldVal) {
       if (newVal !== oldVal && newVal.length === 7) {
-        if (moment(newVal, 'YYYY-MM').isValid()) {
-          if (moment(newVal, 'YYYY-MM').diff($scope.month_year, 'months') !== 0) {
-            var newDateVal = moment(newVal).endOf('month').endOf('day').toDate();
-            $scope.onTimeSet(newDateVal);
-          }
+        var newDate = new moment(newVal, 'YYYY-MM').utc();
+        if (newDate.isValid()) {
+          newDate.add(1, 'day');
+          var newDateVal = newDate.startOf('month').startOf('day').valueOf();
+          $scope.onTimeSet(newDateVal);
         }
       }
     });
@@ -235,17 +234,24 @@
     };
 
     /**
-     * [updateUsage_ description]
-     * @param  {Date} from
-     * @param  {Date} to
+     * @name updateUsage_
+     * @description get USage Report Date
+     *
+     * INCLUDE report days for time period
+     * @param  {Date} month_year
      * @param  {Array|String} aid  [description]
      * @return {[type]}      [description]
      */
-    var updateUsage_ = function(from, to, aid) {
+
+    var updateUsage_ = function(month_year, aid) {
+
+      var from = new moment(month_year.toISOString()).utc().startOf('month').startOf('day').format('YYYY-MM-DD'); //  very beginning of the month
+      var to = new moment(month_year.toISOString()).utc().endOf('month').endOf('day').format('YYYY-MM-DD'); //  very end of month (last day of report)
+
       var q = {
         account_id: aid,
-        from: from.toISOString().slice(0, 10),
-        to: to.toISOString().slice(0, 10)
+        from: from,
+        to: to
       };
       return Stats.usage_web(q)
         .$promise
@@ -256,12 +262,24 @@
           // console.log( overall );
         });
     };
+    /**
+     * @name updateStats_
+     * @description get Usage Roport data for histogram
+     *
+     * NOT INCLUDE last value of tipe period
+     *
+     * @param {Timestamp} from
+     * @param {*} to
+     * @param {*} aid
+     */
+    var updateStats_ = function(month_year, aid) {
+      var from = new moment(month_year.toISOString()).utc().startOf('month').startOf('day').valueOf(); //  very beginning of the month
+      var to = new moment(month_year.toISOString()).utc().add(1, 'month').startOf('month').startOf('day').valueOf(); //  very beginning of the next month
 
-    var updateStats_ = function(from, to, aid) {
       var q = {
         account_id: aid,
-        from_timestamp: from.valueOf(),
-        to_timestamp: to.valueOf()
+        from_timestamp: from,
+        to_timestamp: to
       };
       $scope.traffic = {
         series: [{
@@ -285,9 +303,7 @@
             // console.log( data );
             data.data.forEach(function(item, idx, items) {
               traffic_total_ += item.sent_bytes;
-              var st = moment(item.time),
-                en = moment(item.time + offset - 1),
-                val = moment(item.time),
+              var val = moment(item.time_utc).utc(),
                 label;
 
               if (idx % tickInterval_) {
@@ -341,13 +357,11 @@
       }
 
       $scope._loading = true;
-      var from = new moment($scope.month_year).utc().startOf('month').startOf('day').toDate(); //  very beginning of the month
-      var to = new moment($scope.month_year).utc().endOf('month').endOf('day').toDate(); //  very beginning of the next month
       var aid = $scope.selected.val.acc_id || '';
 
       $q.all([
-          updateUsage_(from, to, aid),
-          updateStats_(from, to, aid)
+          updateUsage_($scope.month_year, aid),
+          updateStats_($scope.month_year, aid)
         ])
         .catch($scope.alertService.danger)
         .finally(function() {
