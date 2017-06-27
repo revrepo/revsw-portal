@@ -144,7 +144,7 @@
      * @return {[type]}         [description]
      */
     $scope.onTimeSet = function(newDate) {
-      var newDate_ = new moment(newDate).utc().add(1, 'day');//  add one day to avoid glitches with timezones
+      var newDate_ = new moment(newDate).utc().add(1, 'day'); //  add one day to avoid glitches with timezones
       $scope.month_year = newDate_;
       $scope.month_year_symbol = newDate_.format('YYYY-MM');
     };
@@ -444,5 +444,19 @@
       $scope.confirm('parts/reports/modal/modal-billing-zones-details.tpl.html', model);
     };
 
+    /**
+     * @name beforeRenderCalendar
+     * @description disable dates witch in the future
+     * @see https://github.com/dalelotts/angular-bootstrap-datetimepicker/#before-render
+     */
+    $scope.beforeRenderCalendar = function($view, $dates, $leftDate, $upDate, $rightDate) {
+      var currentMoment = moment().utc().valueOf();
+      var index = Math.floor(Math.random() * $dates.length);
+      _.forEach($dates, function(itemDate, key) {
+        if (currentMoment < itemDate.utcDateValue) {
+          $dates[key].selectable = false;
+        }
+      });
+    };
   }
 })();
