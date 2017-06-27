@@ -571,7 +571,47 @@
               </div>
               <hr>
             </uib-tab>
-            <uib-tab index="7" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="This tab is used to manage Web Application Firewall (WAF) settings for the domain">
+            <uib-tab index="4" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Use the tab to manage what category of end users can access the website based on country, IP address or request HTTP header
+          value">
+              <!--  "Access Control Lis(ACL)" -->
+              <uib-tab-heading>ACL</uib-tab-heading>
+              <div class="form-group form-inline">
+                <label for="enableWafRules" class="col-sm-3 control-label">Access Control List</label>
+                <div class="col-md-9">
+                  <toggle-switch id="enable_waf_rules" name="enableWafRules" is-disabled="_loading" ng-model="model.rev_component_bp.acl.enabled"
+                    on-label="On" off-label="Off">
+                  </toggle-switch>
+                  <label for="enableWafRules" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="This switch controls whether ACL functionality is enabled for the domain">
+                                <i class="fa fa-question-circle"></i>
+                              </label>
+                </div>
+              </div>
+              <div class="row" ng-if="model.rev_component_bp.acl.enabled">
+                <div class="panel-body">
+                  <!-- ACL list-->
+                  <div class="panel panel-default panel-body">
+                      <div class="col-sm-12">
+                        <div class="checkbox">
+                          <label>
+                                <input id="aclAction" type="radio" class="inline-block" name="aclAction" ng-model="model.rev_component_bp.acl.action" ng-value="'deny_except'"> Allow Only End User Requests Matching Any Of Specified Conditions (Deny All Other Requests)
+                          </label>
+                        </div>
+                      </div>
+                      <div class="col-sm-12">
+                        <div class="checkbox">
+                          <label>
+                                <input id="aclAction" type="radio" class="inline-block" name="aclAction" ng-model="model.rev_component_bp.acl.action" ng-value="'allow_except'"> Deny Only End User Requests Matching Any Of Specified Conditions (Allow All Other Requests)
+                          </label>
+                        </div>
+                      </div>
+                  </div>
+                  <domain-acl-rules-list id="aclRulesListBlock" ng-model="model.rev_component_bp.acl.acl_rules"></domain-acl-rules-list>
+                </div>
+              </div>
+              <!-- //  "Access Control Lis(ACL)" -->
+              <hr>
+            </uib-tab>
+            <uib-tab index="5" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="This tab is used to manage Web Application Firewall (WAF) settings for the domain">
               <!--  “WAF” -->
               <uib-tab-heading>WAF</uib-tab-heading>
               <div class="form-group form-inline">
@@ -586,11 +626,10 @@
               </div>
               <!-- WAF Locations list-->
               <domain-waf-locations id="wafLocationsBlock" account-id="{{model.account_id}}" ng-if="model.rev_component_bp.enable_waf" ng-model="model.rev_component_bp.waf"></domain-waf-locations>
-              <!-- TODO: delete <pre> {{model.rev_component_bp.waf | json}}</pre>-->
               <!-- //  “WAF” -->
               <hr>
             </uib-tab>
-            <uib-tab index="4" heading="Custom VCL Rules" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="This tab allows Varnish VCL experts to configure custom VCL rules to be applied for the domain configuration">
+            <uib-tab index="6" heading="Custom VCL Rules" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="This tab allows Varnish VCL experts to configure custom VCL rules to be applied for the domain configuration">
               <!--  “Custom VCL Rules” -->
               <div class="form-group form-inline">
                 <label for="customVcl" class="col-sm-3 control-label">Custom VCL Rules</label>
@@ -606,17 +645,17 @@
               <!-- //  “Custom VCL Rules” -->
               <hr>
             </uib-tab>
-            <uib-tab index="5" heading="Lua Scripting" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="This section allows you to enhance the service by running custom Lua code snippets on proxy servers">
+            <uib-tab index="7" heading="Lua Scripting" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="This section allows you to enhance the service by running custom Lua code snippets on proxy servers">
               <domain-lua-scripting class="form-group" ng-model="model"></domain-lua-scripting>
               <hr>
             </uib-tab>
             <!-- Third-Party Links-->
-            <uib-tab index="6" heading="Third-Party Links" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="This section allows you to accelerate your website by redirecting to the CDN platform external objects/scripts served by potentially slow third-party vendors">
+            <uib-tab index="8" heading="Third-Party Links" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="This section allows you to accelerate your website by redirecting to the CDN platform external objects/scripts served by potentially slow third-party vendors">
               <domain-the-third-party-links class="form-group" ng-model="$thirdPartyLinks"></domain-the-third-party-links>
               <hr>
             </uib-tab>
             <!-- ImageEngine-->
-            <uib-tab index="7" heading="ImageEngine" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="The ImageEngine feature provides a simple, automatic and transparent way to resize served images depending on maximum screen resolution of end user devices">
+            <uib-tab index="9" heading="ImageEngine" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="The ImageEngine feature provides a simple, automatic and transparent way to resize served images depending on maximum screen resolution of end user devices">
               <div ng-include="'parts/domains/domain-image-engine/domain-image-engine.tpl.html'" class="form-group"></div>
               <hr>
             </uib-tab>
