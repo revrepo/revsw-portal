@@ -257,6 +257,9 @@ var DomainForm = {
       wafFunctionalityForTheDomain:{
         id: 'enable_waf_rules'
       },
+      aclRulesEnableSw: {
+        id: 'enable_acl_rules'
+      },
       customVCLrules: {
         id: 'customVCLrules'
       },
@@ -861,6 +864,9 @@ var DomainForm = {
   },
   getWAFFunctionalityForTheDomain: function () {
     return element(by.id(this.locators.switches.wafFunctionalityForTheDomain.id));
+  },
+  getACLRulesEnableSw: function () {
+    return element(by.id(this.locators.switches.aclRulesEnableSw.id));
   },
   getCustomVCLrulesSw: function () {
     return element(by.id(this.locators.switches.customVCLrules.id));
