@@ -19,7 +19,7 @@
       scope: true,
       bindToController: {
         aclRule: '=ngModel',
-        onRemove: '&'
+        onCallRemove: '&'
       },
       templateUrl: 'parts/domains/domain-acl-rules/domain-acl-rules-item.tpl.html',
       controllerAs: '$ctrl',
@@ -61,14 +61,6 @@
           $scope.ngCountry = $model;
         };
 
-        /**
-         * @name onRemoveACLRule
-         * @description call remove this item
-         */
-        $ctrl.onRemoveACLRule = function(e,index) {
-          e.preventDefault();
-          $ctrl.onRemove(index);
-        };
         // NOTE: init local model value IP_CIDR for display
         if (!!$ctrl.aclRule.host_name && $ctrl.aclRule.host_name !== '' &&
           !!$ctrl.aclRule.subnet_mask && $ctrl.aclRule.subnet_mask !== '') {

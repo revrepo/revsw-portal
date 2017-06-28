@@ -49,7 +49,7 @@
          *
          * @return
          */
-        $ctrl.onRemoveACLRule = function(index) {
+        $ctrl.onRemoveACLRule = function(e, index) {
           if ($ctrl.aclRulesList.length <= 1) {
             AlertService.success('Last ACL condition can`t be deleted');
             return;
