@@ -1,0 +1,77 @@
+<div class="domain-acl-rules--item panel panel-default" ng-form="aclRuleForm">
+  <div class="panel-heading">
+    <div class="pull-right panel-button-right">
+      <!-- button Remove the ACL Condition-->
+      <a href="" ng-click="$ctrl.onRemoveACLRule($event, $index)" popover-trigger="mouseenter" popover-placement="left" uib-popover="Remove the ACL Condition">
+      <i class="glyphicon glyphicon-remove"></i>
+       </a>
+    </div>
+    <div class="panel-title">&nbsp;</div>
+  </div>
+  <div class="panel-body">
+    <div class="form-group">
+      <label class=" col-md-3 control-label"> IP Subnet In CIDR Format</label>
+      <div class="col-md-9" ng-class="{ 'has-error': aclRuleForm.IP_CIDR.$invalid && aclRuleForm.IP_CIDR.$dirty }">
+        <input class="form-control inline-block" ng-model="IP_CIDR" name="IP_CIDR" placeholder="like  8.8.8.0/24" validate-cidr-format>
+        <label for="country_code" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Specify here optional end user’s IP subnet in CIDR format (like 8.8.8.0/24). Use
+            /32 mask for IP addresses (for example, 4.4.4.4/32).">
+                    <i class="fa fa-question-circle"></i>
+                  </label>
+        <div class="error-messages" ng-messages="aclRuleForm.IP_CIDR.$error" role="alert" ng-messages-multiple="false">
+          <div ng-messages-include="parts/shared/error-messages.html"></div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-md-3  control-label"> Country</label>
+      <div class="col-md-9">
+        <ui-select ng-if="$ctrl.countries.length>0" ng-animate-disabled theme="select2" ng-disabled="$ctrl._loading" ng-model="ngCountry"
+          name="countryCode" on-select="$ctrl.onOneCountrySelect($model)">
+          <ui-select-match placeholder="Select Country">{{$select.selected.name}}</ui-select-match>
+          <ui-select-choices repeat="item.code as  item in $ctrl.countries | filter: {name: $select.search}">
+            <div ng-bind-html="item.name|highlight: $select.search"></div>
+          </ui-select-choices>
+        </ui-select>
+        <label for="country_code" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover=" Select optional country (as detected from end user’s IP address using GeoIP database)">
+                    <i class="fa fa-question-circle"></i>
+                  </label>
+
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <label class="panel-title inline-block"> Request Header</label>
+        <label for="country_code" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Specify here optional request header name and its value which will trigger the condition. For example you can
+          specify header name “Referer” and your website URL as header value - this will allow you to block requests referred
+          from unauthorized websites.">
+                    <i class="fa fa-question-circle"></i>
+                  </label>
+      </div>
+      <div class="panel-body">
+        <div class="col-md-9">
+          <div class="form-group col-sm-12">
+            <label class=" col-md-3 control-label"> Name</label>
+            <div class="col-md-9" ng-class="{'has-error': aclRuleForm.headerName.$invalid}">
+              <input type="text" ng-animate-disabled validate-acl-rule-header-name name="headerName" class="form-control inline-block"
+                ng-model="$ctrl.aclRule.header_name" placeholder="" ng-maxlength="128" ng-required="$ctrl.aclRule.header_value.length>0">
+              <div class="error-messages" ng-messages="aclRuleForm.headerName.$error" role="alert" ng-messages-multiple="false">
+                <div ng-messages-include="parts/shared/error-messages.html"></div>
+              </div>
+            </div>
+          </div>
+          <div class=" form-group col-sm-12 ">
+            <label class="col-md-3 control-label"> Value</label>
+            <div class=" col-md-9" ng-class="{'has-error': aclRuleForm.headerValue.$invalid}">
+              <input ng-animate-disabled validate-acl-rule-header-value type="text" name="headerValue" class="form-control inline-block"
+                ng-model="$ctrl.aclRule.header_value" placeholder="" ng-maxlength="128" ng-required="$ctrl.aclRule.header_name.length>0">
+              <div class="error-messages" ng-messages="aclRuleForm.headerValue.$error" role="alert" ng-messages-multiple="false">
+                <div ng-messages-include="parts/shared/error-messages.html"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

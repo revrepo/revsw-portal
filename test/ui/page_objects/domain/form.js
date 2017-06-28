@@ -2,7 +2,7 @@
  *
  * REV SOFTWARE CONFIDENTIAL
  *
- * [2013] - [2015] Rev Software, Inc.
+ * [2013] - [2017] Rev Software, Inc.
  * All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains
@@ -257,6 +257,9 @@ var DomainForm = {
       wafFunctionalityForTheDomain:{
         id: 'enable_waf_rules'
       },
+      aclRulesEnableSw: {
+        id: 'enable_acl_rules'
+      },
       customVCLrules: {
         id: 'customVCLrules'
       },
@@ -414,25 +417,29 @@ var DomainForm = {
         li: '.domain-edit-form .nav.nav-tabs>li:nth-child(4)',
         css: '.domain-edit-form .nav.nav-tabs>li:nth-child(4) a'
       },
-      waf: {
+      acl: {
         li: '.domain-edit-form .nav.nav-tabs>li:nth-child(5)',
         css: '.domain-edit-form .nav.nav-tabs>li:nth-child(5) a'
       },
-      customVCLRules:{
+      waf: {
         li: '.domain-edit-form .nav.nav-tabs>li:nth-child(6)',
         css: '.domain-edit-form .nav.nav-tabs>li:nth-child(6) a'
       },
-      luaScripting:{
+      customVCLRules:{
         li: '.domain-edit-form .nav.nav-tabs>li:nth-child(7)',
         css: '.domain-edit-form .nav.nav-tabs>li:nth-child(7) a'
       },
-      thirdPartyLinks:{
+      luaScripting:{
         li: '.domain-edit-form .nav.nav-tabs>li:nth-child(8)',
         css: '.domain-edit-form .nav.nav-tabs>li:nth-child(8) a'
       },
-      imageEngine:{
+      thirdPartyLinks:{
         li: '.domain-edit-form .nav.nav-tabs>li:nth-child(9)',
         css: '.domain-edit-form .nav.nav-tabs>li:nth-child(9) a'
+      },
+      imageEngine:{
+        li: '.domain-edit-form .nav.nav-tabs>li:nth-child(10)',
+        css: '.domain-edit-form .nav.nav-tabs>li:nth-child(10) a'
       }
     }
   },
@@ -501,6 +508,17 @@ var DomainForm = {
    */
   getSSLConfigurationTab: function () {
     return element(by.css(this.locators.tabs.sslConfiguration.css));
+  },
+  /**
+   * ### DomainForm.getACLTab()
+   *
+   * Returns the reference to the `WAF` tab (Selenium WebDriver
+   * Element)
+   *
+   * @returns {Selenium WebDriver Element}
+   */
+  getACLTab: function() {
+    return element(by.css(this.locators.tabs.acl.css));
   },
   /**
    * ### DomainForm.getWAFTab()
@@ -846,6 +864,9 @@ var DomainForm = {
   },
   getWAFFunctionalityForTheDomain: function () {
     return element(by.id(this.locators.switches.wafFunctionalityForTheDomain.id));
+  },
+  getACLRulesEnableSw: function () {
+    return element(by.id(this.locators.switches.aclRulesEnableSw.id));
   },
   getCustomVCLrulesSw: function () {
     return element(by.id(this.locators.switches.customVCLrules.id));
