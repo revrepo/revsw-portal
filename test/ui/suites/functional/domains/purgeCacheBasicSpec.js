@@ -99,19 +99,22 @@ describe('Functional', function () {
         var title = 'Domains List';
         expect(Portal.domains.listPage.getTitle()).toEqual(title);
     });
-
-    it('should change value of "Purge Image Engine Secondary Cache" checkbox '+
-      'after click to this checkbox',
-      function () {
-        Portal.helpers.nav.goToPurgeCache();
-        Portal.purgeCacheBasicPage.setPurgeImageEngineSecondaryCache(true);
-        Portal.purgeCacheBasicPage.clickPurgeImageEngineSecondaryCache();
-        var ChBoxPurgeImageEngineSecondaryCache = Portal.purgeCacheBasicPage
-          .getPurgeImageEngineSecondaryCacheChBox();
-        expect(ChBoxPurgeImageEngineSecondaryCache.isSelected()).toBeFalsy();
-        Portal.purgeCacheBasicPage.clickPurgeImageEngineSecondaryCache();
-        expect(ChBoxPurgeImageEngineSecondaryCache.isSelected()).toBeTruthy();
+    // TODO: change test for domain with enabled ImageEngine - need to create new test domain
+    xdescribe('domain with enabled ImageEngine configurations',function(){
+      xit('should change value of "Purge Image Engine Secondary Cache" checkbox ' +
+        'after click to this checkbox',
+        function() {
+          Portal.helpers.nav.goToPurgeCache();
+          Portal.purgeCacheBasicPage.setPurgeImageEngineSecondaryCache(true);
+          Portal.purgeCacheBasicPage.clickPurgeImageEngineSecondaryCache();
+          var ChBoxPurgeImageEngineSecondaryCache = Portal.purgeCacheBasicPage
+            .getPurgeImageEngineSecondaryCacheChBox();
+          expect(ChBoxPurgeImageEngineSecondaryCache.isSelected()).toBeFalsy();
+          Portal.purgeCacheBasicPage.clickPurgeImageEngineSecondaryCache();
+          expect(ChBoxPurgeImageEngineSecondaryCache.isSelected()).toBeTruthy();
+        });
     });
+
   });
   });
   });
