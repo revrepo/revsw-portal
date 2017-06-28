@@ -20,7 +20,7 @@
       ngModel.$validators.cidrFormat = function(value) {
         ngModel.$setValidity(_name, true);
 
-        if (value !== undefined && (CIDR.test(value) === false)) {
+        if (value !== undefined && (CIDR.test(value) === false) && value.length >0) {
           ngModel.$setValidity(_name, false);
         }
         // NOTE: only set value for attribute "$valid"
