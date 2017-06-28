@@ -33,12 +33,17 @@
         Countries.query().$promise
           .then(function(countries) {
             $ctrl.countries.length = 0;
-            _.forEach(countries, function(item, key) {
-              // console.log(item, key)
-              $ctrl.countries.push({
-                name: item,
-                code: key
-              });
+            $ctrl.countries.push({
+              code: '',
+              name: '(not selected)'
+            });
+            _.forEach(angular.copy(countries), function(item, key) {
+              if(typeof key === 'string' && key.length === 2) {
+                $ctrl.countries.push({
+                  name: item,
+                  code: key
+                });
+              }
             });
             if (!$scope.ngCountry || !$scope.ngCountry.code) {
               if (!!$ctrl.aclRule.country_code && $ctrl.aclRule.country_code !== '') {
