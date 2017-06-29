@@ -369,6 +369,18 @@ var EditDomain = {
       .click();
   },
   /**
+ *
+ * Tab "ACL"
+ *
+ */
+
+  // Click to tab "ACL"
+  clickTabACL: function(numberLink) {
+    return this.form
+      .getACLTab()
+      .click();
+  },
+  /**
    *
    * Tab "WAF"
    *

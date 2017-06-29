@@ -42,6 +42,7 @@
                           data-ng-model="month_year"
                           data-datetimepicker-config="{ dropdownSelector: '#month-dd', startView: 'month', minView: 'month', modelType: 'milliseconds' }"
                           data-on-set-time="onTimeSet(newDate)"
+                          data-before-render="beforeRenderCalendar($view, $dates, $leftDate, $upDate, $rightDate)"
                           />
                       </ul>
                     </div>
