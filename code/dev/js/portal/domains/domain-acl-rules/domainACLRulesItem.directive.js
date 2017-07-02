@@ -38,7 +38,7 @@
               name: '(not selected)'
             });
             _.forEach(angular.copy(countries), function(item, key) {
-              if(typeof key === 'string' && key.length === 2) {
+              if (typeof key === 'string' && key.length === 2) {
                 $ctrl.countries.push({
                   name: item,
                   code: key
@@ -50,7 +50,9 @@
                 var ind = _.findIndex($ctrl.countries, function(d) {
                   return d.code === $ctrl.aclRule.country_code;
                 });
-                $ctrl.onOneCountrySelect($ctrl.countries[ind]);
+                $ctrl.onOneCountrySelect($ctrl.countries[ind].code);
+              } else {
+                $ctrl.onOneCountrySelect($ctrl.countries[0].code);
               }
             }
           })
@@ -62,7 +64,7 @@
          * @description
          */
         this.onOneCountrySelect = function($model) {
-          $ctrl.aclRule.country_code = $model.code;
+          $ctrl.aclRule.country_code = $model;
           $scope.ngCountry = $model;
         };
 
