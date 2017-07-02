@@ -26,7 +26,7 @@
       <label class="col-md-3  control-label"> Country</label>
       <div class="col-md-9">
         <ui-select ng-if="$ctrl.countries.length>0" ng-animate-disabled theme="select2" ng-disabled="$ctrl._loading" ng-model="ngCountry"
-          name="countryCode" on-select="$ctrl.onOneCountrySelect($model)">
+          name="countryCode" on-select="$ctrl.onOneCountrySelect(ngCountry)">
           <ui-select-match placeholder="Select Country">{{$select.selected.name}}</ui-select-match>
           <ui-select-choices repeat="item.code as  item in $ctrl.countries | filter: {name: $select.search}">
             <div ng-bind-html="item.name|highlight: $select.search"></div>
@@ -49,8 +49,8 @@
                   </label>
       </div>
       <div class="panel-body">
-        <div class="col-md-9">
-          <div class="form-group col-sm-12">
+        <div class="col-md-12 row">
+          <div class="form-group col-md-12">
             <label class=" col-md-3 control-label"> Name</label>
             <div class="col-md-9" ng-class="{'has-error': aclRuleForm.headerName.$invalid}">
               <input type="text" ng-animate-disabled validate-acl-rule-header-name name="headerName" class="form-control inline-block"
