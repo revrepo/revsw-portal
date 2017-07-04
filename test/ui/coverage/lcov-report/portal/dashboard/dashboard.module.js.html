@@ -1,0 +1,1190 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for portal/dashboard/dashboard.module.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../index.html">all files</a> / <a href="index.html">portal/dashboard/</a> dashboard.module.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">7.22% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>7/97</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/30</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/25</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">7.22% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>7/97</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373
+374
+375
+376</td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" >(<span class="fstat-no" title="function not covered" >function() {</span></span>
+  'use strict';
+  /**
+   * @name  revapm.Portal.Dashboard
+   * @document service
+   */
+<span class="cstat-no" title="statement not covered" >  angular.module('revapm.Portal.Dashboard', [</span>
+      'ngStorage',
+      'revapm.Portal.Shared',
+      'revapm.Portal.Config',
+      'revapm.Portal.Resources',
+      'ui.router',
+      'ngSanitize',
+      'adf',
+      'adf.provider',
+      'revapm.Portal.BlueTriangleTech',
+      'angular-nicescroll',
+      'revapm.Portal.Dashboard.Widgets.AppsAnalytics',
+      'revapm.Portal.Dashboard.Widgets.WebAnalytics',
+      'adf.widget.analytics-proxy-traffic'
+    ])
+    .config( /*ngInject*/ <span class="fstat-no" title="function not covered" >function(dashboardProvider) {</span>
+      // NOTE: define dashboard structures
+<span class="cstat-no" title="statement not covered" >      dashboardProvider.structure('8-4', {</span>
+          title: '(One Wide Column And One Narrow Column)',
+          rows: [{
+            columns: [{
+              styleClass: 'col-md-8',
+              widgets: []
+            }, {
+              styleClass: 'col-md-4',
+              widgets: []
+            }]
+          }]
+        })
+        .structure('12', {
+          title: '(One Wide Column)',
+          rows: [{
+            columns: [{
+              styleClass: 'col-md-12',
+              widgets: []
+            }]
+          }]
+        })
+        .structure('6-6', {
+          title: '(Two Columns Of Equal Width)',
+          rows: [{
+            columns: [{
+              styleClass: 'col-md-6',
+              widgets: []
+            }, {
+              styleClass: 'col-md-6',
+              widgets: []
+            }]
+          }]
+        })
+        .structure('4-4-4', {
+          title: '(Three Columns of Equal Width)',
+          rows: [{
+            columns: [{
+              styleClass: 'col-md-4',
+              widgets: []
+            }, {
+              styleClass: 'col-md-4',
+              widgets: []
+            }, {
+              styleClass: 'col-md-4',
+              widgets: []
+            }]
+          }]
+        })
+        .structure('3-3-3-3', {
+          title: '(Four Columns Of Equal Width)',
+          rows: [{
+            columns: [{
+              styleClass: 'col-md-3',
+              widgets: []
+            }, {
+              styleClass: 'col-md-3',
+              widgets: []
+            }, {
+              styleClass: 'col-md-3',
+              widgets: []
+            }, {
+              styleClass: 'col-md-3',
+              widgets: []
+            }]
+          }]
+        });
+    })
+    .run(setCustomWidgetTemplates)
+    .controller('widgetBTTConversionReportController', widgetBTTConversionReportController)
+    .controller('widgetBTTBounceRateReportController', widgetBTTBounceRateReportController)
+    .controller('widgetBTTBrandConversionRateReportController', widgetBTTBrandConversionRateReportController)
+    .controller('widgetBTTLostRevenueCalculatorReportController', widgetBTTLostRevenueCalculatorReportController)
+    .controller('widgetBTTTrafficInfoReportController', widgetBTTTrafficInfoReportController)
+    .controller('widgetEditBTTiframeController', widgetEditBTTiframeController);
+  /**
+   * [widgetBTTConversionReportController description]
+   * @param  {[type]} $sce             [description]
+   * @param  {[type]} BTTPortalService [description]
+   * @param  {[type]} config           [description]
+   * @return {[type]}                  [description]
+   */
+<span class="fstat-no" title="function not covered" >  function widgetBTTConversionReportController($sce, BTTPortalService, config) {</span>
+<span class="cstat-no" title="statement not covered" >    'ngInject';</span>
+<span class="cstat-no" title="statement not covered" >    var vm = this;</span>
+<span class="cstat-no" title="statement not covered" >    var _defaultConfig = {</span>
+      filters: {
+        country: 'All Countries',
+        count_last_day: '1'
+      },
+      info: {
+        country: 'All countries'
+      }
+    };
+<span class="cstat-no" title="statement not covered" >    _.defaultsDeep(config, _defaultConfig);</span>
+<span class="cstat-no" title="statement not covered" >    vm.config = config;</span>
+<span class="cstat-no" title="statement not covered" >    vm._loading = false;</span>
+    // TODO: init function for control existing domain Id
+<span class="cstat-no" title="statement not covered" >    BTTPortalService.generateUrlConversionReport(config)</span>
+      .then(<span class="fstat-no" title="function not covered" >function(url) {</span>
+<span class="cstat-no" title="statement not covered" >        config.url = url;</span>
+<span class="cstat-no" title="statement not covered" >        if (config.url) {</span>
+<span class="cstat-no" title="statement not covered" >          vm.url = $sce.trustAsResourceUrl(config.url);</span>
+        }
+      })
+      .finally(<span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >        vm._loading = false;</span>
+      });
+  }
+  /**
+   * [widgetBTTBounceRateReportController description]
+   * @param  {[type]} $sce             [description]
+   * @param  {[type]} BTTPortalService [description]
+   * @param  {[type]} config           [description]
+   * @return {[type]}                  [description]
+   */
+<span class="fstat-no" title="function not covered" >  function widgetBTTBounceRateReportController($sce, BTTPortalService, config) {</span>
+<span class="cstat-no" title="statement not covered" >    'ngInject';</span>
+<span class="cstat-no" title="statement not covered" >    var vm = this;</span>
+<span class="cstat-no" title="statement not covered" >    var _defaultConfig = {</span>
+      filters: {
+        country: 'All Countries',
+        count_last_day: '1'
+      },
+      info: {
+        country: 'All countries'
+      }
+    };
+<span class="cstat-no" title="statement not covered" >    _.defaultsDeep(config, _defaultConfig);</span>
+<span class="cstat-no" title="statement not covered" >    vm.config = config;</span>
+<span class="cstat-no" title="statement not covered" >    vm._loading = false;</span>
+    // TODO: init function for control existing domain Id
+<span class="cstat-no" title="statement not covered" >    BTTPortalService.generateUrlBounceRateReport(config)</span>
+      .then(<span class="fstat-no" title="function not covered" >function(url) {</span>
+<span class="cstat-no" title="statement not covered" >        config.url = url;</span>
+<span class="cstat-no" title="statement not covered" >        if (config.url) {</span>
+<span class="cstat-no" title="statement not covered" >          vm.url = $sce.trustAsResourceUrl(config.url);</span>
+        }
+      })
+      .finally(<span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >        vm._loading = false;</span>
+      });
+  }
+  /**
+   * [widgetBTTBrandConversionRateReportController description]
+   * @param  {[type]} $sce             [description]
+   * @param  {[type]} BTTPortalService [description]
+   * @param  {[type]} config           [description]
+   * @return {[type]}                  [description]
+   */
+<span class="fstat-no" title="function not covered" >  function widgetBTTBrandConversionRateReportController($sce, BTTPortalService, config) {</span>
+<span class="cstat-no" title="statement not covered" >    'ngInject';</span>
+<span class="cstat-no" title="statement not covered" >    var vm = this;</span>
+<span class="cstat-no" title="statement not covered" >    var _defaultConfig = {</span>
+      filters: {
+        country: 'All Countries',
+        count_last_day: '1'
+      },
+      info: {
+        country: 'All countries'
+      }
+    };
+<span class="cstat-no" title="statement not covered" >    _.defaultsDeep(config, _defaultConfig);</span>
+<span class="cstat-no" title="statement not covered" >    vm.config = config;</span>
+<span class="cstat-no" title="statement not covered" >    vm._loading = false;</span>
+    // TODO: init function for control existing domain Id
+<span class="cstat-no" title="statement not covered" >    BTTPortalService.generateUrlBrandConversionRateReport(config)</span>
+      .then(<span class="fstat-no" title="function not covered" >function(url) {</span>
+<span class="cstat-no" title="statement not covered" >        config.url = url;</span>
+<span class="cstat-no" title="statement not covered" >        if (config.url) {</span>
+<span class="cstat-no" title="statement not covered" >          vm.url = $sce.trustAsResourceUrl(config.url);</span>
+        }
+      })
+      .finally(<span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >        vm._loading = false;</span>
+      });
+  }
+  /**
+   * @name  widgetBTTLostRevenueCalculatorReportController
+   * @description
+   *
+   *
+   * @param  {[type]} $sce             [description]
+   * @param  {[type]} BTTPortalService [description]
+   * @param  {[type]} config           [description]
+   * @return {[type]}                  [description]
+   */
+<span class="fstat-no" title="function not covered" >  function widgetBTTLostRevenueCalculatorReportController($sce, BTTPortalService, config) {</span>
+<span class="cstat-no" title="statement not covered" >    'ngInject';</span>
+<span class="cstat-no" title="statement not covered" >    var vm = this;</span>
+<span class="cstat-no" title="statement not covered" >    var _defaultConfig = {</span>
+      filters: {
+        country: 'All Countries',
+        count_last_day: '1'
+      },
+      info: {
+        country: 'All countries'
+      }
+    };
+<span class="cstat-no" title="statement not covered" >    _.defaultsDeep(config, _defaultConfig);</span>
+<span class="cstat-no" title="statement not covered" >    vm.config = config;</span>
+<span class="cstat-no" title="statement not covered" >    vm._loading = false;</span>
+    // TODO: init function for control existing domain Id
+<span class="cstat-no" title="statement not covered" >    BTTPortalService.generateUrlLostRevenueCalculatorReport(config)</span>
+      .then(<span class="fstat-no" title="function not covered" >function(url) {</span>
+<span class="cstat-no" title="statement not covered" >        config.url = url;</span>
+<span class="cstat-no" title="statement not covered" >        if (config.url) {</span>
+<span class="cstat-no" title="statement not covered" >          vm.url = $sce.trustAsResourceUrl(config.url);</span>
+        }
+      })
+      .finally(<span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >        vm._loading = false;</span>
+      });
+  }
+  /**
+   * @name  widgetBTTTrafficInfoReportController
+   * @description
+   *
+   *
+   * @param  {[type]} $sce             [description]
+   * @param  {[type]} BTTPortalService [description]
+   * @param  {[type]} config           [description]
+   * @return {[type]}                  [description]
+   */
+<span class="fstat-no" title="function not covered" >  function widgetBTTTrafficInfoReportController($sce, BTTPortalService, config) {</span>
+<span class="cstat-no" title="statement not covered" >    'ngInject';</span>
+<span class="cstat-no" title="statement not covered" >    var vm = this;</span>
+<span class="cstat-no" title="statement not covered" >    var _defaultConfig = {</span>
+      filters: {
+        country: 'All Countries',
+        count_last_day: '1'
+      },
+      info: {
+        country: 'All countries'
+      }
+    };
+<span class="cstat-no" title="statement not covered" >    _.defaultsDeep(config, _defaultConfig);</span>
+<span class="cstat-no" title="statement not covered" >    vm.config = config;</span>
+<span class="cstat-no" title="statement not covered" >    vm._loading = false;</span>
+    // TODO: init function for control existing domain Id
+<span class="cstat-no" title="statement not covered" >    BTTPortalService.generateUrlTrafficInfoReport(config)</span>
+      .then(<span class="fstat-no" title="function not covered" >function(url) {</span>
+<span class="cstat-no" title="statement not covered" >        config.url = url;</span>
+<span class="cstat-no" title="statement not covered" >        if (config.url) {</span>
+<span class="cstat-no" title="statement not covered" >          vm.url = $sce.trustAsResourceUrl(config.url);</span>
+        }
+      })
+      .finally(<span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >        vm._loading = false;</span>
+      });
+  }
+  /**
+   * @name  widgetEditBTTiframeController
+   * @description
+   *
+   *
+   * @param  {[type]} $scope    [description]
+   * @param  {[type]} Countries [description]
+   * @return {[type]}           [description]
+   */
+<span class="fstat-no" title="function not covered" >  function widgetEditBTTiframeController($scope, $localStorage, Countries, User, AlertService) {</span>
+<span class="cstat-no" title="statement not covered" >    'ngInject';</span>
+<span class="cstat-no" title="statement not covered" >    var vm = this;</span>
+<span class="cstat-no" title="statement not covered" >    var _defaultConfig = {</span>
+      filters: {
+        country: 'All Countries',
+        count_last_day: '1'
+      },
+      info: {
+        country: 'All countries'
+      }
+    };
+<span class="cstat-no" title="statement not covered" >    _.defaultsDeep($scope.config, _defaultConfig);</span>
+<span class="cstat-no" title="statement not covered" >    vm._loading = true;</span>
+<span class="cstat-no" title="statement not covered" >    vm.domains = [];</span>
+<span class="cstat-no" title="statement not covered" >    vm.domain = $scope.config.domain;</span>
+<span class="cstat-no" title="statement not covered" >    vm.refCountry = Countries.query();</span>
+&nbsp;
+    // Load user domains
+<span class="cstat-no" title="statement not covered" >    User.getUserDomains(true)</span>
+      .then(<span class="fstat-no" title="function not covered" >function(domains) {</span>
+<span class="cstat-no" title="statement not covered" >        vm.domains = _.filter(domains, <span class="fstat-no" title="function not covered" >function(item) {</span></span>
+<span class="cstat-no" title="statement not covered" >          return (!!item.btt_key &amp;&amp; item.btt_key !== '');</span>
+        });
+        // Set default value if ngModel is empty
+<span class="cstat-no" title="statement not covered" >        if (!vm.domain || !vm.domain.id) {</span>
+          // Select domain if it's only one
+<span class="cstat-no" title="statement not covered" >          if (domains.length === 1 &amp;&amp; $scope.selectOne) {</span>
+<span class="cstat-no" title="statement not covered" >            vm.onDomainSelected($scope.domains[0]);</span>
+<span class="cstat-no" title="statement not covered" >            vm.domain = $scope.domains[0];</span>
+          }
+<span class="cstat-no" title="statement not covered" >          if ($localStorage.selectedDomain &amp;&amp; $localStorage.selectedDomain.id) {</span>
+<span class="cstat-no" title="statement not covered" >            var ind = _.findIndex(domains, <span class="fstat-no" title="function not covered" >function(d) {</span></span>
+<span class="cstat-no" title="statement not covered" >              return d.id === $localStorage.selectedDomain.id;</span>
+            });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            vm.domain = vm.domains[ind];</span>
+<span class="cstat-no" title="statement not covered" >            vm.onDomainSelected(vm.domains[ind]);</span>
+          }
+        }
+<span class="cstat-no" title="statement not covered" >        return vm.domains;</span>
+      })
+      .catch(AlertService.danger)
+      .finally(<span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >        vm._loading = false;</span>
+      });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    vm.onDomainSelected = <span class="fstat-no" title="function not covered" >function(domain) {</span></span>
+<span class="cstat-no" title="statement not covered" >      if (!!domain) {</span>
+<span class="cstat-no" title="statement not covered" >        $localStorage.selectedDomain = domain;</span>
+      }
+<span class="cstat-no" title="statement not covered" >      if (!vm.domain || !vm.domain.id) {</span>
+<span class="cstat-no" title="statement not covered" >        return;</span>
+      }
+<span class="cstat-no" title="statement not covered" >      vm.reload();</span>
+    };
+    /**
+     * @name  reload
+     * @description Reload data
+     * @return
+     */
+<span class="cstat-no" title="statement not covered" >    vm.reload = <span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >      angular.extend($scope.config, {</span>
+        domain: angular.copy(vm.domain)
+      });
+    };
+  }
+  /**
+   * @name  setCustomWidgetTemplates
+   * @description
+   *   Set new template for ADF
+   * @param {[type]} $templateCache [description]
+   */
+<span class="fstat-no" title="function not covered" >  function setCustomWidgetTemplates($templateCache) {</span>
+<span class="cstat-no" title="statement not covered" >    'ngInject';</span>
+<span class="cstat-no" title="statement not covered" >    $templateCache.put('../src/templates/widget-edit.html',</span>
+      '&lt;form name=widgetEditForm novalidate role=form ng-submit=saveDialog()&gt;' +
+      '&lt;div class=modal-header&gt; &lt;button type=button class=close ng-click=closeDialog() aria-hidden=true&gt;&amp;times;&lt;/button&gt; ' +
+      '&lt;h4 class=modal-title&gt;{{widget.title}}&lt;/h4&gt; &lt;/div&gt; &lt;div class=modal-body&gt;' +
+      // " &lt;div class=\"alert alert-danger\" role=alert ng-show=validationError&gt; &lt;strong&gt;Apply error:&lt;/strong&gt; {{validationError}} &lt;/div&gt;"+
+      ' &lt;div class=form-group  ng-class="{\'has-error\': widgetEditForm.widgetTitle.$invalid &amp;&amp; widgetEditForm.widgetTitle.$dirty}"&gt;' +
+      '&lt;label for=widgetTitle&gt;Title&lt;/label&gt; ' +
+      '&lt;input type=text class=form-control id=widgetTitle  name="widgetTitle" ng-model=definition.title placeholder="Enter title" ' +
+      'ng-maxlength=30 validate-pattern-no-special-chars required&gt;' +
+      '&lt;div class="error-messages" ng-messages="widgetEditForm.widgetTitle.$error" role="alert" ng-messages-multiple&gt;' +
+      '   &lt;div ng-messages-include="parts/shared/error-messages.html"&gt;&lt;/div&gt;' +
+      '  &lt;/div&gt;' +
+      '&lt;/div&gt; &lt;div ng-if=widget.edit&gt; &lt;adf-widget-content model=definition content=widget.edit&gt; &lt;/adf-widget-content&gt;&lt;/div&gt; &lt;/div&gt; ' +
+      '&lt;div class=modal-footer&gt; &lt;button type=button class="btn btn-default" ng-click=closeDialog()&gt;Cancel&lt;/button&gt; ' +
+      '&lt;input type=submit class="btn btn-primary" ng-disabled=widgetEditForm.$invalid value=Apply&gt; &lt;/div&gt;&lt;/form&gt;');
+  }
+&nbsp;
+})();
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Jul 04 2017 14:04:53 GMT+0300 (EEST)
+</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>

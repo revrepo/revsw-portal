@@ -1,0 +1,1064 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for portal/ssl_certs/controller/ssl_certsCrud.controller.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../index.html">all files</a> / <a href="index.html">portal/ssl_certs/controller/</a> ssl_certsCrud.controller.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">2.38% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>3/126</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/57</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/32</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">2.38% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>3/126</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334</td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" >(<span class="fstat-no" title="function not covered" >function() {</span></span>
+  'use strict';
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  angular</span>
+    .module('revapm.Portal.SSL_certs')
+    .controller('SSL_certsCrudController', SSL_certsCrudController);
+&nbsp;
+  /*@ngInject*/
+<span class="fstat-no" title="function not covered" >  function SSL_certsCrudController($scope, $timeout,</span>
+    $localStorage,
+    CRUDController,
+    SSL_certs,
+    $injector,
+    $stateParams,
+    $config,
+    Companies,
+    $http,
+    $q,
+    $state,
+    $anchorScroll,
+    User) {
+    //Invoking crud actions
+<span class="cstat-no" title="statement not covered" >    $injector.invoke(CRUDController, this, {</span>
+      $scope: $scope,
+      $stateParams: $stateParams
+    });
+<span class="cstat-no" title="statement not covered" >    $scope.isAdvancedMode = $stateParams.isAdvanced || false;</span>
+<span class="cstat-no" title="statement not covered" >    $scope.jsoneditor = {</span>
+      options: {
+        mode: 'code',
+        modes: ['code', 'view'], // allowed modes['code', 'form', 'text', 'tree', 'view']
+        error: <span class="fstat-no" title="function not covered" >function(err) {</span>
+<span class="cstat-no" title="statement not covered" >          $scope.alertService.danger(err);</span>
+        }
+      }
+    };
+    //Set state (ui.router)
+<span class="cstat-no" title="statement not covered" >    $scope.setState('index.webApp.ssl_certs');</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    $scope.setResource(SSL_certs);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    $scope.NO_SPECIAL_CHARS = $config.PATTERNS.NO_SPECIAL_CHARS;</span>
+<span class="cstat-no" title="statement not covered" >    $scope.COMMENT_NO_SPECIAL_CHARS = $config.PATTERNS.COMMENT_NO_SPECIAL_CHARS;</span>
+<span class="cstat-no" title="statement not covered" >    $scope.sslCert_update_help_info = 'Use the button to send the modified configuration to the staging environment ' +</span>
+      'which can be used to test the new configuration before sending it to the global network (and making it ' +
+      'available for all your end users). Please see “Web -&gt; Staging Env.” section for details about the staging ' +
+      'environment and how to use it.';
+<span class="cstat-no" title="statement not covered" >    $scope.sslCert_publish_help_info = 'Once you have tested the updated configuration in the staging environment ' +</span>
+      '(using “Update” button) are you welcome to publish the configuration in the global network (and make it ' +
+      'available to all your end users)';
+&nbsp;
+    /**
+     * @name setAccountName
+     * @description
+     *
+     */
+<span class="fstat-no" title="function not covered" >    function setAccountName() {</span>
+<span class="cstat-no" title="statement not covered" >      if ($scope.auth.isReseller() || $scope.auth.isRevadmin()) {</span>
+        // Loading list of companies
+<span class="cstat-no" title="statement not covered" >        return Companies.query(<span class="fstat-no" title="function not covered" >function(list) {</span></span>
+<span class="cstat-no" title="statement not covered" >          _.forEach($scope.records, <span class="fstat-no" title="function not covered" >function(item) {</span></span>
+<span class="cstat-no" title="statement not covered" >            var index = _.findIndex(list, {</span>
+              id: item.account_id
+            });
+<span class="cstat-no" title="statement not covered" >            if (index &gt;= 0) {</span>
+<span class="cstat-no" title="statement not covered" >              item.companyName = list[index].companyName;</span>
+            }
+          });
+        });
+      } else {
+<span class="cstat-no" title="statement not covered" >        return $q.when();</span>
+      }
+    }
+&nbsp;
+    // Fetch list of records
+<span class="cstat-no" title="statement not covered" >    $scope.$on('$stateChangeSuccess', <span class="fstat-no" title="function not covered" >function(state) {</span></span>
+<span class="cstat-no" title="statement not covered" >      var data = null;</span>
+      // NOTE: set filter params for specific state
+<span class="cstat-no" title="statement not covered" >      if($state.is('index.accountSettings.accountresources')){</span>
+<span class="cstat-no" title="statement not covered" >        $scope.filter.limit = 5;</span>
+<span class="cstat-no" title="statement not covered" >        var filters = {</span>
+          account_id: !User.getSelectedAccount()? null: User.getSelectedAccount().acc_id
+        };
+<span class="cstat-no" title="statement not covered" >        data = {</span>
+          filters: filters
+        };
+<span class="cstat-no" title="statement not covered" >        $scope.list(data).then(setAccountName);</span>
+<span class="cstat-no" title="statement not covered" >        return;</span>
+      }
+<span class="cstat-no" title="statement not covered" >      if ($state.is($scope.state)) {</span>
+<span class="cstat-no" title="statement not covered" >        $scope.list(data)</span>
+          .then(setAccountName)
+          .then(<span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >            if ($scope.elementIndexForAnchorScroll) {</span>
+<span class="cstat-no" title="statement not covered" >              setTimeout(<span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >                $anchorScroll('anchor' + $scope.elementIndexForAnchorScroll);</span>
+<span class="cstat-no" title="statement not covered" >                $scope.$digest();</span>
+              }, 500);
+            }
+          });
+      }
+    });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    $scope.filterKeys = ['cert_name', 'companyName', 'expires_at', 'domains', 'updated_at'];</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    $scope.locations = [];</span>
+<span class="cstat-no" title="statement not covered" >    $scope.companies = [];</span>
+<span class="cstat-no" title="statement not covered" >    $scope.model = {};</span>
+    // TODO: Change to real types
+<span class="cstat-no" title="statement not covered" >    $scope.certs_types = [{</span>
+      id: 'shared',
+      typeName: 'Shared CDN Certificate'
+    }, {
+      id: 'private',
+      typeName: 'Private With Customer-Provided Key'
+    }];
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    $scope.fetchCompanies = <span class="fstat-no" title="function not covered" >function(companyIds) {</span></span>
+<span class="cstat-no" title="statement not covered" >      var promises = [];</span>
+<span class="cstat-no" title="statement not covered" >      companyIds.forEach(<span class="fstat-no" title="function not covered" >function(id) {</span></span>
+<span class="cstat-no" title="statement not covered" >        promises.push(Companies.get({</span>
+          id: id
+        }).$promise);
+      });
+<span class="cstat-no" title="statement not covered" >      $q.all(promises).then(<span class="fstat-no" title="function not covered" >function(data) {</span></span>
+<span class="cstat-no" title="statement not covered" >        $scope.companies = data;</span>
+      });
+    };
+    /**
+     * @name prepareSSLCertToUpdate
+     * @description
+     *
+     * @param  {[type]} model_current [description]
+     * @return {[type]}               [description]
+     */
+<span class="cstat-no" title="statement not covered" >    $scope.prepareSSLCertToUpdate = <span class="fstat-no" title="function not covered" >function(model_current) {</span></span>
+<span class="cstat-no" title="statement not covered" >      var model;</span>
+<span class="cstat-no" title="statement not covered" >      if (model_current.toJSON === undefined) {</span>
+<span class="cstat-no" title="statement not covered" >        model = _.clone(model_current, true);</span>
+      } else {
+<span class="cstat-no" title="statement not covered" >        model = _.clone(model_current.toJSON(), true);</span>
+      }
+<span class="cstat-no" title="statement not covered" >      delete model.id;</span>
+<span class="cstat-no" title="statement not covered" >      delete model.created_by;</span>
+<span class="cstat-no" title="statement not covered" >      delete model.created_at;</span>
+<span class="cstat-no" title="statement not covered" >      delete model.updated_at;</span>
+<span class="cstat-no" title="statement not covered" >      delete model.expires_at;</span>
+<span class="cstat-no" title="statement not covered" >      delete model.domains;</span>
+<span class="cstat-no" title="statement not covered" >      delete model.last_published_ssl_config_version;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      return model;</span>
+    };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    $scope.setAccountId = <span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >      if ($scope.auth.isReseller() || $scope.auth.isRevadmin()) {</span>
+        // Loading list of companies
+<span class="cstat-no" title="statement not covered" >        Companies.query(<span class="fstat-no" title="function not covered" >function(list) {</span></span>
+<span class="cstat-no" title="statement not covered" >          $scope.companies = list;</span>
+<span class="cstat-no" title="statement not covered" >          if ($scope.companies.length === 1) {</span>
+<span class="cstat-no" title="statement not covered" >            $scope.model.account_id = $scope.companies[0].id;</span>
+          }
+        });
+      } else <span class="cstat-no" title="statement not covered" >if (!angular.isArray($scope.auth.getUser().companyId)) {</span>
+<span class="cstat-no" title="statement not covered" >        $scope.model.account_id = $scope.auth.getUser().companyId;</span>
+      } else <span class="cstat-no" title="statement not covered" >if ($scope.auth.getUser().companyId.length === 1) {</span>
+<span class="cstat-no" title="statement not covered" >        $scope.model.account_id = $scope.auth.getUser().companyId[0];</span>
+      } else {
+<span class="cstat-no" title="statement not covered" >        $scope.fetchCompanies($scope.auth.getUser().companyId);</span>
+      }
+    };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    $scope.setAccountId();</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    $scope.getSSL_cert = <span class="fstat-no" title="function not covered" >function(id) {</span></span>
+<span class="cstat-no" title="statement not covered" >      $scope.get(id)</span>
+        .then(<span class="fstat-no" title="function not covered" >function() {</span>
+          // NOTE: auto set Dirty attribute for fields (validation exists data)
+<span class="cstat-no" title="statement not covered" >          var _fields = ['cert_name', 'public_ssl_cert'];</span>
+<span class="cstat-no" title="statement not covered" >          angular.forEach(_fields, setDirty);</span>
+&nbsp;
+<span class="fstat-no" title="function not covered" >          function setDirty(field) {</span>
+<span class="cstat-no" title="statement not covered" >            if (!!$scope.editForm[field]) {</span>
+<span class="cstat-no" title="statement not covered" >              $scope.editForm[field].$setDirty();</span>
+            }
+          }
+        })
+        .catch(<span class="fstat-no" title="function not covered" >function(err) {</span>
+<span class="cstat-no" title="statement not covered" >          $scope.alertService.danger('Could not load SSL certificate details');</span>
+        });
+&nbsp;
+    };
+    /**
+     * @name  deleteSSLCert
+     * @description
+     *
+     * @param  {Object} model
+     * @return
+     */
+<span class="cstat-no" title="statement not covered" >    $scope.deleteSSLCert = <span class="fstat-no" title="function not covered" >function(model) {</span></span>
+      // NOTE: not delete if RO user
+<span class="cstat-no" title="statement not covered" >      if($scope.isReadOnly() === true){</span>
+<span class="cstat-no" title="statement not covered" >        return;</span>
+      }
+<span class="cstat-no" title="statement not covered" >      $scope.confirm('confirmModal.html', model).then(<span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >        var certName = model.cert_name;</span>
+<span class="cstat-no" title="statement not covered" >        $scope</span>
+          .delete(model)
+          .then(<span class="fstat-no" title="function not covered" >function(data) {</span>
+<span class="cstat-no" title="statement not covered" >            $scope.alertService.success(data);</span>
+<span class="cstat-no" title="statement not covered" >            $scope.list()</span>
+              .then(setAccountName);
+          })
+          .catch($scope.alertService.danger);
+      });
+    };
+    /**
+     * @name  createSSLCert
+     * @description
+     *
+     * Create new SSL certificate
+     *
+     * @param  {[type]} model [description]
+     * @return {[type]}       [description]
+     */
+<span class="cstat-no" title="statement not covered" >    $scope.createSSLCert = <span class="fstat-no" title="function not covered" >function(model, isStay) {</span></span>
+<span class="cstat-no" title="statement not covered" >      model.cert_type = 'private'; </span>// TODO:
+<span class="cstat-no" title="statement not covered" >      $scope</span>
+        .create(model, isStay)
+        .then(<span class="fstat-no" title="function not covered" >function(data) {</span>
+<span class="cstat-no" title="statement not covered" >          $scope.alertService.success(data);</span>
+<span class="cstat-no" title="statement not covered" >          $scope.setAccountId();</span>
+        })
+        .catch($scope.alertService.danger);
+    };
+    /**
+     * @name  publishSSL_cert
+     * @description
+     *
+     *
+     * @param  {[type]} model [description]
+     * @return {[type]}       [description]
+     */
+<span class="cstat-no" title="statement not covered" >    $scope.publishSSLCert = <span class="fstat-no" title="function not covered" >function(model) {</span></span>
+<span class="cstat-no" title="statement not covered" >      if (!model) {</span>
+<span class="cstat-no" title="statement not covered" >        return;</span>
+      }
+<span class="cstat-no" title="statement not covered" >      if (!model.id) {</span>
+<span class="cstat-no" title="statement not covered" >        model.id = $stateParams.id;</span>
+      }
+<span class="cstat-no" title="statement not covered" >      var modelId = model.id;</span>
+<span class="cstat-no" title="statement not covered" >      $scope.confirm('confirmPublishModal.html', model).then(<span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >        model = $scope.prepareSSLCertToUpdate(model);</span>
+<span class="cstat-no" title="statement not covered" >        $scope.update({</span>
+            id: modelId,
+            options: 'publish'
+          }, model)
+          .then($scope.alertService.success)
+          .catch($scope.alertService.danger);
+      });
+    };
+    /**
+     * @name  validateSSL_cert
+     * @description
+     *
+     * @param  {[type]} model [description]
+     * @return {[type]}       [description]
+     */
+<span class="cstat-no" title="statement not covered" >    $scope.validateSSLCert = <span class="fstat-no" title="function not covered" >function(model) {</span></span>
+<span class="cstat-no" title="statement not covered" >      if (!model) {</span>
+<span class="cstat-no" title="statement not covered" >        return;</span>
+      }
+<span class="cstat-no" title="statement not covered" >      if (!model.id) {</span>
+<span class="cstat-no" title="statement not covered" >        model.id = $stateParams.id;</span>
+      }
+<span class="cstat-no" title="statement not covered" >      var modelId = model.id;</span>
+<span class="cstat-no" title="statement not covered" >      model = $scope.prepareSSLCertToUpdate(model);</span>
+<span class="cstat-no" title="statement not covered" >      $scope.update({</span>
+          id: modelId,
+          options: 'verify_only'
+        }, model)
+        .then($scope.alertService.success)
+        .catch($scope.alertService.danger);
+    };
+    /**
+     * @name  updateSSL_cert
+     * @description
+     *
+     * @param  {[type]} model [description]
+     * @return {[type]}       [description]
+     */
+<span class="cstat-no" title="statement not covered" >    $scope.updateSSLCert = <span class="fstat-no" title="function not covered" >function(model) {</span></span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      if (!model) {</span>
+<span class="cstat-no" title="statement not covered" >        return;</span>
+      }
+<span class="cstat-no" title="statement not covered" >      if (!model.id) {</span>
+<span class="cstat-no" title="statement not covered" >        model.id = $stateParams.id;</span>
+      }
+<span class="cstat-no" title="statement not covered" >      var modelId = model.id;</span>
+<span class="cstat-no" title="statement not covered" >      $scope.confirm('confirmUpdateModal.html', model).then(<span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >        model = $scope.prepareSSLCertToUpdate(model);</span>
+<span class="cstat-no" title="statement not covered" >        $scope.update({</span>
+            id: modelId
+          }, model)
+          .then($scope.alertService.success)
+          .catch($scope.alertService.danger);
+      });
+    };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    $scope.storeToStorage = <span class="fstat-no" title="function not covered" >function(model) {</span></span>
+<span class="cstat-no" title="statement not covered" >      $localStorage.selectedDomain = model;</span>
+    };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    $scope.disableSubmit = <span class="fstat-no" title="function not covered" >function(model, isEdit) {</span></span>
+<span class="cstat-no" title="statement not covered" >      if (!isEdit) {</span>
+<span class="cstat-no" title="statement not covered" >        return $scope._loading ||</span>
+          !model.cert_name ||
+          (!model.account_id &amp;&amp; !$scope.model.account_id) ||
+          !model.public_ssl_cert ||
+          !model.private_ssl_key;
+      } else {
+<span class="cstat-no" title="statement not covered" >        return $scope._loading ||</span>
+          (!model.account_id &amp;&amp; !$scope.model.account_id) ||
+          !model.public_ssl_cert ||
+          !model.private_ssl_key;
+      }
+    };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    $scope.getRelativeDate = <span class="fstat-no" title="function not covered" >function(datetime) {</span></span>
+<span class="cstat-no" title="statement not covered" >      return moment.utc(datetime).fromNow();</span>
+    };
+  }
+})();
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Jul 04 2017 14:04:53 GMT+0300 (EEST)
+</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

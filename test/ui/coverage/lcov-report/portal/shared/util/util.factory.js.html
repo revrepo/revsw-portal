@@ -1,0 +1,560 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for portal/shared/util/util.factory.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../index.html">all files</a> / <a href="index.html">portal/shared/util/</a> util.factory.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">21.05% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>8/38</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/36</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/9</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">21.05% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>8/38</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166</td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" >(<span class="fstat-no" title="function not covered" >function () {</span></span>
+  'use strict';
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  angular</span>
+    .module('revapm.Portal.Shared')
+    .factory('Util', UtilFactory);
+&nbsp;
+  /*@ngInject*/
+<span class="fstat-no" title="function not covered" >  function UtilFactory() {</span>
+&nbsp;
+    /**
+     * Shorten int value and add suffix G, M or K
+     *
+     * @param {number} val
+     * @param {string} forced suffix
+     * @returns {string} ( 0.00K or 9.99G or 9.99M )
+     */
+<span class="fstat-no" title="function not covered" >    function convertValue( val, suffix ) {</span>
+<span class="cstat-no" title="statement not covered" >      if (val &gt; 1000000000 || suffix === 'G') {</span>
+<span class="cstat-no" title="statement not covered" >        return Math.round(val / 10000000) / 100 + 'G';</span>
+      }
+<span class="cstat-no" title="statement not covered" >      if (val &gt; 1000000 || suffix === 'M') {</span>
+<span class="cstat-no" title="statement not covered" >        return Math.round(val / 10000) / 100 + 'M';</span>
+      }
+<span class="cstat-no" title="statement not covered" >      if (val &gt; 1000 || suffix === 'K') {</span>
+<span class="cstat-no" title="statement not covered" >        return Math.round(val / 10 ) / 100 + 'K';</span>
+      }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      return val;</span>
+    }
+&nbsp;
+    /**
+     * Convert trafic value to Kbps, Mbps, Gbps, Tbps
+     *
+     * @param {number} bps
+     * @returns {string}
+     */
+<span class="fstat-no" title="function not covered" >    function convertTraffic(bps) {</span>
+<span class="cstat-no" title="statement not covered" >      if (!bps) {</span>
+<span class="cstat-no" title="statement not covered" >        return '0 Bps';</span>
+      }
+<span class="cstat-no" title="statement not covered" >      if ( bps &lt; 1 ) {</span>
+<span class="cstat-no" title="statement not covered" >        return bps.toFixed(2) + ' Bps';</span>
+      }
+<span class="cstat-no" title="statement not covered" >      var sizes = ['Bps', 'Kbps', 'Mbps', 'Gbps', 'Tbps'];</span>
+<span class="cstat-no" title="statement not covered" >      var i = Math.floor(Math.log(bps) / Math.log(1024));</span>
+<span class="cstat-no" title="statement not covered" >      var result = ( Math.round(100 * bps / Math.pow(1024, i)) / 100 ) + ' ' + (sizes[i] || '');</span>
+<span class="cstat-no" title="statement not covered" >      return result || '';</span>
+    }
+&nbsp;
+    /**
+     * Convert trafic value Mbps, forcibly
+     *
+     * @param {number} bps
+     * @param {number} precision
+     * @returns {string}
+     */
+<span class="fstat-no" title="function not covered" >    function convertTrafficMbps(bps, pr) {</span>
+<span class="cstat-no" title="statement not covered" >      if (!bps || bps &lt; 1) {</span>
+<span class="cstat-no" title="statement not covered" >        return '0 Mbps';</span>
+      }
+<span class="cstat-no" title="statement not covered" >      return ( bps / (1024 * 1024) ).toFixed((pr||2)) + ' Mbps';</span>
+    }
+    /**
+     * 1234567890.456 --&gt; 1'234'567'890.456
+     * 1234567890.456 --&gt; 1'234'567'890.5 when fixed == 1
+     *
+     * @returns {string}
+     */
+<span class="fstat-no" title="function not covered" >    function formatNumber( num, fixed ) {</span>
+<span class="cstat-no" title="statement not covered" >      return ( fixed !== undefined ? num.toFixed( fixed ) : num.toString() )</span>
+        .replace( /\B(?=(\d{3})+(?!\d))/g, '\'' );
+    }
+&nbsp;
+    /**
+     * 1234567890 --&gt; 1.15 GB
+     * @returns {string}
+     */
+<span class="fstat-no" title="function not covered" >    function humanFileSize(size, pr) {</span>
+<span class="cstat-no" title="statement not covered" >      if ( !size ) {</span>
+<span class="cstat-no" title="statement not covered" >        return '0 B';</span>
+      }
+<span class="cstat-no" title="statement not covered" >      var i = Math.floor( Math.log(size) / Math.log(1024) );</span>
+<span class="cstat-no" title="statement not covered" >      return ( size / Math.pow(1024, i) ).toFixed((pr||2)) * 1 + ' ' + ['B', 'kB', 'MB', 'GB', 'TB'][i];</span>
+    }
+&nbsp;
+    /**
+     * same as above, forced to GB
+     * @returns {string}
+     */
+<span class="fstat-no" title="function not covered" >    function humanFileSizeInGB(size, pr) {</span>
+<span class="cstat-no" title="statement not covered" >      if ( !size ) {</span>
+<span class="cstat-no" title="statement not covered" >        return '0 GB';</span>
+      }
+<span class="cstat-no" title="statement not covered" >      return ( size / 1073741824/*1024^3*/ ).toFixed((pr||2)) * 1 + ' GB';</span>
+    }
+&nbsp;
+    /**
+     * ISO 3166-2:US, 2-letters USA State code mapped to USA State name
+     * @returns {object}
+     */
+<span class="fstat-no" title="function not covered" >    function statesCodes2Names() {</span>
+<span class="cstat-no" title="statement not covered" >      return {</span>
+        AL: 'Alabama', AK: 'Alaska', AS: 'American Samoa',
+        AZ: 'Arizona', AR: 'Arkansas', CA: 'California',
+        CO: 'Colorado', CT: 'Connecticut', DE: 'Delaware',
+        DC: 'District of Columbia', FL: 'Florida', FM: 'Federated States of Micronesia',
+        GA: 'Georgia', GU: 'Guam', HI: 'Hawaii',
+        ID: 'Idaho', IL: 'Illinois', IN: 'Indiana',
+        IA: 'Iowa', KS: 'Kansas', KY: 'Kentucky',
+        LA: 'Louisiana', ME: 'Maine', MH: 'Marshall Islands',
+        MD: 'Maryland', MA: 'Massachusetts', MI: 'Michigan',
+        MN: 'Minnesota', MS: 'Mississippi', MO: 'Missouri',
+        MT: 'Montana', NE: 'Nebraska', NV: 'Nevada',
+        NH: 'New Hampshire', NJ: 'New Jersey', NM: 'New Mexico',
+        NY: 'New York', NC: 'North Carolina', ND: 'North Dakota',
+        MP: 'Northern Mariana Islands', OH: 'Ohio', OK: 'Oklahoma',
+        OR: 'Oregon', PW: 'Palau', PA: 'Pennsylvania',
+        PR: 'Puerto Rico', RI: 'Rhode Island', SC: 'South Carolina',
+        SD: 'South Dakota', TN: 'Tennessee', TX: 'Texas',
+        UM: 'U.S. Minor Outlying Islands', UT: 'Utah', VT: 'Vermont',
+        VA: 'Virginia', VI: 'Virgin Islands of the U.S.', WA: 'Washington',
+        WV: 'West Virginia', WI: 'Wisconsin', WY: 'Wyoming'
+      };
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return {</span>
+&nbsp;
+      /**
+       * @inheritDoc
+       */
+      convertValue: convertValue,
+&nbsp;
+      /**
+       * @inheritDoc
+       */
+      convertTraffic: convertTraffic,
+&nbsp;
+      /**
+       * @inheritDoc
+       */
+      convertTrafficMbps: convertTrafficMbps,
+&nbsp;
+      /**
+       * @inheritDoc
+       */
+      formatNumber: formatNumber,
+&nbsp;
+      /**
+       * @inheritDoc
+       */
+      humanFileSize: humanFileSize,
+&nbsp;
+      /**
+       * @inheritDoc
+       */
+      humanFileSizeInGB: humanFileSizeInGB,
+&nbsp;
+      /**
+       * @inheritDoc
+       */
+      statesCodes2Names: statesCodes2Names
+    };
+  }
+})();
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Jul 04 2017 14:04:53 GMT+0300 (EEST)
+</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

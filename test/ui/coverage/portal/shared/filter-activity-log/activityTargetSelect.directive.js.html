@@ -1,0 +1,509 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for portal/shared/filter-activity-log/activityTargetSelect.directive.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../index.html">all files</a> / <a href="index.html">portal/shared/filter-activity-log/</a> activityTargetSelect.directive.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">2.94% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>2/68</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/24</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/25</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">2.94% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>2/68</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149</td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" >(<span class="fstat-no" title="function not covered" >function() {</span></span>
+  'use strict';
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  angular</span>
+    .module('revapm.Portal.Shared')
+    .directive('activityTargetSelect', activityTargetSelect)
+    .service('ActivityTargetListService', ActivityTargetListService)
+    .run( /*ngInject*/ <span class="fstat-no" title="function not covered" >function($timeout, $rootScope, ActivityTargetListService) {</span>
+<span class="cstat-no" title="statement not covered" >      $rootScope.$on('update:searchData', <span class="fstat-no" title="function not covered" >function() {</span></span>
+        // NOTE: list will update
+<span class="cstat-no" title="statement not covered" >        $timeout(ActivityTargetListService.init, 300);</span>
+      });
+    });
+&nbsp;
+<span class="fstat-no" title="function not covered" >  function ActivityTargetListService($q, DomainsConfig, Companies, Users, User, Apps, DashboardSrv, ApiKeys, DNSZones) {</span>
+<span class="cstat-no" title="statement not covered" >    'ngInject';</span>
+<span class="cstat-no" title="statement not covered" >    var service = this;</span>
+<span class="cstat-no" title="statement not covered" >    this.init = <span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >      var def = $q.defer();</span>
+<span class="cstat-no" title="statement not covered" >      service.data.lenght = 0;</span>
+<span class="cstat-no" title="statement not covered" >      service.data.push({ id: null, name: 'All Activity Targets', targetType: null });</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      if (!User.isAuthed()) {</span>
+<span class="cstat-no" title="statement not covered" >        return $q.when(service.data);</span>
+      }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      DomainsConfig.query().$promise.then(<span class="fstat-no" title="function not covered" >function(data) {</span></span>
+<span class="cstat-no" title="statement not covered" >        data.forEach(<span class="fstat-no" title="function not covered" >function(item) {</span></span>
+<span class="cstat-no" title="statement not covered" >          var name_ = item.domain_name + ' (Domain Configuration)';</span>
+<span class="cstat-no" title="statement not covered" >          service.data.push({ id: item.id, accountId: item.account_id, name: name_, targetType: 'domain' });</span>
+        });
+      });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      Companies.query().$promise.then(<span class="fstat-no" title="function not covered" >function(data) {</span></span>
+<span class="cstat-no" title="statement not covered" >        data.forEach(<span class="fstat-no" title="function not covered" >function(item) {</span></span>
+<span class="cstat-no" title="statement not covered" >          var name_ = item.companyName + ' (Account)';</span>
+<span class="cstat-no" title="statement not covered" >          service.data.push({ id: item.id, accountId: item.account_id, name: name_, targetType: 'account' });</span>
+        });
+      });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      Users.query().$promise.then(<span class="fstat-no" title="function not covered" >function(data) {</span></span>
+<span class="cstat-no" title="statement not covered" >        data.forEach(<span class="fstat-no" title="function not covered" >function(item) {</span></span>
+<span class="cstat-no" title="statement not covered" >          var name_ = item.firstname + ' ' + item.lastname + '(' + item.email + ')';</span>
+<span class="cstat-no" title="statement not covered" >          service.data.push({ id: item.user_id, name: name_, targetType: 'user' });</span>
+        });
+      });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      Apps.query().$promise.then(<span class="fstat-no" title="function not covered" >function(data) {</span></span>
+<span class="cstat-no" title="statement not covered" >        data.forEach(<span class="fstat-no" title="function not covered" >function(item) {</span></span>
+<span class="cstat-no" title="statement not covered" >          var name_ = item.app_name + ' (App)';</span>
+<span class="cstat-no" title="statement not covered" >          service.data.push({ id: item.id, accountId: item.account_id, name: name_, targetType: 'app' });</span>
+        });
+      });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      ApiKeys.query().$promise.then(<span class="fstat-no" title="function not covered" >function(data) {</span></span>
+<span class="cstat-no" title="statement not covered" >        data.forEach(<span class="fstat-no" title="function not covered" >function(item) {</span></span>
+<span class="cstat-no" title="statement not covered" >          var name_ = item.key_name + ' (API Key)';</span>
+<span class="cstat-no" title="statement not covered" >          service.data.push({ id: item.id, accountId: item.account_id, name: name_, targetType: 'apikey' });</span>
+        });
+      });
+<span class="cstat-no" title="statement not covered" >      DNSZones.query().$promise.then(<span class="fstat-no" title="function not covered" >function(data) {</span></span>
+<span class="cstat-no" title="statement not covered" >        data.forEach(<span class="fstat-no" title="function not covered" >function(item) {</span></span>
+<span class="cstat-no" title="statement not covered" >          var name_ = item.zone + '(DNS Zone)';</span>
+<span class="cstat-no" title="statement not covered" >          service.data.push({ id: item.id, accountId: item.account_id, name: name_, targetType: 'dnszone' });</span>
+        });
+      });
+      // TODO: not released auditlog
+      // DashboardSrv.getAll().then(function(data) {
+      //   data.forEach(function(item) {
+      //     var name_ = item.title + '(Dashboard)';
+      //     item.targetType = 'dashboard';
+      //     item.name = name_;
+      //     service.data.push(item);
+      //   });
+      // });
+<span class="cstat-no" title="statement not covered" >      return def.promise;</span>
+    };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.clear = <span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >      this.data.lenght = 0;</span>
+<span class="cstat-no" title="statement not covered" >      return $q.when([]);</span>
+    };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.data = [];</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return this;</span>
+  }
+  /*@ngInject*/
+<span class="fstat-no" title="function not covered" >  function activityTargetSelect(User, $localStorage, AlertService, ActivityTargetListService) {</span>
+<span class="cstat-no" title="statement not covered" >    return {</span>
+      restrict: 'E',
+      templateUrl: 'parts/shared/filter-activity-log/activity-target-select.tpl.html',
+      scope: true,
+      replace: true,
+      bindToController: {
+        activityTarget: '=ngModel',
+        targetType: '@',
+        accountId: '@',
+        onSelect: '&amp;'
+      },
+      controllerAs: '$ctrl',
+      controller: /*@ngInject*/ <span class="fstat-no" title="function not covered" >function($scope, ActivityTargetListService) {</span>
+<span class="cstat-no" title="statement not covered" >        var $ctrl = this;</span>
+<span class="cstat-no" title="statement not covered" >        $ctrl.activityTargetList = ActivityTargetListService.data;</span>
+<span class="cstat-no" title="statement not covered" >        if ($ctrl.activityTargetList.length === 0) {</span>
+<span class="cstat-no" title="statement not covered" >          ActivityTargetListService.init();</span>
+        }
+<span class="cstat-no" title="statement not covered" >        $ctrl.filterAccountAndAllItem = <span class="fstat-no" title="function not covered" >function(item) {</span></span>
+          // item 'All Activity Targets' need to be in always in list
+<span class="cstat-no" title="statement not covered" >          if (item.id === null) {</span>
+<span class="cstat-no" title="statement not covered" >            return true;</span>
+          }
+<span class="cstat-no" title="statement not covered" >          if ($ctrl.targetType !== '' &amp;&amp; $ctrl.targetType !== item.targetType) {</span>
+<span class="cstat-no" title="statement not covered" >            return false;</span>
+          }
+<span class="cstat-no" title="statement not covered" >          if ($ctrl.accountId !== '') {</span>
+<span class="cstat-no" title="statement not covered" >            if (angular.isArray(item.accountId)) {</span>
+<span class="cstat-no" title="statement not covered" >              return (item.accountId.indexOf($ctrl.accountId) !== -1);</span>
+            } else {
+<span class="cstat-no" title="statement not covered" >              return item.accountId === $ctrl.accountId;</span>
+            }
+          } else {
+<span class="cstat-no" title="statement not covered" >            return true;</span>
+          }
+<span class="cstat-no" title="statement not covered" >          return false;</span>
+        };
+        // if changing targetType then need to change activityTarget
+<span class="cstat-no" title="statement not covered" >        $scope.$watch(<span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >            return $ctrl.targetType;</span>
+          },
+<span class="fstat-no" title="function not covered" >          function(newVal) {</span>
+<span class="cstat-no" title="statement not covered" >            if (newVal === '' || (!!$ctrl.activityTarget &amp;&amp; $ctrl.activityTarget.targetType !== newVal)) {</span>
+<span class="cstat-no" title="statement not covered" >              $ctrl.activityTarget = null;</span>
+            }
+          });
+        // if changing accountId then need to change activityTarget
+<span class="cstat-no" title="statement not covered" >        $scope.$watch(<span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >            return $ctrl.accountId;</span>
+          },
+<span class="fstat-no" title="function not covered" >          function(newVal) {</span>
+<span class="cstat-no" title="statement not covered" >            if (newVal === '' || (!!$ctrl.activityTarget &amp;&amp; $ctrl.activityTarget.accountId !== newVal)) {</span>
+<span class="cstat-no" title="statement not covered" >              $ctrl.activityTarget = null;</span>
+            }
+          });
+      }
+    };
+  }
+})();
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Jul 04 2017 14:04:53 GMT+0300 (EEST)
+</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>
