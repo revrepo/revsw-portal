@@ -31,7 +31,7 @@ gulp.task('test:instrument', ['test:files'], function(done) {
     .pipe(mocha({
       reporter: 'spec',
     }))
-    // .pipe(uglify())
+    .pipe(uglify())
     .pipe(gulpIstanbul({
         coverageVariable: '__coverage__'
       }))
