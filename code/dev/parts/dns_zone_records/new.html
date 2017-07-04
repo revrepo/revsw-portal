@@ -83,7 +83,7 @@
               <label for="recTtl" class="control-label col-sm-2">
                 TTL </label>
               <div class="col-md-10">
-                <input type="number" placeholder="3600" id="proxy_timeout" name="recTtl" class="form-control inline-block" ng-disabled="_loading" ng-model="model.rec.ttl" ng-min="1" ng-max="3600"> second(s)
+                <input type="number" placeholder="3600" id="proxy_timeout" name="recTtl" class="form-control inline-block" ng-disabled="_loading" ng-model="model.rec.ttl" ng-min="1" ng-max="2147483647"> second(s)
                 <label for="recTtl" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Optional; if not set, the default TTL for the {{zone_name}} zone will be used">
                   <i class="fa fa-question-circle"></i>
                 </label>
