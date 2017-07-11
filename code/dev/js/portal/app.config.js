@@ -35,6 +35,9 @@
     Highcharts.setOptions({
       global: {
         useUTC: false
+      },
+      lang: {
+        drillUpText: '◁ Back'
       }
     });
   }
