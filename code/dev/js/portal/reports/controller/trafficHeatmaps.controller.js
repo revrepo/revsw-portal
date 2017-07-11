@@ -6,9 +6,9 @@
     .controller('TrafficHeatmapsController', TrafficHeatmapsController);
 
   /*@ngInject*/
-  function TrafficHeatmapsController($scope, HeatmapsDrawer, Countries, Stats, $q, Util) {
+  function TrafficHeatmapsController($scope, $config, HeatmapsDrawer, HeatmapsWorldDrillDrawer, Countries, Stats, $q, Util) {
 
-    var hitsDrawer = HeatmapsDrawer.create('#canvas-svg-hits'),
+    var hitsDrawer = HeatmapsWorldDrillDrawer.create('#canvas-svg-hits'),
       gbtDrawer = HeatmapsDrawer.create('#canvas-svg-gbt');
 
     /**
@@ -64,12 +64,25 @@
             data.data.forEach( function (item) {
 
               var key = item.key.toUpperCase();
-              world.push({
-                name: ( $scope.countries[key] || item.key ),
-                id: key,
-                value: item.count,
-                tooltip: '<strong>' + Util.convertValue(item.count) + '</strong> requests'
-              });
+              var worldItem = {
+                name: ($scope.countries[key] || item.key),
+                  id: key,
+                  value: item.count,
+                  tooltip: '<strong>' + Util.convertValue(item.count) + '</strong> requests',
+                  regions: []
+              };
+              world.push(worldItem );
+              // NOTE: change region information for display details on map
+              if ( item.regions ) {
+                _.each(item.regions,function(itemRegion){
+                  worldItem.regions.push({
+                    name: key + itemRegion.key,
+                    id: itemRegion['hc-key'],
+                    value: itemRegion.count,
+                    tooltip: '<strong>' + Util.convertValue(itemRegion.count) + '</strong> requests'
+                  });
+                });
+              }
               if ( key === 'US' && item.regions ) {
                 usa = item.regions;
               }
