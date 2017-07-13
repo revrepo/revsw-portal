@@ -32,6 +32,10 @@
                 var chart = this;
                 var namePoint = e.point.drilldown.toLowerCase();
                 var mapKey = 'countries/' + namePoint + '/' + namePoint + '-all';
+                // NOTE:  for key 'in' (India) need is used custom map 'India with Andaman and Nicobar' for show all data
+                if (namePoint === 'in') {
+                  mapKey = 'countries/in/custom/in-all-andaman-and-nicobar';
+                }
                 // Handle error, the timeout is cleared on success
                 var fail = setTimeout(function() {
                   if (!Highcharts.maps[mapKey]) {
@@ -57,33 +61,43 @@
                     mapData: mapData,
                     data: e.point.options.regions,
                     dataLabels: {
-                      enabled: false, // NOTE: not show name on map
+                      enabled: true, // NOTE: show name on map
                       format: '{point.name}'
                     }
                   });
                 });
               }
-              this.setTitle(null, {
+              // NOTE: change titles
+              this.setTitle({
                 text: e.point.name
+              }, {
+                text: ''
               });
             },
             drillup: function() {
-              this.setTitle(null, {
+              this.setTitle({
                 text: ''
+              }, {
+                text: 'Click On Country To See Per-Region Heatmap'
               });
             }
           }
         },
         title: {
-          text: null
-        },
-        subtitle: {
           text: '',
-          floating: !true,
           align: 'center',
           y: 10,
           style: {
             fontSize: '16px'
+          }
+        },
+        subtitle: {
+          text: 'Click On Country To See Per-Region Heatmap',
+          floating: false,
+          align: 'left',
+          y: 10,
+          style: {
+            fontSize: '12px'
           }
         },
         mapNavigation: {
@@ -158,8 +172,9 @@
           drillUpButton: {
             relativeTo: 'spacingBox',
             position: {
+              align: 'top',
               x: 0,
-              y: 60
+              y: 0
             }
           }
         }
