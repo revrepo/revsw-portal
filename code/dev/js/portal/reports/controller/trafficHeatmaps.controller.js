@@ -201,12 +201,12 @@
       }
       $q.all([
         $scope.reloadHitsCountry($scope.domain.id),
-        // $scope.reloadGBTCountry($scope.domain.id)
+        $scope.reloadGBTCountry($scope.domain.id)
       ]).then(function ( data ) {
 
         //  (re)Draw maps using received data
         hitsDrawer.drawCurrentMap( data[0/*hits data*/] );
-        // gbtDrawer.drawCurrentMap( data[1/*gbt data*/] );
+        gbtDrawer.drawCurrentMap( data[1/*gbt data*/] );
 
       }).finally(function () {
         $scope._loading = false;
