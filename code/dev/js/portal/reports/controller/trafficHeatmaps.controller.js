@@ -71,7 +71,11 @@
                   tooltip: '<strong>' + Util.convertValue(item.count) + '</strong> requests',
                   regions: []
               };
-              world.push(worldItem );
+              // NOTE: exclude data for key equal 'FO'. This data broke a map
+              if(['FO'].indexOf(key) !== -1){
+                return;
+              }
+              world.push(worldItem);
               // NOTE: change region information for display details on map
               if ( item.regions ) {
                 _.each(item.regions,function(itemRegion){
