@@ -52,6 +52,17 @@
                 $.getScript('https://code.highcharts.com/mapdata/' + mapKey + '.js', function() {
                   var mapData = Highcharts.geojson(Highcharts.maps[mapKey]);
                   // Hide loading and add series
+                  // NOTE: fix error zero value for colorAxis.type === 'logarithmic'
+                  // var data = _.filter(e.point.options.regions,function(item){
+                  //   return item.value>0;
+                  // });
+                  // NOTE: fix data for show all regions with a color
+                  var data = _.map(e.point.options.regions, function(item) {
+                    if(item.value < 1){
+                      item.value = 1;
+                    }
+                    return item;
+                  });
                   chart.hideLoading();
                   clearTimeout(fail);
                   chart.addSeriesAsDrilldown(e.point, {
@@ -59,7 +70,7 @@
                     joinBy: ['hc-key', 'id'],
                     name: e.point.name,
                     mapData: mapData,
-                    data: e.point.options.regions,
+                    data: data,
                     dataLabels: {
                       enabled: true, // NOTE: show name on map
                       format: '{point.name}'
@@ -271,11 +282,11 @@
         return curr.value === undefined || curr.id === '--' || curr.value >= prev ? prev : curr.value;
       }, conf.colorAxis.max);
       // TODO: delete after chechs
-      // if (!data || !data.length || conf.colorAxis.min !== 0) {
-      //   conf.colorAxis.type = 'linear';
-      // } else {
-      //   conf.colorAxis.type = 'logarithmic';
-      // }
+      if (!data || !data.length || !conf.colorAxis.min) {
+        conf.colorAxis.type = 'linear';
+      } else {
+        conf.colorAxis.type = 'logarithmic';
+      }
       // console.log(conf.colorAxis.min, conf.colorAxis.type)
       conf.series[0].joinBy = ['iso-a2', 'id'];
       conf.series[0].data = data.map(function(item) {
@@ -283,7 +294,6 @@
       });
       var dataMap_ = Highcharts.geojson(Highcharts.maps['custom/world-highres']);
       conf.series[0].mapData = $.each(dataMap_, function(item) {
-        // console.log(this.properties);
         this.drilldown = this.properties['hc-key'];
         this.value = item; // Non-random bogus data
       });
