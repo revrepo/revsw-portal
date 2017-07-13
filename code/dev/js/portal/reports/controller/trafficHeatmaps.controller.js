@@ -71,14 +71,25 @@
                   tooltip: '<strong>' + Util.convertValue(item.count) + '</strong> requests',
                   regions: []
               };
-              // NOTE: exclude data for key equal 'FO'. This data broke a map
-              if(['FO'].indexOf(key) !== -1){
-                return;
-              }
+              // TODO: add exclude data for key equal 'FO'. This data broke a map
+              // if(['FO'].indexOf(key) !== -1){
+              //   return;
+              // }
               world.push(worldItem);
+
               // NOTE: change region information for display details on map
               if ( item.regions ) {
                 _.each(item.regions,function(itemRegion){
+                  // NOTE: not use data without 'hc-key' and
+                  // TODO: check 'hc-key' equals 'us-ae' ("Armed Forces Europe, Middle East, & Canada")
+                  // TODO: check 'ar-df' - "Distrito Federal" ??
+                  if(!itemRegion['hc-key']){
+                    if(itemRegion['in-key']){
+                      var item = _.find();
+                    }
+                    return;
+                  }
+
                   worldItem.regions.push({
                     name: key + itemRegion.key,
                     id: itemRegion['hc-key'],
@@ -86,6 +97,18 @@
                     tooltip: '<strong>' + Util.convertValue(itemRegion.count) + '</strong> requests'
                   });
                 });
+                // NOTE: additional actions for add data to regions
+                _.map(item.regions, function(itemRegion) {
+                   if(itemRegion['in-key']) {
+                     var item = _.find(worldItem.regions,function(itemRegion_){
+                       return itemRegion_.id ===itemRegion['in-key'];
+                     });
+
+                     if(!!item){
+                       item.value += itemRegion.count;
+                       item.tooltip= '<strong>' + Util.convertValue(item.value) + '</strong> requests';
+                     }
+                  }});
               }
               if ( key === 'US' && item.regions ) {
                 usa = item.regions;
@@ -178,12 +201,12 @@
       }
       $q.all([
         $scope.reloadHitsCountry($scope.domain.id),
-        $scope.reloadGBTCountry($scope.domain.id)
+        // $scope.reloadGBTCountry($scope.domain.id)
       ]).then(function ( data ) {
 
         //  (re)Draw maps using received data
         hitsDrawer.drawCurrentMap( data[0/*hits data*/] );
-        gbtDrawer.drawCurrentMap( data[1/*gbt data*/] );
+        // gbtDrawer.drawCurrentMap( data[1/*gbt data*/] );
 
       }).finally(function () {
         $scope._loading = false;

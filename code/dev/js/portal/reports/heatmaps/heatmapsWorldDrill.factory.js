@@ -120,7 +120,7 @@
         colorAxis: {
           minColor: '#99CCFF',
           maxColor: '#0050A1',
-          type: 'logarithmic',
+          type: 'linear',
           tickPixelInterval: 100
         },
         tooltip: {
@@ -174,7 +174,7 @@
             position: {
               align: 'top',
               x: 0,
-              y: 0
+              y: 15
             }
           }
         }
@@ -270,12 +270,13 @@
       conf.colorAxis.min = data.reduce(function(prev, curr) {
         return curr.value === undefined || curr.id === '--' || curr.value >= prev ? prev : curr.value;
       }, conf.colorAxis.max);
-
-      if (!data || !data.length || !conf.colorAxis.min) {
-        conf.colorAxis.type = 'linear';
-      } else {
-        conf.colorAxis.type = 'logarithmic';
-      }
+      // TODO: delete after chechs
+      // if (!data || !data.length || conf.colorAxis.min !== 0) {
+      //   conf.colorAxis.type = 'linear';
+      // } else {
+      //   conf.colorAxis.type = 'logarithmic';
+      // }
+      // console.log(conf.colorAxis.min, conf.colorAxis.type)
       conf.series[0].joinBy = ['iso-a2', 'id'];
       conf.series[0].data = data.map(function(item) {
         return _.clone(item);
