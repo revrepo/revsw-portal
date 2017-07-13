@@ -101,7 +101,7 @@
                   rel_http = Math.round(http_ * 1000 / (https_ + http_)) / 10;
                   rel_https = Math.round(https_ * 1000 / (https_ + http_)) / 10;
                 }
-                var _text = '!HTTPS <span style="font-weight: bold; color: #3c65ac;">' + Util.formatNumber(https_) +
+                var _text = 'HTTPS <span style="font-weight: bold; color: #3c65ac;">' + Util.formatNumber(https_) +
                   '</span> Requests, <span style="font-weight: bold; color: #3c65ac;">' + rel_https +
                   '</span>%<br> HTTP <span style="font-weight: bold; color: black;">' + Util.formatNumber(http_) +
                   '</span> Requests, <span style="font-weight: bold; color: black;">' + rel_http +
