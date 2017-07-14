@@ -31,6 +31,7 @@
       }
     });
 
+    delete $localStorage.selectedBP; // NOTE: clear for new information about selected BP
     $scope.NO_SPECIAL_CHARS = $config.PATTERNS.NO_SPECIAL_CHARS;
 
     /**
@@ -38,11 +39,12 @@
      * @description
      *
      * Choose Billin Plan for registration
-     *
+     * NOTE: store a billing plan details for another pages
      * @param  {Object} bp Billing Plan
      * @return
      */
     $scope.chooseBillingPlan = function(bp) {
+      $localStorage.selectedBP = bp;
       $state.go('signup.contact_info2', {
         billing_plan_handler: bp.chargify_handle
       });
