@@ -496,5 +496,24 @@
           $scope._loading = false;
         });
     };
+    /**
+     * @name isJobConfigured
+     * @description method check existing all required configuration properties
+     *  for run/stop/pause job
+     * NOTE: only for check from list !
+     *
+     * @param {Object} item
+     */
+    $scope.isJobConfigured = function(item) {
+      // NOTE: source_id is required
+      if(!item.source_id || item.source_id  === ''){
+        return false;
+      }
+      // NOTE: destination_host is required
+      if(!item.destination_host || item.destination_host.length === 0) {
+        return false;
+      }
+      return true;
+    };
   }
 })();
