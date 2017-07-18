@@ -2,6 +2,8 @@ var config = require('config');
 var Jasmine2HtmlReporter = require('protractor-jasmine2-html-reporter');
 var JasmineSpecReporter = require('jasmine-spec-reporter');
 
+var PortalCoverage = require('./../resources/coverage');
+
 module.exports = {
   directConnect: false,
   seleniumAddress: config.get('protractor.seleniumAddress'),
@@ -83,5 +85,28 @@ module.exports = {
       displayStacktrace: 'summary'
     });
     jasmine.getEnv().addReporter(specReporter);
+
+    if (process.env.NODE_ENV === 'coverage') {
+
+      /**
+       * Defining a general/common after each for all specs that will be run.
+       * Main purpose of this is to send Ceverage Information gathered in
+       * client side to Coverage server.
+       */
+      beforeEach(function (done) {
+        browser.driver
+          .executeScript(function () {
+            return window.__coverage__;
+          })
+          .then(function (coverageInfo) {
+            PortalCoverage
+              .logClientInfo(coverageInfo)
+              .then(function(){
+                done();
+              })
+              .catch(done);
+          });
+      });
+    }
   }
 };
