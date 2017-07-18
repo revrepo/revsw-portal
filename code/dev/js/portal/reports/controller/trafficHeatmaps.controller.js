@@ -71,10 +71,11 @@
                   tooltip: '<strong>' + Util.convertValue(item.count) + '</strong> requests',
                   regions: []
               };
-              // TODO: add exclude data for key equal 'FO'. This data broke a map
-              // if(['FO'].indexOf(key) !== -1){
-              //   return;
-              // }
+              // NOTE: exclude data for key equal 'FO'. This data broke a highchart map
+              // NOTE: DON`T DELETE THIS!!!
+              if(['FO'].indexOf(key) !== -1){
+                return;
+              }
               world.push(worldItem);
 
               // NOTE: change region information for display details on map
