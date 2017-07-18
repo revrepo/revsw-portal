@@ -86,7 +86,7 @@
 
       <!-- Selected Billing Plan -->
       <div class="row col-xs-12 col-sm-12" ng-if="vendorConfig.enable_simplified_signup_process === false">
-        <div style="height: 65%" class="affix affix-top col-sm-offset-1 col-xs-offset-1 col-xs-11 col-sm-11 col-md-5">
+        <div style="padding-right: 30px;margin-bottom: 40px;" class="affix affix-top col-sm-offset-1 col-xs-offset-1 col-xs-11 col-sm-11 col-md-5">
           <div class="individual-plan" style="padding-bottom: 30px;" ng-if="currentPB.chargify_handle == $ctrl.model.billing_plan">
             <div class="billing-plan">
               <div class="billing-plan-header">
@@ -173,11 +173,11 @@
             </div>
             <!--Promo Code -->
             <div class="form-group" ng-class="{ 'has-error': newUser.promoCode.$invalid && newUser.promoCode.$dirty }">
-              <label for="promoCode" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Promo Code">Promo Code</label>
+              <label for="promoCode" class="col-sm-3 control-label">Promo Code</label>
               <div class="col-sm-9">
                 <input type="text" class="form-control inline-block" id="promoCode" name="promoCode" placeholder="Enter Promo Code" ng-maxlength="15"
                   ng-model="$ctrl.model.promocode" ng-pattern="NO_SPECIAL_CHARS" ng-disabled="$ctrl._loading">
-                <label for="lastName" class="text-info" popover-trigger="mouseenter" uib-popover="Last name">
+                <label for="promoCode" class="text-info" popover-trigger="mouseenter" uib-popover="Promo Code">
                 <i class="fa fa-question-circle"></i>
                 </label>
                 <div class="error-messages" ng-messages="newUser.promoCode.$error" role="alert" ng-messages-multiple>
