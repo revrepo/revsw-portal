@@ -83,9 +83,30 @@
           </div>
         </div>
       </form>
-      <!-- Full form registration -->
+
+      <!-- Selected Billing Plan -->
       <div class="row col-xs-12 col-sm-12" ng-if="vendorConfig.enable_simplified_signup_process === false">
-        <div class="affix affix-top col-sm-offset-1 col-xs-offset-1 col-xs-11 col-sm-11 col-md-5">
+        <div style="height: 65%" class="affix affix-top col-sm-offset-1 col-xs-offset-1 col-xs-11 col-sm-11 col-md-5">
+          <div class="individual-plan col-sm-12" ng-if="currentPB.chargify_handle == $ctrl.model.billing_plan">
+            <div class="billing-plan">
+              <div class="billing-plan-header">
+                <h2 class="billing-plan-title">{{currentPB.name}}</h2>
+              </div>
+              <div class="billing-plan-price">
+                <h1 class=""><span class="billing-plan-ammount">${{currentPB.monthly_fee}}</span>/mon</h1>
+              </div>
+              <div class="billing-plan-details">
+                <p class="billing-plan-description">{{currentPB.description}}</p>
+                <h4>Overage Charges</h4>
+                <div class="billing-plan-services" ng-repeat="service in currentPB.services">
+                  <div>${{service.cost | number:2}} per {{service.measurement_unit}}</div>
+                </div>
+              </div>
+              <footer class="billing-plan-action">
+                <!--<button href="" ng-click="chooseBillingPlan(item)" class="btn btn-success btn-lg">Subscribe</button>-->
+              </footer>
+            </div>
+          </div>
           <p class="information"><strong> Discover how <em>fast</em> fast can be when accelerating your business at the edge with nuu:bit</strong></p>
           <p><strong>To Get Started:</strong></p>
           <ol class="list-instruction">
@@ -96,14 +117,10 @@
               at the edge.</li>
           </ol>
           <hr>
-          <!-- Selected Billing Plan -->
-          <div class="col-sm-12" ng-if="currentPB.chargify_handle == $ctrl.model.billing_plan">
-            <p>You are about to subscribe to billing plan <strong>"{{currentPB.name}}"</strong> for <strong>${{currentPB.monthly_fee}}/mon. </strong></p>
-            <p>It {{currentPB.description | lowcase}}. </p>
-          </div>
         </div>
       </div>
       <div class="col-md-offset-6 col-sm-12 col-md-6">
+        <!-- Full form registration -->
         <form class="col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-0 col-lg-11 col-xs-11 col-sm-11 col-md-11  form-horizontal form-contact-info--full"
           name="newUser" novalidate>
           <div class="form-group " ng-class="{ 'has-error': newUser.email.$invalid && newUser.email.$dirty }">
