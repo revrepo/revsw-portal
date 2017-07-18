@@ -131,7 +131,7 @@
         colorAxis: {
           minColor: '#99CCFF',
           maxColor: '#0050A1',
-          type: 'linear',
+          type: 'logarithmic',
           tickPixelInterval: 100
         },
         tooltip: {
@@ -295,7 +295,6 @@
       var dataMap_ = Highcharts.geojson(Highcharts.maps['custom/world-highres']);
       conf.series[0].mapData = $.each(dataMap_, function(item) {
         this.drilldown = this.properties['hc-key'];
-        this.value = item; // Non-random bogus data
       });
 
       // conf.series[0].mapData = Highcharts.maps['custom/world-highres'];
