@@ -176,7 +176,7 @@
         WILDCARD_DOMAIN_FIELD: /(^(\*\.[a-zA-Z0-9-\_]{0,62}[a-zA-Z0-9]\.)+[a-zA-Z]{2,63}$)/,
         WILDCARD_DOMAINS_FIELDS: /(^\*\.(([a-zA-Z0-9-\_]{0,62})[a-zA-Z0-9]\.)+[a-zA-Z]{2,63}$)/,
         URL: /(https?:)?\/\/.+/,
-        HEADER_VALUE: /^[A-Za-z0-9.' -]+$/,
+        HEADER_VALUE: /^[A-Za-z0-9.' -[\]\_\/{}()""*+&@?!.,\\^$|#]+$/,
         DOMAIN: /(?=^.{4,253}$)(^((?!-)(?!\_)[a-zA-Z0-9-\_]{0,62}[a-zA-Z0-9]\.)+[a-zA-Z]{2,63}$)/,
         DNS_RECORD_DOMAIN: /(?=^.{4,253}$)(^((?!-)[a-zA-Z0-9-\_]{0,62}[a-zA-Z0-9]\.)+[a-zA-Z]{2,63}$)/,
         COOKIE: /^[A-Za-z0-9.' -]+$/,
