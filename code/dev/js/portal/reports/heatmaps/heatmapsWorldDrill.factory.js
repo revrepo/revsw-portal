@@ -89,7 +89,7 @@
               this.setTitle({
                 text: ''
               }, {
-                text: 'Click On Country To See Per-Region Heatmap'
+                text: 'Click on USA, Canada, Brazil, Russia, India or China to see detailed country heatmap'
               });
             }
           }
@@ -103,7 +103,7 @@
           }
         },
         subtitle: {
-          text: 'Click On Country To See Per-Region Heatmap',
+          text: 'Click on USA, Canada, Brazil, Russia, India or China to see detailed country heatmap',
           floating: false,
           align: 'left',
           y: 10,

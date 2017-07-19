@@ -9,7 +9,7 @@
   function TrafficHeatmapsController($scope, $config, HeatmapsDrawer, HeatmapsWorldDrillDrawer, Countries, Stats, $q, Util) {
 
     var hitsDrawer = HeatmapsWorldDrillDrawer.create('#canvas-svg-hits'),
-      gbtDrawer = HeatmapsDrawer.create('#canvas-svg-gbt');
+      gbtDrawer = HeatmapsWorldDrillDrawer.create('#canvas-svg-gbt');
 
     /**
      * Loading flag
@@ -66,10 +66,10 @@
               var key = item.key.toUpperCase();
               var worldItem = {
                 name: ($scope.countries[key] || item.key),
-                  id: key,
-                  value: item.count,
-                  tooltip: '<strong>' + Util.convertValue(item.count) + '</strong> requests',
-                  regions: []
+                id: key,
+                value: item.count,
+                tooltip: '<strong>' + Util.convertValue(item.count) + '</strong> requests',
+                regions: []
               };
               // NOTE: exclude data for key equal 'FO'. This data broke a highchart map
               // NOTE: DON`T DELETE THIS!!!
@@ -77,19 +77,22 @@
                 return;
               }
               world.push(worldItem);
-
               // NOTE: change region information for display details on map
-              if ( item.regions ) {
-                _.each(item.regions,function(itemRegion){
-                  // NOTE: not use data without 'hc-key' and
-                  // TODO: check 'hc-key' equals 'us-ae' ("Armed Forces Europe, Middle East, & Canada")
-                  // TODO: check 'ar-df' - "Distrito Federal" ??
-                  if(!itemRegion['hc-key']){
-                    if(itemRegion['in-key']){
-                      var item = _.find();
-                    }
+              if (item.regions) {
+                // NOTE: additional actions for add data to regions
+                var additionalData = _.filter(item.regions, function(item) {
+                  return !!item['in-key'];
+                });
+                _.each(item.regions, function(itemRegion) {
+                  // NOTE: ignore data without 'hc-key'
+                  if (!itemRegion['hc-key']) {
                     return;
                   }
+                  _.each(additionalData, function(includeItem) {
+                    if(itemRegion['hc-key'] === includeItem['in-key']){
+                      itemRegion.count += includeItem.count;
+                    }
+                  });
 
                   worldItem.regions.push({
                     name: key + itemRegion.key,
@@ -98,20 +101,9 @@
                     tooltip: '<strong>' + Util.convertValue(itemRegion.count) + '</strong> requests'
                   });
                 });
-                // NOTE: additional actions for add data to regions
-                _.map(item.regions, function(itemRegion) {
-                   if(itemRegion['in-key']) {
-                     var item = _.find(worldItem.regions,function(itemRegion_){
-                       return itemRegion_.id ===itemRegion['in-key'];
-                     });
-
-                     if(!!item){
-                       item.value += itemRegion.count;
-                       item.tooltip= '<strong>' + Util.convertValue(item.value) + '</strong> requests';
-                     }
-                  }});
               }
-              if ( key === 'US' && item.regions ) {
+              // TODO: delete after change graph
+              if (key === 'US' && item.regions) {
                 usa = item.regions;
               }
             });
@@ -159,26 +151,63 @@
 
               // console.log( item );
               var key = item.key.toUpperCase();
-              world.push({
-                name: ( $scope.countries[key] || item.key ),
+              // TODO: delete old code
+              // world.push({
+              //   name: ($scope.countries[key] || item.key),
+              //   id: key,
+              //   value: item.sent_bytes,
+              //   tooltip: ('Sent: <strong>' + Util.humanFileSizeInGB(item.sent_bytes) +
+              //     '</strong> Received: <strong>' + Util.humanFileSizeInGB(item.received_bytes) + '</strong>')
+              // });
+              var worldItem = {
+                name: ($scope.countries[key] || item.key),
                 id: key,
                 value: item.sent_bytes,
-                tooltip: ( 'Sent: <strong>' + Util.humanFileSizeInGB(item.sent_bytes) +
-                  '</strong> Received: <strong>' + Util.humanFileSizeInGB(item.received_bytes) + '</strong>' )
-              });
-
-              if ( key === 'US' && item.regions ) {
+                tooltip: ('Sent: <strong>' + Util.humanFileSizeInGB(item.sent_bytes) +
+                  '</strong> Received: <strong>' + Util.humanFileSizeInGB(item.received_bytes) + '</strong>'),
+                regions: []
+              };
+              world.push(worldItem);
+              // NOTE: change region information for display details on map
+              if (item.regions) {
+                // NOTE: additional actions for add data to regions
+                var additionalData = _.filter(item.regions, function(item) {
+                  return !!item['in-key'];
+                });
+                _.each(item.regions, function(itemRegion) {
+                  // NOTE: ignore data without 'hc-key'
+                  if (!itemRegion['hc-key']) {
+                    return;
+                  }
+                  _.each(additionalData, function(includeItem) {
+                    if(itemRegion['hc-key'] === includeItem['in-key']) {
+                      itemRegion.count += includeItem.count;
+                      itemRegion.sent_bytes += includeItem.sent_bytes;
+                      itemRegion.received_bytes += includeItem.received_bytes;
+                    }
+                  });
+                  worldItem.regions.push({
+                    name: key + itemRegion.key,
+                    id: itemRegion['hc-key'],
+                    value: itemRegion.sent_bytes,
+                    tooltip: ('Sent: <strong>' + Util.humanFileSizeInGB(itemRegion.sent_bytes) +
+                      '</strong> Received: <strong>' + Util.humanFileSizeInGB(itemRegion.received_bytes) + '</strong>'),
+                  });
+                });
+              }
+              // TODO: delete after change graph
+              if (key === 'US' && item.regions) {
                 usa = item.regions;
               }
             });
 
-            usa = usa.map( function( item ) {
+            usa = usa.map(function(item) {
               return {
                 id: item.key,
                 name: item.key,
                 value: item.sent_bytes,
-                tooltip: ( 'Sent: <strong>' + Util.humanFileSizeInGB(item.sent_bytes) +
-                  '</strong> Received: <strong>' + Util.humanFileSizeInGB(item.received_bytes) + '</strong>' )
+                tooltip: ('Sent: <strong>' + Util.humanFileSizeInGB(item.sent_bytes) +
+                  '</strong> Received: <strong>' + Util.humanFileSizeInGB(item.received_bytes) + '</strong>')
               };
             });
           }
@@ -196,20 +225,20 @@
      *
      * @see {$scope.reloadCountry}
      */
-    $scope.onDomainSelect = function () {
+    $scope.onDomainSelect = function() {
       if (!$scope.domain || !$scope.domain.id) {
         return;
       }
       $q.all([
         $scope.reloadHitsCountry($scope.domain.id),
         $scope.reloadGBTCountry($scope.domain.id)
-      ]).then(function ( data ) {
+      ]).then(function(data) {
 
         //  (re)Draw maps using received data
-        hitsDrawer.drawCurrentMap( data[0/*hits data*/] );
-        gbtDrawer.drawCurrentMap( data[1/*gbt data*/] );
+        hitsDrawer.drawCurrentMap(data[0 /*hits data*/ ]);
+        gbtDrawer.drawCurrentMap(data[1 /*gbt data*/ ]);
 
-      }).finally(function () {
+      }).finally(function() {
         $scope._loading = false;
       });
 
