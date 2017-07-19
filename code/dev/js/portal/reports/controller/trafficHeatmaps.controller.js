@@ -189,9 +189,9 @@
                   worldItem.regions.push({
                     name: key + itemRegion.key,
                     id: itemRegion['hc-key'],
-                    value: item.sent_bytes,
-                    tooltip: ('Sent: <strong>' + Util.humanFileSizeInGB(item.sent_bytes) +
-                      '</strong> Received: <strong>' + Util.humanFileSizeInGB(item.received_bytes) + '</strong>'),
+                    value: itemRegion.sent_bytes,
+                    tooltip: ('Sent: <strong>' + Util.humanFileSizeInGB(itemRegion.sent_bytes) +
+                      '</strong> Received: <strong>' + Util.humanFileSizeInGB(itemRegion.received_bytes) + '</strong>'),
                   });
                 });
               }
