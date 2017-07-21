@@ -120,15 +120,15 @@ describe('Functional', function () {
               expect(alert.getText()).toEqual(expectedMsg);
             });
 
-            it('should verify success with enabled "Set Default ImageEngine Configuration"',
-              function () {
-                EditPage.switchBtns(form.getSetImageEngineConfigurationSw(), true);
-                EditPage.clickValidateDomain();
-                var alert = Portal.alerts.getFirst();
-                var expectedMsg = 'Successfully verified the domain configuration';
-                expect(alert.getText()).toEqual(expectedMsg);
-              });
-          });
+          it('should verify success with enabled "Set Default ImageEngine Configuration"',
+            function () {
+              EditPage.switchBtns(form.getSetImageEngineConfigurationSw(), true);
+              EditPage.clickValidateDomain();
+              var alert = Portal.alerts.getFirst();
+              var expectedMsg = 'Successfully verified the domain configuration';
+              expect(alert.getText()).toEqual(expectedMsg);
+            });
+        });
 
         describe('Notification windows for ImageEngine', function () {
           beforeEach(function (done) {
