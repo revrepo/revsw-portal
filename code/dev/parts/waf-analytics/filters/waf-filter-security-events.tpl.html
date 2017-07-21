@@ -28,14 +28,10 @@
       </div>
       <!-- Count per page -->
       <div class="form-group" ng-show="isShowCount">
-        <select class="form-control fixed" popover-trigger="mouseenter" uib-popover="Number of WAF events to show on a page" ng-model="ngFilters.count">
-          <option ng-selected="ngFilters.count==25" value="25">25</option>
-          <option ng-selected="ngFilters.count==50" value="50">50</option>
-          <option ng-selected="ngFilters.count==100" value="100">100</option>
-          <option ng-selected="ngFilters.count==200"  value="200">200</option>
+        <select class="form-control fixed" popover-trigger="mouseenter" uib-popover="Number of WAF events to show on a page" ng-model="ngFilters.count"
+          ng-options="t for t in [25,50,100,200]">
         </select>
       </div>
-
       <div class="form-group">
         <button class="btn btn-info" ng-disabled="isLoading" ng-click="updateFilters()">
          <i class="glyphicon glyphicon-refresh" ng-class="isLoading ? 'spin':''"></i>  &nbsp;
