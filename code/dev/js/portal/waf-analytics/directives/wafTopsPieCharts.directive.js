@@ -27,9 +27,15 @@
           chart: {},
           tooltip: {
             formatter: function() {
-              var text = '<b>' + this.point.description + ' </b>'+
-              //  Highcharts.numberFormat(this.point.percentage, 0) + '% '+
-               '(' + Highcharts.numberFormat(this.y, 0, '.', ',') + ' requests)';
+              var text = '<b>' + this.point.name + '</b>: ' +
+                Highcharts.numberFormat(this.point.percentage, 1) + '% ' +
+                '(' + Highcharts.numberFormat(this.y, 0, '.', ',') + ' requests)';
+              if (this.point.description) {
+                text = '<b>' + this.point.description + '</b>' +
+                  ' (rule ID ' + this.point.name + '): ' +
+                  Highcharts.numberFormat(this.point.percentage, 1) + '% ' +
+                  '(' + Highcharts.numberFormat(this.y, 0, '.', ',') + ' requests)';
+              }
               return text;
             }
           },
@@ -96,7 +102,7 @@
                   $scope.topRulesIds.push({
                     name: item.key,
                     y: item.count,
-                    description: (!!descriptionName) ? descriptionName.msg /*+ ' (ID ' + item.key + ')' */: '' + item.key,
+                    description: (!!descriptionName) ? descriptionName.msg /*+ ' (ID ' + item.key + ')' */ : '',
                   });
                 });
               }
