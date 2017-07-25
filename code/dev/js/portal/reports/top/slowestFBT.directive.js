@@ -22,8 +22,8 @@
       controller: function ($scope, Stats, $localStorage) {
         $scope._loading = false;
         $scope.filters = !$scope.flStoreName ? _.assign({
-          from_timestamp: moment().subtract(24, 'hours').valueOf(),
-          to_timestamp: Date.now()
+          delay: '24',
+          count: '20'
         }, {}) : $localStorage[$scope.flStoreName];
 
         $scope.items = [];
@@ -34,7 +34,11 @@
           $scope._loading = true;
           var params = angular.merge({
             domainId: $scope.ngDomain.id
-          }, $scope.filters);
+          }, $scope.filters, {
+            // NOTE: always get new data
+            from_timestamp: moment().subtract($scope.filters.delay || '24', 'hours').valueOf(),
+            to_timestamp: moment().valueOf()
+          });
           delete params.delay;
           Stats
             .slowestFBTObjects(params)
