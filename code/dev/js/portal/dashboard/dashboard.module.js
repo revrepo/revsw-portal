@@ -18,6 +18,7 @@
       'revapm.Portal.Dashboard.Widgets.AppsAnalytics',
       'revapm.Portal.Dashboard.Widgets.WebAnalytics',
       'revapm.Portal.Dashboard.Widgets.SecurityAnalytics',
+      'revapm.Portal.Dashboard.Widgets.DNSAnalytics',
       'adf.widget.analytics-proxy-traffic'
     ])
     .config( /*ngInject*/ function(dashboardProvider) {
