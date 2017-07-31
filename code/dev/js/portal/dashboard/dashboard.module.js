@@ -17,6 +17,7 @@
       'angular-nicescroll',
       'revapm.Portal.Dashboard.Widgets.AppsAnalytics',
       'revapm.Portal.Dashboard.Widgets.WebAnalytics',
+      'revapm.Portal.Dashboard.Widgets.SecurityAnalytics',
       'adf.widget.analytics-proxy-traffic'
     ])
     .config( /*ngInject*/ function(dashboardProvider) {

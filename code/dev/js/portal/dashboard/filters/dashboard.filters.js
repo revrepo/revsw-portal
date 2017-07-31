@@ -29,6 +29,7 @@
     'widget-apps-mobile-top-10-domains-hits', // TODO: rebase to Apps Analytics
     'widget-apps-mobile-top-10-domains-hits', // TODO: rebase to Apps Analytics
     'widget-apps-mobile-rps-chart', // TODO: rebase to Apps Analytics group
+    'widget-waf-security-events-chart' // WAF Analitycs - "Security Events Graph"
   ];
   var _group_widgets = {
     apps: {
@@ -85,6 +86,7 @@
       order: 4,
       widgets_list: [
         'widget-norse-live-attack-map', //"Norse Live Attack Map"
+        'widget-waf-security-events-chart' // "Security Events Graph"
       ]
     },
     // “Third-Party Integrations”
