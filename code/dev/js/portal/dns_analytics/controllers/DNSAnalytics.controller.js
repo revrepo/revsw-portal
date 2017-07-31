@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
 
   angular
@@ -21,7 +21,9 @@
   ) {
     var vm = this;
     vm._loading = false;
-    vm.period = '1h'; // default period
+    vm.filters = {
+      period: '1h' // default period
+    };
     vm.totalDNSZoneRecords = 0;
     vm.accountTotalDNSZones = 0;
     vm.totalDNSZoneQueries30d = 0;
@@ -34,7 +36,7 @@
       chart: {
         zoomType: 'x',
         events: {
-          redraw: function () {
+          redraw: function() {
             if (info_) {
               info_.destroy();
               info_ = null;
@@ -64,7 +66,7 @@
           text: 'Queries'
         },
         labels: {
-          formatter: function () {
+          formatter: function() {
             return Util.formatNumber(this.value);
           }
         }
@@ -92,7 +94,7 @@
 
     // get Total count DNS Zones for current account
     User.getUserDNSZones()
-      .then(function (data) {
+      .then(function(data) {
         vm.accountTotalDNSZones = data.length;
       });
 
@@ -100,7 +102,7 @@
      * @name onDNSZoneSelected
      * @description method call then change selected DNS Zone
      */
-    vm.onDNSZoneSelected = function () {
+    vm.onDNSZoneSelected = function() {
       if (!vm.selectedZone || !vm.selectedZone.id) {
         return;
       }
@@ -111,72 +113,45 @@
      * @name reload
      * @description Reload data for Account DNS Zone
      */
-    vm.reload = function () {
+    vm.reload = function() {
       if (!vm.selectedZone || !vm.selectedZone.id) {
         return;
       }
+      vm.newFilters = false;
+      $timeout(function() {
+        // NOTE: update filter for reload data into directive
+        vm.newFilters = angular.copy(vm.filters);
+      }, 100);
+
       vm._loading = true;
 
       var optionsDNSZone = angular.merge({
         id: vm.selectedZone.id
       }, {
-        period: vm.period
+        period: vm.filters.period
       }, {});
-
-      var _xAxisPointStart = null;
-      var _xAxisPointInterval = null;
-      var series = [{
-        name: 'Queries',
-        showInLegend: false,
-        data: []
-      }];
-      // NOTE: for better performance - make only one request for equals period
-      var requestDataLast30Day_ = $q.when({});
-      if (vm.period !== '30d') {
-        requestDataLast30Day_ = Stats.dns_stats_usage_zone(angular.merge({}, optionsDNSZone, {
+      Stats.dns_stats_usage_zone(angular.merge({}, optionsDNSZone, {
           period: '30d'
-        })).$promise;
-      }
-      // NOTE: Get data for Selected DNS Zone
-      $q.all([
-          Stats.dns_stats_usage_zone(optionsDNSZone).$promise, //
-          requestDataLast30Day_
-        ])
-        .then(function (arraysData) {
-          var dataMonth = arraysData[0];
-          var data = arraysData[0];
-          if (vm.period !== '30d') {
-            dataMonth = arraysData[1];
-          }
-          if (dataMonth) {
-            vm.totalDNSZoneQueries30d = Util.formatNumber(dataMonth.metadata.queries);
-          }
+        })).$promise
+        .then(function(arraysData) {
+          var dataMonth = arraysData;
+          var data = arraysData;
+          vm.totalDNSZoneQueries30d = Util.formatNumber(dataMonth.metadata.queries);
+
           if (data.metadata) {
             vm.totalDNSZoneRecords = Util.formatNumber(data.metadata.records);
           }
-          var interval = data.metadata.interval_sec || 1800;
-          _xAxisPointStart = parseInt(data.metadata.start_timestamp);
-          _xAxisPointInterval = parseInt(data.metadata.interval_sec) * 1000;
+
           totalDNSZoneQueries_ = 0;
           if (data.data && data.data.length > 0) {
-            series[0].data = data.data;
             totalDNSZoneQueries_ = data.metadata.queries;
-          } else {
-            series[0].data = [];
           }
-          return $q.when(series);
         })
-        .then(function setNewData(data) {
-          // model better to update once
-          vm.dnsZoneData = {
-            pointStart: _xAxisPointStart,
-            // pointInterval: _xAxisPointInterval,
-            series: series
-          };
-        })
-        .finally(function () {
+
+        .finally(function() {
           vm._loading = false;
         });
+
     };
   }
 })();
