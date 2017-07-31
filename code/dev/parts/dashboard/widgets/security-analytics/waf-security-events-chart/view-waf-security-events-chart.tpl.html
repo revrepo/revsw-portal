@@ -1,0 +1,8 @@
+<div class="widgets--waf-security-events-chart auto-scroll">
+  <div class="alert alert-info" ng-if="!vm.config.domain">
+    Please click on <i class="glyphicon glyphicon-cog"></i> icon to configure the widget
+  </div>
+  <div ng-if="vm.config.domain">
+    <div waf-security-events-chart filters-sets="vm.config.filters" ng-domain="vm.config.domain"></div>
+  </div>
+</div>
