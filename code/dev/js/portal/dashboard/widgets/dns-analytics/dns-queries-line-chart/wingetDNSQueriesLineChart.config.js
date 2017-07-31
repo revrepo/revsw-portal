@@ -10,7 +10,7 @@
     dashboardProvider
       // “DNS Queries Graph”
       .widget('widget-dns-queries-line-chart', {
-        title: 'DNS Queries Graph',
+        title: 'DNS Queries',
         description: 'Display DNS Queries Graph',
         templateUrl: 'parts/dashboard/widgets/dns-analytics/dns-queries-line-chart/view-dns-queries-line-chart.tpl.html',
         titleTemplateUrl: 'parts/dashboard/widgets/dns-analytics/widget-title-with-params-zone.tpl.html',

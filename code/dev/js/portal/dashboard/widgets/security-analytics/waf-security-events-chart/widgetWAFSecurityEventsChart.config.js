@@ -10,7 +10,7 @@
     dashboardProvider
       // “Security Events Graph”
       .widget('widget-waf-security-events-chart', {
-        title: 'Security Events Graph',
+        title: 'Security Events',
         description: 'Display Security Events Graph',
         templateUrl: 'parts/dashboard/widgets/security-analytics/waf-security-events-chart/view-waf-security-events-chart.tpl.html',
         titleTemplateUrl: 'parts/dashboard/widgets/security-analytics/widget-title-with-params-waf.tpl.html',
