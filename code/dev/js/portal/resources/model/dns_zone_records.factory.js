@@ -22,6 +22,10 @@
       delete:{
         method: 'DELETE',
         transformRequest: clearSendData
+      },
+      autoDiscover: {
+        url: $config.API_URL + '/dns_zones/auto_discover/:zone_name',
+        method: 'GET'
       }
     });
   }

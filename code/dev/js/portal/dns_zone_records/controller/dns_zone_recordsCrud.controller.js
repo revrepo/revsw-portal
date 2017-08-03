@@ -19,7 +19,8 @@
     $http,
     $q,
     $state,
-    $anchorScroll) {
+    $anchorScroll,
+    $uibModal) {
 
     $scope.DNS_DEFAULT_VALUES = $config.DNS_DEFAULT_VALUES;
     //Invoking crud actions
@@ -197,7 +198,7 @@
         .then(function(data) {
           if(isStay===true){
             // NOTE: set default values
-            model.rec.ttl = null;
+            model.rec.ttl = 3600;// NOTE: set default TTL
             model.rec.type = 'A';
             model.idomain = '';
             model.rec.answers = [];
@@ -398,8 +399,68 @@
         });
     };
 
+    /**
+      * Window AutoDiscover dialog
+      *
+      * @param {string=} [template]
+      * @param {Object=} [resolve]
+      * @returns {*}
+      */
+    $scope.windowAutoDiscover = function(template, resolve) {
+      if(angular.isObject(template)) {
+        resolve = template;
+        template = '';
+      }
+      if(angular.isObject(resolve)) {
+        resolve = {
+          model: resolve
+        };
+      }
+      var modalInstance = $uibModal.open({
+        animation: false,
+        templateUrl: template || 'parts/modal/confirmDelete.html',
+        // NOTE: use specific controller for additional actions
+        controller: 'dnsZoneAutoDiscoverZoneRecordsModalController',
+        size: 'lg',
+        resolve: resolve || {}
+      });
 
-
+      return modalInstance.result;
+    };
+    /**
+     * @name onOpenAutoDiscoverZoneRecords
+     */
+    $scope.onOpenAutoDiscoverZoneRecords = function(zoneName) {
+      if(!zoneName || zoneName.length === 0) {
+        return;
+      }
+      var model_ = {
+        dns_zone_id: $scope.dnsZoneId,
+        zone_name: zoneName,
+        _loading: true
+      };
+      // NOTE: show main work window
+      $scope.windowAutoDiscover('processAutoDiscover.html', model_);
+      // NOTE: get data for show in modal window
+      DNSZoneRecords.autoDiscover(model_).$promise
+        .then(function(data) {
+          angular.merge(model_, {
+            zone_records: angular.copy(data.zone_records)
+          });
+        })
+        .catch(function(err){
+          $scope.alertService.danger(err);
+          angular.merge(model_, {
+            zone_records: []
+          });
+        })
+        .finally(function() {
+          // NOTE: time  to read message
+          $timeout(function() {
+            model_._loading = false;
+          }, 700);
+        });
+    };
 
   }
 })();
