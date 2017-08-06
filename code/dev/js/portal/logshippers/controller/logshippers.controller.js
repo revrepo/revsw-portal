@@ -138,13 +138,13 @@
     $scope.$on('$stateChangeSuccess', function(state) {
       var data = null;
       // NOTE: set filter params for specific state
-      if($state.is('index.accountSettings.accountresources')){
+      if ($state.is('index.accountSettings.accountresources')) {
         $scope.filter.limit = 5;
         var filters = {
-          account_id: !User.getSelectedAccount() ? null: User.getSelectedAccount().acc_id
+          account_id: !User.getSelectedAccount() ? null : User.getSelectedAccount().acc_id
         };
         data = {
-          filters:filters
+          filters: filters
         };
         $scope.list(data)
           .then(setAccountName)
@@ -282,7 +282,7 @@
      * @return
      */
     $scope.deleteJob = function(model) {
-      if($scope.isReadOnly() === true) {
+      if ($scope.isReadOnly() === true) {
         return;
       }
       $scope.confirm('confirmModal.html', model).then(function() {
@@ -458,26 +458,32 @@
         model.id = $stateParams.id;
       }
       var modelId = model.id;
+      // NOTE: Pull actual data about job
+      $scope.get(model.id)
+        .then(function(data) {
+          var actualData = data;
+          $scope.confirm('confirmChangeLogShippingStateModal.html', actualData)
+            .then(function() {
+              actualData.operational_mode = state;
+              actualData = $scope.prepareJobToUpdate(actualData, true);
 
-      $scope.confirm('confirmChangeLogShippingStateModal.html', model)
-        .then(function() {
-          model.operational_mode = state;
-          model = $scope.prepareJobToUpdate(model, true);
-          var params = {
-            id: modelId
-          };
-          $scope.loading(true);
-          // Send data
-          $scope.resource
-            .update(params, model)
-            .$promise
-            .then(function(data) {
-              return data;
-            })
-            .then($scope.alertService.success)
-            .catch($scope.alertService.danger)
-            .finally(function() {
-              $scope.loading(false);
+              var params = {
+                id: modelId
+              };
+              $scope.loading(true);
+              // Send data
+              $scope.resource
+                .update(params, actualData)
+                .$promise
+                .then(function(data) {
+                  angular.merge(model, actualData);
+                  return data;
+                })
+                .then($scope.alertService.success)
+                .catch($scope.alertService.danger)
+                .finally(function() {
+                  $scope.loading(false);
+                });
             });
         });
     };
@@ -506,11 +512,11 @@
      */
     $scope.isJobConfigured = function(item) {
       // NOTE: source_id is required
-      if(!item.source_id || item.source_id  === ''){
+      if (!item.source_id || item.source_id === '') {
         return false;
       }
       // NOTE: destination_host is required
-      if(!item.destination_host || item.destination_host.length === 0) {
+      if (!item.destination_host || item.destination_host.length === 0) {
         return false;
       }
       return true;
