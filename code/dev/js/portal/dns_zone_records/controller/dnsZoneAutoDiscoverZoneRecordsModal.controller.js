@@ -8,8 +8,10 @@
   /*@ngInject*/
   function dnsZoneAutoDiscoverZoneRecordsModalController($q, $scope, $rootScope, DNSZoneRecords, $uibModal, $uibModalInstance, model) {
 
+    $scope.totalAddedRecords = 0;
     $scope.model = model;
-    $scope._loading = $scope.model._loading;
+
+    $scope._loading = false;
     $scope.ok = function() {
       $uibModalInstance.close(true);
     };
@@ -70,7 +72,7 @@
         .map(function(record) {
           var newRecord = {
             dns_zone_id: $scope.model.dns_zone_id,
-            domain: record.domain,// TODO: delete - clean code .replace('mbeans.com', 'vipbilet24.xyz'), // $scope.model.zone_name,
+            domain: record.domain,
             type: record.type
           };
 
@@ -78,13 +80,15 @@
           return $q.when(DNSZoneRecords.create(newRecord).$promise
             .then(function(data) {
               record.$$isAdded = true;
+              record.$$isError = false;
               record.$$isSelected = false;
-              record.$$isExists = true;
+              $scope.totalAddedRecords += 1;
               return record;
             })
             .catch(function(err) {
-              record.$$isSelected = true;
-              record.$$isAdded = false;
+              record.$$isSelected = false;
+              record.$$isError = true;
+              record.$$errorMessage = (!!err.data) ? err.data.message : null;
               return record;
             })
           );
@@ -94,8 +98,6 @@
           // console.log('result', data)
         })
         .finally(function() {
-          // TODO: update main list DNS Records
-          // $rootScope.$broadcast('update:searchData');
           $scope._loading = false;
         });
     };
