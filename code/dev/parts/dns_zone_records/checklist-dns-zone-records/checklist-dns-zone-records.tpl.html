@@ -5,7 +5,7 @@
       <th width="8%">Type</th>
       <th width="7%">TTL</th>
       <th _width="40%">Answers</th>
-      <th width="25%">Keep</th>
+      <th width="25%" class="text text-center">Keep</th>
     </tr>
   </thead>
   <tbody>
@@ -20,9 +20,9 @@
           </li>
         </ul>
       </td>
-      <td>
+      <td class="text text-center" >
         <input ng-if="(!record.$$isExists || record.$$isExists === false) && record.$$isAdded!==true &&record.$$isError !==true"
-          type="checkbox" class="inline-block" ng-model="record.$$isSelected" ng-change="record.$$isAdded=null">
+          type="checkbox" class="inline-block" style="margin-left: 0px;" ng-model="record.$$isSelected" ng-change="record.$$isAdded=null">
         <span class="label label-info" ng-if="record.$$isExists === true && record.$$isDifferentExist === false"> Already Exists </span>
         <div class="label label-warning" ng-if="record.$$isExists === true && record.$$isDifferentExist === true"> Exists With Different Answer(s) </div>
         <span class="label label-success" ng-if="record.$$isAdded === true"> Added</span>
