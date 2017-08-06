@@ -42,7 +42,7 @@
       <p>Please carefully review the list and decide which records are correct and should be stored in the DNS zone, and which
         records should be skipped.</p>
       <p>After completing the process please click on “Add To The DNS Zone” button below.</p>
-      <div class="panel-auto-discover-dns-zones-list" style="min-height: 30vh;max-height: 40vh;overflow: auto;">
+      <div class="panel-auto-discover-dns-zones-list" style="min-height: 30vh;max-height: 60vh;overflow: auto;">
         <div checklist-dns-zone-records ng-model="model.zone_records" dns-zone-id="{{model.dns_zone_id}}">
         </div>
       </div>
@@ -52,9 +52,9 @@
     </div>
   </div>
   <div class="modal-footer">
-    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
-    <!-- <button ng-if="!!model.zone_records" class="btn btn-success" type="button" ng-click="ok()">Close</button> -->
-    <button ng-disabled="countSelectedItems()===0 || model._loading" ng-if="!!model.zone_records && model.zone_records.length!==0"
+    <button ng-if="totalAddedRecords==0"class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+    <button ng-if="totalAddedRecords>0" class="btn btn-success" type="button" ng-click="ok(totalAddedRecords>0)">Close</button>
+    <button ng-disabled="countSelectedItems()===0 || model._loading || _loading" ng-if="!!model.zone_records && model.zone_records.length!==0"
       class="btn btn-success" type="button" ng-click="onAddToTheDNSZone()">Add To The DNS Zone</button>
   </div>
 </script>

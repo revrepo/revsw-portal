@@ -421,7 +421,7 @@
         templateUrl: template || 'parts/modal/confirmDelete.html',
         // NOTE: use specific controller for additional actions
         controller: 'dnsZoneAutoDiscoverZoneRecordsModalController',
-        size: 'lg',
+        size: 'lg modal-dialog--max-size',
         resolve: resolve || {}
       });
 
@@ -440,12 +440,41 @@
         _loading: true
       };
       // NOTE: show main work window
-      $scope.windowAutoDiscover('processAutoDiscover.html', model_);
+      $scope.windowAutoDiscover('processAutoDiscover.html', model_)
+        .then(function(data){
+          if(data === true){
+            $scope.list({ dns_zone_id: $stateParams.dns_zone_id });
+          }
+        });
       // NOTE: get data for show in modal window
       DNSZoneRecords.autoDiscover(model_).$promise
         .then(function(data) {
-          angular.merge(model_, {
+          _.merge(model_, {
             zone_records: angular.copy(data.zone_records)
+          });
+          // NOTE: add additional properties
+          angular.forEach(model_.zone_records, function(item) {
+            var existRecords = _.where($scope.records, { type: item.type, domain: item.domain });
+            item.$$isExists = (existRecords.length>0);
+            item.$$isDifferentExist = true; // NOTE: value by default
+            if(item.$$isExists){
+              // NOTE: add additional data -  "short_answers"
+              item.short_answers = _.map(item.answers, function(itemAnswer) {
+                return itemAnswer.answer.join(' ');
+              });
+
+              if(existRecords[0].short_answers.length === item.short_answers.length){
+                // Exists With Different Answer(s)
+                item.$$isDifferentExist = false;
+                _.forEach(existRecords[0].short_answers,function(itemShortAnswer){
+                  if(_.indexOf(item.short_answers, itemShortAnswer) === -1){
+                    item.$$isDifferentExist = true;
+                  }
+                });
+              }else{
+                item.$$isDifferentExist = true;
+              }
+            }
           });
         })
         .catch(function(err){
@@ -455,10 +484,7 @@
           });
         })
         .finally(function() {
-          // NOTE: time  to read message
-          $timeout(function() {
             model_._loading = false;
-          }, 700);
         });
     };
 

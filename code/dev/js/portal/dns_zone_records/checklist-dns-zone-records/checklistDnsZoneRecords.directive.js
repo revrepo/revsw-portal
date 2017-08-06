@@ -30,8 +30,11 @@
 
         angular.forEach($ctrl.recordsList, function(item) {
           // NOTE: set for all items default properties
-          item.$$isExists = false;
-          item.$$isSelected = !true;
+          if (!item.$$isExists || item.$$isExists === false) {
+            item.$$isSelected = true;
+          } else {
+            item.$$isSelected = false;
+          }
         });
       }
     };

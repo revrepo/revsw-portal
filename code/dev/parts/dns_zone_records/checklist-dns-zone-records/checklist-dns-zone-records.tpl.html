@@ -2,32 +2,34 @@
   <thead>
     <tr>
       <th>Domain</th>
-      <th width="10%">Type</th>
-      <th width="50%">Answers</th>
-      <th width="15%">Keep</th>
+      <th width="8%">Type</th>
+      <th width="7%">TTL</th>
+      <th _width="40%">Answers</th>
+      <th width="25%">Keep</th>
     </tr>
   </thead>
   <tbody>
     <tr ng-repeat='record in $ctrl.recordsList'>
       <td>{{record.domain}}</td>
       <td>{{record.type}}</td>
+      <td>{{record.ttl}}</td>
       <td>
         <ul style="padding: 0;white-space: normal;">
-          <li style_="display: inline;" ng-repeat="answer in record.answers">
+          <li ng-repeat="answer in record.answers">
             {{answer.answer | mergearray}}<span ng-if="!$last">,</span>
-            <!-- TODO: add new view of data?? -->
-            <!-- <dns-zone-record-answer-short-info class="col-sm-10" record-type="{{record.type}}" ng-model="answer"></dns-zone-record-answer-short-info> -->
           </li>
         </ul>
-
       </td>
       <td>
-        <input ng-if="record.$$isAdded === false || record.$$isExists === false" type="checkbox" class="inline-block" ng-model="record.$$isSelected"
-          ng-change="record.$$isAdded=null">
-        <span class="label label-info" ng-if="record.$$isExists === true"> Exists</span>
-        <span class="label label-success" ng-if="record.$$isExists == true && record.$$isAdded === true"> Added</span>
-        <!-- TODO: add error message-->
-        <span class="label label-warning" ng-if="record.$$isAdded === false"> Error </span>
+        <input ng-if="(!record.$$isExists || record.$$isExists === false) && record.$$isAdded!==true &&record.$$isError !==true"
+          type="checkbox" class="inline-block" ng-model="record.$$isSelected" ng-change="record.$$isAdded=null">
+        <span class="label label-info" ng-if="record.$$isExists === true && record.$$isDifferentExist === false"> Already Exists </span>
+        <div class="label label-warning" ng-if="record.$$isExists === true && record.$$isDifferentExist === true"> Exists With Different Answer(s) </div>
+        <span class="label label-success" ng-if="record.$$isAdded === true"> Added</span>
+        <span class="label label-danger inline-block" ng-if="record.$$isError === true" popover-append-to-body="{{false}}" popover-trigger="mouseenter"
+          popover-placement="left" uib-popover="{{record.$$errorMessage|| 'Error'}}"> Error
+          <i class="fa fa-info-circle"></i>
+        </span>
       </td>
     </tr>
   </tbody>
