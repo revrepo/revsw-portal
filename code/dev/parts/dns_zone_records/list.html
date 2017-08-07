@@ -4,9 +4,10 @@
     <h3 class="modal-title">Confirm</h3>
   </div>
   <div class="modal-body">
-    <p>Are you sure you want to delete the <span class="badge">{{model.delrec.type}}</span> <b>{{model.delrec.domain}}</b> record and all associated answers and configuration details?</p>
+    <p>Are you sure you want to delete the <span class="badge">{{model.delrec.type}}</span> <b>{{model.delrec.domain}}</b> record
+      and all associated answers and configuration details?</p>
     <span ng-show="reverse_permitted(model.delrec.type) &amp;&amp; revrec != null">
-        <label><input type="checkbox" class="input-top" ng-model="delete_revrec"> Also delete reverse record <span class="badge">{{revrec.type}}</span> <b>{{revrec.domain}}</b></label>
+        <label><input type="checkbox" class="input-top" ng-model="delete_revrec"> Also delete reverse record <span class="badge">{{revrec.type}}</span>    <b>{{revrec.domain}}</b></label>
     </span>
   </div>
   <div class="modal-footer">
@@ -27,6 +28,52 @@
     <button class="btn btn-success" type="button" ng-click="ok()">OK</button>
   </div>
 </script>
+
+<script type="text/ng-template" id="processAutoDiscover.html">
+  <div class="modal-header">
+    <h3 class="modal-title">Auto-Discover Zone Records</h3>
+  </div>
+  <div class="modal-body">
+    <p ng-if="model._loading">
+      We are working on discovering of the DNS zone’s content - it may take several minutes to complete the process…
+    </p>
+    <div ng-if="!model._loading&& !!model.zone_records && model.zone_records.length>0" style="min-height: 55vh;">
+      <p>We were able to detect the following <strong>({{model.zone_records.length}})</strong> records of DNS zone <strong>{{model.zone_name}}</strong>.</p>
+      <p>Please carefully review the list and decide which records are correct and should be stored in the DNS zone, and which
+        records should be skipped.</p>
+      <p>After completing the process please click on “Add To The DNS Zone” button below.</p>
+      <div class="panel-auto-discover-dns-zones-list" style="min-height: 30vh;max-height: 60vh;overflow: auto;">
+        <div checklist-dns-zone-records ng-model="model.zone_records" dns-zone-id="{{model.dns_zone_id}}">
+        </div>
+      </div>
+    </div>
+    <div ng-if="!model._loading && !!model.zone_records && model.zone_records.length==0">
+      We were not able to auto-discover any records of the DNS zone. Please try again later or use another DNS zone name.
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button ng-if="totalAddedRecords==0"class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+    <button ng-if="totalAddedRecords>0" class="btn btn-success" type="button" ng-click="ok(totalAddedRecords>0)">Close</button>
+    <button ng-disabled="countSelectedItems()===0 || model._loading || _loading" ng-if="!!model.zone_records && model.zone_records.length!==0"
+      class="btn btn-success" type="button" ng-click="onAddToTheDNSZone()">Add To The DNS Zone</button>
+  </div>
+</script>
+<script type="text/ng-template" id="confirmMultiAddDNSRecords.html">
+  <div class="modal-header">
+    <h3 class="modal-title">Confirm</h3>
+  </div>
+  <div class="modal-body">
+    Please confirm that you want to add <strong>{{model.count}}</strong> records to DNS zone
+    <strong>{{model.zone_name}}</strong>?
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+    <button class="btn btn-success" type="button" ng-click="ok()">OK</button>
+  </div>
+</script>
+
+
+
 <div class="container-fluid" ui-view="page">
   <div class="row">
     <div class="col-sm-12">
@@ -53,6 +100,15 @@
                     <i class="glyphicon glyphicon-plus"></i>&nbsp; Add New Record
                   </a>
                 </div>
+                <div class="form-group">
+                  <button ng-click="onOpenAutoDiscoverZoneRecords(zone_name)" ng-class="{'btn-disabled':isReadOnly()}" class="btn btn-success"
+                    ng-disabled="_loading || isReadOnly()" popover-append-to-body="{{true}}" popover-placement="right" popover-trigger="mouseenter"
+                    uib-popover="Our system can automatically discover the content of a DNS zone by probing all well-known and popular host names typically
+found in a DNS zone. The tool does not guarantee that the discovered zone content will be absolutely complete or correct
+so you will need to manually review the proposed DNS zone content and approve it for publishing.">
+
+                <i class="fa fa-cc-discover"></i>&nbsp; Auto-Discover Zone Records</button>
+                </div>
               </div>
               <div class="pull-right">
                 <form class="form-inline">
@@ -68,7 +124,8 @@
         </div>
         <div class="panel-body">
           <div class="alert alert-info" ng-if="records.length == 0 && !_loading">
-            Currently you don't have any DNS zones registered in the system. You can click on "Add New DNS Zone" button above to add an DNS Zone.
+            Currently you don't have any DNS zones registered in the system. You can click on "Add New DNS Zone" button above to add
+            an DNS Zone.
           </div>
           <div class="alert alert-warning" ng-if="records == null && !_loading">
             Failed to retrieve a list of resources - please try again later

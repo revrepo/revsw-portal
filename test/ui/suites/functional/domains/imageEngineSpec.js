@@ -61,6 +61,10 @@ describe('Functional', function () {
           beforeEach(function (done) {
             EditPage.clickTabImageEngine();
             EditPage.switchBtns(form.getImageEngineSw(), true);
+            var okBtn = Portal.dialog.getOkBtn();
+            if(okBtn.isDisplayed()){
+              Portal.dialog.clickOk();
+            }
             done();
           });
           afterEach(function (done) {
@@ -132,6 +136,10 @@ describe('Functional', function () {
             EditPage.switchBtns(form.getCustomVCLrulesSw(), true);
             EditPage.clickTabImageEngine();
             EditPage.switchBtns(form.getImageEngineSw(), true);
+            var okBtn = Portal.dialog.getOkBtn();
+            if(okBtn.isDisplayed()) {
+              Portal.dialog.clickOk();
+            }
             done();
           });
 

@@ -1,0 +1,9 @@
+<div class="widgets--dns-queries-line-chart auto-scroll">
+  <div class="alert alert-info" ng-if="!vm.config.zone">
+    Please click on <i class="glyphicon glyphicon-cog"></i> icon to configure the widget
+  </div>
+  <div ng-if="vm.config.zone">
+    <div style="min-width: 500px; min-height: 350px" dns-queries-line-chart ng-zone="vm.config.zone" filters-sets="vm.config.filters"
+      filters="vm.newFilters"></div>
+  </div>
+</div>

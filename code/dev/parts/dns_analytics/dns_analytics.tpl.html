@@ -23,7 +23,7 @@
               <div class="pull-right">
                 <form class="form-inline">
                   <div class="form-group">
-                    <select class="form-control fixed" ng-model="vm.period">
+                    <select class="form-control fixed" ng-model="vm.filters.period">
                       <option value="1h">Last 1 Hour</option>
                       <option value="24h">Last 24 Hours</option>
                       <option value="30d">Last 30 Days</option>
@@ -74,10 +74,8 @@
             <div class="col-sm-12">
               <div class="panel">
                 <div class="panel-heading">
-                  <label class="title h4">DNS Queries</label>
-                  <div class="panel-body">
-                    <div style="min-width: 500px; min-height: 350px" line-chart ng-data="vm.dnsZoneData" ng-chart-options="vm.chartOptions"></div>
-                  </div>
+                  <div style="min-width: 500px; min-height: 350px" dns-queries-line-chart ng-zone="vm.selectedZone" filters-sets="vm.filters"
+                    filters="vm.newFilters"></div>
                 </div>
               </div>
             </div>

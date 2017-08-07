@@ -48,13 +48,27 @@
           case 'HINFO':
             return new Array(answer.hardware, answer.os);
           case 'MX':
-            return new Array(answer.priority || DNS_CONST.MX_PRIORITY, answer.host);
+            // NOTE: constructtion "new Array(answer.priority || DNS_CONST.MX_PRIORITY, answer.host)"
+            // NOTE: not will be work if "answer.priority" equal 0(zero)
+            if(answer.priority === undefined) {
+              answer.priority = DNS_CONST.MX_PRIORITY;
+            }
+            return new Array(answer.priority, answer.host);
           case 'NAPTR':
             return new Array(answer.order, answer.preference, answer.flags, answer.service, answer.regexp, answer.replacement);
           case 'RP':
             return new Array(answer.email, answer.txt_dname);
           case 'SRV':
-            return new Array(answer.priority || DNS_CONST.SRV_PRIORITY, answer.weight || DNS_CONST.SRV_WEIGHT, answer.port || DNS_CONST.SRV_PORT, answer.host);
+            if(answer.priority === undefined) {
+              answer.priority = DNS_CONST.SRV_PRIORITY;
+            }
+            if(answer.weight === undefined) {
+              answer.weight = DNS_CONST.SRV_WEIGHT;
+            }
+            if(answer.port === undefined) {
+              answer.port =  DNS_CONST.SRV_PORT;
+            }
+            return new Array(answer.priority, answer.weight, answer.port, answer.host);
           default:
             return new Array(answer.value);
         }

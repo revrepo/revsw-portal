@@ -19,7 +19,8 @@
     $http,
     $q,
     $state,
-    $anchorScroll) {
+    $anchorScroll,
+    $uibModal) {
 
     $scope.DNS_DEFAULT_VALUES = $config.DNS_DEFAULT_VALUES;
     //Invoking crud actions
@@ -197,7 +198,7 @@
         .then(function(data) {
           if(isStay===true){
             // NOTE: set default values
-            model.rec.ttl = null;
+            model.rec.ttl = 3600;// NOTE: set default TTL
             model.rec.type = 'A';
             model.idomain = '';
             model.rec.answers = [];
@@ -398,8 +399,94 @@
         });
     };
 
+    /**
+      * Window AutoDiscover dialog
+      *
+      * @param {string=} [template]
+      * @param {Object=} [resolve]
+      * @returns {*}
+      */
+    $scope.windowAutoDiscover = function(template, resolve) {
+      if(angular.isObject(template)) {
+        resolve = template;
+        template = '';
+      }
+      if(angular.isObject(resolve)) {
+        resolve = {
+          model: resolve
+        };
+      }
+      var modalInstance = $uibModal.open({
+        animation: false,
+        templateUrl: template || 'parts/modal/confirmDelete.html',
+        // NOTE: use specific controller for additional actions
+        controller: 'dnsZoneAutoDiscoverZoneRecordsModalController',
+        size: 'lg modal-dialog--max-size',
+        resolve: resolve || {}
+      });
 
+      return modalInstance.result;
+    };
+    /**
+     * @name onOpenAutoDiscoverZoneRecords
+     */
+    $scope.onOpenAutoDiscoverZoneRecords = function(zoneName) {
+      if(!zoneName || zoneName.length === 0) {
+        return;
+      }
+      var model_ = {
+        dns_zone_id: $scope.dnsZoneId,
+        zone_name: zoneName,
+        _loading: true
+      };
+      // NOTE: show main work window
+      $scope.windowAutoDiscover('processAutoDiscover.html', model_)
+        .then(function(data){
+          if(data === true){
+            $scope.list({ dns_zone_id: $stateParams.dns_zone_id });
+          }
+        });
+      // NOTE: get data for show in modal window
+      DNSZoneRecords.autoDiscover(model_).$promise
+        .then(function(data) {
+          _.merge(model_, {
+            zone_records: angular.copy(data.zone_records)
+          });
+          // NOTE: add additional properties
+          angular.forEach(model_.zone_records, function(item) {
+            var existRecords = _.where($scope.records, { type: item.type, domain: item.domain });
+            item.$$isExists = (existRecords.length>0);
+            item.$$isDifferentExist = true; // NOTE: value by default
+            if(item.$$isExists){
+              // NOTE: add additional data -  "short_answers"
+              item.short_answers = _.map(item.answers, function(itemAnswer) {
+                return itemAnswer.answer.join(' ');
+              });
 
+              if(existRecords[0].short_answers.length === item.short_answers.length){
+                // Exists With Different Answer(s)
+                item.$$isDifferentExist = false;
+                _.forEach(existRecords[0].short_answers,function(itemShortAnswer){
+                  if(_.indexOf(item.short_answers, itemShortAnswer) === -1){
+                    item.$$isDifferentExist = true;
+                  }
+                });
+              }else{
+                item.$$isDifferentExist = true;
+              }
+            }
+          });
+        })
+        .catch(function(err){
+          $scope.alertService.danger(err);
+          angular.merge(model_, {
+            zone_records: []
+          });
+        })
+        .finally(function() {
+            model_._loading = false;
+        });
+    };
 
   }
 })();

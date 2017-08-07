@@ -61,11 +61,14 @@
         <form class="form-horizontal" name="editForm">
           <div class="form-group form-inline" ng-show="record.link==null">
             <label for="recordTtl" class="control-label col-sm-2">TTL </label>
-            <div class="col-sm-10">
-              <input name="recordTtl" type="number" min="0" max="2147483647" class="form-control inline-block" placeholder="20" ng-model="record.ttl"> (seconds)
+            <div class="col-sm-10" ng-class="{'has-error': editForm.recordTtl.$invalid && editForm.recordTtl.$dirty}">
+              <input name="recordTtl" type="number" ng-min="0" ng-max="2147483647" class="form-control inline-block" placeholder="20" ng-model="record.ttl"> (seconds)
               <label for="recordTtl" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Optional; if not set, the default TTL for the {{zone}} zone will be used.">
                 <i class="fa fa-question-circle"></i>
               </label>
+              <div class="error-messages" ng-messages="editForm.recordTtl.$error" role="alert" ng-messages-multiple>
+                <div ng-messages-include="parts/shared/error-messages.html"></div>
+              </div>
             </div>
           </div>
           <div class="form-group">

@@ -174,13 +174,13 @@
                 </div>
               </div>
               <div class="form-group" ng-class="{'has-error': editForm.destinationPassword.$invalid && editForm.destinationPassword.$dirty }">
-                <label for="destinationPassword" class="col-sm-2 control-label">Password<span ng-if="model.destination_type ==='sftp' ||model.destination_type ==='ftp'"> *</span> </label>
+                <label for="destinationPassword" class="col-sm-2 control-label">Password<span ng-if="model.destination_type ==='sftp' ||model.destination_type ==='ftp'||model.destination_type ==='s3'"> *</span> </label>
                 <div class="col-sm-10">
                   <div class="input-group">
                     <span id="spnPassword" class="add-on input-group-addon" style="cursor:pointer;" ng-click="isShowPassw= !isShowPassw" popover-trigger="mouseenter" uib-popover="Click to show/hide the password">
                    <i id="icnPassword" class="glyphicon" ng-class="isShowPassw?'glyphicon-eye-open':'glyphicon-eye-close'"></i></span>
-                    <input type="{{isShowPassw?'text':'password'}}" class="form-control inline-block" id="destination_password" name="destinationPassword" placeholder="Password" ng-model="model.destination_password" ng-maxlength="150" ng-disabled="_loading" ng-required="model.destination_type ==='sftp' ||model.destination_type ==='ftp'">
-                    <label for="destinationPassword" class="text text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Password for FTP and SFTP destination types" style="padding-left: 4px;">
+                    <input type="{{isShowPassw?'text':'password'}}" class="form-control inline-block" id="destination_password" name="destinationPassword" placeholder="Password" ng-model="model.destination_password" ng-maxlength="150" ng-disabled="_loading" ng-required="model.destination_type ==='sftp' ||model.destination_type ==='ftp'|| model.destination_type ==='s3'">
+                    <label for="destinationPassword" class="text text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Password for FTP and SFTP destination types, Amazon Secret Access Key for S3 destination type" style="padding-left: 4px;">
                       <i class="fa fa-question-circle"></i>
                     </label>
                   </div>
