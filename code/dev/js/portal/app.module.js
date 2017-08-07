@@ -42,6 +42,7 @@
     'revapm.Portal.AzureSubscriptions',
     'revapm.Portal.WAFAnalytics',
     'revapm.Portal.WAFRules',
+    'revapm.Portal.networkIPBlocks',
     'ngYoutubeEmbed',
     'satellizer'
   ]);
