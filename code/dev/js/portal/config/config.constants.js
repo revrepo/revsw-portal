@@ -269,6 +269,11 @@
         SRV_PORT: 5060
       },
       /**
+       * @name DNS_WAIT_NEW_CALL_MILLISSECONDS
+       * @description default value waiting between request to API (NSONE)
+       */
+      DNS_WAIT_NEW_CALL_MILLISSECONDS: 5000,
+      /**
        * @name WAF_ACTIONS_DEFAULT
        * @description default WAF Action Rule for add
        * @type {Array}
