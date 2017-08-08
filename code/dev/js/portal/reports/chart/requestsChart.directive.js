@@ -16,7 +16,8 @@
         flOs: '=',
         flDevice: '=',
         flBrowser: '=',
-        filtersSets: '='
+        filtersSets: '=',
+        isAutoReload: '@?isAutoReload' // NOTE: optional property. if not equ no
       },
       /*@ngInject*/
       controller: RequestsChartCtrl
@@ -85,6 +86,10 @@
               '</span> Max <span style="font-weight: bold; color: #3c65ac;">' + Util.convertTraffic(traffic_max_) +
               '</span><br>Traffic Total <span style="font-weight: bold; color: #3c65ac;">' + Util.humanFileSizeInGB(traffic_total_, 3) +
               '</span>';
+            // NOTE: information about error
+            if( $scope.hasFailedToLoadData === true){
+              _text = '<strong style="color: red;"> Failed to retrieve the data - please try again later </strong>';
+            }
             var x = this.xAxis[0].toPixels(this.xAxis[0].min) + 3;
             info_ = this /*chart*/ .renderer
               .label(_text,
@@ -94,7 +99,7 @@
               })
               .attr({
                 fill: 'rgba(240, 240, 240, 0.6)',
-                stroke: '#3c65ac',
+                stroke: $scope.hasFailedToLoadData ? 'red' : '#3c65ac', // NOTE: border color
                 'stroke-width': 1,
                 padding: 6,
                 r: 2,
@@ -132,7 +137,7 @@
     }
 
     $scope.$watch('ngDomain', function() {
-      if (!$scope.ngDomain) {
+      if (!$scope.ngDomain || $scope.isAutoReload === 'false') {
         return;
       }
       reload();
@@ -158,6 +163,7 @@
         return;
       }
       $scope._loading = true;
+      $scope.hasFailedToLoadData = false;
       var _xAxisPointStart = null;
       var _xAxisPointInterval = null;
       var series = [{
@@ -212,6 +218,14 @@
             pointInterval: _xAxisPointInterval,
             series: series
           };
+        })
+        .catch(function(err){
+           $scope.traffic = {
+            pointStart: _xAxisPointStart,
+            pointInterval: _xAxisPointInterval,
+            series: series
+          };
+          $scope.hasFailedToLoadData = true;
         })
         .finally(function() {
           $scope._loading = false;

@@ -47,7 +47,7 @@ describe('Smoke', function () {
         });
 
         it('should display tabs to Edit Domain page', function () {
-          expect(EditPage.getAllTabsCountDomain()).toEqual('6');
+          expect(EditPage.getAllTabsCountDomain()).toEqual('9');
         });
 
         it('click tab "General Settings"', function () {
@@ -70,6 +70,16 @@ describe('Smoke', function () {
           expect(EditPage.tabIsActive('sslConfiguration')).toEqual(true);
         });
 
+        it('click tab "ACL"', function() {
+          EditPage.clickTabACL();
+          expect(EditPage.tabIsActive('acl')).toEqual(true);
+        });
+
+        it('click tab "WAF"', function() {
+          EditPage.clickTabWAF();
+          expect(EditPage.tabIsActive('waf')).toEqual(true);
+        });
+
         it('click tab "Custom VCL Rules"', function () {
           EditPage.clickTabVCL();
           expect(EditPage.tabIsActive('customVCLRules')).toEqual(true);
@@ -85,7 +95,11 @@ describe('Smoke', function () {
           expect(EditPage.tabIsActive('thirdPartyLinks')).toEqual(true);
         });
 
-        
+        it('click tab "ImagesEngine"', function() {
+          EditPage.clickTabImageEngine();
+          expect(EditPage.tabIsActive('imageEngine')).toEqual(true);
+        });
+
       });
     });
   });

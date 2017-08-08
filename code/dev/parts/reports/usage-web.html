@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid usage-web">
   <div class="row">
     <div class="col-md-12">
       <h2>Usage Report</h2>
@@ -42,6 +42,7 @@
                           data-ng-model="month_year"
                           data-datetimepicker-config="{ dropdownSelector: '#month-dd', startView: 'month', minView: 'month', modelType: 'milliseconds' }"
                           data-on-set-time="onTimeSet(newDate)"
+                          data-before-render="beforeRenderCalendar($view, $dates, $leftDate, $upDate, $rightDate)"
                           />
                       </ul>
                     </div>
@@ -77,74 +78,19 @@
           </div>
 
           <div class="row">
-
-            <div class="col-md-4">
-
-              <h4>Domains</h4>
-
-              <form class="form-horizontal">
-
-                <div class="form-group">
-                  <label class="col-sm-6 control-label" >Active</label>
-                  <div class="col-sm-6">
-                    <div class="form-control text-right">{{ report.domains.active }}</div>
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label class="col-sm-6 control-label" >Deleted</label>
-                  <div class="col-sm-6">
-                    <div class="form-control text-right">{{ report.domains.deleted }}</div>
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label class="col-sm-6 control-label" >SSL Enabled</label>
-                  <div class="col-sm-6">
-                    <div class="form-control text-right">{{ report.domains.ssl_enabled }}</div>
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label class="col-sm-6 control-label">Total</label>
-                  <div class="col-sm-6">
-                    <div class="form-control text-right">{{ report.domains.total }}</div>
-                  </div>
-                </div>
-
-              </form>
-
+            <!-- Block Domains -->
+            <div class="col-md-4 usage-web__block_domains" ng-include="'parts/reports/usage-web/usage-web__domains.tpl.html'">
             </div>
-
             <div class="col-md-4">
-
-              <h4>Mobile Apps</h4>
-
-              <form class="form-horizontal">
-
-                <div class="form-group">
-                  <label class="col-sm-6 control-label" >Active</label>
-                  <div class="col-sm-6">
-                    <div class="form-control text-right">{{ report.applications.active }}</div>
-                  </div>
+                <!-- Section with data SSL Certificates-->
+                <div id="ssl_certs__view_container" ng-include="'parts/reports/usage-web/usage-web__ssl_certs.tpl.html'">
                 </div>
-
-                <div class="form-group">
-                  <label class="col-sm-6 control-label" >Deleted</label>
-                  <div class="col-sm-6">
-                    <div class="form-control text-right">{{ report.applications.deleted }}</div>
-                  </div>
+                 <!-- Section with data SSL Names-->
+                <div id="ssl_names__view_container" ng-include="'parts/reports/usage-web/usage-web__ssl_names.tpl.html'">
                 </div>
-
-                <div class="form-group">
-                  <label class="col-sm-6 control-label">Total</label>
-                  <div class="col-sm-6">
-                    <div class="form-control text-right">{{ report.applications.total }}</div>
-                  </div>
+                <!-- Section with data Log Shipping Jobs-->
+                <div id="log_shipping_jobs__view_container" ng-include="'parts/reports/usage-web/usage-web__log_shipping_jobs.tpl.html'">
                 </div>
-
-              </form>
-
             </div>
 
             <div class="col-md-4">
@@ -154,7 +100,7 @@
               <form class="form-horizontal">
 
                 <div class="form-group">
-                  <label class="col-sm-6 control-label" >Active</label>
+                  <label class="col-sm-6 control-label">Active</label>
                   <div class="col-sm-6">
                     <div class="form-control text-right">{{ report.api_keys.active }}</div>
                   </div>
@@ -167,20 +113,85 @@
                   </div>
                 </div>
 
-                <div class="form-group">
-                  <label class="col-sm-6 control-label">Total</label>
-                  <div class="col-sm-6">
-                    <div class="form-control text-right">{{ report.api_keys.total }}</div>
-                  </div>
-                </div>
-
               </form>
 
             </div>
 
           </div>
           <hr>
+          <!-- DNS Service-->
+          <div class="row">
+            <div id="dns_service__view_container" class="col-md-4" ng-include="'parts/reports/usage-web/usage-web__dns_service.tpl.html'"></div>
+          </div>
+          <!-- New version display Mobile Apps data-->
+          <div class="row" id="apps__view_container">
+            <div class="col-sm-12">
+              <div class="h4">Mobile Apps</div>
+              <table class="table">
+                <thead>
+                  <th></th>
+                  <th>All Platforms</th>
+                  <th>Android</th>
+                  <th>iOS</th>
+                  <th>Window Mobile</th>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Active</td>
+                    <td>{{report.applications.active}}</td>
+                    <td>{{report.apps_per_platform['Android'].active}}</td>
+                    <td>{{report.apps_per_platform['iOS'].active}}</td>
+                    <td>{{report.apps_per_platform['Windows_Mobile'].active}}</td>
+                  </tr>
+                  <tr>
+                    <td>Deleted</td>
+                    <td>{{report.applications.deleted}}</td>
+                    <td>{{report.apps_per_platform['Android'].deleted}}</td>
+                    <td>{{report.apps_per_platform['iOS'].deleted}}</td>
+                    <td>{{report.apps_per_platform['Windows_Mobile'].deleted}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
 
+          <hr>
+          <!-- New version display DNS Domains data-->
+          <!--div class="row">
+            <div class="col-sm-12" id="dns_domains__container">
+              <div class="h4">DNS Domains</div>
+              <table class="table">
+                <thead>
+                  <th></th>
+                  <th>All Platforms</th>
+
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Active</td>
+                    <td>{{report.applications.active}}</td>
+                    <td>{{report.apps_per_platform['Android'].active}}</td>
+                    <td>{{report.apps_per_platform['iOS'].active}}</td>
+                    <td>{{report.apps_per_platform['Windows_Mobile'].active}}</td>
+                  </tr>
+                  <tr>
+                    <td>Deleted</td>
+                    <td>{{report.applications.deleted}}</td>
+                    <td>{{report.apps_per_platform['Android'].deleted}}</td>
+                    <td>{{report.apps_per_platform['iOS'].deleted}}</td>
+                    <td>{{report.apps_per_platform['Windows_Mobile'].deleted}}</td>
+                  </tr>
+                  <tr>
+                    <td>Total</td>
+                    <td>{{report.applications.total}}</td>
+                    <td>{{report.apps_per_platform['Android'].total}}</td>
+                    <td>{{report.apps_per_platform['iOS'].total}}</td>
+                    <td>{{report.apps_per_platform['Windows_Mobile'].total}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div-->
           <div class="row">
 
             <div class="col-md-4">
@@ -300,7 +311,7 @@
               </table>
 
               <hr>
-              <h4 class="title-list">Domains Usage</h4>
+              <h4 class="list-title">Domains Usage</h4>
 
               <table class="table table-stripped table-condensed">
                 <thead>
@@ -450,7 +461,10 @@
             </div>
 
           </div>
-
+          <!-- DNS Usage-->{{report.dns_usage.lenght}}
+          <div class="row" ng-if="report.dns_usage.length>0">
+            <div class="col-sm-12" ng-include="'parts/reports/usage-web/usage-web__dns_usage.tpl.html'"></div>
+          </div>
         </div>
 
       </div>

@@ -54,11 +54,15 @@
                   <a href="" ng-click="order('subscription_id')">Subscription ID</a>
                   <span class="sortorder" ng-show="filter.predicate === 'subscription_id'" ng-class="{reverse: filter.reverse}"></span>
                 </th>
-                <th class="col-sm-3">
+                <th class="col-sm-2">
                   <a href="" ng-click="order('created_at')">Registration Date</a>
                   <span class="sortorder" ng-show="filter.predicate === 'created_at'" ng-class="{reverse: filter.reverse}"></span>
                 </th>
                 <th class="col-sm-2">
+                  <a href="" ng-click="order('updated_at')">Last Update</a>
+                  <span class="sortorder" ng-show="filter.predicate === 'updated_at'" ng-class="{reverse: filter.reverse}"></span>
+                </th>
+                <th class="col-sm-1">
                   <a href="" ng-click="order('subscription_state')">State</a>
                   <span class="sortorder" ng-show="filter.predicate === 'subscription_state'" ng-class="{reverse: filter.reverse}"></span>
                 </th>
@@ -68,11 +72,13 @@
             <tbody>
               <tr id="anchor{{::$index}}" ng-click="saveAnchorScrollIndex($index)" ng-repeat="item in filteredRecords | limitTo:filter.limit:filter.skip track by $index">
                 <td>
-                  <a ngclick="goToResources(item.id)" ui-sref="index.azureMarketplace.subscription_resources({subscriptionId: item.subscription_id})" ng-if="!item.loading" uib-tooltip="View Resources Per Subscription">
+                  <a ngclick="goToResources(item.id)" ui-sref="index.azureMarketplace.subscription_resources({subscriptionId: item.subscription_id})"
+                    ng-if="!item.loading" uib-tooltip="View Resources Per Subscription">
                   {{item.subscription_id}}
                 </a>
                 </td>
                 <td>{{ getRelativeDate(item.created_at) }}</td>
+                <td>{{ getRelativeDate(item.updated_at) }}</td>
                 <td>
                   <span title="{{item.subscription_state}}"> {{item.subscription_state}} </span>
                 </td>
@@ -81,7 +87,8 @@
                   <a ng-click="onViewSubscription($event,item)" ng-if="!item.loading" uib-tooltip="View">
                     <i class="fa fa-eye"></i>
                   </a>
-                  <a ng-click="openChangeStatusDialog(item)" _uisref=".edit({id: item.id})" ng-if="!item.loading"  ng-class="{'disabled':isReadOnly()}"  uib-tooltip="Change Status">
+                  <a ng-click="openChangeStatusDialog(item)" ng-if="!item.loading" ng-class="{'disabled':isReadOnly()}"
+                    uib-tooltip="Change Status">
                     <i class="glyphicon glyphicon-pencil"></i>
                   </a>
                 </td>

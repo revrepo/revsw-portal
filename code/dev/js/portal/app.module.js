@@ -35,10 +35,14 @@
     'ngAnimate',
     'toaster',
     'angular-loading-bar',
+    'revapm.Portal.DNSAnalytics',
     'revapm.Portal.DNSZoneRecords',
     'revapm.Portal.DNSZones',
     'revapm.Portal.AzureResources',
     'revapm.Portal.AzureSubscriptions',
+    'revapm.Portal.WAFAnalytics',
+    'revapm.Portal.WAFRules',
+    'revapm.Portal.networkIPBlocks',
     'ngYoutubeEmbed',
     'satellizer'
   ]);

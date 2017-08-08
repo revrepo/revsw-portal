@@ -41,6 +41,9 @@ var AppsList = {
       },
       panelBody: {
         css: '.col-md-12 .panel .panel-body'
+      },
+      listItems: {
+        css: '.table-condensed tbody tr'
       }
     },
     buttons: {
@@ -77,6 +80,19 @@ var AppsList = {
       .all(by.css(this.locators.views.container))
       .get(0);
   },
+
+  /**
+   * ### getListItems()
+   *
+   * Returns all elements on one page (Selenium WebDriver
+   * Element) from the Apps List page from the Portal app.
+   *
+   * @returns {Selenium WebDriver Element}
+   */
+  getListItems: function() {
+    return element.all(by.css(this.locators.views.listItems.css));
+  },
+  
 
   /**
    * ### AppsList.getPanelHeadingElem()

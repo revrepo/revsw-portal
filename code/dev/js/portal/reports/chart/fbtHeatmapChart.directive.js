@@ -13,7 +13,8 @@
       templateUrl: 'parts/reports/charts/fbt-heatmap.html',
       scope: {
         flCountry: '=',
-        ngDomain: '='
+        ngDomain: '=',
+        isAutoReload: '@?'
       },
       /*@ngInject*/
       controller: function( $scope, Stats, HeatmapsDrawer, Util ) {
@@ -82,7 +83,7 @@
         };
 
         $scope.$watch( 'ngDomain', function() {
-          if ( !$scope.ngDomain ) {
+          if (!$scope.ngDomain || $scope.isAutoReload === 'false') {
             return;
           }
           $scope.reloadFBTStats();

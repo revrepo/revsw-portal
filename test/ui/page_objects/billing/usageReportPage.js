@@ -2,7 +2,7 @@
  *
  * REV SOFTWARE CONFIDENTIAL
  *
- * [2013] - [2016] Rev Software, Inc.
+ * [2013] - [2017] Rev Software, Inc.
  * All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains
@@ -32,7 +32,22 @@ var UsageReport = {
         css: '.col-md-12 .panel .panel-heading',
         pullLeft: '.pull-left'
       },
-      panelBody: '.col-md-12 .panel .panel-body'
+      panelBody: '.col-md-12 .panel .panel-body',
+      mobileApps: {
+        id: 'apps__view_container'
+      },
+      sslCerts:{
+        id: 'ssl_certs__view_container'
+      },
+      sslNames:{
+        id: 'ssl_names__view_container'
+      },
+      dnsService: {
+        id: 'dns_service__view_container'
+      },
+      logShippingJob:{
+        id: 'log_shipping_jobs__view_container'
+      }
     },
     buttons: {
       updateReport: {
@@ -251,16 +266,105 @@ var UsageReport = {
   },
 
   /**
-   * ### UsageReport.getMobileAppsForm()
+   * ### UsageReport.getMobileAppsView()
    *
-   * Gets the reference to `Mobile Apps` form element core/text.
+   * Gets the reference to `Mobile Apps` block view element.
    *
    * @returns {Promise}
    */
-  getMobileAppsForm: function () {
-    return this.getFormTextByFormName('Mobile Apps');
+  getMobileAppsView: function () {
+    return element(by.id(this.locators.views.mobileApps.id));
   },
-
+    /**
+   * ### UsageReport.getMobileAppsViewText()
+   *
+   * Gets the text  from `Mobile Apps` block view element core/text.
+   *
+   * @returns {Promise}
+   */
+  getMobileAppsViewText: function () {
+    return this.getMobileAppsView().getText();
+  },
+  /**
+   * ### UsageReport.getSSLCertsView()
+   *
+   * Gets the reference to `SSL Certificates` block view element.
+   *
+   * @returns {Promise}
+   */
+  getSSLCertsView: function () {
+    return element(by.id(this.locators.views.sslCerts.id));
+  },
+    /**
+   * ### UsageReport.getSSLCertsViewText()
+   *
+   * Gets the text  from `SSL Certificates` block view element core/text.
+   *
+   * @returns {Promise}
+   */
+  getSSLCertsViewText: function () {
+    return this.getSSLCertsView().getText();
+  },
+  /**
+   * ### UsageReport.getSSLNamesView()
+   *
+   * Gets the reference to `SSL Names` block view element.
+   *
+   * @returns {Promise}
+   */
+  getSSLNamesView: function () {
+    return element(by.id(this.locators.views.sslNames.id));
+  },
+  /**
+   * ### UsageReport.getSSLNamesViewText()
+   *
+   * Gets the text  from `SSL Names` block view element core/text.
+   *
+   * @returns {Promise}
+   */
+  getSSLNamesViewText: function () {
+    return this.getSSLNamesView().getText();
+  },
+  /**
+   * ### UsageReport.getDNSServiceView()
+   *
+   * Gets the reference to `DNS Service` block view element.
+   *
+   * @returns {Promise}
+   */
+  getDNSServiceView: function () {
+    return element(by.id(this.locators.views.dnsService.id));
+  },
+  /**
+   * ### UsageReport.getDNSServiceViewText()
+   *
+   * Gets the text  from `DNS Service` block view element core/text.
+   *
+   * @returns {Promise}
+   */
+  getDNSServiceViewText: function () {
+    return this.getDNSServiceView().getText();
+  },
+  /**
+   * ### UsageReport.getLogShippingJobView()
+   *
+   * Gets the reference to `Log Shipping Job` block view element.
+   *
+   * @returns {Promise}
+   */
+  getLogShippingJobView: function () {
+    return element(by.id(this.locators.views.logShippingJob.id));
+  },
+  /**
+   * ### UsageReport.getLogSippingJobViewText()
+   *
+   * Gets the text  from `Log Shipping Job` block view element core/text.
+   *
+   * @returns {Promise}
+   */
+  getLogSippingJobViewText: function () {
+    return this.getLogShippingJobView().getText();
+  },
   /**
    * ### UsageReport.getApiKeysForm()
    *
@@ -404,9 +508,8 @@ var UsageReport = {
    * @returns {Promise}
    */
   fill: function (data) {
-    return this.setCompanyName(data.companyName);
-    // TODO need to find a way how to properly set a data in usage reporting screen
-    //return this.setMonthDD(data.monthDD);
+    this.setCompanyName(data.companyName);
+    return this.setMonthDD(data.monthDD);
   },
 
   /**

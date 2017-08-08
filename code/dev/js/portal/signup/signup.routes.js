@@ -49,9 +49,9 @@
           }
         }
       })
-      // step 2 - enter contact information
+      // step 2 - enter contract information
       .state('signup.contact_info2', {
-        url: '/:billing_plan_handler',
+        url: '/:billing_plan_handler?:promo',
         views: {
           form: {
             controller: 'SignupBillingPlansController',

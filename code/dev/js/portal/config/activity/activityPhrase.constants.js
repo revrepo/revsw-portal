@@ -22,7 +22,8 @@
         'disable2fa': 'Disabled 2FA',
         'resetpassword': 'Password Reset',
         'signup': 'Signed Up',
-        'verify': 'Verified Domain Control'
+        'verify': 'Verified Domain Control',
+        'verify_email': 'Verified Email Address'
       },
 
       /**
@@ -41,7 +42,8 @@
         'sslname': 'SSL Name',
 //        'object': 'Object',
         'dnszone':'DNS Zone',
-        'dnsrecord': 'DNS Zone Record'
+        'dnsrecord': 'DNS Zone Record',
+        'wafrule': 'WAF Rule'
       },
       /**
        * @name  EVENT_TYPES

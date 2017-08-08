@@ -34,7 +34,7 @@
             cursor: 'pointer',
             dataLabels: {
               enabled: true,
-              format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+              format: '<b>{point.name}</b>: {point.percentage:.1f}%',
               style: {
                 color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
               }
@@ -62,6 +62,11 @@
         // Set new data
         chart.series[0].setData(value);
       });
+      // NOTE: new Highcharts object must be destroyed
+      $scope.$on('$destroy', function () {
+         chart.destroy();
+      });
+
     }
 
     return {

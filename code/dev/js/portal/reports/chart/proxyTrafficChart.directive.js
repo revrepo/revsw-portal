@@ -17,7 +17,8 @@
         flOs: '=',
         flDevice: '=',
         flBrowser: '=',
-        filtersSets: '='
+        filtersSets: '=',
+        isAutoReload: '@?'
       },
       /*@ngInject*/
       controller: function($scope, $q, Stats, Util) {
@@ -79,19 +80,23 @@
                   info_ = null;
                 }
                 var x = this.xAxis[0].toPixels(this.xAxis[0].min) + 3;
-
+                var _text = 'RPS Avg <span style="font-weight: bold; color: #3c65ac;">' + (Math.round(rps_avg_ * 1000) / 1000) +
+                  '</span> Max <span style="font-weight: bold; color: #3c65ac;">' + (Math.round(rps_max_ * 1000) / 1000) +
+                  '</span><br>Hits Total <span style="font-weight: bold; color: #3c65ac;">' + Util.formatNumber(hits_total_) +
+                  '</span>';
+                // NOTE: information about error
+                if( $scope.hasFailedToLoadData === true){
+                  _text = '<strong style="color: red;"> Failed to retrieve the data - please try again later </strong>';
+                }
                 info_ = this /*chart*/ .renderer
-                  .label('RPS Avg <span style="font-weight: bold; color: #3c65ac;">' + (Math.round(rps_avg_ * 1000) / 1000) +
-                    '</span> Max <span style="font-weight: bold; color: #3c65ac;">' + (Math.round(rps_max_ * 1000) / 1000) +
-                    '</span><br>Hits Total <span style="font-weight: bold; color: #3c65ac;">' + Util.formatNumber(hits_total_) +
-                    '</span>',
+                  .label(_text,
                     x /*x*/ , 3 /*y*/ , '', 0, 0, true /*html*/ )
                   .css({
                     color: '#444'
                   })
                   .attr({
                     fill: 'rgba(240, 240, 240, 0.6)',
-                    stroke: '#3c65ac',
+                    stroke: $scope.hasFailedToLoadData ? 'red' : '#3c65ac',
                     'stroke-width': 1,
                     padding: 6,
                     r: 2,
@@ -135,6 +140,7 @@
             return;
           }
           $scope._loading = true;
+          $scope.hasFailedToLoadData = false;
           var series = [{
             name: 'Total',
             data: []
@@ -177,13 +183,21 @@
                 series: series
               };
             })
+            .catch(function(err){
+              $scope.traffic = {
+                pointStart: _xAxisPointStart,
+                pointInterval: _xAxisPointInterval,
+                series: series
+              };
+              $scope.hasFailedToLoadData = true;
+            })
             .finally(function() {
               $scope._loading = false;
             });
         };
 
         $scope.$watch('ngDomain', function() {
-          if (!$scope.ngDomain) {
+          if (!$scope.ngDomain || $scope.isAutoReload === 'false') {
             return;
           }
           $scope.reload();

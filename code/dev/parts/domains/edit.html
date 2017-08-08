@@ -15,19 +15,24 @@
               <a ui-sref="^" ng-disabled="_loading" class="btn btn-default">
                 <i class="glyphicon glyphicon-arrow-left"></i>&nbsp; Back To List
               </a>
-              <a href="" ng-show="!isAdvancedMode" ng-click="onChangeModeView()" ng-disabled="_loading" class="btn btn-info">
+              <a href="" ng-show="isAdvancedMode==false || isAdvancedMode=='false' " ng-click="onChangeModeView()" ng-disabled="_loading" class="btn btn-info">
                 <i class="icon-revapm-cogs"></i>&nbsp; Advanced Mode
               </a>
-              <a href="" ng-show="isAdvancedMode" ng-click="onChangeModeView()" ng-disabled="_loading" class="btn btn-info">
+              <a href="" ng-show="isAdvancedMode==true || isAdvancedMode=='true' " ng-click="onChangeModeView()" ng-disabled="_loading" class="btn btn-info">
                 <i class="glyphicon glyphicon-cog"></i>&nbsp; Basic Mode
               </a>
+            </div>
+            <div>
+              <button class="btn btn-primary pull-right" ng-disabled="_loading" uib-tooltip="Refresh" ng-click="refreshPage($event,params.id)">
+                <i class="glyphicon glyphicon-refresh" ng-class="_loading ? 'glyphicon-refresh spin': 'glyphicon-refresh'"></i>
+              </button>
             </div>
           </div>
         </div>
       </div>
       <div class="panel-body">
         <!-- Display data in Advanced Mode-->
-        <div class="form-horizontal" ng-show="isAdvancedMode">
+        <div class="form-horizontal" ng-show="isAdvancedMode==true || isAdvancedMode=='true' ">
           <div name="json" class="col-md-12 domains-advanced-mode-edit" id="json" ng-model="modelAdvance" options="jsoneditor.options" ng-jsoneditor="jsonEditorEvent" style="height: 550px; padding-left: 0;"></div>
           <div class="form-group">
             <label class="col-sm-3 control-label" style="margin-top: 15px;">Current Publishing Status</label>
@@ -50,7 +55,7 @@
             </div>
           </div>
         </div>
-        <form class="form-horizontal domain-edit-form" name="editForm" novalidate ng-show="!isAdvancedMode">
+        <form class="form-horizontal domain-edit-form" name="editForm" novalidate ng-show="isAdvancedMode==false || isAdvancedMode=='false'">
           <!-- Display data in Basic Mode -->
           <uib-tabset active="active">
             <uib-tab index="0" heading="General Settings" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Use the tab to configure general domain settings like name and location of web origin, data transfer timeouts, etc">
@@ -93,7 +98,7 @@
               <div class="form-group" ng-class="{'has-error': editForm.originServer.$invalid && editForm.originServer.$dirty}">
                 <label for="originServer" class="col-sm-3 control-label">Origin Server Name/IP *</label>
                 <div class="col-sm-9">
-                  <input type="text" validate-origin-server-name class="form-control inline-block" ng-disabled="_loading" ng-model="model.origin_server" id="originServer" name="originServer" placeholder="Origin Server Name" ng-maxlength="50" required>
+                  <input type="text" validate-origin-server-name class="form-control inline-block" ng-disabled="_loading" ng-model="model.origin_server" id="originServer" name="originServer" placeholder="Origin Server Name" ng-maxlength="150" required>
                   <label for="originServer" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enter here domain name or IP address of origin web server">
                     <i class="fa fa-question-circle"></i>
                   </label>
@@ -105,7 +110,7 @@
               <div class="form-group" ng-class="{'has-error': editForm.originHostHeader.$invalid && editForm.originHostHeader.$dirty}">
                 <label class="col-sm-3 control-label" for="originHostHeader">Origin Host Header *</label>
                 <div class="col-sm-9">
-                  <input type="text" validate-domain-name class="form-control inline-block" ng-model="model.origin_host_header" ng-disabled="_loading" id="origin_host_header" name="originHostHeader" placeholder="Origin Host Header" ng-maxlength="63" required>
+                  <input type="text" validate-domain-name class="form-control inline-block" ng-model="model.origin_host_header" ng-disabled="_loading" id="origin_host_header" name="originHostHeader" placeholder="Origin Host Header" ng-maxlength="150" required>
                   <label for="originHostHeader" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enter here a domain name to be used in 'Host' header of requests sent to the origin server. The name might be different from origin server name/IP specified above. For example, if origin server IP is 11.11.11.11 and the origin HTTP server recognizes web requests for domain 'www.example.com' you will need to specify '11.11.11.11' in origin server name field above and 'www.example.com' in this field.">
                     <i class="fa fa-question-circle"></i>
                   </label>
@@ -126,6 +131,19 @@
                   <div class="error-messages" ng-messages="editForm.originServerLocationId.$error" role="alert" ng-messages-multiple>
                     <div ng-messages-include="parts/shared/error-messages.html"></div>
                   </div>
+                </div>
+              </div>
+              <!-- Enhanced Traffic Analytics -->
+              <div class="form-group form-inline">
+                <label for="enableEnhancedAnalytics" class="col-sm-3 control-label">
+                  Enhanced Traffic Analytics
+                </label>
+                <div class="col-md-9">
+                  <toggle-switch id="enableEnhancedAnalytics" name="enableEnhancedAnalytics" is-disabled="_loading" ng-model="model.enable_enhanced_analytics" on-label="On" off-label="Off">
+                  </toggle-switch>
+                  <label for="enableEnhancedAnalytics" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="By enabling Enhanced Traffic Analytics feature for the domain you will get an access to a wide range of information regarding your end users">
+                    <i class="fa fa-question-circle"></i>
+                  </label>
                 </div>
               </div>
               <!-- Origin Communication Protocol -->
@@ -153,7 +171,6 @@
               <div class="form-group" ng-class="{'has-error': editForm.domainAliases.$invalid && editForm.domainAliases.$dirty}">
                 <label for="domainAliases" class="col-sm-3 control-label">Non-Wildcard Domain Aliases</label>
                 <div class="col-sm-9">
-
                   <ui-select id="non-Wildcard-Domain-Aliases" validate-domains-list tagging tagging-label="Add New Domain" multiple tagging-tokens="SPACE|," theme="bootstrap" class="form-control inline-block" ng-disabled="_loading" ng-model="model.domain_aliases" name="domainAliases" id="domain_aliases">
                     <ui-select-match placeholder="Add domains...">{{$item}}</ui-select-match>
                     <ui-select-choices repeat="domain in model.domain_aliases">
@@ -173,7 +190,7 @@
               <div class="form-group" ng-class="{'has-error': editForm.domainWildcardAlias.$invalid && editForm.domainWildcardAlias.$dirty}">
                 <label for="domainWildcardAlias" class="col-sm-3 control-label">Wildcard Domain Alias</label>
                 <div class="col-md-9">
-                  <input validate-wildcard-domain-field type="text" class="form-control inline-block" ng-disabled="_loading" id="domain_wildcard_alias" name="domainWildcardAlias" ng-model="model.domain_wildcard_alias" ng-maxlength="50" placeholder="Wildcard Domain Alias">
+                  <input validate-wildcard-domain-field type="text" class="form-control inline-block" ng-disabled="_loading" id="domain_wildcard_alias" name="domainWildcardAlias" ng-model="model.domain_wildcard_alias" ng-maxlength="150" placeholder="Wildcard Domain Alias">
                   <label for="domainWildcardAlias" class="text-info" popover-trigger="mouseenter" uib-popover="You can specify here a domain alias in wildcard format. For example, if you specify here '*.example.com' name we will accept and apply the same configuration for domains like 'www.example.com', 'www2.example.com', 'app.example.com', etc. Please note that we will not show Web Analytics stats for domains matching the wildcard alias but will count the traffic for billing purposes.">
                     <i class="fa fa-question-circle"></i>
                   </label>
@@ -236,7 +253,7 @@
                   </label>
                 </div>
               </div>
-            <!-- RUM Data Collection  -->
+              <!-- RUM Data Collection  -->
               <div class="form-group form-inline">
                 <label for="enable_decompression" class="col-sm-3 control-label">
                   Decompress Objects Fetched <br/>From The Origin
@@ -249,7 +266,6 @@
                   </label>
                 </div>
               </div>
-
               <div class="form-group" ng-class="{ 'has-error': editForm.comment.$invalid &&  editForm.comment.$dirty }">
                 <label for="comment" class="col-sm-3 control-label">Comment</label>
                 <div class="col-md-9">
@@ -302,7 +318,6 @@
                   <div class="form-group" ng-class="{'has-error': editForm.originHealthProbeHTTP_REQUEST.$invalid && editForm.originHealthProbeHTTP_REQUEST.$dirty}">
                     <label for="third-party-integrations" class="col-sm-3 control-label">Origin Monitoring HTTP Request</label>
                     <div class="col-md-9">
-
                       <input id="originMonitoringHTTPrequest" type="text" class="form-control inline-block" ng-disabled="_loading" name="originHealthProbeHTTP_REQUEST" ng-model="model.origin_health_probe.HTTP_REQUEST" placeholder="Text like 'GET / HTTP/1.1' (300 characters max)" ng-maxlength="300" characters required>
                       <label for="third-party-integrations" class="text-info" popover-trigger="mouseenter" uib-popover="This string will be sent to the origin HTTP server after connecting to ports 80 and 443. Default value ‘GET / HTTP/1.1’ will work in majority of cases.">
                         <i class="fa fa-question-circle"></i>
@@ -394,13 +409,13 @@
               <div id="cachingRulesBlock" class="panel panel-default caching-rules-list" ng-if="model.rev_component_bp.enable_cache">
                 <div class="panel-heading">
                   <span class="pull-left panel-buttons-left">
-                <a class="btn btn-default btn-md " ng-click="onCollapsAllCachingRule()" title="Collapse All Rules" ng-show="!isCollapsedAll">
-                  <i class="glyphicon glyphicon-chevron-up "></i>
-                </a>
-                <a class="btn btn-default btn-md " ng-click="onExpandAllCachingRule()" title="Expand All Rules">
-                  <i class="glyphicon glyphicon-chevron-down"></i>
-                </a>
-              </span>
+                    <a class="btn btn-default btn-md " ng-click="onCollapsAllCachingRule()" title="Collapse All Rules" ng-show="!isCollapsedAll">
+                      <i class="glyphicon glyphicon-chevron-up "></i>
+                    </a>
+                    <a class="btn btn-default btn-md " ng-click="onExpandAllCachingRule()" title="Expand All Rules">
+                      <i class="glyphicon glyphicon-chevron-down"></i>
+                    </a>
+                  </span>
                   <div class="form-group pull-right">
                     <div class="col-sm-12">
                       <a ng-click="onAddNewCachingRule($event,true)" class="btn btn-primary btn-sm " uib-tooltip="Use the button to add a new caching rule to cache JPG, JPEG, PNG, GIF, WEBP, JS, CSS, WOFF, WOFF2, MP4, SWF, AVI, MPEG and MOV objects for period of 2 weeks. You can modify the rule to suit your needs."><i class="glyphicon"></i>Cache Static Objects</a>
@@ -424,9 +439,9 @@
                             <i class="glyphicon glyphicon-chevron-down"></i>
                           </a>
                           <!--  Caching Rule Up  -->
-                          <a class="btn btn-default btn-xs" href="" ng-click="onUpCachingRule(caching_rule)"><i class="glyphicon glyphicon glyphicon-arrow-up " title="Move One Position Up"></i></a>
+                          <a class="btn btn-default btn-xs" href="" ng-click="onUpCachingRule(caching_rule)"><i class="glyphicon glyphicon-arrow-up" title="Move One Position Up"></i></a>
                           <!--  Caching Rule Down  -->
-                          <a class="btn btn-default btn-xs" href="" ng-click="onDownCachingRule(caching_rule)"><i class="glyphicon glyphicon glyphicon-arrow-down" title="Move One Position Down"></i></a>
+                          <a class="btn btn-default btn-xs" href="" ng-click="onDownCachingRule(caching_rule)"><i class="glyphicon glyphicon-arrow-down" title="Move One Position Down"></i></a>
                           <!-- // -->
                         </div>
                         <div class="pull-right panel-button-right">
@@ -485,7 +500,6 @@
                         <div class="col-sm-12">
                           <div class="checkbox">
                             <label>
-
                               <input id="predefinedSSLconfigurationProfile" type="radio" class="inline-block" name="isCustomSSL_conf_profile" ng-model="isCustomSSL_conf_profile" ng-value="false"> Predefined SSL Configuration Profile
                               <label for="isCustomSSL_conf_profile" popover-append-to-body="{{true}}" class="text-info" popover-trigger="mouseenter" uib-popover="Select the radio-button to use one of the pre-defined SSL configuration profiles (recommended)">
                                 <i class="fa fa-question-circle"></i>
@@ -495,7 +509,7 @@
                         </div>
                       </div>
                       <div class="form-group form-inline" ng-class="{'has-error': editForm.sslConfProfile.$invalid && editForm.sslConfProfile.$dirty}">
-                        <select class="form-control col-sm-offset-3" ng-disabled="_loading|| (isCustomSSL_conf_profile == true)" ng-model="model.ssl_conf_profile" id="ssl_conf_profile" name="sslConfProfile" ng-options="obj.id as obj.profile_name for obj in SSL_conf_profiles"required>
+                        <select class="form-control col-sm-offset-3" ng-disabled="_loading|| (isCustomSSL_conf_profile == true)" ng-model="model.ssl_conf_profile" id="ssl_conf_profile" name="sslConfProfile" ng-options="obj.id as obj.profile_name for obj in SSL_conf_profiles" required>
                         </select>
                         <div class="error-messages" ng-messages="editForm.sslConfProfile.$error" role="alert" ng-messages-multiple>
                           <div ng-messages-include="parts/shared/error-messages.html"></div>
@@ -557,7 +571,65 @@
               </div>
               <hr>
             </uib-tab>
-            <uib-tab index="4" heading="Custom VCL Rules" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="This tab allows Varnish VCL experts to configure custom VCL rules to be applied for the domain configuration">
+            <uib-tab index="4" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Use the tab to manage what category of end users can access the website based on country, IP address or request HTTP header
+          value">
+              <!--  "Access Control Lis(ACL)" -->
+              <uib-tab-heading>ACL</uib-tab-heading>
+              <div class="form-group form-inline">
+                <label for="enableACLRules" class="col-sm-3 control-label">Access Control List</label>
+                <div class="col-md-9">
+                  <toggle-switch id="enable_acl_rules" name="enableACLRules" is-disabled="_loading" ng-model="model.rev_component_bp.acl.enabled"
+                    on-label="On" off-label="Off">
+                  </toggle-switch>
+                  <label for="enableACLRules" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="This switch controls whether ACL functionality is enabled for the domain">
+                                <i class="fa fa-question-circle"></i>
+                              </label>
+                </div>
+              </div>
+              <div class="row" ng-if="model.rev_component_bp.acl.enabled">
+                <div class="panel-body">
+                  <!-- ACL list-->
+                  <div class="panel panel-default panel-body">
+                      <div class="col-sm-12">
+                        <div class="checkbox">
+                          <label>
+                                <input id="aclAction" type="radio" class="inline-block" name="aclAction" ng-model="model.rev_component_bp.acl.action" ng-value="'deny_except'"> Allow Only End User Requests Matching Any Of Specified Conditions (Deny All Other Requests)
+                          </label>
+                        </div>
+                      </div>
+                      <div class="col-sm-12">
+                        <div class="checkbox">
+                          <label>
+                                <input id="aclAction" type="radio" class="inline-block" name="aclAction" ng-model="model.rev_component_bp.acl.action" ng-value="'allow_except'"> Deny Only End User Requests Matching Any Of Specified Conditions (Allow All Other Requests)
+                          </label>
+                        </div>
+                      </div>
+                  </div>
+                  <domain-acl-rules-list id="aclRulesListBlock" ng-model="model.rev_component_bp.acl.acl_rules"></domain-acl-rules-list>
+                </div>
+              </div>
+              <!-- //  "Access Control Lis(ACL)" -->
+              <hr>
+            </uib-tab>
+            <uib-tab index="5" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="This tab is used to manage Web Application Firewall (WAF) settings for the domain">
+              <!--  “WAF” -->
+              <uib-tab-heading>WAF</uib-tab-heading>
+              <div class="form-group form-inline">
+                <label for="enableWafRules" class="col-sm-3 control-label">WAF Protection</label>
+                <div class="col-md-9">
+                  <toggle-switch id="enable_waf_rules" name="enableWafRules" is-disabled="_loading" ng-model="model.rev_component_bp.enable_waf" on-label="On" off-label="Off">
+                  </toggle-switch>
+                  <label for="enableWafRules" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="This switch controls the global WAF functionality for the domain. If you move it to OFF state the WAF feature will be completely disabled for the domain (but all existing WAF configuration will stay in place so you can easily re-enable it later). If you enable WAF for the first time you still need to do additional configuration steps for WAF to actually protect the website.">
+                    <i class="fa fa-question-circle"></i>
+                  </label>
+                </div>
+              </div>
+              <!-- WAF Locations list-->
+              <domain-waf-locations id="wafLocationsBlock" account-id="{{model.account_id}}" ng-if="model.rev_component_bp.enable_waf" ng-model="model.rev_component_bp.waf"></domain-waf-locations>
+              <!-- //  “WAF” -->
+              <hr>
+            </uib-tab>
+            <uib-tab index="6" heading="Custom VCL Rules" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="This tab allows Varnish VCL experts to configure custom VCL rules to be applied for the domain configuration">
               <!--  “Custom VCL Rules” -->
               <div class="form-group form-inline">
                 <label for="customVcl" class="col-sm-3 control-label">Custom VCL Rules</label>
@@ -573,13 +645,18 @@
               <!-- //  “Custom VCL Rules” -->
               <hr>
             </uib-tab>
-            <uib-tab index="5" heading="Lua Scripting" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="This section allows you to enhance the service by running custom Lua code snippets on proxy servers">
+            <uib-tab index="7" heading="Lua Scripting" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="This section allows you to enhance the service by running custom Lua code snippets on proxy servers">
               <domain-lua-scripting class="form-group" ng-model="model"></domain-lua-scripting>
               <hr>
             </uib-tab>
             <!-- Third-Party Links-->
-            <uib-tab index="6" heading="Third-Party Links" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="This section allows you to accelerate your website by redirecting to the CDN platform external objects/scripts served by potentially slow third-party vendors">
+            <uib-tab index="8" heading="Third-Party Links" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="This section allows you to accelerate your website by redirecting to the CDN platform external objects/scripts served by potentially slow third-party vendors">
               <domain-the-third-party-links class="form-group" ng-model="$thirdPartyLinks"></domain-the-third-party-links>
+              <hr>
+            </uib-tab>
+            <!-- ImageEngine-->
+            <uib-tab index="9" heading="ImageEngine" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="The ImageEngine feature provides a simple, automatic and transparent way to resize served images depending on maximum screen resolution of end user devices">
+              <div ng-include="'parts/domains/domain-image-engine/domain-image-engine.tpl.html'" class="form-group"></div>
               <hr>
             </uib-tab>
           </uib-tabset>
@@ -592,13 +669,13 @@
               <a ui-sref="^" class="btn btn-default">
                 <i class="glyphicon glyphicon-remove"></i>&nbsp; Cancel
               </a>
-              <button class="btn btn-info" ng-class="{'btn-disabled':isReadOnly()}" ng-disabled="disableSubmit(model, true) || editForm.$invalid || isReadOnly()" ng-click="validateDomain(model)">
+              <button id="verifyDomain" class="btn btn-info" ng-class="{'btn-disabled':isReadOnly()}" ng-disabled="disableSubmit(model, true) || editForm.$invalid || isReadOnly()" ng-click="validateDomain(model)">
                 <i class="glyphicon" ng-class="_loading ? 'glyphicon-refresh spin':'glyphicon-check'"></i>&nbsp; Verify
               </button>
-              <button class="btn btn-success" ng-class="{'btn-disabled':isReadOnly()}" ng-disabled="disableSubmit(model, true) || editForm.$invalid || isReadOnly()" ng-click="updateDomain(model)" uib-tooltip="{{domain_update_help_info}}">
+              <button id="updateDomain" class="btn btn-success" ng-class="{'btn-disabled':isReadOnly()}" ng-disabled="disableSubmit(model, true) || editForm.$invalid || isReadOnly()" ng-click="updateDomain(model)" uib-tooltip="{{domain_update_help_info}}">
                 <i class="glyphicon" ng-class="_loading ? 'glyphicon-refresh spin':'glyphicon-file'"></i>&nbsp; Update
               </button>
-              <button class="btn btn-success" ng-class="{'btn-disabled':isReadOnly()}" ng-disabled="disableSubmit(model, true)|| editForm.$invalid || isReadOnly()" ng-click="publishDomain(model)" uib-tooltip="{{domain_publish_help_info}}">
+              <button id="publishDomain" class="btn btn-success" ng-class="{'btn-disabled':isReadOnly()}" ng-disabled="disableSubmit(model, true)|| editForm.$invalid || isReadOnly()" ng-click="publishDomain(model)" uib-tooltip="{{domain_publish_help_info}}">
                 <i class="glyphicon" ng-class="_loading ? 'glyphicon-refresh spin':'glyphicon-ok'"></i>&nbsp; Publish
               </button>
             </div>

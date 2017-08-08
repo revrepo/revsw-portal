@@ -24,6 +24,7 @@ describe('Smoke', function () {
 
   // Defining set of users for which all below tests will be run
   var users = [
+// TODO: need to enable "user" role too
 //    config.get('portal.users.user'),
     config.get('portal.users.admin'),
     config.get('portal.users.revAdmin'),

@@ -2,7 +2,7 @@
  *
  * REV SOFTWARE CONFIDENTIAL
  *
- * [2013] - [2015] Rev Software, Inc.
+ * [2013] - [2017] Rev Software, Inc.
  * All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains
@@ -65,6 +65,7 @@ var Accounts = require('./admin/accounts');
 var AccountResourcesPage = require('./accountresources');
 var AdminSettingsPage = require('./admin/securitySettings');
 var ApiKeysListPage = require('./admin/apiKeys');
+var CDNIPBlocksPage = require('./cdnIPBlocks/cdnIPBlocksPage');
 var ActivityLogPage = require('./admin/activityLog');
 var MobileAppListPage = require('./mobileApp/listPage');
 var MobileAppAddPage = require('./mobileApp/addPage');
@@ -87,12 +88,21 @@ var SSLCertEditPage = require('./sslCerts/editPage');
 var SSLNamesListPage = require('./sslNames/listPage');
 var SSLNamesAddPage = require('./sslNames/addPage');
 
+var WAFRulePage = require('./wafRule/listPage');
+var WAFRuleAddPage = require('./wafRule/addPage');
+var WAFRuleEditPage = require('./wafRule/editPage');
+
+var WAFAnalitycs = require('./wafAnalytics/wafAnalyticsPage');
+var WAFEventsList = require('./wafEvents/listPage');
+var WAFHeatmaps = require('./wafHeatmaps/wafHeatmapPage');
+
 var StagingEnvPage = require('./stagingEnv/stagingEnvPage');
 
 var LogShippingListPage = require('./logShipping/listPage');
 var LogShippingAddPage = require('./logShipping/addPage');
 var LogShippingEditPage = require('./logShipping/editPage');
 
+var DNSAnalyticsPage = require('./dnsAnalytics/dnsAnalyticsPage');
 var DNSZonesListPage = require('./dnsZones/listPage');
 var DNSZonesAddPage = require('./dnsZones/addPage');
 var DNSZonesEditPage = require('./dnsZones/editPage');
@@ -176,6 +186,9 @@ var Portal = {
     settingsPage: AdminSettingsPage,
     activityLog: ActivityLogPage
   },
+  cdnIPBlocks: {
+    page: CDNIPBlocksPage
+  },
   accounts: {
     profilePage: AccountProfilePage,
     billingPlanPage: BillingPlanPage,
@@ -194,6 +207,16 @@ var Portal = {
     listPage: SSLNamesListPage,
     addPage: SSLNamesAddPage
   },
+  wafRules:{
+    listPage: WAFRulePage,
+    addPage: WAFRuleAddPage,
+    editPage: WAFRuleEditPage
+  },
+
+  wafAnalitycs: WAFAnalitycs,
+  wafEvents: WAFEventsList,
+  wafHeatmaps: WAFHeatmaps,
+
   logShipping: {
     listPage: LogShippingListPage,
     addPage: LogShippingAddPage,
@@ -202,6 +225,7 @@ var Portal = {
   stagingEnv: {
     page: StagingEnvPage
   },
+  dnsAnalyticsPage: DNSAnalyticsPage,
   dnsZones: {
     listPage: DNSZonesListPage,
     addPage: DNSZonesAddPage,
@@ -560,9 +584,12 @@ var Portal = {
       me.helpers.nav.goToAPIKeys();
       me.admin.apiKeys.listPage.clickAddNewApiKey();
 
-      if (isUserAdmin && account) {
-        me.admin.apiKeys.addPage.createAccount(account);
-      }
+      me.admin.apiKeys.addPage.getModalEl().isPresent()
+        .then(function(value) {
+          if (isUserAdmin && account && value) {
+            me.admin.apiKeys.addPage.createAccount(account);
+          }
+      });
 
       me.admin.apiKeys.listPage.searcher.clearSearchCriteria();
       me.admin.apiKeys.listPage.searchAndClickEdit('New API Key');

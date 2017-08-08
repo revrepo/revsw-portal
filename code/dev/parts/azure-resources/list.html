@@ -14,8 +14,8 @@
   <div class="row">
     <div class="col-sm-12">
       <h2 class="pull-left page-title">
-              Resources
-            </h2>
+        Resources
+      </h2>
     </div>
   </div>
   <div class="row">
@@ -77,6 +77,10 @@
                   <a href="" ng-click="order('resource_group_name')">Resource Group</a>
                   <span class="sortorder" ng-show="filter.predicate === 'resource_group_name'" ng-class="{reverse: filter.reverse}"></span>
                 </th>
+                <th class="col-sm-2">
+                  <a href="" ng-click="order('updated_at')">Last Update</a>
+                  <span class="sortorder" ng-show="filter.predicate === 'updated_at'" ng-class="{reverse: filter.reverse}"></span>
+                </th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -94,6 +98,7 @@
                 <td>
                   <div>{{item.resource_group_name}}</div>
                 </td>
+                <td>{{ getRelativeDate(item.updated_at) }}</td>
                 <td class="actions">
                   <i class="glyphicon glyphicon-refresh spin" ng-if="item.loading"></i>
                   <a ng-click="onViewResource($event,item)" ng-if="!item.loading" uib-tooltip="View">

@@ -12,7 +12,7 @@
    *
    * @param {any} config
    */
-  function widgetsAppsSDKDestributionsReportsController(config, Stats) {
+  function widgetsAppsSDKDestributionsReportsController(config, Stats, Util) {
     var _filters_field_list = ['from_timestamp', 'to_timestamp', 'app_id', 'account_id'];
     var vm = this;
     vm.config = config;

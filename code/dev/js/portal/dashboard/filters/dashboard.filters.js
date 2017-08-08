@@ -16,7 +16,9 @@
     'widget-web-analytics-edge-cache-hit-miss-ratio', //Web Analytics “Edge Cache Hit/Miss Ratio”
     'widget-web-analytics-http-status-codes-ratio', //Web Analytics “HTTP Status Codes Ratio”
     'widget-web-analytics-http-https-request-ratio', //Web Analytics Pie chart “HTTP/HTTPS Requests Ratio”
-    'widget-web-analytics-ftb-average', //Web Analytics Web Analitycs - Average FBT
+    'widget-web-analytics-ftb-average', //Web Analytics - Average FBT
+    'widget-web-analytics-imageengine-linechart-bytes-saved', // Web Analytics - Bandwidth Saved By ImageEngine Graph
+    'widget-web-analytics-imageengine-solidgauge-performance-improvement',// Web Analytics -  Performance Improvement By ImageEngine
 
     'bluetriangletech-conversions-subcategories', //"Conversion Rate"
     'bluetriangletech-bounce-rate', //"Bounce Rate"
@@ -26,11 +28,13 @@
     'widget-norse-live-attack-map', //"Norse Live Attack Map"
     'widget-apps-mobile-top-10-domains-hits', // TODO: rebase to Apps Analytics
     'widget-apps-mobile-top-10-domains-hits', // TODO: rebase to Apps Analytics
-    'widget-apps-mobile-rps-chart', // TODO: rebase to Apps Analityc group
+    'widget-apps-mobile-rps-chart', // TODO: rebase to Apps Analytics group
+    'widget-waf-security-events-chart', // WAF Analitycs - "Security Events Graph"
+    'widget-dns-queries-line-chart', // DNS Analytics - "DNS Queries Graph"
   ];
   var _group_widgets = {
     apps: {
-      title: 'Apps Analitycs',
+      title: 'Apps Analytics',
       order: 1,
       widgets_list: [
         'widget-apps-mobile-rps-chart',
@@ -62,7 +66,9 @@
         'widget-web-analytics-edge-cache-hit-miss-ratio', //Web Analytics “Edge Cache Hit/Miss Ratio”
         'widget-web-analytics-http-status-codes-ratio', //Web Analytics “HTTP Status Codes Ratio”
         'widget-web-analytics-http-https-request-ratio', //Web Analytics Pie chart “HTTP/HTTPS Requests Ratio”
-        'widget-web-analytics-ftb-average', //Web Analytics Web Analitycs - Average FBT
+        'widget-web-analytics-ftb-average', //Web Analytics - Average FBT
+        'widget-web-analytics-imageengine-linechart-bytes-saved', // Web Analytics - Bandwidth Saved By ImageEngine Graph
+        'widget-web-analytics-imageengine-solidgauge-performance-improvement',// Web Analytics - Performance Improvement By ImageEngine
       ]
     },
     business: {
@@ -78,9 +84,25 @@
     },
     security: {
       title: 'Security Analytics',
-      order: 5,
+      order: 4,
       widgets_list: [
         'widget-norse-live-attack-map', //"Norse Live Attack Map"
+        'widget-waf-security-events-chart' // "Security Events Graph"
+      ]
+    },
+    // “Third-Party Integrations”
+    thirdPartyIntegrations: {
+      title: 'Third-Party Integrations',
+      order: 6,
+      widgets_list: [
+        'third-party-iframe-page'
+      ]
+    },
+    dns: {
+      title: 'DNS Analytics',
+      order: 7,
+      widgets_list: [
+        'widget-dns-queries-line-chart', //"DNS Queries Graph"
       ]
     }
   };

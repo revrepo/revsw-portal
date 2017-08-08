@@ -1,0 +1,68 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <h2>ImageEngine Analytics</h2>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="pull-left">
+
+                <form class="form-inline">
+                  <div class="form-group">
+                    <div domain-select id="domain" ng-model="domain" on-select="onDomainSelected()" select-one="true"></div>
+                  </div>
+                  <div class="form-group">
+                    <time-note-display></time-note-display>
+                  </div>
+                </form>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="panel-body">
+          <!-- TODO: make common filter for both graphs -->
+          <div class="row">
+            <div class="col-md-6">
+              <!--<h3 class="text-left">Performance Improvement By ImageEngine</h3>-->
+              <div imageengine-solidgauge-performance-improvement fl-os="os" fl-device="device" fl-browser="browser" fl-country="country"
+                ng-domain="domain" is-auto-reload="true"> </div>
+            </div>
+            <div class="col-md-6">
+              <!--<h3>Bytes Saved By ImageEngine</h3>-->
+              <div imageengine-linechart-bytes-saved fl-os="os" fl-device="device" fl-browser="browser" fl-country="country" ng-domain="domain"
+                is-auto-reload="true"></div>
+            </div>
+
+          </div>
+          <hr>
+          <div class="row ">
+            <div class="clearfix_ col-md-12" filter-hours-periods ng-disabled="_loading ||!domain" is-loading="_loading" fl-os="os" fl-country="country"
+              fl-device="device" fl-browser="browser" ng-filters="filters" on-filter="reload()" filters-sets="filters"></div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <h3 class="text-left">Image Format Changes</h3>
+              <div>
+                <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="dataImageEngineFotmatChanges"></div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <h3 class="text-left">Image Resolution Changes</h3>
+              <div>
+                <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="dataImageEngineResolutionChanges"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

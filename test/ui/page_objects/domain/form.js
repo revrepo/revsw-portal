@@ -2,7 +2,7 @@
  *
  * REV SOFTWARE CONFIDENTIAL
  *
- * [2013] - [2015] Rev Software, Inc.
+ * [2013] - [2017] Rev Software, Inc.
  * All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains
@@ -93,6 +93,15 @@ var DomainForm = {
       },
       thirdPartyRuntimeDomains: {
         id: 'thirdPartyRuntimeDomains'
+      },
+      imageEngineToken: {
+        id: 'imageEngineToken'
+      },
+      imageEngineAPIKey: {
+        id: 'imageEngineAPIKey'
+      },
+      imageEngineOriginServer: {
+        id: 'imageEngineOriginServer'
       }
 
     },
@@ -174,6 +183,9 @@ var DomainForm = {
       mainAttrs: {
         ariaChecked: 'aria-checked'
       },
+      enableEnhancedAnalytics:{
+        id: 'enableEnhancedAnalytics'
+      },
       lastMileQUICprotocol: {
         id: 'lastMileQUICprotocol'
       },
@@ -242,6 +254,12 @@ var DomainForm = {
       acceptSSLrequests: {
         id: 'acceptSSLrequests'
       },
+      wafFunctionalityForTheDomain:{
+        id: 'enable_waf_rules'
+      },
+      aclRulesEnableSw: {
+        id: 'enable_acl_rules'
+      },
       customVCLrules: {
         id: 'customVCLrules'
       },
@@ -277,6 +295,12 @@ var DomainForm = {
       revAPMadminApprovalCO: {
         css: 'div[ng-if="$ctrl.domain.co_lua_enable_all"] div[name="customVcl"]'
       },
+      imageEngine:{
+        id: 'enableImageEngine'
+      },
+      refreshImageEngineConfigurationChBox:{
+        id: 'refreshImageEngineConfigurationChBox'
+      }
 
 
     },
@@ -313,10 +337,10 @@ var DomainForm = {
         id: 'manageSSLcertificates'
       },
       onAddNewItemBP: {
-        css: '.addNewLuaBlock'
+        css: '#luaScriptingLastMileBlock .addNewLuaBlock'
       },
       onAddNewItemCO: {
-        css: '[ng-click="$ctrl.onAddNewItemCO()"]'
+        css: '#luaScriptingFirstMileBlock .addNewLuaBlock'
       }
     },
     elementsForm: {
@@ -393,17 +417,29 @@ var DomainForm = {
         li: '.domain-edit-form .nav.nav-tabs>li:nth-child(4)',
         css: '.domain-edit-form .nav.nav-tabs>li:nth-child(4) a'
       },
-      customVCLRules:{
+      acl: {
         li: '.domain-edit-form .nav.nav-tabs>li:nth-child(5)',
         css: '.domain-edit-form .nav.nav-tabs>li:nth-child(5) a'
       },
-      luaScripting:{
+      waf: {
         li: '.domain-edit-form .nav.nav-tabs>li:nth-child(6)',
         css: '.domain-edit-form .nav.nav-tabs>li:nth-child(6) a'
       },
-      thirdPartyLinks:{
+      customVCLRules:{
         li: '.domain-edit-form .nav.nav-tabs>li:nth-child(7)',
         css: '.domain-edit-form .nav.nav-tabs>li:nth-child(7) a'
+      },
+      luaScripting:{
+        li: '.domain-edit-form .nav.nav-tabs>li:nth-child(8)',
+        css: '.domain-edit-form .nav.nav-tabs>li:nth-child(8) a'
+      },
+      thirdPartyLinks:{
+        li: '.domain-edit-form .nav.nav-tabs>li:nth-child(9)',
+        css: '.domain-edit-form .nav.nav-tabs>li:nth-child(9) a'
+      },
+      imageEngine:{
+        li: '.domain-edit-form .nav.nav-tabs>li:nth-child(10)',
+        css: '.domain-edit-form .nav.nav-tabs>li:nth-child(10) a'
       }
     }
   },
@@ -474,6 +510,28 @@ var DomainForm = {
     return element(by.css(this.locators.tabs.sslConfiguration.css));
   },
   /**
+   * ### DomainForm.getACLTab()
+   *
+   * Returns the reference to the `WAF` tab (Selenium WebDriver
+   * Element)
+   *
+   * @returns {Selenium WebDriver Element}
+   */
+  getACLTab: function() {
+    return element(by.css(this.locators.tabs.acl.css));
+  },
+  /**
+   * ### DomainForm.getWAFTab()
+   *
+   * Returns the reference to the `WAF` tab (Selenium WebDriver
+   * Element)
+   *
+   * @returns {Selenium WebDriver Element}
+   */
+  getWAFTab: function () {
+    return element(by.css(this.locators.tabs.waf.css));
+  },
+  /**
    * ### DomainForm.getCustomVCLRulesTab()
    *
    * Returns the reference to the `Custom VCL Rules` tab (Selenium WebDriver
@@ -500,6 +558,17 @@ var DomainForm = {
     return element(by.css(this.locators.tabs.thirdPartyLinks.css));
   },
 
+  /**
+   * ### DomainForm.getImageEngineTab()
+   *
+   * Returns the reference to the `ImageEngine` tab
+   * (Selenium WebDriver Element)
+   *
+   * @returns {Selenium WebDriver Element}
+   */
+  getImageEngineTab: function () {
+    return element(by.css(this.locators.tabs.imageEngine.css));
+  },
 
   /**
    * ### DomainForm.getDomainNameTxtIn()
@@ -633,6 +702,10 @@ var DomainForm = {
 
   getOriginHostTxtIn: function () {
     return element(by.id(this.locators.textInputs.originHost.id));
+  },
+
+  getEnableEnhancedAnalytics: function () {
+    return element(by.id(this.locators.switches.enableEnhancedAnalytics.id));
   },
 
   getUrlLocationBP: function () {
@@ -789,7 +862,13 @@ var DomainForm = {
   getAcceptSSLrequestsTxtIn: function () {
     return element(by.id(this.locators.switches.acceptSSLrequests.id));
   },
-  getCustomVCLrulesTxtIn: function () {
+  getWAFFunctionalityForTheDomain: function () {
+    return element(by.id(this.locators.switches.wafFunctionalityForTheDomain.id));
+  },
+  getACLRulesEnableSw: function () {
+    return element(by.id(this.locators.switches.aclRulesEnableSw.id));
+  },
+  getCustomVCLrulesSw: function () {
     return element(by.id(this.locators.switches.customVCLrules.id));
   },
   getDynamicOriginDNSnameLookupsTxtIn: function () {
@@ -834,7 +913,38 @@ var DomainForm = {
   getRevAPMadminApprovalCO: function () {
     return element(by.css(this.locators.switches.revAPMadminApprovalCO.css));
   },
-
+   /**
+   * ### DomainForm.getImageEngineSw()
+   *
+   * Returns the reference to the `ImageEngine` switch
+   * (Selenium WebDriver Element)
+   *
+   * @returns {Selenium WebDriver Element}
+   */
+  getImageEngineSw: function () {
+    return element(by.id(this.locators.switches.imageEngine.id));
+  },
+  getImageEngineTokenTxtIn: function () {
+    return element(by.id(this.locators.textInputs.imageEngineToken.id));
+  },
+  getImageEngineTokenValue: function () {
+    return this.getImageEngineTokenTxtIn().getAttribute('value');
+  },
+  getImageEngineAPIKeyTxtIn: function () {
+    return element(by.id(this.locators.textInputs.imageEngineAPIKey.id));
+  },
+  getImageEngineAPIKeyValue: function () {
+    return this.getImageEngineAPIKeyTxtIn().getAttribute('value');
+  },
+  getImageEngineOriginServerTxtIn: function () {
+    return element(by.id(this.locators.textInputs.imageEngineOriginServer.id));
+  },
+  getImageEngineOriginServerValue: function () {
+    return this.getImageEngineOriginServerTxtIn().getAttribute('value');
+  },
+  getSetImageEngineConfigurationSw: function () {
+    return element(by.id(this.locators.switches.refreshImageEngineConfigurationChBox.id));
+  },
   getUseEndUserProtocolTxtIn: function () {
     return element(by.id(this.locators.radioInputs.useEndUserProtocol.id));
   },
@@ -891,7 +1001,7 @@ var DomainForm = {
   },
 
   getOnAddNewItemBP: function () {
-    return element.all(by.css(this.locators.buttons.onAddNewItemBP.css));
+    return element(by.css(this.locators.buttons.onAddNewItemBP.css));
   },
   getOnAddNewItemCO: function () {
     return element(by.css(this.locators.buttons.onAddNewItemCO.css));
@@ -1115,6 +1225,52 @@ var DomainForm = {
       .element(by.cssContainingText('option', domainOriginLocation))
       .click();
   },
+   /**
+   * ### DomainForm.setImageEngineTokenTxtIn()
+   *
+   * Sets a new value for `ImageEngine Token` text field
+   *
+   * @param {String} imageEngineTokenValue
+   *
+   * @returns {Promise}
+   */
+  setImageEngineTokenTxtIn: function (imageEngineTokenValue) {
+    var el = this
+      .getImageEngineTokenTxtIn()
+      .clear()
+      .sendKeys(imageEngineTokenValue);
+    return  el;
+  },
+  /**
+   * ### DomainForm.setImageEngineAPIKeyTxtIn()
+   *
+   * Sets a new value for `ImageEngine Purge API Secret Key` text field
+   *
+   * @param {String} imageEngineAPIKeyValue
+   *
+   * @returns {Promise}
+   */
+  setImageEngineAPIKeyTxtIn: function (imageEngineAPIKeyValue) {
+    return this
+      .getImageEngineAPIKeyTxtIn()
+      .clear()
+      .sendKeys(imageEngineAPIKeyValue);
+  },
+   /**
+   * ### DomainForm.setImageEngineAPIKeyTxtIn()
+   *
+   * Sets a new value for `Origin Server` text field
+   *
+   * @param {String} ImageEngineTokenTxtIn
+   *
+   * @returns {Promise}
+   */
+  setImageEngineOriginServerTxtIn: function (imageEngineOriginServerValue) {
+    return this
+      .getImageEngineOriginServerTxtIn()
+      .clear()
+      .sendKeys(imageEngineOriginServerValue);
+  },
 
   /**
    * ### DomainForm.clearDomainName()
@@ -1235,7 +1391,37 @@ var DomainForm = {
       .getOriginHostHeaderTxtIn()
       .clear();
   },
-
+ /**
+   * ### DomainForm.clearInputsImageEngineForm()
+   *
+   * Clean the Domain Config ImageEngine Form inputs elemenst in the UI.
+   *
+   * @returns {Promise}
+   */
+  clearInputsImageEngineForm: function () {
+    this
+      .getImageEngineTokenTxtIn()
+      .clear();
+    this
+      .getImageEngineAPIKeyTxtIn()
+      .clear();
+    return this
+      .getImageEngineOriginServerTxtIn()
+      .clear();
+  },
+  /**
+   * ### DomainForm.clickImageEngine()
+   *
+   * Triggers a click on the `ImageEngine` switch from the Edit Domain page
+   * from the Portal app.
+   *
+   * @returns {Promise}
+   */
+  clickImageEngine: function(){
+    this
+      .getImageEngineSw()
+      .click();
+  },
   /**
    * ### DomainForm.fill()
    *

@@ -1,0 +1,6 @@
+<h3 class="waf_charts_title">{{ heading }}</h3>
+<div class="clearfix" waf-filter-security-events ng-disabled="!ngDomain" fl-country="flCountry" fl-zones="flZones" ng-filters="filters"
+  on-filter="reload()"></div>
+<div class="auto-scroll">
+  <div style="min-width: 500px; min-height: 350px" line-chart ng-data="traffic" ng-chart-options="chartOptions"></div>
+</div>

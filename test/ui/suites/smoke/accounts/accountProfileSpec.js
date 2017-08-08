@@ -48,10 +48,11 @@ describe('Smoke', function () {
           .isDisplayed()).toBeTruthy();
       });
 
-    it('should cancel account profile edition.',
+    it('should leave account profile edition page after cancel.',
       function () {
         Portal.accounts.profilePage.form.clickCancel();
-        expect(Portal.userListPage.isDisplayed()).toBeTruthy();
+        expect(Portal.accounts.profilePage.isDisplayed()).toBeFalsy();
+        expect(Portal.dashboards.listPage.isDisplayed()).toBeTruthy();
       });
 
     it('should update company profile.',
@@ -75,7 +76,7 @@ describe('Smoke', function () {
           });
       });
   });
-  
+
 });
 
 

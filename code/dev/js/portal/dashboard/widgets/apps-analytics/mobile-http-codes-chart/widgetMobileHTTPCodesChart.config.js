@@ -11,7 +11,7 @@
       // “HTTP Status Codes Graph”
       .widget('widget-apps-mobile-http-codes-chart', {
         title: 'HTTP Status Codes Graph',
-        description: 'Apps Analitycs - HTTP Status Codes Graph',
+        description: 'Apps Analytics - HTTP Status Codes Graph',
         templateUrl: 'parts/dashboard/widgets/apps-analytics/mobile-http-codes-chart/view-mobile-http-codes-chart.tpl.html',
         titleTemplateUrl: 'parts/dashboard/widgets/apps-analytics/widget-title-with-params-trafic-levels.tpl.html',
         controller: 'widgeAppsMobileHTTPCodesController',

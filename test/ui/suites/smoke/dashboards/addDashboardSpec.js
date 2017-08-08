@@ -26,11 +26,21 @@ describe('Smoke', function () {
   // Defining set of users for which all below tests will be run
   var users = [
     config.get('portal.users.revAdmin'),
-//    config.get('portal.users.reseller'),  // TODO: somehow the first test fails for reseller role
+    config.get('portal.users.reseller'),
     config.get('portal.users.admin'),
     config.get('portal.users.user'),
     config.get('portal.users.roUser')
   ];
+  var dashboard = DataProvider.generateDashboardData();
+  var hasElementWithText = function(textElements, customTitle) {
+    var result = false;
+    textElements.forEach(function(text) {
+      if (text === (customTitle || dashboard.title)) {
+        result = text;
+      }
+    });   
+    return result;
+  };
 
   users.forEach(function (user) {
 
@@ -52,71 +62,77 @@ describe('Smoke', function () {
 
         it('should default "My Dashboard" exist in Dasboards page', function () {
           var defaultDashboardName = 'My Dashboard';
-
           var createdDashboard = Portal.dashboards.listPage.getTitle();
-          var leftMenu = Portal.dashboards.listPage.getLeftMenuDashboards();
+          var leftMenu = Portal.helpers.nav.getDashboardsItems().getText();
           var existDashChart = Portal.dashboards.listPage.existDashboardChart();
 
-          // expect(createdDashboard).toContain(defaultDashboardName);
-          expect(leftMenu).toContain(defaultDashboardName);
+          leftMenu.then(function(elementText) {
+            expect(hasElementWithText(elementText, defaultDashboardName))
+              .toContain(defaultDashboardName);
+          });
+
           expect(existDashChart).toBe(true);
         });
 
         it('should "Add Dashboard" in Dashboard Page - Structure - ' +
           'Two Columns Of Equal Width - Every 15 Minutes',
           function () {
-            var dashboard = DataProvider.generateDashboardData();
-            dashboard.structure = 2;
+            
+            dashboard.structure = 1;
 
             Portal.dashboards.listPage.addNewDashboard(dashboard);
             var dashboardTitle = Portal.dashboards.listPage.getTitle();
-            var leftMenu = Portal.dashboards.listPage.getLeftMenuDashboards();
+            var leftMenu = Portal.helpers.nav.getDashboardsItems().getText();
             var existChart = Portal.dashboards.listPage.existDashboardChart();
 
             expect(dashboardTitle).toContain(dashboard.title);
-            expect(leftMenu).toContain(dashboard.title);
+
+            leftMenu.then(function(elementText) {
+              expect(hasElementWithText(elementText)).toContain(dashboard.title);
+            });
+
+
             expect(existChart).toBe(true);
 
             Portal.dashboards.listPage.deleteDashboard(dashboard);
-            Portal.dashboards.dialogPage.clickDelete();
           });
 
         it('should "Add Dashboard" in Dashboard Page - Structure - ' +
           'One Wide Column - Every 1 Minute',
           function () {
-            var dashboard = DataProvider.generateDashboardData();
             dashboard.structure = 0;
 
             Portal.dashboards.listPage.addNewDashboard(dashboard);
             var createdDashboard = Portal.dashboards.listPage.getTitle();
-            var leftMenu = Portal.dashboards.listPage.getLeftMenuDashboards();
+            var leftMenu = Portal.helpers.nav.getDashboardsItems().getText();
             var existChart = Portal.dashboards.listPage.existDashboardChart();
 
             expect(createdDashboard).toContain(dashboard.title);
-            expect(leftMenu).toContain(dashboard.title);
+            leftMenu.then(function(elementText) {
+              expect(hasElementWithText(elementText)).toContain(dashboard.title);
+            });
             expect(existChart).toBe(true);
 
             Portal.dashboards.listPage.deleteDashboard(dashboard);
-            Portal.dashboards.dialogPage.clickDelete();
           });
 
         it('should "Add Dashboard" in Dashboard Page - Structure - ' +
           'Four Columns Of Equal Width - No Auto-Refresh',
           function () {
-            var dashboard = DataProvider.generateDashboardData();
             dashboard.structure = 4;
 
             Portal.dashboards.listPage.addNewDashboard(dashboard);
             var createdDashboard = Portal.dashboards.listPage.getTitle();
-            var leftMenu = Portal.dashboards.listPage.getLeftMenuDashboards();
+            var leftMenu = Portal.helpers.nav.getDashboardsItems().getText();
             var existChart = Portal.dashboards.listPage.existDashboardChart();
 
             expect(createdDashboard).toContain(dashboard.title);
-            expect(leftMenu).toContain(dashboard.title);
+            leftMenu.then(function(elementText) {
+              expect(hasElementWithText(elementText)).toContain(dashboard.title);
+            });
             expect(existChart).toBe(true);
 
             Portal.dashboards.listPage.deleteDashboard(dashboard);
-            Portal.dashboards.dialogPage.clickDelete();
           });
       });
     });

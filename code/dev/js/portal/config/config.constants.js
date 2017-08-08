@@ -60,6 +60,10 @@
         Modified: 'glyphicon-ok-circle text-primary'
       },
       /**
+       * Interval delay for unlock UI for user actions
+       */
+      TIMEOUT_USER_ACTIONS_LOCK: 1000, // 1 sec
+      /**
        * Interval delay for refreshing apps staging/global status
        */
       APP_STATUS_REFRESH_INTERVAL: 15000,
@@ -90,6 +94,23 @@
        * Interval delay for refreshing SSL Certificate staging/global status
        */
       SSL_CERT_STATUS_REFRESH_INTERVAL: 15000,
+       /**
+       * Interval delay for refreshing WAF Rules Status staging/global status
+       */
+      WAF_RULE_STATUS_REFRESH_INTERVAL: 15000,
+      /**
+       * List of icon classes for WAF Rule  statuses
+       */
+      WAF_RULE_STAGING_STATUS_ICONS: {
+        InProgress: 'glyphicon-refresh spin',
+        Published: 'glyphicon-ok-sign text-success',
+        Modified: 'glyphicon-ok-sign text-primary'
+      },
+      WAF_RULE_PRODUCTION_STATUS_ICONS: {
+        InProgress: 'glyphicon-refresh spin',
+        Published: 'glyphicon-ok-circle text-success',
+        Modified: 'glyphicon-ok-circle text-primary'
+      },
       /**
        * [LOGSHIPPERS_SOURCE_TYPES description]
        * @type {Object}
@@ -155,7 +176,7 @@
         WILDCARD_DOMAIN_FIELD: /(^(\*\.[a-zA-Z0-9-\_]{0,62}[a-zA-Z0-9]\.)+[a-zA-Z]{2,63}$)/,
         WILDCARD_DOMAINS_FIELDS: /(^\*\.(([a-zA-Z0-9-\_]{0,62})[a-zA-Z0-9]\.)+[a-zA-Z]{2,63}$)/,
         URL: /(https?:)?\/\/.+/,
-        HEADER_VALUE: /^[A-Za-z0-9.' -]+$/,
+        HEADER_VALUE: /^[A-Za-z0-9.' -[\]\_\/{}()""*+&@?!.,\\^$|#]+$/,
         DOMAIN: /(?=^.{4,253}$)(^((?!-)(?!\_)[a-zA-Z0-9-\_]{0,62}[a-zA-Z0-9]\.)+[a-zA-Z]{2,63}$)/,
         DNS_RECORD_DOMAIN: /(?=^.{4,253}$)(^((?!-)[a-zA-Z0-9-\_]{0,62}[a-zA-Z0-9]\.)+[a-zA-Z]{2,63}$)/,
         COOKIE: /^[A-Za-z0-9.' -]+$/,
@@ -163,12 +184,21 @@
         QUERY_STRINGS_OPTION: /^[A-Za-z0-9.' -]+$/,
         CONTACT_DATA: /^[A-Za-zÀÈÌÒÙàèìòùÁÉÍÓÚÝáéíóúýÂÊÎÔÛâêîôûÃÑÕãñõÄËÏÖÜŸäëïöüŸ¡¿çÇŒœßØøÅåÆæÞþÐð$\/-]+$/,
         COMPANY_DATA: /^[A-Za-zÀÈÌÒÙ àèìòù ÁÉÍÓÚ Ý áéíóúý ÂÊÎÔÛ âêîôû ÃÑÕ ãñõ ÄËÏÖÜŸ äëïöüŸ ¡¿çÇŒœ ßØøÅå ÆæÞþ Ðð ""\w\d\s-'.,&#@:?!()$\/-]+$/,
-      },
+        WAF_LOCATION_NAME: /^\/{1}(([A-Za-z0-9\-\_]+)(\/?){1})*$/,
+        CIDR:/^([0-9]{1,3}\.){3}[0-9]{1,3}\/{1}(([1-9]|[1-2][0-9]|3[0-2])){1}?$/
+     },
       // HEADER OPERATION FOR DOMAIN CACHING RULE
       HEADER_OPERATIONS: {
         'add': 'Add',
         'remove': 'Remove',
         'replace': 'Replace'
+      },
+      // DOMAIN WAF ACTIONS
+      WAF_ACTIONS:{
+        'ALLOW': 'ALLOW',
+        'BLOCK': 'BLOCK',
+        'LOG': 'LOG',
+        'DROP': 'DROP'
       },
       TIME_NOTE_DISPLAY: {
         MESSAGE: 'All times are shown in the computer’s local time zone'
@@ -237,6 +267,64 @@
         SRV_PRIORITY: 10,
         SRV_WEIGHT: 5,
         SRV_PORT: 5060
+      },
+      /**
+       * @name DNS_WAIT_NEW_CALL_MILLISSECONDS
+       * @description default value waiting between request to API (NSONE)
+       */
+      DNS_WAIT_NEW_CALL_MILLISSECONDS: 5000,
+      /**
+       * @name WAF_ACTIONS_DEFAULT
+       * @description default WAF Action Rule for add
+       * @type {Array}
+       */
+      WAF_ACTIONS_DEFAULT: {
+        'condition': '$SQL >= 8', // TODO: set valid value
+        'action': 'BLOCK'
+      },
+      /**
+       * @name WAF_LOCATION_DEFAULT
+       * @description default WAF Location Block for add
+       */
+      WAF_LOCATION_DEFAULT: {
+        'location': '/',
+        'enable_waf': true,
+        'enable_learning_mode': true,
+        'enable_sql_injection_lib': true,
+        'enable_xss_injection_lib': true,
+        'waf_rules': [],
+        'waf_actions': [
+            {
+              'condition': '$SQL >= 8',
+              'action': 'BLOCK'
+            },
+            {
+              'condition': '$UWA >= 4',
+              'action': 'DROP'
+            },
+            {
+              'condition': '$XSS >= 8',
+              'action': 'BLOCK'
+            },
+            {
+              'condition': '$EVADE >= 4',
+              'action': 'BLOCK'
+            },
+            {
+              'condition': '$LIBINJECTION_XSS >= 8',
+              'action': 'BLOCK'
+            },
+            {
+              'condition': '$LIBINJECTION_SQL >= 8',
+              'action': 'BLOCK'
+            }
+        ]
+      },
+      WAF_REQUEST_ZONES: {
+        'ARGS': 'Request Arguments',
+        'HEADERS': 'Request Header',
+        'BODY': 'Request Body',
+        'URL': 'Request URL'
       }
     });
 

@@ -18,7 +18,8 @@
         flDevice: '=',
         flBrowser: '=',
         filtersSets: '=',
-        hideFilters: '='
+        hideFilters: '=',
+        isAutoReload: '@?'
       },
       /*@ngInject*/
       controller: function($scope, Stats, $q, Util, filterGeneratorService) {
@@ -47,6 +48,7 @@
 
         $scope.heading = 'Edge Cache Efficiency Hits';
         $scope._loading = false;
+        $scope.hasFailedToLoadData = false;
         $scope.filters = {
           from_timestamp: moment().subtract(1, 'days').valueOf(),
           to_timestamp: Date.now()
@@ -87,19 +89,23 @@
                   rel_hit = Math.round(hit_ * 1000 / (miss_ + hit_)) / 10;
                   rel_miss = Math.round(miss_ * 1000 / (miss_ + hit_)) / 10;
                 }
+                var _text = 'Cache Hits <span style="font-weight: bold; color: #3c65ac;">' + Util.formatNumber(hit_) +
+                  '</span> Requests, <span style="font-weight: bold; color: #3c65ac;">' + rel_hit +
+                  '</span>%<br> Cache Miss <span style="font-weight: bold; color: darkred;">' + Util.formatNumber(miss_) +
+                  '</span> Requests, <span style="font-weight: bold; color: darkred;">' + rel_miss +
+                  '</span>%';
+                if($scope.hasFailedToLoadData === true) {
+                  _text = '<strong style="color: red;"> Failed to retrieve the data - please try again later </strong>';
+                }
                 info_ = this /*chart*/ .renderer
-                  .label('Cache Hits <span style="font-weight: bold; color: #3c65ac;">' + Util.formatNumber(hit_) +
-                    '</span> Requests, <span style="font-weight: bold; color: #3c65ac;">' + rel_hit +
-                    '</span>%<br> Cache Miss <span style="font-weight: bold; color: darkred;">' + Util.formatNumber(miss_) +
-                    '</span> Requests, <span style="font-weight: bold; color: darkred;">' + rel_miss +
-                    '</span>%',
+                  .label( _text,
                     x /* x */ , 3 /* y */ , '', 0, 0, true /*html*/ )
                   .css({
                     color: '#444'
                   })
                   .attr({
                     fill: 'rgba(240, 240, 240, 0.6)',
-                    stroke: '#3c65ac',
+                    stroke: $scope.hasFailedToLoadData ? 'red' : '#3c65ac', // NOTE: border color
                     'stroke-width': 1,
                     padding: 6,
                     r: 2,
@@ -189,6 +195,7 @@
           }
 
           $scope._loading = true;
+          $scope.hasFailedToLoadData = false;
           var series = [{
             name: 'Cache Hit',
             data: []
@@ -246,13 +253,21 @@
                 series: series
               };
             })
+            .catch(function(err) {
+              $scope.traffic = {
+                pointStart: _xAxisPointStart,
+                pointInterval: _xAxisPointInterval,
+                series: series
+              };
+              $scope.hasFailedToLoadData = true;
+            })
             .finally(function() {
               $scope._loading = false;
             });
         };
 
         $scope.$watch('ngDomain', function() {
-          if (!$scope.ngDomain) {
+          if (!$scope.ngDomain || $scope.isAutoReload === 'false') {
             return;
           }
           $scope.reload();

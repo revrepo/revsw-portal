@@ -28,12 +28,14 @@
 
           <div class="row">
             <div class="col-lg-12">
+              <!-- NOTE: this graph use time filter 1/7/30 days, but now filter params contain data only for last hour  -->
               <div fbt-average-chart
                    fl-os="os"
                    fl-device="device"
                    fl-country="country"
                    fl-browser="browser"
-                   ng-domain="domain"></div>
+                   ng-domain="domain"
+                   is-auto-reload="true"></div>
             </div>
           </div>
 
@@ -45,16 +47,19 @@
                    fl-device="device24"
                    fl-country="country24"
                    fl-browser="browser24"
-                   ng-domain="domain"></div>
+                   ng-domain="domain"
+                   is-auto-reload="true"></div>
             </div>
           </div>
 
           <hr>
           <div class="row">
             <div class="col-lg-12">
+              <!-- NOTE: this graph use time filter 1/7/30 days, but now filter params contain data only for last hour  -->
               <div fbt-heatmap-chart
                    fl-country="countries"
-                   ng-domain="domain"></div>
+                   ng-domain="domain"
+                   is-auto-reload="true"></div>
             </div>
           </div>
 

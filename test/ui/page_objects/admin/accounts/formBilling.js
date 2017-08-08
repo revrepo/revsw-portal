@@ -15,6 +15,7 @@
  * is strictly forbidden unless prior written permission is obtained
  * from Rev Software, Inc.
  */
+var WebElement = require('./../../../common/helpers/webElement');
 
 // # Edit Company Form Page Object
 
@@ -339,10 +340,10 @@ var CompanyBillingForm = {
    * @returns {Promise}
    */
   setState: function (state) {
-    this.getStateTxt().clear();
-    return this
-      .getStateTxt()
-      .sendKeys(state);
+    var el =  this.getStateTxt();
+    WebElement.scrollToElement(el);
+    el.clear();
+    return el.sendKeys(state);
   },
 
   /**
@@ -371,10 +372,10 @@ var CompanyBillingForm = {
    * @returns {Promise}
    */
   setZipCode: function (zipcode) {
-    this.getZipCodeTxt().clear();
-    return this
-      .getZipCodeTxt()
-      .sendKeys(zipcode);
+    var el =  this.getZipCodeTxt();
+    WebElement.scrollToElement(el);
+    el.clear();
+    return el.sendKeys(zipcode);
   },
 
   // ## Helper Methods

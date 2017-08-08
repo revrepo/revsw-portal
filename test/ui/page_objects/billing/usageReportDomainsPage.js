@@ -2,7 +2,7 @@
  *
  * REV SOFTWARE CONFIDENTIAL
  *
- * [2013] - [2016] Rev Software, Inc.
+ * [2013] - [2017] Rev Software, Inc.
  * All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains
@@ -29,17 +29,24 @@ var UsageReportDomainsPage = {
     domainsTable: {
       repeater: '( domain, usage ) in report.domains_usage'
     },
-    views: {
-      container: '.container-fluid .row',
-      panelHeading: {
-        css: '.col-md-12 .panel .panel-heading',
-        pullLeft: '.pull-left'
-      },
-      panelBody: '.col-md-12 .panel .panel-body',
-      panelBodyRootDivs: '.col-md-12 .panel .panel-body > div'
+    container: {
+      css: '.container-fluid .row #domains_usage',
+      id: 'domains_usage'
     },
+    titles: {
+      css: 'h4.list-title'
+    }
   },
-
+  /**
+   * ### UsageReportDomains.getContainer()
+   *
+   * Returns the container element for the Domains Usage Reports
+   *
+   * @returns {Selenium WebDriver Element}
+   */
+  getContainer: function () {
+    return element(by.css(this.locators.container.css));
+  },
   /**
    * ### UsageReportDomains.getDomainsList()
    *
@@ -69,16 +76,14 @@ var UsageReportDomainsPage = {
   /**
    * ### UsageReport.getTitle()
    *
-   * Returns the reference to the `Title` label element (Selenium WebDriver
+   * Returns the reference to the title `Domains Usage` label element (Selenium WebDriver
    * Element) from the Usage Report page from the Portal app.
    *
    * @returns {Selenium WebDriver Element}
    */
   getTitle: function() {
-    return element
-      .all(by.css(this.locators.views.panelBodyRootDivs))
-      .get(3)
-      .all(by.css('h4'))
+    return this.getContainer()
+      .all(by.css(this.locators.titles.css))
       .get(1)
       .getText();
   }

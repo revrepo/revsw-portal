@@ -48,7 +48,7 @@
                   .label('Origin Avg <span style="font-weight: bold; color: #3c65ac;">' + origin_avg_ +
                     '</span><br>CDN Avg <span style="font-weight: bold; color: black;">' + rev_avg_ +
                     '</span><br>Improvement <span style="font-weight: bold; color: darkred;">' + imp_avg_ +
-                    '</span> %',
+                    '</span>%',
                     this.xAxis[0].toPixels(0), 0, '', 0, 0, true /*html*/ )
                   .css({
                     color: '#444'

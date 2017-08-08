@@ -123,7 +123,7 @@
      /**
       * @name  autoRefresh
       * @description
-      * @param  {Object} option -
+      * @param  {Object} option
       * @return
       */
      $scope.autoRefresh = function(option) {
@@ -134,6 +134,10 @@
        if (!!option && !!option.autorefresh && option.autorefresh !== '') {
          timeReload = $interval(
            function() {
+             if($state.current.name !== 'index.dashboard.details') {
+               // NOTE: don't run auto refresh if type of the page is changed
+               return;
+             }
              $scope.$broadcast('widgetReload');
              $scope.autoRefresh(option);
            }, option.autorefresh * 60 * 1000, 1);
@@ -207,7 +211,8 @@
      }
      // NOTE: user skip intor on this session work
      vm.onIntroSkipEvent = function() {
-       intro.isSkipIntro = true;
+       intro.isSkipIntro = true; // NOTE: store information about Intor was shows.
+       intro.isShowMainIntro = true;
        $localStorage.intro = intro;
      };
 

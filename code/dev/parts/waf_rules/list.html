@@ -1,0 +1,122 @@
+<!-- Note that element contain ui-view child page will be added here -->
+<script type="text/ng-template" id="confirmModal.html">
+  <div class="modal-header">
+    <h3 class="modal-title">Confirm</h3>
+  </div>
+  <div class="modal-body">
+    Are you sure you want to delete WAF Rule
+    <strong>{{model.rule_name}}</strong>?
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+    <button class="btn btn-danger" type="button" ng-click="ok()">OK</button>
+  </div>
+</script>
+<script type="text/ng-template" id="confirmUpdateModal.html">
+  <div class="modal-header">
+    <h3 class="modal-title">Confirm</h3>
+  </div>
+  <div class="modal-body">
+    Are you sure you want to update WAF Rule
+    <strong>{{model.rule_name}}</strong>?
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+    <button class="btn btn-success" type="button" ng-click="ok()">OK</button>
+  </div>
+</script>
+<script type="text/ng-template" id="confirmPublishModal.html">
+  <div class="modal-header">
+    <h3 class="modal-title">Confirm</h3>
+  </div>
+  <div class="modal-body">
+    Are you sure you want to publish WAF Rule
+    <strong>{{model.rule_name}}</strong>?
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+    <button class="btn btn-success" type="button" ng-click="ok()">OK</button>
+  </div>
+</script>
+<script type="text/ng-template" id="confirmDuplicateModal.html">
+  <div class="modal-header">
+    <h3 class="modal-title">Confirm</h3>
+  </div>
+  <div class="modal-body">
+    <form class="form-horizontal" name="duplicateForm">
+      <div class="form-group"><label class="col-sm-12"> We are going to create a copy of WAF Rule <strong>"{{model.rule_name}}"</strong>. Please enter a new WAF Rule name:</label></div>
+      <div class="form-group" ng-class="{ 'has-error': duplicateForm.rule_name.$invalid && duplicateForm.rule_name.$dirty }">
+        <div class="col-sm-12">
+          <input type="text" autofocus class="form-control inline-block" ng-disabled="_loading" ng-model="model.newRuleName" name="rule_name"
+            id="rule_name" placeholder="New WAF Rule Name" ng-pattern="NO_SPECIAL_CHARS" ng-maxlength="50" required>
+            <label for="rule_name" class="text-info" popover-append-to-body="{{false}}" popover-trigger="mouseenter" uib-popover="WAF Rule name (50 characters max)">
+              <i class="fa fa-question-circle"></i>
+            </label>
+          <div class="error-messages" ng-messages="duplicateForm.rule_name.$error" role="alert" ng-messages-multiple>
+            <div ng-messages-include="parts/shared/error-messages.html"></div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+    <button class="btn btn-success" type="button" ng-disabled="duplicateForm.$invalid" ng-click="ok(newRuleName)">OK</button>
+  </div>
+</script>
+<div class="container-fluid waf-rules__page" ui-view="page">
+  <div class="row">
+    <div class="col-sm-12">
+      <h2 class="pull-left page-title">
+        WAF Rules List
+      </h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="pull-left form-inline">
+                <div class="form-group">
+                  <a ui-sref="{{isReadOnly() ?'.': '.new'}}" class="btn btn-success" id="btn_add_new_waf_rule" ng-class="{'btn-disabled':isReadOnly()}" ng-disabled="_loading || isReadOnly()"
+                    popover-append-to-body="{{false}}" popover-trigger="mouseenter" uib-popover="Click to add a new WAF rule. Later the rule can be used in WAF settings of your web domains.">
+                    <i class="glyphicon glyphicon-plus"></i>&nbsp; Add New WAF Rule
+                  </a>
+                </div>
+                <div class="form-group">
+                  <!-- TODO: -->
+                  <a uisref="{{isReadOnly() ?'.': '.new'}}" class="btn btn-success" ng-class="{'btn-disabled':isReadOnly()}" ng-disabled="_loading || isReadOnly() || true"
+                    popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="The system can automatically create white-listing WAF rules using real end user traffic of a website. WAF learning mode can be enabled using “Learning Mode” switch in WAF tab of your website configuration.">
+                    <i class="glyphicon glyphicon-plus"></i>&nbsp; Learn From The Logs And Add Auto-Generated Rule
+                  </a>
+                </div>
+              </div>
+
+              <div class="pull-right">
+                <form class="form-inline">
+                  <div class="form-group">
+                    <label for="search">Search:&nbsp;</label>
+                    <input type="text" class="form-control" id="search" placeholder="" ng-model="filter.filter" ng-change="checkFilterPage()">&nbsp;&nbsp;
+                    <i class="glyphicon glyphicon-remove" ng-show="filter.filter != ''" ng-click="filter.filter = ''"></i>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="panel-body">
+          <uib-tabset active="active" class="waf-rules__tabs">
+            <uib-tab index="1" heading="Customer Rules" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Customer Rules are managed by you and are application-specific">
+              <div id="waf-rules-list__custom" ng-include="'parts/waf_rules/view/waf-rules-list__customer.tpl.html'"></div>
+            </uib-tab>
+            <uib-tab index="2" heading="Built-In Rules" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Built-In Rules are pre-configured and managed by the WAF vendor and can be used in your web applications as the basis for WAF configuration">
+              <div id="waf-rules-list__builtin" ng-include="'parts/waf_rules/view/waf-rules-list__builtin.tpl.html'"></div>
+            </uib-tab>
+          </uib-tabset>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

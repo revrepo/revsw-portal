@@ -68,6 +68,10 @@ var MenuItems = {
       id: 'side-menu-sub-item__webApp-ssl_names',
       area: MenuAreas.WEB
     },
+    WAF_RULES: {
+      id: 'side-menu-sub-item__webApp-waf_rules',
+      area: MenuAreas.WEB
+    },
     STAGING_ENVIRONMENT: {
       id: 'side-menu-sub-item__webApp-staging-environment',
       area: MenuAreas.WEB
@@ -107,6 +111,20 @@ var MenuItems = {
       area: MenuAreas.WEB_ANALYTICS
     }
   },
+  SECURITY_ANALYTICS:{
+    WAF_ANALYTICS:{
+      linkText: 'WAF Analytics',
+      area: MenuAreas.SECURITY_ANALYTICS
+    },
+    WAF_EVENS:{
+      linkText: 'WAF Events',
+      area: MenuAreas.SECURITY_ANALYTICS
+    },
+    WAF_HEAT_MAPS: {
+      linkText: 'WAF Heatmaps',
+      area: MenuAreas.SECURITY_ANALYTICS
+    }
+  },
   DNS_SERVICE: {
     DNS_ZONES: {
       linkText: 'DNS Zones',
@@ -118,6 +136,10 @@ var MenuItems = {
     },
     DATA_SOURCES: {
       linkText: 'Data Sources',
+      area: MenuAreas.DNS_SERVICE
+    },
+    DNS_ANALYTICS:{
+      linkText: 'DNS Analytics',
       area: MenuAreas.DNS_SERVICE
     }
   },
@@ -144,6 +166,10 @@ var MenuItems = {
     },
     SECURITY_SETTINGS: {
       linkText: 'Security Settings',
+      area: MenuAreas.ADMIN
+    },
+    CDN_IP_BLOCKS: {
+      id: 'side-menu-sub-item__cdn-ip-bloks',
       area: MenuAreas.ADMIN
     },
     ACTIVITY_LOG: {

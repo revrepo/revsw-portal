@@ -26,61 +26,70 @@ describe('Functional', function () {
     var users = [
       config.get('portal.users.admin')
     ];
-    var testUser;
 
     users.forEach(function (user) {
 
       describe('With user: ' + user.role, function () {
 
-        beforeEach(function (done) {
-          Portal.session.setCurrentUser(user);
-          Portal.helpers.users
-            .create()
-            .then(function (newUser) {
-              testUser = newUser;
-              done();
-            })
-            .catch(done);
+        beforeAll(function (done) {
+          Portal.signIn(user);
+          Portal.helpers.nav.goToUpdatePassword();
+          done();
+        });
+
+        afterAll(function () {
+          Portal.signOut();
         });
 
         it('should go to "User List" page when clicking "Back" button',
           function () {
-            Portal.signIn(user);
-            Portal.helpers.nav.goToUpdatePassword();
             Portal.updatePasswordPage.clickBackToList();
             expect(Portal.userListPage.isDisplayed()).toBeTruthy();
-            Portal.signOut();
           });
 
-        it('should update password successfully using only letter values',
-          function () {
-            var newPassword = 'newpassword';
-            Portal.signIn(testUser);
-            Portal.helpers.nav.goToUpdatePassword();
-            Portal.updatePasswordPage.setCurrentPassword(testUser.password);
-            Portal.updatePasswordPage.setNewPassword(newPassword);
-            Portal.updatePasswordPage.setPasswordConfirm(newPassword);
-            Portal.updatePasswordPage.clickUpdatePassword();
-            var alert = Portal.alerts.getFirst();
-            expect(alert.getText())
-              .toContain(Constants.alertMessages.users.MSG_SUCCESS_UPDATE_PASSWORD);
-            Portal.signOut();
+        describe('change password for user', function () {
+          var testUser;
+          beforeEach(function (done) {
+            Portal.session.setCurrentUser(user);
+            Portal.helpers.users
+              .create()
+              .then(function (newUser) {
+                testUser = newUser;
+                done();
+              })
+              .catch(done);
           });
 
-        it('should update password successfully  using only numbers',
-          function () {
-            var newPassword = '12345678';
-            Portal.signIn(testUser);
-            Portal.helpers.nav.goToUpdatePassword();
-            Portal.updatePasswordPage.setCurrentPassword(testUser.password);
-            Portal.updatePasswordPage.setNewPassword(newPassword);
-            Portal.updatePasswordPage.setPasswordConfirm(newPassword);
-            Portal.updatePasswordPage.clickUpdatePassword();
-            var alert = Portal.alerts.getFirst();
-            expect(alert.getText())
-              .toContain(Constants.alertMessages.users.MSG_SUCCESS_UPDATE_PASSWORD);
-            Portal.signOut();
-          });
+          it('should update password successfully using only letter values',
+            function () {
+              var newPassword = 'newpassword';
+              Portal.signIn(testUser);
+              Portal.helpers.nav.goToUpdatePassword();
+              Portal.updatePasswordPage.setCurrentPassword(testUser.password);
+              Portal.updatePasswordPage.setNewPassword(newPassword);
+              Portal.updatePasswordPage.setPasswordConfirm(newPassword);
+              Portal.updatePasswordPage.clickUpdatePassword();
+              var alert = Portal.alerts.getFirst();
+              expect(alert.getText())
+                .toContain(Constants.alertMessages.users.MSG_SUCCESS_UPDATE_PASSWORD);
+              Portal.signOut();
+            });
+
+          it('should update password successfully using only numbers',
+            function () {
+              var newPassword = '12345678';
+              Portal.signIn(testUser);
+              Portal.helpers.nav.goToUpdatePassword();
+              Portal.updatePasswordPage.setCurrentPassword(testUser.password);
+              Portal.updatePasswordPage.setNewPassword(newPassword);
+              Portal.updatePasswordPage.setPasswordConfirm(newPassword);
+              Portal.updatePasswordPage.clickUpdatePassword();
+              var alert = Portal.alerts.getFirst();
+              expect(alert.getText())
+                .toContain(Constants.alertMessages.users.MSG_SUCCESS_UPDATE_PASSWORD);
+              Portal.signOut();
+            });
+        });
       });
     });
   });

@@ -37,6 +37,12 @@
 
 
     /**
+     * List of Users DNS Zones
+     * @type {Array}
+     */
+    var DNSZoneList = [];
+    var dnsZoneSelected = null;
+    /**
      * Clear all details from localstorage
      */
     function clearAll() {
@@ -52,6 +58,7 @@
         last_user_id: null,
         selectedAccount: null,
         selectedApplication: null,
+        selectedDNSZone: null,
         intro: intro_,
         lastUrl: null
       });
@@ -395,6 +402,7 @@
      * @returns {Promise}
      */
     function getUserApps(reload) {
+      var self = this;
       return $q(function (resolve, reject) {
         if (apps.length > 0 && !reload) {
           return resolve(apps);
@@ -416,7 +424,7 @@
                 });
 
               var user = getUser();
-              if ( apps.length && user && user.companyId[0] ) {
+              if ( apps.length && !self.isRevadmin()) {
                 apps.unshift({
                   app_id: '',
                   app_name: 'All Applications'
@@ -438,6 +446,24 @@
     function getSelectedApplication() {
       // return appSelected || $localStorage.selectedApplication;
       return $localStorage.selectedApplication || appSelected;
+    }
+
+    /**
+     * @name selectDNSZone
+     * @description save data about selected DNS Zone
+     * @returns
+     */
+    function selectDNSZone( zone ) {
+      $localStorage.selectedDNSZone = zone;
+      dnsZoneSelected = zone;
+    }
+    /**
+     * @name getSelectedDNSZone
+     * @description get data a last selected DNS Zone
+     * @returns {null| Object}
+     */
+    function getSelectedDNSZone() {
+      return $localStorage.selectedDNSZone || dnsZoneSelected;
     }
 
     /**
@@ -492,6 +518,46 @@
 
     function getSelectedAccount() {
       return accSelected || $localStorage.selectedAccount;
+    }
+
+    /**
+     * @name getUserDNSZones
+     * @description get all DNS Zones available for current User
+     * @param {Boolean} reload
+     * @returns
+     */
+    function getUserDNSZones(reload) {
+      return $q(function (resolve, reject) {
+        if (DNSZoneList.length > 0 && !reload) {
+          return resolve(DNSZoneList);
+        }
+        $http.get($config.API_URL + '/dns_zones')
+          .then( function (data) {
+
+            if (data && data.status === $config.STATUS.OK) {
+              DNSZoneList = data.data.map( function( item ) {
+                  return {
+                    zone: item.zone,
+                    id: item.id,
+                    account_id: item.account_id
+                  };
+                });
+              var user = getUser();
+              if ( DNSZoneList.length > 1 && user ) {
+                DNSZoneList.unshift({
+                  acc_id: '',
+                  acc_name: 'All DNS Zones'
+                });
+              }
+              resolve( DNSZoneList );
+            } else {
+              reject( new Error(data.response) );
+            }
+          })
+          .catch( function( err ) {
+            // console.log( err );
+          });
+      });
     }
 
     function updateToken(token) {
@@ -639,7 +705,13 @@
 
       getACL: getACL,
 
-      isReadOnly: isReadOnly
+      isReadOnly: isReadOnly,
+
+      getUserDNSZones: getUserDNSZones,
+
+      selectDNSZone: selectDNSZone,
+
+      getSelectedDNSZone: getSelectedDNSZone
     };
   }
 })();

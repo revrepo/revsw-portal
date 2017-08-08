@@ -18,7 +18,8 @@
 
 var MenuAreas = {
   DASHBOARDS: {
-    linkText: 'Dashboards'
+    linkText: 'Dashboards',
+    css: '#left-menu-dashboard-section .side-menu-sub-item'
   },
   MOBILE_APPS: {
     id: 'side-menu-apps-item'
@@ -32,6 +33,9 @@ var MenuAreas = {
   WEB_ANALYTICS: {
     id: 'side-menu-web-analytics-item'
   },
+  SECURITY_ANALYTICS:{
+    id: 'side-menu-security-analytics-item'
+  },
   DNS_SERVICE: {
     id: 'side-menu-dns-service-item'
   },
@@ -39,7 +43,8 @@ var MenuAreas = {
     linkText: 'Admin'
   },
   BILLING: {
-    linkText: 'Billing'
+    linkText: 'Billing',
+    id: 'side-menu-item-billing'
   },
   SUPPORT: {
     linkText: 'Support'

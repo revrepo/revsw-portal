@@ -10,6 +10,8 @@
   "author": "Konstantin Zolotarev <konstantin.zolotarev@gmail.com>",
   "license": "ISC",
   "devDependencies": {
+    "body-parser": "^1.17.2",
+    "browser-sync": "^2.18.8",
     "del": "^2.2.0",
     "gulp": "^3.9.1",
     "gulp-angular-filesort": "^1.1.1",
@@ -36,8 +38,7 @@
     "jshint": "^2.9.1",
     "jshint-stylish": "^2.1.0",
     "less-plugin-clean-css": "^1.5.1",
-    "ng-annotate-adf-plugin": "^0.1.2",
-    "browser-sync": "^2.18.8"
+    "ng-annotate-adf-plugin": "^0.1.2"
   },
   "dependencies": {
     "gulp": "^3.9.1",

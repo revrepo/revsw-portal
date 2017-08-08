@@ -2,7 +2,7 @@
  *
  * REV SOFTWARE CONFIDENTIAL
  *
- * [2013] - [2015] Rev Software, Inc.
+ * [2013] - [2017] Rev Software, Inc.
  * All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains
@@ -48,41 +48,24 @@ describe('Functional', function () {
         expect(purgeBtn.isEnabled()).toBeFalsy();
       });
 
-    // TODO: Need to find a way to get current ACE editor session and manipulate it (set/get value)
-    xit('should purge an object in Code mode',
+    it('should purge an object in Code mode',
       function () {
-        var jsonObject = {
-          purges: [
-            {
-              url: {
-                is_wildcard: true,   // jshint ignore:line
-                expression: '/images/*.png'
-              }
-            }
-          ]
-        };
-
         Portal.purgeCacheAdvancedPage.clickAdvancedMode();
         Portal.purgeCacheAdvancedPage.selectDomain(myDomain);
-        Portal.purgeCacheAdvancedPage.setAceContent(jsonObject.toString());
+        Portal.purgeCacheAdvancedPage.clickUseThisExample(0);
         Portal.purgeCacheAdvancedPage.clickPurge();
-
         var alert = Portal.alerts.getFirst();
-        var expectedMsg = 'The request has been successfully submitted';
+        var expectedMsg = 'The purge request has been successfully queued';
         expect(alert.getText()).toEqual(expectedMsg);
       });
 
-    // TODO: Need to find a way to get current ACE editor session and manipulate it (set/get value)
-    xit('should purge a default json data in Ace Editor in View mode',
+    it('should purge a default json data in Ace Editor in View mode',
       function () {
         Portal.purgeCacheAdvancedPage.clickAdvancedMode();
         Portal.purgeCacheAdvancedPage.selectDomain(myDomain);
         Portal.purgeCacheAdvancedPage.changeToView();
         Portal.purgeCacheAdvancedPage.clickPurge();
-
-        var alert = Portal.alerts.getFirst();
-        var expectedMsg = 'Oops something went wrong';
-        expect(alert.getText()).toEqual(expectedMsg);
+        expect(Portal.purgeCacheAdvancedPage.getPurgeBtn().isEnabled()).toBeFalsy();
       });
 
     it('should cancel in "Ace Editor" go to "List Domains" Page',
@@ -94,5 +77,20 @@ describe('Functional', function () {
         var title = 'Domains List';
         expect(Portal.domains.listPage.getTitle()).toEqual(title);
       });
+
+    // TODO: change test for domain with enabled ImageEngine - need to create new test domain
+    xdescribe('domain with enabled ImageEngine configurations', function() {
+      xit('should change value of "Purge Image Engine Secondary Cache" checkbox '+
+        'after click to this checkbox',
+        function () {
+          Portal.purgeCacheAdvancedPage.setPurgeImageEngineSecondaryCache(true);
+          Portal.purgeCacheAdvancedPage.clickPurgeImageEngineSecondaryCache();
+          var ChBoxPurgeImageEngineSecondaryCache = Portal.purgeCacheAdvancedPage
+            .getPurgeImageEngineSecondaryCacheChBox();
+          expect(ChBoxPurgeImageEngineSecondaryCache.isSelected()).toBeFalsy();
+          Portal.purgeCacheAdvancedPage.clickPurgeImageEngineSecondaryCache();
+          expect(ChBoxPurgeImageEngineSecondaryCache.isSelected()).toBeTruthy();
+        });
+    });
   });
 });

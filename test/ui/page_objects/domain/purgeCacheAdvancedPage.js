@@ -2,7 +2,7 @@
  *
  * REV SOFTWARE CONFIDENTIAL
  *
- * [2013] - [2015] Rev Software, Inc.
+ * [2013] - [2017] Rev Software, Inc.
  * All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains
@@ -17,6 +17,7 @@
  */
 
 // # Purge Cache Page Object
+var WebElement = require('./../../common/helpers/webElement');
 
 // This `Purge Cache` Page Object abstracts all operations or actions that
 // a common Purge Cached Objects could do in the Portal app/site.
@@ -42,12 +43,20 @@ var PurgeCacheAdvanced = {
       aceEditor: {
         css: '.ace_editor'
       },
+      aceEditorTextarea: {
+        css: '.ace_editor .ace_text-input'
+      },
       aceContent: {
         css: '.ace_content'
       },
       jsonExamples: {
         css: '.col-md-4 .form-group >div'
       }
+    },
+    checkBoxes: {
+      purgeImageEngineSecondaryCache: {
+        css: 'input[name="enablePurgeImageEngineSecondaryCache"]'
+      },
     },
     buttons: {
       advancedMode: {
@@ -59,6 +68,9 @@ var PurgeCacheAdvanced = {
       },
       purge: {
         css: '[ng-click="purge()"]'
+      },
+      useThisExample: {
+        css: 'button[ng-click="copyToJsonEditor(item)"]'
       },
       cancel: {
         linkText: 'Cancel'
@@ -150,6 +162,18 @@ var PurgeCacheAdvanced = {
       .element(by.css(this.locators.buttons.purge.css));
   },
 
+
+  /**
+   * ### PurgeCacheAdvanced.getUseThisExampleBtn()
+   *
+   * Gets the reference to `Use This Example` button element.
+   *
+   * @returns {Promise}
+   */
+  getUseThisExampleBtn: function () {
+    return element.all(by.css(this.locators.buttons.useThisExample.css));
+  },
+
   /**
    * ### PurgeCacheAdvanced.getCancelBtn()
    *
@@ -201,6 +225,20 @@ var PurgeCacheAdvanced = {
       .element(by.css(this.locators.jsonEditor.aceEditor.css));
   },
 
+
+  /**
+   * ### PurgeCacheAdvanced.getAceEditorTextareaElem()
+   *
+   * Gets the reference to `Ace Editor` element.
+   *
+   * @returns {Promise}
+   */
+  getAceEditorTextareaElem: function () {
+    return this
+      .getPanelBodyElem()
+      .element(by.css(this.locators.jsonEditor.aceEditorTextarea.css));
+  },
+
   /**
    * ### PurgeCacheAdvanced.getAceContentElem()
    *
@@ -213,7 +251,20 @@ var PurgeCacheAdvanced = {
       .getPanelBodyElem()
       .element(by.css(this.locators.jsonEditor.aceContent));
   },
+  /**
+   * ### PurgeCacheAdvanced.getPurgeImageEngineSecondaryCacheChBox()
+   *
+   * Returns the reference to the `Purge Image Engine Secondary Cache` checkbox (Selenium WebDriver
+   * Element)
+   *
+   * @returns {Object} Selenium WebDriver Element
+   */
+  getPurgeImageEngineSecondaryCacheChBox: function () {
+    return element(by.css(this.locators.checkBoxes.purgeImageEngineSecondaryCache.css));
+  },
 
+
+  // ## Helper Methods
   clickEditorViewList: function (indexList) {
     return this
       .getPanelBodyElem()
@@ -280,6 +331,22 @@ var PurgeCacheAdvanced = {
   setAceContent: function (value) {
     return this
       .getAceContentElem()
+      .sendKeys(value);
+  },
+
+
+  /**
+   * ### PurgeCacheAdvanced.setAceEditor()
+   *
+   * Sets value in `Ace Content` from Ace Editor element.
+   *
+   * @param {String} Value to Text Area in Purge Cached Objects page.
+   *
+   * @returns {Promise}
+   */
+  setAceEditor: function (value) {
+    return this
+      .getAceEditorTextareaElem()
       .sendKeys(value);
   },
 
@@ -391,6 +458,30 @@ var PurgeCacheAdvanced = {
   },
 
   /**
+   * ### PurgeCacheAdvanced.clickUseThisExample()
+   *
+   * Clicks on the `Use This Example` button element.
+   *
+   * @returns {Promise}
+   */
+  clickUseThisExample: function (number) {
+    return this
+      .getUseThisExampleBtn().get(number)
+      .click();
+  },
+  /**
+   * ### PurgeCacheAdvanced.clickPurgeImageEngineSecondaryCache()
+   *
+   * Clicks on the `PurgeImageEngineSecondaryCache` checkbox element.
+   *
+   * @returns {Promise}
+   */
+  clickPurgeImageEngineSecondaryCache: function () {
+    return this
+      .getPurgeImageEngineSecondaryCacheChBox()
+      .click();
+  },
+  /**
    * ### PurgeCacheAdvanced.clickCancel()
    *
    * Clicks on the `Cancel` button element.
@@ -432,6 +523,17 @@ var PurgeCacheAdvanced = {
   selectDomain: function (domain) {
     this.clickDomain();
     return this.setSearchDomain(domain.name);
+  },
+  /**
+   * ### PurgeCacheAdvanced.setPurgeImageEngineSecondaryCache()
+   *
+   * Checks/un-checks the `Purge Image Engine Secondary Cache` checkbox element
+   *
+   * @param {Boolean} checked, whether check or not the element
+   * @returns {Object} Promise
+   */
+  setPurgeImageEngineSecondaryCache: function (checked) {
+    return WebElement.changeCheckBox(this.getPurgeImageEngineSecondaryCacheChBox(), checked);
   }
 };
 

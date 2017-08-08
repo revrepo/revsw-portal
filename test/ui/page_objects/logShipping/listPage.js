@@ -75,7 +75,7 @@ var LogShippingList = {
    * @returns {Object} Selenium WebDriver Element
    */
   getAddNewLogShippingJobBtn: function () {
-    return element(
+    return element.all(
       by.css(this.locators.buttons.addNewLogShippingJob.css));
   },
 

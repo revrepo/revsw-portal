@@ -109,7 +109,8 @@ var Constants = {
     },
     dnsService: {
       DNS_SERVICE: 'DNS Service',
-      DNS_ZONES: 'DNS Zones'
+      DNS_ZONES: 'DNS Zones',
+      DNS_ANALYTICS: 'DNS Analytics'
     }
   },
   user: {
@@ -187,6 +188,11 @@ var Constants = {
   rttHeatmaps: {
     TITLE: 'Global Last Mile RTT Heatmap'
   },
+  selectedItems: {
+    billing: {
+      SELECTED_API_QA_ACCOUNT: 'API QA Account'
+    }
+  },
   alertMessages: {
     // @see revsw-cds/lib/handlers/appHandlers.js
     app: {
@@ -236,6 +242,9 @@ var Constants = {
     sslCerts:{
       MSG_FAIL_DELETE: 'The SSL certificate is in use by active domain(s) ' +
       '- please update the domain(s) before removing the SSL certificate'
+    },
+    wafRules:{
+      MSG_SUCCESS_ADD: 'The WAF rule has been successfully created'
     }
   },
 

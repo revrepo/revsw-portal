@@ -27,7 +27,20 @@
 
   function routesConfig($stateProvider, $urlRouterProvider) {
     'ngInject';
-    $urlRouterProvider.otherwise('/dashboards');
+    // NOTE: open by default the first configured dashboard or go to Web Analytics -> Proxy Traffic page
+    $urlRouterProvider.otherwise(/*ngInject*/function($injector, $location){
+      var $state = $injector.get('$state');
+      var DashboardSrv =  $injector.get('DashboardSrv');
+      DashboardSrv.getAll()
+          .then(function(dashboards) {
+            if (dashboards && dashboards.length) {
+              $location.path('dashboard/' + dashboards[0].id);
+            } else {
+              $state.go('index.reports.proxy');
+            }
+          });
+      return true;
+    });
 
     $stateProvider
     // Base 3 layout
@@ -147,11 +160,12 @@
           }
         }
       })
+      // Security Analytics
       .state('index.security', {
         url: '/security',
         views: {
           page: {
-            template: '<span></span>'
+             templateUrl: 'parts/layout/page.html'
           }
         }
       })

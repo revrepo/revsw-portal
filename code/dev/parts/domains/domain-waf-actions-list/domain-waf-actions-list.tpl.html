@@ -1,0 +1,56 @@
+<div class="domain-waf-actions">
+  <div class="panel panel-default">
+    <!-- Default panel contents -->
+    <div class="panel-heading"> WAF Actions
+      <button type="button" class="btn btn-xs btn-success pull-right" ng-disable="$ctrl.loading" ng-click="$ctrl.onAddNew($event)"
+        title="Add New Action"><i class="glyphicon glyphicon-plus"></i> Add New</button>
+    </div>
+    <!-- Table -->
+    <p ng-show="!$ctrl.waf_actions || $ctrl.waf_actions.length==0" class="text text-center">No records</p>
+    <table class="table table-headers-info" ng-show="!!$ctrl.waf_actions && $ctrl.waf_actions.length>0">
+      <thead>
+        <tr>
+          <th style="width: 50%"> Condition <label for="coLuaEnableAll" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter"
+              uib-popover="Conditions define per-request criteria and are based on WAF score assigned to a request. If a request meets a condition the WAF takes the action defined for the conditition.">
+          <i class="fa fa-question-circle"></i>
+        </label></th>
+          <th class="table-title--operation"> Action <label for="coLuaEnableAll" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter"
+              uib-popover="Once the WAF has flagged a request with one of the defined condition it can take one of the following actions: ALLOW (will allow the request), BLOCK (will block the request if WAF is not in Learning Mode, DROP (will block the request even if the WAF is in Learning Mode, LOG (will allow the request and log the incident)">
+          <i class="fa fa-question-circle"></i>
+        </label></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-animate-disabled ng-repeat="line in $ctrl.waf_actions" ng-form="editRow">
+          <td ng-animate-disabled ng-click="editRow.isSelectedIndex = $index" ng-class="{'has-error': editRow.condition.$invalid}">
+            <span ng-animate-disabled ng-show="editRow.isSelectedIndex!==$index">{{line.condition}} </span>
+            <input type="text" ng-animate-disabled name="condition" class="form-control" ng-model="line.condition" placeholder="New Condition"
+              ng-maxlength="128" ng-show="editRow.isSelectedIndex==$index" required>
+            <div class="error-messages" ng-messages="editRow.condition.$error" role="alert" ng-messages-multiple="false">
+              <div ng-messages-include="parts/shared/error-messages.html"></div>
+            </div>
+          </td>
+          <td ng-click="editRow.isSelectedIndex = $index">
+            <span ng-animate-disabled ng-show="editRow.isSelectedIndex!==$index">{{$ctrl.wafActions[line.action]}}</span>
+            <select ng-animate-disabled ng-if="editRow.isSelectedIndex==$index" class="form-control" ng-model="line.action" ng-options="key as label for (key,label) in $ctrl.wafActions">
+            </select>
+          </td>
+          <td>
+            <button class="btn btn-primary btn-sm btn-edit-origin_request_header" type="button" ng-click="editRow.isSelectedIndex=$index"
+              title="Edit The Action" ng-if="editRow.isSelectedIndex!==$index">
+              <i class="glyphicon glyphicon-remove"> Edit </i>
+            </button>
+            <button class="btn btn-success btn-sm btn-edit-origin_request_header" type="button" ng-click="editRow.isSelectedIndex =null"
+              title="Save The Action" ng-if="editRow.isSelectedIndex==$index" ng-disabled="editRow.$invalid">
+              <i class="glyphicon glyphicon-ok">  Ok  </i>
+            </button>
+            <button class="btn btn-warning btn-sm btn-delete-origin_request_header" type="button" ng-click="$ctrl.onDelete($index)" title="Delete The Action">
+              <i class="glyphicon glyphicon-remove"> Delete</i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

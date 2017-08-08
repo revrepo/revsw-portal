@@ -1,47 +1,61 @@
 .widget {
-    width: 100%;
-    .filter-time-period {
-        display: none;
-    }
-    .reports_charts_title {
-        display: none;
-    }
+  width: 100%;
+  .filter-time-period,
+  .filter-hours-periods {
+    display: none;
+  }
+  .reports_charts_title,
+  .waf_charts_title,
+  .title-chart {
+    display: none;
+  }
 }
 
 // change  columns width for modal window "Add new widget"
 @media (min-width: 768px) {
-    .dl-horizontal dt {
-        width: 250px;
-    }
-    .dl-horizontal dd {
-        margin-left: 260px;
-    }
+  .dl-horizontal dt {
+    width: 250px;
+  }
+  .dl-horizontal dd {
+    margin-left: 260px;
+  }
 }
 
 .bluetriangletech {
-    max-height: 395px;
-    overflow: hidden;
-    & iframe {
-        border: 0px inset;
-        min-height: 450px;
-        &.bluetriangletech {
-            &--traffic-info {
-                min-height: 240px;
-            }
-        }
+  max-height: 395px;
+  overflow: hidden;
+  & iframe {
+    border: 0px inset;
+    min-height: 450px;
+    &.bluetriangletech {
+      &--traffic-info {
+        min-height: 240px;
+      }
     }
+  }
+}
+
+.thirdpartyiframe {
+  max-height: 395px;
+  overflow: hidden;
+  & iframe {
+    border: 0px inset;
+    min-height: 450px;
+  }
 }
 
 .widgets {
-    &-list {
-        min-height: 50vh;
-        max-height: 60vh;
-        overflow: auto;
+  &-list {
+    min-height: 50vh;
+    max-height: 60vh;
+    overflow: auto;
+  }
+  &--mobile-rps-chart,
+  &--mobile-bw-chart,
+  &--mobile-http-codes-chart {
+    h3,
+    .clearfix {
+      display: none
     }
-    &--mobile-rps-chart, &--mobile-bw-chart, &--mobile-http-codes-chart {
-        h3,
-        .clearfix {
-            display: none
-        }
-    }
+  }
 }

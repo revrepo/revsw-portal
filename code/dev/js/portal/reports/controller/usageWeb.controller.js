@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
 
   angular
@@ -10,11 +10,14 @@
 
     $scope._loading = true;
     $scope.accounts = [];
-    $scope.selected = { val: null };
-    $scope.month_year = new Date();
-    $scope.month_year_symbol = $scope.month_year.toISOString().slice( 0, 7 );
+    $scope.selected = {
+      val: null
+    };
+    $scope.month_year = new moment().utc();
+    $scope.month_year_symbol = $scope.month_year.format('YYYY-MM');
     $scope.report = null;
     $scope.traffic = null;
+    $scope.formatNumber = Util.formatNumber;
 
     var pageLength = 10;
     var tickInterval_ = 2;
@@ -24,22 +27,57 @@
       .withDisplayLength(pageLength)
       .withBootstrap()
       .withDOM('<<"pull-left"pl>f<t>i<"pull-left"p>>')
-      .withOption('order', [[1, 'desc']]);
+      .withOption('order', [
+        [1, 'desc']
+      ]);
 
     $scope.colDefs = [{
       targets: [1],
       type: 'num-fmt'
     }, {
-      targets: [6,7],
+      targets: [6, 7],
       type: 'num'
     }, {
-      targets: [2,3,4,5],
+      targets: [2, 3, 4, 5],
       orderable: false
     }];
-
+    var traffic_total_ = 0;
+    var info_ = null;
     $scope.chartOptions = {
       chart: {
-        type: 'column'
+        type: 'column',
+        // NOTE: used for debug data in graph and table
+        // zoomType: 'x',
+        // events: {
+        //   redraw: function() {
+        //     if (info_) {
+        //       info_.destroy();
+        //       info_ = null;
+        //     }
+        //     var _text = '</span>Traffic Total <span style="font-weight: bold; color: #3c65ac;">' + Util.humanFileSizeInGB(traffic_total_, 3) +
+        //       '</span>';
+        //     // NOTE: information about error
+        //     if ($scope.hasFailedToLoadData === true) {
+        //       _text = '<strong style="color: red;"> Failed to retrieve the data - please try again later </strong>';
+        //     }
+        //     var x = this.xAxis[0].toPixels(this.xAxis[0].min) + 3;
+        //     info_ = this /*chart*/ .renderer
+        //       .label(_text,
+        //         x /*x*/ , 3 /*y*/ , '' /*img*/ , 0, 0, true /*html*/ )
+        //       .css({
+        //         color: '#444'
+        //       })
+        //       .attr({
+        //         fill: 'rgba(240, 240, 240, 0.6)',
+        //         stroke: $scope.hasFailedToLoadData ? 'red' : '#3c65ac', // NOTE: border color
+        //         'stroke-width': 1,
+        //         padding: 6,
+        //         r: 2,
+        //         zIndex: 5
+        //       })
+        //       .add();
+        //   }
+        // }
       },
       yAxis: {
         title: {
@@ -47,7 +85,7 @@
         },
         labels: {
           formatter: function() {
-            return Util.humanFileSizeInGB( this.value );
+            return Util.humanFileSizeInGB(this.value);
           }
         }
       },
@@ -72,39 +110,55 @@
         }
       },
       plotOptions: {
-          series: {
-              pointWidth: 20 //width of the column bars irrespective of the chart size
-          }
+        series: {
+          pointWidth: 20 //width of the column bars irrespective of the chart size
+        }
       }
     };
 
 
     //  ---------------------------------
-    $scope.onAccountSelect = function ( acc ) {
+    $scope.onAccountSelect = function(acc) {
       $scope.selected.val = acc;
       //  do not store 'All accounts'
-      if ( acc.acc_id !== '' ) {
-        User.selectAccount( acc );
+      if (acc.acc_id !== '') {
+        User.selectAccount(acc);
       }
     };
 
-    $scope.onAccountClick = function ( acc_id ) {
-      var acc = $scope.accounts.find( function( a ) {
+    $scope.onAccountClick = function(acc_id) {
+      var acc = $scope.accounts.find(function(a) {
         return a.acc_id === acc_id;
       });
       $scope.selected.val = acc;
       //  do not store 'All account'
-      if ( acc.acc_id !== '' ) {
-        User.selectAccount( acc );
+      if (acc.acc_id !== '') {
+        User.selectAccount(acc);
       }
       $scope.onUpdate();
     };
-
-    $scope.onTimeSet = function( newDate ) {
-      newDate = new Date( newDate + 86400000 ); //  add one day to avoid glitches with timezones
-      $scope.month_year = newDate;
-      $scope.month_year_symbol = newDate.toISOString().slice( 0, 7 );
+    /**
+     * @name  onTimeSet
+     * @description
+     * @param  {Date} newDate [description]
+     * @return {[type]}         [description]
+     */
+    $scope.onTimeSet = function(newDate) {
+      var newDate_ = new moment(newDate).utc().add(1, 'day'); //  add one day to avoid glitches with timezones
+      $scope.month_year = newDate_;
+      $scope.month_year_symbol = newDate_.format('YYYY-MM');
     };
+    // NOTE: hand date update
+    $scope.$watch('month_year_symbol', function(newVal, oldVal) {
+      if (newVal !== oldVal && newVal.length === 7) {
+        var newDate = new moment(newVal, 'YYYY-MM').utc();
+        if (newDate.isValid()) {
+          newDate.add(1, 'day');
+          var newDateVal = newDate.startOf('month').startOf('day').valueOf();
+          $scope.onTimeSet(newDateVal);
+        }
+      }
+    });
 
     $scope.showTraffic = function() {
       return !$scope._loading && $scope.report && $scope.report.traffic.count !== '0';
@@ -117,53 +171,53 @@
     };
 
     //  ---------------------------------
-    var subFormat_ = function( data ) {
-      if ( data.count !== undefined ) {
-        data.count = Util.formatNumber( data.count );
-        data.received_bytes = Util.humanFileSizeInGB( data.received_bytes, 3 );
-        data.sent_bytes = Util.humanFileSizeInGB( data.sent_bytes, 3 );
+    var subFormat_ = function(data) {
+      if (data.count !== undefined) {
+        data.count = Util.formatNumber(data.count);
+        data.received_bytes = Util.humanFileSizeInGB(data.received_bytes, 3);
+        data.sent_bytes = Util.humanFileSizeInGB(data.sent_bytes, 3);
       }
-      if ( data.billable_received_bps !== undefined ) {
-        data.billable_received_bps = Util.convertTrafficMbps( data.billable_received_bps, 3 );
-        data.billable_sent_bps = Util.convertTrafficMbps( data.billable_sent_bps, 3 );
+      if (data.billable_received_bps !== undefined) {
+        data.billable_received_bps = Util.convertTrafficMbps(data.billable_received_bps, 3);
+        data.billable_sent_bps = Util.convertTrafficMbps(data.billable_sent_bps, 3);
       }
-      if ( data.cache_hits !== undefined ) {
-        data.cache_hits.MISS = Util.formatNumber( data.cache_hits.MISS );
-        data.cache_hits.HIT = Util.formatNumber( data.cache_hits.HIT );
-        for ( var port in data.port_hits ) {
-          data.port_hits[port] = Util.formatNumber( data.port_hits[port] );
+      if (data.cache_hits !== undefined) {
+        data.cache_hits.MISS = Util.formatNumber(data.cache_hits.MISS);
+        data.cache_hits.HIT = Util.formatNumber(data.cache_hits.HIT);
+        for (var port in data.port_hits) {
+          data.port_hits[port] = Util.formatNumber(data.port_hits[port]);
         }
       }
     };
 
-    var format_ = function( data ) {
-      subFormat_( data );
-      for ( var zone in data.traffic_per_billing_zone ) {
-        subFormat_( data.traffic_per_billing_zone[zone] );
+    var format_ = function(data) {
+      subFormat_(data);
+      for (var zone in data.traffic_per_billing_zone) {
+        subFormat_(data.traffic_per_billing_zone[zone]);
       }
 
-      for ( var d in data.domains_usage ) {
+      for (var d in data.domains_usage) {
         var dmn = data.domains_usage[d];
-        subFormat_( dmn );
-        for ( var t in dmn.traffic_per_billing_zone ) {
-          subFormat_( dmn.traffic_per_billing_zone[t] );
+        subFormat_(dmn);
+        for (var t in dmn.traffic_per_billing_zone) {
+          subFormat_(dmn.traffic_per_billing_zone[t]);
         }
       }
 
-      if ( data.traffic ) {
-        subFormat_( data.traffic );
+      if (data.traffic) {
+        subFormat_(data.traffic);
       }
 
-      if ( data.accounts ) {
-        for ( var i = 0, len = data.accounts.length; i < len; ++i ) {
-          subFormat_( data.accounts[i] );
+      if (data.accounts) {
+        for (var i = 0, len = data.accounts.length; i < len; ++i) {
+          subFormat_(data.accounts[i]);
         }
       }
 
-      if ( data.domains_usage !== undefined &&
-           data.domains.list ) {
-        data.domains.list.forEach( function( domain ) {
-          if ( !data.domains_usage[domain.name] ) {
+      if (data.domains_usage !== undefined &&
+        data.domains.list) {
+        data.domains.list.forEach(function(domain) {
+          if (!data.domains_usage[domain.name]) {
             data.domains_usage[domain.name] = {
               count: '0',
               received_bytes: '0 GB',
@@ -179,45 +233,77 @@
       }
     };
 
-    var updateUsage_ = function( from, to, aid ) {
+    /**
+     * @name updateUsage_
+     * @description get USage Report Date
+     *
+     * INCLUDE report days for time period
+     * @param  {Date} month_year
+     * @param  {Array|String} aid  [description]
+     * @return {[type]}      [description]
+     */
+
+    var updateUsage_ = function(month_year, aid) {
+
+      var from = new moment(month_year.toISOString()).utc().startOf('month').startOf('day').format('YYYY-MM-DD'); //  very beginning of the month
+      var to = new moment(month_year.toISOString()).utc().endOf('month').endOf('day').format('YYYY-MM-DD'); //  very end of month (last day of report)
+
       var q = {
         account_id: aid,
-        from: from.toISOString().slice( 0, 10 ),
-        to: to.toISOString().slice( 0, 10 )
+        from: from,
+        to: to
       };
-      return Stats.usage_web( q )
+      return Stats.usage_web(q)
         .$promise
-        .then( function( data ) {
-          var overall = data.data[data.data.length - 1/*overall summary*/];
-          format_( overall );
+        .then(function(data) {
+          var overall = data.data[data.data.length - 1 /*overall summary*/ ];
+          format_(overall);
           $scope.report = overall;
           // console.log( overall );
         });
     };
+    /**
+     * @name updateStats_
+     * @description get Usage Roport data for histogram
+     *
+     * NOT INCLUDE last value of tipe period
+     *
+     * @param {Timestamp} from
+     * @param {*} to
+     * @param {*} aid
+     */
+    var updateStats_ = function(month_year, aid) {
+      var from = new moment(month_year.toISOString()).utc().startOf('month').startOf('day').valueOf(); //  very beginning of the month
+      var to = new moment(month_year.toISOString()).utc().add(1, 'month').startOf('month').startOf('day').valueOf(); //  very beginning of the next month
 
-    var updateStats_ = function( from, to, aid ) {
       var q = {
         account_id: aid,
-        from_timestamp: from.valueOf(),
-        to_timestamp: to.valueOf()
+        from_timestamp: from,
+        to_timestamp: to
       };
-      return Stats.usage_web_stats( q )
+      $scope.traffic = {
+        series: [{
+          name: 'GBT',
+          data: []
+        }]
+      };
+      var labels = [];
+      var series = [{
+        name: 'GBT',
+        data: []
+      }];
+      return Stats.usage_web_stats(q)
         .$promise
         .then(function(data) {
-          var series = [{
-            name: 'GBT',
-            data: []
-          }];
-          if ( data.data && data.data.length > 0 ) {
-            var labels = [];
-            var offset = data.metadata.interval;
+          traffic_total_ = 0;
+          if (data.data && data.data.length > 0) {
+            labels.length = 0;
+            var offset = parseInt(data.metadata.interval || 1800);
 
             // console.log( data );
             data.data.forEach(function(item, idx, items) {
-
-              var st = moment(item.time),
-                en = moment(item.time + offset - 1),
-                val = moment(item.time),
+              traffic_total_ += item.sent_bytes;
+              var val = moment(item.time_utc).utc(),
                 label;
 
               if (idx % tickInterval_) {
@@ -238,119 +324,139 @@
               }
 
             });
-
-            $scope.traffic = {
-              labels: labels,
-              series: series
-            };
-
+            return $q.when(series);
           } else {
-            $scope.traffic = {
-              labels: [],
-              series: series
-            };
+            return $q.when(series);
           }
+        })
+        .then(function setNewData(data) {
+          // model better to update once
+          $scope.traffic = {
+            labels: labels,
+            series: series
+          };
+        })
+        .catch(function(err) {
+          $scope.traffic = {
+            labels: [],
+            series: series
+          };
+          $scope.hasFailedToLoadData = true;
+        })
+        .finally(function() {
+          $scope._loading = false;
         });
     };
 
     //  ---------------------------------
-    $scope.onUpdate = function () {
+    $scope.onUpdate = function() {
 
-      if ( $scope.accounts.length === 0 || !$scope.selected.val ) {
+      if ($scope.accounts.length === 0 || !$scope.selected.val) {
         $scope._loading = false;
         return;
       }
 
       $scope._loading = true;
-      var from = new Date($scope.month_year );
-      from.setDate( 1 );
-      from.setHours( 0, 0, 0, 0 );  //  very beginning of the month
-      var to = new Date( from );
-      to.setMonth( to.getMonth() + 1 ); //  very beginning of the next month
       var aid = $scope.selected.val.acc_id || '';
 
       $q.all([
-        updateUsage_( from, to, aid ),
-        updateStats_( from, to, aid )
-      ])
-      .catch($scope.alertService.danger)
-      .finally(function() {
-        $scope._loading = false;
-        $scope.accountsDtOptions = DTOptionsBuilder.newOptions()
-          .withPaginationType('full_numbers')
-          .withDisplayLength(pageLength)
-          .withBootstrap()
-          .withDOM('<<"pull-left"pl>f<t>i<"pull-left"p>>')
-          .withOption('paging', ($scope.report.accounts.length > pageLength))
-          .withOption('order', [[1, 'desc']]);
-      });
+          updateUsage_($scope.month_year, aid),
+          updateStats_($scope.month_year, aid)
+        ])
+        .catch($scope.alertService.danger)
+        .finally(function() {
+          $scope._loading = false;
+          $scope.accountsDtOptions = DTOptionsBuilder.newOptions()
+            .withPaginationType('full_numbers')
+            .withDisplayLength(pageLength)
+            .withBootstrap()
+            .withDOM('<<"pull-left"pl>f<t>i<"pull-left"p>>')
+            .withOption('paging', ($scope.report.accounts.length > pageLength))
+            .withOption('order', [
+              [1, 'desc']
+            ]);
+        });
     };
 
     //  ---------------------------------
     var sel_account = User.getSelectedAccount();
-    if ( sel_account && sel_account.acc_id !== ''/*do not restore 'All accounts'*/ ) {
+    if (sel_account && sel_account.acc_id !== '' /*do not restore 'All accounts'*/ ) {
       $scope.selected.val = sel_account;
     }
 
     User.getUserAccounts()
-      .then(function ( accs ) {
+      .then(function(accs) {
         $scope.accounts = accs;
-        if ( accs.length === 1 ) {
+        if (accs.length === 1) {
           $scope.selected.val = accs[0];
         }
         $scope.onUpdate();
       })
       .catch($scope.alertService.danger)
-      .finally(function(){
+      .finally(function() {
         $scope._loading = false;
       });
 
-     Locations.billingZones().$promise
-      .then(function(data){
+    Locations.billingZones().$promise
+      .then(function(data) {
         $scope.billingZones = data;
         $scope.billingZonesGroup = _.chain(data).sortBy('billing_zone').groupBy('billing_zone').value();
       });
 
-       /**
-       * Confirmation dialog
-       *
-       * @param {string=} [template]
-       * @param {Object=} [resolve]
-       * @returns {*}
-       */
-      $scope.confirm = function(template, resolve) {
-        if (angular.isObject(template)) {
-          resolve = template;
-          template = '';
-        }
-        if (angular.isObject(resolve)) {
-          resolve = {
-            model: resolve
-          };
-        }
-        var modalInstance = $uibModal.open({
-          animation: false,
-          templateUrl: template || 'parts/modal/confirmDelete.html',
-          controller: 'ConfirmModalInstanceCtrl',
-          size: 'md',
-          resolve: resolve || {}
-        });
-
-        return modalInstance.result;
-      };
-
-      /**
-       * @name onGetBillingZonesDetails
-       * @description show modal window with Billing Zones
-       *
-       * @return
-       */
-      $scope.onGetBillingZonesDetails = function() {
-        var model = {
-          billingZones: $scope.billingZonesGroup
+    /**
+     * Confirmation dialog
+     *
+     * @param {string=} [template]
+     * @param {Object=} [resolve]
+     * @returns {*}
+     */
+    $scope.confirm = function(template, resolve) {
+      if (angular.isObject(template)) {
+        resolve = template;
+        template = '';
+      }
+      if (angular.isObject(resolve)) {
+        resolve = {
+          model: resolve
         };
-        $scope.confirm('parts/reports/modal/modal-billing-zones-details.tpl.html', model);
-      };
+      }
+      var modalInstance = $uibModal.open({
+        animation: false,
+        templateUrl: template || 'parts/modal/confirmDelete.html',
+        controller: 'ConfirmModalInstanceCtrl',
+        size: 'md',
+        resolve: resolve || {}
+      });
 
+      return modalInstance.result;
+    };
+
+    /**
+     * @name onGetBillingZonesDetails
+     * @description show modal window with Billing Zones
+     *
+     * @return
+     */
+    $scope.onGetBillingZonesDetails = function() {
+      var model = {
+        billingZones: $scope.billingZonesGroup
+      };
+      $scope.confirm('parts/reports/modal/modal-billing-zones-details.tpl.html', model);
+    };
+
+    /**
+     * @name beforeRenderCalendar
+     * @description disable dates witch in the future
+     * @see https://github.com/dalelotts/angular-bootstrap-datetimepicker/#before-render
+     */
+    $scope.beforeRenderCalendar = function($view, $dates, $leftDate, $upDate, $rightDate) {
+      var currentMoment = moment().utc().valueOf();
+      var index = Math.floor(Math.random() * $dates.length);
+      _.forEach($dates, function(itemDate, key) {
+        if (currentMoment < itemDate.utcDateValue) {
+          $dates[key].selectable = false;
+        }
+      });
+    };
   }
 })();

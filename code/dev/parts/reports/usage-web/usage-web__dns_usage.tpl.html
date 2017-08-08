@@ -1,0 +1,25 @@
+<div class="h4 list-title">DNS Usage</div>
+
+<table class="table table-stripped table-condensed">
+  <thead>
+    <tr>
+      <th>DNS Zone Name</th>
+      <th>DNS Records</th>
+      <th>DNS Queries</th>
+
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="  usage  in report.dns_usage" >
+      <td>
+       {{usage.dns_zone}}
+      </td>
+      <td>
+       {{usage.dns_records}}
+      </td>
+      <td>{{formatNumber(usage.dns_queries)}}</td>
+
+    </tr>
+
+  </tbody>
+</table>

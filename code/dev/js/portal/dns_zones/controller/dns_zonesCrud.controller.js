@@ -245,5 +245,12 @@
     $scope.getRelativeDate = function(datetime) {
       return moment.utc(datetime).fromNow();
     };
+    /**
+     * @name storeToStorage
+     * @description method save the DNS zone in storage (before go to DNS Analytics)
+     */
+    $scope.storeToStorage = function(zone){
+      User.selectDNSZone({id:zone.id,zone:zone.zone,account_id: zone.account_id});
+    };
   }
 })();

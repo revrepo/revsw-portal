@@ -1,0 +1,53 @@
+<div class="panel panel-default domain-waf-rules">
+  <div class="panel-heading"> WAF Rules </div>
+  <!-- TODO: add pagination ??? -->
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Rule Name </th>
+          <th> Rule Type</th>
+          <th> Description</th>
+          <th> Updated At</th>
+          <th ng-if="auth.isRevadmin()">Updated By </th>
+          <th class="thin_">Status</th>
+          <th> Actions</th>
+          <th> Order</th>
+          <th class="text-center">Use This Rule</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="item in $ctrl.orderRecords track by $index">
+          <td> {{item.rule_name}} </td>
+          <td class="waf-rule-type"> {{item.rule_type}} </td>
+          <td class="description"> {{item.comment}}</td>
+          <td> {{getRelativeDate(item.updated_at) }}</td>
+          <td ng-if="auth.isRevadmin()">{{item.updated_by}}</td>
+          <td>
+            <div waf-rule-staging-status ng-id="item.id"></div>
+          </td>
+          <td class="actions">
+            <i class="glyphicon glyphicon-refresh spin" ng-if="item.loading"></i>
+            <div class="pull-right">
+              <a href="" class="" ng-click="$ctrl.onViewWAFRule($event,item)" ng-if="!item.loading" uib-tooltip="View WAF Rule">
+                <i class="fa fa-eye"></i>
+              </a>
+            </div>
+          </td>
+          <td>
+            <a href="" class="btn btn-default btn-xs" ng-click="$ctrl.onUpWAFRule(item)" ng-if="!item.loading" uib-tooltip="Up WAF Rule">
+              <i class="glyphicon glyphicon-arrow-up"></i>
+            </a>
+            <a href="" class="btn btn-default btn-xs" ng-click="$ctrl.onDownWAFRule(item)" ng-if="!item.loading" uib-tooltip="Down WAF Rule">
+              <i class="glyphicon glyphicon-arrow-down"></i>
+            </a>
+          </td>
+          <td>
+            <toggle-switch class="is-checked--toggle-switch" name="isChecked" ng-model="item.isChecked" on-label="On" off-label="Off">
+            </toggle-switch>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

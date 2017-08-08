@@ -17,7 +17,8 @@
         flOs: '=',
         flDevice: '=',
         flBrowser: '=',
-        filtersSets: '='
+        filtersSets: '=',
+        isAutoReload: '@?'
       },
       /*@ngInject*/
       controller: function($scope, $q, Stats, Util) {
@@ -45,6 +46,7 @@
           return params;
         }
         $scope._loading = false;
+        $scope.hasFailedToLoadData = false;
         $scope.heading = 'Last Mile Round Trip Time Latency';
         $scope.filters = {
           from_timestamp: moment().subtract(1, 'days').valueOf(),
@@ -82,19 +84,24 @@
                   info_ = null;
                 }
                 var x = this.xAxis[0].toPixels(this.xAxis[0].min) + 3;
+                var _text = 'LM RTT Avg <span style="font-weight: bold; color: #3c65ac;">' + Util.formatNumber(Math.round(lm_rtt_avg_)) +
+                  '</span>ms, Max <span style="font-weight: bold; color: #3c65ac;">' + Util.formatNumber(Math.round(lm_rtt_max_)) +
+                  '</span>ms, Min <span style="font-weight: bold; color: #3c65ac;">' + Util.formatNumber(Math.round(lm_rtt_min_)) +
+                  '</span>ms<br>Hits Total <span style="font-weight: bold; color: #3c65ac;">' + Util.formatNumber(hits_total_) +
+                  '</span>';
+                // NOTE: information about error
+                if($scope.hasFailedToLoadData === true) {
+                  _text = '<strong style="color: red;"> Failed to retrieve the data - please try again later </strong>';
+                }
                 info_ = this /*chart*/ .renderer
-                  .label('LM RTT Avg <span style="font-weight: bold; color: #3c65ac;">' + Util.formatNumber(Math.round(lm_rtt_avg_)) +
-                    '</span>ms, Max <span style="font-weight: bold; color: #3c65ac;">' + Util.formatNumber(Math.round(lm_rtt_max_)) +
-                    '</span>ms, Min <span style="font-weight: bold; color: #3c65ac;">' + Util.formatNumber(Math.round(lm_rtt_min_)) +
-                    '</span>ms<br>Hits Total <span style="font-weight: bold; color: #3c65ac;">' + Util.formatNumber(hits_total_) +
-                    '</span>',
+                  .label(_text,
                     x /* x */ , 3 /* y */ , '', 0, 0, true /*html*/ )
                   .css({
                     color: '#444'
                   })
                   .attr({
                     fill: 'rgba(240, 240, 240, 0.6)',
-                    stroke: '#3c65ac',
+                    stroke: $scope.hasFailedToLoadData ? 'red' : '#3c65ac', // NOTE: border color
                     'stroke-width': 1,
                     padding: 6,
                     r: 2,
@@ -139,6 +146,7 @@
             return;
           }
           $scope._loading = true;
+          $scope.hasFailedToLoadData = false;
           var _xAxisPointStart = null;
           var _xAxisPointInterval = null;
           var series = [
@@ -194,13 +202,21 @@
                 series: series
               };
             })
+            .catch(function(err) {
+              $scope.traffic = {
+                pointStart: _xAxisPointStart,
+                pointInterval: _xAxisPointInterval,
+                series: series
+              };
+              $scope.hasFailedToLoadData = true;
+            })
             .finally(function() {
               $scope._loading = false;
             });
         };
 
         $scope.$watch('ngDomain', function() {
-          if (!$scope.ngDomain) {
+          if (!$scope.ngDomain || $scope.isAutoReload === 'false') {
             return;
           }
           $scope.reload();

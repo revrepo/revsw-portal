@@ -20,9 +20,7 @@ var config = require('config');
 var Portal = require('./../../../page_objects/portal');
 var DataProvider = require('./../../../common/providers/data');
 
-//TODO: Commenting out all tests as there is not possible to get reference to
-//alert component. This might be related to usage of setTimeout/timeInterval
-xdescribe('Functional', function () {  // jshint ignore:line
+describe('Functional', function () {  // jshint ignore:line
   describe('Edit domain', function () {
 
     var adminUser = config.get('portal.users.admin');
@@ -46,17 +44,16 @@ xdescribe('Functional', function () {  // jshint ignore:line
         Portal.domains.listPage.searchAndClickEdit(myDomain.name);
         Portal.domains.editPage.clickValidateDomain();
         var alert = Portal.alerts.getFirst();
-        expect(alert.getText()).toEqual('×\nThe domain configuration is correct');
+        expect(alert.getText()).toEqual('Successfully verified the domain configuration');
       });
 
     it('should edit a domain and update the domain successfully',
       function () {
         Portal.domains.listPage.searchAndClickEdit(myDomain.name);
-        Portal.domains.editPage.form.setOriginHostHeader(' ');
         Portal.domains.editPage.clickUpdateDomain();
         Portal.dialog.clickOk();
         var alert = Portal.alerts.getFirst();
-        expect(alert.getText()).toEqual('×\nDomain updated');
+        expect(alert.getText()).toEqual('Successfully saved the domain configuration');
       });
 
     it('should edit a domain and publish the domain successfully',
@@ -64,9 +61,8 @@ xdescribe('Functional', function () {  // jshint ignore:line
         Portal.domains.listPage.searchAndClickEdit(myDomain.name);
         Portal.domains.editPage.clickPublishDomain();
         Portal.dialog.clickOk();
-        browser.sleep(3000);
         var alert = Portal.alerts.getFirst();
-        expect(alert.getText()).toEqual('×\nDomain configuration published');
+        expect(alert.getText()).toEqual('Successfully saved the domain configuration');
       });
   });
 });

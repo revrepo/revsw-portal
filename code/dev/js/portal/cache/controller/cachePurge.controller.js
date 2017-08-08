@@ -12,6 +12,7 @@
     $scope._loading = false;
     $scope.environment = $config.PURGE_JOB_ENVIRONMENTS_CHOICE[2].key;
     $scope.isReadOnly = User.isReadOnly;
+    $scope.purgeImageEngineSecondaryCache = true;
     // $scope.domain;
     $scope.json = {
       purges: [{
@@ -82,7 +83,10 @@
       json.domainName = $scope.domain.domain_name;
       json.environment = $scope.environment;
       $scope._loading = true;
-      Cache.purge({}, json)
+      var params = {
+        purge_image_engine_secondary_cache: $scope.purgeImageEngineSecondaryCache
+      };
+      Cache.purge(params, json)
         .$promise
         .then(AlertService.success)
         .catch(AlertService.danger)
@@ -110,7 +114,10 @@
         });
       });
       $scope._loading = true;
-      Cache.purge({}, json)
+      var params = {
+        purge_image_engine_secondary_cache: $scope.purgeImageEngineSecondaryCache
+      };
+      Cache.purge(params, json)
         .$promise
         .then(AlertService.success)
         .catch(AlertService.danger)
@@ -140,7 +147,10 @@
         .then(function() {
           var domainName = $scope.domain.domain_name;
           $scope._loading = true;
-          Cache.purge({}, json)
+          var params = {
+            purge_image_engine_secondary_cache: $scope.purgeImageEngineSecondaryCache
+          };
+          Cache.purge(params, json)
             .$promise
             .then(AlertService.success)
             .catch(AlertService.danger)
@@ -283,9 +293,9 @@
       }
       return def.promise;
     };
-
+    // NOTE: @see date formats in /js/datatables.net/date-moment-ext.js
     vm.dtColumnDefs = [
-      DTColumnDefBuilder.newColumnDef([0]).withOption('type', 'date')
+      DTColumnDefBuilder.newColumnDef([0]).withOption('type', 'moment-MM/DD/YYYY HH:mm a')
     ];
 
     vm.purgeJobsDtOptions = DTOptionsBuilder.newOptions()
@@ -295,12 +305,22 @@
       .withOption('paging', true)
       .withOption('lengthChange', true)
       .withOption('order', [0, 'desc'])
+      .withOption('columnDefs',
+      [
+        { 'type': 'moment-MM/DD/YYYY HH:mm a', 'targets': 0 }
+      ])
       .withBootstrap()
       .withDOM('<<"pull-left"pl>f<t>i<"pull-left"p>>');
 
     $scope.$watch('domain', function(newVal, oldVal) {
       if (newVal !== undefined) {
         vm._loading = true;
+        // NOTE: check for auto disable Purge ImageEngine Secondary Cache checkbox
+        if (!!newVal.image_engine && newVal.image_engine.enable_image_engine !== true){
+          $scope.purgeImageEngineSecondaryCache = false;
+        }else{
+          $scope.purgeImageEngineSecondaryCache = true;
+        }
         vm.getPurgeJobs(newVal)
           .then(function(data) {
             vm.purgeJobsList = data;

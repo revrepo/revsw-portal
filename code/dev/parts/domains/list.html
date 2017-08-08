@@ -25,6 +25,36 @@
     <button class="btn btn-success" type="button" ng-click="ok()">OK</button>
   </div>
 </script>
+<script type="text/ng-template" id="confirmChangeVCLModal.html">
+  <div class="modal-header">
+    <h3 class="modal-title">Confirm</h3>
+  </div>
+  <div class="modal-body">
+    Disabling the ImageEngine feature will also automatically disable the Custom VCL Code feature. Do you want to proceed?
+  </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+    <button class="btn btn-success" type="button" ng-click="ok()">OK</button>
+  </div>
+</script>
+<script type="text/ng-template" id="confirmEnableImageEngineModal.html">
+  <div class="modal-header">
+    <h3 class="modal-title">Confirm</h3>
+  </div>
+  <div class="modal-body">
+    ImageEngine feature should be enabled only for web domains serving image objects. Non-image objects (like HTML pages, JavaScript/CSS
+    files, etc) requested from ImageEngine-enabled domain will be rejected with HTTP error code 412 (Precondition Failed).
+    Before enabling ImageEngine feature for the domain please make sure that it will be used only to serve image objects
+    (PNG/JPG/GIF/WEBP/BMP).
+  </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+    <button class="btn btn-success" type="button" ng-click="ok()">Continue</button>
+  </div>
+</script>
+
 <script type="text/ng-template" id="confirmPublishModal.html">
   <div class="modal-header">
     <h3 class="modal-title">Confirm</h3>
@@ -83,7 +113,8 @@
         </div>
         <div class="panel-body">
           <div class="alert alert-info" ng-if="records.length == 0 && !_loading">
-            Currently you don't have any web domains registered in the system. You can click on "Add New Domain" button above to add a domain.
+            Currently you don't have any web domains registered in the system. You can click on "Add New Domain" button above to add
+            a domain.
           </div>
           <div class="alert alert-warning" ng-if="records == null && !_loading">
             Failed to retrieve a list of resources - please try again later
@@ -124,7 +155,8 @@
                   </a>
                   </td>
                   <td>
-                    <button class="btn  btn-xs btn-primary" clipboard text="item.cname" on-copied="copyCallback()" on-error="copyCallback(err)" style="vertical-align: initial;" uib-tooltip="Click to copy the CNAME to the clipboard" tooltip-placement="top"><i class="fa fa-files-o"></i></button>
+                    <button class="btn  btn-xs btn-primary" clipboard text="item.cname" on-copied="copyCallback()" on-error="copyCallback(err)"
+                      style="vertical-align: initial;" uib-tooltip="Click to copy the CNAME to the clipboard" tooltip-placement="top"><i class="fa fa-files-o"></i></button>
                     <span title="{{item.cname}}"> {{item.cname}} </span></td>
                   <td>{{ getRelativeDate(item.updated_at) }}</td>
                   <td>

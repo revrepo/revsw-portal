@@ -137,6 +137,11 @@
 
         chart.xAxis[0].update(value);
       }, true);
+
+      // NOTE: new Highcharts object must be destroyed
+      $scope.$on('$destroy', function () {
+          chart.destroy();
+      });
     }
 
     return {

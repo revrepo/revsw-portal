@@ -1,0 +1,43 @@
+<div class="row filter-time-period" ngshow="flCountry && flZones">
+  <div class="col-md-12">
+    <form class="form-inline">
+      <div class="form-group">
+        <div class="date-picker-wrapper pull-left">
+          <input date-range-picker="" ng-model="datePicker.date" options="::datePicker.options" min="datePicker.minDate" max="datePicker.maxDate"
+            class="form-control date-picker select2" type="text" readonly/>
+          <input ng-show="datePicker.overlay.show" ng-focus="handlers.overlayClickHandler()" ng-model="datePicker.overlay.val" class="over form-control select2"
+            type="text" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <select class="form-control fixed" ng-model="ngFilters.country" ng-options="key as item for (key, item) in flCountry">
+          <option value="">All Countries</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <!-- TODO: FIX Style -->
+        <input type="number" class="form-control fixed" ng-model="ngFilters.rule_id" style="margin-bottom: 0px;" placeholder="Rule ID">
+      </div>
+
+      <div class="form-group">
+        <select class="form-control fixed" ng-model="ngFilters.zone" ng-options="key as item for  (key ,item) in flZones">
+          <option value="">All Zones</option>
+        </select>
+      </div>
+      <!-- Count per page -->
+      <div class="form-group" ng-show="isShowCount">
+        <select class="form-control fixed" popover-trigger="mouseenter" uib-popover="Number of WAF events to show on a page" ng-model="ngFilters.count"
+          ng-options="t for t in [25,50,100,200]">
+        </select>
+      </div>
+      <div class="form-group">
+        <button class="btn btn-info" ng-disabled="isLoading" ng-click="updateFilters()">
+         <i class="glyphicon glyphicon-refresh" ng-class="isLoading ? 'spin':''"></i>  &nbsp;
+          Update Report
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

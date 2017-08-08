@@ -11,7 +11,7 @@
       // “Bandwidth Usage Graph”
       .widget('widget-apps-mobile-bw-chart', {
         title: 'Bandwidth Usage Graph',
-        description: 'Apps Analitycs - Bandwidth Usage Graph',
+        description: 'Apps Analytics - Bandwidth Usage Graph',
         templateUrl: 'parts/dashboard/widgets/apps-analytics/mobile-bw-chart/view-mobile-bw-chart.tpl.html',
         titleTemplateUrl: 'parts/dashboard/widgets/apps-analytics/widget-title-with-params-trafic-levels.tpl.html',
         controller: 'widgeAppsMobileBWController',

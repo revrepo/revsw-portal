@@ -55,6 +55,15 @@
             <div ng-messages-include="parts/shared/error-messages.html"></div>
           </div>
         </div>
+        <!-- Promo Code-->
+        <div class="form-group" ng-class="{ 'has-error': newUser.promoCode.$invalid && newUser.promoCode.$dirty }">
+          <label for="promoCode" class="control-label" popover-trigger="mouseenter" uib-popover="Promo Code">Promo Code</label>
+          <input type="text" class="form-control" id="promoCode" name="promoCode" placeholder="Enter Promo Code" ng-maxlength="15"
+            ng-model="$ctrl.model.promocode" ng-pattern="NO_SPECIAL_CHARS" ng-disabled="$ctrl._loading">
+          <div class="error-messages" ng-messages="newUser.promoCode.$error" role="alert" ng-messages-multiple>
+            <div ng-messages-include="parts/shared/error-messages.html"></div>
+          </div>
+        </div>
         <div class="form-group">
           <div class="text-center text-muted" style="margin-bottom: 10px">
             By clicking on Sign Up you agree with our
@@ -74,23 +83,43 @@
           </div>
         </div>
       </form>
-      <!-- Full form registration -->
-      <div class="row col-xs-12 col-sm-12" ng-if="vendorConfig.enable_simplified_signup_process === false" >
-        <div class="affix affix-top col-sm-offset-1 col-xs-offset-1 col-xs-11 col-sm-11 col-md-5">
+
+      <!-- Selected Billing Plan -->
+      <div class="row col-xs-12 col-sm-12" ng-if="vendorConfig.enable_simplified_signup_process === false">
+        <div style="padding-right: 30px;margin-bottom: 40px;" class="affix affix-top col-sm-offset-1 col-xs-offset-1 col-xs-11 col-sm-11 col-md-5">
+          <div class="individual-plan" style="padding-bottom: 30px;" ng-if="currentPB.chargify_handle == $ctrl.model.billing_plan">
+            <div class="billing-plan">
+              <div class="billing-plan-header">
+                <h2 class="billing-plan-title">{{currentPB.name}}</h2>
+              </div>
+              <div class="billing-plan-price">
+                <h1 class=""><span class="billing-plan-ammount">${{currentPB.monthly_fee}}</span>/mon</h1>
+              </div>
+              <div class="billing-plan-details">
+                <p class="billing-plan-description">{{currentPB.description}}</p>
+                <h4>Overage Charges</h4>
+                <div class="billing-plan-services" ng-repeat="service in currentPB.services">
+                  <div>${{service.cost | number:2}} per {{service.measurement_unit}}</div>
+                </div>
+              </div>
+              <footer class="billing-plan-action">
+                <!--<button href="" ng-click="chooseBillingPlan(item)" class="btn btn-success btn-lg">Subscribe</button>-->
+              </footer>
+            </div>
+          </div>
           <p class="information"><strong> Discover how <em>fast</em> fast can be when accelerating your business at the edge with nuu:bit</strong></p>
           <p><strong>To Get Started:</strong></p>
           <ol class="list-instruction">
-            <li>Create an account, by entering your information in the form on the right. If you have a discount/promo coupon
-              you will have a chance to enter it together with payment information on a following screen.</li>
+            <li>Create an account, by entering your information and optional promo code in the form on the right.</li>
             <li>A confirmation email will be sent to the address that was initially provided.</li>
-            <li>Once received, click on the link in the email that will take you to the nuu:bit customer portal, where you’ll
-              be able to enter your payment information and any coupon codes you might have.</li>
+            <li>Once received, click on the link in the email that will take you to the nuu:bit customer portal.</li>
             <li>Then sit back and get ready to take control of the digital experience that will transform your opportunities
               at the edge.</li>
           </ol>
           <hr>
         </div>
         <div class="col-md-offset-6 col-sm-12 col-md-6">
+          <!-- Full form registration -->
           <form class="col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-0 col-lg-11 col-xs-11 col-sm-11 col-md-11  form-horizontal form-contact-info--full"
             name="newUser" novalidate>
             <div class="form-group " ng-class="{ 'has-error': newUser.email.$invalid && newUser.email.$dirty }">
@@ -137,20 +166,35 @@
                 <input type="text" class="form-control inline-block" id="lastName" name="lastName" placeholder="Last Name" ng-model="$ctrl.model.last_name"
                   required ng-maxlength="150" ng-disabled="$ctrl._loading">
                 <label for="lastName" class="text-info" popover-trigger="mouseenter" uib-popover="Last name">
-              <i class="fa fa-question-circle"></i>
-          </label>
+                <i class="fa fa-question-circle"></i>
+                </label>
                 <div ng-show="!!newUser['lastName'].$error.maxlength" style="color:red">150 characters max</div>
               </div>
             </div>
-            <div class="form-group" ng-class="{ 'has-error': newUser.phoneNumber.$invalid &&
+            <!--Promo Code -->
+            <div class="form-group" ng-class="{ 'has-error': newUser.promoCode.$invalid && newUser.promoCode.$dirty }">
+              <label for="promoCode" class="col-sm-3 control-label">Promo Code</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control inline-block" id="promoCode" name="promoCode" placeholder="Enter Promo Code" ng-maxlength="15"
+                  ng-model="$ctrl.model.promocode" ng-pattern="NO_SPECIAL_CHARS" ng-disabled="$ctrl._loading">
+                <label for="promoCode" class="text-info" popover-trigger="mouseenter" uib-popover="Promo Code">
+                <i class="fa fa-question-circle"></i>
+                </label>
+                <div class="error-messages" ng-messages="newUser.promoCode.$error" role="alert" ng-messages-multiple>
+                  <div ng-messages-include="parts/shared/error-messages.html"></div>
+                </div>
+              </div>
+            </div>
+            <!-- NOTE: don't delete the commented code - it will be needed -->
+            <!--<div class="form-group" ng-class="{ 'has-error': newUser.phoneNumber.$invalid &&
                             newUser.phoneNumber.$dirty }">
               <label for="phoneNumber" class="col-sm-3 control-label">Phone Number *</label>
               <div class="col-sm-9">
                 <input type="text" ng-pattern="phoneRegex" class="form-control inline-block" required id="phoneNumber" name="phoneNumber"
                   placeholder="Phone Number" ng-maxlength="30" ng-model="$ctrl.model.phone_number" ng-disabled="$ctrl._loading">
                 <label for="phoneNumber" class="text-info" popover-trigger="mouseenter" uib-popover="Contact phone number">
-              <i class="fa fa-question-circle"></i>
-          </label>
+                  <i class="fa fa-question-circle"></i>
+              </label>
                 <div ng-show="!!newUser['phoneNumber'].$error.maxlength" style="color:red">30 characters max</div>
               </div>
             </div>
@@ -168,7 +212,7 @@
               </div>
             </div>
             <hr>
-            <div class="form-group" ng-class="{ 'has-error': newUser.address1.$invalid &&
+             <div class="form-group" ng-class="{ 'has-error': newUser.address1.$invalid &&
                             newUser.address1.$dirty }">
               <label for="address1" class="col-sm-3 control-label">Address *</label>
               <div class="col-sm-9">
@@ -192,7 +236,7 @@
                 <div ng-show="!!newUser['address2'].$error.maxlength" style="color:red">150 characters max</div>
               </div>
             </div>
-            <div class="form-group" ng-class="{ 'has-error': newUser.country.$invalid &&
+             <div class="form-group" ng-class="{ 'has-error': newUser.country.$invalid &&
                             newUser.country.$dirty }">
               <label for="country" class="col-sm-3 control-label">Country *</label>
               <div class="col-sm-9">
@@ -238,8 +282,8 @@
           <i class="fa fa-question-circle"></i>
           </label>
                 <div ng-show="!!newUser['zipcode'].$error.maxlength" style="color:red">30 characters max</div>
-              </div>
-            </div>
+                </div>
+            </div>-->
             <hr>
             <div class="form-group">
               <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">

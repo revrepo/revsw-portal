@@ -11,7 +11,7 @@
     // “HTTP Status Codes Graph”
       .widget('widget-web-analytics-http-staus-codes-graph', {
       title: 'HTTP Status Codes Graph',
-      description: 'Web Analitycs - HTTP Status Codes Graph',
+      description: 'Display HTTP Status Codes Graph',
       templateUrl: 'parts/dashboard/widgets/web-analytics/http-status-codes-graph/view-http-status-codes-graph.tpl.html',
       titleTemplateUrl: 'parts/dashboard/widgets/web-analytics/widget-title-with-params.tpl.html',
       controller: 'widgetHTTPStatusCodeLineGraphController',

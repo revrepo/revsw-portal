@@ -68,7 +68,7 @@
 <!--<script type="text/javascript" src="bower_components/PACE/pace.js"></script>-->
 
 <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
-<script type="text/javascript" src="bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="bower_components/lodash/lodash.min.js"></script>
 <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="bower_components/jsoneditor/dist/jsoneditor.min.js"></script>
@@ -79,6 +79,7 @@
 <script type="text/javascript" src="bower_components/highcharts/highstock.src.js"></script>
 <!-- <script type="text/javascript" src="bower_components/highcharts/highcharts.js"></script> -->
 <script type="text/javascript" src="bower_components/highcharts/modules/map.js"></script>
+<script type="text/javascript" src="bower_components/highcharts/modules/drilldown.js"></script>
 <script type="text/javascript" src="bower_components/highcharts/highcharts-3d.js"></script>
 <script type="text/javascript" src="bower_components/highcharts/highcharts-more.js"></script>
 <script type="text/javascript" src="bower_components/highcharts/modules/exporting.js"></script>
@@ -114,6 +115,8 @@
 <script type="text/javascript" src="bower_components/angular-file-saver/dist/angular-file-saver.bundle.min.js"></script>
 
 <script type="text/javascript" src="bower_components/highlightjs/highlight.pack.js"></script>
+
+<script type="text/javascript" src="bower_components/highcharts/modules/solid-gauge.src.js"></script>
 <script type="text/javascript" src="bower_components/highcharts/modules/no-data-to-display.src.js"></script>
 <script type="text/javascript" src="bower_components/angular-highlightjs/src/angular-highlightjs.js"></script>
 
@@ -140,6 +143,7 @@
 <script type="text/javascript" src="bower_components/satellizer/dist/satellizer.js"></script>
 <script type="text/javascript" src="js/heatmaps/highmap.us.js"></script>
 <script type="text/javascript" src="js/heatmaps/highmap.world.js"></script>
+<script type="text/javascript" src="js/datatables.net/date-moment-ext.js"></script>
 
 <!-- <script type="text/javascript" src="widgets/adf-widget-analytics-proxy-traffic/dist/adf-widget-analytics-proxy-traffic.js"></script> -->
 <!-- endbuild -->
@@ -180,21 +184,27 @@
 <script type="text/javascript" src="js/portal/shared/filter-generator/filter-generator.directive.js"></script>
 <script type="text/javascript" src="js/portal/shared/filter-generator/filter-generator.service.js"></script>
 <script type="text/javascript" src="js/portal/shared/search/search.directive.js"></script>
+<script type="text/javascript" src="js/portal/shared/validators/validate-acl-rule-header-name.directive.js"></script>
+<script type="text/javascript" src="js/portal/shared/validators/validate-acl-rule-header-name.directive.js"></script>
 <script type="text/javascript" src="js/portal/shared/validators/validate-cache-bypass-locations.directive.js"></script>
 <script type="text/javascript" src="js/portal/shared/validators/validate-caching-rule-header-name.directive.js"></script>
 <script type="text/javascript" src="js/portal/shared/validators/validate-caching-rule-header-value.directive.js"></script>
 <script type="text/javascript" src="js/portal/shared/validators/validate-caching-rule-url.directive.js"></script>
+<script type="text/javascript" src="js/portal/shared/validators/validate-cidr-format.directive.js"></script>
 <script type="text/javascript" src="js/portal/shared/validators/validate-compare-to.directive.js"></script>
 <script type="text/javascript" src="js/portal/shared/validators/validate-cookies-options.directive.js"></script>
 <script type="text/javascript" src="js/portal/shared/validators/validate-domains-list.directive.js"></script>
 <script type="text/javascript" src="js/portal/shared/validators/validate-pattern-no-special-chars.directive.js"></script>
 <script type="text/javascript" src="js/portal/shared/validators/validate-pattern-comment-no-special-chars.directive.js"></script>
 <script type="text/javascript" src="js/portal/shared/validators/validate-query-strings-options.directive.js"></script>
+<script type="text/javascript" src="js/portal/shared/validators/validate-uniqueness-in-array.directive.js"></script>
+<script type="text/javascript" src="js/portal/shared/validators/validate-waf-location-name.directive.js"></script>
 <script type="text/javascript" src="js/portal/shared/validators/validate-wildcard-domain-field.directive.js"></script>
 <script type="text/javascript" src="js/portal/shared/validators/validate-domain-name-or-url.directive.js"></script>
 <script type="text/javascript" src="js/portal/shared/validators/validate-domain-name-regular-or-wildcard.directive.js"></script>
 <script type="text/javascript" src="js/portal/shared/validators/validate-domain-name-regular-or-wildcard-domains.directive.js"></script>
 <script type="text/javascript" src="js/portal/shared/validators/validate-domain-name.directive.js"></script>
+<script type="text/javascript" src="js/portal/shared/validators/validate-origin-server-name-optional.directive.js"></script>
 <script type="text/javascript" src="js/portal/shared/validators/validate-origin-server-name.directive.js"></script>
 <script type="text/javascript" src="js/portal/shared/validators/validate-dns-record-domain-name-regular-or-wildcard-domains.directive.js"></script>
 <script type="text/javascript" src="js/portal/resources/resources.module.js"></script>
@@ -205,6 +215,8 @@
 <script type="text/javascript" src="js/portal/resources/model/users.factory.js"></script>
 <script type="text/javascript" src="js/portal/resources/model/cache.factory.js"></script>
 <script type="text/javascript" src="js/portal/resources/model/stats.factory.js"></script>
+<script type="text/javascript" src="js/portal/resources/model/statsImageEngine.factory.js"></script>
+<script type="text/javascript" src="js/portal/resources/model/statsWAF.factory.js"></script>
 <script type="text/javascript" src="js/portal/resources/model/countries.factory.js"></script>
 <script type="text/javascript" src="js/portal/resources/model/dns_zone_records.factory.js"></script>
 <script type="text/javascript" src="js/portal/resources/model/dns_zones.factory.js"></script>
@@ -221,6 +233,7 @@
 <script type="text/javascript" src="js/portal/resources/model/azureResources.factory.js"></script>
 <script type="text/javascript" src="js/portal/resources/model/azureSubscriptions.factory.js"></script>
 <script type="text/javascript" src="js/portal/resources/model/vendors.factory.js"></script>
+<script type="text/javascript" src="js/portal/resources/model/waf_rules.factory.js"></script>
 
 <script type="text/javascript" src="js/portal/auth/auth.module.js"></script>
 <script type="text/javascript" src="js/portal/auth/auth.config.js"></script>
@@ -276,7 +289,13 @@
 <script type="text/javascript" src="js/portal/domains/domains.constants.js"></script>
 <script type="text/javascript" src="js/portal/domains/domain-select/domainSelect.directive.js"></script>
 <script type="text/javascript" src="js/portal/domains/domain-the-third-party-links/domainTheThirdPartyLinks.directive.js"></script>
+<script type="text/javascript" src="js/portal/domains/domain-waf-locations/domainWafLocations.directive.js"></script>
+<script type="text/javascript" src="js/portal/domains/domain-waf-rules/domainWafRules.directive.js"></script>
+<script type="text/javascript" src="js/portal/domains/domain-waf-actions-list/domainWafActionsList.directive.js"></script>
+
 <script type="text/javascript" src="js/portal/domains/domain-staging-status/domainStagingStatus.directive.js"></script>
+<script type="text/javascript" src="js/portal/domains/domain-acl-rules/domainACLRulesList.directive.js"></script>
+<script type="text/javascript" src="js/portal/domains/domain-acl-rules/domainACLRulesItem.directive.js"></script>
 <script type="text/javascript" src="js/portal/domains/domain-caching-rule/domainCachingRule.directive.js"></script>
 <script type="text/javascript" src="js/portal/domains/domain-check-integration/domainCheckIntegration.directive.js"></script>
 <script type="text/javascript" src="js/portal/domains/domain-check-integration/domainCheckIntegrationPanel.directive.js"></script>
@@ -330,11 +349,13 @@
 <script type="text/javascript" src="js/portal/reports/service/pieChartHelper.factory.js"></script>
 <script type="text/javascript" src="js/portal/reports/service/eventsSerieDataService.factory.js"></script>
 <script type="text/javascript" src="js/portal/reports/service/reports-filter.service.js"></script>
+<script type="text/javascript" src="js/portal/reports/filter/filterHoursPeriods.directive.js"></script>
 <script type="text/javascript" src="js/portal/reports/filter/timePeriods.directive.js"></script>
 <script type="text/javascript" src="js/portal/reports/filter/filterTopObjects.directive.js"></script>
 <script type="text/javascript" src="js/portal/reports/filter/mobileTrafficFilters.directive.js"></script>
 <script type="text/javascript" src="js/portal/reports/filter/mobileTopObjectsFilters.directive.js"></script>
 <script type="text/javascript" src="js/portal/reports/pie-chart/pieChart.directive.js"></script>
+<script type="text/javascript" src="js/portal/reports/solidgauge-chart/solidgaugeChart.directive.js"></script>
 <script type="text/javascript" src="js/portal/reports/bar-chart/barChart.directive.js"></script>
 <script type="text/javascript" src="js/portal/reports/line-chart/lineChart.directive.js"></script>
 <script type="text/javascript" src="js/portal/reports/chart/d3PieChart.directive.js"></script>
@@ -359,6 +380,10 @@
 <script type="text/javascript" src="js/portal/reports/top/slowestFBT.directive.js"></script>
 <script type="text/javascript" src="js/portal/reports/top/slowestDownload.directive.js"></script>
 <script type="text/javascript" src="js/portal/reports/heatmaps/heatmaps.factory.js"></script>
+<script type="text/javascript" src="js/portal/reports/heatmaps/heatmapsWorldDrill.factory.js"></script>
+<script type="text/javascript" src="js/portal/reports/imageengine-analytics/imageEngineAnalytics.controller.js"></script>
+<script type="text/javascript" src="js/portal/reports/imageengine-analytics/directives/imageengineLinechartBytesSaved.directive.js"></script>
+<script type="text/javascript" src="js/portal/reports/imageengine-analytics/directives/imageengineSolidgaugePerformanceImprovement.directive.js"></script>
 <script type="text/javascript" src="js/portal/reports/controller/reportsProxyTraffic.controller.js"></script>
 <script type="text/javascript" src="js/portal/reports/controller/topReportsTraffic.controller.js"></script>
 <script type="text/javascript" src="js/portal/reports/controller/topObjects.controller.js"></script>
@@ -419,6 +444,18 @@
 <script type="text/javascript" src="js/portal/dashboard/widgets/apps-analytics/mobile-tops/widgetsAppsSDKTopsReports.controller.js"></script>
 <script type="text/javascript" src="js/portal/dashboard/widgets/apps-analytics/mobile-tops/widgetsMobileTopsEditConfig.controller.js"></script>
 <!-- //Apps Analytic -->
+<!-- DNS Analytics-->
+<script type="text/javascript" src="js/portal/dashboard/widgets/dns-analytics/widgetsDNSAnalytics.module.js"></script>
+<script type="text/javascript" src="js/portal/dashboard/widgets/dns-analytics/widgetsDNSAnalyticsDefault.controller.js"></script>
+<script type="text/javascript" src="js/portal/dashboard/widgets/dns-analytics/widgetsDNSAnalyticsEditConfig.controller.js"></script>
+<script type="text/javascript" src="js/portal/dashboard/widgets/dns-analytics/dns-queries-line-chart/wingetDNSQueriesLineChart.config.js"></script>
+<!-- //DNS Analytics -->
+<!-- Security Analytics-->
+<script type="text/javascript" src="js/portal/dashboard/widgets/security-analytics/widgetSecurityAnalytics.module.js"></script>
+<script type="text/javascript" src="js/portal/dashboard/widgets/security-analytics/widgetsWAFAnalyticsEditConfig.controller.js"></script>
+<script type="text/javascript" src="js/portal/dashboard/widgets/security-analytics/waf-security-events-chart/widgetWAFSecurityEventsChart.config.js"></script>
+<script type="text/javascript" src="js/portal/dashboard/widgets/security-analytics/waf-security-events-chart/widgetWAFSecurityEventsChart.controller.js"></script>
+<!-- //Security Analytics-->
 <!-- Web Analytic -->
 <script type="text/javascript" src="js/portal/dashboard/widgets/web-analytics/widgetsWebAnalytics.module.js"></script>
 <script type="text/javascript" src="js/portal/dashboard/widgets/web-analytics/widgetsWebAnalyticsEditConfig.controller.js"></script>
@@ -432,6 +469,10 @@
 <script type="text/javascript" src="js/portal/dashboard/widgets/web-analytics/http-https-request-ratio/widgetHTTPHTTPSRequestsRatio.controller.js"></script>
 <script type="text/javascript" src="js/portal/dashboard/widgets/web-analytics/http-status-codes-ratio/widgetHTTPStatusCodesRatio.config.js"></script>
 <script type="text/javascript" src="js/portal/dashboard/widgets/web-analytics/http-status-codes-ratio/widgetHTTPStatusCodesRatio.controller.js"></script>
+<script type="text/javascript" src="js/portal/dashboard/widgets/web-analytics/imageengine-linechart-bytes-saved/widgetImageEngineLineChartByteSaved.config.js"></script>
+<script type="text/javascript" src="js/portal/dashboard/widgets/web-analytics/imageengine-linechart-bytes-saved/widgetImageEngineLineChartByteSaved.controller.js"></script>
+<script type="text/javascript" src="js/portal/dashboard/widgets/web-analytics/imageengine-solidgauge-performance-improvement/imageengineSolidgaugePerformanceImprovement.config.js"></script>
+<script type="text/javascript" src="js/portal/dashboard/widgets/web-analytics/imageengine-solidgauge-performance-improvement/imageengineSolidgaugePerformanceImprovement.controller.js"></script>
 <script type="text/javascript" src="widgets/adf-widget-analytics-proxy-traffic/dist/adf-widget-analytics-proxy-traffic.js"></script>
 
 <!-- //Web Analytic -->
@@ -446,10 +487,17 @@
 <script type="text/javascript" src="js/portal/logshippers/controller/logshippers.controller.js"></script>
 <script type="text/javascript" src="js/portal/logshippers/logshippers-staging-status/logshippersStagingStatus.directive.js"></script>
 <!-- // LogShippers -->
+<!-- Network IP Blocks-->
+<script type="text/javascript" src="js/portal/network-ip-blocks/networkIPBlocks.module.js"></script>
+<script type="text/javascript" src="js/portal/network-ip-blocks/networkIPBlocks.routes.js"></script>
+<script type="text/javascript" src="js/portal/network-ip-blocks/controllers/cdnIPBlocks.controller.js"></script>
+<!-- // Network IP Blocks-->
 <!-- DNS Zone Records -->
 <script type="text/javascript" src="js/portal/dns_zone_records/dns_zone_records.module.js"></script>
 <script type="text/javascript" src="js/portal/dns_zone_records/dns_zone_records.routes.js"></script>
 <script type="text/javascript" src="js/portal/dns_zone_records/controller/dns_zone_recordsCrud.controller.js"></script>
+<script type="text/javascript" src="js/portal/dns_zone_records/controller/dnsZoneAutoDiscoverZoneRecordsModal.controller.js"></script>
+<script type="text/javascript" src="js/portal/dns_zone_records/checklist-dns-zone-records/checklistDnsZoneRecords.directive.js"></script>
 <script type="text/javascript" src="js/portal/dns_zone_records/dns-zone-record-answer/dnsZoneRecordAnswer.directive.js"></script>
 
 <!-- //DNS Zone Records -->
@@ -460,7 +508,14 @@
 <script type="text/javascript" src="js/portal/dns_zones/controller/dns_zonesCrud.controller.js"></script>
 <script type="text/javascript" src="js/portal/dns_zones/dns-zone-check-integration/dnsZoneCheckIntegration.directive.js"></script>
 <script type="text/javascript" src="js/portal/dns_zones/dns-zone-check-integration/dnsZoneCheckIntegrationPanel.directive.js"></script>
+<script type="text/javascript" src="js/portal/dns_zones/dns-zone-select/dnsZoneSelect.directive.js"></script>
 <!-- //DNS Zones -->
+<!-- DNS Analytics-->
+<script type="text/javascript" src="js/portal/dns_analytics/dns_analytics.module.js"></script>
+<script type="text/javascript" src="js/portal/dns_analytics/dns_analytics.routes.js"></script>
+<script type="text/javascript" src="js/portal/dns_analytics/dns-queries-line-chart/dnsQueriesLineChart.directive.js"></script>
+<script type="text/javascript" src="js/portal/dns_analytics/controllers/DNSAnalytics.controller.js"></script>
+<!-- //DNS Analytics-->
 <!-- Azure Marcetplace-->
 <script type="text/javascript" src="js/portal/azure-resources/azureResources.module.js"></script>
 <script type="text/javascript" src="js/portal/azure-resources/azureResources.routes.js"></script>
@@ -472,6 +527,27 @@
 <script type="text/javascript" src="js/portal/azure-subscriptions/controller/azureSubscriptions.controller.js"></script>
 <script type="text/javascript" src="js/portal/azure-subscriptions/controller/azureSubscriptionResources.controller.js"></script>
 <!-- //Azure Marcetplace-->
+<!-- WAF Rules -->
+<script type="text/javascript" src="js/portal/waf_rules/waf_rules.module.js"></script>
+<script type="text/javascript" src="js/portal/waf_rules/waf_rules.routes.js"></script>
+<script type="text/javascript" src="js/portal/waf_rules/controller/wafRulesCrud.controller.js"></script>
+<script type="text/javascript" src="js/portal/waf_rules/controller/wafRulesBuiltInList.controller.js"></script>
+<script type="text/javascript" src="js/portal/waf_rules/waf-rule-staging-status/wafRuleStagingStatus.directive.js"></script>
+<!-- //WAF Rules -->
+<!-- WAF Analytics -->
+<script type="text/javascript" src="js/portal/waf-analytics/wafAnalytics.module.js"></script>
+<script type="text/javascript" src="js/portal/waf-analytics/wafAnalytics.routes.js"></script>
+<script type="text/javascript" src="js/portal/waf-analytics/controller/wafAnalytics.controller.js"></script>
+<script type="text/javascript" src="js/portal/waf-analytics/controller/wafHeatMap.controller.js"></script>
+<script type="text/javascript" src="js/portal/waf-analytics/controller/wafEventsList.controller.js"></script>
+<script type="text/javascript" src="js/portal/waf-analytics/directives/wafSecurityEventsChart.directive.js"></script>
+<script type="text/javascript" src="js/portal/waf-analytics/directives/wafTopAttackedUrls.directive.js"></script>
+<script type="text/javascript" src="js/portal/waf-analytics/directives/wafTopAttackerIPs.directive.js"></script>
+<script type="text/javascript" src="js/portal/waf-analytics/directives/wafTopsPieCharts.directive.js"></script>
+<script type="text/javascript" src="js/portal/waf-analytics/filters/wafFilterSecurityEvents.directive.js"></script>
+<script type="text/javascript" src="js/portal/waf-analytics/filters/wafFilterTops.directive.js"></script>
+<script type="text/javascript" src="js/portal/waf-analytics/filters/wafFilterTopObjects.directive.js"></script>
+<!-- //WAF Analytics -->
 <script type="text/javascript" src="js/portal/app.module.js"></script>
 <script type="text/javascript" src="js/portal/app.config.js"></script>
 <script type="text/javascript" src="js/portal/app.routes.js"></script>

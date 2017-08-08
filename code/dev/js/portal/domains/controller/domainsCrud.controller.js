@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -28,12 +28,13 @@
       $scope: $scope,
       $stateParams: $stateParams
     });
-    $scope.isAdvancedMode = $stateParams.isAdvanced || false;
+    $scope.isAdvancedMode = ($stateParams.isAdvanced === 'true') ? true : false;
+    $state._loading = true;
     $scope.jsoneditor = {
       options: {
         mode: 'code',
         modes: ['code', 'view'], // allowed modes['code', 'form', 'text', 'tree', 'view']
-        error: function(err) {
+        error: function (err) {
           alert(err.toString());
         }
       }
@@ -61,8 +62,8 @@
     function setAccountName() {
       if ($scope.auth.isReseller() || $scope.auth.isRevadmin()) {
         // Loading list of companies
-        return Companies.query(function(list) {
-          _.forEach($scope.records, function(item) {
+        return Companies.query(function (list) {
+          _.forEach($scope.records, function (item) {
             var index = _.findIndex(list, {
               id: item.account_id
             });
@@ -77,10 +78,10 @@
       }
     }
 
-    $scope.initNew = function() {
+    $scope.initNew = function () {
       if ($scope.auth.isReseller() || $scope.auth.isRevadmin()) {
         // Loading list of companies
-        Companies.query(function(list) {
+        Companies.query(function (list) {
           $scope.companies = list;
           $scope.setDefaultAccountId();
         });
@@ -89,23 +90,23 @@
       }
     };
 
-    $scope.initEdit = function() {
+    $scope.initEdit = function () {
       if ($scope.auth.isReseller() || $scope.auth.isRevadmin()) {
         // Loading list of companies
-        Companies.query(function(list) {
+        Companies.query(function (list) {
           $scope.companies = list;
         });
       }
     };
 
     // Fetch list of records
-    $scope.$on('$stateChangeSuccess', function(state, stateTo, stateParam) {
+    $scope.$on('$stateChangeSuccess', function (state, stateTo, stateParam) {
       var data = null;
       // NOTE: set filter params for specific state
-      if($state.is('index.accountSettings.accountresources')){
+      if ($state.is('index.accountSettings.accountresources')) {
         $scope.filter.limit = 5;
-         var filters = {
-          account_id: !User.getSelectedAccount() ? null: User.getSelectedAccount().acc_id
+        var filters = {
+          account_id: !User.getSelectedAccount() ? null : User.getSelectedAccount().acc_id
         };
         data = {
           filters: filters
@@ -116,9 +117,9 @@
       if ($state.is($scope.state)) {
         $scope.list(data)
           .then(setAccountName)
-          .then(function() {
+          .then(function () {
             if ($scope.elementIndexForAnchorScroll) {
-              setTimeout(function() {
+              setTimeout(function () {
                 $anchorScroll('anchor' + $scope.elementIndexForAnchorScroll);
                 $scope.$digest();
               }, 500);
@@ -141,10 +142,10 @@
     $scope.model = {};
 
     // fetch list of locations
-    $scope.fetchLocations = function() {
+    $scope.fetchLocations = function () {
       $http
         .get($config.API_URL + '/locations/firstmile')
-        .then(function(data) {
+        .then(function (data) {
           if (data.status === $config.STATUS.OK) {
             $scope.locations = data.data;
           }
@@ -152,7 +153,7 @@
         .catch($scope.alertService.danger);
     };
 
-    $scope.prepareSimpleDomainUpdate = function(model_current) {
+    $scope.prepareSimpleDomainUpdate = function (model_current) {
       var model;
       if (model_current.toJSON === undefined) {
         model = _.clone(model_current, true);
@@ -164,21 +165,27 @@
         delete model.rev_component_bp.certificate_urls;
         delete model.rev_component_bp.ssl_certificates;
         if (model.rev_component_bp.caching_rules) {
-          angular.forEach(model.rev_component_bp.caching_rules, function(item) {
+          angular.forEach(model.rev_component_bp.caching_rules, function (item) {
             delete item.$$cachingRuleState;
           });
         }
         // NOTE: delete UI elements not for saving
         // $$backendBlockState - added in domain-custom-vcl-backends
         if (model.rev_component_bp.custom_vcl && !!model.rev_component_bp.custom_vcl.backends) {
-          angular.forEach(model.rev_component_bp.custom_vcl.backends, function(item) {
+          angular.forEach(model.rev_component_bp.custom_vcl.backends, function (item) {
             delete item.$$backendBlockState;
           });
         }
         // $$itemState - added for domain-lua-code-block
         if (model.bp_lua && angular.isArray(model.bp_lua)) {
-          angular.forEach(model.bp_lua, function(item) {
+          angular.forEach(model.bp_lua, function (item) {
             delete item.$$itemState;
+          });
+        }
+        // $$wafLocationBlockState
+        if (model.rev_component_bp.waf && angular.isArray(model.rev_component_bp.waf)) {
+          angular.forEach(model.rev_component_bp.waf, function (item) {
+            delete item.$$wafLocationBlockState;
           });
         }
       }
@@ -211,7 +218,7 @@
         delete model.domain_wildcard_alias;
       }
       // NOTE:  "Origin Health Monitoring" should be active if “Edge Caching” is ON(true)
-      if (!model.rev_component_bp.enable_cache || model.rev_component_bp.enable_cache === false) {
+      if (!!model.rev_component_bp && (!model.rev_component_bp.enable_cache || model.rev_component_bp.enable_cache === false)) {
         model.enable_origin_health_probe = false;
       }
       if ($scope.$thirdPartyLinks) {
@@ -239,7 +246,7 @@
     function fetchSSL_certificates() {
       $scope.SSL_certs.length = 0;
       return SSL_certs.query().$promise
-        .then(function(list) {
+        .then(function (list) {
           //TODO: add control USER ROLE for filtred data
           if ($scope.auth.isReseller() || $scope.auth.isRevadmin()) {}
           $scope.SSL_certs = list;
@@ -249,7 +256,7 @@
     function fetchSSL_conf_profiles() {
       $scope.SSL_conf_profiles.length = 0;
       return SSL_conf_profiles.query().$promise
-        .then(function(list) {
+        .then(function (list) {
           $scope.SSL_conf_profiles = list;
           if ($scope.model.ssl_conf_profile === '') {
             // set default value for ssl_conf_profile
@@ -274,16 +281,16 @@
      * @param  {String} id
      * @return
      */
-    $scope.getDomain = function(id) {
+    $scope.getDomain = function (id) {
       $scope.get(id)
         .then(saveNoChangingValue)
         .then(validateDomainProperties)
-        .then(function() {
-          return Companies.query(function(list) {
+        .then(function () {
+          return Companies.query(function (list) {
             $scope.companies = list;
           });
         })
-        .then(function() {
+        .then(function () {
           if ($scope.model.ssl_conf_profile !== '') {
             $scope.isCustomSSL_conf_profile = false;
           } else {
@@ -303,8 +310,11 @@
           };
           return $q.all([fetchSSL_certificates(), fetchSSL_conf_profiles()]);
         })
-        .catch(function(err) {
+        .catch(function (err) {
           $scope.alertService.danger('Could not load domain details');
+        })
+        .finally(function () {
+          $scope._loading = false;
         });
 
       /**
@@ -319,7 +329,7 @@
        */
       function validateDomainProperties(domain) {
         // $scope.modelAdvance = {'loading':'Please wait few seconds...'};
-        $timeout(function() {
+        $timeout(function () {
           $scope.modelAdvance = angular.copy($scope.prepareSimpleDomainUpdate(domain));
         }, 2000);
 
@@ -337,7 +347,7 @@
         delete $scope.model.domain_name;
         delete $scope.model.cname;
         delete $scope.model.id;
-        angular.forEach($scope.model.rev_component_bp.caching_rules, function(item) {
+        angular.forEach($scope.model.rev_component_bp.caching_rules, function (item) {
           // NOTE: add parameter for collapsed item
           angular.extend(item, {
             $$cachingRuleState: {
@@ -349,7 +359,7 @@
             item.edge_caching.query_string_keep_or_remove_list = [];
           }
         });
-        angular.forEach($scope.model.bp_lua, function(item) {
+        angular.forEach($scope.model.bp_lua, function (item) {
           // NOTE: add parameter for collapsed item
           angular.extend(item, {
             $$itemState: {
@@ -357,7 +367,7 @@
             }
           });
         });
-        angular.forEach($scope.model.co_lua, function(item) {
+        angular.forEach($scope.model.co_lua, function (item) {
           // NOTE: add parameter for collapsed item
           angular.extend(item, {
             $$itemState: {
@@ -365,6 +375,15 @@
             }
           });
         });
+        angular.forEach($scope.model.rev_component_bp.waf, function (item) {
+          // NOTE: add parameter for collapsed item
+          angular.extend(item, {
+            $$wafLocationBlockState: {
+              isCollapsed: true
+            }
+          });
+        });
+
       }
       /**
        * @name  saveNoChangingValue
@@ -396,7 +415,7 @@
     function reloadStatus() {
       $scope.modelInfo.status_domain_id = null;
       $scope.refresh = true;
-      $timeout(function() {
+      $timeout(function () {
         $scope.modelInfo.status_domain_id = $scope.model.id || $stateParams.id;
       }, 300);
 
@@ -405,13 +424,16 @@
     /**
      * @name deleteDomain
      * @description
-     *   Delete domain
-     * @param  {Object} model [description]
-     * @return
+     *   Delete domain after confirm
+     * @param  {Object} model Information about domain
+     * @return {Boolean}
      */
-    $scope.deleteDomain = function(model) {
+    $scope.deleteDomain = function (model) {
+      if ($scope.isReadOnly()) {
+        return false;
+      }
       $scope.confirm('confirmModal.html', model)
-        .then(function() {
+        .then(function () {
           $scope
             .delete(model)
             .then($scope.alertService.success)
@@ -419,11 +441,11 @@
         });
     };
 
-    $scope.createDomain = function(model, isStay) {
+    $scope.createDomain = function (model, isStay) {
       var _model = angular.copy(model);
       $scope
         .create(_model, isStay)
-        .then(function(data) {
+        .then(function (data) {
           // NOTE: clean model for new domain
           model.domain_name = '';
           model.comment = '';
@@ -439,7 +461,7 @@
         .catch($scope.alertService.danger);
     };
 
-    $scope.publishDomain = function(model) {
+    $scope.publishDomain = function (model) {
       if (!model) {
         return;
       }
@@ -449,7 +471,7 @@
       var modelId = model.id;
       $scope.confirm('confirmPublishModal.html', {
         domain_name: $scope.modelInfo.domain_name
-      }).then(function() {
+      }).then(function () {
         model = $scope.prepareSimpleDomainUpdate(model);
         $scope.update({
             id: modelId,
@@ -461,7 +483,7 @@
       });
     };
 
-    $scope.validateDomain = function(model) {
+    $scope.validateDomain = function (model) {
       if (!model) {
         return;
       }
@@ -479,7 +501,7 @@
         .catch($scope.alertService.danger);
     };
 
-    $scope.updateDomain = function(model) {
+    $scope.updateDomain = function (model) {
       if (!model) {
         return;
       }
@@ -489,7 +511,7 @@
       var modelId = model.id;
       $scope.confirm('confirmUpdateModal.html', {
         domain_name: $scope.modelInfo.domain_name
-      }).then(function() {
+      }).then(function () {
         model = $scope.prepareSimpleDomainUpdate(model);
         $scope.update({
             id: modelId
@@ -500,11 +522,11 @@
       });
     };
 
-    $scope.storeToStorage = function(model) {
+    $scope.storeToStorage = function (model) {
       $localStorage.selectedDomain = model;
     };
 
-    $scope.disableSubmit = function(model, isEdit) {
+    $scope.disableSubmit = function (model, isEdit) {
       if (!isEdit) {
         return $scope._loading ||
           !model.domain_name ||
@@ -522,7 +544,7 @@
       }
     };
 
-    $scope.getRelativeDate = function(datetime) {
+    $scope.getRelativeDate = function (datetime) {
       return moment.utc(datetime).fromNow();
     };
 
@@ -530,14 +552,14 @@
     /**
      * Get editor instance
      */
-    $scope.jsonEditorEvent = function(instance) {
+    $scope.jsonEditorEvent = function (instance) {
       $scope.jsonEditorInstance = instance;
     };
 
     /**
      * Set watcher on json editor's text to catch json validation error
      */
-    $scope.$watch('jsonEditorInstance.getText()', function(val) {
+    $scope.$watch('jsonEditorInstance.getText()', function (val) {
       // if editor text is empty just return
       if (!val) {
         $scope.jsonIsInvalid = true;
@@ -562,7 +584,7 @@
      *
      * @return
      */
-    $scope.onAddNewCachingRule = function(e, isChacheStatic) {
+    $scope.onAddNewCachingRule = function (e, isChacheStatic) {
       if (e) {
         e.preventDefault();
       }
@@ -629,11 +651,11 @@
      *
      * @return
      */
-    $scope.onRemoveCachingRule = function(index) {
+    $scope.onRemoveCachingRule = function (index) {
       $scope.confirm('confirmModalDeleteCachingRule.html', {
           url: $scope.model.rev_component_bp.caching_rules[index].url
         })
-        .then(function() {
+        .then(function () {
           $scope.model.rev_component_bp.caching_rules.splice(index, 1);
           $scope.alertService.success('Caching Rule was deleted');
         });
@@ -645,7 +667,7 @@
      * @param  {Object} element - Caching Rule Object
      * @return {Boolean|Integer}
      */
-    $scope.onUpCachingRule = function(element) {
+    $scope.onUpCachingRule = function (element) {
       var array = $scope.model.rev_component_bp.caching_rules;
       var index = array.indexOf(element);
       // Item non-existent?
@@ -668,7 +690,7 @@
      * @param  {Object} element - Caching Rule Object
      * @return {Boolean|Integer}
      */
-    $scope.onDownCachingRule = function(element) {
+    $scope.onDownCachingRule = function (element) {
       var array = $scope.model.rev_component_bp.caching_rules;
       var index = array.indexOf(element);
       // Item non-existent?
@@ -691,9 +713,9 @@
      *
      * @return
      */
-    $scope.onCollapsAllCachingRule = function() {
+    $scope.onCollapsAllCachingRule = function () {
       var _rules = $scope.model.rev_component_bp.caching_rules;
-      angular.forEach(_rules, function(item) {
+      angular.forEach(_rules, function (item) {
         item.$$cachingRuleState.isCollapsed = true;
 
       });
@@ -704,14 +726,14 @@
      *
      * @return
      */
-    $scope.onExpandAllCachingRule = function() {
+    $scope.onExpandAllCachingRule = function () {
       var _rules = $scope.model.rev_component_bp.caching_rules;
-      angular.forEach(_rules, function(item) {
+      angular.forEach(_rules, function (item) {
         item.$$cachingRuleState.isCollapsed = false;
       });
     };
 
-    $scope.onChangeModeView = function() {
+    $scope.onChangeModeView = function () {
       $scope.isAdvancedMode = !$scope.isAdvancedMode;
     };
     /**
@@ -725,7 +747,7 @@
      * @return
      */
     var _id_ssl_conf_profile = '';
-    $scope.$watch('isAdvancedMode', function(newVal, oldVal) {
+    $scope.$watch('isAdvancedMode', function (newVal, oldVal) {
       if (newVal !== oldVal && newVal === true) {
         var newModel = $scope.prepareSimpleDomainUpdate($scope.model);
         _id_ssl_conf_profile = $scope.model.ssl_conf_profile;
@@ -742,16 +764,20 @@
         if ($scope.isCustomSSL_conf_profile === false) {
           syncSSL_conf_profile($scope.model.ssl_conf_profile);
         }
+        // NOTE: update ACL for render UI into directives
+        if(!!$scope.model.rev_component_bp.acl && !!$scope.model.rev_component_bp.acl) {
+          angular.extend($scope.model.rev_component_bp.acl, $scope.modelAdvance.rev_component_bp.acl);
+        }
       }
     });
 
-    $scope.$watch('model.ssl_conf_profile', function(newVal, oldVal) {
+    $scope.$watch('model.ssl_conf_profile', function (newVal, oldVal) {
       if (newVal !== oldVal && !!newVal) {
         syncSSL_conf_profile(newVal);
       }
     });
 
-    $scope.$watch('isCustomSSL_conf_profile', function(newVal, oldVal) {
+    $scope.$watch('isCustomSSL_conf_profile', function (newVal, oldVal) {
       if (newVal !== oldVal && newVal !== undefined) {
         if (newVal === false) {
           syncSSL_conf_profile($scope.model.ssl_conf_profile);
@@ -759,7 +785,7 @@
       }
     });
 
-    $scope.$watch('model.rev_component_bp.enable_cache', function(newVal, oldVal) {
+    $scope.$watch('model.rev_component_bp.enable_cache', function (newVal, oldVal) {
       if (newVal !== oldVal && newVal !== undefined) {
         if (newVal === false) {
           $scope.model.enable_origin_health_probe = false;
@@ -767,7 +793,7 @@
       }
     });
 
-    $scope.$watch('model.enable_origin_health_probe', function(newVal, oldVal) {
+    $scope.$watch('model.enable_origin_health_probe', function (newVal, oldVal) {
       if (newVal !== oldVal && newVal !== undefined) {
         if (newVal === true || newVal === 'true') {
           // NOTE: set default values for new Origin Health Probe
@@ -812,12 +838,70 @@
      * @param  {[type]} err [description]
      * @return {[type]}     [description]
      */
-    $scope.copyCallback = function(err) {
+    $scope.copyCallback = function (err) {
       if (err) {
         $scope.alertService.danger('Copying failed, please try manual approach', 2000);
       } else {
         $scope.alertService.success('The CNAME has been copied to the clipboard', 2000);
       }
+    };
+    /**
+     * @name onEnableImageEngineChanged
+     * @description method for controll change EnableImageEngine
+     * @param {Event} e
+     * @param {Boolean} isEnabled
+     */
+    $scope.onEnableImageEngineChanged = function (e, isEnabled) {
+      var customVCLenabled = (!!$scope.model.rev_component_bp.custom_vcl) ? $scope.model.rev_component_bp.custom_vcl.enabled : false;
+      if (isEnabled === false && customVCLenabled === true) {
+        $scope.confirm('confirmChangeVCLModal.html', {
+            domain_name: $scope.modelInfo.domain_name
+          })
+          .then(function (data) {
+            // NOTE: change on UI
+            $scope.model.rev_component_bp.custom_vcl.enabled = false;
+          })
+          .catch(function (err) {
+            // NOTE: cancel change this property
+            $scope.model.image_engine.enable_image_engine = true;
+          });
+      }
+      if (isEnabled === true) {
+        // NOTE: if user try activate ImageEngine we need to show a warning message
+        $scope.confirm('confirmEnableImageEngineModal.html', {
+            domain_name: $scope.modelInfo.domain_name
+          })
+          .then(function (data) {
+            // NOTE: change on UI
+            $scope.model.image_engine.enable_image_engine = true;
+          })
+          .catch(function (err) {
+            // NOTE: cancel change property
+            $scope.model.image_engine.enable_image_engine = false;
+          });
+      }
+    };
+    /**
+     * @name refreshPage
+     * @description method for refresh data on the Page (reload the state)
+     */
+    $scope.refreshPage = function (e, id) {
+      $scope._loading = true;
+      $timeout(function () {
+        var isAdvanced = $scope.isAdvancedMode;
+        var state = $state.$current;
+        var params = {
+          id: id
+        };
+        if (isAdvanced === true) {
+          params.isAdvanced = isAdvanced;
+        }
+        $state.transitionTo($state.$current, params, {
+          reload: true,
+          inherit: false,
+          notify: true
+        });
+      }, 200);
     };
   }
 

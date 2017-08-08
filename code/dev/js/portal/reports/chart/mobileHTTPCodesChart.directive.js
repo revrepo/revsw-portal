@@ -19,7 +19,8 @@
         flCountries: '=',
         flOperators: '=',
         flNetworks: '=',
-        flDisabled: '='
+        flDisabled: '=',
+        filtersSets: '='
       },
       /*@ngInject*/
       controller: function($scope, Stats, Util) {
@@ -77,7 +78,30 @@
             }
           }
         };
-
+        var _filters_field_list = ['report_type','from_timestamp', 'to_timestamp', 'country', 'device', 'os', 'browser','network','operator','account_id','app_id'];
+        function generateFilterParams(filters) {
+            var params = {
+              from_timestamp: moment().subtract(1, 'days').valueOf(),
+              to_timestamp: Date.now()
+            };
+            _.forEach(filters, function(val, key) {
+              if (_.indexOf(_filters_field_list, key) !== -1) {
+                if (val !== '-' && val !== '') {
+                  params[key] = val;
+                }
+              } else {
+                if (key === 'count_last_day') {
+                  params.from_timestamp = moment().subtract(val, 'days').valueOf();
+                  params.to_timestamp = Date.now();
+                  delete params.count_last_day;
+                }
+              }
+            });
+            return params;
+          }
+          if ($scope.filtersSets) {
+            _.extend($scope.filters, $scope.filtersSets);
+          }
         //  ---------------------------------
         $scope.reload = function() {
 
@@ -85,8 +109,8 @@
           $scope.filters.account_id = $scope.ngAccount;
           $scope.filters.app_id = ($scope.ngApp || null);
 
-          return Stats.sdk_agg_flow($scope.filters)
-            .$promise
+          return Stats.sdk_agg_flow(generateFilterParams($scope.filters))
+          .$promise
             .then(function(data) {
 
               if (data.data && data.data.length > 0) {

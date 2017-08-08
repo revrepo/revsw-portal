@@ -40,7 +40,7 @@
         <tbody>
         <tr ng-repeat="subitem in item.items">
           <td>
-            <a target="_blank" ng-href="{{item.key}}">{{subitem.key}}</a>
+            <a target="_blank" class="description-link" ng-href="{{item.key}}">{{subitem.key}}</a>
           </td>
           <td class="text-right">{{subitem.doc_count}}</td>
         </tr>

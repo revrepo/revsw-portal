@@ -25,6 +25,11 @@
         check_type: '@check_type',
         isArray: false
       },
+      wafRulesList: {
+        url: $config.API_URL + '/domain_configs/:id/waf_rules_list',
+        method: 'GET',
+        isArray: false
+      },
       // TODO: re-base to cache.factory.js after fix API (query options)
       purge: {
         url: $config.API_URL + '/purge',

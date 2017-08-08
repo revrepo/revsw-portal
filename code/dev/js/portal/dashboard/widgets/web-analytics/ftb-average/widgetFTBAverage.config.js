@@ -11,7 +11,7 @@
     // “Average FBT”
       .widget('widget-web-analytics-ftb-average', {
       title: 'Average FBT',
-      description: 'Web Analitycs - Average FBT',
+      description: 'Display Average FBT',
       templateUrl: 'parts/dashboard/widgets/web-analytics/ftb-average/view-ftb-average.tpl.html',
       titleTemplateUrl: 'parts/dashboard/widgets/web-analytics/widget-title-with-params.tpl.html',
       controller: 'widgetFTBAverageController',

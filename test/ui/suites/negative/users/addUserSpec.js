@@ -22,124 +22,131 @@ var DataProvider = require('./../../../common/providers/data');
 var Constants = require('./../../../page_objects/constants');
 
 describe('Negative', function () {
-  describe('Add user', function () {
 
-    // TODO: please add negaive tests for reseller and revadmin roles
+  var users = [
+    config.get('portal.users.admin'),
+    config.get('portal.users.revAdmin'),
+    config.get('portal.users.reseller')
+  ];
 
-    var adminUser = config.get('portal.users.admin');
+  users.forEach(function (user) {
+    describe('With user: ' + user.role, function () {
 
-    beforeAll(function () {
-      Portal.signIn(adminUser);
+      beforeAll(function () {
+        Portal.signIn(user);
+        Portal.helpers.nav.goToUsers();
+      });
+
+      afterAll(function () {
+        Portal.signOut();
+      });
+
+      beforeEach(function () {
+      });
+
+      it('should not create user when a required field is filled with blank ' +
+        'space chars',
+        function () {
+          var emptyUserData = {};
+          Portal.userListPage.clickAddNewUser();
+          Portal.addUserPage.form.fill(emptyUserData);
+          var addBtn = Portal.addUserPage.getCreateUserBtn();
+          expect(addBtn.isEnabled()).toBeFalsy();
+        });
+
+      it('should not create user when the filled email is already used by ' +
+        'another user',
+        function () {
+          var tom = DataProvider.generateUser();
+          var jerry = DataProvider.generateUser();
+          jerry.email = tom.email;
+          Portal.userListPage.clickAddNewUser();
+          Portal.addUserPage.createUser(tom);
+          Portal.addUserPage.clickBackToList();
+          Portal.userListPage.clickAddNewUser();
+          Portal.addUserPage.createUser(jerry);
+          expect(Portal.alerts.getAll().count()).not.toEqual(0);
+          var alert = Portal.alerts.getFirst();
+          var expectedMessage = Constants.alertMessages.users.MSG_FAIL_ADD_EMAIL_EXISTS;
+          expect(alert.getText()).toContain(expectedMessage);
+          Portal.addUserPage.clickBackToList();
+          browser.sleep(5);
+        });
+
+      it('should not allow to create a user without email',
+        function () {
+          var derek = DataProvider.generateUser();
+          derek.email = '';
+          Portal.userListPage.clickAddNewUser();
+          Portal.addUserPage.form.fill(derek);
+          var addBtn = Portal.addUserPage.getCreateUserBtn();
+          expect(addBtn.isEnabled()).toBeFalsy();
+        });
+
+      it('should not allow to create a user without first name',
+        function () {
+          var mathew = DataProvider.generateUser();
+          mathew.firstName = '';
+          Portal.userListPage.clickAddNewUser();
+          Portal.addUserPage.form.fill(mathew);
+          var addBtn = Portal.addUserPage.getCreateUserBtn();
+          expect(addBtn.isEnabled()).toBeFalsy();
+        });
+
+      it('should not allow to create a user without last name',
+        function () {
+          var mathew = DataProvider.generateUser();
+          mathew.lastName = '';
+          Portal.userListPage.clickAddNewUser();
+          Portal.addUserPage.form.fill(mathew);
+          var addBtn = Portal.addUserPage.getCreateUserBtn();
+          expect(addBtn.isEnabled()).toBeFalsy();
+        });
+
+      it('should not allow to create a user without any role',
+        function () {
+          var scott = DataProvider.generateUser();
+          delete scott.role;
+          Portal.userListPage.clickAddNewUser();
+          Portal.addUserPage.form.fill(scott);
+          var addBtn = Portal.addUserPage.getCreateUserBtn();
+          expect(addBtn.isEnabled()).toBeFalsy();
+        });
+
+      it('should not allow to create a user without password',
+        function () {
+          var brian = DataProvider.generateUser();
+          delete brian.password;
+          Portal.userListPage.clickAddNewUser();
+          Portal.addUserPage.form.fill(brian);
+          var addBtn = Portal.addUserPage.getCreateUserBtn();
+          expect(addBtn.isEnabled()).toBeFalsy();
+        });
+
+      it('should not allow to create a user without confirmation password',
+        function () {
+          var brian = DataProvider.generateUser();
+          delete brian.passwordConfirm;
+          Portal.userListPage.clickAddNewUser();
+          Portal.addUserPage.form.fill(brian);
+          var addBtn = Portal.addUserPage.getCreateUserBtn();
+          expect(addBtn.isEnabled()).toBeFalsy();
+        });
+
+      it('should display an error message when creating user when "Password" ' +
+        'and "Confirmation Password" do not match',
+        function () {
+          var vincent = DataProvider.generateUser();
+          vincent.password = 'something';
+          vincent.passwordConfirm = 'different';
+          Portal.userListPage.clickAddNewUser();
+          Portal.addUserPage.createUser(vincent);
+          Portal.addUserPage.form.fill(vincent);
+          var addBtn = Portal.addUserPage.getCreateUserBtn();
+          expect(addBtn.isEnabled()).toBeFalsy();
+        });
     });
-
-    afterAll(function () {
-      Portal.signOut();
-    });
-
-    beforeEach(function () {
-      Portal.helpers.nav.goToUsers();
-    });
-
-    it('should not create user when a required field is filled with blank ' +
-      'space chars',
-      function () {
-        var emptyUserData = {};
-        Portal.userListPage.clickAddNewUser();
-        Portal.addUserPage.form.fill(emptyUserData);
-        var addBtn = Portal.addUserPage.getCreateUserBtn();
-        expect(addBtn.isEnabled()).toBeFalsy();
-      });
-
-    it('should not create user when the filled email is already used by ' +
-      'another user',
-      function () {
-        var tom = DataProvider.generateUser();
-        var jerry = DataProvider.generateUser();
-        jerry.email = tom.email;
-        Portal.userListPage.clickAddNewUser();
-        Portal.addUserPage.createUser(tom);
-        Portal.addUserPage.clickBackToList();
-        Portal.userListPage.clickAddNewUser();
-        Portal.addUserPage.createUser(jerry);
-        expect(Portal.alerts.getAll().count()).not.toEqual(0);
-        var alert = Portal.alerts.getFirst();
-        var expectedMessage = Constants.alertMessages.users.MSG_FAIL_ADD_EMAIL_EXISTS;
-        expect(alert.getText()).toContain(expectedMessage);
-        Portal.addUserPage.clickBackToList();
-        browser.sleep(5);
-      });
-
-    it('should not allow to create a user without email',
-      function () {
-        var derek = DataProvider.generateUser();
-        derek.email = '';
-        Portal.userListPage.clickAddNewUser();
-        Portal.addUserPage.form.fill(derek);
-        var addBtn = Portal.addUserPage.getCreateUserBtn();
-        expect(addBtn.isEnabled()).toBeFalsy();
-      });
-
-    it('should not allow to create a user without first name',
-      function () {
-        var mathew = DataProvider.generateUser();
-        mathew.firstName = '';
-        Portal.userListPage.clickAddNewUser();
-        Portal.addUserPage.form.fill(mathew);
-        var addBtn = Portal.addUserPage.getCreateUserBtn();
-        expect(addBtn.isEnabled()).toBeFalsy();
-      });
-
-    it('should not allow to create a user without last name',
-      function () {
-        var mathew = DataProvider.generateUser();
-        mathew.lastName = '';
-        Portal.userListPage.clickAddNewUser();
-        Portal.addUserPage.form.fill(mathew);
-        var addBtn = Portal.addUserPage.getCreateUserBtn();
-        expect(addBtn.isEnabled()).toBeFalsy();
-      });
-
-    it('should not allow to create a user without any role',
-      function () {
-        var scott = DataProvider.generateUser();
-        delete scott.role;
-        Portal.userListPage.clickAddNewUser();
-        Portal.addUserPage.form.fill(scott);
-        var addBtn = Portal.addUserPage.getCreateUserBtn();
-        expect(addBtn.isEnabled()).toBeFalsy();
-      });
-
-    it('should not allow to create a user without password',
-      function () {
-        var brian = DataProvider.generateUser();
-        delete brian.password;
-        Portal.userListPage.clickAddNewUser();
-        Portal.addUserPage.form.fill(brian);
-        var addBtn = Portal.addUserPage.getCreateUserBtn();
-        expect(addBtn.isEnabled()).toBeFalsy();
-      });
-
-    it('should not allow to create a user without confirmation password',
-      function () {
-        var brian = DataProvider.generateUser();
-        delete brian.passwordConfirm;
-        Portal.userListPage.clickAddNewUser();
-        Portal.addUserPage.form.fill(brian);
-        var addBtn = Portal.addUserPage.getCreateUserBtn();
-        expect(addBtn.isEnabled()).toBeFalsy();
-      });
-
-    it('should display an error message when creating user when "Password" ' +
-      'and "Confirmation Password" do not match',
-      function () {
-        var vincent = DataProvider.generateUser();
-        vincent.password = 'something';
-        vincent.passwordConfirm = 'different';
-        Portal.userListPage.clickAddNewUser();
-        Portal.addUserPage.createUser(vincent);
-        Portal.addUserPage.form.fill(vincent);
-        var addBtn = Portal.addUserPage.getCreateUserBtn();
-        expect(addBtn.isEnabled()).toBeFalsy();
-      });
   });
+
+
 });

@@ -1,0 +1,10 @@
+<ui-select class="dns-zone-select"
+           ng-model="ngDNSZone"
+           theme="select2" ng-animate-disabled
+           ng-disabled="_loading"
+           on-select="onModelSelect($model)">
+  <ui-select-match placeholder="Select DNS Zone">{{$select.selected.zone}}</ui-select-match>
+  <ui-select-choices repeat="item in dnsZoneList | filter: {zone: $select.search}">
+    <div ng-bind-html="item.zone | highlight: $select.search"></div>
+  </ui-select-choices>
+</ui-select>

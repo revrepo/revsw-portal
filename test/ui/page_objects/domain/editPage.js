@@ -2,7 +2,7 @@
  *
  * REV SOFTWARE CONFIDENTIAL
  *
- * [2013] - [2015] Rev Software, Inc.
+ * [2013] - [2017] Rev Software, Inc.
  * All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains
@@ -20,7 +20,7 @@
 
 // Requiring `domain form` component page object
 var DomainForm = require('./form');
-
+var WebElement = require('./../../common/helpers/webElement');
 var BROWSER_WAIT_TIMEOUT = 420000; // 7 mins
 
 // This `Edit Domain` Page Object abstracts all operations or actions that a
@@ -48,13 +48,13 @@ var EditDomain = {
         linkText: 'Basic Mode'
       },
       validateDomain: {
-        css: '[ng-click="validateDomain(model)"]'
+        id: 'verifyDomain'
       },
       updateDomain: {
-        css: '[ng-click="updateDomain(model)"]'
+        id: 'updateDomain'
       },
       publishDomain: {
-        css: '[ng-click="publishDomain(model)"]'
+        id: 'publishDomain'
       },
       cancel: {
         linkText: 'Cancel'
@@ -149,7 +149,7 @@ var EditDomain = {
    * @returns {Object} Selenium WebDriver Element
    */
   getValidateDomainBtn: function () {
-    return element(by.css(this.locators.buttons.validateDomain.css));
+    return element(by.id(this.locators.buttons.validateDomain.id));
   },
 
   /**
@@ -161,8 +161,9 @@ var EditDomain = {
    * @returns {Object} Selenium WebDriver Element
    */
   getUpdateDomainBtn: function () {
-    return element(by.css(this.locators.buttons.updateDomain.css));
+    return element(by.id(this.locators.buttons.updateDomain.id));
   },
+
 
   getEditDomainLink: function (numberLink) {
     return element(by.css(this.locators.links.editDomain.css +
@@ -183,8 +184,9 @@ var EditDomain = {
    * @returns {Object} Selenium WebDriver Element
    */
   getPublishDomainBtn: function () {
-    return element(by.css(this.locators.buttons.publishDomain.css));
+    return element(by.id(this.locators.buttons.publishDomain.id));
   },
+
 
   /**
    * ### EditDomain.getCancelBtn()
@@ -196,6 +198,19 @@ var EditDomain = {
    */
   getCancelBtn: function () {
     return element(by.partialLinkText(this.locators.buttons.cancel.linkText));
+  },
+  /**
+   *### EditDomain.getSwitchBtnValue()
+   *
+   *  Return the value from switch element
+   * @return {String} value as string ('true','false')
+   */
+  getSwitchBtnValue: function (getCbElement) {
+    return getCbElement
+      .getAttribute(this.form.locators.switches.mainAttrs.ariaChecked)
+      .then(function (data) {
+        return data;
+      });
   },
 
   // ## Methods to interact with the Edit Domain Page components
@@ -225,15 +240,15 @@ var EditDomain = {
   switchBtns: function(getCbElement, onOff) {
     getCbElement
       .getAttribute(this.form.locators.switches.mainAttrs.ariaChecked)
-        .then(function(data) {
-          if (onOff && data !== 'true') {
-            getCbElement.click();
-          }
+      .then(function(data) {
+        if (onOff && data !== 'true') {
+          getCbElement.click();
+        }
 
-          if (!onOff && data === 'false') {
-            getCbElement.click();
-          }
-    });
+        if (!onOff && data !== 'false') {
+          getCbElement.click();
+        }
+      });
   },
 
 
@@ -353,7 +368,30 @@ var EditDomain = {
       .getSSLConfigurationTab()
       .click();
   },
+  /**
+ *
+ * Tab "ACL"
+ *
+ */
 
+  // Click to tab "ACL"
+  clickTabACL: function(numberLink) {
+    return this.form
+      .getACLTab()
+      .click();
+  },
+  /**
+   *
+   * Tab "WAF"
+   *
+   */
+
+  // Click to tab "WAF"
+  clickTabWAF: function (numberLink) {
+    return this.form
+      .getWAFTab()
+      .click();
+  },
 
   /**
    *
@@ -394,13 +432,30 @@ var EditDomain = {
       .getThirdPartyLinksTab()
       .click();
   },
-  clickOnAddNewItemBP: function () {
+
+  /**
+   *
+   * Tab "ImageEngine"
+   *
+   */
+
+  // Click to tab "ImageEngine"
+  clickTabImageEngine: function (numberLink) {
     return this.form
-      .getOnAddNewItemBP()
+      .getImageEngineTab()
       .click();
   },
 
+  // Click on button
+  clickOnAddNewItemBP: function () {
+    var el = this.form.getOnAddNewItemBP();
+    WebElement.scrollToElement(el);
+    return el.click();
+  },
+
   clickOnAddNewItemCO: function () {
+    var el = this.form.getOnAddNewItemCO();
+    WebElement.scrollToElement(el);
     return this.form
       .getOnAddNewItemCO()
       .click();
@@ -428,9 +483,9 @@ var EditDomain = {
   },
 
   clickAddNewBackendBlock: function() {
-    return this.form
-      .getOnAddNewBackendBlock()
-      .click();
+    var el = this.form.getOnAddNewBackendBlock();
+    WebElement.scrollToElement(el);
+    return el.click();
   },
 
   clickOpenUrlOfCachingRule: function() {

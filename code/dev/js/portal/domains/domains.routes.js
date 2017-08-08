@@ -28,6 +28,7 @@
       })
       .state('index.webApp.domains.edit', {
         url: '/edit/:id?isAdvanced',
+        cache: false,
         views: {
           page: {
             templateUrl: 'parts/domains/edit.html',

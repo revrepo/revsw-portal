@@ -20,6 +20,7 @@
 
 // Requiring `domain form` component page object
 var DashboardForm = require('./form');
+var dashboardListPage = require('./listPage');
 
 // This `Add Dashboard` Page Object abstracts all operations or actions that a
 // common dashboard could do in the Add Dashboard page from the Portal app/site.
@@ -54,6 +55,7 @@ var AddDashboard = {
    * @returns {Promise}
    */
   createDashboard: function(dashboard) {
+    dashboardListPage.addNewDashboard(dashboard);
     this.form.fill(dashboard);
     this.form.clickCreate();
   }

@@ -42,6 +42,11 @@ var NavHelper = {
     return SideBar.select(MenuAreas.DASHBOARDS);
   },
 
+  getDashboardsItems: function () {
+    return element.all(by.css(MenuAreas.DASHBOARDS.css));
+  },
+
+
   /**
    * Goes to Mobile Apps Area
    * @returns {*}
@@ -144,7 +149,30 @@ var NavHelper = {
   goToSSLNames: function () {
     return SideBar.select(MenuItems.WEB.SSL_NAMES);
   },
-
+  /**
+   * Navigates to Web > WAF Rules
+   */
+  goToWAFRules: function () {
+    return SideBar.select(MenuItems.WEB.WAF_RULES);
+  },
+  /**
+   * Navigates to Security Analytics > WAF Analytics
+   */
+  goToWAFAnalytics: function () {
+    return SideBar.select(MenuItems.SECURITY_ANALYTICS.WAF_ANALYTICS);
+  },
+  /**
+   * Navigates to Security Analytics > WAF Events
+   */
+  goToWAFEvents: function () {
+    return SideBar.select(MenuItems.SECURITY_ANALYTICS.WAF_EVENS);
+  },
+  /**
+   * Navigates to Security Analytics > WAF Heatmaps
+   */
+  goToWAFHeatmaps: function () {
+    return SideBar.select(MenuItems.SECURITY_ANALYTICS.WAF_HEAT_MAPS);
+  },
   /**
    * Navigates to Web > Staging Environment
    */
@@ -209,6 +237,13 @@ var NavHelper = {
   },
 
   /**
+   * Navigates to DNS Service > DNS Analytics
+   */
+  goToDNSAnalytics: function () {
+    return SideBar.select(MenuItems.DNS_SERVICE.DNS_ANALYTICS);
+  },
+
+  /**
    * Navigates to DNS Service > DNS Zones
    */
   goToDNSZones: function () {
@@ -270,7 +305,12 @@ var NavHelper = {
   goToSecuritySettings: function () {
     return SideBar.select(MenuItems.ADMIN.SECURITY_SETTINGS);
   },
-
+  /**
+   * Navigates to Admin > CDN IP Blocks
+   */
+  goToCDNIPBlocks: function() {
+    return SideBar.select(MenuItems.ADMIN.CDN_IP_BLOCKS);
+  },
   /**
    * Navigates to Admin > Activity Log
    */

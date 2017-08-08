@@ -158,7 +158,7 @@ gulp.task('serve:dev', function() {
         '/widgets': '/../widgets',
       }
     }
-  });  
+  });
 
   gulp.watch([devFolder + '**/*.html'], reload);
   gulp.watch([devFolder + 'less/**/*.less'], ['less']);
@@ -183,9 +183,15 @@ gulp.task('serve:public', function() {
   });
 });
 
+gulp.task('serve:coverage', function() {
+  // NOTE: Portal app run from dev folder for coverage purposes
+  require('./coverage/index').start();
+});
+
 
 gulp.task('copy', ['copyCss', 'copyParts', 'copyFaviconIcon', 'copyImages', 'copyJson', 'copyFonts', 'fonts', 'widgetsCopy', 'copyConfig']);
 gulp.task('build', ['less', 'lessVendor', 'copy', 'dist']);
 gulp.task('default', ['serve', 'less', 'widgets:build']);
 gulp.task('serve', ['serve:dev']);
 gulp.task('public', ['serve:public']);
+gulp.task('coverage', ['serve:coverage']);

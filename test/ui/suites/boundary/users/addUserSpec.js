@@ -47,7 +47,11 @@ describe('Boundary', function () {
         Portal.addUserPage.form.fill(tommy);
         var addBtn = Portal.addUserPage.getCreateUserBtn();
         expect(addBtn.isEnabled()).toBeFalsy();
-      });
+        expect(Portal.addUserPage.form.getEmailTxtIn().getAttribute('class'))
+          .toMatch('ng-invalid');
+        expect(Portal.addUserPage.form.getEmailTxtIn().getAttribute('class'))
+          .toMatch('ng-invalid-maxlength');
+    });
 
     it('should not allow to create user with long First Name.', function () {
       var rocky = DataProvider.generateUser();
@@ -55,6 +59,10 @@ describe('Boundary', function () {
       Portal.addUserPage.form.fill(rocky);
       var addBtn = Portal.addUserPage.getCreateUserBtn();
       expect(addBtn.isEnabled()).toBeFalsy();
+      expect(Portal.addUserPage.form.getFirstNameTxtIn().getAttribute('class'))
+        .toMatch('ng-invalid');
+      expect(Portal.addUserPage.form.getFirstNameTxtIn().getAttribute('class'))
+        .toMatch('ng-invalid-maxlength');
     });
 
     it('should not allow to create user with long Last Name.', function () {
@@ -63,6 +71,10 @@ describe('Boundary', function () {
       Portal.addUserPage.form.fill(paul);
       var addBtn = Portal.addUserPage.getCreateUserBtn();
       expect(addBtn.isEnabled()).toBeFalsy();
+      expect(Portal.addUserPage.form.getLastNameTxtIn().getAttribute('class'))
+        .toMatch('ng-invalid');
+      expect(Portal.addUserPage.form.getLastNameTxtIn().getAttribute('class'))
+        .toMatch('ng-invalid-maxlength');
     });
 
     it('should not create user when the "Password" value is not 8 characters ' +
@@ -74,7 +86,11 @@ describe('Boundary', function () {
         Portal.addUserPage.form.fill(michael);
         var addBtn = Portal.addUserPage.getCreateUserBtn();
         expect(addBtn.isEnabled()).toBeFalsy();
-      });
+          expect(Portal.addUserPage.form.getPasswordTxtIn().getAttribute('class'))
+          .toMatch('ng-invalid');
+        expect(Portal.addUserPage.form.getPasswordTxtIn().getAttribute('class'))
+          .toMatch('ng-invalid-minlength');
+    });
 
     it('should not create user when the "Password" value is greater than ' +
       '15 characters long',
@@ -85,6 +101,10 @@ describe('Boundary', function () {
         Portal.addUserPage.form.fill(vincent);
         var addBtn = Portal.addUserPage.getCreateUserBtn();
         expect(addBtn.isEnabled()).toBeFalsy();
+        expect(Portal.addUserPage.form.getPasswordTxtIn().getAttribute('class'))
+          .toMatch('ng-invalid');
+        expect(Portal.addUserPage.form.getPasswordTxtIn().getAttribute('class'))
+          .toMatch('ng-invalid-maxlength');
       });
   });
 });

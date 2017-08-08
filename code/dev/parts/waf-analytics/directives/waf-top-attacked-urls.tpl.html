@@ -1,0 +1,30 @@
+<h3>Top Attacked URLs</h3>
+<div class="clearfix" style="margin-bottom: 8px;" waf-filter-top-objects ng-disabled="!ngDomain" fl-country="flCountry" ng-filters="filters"
+  on-filter="loadDetails()"></div>
+<div class="alert alert-info" ng-if="!_loading && !items.length">
+  No data to display
+</div>
+<div class="alert alert-info" ng-if="_loading">
+  <i class="glyphicon glyphicon-refresh spin"></i>&nbsp; Loading
+</div>
+<div class="row margin-top" ng-if="ngDomain && items.length">
+  <div class="col-md-12">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>URL</th>
+          <th style="width: 10%;" class="text-right">Count</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="item in items">
+          <td>
+            <!-- TODO: change when key will contain full path -->
+            <a target="_blank" ng-href="http://{{ngDomain.domain_name}}{{item.key}}">{{item.key}}</a>
+          </td>
+          <td class="text-right">{{item.count}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
