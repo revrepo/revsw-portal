@@ -305,7 +305,12 @@ var NavHelper = {
   goToSecuritySettings: function () {
     return SideBar.select(MenuItems.ADMIN.SECURITY_SETTINGS);
   },
-
+  /**
+   * Navigates to Admin > CDN IP Blocks
+   */
+  goToCDNIPBlocks: function() {
+    return SideBar.select(MenuItems.ADMIN.CDN_IP_BLOCKS);
+  },
   /**
    * Navigates to Admin > Activity Log
    */

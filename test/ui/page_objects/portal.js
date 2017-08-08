@@ -65,6 +65,7 @@ var Accounts = require('./admin/accounts');
 var AccountResourcesPage = require('./accountresources');
 var AdminSettingsPage = require('./admin/securitySettings');
 var ApiKeysListPage = require('./admin/apiKeys');
+var CDNIPBlocksPage = require('./cdnIPBlocks/cdnIPBlocksPage');
 var ActivityLogPage = require('./admin/activityLog');
 var MobileAppListPage = require('./mobileApp/listPage');
 var MobileAppAddPage = require('./mobileApp/addPage');
@@ -184,6 +185,9 @@ var Portal = {
     apiKeys: ApiKeysListPage,
     settingsPage: AdminSettingsPage,
     activityLog: ActivityLogPage
+  },
+  cdnIPBlocks: {
+    page: CDNIPBlocksPage
   },
   accounts: {
     profilePage: AccountProfilePage,
