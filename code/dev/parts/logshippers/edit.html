@@ -164,7 +164,7 @@
               <div class="form-group" ng-class="{ 'has-error': editForm.destinationUsername.$invalid && editForm.destinationUsername.$dirty }">
                 <label for="destinationUsername" class="col-sm-2 control-label">Username<span ng-if="model.destination_type ==='sftp' ||model.destination_type ==='ftp'"> *</span></label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control inline-block" id="destination_username" name="destinationUsername" placeholder="Username" ng-model="model.destination_username" ng-maxlength="150" ng-pattern="NO_SPECIAL_CHARS" ng-disabled="_loading" ng-required="model.destination_type ==='sftp' ||model.destination_type ==='ftp'">
+                  <input type="text" class="form-control inline-block" readonly onfocus="this.removeAttribute('readonly');" autocomplete="false" id="destination_username" name="destinationUsername" placeholder="Username" ng-model="model.destination_username" ng-maxlength="150" ng-pattern="NO_SPECIAL_CHARS" ng-disabled="_loading" ng-required="model.destination_type ==='sftp' ||model.destination_type ==='ftp'">
                   <label for="destinationUsername" class="text text-info" popover-trigger="mouseenter" uib-popover="Username for FTP and SFTP destination types">
                     <i class="fa fa-question-circle"></i>
                   </label>
