@@ -52,7 +52,7 @@ describe('Smoke', function() {
           return editPage.elementIsDisplayed(elem);
         };
 
-        it('should display switch "Access Control List"', function() {
+        it('should display switch "Access Control List" ', function() {
           expect(checkDisplay('getACLRulesEnableSw')).toBe(true);
         });
 
