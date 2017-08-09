@@ -6,7 +6,7 @@
     .controller('dnsZoneAutoDiscoverZoneRecordsModalController', dnsZoneAutoDiscoverZoneRecordsModalController);
 
   /*@ngInject*/
-  function dnsZoneAutoDiscoverZoneRecordsModalController($q, $config, $timeout, $scope, $rootScope, DNSZoneRecords, $uibModal, $uibModalInstance, model) {
+  function dnsZoneAutoDiscoverZoneRecordsModalController($q, $config, $timeout, $scope, $rootScope, DNSZoneRecords, $uibModal, $uibModalInstance, model, AlertService) {
 
     var defaultTimeToWaitNewNSONECallInMillissecons = $config.DNS_WAIT_NEW_CALL_MILLISSECONDS;
 
@@ -76,10 +76,10 @@
      * @param {Array} records
      * @returns
      */
-    function sendRequest(records,delay) {
+    function sendRequest(records, delay) {
       var delay_ = delay || defaultTimeToWaitNewNSONECallInMillissecons;
       var record = records.shift();
-      if(!record) {
+      if (!record) {
         return $q.when();
       }
       var newRecord = {
@@ -108,7 +108,8 @@
           record.$$isSelected = false;
           record.$$isError = true;
           record.$$errorMessage = (!!err.data) ? err.data.message : null;
-          return record;
+          AlertService.danger(err);
+          return err;
         });
 
     }
@@ -119,19 +120,13 @@
     $scope.addToTheDNSZone = function() {
       $scope._loading = true;
       var newRecordsList = _.filter($scope.model.zone_records, function(item) {
-          return item.$$isSelected;
-        });
+        return item.$$isSelected;
+      });
       // NOTE: send request for create new record
       sendRequest(newRecordsList)
-      .then(function(data){
-        // TODO: ? show a message with total info ( $scope.totalAddedRecords) ?
-      })
-      .catch(function(err){
-        // TODO: ? show error  message ?
-      })
-      .finally(function(){
-        $scope._loading = false;
-      });
+        .finally(function() {
+          $scope._loading = false;
+        });
     };
   }
 })();
