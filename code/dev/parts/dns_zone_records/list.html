@@ -52,7 +52,7 @@
     </div>
   </div>
   <div class="modal-footer">
-    <button ng-if="totalAddedRecords==0"class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+    <button ng-if="totalAddedRecords==0" class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
     <button ng-if="totalAddedRecords>0" class="btn btn-success" type="button" ng-click="ok(totalAddedRecords>0)">Close</button>
     <button ng-disabled="countSelectedItems()===0 || model._loading || _loading" ng-if="!!model.zone_records && model.zone_records.length!==0"
       class="btn btn-success" type="button" ng-click="onAddToTheDNSZone()">Add To The DNS Zone</button>
@@ -99,6 +99,9 @@
                   <a ui-sref="{{isReadOnly() ?'.': '.new'}}" ng-class="{'btn-disabled':isReadOnly()}" class="btn btn-success" ng-disabled="_loading || isReadOnly()">
                     <i class="glyphicon glyphicon-plus"></i>&nbsp; Add New Record
                   </a>
+                </div>
+                <div class="form-group hidden-xs">
+                  <div class="col-sm-12"></div>
                 </div>
                 <div class="form-group">
                   <button ng-click="onOpenAutoDiscoverZoneRecords(zone_name)" ng-class="{'btn-disabled':isReadOnly()}" class="btn btn-success"
