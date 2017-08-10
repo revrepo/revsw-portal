@@ -18,7 +18,9 @@
         'request': function(config) {
           // NOTE: delete header 'Authorization' with JWT for caching
           if (config.method === 'GET' && (config.url.indexOf(API_URL_V1) !== 0) &&
-            (config.url.indexOf(API_URL + '/subscriptions') === -1)) {
+            // NOTE: specific API url for Azure subscriptions and resourcies
+            (config.url.indexOf(API_URL + '/subscriptions') === -1) &&
+            (config.url.indexOf(API_URL + '/resources') === -1)) {
             delete config.headers.Authorization;
           }
           return config;
