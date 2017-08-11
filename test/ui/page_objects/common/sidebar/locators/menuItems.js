@@ -168,6 +168,10 @@ var MenuItems = {
       linkText: 'Security Settings',
       area: MenuAreas.ADMIN
     },
+    CDN_IP_BLOCKS: {
+      id: 'side-menu-sub-item__cdn-ip-bloks',
+      area: MenuAreas.ADMIN
+    },
     ACTIVITY_LOG: {
       linkText: 'Activity Log',
       area: MenuAreas.ADMIN

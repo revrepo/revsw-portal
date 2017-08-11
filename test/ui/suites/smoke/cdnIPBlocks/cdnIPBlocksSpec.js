@@ -26,47 +26,25 @@ var users = [
   config.get('portal.users.user')
 ];
 
-var expectedIpAddress = '192.168.4.53';
-
 describe('Smoke', function() {
-
   users.forEach(function(user) {
-
     describe('With user: ' + user.role, function() {
-      describe('Staging Env', function() {
+      describe('CDN IP Blocks', function() {
 
         beforeAll(function() {
           Portal.signIn(user);
-          Portal.helpers.nav.goToStagingEnvironment();
+          Portal.helpers.nav.goToCDNIPBlocks();
         });
 
         afterAll(function() {
           Portal.signOut();
         });
 
-        it('should display "Staging Env" page',
+        it('should display "CDN IP Blocks" page',
           function() {
-            var expectedTitle = 'Staging Environment';
-            var title = Portal.stagingEnv.page.getTitle();
+            var expectedTitle = 'CDN IP Blocks';
+            var title = Portal.cdnIPBlocks.page.getTitle();
             expect(title).toEqual(expectedTitle);
-          });
-
-        it('should display staging server ip address',
-          function() {
-            var ip = Portal.stagingEnv.page.getStagingServer();
-            expect(ip).toBe(expectedIpAddress);
-          });
-
-        it('should display staging server ip address in etc/hosts config',
-          function() {
-            var configString = Portal.stagingEnv.page.getConfigString();
-            expect(configString).toContain(expectedIpAddress);
-          });
-
-        it('should display staging server ip address in example string',
-          function() {
-            var exampleString = Portal.stagingEnv.page.getExampleString();
-            expect(exampleString).toContain(expectedIpAddress);
           });
       });
     });
