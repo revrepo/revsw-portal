@@ -1,0 +1,47 @@
+<div class="modal-header">
+  <h3 class="modal-title">Add Job Automatically Generate WAF Rules</h3>
+</div>
+<div class="modal-body row">
+  <div ng-form="addNewJob" class="col-md-12 form form-horizontal">
+    <div class="form-group">
+      <p class="col-sm-12 text">The feature allows you to automatically generate WAF rules learned from real end user traffic of a website. The process
+        is asynchronous and may take several hours to complete - you will receive an email notifying about its completion.</p>
+      <p class="col-sm-12 text">To use the feature please make sure that:</p>
+      <ul class="col-sm-12" style="margin-left: 2em;">
+        <li>The target website has the WAF functionality enabled in "Learning Mode"</li>
+        <li>The website is utilizing "WAF Core Rule" rule </li>
+        <li>The website was serving real end user traffic for several days (preferably a week)</li>
+      </ul>
+    </div>
+    <div class="form-group">
+      <label class="col-md-3 label-control">Domain *</label>
+      <div class="col-md-9">
+        <domain-select ng-model="model.domain" on-select="onDomainSelected()" is-reload="false"></domain-select>
+        <label class="text-info" popover-trigger="mouseenter" popover-append-to-body="false" uib-popover="Select a domain name you want to auto-generate new WAF rules for">
+        <i class="fa fa-question-circle"></i></label>
+      </div>
+
+    </div>
+    <div class="form-group">
+      <label class="col-md-3 label-control">Time period *</label>
+      <div class="col-md-9">
+        <div waf-rule-generation-job-time-period time-period="model.time_period" on-change="onTimePeriodChange()" class="filter-time-period inline-block"></div>
+        <label class="text-info" popover-trigger="mouseenter" popover-append-to-body="false" uib-popover="Time period">
+        <i class="fa fa-question-circle"></i></label>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-md-3 label-control">WAF Rule Name</label>
+      <div class="col-md-9">
+        <input type="text" class="form-control fixed inline-block" ng-model="model.rule_name" placeholder="" style="max-width: 300px;">
+        <label class="text-info" popover-trigger="mouseenter" popover-append-to-body="false" popover-placement="left" uib-popover="Specify here optional name to be assigned to the newly generated WAF rule. If not specified the system will define the name
+        for you based on the selected domain name and time range.">
+        <i class="fa fa-question-circle"></i></label>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+  <button class="btn btn-danger" type="button" ng-click="ok()" ng-disabled="!model.domain || _loading">Start Rule Generation Process</button>
+</div>

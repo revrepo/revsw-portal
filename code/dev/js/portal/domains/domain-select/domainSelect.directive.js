@@ -14,7 +14,8 @@
       scope: {
         selectOne: '=',
         ngModel: '=',
-        onSelect: '&'
+        onSelect: '&',
+        isReload: '=?' // NOTE: reload list of domains
       },
       /*@ngInject*/
       controller: function($scope) {
@@ -31,7 +32,7 @@
         };
 
         // Load user domains
-        User.getUserDomains(true)
+        User.getUserDomains(($scope.isReload === false)? false : true)
           .then(function(domains) {
             $scope.domains = domains;
             // Set default value if ngModel is empty
