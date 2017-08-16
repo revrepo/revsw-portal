@@ -1,5 +1,5 @@
 // TODO: NOT FINISHED
-(function () {
+(function() {
   'use strict';
 
   angular
@@ -42,8 +42,8 @@
     function setAccountName() {
       if ($scope.auth.isReseller() || $scope.auth.isRevadmin()) {
         // Loading list of companies
-        return Companies.query(function (list) {
-          _.forEach($scope.records, function (item) {
+        return Companies.query(function(list) {
+          _.forEach($scope.records, function(item) {
             var index = _.findIndex(list, {
               id: item.account_id
             });
@@ -58,7 +58,7 @@
     }
 
     // Fetch list of records
-    $scope.$on('$stateChangeSuccess', function (state) {
+    $scope.$on('$stateChangeSuccess', function(state) {
       var data = null;
       // NOTE: set filter params for specific state - @see All Account Resources Page
       if ($state.is('index.accountSettings.accountresources')) {
@@ -91,21 +91,21 @@
      * @param  {Boolean} isStay
      * @return {Promise}
      */
-    $scope.create = function (model, isStay) {
+    $scope.create = function(model, isStay) {
       if (!$scope.resource) {
         throw new Error('No resource provided.');
       }
       $scope.loading(true);
       var record = new $scope.resource(model);
       return record.$save()
-        .then(function (data) {
+        .then(function(data) {
           $rootScope.$broadcast('update:searchData');
           $scope.clearModel(model);
           if (isStay === true) {
             return $q.resolve(data); // Send data next to promise handlers
           } else {
             $state.go('.^'); // NOTE: go to up to list from new state
-            return $scope.initList().then(function () {
+            return $scope.initList().then(function() {
               // NOTE: set sort for see new record on top of list
               $scope.filter.predicate = 'updated_at';
               $scope.filter.reverse = true;
@@ -115,10 +115,10 @@
             }); // Update list
           }
         })
-        .catch(function (data) {
+        .catch(function(data) {
           return $q.reject(data);
         })
-        .finally(function () {
+        .finally(function() {
           $scope.loading(false);
         });
     };
@@ -127,7 +127,7 @@
      * @name initList
      * @description method init call data
      */
-    $scope.initList = function () {
+    $scope.initList = function() {
       var data = {
         filters: {
           rule_type: 'customer'
@@ -135,9 +135,9 @@
       };
       return $scope.list(data)
         .then(setAccountName)
-        .then(function () {
+        .then(function() {
           if ($scope.elementIndexForAnchorScroll) {
-            setTimeout(function () {
+            setTimeout(function() {
               $anchorScroll('anchor' + $scope.elementIndexForAnchorScroll);
               $scope.$digest();
             }, 500);
@@ -145,7 +145,7 @@
         });
     };
 
-    $scope.initNew = function () {
+    $scope.initNew = function() {
       if ($scope.auth.isRevadmin() !== true) {
         $scope.model.rule_type = 'customer';
         $scope.model.visibility = 'public';
@@ -175,14 +175,14 @@
       typeName: 'Hidden WAF Rule'
     }];
 
-    $scope.fetchCompanies = function (companyIds) {
+    $scope.fetchCompanies = function(companyIds) {
       var promises = [];
-      companyIds.forEach(function (id) {
+      companyIds.forEach(function(id) {
         promises.push(Companies.get({
           id: id
         }).$promise);
       });
-      $q.all(promises).then(function (data) {
+      $q.all(promises).then(function(data) {
         $scope.companies = data;
       });
     };
@@ -193,7 +193,7 @@
      * @param  {[type]} model_current [description]
      * @return {[type]}               [description]
      */
-    $scope.prepareWARRuleToUpdate = function (model_current) {
+    $scope.prepareWARRuleToUpdate = function(model_current) {
       var model;
       if (model_current.toJSON === undefined) {
         model = _.clone(model_current, true);
@@ -213,10 +213,10 @@
       return model;
     };
 
-    $scope.setAccountId = function () {
+    $scope.setAccountId = function() {
       if ($scope.auth.isReseller() || $scope.auth.isRevadmin()) {
         // Loading list of companies
-        Companies.query(function (list) {
+        Companies.query(function(list) {
           $scope.companies = list;
           if ($scope.companies.length === 1) {
             $scope.model.account_id = $scope.companies[0].id;
@@ -233,9 +233,9 @@
 
     $scope.setAccountId();
 
-    $scope.getWAFRule = function (id) {
+    $scope.getWAFRule = function(id) {
       $scope.get(id)
-        .then(function () {
+        .then(function() {
           // NOTE: auto set Dirty attribute for fields (validation exists data)
           var _fields = ['rule_name', 'rule_type'];
           angular.forEach(_fields, setDirty);
@@ -246,7 +246,7 @@
             }
           }
         })
-        .catch(function (err) {
+        .catch(function(err) {
           $scope.alertService.danger('Could not load WAF Rule details');
         });
     };
@@ -257,16 +257,16 @@
      * @param  {Object} model
      * @return
      */
-    $scope.deleteWAFRule = function (model) {
+    $scope.deleteWAFRule = function(model) {
       // NOTE: not delete if RO user
       if ($scope.isReadOnly() === true) {
         return false;
       }
-      $scope.confirm('confirmModal.html', model).then(function () {
+      $scope.confirm('confirmModal.html', model).then(function() {
         var ruleName = model.rule_name;
         $scope
           .delete(model)
-          .then(function (data) {
+          .then(function(data) {
             $scope.alertService.success(data);
             $scope.initList();
           })
@@ -282,7 +282,7 @@
      * @param  {Object} model
      * @return {Boolean} isStay
      */
-    $scope.createWAFRule = function (model, isStay) {
+    $scope.createWAFRule = function(model, isStay) {
       if ($scope._loading) {
         return false;
       }
@@ -290,7 +290,7 @@
       var createModel = $scope.prepareWARRuleToUpdate(model);
       $scope
         .create(createModel, isStay)
-        .then(function (data) {
+        .then(function(data) {
           $scope.alertService.success(data);
           $scope.setAccountId();
           if (isStay === true) {
@@ -308,7 +308,7 @@
      * @param  {[type]} model [description]
      * @return {[type]}       [description]
      */
-    $scope.publishWAFRule = function (model) {
+    $scope.publishWAFRule = function(model) {
       if (!model) {
         return;
       }
@@ -316,7 +316,7 @@
         model.id = $stateParams.id;
       }
       var modelId = model.id;
-      $scope.confirm('confirmPublishModal.html', model).then(function () {
+      $scope.confirm('confirmPublishModal.html', model).then(function() {
         model = $scope.prepareWARRuleToUpdate(model);
         $scope.update({
             id: modelId,
@@ -333,7 +333,7 @@
      * @param  {[type]} model [description]
      * @return {[type]}       [description]
      */
-    $scope.validateWAFRule = function (model) {
+    $scope.validateWAFRule = function(model) {
       if (!model) {
         return;
       }
@@ -356,7 +356,7 @@
      * @param  {[type]} model Data for update
      * @return {[type]}       [description]
      */
-    $scope.updateWAFRule = function (model) {
+    $scope.updateWAFRule = function(model) {
 
       if (!model) {
         return;
@@ -365,7 +365,7 @@
         model.id = $stateParams.id;
       }
       var modelId = model.id;
-      $scope.confirm('confirmUpdateModal.html', model).then(function () {
+      $scope.confirm('confirmUpdateModal.html', model).then(function() {
         model = $scope.prepareWARRuleToUpdate(model);
         $scope.update({
             id: modelId
@@ -380,7 +380,7 @@
      * @name disableSubmit
      * @description check model
      */
-    $scope.disableSubmit = function (model, isEdit) {
+    $scope.disableSubmit = function(model, isEdit) {
       if (!isEdit) {
         return $scope._loading ||
           !model.rule_name ||
@@ -395,7 +395,7 @@
       }
     };
 
-    $scope.getRelativeDate = function (datetime) {
+    $scope.getRelativeDate = function(datetime) {
       return moment.utc(datetime).fromNow();
     };
 
@@ -403,19 +403,19 @@
      * @name openViewDialogRule
      * @description method for display WAR Rule Body
      */
-    $scope.openViewDialogRule = function (e, item) {
+    $scope.openViewDialogRule = function(e, item) {
       if ($scope._loading) {
         return false;
       }
       $scope._loading = true;
       $scope.alertService.clear();
       $scope.get(item.id)
-        .then(function (data) {
+        .then(function(data) {
           $scope.model = data;
           $scope.confirm('parts/waf_rules/dialog/view-waf-rule.tpl.html', $scope.model);
         })
         .catch($scope.alertService.danger)
-        .finally(function () {
+        .finally(function() {
           $scope._loading = false;
         });
     };
@@ -423,18 +423,18 @@
      * @name onDuplicateWAFRule
      * @description method for create duplicate WAR Rule
      */
-    $scope.onDuplicateWAFRule = function (e, item) {
+    $scope.onDuplicateWAFRule = function(e, item) {
       if ($scope._loading || $scope.isReadOnly()) { // NOTE: not duplicate if RO user
         return false;
       }
       $scope._loading = true;
       $scope.alertService.clear();
       $scope.get(item.id)
-        .then(function (data) {
+        .then(function(data) {
           $scope.model = data;
           $scope.model.newRuleName = '';
           return $scope.confirm('confirmDuplicateModal.html', $scope.model)
-            .then(function (data) {
+            .then(function(data) {
               var newWafRule = {
                 account_id: $scope.model.account_id,
                 rule_name: $scope.model.newRuleName,
@@ -446,23 +446,95 @@
               var isStay = true;
               return $scope
                 .create(newWafRule, isStay)
-                .then(function (data) {
+                .then(function(data) {
                   // TODO: show custom message ???
                   $scope.alertService.success(data);
                   $scope.setAccountId();
                   $scope.initList();
                 })
                 .catch($scope.alertService.danger);
-            }, function (err) {
+            }, function(err) {
               if (err !== 'cancel') {
                 return err;
               }
             });
         })
         .catch($scope.alertService.danger)
-        .finally(function () {
+        .finally(function() {
           $scope._loading = false;
         });
+    };
+    /**
+     * @name onClickRefresh
+     * @description
+     *   Refresh data in tables in both tabs
+     * @return
+     */
+    $scope.onClickRefresh = function() {
+      $scope._loading = true;
+      $scope.$broadcast('wafrulelist:refresh:list');
+      $scope.initList()
+        .finally(function() {
+          $scope._loading = false;
+        });
+    };
+
+    /**
+     * @name onCreateWhiteListingWAFRules
+     * @description method activate auto-generation of WAF while lists
+     */
+    $scope.onCreateWhiteListingWAFRules = function() {
+
+      $scope.modelJob = {};
+      $scope.openWindowAddWAFAutoGeneratedRules('parts/waf_rules/dialog/modal-waf-rule-auto-generate-job.tpl.html', $scope.modelJob)
+        .then(function(data) {
+          if (data === true) {
+            $scope._loading = true;
+            var newJobData = {
+              domain_id: $scope.modelJob.domain.id,
+              account_id: $scope.modelJob.domain.account_id,
+              rule_name: $scope.modelJob.rule_name,
+              time_period: $scope.modelJob.time_period
+            };
+
+            WAF_Rules.addAutoGeneratedJob(newJobData).$promise
+              .then(function(data) {
+                // NOTE: success add Job
+                return $scope.confirm('parts/waf_rules/dialog/modal-waf-rule-auto-generate-job-added.tpl.html', {
+                  domain_name: $scope.modelJob.domain.domain_name,
+                  time_period: newJobData.time_period
+                });
+              })
+              .catch($scope.alertService.danger)
+              .finally(function() {
+                $scope._loading = false;
+              });
+          }
+        });
+    };
+    /**
+     * @name openWindowAddWAFAutoGeneratedRules
+     *
+     */
+    $scope.openWindowAddWAFAutoGeneratedRules = function(template, resolve) {
+      if (angular.isObject(template)) {
+        resolve = template;
+        template = '';
+      }
+      if (angular.isObject(resolve)) {
+        resolve = {
+          model: resolve
+        };
+      }
+      var modalInstance = $uibModal.open({
+        animation: false,
+        templateUrl: 'parts/waf_rules/dialog/modal-waf-rule-auto-generate-job.tpl.html',
+        // NOTE: use specific controller for additional actions
+        controller: 'wafRulesAutoGenerateRulesModalController',
+        size: 'md',
+        resolve: resolve || {}
+      });
+      return modalInstance.result;
     };
   }
 })();
