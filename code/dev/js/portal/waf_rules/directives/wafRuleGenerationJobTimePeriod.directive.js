@@ -172,5 +172,9 @@
       scope.datePicker.overlay.show = true;
       scope.updateTimePeriod();
     }
+    // NOTE: check and set default value
+    if(!scope.timePeriod || $cope.timePeriod.lenth < 10) {
+      scope.updateTimePeriod();
+    }
   }
 })();
