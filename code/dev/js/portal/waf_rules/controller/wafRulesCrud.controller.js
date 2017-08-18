@@ -31,7 +31,7 @@
 
     $scope.setResource(WAF_Rules);
 
-    $scope.NO_SPECIAL_CHARS = $config.PATTERNS.NO_SPECIAL_CHARS;
+    $scope.WAF_RULE_NAME = $config.PATTERNS.WAF_RULE_NAME;
     $scope.COMMENT_NO_SPECIAL_CHARS = $config.PATTERNS.COMMENT_NO_SPECIAL_CHARS;
 
     /**
