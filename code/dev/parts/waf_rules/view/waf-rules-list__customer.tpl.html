@@ -13,7 +13,7 @@
     <table class="table">
       <thead>
         <tr>
-          <th>
+          <th class="waf-rule-name">
             <a href="" ng-click="order('rule_name')">Rule Name</a>
             <span class="sortorder" ng-show="filter.predicate === 'rule_name'" ng-class="{reverse: filter.reverse}"></span>
           </th>
@@ -37,7 +37,7 @@
       </thead>
       <tbody>
         <tr id="anchor{{::$index}}" ng-click="saveAnchorScrollIndex($index)" ng-repeat="item in filteredRecords | limitTo:filter.limit:filter.skip track by $index">
-          <td> <a href="" ui-sref="{{isReadOnly() ? '.':'.edit({id: item.id})'}}" ng-class="{'disabled':isReadOnly()}" ng-if="!item.loading"
+          <td class="waf-rule-name"> <a href="" ui-sref="{{isReadOnly() ? '.':'.edit({id: item.id})'}}" ng-class="{'disabled':isReadOnly()}" ng-if="!item.loading"
               uib-tooltip="{{isReadOnly() ?'View WAF Rule':'Edit WAF Rule'}}">
              {{item.rule_name}}</a>
           </td>
