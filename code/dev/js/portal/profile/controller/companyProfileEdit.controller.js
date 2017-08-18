@@ -24,6 +24,11 @@
     $scope.countries = Countries.query();
     $scope.zipRegex = '[0-9]{1,10}';
     $scope.phoneRegex = '[0-9, \\s, \\+, \\-, \\(, \\)]{1,20}';
+
+    $scope.COMPANY_NAME = $config.PATTERNS.COMPANY_NAME;
+    $scope.USER_FIRST_NAME = $config.PATTERNS.USER_FIRST_NAME;
+    $scope.USER_LAST_NAME = $config.PATTERNS.USER_LAST_NAME;
+    $scope.STREET_ADDRES = $config.PATTERNS.STREET_ADDRES;
     $scope.NO_SPECIAL_CHARS = $config.PATTERNS.NO_SPECIAL_CHARS;
     $scope.COMMENT_NO_SPECIAL_CHARS = $config.PATTERNS.COMMENT_NO_SPECIAL_CHARS;
 

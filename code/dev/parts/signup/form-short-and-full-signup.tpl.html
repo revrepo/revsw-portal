@@ -31,7 +31,7 @@
         <div class="form-group" ng-class="{ 'has-error': newUser.firstName.$invalid && newUser.firstName.$dirty }">
           <label for="firstName" class="control-label" popover-trigger="mouseenter" uib-popover="First name">First Name *</label>
           <input type="text" class="form-control" id="firstName" name="firstName" placeholder="First name (30 characters max)" required
-            ng-maxlength="30" ng-model="$ctrl.model.first_name" ng-pattern="NO_SPECIAL_CHARS" ng-disabled="$ctrl._loading">
+            ng-maxlength="30" ng-model="$ctrl.model.first_name" ng-pattern="USER_FIRST_NAME" ng-disabled="$ctrl._loading">
           <div class="error-messages" ng-messages="newUser.firstName.$error" role="alert" ng-messages-multiple>
             <div ng-messages-include="parts/shared/error-messages.html"></div>
           </div>
@@ -39,7 +39,7 @@
         <div class="form-group" ng-class="{ 'has-error': newUser.lastName.$invalid && newUser.lastName.$dirty }">
           <label for="lastName" class="control-label" popover-trigger="mouseenter" uib-popover="Last name">Last Name *</label>
           <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Last Name (30 characters max)" ng-model="$ctrl.model.last_name"
-            required ng-maxlength="30" ng-pattern="NO_SPECIAL_CHARS" ng-disabled="$ctrl._loading">
+            required ng-maxlength="30" ng-pattern="USER_LAST_NAME" ng-disabled="$ctrl._loading">
           <div class="error-messages" ng-messages="newUser.lastName.$error" role="alert" ng-messages-multiple>
             <div ng-messages-include="parts/shared/error-messages.html"></div>
           </div>
@@ -152,7 +152,7 @@
               <label for="firstName" class="col-sm-3 control-label">First Name *</label>
               <div class="col-sm-9">
                 <input type="text" class="form-control inline-block" id="firstName" name="firstName" placeholder="First Name" required ng-maxlength="150"
-                  ng-model="$ctrl.model.first_name" ng-disabled="$ctrl._loading">
+                  ng-model="$ctrl.model.first_name" ng-disabled="$ctrl._loading" ng-pattern="USER_FIRST_NAME">
                 <label for="firstName" class="text-info" popover-trigger="mouseenter" uib-popover="First name">
               <i class="fa fa-question-circle"></i>
           </label>
@@ -164,7 +164,7 @@
               <label for="lastName" class="col-sm-3 control-label">Last Name *</label>
               <div class="col-sm-9">
                 <input type="text" class="form-control inline-block" id="lastName" name="lastName" placeholder="Last Name" ng-model="$ctrl.model.last_name"
-                  required ng-maxlength="150" ng-disabled="$ctrl._loading">
+                  required ng-maxlength="150" ng-disabled="$ctrl._loading" ng-pattern="USER_LAST_NAME">
                 <label for="lastName" class="text-info" popover-trigger="mouseenter" uib-popover="Last name">
                 <i class="fa fa-question-circle"></i>
                 </label>

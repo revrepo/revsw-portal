@@ -30,7 +30,9 @@
 
     this.isRegistryFinish = false;
     $scope.NO_SPECIAL_CHARS = $config.PATTERNS.NO_SPECIAL_CHARS;
-    $scope.CONTACT_DATA = $config.PATTERNS.CONTACT_DATA;
+    $scope.USER_FIRST_NAME = $config.PATTERNS.USER_FIRST_NAME;
+    $scope.USER_LAST_NAME = $config.PATTERNS.USER_LAST_NAME;
+    $scope.STREET_ADDRES = $config.PATTERNS.STREET_ADDRES;
     $scope.currentPB = $localStorage.selectedBP;
     $ctrl.countries = [];
     // NOTE: Countries is used only on form  /vs2017-promo
