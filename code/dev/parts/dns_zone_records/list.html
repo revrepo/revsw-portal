@@ -133,9 +133,9 @@ so you will need to manually review the proposed DNS zone content and approve it
           <div class="alert alert-warning" ng-if="records == null && !_loading">
             Failed to retrieve a list of resources - please try again later
           </div>
-          <div class="alert alert-info" ng-if="_loading">
+          <!-- <div class="alert alert-info" ng-if="_loading">
             <i class="glyphicon glyphicon-refresh spin" ng-if="record.loading"></i>&nbsp; Loading...
-          </div>
+          </div> -->
           <crud-pagination></crud-pagination>
           <table class="table">
             <thead>
