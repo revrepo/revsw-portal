@@ -171,7 +171,7 @@
             <div class="form-group" ng-class="{'has-error': editForm.address1.$invalid && editForm.address1.$dirty }">
               <label for="address1" class="col-sm-2 control-label">Address *</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control inline-block" required id="address1" name="address1" placeholder="Address 1" ng-maxlength="150" ng-model="model.address1" ng-pattern="STREET_ADDRES" ng-disabled="_loading">
+                <input type="text" class="form-control inline-block" required id="address1" name="address1" placeholder="Address 1" ng-maxlength="150" ng-model="model.address1" ng-pattern="STREET_ADDRESS" ng-disabled="_loading">
                 <label for="address1" class="text text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Contact street address (150 characters max)">
                   <i class="fa fa-question-circle"></i>
                 </label>
@@ -183,7 +183,7 @@
             <div class="form-group" ng-class="{ 'has-error': editForm.address2.$invalid && editForm.address2.$dirty }">
               <label for="address2" class="col-sm-2 control-label">Address (Line 2) &nbsp;</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control inline-block" id="address2" name="address2" placeholder="Address (Line 2)" ng-maxlength="150" ng-model="model.address2" ng-pattern="STREET_ADDRES" ng-disabled="_loading">
+                <input type="text" class="form-control inline-block" id="address2" name="address2" placeholder="Address (Line 2)" ng-maxlength="150" ng-model="model.address2" ng-pattern="STREET_ADDRESS" ng-disabled="_loading">
                 <label for="address2" class="text text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Optional second line of street address (150 characters max)">
                   <i class="fa fa-question-circle"></i>
                 </label>
