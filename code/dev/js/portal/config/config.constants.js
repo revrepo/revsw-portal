@@ -184,9 +184,9 @@
         QUERY_STRINGS_OPTION: /^[A-Za-z0-9.' -]+$/,
         CONTACT_DATA: /^[A-Za-z\u00C0-\u00ff\/-]+$/,
         COMPANY_NAME: /^[A-z\u00C0-\u00ff""\w\d\s-'.,&#:()]+$/,
-        USER_FIRST_NAME: /^[A-z\u00C0-\u00ff""\w\d\s-'.()#]+$/,
-        USER_LAST_NAME: /^[A-z\u00C0-\u00ff""\w\d\s-'.()#]+$/,
-        STREET_ADDRES: /^[A-z\u00C0-\u00ff""\w\d\s-'.,&#:()]+$/,
+        USER_FIRST_NAME: /^[A-z\u00C0-\u00ff""\w\d\s-'.,()#]+$/,
+        USER_LAST_NAME: /^[A-z\u00C0-\u00ff""\w\d\s-'.,()#]+$/,
+        STREET_ADDRESS: /^[A-z\u00C0-\u00ff""\w\d\s-'.,&#:()]+$/,
         WAF_LOCATION_NAME: /^\/{1}(([A-Za-z0-9\-\_]+)(\/?){1})*$/,
         CIDR:/^([0-9]{1,3}\.){3}[0-9]{1,3}\/{1}(([1-9]|[1-2][0-9]|3[0-2])){1}?$/,
         WAF_RULE_NAME: /^[A-Za-z0-9//_.:', -]+$/
