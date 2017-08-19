@@ -82,7 +82,7 @@
             chart.addSeries(val);
           });
         }
-      });
+      }, true);
       // NOTE: new Highcharts object must be destroyed
       $scope.$on('$destroy', function () {
          chart.destroy();
