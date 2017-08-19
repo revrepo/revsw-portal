@@ -21,12 +21,13 @@
         },
 
         title: false,
-        tooltip: {
-          formatter: function() {
-            return '<b>'+ this.point.name +': </b>'+
-              Highcharts.numberFormat(this.point.percentage, 0) + '% (' + Highcharts.numberFormat(this.y, 0, '.', ',') + ' requests)';
-          }
-        },
+        tooltip: false,
+        //{
+        //   formatter: function() {
+        //     return '<b>'+ this.point.name +': </b>'+
+        //       Highcharts.numberFormat(this.point.percentage, 0) + '% (' + Highcharts.numberFormat(this.y, 0, '.', ',') + ' requests)';
+        //   }
+        // },
 
         plotOptions: {
           bar: {
@@ -48,19 +49,39 @@
           enabled: false
         },
 
-        series: [{
-          data: []
-        }]
+        series: []
       };
-
+      var colors = Highcharts.getOptions().colors;
+      var colorsNum = colors.length;
       var chart = new Highcharts.Chart( angular.merge(chartOpts, ($scope.ngChartOptions || {})));
 
       $scope.$watch('ngData', function (value) {
-        if (!value || !_.isArray(value)) {
+        if(!value || !_.isObject(value)) {
           return;
         }
-        // Set new data
-        chart.series[0].setData(value);
+        // Update series
+        if(_.isArray(value.series)) {
+
+          //  clear series
+          var i = chart.series.length;
+          while(i--) {
+            chart.series[i].remove();
+          }
+
+          //  Set new data (add new or reset exists)
+          value.series.forEach(function(val, key) {
+            if(!!value.pointStart) {
+              val.pointStart = value.pointStart;
+            }
+            if(!!value.pointInterval) {
+              val.pointInterval = value.pointInterval;
+            }
+            if(!val.color) {
+              val.color = colors[key % colorsNum];
+            }
+            chart.addSeries(val);
+          });
+        }
       });
       // NOTE: new Highcharts object must be destroyed
       $scope.$on('$destroy', function () {
