@@ -41,7 +41,7 @@
                      ng-maxlength="150"
                      placeholder="Domain Name"
                      required>
-                <label class=text-info" popover-trigger="mouseenter"  popover-append-to-body="true" uib-popover="Enter here a website/API domain name to be served. Duplicate domain names are not allowed. If the system will complain about a duplicate domain name but you are the rightful domain owner please contact the Customer Support service." >
+                <label class=text-info" popover-trigger="mouseenter"  popover-append-to-body="true" uib-popover="Enter here a website/API domain name to be served. Duplicate domain names are not allowed. If the system complains about a duplicate domain name and you are the rightful domain owner, please contact the Customer Support service." >
                   <i class="fa fa-question-circle"></i>
                 </label>
               <div class="error-messages" ng-messages="createForm.domain_name.$error" role="alert" ng-messages-multiple>
@@ -59,7 +59,7 @@
                   <div ng-bind-html="item.companyName|highlight: $select.search"></div>
                 </ui-select-choices>
               </ui-select>
-              <label for="account_id"  class="text-info" popover-trigger="mouseenter"  popover-append-to-body="true" uib-popover="Select company name the domain should be associated with" >
+              <label for="account_id"  class="text-info" popover-trigger="mouseenter"  popover-append-to-body="true" uib-popover="Select a company name that the domain should be associated with" >
                 <i class="fa fa-question-circle"></i>
               </label>
               <div class="error-messages" ng-messages="createForm.accountId.$error" role="alert" ng-messages-multiple>
@@ -80,7 +80,7 @@
                      ng-maxlength="150"
                      placeholder="Origin Server name"
                      required>
-              <label class=text-info" popover-trigger="mouseenter"  popover-append-to-body="true" uib-popover="Enter here domain name or IP address of origin web server">
+              <label class=text-info" popover-trigger="mouseenter"  popover-append-to-body="true" uib-popover="Enter here a domain name or IP address of the origin web server">
                 <i class="fa fa-question-circle"></i>
               </label>
               <div class="error-messages" ng-messages="createForm.origin_server.$error" role="alert" ng-messages-multiple>
@@ -101,9 +101,9 @@
                      validate-domain-name
                      placeholder="Origin Host Header"
                      required>
-              <label class=text-info" popover-trigger="mouseenter"  popover-append-to-body="true" uib-popover="Enter here a domain name to be used in 'Host' header of requests sent from the CDN to
- the origin server. The name might be different from origin server name/IP specified above. For example, if origin server IP is 11.11.11.11 and the origin HTTP server recognizes web requests for domain 'www.example.com' you will need to
-specify '11.11.11.11' in origin server name field above and 'www.example.com' in this field.">
+              <label class=text-info" popover-trigger="mouseenter"  popover-append-to-body="true" uib-popover="Enter here a domain name to be used in the 'Host' header of requests sent from the CDN to
+ the origin server. The name might be different from the origin server name/IP specified above. For example, if the origin server IP is 11.11.11.11 and the origin HTTP server recognizes web requests for domain 'www.example.com', you will need to
+specify '11.11.11.11' in the origin server name field above and 'www.example.com' in this field.">
                 <i class="fa fa-question-circle"></i>
               </label>
               <div class="error-messages" ng-messages="createForm.origin_host_header.$error" role="alert" ng-messages-multiple>
