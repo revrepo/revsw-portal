@@ -1,1079 +1,1079 @@
 <div id="content">
-<ng:include src="'partials/navbar.html'"></ng:include>
-<div class="container-fluid">
-<div class="row-fluid">
+    <ng:include src="'partials/navbar.html'"></ng:include>
+    <div class="container-fluid">
+        <div class="row-fluid">
 
 
-<div class="span3">
+            <div class="span3">
 
-  <ng:include src="'partials/search.html'"></ng:include>
+                <ng:include src="'partials/search.html'"></ng:include>
 
-  <div class="hero-unit statbadge">
-    <h1 ng-show="!spin.qps">{{ qps.qps | shortnum:1 }}</h1>
-    <span ng-show="spin.qps"><i class="icon-spin icon-spinner"></i></span>
-    <p>Queries/sec for this record</p>
-  </div>
+                <div class="hero-unit statbadge">
+                    <h1 ng-show="!spin.qps">{{ qps.qps | shortnum:1 }}</h1>
+                    <span ng-show="spin.qps"><i class="icon-spin icon-spinner"></i></span>
+                    <p>Queries/sec for this record</p>
+                </div>
 
-  <div class="well" ng-show="!spin.record && networks && record.networks !== undefined && (networks.length > 1 || networks[0].network_id != 0)">
-    <h4>Networks
-    <span class="infosign">
-      <a data-toggle="tooltip" title="Your record is served by these DNS networks.  You may not make network changes to records.  Instead, adjust the networks of the zone.">
-        <i class="icon-info-sign"></i>
-      </a>
-    </span>
-    </h4>
-    <p>
-      <span ng-show="record.networks.length == 0">
-        <i>This record is not currently available on any network.  Edit the <a href="#/zones/{{urlzone}}">zone</a> to change network settings.</i>
-      </span>
-      <span ng-repeat="network in record.networks">
-        <span class="label label-info"><i class="icon-code-fork"></i> {{networks_by_id[network].name}}</span><br/>
-      </span>
-    </p>
-  </div>
+                <div class="well" ng-show="!spin.record && networks && record.networks !== undefined && (networks.length > 1 || networks[0].network_id != 0)">
+                    <h4>Networks
+                        <span class="infosign">
+                            <a data-toggle="tooltip" title="Your record is served by these DNS networks.  You may not make network changes to records.  Instead, adjust the networks of the zone.">
+                                <i class="icon-info-sign"></i>
+                            </a>
+                        </span>
+                    </h4>
+                    <p>
+                        <span ng-show="record.networks.length == 0">
+                            <i>This record is not currently available on any network.  Edit the <a href="#/zones/{{urlzone}}">zone</a> to change network settings.</i>
+                        </span>
+                        <span ng-repeat="network in record.networks">
+                            <span class="label label-info"><i class="icon-code-fork"></i> {{networks_by_id[network].name}}</span><br/>
+                        </span>
+                    </p>
+                </div>
 
-  <div ng-show="hasperm('dns', 'manage_zones')">
-    <button class="btn btn-primary btn-large btn-block leftbar" ng-click="show_clonerec()">
-      <i class="icon-copy"></i> Clone This Record
-    </button>
-    <button class="btn btn-large btn-block leftbar" ng-click="confirm_delrec()">
-      <i class="icon-remove-sign"></i> Delete This Record
-    </button>
-  </div>
+                <div ng-show="hasperm('dns', 'manage_zones')">
+                    <button class="btn btn-primary btn-large btn-block leftbar" ng-click="show_clonerec()">
+                        <i class="icon-copy"></i> Clone This Record
+                    </button>
+                    <button class="btn btn-large btn-block leftbar" ng-click="confirm_delrec()">
+                        <i class="icon-remove-sign"></i> Delete This Record
+                    </button>
+                </div>
 
-  <div class="well">
-    <h4>Record configuration</h4>
-    <p>This is where the magic happens.</p>
-    <p>You can set metadata fields and values and configure data feeds
-      at the record-wide level, region level, and answer level. Data
-      feeds update metadata of the record, region, or answer for which
-      they're configured.</p>
-    <p>You can add multiple answers to your record, and if you want,
-      assign each to a region. All your answers are passed through the
-      filter chain and subjected to any filters you've configured to
-      select a final set of answers for a query.</p>
-  </div>
+                <div class="well">
+                    <h4>Record configuration</h4>
+                    <p>This is where the magic happens.</p>
+                    <p>You can set metadata fields and values and configure data feeds
+                        at the record-wide level, region level, and answer level. Data
+                        feeds update metadata of the record, region, or answer for which
+                        they're configured.</p>
+                    <p>You can add multiple answers to your record, and if you want,
+                        assign each to a region. All your answers are passed through the
+                        filter chain and subjected to any filters you've configured to
+                        select a final set of answers for a query.</p>
+                </div>
 
-</div>
-
-<div class="span9">
-
-  <ul class="breadcrumb">
-    <li><a href="#/zones">Zones</a> <span class="divider">/</span></li>
-    <li><a href="#/zones/{{urlzone}}">{{zone}}</a> <span class="divider">/</span></li>
-    <li class="active">{{domain}} <span class="badge">{{ type }}</span></li>
-  </ul>
-
-  <ng:include src="'partials/alerts.html'"></ng:include>
-  <div class="alert" ng-show="noperm('dns', 'manage_zones')">
-    You do not have permission to make changes to this record.  You will only be able to view the current settings.  Any changes you make will be lost.  Contact your account administrator to change your access restrictions.
-  </div>
-
-  <div class="module" ng-show="spin.record || record_failure">
-    <div class="module-header">
-      <h3>{{ domain }} <span class="badge">{{ type }}</span></h3>
-    </div>
-    <div class="module-content padding">
-      <div class="emptytable" ng-show="spin.record">
-	<i class="icon-spin icon-spinner"></i>
-      </div>
-      <div class="emptytable" ng-show="record_failure">
-	<p><i class="icon-warning-sign"></i> Unable to get record
-	details, please try again shortly.</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="module" id="config" ng-show="record">
-    <div class="module-header">
-	<div class="pull-right" ng-show="hasperm('dns', 'manage_zones')">
-      <button class="btn btn-primary btn-mini" ng-disabled="recupdateform.$invalid || unchanged(record)" ng-click="saverec(record)"><i class="icon-save"></i> Save Changes</button>
-          <label ng-show="reverse_permitted(record.type)"><input type="checkbox" class="input-top" ng-model="make_revrec"/> PTR record <a data-toggle="tooltip" title="If possible, when saving record also create the associated reverse PTR record.">
-		<i class="icon-info-sign"></i>
-            </a>
-        </label>
-      </div>
-      <span class="h3 pull-right"  tooltipper ng-show="recwarning()" rel="tooltip" data-toggle="tooltip" data-placement="left" title="Please note: According to RFC, a CNAME record should not return multiple answers. Doing so may cause problems during resolution. If you want to use multiple answers, you should ensure you have the correct filters in place (such as SELECT_FIRST_N 1) to limit them to a single answer at resolution time.">
-				<i class="icon-exclamation-sign icon-2x text-warning"></i>&nbsp;&nbsp;
-			</span>
-      <h3>{{ domain }}
-        <span class="badge">{{ type }}</span>
-        <span ng-show="record.tier == 1" class="badge badge-1">STATIC</span>
-        <span ng-show="record.tier == 2" class="badge badge-2">DYNAMIC</span>
-        <span ng-show="record.tier == 3" class="badge badge-3">INTELLIGENT</span>
-        <span ng-show="record.link != null" class="badge badge-L">LINK</span>
-      </h3>
-    </div>
-
-    <div class="module-content padding">
-
-      <div class="form-horizontal">
-	<div class="control-group" ng-show="record.link==null">
-          <label class="control-label">TTL (seconds)
-	    <span class="infosign">
-              <a data-toggle="tooltip" title="Optional; if not set, the default TTL for the {{zone}} zone will be used.">
-		<i class="icon-info-sign"></i>
-	      </a>
-	    </span>
-          </label>
-          <div class="controls">
-            <input type="number" min="0" max="2147483647" class="input-xlarge" placeholder="20" ng-model="record.ttl">
-          </div>
-        </div>
-	<div class="control-group">
-          <label class="control-label">Use Client Subnet
-	    <span class="infosign">
-              <a data-toggle="tooltip" title="If enabled, edns-client-subnet data will be used with compatible filters. edns-client-subnet results in more accurate routing, but increased query counts, so disabling this option will reduce queries at the cost of accuracy">
-		<i class="icon-info-sign"></i>
-	      </a>
-	    </span>
-          </label>
-          <div class="controls">
-            <input type="checkbox" ng-model="record.use_client_subnet">
-          </div>
-        </div>
-    <div class="control-group" ng-show="record.link!=null">
-          <label class="control-label">Link Target
-        <span class="infosign">
-              <a data-toggle="tooltip" title="The FQDN of the record (in NS1 platform) holding the configuration this link should use.">
-        <i class="icon-info-sign"></i>
-          </a>
-        </span>
-          </label>
-          <div class="controls">
-            <input type="text" class="input-xlarge" placeholder="target.example.com" ng-model="record.link">
-          </div>
-        </div>
-      </div>
-
-      <hr ng-show="record.link==null">
-
-      <div class="container-fluid metafeeds" ng-show="record.link==null">
-
-        <div class="span6">
-          <h4>Record Metadata</h4>
-          <table class="table table-striped table-condensed">
-            <tbody>
-	      <tr ng-repeat="(key,value) in record.meta">
-                <td ng-show="allmeta[key]">
-		  <div class="pull-left pcontrols clickable-nohover">
-                    <a ng-click="show_editmeta(record, key, value, feedmap)"><i class="icon-pencil"></i></a>
-                    <a ng-click="delmeta(record, key)"><i class="icon-remove-sign"></i></a>
-		  </div>
-		  {{ allmeta[key].shortdesc }}
-		</td>
-                <td ng-show="!allmeta[key]">
-                  <div class="pull-left pcontrols clickable-nohover">&nbsp;</div>
-                  <span ng-show="key=='pulse'||key=='pulsar'">Pulsar job</span>
-                  <span ng-show="key!='pulse'&&key!='pulsar'">{{key}}</span>
-                </td>
-                <td><span ng-bind-html="value | unwrap_feedptr:key:feedmap:sourcemap:pulsar_jobs"></span></td>
-	      </tr>
-	      <tr>
-                <td colspan="2" ng-click="show_addmeta(record)" class="addnew pcontrols clickable-nohover">
-                  <i class="icon-plus-sign"></i> Add Field
-		</td>
-	      </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="span6" ng-show="!record.feed_ptrs.exist">
-          <h4>Record-wide Data Feeds
-	    <span class="infosign">
-              <a data-toggle="tooltip" title="Occasionally useful for certain filters &mdash; these feeds will update the record-wide metadata table">
-		<i class="icon-info-sign"></i>
-	      </a>
-	    </span>
-          </h4>
-          <table class="table table-striped table-condensed">
-            <tbody>
-	      <tr ng-repeat="feed in record.feeds">
-                <td>
-		  <div class="pull-right pcontrols clickable-nohover">
-                    <a ng-click="confirm_delfeed(feed, record.feeds, $index)"><i class="icon-remove-sign"></i></a>
-		  </div>
-                  <b>{{feedmap[feed.feed].name}}</b> via
-                  <img ng-src="/img/datasources/icon/{{sourcemap[feed.source].sourcetype}}.png" alt="{{sourcemap[feed.source].sourcetype}}" width="16" height="16"/>
-                  <b>{{sourcemap[feed.source].name}}</b>
-		</td>
-              </tr>
-	      <tr>
-                <td ng-click="show_addfeed(record)" class="addnew pcontrols clickable-nohover">
-                  <i class="icon-plus-sign"></i> Connect Feed
-		</td>
-	      </tr>
-            </tbody>
-          </table>
-        </div>
-
-      </div>
-    </div>
-  </div>
-
-  <div class="module" id="filterchain" ng-show="record&&record.link==null">
-    <div class="module-header">
-      <h3>Filter Chain</h3>
-    </div>
-
-    <div class="module-content">
-
-      <div ng-repeat="filter in record.filters">
-	<div class="container-fluid filter">
-	  <div class="span4">
-	    <span ng-show="filter.model.tier == 1">
-	      <h3 class="filtername-1">{{filter.filter | uppercase}}</h3>
-	    </span>
-	    <span ng-show="filter.model.tier == 2">
-	      <h3 class="filtername-2">{{filter.filter | uppercase}}</h3>
-	    </span>
-	    <span ng-show="filter.model.tier == 3">
-	      <h3 class="filtername-3">{{filter.filter | uppercase}}</h3>
-	    </span>
-	    <p>
-	      <span ng-show="filter.disabled">
-		<span class="label clickable-nohover" ng-click="filter.disabled=false;">DISABLED</span>
-		<span class="infosign-close">
-		  <a data-toggle="tooltip" title="Click to enable">
-		    <i class="icon-info-sign"></i>
-		  </a>
-		</span>
-	      </span>
-	      <span ng-show="!filter.disabled">
-		<span class="label label-success clickable-nohover" ng-click="filter.disabled=true;">ENABLED</span>
-		<span class="infosign-close">
-		  <a data-toggle="tooltip" title="Click to disable">
-		    <i class="icon-info-sign"></i>
-		  </a>
-		</span>
-	      </span>
-	    </p>
-	  </div>
-	  <div class="span7">
-	    <p>
-	      <span ng-bind-html="filter.model.desc"></span>
-	      <span ng-show="filter.model.config == null">
-		<i>No configuration is needed for this filter.</i>
-	      </span>
-	    </p>
-	    <form novalidate class="form-horizontal" ng-show="filter.model.config != null">
-	      <div ng-repeat="(opt, optcfg) in filter.model.config" class="control-group">
-		<label class="control-label">{{optcfg.shortdesc}}
-		  <span ng-show="optcfg.required">*</span>
-		  <span ng-show="optcfg.desc" class="infosign">
-		    <a data-toggle="tooltip" title="{{optcfg.desc}}">
-		      <i class="icon-info-sign"></i>
-		    </a>
-		  </span>
-		</label>
-		<div class="controls">
-		  <input ng-show="opt!='metric'||filter.filter!='shed_load'" type="{{optcfg.type}}" ng-required="optcfg.required" class="input-xlarge" ng-model="filter.config[opt]" null-if-empty>
-		  <span ng-show="opt=='metric'&&filter.filter=='shed_load'">
-		    <select class="input-xlarge" ng-model="filter.config[opt]" ng-required="optfcg.required">
-		      <option value="loadavg">Load average</option>
-		      <option value="connections">Active connections</option>
-		      <option value="requests">Active requests</option>
-		    </select>
-		  </span>
-		</div>
-	      </div>
-	    </form>
-	  </div>
-	  <div class="span1 pull-right">
-	    <div class="pull-right pcontrols">
-	      <a ng-click="confirm_delfilter($index)">
-		<i class="icon-remove-sign clickable-nohover"></i>
-	      </a>
-	      <span ng-show="!filter.first">
-		<br/>
-		<a ng-click="filterup($index)">
-		  <i class="icon-circle-arrow-up clickable-nohover"></i>
-		</a>
-	      </span>
-	      <span ng-show="!filter.last">
-		<br/>
-		<a ng-click="filterdown($index)">
-		  <i class="icon-circle-arrow-down clickable-nohover"></i>
-		</a>
-	      </span>
-	    </div>
-	  </div>
-	</div>
-	<hr>
-      </div>
-
-      <div ng-click="show_addfilter()" class="container-fluid addnew pcontrols clickable-nohover">
-        <i class="icon-plus-sign"></i> Add Filter
-      </div>
-
-    </div>
-  </div>
-
-  <div class="module" id="answers" ng-show="record&&record.link==null">
-    <div class="module-header">
-      <h3 style="display: inline-block;">Answers&nbsp;</h3>
-    	<span class="h3" tooltipper ng-show="recwarning()" data-toggle="tooltip" title="Please note: According to RFC, a CNAME record should not return multiple answers. Doing so may cause problems during resolution. If you want to use multiple answers, you should ensure you have the correct filters in place (such as SELECT_FIRST_N 1) to limit them to a single answer at resolution time.">
-				<i class="icon-exclamation-sign icon-2x text-warning"></i>
-			</span>
-    </div>
-
-    <div class="module-content">
-      <div ng-repeat="answer in record.answers">
-				<div class="answer">
-				  <div class="pull-right pcontrols clickable-nohover">
-				    <a ng-click="confirm_delanswer($index)">
-				      <i class="icon-remove-sign"></i>
-				    </a>
-				  </div>
-				  <h3>{{answer.answer | mergearray}}</h3>
-				  <div class="container-fluid">
-					  <div class="form" ng-class="{ 'span6' : feed_ptrs_enabled }">
-	            <div class="control-group">
-	              <label class="control-label"><h4 style="color: #777; display: inline-block;">Answer *</h4>
-									<span class="">
-									 	<a data-toggle="tooltip" title="Specify answer fields depending on the record type">
-									    <i class="icon-info-sign"></i>
-									  </a>
-									</span>
-				        </label>
-				      	<ng:include src="'partials/answercontrols.html'" onload="newanswer=answer.longanswer;origanswer=answer;"></ng:include>
-				      </div>
-				      <div ng-show="record.regions" class="control-group">
-				        <label class="control-label">Region
-									<span class="">
-									  <a data-toggle="tooltip" title="If you do not specify a region for the answer, metadata will be resolved from the answer's metadata and the record-wide metadata only.">
-									    <i class="icon-info-sign"></i>
-									  </a>
-									</span>
-					      </label>
-				        <div class="controls">
-									<select class="input" name="region" ng-model="answer.region" ng-options="region as region for (region, R) in record.regions">
-									  <option value="">None</option>
-									</select>
-		            </div>
-		          </div>
-					  </div>
-
-					  <div class="metafeeds">
-	            <div class="span6">
-	              <h4>Metadata</h4>
-	              <table class="table table-striped table-condensed">
-									<tbody>
-									  <tr ng-repeat="(key,value) in answer.meta">
-							        <td ng-show="allmeta[key]">
-									      <div class="pull-left pcontrols clickable-nohover">
-													<a ng-click="show_editmeta(answer, key, value, feedmap)"><i class="icon-pencil"></i></a>
-													<a ng-click="delmeta(answer, key)"><i class="icon-remove-sign"></i></a>
-									      </div>
-									      {{ allmeta[key].shortdesc }}
-									    </td>
-									    <td ng-show="!allmeta[key]">
-									      <div class="pull-left pcontrols clickable-nohover">&nbsp;</div>
-									      <span ng-show="key=='pulse'||key=='pulsar'">Pulsar job</span>
-									      <span ng-show="key!='pulse'&&key!='pulsar'">{{key}}</span>
-									    </td>
-	                                    <td><span ng-bind-html="value | unwrap_feedptr:key:feedmap:sourcemap:pulsar_jobs"></span></td>
-										  </tr>
-										  <tr>
-				             	<td colspan="2" ng-click="show_addmeta(answer)" class="addnew pcontrols clickable-nohover">
-				                <i class="icon-plus-sign"></i> Add Field
-						    			</td>
-						  			</tr>
-									</tbody>
-				        </table>
-				      </div>
-
-				      <div class="span6" ng-show="!record.feed_ptrs.exist">
-				        <h4>Data Feeds
-								<span class="infosign">
-								  <a data-toggle="tooltip" title="These feeds will update the metadata table specific to this answer only.">
-								    <i class="icon-info-sign"></i>
-								  </a>
-								</span>
-				        </h4>
-				        <table class="table table-striped table-condensed">
-				          <tbody>
-					          <tr ng-repeat="feed in answer.feeds">
-				              <td>
-							      		<div class="pull-right pcontrols clickable-nohover">
-					                <a ng-click="confirm_delfeed(feed, answer.feeds, $index)"><i class="icon-remove-sign"></i></a>
-							      		</div>
-				                <b>{{feedmap[feed.feed].name}}</b> via
-				                <img ng-src="/img/datasources/icon/{{sourcemap[feed.source].sourcetype}}.png" alt="{{sourcemap[feed.source].sourcetype}}" width="16" height="16"/>
-				                <b>{{sourcemap[feed.source].name}}</b>
-						    			</td>
-				            </tr>
-					          <tr>
-				            <td ng-click="show_addfeed(answer)" class="addnew pcontrols clickable-nohover">
-				              <i class="icon-plus-sign"></i> Connect Feed
-						    			</td>
-					          </tr>
-	                </tbody>
-	              </table>
-	            </div>
-					  </div>
-				  </div>
-				</div>
-				<hr>
-      </div>
-	    <div ng-click="show_addanswer()" class="container-fluid addnew pcontrols clickable-nohover">
-				<i class="icon-plus-sign"></i> Add Answer
-	    </div>
-    </div>
-  </div>
-
-
-  <div class="module" id="regions" ng-show="record&&record.link==null">
-    <div class="module-header">
-      <h3>Regions</h3>
-    </div>
-
-    <div class="module-content">
-
-      <div ng-repeat="(region, R) in record.regions">
-	<div class="region">
-	  <div class="pull-right pcontrols clickable-nohover">
-	    <a ng-click="confirm_delregion(region)">
-	      <i class="icon-remove-sign"></i>
-	    </a>
-	  </div>
-	  <h3>{{region}}</h3>
-<!-- XXX: {{region}} is the key of a hash and can't be ng-model
-	  <div class="form-horizontal">
-            <div class="control-group">
-              <label class="control-label">Region Name *
-		<span class="infosign">
-		  <a data-toggle="tooltip" title="Use a simple but descriptive name, no longer than 20 characters, with letters, numbers, dashes, and underscores.">
-		    <i class="icon-info-sign"></i>
-		  </a>
-		</span>
-              </label>
-              <div class="controls">
-		<input required maxlength="20" type="text" class="input-xlarge" ng-model="region">
-              </div>
-            </div>
-	  </div>
--->
-
-	  <div class="container-fluid metafeeds">
-
-            <div class="span6">
-              <h4>{{region}} Metadata</h4>
-              <table class="table table-striped table-condensed">
-		<tbody>
-		  <tr ng-repeat="(key,value) in R.meta">
-                    <td ng-show="allmeta[key]">
-		      <div class="pull-left pcontrols clickable-nohover">
-			<a ng-click="show_editmeta(R, key, value, feedmap)"><i class="icon-pencil"></i></a>
-			<a ng-click="delmeta(R, key)"><i class="icon-remove-sign"></i></a>
-		      </div>
-		      {{ allmeta[key].shortdesc }}
-		    </td>
-		    <td ng-show="!allmeta[key]">
-		      <div class="pull-left pcontrols clickable-nohover">&nbsp;</div>
-		      <span ng-show="key=='pulse'||key=='pulsar'">Pulsar job</span>
-		      <span ng-show="key!='pulse'&&key!='pulsar'">{{key}}</span>
-		    </td>
-                    <td><span ng-bind-html="value | unwrap_feedptr:key:feedmap:sourcemap:pulsar_jobs"></span></td>
-		  </tr>
-		  <tr>
-                    <td colspan="2" ng-click="show_addmeta(R)" class="addnew pcontrols clickable-nohover">
-                      <i class="icon-plus-sign"></i> Add Field
-		    </td>
-		  </tr>
-		</tbody>
-              </table>
             </div>
 
-            <div class="span6"ng-show="!record.feed_ptrs.exist">
-              <h4>Data Feeds for {{region}}
-		<span class="infosign">
-		  <a data-toggle="tooltip" title="These feeds will update the metadata specific to this region only.">
-		    <i class="icon-info-sign"></i>
-		  </a>
-		</span>
-              </h4>
-              <table class="table table-striped table-condensed">
-                <tbody>
-	          <tr ng-repeat="feed in R.feeds">
-                    <td>
-		      <div class="pull-right pcontrols clickable-nohover">
-                        <a ng-click="confirm_delfeed(feed, R.feeds, $index)"><i class="icon-remove-sign"></i></a>
-		      </div>
-                      <b>{{feedmap[feed.feed].name}}</b> via
-                      <img ng-src="/img/datasources/icon/{{sourcemap[feed.source].sourcetype}}.png" alt="{{sourcemap[feed.source].sourcetype}}" width="16" height="16"/>
-                      <b>{{sourcemap[feed.source].name}}</b>
-		    </td>
-                  </tr>
-	          <tr>
-                    <td ng-click="show_addfeed(R)" class="addnew pcontrols clickable-nohover">
-                      <i class="icon-plus-sign"></i> Connect Feed
-		    </td>
-	          </tr>
-                </tbody>
-              </table>
+            <div class="span9">
+
+                <ul class="breadcrumb">
+                    <li><a href="#/zones">Zones</a> <span class="divider">/</span></li>
+                    <li><a href="#/zones/{{urlzone}}">{{zone}}</a> <span class="divider">/</span></li>
+                    <li class="active">{{domain}} <span class="badge">{{ type}}</span></li>
+                </ul>
+
+                <ng:include src="'partials/alerts.html'"></ng:include>
+                <div class="alert" ng-show="noperm('dns', 'manage_zones')">
+                    You do not have permission to make changes to this record.  You will only be able to view the current settings.  Any changes you make will be lost.  Contact your account administrator to change your access restrictions.
+                </div>
+
+                <div class="module" ng-show="spin.record || record_failure">
+                    <div class="module-header">
+                        <h3>{{ domain}} <span class="badge">{{ type}}</span></h3>
+                    </div>
+                    <div class="module-content padding">
+                        <div class="emptytable" ng-show="spin.record">
+                            <i class="icon-spin icon-spinner"></i>
+                        </div>
+                        <div class="emptytable" ng-show="record_failure">
+                            <p><i class="icon-warning-sign"></i> Unable to get record
+                                details, please try again shortly.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module" id="config" ng-show="record">
+                    <div class="module-header">
+                        <div class="pull-right" ng-show="hasperm('dns', 'manage_zones')">
+                            <button class="btn btn-primary btn-mini" ng-disabled="recupdateform.$invalid || unchanged(record)" ng-click="saverec(record)"><i class="icon-save"></i> Save Changes</button>
+                            <label ng-show="reverse_permitted(record.type)"><input type="checkbox" class="input-top" ng-model="make_revrec"/> PTR record <a data-toggle="tooltip" title="If possible, when saving record also create the associated reverse PTR record.">
+                                    <i class="icon-info-sign"></i>
+                                </a>
+                            </label>
+                        </div>
+                        <span class="h3 pull-right"  tooltipper ng-show="recwarning()" rel="tooltip" data-toggle="tooltip" data-placement="left" title="Please note: According to RFC, a CNAME record should not return multiple answers. Doing so may cause problems during resolution. If you want to use multiple answers, you should ensure you have the correct filters in place (such as SELECT_FIRST_N 1) to limit them to a single answer at resolution time.">
+                            <i class="icon-exclamation-sign icon-2x text-warning"></i>&nbsp;&nbsp;
+                        </span>
+                        <h3>{{ domain}}
+                            <span class="badge">{{ type}}</span>
+                            <span ng-show="record.tier == 1" class="badge badge-1">STATIC</span>
+                            <span ng-show="record.tier == 2" class="badge badge-2">DYNAMIC</span>
+                            <span ng-show="record.tier == 3" class="badge badge-3">INTELLIGENT</span>
+                            <span ng-show="record.link != null" class="badge badge-L">LINK</span>
+                        </h3>
+                    </div>
+
+                    <div class="module-content padding">
+
+                        <div class="form-horizontal">
+                            <div class="control-group" ng-show="record.link == null">
+                                <label class="control-label">TTL (seconds)
+                                    <span class="infosign">
+                                        <a data-toggle="tooltip" title="Optional; if not set, the default TTL for the {{zone}} zone will be used.">
+                                            <i class="icon-info-sign"></i>
+                                        </a>
+                                    </span>
+                                </label>
+                                <div class="controls">
+                                    <input type="number" min="0" max="2147483647" class="input-xlarge" placeholder="20" ng-model="record.ttl">
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label">Use Client Subnet
+                                    <span class="infosign">
+                                        <a data-toggle="tooltip" title="If enabled, edns-client-subnet data will be used with compatible filters. edns-client-subnet results in more accurate routing, but increased query counts, so disabling this option will reduce queries at the cost of accuracy">
+                                            <i class="icon-info-sign"></i>
+                                        </a>
+                                    </span>
+                                </label>
+                                <div class="controls">
+                                    <input type="checkbox" ng-model="record.use_client_subnet">
+                                </div>
+                            </div>
+                            <div class="control-group" ng-show="record.link != null">
+                                <label class="control-label">Link Target
+                                    <span class="infosign">
+                                        <a data-toggle="tooltip" title="The FQDN of the record (in NS1 platform) holding the configuration this link should use.">
+                                            <i class="icon-info-sign"></i>
+                                        </a>
+                                    </span>
+                                </label>
+                                <div class="controls">
+                                    <input type="text" class="input-xlarge" placeholder="target.example.com" ng-model="record.link">
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr ng-show="record.link == null">
+
+                        <div class="container-fluid metafeeds" ng-show="record.link == null">
+
+                            <div class="span6">
+                                <h4>Record Metadata</h4>
+                                <table class="table table-striped table-condensed">
+                                    <tbody>
+                                        <tr ng-repeat="(key,value) in record.meta">
+                                            <td ng-show="allmeta[key]">
+                                                <div class="pull-left pcontrols clickable-nohover">
+                                                    <a ng-click="show_editmeta(record, key, value, feedmap)"><i class="icon-pencil"></i></a>
+                                                    <a ng-click="delmeta(record, key)"><i class="icon-remove-sign"></i></a>
+                                                </div>
+                                                {{ allmeta[key].shortdesc}}
+                                            </td>
+                                            <td ng-show="!allmeta[key]">
+                                                <div class="pull-left pcontrols clickable-nohover">&nbsp;</div>
+                                                <span ng-show="key == 'pulse' || key == 'pulsar'">Pulsar job</span>
+                                                <span ng-show="key != 'pulse' && key != 'pulsar'">{{key}}</span>
+                                            </td>
+                                            <td><span ng-bind-html="value | unwrap_feedptr:key:feedmap:sourcemap:pulsar_jobs"></span></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" ng-click="show_addmeta(record)" class="addnew pcontrols clickable-nohover">
+                                                <i class="icon-plus-sign"></i> Add Field
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="span6" ng-show="!record.feed_ptrs.exist">
+                                <h4>Record-wide Data Feeds
+                                    <span class="infosign">
+                                        <a data-toggle="tooltip" title="Occasionally useful for certain filters &mdash; these feeds will update the record-wide metadata table">
+                                            <i class="icon-info-sign"></i>
+                                        </a>
+                                    </span>
+                                </h4>
+                                <table class="table table-striped table-condensed">
+                                    <tbody>
+                                        <tr ng-repeat="feed in record.feeds">
+                                            <td>
+                                                <div class="pull-right pcontrols clickable-nohover">
+                                                    <a ng-click="confirm_delfeed(feed, record.feeds, $index)"><i class="icon-remove-sign"></i></a>
+                                                </div>
+                                                <b>{{feedmap[feed.feed].name}}</b> via
+                                                <img ng-src="/img/datasources/icon/{{sourcemap[feed.source].sourcetype}}.png" alt="{{sourcemap[feed.source].sourcetype}}" width="16" height="16"/>
+                                                <b>{{sourcemap[feed.source].name}}</b>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td ng-click="show_addfeed(record)" class="addnew pcontrols clickable-nohover">
+                                                <i class="icon-plus-sign"></i> Connect Feed
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module" id="filterchain" ng-show="record && record.link == null">
+                    <div class="module-header">
+                        <h3>Filter Chain</h3>
+                    </div>
+
+                    <div class="module-content">
+
+                        <div ng-repeat="filter in record.filters">
+                            <div class="container-fluid filter">
+                                <div class="span4">
+                                    <span ng-show="filter.model.tier == 1">
+                                        <h3 class="filtername-1">{{filter.filter| uppercase}}</h3>
+                                    </span>
+                                    <span ng-show="filter.model.tier == 2">
+                                        <h3 class="filtername-2">{{filter.filter| uppercase}}</h3>
+                                    </span>
+                                    <span ng-show="filter.model.tier == 3">
+                                        <h3 class="filtername-3">{{filter.filter| uppercase}}</h3>
+                                    </span>
+                                    <p>
+                                        <span ng-show="filter.disabled">
+                                            <span class="label clickable-nohover" ng-click="filter.disabled = false;">DISABLED</span>
+                                            <span class="infosign-close">
+                                                <a data-toggle="tooltip" title="Click to enable">
+                                                    <i class="icon-info-sign"></i>
+                                                </a>
+                                            </span>
+                                        </span>
+                                        <span ng-show="!filter.disabled">
+                                            <span class="label label-success clickable-nohover" ng-click="filter.disabled = true;">ENABLED</span>
+                                            <span class="infosign-close">
+                                                <a data-toggle="tooltip" title="Click to disable">
+                                                    <i class="icon-info-sign"></i>
+                                                </a>
+                                            </span>
+                                        </span>
+                                    </p>
+                                </div>
+                                <div class="span7">
+                                    <p>
+                                        <span ng-bind-html="filter.model.desc"></span>
+                                        <span ng-show="filter.model.config == null">
+                                            <i>No configuration is needed for this filter.</i>
+                                        </span>
+                                    </p>
+                                    <form novalidate class="form-horizontal" ng-show="filter.model.config != null">
+                                        <div ng-repeat="(opt, optcfg) in filter.model.config" class="control-group">
+                                            <label class="control-label">{{optcfg.shortdesc}}
+                                                <span ng-show="optcfg.required">*</span>
+                                                <span ng-show="optcfg.desc" class="infosign">
+                                                    <a data-toggle="tooltip" title="{{optcfg.desc}}">
+                                                        <i class="icon-info-sign"></i>
+                                                    </a>
+                                                </span>
+                                            </label>
+                                            <div class="controls">
+                                                <input ng-show="opt != 'metric' || filter.filter != 'shed_load'" type="{{optcfg.type}}" ng-required="optcfg.required" class="input-xlarge" ng-model="filter.config[opt]" null-if-empty>
+                                                <span ng-show="opt == 'metric' && filter.filter == 'shed_load'">
+                                                    <select class="input-xlarge" ng-model="filter.config[opt]" ng-required="optfcg.required">
+                                                        <option value="loadavg">Load average</option>
+                                                        <option value="connections">Active connections</option>
+                                                        <option value="requests">Active requests</option>
+                                                    </select>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="span1 pull-right">
+                                    <div class="pull-right pcontrols">
+                                        <a ng-click="confirm_delfilter($index)">
+                                            <i class="icon-remove-sign clickable-nohover"></i>
+                                        </a>
+                                        <span ng-show="!filter.first">
+                                            <br/>
+                                            <a ng-click="filterup($index)">
+                                                <i class="icon-circle-arrow-up clickable-nohover"></i>
+                                            </a>
+                                        </span>
+                                        <span ng-show="!filter.last">
+                                            <br/>
+                                            <a ng-click="filterdown($index)">
+                                                <i class="icon-circle-arrow-down clickable-nohover"></i>
+                                            </a>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                        </div>
+
+                        <div ng-click="show_addfilter()" class="container-fluid addnew pcontrols clickable-nohover">
+                            <i class="icon-plus-sign"></i> Add Filter
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="module" id="answers" ng-show="record && record.link == null">
+                    <div class="module-header">
+                        <h3 style="display: inline-block;">Answers&nbsp;</h3>
+                        <span class="h3" tooltipper ng-show="recwarning()" data-toggle="tooltip" title="Please note: According to RFC, a CNAME record should not return multiple answers. Doing so may cause problems during resolution. If you want to use multiple answers, you should ensure you have the correct filters in place (such as SELECT_FIRST_N 1) to limit them to a single answer at resolution time.">
+                            <i class="icon-exclamation-sign icon-2x text-warning"></i>
+                        </span>
+                    </div>
+
+                    <div class="module-content">
+                        <div ng-repeat="answer in record.answers">
+                            <div class="answer">
+                                <div class="pull-right pcontrols clickable-nohover">
+                                    <a ng-click="confirm_delanswer($index)">
+                                        <i class="icon-remove-sign"></i>
+                                    </a>
+                                </div>
+                                <h3>{{answer.answer| mergearray}}</h3>
+                                <div class="container-fluid">
+                                    <div class="form" ng-class="{ 'span6' : feed_ptrs_enabled }">
+                                        <div class="control-group">
+                                            <label class="control-label"><h4 style="color: #777; display: inline-block;">Answer *</h4>
+                                                <span class="">
+                                                    <a data-toggle="tooltip" title="Specify answer fields depending on the record type">
+                                                        <i class="icon-info-sign"></i>
+                                                    </a>
+                                                </span>
+                                            </label>
+                                            <ng:include src="'partials/answercontrols.html'" onload="newanswer = answer.longanswer;origanswer = answer;"></ng:include>
+                                        </div>
+                                        <div ng-show="record.regions" class="control-group">
+                                            <label class="control-label">Region
+                                                <span class="">
+                                                    <a data-toggle="tooltip" title="If you do not specify a region for the answer, metadata will be resolved from the answer's metadata and the record-wide metadata only.">
+                                                        <i class="icon-info-sign"></i>
+                                                    </a>
+                                                </span>
+                                            </label>
+                                            <div class="controls">
+                                                <select class="input" name="region" ng-model="answer.region" ng-options="region as region for (region, R) in record.regions">
+                                                    <option value="">None</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="metafeeds">
+                                        <div class="span6">
+                                            <h4>Metadata</h4>
+                                            <table class="table table-striped table-condensed">
+                                                <tbody>
+                                                    <tr ng-repeat="(key,value) in answer.meta">
+                                                        <td ng-show="allmeta[key]">
+                                                            <div class="pull-left pcontrols clickable-nohover">
+                                                                <a ng-click="show_editmeta(answer, key, value, feedmap)"><i class="icon-pencil"></i></a>
+                                                                <a ng-click="delmeta(answer, key)"><i class="icon-remove-sign"></i></a>
+                                                            </div>
+                                                            {{ allmeta[key].shortdesc}}
+                                                        </td>
+                                                        <td ng-show="!allmeta[key]">
+                                                            <div class="pull-left pcontrols clickable-nohover">&nbsp;</div>
+                                                            <span ng-show="key == 'pulse' || key == 'pulsar'">Pulsar job</span>
+                                                            <span ng-show="key != 'pulse' && key != 'pulsar'">{{key}}</span>
+                                                        </td>
+                                                        <td><span ng-bind-html="value | unwrap_feedptr:key:feedmap:sourcemap:pulsar_jobs"></span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="2" ng-click="show_addmeta(answer)" class="addnew pcontrols clickable-nohover">
+                                                            <i class="icon-plus-sign"></i> Add Field
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                        <div class="span6" ng-show="!record.feed_ptrs.exist">
+                                            <h4>Data Feeds
+                                                <span class="infosign">
+                                                    <a data-toggle="tooltip" title="These feeds will update the metadata table specific to this answer only.">
+                                                        <i class="icon-info-sign"></i>
+                                                    </a>
+                                                </span>
+                                            </h4>
+                                            <table class="table table-striped table-condensed">
+                                                <tbody>
+                                                    <tr ng-repeat="feed in answer.feeds">
+                                                        <td>
+                                                            <div class="pull-right pcontrols clickable-nohover">
+                                                                <a ng-click="confirm_delfeed(feed, answer.feeds, $index)"><i class="icon-remove-sign"></i></a>
+                                                            </div>
+                                                            <b>{{feedmap[feed.feed].name}}</b> via
+                                                            <img ng-src="/img/datasources/icon/{{sourcemap[feed.source].sourcetype}}.png" alt="{{sourcemap[feed.source].sourcetype}}" width="16" height="16"/>
+                                                            <b>{{sourcemap[feed.source].name}}</b>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td ng-click="show_addfeed(answer)" class="addnew pcontrols clickable-nohover">
+                                                            <i class="icon-plus-sign"></i> Connect Feed
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                        </div>
+                        <div ng-click="show_addanswer()" class="container-fluid addnew pcontrols clickable-nohover">
+                            <i class="icon-plus-sign"></i> Add Answer
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="module" id="regions" ng-show="record && record.link == null">
+                    <div class="module-header">
+                        <h3>Regions</h3>
+                    </div>
+
+                    <div class="module-content">
+
+                        <div ng-repeat="(region, R) in record.regions">
+                            <div class="region">
+                                <div class="pull-right pcontrols clickable-nohover">
+                                    <a ng-click="confirm_delregion(region)">
+                                        <i class="icon-remove-sign"></i>
+                                    </a>
+                                </div>
+                                <h3>{{region}}</h3>
+                                <!-- XXX: {{region}} is the key of a hash and can't be ng-model
+                                          <div class="form-horizontal">
+                                            <div class="control-group">
+                                              <label class="control-label">Region Name *
+                                                <span class="infosign">
+                                                  <a data-toggle="tooltip" title="Use a simple but descriptive name, no longer than 20 characters, with letters, numbers, dashes, and underscores.">
+                                                    <i class="icon-info-sign"></i>
+                                                  </a>
+                                                </span>
+                                              </label>
+                                              <div class="controls">
+                                                <input required maxlength="20" type="text" class="input-xlarge" ng-model="region">
+                                              </div>
+                                            </div>
+                                          </div>
+                                -->
+
+                                <div class="container-fluid metafeeds">
+
+                                    <div class="span6">
+                                        <h4>{{region}} Metadata</h4>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                <tr ng-repeat="(key,value) in R.meta">
+                                                    <td ng-show="allmeta[key]">
+                                                        <div class="pull-left pcontrols clickable-nohover">
+                                                            <a ng-click="show_editmeta(R, key, value, feedmap)"><i class="icon-pencil"></i></a>
+                                                            <a ng-click="delmeta(R, key)"><i class="icon-remove-sign"></i></a>
+                                                        </div>
+                                                        {{ allmeta[key].shortdesc}}
+                                                    </td>
+                                                    <td ng-show="!allmeta[key]">
+                                                        <div class="pull-left pcontrols clickable-nohover">&nbsp;</div>
+                                                        <span ng-show="key == 'pulse' || key == 'pulsar'">Pulsar job</span>
+                                                        <span ng-show="key != 'pulse' && key != 'pulsar'">{{key}}</span>
+                                                    </td>
+                                                    <td><span ng-bind-html="value | unwrap_feedptr:key:feedmap:sourcemap:pulsar_jobs"></span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2" ng-click="show_addmeta(R)" class="addnew pcontrols clickable-nohover">
+                                                        <i class="icon-plus-sign"></i> Add Field
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <div class="span6"ng-show="!record.feed_ptrs.exist">
+                                        <h4>Data Feeds for {{region}}
+                                            <span class="infosign">
+                                                <a data-toggle="tooltip" title="These feeds will update the metadata specific to this region only.">
+                                                    <i class="icon-info-sign"></i>
+                                                </a>
+                                            </span>
+                                        </h4>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                <tr ng-repeat="feed in R.feeds">
+                                                    <td>
+                                                        <div class="pull-right pcontrols clickable-nohover">
+                                                            <a ng-click="confirm_delfeed(feed, R.feeds, $index)"><i class="icon-remove-sign"></i></a>
+                                                        </div>
+                                                        <b>{{feedmap[feed.feed].name}}</b> via
+                                                        <img ng-src="/img/datasources/icon/{{sourcemap[feed.source].sourcetype}}.png" alt="{{sourcemap[feed.source].sourcetype}}" width="16" height="16"/>
+                                                        <b>{{sourcemap[feed.source].name}}</b>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td ng-click="show_addfeed(R)" class="addnew pcontrols clickable-nohover">
+                                                        <i class="icon-plus-sign"></i> Connect Feed
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                        </div>
+
+                        <div ng-click="show_addregion()" class="container-fluid addnew pcontrols clickable-nohover">
+                            <i class="icon-plus-sign"></i> Add Region
+                        </div>
+
+                    </div>
+                </div>
+
             </div>
-	  </div>
-	</div>
-	<hr>
-      </div>
 
-      <div ng-click="show_addregion()" class="container-fluid addnew pcontrols clickable-nohover">
-	<i class="icon-plus-sign"></i> Add Region
-      </div>
 
+        </div>
     </div>
-  </div>
-
-</div>
-
-
-</div>
-</div>
 </div>
 
 <div id="confirmdelrec" class="modal hide">
-  <div class="modal-header">
-    <a class="close" ng-click="cancel_delrec()">&times;</a>
-    <h3>Delete Record</h3>
-  </div>
-  <div class="modal-body">
-    <p>Are you sure you want to delete this record?  All configuration details will be lost.</p>
-    <span ng-show="reverse_permitted(record.type) && revrec != null">
-        <label><input type="checkbox" class="input-top" ng-model="delete_revrec"/> Also delete reverse record <span class="badge">{{revrec.type}}</span> <b>{{revrec.domain}}</b></label>
-    </span>
-  </div>
-  <div class="modal-footer">
-    <button class="btn btn-large btn-danger" ng-click="delrec()">Delete</button>
-    <button class="btn btn-large" ng-click="cancel_delrec()">Cancel</button>
-  </div>
+    <div class="modal-header">
+        <a class="close" ng-click="cancel_delrec()">&times;</a>
+        <h3>Delete Record</h3>
+    </div>
+    <div class="modal-body">
+        <p>Are you sure you want to delete this record?  All configuration details will be lost.</p>
+        <span ng-show="reverse_permitted(record.type) && revrec != null">
+            <label><input type="checkbox" class="input-top" ng-model="delete_revrec"/> Also delete reverse record <span class="badge">{{revrec.type}}</span> <b>{{revrec.domain}}</b></label>
+        </span>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-large btn-danger" ng-click="delrec()">Delete</button>
+        <button class="btn btn-large" ng-click="cancel_delrec()">Cancel</button>
+    </div>
 </div>
 
 
 <div id="confirmdelanswer" class="modal hide">
-  <div class="modal-header">
-    <a class="close" ng-click="cancel_delanswer()">&times;</a>
-    <h3>Delete Answer</h3>
-  </div>
-  <div class="modal-body">
-    <p>Are you sure you want to remove the <b>{{record.answers[danswer].answer | mergearray}}</b> answer and all associated metadata and feeds from this record?</p>
-  </div>
-  <div class="modal-footer">
-    <button class="btn btn-large btn-danger" ng-click="delanswer(danswer)">Delete</button>
-    <button class="btn btn-large" ng-click="cancel_delanswer()">Cancel</button>
-  </div>
+    <div class="modal-header">
+        <a class="close" ng-click="cancel_delanswer()">&times;</a>
+        <h3>Delete Answer</h3>
+    </div>
+    <div class="modal-body">
+        <p>Are you sure you want to remove the <b>{{record.answers[danswer].answer| mergearray}}</b> answer and all associated metadata and feeds from this record?</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-large btn-danger" ng-click="delanswer(danswer)">Delete</button>
+        <button class="btn btn-large" ng-click="cancel_delanswer()">Cancel</button>
+    </div>
 </div>
 
 <div id="addanswer" class="modal hide" tabindex="-1">
-  <form name="addanswerform" class="css-form" novalidate>
-  <div class="modal-header">
-    <a class="close" ng-click="cancel_addanswer()">&times;</a>
-    <h3>New Answer</h3>
-  </div>
-  <div class="modal-body">
-    <div class="form-horizontal">
-      <div class="control-group">
-        <label class="control-label">Answer Fields *
-            <span class="infosign">
-              <a data-toggle="tooltip" title="Set values for each of the fields of this DNS record, depending on the record type.">
-                <i class="icon-info-sign"></i>
-              </a>
-            </span>
-        </label>
-        <ng:include src="'partials/answercontrols.html'"></ng:include>
-      </div>
-      <div class="control-group">
-        <label class="control-label">Region
-            <span class="infosign">
-              <a data-toggle="tooltip" title="Optional; assign this answer to a region &mdash; it will inherit the region's medadata for filtering purposes.">
-                <i class="icon-info-sign"></i>
-              </a>
-            </span>
-        </label>
-        <div class="controls">
-          <select class="input-xlarge" name="region" ng-model="newanswer.region" ng-options="region as region for (region, R) in record.regions">
-            <option value="">None</option>
-          </select>
+    <form name="addanswerform" class="css-form" novalidate>
+        <div class="modal-header">
+            <a class="close" ng-click="cancel_addanswer()">&times;</a>
+            <h3>New Answer</h3>
         </div>
-      </div>
-    </div>
-  </div>
-  <div class="modal-footer">
-    <button class="btn btn-large btn-primary" ng-click="addanswer(newanswer)" ng-disabled="addanswerform.$invalid">Add Answer</button>
-    <button class="btn btn-large" ng-click="cancel_addanswer()">Cancel</button>
-  </div>
-  </form>
+        <div class="modal-body">
+            <div class="form-horizontal">
+                <div class="control-group">
+                    <label class="control-label">Answer Fields *
+                        <span class="infosign">
+                            <a data-toggle="tooltip" title="Set values for each of the fields of this DNS record, depending on the record type.">
+                                <i class="icon-info-sign"></i>
+                            </a>
+                        </span>
+                    </label>
+                    <ng:include src="'partials/answercontrols.html'"></ng:include>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">Region
+                        <span class="infosign">
+                            <a data-toggle="tooltip" title="Optional; assign this answer to a region &mdash; it will inherit the region's medadata for filtering purposes.">
+                                <i class="icon-info-sign"></i>
+                            </a>
+                        </span>
+                    </label>
+                    <div class="controls">
+                        <select class="input-xlarge" name="region" ng-model="newanswer.region" ng-options="region as region for (region, R) in record.regions">
+                            <option value="">None</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-large btn-primary" ng-click="addanswer(newanswer)" ng-disabled="addanswerform.$invalid">Add Answer</button>
+            <button class="btn btn-large" ng-click="cancel_addanswer()">Cancel</button>
+        </div>
+    </form>
 </div>
 
 <div id="confirmdelfilter" class="modal hide">
-  <div class="modal-header">
-    <a class="close" ng-click="cancel_delfilter()">&times;</a>
-    <h3>Remove Filter From Chain</h3>
-  </div>
-  <div class="modal-body">
-    <p>Are you sure you want to remove the <span ng-class="'filtername-'+record.filters[dfilter].model.tier">{{record.filters[dfilter].filter|uppercase}}</span> filter and all associated configuration from the filter chain?</p>
-  </div>
-  <div class="modal-footer">
-    <button class="btn btn-large btn-danger" ng-click="delfilter(dfilter)">Remove</button>
-    <button class="btn btn-large" ng-click="cancel_delfilter()">Cancel</button>
-  </div>
+    <div class="modal-header">
+        <a class="close" ng-click="cancel_delfilter()">&times;</a>
+        <h3>Remove Filter From Chain</h3>
+    </div>
+    <div class="modal-body">
+        <p>Are you sure you want to remove the <span ng-class="'filtername-' + record.filters[dfilter].model.tier">{{record.filters[dfilter].filter|uppercase}}</span> filter and all associated configuration from the filter chain?</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-large btn-danger" ng-click="delfilter(dfilter)">Remove</button>
+        <button class="btn btn-large" ng-click="cancel_delfilter()">Cancel</button>
+    </div>
 </div>
 
 <div id="addfilter" class="modal hide" tabindex="-1">
-  <form name="addfilterform" class="css-form" novalidate>
-  <div class="modal-header">
-    <a class="close" ng-click="cancel_addfilter()">&times;</a>
-    <h3>Add Filter To Chain</h3>
-  </div>
-  <div class="modal-body">
-    <div class="form-horizontal">
-      <div class="control-group">
-        <label class="control-label">Filter *
-            <span class="infosign">
-              <a data-toggle="tooltip" title="Choose from among the available filter types &mdash; hover over them to see descriptions">
-                <i class="icon-info-sign"></i>
-              </a>
-            </span>
-        </label>
-        <div class="controls">
-          <span ng-repeat="(name, details) in get_valid_filters(type)">
-            <a data-toggle="tooltip" title="{{details.shortdesc}}">
-              <span ng-show="details.tier == 1 && newfilter.filter != name" class="filtername-1 badge-1 clickable-1" ng-click="setnewfiltermodel(name)">{{name|uppercase}}</span>
-              <span ng-show="details.tier == 1 && newfilter.filter == name" class="filtername-1 clicked-1">{{name|uppercase}}</span>
-              <span ng-show="details.tier == 2 && newfilter.filter != name" class="filtername-2 badge-2 clickable-2" ng-click="setnewfiltermodel(name)">{{name|uppercase}}</span>
-              <span ng-show="details.tier == 2 && newfilter.filter == name" class="filtername-2 clicked-2">{{name|uppercase}}</span>
-              <span ng-show="details.tier == 3 && newfilter.filter != name" class="filtername-3 badge-3 clickable-3" ng-click="setnewfiltermodel(name)">{{name|uppercase}}</span>
-              <span ng-show="details.tier == 3 && newfilter.filter == name" class="filtername-3 clicked-3">{{name|uppercase}}</span>
-            </a>
-          </span>
+    <form name="addfilterform" class="css-form" novalidate>
+        <div class="modal-header">
+            <a class="close" ng-click="cancel_addfilter()">&times;</a>
+            <h3>Add Filter To Chain</h3>
         </div>
-      </div>
-      <div ng-show="newfilter.filter">
-        <hr/>
-        <!-- FIXME: this is effectively the same as a big chunk of the filter list, genericize it -->
-        <h3 ng-class="'filtername-'+newfilter.model.tier">{{newfilter.filter|uppercase}}</h3>
-        <p>
-          <span ng-bind-html="newfilter.model.desc"></span>
-          <span ng-show="newfilter.model.config == null">
-            <i>No configuration is needed for this filter.</i>
-          </span>
-        </p>
-        <div ng-show="newfilter.model.config != null">
-          <div ng-repeat="(opt, optcfg) in newfilter.model.config" class="control-group">
-            <label class="control-label">{{optcfg.shortdesc}}
-	      <span ng-show="optcfg.required">*</span>
-              <span ng-show="optcfg.desc" class="infosign">
-                <a data-toggle="tooltip" title="{{optcfg.desc}}">
-                  <i class="icon-info-sign"></i>
-                </a>
-              </span>
-            </label>
-            <div class="controls">
-              <input ng-show="opt!='metric'||newfilter.filter!='shed_load'" type="{{optcfg.type}}" ng-required="optcfg.required" class="input-xlarge" placeholder="{{optcfg.default}}" ng-model="newfilter.config[opt]" null-if-empty>
-	      <span ng-show="opt=='metric'&&newfilter.filter=='shed_load'">
-		<select class="input-xlarge" ng-model="newfilter.config[opt]" ng-required="optfcg.required">
-		  <option value="loadavg">Load average</option>
-		  <option value="connections">Active connections</option>
-		  <option value="requests">Active requests</option>
-		</select>
-	      </span>
+        <div class="modal-body">
+            <div class="form-horizontal">
+                <div class="control-group">
+                    <label class="control-label">Filter *
+                        <span class="infosign">
+                            <a data-toggle="tooltip" title="Choose from among the available filter types &mdash; hover over them to see descriptions">
+                                <i class="icon-info-sign"></i>
+                            </a>
+                        </span>
+                    </label>
+                    <div class="controls">
+                        <span ng-repeat="(name, details) in get_valid_filters(type)">
+                            <a data-toggle="tooltip" title="{{details.shortdesc}}">
+                                <span ng-show="details.tier == 1 && newfilter.filter != name" class="filtername-1 badge-1 clickable-1" ng-click="setnewfiltermodel(name)">{{name|uppercase}}</span>
+                                <span ng-show="details.tier == 1 && newfilter.filter == name" class="filtername-1 clicked-1">{{name|uppercase}}</span>
+                                <span ng-show="details.tier == 2 && newfilter.filter != name" class="filtername-2 badge-2 clickable-2" ng-click="setnewfiltermodel(name)">{{name|uppercase}}</span>
+                                <span ng-show="details.tier == 2 && newfilter.filter == name" class="filtername-2 clicked-2">{{name|uppercase}}</span>
+                                <span ng-show="details.tier == 3 && newfilter.filter != name" class="filtername-3 badge-3 clickable-3" ng-click="setnewfiltermodel(name)">{{name|uppercase}}</span>
+                                <span ng-show="details.tier == 3 && newfilter.filter == name" class="filtername-3 clicked-3">{{name|uppercase}}</span>
+                            </a>
+                        </span>
+                    </div>
+                </div>
+                <div ng-show="newfilter.filter">
+                    <hr/>
+                    <!-- FIXME: this is effectively the same as a big chunk of the filter list, genericize it -->
+                    <h3 ng-class="'filtername-' + newfilter.model.tier">{{newfilter.filter|uppercase}}</h3>
+                    <p>
+                        <span ng-bind-html="newfilter.model.desc"></span>
+                        <span ng-show="newfilter.model.config == null">
+                            <i>No configuration is needed for this filter.</i>
+                        </span>
+                    </p>
+                    <div ng-show="newfilter.model.config != null">
+                        <div ng-repeat="(opt, optcfg) in newfilter.model.config" class="control-group">
+                            <label class="control-label">{{optcfg.shortdesc}}
+                                <span ng-show="optcfg.required">*</span>
+                                <span ng-show="optcfg.desc" class="infosign">
+                                    <a data-toggle="tooltip" title="{{optcfg.desc}}">
+                                        <i class="icon-info-sign"></i>
+                                    </a>
+                                </span>
+                            </label>
+                            <div class="controls">
+                                <input ng-show="opt != 'metric' || newfilter.filter != 'shed_load'" type="{{optcfg.type}}" ng-required="optcfg.required" class="input-xlarge" placeholder="{{optcfg.default}}" ng-model="newfilter.config[opt]" null-if-empty>
+                                <span ng-show="opt == 'metric' && newfilter.filter == 'shed_load'">
+                                    <select class="input-xlarge" ng-model="newfilter.config[opt]" ng-required="optfcg.required">
+                                        <option value="loadavg">Load average</option>
+                                        <option value="connections">Active connections</option>
+                                        <option value="requests">Active requests</option>
+                                    </select>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
-    </div>
-  </div>
-  <div class="modal-footer">
-    <button class="btn btn-large btn-primary" ng-click="addfilter(newfilter)" ng-disabled="addfilterform.$invalid">Add Filter</button>
-    <button class="btn btn-large" ng-click="cancel_addfilter()">Cancel</button>
-  </div>
-  </form>
+        <div class="modal-footer">
+            <button class="btn btn-large btn-primary" ng-click="addfilter(newfilter)" ng-disabled="addfilterform.$invalid">Add Filter</button>
+            <button class="btn btn-large" ng-click="cancel_addfilter()">Cancel</button>
+        </div>
+    </form>
 </div>
 
 <div id="confirmdelregion" class="modal hide">
-  <div class="modal-header">
-    <a class="close" ng-click="cancel_delregion()">&times;</a>
-    <h3>Delete Region</h3>
-  </div>
-  <div class="modal-body">
-    <p>Are you sure you want to remove the <b>{{dregion}}</b> region and all associated metadata and feeds from this record?  Any answers in this region will be removed from the region (but not deleted).</p>
-  </div>
-  <div class="modal-footer">
-    <button class="btn btn-large btn-danger" ng-click="delregion(dregion)">Delete</button>
-    <button class="btn btn-large" ng-click="cancel_delregion()">Cancel</button>
-  </div>
+    <div class="modal-header">
+        <a class="close" ng-click="cancel_delregion()">&times;</a>
+        <h3>Delete Region</h3>
+    </div>
+    <div class="modal-body">
+        <p>Are you sure you want to remove the <b>{{dregion}}</b> region and all associated metadata and feeds from this record?  Any answers in this region will be removed from the region (but not deleted).</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-large btn-danger" ng-click="delregion(dregion)">Delete</button>
+        <button class="btn btn-large" ng-click="cancel_delregion()">Cancel</button>
+    </div>
 </div>
 
 <div id="addregion" class="modal hide" tabindex="-1">
-  <form name="addregionform" class="css-form" novalidate>
-  <div class="modal-header">
-    <a class="close" ng-click="cancel_addregion()">&times;</a>
-    <h3>New Region</h3>
-  </div>
-  <div class="modal-body">
-    <div class="form-horizontal">
-      <div class="control-group">
-        <label class="control-label">Region Label *
-            <span class="infosign">
-              <a data-toggle="tooltip" title="Enter a label for this region &mdash; keep it short and sweet, e.g. 'us-east' or 'asiapac'.">
-                <i class="icon-info-sign"></i>
-              </a>
-            </span>
-        </label>
-        <div class="controls">
-          <input required type="text" class="input-xlarge" placeholder="us-east" ng-pattern="/^(?=.{1,64}$)([a-zA-Z0-9\-_]+)$/" ng-model="newregion">
+    <form name="addregionform" class="css-form" novalidate>
+        <div class="modal-header">
+            <a class="close" ng-click="cancel_addregion()">&times;</a>
+            <h3>New Region</h3>
         </div>
-      </div>
-    </div>
-  </div>
-  <div class="modal-footer">
-    <button class="btn btn-large btn-primary" ng-click="addregion(newregion)" ng-disabled="addregionform.$invalid">Add Region</button>
-    <button class="btn btn-large" ng-click="cancel_addregion()">Cancel</button>
-  </div>
-  </form>
+        <div class="modal-body">
+            <div class="form-horizontal">
+                <div class="control-group">
+                    <label class="control-label">Region Label *
+                        <span class="infosign">
+                            <a data-toggle="tooltip" title="Enter a label for this region &mdash; keep it short and sweet, e.g. 'us-east' or 'asiapac'.">
+                                <i class="icon-info-sign"></i>
+                            </a>
+                        </span>
+                    </label>
+                    <div class="controls">
+                        <input required type="text" class="input-xlarge" placeholder="us-east" ng-pattern="/^(?=.{1,64}$)([a-zA-Z0-9\-_]+)$/" ng-model="newregion">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-large btn-primary" ng-click="addregion(newregion)" ng-disabled="addregionform.$invalid">Add Region</button>
+            <button class="btn btn-large" ng-click="cancel_addregion()">Cancel</button>
+        </div>
+    </form>
 </div>
 
 <div id="addmeta" class="modal hide" tabindex="-1">
-  <form name="addmetaform" class="css-form" novalidate>
-  <div class="modal-header">
-    <a class="close" ng-click="cancel_addmeta()">&times;</a>
-    <h3>New Metadata Field</h3>
-  </div>
-  <div class="modal-body">
-    <!-- metadata -->
-    <div class="form-horizontal">
-      <div class="control-group">
-        <label class="control-label">Key *
-            <span class="infosign">
-              <a data-toggle="tooltip" title="Pick a metadata key to specify">
-                <i class="icon-info-sign"></i>
-              </a>
-            </span>
-        </label>
-        <div class="controls">
-	  <select required class="input-xlarge" ng-model="edmetakey" ng-options="key as m.shortdesc group by category_labels[m.category] for (key,m) in allmeta" ng-change="dataChanged(key, value)">
-	    <option value="">Pick a key</option>
-	  </select>
-          <br/>
-          <br/>
-          <p><span ng-bind-html="(feed_ptrs_enabled == false) && allmeta[edmetakey].desc"></p>
-          <p><span ng-bind-html="(feed_ptrs_enabled == true) && allmeta[edmetakey].desc"></p>
+    <form name="addmetaform" class="css-form" novalidate>
+        <div class="modal-header">
+            <a class="close" ng-click="cancel_addmeta()">&times;</a>
+            <h3>New Metadata Field</h3>
         </div>
-      </div>
-      <div class="control-group">
-        <label class="control-label"  ng-show="!feed_ptrs_enabled&&edmetakey">Value *</label>
-        <ng:include src="'editmeta.html'"></ng:include>
-      </div>
-    </div>
-  </div>
-  <div class="modal-footer">
-    <button class="btn btn-large btn-primary" ng-click="addmeta(edmeta_obj, edmetakey)" ng-disabled="addmetaform.$invalid">Add Field</button>
-    <button class="btn btn-large" ng-click="cancel_addmeta()">Cancel</button>
-  </div>
-  </form>
+        <div class="modal-body">
+            <!-- metadata -->
+            <div class="form-horizontal">
+                <div class="control-group">
+                    <label class="control-label">Key *
+                        <span class="infosign">
+                            <a data-toggle="tooltip" title="Pick a metadata key to specify">
+                                <i class="icon-info-sign"></i>
+                            </a>
+                        </span>
+                    </label>
+                    <div class="controls">
+                        <select required class="input-xlarge" ng-model="edmetakey" ng-options="key as m.shortdesc group by category_labels[m.category] for (key,m) in allmeta" ng-change="dataChanged(key, value)">
+                            <option value="">Pick a key</option>
+                        </select>
+                        <br/>
+                        <br/>
+                        <p><span ng-bind-html="(feed_ptrs_enabled == false) && allmeta[edmetakey].desc"></p>
+                        <p><span ng-bind-html="(feed_ptrs_enabled == true) && allmeta[edmetakey].desc"></p>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label"  ng-show="!feed_ptrs_enabled && edmetakey">Value *</label>
+                    <ng:include src="'editmeta.html'"></ng:include>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-large btn-primary" ng-click="addmeta(edmeta_obj, edmetakey)" ng-disabled="addmetaform.$invalid">Add Field</button>
+            <button class="btn btn-large" ng-click="cancel_addmeta()">Cancel</button>
+        </div>
+    </form>
 </div>
 
 <div id="editmeta" class="modal hide" tabindex="-1">
-  <form name="editmetaform" class="css-form" novalidate>
-  <div class="modal-header">
-    <a class="close" ng-click="cancel_editmeta()">&times;</a>
-    <h3>Update &mdash; {{allmeta[edmetakey].shortdesc}}</h3>
-  </div>
-  <div class="modal-body">
-      <p><span ng-bind-html="allmeta[edmetakey].desc"></p>
-      <div class="emptytable" ng-show="spin.addfeed">
-          <i class="icon-spin icon-spinner"></i>
-      </div>
-      <div ng-show="record.feed_ptrs.exist&&!spin.addfeed">
-          <div class="alert" ng-show="addfeed_error">
-              <span ng-bind-html="addfeed_error"></span>
-          </div>
-          <div class="form-horizontal">
-              <div class="control-group" ng-show="!newsource">
-                  <i>This meta data is currently static; to edit the static value, use the Static Value input box below. If you want to connect this meta data to a feed, select a data source and feed here.</i>
-              </div>
-              <div class="control-group">
-                  <label class="control-label">Data Source *
-                    <span class="infosign">
-                      <a data-toggle="tooltip" title="Select a data source to connect">
-                          <i class="icon-info-sign"></i>
-                      </a>
-                    </span>
-                  </label>
-                  <div class="controls">
-                      <select class="input-xlarge" name="newsource" ng-model="newsource" ng-options="src as src.name for src in newsources">
-                          <option value="">None (Static Meta Value)</option>
-                      </select>
-                  </div>
-              </div>
-              <div ng-show="newsource">
-                  <img class="thumbnail" style="float:left;margin-right:10px;margin-bottom:10px;" ng-src="/img/datasources/{{newsource.sourcetype}}.png"
-                       alt="{{newsource.sourcetype}}" width="160" height="120"/>
-                  <h4>{{newsource.name}}</h4>
-                  <p><b>Status:</b>
-                      <span class="label label-success" ng-show="newsource.status == 'ok'">{{newsource.status|uppercase}}</span>
-                      <span class="label label-info" ng-show="newsource.status != 'ok' && newsource.status != 'error'">{{newsource.status|uppercase}}</span>
-                      <span class="label label-important" ng-show="newsource.status == 'error'">{{newsource.status|uppercase}}</span>
-                  </p>
-                  <p>Active Feeds: <b>{{newsource.feeds.length}}</b></p>
-              </div>
-              <div class="control-group" ng-show="newsource">
-                  <label class="control-label">Data Feed *
-                    <span class="infosign">
-                      <a data-toggle="tooltip" title="Choose the feed from the data source to connect to this metadata table">
-                          <i class="icon-info-sign"></i>
-                      </a>
-                    </span>
-                  </label>
-                  <div class="controls">
-                      <select ng-require="newsource" class="input-xlarge" name="newfeed" ng-model="newfeed" ng-options="feed as feed.name for feed in newsource.feeds">
-                          <option value=""></option>
-                      </select>
-                  </div>
-              </div>
-              <hr style="clear:both"/>
-          </div>
-    </div>
-    <div class="form-horizontal">
-      <div class="control-group" ng-show="!newsource">
-            <label class="control-label" ng-show="!record.feed_ptrs.exist">Value *</label>
-            <label class="control-label" ng-show="record.feed_ptrs.exist">Static Value *</label>
-            <ng:include src="'editmeta.html'"></ng:include>
-      </div>
-        <div class="control-group" ng-show="newsource">
-            <i>This meta data will receive its value from the data source selected above. If you would like to make it static instead, remove the data source
-            and feed above.</i>
+    <form name="editmetaform" class="css-form" novalidate>
+        <div class="modal-header">
+            <a class="close" ng-click="cancel_editmeta()">&times;</a>
+            <h3>Update &mdash; {{allmeta[edmetakey].shortdesc}}</h3>
         </div>
-    </div>
-  </div>
-  <div class="modal-footer">
-    <button class="btn btn-large btn-primary" ng-click="editmeta(edmeta_obj, edmetakey)" ng-disabled="!newsource&&(editmetaform.$invalid||badpulsar)">Update Field</button>
-    <button class="btn btn-large" ng-click="cancel_editmeta()">Cancel</button>
-  </div>
-  </form>
+        <div class="modal-body">
+            <p><span ng-bind-html="allmeta[edmetakey].desc"></p>
+            <div class="emptytable" ng-show="spin.addfeed">
+                <i class="icon-spin icon-spinner"></i>
+            </div>
+            <div ng-show="record.feed_ptrs.exist && !spin.addfeed">
+                <div class="alert" ng-show="addfeed_error">
+                    <span ng-bind-html="addfeed_error"></span>
+                </div>
+                <div class="form-horizontal">
+                    <div class="control-group" ng-show="!newsource">
+                        <i>This meta data is currently static; to edit the static value, use the Static Value input box below. If you want to connect this meta data to a feed, select a data source and feed here.</i>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Data Source *
+                            <span class="infosign">
+                                <a data-toggle="tooltip" title="Select a data source to connect">
+                                    <i class="icon-info-sign"></i>
+                                </a>
+                            </span>
+                        </label>
+                        <div class="controls">
+                            <select class="input-xlarge" name="newsource" ng-model="newsource" ng-options="src as src.name for src in newsources">
+                                <option value="">None (Static Meta Value)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div ng-show="newsource">
+                        <img class="thumbnail" style="float:left;margin-right:10px;margin-bottom:10px;" ng-src="/img/datasources/{{newsource.sourcetype}}.png"
+                             alt="{{newsource.sourcetype}}" width="160" height="120"/>
+                        <h4>{{newsource.name}}</h4>
+                        <p><b>Status:</b>
+                            <span class="label label-success" ng-show="newsource.status == 'ok'">{{newsource.status|uppercase}}</span>
+                            <span class="label label-info" ng-show="newsource.status != 'ok' && newsource.status != 'error'">{{newsource.status|uppercase}}</span>
+                            <span class="label label-important" ng-show="newsource.status == 'error'">{{newsource.status|uppercase}}</span>
+                        </p>
+                        <p>Active Feeds: <b>{{newsource.feeds.length}}</b></p>
+                    </div>
+                    <div class="control-group" ng-show="newsource">
+                        <label class="control-label">Data Feed *
+                            <span class="infosign">
+                                <a data-toggle="tooltip" title="Choose the feed from the data source to connect to this metadata table">
+                                    <i class="icon-info-sign"></i>
+                                </a>
+                            </span>
+                        </label>
+                        <div class="controls">
+                            <select ng-require="newsource" class="input-xlarge" name="newfeed" ng-model="newfeed" ng-options="feed as feed.name for feed in newsource.feeds">
+                                <option value=""></option>
+                            </select>
+                        </div>
+                    </div>
+                    <hr style="clear:both"/>
+                </div>
+            </div>
+            <div class="form-horizontal">
+                <div class="control-group" ng-show="!newsource">
+                    <label class="control-label" ng-show="!record.feed_ptrs.exist">Value *</label>
+                    <label class="control-label" ng-show="record.feed_ptrs.exist">Static Value *</label>
+                    <ng:include src="'editmeta.html'"></ng:include>
+                </div>
+                <div class="control-group" ng-show="newsource">
+                    <i>This meta data will receive its value from the data source selected above. If you would like to make it static instead, remove the data source
+                        and feed above.</i>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-large btn-primary" ng-click="editmeta(edmeta_obj, edmetakey)" ng-disabled="!newsource && (editmetaform.$invalid || badpulsar)">Update Field</button>
+            <button class="btn btn-large" ng-click="cancel_editmeta()">Cancel</button>
+        </div>
+    </form>
 </div>
 
 <div id="confirmdelfeed" class="modal hide">
-  <div class="modal-header">
-    <a class="close" ng-click="cancel_delfeed()">&times;</a>
-    <h3>Disconnect Feed</h3>
-  </div>
-  <div class="modal-body">
-    <p>Are you sure you want to disconnect the <b>{{delfeed.name}}</b> feed from this metadata table?</p>
-  </div>
-  <div class="modal-footer">
-    <button class="btn btn-large btn-danger" ng-click="deletefeed(delfeed_list, delfeed_idx)">Disconnect</button>
-    <button class="btn btn-large" ng-click="cancel_delfeed()">Cancel</button>
-  </div>
+    <div class="modal-header">
+        <a class="close" ng-click="cancel_delfeed()">&times;</a>
+        <h3>Disconnect Feed</h3>
+    </div>
+    <div class="modal-body">
+        <p>Are you sure you want to disconnect the <b>{{delfeed.name}}</b> feed from this metadata table?</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-large btn-danger" ng-click="deletefeed(delfeed_list, delfeed_idx)">Disconnect</button>
+        <button class="btn btn-large" ng-click="cancel_delfeed()">Cancel</button>
+    </div>
 </div>
 
 <div id="addfeed" class="modal hide" tabindex="-1">
-  <form name="addfeedform" class="css-form" novalidate>
-  <div class="modal-header">
-    <a class="close" ng-click="cancel_addfeed()">&times;</a>
-    <h3>Connect Data Feed</h3>
-  </div>
-  <div class="modal-body">
-    <div class="emptytable" ng-show="spin.addfeed">
-      <i class="icon-spin icon-spinner"></i>
-    </div>
-    <div ng-show="!spin.addfeed">
-    <div class="alert" ng-show="addfeed_error">
-      <span ng-bind-html="addfeed_error"></span>
-    </div>
-    <div class="form-horizontal">
-      <div class="control-group">
-        <label class="control-label">Data Source *
-            <span class="infosign">
-              <a data-toggle="tooltip" title="Select a data source to connect">
-                <i class="icon-info-sign"></i>
-              </a>
-            </span>
-        </label>
-        <div class="controls">
-          <select required class="input-xlarge" name="newsource" ng-model="newsource" ng-options="src as src.name for src in newsources">
-          </select>
+    <form name="addfeedform" class="css-form" novalidate>
+        <div class="modal-header">
+            <a class="close" ng-click="cancel_addfeed()">&times;</a>
+            <h3>Connect Data Feed</h3>
         </div>
-      </div>
-      <div ng-show="newsource">
-        <img class="thumbnail" style="float:left;margin-right:10px;margin-bottom:10px;" ng-src="/img/datasources/{{newsource.sourcetype}}.png"
-           alt="{{newsource.sourcetype}}" width="160" height="120"/>
-        <h4>{{newsource.name}}</h4>
-        <p><b>Status:</b>
-          <span class="label label-success" ng-show="newsource.status == 'ok'">{{newsource.status|uppercase}}</span>
-          <span class="label label-info" ng-show="newsource.status != 'ok' && newsource.status != 'error'">{{newsource.status|uppercase}}</span>
-          <span class="label label-important" ng-show="newsource.status == 'error'">{{newsource.status|uppercase}}</span>
-        </p>
-        <p>Active Feeds: <b>{{newsource.feeds.length}}</b></p>
-      </div>
-      <hr style="clear:both"/>
-      <div class="control-group">
-        <label class="control-label">Data Feed *
-            <span class="infosign">
-              <a data-toggle="tooltip" title="Choose the feed from the data source to connect to this metadata table">
-                <i class="icon-info-sign"></i>
-              </a>
-            </span>
-        </label>
-        <div class="controls">
-          <select required class="input-xlarge" name="newfeed" ng-model="newfeed" ng-options="feed as feed.name for feed in newsource.feeds">
-          </select>
+        <div class="modal-body">
+            <div class="emptytable" ng-show="spin.addfeed">
+                <i class="icon-spin icon-spinner"></i>
+            </div>
+            <div ng-show="!spin.addfeed">
+                <div class="alert" ng-show="addfeed_error">
+                    <span ng-bind-html="addfeed_error"></span>
+                </div>
+                <div class="form-horizontal">
+                    <div class="control-group">
+                        <label class="control-label">Data Source *
+                            <span class="infosign">
+                                <a data-toggle="tooltip" title="Select a data source to connect">
+                                    <i class="icon-info-sign"></i>
+                                </a>
+                            </span>
+                        </label>
+                        <div class="controls">
+                            <select required class="input-xlarge" name="newsource" ng-model="newsource" ng-options="src as src.name for src in newsources">
+                            </select>
+                        </div>
+                    </div>
+                    <div ng-show="newsource">
+                        <img class="thumbnail" style="float:left;margin-right:10px;margin-bottom:10px;" ng-src="/img/datasources/{{newsource.sourcetype}}.png"
+                             alt="{{newsource.sourcetype}}" width="160" height="120"/>
+                        <h4>{{newsource.name}}</h4>
+                        <p><b>Status:</b>
+                            <span class="label label-success" ng-show="newsource.status == 'ok'">{{newsource.status|uppercase}}</span>
+                            <span class="label label-info" ng-show="newsource.status != 'ok' && newsource.status != 'error'">{{newsource.status|uppercase}}</span>
+                            <span class="label label-important" ng-show="newsource.status == 'error'">{{newsource.status|uppercase}}</span>
+                        </p>
+                        <p>Active Feeds: <b>{{newsource.feeds.length}}</b></p>
+                    </div>
+                    <hr style="clear:both"/>
+                    <div class="control-group">
+                        <label class="control-label">Data Feed *
+                            <span class="infosign">
+                                <a data-toggle="tooltip" title="Choose the feed from the data source to connect to this metadata table">
+                                    <i class="icon-info-sign"></i>
+                                </a>
+                            </span>
+                        </label>
+                        <div class="controls">
+                            <select required class="input-xlarge" name="newfeed" ng-model="newfeed" ng-options="feed as feed.name for feed in newsource.feeds">
+                            </select>
+                        </div>
+                    </div>
+                    <!-- FIXME: show config for this feed (need to load source models) -->
+                </div>
+            </div>
         </div>
-      </div>
-      <!-- FIXME: show config for this feed (need to load source models) -->
-    </div>
-    </div>
-  </div>
-  <div class="modal-footer">
-    <button class="btn btn-large btn-primary" ng-click="addfeed(newsource, newfeed, feedlist)" ng-disabled="addfeedform.$invalid">Connect</button>
-    <button class="btn btn-large" ng-click="cancel_addfeed()">Cancel</button>
-  </div>
-  </form>
+        <div class="modal-footer">
+            <button class="btn btn-large btn-primary" ng-click="addfeed(newsource, newfeed, feedlist)" ng-disabled="addfeedform.$invalid">Connect</button>
+            <button class="btn btn-large" ng-click="cancel_addfeed()">Cancel</button>
+        </div>
+    </form>
 </div>
 
 <div id="clonerec" class="modal hide" tabindex="-1">
-  <form name="clonerecform" class="css-form" novalidate>
-  <div class="modal-header">
-    <a class="close" ng-click="cancel_clonerec()">&times;</a>
-    <h3>Clone Record</h3>
-  </div>
-  <div class="modal-body">
-    <div class="emptytable" ng-show="spin.clonerec">
-      <i class="icon-spin icon-spinner"></i>
-    </div>
-    <div ng-show="!spin.clonerec">
-    <div class="alert" ng-show="clonerec_error">
-      <span ng-bind-html="clonerec_error"></span>
-    </div>
-    <div class="form-horizontal">
-      <div class="control-group">
-        <label class="control-label">Zone *
-            <span class="infosign">
-              <a data-toggle="tooltip" title="Select zone for new record">
-                <i class="icon-info-sign"></i>
-              </a>
-            </span>
-        </label>
-        <div class="controls">
-          <select required class="input-xlarge" name="clonezone" ng-model="clonezone" ng-options="z for z in clonezones">
-          </select>
+    <form name="clonerecform" class="css-form" novalidate>
+        <div class="modal-header">
+            <a class="close" ng-click="cancel_clonerec()">&times;</a>
+            <h3>Clone Record</h3>
         </div>
-      </div>
-      <div class="control-group">
-        <label class="control-label">Domain *
-            <span class="infosign">
-              <a data-toggle="tooltip" title="Enter a subdomain within the {{clonezone}} zone.  You may enter '*' as the first component of the subdomain to create a wildcard record.  You may also leave the subdomain blank to create a record for {{clonezone}}.">
-                <i class="icon-info-sign"></i>
-              </a>
-            </span>
-        </label>
-        <div class="controls">
-          <input type="text" class="input-medium" placeholder="my.subdomain" ng-model="clonedomain">
-          <span class="add-on">.{{clonezone}}</span>
+        <div class="modal-body">
+            <div class="emptytable" ng-show="spin.clonerec">
+                <i class="icon-spin icon-spinner"></i>
+            </div>
+            <div ng-show="!spin.clonerec">
+                <div class="alert" ng-show="clonerec_error">
+                    <span ng-bind-html="clonerec_error"></span>
+                </div>
+                <div class="form-horizontal">
+                    <div class="control-group">
+                        <label class="control-label">Zone *
+                            <span class="infosign">
+                                <a data-toggle="tooltip" title="Select zone for new record">
+                                    <i class="icon-info-sign"></i>
+                                </a>
+                            </span>
+                        </label>
+                        <div class="controls">
+                            <select required class="input-xlarge" name="clonezone" ng-model="clonezone" ng-options="z for z in clonezones">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Domain *
+                            <span class="infosign">
+                                <a data-toggle="tooltip" title="Enter a subdomain within the {{clonezone}} zone.  You may enter '*' as the first component of the subdomain to create a wildcard record.  You may also leave the subdomain blank to create a record for {{clonezone}}.">
+                                    <i class="icon-info-sign"></i>
+                                </a>
+                            </span>
+                        </label>
+                        <div class="controls">
+                            <input type="text" class="input-medium" placeholder="my.subdomain" ng-model="clonedomain">
+                            <span class="add-on">.{{clonezone}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-    </div>
-  </div>
-  <div class="modal-footer">
-    <button class="btn btn-large btn-primary" ng-click="clonerec(clonezone, clonedomain)" ng-disabled="spin.clonerec || clonerecform.$invalid"><i class="icon-copy"></i>Clone</button>
-    <button class="btn btn-large" ng-click="cancel_clonerec()">Cancel</button>
-  </div>
-  </form>
+        <div class="modal-footer">
+            <button class="btn btn-large btn-primary" ng-click="clonerec(clonezone, clonedomain)" ng-disabled="spin.clonerec || clonerecform.$invalid"><i class="icon-copy"></i>Clone</button>
+            <button class="btn btn-large" ng-click="cancel_clonerec()">Cancel</button>
+        </div>
+    </form>
 </div>
 
 <script type="text/ng-template" id="editmeta.html">
-        <div class="controls">
-	  <input ng-show="edmetakey=='priority'" type="number" class="input-xlarge" ng-model="edmeta.priority" min="0">
-	  <input ng-show="edmetakey=='connections'" type="number" class="input-xlarge" ng-model="edmeta.connections" min="0">
-	  <input ng-show="edmetakey=='requests'" type="number" class="input-xlarge" ng-model="edmeta.requests" min="0">
-	  <input ng-show="edmetakey=='loadavg'" type="number" class="input-xlarge" ng-model="edmeta.loadavg" min="0">
-	  <input ng-show="edmetakey=='weight'" type="number" class="input-xlarge" ng-model="edmeta.weight" min="0" max="4294967295">
-	  <input ng-show="edmetakey=='low_watermark'" type="number" class="input-xlarge" ng-model="edmeta.low_watermark" min="0">
-	  <input ng-show="edmetakey=='high_watermark'" type="number" class="input-xlarge" ng-model="edmeta.high_watermark" min="0">
-	  <textarea ng-show="edmetakey=='note'" rows="1" class="input-xlarge" ng-model="edmeta.note" placeholder="Note text..."></textarea>
-	  <input ng-show="edmetakey=='latitude'" type="number" class="input-xlarge" ng-model="edmeta.latitude" min="-180" max="180">
-	  <input ng-show="edmetakey=='longitude'" type="number" class="input-xlarge" ng-model="edmeta.longitude" min="-180" max="180">
-	  <span ng-show="edmetakey=='up'">
-	    <span ng-class="{'label-list':true,'clickable-nohover':true,'label-success':edmeta.up,'label':true}" ng-click="edmeta.up=true"><i class="icon-chevron-sign-up"></i> UP</span>
-	    <span ng-class="{'label-list':true,'clickable-nohover':true,'label':true,'label-important':!edmeta.up}" ng-click="edmeta.up=false"><i class="icon-chevron-sign-down"></i> DOWN</span>
-	  </span>
-	  <span ng-show="edmetakey=='georegion'">
-	    <span ng-repeat="gr in ['US-EAST','US-CENTRAL','US-WEST','EUROPE','ASIAPAC','SOUTH-AMERICA','AFRICA']" ng-class="{'label-list':true,'clickable-nohover':true,'label-success':georegion[gr],'label':true}" ng-click="update_meta_set('georegion', georegion, gr)">{{gr|uppercase}}</span>
-	  </span>
-	  <span ng-show="edmetakey=='us_state'">
-	    <div ng-repeat="(region, states) in int_us_states">
-	      <h4>{{region}}
-		<span class="label label-success clickable-nohover" ng-click="toggle_meta_set('us_state', us_state, states, true)">+ all</span>
-		<span class="label label-important clickable-nohover" ng-click="toggle_meta_set('us_state', us_state, states, false)">- all</span>
-	      </h4>
-	      <span ng-repeat="state in states" ng-class="{'label-list':true,'clickable-nohover':true,'label-success':us_state[state],'label':true}" ng-click="update_meta_set('us_state', us_state, state)">{{state|uppercase}}</span>
-	    </div>
-	  </span>
-	  <span ng-show="edmetakey=='ca_province'">
-	    <div ng-repeat="(region, provinces) in int_ca_provinces">
-	      <h4>{{region}}
-		<span class="label label-success clickable-nohover" ng-click="toggle_meta_set('ca_province', ca_province, provinces, true)">+ all</span>
-		<span class="label label-important clickable-nohover" ng-click="toggle_meta_set('ca_province', ca_province, provinces, false)">- all</span>
-	      </h4>
-	      <span ng-repeat="province in provinces" ng-class="{'label-list':true,'clickable-nohover':true,'label-success':ca_province[province],'label':true}" ng-click="update_meta_set('ca_province', ca_province, province)">{{province|uppercase}}</span>
-	    </div>
-	  </span>
-	  <span ng-show="edmetakey=='country'">
-	    <div ng-repeat="(region, subregions) in int_countries">
-	      <h4>{{region}}
-		<span class="label label-success clickable-nohover" ng-click="toggle_meta_subsets('country', country, subregions, true)">+ all</span>
-		<span class="label label-important clickable-nohover" ng-click="toggle_meta_subsets('country', country, subregions, false)">- all</span>
-	      </h4>
-	      <div ng-repeat="(subregion, countries) in subregions">
-		<h5>{{subregion}}
-		  <span class="label label-success clickable-nohover" ng-click="toggle_meta_set('country', country, countries, true)">+ all</span>
-		  <span class="label label-important clickable-nohover" ng-click="toggle_meta_set('country', country, countries, false)">- all</span>
-		</h5>
-		<span ng-repeat="cc in countries" ng-class="{'label-list':true,'clickable-nohover':true,'label-success':country[cc],'label':true}" ng-click="update_meta_set('country', country, cc)">{{int_iso3166[cc]|uppercase}}</span>
-	      </div>
-	    </div>
-	  </span>
-          <span ng-show="edmetakey=='ip_prefixes'">
-            <div class="input-append">
-	      <input type="text" class="input-xlarge" ng-model="edmeta_ip_prefix" placeholder="192.168.1.0/24">
-              <button class="btn" ng-click="update_meta_set('ip_prefixes', ip_prefixes, edmeta_ip_prefix); edmeta_ip_prefix=null;" ng-disabled="!valid_ip_prefix(edmeta_ip_prefix)">Add</button>
-            </div>
-            <p><span ng-repeat="prefix in edmeta.ip_prefixes" class="label label-list">{{prefix}} <span class="pcontrols-x clickable-nohover" ng-click="update_meta_set('ip_prefixes', ip_prefixes, prefix)"><i class="icon-remove-sign"></i></span></span></p>
-          </span>
-          <span ng-show="edmetakey=='asn'">
-            <div class="input-append">
-	      <input type="text" class="input-xlarge" ng-model="edmeta_asn" type="number" placeholder="62597">
-              <button class="btn" ng-click="update_meta_set('asn', asn, edmeta_asn); edmeta_asn=null;" ng-disabled="!valid_asn(edmeta_asn)">Add</button>
-            </div>
-            <p><span ng-repeat="as in edmeta.asn" class="label label-list">{{as}} <span class="pcontrols-x clickable-nohover" ng-click="update_meta_set('asn', asn, as)"><i class="icon-remove-sign"></i></span></span></p>
-          </span>
-          <span ng-show="edmetakey=='pulsar'">
-            <p>
-            <select class="input-xlarge" name="pulsar_app" ng-model="edmeta.pulsar_app" ng-options="app as app.name for app in pulsar_apps_with_valid_jobs()" ng-change="edmeta.pulsar_job=null;init_edmeta_pulsar_gran(null,null)">
-              <option value="">Select Pulsar app...</option>
-            </select>
-            </p>
-            <p ng-show="edmeta.pulsar_app">
-            <select class="input-xlarge" name="pulsar_job" ng-model="edmeta.pulsar_job" ng-options="job as job.name for job in pulsar_valid_jobs(edmeta.pulsar_app)" ng-show="edmeta.pulsar_app" ng-change="init_edmeta_pulsar_gran(edmeta.pulsar_app,edmeta.pulsar_job);checkpulsar(edmeta.pulsar_app,edmeta.pulsar_job,edmeta.pulsar_gran)">
-              <option value="">Select Pulsar job...</option>
-            </select>
-            </p>
-            <div ng-show="edmeta.pulsar_job">
-              <span ng-show="pulsar_granularities(edmeta.pulsar_app, edmeta.pulsar_job).length<=1">
-                <p>This Pulsar <span ng-show="edmeta.pulsar_job.typeid=='custom'" class="label label-info"><i class="icon-asterisk"></i> CUSTOM</i></span><span ng-show="edmeta.pulsar_job.typeid=='latency'" class="label label-info"><i class="icon-bolt"></i> LATENCY</i></span> job supports
-                <span class="label label-info" ng-show="pulsar_granularities(edmeta.pulsar_app, edmeta.pulsar_job).indexOf('geo')>=0" data-toggle="tooltip" title="GEO Aggregation"><i class="icon-large icon-globe"></i> GEO</span>
-                <span class="label label-info" ng-show="pulsar_granularities(edmeta.pulsar_app, edmeta.pulsar_job).indexOf('geo_asn')>=0" data-toggle="tooltip" title="GEO+ASN Aggregation"><i class="icon-large icon-plus-sign"></i> GEO+ASN</span>
-                routing table granularity.</p>
-              </span>
-              <span ng-show="pulsar_granularities(edmeta.pulsar_app, edmeta.pulsar_job).length>1">
-                <p>This Pulsar job supports multiple routing table granularities.  Select which to use (we recommend all):</p>
-                  <span ng-class="{'label':true,'label-info':edmeta.pulsar_gran.geo,'clickable-nohover':true,'label-list':true}" ng-click="edmeta.pulsar_gran.geo=!edmeta.pulsar_gran.geo;checkpulsar(edmeta.pulsar_app,edmeta.pulsar_job,edmeta.pulsar_gran)" ng-show="pulsar_granularities(edmeta.pulsar_app, edmeta.pulsar_job).indexOf('geo')>=0" data-toggle="tooltip" title="GEO Aggregation"><i class="icon-large icon-globe"></i> GEO</span>
-                  <span ng-class="{'label':true,'label-info':edmeta.pulsar_gran.geo_asn,'clickable-nohover':true,'label-list':true}" ng-click="edmeta.pulsar_gran.geo_asn=!edmeta.pulsar_gran.geo_asn;checkpulsar(edmeta.pulsar_app,edmeta.pulsar_job,edmeta.pulsar_gran)" ng-show="pulsar_granularities(edmeta.pulsar_app, edmeta.pulsar_job).indexOf('geo_asn')>=0" data-toggle="tooltip" title="GEO+ASN Aggregation"><i class="icon-large icon-plus-sign"></i> GEO+ASN</span>
-              </span>
-            </div>
-          </span>
-        </div>
+    <div class="controls">
+    <input ng-show="edmetakey=='priority'" type="number" class="input-xlarge" ng-model="edmeta.priority" min="0">
+    <input ng-show="edmetakey=='connections'" type="number" class="input-xlarge" ng-model="edmeta.connections" min="0">
+    <input ng-show="edmetakey=='requests'" type="number" class="input-xlarge" ng-model="edmeta.requests" min="0">
+    <input ng-show="edmetakey=='loadavg'" type="number" class="input-xlarge" ng-model="edmeta.loadavg" min="0">
+    <input ng-show="edmetakey=='weight'" type="number" class="input-xlarge" ng-model="edmeta.weight" min="0" max="4294967295">
+    <input ng-show="edmetakey=='low_watermark'" type="number" class="input-xlarge" ng-model="edmeta.low_watermark" min="0">
+    <input ng-show="edmetakey=='high_watermark'" type="number" class="input-xlarge" ng-model="edmeta.high_watermark" min="0">
+    <textarea ng-show="edmetakey=='note'" rows="1" class="input-xlarge" ng-model="edmeta.note" placeholder="Note text..."></textarea>
+    <input ng-show="edmetakey=='latitude'" type="number" class="input-xlarge" ng-model="edmeta.latitude" min="-180" max="180">
+    <input ng-show="edmetakey=='longitude'" type="number" class="input-xlarge" ng-model="edmeta.longitude" min="-180" max="180">
+    <span ng-show="edmetakey=='up'">
+    <span ng-class="{'label-list':true,'clickable-nohover':true,'label-success':edmeta.up,'label':true}" ng-click="edmeta.up=true"><i class="icon-chevron-sign-up"></i> UP</span>
+    <span ng-class="{'label-list':true,'clickable-nohover':true,'label':true,'label-important':!edmeta.up}" ng-click="edmeta.up=false"><i class="icon-chevron-sign-down"></i> DOWN</span>
+    </span>
+    <span ng-show="edmetakey=='georegion'">
+    <span ng-repeat="gr in ['US-EAST','US-CENTRAL','US-WEST','EUROPE','ASIAPAC','SOUTH-AMERICA','AFRICA']" ng-class="{'label-list':true,'clickable-nohover':true,'label-success':georegion[gr],'label':true}" ng-click="update_meta_set('georegion', georegion, gr)">{{gr|uppercase}}</span>
+    </span>
+    <span ng-show="edmetakey=='us_state'">
+    <div ng-repeat="(region, states) in int_us_states">
+    <h4>{{region}}
+    <span class="label label-success clickable-nohover" ng-click="toggle_meta_set('us_state', us_state, states, true)">+ all</span>
+    <span class="label label-important clickable-nohover" ng-click="toggle_meta_set('us_state', us_state, states, false)">- all</span>
+    </h4>
+    <span ng-repeat="state in states" ng-class="{'label-list':true,'clickable-nohover':true,'label-success':us_state[state],'label':true}" ng-click="update_meta_set('us_state', us_state, state)">{{state|uppercase}}</span>
+    </div>
+    </span>
+    <span ng-show="edmetakey=='ca_province'">
+    <div ng-repeat="(region, provinces) in int_ca_provinces">
+    <h4>{{region}}
+    <span class="label label-success clickable-nohover" ng-click="toggle_meta_set('ca_province', ca_province, provinces, true)">+ all</span>
+    <span class="label label-important clickable-nohover" ng-click="toggle_meta_set('ca_province', ca_province, provinces, false)">- all</span>
+    </h4>
+    <span ng-repeat="province in provinces" ng-class="{'label-list':true,'clickable-nohover':true,'label-success':ca_province[province],'label':true}" ng-click="update_meta_set('ca_province', ca_province, province)">{{province|uppercase}}</span>
+    </div>
+    </span>
+    <span ng-show="edmetakey=='country'">
+    <div ng-repeat="(region, subregions) in int_countries">
+    <h4>{{region}}
+    <span class="label label-success clickable-nohover" ng-click="toggle_meta_subsets('country', country, subregions, true)">+ all</span>
+    <span class="label label-important clickable-nohover" ng-click="toggle_meta_subsets('country', country, subregions, false)">- all</span>
+    </h4>
+    <div ng-repeat="(subregion, countries) in subregions">
+    <h5>{{subregion}}
+    <span class="label label-success clickable-nohover" ng-click="toggle_meta_set('country', country, countries, true)">+ all</span>
+    <span class="label label-important clickable-nohover" ng-click="toggle_meta_set('country', country, countries, false)">- all</span>
+    </h5>
+    <span ng-repeat="cc in countries" ng-class="{'label-list':true,'clickable-nohover':true,'label-success':country[cc],'label':true}" ng-click="update_meta_set('country', country, cc)">{{int_iso3166[cc]|uppercase}}</span>
+    </div>
+    </div>
+    </span>
+    <span ng-show="edmetakey=='ip_prefixes'">
+    <div class="input-append">
+    <input type="text" class="input-xlarge" ng-model="edmeta_ip_prefix" placeholder="192.168.1.0/24">
+    <button class="btn" ng-click="update_meta_set('ip_prefixes', ip_prefixes, edmeta_ip_prefix); edmeta_ip_prefix=null;" ng-disabled="!valid_ip_prefix(edmeta_ip_prefix)">Add</button>
+    </div>
+    <p><span ng-repeat="prefix in edmeta.ip_prefixes" class="label label-list">{{prefix}} <span class="pcontrols-x clickable-nohover" ng-click="update_meta_set('ip_prefixes', ip_prefixes, prefix)"><i class="icon-remove-sign"></i></span></span></p>
+    </span>
+    <span ng-show="edmetakey=='asn'">
+    <div class="input-append">
+    <input type="text" class="input-xlarge" ng-model="edmeta_asn" type="number" placeholder="62597">
+    <button class="btn" ng-click="update_meta_set('asn', asn, edmeta_asn); edmeta_asn=null;" ng-disabled="!valid_asn(edmeta_asn)">Add</button>
+    </div>
+    <p><span ng-repeat="as in edmeta.asn" class="label label-list">{{as}} <span class="pcontrols-x clickable-nohover" ng-click="update_meta_set('asn', asn, as)"><i class="icon-remove-sign"></i></span></span></p>
+    </span>
+    <span ng-show="edmetakey=='pulsar'">
+    <p>
+    <select class="input-xlarge" name="pulsar_app" ng-model="edmeta.pulsar_app" ng-options="app as app.name for app in pulsar_apps_with_valid_jobs()" ng-change="edmeta.pulsar_job=null;init_edmeta_pulsar_gran(null,null)">
+    <option value="">Select Pulsar app...</option>
+    </select>
+    </p>
+    <p ng-show="edmeta.pulsar_app">
+    <select class="input-xlarge" name="pulsar_job" ng-model="edmeta.pulsar_job" ng-options="job as job.name for job in pulsar_valid_jobs(edmeta.pulsar_app)" ng-show="edmeta.pulsar_app" ng-change="init_edmeta_pulsar_gran(edmeta.pulsar_app,edmeta.pulsar_job);checkpulsar(edmeta.pulsar_app,edmeta.pulsar_job,edmeta.pulsar_gran)">
+    <option value="">Select Pulsar job...</option>
+    </select>
+    </p>
+    <div ng-show="edmeta.pulsar_job">
+    <span ng-show="pulsar_granularities(edmeta.pulsar_app, edmeta.pulsar_job).length<=1">
+    <p>This Pulsar <span ng-show="edmeta.pulsar_job.typeid=='custom'" class="label label-info"><i class="icon-asterisk"></i> CUSTOM</i></span><span ng-show="edmeta.pulsar_job.typeid=='latency'" class="label label-info"><i class="icon-bolt"></i> LATENCY</i></span> job supports
+    <span class="label label-info" ng-show="pulsar_granularities(edmeta.pulsar_app, edmeta.pulsar_job).indexOf('geo')>=0" data-toggle="tooltip" title="GEO Aggregation"><i class="icon-large icon-globe"></i> GEO</span>
+    <span class="label label-info" ng-show="pulsar_granularities(edmeta.pulsar_app, edmeta.pulsar_job).indexOf('geo_asn')>=0" data-toggle="tooltip" title="GEO+ASN Aggregation"><i class="icon-large icon-plus-sign"></i> GEO+ASN</span>
+    routing table granularity.</p>
+    </span>
+    <span ng-show="pulsar_granularities(edmeta.pulsar_app, edmeta.pulsar_job).length>1">
+    <p>This Pulsar job supports multiple routing table granularities.  Select which to use (we recommend all):</p>
+    <span ng-class="{'label':true,'label-info':edmeta.pulsar_gran.geo,'clickable-nohover':true,'label-list':true}" ng-click="edmeta.pulsar_gran.geo=!edmeta.pulsar_gran.geo;checkpulsar(edmeta.pulsar_app,edmeta.pulsar_job,edmeta.pulsar_gran)" ng-show="pulsar_granularities(edmeta.pulsar_app, edmeta.pulsar_job).indexOf('geo')>=0" data-toggle="tooltip" title="GEO Aggregation"><i class="icon-large icon-globe"></i> GEO</span>
+    <span ng-class="{'label':true,'label-info':edmeta.pulsar_gran.geo_asn,'clickable-nohover':true,'label-list':true}" ng-click="edmeta.pulsar_gran.geo_asn=!edmeta.pulsar_gran.geo_asn;checkpulsar(edmeta.pulsar_app,edmeta.pulsar_job,edmeta.pulsar_gran)" ng-show="pulsar_granularities(edmeta.pulsar_app, edmeta.pulsar_job).indexOf('geo_asn')>=0" data-toggle="tooltip" title="GEO+ASN Aggregation"><i class="icon-large icon-plus-sign"></i> GEO+ASN</span>
+    </span>
+    </div>
+    </span>
+    </div>
 </script>
 
 <ng:include src="'partials/footer.html'"></ng:include>
