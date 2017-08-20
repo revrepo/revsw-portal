@@ -1,30 +1,38 @@
 .waf-rules {
-    &__tabs .nav-tabs>li {
-        margin-bottom: -6px;
+  &__tabs .nav-tabs>li {
+    margin-bottom: -6px;
+  }
+  &__tabs table tbody tr td {
+    max-width: none;
+  }
+  &-list__customer,
+  &-list__buiiltin {
+    td.description {
+      min-width: 150px;
+      max-width: 30vw;
     }
-    &__tabs  table tbody tr td {
-        max-width: none;
+    td.waf-rule-name {
+      min-width: 300px;
+      max-width: 30vw;
+      white-space: normal;
+      word-break: break-word;
+      max-height: 50px;
     }
-    &-list__customer, &-list__buiiltin{
-      td.description{
-        min-width: 150px;
-        max-width: none;
-      }
-    }
+  }
 }
 
 .waf-rule-body--view {
-    width: 100%;
-    height: 50vh;
-    resize: none;
-    margin-bottom: 0px;
+  width: 100%;
+  height: 50vh;
+  resize: none;
+  margin-bottom: 0px;
 }
 
 td {
-   &.waf-rule-type {
-        text-transform: lowercase;
-    }
-   &.waf-rule-type:first-letter {
-        text-transform: uppercase;
-    }
+  &.waf-rule-type {
+    text-transform: lowercase;
+  }
+  &.waf-rule-type:first-letter {
+    text-transform: uppercase;
+  }
 }

@@ -18,6 +18,7 @@
     //Set state (ui.router)
     $scope.setState('index.accountSettings.companies');
 
+    $scope.COMPANY_NAME = $config.PATTERNS.COMPANY_NAME;
     $scope.NO_SPECIAL_CHARS = $config.PATTERNS.NO_SPECIAL_CHARS;
     $scope.COMMENT_NO_SPECIAL_CHARS = $config.PATTERNS.COMMENT_NO_SPECIAL_CHARS;
 

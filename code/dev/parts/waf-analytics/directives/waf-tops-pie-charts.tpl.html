@@ -1,19 +1,29 @@
 <div class="clearfix" waf-filter-tops ng-disabled="!ngDomain" ng-filters="filters" on-filter="loadDetails()"> </div>
-<div class="col-md-4 graph">
-  <h3 class="graph-title">Top 20 Countries</h3>
-  <div class="graph-container">
-    <div _style="min-width: 480px; min-height: 350px" pie-chart ng-data="topCountries"></div>
+<div class="row">
+  <div class="col-md-6">
+    <h3 class="graph-title">Actions Taken</h3>
+    <div class="graph-container">
+      <div _style="min-width: 480px; min-height: 350px" bar-chart ng-data="topActionsTaken" ng-chart-options="barChartOpts"></div>
+    </div>
+  </div>
+  <div class="col-md-6 graph">
+    <h3 class="graph-title">Top 20 Countries</h3>
+    <div class="graph-container">
+      <div _style="min-width: 480px; min-height: 350px" pie-chart ng-data="topCountries"></div>
+    </div>
   </div>
 </div>
-<div class="col-md-4">
-  <h3 class="graph-title">Top 20 Rule IDs</h3>
-  <div>
-    <div _style="min-width: 480px; min-height: 350px" pie-chart ng-data="topRulesIds" ng-chart-options="chartOptions"></div>
+<div class="row">
+  <div class="col-md-6">
+    <h3 class="graph-title">Top 20 Rule IDs</h3>
+    <div>
+      <div _style="min-width: 480px; min-height: 350px" pie-chart ng-data="topRulesIds" ng-chart-options="chartOptions"></div>
+    </div>
   </div>
-</div>
-<div class="col-md-4">
-  <h3 class="graph-title">Attacks By Target Request Zones</h3>
-  <div>
-    <div _style="min-width: 480px; min-height: 350px" pie-chart ng-data="topTargetZones"></div>
+  <div class="col-md-6">
+    <h3 class="graph-title">Attacks By Target Request Zones</h3>
+    <div>
+      <div _style="min-width: 480px; min-height: 350px" pie-chart ng-data="topTargetZones"></div>
+    </div>
   </div>
 </div>

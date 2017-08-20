@@ -30,7 +30,10 @@
     $scope.setResource(WAF_Rules);
     $scope.filterKeys = ['rule_name', 'domains', 'updated_at'];
     $scope.model = {};
-
+    // NOTE: listener event for refresh data in table
+    $scope.$on('wafrulelist:refresh:list',function(){
+      $scope.initList();
+    });
     $scope.$on('$stateChangeSuccess', function (state) {
       if ($state.is($scope.state)) {
         $scope.initList();

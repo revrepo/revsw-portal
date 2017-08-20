@@ -28,7 +28,7 @@
                 <div class="col-sm-12">
                   <p>Please configure your DNS name registrar (like GoDaddy) to use the following name servers for the DNS zone:</p>
                   <div class="alert alert-info" ng-if="_loading">
-                    <i class="glyphicon glyphicon-refresh spin" ng-if="_loading"></i>&nbsp; Loading...
+                    <i class="glyphicon glyphicon-refresh spin"></i>&nbsp; Loading...
                   </div>
                   <div class="col-sm-12 col-md-offset-2" ng-repeat="server_name in model.dns_servers">
                     {{server_name}}

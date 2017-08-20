@@ -168,7 +168,7 @@
 
       // Used by Angular Toaster
       SUCCESS_MESSAGE_DISPLAY_TIMEOUT: 5000,
-      // PATTERNS
+      // PATTERNS @see info into the API repository file lib/routeModels.js
       PATTERNS: {
         NO_SPECIAL_CHARS: /^[A-Za-z0-9//_.' -]+$/,
         COMMENT_NO_SPECIAL_CHARS: /^[A-Za-zÀÈÌÒÙàèìòùÁÉÍÓÚÝáéíóúýÂÊÎÔÛâêîôûÃÑÕãñõÄËÏÖÜŸäëïöüŸ¡¿çÇŒœßØøÅåÆæÞþÐð""\w\d\s-'.,“”&#@:?!()$\/\n\r-]+$/,
@@ -182,10 +182,14 @@
         COOKIE: /^[A-Za-z0-9.' -]+$/,
         CACHE_BYPASS_LOCATION: /^[A-Za-z0-9//.' -]+$/,
         QUERY_STRINGS_OPTION: /^[A-Za-z0-9.' -]+$/,
-        CONTACT_DATA: /^[A-Za-zÀÈÌÒÙàèìòùÁÉÍÓÚÝáéíóúýÂÊÎÔÛâêîôûÃÑÕãñõÄËÏÖÜŸäëïöüŸ¡¿çÇŒœßØøÅåÆæÞþÐð$\/-]+$/,
-        COMPANY_DATA: /^[A-Za-zÀÈÌÒÙ àèìòù ÁÉÍÓÚ Ý áéíóúý ÂÊÎÔÛ âêîôû ÃÑÕ ãñõ ÄËÏÖÜŸ äëïöüŸ ¡¿çÇŒœ ßØøÅå ÆæÞþ Ðð ""\w\d\s-'.,&#@:?!()$\/-]+$/,
+        CONTACT_DATA: /^[A-Za-z\u00C0-\u00ff\/-]+$/,
+        COMPANY_NAME: /^[A-z\u00C0-\u00ff""\w\d\s-'.,&#:()]+$/,
+        USER_FIRST_NAME: /^[A-z\u00C0-\u00ff""\w\d\s-'.,()#]+$/,
+        USER_LAST_NAME: /^[A-z\u00C0-\u00ff""\w\d\s-'.,()#]+$/,
+        STREET_ADDRESS: /^[A-z\u00C0-\u00ff""\w\d\s-'.,&#:()]+$/,
         WAF_LOCATION_NAME: /^\/{1}(([A-Za-z0-9\-\_]+)(\/?){1})*$/,
-        CIDR:/^([0-9]{1,3}\.){3}[0-9]{1,3}\/{1}(([1-9]|[1-2][0-9]|3[0-2])){1}?$/
+        CIDR:/^([0-9]{1,3}\.){3}[0-9]{1,3}\/{1}(([1-9]|[1-2][0-9]|3[0-2])){1}?$/,
+        WAF_RULE_NAME: /^[A-Za-z0-9//_.:', -]+$/
      },
       // HEADER OPERATION FOR DOMAIN CACHING RULE
       HEADER_OPERATIONS: {
