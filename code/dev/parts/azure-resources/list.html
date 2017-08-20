@@ -50,8 +50,8 @@
           <div class="alert alert-warning" ng-if="records == null && !_loading">
             Failed to retrieve a list of resources - please try again later
           </div>
-          <div class="alert alert-info" ng-if="_loading">
-            <i class="glyphicon glyphicon-refresh spin" ng-if="item.loading"></i>&nbsp; Loading...
+          <div class="alert alert-info" ng-if="_loading && filteredRecords.length === 0">
+            <i class="glyphicon glyphicon-refresh spin"></i>&nbsp; Loading...
           </div>
           <crud-pagination></crud-pagination>
           <table class="table">

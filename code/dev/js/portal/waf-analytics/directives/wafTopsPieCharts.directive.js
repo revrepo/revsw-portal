@@ -16,7 +16,7 @@
         flStoreName: '@'
       },
       /*@ngInject*/
-      controller: function($q, $scope, StatsWAF, WAF_Rules, DomainsConfig, $localStorage) {
+      controller: function($q, Util, $scope, StatsWAF, WAF_Rules, DomainsConfig, $localStorage) {
         var STORAGE_NAME_FOR_DOMAIN_WAR_RULES_CODES = 'domainWafRulesCodesList'; // TODO: rebase to $config
         $scope._loading = false;
         $scope.filters = !$scope.flStoreName ? _.assign({
@@ -54,6 +54,48 @@
             }
           },
         };
+        $scope.topActionsTaken = {
+          series: []
+        };
+        // NOTE: options for the bar chart  "Actions Taken"
+        $scope.barChartOpts = {
+          yAxis: {
+            min: 0,
+            title: {
+              text: null //'Requests Per Second'
+            },
+            // labels: {
+            //   formatter: function() {
+            //     return Util.formatNumber(this.value);
+            //   }
+            // }
+          },
+          xAxis: {
+            categories: ['Total']
+          },
+          tooltip: //false,
+          {
+            xDateFormat: '<span style="color: #000; font-weight: bold;">%H:%M</span> %b %d',
+            shared: false,
+            headerFormat: '',
+            pointFormat: '<span style="_color:{series.color}">{series.name}</span>: <b>{point.y:,.0f} requests</b>  <br/>',
+          },
+          plotOptions: {
+            bar: {
+              allowPointSelect: false,
+              cursor: 'pointer',
+              dataLabels: {
+                enabled: true,
+                format: '<b>{series.name}</b>: {point.y:,.0f} requests',
+                style: {
+                  color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black',
+                  backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
+                }
+              }
+            }
+          },
+          series: []
+        };
         $scope.items = [];
         $scope.loadDetails = function() {
           if (!$scope.ngDomain || !$scope.ngDomain.id) {
@@ -76,13 +118,17 @@
               StatsWAF.topReport(angular.merge({}, params, {
                 report_type: 'zone'
               })).$promise,
+              StatsWAF.topReport(angular.merge({}, params, {
+                report_type: 'action_taken'
+              })).$promise,
               getWAFRulesList()
             ])
             .then(function(dataTops) {
               $scope.topCountries = [];
               $scope.topRulesIds = [];
               $scope.topTargetZones = [];
-              var wafRulesList = dataTops[3].data || [];
+              $scope.topActionsTaken.series.length = 0;
+              var wafRulesList = dataTops[4].data || [];
               // NOTE: prepare countries  data
               if (dataTops[0].data && dataTops[0].data.length > 0) {
                 _.forEach(dataTops[0].data, function(item) {
@@ -106,11 +152,30 @@
                   });
                 });
               }
+              // NOTE: data for Attacks By Target Request Zones
               if (dataTops[2].data && dataTops[2].data.length > 0) {
                 _.forEach(dataTops[2].data, function(item) {
                   $scope.topTargetZones.push({
                     name: item.key,
                     y: item.count
+                  });
+                });
+              }
+              // NOTE: data for Actions Taken
+              if (dataTops[3].data && dataTops[3].data.length > 0) {
+                $scope.topActionsTaken.series.length = 0;
+                _.forEach(dataTops[3].data, function(item) {
+                  $scope.topActionsTaken.series.push({
+                    name: 'All Security Events',
+                    data: [item.count]
+                  });
+                  $scope.topActionsTaken.series.push({
+                    name: 'Blocked Requests',
+                    data: [item.blocked]
+                  });
+                  $scope.topActionsTaken.series.push({
+                    name: 'Training Events',
+                    data: [item.learning]
                   });
                 });
               }

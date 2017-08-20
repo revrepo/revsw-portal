@@ -27,9 +27,11 @@
 
     $scope.setResource(Users);
 
+    $scope.USER_FIRST_NAME = $config.PATTERNS.USER_FIRST_NAME;
+    $scope.USER_LAST_NAME = $config.PATTERNS.USER_LAST_NAME;
+    $scope.STREET_ADDRESS = $config.PATTERNS.STREET_ADDRESS;
     $scope.NO_SPECIAL_CHARS = $config.PATTERNS.NO_SPECIAL_CHARS;
     $scope.COMMENT_NO_SPECIAL_CHARS = $config.PATTERNS.COMMENT_NO_SPECIAL_CHARS;
-    $scope.CONTACT_DATA = $config.PATTERNS.CONTACT_DATA;
 
     $scope.roles = ['user', 'admin'];
     // Adding additional user roles for RevAdmin
