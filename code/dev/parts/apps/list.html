@@ -155,7 +155,7 @@
                     <a ui-sref=".configure({id: item.id})" ng-if="!item.loading" uib-tooltip="Advanced Edit App">
                       <i class="glyphicon glyphicon-cog"></i>
                     </a>
-                    <a href="" ng-if="!item.loading" ng-class="{'disabled': isReadOnly() }"ng-click="deleteApp(item)" uib-tooltip="Delete App">
+                    <a href="" ng-if="!item.loading" ng-class="{'disabled': isReadOnly() }" ng-click="deleteApp(item)" uib-tooltip="Delete App">
                       <i class="glyphicon glyphicon-trash"></i>
                     </a>
                     <a href="#/mobile/traffic" ng-if="!item.loading" ng-click="storeToStorage(item)" uib-tooltip="Stats">
