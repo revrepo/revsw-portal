@@ -5,6 +5,7 @@ var devFolder = path.join(__dirname, '..', 'dev');
 
 gulp.task('linthtml', function() {
   return gulp.src([
+    path.join(devFolder, '*.html'),
     path.join(devFolder, 'parts', '**', '*.html'),
     path.join(devFolder, 'parts', '**', '**', '*.html')
     ])
