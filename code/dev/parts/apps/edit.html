@@ -68,7 +68,7 @@
           <div class="form-group" ng-if="auth.isReseller() || auth.isRevadmin()" ng-class="{ 'has-error': editForm.accountId.$invalid && editForm.accountId.$dirty }">
             <label for="account_id" class="col-sm-2 control-label">Account *</label>
             <div class="col-sm-10">
-              <input type="hidden" ng-model="model.account_id" name="accountId" required></input>
+              <input type="hidden" ng-model="model.account_id" name="accountId" required>
               <ui-select ng-model="model.account_id" theme="select2" ng-animate-disabled ng-disabled="_loading" on-select="onAccountSelect($model)" style="min-width: 550px;" id="account_id" name="account_id">
                 <ui-select-match placeholder="Select Account">{{$select.selected.companyName}}</ui-select-match>
                 <ui-select-choices repeat="item.id as item in companies | filter: {companyName: $select.search}">
@@ -256,7 +256,7 @@
               <label for="domains_provisioned_list" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="'Provisioned' domains which are registered in the 'Web' section of the portal and provide full middle-mile acceleration">
                 <i class="fa fa-question-circle"></i>
               </label>
-              <a ui-sref="index.webApp.domains" id="btn-manage-domains"class="btn btn-sm btn-primary" uib-tooltip="Manage Domains" ng-disabled="_loading"><i class="fa fa-list"></i> Manage Domains</a>
+              <a ui-sref="index.webApp.domains" id="btn-manage-domains" class="btn btn-sm btn-primary" uib-tooltip="Manage Domains" ng-disabled="_loading"><i class="fa fa-list"></i> Manage Domains</a>
               <div class="error-messages" ng-messages="editForm.domainsBlackList.$error" role="alert" ng-messages-multiple>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
               </div>
@@ -266,7 +266,7 @@
                 editForm.ratio.$dirty }">
             <label for="a_b_testing_origin_offload_ratio" class="col-sm-2 control-label">A/B Testing Offloading Ratio In % *</label>
             <div class="col-sm-10">
-              <input type="number" min="0" max="100" class="form-control inline-block" name="ratio" ng-disabled="_loading" ng-model="configuration.a_b_testing_origin_offload_ratio" id="a_b_testing_origin_offload_ratio" min="0" max="100" required>
+              <input type="number" class="form-control inline-block" name="ratio" ng-disabled="_loading" ng-model="configuration.a_b_testing_origin_offload_ratio" id="a_b_testing_origin_offload_ratio" min="0" max="100" required>
               <label for="a_b_testing_origin_offload_ratio" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="A/B testing offloading ratio in % (range 0-100). The specified percentage of traffic will be served directly from the application origin server">
                 <i class="fa fa-question-circle"></i>
               </label>
