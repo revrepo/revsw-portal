@@ -3,7 +3,7 @@ var path = require('path');
 var htmlhint = require('gulp-htmlhint'); // @see https://www.npmjs.com/package/gulp-htmlhint
 var devFolder = path.join(__dirname, '..', 'dev');
 
-gulp.task('htmlhint', function() {
+gulp.task('linthtml', function() {
   return gulp.src([
     path.join(devFolder, '*.html'),
     path.join(devFolder, 'parts', '**', '*.html'),
