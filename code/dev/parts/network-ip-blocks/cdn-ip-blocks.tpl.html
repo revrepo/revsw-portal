@@ -12,12 +12,13 @@
         <div class="panel-heading">
           <div class="panel-body">
             <p>The page provides information about IP blocks from which the CDN may originate requests to your origin web servers
-              or ship logs (if configured on “Admin -> Log Shipping” page). The list is dynamic and some IP blocks can be
-              removed or added without a notice. The information is also available via our customer API, end-point
+              or ship logs (if configured on “Admin -&gt; Log Shipping” page). The list is dynamic and some IP blocks can
+              be removed or added without a notice. The information is also available via our customer API, end-point
               <strong><a ng-href="{{$ctrl.API_URL}}#!/locations/v1locationsnetwork_ip_blocks_get_3" target="_blank">{{$ctrl.API_URL}}/locations/network_ip_blocks</a></strong>.
               If you protect your origin or log receiving services with a firewall or/and IDS/IPS please use the information
               to white-list (allow all communication and ignore possible attack/abuse patterns) on both firewall and IPS/IDS
-              levels.</p>
+              levels.
+            </p>
             <p>
               If you do utilize an active Intrusion Prevention Service (IPS) and will not while-list the CDN IP blocks there is a high
               risk that a potentially malicious request originated by one end user will trigger the IPS to block the CDN
@@ -52,3 +53,4 @@
       </div>
     </div>
   </div>
+</div>

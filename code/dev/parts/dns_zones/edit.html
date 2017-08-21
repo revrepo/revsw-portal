@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-sm-12">
     <h2 class="pull-left page-title">
-      <img class="ns1-logo--title" ng-src="images/ns1/white-pb-ns1.svg"></img>
+      <img class="ns1-logo--title" ng-src="images/ns1/white-pb-ns1.svg" alt="NS1 Logo">
       Edit Zone Properties <strong>{{model.zone}}</strong>
     </h2>
   </div>
@@ -69,7 +69,7 @@
           <div class="form-group form-inline" ng-class="{'has-error': editForm.refresh.$invalid && editForm.refresh.$dirty}">
             <label for="refresh" class="col-sm-2 control-label">Refresh *</label>
             <div class="col-md-10">
-              <input type="number" placeholder="7200" id="proxy_timeout" name="refresh" class="form-control inline-block" ng-disabled="_loading" ng-model="model.refresh" ng-min="1" ng-max="43200" placeholder="3600" required> second(s)
+              <input type="number" id="proxy_timeout" name="refresh" class="form-control inline-block" ng-disabled="_loading" ng-model="model.refresh" ng-min="1" ng-max="43200" placeholder="3600" required> second(s)
               <label for="refresh" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Frequency at which slave nameservers will try to refresh the zone from our servers (1-43200 range)">
                 <i class="fa fa-question-circle"></i>
               </label>

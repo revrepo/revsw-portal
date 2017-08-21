@@ -460,12 +460,6 @@
             if(item.$$isExists){
               // NOTE: add additional data -  "short_answers"
               item.short_answers = _.map(item.answers, function(itemAnswer) {
-                if(item.type === 'TXT') {
-                  itemAnswer.answer = _.map(itemAnswer.answer, function(item) {
-                    // NOTE: specific change NSONE for display into a field "short_answers"
-                    return '[u\'' + item.toString() + '\']';
-                  });
-                }
                 return itemAnswer.answer.join(' ');
               });
 
