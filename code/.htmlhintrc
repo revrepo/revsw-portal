@@ -17,7 +17,7 @@
 //  "id-class-value": "dash",
   "style-disabled": true,
   "inline-style-disabled": false,
-  "inline-script-disabled": true,
+  "inline-script-disabled": false,
   "space-tab-mixed-disabled": "true",
   "id-class-ad-disabled": true,
   // "href-abs-or-rel": "rel",

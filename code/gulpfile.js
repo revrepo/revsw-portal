@@ -10,7 +10,6 @@ var vulcanize = require('gulp-vulcanize');
 var browserSync = require('browser-sync');
 var reload = browserSync.reload;
 var ngAnnotate = require('gulp-ng-annotate');
-var htmlhint = require('gulp-htmlhint');
 var gulpRequireTasks = require('gulp-require-tasks');
 var flatten = require('gulp-flatten');
 
@@ -21,13 +20,7 @@ gulpRequireTasks({
 });
 var devFolder = 'dev/';
 var destFolder = './public/';
-var bowerComponentsFolder = devFolder +'bower_components/';
-
-gulp.task('valid', function() {
-  return gulp.src(devFolder + 'parts/**/*.html')
-    .pipe(htmlhint('.htmlhintrc'))
-    .pipe(htmlhint.failReporter());
-});
+var bowerComponentsFolder = devFolder + 'bower_components/';
 
 gulp.task('less', function() {
   return gulp.src(devFolder + 'less/styles.less')
@@ -49,7 +42,10 @@ gulp.task('lessVendor', function() {
 
 gulp.task('copyCss', function() {
   console.log(destFolder + 'css');
-  return gulp.src([devFolder + 'css/**/*.css', devFolder + 'css/**/*.{png,gif}'])
+  return gulp.src([
+      devFolder + 'css/**/*.css',
+      devFolder + 'css/**/*.{png,gif}'
+    ])
     .pipe(gulp.dest(destFolder + 'css'));
 });
 
@@ -74,8 +70,11 @@ gulp.task('copyJson', function() {
 });
 // copy production configuration files
 gulp.task('copyConfig', function() {
-  return gulp.src([devFolder + '../config.js', devFolder + 'version.txt',
-    devFolder + 'robots.txt'])
+  return gulp.src([
+      devFolder + '../config.js',
+      devFolder + 'version.txt',
+      devFolder + 'robots.txt'
+    ])
     .pipe(gulp.dest(destFolder));
 });
 // copy widgets
@@ -101,10 +100,10 @@ gulp.task('dist', function() {
 
   var uglifyOptions = {
     mangle: false //,
-      //compress: {
-      //  dead_code: false,
-      //  hoist_funs: false
-      //}
+    //compress: {
+    //  dead_code: false,
+    //  hoist_funs: false
+    //}
   };
   return gulp.src(devFolder + 'index.html')
     .pipe(assets)
@@ -160,12 +159,15 @@ gulp.task('serve:dev', function() {
     }
   });
 
-  gulp.watch([devFolder + '**/*.html'], reload);
+  gulp.watch([devFolder + '**/*.html',
+    devFolder + 'parts/*.html',
+    devFolder + 'parts/**/*.html',
+    devFolder + 'parts/**/**/*.html'
+  ], ['linthtml', reload]);
   gulp.watch([devFolder + 'less/**/*.less'], ['less']);
   gulp.watch([devFolder + 'less/vendors/**.less'], ['lessVendor']);
 
   gulp.watch([devFolder + 'js/**/*.js'], ['lintjs', reload]);
-  gulp.watch([devFolder + 'js/**/*.html'], reload);
   gulp.watch([devFolder + 'images/**/*'], reload);
   gulp.watch([devFolder + 'widgets/**/src/*'], ['widgets:build']);
 });
@@ -192,6 +194,6 @@ gulp.task('serve:coverage', function() {
 gulp.task('copy', ['copyCss', 'copyParts', 'copyFaviconIcon', 'copyImages', 'copyJson', 'copyFonts', 'fonts', 'widgetsCopy', 'copyConfig']);
 gulp.task('build', ['less', 'lessVendor', 'copy', 'dist']);
 gulp.task('default', ['serve', 'less', 'widgets:build']);
-gulp.task('serve', ['serve:dev']);
+gulp.task('serve', ['serve:dev', 'linthtml']);
 gulp.task('public', ['serve:public']);
 gulp.task('coverage', ['serve:coverage']);
