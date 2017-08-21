@@ -24,8 +24,8 @@
           <br>
           <p><strong>Still running your digital content over delivery platforms built for wired devices?</strong></p>
           <p class="information">Our OpenEdge™ Global Delivery Platform brings together our smart, next-generation CDN + open source approach to
-            edge computing for companies competing in the digital economy. Special, limited time,
-            OpenEdge™ 90-Day Fast Pass offer* includes:</strong>
+            edge computing for companies competing in the digital economy. Special, limited time, OpenEdge™ 90-Day Fast Pass
+            offer* includes:
           </p>
 
           <ul class="list-information">
@@ -42,13 +42,13 @@
           <p><strong> Unlock Your Access to Our OpenEdge™ Global Delivery Platform Today</strong></p>
           <p><strong>To Get Started:</strong></p>
           <ol class="list-instruction">
-            <li>Create an nuu:bit account by completing the Sign Up form on the right.
-              Use Promo Code <b>VS2017</b>.</li>
+            <li>Create an nuu:bit account by completing the Sign Up form on the right. Use Promo Code <b>VS2017</b>.</li>
             <li>A confirmation email will be sent to the email address provided.</li>
             <li>Click on the link in the email, which will take you to our nuu:bit customer portal where you'll be prompted to
               enter your payment information.
               <em> Your credit card will not be billed for the duration of your offer.</em></li>
-            <li>Test drive your content on our <strong>OpenEdge™ Global Delivery Platform</strong> and see how fast you can accelerate your content and your revenues.</li>
+            <li>Test drive your content on our <strong>OpenEdge™ Global Delivery Platform</strong> and see how fast you can accelerate
+              your content and your revenues.</li>
           </ol>
           <br>
           <div class="text text-center">
@@ -200,7 +200,7 @@
               <label for="zipcode" class="col-sm-3 control-label">Zip Code *</label>
               <div class="col-sm-9">
                 <input type="text" ng-pattern="zipRegex" class="form-control inline-block" id="zipcode" name="zipcode" ng-maxlength="30"
-                  required placeholder="Zip Code" ng-model="$ctrl.model.zipcode" ng-maxlength="30" ng-disabled="$ctrl._loading">
+                  required placeholder="Zip Code" ng-model="$ctrl.model.zipcode" ng-disabled="$ctrl._loading">
                 <label for="zipcode" class="text-info" popover-trigger="mouseenter" uib-popover="Could be used in a billing address later">
             <i class="fa fa-question-circle"></i>
           </label>
@@ -209,11 +209,11 @@
             </div>
             <div class="form-group" ng-class="{ 'has-error': newUser.promocode.$invalid &&
                             newUser.promocode.$dirty }">
-            <label for="promocode" class="col-sm-3 control-label">Promo Code</label>
-            <div class="col-sm-9">
-              <input type="text" class="form-control inline-block" id="promocode" name="promocode" ng-maxlength="30"
-                placeholder="Promocode" ng-model="$ctrl.model.promocode" ng-maxlength="30" ng-disabled="$ctrl._loading">
-              <label for="promocode" class="text-info" popover-trigger="mouseenter" uib-popover="Enter here any promo code you might have">
+              <label for="promocode" class="col-sm-3 control-label">Promo Code</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control inline-block" id="promocode" name="promocode" placeholder="Promocode" ng-model="$ctrl.model.promocode"
+                  ng-maxlength="30" ng-disabled="$ctrl._loading">
+                <label for="promocode" class="text-info" popover-trigger="mouseenter" uib-popover="Enter here any promo code you might have">
             <i class="fa fa-question-circle"></i>
           </label>
                 <div ng-show="!!newUser['promocode'].$error.maxlength" style="color:red">30 characters max</div>
@@ -245,3 +245,4 @@
       </div>
     </div>
   </div>
+</div>

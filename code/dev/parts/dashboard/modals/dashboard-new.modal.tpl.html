@@ -1,11 +1,11 @@
 <div class="modal-header">
-  <button type=button class="close" ng-click=closeDialog() aria-hidden=true>&times;</button>
-  <h4 class=modal-title>New Dashboard</h4> </div>
-<div class=modal-body>
+  <button type="button" class="close" ng-click="closeDialog()" aria-hidden="true">&times;</button>
+  <h4 class="modal-title">New Dashboard</h4> </div>
+<div class="modal-body">
   <form role="form" name="newDashboardForm">
     <div class="form-group" ng-class="{'has-error': newDashboardForm.dashboardTitle.$invalid && newDashboardForm.dashboardTitle.$dirty}">
       <label for="dashboardTitle">Title</label>
-      <input type=text class="form-control" id="dashboardTitle" name="dashboardTitle" ng-model="model.title" ng-maxlength="20" validate-pattern-no-special-chars required>
+      <input type="text" class="form-control" id="dashboardTitle" name="dashboardTitle" ng-model="model.title" ng-maxlength="20" validate-pattern-no-special-chars required>
       <div class="error-messages" ng-messages="newDashboardForm.dashboardTitle.$error" role="alert" ng-messages-multiple>
         <div ng-messages-include="parts/shared/error-messages.html"></div>
       </div>
@@ -32,7 +32,7 @@
     </div>
   </form>
 </div>
-<div class=modal-footer>
-  <button type=button class="btn btn-default" ng-disabled="_isLoading" ng-click=closeDialog()>Cancel</button>
-  <button type=button class="btn btn-primary" ng-disabled="newDashboardForm.$invalid || _isLoading" ng-click="applyDialog(model)">Create</button>
+<div class="modal-footer">
+  <button type="button" class="btn btn-default" ng-disabled="_isLoading" ng-click="closeDialog()">Cancel</button>
+  <button type="button" class="btn btn-primary" ng-disabled="newDashboardForm.$invalid || _isLoading" ng-click="applyDialog(model)">Create</button>
 </div>
