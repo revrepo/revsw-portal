@@ -228,7 +228,11 @@ input.ui-select-search {
 
 select.form-control {
   max-width: 550px;
-  margin-bottom: auto;
+}
+
+// fix for btn margins in inline forms
+.form-inline .btn-info{
+  margin-bottom: 5px;
 }
 
 select.form-control.fixed {
@@ -255,7 +259,9 @@ input.form-control {
   height: 30px;
   padding: 4px 8px;
 }
-
+.usage-report .form-inline .btn-info{
+  margin-bottom: 0;
+}
 .usage-report .form-horizontal .control-label {
   padding-top: 5px;
 }
@@ -459,13 +465,13 @@ form,
 .filter-time-period {
   .form-control.date-picker.select2,
   &.date-picker-wrapper>input[type="text"] {
-    margin-top: 10px;
+    margin-top: 0;
   }
   & .date-picker-wrapper {
     // margin: 10px;
     position: relative;
     .over {
-      margin-top: 10px;
+      margin-top: 0;
       position: absolute;
       top: 0;
       left: 0;
@@ -532,17 +538,9 @@ form,
   margin-bottom: 8px;
 }
 
-//fix for certein filters vertical margin missing
-.col-md-6 .col-md-12 .form-inline select.form-control,
-.col-md-6 .col-md-12 .form-inline button.btn-info,
-.col-md-12 .col-md-12 .form-inline button.btn-info,
-.col-md-12 .col-md-12 .form-inline select.form-control{
-  margin-top: 5px;
-}
-
 //fix input type number stying
 .form-inline input.form-control[type="number"]{
-  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 //fix for usage report date picker input field style
@@ -559,6 +557,18 @@ form,
   border-bottom-right-radius: 0;
 }
 
-.panel-heading .col-md-12 .form-inline button.btn-info{
-  margin-top: 0;
+.waf-events-filters .form-inline{
+  margin-top: 5px;
+}
+
+//waf events filters responsive fix
+@media (max-width: 991px){
+  .filter-time-period .date-picker-wrapper{
+    margin-top: 5px;
+  }
+}
+
+.highcharts-data-table table{
+  border-collapse: initial;
+  border-spacing: 10px;
 }
