@@ -7,25 +7,28 @@
 
   /*@ngInject*/
   function TwoFactorAuthCodeModalController($scope, $uibModalInstance, auth, User, AlertService, $config) {
+
+    var code = '';
+
     $scope.data = {
       code: '',
       loading: false
     };
 
-    $scope.close = function() {
+    $scope.close = function () {
       $scope.data.loading = false;
       $uibModalInstance.dismiss();
     };
 
-    $scope.login = function(form) {
+    $scope.login = function (form) {
       if (form.$invalid) {
         return;
       }
       AlertService.clear();
       $scope.data.loading = true;
       try {
-        User.login(auth.email, auth.password, $scope.data.code)
-          .then(function(data) {
+        User.login(auth.email, auth.password, this.code.replace(/\D/g,''))
+          .then(function (data) {
             $uibModalInstance.close(data);
           })
           .catch(function (err) {
@@ -40,12 +43,20 @@
           .finally(function () {
             $scope.data.loading = false;
           });
-      } catch(e) {
+      } catch (e) {
         AlertService.danger(e.message);
         $scope.data.loading = false;
       }
     };
 
-
+    // Replace digits with wildcard
+    $scope.wildcard = function (e) {     
+      if (e.target.value.includes(e.key)) {
+        this.code += e.key;
+        setTimeout(function () {
+          e.target.value = e.target.value.replace(e.key, '*');
+        }, $config.OTP_WILDCARD_DELAY);
+      }
+    }
   }
 })();

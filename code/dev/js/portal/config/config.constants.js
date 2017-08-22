@@ -329,7 +329,8 @@
         'HEADERS': 'Request Header',
         'BODY': 'Request Body',
         'URL': 'Request URL'
-      }
+      },
+      OTP_WILDCARD_DELAY: 1000
     });
 
 })(angular, window);
