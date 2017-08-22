@@ -106,9 +106,6 @@ section[main] {
 
 .log-details {
   cursor: pointer;
-  &:hover {
-    padding-left: 2px;
-  }
 }
 
 .strong {
@@ -252,10 +249,6 @@ select.form-control.fixed175 {
 
 input.form-control {
   max-width: 550px;
-}
-
-.usage-report .form-group {
-  margin-bottom: 6px;
 }
 
 .usage-report div.form-control {
@@ -466,13 +459,13 @@ form,
 .filter-time-period {
   .form-control.date-picker.select2,
   &.date-picker-wrapper>input[type="text"] {
-    margin-top: 5px;
+    margin-top: 10px;
   }
   & .date-picker-wrapper {
     // margin: 10px;
     position: relative;
     .over {
-      margin-top: 5px;
+      margin-top: 10px;
       position: absolute;
       top: 0;
       left: 0;
@@ -537,4 +530,35 @@ form,
 
 .clearfix {
   margin-bottom: 8px;
+}
+
+//fix for certein filters vertical margin missing
+.col-md-6 .col-md-12 .form-inline select.form-control,
+.col-md-6 .col-md-12 .form-inline button.btn-info,
+.col-md-12 .col-md-12 .form-inline button.btn-info,
+.col-md-12 .col-md-12 .form-inline select.form-control{
+  margin-top: 5px;
+}
+
+//fix input type number stying
+.form-inline input.form-control[type="number"]{
+  margin-top: 5px;
+}
+
+//fix for usage report date picker input field style
+.panel-heading .input-group .form-control:first-child{
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1;
+  color: #555;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.panel-heading .col-md-12 .form-inline button.btn-info{
+  margin-top: 0;
 }
