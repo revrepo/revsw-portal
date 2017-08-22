@@ -223,6 +223,14 @@ var NavHelper = {
   },
 
   /**
+   * Navigates to Web Analytics > ImageEngine
+   */
+  goToImageEngine: function () {
+    return SideBar.select(MenuItems.WEB_ANALYTICS.IMAGE_ENGINE);
+  },
+
+
+  /**
    * Navigates to Web Analytics > Traffic Heatmaps
    */
   goToWATrafficHeatmaps: function () {
@@ -379,7 +387,7 @@ var NavHelper = {
    */
   goToNetworkStatus: function () {
     return SideBar.select(MenuItems.SUPPORT.NETWORK_STATUS);
-  }
+  },
 };
 
 module.exports = NavHelper;

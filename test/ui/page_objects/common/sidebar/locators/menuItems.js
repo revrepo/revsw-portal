@@ -109,6 +109,10 @@ var MenuItems = {
     RTT_HEAT_MAPS: {
       linkText: 'RTT Heatmaps',
       area: MenuAreas.WEB_ANALYTICS
+    },
+    IMAGE_ENGINE: {
+      linkText: 'ImageEngine',
+      area: MenuAreas.WEB_ANALYTICS
     }
   },
   SECURITY_ANALYTICS:{

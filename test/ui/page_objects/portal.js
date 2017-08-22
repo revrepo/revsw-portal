@@ -124,6 +124,8 @@ var PortalHelpers = require('./../common/helpers/portal');
 
 var PortalDataProviders = require('./../common/providers/data/portal');
 
+var ImageEnginePage = require('./analytics/ImageEngine');
+
 // This `Portal` Page Object is the entry point to use all other Page Objects
 // that abstract all components from the Portal App.
 var Portal = {
@@ -241,7 +243,9 @@ var Portal = {
 	  topReportsPage: MobileAnalyticsTopReportsPage,
 	  topObjectsPage : MobileAnalyticsTopObjectsPage,
 	  trafficDistributions: MobileAnalyticsTrafficDistributionsPage,
+    ImageEnginePage: ImageEnginePage
   },
+  
   accountResourcesPage: AccountResourcesPage,
 
   helpers: PortalHelpers,
