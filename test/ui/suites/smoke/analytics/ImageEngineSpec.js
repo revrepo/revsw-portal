@@ -23,22 +23,30 @@ var Portal = require('./../../../page_objects/portal');
 var Constants = require('./../../../page_objects/constants');
 
 describe('Smoke', function () {
-  describe('ImageEngine', function () {
+  var users = [
+    config.get('portal.users.revAdmin'),
+    config.get('portal.users.admin'),
+    config.get('portal.users.reseller'),
+    config.get('portal.users.user'),
+    config.get('portal.users.roUser')
+  ];
 
-    var adminUser = config.get('portal.users.admin');
+   users.forEach(function(user) {
 
-    beforeAll(function () {
-      Portal.signIn(adminUser);
-      Portal.helpers.nav.goToImageEngine();
-    });
+    describe('With user: ' + user.role, function() {
 
-    afterAll(function () {
-      Portal.signOut();
-    });
+      describe('ImageEngine', function() {
 
+          beforeAll(function() {
+          Portal.signIn(user);
+          Portal.helpers.nav.goToImageEngine();
+        });
+
+        afterAll(function() {
+          Portal.signOut();
+        });
+  
 	
-
-
     it('should displayed all filters', function(){ 
         Portal.mobileAnalytics.ImageEnginePage.getFilterHoursPeriods()
           .getAttribute('ng-model')
@@ -67,17 +75,15 @@ describe('Smoke', function () {
 
     it('should displayed button update report', function(){ 
          Portal.mobileAnalytics.ImageEnginePage.getUpdateReport()
-          .getAttribute('ng-click')
             .then(function(value) {  
-              expect(value.length > 1).toBe(true);
+              expect(value.length === 3).toBe(true);
           });
        });
 
     it('should displayed chart context menu', function(){ 
     	Portal.mobileAnalytics.ImageEnginePage.getChartContextMenu()
-        .getAttribute('style')
           .then(function(value) { 
-           expect(value.length > 1).toBe(true);
+           expect(value.length === 4).toBe(true);
     	   });
         });
 
@@ -107,6 +113,8 @@ describe('Smoke', function () {
 
 
 
- });
+         });
+      });
+   });
 });
 

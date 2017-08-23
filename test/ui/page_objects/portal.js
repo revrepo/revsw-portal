@@ -126,6 +126,10 @@ var PortalDataProviders = require('./../common/providers/data/portal');
 
 var ImageEnginePage = require('./analytics/ImageEngine');
 
+var SubscriptionsPage = require('./azure/Subscriptions');
+var ResourcesPerSubscriptionPage = require('./azure/ResourcesPerSubscription');
+var ResourcesPage = require('./azure/Resources');
+
 // This `Portal` Page Object is the entry point to use all other Page Objects
 // that abstract all components from the Portal App.
 var Portal = {
@@ -244,6 +248,11 @@ var Portal = {
 	  topObjectsPage : MobileAnalyticsTopObjectsPage,
 	  trafficDistributions: MobileAnalyticsTrafficDistributionsPage,
     ImageEnginePage: ImageEnginePage
+  },
+  azureMarketplace: {
+      SubscriptionsPage: SubscriptionsPage,
+      ResourcesPerSubscriptionPage: ResourcesPerSubscriptionPage,
+      ResourcesPage: ResourcesPage
   },
   
   accountResourcesPage: AccountResourcesPage,

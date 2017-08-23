@@ -199,6 +199,21 @@ var MenuItems = {
       area: MenuAreas.BILLING
     }
   },
+  AZURE_MARKETPLACE: {
+    SUBSCRIPTIONS: {
+      linkText: 'Subscriptions',
+      area: MenuAreas.AZURE_MARKETPLACE
+    },
+    RESOURCES_PER_SUBSCRIPTION: {
+      linkText: 'Resources Per Subscription',
+      area: MenuAreas.AZURE_MARKETPLACE
+    },
+    RESOURCES: {
+      linkText: 'Resources',
+      css: 'a[ui-sref="index.azureMarketplace.resources"]',
+      area: MenuAreas.AZURE_MARKETPLACE
+    }
+  },
   SUPPORT: {
     API_DOCUMENTATION: {
       linkText: 'API Documentation',
