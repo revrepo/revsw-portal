@@ -114,7 +114,6 @@
           </div>
           <div class="row" ng-if="records.length > 0">
             <div class="col-sm-6 col-md-3 individual-plan" ng-repeat="item in records | orderBy: 'monthly_fee'">
-                <p>1st Month Free.</p>
               <div class="billing-plan" ng-class="{'current':item.id === account.plan_id}">
                 <div class="billing-plan-header">
                   <h2 class="billing-plan-title">{{item.name}}</h2>
