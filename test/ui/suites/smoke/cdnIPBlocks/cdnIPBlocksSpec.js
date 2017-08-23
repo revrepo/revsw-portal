@@ -46,6 +46,19 @@ describe('Smoke', function() {
             var title = Portal.cdnIPBlocks.page.getTitle();
             expect(title).toEqual(expectedTitle);
           });
+
+        it('should display IP subnets which may ship logs ',
+          function() {
+            var listIPSubnetsLogShipping = Portal.cdnIPBlocks.page.getListItemsLogShippingBlocksList();
+            expect(listIPSubnetsLogShipping.count()).toBeGreaterThan(0);
+          });
+
+        it('should display IP subnets which may send origin requests',
+          function() {
+            var listIPSubnets = Portal.cdnIPBlocks.page.getListItemsEdgeBlocksList();
+            expect(listIPSubnets.count()).toBeGreaterThan(0);
+          });
+
       });
     });
   });

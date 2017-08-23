@@ -35,16 +35,16 @@
               <div ng-show="$ctrl._loading && $ctrl.logShippingBlocksList.length==0">
                 <p><i class="glyphicon glyphicon-refresh spin" ng-show="$ctrl._loading && $ctrl.logShippingBlocksList.length==0"></i></p>
               </div>
-              <div class="form-group staging-servers-list" ng-if="!$ctrl._loading && $ctrl.logShippingBlocksList.length >0">
-                <p ng-repeat="server_ip in $ctrl.logShippingBlocksList">{{server_ip}}</p>
+              <div id="logShippingBlocksList" class="form-group cdn-ip-blocks-list" ng-if="!$ctrl._loading && $ctrl.logShippingBlocksList.length >0">
+                <p ng-repeat="server_ip in $ctrl.logShippingBlocksList" class="cdn-ip-blocks-item">{{server_ip}}</p>
               </div>
               <!-- -->
               <p>IP subnets which may send origin requests to your web servers<span ng-if="$ctrl.edgeBlocksList.length>0"> ({{$ctrl.edgeBlocksList.length}} subnets in total)</span>:</p>
               <div ng-show="$ctrl._loading && $ctrl.edgeBlocksList.length==0">
                 <p><i class="glyphicon glyphicon-refresh spin" ng-show="$ctrl._loading && $ctrl.edgeBlocksList.length==0"></i></p>
               </div>
-              <div class="form-group staging-servers-list" ng-if="!$ctrl._loading && $ctrl.edgeBlocksList.length >0">
-                <p ng-repeat="server_ip in $ctrl.edgeBlocksList">{{server_ip}}</p>
+              <div id="edgeBlocksList" class="form-group cdn-ip-blocks-list" ng-if="!$ctrl._loading && $ctrl.edgeBlocksList.length >0">
+                <p ng-repeat="server_ip in $ctrl.edgeBlocksList" class="cdn-ip-blocks-item">{{server_ip}}</p>
               </div>
             </div>
 
