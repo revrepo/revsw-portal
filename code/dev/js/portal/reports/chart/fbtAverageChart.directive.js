@@ -100,6 +100,9 @@
             }
           },
           xAxis: {
+            title: {
+              text: 'Date'
+            },
             crosshair: {
               width: 1,
               color: '#000000'
