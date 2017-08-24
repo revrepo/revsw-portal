@@ -6,8 +6,7 @@
     .controller('TwoFactorAuthController', TwoFactorAuthController);
 
   /*@ngInject*/
-  function TwoFactorAuthController($scope, User, TwoFactorAuth, AlertService, $uibModal) {
-
+  function TwoFactorAuthController($scope, User, TwoFactorAuth, AlertService, $uibModal, $config) {
     /**
      * Loading flag
      *
@@ -55,7 +54,7 @@
     /**
      * Clear all codes related to enable 2fa
      */
-    $scope.clearCodes = function() {
+    $scope.clearCodes = function () {
       $scope.qrImg = '';
       $scope.asciiCode = '';
       $scope.oneTimePassword = '';
@@ -67,7 +66,7 @@
      *
      * @param {Boolean} enabled
      */
-    $scope.updateUserProfile = function(enabled) {
+    $scope.updateUserProfile = function (enabled) {
       $scope.twoFAEnabled = enabled;
       $scope.clearCodes();
       User.reloadUser();
@@ -76,7 +75,7 @@
     /**
      * Init 2fa for current loged in user
      */
-    $scope.init = function() {
+    $scope.init = function () {
       $scope._loading = true;
 
       TwoFactorAuth.init().$promise.then(function (data) {
@@ -98,7 +97,7 @@
      *
      * @param {String} oneTimePassword
      */
-    $scope.enable = function(oneTimePassword) {
+    $scope.enable = function (oneTimePassword) {
       if (!oneTimePassword) {
         AlertService.danger('Please enter your One Time Password');
         angular.element('#one-time-password').focus();
@@ -127,21 +126,21 @@
     /**
      * Will show elements related to disable 2fa
      */
-    $scope.showDisablePart = function() {
+    $scope.showDisablePart = function () {
       $scope.showDisable = true;
     };
 
     /**
      * Will show elements related to disable 2fa
      */
-    $scope.hideDisablePart = function() {
+    $scope.hideDisablePart = function () {
       $scope.showDisable = false;
     };
 
     /**
      * Disables 2fa for user
      */
-    $scope._disable = function(/*oneTimePassword*/) {
+    $scope._disable = function (/*oneTimePassword*/) {
       //if (!oneTimePassword) {
       //  AlertService.danger('Please enter your One Time Password');
       //  angular.element('#one-time-password').focus();
@@ -174,7 +173,7 @@
      *
      * @returns {Promise}
      */
-    $scope.confirm = function() {
+    $scope.confirm = function () {
       var modalInstance = $uibModal.open({
         animation: true,
         templateUrl: 'confirm2FaDisable.html',
@@ -194,8 +193,30 @@
     /**
      * Show confirmation popup and disable 2fa
      */
-    $scope.disable = function() {
+    $scope.disable = function () {
       $scope.confirm().then($scope._disable);
+    };
+
+    // Var for holding the OTP
+    $scope.code = '';
+    // Replace digits with wildcard
+    $scope.wildcard = function (e) {
+      if (($scope.code.length - e.target.value.length) > 1) {
+        $scope.code = '';
+        e.target.value = '';
+      }
+      if (e.target.value === '') {
+        $scope.code = '';
+      } else {
+        if (e.keyCode === 8 || e.keyCode === 46) { // Check if key is backspace or delete
+          $scope.code = $scope.code.slice(0, -1);
+        } else if (e.target.value.includes(e.key)) {
+          $scope.code += e.key;
+          setTimeout(function () {
+            e.target.value = e.target.value.replace(e.key, '*');
+          }, $config.OTP_WILDCARD_DELAY);
+        }
+      }
     };
   }
 })();

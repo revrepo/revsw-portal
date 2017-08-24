@@ -1,4 +1,4 @@
-(function(angular, window) {
+(function (angular, window) {
   'use strict';
   angular
     .module('revapm.Portal.Config')
@@ -94,9 +94,9 @@
        * Interval delay for refreshing SSL Certificate staging/global status
        */
       SSL_CERT_STATUS_REFRESH_INTERVAL: 15000,
-       /**
-       * Interval delay for refreshing WAF Rules Status staging/global status
-       */
+      /**
+      * Interval delay for refreshing WAF Rules Status staging/global status
+      */
       WAF_RULE_STATUS_REFRESH_INTERVAL: 15000,
       /**
        * List of icon classes for WAF Rule  statuses
@@ -188,9 +188,9 @@
         USER_LAST_NAME: /^[A-z\u00C0-\u00ff""\w\d\s-'.,()#]+$/,
         STREET_ADDRESS: /^[A-z\u00C0-\u00ff""\w\d\s-'.,&#:()]+$/,
         WAF_LOCATION_NAME: /^\/{1}(([A-Za-z0-9\-\_]+)(\/?){1})*$/,
-        CIDR:/^([0-9]{1,3}\.){3}[0-9]{1,3}\/{1}(([1-9]|[1-2][0-9]|3[0-2])){1}?$/,
+        CIDR: /^([0-9]{1,3}\.){3}[0-9]{1,3}\/{1}(([1-9]|[1-2][0-9]|3[0-2])){1}?$/,
         WAF_RULE_NAME: /^[A-Za-z0-9//_.:', -]+$/
-     },
+      },
       // HEADER OPERATION FOR DOMAIN CACHING RULE
       HEADER_OPERATIONS: {
         'add': 'Add',
@@ -198,7 +198,7 @@
         'replace': 'Replace'
       },
       // DOMAIN WAF ACTIONS
-      WAF_ACTIONS:{
+      WAF_ACTIONS: {
         'ALLOW': 'ALLOW',
         'BLOCK': 'BLOCK',
         'LOG': 'LOG',
@@ -298,30 +298,30 @@
         'enable_xss_injection_lib': true,
         'waf_rules': [],
         'waf_actions': [
-            {
-              'condition': '$SQL >= 8',
-              'action': 'BLOCK'
-            },
-            {
-              'condition': '$UWA >= 4',
-              'action': 'DROP'
-            },
-            {
-              'condition': '$XSS >= 8',
-              'action': 'BLOCK'
-            },
-            {
-              'condition': '$EVADE >= 4',
-              'action': 'BLOCK'
-            },
-            {
-              'condition': '$LIBINJECTION_XSS >= 8',
-              'action': 'BLOCK'
-            },
-            {
-              'condition': '$LIBINJECTION_SQL >= 8',
-              'action': 'BLOCK'
-            }
+          {
+            'condition': '$SQL >= 8',
+            'action': 'BLOCK'
+          },
+          {
+            'condition': '$UWA >= 4',
+            'action': 'DROP'
+          },
+          {
+            'condition': '$XSS >= 8',
+            'action': 'BLOCK'
+          },
+          {
+            'condition': '$EVADE >= 4',
+            'action': 'BLOCK'
+          },
+          {
+            'condition': '$LIBINJECTION_XSS >= 8',
+            'action': 'BLOCK'
+          },
+          {
+            'condition': '$LIBINJECTION_SQL >= 8',
+            'action': 'BLOCK'
+          }
         ]
       },
       WAF_REQUEST_ZONES: {
@@ -329,7 +329,12 @@
         'HEADERS': 'Request Header',
         'BODY': 'Request Body',
         'URL': 'Request URL'
-      }
+      },
+      /**
+       * @name OTP_WILDCARD_DELAY
+       * @description OTP digit change to wildcard delay in milliseconds   
+       */
+      OTP_WILDCARD_DELAY: 1000
     });
 
 })(angular, window);
