@@ -91,7 +91,7 @@
                     <i class="glyphicon glyphicon-refresh" ng-class="_loading ? 'spin' : ''"></i>&nbsp; Refresh
                     </button>
                 </div>                
-                <div class="form-group">
+                <div class="form-group spaced-button">
                 <button ng-click="onCreateWhiteListingWAFRules()" class="btn btn-success" ng-class="{'btn-disabled':isReadOnly()}" ng-disabled="_loading || isReadOnly()"
                   popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="The system can automatically create white-listing WAF rules using real end user traffic of a website. WAF learning mode can be enabled using “Learning Mode” switch in WAF tab of your website configuration.">
                     <i class="glyphicon glyphicon-plus"></i>&nbsp; Learn From The Logs And Add Auto-Generated Rule
