@@ -94,20 +94,13 @@
           width: 1,
           color: '#000000'
         },
-        tickInterval: tickInterval_,
-        labels: {
-          autoRotation: false,
-          useHTML: true,
-          formatter: function() {
-            return this.value.label;
-          }
-        }
+        tickInterval: tickInterval_
       },
       tooltip: {
-        formatter: function() {
-          return this.key.tooltip + '<br/>' +
-            this.series.name + ': <strong>' + Util.humanFileSizeInGB(this.y, 3) + '</strong>';
-        }
+        xDateFormat: '<span style="color: #000; font-weight: bold;">%H:%M</span> %b %d',
+        shared: true,
+        headerFormat: '{point.key}<br/>',
+        pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y:.3f}</b><br/>'
       },
       plotOptions: {
         series: {
@@ -304,18 +297,8 @@
             data.data.forEach(function(item, idx, items) {
               traffic_total_ += item.sent_bytes;
               var val = moment(item.time_utc).utc(),
-                label;
-
-              if (idx % tickInterval_) {
-                label = '';
-              } else {
-                label = val.format('[<span style="color: #000; font-weight: bold;">]MMM D[</span>]');
-              }
-
-              labels.push({
-                tooltip: val.format('[<span style="color: #000; font-weight: bold;">]MMMM Do YYYY[</span>]'),
-                label: label
-              });
+                label = val.format('[<span style="color: #000; font-weight: bold;">]MMM D[</span>]');          
+              labels.push(label);
 
               if (item.count) {
                 series[0].data.push(item.sent_bytes);
