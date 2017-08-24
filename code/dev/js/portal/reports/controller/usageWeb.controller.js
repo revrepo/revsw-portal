@@ -46,7 +46,7 @@
     $scope.chartOptions = {
       chart: {
         type: 'column',
-        // NOTE: used for debug data in graph and table
+        //NOTE: used for debug data in graph and table
         // zoomType: 'x',
         // events: {
         //   redraw: function() {
@@ -94,13 +94,23 @@
           width: 1,
           color: '#000000'
         },
-        tickInterval: tickInterval_
+        title: {
+          text: 'Date'
+        },
+        tickInterval: tickInterval_,
+        labels: {
+          autoRotation: false,
+          useHTML: true,
+          formatter: function() {
+            return moment(this.value).format('[<span style="color: #000; font-weight: bold;">]MMM D[</span>]');
+          }
+        }
       },
       tooltip: {
-        xDateFormat: '<span style="color: #000; font-weight: bold;">%H:%M</span> %b %d',
-        shared: true,
-        headerFormat: '{point.key}<br/>',
-        pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y:.3f}</b><br/>'
+        formatter: function() {
+          return moment(this.key).format('[<span style="color: #000; font-weight: bold;">]MMMM Do YYYY[</span>]') + '<br/>' +
+            this.series.name + ': <strong>' + Util.humanFileSizeInGB(this.y, 3) + '</strong>';
+        }
       },
       plotOptions: {
         series: {
@@ -297,7 +307,11 @@
             data.data.forEach(function(item, idx, items) {
               traffic_total_ += item.sent_bytes;
               var val = moment(item.time_utc).utc(),
-                label = val.format('[<span style="color: #000; font-weight: bold;">]MMM D[</span>]');          
+                
+                //label = val.format('[<span style="color: #000; font-weight: bold;">]MMM D[</span>]');
+                label = val.format('MMM D YYYY');
+              
+
               labels.push(label);
 
               if (item.count) {
