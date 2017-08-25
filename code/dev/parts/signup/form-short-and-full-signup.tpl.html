@@ -74,7 +74,7 @@
           <div class="form-action center-block">
             <div class="text-center">
               <a ui-sref="^" class="btn btn-default">
-                <i class="glyphicon glyphicon-remove"></i>&nbsp; Cancel
+                <i class="glyphicon glyphicon-arrow-left"></i>&nbsp; Back
               </a>
               <button class="btn btn-success" ng-disabled="$ctrl._loading || newUser.$invalid" ng-click="$ctrl.onSignUpShort($ctrl.model)">
               <i class="glyphicon" ng-class="_loading ? 'glyphicon-refresh spin':'glyphicon-log-in'"></i> Sign Up
@@ -297,7 +297,7 @@
                 <br>
                 <div class="text text-center">
                   <a ui-sref="^" class="btn btn-default">
-                    <i class="glyphicon glyphicon-remove"></i>&nbsp; Cancel
+                    <i class="glyphicon glyphicon-arrow-left"></i>&nbsp; Back
                   </a>
                   <button class="btn btn-success" ng-disabled="_loading || newUser.$invalid ||(($ctrl.model.password != $ctrl.model.passwordConfirm ||newUser.passwordConfirm.$invalid) &&newUser.passwordConfirm.$dirty )"
                     ng-click="$ctrl.onSignUp($ctrl.model)">
