@@ -75,7 +75,7 @@
                 }
                 var x = this.xAxis[0].toPixels(this.xAxis[0].min) + 3;
                 info_ = this /*chart*/ .renderer
-                  .label('Events <span style="font-weight: bold; color: #3c65ac;">' + Util.formatNumber(requests_) +
+                  .label('Security Events <span style="font-weight: bold; color: #3c65ac;">' + Util.formatNumber(requests_) +
                     '</span>',
                     x /* x */ , 3 /* y */ , '', 0, 0, true /*html*/ )
                   .css({
