@@ -309,7 +309,11 @@
           report_type: 'ie_resolution_changes',
           count: 10
         }
-      }
+      },
+      statsDomainActivity:{
+        method: 'GET',
+        url: $config.API_URL + '/stats/:domainId/activity',
+      },
     });
   }
 })();
