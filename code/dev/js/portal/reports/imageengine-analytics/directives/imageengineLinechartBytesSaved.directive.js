@@ -58,7 +58,7 @@
       return params;
     }
     $scope._loading = false;
-    $scope.heading = 'Bandwidth Saved By ImageEngine';
+    $scope.heading = 'Bandwidth Saved By Image Optimization';
     $scope.reload = reload;
 
     $scope.filters = {

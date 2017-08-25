@@ -62,7 +62,7 @@
 
     $scope._loading = false;
     $scope.delay = '24';
-    $scope.heading = 'Performance Improvement By ImageEngine';
+    $scope.heading = 'Performance Improvement By Image Optimization';
     $scope.reload = reload;
 
     $scope.filters = {
