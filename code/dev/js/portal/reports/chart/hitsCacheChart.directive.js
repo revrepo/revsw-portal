@@ -22,7 +22,7 @@
         isAutoReload: '@?'
       },
       /*@ngInject*/
-      controller: function($scope, Stats, $q, Util, filterGeneratorService) {
+      controller: function($scope, Stats, $q, Util, filterGeneratorService, EventsSerieDataService) {
         var _filters_field_list = ['from_timestamp', 'to_timestamp', 'country', 'device', 'os', 'browser'];
 
         function generateFilterParams(filters) {
@@ -244,6 +244,16 @@
                 }
               }
               return $q.when(series);
+            })
+            .then(function(series) {
+              // NOTE: add events data
+              var filterParams = generateFilterParams($scope.filters);
+              var options = {
+                from_timestamp: filterParams.from_timestamp,
+                to_timestamp: filterParams.to_timestamp,
+                domain_id: $scope.ngDomain.id,
+              };
+              return EventsSerieDataService.extendSeriesEventsDataForDomainId(series, options);
             })
             .then(function setNewData(data) {
               // model better to update once

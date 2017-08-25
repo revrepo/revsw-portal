@@ -21,7 +21,7 @@
         isAutoReload: '@?'
       },
       /*@ngInject*/
-      controller: function($scope, Stats, $q, Util) {
+      controller: function($scope, Stats, $q, Util, EventsSerieDataService) {
         var _filters_field_list = ['from_timestamp', 'to_timestamp', 'country', 'device', 'os', 'browser'];
         $scope.heading = 'HTTP/HTTPS Hits';
         $scope._loading = false;
@@ -224,6 +224,16 @@
                 }
               }
               return $q.when(series);
+            })
+            .then(function(series) {
+              // NOTE: add events data
+              var filterParams = generateFilterParams($scope.filters);
+              var options = {
+                from_timestamp: filterParams.from_timestamp,
+                to_timestamp: filterParams.to_timestamp,
+                domain_id: $scope.ngDomain.id,
+              };
+              return EventsSerieDataService.extendSeriesEventsDataForDomainId(series, options);
             })
             .then(function setNewData(data) {
               // model better to update once
