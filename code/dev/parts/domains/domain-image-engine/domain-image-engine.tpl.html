@@ -2,13 +2,13 @@
   <!--ImageEngine-->
   <div class="form-group form-inline">
     <label for="enableImageEngine" class="col-sm-3 control-label">
-      ImageEngine
+      Image Optimization
     </label>
     <div class="col-md-9">
       <toggle-switch name="enableImageEngine" id="enableImageEngine" ng-model="model.image_engine.enable_image_engine" on-label="On"
         off-label="Off" is-disabled="_loading" ng-change="onEnableImageEngineChanged($event, model.image_engine.enable_image_engine)">
       </toggle-switch>
-      <label for="enableImageEngine" class="text-info" popover-trigger="mouseenter" uib-popover="This switch controls whether ImageEngine image optimization feature should be enabled for the domain. Once enabled ImageEngine will automatically resize served images depending on the maximum screen resolution of end users' devices. Enabling ImageEngine will automatically enable Custom VCL Code feature.">
+      <label for="enableImageEngine" class="text-info" popover-trigger="mouseenter" uib-popover="This switch controls whether Image Optimization feature should be enabled for the domain. Once enabled Image Optimization will automatically resize served images depending on the maximum screen resolution of end users' devices. Enabling Image Optimization will automatically enable Custom VCL Code feature.">
         <i class="fa fa-question-circle"></i>
       </label>
     </div>
@@ -17,12 +17,12 @@
     <!--Inage Engine Token-->
     <div class="form-group" ng-class="{'has-error': editForm.imageEngineToken.$invalid && editForm.imageEngineToken.$dirty}">
       <label for="imageEngineToken" class="col-sm-3 control-label">
-          ImageEngine Token
+          Image Optimization Token
     </label>
       <div class="col-md-9">
         <input id="imageEngineToken" type="text" class="form-control inline-block" ng-disabled="_loading" name="imageEngineToken"
-          ng-model="model.image_engine.image_engine_token" placeholder="ImageEngine Token">
-        <label for="imageEngineToken" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Optional ImageEngine token value to be used in communication with ImageEngine secondary cache storage">
+          ng-model="model.image_engine.image_engine_token" placeholder="Image Optimization Token">
+        <label for="imageEngineToken" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Optional Image Optimization token value to be used in communication with Image Optimization secondary cache storage">
                     <i class="fa fa-question-circle"></i>
        </label>
         <div class="error-messages" ng-messages="editForm.imageEngineToken.$error" role="alert" ng-messages-multiple>
@@ -31,15 +31,15 @@
       </div>
     </div>
     <!--// Image Engine Toke-->
-    <!-- ImageEngine Purge API Secret Key-->
+    <!-- Image Optimization Purge API Secret Key-->
     <div class="form-group" ng-class="{'has-error': editForm.imageEngineAPIKey.$invalid && editForm.imageEngineAPIKey.$dirty}">
       <label for="imageEngineAPIKey" class="col-sm-3 control-label">
-         ImageEngine Purge API Secret Key
+         Image Optimization Purge API Secret Key
     </label>
       <div class="col-md-9">
         <input id="imageEngineAPIKey" type="text" class="form-control inline-block" ng-disabled="_loading" name="imageEngineAPIKey"
           ng-model="model.image_engine.image_engine_api_key" placeholder="API Key">
-        <label for="imageEngineAPIKey" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Optional API key value is used for purging of objects from ImageEngine secondary cache storage">
+        <label for="imageEngineAPIKey" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Optional API key value is used for purging of objects from Image Optimization secondary cache storage">
                     <i class="fa fa-question-circle"></i>
        </label>
         <div class="error-messages" ng-messages="editForm.imageEngineAPIKey.$error" role="alert" ng-messages-multiple>
@@ -49,11 +49,11 @@
     </div>
     <!--image_engine_origin_server -->
     <div class="form-group" ng-class="{'has-error': editForm.imageEngineOriginServer.$invalid && editForm.imageEngineOriginServer.$dirty}">
-      <label for="imageEngineOriginServer" class="col-sm-3 control-label">ImageEngine Secondary Cache Storage</label>
+      <label for="imageEngineOriginServer" class="col-sm-3 control-label">Image Optimization Secondary Cache Storage</label>
       <div class="col-sm-9">
         <input type="text" validate-origin-server-name-optional class="form-control inline-block" ng-disabled="_loading" ng-model="model.image_engine.image_engine_origin_server"
           id="imageEngineOriginServer" name="imageEngineOriginServer" placeholder="Origin Server Name" ng-maxlength="150">
-        <label for="imageEngineOriginServer" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Optional host name of ImageEngine secondary cache storage">
+        <label for="imageEngineOriginServer" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Optional host name of Image Optimization secondary cache storage">
                     <i class="fa fa-question-circle"></i>
                   </label>
         <div class="error-messages" ng-messages="editForm.imageEngineOriginServer.$error" role="alert" ng-messages-multiple>
@@ -61,17 +61,17 @@
         </div>
       </div>
     </div>
-    <!-- Set Default ImageEngine Configuration -->
+    <!-- Set Default Image Optimization Configuration -->
     <div class="form-group" ng-if="model.image_engine.custom_configuration_present">
       <label for="refreshImageEngineConfiguration" class="col-sm-3 control-label">
-        Set Default ImageEngine Configuration
+        Set Default Image Optimization Configuration
       </label>
       <div class="col-md-9">
         <toggle-switch id="refreshImageEngineConfigurationChBox" name="refreshImageEngineConfiguration" is-disabled="_loading" ng-model="model.image_engine.refresh_image_engine_configuration"
           on-label="Yes" off-label="No">
         </toggle-switch>
         <label for="refreshImageEngineConfiguration" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter"
-          uib-popover="Use the switch to reset the Custom VCL Code to the default ImageEngine code">
+          uib-popover="Use the switch to reset the Custom VCL Code to the default Image Optimization code">
           <i class="fa fa-question-circle"></i>
         </label>
       </div>
@@ -79,9 +79,9 @@
     <div class="form-group " ng-if="model.image_engine.custom_configuration_present">
       <label class="col-sm-3  control-label"> Note: </label>
       <div class="col-sm-9 control-label pull-left" style="text-align:left">
-        ImageEngine configuration uses modified Custom VCL Code
+        Image Optimization configuration uses modified Custom VCL Code
         <label for="refreshImageEngineConfiguration" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter"
-          uib-popover="It is possible to customize ImageEngine logic directly in “Custom VCL Code” section of the domain configuration page. This note appears when we detect that the domain is using customized ImageEngine VCL code. In order to reset the configuration to the default value you can use “Set Default ImageEngine Configuration” switch above">
+          uib-popover="It is possible to customize Image Optimization logic directly in “Custom VCL Code” section of the domain configuration page. This note appears when we detect that the domain is using customized Image Optimization VCL code. In order to reset the configuration to the default value you can use “Set Default Image Optimization Configuration” switch above">
           <i class="fa fa-question-circle"></i>
         </label>
       </div>

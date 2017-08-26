@@ -231,7 +231,7 @@
                 <br>
                 <div class="text text-center">
                   <a ui-sref="^" class="btn btn-default">
-                    <i class="glyphicon glyphicon-remove"></i>&nbsp; Cancel
+                    <i class="glyphicon glyphicon-arrow-left"></i>&nbsp; Back
                   </a>
                   <button class="btn btn-success" ng-disabled="_loading || newUser.$invalid ||(($ctrl.model.password != $ctrl.model.passwordConfirm ||newUser.passwordConfirm.$invalid) &&newUser.passwordConfirm.$dirty )"
                     ng-click="$ctrl.model.billing_plan = bp_;  $ctrl.onSignUp($ctrl.model)">
