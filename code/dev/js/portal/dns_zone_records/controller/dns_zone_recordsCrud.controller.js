@@ -52,8 +52,8 @@
               }, 500);
             }
           });
-      } else {
-        $scope.clearModel();
+      } else {        
+        //$scope.clearModel();
       }
     });
 
@@ -159,7 +159,7 @@
      * @return {[type]}       [description]
      */
     $scope.createDNSZoneRecord = function(model, isStay) {
-      model.rec.zone = $scope.zone_name; //decodeURIComponent($routeParams.zone);
+      model.rec.zone = $scope.zone_name; //decodeURIComponent($routeParams.zone);      
       var idomain = model.idomain;
       if (idomain) {
         if (idomain.slice(-1) === '.') {
@@ -235,6 +235,7 @@
     };
 
     $scope.storeToStorage = function(model) {
+      alert('a');
       $localStorage.selectedDomain = model;
     };
 
@@ -303,7 +304,7 @@
       if (!$scope.resource) {
         throw new Error('No resource provided.');
       }
-      $scope.clearModel();
+      //$scope.clearModel();
       $scope.loading(true);
       return $scope.resource
         .get({
@@ -376,7 +377,7 @@
       return record.$save()
         .then(function(data) {
           $rootScope.$broadcast('update:searchData');
-          $scope.clearModel(model);
+          //$scope.clearModel(model);
           if (isStay === true) {
             return $q.resolve(data); // Send data next to promise handlers
           } else {
