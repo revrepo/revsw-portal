@@ -49,7 +49,8 @@ describe('Smoke', function() {
 
         it('should display IP subnets which may ship logs ',
           function() {
-            var listIPSubnetsLogShipping = Portal.cdnIPBlocks.page.getListItemsLogShippingBlocksList();
+            var listIPSubnetsLogShipping = Portal.cdnIPBlocks.page.
+              getListItemsLogShippingBlocksList();
             expect(listIPSubnetsLogShipping.count()).toBeGreaterThan(0);
           });
 
