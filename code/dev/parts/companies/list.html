@@ -113,7 +113,7 @@
                 <td>{{item.subscription_state}}</td>
                 <td>{{(item.subscription_name) ? item.subscription_name : 'Manual'}}</td>
                 <td>{{getRelativeDate(item.updated_at)}}</td>
-                <td class="actions text-right">
+                <td class="actions text-center">
                   <div class="actions--wrap">
                     <i class="glyphicon glyphicon-refresh spin" ng-if="item.loading"></i>
                     <a ng-click="onGoToUsageReport(item)"  uisref="index.billing.usage({acc_id: item.id})" ng-if="!item.loading" uib-tooltip="Usage Report">
