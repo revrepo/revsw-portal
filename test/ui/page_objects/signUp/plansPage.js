@@ -89,7 +89,7 @@ var PlansList = {
   getEnterprisePlanEl: function () {
     var plan;
     plan = element(
-      by.cssContainingText(this.locators.labels.enterprise.css, 'Custom Edge Solution'));
+      by.cssContainingText(this.locators.labels.enterprise.css, 'Custom Solution'));
     return new Plan(plan);
   },
 

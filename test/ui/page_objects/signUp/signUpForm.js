@@ -28,7 +28,7 @@ var SignUp = {
   locators: {
     buttons: {
       cancel: {
-        linkText: 'Cancel'
+        linkText: 'Back'
       },
       signUp: {
         buttonText: 'Sign Up'
