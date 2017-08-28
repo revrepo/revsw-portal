@@ -24,8 +24,8 @@
           <br>
           <p><strong>Still running your digital content over delivery platforms built for wired devices?</strong></p>
           <p class="information">Our OpenEdge™ Global Delivery Platform brings together our smart, next-generation CDN + open source approach to
-            edge computing for companies competing in the digital economy. Special, limited time,
-            OpenEdge™ 90-Day Fast Pass offer* includes:</strong>
+            edge computing for companies competing in the digital economy. Special, limited time, OpenEdge™ 90-Day Fast Pass
+            offer* includes:
           </p>
 
           <ul class="list-information">
@@ -42,13 +42,13 @@
           <p><strong> Unlock Your Access to Our OpenEdge™ Global Delivery Platform Today</strong></p>
           <p><strong>To Get Started:</strong></p>
           <ol class="list-instruction">
-            <li>Create an nuu:bit account by completing the Sign Up form on the right.
-              Use Promo Code <b>VS2017</b>.</li>
+            <li>Create an nuu:bit account by completing the Sign Up form on the right. Use Promo Code <b>VS2017</b>.</li>
             <li>A confirmation email will be sent to the email address provided.</li>
             <li>Click on the link in the email, which will take you to our nuu:bit customer portal where you'll be prompted to
               enter your payment information.
               <em> Your credit card will not be billed for the duration of your offer.</em></li>
-            <li>Test drive your content on our <strong>OpenEdge™ Global Delivery Platform</strong> and see how fast you can accelerate your content and your revenues.</li>
+            <li>Test drive your content on our <strong>OpenEdge™ Global Delivery Platform</strong> and see how fast you can accelerate
+              your content and your revenues.</li>
           </ol>
           <br>
           <div class="text text-center">
@@ -90,7 +90,7 @@
               <label for="firstName" class="col-sm-3 control-label">First Name *</label>
               <div class="col-sm-9">
                 <input type="text" class="form-control inline-block" id="firstName" name="firstName" placeholder="First Name" required ng-maxlength="150"
-                  ng-model="$ctrl.model.first_name" ng-disabled="$ctrl._loading">
+                  ng-model="$ctrl.model.first_name" ng-disabled="$ctrl._loading" ng-pattern="USER_FIRST_NAME">
                 <label for="firstName" class="text-info" popover-trigger="mouseenter" uib-popover="First name">
               <i class="fa fa-question-circle"></i>
           </label>
@@ -102,7 +102,7 @@
               <label for="lastName" class="col-sm-3 control-label">Last Name *</label>
               <div class="col-sm-9">
                 <input type="text" class="form-control inline-block" id="lastName" name="lastName" placeholder="Last Name" ng-model="$ctrl.model.last_name"
-                  required ng-maxlength="150" ng-disabled="$ctrl._loading">
+                  required ng-maxlength="150" ng-disabled="$ctrl._loading" ng-pattern="USER_LAST_NAME">
                 <label for="lastName" class="text-info" popover-trigger="mouseenter" uib-popover="Last name">
               <i class="fa fa-question-circle"></i>
           </label>
@@ -127,7 +127,7 @@
           Company Name &nbsp;</label>
               <div class="col-sm-9">
                 <input type="text" class="form-control inline-block" id="companyName" name="companyName" placeholder="Company Name" ng-maxlength="150"
-                  ng-model="$ctrl.model.company_name" ng-disabled="$ctrl._loading">
+                  ng-model="$ctrl.model.company_name" ng-disabled="$ctrl._loading" ng-pattern="COMPANY_NAME">
                 <label for="companyName" class="text-info" popover-trigger="mouseenter" uib-popover="Will be generated from your first and last name if left empty.">
           <i class="fa fa-question-circle"></i>
           </label>
@@ -140,7 +140,7 @@
               <label for="address1" class="col-sm-3 control-label">Address *</label>
               <div class="col-sm-9">
                 <input type="text" class="form-control inline-block" required id="address1" name="address1" placeholder="Address" ng-model="$ctrl.model.address1"
-                  ng-maxlength="150" ng-disabled="$ctrl._loading">
+                  ng-maxlength="150" ng-disabled="$ctrl._loading" ng-pattern="STREET_ADDRESS">
                 <label for="address1" class="text-info" popover-trigger="mouseenter" uib-popover="Could be used as a billing address later.">
           <i class="fa fa-question-circle"></i>
           </label>
@@ -152,7 +152,7 @@
               <label for="address2" class="col-sm-3 control-label">Address (Line 2) &nbsp;</label>
               <div class="col-sm-9">
                 <input type="text" class="form-control inline-block" id="address2" name="address2" placeholder="Address (Line 2)" ng-model="$ctrl.model.address2"
-                  ng-maxlength="150" ng-disabled="$ctrl._loading">
+                  ng-maxlength="150" ng-disabled="$ctrl._loading" ng-pattern="STREET_ADDRESS">
                 <label for="address2" class="text-info" popover-trigger="mouseenter" uib-popover="Could be used as a billing address later.">
           <i class="fa fa-question-circle"></i>
           </label>
@@ -177,7 +177,7 @@
               <div class="col-sm-9">
                 <input type="text" class="form-control inline-block" id="state" name="state" required placeholder="State" ng-model="$ctrl.model.state"
                   ng-maxlength="150" ng-disabled="$ctrl._loading">
-                <label for="state" class="text-info" popover-trigger="mouseenter" uib-popover="Could be used in a billing address later.">
+                <label for="state" class="text-info" popover-trigger="mouseenter" uib-popover="Could be used in a billing address later">
             <i class="fa fa-question-circle"></i>
             </label>
                 <div ng-show="!!newUser['state'].$error.maxlength" style="color:red">150 characters max</div>
@@ -189,7 +189,7 @@
               <div class="col-sm-9">
                 <input type="text" class="form-control inline-block" id="City" name="city" required placeholder="City" ng-model="$ctrl.model.city"
                   ng-maxlength="150" ng-disabled="$ctrl._loading">
-                <label for="city" class="text-info" popover-trigger="mouseenter" uib-popover="Could be used in a billing address later.">
+                <label for="city" class="text-info" popover-trigger="mouseenter" uib-popover="Could be used in a billing address later">
           <i class="fa fa-question-circle"></i>
           </label>
                 <div ng-show="!!newUser['city'].$error.maxlength" style="color:red">150 characters max</div>
@@ -200,8 +200,8 @@
               <label for="zipcode" class="col-sm-3 control-label">Zip Code *</label>
               <div class="col-sm-9">
                 <input type="text" ng-pattern="zipRegex" class="form-control inline-block" id="zipcode" name="zipcode" ng-maxlength="30"
-                  required placeholder="Zip Code" ng-model="$ctrl.model.zipcode" ng-maxlength="30" ng-disabled="$ctrl._loading">
-                <label for="zipcode" class="text-info" popover-trigger="mouseenter" uib-popover="Could be used in a billing address later.">
+                  required placeholder="Zip Code" ng-model="$ctrl.model.zipcode" ng-disabled="$ctrl._loading">
+                <label for="zipcode" class="text-info" popover-trigger="mouseenter" uib-popover="Could be used in a billing address later">
             <i class="fa fa-question-circle"></i>
           </label>
                 <div ng-show="!!newUser['zipcode'].$error.maxlength" style="color:red">30 characters max</div>
@@ -209,11 +209,11 @@
             </div>
             <div class="form-group" ng-class="{ 'has-error': newUser.promocode.$invalid &&
                             newUser.promocode.$dirty }">
-            <label for="promocode" class="col-sm-3 control-label">Promo Code</label>
-            <div class="col-sm-9">
-              <input type="text" class="form-control inline-block" id="promocode" name="promocode" ng-maxlength="30"
-                placeholder="Promocode" ng-model="$ctrl.model.promocode" ng-maxlength="30" ng-disabled="$ctrl._loading">
-              <label for="promocode" class="text-info" popover-trigger="mouseenter" uib-popover="Enter here any promo code you might have">
+              <label for="promocode" class="col-sm-3 control-label">Promo Code</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control inline-block" id="promocode" name="promocode" placeholder="Promocode" ng-model="$ctrl.model.promocode"
+                  ng-maxlength="30" ng-disabled="$ctrl._loading">
+                <label for="promocode" class="text-info" popover-trigger="mouseenter" uib-popover="Enter here any promo code you might have">
             <i class="fa fa-question-circle"></i>
           </label>
                 <div ng-show="!!newUser['promocode'].$error.maxlength" style="color:red">30 characters max</div>
@@ -231,7 +231,7 @@
                 <br>
                 <div class="text text-center">
                   <a ui-sref="^" class="btn btn-default">
-                    <i class="glyphicon glyphicon-remove"></i>&nbsp; Cancel
+                    <i class="glyphicon glyphicon-arrow-left"></i>&nbsp; Back
                   </a>
                   <button class="btn btn-success" ng-disabled="_loading || newUser.$invalid ||(($ctrl.model.password != $ctrl.model.passwordConfirm ||newUser.passwordConfirm.$invalid) &&newUser.passwordConfirm.$dirty )"
                     ng-click="$ctrl.model.billing_plan = bp_;  $ctrl.onSignUp($ctrl.model)">
@@ -245,3 +245,4 @@
       </div>
     </div>
   </div>
+</div>

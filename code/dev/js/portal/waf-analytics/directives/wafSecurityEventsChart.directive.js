@@ -18,7 +18,7 @@
         filtersSets: '='
       },
       /*@ngInject*/
-      controller: function ($scope, StatsWAF, $q, Util) {
+      controller: function($scope, StatsWAF, $q, Util, EventsSerieDataService) {
 
         var _filters_field_list = ['from_timestamp', 'to_timestamp', 'country', 'rule_id', 'zone'];
 
@@ -54,7 +54,7 @@
         }
         $scope.traffic = {
           series: [{
-            name: 'Events',
+            name: 'Security Events',
             data: []
           }]
         };
@@ -75,7 +75,7 @@
                 }
                 var x = this.xAxis[0].toPixels(this.xAxis[0].min) + 3;
                 info_ = this /*chart*/ .renderer
-                  .label('Events <span style="font-weight: bold; color: #3c65ac;">' + Util.formatNumber(requests_) +
+                  .label('Security Events <span style="font-weight: bold; color: #3c65ac;">' + Util.formatNumber(requests_) +
                     '</span>',
                     x /* x */ , 3 /* y */ , '', 0, 0, true /*html*/ )
                   .css({
@@ -129,7 +129,7 @@
           if (!$scope.ngDomain || !$scope.ngDomain.id) {
             $scope.traffic = {
               series: [{
-                name: 'Events',
+                name: 'Security Events',
                 data: []
               }]
             };
@@ -139,7 +139,7 @@
           var _xAxisPointStart = null;
           var _xAxisPointInterval = null;
           var series = [{
-            name: 'Events',
+            name: 'Security Events',
             data: []
           }];
 
@@ -163,6 +163,16 @@
               }
 
               return $q.when(series);
+            })
+            // NOTE: add event data
+            .then(function(series) {
+              var filterParams = generateFilterParams($scope.filters);
+              var options = {
+                from_timestamp: filterParams.from_timestamp,
+                to_timestamp: filterParams.to_timestamp,
+                domain_id: $scope.ngDomain.id,
+              };
+              return EventsSerieDataService.extendSeriesEventsDataForDomainId(series, options);
             })
             .then(function setNewData(data) {
               // model better to update once

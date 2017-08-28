@@ -1,5 +1,5 @@
 <ul class="nav navbar-nav navbar-right user">
-  <li class="user-info fit" data-ng-if="isAuthorized">
+  <li class="user-info top-strip fit" data-ng-if="isAuthorized">
     <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
       <strong>{{user.firstname}} {{user.lastname}}</strong>
       <span>(<em ng-if="userACL.readOnly" id="msg-is-read-only">READ-ONLY </em>{{user.role}})</span>

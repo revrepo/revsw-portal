@@ -460,20 +460,20 @@
             if(item.$$isExists){
               // NOTE: add additional data -  "short_answers"
               item.short_answers = _.map(item.answers, function(itemAnswer) {
-                if(item.type === 'TXT') {
-                  itemAnswer.answer = _.map(itemAnswer.answer, function(item) {
-                    // NOTE: specific change NSONE for display into a field "short_answers"
-                    return '[u\'' + item.toString() + '\']';
-                  });
-                }
                 return itemAnswer.answer.join(' ');
+              });
+              // NOTE: make an alternative collection with short answers
+              // add a dot at the end of our local answers
+              var shortAnswersAlternative = _.map(item.answers, function(itemAnswer) {
+                return itemAnswer.answer.join(' ')+'.';
               });
 
               if(existRecords[0].short_answers.length === item.short_answers.length){
                 // Exists With Different Answer(s)
                 item.$$isDifferentExist = false;
                 _.forEach(existRecords[0].short_answers,function(itemShortAnswer){
-                  if(_.indexOf(item.short_answers, itemShortAnswer) === -1){
+                  if(_.indexOf(item.short_answers, itemShortAnswer) === -1 &&
+                    _.indexOf(shortAnswersAlternative, itemShortAnswer) === -1){
                     item.$$isDifferentExist = true;
                   }
                 });

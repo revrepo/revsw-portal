@@ -9,22 +9,22 @@
 
   <!-- build:css css/vendor.css -->
   <!--<link rel="stylesheet" href="bower_components/PACE/themes/orange/pace-theme-minimal.css" rel="stylesheet">-->
-  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="bower_components/jsoneditor/dist/jsoneditor.css" rel="stylesheet">
-  <link rel="stylesheet" href="bower_components/angular-chart.js/dist/angular-chart.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="bower_components/ui-select/dist/select.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="bower_components/angular-datatables/dist/plugins/bootstrap/datatables.bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="bower_components/jsoneditor/dist/jsoneditor.css">
+  <link rel="stylesheet" href="bower_components/angular-chart.js/dist/angular-chart.min.css">
+  <link rel="stylesheet" href="bower_components/ui-select/dist/select.min.css">
+  <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="bower_components/angular-datatables/dist/plugins/bootstrap/datatables.bootstrap.min.css">
   <link rel="stylesheet" href="bower_components/angular-bootstrap-datetimepicker/src/css/datetimepicker.css" >
   <link rel="stylesheet" href="bower_components/bootstrap-daterangepicker/daterangepicker.css"/>
-  <link rel="stylesheet" href='bower_components/angular-dashboard-framework/dist/angular-dashboard-framework.min.css' rel="stylesheet">
-  <link rel="stylesheet" href='bower_components/angular-bootstrap-toggle-switch/style/bootstrap3/angular-toggle-switch-bootstrap-3.css' rel="stylesheet">
-  <link rel="stylesheet" href="bower_components/angular/angular-csp.css" rel="stylesheet">
-  <link rel="stylesheet" href="bower_components/intro.js/minified/introjs.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="bower_components/angular-dashboard-framework/dist/angular-dashboard-framework.min.css">
+  <link rel="stylesheet" href="bower_components/angular-bootstrap-toggle-switch/style/bootstrap3/angular-toggle-switch-bootstrap-3.css">
+  <link rel="stylesheet" href="bower_components/angular/angular-csp.css">
+  <link rel="stylesheet" href="bower_components/intro.js/minified/introjs.min.css">
   <link rel="stylesheet" href="bower_components/select2/select2.css">
   <link rel="stylesheet" href="bower_components/select2-bootstrap-css/select2-bootstrap.css">
   <link rel="stylesheet" href="bower_components/highlightjs/styles/github.css">
-  <link rel="stylesheet" href="bower_components/AngularJS-Toaster/toaster.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="bower_components/AngularJS-Toaster/toaster.min.css">
   <link rel="stylesheet" href="bower_components/sweetalert/dist/sweetalert.css">
 
   <!-- endbuild -->
@@ -99,10 +99,10 @@
 
 <script type="text/javascript" src="bower_components/angular-intro.js/build/angular-intro.min.js"></script>
 <script type="text/javascript" src="bower_components/ng-youtube-embed/build/ng-youtube-embed.min.js"></script>
-<script type="text/javascript" src='bower_components/Sortable/Sortable.min.js'></script>
-<script type="text/javascript" src='bower_components/Sortable/ng-sortable.js'></script>
+<script type="text/javascript" src="bower_components/Sortable/Sortable.min.js"></script>
+<script type="text/javascript" src="bower_components/Sortable/ng-sortable.js"></script>
 <!-- <script type="text/javascript" src='bower_components/angular-dashboard-framework/dist/angular-dashboard-framework.min.js'></script> -->
-<script type="text/javascript" src='bower_components/angular-dashboard-framework/dist/angular-dashboard-framework.js'></script>
+<script type="text/javascript" src="bower_components/angular-dashboard-framework/dist/angular-dashboard-framework.js"></script>
 
 <script type="text/javascript" src="bower_components/ngstorage/ngStorage.min.js"></script>
 <script type="text/javascript" src="bower_components/angular-base64/angular-base64.min.js"></script>
@@ -172,6 +172,7 @@
 <script type="text/javascript" src="js/portal/shared/directives/ui-sref-active-if.directive.js"></script>
 <script type="text/javascript" src="js/portal/shared/directives/menu-toggle.directive.js"></script>
 <script type="text/javascript" src="js/portal/shared/directives/ng-animate-disabled.directive.js"></script>
+<script type="text/javascript" src="js/portal/shared/directives/string-to-number.directive.js"></script>
 <script type="text/javascript" src="js/portal/shared/directives/time-note-display.directive.js"></script>
 <script type="text/javascript" src="js/portal/shared/directives/typeahead.directive.js"></script>
 <script type="text/javascript" src="js/portal/shared/directives/focus-me.directive.js"></script>
@@ -530,8 +531,10 @@
 <!-- WAF Rules -->
 <script type="text/javascript" src="js/portal/waf_rules/waf_rules.module.js"></script>
 <script type="text/javascript" src="js/portal/waf_rules/waf_rules.routes.js"></script>
+<script type="text/javascript" src="js/portal/waf_rules/controller/wafRulesAutoGenerateRulesModal.controller.js"></script>
 <script type="text/javascript" src="js/portal/waf_rules/controller/wafRulesCrud.controller.js"></script>
 <script type="text/javascript" src="js/portal/waf_rules/controller/wafRulesBuiltInList.controller.js"></script>
+<script type="text/javascript" src="js/portal/waf_rules/directives/wafRuleGenerationJobTimePeriod.directive.js"></script>
 <script type="text/javascript" src="js/portal/waf_rules/waf-rule-staging-status/wafRuleStagingStatus.directive.js"></script>
 <!-- //WAF Rules -->
 <!-- WAF Analytics -->

@@ -58,24 +58,20 @@
             }
           },
           xAxis: {
+            title:{ // Display 'Date' instead of 'Category'
+              text: 'Date'
+            }, 
             crosshair: {
               width: 1,
               color: '#000000'
             },
-            tickInterval: tickInterval_,
-            labels: {
-              autoRotation: false,
-              useHTML: true,
-              formatter: function() {
-                return this.value.label;
-              }
-            }
+            tickInterval: tickInterval_,            
           },
           tooltip: {
-            formatter: function() {
-              return this.key.tooltip + '<br/>' +
-                this.series.name + ': <strong>' + Util.formatNumber(this.y, 3) + '</strong>';
-            }
+            xDateFormat: '<span style="color: #000; font-weight: bold;">%H:%M</span> %b %d',
+            shared: true,
+            headerFormat: '{point.key}<br/>',
+            pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y:.3f}</b><br/>'
           }
         };
         var _filters_field_list = ['report_type','from_timestamp', 'to_timestamp', 'country', 'device', 'os', 'browser','network','operator','account_id','app_id'];
@@ -130,20 +126,9 @@
                     var item = code.flow[i];
                     if (!labels_filled_up) {
                       var val = moment(item.time + offset);
-                      var label;
-                      if (i % tickInterval_) {
-                        label = '';
-                      } else if (i === 0 ||
-                        (new Date(item.time + offset)).getDate() !== (new Date(code.flow[i - tickInterval_].time + offset)).getDate()) {
-                        label = val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span><br>]MMM D');
-                      } else {
-                        label = val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span>]');
-                      }
+                      var label = val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span>] MMM D');                      
 
-                      labels.push({
-                        tooltip: val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span>] MMMM Do YYYY'),
-                        label: label
-                      });
+                      labels.push(label);
                     }
                     var rps = Math.round(item.hits * 1000 / interval) / 1000;
                     s.data.push(rps);

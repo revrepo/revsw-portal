@@ -117,24 +117,20 @@
             }
           },
           xAxis: {
+            title:{ // Display 'Date' instead of 'Category'
+              text: 'Date'
+            },
             crosshair: {
               width: 1,
               color: '#000000'
             },
-            tickInterval: tickInterval_,
-            labels: {
-              autoRotation: false,
-              useHTML: true,
-              formatter: function() {
-                return this.value.label;
-              }
-            }
+            tickInterval: tickInterval_   
           },
           tooltip: {
-            formatter: function() {
-              return this.key.tooltip + '<br/>' +
-                this.series.name + ': <strong>' + Util.formatNumber(this.y, 3) + '</strong>';
-            }
+            xDateFormat: '<span style="color: #000; font-weight: bold;">%H:%M</span> %b %d',
+            shared: true,
+            headerFormat: '{point.key}<br/>',
+            pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y:.3f}</b><br/>'
           }
         };
 
@@ -163,20 +159,8 @@
                 data.data.forEach(function(item, idx, items) {
 
                   var val = moment(item.time + offset);
-                  var label;
-                  if (idx % tickInterval_) {
-                    label = '';
-                  } else if (idx === 0 ||
-                    (new Date(item.time + offset)).getDate() !== (new Date(items[idx - tickInterval_].time + offset)).getDate()) {
-                    label = val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span><br>]MMM D');
-                  } else {
-                    label = val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span>]');
-                  }
-
-                  labels.push({
-                    tooltip: val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span>] MMMM Do YYYY'),
-                    label: label
-                  });
+                  var label = val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span>] MMM D');
+                  labels.push(label); // Pass just a label to avoid [object Object] bug                  
 
                   var rps = item.hits / interval;
                   rps_avg_ += rps;

@@ -38,8 +38,7 @@
           </td>
           <td ng-click="editRow.isSelectedIndex = $index">
             <span ng-animate-disabled ng-show="editRow.isSelectedIndex!==$index">{{$ctrl.headerOperations[line.operation]}}</span>
-            <select ng-animate-disabled ng-if="editRow.isSelectedIndex==$index" class="form-control" ng-model="line.operation" ng-options="key as label for (key,label) in $ctrl.headerOperations">
-              < </select>
+            <select ng-animate-disabled ng-if="editRow.isSelectedIndex==$index" class="form-control" ng-model="line.operation" ng-options="key as label for (key,label) in $ctrl.headerOperations"></select>
           </td>
           <td>
             <button class="btn btn-primary btn-sm btn-edit-origin_request_header" type="button" ng-click="editRow.isSelectedIndex=$index" title="Edit Header" ng-if="editRow.isSelectedIndex!==$index">

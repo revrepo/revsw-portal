@@ -61,8 +61,7 @@
                 </div>
                 <div class="form-group">
                   <button class="btn btn-success" ng-disabled="_loading" ng-click="onClickRefresh()">
-                    <i class="glyphicon glyphicon-refresh" ng-class="_loading ? 'spin' : ''"></i>&nbsp; Refresh
-                    </dutton>
+                    <i class="glyphicon glyphicon-refresh" ng-class="_loading ? 'spin' : ''"></i>&nbsp; Refresh</button>
                 </div>
               </div>
               <div class="pull-right">
@@ -84,8 +83,8 @@
           <div class="alert alert-warning" ng-if="records == null && !_loading">
             Failed to retrieve a list of resources - please try again later
           </div>
-          <div class="alert alert-info" ng-if="_loading">
-            <i class="glyphicon glyphicon-refresh spin" ng-if="item.loading"></i>&nbsp; Loading...
+          <div class="alert alert-info" ng-if="_loading && filteredRecords.length === 0">
+            <i class="glyphicon glyphicon-refresh spin"></i>&nbsp; Loading...
           </div>
           <crud-pagination ng-if="records !== null"></crud-pagination>
           <div class="table-responsive">

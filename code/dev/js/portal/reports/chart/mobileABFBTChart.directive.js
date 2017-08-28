@@ -82,27 +82,20 @@
             }
           },
           xAxis: {
+            title: {
+              text: 'Date'
+            },
             crosshair: {
               width: 1,
               color: '#000000'
             },
-            tickInterval: tickInterval_,
-            labels: {
-              autoRotation: false,
-              useHTML: true,
-              // step: 1,         //  doesn't work, use that tickInterval above
-              // staggerLines: 3  //  bad idea, looks messy
-              formatter: function() {
-                return this.value.label;
-                // return '#';
-              }
-            }
+            tickInterval: tickInterval_
           },
           tooltip: {
-            formatter: function() {
-              return this.key.tooltip + '<br/>' +
-                this.series.name + ': <strong>' + Util.formatNumber(this.y, 1) + '</strong>';
-            }
+            xDateFormat: '<span style="color: #000; font-weight: bold;">%H:%M</span> %b %d',
+            shared: true,
+            headerFormat: '{point.key}<br/>',
+            pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y:.3f}</b><br/>'
           }
         };
 
@@ -206,20 +199,9 @@
                   dest.items.forEach(function(item, idx, items) {
                     if (!labels_filled) {
                       var val = moment(item.key + offset);
-                      var label;
-                      if (idx % tickInterval_) {
-                        label = '';
-                      } else if (idx === 0 ||
-                        (new Date(item.key + offset)).getDate() !== (new Date(items[idx - tickInterval_].key + offset)).getDate()) {
-                        label = val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span><br>]MMM D');
-                      } else {
-                        label = val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span>]');
-                      }
+                      var label = val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span>] MMM D');                      
 
-                      labels.push({
-                        tooltip: val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span>] MMMM Do YYYY'),
-                        label: label
-                      });
+                      labels.push(label);
                     }
                     hits[dest.key].max.push(item.fbt_max);
                     hits[dest.key].min.push(item.fbt_min);
