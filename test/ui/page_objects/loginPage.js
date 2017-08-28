@@ -49,13 +49,23 @@ var Login = {
         model: 'pass'
       }
     },
+    images: {
+      css: {
+        logo: '#logo > a > img'
+      }
+    },
+    copyright: {
+      css:{
+        brand: '.footerNoteA' 
+      }
+    },
     dialogs: {
       forgotPassword: {
         css: 'div.modal-dialog.modal-md',
         textInputs: {
           email: {
             model: 'data.email'
-          }
+          }      
         },
         labels: {
           title: {
@@ -316,7 +326,16 @@ var Login = {
     this.setEmail(user.email);
     this.setPassword(user.password);
     return this.clickSignIn();
+  },
+
+  getLogo: function(){
+     return element(by.css(this.locators.images.css.logo));
+  },
+
+  getBrand: function(){
+     return element(by.css(this.locators.copyright.css.brand));
   }
+
 };
 
 module.exports = Login;

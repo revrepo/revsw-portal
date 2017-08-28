@@ -36,6 +36,11 @@ var PlansList = {
         css: 'h2.billing-plan-title'
       }
     },
+    images: {
+      css: {
+        logo: '.img-responsive' 
+      }
+    },
     links: {
       signIn: {
         linkText: 'sign in if you already have an account'
@@ -107,6 +112,11 @@ var PlansList = {
       .getSignInLnk()
       .click();
   },
+
+  getLogo: function(){
+     return element(by.css(this.locators.images.css.logo));
+  },
+
 
   /**
    * ### PlansList.clickContactUs()

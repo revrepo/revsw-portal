@@ -63,28 +63,33 @@ var Subscriptions = {
   getOpenMenu: function() {
      return element.all(by.css(this.locators.selects.css.openMenu));    
   },
-
+  clickOpenMenu: function() {
+     return this.getOpenMenu().click();    
+  },
 
   getSortOrder: function() {
      return element.all(by.css(this.locators.selects.css.sortOrder));    
   },
 
-
-
   getViewButton: function() {
      return element.all(by.css(this.locators.buttons.css.viewButton));  
   },
 
+  clickViewButton: function() {
+     return this.getViewButton().get(0).click();  
+  },
 
   getChangeStatus: function(){
       return  element.all(by.css(this.locators.buttons.css.changeStatus));  
-  
+  },
+
+  clickChangeStatus: function(){
+      return  this.getChangeStatus().get(0).click();  
   },
 
   getSearchTxtIn: function(){
       return  element(by.id(this.locators.textInputs.search.id)); 
   },
-
 
   getSubscriptionItems: function(){
      return element.all(by.css(this.locators.selects.css.subscriptionItems)); 
@@ -102,6 +107,10 @@ var Subscriptions = {
     return element(by.css(this.locators.buttons.css.closeButton)); 
   },
 
+  clickCloseButton: function(){
+    return this.getCloseButton().click(); 
+  },
+
   getStatusPopup: function(){
    return element(by.css(this.locators.popups.css.statusPopup)); 
   },
@@ -112,6 +121,10 @@ var Subscriptions = {
 
   getCancelButton: function(){
     return element(by.css(this.locators.buttons.css.cancelButton)); 
+  },
+
+  clickCancelButton: function(){
+    return this.getCancelButton().click();
   },
 
   getSaveButton: function(){

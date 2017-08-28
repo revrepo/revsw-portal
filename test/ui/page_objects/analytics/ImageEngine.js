@@ -22,9 +22,11 @@ var ImageEngine = {
   locators: {
     selects: {
       css: {
-        filterHoursPeriods: 'div[filter-hours-periods] select.form-control',
-        comboBoxSearch: 'input[ng-model="$select.search"]'
-      }
+        filterPerformance: 'div[imageengine-solidgauge-performance-improvement] select.form-control',
+        filterBandwidth: 'div[imageengine-linechart-bytes-saved] select.form-control',
+        filterFormatResolution: 'div.clearfix_ select.form-control' ,
+        comboBoxSearch: 'input[ng-model="$select.search"]' 
+      }   
     },
      buttons: {
        css: {
@@ -38,13 +40,20 @@ var ImageEngine = {
         css: {
           listDomains: '#domain a[ng-click="$select.toggle($event)"]'
         }
-     }
+    },
   },
 
-  getFilterHoursPeriods: function() {
-     return element.all(by.css(this.locators.selects.css.filterHoursPeriods));    
+  getFilterPerformance: function() {
+     return element.all(by.css(this.locators.selects.css.filterPerformance));    
   },
 
+  getFilterBandwidth: function() {
+     return element.all(by.css(this.locators.selects.css.filterBandwidth));    
+  },
+
+  getFilterFormatResolution: function() {
+     return element.all(by.css(this.locators.selects.css.filterFormatResolution));    
+  },
 
   getUpdateReport: function(){
      return  element.all(by.css(this.locators.buttons.css.updateReport));  
@@ -61,6 +70,10 @@ var ImageEngine = {
 
   getListDomains: function(){
      return  element(by.css(this.locators.dropDowns.css.listDomains)); 
+  },
+
+  clickListDomains: function() {
+     return this.getListDomains().click();    
   },
 
   getHideMenu: function(){

@@ -67,6 +67,10 @@ var ResourcesPerSubscription = {
     return element.all(by.css(this.locators.buttons.css.viewButton));
   },
 
+  clickViewButton: function(){
+    return this.getViewButton().get(0).click();
+  },
+
   getSearchInput: function(){
     return element(by.css(this.locators.textInputs.css.searchInput)); 
   },
@@ -79,8 +83,16 @@ var ResourcesPerSubscription = {
     return element(by.css(this.locators.dropDowns.css.listSubscriptions));
   },
 
+  clickListSubscriptions: function(){
+    return this.getListSubscriptions().click();
+  },
+
   getSecondSubscription: function(){
     return element.all(by.css(this.locators.dropDowns.css.secondSubscription));
+  },
+
+  clickSecondSubscription: function(){
+    return this.getSecondSubscription().get(2).click();
   },
 
   getComboBoxSearch: function(){
@@ -97,8 +109,11 @@ var ResourcesPerSubscription = {
 
   getCloseButton: function(){
     return element(by.css(this.locators.buttons.css.closeButton));
-  }
+  },
 
+  clickCloseButton: function(){
+    return this.getCloseButton().click();
+  }
 
 
   };

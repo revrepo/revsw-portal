@@ -175,7 +175,7 @@ var SignUp = {
         .getEmailAddressEl()
         .getText();
     },
-
+    
     waitToDisplay: function () {
       var me = this;
       return browser.wait(function () {

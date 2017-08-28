@@ -29,11 +29,8 @@ describe('Smoke', function () {
     beforeAll(function () {
       Portal.signIn(revAdmin);
       Portal.helpers.nav.goToResourcesPerSubscription();
-
-      Portal.azureMarketplace.ResourcesPerSubscriptionPage.getListSubscriptions().click();
-      browser.sleep(2000);
-      Portal.azureMarketplace.ResourcesPerSubscriptionPage.getSecondSubscription().get(2).click();
-      browser.sleep(2000);
+      Portal.azureMarketplace.ResourcesPerSubscriptionPage.clickListSubscriptions();
+      Portal.azureMarketplace.ResourcesPerSubscriptionPage.clickSecondSubscription();
     });
 
     afterAll(function () {
@@ -41,8 +38,7 @@ describe('Smoke', function () {
     });
 
 
-
-       it('should displayed all filters', function(){ 
+       it('should displayed all sortable columns', function(){ 
            expect(Portal.azureMarketplace.ResourcesPerSubscriptionPage
               .getSortOrderActive().isDisplayed()).toBe(true);
            Portal.azureMarketplace.ResourcesPerSubscriptionPage
@@ -105,12 +101,12 @@ describe('Smoke', function () {
       
       
       it('should displayed combobox search',function(){
-          Portal.azureMarketplace.ResourcesPerSubscriptionPage.getListSubscriptions().click();
+          Portal.azureMarketplace.ResourcesPerSubscriptionPage.clickListSubscriptions();
           Portal.azureMarketplace.ResourcesPerSubscriptionPage
               .getComboBoxSearch().isDisplayed()
                   .then(function(value) {
                       expect(value).toBe(true);
-          Portal.azureMarketplace.ResourcesPerSubscriptionPage.getListSubscriptions().click();
+          Portal.azureMarketplace.ResourcesPerSubscriptionPage.clickListSubscriptions();
 
           });
       });
@@ -126,23 +122,23 @@ describe('Smoke', function () {
 
 
       it('should displayed popup view',function(){
-          Portal.azureMarketplace.ResourcesPerSubscriptionPage.getViewButton().get(0).click();
+          Portal.azureMarketplace.ResourcesPerSubscriptionPage.clickViewButton();
           Portal.azureMarketplace.ResourcesPerSubscriptionPage
               .getViewPopup().isDisplayed()
                   .then(function(value) {
                       expect(value).toBe(true);
-          Portal.azureMarketplace.ResourcesPerSubscriptionPage.getCloseButton().click();
+          Portal.azureMarketplace.ResourcesPerSubscriptionPage.clickCloseButton();
           });
       });
 
 
       it('should displayed button close',function(){
-          Portal.azureMarketplace.ResourcesPerSubscriptionPage.getViewButton().get(0).click();
+          Portal.azureMarketplace.ResourcesPerSubscriptionPage.clickViewButton();
           Portal.azureMarketplace.ResourcesPerSubscriptionPage
               .getCloseButton().isDisplayed()
                   .then(function(value) {
                       expect(value).toBe(true);
-          Portal.azureMarketplace.ResourcesPerSubscriptionPage.getCloseButton().click();
+          Portal.azureMarketplace.ResourcesPerSubscriptionPage.clickCloseButton();
           });
       });
 

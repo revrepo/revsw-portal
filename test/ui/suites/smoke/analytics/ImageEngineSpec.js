@@ -47,8 +47,8 @@ describe('Smoke', function () {
         });
   
 	
-    it('should displayed all filters', function(){ 
-        Portal.mobileAnalytics.ImageEnginePage.getFilterHoursPeriods()
+    it('should displayed all performance filters', function(){ 
+        Portal.mobileAnalytics.ImageEnginePage.getFilterPerformance()
           .getAttribute('ng-model')
             .then(function(value) {
 	 	    	
@@ -57,20 +57,42 @@ describe('Smoke', function () {
 				'ngFilters.country ',
 				'ngFilters.os ',
 				'ngFilters.device ',
-				'ngFilters.browser ',
-				'ngFilters.delay',
-				'ngFilters.country ',
-				'ngFilters.os ',
-				'ngFilters.device ',
-				'ngFilters.browser ',
-				'ngFilters.delay',
-				'ngFilters.country ',
-				'ngFilters.os ',
-				'ngFilters.device ',
 				'ngFilters.browser '
-  			  ]);    
+        ]);
            });
-        }); 
+       }); 
+
+
+    it('should displayed all bandwidth filters', function(){ 
+        Portal.mobileAnalytics.ImageEnginePage.getFilterBandwidth()
+          .getAttribute('ng-model')
+            .then(function(value) {
+          
+      expect(value).toEqual([
+        'ngFilters.delay',
+        'ngFilters.country ',
+        'ngFilters.os ',
+        'ngFilters.device ',
+        'ngFilters.browser '
+        ]);
+           });
+       }); 
+
+
+    it('should displayed all format and resolution filters', function(){ 
+        Portal.mobileAnalytics.ImageEnginePage.getFilterFormatResolution()
+          .getAttribute('ng-model')
+            .then(function(value) {
+          
+      expect(value).toEqual([
+        'ngFilters.delay',
+        'ngFilters.country ',
+        'ngFilters.os ',
+        'ngFilters.device ',
+        'ngFilters.browser '
+         ]);
+           });
+       }); 
 
 
     it('should displayed button update report', function(){ 
@@ -80,12 +102,14 @@ describe('Smoke', function () {
           });
        });
 
+
     it('should displayed chart context menu', function(){ 
     	Portal.mobileAnalytics.ImageEnginePage.getChartContextMenu()
           .then(function(value) { 
            expect(value.length === 4).toBe(true);
     	   });
         });
+
 
     it('should displayed span toggle', function() {
         Portal.mobileAnalytics.ImageEnginePage.getListDomains().isDisplayed().then(function(value) {
@@ -95,7 +119,7 @@ describe('Smoke', function () {
 
 
     it('should displayed combobox search', function() {
-         Portal.mobileAnalytics.ImageEnginePage.getListDomains().click();
+         Portal.mobileAnalytics.ImageEnginePage.clickListDomains();
          Portal.mobileAnalytics.ImageEnginePage.getComboBoxSearch()
           .isDisplayed()
             .then(function(value) {
@@ -109,8 +133,6 @@ describe('Smoke', function () {
               expect(value).toBe(true); 
            });
        });
-
-
 
 
          });

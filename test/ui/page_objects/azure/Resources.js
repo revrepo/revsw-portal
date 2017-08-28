@@ -56,6 +56,10 @@ var Resources = {
     return element.all(by.css(this.locators.selects.css.resourceName));
   },
 
+  clickResourceName: function(){
+    return this.getResourceName().get(0).click();
+  },
+
   getSortsOrder: function(){
     return element.all(by.css(this.locators.selects.css.sortsOrder));
   },
@@ -64,6 +68,9 @@ var Resources = {
     return element.all(by.css(this.locators.buttons.css.viewButton));
   },
  
+  clickViewButton: function(){
+    return this.getViewButton().get(0).click();
+  },
   getSearchTxtIn: function(){
     return  element(by.id(this.locators.textInputs.search.id)); 
   },
@@ -82,6 +89,10 @@ var Resources = {
 
   getCloseButton: function(){
     return element(by.css(this.locators.buttons.css.closeButton));
+  },
+
+  clickCloseButton: function(){
+    return this.getCloseButton().click();
   },
 
   getFirstButton: function(){

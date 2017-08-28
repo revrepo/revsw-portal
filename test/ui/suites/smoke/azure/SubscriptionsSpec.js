@@ -37,7 +37,7 @@ describe('Smoke', function () {
 
 
     it('should displayed all filters', function(){ 
-        Portal.azureMarketplace.SubscriptionsPage.getOpenMenu().click();
+        Portal.azureMarketplace.SubscriptionsPage.clickOpenMenu();
         Portal.azureMarketplace.SubscriptionsPage.getSortOrder()
          .getAttribute('ng-show')
          .then(function(value) {
@@ -96,67 +96,67 @@ describe('Smoke', function () {
     
 
     it('should displayed popup view subscription',function(){
-        Portal.azureMarketplace.SubscriptionsPage.getViewButton().get(0).click();
+        Portal.azureMarketplace.SubscriptionsPage.clickViewButton();
         Portal.azureMarketplace.SubscriptionsPage
             .getViewPopup().isDisplayed()
                 .then(function(value) {
                     expect(value).toBe(true);
-        Portal.azureMarketplace.SubscriptionsPage.getCloseButton().click();
+        Portal.azureMarketplace.SubscriptionsPage.clickCloseButton();
         });
     });
 
 
     it('should displayed button close',function(){
-        Portal.azureMarketplace.SubscriptionsPage.getViewButton().get(0).click();
+        Portal.azureMarketplace.SubscriptionsPage.clickViewButton();
         Portal.azureMarketplace.SubscriptionsPage
             .getCloseButton().isDisplayed()
                 .then(function(value) {
                     expect(value).toBe(true);
-        Portal.azureMarketplace.SubscriptionsPage.getCloseButton().click();
+        Portal.azureMarketplace.SubscriptionsPage.clickCloseButton();
         });
     });
 
 
     it('should displayed popup change status',function(){
-        Portal.azureMarketplace.SubscriptionsPage.getChangeStatus().get(0).click();
+        Portal.azureMarketplace.SubscriptionsPage.clickChangeStatus();
         Portal.azureMarketplace.SubscriptionsPage
             .getStatusPopup().isDisplayed()
                 .then(function(value) {
                     expect(value).toBe(true);
-        Portal.azureMarketplace.SubscriptionsPage.getCancelButton().click();
+        Portal.azureMarketplace.SubscriptionsPage.clickCancelButton();
         });
     });
 
    
     it('should displayed span status',function(){
-        Portal.azureMarketplace.SubscriptionsPage.getChangeStatus().get(0).click();
+        Portal.azureMarketplace.SubscriptionsPage.clickChangeStatus();
         Portal.azureMarketplace.SubscriptionsPage
             .getStatusDrop().isDisplayed()
                 .then(function(value) {
                     expect(value).toBe(true);
-        Portal.azureMarketplace.SubscriptionsPage.getCancelButton().click();
+        Portal.azureMarketplace.SubscriptionsPage.clickCancelButton();
         });
     });
 
 
     it('should displayed button cancel',function(){
-        Portal.azureMarketplace.SubscriptionsPage.getChangeStatus().get(0).click();
+        Portal.azureMarketplace.SubscriptionsPage.clickChangeStatus();
         Portal.azureMarketplace.SubscriptionsPage
             .getCancelButton().isDisplayed()
                 .then(function(value) {
                     expect(value).toBe(true);
-        Portal.azureMarketplace.SubscriptionsPage.getCancelButton().click();
+        Portal.azureMarketplace.SubscriptionsPage.clickCancelButton();
         });
     });
 
     
     it('should displayed button save',function(){
-        Portal.azureMarketplace.SubscriptionsPage.getChangeStatus().get(0).click();
+        Portal.azureMarketplace.SubscriptionsPage.clickChangeStatus();
         Portal.azureMarketplace.SubscriptionsPage
             .getSaveButton().isDisplayed()
                 .then(function(value) {
                     expect(value).toBe(true);
-        Portal.azureMarketplace.SubscriptionsPage.getCancelButton().click(); 
+        Portal.azureMarketplace.SubscriptionsPage.clickCancelButton(); 
         });
     });
 

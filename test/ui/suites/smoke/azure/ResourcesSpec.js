@@ -38,8 +38,7 @@ describe('Smoke', function () {
 
 
     it('should displayed all filters', function(){ 
-        Portal.azureMarketplace.ResourcesPage.getResourceName().get(0).click();
-          browser.sleep(1000);
+        Portal.azureMarketplace.ResourcesPage.clickResourceName();
         Portal.azureMarketplace.ResourcesPage
             .getSortsOrder().getAttribute('class')
                 .then(function(value) {
@@ -86,23 +85,23 @@ describe('Smoke', function () {
 
     
     it('should displayed popup view', function(){
-        Portal.azureMarketplace.ResourcesPage.getViewButton().get(0).click();
+        Portal.azureMarketplace.ResourcesPage.clickViewButton();
         Portal.azureMarketplace.ResourcesPage
             .getviewPopup().isDisplayed()
                 .then(function(value) {  
                     expect(value).toBe(true);
-          Portal.azureMarketplace.ResourcesPage.getCloseButton().click();
+          Portal.azureMarketplace.ResourcesPage.clickCloseButton();
         });
     });
     
 
     it('should displayed button close',function(){
-        Portal.azureMarketplace.ResourcesPage.getViewButton().get(0).click();
+        Portal.azureMarketplace.ResourcesPage.clickViewButton();
         Portal.azureMarketplace.ResourcesPage
             .getCloseButton().isDisplayed()
                 .then(function(value) {
                     expect(value).toBe(true);
-          Portal.azureMarketplace.ResourcesPage.getCloseButton().click();
+          Portal.azureMarketplace.ResourcesPage.clickCloseButton();
         });
     });
 
