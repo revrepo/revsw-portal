@@ -207,9 +207,15 @@
             return $q.when(series);
           }
         })
-        .then(function(data) {
-          addEventsData(data);
-          return data;
+        // NOTE: add event data
+        .then(function(series) {
+          var filterParams = generateFilterParams($scope.filters);
+          var options = {
+            from_timestamp: filterParams.from_timestamp,
+            to_timestamp: filterParams.to_timestamp,
+            domain_id: $scope.ngDomain.id,
+          };
+          return EventsSerieDataService.extendSeriesEventsDataForDomainId(series, options);
         })
         .then(function setNewData(data) {
           // model better to update once
@@ -229,27 +235,6 @@
         })
         .finally(function() {
           $scope._loading = false;
-        });
-    }
-    /**
-     * @name  addEventsData
-     * @description
-     *   Add to series new serie with Events
-     * @param {Array} series
-     */
-    function addEventsData(series) {
-      var filterParams = generateFilterParams($scope.filters);
-      var options = {
-        from_timestamp: filterParams.from_timestamp,
-        to_timestamp: filterParams.to_timestamp,
-        account_id: $scope.ngDomain.account_id,
-        domain_id: $scope.ngDomain.id,
-        domain_name: $scope.ngDomain.domain_name
-      };
-      return EventsSerieDataService.getEventsSerieDataForDomain(options)
-        .then(function(data) {
-          // NOTE: add new series data "Events"
-          series.push(data);
         });
     }
   }

@@ -106,9 +106,6 @@ section[main] {
 
 .log-details {
   cursor: pointer;
-  &:hover {
-    padding-left: 2px;
-  }
 }
 
 .strong {
@@ -231,7 +228,11 @@ input.ui-select-search {
 
 select.form-control {
   max-width: 550px;
-  margin-bottom: auto;
+}
+
+// fix for btn margins in inline forms
+.form-inline .btn-info{
+  margin-bottom: 5px;
 }
 
 select.form-control.fixed {
@@ -254,15 +255,13 @@ input.form-control {
   max-width: 550px;
 }
 
-.usage-report .form-group {
-  margin-bottom: 6px;
-}
-
 .usage-report div.form-control {
   height: 30px;
   padding: 4px 8px;
 }
-
+.usage-report .form-inline .btn-info{
+  margin-bottom: 0;
+}
 .usage-report .form-horizontal .control-label {
   padding-top: 5px;
 }
@@ -466,13 +465,13 @@ form,
 .filter-time-period {
   .form-control.date-picker.select2,
   &.date-picker-wrapper>input[type="text"] {
-    margin-top: 5px;
+    margin-top: 0;
   }
   & .date-picker-wrapper {
     // margin: 10px;
     position: relative;
     .over {
-      margin-top: 5px;
+      margin-top: 0;
       position: absolute;
       top: 0;
       left: 0;
@@ -537,4 +536,57 @@ form,
 
 .clearfix {
   margin-bottom: 8px;
+}
+
+//fix input type number stying
+.form-inline input.form-control[type="number"]{
+  margin-bottom: 5px;
+}
+
+//fix for usage report date picker input field style
+.panel-heading .input-group .form-control:first-child{
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1;
+  color: #555;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.waf-events-filters .form-inline{
+  margin-top: 5px;
+}
+
+//waf events filters responsive fix
+@media (max-width: 991px){
+  .filter-time-period .date-picker-wrapper{
+    margin-top: 5px;
+  }
+}
+
+.highcharts-data-table table{
+  border-collapse: initial;
+  border-spacing: 10px;
+}
+
+.global-search{
+  top: 0 !important; //fix for firefox
+}
+
+.form-inline.inline-buttons-fix .btn-info{
+  margin-bottom: 0;
+}
+
+.spaced-button{
+  margin-left: 30px;
+}
+
+@media (max-width: 1145px){
+  .fix-btns button, .fix-btns a{
+    margin-bottom: 5px !important;
+  }
 }

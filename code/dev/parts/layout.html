@@ -7,7 +7,7 @@
   <div class="panel-menu">
       <ul class="side-menu">
         <dashboard-nav-menu></dashboard-nav-menu>
-        <li ui-sref-active-if="{class: 'open-side-menu-item', state: 'index.apps'}" ng-class="{'open-side-menu-item ': menuExpanded('index.apps'),'active-side-menu-item': $state.includes('index.apps')}" style="margin-top: 8px;">
+        <li ui-sref-active-if="{class: 'open-side-menu-item', state: 'index.apps'}" ng-class="{'open-side-menu-item ': menuExpanded('index.apps'),'active-side-menu-item': $state.includes('index.apps')}">
           <a id="side-menu-apps-item" class="side-menu-item" ng-click="goToState('index.apps.ios')">
             <div class="left-menu-start">
               <i class="fa fa-mobile" style="font-size: 28px; margin-top: -14px !important;"></i>
@@ -111,7 +111,7 @@
             <i class="sub-menu-icon fa fa-exchange"></i> RTT Heatmaps
           </a>
           <a ui-sref-active="active" ui-sref="index.reports.imageengine-analytics" class="side-menu-sub-item">
-            <i class="sub-menu-icon fa fa-picture-o" aria-hidden="true"></i> ImageEngine
+            <i class="sub-menu-icon fa fa-picture-o" aria-hidden="true"></i> Image Optimization
           </a>
         </li>
         <!--Security Analytics -->
@@ -280,7 +280,7 @@
           <div class="col-md-12 footer-content">
             <a href="{{contactUsLink}}" target="_blank">Contact Us</a>
             <span class="pull-left copyright">{{vendorConfig.copyright}}
-            <br>Version {{portalVersion}}/{{apiVersion}}
+            <br>Version {{portalVersion.trim()}}/{{apiVersion}}
             </span>
             <!-- <span class="pull-right version">Version {{portalVersion}}/{{apiVersion}} </span> -->
           </div>

@@ -28,13 +28,11 @@ var CDNIPBlocks = {
   locators: {
     container: '.container-fluid .row',
     panelBody: '.col-md-12 .panel .panel-body',
-    labels: {
-      stagingServer: {
-        css: 'p.ng-binding'
-      },
-      strings: {
-        css: 'pre.console.ng-binding'
-      }
+    listItemsLogShippingBlocksList: {
+      css: '#logShippingBlocksList .cdn-ip-blocks-item'
+    },
+    listItemsEdgeBlocksList:{
+      css: '#edgeBlocksList .cdn-ip-blocks-item'
     }
   },
 
@@ -79,6 +77,32 @@ var CDNIPBlocks = {
     return this
       .getTitleLbl()
       .getText();
+  },
+
+  /**
+   * ### CDNIPBlocks.getListItemsLogShippingBlocksList()
+   *
+   * Returns the reference to the `List IP subnets which may ship logs` element (Selenium WebDriver
+   * Element) from the CDN IP Blocks page in the Portal app.
+   *
+   * @returns {Selenium WebDriver Element}
+   */
+  getListItemsLogShippingBlocksList: function() {
+    return element
+      .all(by.css(this.locators.listItemsLogShippingBlocksList.css));
+  },
+
+  /**
+   * ### CDNIPBlocks.getListItemsEdgeBlocksList()
+   *
+   * Returns the reference to the `List IP subnets which may send origin requests` element
+   * (Selenium WebDriver Element) from the CDN IP Blocks page in the Portal app.
+   *
+   * @returns {Selenium WebDriver Element}
+   */
+  getListItemsEdgeBlocksList: function() {
+    return element
+      .all(by.css(this.locators.listItemsEdgeBlocksList.css));
   },
 
   // ## Helper Methods
