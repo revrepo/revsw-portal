@@ -223,10 +223,10 @@ var NavHelper = {
   },
 
   /**
-   * Navigates to Web Analytics > ImageEngine
+   * Navigates to Web Analytics > Image Optimization     
    */
-  goToImageEngine: function () {
-    return SideBar.select(MenuItems.WEB_ANALYTICS.IMAGE_ENGINE);
+  goToImageOptimization: function () {
+    return SideBar.select(MenuItems.WEB_ANALYTICS.IMAGE_OPTIMIZATION);
   },
 
 

@@ -35,11 +35,11 @@ describe('Smoke', function () {
 
     describe('With user: ' + user.role, function() {
 
-      describe('ImageEngine', function() {
+      describe('Image Optimization', function() {
 
           beforeAll(function() {
           Portal.signIn(user);
-          Portal.helpers.nav.goToImageEngine();
+          Portal.helpers.nav.goToImageOptimization();
         });
 
         afterAll(function() {
@@ -48,7 +48,7 @@ describe('Smoke', function () {
   
 	
     it('should displayed all performance filters', function(){ 
-        Portal.mobileAnalytics.ImageEnginePage.getFilterPerformance()
+        Portal.mobileAnalytics.ImageOptimizationPage.getFilterPerformance()
           .getAttribute('ng-model')
             .then(function(value) {
 	 	    	
@@ -64,7 +64,7 @@ describe('Smoke', function () {
 
 
     it('should displayed all bandwidth filters', function(){ 
-        Portal.mobileAnalytics.ImageEnginePage.getFilterBandwidth()
+        Portal.mobileAnalytics.ImageOptimizationPage.getFilterBandwidth()
           .getAttribute('ng-model')
             .then(function(value) {
           
@@ -80,7 +80,7 @@ describe('Smoke', function () {
 
 
     it('should displayed all format and resolution filters', function(){ 
-        Portal.mobileAnalytics.ImageEnginePage.getFilterFormatResolution()
+        Portal.mobileAnalytics.ImageOptimizationPage.getFilterFormatResolution()
           .getAttribute('ng-model')
             .then(function(value) {
           
@@ -96,7 +96,7 @@ describe('Smoke', function () {
 
 
     it('should displayed button update report', function(){ 
-         Portal.mobileAnalytics.ImageEnginePage.getUpdateReport()
+         Portal.mobileAnalytics.ImageOptimizationPage.getUpdateReport()
             .then(function(value) {  
               expect(value.length === 3).toBe(true);
           });
@@ -104,23 +104,24 @@ describe('Smoke', function () {
 
 
     it('should displayed chart context menu', function(){ 
-    	Portal.mobileAnalytics.ImageEnginePage.getChartContextMenu()
+    	Portal.mobileAnalytics.ImageOptimizationPage.getChartContextMenu()
           .then(function(value) { 
-           expect(value.length === 4).toBe(true);
+            expect(value.length === 4).toBe(true);
     	   });
         });
 
 
     it('should displayed span toggle', function() {
-        Portal.mobileAnalytics.ImageEnginePage.getListDomains().isDisplayed().then(function(value) {
-           expect(value).toBe(true);
+        Portal.mobileAnalytics.ImageOptimizationPage.getListDomains()
+           .isDisplayed().then(function(value) {
+             expect(value).toBe(true);
             });
         });
 
 
     it('should displayed combobox search', function() {
-         Portal.mobileAnalytics.ImageEnginePage.clickListDomains();
-         Portal.mobileAnalytics.ImageEnginePage.getComboBoxSearch()
+         Portal.mobileAnalytics.ImageOptimizationPage.clickListDomains();
+         Portal.mobileAnalytics.ImageOptimizationPage.getComboBoxSearch()
           .isDisplayed()
             .then(function(value) {
               expect(value).toBe(true);
@@ -129,7 +130,7 @@ describe('Smoke', function () {
 
 
     it('should displayed button hide/show menu', function() {
-	   Portal.mobileAnalytics.ImageEnginePage.getHideMenu().isDisplayed().then(function(value) {
+	   Portal.mobileAnalytics.ImageOptimizationPage.getHideMenu().isDisplayed().then(function(value) {
               expect(value).toBe(true); 
            });
        });

@@ -124,7 +124,7 @@ var PortalHelpers = require('./../common/helpers/portal');
 
 var PortalDataProviders = require('./../common/providers/data/portal');
 
-var ImageEnginePage = require('./analytics/ImageEngine');
+var ImageOptimizationPage = require('./analytics/ImageOptimization');
 
 var SubscriptionsPage = require('./azure/Subscriptions');
 var ResourcesPerSubscriptionPage = require('./azure/ResourcesPerSubscription');
@@ -247,7 +247,7 @@ var Portal = {
 	  topReportsPage: MobileAnalyticsTopReportsPage,
 	  topObjectsPage : MobileAnalyticsTopObjectsPage,
 	  trafficDistributions: MobileAnalyticsTrafficDistributionsPage,
-    ImageEnginePage: ImageEnginePage
+    ImageOptimizationPage: ImageOptimizationPage
   },
   azureMarketplace: {
       SubscriptionsPage: SubscriptionsPage,

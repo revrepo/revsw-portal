@@ -110,8 +110,8 @@ var MenuItems = {
       linkText: 'RTT Heatmaps',
       area: MenuAreas.WEB_ANALYTICS
     },
-    IMAGE_ENGINE: {
-      linkText: 'ImageEngine',
+    IMAGE_OPTIMIZATION: {
+      linkText: 'Image Optimization',
       area: MenuAreas.WEB_ANALYTICS
     }
   },

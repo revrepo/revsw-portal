@@ -16,13 +16,13 @@
  * from Rev Software, Inc.
  */
 
-var ImageEngine = {
+var ImageOptimization = {
 
 
   locators: {
     selects: {
       css: {
-        filterPerformance: 'div[imageengine-solidgauge-performance-improvement] select.form-control',
+        filterPerformance: 'div[imageengine-solidgauge-performance] select.form-control',
         filterBandwidth: 'div[imageengine-linechart-bytes-saved] select.form-control',
         filterFormatResolution: 'div.clearfix_ select.form-control' ,
         comboBoxSearch: 'input[ng-model="$select.search"]' 
@@ -82,5 +82,5 @@ var ImageEngine = {
 
   };
 
-module.exports = ImageEngine;
+module.exports = ImageOptimization;
 
