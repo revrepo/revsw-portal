@@ -54,7 +54,20 @@
       EVENT_TYPES:{
         'domain': 'Domain Config Modification',
         'purge': 'Object Purge',
-        'sslcert': 'SSL Config Modification'
+        'sslcert': 'SSL Config Modification',
+        'wafrule': 'WAF Rule Modification'
+      },
+      /**
+       * @name  EVENT_COLORS
+       * @description
+       *   Colors for Events in graphs
+       * @type {Object}
+       */
+      EVENT_COLORS:{
+        'domain': 'blue',
+        'purge': 'green',
+        'sslcert': 'red',
+        'wafrule': 'magenta'
       }
     });
 

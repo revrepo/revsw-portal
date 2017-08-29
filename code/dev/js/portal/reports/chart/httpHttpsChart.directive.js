@@ -21,7 +21,7 @@
         isAutoReload: '@?'
       },
       /*@ngInject*/
-      controller: function($scope, Stats, $q, Util) {
+      controller: function($scope, Stats, $q, Util, EventsSerieDataService) {
         var _filters_field_list = ['from_timestamp', 'to_timestamp', 'country', 'device', 'os', 'browser'];
         $scope.heading = 'HTTP/HTTPS Hits';
         $scope._loading = false;
@@ -101,7 +101,7 @@
                   rel_http = Math.round(http_ * 1000 / (https_ + http_)) / 10;
                   rel_https = Math.round(https_ * 1000 / (https_ + http_)) / 10;
                 }
-                var _text = '!HTTPS <span style="font-weight: bold; color: #3c65ac;">' + Util.formatNumber(https_) +
+                var _text = 'HTTPS <span style="font-weight: bold; color: #3c65ac;">' + Util.formatNumber(https_) +
                   '</span> Requests, <span style="font-weight: bold; color: #3c65ac;">' + rel_https +
                   '</span>%<br> HTTP <span style="font-weight: bold; color: black;">' + Util.formatNumber(http_) +
                   '</span> Requests, <span style="font-weight: bold; color: black;">' + rel_http +
@@ -224,6 +224,16 @@
                 }
               }
               return $q.when(series);
+            })
+            .then(function(series) {
+              // NOTE: add events data
+              var filterParams = generateFilterParams($scope.filters);
+              var options = {
+                from_timestamp: filterParams.from_timestamp,
+                to_timestamp: filterParams.to_timestamp,
+                domain_id: $scope.ngDomain.id,
+              };
+              return EventsSerieDataService.extendSeriesEventsDataForDomainId(series, options);
             })
             .then(function setNewData(data) {
               // model better to update once

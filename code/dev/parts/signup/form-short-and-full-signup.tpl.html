@@ -31,7 +31,7 @@
         <div class="form-group" ng-class="{ 'has-error': newUser.firstName.$invalid && newUser.firstName.$dirty }">
           <label for="firstName" class="control-label" popover-trigger="mouseenter" uib-popover="First name">First Name *</label>
           <input type="text" class="form-control" id="firstName" name="firstName" placeholder="First name (30 characters max)" required
-            ng-maxlength="30" ng-model="$ctrl.model.first_name" ng-pattern="NO_SPECIAL_CHARS" ng-disabled="$ctrl._loading">
+            ng-maxlength="30" ng-model="$ctrl.model.first_name" ng-pattern="USER_FIRST_NAME" ng-disabled="$ctrl._loading">
           <div class="error-messages" ng-messages="newUser.firstName.$error" role="alert" ng-messages-multiple>
             <div ng-messages-include="parts/shared/error-messages.html"></div>
           </div>
@@ -39,7 +39,7 @@
         <div class="form-group" ng-class="{ 'has-error': newUser.lastName.$invalid && newUser.lastName.$dirty }">
           <label for="lastName" class="control-label" popover-trigger="mouseenter" uib-popover="Last name">Last Name *</label>
           <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Last Name (30 characters max)" ng-model="$ctrl.model.last_name"
-            required ng-maxlength="30" ng-pattern="NO_SPECIAL_CHARS" ng-disabled="$ctrl._loading">
+            required ng-maxlength="30" ng-pattern="USER_LAST_NAME" ng-disabled="$ctrl._loading">
           <div class="error-messages" ng-messages="newUser.lastName.$error" role="alert" ng-messages-multiple>
             <div ng-messages-include="parts/shared/error-messages.html"></div>
           </div>
@@ -74,7 +74,7 @@
           <div class="form-action center-block">
             <div class="text-center">
               <a ui-sref="^" class="btn btn-default">
-                <i class="glyphicon glyphicon-remove"></i>&nbsp; Cancel
+                <i class="glyphicon glyphicon-arrow-left"></i>&nbsp; Back
               </a>
               <button class="btn btn-success" ng-disabled="$ctrl._loading || newUser.$invalid" ng-click="$ctrl.onSignUpShort($ctrl.model)">
               <i class="glyphicon" ng-class="_loading ? 'glyphicon-refresh spin':'glyphicon-log-in'"></i> Sign Up
@@ -83,9 +83,31 @@
           </div>
         </div>
       </form>
-      <!-- Full form registration -->
+
+      <!-- Selected Billing Plan -->
       <div class="row col-xs-12 col-sm-12" ng-if="vendorConfig.enable_simplified_signup_process === false">
-        <div class="affix affix-top col-sm-offset-1 col-xs-offset-1 col-xs-11 col-sm-11 col-md-5">
+        <div style="padding-right: 30px;margin-bottom: 40px;" class="affix affix-top col-sm-offset-1 col-xs-offset-1 col-xs-11 col-sm-11 col-md-5">
+          <div class="individual-plan" style="padding-bottom: 30px;" ng-if="currentPB.chargify_handle == $ctrl.model.billing_plan">
+            <p class="text-muted"><strong>1st Month Free.</strong></p>
+            <div class="billing-plan">
+              <div class="billing-plan-header">
+                <h2 class="billing-plan-title">{{currentPB.name}}</h2>
+              </div>
+              <div class="billing-plan-price">
+                <h1 class=""><span class="billing-plan-ammount">${{currentPB.monthly_fee}}</span>/mon</h1>
+              </div>
+              <div class="billing-plan-details">
+                <p class="billing-plan-description">{{currentPB.description}}</p>
+                <h4>Overage Charges</h4>
+                <div class="billing-plan-services" ng-repeat="service in currentPB.services">
+                  <div>${{service.cost | number:2}} per {{service.measurement_unit}}</div>
+                </div>
+              </div>
+              <footer class="billing-plan-action">
+                <!--<button href="" ng-click="chooseBillingPlan(item)" class="btn btn-success btn-lg">Subscribe</button>-->
+              </footer>
+            </div>
+          </div>
           <p class="information"><strong> Discover how <em>fast</em> fast can be when accelerating your business at the edge with nuu:bit</strong></p>
           <p><strong>To Get Started:</strong></p>
           <ol class="list-instruction">
@@ -98,6 +120,7 @@
           <hr>
         </div>
         <div class="col-md-offset-6 col-sm-12 col-md-6">
+          <!-- Full form registration -->
           <form class="col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-0 col-lg-11 col-xs-11 col-sm-11 col-md-11  form-horizontal form-contact-info--full"
             name="newUser" novalidate>
             <div class="form-group " ng-class="{ 'has-error': newUser.email.$invalid && newUser.email.$dirty }">
@@ -130,7 +153,7 @@
               <label for="firstName" class="col-sm-3 control-label">First Name *</label>
               <div class="col-sm-9">
                 <input type="text" class="form-control inline-block" id="firstName" name="firstName" placeholder="First Name" required ng-maxlength="150"
-                  ng-model="$ctrl.model.first_name" ng-disabled="$ctrl._loading">
+                  ng-model="$ctrl.model.first_name" ng-disabled="$ctrl._loading" ng-pattern="USER_FIRST_NAME">
                 <label for="firstName" class="text-info" popover-trigger="mouseenter" uib-popover="First name">
               <i class="fa fa-question-circle"></i>
           </label>
@@ -142,20 +165,20 @@
               <label for="lastName" class="col-sm-3 control-label">Last Name *</label>
               <div class="col-sm-9">
                 <input type="text" class="form-control inline-block" id="lastName" name="lastName" placeholder="Last Name" ng-model="$ctrl.model.last_name"
-                  required ng-maxlength="150" ng-disabled="$ctrl._loading">
+                  required ng-maxlength="150" ng-disabled="$ctrl._loading" ng-pattern="USER_LAST_NAME">
                 <label for="lastName" class="text-info" popover-trigger="mouseenter" uib-popover="Last name">
                 <i class="fa fa-question-circle"></i>
                 </label>
                 <div ng-show="!!newUser['lastName'].$error.maxlength" style="color:red">150 characters max</div>
               </div>
             </div>
-             <!--Promo Code -->
+            <!--Promo Code -->
             <div class="form-group" ng-class="{ 'has-error': newUser.promoCode.$invalid && newUser.promoCode.$dirty }">
-              <label for="promoCode" class="col-sm-3 control-label" popover-trigger="mouseenter" uib-popover="Promo Code">Promo Code</label>
+              <label for="promoCode" class="col-sm-3 control-label">Promo Code</label>
               <div class="col-sm-9">
                 <input type="text" class="form-control inline-block" id="promoCode" name="promoCode" placeholder="Enter Promo Code" ng-maxlength="15"
                   ng-model="$ctrl.model.promocode" ng-pattern="NO_SPECIAL_CHARS" ng-disabled="$ctrl._loading">
-                <label for="lastName" class="text-info" popover-trigger="mouseenter" uib-popover="Last name">
+                <label for="promoCode" class="text-info" popover-trigger="mouseenter" uib-popover="Promo Code">
                 <i class="fa fa-question-circle"></i>
                 </label>
                 <div class="error-messages" ng-messages="newUser.promoCode.$error" role="alert" ng-messages-multiple>
@@ -274,7 +297,7 @@
                 <br>
                 <div class="text text-center">
                   <a ui-sref="^" class="btn btn-default">
-                    <i class="glyphicon glyphicon-remove"></i>&nbsp; Cancel
+                    <i class="glyphicon glyphicon-arrow-left"></i>&nbsp; Back
                   </a>
                   <button class="btn btn-success" ng-disabled="_loading || newUser.$invalid ||(($ctrl.model.password != $ctrl.model.passwordConfirm ||newUser.passwordConfirm.$invalid) &&newUser.passwordConfirm.$dirty )"
                     ng-click="$ctrl.onSignUp($ctrl.model)">

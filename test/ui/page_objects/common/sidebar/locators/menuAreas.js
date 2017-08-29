@@ -43,7 +43,8 @@ var MenuAreas = {
     linkText: 'Admin'
   },
   BILLING: {
-    linkText: 'Billing'
+    linkText: 'Billing',
+    id: 'side-menu-item-billing'
   },
   SUPPORT: {
     linkText: 'Support'

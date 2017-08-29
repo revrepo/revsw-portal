@@ -1,0 +1,4 @@
+
+The code was used to delete old test Chargify subscriptions/customers via Chargify UI, and later the code was replaced with 
+API calls. The code is not in use anymore - just leaving it here as an example of automated access to a website.
+

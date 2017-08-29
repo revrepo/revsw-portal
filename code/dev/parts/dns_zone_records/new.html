@@ -1,8 +1,8 @@
 <div class="row">
   <div class="col-sm-12">
     <h2 class="pull-left page-title">
-      <img class="ns1-logo--title" ng-src="images/ns1/white-pb-ns1.svg"></img>
-      Add New Record
+      <img class="ns1-logo--title" ng-src="images/ns1/white-pb-ns1.svg" alt="NS1 Logo">
+      Add New Record <span ng-if="zone_name"> To Domain <strong>{{zone_name}}</strong></span>
     </h2>
   </div>
 </div>
@@ -29,8 +29,8 @@
               <div class="col-sm-10">
                 <!-- NOTE: all validation rules implement to hidden fild-->
                 <input type="hidden" id="subdomainFull" name="subdomainFull" validate-dns-record-domain-name-regular-or-wildcard-domains ng-model="newDomainName" ng-maxlength="225">
-                <input type="text" id="subdomain" name="subdomain" autofocus class="form-control" placeholder="my.subdomain" ng-model="model.idomain" ng-change="newDomainName = (model.idomain.length>0)? model.idomain+'.'+zone_name:null">
-                <label class="add-on" ng-if="zone_name">.{{zone_name}}</label>
+                <input type="text" id="subdomain" name="subdomain" autofocus focus-me="!_loading" class="form-control" placeholder="my.subdomain" ng-model="model.idomain" ng-change="newDomainName = (model.idomain.length>0)? model.idomain+'.'+zone_name:zone_name">
+                <label class="add-on" ng-if="zone_name"><span ng-show="model.idomain.length>0">.</span>{{zone_name}}</label>
                 <label for="subdomain" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enter a subdomain within the {{zone_name}} zone.  You may enter &#39;*&#39; as the first component of the subdomain to create a wildcard record.  For example, &#39;*.{{zone_name}}&#39; will match &#39;foo.{{zone_name}}&#39;, &#39;bar.{{zone_name}}&#39;, &#39;foo.bar.{{zone_name}}&#39;, and so on.  You may also leave the subdomain blank to create a record for {{zone_name}}.">
                   <i class="fa fa-question-circle"></i>
                 </label>
@@ -83,7 +83,7 @@
               <label for="recTtl" class="control-label col-sm-2">
                 TTL </label>
               <div class="col-md-10">
-                <input type="number" placeholder="3600" id="proxy_timeout" name="recTtl" class="form-control inline-block" ng-disabled="_loading" ng-model="model.rec.ttl" ng-min="1" ng-max="3600"> second(s)
+                <input type="number" placeholder="3600" id="proxy_timeout" name="recTtl" class="form-control inline-block" ng-disabled="_loading" ng-model="model.rec.ttl" ng-min="1" ng-max="2147483647"> second(s)
                 <label for="recTtl" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Optional; if not set, the default TTL for the {{zone_name}} zone will be used">
                   <i class="fa fa-question-circle"></i>
                 </label>

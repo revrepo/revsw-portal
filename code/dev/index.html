@@ -9,22 +9,22 @@
 
   <!-- build:css css/vendor.css -->
   <!--<link rel="stylesheet" href="bower_components/PACE/themes/orange/pace-theme-minimal.css" rel="stylesheet">-->
-  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="bower_components/jsoneditor/dist/jsoneditor.css" rel="stylesheet">
-  <link rel="stylesheet" href="bower_components/angular-chart.js/dist/angular-chart.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="bower_components/ui-select/dist/select.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="bower_components/angular-datatables/dist/plugins/bootstrap/datatables.bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="bower_components/jsoneditor/dist/jsoneditor.css">
+  <link rel="stylesheet" href="bower_components/angular-chart.js/dist/angular-chart.min.css">
+  <link rel="stylesheet" href="bower_components/ui-select/dist/select.min.css">
+  <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="bower_components/angular-datatables/dist/plugins/bootstrap/datatables.bootstrap.min.css">
   <link rel="stylesheet" href="bower_components/angular-bootstrap-datetimepicker/src/css/datetimepicker.css" >
   <link rel="stylesheet" href="bower_components/bootstrap-daterangepicker/daterangepicker.css"/>
-  <link rel="stylesheet" href='bower_components/angular-dashboard-framework/dist/angular-dashboard-framework.min.css' rel="stylesheet">
-  <link rel="stylesheet" href='bower_components/angular-bootstrap-toggle-switch/style/bootstrap3/angular-toggle-switch-bootstrap-3.css' rel="stylesheet">
-  <link rel="stylesheet" href="bower_components/angular/angular-csp.css" rel="stylesheet">
-  <link rel="stylesheet" href="bower_components/intro.js/minified/introjs.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="bower_components/angular-dashboard-framework/dist/angular-dashboard-framework.min.css">
+  <link rel="stylesheet" href="bower_components/angular-bootstrap-toggle-switch/style/bootstrap3/angular-toggle-switch-bootstrap-3.css">
+  <link rel="stylesheet" href="bower_components/angular/angular-csp.css">
+  <link rel="stylesheet" href="bower_components/intro.js/minified/introjs.min.css">
   <link rel="stylesheet" href="bower_components/select2/select2.css">
   <link rel="stylesheet" href="bower_components/select2-bootstrap-css/select2-bootstrap.css">
   <link rel="stylesheet" href="bower_components/highlightjs/styles/github.css">
-  <link rel="stylesheet" href="bower_components/AngularJS-Toaster/toaster.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="bower_components/AngularJS-Toaster/toaster.min.css">
   <link rel="stylesheet" href="bower_components/sweetalert/dist/sweetalert.css">
 
   <!-- endbuild -->
@@ -79,6 +79,7 @@
 <script type="text/javascript" src="bower_components/highcharts/highstock.src.js"></script>
 <!-- <script type="text/javascript" src="bower_components/highcharts/highcharts.js"></script> -->
 <script type="text/javascript" src="bower_components/highcharts/modules/map.js"></script>
+<script type="text/javascript" src="bower_components/highcharts/modules/drilldown.js"></script>
 <script type="text/javascript" src="bower_components/highcharts/highcharts-3d.js"></script>
 <script type="text/javascript" src="bower_components/highcharts/highcharts-more.js"></script>
 <script type="text/javascript" src="bower_components/highcharts/modules/exporting.js"></script>
@@ -98,10 +99,10 @@
 
 <script type="text/javascript" src="bower_components/angular-intro.js/build/angular-intro.min.js"></script>
 <script type="text/javascript" src="bower_components/ng-youtube-embed/build/ng-youtube-embed.min.js"></script>
-<script type="text/javascript" src='bower_components/Sortable/Sortable.min.js'></script>
-<script type="text/javascript" src='bower_components/Sortable/ng-sortable.js'></script>
+<script type="text/javascript" src="bower_components/Sortable/Sortable.min.js"></script>
+<script type="text/javascript" src="bower_components/Sortable/ng-sortable.js"></script>
 <!-- <script type="text/javascript" src='bower_components/angular-dashboard-framework/dist/angular-dashboard-framework.min.js'></script> -->
-<script type="text/javascript" src='bower_components/angular-dashboard-framework/dist/angular-dashboard-framework.js'></script>
+<script type="text/javascript" src="bower_components/angular-dashboard-framework/dist/angular-dashboard-framework.js"></script>
 
 <script type="text/javascript" src="bower_components/ngstorage/ngStorage.min.js"></script>
 <script type="text/javascript" src="bower_components/angular-base64/angular-base64.min.js"></script>
@@ -171,6 +172,7 @@
 <script type="text/javascript" src="js/portal/shared/directives/ui-sref-active-if.directive.js"></script>
 <script type="text/javascript" src="js/portal/shared/directives/menu-toggle.directive.js"></script>
 <script type="text/javascript" src="js/portal/shared/directives/ng-animate-disabled.directive.js"></script>
+<script type="text/javascript" src="js/portal/shared/directives/string-to-number.directive.js"></script>
 <script type="text/javascript" src="js/portal/shared/directives/time-note-display.directive.js"></script>
 <script type="text/javascript" src="js/portal/shared/directives/typeahead.directive.js"></script>
 <script type="text/javascript" src="js/portal/shared/directives/focus-me.directive.js"></script>
@@ -379,6 +381,7 @@
 <script type="text/javascript" src="js/portal/reports/top/slowestFBT.directive.js"></script>
 <script type="text/javascript" src="js/portal/reports/top/slowestDownload.directive.js"></script>
 <script type="text/javascript" src="js/portal/reports/heatmaps/heatmaps.factory.js"></script>
+<script type="text/javascript" src="js/portal/reports/heatmaps/heatmapsWorldDrill.factory.js"></script>
 <script type="text/javascript" src="js/portal/reports/imageengine-analytics/imageEngineAnalytics.controller.js"></script>
 <script type="text/javascript" src="js/portal/reports/imageengine-analytics/directives/imageengineLinechartBytesSaved.directive.js"></script>
 <script type="text/javascript" src="js/portal/reports/imageengine-analytics/directives/imageengineSolidgaugePerformanceImprovement.directive.js"></script>
@@ -442,6 +445,18 @@
 <script type="text/javascript" src="js/portal/dashboard/widgets/apps-analytics/mobile-tops/widgetsAppsSDKTopsReports.controller.js"></script>
 <script type="text/javascript" src="js/portal/dashboard/widgets/apps-analytics/mobile-tops/widgetsMobileTopsEditConfig.controller.js"></script>
 <!-- //Apps Analytic -->
+<!-- DNS Analytics-->
+<script type="text/javascript" src="js/portal/dashboard/widgets/dns-analytics/widgetsDNSAnalytics.module.js"></script>
+<script type="text/javascript" src="js/portal/dashboard/widgets/dns-analytics/widgetsDNSAnalyticsDefault.controller.js"></script>
+<script type="text/javascript" src="js/portal/dashboard/widgets/dns-analytics/widgetsDNSAnalyticsEditConfig.controller.js"></script>
+<script type="text/javascript" src="js/portal/dashboard/widgets/dns-analytics/dns-queries-line-chart/wingetDNSQueriesLineChart.config.js"></script>
+<!-- //DNS Analytics -->
+<!-- Security Analytics-->
+<script type="text/javascript" src="js/portal/dashboard/widgets/security-analytics/widgetSecurityAnalytics.module.js"></script>
+<script type="text/javascript" src="js/portal/dashboard/widgets/security-analytics/widgetsWAFAnalyticsEditConfig.controller.js"></script>
+<script type="text/javascript" src="js/portal/dashboard/widgets/security-analytics/waf-security-events-chart/widgetWAFSecurityEventsChart.config.js"></script>
+<script type="text/javascript" src="js/portal/dashboard/widgets/security-analytics/waf-security-events-chart/widgetWAFSecurityEventsChart.controller.js"></script>
+<!-- //Security Analytics-->
 <!-- Web Analytic -->
 <script type="text/javascript" src="js/portal/dashboard/widgets/web-analytics/widgetsWebAnalytics.module.js"></script>
 <script type="text/javascript" src="js/portal/dashboard/widgets/web-analytics/widgetsWebAnalyticsEditConfig.controller.js"></script>
@@ -473,10 +488,17 @@
 <script type="text/javascript" src="js/portal/logshippers/controller/logshippers.controller.js"></script>
 <script type="text/javascript" src="js/portal/logshippers/logshippers-staging-status/logshippersStagingStatus.directive.js"></script>
 <!-- // LogShippers -->
+<!-- Network IP Blocks-->
+<script type="text/javascript" src="js/portal/network-ip-blocks/networkIPBlocks.module.js"></script>
+<script type="text/javascript" src="js/portal/network-ip-blocks/networkIPBlocks.routes.js"></script>
+<script type="text/javascript" src="js/portal/network-ip-blocks/controllers/cdnIPBlocks.controller.js"></script>
+<!-- // Network IP Blocks-->
 <!-- DNS Zone Records -->
 <script type="text/javascript" src="js/portal/dns_zone_records/dns_zone_records.module.js"></script>
 <script type="text/javascript" src="js/portal/dns_zone_records/dns_zone_records.routes.js"></script>
 <script type="text/javascript" src="js/portal/dns_zone_records/controller/dns_zone_recordsCrud.controller.js"></script>
+<script type="text/javascript" src="js/portal/dns_zone_records/controller/dnsZoneAutoDiscoverZoneRecordsModal.controller.js"></script>
+<script type="text/javascript" src="js/portal/dns_zone_records/checklist-dns-zone-records/checklistDnsZoneRecords.directive.js"></script>
 <script type="text/javascript" src="js/portal/dns_zone_records/dns-zone-record-answer/dnsZoneRecordAnswer.directive.js"></script>
 
 <!-- //DNS Zone Records -->
@@ -492,6 +514,7 @@
 <!-- DNS Analytics-->
 <script type="text/javascript" src="js/portal/dns_analytics/dns_analytics.module.js"></script>
 <script type="text/javascript" src="js/portal/dns_analytics/dns_analytics.routes.js"></script>
+<script type="text/javascript" src="js/portal/dns_analytics/dns-queries-line-chart/dnsQueriesLineChart.directive.js"></script>
 <script type="text/javascript" src="js/portal/dns_analytics/controllers/DNSAnalytics.controller.js"></script>
 <!-- //DNS Analytics-->
 <!-- Azure Marcetplace-->
@@ -508,8 +531,10 @@
 <!-- WAF Rules -->
 <script type="text/javascript" src="js/portal/waf_rules/waf_rules.module.js"></script>
 <script type="text/javascript" src="js/portal/waf_rules/waf_rules.routes.js"></script>
+<script type="text/javascript" src="js/portal/waf_rules/controller/wafRulesAutoGenerateRulesModal.controller.js"></script>
 <script type="text/javascript" src="js/portal/waf_rules/controller/wafRulesCrud.controller.js"></script>
 <script type="text/javascript" src="js/portal/waf_rules/controller/wafRulesBuiltInList.controller.js"></script>
+<script type="text/javascript" src="js/portal/waf_rules/directives/wafRuleGenerationJobTimePeriod.directive.js"></script>
 <script type="text/javascript" src="js/portal/waf_rules/waf-rule-staging-status/wafRuleStagingStatus.directive.js"></script>
 <!-- //WAF Rules -->
 <!-- WAF Analytics -->

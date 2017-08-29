@@ -35,7 +35,7 @@
     </pre>
   </div>
   <div class="modal-footer">
-    <button class="btn btn-default" type="button" ng-click="cancel()">Hide</button>
+    <button class="btn btn-primary" type="button" ng-click="cancel()">Close</button>
   </div>
 </script>
 <div class="container-fluid" ui-view="page">
@@ -70,8 +70,8 @@
           <div class="alert alert-warning" ng-if="records == null && !_loading">
             Failed to retrieve a list of resources - please try again later
           </div>
-          <div class="alert alert-info" ng-if="_loading">
-            <i class="glyphicon glyphicon-refresh spin" ng-if="item.loading"></i>&nbsp; Loading...
+          <div class="alert alert-info" ng-if="_loading && filteredRecords.length === 0">
+            <i class="glyphicon glyphicon-refresh spin"></i>&nbsp; Loading...
           </div>
           <crud-pagination ng-if="records !== null"></crud-pagination>
           <div class="table-responsive">

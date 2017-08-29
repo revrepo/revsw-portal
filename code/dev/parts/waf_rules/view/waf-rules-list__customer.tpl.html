@@ -1,19 +1,19 @@
 <div class="waf-rules-list__customer">
   <div class="alert alert-info" ng-if="records.length == 0 && !_loading">
-    There are no any customer WAF rules configured in the system
+    There are no customer WAF rules configured in the system
   </div>
   <div class="alert alert-warning" ng-if="records == null && !_loading">
     Failed to retrieve a list of resources - please try again later
   </div>
-  <div class="alert alert-info" ng-if="_loading">
-    <i class="glyphicon glyphicon-refresh spin" ng-if="item.loading"></i>&nbsp; Loading...
+   <div class="alert alert-info" ng-if="_loading && filteredRecords.length === 0">
+    <i class="glyphicon glyphicon-refresh spin"></i>&nbsp; Loading...
   </div>
   <crud-pagination></crud-pagination>
   <div class="table-responsive">
     <table class="table">
       <thead>
         <tr>
-          <th>
+          <th class="waf-rule-name">
             <a href="" ng-click="order('rule_name')">Rule Name</a>
             <span class="sortorder" ng-show="filter.predicate === 'rule_name'" ng-class="{reverse: filter.reverse}"></span>
           </th>
@@ -37,7 +37,7 @@
       </thead>
       <tbody>
         <tr id="anchor{{::$index}}" ng-click="saveAnchorScrollIndex($index)" ng-repeat="item in filteredRecords | limitTo:filter.limit:filter.skip track by $index">
-          <td> <a href="" ui-sref="{{isReadOnly() ? '.':'.edit({id: item.id})'}}" ng-class="{'disabled':isReadOnly()}" ng-if="!item.loading"
+          <td class="waf-rule-name"> <a href="" ui-sref="{{isReadOnly() ? '.':'.edit({id: item.id})'}}" ng-class="{'disabled':isReadOnly()}" ng-if="!item.loading"
               uib-tooltip="{{isReadOnly() ?'View WAF Rule':'Edit WAF Rule'}}">
              {{item.rule_name}}</a>
           </td>

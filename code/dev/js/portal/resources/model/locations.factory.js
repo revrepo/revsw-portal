@@ -26,6 +26,11 @@
         params:{action: 'billing_zones'},
         isArray: true
       },
+      networkIPBlocks: {
+        method: 'GET',
+        params: { action: 'network_ip_blocks' },
+        isArray: false
+      }
     });
   }
 })();

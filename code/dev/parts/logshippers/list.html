@@ -53,16 +53,15 @@
           <div class="row">
             <div class="col-md-12">
               <div class="form-inline pull-left">
-               <div class="form-group">
-                <a ui-sref="{{isReadOnly() ?'.': '.new'}}" class="btn btn-success" ng-class="{'btn-disabled':isReadOnly()}" ng-disabled="_loading || isReadOnly()">
+                <div class="form-group">
+                  <a ui-sref="{{isReadOnly() ?'.': '.new'}}" class="btn btn-success" ng-class="{'btn-disabled':isReadOnly()}" ng-disabled="_loading || isReadOnly()">
                   <i class="glyphicon glyphicon-plus"></i>&nbsp; Add New Log Shipping Job
                 </a>
 
                 </div>
-                 <div class="form-group">
+                <div class="form-group">
                   <button class="btn btn-success" ng-disabled="_loading" ng-click="onClickRefresh()">
-                    <i class="glyphicon glyphicon-refresh" ng-class="_loading ? 'spin' : ''"></i>&nbsp; Refresh
-                    </dutton>
+                    <i class="glyphicon glyphicon-refresh" ng-class="_loading ? 'spin' : ''"></i>&nbsp; Refresh</button>
                 </div>
               </div>
               <div class="pull-right">
@@ -84,8 +83,8 @@
           <div class="alert alert-warning" ng-if="records == null && !_loading">
             Failed to retrieve a list of resources - please try again later
           </div>
-          <div class="alert alert-info" ng-if="_loading">
-            <i class="glyphicon glyphicon-refresh spin" ng-if="item.loading"></i>&nbsp; Loading...
+          <div class="alert alert-info" ng-if="_loading && filteredRecords.length === 0">
+            <i class="glyphicon glyphicon-refresh spin"></i>&nbsp; Loading...
           </div>
           <crud-pagination ng-if="records !== null"></crud-pagination>
           <div class="table-responsive">
@@ -142,7 +141,7 @@
                   <td>{{getRelativeDate(item.updated_at) }}</td>
                   <td class="state">
                     <!-- {{item.operationalModeName}} -->
-                    <div logshippers-staging-status current-state="item.operationalModeName" ng-id="item.id"></div>
+                    <div ng-if="isJobConfigured(item)" logshippers-staging-status current-state="item.operationalModeName" ng-id="item.id"></div>
                     <!--NOTE: it`s{{item.operational_mode}}-->
                   </td>
                   <td class="actions">
@@ -153,18 +152,23 @@
                     <a href="" ng-if="!item.loading"  ng-class="{'disabled':isReadOnly()}"  ng-click="deleteJob(item)" uib-tooltip="Delete Job">
                       <i class="glyphicon glyphicon-trash"></i>
                     </a>
-                    <!-- “Pause With Log Piling” -->
-                    <a href="" ng-class="{'not-active':item.operational_mode=='pause','disabled':isReadOnly()}" ng-if="!item.loading" ng-click="onChangeLogShippingState(item,'pause')" uib-tooltip="Pause With Log Piling">
-                      <i class="glyphicon glyphicon-pause"></i>
-                    </a>
-                    <!--   “Start”  -->
-                    <a href="" ng-class="{'not-active':item.operational_mode=='active','disabled':isReadOnly()}" ng-if="!item.loading" ng-click="onChangeLogShippingState(item,'active')" uib-tooltip="Start">
-                      <i class="glyphicon glyphicon-play"></i>
-                    </a>
-                    <!-- “Stop” / “Start”  -->
-                    <a href="" ng-class="{'not-active':item.operational_mode=='stop','disabled':isReadOnly()}" ng-if="!item.loading" ng-click="onChangeLogShippingState(item,'stop')" uib-tooltip="Stop">
-                      <i class="glyphicon glyphicon-stop"></i>
-                    </a>
+                    <span ng-if="isJobConfigured(item)">
+                      <!-- “Pause With Log Piling” -->
+                      <a href="" ng-class="{'not-active':item.operational_mode=='pause','disabled':isReadOnly()}" ng-if="!item.loading" ng-click="onChangeLogShippingState(item,'pause')" uib-tooltip="Pause With Log Piling">
+                        <i class="glyphicon glyphicon-pause"></i>
+                      </a>
+                      <!--   “Start”  -->
+                      <a href="" ng-class="{'not-active':item.operational_mode=='active','disabled':isReadOnly()}" ng-if="!item.loading" ng-click="onChangeLogShippingState(item,'active')" uib-tooltip="Start">
+                        <i class="glyphicon glyphicon-play"></i>
+                      </a>
+                      <!-- “Stop” / “Start”  -->
+                      <a href="" ng-class="{'not-active':item.operational_mode=='stop','disabled':isReadOnly()}" ng-if="!item.loading" ng-click="onChangeLogShippingState(item,'stop')" uib-tooltip="Stop">
+                        <i class="glyphicon glyphicon-stop"></i>
+                      </a>
+                    </span>
+                    <label ng-if="!isJobConfigured(item)" for="domain" class="text text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="The job is not yet configured. Please click on “Edit Job” icon.">
+                      <i class="fa fa-question-circle"></i>
+                    </label>
                   </td>
                   <td ng-if="auth.isReseller() ||  auth.isRevadmin()">
                     <div>{{item.companyName}}</div>

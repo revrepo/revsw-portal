@@ -12,122 +12,46 @@
     .module('revapm.Portal.Reports')
     .factory('EventsSerieDataService', EventsSerieDataService);
 
-  function EventsSerieDataService($q, Activity, ActivityPhrase, DomainsConfig, $uibModal) {
+  function EventsSerieDataService($q, Activity, ActivityPhrase, DomainsConfig, Stats, $uibModal) {
     'ngInject';
-    // TODO: rebase to config
-    var constEventsColor = {
-      'domain': 'blue',
-      'purge': 'green',
-      'sslcert': 'red'
-    };
+    var constEventsColor = ActivityPhrase.EVENT_COLORS;
     // service API
     return {
-      getEventsSerieDataForDomain: getEventsSerieDataForDomain
+      getEventsSerieDataForDomain: getEventsSerieDataForDomain,
+      extendSeriesEventsDataForDomainId: extendSeriesEventsDataForDomainId
     };
     /**
-     * @name  getEventsSerieDataForDomain
-     * @description
-     *   get Events (Activity) for Domain
-     * @param  {Object} options
-     * @return {Promise}
+     * @name extendSeriesEventsDataForDomainId
+     *
+     * @param {Array} series
+     * @param {Object} options
+     * @returns
+     */
+    function extendSeriesEventsDataForDomainId(series, options) {
+      return this.getEventsSerieDataForDomain(options)
+        .then(function(data) {
+          // NOTE: add new series data "Events"
+          series.push(data);
+          return series;
+        })
+        .catch(function() {
+          return series;
+        });
+    }
+    /**
+     *
+     * @param {Object} options
      */
     function getEventsSerieDataForDomain(options) {
-      var promises = [];
       var queryParams = {
         from_timestamp: options.from_timestamp,
-        to_timestamp: options.to_timestamp
+        to_timestamp: options.to_timestamp,
+        domainId: options.domain_id || options.id
       };
-      // TODO: activate after checking server work
-      if (!!options.account_id) {
-        queryParams.account_id = options.account_id;
-      }
 
-      /**
-       * @actionPreparingRequestSSLCertEvents
-       * @description
-       *   Preparing request for get Events(Activity) of target type "SSL Certificates"
-       * @return {Promise}
-       */
-      function actionPreparingRequestSSLCertEvents(options) {
-        var def = $q.defer();
-        if (!!options.domain_id) {
-          DomainsConfig.get({
-            id: options.domain_id
-          }).$promise.then(function(domainConfig) {
-            if (domainConfig.ssl_cert_id && domainConfig.ssl_cert_id !== '') {
-              var sslCertQueryPrams = {
-                from_timestamp: options.from_timestamp,
-                to_timestamp: options.to_timestamp,
-                target_id: domainConfig.ssl_cert_id,
-                target_type: 'sslcert'
-              };
-              def.resolve(Activity.query(sslCertQueryPrams).$promise);
-            }
-            def.resolve($q.when(null));
-          });
-        } else {
-          def.resolve($q.when(null));
-        }
-        return def.promise;
-      }
-      /**
-       * @name  actionPreparingRequestDomainEvents
-       * @description
-       *    Action for preparing to get events (activities) only type 'domain'
-       *
-       * @param  {Object} options
-       * @return {[type]}          [description]
-       */
-      function actionPreparingRequestDomainEvents(options) {
-        var def = $q.defer();
-        if (!!options.domain_id) {
-          var domainQueryPrams = {
-            from_timestamp: options.from_timestamp,
-            to_timestamp: options.to_timestamp,
-            target_id: options.domain_id,
-            target_type: 'domain',
-            activity_type: 'publish'
-          };
-          def.resolve(Activity.query(domainQueryPrams).$promise);
-        } else {
-          def.resolve($q.when(null));
-        }
-        return def.promise;
-      }
-
-      /**
-       * @name  actionPreparingRequestPurgeEvents
-       * @description
-       *    Action for preparing to get events (activities) only type 'purge'
-       *    Attention: target_id - is Domain ID
-       *
-       * @param  {Object} options
-       * @return {Promise}
-       */
-      function actionPreparingRequestPurgeEvents(options) {
-        var def = $q.defer();
-        if (!!options.domain_id) {
-          var domainQueryPrams = {
-            from_timestamp: options.from_timestamp,
-            to_timestamp: options.to_timestamp,
-            target_id: options.domain_id,
-            target_type: 'domain',
-            activity_type: 'purge'
-          };
-          def.resolve(Activity.query(domainQueryPrams).$promise);
-        } else {
-          def.resolve($q.when(null));
-        }
-        return def.promise;
-      }
-      // Async call all needed data
-      return $q.all([
-          actionPreparingRequestDomainEvents(options),
-          actionPreparingRequestSSLCertEvents(options),
-          actionPreparingRequestPurgeEvents(options)
-        ])
-        .then(function(dataAllRequests) {
-          // NOTE: create series data
+      return Stats.statsDomainActivity(queryParams).$promise
+        .then(function(data) {
+          // NOTE: create series data for Domain Events
           var serie = {
             name: 'Events',
             data: [],
@@ -166,6 +90,7 @@
                     _text += '<br> performed by ' + this.total.user_name + '';
                     break;
                   case 'sslcert':
+                  case 'wafrule':
                     _text = '<b>' + this.series.name + '</b> ' + ActivityPhrase.EVENT_TYPES[this.options.name] +
                       '<br>' + moment(this.x).format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span>] MMM D') + '';
                     _text += '<br> performed by ' + this.total.user_name + '';
@@ -178,38 +103,37 @@
               }
             }
           };
-          angular.forEach(dataAllRequests, function(data) {
-            if (data !== null) {
-              angular.forEach(data.data, function addPointsToSerie(item) {
-                // Set color for activity_target name
-                var marker = {
-                  fillColor: constEventsColor[item.activity_target],
-                  radius: 6
-                };
-                var title_ = item.activity_target[0].toUpperCase();
-                // Event 'Object Purge' is Activity Domain
-                if (item.activity_target === 'domain') {
-                  if (item.activity_type === 'purge') {
-                    title_ = 'P';
-                    marker.fillColor = constEventsColor[item.activity_type];
-                  }
+
+          if (data !== null) {
+            angular.forEach(data.data, function addPointsToSerie(item) {
+              // Set color for activity_target name
+              var marker = {
+                fillColor: constEventsColor[item.activity_target],
+                radius: 6
+              };
+              var title_ = item.activity_target[0].toUpperCase();
+              // Event 'Object Purge' is Activity Domain
+              if (item.activity_target === 'domain') {
+                if (item.activity_type === 'purge') {
+                  title_ = 'P';
+                  marker.fillColor = constEventsColor[item.activity_type];
                 }
-                var eventPointData = {
-                  id: item.activity_target + '_' + item.datetime,
-                  name: item.activity_target,
-                  activity_target: item.activity_target,
-                  activity_type: item.activity_type,
-                  user_type: item.user_type,
-                  total: item,
-                  title: title_,
-                  y: 0,
-                  x: item.datetime,
-                  marker: marker
-                };
-                serie.data.push(eventPointData);
-              });
-            }
-          });
+              }
+              var eventPointData = {
+                id: item.activity_target + '_' + item.datetime,
+                name: item.activity_target,
+                activity_target: item.activity_target,
+                activity_type: item.activity_type,
+                user_type: item.user_type,
+                total: item,
+                title: title_,
+                y: 0,
+                x: item.datetime,
+                marker: marker
+              };
+              serie.data.push(eventPointData);
+            });
+          }
           return serie;
         });
     }

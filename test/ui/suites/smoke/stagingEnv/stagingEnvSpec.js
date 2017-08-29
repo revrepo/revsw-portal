@@ -2,7 +2,7 @@
  *
  * REV SOFTWARE CONFIDENTIAL
  *
- * [2013] - [2015] Rev Software, Inc.
+ * [2013] - [2017] Rev Software, Inc.
  * All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains
@@ -18,55 +18,57 @@
 
 var config = require('config');
 var Portal = require('./../../../page_objects/portal');
-var DataProvider = require('./../../../common/providers/data');
-var Constants = require('./../../../page_objects/constants');
 
 var users = [
-    config.get('portal.users.admin'),
-    config.get('portal.users.revAdmin'),
-    config.get('portal.users.reseller'),
-    config.get('portal.users.user')
+  config.get('portal.users.admin'),
+  config.get('portal.users.revAdmin'),
+  config.get('portal.users.reseller'),
+  config.get('portal.users.user')
 ];
 
 var expectedIpAddress = '192.168.4.53';
 
-users.forEach(function (user) {
-    describe('Smoke', function () {
-        describe('Staging Env', function () {
+describe('Smoke', function() {
 
-            beforeAll(function () {
-                Portal.signIn(user);
-                Portal.helpers.nav.goToStagingEnvironment();
-            });
+  users.forEach(function(user) {
 
-            afterAll(function () {
-                Portal.signOut();
-            });
+    describe('With user: ' + user.role, function() {
+      describe('Staging Env', function() {
 
-            it('should display "Staging Env" page',
-                function () {
-                    var expectedTitle = 'Staging Environment';
-                    var title = Portal.stagingEnv.page.getTitle();
-                    expect(title).toEqual(expectedTitle);
-                });
-
-            it('should display staging server ip address',
-                function () {
-                    var ip = Portal.stagingEnv.page.getStagingServer();
-                    expect(ip).toBe(expectedIpAddress);
-                });
-
-            it('should display staging server ip address in etc/hosts config',
-                function () {
-                    var configString = Portal.stagingEnv.page.getConfigString();
-                    expect(configString).toContain(expectedIpAddress);
-                });
-
-            it('should display staging server ip address in example string',
-                function () {
-                    var exampleString = Portal.stagingEnv.page.getExampleString();
-                    expect(exampleString).toContain(expectedIpAddress);
-                });
+        beforeAll(function() {
+          Portal.signIn(user);
+          Portal.helpers.nav.goToStagingEnvironment();
         });
+
+        afterAll(function() {
+          Portal.signOut();
+        });
+
+        it('should display "Staging Env" page',
+          function() {
+            var expectedTitle = 'Staging Environment';
+            var title = Portal.stagingEnv.page.getTitle();
+            expect(title).toEqual(expectedTitle);
+          });
+
+        it('should display staging server ip address',
+          function() {
+            var ip = Portal.stagingEnv.page.getStagingServer();
+            expect(ip).toBe(expectedIpAddress);
+          });
+
+        it('should display staging server ip address in etc/hosts config',
+          function() {
+            var configString = Portal.stagingEnv.page.getConfigString();
+            expect(configString).toContain(expectedIpAddress);
+          });
+
+        it('should display staging server ip address in example string',
+          function() {
+            var exampleString = Portal.stagingEnv.page.getExampleString();
+            expect(exampleString).toContain(expectedIpAddress);
+          });
+      });
     });
+  });
 });

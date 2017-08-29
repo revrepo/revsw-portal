@@ -25,8 +25,8 @@
             <label for="rule_name" class="col-sm-2 control-label">Rule Name *</label>
             <div class="col-sm-10">
               <input type="text" autofocus class="form-control inline-block" ng-disabled="_loading" ng-model="model.rule_name" name="rule_name"
-                id="rule_name" placeholder="WAF Rule Name" ng-pattern="NO_SPECIAL_CHARS" ng-maxlength="50" required>
-              <label for="rule_name" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="WAF Rule name (50 characters max)">
+                id="rule_name" placeholder="WAF Rule Name" ng-pattern="WAF_RULE_NAME" ng-maxlength="150" required>
+              <label for="rule_name" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="WAF Rule name (150 characters max)">
                 <i class="fa fa-question-circle"></i>
               </label>
               <div class="error-messages" ng-messages="editForm.rule_name.$error" role="alert" ng-messages-multiple>
@@ -105,7 +105,7 @@
             <div class="col-md-10">
               <div class="col-sm-12 form-group">
                 <textarea id="rule_body" placeholder="Public WAF Rule" class="form-control text--courier inline-block" name="rule_body" ng-model="model.rule_body"
-                  ng-disabled="_loading" ng-maxlength="10000" required>
+                  ng-disabled="_loading" ng-maxlength="65000" required>
                 </textarea>
                 <label for="rule_body" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Specify here WAF rule statements in defined format">
                   <i class="fa fa-question-circle"></i>

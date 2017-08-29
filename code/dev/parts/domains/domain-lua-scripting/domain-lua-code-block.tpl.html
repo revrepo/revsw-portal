@@ -14,7 +14,7 @@
   <div class="form-group" ng-class="{'has-error': blockEditForm.luaBPlocation.$invalid && blockEditForm.luaBPlocation.$dirty}">
     <label for="luaBPlocation" class="col-sm-3 control-label">URL Location *</label>
     <div class="col-sm-9">
-      <input type="text" class="form-control inline-block elemLastFirstMile" ng-disabled="_loading" ng-model="$ctrl.luaBlock.location" name="luaBPlocation" placeholder="like \" /my_url/\ "" ng-maxlength="150" required>
+       <input type="text" class="form-control inline-block elemLastFirstMile" ng-disabled="_loading" ng-model="$ctrl.luaBlock.location" name="luaBPlocation" placeholder="like  /my_url/" ng-maxlength="150" required>
       <label for="luaBPlocation" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Specify here a website path (like “/my_url/”) the Lua code should be executed for">
         <i class="fa fa-question-circle"></i>
       </label>

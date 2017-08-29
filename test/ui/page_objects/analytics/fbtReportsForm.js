@@ -2,7 +2,7 @@
  *
  * REV SOFTWARE CONFIDENTIAL
  *
- * [2013] - [2015] Rev Software, Inc.
+ * [2013] - [2017] Rev Software, Inc.
  * All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains
@@ -38,6 +38,10 @@ var FBTReportsForm = {
         country: 'country',
         os: 'os',
         device: 'device',
+        filtersCountLastDay: 'filters.count_last_day',
+        filtersCountry: 'filters.country',
+        filtersOS: 'filters.os',
+        filtersDevice: 'filters.device',
         searchDomain: '$select.search'
       }
     },
@@ -101,10 +105,15 @@ var FBTReportsForm = {
    * @returns {Promise}
    */
   getDelayDDown: function (indexForm) {
+    var element = by.model(this.locators.dropDown.models.delay);
+    if(indexForm === 0){
+      // NOTE: Average FBT - has another filter model
+      element = by.model(this.locators.dropDown.models.filtersCountLastDay);
+    }
     return this
       .getPanelBodyElem()
       .get(indexForm)
-      .element(by.model(this.locators.dropDown.models.delay));
+      .element(element);
   },
 
   /**
@@ -118,10 +127,15 @@ var FBTReportsForm = {
    * @returns {Promise}
    */
   getCountryDDown: function (indexForm) {
+    var element = by.model(this.locators.dropDown.models.country);
+    if(indexForm === 0) {
+      // NOTE: Average FBT - has another filter model
+      element = by.model(this.locators.dropDown.models.filtersCountry);
+    }
     return this
       .getPanelBodyElem()
       .get(indexForm)
-      .element(by.model(this.locators.dropDown.models.country));
+      .element(element);
   },
 
   /**
@@ -135,10 +149,15 @@ var FBTReportsForm = {
    * @returns {Promise}
    */
   getOSDDown: function (indexForm) {
+    var element = by.model(this.locators.dropDown.models.os);
+    if(indexForm === 0) {
+      // NOTE: Average FBT - has another filter model
+      element = by.model(this.locators.dropDown.models.filtersOS);
+    }
     return this
       .getPanelBodyElem()
       .get(indexForm)
-      .element(by.model(this.locators.dropDown.models.os));
+      .element(element);
   },
 
   /**
@@ -152,10 +171,15 @@ var FBTReportsForm = {
    * @returns {Promise}
    */
   getDeviceDDown: function (indexForm) {
+    var element = by.model(this.locators.dropDown.models.device);
+    if(indexForm === 0) {
+      // NOTE: Average FBT - has another filter model
+      element = by.model(this.locators.dropDown.models.filtersDevice);
+    }
     return this
       .getPanelBodyElem()
       .get(indexForm)
-      .element(by.model(this.locators.dropDown.models.device));
+      .element(element);
   },
 
   /**
@@ -199,7 +223,7 @@ var FBTReportsForm = {
   getSearchDomainTxtIn: function () {
     return element(by.model(this.locators.dropDown.models.searchDomain));
   },
-  
+
   /**
    * ### FBTReportsForm.setDelay()
    *

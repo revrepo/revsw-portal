@@ -85,13 +85,14 @@
               <span ng-show="model.source_type=='app'">Application</span> *
             </label>
             <div class="col-sm-10">
-              <ui-select ng-model="selectedDomainSourceId" theme="select2" ng-animate-disabled name="sourceId" ng-disabled="_loading" on-select="onDomainSelect($model)" style="min-width: 550px;" ng-if="model.source_type=='domain'" required>
+              <div style="min-width: 550px;" class="inline-block" ng-if="!model.source_type || (model.source_type=='domain'&&!domainsList) || (model.source_type=='app'&&!appsList)"><label class="control-label"><i class="text text-info glyphicon glyphicon-refresh spin"></i>&nbsp;Loading...</label></div>
+              <ui-select ng-model="selectedDomainSourceId" theme="select2" ng-animate-disabled name="sourceId" ng-disabled="_loading" on-select="onDomainSelect($model)" style="min-width: 550px;" ng-if="model.source_type=='domain'&& !_loading&&!!domainsList" required>
                 <ui-select-match placeholder="Select Domain">{{$select.selected.domain_name}}</ui-select-match>
                 <ui-select-choices repeat="item.id as item in domainsList | filter: {domain_name: $select.search,account_id:model.account_id}">
                   <div ng-bind-html="item.domain_name|highlight: $select.search"></div>
                 </ui-select-choices>
               </ui-select>
-              <ui-select ng-model="selectedAppSourceId" class="source-select" theme="select2" ng-animate-disabled name="sourceId" ng-disabled="_loading" on-select="onAppSelect($model)" style="min-width: 550px;" ng-if="(model.source_type=='app')" required>
+              <ui-select ng-model="selectedAppSourceId" class="source-select" theme="select2" ng-animate-disabled name="sourceId" ng-disabled="_loading" on-select="onAppSelect($model)" style="min-width: 550px;" ng-if="(model.source_type=='app'&&!_loading&&!!appsList)" required>
                 <ui-select-match placeholder="Select Application">{{$select.selected.app_name}} <i>({{$select.selected.app_platform.replace('_',' ')}})</i></ui-select-match>
                 <ui-select-choices repeat="item.id as item in appsList | filter: {app_name: $select.search,account_id:model.account_id }">
                   <div ng-bind-html="item.app_name + '<i> ('+item.app_platform.replace('_',' ')+')</i>'|highlight: $select.search"></div>
@@ -164,7 +165,7 @@
               <div class="form-group" ng-class="{ 'has-error': editForm.destinationUsername.$invalid && editForm.destinationUsername.$dirty }">
                 <label for="destinationUsername" class="col-sm-2 control-label">Username<span ng-if="model.destination_type ==='sftp' ||model.destination_type ==='ftp'"> *</span></label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control inline-block" id="destination_username" name="destinationUsername" placeholder="Username" ng-model="model.destination_username" ng-maxlength="150" ng-pattern="NO_SPECIAL_CHARS" ng-disabled="_loading" ng-required="model.destination_type ==='sftp' ||model.destination_type ==='ftp'">
+                  <input type="text" class="form-control inline-block" readonly onfocus="this.removeAttribute('readonly');" autocomplete="false" id="destination_username" name="destinationUsername" placeholder="Username" ng-model="model.destination_username" ng-maxlength="150" ng-pattern="NO_SPECIAL_CHARS" ng-disabled="_loading" ng-required="model.destination_type ==='sftp' ||model.destination_type ==='ftp'">
                   <label for="destinationUsername" class="text text-info" popover-trigger="mouseenter" uib-popover="Username for FTP and SFTP destination types">
                     <i class="fa fa-question-circle"></i>
                   </label>
@@ -174,13 +175,13 @@
                 </div>
               </div>
               <div class="form-group" ng-class="{'has-error': editForm.destinationPassword.$invalid && editForm.destinationPassword.$dirty }">
-                <label for="destinationPassword" class="col-sm-2 control-label">Password<span ng-if="model.destination_type ==='sftp' ||model.destination_type ==='ftp'"> *</span> </label>
+                <label for="destinationPassword" class="col-sm-2 control-label">Password<span ng-if="model.destination_type ==='sftp' ||model.destination_type ==='ftp'||model.destination_type ==='s3'"> *</span> </label>
                 <div class="col-sm-10">
                   <div class="input-group">
                     <span id="spnPassword" class="add-on input-group-addon" style="cursor:pointer;" ng-click="isShowPassw= !isShowPassw" popover-trigger="mouseenter" uib-popover="Click to show/hide the password">
                    <i id="icnPassword" class="glyphicon" ng-class="isShowPassw?'glyphicon-eye-open':'glyphicon-eye-close'"></i></span>
-                    <input type="{{isShowPassw?'text':'password'}}" class="form-control inline-block" id="destination_password" name="destinationPassword" placeholder="Password" ng-model="model.destination_password" ng-maxlength="150" ng-disabled="_loading" ng-required="model.destination_type ==='sftp' ||model.destination_type ==='ftp'">
-                    <label for="destinationPassword" class="text text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Password for FTP and SFTP destination types" style="padding-left: 4px;">
+                    <input type="{{isShowPassw?'text':'password'}}" class="form-control inline-block" id="destination_password" name="destinationPassword" placeholder="Password" ng-model="model.destination_password" ng-maxlength="150" ng-disabled="_loading" ng-required="model.destination_type ==='sftp' ||model.destination_type ==='ftp'|| model.destination_type ==='s3'" autocomplete="nope">
+                    <label for="destinationPassword" class="text text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Password for FTP and SFTP destination types, Amazon Secret Access Key for S3 destination type" style="padding-left: 4px;">
                       <i class="fa fa-question-circle"></i>
                     </label>
                   </div>

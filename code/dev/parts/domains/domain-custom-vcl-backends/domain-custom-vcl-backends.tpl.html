@@ -81,9 +81,10 @@
             </toggle-switch>
             <label for="dynamic" class="text-info" popover-trigger="mouseenter" uib-popover="Enables/disables dynamic DNS lookups (respecting of DNS TTL) of origin host DNS names">
               <i class="fa fa-question-circle"></i>
-              <div class="error-messages" ng-messages="customVclBackendForm.backendVcl.$error" role="alert" ng-messages-multiple>
-                <div ng-messages-include="parts/shared/error-messages.html"></div>
-              </div>
+            </label>
+            <div class="error-messages" ng-messages="customVclBackendForm.backendVcl.$error" role="alert" ng-messages-multiple>
+              <div ng-messages-include="parts/shared/error-messages.html"></div>
+            </div>
           </div>
         </div>
         <!-- Origin TCP Port -->

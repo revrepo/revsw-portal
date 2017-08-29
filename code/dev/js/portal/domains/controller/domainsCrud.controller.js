@@ -764,6 +764,10 @@
         if ($scope.isCustomSSL_conf_profile === false) {
           syncSSL_conf_profile($scope.model.ssl_conf_profile);
         }
+        // NOTE: update ACL for render UI into directives
+        if(!!$scope.model.rev_component_bp.acl && !!$scope.model.rev_component_bp.acl) {
+          angular.extend($scope.model.rev_component_bp.acl, $scope.modelAdvance.rev_component_bp.acl);
+        }
       }
     });
 

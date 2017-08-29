@@ -1,0 +1,20 @@
+{
+  "protractor": {
+    "seleniumAddress": "http://127.0.0.1:4444/wd/hub"
+  },
+  "api": {
+    "host": {
+      "protocol": "https",
+      "name": "testsjc20-api01.revsw.net",
+      "port": 443
+    }
+  },
+  "portal": {
+    "host": {
+      "protocol": "http",
+      "name": "127.0.0.1",
+      "port": 8888,
+      "path": null
+    }
+  }
+}

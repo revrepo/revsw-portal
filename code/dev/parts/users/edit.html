@@ -33,7 +33,7 @@
           <div class="form-group" ng-class="{'has-error': editForm.firstName.$invalid && editForm.firstName.$dirty}">
             <label for="firstName" class="col-sm-2 control-label">First Name *</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control inline-block" id="firstname" name="firstName" placeholder="First Name" ng-model="model.firstname" ng-disabled="_loading" ng-maxlength="30" ng-pattern="CONTACT_DATA" required>
+              <input type="text" class="form-control inline-block" id="firstname" name="firstName" placeholder="First Name" ng-model="model.firstname" ng-disabled="_loading" ng-maxlength="30" ng-pattern="USER_FIRST_NAME" required>
               <label for="firstname" class="text text-info" popover-trigger="mouseenter" uib-popover="First name (30 characters max)">
                 <i class="fa fa-question-circle"></i>
               </label>
@@ -45,7 +45,7 @@
           <div class="form-group" ng-class="{'has-error': editForm.lastName.$invalid && editForm.lastName.$dirty}">
             <label for="lastName" class="col-sm-2 control-label">Last Name *</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control inline-block" id="lastName" name="lastName" placeholder="Last Name" ng-model="model.lastname" ng-disabled="_loading" ng-maxlength="30" ng-pattern="CONTACT_DATA" required="">
+              <input type="text" class="form-control inline-block" id="lastName" name="lastName" placeholder="Last Name" ng-model="model.lastname" ng-disabled="_loading" ng-maxlength="30" ng-pattern="USER_LAST_NAME" required="">
               <label for="lastName" class="text text-info" popover-trigger="mouseenter" uib-popover="Last name (30 characters max)">
                 <i class="fa fa-question-circle"></i>
               </label>

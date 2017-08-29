@@ -147,7 +147,6 @@ var PurgeCacheBasic = {
   getDomainDDown: function () {
     return this
       .getPanelHeadingElem()
-      .element(by.css(this.locators.pullLeft))
       .element(by.css(this.locators.dropDown.domain));
   },
 

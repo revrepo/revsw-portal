@@ -22,15 +22,15 @@
                 </form>
               </div>
               <div waf-filter-security-events ng-filters="vm.filters" fl-country="vm.countries" on-filter="vm.onDomainSelect()" fl-zones="vm.zonesList"
-                is-show-count="true" is-loading="vm._loading"></div>
+                is-show-count="true" class="waf-events-filters" is-loading="vm._loading"></div>
             </div>
           </div>
         </div>
         <div class="panel-body">
           <div class="alert alert-info" ng-if="vm._loading && vm.totalItems==0">
-            <i class="glyphicon glyphicon-refresh spin" ng-if="vm._loading"></i>&nbsp; Loading...
+            <i class="glyphicon glyphicon-refresh spin"></i>&nbsp; Loading...
           </div>
-          <div class="alert alert-info" ng-if="!vm._loading && !vm.wafEventsList.length">
+          <div class="alert alert-info" ng-if="!vm._loading && !records.length">
             No data to display
           </div>
           <div ng-if="vm.totalItems>0" ng-disabled="vm._loading" uib-pagination total-items="vm.totalItems" ng-model="vm.currentPage"
@@ -40,15 +40,21 @@
               <thead>
                 <tr>
                   <th></th>
-                  <th>Date/time</th>
-                  <th>URL</th>
-                  <th>IP address</th>
-                  <th>Request Zone</th>
-                  <th>Triggered Rule Id</th>
+                  <th><a href="" ng-click="vm.order('date')">Date/time</a>
+                  <span class="sortorder" ng-show="filter.predicate === 'date'" ng-class="{reverse: filter.reverse}"></span>
+                   </th>
+                  <th><a href="" ng-click="vm.order('uri')">URL</a>
+                  <span class="sortorder" ng-show="filter.predicate === 'uri'" ng-class="{reverse: filter.reverse}"></span></th>
+                  <th><a href="" ng-click="vm.order('ip')">IP address</a>
+                  <span class="sortorder" ng-show="filter.predicate === 'ip'" ng-class="{reverse: filter.reverse}"></span></th>
+                  <th><a href="" ng-click="vm.order('zone')">Request Zone</a>
+                  <span class="sortorder" ng-show="filter.predicate === 'zone'" ng-class="{reverse: filter.reverse}"></span></th>
+                  <th><a href="" ng-click="vm.order('id')">Triggered Rule Id</a>
+                  <span class="sortorder" ng-show="filter.predicate === 'id'" ng-class="{reverse: filter.reverse}"></span></th>
                 </tr>
               </thead>
               <tbody>
-                <tr ng-repeat-start="item in vm.wafEventsList">
+                <tr ng-repeat-start="item in records">
                   <td>
                     <a ng-if="vm.user.isRevadmin()" role="button" data-toggle="collapse" data-target="#events-{{$index}}">
                       <i class="glyphicon glyphicon-plus-sign"></i>

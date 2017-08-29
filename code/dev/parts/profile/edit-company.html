@@ -107,7 +107,7 @@
               <label for="companyName" class="col-sm-2 control-label">
                 Company Name * &nbsp;</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control inline-block" id="companyName" name="companyName" placeholder="Company Name" ng-maxlength="150" ng-model="model.companyName" ng-pattern="NO_SPECIAL_CHARS" ng-disabled="_loading" required>
+                <input type="text" class="form-control inline-block" id="companyName" name="companyName" placeholder="Company Name" ng-maxlength="150" ng-model="model.companyName" ng-pattern="COMPANY_NAME" ng-disabled="_loading" required>
                 <label for="companyName" class="text text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Company name (150 characters max)">
                   <i class="fa fa-question-circle"></i>
                 </label>
@@ -121,7 +121,7 @@
             <div class="form-group" ng-class="{ 'has-error': editForm.firstName.$invalid && editForm.firstName.$dirty }">
               <label for="firstName" class="col-sm-2 control-label">First Name *</label>
               <div class="col-sm-10 ">
-                <input type="text" class="form-control inline-block" required id="firstName" name="firstName" placeholder="First Name" ng-maxlength="30" ng-model="model.first_name" ng-pattern="NO_SPECIAL_CHARS" ng-disabled="_loading" required>
+                <input type="text" class="form-control inline-block" id="firstName" name="firstName" placeholder="First Name" ng-maxlength="30" ng-model="model.first_name" ng-pattern="USER_FIRST_NAME" ng-disabled="_loading" required>
                 <label for="firstName" class="text text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Contact person first name (30 characters max)">
                   <i class="fa fa-question-circle"></i>
                 </label>
@@ -134,7 +134,7 @@
             <div class="form-group" ng-class="{ 'has-error': editForm.lastName.$invalid && editForm.lastName.$dirty }">
               <label for="lastName" class="col-sm-2 control-label">Last Name *</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control inline-block" required id="lastName" name="lastName" placeholder="Last Name" ng-maxlength="30" ng-model="model.last_name" ng-pattern="NO_SPECIAL_CHARS" ng-disabled="_loading" required>
+                <input type="text" class="form-control inline-block" id="lastName" name="lastName" placeholder="Last Name" ng-maxlength="30" ng-model="model.last_name" ng-pattern="USER_LAST_NAME" ng-disabled="_loading" required>
                 <label for="lastName" class="text text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Contact person last name (30 characters max)">
                   <i class="fa fa-question-circle"></i>
                 </label>
@@ -147,7 +147,7 @@
                             editForm.phoneNumber.$dirty }">
               <label for="phoneNumber" class="col-sm-2 control-label">Phone Number *</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control inline-block" required id="phoneNumber" name="phoneNumber" placeholder="Phone Number" ng-maxlength="30" ng-model="model.phone_number" ng-disabled="_loading" required>
+                <input type="text" class="form-control inline-block" id="phoneNumber" name="phoneNumber" placeholder="Phone Number" ng-maxlength="30" ng-model="model.phone_number" ng-disabled="_loading" required>
                 <label for="phoneNumber" class="text text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Contact phone number">
                   <i class="fa fa-question-circle"></i>
                 </label>
@@ -159,7 +159,7 @@
             <div class="form-group" ng-class="{ 'has-error': editForm.contactEmail.$invalid &&  editForm.contactEmail.$dirty }">
               <label for="phoneNumber" class="col-sm-2 control-label">Contact Email *</label>
               <div class="col-sm-10">
-                <input type="email" class="form-control inline-block" required id="contactEmail" name="contactEmail" placeholder="Contact Email" ng-model="model.contact_email" ng-disabled="_loading" required>
+                <input type="email" class="form-control inline-block" id="contactEmail" name="contactEmail" placeholder="Contact Email" ng-model="model.contact_email" ng-disabled="_loading" required>
                 <label for="phoneNumber" class="text text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Contact Email">
                   <i class="fa fa-question-circle"></i>
                 </label>
@@ -171,7 +171,7 @@
             <div class="form-group" ng-class="{'has-error': editForm.address1.$invalid && editForm.address1.$dirty }">
               <label for="address1" class="col-sm-2 control-label">Address *</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control inline-block" required id="address1" name="address1" placeholder="Address 1" ng-maxlength="150" ng-model="model.address1" ng-pattern="NO_SPECIAL_CHARS" ng-disabled="_loading">
+                <input type="text" class="form-control inline-block" required id="address1" name="address1" placeholder="Address 1" ng-maxlength="150" ng-model="model.address1" ng-pattern="STREET_ADDRESS" ng-disabled="_loading">
                 <label for="address1" class="text text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Contact street address (150 characters max)">
                   <i class="fa fa-question-circle"></i>
                 </label>
@@ -183,7 +183,7 @@
             <div class="form-group" ng-class="{ 'has-error': editForm.address2.$invalid && editForm.address2.$dirty }">
               <label for="address2" class="col-sm-2 control-label">Address (Line 2) &nbsp;</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control inline-block" id="address2" name="address2" placeholder="Address (Line 2)" ng-maxlength="150" ng-model="model.address2" ng-pattern="NO_SPECIAL_CHARS" ng-disabled="_loading">
+                <input type="text" class="form-control inline-block" id="address2" name="address2" placeholder="Address (Line 2)" ng-maxlength="150" ng-model="model.address2" ng-pattern="STREET_ADDRESS" ng-disabled="_loading">
                 <label for="address2" class="text text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Optional second line of street address (150 characters max)">
                   <i class="fa fa-question-circle"></i>
                 </label>
@@ -285,7 +285,7 @@
                 <div class="form-group col-md-6" ng-class="{ 'has-error': editForm.billingFirstName.$invalid && editForm.billingFirstName.$dirty }">
                   <label for="billingFirstName" class="col-sm-4 control-label" popover-trigger="mouseenter" uib-popover="First Name (30 characters max)">First Name *</label>
                   <div class="col-sm-8">
-                    <input type="text" class="form-control" required id="first_name" name="billingFirstName" placeholder="First Name" ng-model="model.billing_info.first_name" ng-maxlength="30" ng-pattern="NO_SPECIAL_CHARS" ng-disabled="_loading">
+                    <input type="text" class="form-control" required id="first_name" name="billingFirstName" placeholder="First Name" ng-model="model.billing_info.first_name" ng-maxlength="30" ng-pattern="USER_FIRST_NAME" ng-disabled="_loading">
                     <div class="error-messages" ng-messages="editForm.billingFirstName.$error" role="alert" ng-messages-multiple>
                       <div ng-messages-include="parts/shared/error-messages.html"></div>
                     </div>
@@ -295,7 +295,7 @@
                 <div class="form-group col-md-6" ng-class="{ 'has-error': editForm.billingLastName.$invalid &&  editForm.billingLastName.$dirty }">
                   <label for="billingLastName" class="col-sm-4 control-label" popover-trigger="mouseenter" uib-popover="Last Name (30 characters max)">Last Name *</label>
                   <div class="col-sm-8">
-                    <input type="text" class="form-control" required id="last_name" name="billingLastName" placeholder="Last Name" ng-model="model.billing_info.last_name" ng-maxlength="30" ng-pattern="NO_SPECIAL_CHARS" ng-disabled="_loading">
+                    <input type="text" class="form-control" required id="last_name" name="billingLastName" placeholder="Last Name" ng-model="model.billing_info.last_name" ng-maxlength="30" ng-pattern="USER_LAST_NAME" ng-disabled="_loading">
                     <div class="error-messages" ng-messages="editForm.billingLastName.$error" role="alert" ng-messages-multiple>
                       <div ng-messages-include="parts/shared/error-messages.html"></div>
                     </div>

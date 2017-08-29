@@ -1,0 +1,56 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12">
+      <h2 class="pull-left page-title">
+        CDN IP Blocks
+      </h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="staging-servers col-sm-12 col-md-12 col-lg-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="panel-body">
+            <p>The page provides information about IP blocks from which the CDN may originate requests to your origin web servers
+              or ship logs (if configured on “Admin -&gt; Log Shipping” page). The list is dynamic and some IP blocks can
+              be removed or added without a notice. The information is also available via our customer API, end-point
+              <strong><a ng-href="{{$ctrl.API_URL}}#!/locations/v1locationsnetwork_ip_blocks_get_3" target="_blank">{{$ctrl.API_URL}}/locations/network_ip_blocks</a></strong>.
+              If you protect your origin or log receiving services with a firewall or/and IDS/IPS please use the information
+              to white-list (allow all communication and ignore possible attack/abuse patterns) on both firewall and IPS/IDS
+              levels.
+            </p>
+            <p>
+              If you do utilize an active Intrusion Prevention Service (IPS) and will not while-list the CDN IP blocks there is a high
+              risk that a potentially malicious request originated by one end user will trigger the IPS to block the CDN
+              IP addresses effectively disabling origin access for ALL your end users (and causing a service outage for your
+              web properties served via the CDN).
+            </p>
+
+            <div class="alert alert-warning" ng-if="$ctrl.isFaild && !$ctrl._loading">
+              Failed to retrieve a list of resources - please try again later
+            </div>
+            <div ng-if="!$ctrl.isFaild">
+              <!--  -->
+              <p>IP subnets which may ship logs to your log receiving services<span ng-if="$ctrl.logShippingBlocksList.length>0"> ({{$ctrl.logShippingBlocksList.length}} subnets in total)</span>:</p>
+              <div ng-show="$ctrl._loading && $ctrl.logShippingBlocksList.length==0">
+                <p><i class="glyphicon glyphicon-refresh spin" ng-show="$ctrl._loading && $ctrl.logShippingBlocksList.length==0"></i></p>
+              </div>
+              <div id="logShippingBlocksList" class="form-group cdn-ip-blocks-list" ng-if="!$ctrl._loading && $ctrl.logShippingBlocksList.length >0">
+                <p ng-repeat="server_ip in $ctrl.logShippingBlocksList" class="cdn-ip-blocks-item">{{server_ip}}</p>
+              </div>
+              <!-- -->
+              <p>IP subnets which may send origin requests to your web servers<span ng-if="$ctrl.edgeBlocksList.length>0"> ({{$ctrl.edgeBlocksList.length}} subnets in total)</span>:</p>
+              <div ng-show="$ctrl._loading && $ctrl.edgeBlocksList.length==0">
+                <p><i class="glyphicon glyphicon-refresh spin" ng-show="$ctrl._loading && $ctrl.edgeBlocksList.length==0"></i></p>
+              </div>
+              <div id="edgeBlocksList" class="form-group cdn-ip-blocks-list" ng-if="!$ctrl._loading && $ctrl.edgeBlocksList.length >0">
+                <p ng-repeat="server_ip in $ctrl.edgeBlocksList" class="cdn-ip-blocks-item">{{server_ip}}</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
