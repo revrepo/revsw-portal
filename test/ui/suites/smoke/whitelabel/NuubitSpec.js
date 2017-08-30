@@ -50,6 +50,5 @@ describe ('White-label Nuubit', function() {
     Portal.signUp.plansPage.getSecondBrand().getText().then(function(value){   
       expect(value).toBe('Copyright nuu:bit, Inc. 2017');
     });
- });
-
+  });
 });
