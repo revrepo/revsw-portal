@@ -223,6 +223,14 @@ var NavHelper = {
   },
 
   /**
+   * Navigates to Web Analytics > Image Optimization     
+   */
+  goToImageOptimization: function () {
+    return SideBar.select(MenuItems.WEB_ANALYTICS.IMAGE_OPTIMIZATION);
+  },
+
+
+  /**
    * Navigates to Web Analytics > Traffic Heatmaps
    */
   goToWATrafficHeatmaps: function () {
@@ -379,7 +387,29 @@ var NavHelper = {
    */
   goToNetworkStatus: function () {
     return SideBar.select(MenuItems.SUPPORT.NETWORK_STATUS);
-  }
+  },
+
+ /**
+   * Navigates to Azure Marketplace > Subscriptions
+   */
+  goToSubscriptions: function () {
+    return SideBar.select(MenuItems.AZURE_MARKETPLACE.SUBSCRIPTIONS);
+  },
+
+ /**
+   * Navigates to Azure Marketplace > Resources Per Subscription
+   */
+  goToResourcesPerSubscription: function () {
+    return SideBar.select(MenuItems.AZURE_MARKETPLACE.RESOURCES_PER_SUBSCRIPTION);
+  },
+
+ /**
+   * Navigates to Azure Marketplace > Resources
+   */
+  goToResources: function () {
+    return SideBar.select(MenuItems.AZURE_MARKETPLACE.RESOURCES);
+  },
+
 };
 
 module.exports = NavHelper;

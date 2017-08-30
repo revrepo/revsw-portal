@@ -70,9 +70,13 @@ var SideBar = {
     if (locatorData.id) {
       locator = by.id(locatorData.id);
     }
+    else if (locatorData.css) {
+      locator = by.css(locatorData.css);
+    }
     else {
       locator = by.partialLinkText(locatorData.linkText);
     }
+
     if (locatorData.area) {
       var areaLocator;
       var areaLocatorData = locatorData.area;

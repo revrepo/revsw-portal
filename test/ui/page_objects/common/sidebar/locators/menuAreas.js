@@ -42,6 +42,9 @@ var MenuAreas = {
   ADMIN: {
     linkText: 'Admin'
   },
+  AZURE_MARKETPLACE: {
+    linkText: 'Azure Marketplace'
+  },
   BILLING: {
     linkText: 'Billing',
     id: 'side-menu-item-billing'
