@@ -119,17 +119,6 @@
           };
 
           if (data !== null) {
-            // var startPointData = {
-            //   y: 0,
-            //   x: data.metadata.start_timestamp
-            // };
-            // serie.data.push(startPointData);
-            // var endPointData = {
-            //   y: 0,
-            //   x: data.metadata.end_timestamp
-            // };
-            // serie.data.push(endPointData);
-            serie.pointStart = data.metadata.start_timestamp;
             angular.forEach(data.data, function addPointsToSerie(item) {
               // Set color for activity_target name
               var marker = {
@@ -158,21 +147,9 @@
               };
               serie.data.push(eventPointData);
             });
-            //   var startPointData = {
-            //   y: 0,
-            //   x: data.metadata.start_timestamp
-            // };
-            // serie.data.push(startPointData);
-            // var endPointData = {
-            //   y: 0,
-            //   x: data.metadata.end_timestamp
-            // };
-            // serie.data.push(endPointData);
           }
-          console.log(serie.data);
           return serie;
         });
-
     }
 
     /**
