@@ -45,7 +45,11 @@ describe ('White-label RevApm', function() {
         expect(/logo_color\.png/.test(value)).toBe(true);
     });
  });
- 
+  it('should displayed copyright RevApm on sign up page', function(){
+    Portal.signUp.plansPage.getSecondBrand().getText().then(function(value){   
+      expect(value).toBe('Copyright RevAPM 2013-2017');
+    });
+  });
 });
 
 

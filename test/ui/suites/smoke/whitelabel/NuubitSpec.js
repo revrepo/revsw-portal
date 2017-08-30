@@ -25,24 +25,30 @@ describe ('White-label Nuubit', function() {
      });
 
 
-   it('should displayed logo Nuubit on login page', function(){
+  it('should displayed logo Nuubit on login page', function(){
     Portal.loginPage.getLogo().getAttribute('src').then(function(value){   
       expect(/logo\.png/.test(value)).toBe(true); 
     });
  });
 
 
-   it('should displayed copyright Nuubit on login page', function(){
+  it('should displayed copyright Nuubit on login page', function(){
     Portal.loginPage.getBrand().getText().then(function(value){   
       expect(value).toBe('Copyright nuu:bit, Inc. 2017');
     });
  });
 
 
- it('should displayed logo Nuubit on sign up page', function(){
+  it('should displayed logo Nuubit on sign up page', function(){
     Portal.loginPage.clickSignUp();
     Portal.signUp.plansPage.getLogo().getAttribute('src').then(function(value){   
         expect(/logo_color\.png/.test(value)).toBe(true);
+    });
+ });
+
+  it('should displayed copyright Nuubit on sign up page', function(){
+    Portal.signUp.plansPage.getSecondBrand().getText().then(function(value){   
+      expect(value).toBe('Copyright nuu:bit, Inc. 2017');
     });
  });
 
