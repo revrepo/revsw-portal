@@ -17,7 +17,7 @@
  */
 
 // # Help Page Object
-
+var timeWait = 6000;
 // This `Help` Button Object abstracts all operations or actions that
 // a common Help could do in the Portal app/site.
 var Help = {
@@ -31,12 +31,12 @@ var Help = {
       button: '#Embed'
     },
     help: {
-      iframe: 'helpCenterForm',
+      iframe: 'webWidget',
       search: '//input[@type="search"]',
-      submit: '//input[@type="submit"]'
+      submit:  '//*[@id="Embed"]/div/div[3]/div/div/div/footer/div/div/input[@type="submit"]'
     },
     ticket: {
-      iframe: 'ticketSubmissionForm',
+      iframe: 'webWidget',
       close: '.Icon.Icon--close',
       name: 'name',
       email: 'email',
@@ -54,11 +54,12 @@ var Help = {
    * @returns {Selenium WebDriver Element}
    */
   clickHelpButton: function (callback) {
-    browser.sleep(6000)
+    browser.sleep(timeWait)
     .then(function() {
       browser.driver.switchTo().defaultContent();
+
       browser.driver.switchTo().frame(Help.locators.launcher.iframe);
-      browser.sleep(6000)
+      browser.sleep(timeWait)
       .then(function() {
         browser.driver.findElement(by.css(Help.locators.launcher.button))
         .click()
@@ -80,7 +81,7 @@ var Help = {
    * @returns {Selenium WebDriver Element}
    */
   fillHelpForm: function (text, callback) {
-    browser.sleep(6000)
+    browser.sleep(timeWait)
     .then(function() {
       browser.driver.switchTo().defaultContent();
       browser.driver.switchTo().frame(Help.locators.help.iframe);
@@ -89,7 +90,7 @@ var Help = {
       browser.driver.findElement(by.xpath(Help.locators.help.search))
       .sendKeys(protractor.Key.ENTER)
       .then(function() {
-        browser.sleep(6000)
+        browser.sleep(timeWait)
         .then(function() {
           browser.driver.findElement(by.xpath(Help.locators.help.submit))
           .click()
@@ -112,7 +113,7 @@ var Help = {
    * @returns {Selenium WebDriver Element}
    */
   fillTicketForm: function (data, callback) {
-    browser.sleep(6000)
+    browser.sleep(timeWait)
     .then(function() {
       var db = browser.driver;
       db.switchTo().defaultContent();
@@ -122,12 +123,12 @@ var Help = {
       db.findElement(by.name(Help.locators.ticket.description))
       .sendKeys(data.description)
       .then(function() {
-        browser.sleep(6000)
+        browser.sleep(timeWait)
         .then(function() {
           browser.driver.findElement(by.xpath(Help.locators.ticket.submit))
           .click()
           .then(function() {
-            browser.sleep(6000)
+            browser.sleep(timeWait)
             .then(function() {
               browser.driver.findElement(by.css(Help.locators.ticket.title))
               .getText()

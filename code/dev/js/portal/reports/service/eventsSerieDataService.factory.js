@@ -28,11 +28,25 @@
      * @returns
      */
     function extendSeriesEventsDataForDomainId(series, options) {
-      return this.getEventsSerieDataForDomain(options)
+      var self = this;
+      return $q.when(series)
         .then(function(data) {
-          // NOTE: add new series data "Events"
-          series.push(data);
-          return series;
+          var isEmpty = true;
+          _.forEach(series, function(item) {
+            if (item.data.length > 0) {
+              isEmpty = false;
+            }
+          });
+          // NOTE:if we have no main data when we don't add series data "Events"
+          if (isEmpty) {
+            return series;
+          }
+          return self.getEventsSerieDataForDomain(options)
+            .then(function(data) {
+              // NOTE: add new series data "Events"
+              series.push(data);
+              return series;
+            });
         })
         .catch(function() {
           return series;
