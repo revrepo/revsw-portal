@@ -8,7 +8,7 @@ var Constants = require('./../../../page_objects/constants');
 
 describe('Smoke', function () {
 
-  // Defining set of users for which all below tests will be run
+  // Defining set of users for which all below tests will be run 
   var users = [
     config.get('portal.users.user'),
     config.get('portal.users.admin'),
