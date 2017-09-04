@@ -92,7 +92,7 @@
                   <a href="" ng-click="order('updated_at')">Last Update</a>
                   <span class="sortorder" ng-show="filter.predicate === 'updated_at'" ng-class="{reverse: filter.reverse}"></span>
                 </th>
-                <th class="actions col-sm-1 col-lg-1 text-center">Actions</th>
+                <th class="actions col-sm-1 col-lg-1 text-left">Actions</th>
                 <th class="col-sm-1 col-lg-1" ng-if="auth.isRevadmin()">
                   <a href="" ng-click="order('vendor_profile')">Vendor</a>
                   <span class="sortorder" ng-show="filter.predicate === 'vendor_profile'" ng-class="{reverse: filter.reverse}"></span>
@@ -113,7 +113,7 @@
                 <td>{{item.subscription_state}}</td>
                 <td>{{(item.subscription_name) ? item.subscription_name : 'Manual'}}</td>
                 <td>{{getRelativeDate(item.updated_at)}}</td>
-                <td class="actions text-center">
+                <td class="actions text-left">
                   <div class="actions--wrap">
                     <i class="glyphicon glyphicon-refresh spin" ng-if="item.loading"></i>
                     <a ng-click="onGoToUsageReport(item)"  uisref="index.billing.usage({acc_id: item.id})" ng-if="!item.loading" uib-tooltip="Usage Report">
