@@ -18,6 +18,7 @@
 
 var MenuAreas = {
   DASHBOARDS: {
+    id: 'side-menu-dashboard-item',
     linkText: 'Dashboards',
     css: '#left-menu-dashboard-section .side-menu-sub-item'
   },

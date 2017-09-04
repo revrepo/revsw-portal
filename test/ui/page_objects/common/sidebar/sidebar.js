@@ -196,6 +196,7 @@ var SideBar = {
     this.collapseAll();
     if (locatorData.area) {
       this.expand(locatorData.area);
+
     }
     else {
       this.expand(locatorData);
