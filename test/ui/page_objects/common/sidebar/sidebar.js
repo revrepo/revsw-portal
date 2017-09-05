@@ -20,7 +20,8 @@
 
 // Requiring third party libraries
 var Promise = require('bluebird');
-
+var MenuItems = require('./locators/menuItems.js');
+var MenuAreas = require('./locators/menuAreas.js');
 // This `SideBar` Page Object abstracts all operations or actions that a common
 // user could do with the SideBar menu component from Portal app/site.
 var SideBar = {
@@ -30,10 +31,10 @@ var SideBar = {
   // Locators specific to HTML elements from this page object
   locators: {
     arrowUp: {
-        css: '.fa-caret-up'
+      css: '.fa-caret-up'
     },
     arrowDown: {
-        css: '.fa-caret-down'
+      css: '.fa-caret-down'
     },
     container: {
       css: 'ul.side-menu'
@@ -49,7 +50,8 @@ var SideBar = {
       }
     }
   },
-
+  menuItems: MenuItems,
+  menuAreas: MenuAreas,
   // ## Methods
 
   /**
@@ -65,7 +67,7 @@ var SideBar = {
    * @param locatorData
    * @returns {*}
    */
-  getMenuItem: function (locatorData) {
+  getMenuItem: function (locatorData) {    
     var locator;
     if (locatorData.id) {
       locator = by.id(locatorData.id);
@@ -137,7 +139,7 @@ var SideBar = {
       .getAttribute('className')
       .then(function (className) {
         return className
-            .indexOf(me.locators.menu.items.collapsible.className) >= 0;
+          .indexOf(me.locators.menu.items.collapsible.className) >= 0;
       });
   },
 

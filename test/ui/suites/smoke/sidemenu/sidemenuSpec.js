@@ -31,61 +31,51 @@ describe('Smoke: ', function () {
         ];
         users.forEach(function (user) {
             describe('With user: ' + user.role, function () {
+                var menuItems;
+                var menuAreas;
                 beforeAll(function () {
                     Portal.signIn(user);
+                    menuItems = Portal.sideMenu.menuItems;
+                    menuAreas = Portal.sideMenu.menuAreas;
                 });
 
                 afterAll(function () {
                     Portal.signOut();
                 });
                 if (user.role === 'Reseller') {
-                    it('should not display Change Billing Plan option', function () {
-                        Portal.sideMenu.expand({ linkText: 'Billing' });
-                        var menuitem = Portal.sideMenu.getMenuItem({
-                            linkText: 'Change Billing Plan'
-                        });
-                        expect(menuitem.isPresent()).toBeFalsy();
+                    it('should not display Change Billing Plan option', function () {                     
+                        Portal.sideMenu.expand(menuAreas.BILLING);
+                        expect(Portal.sideMenu.getMenuItem(menuItems.BILLING.CHANGE_BILLING_PLAN)
+                            .isPresent()).toBeFalsy();
                     });
                     it('should not display Billing Statements option', function () {
-                        var menuitem = Portal.sideMenu.getMenuItem({
-                            linkText: 'Billing Statements'
-                        });
-                        expect(menuitem.isPresent()).toBeFalsy();
+                        expect(Portal.sideMenu.getMenuItem(menuItems.BILLING.BILLING_STATEMENTS)
+                            .isPresent()).toBeFalsy();
                     });
                 } else if (user.role === 'Admin') {
                     it('should not display Change Billing Plan option', function () {
-                        Portal.sideMenu.expand({ linkText: 'Billing' });
-                        var menuitem = Portal.sideMenu.getMenuItem({
-                            linkText: 'Change Billing Plan'
-                        });
-                        expect(menuitem.isPresent()).toBeFalsy();
+                        Portal.sideMenu.expand(menuAreas.BILLING);
+                        expect(Portal.sideMenu.getMenuItem(menuItems.BILLING.CHANGE_BILLING_PLAN)
+                        .isPresent()).toBeFalsy();
                     });
                     it('should not display Billing Statements option', function () {
-                        var menuitem = Portal.sideMenu.getMenuItem({
-                            linkText: 'Billing Statements'
-                        });
-                        expect(menuitem.isPresent()).toBeFalsy();
+                        expect(Portal.sideMenu.getMenuItem(menuItems.BILLING.BILLING_STATEMENTS)
+                        .isPresent()).toBeFalsy();
                     });
                 } else if (user.role === 'Normal User') {
                     it('should not display Billing menu item', function () {
-                        var menuitem = Portal.sideMenu.getMenuItem({
-                            linkText: 'Billing'
-                        });
-                        expect(menuitem.isPresent()).toBeFalsy();
+                        expect(Portal.sideMenu.getMenuItem(menuAreas.BILLING)
+                        .isPresent()).toBeFalsy();
                     });
                 } else {
                     it('should display Change Billing Plan option', function () {
-                        Portal.sideMenu.expand({ linkText: 'Billing' });
-                        var menuitem = Portal.sideMenu.getMenuItem({
-                            linkText: 'Change Billing Plan'
-                        });
-                        expect(menuitem.isDisplayed()).toBeTruthy();
+                        Portal.sideMenu.expand(menuAreas.BILLING);
+                        expect(Portal.sideMenu.getMenuItem(menuItems.BILLING.CHANGE_BILLING_PLAN)
+                        .isPresent()).toBeTruthy();
                     });
                     it('should display Billing Statements option', function () {
-                        var menuitem = Portal.sideMenu.getMenuItem({
-                            linkText: 'Billing Statements'
-                        });
-                        expect(menuitem.isDisplayed()).toBeTruthy();
+                        expect(Portal.sideMenu.getMenuItem(menuItems.BILLING.BILLING_STATEMENTS)
+                        .isPresent()).toBeTruthy();
                     });
                 }
             });
