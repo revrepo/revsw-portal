@@ -64,6 +64,11 @@ var DashboardList = {
         css: '.fa-undo'
       }
     },
+     popups: {
+     css: {
+       introPopup: '.introjs-tooltip' 
+     }
+    },
     dropDowns: {
       autoRefresh: {
         model: 'model.options.autorefresh'
@@ -481,6 +486,9 @@ var DashboardList = {
     me.clickEditDashboardProperties();
     me.form.clickDelete();
     Dialog.clickDeleteBtn();
+  },
+ getIntroPopup: function(){
+    return element(by.css(this.locators.popups.css.introPopup));
   }
 };
 
