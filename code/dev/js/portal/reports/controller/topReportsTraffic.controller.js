@@ -287,7 +287,7 @@
                     y: reg.sent_bytes
                   };
                   });
-                states = _.sortByOrder(states,['y','name'],['desc']);
+                states = _.sortByOrder(states,['y','name'],['desc','asc']);
                 if ( states.length > 20 ) {
                   states.length = 20;
                 }
