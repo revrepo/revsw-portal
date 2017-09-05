@@ -54,6 +54,7 @@
           });
       } else {        
         //$scope.clearModel();
+        $scope.model = $localStorage.selectedDomain;
       }
     });
 
@@ -204,6 +205,7 @@
             model.rec.answers = [];
             model.newanswer = null;
           }
+          $scope.clearModel();
           $scope.alertService.success(data);
         })
         .catch($scope.alertService.danger);
@@ -235,7 +237,6 @@
     };
 
     $scope.storeToStorage = function(model) {
-      alert('a');
       $localStorage.selectedDomain = model;
     };
 
@@ -495,5 +496,9 @@
         });
     };
 
+    // Clear form data when cancel is pressed
+    $scope.clearForm = function (){
+      $scope.clearModel();
+    };
   }
 })();
