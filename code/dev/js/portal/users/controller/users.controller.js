@@ -93,7 +93,7 @@
 
     $scope.clearForm = function () {
       $scope.clearModel();
-    }
+    };
 
     $scope.initNew = function () {
       initModel();
