@@ -14,7 +14,7 @@
         <div class="row">
           <div class="col-md-12">
             <div class="pull-left">
-              <a ui-sref="^" class="btn btn-info">
+              <a ui-sref="^" class="btn btn-info" ng-click="storeToStorage(model)">
                 <i class="glyphicon glyphicon-arrow-left"></i>&nbsp;
                 Back To List
               </a>
@@ -84,7 +84,7 @@
           <hr>
           <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-              <a ui-sref="^" class="btn btn-default">
+              <a ui-sref="^" class="btn btn-default" ng-click="clearForm()">
                 <i class="glyphicon glyphicon-remove"></i>&nbsp;
                 Cancel
               </a>

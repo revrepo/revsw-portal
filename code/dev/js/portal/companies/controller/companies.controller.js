@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -6,7 +6,9 @@
     .controller('CompaniesCrudController', CompaniesCrudController);
 
   /*@ngInject*/
-  function CompaniesCrudController($scope, CRUDController, Companies, User, BillingPlans, Vendors, $injector, $stateParams, $config, $state, $anchorScroll, $uibModal) {
+  function CompaniesCrudController($scope, CRUDController, Companies, User,
+    BillingPlans, Vendors, $injector, $stateParams,
+    $config, $state, $anchorScroll, $uibModal, $localStorage) {
     //Invoking crud actions
     $injector.invoke(CRUDController, this, {
       $scope: $scope,
@@ -22,14 +24,18 @@
     $scope.NO_SPECIAL_CHARS = $config.PATTERNS.NO_SPECIAL_CHARS;
     $scope.COMMENT_NO_SPECIAL_CHARS = $config.PATTERNS.COMMENT_NO_SPECIAL_CHARS;
 
+    $scope.storeToStorage = function (model) {
+      $localStorage.selectedCompany = model;
+    };
 
     // Fetch list of users
-    $scope.$on('$stateChangeSuccess', function(state) {
+    $scope.$on('$stateChangeSuccess', function (state) {
+      $scope.model = $localStorage.selectedCompany;
       if ($state.is($scope.state)) {
         $scope.list()
-          .then(function() {
+          .then(function () {
             if ($scope.elementIndexForAnchorScroll !== undefined) {
-              setTimeout(function() {
+              setTimeout(function () {
                 $anchorScroll('anchor' + $scope.elementIndexForAnchorScroll);
                 $scope.$digest();
               }, 500);
@@ -37,8 +43,8 @@
             return BillingPlans.query().$promise;
 
           })
-          .then(function(res) {
-            $scope.records = $scope.records.map(function(r) {
+          .then(function (res) {
+            $scope.records = $scope.records.map(function (r) {
               var idx = _.findIndex(res, {
                 id: r.billing_plan
               });
@@ -52,7 +58,7 @@
           });
       }
 
-      Vendors.query().$promise.then(function(response){
+      Vendors.query().$promise.then(function (response) {
         $scope.vendorProfiles = response;
       });
     });
@@ -66,12 +72,12 @@
      * @param  {[type]} id [description]
      * @return {[type]}    [description]
      */
-    $scope.getCompany = function(id) {
+    $scope.getCompany = function (id) {
       $scope.get(id)
         .catch($scope.alertService.danger);
     };
 
-    $scope.getRelativeDate = function(datetime) {
+    $scope.getRelativeDate = function (datetime) {
       return moment.utc(datetime).fromNow();
     };
     /**
@@ -81,13 +87,13 @@
      * @param  {Object} model [description]
      * @return
      */
-    $scope.deleteCompany = function(model) {
-      if($scope.isReadOnly() === true){
+    $scope.deleteCompany = function (model) {
+      if ($scope.isReadOnly() === true) {
         return;
       }
       $scope
         .confirm('confirmModal.html', model)
-        .then(function() {
+        .then(function () {
           return $scope
             .delete(model)
             .then($scope.alertService.success)
@@ -101,26 +107,27 @@
      * @param  {Object} model [description]
      * @return
      */
-    $scope.createCompany = function(model) {
+    $scope.createCompany = function (model) {
       if (!model) {
         return;
       }
       $scope
         .create(model)
-        .then(function(data) {
+        .then(function (data) {
+          $scope.clearModel();
           $scope.alertService.success(data);
           $scope.auth.reloadUser();
         })
         .catch($scope.alertService.danger);
     };
 
-    $scope.updateCompany = function(model) {
+    $scope.updateCompany = function (model) {
       $scope.update(model)
         .then($scope.alertService.success)
         .catch($scope.alertService.danger);
     };
 
-    $scope.onGoToUsageReport = function(model) {
+    $scope.onGoToUsageReport = function (model) {
       // NOTE: make data format for using into state 'index.billing.usage'
       model.acc_id = model.id;
       model.acc_name = model.companyName;
@@ -130,7 +137,7 @@
       $state.go('index.billing.usage');
     };
 
-    $scope.onGoToBillingPlans = function(model) {
+    $scope.onGoToBillingPlans = function (model) {
       // NOTE: make data format for using into state 'index.billing.plans'
       model.acc_id = model.id;
       model.acc_name = model.companyName;
@@ -140,7 +147,7 @@
       $state.go('index.billing.plans');
     };
 
-    $scope.onGoToBillingStatement = function(model) {
+    $scope.onGoToBillingStatement = function (model) {
       // NOTE: make data format for using into state 'index.billing.statements'
       model.acc_id = model.id;
       model.acc_name = model.companyName;
@@ -154,7 +161,7 @@
      * @description action for go to page "All Account Resources"
      *
      */
-    $scope.onGoToAccountInformation = function(e, model) {
+    $scope.onGoToAccountInformation = function (e, model) {
       e.preventDefault();
       // NOTE: make data format for using into state 'index.accountSettings.companies_information'
       model.acc_id = model.id;
@@ -165,7 +172,7 @@
       $state.go('index.accountSettings.accountresources');
     };
 
-    $scope.onVendorUpdate = function(account) {
+    $scope.onVendorUpdate = function (account) {
 
       var modalInstance = $uibModal.open({
         templateUrl: 'parts/companies/change-vendor.html',
@@ -179,17 +186,21 @@
         }
       });
 
-      modalInstance.result.then(function(result) {
+      modalInstance.result.then(function (result) {
         Vendors.updateAccountVendor({
           account_id: account.id,
           vendor: result
         }).$promise
-          .then(function(respnse) {
+          .then(function (respnse) {
             account.vendor_profile = result;
             $scope.alertService.success(respnse.message);
           })
           .catch($scope.alertService.danger);
       });
+    };
+
+    $scope.clearForm = function () {
+      $scope.clearModel();
     };
   }
 })();
