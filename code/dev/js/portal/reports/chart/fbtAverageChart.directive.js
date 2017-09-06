@@ -21,7 +21,7 @@
         isAutoReload: '@?'
       },
       /*@ngInject*/
-      controller: function($q, $scope, Stats, Util) {
+      controller: function($q, $scope, Stats, Util, EventsSerieDataService) {
         var _filters_field_list = ['from_timestamp', 'to_timestamp', 'country', 'device', 'os', 'browser'];
 
         function generateFilterParams(filters) {
@@ -52,8 +52,7 @@
         var info_ = null,
           avg_ = 0,
           median_ = 0,
-          max_ = 0,
-          tickInterval_ = 4;
+          max_ = 0;
 
         $scope.chartOptions = {
           chart: {
@@ -100,14 +99,16 @@
             }
           },
           xAxis: {
-            title: {
-              text: 'Date'
-            },
+            // title: {
+            //   text: 'Date'
+            // },
             crosshair: {
               width: 1,
               color: '#000000'
             },
-            tickInterval: tickInterval_            
+            // tickInterval: 4,
+            type: 'datetime',
+            pointInterval: 24 * 60 * 60 * 1000,
           },
           tooltip: {
             xDateFormat: '<span style="color: #000; font-weight: bold;">%H:%M</span> %b %d',
@@ -146,7 +147,8 @@
 
           $scope._loading = true;
           $scope.hasFailedToLoadData = false;
-          var labels = [];
+          var _xAxisPointStart = null;
+          var _xAxisPointInterval = null;
           var series = [{
             name: 'Average FBT',
             data: []
@@ -158,17 +160,13 @@
             .$promise
             .then(function(data) {
               if (data.data && data.data.length > 0) {
+                _xAxisPointStart = parseInt(data.metadata.start_timestamp);
+                _xAxisPointInterval = parseInt(data.metadata.interval_sec) * 1000;
                 avg_ = max_ = median_ = 0;
                 var offset = (data.metadata.interval_sec || 1800) * 1000;
                 var cnt_ = 0;
                 // console.log( data );
                 data.data.forEach(function(item, idx, items) {
-
-                  var val = moment(item.time + offset);
-                  var label = val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span>] MMM D');                  
-
-                  labels.push(label);
-
                   if (max_ < item.avg_fbt) {
                     max_ = item.avg_fbt;
                   }
@@ -202,16 +200,28 @@
                 return $q.when(series);
               }
             })
+            // NOTE: add event data
+            .then(function(series) {
+              var filterParams = generateFilterParams($scope.filters);
+              var options = {
+                from_timestamp: filterParams.from_timestamp,
+                to_timestamp: filterParams.to_timestamp,
+                domain_id: $scope.ngDomain.id,
+              };
+              return EventsSerieDataService.extendSeriesEventsDataForDomainId(series, options);
+            })
             .then(function setNewData(data) {
               // model better to update once
               $scope.traffic = {
-                labels: labels,
+                pointStart: _xAxisPointStart,
+                pointInterval: _xAxisPointInterval,
                 series: series
               };
             })
             .catch(function(err) {
               $scope.traffic = {
-                labels: labels,
+                pointStart: _xAxisPointStart,
+                pointInterval: _xAxisPointInterval,
                 series: series
               };
               $scope.hasFailedToLoadData = true;

@@ -72,9 +72,13 @@ var SideBar = {
     if (locatorData.id) {
       locator = by.id(locatorData.id);
     }
+    else if (locatorData.css) {
+      locator = by.css(locatorData.css);
+    }
     else {
       locator = by.partialLinkText(locatorData.linkText);
     }
+
     if (locatorData.area) {
       var areaLocator;
       var areaLocatorData = locatorData.area;
@@ -194,6 +198,7 @@ var SideBar = {
     this.collapseAll();
     if (locatorData.area) {
       this.expand(locatorData.area);
+
     }
     else {
       this.expand(locatorData);

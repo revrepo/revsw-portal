@@ -47,8 +47,8 @@
         }
         $scope.traffic = {
           series: [{
-            name: 'Queries',
-            showInLegend: false,
+            name: 'DNS Queries',
+            showInLegend: true,
             data: []
           }]
         };
@@ -123,8 +123,8 @@
           if (!$scope.ngZone || !$scope.ngZone.id) {
             $scope.traffic = {
               series: [{
-                name: 'Queries',
-                showInLegend: false,
+                name: 'DNS Queries',
+                showInLegend: true,
                 data: []
               }]
             };
@@ -141,8 +141,8 @@
           var _xAxisPointStart = null;
           var _xAxisPointInterval = null;
           var series = [{
-            name: 'Queries',
-            showInLegend: false,
+            name: 'DNS Queries',
+            showInLegend: true,
             data: []
           }];
 

@@ -109,6 +109,10 @@ var MenuItems = {
     RTT_HEAT_MAPS: {
       linkText: 'RTT Heatmaps',
       area: MenuAreas.WEB_ANALYTICS
+    },
+    IMAGE_OPTIMIZATION: {
+      linkText: 'Image Optimization',
+      area: MenuAreas.WEB_ANALYTICS
     }
   },
   SECURITY_ANALYTICS:{
@@ -193,6 +197,21 @@ var MenuItems = {
     BILLING_STATEMENTS: {
       linkText: 'Billing Statements',
       area: MenuAreas.BILLING
+    }
+  },
+  AZURE_MARKETPLACE: {
+    SUBSCRIPTIONS: {
+      linkText: 'Subscriptions',
+      area: MenuAreas.AZURE_MARKETPLACE
+    },
+    RESOURCES_PER_SUBSCRIPTION: {
+      linkText: 'Resources Per Subscription',
+      area: MenuAreas.AZURE_MARKETPLACE
+    },
+    RESOURCES: {
+      linkText: 'Resources',
+      css: 'a[ui-sref="index.azureMarketplace.resources"]',
+      area: MenuAreas.AZURE_MARKETPLACE
     }
   },
   SUPPORT: {
