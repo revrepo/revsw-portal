@@ -31,6 +31,7 @@ describe('Functional', function () {
     afterEach(function () {
       Portal.signOut();
     });
+     
 
 
     it('should  click through all intro steps till the end and click button done', function(){
@@ -61,9 +62,7 @@ describe('Functional', function () {
     });
 
 
-    it('should loaded page without intro window with button done ', function(){
-     //  var popUpContainer = Portal.dashboards.listPage.getIntroPopup();
-     // expect(popUpContainer.isDisplayed()).toBe(false); 
+    it('should loaded page without intro window with button done ', function(){ 
      var dashboardElem = Portal.dashboards.listPage.getDashboardsElem();
        expect(dashboardElem .isDisplayed()).toBe(true);
 
@@ -82,9 +81,7 @@ describe('Functional', function () {
       Portal.dashboards.listPage.waitForPopup();
       Portal.dashboards.listPage.clickButtonSkip();
         var dashboardElem = Portal.dashboards.listPage.getDashboardsElem();
-      expect(dashboardElem .isDisplayed()).toBe(true);
-    //     var popUpContainer = Portal.dashboards.listPage.getIntroPopup();
-    //    expect(popUpContainer.isDisplayed()).toBe(false); 
+      expect(dashboardElem .isDisplayed()).toBe(true); 
     });
 
     it('should loaded intro window after reload', function(){
