@@ -23,24 +23,34 @@ var Constants = require('./../../../page_objects/constants');
 
 describe('Smoke: ', function () {
     describe('Side Menu', function () {
-        var user = config.get('portal.users.user');
-        describe('With user: ' + user.role, function () {
+        describe('With user: New User', function () {
 
             var menu;
 
-            beforeAll(function () {
-                Portal.signIn(user);
-                menu = Portal.sideMenu;
+            beforeAll(function (done) {
+                Portal
+                    .signUpAndVerifyUser()
+                    .then(function () {
+                        menu = Portal.sideMenu;
+                        menu.expand(menu.getBillingOption());
+                        done();
+                    });
             });
 
             afterAll(function () {
                 Portal.signOut();
             });
-            it('should not display Billing menu item',
+            it('should display Change Billing Plan option',
                 function () {
                     expect(menu.getMenuItem(
-                        menu.getBillingOption())
-                        .isPresent()).toBeFalsy();
+                        menu.getChangeBillingPlanOption())
+                        .isDisplayed()).toBeTruthy();
+                });
+            it('should display Billing Statements option',
+                function () {
+                    expect(menu.getMenuItem(
+                        menu.getBillingStatementsOption())
+                        .isDisplayed()).toBeTruthy();
                 });
         });
     });
