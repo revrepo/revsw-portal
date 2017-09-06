@@ -31,61 +31,51 @@ describe('Smoke: ', function () {
         ];
         users.forEach(function (user) {
             describe('With user: ' + user.role, function () {
+
+                var menu;
+
                 beforeAll(function () {
                     Portal.signIn(user);
+                    menu = Portal.sideMenu;
                 });
 
                 afterAll(function () {
                     Portal.signOut();
                 });
                 if (user.role === 'Reseller') {
-                    it('should not display Change Billing Plan option', function () {
-                        Portal.sideMenu.expand({ linkText: 'Billing' });
-                        var menuitem = Portal.sideMenu.getMenuItem({
-                            linkText: 'Change Billing Plan'
-                        });
-                        expect(menuitem.isPresent()).toBeFalsy();
+                    it('should not display Change Billing Plan option', function () {                     
+                        menu.expand(menu.getBillingOption());
+                        expect(menu.getMenuItem(menu.getChangeBillingPlanOption())
+                            .isPresent()).toBeFalsy();
                     });
                     it('should not display Billing Statements option', function () {
-                        var menuitem = Portal.sideMenu.getMenuItem({
-                            linkText: 'Billing Statements'
-                        });
-                        expect(menuitem.isPresent()).toBeFalsy();
+                        expect(menu.getMenuItem(menu.getBillingStatementsOption())
+                            .isPresent()).toBeFalsy();
                     });
                 } else if (user.role === 'Admin') {
                     it('should not display Change Billing Plan option', function () {
-                        Portal.sideMenu.expand({ linkText: 'Billing' });
-                        var menuitem = Portal.sideMenu.getMenuItem({
-                            linkText: 'Change Billing Plan'
-                        });
-                        expect(menuitem.isPresent()).toBeFalsy();
+                        menu.expand(menu.getBillingOption());
+                        expect(menu.getMenuItem(menu.getChangeBillingPlanOption())
+                        .isPresent()).toBeFalsy();
                     });
                     it('should not display Billing Statements option', function () {
-                        var menuitem = Portal.sideMenu.getMenuItem({
-                            linkText: 'Billing Statements'
-                        });
-                        expect(menuitem.isPresent()).toBeFalsy();
+                        expect(menu.getMenuItem(menu.getBillingStatementsOption())
+                        .isPresent()).toBeFalsy();
                     });
                 } else if (user.role === 'Normal User') {
                     it('should not display Billing menu item', function () {
-                        var menuitem = Portal.sideMenu.getMenuItem({
-                            linkText: 'Billing'
-                        });
-                        expect(menuitem.isPresent()).toBeFalsy();
+                        expect(menu.getMenuItem(menu.getBillingOption())
+                        .isPresent()).toBeFalsy();
                     });
                 } else {
                     it('should display Change Billing Plan option', function () {
-                        Portal.sideMenu.expand({ linkText: 'Billing' });
-                        var menuitem = Portal.sideMenu.getMenuItem({
-                            linkText: 'Change Billing Plan'
-                        });
-                        expect(menuitem.isDisplayed()).toBeTruthy();
+                        menu.expand(menu.getBillingOption());
+                        expect(menu.getMenuItem(menu.getChangeBillingPlanOption())
+                        .isPresent()).toBeTruthy();
                     });
                     it('should display Billing Statements option', function () {
-                        var menuitem = Portal.sideMenu.getMenuItem({
-                            linkText: 'Billing Statements'
-                        });
-                        expect(menuitem.isDisplayed()).toBeTruthy();
+                        expect(menu.getMenuItem(menu.getBillingStatementsOption())
+                        .isPresent()).toBeTruthy();
                     });
                 }
             });

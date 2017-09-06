@@ -29,6 +29,7 @@ var Utils = require('./../common/helpers/utils');
 // Requiring components
 var Header = require('./common/header');
 var SideBar = require('./common/sidebar');
+var SideMenu = require('./common/sidebar/sidebar');
 var Alerts = require('./common/alerts');
 var Dialog = require('./common/dialog');
 var GlobalSearcher = require('./common/globalSearcher');
@@ -144,6 +145,7 @@ var Portal = {
   // Common components that are used in more than one page in this Portal object
   header: Header,
   sideBar: SideBar,
+  sideMenu: SideMenu,
   alerts: Alerts,
   dialog: Dialog,
   globalSearcher: GlobalSearcher,
