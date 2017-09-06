@@ -67,7 +67,7 @@ var SideBar = {
    * @param locatorData
    * @returns {*}
    */
-  getMenuItem: function (locatorData) {    
+  getMenuItem: function (locatorData) {
     var locator;
     if (locatorData.id) {
       locator = by.id(locatorData.id);
@@ -201,6 +201,16 @@ var SideBar = {
     return this
       .getMenuItem(locatorData)
       .click();
+  },
+
+  getBillingOption: function () {
+    return MenuAreas.BILLING;
+  },
+  getChangeBillingPlanOption: function () {
+    return MenuItems.BILLING.CHANGE_BILLING_PLAN;
+  },
+  getBillingStatementsOption: function () {
+    return MenuItems.BILLING.BILLING_STATEMENTS;
   }
 };
 
