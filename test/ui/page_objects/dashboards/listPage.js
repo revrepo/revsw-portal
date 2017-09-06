@@ -62,9 +62,15 @@ var DashboardList = {
       },
       undoChanges: {
         css: '.fa-undo'
-      }
+      },
+      buttonNext: {
+        css: '.introjs-nextbutton'
+      },
+      buttonSkip: {
+        css: '.introjs-skipbutton'
+      },
     },
-     popups: {
+    popups: {
      css: {
        introPopup: '.introjs-tooltip' 
      }
@@ -487,8 +493,29 @@ var DashboardList = {
     me.form.clickDelete();
     Dialog.clickDeleteBtn();
   },
- getIntroPopup: function(){
+  getIntroPopup: function(){
     return element(by.css(this.locators.popups.css.introPopup));
+  },
+  getButtonNext: function(){
+    return element(by.css(this.locators.buttons.buttonNext.css));
+  },
+  clickButtonNext: function() {
+     return this.getButtonNext().click();    
+  },
+  getButtonSkip: function(){
+    return element(by.css(this.locators.buttons.buttonSkip.css));
+  },
+  clickButtonSkip: function(){
+    return this.getButtonSkip().click();
+  },
+  waitForPopup: function () {
+   var me = this;
+   var EC = protractor.ExpectedConditions;
+   var elem = element(by.css(me.locators.popups.css.introPopup));
+   browser.driver.wait(function () {
+   browser.wait(EC.visibilityOf(elem), 10000);
+     return elem;
+  });
   }
 };
 
