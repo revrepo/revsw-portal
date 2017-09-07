@@ -537,5 +537,9 @@
       });
       return modalInstance.result;
     };
+
+    $scope.clearForm = function () {
+      $scope.clearModel();
+    };
   }
 })();

@@ -85,7 +85,7 @@
           <hr>
           <div class="form-group">
             <div class="col-sm-offset-3 col-sm-9">
-              <a ui-sref="^" class="btn btn-default">
+              <a ui-sref="^" class="btn btn-default" ng-click="clearForm()">
                 <i class="glyphicon glyphicon-remove"></i>&nbsp; Cancel
               </a>
               <button class="btn btn-success" ng-class="{'btn-disabled':isReadOnly()}"  id="create_ssr_cert" ng-disabled="createForm.$invalid|| _loading || isReadOnly()" ng-click="onCreateSSLName(model,false)">

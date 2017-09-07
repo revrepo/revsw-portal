@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -42,8 +42,8 @@
     function setAccountName() {
       if ($scope.auth.isReseller() || $scope.auth.isRevadmin()) {
         // Loading list of companies
-        return Companies.query(function(list) {
-          _.forEach($scope.records, function(item) {
+        return Companies.query(function (list) {
+          _.forEach($scope.records, function (item) {
             var index = _.findIndex(list, {
               id: item.account_id
             });
@@ -58,13 +58,13 @@
     }
 
     // Fetch list of records
-    $scope.$on('$stateChangeSuccess', function(state, stateTo, stateParam) {
+    $scope.$on('$stateChangeSuccess', function (state, stateTo, stateParam) {
       var data = null;
       // NOTE: set filter params for specific state
-      if($state.is('index.accountSettings.accountresources')){
+      if ($state.is('index.accountSettings.accountresources')) {
         $scope.filter.limit = 5;
         var filters = {
-          account_id: !User.getSelectedAccount()? null: User.getSelectedAccount().acc_id
+          account_id: !User.getSelectedAccount() ? null : User.getSelectedAccount().acc_id
         };
         data = {
           filters: filters
@@ -73,9 +73,9 @@
       if ($state.is($scope.state) || $state.is('index.accountSettings.accountresources')) {
         $scope.list(data)
           .then(setAccountName)
-          .then(function() {
+          .then(function () {
             if ($scope.elementIndexForAnchorScroll) {
-              setTimeout(function() {
+              setTimeout(function () {
                 $anchorScroll('anchor' + $scope.elementIndexForAnchorScroll);
                 $scope.$digest();
               }, 500);
@@ -88,7 +88,7 @@
         } else {
           $scope.params = stateParam;
           $scope.setDefaultAccountId();
-         }
+        }
       }
     });
 
@@ -97,14 +97,14 @@
     $scope.companies = [];
     $scope.model = {};
 
-    $scope.fetchCompanies = function(companyIds) {
+    $scope.fetchCompanies = function (companyIds) {
       var promises = [];
-      companyIds.forEach(function(id) {
+      companyIds.forEach(function (id) {
         promises.push(Companies.get({
           id: id
         }).$promise);
       });
-      $q.all(promises).then(function(data) {
+      $q.all(promises).then(function (data) {
         $scope.companies = data;
       });
     };
@@ -115,7 +115,7 @@
      * @param  {[type]} model_current [description]
      * @return {[type]}               [description]
      */
-    $scope.prepareDNSZoneToUpdate = function(model_current) {
+    $scope.prepareDNSZoneToUpdate = function (model_current) {
       var model;
       if (model_current.toJSON === undefined) {
         model = _.clone(model_current, true);
@@ -134,10 +134,10 @@
       return model;
     };
 
-    $scope.setAccountId = function() {
+    $scope.setAccountId = function () {
       if ($scope.auth.isReseller() || $scope.auth.isRevadmin()) {
         // Loading list of companies
-        Companies.query(function(list) {
+        Companies.query(function (list) {
           $scope.companies = list;
           if ($scope.companies.length === 1) {
             $scope.model.account_id = $scope.companies[0].id;
@@ -154,9 +154,9 @@
 
     $scope.setAccountId();
 
-    $scope.getDNSZone = function(id) {
+    $scope.getDNSZone = function (id) {
       $scope.get(id)
-        .catch(function(err) {
+        .catch(function (err) {
           $scope.alertService.danger('Could not load DNS Zone details');
         });
     };
@@ -167,16 +167,16 @@
      * @param  {Object} model
      * @return
      */
-    $scope.deleteDNSZone = function(model) {
+    $scope.deleteDNSZone = function (model) {
       // NOTE: not delete if RO user
-      if($scope.isReadOnly() === true){
+      if ($scope.isReadOnly() === true) {
         return;
       }
-      $scope.confirm('confirmModal.html', model).then(function() {
+      $scope.confirm('confirmModal.html', model).then(function () {
         var zone = model.zone;
         $scope
           .delete(model)
-          .then(function(data) {
+          .then(function (data) {
             $scope.alertService.success(data);
             $scope.list()
               .then(setAccountName);
@@ -193,11 +193,11 @@
      * @param  {[type]} model [description]
      * @return {[type]}       [description]
      */
-    $scope.createDNSZone = function(model, isStay) {
+    $scope.createDNSZone = function (model, isStay) {
 
       $scope
         .create(model, isStay)
-        .then(function(data) {
+        .then(function (data) {
           $scope.alertService.success(data);
           $scope.setAccountId();
         })
@@ -210,7 +210,7 @@
      * @param  {[type]} model [description]
      * @return {[type]}       [description]
      */
-    $scope.updateDNSZone = function(model) {
+    $scope.updateDNSZone = function (model) {
 
       if (!model) {
         return;
@@ -219,18 +219,18 @@
         model.id = $stateParams.id;
       }
       var modelId = model.id;
-      $scope.confirm('confirmUpdateModal.html', model).then(function() {
+      $scope.confirm('confirmUpdateModal.html', model).then(function () {
         model = $scope.prepareDNSZoneToUpdate(model);
         $scope.update({
-            id: modelId
-          }, model)
+          id: modelId
+        }, model)
           .then($scope.alertService.success)
           .catch($scope.alertService.danger);
       });
     };
 
     // TODO: add correct rules or delete
-    $scope.disableSubmit = function(model, isEdit) {
+    $scope.disableSubmit = function (model, isEdit) {
       if (!isEdit) {
         return $scope._loading ||
           !model.zone ||
@@ -242,15 +242,19 @@
       }
     };
 
-    $scope.getRelativeDate = function(datetime) {
+    $scope.getRelativeDate = function (datetime) {
       return moment.utc(datetime).fromNow();
     };
     /**
      * @name storeToStorage
      * @description method save the DNS zone in storage (before go to DNS Analytics)
      */
-    $scope.storeToStorage = function(zone){
-      User.selectDNSZone({id:zone.id,zone:zone.zone,account_id: zone.account_id});
+    $scope.storeToStorage = function (zone) {
+      User.selectDNSZone({ id: zone.id, zone: zone.zone, account_id: zone.account_id });
+    };
+
+    $scope.clearForm = function () {
+      $scope.clearModel();
     };
   }
 })();

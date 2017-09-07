@@ -53,9 +53,7 @@ describe('Smoke', function () {
           expect(Portal.addUserPage.form.isDisplayed()).toBeTruthy();
         });
 
-        // TODO: BUG: after clicking on Cancel and going back to the Add User form
-        // the portal does not enable Create button even after providing all correct data
-        xit('should allow to cancel an user edition', function () {
+        it('should allow to cancel an user edition', function () {
           Portal.addUserPage.form.setEmail('something');
           Portal.addUserPage.clickCancel();
           expect(Portal.userListPage.isDisplayed()).toBeTruthy();
