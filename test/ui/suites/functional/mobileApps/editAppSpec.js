@@ -25,7 +25,9 @@ var Utils= require('./../../../common/helpers/utils');
 describe('Functional', function () {
   describe('Basic Edit App And Update', function () {
 
+    // TODO add revadmin and reseller users
     var users = [
+      config.get('portal.users.user'),
       config.get('portal.users.admin')
     ];
     var platforms = [
@@ -163,6 +165,7 @@ describe('Functional', function () {
                 var alert = Portal.alerts.getFirst();
                 var expectedMsg = Constants.alertMessages.app.MSG_SUCCESS_UPDATE;
                 expect(alert.getText()).toContain(expectedMsg);
+                browser.sleep(10000);
 
                 Portal.helpers.nav.goToMobileAppsMenuItem(platform);
                 var count = Portal.mobileApps.listPage.searchAndCount(cApp.name);
@@ -185,6 +188,7 @@ describe('Functional', function () {
                 var alert = Portal.alerts.getFirst();
                 var expectedMsg = Constants.alertMessages.app.MSG_SUCCESS_UPDATE;
                 expect(alert.getText()).toContain(expectedMsg);
+                browser.sleep(10000);
 
                 Portal.helpers.nav.goToMobileAppsMenuItem(platform);
                 var count = Portal.mobileApps.listPage.searchAndCount(cApp.name);
