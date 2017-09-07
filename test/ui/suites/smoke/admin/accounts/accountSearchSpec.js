@@ -24,7 +24,6 @@ describe('Smoke', function () {
 
   // Defining set of users for which all below tests will be run
   var users = [
-    //config.get('portal.users.admin'),
     config.get('portal.users.revAdmin'),
     config.get('portal.users.reseller')
   ];
@@ -54,6 +53,11 @@ describe('Smoke', function () {
             expect(searchField.isPresent()).toBeTruthy();
           });
 
+      
+        // TODO: the test is very fragile: if there is another account with
+        // name which includes the name of the first account in the list then
+        // the test will fail. Need to change the test to create an unique account 
+        // and use it to test the search field.
         it('should filter accounts according to text filled',
           function () {
             var accountNameToSearch = Portal.admin.accounts.listPage.table
