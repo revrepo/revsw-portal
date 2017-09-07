@@ -35,7 +35,10 @@ describe('Functional', function () {
  it('button hide/show menu  should  be clickable', function(){
      Portal.mobileAnalytics.ImageOptimizationPage.clickHideMenu();
      Portal.mobileAnalytics.ImageOptimizationPage.clickHideMenu();
-      });
+     Portal.mobileAnalytics.ImageOptimizationPage.getHideMenu().isEnabled().then(function(v) {
+         expect(v).toBe(true);  
+     });
+     });
 
 it('should automatically hide/unhide  menu', function(){
      Portal.mobileAnalytics.ImageOptimizationPage.clickHideMenu();
