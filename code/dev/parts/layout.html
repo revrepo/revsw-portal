@@ -220,7 +220,7 @@
           <a ui-sref-active="active" ui-sref="index.billing.company" class="side-menu-sub-item" ng-if="userService.isAdmin()">
             <i class="sub-menu-icon fa fa-gear"></i> Account Profile
           </a>
-          <a ui-sref-active="active" ui-sref="index.billing.plans" class="side-menu-sub-item" ng-if="(userService.isAdmin() && userService.hasBillingPlan()) || userService.isReseller() || userService.isRevadmin()">
+          <a ui-sref-active="active" ui-sref="index.billing.plans" class="side-menu-sub-item" ng-if="userService.isRevadmin()">
             <i class="sub-menu-icon fa fa-arrow-circle-up"></i> Change Billing Plan
           </a>
           <a ui-sref-active="active" ui-sref="index.billing.statements" class="side-menu-sub-item" ng-if="(userService.isAdmin() && userService.hasBillingPlan()) || userService.isReseller() || userService.isRevadmin()">
