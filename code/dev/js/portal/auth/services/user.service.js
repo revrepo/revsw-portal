@@ -213,6 +213,15 @@
       setToken(); // set token to undefined
       // Clear user
       $localStorage.user = undefined;
+
+      // Clear activity filter data
+      $localStorage.activityFilterData = undefined;
+
+      // Clear form data
+      $localStorage.selectedUser = undefined;
+      $localStorage.selectedCompany = undefined;
+      $localStorage.selectedDomain = undefined;
+      
       clearAuthHeaderForAPI();
       clearAll();
     }

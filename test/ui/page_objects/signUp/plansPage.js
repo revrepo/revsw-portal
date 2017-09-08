@@ -36,6 +36,17 @@ var PlansList = {
         css: 'h2.billing-plan-title'
       }
     },
+    images: {
+      css: {
+        logo: '.img-responsive' 
+      }
+    },
+    copyright: {
+      css:{
+        brand: '.footerNoteA',
+        secondBrand: 'p.text-center'  
+      }
+    },
     links: {
       signIn: {
         linkText: 'sign in if you already have an account'
@@ -106,6 +117,18 @@ var PlansList = {
     return this
       .getSignInLnk()
       .click();
+  },
+
+  getLogo: function(){
+     return element(by.css(this.locators.images.css.logo));
+  },
+
+  getBrand: function(){
+     return element(by.css(this.locators.copyright.css.brand));
+  },
+
+  getSecondBrand: function(){
+     return element(by.css(this.locators.copyright.css.secondBrand));
   },
 
   /**

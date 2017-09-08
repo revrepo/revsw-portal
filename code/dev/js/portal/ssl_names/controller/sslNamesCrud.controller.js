@@ -90,8 +90,9 @@
           });
       } else {
         // NOTE: clear model for create new SSL Name
-        $scope.model.ssl_name = '';
-        $scope.model.verification_method = null;
+        // We want to save the form data on view change
+        // $scope.model.ssl_name = '';
+        // $scope.model.verification_method = null;
       }
     });
 
@@ -275,6 +276,7 @@
                 .create(_model, isStay)
                 .then(function(data) {
                   $scope.alertService.success(data);
+                  $scope.clearModel();
                   // Auto start Verify
                   $scope.onVerifyDomain(null, {
                     id: data.object_id

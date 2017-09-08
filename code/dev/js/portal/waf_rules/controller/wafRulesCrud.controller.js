@@ -76,7 +76,8 @@
         if ($state.is($scope.state)) {
           $scope.initList();
         } else {
-          $scope.clearModel();
+          // We want to save the form data on view change
+          //$scope.clearModel();
         }
       }
 
@@ -293,8 +294,8 @@
         .then(function(data) {
           $scope.alertService.success(data);
           $scope.setAccountId();
-          if (isStay === true) {
-            $scope.clearModel();
+          $scope.clearModel(); // Clear form data even if not isStay
+          if (isStay === true) {            
             $scope.initNew();
           }
         })
