@@ -64,6 +64,15 @@ describe('Smoke', function () {
             expect(Portal.domains.listPage.isDisplayed()).toBeTruthy();
           });
 
+        it('should clear form after Cancel is clicked', function () {
+          Portal.domains.listPage.clickAddNewDomain();
+          var newDomain = DataProvider.generateDomain();
+          Portal.domains.addPage.form.fill(newDomain);
+          Portal.domains.addPage.clickCancel();
+          Portal.domains.listPage.clickAddNewDomain();
+          expect(Portal.domains.addPage.form.getDomainName()).toEqual('');
+        });
+
         it('should create a domain successfully when filling all required data',
           function () {
             var smoketest = DataProvider.generateDomain('smoketest');

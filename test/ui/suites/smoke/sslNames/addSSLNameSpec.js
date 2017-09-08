@@ -62,6 +62,14 @@ describe('Smoke', function () {
           expect(Portal.sslNames.listPage.isDisplayed()).toBeTruthy();
         });
 
+        it('should clear form after Cancel is clicked', function () {
+          var newSSLName = DataProvider.generateSSLNameData();
+          Portal.sslNames.addPage.form.fill(newSSLName);
+          Portal.sslNames.addPage.clickCancel();
+          Portal.sslNames.listPage.clickAddNewSSLName();
+          expect(Portal.sslNames.addPage.form.getDomainName()).toEqual('');
+        });
+
         // TODO: need to review all SSL Names tests related to adding/deleting of SSL names - the
         // tests are failing because of GlobalSign API timeouts/failures
 

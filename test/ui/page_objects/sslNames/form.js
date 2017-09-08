@@ -107,6 +107,19 @@ var SSLNameForm = {
     return element(by.model(this.locators.textInputs.domainName.model));
   },
 
+  /**
+   * ### SSLNameForm.getDomainName()
+   *
+   * Returns the value of the domain name input field
+   *
+   * @returns {String}
+   */
+  getDomainName: function () {
+    return this
+            .getDomainNameNameTxtIn()
+            .getAttribute('value');
+  },
+
    /**
    * ### SSLNameForm.getCompanyDDown()
    *
