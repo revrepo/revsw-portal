@@ -526,6 +526,10 @@
       $localStorage.selectedDomain = model;
     };
 
+    $scope.clearForm = function () {
+      $scope.clearModel();
+    };
+
     $scope.disableSubmit = function (model, isEdit) {
       if (!isEdit) {
         return $scope._loading ||

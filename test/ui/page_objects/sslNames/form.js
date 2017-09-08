@@ -96,15 +96,28 @@ var SSLNameForm = {
   },
 
   /**
-   * ### SSLNameForm.getDomainNameNameTxtIn()
+   * ### SSLNameForm.getDomainNameTxtIn()
    *
    * Returns the reference to the `Domain Name` text field (Selenium WebDriver
    * Element)
    *
    * @returns {Object} Selenium WebDriver Element
    */
-  getDomainNameNameTxtIn: function () {
+  getDomainNameTxtIn: function () {
     return element(by.model(this.locators.textInputs.domainName.model));
+  },
+
+  /**
+   * ### SSLNameForm.getDomainName()
+   *
+   * Returns the value of the domain name input field
+   *
+   * @returns {String}
+   */
+  getDomainName: function () {
+    return this
+            .getDomainNameTxtIn()
+            .getAttribute('value');
   },
 
    /**
@@ -171,7 +184,7 @@ var SSLNameForm = {
    */
   setDomainName: function (value) {
     return this
-      .getDomainNameNameTxtIn()
+      .getDomainNameTxtIn()
       .sendKeys(value);
   },
 
@@ -208,7 +221,7 @@ var SSLNameForm = {
    */
   isDisplayed: function () {
     return this
-        .getDomainNameNameTxtIn()
+        .getDomainNameTxtIn()
         .isPresent();
   },
 

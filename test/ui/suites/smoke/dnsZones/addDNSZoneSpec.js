@@ -65,6 +65,14 @@ describe('Smoke', function () {
           expect(Portal.dnsZones.listPage.isDisplayed()).toBeTruthy();
         });
 
+        it('should clear form after Cancel is clicked', function () {      
+          var newDnsZone = DataProvider.generateDNSZoneData();
+          Portal.dnsZones.addPage.form.fill(newDnsZone);
+          Portal.dnsZones.addPage.clickCancel();    
+          Portal.dnsZones.listPage.clickAddNewDNSZone();
+          expect(Portal.dnsZones.addPage.form.getDomain()).toEqual('');
+        });
+
         it('should create a DNS Zone when filling all required data',
           function () {
             var dnsZoneToSearch = DataProvider.generateDNSZoneData();

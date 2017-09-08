@@ -413,6 +413,10 @@
       $localStorage.selectedDomain = model;
     };
 
+    $scope.clearForm = function () {
+      $scope.clearModel();
+    };
+
     $scope.getRelativeDate = function(datetime) {
       return moment.utc(datetime).fromNow();
     };
