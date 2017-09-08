@@ -70,7 +70,7 @@
               <input type="button" id="forgot_password" ng-click="forgotPassword()" value="Forgot Password?" class="btn btn-link forgot_password">
             </div>
             <div class="form-group marl_med pull-right">
-              <a ng-href="/#/signup/plans" class="btn btn-link">Sign Up</a>
+              <a ng-href="{{vendorConfig.sign_up_url || '/#/signup/plans'}}" class="btn btn-link">Sign Up</a>
             </div>
           </div>
         </div>
