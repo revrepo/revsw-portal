@@ -230,7 +230,7 @@
                 </div>
                 <br>
                 <div class="text text-center">
-                  <a ui-sref="^" class="btn btn-default">
+                  <a ng-href="{{vendorConfig.sign_up_url}}" class="btn btn-default">
                     <i class="glyphicon glyphicon-arrow-left"></i>&nbsp; Back
                   </a>
                   <button class="btn btn-success" ng-disabled="_loading || newUser.$invalid ||(($ctrl.model.password != $ctrl.model.passwordConfirm ||newUser.passwordConfirm.$invalid) &&newUser.passwordConfirm.$dirty )"

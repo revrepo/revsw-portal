@@ -33,7 +33,7 @@ var Help = {
     help: {
       iframe: 'webWidget',
       search: '//input[@type="search"]',
-      submit:  '//*[@id="Embed"]/div/div[3]/div/div/div/footer/div/div/input[@type="submit"]'
+      submit: '//input[@type="submit" and not(@disabled)]'
     },
     ticket: {
       iframe: 'webWidget',
