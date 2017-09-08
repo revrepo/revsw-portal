@@ -20,7 +20,8 @@
 
 // Requiring third party libraries
 var Promise = require('bluebird');
-
+var MenuItems = require('./locators/menuItems.js');
+var MenuAreas = require('./locators/menuAreas.js');
 // This `SideBar` Page Object abstracts all operations or actions that a common
 // user could do with the SideBar menu component from Portal app/site.
 var SideBar = {
@@ -30,10 +31,10 @@ var SideBar = {
   // Locators specific to HTML elements from this page object
   locators: {
     arrowUp: {
-        css: '.fa-caret-up'
+      css: '.fa-caret-up'
     },
     arrowDown: {
-        css: '.fa-caret-down'
+      css: '.fa-caret-down'
     },
     container: {
       css: 'ul.side-menu'
@@ -49,7 +50,8 @@ var SideBar = {
       }
     }
   },
-
+  menuItems: MenuItems,
+  menuAreas: MenuAreas,
   // ## Methods
 
   /**
@@ -70,9 +72,13 @@ var SideBar = {
     if (locatorData.id) {
       locator = by.id(locatorData.id);
     }
+    else if (locatorData.css) {
+      locator = by.css(locatorData.css);
+    }
     else {
       locator = by.partialLinkText(locatorData.linkText);
     }
+
     if (locatorData.area) {
       var areaLocator;
       var areaLocatorData = locatorData.area;
@@ -137,7 +143,7 @@ var SideBar = {
       .getAttribute('className')
       .then(function (className) {
         return className
-            .indexOf(me.locators.menu.items.collapsible.className) >= 0;
+          .indexOf(me.locators.menu.items.collapsible.className) >= 0;
       });
   },
 
@@ -192,6 +198,7 @@ var SideBar = {
     this.collapseAll();
     if (locatorData.area) {
       this.expand(locatorData.area);
+
     }
     else {
       this.expand(locatorData);
@@ -199,6 +206,16 @@ var SideBar = {
     return this
       .getMenuItem(locatorData)
       .click();
+  },
+
+  getBillingOption: function () {
+    return MenuAreas.BILLING;
+  },
+  getChangeBillingPlanOption: function () {
+    return MenuItems.BILLING.CHANGE_BILLING_PLAN;
+  },
+  getBillingStatementsOption: function () {
+    return MenuItems.BILLING.BILLING_STATEMENTS;
   }
 };
 

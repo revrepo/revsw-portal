@@ -18,6 +18,7 @@
 
 var MenuAreas = {
   DASHBOARDS: {
+    id: 'side-menu-dashboard-item',
     linkText: 'Dashboards',
     css: '#left-menu-dashboard-section .side-menu-sub-item'
   },
@@ -41,6 +42,9 @@ var MenuAreas = {
   },
   ADMIN: {
     linkText: 'Admin'
+  },
+  AZURE_MARKETPLACE: {
+    linkText: 'Azure Marketplace'
   },
   BILLING: {
     linkText: 'Billing',

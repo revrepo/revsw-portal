@@ -1,4 +1,4 @@
-(function(angular, empty) {
+(function (angular, empty) {
   'use strict';
 
   angular
@@ -137,7 +137,7 @@
        *
        * @private
        */
-      $scope._applyFilter = function() {
+      $scope._applyFilter = function () {
         var filtered,
           i,
           res,
@@ -147,7 +147,7 @@
         // checks if filter value is string and not blank + checks the length of filterKeys to be not empty
         if (_.isString($scope.filter.filter) && $scope.filter.filter.length > 0 && $scope.filterKeys.length > 0) {
           // filters over the array
-          filtered = _.filter($scope.records, function(record) {
+          filtered = _.filter($scope.records, function (record) {
             //checks for each key
             //if value is found returns true
             for (i = 0; i < $scope.filterKeys.length; i++) {
@@ -178,7 +178,7 @@
        * Delay added for UX. Without it function might be called on every letter in filter field.
        * So it will be invokd lot of times and might break output.
        */
-      $scope.filterList = function() {
+      $scope.filterList = function () {
         if ($scope._delayTimeout) {
           $timeout.cancel($scope._delayTimeout);
           $scope._delayTimeout = null;
@@ -189,7 +189,7 @@
       /**
        * Will watch filter to be able to apply it
        */
-      $scope.$watch('filter', function() {
+      $scope.$watch('filter', function () {
         // Apply filters here
         $scope.filterList();
       }, true);
@@ -209,7 +209,7 @@
        * @param {Object=} [resolve]
        * @returns {*}
        */
-      $scope.confirm = function(template, resolve) {
+      $scope.confirm = function (template, resolve) {
         if (angular.isObject(template)) {
           resolve = template;
           template = '';
@@ -240,7 +240,7 @@
        * @param {boolean?} [loading]
        * @returns {boolean}
        */
-      $scope.loading = function(loading) {
+      $scope.loading = function (loading) {
         if (angular.isUndefined(loading)) {
           return $scope._loading;
         }
@@ -252,7 +252,7 @@
        *
        * @param {string} state
        */
-      $scope.setState = function(state) {
+      $scope.setState = function (state) {
         if (!state) {
           throw new Error('Wrong state provided.');
         }
@@ -264,7 +264,7 @@
        *
        * @param {string=} [filter] filter to clear otherwise {@link $scope.quickFilter} will be cleared
        */
-      $scope.clearQuickFilter = function(filter) {
+      $scope.clearQuickFilter = function (filter) {
         if (filter) {
           filter = '';
         } else {
@@ -277,11 +277,11 @@
        *
        * @param {object=} [model]
        */
-      $scope.clearModel = function(model) {
+      $scope.clearModel = function (model) {
         if (!model) {
           model = $scope.model;
         }
-        angular.forEach(model, function(val, key) {
+        angular.forEach(model, function (val, key) {
           model[key] = '';
         });
         model = null;
@@ -290,7 +290,7 @@
       /**
        * Will remove all elements from array of records.
        */
-      $scope.clearList = function() {
+      $scope.clearList = function () {
         $scope.records.splice(0, $scope.records.length);
         $scope.filteredRecords.splice(0, $scope.filteredRecords.length);
       };
@@ -300,7 +300,7 @@
        *
        * @param {object} resource
        */
-      $scope.setResource = function(resource) {
+      $scope.setResource = function (resource) {
         $scope.resource = resource;
       };
 
@@ -309,7 +309,7 @@
        *
        * @param {Array} fields
        */
-      $scope.setDeniedFields = function(fields) {
+      $scope.setDeniedFields = function (fields) {
         if (!angular.isArray(fields)) {
           return;
         }
@@ -317,10 +317,14 @@
       };
 
       /**
-       * Scroll page to top
+       * Scroll to top of the page *only if theres only one pagination on the page* -- fix for page scrolling up when not needed
        */
-      $scope.scrollTop = function() {
-        $anchorScroll('top');
+      $scope.scrollTop = function () {
+        if (document.querySelectorAll('crud-pagination').length > 2) {
+          return false;
+        } else { 
+          $anchorScroll('top'); 
+        }
       };
 
       /**
@@ -328,7 +332,7 @@
        *
        * @param {string} predicate
        */
-      $scope.order = function(predicate) {
+      $scope.order = function (predicate) {
         $scope.filter.reverse = ($scope.filter.predicate === predicate) ? !$scope.filter.reverse : false;
         $scope.filter.predicate = predicate;
       };
@@ -336,7 +340,7 @@
       /**
        * Check if user is not on the 1st page. he will be send there.
        */
-      $scope.checkFilterPage = function() {
+      $scope.checkFilterPage = function () {
         if ($scope.filter.skip > 0) {
           $scope.goToPage(1);
         }
@@ -351,8 +355,8 @@
        *
        * @private
        */
-      $scope._checkPagination = function() {
-        if(!$scope.filteredRecords){
+      $scope._checkPagination = function () {
+        if (!$scope.filteredRecords) {
           return;
         }
         if ($scope.filteredRecords.length < ($scope.filter.limit + $scope.filter.skip)) {
@@ -376,7 +380,7 @@
       /**
        * Load next records
        */
-      $scope.nextPage = function() {
+      $scope.nextPage = function () {
         if (!$scope.page.hasNextPage) {
           return;
         }
@@ -391,7 +395,7 @@
       /**
        * Load prev records
        */
-      $scope.prevPage = function() {
+      $scope.prevPage = function () {
         if (!$scope.page.hasPrevPage) {
           return;
         }
@@ -408,7 +412,7 @@
        *
        * @param {number} page
        */
-      $scope.goToPage = function(page) {
+      $scope.goToPage = function (page) {
         if ($scope.page.current === page) {
           return;
         }
@@ -435,16 +439,16 @@
        * @throws Error is not {@link $scope.resource} provided
        * @returns {Promise}
        */
-      $scope.list = function(data) {
+      $scope.list = function (data) {
         if (!$scope.resource) {
           throw new Error('No resource provided.');
         }
         $scope.loading(true);
         //fetching data
         return $scope.resource
-          .query(data, function(data) {
+          .query(data, function (data) {
             // NOTE: control data type
-            if(!angular.isArray(data)){
+            if (!angular.isArray(data)) {
               // no data for display in a list
               $scope.records = null;
               return null;
@@ -457,11 +461,11 @@
             $scope.filterList(); // Apply filters
             $scope._checkPagination();
             return data; // Send data to future promise
-          },function(){
+          }, function () {
             $scope.records = null;
             return null;
           }).$promise
-          .finally(function() {
+          .finally(function () {
             $scope.loading(false);
           });
       };
@@ -472,7 +476,7 @@
        * @throws Error if not {@link $scope.resource} provided
        * @param {object} model
        */
-      $scope.delete = function(model) {
+      $scope.delete = function (model) {
         if (!model) {
           return;
         }
@@ -483,13 +487,13 @@
         model.loading = true;
         // NOTE: user resource method "remove" for delete data.
         return $scope.resource.remove({
-            id: model.id
-          }).$promise
-          .then(function(data) {
+          id: model.id
+        }).$promise
+          .then(function (data) {
             $rootScope.$broadcast('update:searchData');
             if (data.statusCode === $config.STATUS.OK || data.statusCode === $config.STATUS.ACCEPTED) {
               // NOTE: delete item from arrays
-              var idx = _.findIndex($scope.records, function(item) {
+              var idx = _.findIndex($scope.records, function (item) {
                 return item.id === model.id;
               });
               if (idx > -1) {
@@ -505,7 +509,7 @@
             }
             return data;
           })
-          .finally(function() {
+          .finally(function () {
             model.loading = false;
           });
       };
@@ -520,21 +524,21 @@
        * @param  {Boolean} isStay [description]
        * @return {Promise}         [description]
        */
-      $scope.create = function(model, isStay) {
+      $scope.create = function (model, isStay) {
         if (!$scope.resource) {
           throw new Error('No resource provided.');
         }
         $scope.loading(true);
         var record = new $scope.resource(model);
         return record.$save()
-          .then(function(data) {
+          .then(function (data) {
             $rootScope.$broadcast('update:searchData');
             $scope.clearModel(model);
             if (isStay === true) {
               return $q.resolve(data); // Send data next to promise handlers
             } else {
               $state.go('.^'); // NOTE: go to up to list from new state
-              return $scope.list().then(function() {
+              return $scope.list().then(function () {
                 // NOTE: set sort for see new record on top of list
                 $scope.filter.predicate = 'updated_at';
                 $scope.filter.reverse = true;
@@ -544,10 +548,10 @@
               }); // Update list
             }
           })
-          .catch(function(data) {
+          .catch(function (data) {
             return $q.reject(data);
           })
-          .finally(function() {
+          .finally(function () {
             $scope.loading(false);
           });
       };
@@ -558,7 +562,7 @@
        * @param {string|number} id
        * @returns {Promise}
        */
-      $scope.get = function(id) {
+      $scope.get = function (id) {
         if (!$scope.resource) {
           throw new Error('No resource provided.');
         }
@@ -569,11 +573,11 @@
             id: id
           })
           .$promise
-          .then(function(record) {
+          .then(function (record) {
             $scope.model = record;
             return record;
           })
-          .finally(function() {
+          .finally(function () {
             $scope.loading(false);
           });
       };
@@ -585,7 +589,7 @@
        * @param {object} model
        * @returns {Promise}
        */
-      $scope.update = function(params, model) {
+      $scope.update = function (params, model) {
         if (angular.isObject(params) && !model) {
           model = params;
           params = undefined;
@@ -596,7 +600,7 @@
             id: id
           };
         }
-        angular.forEach($scope.deniedFields, function(val) {
+        angular.forEach($scope.deniedFields, function (val) {
           if (model[val]) {
             delete model[val];
           }
@@ -606,18 +610,18 @@
         return $scope.resource
           .update(params, model)
           .$promise
-          .then(function(data) {
+          .then(function (data) {
             $rootScope.$broadcast('update:searchData');
             $scope.list(); // Update list
             $scope.$emit('list');
             return data;
           })
-          .finally(function() {
+          .finally(function () {
             $scope.loading(false);
           });
       };
 
-      $scope.$on('list', function() {
+      $scope.$on('list', function () {
         $scope.list();
       });
 
@@ -645,7 +649,7 @@
        *****                             END SCROLL POSITION HANDLER SECTION
        **************************************************************************************/
 
-      $scope.setDefaultAccountId = function() {
+      $scope.setDefaultAccountId = function () {
         if ($scope.auth.isReseller() || $scope.auth.isRevadmin()) {
           if (!!$scope.companies && $scope.companies.length === 1) {
             $scope.model.account_id = $scope.companies[0].id;
@@ -659,17 +663,17 @@
         }
       };
 
-      $scope.fetchCompanies = function(companyIds) {
+      $scope.fetchCompanies = function (companyIds) {
         var promises = [];
         if (!companyIds) {
           return $q.when([]);
         }
-        companyIds.forEach(function(id) {
+        companyIds.forEach(function (id) {
           promises.push(Companies.get({
             id: id
           }).$promise);
         });
-        return $q.all(promises).then(function(data) {
+        return $q.all(promises).then(function (data) {
           $scope.companies = data;
         });
       };
@@ -679,7 +683,7 @@
        *
        * @return {Boolean}
        */
-      $scope.isReadOnly =  $scope.auth.isReadOnly;
+      $scope.isReadOnly = $scope.auth.isReadOnly;
     }
 
     return CRUDControllerImpl;

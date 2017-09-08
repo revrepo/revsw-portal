@@ -29,6 +29,7 @@ var Utils = require('./../common/helpers/utils');
 // Requiring components
 var Header = require('./common/header');
 var SideBar = require('./common/sidebar');
+var SideMenu = require('./common/sidebar/sidebar');
 var Alerts = require('./common/alerts');
 var Dialog = require('./common/dialog');
 var GlobalSearcher = require('./common/globalSearcher');
@@ -124,6 +125,12 @@ var PortalHelpers = require('./../common/helpers/portal');
 
 var PortalDataProviders = require('./../common/providers/data/portal');
 
+var ImageOptimizationPage = require('./analytics/ImageOptimization');
+
+var SubscriptionsPage = require('./azure/Subscriptions');
+var ResourcesPerSubscriptionPage = require('./azure/ResourcesPerSubscription');
+var ResourcesPage = require('./azure/Resources');
+
 // This `Portal` Page Object is the entry point to use all other Page Objects
 // that abstract all components from the Portal App.
 var Portal = {
@@ -138,6 +145,7 @@ var Portal = {
   // Common components that are used in more than one page in this Portal object
   header: Header,
   sideBar: SideBar,
+  sideMenu: SideMenu,
   alerts: Alerts,
   dialog: Dialog,
   globalSearcher: GlobalSearcher,
@@ -241,7 +249,14 @@ var Portal = {
 	  topReportsPage: MobileAnalyticsTopReportsPage,
 	  topObjectsPage : MobileAnalyticsTopObjectsPage,
 	  trafficDistributions: MobileAnalyticsTrafficDistributionsPage,
+    ImageOptimizationPage: ImageOptimizationPage
   },
+  azureMarketplace: {
+      SubscriptionsPage: SubscriptionsPage,
+      ResourcesPerSubscriptionPage: ResourcesPerSubscriptionPage,
+      ResourcesPage: ResourcesPage
+  },
+  
   accountResourcesPage: AccountResourcesPage,
 
   helpers: PortalHelpers,

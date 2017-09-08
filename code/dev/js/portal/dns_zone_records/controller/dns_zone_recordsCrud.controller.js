@@ -52,8 +52,9 @@
               }, 500);
             }
           });
-      } else {
-        $scope.clearModel();
+      } else {        
+        //$scope.clearModel();
+        $scope.model = $localStorage.selectedDomain;
       }
     });
 
@@ -159,7 +160,7 @@
      * @return {[type]}       [description]
      */
     $scope.createDNSZoneRecord = function(model, isStay) {
-      model.rec.zone = $scope.zone_name; //decodeURIComponent($routeParams.zone);
+      model.rec.zone = $scope.zone_name; //decodeURIComponent($routeParams.zone);      
       var idomain = model.idomain;
       if (idomain) {
         if (idomain.slice(-1) === '.') {
@@ -204,6 +205,7 @@
             model.rec.answers = [];
             model.newanswer = null;
           }
+          $scope.clearModel();
           $scope.alertService.success(data);
         })
         .catch($scope.alertService.danger);
@@ -303,7 +305,7 @@
       if (!$scope.resource) {
         throw new Error('No resource provided.');
       }
-      $scope.clearModel();
+      //$scope.clearModel();
       $scope.loading(true);
       return $scope.resource
         .get({
@@ -376,7 +378,7 @@
       return record.$save()
         .then(function(data) {
           $rootScope.$broadcast('update:searchData');
-          $scope.clearModel(model);
+          //$scope.clearModel(model);
           if (isStay === true) {
             return $q.resolve(data); // Send data next to promise handlers
           } else {
@@ -494,5 +496,9 @@
         });
     };
 
+    // Clear form data when cancel is pressed
+    $scope.clearForm = function (){
+      $scope.clearModel();
+    };
   }
 })();
