@@ -110,8 +110,8 @@
           tooltip: {
             xDateFormat: '<span style="color: #000; font-weight: bold;">%H:%M</span> %b %d',
             shared: true,
-            headerFormat: '{point.key}<br>',
-            pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y:.3f}</b> ({point.percentage:.3f}%)<br/>',
+            headerFormat: '<b>Events Per Second</b><br>{point.key}<br>',
+            pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y:.3f}</b><br/>',
           },
           plotOptions: {
             areaspline: {
