@@ -56,7 +56,8 @@
               <tbody>
                 <tr ng-repeat-start="item in records">
                   <td>
-                    <a ng-if="vm.user.isRevadmin()" role="button" data-toggle="collapse" data-target="#events-{{$index}}">
+                    <a tooltip-placement="top" tooltip-append-to-body="{{true}}" uib-tooltip="Click to show/hide more information about the event"
+                      ng-if="vm.user.isRevadmin()" role="button" data-toggle="collapse" data-target="#events-{{$index}}">
                       <i class="glyphicon glyphicon-plus-sign"></i>
                     </a>
                     <a ng-if="!vm.user.isRevadmin()">
@@ -79,7 +80,7 @@
                       <div>End User Country: {{ item.country }}</div>
                       <div>End User ISP/Organization: </div>
                       <!-- TODO: Pull data from maxmind -->
-                      <div>Triggered Rule: {{ item.id }} ({{ getRuleDescription(item.id) }})</div>                      
+                      <div>Triggered Rule: {{ item.id }} ({{ getRuleDescription(item.id) }})</div>
                       <div>Triggered Zone: {{ item.zone }}</div>
                       <div>Variable Name: {{ item.var_name }}</div>
                       <div>Blocked: {{ item.block === '1' ? 'Yes' : 'No'}}</div>
