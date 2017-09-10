@@ -81,6 +81,9 @@ var rowLocators = {
         className: 'glyphicon-trash'
       }
     }
+  },
+  account: {
+    css: 'td:nth-of-type(9) a'
   }
 };
 

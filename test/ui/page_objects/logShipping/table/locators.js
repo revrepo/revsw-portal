@@ -95,7 +95,7 @@ var rowLocators = {
     }
   },
   account: {
-    css: 'th:nth-of-type(9)'
+    css: 'td:nth-of-type(9) a'
   }
 };
 

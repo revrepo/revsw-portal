@@ -64,7 +64,8 @@
         </div>
         <div class="panel-body">
           <div class="alert alert-info" ng-if="records.length == 0 && !_loading">
-            Currently you don't have any SSL names registered in the system. You can click on "Add New SSL Name" button above to add an SSL name.
+            Currently you don't have any SSL names registered in the system. You can click on "Add New SSL Name" button above to add
+            an SSL name.
           </div>
           <div class="alert alert-warning" ng-if="records == null && !_loading">
             Failed to retrieve a list of resources - please try again later
@@ -114,7 +115,8 @@
                   </td>
                   <td class="actions">
                     <i class="glyphicon glyphicon-refresh spin" ng-if="item.loading"></i>
-                    <a href="" ng-class="(item.verified ||isReadOnly())?'disabled':''" ng-disabled="item.verified ||isReadOnly()" ng-if="!item.loading" uib-tooltip="{{item.verified?'Already Verified':'Verify Domain Control'}}" ng-click="onVerifyDomain($event,item)">
+                    <a href="" ng-class="(item.verified ||isReadOnly())?'disabled':''" ng-disabled="item.verified ||isReadOnly()" ng-if="!item.loading"
+                      uib-tooltip="{{item.verified?'Already Verified':'Verify Domain Control'}}" ng-click="onVerifyDomain($event,item)">
                       <i class="glyphicon glyphicon-check"></i>
                     </a>
                     <a href="" ng-class="(isReadOnly())?'disabled':''" ng-if="!item.loading" ng-click="deleteSSLName(item)" uib-tooltip="Delete SSL Name">
@@ -122,7 +124,10 @@
                     </a>
                   </td>
                   <td ng-if="auth.isReseller() ||  auth.isRevadmin()">
-                    <div>{{item.companyName}}</div>
+                    <a href="" ng-click="onGoToAccountInformation($event, item)" ng-if="!item.loading" tooltip-placement="left" tooltip-append-to-body="{{true}}"
+                      uib-tooltip="View Account Resources">
+                      <div>{{item.companyName}}</div>
+                    </a>
                   </td>
                 </tr>
               </tbody>

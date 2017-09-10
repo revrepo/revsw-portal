@@ -248,7 +248,7 @@
       return SSL_certs.query().$promise
         .then(function (list) {
           //TODO: add control USER ROLE for filtred data
-          if ($scope.auth.isReseller() || $scope.auth.isRevadmin()) {}
+          if ($scope.auth.isReseller() || $scope.auth.isRevadmin()) { }
           $scope.SSL_certs = list;
         }).$promise;
     }
@@ -474,9 +474,9 @@
       }).then(function () {
         model = $scope.prepareSimpleDomainUpdate(model);
         $scope.update({
-            id: modelId,
-            options: 'publish'
-          }, model)
+          id: modelId,
+          options: 'publish'
+        }, model)
           .then($scope.alertService.success)
           .then(reloadStatus)
           .catch($scope.alertService.danger);
@@ -493,9 +493,9 @@
       var modelId = model.id;
       model = $scope.prepareSimpleDomainUpdate(model);
       $scope.update({
-          id: modelId,
-          options: 'verify_only'
-        }, model)
+        id: modelId,
+        options: 'verify_only'
+      }, model)
         .then($scope.alertService.success)
         .then(reloadStatus)
         .catch($scope.alertService.danger);
@@ -514,8 +514,8 @@
       }).then(function () {
         model = $scope.prepareSimpleDomainUpdate(model);
         $scope.update({
-            id: modelId
-          }, model)
+          id: modelId
+        }, model)
           .then($scope.alertService.success)
           .then(reloadStatus)
           .catch($scope.alertService.danger);
@@ -657,8 +657,8 @@
      */
     $scope.onRemoveCachingRule = function (index) {
       $scope.confirm('confirmModalDeleteCachingRule.html', {
-          url: $scope.model.rev_component_bp.caching_rules[index].url
-        })
+        url: $scope.model.rev_component_bp.caching_rules[index].url
+      })
         .then(function () {
           $scope.model.rev_component_bp.caching_rules.splice(index, 1);
           $scope.alertService.success('Caching Rule was deleted');
@@ -769,7 +769,7 @@
           syncSSL_conf_profile($scope.model.ssl_conf_profile);
         }
         // NOTE: update ACL for render UI into directives
-        if(!!$scope.model.rev_component_bp.acl && !!$scope.model.rev_component_bp.acl) {
+        if (!!$scope.model.rev_component_bp.acl && !!$scope.model.rev_component_bp.acl) {
           angular.extend($scope.model.rev_component_bp.acl, $scope.modelAdvance.rev_component_bp.acl);
         }
       }
@@ -859,8 +859,8 @@
       var customVCLenabled = (!!$scope.model.rev_component_bp.custom_vcl) ? $scope.model.rev_component_bp.custom_vcl.enabled : false;
       if (isEnabled === false && customVCLenabled === true) {
         $scope.confirm('confirmChangeVCLModal.html', {
-            domain_name: $scope.modelInfo.domain_name
-          })
+          domain_name: $scope.modelInfo.domain_name
+        })
           .then(function (data) {
             // NOTE: change on UI
             $scope.model.rev_component_bp.custom_vcl.enabled = false;
@@ -873,8 +873,8 @@
       if (isEnabled === true) {
         // NOTE: if user try activate ImageEngine we need to show a warning message
         $scope.confirm('confirmEnableImageEngineModal.html', {
-            domain_name: $scope.modelInfo.domain_name
-          })
+          domain_name: $scope.modelInfo.domain_name
+        })
           .then(function (data) {
             // NOTE: change on UI
             $scope.model.image_engine.enable_image_engine = true;
@@ -907,6 +907,7 @@
         });
       }, 200);
     };
+
   }
 
 })();

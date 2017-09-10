@@ -43,10 +43,10 @@
     <h3 class="modal-title">Confirm</h3>
   </div>
   <div class="modal-body">
-    Image Optimization feature should be enabled only for web domains serving image objects. Non-image objects (like HTML pages, JavaScript/CSS
-    files, etc) requested from Image Optimization-enabled domain will be rejected with HTTP error code 412 (Precondition Failed).
-    Before enabling Image Optimization feature for the domain please make sure that it will be used only to serve image objects
-    (PNG/JPG/GIF/WEBP/BMP).
+    Image Optimization feature should be enabled only for web domains serving image objects. Non-image objects (like HTML pages,
+    JavaScript/CSS files, etc) requested from Image Optimization-enabled domain will be rejected with HTTP error code 412
+    (Precondition Failed). Before enabling Image Optimization feature for the domain please make sure that it will be used
+    only to serve image objects (PNG/JPG/GIF/WEBP/BMP).
   </div>
   </div>
   <div class="modal-footer">
@@ -184,7 +184,10 @@
                     </a>
                   </td>
                   <td ng-if="auth.isReseller() ||  auth.isRevadmin()">
-                    <div>{{item.companyName}}</div>
+                    <a href="" ng-click="onGoToAccountInformation($event, item)" ng-if="!item.loading" tooltip-placement="left" tooltip-append-to-body="{{true}}"
+                      uib-tooltip="View Account Resources">
+                      <div>{{item.companyName}}</div>
+                    </a>
                   </td>
                 </tr>
                 <!--<tr class="disabled loading">-->

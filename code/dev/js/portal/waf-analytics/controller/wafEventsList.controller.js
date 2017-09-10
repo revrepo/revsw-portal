@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -18,7 +18,8 @@
     AlertService,
     StatsWAF,
     Countries,
-    $config
+    $config,
+    $localStorage
   ) {
     //Invoking crud actions
     $injector.invoke(CRUDController, this, {
@@ -28,7 +29,7 @@
     //Set state (ui.router)
     $scope.setState('index.security.waf_events');
     // Fetch list of users
-    $scope.$on('$stateChangeSuccess', function(state, stateTo, stateParam) {
+    $scope.$on('$stateChangeSuccess', function (state, stateTo, stateParam) {
       var data = null;
       // NOTE: set filter params for specific state
       if ($state.is($scope.state)) {
@@ -65,16 +66,16 @@
     /**
      * @name onDomainSelect
      */
-    vm.onDomainSelect = function() {
+    vm.onDomainSelect = function () {
       vm.currentPage = 1;
       $scope.list();
     };
 
-    vm.pageChanged = function() {
+    vm.pageChanged = function () {
       $scope.list();
     };
 
-    vm.getRelativeDate = function(datetime) {
+    vm.getRelativeDate = function (datetime) {
       return moment.utc(datetime).fromNow();
     };
 
@@ -85,14 +86,14 @@
      * @returns {Promise}
      */
 
-    $scope.list = function(data) {
+    $scope.list = function (data) {
       if (!vm.domain || !vm.domain.id) {
         return;
       }
       vm._loading = true;
       var params = angular.merge({}, {
-          domainId: vm.domain.id
-        },
+        domainId: vm.domain.id
+      },
         vm.filters, {
           page: vm.currentPage,
           limit: $scope.filter.count,
@@ -105,7 +106,7 @@
       vm.loading(true);
       //fetching data
       return $scope.resource
-        .events(params, function(data) {
+        .events(params, function (data) {
           // NOTE: control data type
           if (!data || !angular.isArray(data.data)) {
             // no data for display in a list
@@ -120,11 +121,11 @@
           // NOTE: set total count of records
           vm.totalItems = data.metadata.total || 0;
           return data; // Send data to future promise
-        }, function() {
+        }, function () {
           $scope.records = null;
           return null;
         }).$promise
-        .finally(function() {
+        .finally(function () {
           vm.loading(false);
         });
     };
@@ -135,7 +136,7 @@
      * Delay added for UX. Without it function might be called on every letter in filter field.
      * So it will be invokd lot of times and might break output.
      */
-    $scope.filterList = function() {
+    $scope.filterList = function () {
       if ($scope._delayTimeout) {
         $timeout.cancel($scope._delayTimeout);
         $scope._delayTimeout = null;
@@ -149,7 +150,7 @@
      * @param {boolean?} [loading]
      * @returns {boolean}
      */
-    vm.loading = function(loading) {
+    vm.loading = function (loading) {
       if (angular.isUndefined(loading)) {
         return vm._loading;
       }
@@ -160,11 +161,38 @@
      * @name order
      * @description don`t  change order if data is loading
      */
-    vm.order = function(name) {
+    vm.order = function (name) {
       if (vm._loading) {
         return;
       }
       $scope.order(name);
+    };
+
+
+    /**
+     * @name getRuleDescription
+     * @description get the rule description by id
+     */
+    $scope.getRuleDescription = function (id) {
+      var STORAGE_NAME_FOR_DOMAIN_WAR_RULES_CODES = 'domainWafRulesCodesList';
+      var wafRulesCodesList = $localStorage[STORAGE_NAME_FOR_DOMAIN_WAR_RULES_CODES] || {};
+      if (wafRulesCodesList.data.length > 0) {
+
+        for (var i = 0; i < wafRulesCodesList.data.length; i++) {
+          if (wafRulesCodesList.data[i].id === id) {
+            return wafRulesCodesList.data[i].msg;
+          }
+        }
+      }
+    };
+
+
+    /**
+  * @name getCountryName
+  * @description get the full name of a country
+  */
+    $scope.getCountryName = function (short) {
+      return vm.countries[short] !== undefined ? vm.countries[short] : short;
     };
   }
 })();

@@ -256,5 +256,6 @@
     $scope.clearForm = function () {
       $scope.clearModel();
     };
+
   }
 })();

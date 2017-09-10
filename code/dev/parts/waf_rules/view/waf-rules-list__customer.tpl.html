@@ -5,7 +5,7 @@
   <div class="alert alert-warning" ng-if="records == null && !_loading">
     Failed to retrieve a list of resources - please try again later
   </div>
-   <div class="alert alert-info" ng-if="_loading && filteredRecords.length === 0">
+  <div class="alert alert-info" ng-if="_loading && filteredRecords.length === 0">
     <i class="glyphicon glyphicon-refresh spin"></i>&nbsp; Loading...
   </div>
   <crud-pagination></crud-pagination>
@@ -68,7 +68,10 @@
             </a>
           </td>
           <td ng-if="auth.isReseller() ||  auth.isRevadmin()">
-            <div>{{item.companyName}}</div>
+            <a href="" ng-click="onGoToAccountInformation($event, item)" ng-if="!item.loading" tooltip-placement="left" tooltip-append-to-body="{{true}}"
+              uib-tooltip="View Account Resources">
+              <div>{{item.companyName}}</div>
+            </a>
           </td>
         </tr>
       </tbody>

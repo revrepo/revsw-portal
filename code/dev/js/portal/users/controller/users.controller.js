@@ -26,7 +26,6 @@
     }
     //Set state (ui.router)
     $scope.setState('index.accountSettings.users');
-
     $scope.setResource(Users);
 
     $scope.USER_FIRST_NAME = $config.PATTERNS.USER_FIRST_NAME;

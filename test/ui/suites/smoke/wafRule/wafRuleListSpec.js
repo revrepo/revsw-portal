@@ -66,8 +66,7 @@ describe('Smoke', function () {
             Portal.wafRules.listPage.clickAddNewWAFRule();
             Portal.wafRules.addPage.clickBackToList();
             expect(Portal.wafRules.listPage.isDisplayed()).toBeTruthy();
-          });
-
+          });        
       });
     });
   });
