@@ -72,6 +72,9 @@ var rowLocators = {
   },
   account: {
     css: 'td:nth-of-type(8) a'
+  },
+  accountReseller: {
+    css: 'td:nth-of-type(7) a'
   }
 };
 

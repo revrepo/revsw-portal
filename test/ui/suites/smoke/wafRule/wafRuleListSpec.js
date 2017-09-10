@@ -66,24 +66,7 @@ describe('Smoke', function () {
             Portal.wafRules.listPage.clickAddNewWAFRule();
             Portal.wafRules.addPage.clickBackToList();
             expect(Portal.wafRules.listPage.isDisplayed()).toBeTruthy();
-          });
-        if ((user.role === 'Rev Admin' || user.role === 'Reseller')) {
-          it('should be displayed when "Back" button is clicked from ' +
-            '"All Account Resources" page',
-            function () {
-              Portal
-                .wafRules
-                .listPage
-                .tableCustomerRules
-                .getFirstRow()
-                .clickAccount();
-              Portal.accountResourcesPage.clickBackButton();
-              expect(Portal
-                .wafRules
-                .listPage
-                .isDisplayed()).toBeTruthy();
-            });
-        }
+          });        
       });
     });
   });

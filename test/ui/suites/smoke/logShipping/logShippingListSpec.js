@@ -93,25 +93,7 @@ describe('Smoke', function () {
                         Portal.logShipping.listPage.clickAddNewLogShippingJob();
                         Portal.logShipping.addPage.clickCancel();
                         expect(Portal.logShipping.listPage.isDisplayed()).toBeTruthy();
-                    });
-
-                if (user.role === 'Rev Admin' || user.role === 'Reseller') {
-                    it('should be displayed when "Back" button is clicked from ' +
-                        '"All Account Resources" page',
-                        function () {
-                            Portal
-                                .logShipping
-                                .listPage
-                                .table
-                                .getFirstRow()
-                                .clickAccount();
-                            Portal.accountResourcesPage.clickBackButton();
-                            expect(Portal
-                                .logShipping
-                                .listPage
-                                .isDisplayed()).toBeTruthy();
-                        });
-                }
+                    });                
             });
         });
     });

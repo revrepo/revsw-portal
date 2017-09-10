@@ -44,8 +44,16 @@ var SSLCertTableRow = function (rowEl, locators) {
     return this.rowEl.element(by.css(this.locators.lastUpdate.css));
   };
 
-  this.getAccountCell = function () {
-    return this.rowEl.element(by.css(this.locators.account.css));
+  this.getAccountCell = function (role) {
+    if (role !== undefined) {
+      if (role === 'Rev Admin') {
+        return this.rowEl.element(by.css(this.locators.account.css));
+      } else if (role === 'Reseller') {
+        return this.rowEl.element(by.css(this.locators.accountReseller.css));
+      } else {
+        return this.rowEl.element(by.css(this.locators.account.css));
+      }
+    }
   };
 
   // Get values from cells
@@ -120,12 +128,12 @@ var SSLCertTableRow = function (rowEl, locators) {
 
   if (this.locators.actions && this.locators.actions.buttons.pencil) {
 
-    
-  this.clickAccount = function () {
-    return this
-      .getAccount()
-      .click();
-  };
+
+    this.clickAccount = function (role) {
+      return this
+        .getAccountCell(role)
+        .click();
+    };
 
     this.getEditBtn = function () {
       return this.rowEl
