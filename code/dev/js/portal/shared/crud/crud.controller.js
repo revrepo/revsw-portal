@@ -322,8 +322,8 @@
       $scope.scrollTop = function () {
         if (document.querySelectorAll('crud-pagination').length > 2) {
           return false;
-        } else { 
-          $anchorScroll('top'); 
+        } else {
+          $anchorScroll('top');
         }
       };
 
@@ -684,6 +684,22 @@
        * @return {Boolean}
        */
       $scope.isReadOnly = $scope.auth.isReadOnly;
+
+      /**
+       * @name onGoToAccountInformation
+       * @description action for go to page "All Account Resources"
+       *
+       */
+      $scope.onGoToAccountInformation = function (e, model) {
+        e.preventDefault();
+        // NOTE: make data format for using into state 'index.accountSettings.companies_information'
+        model.acc_id = model.id;
+        model.acc_name = model.companyName;
+        model.plan_id = model.billing_plan;
+        model.billing_plan = model.billing_plan;
+        User.selectAccount(model);
+        $state.go('index.accountSettings.accountresources', { 'from': $scope.state });
+      };
     }
 
     return CRUDControllerImpl;
