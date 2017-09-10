@@ -77,7 +77,7 @@
                       <div>Event Date/Time: {{ item.date }}</div>
                       <div>URL: {{ item.uri }}</div>
                       <div>End User IP: {{ item.ip }}</div>
-                      <div>End User Country: {{ item.country }}</div>
+                      <div>End User Country: {{ getCountryName(item.country) }}</div>
                       <div>End User ISP/Organization: </div>
                       <!-- TODO: Pull data from maxmind -->
                       <div>Triggered Rule: {{ item.id }} ({{ getRuleDescription(item.id) }})</div>

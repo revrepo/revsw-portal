@@ -176,7 +176,6 @@
     $scope.getRuleDescription = function (id) {
       var STORAGE_NAME_FOR_DOMAIN_WAR_RULES_CODES = 'domainWafRulesCodesList';
       var wafRulesCodesList = $localStorage[STORAGE_NAME_FOR_DOMAIN_WAR_RULES_CODES] || {};
-
       if (wafRulesCodesList.data.length > 0) {
 
         for (var i = 0; i < wafRulesCodesList.data.length; i++) {
@@ -185,6 +184,15 @@
           }
         }
       }
+    };
+
+
+    /**
+  * @name getCountryName
+  * @description get the full name of a country
+  */
+    $scope.getCountryName = function (short) {
+      return vm.countries[short] !== undefined ? vm.countries[short] : short;
     };
   }
 })();
