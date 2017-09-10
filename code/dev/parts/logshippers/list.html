@@ -78,7 +78,8 @@
         </div>
         <div class="panel-body">
           <div class="alert alert-info" ng-if="records.length == 0 && !_loading">
-            Currently you don't have any log shipping jobs configured in the system. You can click on "Add New Log Shipping Job" button above to configure a new log shipping task.
+            Currently you don't have any log shipping jobs configured in the system. You can click on "Add New Log Shipping Job" button
+            above to configure a new log shipping task.
           </div>
           <div class="alert alert-warning" ng-if="records == null && !_loading">
             Failed to retrieve a list of resources - please try again later
@@ -149,7 +150,7 @@
                     <a ui-sref=".edit({id: item.id})" ng-if="!item.loading" uib-tooltip="Edit Job">
                       <i class="glyphicon glyphicon-pencil"></i>
                     </a>
-                    <a href="" ng-if="!item.loading"  ng-class="{'disabled':isReadOnly()}"  ng-click="deleteJob(item)" uib-tooltip="Delete Job">
+                    <a href="" ng-if="!item.loading" ng-class="{'disabled':isReadOnly()}" ng-click="deleteJob(item)" uib-tooltip="Delete Job">
                       <i class="glyphicon glyphicon-trash"></i>
                     </a>
                     <span ng-if="isJobConfigured(item)">
@@ -166,12 +167,16 @@
                         <i class="glyphicon glyphicon-stop"></i>
                       </a>
                     </span>
-                    <label ng-if="!isJobConfigured(item)" for="domain" class="text text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="The job is not yet configured. Please click on “Edit Job” icon.">
+                    <label ng-if="!isJobConfigured(item)" for="domain" class="text text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter"
+                      uib-popover="The job is not yet configured. Please click on “Edit Job” icon.">
                       <i class="fa fa-question-circle"></i>
                     </label>
                   </td>
                   <td ng-if="auth.isReseller() ||  auth.isRevadmin()">
-                    <div>{{item.companyName}}</div>
+                    <a href="" ng-click="onGoToAccountInformation($event, item)" ng-if="!item.loading" tooltip-placement="left" tooltip-append-to-body="{{true}}"
+                      uib-tooltip="View Account Resources">
+                      <div>{{item.companyName}}</div>
+                    </a>
                   </td>
                 </tr>
               </tbody>

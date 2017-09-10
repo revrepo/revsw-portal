@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -47,8 +47,8 @@
     function setAccountName() {
       if ($scope.auth.isReseller() || $scope.auth.isRevadmin()) {
         // Loading list of companies
-        return Companies.query(function(list) {
-          _.forEach($scope.records, function(item) {
+        return Companies.query(function (list) {
+          _.forEach($scope.records, function (item) {
             var index = _.findIndex(list, {
               id: item.account_id
             });
@@ -63,13 +63,13 @@
     }
 
     // Fetch list of records
-    $scope.$on('$stateChangeSuccess', function(state) {
+    $scope.$on('$stateChangeSuccess', function (state) {
       var data = null;
       // NOTE: set filter params for specific state
-      if($state.is('index.accountSettings.accountresources')){
+      if ($state.is('index.accountSettings.accountresources')) {
         $scope.filter.limit = 5;
         var filters = {
-          account_id: !User.getSelectedAccount()? null: User.getSelectedAccount().acc_id
+          account_id: !User.getSelectedAccount() ? null : User.getSelectedAccount().acc_id
         };
         data = {
           filters: filters
@@ -80,9 +80,9 @@
       if ($state.is($scope.state)) {
         $scope.list(data)
           .then(setAccountName)
-          .then(function() {
+          .then(function () {
             if ($scope.elementIndexForAnchorScroll) {
-              setTimeout(function() {
+              setTimeout(function () {
                 $anchorScroll('anchor' + $scope.elementIndexForAnchorScroll);
                 $scope.$digest();
               }, 500);
@@ -96,14 +96,14 @@
       }
     });
 
-    $scope.fetchCompanies = function(companyIds) {
+    $scope.fetchCompanies = function (companyIds) {
       var promises = [];
-      companyIds.forEach(function(id) {
+      companyIds.forEach(function (id) {
         promises.push(Companies.get({
           id: id
         }).$promise);
       });
-      $q.all(promises).then(function(data) {
+      $q.all(promises).then(function (data) {
         $scope.companies = data;
       });
     };
@@ -115,12 +115,12 @@
      * @param  {[type]} model [description]
      * @return {[type]}       [description]
      */
-    $scope.onVerifyDomain = function(e, model) {
+    $scope.onVerifyDomain = function (e, model) {
       if (e) {
         e.preventDefault();
       }
       // NOTE: no verify for RO user
-      if($scope.isReadOnly() === true){
+      if ($scope.isReadOnly() === true) {
         return;
       }
       if (!!model.verified && model.verified === true) {
@@ -144,16 +144,16 @@
         return $scope.confirm('confirmVerifyDomainModal.html', _model)
           .then(function onSuccessCloseModalDialog(result) {
             SSLNames.verify({
-                id: params.model.id,
-                url: _model.verify.url
-              }).$promise
+              id: params.model.id,
+              url: _model.verify.url
+            }).$promise
               .then(showMessageSuccessValidationSSLNameByEmail,
-                function(data) {
-                  showMessageFailedValidationSSLName(data.data);
-                })
+              function (data) {
+                showMessageFailedValidationSSLName(data.data);
+              })
               .then($scope.onClickRefresh) // NOTE: refresh list for update status
               .catch($scope.alertService.danger)
-              .finally(function() {
+              .finally(function () {
                 $scope._loading = false;
               });
           });
@@ -190,9 +190,9 @@
       }
       // 1. GET SSL Name detaild by id
       SSLNames.get({
-          id: model.id
-        }).$promise
-        .then(function(model) {
+        id: model.id
+      }).$promise
+        .then(function (model) {
           // Prepare parameters and open modal dialog
           var params = {
             title: 'Confirm',
@@ -213,26 +213,26 @@
             case 'email':
               $scope._loading = true;
               SSLNames.verify({
-                  id: model.id
-                }).$promise
+                id: model.id
+              }).$promise
                 .then(function successGetDetails(data) {
-                    if (data.message && data.message === 'Waiting for approval') {
-                      showMessageFailedValidationSSLName(data).then($scope.onClickRefresh);
-                    } else {
-                      showMessageSuccessValidationSSLNameByEmail(data).then($scope.onClickRefresh);
-                    }
-                  },
-                  function errorGetDetails(data) {
-                    // NOTE: server error display like standart error
-                    if (data.status === 500) {
-                      $scope.alertService.danger(data);
-                    } else {
-                      // NOTE: show error information in modal window
-                      showMessageFailedValidationSSLName(data.data).then($scope.onClickRefresh);
-                    }
-                  })
+                  if (data.message && data.message === 'Waiting for approval') {
+                    showMessageFailedValidationSSLName(data).then($scope.onClickRefresh);
+                  } else {
+                    showMessageSuccessValidationSSLNameByEmail(data).then($scope.onClickRefresh);
+                  }
+                },
+                function errorGetDetails(data) {
+                  // NOTE: server error display like standart error
+                  if (data.status === 500) {
+                    $scope.alertService.danger(data);
+                  } else {
+                    // NOTE: show error information in modal window
+                    showMessageFailedValidationSSLName(data.data).then($scope.onClickRefresh);
+                  }
+                })
                 .catch($scope.alertService.danger)
-                .finally(function() {
+                .finally(function () {
                   $scope._loading = false;
                 });
               break;
@@ -243,7 +243,7 @@
 
         })
         .catch($scope.alertService.danger)
-        .finally(function() {
+        .finally(function () {
           $scope._loading = false;
         });
     };
@@ -256,14 +256,14 @@
      * @param  {Boolean} isStay [description]
      * @return {[type]}         [description]
      */
-    $scope.onCreateSSLName = function(model, isStay) {
+    $scope.onCreateSSLName = function (model, isStay) {
       // Check additional parameters
       switch (model.verification_method) {
         case 'dns':
         case 'url':
           // 1. Confirm creating SSL Name
           $scope.confirm('confirmCreateSSLNameModal.html', model)
-            .then(function(data) {
+            .then(function (data) {
               var _model = {
                 account_id: model.account_id,
                 ssl_name: model.ssl_name,
@@ -274,7 +274,7 @@
               }
               $scope
                 .create(_model, isStay)
-                .then(function(data) {
+                .then(function (data) {
                   $scope.alertService.success(data);
                   $scope.clearModel();
                   // Auto start Verify
@@ -306,21 +306,21 @@
         };
         var createdSSLName = {};
         SSLNames.approvers({
-            ssl_name: model.ssl_name
-          }).$promise
+          ssl_name: model.ssl_name
+        }).$promise
           .then(
-            function showApproversEmails(data) {
-              modelApprove.approvers = data;
-              return $scope.confirm('parts/ssl_names/modal/approvers-emails.tpl.html', modelApprove)
-                .then(function() {
-                  return {
-                    'account_id': model.account_id,
-                    'ssl_name': model.ssl_name,
-                    'verification_method': model.verification_method,
-                    'verification_email': modelApprove.verification_email
-                  };
-                });
-            })
+          function showApproversEmails(data) {
+            modelApprove.approvers = data;
+            return $scope.confirm('parts/ssl_names/modal/approvers-emails.tpl.html', modelApprove)
+              .then(function () {
+                return {
+                  'account_id': model.account_id,
+                  'ssl_name': model.ssl_name,
+                  'verification_method': model.verification_method,
+                  'verification_email': modelApprove.verification_email
+                };
+              });
+          })
           .then(function createSSLName(createdSSLName) {
             return $scope.create(createdSSLName, true);
           })
@@ -342,7 +342,7 @@
               $scope.alertService.danger(data);
             }
           })
-          .finally(function() {
+          .finally(function () {
             $scope._loading = false;
           });
       }
@@ -354,11 +354,11 @@
      *   Refresh data in table
      * @return {[type]} [description]
      */
-    $scope.onClickRefresh = function() {
+    $scope.onClickRefresh = function () {
       $scope._loading = true;
       $scope.list()
         .then(setAccountName)
-        .finally(function() {
+        .finally(function () {
           $scope._loading = false;
         });
     };
@@ -370,17 +370,17 @@
      * @param  {Object} model
      * @return
      */
-    $scope.deleteSSLName = function(model) {
+    $scope.deleteSSLName = function (model) {
       // NOTE: no delete if RO user
-      if($scope.isReadOnly() === true){
+      if ($scope.isReadOnly() === true) {
         return;
       }
       $scope.confirm('confirmModal.html', model)
-        .then(function() {
+        .then(function () {
           var certName = model.ssl_name;
           $scope
             .delete(model)
-            .then(function(data) {
+            .then(function (data) {
               $scope.alertService.success(data);
               $scope.list()
                 .then(setAccountName);
@@ -389,10 +389,10 @@
         });
     };
 
-    $scope.setAccountId = function() {
+    $scope.setAccountId = function () {
       if ($scope.auth.isReseller() || $scope.auth.isRevadmin()) {
         // Loading list of companies
-        Companies.query(function(list) {
+        Companies.query(function (list) {
           $scope.companies = list;
           if ($scope.companies.length === 1) {
             $scope.model.account_id = $scope.companies[0].id;
@@ -409,7 +409,7 @@
 
     $scope.setAccountId();
 
-    $scope.storeToStorage = function(model) {
+    $scope.storeToStorage = function (model) {
       $localStorage.selectedDomain = model;
     };
 
@@ -417,8 +417,19 @@
       $scope.clearModel();
     };
 
-    $scope.getRelativeDate = function(datetime) {
+    $scope.getRelativeDate = function (datetime) {
       return moment.utc(datetime).fromNow();
+    };
+
+    $scope.onGoToAccountInformation = function (e, model) {
+      e.preventDefault();
+      // NOTE: make data format for using into state 'index.accountSettings.companies_information'
+      model.acc_id = model.id;
+      model.acc_name = model.companyName;
+      model.plan_id = model.billing_plan;
+      model.billing_plan = model.billing_plan;
+      User.selectAccount(model);
+      $state.go('index.accountSettings.accountresources', { from: $state });
     };
   }
 })();

@@ -89,8 +89,8 @@ var rowLocators = {
       }
     }
   },
-  account: {
-    css: 'th:nth-of-type(8)'
+  accountLink: {
+    css: 'td:nth-of-type(8)'
   }
 };
 

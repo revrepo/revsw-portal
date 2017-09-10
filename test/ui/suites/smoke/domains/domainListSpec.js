@@ -89,6 +89,24 @@ describe('Smoke', function () {
             Portal.domains.versionsPage.clickBackToList();
             expect(Portal.domains.listPage.isDisplayed()).toBeTruthy();
           });
+
+        if (user.role === 'Rev Admin' || user.role === 'Reseller') {
+          it('should be displayed when "Back" button is clicked from ' +
+            '"All Account Resources" page',
+            function () {
+              Portal
+                .domains                
+                .listPage
+                .table
+                .getFirstRow()
+                .clickAccount();
+              Portal.accountResourcesPage.clickBackButton();
+              expect(Portal                
+                .domains
+                .listPage
+                .isDisplayed()).toBeTruthy();
+            });
+        }
       });
     });
   });

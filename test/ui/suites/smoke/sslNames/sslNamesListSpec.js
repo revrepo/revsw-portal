@@ -67,6 +67,24 @@ describe('Smoke', function () {
                         Portal.sslNames.addPage.clickCancel();
                         expect(Portal.sslNames.listPage.isDisplayed()).toBeTruthy();
                     });
+
+                if (user.role === 'Rev Admin' || user.role === 'Reseller') {
+                    it('should be displayed when "Back" button is clicked from ' +
+                        '"All Account Resources" page',
+                        function () {
+                            Portal
+                                .sslNames
+                                .listPage
+                                .table
+                                .getFirstRow()
+                                .clickAccount();
+                            Portal.accountResourcesPage.clickBackButton();
+                            expect(Portal
+                                .sslNames
+                                .listPage
+                                .isDisplayed()).toBeTruthy();
+                        });
+                }
             });
         });
     });

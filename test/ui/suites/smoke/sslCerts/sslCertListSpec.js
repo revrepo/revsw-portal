@@ -66,6 +66,21 @@ describe('Smoke', function () {
             Portal.sslCerts.addPage.clickBackToList();
             expect(Portal.sslCerts.listPage.isDisplayed()).toBeTruthy();
           });
+        it('should be displayed when "Back" button is clicked from ' +
+          '"All Account Resources" page',
+          function () {
+            Portal
+              .sslCerts
+              .listPage
+              .table
+              .getFirstRow()
+              .clickAccount();
+            Portal.accountResourcesPage.clickBackButton();
+            expect(Portal
+              .sslCerts
+              .listPage
+              .isDisplayed()).toBeTruthy();
+          });
       });
     });
   });

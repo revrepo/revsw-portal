@@ -118,13 +118,14 @@ var SSLCertTableRow = function (rowEl, locators) {
       .click();
   };
 
+  if (this.locators.actions && this.locators.actions.buttons.pencil) {
+
+    
   this.clickAccount = function () {
     return this
-      .getAccountCell()
+      .getAccount()
       .click();
   };
-
-  if (this.locators.actions && this.locators.actions.buttons.pencil) {
 
     this.getEditBtn = function () {
       return this.rowEl

@@ -71,6 +71,26 @@ describe('Smoke', function () {
             var displayed = Portal.admin.apiKeys.listPage.isDisplayed();
             expect(displayed).toBeTruthy();
           });
+
+        if (user.role !== 'Admin') {
+          it('should be displayed when "Back" button is clicked from ' +
+            '"All Account Resources" page',
+            function () {
+              Portal
+                .admin
+                .apiKeys
+                .listPage
+                .table
+                .getFirstRow()
+                .clickAccount();
+              Portal.accountResourcesPage.clickBackButton();
+              expect(Portal
+                .admin
+                .apiKeys
+                .listPage
+                .isDisplayed()).toBeTruthy();
+            });
+        }
       });
     });
   });

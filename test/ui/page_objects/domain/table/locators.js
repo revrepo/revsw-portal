@@ -106,6 +106,9 @@ var rowLocators = {
         className: 'glyphicon-book'
       }
     }
+  },
+  account: {
+    css: 'td:nth-of-type(6) a'
   }
 };
 

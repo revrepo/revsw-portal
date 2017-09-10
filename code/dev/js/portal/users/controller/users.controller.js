@@ -26,7 +26,6 @@
     }
     //Set state (ui.router)
     $scope.setState('index.accountSettings.users');
-
     $scope.setResource(Users);
 
     $scope.USER_FIRST_NAME = $config.PATTERNS.USER_FIRST_NAME;
@@ -362,6 +361,22 @@
         $scope.model.companyId = [];
       }
       $scope.model.companyId[0] = model;
+    };
+
+    /**
+     * @name onGoToAccountInformation
+     * @description action for go to page "All Account Resources"
+     *
+     */
+    $scope.onGoToAccountInformation = function (e, model) {
+      e.preventDefault();
+      // NOTE: make data format for using into state 'index.accountSettings.companies_information'
+      model.acc_id = model.id;
+      model.acc_name = model.companyName;
+      model.plan_id = model.billing_plan;
+      model.billing_plan = model.billing_plan;
+      User.selectAccount(model);
+      $state.go('index.accountSettings.accountresources', { 'from': $scope.state });
     };
   }
 })();

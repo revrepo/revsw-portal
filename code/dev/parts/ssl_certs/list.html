@@ -71,7 +71,8 @@
         </div>
         <div class="panel-body">
           <div class="alert alert-info" ng-if="records.length == 0 && !_loading">
-            Currently you don't have any SSL certificates registered in the system. You can click on "Add New SSL Certificate" button above to add an SSL certificate.
+            Currently you don't have any SSL certificates registered in the system. You can click on "Add New SSL Certificate" button
+            above to add an SSL certificate.
           </div>
           <div class="alert alert-warning" ng-if="records == null && !_loading">
             Failed to retrieve a list of resources - please try again later
@@ -132,7 +133,10 @@
                     </a>
                   </td>
                   <td ng-if="auth.isReseller() ||  auth.isRevadmin()">
-                    <div>{{item.companyName}}</div>
+                    <a href="" ng-click="onGoToAccountInformation($event, item)" ng-if="!item.loading" tooltip-placement="left" tooltip-append-to-body="{{true}}"
+                      uib-tooltip="View Account Resources">
+                      <div>{{item.companyName}}</div>
+                    </a>
                   </td>
                 </tr>
               </tbody>

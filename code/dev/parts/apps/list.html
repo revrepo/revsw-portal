@@ -42,7 +42,8 @@
     <h3 class="modal-title">SDK Introduction Video</h3>
   </div>
   <div class="modal-body">
-    <ng-youtube-embed video="model.youtubeId" autoplay="true" color="white" width="100%" style="width: 100%; min-height: 20vh;" disablekb="true"></ng-youtube-embed>
+    <ng-youtube-embed video="model.youtubeId" autoplay="true" color="white" width="100%" style="width: 100%; min-height: 20vh;"
+      disablekb="true"></ng-youtube-embed>
   </div>
   <div class="modal-footer">
     <button class="btn btn-warning" type="button" ng-click="cancel()">Close</button>
@@ -53,7 +54,7 @@
   <div class="row">
     <div class="col-sm-12">
       <h2 class="pull-left page-title">
-       {{$state.current.data.platform}} Apps List
+        {{$state.current.data.platform}} Apps List
       </h2>
     </div>
   </div>
@@ -65,11 +66,12 @@
             <div class="col-md-12">
               <div class="pull-left form-inline fix-btns">
                 <div class="form-group">
-                  <a ui-sref="{{isReadOnly() ?'.': '.new'}}" class="btn btn-success btn-vendor-new-app" ng-class="{'btn-disabled':isReadOnly()}" ng-disabled="_loading || isReadOnly()">
+                  <a ui-sref="{{isReadOnly() ?'.': '.new'}}" class="btn btn-success btn-vendor-new-app" ng-class="{'btn-disabled':isReadOnly()}"
+                    ng-disabled="_loading || isReadOnly()">
                     <i class="glyphicon glyphicon-plus"></i>&nbsp; Add New App
                   </a>
                 </div>
-                 <span ng-include="'parts/apps/app-panel-sdk-buttons.tpl.html'"></span>
+                <span ng-include="'parts/apps/app-panel-sdk-buttons.tpl.html'"></span>
               </div>
               <div class="pull-right">
                 <form class="form-inline">
@@ -134,9 +136,11 @@
                   <td>{{item.last_app_published_version}}</td>
                   <td>{{ getRelativeDate(item.updated_at) }}</td>
                   <td>
-                    <button class="btn btn-primary btn-sdk-key" clipboard text="item.sdk_key" on-copied="copyCallback()" on-error="copyCallback(err)" style="vertical-align: initial;" uib-tooltip="Click to copy the key to the clipboard" tooltip-placement="top"><i class="fa fa-files-o"></i></button>
+                    <button class="btn btn-primary btn-sdk-key" clipboard text="item.sdk_key" on-copied="copyCallback()" on-error="copyCallback(err)"
+                      style="vertical-align: initial;" uib-tooltip="Click to copy the key to the clipboard" tooltip-placement="top"><i class="fa fa-files-o"></i></button>
                     <button class="btn btn-primary btn-sdk-key" ng-click="switchKeyVisibility(item)" ng-hide="item.showKey" style="vertical-align: initial;">Show SDK Key</button>
-                    <input ng-if="item.showKey" ng-blur="switchKeyVisibility(item)" class="form-control" value="{{item.sdk_key}}" style="width: 300px; display: inline-block; position: absolute; z-index: 999; margin-left: 4px;" focus-me="item.showKey">
+                    <input ng-if="item.showKey" ng-blur="switchKeyVisibility(item)" class="form-control" value="{{item.sdk_key}}" style="width: 300px; display: inline-block; position: absolute; z-index: 999; margin-left: 4px;"
+                      focus-me="item.showKey">
                     <!--<input class="list-input" disabled ng-hide="item.show" type="password" value="{{item.sdk_key}}" />-->
                     <!--<input class=""  ng-show="item.show" type="text" value="{{item.sdk_key}}"  />-->
                     <!--<i class="glyphicon eye"-->
@@ -166,7 +170,10 @@
                     </a>
                   </td>
                   <td ng-if="auth.isReseller() ||  auth.isRevadmin()">
-                    <div>{{item.companyName}}</div>
+                    <a href="" ng-click="onGoToAccountInformation($event, item)" ng-if="!item.loading" tooltip-placement="left" tooltip-append-to-body="{{true}}"
+                      uib-tooltip="View Account Resources">
+                      <div>{{item.companyName}}</div>
+                    </a>
                   </td>
                 </tr>
                 <!--<tr class="disabled loading">-->

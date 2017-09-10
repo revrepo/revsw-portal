@@ -130,6 +130,13 @@ var SSLNamesTableRow = function (rowEl, locators) {
 
   if (this.locators.actions && this.locators.actions.buttons.verify) {
 
+    this.clickAccount = function () {
+      return this
+        .getAccountCell()
+        .getText()
+        .click();
+    };
+
     this.getVerifyBtn = function () {
       return this.rowEl
         .element(by.css(this.locators.actions.css))

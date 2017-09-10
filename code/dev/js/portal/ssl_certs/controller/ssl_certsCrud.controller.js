@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -29,7 +29,7 @@
       options: {
         mode: 'code',
         modes: ['code', 'view'], // allowed modes['code', 'form', 'text', 'tree', 'view']
-        error: function(err) {
+        error: function (err) {
           $scope.alertService.danger(err);
         }
       }
@@ -57,8 +57,8 @@
     function setAccountName() {
       if ($scope.auth.isReseller() || $scope.auth.isRevadmin()) {
         // Loading list of companies
-        return Companies.query(function(list) {
-          _.forEach($scope.records, function(item) {
+        return Companies.query(function (list) {
+          _.forEach($scope.records, function (item) {
             var index = _.findIndex(list, {
               id: item.account_id
             });
@@ -73,13 +73,13 @@
     }
 
     // Fetch list of records
-    $scope.$on('$stateChangeSuccess', function(state) {
+    $scope.$on('$stateChangeSuccess', function (state) {
       var data = null;
       // NOTE: set filter params for specific state
-      if($state.is('index.accountSettings.accountresources')){
+      if ($state.is('index.accountSettings.accountresources')) {
         $scope.filter.limit = 5;
         var filters = {
-          account_id: !User.getSelectedAccount()? null: User.getSelectedAccount().acc_id
+          account_id: !User.getSelectedAccount() ? null : User.getSelectedAccount().acc_id
         };
         data = {
           filters: filters
@@ -90,9 +90,9 @@
       if ($state.is($scope.state)) {
         $scope.list(data)
           .then(setAccountName)
-          .then(function() {
+          .then(function () {
             if ($scope.elementIndexForAnchorScroll) {
-              setTimeout(function() {
+              setTimeout(function () {
                 $anchorScroll('anchor' + $scope.elementIndexForAnchorScroll);
                 $scope.$digest();
               }, 500);
@@ -115,14 +115,14 @@
       typeName: 'Private With Customer-Provided Key'
     }];
 
-    $scope.fetchCompanies = function(companyIds) {
+    $scope.fetchCompanies = function (companyIds) {
       var promises = [];
-      companyIds.forEach(function(id) {
+      companyIds.forEach(function (id) {
         promises.push(Companies.get({
           id: id
         }).$promise);
       });
-      $q.all(promises).then(function(data) {
+      $q.all(promises).then(function (data) {
         $scope.companies = data;
       });
     };
@@ -133,7 +133,7 @@
      * @param  {[type]} model_current [description]
      * @return {[type]}               [description]
      */
-    $scope.prepareSSLCertToUpdate = function(model_current) {
+    $scope.prepareSSLCertToUpdate = function (model_current) {
       var model;
       if (model_current.toJSON === undefined) {
         model = _.clone(model_current, true);
@@ -151,10 +151,10 @@
       return model;
     };
 
-    $scope.setAccountId = function() {
+    $scope.setAccountId = function () {
       if ($scope.auth.isReseller() || $scope.auth.isRevadmin()) {
         // Loading list of companies
-        Companies.query(function(list) {
+        Companies.query(function (list) {
           $scope.companies = list;
           if ($scope.companies.length === 1) {
             $scope.model.account_id = $scope.companies[0].id;
@@ -171,9 +171,9 @@
 
     $scope.setAccountId();
 
-    $scope.getSSL_cert = function(id) {
+    $scope.getSSL_cert = function (id) {
       $scope.get(id)
-        .then(function() {
+        .then(function () {
           // NOTE: auto set Dirty attribute for fields (validation exists data)
           var _fields = ['cert_name', 'public_ssl_cert'];
           angular.forEach(_fields, setDirty);
@@ -184,7 +184,7 @@
             }
           }
         })
-        .catch(function(err) {
+        .catch(function (err) {
           $scope.alertService.danger('Could not load SSL certificate details');
         });
 
@@ -196,16 +196,16 @@
      * @param  {Object} model
      * @return
      */
-    $scope.deleteSSLCert = function(model) {
+    $scope.deleteSSLCert = function (model) {
       // NOTE: not delete if RO user
-      if($scope.isReadOnly() === true){
+      if ($scope.isReadOnly() === true) {
         return;
       }
-      $scope.confirm('confirmModal.html', model).then(function() {
+      $scope.confirm('confirmModal.html', model).then(function () {
         var certName = model.cert_name;
         $scope
           .delete(model)
-          .then(function(data) {
+          .then(function (data) {
             $scope.alertService.success(data);
             $scope.list()
               .then(setAccountName);
@@ -222,11 +222,11 @@
      * @param  {[type]} model [description]
      * @return {[type]}       [description]
      */
-    $scope.createSSLCert = function(model, isStay) {
+    $scope.createSSLCert = function (model, isStay) {
       model.cert_type = 'private'; // TODO:
       $scope
         .create(model, isStay)
-        .then(function(data) {
+        .then(function (data) {
           $scope.alertService.success(data);
           $scope.setAccountId();
         })
@@ -240,7 +240,7 @@
      * @param  {[type]} model [description]
      * @return {[type]}       [description]
      */
-    $scope.publishSSLCert = function(model) {
+    $scope.publishSSLCert = function (model) {
       if (!model) {
         return;
       }
@@ -248,12 +248,12 @@
         model.id = $stateParams.id;
       }
       var modelId = model.id;
-      $scope.confirm('confirmPublishModal.html', model).then(function() {
+      $scope.confirm('confirmPublishModal.html', model).then(function () {
         model = $scope.prepareSSLCertToUpdate(model);
         $scope.update({
-            id: modelId,
-            options: 'publish'
-          }, model)
+          id: modelId,
+          options: 'publish'
+        }, model)
           .then($scope.alertService.success)
           .catch($scope.alertService.danger);
       });
@@ -265,7 +265,7 @@
      * @param  {[type]} model [description]
      * @return {[type]}       [description]
      */
-    $scope.validateSSLCert = function(model) {
+    $scope.validateSSLCert = function (model) {
       if (!model) {
         return;
       }
@@ -275,9 +275,9 @@
       var modelId = model.id;
       model = $scope.prepareSSLCertToUpdate(model);
       $scope.update({
-          id: modelId,
-          options: 'verify_only'
-        }, model)
+        id: modelId,
+        options: 'verify_only'
+      }, model)
         .then($scope.alertService.success)
         .catch($scope.alertService.danger);
     };
@@ -288,7 +288,7 @@
      * @param  {[type]} model [description]
      * @return {[type]}       [description]
      */
-    $scope.updateSSLCert = function(model) {
+    $scope.updateSSLCert = function (model) {
 
       if (!model) {
         return;
@@ -297,21 +297,21 @@
         model.id = $stateParams.id;
       }
       var modelId = model.id;
-      $scope.confirm('confirmUpdateModal.html', model).then(function() {
+      $scope.confirm('confirmUpdateModal.html', model).then(function () {
         model = $scope.prepareSSLCertToUpdate(model);
         $scope.update({
-            id: modelId
-          }, model)
+          id: modelId
+        }, model)
           .then($scope.alertService.success)
           .catch($scope.alertService.danger);
       });
     };
 
-    $scope.storeToStorage = function(model) {
+    $scope.storeToStorage = function (model) {
       $localStorage.selectedDomain = model;
     };
 
-    $scope.disableSubmit = function(model, isEdit) {
+    $scope.disableSubmit = function (model, isEdit) {
       if (!isEdit) {
         return $scope._loading ||
           !model.cert_name ||
@@ -326,8 +326,19 @@
       }
     };
 
-    $scope.getRelativeDate = function(datetime) {
+    $scope.getRelativeDate = function (datetime) {
       return moment.utc(datetime).fromNow();
+    };
+
+    $scope.onGoToAccountInformation = function (e, model) {
+      e.preventDefault();
+      // NOTE: make data format for using into state 'index.accountSettings.companies_information'
+      model.acc_id = model.id;
+      model.acc_name = model.companyName;
+      model.plan_id = model.billing_plan;
+      model.billing_plan = model.billing_plan;
+      User.selectAccount(model);
+      $state.go('index.accountSettings.accountresources', { from: $state });
     };
   }
 })();

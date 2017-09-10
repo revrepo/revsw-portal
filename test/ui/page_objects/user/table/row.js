@@ -51,6 +51,10 @@ var UserTableRow = function (rowEl, locators) {
     return this.rowEl.element(by.css(this.locators.lastLoginAt.css));
   };
 
+  this.getAccountCell = function () {
+    return this.rowEl.element(by.css(this.locators.account.css));
+  };
+
   this.getFirstName = function () {
     return this
       .getFirstNameCell()
@@ -93,6 +97,8 @@ var UserTableRow = function (rowEl, locators) {
       .click();
   };
 
+
+
   this.clickRole = function () {
     return this
       .getRoleCell()
@@ -112,6 +118,13 @@ var UserTableRow = function (rowEl, locators) {
   };
 
   if (this.locators.actions && this.locators.actions.buttons.pencil) {
+
+    this.clickAccount = function () {
+      return this
+        .getAccountCell()
+        .getText()
+        .click();
+    };
 
     this.getEditBtn = function () {
       return this.rowEl

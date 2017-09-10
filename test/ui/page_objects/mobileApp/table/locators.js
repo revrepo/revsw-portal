@@ -129,7 +129,7 @@ var rowLocators = {
     }
   },
   account: {
-    css: 'td:nth-of-type(8)'
+    css: 'td:nth-of-type(8) a'
   }
 };
 
