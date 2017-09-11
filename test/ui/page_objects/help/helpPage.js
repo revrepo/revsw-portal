@@ -61,9 +61,11 @@ var Help = {
       browser.driver.switchTo().frame(Help.locators.launcher.iframe);
       browser.sleep(timeWait)
       .then(function() {
+        browser.sleep(timeWait);
         browser.driver.findElement(by.css(Help.locators.launcher.button))
         .click()
         .then(function() {
+          browser.sleep(timeWait);
           callback(true);
         }, function() {
           callback(false);
@@ -81,17 +83,19 @@ var Help = {
    * @returns {Selenium WebDriver Element}
    */
   fillHelpForm: function (text, callback) {
-    browser.sleep(timeWait)
+    browser.sleep(timeWait*2)
     .then(function() {
       browser.driver.switchTo().defaultContent();
       browser.driver.switchTo().frame(Help.locators.help.iframe);
       browser.driver.findElement(by.xpath(Help.locators.help.search))
       .sendKeys(text);
+      browser.sleep(timeWait);
       browser.driver.findElement(by.xpath(Help.locators.help.search))
       .sendKeys(protractor.Key.ENTER)
       .then(function() {
         browser.sleep(timeWait)
         .then(function() {
+          browser.sleep(timeWait);
           browser.driver.findElement(by.xpath(Help.locators.help.submit))
           .click()
           .then(function() {
