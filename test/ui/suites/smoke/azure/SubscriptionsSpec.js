@@ -25,6 +25,7 @@ describe('Smoke', function () {
   describe('Subscriptions', function () {
 
     var revAdmin = config.get('portal.users.revAdmin');
+    var filterResults = Constants.azureMarketplace.subscriptionsPage.filterResults;
 
     beforeAll(function () {
       Portal.signIn(revAdmin);
@@ -41,11 +42,10 @@ describe('Smoke', function () {
         Portal.azureMarketplace.SubscriptionsPage.getSortOrder()
          .getAttribute('ng-show')
          .then(function(value) {
-            expect(value).toEqual([ 'filter.predicate === \'subscription_id\'',
-                                  'filter.predicate === \'created_at\'',
-                                  'filter.predicate === \'updated_at\'',
-                                  'filter.predicate === \'subscription_state\''
-              	                ]);
+              expect(value[0]).toEqual(filterResults.attrSubsID);
+              expect(value[1]).toEqual(filterResults.attrCreated);
+              expect(value[2]).toEqual(filterResults.attrUpdated);
+              expect(value[3]).toEqual(filterResults.attrSubState);
         });
     });
 
