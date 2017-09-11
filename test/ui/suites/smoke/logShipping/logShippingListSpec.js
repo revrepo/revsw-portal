@@ -93,7 +93,7 @@ describe('Smoke', function () {
                         Portal.logShipping.listPage.clickAddNewLogShippingJob();
                         Portal.logShipping.addPage.clickCancel();
                         expect(Portal.logShipping.listPage.isDisplayed()).toBeTruthy();
-                    });
+                    });                
             });
         });
     });

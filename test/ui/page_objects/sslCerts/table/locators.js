@@ -40,9 +40,6 @@ var headerLocators = {
   },
   lastUpdate: {
     css: 'th:nth-of-type(5) a'
-  },
-  account: {
-    css: 'th:nth-of-type(7) a'
   }
 };
 
@@ -74,8 +71,11 @@ var rowLocators = {
     }
   },
   account: {
-    css: 'th:nth-of-type(8)'
+    css: 'td:nth-of-type(8) a'
   },
+  accountReseller: {
+    css: 'td:nth-of-type(7) a'
+  }
 };
 
 module.exports = {

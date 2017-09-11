@@ -70,6 +70,19 @@ var WAFRuleNameForm = {
   getWAFRuleNameTxtIn: function () {
     return element(by.id(this.locators.textInputs.wafRuleName.id));
   },
+
+  /**
+ * ### WAFRuleNameForm.getWAFRuleName()
+ *
+ * Returns the value of the rule name input field
+ *
+ * @returns {Object} Selenium WebDriver Element
+ */
+  getWAFRuleName: function () {
+    return this
+      .getWAFRuleNameTxtIn()
+      .getAttribute('value');
+  },
   /**
    * ### WAFRuleNameForm.getWAFRuleDescriptionTxtIn()
    *

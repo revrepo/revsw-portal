@@ -150,13 +150,14 @@ var LogShippingTableRow = function (rowEl, locators) {
         .click();
   };
 
-  this.clickAccount = function () {
-    return this
-        .getAccountCell()
-        .click();
-  };
-
   if (this.locators.actions && this.locators.actions.buttons.pencil) {
+
+    this.clickAccount = function () {
+      return this
+          .getAccountCell()
+          .getText()
+          .click();
+    };
 
     this.getEditBtn = function () {
       return this.rowEl

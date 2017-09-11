@@ -43,6 +43,10 @@ var DomainTableRow = function (rowEl, locators) {
     return this.rowEl.element(by.css(this.locators.status.css));
   };
 
+  this.getAccountCell = function () {
+    return this.rowEl.element(by.css(this.locators.account.css));
+  };
+
   this.getStagingStatusIcon = function () {
     return this
       .getStatusCell()
@@ -71,6 +75,13 @@ var DomainTableRow = function (rowEl, locators) {
     return this
       .getLastUpdatedCell()
       .getText();
+  };
+
+  this.clickAccount = function () {
+    return this
+      .getAccountCell()
+      .getText()
+      .click();
   };
 
 

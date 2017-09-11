@@ -39,6 +39,10 @@ var KeyTableRow = function (rowElem, locators) {
     return this.rowElem.element(by.css(this.locators.lastUpdate.css));
   };
 
+  this.getAccountCell = function () {
+    return this.rowElem.element(by.css(this.locators.account.css));
+  };
+
   this.getName = function () {
     return this
       .getNameCell()
@@ -65,6 +69,13 @@ var KeyTableRow = function (rowElem, locators) {
 
   // if (this.locators.actions && this.locators.actions.buttons.pencil) {
   if (this.locators.actions) {
+
+    this.clickAccount = function () {
+      return this
+        .getAccountCell()
+        .getText()
+        .click();
+    };
 
     this.getEditBtn = function () {
       return this.rowElem

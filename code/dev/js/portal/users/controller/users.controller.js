@@ -26,7 +26,6 @@
     }
     //Set state (ui.router)
     $scope.setState('index.accountSettings.users');
-
     $scope.setResource(Users);
 
     $scope.USER_FIRST_NAME = $config.PATTERNS.USER_FIRST_NAME;
@@ -51,9 +50,8 @@
       initModel();
     }
 
-    function initModel() {
-      console.log($scope.model);
-      if (!$scope.model) {
+    function initModel(reinit) {
+      if (!$scope.model || reinit) {
         $scope.model = {};
         angular.merge($scope.model, {
           theme: 'light',
@@ -93,10 +91,11 @@
 
     $scope.clearForm = function () {
       $scope.clearModel();
+      $scope.initNew(true); // send true to reinit the model
     };
 
-    $scope.initNew = function () {
-      initModel();
+    $scope.initNew = function (reinit) {
+      initModel(reinit);
       if ($scope.auth.isReseller() || $scope.auth.isRevadmin()) {
         dependencies().then(function (data) {
           $scope.setDefaultAccountId();
@@ -206,7 +205,7 @@
       delete _model.account_id;
       delete _model.passwordConfirm;
       $scope.create(_model, isStay)
-        .then(function (data) {          
+        .then(function (data) {
           initModel();
           if (angular.isArray($scope.model.companyId)) {
             $scope.model.companyId.length = 0;

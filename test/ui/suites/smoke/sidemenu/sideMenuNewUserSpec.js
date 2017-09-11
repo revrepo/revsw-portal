@@ -40,11 +40,11 @@ describe('Smoke: ', function () {
             afterAll(function () {
                 Portal.signOut();
             });
-            it('should display Change Billing Plan option',
+            it('should not display Change Billing Plan option',
                 function () {
                     expect(menu.getMenuItem(
                         menu.getChangeBillingPlanOption())
-                        .isDisplayed()).toBeTruthy();
+                        .isPresent()).toBeFalsy();
                 });
             it('should display Billing Statements option',
                 function () {

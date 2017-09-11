@@ -89,6 +89,7 @@ describe('Smoke', function () {
             Portal.domains.versionsPage.clickBackToList();
             expect(Portal.domains.listPage.isDisplayed()).toBeTruthy();
           });
+
       });
     });
   });

@@ -148,6 +148,12 @@ var AppTableRow = function (rowEl, locators) {
   if (this.locators.actions && this.locators.actions.buttons &&
     this.locators.actions.buttons.pencil) {
 
+    this.clickAccount = function () {
+      return this.getAccountCell()
+        .getText()
+        .click();
+    };
+
     this.getEditBtn = function () {
       return this.rowEl
         .element(by.css(this.locators.actions.css))

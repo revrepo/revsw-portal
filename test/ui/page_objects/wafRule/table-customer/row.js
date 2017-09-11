@@ -40,6 +40,10 @@ var UserTableRow = function (rowEl, locators) {
     return this.rowEl.element(by.css(this.locators.updatedBy.css));
   };
 
+  this.getAccountCell = function () {
+    return this.rowEl.element(by.css(this.locators.accountLink.css));
+  };
+
   this.getRuleName = function () {
     return this
       .getRuleNameCell()
@@ -70,6 +74,13 @@ var UserTableRow = function (rowEl, locators) {
   //     .click();
   // };
   if (this.locators.actions && this.locators.actions.buttons.pencil) {
+
+    this.clickAccount = function () {
+      return this
+        .getAccountCell()
+        .getText()
+        .click();
+    };
 
     this.getEditBtn = function () {
       return this.rowEl

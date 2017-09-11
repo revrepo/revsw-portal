@@ -19,55 +19,56 @@
 var config = require('config');
 var Portal = require('./../../../page_objects/portal');
 var DataProvider = require('./../../../common/providers/data');
-var Constants = require('./../../../page_objects/constants');
 
 describe('Smoke', function () {
 
   // Defining set of users for which all below tests will be run
   var users = [
-    config.get('portal.users.admin'),
+    config.get('portal.users.revAdmin'),
     config.get('portal.users.reseller'),
-    config.get('portal.users.revAdmin')
+    config.get('portal.users.admin'),
+    config.get('portal.users.user')
   ];
 
   users.forEach(function (user) {
 
     describe('With user: ' + user.role, function () {
-      describe('Add user', function () {
+      describe('Add WAF Rule', function () {
 
         beforeAll(function () {
-          Portal.signIn(user);
         });
 
         afterAll(function () {
-          Portal.signOut();
         });
 
         beforeEach(function () {
-          Portal.helpers.nav.goToUsers();
-          Portal.userListPage.clickAddNewUser();
+          Portal.signIn(user);
+          Portal.helpers.nav.goToWAFRules();
+          Portal.wafRules.listPage.clickAddNewWAFRule();
         });
 
-        it('should display "Add user" form', function () {
-          expect(Portal.addUserPage.isDisplayed()).toBeTruthy();
-          expect(Portal.addUserPage.form.isDisplayed()).toBeTruthy();
+        afterEach(function () {
+          Portal.signOut();
         });
 
-        it('should allow to cancel an user edition', function () {
-          Portal.addUserPage.form.setEmail('something');
-          Portal.addUserPage.clickCancel();
-          expect(Portal.userListPage.isDisplayed()).toBeTruthy();
+        it('should display "Add WAF Rule" form', function () {
+          expect(Portal.wafRules.addPage.isDisplayed()).toBeTruthy();
+          expect(Portal.wafRules.addPage.form.isDisplayed()).toBeTruthy();
         });
 
-        it('should create an user successfully when filling all required data',
-          function () {
-            // Create user
-            var bruce = DataProvider.generateUser();
-            Portal.addUserPage.createUser(bruce);
-            // Check App alert notifications
-            expect(Portal.alerts.getFirst().getText())
-              .toContain(Constants.alertMessages.users.MSG_SUCCESS_ADD);
-          });
+        it('should allow to cancel a WAF Rule addition', function () {
+          Portal.wafRules.addPage.form.setWAFRuleName('something');
+          Portal.wafRules.addPage.clickCancel();
+          expect(Portal.wafRules.listPage.isDisplayed()).toBeTruthy();
+        });
+
+        it('should clear form after Cancel is clicked', function () {
+          var newWafRule = DataProvider.generateCustomWAFRule();
+          Portal.wafRules.addPage.form.fill(newWafRule);
+          Portal.wafRules.addPage.clickCancel();
+          Portal.wafRules.listPage.clickAddNewWAFRule();
+          expect(Portal.wafRules.addPage.form.getWAFRuleName()).toEqual('');
+        });
       });
     });
   });

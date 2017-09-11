@@ -53,7 +53,7 @@
           <hr>
           <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-              <a ui-sref="^" class="btn btn-default">
+              <a ui-sref="^" class="btn btn-default" ng-click="clearForm()">
                 <i class="glyphicon glyphicon-remove"></i>&nbsp; Cancel
               </a>
               <button class="btn btn-success" ng-class="{'btn-disabled':isReadOnly()}" id="btnCreateJob"  ng-disabled="disableSubmit(model) || isReadOnly()">
