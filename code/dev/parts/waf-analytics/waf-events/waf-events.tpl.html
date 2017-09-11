@@ -56,11 +56,8 @@
               <tbody>
                 <tr ng-repeat-start="item in records">
                   <td>
-                    <a tooltip-placement="top" tooltip-append-to-body="{{true}}" uib-tooltip="Click to show/hide more information about the event"
-                      ng-if="vm.user.isRevadmin()" role="button" data-toggle="collapse" data-target="#events-{{$index}}">
-                      <i class="glyphicon glyphicon-plus-sign"></i>
-                    </a>
-                    <a ng-if="!vm.user.isRevadmin()">
+                    <a tooltip-placement="top" tooltip-append-to-body="{{true}}" uib-tooltip="Click to show/hide additional information about the event"
+                      role="button" data-toggle="collapse" data-target="#events-{{$index}}">
                       <i class="glyphicon glyphicon-plus-sign"></i>
                     </a>
                   </td>
