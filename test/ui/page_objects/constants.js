@@ -256,7 +256,30 @@ var Constants = {
       android: 'Android',
       windowsMobile: 'Windows_Mobile'
     }
-  }
-};
+  }, 
 
+  mobileAnalytics: {
+    imageOptimizationPage: {
+      filterResults: {
+        attrDelay: 'ngFilters.delay',
+        attrCountry: 'ngFilters.country ',
+        attrOS: 'ngFilters.os ',
+        attrDevice: 'ngFilters.device ',
+        attrBrowser:  'ngFilters.browser '
+      } 
+    }
+},
+
+ azureMarketplace: {
+   subscriptionsPage: {
+      filterResults: {
+        attrSubsID: 'filter.predicate === \'subscription_id\'',
+        attrCreated: 'filter.predicate === \'created_at\'',
+        attrUpdated: 'filter.predicate === \'updated_at\'',
+        attrSubState:'filter.predicate === \'subscription_state\''
+      } 
+    }
+}
+
+};
 module.exports = Constants;
