@@ -30,6 +30,7 @@ describe('Smoke', function () {
     config.get('portal.users.user'),
     config.get('portal.users.roUser')
   ];
+var filterResults = Constants.mobileAnalytics.imageOptimizationPage.filterResults;
 
    users.forEach(function(user) {
 
@@ -48,17 +49,14 @@ describe('Smoke', function () {
   
 	
     it('should displayed all performance filters', function(){ 
-        Portal.mobileAnalytics.ImageOptimizationPage.getFilterPerformance()
+      Portal.mobileAnalytics.ImageOptimizationPage.getFilterPerformance()
           .getAttribute('ng-model')
             .then(function(value) {
-	 	    	
-	 		expect(value).toEqual([
-	 			'ngFilters.delay',
-				'ngFilters.country ',
-				'ngFilters.os ',
-				'ngFilters.device ',
-				'ngFilters.browser '
-        ]);
+	 		        expect(value[0]).toEqual(filterResults.attrDelay);
+              expect(value[1]).toEqual(filterResults.attrCountry);
+              expect(value[2]).toEqual(filterResults.attrOS);
+              expect(value[3]).toEqual(filterResults.attrDevice);
+              expect(value[4]).toEqual(filterResults.attrBrowser);
            });
        }); 
 
@@ -66,15 +64,13 @@ describe('Smoke', function () {
     it('should displayed all bandwidth filters', function(){ 
         Portal.mobileAnalytics.ImageOptimizationPage.getFilterBandwidth()
           .getAttribute('ng-model')
-            .then(function(value) {
-          
-      expect(value).toEqual([
-        'ngFilters.delay',
-        'ngFilters.country ',
-        'ngFilters.os ',
-        'ngFilters.device ',
-        'ngFilters.browser '
-        ]);
+            .then(function(value) {      
+              expect(value[0]).toEqual(filterResults.attrDelay);
+              expect(value[1]).toEqual(filterResults.attrCountry);
+              expect(value[2]).toEqual(filterResults.attrOS);
+              expect(value[3]).toEqual(filterResults.attrDevice);
+              expect(value[4]).toEqual(filterResults.attrBrowser);
+
            });
        }); 
 
@@ -82,15 +78,12 @@ describe('Smoke', function () {
     it('should displayed all format and resolution filters', function(){ 
         Portal.mobileAnalytics.ImageOptimizationPage.getFilterFormatResolution()
           .getAttribute('ng-model')
-            .then(function(value) {
-          
-      expect(value).toEqual([
-        'ngFilters.delay',
-        'ngFilters.country ',
-        'ngFilters.os ',
-        'ngFilters.device ',
-        'ngFilters.browser '
-         ]);
+            .then(function(value) {   
+              expect(value[0]).toEqual(filterResults.attrDelay);
+              expect(value[1]).toEqual(filterResults.attrCountry);
+              expect(value[2]).toEqual(filterResults.attrOS);
+              expect(value[3]).toEqual(filterResults.attrDevice);
+              expect(value[4]).toEqual(filterResults.attrBrowser);
            });
        }); 
 
@@ -139,5 +132,5 @@ describe('Smoke', function () {
          });
       });
    });
-});
+ });
 
