@@ -16,13 +16,13 @@
           <i ng-click="expandMenu('index.apps', $event)" class="pull-right {{ menuExpanded('index.apps') ? 'fa fa-caret-up' : 'fa fa-caret-down' }}"></i>
         </a>
         <a id="side-menu-sub-item__apps-ios" ui-sref-active="active" ui-sref="index.apps.ios" class="side-menu-sub-item">
-            <i class="sub-menu-icon fa fa-apple"></i> iOS <i class="fa  beta-functional" aria-hidden="true" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Betta functional"> &beta;</i>
+            <i class="sub-menu-icon fa fa-apple"></i> iOS <i class="label label-primary pull-right fa beta-functional" aria-hidden="true"> Beta</i>
           </a>
         <a id="side-menu-sub-item__apps-android" ui-sref-active="active" ui-sref="index.apps.android" class="side-menu-sub-item">
-            <i class="sub-menu-icon fa fa-android"></i> Android <i class="fa  beta-functional" aria-hidden="true" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Betta functional"> &beta;</i>
+            <i class="sub-menu-icon fa fa-android"></i> Android <i class="label label-primary pull-right fa beta-functional" aria-hidden="true"> Beta</i>
           </a>
-        <a id="side-menu-sub-item__apps-windows" ui-sref-active="active" ui-sref="index.apps.windows_mobile" class="side-menu-sub-item">
-            <i class="sub-menu-icon fa fa-windows"></i> Windows Mobile <i class="fa  beta-functional" aria-hidden="true" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Betta functional"> &beta;</i>
+        <a id="side-menu-sub-item__apps-windows" ui-sref-active="active" ui-sref="index.apps.windows_mobile" class="side-menu-sub-item"><i class="label label-primary pull-right fa beta-functional" aria-hidden="true"> Beta </i>
+            <i class="sub-menu-icon fa fa-windows"></i> Windows Mobile
           </a>
       </li>
       <li ui-sref-active-if="{class: 'open-side-menu-item', state: 'index.mobile'}" ng-class="{'open-side-menu-item': menuExpanded('index.mobile'),'active-side-menu-item': $state.includes('index.mobile')}">
@@ -67,7 +67,7 @@
             <i class="sub-menu-icon fa fa-lock"></i> SSL Names
           </a>
         <a id="side-menu-sub-item__webApp-waf_rules" ui-sref-active="active" ui-sref="index.webApp.waf_rules" class="side-menu-sub-item">
-          <i class="sub-menu-icon fa fa-list-alt"></i> WAF Rules <i class="fa  beta-functional" aria-hidden="true" popover-append-to-body="{{true}}"  popover-trigger="mouseenter" uib-popover="Betta functional"> &beta;</i>
+          <i class="sub-menu-icon fa fa-list-alt"></i> WAF Rules <i class="label label-primary pull-right fa beta-functional" aria-hidden="true"> Beta</i>
           </a>
         <a id="side-menu-sub-item__webApp-staging-environment" ui-sref-active="active" ui-sref="index.webApp.staging-environment" class="side-menu-sub-item">
             <i class="sub-menu-icon fa fa-eye"></i> Staging Env.
@@ -173,7 +173,7 @@
             <i class="sub-menu-icon fa fa-key"></i> API Keys
           </a>
         <a ui-sref-active="active" ui-sref="index.accountSettings.logshippers" class="side-menu-sub-item" ng-if="!userService.isUser()">
-            <i class="sub-menu-icon glyphicon glyphicon-open-file"></i> Log Shipping <i class="fa  beta-functional" aria-hidden="true" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Betta functional"> &beta;</i>
+            <i class="sub-menu-icon glyphicon glyphicon-open-file"></i> Log Shipping <i class="label label-primary pull-right fa beta-functional" aria-hidden="true"> Beta</i>
           </a>
         <a ui-sref-active="active" ui-sref="index.accountSettings.profile" class="side-menu-sub-item" href="#/profile">
             <i class="sub-menu-icon fa fa-user"></i> Update Password
