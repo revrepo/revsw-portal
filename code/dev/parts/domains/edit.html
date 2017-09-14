@@ -613,7 +613,7 @@
             </uib-tab>
             <uib-tab index="5" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="This tab is used to manage Web Application Firewall (WAF) settings for the domain">
               <!--  “WAF” -->
-              <uib-tab-heading>WAF</uib-tab-heading>
+              <uib-tab-heading>WAF <i class="fa  beta-functional" aria-hidden="true" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Betta functional"> &beta;</i></uib-tab-heading>
               <div class="form-group form-inline">
                 <label for="enableWafRules" class="col-sm-3 control-label">WAF Protection</label>
                 <div class="col-md-9">
@@ -645,9 +645,12 @@
               <!-- //  “Custom VCL Rules” -->
               <hr>
             </uib-tab>
-            <uib-tab index="7" heading="Lua Scripting" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="This section allows you to enhance the service by running custom Lua code snippets on proxy servers">
-              <domain-lua-scripting class="form-group" ng-model="model"></domain-lua-scripting>
+            <uib-tab index="7" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="This section allows you to enhance the service by running custom Lua code snippets on proxy servers">
+              <!--  Lua Scripting -->
+              <uib-tab-heading> Lua Scripting <i class="fa  beta-functional" aria-hidden="true" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Betta functional"> &beta;</i></uib-tab-heading>
+                <domain-lua-scripting class="form-group" ng-model="model"></domain-lua-scripting>
               <hr>
+              <!--  // Lua Scripting -->
             </uib-tab>
             <!-- Third-Party Links-->
             <uib-tab index="8" heading="Third-Party Links" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="This section allows you to accelerate your website by redirecting to the CDN platform external objects/scripts served by potentially slow third-party vendors">
