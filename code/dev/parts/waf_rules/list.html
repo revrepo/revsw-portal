@@ -68,7 +68,7 @@
   <div class="row">
     <div class="col-sm-12">
       <h2 class="pull-left page-title">
-        WAF Rules List
+        WAF Rules List <i class="label label-primary pull-right fa beta-functional" aria-hidden="true"> Beta</i>
       </h2>
     </div>
   </div>
@@ -90,7 +90,7 @@
                   <button class="btn btn-success" ng-disabled="_loading" ng-click="onClickRefresh()">
                     <i class="glyphicon glyphicon-refresh" ng-class="_loading ? 'spin' : ''"></i>&nbsp; Refresh
                     </button>
-                </div>                
+                </div>
                 <div class="form-group spaced-button">
                 <button ng-click="onCreateWhiteListingWAFRules()" class="btn btn-success" ng-class="{'btn-disabled':isReadOnly()}" ng-disabled="_loading || isReadOnly()"
                   popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="The system can automatically create white-listing WAF rules using real end user traffic of a website. WAF learning mode can be enabled using “Learning Mode” switch in WAF tab of your website configuration.">
