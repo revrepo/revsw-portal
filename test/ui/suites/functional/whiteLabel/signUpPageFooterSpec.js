@@ -34,13 +34,12 @@ describe('Functional', function () {
       expect(footerMessage).toEqual(defaultFooterMessage);
     });
 
-     it('should display copyright message on nuubit sign up page', function () {
+    it('should display copyright message on nuubit sign up page', function () {
       Portal.loadNuubit();
       Portal.loginPage.clickSignUp();
 
       var footerMessage = Portal.signUp.plansPage.getFooterMessageText();
       expect(footerMessage).toEqual(defaultFooterMessage);
     });
-  
   });
 });

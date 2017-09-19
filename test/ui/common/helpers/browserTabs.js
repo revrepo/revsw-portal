@@ -27,15 +27,15 @@ var browserTabs = {
    *
    */
   switchBrowserTabs: function () {
-     browser.getAllWindowHandles().then(function (handles) {
-	 // Switch to Sign up window where we clicked the Logo from nuubit
-   	 browser.driver.switchTo().window(handles[0]);
-   	 // Close current tab
-	 browser.actions().keyDown(protractor.Key.CONTROL).sendKeys('w').perform();
-	 // Switch to the newly opened tab nuubit.com
-     browser.driver.switchTo().window(handles[1]);
-	});
+    browser.getAllWindowHandles().then(function (handles) {
+  	  // Switch to Sign up window where we clicked the Logo from nuubit
+     	browser.driver.switchTo().window(handles[0]);
+     	// Close current tab
+  	  browser.actions().keyDown(protractor.Key.CONTROL).sendKeys('w').perform();
+  	  // Switch to the newly opened tab nuubit.com
+      browser.driver.switchTo().window(handles[1]);
+	  });
   }
-}
+};
 
 module.exports = browserTabs;
