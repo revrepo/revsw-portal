@@ -34,6 +34,9 @@ var PlansList = {
       },
       plan: {
         css: 'h2.billing-plan-title'
+      },
+      footer: {
+            css: '.panel-footer > p'
       }
     },
     images: {
@@ -104,6 +107,31 @@ var PlansList = {
     return new Plan(plan);
   },
 
+/**
+  * ### PlanElement.getFooterMessageEl()
+  *
+  * Returns the Footer Message Element that is inside the Footer container element.
+  *
+  * @returns {Object} Selenium WebDriver Element
+  */
+ getFooterMessageEl: function () {
+    return element(by.css(this.locators.labels.footer.css))
+      get(0);   
+  },
+
+/**
+  * ### PlanElement.getFooterMessageText()
+  *
+  * Returns the Text of the Footer.
+  *
+  * @returns {Object} Promise
+  */
+  getFooterMessageText: function () {
+    return this
+      .getFooterMessageEl()
+      .getText();
+    },
+
   // ## Methods to interact with the User List Page components
 
   /**
@@ -119,6 +147,19 @@ var PlansList = {
       .click();
   },
 
+ /**
+   * ### PlansList.clickLogo()
+   *
+   * Clicks the Logo picture to redirect to nuubit.com
+   *
+   * @returns {Object} Promise
+   */
+  clickLogo: function () {
+    return this
+      .getLogo()
+      .click();
+  },
+  
   getLogo: function(){
      return element(by.css(this.locators.images.css.logo));
   },

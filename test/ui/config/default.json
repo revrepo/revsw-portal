@@ -71,6 +71,15 @@
           "id": "5588869fbde7a0d00338ce8f",
           "companyName": "Rev Test"
         }
+      },
+      "nuubitAdmin": {
+        "email": "qa_user_with_rev-admin_perm_vendor_nuubit@revsw.com",
+        "password": "password1",
+        "role": "Admin",
+        "account": {
+          "id": "59b25a6c964593ac65967218",
+          "companyName": "DONT DELETE - TEST COMPANY FOR API QA SCRIPTS"
+        }
       }
     },
     "usageReport": {
