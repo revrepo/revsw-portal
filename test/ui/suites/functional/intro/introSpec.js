@@ -22,53 +22,50 @@ var Constants = require('./../../../page_objects/constants');
 describe('Functional', function () {
   describe('Intro Window', function () {
 
-    var User = config.get('portal.users.user');
+    var user = config.get('portal.users.user');
 
     beforeEach(function () {
-      Portal.signIn(User);
+      Portal.signIn(user);
     });
 
     afterEach(function () {
       Portal.signOut();
     });
      
+    it('should  click through all intro steps till the end and click button done', function () {
+      Portal.dashboards.listPage.clickButtonNext();
+      Portal.dashboards.listPage.waitForPopup();
+      Portal.dashboards.listPage.clickButtonNext();
+      Portal.dashboards.listPage.waitForPopup();
+      Portal.dashboards.listPage.clickButtonNext();
+      Portal.dashboards.listPage.waitForPopup();
+      Portal.dashboards.listPage.clickButtonNext();
+      Portal.dashboards.listPage.waitForPopup();
+      Portal.dashboards.listPage.clickButtonNext();
+      Portal.dashboards.listPage.waitForPopup();
+      Portal.dashboards.listPage.clickButtonNext();
+      Portal.dashboards.listPage.waitForPopup();
+      Portal.dashboards.listPage.clickButtonNext();
+      Portal.dashboards.listPage.waitForPopup();
+      Portal.dashboards.listPage.clickButtonNext();
+      Portal.dashboards.listPage.waitForPopup();
+      Portal.dashboards.listPage.clickButtonNext();
+      Portal.dashboards.listPage.waitForPopup();
+      Portal.dashboards.listPage.clickButtonNext();
+      Portal.dashboards.listPage.waitForPopup();
 
+      var buttonSkip = Portal.dashboards.listPage.getButtonSkip();
+      expect(buttonSkip.isDisplayed()).toBe(true);
 
-    it('should  click through all intro steps till the end and click button done', function(){
-      Portal.dashboards.listPage.clickButtonNext();
-      Portal.dashboards.listPage.waitForPopup();
-      Portal.dashboards.listPage.clickButtonNext();
-      Portal.dashboards.listPage.waitForPopup();
-      Portal.dashboards.listPage.clickButtonNext();
-      Portal.dashboards.listPage.waitForPopup();
-      Portal.dashboards.listPage.clickButtonNext();
-      Portal.dashboards.listPage.waitForPopup();
-      Portal.dashboards.listPage.clickButtonNext();
-      Portal.dashboards.listPage.waitForPopup();
-      Portal.dashboards.listPage.clickButtonNext();
-      Portal.dashboards.listPage.waitForPopup();
-      Portal.dashboards.listPage.clickButtonNext();
-      Portal.dashboards.listPage.waitForPopup();
-      Portal.dashboards.listPage.clickButtonNext();
-      Portal.dashboards.listPage.waitForPopup();
-      Portal.dashboards.listPage.clickButtonNext();
-      Portal.dashboards.listPage.waitForPopup();
-      Portal.dashboards.listPage.clickButtonNext();
-      Portal.dashboards.listPage.waitForPopup();
-      Portal.dashboards.listPage.getButtonSkip().isDisplayed().then(function(value){
-        expect(value).toBe(true);
-     });
       Portal.dashboards.listPage.clickButtonSkip(); 
     });
 
-
-    it('should loaded page without intro window with button done ', function(){ 
+    it('should loaded page without intro window with button done ', function () { 
      var dashboardElem = Portal.dashboards.listPage.getDashboardsElem();
-       expect(dashboardElem .isDisplayed()).toBe(true);
-
+     expect(dashboardElem .isDisplayed()).toBe(true);
    });  
 
-    it('should loaded page without intro window with button skip', function(){
+    it('should loaded page without intro window with button skip', function () {
       Portal.dashboards.listPage.clickButtonNext();
       Portal.dashboards.listPage.waitForPopup();
       Portal.dashboards.listPage.clickButtonNext();
@@ -80,11 +77,12 @@ describe('Functional', function () {
       Portal.dashboards.listPage.clickButtonNext();
       Portal.dashboards.listPage.waitForPopup();
       Portal.dashboards.listPage.clickButtonSkip();
-        var dashboardElem = Portal.dashboards.listPage.getDashboardsElem();
+
+      var dashboardElem = Portal.dashboards.listPage.getDashboardsElem();
       expect(dashboardElem .isDisplayed()).toBe(true); 
     });
 
-    it('should loaded intro window after reload', function(){
+    it('should loaded intro window after reload', function () {
       Portal.dashboards.listPage.clickButtonNext();
       Portal.dashboards.listPage.waitForPopup();
       Portal.dashboards.listPage.clickButtonNext();
@@ -93,10 +91,13 @@ describe('Functional', function () {
       Portal.dashboards.listPage.waitForPopup();
       Portal.dashboards.listPage.clickButtonNext();
       Portal.dashboards.listPage.waitForPopup();
+
       browser.refresh();
-        var popUpContainer = Portal.dashboards.listPage.getIntroPopup();
+      
+      var popUpContainer = Portal.dashboards.listPage.getIntroPopup();
       expect(popUpContainer.isDisplayed()).toBe(true);
     });
   });
 });
 
+  

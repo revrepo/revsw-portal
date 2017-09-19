@@ -22,35 +22,32 @@ var Constants = require('./../../../page_objects/constants');
 describe('Functional', function () {
   describe('Intro Window', function () {
 
-    var User = config.get('portal.users.user');
+    var user = config.get('portal.users.user');
 
     beforeAll(function () {
-      Portal.signIn(User);
+      Portal.signIn(user);
     });
 
     afterAll(function () {
       Portal.signOut();
     });
      
- it('button hide/show menu  should  be clickable', function(){
-     Portal.mobileAnalytics.ImageOptimizationPage.clickHideMenu();
-     Portal.mobileAnalytics.ImageOptimizationPage.clickHideMenu();
-     Portal.mobileAnalytics.ImageOptimizationPage.getHideMenu().isEnabled().then(function(v) {
-         expect(v).toBe(true);  
-     });
-     });
+    it('button hide/show menu  should  be clickable', function () {
+      Portal.mobileAnalytics.ImageOptimizationPage.clickHideMenu();
+      Portal.mobileAnalytics.ImageOptimizationPage.clickHideMenu();
 
-it('should automatically hide/unhide  menu', function(){
-     Portal.mobileAnalytics.ImageOptimizationPage.clickHideMenu();
-     Portal.mobileAnalytics.ImageOptimizationPage.getMainMenu().isDisplayed().then(function(v) {
-         expect(v).toBe(false);  
-      });
-     Portal.mobileAnalytics.ImageOptimizationPage.clickHideMenu();
-     Portal.mobileAnalytics.ImageOptimizationPage.getMainMenu().isDisplayed().then(function(v) {
-         expect(v).toBe(true);  
-      });
+      var hideMenu = Portal.mobileAnalytics.ImageOptimizationPage.getHideMenu();
+      expect(hideMenu.isEnabled()).toBe(true);  
+    });
+    
+    it('should automatically hide/unhide  menu', function () {
+      Portal.mobileAnalytics.ImageOptimizationPage.clickHideMenu();
+      var mainMenu = Portal.mobileAnalytics.ImageOptimizationPage.getMainMenu();
 
-      });
+      expect(mainMenu.isDisplayed()).toBe(false);  
+      Portal.mobileAnalytics.ImageOptimizationPage.clickHideMenu();
+      expect(mainMenu.isDisplayed()).toBe(true); 
     });
   });
+});
 

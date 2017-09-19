@@ -22,21 +22,19 @@ var Constants = require('./../../../page_objects/constants');
 describe('Smoke', function () {
   describe('Intro Window', function () {
 
-    var User = config.get('portal.users.user');
+    var user = config.get('portal.users.user');
 
     beforeAll(function () {
-      Portal.signIn(User);
+      Portal.signIn(user);
     });
 
     afterAll(function () {
       Portal.signOut();
     });
 
-
-  it('should displayed intro window', function(){
-    Portal.dashboards.listPage.getIntroPopup().isDisplayed().then(function(value){
-       expect(value).toBe(true);
-      });
+    it('should display intro window', function () {
+      var introPopup = Portal.dashboards.listPage.getIntroPopup();
+      expect(introPopup.isDisplayed()).toBe(true);
     });
   });
 });
