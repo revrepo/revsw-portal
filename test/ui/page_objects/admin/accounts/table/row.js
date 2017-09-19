@@ -53,6 +53,10 @@ var CompanyTableRow = function (rowElem, locators) {
     return this.rowElem.element(by.css(this.locators.lastUpdate.css));
   };
 
+  this.getVendorCell = function () {
+    return this.rowElem.element(by.css(this.locators.vendor.css));
+  };
+
   this.getCompanyName = function () {
     return this
       .getCompanyNameCell()
@@ -89,6 +93,12 @@ var CompanyTableRow = function (rowElem, locators) {
       .getText();
   };
 
+  this.getVendor = function () {
+    return this
+      .getVendorCell()
+      .getText();
+  };
+
   this.clickCompanyName = function () {
     return this
       .getCompanyNameCell()
@@ -104,6 +114,12 @@ var CompanyTableRow = function (rowElem, locators) {
   this.clickBillingPlan = function () {
     return this
       .getBillingPlanCell()
+      .click();
+  };
+
+  this.clickVendor = function () {
+    return this
+      .getVendorCell()
       .click();
   };
 

@@ -35,7 +35,7 @@ describe('Functional', function () {
             describe('With user: ' + user.role, function () {
 
                 var SMALL_SCREEN = 980;
-                var LARGE_SCREEN = 1024;
+                var LARGE_SCREEN = 1280;
 
                 beforeAll(function () {
                     Portal.signIn(user);
@@ -45,7 +45,7 @@ describe('Functional', function () {
 
                     // remove 'scrim' overlay so we can click logout
                     browser.executeScript('$("#scrim").remove();');
-                    
+                    browser.manage().window().setSize(LARGE_SCREEN, 800);
                     Portal.signOut();
                 });
 
