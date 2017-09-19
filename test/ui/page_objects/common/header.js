@@ -65,6 +65,11 @@ var Header = {
           linkText: Constants.header.userMenu.LOGOUT
         }
       }
+    },
+    buttons: {
+      menuToggleBtn: {
+        css: '#menuToggleBtn'
+      }
     }
   },
 
@@ -161,7 +166,7 @@ var Header = {
    *
    * @returns {Object} Promise
    */
-  clickWeb: function() {
+  clickWeb: function () {
     return this
       .getNavBar()
       .element(by.linkText(this.locators.menu.navbar.web.linkText))
@@ -175,7 +180,7 @@ var Header = {
    *
    * @returns {Object} Promise
    */
-  clickAnalytics: function() {
+  clickAnalytics: function () {
     return this
       .getNavBar()
       .element(by.linkText(this.locators.menu.navbar.Analytics.linkText))
@@ -189,7 +194,7 @@ var Header = {
    *
    * @returns {Object} Promise
    */
-  clickAccountSettings: function() {
+  clickAccountSettings: function () {
     return this
       .getNavBar()
       .element(by.linkText(this.locators.menu.navbar.accountSettings.linkText))
@@ -203,7 +208,7 @@ var Header = {
    *
    * @returns {Object} Promise
    */
-  clickHelpSupport: function() {
+  clickHelpSupport: function () {
     return this
       .getNavBar()
       .element(by.linkText(this.locators.menu.navbar.helpSupport.linkText))
@@ -237,6 +242,29 @@ var Header = {
   isPresent: function () {
     return browser.driver
       .isElementPresent(by.css(this.locators.labels.userInfo.css));
+  },
+
+  /**
+ * ### Header.getMenuToggleBtn()
+ *
+ * Returns the menu toggle button (Selenium WebDriver Elements)
+ *
+ * @returns {Object} Selenium WebDriver Element
+ */
+  getMenuToggleBtn: function () {
+    return element(by.css(this.locators.buttons.menuToggleBtn.css));
+  },
+
+  /**
+   * ### Header.clickMenuToggleBtn()
+   *
+   * Clicks the Menu Toggle button
+   * 
+   */
+  clickMenuToggleBtn: function () {
+    return this
+      .getMenuToggleBtn()
+      .click();
   }
 };
 
