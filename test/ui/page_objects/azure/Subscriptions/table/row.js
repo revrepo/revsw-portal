@@ -57,7 +57,7 @@ var SubsTableRow = function (rowElem, locators) {
     };
 
     this.clickSubId = function () {
-        return this.getSubIdCell().click();
+        return this.getSubId().click();
     };
 
     this.clickRegisterDate = function () {

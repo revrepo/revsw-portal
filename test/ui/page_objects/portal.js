@@ -128,7 +128,7 @@ var PortalDataProviders = require('./../common/providers/data/portal');
 var ImageOptimizationPage = require('./analytics/ImageOptimization');
 
 var SubscriptionsPage = require('./azure/Subscriptions/listPage');
-var ResourcesPerSubscriptionPage = require('./azure/ResourcesPerSubscription');
+var ResourcesPerSubscriptionPage = require('./azure/ResourcesPerSubscription/listPage');
 var ResourcesPage = require('./azure/Resources');
 
 // This `Portal` Page Object is the entry point to use all other Page Objects

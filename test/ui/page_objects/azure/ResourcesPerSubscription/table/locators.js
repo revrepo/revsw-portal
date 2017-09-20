@@ -21,46 +21,49 @@ var tableLocators = {
         css: 'table thead tr'
     },
     rows: {
-        repeater: 'item in filteredRecords'
+        repeater: 'item in subresources'
     }
 };
 
 var headerLocators = {
-    subId: {
-        css: 'th:nth-of-type(1) a'
+    name: {
+        css: 'th:nth-of-type(1)'
     },
-    registerDate: {
-        css: 'th:nth-of-type(2) a'
+    type: {
+        css: 'th:nth-of-type(2)'
     },
-    lastUpdate: {
-        css: 'th:nth-of-type(3) a'
+    location: {
+        css: 'th:nth-of-type(3)'
     },
-    state: {
-        css: 'th:nth-of-type(4) a'
+    plan: {
+        css: 'th:nth-of-type(4)'
+    },
+    resourceGroup: {
+        css: 'th:nth-of-type(5)'
     }
 };
 
 var rowLocators = {
-    subId: {
-        css: 'td:nth-of-type(1) a',
+    name: {
+        css: 'td:nth-of-type(1)'
     },
-    registerDate: {
+    type: {
         css: 'td:nth-of-type(2)'
     },
-    lastUpdate: {
+    location: {
         css: 'td:nth-of-type(3)'
     },
-    state: {
+    plan: {
         css: 'td:nth-of-type(4)'
     },
+    resourceGroup: {
+        css: 'td:nth-of-type(5)'
+    },
     actions: {
-        css: 'td:nth-of-type(5)',
+        css: 'td:nth-of-type(6)',
         buttons: {
             view: {
                 css: '.fa-eye'
-            },
-            changeStatus: {
-                css: '.glyphicon-pencil'
             }
         }
     }
