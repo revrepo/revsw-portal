@@ -255,6 +255,16 @@ var Constants = {
     }
   },
 
+  backgroundColor: {
+      revapm: 'rgba(255, 140, 0, 0.7)',
+      nuubit: 'rgba(0, 48, 86, 1)' 
+  },
+
+  footerMessage: 'Not sure which plan to choose? Talk to an expert',
+
+  baseUrlNuubit: 'https://testsjc20-portal-nuubit.revsw.net/#/login',
+  nuubitHomePage: 'https://www.nuubit.com/',
+
   // TODO: Everything above this line needs revision/clean up
 
   mobileApps: {
