@@ -127,7 +127,7 @@ var PortalDataProviders = require('./../common/providers/data/portal');
 
 var ImageOptimizationPage = require('./analytics/ImageOptimization');
 
-var SubscriptionsPage = require('./azure/Subscriptions');
+var SubscriptionsPage = require('./azure/Subscriptions/listPage');
 var ResourcesPerSubscriptionPage = require('./azure/ResourcesPerSubscription');
 var ResourcesPage = require('./azure/Resources');
 
@@ -215,7 +215,7 @@ var Portal = {
     listPage: SSLNamesListPage,
     addPage: SSLNamesAddPage
   },
-  wafRules:{
+  wafRules: {
     listPage: WAFRulePage,
     addPage: WAFRuleAddPage,
     editPage: WAFRuleEditPage
@@ -245,18 +245,18 @@ var Portal = {
     editPage: ZoneRecordsEditPage
   },
   mobileAnalytics: {
-	  trafficLevelsPage: MobileAnalyticsTrafficLevelsPage,
-	  topReportsPage: MobileAnalyticsTopReportsPage,
-	  topObjectsPage : MobileAnalyticsTopObjectsPage,
-	  trafficDistributions: MobileAnalyticsTrafficDistributionsPage,
+    trafficLevelsPage: MobileAnalyticsTrafficLevelsPage,
+    topReportsPage: MobileAnalyticsTopReportsPage,
+    topObjectsPage: MobileAnalyticsTopObjectsPage,
+    trafficDistributions: MobileAnalyticsTrafficDistributionsPage,
     ImageOptimizationPage: ImageOptimizationPage
   },
   azureMarketplace: {
-      SubscriptionsPage: SubscriptionsPage,
-      ResourcesPerSubscriptionPage: ResourcesPerSubscriptionPage,
-      ResourcesPage: ResourcesPage
+    SubscriptionsPage: SubscriptionsPage,
+    ResourcesPerSubscriptionPage: ResourcesPerSubscriptionPage,
+    ResourcesPage: ResourcesPage
   },
-  
+
   accountResourcesPage: AccountResourcesPage,
 
   helpers: PortalHelpers,
@@ -353,7 +353,7 @@ var Portal = {
    * @returns {Promise}
    */
   goToCustomUrl: function (appPathUrl) {
-    return browser.get(this.baseUrl+appPathUrl);
+    return browser.get(this.baseUrl + appPathUrl);
   },
   // ## User Helper methods
 
@@ -600,11 +600,11 @@ var Portal = {
       me.admin.apiKeys.listPage.clickAddNewApiKey();
 
       me.admin.apiKeys.addPage.getModalEl().isPresent()
-        .then(function(value) {
+        .then(function (value) {
           if (isUserAdmin && account && value) {
             me.admin.apiKeys.addPage.createAccount(account);
           }
-      });
+        });
 
       me.admin.apiKeys.listPage.searcher.clearSearchCriteria();
       me.admin.apiKeys.listPage.searchAndClickEdit('New API Key');
@@ -780,7 +780,7 @@ var Portal = {
           .getFirstRow()
           .clickManageRecords();
       });
-  }
+  },
 };
 
 module.exports = Portal;
