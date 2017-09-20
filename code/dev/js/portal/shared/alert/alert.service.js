@@ -72,7 +72,24 @@
       };
       toaster.pop(toasterParams);
     }
-
+    /**
+      * Show a info alert
+      *
+      * @param {string|object} msg
+      * @param {number=} [timeout]
+      */
+    function info(msg, timeout) {
+      if(angular.isUndefined(timeout)) {
+        timeout = $config.SUCCESS_MESSAGE_DISPLAY_TIMEOUT;
+      }
+      var toasterParams = {
+        timeout: 0,
+        showCloseButton: true,
+        body: getMessage(msg),
+        type: 'primary'
+      };
+      toaster.pop(toasterParams);
+    }
     /**
      * Clear all alerts
      */
@@ -85,6 +102,8 @@
       success: success,
 
       danger: danger,
+
+      info: info,
 
       clear: clear
     };

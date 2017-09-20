@@ -1,0 +1,65 @@
+<div class="modal-header">
+  <h3 class="modal-title">Edit Destination </h3>
+</div>
+<div class="modal-body">
+  <form class="form-horizontal" name="editDestinationsForm">
+    <div class="form-group">
+      <label class="col-sm-12"> Destination Type:</label>
+      <div class="col-sm-12">
+        <span class="badge">
+        <i ng-show="model.destination_type=='email'" class="fa fa-envelope-o" aria-hidden="true"></i>
+        <i ng-show="model.destination_type=='user'" class="fa fa-user" aria-hidden="true"></i>
+         &nbsp;&nbsp; {{destination_types[model.destination_type]| uppercase}}
+        </span>
+      </div>
+    </div>
+    <div class="form-group" ng-class="{ 'has-error': editDestinationsForm.destinationConfigValue.$invalid && editDestinationsForm.destinationConfigValue.$dirty }"
+      ng-hide="!model.destination_type.length" ng-switch="model.destination_type">
+      <label class="col-sm-12"> Destination:</label>
+      <!-- EMAIL type-->
+      <div class="col-sm-12" ng-switch-when="email">
+        <input type="email" autofocus class="form-control inline-block" ng-disabled="_loading" ng-model="model.email" name="destinationConfigValue"
+          id="destinationConfigValue" placeholder="Email" required>
+        <label for="destinationConfigValue" class="text-info" popover-append-to-body="{{false}}" popover-trigger="mouseenter" popover-placement="left"
+          uib-popover="Specify here an email address which should receive notifications for the destination">
+              <i class="fa fa-question-circle"></i>
+            </label>
+
+        <div class="error-messages" ng-messages="editDestinationsForm.destinationConfigValue.$error" role="alert" ng-messages-multiple>
+          <div ng-messages-include="parts/shared/error-messages.html"></div>
+        </div>
+      </div>
+      <!-- // EMAIL type -->
+      <!-- USER type-->
+      <div class="col-md-12" ng-switch-when="user">
+        <ui-select ng-model="model.user_id" theme="select2" ng-animate-disabled ng-disabled="_loading" on-select="onUserSelect($model)"
+          style="min-width: 550px;" uib-tooltip="Select a portal user which should receive notifications for the list">
+          <ui-select-match placeholder="Select User">{{$select.selected.name}}</ui-select-match>
+          <ui-select-choices repeat="item.id as item in   users_list | filter: {name: $select.search}">
+            <div ng-bind-html="item.name|highlight: $select.search"></div>
+          </ui-select-choices>
+        </ui-select>
+
+        <label for="destinationConfigValue" class="text-info" popover-append-to-body="{{false}}" popover-placement="left" popover-trigger="mouseenter"
+          uib-popover="Select a portal user which should receive notifications for the list">
+              <i class="fa fa-question-circle"></i>
+            </label>
+
+        <div class="error-messages" ng-messages="editDestinationsForm.destinationConfigValue.$error" role="alert" ng-messages-multiple>
+          <div ng-messages-include="parts/shared/error-messages.html"></div>
+        </div>
+
+
+      </div>
+      <!-- // USER type -->
+    </div>
+    <div class="form-group" ng-hide="model.destination_type.length>0">
+      <hr>
+      <div class="col-md-12">Please choose "Destination Type"</div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-primary" type="button" ng-click="cancel()">Cancel</button>
+  <button class="btn btn-success" type="button" ng-disabled="editDestinationsForm.$invalid" ng-click="ok(model)">OK</button>
+</div>
