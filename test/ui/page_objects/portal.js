@@ -125,7 +125,7 @@ var PortalHelpers = require('./../common/helpers/portal');
 
 var PortalDataProviders = require('./../common/providers/data/portal');
 
-var ImageOptimizationPage = require('./analytics/ImageOptimization');
+var ImageOptimizationPage = require('./analytics/ImageOptimizationPage');
 
 var SubscriptionsPage = require('./azure/Subscriptions/listPage');
 var ResourcesPerSubscriptionPage = require('./azure/ResourcesPerSubscription/listPage');
@@ -168,6 +168,7 @@ var Portal = {
     versionsPage: DomainVersionsPage
   },
   proxyTrafficPage: ProxyTrafficPage,
+  imageOptimizationPage: ImageOptimizationPage,
   topReportsPage: TopReportsPage,
   topObjectsPage: TopObjectsPage,
   fbtReportsPage: FBTReportsPage,
