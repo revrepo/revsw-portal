@@ -21,21 +21,19 @@ var Portal = require('./../../../page_objects/portal');
 var Constants = require('./../../../page_objects/constants');
 
 describe('Smoke', function () {
-  describe('Proxy traffic reports', function () {
+  describe('Image Optimization reports', function () {
 
     var adminUser = config.get('portal.users.admin');
     var noDomain = 'Select Domain';
 
     beforeAll(function () {
+      browser.sleep(2000);
       Portal.signIn(adminUser);
       Portal.helpers.nav.goToImageOptimization();
     });
 
     afterAll(function () {
       Portal.signOut();
-    });
-
-    beforeEach(function () {
     });
 
     it('should display "Image Optimization Analytics" in the portal',
