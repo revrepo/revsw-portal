@@ -1,0 +1,52 @@
+<div class="container-fluid notifications_list__page" ui-view="page">
+  <div class="row">
+    <div class="col-sm-12">
+      <h2 class="pull-left page-title">
+        Notification Lists
+      </h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="row">
+            <div class="col-md-12">
+              <form class="form form-inline">
+                <div class="form-group" ng-if="auth.isReseller() || auth.isRevadmin()">
+
+                  <ui-select ng-model="account" theme="select2" ng-animate-disabled ng-disabled="_loading" on-select="onAccountSelect($model)"
+                    style="min-width: 300px;" uib-tooltip="Use the menu to select an account you need to manage notification lists for">
+                    <ui-select-match placeholder="Select Account">{{$select.selected.acc_name}}</ui-select-match>
+                    <ui-select-choices repeat="item in accounts | filter: {acc_name: $select.search}">
+                      <div ng-bind-html="item.acc_name|highlight: $select.search"></div>
+                    </ui-select-choices>
+                  </ui-select>
+                </div>
+                <div class="form-group pull-right">
+                  <button type="button" class="btn btn-success" ng-click="onResetChanges($event)"><i class="glyphicon glyphicon-refresh" ng-class="_loading ? 'spin': ''"></i>&nbsp;Reset Changes</button>
+                  <button type="button" class="btn btn-success" ng-click="onSaveAllChanges($event)" ng-disabled="!accountId"><i class="glyphicon" ng-class="_loading ? 'glyphicon-refresh spin': 'glyphicon-ok'"></i>&nbsp;Save Changes</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="panel-body">
+          <div class="col-md-12">
+            <div class="form well" style="padding-top: 10px; padding-bottom: 10px;">
+              <p class="h5 text text-info text-center">Use the page to configure notification lists for your traffic and other alerts (which can be configured on
+                page “Traffic Alerts” of the portal).
+                <br> Each notification list may include multiple destinations like email address, portal user, webbook, etc.
+              </p>
+            </div>
+          </div>
+
+          <div class="col-sm-12" ng-disabled="_loading">
+            <account-notification-lists ng-model="notificationLists" account-users-list="accountUsersList" account-id="{{accountId}}"
+              ng-disabled="_loading || !accountId"></account-notification-lists>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

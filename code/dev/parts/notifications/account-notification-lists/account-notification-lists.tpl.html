@@ -1,0 +1,35 @@
+<div class="account-notification-lists panel panel-default">
+  <div class="panel-heading">
+    <div class="pull-left panel-buttons-left block-inline">
+      <a class="btn btn-default btn-md " ng-click="$ctrl.onCollapsAllNotificationLists()" title="Collapse All Notification Lists"
+        ng-show="!isCollapsedAll">
+        <i class="glyphicon glyphicon-chevron-up "></i>
+      </a>
+      <a class="btn btn-default btn-md " ng-click="$ctrl.onExpandAllNotificationLists()" title="Expand All Notification Lists">
+        <i class="glyphicon glyphicon-chevron-down"></i>
+      </a>
+    </div>
+    <div class="form-group pull-right">
+      <div class="col-sm-12">
+        <a id="addNewNotificationListBtn" ng-disabled="!accountId" ng-click="$ctrl.onAddNewNotificationList(true)" class="btn btn-primary btn-sm "
+          title="Add New Notification List" opover-append-to-body="{{true}}" popover-trigger="mouseenter" popover-placement=" left"
+          uib-popover="Click here to add a new empty notification list. After that you can add to the new list desired notification destinations
+          like email address, portal user, webbook, etc."><i class="glyphicon glyphicon-plus"></i></a>
+      </div>
+    </div>
+    <div class="h4 panel-title"><b class="h4 inline-block">&nbsp; Notification Lists </b>
+      <label class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Notification Lists">
+          <i class="fa fa-question-circle"></i>
+        </label>
+    </div>
+  </div>
+  <div class="panel-body">
+
+    <div class="col-sm-12" ng-disabled="_loading" ng-if="!_loading && $ctrl.notificationLists.length ==0">
+      <p class="text text-info">No notification lists are configured. Please click on “+” sign to add a new Notification List.</p>
+    </div>
+    <div ng-repeat="item in $ctrl.notificationLists">
+      <notification-list ng-model="item" users-list="$ctrl.accountUsersList" on-delete="$ctrl.onDeleteNotificationList($index)"></notification-list>
+    </div>
+  </div>
+</div>

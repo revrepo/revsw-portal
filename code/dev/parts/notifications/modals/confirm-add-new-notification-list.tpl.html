@@ -1,0 +1,26 @@
+<div class="modal-header">
+  <h3 class="modal-title">Add New Notification List</h3>
+</div>
+<div class="modal-body">
+  <form class="form-horizontal" name="newNotificationListForm">
+    <div class="form-group"><label class="col-sm-12"> Please enter new  Notification List Name for create:</label></div>
+    <div class="form-group" ng-class="{ 'has-error': newNotificationListForm.notificationListName.$invalid && newNotificationListForm.notificationListName.$dirty }">
+      <div class="col-sm-12">
+        <input type="text" autofocus class="form-control inline-block" ng-disabled="_loading" ng-model="newLocationName" name="notificationListName"
+          id="notificationListName" placeholder="New List Name" ng-maxlength="150" validate-uniqueness-in-array-notification-lists="exists_names"
+          required>
+        <label for="notificationListName" class="text-info" popover-append-to-body="{{false}}" popover-trigger="mouseenter" popover-placement="left"
+          uib-popover="Specify here the unique name of the notification list (150 characters max). The name is for reference purpose only.">
+              <i class="fa fa-question-circle"></i>
+            </label>
+        <div class="error-messages" ng-messages="newNotificationListForm.notificationListName.$error" role="alert" ng-messages-multiple>
+          <div ng-messages-include="parts/shared/error-messages.html"></div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-primary" type="button" ng-click="cancel()">Cancel</button>
+  <button class="btn btn-success" type="button" ng-disabled="newNotificationListForm.$invalid" ng-click="ok(newLocationName)">OK</button>
+</div>
