@@ -127,7 +127,7 @@ var BrowserTabsHelpers = require('./../common/helpers/browserTabs');
 
 var PortalDataProviders = require('./../common/providers/data/portal');
 
-var ImageOptimizationPage = require('./analytics/ImageOptimizationPage');
+var ImageOptimizationPage = require('./analytics/imageOptimizationPage');
 
 var SubscriptionsPage = require('./azure/Subscriptions/listPage');
 var ResourcesPerSubscriptionPage = require('./azure/ResourcesPerSubscription/listPage');
