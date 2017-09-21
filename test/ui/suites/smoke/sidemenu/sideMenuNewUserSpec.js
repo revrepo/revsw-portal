@@ -39,12 +39,13 @@ describe('Smoke: ', function () {
 
             afterAll(function () {
                 Portal.signOut();
+                browser.sleep(1500); // fix for reseller test fail
             });
-            it('should not display Change Billing Plan option',
+            it('should display Change Billing Plan option',
                 function () {
                     expect(menu.getMenuItem(
                         menu.getChangeBillingPlanOption())
-                        .isPresent()).toBeFalsy();
+                        .isPresent()).toBeTruthy();
                 });
             it('should display Billing Statements option',
                 function () {

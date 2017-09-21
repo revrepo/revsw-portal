@@ -57,6 +57,9 @@ var PlanElement = function (titleEl) {
       labels: {
         title: {
           css: 'h2'
+        },
+        footer: {
+            css: '.panel-footer > p'
         }
       }
     },

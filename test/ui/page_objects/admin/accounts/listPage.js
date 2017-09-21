@@ -23,6 +23,7 @@ var CompanyTable = require('./table/table');
 var Pager = require('./../../common/pager');
 var Searcher = require('./../../common/searcher');
 var AddCompany = require('./addCompany');
+var ChangeVendorModal = require('./vendorModal/changeVendorModal');
 
 // This `Company List` Page Object abstracts all operations or actions that a
 // common user could do in the Company List page from the Portal app/site.
@@ -46,6 +47,11 @@ var CompanyList = {
       addNewCompany: {
         linkText: 'Add New Company'
       }
+    },
+    links: {
+      vendor: {
+        css: 'a[ng-click="onVendorUpdate(item)"]'
+      }
     }
   },
 
@@ -56,7 +62,7 @@ var CompanyList = {
   pager: Pager,
   searcher: Searcher,
   addCompany: AddCompany,
-
+  changeVendorModal: ChangeVendorModal,
   // ## Methods to retrieve references to UI elements (Selenium WebDriver
   // Element)
 
@@ -68,8 +74,23 @@ var CompanyList = {
    *
    * @returns {Selenium WebDriver Element}
    */
-  getContainerFluidElem: function () {
+  getContainerFluidElem: function() {
     return element.all(by.css(this.locators.views.container));
+  },
+
+  // ## Methods to retrieve references to UI elements (Selenium WebDriver
+  // Element)
+
+  /**
+   * ### CompanyList.getVendorLink()
+   *
+   * Returns the reference to the `Vendor` link element (Selenium WebDriver
+   * Element) from the Company List page from the Portal app.
+   *
+   * @returns {Selenium WebDriver Element}
+   */
+  getVendorLink: function () {
+    return element.all(by.css(this.locators.links.vendor.css)).get(0);
   },
 
   /**
@@ -113,6 +134,33 @@ var CompanyList = {
     return this
       .getAddNewCompanyBtn()
       .click();
+  },
+
+  /**
+   * ### CompanyList.clickVendorLink()
+   *
+   * Triggers a click to the `Vendor` link from the Company List page
+   * from the Portal app
+   *
+   * @returns {Promise}
+   */
+  clickVendorLink: function () {
+    return this
+      .getVendorLink()
+      .click();
+  },
+
+  /**
+   * ### CompanyList.getTitle()
+   *
+   * Gets the `Title` label from the Company List page
+   *
+   * @returns {Promise}
+   */
+  getVendorLinkText: function () {
+    return this
+      .getVendorLink()
+      .getText();
   },
 
   /**

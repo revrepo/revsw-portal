@@ -90,6 +90,9 @@ var rowLocators = {
         className: 'glyphicon-equalizer'
       }
     }
+  },
+  vendor: {
+    css: '.account-vendor'
   }
 };
 

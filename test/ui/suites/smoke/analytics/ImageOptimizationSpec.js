@@ -1,9 +1,8 @@
-
 /*************************************************************************
  *
  * REV SOFTWARE CONFIDENTIAL
  *
- * [2013] - [2017] Rev Software, Inc.
+ * [2013] - [2015] Rev Software, Inc.
  * All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains
@@ -17,120 +16,59 @@
  * from Rev Software, Inc.
  */
 
-
 var config = require('config');
 var Portal = require('./../../../page_objects/portal');
 var Constants = require('./../../../page_objects/constants');
 
 describe('Smoke', function () {
-  var users = [
-    config.get('portal.users.revAdmin'),
-    config.get('portal.users.admin'),
-    config.get('portal.users.reseller'),
-    config.get('portal.users.user'),
-    config.get('portal.users.roUser')
-  ];
-var filterResults = Constants.mobileAnalytics.imageOptimizationPage.filterResults;
+  describe('Image Optimization reports', function () {
 
-   users.forEach(function(user) {
+    var adminUser = config.get('portal.users.admin');
+    var noDomain = 'Select Domain';
 
-    describe('With user: ' + user.role, function() {
+    beforeAll(function () {
+      browser.sleep(2000);
+      Portal.signIn(adminUser);
+      Portal.helpers.nav.goToImageOptimization();
+    });
 
-      describe('Image Optimization', function() {
+    afterAll(function () {
+      Portal.signOut();
+    });
 
-          beforeAll(function() {
-          Portal.signIn(user);
-          Portal.helpers.nav.goToImageOptimization();
-        });
-
-        afterAll(function() {
-          Portal.signOut();
-        });
-  
-	
-    it('should displayed all performance filters', function(){ 
-      Portal.mobileAnalytics.ImageOptimizationPage.getFilterPerformance()
-          .getAttribute('ng-model')
-            .then(function(value) {
-	 		        expect(value[0]).toEqual(filterResults.attrDelay);
-              expect(value[1]).toEqual(filterResults.attrCountry);
-              expect(value[2]).toEqual(filterResults.attrOS);
-              expect(value[3]).toEqual(filterResults.attrDevice);
-              expect(value[4]).toEqual(filterResults.attrBrowser);
-           });
-       }); 
-
-
-    it('should displayed all bandwidth filters', function(){ 
-        Portal.mobileAnalytics.ImageOptimizationPage.getFilterBandwidth()
-          .getAttribute('ng-model')
-            .then(function(value) {      
-              expect(value[0]).toEqual(filterResults.attrDelay);
-              expect(value[1]).toEqual(filterResults.attrCountry);
-              expect(value[2]).toEqual(filterResults.attrOS);
-              expect(value[3]).toEqual(filterResults.attrDevice);
-              expect(value[4]).toEqual(filterResults.attrBrowser);
-
-           });
-       }); 
-
-
-    it('should displayed all format and resolution filters', function(){ 
-        Portal.mobileAnalytics.ImageOptimizationPage.getFilterFormatResolution()
-          .getAttribute('ng-model')
-            .then(function(value) {   
-              expect(value[0]).toEqual(filterResults.attrDelay);
-              expect(value[1]).toEqual(filterResults.attrCountry);
-              expect(value[2]).toEqual(filterResults.attrOS);
-              expect(value[3]).toEqual(filterResults.attrDevice);
-              expect(value[4]).toEqual(filterResults.attrBrowser);
-           });
-       }); 
-
-
-    it('should displayed button update report', function(){ 
-         Portal.mobileAnalytics.ImageOptimizationPage.getUpdateReport()
-            .then(function(value) {  
-              expect(value.length === 3).toBe(true);
-          });
-       });
-
-
-    it('should displayed chart context menu', function(){ 
-    	Portal.mobileAnalytics.ImageOptimizationPage.getChartContextMenu()
-          .then(function(value) { 
-            expect(value.length === 4).toBe(true);
-    	   });
-        });
-
-
-    it('should displayed span toggle', function() {
-        Portal.mobileAnalytics.ImageOptimizationPage.getListDomains()
-           .isDisplayed().then(function(value) {
-             expect(value).toBe(true);
-            });
-        });
-
-
-    it('should displayed combobox search', function() {
-         Portal.mobileAnalytics.ImageOptimizationPage.clickListDomains();
-         Portal.mobileAnalytics.ImageOptimizationPage.getComboBoxSearch()
-          .isDisplayed()
-            .then(function(value) {
-              expect(value).toBe(true);
-            });  
-        });
-
-
-    it('should displayed button hide/show menu', function() {
-	   Portal.mobileAnalytics.ImageOptimizationPage.getHideMenu().isDisplayed().then(function(value) {
-              expect(value).toBe(true); 
-           });
-       });
-
-
-         });
+    it('should display "Image Optimization Analytics" in the portal',
+      function () {
+        var titleReport = Constants.imageOptimization.TITLE;
+        expect(Portal.imageOptimizationPage.getSelectedDomain()).toEqual(noDomain);
+        expect(Portal.imageOptimizationPage.getTitle()).toEqual(titleReport);
       });
-   });
- });
 
+    it('should display the default "Performance Improvement" report with empty data',
+      function () {
+        var titleChart = Constants.imageOptimization.PERFORMANCE_IMPROVEMENT;
+        expect(Portal.imageOptimizationPage.getSelectedDomain()).toEqual(noDomain);
+        expect(Portal.imageOptimizationPage.getChartTitle()).toContain(titleChart);
+      });
+
+    it('should display the default "Bandwidth Saved" report with empty data',
+      function () {
+        var titleChart = Constants.imageOptimization.BANDWIDTH_SAVED;
+        expect(Portal.imageOptimizationPage.getSelectedDomain()).toEqual(noDomain);
+        expect(Portal.imageOptimizationPage.getChartTitle()).toContain(titleChart);
+      });
+
+    it('should display the default "Image Format Changes" report with empty data',
+      function () {
+        var titleChart = Constants.imageOptimization.FORMAT_CHANGES;
+        expect(Portal.imageOptimizationPage.getSelectedDomain()).toEqual(noDomain);
+        expect(Portal.imageOptimizationPage.getChartTitle()).toContain(titleChart);
+      });
+
+    it('should display default "Image Resolution Changes" report with empty data',
+      function () {
+        var titleChart = Constants.imageOptimization.RESOLUTION_CHANGES;
+        expect(Portal.imageOptimizationPage.getSelectedDomain()).toEqual(noDomain);
+        expect(Portal.imageOptimizationPage.getChartTitle()).toContain(titleChart);
+      });
+  });
+});

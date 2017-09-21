@@ -55,17 +55,17 @@ describe('Smoke', function () {
     [
       'Developer',
       'Bronze',
-      'Silver',
+      //'Silver', Silver plan should not be displayed
       'Gold'
     ].forEach(function (plan) {
-        it('should display `' + plan + '` plan.',
-          function () {
-            expect(Portal.accounts.billingPlanPage
-              .getPlanEl(plan)
-              .getTitleEl()
-              .isDisplayed()).toBeTruthy();
-          });
-      });
+      it('should display `' + plan + '` plan.',
+        function () {
+          expect(Portal.accounts.billingPlanPage
+            .getPlanEl(plan)
+            .getTitleEl()
+            .isDisplayed()).toBeTruthy();
+        });
+    });
 
     it('should display current plan.',
       function () {

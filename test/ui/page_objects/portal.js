@@ -123,13 +123,15 @@ var DataProvider = require('./../common/providers/data');
 
 var PortalHelpers = require('./../common/helpers/portal');
 
+var BrowserTabsHelpers = require('./../common/helpers/browserTabs');
+
 var PortalDataProviders = require('./../common/providers/data/portal');
 
-var ImageOptimizationPage = require('./analytics/ImageOptimization');
+var ImageOptimizationPage = require('./analytics/imageOptimizationPage');
 
-var SubscriptionsPage = require('./azure/Subscriptions');
-var ResourcesPerSubscriptionPage = require('./azure/ResourcesPerSubscription');
-var ResourcesPage = require('./azure/Resources');
+var SubscriptionsPage = require('./azure/Subscriptions/listPage');
+var ResourcesPerSubscriptionPage = require('./azure/ResourcesPerSubscription/listPage');
+var ResourcesPage = require('./azure/Resources/listPage');
 
 // This `Portal` Page Object is the entry point to use all other Page Objects
 // that abstract all components from the Portal App.
@@ -141,6 +143,7 @@ var Portal = {
 
   // Properties
   baseUrl: Utils.getBaseUrl(),
+  baseUrlNuubit: Constants.baseUrlNuubit,
 
   // Common components that are used in more than one page in this Portal object
   header: Header,
@@ -168,6 +171,7 @@ var Portal = {
     versionsPage: DomainVersionsPage
   },
   proxyTrafficPage: ProxyTrafficPage,
+  imageOptimizationPage: ImageOptimizationPage,
   topReportsPage: TopReportsPage,
   topObjectsPage: TopObjectsPage,
   fbtReportsPage: FBTReportsPage,
@@ -215,7 +219,7 @@ var Portal = {
     listPage: SSLNamesListPage,
     addPage: SSLNamesAddPage
   },
-  wafRules:{
+  wafRules: {
     listPage: WAFRulePage,
     addPage: WAFRuleAddPage,
     editPage: WAFRuleEditPage
@@ -245,21 +249,22 @@ var Portal = {
     editPage: ZoneRecordsEditPage
   },
   mobileAnalytics: {
-	  trafficLevelsPage: MobileAnalyticsTrafficLevelsPage,
-	  topReportsPage: MobileAnalyticsTopReportsPage,
-	  topObjectsPage : MobileAnalyticsTopObjectsPage,
-	  trafficDistributions: MobileAnalyticsTrafficDistributionsPage,
+    trafficLevelsPage: MobileAnalyticsTrafficLevelsPage,
+    topReportsPage: MobileAnalyticsTopReportsPage,
+    topObjectsPage: MobileAnalyticsTopObjectsPage,
+    trafficDistributions: MobileAnalyticsTrafficDistributionsPage,
     ImageOptimizationPage: ImageOptimizationPage
   },
   azureMarketplace: {
-      SubscriptionsPage: SubscriptionsPage,
-      ResourcesPerSubscriptionPage: ResourcesPerSubscriptionPage,
-      ResourcesPage: ResourcesPage
+    SubscriptionsPage: SubscriptionsPage,
+    ResourcesPerSubscriptionPage: ResourcesPerSubscriptionPage,
+    ResourcesPage: ResourcesPage
   },
-  
+
   accountResourcesPage: AccountResourcesPage,
 
   helpers: PortalHelpers,
+  browserTabs: BrowserTabsHelpers,
 
   dataProviders: PortalDataProviders,
 
@@ -291,6 +296,42 @@ var Portal = {
         else {
           // There is not any session created yet.
           me.load();
+        }
+        return me.loginPage
+          .signIn(user)
+          .then(function () {
+            me.session.setCurrentUser(user);
+          });
+      });
+    return Promise.resolve(promise);
+  },
+
+  /**
+   * ### Portal.signInNuubit()
+   *
+   * Signs in the specified user into the Portal Nuubit app
+   * @param {Object} user, object with the following schema
+   *
+   *     {
+   *         email: String,
+   *         password: String
+   *     }
+   *
+   * @returns {Promise}
+   */
+  signInNuubit: function (user) {
+    var me = this;
+    var promise = this.header
+      .isPresent()
+      .then(function (isPresent) {
+        if (isPresent) {
+          // Session is already open.
+          // So, closing it and starting new session for user.
+          me.signOut();
+        }
+        else {
+          // There is not any session created yet.
+          me.loadNuubit();
         }
         return me.loginPage
           .signIn(user)
@@ -344,6 +385,18 @@ var Portal = {
   load: function () {
     return browser.get(this.baseUrl);
   },
+
+  /**
+   * ### Portal.loadNuubit()
+   *
+   * Loads the Nuubit URL for Portal App under test.
+   *
+   * @returns {Promise}
+   */
+  loadNuubit: function () {
+    return browser.get(this.baseUrlNuubit);
+  },
+
   /**
    * ### Portal.goToCustomUrl()
    *
@@ -353,7 +406,7 @@ var Portal = {
    * @returns {Promise}
    */
   goToCustomUrl: function (appPathUrl) {
-    return browser.get(this.baseUrl+appPathUrl);
+    return browser.get(this.baseUrl + appPathUrl);
   },
   // ## User Helper methods
 
@@ -600,11 +653,11 @@ var Portal = {
       me.admin.apiKeys.listPage.clickAddNewApiKey();
 
       me.admin.apiKeys.addPage.getModalEl().isPresent()
-        .then(function(value) {
+        .then(function (value) {
           if (isUserAdmin && account && value) {
             me.admin.apiKeys.addPage.createAccount(account);
           }
-      });
+        });
 
       me.admin.apiKeys.listPage.searcher.clearSearchCriteria();
       me.admin.apiKeys.listPage.searchAndClickEdit('New API Key');
@@ -780,7 +833,7 @@ var Portal = {
           .getFirstRow()
           .clickManageRecords();
       });
-  }
+  },
 };
 
 module.exports = Portal;

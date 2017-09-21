@@ -149,6 +149,13 @@ var Constants = {
     REQUEST_STATUS: 'Success/Failure Request Status',
     EDGE_CACHE_EFFICIENCY_HITS: 'Edge Cache Efficiency Hits'
   },
+  imageOptimization: {
+    TITLE: 'Image Optimization Analytics',
+    PERFORMANCE_IMPROVEMENT: 'Performance Improvement By Image Optimization',
+    BANDWIDTH_SAVED: 'Bandwidth Saved By Image Optimization',
+    FORMAT_CHANGES: 'Image Format Changes',
+    RESOLUTION_CHANGES: 'Image Resolution Changes'
+  },
   topReports: {
     TITLE: 'Top Proxy Traffic Reports',
     EDGE_CACHE_RATIO: 'Edge Cache Hit/Miss Ratio',
@@ -213,9 +220,9 @@ var Constants = {
       NSG_STATS_NOT_FOUND: 'SDK stats reporting API service not found',
       MSG_SERVER_NOT_FOUND: 'Server group not found',
       MSG_ALREADY_EXISTS: 'The application name and platform is' +
-        ' already registered in the system',
+      ' already registered in the system',
     },
-    apiKeys:{
+    apiKeys: {
       MSG_SUCCESS_UPDATE: 'Successfully updated the API key'
     },
     users: {
@@ -223,14 +230,14 @@ var Constants = {
       MSG_SUCCESS_UPDATE: 'Successfully updated the user',
       MSG_SUCCESS_DELETE: 'Successfully deleted the user',
       MSG_SUCCESS_UPDATE_PASSWORD: 'Successfully updated the password',
-      MSG_FAIL_ADD_EMAIL_EXISTS:'The email address is already used by another user',
+      MSG_FAIL_ADD_EMAIL_EXISTS: 'The email address is already used by another user',
     },
-    accounts:{
+    accounts: {
       MSG_SUCCESS_ADD: 'Successfully created new account',
       MSG_SUCCESS_UPDATE: 'Successfully updated the account',
       MSG_SUCCESS_DELETE: 'Successfully deleted the account',
     },
-    domains:{
+    domains: {
       MSG_SUCCESS_ADD: 'Successfully created new domain configuration',
       MSG_SUCCESS_VERIFY: 'The configuration has been successfully verified',
       MSG_SUCCESS_UPDATE: 'Successfully saved the domain configuration',
@@ -239,14 +246,24 @@ var Constants = {
       MSG_FAIL_ADD_DUPLICATE_NAME: 'The domain name is already registered in the system',
       MSG_FAIL_RO_USER_CANNOT_ADD: 'Access denied. Do you have a read-only user account?'
     },
-    sslCerts:{
+    sslCerts: {
       MSG_FAIL_DELETE: 'The SSL certificate is in use by active domain(s) ' +
       '- please update the domain(s) before removing the SSL certificate'
     },
-    wafRules:{
+    wafRules: {
       MSG_SUCCESS_ADD: 'The WAF rule has been successfully created'
     }
   },
+
+  backgroundColor: {
+      revapm: 'rgba(255, 140, 0, 0.7)',
+      nuubit: 'rgba(0, 48, 86, 1)' 
+  },
+
+  footerMessage: 'Not sure which plan to choose? Talk to an expert',
+
+  baseUrlNuubit: 'https://testsjc20-portal-nuubit.revsw.net/#/login',
+  nuubitHomePage: 'https://www.nuubit.com/',
 
   // TODO: Everything above this line needs revision/clean up
 
@@ -256,7 +273,7 @@ var Constants = {
       android: 'Android',
       windowsMobile: 'Windows_Mobile'
     }
-  }, 
+  },
 
   mobileAnalytics: {
     imageOptimizationPage: {
@@ -265,21 +282,21 @@ var Constants = {
         attrCountry: 'ngFilters.country ',
         attrOS: 'ngFilters.os ',
         attrDevice: 'ngFilters.device ',
-        attrBrowser:  'ngFilters.browser '
-      } 
+        attrBrowser: 'ngFilters.browser '
+      }
     }
-},
+  },
 
- azureMarketplace: {
-   subscriptionsPage: {
+  azureMarketplace: {
+    subscriptionsPage: {
       filterResults: {
         attrSubsID: 'filter.predicate === \'subscription_id\'',
         attrCreated: 'filter.predicate === \'created_at\'',
         attrUpdated: 'filter.predicate === \'updated_at\'',
-        attrSubState:'filter.predicate === \'subscription_state\''
-      } 
+        attrSubState: 'filter.predicate === \'subscription_state\''
+      }
     }
-}
+  }
 
 };
 module.exports = Constants;

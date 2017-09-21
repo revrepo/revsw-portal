@@ -332,9 +332,23 @@
       },
       /**
        * @name OTP_WILDCARD_DELAY
-       * @description OTP digit change to wildcard delay in milliseconds   
+       * @description OTP digit change to wildcard delay in milliseconds
        */
-      OTP_WILDCARD_DELAY: 1000
+      OTP_WILDCARD_DELAY: 1000,
+      /**
+       * @name NOTIFICATION_LIST_DEFAULT
+       * @description default name for Notification List for add
+       */
+      NOTIFICATION_LIST_DEFAULT: {
+        'list_name': 'Default List Name',
+        'destinations':[]
+      },
+      NOTIFICATION_DESTINATIONS_TYPE: {
+        'email': 'Email',
+        'user': 'Portal User',
+        // 'webhook': 'Webhook',// TODO: use later
+        // 'slack': 'Slack' // TODO: use later
+      }
     });
 
 })(angular, window);

@@ -36,6 +36,16 @@ var Header = {
         css: '.paper-header .user-info > a'
       }
     },
+    container: {
+      login: {
+        css: '.login_box'
+      }
+    },
+    header: {
+      bar: {
+        css: '.navbar'
+      }
+    },
     menu: {
       navbar: {
         css: '.collapse.navbar-collapse .nav.navbar-nav',
@@ -70,7 +80,15 @@ var Header = {
       menuToggleBtn: {
         css: '#menuToggleBtn'
       }
+    },
+    images: {
+      css: {
+        logo: '#logo img'
+      }
     }
+  },
+  backGround: {
+      css: 'background-color'
   },
 
   // ## Methods
@@ -85,6 +103,18 @@ var Header = {
    */
   getNavBar: function () {
     return element.all(by.css(this.locators.menu.navbar.css)).first();
+  },
+
+   /**
+   * ### Header.getHeaderBar()
+   *
+   * Return the reference to the `Nav Menu` container (Selenium WebDriver
+   * Element) from the Portal app
+   *
+   * @returns {Object} Selenium WebDriver Element
+   */
+  getHeaderBar: function () {
+    return element(by.css(this.locators.header.bar.css));
   },
 
   /**
@@ -124,6 +154,20 @@ var Header = {
     return this
       .getUserInfoMenu()
       .element(by.partialLinkText(this.locators.menu.user.logout.linkText));
+  },
+
+  /**
+   * ### Header.getNavBarColor()
+   *
+   * Return the color of the navigation bar (Selenium WebDriver Element)
+   * on the Portal app.
+   *
+   * @returns {Object} Selenium WebDriver Element
+   */
+  getNavBarBGColor: function () {
+    return this
+      .getHeaderBar()
+      .getCssValue(this.backGround.css);
   },
 
   // ## Helper Methods
@@ -264,6 +308,32 @@ var Header = {
   clickMenuToggleBtn: function () {
     return this
       .getMenuToggleBtn()
+      .click();
+  },
+
+ /**
+   * ### DashboardList.getLogo()
+   *
+   * Gets the Logo image from the Dashboard List page
+   *
+   * @returns {Promise}
+   */
+  getLogo: function() {
+    return element(by.css(this.locators.images.css.logo));
+  },
+
+   // ## Methods to interact with the User List Page components
+
+  /**
+   * ### DashboardList.clickLogo()
+   *
+   * Clicks the Logo picture to redirect to nuubit.com
+   *
+   * @returns {Object} Promise
+   */
+  clickLogo: function () {
+    return this
+      .getLogo()
       .click();
   }
 };
