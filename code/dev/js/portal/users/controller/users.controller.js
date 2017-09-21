@@ -206,7 +206,7 @@
       delete _model.passwordConfirm;
       $scope.create(_model, isStay)
         .then(function (data) {
-          initModel();
+          initModel(true);
           if (angular.isArray($scope.model.companyId)) {
             $scope.model.companyId.length = 0;
           }
@@ -214,6 +214,7 @@
             $scope.model.domain.length = 0;
           }
           $scope.clearModel();
+          initModel(true);
           $scope.alertService.success(data);
         })
         .catch($scope.alertService.danger);
