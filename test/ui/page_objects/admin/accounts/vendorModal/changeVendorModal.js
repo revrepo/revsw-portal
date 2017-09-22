@@ -20,6 +20,9 @@
 
 // This `Change Vendor Modal` Object abstracts all operations or actions that a
 // common user could do in the change vendor modal from the Portal app/site.
+
+var DropDownWidget = require('./../../../common/dropDownWidget');
+
 var ChangeVendorModal = {
 
     // ## Properties
@@ -46,6 +49,19 @@ var ChangeVendorModal = {
     },
 
     /**
+    * ### ChangeVendorModal.getModalContainer()
+    *
+    * Returns the reference to the `Vendor Dropdown` element (Selenium WebDriver
+    * Element) from the vendor change modal.
+    *
+    * @returns {Selenium WebDriver Element}
+    */
+    getModalContainer: function () {
+        return element(by.css(this.locators.container.css));
+    },
+
+
+    /**
    * ### ChangeVendorModal.getVendorDropdown()
    *
    * Returns the reference to the `Vendor Dropdown` element (Selenium WebDriver
@@ -54,7 +70,7 @@ var ChangeVendorModal = {
    * @returns {Selenium WebDriver Element}
    */
     getVendorDropdown: function () {
-        return element(by.css(this.locators.vendorDropdown.css));
+        return new DropDownWidget(by.css(this.locators.vendorDropdown.css));
     },
 
     /**
@@ -67,6 +83,18 @@ var ChangeVendorModal = {
    */
     getChangeButton: function () {
         return element(by.css(this.locators.buttons.change.css));
+    },
+
+    /**
+    * ### ChangeVendorModal.getCancelButton()
+    *
+    * Returns the reference to the `Cancel Button` element (Selenium WebDriver
+    * Element) from the vendor change modal.
+    *
+    * @returns {Selenium WebDriver Element}
+    */
+    getCancelButton: function () {
+        return element(by.css(this.locators.buttons.cancel.css));
     },
 
     /**
@@ -97,12 +125,24 @@ var ChangeVendorModal = {
     /**
     * ### ChangeVendorModal.clickChange()
     *
-    * Clicks on the change buton
+    * Clicks on the change button
     *
     */
     clickChange: function () {
         return this
             .getChangeButton()
+            .click();
+    },
+
+    /**
+    * ### ChangeVendorModal.clickCancel()
+    *
+    * Clicks on the cancel button
+    *
+    */
+    clickCancel: function () {
+        return this
+            .getCancelButton()
             .click();
     },
 
@@ -114,55 +154,19 @@ var ChangeVendorModal = {
     */
     isDisplayed: function () {
         return this
-            .getVendorDropdown()
+            .getModalContainer()
             .isPresent();
     },
 
     /**
     * ### ChangeVendorModal.picknewVendor()
     *
-    * Picks a different vendor than the one thats specified
+    * Selects a new vendor
     *
     */
-    pickNewVendor: function (currVendor) {
-        var me = this;
-
-        var currVendorText;
-        currVendor.getText().then(function (text) {
-            currVendorText = text;
-        });
-        var dropdown = me.getVendorDropdown();
-        dropdown.click();
-        var picks = me.getVendorOptions();
-        picks.getText().then(function (text) {
-            if (text.indexOf(currVendorText) !== -1 && text.length > 2) {
-                var i = text.indexOf(currVendorText);
-                //pick different vendor
-                picks.get(i === 0 ? 1 : 0).click();
-                me.clickChange();
-            }
-        });
-    },
-
-    /**
-    * ### ChangeVendorModal.pickOldVendor()
-    *
-    * Reverts to original vendor
-    *
-    */
-    pickOldVendor: function (oldVendor) {
-        var me = this;
-        var dropdown = me.getVendorDropdown();
-        dropdown.click();
-        var picks = me.getVendorOptions();
-        picks.getText().then(function (text) {
-            if (text.indexOf(oldVendor) !== -1 && text.length > 2) {
-                var i = text.indexOf(oldVendor);
-                //pick different vendor
-                picks.get(i).click();
-                me.clickChange();
-            }
-        });
+    pickNewVendor: function (vendor) {
+        this.getVendorDropdown().setValue(vendor);
+        this.clickChange();
     }
 };
 
