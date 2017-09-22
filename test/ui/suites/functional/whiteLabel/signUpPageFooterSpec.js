@@ -24,23 +24,24 @@ var Constants = require('./../../../page_objects/constants');
 describe('Functional', function () {
   describe('Copyright message on sign up page', function () {
     var adminUser = config.get('portal.users.admin');
-    var defaultFooterMessage = Constants.footerMessage; 
+    var defaultFooterMessage = Constants.footerMessage;
 
     it('should display copyright message on revsw sign up page', function () {
       Portal.load();
-      Portal.loginPage.clickSignUp();
-      
-      var footerMessage = Portal.signUp.plansPage.getFooterMessageText();
-      expect(footerMessage).toEqual(defaultFooterMessage);
+      Portal.loginPage.clickSignUp().then(function () {
+        var footerMessage = Portal.signUp.plansPage.getFooterMessageText();
+        expect(footerMessage).toEqual(defaultFooterMessage);
+      });
+
     });
 
-     it('should display copyright message on nuubit sign up page', function () {
+    it('should display copyright message on nuubit sign up page', function () {
       Portal.loadNuubit();
       Portal.loginPage.clickSignUp();
 
       var footerMessage = Portal.signUp.plansPage.getFooterMessageText();
       expect(footerMessage).toEqual(defaultFooterMessage);
     });
-  
+
   });
 });

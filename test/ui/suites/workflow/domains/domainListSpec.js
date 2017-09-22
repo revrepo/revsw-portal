@@ -24,7 +24,7 @@ var Constants = require('./../../../page_objects/constants');
 describe('Workflow', function () {
   describe('Add Domain', function () {
 
-    var user = config.get('portal.users.admin');
+    var user = config.get('portal.users.revAdmin');
 
     beforeAll(function () {
       Portal.signIn(user);

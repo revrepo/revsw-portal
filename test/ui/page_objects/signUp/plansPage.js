@@ -115,7 +115,7 @@ var PlansList = {
     * @returns {Object} Selenium WebDriver Element
     */
   getFooterMessageEl: function () {
-    return element(by.css(this.locators.labels.footer.css)).get(0);
+    return element.all(by.css(this.locators.labels.footer.css)).get(0);
   },
 
   /**
