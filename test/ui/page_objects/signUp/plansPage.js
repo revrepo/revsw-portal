@@ -36,18 +36,18 @@ var PlansList = {
         css: 'h2.billing-plan-title'
       },
       footer: {
-            css: '.panel-footer > p'
+        css: '.panel-footer > p'
       }
     },
     images: {
       css: {
-        logo: '.img-responsive' 
+        logo: '.img-responsive'
       }
     },
     copyright: {
-      css:{
+      css: {
         brand: '.footerNoteA',
-        secondBrand: 'p.text-center'  
+        secondBrand: 'p.text-center'
       }
     },
     links: {
@@ -115,22 +115,21 @@ var PlansList = {
   * @returns {Object} Selenium WebDriver Element
   */
  getFooterMessageEl: function () {
-    return element.all(by.css(this.locators.labels.footer.css))
-      .get(0);   
+    return element.all(by.css(this.locators.labels.footer.css)).get(0);
   },
 
-/**
-  * ### PlanElement.getFooterMessageText()
-  *
-  * Returns the Text of the Footer.
-  *
-  * @returns {Object} Promise
-  */
+  /**
+    * ### PlanElement.getFooterMessageText()
+    *
+    * Returns the Text of the Footer.
+    *
+    * @returns {Object} Promise
+    */
   getFooterMessageText: function () {
     return this
       .getFooterMessageEl()
       .getText();
-    },
+  },
 
   // ## Methods to interact with the User List Page components
 
@@ -147,29 +146,29 @@ var PlansList = {
       .click();
   },
 
- /**
-   * ### PlansList.clickLogo()
-   *
-   * Clicks the Logo picture to redirect to nuubit.com
-   *
-   * @returns {Object} Promise
-   */
+  /**
+    * ### PlansList.clickLogo()
+    *
+    * Clicks the Logo picture to redirect to nuubit.com
+    *
+    * @returns {Object} Promise
+    */
   clickLogo: function () {
     return this
       .getLogo()
       .click();
   },
-  
-  getLogo: function(){
-     return element(by.css(this.locators.images.css.logo));
+
+  getLogo: function () {
+    return element(by.css(this.locators.images.css.logo));
   },
 
-  getBrand: function(){
-     return element(by.css(this.locators.copyright.css.brand));
+  getBrand: function () {
+    return element(by.css(this.locators.copyright.css.brand));
   },
 
-  getSecondBrand: function(){
-     return element(by.css(this.locators.copyright.css.secondBrand));
+  getSecondBrand: function () {
+    return element(by.css(this.locators.copyright.css.secondBrand));
   },
 
   /**

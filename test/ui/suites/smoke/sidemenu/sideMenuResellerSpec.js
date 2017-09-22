@@ -32,12 +32,11 @@ describe('Smoke: ', function () {
 
                 var menu;
 
-                beforeAll(function (done) {
+                beforeAll(function () {
                     Portal.signIn(user);
 
                     menu = Portal.sideMenu;
                     menu.expand(menu.getBillingOption());
-                    done();
                 });
 
                 afterAll(function () {

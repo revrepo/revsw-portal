@@ -23,6 +23,7 @@ var CompanyTable = require('./table/table');
 var Pager = require('./../../common/pager');
 var Searcher = require('./../../common/searcher');
 var AddCompany = require('./addCompany');
+var ChangeVendorModal = require('./vendorModal/changeVendorModal');
 
 // This `Company List` Page Object abstracts all operations or actions that a
 // common user could do in the Company List page from the Portal app/site.
@@ -61,7 +62,7 @@ var CompanyList = {
   pager: Pager,
   searcher: Searcher,
   addCompany: AddCompany,
-
+  changeVendorModal: ChangeVendorModal,
   // ## Methods to retrieve references to UI elements (Selenium WebDriver
   // Element)
 
@@ -73,7 +74,7 @@ var CompanyList = {
    *
    * @returns {Selenium WebDriver Element}
    */
-  getContainerFluidElem: function () {
+  getContainerFluidElem: function() {
     return element.all(by.css(this.locators.views.container));
   },
 

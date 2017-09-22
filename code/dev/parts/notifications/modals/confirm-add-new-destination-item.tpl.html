@@ -1,0 +1,78 @@
+<div class="modal-header">
+  <h3 class="modal-title">Add New Destination</h3>
+</div>
+<div class="modal-body">
+  <form class="form-horizontal" name="newDestinationsForm">
+    <div class="form-group">
+      <label class="col-sm-12"> Destination Type:</label>
+      <div class="col-sm-12">
+        <div class="col-md-12">
+          <label class="radio inline-block">
+                    <input type="radio" ng-model="model.destination_type" value="user" class="inline-block" style="margin-top: 0;"> Portal User
+             </label>
+          <label class="text-info" popover-append-to-body="{{false}}" popover-trigger="mouseenter" popover-placement="right" uib-popover="Select the option to send notifications to a user of the customer portal. Messages will be dispatched to the user’s email
+              address (login name) configured in the user’s profile.">
+                    <i class="fa fa-question-circle">   </i>
+                  </label>
+        </div>
+        <div class="col-md-12">
+          <label class="radio inline-block">
+                    <input type="radio" ng-model="model.destination_type" value="email" style="margin-top: 0;"> Email Address
+               </label>
+          <label class="text-info" popover-append-to-body="{{false}}" popover-trigger="mouseenter" popover-placement="right" uib-popover="The option allows you to send notifications to a specified email address">
+                     <i class="fa fa-question-circle"></i>
+                  </label>
+        </div>
+      </div>
+    </div>
+    <div class="form-group" ng-class="{ 'has-error': newDestinationsForm.destinationConfigValue.$invalid && newDestinationsForm.destinationConfigValue.$dirty }"
+      ng-hide="!model.destination_type.length" ng-switch="model.destination_type">
+      <label class="col-sm-12"> Destination:</label>
+      <!-- EMAIL type-->
+      <div class="col-sm-12" ng-switch-when="email">
+
+        <input type="email" autofocus class="form-control inline-block" ng-disabled="_loading" ng-model="model.email" name="destinationConfigValue"
+          id="destinationConfigValue" placeholder="Email" required>
+        <label for="destinationConfigValue" class="text-info" popover-append-to-body="{{false}}" popover-trigger="mouseenter" popover-placement="left"
+          uib-popover="Specify here an email address which should receive notifications for the destination">
+              <i class="fa fa-question-circle"></i>
+            </label>
+
+        <div class="error-messages" ng-messages="newDestinationsForm.destinationConfigValue.$error" role="alert" ng-messages-multiple>
+          <div ng-messages-include="parts/shared/error-messages.html"></div>
+        </div>
+      </div>
+      <!-- // EMAIL type -->
+      <!-- USER type-->
+      <div class="col-md-12" ng-switch-when="user">
+        <ui-select ng-model="model.user_id" theme="select2" ng-animate-disabled ng-disabled="_loading" on-select="onUserSelect($model)"
+          style="min-width: 550px;" uib-tooltip="Select a portal user which should receive notifications for the list">
+          <ui-select-match placeholder="Select User">{{$select.selected.name}}</ui-select-match>
+          <ui-select-choices repeat="item.id as item in   users_list | filter: {name: $select.search}">
+            <div ng-bind-html="item.name|highlight: $select.search"></div>
+          </ui-select-choices>
+        </ui-select>
+
+        <label for="destinationConfigValue" class="text-info" popover-append-to-body="{{false}}" popover-placement="left" popover-trigger="mouseenter"
+          uib-popover="Select a portal user which should receive notifications for the list">
+              <i class="fa fa-question-circle"></i>
+            </label>
+
+        <div class="error-messages" ng-messages="newDestinationsForm.destinationConfigValue.$error" role="alert" ng-messages-multiple>
+          <div ng-messages-include="parts/shared/error-messages.html"></div>
+        </div>
+
+
+      </div>
+      <!-- // USER type -->
+    </div>
+    <div class="form-group" ng-hide="model.destination_type.length>0">
+      <hr>
+      <div class="col-md-12">Please choose "Destination Type"</div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-primary" type="button" ng-click="cancel()">Cancel</button>
+  <button class="btn btn-success" type="button" ng-disabled="newDestinationsForm.$invalid" ng-click="ok(model)">OK</button>
+</div>
