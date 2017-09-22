@@ -384,9 +384,9 @@ var CompanyProfileForm = {
    * @returns {Promise}
    */
   setCountry: function (country) {
-    this.getCountryDDown().click(); // reveal input field
     return this
-      .getCountryInput()
+      .getCountryDDown()
+      .click()
       .sendKeys(country + protractor.Key.ENTER);
   },
 
