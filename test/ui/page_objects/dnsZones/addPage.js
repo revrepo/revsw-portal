@@ -44,7 +44,7 @@ var AddDNSZone = {
         linkText: 'Cancel'
       },
       createDNSZone: {
-        css: '#create_dns_zone i.glyphicon-ok'
+        css: '#create_dns_zone'
       }
     }
   },
