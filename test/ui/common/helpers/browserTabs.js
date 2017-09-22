@@ -18,7 +18,7 @@
 
 var browserTabs = {
 
-  /**
+/**
    * ### browserTabs.switchBrowserTabs()
    *
    * This function closes first tab of the browser
@@ -28,12 +28,13 @@ var browserTabs = {
    */
   switchBrowserTabs: function () {
     browser.getAllWindowHandles().then(function (handles) {
+      var handlesLength = handles.length;
   	  // Switch to Sign up window where we clicked the Logo from nuubit
-     	browser.driver.switchTo().window(handles[0]);
+     	browser.driver.switchTo().window(handles[handlesLength-2]);
      	// Close current tab
   	  browser.actions().keyDown(protractor.Key.CONTROL).sendKeys('w').perform();
   	  // Switch to the newly opened tab nuubit.com
-      browser.driver.switchTo().window(handles[1]);
+      browser.driver.switchTo().window(handles[handlesLength-1]);
 	  });
   }
 };
