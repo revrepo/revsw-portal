@@ -5,7 +5,9 @@ smoke.capabilities = {
 };
 
 smoke.specs = [
-  '../suites/smoke/**/*Spec.js'
+  '../suites/smoke/azure/**/*Spec.js',
+  '../suites/functional/azure/**/*Spec.js',
+  '../suites/functional/users/**/*Spec.js'
 ];
 
 exports.config = smoke;

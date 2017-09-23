@@ -30,13 +30,66 @@ var Subscriptions = {
     views: {
       container: '.container-fluid .row',
       panelHeading: '.col-md-12 .panel .panel-heading',
-      panelBody: '.col-md-12 .panel .panel-body'
+      panelBody: '.col-md-12 .panel .panel-body',
+      viewModal: {
+        container: '.modal-dialog',
+        buttons: {
+          close: '.btn-primary'
+        }
+      },
+      statusModal: {
+        container: '.modal-dialog',
+        buttons: {
+          cancel: '.btn-info',
+          save: '.btn-success'
+        },
+        select: '.ui-select-container'
+      }
     },
     labels: {
       title: {
         className: 'page-title'
       }
     }
+  },
+
+  getViewModal: function () {
+    return element(by.css(this.locators.views.viewModal.container));
+  },
+
+  getViewCloseBtn: function () {
+    return this.getViewModal()
+      .element(by.css(this.locators.views.viewModal.buttons.close));
+  },
+
+  clickViewCloseBtn: function () {
+    return this.getViewCloseBtn().click();
+  },
+
+  getStatusModal: function () {
+    return element(by.css(this.locators.views.statusModal.container));
+  },
+
+  getStatusDropDown: function () {
+    return element(by.css(this.locators.views.statusModal.select));
+  },
+
+  getStatusCancelBtn: function () {
+    return this.getStatusModal()
+      .element(by.css(this.locators.views.statusModal.buttons.cancel));
+  },
+
+  getStatusSaveBtn: function () {
+    return this.getStatusModal()
+      .element(by.css(this.locators.views.statusModal.buttons.save));
+  },
+
+  clickStatusCancelBtn: function () {
+    return this.getStatusCancelBtn().click();
+  },
+
+  clickStatusSaveBtn: function () {
+    return this.getStatusSaveBtn().click();
   },
 
   getSortOrder: function () {

@@ -40,19 +40,86 @@ describe('Smoke', function () {
     afterEach(function () {
     });
 
-    it('should not display pagination if there are less than 26 rows', function () {
-      var rowsCount = Portal
-        .azureMarketplace.SubscriptionsPage
+    it('should not display pagination if less than one page', function () {
+      var resource = Portal
+        .azureMarketplace
+        .SubscriptionsPage
         .table
-        .getRows()
-        .count();
+        .getFirstRow()
+        .getSubId();
 
-      if (rowsCount < 26) {
-        expect(Portal
-          .azureMarketplace.SubscriptionsPage
-          .pager
-          .isDisplayed()).toBeFalsy();
-      }
+      Portal
+        .azureMarketplace
+        .SubscriptionsPage
+        .searcher
+        .setSearchCriteria(resource);
+
+      expect(Portal
+        .azureMarketplace
+        .SubscriptionsPage
+        .pager.isDisplayed()).toBeFalsy();
+
+      Portal
+        .azureMarketplace
+        .SubscriptionsPage
+        .searcher
+        .clearSearchCriteria();
+
+    });
+    xit('should go to next page when `next page` is clicked', function () {
+
+      var firstRow = Portal
+        .azureMarketplace
+        .SubscriptionsPage
+        .table
+        .getFirstRow()
+        .getSubId();
+
+      Portal
+        .azureMarketplace
+        .SubscriptionsPage
+        .pager
+        .clickNext();
+
+      expect(
+        Portal
+          .azureMarketplace
+          .SubscriptionsPage
+          .table
+          .getFirstRow()
+          .getSubId()
+      ).not.toEqual(firstRow);
+
+    });
+    xit('should go back when `previous page` is clicked', function () {
+
+      var firstRow = Portal
+        .azureMarketplace
+        .SubscriptionsPage
+        .table
+        .getFirstRow()
+        .getSubId();
+
+      Portal
+        .azureMarketplace
+        .SubscriptionsPage
+        .pager
+        .clickNext();
+
+      Portal
+        .azureMarketplace
+        .SubscriptionsPage
+        .pager
+        .clickPrevious();
+
+      expect(
+        Portal
+          .azureMarketplace
+          .SubscriptionsPage
+          .table
+          .getFirstRow()
+          .getSubId()
+      ).toEqual(firstRow);
     });
   });
 });

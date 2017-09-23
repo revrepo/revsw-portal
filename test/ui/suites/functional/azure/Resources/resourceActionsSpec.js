@@ -18,6 +18,7 @@
 
 var config = require('config');
 var Portal = require('./../../../../page_objects/portal');
+var DataProvider = require('./../../../../common/providers/data');
 var Constants = require('./../../../../page_objects/constants');
 
 describe('Smoke', function () {
@@ -31,10 +32,11 @@ describe('Smoke', function () {
 
         describe('With user: ' + user.role, function () {
 
-            describe('Subscriptions Search', function () {
+            describe('Azure Resources Actions', function () {
 
                 beforeAll(function () {
                     Portal.signIn(user);
+                    Portal.helpers.nav.goToResources();
                 });
 
                 afterAll(function () {
@@ -42,17 +44,29 @@ describe('Smoke', function () {
                 });
 
                 beforeEach(function () {
-                    Portal.helpers.nav.goToSubscriptions();
                 });
 
-                it('should be displayed when displaying Subscriptions List page',
+                afterEach(function () {
+                });
+                it('should close "View" window when view close button is clicked',
                     function () {
-                        var searchField = Portal
+                        Portal
                             .azureMarketplace
-                            .SubscriptionsPage
-                            .searcher
-                            .getSearchCriteriaTxtIn();
-                        expect(searchField.isPresent()).toBeTruthy();
+                            .ResourcesPage
+                            .table
+                            .getFirstRow()
+                            .clickViewBtn();
+                        Portal
+                            .azureMarketplace
+                            .ResourcesPage
+                            .clickViewCloseBtn();
+                        expect(
+                            Portal
+                                .azureMarketplace
+                                .ResourcesPage
+                                .getViewModal()
+                                .isPresent()
+                        ).toBeFalsy();
                     });
             });
         });

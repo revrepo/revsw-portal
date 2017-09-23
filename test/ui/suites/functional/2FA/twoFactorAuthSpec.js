@@ -17,21 +17,20 @@
  */
 
 var config = require('config');
-var Portal = require('./../../../../page_objects/portal');
-var Constants = require('./../../../../page_objects/constants');
+var Portal = require('./../../../page_objects/portal');
+var DataProvider = require('./../../../common/providers/data');
+var Constants = require('./../../../page_objects/constants');
 
-describe('Smoke', function () {
+describe('Functional', function () {
+    describe('Add user', function () {
 
-    // Defining set of users for which all below tests will be run
-    var users = [
-        config.get('portal.users.revAdmin')
-    ];
+        var users = [
+            config.get('portal.users.admin')
+        ];
 
-    users.forEach(function (user) {
+        users.forEach(function (user) {
 
-        describe('With user: ' + user.role, function () {
-
-            describe('Subscriptions Search', function () {
+            describe('With user: ' + user.role, function () {
 
                 beforeAll(function () {
                     Portal.signIn(user);
@@ -41,19 +40,17 @@ describe('Smoke', function () {
                     Portal.signOut();
                 });
 
-                beforeEach(function () {
-                    Portal.helpers.nav.goToSubscriptions();
-                });
-
-                it('should be displayed when displaying Subscriptions List page',
-                    function () {
-                        var searchField = Portal
-                            .azureMarketplace
-                            .SubscriptionsPage
-                            .searcher
-                            .getSearchCriteriaTxtIn();
-                        expect(searchField.isPresent()).toBeTruthy();
+                it('should enable 2FA', function () {
+                    var bret = DataProvider.generateUser();
+                    Portal.helpers.nav.goToUsers();
+                    Portal.userListPage.clickAddNewUser();
+                    Portal.addUserPage.createUser(bret);
+                    Portal.signOut().then(function () {
+                        Portal.signIn(bret);
+                        Portal.helpers.nav.goToSecuritySettings();
+                        Portal.securitySettingsPage.getSetUpTwoFactorAuthBtn().click();
                     });
+                });
             });
         });
     });

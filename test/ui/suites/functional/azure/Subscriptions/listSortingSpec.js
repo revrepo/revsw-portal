@@ -28,33 +28,18 @@ describe('Smoke', function () {
 
         beforeAll(function () {
             Portal.signIn(revAdminUser);
+            Portal.helpers.nav.goToSubscriptions();
         });
 
         afterAll(function () {
             Portal.signOut();
         });
 
-        beforeEach(function () {
-            Portal.helpers.nav.goToSubscriptions();
-        });
-
-        afterEach(function () {
-        });
-
         it('should apply `descendant` sorting by `Subscription ID` column',
             function () {
-                Portal
-                    .azureMarketplace
-                    .SubscriptionsPage
-                    .table
-                    .getHeader()
-                    .clickSubId();
-                var subId1 = Portal
-                    .azureMarketplace
-                    .SubscriptionsPage
-                    .table
-                    .getFirstRow()
-                    .getSubId();
+                Portal.azureMarketplace.SubscriptionsPage.table.getHeader().clickSubId();
+                var subId1 = Portal.azureMarketplace
+                    .SubscriptionsPage.table.getFirstRow().getSubId();
 
                 Portal
                     .azureMarketplace

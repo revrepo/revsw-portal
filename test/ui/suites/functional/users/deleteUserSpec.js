@@ -107,6 +107,20 @@ describe('Functional', function () {
             Portal.userListPage.searchAndClickDelete(testUser.email);
             Portal.dialog.clickOk();
           });
+
+        it('should not login a deleted user',
+          function () {
+            Portal.userListPage.searchAndClickDelete(testUser.email);
+            Portal.dialog.clickOk();
+            Portal.signOut().then(function () {
+              Portal.signIn(testUser);
+              expect(Portal
+                .loginPage
+                .getEmailTxtIn()
+                .isDisplayed()).toBeTruthy();
+              Portal.signIn(user);
+            });
+          });
       });
     });
   });

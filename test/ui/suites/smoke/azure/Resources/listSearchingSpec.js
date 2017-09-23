@@ -54,29 +54,6 @@ describe('Smoke', function () {
                             .getSearchCriteriaTxtIn();
                         expect(searchField.isPresent()).toBeTruthy();
                     });
-
-                it('should filter subscriptions according to text filled',
-                    function () {
-                        var subIdToSearch = Portal
-                            .azureMarketplace
-                            .ResourcesPage
-                            .table
-                            .getFirstRow()
-                            .getSubId();
-                        Portal
-                            .azureMarketplace
-                            .ResourcesPage
-                            .searcher
-                            .setSearchCriteria(subIdToSearch);
-                        expect(
-                            Portal
-                                .azureMarketplace
-                                .ResourcesPage
-                                .table
-                                .getFirstRow()
-                                .getSubId()
-                        ).toEqual(subIdToSearch);
-                    });
             });
         });
     });

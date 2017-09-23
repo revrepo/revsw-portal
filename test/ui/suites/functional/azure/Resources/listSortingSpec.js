@@ -28,6 +28,7 @@ describe('Smoke', function () {
 
         beforeAll(function () {
             Portal.signIn(revAdminUser);
+            Portal.helpers.nav.goToResources();
         });
 
         afterAll(function () {
@@ -35,57 +36,35 @@ describe('Smoke', function () {
         });
 
         beforeEach(function () {
-            Portal.helpers.nav.goToResources();
         });
 
         afterEach(function () {
         });
 
-        it('should apply `descendant` sorting by `Resource Name` column',
-            function () {
-                Portal
-                    .azureMarketplace
-                    .ResourcesPage
-                    .table
-                    .getHeader()
-                    .clickName();
-                var subId1 = Portal
-                    .azureMarketplace
-                    .ResourcesPage
-                    .table
-                    .getFirstRow()
-                    .getName();
-
-                Portal
-                    .azureMarketplace
-                    .ResourcesPage
-                    .table
-                    .getHeader()
-                    .clickName();
-                var subId2 = Portal
-                    .azureMarketplace
-                    .ResourcesPage
-                    .table
-                    .getFirstRow()
-                    .getName();
-
-                expect(subId1).not.toEqual(subId2);
-            });
-
         it('should apply `ascendant` sorting by `Resource Name` column',
             function () {
+                Portal.azureMarketplace.ResourcesPage.table.getHeader().clickName();
+                var subId1 = Portal.azureMarketplace
+                    .ResourcesPage.table.getFirstRow().getName();
+
                 Portal
                     .azureMarketplace
                     .ResourcesPage
                     .table
                     .getHeader()
                     .clickName();
-                Portal
+                var subId2 = Portal
                     .azureMarketplace
                     .ResourcesPage
                     .table
-                    .getHeader()
-                    .clickName();
+                    .getFirstRow()
+                    .getName();
+
+                expect(subId1).toBeLessThan(subId2);
+            });
+
+        it('should apply `descendant` sorting by `Resource Name` column',
+            function () {
                 var subId1 = Portal
                     .azureMarketplace
                     .ResourcesPage
@@ -106,10 +85,10 @@ describe('Smoke', function () {
                     .getFirstRow()
                     .getName();
 
-                expect(subId1).not.toEqual(subId2);
+                expect(subId1).toBeGreaterThan(subId2);
             });
 
-        it('should apply `descendant` sorting by `Subscription ID` column',
+        it('should apply `ascendant` sorting by `Subscription ID` column',
             function () {
                 Portal
                     .azureMarketplace
@@ -117,6 +96,7 @@ describe('Smoke', function () {
                     .table
                     .getHeader()
                     .clickSubId();
+
                 var subId1 = Portal
                     .azureMarketplace
                     .ResourcesPage
@@ -140,21 +120,8 @@ describe('Smoke', function () {
                 expect(subId1).toBeLessThan(subId2);
             });
 
-        it('should apply `ascendant` sorting by `Subscription ID` column',
+        it('should apply `descendant` sorting by `Subscription ID` column',
             function () {
-                Portal
-                    .azureMarketplace
-                    .ResourcesPage
-                    .table
-                    .getHeader()
-                    .clickSubId();
-
-                Portal
-                    .azureMarketplace
-                    .ResourcesPage
-                    .table
-                    .getHeader()
-                    .clickSubId();
                 var subId1 = Portal
                     .azureMarketplace
                     .ResourcesPage
@@ -178,38 +145,6 @@ describe('Smoke', function () {
                 expect(subId1).toBeGreaterThan(subId2);
             });
 
-        it('should apply `descendant` sorting by `Last Update` column',
-            function () {
-                Portal
-                    .azureMarketplace
-                    .ResourcesPage
-                    .table
-                    .getHeader()
-                    .clickLastUpdate();
-                var sub1 = Portal
-                    .azureMarketplace
-                    .ResourcesPage
-                    .table
-                    .getFirstRow()
-                    .getSubId();
-
-                Portal
-                    .azureMarketplace
-                    .ResourcesPage
-                    .table
-                    .getHeader()
-                    .clickLastUpdate();
-                var sub2 = Portal
-                    .azureMarketplace
-                    .ResourcesPage
-                    .table
-                    .getFirstRow()
-                    .getSubId();
-
-                expect(sub1).not.toEqual(sub2);
-
-            });
-
         it('should apply `ascendant` sorting by `Last Update` column',
             function () {
                 Portal
@@ -218,19 +153,12 @@ describe('Smoke', function () {
                     .table
                     .getHeader()
                     .clickLastUpdate();
-
-                Portal
-                    .azureMarketplace
-                    .ResourcesPage
-                    .table
-                    .getHeader()
-                    .clickLastUpdate();
                 var sub1 = Portal
                     .azureMarketplace
                     .ResourcesPage
                     .table
                     .getFirstRow()
-                    .getSubId();
+                    .getLastUpdate();
 
                 Portal
                     .azureMarketplace
@@ -243,19 +171,40 @@ describe('Smoke', function () {
                     .ResourcesPage
                     .table
                     .getFirstRow()
-                    .getSubId();
+                    .getLastUpdate();
+
+                expect(sub1).not.toEqual(sub2);
+
+            });
+
+        it('should apply `descendant` sorting by `Last Update` column',
+            function () {
+
+                var sub1 = Portal
+                    .azureMarketplace
+                    .ResourcesPage
+                    .table
+                    .getFirstRow()
+                    .getLastUpdate();
+
+                Portal
+                    .azureMarketplace
+                    .ResourcesPage
+                    .table
+                    .getHeader()
+                    .clickLastUpdate();
+                var sub2 = Portal
+                    .azureMarketplace
+                    .ResourcesPage
+                    .table
+                    .getFirstRow()
+                    .getLastUpdate();
 
                 expect(sub1).not.toEqual(sub2);
             });
 
         it('should apply `ascendant` sorting by `Type` column',
             function () {
-                Portal
-                    .azureMarketplace
-                    .ResourcesPage
-                    .table
-                    .getHeader()
-                    .clickType();
 
                 Portal
                     .azureMarketplace
@@ -288,12 +237,6 @@ describe('Smoke', function () {
 
         it('should apply `descendant` sorting by `Type` column',
             function () {
-                Portal
-                    .azureMarketplace
-                    .ResourcesPage
-                    .table
-                    .getHeader()
-                    .clickType();
                 var sub1 = Portal
                     .azureMarketplace
                     .ResourcesPage
@@ -350,12 +293,7 @@ describe('Smoke', function () {
 
         it('should apply `descendant` sorting by `Location` column',
             function () {
-                Portal
-                    .azureMarketplace
-                    .ResourcesPage
-                    .table
-                    .getHeader()
-                    .clickLocation();
+
                 var sub1 = Portal
                     .azureMarketplace
                     .ResourcesPage
@@ -412,12 +350,6 @@ describe('Smoke', function () {
 
         it('should apply `descendant` sorting by `Plan` column',
             function () {
-                Portal
-                    .azureMarketplace
-                    .ResourcesPage
-                    .table
-                    .getHeader()
-                    .clickPlan();
                 var sub1 = Portal
                     .azureMarketplace
                     .ResourcesPage
@@ -474,12 +406,6 @@ describe('Smoke', function () {
 
         it('should apply `descendant` sorting by `Resource Group` column',
             function () {
-                Portal
-                    .azureMarketplace
-                    .ResourcesPage
-                    .table
-                    .getHeader()
-                    .clickResourceGroup();
                 var sub1 = Portal
                     .azureMarketplace
                     .ResourcesPage

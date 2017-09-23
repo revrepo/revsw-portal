@@ -62,6 +62,34 @@ describe('Smoke', function () {
                 .isDisplayed()
             ).toBeTruthy();
           });
+
+        it('should display "View" window when view button is clicked',
+          function () {
+            Portal
+              .azureMarketplace
+              .ResourcesPage
+              .table
+              .getFirstRow()
+              .clickViewBtn();
+            expect(
+              Portal
+                .azureMarketplace
+                .ResourcesPage
+                .getViewModal()
+                .isDisplayed()
+            ).toBeTruthy();
+          });
+
+        it('should display "Close" button in view modal',
+          function () {
+            expect(
+              Portal
+                .azureMarketplace
+                .ResourcesPage
+                .getViewCloseBtn()
+                .isDisplayed()
+            ).toBeTruthy();
+          });
       });
     });
   });

@@ -75,6 +75,19 @@ describe('Functional', function () {
               Portal.signOut();
             });
 
+          it('should login successfully using new password',
+            function () {
+              var newPassword = 'newpassword';
+              Portal.loginPage.setEmail(testUser.email);
+              Portal.loginPage.setPassword(newPassword);
+              Portal.loginPage.clickSignIn();
+              expect(Portal
+                .loginPage
+                .getEmailTxtIn()
+                .isDisplayed()).toBeFalsy();
+              Portal.signOut();
+            });
+
           it('should update password successfully using only numbers',
             function () {
               var newPassword = '12345678';
@@ -87,6 +100,19 @@ describe('Functional', function () {
               var alert = Portal.alerts.getFirst();
               expect(alert.getText())
                 .toContain(Constants.alertMessages.users.MSG_SUCCESS_UPDATE_PASSWORD);
+              Portal.signOut();
+            });
+
+          it('should login successfully using new password',
+            function () {
+              var newPassword = '12345678';
+              Portal.loginPage.setEmail(testUser.email);
+              Portal.loginPage.setPassword(newPassword);
+              Portal.loginPage.clickSignIn();
+              expect(Portal
+                .loginPage
+                .getEmailTxtIn()
+                .isDisplayed()).toBeFalsy();
               Portal.signOut();
             });
         });
