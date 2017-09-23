@@ -45,7 +45,7 @@ describe('Smoke', function () {
                     Portal.helpers.nav.goToResources();
                 });
 
-                it('should be displayed when displaying Subscriptions List page',
+                it('should be displayed when displaying Resources List page',
                     function () {
                         var searchField = Portal
                             .azureMarketplace
