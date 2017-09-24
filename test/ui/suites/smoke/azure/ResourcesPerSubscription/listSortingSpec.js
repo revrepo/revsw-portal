@@ -2,7 +2,7 @@
  *
  * REV SOFTWARE CONFIDENTIAL
  *
- * [2013] - [2016] Rev Software, Inc.
+ * [2013] - [2015] Rev Software, Inc.
  * All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains
@@ -18,7 +18,6 @@
 
 var config = require('config');
 var Portal = require('./../../../../page_objects/portal');
-var DataProvider = require('./../../../../common/providers/data');
 var Constants = require('./../../../../page_objects/constants');
 
 describe('Smoke', function () {
@@ -35,209 +34,61 @@ describe('Smoke', function () {
                     .getFirstRow()
                     .clickSubId();
             });
-
         });
 
         afterAll(function () {
             Portal.signOut();
         });
 
-        beforeEach(function () {
+        it('should display `Name` filter', function () {
+            expect(Portal
+                .azureMarketplace
+                .ResourcesPerSubscriptionPage
+                .table
+                .getHeader()
+                .getNameCell()
+                .isDisplayed()).toBeTruthy();
         });
 
-        afterEach(function () {
+        it('should display `Type` filter', function () {
+            expect(Portal
+                .azureMarketplace
+                .ResourcesPerSubscriptionPage
+                .table
+                .getHeader()
+                .getTypeCell()
+                .isDisplayed()).toBeTruthy();
         });
 
-        it('should apply `descendant` sorting by `Name` column',
-            function () {
-                Portal
-                    .azureMarketplace
-                    .ResourcesPerSubscriptionPage
-                    .table
-                    .getHeader()
-                    .clickName();
-                expect(
-                    Portal
-                        .azureMarketplace
-                        .ResourcesPerSubscriptionPage
-                        .table
-                        .getHeader()
-                        .getNameCell()
-                        .getAttribute('aria-sort')
-                ).toBe('descending');
-            });
+        it('should display `Location` filter', function () {
+            expect(Portal
+                .azureMarketplace
+                .ResourcesPerSubscriptionPage
+                .table
+                .getHeader()
+                .getLocationCell()
+                .isDisplayed()).toBeTruthy();
+        });
 
-        it('should apply `ascendant` sorting by `Name` column',
-            function () {
-                Portal
-                    .azureMarketplace
-                    .ResourcesPerSubscriptionPage
-                    .table
-                    .getHeader()
-                    .clickName();
-                expect(
-                    Portal
-                        .azureMarketplace
-                        .ResourcesPerSubscriptionPage
-                        .table
-                        .getHeader()
-                        .getNameCell()
-                        .getAttribute('aria-sort')
-                ).toBe('ascending');
-            });
+        it('should display `Plan` filter', function () {
+            expect(Portal
+                .azureMarketplace
+                .ResourcesPerSubscriptionPage
+                .table
+                .getHeader()
+                .getPlanCell()
+                .isDisplayed()).toBeTruthy();
+        });
 
-        it('should apply `ascendant` sorting by `Type` column',
-            function () {
-                Portal
-                    .azureMarketplace
-                    .ResourcesPerSubscriptionPage
-                    .table
-                    .getHeader()
-                    .clickType();
-                expect(
-                    Portal
-                        .azureMarketplace
-                        .ResourcesPerSubscriptionPage
-                        .table
-                        .getHeader()
-                        .getTypeCell()
-                        .getAttribute('aria-sort')
-                ).toBe('ascending');
-            });
-
-        it('should apply `descendant` sorting by `Type` column',
-            function () {
-                Portal
-                    .azureMarketplace
-                    .ResourcesPerSubscriptionPage
-                    .table
-                    .getHeader()
-                    .clickType();
-                expect(
-                    Portal
-                        .azureMarketplace
-                        .ResourcesPerSubscriptionPage
-                        .table
-                        .getHeader()
-                        .getTypeCell()
-                        .getAttribute('aria-sort')
-                ).toBe('descending');
-            });
-
-        it('should apply `ascendant` sorting by `Location` column',
-            function () {
-                Portal
-                    .azureMarketplace
-                    .ResourcesPerSubscriptionPage
-                    .table
-                    .getHeader()
-                    .clickLocation();
-                expect(
-                    Portal
-                        .azureMarketplace
-                        .ResourcesPerSubscriptionPage
-                        .table
-                        .getHeader()
-                        .getLocationCell()
-                        .getAttribute('aria-sort')
-                ).toBe('ascending');
-
-            });
-
-        it('should apply `descendant` sorting by `Location` column',
-            function () {
-                Portal
-                    .azureMarketplace
-                    .ResourcesPerSubscriptionPage
-                    .table
-                    .getHeader()
-                    .clickLocation();
-                expect(
-                    Portal
-                        .azureMarketplace
-                        .ResourcesPerSubscriptionPage
-                        .table
-                        .getHeader()
-                        .getLocationCell()
-                        .getAttribute('aria-sort')
-                ).toBe('descending');
-            });
-
-        it('should apply `ascendant` sorting by `Plan` column',
-            function () {
-                Portal
-                    .azureMarketplace
-                    .ResourcesPerSubscriptionPage
-                    .table
-                    .getHeader()
-                    .clickPlan();
-                expect(
-                    Portal
-                        .azureMarketplace
-                        .ResourcesPerSubscriptionPage
-                        .table
-                        .getHeader()
-                        .getPlanCell()
-                        .getAttribute('aria-sort')
-                ).toBe('ascending');
-            });
-
-        it('should apply `descendant` sorting by `Plan` column',
-            function () {
-                Portal
-                    .azureMarketplace
-                    .ResourcesPerSubscriptionPage
-                    .table
-                    .getHeader()
-                    .clickPlan();
-                expect(
-                    Portal
-                        .azureMarketplace
-                        .ResourcesPerSubscriptionPage
-                        .table
-                        .getHeader()
-                        .getPlanCell()
-                        .getAttribute('aria-sort')
-                ).toBe('descending');
-            });
-
-        it('should apply `ascendant` sorting by `Resource Group` column',
-            function () {
-                Portal
-                    .azureMarketplace
-                    .ResourcesPerSubscriptionPage
-                    .table
-                    .getHeader()
-                    .clickResourceGroup();
-                expect(
-                    Portal
-                        .azureMarketplace
-                        .ResourcesPerSubscriptionPage
-                        .table
-                        .getHeader()
-                        .getResourceGroupCell()
-                        .getAttribute('aria-sort')
-                ).toBe('ascending');
-            });
-
-        it('should apply `descendant` sorting by `Resource Group` column',
-            function () {
-                Portal
-                    .azureMarketplace
-                    .ResourcesPerSubscriptionPage
-                    .table
-                    .getHeader()
-                    .clickResourceGroup();
-                expect(
-                    Portal
-                        .azureMarketplace
-                        .ResourcesPerSubscriptionPage
-                        .table
-                        .getHeader()
-                        .getResourceGroupCell()
-                        .getAttribute('aria-sort')
-                ).toBe('descending');
-            });
+        it('should display `Resource Group` filter', function () {
+            expect(Portal
+                .azureMarketplace
+                .ResourcesPerSubscriptionPage
+                .table
+                .getHeader()
+                .getResourceGroupCell()
+                .isDisplayed()).toBeTruthy();
+        });
 
     });
 });

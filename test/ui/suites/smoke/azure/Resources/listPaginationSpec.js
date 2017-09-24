@@ -21,151 +21,76 @@ var Portal = require('./../../../../page_objects/portal');
 var Constants = require('./../../../../page_objects/constants');
 
 describe('Smoke', function () {
-  describe('Subscriptions pagination', function () {
+    describe('Resources pagination', function () {
 
-    var revAdminUser = config.get('portal.users.revAdmin');
+        var revAdminUser = config.get('portal.users.revAdmin');
 
-    beforeAll(function () {
-      Portal.signIn(revAdminUser);
-    });
+        beforeAll(function () {
+            Portal.signIn(revAdminUser);
+        });
 
-    afterAll(function () {
-      Portal.signOut();
-    });
+        afterAll(function () {
+            Portal.signOut();
+        });
 
-    beforeEach(function () {
-      Portal.helpers.nav.goToSubscriptions();
-    });
+        beforeEach(function () {
+            Portal.helpers.nav.goToResources();
+        });
 
-    afterEach(function () {
-    });
-
-    it('should not display pagination if there are less than 26 rows', function () {
-      Portal
-        .azureMarketplace.ResourcesPage
-        .table
-        .getRows()
-        .count().then(function (rowsCount) {
-          if (rowsCount < 26) {
+        it('should display button `first`', function () {
             expect(Portal
-              .azureMarketplace.ResourcesPage
-              .pager
-              .isDisplayed()).toBeFalsy();
-          }
+                .azureMarketplace
+                .ResourcesPage
+                .pager
+                .getFirstBtn()
+                .isDisplayed()).toBeTruthy();
         });
-    });
-    it('should display pagination if there are more than 25 rows', function () {
-      Portal
-        .azureMarketplace.ResourcesPage
-        .table
-        .getRows()
-        .count().then(function (rowsCount) {
-          if (rowsCount > 25) {
+
+        it('should display button `last`', function () {
             expect(Portal
-              .azureMarketplace.ResourcesPage
-              .pager
-              .isDisplayed()).toBeTruthy();
-          }
-        });
-    });
-    it('should switch pages when different page is clicked', function () {
-      Portal
-        .azureMarketplace.ResourcesPage
-        .table
-        .getRows()
-        .count().then(function (rowsCount) {
-          if (rowsCount > 25) {
-            var firstRow = Portal
-              .azureMarketplace
-              .ResourcesPage
-              .table
-              .getFirstRow()
-              .getSubId();
-
-            Portal
-              .azureMarketplace
-              .ResourcesPage
-              .pager
-              .clickPageIndex(2);
-
-            expect(
-              Portal
                 .azureMarketplace
                 .ResourcesPage
-                .table
-                .getFirstRow()
-                .getSubId()
-            ).not.toEqual(firstRow);
-          }
+                .pager
+                .getLastBtn()
+                .isDisplayed()).toBeTruthy();
         });
-    });
-    it('should go to next page when `next page` is clicked', function () {
-      Portal
-        .azureMarketplace.ResourcesPage
-        .table
-        .getRows()
-        .count().then(function (rowsCount) {
-          if (rowsCount > 25) {
-            var firstRow = Portal
-              .azureMarketplace
-              .ResourcesPage
-              .table
-              .getFirstRow()
-              .getSubId();
 
-            Portal
-              .azureMarketplace
-              .ResourcesPage
-              .pager
-              .clickNext();
-
-            expect(
-              Portal
+        it('should display button `previous`', function () {
+            expect(Portal
                 .azureMarketplace
                 .ResourcesPage
-                .table
-                .getFirstRow()
-                .getSubId()
-            ).not.toEqual(firstRow);
-          }
+                .pager
+                .getPreviousBtn()
+                .isDisplayed()).toBeTruthy();
         });
-    });
-    it('should go back when `previous page` is clicked', function () {
-      Portal
-        .azureMarketplace.ResourcesPage
-        .table
-        .getRows()
-        .count().then(function (rowsCount) {
-          if (rowsCount > 25) {
-            var firstRow = Portal
-              .azureMarketplace
-              .ResourcesPage
-              .table
-              .getFirstRow()
-              .getSubId();
 
-            Portal
-              .azureMarketplace
-              .ResourcesPage
-              .pager
-              .clickNext();
-
-            Portal
-              .azureMarketplace
-              .ResourcesPage
-              .pager
-              .clickPrevious();
-
-            expect(
-              Portal
+        it('should display button `next`', function () {
+            expect(Portal
                 .azureMarketplace
                 .ResourcesPage
-                .table
-                .getFirstRow()
-                .getSubId()
-            ).toEqual(firstRow);
-          }
+                .pager
+                .getNextBtn()
+                .isDisplayed()).toBeTruthy();
+        });
+
+        it('should display button `1`', function () {
+            expect(Portal
+                .azureMarketplace
+                .ResourcesPage
+                .pager
+                .getAllPageIndexButtons()
+                .get(0)
+                .getText()).toEqual('1');
+        });
+
+        it('should display button `2`', function () {
+            expect(Portal
+                .azureMarketplace
+                .ResourcesPage
+                .pager
+                .getAllPageIndexButtons()
+                .get(1)
+                .getText()).toEqual('2');
         });
     });
-  });
 });

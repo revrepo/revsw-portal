@@ -63,7 +63,7 @@ describe('Smoke', function () {
             ).toBeTruthy();
           });
 
-        it('should display "Change State" button from the first subscription',
+        it('should display "Change Status" button from the first subscription',
           function () {
             expect(
               Portal
@@ -72,6 +72,89 @@ describe('Smoke', function () {
                 .table
                 .getFirstRow()
                 .getChangeStatusBtn()
+                .isDisplayed()
+            ).toBeTruthy();
+          });
+
+        it('should display "View" window when view button is clicked',
+          function () {
+            Portal
+              .azureMarketplace
+              .SubscriptionsPage
+              .table
+              .getFirstRow()
+              .clickViewBtn();
+            expect(
+              Portal
+                .azureMarketplace
+                .SubscriptionsPage
+                .getViewModal()
+                .isDisplayed()
+            ).toBeTruthy();
+          });
+
+        it('should display "Close" button in view modal',
+          function () {
+            expect(
+              Portal
+                .azureMarketplace
+                .SubscriptionsPage
+                .getViewCloseBtn()
+                .isDisplayed()
+            ).toBeTruthy();
+
+            Portal
+              .azureMarketplace
+              .SubscriptionsPage
+              .clickViewCloseBtn();
+          });
+
+        it('should display "Change Status" window when change Status button is clicked',
+          function () {
+            Portal
+              .azureMarketplace
+              .SubscriptionsPage
+              .table
+              .getFirstRow()
+              .clickChangeStatusBtn();
+            expect(
+              Portal
+                .azureMarketplace
+                .SubscriptionsPage
+                .getStatusModal()
+                .isDisplayed()
+            ).toBeTruthy();
+          });
+
+        it('should display "Cancel" button in change Status modal',
+          function () {
+            expect(
+              Portal
+                .azureMarketplace
+                .SubscriptionsPage
+                .getStatusCancelBtn()
+                .isDisplayed()
+            ).toBeTruthy();
+          });
+
+        it('should display "Save" button in change Status modal',
+          function () {
+            expect(
+              Portal
+                .azureMarketplace
+                .SubscriptionsPage
+                .getStatusSaveBtn()
+                .isDisplayed()
+            ).toBeTruthy();
+          });
+
+        it('should display "Status" dropdown in change Status modal',
+          function () {
+            expect(
+              Portal
+                .azureMarketplace
+                .SubscriptionsPage
+                .getStatusDropDown()
                 .isDisplayed()
             ).toBeTruthy();
           });

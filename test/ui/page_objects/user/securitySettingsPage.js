@@ -41,6 +41,12 @@ var SecuritySettings = {
       enable2fa: {
         id: 'btn-enable-2fa'
       }
+    },
+    qrImage: {
+      id: 'qr-code-image'
+    },
+    otpTxtIn: {
+      id: 'one-time-password'
     }
   },
 
@@ -65,9 +71,55 @@ var SecuritySettings = {
    *
    * @returns {Selenium WebDriver Element}
    */
-  getSetUpTwoFactorAuthBtn: function() {
+  getSetUpTwoFactorAuthBtn: function () {
     return element(by.id(this.locators.buttons.setUpTwoFactorAuth.id));
   },
+
+  /**
+ * ### SecuritySettings.getQRImage()
+ *
+ * Returns the reference to the `QR Image`
+ *
+ * @returns {String}
+ */
+  getQRImage: function () {
+    return element(by.id(this.locators.qrImage.id));
+  },
+
+  /**
+   * ### SecuritySettings.getASCIISecret()
+   *
+   * Returns the reference to the `ASCII` code in the qr element
+   *
+   * @returns {String}
+   */
+  getASCIISecret: function () {
+    return this.getQRImage()
+      .getAttribute('otp-base32');
+  },
+
+  /**
+ * ### SecuritySettings.getOTPTxtIn()
+ *
+ * Returns the reference to the `One Time Password` input field
+ *
+ * @returns {String}
+ */
+  getOTPTxtIn: function () {
+    return element(by.id(this.locators.otpTxtIn.id));
+  },
+
+  /**
+* ### SecuritySettings.getSetUpTwoFactorAuthBtn()
+*
+* Sets a value to `One Time Password` input field
+*
+*/
+  setOTPTxtIn: function (value) {
+    return this.getOTPTxtIn()
+      .sendKeys(value);
+  },
+
 
   /**
    * ### SecuritySettings.getCancelBtn()
@@ -76,7 +128,7 @@ var SecuritySettings = {
    *
    * @returns {Selenium WebDriver Element}
    */
-  getCancelBtn: function() {
+  getCancelBtn: function () {
     return element(by.id(this.locators.buttons.cancel2fa.id));
   },
 
@@ -87,8 +139,18 @@ var SecuritySettings = {
    *
    * @returns {Selenium WebDriver Element}
    */
-  getEnableBtn: function() {
+  getEnableBtn: function () {
     return element(by.id(this.locators.buttons.enable2fa.id));
+  },
+
+  /**
+ * ### SecuritySettings.clickEnableBtn()
+ *
+ * Clicks the `Enable` button
+ *
+ */
+  clickEnableBtn: function () {
+    return this.getEnableBtn().click();
   },
   // ## Helper Methods
 
@@ -100,7 +162,7 @@ var SecuritySettings = {
    *
    * @returns {Promise}
    */
-  isDisplayed: function() {
+  isDisplayed: function () {
     return this
       .getTitleLbl()
       .isDisplayed();

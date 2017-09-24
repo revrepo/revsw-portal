@@ -25,33 +25,34 @@ describe('Functional', function () {
   describe('Help', function () {
 
     it('should click on Help button and open the Help form in Portal',
-      function() {
+      function () {
         Portal.load()
-        .then(function() {
-          Portal.helpPage.clickHelpButton(function(isClicked) {
-            expect(isClicked).toBe(true);
+          .then(function () {
+            browser.sleep(10000); // wait for iframe
+            Portal.helpPage.clickHelpButton(function (isClicked) {
+              expect(isClicked).toBe(true);
+            });
           });
-        });
-    });
+      });
 
     it('should fill Help form, click on "Leave us a message" open Help form',
-      function() {
-        Portal.helpPage.fillHelpForm('help', function(isFilled) {
+      function () {
+        Portal.helpPage.fillHelpForm('help', function (isFilled) {
           expect(isFilled).toBe(true);
         });
-    });
+      });
 
     it('should fill Ticket Submission form, and click on "Send" button',
-      function() {
+      function () {
         var data = {
           name: 'user1',
           email: 'user1@mail.com',
           description: 'My description testing'
         };
-        Portal.helpPage.fillTicketForm(data, function(isFilled, text) {
+        Portal.helpPage.fillTicketForm(data, function (isFilled, text) {
           expect(isFilled).toBe(true);
           expect('Message sent').toBe(text);
         });
-    });
+      });
   });
 });

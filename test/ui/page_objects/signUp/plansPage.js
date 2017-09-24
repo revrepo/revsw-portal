@@ -107,6 +107,16 @@ var PlansList = {
     return new Plan(plan);
   },
 
+<<<<<<< HEAD
+  /**
+    * ### PlanElement.getFooterMessageEl()
+    *
+    * Returns the Footer Message Element that is inside the Footer container element.
+    *
+    * @returns {Object} Selenium WebDriver Element
+    */
+  getFooterMessageEl: function () {
+=======
 /**
   * ### PlanElement.getFooterMessageEl()
   *
@@ -115,6 +125,7 @@ var PlansList = {
   * @returns {Object} Selenium WebDriver Element
   */
  getFooterMessageEl: function () {
+>>>>>>> 97073e12ab52be40ca8caa1bd7028d19f95aef0b
     return element.all(by.css(this.locators.labels.footer.css)).get(0);
   },
 

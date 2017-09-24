@@ -21,38 +21,34 @@ var Portal = require('./../../../../page_objects/portal');
 var Constants = require('./../../../../page_objects/constants');
 
 describe('Smoke', function () {
-  describe('Subscriptions pagination', function () {
+    describe('Resources list', function () {
 
-    var revAdminUser = config.get('portal.users.revAdmin');
+        var revAdminUser = config.get('portal.users.revAdmin');
 
-    beforeAll(function () {
-      Portal.signIn(revAdminUser);
+        beforeAll(function () {
+            Portal.signIn(revAdminUser);
+            Portal.helpers.nav.goToResources();
+        });
+
+        afterAll(function () {
+            Portal.signOut();
+        });
+
+        it('should display `Back` button', function () {
+            expect(Portal
+                .azureMarketplace
+                .ResourcesPage
+                .getBackBtn()
+                .isDisplayed()).toBeTruthy();
+        });
+
+        it('should display resources list', function () {
+            expect(Portal
+                .azureMarketplace
+                .ResourcesPage
+                .table
+                .getRows()
+                .count()).toBeGreaterThan(0);
+        });
     });
-
-    afterAll(function () {
-      Portal.signOut();
-    });
-
-    beforeEach(function () {
-      Portal.helpers.nav.goToSubscriptions();
-    });
-
-    afterEach(function () {
-    });
-
-    it('should not display pagination if there are less than 26 rows', function () {
-      var rowsCount = Portal
-        .azureMarketplace.SubscriptionsPage
-        .table
-        .getRows()
-        .count();
-
-      if (rowsCount < 26) {
-        expect(Portal
-          .azureMarketplace.SubscriptionsPage
-          .pager
-          .isDisplayed()).toBeFalsy();
-      }
-    });
-  });
 });

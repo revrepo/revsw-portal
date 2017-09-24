@@ -78,7 +78,7 @@ var Header = {
     },
     buttons: {
       menuToggleBtn: {
-        css: '#menuToggleBtn'
+        css: '#menuToggleBtn .glyphicon-menu-hamburger'
       }
     },
     images: {
@@ -88,7 +88,7 @@ var Header = {
     }
   },
   backGround: {
-      css: 'background-color'
+    css: 'background-color'
   },
 
   // ## Methods
@@ -105,14 +105,14 @@ var Header = {
     return element.all(by.css(this.locators.menu.navbar.css)).first();
   },
 
-   /**
-   * ### Header.getHeaderBar()
-   *
-   * Return the reference to the `Nav Menu` container (Selenium WebDriver
-   * Element) from the Portal app
-   *
-   * @returns {Object} Selenium WebDriver Element
-   */
+  /**
+  * ### Header.getHeaderBar()
+  *
+  * Return the reference to the `Nav Menu` container (Selenium WebDriver
+  * Element) from the Portal app
+  *
+  * @returns {Object} Selenium WebDriver Element
+  */
   getHeaderBar: function () {
     return element(by.css(this.locators.header.bar.css));
   },
@@ -311,18 +311,18 @@ var Header = {
       .click();
   },
 
- /**
-   * ### DashboardList.getLogo()
-   *
-   * Gets the Logo image from the Dashboard List page
-   *
-   * @returns {Promise}
-   */
-  getLogo: function() {
+  /**
+    * ### DashboardList.getLogo()
+    *
+    * Gets the Logo image from the Dashboard List page
+    *
+    * @returns {Promise}
+    */
+  getLogo: function () {
     return element(by.css(this.locators.images.css.logo));
   },
 
-   // ## Methods to interact with the User List Page components
+  // ## Methods to interact with the User List Page components
 
   /**
    * ### DashboardList.clickLogo()

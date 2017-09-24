@@ -25,9 +25,9 @@ describe('Functional', function () {
     describe('Side Menu Display Toggle Button', function () {
 
         var users = [
-            config.get('portal.users.admin'),
             config.get('portal.users.revAdmin'),
-            config.get('portal.users.reseller')
+            config.get('portal.users.reseller'),
+            config.get('portal.users.admin')
         ];
 
         users.forEach(function (user) {
@@ -48,6 +48,7 @@ describe('Functional', function () {
                 });
                 it('should show the side menu when clicked again', function () {
                     Portal.header.clickMenuToggleBtn();
+
                     expect(Portal.sideBar.getMenu().isDisplayed()).toBeTruthy();
                 });
             });

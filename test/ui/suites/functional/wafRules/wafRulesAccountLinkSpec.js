@@ -59,11 +59,12 @@ describe('Functional', function () {
                             .listPage
                             .tableCustomerRules
                             .getFirstRow()
-                            .clickAccount();
-                        expect(Portal
-                            .accountResourcesPage
-                            .getTitleLbl()
-                            .isDisplayed()).toBeTruthy();
+                            .clickAccount().then(function () {
+                                expect(Portal
+                                    .accountResourcesPage
+                                    .getTitleLbl()
+                                    .isDisplayed()).toBeTruthy();
+                            });
                     });
 
                 it('should be displayed when "Back" button is clicked from ' +

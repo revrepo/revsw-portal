@@ -45,7 +45,7 @@ describe('Smoke', function () {
                     Portal.helpers.nav.goToResources();
                 });
 
-                it('should be displayed when displaying Subscriptions List page',
+                it('should be displayed when displaying Resources List page',
                     function () {
                         var searchField = Portal
                             .azureMarketplace
@@ -53,29 +53,6 @@ describe('Smoke', function () {
                             .searcher
                             .getSearchCriteriaTxtIn();
                         expect(searchField.isPresent()).toBeTruthy();
-                    });
-
-                it('should filter subscriptions according to text filled',
-                    function () {
-                        var subIdToSearch = Portal
-                            .azureMarketplace
-                            .ResourcesPage
-                            .table
-                            .getFirstRow()
-                            .getSubId();
-                        Portal
-                            .azureMarketplace
-                            .ResourcesPage
-                            .searcher
-                            .setSearchCriteria(subIdToSearch);
-                        expect(
-                            Portal
-                                .azureMarketplace
-                                .ResourcesPage
-                                .table
-                                .getFirstRow()
-                                .getSubId()
-                        ).toEqual(subIdToSearch);
                     });
             });
         });

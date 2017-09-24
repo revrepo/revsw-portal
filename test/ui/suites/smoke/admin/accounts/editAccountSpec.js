@@ -54,7 +54,6 @@ describe('Smoke', function () {  // jshint ignore:line
         Portal.admin.accounts.editPage
           .updateAccountProfile(accountProfile, billingContact);
         Portal.dialog.clickOk();
-
         Portal.helpers.nav.goToAccounts();
         Portal.admin.accounts.listPage.searcher.clearSearchCriteria();
         Portal.admin.accounts.listPage.searcher.setSearchCriteria(account2);
@@ -62,7 +61,7 @@ describe('Smoke', function () {  // jshint ignore:line
         expect(allRows.count()).toEqual(1);
       });
 
-    it('should edit a account and Create Billing Profile',
+    it('should edit an account and Create Billing Profile',
       function () {
         var account1 = accountProfile.companyName;
         Portal.admin.accounts.listPage.searchAndClickEdit(account1);

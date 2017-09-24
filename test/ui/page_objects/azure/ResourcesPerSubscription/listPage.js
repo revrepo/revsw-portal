@@ -32,13 +32,45 @@ var ResourcesPerSub = {
       panelHeading: '.col-md-12 .panel .panel-heading',
       panelBody: '.col-md-12 .panel .panel-body',
       searchComboBox: '.ui-select-container',
-      searchInputField: '.dataTables_filter input[type=search]'
+      searchInputField: '.dataTables_filter input[type=search]',
+      viewModal: {
+        container: '.modal-dialog',
+        buttons: {
+          close: '.btn-primary'
+        }
+      }
     },
     labels: {
       title: {
         className: 'page-title'
       }
+    },
+    buttons: {
+      back: {
+        css: '.glyphicon-arrow-left'
+      }
     }
+  },
+
+  getViewModal: function () {
+    return element(by.css(this.locators.views.viewModal.container));
+  },
+
+  getViewCloseBtn: function () {
+    return this.getViewModal()
+      .element(by.css(this.locators.views.viewModal.buttons.close));
+  },
+
+  clickViewCloseBtn: function () {
+    return this.getViewCloseBtn().click();
+  },
+
+  getBackBtn: function () {
+    return element(by.css(this.locators.buttons.back.css));
+  },
+
+  clickBackBtn: function () {
+    return this.getBackBtn().click();
   },
 
   getSortOrder: function () {

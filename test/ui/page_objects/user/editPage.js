@@ -43,6 +43,21 @@ var EditUser = {
       },
       cancel: {
         linkText: 'Cancel'
+      },
+      disable2FA: {
+        css: '#disable2FA'
+      }
+    },
+    dialogs: {
+      disable2FA: {
+        container: {
+          css: '.modal-dialog.modal-md'
+        },
+        buttons: {
+          ok: {
+            css: '#disable2faOk'
+          }
+        }
       }
     }
   },
@@ -53,6 +68,19 @@ var EditUser = {
 
   // ## Methods to retrieve references to UI elements (Selenium WebDriver
   // Element)
+
+  getDisable2FADialog: function () {
+    return element(by.css(this.locators.dialogs.disable2FA.container.css));
+  },
+
+  getDisable2faOkBtn: function () {
+    return element(by.css(this.locators.dialogs.disable2FA.buttons.ok.css));
+  },
+
+  clickDisable2faOkBtn: function () {
+    return this.getDisable2faOkBtn().click();
+  },
+
 
   /**
    * ### EditUser.getTitleLbl()
@@ -101,6 +129,30 @@ var EditUser = {
    */
   getCancelBtn: function () {
     return element(by.partialLinkText(this.locators.buttons.cancel.linkText));
+  },
+
+  /**
+   * ### EditUser.getDisable2FABtn()
+   *
+   * Returns the reference to the `Disable 2FA` button (Selenium WebDriver Element)
+   * from the Edit User page from the Portal app.
+   *
+   * @returns {Selenium WebDriver Element}
+   */
+  getDisable2FABtn: function () {
+    return element(by.css(this.locators.buttons.disable2FA.css));
+  },
+
+  /**
+   * ### EditUser.clickDisable2FA()
+   *
+   *  Triggers a click on the `Disable 2FA` button from the Edit User page from
+   * the Portal app
+   *
+   * @returns {Selenium WebDriver Element}
+   */
+  clickDisable2FA: function () {
+    return this.getDisable2FABtn().click();
   },
 
   // ## Methods to interact with the Edit User Page components

@@ -28,7 +28,7 @@ var Help = {
   locators: {
     launcher: {
       iframe: 'launcher',
-      button: '#Embed'
+      button: '#Embed .src-component-Launcher-label'
     },
     help: {
       iframe: 'webWidget',
@@ -55,23 +55,23 @@ var Help = {
    */
   clickHelpButton: function (callback) {
     browser.sleep(timeWait)
-    .then(function() {
-      browser.driver.switchTo().defaultContent();
+      .then(function () {
+        browser.driver.switchTo().defaultContent();
 
-      browser.driver.switchTo().frame(Help.locators.launcher.iframe);
-      browser.sleep(timeWait)
-      .then(function() {
-        browser.sleep(timeWait);
-        browser.driver.findElement(by.css(Help.locators.launcher.button))
-        .click()
-        .then(function() {
-          browser.sleep(timeWait);
-          callback(true);
-        }, function() {
-          callback(false);
-        });
+        browser.driver.switchTo().frame(Help.locators.launcher.iframe);
+        browser.sleep(timeWait)
+          .then(function () {
+            browser.sleep(timeWait);
+            browser.driver.findElement(by.css(Help.locators.launcher.button))
+              .then(function (elem) {
+                elem.click().then(function () {
+                  callback(true);
+                }, function () {
+                  callback(false);
+                });
+              });
+          });
       });
-    });
   },
 
   /**
@@ -83,29 +83,29 @@ var Help = {
    * @returns {Selenium WebDriver Element}
    */
   fillHelpForm: function (text, callback) {
-    browser.sleep(timeWait*2)
-    .then(function() {
-      browser.driver.switchTo().defaultContent();
-      browser.driver.switchTo().frame(Help.locators.help.iframe);
-      browser.driver.findElement(by.xpath(Help.locators.help.search))
-      .sendKeys(text);
-      browser.sleep(timeWait);
-      browser.driver.findElement(by.xpath(Help.locators.help.search))
-      .sendKeys(protractor.Key.ENTER)
-      .then(function() {
-        browser.sleep(timeWait)
-        .then(function() {
-          browser.sleep(timeWait);
-          browser.driver.findElement(by.xpath(Help.locators.help.submit))
-          .click()
-          .then(function() {
-            callback(true);
-          }, function(error) {
-            callback(false);
+    browser.sleep(timeWait * 2)
+      .then(function () {
+        browser.driver.switchTo().defaultContent();
+        browser.driver.switchTo().frame(Help.locators.help.iframe);
+        browser.driver.findElement(by.xpath(Help.locators.help.search))
+          .sendKeys(text);
+        browser.sleep(timeWait);
+        browser.driver.findElement(by.xpath(Help.locators.help.search))
+          .sendKeys(protractor.Key.ENTER)
+          .then(function () {
+            browser.sleep(timeWait)
+              .then(function () {
+                browser.sleep(timeWait);
+                browser.driver.findElement(by.xpath(Help.locators.help.submit))
+                  .click()
+                  .then(function () {
+                    callback(true);
+                  }, function (error) {
+                    callback(false);
+                  });
+              });
           });
-        });
       });
-    });
   },
 
   /**
@@ -118,38 +118,38 @@ var Help = {
    */
   fillTicketForm: function (data, callback) {
     browser.sleep(timeWait)
-    .then(function() {
-      var db = browser.driver;
-      db.switchTo().defaultContent();
-      db.switchTo().frame(Help.locators.ticket.iframe);
-      db.findElement(by.name(Help.locators.ticket.name)).sendKeys(data.name);
-      db.findElement(by.name(Help.locators.ticket.email)).sendKeys(data.email);
-      db.findElement(by.name(Help.locators.ticket.description))
-      .sendKeys(data.description)
-      .then(function() {
-        browser.sleep(timeWait)
-        .then(function() {
-          browser.driver.findElement(by.xpath(Help.locators.ticket.submit))
-          .click()
-          .then(function() {
+      .then(function () {
+        var db = browser.driver;
+        db.switchTo().defaultContent();
+        db.switchTo().frame(Help.locators.ticket.iframe);
+        db.findElement(by.name(Help.locators.ticket.name)).sendKeys(data.name);
+        db.findElement(by.name(Help.locators.ticket.email)).sendKeys(data.email);
+        db.findElement(by.name(Help.locators.ticket.description))
+          .sendKeys(data.description)
+          .then(function () {
             browser.sleep(timeWait)
-            .then(function() {
-              browser.driver.findElement(by.css(Help.locators.ticket.title))
-              .getText()
-              .then(function(text){
-                browser.driver.findElement(by.css(Help.locators.ticket.close))
-                .click()
-                .then(function() {
-                  callback(true, text);
-                }, function(error) {
-                  callback(false, 'Failed');
-                });
+              .then(function () {
+                browser.driver.findElement(by.xpath(Help.locators.ticket.submit))
+                  .click()
+                  .then(function () {
+                    browser.sleep(timeWait)
+                      .then(function () {
+                        browser.driver.findElement(by.css(Help.locators.ticket.title))
+                          .getText()
+                          .then(function (text) {
+                            browser.driver.findElement(by.css(Help.locators.ticket.close))
+                              .click()
+                              .then(function () {
+                                callback(true, text);
+                              }, function (error) {
+                                callback(false, 'Failed');
+                              });
+                          });
+                      });
+                  });
               });
-            });
           });
-        });
       });
-    });
   }
 };
 

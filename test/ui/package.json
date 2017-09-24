@@ -27,6 +27,7 @@
     "moment": "^2.13.0",
     "protractor": "^2.5.1",
     "protractor-jasmine2-html-reporter": "0.0.5",
+    "speakeasy": "^2.0.0",
     "supertest": "^1.1.0",
     "supertest-as-promised": "^2.0.2",
     "validator": "^4.7.1"

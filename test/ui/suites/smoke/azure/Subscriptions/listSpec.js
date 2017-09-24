@@ -21,7 +21,7 @@ var Portal = require('./../../../../page_objects/portal');
 var Constants = require('./../../../../page_objects/constants');
 
 describe('Smoke', function () {
-    describe('Subscriptions sorting', function () {
+    describe('Subscriptions list', function () {
 
         var revAdminUser = config.get('portal.users.revAdmin');
 
@@ -34,43 +34,22 @@ describe('Smoke', function () {
             Portal.signOut();
         });
 
-        it('should display `Subscription ID` filter', function () {
+        it('should display subscriptions list', function () {
             expect(Portal
                 .azureMarketplace
                 .SubscriptionsPage
                 .table
-                .getHeader()
-                .getSubIdCell()
-                .isDisplayed()).toBeTruthy();
+                .getRows()
+                .count()).toBeGreaterThan(0);
         });
 
-        it('should display `Registration Date` filter', function () {
+        it('should display subscription text', function () {
             expect(Portal
                 .azureMarketplace
                 .SubscriptionsPage
                 .table
-                .getHeader()
-                .getRegisterDateCell()
-                .isDisplayed()).toBeTruthy();
-        });
-
-        it('should display `Last Update` filter', function () {
-            expect(Portal
-                .azureMarketplace
-                .SubscriptionsPage
-                .table
-                .getHeader()
-                .getLastUpdateCell()
-                .isDisplayed()).toBeTruthy();
-        });
-        it('should display `State` filter', function () {
-            expect(Portal
-                .azureMarketplace
-                .SubscriptionsPage
-                .table
-                .getHeader()
-                .getStateCell()
-                .isDisplayed()).toBeTruthy();
+                .getFirstRow()
+                .getSubId()).not.toEqual('');
         });
     });
 });

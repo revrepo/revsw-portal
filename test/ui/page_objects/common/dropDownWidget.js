@@ -29,6 +29,9 @@ var DropDownWidget = function (dropDownLocator) {
       search: {
         css: '.ui-select-search'
       }
+    },
+    options: {
+      css: '.ui-select-choices-row .ng-scope'
     }
   };
 };
@@ -41,6 +44,10 @@ DropDownWidget.prototype.getSearchTxtIn = function () {
   return this.container.element(by.css(this.locators.textInputs.search.css));
 };
 
+DropDownWidget.prototype.getOption = function (option) {
+  return this.container.element(by.cssContainingText(this.locators.options.css, option));
+};
+
 DropDownWidget.prototype.open = function () {
   return this
     .getArrowEl()
@@ -49,9 +56,15 @@ DropDownWidget.prototype.open = function () {
 
 DropDownWidget.prototype.setValue = function (value) {
   this.open();
-  return this
-    .getSearchTxtIn()
-    .sendKeys(value + protractor.Key.ENTER);
+  if (this.getSearchTxtIn().isPresent() === true) {
+    return this
+      .getSearchTxtIn()
+      .sendKeys(value + protractor.Key.ENTER);
+  } else {
+    return this
+      .getOption(value)
+      .click();
+  }
 };
 
 module.exports = DropDownWidget;

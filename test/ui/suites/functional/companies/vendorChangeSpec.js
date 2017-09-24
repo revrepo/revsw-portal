@@ -55,28 +55,36 @@ describe('Functional', function () {
                         .toBeTruthy();
                 });
 
+                it('should not display vendor change modal on cancel click', function () {
+                    Portal
+                        .admin
+                        .accounts
+                        .listPage
+                        .changeVendorModal
+                        .clickCancel();
+                    expect(Portal
+                        .admin
+                        .accounts
+                        .listPage
+                        .changeVendorModal
+                        .isDisplayed())
+                        .toBeFalsy();
+                });
+
                 it('should be able to change vendors', function () {
-                    var vendorModal = Portal
+                    Portal
                         .admin
                         .accounts
                         .listPage
-                        .changeVendorModal;
-                    var currVendor = Portal
+                        .searchAndGetFirstRow('API QA Account')
+                        .clickVendor();
+
+                    Portal
                         .admin
                         .accounts
                         .listPage
-                        .table
-                        .getFirstRow()
-                        .getVendor();
-                    var oldVendorText;
-                    currVendor.getText().then(function (currVendorText) {
-                        oldVendorText = currVendorText; // save old vendor
-                    });
-
-
-                    vendorModal.pickNewVendor(currVendor);
-                    browser.sleep(5000); // wait for pick to finish                    
-
+                        .changeVendorModal
+                        .pickNewVendor('nuubit');
                     Portal
                         .admin
                         .accounts
@@ -87,7 +95,7 @@ describe('Functional', function () {
                         .then(function (text) {
                             expect(
                                 text
-                            ).not.toBe(oldVendorText);
+                            ).not.toBe('revapm');
 
                             // Go back to revapm vendor
                             Portal
@@ -96,7 +104,12 @@ describe('Functional', function () {
                                 .listPage
                                 .searchAndGetFirstRow('API QA Account')
                                 .clickVendor();
-                            vendorModal.pickOldVendor(oldVendorText);
+                            Portal
+                                .admin
+                                .accounts
+                                .listPage
+                                .changeVendorModal
+                                .pickNewVendor('revapm');
                         });
 
                 });

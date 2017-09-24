@@ -44,15 +44,25 @@ describe('Smoke', function () {
                 beforeEach(function () {
                     Portal.helpers.nav.goToSubscriptions();
                 });
-
-                it('should be displayed when displaying Subscriptions List page',
+                it('should filter subscriptions according to text filled',
                     function () {
-                        var searchField = Portal
+                        var subIdToSearch = Portal
+                            .azureMarketplace
+                            .SubscriptionsPage
+                            .table
+                            .getFirstRow()
+                            .getSubId();
+                        Portal
                             .azureMarketplace
                             .SubscriptionsPage
                             .searcher
-                            .getSearchCriteriaTxtIn();
-                        expect(searchField.isPresent()).toBeTruthy();
+                            .setSearchCriteria(subIdToSearch);
+                        expect(Portal
+                            .azureMarketplace
+                            .SubscriptionsPage
+                            .table
+                            .getRows()
+                            .count()).toEqual(1);
                     });
             });
         });

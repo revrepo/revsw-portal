@@ -21,56 +21,40 @@ var Portal = require('./../../../../page_objects/portal');
 var Constants = require('./../../../../page_objects/constants');
 
 describe('Smoke', function () {
-    describe('Subscriptions sorting', function () {
+    describe('Resources Per Subscription list', function () {
 
         var revAdminUser = config.get('portal.users.revAdmin');
 
         beforeAll(function () {
             Portal.signIn(revAdminUser);
-            Portal.helpers.nav.goToSubscriptions();
+            Portal.helpers.nav.goToSubscriptions().then(function () {
+                Portal.azureMarketplace
+                    .SubscriptionsPage
+                    .table
+                    .getFirstRow()
+                    .clickSubId();
+            });
         });
 
         afterAll(function () {
             Portal.signOut();
         });
 
-        it('should display `Subscription ID` filter', function () {
+        it('should display `Back` button', function () {
             expect(Portal
                 .azureMarketplace
-                .SubscriptionsPage
-                .table
-                .getHeader()
-                .getSubIdCell()
+                .ResourcesPerSubscriptionPage
+                .getBackBtn()
                 .isDisplayed()).toBeTruthy();
         });
 
-        it('should display `Registration Date` filter', function () {
+        it('should display resources list', function () {
             expect(Portal
                 .azureMarketplace
-                .SubscriptionsPage
+                .ResourcesPerSubscriptionPage
                 .table
-                .getHeader()
-                .getRegisterDateCell()
-                .isDisplayed()).toBeTruthy();
-        });
-
-        it('should display `Last Update` filter', function () {
-            expect(Portal
-                .azureMarketplace
-                .SubscriptionsPage
-                .table
-                .getHeader()
-                .getLastUpdateCell()
-                .isDisplayed()).toBeTruthy();
-        });
-        it('should display `State` filter', function () {
-            expect(Portal
-                .azureMarketplace
-                .SubscriptionsPage
-                .table
-                .getHeader()
-                .getStateCell()
-                .isDisplayed()).toBeTruthy();
+                .getRows()
+                .count()).toBeGreaterThan(0);
         });
     });
 });
