@@ -32,6 +32,11 @@ describe('Smoke', function () {
                 Portal.azureMarketplace
                     .SubscriptionsPage
                     .table
+                    .getHeader()
+                    .clickSubId();
+                Portal.azureMarketplace
+                    .SubscriptionsPage
+                    .table
                     .getFirstRow()
                     .clickSubId();
             });
@@ -50,40 +55,50 @@ describe('Smoke', function () {
 
         it('should apply `descendant` sorting by `Name` column',
             function () {
+                var item1 = Portal
+                    .azureMarketplace
+                    .ResourcesPerSubscriptionPage
+                    .table
+                    .getFirstRow()
+                    .getName();
                 Portal
                     .azureMarketplace
                     .ResourcesPerSubscriptionPage
                     .table
                     .getHeader()
                     .clickName();
-                expect(
-                    Portal
-                        .azureMarketplace
-                        .ResourcesPerSubscriptionPage
-                        .table
-                        .getHeader()
-                        .getNameCell()
-                        .getAttribute('aria-sort')
-                ).toBe('descending');
+
+                var item2 = Portal
+                    .azureMarketplace
+                    .ResourcesPerSubscriptionPage
+                    .table
+                    .getFirstRow()
+                    .getName();
+                expect(item2).toBeGreaterThan(item1);
             });
 
         it('should apply `ascendant` sorting by `Name` column',
             function () {
+                var item1 = Portal
+                    .azureMarketplace
+                    .ResourcesPerSubscriptionPage
+                    .table
+                    .getFirstRow()
+                    .getName();
                 Portal
                     .azureMarketplace
                     .ResourcesPerSubscriptionPage
                     .table
                     .getHeader()
                     .clickName();
-                expect(
-                    Portal
-                        .azureMarketplace
-                        .ResourcesPerSubscriptionPage
-                        .table
-                        .getHeader()
-                        .getNameCell()
-                        .getAttribute('aria-sort')
-                ).toBe('ascending');
+
+                var item2 = Portal
+                    .azureMarketplace
+                    .ResourcesPerSubscriptionPage
+                    .table
+                    .getFirstRow()
+                    .getName();
+                expect(item2).toBeLessThan(item1);
             });
 
         it('should apply `ascendant` sorting by `Type` column',
@@ -94,34 +109,58 @@ describe('Smoke', function () {
                     .table
                     .getHeader()
                     .clickType();
-                expect(
-                    Portal
-                        .azureMarketplace
-                        .ResourcesPerSubscriptionPage
-                        .table
-                        .getHeader()
-                        .getTypeCell()
-                        .getAttribute('aria-sort')
-                ).toBe('ascending');
-            });
-
-        it('should apply `descendant` sorting by `Type` column',
-            function () {
+                var item1 = Portal
+                    .azureMarketplace
+                    .ResourcesPerSubscriptionPage
+                    .table
+                    .getFirstRow()
+                    .getType();
                 Portal
                     .azureMarketplace
                     .ResourcesPerSubscriptionPage
                     .table
                     .getHeader()
                     .clickType();
-                expect(
-                    Portal
-                        .azureMarketplace
-                        .ResourcesPerSubscriptionPage
-                        .table
-                        .getHeader()
-                        .getTypeCell()
-                        .getAttribute('aria-sort')
-                ).toBe('descending');
+
+                var item2 = Portal
+                    .azureMarketplace
+                    .ResourcesPerSubscriptionPage
+                    .table
+                    .getFirstRow()
+                    .getType();
+                item2.then(function (t1) {
+                    item1.then(function (t2) {
+                        expect(t1.toLowerCase()).toBeGreaterThan(t2.toLowerCase());
+                    });
+                });
+            });
+
+        it('should apply `descendant` sorting by `Type` column',
+            function () {
+                var item1 = Portal
+                    .azureMarketplace
+                    .ResourcesPerSubscriptionPage
+                    .table
+                    .getFirstRow()
+                    .getType();
+                Portal
+                    .azureMarketplace
+                    .ResourcesPerSubscriptionPage
+                    .table
+                    .getHeader()
+                    .clickType();
+
+                var item2 = Portal
+                    .azureMarketplace
+                    .ResourcesPerSubscriptionPage
+                    .table
+                    .getFirstRow()
+                    .getType();
+                item2.then(function (t1) {
+                    item1.then(function (t2) {
+                        expect(t1.toLowerCase()).toBeLessThan(t2.toLowerCase());
+                    });
+                });
             });
 
         it('should apply `ascendant` sorting by `Location` column',
@@ -132,35 +171,51 @@ describe('Smoke', function () {
                     .table
                     .getHeader()
                     .clickLocation();
-                expect(
-                    Portal
-                        .azureMarketplace
-                        .ResourcesPerSubscriptionPage
-                        .table
-                        .getHeader()
-                        .getLocationCell()
-                        .getAttribute('aria-sort')
-                ).toBe('ascending');
-
-            });
-
-        it('should apply `descendant` sorting by `Location` column',
-            function () {
+                var item1 = Portal
+                    .azureMarketplace
+                    .ResourcesPerSubscriptionPage
+                    .table
+                    .getFirstRow()
+                    .getLocation();
                 Portal
                     .azureMarketplace
                     .ResourcesPerSubscriptionPage
                     .table
                     .getHeader()
                     .clickLocation();
-                expect(
-                    Portal
-                        .azureMarketplace
-                        .ResourcesPerSubscriptionPage
-                        .table
-                        .getHeader()
-                        .getLocationCell()
-                        .getAttribute('aria-sort')
-                ).toBe('descending');
+
+                var item2 = Portal
+                    .azureMarketplace
+                    .ResourcesPerSubscriptionPage
+                    .table
+                    .getFirstRow()
+                    .getLocation();
+                expect(item2).toBeGreaterThan(item1);
+
+            });
+
+        it('should apply `descendant` sorting by `Location` column',
+            function () {
+                var item1 = Portal
+                    .azureMarketplace
+                    .ResourcesPerSubscriptionPage
+                    .table
+                    .getFirstRow()
+                    .getLocation();
+                Portal
+                    .azureMarketplace
+                    .ResourcesPerSubscriptionPage
+                    .table
+                    .getHeader()
+                    .clickLocation();
+
+                var item2 = Portal
+                    .azureMarketplace
+                    .ResourcesPerSubscriptionPage
+                    .table
+                    .getFirstRow()
+                    .getLocation();
+                expect(item2).toBeLessThan(item1);
             });
 
         it('should apply `ascendant` sorting by `Plan` column',
@@ -171,34 +226,50 @@ describe('Smoke', function () {
                     .table
                     .getHeader()
                     .clickPlan();
-                expect(
-                    Portal
-                        .azureMarketplace
-                        .ResourcesPerSubscriptionPage
-                        .table
-                        .getHeader()
-                        .getPlanCell()
-                        .getAttribute('aria-sort')
-                ).toBe('ascending');
-            });
-
-        it('should apply `descendant` sorting by `Plan` column',
-            function () {
+                var item1 = Portal
+                    .azureMarketplace
+                    .ResourcesPerSubscriptionPage
+                    .table
+                    .getFirstRow()
+                    .getPlan();
                 Portal
                     .azureMarketplace
                     .ResourcesPerSubscriptionPage
                     .table
                     .getHeader()
                     .clickPlan();
-                expect(
-                    Portal
-                        .azureMarketplace
-                        .ResourcesPerSubscriptionPage
-                        .table
-                        .getHeader()
-                        .getPlanCell()
-                        .getAttribute('aria-sort')
-                ).toBe('descending');
+
+                var item2 = Portal
+                    .azureMarketplace
+                    .ResourcesPerSubscriptionPage
+                    .table
+                    .getFirstRow()
+                    .getPlan();
+                expect(item2).toBeGreaterThan(item1);
+            });
+
+        it('should apply `descendant` sorting by `Plan` column',
+            function () {
+                var item1 = Portal
+                    .azureMarketplace
+                    .ResourcesPerSubscriptionPage
+                    .table
+                    .getFirstRow()
+                    .getPlan();
+                Portal
+                    .azureMarketplace
+                    .ResourcesPerSubscriptionPage
+                    .table
+                    .getHeader()
+                    .clickPlan();
+
+                var item2 = Portal
+                    .azureMarketplace
+                    .ResourcesPerSubscriptionPage
+                    .table
+                    .getFirstRow()
+                    .getPlan();
+                expect(item2).toBeLessThan(item1);
             });
 
         it('should apply `ascendant` sorting by `Resource Group` column',
@@ -209,34 +280,50 @@ describe('Smoke', function () {
                     .table
                     .getHeader()
                     .clickResourceGroup();
-                expect(
-                    Portal
-                        .azureMarketplace
-                        .ResourcesPerSubscriptionPage
-                        .table
-                        .getHeader()
-                        .getResourceGroupCell()
-                        .getAttribute('aria-sort')
-                ).toBe('ascending');
-            });
-
-        it('should apply `descendant` sorting by `Resource Group` column',
-            function () {
+                var item1 = Portal
+                    .azureMarketplace
+                    .ResourcesPerSubscriptionPage
+                    .table
+                    .getFirstRow()
+                    .getResourceGroup();
                 Portal
                     .azureMarketplace
                     .ResourcesPerSubscriptionPage
                     .table
                     .getHeader()
                     .clickResourceGroup();
-                expect(
-                    Portal
-                        .azureMarketplace
-                        .ResourcesPerSubscriptionPage
-                        .table
-                        .getHeader()
-                        .getResourceGroupCell()
-                        .getAttribute('aria-sort')
-                ).toBe('descending');
+
+                var item2 = Portal
+                    .azureMarketplace
+                    .ResourcesPerSubscriptionPage
+                    .table
+                    .getFirstRow()
+                    .getResourceGroup();
+                expect(item2).toBeGreaterThan(item1);
+            });
+
+        it('should apply `descendant` sorting by `Resource Group` column',
+            function () {
+                var item1 = Portal
+                    .azureMarketplace
+                    .ResourcesPerSubscriptionPage
+                    .table
+                    .getFirstRow()
+                    .getResourceGroup();
+                Portal
+                    .azureMarketplace
+                    .ResourcesPerSubscriptionPage
+                    .table
+                    .getHeader()
+                    .clickResourceGroup();
+
+                var item2 = Portal
+                    .azureMarketplace
+                    .ResourcesPerSubscriptionPage
+                    .table
+                    .getFirstRow()
+                    .getResourceGroup();
+                expect(item2).toBeLessThan(item1);
             });
 
     });
