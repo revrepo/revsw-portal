@@ -33,19 +33,43 @@ var ChangeVendorModal = {
             css: '.modal-dialog'
         },
         vendorDropdown: {
-            css: '.ui-select-container',
+            css: '[ng-click="$select.toggle($event)"]',
             options: {
                 css: '.ui-select-choices-row'
             }
         },
         buttons: {
             change: {
-                css: '.btn-change'
+                css: '[ng-click="change()"]'
             },
             cancel: {
-                css: '.btn-cancel'
+                css: '[ng-click="cancel()"]'
+            }
+        },
+        options: {
+            nuubit: {
+                css: '.ui-select-choices-group ul li:nth-child(2)'
+            },
+            revapm: {
+                css: '.ui-select-choices-group ul li:nth-child(1)'
             }
         }
+    },
+
+  // ## Methods to retrieve references to UI elements (Selenium WebDriver
+  // Element)
+
+  /**
+   * ### ChangeVendorModal.getCancelBtn()
+   *
+   * Returns the reference to the `Cancel` button (Selenium WebDriver
+   * Element)from the Change Vendor page from the
+   * Accounts
+   *
+   * @returns {Selenium WebDriver Element}
+   */
+    getCancelBtn: function () {
+      return element(by.css(this.locators.buttons.cancel.css));
     },
 
     /**
@@ -86,6 +110,7 @@ var ChangeVendorModal = {
     },
 
     /**
+<<<<<<< HEAD
     * ### ChangeVendorModal.getCancelButton()
     *
     * Returns the reference to the `Cancel Button` element (Selenium WebDriver
@@ -95,6 +120,31 @@ var ChangeVendorModal = {
     */
     getCancelButton: function () {
         return element(by.css(this.locators.buttons.cancel.css));
+=======
+   * ### ChangeVendorModal.getVendorOptionNuubit()
+   *
+   * Returns the reference to the `Vendor` drop down option Nuubit (Selenium WebDriver
+   * Element) from the Change Vendor page from the
+   * Accounts
+   *
+   * @returns {Selenium WebDriver Element}
+   */
+    getVendorOptionNuubit: function () {
+      return element.all(by.css(this.locators.options.nuubit.css));
+    },
+
+  /**
+   * ### ChangeVendorModal.getVendorOptionRevapm()
+   *
+   * Returns the reference to the `Vendor` drop down option Revapm(Selenium WebDriver
+   * Element) from the Change Vendor page from the
+   * Accounts
+   *
+   * @returns {Selenium WebDriver Element}
+   */
+    getVendorOptionRevapm: function () {
+      return element.all(by.css(this.locators.options.revapm.css));
+>>>>>>> 97073e12ab52be40ca8caa1bd7028d19f95aef0b
     },
 
     /**
@@ -109,6 +159,20 @@ var ChangeVendorModal = {
         return element.all(by.css(this.locators.vendorDropdown.options.css));
     },
 
+  /**
+   * ### ChangeVendor.selectVendorDdown()
+   *
+   * Triggers a click on the `Vendor` drop down from the Change Vendor page from the
+   * Portal app
+   *
+   * @returns {Promise}
+   */
+    selectVendorDdown: function () {
+      return this
+        .getVendorDropdown()
+        .click();
+    },
+
     /**
     * ### ChangeVendorModal.clickVendor()
     *
@@ -119,7 +183,6 @@ var ChangeVendorModal = {
         return this
             .getVendorDropdown()
             .click();
-
     },
 
     /**
@@ -132,6 +195,20 @@ var ChangeVendorModal = {
         return this
             .getChangeButton()
             .click();
+    },
+
+  /**
+   * ### ChangeVendorModal.clickCancelBtn()
+   *
+   * Triggers a click on the `Cancel` button from the Change Vendor page from the
+   * Accounts
+   *
+   * @returns {Promise}
+   */
+    clickCancelBtn: function () {
+      return this
+        .getCancelBtn()
+        .click();
     },
 
     /**
@@ -164,10 +241,57 @@ var ChangeVendorModal = {
     * Selects a new vendor
     *
     */
+<<<<<<< HEAD
     pickNewVendor: function (vendor) {
         this.getVendorDropdown().setValue(vendor);
         this.clickChange();
     }
+=======
+    pickOldVendor: function (oldVendor) {
+        var me = this;
+        var dropdown = me.getVendorDropdown();
+        dropdown.click();
+        var picks = me.getVendorOptions();
+        picks.getText().then(function (text) {
+            if (text.indexOf(oldVendor) !== -1 && text.length > 2) {
+                var i = text.indexOf(oldVendor);
+                //pick different vendor
+                picks.get(i).click();
+                me.clickChange();
+            }
+        });
+    },
+
+  /**
+   * ### ChangeVendor.setVendorNuubit()
+   *
+   * Sets value 'nuubit' to `Vendor` drop down element.
+   *
+   * @param {String} Value to set in Vendor drop down on Accounts Change Vendor page.
+   *
+   * @returns {Promise}
+   */
+    setVendorNuubit: function () {
+      return this
+        .getVendorOptionNuubit()
+        .click();
+    },
+
+  /**
+   * ### ChangeVendor.setVendorRevapm()
+   *
+   * Sets value 'revapm' to `Vendor` drop down element.
+   *
+   * @param {String} Value to set in Vendor drop down on Accounts Change Vendor page.
+   *
+   * @returns {Promise}
+   */
+    setVendorRevapm: function () {
+      return this
+        .getVendorOptionRevapm()
+        .click();
+  },
+>>>>>>> 97073e12ab52be40ca8caa1bd7028d19f95aef0b
 };
 
 module.exports = ChangeVendorModal;
