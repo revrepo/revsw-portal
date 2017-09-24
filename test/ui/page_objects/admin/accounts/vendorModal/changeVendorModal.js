@@ -110,17 +110,6 @@ var ChangeVendorModal = {
     },
 
     /**
-<<<<<<< HEAD
-    * ### ChangeVendorModal.getCancelButton()
-    *
-    * Returns the reference to the `Cancel Button` element (Selenium WebDriver
-    * Element) from the vendor change modal.
-    *
-    * @returns {Selenium WebDriver Element}
-    */
-    getCancelButton: function () {
-        return element(by.css(this.locators.buttons.cancel.css));
-=======
    * ### ChangeVendorModal.getVendorOptionNuubit()
    *
    * Returns the reference to the `Vendor` drop down option Nuubit (Selenium WebDriver
@@ -144,7 +133,6 @@ var ChangeVendorModal = {
    */
     getVendorOptionRevapm: function () {
       return element.all(by.css(this.locators.options.revapm.css));
->>>>>>> 97073e12ab52be40ca8caa1bd7028d19f95aef0b
     },
 
     /**
@@ -241,12 +229,6 @@ var ChangeVendorModal = {
     * Selects a new vendor
     *
     */
-<<<<<<< HEAD
-    pickNewVendor: function (vendor) {
-        this.getVendorDropdown().setValue(vendor);
-        this.clickChange();
-    }
-=======
     pickOldVendor: function (oldVendor) {
         var me = this;
         var dropdown = me.getVendorDropdown();
@@ -291,7 +273,6 @@ var ChangeVendorModal = {
         .getVendorOptionRevapm()
         .click();
   },
->>>>>>> 97073e12ab52be40ca8caa1bd7028d19f95aef0b
 };
 
 module.exports = ChangeVendorModal;
