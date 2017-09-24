@@ -231,6 +231,8 @@ var Constants = {
       MSG_SUCCESS_DELETE: 'Successfully deleted the user',
       MSG_SUCCESS_UPDATE_PASSWORD: 'Successfully updated the password',
       MSG_FAIL_ADD_EMAIL_EXISTS: 'The email address is already used by another user',
+      MSG_SUCCESS_ENABLE_2FA: 'Successfully enabled two factor authentication',
+      MSG_SUCCESS_DISABLE_2FA: 'Successfully disabled two factor authentication',
     },
     accounts: {
       MSG_SUCCESS_ADD: 'Successfully created new account',
@@ -256,8 +258,8 @@ var Constants = {
   },
 
   backgroundColor: {
-      revapm: 'rgba(255, 140, 0, 0.7)',
-      nuubit: 'rgba(0, 48, 86, 1)' 
+    revapm: 'rgba(255, 140, 0, 0.7)',
+    nuubit: 'rgba(0, 48, 86, 1)'
   },
 
   footerMessage: 'Not sure which plan to choose? Talk to an expert',

@@ -17,6 +17,7 @@
  */
 
 var config = require('config');
+var speakeasy = require('speakeasy');
 var Portal = require('./../../../page_objects/portal');
 var DataProvider = require('./../../../common/providers/data');
 var Constants = require('./../../../page_objects/constants');
@@ -25,7 +26,8 @@ describe('Functional', function () {
     describe('Add user', function () {
 
         var users = [
-            config.get('portal.users.admin')
+            config.get('portal.users.admin'),
+            config.get('portal.users.reseller')
         ];
 
         users.forEach(function (user) {
@@ -39,16 +41,109 @@ describe('Functional', function () {
                 afterAll(function () {
                     Portal.signOut();
                 });
+                var bret;
 
-                it('should enable 2FA', function () {
-                    var bret = DataProvider.generateUser();
-                    Portal.helpers.nav.goToUsers();
-                    Portal.userListPage.clickAddNewUser();
-                    Portal.addUserPage.createUser(bret);
+                it('should display QR Image when `Set Up 2FA` button is clicked',
+                    function () {
+                        bret = DataProvider.generateUser();
+                        Portal.helpers.nav.goToUsers();
+                        Portal.userListPage.clickAddNewUser();
+                        Portal.addUserPage.createUser(bret);
+                        Portal.signOut().then(function () {
+                            Portal.signIn(bret);
+                            Portal.helpers.nav.goToSecuritySettings();
+                            Portal.securitySettingsPage.getSetUpTwoFactorAuthBtn().click();
+                            expect(Portal
+                                .securitySettingsPage
+                                .getQRImage()
+                                .isDisplayed()).toBeTruthy();
+                        });
+                    });
+
+                it('should display `OTP` text input when `Set Up 2FA` ' +
+                    'button is clicked', function () {
+                        expect(Portal
+                            .securitySettingsPage
+                            .getOTPTxtIn()
+                            .isDisplayed()).toBeTruthy();
+                    });
+
+                it('should display a successful message when enabling ' +
+                    '2FA', function () {
+                        Portal
+                            .securitySettingsPage
+                            .getASCIISecret().then(function (code) {
+                                /*
+                                Get the base32 code from the qr image element,
+                                use speakeasy to get the OTP out of that,
+                                set the value to the OTP text input and click Enable
+                                */
+                                var oneTimePassword = speakeasy.time({
+                                    secret: code,
+                                    encoding: 'base32'
+                                });
+                                Portal
+                                    .securitySettingsPage
+                                    .setOTPTxtIn(oneTimePassword);
+                                Portal
+                                    .securitySettingsPage
+                                    .clickEnableBtn();
+
+                                var alert = Portal.alerts.getFirst();
+                                expect(alert.getText())
+                                    .toContain(Constants
+                                        .alertMessages
+                                        .users
+                                        .MSG_SUCCESS_ENABLE_2FA);
+                            });
+                    });
+
+                it('should display `2FA` dialog on login after enabling 2FA', function () {
                     Portal.signOut().then(function () {
                         Portal.signIn(bret);
-                        Portal.helpers.nav.goToSecuritySettings();
-                        Portal.securitySettingsPage.getSetUpTwoFactorAuthBtn().click();
+                        expect(Portal
+                            .loginPage
+                            .get2FADialog()
+                            .isDisplayed()).toBeTruthy();
+                    });
+                });
+
+                it('should allow an admin of a user to disable that users 2FA',
+                    function () {
+                        Portal.signIn(user);
+                        Portal.helpers.nav.goToUsers();
+                        Portal
+                            .userListPage
+                            .searcher
+                            .setSearchCriteria(bret.email);
+
+                        Portal
+                            .userListPage
+                            .table
+                            .getFirstRow()
+                            .clickEdit();
+                        Portal
+                            .editUserPage
+                            .clickDisable2FA();
+                        Portal
+                            .editUserPage
+                            .clickDisable2faOkBtn();
+
+                        var alert = Portal.alerts.getFirst();
+                        expect(alert.getText())
+                            .toContain(Constants
+                                .alertMessages
+                                .users
+                                .MSG_SUCCESS_DISABLE_2FA);
+                    });
+
+                it('should not display `2FA` dialog on login after disabling 2FA', function () {
+                    Portal.signOut().then(function () {
+                        Portal.signIn(bret);
+                        expect(Portal
+                            .loginPage
+                            .get2FADialog()
+                            .isPresent()).toBeFalsy();
                     });
                 });
             });

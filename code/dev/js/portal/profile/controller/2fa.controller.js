@@ -85,6 +85,9 @@
         if (data.ascii) {
           $scope.asciiCode = data.ascii;
         }
+        if (data.base32) {
+          $scope.base32Code = data.base32;
+        }
       }).catch(function (err) {
         AlertService.danger(err, 5000);
       }).finally(function () {
@@ -215,6 +218,8 @@
           setTimeout(function () {
             e.target.value = e.target.value.replace(e.key, '*');
           }, $config.OTP_WILDCARD_DELAY);
+        } else {
+          $scope.code = e.target.value;
         }
       }
     };
