@@ -5,9 +5,10 @@ smoke.capabilities = {
 };
 
 smoke.specs = [
-  '../suites/smoke/azure/**/*Spec.js',
-  '../suites/functional/azure/**/*Spec.js',
-  '../suites/functional/users/**/*Spec.js'
+  '../suites/smoke/azure/**/*.js',
+  '../suites/functional/azure/**/*.js',
+  '../suites/functional/2FA/**/*.js',
+  '../suites/smoke/analytics/imageOptimizationSpec.js'
 ];
 
 exports.config = smoke;

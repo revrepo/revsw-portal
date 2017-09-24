@@ -27,7 +27,6 @@ describe('Smoke', function () {
     var noDomain = 'Select Domain';
 
     beforeAll(function () {
-      browser.sleep(2000);
       Portal.signIn(adminUser);
       Portal.helpers.nav.goToImageOptimization();
     });
@@ -46,28 +45,28 @@ describe('Smoke', function () {
     it('should display the default "Performance Improvement" report with empty data',
       function () {
         var titleChart = Constants.imageOptimization.PERFORMANCE_IMPROVEMENT;
-        expect(Portal.imageOptimizationPage.getSelectedDomain()).toEqual(noDomain);
+
         expect(Portal.imageOptimizationPage.getChartTitle()).toContain(titleChart);
       });
 
     it('should display the default "Bandwidth Saved" report with empty data',
       function () {
         var titleChart = Constants.imageOptimization.BANDWIDTH_SAVED;
-        expect(Portal.imageOptimizationPage.getSelectedDomain()).toEqual(noDomain);
+
         expect(Portal.imageOptimizationPage.getChartTitle()).toContain(titleChart);
       });
 
     it('should display the default "Image Format Changes" report with empty data',
       function () {
         var titleChart = Constants.imageOptimization.FORMAT_CHANGES;
-        expect(Portal.imageOptimizationPage.getSelectedDomain()).toEqual(noDomain);
+
         expect(Portal.imageOptimizationPage.getChartTitle()).toContain(titleChart);
       });
 
     it('should display default "Image Resolution Changes" report with empty data',
       function () {
         var titleChart = Constants.imageOptimization.RESOLUTION_CHANGES;
-        expect(Portal.imageOptimizationPage.getSelectedDomain()).toEqual(noDomain);
+
         expect(Portal.imageOptimizationPage.getChartTitle()).toContain(titleChart);
       });
   });
