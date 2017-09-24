@@ -42,9 +42,5 @@ describe('Functional', function () {
       var footerMessage = Portal.signUp.plansPage.getFooterMessageText();
       expect(footerMessage).toEqual(defaultFooterMessage);
     });
-<<<<<<< HEAD
-
-=======
->>>>>>> 97073e12ab52be40ca8caa1bd7028d19f95aef0b
   });
 });
