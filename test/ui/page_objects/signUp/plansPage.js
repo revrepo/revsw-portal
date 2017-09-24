@@ -107,15 +107,15 @@ var PlansList = {
     return new Plan(plan);
   },
 
-  /**
-    * ### PlanElement.getFooterMessageEl()
-    *
-    * Returns the Footer Message Element that is inside the Footer container element.
-    *
-    * @returns {Object} Selenium WebDriver Element
-    */
-  getFooterMessageEl: function () {
-    return element(by.css(this.locators.labels.footer.css)).get(0);
+/**
+  * ### PlanElement.getFooterMessageEl()
+  *
+  * Returns the Footer Message Element that is inside the Footer container element.
+  *
+  * @returns {Object} Selenium WebDriver Element
+  */
+ getFooterMessageEl: function () {
+    return element.all(by.css(this.locators.labels.footer.css)).get(0);
   },
 
   /**

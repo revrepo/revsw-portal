@@ -36,17 +36,15 @@ describe('Functional', function () {
     it('should have orange background color on Revapm website', function () {
       Portal.signIn(adminUserRev);
      
-      Portal.header.getNavBarBGColor().then(function(bgColor) {
-         expect(bgColor).toBe(bgColorRev);
-      });
+      var bgColor = Portal.header.getNavBarBGColor();
+      expect(bgColor).toBe(bgColorRev);
     });
 
     it('should have dark blue background color on Nuubit website', function () {
       Portal.signInNuubit(adminUserNuubit);
 
-      Portal.header.getNavBarBGColor().then(function(bgColor) {
-         expect(bgColor).toBe(bgColorNuubit);
-      });
+      var bgColor = Portal.header.getNavBarBGColor();
+      expect(bgColor).toBe(bgColorNuubit);
     });
   });
 });
