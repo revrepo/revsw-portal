@@ -314,6 +314,10 @@
         method: 'GET',
         url: $config.API_URL + '/stats/:domainId/activity',
       },
+      edgeCache: {
+        method: 'GET',
+        url: $config.API_URL + '/stats/edge_cache/:domainId',
+      },
     });
   }
 })();

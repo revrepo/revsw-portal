@@ -1,58 +1,105 @@
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-12">
-            <h2>Edge Cache</h2>
-        </div>
+<div class="container-fluid report_edge_cache">
+  <div class="row">
+    <div class="col-md-12">
+      <h2>Edge Cache</h2>
     </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="panel nd-panel">
-                <div class="panel-heading">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="pull-left">
-                                <form class="form-inline">
-                                    <div class="form-group">
-                                        <div domain-select id="domain" ng-model="vm.model.domain" on-select="vm.actions.onDomainChange()" select-one="true"></div>
-                                    </div>
-                                    <div class="form-group" ng-if="vm.model.domain">
-                                        <filter-generator domain="vm.model.domain" ng-model="vm.model.filtersList"></filter-generator>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="pull-left">
+                <form class="form-inline">
+                  <div class="form-group">
+                    <div domain-select id="domain" ng-model="vm.domain" on-select="vm.onDomainSelected(model)" select-one="true"></div>
+                  </div>
+                </form>
+              </div>
+              <form class="form-inline">
+                <div class="pull-right">
+                  <div class="clearfix" filter-hours-periods ng-disabled="!vm.domain" is-loading="vm._loading" fl-os="vm.os" fl-country="vm.country"
+                    fl-device="vm.device" fl-browser="vm.browser" ng-filters="vm.filters" on-filter="vm.reload()"></div>
                 </div>
-                <div class="panel-body">
-                    <div class="row text-center nd-block kpi">
-                        <div class="col-lg-2 col-sm-4 col-xs-6">
-                            <h3 ng-bind="vm.model.total.cacheHitRate + '%'"></h3>
-                            <small>Cache Hit Rate</small>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="col-sm-12 nd-block">
-                                <h3>Edge Cache Hit/Miss Ratio!!</h3>
-                               <!--  <div class="alert alert-info" ng-if="!cacheStatus || !cacheStatus.length">
-                                    No data to display
-                                </div> -->
-                                <div><!--  ng-hide="!cacheStatus || !cacheStatus.length"> -->
-                                    <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="cacheStatus"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="col-lg-12 nd-block">
-                                <div hits-cache-chart
-                                     ng-domain="vm.model.domain"
-                                     hide-filters="true">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+              </form>
             </div>
+          </div>
         </div>
+
+        <div class="panel-body">
+          <div class="row   text-center report_edge_cache_total__view_container">
+            <div class="col-sm-12 col-md-4">
+              <div class="panel nd-block">
+                <div class="panel-heading">
+                  <label class="title h4">Number <br class="hidden-xs hidden-sm">Of Unique Objects</label>
+                </div>
+                <div class="panel-body"><span class="stats-value h4"> {{vm.edgeCacheData.new_unique_objects || '-'}}</span> </div>
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-4 ">
+              <div class="panel nd-block">
+                <div class="panel-heading">
+                  <label class="title h4">New Objects <br class="hidden-xs hidden-sm">In  The Edge Cache</label>
+                </div>
+                <div class="panel-body"><span class="stats-value h4">{{vm.edgeCacheData.total_unique_objects || '-'}}</span></div>
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-4">
+              <div class="panel nd-block">
+                <div class="panel-heading ">
+                  <label class="title h4">Average <br class="hidden-xs hidden-sm">Configured Edge Cache TTL</label>
+                </div>
+                <div class="panel-body"><span class="stats-value h4">{{vm.edgeCacheData.average_configured_edge_cache_ttl_sec | humanizeMiliseconds:['ms'] || '-'}}</span></div>
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-4">
+              <div class="panel nd-block">
+                <div class="panel-heading ">
+                  <label class="title h4">Average <br class="hidden-xs hidden-sm">Age Of Served Objects</label>
+                </div>
+                <div class="panel-body"><span class="stats-value h4">{{vm.edgeCacheData.average_age_for_served_objects_sec | humanizeMiliseconds: ['ms'] || '-'}}</span></div>
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-4">
+              <div class="panel nd-block">
+                <div class="panel-heading ">
+                  <label class="title h4">Average <br class="hidden-xs hidden-sm">Cache Response Time</label>
+                </div>
+                <div class="panel-body"><span class="stats-value h4">{{vm.edgeCacheData.average_edge_cache_response_time_sec  | humanizeMiliseconds}}</span></div>
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-4">
+              <div class="panel nd-block">
+                <div class="panel-heading ">
+                  <label class="title h4">Average <br class="hidden-xs hidden-sm">Origin Response Time</label>
+                </div>
+                <div class="panel-body"><span class="stats-value h4">{{vm.edgeCacheData.average_origin_response_time_sec | humanizeMiliseconds}}</span></div>
+              </div>
+            </div>
+          </div>
+          <!-- NEW ROW -->
+          <div class="row  report_edge_cache_line_chart__view_container">
+            <div class="row">
+              <div class="col-sm-12 col-md-6">
+                <div class="col-lg-12 _nd-block">
+                  <div style="min-width: 480px; min-height: 350px" hits-cache-chart ng-domain="vm.domain" filters-sets="vm.filtersExternal"
+                    hide-filters="true">
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-6">
+                <div class="col-sm-12 _nd-block">
+                  <h3>Edge Cache Hit/Miss Ratio</h3>
+                  <div>
+                    <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="vm.cacheStatus"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </div>
