@@ -211,13 +211,16 @@
         .then(function(data) {
           if (data.data && data.data.length > 0) {
             var newData = [];
-            _.forEach(data.data, function(val) {
+            angular.forEach(data.data, function(val) {
               newData.push({
                 name: val.key,
                 y: val.count
               });
             });
-            vm.cacheStatus = newData;
+            if (newData.length === 2 &&
+              (newData[0].y > 0 || newData[1].y > 0)) {
+              vm.cacheStatus = newData;
+            }
           }
         });
     };
