@@ -41,6 +41,11 @@
                 params.to_timestamp = Date.now();
                 delete params.count_last_day;
               }
+              if(key === 'delay') {
+                params.from_timestamp = moment().subtract(val, 'h').valueOf();
+                params.to_timestamp = Date.now();
+                delete params.delay;
+              }
             }
           });
           return params;
@@ -280,6 +285,14 @@
           if (!$scope.ngDomain || $scope.isAutoReload === 'false') {
             return;
           }
+          $scope.reload();
+        });
+        // NOTE: watch to changes in external filters
+        $scope.$watch('filtersSets', function(newVal, oldVall) {
+          if(!$scope.ngDomain || $scope.isAutoReload === 'false' || (newVal === oldVall)) {
+            return;
+          }
+          _.extend($scope.filters, newVal);
           $scope.reload();
         });
       }
