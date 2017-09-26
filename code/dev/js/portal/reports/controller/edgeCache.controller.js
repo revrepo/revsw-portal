@@ -243,10 +243,10 @@
         .then(function(data) {
           // NOTE: convert seconds to miliseconds for work with angular "filter"
           vm.edgeCacheData = {
-            average_age_for_served_objects_sec: data.average_age_for_served_objects_sec * 1000 || 0,
-            average_configured_edge_cache_ttl_sec: data.average_configured_edge_cache_ttl_sec * 1000 || 0,
-            average_edge_cache_response_time_sec: data.average_edge_cache_response_time_ms || 0,
-            average_origin_response_time_sec: data.average_origin_response_time_ms || 0,
+            average_age_for_served_objects_ms: data.average_age_for_served_objects_sec * 1000 || 0,
+            average_configured_edge_cache_ttl_ms: data.average_configured_edge_cache_ttl_sec * 1000 || 0,
+            average_edge_cache_response_time_ms: data.average_edge_cache_response_time_ms || 0,
+            average_origin_response_time_ms: data.average_origin_response_time_ms || 0,
             new_unique_objects: data.new_unique_objects || 0,
             total_unique_objects: data.total_unique_objects || 0
           };

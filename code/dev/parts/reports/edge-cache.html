@@ -50,7 +50,7 @@
                 <div class="panel-heading ">
                   <label class="title h4">Average <br class="hidden-xs hidden-sm">Configured Edge Cache TTL</label>
                 </div>
-                <div class="panel-body"><span class="stats-value h4">{{vm.edgeCacheData.average_configured_edge_cache_ttl_sec | humanizeMiliseconds:['ms'] || '-'}}</span></div>
+                <div class="panel-body"><span class="stats-value h4">{{vm.edgeCacheData.average_configured_edge_cache_ttl_ms | humanizeMiliseconds:['ms'] || '-'}}</span></div>
               </div>
             </div>
             <div class="col-sm-12 col-md-4">
@@ -58,7 +58,7 @@
                 <div class="panel-heading ">
                   <label class="title h4">Average <br class="hidden-xs hidden-sm">Age Of Served Objects</label>
                 </div>
-                <div class="panel-body"><span class="stats-value h4">{{vm.edgeCacheData.average_age_for_served_objects_sec | humanizeMiliseconds: ['ms'] || '-'}}</span></div>
+                <div class="panel-body"><span class="stats-value h4">{{vm.edgeCacheData.average_age_for_served_objects_ms | humanizeMiliseconds: ['ms'] || '-'}}</span></div>
               </div>
             </div>
             <div class="col-sm-12 col-md-4">
@@ -66,7 +66,7 @@
                 <div class="panel-heading ">
                   <label class="title h4">Average <br class="hidden-xs hidden-sm">Cache Response Time</label>
                 </div>
-                <div class="panel-body"><span class="stats-value h4">{{vm.edgeCacheData.average_edge_cache_response_time_sec  | humanizeMiliseconds}}</span></div>
+                <div class="panel-body"><span class="stats-value h4">{{vm.edgeCacheData.average_edge_cache_response_time_ms  | humanizeMiliseconds}}</span></div>
               </div>
             </div>
             <div class="col-sm-12 col-md-4">
@@ -74,7 +74,7 @@
                 <div class="panel-heading ">
                   <label class="title h4">Average <br class="hidden-xs hidden-sm">Origin Response Time</label>
                 </div>
-                <div class="panel-body"><span class="stats-value h4">{{vm.edgeCacheData.average_origin_response_time_sec | humanizeMiliseconds}}</span></div>
+                <div class="panel-body"><span class="stats-value h4">{{vm.edgeCacheData.average_origin_response_time_ms | humanizeMiliseconds}}</span></div>
               </div>
             </div>
           </div>
