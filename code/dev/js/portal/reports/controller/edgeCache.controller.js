@@ -45,6 +45,10 @@
         // calculate the individual unit values...
         units.forEach(function(u) {
           millis = (millis - (dur[u.label] = (millis % u.mod))) / u.mod;
+          if(u.short==='ms'){
+            // NOTE: Round all ms responses to three digits after the dot
+            dur[u.label] = parseFloat(dur[u.label]).toFixed(3);
+          }
         });
 
         // convert object to a string representation...
