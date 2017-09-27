@@ -47,7 +47,11 @@
           millis = (millis - (dur[u.label] = (millis % u.mod))) / u.mod;
           if (u.short === 'ms') {
             // NOTE: Round all ms responses to three digits after the dot
-            dur[u.label] = parseFloat(dur[u.label]).toFixed(3);
+            if (dur[u.label] > 0) {
+              dur[u.label] = parseFloat(dur[u.label]).toFixed(3);
+            } else {
+              dur[u.label] = 0;
+            }
           }
         });
 
@@ -262,12 +266,12 @@
     // NOTE: action for send change filter data
     vm.reloadFilters = function(filters) {
       vm.filtersExternal = null;
-      var def = $q.deffer;
+      var deferred = $q.defer();
       $timeout(function() {
         vm.filtersExternal = filters;
-        def.resolve();
+        deferred.resolve();
       }, 1);
-      return def;
+      return deferred;
     };
   }
 })(angular, _);
