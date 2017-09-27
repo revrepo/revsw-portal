@@ -45,7 +45,7 @@
         // calculate the individual unit values...
         units.forEach(function(u) {
           millis = (millis - (dur[u.label] = (millis % u.mod))) / u.mod;
-          if(u.short==='ms'){
+          if (u.short === 'ms') {
             // NOTE: Round all ms responses to three digits after the dot
             dur[u.label] = parseFloat(dur[u.label]).toFixed(3);
           }
@@ -160,7 +160,7 @@
 
       $q.all([
           vm.reloadEdgeCacheData(params_),
-          vm.reloadFilters(vm.filters)
+          vm.reloadFilters(params_)
         ])
         .finally(function() {
           vm._loading = false;
@@ -262,10 +262,12 @@
     // NOTE: action for send change filter data
     vm.reloadFilters = function(filters) {
       vm.filtersExternal = null;
+      var def = $q.deffer;
       $timeout(function() {
         vm.filtersExternal = filters;
-      }, 100);
-      return $q.when();
+        def.resolve();
+      }, 1);
+      return def;
     };
   }
 })(angular, _);
