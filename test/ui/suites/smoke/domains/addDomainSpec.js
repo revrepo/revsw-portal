@@ -66,7 +66,7 @@ describe('Smoke', function () {
 
         it('should clear form after Cancel is clicked', function () {
           Portal.domains.listPage.clickAddNewDomain();
-          var newDomain = DataProvider.generateDomain();
+          var newDomain = DataProvider.generateDomain('smoketest');
           Portal.domains.addPage.form.fill(newDomain);
           Portal.domains.addPage.clickCancel();
           Portal.domains.listPage.clickAddNewDomain();
