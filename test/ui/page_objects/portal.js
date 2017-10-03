@@ -305,8 +305,9 @@ var Portal = {
 
             // Check for intro
             var until = protractor.ExpectedConditions;
-            browser.wait(until.presenceOf(Portal.header.getHeaderBar()), 20000);
-            Portal.intro.getIntroContainer().isDisplayed().then(function (val) {
+            // Wait up to 1 minute for login to finish
+            browser.wait(until.presenceOf(Portal.header.getHeaderBar()), 60000);
+            Portal.intro.getIntroContainer().isPresent().then(function (val) {
               if (val) {
                 Portal.intro.clickSkipBtn();
                 browser.sleep(2000);
