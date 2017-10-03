@@ -75,7 +75,7 @@ var DashboardList = {
         css: '#left-menu-dashboard-section .side-menu-sub-item'
         // repeater: 'dash in vm.dashboardsList'
       }
-    }
+    },
   },
 
   // `Dashboards List` Page is compound mainly by the form. Following

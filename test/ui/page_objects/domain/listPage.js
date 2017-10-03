@@ -78,7 +78,7 @@ var DomainList = {
    *
    * @returns {Selenium WebDriver Element}
    */
-  getListItems: function() {
+  getListItems: function () {
     return element.all(by.css(this.locators.views.listItems.css));
   },
 
@@ -204,7 +204,7 @@ var DomainList = {
           browser.sleep(3000); // 3 seconds
           return previousTooltip !== newTooltip;
         });
-    }, 360000); // Wait 6 minutes to change tooltip
+    }, 720000); // Wait 12 minutes to change tooltip
   },
 
   /**

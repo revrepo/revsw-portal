@@ -53,7 +53,10 @@ var CompanyBillingForm = {
         id: 'billingAddress2'
       },
       billingCountry: {
-        id: 'billingCountry'
+        id: 'billingCountry',
+        inputField: {
+          css: '#billingCountry .ui-select-search'
+        }
       },
       billingState: {
         id: 'billingState'
@@ -179,6 +182,18 @@ var CompanyBillingForm = {
    */
   getCountryDDown: function () {
     return element(by.id(this.locators.textInputs.billingCountry.id));
+  },
+
+  /**
+   * ### CompanyBillingForm.getCountryInput()
+   *
+   * Returns the reference to the `Country` input text field (Selenium WebDriver
+   * Element) from the Edit Form Company page from the Portal app.
+   *
+   * @returns {Selenium WebDriver Element}
+   */
+  getCountryInput: function () {
+    return element(by.css(this.locators.textInputs.billingCountry.inputField.css));
   },
 
   /**
@@ -327,7 +342,8 @@ var CompanyBillingForm = {
   setCountry: function (country) {
     return this
       .getCountryDDown()
-      .sendKeys(country);
+      .click()
+      .sendKeys(country + protractor.Key.ENTER);
   },
 
   /**
@@ -340,7 +356,7 @@ var CompanyBillingForm = {
    * @returns {Promise}
    */
   setState: function (state) {
-    var el =  this.getStateTxt();
+    var el = this.getStateTxt();
     WebElement.scrollToElement(el);
     el.clear();
     return el.sendKeys(state);
@@ -372,7 +388,7 @@ var CompanyBillingForm = {
    * @returns {Promise}
    */
   setZipCode: function (zipcode) {
-    var el =  this.getZipCodeTxt();
+    var el = this.getZipCodeTxt();
     WebElement.scrollToElement(el);
     el.clear();
     return el.sendKeys(zipcode);

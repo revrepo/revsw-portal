@@ -91,7 +91,7 @@ var MailinatorHelper = {
       })
       .then(function (fullMsg) {
         var msgBody = fullMsg.data.parts[0].body;
-        var tokenUrlRegExp = /http.*[0-9a-f]{40}/;
+        var tokenUrlRegExp = /http.*[0-9a-fA-F]{0}/;
         return msgBody.match(tokenUrlRegExp)[0];
       });
   }

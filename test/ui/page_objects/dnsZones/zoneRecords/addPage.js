@@ -44,7 +44,7 @@ var AddZoneRecord = {
         linkText: 'Cancel'
       },
       addNewRecord: {
-        css: 'i.glyphicon-ok'
+        css: '#create_dns_zone_record'
       }
     }
   },

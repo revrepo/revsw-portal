@@ -49,7 +49,7 @@ var ZoneRecordForm = {
       }
     },
     panels: {
-      answers:{
+      answers: {
         id: 'answers',
         textInputs: {
           answer: {
@@ -108,7 +108,7 @@ var ZoneRecordForm = {
    * @returns {Object} Selenium WebDriver Element
    */
   getAnswerTxtIn: function () {
-    return element(by.model(this.locators.textInputs.answer.model));
+    return element.all(by.model(this.locators.textInputs.answer.model)).get(0);
   },
 
   /**
@@ -265,7 +265,7 @@ var ZoneRecordForm = {
     return this
       .getAnswerTxtInById(id)
       .clear()
-      .then(function(){
+      .then(function () {
         me.getAnswerTxtInById(id)
           .sendKeys(value);
       });

@@ -40,16 +40,36 @@ describe('Functional', function () {
           Portal.signOut();
         });
 
+        var john;
+
         it('should display a successful message when creating ' +
           'user', function () {
-          var bret = DataProvider.generateUser();
-          Portal.helpers.nav.goToUsers();
-          Portal.userListPage.clickAddNewUser();
-          Portal.addUserPage.createUser(bret);
-          var alert = Portal.alerts.getFirst();
-          expect(alert.getText())
-            .toContain(Constants.alertMessages.users.MSG_SUCCESS_ADD);
-          Portal.addUserPage.clickBackToList();
+            var bret = DataProvider.generateUser();
+            Portal.helpers.nav.goToUsers();
+            Portal.userListPage.clickAddNewUser();
+            Portal.addUserPage.createUser(bret);
+            john = bret;
+            var alert = Portal.alerts.getFirst();
+            expect(alert.getText())
+              .toContain(Constants.alertMessages.users.MSG_SUCCESS_ADD);
+            Portal.addUserPage.clickBackToList();
+          });
+
+        it('should be able to login with new user ', function (done) {
+          Portal.signOut().then(function () {
+            Portal.signIn(john);
+            expect(Portal
+              .loginPage
+              .getEmailTxtIn()
+              .isPresent()).toBeFalsy();
+
+            Portal.signOut().then(function () {
+              //log back into testing user              
+              Portal.signIn(user);
+              Portal.helpers.nav.goToUsers();
+              done();
+            });
+          });
         });
 
         it('should create a new user with "user" role', function (done) {

@@ -36,7 +36,6 @@ describe('Smoke', function () {
       describe('Add DNS Zone Record', function () {
 
         beforeAll(function () {
-          Portal.load();
           Portal.signIn(user);
         });
 
@@ -44,8 +43,9 @@ describe('Smoke', function () {
           Portal.helpers.dnsZones
             .cleanup()
             .then(function () {
-              Portal.signOut();
-              done();
+              Portal.signOut().then(function () {
+                done();
+              });
             })
             .catch(done);
         });

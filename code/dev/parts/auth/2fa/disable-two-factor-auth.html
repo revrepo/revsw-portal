@@ -11,7 +11,7 @@
       </span> ?
     </div>
     <div class="modal-footer">
-      <button class="btn btn-danger" type="button" ng-click="ok()">OK</button>
+      <button class="btn btn-danger" id="disable2faOk" type="button" ng-click="ok()">OK</button>
       <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
     </div>
   </script>
@@ -25,7 +25,7 @@
         <input type="text" class="form-control" id="one-time-password" placeholder="One-Time Password" ng-model="oneTimePassword">
       </div>
     </div>&nbsp;
-    <button type="submit" class="btn btn-danger" ng-disabled="_loading" ng-click="disable(oneTimePassword)">
+    <button type="submit" class="btn btn-danger" id="disable2FA" ng-disabled="_loading" ng-click="disable(oneTimePassword)">
       <i class="glyphicon glyphicon-ban-circle"></i>&nbsp;
       Disable 2FA
     </button>

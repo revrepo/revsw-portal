@@ -55,8 +55,8 @@ var Login = {
       }
     },
     copyright: {
-      css:{
-        brand: '.footerNoteA' 
+      css: {
+        brand: '.footerNoteA'
       }
     },
     dialogs: {
@@ -65,11 +65,29 @@ var Login = {
         textInputs: {
           email: {
             model: 'data.email'
-          }      
+          }
         },
         labels: {
           title: {
             css: 'h3.modal-title'
+          }
+        }
+      },
+      twoFactorAuth: {
+        css: 'div.modal-dialog.modal-md',
+        textInputs: {
+          otp: {
+            model: 'data.code'
+          }
+        },
+        labels: {
+          title: {
+            css: 'h3.modal-title'
+          }
+        },
+        buttons: {
+          submit: {
+            css: 'btn.btn-primary'
           }
         }
       }
@@ -78,6 +96,62 @@ var Login = {
 
   // ## Methods to retrieve references to UI elements (Selenium WebDriver
   // Element)
+
+  /**
+ * ### Login.get2FADialog()
+ *
+ * Returns the reference to the `Two Factor Authentication` dialog (Selenium WebDriver
+ * Element) from the Login page from the Portal app.
+ *
+ * @returns {Object} Selenium WebDriver Element
+ */
+  get2FADialog: function () {
+    return element(by.css(this.locators.dialogs.twoFactorAuth.css));
+  },
+
+  /**
+* ### Login.getOTPTxtIn()
+*
+* Returns the reference to the `One Time Password` text field (Selenium WebDriver
+* Element) from the Login page from the Portal app.
+*
+* @returns {Object} Selenium WebDriver Element
+*/
+  getOTPTxtIn: function () {
+    return element(by.model(this.locators.dialogs.twoFactorAuth.textInputs.otp.model));
+  },
+
+  /**
+* ### Login.setOTP()
+*
+* Sets the One time password field with the given value
+*
+*/
+  setOTP: function (value) {
+    return this.getOTPTxtIn().sendKeys(value);
+  },
+
+  /**
+* ### Login.getOTPSubmitBtn()
+*
+* Returns the reference to the `Submit` button (Selenium WebDriver
+* Element) from the Login page from the Portal app.
+*
+* @returns {Object} Selenium WebDriver Element
+*/
+  getOTPSubmitBtn: function () {
+    return element(by.css(this.locators.dialogs.twoFactorAuth.buttons.submit.css));
+  },
+
+  /**
+* ### Login.getOTPSubmitBtn()
+*
+* Clicks the submit button in the 2FA dialog
+*
+*/
+  clickOTPSubmitBtn: function () {
+    return this.getOTPSubmitBtn().click();
+  },
 
   /**
    * ### Login.getForgotPasswordDialog()
@@ -328,12 +402,12 @@ var Login = {
     return this.clickSignIn();
   },
 
-  getLogo: function(){
-     return element(by.css(this.locators.images.css.logo));
+  getLogo: function () {
+    return element(by.css(this.locators.images.css.logo));
   },
 
-  getBrand: function(){
-     return element(by.css(this.locators.copyright.css.brand));
+  getBrand: function () {
+    return element(by.css(this.locators.copyright.css.brand));
   }
 
 };

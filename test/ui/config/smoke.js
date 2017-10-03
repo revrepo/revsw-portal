@@ -5,7 +5,6 @@ smoke.capabilities = {
 };
 
 smoke.specs = [
-  '../suites/smoke/*Spec.js',
   '../suites/smoke/**/*Spec.js'
 ];
 

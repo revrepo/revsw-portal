@@ -693,12 +693,15 @@
       $scope.onGoToAccountInformation = function (e, model) {
         e.preventDefault();
         // NOTE: make data format for using into state 'index.accountSettings.companies_information'
-        model.acc_id = model.id;
-        model.acc_name = model.companyName;
-        model.plan_id = model.billing_plan;
-        model.billing_plan = model.billing_plan;
+
+        model.acc_id = model.account_id !== undefined ? model.account_id : model.id;
+
+        // fix for users list
+        if (model.companyId !== undefined) {
+          model.acc_id = model.companyId[0];
+        }
         User.selectAccount(model);
-        $state.go('index.accountSettings.accountresources', { 'from': $scope.state });
+        $state.go('index.accountSettings.accountresources');
       };
     }
 

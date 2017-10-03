@@ -54,7 +54,10 @@ var CompanyProfileForm = {
         id: 'address2'
       },
       country: {
-        id: 'Country'
+        id: 'Country',
+        inputField: {
+          css: '#Country .ui-select-search'
+        }
       },
       state: {
         id: 'state'
@@ -195,6 +198,18 @@ var CompanyProfileForm = {
    */
   getCountryDDown: function () {
     return element(by.id(this.locators.textInputs.country.id));
+  },
+
+  /**
+ * ### CompanyProfileForm.getCountryInput()
+ *
+ * Returns the reference to the `Country` input text field (Selenium WebDriver
+ * Element) from the Edit Form Company page from the Portal app.
+ *
+ * @returns {Selenium WebDriver Element}
+ */
+  getCountryInput: function () {
+    return element(by.css(this.locators.textInputs.country.inputField.css));
   },
 
   /**
@@ -371,7 +386,8 @@ var CompanyProfileForm = {
   setCountry: function (country) {
     return this
       .getCountryDDown()
-      .sendKeys(country);
+      .click()
+      .sendKeys(country + protractor.Key.ENTER);
   },
 
   /**

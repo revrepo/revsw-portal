@@ -48,6 +48,12 @@ var Pager = {
       },
       nextPage: {
         css: 'hr + crud-pagination li.next a'
+      },
+      firstPage: {
+        css: 'hr + crud-pagination li.first a'
+      },
+      lastPage: {
+        css: 'hr + crud-pagination li.last a'
       }
     },
     listItems: {
@@ -108,6 +114,30 @@ var Pager = {
    */
   getAllPageIndexButtons: function () {
     return element.all(by.css(this.locators.buttons.allPages.css));
+  },
+
+  /**
+ * ### Pager.getFirstBtn()
+ *
+ * Returns the reference to the `First` button (Selenium WebDriver
+ * Element) from a specific pagination component from the Portal app
+ *
+ * @returns {Selenium WebDriver Element}
+ */
+  getFirstBtn: function () {
+    return element(by.css(this.locators.buttons.firstPage.css));
+  },
+
+  /**
+   * ### Pager.getLastBtn()
+   *
+   * Returns the reference to the `Last` button (Selenium WebDriver
+   * Element) from a specific pagination component from the Portal app
+   *
+   * @returns {Selenium WebDriver Element}
+   */
+  getLastBtn: function () {
+    return element(by.css(this.locators.buttons.lastPage.css));
   },
 
   /**
