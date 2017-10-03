@@ -87,7 +87,7 @@ var Login = {
         },
         buttons: {
           submit: {
-            css: 'btn.btn-primary'
+            css: '.btn.btn-primary'
           }
         }
       }
@@ -140,7 +140,9 @@ var Login = {
 * @returns {Object} Selenium WebDriver Element
 */
   getOTPSubmitBtn: function () {
-    return element(by.css(this.locators.dialogs.twoFactorAuth.buttons.submit.css));
+    return this
+      .get2FADialog()
+      .element(by.css(this.locators.dialogs.twoFactorAuth.buttons.submit.css));
   },
 
   /**
