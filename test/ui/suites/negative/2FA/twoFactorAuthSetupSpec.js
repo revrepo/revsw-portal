@@ -22,12 +22,11 @@ var Portal = require('./../../../page_objects/portal');
 var DataProvider = require('./../../../common/providers/data');
 var Constants = require('./../../../page_objects/constants');
 
-describe('Functional', function () {
-    describe('Two Factor Authentication', function () {
+describe('Negative: ', function () {
+    describe('Two Factor Authentication Setup', function () {
 
         var users = [
-            config.get('portal.users.admin'),
-            config.get('portal.users.reseller')
+            config.get('portal.users.admin')
         ];
 
         users.forEach(function (user) {
@@ -43,7 +42,7 @@ describe('Functional', function () {
                 });
                 var bret;
 
-                it('should display QR Image when `Set Up 2FA` button is clicked',
+                it('should not allow click on enable button if OTP is less than 6 chars',
                     function () {
                         bret = DataProvider.generateUser();
                         Portal.helpers.nav.goToUsers();
@@ -53,23 +52,39 @@ describe('Functional', function () {
                             Portal.signIn(bret);
                             Portal.helpers.nav.goToSecuritySettings();
                             Portal.securitySettingsPage.getSetUpTwoFactorAuthBtn().click();
-                            expect(Portal
+                            Portal
                                 .securitySettingsPage
-                                .getQRImage()
-                                .isDisplayed()).toBeTruthy();
+                                .clickEnableBtn();
+
+                            expect(Portal.alerts.getAll().count()).toEqual(0);
                         });
                     });
 
-                it('should display `OTP` text input when `Set Up 2FA` ' +
-                    'button is clicked', function () {
-                        expect(Portal
+                it('should check that Enable 2FA fails with invalid OTP',
+                    function () {
+                        var incorrectOTP = '!@#$%^'
+                        Portal
+                            .securitySettingsPage
+                            .setOTPTxtIn(incorrectOTP);
+                        Portal
+                            .securitySettingsPage
+                            .clickEnableBtn();
+
+                        var alert = Portal.alerts.getFirst();
+                        expect(alert.getText())
+                            .toContain(Constants
+                                .alertMessages
+                                .users
+                                .MSG_INVALID_OTP_2FA);
+
+                        Portal
                             .securitySettingsPage
                             .getOTPTxtIn()
-                            .isDisplayed()).toBeTruthy();
+                            .clear();
                     });
 
-                it('should display a successful message when enabling ' +
-                    '2FA', function () {
+                it('should check that Enable 2FA fails with incorrect OTP',
+                    function () {
                         Portal
                             .securitySettingsPage
                             .getASCIISecret().then(function (code) {
@@ -82,9 +97,11 @@ describe('Functional', function () {
                                     secret: code,
                                     encoding: 'base32'
                                 });
+
+                                var incorrectOTP = oneTimePassword === 123456 ? 123457 : 123456
                                 Portal
                                     .securitySettingsPage
-                                    .setOTPTxtIn(oneTimePassword);
+                                    .setOTPTxtIn(incorrectOTP);
                                 Portal
                                     .securitySettingsPage
                                     .clickEnableBtn();
@@ -94,58 +111,13 @@ describe('Functional', function () {
                                     .toContain(Constants
                                         .alertMessages
                                         .users
-                                        .MSG_SUCCESS_ENABLE_2FA);
+                                        .MSG_INCORRECT_OTP_2FA);
+                                Portal
+                                    .securitySettingsPage
+                                    .getOTPTxtIn()
+                                    .clear();
                             });
                     });
-
-                it('should display `2FA` dialog on login after enabling 2FA', function () {
-                    Portal.signOut().then(function () {
-                        Portal.signIn(bret);
-                        expect(Portal
-                            .loginPage
-                            .get2FADialog()
-                            .isDisplayed()).toBeTruthy();
-                    });
-                });
-
-                it('should allow an admin of a user to disable that users 2FA',
-                    function () {
-                        Portal.signIn(user);
-                        Portal.helpers.nav.goToUsers();
-                        Portal
-                            .userListPage
-                            .searcher
-                            .setSearchCriteria(bret.email);
-
-                        Portal
-                            .userListPage
-                            .table
-                            .getFirstRow()
-                            .clickEdit();
-                        Portal
-                            .editUserPage
-                            .clickDisable2FA();
-                        Portal
-                            .editUserPage
-                            .clickDisable2faOkBtn();
-
-                        var alert = Portal.alerts.getFirst();
-                        expect(alert.getText())
-                            .toContain(Constants
-                                .alertMessages
-                                .users
-                                .MSG_SUCCESS_DISABLE_2FA);
-                    });
-
-                it('should not display `2FA` dialog on login after disabling 2FA', function () {
-                    Portal.signOut().then(function () {
-                        Portal.signIn(bret);
-                        expect(Portal
-                            .loginPage
-                            .get2FADialog()
-                            .isPresent()).toBeFalsy();
-                    });
-                });
             });
         });
     });
