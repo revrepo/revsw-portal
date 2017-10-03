@@ -62,7 +62,7 @@ describe('Negative: ', function () {
 
                 it('should check that Enable 2FA fails with invalid OTP',
                     function () {
-                        var incorrectOTP = '!@#$%^'
+                        var incorrectOTP = '!@#$%^';
                         Portal
                             .securitySettingsPage
                             .setOTPTxtIn(incorrectOTP);
@@ -98,7 +98,7 @@ describe('Negative: ', function () {
                                     encoding: 'base32'
                                 });
 
-                                var incorrectOTP = oneTimePassword === 123456 ? 123457 : 123456
+                                var incorrectOTP = oneTimePassword === 123456 ? 123457 : 123456;
                                 Portal
                                     .securitySettingsPage
                                     .setOTPTxtIn(incorrectOTP);
