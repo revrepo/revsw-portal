@@ -28,11 +28,16 @@ var ImageOptimization = {
         comboBoxSearch: 'input[ng-model="$select.search"]' 
       }   
     },
+     blocks: {
+      css: {
+        mainMenu:'section[drawer]'
+      } 
+     },
      buttons: {
        css: {
            updateReport: 'button[ng-click="updateFilters() "]',
            chartContextMenu: 'g[style="cursor:default;"]',
-           hideMenu:  '#menuToggleBtn' 
+           hideMenu:  '.glyphicon-menu-hamburger' 
 
        }
      },
@@ -78,7 +83,16 @@ var ImageOptimization = {
 
   getHideMenu: function(){
      return  element(by.css(this.locators.buttons.css.hideMenu)); 
-  }
+  },
+
+  clickHideMenu: function(){
+     return  this.getHideMenu().click(); 
+  },
+
+  getMainMenu: function(){
+     return  element(by.css(this.locators.blocks.css.mainMenu)); 
+  },
+
 
   };
 
