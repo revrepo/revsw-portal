@@ -25,79 +25,58 @@ describe('Functional', function () {
     var user = config.get('portal.users.user');
 
     beforeEach(function () {
-      Portal.signIn(user);
+      Portal.signIn(user, false);
     });
 
     afterEach(function () {
       Portal.signOut();
     });
-     
-    it('should  click through all intro steps till the end and click button done', function () {
-      Portal.dashboards.listPage.clickButtonNext();
-      Portal.dashboards.listPage.waitForPopup();
-      Portal.dashboards.listPage.clickButtonNext();
-      Portal.dashboards.listPage.waitForPopup();
-      Portal.dashboards.listPage.clickButtonNext();
-      Portal.dashboards.listPage.waitForPopup();
-      Portal.dashboards.listPage.clickButtonNext();
-      Portal.dashboards.listPage.waitForPopup();
-      Portal.dashboards.listPage.clickButtonNext();
-      Portal.dashboards.listPage.waitForPopup();
-      Portal.dashboards.listPage.clickButtonNext();
-      Portal.dashboards.listPage.waitForPopup();
-      Portal.dashboards.listPage.clickButtonNext();
-      Portal.dashboards.listPage.waitForPopup();
-      Portal.dashboards.listPage.clickButtonNext();
-      Portal.dashboards.listPage.waitForPopup();
-      Portal.dashboards.listPage.clickButtonNext();
-      Portal.dashboards.listPage.waitForPopup();
-      Portal.dashboards.listPage.clickButtonNext();
-      Portal.dashboards.listPage.waitForPopup();
 
-      var buttonSkip = Portal.dashboards.listPage.getButtonSkip();
-      expect(buttonSkip.isDisplayed()).toBe(true);
-
-      Portal.dashboards.listPage.clickButtonSkip(); 
-    });
-
-    it('should loaded page without intro window with button done ', function () { 
-     var dashboardElem = Portal.dashboards.listPage.getDashboardsElem();
-     expect(dashboardElem .isDisplayed()).toBe(true);
-   });  
-
-    it('should loaded page without intro window with button skip', function () {
-      Portal.dashboards.listPage.clickButtonNext();
-      Portal.dashboards.listPage.waitForPopup();
-      Portal.dashboards.listPage.clickButtonNext();
-      Portal.dashboards.listPage.waitForPopup();
-      Portal.dashboards.listPage.clickButtonNext();
-      Portal.dashboards.listPage.waitForPopup();
-      Portal.dashboards.listPage.clickButtonNext();
-      Portal.dashboards.listPage.waitForPopup();
-      Portal.dashboards.listPage.clickButtonNext();
-      Portal.dashboards.listPage.waitForPopup();
-      Portal.dashboards.listPage.clickButtonSkip();
-
-      var dashboardElem = Portal.dashboards.listPage.getDashboardsElem();
-      expect(dashboardElem .isDisplayed()).toBe(true); 
-    });
-
-    it('should loaded intro window after reload', function () {
-      Portal.dashboards.listPage.clickButtonNext();
-      Portal.dashboards.listPage.waitForPopup();
-      Portal.dashboards.listPage.clickButtonNext();
-      Portal.dashboards.listPage.waitForPopup();
-      Portal.dashboards.listPage.clickButtonNext();
-      Portal.dashboards.listPage.waitForPopup();
-      Portal.dashboards.listPage.clickButtonNext();
-      Portal.dashboards.listPage.waitForPopup();
-
+    it('should click through all steps and click `Done` in the end', function (done) {
+      browser.executeScript('window.localStorage.setItem("ngStorage-testEnv", "1");');
+      var until = protractor.ExpectedConditions;
+      browser.wait(until.presenceOf(Portal.header.getHeaderBar()), 30000);
       browser.refresh();
-      
-      var popUpContainer = Portal.dashboards.listPage.getIntroPopup();
-      expect(popUpContainer.isDisplayed()).toBe(true);
+      Portal.intro.waitForStep();
+      browser.executeScript('window.localStorage.removeItem("ngStorage-testEnv");');
+      Portal.intro.getSteps().each(function (step) {
+        Portal.intro.getDoneBtn().isPresent().then(function (e) {
+          if (e) {
+            browser.executeScript('$(".introjs-overlay").hide();');
+            Portal.intro.clickDoneBtn();
+            expect(Portal.intro.getIntroContainer().isPresent()).toBeFalsy();
+            done();
+          } else {
+            Portal.intro.clickNextBtn();
+            browser.sleep(1500);
+          }
+        });
+      });
+    });
+
+    it('should load portal without intro popup after `Done` is clicked', function () {
+      expect(Portal.intro.getIntroContainer().isPresent()).toBeFalsy();
+    });
+
+    it('should not display intro popup after `Skip` is clicked', function (done) {
+      browser.executeScript('window.localStorage.setItem("ngStorage-testEnv", "1");');
+      var until = protractor.ExpectedConditions;
+      browser.wait(until.presenceOf(Portal.header.getHeaderBar()), 30000);
+      browser.refresh();
+      Portal.intro.waitForStep();
+      browser.executeScript('window.localStorage.removeItem("ngStorage-testEnv");');
+      Portal.intro.clickNextBtn();
+      browser.executeScript('$(".introjs-overlay").hide();');
+      browser.sleep(1500);
+      Portal.intro.clickSkipBtn();
+      Portal.signOut().then(function () {
+        Portal.signIn(user, false).then(function () {
+          expect(Portal.intro.getIntroContainer().isPresent()).toBeFalsy();
+          done();
+        });
+      });
     });
   });
 });
 
-  
+

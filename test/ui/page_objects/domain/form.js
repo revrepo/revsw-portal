@@ -699,6 +699,9 @@ var DomainForm = {
     return element(by.id(this.locators.textInputs.originMonitoringHTTPrequest.id));
   },
 
+  setOriginMonitoringHTTPrequest: function (value) {
+    return this.getOriginMonitoringHTTPrequestTxtIn().sendKeys(value);
+  },
 
   getCacheBypassLocationsTxtIn: function () {
     return element(by.id(this.locators.textInputs.cacheBypassLocations.id));
@@ -748,6 +751,10 @@ var DomainForm = {
     return element(by.id(this.locators.textareas.comment.id));
   },
 
+  setComment: function (value) {
+    return this.getCommentTxtIn().sendKeys(value);
+  },
+
   getRecvFunctionTxtIn: function () {
     return element(by.css(this.locators.textareas.recvFunction.css));
   },
@@ -761,6 +768,10 @@ var DomainForm = {
 
   getDataReadTimeoutTxtIn: function () {
     return element(by.id(this.locators.numberInputs.dataReadTimeout.id));
+  },
+
+  setDataReadTimeout: function (value) {
+    return this.getDataReadTimeoutTxtIn().sendKeys(value);
   },
 
   getOriginHealthMonitoringBtn: function () {
