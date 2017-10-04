@@ -11,7 +11,7 @@ window.API_URL = 'https://testsjc20-api01.revsw.net/v1';
 // window.API_URL = 'https://testsjc20-victordev01.revsw.net:8000/v1';
 
 // Local development server
-// window.API_URL = 'https://localhost:8000/v1';
+//window.API_URL = 'https://localhost:8000/v1';
 
 // Production staging API server
 // window.API_URL = 'https://iad02-api03.revsw.net/v1';
@@ -24,7 +24,7 @@ window.gaAccount = 'UA-68856309-2'; // testing environment
 
 // Intro configuration flag (true=on, false=off)
 // should be disabled in the testing env and enabled in production
-// window.intro = false;
+window.intro = true;
 //
 
 // Configuration parameter to set timeout value for POST and PUT requests to the API

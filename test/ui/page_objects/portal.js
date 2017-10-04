@@ -132,6 +132,7 @@ var ImageOptimizationPage = require('./analytics/imageOptimizationPage');
 var SubscriptionsPage = require('./azure/Subscriptions/listPage');
 var ResourcesPerSubscriptionPage = require('./azure/ResourcesPerSubscription/listPage');
 var ResourcesPage = require('./azure/Resources/listPage');
+var Intro = require('./intro');
 
 // This `Portal` Page Object is the entry point to use all other Page Objects
 // that abstract all components from the Portal App.
@@ -267,7 +268,7 @@ var Portal = {
   browserTabs: BrowserTabsHelpers,
 
   dataProviders: PortalDataProviders,
-
+  intro: Intro,
   // ## Authentication Helper methods
 
   /**
@@ -301,6 +302,17 @@ var Portal = {
           .signIn(user)
           .then(function () {
             me.session.setCurrentUser(user);
+
+            // Check for intro
+            var until = protractor.ExpectedConditions;
+            // Wait up to 1 minute for login to finish
+            browser.wait(until.presenceOf(Portal.header.getHeaderBar()), 60000);
+            Portal.intro.getIntroContainer().isPresent().then(function (val) {
+              if (val) {
+                Portal.intro.clickSkipBtn();
+                browser.sleep(2000);
+              }
+            });
           });
       });
     return Promise.resolve(promise);

@@ -63,8 +63,7 @@ describe('Smoke', function () {
         });
 
         it('should clear form after Cancel is clicked', function () {
-          var newWafRule = DataProvider.generateCustomWAFRule();
-          Portal.wafRules.addPage.form.fill(newWafRule);
+          Portal.wafRules.addPage.form.setWAFRuleName('something');
           Portal.wafRules.addPage.clickCancel();
           Portal.wafRules.listPage.clickAddNewWAFRule();
           expect(Portal.wafRules.addPage.form.getWAFRuleName()).toEqual('');

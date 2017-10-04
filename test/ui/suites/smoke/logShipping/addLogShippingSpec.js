@@ -77,8 +77,7 @@ describe('Smoke', function () {
         });
 
         it('should clear form after Cancel is clicked', function () {
-          var newJob = DataProvider.generateLogShippingJobData();
-          Portal.logShipping.addPage.form.fill(newJob);
+          Portal.logShipping.addPage.form.setJobName('something');
           Portal.logShipping.addPage.clickCancel();
           Portal.logShipping.listPage.clickAddNewLogShippingJob();
           expect(Portal.logShipping.addPage.form.getJobName()).toEqual('');
