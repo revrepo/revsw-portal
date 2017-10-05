@@ -30,7 +30,12 @@ describe('Functional', function () {
         .signUpAndVerifyUser()
         .then(function (newUser) {
           user = newUser;
-          Portal.signOut();
+          browser.executeScript('$(".introjs-overlay").hide();');
+          Portal.signOut().then(function () {
+
+            done();
+
+          });
         });
     });
 
@@ -47,7 +52,6 @@ describe('Functional', function () {
         Portal.loginPage.clickForgotPassword();
         expect(Portal.loginPage.getForgotPasswordDialog()
           .isDisplayed()).toBeTruthy();
-        Portal.signOut();
       });
 
     it('should successfully send change-password request.',
