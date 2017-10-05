@@ -204,7 +204,7 @@ var DomainList = {
           browser.sleep(3000); // 3 seconds
           return previousTooltip !== newTooltip;
         });
-    }, 720000); // Wait 12 minutes to change tooltip
+    }, 360000); // Wait 6 minutes to change tooltip
   },
 
   /**
