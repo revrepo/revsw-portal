@@ -1,8 +1,7 @@
 var smoke = require('./base');
-smoke.specs = [
-  '../suites/functional/mobileApps/editAppSpec.js',
-  '../suites/functional/users/resetPasswordSpec.js'
 
+smoke.specs = [
+  '../suites/smoke/**/*Spec.js',
 ];
 
 exports.config = smoke;
