@@ -30,8 +30,9 @@ describe('Functional', function () {
         .signUpAndVerifyUser()
         .then(function (newUser) {
           user = newUser;
-          Portal.signOut();
-          done();
+          Portal.signOut().then(function () {
+            done();
+          });
         });
     });
 
@@ -44,10 +45,13 @@ describe('Functional', function () {
     });
 
     it('should display Password Recovery dialog',
-      function () {
+      function (done) {
         Portal.loginPage.clickForgotPassword();
         expect(Portal.loginPage.getForgotPasswordDialog()
           .isDisplayed()).toBeTruthy();
+        Portal.signOut().then(function () {
+          done();
+        });
       });
 
     it('should successfully send change-password request.',

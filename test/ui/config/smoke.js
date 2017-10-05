@@ -1,11 +1,8 @@
 var smoke = require('./base');
-
-smoke.capabilities = {
-  browserName: 'firefox'
-};
-
 smoke.specs = [
-  '../suites/smoke/**/*Spec.js'
+  '../suites/functional/mobileApps/editAppSpec.js',
+  '../suites/functional/users/resetPasswordSpec.js'
+
 ];
 
 exports.config = smoke;
