@@ -46,6 +46,9 @@ var EditLogShipping = {
             },
             confirmUpdate: {
                 css: '.btn.btn-success'
+            },
+            updateJob: {
+                css: '.btn.btn-success'
             }
         }
     },
@@ -156,6 +159,11 @@ var EditLogShipping = {
         return this
             .getUpdateBtn()
             .click();
+    },
+
+    isUpdateBtnEnabled: function () {
+        return element(by.cssContainingText(this.locators.buttons.updateJob.css, 'Update'))
+            .isEnabled();
     },
 
     // ## Helper Methods
