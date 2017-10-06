@@ -1,11 +1,7 @@
 var smoke = require('./base');
 
 smoke.specs = [
-  '../suites/functional/logShipping/**/*Spec.js',
-  '../suites/functional/intro/**/*Spec.js',
-  '../suites/negative/logShipping/**/*Spec.js',
-  '../suites/smoke/intro/introSpec.js',
-
+  '../suites/smoke/**/*Spec.js'
 ];
 
 exports.config = smoke;
