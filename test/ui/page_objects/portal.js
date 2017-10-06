@@ -284,7 +284,8 @@ var Portal = {
    *
    * @returns {Promise}
    */
-  signIn: function (user) {
+  signIn: function (user, introSkip) {
+    introSkip = introSkip === undefined ? true : false;
     var me = this;
     var promise = this.header
       .isPresent()
@@ -303,16 +304,18 @@ var Portal = {
           .then(function () {
             me.session.setCurrentUser(user);
 
-            // Check for intro
-            var until = protractor.ExpectedConditions;
-            // Wait up to 1 minute for login to finish
-            browser.wait(until.presenceOf(Portal.header.getHeaderBar()), 60000);
-            Portal.intro.getIntroContainer().isPresent().then(function (val) {
-              if (val) {
-                Portal.intro.clickSkipBtn();
-                browser.sleep(2000);
-              }
-            });
+            if (introSkip) {
+              // Check for intro
+              var until = protractor.ExpectedConditions;
+              // Wait up to 1 minute for login to finish
+              browser.wait(until.presenceOf(Portal.header.getHeaderBar()), 60000);
+              Portal.intro.getIntroContainer().isPresent().then(function (val) {
+                if (val) {
+                  Portal.intro.clickSkipBtn();
+                  browser.sleep(2000);
+                }
+              });
+            }
           });
       });
     return Promise.resolve(promise);

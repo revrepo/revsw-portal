@@ -30,8 +30,12 @@ describe('Functional', function () {
         .signUpAndVerifyUser()
         .then(function (newUser) {
           user = newUser;
-          Portal.signOut();
-          done();
+          browser.executeScript('$(".introjs-overlay").hide();');
+          Portal.signOut().then(function () {
+
+            done();
+
+          });
         });
     });
 

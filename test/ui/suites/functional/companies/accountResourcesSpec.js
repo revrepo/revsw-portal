@@ -34,7 +34,13 @@ describe('Functional', function () {
                 beforeAll(function () {
                     Portal.signIn(user);
                     Portal.helpers.nav.goToAccounts();
-                    Portal.goToCustomUrl(Portal.constants.hashFragments.accountResources);
+                    Portal
+                        .admin
+                        .accounts
+                        .listPage
+                        .table
+                        .getFirstRow()
+                        .clickViewAccountResources();
                 });
 
                 afterAll(function () {
@@ -42,10 +48,8 @@ describe('Functional', function () {
                 });
 
                 it('should go back to accounts page', function () {
-                    Portal.accountResourcesPage
-                        .getBackBtn()
-                        .click();
-                    
+                    Portal.accountResourcesPage.clickBackButton();
+
                     expect(Portal.admin.accounts.listPage.isDisplayed()).toBeTruthy();
                 });
             });
