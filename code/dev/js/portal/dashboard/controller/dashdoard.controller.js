@@ -199,13 +199,13 @@
       var intro = $localStorage.intro || { isShowMainIntro: false, isSkipIntro: false };
       var testEnv;
       if ($localStorage.testEnv !== undefined) {
-        if ($localStorage.testEnv === '1') {
+        if ($localStorage.testEnv === '1' || $localStorage.testEnv === 1) {
           testEnv = true;
         } else {
           testEnv = false;
         }
       }
-      if ((intro.isShowMainIntro === false || intro.isShowMainIntro === 'false') && intro.isSkipIntro === false || testEnv) {
+      if (((intro.isShowMainIntro === false || intro.isShowMainIntro === 'false') && intro.isSkipIntro === false) || testEnv) {
         // NOTE: close menu items for start intro navigation
         ['index.apps', 'index.reports', 'index.webApp', 'index.accountSettings'].forEach(function (menuState) {
           $rootScope.menuExpandedNodes[menuState] = false;

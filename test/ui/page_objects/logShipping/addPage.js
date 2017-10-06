@@ -45,6 +45,9 @@ var AddLogShipping = {
       },
       createJob: {
         css: 'i.glyphicon-ok'
+      },
+      saveJob: {
+        css: '.btn.btn-success'
       }
     }
   },
@@ -134,6 +137,11 @@ var AddLogShipping = {
     return this
       .getCreateJobBtn()
       .click();
+  },
+
+  isSaveBtnEnabled: function () {
+    return element(by.cssContainingText(this.locators.buttons.saveJob.css, 'Create Job'))
+      .isEnabled();
   },
 
   /**

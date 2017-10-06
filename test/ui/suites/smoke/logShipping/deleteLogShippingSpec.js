@@ -67,36 +67,6 @@ describe('Smoke', function () {
           expect(deleteButton.isDisplayed()).toBeTruthy();
         });
 
-        it('should allow to delete Log Shipping Job', function () {
-          var job = DataProvider.generateLogShippingJobData();
-
-          if (user.role === 'Reseller') {
-            job.account = ['API QA Reseller Company'];
-          }
-
-          Portal.createLogShippingJob(job);
-          Portal.logShipping.listPage.searchAndClickDelete(job.name);
-          Portal.dialog.clickOk();
-          Portal.logShipping.listPage.searcher.setSearchCriteria(job.name);
-          var tableRows = Portal.logShipping.listPage.table.getRows();
-          expect(tableRows.count()).toEqual(0);
-        });
-
-        it('should display a confirmation message when deleting a Log Shipping Job',
-          function () {
-            var job = DataProvider.generateLogShippingJobData();
-
-            if (user.role === 'Reseller') {
-              job.account = ['API QA Reseller Company'];
-            }
-
-            Portal.createLogShippingJob(job);
-            Portal.logShipping.listPage.searchAndClickDelete(job.name);
-            Portal.dialog.clickOk();
-            expect(Portal.alerts.getAll().count()).not.toEqual(0);
-            expect(Portal.alerts.getFirst().getText())
-              .toContain('Successfully deleted the log shipping job');
-          });
       });
     });
   });

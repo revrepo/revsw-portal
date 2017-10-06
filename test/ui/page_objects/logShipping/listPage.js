@@ -40,6 +40,12 @@ var LogShippingList = {
       addNewLogShippingJob: {
         linkText: 'Add New Log Shipping Job',
         css: 'i.glyphicon.glyphicon-plus'
+      },
+      confirmDelete: {
+        css: '.btn.btn-danger'
+      },
+      modalConfirm: {
+        css: '.btn.btn-success'
       }
     }
   },
@@ -106,6 +112,21 @@ var LogShippingList = {
     return this
       .getTitleLbl()
       .getText();
+  },
+  getConfirmDeleteBtn: function () {
+    return element(by.cssContainingText(this.locators.buttons.confirmDelete.css, 'OK'));
+  },
+
+  clickConfirmDeleteBtn: function () {
+    return this.getConfirmDeleteBtn().click();
+  },
+
+  getModalConfirmBtn: function () {
+    return element(by.cssContainingText(this.locators.buttons.modalConfirm.css, 'OK'));
+  },
+
+  clickModalConfirmBtn: function () {
+    return this.getModalConfirmBtn().click();
   },
 
   // ## Helper Methods
@@ -184,8 +205,8 @@ var LogShippingList = {
    */
   searchAndClickPause: function (criteria) {
     return this
-        .searchAndGetFirstRow(criteria)
-        .clickPause();
+      .searchAndGetFirstRow(criteria)
+      .clickPause();
   },
 
   /**
@@ -200,8 +221,8 @@ var LogShippingList = {
    */
   searchAndClickPlay: function (criteria) {
     return this
-        .searchAndGetFirstRow(criteria)
-        .clickPlay();
+      .searchAndGetFirstRow(criteria)
+      .clickPlay();
   },
 
   /**
@@ -216,8 +237,8 @@ var LogShippingList = {
    */
   searchAndClickStop: function (criteria) {
     return this
-        .searchAndGetFirstRow(criteria)
-        .clickStop();
+      .searchAndGetFirstRow(criteria)
+      .clickStop();
   }
 };
 

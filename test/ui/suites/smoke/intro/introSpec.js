@@ -33,6 +33,12 @@ describe('Smoke', function () {
     });
 
     it('should display intro window', function () {
+      browser.executeScript('window.localStorage.setItem("ngStorage-testEnv", "1");');
+      var until = protractor.ExpectedConditions;
+      browser.wait(until.presenceOf(Portal.header.getHeaderBar()), 30000);
+      browser.refresh();
+      Portal.intro.waitForStep();
+      browser.executeScript('window.localStorage.removeItem("ngStorage-testEnv");');
       var introPopup = Portal.dashboards.listPage.getIntroPopup();
       expect(introPopup.isDisplayed()).toBe(true);
     });
