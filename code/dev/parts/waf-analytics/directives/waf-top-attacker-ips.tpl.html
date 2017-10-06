@@ -20,6 +20,11 @@
         <tr ng-repeat="item in items">
           <td>
             {{item.key}}
+            <span class="text-info ip-tooltip-holder">
+              <div class="ipinfo" ng-bind-html="getIpToolTip(item)">
+              </div>
+              <i class="fa fa-question-circle"></i>
+            </span>
           </td>
           <td class="text-right">{{item.count}}</td>
         </tr>
