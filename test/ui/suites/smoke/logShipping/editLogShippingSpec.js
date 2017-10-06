@@ -25,7 +25,7 @@ describe('Smoke', function () {
 
   // Defining set of users for which all below tests will be run
   var users = [
-     config.get('portal.users.revAdmin'),
+    config.get('portal.users.revAdmin'),
     config.get('portal.users.reseller'),
     config.get('portal.users.admin')
   ];
@@ -49,7 +49,7 @@ describe('Smoke', function () {
         });
 
         afterEach(function () {
-          
+
         });
 
         it('should display edit Log Shipping button',
@@ -101,39 +101,6 @@ describe('Smoke', function () {
             Portal.logShipping.editPage.clickCancel();
             expect(Portal.logShipping.listPage.isDisplayed()).toBeTruthy();
           });
-
-
-          it('should update Log Shipping when filling all required data',
-            function () {
-              var data;
-              if (user.role === 'Reseller') {
-                data = {
-                  account: ['API QA Reseller Company']
-                };
-              } else if (user.role === 'Admin') {
-                data = {
-                  sourceDomain: 'qa-admin-10-portal-ui-test.com'
-                };
-              }
-              var job = DataProvider.generateLogShippingJobData(data);
-              var updatedJob = DataProvider.generateLogShippingJobData(data);
-              Portal.createLogShippingJob(job);
-              Portal.logShipping.listPage.searcher.clearSearchCriteria();
-              Portal.logShipping.listPage.searcher.setSearchCriteria(job.name);
-              Portal.logShipping.listPage.table
-                .getFirstRow()
-                .clickEdit();
-              Portal.logShipping.editPage.updateLogShippingJob(updatedJob);
-              Portal.dialog.clickOk();
-              Portal.logShipping.editPage.clickBackToList();
-              Portal.logShipping.listPage.searcher.clearSearchCriteria();
-              Portal.logShipping.listPage.searcher.setSearchCriteria(updatedJob.name);
-              var updatedJobName = Portal.logShipping.listPage.table
-                .getFirstRow()
-                .getJobName();
-              expect(updatedJobName).toBe(updatedJob.name);
-            });
-        
       });
     });
   });

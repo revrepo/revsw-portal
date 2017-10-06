@@ -256,6 +256,14 @@ var Constants = {
     },
     wafRules: {
       MSG_SUCCESS_ADD: 'The WAF rule has been successfully created'
+    },
+    logShipping: {
+      MSG_SUCCESS_ADD: 'Successfully created a new log shipping job',
+      MSG_SUCCESS_UPDATE: 'Successfully updated the log shipping job',
+      MSG_SUCCESS_DELETE: 'Successfully deleted the log shipping job',
+      MSG_SUCCESS_PLAY: 'Successfully updated the log shipping job',
+      MSG_SUCCESS_PAUSE: 'Successfully updated the log shipping job',
+      MSG_SUCCESS_STOP: 'Successfully updated the log shipping job'
     }
   },
 

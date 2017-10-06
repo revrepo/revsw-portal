@@ -43,6 +43,9 @@ var EditLogShipping = {
             },
             update: {
                 css: 'i.glyphicon-ok'
+            },
+            confirmUpdate: {
+                css: '.btn.btn-success'
             }
         }
     },
@@ -101,6 +104,14 @@ var EditLogShipping = {
      */
     getUpdateBtn: function () {
         return element(by.css(this.locators.buttons.update.css));
+    },
+
+    getConfirmUpdateBtn: function () {
+        return element(by.cssContainingText(this.locators.buttons.confirmUpdate.css, 'OK'));
+    },
+
+    clickConfirmUpdateBtn: function () {
+        return this.getConfirmUpdateBtn().click();
     },
 
     // ## Methods to interact with the Edit Log Shipping Page components
@@ -188,7 +199,8 @@ var EditLogShipping = {
      */
     updateLogShippingJob: function (logShippingJob) {
         this.form.fill(logShippingJob);
-        return this.clickUpdate();
+        this.clickUpdate();
+        return this.clickConfirmUpdateBtn();
     }
 };
 
