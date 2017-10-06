@@ -1,0 +1,58 @@
+/*************************************************************************
+ *
+ * REV SOFTWARE CONFIDENTIAL
+ *
+ * [2013] - [2015] Rev Software, Inc.
+ * All Rights Reserved.
+ *
+ * NOTICE:  All information contained herein is, and remains
+ * the property of Rev Software, Inc. and its suppliers,
+ * if any.  The intellectual and technical concepts contained
+ * herein are proprietary to Rev Software, Inc.
+ * and its suppliers and may be covered by U.S. and Foreign Patents,
+ * patents in process, and are protected by trade secret or copyright law.
+ * Dissemination of this information or reproduction of this material
+ * is strictly forbidden unless prior written permission is obtained
+ * from Rev Software, Inc.
+ */
+
+var config = require('config');
+var Portal = require('./../../../page_objects/portal');
+var Constants = require('./../../../page_objects/constants');
+var DataProvider = require('./../../../common/providers/data');
+
+describe('Boundry', function () {
+    describe('Log Shipping Add Job', function () {
+
+        var user = config.get('portal.users.revAdmin');
+
+
+        describe('With user: ' + user.role, function () {
+
+            beforeAll(function () {
+                Portal.signIn(user);
+                Portal.helpers.nav.goToLogShipping();
+                Portal.logShipping.listPage.clickAddNewLogShippingJob();
+            });
+
+            afterAll(function () {
+                Portal.signOut();
+            });
+
+            it('should not enable creation if `Job Name` contains special characters',
+                function () {
+                    Portal.logShipping.addPage.form.clearJobName();
+                    Portal.logShipping.addPage.form.setJobName('a!b@c#d$e%f^g&');
+                    expect(Portal.logShipping.addPage.isSaveBtnEnabled()).toBeFalsy();
+                });
+
+            it('should not enable creation if `Jon Name` contains more than 150 characters',
+                function () {
+                    var lengthString151 = new Array(151).join('x');
+                    Portal.logShipping.addPage.form.clearJobName();
+                    Portal.logShipping.addPage.form.setJobName(lengthString151);
+                    expect(Portal.logShipping.addPage.isSaveBtnEnabled()).toBeFalsy();
+                });
+        });
+    });
+});
