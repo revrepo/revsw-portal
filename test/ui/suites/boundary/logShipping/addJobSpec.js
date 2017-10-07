@@ -21,38 +21,57 @@ var Portal = require('./../../../page_objects/portal');
 var Constants = require('./../../../page_objects/constants');
 var DataProvider = require('./../../../common/providers/data');
 
-describe('Boundry', function () {
+describe('Boundary', function () {
     describe('Log Shipping Add Job', function () {
 
-        var user = config.get('portal.users.revAdmin');
+        var users = [
+            config.get('portal.users.revAdmin'),
+            config.get('portal.users.reseller'),
+            config.get('portal.users.admin')
+        ];
 
+        users.forEach(function (user) {
+            describe('With user: ' + user.role, function () {
 
-        describe('With user: ' + user.role, function () {
-
-            beforeAll(function () {
-                Portal.signIn(user);
-                Portal.helpers.nav.goToLogShipping();
-                Portal.logShipping.listPage.clickAddNewLogShippingJob();
-            });
-
-            afterAll(function () {
-                Portal.signOut();
-            });
-
-            it('should not enable creation if `Job Name` contains special characters',
-                function () {
-                    Portal.logShipping.addPage.form.clearJobName();
-                    Portal.logShipping.addPage.form.setJobName('a!b@c#d$e%f^g&');
-                    expect(Portal.logShipping.addPage.isSaveBtnEnabled()).toBeFalsy();
+                beforeAll(function () {
+                    Portal.signIn(user);
+                    Portal.helpers.nav.goToLogShipping();
+                    Portal.logShipping.listPage.clickAddNewLogShippingJob();
                 });
 
-            it('should not enable creation if `Jon Name` contains more than 150 characters',
-                function () {
-                    var lengthString151 = new Array(151).join('x');
-                    Portal.logShipping.addPage.form.clearJobName();
-                    Portal.logShipping.addPage.form.setJobName(lengthString151);
-                    expect(Portal.logShipping.addPage.isSaveBtnEnabled()).toBeFalsy();
+                afterAll(function () {
+                    Portal.signOut();
                 });
+
+                it('should enable creation if form is filled with valid data',
+                    function () {
+                        var acc = {};
+                        switch (user.role) {
+                            case 'revAdmin':
+                                acc.account = ['Rev Test'];
+                                break;
+                            case 'Reseller':
+                                acc.account = ['API QA Reseller Company Updated'];
+                                break;
+                        }
+                        var jobData = DataProvider.generateLogShippingJobData(acc);
+                        Portal.logShipping.addPage.form.fill(jobData);
+                        expect(Portal.logShipping.addPage.isSaveBtnEnabled()).toBeTruthy();
+                    });
+
+                it('should not enable creation if `Job Name` contains special characters',
+                    function () {
+                        Portal.logShipping.addPage.form.setJobName('a!b@c#d$e%f^g&');
+                        expect(Portal.logShipping.addPage.isSaveBtnEnabled()).toBeFalsy();
+                    });
+
+                it('should not enable creation if `Job Name` contains more than 150 characters',
+                    function () {
+                        var lengthString151 = new Array(160).join('x');
+                        Portal.logShipping.addPage.form.setJobName(lengthString151);
+                        expect(Portal.logShipping.addPage.isSaveBtnEnabled()).toBeFalsy();
+                    });
+            });
         });
     });
 });
