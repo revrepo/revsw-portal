@@ -286,6 +286,7 @@ var LogShippingForm = {
    * @returns {Object} Promise
    */
   setHost: function (value) {
+    this.clearHost();
     return this
       .getHostTxtIn()
       .sendKeys(value);
@@ -331,6 +332,7 @@ var LogShippingForm = {
    * @returns {Object} Promise
    */
   setUserName: function (value) {
+    this.clearUserName();
     return this
       .getUserNameTxtIn()
       .sendKeys(value);
@@ -346,6 +348,7 @@ var LogShippingForm = {
    * @returns {Object} Promise
    */
   setPassword: function (value) {
+    this.clearPassword();
     return this
       .getPasswordTxtIn()
       .sendKeys(value);

@@ -45,7 +45,7 @@
             });
         };
 
-        $scope.$watchGroup(['ngDomain','filters'], function () {
+        $scope.$watchGroup(['ngDomain', 'filters'], function () {
           $scope.loadDetails();
         });
         // NOTE: watch fitlers and save to localstorage
@@ -54,7 +54,26 @@
             $localStorage[$scope.flStoreName] = $scope.filters;
           }
         }, true);
+
+        /**
+        * @name getIpToolTip
+        * @description get the tooltip for IP info
+        */
+        $scope.getIpToolTip = function (item) {
+          return 'Country: ' + item.country + '. <br />' +
+            'Region, City: ' + item.city + '. <br />' +
+            'ISP/Organization: ' + item.isp + '.';
+        };
+
+        $scope.showIPinfo = function () {
+          $scope.showIpToolTip = true;
+        };
+        $scope.hideIPinfo = function () {
+          $scope.showIpToolTip = false;
+        };
       }
+
+
     };
   }
 })();

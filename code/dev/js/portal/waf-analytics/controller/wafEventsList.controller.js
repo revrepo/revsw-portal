@@ -194,5 +194,19 @@
     $scope.getCountryName = function (short) {
       return vm.countries[short] !== undefined ? vm.countries[short] : short;
     };
+
+    /**
+  * @name getIpToolTip
+  * @description get the tooltip for IP info
+  */
+    $scope.getIpToolTip = function (item) {
+      if (item.city === 'No data' && item.isp === 'No data' && item.countryByIp === 'No data') {
+        return 'No IP Address Data';
+      } else {
+        return 'Country: ' + item.countryByIp + '<br />' +
+          'City: ' + item.city + '<br />' +
+          'ISP/Organization: ' + item.isp;
+      }
+    };
   }
 })();
