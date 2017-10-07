@@ -28,10 +28,15 @@ describe('Functional', function () {
 
 
         describe('With user: ' + user.role, function () {
-
+            var jobData;
             beforeAll(function () {
                 Portal.signIn(user);
                 Portal.helpers.nav.goToLogShipping();
+                jobData = DataProvider.generateLogShippingJobData();
+                Portal.logShipping.listPage.clickAddNewLogShippingJob();
+                Portal.logShipping.addPage.form.setJobName(jobData.name);
+                Portal.logShipping.addPage.form.setAccount(jobData.account);
+                Portal.logShipping.addPage.clickCreateJobBtn();
             });
 
             afterAll(function () {
@@ -40,25 +45,9 @@ describe('Functional', function () {
 
             it('should successfully update job with valid data',
                 function () {
-                    var jobData = DataProvider.generateLogShippingJobData();
-
-                    Portal.logShipping.listPage.clickAddNewLogShippingJob();
-                    Portal.logShipping.addPage.form.setJobName(jobData.name);
-                    Portal.logShipping.addPage.form.setAccount(jobData.account);
-                    Portal.logShipping.addPage.clickCreateJobBtn();
-
-                    var alert = Portal.alerts.getFirst();
-                    expect(alert.getText())
-                        .toContain(Constants.alertMessages.logShipping.MSG_SUCCESS_ADD);
-
                     Portal.logShipping.listPage.searchAndClickEdit(jobData.name);
                     jobData.name = jobData.name + '-UPDATED';
                     Portal.logShipping.editPage.updateLogShippingJob(jobData);
-
-                    alert = Portal.alerts.getFirst();
-                    expect(alert.getText())
-                        .toContain(Constants.alertMessages.logShipping.MSG_SUCCESS_UPDATE);
-
                     Portal.logShipping.editPage.clickBackToList();
                     Portal.logShipping.listPage.searchAndGetFirstRow(jobData.name);
                     expect(Portal.logShipping.listPage.table.getRows().count()).toEqual(1);

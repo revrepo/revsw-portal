@@ -36,26 +36,37 @@ describe('Boundary', function () {
                 beforeAll(function () {
                     Portal.signIn(user);
                     Portal.helpers.nav.goToLogShipping();
-                    Portal.logShipping.listPage.clickAddNewLogShippingJob();
+
                 });
 
                 afterAll(function () {
                     Portal.signOut();
                 });
 
+                beforeEach(function () {
+                    Portal.logShipping.listPage.clickAddNewLogShippingJob();
+                    var acc = {};
+                    switch (user.role) {
+                        case 'revAdmin':
+                            acc.account = ['Rev Test'];
+                            break;
+                        case 'Reseller':
+                            acc.account = ['API QA Reseller Company Updated'];
+                            break;
+                        case 'Admin':
+                            acc.account = null;
+                            break;
+                    }
+                    var jobData = DataProvider.generateLogShippingJobData(acc);
+                    Portal.logShipping.addPage.form.fill(jobData);
+                });
+
+                afterEach(function () {
+                    Portal.logShipping.addPage.clickCancel();
+                });
+
                 it('should enable creation if form is filled with valid data',
                     function () {
-                        var acc = {};
-                        switch (user.role) {
-                            case 'revAdmin':
-                                acc.account = ['Rev Test'];
-                                break;
-                            case 'Reseller':
-                                acc.account = ['API QA Reseller Company Updated'];
-                                break;
-                        }
-                        var jobData = DataProvider.generateLogShippingJobData(acc);
-                        Portal.logShipping.addPage.form.fill(jobData);
                         expect(Portal.logShipping.addPage.isSaveBtnEnabled()).toBeTruthy();
                     });
 

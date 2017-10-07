@@ -47,32 +47,34 @@ describe('Boundary', function () {
                             break;
                     }
                     jobData = DataProvider.generateLogShippingJobData(acc);
+                    Portal.logShipping.addPage.form.setJobName(jobData.name);
+                    if (user.role !== 'Admin') {
+                        Portal.logShipping.addPage.form.setAccount(jobData.account);
+                    } else {
+                        jobData.sourceDomain = 'qa-admin-11-portal-ui-test.com';
+                    }
+                    Portal.logShipping.addPage.clickCreateJobBtn();
                 });
 
                 afterAll(function () {
                     Portal.signOut();
                 });
 
+                beforeEach(function () {
+                    Portal.logShipping.listPage.searchAndClickEdit(jobData.name);
+                    Portal
+                        .logShipping
+                        .editPage
+                        .form
+                        .fill(jobData);
+                });
+
+                afterEach(function () {
+                    Portal.logShipping.editPage.clickBackToList();
+                });
+
                 it('should enable update if form is filled with valid data',
                     function () {
-                        Portal.logShipping.addPage.form.setJobName(jobData.name);
-                        if (user.role !== 'Admin') {
-                            Portal.logShipping.addPage.form.setAccount(jobData.account);
-                        } else {
-                            jobData.sourceDomain = 'qa-admin-11-portal-ui-test.com';
-                        }
-                        Portal.logShipping.addPage.clickCreateJobBtn();
-
-                        var alert = Portal.alerts.getFirst();
-                        expect(alert.getText())
-                            .toContain(Constants.alertMessages.logShipping.MSG_SUCCESS_ADD);
-
-                        Portal.logShipping.listPage.searchAndClickEdit(jobData.name);
-                        Portal
-                            .logShipping
-                            .editPage
-                            .form
-                            .fill(jobData);
                         expect(Portal.logShipping.editPage.isUpdateBtnEnabled()).toBeTruthy();
                     });
 
@@ -80,41 +82,35 @@ describe('Boundary', function () {
                     function () {
                         Portal.logShipping.editPage.form.setJobName('a!b@c#d$e%f^g&');
                         expect(Portal.logShipping.editPage.isUpdateBtnEnabled()).toBeFalsy();
-                        Portal.logShipping.editPage.form.setJobName(jobData.name);
                     });
                 it('should not enable update if `Job Name` contains more than 150 characters',
                     function () {
                         Portal.logShipping.editPage.form.setJobName(lengthString160);
                         expect(Portal.logShipping.editPage.isUpdateBtnEnabled()).toBeFalsy();
-                        Portal.logShipping.editPage.form.setJobName(jobData.name);
                     });
 
                 it('should not enable update if `Host` contains more than 150 characters',
                     function () {
                         Portal.logShipping.editPage.form.setHost(lengthString160);
                         expect(Portal.logShipping.editPage.isUpdateBtnEnabled()).toBeFalsy();
-                        Portal.logShipping.editPage.form.setHost(jobData.host);
                     });
 
                 it('should not enable update if `Username` contains special characters',
                     function () {
                         Portal.logShipping.editPage.form.setUserName('a!b@c$d%e%');
                         expect(Portal.logShipping.editPage.isUpdateBtnEnabled()).toBeFalsy();
-                        Portal.logShipping.editPage.form.setUserName('abcd');
                     });
 
                 it('should not enable update if `Username` contains more than 150 characters',
                     function () {
                         Portal.logShipping.editPage.form.setUserName(lengthString160);
                         expect(Portal.logShipping.editPage.isUpdateBtnEnabled()).toBeFalsy();
-                        Portal.logShipping.editPage.form.setUserName('abcd');
                     });
 
                 it('should not enable update if `Password` contains more than 150 characters',
                     function () {
                         Portal.logShipping.editPage.form.setPassword(lengthString160);
                         expect(Portal.logShipping.editPage.isUpdateBtnEnabled()).toBeFalsy();
-                        Portal.logShipping.editPage.form.setPassword('123456789');
                     });
             });
         });

@@ -32,23 +32,30 @@ describe('Negative', function () {
             beforeAll(function () {
                 Portal.signIn(user);
                 Portal.helpers.nav.goToLogShipping();
-                Portal.logShipping.listPage.clickAddNewLogShippingJob();
             });
 
             afterAll(function () {
                 Portal.signOut();
             });
 
+            beforeEach(function () {
+                Portal.logShipping.listPage.clickAddNewLogShippingJob();
+                var job = DataProvider.generateLogShippingJobData();
+                Portal.logShipping.addPage.form.fill(job);
+            });
+
+            afterEach(function () {
+                Portal.logShipping.addPage.clickCancel();
+            });
+
+            it('should enable creation if all fields have valid data',
+                function () {
+                    expect(Portal.logShipping.addPage.isSaveBtnEnabled()).toBeTruthy();
+                });
+
             it('should not enable creation if `Job Name` is empty',
                 function () {
                     Portal.logShipping.addPage.form.clearJobName();
-                    expect(Portal.logShipping.addPage.isSaveBtnEnabled()).toBeFalsy();
-                });
-
-            it('should not enable creation if `Account` is empty',
-                function () {
-                    Portal.logShipping.addPage.form.setJobName('a');
-                    Portal.logShipping.addPage.form.setAccount('');
                     expect(Portal.logShipping.addPage.isSaveBtnEnabled()).toBeFalsy();
                 });
         });
