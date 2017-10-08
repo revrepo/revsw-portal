@@ -19,6 +19,7 @@
 var config = require('config');
 var Portal = require('./../../../../page_objects/portal');
 var DataProvider = require('./../../../../common/providers/data');
+var request = require('supertest');
 
 describe('Smoke', function () {
 
@@ -34,7 +35,7 @@ describe('Smoke', function () {
     });
 
     afterAll(function () {
-      // Portal.signOut();
+      Portal.signOut();
     });
 
     beforeEach(function () {
@@ -57,7 +58,7 @@ describe('Smoke', function () {
       Portal.admin.apiKeys.editPage.clickBackToList();
       Portal.admin.apiKeys.listPage.searcher.clearSearchCriteria();
       Portal.admin.apiKeys.listPage.searcher.setSearchCriteria(keyData.name);
-      
+
       var allRows = Portal.admin.apiKeys.listPage.table.getRows();
       expect(allRows.count()).toEqual(1);
 
@@ -85,7 +86,7 @@ describe('Smoke', function () {
       Portal.admin.apiKeys.editPage.clickBackToList();
       Portal.admin.apiKeys.listPage.searcher.clearSearchCriteria();
       Portal.admin.apiKeys.listPage.searcher.setSearchCriteria(keyData.name);
-      
+
       var allRows = Portal.admin.apiKeys.listPage.table.getRows();
       expect(allRows.count()).toEqual(1);
 
@@ -93,6 +94,36 @@ describe('Smoke', function () {
       Portal.dialog.clickOk();
 
       Portal.signOut();
+    });
+
+    it('should use a newly created API key to fetch data from the API', function (done) {
+      Portal.signIn(adminUser);
+      Portal.helpers.nav.goToAPIKeys();
+
+      var defaultName = 'New API Key';
+      var keyData = DataProvider.generateApiKeyData();
+
+      Portal.admin.apiKeys.listPage.clickAddNewApiKey();
+      Portal.admin.apiKeys.listPage.searcher.clearSearchCriteria();
+      Portal.admin.apiKeys.listPage.searchAndClickEdit(defaultName);
+
+      Portal.admin.apiKeys.editPage.form.setName(keyData.name);
+      Portal.admin.apiKeys.editPage.form.clickUpdate();
+      Portal.admin.apiKeys.editPage.clickBackToList();
+      Portal.admin.apiKeys.listPage.searcher.clearSearchCriteria();
+      Portal.admin.apiKeys.listPage.searcher.setSearchCriteria(keyData.name);
+      Portal.admin.apiKeys.listPage.table.getFirstRow().getAPICode().then(function (code) {
+        var apiUrl = config.get('api.host.protocol') +
+          '://' +
+          config.get('api.host.name');
+        request(apiUrl)
+          .get('/v1/accounts')
+          .set('Authorization', 'X-API-KEY ' + code)
+          .expect(function (res) {
+            expect(res.status).toEqual(200);
+          })
+          .expect(200, done);
+      });
     });
   });
 });

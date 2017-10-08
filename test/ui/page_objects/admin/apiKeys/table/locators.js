@@ -48,7 +48,13 @@ var rowLocators = {
     }
   },
   apiKey: {
-    css: 'td:nth-of-type(2)'
+    css: 'td:nth-of-type(2)',
+    showAPIKeyBtn: {
+      css: '.btn.btn-primary'
+    },
+    apiKeyTextInput: {
+      css: 'input[ng-blur="switchKeyVisibility(item)"]'
+    }
   },
   lastUpdate: {
     css: 'td:nth-of-type(3)'
