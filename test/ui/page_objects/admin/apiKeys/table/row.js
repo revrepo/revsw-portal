@@ -81,7 +81,7 @@ var KeyTableRow = function (rowElem, locators) {
 
   this.getAPIKeyTxtIn = function () {
     return element(by.css(this.locators.apiKey.apiKeyTextInput.css));
-  }
+  };
 
   this.getAPICode = function () {
     this.clickShowAPIKeyBtn();
@@ -89,7 +89,7 @@ var KeyTableRow = function (rowElem, locators) {
     browser.wait(until.presenceOf(this.getAPIKeyTxtIn()), 5000);
     return this.getAPIKeyTxtIn().getAttribute('value');
 
-  }
+  };
 
   // if (this.locators.actions && this.locators.actions.buttons.pencil) {
   if (this.locators.actions) {
