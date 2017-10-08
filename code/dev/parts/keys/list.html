@@ -84,14 +84,16 @@
                 <tr ng-repeat="item in filteredRecords | limitTo:filter.limit:filter.skip track by $index">
                   <td>
                     <a ui-sref="index.accountSettings.keys.edit({id: item.id})" ng-if="!item.loading" uib-tooltip="Edit API Key">
-                    {{item.key_name}}
-                  </a>
+                      {{item.key_name}}
+                    </a>
                   </td>
                   <td>
                     <button class="btn btn-primary" clipboard text="item.key" on-copied="copyCallback()" on-error="copyCallback(err)" style="vertical-align: initial;"
-                      uib-tooltip="Click to copy the key to the clipboard" tooltip-placement="top"><i class="fa fa-files-o"></i></button>
+                      uib-tooltip="Click to copy the key to the clipboard" tooltip-placement="top">
+                      <i class="fa fa-files-o"></i>
+                    </button>
                     <button class="btn btn-primary" ng-click="switchKeyVisibility(item)" ng-hide="item.showKey" style="vertical-align: initial;">Show API Key</button>
-                    <input ng-if="item.showKey" ng-blur="switchKeyVisibility(item)" class="form-control" value="{{item.key}}" style="width: 300px; display: inline-block; position: absolute; z-index: 999; margin-left: 4px;"
+                    <input ng-if="item.showKey" ng-blur="switchKeyVisibility(item)" class="form-control api-key" value="{{item.key}}" style="width: 300px; display: inline-block; position: absolute; z-index: 999; margin-left: 4px;"
                       focus-me="item.showKey">
                   </td>
                   <td>{{ getRelativeDate(item.updated_at) }}</td>
