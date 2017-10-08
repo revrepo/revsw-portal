@@ -19,7 +19,7 @@
 var config = require('config');
 var Portal = require('./../../../../page_objects/portal');
 var DataProvider = require('./../../../../common/providers/data');
-
+var request = require('supertest');
 describe('Smoke', function () {
 
   // Defining set of users for which all below tests will be run
@@ -86,12 +86,40 @@ describe('Smoke', function () {
       var apiKey = DataProvider.generateApiKeyData('API-Key-Delete');
       Portal.signIn(userAdmin);
       Portal.createApiKey(apiKey);
-      
+
       Portal.helpers.nav.goToAPIKeys();
       Portal.admin.apiKeys.listPage.searcher.setSearchCriteria(apiKey.name);
       Portal.admin.apiKeys.listPage.table.getFirstRow().clickDelete();
       expect(Portal.dialog.isDisplayed()).toBeTruthy();
       Portal.dialog.clickOk();
+      Portal.signOut();
+    });
+
+    it('should not be able to use API key after deleting it', function () {
+      var apiKey = DataProvider.generateApiKeyData('API-Key-Delete');
+      Portal.signIn(userRevAdmin);
+      var isAdminUser = true;
+      var account = 'API QA Reseller Company';
+      Portal.createApiKey(apiKey, isAdminUser, account);
+
+      Portal.helpers.nav.goToAPIKeys();
+      Portal.admin.apiKeys.listPage.searchAndGetFirstRow(apiKey.name);
+      var keycode;
+      Portal.admin.apiKeys.listPage.table.getFirstRow().getAPICode().then(function (code) {
+        keycode = code;
+      });
+      Portal.admin.apiKeys.listPage.searchAndClickDelete(apiKey.name);
+      Portal.dialog.clickOk();
+      var apiUrl = config.get('api.host.protocol') +
+        '://' +
+        config.get('api.host.name');
+      request(apiUrl)
+        .get('/v1/accounts')
+        .set('Authorization', 'X-API-KEY ' + keycode)
+        .expect(function (res) {
+          expect(res.status).toEqual(200);
+        })
+        .expect(200);
       Portal.signOut();
     });
   });
