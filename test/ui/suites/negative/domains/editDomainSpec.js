@@ -76,8 +76,123 @@ describe('Negative', function () {
         var publishBtn = Portal.domains.editPage.getPublishDomainBtn();
         expect(publishBtn.isEnabled()).toBeFalsy();
       });
-    
 
+    it('should not be able to update a domain with invalid value in "Wildcard Domain Alias"',
+      function () {
+        var incorrectValue = 'a';
 
+        Portal.domains.listPage.searchAndClickEdit(myDomain.name);
+        Portal.domains.editPage.form.clearWildcardDomainAlias();
+        Portal.domains.editPage.form.setWildcardDomainAlias(incorrectValue);
+        var updateBtn = Portal.domains.editPage.getUpdateDomainBtn();
+        expect(updateBtn.isEnabled()).toBeFalsy();
+      });
+
+    it('should not be able to publish a domain with invalid value in "Wildcard Domain Alias"',
+      function () {
+        var incorrectValue = 'a';
+
+        Portal.domains.listPage.searchAndClickEdit(myDomain.name);
+        Portal.domains.editPage.form.clearWildcardDomainAlias();
+        Portal.domains.editPage.form.setWildcardDomainAlias(incorrectValue);
+        var publishBtn = Portal.domains.editPage.getPublishDomainBtn();
+        expect(publishBtn.isEnabled()).toBeFalsy();
+      });
+
+    it('should not be able to update a domain with invalid value in "Blue Triangle Tech. Key"',
+      function () {
+        var incorrectValue = 'a';
+
+        Portal.domains.listPage.searchAndClickEdit(myDomain.name);
+        Portal.domains.editPage.form.clearBlueTriangleTechKey();
+        Portal.domains.editPage.form.setBlueTriangleTechKey(incorrectValue);
+        var updateBtn = Portal.domains.editPage.getUpdateDomainBtn();
+        expect(updateBtn.isEnabled()).toBeFalsy();
+      });
+
+    it('should not be able to publish a domain with invalid value in "Blue Triangle Tech. Key"',
+      function () {
+        var incorrectValue = 'a';
+
+        Portal.domains.listPage.searchAndClickEdit(myDomain.name);
+        Portal.domains.editPage.form.clearBlueTriangleTechKey();
+        Portal.domains.editPage.form.setBlueTriangleTechKey(incorrectValue);
+        var publishBtn = Portal.domains.editPage.getPublishDomainBtn();
+        expect(publishBtn.isEnabled()).toBeFalsy();
+      });
+
+    it('should not be able to update a domain with invalid value in "Probe Timeout"',
+      function () {
+        var incorrectValue = 'a';
+
+        Portal.domains.listPage.searchAndClickEdit(myDomain.name);
+        Portal.domains.editPage.clickTabOriginHealthMonitoring();
+        Portal.domains.editPage.form.clickOriginHealthMonitoringBtn();
+        Portal.domains.editPage.form.setProbeTimeout(incorrectValue);
+        var updateBtn = Portal.domains.editPage.getUpdateDomainBtn();
+        expect(updateBtn.isEnabled()).toBeFalsy();
+      });
+
+    it('should not be able to publish a domain with invalid value in "Probe Timeout"',
+      function () {
+        var incorrectValue = 'a';
+
+        Portal.domains.listPage.searchAndClickEdit(myDomain.name);
+        Portal.domains.editPage.clickTabOriginHealthMonitoring();
+        Portal.domains.editPage.form.clickOriginHealthMonitoringBtn();
+        Portal.domains.editPage.form.setProbeTimeout(incorrectValue);
+        var publishBtn = Portal.domains.editPage.getPublishDomainBtn();
+        expect(publishBtn.isEnabled()).toBeFalsy();
+      });
+
+    it('should not be able to update a domain with invalid value in "Probe Interval"',
+      function () {
+        var incorrectValue = 'a';
+
+        Portal.domains.listPage.searchAndClickEdit(myDomain.name);
+        Portal.domains.editPage.clickTabOriginHealthMonitoring();
+        Portal.domains.editPage.form.clickOriginHealthMonitoringBtn();
+        Portal.domains.editPage.form.setProbeInterval(incorrectValue);
+        var updateBtn = Portal.domains.editPage.getUpdateDomainBtn();
+        expect(updateBtn.isEnabled()).toBeFalsy();
+      });
+
+    it('should not be able to publish a domain with invalid value in "Probe Interval"',
+      function () {
+        var incorrectValue = 'a';
+
+        Portal.domains.listPage.searchAndClickEdit(myDomain.name);
+        Portal.domains.editPage.clickTabOriginHealthMonitoring();
+        Portal.domains.editPage.form.clickOriginHealthMonitoringBtn();
+        Portal.domains.editPage.form.setProbeInterval(incorrectValue);
+        var publishBtn = Portal.domains.editPage.getPublishDomainBtn();
+        expect(publishBtn.isEnabled()).toBeFalsy();
+      });
+
+    it('should not be able to update a domain with invalid value in ' +
+      '"Expected HTTP Response Code"',
+      function () {
+        var incorrectValue = '1';
+
+        Portal.domains.listPage.searchAndClickEdit(myDomain.name);
+        Portal.domains.editPage.clickTabOriginHealthMonitoring();
+        Portal.domains.editPage.form.clickOriginHealthMonitoringBtn();
+        Portal.domains.editPage.form.setExpectedHTTPresponseCode(incorrectValue);
+        var updateBtn = Portal.domains.editPage.getUpdateDomainBtn();
+        expect(updateBtn.isEnabled()).toBeFalsy();
+      });
+
+    it('should not be able to publish a domain with invalid value in ' +
+      '"Expected HTTP Response Code"',
+      function () {
+        var incorrectValue = '1';
+
+        Portal.domains.listPage.searchAndClickEdit(myDomain.name);
+        Portal.domains.editPage.clickTabOriginHealthMonitoring();
+        Portal.domains.editPage.form.clickOriginHealthMonitoringBtn();
+        Portal.domains.editPage.form.setExpectedHTTPresponseCode(incorrectValue);
+        var publishBtn = Portal.domains.editPage.getPublishDomainBtn();
+        expect(publishBtn.isEnabled()).toBeFalsy();
+      });
   });
 });

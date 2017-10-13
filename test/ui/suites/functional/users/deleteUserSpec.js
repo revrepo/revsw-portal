@@ -113,7 +113,7 @@ describe('Functional', function () {
             Portal.userListPage.searchAndClickDelete(testUser.email);
             Portal.dialog.clickOk();
             Portal.signOut().then(function () {
-              Portal.signIn(testUser);
+              Portal.signIn(testUser, false);
               expect(Portal
                 .loginPage
                 .getEmailTxtIn()

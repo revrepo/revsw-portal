@@ -84,7 +84,7 @@ describe('Workflow', function () {
           });
       });
 
-    it('should display `Published` staging status some period of time after ' +
+    xit('should display `Published` staging status some period of time after ' +
       'creating a domain',
       function () {
         var myDomain = DataProvider.generateDomain('my-domain');
@@ -101,7 +101,7 @@ describe('Workflow', function () {
           });
       });
 
-    it('should display `Published` global status some period of time after ' +
+    xit('should display `Published` global status some period of time after ' +
       'creating a domain',
       function () {
         var myDomain = DataProvider.generateDomain('my-domain');
@@ -119,7 +119,7 @@ describe('Workflow', function () {
           });
       });
 
-    it('should display `Modified` global status some period of time after ' +
+    xit('should display `Modified` global status some period of time after ' +
       'modifying a domain',
       function () {
         var myDomain = DataProvider.generateDomain('my-domain');

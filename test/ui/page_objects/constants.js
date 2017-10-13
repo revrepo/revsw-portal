@@ -232,6 +232,8 @@ var Constants = {
       MSG_SUCCESS_UPDATE_PASSWORD: 'Successfully updated the password',
       MSG_FAIL_ADD_EMAIL_EXISTS: 'The email address is already used by another user',
       MSG_SUCCESS_ENABLE_2FA: 'Successfully enabled two factor authentication',
+      MSG_INCORRECT_OTP_2FA: 'The supplied one time password is incorrect',
+      MSG_INVALID_OTP_2FA: 'child "oneTimePassword" fails because',
       MSG_SUCCESS_DISABLE_2FA: 'Successfully disabled two factor authentication',
     },
     accounts: {
@@ -254,6 +256,14 @@ var Constants = {
     },
     wafRules: {
       MSG_SUCCESS_ADD: 'The WAF rule has been successfully created'
+    },
+    logShipping: {
+      MSG_SUCCESS_ADD: 'Successfully created a new log shipping job',
+      MSG_SUCCESS_UPDATE: 'Successfully updated the log shipping job',
+      MSG_SUCCESS_DELETE: 'Successfully deleted the log shipping job',
+      MSG_SUCCESS_PLAY: 'Successfully updated the log shipping job',
+      MSG_SUCCESS_PAUSE: 'Successfully updated the log shipping job',
+      MSG_SUCCESS_STOP: 'Successfully updated the log shipping job'
     }
   },
 

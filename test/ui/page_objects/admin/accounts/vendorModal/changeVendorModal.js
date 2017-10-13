@@ -56,20 +56,20 @@ var ChangeVendorModal = {
         }
     },
 
-  // ## Methods to retrieve references to UI elements (Selenium WebDriver
-  // Element)
+    // ## Methods to retrieve references to UI elements (Selenium WebDriver
+    // Element)
 
-  /**
-   * ### ChangeVendorModal.getCancelBtn()
-   *
-   * Returns the reference to the `Cancel` button (Selenium WebDriver
-   * Element)from the Change Vendor page from the
-   * Accounts
-   *
-   * @returns {Selenium WebDriver Element}
-   */
+    /**
+     * ### ChangeVendorModal.getCancelBtn()
+     *
+     * Returns the reference to the `Cancel` button (Selenium WebDriver
+     * Element)from the Change Vendor page from the
+     * Accounts
+     *
+     * @returns {Selenium WebDriver Element}
+     */
     getCancelBtn: function () {
-      return element(by.css(this.locators.buttons.cancel.css));
+        return element(by.css(this.locators.buttons.cancel.css));
     },
 
     /**
@@ -94,7 +94,7 @@ var ChangeVendorModal = {
    * @returns {Selenium WebDriver Element}
    */
     getVendorDropdown: function () {
-        return new DropDownWidget(by.css(this.locators.vendorDropdown.css));
+        return element(by.css(this.locators.vendorDropdown.css));
     },
 
     /**
@@ -119,20 +119,20 @@ var ChangeVendorModal = {
    * @returns {Selenium WebDriver Element}
    */
     getVendorOptionNuubit: function () {
-      return element.all(by.css(this.locators.options.nuubit.css));
+        return element.all(by.css(this.locators.options.nuubit.css));
     },
 
-  /**
-   * ### ChangeVendorModal.getVendorOptionRevapm()
-   *
-   * Returns the reference to the `Vendor` drop down option Revapm(Selenium WebDriver
-   * Element) from the Change Vendor page from the
-   * Accounts
-   *
-   * @returns {Selenium WebDriver Element}
-   */
+    /**
+     * ### ChangeVendorModal.getVendorOptionRevapm()
+     *
+     * Returns the reference to the `Vendor` drop down option Revapm(Selenium WebDriver
+     * Element) from the Change Vendor page from the
+     * Accounts
+     *
+     * @returns {Selenium WebDriver Element}
+     */
     getVendorOptionRevapm: function () {
-      return element.all(by.css(this.locators.options.revapm.css));
+        return element.all(by.css(this.locators.options.revapm.css));
     },
 
     /**
@@ -147,18 +147,18 @@ var ChangeVendorModal = {
         return element.all(by.css(this.locators.vendorDropdown.options.css));
     },
 
-  /**
-   * ### ChangeVendor.selectVendorDdown()
-   *
-   * Triggers a click on the `Vendor` drop down from the Change Vendor page from the
-   * Portal app
-   *
-   * @returns {Promise}
-   */
+    /**
+     * ### ChangeVendor.selectVendorDdown()
+     *
+     * Triggers a click on the `Vendor` drop down from the Change Vendor page from the
+     * Portal app
+     *
+     * @returns {Promise}
+     */
     selectVendorDdown: function () {
-      return this
-        .getVendorDropdown()
-        .click();
+        return this
+            .getVendorDropdown()
+            .click();
     },
 
     /**
@@ -185,18 +185,18 @@ var ChangeVendorModal = {
             .click();
     },
 
-  /**
-   * ### ChangeVendorModal.clickCancelBtn()
-   *
-   * Triggers a click on the `Cancel` button from the Change Vendor page from the
-   * Accounts
-   *
-   * @returns {Promise}
-   */
+    /**
+     * ### ChangeVendorModal.clickCancelBtn()
+     *
+     * Triggers a click on the `Cancel` button from the Change Vendor page from the
+     * Accounts
+     *
+     * @returns {Promise}
+     */
     clickCancelBtn: function () {
-      return this
-        .getCancelBtn()
-        .click();
+        return this
+            .getCancelBtn()
+            .click();
     },
 
     /**
@@ -207,7 +207,7 @@ var ChangeVendorModal = {
     */
     clickCancel: function () {
         return this
-            .getCancelButton()
+            .getCancelBtn()
             .click();
     },
 
@@ -244,35 +244,35 @@ var ChangeVendorModal = {
         });
     },
 
-  /**
-   * ### ChangeVendor.setVendorNuubit()
-   *
-   * Sets value 'nuubit' to `Vendor` drop down element.
-   *
-   * @param {String} Value to set in Vendor drop down on Accounts Change Vendor page.
-   *
-   * @returns {Promise}
-   */
+    /**
+     * ### ChangeVendor.setVendorNuubit()
+     *
+     * Sets value 'nuubit' to `Vendor` drop down element.
+     *
+     * @param {String} Value to set in Vendor drop down on Accounts Change Vendor page.
+     *
+     * @returns {Promise}
+     */
     setVendorNuubit: function () {
-      return this
-        .getVendorOptionNuubit()
-        .click();
+        return this
+            .getVendorOptionNuubit()
+            .click();
     },
 
-  /**
-   * ### ChangeVendor.setVendorRevapm()
-   *
-   * Sets value 'revapm' to `Vendor` drop down element.
-   *
-   * @param {String} Value to set in Vendor drop down on Accounts Change Vendor page.
-   *
-   * @returns {Promise}
-   */
+    /**
+     * ### ChangeVendor.setVendorRevapm()
+     *
+     * Sets value 'revapm' to `Vendor` drop down element.
+     *
+     * @param {String} Value to set in Vendor drop down on Accounts Change Vendor page.
+     *
+     * @returns {Promise}
+     */
     setVendorRevapm: function () {
-      return this
-        .getVendorOptionRevapm()
-        .click();
-  },
+        return this
+            .getVendorOptionRevapm()
+            .click();
+    },
 };
 
 module.exports = ChangeVendorModal;

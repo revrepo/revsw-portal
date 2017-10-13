@@ -44,7 +44,7 @@ describe('Negative', function () {
                 .signIn(user)
                 .then(function () {
                   return Portal.helpers.mobileApps
-                    .create({platform: platform})
+                    .create({ platform: platform })
                     .then(function (newApp) {
                       app = newApp;
                       done();
@@ -60,30 +60,66 @@ describe('Negative', function () {
 
             it('should not allow to "verify" an app in Basic Edit mode with app name ' +
               'set to empty characters', function () {
-              Portal.helpers.nav.goToMobileAppsMenuItem(platform);
-              Portal.mobileApps.listPage.searchAndEdit(app.name);
-              Portal.mobileApps.editPage.form.setAppName(' ');
-              var enabled = Portal.mobileApps.editPage.form.isVerifyBtnEnabled();
-              expect(enabled).toBe(false);
-            });
+                Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+                Portal.mobileApps.listPage.searchAndEdit(app.name);
+                Portal.mobileApps.editPage.form.setAppName(' ');
+                var enabled = Portal.mobileApps.editPage.form.isVerifyBtnEnabled();
+                expect(enabled).toBe(false);
+              });
 
             it('should not allow to "update" an app in Basic Edit mode with app name ' +
               'set to empty characters', function () {
-              Portal.helpers.nav.goToMobileAppsMenuItem(platform);
-              Portal.mobileApps.listPage.searchAndEdit(app.name);
-              Portal.mobileApps.editPage.form.setAppName(' ');
-              var enabled = Portal.mobileApps.editPage.form.isUpdateBtnEnabled();
-              expect(enabled).toBe(false);
-            });
+                Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+                Portal.mobileApps.listPage.searchAndEdit(app.name);
+                Portal.mobileApps.editPage.form.setAppName(' ');
+                var enabled = Portal.mobileApps.editPage.form.isUpdateBtnEnabled();
+                expect(enabled).toBe(false);
+              });
 
             it('should not allow to "publish" an app in Basic Edit mode with app name ' +
               'set to empty characters', function () {
-              Portal.helpers.nav.goToMobileAppsMenuItem(platform);
-              Portal.mobileApps.listPage.searchAndEdit(app.name);
-              Portal.mobileApps.editPage.form.setAppName(' ');
-              var enabled = Portal.mobileApps.editPage.form.isPublishBtnEnabled();
-              expect(enabled).toBe(false);
-            });
+                Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+                Portal.mobileApps.listPage.searchAndEdit(app.name);
+                Portal.mobileApps.editPage.form.setAppName(' ');
+                var enabled = Portal.mobileApps.editPage.form.isPublishBtnEnabled();
+                expect(enabled).toBe(false);
+              });
+
+            it('should check "Update" button is disabled when Configuration ' +
+              ' Refresh Interval  is empty.', function () {
+                Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+                Portal.mobileApps.listPage.searchAndEdit(app.name);
+                Portal.mobileApps.editPage.form.setConfigurationRefreshInterval('');
+                var enabled = Portal.mobileApps.editPage.form.isUpdateBtnEnabled();
+                expect(enabled).toBe(false);
+              });
+
+            it('should check "Update" button is disabled when Configuration ' +
+              ' Stale Timeout  is empty.', function () {
+                Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+                Portal.mobileApps.listPage.searchAndEdit(app.name);
+                Portal.mobileApps.editPage.form.setConfigurationStaleTimeout('');
+                var enabled = Portal.mobileApps.editPage.form.isUpdateBtnEnabled();
+                expect(enabled).toBe(false);
+              });
+
+            it('should check "Publish" button is disabled when Configuration ' +
+              ' Refresh Interval  is empty.', function () {
+                Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+                Portal.mobileApps.listPage.searchAndEdit(app.name);
+                Portal.mobileApps.editPage.form.setConfigurationRefreshInterval('');
+                var enabled = Portal.mobileApps.editPage.form.isPublishBtnEnabled();
+                expect(enabled).toBe(false);
+              });
+
+            it('should check "Publish" button is disabled when Configuration ' +
+              ' Stale Timeout  is empty.', function () {
+                Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+                Portal.mobileApps.listPage.searchAndEdit(app.name);
+                Portal.mobileApps.editPage.form.setConfigurationStaleTimeout('');
+                var enabled = Portal.mobileApps.editPage.form.isPublishBtnEnabled();
+                expect(enabled).toBe(false);
+              });
           });
         });
       });

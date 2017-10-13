@@ -56,32 +56,10 @@ describe('Smoke', function () {
           expect(Portal.logShipping.addPage.form.isDisplayed()).toBeTruthy();
         });
 
-        it('should create a Log Shipping Job when filling all required data',
-          function () {
-            var logShippingJobToSearch = DataProvider.generateLogShippingJobData();
-            if (user.role === 'Reseller') {
-              logShippingJobToSearch.account = ['API QA Reseller Company'];
-            }
-            Portal.logShipping.addPage.createLogShippingJob(logShippingJobToSearch);
-            Portal.logShipping.listPage.searcher
-              .setSearchCriteria(logShippingJobToSearch.name);
-            expect(Portal.logShipping.listPage
-              .searchAndGetFirstRow(logShippingJobToSearch.name)
-              .getJobName()).toEqual(logShippingJobToSearch.name);
-          });
-
         it('should allow to cancel a Log Shipping Job addition', function () {
           Portal.logShipping.addPage.form.setJobName('something');
           Portal.logShipping.addPage.clickCancel();
           expect(Portal.logShipping.listPage.isDisplayed()).toBeTruthy();
-        });
-
-        it('should clear form after Cancel is clicked', function () {
-          var newJob = DataProvider.generateLogShippingJobData();
-          Portal.logShipping.addPage.form.fill(newJob);
-          Portal.logShipping.addPage.clickCancel();
-          Portal.logShipping.listPage.clickAddNewLogShippingJob();
-          expect(Portal.logShipping.addPage.form.getJobName()).toEqual('');
         });
       });
     });

@@ -49,7 +49,7 @@ describe('Functional', function () {
 
         describe('change password for user', function () {
           var testUser;
-          beforeEach(function (done) {
+          beforeAll(function (done) {
             Portal.session.setCurrentUser(user);
             Portal.helpers.users
               .create()
@@ -61,7 +61,7 @@ describe('Functional', function () {
           });
 
           it('should update password successfully using only letter values',
-            function () {
+            function (done) {
               var newPassword = 'newpassword';
               Portal.signIn(testUser);
               Portal.helpers.nav.goToUpdatePassword();
@@ -72,35 +72,44 @@ describe('Functional', function () {
               var alert = Portal.alerts.getFirst();
               expect(alert.getText())
                 .toContain(Constants.alertMessages.users.MSG_SUCCESS_UPDATE_PASSWORD);
-              Portal.signOut();
+              Portal.signOut().then(function () {
+                done();
+              });
             });
 
           it('should login successfully using new password',
-            function () {
+            function (done) {
               var newPassword = 'newpassword';
               Portal.loginPage.setEmail(testUser.email);
               Portal.loginPage.setPassword(newPassword);
               Portal.loginPage.clickSignIn();
+
               expect(Portal
-                .loginPage
-                .getEmailTxtIn()
-                .isDisplayed()).toBeFalsy();
-              Portal.signOut();
+                .header
+                .getHeaderBar().isDisplayed()).toBeTruthy();
+              Portal.signOut().then(function () {
+                done();
+              });
             });
 
           it('should update password successfully using only numbers',
-            function () {
+            function (done) {
               var newPassword = '12345678';
-              Portal.signIn(testUser);
+              var currPassword = 'newpassword';
+              Portal.loginPage.setEmail(testUser.email);
+              Portal.loginPage.setPassword(currPassword);
+              Portal.loginPage.clickSignIn();
               Portal.helpers.nav.goToUpdatePassword();
-              Portal.updatePasswordPage.setCurrentPassword(testUser.password);
+              Portal.updatePasswordPage.setCurrentPassword(currPassword);
               Portal.updatePasswordPage.setNewPassword(newPassword);
               Portal.updatePasswordPage.setPasswordConfirm(newPassword);
               Portal.updatePasswordPage.clickUpdatePassword();
               var alert = Portal.alerts.getFirst();
               expect(alert.getText())
                 .toContain(Constants.alertMessages.users.MSG_SUCCESS_UPDATE_PASSWORD);
-              Portal.signOut();
+              Portal.signOut().then(function () {
+                done();
+              });
             });
 
           it('should login successfully using new password',
@@ -110,9 +119,8 @@ describe('Functional', function () {
               Portal.loginPage.setPassword(newPassword);
               Portal.loginPage.clickSignIn();
               expect(Portal
-                .loginPage
-                .getEmailTxtIn()
-                .isDisplayed()).toBeFalsy();
+                .header
+                .getHeaderBar().isDisplayed()).toBeTruthy();
               Portal.signOut();
             });
         });

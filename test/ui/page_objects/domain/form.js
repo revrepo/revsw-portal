@@ -144,7 +144,7 @@ var DomainForm = {
       },
       originTCPport: {
         id: 'proxy_timeout'
-      } ,
+      },
       browserCachingTTL: {
         id: 'browserCachingTTL'
       }
@@ -183,7 +183,7 @@ var DomainForm = {
       mainAttrs: {
         ariaChecked: 'aria-checked'
       },
-      enableEnhancedAnalytics:{
+      enableEnhancedAnalytics: {
         id: 'enableEnhancedAnalytics'
       },
       lastMileQUICprotocol: {
@@ -211,7 +211,7 @@ var DomainForm = {
         id: 'newEdgeTTLifOriginMissing'
       },
       keepOrDropQueryStringParameters: {
-        id:'keepOrDropQueryStringParameters'
+        id: 'keepOrDropQueryStringParameters'
       },
       overrideHTTPcookies: {
         css: '.cachingRulesURLblock:first-child .overrideHTTPcookies'
@@ -254,7 +254,7 @@ var DomainForm = {
       acceptSSLrequests: {
         id: 'acceptSSLrequests'
       },
-      wafFunctionalityForTheDomain:{
+      wafFunctionalityForTheDomain: {
         id: 'enable_waf_rules'
       },
       aclRulesEnableSw: {
@@ -272,13 +272,13 @@ var DomainForm = {
       enableLuaScriptingOriginFirstMile: {
         id: 'luaScriptingFirstMile'
       },
-      enable3rdPartyRewrite:{
+      enable3rdPartyRewrite: {
         id: 'enable3rdPartyRewrite'
       },
-      enable3rdPartyRootRewrite:{
+      enable3rdPartyRootRewrite: {
         id: 'enable3rdPartyRootRewrite'
       },
-      enable3rdPartyRuntimeRewrite:{
+      enable3rdPartyRuntimeRewrite: {
         id: 'enable3rdPartyRuntimeRewrite'
       },
       enableThisCodeBlockBP: {
@@ -295,10 +295,10 @@ var DomainForm = {
       revAPMadminApprovalCO: {
         css: 'div[ng-if="$ctrl.domain.co_lua_enable_all"] div[name="customVcl"]'
       },
-      imageEngine:{
+      imageEngine: {
         id: 'enableImageEngine'
       },
-      refreshImageEngineConfigurationChBox:{
+      refreshImageEngineConfigurationChBox: {
         id: 'refreshImageEngineConfigurationChBox'
       }
 
@@ -341,6 +341,9 @@ var DomainForm = {
       },
       onAddNewItemCO: {
         css: '#luaScriptingFirstMileBlock .addNewLuaBlock'
+      },
+      originHealthMonitoringBtn: {
+        model: 'model.enable_origin_health_probe'
       }
     },
     elementsForm: {
@@ -400,7 +403,7 @@ var DomainForm = {
       }
 
     },
-    tabs:{
+    tabs: {
       generalSettings: {
         li: '.domain-edit-form .nav.nav-tabs>li:nth-child(1)',
         css: '.domain-edit-form .nav.nav-tabs>li:nth-child(1) a'
@@ -425,19 +428,19 @@ var DomainForm = {
         li: '.domain-edit-form .nav.nav-tabs>li:nth-child(6)',
         css: '.domain-edit-form .nav.nav-tabs>li:nth-child(6) a'
       },
-      customVCLRules:{
+      customVCLRules: {
         li: '.domain-edit-form .nav.nav-tabs>li:nth-child(7)',
         css: '.domain-edit-form .nav.nav-tabs>li:nth-child(7) a'
       },
-      luaScripting:{
+      luaScripting: {
         li: '.domain-edit-form .nav.nav-tabs>li:nth-child(8)',
         css: '.domain-edit-form .nav.nav-tabs>li:nth-child(8) a'
       },
-      thirdPartyLinks:{
+      thirdPartyLinks: {
         li: '.domain-edit-form .nav.nav-tabs>li:nth-child(9)',
         css: '.domain-edit-form .nav.nav-tabs>li:nth-child(9) a'
       },
-      imageEngine:{
+      imageEngine: {
         li: '.domain-edit-form .nav.nav-tabs>li:nth-child(10)',
         css: '.domain-edit-form .nav.nav-tabs>li:nth-child(10) a'
       }
@@ -517,7 +520,7 @@ var DomainForm = {
    *
    * @returns {Selenium WebDriver Element}
    */
-  getACLTab: function() {
+  getACLTab: function () {
     return element(by.css(this.locators.tabs.acl.css));
   },
   /**
@@ -623,7 +626,7 @@ var DomainForm = {
    *
    * @returns {Selenium WebDriver Element}
    */
-  getSslCertDDownItems: function() {
+  getSslCertDDownItems: function () {
     this.getSSLConfigurationTab()
       .click();
     return this
@@ -659,8 +662,33 @@ var DomainForm = {
     return element(by.id(this.locators.textInputs.blueTriangleTechKey.id));
   },
 
+  clearBlueTriangleTechKey: function () {
+    return this
+      .getBlueTriangleTechKeyTxtIn()
+      .clear();
+  },
+
+  setBlueTriangleTechKey: function (value) {
+    return this
+      .getBlueTriangleTechKeyTxtIn()
+      .sendKeys(value);
+  },
+
+
   getWildcardDomainAliasTxtIn: function () {
     return element(by.id(this.locators.textInputs.wildcardDomainAlias.id));
+  },
+
+  clearWildcardDomainAlias: function () {
+    return this
+      .getWildcardDomainAliasTxtIn()
+      .clear();
+  },
+
+  setWildcardDomainAlias: function (value) {
+    return this
+      .getWildcardDomainAliasTxtIn()
+      .sendKeys(value);
   },
 
   getNonWildcardDomainAliasesTxtIn: function () {
@@ -671,6 +699,9 @@ var DomainForm = {
     return element(by.id(this.locators.textInputs.originMonitoringHTTPrequest.id));
   },
 
+  setOriginMonitoringHTTPrequest: function (value) {
+    return this.getOriginMonitoringHTTPrequestTxtIn().sendKeys(value);
+  },
 
   getCacheBypassLocationsTxtIn: function () {
     return element(by.id(this.locators.textInputs.cacheBypassLocations.id));
@@ -720,6 +751,10 @@ var DomainForm = {
     return element(by.id(this.locators.textareas.comment.id));
   },
 
+  setComment: function (value) {
+    return this.getCommentTxtIn().sendKeys(value);
+  },
+
   getRecvFunctionTxtIn: function () {
     return element(by.css(this.locators.textareas.recvFunction.css));
   },
@@ -734,16 +769,51 @@ var DomainForm = {
   getDataReadTimeoutTxtIn: function () {
     return element(by.id(this.locators.numberInputs.dataReadTimeout.id));
   },
+
+  setDataReadTimeout: function (value) {
+    return this.getDataReadTimeoutTxtIn().sendKeys(value);
+  },
+
+  getOriginHealthMonitoringBtn: function () {
+    return element(by.model(this.locators.buttons.originHealthMonitoringBtn.model));
+  },
+
+  clickOriginHealthMonitoringBtn: function () {
+    return this
+      .getOriginHealthMonitoringBtn()
+      .click();
+  },
   getProbeTimeoutTxtIn: function () {
     return element(by.id(this.locators.numberInputs.probeTimeout.id));
+  },
+
+  setProbeTimeout: function (value) {
+    return this
+      .getProbeTimeoutTxtIn()
+      .clear()
+      .sendKeys(value);
   },
 
   getProbeIntervalTxtIn: function () {
     return element(by.id(this.locators.numberInputs.probeInterval.id));
   },
 
+  setProbeInterval: function (value) {
+    return this
+      .getProbeIntervalTxtIn()
+      .clear()
+      .sendKeys(value);
+  },
+
   getExpectedHTTPresponseCodeTxtIn: function () {
     return element(by.id(this.locators.numberInputs.expectedHTTPresponseCode.id));
+  },
+
+  setExpectedHTTPresponseCode: function (value) {
+    return this
+      .getExpectedHTTPresponseCodeTxtIn()
+      .clear()
+      .sendKeys(value);
   },
 
   getEdgeCacheTTLTxtIn: function () {
@@ -913,14 +983,14 @@ var DomainForm = {
   getRevAPMadminApprovalCO: function () {
     return element(by.css(this.locators.switches.revAPMadminApprovalCO.css));
   },
-   /**
-   * ### DomainForm.getImageEngineSw()
-   *
-   * Returns the reference to the `ImageEngine` switch
-   * (Selenium WebDriver Element)
-   *
-   * @returns {Selenium WebDriver Element}
-   */
+  /**
+  * ### DomainForm.getImageEngineSw()
+  *
+  * Returns the reference to the `ImageEngine` switch
+  * (Selenium WebDriver Element)
+  *
+  * @returns {Selenium WebDriver Element}
+  */
   getImageEngineSw: function () {
     return element(by.id(this.locators.switches.imageEngine.id));
   },
@@ -1031,7 +1101,7 @@ var DomainForm = {
   getLuaScriptsExecutedEdgeLastFirstMilesProxies: function () {
     return element
       .all(by.css(this.locators.blocks
-          .luaScriptsExecutedEdgeLastFirstMilesProxies.css));
+        .luaScriptsExecutedEdgeLastFirstMilesProxies.css));
   },
 
 
@@ -1117,7 +1187,7 @@ var DomainForm = {
    *
    * @returns {Promise}
    */
-  getSslCert: function() {
+  getSslCert: function () {
     this.getSSLConfigurationTab()
       .click();
     return this
@@ -1168,10 +1238,10 @@ var DomainForm = {
    *
    * @returns {Promise}
    */
-  setSslCert: function(sslCert) {
+  setSslCert: function (sslCert) {
     var me = this;
     return this.getSSLConfigurationTab()
-      .click().then(function() {
+      .click().then(function () {
         return me
           .getSslCertDDown()
           .sendKeys(sslCert);
@@ -1225,21 +1295,21 @@ var DomainForm = {
       .element(by.cssContainingText('option', domainOriginLocation))
       .click();
   },
-   /**
-   * ### DomainForm.setImageEngineTokenTxtIn()
-   *
-   * Sets a new value for `ImageEngine Token` text field
-   *
-   * @param {String} imageEngineTokenValue
-   *
-   * @returns {Promise}
-   */
+  /**
+  * ### DomainForm.setImageEngineTokenTxtIn()
+  *
+  * Sets a new value for `ImageEngine Token` text field
+  *
+  * @param {String} imageEngineTokenValue
+  *
+  * @returns {Promise}
+  */
   setImageEngineTokenTxtIn: function (imageEngineTokenValue) {
     var el = this
       .getImageEngineTokenTxtIn()
       .clear()
       .sendKeys(imageEngineTokenValue);
-    return  el;
+    return el;
   },
   /**
    * ### DomainForm.setImageEngineAPIKeyTxtIn()
@@ -1256,15 +1326,15 @@ var DomainForm = {
       .clear()
       .sendKeys(imageEngineAPIKeyValue);
   },
-   /**
-   * ### DomainForm.setImageEngineAPIKeyTxtIn()
-   *
-   * Sets a new value for `Origin Server` text field
-   *
-   * @param {String} ImageEngineTokenTxtIn
-   *
-   * @returns {Promise}
-   */
+  /**
+  * ### DomainForm.setImageEngineAPIKeyTxtIn()
+  *
+  * Sets a new value for `Origin Server` text field
+  *
+  * @param {String} ImageEngineTokenTxtIn
+  *
+  * @returns {Promise}
+  */
   setImageEngineOriginServerTxtIn: function (imageEngineOriginServerValue) {
     return this
       .getImageEngineOriginServerTxtIn()
@@ -1363,8 +1433,8 @@ var DomainForm = {
    */
   isDisplayed: function () {
     return this
-        .getDomainNameTxtIn()
-        .isPresent() &&
+      .getDomainNameTxtIn()
+      .isPresent() &&
       this
         .getOriginServerTxtIn()
         .isPresent() &&
@@ -1391,13 +1461,13 @@ var DomainForm = {
       .getOriginHostHeaderTxtIn()
       .clear();
   },
- /**
-   * ### DomainForm.clearInputsImageEngineForm()
-   *
-   * Clean the Domain Config ImageEngine Form inputs elemenst in the UI.
-   *
-   * @returns {Promise}
-   */
+  /**
+    * ### DomainForm.clearInputsImageEngineForm()
+    *
+    * Clean the Domain Config ImageEngine Form inputs elemenst in the UI.
+    *
+    * @returns {Promise}
+    */
   clearInputsImageEngineForm: function () {
     this
       .getImageEngineTokenTxtIn()
@@ -1417,7 +1487,7 @@ var DomainForm = {
    *
    * @returns {Promise}
    */
-  clickImageEngine: function(){
+  clickImageEngine: function () {
     this
       .getImageEngineSw()
       .click();

@@ -63,10 +63,10 @@ var LogShippingForm = {
       account: {
         id: 'account_id'
       },
-      setCurrentMode:{
+      setCurrentMode: {
         id: 'operational_mode'
       },
-      sourceType:{
+      sourceType: {
         id: 'source_type'
       },
       sourceDomain: {
@@ -259,10 +259,21 @@ var LogShippingForm = {
     return WebElement.clearTextInput(this.getJobNameTxtIn());
   },
 
+  clearHost: function () {
+    return WebElement.clearTextInput(this.getHostTxtIn());
+  },
+
+  clearUserName: function () {
+    return WebElement.clearTextInput(this.getUserNameTxtIn());
+  },
+
+  clearPassword: function () {
+    return WebElement.clearTextInput(this.getPasswordTxtIn());
+  },
   getJobName: function () {
     return this
-        .getJobNameTxtIn()
-        .getText();
+      .getJobNameTxtIn()
+      .getText();
   },
 
   /**
@@ -275,9 +286,10 @@ var LogShippingForm = {
    * @returns {Object} Promise
    */
   setHost: function (value) {
+    this.clearHost();
     return this
-        .getHostTxtIn()
-        .sendKeys(value);
+      .getHostTxtIn()
+      .sendKeys(value);
   },
 
   /**
@@ -291,8 +303,8 @@ var LogShippingForm = {
    */
   setPort: function (value) {
     return this
-        .getPortTxtIn()
-        .sendKeys(value);
+      .getPortTxtIn()
+      .sendKeys(value);
   },
 
   /**
@@ -306,8 +318,8 @@ var LogShippingForm = {
    */
   setSecretKey: function (value) {
     return this
-        .getSecretKeyTxtIn()
-        .sendKeys(value);
+      .getSecretKeyTxtIn()
+      .sendKeys(value);
   },
 
   /**
@@ -320,9 +332,10 @@ var LogShippingForm = {
    * @returns {Object} Promise
    */
   setUserName: function (value) {
+    this.clearUserName();
     return this
-        .getUserNameTxtIn()
-        .sendKeys(value);
+      .getUserNameTxtIn()
+      .sendKeys(value);
   },
 
   /**
@@ -335,9 +348,10 @@ var LogShippingForm = {
    * @returns {Object} Promise
    */
   setPassword: function (value) {
+    this.clearPassword();
     return this
-        .getPasswordTxtIn()
-        .sendKeys(value);
+      .getPasswordTxtIn()
+      .sendKeys(value);
   },
 
   /**
@@ -351,8 +365,8 @@ var LogShippingForm = {
    */
   setEmail: function (value) {
     return this
-        .getEmailTxtIn()
-        .sendKeys(value);
+      .getEmailTxtIn()
+      .sendKeys(value);
   },
 
   /**
@@ -366,8 +380,8 @@ var LogShippingForm = {
    */
   setComment: function (value) {
     return this
-        .getCommentTxtIn()
-        .sendKeys(value);
+      .getCommentTxtIn()
+      .sendKeys(value);
   },
 
   /**
@@ -379,7 +393,7 @@ var LogShippingForm = {
    *
    * @returns {Object} Promise
    */
-  setAccount: function (accounts) { 
+  setAccount: function (accounts) {
     for (var i = 0, len = accounts.length; i < len; i++) {
       var account = accounts[i];
       var option = this
@@ -402,7 +416,7 @@ var LogShippingForm = {
    */
   setCurrentMode: function (mode) {
     this.getCurrentModeDDown()
-        .sendKeys(mode);
+      .sendKeys(mode);
   },
 
   /**
@@ -416,7 +430,7 @@ var LogShippingForm = {
    */
   setSourceType: function (type) {
     this.getSourceTypeDDown()
-        .sendKeys(type);
+      .sendKeys(type);
   },
 
   /**
@@ -431,11 +445,11 @@ var LogShippingForm = {
   setSourceDomain: function (value) {
     var me = this;
     return this.getSourceDomainDDown()
-        .click().then(function () {
+      .click().then(function () {
         browser.actions().sendKeys(value)
-            .perform();
-          browser.actions().sendKeys(protractor.Key.ENTER)
-              .perform();
+          .perform();
+        browser.actions().sendKeys(protractor.Key.ENTER)
+          .perform();
       });
   },
 
@@ -450,7 +464,7 @@ var LogShippingForm = {
    */
   setDestination: function (value) {
     this.getDestinationDDown()
-        .sendKeys(value);
+      .sendKeys(value);
   },
 
   // ## Helper Methods
@@ -464,8 +478,8 @@ var LogShippingForm = {
    */
   isDisplayed: function () {
     return this
-        .getJobNameTxtIn()
-        .isPresent();
+      .getJobNameTxtIn()
+      .isPresent();
   },
 
   /**
@@ -490,88 +504,88 @@ var LogShippingForm = {
     var me = this;
 
     element.all(by.id(this.locators.dropDowns.account.id))
-        .then(function (elements) {
-          if (job.account !== undefined && elements.length > 0) {
-            me.setAccount(job.account);
-          }
-        });
+      .then(function (elements) {
+        if (job.account !== undefined && elements.length > 0) {
+          me.setAccount(job.account);
+        }
+      });
 
     element.all(by.id(this.locators.dropDowns.setCurrentMode.id))
-        .then(function (elements) {
-          if (job.currentMode !== undefined && elements.length > 0) {
-            me.setCurrentMode(job.currentMode);
-          }
-        });
+      .then(function (elements) {
+        if (job.currentMode !== undefined && elements.length > 0) {
+          me.setCurrentMode(job.currentMode);
+        }
+      });
 
     element.all(by.id(this.locators.dropDowns.sourceType.id))
-        .then(function (elements) {
-          if (job.sourceType !== undefined && elements.length > 0) {
-            me.setSourceType(job.sourceType);
-          }
-        });
+      .then(function (elements) {
+        if (job.sourceType !== undefined && elements.length > 0) {
+          me.setSourceType(job.sourceType);
+        }
+      });
 
     element.all(by.id(this.locators.dropDowns.destination.id))
-        .then(function (elements) {
-          if (job.destination !== undefined && elements.length > 0) {
-            me.setDestination(job.destination);
-          }
-        });
+      .then(function (elements) {
+        if (job.destination !== undefined && elements.length > 0) {
+          me.setDestination(job.destination);
+        }
+      });
 
     element.all(by.id(this.locators.textInputs.host.id))
-        .then(function (elements) {
-          if (job.host !== undefined && elements.length > 0) {
-            me.setHost(job.host);
-          }
-        });
+      .then(function (elements) {
+        if (job.host !== undefined && elements.length > 0) {
+          me.setHost(job.host);
+        }
+      });
 
     element.all(by.id(this.locators.textInputs.port.id))
-        .then(function (elements) {
-          if (job.port !== undefined && elements.length > 0) {
-            me.setPort(job.port);
-          }
-        });
+      .then(function (elements) {
+        if (job.port !== undefined && elements.length > 0) {
+          me.setPort(job.port);
+        }
+      });
 
     element.all(by.id(this.locators.textInputs.secretKey.id))
-        .then(function (elements) {
-          if (job.secretKey !== undefined && elements.length > 0) {
-            me.setSecretKey(job.secretKey);
-          }
-        });
+      .then(function (elements) {
+        if (job.secretKey !== undefined && elements.length > 0) {
+          me.setSecretKey(job.secretKey);
+        }
+      });
 
     element.all(by.id(this.locators.textInputs.userName.id))
-        .then(function (elements) {
-          if (job.userName !== undefined && elements.length > 0) {
-            me.setUserName(job.userName);
-          }
-        });
+      .then(function (elements) {
+        if (job.userName !== undefined && elements.length > 0) {
+          me.setUserName(job.userName);
+        }
+      });
 
     element.all(by.id(this.locators.textInputs.password.id))
-        .then(function (elements) {
-          if (job.password !== undefined && elements.length > 0) {
-            me.setPassword(job.password);
-          }
-        });
+      .then(function (elements) {
+        if (job.password !== undefined && elements.length > 0) {
+          me.setPassword(job.password);
+        }
+      });
 
     element.all(by.id(this.locators.textInputs.emailForProblemNotification.id))
-        .then(function (elements) {
-          if (job.email !== undefined && elements.length > 0) {
-            me.setEmail(job.email);
-          }
-        });
+      .then(function (elements) {
+        if (job.email !== undefined && elements.length > 0) {
+          me.setEmail(job.email);
+        }
+      });
 
     element.all(by.id(this.locators.textInputs.comment.id))
-        .then(function (elements) {
-          if (job.comment !== undefined && elements.length > 0) {
-            me.setComment(job.comment);
-          }
-        });
+      .then(function (elements) {
+        if (job.comment !== undefined && elements.length > 0) {
+          me.setComment(job.comment);
+        }
+      });
 
     element.all(by.css(this.locators.dropDowns.sourceDomain.css))
-        .then(function (elements) {
-          if (job.sourceDomain !== undefined && elements.length > 0) {
-            me.setSourceDomain(job.sourceDomain);
-          }
-        });
+      .then(function (elements) {
+        if (job.sourceDomain !== undefined && elements.length > 0) {
+          me.setSourceDomain(job.sourceDomain);
+        }
+      });
   }
 };
 

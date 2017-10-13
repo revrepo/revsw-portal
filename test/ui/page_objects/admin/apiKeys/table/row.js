@@ -67,6 +67,30 @@ var KeyTableRow = function (rowElem, locators) {
       .click();
   };
 
+  this.getShowAPIKeyBtn = function () {
+    return element(by.cssContainingText(this
+      .locators
+      .apiKey
+      .showAPIKeyBtn
+      .css, 'Show API Key'));
+  };
+
+  this.clickShowAPIKeyBtn = function () {
+    return this.getShowAPIKeyBtn().click();
+  };
+
+  this.getAPIKeyTxtIn = function () {
+    return element(by.css(this.locators.apiKey.apiKeyTextInput.css));
+  };
+
+  this.getAPICode = function () {
+    this.clickShowAPIKeyBtn();
+    var until = protractor.ExpectedConditions;
+    browser.wait(until.presenceOf(this.getAPIKeyTxtIn()), 5000);
+    return this.getAPIKeyTxtIn().getAttribute('value');
+
+  };
+
   // if (this.locators.actions && this.locators.actions.buttons.pencil) {
   if (this.locators.actions) {
 
