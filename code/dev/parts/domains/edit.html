@@ -629,6 +629,25 @@
               <!-- //  “WAF” -->
               <hr>
             </uib-tab>
+            <uib-tab index="10" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="TODO text">
+              <!--  “Bot Protection” -->
+              <uib-tab-heading>Bot Protection <i class="label label-primary pull-right fa beta-functional" aria-hidden="true"> Beta</i></uib-tab-heading>
+              <div class="form-group form-inline">
+                <label for="enableBotProtection" class="col-sm-3 control-label">Bot Protection</label>
+                <div class="col-md-9">
+                  <toggle-switch id="enable_bot_protection" name="enableBotProtection" is-disabled="_loading" ng-model="model.rev_component_bp.enable_bot_protection"
+                    on-label="On" off-label="Off">
+                  </toggle-switch>
+                  <label for="enableBotProtection" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="TODO text">
+                      <i class="fa fa-question-circle"></i>
+                    </label>
+                </div>
+              </div>
+              <!-- Bot Protection list-->
+              <domain-bot-protection-list id="enableBotProtectionBlock" account-id="{{model.account_id}}" ng-if="model.rev_component_bp.enable_bot_protection" ng-model="model.rev_component_bp.bot_protection"></domain-bot-protection-list>
+              <!-- //  “Bot Protection” -->
+              <hr>
+            </uib-tab>
             <uib-tab index="6" heading="Custom VCL Rules" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="This tab allows Varnish VCL experts to configure custom VCL rules to be applied for the domain configuration">
               <!--  “Custom VCL Rules” -->
               <div class="form-group form-inline">

@@ -189,7 +189,8 @@
         STREET_ADDRESS: /^[A-z\u00C0-\u00ff""\w\d\s-'.,&#:()]+$/,
         WAF_LOCATION_NAME: /^\/{1}(([A-Za-z0-9\-\_]+)(\/?){1})*$/,
         CIDR: /^([0-9]{1,3}\.){3}[0-9]{1,3}\/{1}(([1-9]|[1-2][0-9]|3[0-2])){1}?$/,
-        WAF_RULE_NAME: /^[A-Za-z0-9//_.:', -]+$/
+        WAF_RULE_NAME: /^[A-Za-z0-9//_.:', -]+$/,
+        BOT_PROTECTION_LOCATION_NAME: /^\/{1}(([A-Za-z0-9\-\_]+)(\/?){1})*$/
       },
       // HEADER OPERATION FOR DOMAIN CACHING RULE
       HEADER_OPERATIONS: {
@@ -348,6 +349,27 @@
         'user': 'Portal User',
         // 'webhook': 'Webhook',// TODO: use later
         // 'slack': 'Slack' // TODO: use later
+      },
+      /**
+       * @name BOT_PROTECTION_MODE_TYPES
+       * @description  possible values for a mode property Bot Protection
+       */
+      BOT_PROTECTION_MODE_TYPES:{
+        disable: 'Disable',
+        monitor: 'Monitor',
+        active_protection: 'Active Protection',
+      },
+      /**
+       * @name BOT_PROTECTION_DEFAULT
+       * @description default values for new Bot Protection
+       */
+      BOT_PROTECTION_DEFAULT:{
+        'location': '/',
+        'mode': 'monitor',
+        'call_type': 1,
+        'username_cookie_name': '',
+        'sessionid_cookie_name':'',
+        'bot_protection_id': null
       }
     });
 
