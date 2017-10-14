@@ -75,9 +75,9 @@
             <label for="mode" class="col-sm-3 control-label">Mode</label>
             <div class="col-md-9">
               <input type="hidden" ng-model="item.mode" name="mode" class="form-control inline-block" required>
-              <select class="form-control fixed inline-block" ng-model="item.mode" ng-options="key as item for  (key ,item) in $ctrl.modeTypes">
-          <!-- <option value="">All Zones</option> -->
-        </select>
+              <select class="form-control inline-block" ng-model="item.mode" ng-options="key as item for  (key ,item) in $ctrl.modeTypes">
+                 <!-- <option value="">All Zones</option> -->
+              </select>
               <label for="mode" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="TODO text">
                     <i class="fa fa-question-circle"></i>
                   </label>
@@ -101,9 +101,9 @@
           </div>
           <!-- username_cookie_name -->
           <div class="form-group" ng-class="{'has-error': botProtectionEditForm.usernameCookieName.$invalid && botProtectionEditForm.usernameCookieName.$dirty}">
-            <label for="usernameCookieName" class="col-sm-3 control-label">Username Cookie Name *</label>
+            <label for="usernameCookieName" class="col-sm-3 control-label">Username Cookie Name</label>
             <div class="col-md-9">
-              <input type="text" ng-model="item.username_cookie_name" name="usernameCookieName" class="form-control inline-block" required>
+              <input type="text" ng-model="item.username_cookie_name" name="usernameCookieName" class="form-control inline-block">
               <label for="usernameCookieName" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="TODO text">
                     <i class="fa fa-question-circle"></i>
                   </label>
@@ -114,9 +114,9 @@
           </div>
           <!-- sessionid_cookie_name -->
           <div class="form-group" ng-class="{'has-error': botProtectionEditForm.sessionidCookieName.$invalid && botProtectionEditForm.sessionidCookieName.$dirty}">
-            <label for="sessionidCookieName" class="col-sm-3 control-label">Sessionid Cookie Name *</label>
+            <label for="sessionidCookieName" class="col-sm-3 control-label">Sessionid Cookie Name</label>
             <div class="col-md-9">
-              <input type="text" ng-model="item.sessionid_cookie_name" name="sessionidCookieName" class="form-control inline-block" required>
+              <input type="text" ng-model="item.sessionid_cookie_name" name="sessionidCookieName" class="form-control inline-block">
               <label for="sessionidCookieName" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="TODO text">
                     <i class="fa fa-question-circle"></i>
                   </label>
