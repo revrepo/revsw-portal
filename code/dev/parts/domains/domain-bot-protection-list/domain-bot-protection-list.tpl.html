@@ -78,7 +78,7 @@
               <select class="form-control inline-block" ng-model="item.mode" ng-options="key as item for  (key ,item) in $ctrl.modeTypes">
                  <!-- <option value="">All Zones</option> -->
               </select>
-              <label for="mode" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Bot Protection has three modes of operation: Disable mode will diactive protection for the specific location but will leave the configuration intact; Monitor mode will collect analytics about bad and good bots but will not actually block any requests; Active Protection mode will protect the content from bad bots depending on ShieldSquare configuration for the domain.">
+              <label for="mode" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Bot Protection has three modes of operation: Disable mode will deactivate protection for the specific location but will leave the configuration intact; Monitor mode will collect analytics about bad and good bots but will not actually block any requests; Active Protection mode will protect the content from bad bots depending on ShieldSquare configuration for the domain.">
                     <i class="fa fa-question-circle"></i>
                   </label>
               <div class="error-messages" ng-messages="botProtectionEditForm.mode.$error" role="alert" ng-messages-multiple>
