@@ -33,6 +33,7 @@ describe('Smoke', function () {
     });
 
     afterAll(function () {
+      Portal.signOut();
     });
 
     beforeEach(function () {
@@ -95,7 +96,7 @@ describe('Smoke', function () {
       Portal.signOut();
     });
 
-    it('should not be able to use API key after deleting it', function () {
+    it('should not be able to use API key after deleting it', function (done) {
       var apiKey = DataProvider.generateApiKeyData('API-Key-Delete');
       Portal.signIn(userRevAdmin);
       var isAdminUser = true;
@@ -108,19 +109,13 @@ describe('Smoke', function () {
       Portal.admin.apiKeys.listPage.table.getFirstRow().getAPICode().then(function (code) {
         keycode = code;
       });
-      Portal.admin.apiKeys.listPage.searchAndClickDelete(apiKey.name);
-      Portal.dialog.clickOk();
-      var apiUrl = config.get('api.host.protocol') +
-        '://' +
-        config.get('api.host.name');
-      request(apiUrl)
-        .get('/v1/accounts')
-        .set('Authorization', 'X-API-KEY ' + keycode)
-        .expect(function (res) {
-          expect(res.status).toEqual(200);
-        })
-        .expect(200);
-      Portal.signOut();
+      Portal.admin.apiKeys.listPage.searchAndClickDelete(apiKey.name).then(function () {
+        Portal.dialog.clickOk();
+        Portal.apiKeysHelpers.validateAPIKey(keycode, function (res) {
+          expect(res).toBe(401);
+          done();
+        });
+      });
     });
   });
 });
