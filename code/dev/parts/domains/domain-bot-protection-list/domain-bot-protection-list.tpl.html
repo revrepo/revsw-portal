@@ -1,0 +1,145 @@
+<div id="domainBotProtectionBlock" class="panel panel-default domain-waf-locations">
+  <div class="panel-heading">
+    <div class="pull-left panel-buttons-left inline-block">
+      <a class="btn btn-default btn-md " ng-click="$ctrl.onCollapsAllBotProtections()" title="Collapse All Locations" ng-show="!isCollapsedAll">
+        <i class="glyphicon glyphicon-chevron-up "></i>
+      </a>
+      <a class="btn btn-default btn-md " ng-click="$ctrl.onExpandAllBotProtections()" title="Expand All Locations">
+        <i class="glyphicon glyphicon-chevron-down"></i>
+      </a>
+    </div>
+    <div class="form-group pull-right">
+      <div class="col-sm-12">
+        <a id="addNewBotProtectBtn" ng-click="$ctrl.onAddNewBotProtection(true)" class="btn btn-primary btn-sm " title="Add New Location"
+          opover-append-to-body="{{true}}" popover-trigger="mouseenter" popover-placement=" left" uib-popover="Add New Location"><i class="glyphicon glyphicon-plus"></i></a>
+      </div>
+    </div>
+    <div class="h4 panel-title"><b class="h4  inline-block"> Locations </b>
+      <label class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Use Location blocks to define Bot Protection configuration for different parts (locations) of the website">
+                <i class="fa fa-question-circle"></i>
+              </label>
+    </div>
+  </div>
+  <div class="panel panel-body">
+    <div class="form-group" ng-form="botProtectionEditForm">
+      <div class="panel panel-default" ng-repeat="item in $ctrl.botProtection">
+        <div class="panel-heading">
+          <div class="domain-waf-location__info">
+            <div class="pull-left panel-buttons-left">
+              <!-- collapse -->
+              <a class="btn btn-default btn-xs" href="" title="CollapseLocation" ng-show="!item.$$botProtectionLocationBlockState.isCollapsed"
+                ng-click="item.$$botProtectionLocationBlockState.isCollapsed = !item.$$botProtectionLocationBlockState.isCollapsed">
+                <i class="glyphicon glyphicon-chevron-up"></i>
+              </a>
+              <!-- expend -->
+              <a class="btn btn-default btn-xs" href="" title="ExpandLocation" ng-show="item.$$botProtectionLocationBlockState.isCollapsed"
+                ng-click="item.$$botProtectionLocationBlockState.isCollapsed = !item.$$botProtectionLocationBlockState.isCollapsed">
+                <i class="glyphicon glyphicon-chevron-down"></i>
+              </a>
+              <!--Location Up  -->
+              <a class="btn btn-default btn-xs" href="" ng-click="$ctrl.onUpBotProtection($event,item)"><i class="glyphicon glyphicon-arrow-up " title="Move One Position Up"></i></a>
+              <!-- Location Down  -->
+              <a class="btn btn-default btn-xs" href="" ng-click="$ctrl.onDownBotProtection($event,item)"><i class="glyphicon glyphicon-arrow-down" title="Move One Position Down"></i></a>
+              <!-- // -->
+            </div>
+            <div class="pull-right panel-button-right">
+              <!-- Actions -->
+              <a ng-click="$ctrl.onDuplicateBotProtection($event,item)" class="btn btn-primary btn-xs duplicateBotProtectionBtn" opover-append-to-body="{{true}}"
+                popover-trigger="mouseenter" uib-popover="Duplicate Location"><i class="fa fa-clone"></i> Duplicate Location</a>
+              <a href title="Delete Location" ng-click="$ctrl.onDeleteBotProtection($event,$index)">
+                <i class="glyphicon glyphicon-remove"></i>
+              </a>
+            </div>
+            <div class="panel-title">
+              <b>Location</b>: {{item.location}}</div>
+          </div>
+        </div>
+
+        <div class="panel-body" ng-show="!item.$$botProtectionLocationBlockState.isCollapsed">
+
+          <div class="form-group" ng-class="{'has-error': botProtectionEditForm.botProtectionLocation.$invalid && botProtectionEditForm.botProtectionLocation.$dirty}">
+            <label for="botProtectionLocation" class="col-sm-3 control-label">Location *</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control inline-block" ng-disabled="_loading" ng-model="item.location" name="botProtectionLocation"
+                placeholder="like '/my_url/'" ng-maxlength="150" validate-bot-protection-location-name required>
+              <label for="botProtectionLocation" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Specify here a website path like '/' or '/images/'. Bot Protection configuration from this specific block will be applied to the specific path.">
+                <i class="fa fa-question-circle"></i>
+              </label>
+              <div class="error-messages" ng-messages="botProtectionEditForm.botProtectionLocation.$error" role="alert" ng-messages-multiple>
+                <div ng-messages-include="parts/shared/error-messages.html"></div>
+              </div>
+            </div>
+          </div>
+          <!-- mode -->
+          <div class="form-group" ng-class="{'has-error': botProtectionEditForm.mode.$invalid && botProtectionEditForm.mode.$dirty}">
+            <label for="mode" class="col-sm-3 control-label">Mode</label>
+            <div class="col-md-9">
+              <input type="hidden" ng-model="item.mode" name="mode" class="form-control inline-block" required>
+              <select class="form-control inline-block" ng-model="item.mode" ng-options="key as item for  (key ,item) in $ctrl.modeTypes">
+                 <!-- <option value="">All Zones</option> -->
+              </select>
+              <label for="mode" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Bot Protection has three modes of operation: Disable mode will deactivate protection for the specific location but will leave the configuration intact; Monitor mode will collect analytics about bad and good bots but will not actually block any requests; Active Protection mode will protect the content from bad bots depending on ShieldSquare configuration for the domain.">
+                    <i class="fa fa-question-circle"></i>
+                  </label>
+              <div class="error-messages" ng-messages="botProtectionEditForm.mode.$error" role="alert" ng-messages-multiple>
+                <div ng-messages-include="parts/shared/error-messages.html"></div>
+              </div>
+            </div>
+          </div>
+          <!-- call_type -->
+          <div class="form-group" ng-class="{'has-error': botProtectionEditForm.callType.$invalid && botProtectionEditForm.callType.$dirty}">
+            <label for="callType" class="col-sm-3 control-label">Call Type *</label>
+            <div class="col-md-9">
+              <input type="number" ng-model="item.call_type" ng-min="1" ng-max="6" name="callType" class="form-control inline-block" required>
+              <label for="callType" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Internal parameter (please set it to 1)">
+                    <i class="fa fa-question-circle"></i>
+                  </label>
+              <div class="error-messages" ng-messages="botProtectionEditForm.callType.$error" role="alert" ng-messages-multiple>
+                <div ng-messages-include="parts/shared/error-messages.html"></div>
+              </div>
+            </div>
+          </div>
+          <!-- username_cookie_name -->
+          <div class="form-group" ng-class="{'has-error': botProtectionEditForm.usernameCookieName.$invalid && botProtectionEditForm.usernameCookieName.$dirty}">
+            <label for="usernameCookieName" class="col-sm-3 control-label">Username Cookie Name</label>
+            <div class="col-md-9">
+              <input type="text" ng-model="item.username_cookie_name" name="usernameCookieName" class="form-control inline-block">
+              <label for="usernameCookieName" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="This optional field should be assigned with the name of HTTP cookie used to track username on the website">
+                    <i class="fa fa-question-circle"></i>
+                  </label>
+              <div class="error-messages" ng-messages="botProtectionEditForm.usernameCookieName.$error" role="alert" ng-messages-multiple>
+                <div ng-messages-include="parts/shared/error-messages.html"></div>
+              </div>
+            </div>
+          </div>
+          <!-- sessionid_cookie_name -->
+          <div class="form-group" ng-class="{'has-error': botProtectionEditForm.sessionidCookieName.$invalid && botProtectionEditForm.sessionidCookieName.$dirty}">
+            <label for="sessionidCookieName" class="col-sm-3 control-label">Sessionid Cookie Name</label>
+            <div class="col-md-9">
+              <input type="text" ng-model="item.sessionid_cookie_name" name="sessionidCookieName" class="form-control inline-block">
+              <label for="sessionidCookieName" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="The optional field should hold the name of HTTP cookie used to track user sessions">
+                    <i class="fa fa-question-circle"></i>
+                  </label>
+              <div class="error-messages" ng-messages="botProtectionEditForm.sessionidCookieName.$error" role="alert" ng-messages-multiple>
+                <div ng-messages-include="parts/shared/error-messages.html"></div>
+              </div>
+            </div>
+          </div>
+          <!-- bot_protection_id -->
+          <div class="form-group" ng-class="{'has-error': botProtectionEditForm.botProtectionID.$invalid && botProtectionEditForm.botProtectionID.$dirty}">
+            <label for="botProtectionID" class="col-sm-3 control-label">Bot Protection ID *</label>
+            <div class="col-md-9">
+              <input type="text" ng-model="item.bot_protection_id" name="botProtectionID" class="form-control inline-block" required>
+              <label for="botProtectionID" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="This field should be configured with production subscriber ID as provisioned in ShieldSquare admin portal">
+                    <i class="fa fa-question-circle"></i>
+                  </label>
+              <div class="error-messages" ng-messages="botProtectionEditForm.botProtectionID.$error" role="alert" ng-messages-multiple>
+                <div ng-messages-include="parts/shared/error-messages.html"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

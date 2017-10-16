@@ -188,6 +188,18 @@
             delete item.$$wafLocationBlockState;
           });
         }
+        // $$botProtectionLocationBlockState
+        if(model.rev_component_bp.bot_protection && angular.isArray(model.rev_component_bp.bot_protection)) {
+          angular.forEach(model.rev_component_bp.bot_protection, function(item) {
+            if(!!!item.username_cookie_name){
+              item.username_cookie_name = '';
+            }
+            if(!!!item.sessionid_cookie_name) {
+              item.sessionid_cookie_name = '';
+            }
+            delete item.$$botProtectionLocationBlockState;
+          });
+        }
       }
       if (model.domain_name) {
         delete model.domain_name;
