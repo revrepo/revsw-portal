@@ -111,6 +111,7 @@ describe('Smoke', function () {
       });
       Portal.admin.apiKeys.listPage.searchAndClickDelete(apiKey.name).then(function () {
         Portal.dialog.clickOk();
+        browser.sleep(5000);
         Portal.apiKeysHelpers.validateAPIKey(keycode, function (res) {
           expect(res).toBe(401);
           done();
