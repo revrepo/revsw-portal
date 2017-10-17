@@ -392,7 +392,18 @@ var EditDomain = {
       .getWAFTab()
       .click();
   },
+  /**
+   *
+   * Tab "Bot Protection"
+   *
+   */
 
+  // Click to tab "Bot Protection"
+  clickTabBotProtection: function(numberLink) {
+    return this.form
+      .getBotProtectionTab()
+      .click();
+  },
   /**
    *
    * Tab "Custom VCL Rules"
