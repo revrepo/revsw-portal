@@ -80,6 +80,11 @@ describe('Smoke', function () {
           expect(EditPage.tabIsActive('waf')).toEqual(true);
         });
 
+        it('click tab "Bot Protection"', function() {
+          EditPage.clickTabBotProtection();
+          expect(EditPage.tabIsActive('botProtection')).toEqual(true);
+        });
+
         it('click tab "Custom VCL Rules"', function () {
           EditPage.clickTabVCL();
           expect(EditPage.tabIsActive('customVCLRules')).toEqual(true);
