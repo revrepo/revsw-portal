@@ -109,13 +109,11 @@ describe('Smoke', function () {
       Portal.admin.apiKeys.listPage.table.getFirstRow().getAPICode().then(function (code) {
         keycode = code;
       });
-      Portal.admin.apiKeys.listPage.searchAndClickDelete(apiKey.name).then(function () {
-        Portal.dialog.clickOk();
-        browser.sleep(60000);
-        Portal.apiKeysHelpers.validateAPIKey(keycode, function (res) {
-          expect(res).toBe(401);
-          done();
-        });
+      Portal.admin.apiKeys.listPage.searchAndClickDelete(apiKey.name);
+      Portal.dialog.clickOk();
+      Portal.apiKeysHelpers.validateAPIKey(keycode, function (res) {
+        expect(res).toBe(401);
+        done();
       });
     });
   });
