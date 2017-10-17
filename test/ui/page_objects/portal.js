@@ -134,12 +134,13 @@ var ResourcesPerSubscriptionPage = require('./azure/ResourcesPerSubscription/lis
 var ResourcesPage = require('./azure/Resources/listPage');
 var Intro = require('./intro');
 var ApiKeysHelpers = require('./../common/helpers/apiKeys.js');
+var DomainsHelpers = require('./../common/helpers/domains.js');
 // This `Portal` Page Object is the entry point to use all other Page Objects
 // that abstract all components from the Portal App.
 var Portal = {
 
   apiKeysHelpers: ApiKeysHelpers,
-
+  domainsHelpers: DomainsHelpers,
   constants: Constants,
 
   session: Session,

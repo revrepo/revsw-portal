@@ -22,11 +22,12 @@
 var DomainForm = require('./form');
 var WebElement = require('./../../common/helpers/webElement');
 var BROWSER_WAIT_TIMEOUT = 420000; // 7 mins
+var WafRulesTable = require('./wafRulesTable/table')
 
 // This `Edit Domain` Page Object abstracts all operations or actions that a
 // common domain could do in the Edit Domain page from the Portal app/site.
 var EditDomain = {
-
+  wafRulesTable: WafRulesTable,
   // ## Properties
 
   // Locators specific to HTML elements from this page object
@@ -58,11 +59,14 @@ var EditDomain = {
       },
       cancel: {
         linkText: 'Cancel'
+      },
+      expandWafRules: {
+        css: '.btn[ng-click="$ctrl.onExpandAllWAFLocations()"]'
       }
     },
     links: {
       editDomain: {
-        css:  '#anchor'
+        css: '#anchor'
       }
     },
     tabs: {
@@ -237,10 +241,10 @@ var EditDomain = {
    * 'ON' or 'off'
    *
    */
-  switchBtns: function(getCbElement, onOff) {
+  switchBtns: function (getCbElement, onOff) {
     getCbElement
       .getAttribute(this.form.locators.switches.mainAttrs.ariaChecked)
-      .then(function(data) {
+      .then(function (data) {
         if (onOff && data !== 'true') {
           getCbElement.click();
         }
@@ -375,7 +379,7 @@ var EditDomain = {
  */
 
   // Click to tab "ACL"
-  clickTabACL: function(numberLink) {
+  clickTabACL: function (numberLink) {
     return this.form
       .getACLTab()
       .click();
@@ -399,7 +403,7 @@ var EditDomain = {
    */
 
   // Click to tab "Bot Protection"
-  clickTabBotProtection: function(numberLink) {
+  clickTabBotProtection: function (numberLink) {
     return this.form
       .getBotProtectionTab()
       .click();
@@ -487,19 +491,19 @@ var EditDomain = {
       .click();
   },
 
-  clickAddNewCachingRule: function() {
+  clickAddNewCachingRule: function () {
     return this.form
       .getOnAddNewCachingRule()
       .click();
   },
 
-  clickAddNewBackendBlock: function() {
+  clickAddNewBackendBlock: function () {
     var el = this.form.getOnAddNewBackendBlock();
     WebElement.scrollToElement(el);
     return el.click();
   },
 
-  clickOpenUrlOfCachingRule: function() {
+  clickOpenUrlOfCachingRule: function () {
     return this.form
       .getOpenUrlOfCachingRule()
       .click();
@@ -552,7 +556,7 @@ var EditDomain = {
       .isPresent();
   },
 
-  elementIsDisplayed: function(elem, value) {
+  elementIsDisplayed: function (elem, value) {
     var element = this.form[elem](value);
     return element.isPresent();
   },
@@ -598,6 +602,14 @@ var EditDomain = {
         element(by.css(this.locators.icons.published.css))
       ), BROWSER_WAIT_TIMEOUT
     );
+  },
+
+  getExpandWafRulesBtn: function () {
+    return element(by.css(this.locators.buttons.expandWafRules.css));
+  },
+
+  clickExpandWafRulesBtn: function () {
+    return this.getExpandWafRulesBtn().click();
   }
 };
 

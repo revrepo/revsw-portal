@@ -180,6 +180,9 @@ var DomainForm = {
       }
     },
     switches: {
+      wafProtection: {
+        id: 'enable_waf_rules'
+      },
       mainAttrs: {
         ariaChecked: 'aria-checked'
       },
@@ -549,7 +552,7 @@ var DomainForm = {
    *
    * @returns {Selenium WebDriver Element}
    */
-  getBotProtectionTab: function() {
+  getBotProtectionTab: function () {
     return element(by.css(this.locators.tabs.botProtection.css));
   },
   /**
@@ -956,7 +959,7 @@ var DomainForm = {
   getACLRulesEnableSw: function () {
     return element(by.id(this.locators.switches.aclRulesEnableSw.id));
   },
-  getBotProtectionEnableSw: function() {
+  getBotProtectionEnableSw: function () {
     return element(by.id(this.locators.switches.botProtectionEnableSw.id));
   },
   getCustomVCLrulesSw: function () {
@@ -1548,6 +1551,14 @@ var DomainForm = {
     if (domain.originLocation !== undefined) {
       this.setDomainOriginLocation(domain.originLocation);
     }
+  },
+
+  getWAFSwitch: function () {
+    return element(by.id(this.locators.switches.wafProtection.id));
+  },
+
+  clickWAFSwitch: function () {
+    return this.getWAFSwitch().click();
   }
 };
 
