@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -15,8 +16,8 @@
   <link rel="stylesheet" href="bower_components/ui-select/dist/select.min.css">
   <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
   <link rel="stylesheet" href="bower_components/angular-datatables/dist/plugins/bootstrap/datatables.bootstrap.min.css">
-  <link rel="stylesheet" href="bower_components/angular-bootstrap-datetimepicker/src/css/datetimepicker.css" >
-  <link rel="stylesheet" href="bower_components/bootstrap-daterangepicker/daterangepicker.css"/>
+  <link rel="stylesheet" href="bower_components/angular-bootstrap-datetimepicker/src/css/datetimepicker.css">
+  <link rel="stylesheet" href="bower_components/bootstrap-daterangepicker/daterangepicker.css" />
   <link rel="stylesheet" href="bower_components/angular-dashboard-framework/dist/angular-dashboard-framework.min.css">
   <link rel="stylesheet" href="bower_components/angular-bootstrap-toggle-switch/style/bootstrap3/angular-toggle-switch-bootstrap-3.css">
   <link rel="stylesheet" href="bower_components/angular/angular-csp.css">
@@ -39,15 +40,16 @@
   <![endif]-->
 
 </head>
+
 <body data-ng-app="revapm.Portal" class="hide-vertical-scroll">
-<div ng-hide="!!vendor" class="loader"></div>
-<link ng-if="vendor" rel="stylesheet" ng-href="css/{{vendor}}.css">
+  <div ng-hide="!!vendor" class="loader"></div>
+  <link ng-if="vendor" rel="stylesheet" ng-href="css/{{vendor}}.css">
 
-<toaster-container toaster-options="{'animation-class': 'toast-top-center'}"></toaster-container>
-<div ui-view="layout" class="layout {{vendor}}"></div>
+  <toaster-container toaster-options="{'animation-class': 'toast-top-center'}"></toaster-container>
+  <div ui-view="layout" class="layout {{vendor}}"></div>
 
 
-<!--<script>
+  <!--<script>
   paceOptions = {
     ajax: {
       trackMethods: ['GET', 'POST'],
@@ -61,512 +63,513 @@
     }
   };
 </script>-->
-<div zendesk-include></div>
+  <div zendesk-include></div>
 
-<!-- build:js scripts/vendor.js -->
+  <!-- build:js scripts/vendor.js -->
 
-<!--<script type="text/javascript" src="bower_components/PACE/pace.js"></script>-->
+  <!--<script type="text/javascript" src="bower_components/PACE/pace.js"></script>-->
 
-<script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
-<script type="text/javascript" src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="bower_components/lodash/lodash.min.js"></script>
-<script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="bower_components/jsoneditor/dist/jsoneditor.min.js"></script>
-<script type="text/javascript" src="bower_components/Chart.js/Chart.js"></script>
-<script type="text/javascript" src="bower_components/moment/min/moment.min.js"></script>
-
-
-<script type="text/javascript" src="bower_components/highcharts/highstock.src.js"></script>
-<!-- <script type="text/javascript" src="bower_components/highcharts/highcharts.js"></script> -->
-<script type="text/javascript" src="bower_components/highcharts/modules/map.js"></script>
-<script type="text/javascript" src="bower_components/highcharts/modules/drilldown.js"></script>
-<script type="text/javascript" src="bower_components/highcharts/highcharts-3d.js"></script>
-<script type="text/javascript" src="bower_components/highcharts/highcharts-more.js"></script>
-<script type="text/javascript" src="bower_components/highcharts/modules/exporting.js"></script>
-<script type="text/javascript" src="bower_components/highcharts-export-csv/export-csv.js"></script>
-
-<script type="text/javascript" src="bower_components/d3/d3.min.js"></script>
-<script type="text/javascript" src="bower_components/topojson/topojson.js"></script>
-<script type="text/javascript" src="bower_components/intro.js/minified/intro.min.js"></script>
-
-<script type="text/javascript" src="bower_components/angular/angular.js"></script>
-<script type="text/javascript" src="bower_components/angular-resource/angular-resource.min.js"></script>
-<script type="text/javascript" src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
-<script type="text/javascript" src="bower_components/angular-messages/angular-messages.min.js"></script>
-<script type="text/javascript" src="bower_components/angular-animate/angular-animate.min.js"></script>
-<script type="text/javascript" src="bower_components/angular-touch/angular-touch.min.js"></script>
-<script type="text/javascript" src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
-
-<script type="text/javascript" src="bower_components/angular-intro.js/build/angular-intro.min.js"></script>
-<script type="text/javascript" src="bower_components/ng-youtube-embed/build/ng-youtube-embed.min.js"></script>
-<script type="text/javascript" src="bower_components/Sortable/Sortable.min.js"></script>
-<script type="text/javascript" src="bower_components/Sortable/ng-sortable.js"></script>
-<!-- <script type="text/javascript" src='bower_components/angular-dashboard-framework/dist/angular-dashboard-framework.min.js'></script> -->
-<script type="text/javascript" src="bower_components/angular-dashboard-framework/dist/angular-dashboard-framework.js"></script>
-
-<script type="text/javascript" src="bower_components/ngstorage/ngStorage.min.js"></script>
-<script type="text/javascript" src="bower_components/angular-base64/angular-base64.min.js"></script>
-<script type="text/javascript" src="bower_components/ng-jsoneditor/ng-jsoneditor.min.js"></script>
-<script type="text/javascript" src="bower_components/angular-bootstrap/ui-bootstrap.js"></script>
-<script type="text/javascript" src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-<script type="text/javascript" src="bower_components/angular-chart.js/dist/angular-chart.min.js"></script>
-<script type="text/javascript" src="bower_components/ui-select/dist/select.min.js"></script>
-<script type="text/javascript" src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
-<script type="text/javascript" src="bower_components/angular-file-saver/dist/angular-file-saver.bundle.min.js"></script>
-
-<script type="text/javascript" src="bower_components/highlightjs/highlight.pack.js"></script>
-
-<script type="text/javascript" src="bower_components/highcharts/modules/solid-gauge.src.js"></script>
-<script type="text/javascript" src="bower_components/highcharts/modules/no-data-to-display.src.js"></script>
-<script type="text/javascript" src="bower_components/angular-highlightjs/src/angular-highlightjs.js"></script>
-
-<script type="text/javascript" src="bower_components/angular-bootstrap-datetimepicker/src/js/datetimepicker.js"></script>
-<script type="text/javascript" src="bower_components/angular-bootstrap-datetimepicker/src/js/datetimepicker.templates.js"></script>
-<script type="text/javascript" src="bower_components/angular-moment/angular-moment.min.js"></script>
-<script type="text/javascript" src="bower_components/angular-datatables/dist/angular-datatables.min.js"></script>
-<script type="text/javascript" src="bower_components/angular-datatables/dist/plugins/bootstrap/angular-datatables.bootstrap.min.js"></script>
-<script type="text/javascript" src="bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
-<script type="text/javascript" src="bower_components/angular-daterangepicker/js/angular-daterangepicker.js"></script>
-<script type="text/javascript" src="bower_components/angular-bootstrap-toggle-switch/angular-toggle-switch.js"></script>
-<script type="text/javascript" src="bower_components/angular-clipboard/angular-clipboard.js"></script>
-<script type="text/javascript" src="bower_components/AngularJS-Toaster/toaster.min.js"></script>
-<script type="text/javascript" src="bower_components/jquery.nicescroll/jquery.nicescroll.min.js"></script>
-<script type="text/javascript" src="bower_components/angular-nicescroll/angular-nicescroll.js"></script>
-<script type="text/javascript" src="bower_components/Sortable/ng-sortable.js"></script>
-
-<script type="text/javascript" src="bower_components/angular-loading-bar/build/loading-bar.min.js"></script>
-<script type="text/javascript" src="bower_components/angular-loading-bar/build/loading-bar.min.js"></script>
-
-<script type="text/javascript" src="bower_components/sweetalert/dist/sweetalert.min.js"></script>
-
-<script type="text/javascript" src="bower_components/angular-object-diff/dist/angular-object-diff.js"></script>
-<script type="text/javascript" src="bower_components/satellizer/dist/satellizer.js"></script>
-<script type="text/javascript" src="js/heatmaps/highmap.us.js"></script>
-<script type="text/javascript" src="js/heatmaps/highmap.world.js"></script>
-<script type="text/javascript" src="js/datatables.net/date-moment-ext.js"></script>
-
-<!-- <script type="text/javascript" src="widgets/adf-widget-analytics-proxy-traffic/dist/adf-widget-analytics-proxy-traffic.js"></script> -->
-<!-- endbuild -->
-
-<script src="config.js"></script>
-<!-- Google Analytics -->
-<script google-analytics-include></script>
-
-<!-- End Google Analytics -->
-<!-- build:js scripts/compiled.js -->
-<script type="text/javascript" src="js/portal/config/config.module.js"></script>
-<script type="text/javascript" src="js/portal/config/config.constants.js"></script>
-<script type="text/javascript" src="js/portal/config/config.values.js"></script>
-<script type="text/javascript" src="js/portal/config/activity/activityPhrase.constants.js"></script>
-
-<script type="text/javascript" src="js/portal/shared/shared.module.js"></script>
-<script type="text/javascript" src="js/portal/shared/interceptor/http.interceptor.js"></script>
-<script type="text/javascript" src="js/portal/shared/alert/alert.service.js"></script>
-<script type="text/javascript" src="js/portal/shared/modal/ConfirmModalInstance.controller.js"></script>
-<script type="text/javascript" src="js/portal/shared/crud/crud.controller.js"></script>
-<script type="text/javascript" src="js/portal/shared/crud/pagination.directive.js"></script>
-<script type="text/javascript" src="js/portal/shared/filter/filter.directive.js"></script>
-<script type="text/javascript" src="js/portal/shared/directives/zendesk-include.directive.js"></script>
-<script type="text/javascript" src="js/portal/shared/directives/google-analytics-include.directive.js"></script>
-<script type="text/javascript" src="js/portal/shared/util/util.factory.js"></script>
-<script type="text/javascript" src="js/portal/shared/directives/ui-sref-active-if.directive.js"></script>
-<script type="text/javascript" src="js/portal/shared/directives/menu-toggle.directive.js"></script>
-<script type="text/javascript" src="js/portal/shared/directives/ng-animate-disabled.directive.js"></script>
-<script type="text/javascript" src="js/portal/shared/directives/string-to-number.directive.js"></script>
-<script type="text/javascript" src="js/portal/shared/directives/time-note-display.directive.js"></script>
-<script type="text/javascript" src="js/portal/shared/directives/typeahead.directive.js"></script>
-<script type="text/javascript" src="js/portal/shared/directives/focus-me.directive.js"></script>
-<script type="text/javascript" src="js/portal/shared/filter-activity-log/filterActivityLog.directive.js"></script>
-<script type="text/javascript" src="js/portal/shared/filter-activity-log/filterActivityLogDaterangepicker.directive.js"></script>
-<script type="text/javascript" src="js/portal/shared/filter-activity-log/activityTargetSelect.directive.js"></script>
-<script type="text/javascript" src="js/portal/shared/filter-activity-log/activityWhoPerformedSelect.directive.js"></script>
-<!--<script type="text/javascript" src="js/portal/shared/directives/confirm-on-exit.directive.js"></script>-->
-<script type="text/javascript" src="js/portal/shared/filter-generator/filter-generator.constants.js"></script>
-<script type="text/javascript" src="js/portal/shared/filter-generator/filter-generator.directive.js"></script>
-<script type="text/javascript" src="js/portal/shared/filter-generator/filter-generator.service.js"></script>
-<script type="text/javascript" src="js/portal/shared/search/search.directive.js"></script>
-<script type="text/javascript" src="js/portal/shared/validators/validate-acl-rule-header-name.directive.js"></script>
-<script type="text/javascript" src="js/portal/shared/validators/validate-bot-protection-location-name.directive.js"></script>
-<script type="text/javascript" src="js/portal/shared/validators/validate-cache-bypass-locations.directive.js"></script>
-<script type="text/javascript" src="js/portal/shared/validators/validate-caching-rule-header-name.directive.js"></script>
-<script type="text/javascript" src="js/portal/shared/validators/validate-caching-rule-header-value.directive.js"></script>
-<script type="text/javascript" src="js/portal/shared/validators/validate-caching-rule-url.directive.js"></script>
-<script type="text/javascript" src="js/portal/shared/validators/validate-cidr-format.directive.js"></script>
-<script type="text/javascript" src="js/portal/shared/validators/validate-compare-to.directive.js"></script>
-<script type="text/javascript" src="js/portal/shared/validators/validate-cookies-options.directive.js"></script>
-<script type="text/javascript" src="js/portal/shared/validators/validate-domains-list.directive.js"></script>
-<script type="text/javascript" src="js/portal/shared/validators/validate-pattern-no-special-chars.directive.js"></script>
-<script type="text/javascript" src="js/portal/shared/validators/validate-pattern-comment-no-special-chars.directive.js"></script>
-<script type="text/javascript" src="js/portal/shared/validators/validate-query-strings-options.directive.js"></script>
-<script type="text/javascript" src="js/portal/shared/validators/validate-uniqueness-in-array-notification-lists.directive.js"></script>
-<script type="text/javascript" src="js/portal/shared/validators/validate-uniqueness-in-array.directive.js"></script>
-<script type="text/javascript" src="js/portal/shared/validators/validate-waf-location-name.directive.js"></script>
-<script type="text/javascript" src="js/portal/shared/validators/validate-wildcard-domain-field.directive.js"></script>
-<script type="text/javascript" src="js/portal/shared/validators/validate-domain-name-or-url.directive.js"></script>
-<script type="text/javascript" src="js/portal/shared/validators/validate-domain-name-regular-or-wildcard.directive.js"></script>
-<script type="text/javascript" src="js/portal/shared/validators/validate-domain-name-regular-or-wildcard-domains.directive.js"></script>
-<script type="text/javascript" src="js/portal/shared/validators/validate-domain-name.directive.js"></script>
-<script type="text/javascript" src="js/portal/shared/validators/validate-origin-server-name-optional.directive.js"></script>
-<script type="text/javascript" src="js/portal/shared/validators/validate-origin-server-name.directive.js"></script>
-<script type="text/javascript" src="js/portal/shared/validators/validate-dns-record-domain-name-regular-or-wildcard-domains.directive.js"></script>
-<script type="text/javascript" src="js/portal/resources/resources.module.js"></script>
-<script type="text/javascript" src="js/portal/resources/resources.config.js"></script>
-<script type="text/javascript" src="js/portal/resources/resource.factory.js"></script>
-<script type="text/javascript" src="js/portal/resources/model/companies.factory.js"></script>
-<script type="text/javascript" src="js/portal/resources/model/domainsConfig.factory.js"></script>
-<script type="text/javascript" src="js/portal/resources/model/users.factory.js"></script>
-<script type="text/javascript" src="js/portal/resources/model/cache.factory.js"></script>
-<script type="text/javascript" src="js/portal/resources/model/stats.factory.js"></script>
-<script type="text/javascript" src="js/portal/resources/model/statsImageEngine.factory.js"></script>
-<script type="text/javascript" src="js/portal/resources/model/statsWAF.factory.js"></script>
-<script type="text/javascript" src="js/portal/resources/model/countries.factory.js"></script>
-<script type="text/javascript" src="js/portal/resources/model/dns_zone_records.factory.js"></script>
-<script type="text/javascript" src="js/portal/resources/model/dns_zones.factory.js"></script>
-<script type="text/javascript" src="js/portal/resources/model/activity.factory.js"></script>
-<script type="text/javascript" src="js/portal/resources/model/2fa.factory.js"></script>
-<script type="text/javascript" src="js/portal/resources/model/keys.factory.js"></script>
-<script type="text/javascript" src="js/portal/resources/model/locations.factory.js"></script>
-<script type="text/javascript" src="js/portal/resources/model/log_shipping_jobs.factory.js"></script>
-<script type="text/javascript" src="js/portal/resources/model/notificationLists.factory.js"></script>
-<script type="text/javascript" src="js/portal/resources/model/ssl_certs.factory.js"></script>
-<script type="text/javascript" src="js/portal/resources/model/ssl_conf_profiles.factory.js"></script>
-<script type="text/javascript" src="js/portal/resources/model/sslNames.factory.js"></script>
-<script type="text/javascript" src="js/portal/resources/model/stagingServers.factory.js"></script>
-<script type="text/javascript" src="js/portal/resources/model/apps.factory.js"></script>
-<script type="text/javascript" src="js/portal/resources/model/azureResources.factory.js"></script>
-<script type="text/javascript" src="js/portal/resources/model/azureSubscriptions.factory.js"></script>
-<script type="text/javascript" src="js/portal/resources/model/vendors.factory.js"></script>
-<script type="text/javascript" src="js/portal/resources/model/waf_rules.factory.js"></script>
-
-<script type="text/javascript" src="js/portal/auth/auth.module.js"></script>
-<script type="text/javascript" src="js/portal/auth/auth.config.js"></script>
-<script type="text/javascript" src="js/portal/auth/auth.routes.js"></script>
-<script type="text/javascript" src="js/portal/auth/auth.run.js"></script>
-
-<script type="text/javascript" src="js/portal/auth/services/user.service.js"></script>
-<script type="text/javascript" src="js/portal/auth/menu/selectAccountDomain.directive.js"></script>
-<script type="text/javascript" src="js/portal/auth/2fa/disableTwoFactorAuth.directive.js"></script>
-<script type="text/javascript" src="js/portal/auth/azure-sso/azureSSO.controller.js"></script>
-<script type="text/javascript" src="js/portal/auth/login/passwordRestore.controller.js"></script>
-<script type="text/javascript" src="js/portal/auth/login/resendRegistrationEmail.controller.js"></script>
-<script type="text/javascript" src="js/portal/auth/login/forgotpass.controller.js"></script>
-<script type="text/javascript" src="js/portal/auth/login/twoFactorAuthCodeModal.controller.js"></script>
-<script type="text/javascript" src="js/portal/auth/login/login.controller.js"></script>
-
-<script type="text/javascript" src="js/portal/auth/block/blockUserLoginLogout.directive.js"></script>
-
-<script type="text/javascript" src="js/portal/signup/signup.module.js"></script>
-<script type="text/javascript" src="js/portal/signup/controller/signupBillingPlans.controller.js"></script>
-<script type="text/javascript" src="js/portal/signup/controller/signup.controller.js"></script>
-<script type="text/javascript" src="js/portal/signup/controller/verify.controller.js"></script>
-<script type="text/javascript" src="js/portal/signup/signup.routes.js"></script>
-
-<script type="text/javascript" src="js/portal/resources/model/billingPlans.factory.js"></script>
-
-<script type="text/javascript" src="js/portal/profile/profile.module.js"></script>
-<script type="text/javascript" src="js/portal/profile/profile.routes.js"></script>
-<script type="text/javascript" src="js/portal/profile/directives/subscription-summary.js"></script>
-<script type="text/javascript" src="js/portal/profile/controller/profileEdit.controller.js"></script>
-<script type="text/javascript" src="js/portal/profile/controller/activityLog.controller.js"></script>
-<script type="text/javascript" src="js/portal/profile/controller/2fa.controller.js"></script>
-<script type="text/javascript" src="js/portal/profile/controller/companyProfileEdit.controller.js"></script>
-<script type="text/javascript" src="js/portal/profile/controller/billing.controller.js"></script>
-<script type="text/javascript" src="js/portal/profile/controller/statements.controller.js"></script>
-<script type="text/javascript" src="js/portal/profile/controller/goodBye.controller.js"></script>
-
-<script type="text/javascript" src="js/portal/users/users.module.js"></script>
-<script type="text/javascript" src="js/portal/users/users.routes.js"></script>
-
-<script type="text/javascript" src="js/portal/users/controller/users.controller.js"></script>
-
-<script type="text/javascript" src="js/portal/apps/apps.module.js"></script>
-<script type="text/javascript" src="js/portal/apps/apps.routes.js"></script>
-<script type="text/javascript" src="js/portal/apps/controller/apps.controller.js"></script>
-<script type="text/javascript" src="js/portal/apps/controller/appVersions.controller.js"></script>
-<script type="text/javascript" src="js/portal/apps/controller/appEdit.controller.js"></script>
-<script type="text/javascript" src="js/portal/apps/app-staging-status/appStagingStatus.directive.js"></script>
-<script type="text/javascript" src="js/portal/apps/app-select/appSelect.directive.js"></script>
-
-<script type="text/javascript" src="js/portal/domains/domains.module.js"></script>
-<script type="text/javascript" src="js/portal/domains/domains.routes.js"></script>
-<script type="text/javascript" src="js/portal/domains/domains.constants.js"></script>
-<script type="text/javascript" src="js/portal/domains/domain-select/domainSelect.directive.js"></script>
-<script type="text/javascript" src="js/portal/domains/domain-the-third-party-links/domainTheThirdPartyLinks.directive.js"></script>
-<script type="text/javascript" src="js/portal/domains/domain-waf-locations/domainWafLocations.directive.js"></script>
-<script type="text/javascript" src="js/portal/domains/domain-waf-rules/domainWafRules.directive.js"></script>
-<script type="text/javascript" src="js/portal/domains/domain-waf-actions-list/domainWafActionsList.directive.js"></script>
-
-<script type="text/javascript" src="js/portal/domains/domain-staging-status/domainStagingStatus.directive.js"></script>
-<script type="text/javascript" src="js/portal/domains/domain-acl-rules/domainACLRulesList.directive.js"></script>
-<script type="text/javascript" src="js/portal/domains/domain-acl-rules/domainACLRulesItem.directive.js"></script>
-<script type="text/javascript" src="js/portal/domains/domain-bot-protection-list/domainBotProtectionList.directive.js"></script>
-<script type="text/javascript" src="js/portal/domains/domain-caching-rule/domainCachingRule.directive.js"></script>
-<script type="text/javascript" src="js/portal/domains/domain-check-integration/domainCheckIntegration.directive.js"></script>
-<script type="text/javascript" src="js/portal/domains/domain-check-integration/domainCheckIntegrationPanel.directive.js"></script>
+  <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+  <script type="text/javascript" src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+  <script type="text/javascript" src="bower_components/lodash/lodash.min.js"></script>
+  <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="bower_components/jsoneditor/dist/jsoneditor.min.js"></script>
+  <script type="text/javascript" src="bower_components/Chart.js/Chart.js"></script>
+  <script type="text/javascript" src="bower_components/moment/min/moment.min.js"></script>
 
 
+  <script type="text/javascript" src="bower_components/highcharts/highstock.src.js"></script>
+  <!-- <script type="text/javascript" src="bower_components/highcharts/highcharts.js"></script> -->
+  <script type="text/javascript" src="bower_components/highcharts/modules/map.js"></script>
+  <script type="text/javascript" src="bower_components/highcharts/modules/drilldown.js"></script>
+  <script type="text/javascript" src="bower_components/highcharts/highcharts-3d.js"></script>
+  <script type="text/javascript" src="bower_components/highcharts/highcharts-more.js"></script>
+  <script type="text/javascript" src="bower_components/highcharts/modules/exporting.js"></script>
+  <script type="text/javascript" src="bower_components/highcharts-export-csv/export-csv.js"></script>
 
-<script type="text/javascript" src="js/portal/domains/domain-custom-vcl/domainCustomVcl.directive.js"></script>
-<script type="text/javascript" src="js/portal/domains/domain-custom-vcl-backends/domainCustomVclBackends.directive.js"></script>
-<script type="text/javascript" src="js/portal/domains/domain-lua-scripting/domainLuaCodeBlock.directive.js"></script>
-<script type="text/javascript" src="js/portal/domains/domain-lua-scripting/domainLuaScripting.directive.js"></script>
+  <script type="text/javascript" src="bower_components/d3/d3.min.js"></script>
+  <script type="text/javascript" src="bower_components/topojson/topojson.js"></script>
+  <script type="text/javascript" src="bower_components/intro.js/minified/intro.min.js"></script>
 
-<script type="text/javascript" src="js/portal/domains/origin-request-headers/originRequestHeaders.directive.js"></script>
-<script type="text/javascript" src="js/portal/domains/end-user-response-headers/endUserResponseHeaders.directive.js"></script>
-<script type="text/javascript" src="js/portal/domains/controller/domainCheckIntegrationPage.controller.js"></script>
-<script type="text/javascript" src="js/portal/domains/controller/domainsCrud.controller.js"></script>
-<!-- TODO: delete - depricated <script type="text/javascript" src="js/portal/domains/controller/domainConfigureAdvanced.controller.js"></script> -->
-<script type="text/javascript" src="js/portal/domains/controller/domainVersions.controller.js"></script>
+  <script type="text/javascript" src="bower_components/angular/angular.js"></script>
+  <script type="text/javascript" src="bower_components/angular-resource/angular-resource.min.js"></script>
+  <script type="text/javascript" src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+  <script type="text/javascript" src="bower_components/angular-messages/angular-messages.min.js"></script>
+  <script type="text/javascript" src="bower_components/angular-animate/angular-animate.min.js"></script>
+  <script type="text/javascript" src="bower_components/angular-touch/angular-touch.min.js"></script>
+  <script type="text/javascript" src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
 
-<script type="text/javascript" src="js/portal/ssl_certs/ssl_certs.module.js"></script>
-<script type="text/javascript" src="js/portal/ssl_certs/ssl_certs.routes.js"></script>
-<script type="text/javascript" src="js/portal/ssl_certs/controller/ssl_certsCrud.controller.js"></script>
-<script type="text/javascript" src="js/portal/ssl_certs/cert-staging-status/certStagingStatus.directive.js"></script>
+  <script type="text/javascript" src="bower_components/angular-intro.js/build/angular-intro.min.js"></script>
+  <script type="text/javascript" src="bower_components/ng-youtube-embed/build/ng-youtube-embed.min.js"></script>
+  <script type="text/javascript" src="bower_components/Sortable/Sortable.min.js"></script>
+  <script type="text/javascript" src="bower_components/Sortable/ng-sortable.js"></script>
+  <!-- <script type="text/javascript" src='bower_components/angular-dashboard-framework/dist/angular-dashboard-framework.min.js'></script> -->
+  <script type="text/javascript" src="bower_components/angular-dashboard-framework/dist/angular-dashboard-framework.js"></script>
 
-<script type="text/javascript" src="js/portal/ssl_names/ssl_names.module.js"></script>
-<script type="text/javascript" src="js/portal/ssl_names/ssl_names.routes.js"></script>
-<script type="text/javascript" src="js/portal/ssl_names/controller/sslNamesCrud.controller.js"></script>
+  <script type="text/javascript" src="bower_components/ngstorage/ngStorage.min.js"></script>
+  <script type="text/javascript" src="bower_components/angular-base64/angular-base64.min.js"></script>
+  <script type="text/javascript" src="bower_components/ng-jsoneditor/ng-jsoneditor.min.js"></script>
+  <script type="text/javascript" src="bower_components/angular-bootstrap/ui-bootstrap.js"></script>
+  <script type="text/javascript" src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+  <script type="text/javascript" src="bower_components/angular-chart.js/dist/angular-chart.min.js"></script>
+  <script type="text/javascript" src="bower_components/ui-select/dist/select.min.js"></script>
+  <script type="text/javascript" src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+  <script type="text/javascript" src="bower_components/angular-file-saver/dist/angular-file-saver.bundle.min.js"></script>
 
-<script type="text/javascript" src="js/portal/staging-environment/stagingEnvironment.module.js"></script>
-<script type="text/javascript" src="js/portal/staging-environment/stagingEnvironment.routes.js"></script>
-<script type="text/javascript" src="js/portal/staging-environment/controllers/stagingEnvironment.controller.js"></script>
+  <script type="text/javascript" src="bower_components/highlightjs/highlight.pack.js"></script>
 
-<script type="text/javascript" src="js/portal/companies/companies.module.js"></script>
-<script type="text/javascript" src="js/portal/companies/companies.routes.js"></script>
-<script type="text/javascript" src="js/portal/companies/controller/companies.controller.js"></script>
-<script type="text/javascript" src="js/portal/companies/controller/accountResources.controller.js"></script>
-<script type="text/javascript" src="js/portal/companies/controller/changeAccountVendorModalController.js"></script>
+  <script type="text/javascript" src="bower_components/highcharts/modules/solid-gauge.src.js"></script>
+  <script type="text/javascript" src="bower_components/highcharts/modules/no-data-to-display.src.js"></script>
+  <script type="text/javascript" src="bower_components/angular-highlightjs/src/angular-highlightjs.js"></script>
 
-<script type="text/javascript" src="js/portal/cache/cache.module.js"></script>
-<script type="text/javascript" src="js/portal/cache/cache.routes.js"></script>
-<script type="text/javascript" src="js/portal/cache/controller/cachePurge.controller.js"></script>
-<script type="text/javascript" src="js/portal/cache/cache-environment-drop-down-menu/cache-environment-drop-down-menu.compoment.js"></script>
+  <script type="text/javascript" src="bower_components/angular-bootstrap-datetimepicker/src/js/datetimepicker.js"></script>
+  <script type="text/javascript" src="bower_components/angular-bootstrap-datetimepicker/src/js/datetimepicker.templates.js"></script>
+  <script type="text/javascript" src="bower_components/angular-moment/angular-moment.min.js"></script>
+  <script type="text/javascript" src="bower_components/angular-datatables/dist/angular-datatables.min.js"></script>
+  <script type="text/javascript" src="bower_components/angular-datatables/dist/plugins/bootstrap/angular-datatables.bootstrap.min.js"></script>
+  <script type="text/javascript" src="bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+  <script type="text/javascript" src="bower_components/angular-daterangepicker/js/angular-daterangepicker.js"></script>
+  <script type="text/javascript" src="bower_components/angular-bootstrap-toggle-switch/angular-toggle-switch.js"></script>
+  <script type="text/javascript" src="bower_components/angular-clipboard/angular-clipboard.js"></script>
+  <script type="text/javascript" src="bower_components/AngularJS-Toaster/toaster.min.js"></script>
+  <script type="text/javascript" src="bower_components/jquery.nicescroll/jquery.nicescroll.min.js"></script>
+  <script type="text/javascript" src="bower_components/angular-nicescroll/angular-nicescroll.js"></script>
+  <script type="text/javascript" src="bower_components/Sortable/ng-sortable.js"></script>
 
-<script type="text/javascript" src="js/portal/import-config/importConfig.module.js"></script>
-<script type="text/javascript" src="js/portal/import-config/importConfig.routes.js"></script>
-<script type="text/javascript" src="js/portal/import-config/controller/importConfig.controller.js"></script>
+  <script type="text/javascript" src="bower_components/angular-loading-bar/build/loading-bar.min.js"></script>
+  <script type="text/javascript" src="bower_components/angular-loading-bar/build/loading-bar.min.js"></script>
 
-<script type="text/javascript" src="js/portal/reports/reports.module.js"></script>
-<script type="text/javascript" src="js/portal/reports/reports.routes.js"></script>
-<script type="text/javascript" src="js/portal/reports/service/d3ChartHelper.factory.js"></script>
-<script type="text/javascript" src="js/portal/reports/service/chartColorService.factory.js"></script>
-<script type="text/javascript" src="js/portal/reports/service/pieChartHelper.factory.js"></script>
-<script type="text/javascript" src="js/portal/reports/service/eventsSerieDataService.factory.js"></script>
-<script type="text/javascript" src="js/portal/reports/service/reports-filter.service.js"></script>
-<script type="text/javascript" src="js/portal/reports/filter/filterHoursPeriods.directive.js"></script>
-<script type="text/javascript" src="js/portal/reports/filter/timePeriods.directive.js"></script>
-<script type="text/javascript" src="js/portal/reports/filter/filterTopObjects.directive.js"></script>
-<script type="text/javascript" src="js/portal/reports/filter/mobileTrafficFilters.directive.js"></script>
-<script type="text/javascript" src="js/portal/reports/filter/mobileTopObjectsFilters.directive.js"></script>
-<script type="text/javascript" src="js/portal/reports/pie-chart/pieChart.directive.js"></script>
-<script type="text/javascript" src="js/portal/reports/solidgauge-chart/solidgaugeChart.directive.js"></script>
-<script type="text/javascript" src="js/portal/reports/bar-chart/barChart.directive.js"></script>
-<script type="text/javascript" src="js/portal/reports/line-chart/lineChart.directive.js"></script>
-<script type="text/javascript" src="js/portal/reports/chart/d3PieChart.directive.js"></script>
-<script type="text/javascript" src="js/portal/reports/chart/requestsChart.directive.js"></script>
-<script type="text/javascript" src="js/portal/reports/chart/hitsCacheChart.directive.js"></script>
-<script type="text/javascript" src="js/portal/reports/chart/httpStatusCodeChart.directive.js"></script>
-<script type="text/javascript" src="js/portal/reports/chart/httpHttpsChart.directive.js"></script>
-<script type="text/javascript" src="js/portal/reports/chart/requestStatusChart.directive.js"></script>
-<script type="text/javascript" src="js/portal/reports/chart/proxyTrafficChart.directive.js"></script>
-<script type="text/javascript" src="js/portal/reports/chart/fbtAverageChart.directive.js"></script>
-<script type="text/javascript" src="js/portal/reports/chart/fbtDistributionChart.directive.js"></script>
-<script type="text/javascript" src="js/portal/reports/chart/fbtHeatmapChart.directive.js"></script>
-<script type="text/javascript" src="js/portal/reports/chart/lmRTTChart.directive.js"></script>
+  <script type="text/javascript" src="bower_components/sweetalert/dist/sweetalert.min.js"></script>
 
-<script type="text/javascript" src="js/portal/reports/top/topRequests.directive.js"></script>
-<script type="text/javascript" src="js/portal/reports/top/topCacheMiss.directive.js"></script>
-<script type="text/javascript" src="js/portal/reports/top/topCacheHit.directive.js"></script>
-<script type="text/javascript" src="js/portal/reports/top/top404.directive.js"></script>
-<script type="text/javascript" src="js/portal/reports/top/topReferer.directive.js"></script>
-<script type="text/javascript" src="js/portal/reports/top/top5xx.directive.js"></script>
-<script type="text/javascript" src="js/portal/reports/top/topFailed.directive.js"></script>
-<script type="text/javascript" src="js/portal/reports/top/slowestFBT.directive.js"></script>
-<script type="text/javascript" src="js/portal/reports/top/slowestDownload.directive.js"></script>
-<script type="text/javascript" src="js/portal/reports/heatmaps/heatmaps.factory.js"></script>
-<script type="text/javascript" src="js/portal/reports/heatmaps/heatmapsWorldDrill.factory.js"></script>
-<script type="text/javascript" src="js/portal/reports/imageengine-analytics/imageEngineAnalytics.controller.js"></script>
-<script type="text/javascript" src="js/portal/reports/imageengine-analytics/directives/imageengineLinechartBytesSaved.directive.js"></script>
-<script type="text/javascript" src="js/portal/reports/imageengine-analytics/directives/imageengineSolidgaugePerformanceImprovement.directive.js"></script>
-<script type="text/javascript" src="js/portal/reports/controller/reportsProxyTraffic.controller.js"></script>
-<script type="text/javascript" src="js/portal/reports/controller/topReportsTraffic.controller.js"></script>
-<script type="text/javascript" src="js/portal/reports/controller/topObjects.controller.js"></script>
-<script type="text/javascript" src="js/portal/reports/controller/fbtReports.controller.js"></script>
-<script type="text/javascript" src="js/portal/reports/controller/trafficHeatmaps.controller.js"></script>
-<script type="text/javascript" src="js/portal/reports/controller/lmRTTHeatmaps.controller.js"></script>
-<script type="text/javascript" src="js/portal/reports/controller/general.controller.js"></script>
-<script type="text/javascript" src="js/portal/reports/controller/edgeCache.controller.js"></script>
+  <script type="text/javascript" src="bower_components/angular-object-diff/dist/angular-object-diff.js"></script>
+  <script type="text/javascript" src="bower_components/satellizer/dist/satellizer.js"></script>
+  <script type="text/javascript" src="js/heatmaps/highmap.us.js"></script>
+  <script type="text/javascript" src="js/heatmaps/highmap.world.js"></script>
+  <script type="text/javascript" src="js/datatables.net/date-moment-ext.js"></script>
 
-<script type="text/javascript" src="js/portal/reports/mobile.module.js"></script>
-<script type="text/javascript" src="js/portal/reports/mobile.routes.js"></script>
-<script type="text/javascript" src="js/portal/reports/controller/mobileTraffic.controller.js"></script>
-<script type="text/javascript" src="js/portal/reports/chart/mobileRPSChart.directive.js"></script>
-<script type="text/javascript" src="js/portal/reports/chart/mobileBWChart.directive.js"></script>
-<script type="text/javascript" src="js/portal/reports/chart/mobileHTTPCodesChart.directive.js"></script>
+  <!-- <script type="text/javascript" src="widgets/adf-widget-analytics-proxy-traffic/dist/adf-widget-analytics-proxy-traffic.js"></script> -->
+  <!-- endbuild -->
 
-<script type="text/javascript" src="js/portal/reports/mobile-top-objects/mobileTopObjects.directive.js"></script>
-<script type="text/javascript" src="js/portal/reports/mobile-top-objects/mobileTopObjectsTime.directive.js"></script>
-<script type="text/javascript" src="js/portal/reports/mobile-top-objects/mobileTopObjects5xx.directive.js"></script>
+  <script src="config.js"></script>
+  <!-- Google Analytics -->
+  <script google-analytics-include></script>
 
-<script type="text/javascript" src="js/portal/reports/controller/mobileTops.controller.js"></script>
-<script type="text/javascript" src="js/portal/reports/controller/mobileDistributions.controller.js"></script>
-<script type="text/javascript" src="js/portal/reports/controller/mobileTopObjects.controller.js"></script>
+  <!-- End Google Analytics -->
+  <!-- build:js scripts/compiled.js -->
+  <script type="text/javascript" src="js/portal/config/config.module.js"></script>
+  <script type="text/javascript" src="js/portal/config/config.constants.js"></script>
+  <script type="text/javascript" src="js/portal/config/config.values.js"></script>
+  <script type="text/javascript" src="js/portal/config/activity/activityPhrase.constants.js"></script>
 
-<script type="text/javascript" src="js/portal/reports/controller/mobileAb.controller.js"></script>
-<script type="text/javascript" src="js/portal/reports/chart/mobileABFBTChart.directive.js"></script>
-<script type="text/javascript" src="js/portal/reports/chart/mobileABFBTDistributionChart.directive.js"></script>
-<script type="text/javascript" src="js/portal/reports/chart/mobileABErrorsChart.directive.js"></script>
-<script type="text/javascript" src="js/portal/reports/chart/mobileABSpeedChart.directive.js"></script>
+  <script type="text/javascript" src="js/portal/shared/shared.module.js"></script>
+  <script type="text/javascript" src="js/portal/shared/interceptor/http.interceptor.js"></script>
+  <script type="text/javascript" src="js/portal/shared/alert/alert.service.js"></script>
+  <script type="text/javascript" src="js/portal/shared/modal/ConfirmModalInstance.controller.js"></script>
+  <script type="text/javascript" src="js/portal/shared/crud/crud.controller.js"></script>
+  <script type="text/javascript" src="js/portal/shared/crud/pagination.directive.js"></script>
+  <script type="text/javascript" src="js/portal/shared/filter/filter.directive.js"></script>
+  <script type="text/javascript" src="js/portal/shared/directives/zendesk-include.directive.js"></script>
+  <script type="text/javascript" src="js/portal/shared/directives/google-analytics-include.directive.js"></script>
+  <script type="text/javascript" src="js/portal/shared/util/util.factory.js"></script>
+  <script type="text/javascript" src="js/portal/shared/directives/ui-sref-active-if.directive.js"></script>
+  <script type="text/javascript" src="js/portal/shared/directives/menu-toggle.directive.js"></script>
+  <script type="text/javascript" src="js/portal/shared/directives/ng-animate-disabled.directive.js"></script>
+  <script type="text/javascript" src="js/portal/shared/directives/string-to-number.directive.js"></script>
+  <script type="text/javascript" src="js/portal/shared/directives/time-note-display.directive.js"></script>
+  <script type="text/javascript" src="js/portal/shared/directives/typeahead.directive.js"></script>
+  <script type="text/javascript" src="js/portal/shared/directives/focus-me.directive.js"></script>
+  <script type="text/javascript" src="js/portal/shared/filter-activity-log/filterActivityLog.directive.js"></script>
+  <script type="text/javascript" src="js/portal/shared/filter-activity-log/filterActivityLogDaterangepicker.directive.js"></script>
+  <script type="text/javascript" src="js/portal/shared/filter-activity-log/activityTargetSelect.directive.js"></script>
+  <script type="text/javascript" src="js/portal/shared/filter-activity-log/activityWhoPerformedSelect.directive.js"></script>
+  <!--<script type="text/javascript" src="js/portal/shared/directives/confirm-on-exit.directive.js"></script>-->
+  <script type="text/javascript" src="js/portal/shared/filter-generator/filter-generator.constants.js"></script>
+  <script type="text/javascript" src="js/portal/shared/filter-generator/filter-generator.directive.js"></script>
+  <script type="text/javascript" src="js/portal/shared/filter-generator/filter-generator.service.js"></script>
+  <script type="text/javascript" src="js/portal/shared/search/search.directive.js"></script>
+  <script type="text/javascript" src="js/portal/shared/validators/validate-acl-rule-header-name.directive.js"></script>
+  <script type="text/javascript" src="js/portal/shared/validators/validate-bot-protection-location-name.directive.js"></script>
+  <script type="text/javascript" src="js/portal/shared/validators/validate-cache-bypass-locations.directive.js"></script>
+  <script type="text/javascript" src="js/portal/shared/validators/validate-caching-rule-header-name.directive.js"></script>
+  <script type="text/javascript" src="js/portal/shared/validators/validate-caching-rule-header-value.directive.js"></script>
+  <script type="text/javascript" src="js/portal/shared/validators/validate-caching-rule-url.directive.js"></script>
+  <script type="text/javascript" src="js/portal/shared/validators/validate-cidr-format.directive.js"></script>
+  <script type="text/javascript" src="js/portal/shared/validators/validate-compare-to.directive.js"></script>
+  <script type="text/javascript" src="js/portal/shared/validators/validate-cookies-options.directive.js"></script>
+  <script type="text/javascript" src="js/portal/shared/validators/validate-domains-list.directive.js"></script>
+  <script type="text/javascript" src="js/portal/shared/validators/validate-pattern-no-special-chars.directive.js"></script>
+  <script type="text/javascript" src="js/portal/shared/validators/validate-pattern-comment-no-special-chars.directive.js"></script>
+  <script type="text/javascript" src="js/portal/shared/validators/validate-query-strings-options.directive.js"></script>
+  <script type="text/javascript" src="js/portal/shared/validators/validate-uniqueness-in-array-notification-lists.directive.js"></script>
+  <script type="text/javascript" src="js/portal/shared/validators/validate-uniqueness-in-array.directive.js"></script>
+  <script type="text/javascript" src="js/portal/shared/validators/validate-waf-location-name.directive.js"></script>
+  <script type="text/javascript" src="js/portal/shared/validators/validate-wildcard-domain-field.directive.js"></script>
+  <script type="text/javascript" src="js/portal/shared/validators/validate-domain-name-or-url.directive.js"></script>
+  <script type="text/javascript" src="js/portal/shared/validators/validate-domain-name-regular-or-wildcard.directive.js"></script>
+  <script type="text/javascript" src="js/portal/shared/validators/validate-domain-name-regular-or-wildcard-domains.directive.js"></script>
+  <script type="text/javascript" src="js/portal/shared/validators/validate-domain-name.directive.js"></script>
+  <script type="text/javascript" src="js/portal/shared/validators/validate-origin-server-name-optional.directive.js"></script>
+  <script type="text/javascript" src="js/portal/shared/validators/validate-origin-server-name.directive.js"></script>
+  <script type="text/javascript" src="js/portal/shared/validators/validate-dns-record-domain-name-regular-or-wildcard-domains.directive.js"></script>
+  <script type="text/javascript" src="js/portal/resources/resources.module.js"></script>
+  <script type="text/javascript" src="js/portal/resources/resources.config.js"></script>
+  <script type="text/javascript" src="js/portal/resources/resource.factory.js"></script>
+  <script type="text/javascript" src="js/portal/resources/model/companies.factory.js"></script>
+  <script type="text/javascript" src="js/portal/resources/model/domainsConfig.factory.js"></script>
+  <script type="text/javascript" src="js/portal/resources/model/users.factory.js"></script>
+  <script type="text/javascript" src="js/portal/resources/model/cache.factory.js"></script>
+  <script type="text/javascript" src="js/portal/resources/model/stats.factory.js"></script>
+  <script type="text/javascript" src="js/portal/resources/model/statsImageEngine.factory.js"></script>
+  <script type="text/javascript" src="js/portal/resources/model/statsWAF.factory.js"></script>
+  <script type="text/javascript" src="js/portal/resources/model/countries.factory.js"></script>
+  <script type="text/javascript" src="js/portal/resources/model/dns_zone_records.factory.js"></script>
+  <script type="text/javascript" src="js/portal/resources/model/dns_zones.factory.js"></script>
+  <script type="text/javascript" src="js/portal/resources/model/activity.factory.js"></script>
+  <script type="text/javascript" src="js/portal/resources/model/2fa.factory.js"></script>
+  <script type="text/javascript" src="js/portal/resources/model/keys.factory.js"></script>
+  <script type="text/javascript" src="js/portal/resources/model/locations.factory.js"></script>
+  <script type="text/javascript" src="js/portal/resources/model/log_shipping_jobs.factory.js"></script>
+  <script type="text/javascript" src="js/portal/resources/model/notificationLists.factory.js"></script>
+  <script type="text/javascript" src="js/portal/resources/model/ssl_certs.factory.js"></script>
+  <script type="text/javascript" src="js/portal/resources/model/ssl_conf_profiles.factory.js"></script>
+  <script type="text/javascript" src="js/portal/resources/model/sslNames.factory.js"></script>
+  <script type="text/javascript" src="js/portal/resources/model/stagingServers.factory.js"></script>
+  <script type="text/javascript" src="js/portal/resources/model/apps.factory.js"></script>
+  <script type="text/javascript" src="js/portal/resources/model/azureResources.factory.js"></script>
+  <script type="text/javascript" src="js/portal/resources/model/azureSubscriptions.factory.js"></script>
+  <script type="text/javascript" src="js/portal/resources/model/vendors.factory.js"></script>
+  <script type="text/javascript" src="js/portal/resources/model/waf_rules.factory.js"></script>
 
-<script type="text/javascript" src="js/portal/reports/usage.module.js"></script>
-<script type="text/javascript" src="js/portal/reports/usage.routes.js"></script>
-<script type="text/javascript" src="js/portal/reports/controller/usageWeb.controller.js"></script>
+  <script type="text/javascript" src="js/portal/auth/auth.module.js"></script>
+  <script type="text/javascript" src="js/portal/auth/auth.config.js"></script>
+  <script type="text/javascript" src="js/portal/auth/auth.routes.js"></script>
+  <script type="text/javascript" src="js/portal/auth/auth.run.js"></script>
 
-<script type="text/javascript" src="js/portal/keys/keys.module.js"></script>
-<script type="text/javascript" src="js/portal/keys/keys.routes.js"></script>
-<script type="text/javascript" src="js/portal/keys/controller/keysList.controller.js"></script>
-<script type="text/javascript" src="js/portal/keys/controller/keysCreate.controller.js"></script>
-<script type="text/javascript" src="js/portal/keys/controller/keysEdit.controller.js"></script>
+  <script type="text/javascript" src="js/portal/auth/services/user.service.js"></script>
+  <script type="text/javascript" src="js/portal/auth/menu/selectAccountDomain.directive.js"></script>
+  <script type="text/javascript" src="js/portal/auth/2fa/disableTwoFactorAuth.directive.js"></script>
+  <script type="text/javascript" src="js/portal/auth/azure-sso/azureSSO.controller.js"></script>
+  <script type="text/javascript" src="js/portal/auth/login/passwordRestore.controller.js"></script>
+  <script type="text/javascript" src="js/portal/auth/login/resendRegistrationEmail.controller.js"></script>
+  <script type="text/javascript" src="js/portal/auth/login/forgotpass.controller.js"></script>
+  <script type="text/javascript" src="js/portal/auth/login/twoFactorAuthCodeModal.controller.js"></script>
+  <script type="text/javascript" src="js/portal/auth/login/login.controller.js"></script>
 
-<script type="text/javascript" src="js/portal/dashboard/dashboard.module.js"></script>
-<script type="text/javascript" src="js/portal/dashboard/dashboard.config.js"></script>
-<script type="text/javascript" src="js/portal/dashboard/dashboard.routes.js"></script>
-<script type="text/javascript" src="js/portal/dashboard/filters/dashboard.filters.js"></script>
-<script type="text/javascript" src="js/portal/dashboard/services/dashboard.service.js"></script>
-<script type="text/javascript" src="js/portal/dashboard/controller/dashdoard.controller.js"></script>
-<script type="text/javascript" src="js/portal/dashboard/components/dashboard-nav-menu.component.js"></script>
-<script type="text/javascript" src="js/portal/dashboard/components/dashboard-btn-new.component.js"></script>
-<script type="text/javascript" src="js/portal/dashboard/components/dashboard-btn-delete.conmponent.js"></script>
-<!-- Apps Analytic -->
-<script type="text/javascript" src="js/portal/dashboard/widgets/apps-analytics/widgetsAppsAnalytics.module.js"></script>
-<script type="text/javascript" src="js/portal/dashboard/widgets/apps-analytics/widgetsAppsAnalyticsEditConfig.controller.js"></script>
-<script type="text/javascript" src="js/portal/dashboard/widgets/apps-analytics/mobile-bw-chart/widgetMobileBWChart.config.js"></script>
-<script type="text/javascript" src="js/portal/dashboard/widgets/apps-analytics/mobile-http-codes-chart/widgetMobileHTTPCodesChart.config.js"></script>
-<script type="text/javascript" src="js/portal/dashboard/widgets/apps-analytics/mobile-rps-chart/widgetMobileRPSChart.config.js"></script>
-<script type="text/javascript" src="js/portal/dashboard/widgets/apps-analytics/mobile-tops/widgetMobileTops.config.js"></script>
-<script type="text/javascript" src="js/portal/dashboard/widgets/apps-analytics/mobile-tops/widgetsAppsSDKDestributionsReports.controller.js"></script>
-<script type="text/javascript" src="js/portal/dashboard/widgets/apps-analytics/mobile-tops/widgetsAppsSDKTopsReports.controller.js"></script>
-<script type="text/javascript" src="js/portal/dashboard/widgets/apps-analytics/mobile-tops/widgetsMobileTopsEditConfig.controller.js"></script>
-<!-- //Apps Analytic -->
-<!-- DNS Analytics-->
-<script type="text/javascript" src="js/portal/dashboard/widgets/dns-analytics/widgetsDNSAnalytics.module.js"></script>
-<script type="text/javascript" src="js/portal/dashboard/widgets/dns-analytics/widgetsDNSAnalyticsDefault.controller.js"></script>
-<script type="text/javascript" src="js/portal/dashboard/widgets/dns-analytics/widgetsDNSAnalyticsEditConfig.controller.js"></script>
-<script type="text/javascript" src="js/portal/dashboard/widgets/dns-analytics/dns-queries-line-chart/wingetDNSQueriesLineChart.config.js"></script>
-<!-- //DNS Analytics -->
-<!-- Security Analytics-->
-<script type="text/javascript" src="js/portal/dashboard/widgets/security-analytics/widgetSecurityAnalytics.module.js"></script>
-<script type="text/javascript" src="js/portal/dashboard/widgets/security-analytics/widgetsWAFAnalyticsEditConfig.controller.js"></script>
-<script type="text/javascript" src="js/portal/dashboard/widgets/security-analytics/waf-security-events-chart/widgetWAFSecurityEventsChart.config.js"></script>
-<script type="text/javascript" src="js/portal/dashboard/widgets/security-analytics/waf-security-events-chart/widgetWAFSecurityEventsChart.controller.js"></script>
-<!-- //Security Analytics-->
-<!-- Web Analytic -->
-<script type="text/javascript" src="js/portal/dashboard/widgets/web-analytics/widgetsWebAnalytics.module.js"></script>
-<script type="text/javascript" src="js/portal/dashboard/widgets/web-analytics/widgetsWebAnalyticsEditConfig.controller.js"></script>
-<script type="text/javascript" src="js/portal/dashboard/widgets/web-analytics/edge-cache-hit-miss-ratio/widgetEdgeCacheHitMissRatio.controller.js"></script>
-<script type="text/javascript" src="js/portal/dashboard/widgets/web-analytics/edge-cache-hit-miss-ratio/widgetEdgeCacheHitMissRatio.config.js"></script>
-<script type="text/javascript" src="js/portal/dashboard/widgets/web-analytics/ftb-average/widgetFTBAverage.controller.js"></script>
-<script type="text/javascript" src="js/portal/dashboard/widgets/web-analytics/ftb-average/widgetFTBAverage.config.js"></script>
-<script type="text/javascript" src="js/portal/dashboard/widgets/web-analytics/http-status-codes-graph/widgetHTTPStatusCodeLineGraph.controller.js"></script>
-<script type="text/javascript" src="js/portal/dashboard/widgets/web-analytics/http-status-codes-graph/widgetHTTPStatusCodeLineGraph.config.js"></script>
-<script type="text/javascript" src="js/portal/dashboard/widgets/web-analytics/http-https-request-ratio/widgetHTTPHTTPSRequestsRatio.config.js"></script>
-<script type="text/javascript" src="js/portal/dashboard/widgets/web-analytics/http-https-request-ratio/widgetHTTPHTTPSRequestsRatio.controller.js"></script>
-<script type="text/javascript" src="js/portal/dashboard/widgets/web-analytics/http-status-codes-ratio/widgetHTTPStatusCodesRatio.config.js"></script>
-<script type="text/javascript" src="js/portal/dashboard/widgets/web-analytics/http-status-codes-ratio/widgetHTTPStatusCodesRatio.controller.js"></script>
-<script type="text/javascript" src="js/portal/dashboard/widgets/web-analytics/imageengine-linechart-bytes-saved/widgetImageEngineLineChartByteSaved.config.js"></script>
-<script type="text/javascript" src="js/portal/dashboard/widgets/web-analytics/imageengine-linechart-bytes-saved/widgetImageEngineLineChartByteSaved.controller.js"></script>
-<script type="text/javascript" src="js/portal/dashboard/widgets/web-analytics/imageengine-solidgauge-performance-improvement/imageengineSolidgaugePerformanceImprovement.config.js"></script>
-<script type="text/javascript" src="js/portal/dashboard/widgets/web-analytics/imageengine-solidgauge-performance-improvement/imageengineSolidgaugePerformanceImprovement.controller.js"></script>
-<script type="text/javascript" src="widgets/adf-widget-analytics-proxy-traffic/dist/adf-widget-analytics-proxy-traffic.js"></script>
+  <script type="text/javascript" src="js/portal/auth/block/blockUserLoginLogout.directive.js"></script>
 
-<!-- //Web Analytic -->
-<!-- BlueTriangleTech -->
-<script type="text/javascript" src="js/portal/bluetriangletech/bluetriangletech.module.js"></script>
-<script type="text/javascript" src="js/portal/bluetriangletech/bluetriangletech.values.js"></script>
-<script type="text/javascript" src="js/portal/bluetriangletech/services/BTTPortal.service.js"></script><!-- //BlueTriangleTech-->
+  <script type="text/javascript" src="js/portal/signup/signup.module.js"></script>
+  <script type="text/javascript" src="js/portal/signup/controller/signupBillingPlans.controller.js"></script>
+  <script type="text/javascript" src="js/portal/signup/controller/signup.controller.js"></script>
+  <script type="text/javascript" src="js/portal/signup/controller/verify.controller.js"></script>
+  <script type="text/javascript" src="js/portal/signup/signup.routes.js"></script>
 
-<!-- LogShippers -->
-<script type="text/javascript" src="js/portal/logshippers/logshippers.module.js"></script>
-<script type="text/javascript" src="js/portal/logshippers/logshippers.routes.js"></script>
-<script type="text/javascript" src="js/portal/logshippers/controller/logshippers.controller.js"></script>
-<script type="text/javascript" src="js/portal/logshippers/logshippers-staging-status/logshippersStagingStatus.directive.js"></script>
-<!-- // LogShippers -->
-<!-- Network IP Blocks-->
-<script type="text/javascript" src="js/portal/network-ip-blocks/networkIPBlocks.module.js"></script>
-<script type="text/javascript" src="js/portal/network-ip-blocks/networkIPBlocks.routes.js"></script>
-<script type="text/javascript" src="js/portal/network-ip-blocks/controllers/cdnIPBlocks.controller.js"></script>
-<!-- // Network IP Blocks-->
-<!-- DNS Zone Records -->
-<script type="text/javascript" src="js/portal/dns_zone_records/dns_zone_records.module.js"></script>
-<script type="text/javascript" src="js/portal/dns_zone_records/dns_zone_records.routes.js"></script>
-<script type="text/javascript" src="js/portal/dns_zone_records/controller/dns_zone_recordsCrud.controller.js"></script>
-<script type="text/javascript" src="js/portal/dns_zone_records/controller/dnsZoneAutoDiscoverZoneRecordsModal.controller.js"></script>
-<script type="text/javascript" src="js/portal/dns_zone_records/checklist-dns-zone-records/checklistDnsZoneRecords.directive.js"></script>
-<script type="text/javascript" src="js/portal/dns_zone_records/dns-zone-record-answer/dnsZoneRecordAnswer.directive.js"></script>
+  <script type="text/javascript" src="js/portal/resources/model/billingPlans.factory.js"></script>
 
-<!-- //DNS Zone Records -->
-<!-- DNS Zones -->
-<script type="text/javascript" src="js/portal/dns_zones/dns_zones.module.js"></script>
-<script type="text/javascript" src="js/portal/dns_zones/dns_zones.routes.js"></script>
-<script type="text/javascript" src="js/portal/dns_zones/controller/dns_zoneCheckIntegrationPage.controller.js"></script>
-<script type="text/javascript" src="js/portal/dns_zones/controller/dns_zonesCrud.controller.js"></script>
-<script type="text/javascript" src="js/portal/dns_zones/dns-zone-check-integration/dnsZoneCheckIntegration.directive.js"></script>
-<script type="text/javascript" src="js/portal/dns_zones/dns-zone-check-integration/dnsZoneCheckIntegrationPanel.directive.js"></script>
-<script type="text/javascript" src="js/portal/dns_zones/dns-zone-select/dnsZoneSelect.directive.js"></script>
-<!-- //DNS Zones -->
-<!-- DNS Analytics-->
-<script type="text/javascript" src="js/portal/dns_analytics/dns_analytics.module.js"></script>
-<script type="text/javascript" src="js/portal/dns_analytics/dns_analytics.routes.js"></script>
-<script type="text/javascript" src="js/portal/dns_analytics/dns-queries-line-chart/dnsQueriesLineChart.directive.js"></script>
-<script type="text/javascript" src="js/portal/dns_analytics/controllers/DNSAnalytics.controller.js"></script>
-<!-- //DNS Analytics-->
-<!-- Azure Marcetplace-->
-<script type="text/javascript" src="js/portal/azure-resources/azureResources.module.js"></script>
-<script type="text/javascript" src="js/portal/azure-resources/azureResources.routes.js"></script>
-<script type="text/javascript" src="js/portal/azure-resources/controller/azureResourcesCrud.controller.js"></script>
+  <script type="text/javascript" src="js/portal/profile/profile.module.js"></script>
+  <script type="text/javascript" src="js/portal/profile/profile.routes.js"></script>
+  <script type="text/javascript" src="js/portal/profile/directives/subscription-summary.js"></script>
+  <script type="text/javascript" src="js/portal/profile/controller/profileEdit.controller.js"></script>
+  <script type="text/javascript" src="js/portal/profile/controller/activityLog.controller.js"></script>
+  <script type="text/javascript" src="js/portal/profile/controller/2fa.controller.js"></script>
+  <script type="text/javascript" src="js/portal/profile/controller/companyProfileEdit.controller.js"></script>
+  <script type="text/javascript" src="js/portal/profile/controller/billing.controller.js"></script>
+  <script type="text/javascript" src="js/portal/profile/controller/statements.controller.js"></script>
+  <script type="text/javascript" src="js/portal/profile/controller/goodBye.controller.js"></script>
+
+  <script type="text/javascript" src="js/portal/users/users.module.js"></script>
+  <script type="text/javascript" src="js/portal/users/users.routes.js"></script>
+
+  <script type="text/javascript" src="js/portal/users/controller/users.controller.js"></script>
+
+  <script type="text/javascript" src="js/portal/apps/apps.module.js"></script>
+  <script type="text/javascript" src="js/portal/apps/apps.routes.js"></script>
+  <script type="text/javascript" src="js/portal/apps/controller/apps.controller.js"></script>
+  <script type="text/javascript" src="js/portal/apps/controller/appVersions.controller.js"></script>
+  <script type="text/javascript" src="js/portal/apps/controller/appEdit.controller.js"></script>
+  <script type="text/javascript" src="js/portal/apps/app-staging-status/appStagingStatus.directive.js"></script>
+  <script type="text/javascript" src="js/portal/apps/app-select/appSelect.directive.js"></script>
+
+  <script type="text/javascript" src="js/portal/domains/domains.module.js"></script>
+  <script type="text/javascript" src="js/portal/domains/domains.routes.js"></script>
+  <script type="text/javascript" src="js/portal/domains/domains.constants.js"></script>
+  <script type="text/javascript" src="js/portal/domains/domain-select/domainSelect.directive.js"></script>
+  <script type="text/javascript" src="js/portal/domains/domain-the-third-party-links/domainTheThirdPartyLinks.directive.js"></script>
+  <script type="text/javascript" src="js/portal/domains/domain-waf-locations/domainWafLocations.directive.js"></script>
+  <script type="text/javascript" src="js/portal/domains/domain-waf-rules/domainWafRules.directive.js"></script>
+  <script type="text/javascript" src="js/portal/domains/domain-waf-actions-list/domainWafActionsList.directive.js"></script>
+
+  <script type="text/javascript" src="js/portal/domains/domain-staging-status/domainStagingStatus.directive.js"></script>
+  <script type="text/javascript" src="js/portal/domains/domain-acl-rules/domainACLRulesList.directive.js"></script>
+  <script type="text/javascript" src="js/portal/domains/domain-acl-rules/domainACLRulesItem.directive.js"></script>
+  <script type="text/javascript" src="js/portal/domains/domain-bot-protection-list/domainBotProtectionList.directive.js"></script>
+  <script type="text/javascript" src="js/portal/domains/domain-caching-rule/domainCachingRule.directive.js"></script>
+  <script type="text/javascript" src="js/portal/domains/domain-check-integration/domainCheckIntegration.directive.js"></script>
+  <script type="text/javascript" src="js/portal/domains/domain-check-integration/domainCheckIntegrationPanel.directive.js"></script>
 
 
-<script type="text/javascript" src="js/portal/azure-subscriptions/azureSubscriptions.module.js"></script>
-<script type="text/javascript" src="js/portal/azure-subscriptions/azureSubscriptions.routes.js"></script>
-<script type="text/javascript" src="js/portal/azure-subscriptions/controller/azureSubscriptions.controller.js"></script>
-<script type="text/javascript" src="js/portal/azure-subscriptions/controller/azureSubscriptionResources.controller.js"></script>
-<!-- //Azure Marcetplace-->
-<!-- WAF Rules -->
-<script type="text/javascript" src="js/portal/waf_rules/waf_rules.module.js"></script>
-<script type="text/javascript" src="js/portal/waf_rules/waf_rules.routes.js"></script>
-<script type="text/javascript" src="js/portal/waf_rules/controller/wafRulesAutoGenerateRulesModal.controller.js"></script>
-<script type="text/javascript" src="js/portal/waf_rules/controller/wafRulesCrud.controller.js"></script>
-<script type="text/javascript" src="js/portal/waf_rules/controller/wafRulesBuiltInList.controller.js"></script>
-<script type="text/javascript" src="js/portal/waf_rules/directives/wafRuleGenerationJobTimePeriod.directive.js"></script>
-<script type="text/javascript" src="js/portal/waf_rules/waf-rule-staging-status/wafRuleStagingStatus.directive.js"></script>
-<!-- //WAF Rules -->
-<!-- WAF Analytics -->
-<script type="text/javascript" src="js/portal/waf-analytics/wafAnalytics.module.js"></script>
-<script type="text/javascript" src="js/portal/waf-analytics/wafAnalytics.routes.js"></script>
-<script type="text/javascript" src="js/portal/waf-analytics/controller/wafAnalytics.controller.js"></script>
-<script type="text/javascript" src="js/portal/waf-analytics/controller/wafHeatMap.controller.js"></script>
-<script type="text/javascript" src="js/portal/waf-analytics/controller/wafEventsList.controller.js"></script>
-<script type="text/javascript" src="js/portal/waf-analytics/directives/wafSecurityEventsChart.directive.js"></script>
-<script type="text/javascript" src="js/portal/waf-analytics/directives/wafTopAttackedUrls.directive.js"></script>
-<script type="text/javascript" src="js/portal/waf-analytics/directives/wafTopAttackerIPs.directive.js"></script>
-<script type="text/javascript" src="js/portal/waf-analytics/directives/wafTopsPieCharts.directive.js"></script>
-<script type="text/javascript" src="js/portal/waf-analytics/filters/wafFilterSecurityEvents.directive.js"></script>
-<script type="text/javascript" src="js/portal/waf-analytics/filters/wafFilterTops.directive.js"></script>
-<script type="text/javascript" src="js/portal/waf-analytics/filters/wafFilterTopObjects.directive.js"></script>
-<!-- //WAF Analytics -->
-<!-- Notifications  -->
-<script type="text/javascript" src="js/portal/notifications/notifications.module.js"></script>
-<script type="text/javascript" src="js/portal/notifications/notifications.routes.js"></script>
-<script type="text/javascript" src="js/portal/notifications/controller/notificationLists.controller.js"></script>
-<script type="text/javascript" src="js/portal/notifications/account-notification-lists/accountNotificationLists.directive.js"></script>
-<script type="text/javascript" src="js/portal/notifications/notification-list/notificationList.directive.js"></script>
-<!-- // Notifications -->
-<script type="text/javascript" src="js/portal/app.module.js"></script>
-<script type="text/javascript" src="js/portal/app.config.js"></script>
-<script type="text/javascript" src="js/portal/app.routes.js"></script>
-<script type="text/javascript" src="js/portal/app.run.js"></script>
-<script type="text/javascript" src="js/portal/app.ga.js"></script>
-<script type="text/javascript" src="js/portal/app.intro.js"></script>
-<!-- endbuild -->
+
+  <script type="text/javascript" src="js/portal/domains/domain-custom-vcl/domainCustomVcl.directive.js"></script>
+  <script type="text/javascript" src="js/portal/domains/domain-custom-vcl-backends/domainCustomVclBackends.directive.js"></script>
+  <script type="text/javascript" src="js/portal/domains/domain-lua-scripting/domainLuaCodeBlock.directive.js"></script>
+  <script type="text/javascript" src="js/portal/domains/domain-lua-scripting/domainLuaScripting.directive.js"></script>
+
+  <script type="text/javascript" src="js/portal/domains/origin-request-headers/originRequestHeaders.directive.js"></script>
+  <script type="text/javascript" src="js/portal/domains/end-user-response-headers/endUserResponseHeaders.directive.js"></script>
+  <script type="text/javascript" src="js/portal/domains/controller/domainCheckIntegrationPage.controller.js"></script>
+  <script type="text/javascript" src="js/portal/domains/controller/domainsCrud.controller.js"></script>
+  <script type="text/javascript" src="js/portal/domains/controller/domainVersions.controller.js"></script>
+
+  <script type="text/javascript" src="js/portal/ssl_certs/ssl_certs.module.js"></script>
+  <script type="text/javascript" src="js/portal/ssl_certs/ssl_certs.routes.js"></script>
+  <script type="text/javascript" src="js/portal/ssl_certs/controller/ssl_certsCrud.controller.js"></script>
+  <script type="text/javascript" src="js/portal/ssl_certs/cert-staging-status/certStagingStatus.directive.js"></script>
+
+  <script type="text/javascript" src="js/portal/ssl_names/ssl_names.module.js"></script>
+  <script type="text/javascript" src="js/portal/ssl_names/ssl_names.routes.js"></script>
+  <script type="text/javascript" src="js/portal/ssl_names/controller/sslNamesCrud.controller.js"></script>
+
+  <script type="text/javascript" src="js/portal/staging-environment/stagingEnvironment.module.js"></script>
+  <script type="text/javascript" src="js/portal/staging-environment/stagingEnvironment.routes.js"></script>
+  <script type="text/javascript" src="js/portal/staging-environment/controllers/stagingEnvironment.controller.js"></script>
+
+  <script type="text/javascript" src="js/portal/companies/companies.module.js"></script>
+  <script type="text/javascript" src="js/portal/companies/companies.routes.js"></script>
+  <script type="text/javascript" src="js/portal/companies/controller/companies.controller.js"></script>
+  <script type="text/javascript" src="js/portal/companies/controller/accountResources.controller.js"></script>
+  <script type="text/javascript" src="js/portal/companies/controller/changeAccountVendorModalController.js"></script>
+
+  <script type="text/javascript" src="js/portal/cache/cache.module.js"></script>
+  <script type="text/javascript" src="js/portal/cache/cache.routes.js"></script>
+  <script type="text/javascript" src="js/portal/cache/controller/cachePurge.controller.js"></script>
+  <script type="text/javascript" src="js/portal/cache/cache-environment-drop-down-menu/cache-environment-drop-down-menu.compoment.js"></script>
+
+  <script type="text/javascript" src="js/portal/import-config/importConfig.module.js"></script>
+  <script type="text/javascript" src="js/portal/import-config/importConfig.routes.js"></script>
+  <script type="text/javascript" src="js/portal/import-config/controller/importConfig.controller.js"></script>
+
+  <script type="text/javascript" src="js/portal/reports/reports.module.js"></script>
+  <script type="text/javascript" src="js/portal/reports/reports.routes.js"></script>
+  <script type="text/javascript" src="js/portal/reports/service/d3ChartHelper.factory.js"></script>
+  <script type="text/javascript" src="js/portal/reports/service/chartColorService.factory.js"></script>
+  <script type="text/javascript" src="js/portal/reports/service/pieChartHelper.factory.js"></script>
+  <script type="text/javascript" src="js/portal/reports/service/eventsSerieDataService.factory.js"></script>
+  <script type="text/javascript" src="js/portal/reports/service/reports-filter.service.js"></script>
+  <script type="text/javascript" src="js/portal/reports/filter/filterHoursPeriods.directive.js"></script>
+  <script type="text/javascript" src="js/portal/reports/filter/timePeriods.directive.js"></script>
+  <script type="text/javascript" src="js/portal/reports/filter/filterTopObjects.directive.js"></script>
+  <script type="text/javascript" src="js/portal/reports/filter/mobileTrafficFilters.directive.js"></script>
+  <script type="text/javascript" src="js/portal/reports/filter/mobileTopObjectsFilters.directive.js"></script>
+  <script type="text/javascript" src="js/portal/reports/pie-chart/pieChart.directive.js"></script>
+  <script type="text/javascript" src="js/portal/reports/solidgauge-chart/solidgaugeChart.directive.js"></script>
+  <script type="text/javascript" src="js/portal/reports/bar-chart/barChart.directive.js"></script>
+  <script type="text/javascript" src="js/portal/reports/line-chart/lineChart.directive.js"></script>
+  <script type="text/javascript" src="js/portal/reports/chart/d3PieChart.directive.js"></script>
+  <script type="text/javascript" src="js/portal/reports/chart/requestsChart.directive.js"></script>
+  <script type="text/javascript" src="js/portal/reports/chart/hitsCacheChart.directive.js"></script>
+  <script type="text/javascript" src="js/portal/reports/chart/httpStatusCodeChart.directive.js"></script>
+  <script type="text/javascript" src="js/portal/reports/chart/httpHttpsChart.directive.js"></script>
+  <script type="text/javascript" src="js/portal/reports/chart/requestStatusChart.directive.js"></script>
+  <script type="text/javascript" src="js/portal/reports/chart/proxyTrafficChart.directive.js"></script>
+  <script type="text/javascript" src="js/portal/reports/chart/fbtAverageChart.directive.js"></script>
+  <script type="text/javascript" src="js/portal/reports/chart/fbtDistributionChart.directive.js"></script>
+  <script type="text/javascript" src="js/portal/reports/chart/fbtHeatmapChart.directive.js"></script>
+  <script type="text/javascript" src="js/portal/reports/chart/lmRTTChart.directive.js"></script>
+
+  <script type="text/javascript" src="js/portal/reports/top/topRequests.directive.js"></script>
+  <script type="text/javascript" src="js/portal/reports/top/topCacheMiss.directive.js"></script>
+  <script type="text/javascript" src="js/portal/reports/top/topCacheHit.directive.js"></script>
+  <script type="text/javascript" src="js/portal/reports/top/top404.directive.js"></script>
+  <script type="text/javascript" src="js/portal/reports/top/topReferer.directive.js"></script>
+  <script type="text/javascript" src="js/portal/reports/top/top5xx.directive.js"></script>
+  <script type="text/javascript" src="js/portal/reports/top/topFailed.directive.js"></script>
+  <script type="text/javascript" src="js/portal/reports/top/slowestFBT.directive.js"></script>
+  <script type="text/javascript" src="js/portal/reports/top/slowestDownload.directive.js"></script>
+  <script type="text/javascript" src="js/portal/reports/heatmaps/heatmaps.factory.js"></script>
+  <script type="text/javascript" src="js/portal/reports/heatmaps/heatmapsWorldDrill.factory.js"></script>
+  <script type="text/javascript" src="js/portal/reports/imageengine-analytics/imageEngineAnalytics.controller.js"></script>
+  <script type="text/javascript" src="js/portal/reports/imageengine-analytics/directives/imageengineLinechartBytesSaved.directive.js"></script>
+  <script type="text/javascript" src="js/portal/reports/imageengine-analytics/directives/imageengineSolidgaugePerformanceImprovement.directive.js"></script>
+  <script type="text/javascript" src="js/portal/reports/controller/reportsProxyTraffic.controller.js"></script>
+  <script type="text/javascript" src="js/portal/reports/controller/topReportsTraffic.controller.js"></script>
+  <script type="text/javascript" src="js/portal/reports/controller/topObjects.controller.js"></script>
+  <script type="text/javascript" src="js/portal/reports/controller/fbtReports.controller.js"></script>
+  <script type="text/javascript" src="js/portal/reports/controller/trafficHeatmaps.controller.js"></script>
+  <script type="text/javascript" src="js/portal/reports/controller/lmRTTHeatmaps.controller.js"></script>
+  <script type="text/javascript" src="js/portal/reports/controller/general.controller.js"></script>
+  <script type="text/javascript" src="js/portal/reports/controller/edgeCache.controller.js"></script>
+
+  <script type="text/javascript" src="js/portal/reports/mobile.module.js"></script>
+  <script type="text/javascript" src="js/portal/reports/mobile.routes.js"></script>
+  <script type="text/javascript" src="js/portal/reports/controller/mobileTraffic.controller.js"></script>
+  <script type="text/javascript" src="js/portal/reports/chart/mobileRPSChart.directive.js"></script>
+  <script type="text/javascript" src="js/portal/reports/chart/mobileBWChart.directive.js"></script>
+  <script type="text/javascript" src="js/portal/reports/chart/mobileHTTPCodesChart.directive.js"></script>
+
+  <script type="text/javascript" src="js/portal/reports/mobile-top-objects/mobileTopObjects.directive.js"></script>
+  <script type="text/javascript" src="js/portal/reports/mobile-top-objects/mobileTopObjectsTime.directive.js"></script>
+  <script type="text/javascript" src="js/portal/reports/mobile-top-objects/mobileTopObjects5xx.directive.js"></script>
+
+  <script type="text/javascript" src="js/portal/reports/controller/mobileTops.controller.js"></script>
+  <script type="text/javascript" src="js/portal/reports/controller/mobileDistributions.controller.js"></script>
+  <script type="text/javascript" src="js/portal/reports/controller/mobileTopObjects.controller.js"></script>
+
+  <script type="text/javascript" src="js/portal/reports/controller/mobileAb.controller.js"></script>
+  <script type="text/javascript" src="js/portal/reports/chart/mobileABFBTChart.directive.js"></script>
+  <script type="text/javascript" src="js/portal/reports/chart/mobileABFBTDistributionChart.directive.js"></script>
+  <script type="text/javascript" src="js/portal/reports/chart/mobileABErrorsChart.directive.js"></script>
+  <script type="text/javascript" src="js/portal/reports/chart/mobileABSpeedChart.directive.js"></script>
+
+  <script type="text/javascript" src="js/portal/reports/usage.module.js"></script>
+  <script type="text/javascript" src="js/portal/reports/usage.routes.js"></script>
+  <script type="text/javascript" src="js/portal/reports/controller/usageWeb.controller.js"></script>
+
+  <script type="text/javascript" src="js/portal/keys/keys.module.js"></script>
+  <script type="text/javascript" src="js/portal/keys/keys.routes.js"></script>
+  <script type="text/javascript" src="js/portal/keys/controller/keysList.controller.js"></script>
+  <script type="text/javascript" src="js/portal/keys/controller/keysCreate.controller.js"></script>
+  <script type="text/javascript" src="js/portal/keys/controller/keysEdit.controller.js"></script>
+
+  <script type="text/javascript" src="js/portal/dashboard/dashboard.module.js"></script>
+  <script type="text/javascript" src="js/portal/dashboard/dashboard.config.js"></script>
+  <script type="text/javascript" src="js/portal/dashboard/dashboard.routes.js"></script>
+  <script type="text/javascript" src="js/portal/dashboard/filters/dashboard.filters.js"></script>
+  <script type="text/javascript" src="js/portal/dashboard/services/dashboard.service.js"></script>
+  <script type="text/javascript" src="js/portal/dashboard/controller/dashdoard.controller.js"></script>
+  <script type="text/javascript" src="js/portal/dashboard/components/dashboard-nav-menu.component.js"></script>
+  <script type="text/javascript" src="js/portal/dashboard/components/dashboard-btn-new.component.js"></script>
+  <script type="text/javascript" src="js/portal/dashboard/components/dashboard-btn-delete.conmponent.js"></script>
+  <!-- Apps Analytic -->
+  <script type="text/javascript" src="js/portal/dashboard/widgets/apps-analytics/widgetsAppsAnalytics.module.js"></script>
+  <script type="text/javascript" src="js/portal/dashboard/widgets/apps-analytics/widgetsAppsAnalyticsEditConfig.controller.js"></script>
+  <script type="text/javascript" src="js/portal/dashboard/widgets/apps-analytics/mobile-bw-chart/widgetMobileBWChart.config.js"></script>
+  <script type="text/javascript" src="js/portal/dashboard/widgets/apps-analytics/mobile-http-codes-chart/widgetMobileHTTPCodesChart.config.js"></script>
+  <script type="text/javascript" src="js/portal/dashboard/widgets/apps-analytics/mobile-rps-chart/widgetMobileRPSChart.config.js"></script>
+  <script type="text/javascript" src="js/portal/dashboard/widgets/apps-analytics/mobile-tops/widgetMobileTops.config.js"></script>
+  <script type="text/javascript" src="js/portal/dashboard/widgets/apps-analytics/mobile-tops/widgetsAppsSDKDestributionsReports.controller.js"></script>
+  <script type="text/javascript" src="js/portal/dashboard/widgets/apps-analytics/mobile-tops/widgetsAppsSDKTopsReports.controller.js"></script>
+  <script type="text/javascript" src="js/portal/dashboard/widgets/apps-analytics/mobile-tops/widgetsMobileTopsEditConfig.controller.js"></script>
+  <!-- //Apps Analytic -->
+  <!-- DNS Analytics-->
+  <script type="text/javascript" src="js/portal/dashboard/widgets/dns-analytics/widgetsDNSAnalytics.module.js"></script>
+  <script type="text/javascript" src="js/portal/dashboard/widgets/dns-analytics/widgetsDNSAnalyticsDefault.controller.js"></script>
+  <script type="text/javascript" src="js/portal/dashboard/widgets/dns-analytics/widgetsDNSAnalyticsEditConfig.controller.js"></script>
+  <script type="text/javascript" src="js/portal/dashboard/widgets/dns-analytics/dns-queries-line-chart/wingetDNSQueriesLineChart.config.js"></script>
+  <!-- //DNS Analytics -->
+  <!-- Security Analytics-->
+  <script type="text/javascript" src="js/portal/dashboard/widgets/security-analytics/widgetSecurityAnalytics.module.js"></script>
+  <script type="text/javascript" src="js/portal/dashboard/widgets/security-analytics/widgetsWAFAnalyticsEditConfig.controller.js"></script>
+  <script type="text/javascript" src="js/portal/dashboard/widgets/security-analytics/waf-security-events-chart/widgetWAFSecurityEventsChart.config.js"></script>
+  <script type="text/javascript" src="js/portal/dashboard/widgets/security-analytics/waf-security-events-chart/widgetWAFSecurityEventsChart.controller.js"></script>
+  <!-- //Security Analytics-->
+  <!-- Web Analytic -->
+  <script type="text/javascript" src="js/portal/dashboard/widgets/web-analytics/widgetsWebAnalytics.module.js"></script>
+  <script type="text/javascript" src="js/portal/dashboard/widgets/web-analytics/widgetsWebAnalyticsEditConfig.controller.js"></script>
+  <script type="text/javascript" src="js/portal/dashboard/widgets/web-analytics/edge-cache-hit-miss-ratio/widgetEdgeCacheHitMissRatio.controller.js"></script>
+  <script type="text/javascript" src="js/portal/dashboard/widgets/web-analytics/edge-cache-hit-miss-ratio/widgetEdgeCacheHitMissRatio.config.js"></script>
+  <script type="text/javascript" src="js/portal/dashboard/widgets/web-analytics/ftb-average/widgetFTBAverage.controller.js"></script>
+  <script type="text/javascript" src="js/portal/dashboard/widgets/web-analytics/ftb-average/widgetFTBAverage.config.js"></script>
+  <script type="text/javascript" src="js/portal/dashboard/widgets/web-analytics/http-status-codes-graph/widgetHTTPStatusCodeLineGraph.controller.js"></script>
+  <script type="text/javascript" src="js/portal/dashboard/widgets/web-analytics/http-status-codes-graph/widgetHTTPStatusCodeLineGraph.config.js"></script>
+  <script type="text/javascript" src="js/portal/dashboard/widgets/web-analytics/http-https-request-ratio/widgetHTTPHTTPSRequestsRatio.config.js"></script>
+  <script type="text/javascript" src="js/portal/dashboard/widgets/web-analytics/http-https-request-ratio/widgetHTTPHTTPSRequestsRatio.controller.js"></script>
+  <script type="text/javascript" src="js/portal/dashboard/widgets/web-analytics/http-status-codes-ratio/widgetHTTPStatusCodesRatio.config.js"></script>
+  <script type="text/javascript" src="js/portal/dashboard/widgets/web-analytics/http-status-codes-ratio/widgetHTTPStatusCodesRatio.controller.js"></script>
+  <script type="text/javascript" src="js/portal/dashboard/widgets/web-analytics/imageengine-linechart-bytes-saved/widgetImageEngineLineChartByteSaved.config.js"></script>
+  <script type="text/javascript" src="js/portal/dashboard/widgets/web-analytics/imageengine-linechart-bytes-saved/widgetImageEngineLineChartByteSaved.controller.js"></script>
+  <script type="text/javascript" src="js/portal/dashboard/widgets/web-analytics/imageengine-solidgauge-performance-improvement/imageengineSolidgaugePerformanceImprovement.config.js"></script>
+  <script type="text/javascript" src="js/portal/dashboard/widgets/web-analytics/imageengine-solidgauge-performance-improvement/imageengineSolidgaugePerformanceImprovement.controller.js"></script>
+  <script type="text/javascript" src="widgets/adf-widget-analytics-proxy-traffic/dist/adf-widget-analytics-proxy-traffic.js"></script>
+
+  <!-- //Web Analytic -->
+  <!-- BlueTriangleTech -->
+  <script type="text/javascript" src="js/portal/bluetriangletech/bluetriangletech.module.js"></script>
+  <script type="text/javascript" src="js/portal/bluetriangletech/bluetriangletech.values.js"></script>
+  <script type="text/javascript" src="js/portal/bluetriangletech/services/BTTPortal.service.js"></script>
+  <!-- //BlueTriangleTech-->
+
+  <!-- LogShippers -->
+  <script type="text/javascript" src="js/portal/logshippers/logshippers.module.js"></script>
+  <script type="text/javascript" src="js/portal/logshippers/logshippers.routes.js"></script>
+  <script type="text/javascript" src="js/portal/logshippers/controller/logshippers.controller.js"></script>
+  <script type="text/javascript" src="js/portal/logshippers/logshippers-staging-status/logshippersStagingStatus.directive.js"></script>
+  <!-- // LogShippers -->
+  <!-- Network IP Blocks-->
+  <script type="text/javascript" src="js/portal/network-ip-blocks/networkIPBlocks.module.js"></script>
+  <script type="text/javascript" src="js/portal/network-ip-blocks/networkIPBlocks.routes.js"></script>
+  <script type="text/javascript" src="js/portal/network-ip-blocks/controllers/cdnIPBlocks.controller.js"></script>
+  <!-- // Network IP Blocks-->
+  <!-- DNS Zone Records -->
+  <script type="text/javascript" src="js/portal/dns_zone_records/dns_zone_records.module.js"></script>
+  <script type="text/javascript" src="js/portal/dns_zone_records/dns_zone_records.routes.js"></script>
+  <script type="text/javascript" src="js/portal/dns_zone_records/controller/dns_zone_recordsCrud.controller.js"></script>
+  <script type="text/javascript" src="js/portal/dns_zone_records/controller/dnsZoneAutoDiscoverZoneRecordsModal.controller.js"></script>
+  <script type="text/javascript" src="js/portal/dns_zone_records/checklist-dns-zone-records/checklistDnsZoneRecords.directive.js"></script>
+  <script type="text/javascript" src="js/portal/dns_zone_records/dns-zone-record-answer/dnsZoneRecordAnswer.directive.js"></script>
+
+  <!-- //DNS Zone Records -->
+  <!-- DNS Zones -->
+  <script type="text/javascript" src="js/portal/dns_zones/dns_zones.module.js"></script>
+  <script type="text/javascript" src="js/portal/dns_zones/dns_zones.routes.js"></script>
+  <script type="text/javascript" src="js/portal/dns_zones/controller/dns_zoneCheckIntegrationPage.controller.js"></script>
+  <script type="text/javascript" src="js/portal/dns_zones/controller/dns_zonesCrud.controller.js"></script>
+  <script type="text/javascript" src="js/portal/dns_zones/dns-zone-check-integration/dnsZoneCheckIntegration.directive.js"></script>
+  <script type="text/javascript" src="js/portal/dns_zones/dns-zone-check-integration/dnsZoneCheckIntegrationPanel.directive.js"></script>
+  <script type="text/javascript" src="js/portal/dns_zones/dns-zone-select/dnsZoneSelect.directive.js"></script>
+  <!-- //DNS Zones -->
+  <!-- DNS Analytics-->
+  <script type="text/javascript" src="js/portal/dns_analytics/dns_analytics.module.js"></script>
+  <script type="text/javascript" src="js/portal/dns_analytics/dns_analytics.routes.js"></script>
+  <script type="text/javascript" src="js/portal/dns_analytics/dns-queries-line-chart/dnsQueriesLineChart.directive.js"></script>
+  <script type="text/javascript" src="js/portal/dns_analytics/controllers/DNSAnalytics.controller.js"></script>
+  <!-- //DNS Analytics-->
+  <!-- Azure Marcetplace-->
+  <script type="text/javascript" src="js/portal/azure-resources/azureResources.module.js"></script>
+  <script type="text/javascript" src="js/portal/azure-resources/azureResources.routes.js"></script>
+  <script type="text/javascript" src="js/portal/azure-resources/controller/azureResourcesCrud.controller.js"></script>
+
+
+  <script type="text/javascript" src="js/portal/azure-subscriptions/azureSubscriptions.module.js"></script>
+  <script type="text/javascript" src="js/portal/azure-subscriptions/azureSubscriptions.routes.js"></script>
+  <script type="text/javascript" src="js/portal/azure-subscriptions/controller/azureSubscriptions.controller.js"></script>
+  <script type="text/javascript" src="js/portal/azure-subscriptions/controller/azureSubscriptionResources.controller.js"></script>
+  <!-- //Azure Marcetplace-->
+  <!-- WAF Rules -->
+  <script type="text/javascript" src="js/portal/waf_rules/waf_rules.module.js"></script>
+  <script type="text/javascript" src="js/portal/waf_rules/waf_rules.routes.js"></script>
+  <script type="text/javascript" src="js/portal/waf_rules/controller/wafRulesAutoGenerateRulesModal.controller.js"></script>
+  <script type="text/javascript" src="js/portal/waf_rules/controller/wafRulesCrud.controller.js"></script>
+  <script type="text/javascript" src="js/portal/waf_rules/controller/wafRulesBuiltInList.controller.js"></script>
+  <script type="text/javascript" src="js/portal/waf_rules/directives/wafRuleGenerationJobTimePeriod.directive.js"></script>
+  <script type="text/javascript" src="js/portal/waf_rules/waf-rule-staging-status/wafRuleStagingStatus.directive.js"></script>
+  <!-- //WAF Rules -->
+  <!-- WAF Analytics -->
+  <script type="text/javascript" src="js/portal/waf-analytics/wafAnalytics.module.js"></script>
+  <script type="text/javascript" src="js/portal/waf-analytics/wafAnalytics.routes.js"></script>
+  <script type="text/javascript" src="js/portal/waf-analytics/controller/wafAnalytics.controller.js"></script>
+  <script type="text/javascript" src="js/portal/waf-analytics/controller/wafHeatMap.controller.js"></script>
+  <script type="text/javascript" src="js/portal/waf-analytics/controller/wafEventsList.controller.js"></script>
+  <script type="text/javascript" src="js/portal/waf-analytics/directives/wafSecurityEventsChart.directive.js"></script>
+  <script type="text/javascript" src="js/portal/waf-analytics/directives/wafTopAttackedUrls.directive.js"></script>
+  <script type="text/javascript" src="js/portal/waf-analytics/directives/wafTopAttackerIPs.directive.js"></script>
+  <script type="text/javascript" src="js/portal/waf-analytics/directives/wafTopsPieCharts.directive.js"></script>
+  <script type="text/javascript" src="js/portal/waf-analytics/filters/wafFilterSecurityEvents.directive.js"></script>
+  <script type="text/javascript" src="js/portal/waf-analytics/filters/wafFilterTops.directive.js"></script>
+  <script type="text/javascript" src="js/portal/waf-analytics/filters/wafFilterTopObjects.directive.js"></script>
+  <!-- //WAF Analytics -->
+  <!-- Notifications  -->
+  <script type="text/javascript" src="js/portal/notifications/notifications.module.js"></script>
+  <script type="text/javascript" src="js/portal/notifications/notifications.routes.js"></script>
+  <script type="text/javascript" src="js/portal/notifications/controller/notificationLists.controller.js"></script>
+  <script type="text/javascript" src="js/portal/notifications/account-notification-lists/accountNotificationLists.directive.js"></script>
+  <script type="text/javascript" src="js/portal/notifications/notification-list/notificationList.directive.js"></script>
+  <!-- // Notifications -->
+  <script type="text/javascript" src="js/portal/app.module.js"></script>
+  <script type="text/javascript" src="js/portal/app.config.js"></script>
+  <script type="text/javascript" src="js/portal/app.routes.js"></script>
+  <script type="text/javascript" src="js/portal/app.run.js"></script>
+  <script type="text/javascript" src="js/portal/app.ga.js"></script>
+  <script type="text/javascript" src="js/portal/app.intro.js"></script>
+  <!-- endbuild -->
 </body>
+
 </html>

@@ -43,7 +43,7 @@ describe('Workflow', function () {
             Portal.helpers.nav.goToDomains();
         });
 
-        xit('should create a valid domain JSON object', function (done) {
+        it('should create a valid domain JSON object', function (done) {
             Portal.domainsHelpers.getDomainJSON(domainData.name, function (domain) {
                 var domainJSON = domain;
                 expect(domainJSON.domain_name).toBe(domainData.name);
@@ -51,7 +51,7 @@ describe('Workflow', function () {
             });
         });
 
-        xit('should update JSON when image optimization is enabled', function (done) {
+        it('should update JSON when image optimization is enabled', function (done) {
             Portal.domainsHelpers.getDomainJSON(domainData.name, function (domain) {
                 var domainJSON = domain;
                 Portal.domains.listPage.searchAndClickEdit(domainData.name);
@@ -74,7 +74,7 @@ describe('Workflow', function () {
             });
         });
 
-        xit('should update JSON when image optimization is disabled', function (done) {
+        it('should update JSON when image optimization is disabled', function (done) {
             Portal.domainsHelpers.getDomainJSON(domainData.name, function (domain) {
                 var domainJSON = domain;
                 Portal.domains.listPage.searchAndClickEdit(domainData.name);
