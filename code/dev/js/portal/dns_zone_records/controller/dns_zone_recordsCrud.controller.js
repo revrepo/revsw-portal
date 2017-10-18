@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -40,19 +40,19 @@
         $scope.zone_name = data.zone;
       });
     // Fetch list of records
-    $scope.$on('$stateChangeSuccess', function(state, stateTo, stateParams) {
+    $scope.$on('$stateChangeSuccess', function (state, stateTo, stateParams) {
       $scope.dnsZoneId = $stateParams.dns_zone_id || stateParams.dns_zone_id;
       if ($state.is($scope.state)) {
         $scope.list({ dns_zone_id: $stateParams.dns_zone_id })
-          .then(function() {
+          .then(function () {
             if ($scope.elementIndexForAnchorScroll) {
-              setTimeout(function() {
+              setTimeout(function () {
                 $anchorScroll('anchor' + $scope.elementIndexForAnchorScroll);
                 $scope.$digest();
               }, 500);
             }
           });
-      } else {        
+      } else {
         //$scope.clearModel();
         $scope.model = $localStorage.selectedDomain;
       }
@@ -71,7 +71,7 @@
      * @param  {[type]} model_current [description]
      * @return {[type]}               [description]
      */
-    $scope.prepareDNSZoneRecordToUpdate = function(model_current) {
+    $scope.prepareDNSZoneRecordToUpdate = function (model_current) {
       var model;
       // TODO: review
       if (model_current.toJSON === undefined) {
@@ -90,32 +90,12 @@
       return model;
     };
 
-    // $scope.setAccountId = function() {
-    //   if ($scope.auth.isReseller() || $scope.auth.isRevadmin()) {
-    //     // Loading list of companies
-    //     Companies.query(function(list) {
-    //       $scope.companies = list;
-    //       if ($scope.companies.length === 1) {
-    //         $scope.model.account_id = $scope.companies[0].id;
-    //       }
-    //     });
-    //   } else if (!angular.isArray($scope.auth.getUser().companyId)) {
-    //     $scope.model.account_id = $scope.auth.getUser().companyId;
-    //   } else if ($scope.auth.getUser().companyId.length === 1) {
-    //     $scope.model.account_id = $scope.auth.getUser().companyId[0];
-    //   } else {
-    //     $scope.fetchCompanies($scope.auth.getUser().companyId);
-    //   }
-    // };
-
-    // $scope.setAccountId(); //TODO: delete - not need
-
-    $scope.getDNSZoneRecord = function(id) {
+    $scope.getDNSZoneRecord = function (id) {
       $scope.get(id)
-        .then(function() {
+        .then(function () {
           $scope.record = $scope.model;
         })
-        .catch(function(err) {
+        .catch(function (err) {
           $scope.alertService.danger('Could not load DNS Record');
         });
 
@@ -127,21 +107,21 @@
      * @param  {Object} model
      * @return
      */
-    $scope.deleteDNSZoneRecord = function(model) {
+    $scope.deleteDNSZoneRecord = function (model) {
       // NOTE: not delete if RO user
-      if($scope.isReadOnly() === true){
+      if ($scope.isReadOnly() === true) {
         return;
       }
       var model_ = {
         delrec: model,
         zone: $scope.zone_name
       };
-      $scope.confirm('confirmModal.html', model_).then(function() {
+      $scope.confirm('confirmModal.html', model_).then(function () {
         var domain = model.domain;
         model.dns_zone_id = $scope.dnsZoneId;
         $scope
           .delete(model)
-          .then(function(data) {
+          .then(function (data) {
             $scope.alertService.success(data);
             $scope.list({ dns_zone_id: $stateParams.dns_zone_id });
             // .then(setAccountName);
@@ -159,7 +139,7 @@
      * @param  {[type]} model [description]
      * @return {[type]}       [description]
      */
-    $scope.createDNSZoneRecord = function(model, isStay) {
+    $scope.createDNSZoneRecord = function (model, isStay) {
       model.rec.zone = $scope.zone_name; //decodeURIComponent($routeParams.zone);      
       var idomain = model.idomain;
       if (idomain) {
@@ -182,7 +162,7 @@
       } else {
         model.rec.answers = [];
       }
-      if (!!model.newanswer  && model.newanswer.link) {
+      if (!!model.newanswer && model.newanswer.link) {
         model.rec.link = model.newanswer.link;
         model.rec.answers = [];
       }
@@ -196,8 +176,8 @@
 
       $scope
         .create(newDNSZoneRecord, isStay)
-        .then(function(data) {
-          if(isStay===true){
+        .then(function (data) {
+          if (isStay === true) {
             // NOTE: set default values
             model.rec.ttl = 3600;// NOTE: set default TTL
             model.rec.type = 'A';
@@ -217,7 +197,7 @@
      * @param  {[type]} model [description]
      * @return {[type]}       [description]
      */
-    $scope.updateDNSZoneRecord = function(model) {
+    $scope.updateDNSZoneRecord = function (model) {
       if (!model) {
         return;
       }
@@ -225,22 +205,22 @@
         model.id = $stateParams.id;
       }
       var modelId = model.id;
-      $scope.confirm('confirmUpdateModal.html', model).then(function() {
+      $scope.confirm('confirmUpdateModal.html', model).then(function () {
         model = $scope.prepareDNSZoneRecordToUpdate(model);
         $scope.update({
-            id: modelId,
-            dns_zone_id: $scope.dnsZoneId
-          }, model)
+          id: modelId,
+          dns_zone_id: $scope.dnsZoneId
+        }, model)
           .then($scope.alertService.success)
           .catch($scope.alertService.danger);
       });
     };
 
-    $scope.storeToStorage = function(model) {
+    $scope.storeToStorage = function (model) {
       $localStorage.selectedDomain = model;
     };
 
-    $scope.disableSubmit = function(model, isEdit) {
+    $scope.disableSubmit = function (model, isEdit) {
       if (!isEdit) {
         return $scope._loading ||
           !model.cert_name ||
@@ -255,18 +235,18 @@
       }
     };
 
-    $scope.getRelativeDate = function(datetime) {
+    $scope.getRelativeDate = function (datetime) {
       return moment.utc(datetime).fromNow();
     };
 
-    $scope.reverse_permitted = function(record_type) {
+    $scope.reverse_permitted = function (record_type) {
       //TODO: check $scope.hasfeature('reverse_record')
       // return (record_type === 'A' || record_type === 'AAAA') && $scope.hasfeature('reverse_record')
       return (record_type === 'A' || record_type === 'AAAA');
     };
 
     //confirmNewAnswerModal
-    $scope.onAddNewAnswer = function(model) {
+    $scope.onAddNewAnswer = function (model) {
       var model_ = {
         record: $scope.model,
         newanswer: {
@@ -274,14 +254,14 @@
         }
       };
       $scope.confirm('confirmNewAnswerModal.html', model_)
-        .then(function(data) {
+        .then(function (data) {
           $scope.model.answers.push(model_.newanswer);
         });
     };
     // confirmDeleteModal
-    $scope.onRemoveAnswer = function($index) {
+    $scope.onRemoveAnswer = function ($index) {
       // NOTE: not delete if RO user
-      if($scope.isReadOnly() === true){
+      if ($scope.isReadOnly() === true) {
         return;
       }
       var model_ = {
@@ -289,7 +269,7 @@
         zone: $scope.zone_name,
         index: $index
       };
-      $scope.confirm('confirmDeleteModal.html', model_).then(function() {
+      $scope.confirm('confirmDeleteModal.html', model_).then(function () {
         $scope.model.answers.splice($index, 1);
       });
     };
@@ -301,7 +281,7 @@
      * @param {string|number} id
      * @returns {Promise}
      */
-    $scope.get = function(id) {
+    $scope.get = function (id) {
       if (!$scope.resource) {
         throw new Error('No resource provided.');
       }
@@ -313,18 +293,18 @@
           dns_zone_id: $scope.dnsZoneId
         })
         .$promise
-        .then(function(record) {
+        .then(function (record) {
           $scope.model = record;
           return record;
         })
-        .finally(function() {
+        .finally(function () {
           $scope.loading(false);
         });
     };
     // Override method
-    $scope.delete = function(model) {
+    $scope.delete = function (model) {
       // NOTE: not delete if RO user
-      if($scope.isReadOnly() === true){
+      if ($scope.isReadOnly() === true) {
         return;
       }
       if (!model) {
@@ -337,14 +317,14 @@
       model.loading = true;
       // NOTE: user resource method 'remove' for delete data.
       return $scope.resource.remove({
-          id: model.id,
-          dns_zone_id: $scope.dnsZoneId
-        }).$promise
-        .then(function(data) {
+        id: model.id,
+        dns_zone_id: $scope.dnsZoneId
+      }).$promise
+        .then(function (data) {
           $rootScope.$broadcast('update:searchData');
           if (data.statusCode === $config.STATUS.OK || data.statusCode === $config.STATUS.ACCEPTED) {
             // NOTE: delete item from arrays
-            var idx = _.findIndex($scope.records, function(item) {
+            var idx = _.findIndex($scope.records, function (item) {
               return item.id === model.id;
             });
             if (idx > -1) {
@@ -354,7 +334,7 @@
           }
           return data;
         })
-        .finally(function() {
+        .finally(function () {
           model.loading = false;
         });
     };
@@ -369,21 +349,21 @@
      * @param  {Boolean} isStay [description]
      * @return {Promise}         [description]
      */
-    $scope.create = function(model, isStay) {
+    $scope.create = function (model, isStay) {
       if (!$scope.resource) {
         throw new Error('No resource provided.');
       }
       $scope.loading(true);
       var record = new $scope.resource(model);
       return record.$save()
-        .then(function(data) {
+        .then(function (data) {
           $rootScope.$broadcast('update:searchData');
           //$scope.clearModel(model);
           if (isStay === true) {
             return $q.resolve(data); // Send data next to promise handlers
           } else {
             $state.go('.^'); // NOTE: go to up to list from new state
-            return $scope.list({ dns_zone_id: $stateParams.dns_zone_id }).then(function() {
+            return $scope.list({ dns_zone_id: $stateParams.dns_zone_id }).then(function () {
               // NOTE: set sort for see new record on top of list
               $scope.filter.predicate = 'updated_at';
               $scope.filter.reverse = true;
@@ -393,10 +373,10 @@
             }); // Update list
           }
         })
-        .catch(function(data) {
+        .catch(function (data) {
           return $q.reject(data);
         })
-        .finally(function() {
+        .finally(function () {
           $scope.loading(false);
         });
     };
@@ -408,12 +388,12 @@
       * @param {Object=} [resolve]
       * @returns {*}
       */
-    $scope.windowAutoDiscover = function(template, resolve) {
-      if(angular.isObject(template)) {
+    $scope.windowAutoDiscover = function (template, resolve) {
+      if (angular.isObject(template)) {
         resolve = template;
         template = '';
       }
-      if(angular.isObject(resolve)) {
+      if (angular.isObject(resolve)) {
         resolve = {
           model: resolve
         };
@@ -432,8 +412,8 @@
     /**
      * @name onOpenAutoDiscoverZoneRecords
      */
-    $scope.onOpenAutoDiscoverZoneRecords = function(zoneName) {
-      if(!zoneName || zoneName.length === 0) {
+    $scope.onOpenAutoDiscoverZoneRecords = function (zoneName) {
+      if (!zoneName || zoneName.length === 0) {
         return;
       }
       var model_ = {
@@ -443,61 +423,61 @@
       };
       // NOTE: show main work window
       $scope.windowAutoDiscover('processAutoDiscover.html', model_)
-        .then(function(data){
-          if(data === true){
+        .then(function (data) {
+          if (data === true) {
             $scope.list({ dns_zone_id: $stateParams.dns_zone_id });
           }
         });
       // NOTE: get data for show in modal window
       DNSZoneRecords.autoDiscover(model_).$promise
-        .then(function(data) {
+        .then(function (data) {
           _.merge(model_, {
             zone_records: angular.copy(data.zone_records)
           });
           // NOTE: add additional properties
-          angular.forEach(model_.zone_records, function(item) {
+          angular.forEach(model_.zone_records, function (item) {
             var existRecords = _.where($scope.records, { type: item.type, domain: item.domain });
-            item.$$isExists = (existRecords.length>0);
+            item.$$isExists = (existRecords.length > 0);
             item.$$isDifferentExist = true; // NOTE: value by default
-            if(item.$$isExists){
+            if (item.$$isExists) {
               // NOTE: add additional data -  "short_answers"
-              item.short_answers = _.map(item.answers, function(itemAnswer) {
+              item.short_answers = _.map(item.answers, function (itemAnswer) {
                 return itemAnswer.answer.join(' ');
               });
               // NOTE: make an alternative collection with short answers
               // add a dot at the end of our local answers
-              var shortAnswersAlternative = _.map(item.answers, function(itemAnswer) {
-                return itemAnswer.answer.join(' ')+'.';
+              var shortAnswersAlternative = _.map(item.answers, function (itemAnswer) {
+                return itemAnswer.answer.join(' ') + '.';
               });
 
-              if(existRecords[0].short_answers.length === item.short_answers.length){
+              if (existRecords[0].short_answers.length === item.short_answers.length) {
                 // Exists With Different Answer(s)
                 item.$$isDifferentExist = false;
-                _.forEach(existRecords[0].short_answers,function(itemShortAnswer){
-                  if(_.indexOf(item.short_answers, itemShortAnswer) === -1 &&
-                    _.indexOf(shortAnswersAlternative, itemShortAnswer) === -1){
+                _.forEach(existRecords[0].short_answers, function (itemShortAnswer) {
+                  if (_.indexOf(item.short_answers, itemShortAnswer) === -1 &&
+                    _.indexOf(shortAnswersAlternative, itemShortAnswer) === -1) {
                     item.$$isDifferentExist = true;
                   }
                 });
-              }else{
+              } else {
                 item.$$isDifferentExist = true;
               }
             }
           });
         })
-        .catch(function(err){
+        .catch(function (err) {
           $scope.alertService.danger(err);
           angular.merge(model_, {
             zone_records: []
           });
         })
-        .finally(function() {
-            model_._loading = false;
+        .finally(function () {
+          model_._loading = false;
         });
     };
 
     // Clear form data when cancel is pressed
-    $scope.clearForm = function (){
+    $scope.clearForm = function () {
       $scope.clearModel();
     };
   }

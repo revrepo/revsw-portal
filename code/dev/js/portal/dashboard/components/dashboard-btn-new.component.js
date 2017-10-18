@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -10,17 +10,13 @@
     return {
       restrict: 'AE',
       replace: true,
-      template:
-      // TODO: make template as file
-        '<a ng-click="vm.onCreateDashboard($event)" class="dashboard-btn-new btn btn-link pull-right" ' +
-          'style="padding-right:0; padding-top:2px;" title="Add New Dashboard">' +
-        ' <i class="glyphicon glyphicon-plus"></i></a>',
+      templateUrl: 'parts/dashboard/buttons/dashboard-btn-new.tpl.html',
       scope: false,
-      controller: function($scope, $state, $uibModal, DashboardSrv, dashboard, AlertService) {
+      controller: function ($scope, $state, $uibModal, DashboardSrv, dashboard, AlertService) {
         'igInject';
         var vm = this;
         this.structures = dashboard.structures;
-        this.changeStructure = function(name, structure) {
+        this.changeStructure = function (name, structure) {
           // TODO: console.log(name, structure);
         };
 
@@ -30,7 +26,7 @@
          * @param  {[type]} e Event object
          * @return
          */
-        this.onCreateDashboard = function(e) {
+        this.onCreateDashboard = function (e) {
           var newDashboardScope = $scope.$new();
           newDashboardScope._isLoading = false;
           newDashboardScope.structures = dashboard.structures;
@@ -48,7 +44,7 @@
             backdrop: 'static'
           });
 
-          newDashboardScope.closeDialog = function() {
+          newDashboardScope.closeDialog = function () {
             // close modal and destroy the scope
             instance.close();
             newDashboardScope.$destroy();
@@ -60,19 +56,19 @@
            * @param  {Object} model - new dashboard info
            * @return
            */
-          newDashboardScope.applyDialog = function(model) {
+          newDashboardScope.applyDialog = function (model) {
             newDashboardScope._isLoading = true;
             DashboardSrv
               .create(model)
-              .then(function(data) {
+              .then(function (data) {
                 newDashboardScope.closeDialog();
                 $state.go('index.dashboard.details', {
                   dashboardId: data.id
                 });
-              }, function(err) {
+              }, function (err) {
                 AlertService.danger(err);
               })
-              .finally(function() {
+              .finally(function () {
                 newDashboardScope._isLoading = false;
               });
           };

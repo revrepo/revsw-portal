@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -34,27 +34,6 @@
             controller: 'LogShippersCrudController'
           }
         }
-      })
-      // TODO:delete
-      // .state('index.accountSettings.logshippers.android.configure', {
-      //   url: '/configure/:id',
-      //   views: {
-      //     page: {
-      //       templateUrl: 'parts/apps/configure.html',
-      //       controller: 'LogShippersCrudController'
-      //     }
-      //   }
-      // })
-      // TODO:delete
-    // .state('index.accountSettings.logshippers.versions', {
-    //   url: '/versions/:id/',
-    //   views: {
-    //     page: {
-    //       templateUrl: 'parts/apps/versions.html',
-    //       controller: 'AppVersionsController'
-    //     }
-    //   }
-    // })
-    ;
+      });
   }
 })();

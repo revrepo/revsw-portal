@@ -83,11 +83,11 @@ var Intro = {
     },
     waitForStep: function () {
         var until = protractor.ExpectedConditions;
-        browser.wait(until.presenceOf(this.getIntroContainer()), 30000);
+        browser.wait(until.presenceOf(this.getIntroContainer()), 60000);
     },
     waitForNextStep: function () {
         var until = protractor.ExpectedConditions;
-        browser.wait(until.presenceOf(this.getNextBtn()), 30000);
+        browser.wait(until.presenceOf(this.getNextBtn()), 60000);
     }
 };
 

@@ -17,7 +17,10 @@
       },
       info: {
         country: 'All countries',
-        // TODO: add info for another filters type
+        os: 'All OS',
+        device: 'All devices',
+        network: 'All networks',
+        operator: 'All operators'        
       }
     };
     $scope.flNetworks = ['Cellular', 'WiFi'];

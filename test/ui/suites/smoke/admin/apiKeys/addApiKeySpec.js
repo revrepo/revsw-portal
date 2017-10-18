@@ -113,16 +113,10 @@ describe('Smoke', function () {
       Portal.admin.apiKeys.listPage.searcher.clearSearchCriteria();
       Portal.admin.apiKeys.listPage.searcher.setSearchCriteria(keyData.name);
       Portal.admin.apiKeys.listPage.table.getFirstRow().getAPICode().then(function (code) {
-        var apiUrl = config.get('api.host.protocol') +
-          '://' +
-          config.get('api.host.name');
-        request(apiUrl)
-          .get('/v1/accounts')
-          .set('Authorization', 'X-API-KEY ' + code)
-          .expect(function (res) {
-            expect(res.status).toEqual(200);
-          })
-          .expect(200, done);
+        Portal.apiKeysHelpers.validateAPIKey(code, function (res) {
+          expect(res).toBe(200);
+          done();
+        });
       });
     });
   });

@@ -229,7 +229,6 @@
       });
     };
 
-    // TODO: add correct rules or delete
     $scope.disableSubmit = function (model, isEdit) {
       if (!isEdit) {
         return $scope._loading ||
