@@ -16,9 +16,10 @@
         interval: '=' // Interval update for Edit Form
       },
       /*@ngInject*/
-      controller: function ($scope) {
+      controller: function ($scope, $element) {
         var intervalPromise;
         var domainId;
+        var element = $element[0];
 
         $scope.iconStaging = 'glyphicon-refresh spin';
         $scope.tooltipStaging = 'Staging Status';
@@ -50,6 +51,10 @@
           }
           if (!id && domainId) {
             id = domainId;
+          }
+
+          if(element.offsetWidth === 0 || element.offsetHeight === 0) {
+            return $scope.startRefresh();
           }
 
           DomainsConfig
