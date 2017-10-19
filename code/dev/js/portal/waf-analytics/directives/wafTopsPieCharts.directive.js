@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -16,8 +16,7 @@
         flStoreName: '@'
       },
       /*@ngInject*/
-      controller: function($q, Util, $scope, StatsWAF, WAF_Rules, DomainsConfig, $localStorage) {
-        var STORAGE_NAME_FOR_DOMAIN_WAR_RULES_CODES = 'domainWafRulesCodesList'; // TODO: rebase to $config
+      controller: function ($q, Util, $scope, StatsWAF, WAF_Rules, DomainsConfig, $localStorage, $config) {
         $scope._loading = false;
         $scope.filters = !$scope.flStoreName ? _.assign({
           from_timestamp: moment().subtract(24, 'hours').valueOf(),
@@ -26,7 +25,7 @@
         $scope.chartOptions = {
           chart: {},
           tooltip: {
-            formatter: function() {
+            formatter: function () {
               var text = '<b>' + this.point.name + '</b>: ' +
                 Highcharts.numberFormat(this.point.percentage, 1) + '% ' +
                 '(' + Highcharts.numberFormat(this.y, 0, '.', ',') + ' requests)';
@@ -97,7 +96,7 @@
           series: []
         };
         $scope.items = [];
-        $scope.loadDetails = function() {
+        $scope.loadDetails = function () {
           if (!$scope.ngDomain || !$scope.ngDomain.id) {
             return;
           }
@@ -109,21 +108,21 @@
           }, $scope.filters);
 
           $q.all([
-              StatsWAF.topReport(angular.merge({}, params, {
-                report_type: 'country'
-              })).$promise,
-              StatsWAF.topReport(angular.merge({}, params, {
-                report_type: 'rule_id'
-              })).$promise,
-              StatsWAF.topReport(angular.merge({}, params, {
-                report_type: 'zone'
-              })).$promise,
-              StatsWAF.topReport(angular.merge({}, params, {
-                report_type: 'action_taken'
-              })).$promise,
-              getWAFRulesList()
-            ])
-            .then(function(dataTops) {
+            StatsWAF.topReport(angular.merge({}, params, {
+              report_type: 'country'
+            })).$promise,
+            StatsWAF.topReport(angular.merge({}, params, {
+              report_type: 'rule_id'
+            })).$promise,
+            StatsWAF.topReport(angular.merge({}, params, {
+              report_type: 'zone'
+            })).$promise,
+            StatsWAF.topReport(angular.merge({}, params, {
+              report_type: 'action_taken'
+            })).$promise,
+            getWAFRulesList()
+          ])
+            .then(function (dataTops) {
               $scope.topCountries = [];
               $scope.topRulesIds = [];
               $scope.topTargetZones = [];
@@ -131,7 +130,7 @@
               var wafRulesList = dataTops[4].data || [];
               // NOTE: prepare countries  data
               if (dataTops[0].data && dataTops[0].data.length > 0) {
-                _.forEach(dataTops[0].data, function(item) {
+                _.forEach(dataTops[0].data, function (item) {
                   var key = item.key.toUpperCase();
                   $scope.topCountries.push({
                     name: ($scope.flCountry[key] || item.key),
@@ -141,8 +140,8 @@
               }
               // NOTE: prepare Rules Id
               if (dataTops[1].data && dataTops[1].data.length > 0) {
-                _.forEach(dataTops[1].data, function(item) {
-                  var descriptionName = _.find(wafRulesList, function(itemRuleIdInfo) {
+                _.forEach(dataTops[1].data, function (item) {
+                  var descriptionName = _.find(wafRulesList, function (itemRuleIdInfo) {
                     return itemRuleIdInfo.id === item.key;
                   });
                   $scope.topRulesIds.push({
@@ -154,7 +153,7 @@
               }
               // NOTE: data for Attacks By Target Request Zones
               if (dataTops[2].data && dataTops[2].data.length > 0) {
-                _.forEach(dataTops[2].data, function(item) {
+                _.forEach(dataTops[2].data, function (item) {
                   $scope.topTargetZones.push({
                     name: item.key,
                     y: item.count
@@ -164,7 +163,7 @@
               // NOTE: data for Actions Taken
               if (dataTops[3].data && dataTops[3].data.length > 0) {
                 $scope.topActionsTaken.series.length = 0;
-                _.forEach(dataTops[3].data, function(item) {
+                _.forEach(dataTops[3].data, function (item) {
                   $scope.topActionsTaken.series.push({
                     name: 'All Security Events',
                     data: [item.count]
@@ -180,22 +179,22 @@
                 });
               }
             })
-            .finally(function() {
+            .finally(function () {
               $scope._loading = false;
             });
         };
 
-        $scope.$watchGroup(['ngDomain', 'filters'], function() {
+        $scope.$watchGroup(['ngDomain', 'filters'], function () {
           $scope.loadDetails();
         });
         // NOTE: watch fitlers and save to localstorage
-        $scope.$watch('filters', function() {
+        $scope.$watch('filters', function () {
           if ($scope.flStoreName) {
             $localStorage[$scope.flStoreName] = $scope.filters;
           }
         }, true);
 
-        var wafRulesCodesList = $localStorage[STORAGE_NAME_FOR_DOMAIN_WAR_RULES_CODES] || {};
+        var wafRulesCodesList = $localStorage[$config.STORAGE_NAME_FOR_DOMAIN_WAR_RULES_CODES] || {};
         /**
          * @name getWAFRulesList
          *
@@ -214,16 +213,16 @@
           }
           if (!lastDomainId || (lastDomainId !== $scope.ngDomain.id)) {
             wafRulesCodesList = {};
-            delete $localStorage[STORAGE_NAME_FOR_DOMAIN_WAR_RULES_CODES];
+            delete $localStorage[$config.STORAGE_NAME_FOR_DOMAIN_WAR_RULES_CODES];
             DomainsConfig.wafRulesList({
-                id: $scope.ngDomain.id
-              }).$promise
-              .then(function(data) {
-                $localStorage[STORAGE_NAME_FOR_DOMAIN_WAR_RULES_CODES] = data;
-                wafRulesCodesList = $localStorage[STORAGE_NAME_FOR_DOMAIN_WAR_RULES_CODES];
+              id: $scope.ngDomain.id
+            }).$promise
+              .then(function (data) {
+                $localStorage[$config.STORAGE_NAME_FOR_DOMAIN_WAR_RULES_CODES] = data;
+                wafRulesCodesList = $localStorage[$config.STORAGE_NAME_FOR_DOMAIN_WAR_RULES_CODES];
                 deff.resolve(wafRulesCodesList);
               })
-              .catch(function(err) {
+              .catch(function (err) {
                 deff.reject(err);
               });
 

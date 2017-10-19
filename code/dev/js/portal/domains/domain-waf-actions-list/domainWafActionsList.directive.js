@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular.module('revapm.Portal.Domains')
@@ -25,7 +25,7 @@
          * @param  {Event} e
          * @return
          */
-        this.onAddNew = function(e) {
+        this.onAddNew = function (e) {
           $ctrl.loading = true;
           e.preventDefault();
           if (!_.isArray($ctrl.waf_actions)) {
@@ -33,7 +33,7 @@
           }
           var newWAFAction = $config.WAF_ACTIONS_DEFAULT;
           $ctrl.waf_actions.push(_.clone(newWAFAction));
-          AlertService.success('New WAF Action is added'); // TODO: set correct text
+          AlertService.success('New WAF Action has been successfully added');
           $ctrl.loading = false;
         };
         /**
@@ -42,29 +42,29 @@
          * @param  {Integer} index
          * @return
          */
-        this.onDelete = function(index) {
+        this.onDelete = function (index) {
           var modalInstance = $uibModal.open({
             animation: true,
             templateUrl: 'parts/domains/modals/confirmDeleteWAFAction.tpl.html',
-            controller: /*ngInject*/ function($scope, $uibModalInstance, model) {
+            controller: /*ngInject*/ function ($scope, $uibModalInstance, model) {
               $scope.model = model;
-              $scope.ok = function() {
+              $scope.ok = function () {
                 $uibModalInstance.close('ok');
               };
-              $scope.cancel = function() {
+              $scope.cancel = function () {
                 $uibModalInstance.dismiss('cancel');
               };
             },
             // size: size,
             resolve: {
-              model: function() {
+              model: function () {
                 return $ctrl.waf_actions[index];
               }
             }
           });
 
           modalInstance.result
-            .then(function() {
+            .then(function () {
               $ctrl.waf_actions.splice(index, 1);
             });
 

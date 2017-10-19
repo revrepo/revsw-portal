@@ -70,13 +70,23 @@ describe('Functional', function () {
       browser.sleep(1500);
       Portal.intro.clickSkipBtn();
       Portal.signOut().then(function () {
-        Portal.signIn(user, false).then(function () {
-          expect(Portal.intro.getIntroContainer().isPresent()).toBeFalsy();
-          done();
-        });
+        Portal.signIn(user, false);
+        expect(Portal.intro.getIntroContainer().isPresent()).toBeFalsy();
+        done();
       });
+    });
+    it('should display intro if the steps are not completed', function () {
+      var until = protractor.ExpectedConditions;
+      browser.wait(until.presenceOf(Portal.header.getHeaderBar()), 60000);
+      browser.executeScript('window.localStorage.removeItem("ngStorage-intro");');
+      browser.refresh();
+      Portal.intro.waitForStep();
+      Portal.intro.clickNextBtn();
+      browser.sleep(1500);
+      browser.refresh();
+      browser.wait(until.presenceOf(Portal.intro.getIntroContainer()), 60000);
+      expect(Portal.intro.getIntroContainer().isDisplayed()).toBeTruthy();
+      browser.executeScript('$(".introjs-overlay").hide();');
     });
   });
 });
-
-

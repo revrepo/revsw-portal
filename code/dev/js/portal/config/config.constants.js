@@ -342,7 +342,7 @@
        */
       NOTIFICATION_LIST_DEFAULT: {
         'list_name': 'Default List Name',
-        'destinations':[]
+        'destinations': []
       },
       NOTIFICATION_DESTINATIONS_TYPE: {
         'email': 'Email',
@@ -354,7 +354,7 @@
        * @name BOT_PROTECTION_MODE_TYPES
        * @description  possible values for a mode property Bot Protection
        */
-      BOT_PROTECTION_MODE_TYPES:{
+      BOT_PROTECTION_MODE_TYPES: {
         disable: 'Disable',
         monitor: 'Monitor',
         active_protection: 'Active Protection',
@@ -363,14 +363,16 @@
        * @name BOT_PROTECTION_DEFAULT
        * @description default values for new Bot Protection
        */
-      BOT_PROTECTION_DEFAULT:{
+      BOT_PROTECTION_DEFAULT: {
         'location': '/',
         'mode': 'monitor',
         'call_type': 1,
         'username_cookie_name': '',
-        'sessionid_cookie_name':'',
+        'sessionid_cookie_name': '',
         'bot_protection_id': null
-      }
+      },
+
+      STORAGE_NAME_FOR_DOMAIN_WAR_RULES_CODES: 'domainWafRulesCodesList'
     });
 
 })(angular, window);
