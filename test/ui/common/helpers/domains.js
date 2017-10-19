@@ -42,7 +42,7 @@ var domains = {
                 .end(function (err, res) {
                     var myDomain;
                     for (var i = 0; i < res.body.length; i++) {
-                        if (res.body[i].domain_name === domainName) {
+                        if (res.body[i][3] === domainName) {
                             myDomain = res.body[i];
                             callback(myDomain);
                         }

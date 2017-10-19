@@ -46,7 +46,7 @@ describe('Workflow', function () {
         it('should create a valid domain JSON object', function (done) {
             Portal.domainsHelpers.getDomainJSON(domainData.name, function (domain) {
                 var domainJSON = domain;
-                expect(domainJSON.domain_name).toBe(domainData.name);
+                expect(domainJSON[3]).toBe(domainData.name);
                 done();
             });
         });
@@ -65,9 +65,7 @@ describe('Workflow', function () {
                         .domainsHelpers
                         .getDomainJSON(domainData.name, function (domain2) {
                             var domainJSON2 = domain2;
-                            expect(domainJSON2
-                                .image_engine
-                                .enable_image_engine).toBeTruthy();
+                            expect(domainJSON2[11][0]).toBeTruthy();
                             done();
                         });
                 });
@@ -88,9 +86,7 @@ describe('Workflow', function () {
                         .domainsHelpers
                         .getDomainJSON(domainData.name, function (domain2) {
                             var domainJSON2 = domain2;
-                            expect(domainJSON2
-                                .image_engine
-                                .enable_image_engine).toBeFalsy();
+                            expect(domainJSON2[11][0]).toBeFalsy();
                             done();
                         });
                 });
