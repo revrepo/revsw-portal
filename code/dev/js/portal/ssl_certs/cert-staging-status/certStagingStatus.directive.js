@@ -15,9 +15,10 @@
         ngId: '=' // SSL_cert id
       },
       /*@ngInject*/
-      controller: function ($scope) {
+      controller: function ($scope, $element) {
         var intervalPromise;
         var certId;
+        var element = $element[0];
 
         $scope.iconStaging = 'glyphicon-refresh spin';
         $scope.tooltipStaging = 'Staging Status';
@@ -50,6 +51,10 @@
           }
           if (!id && certId) {
             id = certId;
+          }
+
+          if(element.offsetWidth === 0 || element.offsetHeight === 0) {
+            return $scope.startRefresh();
           }
 
           SSL_certs
