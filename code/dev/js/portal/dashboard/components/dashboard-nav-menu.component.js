@@ -27,7 +27,7 @@
 
         // TODO: change structure
         this.changeStructure = function (name, structure) {
-          //console.log(name, structure);
+          console.log(name, structure);
         };
 
         /**

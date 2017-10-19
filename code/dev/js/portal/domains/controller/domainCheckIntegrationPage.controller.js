@@ -106,7 +106,7 @@
     };
 
     $scope.onClickRefresh = function() {
-      // TODO: Broadcast
+      $scope.$broadcast('domain:integrity:refresh');
       $scope.getDomain($stateParams.id);
     };
 

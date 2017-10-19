@@ -37,7 +37,7 @@
     };
 
     $scope.onClickRefresh = function() {
-      // TODO: Broadcast
+      $scope.$broadcast('dnzZone:integrity:refresh');
       $scope.getDNSZone($stateParams.id);
     };
 
