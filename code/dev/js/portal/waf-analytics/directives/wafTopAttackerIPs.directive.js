@@ -60,9 +60,9 @@
         * @description get the tooltip for IP info
         */
         $scope.getIpToolTip = function (item) {
-          return 'Country: ' + item.country + '. <br />' +
-            'Region, City: ' + item.city + '. <br />' +
-            'ISP/Organization: ' + item.isp + '.';
+          return 'Country: ' + item.country + ' <br />' +
+            'Region, City: ' + item.city + ' <br />' +
+            'ISP/Organization: ' + item.isp;
         };
 
         $scope.showIPinfo = function () {

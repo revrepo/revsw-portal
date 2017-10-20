@@ -107,7 +107,7 @@ describe('Workflow', function () {
                 Portal.domains.editPage.wafRulesTable.getFirstRow().clickUseThisRule();
                 Portal.domains.editPage.clickPublishDomain();
                 Portal.dialog.clickOk();
-                browser.sleep(50000).then(function () { // wait for publish to finish
+                browser.sleep(120000).then(function () { // wait for publish to finish
                     Portal
                         .domainsHelpers
                         .getDomainWafRules(domainData.name, function (wafRules) {
@@ -124,10 +124,10 @@ describe('Workflow', function () {
                 Portal.domains.listPage.searchAndClickEdit(domainData.name);
                 Portal.domains.editPage.clickTabWAF();
                 Portal.domains.editPage.clickExpandWafRulesBtn();
-                Portal.domains.editPage.wafRulesTable.getFirstRow().clickUseThisRule(true);
+                Portal.domains.editPage.wafRulesTable.getFirstRow().clickUseThisRule();
                 Portal.domains.editPage.clickPublishDomain();
                 Portal.dialog.clickOk();
-                browser.sleep(50000).then(function () { // wait for publish to finish
+                browser.sleep(120000).then(function () { // wait for publish to finish
                     Portal
                         .domainsHelpers
                         .getDomainWafRules(domainData.name, function (wafRules) {

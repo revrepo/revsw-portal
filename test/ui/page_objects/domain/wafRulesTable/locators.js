@@ -75,7 +75,7 @@ var rowLocators = {
     css: 'td:nth-of-type(7)'
   },
   useThisRule: {
-    css: 'td:nth-of-type(8)'
+    css: 'td:nth-of-type(8) div.ats-switch'
   }
 };
 
