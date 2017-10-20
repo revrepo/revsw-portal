@@ -46,7 +46,7 @@ describe('Smoke', function () {
             browser.wait(until.presenceOf(ipsTable), 10000); // wait for table to load
         });
 
-        it('should display ip address', function () {
+        it('should display IP address', function () {
             expect(Portal
             .wafAnalitycs
             .table
@@ -55,7 +55,7 @@ describe('Smoke', function () {
             .isPresent()).toBeTruthy();                          
         });
 
-        it('should display ip info tooltip when mouse is over ip address', function () {
+        it('should display IP info tooltip when mouse is over IP address', function () {
             var ipElem = Portal
                             .wafAnalitycs
                             .table

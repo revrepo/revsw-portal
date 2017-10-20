@@ -38,7 +38,7 @@ describe('Smoke', function () {
             Portal.wafEvents.selectDomainDDown('waf-monitor.revsw.net');
         });
 
-        it('should display ip address', function () {
+        it('should display IP address', function () {
             expect(Portal
                     .wafEvents
                     .table
@@ -47,7 +47,7 @@ describe('Smoke', function () {
                     .isPresent()).toBeTruthy();                          
         });
 
-        it('should display ip info tooltip when mouse is over ip address', function () {
+        it('should display IP info tooltip when mouse is over IP address', function () {
             var ipElem = Portal
                             .wafEvents
                             .table

@@ -29,7 +29,7 @@ var domains = {
            *
            */
     getDomainJSON: function (domainName, callback) {
-
+        /*jshint camelcase: false */
         var apiUrl = config.get('api.host.protocol') +
             '://' +
             config.get('api.host.name');
@@ -42,7 +42,7 @@ var domains = {
                 .end(function (err, res) {
                     var myDomain;
                     for (var i = 0; i < res.body.length; i++) {
-                        if (res.body[i][3] === domainName) {
+                        if (res.body[i].domain_name === domainName) {
                             myDomain = res.body[i];
                             callback(myDomain);
                         }

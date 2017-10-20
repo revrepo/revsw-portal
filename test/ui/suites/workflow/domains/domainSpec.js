@@ -23,7 +23,7 @@ var Constants = require('./../../../page_objects/constants');
 
 describe('Workflow', function () {
     describe('Add Domain', function () {
-
+        /*jshint camelcase: false */
         var user = config.get('portal.users.admin');
         var domainData = DataProvider.generateDomain('test-domain');
 
@@ -46,7 +46,7 @@ describe('Workflow', function () {
         it('should create a valid domain JSON object', function (done) {
             Portal.domainsHelpers.getDomainJSON(domainData.name, function (domain) {
                 var domainJSON = domain;
-                expect(domainJSON[3]).toBe(domainData.name);
+                expect(domainJSON.domain_name).toBe(domainData.name);
                 done();
             });
         });
@@ -65,7 +65,9 @@ describe('Workflow', function () {
                         .domainsHelpers
                         .getDomainJSON(domainData.name, function (domain2) {
                             var domainJSON2 = domain2;
-                            expect(domainJSON2[11][0]).toBeTruthy();
+                            expect(domainJSON2
+                                .image_engine
+                                .enable_image_engine).toBeTruthy();
                             done();
                         });
                 });
@@ -86,7 +88,9 @@ describe('Workflow', function () {
                         .domainsHelpers
                         .getDomainJSON(domainData.name, function (domain2) {
                             var domainJSON2 = domain2;
-                            expect(domainJSON2[11][0]).toBeFalsy();
+                            expect(domainJSON2
+                                .image_engine
+                                .enable_image_engine).toBeFalsy();
                             done();
                         });
                 });
