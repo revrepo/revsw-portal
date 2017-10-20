@@ -107,7 +107,7 @@ describe('Workflow', function () {
                 Portal.domains.editPage.wafRulesTable.getFirstRow().clickUseThisRule();
                 Portal.domains.editPage.clickPublishDomain();
                 Portal.dialog.clickOk();
-                browser.sleep(50000).then(function () { // wait for publish to finish
+                browser.sleep(120000).then(function () { // wait for publish to finish
                     Portal
                         .domainsHelpers
                         .getDomainWafRules(domainData.name, function (wafRules) {
