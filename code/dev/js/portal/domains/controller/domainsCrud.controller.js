@@ -533,7 +533,13 @@
           id: modelId
         }, model)
           .then($scope.alertService.success)
-          .then(reloadStatus)
+          .then(function() {
+            if(model.github_integration.enable === true) {
+              return $scope.refreshPage(null, modelId);
+            }else{
+              reloadStatus();
+            }
+          })
           .catch($scope.alertService.danger);
       });
     };
@@ -830,6 +836,22 @@
         }
       }
     });
+
+    $scope.$watch('model.github_integration', function(newVal, oldVal) {
+      if(newVal !== oldVal && newVal !== undefined) {
+        if($scope.isAdvancedMode === true) {
+          $scope.modelAdvance.github_integration = newVal;
+        }
+      }
+    },true);
+
+    $scope.$watch('modelAdvance.github_integration', function(newVal, oldVal) {
+      if(newVal !== oldVal && newVal !== undefined) {
+        if(!!newVal) {
+          $scope.model.github_integration = newVal;
+        }
+      }
+    }, true);
     /**
      * @name  syncSSL_conf_profile
      * @description
@@ -931,24 +953,17 @@
     var modalInstanceGitHubSettings;
     /**
      * @name showGitHubIntegrationSettings
+     * @description method call modal window with copy GitHub Integration Properties
      */
     $scope.showGitHubIntegrationSettings = function (){
-      var resolve = {model:{}};
-       modalInstanceGitHubSettings = $uibModal.open({
+      $scope.newGitHubIntegrationSettings = angular.copy($scope.model.github_integration || {});
+      modalInstanceGitHubSettings = $uibModal.open({
         animation: false,
-        templateUrl:  'confirmGitHubIntegrationSettings.html',
+        templateUrl:  'gitHubIntegrationSettings.html',
         size: 'lg',
         scope: $scope, // NOTE: use same scope
-        resolve: resolve || {},
         backdrop: 'static'
       });
-       modalInstanceGitHubSettings.result
-        .then(function(res){
-          // console.log(res)
-        })
-        .catch(function(err){
-          // console.log(err);
-        });
       return modalInstanceGitHubSettings.result;
     };
 
@@ -960,32 +975,52 @@
       if($scope.model.github_integration.enable === false){
         $scope.confirm('confirmDisableGitHubIntegrationModal.html', {})
         .then(function(res){
-          if(res!==true){
-            $scope.model.github_integration.enable = true;
-          }
+            if(res!==true){
+              $scope.model.github_integration.enable = true;
+            }
           })
           .catch(function(err) {
             // NOTE: cancel change property
             $scope.model.github_integration.enable = true;
           });
       }else{
-        $scope.showGitHubIntegrationSettings();
+        $scope.showGitHubIntegrationSettings()
+          .then(function(res) {
+            if(res !== true ){
+              $scope.model.github_integration.enable = !$scope.model.github_integration.enable;
+            }
+          })
+          .catch(function(err) {
+            $scope.model.github_integration.enable = !$scope.model.github_integration.enable;
+          });
       }
     };
     // NOTE: actions for modal windows
+    /**
+     * @name onVerifyGitHubJSONConfig
+     * @description method check and change data in github_integration property
+     */
     $scope.onVerifyGitHubJSONConfig = function() {
-
       var model = angular.copy($scope.model);
-      // TODO: make copy this method
-      $scope.validateDomain(model)
-        .then(function(){
-          $scope.alertService.success('The GitHub integration has been successfully verified. '+
+      if(!model.id) {
+        model.id = $stateParams.id;
+      }
+      var modelId = model.id;
+      model.github_integration = $scope.newGitHubIntegrationSettings;
+      model = $scope.prepareSimpleDomainUpdate(model);
+
+      $scope.update({
+        id: modelId,
+        options: 'verify_only'
+      }, model)
+        .then(function(data) {
+          $scope.alertService.success('The GitHub integration has been successfully verified. ' +
             'To activate the integration please either Update or Publish the configuration.');
+          angular.extend($scope.model.github_integration, $scope.newGitHubIntegrationSettings);
           modalInstanceGitHubSettings.close(true);
         })
-        .catch(function(){
-          // TODO: add error message
-        });
+        .then(reloadStatus)
+        .catch($scope.alertService.danger);
     };
 
     $scope.cancelChanges = function() {
