@@ -4,7 +4,10 @@
   angular
     .module('revapm.Portal.Domains')
     .controller('DomainsCrudController', DomainsCrudController);
-
+/*jshint maxstatements: 120 */
+/*eslint max-statements: [1, 120] */
+/*jshint maxparams: 120 */
+/*eslint max-params: [1, 120] */
   /*@ngInject*/
   function DomainsCrudController($scope,
     $timeout,
@@ -19,10 +22,10 @@
     $q,
     $state,
     $anchorScroll,
-    DomainsCachingRuleDefault,
     SSL_certs,
     SSL_conf_profiles,
-    User) {
+    User,
+    $uibModal) {
     //Invoking crud actions
     $injector.invoke(CRUDController, this, {
       $scope: $scope,
@@ -504,7 +507,8 @@
       }
       var modelId = model.id;
       model = $scope.prepareSimpleDomainUpdate(model);
-      $scope.update({
+      // TODO: don`t return promise
+      return $scope.update({
         id: modelId,
         options: 'verify_only'
       }, model)
@@ -920,6 +924,73 @@
       }, 200);
     };
 
+    $scope.onManageGitHubIntegration = function(e){
+      e.preventDefault();
+      $scope.showGitHubIntegrationSettings();
+    };
+    var modalInstanceGitHubSettings;
+    /**
+     * @name showGitHubIntegrationSettings
+     */
+    $scope.showGitHubIntegrationSettings = function (){
+      var resolve = {model:{}};
+       modalInstanceGitHubSettings = $uibModal.open({
+        animation: false,
+        templateUrl:  'confirmGitHubIntegrationSettings.html',
+        size: 'lg',
+        scope: $scope, // NOTE: use same scope
+        resolve: resolve || {},
+        backdrop: 'static'
+      });
+       modalInstanceGitHubSettings.result
+        .then(function(res){
+          // console.log(res)
+        })
+        .catch(function(err){
+          // console.log(err);
+        });
+      return modalInstanceGitHubSettings.result;
+    };
+
+    /**
+     * @name onChangeManageGitHubIntegration
+     * @description method confirm disable Git Hub Integration
+     */
+    $scope.onChangeManageGitHubIntegration = function(e){
+      if($scope.model.github_integration.enable === false){
+        $scope.confirm('confirmDisableGitHubIntegrationModal.html', {})
+        .then(function(res){
+          if(res!==true){
+            $scope.model.github_integration.enable = true;
+          }
+          })
+          .catch(function(err) {
+            // NOTE: cancel change property
+            $scope.model.github_integration.enable = true;
+          });
+      }else{
+        $scope.showGitHubIntegrationSettings();
+      }
+    };
+    // NOTE: actions for modal windows
+    $scope.onVerifyGitHubJSONConfig = function() {
+
+      var model = angular.copy($scope.model);
+      // TODO: make copy this method
+      $scope.validateDomain(model)
+        .then(function(){
+          $scope.alertService.success('The GitHub integration has been successfully verified. '+
+            'To activate the integration please either Update or Publish the configuration.');
+          modalInstanceGitHubSettings.close(true);
+        })
+        .catch(function(){
+          // TODO: add error message
+        });
+    };
+
+    $scope.cancelChanges = function() {
+      modalInstanceGitHubSettings.dismiss('cancel');
+    };
   }
 
 })();

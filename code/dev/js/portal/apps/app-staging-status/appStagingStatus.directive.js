@@ -15,9 +15,10 @@
         ngId: '=' // App id
       },
       /*@ngInject*/
-      controller: function ($scope) {
+      controller: function ($scope, $element) {
         var intervalPromise;
         var appId;
+        var element = $element[0];
 
         $scope.iconStaging = 'glyphicon-refresh spin';
         $scope.tooltipStaging = 'Staging Status';
@@ -53,6 +54,10 @@
           }
           if (!id && appId) {
             id = appId;
+          }
+
+          if(element.offsetWidth === 0 || element.offsetHeight === 0) {
+            return $scope.startRefresh();
           }
 
           Apps

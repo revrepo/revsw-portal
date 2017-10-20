@@ -1,3 +1,57 @@
+<script type="text/ng-template" id="confirmDisableGitHubIntegrationModal.html">
+  <div class="modal-header">
+    <h3 class="modal-title">Confirm</h3>
+  </div>
+  <div class="modal-body">
+   Please confirm that you want to disable GitHub integration for the domain. The domain’s configuration will be set to the last configuration version loaded from GitHub. You still need to Update or Publish the configuration to deactivate the GitHub integration.
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+    <button class="btn btn-danger" type="button" ng-click="ok()">OK</button>
+  </div>
+</script>
+
+<script type="text/ng-template" id="confirmGitHubIntegrationSettings.html">
+  <div class="modal-header">
+    <h3 class="modal-title">Confirm GitHub Integration Settings</h3>
+  </div>
+  <div class="modal-body">
+     <form class="form-horizontal" name="editForm" novalidate>
+         <div class="form-group" ng-class="{'has-error': editForm.gitHubUrlDomainConfigurationFile.$invalid && editForm.gitHubUrlDomainConfigurationFile.$dirty}">
+                <label for="gitHubUrlDomainConfigurationFile" class="col-sm-3 control-label">GitHub URL For Domain Configuration File *</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control inline-block" ng-disabled="_loading" ng-model="model.github_integration.github_url" id="gitHubUrlDomainConfigurationFile" name="gitHubUrlDomainConfigurationFile" placeholder="Origin Server Name" ng-maxlength="300" required>
+                  <label for="gitHubUrlDomainConfigurationFile" class="text-info" popover-append-to-body="false" popover-placement="left"  popover-trigger="mouseenter" uib-popover="Provide here a GitHub URL pointing to a JSON file holding the domain’s configuration. The initial version of the configuration file can be taken from the ‘Advanced Mode’ window.">
+                    <i class="fa fa-question-circle"></i>
+                  </label>
+                  <div class="error-messages" ng-messages="editForm.gitHubUrlDomainConfigurationFile.$error" role="alert" ng-messages-multiple>
+                    <div ng-messages-include="parts/shared/error-messages.html"></div>
+                  </div>
+                </div>
+              </div>
+        <div class="form-group" ng-class="{'has-error': editForm.gitHubPersonalAPIAccessToken.$invalid && editForm.gitHubPersonalAPIAccessToken.$dirty}">
+                <label for="gitHubPersonalAPIAccessToken" class="col-sm-3 control-label">GitHub Personal API Access Token *</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control inline-block" ng-disabled="_loading" ng-model="model.github_integration.github_personal_api_key" id="gitHubPersonalAPIAccessToken" name="gitHubPersonalAPIAccessToken" placeholder="GitHub Personal API Access Token" ng-maxlength="40" required>
+                  <label for="gitHubPersonalAPIAccessToken" class="text-info" popover-append-to-body="false" popover-placement="left"  popover-trigger="mouseenter" uib-popover="Specify here GitHub Personal API Access Token generated via GitHub’s UI and granted with permissions to access the domain configuration file">
+                    <i class="fa fa-question-circle"></i>
+                  </label>
+                  <div class="error-messages" ng-messages="editForm.gitHubPersonalAPIAccessToken.$error" role="alert" ng-messages-multiple>
+                    <div ng-messages-include="parts/shared/error-messages.html"></div>
+                  </div>
+                </div>
+              </div>
+            </form>
+</div>
+  <div class="modal-footer">
+    <button class="btn btn-warning" type="button" ng-click="cancelChanges()">Cancel</button>
+    <button class="btn btn-danger" type="button" ng-disabled="_loading || editForm.$invalid" ng-click="onVerifyGitHubJSONConfig()"
+    uib-tooltip="Click on the button to verify that the provided GitHub token can be used to access the specified domain configuration file. After that you still need to Update or Publish the configuration to activate the GitHub integration.">Verify</button>
+  </div>
+</script>
+
+
+
 <div class="row">
   <div class="col-sm-12">
     <h2 class="pull-left page-title">
@@ -21,6 +75,21 @@
               <a href="" ng-show="isAdvancedMode==true || isAdvancedMode=='true' " ng-click="onChangeModeView()" ng-disabled="_loading" class="btn btn-info">
                 <i class="glyphicon glyphicon-cog"></i>&nbsp; Basic Mode
               </a>
+              <div class="inline-block spaced-button">
+               <label class="title">GitHub Integration :</label>
+                <toggle-switch id="switch_github_integration" name="githubIntegrationEneble" is-disabled="_loading" ng-model="model.github_integration.enable"
+                  on-label="On" off-label="Off" ng-change="onChangeManageGitHubIntegration($event)">
+                </toggle-switch>
+                <label for="githubIntegrationEneble" class="text-info" popover-append-to-body="{{true}}" popover-placement="bottom" popover-trigger="mouseenter" uib-popover="Instead of managing the domain’s configuration via the admin UI or customer API you can place it in a GitHub-hosted JSON
+                file and connect the file to the domain. After enabling the GitHub integration you will be able to see the
+                domain’s configuration via the UI in read-only mode.">
+                  <i class="fa fa-question-circle"></i>
+                </label>
+                <button ng-click="onManageGitHubIntegration($event)" class="btn btn-primary spaced-button" ng-class="{'btn-disabled':isReadOnly() || model.github_integration.enable !=true }" ng-disabled="_loading || isReadOnly() || model.github_integration.enable !=true"
+                  popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover=" ">
+                    <i class="fa fa-lock"></i>&nbsp;Manage GitHub Integration
+                  </button>
+              </div>
             </div>
             <div>
               <button class="btn btn-primary pull-right" ng-disabled="_loading" uib-tooltip="Refresh" ng-click="refreshPage($event,params.id)">
