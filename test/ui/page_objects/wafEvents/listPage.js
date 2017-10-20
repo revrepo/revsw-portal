@@ -26,8 +26,9 @@ var DropDownWidget = require('./../common/dropDownWidget');
 
 // This `WAF Events List` Page Object abstracts all operations or actions that a
 // common user could do in the WAF Events List page from the Portal app/site.
+var Table = require('./table/table');
 var WAFEventsList = {
-
+  table: Table,
   // ## Properties
 
   // Locators specific to HTML elements from this page object
@@ -176,6 +177,10 @@ var WAFEventsList = {
     return this
       .getFirstRow()
       .clickDelete();
+  },
+
+  selectDomainDDown: function (domain) {
+    return this.getDomainDDown().setValue(domain);
   }
 };
 

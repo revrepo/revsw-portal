@@ -29,7 +29,7 @@ var domains = {
            *
            */
     getDomainJSON: function (domainName, callback) {
-
+        /*jshint camelcase: false */
         var apiUrl = config.get('api.host.protocol') +
             '://' +
             config.get('api.host.name');

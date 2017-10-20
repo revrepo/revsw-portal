@@ -23,7 +23,7 @@ var Constants = require('./../../../page_objects/constants');
 
 describe('Workflow', function () {
     describe('Add Domain', function () {
-
+        /*jshint camelcase: false */
         var user = config.get('portal.users.admin');
         var domainData = DataProvider.generateDomain('test-domain');
 
@@ -103,6 +103,7 @@ describe('Workflow', function () {
                 Portal.domains.listPage.searchAndClickEdit(domainData.name);
                 Portal.domains.editPage.clickTabWAF();
                 Portal.domains.editPage.form.clickWAFSwitch();
+                Portal.domains.editPage.clickExpandWafRulesBtn();
                 Portal.domains.editPage.wafRulesTable.getFirstRow().clickUseThisRule();
                 Portal.domains.editPage.clickPublishDomain();
                 Portal.dialog.clickOk();

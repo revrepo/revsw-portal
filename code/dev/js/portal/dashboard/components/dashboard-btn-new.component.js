@@ -17,7 +17,7 @@
         var vm = this;
         this.structures = dashboard.structures;
         this.changeStructure = function (name, structure) {
-          // TODO: console.log(name, structure);
+          //console.log(name, structure);
         };
 
         /**

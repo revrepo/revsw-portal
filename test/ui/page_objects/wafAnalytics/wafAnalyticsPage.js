@@ -20,11 +20,11 @@
 
 // Requiring other Page Objects that compound the WAF Analytics Page one
 var DropDownWidget = require('./../common/dropDownWidget');
-
+var ipTable = require('./table/table');
 // This `WAF Analytics` Page Object abstracts all operations or actions that a
 // common user could do in the WAF Analytics page from the Portal app/site.
 var WAFAnalytics = {
-
+  table: ipTable,
   // ## Properties
 
   // Locators specific to HTML elements from this page object
@@ -47,6 +47,9 @@ var WAFAnalytics = {
       domain: {
         id: 'domain'
       }
+    },
+    topIPs: {
+      css: 'li[index=topAttackerIPs] a'
     }
   },
 
@@ -165,6 +168,14 @@ var WAFAnalytics = {
   isDisplayedDelayDDown: function () {
     return this.getDelayDDown()
       .isPresent();
+  },
+
+  getTopIPs: function () {
+    return element(by.css(this.locators.topIPs.css));
+  },
+
+  clickTopIPs: function () {
+    return this.getTopIPs().click();
   }
 };
 
