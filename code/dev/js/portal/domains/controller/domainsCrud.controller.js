@@ -953,7 +953,7 @@
     var modalInstanceGitHubSettings;
     /**
      * @name showGitHubIntegrationSettings
-     * @description method call modal window with copy GitHub Integration Properties
+     * @description method call modal window with copy GitHub Integration
      */
     $scope.showGitHubIntegrationSettings = function (){
       $scope.newGitHubIntegrationSettings = angular.copy($scope.model.github_integration || {});
