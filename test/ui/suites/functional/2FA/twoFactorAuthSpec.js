@@ -49,6 +49,7 @@ describe('Functional', function () {
                         Portal.helpers.nav.goToUsers();
                         Portal.userListPage.clickAddNewUser();
                         Portal.addUserPage.createUser(bret);
+
                         Portal.signOut().then(function () {
                             Portal.signIn(bret);
                             Portal.helpers.nav.goToSecuritySettings();
@@ -95,6 +96,7 @@ describe('Functional', function () {
                                         .alertMessages
                                         .users
                                         .MSG_SUCCESS_ENABLE_2FA);
+                                
                             });
                     });
 
@@ -106,6 +108,23 @@ describe('Functional', function () {
                             .get2FADialog()
                             .isDisplayed()).toBeTruthy();
                     });
+                });
+
+                xit('should successfully log in after filling correct OTP', function () {
+
+                    /*
+                        TODO: this test does not work now.
+                                bret.two_factor_auth_secret_base32 is undenified                                
+                    */
+                    var otp = speakeasy.time({
+                        key: bret.two_factor_auth_secret_base32,
+                        encoding: 'base32'
+                    });
+                    Portal.loginPage.setOTP(otp);
+                    Portal.loginPage.clickOTPSubmitBtn();
+
+                    expect(Portal.header.getHeaderBar().isDisplayed()).toBeTruthy();
+                    Portal.signOut();
                 });
 
                 it('should allow an admin of a user to disable that users 2FA',
@@ -145,6 +164,10 @@ describe('Functional', function () {
                             .get2FADialog()
                             .isPresent()).toBeFalsy();
                     });
+                });
+
+                it('should successfully login after disabling 2FA', function () {
+                    expect(Portal.header.getHeaderBar().isDisplayed()).toBeTruthy();
                 });
             });
         });
