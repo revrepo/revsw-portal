@@ -57,6 +57,27 @@ describe('Negative', function () {
             afterAll(function () {
               Portal.signOut();
             });
+            
+            it('should allow to verify app if form is filled with valid data', function () {
+              Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+              Portal.mobileApps.listPage.searchAndEdit(app.name);
+              var enabled = Portal.mobileApps.editPage.form.isVerifyBtnEnabled();
+              expect(enabled).toBe(true);
+            });
+
+            it('should allow to update app if form is filled with valid data', function () {
+              Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+              Portal.mobileApps.listPage.searchAndEdit(app.name);
+              var enabled = Portal.mobileApps.editPage.form.isUpdateBtnEnabled();
+              expect(enabled).toBe(true);
+            });
+
+            it('should allow to publish app if form is filled with valid data', function () {
+              Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+              Portal.mobileApps.listPage.searchAndEdit(app.name);
+              var enabled = Portal.mobileApps.editPage.form.isPublishBtnEnabled();
+              expect(enabled).toBe(true);
+            });
 
             it('should not allow to "verify" an app in Basic Edit mode with app name ' +
               'set to empty characters', function () {
