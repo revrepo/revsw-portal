@@ -65,6 +65,8 @@
           setTimeout(function () {
             e.target.value = e.target.value.replace(e.key, '*');
           }, $config.OTP_WILDCARD_DELAY);
+        } else {
+          $scope.code = e.target.value;
         }
       }
     };
