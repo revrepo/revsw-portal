@@ -249,6 +249,13 @@
           'enable_3rd_party_runtime_rewrite': $scope.$thirdPartyLinks.enable_3rd_party_runtime_rewrite || false
         };
       }
+      if (!model.github_integration){
+        model.github_integration = {
+          enable: false,
+          github_url: '',
+          github_personal_api_key: ''
+        };
+      }
       return model;
     };
 
@@ -483,7 +490,7 @@
      * @param {any} model
      */
     function postUpdateOrPublishDomainConfig(modelId, model) {
-      if(model.github_integration.enable === true) {
+      if (!!model.github_integration && model.github_integration.enable === true) {
         $scope._loading = true;
         $timeout(function(){
           $scope._loading = true;
