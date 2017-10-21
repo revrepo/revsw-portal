@@ -485,7 +485,8 @@
       }
       var modelId = model.id;
       $scope.confirm('confirmPublishModal.html', {
-        domain_name: $scope.modelInfo.domain_name
+        domain_name: $scope.modelInfo.domain_name,
+        github_integration: $scope.model.github_integration
       }).then(function () {
         model = $scope.prepareSimpleDomainUpdate(model);
         $scope.update({
@@ -526,7 +527,8 @@
       }
       var modelId = model.id;
       $scope.confirm('confirmUpdateModal.html', {
-        domain_name: $scope.modelInfo.domain_name
+        domain_name: $scope.modelInfo.domain_name,
+        github_integration: $scope.model.github_integration
       }).then(function () {
         model = $scope.prepareSimpleDomainUpdate(model);
         $scope.update({
