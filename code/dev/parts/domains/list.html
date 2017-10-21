@@ -18,7 +18,8 @@
   </div>
   <div class="modal-body">
     Are you sure you want to update domain configuration
-    <strong>{{model.domain_name}}</strong>?
+    <strong>{{model.domain_name}}</strong>
+    <span ng-if="model.github_integration.enable"> from <a ng-href="{{model.github_integration.github_url}}" target="_blank">{{model.github_integration.github_url}}</a></span>?
   </div>
   <div class="modal-footer">
     <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
@@ -61,7 +62,8 @@
   </div>
   <div class="modal-body">
     Are you sure you want to publish domain configuration
-    <strong>{{model.domain_name}}</strong>?
+    <strong>{{model.domain_name}}</strong>
+    <span ng-if="model.github_integration.enable"> from <a ng-href="{{model.github_integration.github_url}}" target="_blank">{{model.github_integration.github_url}}</a></span>?
   </div>
   <div class="modal-footer">
     <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
