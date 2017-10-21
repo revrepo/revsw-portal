@@ -68,12 +68,13 @@ describe('Functional', function () {
                             .getOTPTxtIn()
                             .isDisplayed()).toBeTruthy();
                     });
-
+                    var otpSecret;
                 it('should display a successful message when enabling ' +
                     '2FA', function () {
                         Portal
                             .securitySettingsPage
                             .getASCIISecret().then(function (code) {
+                                otpSecret = code;
                                 /*
                                 Get the base32 code from the qr image element,
                                 use speakeasy to get the OTP out of that,
@@ -110,14 +111,10 @@ describe('Functional', function () {
                     });
                 });
 
-                xit('should successfully log in after filling correct OTP', function () {
+                it('should successfully log in after filling correct OTP', function () {
                     /* jshint camelcase: false */
-                    /*
-                    *    TODO: this test does not work now.
-                    *    bret.two_factor_auth_secret_base32 is undenified
-                    */
                     var otp = speakeasy.time({
-                        key: bret.two_factor_auth_secret_base32,
+                        secret: otpSecret,
                         encoding: 'base32'
                     });
                     Portal.loginPage.setOTP(otp);
