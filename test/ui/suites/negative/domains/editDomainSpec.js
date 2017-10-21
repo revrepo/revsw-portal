@@ -41,6 +41,21 @@ describe('Negative', function () {
       Portal.signOut();
     });
 
+    it('should allow to update domain if form is filled with valid data', function () {
+      Portal.domains.listPage.searchAndClickEdit(myDomain.name);
+      expect(Portal.domains.editPage.getUpdateDomainBtn().isEnabled()).toBeTruthy();
+    });
+    it('should allow to validate domain if form is filled with valid data', function () {
+      Portal.domains.listPage.searchAndClickEdit(myDomain.name);
+      expect(Portal.domains.editPage.getValidateDomainBtn().isEnabled()).toBeTruthy();
+    });
+
+    it('should allow to publish domain if form is filled with valid data', function () {
+      Portal.domains.listPage.searchAndClickEdit(myDomain.name);
+      expect(Portal.domains.editPage.getPublishDomainBtn().isEnabled()).toBeTruthy();
+    });
+
+
     it('should not allow to edit the domain\'s name', function () {
       Portal.domains.listPage.searchAndClickEdit(myDomain.name);
       var domainNameField =
@@ -192,6 +207,201 @@ describe('Negative', function () {
         Portal.domains.editPage.form.clickOriginHealthMonitoringBtn();
         Portal.domains.editPage.form.setExpectedHTTPresponseCode(incorrectValue);
         var publishBtn = Portal.domains.editPage.getPublishDomainBtn();
+        expect(publishBtn.isEnabled()).toBeFalsy();
+      });
+
+    it('should not be able to publish a domain with empty value in ' +
+      '"WAF -> Location"',
+      function () {
+        var incorrectValue = '';
+
+        Portal.domains.listPage.searchAndClickEdit(myDomain.name);
+        Portal.domains.editPage.clickTabWAF();
+        Portal.domains.editPage.form.clickWAFSwitch();
+        Portal.domains.editPage.form.setWAFLocation(incorrectValue);
+        var publishBtn = Portal.domains.editPage.getPublishDomainBtn();
+        expect(publishBtn.isEnabled()).toBeFalsy();
+      });
+
+    it('should not be able to update a domain with empty value in ' +
+      '"WAF -> Location"',
+      function () {
+        var incorrectValue = '';
+
+        Portal.domains.listPage.searchAndClickEdit(myDomain.name);
+        Portal.domains.editPage.clickTabWAF();
+        Portal.domains.editPage.form.clickWAFSwitch();
+        Portal.domains.editPage.form.setWAFLocation(incorrectValue);
+        var publishBtn = Portal.domains.editPage.getUpdateDomainBtn();
+        expect(publishBtn.isEnabled()).toBeFalsy();
+      });
+
+    it('should not be able to validate a domain with empty value in ' +
+      '"WAF -> Location"',
+      function () {
+        var incorrectValue = '';
+
+        Portal.domains.listPage.searchAndClickEdit(myDomain.name);
+        Portal.domains.editPage.clickTabWAF();
+        Portal.domains.editPage.form.clickWAFSwitch();
+        Portal.domains.editPage.form.setWAFLocation(incorrectValue);
+        var publishBtn = Portal.domains.editPage.getValidateDomainBtn();
+        expect(publishBtn.isEnabled()).toBeFalsy();
+      });
+
+    it('should not be able to publish a domain with empty value in ' +
+      '"Bot protection -> Location"',
+      function () {
+        var incorrectValue = '';
+
+        Portal.domains.listPage.searchAndClickEdit(myDomain.name);
+        Portal.domains.editPage.clickTabBotProtection();
+        Portal.domains.editPage.form.getBotProtectionEnableSw().click();
+        Portal.domains.editPage.form.setBotLocation(incorrectValue);
+        var publishBtn = Portal.domains.editPage.getPublishDomainBtn();
+        expect(publishBtn.isEnabled()).toBeFalsy();
+      });
+
+    it('should not be able to update a domain with empty value in ' +
+      '"Bot protection -> Location"',
+      function () {
+        var incorrectValue = '';
+
+        Portal.domains.listPage.searchAndClickEdit(myDomain.name);
+        Portal.domains.editPage.clickTabBotProtection();
+        Portal.domains.editPage.form.getBotProtectionEnableSw().click();
+        Portal.domains.editPage.form.setBotLocation(incorrectValue);
+        var publishBtn = Portal.domains.editPage.getUpdateDomainBtn();
+        expect(publishBtn.isEnabled()).toBeFalsy();
+      });
+
+    it('should not be able to validate a domain with empty value in ' +
+      '"Bot protection -> Location"',
+      function () {
+        var incorrectValue = '';
+
+        Portal.domains.listPage.searchAndClickEdit(myDomain.name);
+        Portal.domains.editPage.clickTabBotProtection();
+        Portal.domains.editPage.form.getBotProtectionEnableSw().click();
+        Portal.domains.editPage.form.setBotLocation(incorrectValue);
+        var publishBtn = Portal.domains.editPage.getValidateDomainBtn();
+        expect(publishBtn.isEnabled()).toBeFalsy();
+      });
+
+    it('should not be able to publish a domain with empty value in ' +
+      '"Bot protection -> Call Type"',
+      function () {
+        var incorrectValue = '';
+
+        Portal.domains.listPage.searchAndClickEdit(myDomain.name);
+        Portal.domains.editPage.clickTabBotProtection();
+        Portal.domains.editPage.form.getBotProtectionEnableSw().click();
+        Portal.domains.editPage.form.setBotCallType(incorrectValue);
+        var publishBtn = Portal.domains.editPage.getPublishDomainBtn();
+        expect(publishBtn.isEnabled()).toBeFalsy();
+      });
+
+    it('should not be able to update a domain with empty value in ' +
+      '"Bot protection -> Call Type"',
+      function () {
+        var incorrectValue = '';
+
+        Portal.domains.listPage.searchAndClickEdit(myDomain.name);
+        Portal.domains.editPage.clickTabBotProtection();
+        Portal.domains.editPage.form.getBotProtectionEnableSw().click();
+        Portal.domains.editPage.form.setBotCallType(incorrectValue);
+        var publishBtn = Portal.domains.editPage.getUpdateDomainBtn();
+        expect(publishBtn.isEnabled()).toBeFalsy();
+      });
+
+    it('should not be able to validate a domain with empty value in ' +
+      '"Bot protection -> Call Type"',
+      function () {
+        var incorrectValue = '';
+
+        Portal.domains.listPage.searchAndClickEdit(myDomain.name);
+        Portal.domains.editPage.clickTabBotProtection();
+        Portal.domains.editPage.form.getBotProtectionEnableSw().click();
+        Portal.domains.editPage.form.setBotCallType(incorrectValue);
+        var publishBtn = Portal.domains.editPage.getValidateDomainBtn();
+        expect(publishBtn.isEnabled()).toBeFalsy();
+      });
+
+    it('should not be able to publish a domain with empty value in ' +
+      '"Bot protection -> Bot Protection ID"',
+      function () {
+        var incorrectValue = '';
+
+        Portal.domains.listPage.searchAndClickEdit(myDomain.name);
+        Portal.domains.editPage.clickTabBotProtection();
+        Portal.domains.editPage.form.getBotProtectionEnableSw().click();
+        Portal.domains.editPage.form.setBotProtectionID('a');
+        Portal.domains.editPage.form.setBotProtectionID(incorrectValue);
+        var publishBtn = Portal.domains.editPage.getPublishDomainBtn();
+        expect(publishBtn.isEnabled()).toBeFalsy();
+      });
+
+    it('should not be able to update a domain with empty value in ' +
+      '"Bot protection -> Bot Protection ID"',
+      function () {
+        var incorrectValue = '';
+
+        Portal.domains.listPage.searchAndClickEdit(myDomain.name);
+        Portal.domains.editPage.clickTabBotProtection();
+        Portal.domains.editPage.form.getBotProtectionEnableSw().click();
+        Portal.domains.editPage.form.setBotProtectionID('a');
+        Portal.domains.editPage.form.setBotProtectionID(incorrectValue);
+        var publishBtn = Portal.domains.editPage.getUpdateDomainBtn();
+        expect(publishBtn.isEnabled()).toBeFalsy();
+      });
+
+    it('should not be able to validate a domain with empty value in ' +
+      '"Bot protection -> Bot Protection ID"',
+      function () {
+        var incorrectValue = '';
+
+        Portal.domains.listPage.searchAndClickEdit(myDomain.name);
+        Portal.domains.editPage.clickTabBotProtection();
+        Portal.domains.editPage.form.getBotProtectionEnableSw().click();
+        Portal.domains.editPage.form.setBotProtectionID('a');
+        Portal.domains.editPage.form.setBotProtectionID(incorrectValue);
+        var publishBtn = Portal.domains.editPage.getValidateDomainBtn();
+        expect(publishBtn.isEnabled()).toBeFalsy();
+      });
+
+      it('should not be able to publish a domain with empty value in ' +
+      '"Custom VCL Rules"',
+      function () {
+        var incorrectValue = '';
+
+        Portal.domains.listPage.searchAndClickEdit(myDomain.name);
+        Portal.domains.editPage.clickTabVCL();
+        Portal.domains.editPage.form.getCustomVCLrulesSw().click();
+        var publishBtn = Portal.domains.editPage.getPublishDomainBtn();
+        expect(publishBtn.isEnabled()).toBeFalsy();
+      });
+
+    it('should not be able to update a domain with empty value in ' +
+      '"Custom VCL Rules"',
+      function () {
+        var incorrectValue = '';
+
+        Portal.domains.listPage.searchAndClickEdit(myDomain.name);
+        Portal.domains.editPage.clickTabVCL();
+        Portal.domains.editPage.form.getCustomVCLrulesSw().click();
+        var publishBtn = Portal.domains.editPage.getUpdateDomainBtn();
+        expect(publishBtn.isEnabled()).toBeFalsy();
+      });
+
+    it('should not be able to validate a domain with empty value in ' +
+      '"Custom VCL Rules"',
+      function () {
+        var incorrectValue = '';
+
+        Portal.domains.listPage.searchAndClickEdit(myDomain.name);
+        Portal.domains.editPage.clickTabVCL();
+        Portal.domains.editPage.form.getCustomVCLrulesSw().click();
+        var publishBtn = Portal.domains.editPage.getValidateDomainBtn();
         expect(publishBtn.isEnabled()).toBeFalsy();
       });
   });

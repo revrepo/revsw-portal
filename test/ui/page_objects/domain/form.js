@@ -32,6 +32,18 @@ var DomainForm = {
   // Locators specific to HTML elements from this page object
   locators: {
     textInputs: {
+      botLocation: {
+        model: 'item.location'
+      },
+      botCallType: {
+        model: 'item.call_type'
+      },
+      botProtectionID: {
+        model: 'item.bot_protection_id'
+      },
+      wafLocation: {
+        model: 'item.location'
+      },
       domainName: {
         id: 'domain_name'
       },
@@ -1559,6 +1571,52 @@ var DomainForm = {
 
   clickWAFSwitch: function () {
     return this.getWAFSwitch().click();
+  },
+
+  setAllowedSSLProtocols: function (value) {
+    this.getAllowedSSLprotocolsTxtIn().clear();
+    return this.getAllowedSSLprotocolsTxtIn().sendKeys(value);
+  },
+
+  setAllowedSSLCiphers: function (value) {
+    this.getAllowedSSLciphersTxtIn().clear();
+    return this.getAllowedSSLciphersTxtIn().sendKeys(value);
+  },
+
+  getWAFLocationTxtIn: function () {
+    return element(by.model(this.locators.textInputs.wafLocation.model));
+  },
+
+  setWAFLocation: function (value) {
+    this.getWAFLocationTxtIn().clear();
+    return this.getWAFLocationTxtIn().sendKeys(value);
+  },
+
+  getBotLocationTxtIn: function () {
+    return element(by.model(this.locators.textInputs.botLocation.model));
+  },
+
+  getBotCallTypeTxtIn: function () {
+    return element(by.model(this.locators.textInputs.botCallType.model));
+  },
+
+  getBotProtectionID: function () {
+    return element(by.model(this.locators.textInputs.botProtectionID.model));
+  },
+
+  setBotLocation: function (value) {
+    this.getBotLocationTxtIn().clear();
+    return this.getBotLocationTxtIn().sendKeys(value);
+  },
+
+  setBotCallType: function (value) {
+    this.getBotCallTypeTxtIn().clear();
+    return this.getBotCallTypeTxtIn().sendKeys(value);
+  },
+
+  setBotProtectionID: function (value) {
+    this.getBotProtectionID().clear();
+    return this.getBotProtectionID().sendKeys(value);
   }
 };
 
