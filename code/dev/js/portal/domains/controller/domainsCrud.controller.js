@@ -475,7 +475,24 @@
         })
         .catch($scope.alertService.danger);
     };
-
+    /**
+     * @name postUpdateOrPublishDomainConfig
+     * @description special actions after Update and Publish
+     *
+     * @param {any} modelId
+     * @param {any} model
+     */
+    function postUpdateOrPublishDomainConfig(modelId, model) {
+      if(model.github_integration.enable === true) {
+        $scope._loading = true;
+        $timeout(function(){
+          $scope._loading = true;
+          $scope.refreshPage(null, modelId);
+        },1700);
+      } else {
+        reloadStatus();
+      }
+    }
     $scope.publishDomain = function (model) {
       if (!model) {
         return;
@@ -494,7 +511,9 @@
           options: 'publish'
         }, model)
           .then($scope.alertService.success)
-          .then(reloadStatus)
+          .then(function(){
+            return postUpdateOrPublishDomainConfig(modelId, model);
+          })
           .catch($scope.alertService.danger);
       });
     };
@@ -535,12 +554,8 @@
           id: modelId
         }, model)
           .then($scope.alertService.success)
-          .then(function() {
-            if(model.github_integration.enable === true) {
-              return $scope.refreshPage(null, modelId);
-            }else{
-              reloadStatus();
-            }
+          .then(function(){
+            postUpdateOrPublishDomainConfig(modelId, model);
           })
           .catch($scope.alertService.danger);
       });
