@@ -111,10 +111,10 @@ describe('Functional', function () {
                 });
 
                 xit('should successfully log in after filling correct OTP', function () {
-
+                    /* jshint camelcase: false */
                     /*
-                        TODO: this test does not work now.
-                                bret.two_factor_auth_secret_base32 is undenified                                
+                    *    TODO: this test does not work now.
+                    *    bret.two_factor_auth_secret_base32 is undenified
                     */
                     var otp = speakeasy.time({
                         key: bret.two_factor_auth_secret_base32,
