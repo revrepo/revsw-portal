@@ -308,7 +308,15 @@ var Constants = {
         attrSubState: 'filter.predicate === \'subscription_state\''
       }
     }
-  }
+  },
+
+  localStorageToClear: [
+    'ngStorage-activityFilterState',
+    'ngStorage-user',
+    'ngStorage-selectedUser',
+    'ngStorage-selectedCompany',
+    'ngStorage-selectedDomain'
+  ]
 
 };
 module.exports = Constants;
