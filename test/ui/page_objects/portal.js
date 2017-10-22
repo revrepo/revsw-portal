@@ -118,7 +118,7 @@ var SignUpPage = require('./signUp/signUpPage');
 var ResetPasswordPage = require('./resetPassword/resetPasswordPage');
 
 var MailinatorHelper = require('./../mailinator/helper');
-
+var LocalStorageHelper = require('./../common/helpers/localStorage');
 var DataProvider = require('./../common/providers/data');
 
 var PortalHelpers = require('./../common/helpers/portal');
@@ -142,7 +142,7 @@ var Portal = {
   apiKeysHelpers: ApiKeysHelpers,
   domainsHelpers: DomainsHelpers,
   constants: Constants,
-
+  localStorage: LocalStorageHelper,
   session: Session,
 
   // Properties

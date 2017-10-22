@@ -137,5 +137,26 @@ describe('Workflow', function () {
                 });
             });
         });
+
+        it('should update domain version after domain is published', function (done) {
+            Portal.domainsHelpers.getDomainJSON(domainData.name, function (domain) {
+                var domainJSON = domain;
+                var ver = domainJSON.last_published_domain_version;
+                Portal.domains.listPage.searchAndClickEdit(domainData.name);
+                Portal.domains.editPage.clickTabSSLconfiguration();
+                Portal.domains.editPage.form.getAcceptSSLrequestsTxtIn().click();
+                Portal.domains.editPage.clickPublishDomain();
+                Portal.dialog.clickOk();
+                browser.sleep(60000).then(function () { // wait for publish to finish
+                    Portal
+                        .domainsHelpers
+                        .getDomainJSON(domainData.name, function (domain2) {
+                            expect(domain2
+                                .last_published_domain_version).toBeGreaterThan(ver);
+                            done();
+                        });
+                });
+            });
+        });
     });
 });
