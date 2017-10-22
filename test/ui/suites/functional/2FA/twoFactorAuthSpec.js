@@ -68,7 +68,7 @@ describe('Functional', function () {
                             .getOTPTxtIn()
                             .isDisplayed()).toBeTruthy();
                     });
-                    var otpSecret;
+                var otpSecret;
                 it('should display a successful message when enabling ' +
                     '2FA', function () {
                         Portal
@@ -97,13 +97,13 @@ describe('Functional', function () {
                                         .alertMessages
                                         .users
                                         .MSG_SUCCESS_ENABLE_2FA);
-                                
+
                             });
                     });
 
                 it('should display `2FA` dialog on login after enabling 2FA', function () {
                     Portal.signOut().then(function () {
-                        Portal.signIn(bret);
+                        Portal.signIn(bret, false);
                         expect(Portal
                             .loginPage
                             .get2FADialog()
@@ -117,11 +117,11 @@ describe('Functional', function () {
                         secret: otpSecret,
                         encoding: 'base32'
                     });
-                    Portal.loginPage.setOTP(otp);
-                    Portal.loginPage.clickOTPSubmitBtn();
-
-                    expect(Portal.header.getHeaderBar().isDisplayed()).toBeTruthy();
-                    Portal.signOut();
+                    Portal.loginPage.setOTP(otp).then(function () {
+                        Portal.loginPage.clickOTPSubmitBtn();
+                        expect(Portal.header.getHeaderBar().isDisplayed()).toBeTruthy();
+                        Portal.signOut();
+                    });
                 });
 
                 it('should allow an admin of a user to disable that users 2FA',
