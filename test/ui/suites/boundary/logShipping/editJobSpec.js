@@ -51,7 +51,7 @@ describe('Boundary', function () {
                     if (user.role !== 'Admin') {
                         Portal.logShipping.addPage.form.setAccount(jobData.account);
                     } else {
-                        jobData.sourceDomain = 'qa-admin-11-portal-ui-test.com';
+                        jobData.sourceDomain = 'qa-admin-10-portal-ui-test.com';
                     }
                     Portal.logShipping.addPage.clickCreateJobBtn();
                 });

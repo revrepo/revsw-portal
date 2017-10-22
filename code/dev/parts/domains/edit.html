@@ -33,7 +33,7 @@
                 <label for="gitHubPersonalAPIAccessToken" class="col-sm-3 control-label">GitHub Personal API Access Token *</label>
                 <div class="col-sm-9">
                   <input type="text" class="form-control inline-block" ng-disabled="_loading" ng-model="newGitHubIntegrationSettings.github_personal_api_key" id="gitHubPersonalAPIAccessToken" name="gitHubPersonalAPIAccessToken" placeholder="GitHub Personal API Access Token" ng-maxlength="40" required>
-                  <label for="gitHubPersonalAPIAccessToken" class="text-info" popover-append-to-body="false" popover-placement="left"  popover-trigger="mouseenter" uib-popover="Specify here GitHub Personal API Access Token generated via GitHub’s UI and granted with permissions to access the domain configuration file">
+                  <label for="gitHubPersonalAPIAccessToken" class="text-info" popover-append-to-body="false" popover-placement="left"  popover-trigger="mouseenter" uib-popover="Specify here GitHub Personal API Access Token generated via GitHub's UI (page https://github.com/settings/tokens) and granted with permissions to access the domain configuration file">
                     <i class="fa fa-question-circle"></i>
                   </label>
                   <div class="error-messages" ng-messages="editForm.gitHubPersonalAPIAccessToken.$error" role="alert" ng-messages-multiple>
