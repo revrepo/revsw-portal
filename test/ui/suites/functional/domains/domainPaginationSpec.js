@@ -22,7 +22,7 @@ var Portal = require('./../../../page_objects/portal');
 describe('Functional', function () {
   describe('Domain pagination', function () {
 
-    var adminUser = config.get('portal.users.admin');
+    var adminUser = config.get('portal.users.revAdmin');
 
     beforeAll(function () {
       Portal.signIn(adminUser);
@@ -85,7 +85,7 @@ describe('Functional', function () {
         expect(newFirstDomainName).toEqual(firstDomainName);
       });
 
-    it('should display a set of domains when clicking an specific page',
+    it('should display a set of domains when clicking a specific page',
       function () {
         var firstDomainName = Portal.domains.listPage.table
           .getFirstRow()
