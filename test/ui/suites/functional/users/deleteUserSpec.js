@@ -114,10 +114,11 @@ describe('Functional', function () {
             Portal.dialog.clickOk();
             Portal.signOut().then(function () {
               Portal.signIn(testUser, false);
-              expect(Portal
-                .loginPage
-                .getEmailTxtIn()
-                .isDisplayed()).toBeTruthy();
+              var alert = Portal.alerts.getFirst();
+              expect(alert.getText()).toContain(Constants
+                .alertMessages
+                .users
+                .MSG_WRONG_USERNAME_PASSWORD);
               Portal.signIn(user);
             });
           });
