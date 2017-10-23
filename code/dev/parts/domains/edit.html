@@ -569,7 +569,7 @@
                         <div class="col-sm-12">
                           <div class="checkbox">
                             <label>
-                              <input id="predefinedSSLconfigurationProfile" type="radio" class="inline-block" name="isCustomSSL_conf_profile" ng-model="isCustomSSL_conf_profile" ng-value="false"> Predefined SSL Configuration Profile
+                              <input id="predefinedSSLconfigurationProfile" type="radio" class="inline-block" name="isCustomSSL_conf_profile"  ng-disabled="_loading || _isEditLocked" ng-model="isCustomSSL_conf_profile" ng-value="false"> Predefined SSL Configuration Profile
                               <label for="isCustomSSL_conf_profile" popover-append-to-body="{{true}}" class="text-info" popover-trigger="mouseenter" uib-popover="Select the radio-button to use one of the pre-defined SSL configuration profiles (recommended)">
                                 <i class="fa fa-question-circle"></i>
                               </label>
@@ -588,7 +588,7 @@
                         <div class="col-sm-12">
                           <div class="checkbox">
                             <label>
-                              <input id="customSSLconfigurationProfile" type="radio" ng-model="isCustomSSL_conf_profile" name="isCustomSSL_conf_profile" ng-value="true"> Custom SSL Configuration Profile
+                              <input id="customSSLconfigurationProfile" type="radio" ng-disabled="_loading || _isEditLocked" ng-model="isCustomSSL_conf_profile" name="isCustomSSL_conf_profile" ng-value="true"> Custom SSL Configuration Profile
                               <label for="isCustomSSL_conf_profile" popover-append-to-body="{{true}}" class="text-info" popover-trigger="mouseenter" uib-popover="Select the option to define your own SSL configuration options">
                                 <i class="fa fa-question-circle"></i>
                               </label>
