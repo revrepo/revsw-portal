@@ -1053,10 +1053,10 @@
       modalInstanceGitHubSettings.dismiss('cancel');
     };
     /**
-     * @name  updateEditLocked
+     * @name  updateIsEditLocked
      * @description all situations for to set isEditLocked equal "true"
      */
-    $scope.updateEditLocked = function(){
+    $scope.updateIsEditLocked = function(){
       if($scope.isReadOnly() === true) {
         $scope._isEditLocked = true;
       } else if($scope.model.github_integration && $scope.model.github_integration.enable === true){
