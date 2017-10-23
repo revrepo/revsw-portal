@@ -19,7 +19,7 @@
         Enable Lua Scripting On Edge (Last Mile) Proxies
       </label>
       <div class="col-md-9">
-        <toggle-switch id="luaScriptingLastMile" name="bpLuaEnableAll" is-disabled="_loading" ng-model="$ctrl.domain.bp_lua_enable_all" on-label="On" off-label="Off">
+        <toggle-switch id="luaScriptingLastMile" name="bpLuaEnableAll" is-disabled="_loading || _isEditLocked" ng-model="$ctrl.domain.bp_lua_enable_all" on-label="On" off-label="Off">
         </toggle-switch>
         <label for="bpLuaEnableAll" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enable or disable at once all Lua scripts executed on edge proxies for the domain">
           <i class="fa fa-question-circle"></i>
@@ -37,7 +37,7 @@
               <i class="glyphicon glyphicon-chevron-down"></i>
             </a>
           </span>
-          <span ng-click="$ctrl.onAddNewItemBP()" class="btn btn-primary btn-sm pull-right addNewLuaBlock" title="Add New Lua Block"><i class="glyphicon glyphicon-plus"></i></span>
+          <span ng-click="$ctrl.onAddNewItemBP()" ng-class="{'disabled': _isEditLocked}" class="btn btn-primary btn-sm pull-right addNewLuaBlock" title="Add New Lua Block"><i class="glyphicon glyphicon-plus"></i></span>
           <h4><b>  Lua Scripts Executed On Edge (Last Mile) Proxies</b></h4>
         </div>
       </div>
@@ -55,14 +55,14 @@
                   <i class="glyphicon glyphicon-chevron-down"></i>
                 </a>
                 <!--  Block Up  -->
-                <a class="btn btn-default btn-xs" href="" ng-click="$ctrl.onUpItemBP(lua_block)"><i class="glyphicon glyphicon-arrow-up " title="Move One Position Up"></i></a>
+                <a class="btn btn-default btn-xs" href="" ng-click="$ctrl.onUpItemBP(lua_block)" ng-class="{'disabled':_isEditLocked}"><i class="glyphicon glyphicon-arrow-up " title="Move One Position Up"></i></a>
                 <!--  Block Down  -->
-                <a class="btn btn-default btn-xs" href="" ng-click="$ctrl.onDownItemBP(lua_block)"><i class="glyphicon glyphicon-arrow-down" title="Move One Position Down"></i></a>
+                <a class="btn btn-default btn-xs" href="" ng-click="$ctrl.onDownItemBP(lua_block)" ng-class="{'disabled':_isEditLocked}"><i class="glyphicon glyphicon-arrow-down" title="Move One Position Down"></i></a>
                 <!-- // -->
               </div>
               <div class="pull-right panel-button-right">
                 <!-- remove widget -->
-                <a href="" title="Remove The Lua Block" ng-click="$ctrl.onRemoveItemBP($index)">
+                <a href="" title="Remove The Lua Block" ng-click="$ctrl.onRemoveItemBP($index)" ng-class="{'disabled': _isEditLocked}">
                   <i class="glyphicon glyphicon-remove"></i>
                 </a>
               </div>
@@ -71,7 +71,7 @@
               </div>
             </div>
           </div>
-          <domain-lua-code-block ng-show="!lua_block.$$itemState.isCollapsed" class="panel-body" ng-model="lua_block"></domain-lua-code-block>
+          <domain-lua-code-block ng-show="!lua_block.$$itemState.isCollapsed" class="panel-body" ng-model="lua_block" is-edit-locked="_isEditLocked"></domain-lua-code-block>
         </div>
       </div>
     </div>
@@ -83,7 +83,7 @@
         Enable Lua Scripting On Origin (First Mile) Proxies
       </label>
       <div class="col-md-9">
-        <toggle-switch id="luaScriptingFirstMile" name="coLuaEnableAll" is-disabled="_loading" ng-model="$ctrl.domain.co_lua_enable_all" on-label="On" off-label="Off">
+        <toggle-switch id="luaScriptingFirstMile" name="coLuaEnableAll" is-disabled="_loading || _isEditLocked" ng-model="$ctrl.domain.co_lua_enable_all" on-label="On" off-label="Off">
         </toggle-switch>
         <label for="coLuaEnableAll" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enable or disable at once all Lua scripts executed on origin (first-mile) proxies">
           <i class="fa fa-question-circle"></i>
@@ -100,7 +100,7 @@
               <i class="glyphicon glyphicon-chevron-down"></i>
             </a>
           </span>
-        <span ng-click="$ctrl.onAddNewItemCO()" class="btn btn-primary btn-sm pull-right addNewLuaBlock" title="Add New Lua Block"><i class="glyphicon glyphicon-plus"></i></span>
+        <span ng-click="$ctrl.onAddNewItemCO()" ng-class="{'disabled': _isEditLocked}" class="btn btn-primary btn-sm pull-right addNewLuaBlock" title="Add New Lua Block"><i class="glyphicon glyphicon-plus"></i></span>
         <h4><b>  Lua Scripts Executed On Origin (First Mile) Proxies</b></h4>
       </div>
       <div class="panel-body">
@@ -117,14 +117,14 @@
                   <i class="glyphicon glyphicon-chevron-down"></i>
                 </a>
                 <!--  Block Up  -->
-                <a class="btn btn-default btn-xs" href="" ng-click="$ctrl.onUpItemCO(lua_block)"><i class="glyphicon glyphicon-arrow-up " title="Move One Position Up"></i></a>
+                <a class="btn btn-default btn-xs" href="" ng-click="$ctrl.onUpItemCO(lua_block)" ng-class="{'disabled':_isEditLocked}"><i class="glyphicon glyphicon-arrow-up " title="Move One Position Up"></i></a>
                 <!--  Block Down  -->
-                <a class="btn btn-default btn-xs" href="" ng-click="$ctrl.onDownItemCO(lua_block)"><i class="glyphicon glyphicon-arrow-down" title="Move One Position Down"></i></a>
+                <a class="btn btn-default btn-xs" href="" ng-click="$ctrl.onDownItemCO(lua_block)" ng-class="{'disabled':_isEditLocked}"><i class="glyphicon glyphicon-arrow-down" title="Move One Position Down"></i></a>
                 <!-- // -->
               </div>
               <div class="pull-right panel-button-right">
                 <!-- remove widget -->
-                <a href="" title="Remove The Lua Block" ng-click="$ctrl.onRemoveItemCO($index)" ng-if="!editMode">
+                <a href="" title="Remove The Lua Block" ng-click="$ctrl.onRemoveItemCO($index)" ng-if="!editMode" ng-class="{'disabled':_isEditLocked}">
                   <i class="glyphicon glyphicon-remove"></i>
                 </a>
               </div>
@@ -133,7 +133,7 @@
               </div>
             </div>
           </div>
-          <domain-lua-code-block ng-show="!lua_block.$$itemState.isCollapsed" class="panel-body" ng-model="lua_block"></domain-lua-code-block>
+          <domain-lua-code-block ng-show="!lua_block.$$itemState.isCollapsed" class="panel-body" ng-model="lua_block" is-edit-locked="_isEditLocked"></domain-lua-code-block>
         </div>
       </div>
     </div>

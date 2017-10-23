@@ -18,7 +18,8 @@
       replace: true,
       scope: true,
       bindToController: {
-        customVcl: '=ngModel'
+        customVcl: '=ngModel',
+        _isEditLocked: '=isEditLocked'
       },
       templateUrl: 'parts/domains/domain-custom-vcl/domain-custom-vcl.tpl.html',
       controllerAs: '$ctrl',
