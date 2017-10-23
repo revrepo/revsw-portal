@@ -134,6 +134,16 @@ describe('Boundary', function () {
                 expect(enabled).toBe(false);
               });
 
+            it('should click "Update" button and validate Configuration Refresh Interval ' +
+              'with special characters.', function () {
+                Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+                Portal.mobileApps.listPage.searchAndEdit(app.name);
+                Portal.mobileApps.editPage.form
+                  .setConfigurationRefreshInterval('& ^ $ @ # % ( ) _ +  / \\ ~ ` , . ; :');
+                var enabled = Portal.mobileApps.editPage.form.isUpdateBtnEnabled();
+                expect(enabled).toBe(false);
+              });
+
             it('should check "Update" button is disabled when Configuration ' +
               ' Refresh Interval  have less than 3 characters.', function () {
                 Portal.helpers.nav.goToMobileAppsMenuItem(platform);
@@ -151,6 +161,17 @@ describe('Boundary', function () {
                 var enabled = Portal.mobileApps.editPage.form.isUpdateBtnEnabled();
                 expect(enabled).toBe(false);
               });
+
+            it('should click "Update" button and validate Configuration Stale Timeout ' +
+              'with special characters.', function () {
+                Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+                Portal.mobileApps.listPage.searchAndEdit(app.name);
+                Portal.mobileApps.editPage.form
+                  .setConfigurationStaleTimeout('& ^ $ @ # % ( ) _ +  / \\ ~ ` , . ; :');
+                var enabled = Portal.mobileApps.editPage.form.isUpdateBtnEnabled();
+                expect(enabled).toBe(false);
+              });
+
 
             it('should check "Update" button is disabled when Configuration ' +
               ' Stale Timeout  have less than 3 characters.', function () {
@@ -179,6 +200,16 @@ describe('Boundary', function () {
                 expect(enabled).toBe(false);
               });
 
+            it('should click "Update" button and validate Analytics Reporting Interval ' +
+              'with special characters.', function () {
+                Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+                Portal.mobileApps.listPage.searchAndEdit(app.name);
+                Portal.mobileApps.editPage.form
+                  .setAnalyticsReportingInterval('& ^ $ @ # % ( ) _ +  / \\ ~ ` , . ; :');
+                var enabled = Portal.mobileApps.editPage.form.isUpdateBtnEnabled();
+                expect(enabled).toBe(false);
+              });
+
             it('should check "Update" button is disabled when Analytics ' +
               ' Reporting Interval value is more than 3600 .', function () {
                 Portal.helpers.nav.goToMobileAppsMenuItem(platform);
@@ -193,6 +224,16 @@ describe('Boundary', function () {
                 Portal.helpers.nav.goToMobileAppsMenuItem(platform);
                 Portal.mobileApps.listPage.searchAndEdit(app.name);
                 Portal.mobileApps.editPage.form.setTestingOffloadingRatio('101');
+                var enabled = Portal.mobileApps.editPage.form.isUpdateBtnEnabled();
+                expect(enabled).toBe(false);
+              });
+
+            it('should click "Update" button and validate A/B Testing Offloading Ratio' +
+              'with special characters.', function () {
+                Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+                Portal.mobileApps.listPage.searchAndEdit(app.name);
+                Portal.mobileApps.editPage.form
+                  .setTestingOffloadingRatio('& ^ $ @ # % ( ) _ +  / \\ ~ ` , . ; :');
                 var enabled = Portal.mobileApps.editPage.form.isUpdateBtnEnabled();
                 expect(enabled).toBe(false);
               });
@@ -245,11 +286,23 @@ describe('Boundary', function () {
                 expect(enabled).toBe(false);
               });
 
+
+
             it('should check "Publish" button is disabled when Configuration ' +
               ' Refresh Interval  have more than 6 characters.', function () {
                 Portal.helpers.nav.goToMobileAppsMenuItem(platform);
                 Portal.mobileApps.listPage.searchAndEdit(app.name);
                 Portal.mobileApps.editPage.form.setConfigurationRefreshInterval('1234567');
+                var enabled = Portal.mobileApps.editPage.form.isPublishBtnEnabled();
+                expect(enabled).toBe(false);
+              });
+
+            it('should check "Publish" button is disabled when Configuration Refresh Interval' +
+              ' contains special characters.', function () {
+                Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+                Portal.mobileApps.listPage.searchAndEdit(app.name);
+                Portal.mobileApps.editPage.form
+                  .setConfigurationRefreshInterval('& ^ $ @ # % ( ) _ +  / \\ ~ ` , . ; :');
                 var enabled = Portal.mobileApps.editPage.form.isPublishBtnEnabled();
                 expect(enabled).toBe(false);
               });
@@ -272,6 +325,16 @@ describe('Boundary', function () {
                 expect(enabled).toBe(false);
               });
 
+            it('should check "Publish" button is disabled when Configuration Stale Timeout' +
+              ' contains special characters.', function () {
+                Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+                Portal.mobileApps.listPage.searchAndEdit(app.name);
+                Portal.mobileApps.editPage.form
+                  .setConfigurationStaleTimeout('& ^ $ @ # % ( ) _ +  / \\ ~ ` , . ; :');
+                var enabled = Portal.mobileApps.editPage.form.isPublishBtnEnabled();
+                expect(enabled).toBe(false);
+              });
+
             it('should check "Publish" button is disabled when Analytics ' +
               ' Reporting Interval  value is less than 20.', function () {
                 Portal.helpers.nav.goToMobileAppsMenuItem(platform);
@@ -290,11 +353,31 @@ describe('Boundary', function () {
                 expect(enabled).toBe(false);
               });
 
+            it('should check "Publish" button is disabled when Analytics Reporting Interval' +
+              ' contains special characters.', function () {
+                Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+                Portal.mobileApps.listPage.searchAndEdit(app.name);
+                Portal.mobileApps.editPage.form
+                  .setAnalyticsReportingInterval('& ^ $ @ # % ( ) _ +  / \\ ~ ` , . ; :');
+                var enabled = Portal.mobileApps.editPage.form.isPublishBtnEnabled();
+                expect(enabled).toBe(false);
+              });
+
             it('should check "Publish" button is disabled when A/B ' +
               ' Testing Offloading Ratio value is more than 100 .', function () {
                 Portal.helpers.nav.goToMobileAppsMenuItem(platform);
                 Portal.mobileApps.listPage.searchAndEdit(app.name);
                 Portal.mobileApps.editPage.form.setTestingOffloadingRatio('101');
+                var enabled = Portal.mobileApps.editPage.form.isPublishBtnEnabled();
+                expect(enabled).toBe(false);
+              });
+
+            it('should check "Publish" button is disabled when A/B Testing Offloading Ratio' +
+              ' contains special characters.', function () {
+                Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+                Portal.mobileApps.listPage.searchAndEdit(app.name);
+                Portal.mobileApps.editPage.form
+                  .setTestingOffloadingRatio('& ^ $ @ # % ( ) _ +  / \\ ~ ` , . ; :');
                 var enabled = Portal.mobileApps.editPage.form.isPublishBtnEnabled();
                 expect(enabled).toBe(false);
               });

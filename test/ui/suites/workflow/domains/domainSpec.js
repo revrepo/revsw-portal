@@ -23,7 +23,7 @@ var Constants = require('./../../../page_objects/constants');
 
 describe('Workflow', function () {
     describe('Add Domain', function () {
-
+        /*jshint camelcase: false */
         var user = config.get('portal.users.admin');
         var domainData = DataProvider.generateDomain('test-domain');
 
@@ -103,10 +103,11 @@ describe('Workflow', function () {
                 Portal.domains.listPage.searchAndClickEdit(domainData.name);
                 Portal.domains.editPage.clickTabWAF();
                 Portal.domains.editPage.form.clickWAFSwitch();
+                Portal.domains.editPage.clickExpandWafRulesBtn();
                 Portal.domains.editPage.wafRulesTable.getFirstRow().clickUseThisRule();
                 Portal.domains.editPage.clickPublishDomain();
                 Portal.dialog.clickOk();
-                browser.sleep(50000).then(function () { // wait for publish to finish
+                browser.sleep(120000).then(function () { // wait for publish to finish
                     Portal
                         .domainsHelpers
                         .getDomainWafRules(domainData.name, function (wafRules) {
@@ -123,14 +124,35 @@ describe('Workflow', function () {
                 Portal.domains.listPage.searchAndClickEdit(domainData.name);
                 Portal.domains.editPage.clickTabWAF();
                 Portal.domains.editPage.clickExpandWafRulesBtn();
-                Portal.domains.editPage.wafRulesTable.getFirstRow().clickUseThisRule(true);
+                Portal.domains.editPage.wafRulesTable.getFirstRow().clickUseThisRule();
                 Portal.domains.editPage.clickPublishDomain();
                 Portal.dialog.clickOk();
-                browser.sleep(50000).then(function () { // wait for publish to finish
+                browser.sleep(120000).then(function () { // wait for publish to finish
                     Portal
                         .domainsHelpers
                         .getDomainWafRules(domainData.name, function (wafRules) {
                             expect(wafRules.length).toEqual(0);
+                            done();
+                        });
+                });
+            });
+        });
+
+        it('should update domain version after domain is published', function (done) {
+            Portal.domainsHelpers.getDomainJSON(domainData.name, function (domain) {
+                var domainJSON = domain;
+                var ver = domainJSON.last_published_domain_version;
+                Portal.domains.listPage.searchAndClickEdit(domainData.name);
+                Portal.domains.editPage.clickTabSSLconfiguration();
+                Portal.domains.editPage.form.getAcceptSSLrequestsTxtIn().click();
+                Portal.domains.editPage.clickPublishDomain();
+                Portal.dialog.clickOk();
+                browser.sleep(60000).then(function () { // wait for publish to finish
+                    Portal
+                        .domainsHelpers
+                        .getDomainJSON(domainData.name, function (domain2) {
+                            expect(domain2
+                                .last_published_domain_version).toBeGreaterThan(ver);
                             done();
                         });
                 });

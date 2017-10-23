@@ -21,61 +21,46 @@ var tableLocators = {
     css: 'table thead tr'
   },
   rows: {
-    repeater: 'item in $ctrl.orderRecords'
+    repeater: 'item in records'
   }
 };
 
 var headerLocators = {
-  name: {
-    css: 'th:nth-of-type(1)'
+  date: {
+    css: 'th:nth-of-type(1) a'
   },
-  type: {
-    css: 'th:nth-of-type(2)'
+  url: {
+    css: 'th:nth-of-type(2) a'
   },
-  description: {
-    css: 'th:nth-of-type(3)'
+  ipAddress: {
+    css: 'th:nth-of-type(3) a'
   },
-  updatedAt: {
-    css: 'th:nth-of-type(4)'
+  requestZone: {
+    css: 'th:nth-of-type(4) a'
   },
-  status: {
-    css: 'th:nth-of-type(5)'
-  },
-  actions: {
-    css: 'th:nth-of-type(6)'
-  },
-  order: {
-    css: 'th:nth-of-type(7)'
-  },
-  useThisRule: {
-    css: 'th:nth-of-type(8)'
+  triggredRuleID: {
+    css: 'th:nth-of-type(5) a'
   }
 };
 
 var rowLocators = {
-  name: {
+  date: {
     css: 'td:nth-of-type(1)'
   },
-  type: {
+  url: {
     css: 'td:nth-of-type(2)'
   },
-  description: {
+  ipAddress: {
     css: 'td:nth-of-type(3)'
   },
-  updatedAt: {
+  requestZone: {
     css: 'td:nth-of-type(4)'
   },
-  status: {
+  triggredRuleID: {
     css: 'td:nth-of-type(5)'
   },
-  actions: {
-    css: 'td:nth-of-type(6)'
-  },
-  order: {
-    css: 'td:nth-of-type(7)'
-  },
-  useThisRule: {
-    css: 'td:nth-of-type(8) div.ats-switch'
+  ipToolTip: {
+    css: '.ipinfo'
   }
 };
 

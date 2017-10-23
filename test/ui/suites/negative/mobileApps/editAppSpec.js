@@ -57,6 +57,27 @@ describe('Negative', function () {
             afterAll(function () {
               Portal.signOut();
             });
+            
+            it('should allow to verify app if form is filled with valid data', function () {
+              Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+              Portal.mobileApps.listPage.searchAndEdit(app.name);
+              var enabled = Portal.mobileApps.editPage.form.isVerifyBtnEnabled();
+              expect(enabled).toBe(true);
+            });
+
+            it('should allow to update app if form is filled with valid data', function () {
+              Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+              Portal.mobileApps.listPage.searchAndEdit(app.name);
+              var enabled = Portal.mobileApps.editPage.form.isUpdateBtnEnabled();
+              expect(enabled).toBe(true);
+            });
+
+            it('should allow to publish app if form is filled with valid data', function () {
+              Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+              Portal.mobileApps.listPage.searchAndEdit(app.name);
+              var enabled = Portal.mobileApps.editPage.form.isPublishBtnEnabled();
+              expect(enabled).toBe(true);
+            });
 
             it('should not allow to "verify" an app in Basic Edit mode with app name ' +
               'set to empty characters', function () {
@@ -92,7 +113,7 @@ describe('Negative', function () {
                 Portal.mobileApps.editPage.form.setConfigurationRefreshInterval('');
                 var enabled = Portal.mobileApps.editPage.form.isUpdateBtnEnabled();
                 expect(enabled).toBe(false);
-              });
+              });              
 
             it('should check "Update" button is disabled when Configuration ' +
               ' Stale Timeout  is empty.', function () {
@@ -112,12 +133,84 @@ describe('Negative', function () {
                 expect(enabled).toBe(false);
               });
 
+              it('should check "Verify" button is disabled when Configuration ' +
+              ' Refresh Interval is empty.', function () {
+                Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+                Portal.mobileApps.listPage.searchAndEdit(app.name);
+                Portal.mobileApps.editPage.form.setConfigurationRefreshInterval('');
+                var enabled = Portal.mobileApps.editPage.form.isVerifyBtnEnabled();
+                expect(enabled).toBe(false);
+              });
+
             it('should check "Publish" button is disabled when Configuration ' +
               ' Stale Timeout  is empty.', function () {
                 Portal.helpers.nav.goToMobileAppsMenuItem(platform);
                 Portal.mobileApps.listPage.searchAndEdit(app.name);
                 Portal.mobileApps.editPage.form.setConfigurationStaleTimeout('');
                 var enabled = Portal.mobileApps.editPage.form.isPublishBtnEnabled();
+                expect(enabled).toBe(false);
+              });
+
+              it('should check "Verify" button is disabled when Configuration ' +
+              ' Stale Timeout is empty.', function () {
+                Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+                Portal.mobileApps.listPage.searchAndEdit(app.name);
+                Portal.mobileApps.editPage.form.setConfigurationStaleTimeout('');
+                var enabled = Portal.mobileApps.editPage.form.isVerifyBtnEnabled();
+                expect(enabled).toBe(false);
+              });
+
+              it('should check "Publish" button is disabled when Analytics ' +
+              ' Reporting Interval  is empty.', function () {
+                Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+                Portal.mobileApps.listPage.searchAndEdit(app.name);
+                Portal.mobileApps.editPage.form.setAnalyticsReportingInterval('');
+                var enabled = Portal.mobileApps.editPage.form.isPublishBtnEnabled();
+                expect(enabled).toBe(false);
+              });
+
+              it('should check "Update" button is disabled when Analytics ' +
+              ' Reporting Interval  is empty.', function () {
+                Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+                Portal.mobileApps.listPage.searchAndEdit(app.name);
+                Portal.mobileApps.editPage.form.setAnalyticsReportingInterval('');
+                var enabled = Portal.mobileApps.editPage.form.isPublishBtnEnabled();
+                expect(enabled).toBe(false);
+              });
+
+              it('should check "Verify" button is disabled when Analytics ' +
+              ' Reporting Interval is empty.', function () {
+                Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+                Portal.mobileApps.listPage.searchAndEdit(app.name);
+                Portal.mobileApps.editPage.form.setAnalyticsReportingInterval('');
+                var enabled = Portal.mobileApps.editPage.form.isVerifyBtnEnabled();
+                expect(enabled).toBe(false);
+              });
+
+              it('should check "Publish" button is disabled when A/B Testing ' +
+              ' Offloading Ratio is empty.', function () {
+                Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+                Portal.mobileApps.listPage.searchAndEdit(app.name);
+                Portal.mobileApps.editPage.form.setTestingOffloadingRatio('');
+                var enabled = Portal.mobileApps.editPage.form.isPublishBtnEnabled();
+                expect(enabled).toBe(false);
+              });
+
+              it('should check "Update" button is disabled when A/B Testing ' +
+              ' Offloading Ratio is empty.', function () {
+                Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+                Portal.mobileApps.listPage.searchAndEdit(app.name);
+                Portal.mobileApps.editPage.form.setTestingOffloadingRatio('');
+                var enabled = Portal.mobileApps.editPage.form.isPublishBtnEnabled();
+                expect(enabled).toBe(false);
+              });
+
+              it('should check "Verify" button is disabled when A/B Testing ' +
+              ' Offloading Ratio is empty.', function () {
+                Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+                Portal.mobileApps.listPage.searchAndEdit(app.name);
+                Portal.mobileApps.editPage.form.setTestingOffloadingRatio('');
+                var enabled = Portal.mobileApps.editPage.form.isVerifyBtnEnabled();
                 expect(enabled).toBe(false);
               });
           });

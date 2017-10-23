@@ -23,9 +23,11 @@ describe('Smoke', function () {
 
   // Defining set of users for which all below tests will be run
   var users = [
-    config.get('portal.users.admin'),
+//    config.get('portal.users.admin'),
+    // Enabling the test only for revadmin role and removing the large amount of per-role
+    // domains used to create the mass of domains necessary to activate the pagination feature
     config.get('portal.users.revAdmin'),
-    config.get('portal.users.reseller')
+//    config.get('portal.users.reseller')
   ];
 
   users.forEach(function (user) {
@@ -46,6 +48,8 @@ describe('Smoke', function () {
           Portal.helpers.nav.goToDomains();
         });
 
+        // The test WILL fail if the total number of domains registered in the test environment
+        // is below 26
         it('should be displayed when displaying Domain List page',
           function () {
             var currPageBtn = Portal.domains.listPage.pager

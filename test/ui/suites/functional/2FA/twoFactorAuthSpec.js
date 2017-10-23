@@ -49,6 +49,7 @@ describe('Functional', function () {
                         Portal.helpers.nav.goToUsers();
                         Portal.userListPage.clickAddNewUser();
                         Portal.addUserPage.createUser(bret);
+
                         Portal.signOut().then(function () {
                             Portal.signIn(bret);
                             Portal.helpers.nav.goToSecuritySettings();
@@ -67,12 +68,13 @@ describe('Functional', function () {
                             .getOTPTxtIn()
                             .isDisplayed()).toBeTruthy();
                     });
-
+                var otpSecret;
                 it('should display a successful message when enabling ' +
                     '2FA', function () {
                         Portal
                             .securitySettingsPage
                             .getASCIISecret().then(function (code) {
+                                otpSecret = code;
                                 /*
                                 Get the base32 code from the qr image element,
                                 use speakeasy to get the OTP out of that,
@@ -95,16 +97,30 @@ describe('Functional', function () {
                                         .alertMessages
                                         .users
                                         .MSG_SUCCESS_ENABLE_2FA);
+
                             });
                     });
 
                 it('should display `2FA` dialog on login after enabling 2FA', function () {
                     Portal.signOut().then(function () {
-                        Portal.signIn(bret);
+                        Portal.signIn(bret, false);
                         expect(Portal
                             .loginPage
                             .get2FADialog()
                             .isDisplayed()).toBeTruthy();
+                    });
+                });
+
+                it('should successfully log in after filling correct OTP', function () {
+                    /* jshint camelcase: false */
+                    var otp = speakeasy.time({
+                        secret: otpSecret,
+                        encoding: 'base32'
+                    });
+                    Portal.loginPage.setOTP(otp).then(function () {
+                        Portal.loginPage.clickOTPSubmitBtn();
+                        expect(Portal.header.getHeaderBar().isDisplayed()).toBeTruthy();
+                        Portal.signOut();
                     });
                 });
 
@@ -145,6 +161,10 @@ describe('Functional', function () {
                             .get2FADialog()
                             .isPresent()).toBeFalsy();
                     });
+                });
+
+                it('should successfully login after disabling 2FA', function () {
+                    expect(Portal.header.getHeaderBar().isDisplayed()).toBeTruthy();
                 });
             });
         });

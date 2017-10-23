@@ -21,61 +21,31 @@ var tableLocators = {
     css: 'table thead tr'
   },
   rows: {
-    repeater: 'item in $ctrl.orderRecords'
+    repeater: 'item in items'
   }
 };
 
 var headerLocators = {
-  name: {
+  ip: {
     css: 'th:nth-of-type(1)'
   },
-  type: {
+  count: {
     css: 'th:nth-of-type(2)'
-  },
-  description: {
-    css: 'th:nth-of-type(3)'
-  },
-  updatedAt: {
-    css: 'th:nth-of-type(4)'
-  },
-  status: {
-    css: 'th:nth-of-type(5)'
-  },
-  actions: {
-    css: 'th:nth-of-type(6)'
-  },
-  order: {
-    css: 'th:nth-of-type(7)'
-  },
-  useThisRule: {
-    css: 'th:nth-of-type(8)'
   }
 };
 
 var rowLocators = {
-  name: {
-    css: 'td:nth-of-type(1)'
+  ip: {
+    css: 'td:nth-of-type(1)',
+    tooltipHolder: {
+      css: '.fa'
+    },
+    tooltip: {
+      css: '.ipinfo'
+    }
   },
-  type: {
+  count: {
     css: 'td:nth-of-type(2)'
-  },
-  description: {
-    css: 'td:nth-of-type(3)'
-  },
-  updatedAt: {
-    css: 'td:nth-of-type(4)'
-  },
-  status: {
-    css: 'td:nth-of-type(5)'
-  },
-  actions: {
-    css: 'td:nth-of-type(6)'
-  },
-  order: {
-    css: 'td:nth-of-type(7)'
-  },
-  useThisRule: {
-    css: 'td:nth-of-type(8) div.ats-switch'
   }
 };
 

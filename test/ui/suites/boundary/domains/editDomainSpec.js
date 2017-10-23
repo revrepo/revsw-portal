@@ -188,5 +188,53 @@ describe('Boundary', function () {
         var publishBtn = Portal.domains.editPage.getPublishDomainBtn();
         expect(publishBtn.isEnabled()).toBeFalsy();
       });
+
+      it('should not allow to validate/update/publish a domain with an invalid value in ' +
+      ' WAF -> Location',
+      function () {
+        var val = '/@';
+        Portal.domains.listPage.searchAndClickEdit(myDomain.name);
+        Portal.domains.editPage.clickTabWAF();
+        Portal.domains.editPage.form.getWAFSwitch().click();
+        Portal.domains.editPage.form.setWAFLocation(val);
+        var validateBtn = Portal.domains.editPage.getValidateDomainBtn();
+        expect(validateBtn.isEnabled()).toBeFalsy();
+        var updateBtn = Portal.domains.editPage.getUpdateDomainBtn();
+        expect(updateBtn.isEnabled()).toBeFalsy();
+        var publishBtn = Portal.domains.editPage.getPublishDomainBtn();
+        expect(publishBtn.isEnabled()).toBeFalsy();
+      });
+
+      it('should not allow to validate/update/publish a domain with an invalid value in ' +
+      ' Bot Protection -> Location',
+      function () {
+        var val = '/@';
+        Portal.domains.listPage.searchAndClickEdit(myDomain.name);
+        Portal.domains.editPage.clickTabBotProtection();
+        Portal.domains.editPage.form.getBotProtectionEnableSw().click();
+        Portal.domains.editPage.form.setBotLocation(val);
+        var validateBtn = Portal.domains.editPage.getValidateDomainBtn();
+        expect(validateBtn.isEnabled()).toBeFalsy();
+        var updateBtn = Portal.domains.editPage.getUpdateDomainBtn();
+        expect(updateBtn.isEnabled()).toBeFalsy();
+        var publishBtn = Portal.domains.editPage.getPublishDomainBtn();
+        expect(publishBtn.isEnabled()).toBeFalsy();
+      });
+
+      it('should not allow to validate/update/publish a domain with an invalid value in ' +
+      ' Bot Protection -> Call Type',
+      function () {
+        var val = '7';
+        Portal.domains.listPage.searchAndClickEdit(myDomain.name);
+        Portal.domains.editPage.clickTabBotProtection();
+        Portal.domains.editPage.form.getBotProtectionEnableSw().click();
+        Portal.domains.editPage.form.setBotCallType(val);
+        var validateBtn = Portal.domains.editPage.getValidateDomainBtn();
+        expect(validateBtn.isEnabled()).toBeFalsy();
+        var updateBtn = Portal.domains.editPage.getUpdateDomainBtn();
+        expect(updateBtn.isEnabled()).toBeFalsy();
+        var publishBtn = Portal.domains.editPage.getPublishDomainBtn();
+        expect(publishBtn.isEnabled()).toBeFalsy();
+      });
   });
 });

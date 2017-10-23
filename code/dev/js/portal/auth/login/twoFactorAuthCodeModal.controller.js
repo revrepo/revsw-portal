@@ -25,7 +25,8 @@
       AlertService.clear();
       $scope.data.loading = true;
       try {
-        User.login(auth.email, auth.password, $scope.code.replace(/\D/g, ''))
+        var otpCode = $scope.code === '' ? form.code : $scope.code;        
+        User.login(auth.email, auth.password, otpCode)
           .then(function (data) {
             $uibModalInstance.close(data);
           })
@@ -65,6 +66,8 @@
           setTimeout(function () {
             e.target.value = e.target.value.replace(e.key, '*');
           }, $config.OTP_WILDCARD_DELAY);
+        } else {
+          $scope.code = e.target.value;
         }
       }
     };
