@@ -46,8 +46,8 @@
               <div class="location-panel-into--totals inline-block">Rules:<strong> {{item.waf_rules.length}}</strong>, Actions: <strong>{{item.waf_actions.length}}</strong> </div>
               <!-- Actions -->
               <a ng-click="$ctrl.onDuplicateWAFLocation($event,item)" class="btn btn-primary btn-xs duplicateWAFLocationBtn" opover-append-to-body="{{true}}"
-                popover-trigger="mouseenter" uib-popover="Duplicate WAF Location"><i class="fa fa-clone"></i> Duplicate Location</a>
-              <a href title="Delete Location" ng-click="$ctrl.onDeleteWAFLocation($event,$index)">
+                popover-trigger="mouseenter" uib-popover="Duplicate WAF Location" ng-class="{'disabled':_isEditLocked}"><i class="fa fa-clone"></i> Duplicate Location</a>
+              <a href title="Delete Location" ng-click="$ctrl.onDeleteWAFLocation($event,$index)" ng-class="{'disabled':_isEditLocked}">
                 <i class="glyphicon glyphicon-remove"></i>
               </a>
             </div>
@@ -61,7 +61,7 @@
           <div class="form-group" ng-class="{'has-error': locationEditForm.wafLocation.$invalid && locationEditForm.wafLocation.$dirty}">
             <label for="wafLocation" class="col-sm-3 control-label">Location *</label>
             <div class="col-sm-9">
-              <input type="text" class="form-control inline-block elemLastFirstMile" ng-disabled="_loading" ng-model="item.location" name="wafLocation"
+              <input type="text" class="form-control inline-block elemLastFirstMile" ng-disabled="_loading || _isEditLocked" ng-model="item.location" name="wafLocation"
                 placeholder="like '/my_url/'" ng-maxlength="150" validate-waf-location-name required>
               <label for="wafLocation" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Specify here a website path (like “/my_url/”) the WAF configuration should be applied to">
                 <i class="fa fa-question-circle"></i>
@@ -75,7 +75,7 @@
           <div class="form-group form-inline">
             <label for="enableWafStatus" class="col-sm-3 control-label">WAF Protection For This Location</label>
             <div class="col-md-9">
-              <toggle-switch name="enableWafStatus" is-disabled="_loading" ng-model="item.enable_waf" on-label="On" off-label="Off">
+              <toggle-switch name="enableWafStatus" is-disabled="_loading || _isEditLocked" ng-model="item.enable_waf" on-label="On" off-label="Off">
               </toggle-switch>
               <label for="enableWafStatus" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="The switch controls WAF protection status for this specific location">
                     <i class="fa fa-question-circle"></i>
@@ -86,7 +86,7 @@
           <div class="form-group form-inline">
             <label for="enableWafLearnMode" class="col-sm-3 control-label">Learning Mode</label>
             <div class="col-md-9">
-              <toggle-switch name="enableWafLearnMode" is-disabled="_loading" ng-model="item.enable_learning_mode" on-label="On" off-label="Off">
+              <toggle-switch name="enableWafLearnMode" is-disabled="_loading || _isEditLocked" ng-model="item.enable_learning_mode" on-label="On" off-label="Off">
               </toggle-switch>
               <label for="enableWafLearnMode" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="The Learning Mode allows to collect security exceptions on real customer traffic without actually blocking flagged requests. Later the collected infomation can be used to automatically generate white-listing WAF rules for this specific web application.">
                     <i class="fa fa-question-circle"></i>
@@ -97,7 +97,7 @@
           <div class="form-group form-inline">
             <label for="enableSQLInjectionLib" class="col-sm-3 control-label">Enable Analysis for SQL Injection</label>
             <div class="col-md-9">
-              <toggle-switch name="enableSQLInjectionLib" is-disabled="_loading" ng-model="item.enable_sql_injection_lib" on-label="On"
+              <toggle-switch name="enableSQLInjectionLib" is-disabled="_loading || _isEditLocked" ng-model="item.enable_sql_injection_lib" on-label="On"
                 off-label="Off">
               </toggle-switch>
               <label for="enableSQLInjectionLib" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="This switch enables automatic detection of possible SQL Injection attacks">
@@ -109,7 +109,7 @@
           <div class="form-group form-inline">
             <label for="enableXSSInjectionLib" class="col-sm-3 control-label">Enable Analysis for XSS Injection</label>
             <div class="col-md-9">
-              <toggle-switch name="enableXSSInjectionLib" is-disabled="_loading" ng-model="item.enable_xss_injection_lib" on-label="On"
+              <toggle-switch name="enableXSSInjectionLib" is-disabled="_loading || _isEditLocked" ng-model="item.enable_xss_injection_lib" on-label="On"
                 off-label="Off">
               </toggle-switch>
               <label for="enableXSSInjectionLib" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="This switch enables automatic detection of XSS Injection attacks">
@@ -118,9 +118,9 @@
             </div>
           </div>
           <hr>
-          <domain-waf-rules ng-model="item.waf_rules" waf-rules-list="$ctrl.wafRulesList"></domain-waf-rules>
+          <domain-waf-rules ng-model="item.waf_rules" waf-rules-list="$ctrl.wafRulesList" is-edit-locked="_isEditLocked"></domain-waf-rules>
           <hr>
-          <domain-waf-actions-list ng-model="item.waf_actions"></domain-waf-actions-list>
+          <domain-waf-actions-list ng-model="item.waf_actions" is-edit-locked="_isEditLocked"></domain-waf-actions-list>
         </div>
       </div>
     </div>

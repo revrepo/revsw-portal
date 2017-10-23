@@ -694,7 +694,7 @@
                 </div>
               </div>
               <!-- WAF Locations list-->
-              <domain-waf-locations id="wafLocationsBlock" account-id="{{model.account_id}}" ng-if="model.rev_component_bp.enable_waf" ng-model="model.rev_component_bp.waf"></domain-waf-locations>
+              <domain-waf-locations id="wafLocationsBlock" account-id="{{model.account_id}}" ng-if="model.rev_component_bp.enable_waf" ng-model="model.rev_component_bp.waf" is-edit-locked="_isEditLocked"></domain-waf-locations>
               <!-- //  “WAF” -->
               <hr>
             </uib-tab>
