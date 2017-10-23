@@ -17,26 +17,26 @@
   </div>
   <div class="modal-body">
      <form class="form-horizontal" name="editForm" novalidate>
-         <div class="form-group" ng-class="{'has-error': editForm.gitHubUrlDomainConfigurationFile.$invalid && editForm.gitHubUrlDomainConfigurationFile.$dirty}">
-                <label for="gitHubUrlDomainConfigurationFile" class="col-sm-3 control-label">GitHub URL For Domain Configuration File *</label>
+         <div class="form-group" ng-class="{'has-error': editForm.newGitHubUrlDomainConfigurationFile.$invalid && editForm.newGitHubUrlDomainConfigurationFile.$dirty}">
+                <label for="newGitHubUrlDomainConfigurationFile" class="col-sm-3 control-label">GitHub URL For Domain Configuration File *</label>
                 <div class="col-sm-9">
-                  <input type="text" class="form-control inline-block" ng-disabled="_loading" ng-model="newGitHubIntegrationSettings.github_url" id="gitHubUrlDomainConfigurationFile" name="gitHubUrlDomainConfigurationFile" placeholder="GitHub URL" ng-maxlength="300" required>
-                  <label for="gitHubUrlDomainConfigurationFile" class="text-info" popover-append-to-body="false" popover-placement="left"  popover-trigger="mouseenter" uib-popover="Provide here a GitHub URL pointing to a JSON file holding the domain’s configuration. The initial version of the configuration file can be taken from the ‘Advanced Mode’ window.">
+                  <input type="text" class="form-control inline-block" ng-disabled="_loading" validate-url-json-file ng-model="newGitHubIntegrationSettings.github_url" id="newGitHubUrlDomainConfigurationFile" name="newGitHubUrlDomainConfigurationFile" placeholder="GitHub URL" ng-maxlength="300" required>
+                  <label for="newGitHubUrlDomainConfigurationFile" class="text-info" popover-append-to-body="false" popover-placement="left"  popover-trigger="mouseenter" uib-popover="Provide here a GitHub URL pointing to a JSON file holding the domain’s configuration. The initial version of the configuration file can be taken from the ‘Advanced Mode’ window.">
                     <i class="fa fa-question-circle"></i>
                   </label>
-                  <div class="error-messages" ng-messages="editForm.gitHubUrlDomainConfigurationFile.$error" role="alert" ng-messages-multiple>
+                  <div class="error-messages" ng-messages="editForm.newGitHubUrlDomainConfigurationFile.$error" role="alert" ng-messages-multiple>
                     <div ng-messages-include="parts/shared/error-messages.html"></div>
                   </div>
                 </div>
               </div>
-        <div class="form-group" ng-class="{'has-error': editForm.gitHubPersonalAPIAccessToken.$invalid && editForm.gitHubPersonalAPIAccessToken.$dirty}">
-                <label for="gitHubPersonalAPIAccessToken" class="col-sm-3 control-label">GitHub Personal API Access Token *</label>
+              <div class="form-group" ng-class="{'has-error': editForm.newGitHubIntegrationSettings.$invalid && editForm.newGitHubIntegrationSettings.$dirty}">
+                <label for="newGitHubIntegrationSettings" class="col-sm-3 control-label">GitHub Personal API Access Token *</label>
                 <div class="col-sm-9">
-                  <input type="text" class="form-control inline-block" ng-disabled="_loading" ng-model="newGitHubIntegrationSettings.github_personal_api_key" id="gitHubPersonalAPIAccessToken" name="gitHubPersonalAPIAccessToken" placeholder="GitHub Personal API Access Token" ng-maxlength="40" required>
-                  <label for="gitHubPersonalAPIAccessToken" class="text-info" popover-append-to-body="false" popover-placement="left"  popover-trigger="mouseenter" uib-popover="Specify here GitHub Personal API Access Token generated via GitHub's UI (page https://github.com/settings/tokens) and granted with permissions to access the domain configuration file">
+                  <input type="text" class="form-control inline-block" validate-github-personal-access-token ng-disabled="_loading" ng-model="newGitHubIntegrationSettings.github_personal_api_key" id="newGitHubIntegrationSettings" name="newGitHubIntegrationSettings" placeholder="GitHub Personal API Access Token" ng-maxlength="40" required>
+                  <label for="newGitHubIntegrationSettings" class="text-info" popover-append-to-body="false" popover-placement="left"  popover-trigger="mouseenter" uib-popover="Specify here GitHub Personal API Access Token generated via GitHub's UI (page https://github.com/settings/tokens) and granted with permissions to access the domain configuration file">
                     <i class="fa fa-question-circle"></i>
                   </label>
-                  <div class="error-messages" ng-messages="editForm.gitHubPersonalAPIAccessToken.$error" role="alert" ng-messages-multiple>
+                  <div class="error-messages" ng-messages="editForm.newGitHubIntegrationSettings.$error" role="alert" ng-messages-multiple>
                     <div ng-messages-include="parts/shared/error-messages.html"></div>
                   </div>
                 </div>
