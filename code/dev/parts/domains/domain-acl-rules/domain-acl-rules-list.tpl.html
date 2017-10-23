@@ -8,6 +8,6 @@
     <div class="panel-title"> End User Access Conditions:</div>
   </div>
   <div class="panel-body" ng-repeat="itemAcl in $ctrl.aclRulesList">
-    <domain-acl-rules-item ng-model="itemAcl" on-call-remove="$ctrl.onRemoveACLRule(index)"></domain-acl-rules-item>
+    <domain-acl-rules-item ng-model="itemAcl" on-call-remove="$ctrl.onRemoveACLRule(index)" is-edit-locked="_isEditLocked"></domain-acl-rules-item>
   </div>
 </div>

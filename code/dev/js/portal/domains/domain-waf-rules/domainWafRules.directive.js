@@ -19,7 +19,8 @@
       scope: true,
       bindToController: {
         domainWAFRules: '=ngModel',
-        wafRulesList: '=wafRulesList'
+        wafRulesList: '=wafRulesList',
+        _isEditLocked: '=isEditLocked'
       },
       templateUrl: 'parts/domains/domain-waf-rules/domain-waf-rules.tpl.html',
       controllerAs: '$ctrl',
@@ -61,6 +62,9 @@
          * @return {Boolean|Integer}
          */
         this.onUpWAFRule = function (element) {
+          if($scope._isEditLocked === true){
+            return;
+          }
           var array = $ctrl.orderRecords;
           var index = array.indexOf(element);
           // Item non-existent?
@@ -84,6 +88,9 @@
          * @return {Boolean|Integer}
          */
         this.onDownWAFRule = function (element) {
+          if($scope._isEditLocked === true){
+            return;
+          }
           var array = $ctrl.orderRecords;
           var index = array.indexOf(element);
           // Item non-existent?

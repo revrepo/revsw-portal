@@ -18,7 +18,9 @@
       replace: true,
       scope: true,
       bindToController: {
-        model: '=ngModel'
+        model: '=ngModel',
+        _isEditLocked: '=isEditLocked'
+
       },
       templateUrl: 'parts/domains/domain-the-third-party-links/domain-the-third-party-links.tpl.html',
       controllerAs: '$ctrl',

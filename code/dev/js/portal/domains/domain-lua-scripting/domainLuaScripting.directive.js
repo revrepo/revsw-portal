@@ -19,7 +19,8 @@
       replace: true,
       scope: true,
       bindToController: {
-        domain: '=ngModel'
+        domain: '=ngModel',
+        _isEditLocked: '=isEditLocked'
       },
       templateUrl: 'parts/domains/domain-lua-scripting/domain-lua-scripting.tpl.html',
       controllerAs: '$ctrl',
@@ -48,6 +49,9 @@
          * @return {Boolean|Integer}
          */
         this.onUpItemBP = function(element) {
+          if($scope._isEditLocked === true){
+            return;
+          }
           var array = $ctrl.domain.bp_lua;
           var index = array.indexOf(element);
           // Item non-existent?
@@ -71,6 +75,9 @@
          * @return {Boolean|Integer}
          */
         this.onDownItemBP = function(element) {
+          if($scope._isEditLocked === true){
+            return;
+          }
           var array = $ctrl.domain.bp_lua;
           var index = array.indexOf(element);
           // Item non-existent?
@@ -95,6 +102,9 @@
          * @return
          */
         this.onAddNewItemBP = function() {
+          if($scope._isEditLocked === true){
+            return;
+          }
           var newLuaBlockCode_ = {
             enable: true,
             location: '/',
@@ -116,6 +126,9 @@
          * @return
          */
         this.onRemoveItemBP = function(index) {
+          if($scope._isEditLocked === true){
+            return;
+          }
           $scope.confirm('parts/domains/domain-lua-scripting/modal/confirmModalDeleteLuaBlock.tpl.html', {
               location: $ctrl.domain.bp_lua[index].location
             })
@@ -147,6 +160,9 @@
          * @return {Boolean|Integer}
          */
         this.onUpItemCO = function(element) {
+          if($scope._isEditLocked === true){
+            return;
+          }
           var array = $ctrl.domain.co_lua;
           var index = array.indexOf(element);
           // Item non-existent?
@@ -170,6 +186,9 @@
          * @return {Boolean|Integer}
          */
         this.onDownItemCO = function(element) {
+          if($scope,_isEditLocked === true){
+            return;
+          }
           var array = $ctrl.domain.co_lua;
           var index = array.indexOf(element);
           // Item non-existent?
@@ -195,6 +214,9 @@
          * @return
          */
         this.onAddNewItemCO = function() {
+          if($scope._isEditLocked === true){
+            return;
+          }
           var newLuaBlockCode_ = {
             enable: true,
             location: '/',
@@ -216,6 +238,9 @@
          * @return
          */
         this.onRemoveItemCO = function(index) {
+          if($scope._isEditLocked === true){
+            return;
+          }
           $scope.confirm('parts/domains/domain-lua-scripting/modal/confirmModalDeleteLuaBlock.tpl.html', {
               location: $ctrl.domain.co_lua[index].location
             })
@@ -224,8 +249,6 @@
               AlertService.success('Lua code block has been deleted');
             });
         };
-
-
       }
     };
   }

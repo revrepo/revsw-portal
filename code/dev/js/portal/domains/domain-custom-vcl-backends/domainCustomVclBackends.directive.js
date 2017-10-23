@@ -18,7 +18,8 @@
       replace: true,
       scope: true,
       bindToController: {
-        customVclBackends: '=ngModel'
+        customVclBackends: '=ngModel',
+        _isEditLocked: '=isEditLocked'
       },
       templateUrl: 'parts/domains/domain-custom-vcl-backends/domain-custom-vcl-backends.tpl.html',
       controllerAs: '$ctrl',
@@ -32,6 +33,9 @@
          * @return
          */
         this.onAddNewBackendBlock = function() {
+          if($scope._isEditLocked === true){
+            return;
+          }
           var newBlock = {
             name: '',
             host: '',
@@ -51,6 +55,9 @@
          * @return
          */
         this.onRemoveBackendBlock = function(index) {
+          if($scope._isEditLocked === true){
+            return;
+          }
           $scope.confirm('parts/domains/domain-custom-vcl-backends/modal/confirmModalDeleteBackenBlock.tpl.html', {
               name: $ctrl.customVclBackends[index].name
             })
@@ -113,6 +120,9 @@
          * @return {Boolean|Integer}
          */
         this.onUpBackendBlock = function(element) {
+          if($scope._isEditLocked === true){
+            return;
+          }
           var array = $ctrl.customVclBackends;
           var index = array.indexOf(element);
           // Item non-existent?
@@ -136,6 +146,9 @@
          * @return {Boolean|Integer}
          */
         this.onDownBackendBlock = function(element) {
+          if($scope._isEditLocked === true){
+            return;
+          }
           var array = $ctrl.customVclBackends;
           var index = array.indexOf(element);
           // Item non-existent?
