@@ -6,7 +6,7 @@
     </label>
     <div class="col-md-9">
       <toggle-switch name="enableImageEngine" id="enableImageEngine" ng-model="model.image_engine.enable_image_engine" on-label="On"
-        off-label="Off" is-disabled="_loading" ng-change="onEnableImageEngineChanged($event, model.image_engine.enable_image_engine)">
+        off-label="Off" is-disabled="_loading || _isEditLocked" ng-change="onEnableImageEngineChanged($event, model.image_engine.enable_image_engine)">
       </toggle-switch>
       <label for="enableImageEngine" class="text-info" popover-trigger="mouseenter" uib-popover="This switch controls whether Image Optimization feature should be enabled for the domain. Once enabled Image Optimization will automatically resize served images depending on the maximum screen resolution of end users' devices. Enabling Image Optimization will automatically enable Custom VCL Code feature.">
         <i class="fa fa-question-circle"></i>
@@ -20,7 +20,7 @@
           Image Optimization Token
     </label>
       <div class="col-md-9">
-        <input id="imageEngineToken" type="text" class="form-control inline-block" ng-disabled="_loading" name="imageEngineToken"
+        <input id="imageEngineToken" type="text" class="form-control inline-block" ng-disabled="_loading || _isEditLocked" name="imageEngineToken"
           ng-model="model.image_engine.image_engine_token" placeholder="Image Optimization Token">
         <label for="imageEngineToken" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Optional Image Optimization token value to be used in communication with Image Optimization secondary cache storage">
                     <i class="fa fa-question-circle"></i>
@@ -37,7 +37,7 @@
          Image Optimization Purge API Secret Key
     </label>
       <div class="col-md-9">
-        <input id="imageEngineAPIKey" type="text" class="form-control inline-block" ng-disabled="_loading" name="imageEngineAPIKey"
+        <input id="imageEngineAPIKey" type="text" class="form-control inline-block" ng-disabled="_loading || _isEditLocked" name="imageEngineAPIKey"
           ng-model="model.image_engine.image_engine_api_key" placeholder="API Key">
         <label for="imageEngineAPIKey" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Optional API key value is used for purging of objects from Image Optimization secondary cache storage">
                     <i class="fa fa-question-circle"></i>
@@ -51,7 +51,7 @@
     <div class="form-group" ng-class="{'has-error': editForm.imageEngineOriginServer.$invalid && editForm.imageEngineOriginServer.$dirty}">
       <label for="imageEngineOriginServer" class="col-sm-3 control-label">Image Optimization Secondary Cache Storage</label>
       <div class="col-sm-9">
-        <input type="text" validate-origin-server-name-optional class="form-control inline-block" ng-disabled="_loading" ng-model="model.image_engine.image_engine_origin_server"
+        <input type="text" validate-origin-server-name-optional class="form-control inline-block" ng-disabled="_loading || _isEditLocked" ng-model="model.image_engine.image_engine_origin_server"
           id="imageEngineOriginServer" name="imageEngineOriginServer" placeholder="Origin Server Name" ng-maxlength="150">
         <label for="imageEngineOriginServer" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Optional host name of Image Optimization secondary cache storage">
                     <i class="fa fa-question-circle"></i>
@@ -67,7 +67,7 @@
         Set Default Image Optimization Configuration
       </label>
       <div class="col-md-9">
-        <toggle-switch id="refreshImageEngineConfigurationChBox" name="refreshImageEngineConfiguration" is-disabled="_loading" ng-model="model.image_engine.refresh_image_engine_configuration"
+        <toggle-switch id="refreshImageEngineConfigurationChBox" name="refreshImageEngineConfiguration" is-disabled="_loading || _isEditLocked" ng-model="model.image_engine.refresh_image_engine_configuration"
           on-label="Yes" off-label="No">
         </toggle-switch>
         <label for="refreshImageEngineConfiguration" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter"
