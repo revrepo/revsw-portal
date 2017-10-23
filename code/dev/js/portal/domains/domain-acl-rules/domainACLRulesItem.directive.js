@@ -19,6 +19,7 @@
       scope: true,
       bindToController: {
         aclRule: '=ngModel',
+        _isEditLocked: '=isEditLocked',
         onCallRemove: '&'
       },
       templateUrl: 'parts/domains/domain-acl-rules/domain-acl-rules-item.tpl.html',
