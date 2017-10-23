@@ -713,7 +713,7 @@
                 </div>
               </div>
               <!-- Bot Protection list-->
-              <domain-bot-protection-list id="enableBotProtectionBlock" account-id="{{model.account_id}}" ng-if="model.rev_component_bp.enable_bot_protection" ng-model="model.rev_component_bp.bot_protection"></domain-bot-protection-list>
+              <domain-bot-protection-list id="enableBotProtectionBlock" account-id="{{model.account_id}}" ng-if="model.rev_component_bp.enable_bot_protection" ng-model="model.rev_component_bp.bot_protection" is-edit-locked="_isEditLocked"></domain-bot-protection-list>
               <!-- //  “Bot Protection” -->
               <hr>
             </uib-tab>

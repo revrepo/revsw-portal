@@ -45,8 +45,8 @@
             <div class="pull-right panel-button-right">
               <!-- Actions -->
               <a ng-click="$ctrl.onDuplicateBotProtection($event,item)" class="btn btn-primary btn-xs duplicateBotProtectionBtn" opover-append-to-body="{{true}}"
-                popover-trigger="mouseenter" uib-popover="Duplicate Location"><i class="fa fa-clone"></i> Duplicate Location</a>
-              <a href title="Delete Location" ng-click="$ctrl.onDeleteBotProtection($event,$index)">
+                popover-trigger="mouseenter" uib-popover="Duplicate Location" ng-disabled="_isEditLocked"><i class="fa fa-clone"></i> Duplicate Location</a>
+              <a href title="Delete Location" ng-click="$ctrl.onDeleteBotProtection($event,$index)" ng-disabled="_isEditLocked">
                 <i class="glyphicon glyphicon-remove"></i>
               </a>
             </div>
@@ -60,7 +60,7 @@
           <div class="form-group" ng-class="{'has-error': botProtectionEditForm.botProtectionLocation.$invalid && botProtectionEditForm.botProtectionLocation.$dirty}">
             <label for="botProtectionLocation" class="col-sm-3 control-label">Location *</label>
             <div class="col-sm-9">
-              <input type="text" class="form-control inline-block" ng-disabled="_loading" ng-model="item.location" name="botProtectionLocation"
+              <input type="text" class="form-control inline-block" ng-disabled="_loading || _isEditLocked" ng-model="item.location" name="botProtectionLocation"
                 placeholder="like '/my_url/'" ng-maxlength="150" validate-bot-protection-location-name required>
               <label for="botProtectionLocation" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Specify here a website path like '/' or '/images/'. Bot Protection configuration from this specific block will be applied to the specific path.">
                 <i class="fa fa-question-circle"></i>
@@ -74,8 +74,8 @@
           <div class="form-group" ng-class="{'has-error': botProtectionEditForm.mode.$invalid && botProtectionEditForm.mode.$dirty}">
             <label for="mode" class="col-sm-3 control-label">Mode</label>
             <div class="col-md-9">
-              <input type="hidden" ng-model="item.mode" name="mode" class="form-control inline-block" required>
-              <select class="form-control inline-block" ng-model="item.mode" ng-options="key as item for  (key ,item) in $ctrl.modeTypes">
+              <input type="hidden" ng-disabled="_isEditLocked" ng-model="item.mode" name="mode" class="form-control inline-block" required>
+              <select class="form-control inline-block" ng-disabled="_isEditLocked" ng-model="item.mode" ng-options="key as item for  (key ,item) in $ctrl.modeTypes">
                  <!-- <option value="">All Zones</option> -->
               </select>
               <label for="mode" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Bot Protection has three modes of operation: Disable mode will deactivate protection for the specific location but will leave the configuration intact; Monitor mode will collect analytics about bad and good bots but will not actually block any requests; Active Protection mode will protect the content from bad bots depending on ShieldSquare configuration for the domain.">
@@ -90,7 +90,7 @@
           <div class="form-group" ng-class="{'has-error': botProtectionEditForm.callType.$invalid && botProtectionEditForm.callType.$dirty}">
             <label for="callType" class="col-sm-3 control-label">Call Type *</label>
             <div class="col-md-9">
-              <input type="number" ng-model="item.call_type" ng-min="1" ng-max="6" name="callType" class="form-control inline-block" required>
+              <input type="number" ng-disabled="_isEditLocked" ng-model="item.call_type" ng-min="1" ng-max="6" name="callType" class="form-control inline-block" required>
               <label for="callType" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Internal parameter (please set it to 1)">
                     <i class="fa fa-question-circle"></i>
                   </label>
@@ -103,7 +103,7 @@
           <div class="form-group" ng-class="{'has-error': botProtectionEditForm.usernameCookieName.$invalid && botProtectionEditForm.usernameCookieName.$dirty}">
             <label for="usernameCookieName" class="col-sm-3 control-label">Username Cookie Name</label>
             <div class="col-md-9">
-              <input type="text" ng-model="item.username_cookie_name" name="usernameCookieName" class="form-control inline-block">
+              <input type="text" ng-disabled="_isEditLocked" ng-model="item.username_cookie_name" name="usernameCookieName" class="form-control inline-block">
               <label for="usernameCookieName" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="This optional field should be assigned with the name of HTTP cookie used to track username on the website">
                     <i class="fa fa-question-circle"></i>
                   </label>
@@ -116,7 +116,7 @@
           <div class="form-group" ng-class="{'has-error': botProtectionEditForm.sessionidCookieName.$invalid && botProtectionEditForm.sessionidCookieName.$dirty}">
             <label for="sessionidCookieName" class="col-sm-3 control-label">Sessionid Cookie Name</label>
             <div class="col-md-9">
-              <input type="text" ng-model="item.sessionid_cookie_name" name="sessionidCookieName" class="form-control inline-block">
+              <input type="text" ng-disabled="_isEditLocked" ng-model="item.sessionid_cookie_name" name="sessionidCookieName" class="form-control inline-block">
               <label for="sessionidCookieName" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="The optional field should hold the name of HTTP cookie used to track user sessions">
                     <i class="fa fa-question-circle"></i>
                   </label>
@@ -129,7 +129,7 @@
           <div class="form-group" ng-class="{'has-error': botProtectionEditForm.botProtectionID.$invalid && botProtectionEditForm.botProtectionID.$dirty}">
             <label for="botProtectionID" class="col-sm-3 control-label">Bot Protection ID *</label>
             <div class="col-md-9">
-              <input type="text" ng-model="item.bot_protection_id" name="botProtectionID" class="form-control inline-block" required>
+              <input type="text" ng-disabled="_isEditLocked" ng-model="item.bot_protection_id" name="botProtectionID" class="form-control inline-block" required>
               <label for="botProtectionID" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="This field should be configured with production subscriber ID as provisioned in ShieldSquare admin portal">
                     <i class="fa fa-question-circle"></i>
                   </label>
