@@ -20,7 +20,7 @@
             </label>
             <div class="col-md-10">
               <div class="form-group">
-                <textarea id="vclRecv" name="vclRecv" ng-model="$ctrl.customVcl.recv" placeholder="" class="form-control text--courier inline-block" ng-maxlength="40000" ng-disabled="_loading" required>
+                <textarea id="vclRecv" name="vclRecv" ng-model="$ctrl.customVcl.recv" placeholder="" class="form-control text--courier inline-block" ng-maxlength="40000" ng-disabled="_loading || _isEditLocked" required>
                 </textarea>
                 <label for="vclRecv" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enter here a VCL code to be used in Varnish 'vcl_recv' subroutine">
                   <i class="fa fa-question-circle"></i>
@@ -40,7 +40,7 @@
             </label>
             <div class="col-md-10">
               <div class="form-group">
-                <textarea id="vclHit" name="vclHit" ng-model="$ctrl.customVcl.hit" placeholder="" class="form-control text--courier inline-block" ng-maxlength="40000" ng-disabled="_loading" required>
+                <textarea id="vclHit" name="vclHit" ng-model="$ctrl.customVcl.hit" placeholder="" class="form-control text--courier inline-block" ng-maxlength="40000" ng-disabled="_loading || _isEditLocked" required>
                 </textarea>
                 <label for="vclHit" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enter here a VCL code to be used in Varnish 'vcl_hit' subroutine">
                   <i class="fa fa-question-circle"></i>
@@ -60,7 +60,7 @@
             </label>
             <div class="col-md-10">
               <div class="form-group">
-                <textarea id="vclMiss" name="vclMiss" ng-model="$ctrl.customVcl.miss" placeholder="" class="form-control text--courier inline-block" ng-maxlength="40000" ng-disabled="_loading" required>
+                <textarea id="vclMiss" name="vclMiss" ng-model="$ctrl.customVcl.miss" placeholder="" class="form-control text--courier inline-block" ng-maxlength="40000" ng-disabled="_loading || _isEditLocked" required>
                 </textarea>
                 <label for="vclMiss" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enter here a VCL code to be used in Varnish 'vcl_miss' subroutine">
                   <i class="fa fa-question-circle"></i>
@@ -80,7 +80,7 @@
             </label>
             <div class="col-md-10">
               <div class="form-group">
-                <textarea id="vclDeliver" name="vclDeliver" ng-model="$ctrl.customVcl.deliver" placeholder="" class="form-control text--courier inline-block" ng-maxlength="40000" ng-disabled="_loading" required>
+                <textarea id="vclDeliver" name="vclDeliver" ng-model="$ctrl.customVcl.deliver" placeholder="" class="form-control text--courier inline-block" ng-maxlength="40000" ng-disabled="_loading || _isEditLocked" required>
                 </textarea>
                 <label for="vclDeliver" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enter here a VCL code to be used in Varnish 'vcl_deliver' subroutine">
                   <i class="fa fa-question-circle"></i>
@@ -100,7 +100,7 @@
             </label>
             <div class="col-md-10">
               <div class="form-group">
-                <textarea id="vclPass" name="vclPass" ng-model="$ctrl.customVcl.pass" placeholder="" class="form-control text--courier inline-block" ng-maxlength="40000" ng-disabled="_loading" required>
+                <textarea id="vclPass" name="vclPass" ng-model="$ctrl.customVcl.pass" placeholder="" class="form-control text--courier inline-block" ng-maxlength="40000" ng-disabled="_loading || _isEditLocked" required>
                 </textarea>
                 <label for="vclPass" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enter here a VCL code to be used in Varnish 'vcl_pass' subroutine">
                   <i class="fa fa-question-circle"></i>
@@ -120,7 +120,7 @@
             </label>
             <div class="col-md-10">
               <div class="form-group">
-                <textarea id="vclPipe" name="vclPipe" ng-model="$ctrl.customVcl.pipe" placeholder="" class="form-control text--courier inline-block" ng-maxlength="40000" ng-disabled="_loading" required>
+                <textarea id="vclPipe" name="vclPipe" ng-model="$ctrl.customVcl.pipe" placeholder="" class="form-control text--courier inline-block" ng-maxlength="40000" ng-disabled="_loading || _isEditLocked" required>
                 </textarea>
                 <label for="vclPipe" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enter here a VCL code to be used in Varnish 'vcl_pipe' subroutine">
                   <i class="fa fa-question-circle"></i>
@@ -140,7 +140,7 @@
             </label>
             <div class="col-md-10">
               <div class="form-group">
-                <textarea id="vclHash" name="vclHash" ng-model="$ctrl.customVcl.hash" placeholder="" class="form-control text--courier inline-block" ng-maxlength="40000" ng-disabled="_loading" required>
+                <textarea id="vclHash" name="vclHash" ng-model="$ctrl.customVcl.hash" placeholder="" class="form-control text--courier inline-block" ng-maxlength="40000" ng-disabled="_loading || _isEditLocked" required>
                 </textarea>
                 <label for="vclHash" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enter here a VCL code to be used in Varnish 'vcl_hash' subroutine">
                   <i class="fa fa-question-circle"></i>
@@ -160,7 +160,7 @@
             </label>
             <div class="col-md-10">
               <div class="form-group">
-                <textarea id="vclSynth" name="vclSynth" ng-model="$ctrl.customVcl.synth" placeholder="" class="form-control text--courier inline-block" ng-maxlength="40000" ng-disabled="_loading" required>
+                <textarea id="vclSynth" name="vclSynth" ng-model="$ctrl.customVcl.synth" placeholder="" class="form-control text--courier inline-block" ng-maxlength="40000" ng-disabled="_loading || _isEditLocked" required>
                 </textarea>
                 <label for="vclSynth" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enter here a VCL code to be used in Varnish 'vcl_synth' subroutine">
                   <i class="fa fa-question-circle"></i>
@@ -180,7 +180,7 @@
             </label>
             <div class="col-md-10">
               <div class="form-group">
-                <textarea id="vclBackendResponse" name="vclBackendResponse" ng-model="$ctrl.customVcl.backend_response" placeholder="" class="form-control text--courier inline-block" ng-maxlength="40000" ng-disabled="_loading" required>
+                <textarea id="vclBackendResponse" name="vclBackendResponse" ng-model="$ctrl.customVcl.backend_response" placeholder="" class="form-control text--courier inline-block" ng-maxlength="40000" ng-disabled="_loading || _isEditLocked" required>
                 </textarea>
                 <label for="vclBackendResponse" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enter here a VCL code to be used in Varnish 'vcl_backend_response' subroutine">
                   <i class="fa fa-question-circle"></i>
@@ -200,7 +200,7 @@
             </label>
             <div class="col-md-10">
               <div class="form-group">
-                <textarea id="vclBackendError" name="vclBackendError" ng-model="$ctrl.customVcl.backend_error" placeholder="" class="form-control text--courier inline-block" ng-maxlength="40000" ng-disabled="_loading" required>
+                <textarea id="vclBackendError" name="vclBackendError" ng-model="$ctrl.customVcl.backend_error" placeholder="" class="form-control text--courier inline-block" ng-maxlength="40000" ng-disabled="_loading || _isEditLocked" required>
                 </textarea>
                 <label for="vclBackendError" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enter here a VCL code to be used in Varnish 'vcl_backend_response' subroutine">
                   <i class="fa fa-question-circle"></i>
@@ -227,7 +227,7 @@
         <!-- </uib-accordion-group> -->
       </uib-accordion>
       <div class="col-sm-12">
-        <domain-custom-vcl-backends id="backendsBlock" ng-model="$ctrl.customVcl.backends"></domain-custom-vcl-backends>
+        <domain-custom-vcl-backends id="backendsBlock" ng-model="$ctrl.customVcl.backends" is-edit-locked="_isEditLocked"></domain-custom-vcl-backends>
       </div>
     </div>
   </div>
