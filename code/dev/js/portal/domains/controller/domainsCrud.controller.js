@@ -33,6 +33,7 @@
     });
     $scope.isAdvancedMode = ($stateParams.isAdvanced === 'true') ? true : false;
     $state._loading = true;
+    $scope._isEditLocked = false;
     $scope.jsoneditor = {
       options: {
         mode: 'code',
@@ -863,6 +864,7 @@
 
     $scope.$watch('model.github_integration', function(newVal, oldVal) {
       if(newVal !== oldVal && newVal !== undefined) {
+        $scope.updateIsEditLocked();
         if($scope.isAdvancedMode === true) {
           $scope.modelAdvance.github_integration = newVal;
         }
@@ -1049,6 +1051,20 @@
 
     $scope.cancelChanges = function() {
       modalInstanceGitHubSettings.dismiss('cancel');
+    };
+    /**
+     * @name  updateEditLocked
+     * @description all situations for to set isEditLocked equal "true"
+     */
+    $scope.updateEditLocked = function(){
+      if($scope.isReadOnly() === true) {
+        $scope._isEditLocked = true;
+      } else if($scope.model.github_integration && $scope.model.github_integration.enable === true){
+        $scope._isEditLocked = true;
+      } else {
+        $scope._isEditLocked = false;
+      }
+      return $scope._isEditLocked;
     };
   }
 
