@@ -10,7 +10,7 @@
     </div>
     <div class="form-group pull-right">
       <div class="col-sm-12">
-        <a id="addNewWAFLocationBtn" ng-click="$ctrl.onAddNewWAFLocation(true)" class="btn btn-primary btn-sm " title="Add New WAF Location"
+        <a id="addNewWAFLocationBtn" ng-click="$ctrl.onAddNewWAFLocation(true)" ng-class="{'disabled':_isEditLocked}" class="btn btn-primary btn-sm " title="Add New WAF Location"
           opover-append-to-body="{{true}}" popover-trigger="mouseenter" popover-placement=" left" uib-popover="Add New WAF Location"><i class="glyphicon glyphicon-plus"></i></a>
       </div>
     </div>
@@ -37,16 +37,16 @@
                 <i class="glyphicon glyphicon-chevron-down"></i>
               </a>
               <!-- WAF Location Up  -->
-              <a class="btn btn-default btn-xs" href="" ng-click="$ctrl.onUpWAFLocation($event,item)"><i class="glyphicon glyphicon-arrow-up " title="Move One Position Up"></i></a>
+              <a ng-class="{'disabled':_isEditLocked}" class="btn btn-default btn-xs" href="" ng-click="$ctrl.onUpWAFLocation($event,item)"><i class="glyphicon glyphicon-arrow-up " title="Move One Position Up"></i></a>
               <!--  WAF Location Down  -->
-              <a class="btn btn-default btn-xs" href="" ng-click="$ctrl.onDownWAFLocation($event,item)"><i class="glyphicon glyphicon-arrow-down" title="Move One Position Down"></i></a>
+              <a ng-class="{'disabled':_isEditLocked}" class="btn btn-default btn-xs" href="" ng-click="$ctrl.onDownWAFLocation($event,item)"><i class="glyphicon glyphicon-arrow-down" title="Move One Position Down"></i></a>
               <!-- // -->
             </div>
             <div class="pull-right panel-button-right">
               <div class="location-panel-into--totals inline-block">Rules:<strong> {{item.waf_rules.length}}</strong>, Actions: <strong>{{item.waf_actions.length}}</strong> </div>
               <!-- Actions -->
-              <a ng-click="$ctrl.onDuplicateWAFLocation($event,item)" class="btn btn-primary btn-xs duplicateWAFLocationBtn" opover-append-to-body="{{true}}"
-                popover-trigger="mouseenter" uib-popover="Duplicate WAF Location" ng-class="{'disabled':_isEditLocked}"><i class="fa fa-clone"></i> Duplicate Location</a>
+              <a ng-click="$ctrl.onDuplicateWAFLocation($event,item)" ng-class="{'disabled':_isEditLocked}" class="btn btn-primary btn-xs duplicateWAFLocationBtn" opover-append-to-body="{{true}}"
+                popover-trigger="mouseenter" uib-popover="Duplicate WAF Location"><i class="fa fa-clone"></i> Duplicate Location</a>
               <a href title="Delete Location" ng-click="$ctrl.onDeleteWAFLocation($event,$index)" ng-class="{'disabled':_isEditLocked}">
                 <i class="glyphicon glyphicon-remove"></i>
               </a>
