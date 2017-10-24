@@ -49,7 +49,7 @@
          * @return
          */
         this.onDelete = function (index) {
-          if($scop._isEditLocked === true){
+          if($scope._isEditLocked === true){
             return;
           }
           var modalInstance = $uibModal.open({
