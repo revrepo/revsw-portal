@@ -229,7 +229,7 @@
         this.onUpBotProtection = function (e, element) {
           e.preventDefault();
           e.stopPropagation();
-          if($scope._isEditLocked === truen){
+          if($scope._isEditLocked === true){
             return;
           }
           var array = $ctrl.botProtection;

@@ -19,7 +19,7 @@
       scope: true,
       bindToController: {
         end_user_response_headers: '=ngModel',
-        _isEdtidLocked: '=isEditLocked'
+        _isEditLocked: '=isEditLocked'
       },
       templateUrl: 'parts/domains/end-user-response-headers/end-user-response-headers.tpl.html',
       controllerAs: '$ctrl',
@@ -35,7 +35,7 @@
          * @return
          */
         this.onAddNew = function(newEndUserResponseHeader) {
-          if($scope._isEdtidLocked === true){
+          if($scope._isEditLocked === true){
             return;
           }
           if (!_.isArray($ctrl.end_user_response_headers)) {
@@ -45,7 +45,7 @@
         };
 
         this.onDelete = function(index) {
-          if($scope._isEdtidLocked === true){
+          if($scope._isEditLocked === true){
             return;
           }
           // TODO: add confirm modal windows
@@ -60,7 +60,7 @@
          * @return
          */
         this.onDelete = function(index) {
-          if($scope._isEdtidLocked === truen){
+          if($scope._isEditLocked === true){
             return;
           }
           // TODO: add confirm modal windows

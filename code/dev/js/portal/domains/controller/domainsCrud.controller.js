@@ -636,6 +636,9 @@
      * @return
      */
     $scope.onAddNewCachingRule = function (e, isChacheStatic) {
+      if($scope._isEditLocked === true){
+        return;
+      }
       if (e) {
         e.preventDefault();
       }
@@ -703,6 +706,9 @@
      * @return
      */
     $scope.onRemoveCachingRule = function (index) {
+      if($scope._isEditLocked === true){
+        return;
+      }
       $scope.confirm('confirmModalDeleteCachingRule.html', {
         url: $scope.model.rev_component_bp.caching_rules[index].url
       })
@@ -719,6 +725,9 @@
      * @return {Boolean|Integer}
      */
     $scope.onUpCachingRule = function (element) {
+      if($scope._isEditLocked === true){
+        return;
+      }
       var array = $scope.model.rev_component_bp.caching_rules;
       var index = array.indexOf(element);
       // Item non-existent?
@@ -742,6 +751,9 @@
      * @return {Boolean|Integer}
      */
     $scope.onDownCachingRule = function (element) {
+      if($scope._isEditLocked === true){
+        return;
+      }
       var array = $scope.model.rev_component_bp.caching_rules;
       var index = array.indexOf(element);
       // Item non-existent?

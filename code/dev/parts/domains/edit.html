@@ -273,7 +273,7 @@
               <div class="form-group form-inline" ng-class="{'has-error': editForm.proxyTimeout.$invalid && editForm.proxyTimeout.$dirty}">
                 <label for="proxyTimeout" class="col-sm-3 control-label">Data Read Timeout</label>
                 <div class="col-md-9">
-                  <input type="number" id="proxy_timeout" name="proxyTimeout" class="form-control inline-block" ng-disabled="_loading" ng-model="model.proxy_timeout" ng-min="1" ng-max="3600" required> second(s)
+                  <input type="number" id="proxy_timeout" name="proxyTimeout" class="form-control inline-block" ng-disabled="_loading || _isEditLocked" ng-model="model.proxy_timeout" ng-min="1" ng-max="3600" required> second(s)
                   <label for="proxyTimeout" class="text-info" popover-trigger="mouseenter" uib-popover="Proxy data read timeout in seconds (1-3600 range)">
                     <i class="fa fa-question-circle"></i>
                   </label>
@@ -487,8 +487,8 @@
                   </span>
                   <div class="form-group pull-right">
                     <div class="col-sm-12">
-                      <a ng-click="onAddNewCachingRule($event,true)" class="btn btn-primary btn-sm " uib-tooltip="Use the button to add a new caching rule to cache JPG, JPEG, PNG, GIF, WEBP, JS, CSS, WOFF, WOFF2, MP4, SWF, AVI, MPEG and MOV objects for a period of 2 weeks. You can modify the rule to suit your needs."><i class="glyphicon"></i>Cache Static Objects</a>
-                      <a id="addNewCachingRulesBlock" ng-click="onAddNewCachingRule($event)" class="btn btn-primary btn-sm " title="Add New Caching Rule addNewBackendBlock"><i class="glyphicon glyphicon-plus"></i>&nbsp;</a>
+                      <a ng-click="onAddNewCachingRule($event,true)" ng-class="{'disabled': _isEditLocked}" class="btn btn-primary btn-sm " uib-tooltip="Use the button to add a new caching rule to cache JPG, JPEG, PNG, GIF, WEBP, JS, CSS, WOFF, WOFF2, MP4, SWF, AVI, MPEG and MOV objects for a period of 2 weeks. You can modify the rule to suit your needs."><i class="glyphicon"></i>Cache Static Objects</a>
+                      <a id="addNewCachingRulesBlock" ng-click="onAddNewCachingRule($event)" ng-class="{'disabled': _isEditLocked}" class="btn btn-primary btn-sm " title="Add New Caching Rule addNewBackendBlock"><i class="glyphicon glyphicon-plus"></i>&nbsp;</a>
                     </div>
                   </div>
                   <h4><b>Caching Rules</b></h4>
@@ -508,14 +508,14 @@
                             <i class="glyphicon glyphicon-chevron-down"></i>
                           </a>
                           <!--  Caching Rule Up  -->
-                          <a class="btn btn-default btn-xs" href="" ng-click="onUpCachingRule(caching_rule)"><i class="glyphicon glyphicon-arrow-up" title="Move One Position Up"></i></a>
+                          <a ng-class="{'disabled': _isEditLocked}" class="btn btn-default btn-xs" href="" ng-click="onUpCachingRule(caching_rule)"><i class="glyphicon glyphicon-arrow-up" title="Move One Position Up"></i></a>
                           <!--  Caching Rule Down  -->
-                          <a class="btn btn-default btn-xs" href="" ng-click="onDownCachingRule(caching_rule)"><i class="glyphicon glyphicon-arrow-down" title="Move One Position Down"></i></a>
+                          <a ng-class="{'disabled': _isEditLocked}" class="btn btn-default btn-xs" href="" ng-click="onDownCachingRule(caching_rule)"><i class="glyphicon glyphicon-arrow-down" title="Move One Position Down"></i></a>
                           <!-- // -->
                         </div>
                         <div class="pull-right panel-button-right">
                           <!-- remove widget -->
-                          <a href="" title="Remove Rule" ng-click="onRemoveCachingRule($index)" ng-if="!editMode">
+                          <a ng-class="{'disabled': _isEditLocked}" href="" title="Remove Rule" ng-click="onRemoveCachingRule($index)" ng-if="!editMode">
                             <i class="glyphicon glyphicon-remove"></i>
                           </a>
                         </div>
