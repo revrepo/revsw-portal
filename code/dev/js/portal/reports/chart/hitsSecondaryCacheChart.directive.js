@@ -51,7 +51,7 @@
           return params;
         }
 
-        $scope.heading = 'Edge Secondary Cache Efficiency Hits';
+        $scope.heading = 'Secondary Cache Efficiency Hits';
         $scope._loading = false;
         $scope.hasFailedToLoadData = false;
         $scope.filters = {
