@@ -157,6 +157,7 @@
       vm._loading = true;
 
       vm.reloadCacheStatus(vm.filters);
+      vm.reloadSecondaryCacheStatus(vm.filters);
 
       var params_ = angular.merge({
         domainId: vm.domain.id
@@ -176,7 +177,6 @@
      *
      */
     vm.onDomainSelected = function(model) {
-      // console.log('---', vm.domain);
       if (!vm.domain || !vm.domain.id) {
         return;
       }
@@ -184,7 +184,7 @@
 
       //  reload all lists for filters
       var now = Date.now();
-
+      // NOTE: update filter data
       Stats.topLists({
         domainId: vm.domain.id,
         from_timestamp: (now - 86400000 /*day in ms*/ ),
@@ -201,6 +201,7 @@
       });
     };
 
+    vm.cacheStatus = [];
     /**
      * @name vm.reloadCacheStatus
      * @desc reloads cache status chart data
@@ -210,9 +211,8 @@
       filters = angular.merge({
         domainId: vm.domain.id
       }, generateFilterParams(vm.filters));
-      // console.log(filters)
 
-      vm.cacheStatus = [];
+      vm.cacheStatus.length = 0;
       Stats
         .cacheStatus(filters)
         .$promise
@@ -228,6 +228,38 @@
             if (newData.length === 2 &&
               (newData[0].y > 0 || newData[1].y > 0)) {
               vm.cacheStatus = newData;
+            }
+          }
+        });
+    };
+
+    vm.secondaryCacheStatusData = [];
+    /**
+      * @name vm.reloadCacheStatus
+      * @desc reloads cache status chart data
+      * @kind function
+      */
+    vm.reloadSecondaryCacheStatus = function(filters) {
+      filters = angular.merge({
+        domainId: vm.domain.id
+      }, generateFilterParams(vm.filters));
+
+      vm.secondaryCacheStatusData.length = 0;
+      Stats
+        .secondaryCacheStatus(filters)
+        .$promise
+        .then(function(data) {
+          if(data.data && data.data.length > 0) {
+            var newData = [];
+            angular.forEach(data.data, function(val) {
+              newData.push({
+                name: val.key,
+                y: val.count
+              });
+            });
+            if(newData.length === 2 &&
+              (newData[0].y > 0 || newData[1].y > 0)) {
+              vm.secondaryCacheStatusData = newData;
             }
           }
         });
