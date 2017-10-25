@@ -98,6 +98,26 @@
               </div>
             </div>
           </div>
+          <!-- Secondary Cahce Data -->
+          <div class="row report_edge_cache_line_chart__view_container">
+            <div class="row">
+              <div class="col-sm-12 col-md-6">
+                <div class="col-lg-12 _nd-block">
+                  <div style="min-width: 480px; min-height: 350px" hits-secondary-cache-chart ng-domain="vm.domain" filters-sets="vm.filtersExternal"
+                    hide-filters="true">
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-6">
+                <div class="col-sm-12 _nd-block">
+                  <h3>Secondary Cache Hit/Miss Ratio</h3>
+                  <div>
+                    <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="vm.secondaryCacheStatusData"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
