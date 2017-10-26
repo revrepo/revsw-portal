@@ -172,6 +172,26 @@
             </div>
           </div>
         </uib-accordion-group>
+        <uib-accordion-group heading="'Backend Fetch' Function">
+          <!--â~@~\"Backend Fetch" Function" - attribute â~@~\rev_component_bp.custom_vcl.backend_fetch"-->
+          <div class="form-group" ng-class="{ 'has-error': customVCLForm.vclBackendFetch.$invalid && customVCLForm.vclBackendFetch.$dirty }">
+            <label for="vclBackendFetch" class="col-sm-2 control-label">
+              "Backend Fetch" Function *
+            </label>
+            <div class="col-md-10">
+              <div class="form-group">
+                <textarea id="vclBackendFetch" name="vclBackendFetch" ng-model="$ctrl.customVcl.backend_fetch" placeholder="" class="form-control text--courier inline-block" ng-maxlength="40000" ng-disabled="_loading || _isEditLocked" required>
+                </textarea>
+                <label for="vclBackendFetch" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enter here a VCL code to be used in Varnish 'vcl_backend_fetch' subroutine">
+                  <i class="fa fa-question-circle"></i>
+                </label>
+              </div>
+              <div class="error-messages" ng-messages="customVCLForm.vclBackendFetch.$error" role="alert" ng-messages-multiple>
+                <div ng-messages-include="parts/shared/error-messages.html"></div>
+              </div>
+            </div>
+          </div>
+        </uib-accordion-group>
         <uib-accordion-group heading="'Backend Response' Function">
           <!--â€œ"Backend Response" Function" - attribute â€œrev_component_bp.custom_vcl.backend_response"-->
           <div class="form-group" ng-class="{ 'has-error': customVCLForm.vclBackendResponse.$invalid && customVCLForm.vclBackendResponse.$dirty }">
