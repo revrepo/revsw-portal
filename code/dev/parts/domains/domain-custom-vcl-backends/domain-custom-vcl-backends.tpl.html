@@ -9,7 +9,8 @@
               <i class="glyphicon glyphicon-chevron-down"></i>
             </a>
           </span>
-    <span id="addNewBackendBlock" ng-click="$ctrl.onAddNewBackendBlock()" class="btn btn-primary btn-sm pull-right" ng-class="{'disabled': _isEditLocked}" title="Add New Backend Block"><i class="glyphicon glyphicon-plus"></i></span>
+    <span id="addNewBackendBlock" ng-click="$ctrl.onAddNewBackendBlock()" class="btn btn-primary btn-sm pull-right" ng-class="{'disabled': _isEditLocked}"
+      title="Add New Backend Block"><i class="glyphicon glyphicon-plus"></i></span>
     <h4><b>Backends</b></h4>
   </div>
   <div class="panel-body">
@@ -46,7 +47,8 @@
           <label for="backendName" class="col-sm-3 control-label">
             Backend Name *</label>
           <div class="col-sm-9">
-            <input type="text" class="form-control inline-block" ng-model="item.name" ng-disabled="_loading || _isEditLocked" id="origin_host_header" name="backendName" placeholder="" ng-maxlength="255" required>
+            <input type="text" class="form-control inline-block" ng-model="item.name" ng-disabled="_loading || _isEditLocked" id="origin_host_header"
+              name="backendName" placeholder="" ng-maxlength="255" required>
             <label for="backendName" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Use the field to name the backend. In VCL functions the backend can be referenced using internal function “REV_BACKEND()">
               <i class="fa fa-question-circle"></i>
             </label>
@@ -60,9 +62,10 @@
           <label for="vclHit" class="col-sm-3 control-label">
             Backend VCL Code *</label>
           <div class="col-sm-9">
-              <textarea id="vclHit" name="vclHit" ng-model="item.vcl" placeholder="" class="form-control text--courier inline-block" ng-maxlength="40000" ng-disabled="_loading || _isEditLocked">
+            <textarea id="vclHit" name="vclHit" ng-model="item.vcl" placeholder="" class="form-control text--courier inline-block" ng-maxlength="40000"
+              ng-disabled="_loading || _isEditLocked" required>
               </textarea>
-              <label for="vclHit" popover-append-to-body="{{true}}" class="text-info" popover-trigger="mouseenter" uib-popover="Use the text field to specify Varnish’s 'backend' code">
+            <label for="vclHit" popover-append-to-body="{{true}}" class="text-info" popover-trigger="mouseenter" uib-popover="Use the text field to specify Varnish’s 'backend' code">
                 <i class="fa fa-question-circle"></i>
               </label>
             <div class="error-messages" ng-messages="customVclBackendForm.vclHit.$error" role="alert" ng-messages-multiple>
@@ -75,7 +78,8 @@
           <label for="dynamicOriginDNSnameLookups" class="col-sm-3 control-label">
             Dynamic Origin DNS Name Lookups</label>
           <div class="col-sm-9">
-            <toggle-switch id="dynamicOriginDNSnameLookups" name="dynamicOriginDNSnameLookups" is-disabled="_loading || _isEditLocked" ng-model="item.dynamic" on-label="On" off-label="Off">
+            <toggle-switch id="dynamicOriginDNSnameLookups" name="dynamicOriginDNSnameLookups" is-disabled="_loading || _isEditLocked"
+              ng-model="item.dynamic" on-label="On" off-label="Off">
             </toggle-switch>
             <label for="dynamic" class="text-info" popover-trigger="mouseenter" uib-popover="Enables/disables dynamic DNS lookups (respecting of DNS TTL) of origin host DNS names">
               <i class="fa fa-question-circle"></i>
@@ -88,7 +92,8 @@
             Origin TCP Port *
           </label>
           <div class="col-md-9">
-            <input type="number" id="proxy_timeout" name="backendOriginTCPPort" class="form-control inline-block" ng-disabled="_loading || _isEditLocked" ng-model="item.port" ng-min="1" ng-max="65536" required>
+            <input type="number" id="proxy_timeout" name="backendOriginTCPPort" class="form-control inline-block" ng-disabled="_loading || _isEditLocked"
+              ng-model="item.port" ng-min="1" ng-max="65536" required>
             <label for="backendOriginTCPPort" class="text-info" popover-trigger="mouseenter" uib-popover="Origin TCP Port (range 1-65536)">
               <i class="fa fa-question-circle"></i>
             </label>
@@ -102,7 +107,8 @@
           <label for="originHost" class="col-sm-3 control-label">
             Origin Host *</label>
           <div class="col-sm-9">
-            <input type="text" validate-origin-server-name class="form-control inline-block" ng-disabled="_loading || _isEditLocked" ng-model="item.host" id="originHost" name="originHost" placeholder="Origin Host" ng-maxlength="50" required>
+            <input type="text" validate-origin-server-name class="form-control inline-block" ng-disabled="_loading || _isEditLocked"
+              ng-model="item.host" id="originHost" name="originHost" placeholder="Origin Host" ng-maxlength="50" required>
             <label for="originHost" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Enter here a domain name or IPv4 address of the origin server">
               <i class="fa fa-question-circle"></i>
             </label>
