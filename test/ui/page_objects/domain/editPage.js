@@ -20,6 +20,7 @@
 
 // Requiring `domain form` component page object
 var DomainForm = require('./form');
+var FormGitHubIntegrationSettings = require('./formGitHubIntegrationSettings');
 var WebElement = require('./../../common/helpers/webElement');
 var BROWSER_WAIT_TIMEOUT = 420000; // 7 mins
 var WafRulesTable = require('./wafRulesTable/table');
@@ -62,6 +63,17 @@ var EditDomain = {
       },
       expandWafRules: {
         css: '.btn[ng-click="$ctrl.onExpandAllWAFLocations()"]'
+      },
+      btnManageGitHubIntegration:{
+        id: 'btnManageGitHubIntegration'
+      }
+    },
+    switches:{
+      mainAttrs: {
+        ariaChecked: 'aria-checked'
+      },
+      gitHubIntegration:{
+        id: 'switch_github_integration'
       }
     },
     links: {
@@ -85,7 +97,8 @@ var EditDomain = {
   // `Edit Domain` Page is compound mainly by a form. This property makes
   // reference to the DomainForm Page Object to interact with it.
   form: DomainForm,
-
+  //
+  formGitHubIntegrationSettings: FormGitHubIntegrationSettings,
   // ## Methods to retrieve references to UI elements (Selenium WebDriver
   // Element)
 
@@ -142,6 +155,63 @@ var EditDomain = {
   getBasicModeBtn: function () {
     return element(
       by.partialLinkText(this.locators.buttons.basicMode.linkText));
+  },
+  /**
+  * ### EditDomain.getGitHubIntegrationSw()
+  *
+  * Returns the reference to the `GitHub Integration` switch (Selenium WebDriver
+  * Element) from the Edit Domain page from the Portal app.
+  *
+  * @returns {Object} Selenium WebDriver Element
+  */
+  getGitHubIntegrationSw: function() {
+    return element(by.id(this.locators.switches.gitHubIntegration.id));
+  },
+  /**
+   *### EditDomain.getGitHubIntegrationSwitchBtnValue()
+   *
+   *  Return the value from switch element
+   * @return {String} value as string ('true','false')
+   */
+  getGitHubIntegrationSwitchBtnValue: function() {
+    return this.getGitHubIntegrationSw
+      .getAttribute(this.locators.switches.mainAttrs.ariaChecked)
+      .then(function(data) {
+        return data;
+      });
+  },
+
+  /**
+  *
+  * setToSwitchBtnValue
+  * 'ON' or 'off'
+  *
+  */
+  setToSwitchBtnValue: function(getCbElement, onOff) {
+    getCbElement
+      .getAttribute(this.locators.switches.mainAttrs.ariaChecked)
+      .then(function(data) {
+        if(onOff && data !== 'true') {
+          getCbElement.click();
+        }
+
+        if(!onOff && data !== 'false') {
+          getCbElement.click();
+        }
+      });
+  },
+  /**
+   * ### EditDomain.getManageGitHubIntegrationBtn()
+   *
+   * Returns the reference to the `Manage GitHub Integration` button
+   * (Selenium WebDriver Element) from the Edit Basic Domain page
+   * from the Portal app.
+   *
+   * @returns {Object} Selenium WebDriver Element
+   */
+  getManageGitHubIntegrationBtn: function() {
+    return element(
+      by.id(this.locators.buttons.btnManageGitHubIntegration.id));
   },
 
   /**
@@ -317,7 +387,19 @@ var EditDomain = {
       .getEditDomainLink(numberLink || 0)
       .click();
   },
-
+  /**
+   * ### EditDomain.clickManageGitHubIntegration()
+   *
+   * Triggers a click on the `Manage GitHub Integration` button
+   * from the Edit Domain page from the Portal app.
+   *
+   * @returns {Promise}
+   */
+  clickManageGitHubIntegration: function() {
+    return this
+      .getManageGitHubIntegrationBtn()
+      .click();
+  },
 
   /**
    *
