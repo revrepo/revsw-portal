@@ -24,8 +24,7 @@ describe('Smoke', function () {
 
   // Defining set of users for which all below tests will be run
   var users = [
-// TODO: need to enable "user" role too
-//    config.get('portal.users.user'),
+    config.get('portal.users.user'),
     config.get('portal.users.admin'),
     config.get('portal.users.revAdmin'),
     config.get('portal.users.reseller')
@@ -63,6 +62,20 @@ describe('Smoke', function () {
             Portal.domains.listPage.searchAndClickEdit(myDomain.name);
             var backToListButton = Portal.domains.editPage.getBackToListBtn();
             expect(backToListButton.isPresent()).toBeTruthy();
+          });
+
+        it('should display "Manage GitHub Integration" button',
+          function() {
+            Portal.domains.listPage.searchAndClickEdit(myDomain.name);
+            var manageGitHubIntegrationButton = Portal.domains.editPage.getManageGitHubIntegrationBtn();
+            expect(manageGitHubIntegrationButton.isPresent()).toBeTruthy();
+          });
+
+        it('should display "GitHub Integration" switch',
+          function() {
+            Portal.domains.listPage.searchAndClickEdit(myDomain.name);
+            var gitHubIntegrationSw = Portal.domains.editPage.getGitHubIntegrationSw();
+            expect(gitHubIntegrationSw.isPresent()).toBeTruthy();
           });
 
         it('should display "Validate" domain button',
