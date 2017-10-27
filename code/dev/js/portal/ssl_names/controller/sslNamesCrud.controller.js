@@ -319,6 +319,9 @@
                   'verification_method': model.verification_method,
                   'verification_email': modelApprove.verification_email
                 };
+              })
+              .catch(function(err){
+                return $q.reject('cancel');
               });
           })
           .then(function createSSLName(createdSSLName) {
