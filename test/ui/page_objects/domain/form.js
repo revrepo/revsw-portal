@@ -974,6 +974,9 @@ var DomainForm = {
   getBotProtectionEnableSw: function () {
     return element(by.id(this.locators.switches.botProtectionEnableSw.id));
   },
+  clickBotProtectionEnableSw: function () {
+    return this.getBotProtectionEnableSw().click();
+  },
   getCustomVCLrulesSw: function () {
     return element(by.id(this.locators.switches.customVCLrules.id));
   },

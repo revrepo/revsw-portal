@@ -34,7 +34,22 @@ describe('Functional', function () {
 
                 beforeAll(function () {
                     Portal.signIn(user);
+                });
+
+                beforeEach(function () {
                     Portal.helpers.nav.goToDNSZones();
+                    Portal
+                        .dnsZones
+                        .listPage
+                        .table
+                        .getFirstRow()
+                        .getZoneName()
+                        .getText().then(function (text) {
+                            Portal
+                                .dnsZones
+                                .listPage
+                                .searchAndGetFirstRow(text);
+                        });
                 });
 
                 afterAll(function () {
@@ -69,6 +84,12 @@ describe('Functional', function () {
                 it('should be displayed when "Back" button is clicked from ' +
                     '"All Account Resources" page',
                     function () {
+                        Portal
+                            .dnsZones
+                            .listPage
+                            .table
+                            .getFirstRow()
+                            .clickAccount();
                         Portal.accountResourcesPage.clickBackButton();
                         expect(Portal.dnsZones.listPage.isDisplayed()).toBeTruthy();
                     });
