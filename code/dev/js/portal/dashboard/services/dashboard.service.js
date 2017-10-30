@@ -107,8 +107,8 @@
             getAll();
             deferred.resolve(model);
           })
-          .error(function() {
-            deferred.reject();
+          .error(function(err) {
+            deferred.reject(err);
           });
         return deferred.promise;
       },
