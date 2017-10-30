@@ -14,6 +14,7 @@
       scope: true,
       bindToController: {
         waf: '=ngModel',
+        _isEditLocked: '=isEditLocked',
         accountId: '@'
       },
       templateUrl: 'parts/domains/domain-waf-locations/domain-waf-locations.tpl.html',
@@ -43,6 +44,9 @@
          * @return
          */
         this.onAddNewWAFLocation = function (isAsk) {
+          if($scope._isEditLocked === true){
+            return;
+          }
           if (!_.isArray($ctrl.waf)) {
             $ctrl.waf = [];
           }
@@ -113,6 +117,9 @@
         this.onDeleteWAFLocation = function (e, index) {
           e.preventDefault();
           e.stopPropagation();
+          if($scope._isEditLocked === true){
+            return;
+          }
           var modalInstance = $uibModal.open({
             animation: true,
             templateUrl: 'parts/domains/modals/confirmDeleteWAFLocation.tpl.html',
@@ -172,6 +179,9 @@
         this.onDuplicateWAFLocation = function (e, item) {
           e.preventDefault();
           e.stopPropagation();
+          if($scope._isEditLocked === true){
+            return;
+          }
           if ($ctrl.loading) {
             return false;
           }
@@ -234,6 +244,9 @@
         this.onUpWAFLocation = function (e, element) {
           e.preventDefault();
           e.stopPropagation();
+          if($scope._isEditLocked === true){
+            return;
+          }
           var array = $ctrl.waf;
           var index = array.indexOf(element);
           // Item non-existent?
@@ -256,6 +269,9 @@
         this.onDownWAFLocation = function (e, element) {
           e.preventDefault();
           e.stopPropagation();
+          if($scope._isEditLocked === true){
+            return;
+          }
           var array = $ctrl.waf;
           var index = array.indexOf(element);
           // Item non-existent?

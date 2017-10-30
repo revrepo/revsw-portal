@@ -368,41 +368,5 @@ describe('Negative', function () {
         var publishBtn = Portal.domains.editPage.getValidateDomainBtn();
         expect(publishBtn.isEnabled()).toBeFalsy();
       });
-
-      it('should not be able to publish a domain with empty value in ' +
-      '"Custom VCL Rules"',
-      function () {
-        var incorrectValue = '';
-
-        Portal.domains.listPage.searchAndClickEdit(myDomain.name);
-        Portal.domains.editPage.clickTabVCL();
-        Portal.domains.editPage.form.getCustomVCLrulesSw().click();
-        var publishBtn = Portal.domains.editPage.getPublishDomainBtn();
-        expect(publishBtn.isEnabled()).toBeFalsy();
-      });
-
-    it('should not be able to update a domain with empty value in ' +
-      '"Custom VCL Rules"',
-      function () {
-        var incorrectValue = '';
-
-        Portal.domains.listPage.searchAndClickEdit(myDomain.name);
-        Portal.domains.editPage.clickTabVCL();
-        Portal.domains.editPage.form.getCustomVCLrulesSw().click();
-        var publishBtn = Portal.domains.editPage.getUpdateDomainBtn();
-        expect(publishBtn.isEnabled()).toBeFalsy();
-      });
-
-    it('should not be able to validate a domain with empty value in ' +
-      '"Custom VCL Rules"',
-      function () {
-        var incorrectValue = '';
-
-        Portal.domains.listPage.searchAndClickEdit(myDomain.name);
-        Portal.domains.editPage.clickTabVCL();
-        Portal.domains.editPage.form.getCustomVCLrulesSw().click();
-        var publishBtn = Portal.domains.editPage.getValidateDomainBtn();
-        expect(publishBtn.isEnabled()).toBeFalsy();
-      });
   });
 });

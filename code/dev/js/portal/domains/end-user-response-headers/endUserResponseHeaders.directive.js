@@ -18,7 +18,8 @@
       replace: true,
       scope: true,
       bindToController: {
-        end_user_response_headers: '=ngModel'
+        end_user_response_headers: '=ngModel',
+        _isEditLocked: '=isEditLocked'
       },
       templateUrl: 'parts/domains/end-user-response-headers/end-user-response-headers.tpl.html',
       controllerAs: '$ctrl',
@@ -34,6 +35,9 @@
          * @return
          */
         this.onAddNew = function(newEndUserResponseHeader) {
+          if($scope._isEditLocked === true){
+            return;
+          }
           if (!_.isArray($ctrl.end_user_response_headers)) {
             $ctrl.end_user_response_headers = [];
           }
@@ -41,6 +45,9 @@
         };
 
         this.onDelete = function(index) {
+          if($scope._isEditLocked === true){
+            return;
+          }
           // TODO: add confirm modal windows
           $ctrl.end_user_response_headers.splice(index, 1);
         };
@@ -53,6 +60,9 @@
          * @return
          */
         this.onDelete = function(index) {
+          if($scope._isEditLocked === true){
+            return;
+          }
           // TODO: add confirm modal windows
           var modalInstance = $uibModal.open({
             animation: true,

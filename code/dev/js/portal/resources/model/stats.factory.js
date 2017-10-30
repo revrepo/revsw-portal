@@ -318,6 +318,21 @@
         method: 'GET',
         url: $config.API_URL + '/stats/edge_cache/:domainId',
       },
+      secondaryCacheTraffic: {
+        url: $config.API_URL + '/stats/:domainId',
+        method: 'GET',
+        params:{
+          cache_type: 'secondary'
+        }
+      },
+      secondaryCacheStatus: {
+        method: 'GET',
+        url: $config.API_URL + '/stats/top/:domainId',
+        params: {
+          report_type: 'cache_status',
+          cache_type: 'secondary'
+        }
+      }
     });
   }
 })();

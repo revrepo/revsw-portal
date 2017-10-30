@@ -156,15 +156,15 @@
       // NOTE: lock UI before finish all requests
       vm._loading = true;
 
-      vm.reloadCacheStatus(vm.filters);
-
       var params_ = angular.merge({
         domainId: vm.domain.id
       }, generateFilterParams(vm.filters));
 
       $q.all([
           vm.reloadEdgeCacheData(params_),
-          vm.reloadFilters(params_)
+          vm.reloadFilters(params_),
+          vm.reloadCacheStatus(vm.filters),
+          vm.reloadSecondaryCacheStatus(vm.filters)
         ])
         .finally(function() {
           vm._loading = false;
@@ -176,7 +176,6 @@
      *
      */
     vm.onDomainSelected = function(model) {
-      // console.log('---', vm.domain);
       if (!vm.domain || !vm.domain.id) {
         return;
       }
@@ -184,7 +183,7 @@
 
       //  reload all lists for filters
       var now = Date.now();
-
+      // NOTE: update filter data
       Stats.topLists({
         domainId: vm.domain.id,
         from_timestamp: (now - 86400000 /*day in ms*/ ),
@@ -201,20 +200,54 @@
       });
     };
 
+    vm.cacheStatus = [];
     /**
      * @name vm.reloadCacheStatus
      * @desc reloads cache status chart data
      * @kind function
+     * @return {Promise}
      */
     vm.reloadCacheStatus = function(filters) {
       filters = angular.merge({
         domainId: vm.domain.id
       }, generateFilterParams(vm.filters));
-      // console.log(filters)
 
-      vm.cacheStatus = [];
-      Stats
+      vm.cacheStatus.length = 0;
+      return Stats
         .cacheStatus(filters)
+        .$promise
+        .then(function(data) {
+          var newData = [];
+          if (data.data && data.data.length > 0) {
+            angular.forEach(data.data, function(val) {
+              newData.push({
+                name: val.key,
+                y: val.count
+              });
+            });
+            if (newData.length === 2 &&
+              (newData[0].y > 0 || newData[1].y > 0)) {
+              vm.cacheStatus = newData;
+            }
+          }
+          return vm.cacheStatus;
+        });
+    };
+
+    vm.secondaryCacheStatusData = [];
+    /**
+     * @name vm.reloadCacheStatus
+     * @desc reloads cache status chart data
+     * @kind function
+     * @return {Promise}
+     */
+    vm.reloadSecondaryCacheStatus = function(filters) {
+      filters = angular.merge({
+        domainId: vm.domain.id
+      }, generateFilterParams(vm.filters));
+      vm.secondaryCacheStatusData.length = 0;
+      return Stats
+        .secondaryCacheStatus(filters)
         .$promise
         .then(function(data) {
           if (data.data && data.data.length > 0) {
@@ -227,9 +260,10 @@
             });
             if (newData.length === 2 &&
               (newData[0].y > 0 || newData[1].y > 0)) {
-              vm.cacheStatus = newData;
+              vm.secondaryCacheStatusData = newData;
             }
           }
+          return vm.secondaryCacheStatusData;
         });
     };
 
@@ -258,7 +292,6 @@
             new_unique_objects: data.new_unique_objects || 0,
             total_unique_objects: data.total_unique_objects || 0
           };
-          // console.log('edge', data, vm.edgeCacheData);
         });
     };
 

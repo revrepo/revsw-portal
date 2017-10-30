@@ -29,11 +29,11 @@ describe('Smoke', function () {
         };
         var resultLuaScriptsLastFirstMilesProxies = function(user) {
           var result = [];
-          if (user.role === 'Rev Admin') {
-            result = ['customVcl', 'luaBPlocation', 'luaBlockCode', 'customVcl'];
-          } else {
+//          if (user.role === 'Rev Admin') {
+//            result = ['customVcl', 'luaBPlocation', 'luaBlockCode', 'customVcl'];
+//          } else {
             result = ['customVcl', 'luaBPlocation', 'luaBlockCode'];
-          }
+//          }
           return result;
         };
         beforeAll(function () {

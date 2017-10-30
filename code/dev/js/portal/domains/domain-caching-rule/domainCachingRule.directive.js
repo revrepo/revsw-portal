@@ -20,7 +20,8 @@
       replace: true,
       scope: true,
       bindToController: {
-        rule: '=ngModel'
+        rule: '=ngModel',
+        _isEditLocked: '=isEditLocked'
       },
       templateUrl: 'parts/domains/domain-caching-rule/domain-caching-rule.tpl.html',
       controllerAs: '$ctrl',

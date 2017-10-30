@@ -4,7 +4,7 @@
       Enable This Code Block
     </label>
     <div class="col-md-9">
-      <toggle-switch class="elemLastFirstMile" name="customVcl" is-disabled="_loading" ng-model="$ctrl.luaBlock.enable" on-label="On" off-label="Off">
+      <toggle-switch class="elemLastFirstMile" name="customVcl" is-disabled="_loading || _isEditLocked" ng-model="$ctrl.luaBlock.enable" on-label="On" off-label="Off">
       </toggle-switch>
       <label for="customVcl" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Use the switch to enable/disable the execution of this specific code snippet">
         <i class="fa fa-question-circle"></i>
@@ -14,7 +14,7 @@
   <div class="form-group" ng-class="{'has-error': blockEditForm.luaBPlocation.$invalid && blockEditForm.luaBPlocation.$dirty}">
     <label for="luaBPlocation" class="col-sm-3 control-label">URL Location *</label>
     <div class="col-sm-9">
-       <input type="text" class="form-control inline-block elemLastFirstMile" ng-disabled="_loading" ng-model="$ctrl.luaBlock.location" name="luaBPlocation" placeholder="like  /my_url/" ng-maxlength="150" required>
+      <input type="text" class="form-control inline-block elemLastFirstMile" ng-disabled="_loading || _isEditLocked" ng-model="$ctrl.luaBlock.location" name="luaBPlocation" placeholder="like  /my_url/" ng-maxlength="150" required>
       <label for="luaBPlocation" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Specify here a website path (like “/my_url/”) the Lua code should be executed for">
         <i class="fa fa-question-circle"></i>
       </label>
@@ -26,24 +26,22 @@
   <div class="form-group" ng-class="{'has-error': blockEditForm.luaBlockCode.$invalid && blockEditForm.luaBlockCode.$dirty}">
     <label for="luaBlockCode" class="col-sm-3 control-label">Lua Code *</label>
     <div class="col-sm-9">
-      <div class="col-sm-12 form-group">
-        <textarea name="luaBlockCode" ng-model="$ctrl.luaBlock.code" placeholder="" class="form-control text--courier inline-block elemLastFirstMile" ng-disabled="_loading" required=>
-        </textarea>
-        <label for="luaBlockCode" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Provide here a Lua code which should be executed for the specific website location">
-          <i class="fa fa-question-circle"></i>
-        </label>
-      </div>
+      <textarea name="luaBlockCode" ng-model="$ctrl.luaBlock.code" placeholder="" class="form-control text--courier inline-block elemLastFirstMile" ng-disabled="_loading || _isEditLocked" required>
+      </textarea>
+      <label for="luaBlockCode" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Provide here a Lua code which should be executed for the specific website location">
+        <i class="fa fa-question-circle"></i>
+      </label>
       <div class="error-messages" ng-messages="blockEditForm.luaBlockCode.$error" role="alert" ng-messages-multiple>
         <div ng-messages-include="parts/shared/error-messages.html"></div>
       </div>
     </div>
   </div>
   <div class="form-group form-inline" ng-if="auth.isRevadmin()">
-    <label for="customVcl" class="col-sm-3 control-label">
+    <label for="luaBlock" class="col-sm-3 control-label">
       CDN Admin Approval
     </label>
     <div class="col-md-9">
-      <toggle-switch class="elemLastFirstMile" name="customVcl" is-disabled="_loading" ng-model="$ctrl.luaBlock.approve" on-label="On" off-label="Off">
+      <toggle-switch name="luaBlock" is-disabled="_loading || _isEditLocked" ng-model="$ctrl.luaBlock.approve" on-label="On" off-label="Off">
       </toggle-switch>
     </div>
   </div>

@@ -18,7 +18,8 @@
       replace: true,
       scope: true,
       bindToController: {
-        aclRulesList: '=ngModel'
+        aclRulesList: '=ngModel',
+        _isEditLocked:'=isEditLocked'
       },
       templateUrl: 'parts/domains/domain-acl-rules/domain-acl-rules-list.tpl.html',
       controllerAs: '$ctrl',
@@ -37,6 +38,9 @@
          */
         this.onAddNewRule = function(e) {
           e.preventDefault();
+          if($scope._isEditLocked){
+            return;
+          }
           $ctrl.aclRulesList.unshift(angular.copy(defaultCondition));
           AlertService.success('A new default ACL condition has been added to the top of the list. Please configure the block before saving the configuration.');
         };
@@ -50,6 +54,9 @@
          * @return
          */
         $ctrl.onRemoveACLRule = function(e, index) {
+          if($scope._isEditLocked) {
+            return;
+          }
           if ($ctrl.aclRulesList.length <= 1) {
             AlertService.success('Last ACL condition can`t be deleted');
             return;

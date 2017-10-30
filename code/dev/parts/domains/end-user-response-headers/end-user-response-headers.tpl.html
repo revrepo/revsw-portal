@@ -2,7 +2,7 @@
   <div class="panel panel-default">
     <!-- Default panel contents -->
     <div class="panel-heading"> End User Response Headers
-      <button type="button" class="btn btn-xs btn-success pull-right" ng-click="$ctrl.onAddNew({operation:'add',header_name:'',header_value:''})" title="Add New Header"><i class="glyphicon glyphicon-plus"></i> Add New</button>
+      <button type="button" class="btn btn-xs btn-success pull-right" ng-disabled="_isEditLocked" ng-click="$ctrl.onAddNew({operation:'add',header_name:'',header_value:''})" title="Add New Header"><i class="glyphicon glyphicon-plus"></i> Add New</button>
     </div>
     <!--     <div class="panel-body">
       <p>...</p>
@@ -23,7 +23,7 @@
           <td ng-animate-disabled ng-click="editRow.isSelectedIndex = $index" ng-class="{'has-error': editRow.headerName.$invalid}">
             <span ng-animate-disabled ng-show="editRow.isSelectedIndex!==$index">{{line.header_name}} </span>
             <input type="text" ng-animate-disabled validate-caching-rule-header-name name="headerName" class="form-control" ng-model="line.header_name" placeholder="New Header Name"
-              ng-maxlength="128" ng-show="editRow.isSelectedIndex==$index" required>
+              ng-maxlength="128" ng-show="editRow.isSelectedIndex==$index" ng-disabled="_isEditLocked" required>
             <div class="error-messages" ng-messages="editRow.headerName.$error" role="alert" ng-messages-multiple="false">
               <div ng-messages-include="parts/shared/error-messages.html"></div>
             </div>
@@ -31,23 +31,23 @@
           <td ng-animate-disabled ng-click="editRow.isSelectedIndex = $index" ng-class="{'has-error': editRow.headerValue.$invalid}">
             <span ng-animate-disabled ng-show="editRow.isSelectedIndex!==$index">{{line.header_value}} </span>
             <input ng-animate-disabled validate-caching-rule-header-value type="text" name="headerValue" class="form-control" ng-model="line.header_value" placeholder="New Header Value"
-              ng-maxlength="128" ng-show="editRow.isSelectedIndex==$index" required>
+              ng-maxlength="128" ng-show="editRow.isSelectedIndex==$index"  ng-disabled="_isEditLocked" required>
             <div class="error-messages" ng-messages="editRow.headerValue.$error" role="alert" ng-messages-multiple="false">
               <div ng-messages-include="parts/shared/error-messages.html"></div>
             </div>
           </td>
           <td ng-click="editRow.isSelectedIndex = $index">
             <span ng-animate-disabled ng-show="editRow.isSelectedIndex!==$index">{{$ctrl.headerOperations[line.operation]}}</span>
-            <select ng-animate-disabled ng-if="editRow.isSelectedIndex==$index" class="form-control" ng-model="line.operation" ng-options="key as label for (key,label) in $ctrl.headerOperations"></select>
+            <select ng-animate-disabled ng-if="editRow.isSelectedIndex==$index" ng-disabled="_isEditLocked" class="form-control" ng-model="line.operation" ng-options="key as label for (key,label) in $ctrl.headerOperations"></select>
           </td>
           <td>
-            <button class="btn btn-primary btn-sm btn-edit-origin_request_header" type="button" ng-click="editRow.isSelectedIndex=$index" title="Edit Header" ng-if="editRow.isSelectedIndex!==$index">
+            <button class="btn btn-primary btn-sm btn-edit-origin_request_header" type="button" ng-disabled="_isEditLocked" ng-click="editRow.isSelectedIndex=$index" title="Edit Header" ng-if="editRow.isSelectedIndex!==$index">
               <i class="glyphicon glyphicon-remove"> Edit </i>
             </button>
             <button class="btn btn-success btn-sm btn-edit-origin_request_header" type="button" ng-click="editRow.isSelectedIndex =null" title="Save Header" ng-if="editRow.isSelectedIndex==$index" ng-disabled="editRow.$invalid">
               <i class="glyphicon glyphicon-ok">  Ok  </i>
             </button>
-            <button class="btn btn-warning btn-sm btn-delete-origin_request_header" type="button" ng-click="$ctrl.onDelete($index)" title="Delete Header">
+            <button class="btn btn-warning btn-sm btn-delete-origin_request_header" type="button" ng-disabled="_isEditLocked" ng-click="$ctrl.onDelete($index)" title="Delete Header">
               <i class="glyphicon glyphicon-remove"> Delete</i>
             </button>
           </td>

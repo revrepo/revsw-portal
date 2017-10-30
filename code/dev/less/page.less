@@ -348,7 +348,9 @@ input[type="checkbox"] {
 textarea {
   &.form-control {
     // font-family: Courier;
-    max-width: 550px;
+    min-width: 550px;
+    width: 550px;
+    max-width: 95%;
   }
   &.text--courier {
     min-height: 30vh;
@@ -386,6 +388,7 @@ form,
     opacity: 1;
     line-height: 0%;
     transition: 0.4s linear all;
+    clear: both;
   }
   &.ng-invalid {
     &.ng-submitted {

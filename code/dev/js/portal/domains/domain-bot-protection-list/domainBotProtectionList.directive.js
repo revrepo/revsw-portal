@@ -11,6 +11,7 @@
       scope: true,
       bindToController: {
         botProtection: '=ngModel',
+        _isEditLocked: '=isEditLocked',
         accountId: '@'
       },
       templateUrl: 'parts/domains/domain-bot-protection-list/domain-bot-protection-list.tpl.html',
@@ -30,6 +31,9 @@
          * @return
          */
         this.onAddNewBotProtection = function (isAsk) {
+          if($scope._isEditLocked === true){
+            return;
+          }
           if (!_.isArray($ctrl.botProtection)) {
             $ctrl.botProtection = [];
           }
@@ -99,6 +103,9 @@
         this.onDeleteBotProtection = function (e, index) {
           e.preventDefault();
           e.stopPropagation();
+          if($scope._isEditLocked === true){
+            return;
+          }
           var modalInstance = $uibModal.open({
             animation: true,
             templateUrl: 'parts/domains/domain-bot-protection-list/modals/confirmDeleteBotProtectionLocation.tpl.html',
@@ -158,6 +165,9 @@
         this.onDuplicateBotProtection = function (e, item) {
           e.preventDefault();
           e.stopPropagation();
+          if($scope._isEditLocked === true){
+            return;
+          }
           if ($ctrl.loading) {
             return false;
           }
@@ -166,8 +176,8 @@
               return angular.copy(item);
             },
             exists_names: function () {
-              return _.map($ctrl.botProtection, function (itemWaf) {
-                return itemWaf.location;
+              return _.map($ctrl.botProtection, function (itemBot) {
+                return itemBot.location;
               });
             }
           };
@@ -219,6 +229,9 @@
         this.onUpBotProtection = function (e, element) {
           e.preventDefault();
           e.stopPropagation();
+          if($scope._isEditLocked === true){
+            return;
+          }
           var array = $ctrl.botProtection;
           var index = array.indexOf(element);
           // Item non-existent?
@@ -241,6 +254,9 @@
         this.onDownBotProtection = function (e, element) {
           e.preventDefault();
           e.stopPropagation();
+          if($scope._isEditLocked === true){
+            return;
+          }
           var array = $ctrl.botProtection;
           var index = array.indexOf(element);
           // Item non-existent?

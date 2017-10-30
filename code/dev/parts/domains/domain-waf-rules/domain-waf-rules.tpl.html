@@ -35,15 +35,15 @@
             </div>
           </td>
           <td>
-            <a href="" class="btn btn-default btn-xs" ng-click="$ctrl.onUpWAFRule(item)" ng-if="!item.loading" uib-tooltip="Up WAF Rule">
+            <a href="" ng-class="{'disabled':_isEditLocked}" class="btn btn-default btn-xs" ng-click="$ctrl.onUpWAFRule(item)" ng-if="!item.loading" uib-tooltip="Up WAF Rule">
               <i class="glyphicon glyphicon-arrow-up"></i>
             </a>
-            <a href="" class="btn btn-default btn-xs" ng-click="$ctrl.onDownWAFRule(item)" ng-if="!item.loading" uib-tooltip="Down WAF Rule">
+            <a href="" ng-class="{'disabled':_isEditLocked}" class="btn btn-default btn-xs" ng-click="$ctrl.onDownWAFRule(item)" ng-if="!item.loading" uib-tooltip="Down WAF Rule">
               <i class="glyphicon glyphicon-arrow-down"></i>
             </a>
           </td>
           <td>
-            <toggle-switch class="is-checked--toggle-switch" name="isChecked" ng-model="item.isChecked" on-label="On" off-label="Off">
+            <toggle-switch class="is-checked--toggle-switch" name="isChecked" ng-model="item.isChecked" on-label="On" off-label="Off" is-disabled="_isEditLocked">
             </toggle-switch>
           </td>
         </tr>

@@ -10,7 +10,8 @@
       replace: true,
       scope: true,
       bindToController: {
-        waf_actions: '=ngModel'
+        waf_actions: '=ngModel',
+        _isEditLocked: '=isEditLocked'
       },
       templateUrl: 'parts/domains/domain-waf-actions-list/domain-waf-actions-list.tpl.html',
       controllerAs: '$ctrl',
@@ -26,8 +27,12 @@
          * @return
          */
         this.onAddNew = function (e) {
-          $ctrl.loading = true;
           e.preventDefault();
+          if($scope._isEditLocked === true){
+            return;
+          }
+          $ctrl.loading = true;
+
           if (!_.isArray($ctrl.waf_actions)) {
             $ctrl.waf_actions = [];
           }
@@ -43,6 +48,9 @@
          * @return
          */
         this.onDelete = function (index) {
+          if($scope._isEditLocked === true){
+            return;
+          }
           var modalInstance = $uibModal.open({
             animation: true,
             templateUrl: 'parts/domains/modals/confirmDeleteWAFAction.tpl.html',

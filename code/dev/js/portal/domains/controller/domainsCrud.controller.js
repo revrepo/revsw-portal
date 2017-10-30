@@ -33,6 +33,7 @@
     });
     $scope.isAdvancedMode = ($stateParams.isAdvanced === 'true') ? true : false;
     $state._loading = true;
+    $scope._isEditLocked = false;
     $scope.jsoneditor = {
       options: {
         mode: 'code',
@@ -635,6 +636,9 @@
      * @return
      */
     $scope.onAddNewCachingRule = function (e, isChacheStatic) {
+      if($scope._isEditLocked === true){
+        return;
+      }
       if (e) {
         e.preventDefault();
       }
@@ -702,6 +706,9 @@
      * @return
      */
     $scope.onRemoveCachingRule = function (index) {
+      if($scope._isEditLocked === true){
+        return;
+      }
       $scope.confirm('confirmModalDeleteCachingRule.html', {
         url: $scope.model.rev_component_bp.caching_rules[index].url
       })
@@ -718,6 +725,9 @@
      * @return {Boolean|Integer}
      */
     $scope.onUpCachingRule = function (element) {
+      if($scope._isEditLocked === true){
+        return;
+      }
       var array = $scope.model.rev_component_bp.caching_rules;
       var index = array.indexOf(element);
       // Item non-existent?
@@ -741,6 +751,9 @@
      * @return {Boolean|Integer}
      */
     $scope.onDownCachingRule = function (element) {
+      if($scope._isEditLocked === true){
+        return;
+      }
       var array = $scope.model.rev_component_bp.caching_rules;
       var index = array.indexOf(element);
       // Item non-existent?
@@ -863,6 +876,7 @@
 
     $scope.$watch('model.github_integration', function(newVal, oldVal) {
       if(newVal !== oldVal && newVal !== undefined) {
+        $scope.updateIsEditLocked();
         if($scope.isAdvancedMode === true) {
           $scope.modelAdvance.github_integration = newVal;
         }
@@ -1049,6 +1063,20 @@
 
     $scope.cancelChanges = function() {
       modalInstanceGitHubSettings.dismiss('cancel');
+    };
+    /**
+     * @name  updateIsEditLocked
+     * @description all situations for to set isEditLocked equal "true"
+     */
+    $scope.updateIsEditLocked = function(){
+      if($scope.isReadOnly() === true) {
+        $scope._isEditLocked = true;
+      } else if($scope.model.github_integration && $scope.model.github_integration.enable === true){
+        $scope._isEditLocked = true;
+      } else {
+        $scope._isEditLocked = false;
+      }
+      return $scope._isEditLocked;
     };
   }
 

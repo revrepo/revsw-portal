@@ -1,13 +1,13 @@
 <div class="domain-alc-rules--list panel panel-default form" ng-form="editFormACLRules">
   <div class="panel-heading">
     <div class="pull-right panel-button-right">
-      <button class="btn btn-primary btn-sm" ng-click="$ctrl.onAddNewRule($event)" popover-trigger="mouseenter" popover-placement="left" uib-popover="Click here to add a new access control condition to the list">
+      <button class="btn btn-primary btn-sm" ng-class="{'disabled':_isEditLocked}" ng-click="$ctrl.onAddNewRule($event)" popover-trigger="mouseenter" popover-placement="left" uib-popover="Click here to add a new access control condition to the list">
        <i class="glyphicon glyphicon-plus"></i>
       </button>
     </div>
     <div class="panel-title"> End User Access Conditions:</div>
   </div>
   <div class="panel-body" ng-repeat="itemAcl in $ctrl.aclRulesList">
-    <domain-acl-rules-item ng-model="itemAcl" on-call-remove="$ctrl.onRemoveACLRule(index)"></domain-acl-rules-item>
+    <domain-acl-rules-item ng-model="itemAcl" on-call-remove="$ctrl.onRemoveACLRule(index)" is-edit-locked="_isEditLocked"></domain-acl-rules-item>
   </div>
 </div>

@@ -18,7 +18,8 @@
       replace: true,
       scope: true,
       bindToController: {
-        origin_request_headers: '=ngModel'
+        origin_request_headers: '=ngModel',
+        _isEditLocked: '=isEditLocked'
       },
       templateUrl: 'parts/domains/origin-request-headers/origin-request-headers.tpl.html',
       controllerAs: '$ctrl',
@@ -33,6 +34,9 @@
          * @return
          */
         this.onAddNew = function (newOriginRequestHeader) {
+          if($scope._isEditLocked === true){
+            return;
+          }
           if (!_.isArray($ctrl.origin_request_headers)) {
             $ctrl.origin_request_headers = [];
           }
@@ -45,6 +49,9 @@
          * @return
          */
         this.onDelete = function (index) {
+          if($scope._isEditLocked === true){
+            return;
+          }
           var modalInstance = $uibModal.open({
             animation: true,
             templateUrl: 'parts/domains/modals/confirmDeleteHeaderInfo.tpl.html',

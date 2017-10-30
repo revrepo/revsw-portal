@@ -34,7 +34,7 @@
                 <div class="panel-heading">
                   <label class="title h4">Number <br class="hidden-xs hidden-sm">Of Unique Objects</label>
                 </div>
-                <div class="panel-body"><span class="stats-value h4"> {{vm.edgeCacheData.new_unique_objects || '-'}}</span> </div>
+                <div class="panel-body"><span class="stats-value h4"> {{vm.edgeCacheData.total_unique_objects || '-'}}</span> </div>
               </div>
             </div>
             <div class="col-sm-12 col-md-4 ">
@@ -42,7 +42,7 @@
                 <div class="panel-heading">
                   <label class="title h4">New Objects <br class="hidden-xs hidden-sm">In  The Edge Cache</label>
                 </div>
-                <div class="panel-body"><span class="stats-value h4">{{vm.edgeCacheData.total_unique_objects || '-'}}</span></div>
+                <div class="panel-body"><span class="stats-value h4">{{vm.edgeCacheData.new_unique_objects || '-'}}</span></div>
               </div>
             </div>
             <div class="col-sm-12 col-md-4">
@@ -93,6 +93,26 @@
                   <h3>Edge Cache Hit/Miss Ratio</h3>
                   <div>
                     <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="vm.cacheStatus"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Secondary Cahce Data -->
+          <div class="row report_edge_cache_line_chart__view_container">
+            <div class="row">
+              <div class="col-sm-12 col-md-6">
+                <div class="col-lg-12 _nd-block">
+                  <div style="min-width: 480px; min-height: 350px" hits-secondary-cache-chart ng-domain="vm.domain" filters-sets="vm.filtersExternal"
+                    hide-filters="true">
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-6">
+                <div class="col-sm-12 _nd-block">
+                  <h3>Secondary Cache Hit/Miss Ratio</h3>
+                  <div>
+                    <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="vm.secondaryCacheStatusData"></div>
                   </div>
                 </div>
               </div>
