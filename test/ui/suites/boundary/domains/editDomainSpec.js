@@ -195,7 +195,7 @@ describe('Boundary', function () {
         var val = '/@';
         Portal.domains.listPage.searchAndClickEdit(myDomain.name);
         Portal.domains.editPage.clickTabWAF();
-        Portal.domains.editPage.form.getWAFSwitch().click();
+        Portal.domains.editPage.form.clickWAFSwitch();
         Portal.domains.editPage.form.setWAFLocation(val);
         var validateBtn = Portal.domains.editPage.getValidateDomainBtn();
         expect(validateBtn.isEnabled()).toBeFalsy();
@@ -211,7 +211,7 @@ describe('Boundary', function () {
         var val = '/@';
         Portal.domains.listPage.searchAndClickEdit(myDomain.name);
         Portal.domains.editPage.clickTabBotProtection();
-        Portal.domains.editPage.form.getBotProtectionEnableSw().click();
+        Portal.domains.editPage.form.clickBotProtectionEnableSw();
         Portal.domains.editPage.form.setBotLocation(val);
         var validateBtn = Portal.domains.editPage.getValidateDomainBtn();
         expect(validateBtn.isEnabled()).toBeFalsy();
@@ -227,7 +227,7 @@ describe('Boundary', function () {
         var val = '7';
         Portal.domains.listPage.searchAndClickEdit(myDomain.name);
         Portal.domains.editPage.clickTabBotProtection();
-        Portal.domains.editPage.form.getBotProtectionEnableSw().click();
+        Portal.domains.editPage.form.clickBotProtectionEnableSw();
         Portal.domains.editPage.form.setBotCallType(val);
         var validateBtn = Portal.domains.editPage.getValidateDomainBtn();
         expect(validateBtn.isEnabled()).toBeFalsy();

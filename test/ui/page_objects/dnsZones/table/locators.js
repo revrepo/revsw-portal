@@ -42,7 +42,7 @@ var headerLocators = {
     css: 'th:nth-of-type(5) a'
   },
   account: {
-    css: 'th:nth-of-type(6) a'
+    css: 'th:nth-of-type(7) a'
   }
 };
 
@@ -63,7 +63,7 @@ var rowLocators = {
     css: 'td:nth-of-type(5) a'
   },
   account: {
-    css: 'td:nth-of-type(6) a'
+    css: 'td:nth-of-type(7) a'
   },
   actions: {
     css: 'td.actions',
