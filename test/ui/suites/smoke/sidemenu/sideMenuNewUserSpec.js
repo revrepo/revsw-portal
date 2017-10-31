@@ -39,7 +39,7 @@ describe('Smoke: ', function () {
 
             afterAll(function (done) {
                 Portal.signOut().then(function () {
-                    done()
+                    done();
                 });
             });
             it('should display Change Billing Plan option',
