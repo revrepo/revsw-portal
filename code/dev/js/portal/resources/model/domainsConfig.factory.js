@@ -38,6 +38,11 @@
         params: {
           domain_id: '@id'
         }
+      },
+      recommendedDefaultSettings: {
+        url: $config.API_URL + '/domain_configs/recommended_default_settings',
+        method: 'GET',
+        isArray: false,
       }
     });
   }
