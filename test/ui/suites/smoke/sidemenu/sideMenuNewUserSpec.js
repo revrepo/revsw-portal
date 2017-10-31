@@ -37,9 +37,10 @@ describe('Smoke: ', function () {
                     });
             });
 
-            afterAll(function () {
-                Portal.signOut();
-                browser.sleep(1500); // fix for reseller test fail
+            afterAll(function (done) {
+                Portal.signOut().then(function () {
+                    done()
+                });
             });
             it('should display Change Billing Plan option',
                 function () {

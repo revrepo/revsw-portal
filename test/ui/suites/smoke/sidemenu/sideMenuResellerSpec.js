@@ -32,11 +32,12 @@ describe('Smoke: ', function () {
 
                 var menu;
 
-                beforeAll(function () {
-                    Portal.signIn(user);
-
-                    menu = Portal.sideMenu;
-                    menu.expand(menu.getBillingOption());
+                beforeAll(function (done) {
+                    Portal.signIn(user).then(function () {
+                        menu = Portal.sideMenu;
+                        menu.expand(menu.getBillingOption());
+                        done();
+                    });
                 });
 
                 afterAll(function () {
