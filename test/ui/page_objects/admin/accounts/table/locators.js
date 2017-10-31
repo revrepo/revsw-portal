@@ -93,6 +93,9 @@ var rowLocators = {
   },
   vendor: {
     css: '.account-vendor'
+  },
+  vendorDrop: {
+    css: '.ui-select-container'
   }
 };
 

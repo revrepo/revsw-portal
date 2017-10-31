@@ -16,6 +16,7 @@
  * from Rev Software, Inc.
  */
 
+var DropDownWidget = require('../../../common/dropDownWidget');
 var CompanyTableRow = function (rowElem, locators) {
 
   // Properties
@@ -121,6 +122,15 @@ var CompanyTableRow = function (rowElem, locators) {
     return this
       .getVendorCell()
       .click();
+  };
+
+  this.getVendorDropDown = function () {
+    return new DropDownWidget(by.css(this.locators.vendorDrop.css));
+  };
+
+  this.setVendor = function (vendor) {
+    this.getVendorDropDown().setValue(vendor);
+    return element(by.css('.btn-change')).click();
   };
 
   if (this.locators.actions && this.locators.actions.buttons.scale) {

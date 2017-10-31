@@ -317,7 +317,22 @@ var Constants = {
     'ngStorage-selectedUser',
     'ngStorage-selectedCompany',
     'ngStorage-selectedDomain'
-  ]
+  ],
+
+  VENDORS: {
+    REVAPM: {
+      NAME: 'RevAPM',
+      LOGIN_URL: 'https://testsjc20-portal01.revsw.net/#/login'
+    },
+    NUUBIT: {
+      NAME: 'nuubit',
+      LOGIN_URL: 'https://testsjc20-portal-nuubit.revsw.net/#/login'
+    },
+    HOOLI: {
+      NAME: 'hooli',
+      LOGIN_URL: 'https://testsjc20-portal-hooli.revsw.net/#/login'
+    }
+  }
 
 };
 module.exports = Constants;
