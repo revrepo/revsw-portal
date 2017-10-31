@@ -55,8 +55,8 @@
     $scope._loading = false;
     $scope.heading = 'Bandwidth Usage';
     $scope.reload = reload;
-    $scope.popoverPopupCloseDelay = 800; // TODO: rebase to $config
-    $scope.popoverHelpHTML = $sce.trustAsHtml('<b style="color: red">I can</b> have <div class="label label-success">HTML</div> content  <a href="/demo"> LINK </a> ');
+    $scope.popoverPopupCloseDelay = 1200; // TODO: rebase to $config
+    $scope.popoverHelpHTML = $sce.trustAsHtml('Demo text  <a href="/demo"> LINK </a> ');
     $scope.filters = {
       from_timestamp: moment().subtract(1, 'days').valueOf(),
       to_timestamp: Date.now()
