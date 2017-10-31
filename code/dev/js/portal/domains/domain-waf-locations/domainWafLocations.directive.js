@@ -1,11 +1,8 @@
-//waf-actions-list.tpl.html
-
-(function () {
+(function() {
   'use strict';
 
   angular.module('revapm.Portal.Domains')
     .directive('domainWafLocations', domainWafLocations);
-
 
   function domainWafLocations() {
     return {
@@ -19,7 +16,7 @@
       },
       templateUrl: 'parts/domains/domain-waf-locations/domain-waf-locations.tpl.html',
       controllerAs: '$ctrl',
-      controller: function domainWafLocationsController($uibModal, $scope, $q, $config, AlertService, WAF_Rules) {
+      controller: function domainWafLocationsController($uibModal, $scope, $q, $config, AlertService, DomainsConfig, WAF_Rules) {
         'ngInject';
         var $ctrl = this;
         $ctrl.wafRulesList = [];
@@ -28,14 +25,8 @@
           rule_type: 'builtin',
           account_id: $ctrl.accountId
         };
-        // NOTE: Get list actuals WAF Rules
-        WAF_Rules.query({
-            filters: filters
-          }).$promise
-          .then(function (data) {
-            $ctrl.wafRulesList = data;
-          })
-          .catch(AlertService.danger);
+        var defaultRecomendedWAFRulesIds;
+
         /**
          * @name  onAddNew
          * @description add new Item of WAF Location
@@ -43,8 +34,8 @@
          * @param  {Object} newWAFLocation
          * @return
          */
-        this.onAddNewWAFLocation = function (isAsk) {
-          if($scope._isEditLocked === true){
+        this.onAddNewWAFLocation = function(isAsk) {
+          if ($scope._isEditLocked === true) {
             return;
           }
           if (!_.isArray($ctrl.waf)) {
@@ -58,11 +49,11 @@
           };
 
           var resolve = {
-            model: function () {
+            model: function() {
               return {};
             },
-            exists_names: function () {
-              return _.map($ctrl.waf, function (itemWaf) {
+            exists_names: function() {
+              return _.map($ctrl.waf, function(itemWaf) {
                 return itemWaf.location;
               });
             }
@@ -72,14 +63,14 @@
             modalInstance = $uibModal.open({
               animation: false,
               templateUrl: 'parts/domains/modals/confirmAddNewLocation.tpl.html',
-              controller: /*ngInject*/ function ($scope, $uibModalInstance, model, exists_names) {
+              controller: /*ngInject*/ function($scope, $uibModalInstance, model, exists_names) {
                 $scope.model = model;
                 $scope.exists_names = exists_names || [];
                 $scope.newLocationName = '';
-                $scope.ok = function (newLocationName) {
+                $scope.ok = function(newLocationName) {
                   $uibModalInstance.close(newLocationName);
                 };
-                $scope.cancel = function () {
+                $scope.cancel = function() {
                   $uibModalInstance.dismiss('cancel');
                 };
               },
@@ -89,7 +80,7 @@
             resolve.model.newLocationName = $config.WAF_LOCATION_DEFAULT.location;
           }
           $ctrl.loading = true;
-          modalInstance.result.then(function (dataNewLocationName) {
+          modalInstance.result.then(function(dataNewLocationName) {
               var newWAFLocation = angular.copy($config.WAF_LOCATION_DEFAULT);
               var newLocationName_ = _.trim(dataNewLocationName);
               angular.merge(newWAFLocation, {
@@ -99,11 +90,13 @@
               }, {
                 location: newLocationName_
               });
+              newWAFLocation.$$isNew = true;
+              newWAFLocation.waf_rules = defaultRecomendedWAFRulesIds;
               $ctrl.waf.push(newWAFLocation);
 
               AlertService.success('A new default location block has been added to the bottom of the list. Please configure the block before saving the configuration.');
             })
-            .finally(function () {
+            .finally(function() {
               $ctrl.loading = false;
             });
         };
@@ -114,33 +107,33 @@
          * @param  {Integer} index
          * @return
          */
-        this.onDeleteWAFLocation = function (e, index) {
+        this.onDeleteWAFLocation = function(e, index) {
           e.preventDefault();
           e.stopPropagation();
-          if($scope._isEditLocked === true){
+          if ($scope._isEditLocked === true) {
             return;
           }
           var modalInstance = $uibModal.open({
             animation: true,
             templateUrl: 'parts/domains/modals/confirmDeleteWAFLocation.tpl.html',
-            controller: /*ngInject*/ function ($scope, $uibModalInstance, model) {
+            controller: /*ngInject*/ function($scope, $uibModalInstance, model) {
               $scope.model = model;
-              $scope.ok = function () {
+              $scope.ok = function() {
                 $uibModalInstance.close('ok');
               };
-              $scope.cancel = function () {
+              $scope.cancel = function() {
                 $uibModalInstance.dismiss('cancel');
               };
             },
             resolve: {
-              model: function () {
+              model: function() {
                 return $ctrl.waf[index];
               }
             }
           });
 
           modalInstance.result
-            .then(function () {
+            .then(function() {
               $ctrl.waf.splice(index, 1);
             });
         };
@@ -151,9 +144,9 @@
          *
          * @return
          */
-        this.onCollapsAllWAFLocations = function () {
+        this.onCollapsAllWAFLocations = function() {
           var _rules = $ctrl.waf;
-          angular.forEach(_rules, function (item) {
+          angular.forEach(_rules, function(item) {
             item.$$wafLocationBlockState.isCollapsed = true;
           });
         };
@@ -164,9 +157,9 @@
          *
          * @return
          */
-        this.onExpandAllWAFLocations = function () {
+        this.onExpandAllWAFLocations = function() {
           var _rules = $ctrl.waf;
-          angular.forEach(_rules, function (item) {
+          angular.forEach(_rules, function(item) {
             item.$$wafLocationBlockState.isCollapsed = false;
           });
         };
@@ -176,21 +169,21 @@
          * @description method  Duplicate WAF Location
          * Ask new Location Name
          */
-        this.onDuplicateWAFLocation = function (e, item) {
+        this.onDuplicateWAFLocation = function(e, item) {
           e.preventDefault();
           e.stopPropagation();
-          if($scope._isEditLocked === true){
+          if ($scope._isEditLocked === true) {
             return;
           }
           if ($ctrl.loading) {
             return false;
           }
           var resolve = {
-            model: function () {
+            model: function() {
               return angular.copy(item);
             },
-            exists_names: function () {
-              return _.map($ctrl.waf, function (itemWaf) {
+            exists_names: function() {
+              return _.map($ctrl.waf, function(itemWaf) {
                 return itemWaf.location;
               });
             }
@@ -199,14 +192,14 @@
           var modalInstance = $uibModal.open({
             animation: false,
             templateUrl: 'parts/domains/modals/confirmDuplicateLocation.tpl.html',
-            controller: /*ngInject*/ function ($scope, $uibModalInstance, model, exists_names) {
+            controller: /*ngInject*/ function($scope, $uibModalInstance, model, exists_names) {
               $scope.model = model;
               $scope.exists_names = exists_names || [];
               $scope.newLocationName = '';
-              $scope.ok = function (newLocationName) {
+              $scope.ok = function(newLocationName) {
                 $uibModalInstance.close(newLocationName);
               };
-              $scope.cancel = function () {
+              $scope.cancel = function() {
                 $uibModalInstance.dismiss('cancel');
               };
             },
@@ -214,7 +207,7 @@
           });
 
           $ctrl.loading = !true;
-          modalInstance.result.then(function (dataNewLocationName) {
+          modalInstance.result.then(function(dataNewLocationName) {
               if (dataNewLocationName) {
                 var newLocationName_ = _.trim(dataNewLocationName);
                 var duplicateWAFLocation = {
@@ -233,7 +226,7 @@
                 AlertService.success('The location block has duplicated to the bottom of the list. Please configure the block before saving the configuration.');
               }
             })
-            .finally(function () {
+            .finally(function() {
               $ctrl.loading = false;
             });
         };
@@ -241,10 +234,10 @@
          * @name onUpWAFLocation
          * @description method Up Location in list
          */
-        this.onUpWAFLocation = function (e, element) {
+        this.onUpWAFLocation = function(e, element) {
           e.preventDefault();
           e.stopPropagation();
-          if($scope._isEditLocked === true){
+          if ($scope._isEditLocked === true) {
             return;
           }
           var array = $ctrl.waf;
@@ -266,10 +259,10 @@
          * @name onDownWAFLocation
          * @description method Down Location in list
          */
-        this.onDownWAFLocation = function (e, element) {
+        this.onDownWAFLocation = function(e, element) {
           e.preventDefault();
           e.stopPropagation();
-          if($scope._isEditLocked === true){
+          if ($scope._isEditLocked === true) {
             return;
           }
           var array = $ctrl.waf;
@@ -291,14 +284,44 @@
          * @name init
          * @description method check exists WAF block and create it
          */
-        this.init = function () {
-          if (!!!$ctrl.waf) {
-            $ctrl.waf = [];
-            $ctrl.onAddNewWAFLocation();
-          }
+        this.init = function() {
+          var deff = $q.defer();
+          // NOTE: Get list actuals WAF Rules
+          $q.all([
+              WAF_Rules.query({
+                filters: filters
+              }).$promise
+              .then(function(data) {
+                $ctrl.wafRulesList = data;
+                return data;
+              }),
+              // NOTE: Get recomended default settings
+              DomainsConfig.recommendedDefaultSettings().$promise
+              .then(function(data) {
+                defaultRecomendedWAFRulesIds = data.waf_rules_ids;
+                return data.waf_rules_ids;
+              })
+            ])
+            .then(function() {
+              deff.resolve();
+            })
+            .catch(function(err) {
+              AlertService.danger(err);
+              deff.reject();
+            });
+          return deff.promise;
         };
+
+        $ctrl._loading = true;
         // NOTE: auto init
-        this.init();
+        this.init()
+          .finally(function() {
+            if (!!!$ctrl.waf) {
+              $ctrl.waf = [];
+              $ctrl.onAddNewWAFLocation();
+            }
+            $ctrl._loading = false;
+          });
       }
     };
   }
