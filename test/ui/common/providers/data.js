@@ -62,7 +62,7 @@ var DataProvider = {
     // Special case when the portal user is creating a new user
     // is a reseller or rev-admin which require the specify the
     // company the new user should be associated with
-    if (currentUser.role !== 'Admin') {
+    if (currentUser !== undefined && currentUser.role !== 'Admin') {
       data.company = ['API QA Reseller Company'];
     }
 
@@ -72,7 +72,7 @@ var DataProvider = {
         .toLowerCase(),
       firstName: firstName,
       lastName: lastName,
-      role: Constants.user.roles.USER,
+      role: data.role || Constants.user.roles.USER,
       password: 'password1',
       passwordConfirm: 'password1',
       company: data.company
