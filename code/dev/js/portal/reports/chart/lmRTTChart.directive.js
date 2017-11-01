@@ -21,7 +21,7 @@
         isAutoReload: '@?'
       },
       /*@ngInject*/
-      controller: function($scope, $q, Stats, Util, EventsSerieDataService) {
+      controller: function($scope, $q, Stats, Util, EventsSerieDataService, $sce, $config) {
 
         var _filters_field_list = ['from_timestamp', 'to_timestamp', 'country', 'device', 'os', 'browser'];
 
@@ -48,6 +48,9 @@
         $scope._loading = false;
         $scope.hasFailedToLoadData = false;
         $scope.heading = 'Last Mile Round Trip Time Latency';
+        $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
+        $scope.popoverHelpHTML = $sce.trustAsHtml('TODO text <a href="/demo">DEMO LINK </a> ');
+
         $scope.filters = {
           from_timestamp: moment().subtract(1, 'days').valueOf(),
           to_timestamp: Date.now()
