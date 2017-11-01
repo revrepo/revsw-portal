@@ -22,7 +22,7 @@
         isAutoReload: '@?'
       },
       /*@ngInject*/
-      controller: function($scope, Stats, $q, Util, filterGeneratorService, EventsSerieDataService) {
+      controller: function($scope, Stats, $q, Util, filterGeneratorService, EventsSerieDataService, $sce, $config) {
         var _filters_field_list = ['from_timestamp', 'to_timestamp', 'country', 'device', 'os', 'browser'];
 
         function generateFilterParams(filters) {
@@ -52,6 +52,9 @@
         }
 
         $scope.heading = 'Edge Cache Efficiency Hits';
+        $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
+        $scope.popoverHelpHTML = $sce.trustAsHtml('TODO text <a href="/demo">DEMO LINK </a> ');
+
         $scope._loading = false;
         $scope.hasFailedToLoadData = false;
         $scope.filters = {
