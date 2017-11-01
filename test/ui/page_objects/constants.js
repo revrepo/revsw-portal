@@ -317,6 +317,24 @@ var Constants = {
     'ngStorage-selectedUser',
     'ngStorage-selectedCompany',
     'ngStorage-selectedDomain'
+  ],
+
+  VENDORS: [
+    {
+      NAME: 'revapm',
+      LOGIN_URL: 'https://testsjc20-portal01.revsw.net/#/login',
+      ACCOUNT: ['QA-TEST-COMPANY-REVAPM']
+    },
+    {
+      NAME: 'nuubit',
+      LOGIN_URL: 'https://testsjc20-portal-nuubit.revsw.net/#/login',
+      ACCOUNT: ['QA-TEST-COMPANY-NUUBIT']
+    },
+    {
+      NAME: 'hooli',
+      LOGIN_URL: 'https://testsjc20-portal-hooli.revsw.net/#/login',
+      ACCOUNT: ['QA-TEST-COMPANY-HOOLI']
+    }
   ]
 
 };

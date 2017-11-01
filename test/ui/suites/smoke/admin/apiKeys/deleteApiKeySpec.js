@@ -26,10 +26,10 @@ describe('Smoke', function () {
   var userAdmin = config.get('portal.users.admin');
 
   describe('Delete API Key', function () {
-
+    var apiKey = DataProvider.generateApiKeyData('API-Key-Delete');
     beforeEach(function () {
       Portal.signIn(userAdmin);
-      var apiKey = DataProvider.generateApiKeyData('API-Key-Delete');
+      
       Portal.createApiKey(apiKey);
       Portal.helpers.nav.goToAPIKeys();
     });

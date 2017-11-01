@@ -25,7 +25,7 @@
       AlertService.clear();
       $scope.data.loading = true;
       try {
-        var otpCode = $scope.code === '' ? form.code : $scope.code;        
+        var otpCode = $scope.code === '' ? $scope.data.code : $scope.code;
         User.login(auth.email, auth.password, otpCode)
           .then(function (data) {
             $uibModalInstance.close(data);

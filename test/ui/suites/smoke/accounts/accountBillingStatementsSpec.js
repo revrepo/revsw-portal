@@ -129,36 +129,7 @@ describe('Smoke', function () {
           expect(Portal.accounts.billingStatements.summary
             .getUpdatePaymentProfileBtn()
             .isDisplayed()).toBeTruthy();
-        });
-
-      it('should check that Billing Summary displays report values.',
-        function () {
-          Portal.accounts.billingStatements.summary
-            .getCurrentBillingPlan()
-            .then(function (currentValue) {
-              expect(currentValue.length).toBeGreaterThan(0);
-            });
-        });
-
-      it('should check that Transactions displays report values.',
-        function () {
-          Portal.accounts.billingStatements.transactions.table
-            .getFirstRow()
-            .getOperationType()
-            .then(function (currentValue) {
-              expect(currentValue.length).toBeGreaterThan(0);
-            });
-        });
-
-      it('should check that Statements displays report values.',
-        function () {
-          Portal.accounts.billingStatements.statements.table
-            .getFirstRow()
-            .getStatement()
-            .then(function (statementValue) {
-              expect(statementValue.length).toBeGreaterThan(0);
-            });
-        });
+        });     
 
       // Rev Admin role
       if (typeof user === 'object') {
