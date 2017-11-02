@@ -24,54 +24,66 @@ var DataProvider = require('./../../../common/providers/data');
 describe('Functional', function () {
     describe('Log Shipping Edit Job', function () {
 
-        var user = config.get('portal.users.revAdmin');
+        var users = [
+            config.get('portal.users.revAdmin'),
+            config.get('portal.users.admin'),
+            config.get('portal.users.reseller')
+        ];
+
+        users.forEach(function (user) {
 
 
-        describe('With user: ' + user.role, function () {
+            describe('With user: ' + user.role, function () {
 
-            beforeAll(function () {
-                var jobData;
-                Portal.signIn(user);
-                Portal.helpers.nav.goToLogShipping();
-                jobData = DataProvider.generateLogShippingJobData();
-                Portal.logShipping.listPage.clickAddNewLogShippingJob();
-                Portal.logShipping.addPage.form.setJobName(jobData.name);
-                Portal.logShipping.addPage.form.setAccount(jobData.account);
-                Portal.logShipping.addPage.clickCreateJobBtn();
-                Portal.logShipping.listPage.searchAndClickEdit(jobData.name);
-                jobData.name = jobData.name + '-UPDATED';
-                Portal.logShipping.editPage.updateLogShippingJob(jobData);
-                Portal.logShipping.editPage.clickBackToList();
-                Portal.logShipping.listPage.searchAndGetFirstRow(jobData.name);
-            });
+                beforeAll(function () {
+                    var jobData;
+                    Portal.signIn(user);
+                    Portal.helpers.nav.goToLogShipping();
+                    jobData = DataProvider.generateLogShippingJobData({}, user.role);
+                    Portal.logShipping.listPage.clickAddNewLogShippingJob();
+                    Portal.logShipping.addPage.form.setJobName(jobData.name);
+                    if (user.role !== 'Admin') {
+                        Portal.logShipping.addPage.form.setAccount(jobData.account);
+                    }
+                    Portal.logShipping.addPage.clickCreateJobBtn();
+                    Portal.logShipping.listPage.searchAndClickEdit(jobData.name);
+                    jobData.name = jobData.name + '-UPDATED';
+                    Portal
+                        .logShipping
+                        .editPage
+                        .updateLogShippingJob(jobData, user.role === 'Admin' ? true : false);
+                    Portal.logShipping.editPage.clickBackToList();
+                    Portal.logShipping.listPage.searchAndGetFirstRow(jobData.name);
+                });
 
-            afterAll(function () {
-                Portal.signOut();
-            });
+                afterAll(function () {
+                    Portal.signOut();
+                });
 
-            it('should successfully activate job after creation',
-                function () {
-                    Portal.logShipping.listPage.table.getFirstRow().clickPlay();
+                it('should successfully activate job after creation',
+                    function () {
+                        Portal.logShipping.listPage.table.getFirstRow().clickPlay();
+                        Portal.logShipping.listPage.clickModalConfirmBtn();
+                        var alert = Portal.alerts.getFirst();
+                        expect(alert.getText())
+                            .toContain(Constants.alertMessages.logShipping.MSG_SUCCESS_PLAY);
+                    });
+
+                it('should successfully pause job after activation', function () {
+                    Portal.logShipping.listPage.table.getFirstRow().clickPause();
                     Portal.logShipping.listPage.clickModalConfirmBtn();
                     var alert = Portal.alerts.getFirst();
                     expect(alert.getText())
-                        .toContain(Constants.alertMessages.logShipping.MSG_SUCCESS_PLAY);
+                        .toContain(Constants.alertMessages.logShipping.MSG_SUCCESS_PAUSE);
                 });
 
-            it('should successfully pause job after activation', function () {
-                Portal.logShipping.listPage.table.getFirstRow().clickPause();
-                Portal.logShipping.listPage.clickModalConfirmBtn();
-                var alert = Portal.alerts.getFirst();
-                expect(alert.getText())
-                    .toContain(Constants.alertMessages.logShipping.MSG_SUCCESS_PAUSE);
-            });
-
-            it('should successfully stop job after activation', function () {
-                Portal.logShipping.listPage.table.getFirstRow().clickStop();
-                Portal.logShipping.listPage.clickModalConfirmBtn();
-                var alert = Portal.alerts.getFirst();
-                expect(alert.getText())
-                    .toContain(Constants.alertMessages.logShipping.MSG_SUCCESS_STOP);
+                it('should successfully stop job after activation', function () {
+                    Portal.logShipping.listPage.table.getFirstRow().clickStop();
+                    Portal.logShipping.listPage.clickModalConfirmBtn();
+                    var alert = Portal.alerts.getFirst();
+                    expect(alert.getText())
+                        .toContain(Constants.alertMessages.logShipping.MSG_SUCCESS_STOP);
+                });
             });
         });
     });

@@ -24,34 +24,43 @@ var DataProvider = require('./../../../common/providers/data');
 describe('Functional', function () {
     describe('Log Shipping Delete Job', function () {
 
-        var user = config.get('portal.users.revAdmin');
+        var users = [
+            config.get('portal.users.revAdmin'),
+            config.get('portal.users.admin'),
+            config.get('portal.users.reseller')
+        ];
+
+        users.forEach(function (user) {
 
 
-        describe('With user: ' + user.role, function () {
-            var jobData;
-            beforeAll(function () {
-                Portal.signIn(user);
-                Portal.helpers.nav.goToLogShipping();
-                jobData = DataProvider.generateLogShippingJobData();
-                Portal.logShipping.listPage.clickAddNewLogShippingJob();
-                Portal.logShipping.addPage.form.setJobName(jobData.name);
-                Portal.logShipping.addPage.form.setAccount(jobData.account);
-                Portal.logShipping.addPage.clickCreateJobBtn();
-            });
-
-            afterAll(function () {
-                Portal.signOut();
-            });
-
-            it('should successfully delete job',
-                function () {
-                    Portal.logShipping.listPage.searchAndClickDelete(jobData.name);
-                    Portal.logShipping.listPage.clickConfirmDeleteBtn();
-                    var alert = Portal.alerts.getFirst();
-                    Portal.logShipping.listPage.searchAndGetFirstRow(jobData.name);
-                    expect(Portal.logShipping.listPage.table.getRows().count()).toEqual(0);
-
+            describe('With user: ' + user.role, function () {
+                var jobData;
+                beforeAll(function () {
+                    Portal.signIn(user);
+                    Portal.helpers.nav.goToLogShipping();
+                    jobData = DataProvider.generateLogShippingJobData({}, user.role);
+                    Portal.logShipping.listPage.clickAddNewLogShippingJob();
+                    Portal.logShipping.addPage.form.setJobName(jobData.name);
+                    if (user.role !== 'Admin') {
+                        Portal.logShipping.addPage.form.setAccount(jobData.account);
+                    }
+                    Portal.logShipping.addPage.clickCreateJobBtn();
                 });
+
+                afterAll(function () {
+                    Portal.signOut();
+                });
+
+                it('should successfully delete job',
+                    function () {
+                        Portal.logShipping.listPage.searchAndClickDelete(jobData.name);
+                        Portal.logShipping.listPage.clickConfirmDeleteBtn();
+                        var alert = Portal.alerts.getFirst();
+                        Portal.logShipping.listPage.searchAndGetFirstRow(jobData.name);
+                        expect(Portal.logShipping.listPage.table.getRows().count()).toEqual(0);
+
+                    });
+            });
         });
     });
 });

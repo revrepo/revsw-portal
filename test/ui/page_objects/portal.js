@@ -306,7 +306,6 @@ var Portal = {
           .signIn(user)
           .then(function () {
             me.session.setCurrentUser(user);
-
             if (introSkip) {
               // Check for intro
               var until = protractor.ExpectedConditions;

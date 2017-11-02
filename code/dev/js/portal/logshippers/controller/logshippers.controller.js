@@ -349,14 +349,23 @@
     };
 
     $scope.clearForm = function () {
-      $scope.clearModel();
+      if ($scope.auth.isReseller() || $scope.auth.isRevadmin()) {
+        $scope.clearModel();
+      } else {
+        $scope.model.job_name = null;
+      }      
     };
 
     $scope.disableSubmit = function(model, isEdit) {
       if (!isEdit) {
-        return $scope._loading ||
+        if($scope.auth.isReseller() || $scope.auth.isRevadmin()){
+          return $scope._loading ||
           !model.job_name ||
           !model.account_id;
+        } else {
+          return $scope._loading ||
+          !model.job_name;
+        }
       } else {
         return $scope._loading ||
           !model.job_name ||

@@ -37,21 +37,10 @@ describe('Boundary', function () {
                     Portal.signIn(user);
                     Portal.helpers.nav.goToLogShipping();
                     Portal.logShipping.listPage.clickAddNewLogShippingJob();
-                    var acc = {};
-                    switch (user.role) {
-                        case 'revAdmin':
-                            acc.account = ['Rev Test'];
-                            break;
-                        case 'Reseller':
-                            acc.account = ['API QA Reseller Company Updated'];
-                            break;
-                    }
-                    jobData = DataProvider.generateLogShippingJobData(acc);
+                    jobData = DataProvider.generateLogShippingJobData({}, user.role);
                     Portal.logShipping.addPage.form.setJobName(jobData.name);
                     if (user.role !== 'Admin') {
                         Portal.logShipping.addPage.form.setAccount(jobData.account);
-                    } else {
-                        jobData.sourceDomain = 'qa-admin-10-portal-ui-test.com';
                     }
                     Portal.logShipping.addPage.clickCreateJobBtn();
                 });
@@ -66,7 +55,7 @@ describe('Boundary', function () {
                         .logShipping
                         .editPage
                         .form
-                        .fill(jobData);
+                        .fill(jobData, user.role === 'Admin' ? true : undefined);
                 });
 
                 afterEach(function () {
@@ -78,20 +67,36 @@ describe('Boundary', function () {
                         expect(Portal.logShipping.editPage.isUpdateBtnEnabled()).toBeTruthy();
                     });
 
-                it('should not enable update if `Job Name` is contains special characters',
+                it('should not enable update if `Job Name` contains special characters',
                     function () {
+                        Portal.logShipping.editPage.form.clearJobName();
                         Portal.logShipping.editPage.form.setJobName('a!b@c#d$e%f^g&');
                         expect(Portal.logShipping.editPage.isUpdateBtnEnabled()).toBeFalsy();
                     });
                 it('should not enable update if `Job Name` contains more than 150 characters',
                     function () {
+                        Portal.logShipping.editPage.form.clearJobName();
                         Portal.logShipping.editPage.form.setJobName(lengthString160);
+                        expect(Portal.logShipping.editPage.isUpdateBtnEnabled()).toBeFalsy();
+                    });
+
+                it('should not enable update if `Job Name` contains only white spaces',
+                    function () {
+                        Portal.logShipping.editPage.form.clearJobName();
+                        Portal.logShipping.editPage.form.setJobName('   ');
                         expect(Portal.logShipping.editPage.isUpdateBtnEnabled()).toBeFalsy();
                     });
 
                 it('should not enable update if `Host` contains more than 150 characters',
                     function () {
+                        Portal.logShipping.editPage.form.setJobName(jobData.name);
                         Portal.logShipping.editPage.form.setHost(lengthString160);
+                        expect(Portal.logShipping.editPage.isUpdateBtnEnabled()).toBeFalsy();
+                    });
+
+                it('should not enable update if `Host` contains only white spaces',
+                    function () {                                                
+                        Portal.logShipping.editPage.form.setHost('   ');
                         expect(Portal.logShipping.editPage.isUpdateBtnEnabled()).toBeFalsy();
                     });
 
@@ -107,9 +112,27 @@ describe('Boundary', function () {
                         expect(Portal.logShipping.editPage.isUpdateBtnEnabled()).toBeFalsy();
                     });
 
+                it('should not enable update if `Username` contains only white spaces',
+                    function () {
+                        Portal.logShipping.editPage.form.setUserName('   ');
+                        expect(Portal.logShipping.editPage.isUpdateBtnEnabled()).toBeFalsy();
+                    });
+
                 it('should not enable update if `Password` contains more than 150 characters',
                     function () {
                         Portal.logShipping.editPage.form.setPassword(lengthString160);
+                        expect(Portal.logShipping.editPage.isUpdateBtnEnabled()).toBeFalsy();
+                    });
+
+                it('should not enable update if `Password` contains only white spaces',
+                    function () {
+                        Portal.logShipping.editPage.form.setPassword('   ');
+                        expect(Portal.logShipping.editPage.isUpdateBtnEnabled()).toBeFalsy();
+                    });
+
+                    it('should not enable update if `Email` is not a valid email address',
+                    function () {
+                        Portal.logShipping.editPage.form.setEmail('notavalidemail');
                         expect(Portal.logShipping.editPage.isUpdateBtnEnabled()).toBeFalsy();
                     });
             });
