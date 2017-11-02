@@ -18,8 +18,8 @@
  */
 
 var config = require('config');
-var Portal = require('./../../../page_objects/portal');
-var Contants = require('./../../../page_objects/constants.js');
+var Portal = require('./../../../../page_objects/portal');
+var Contants = require('./../../../../page_objects/constants.js');
 
 describe('Smoke', function () {
 
