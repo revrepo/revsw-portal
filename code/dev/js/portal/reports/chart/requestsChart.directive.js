@@ -27,7 +27,7 @@
   }
 
   /*ngInject*/
-  function RequestsChartCtrl($scope, Stats, Util, EventsSerieDataService, $q, $sce) {
+  function RequestsChartCtrl($scope, Stats, Util, EventsSerieDataService, $q, $sce, $config) {
 
     var _filters_field_list = ['from_timestamp', 'to_timestamp', 'country', 'device', 'os', 'browser'];
 
@@ -54,9 +54,10 @@
 
     $scope._loading = false;
     $scope.heading = 'Bandwidth Usage';
+    $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
+    $scope.popoverHelpHTML = $sce.trustAsHtml('TODO text <a href="/demo">DEMO LINK </a> ');
+
     $scope.reload = reload;
-    $scope.popoverPopupCloseDelay = 1200; // TODO: rebase to $config
-    $scope.popoverHelpHTML = $sce.trustAsHtml('Demo text  <a href="/demo"> LINK </a> ');
     $scope.filters = {
       from_timestamp: moment().subtract(1, 'days').valueOf(),
       to_timestamp: Date.now()

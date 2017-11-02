@@ -60,6 +60,10 @@
         Modified: 'glyphicon-ok-circle text-primary'
       },
       /**
+       * Interval delay for close popover and popup
+       */
+      POPOVER_POPUP_CLOSE_DELAY_MS: 1200,
+      /**
        * Interval delay for unlock UI for user actions
        */
       TIMEOUT_USER_ACTIONS_LOCK: 1000, // 1 sec
