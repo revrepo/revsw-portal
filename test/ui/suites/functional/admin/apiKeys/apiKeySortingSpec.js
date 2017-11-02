@@ -60,5 +60,43 @@ describe('Smoke', function () {
         var name2 = Portal.admin.apiKeys.listPage.table.getFirstRow().getName();
         expect(name1).toBeGreaterThan(name2);
       });
+
+    it('should apply `descendant` sorting by `Last Update` column',
+      function () {
+        Portal.admin.apiKeys.listPage.table.getHeader().clickLastUpdate();
+        var val1 = Portal.admin.apiKeys.listPage.table.getFirstRow().getLastUpdate();
+        Portal.admin.apiKeys.listPage.table.getHeader().clickLastUpdate();
+        var val2 = Portal.admin.apiKeys.listPage.table.getFirstRow().getLastUpdate();
+        expect(val1).toBeGreaterThan(val2);
+      });
+
+    it('should apply `ascendant` sorting by `Last Update` column',
+      function () {
+        Portal.admin.apiKeys.listPage.table.getHeader().clickLastUpdate();
+        Portal.admin.apiKeys.listPage.table.getHeader().clickLastUpdate();
+        var val1 = Portal.admin.apiKeys.listPage.table.getFirstRow().getLastUpdate();
+        Portal.admin.apiKeys.listPage.table.getHeader().clickLastUpdate();
+        var val2 = Portal.admin.apiKeys.listPage.table.getFirstRow().getLastUpdate();
+        expect(val1).toBeLessThan(val2);
+      });
+
+      it('should apply `descendant` sorting by `Account` column',
+      function () {
+        Portal.admin.apiKeys.listPage.table.getHeader().clickAccount();
+        var val1 = Portal.admin.apiKeys.listPage.table.getFirstRow().getAccount();
+        Portal.admin.apiKeys.listPage.table.getHeader().clickAccount();
+        var val2 = Portal.admin.apiKeys.listPage.table.getFirstRow().getAccount();
+        expect(val1).toBeLessThan(val2);
+      });
+
+    it('should apply `ascendant` sorting by `Account` column',
+      function () {
+        Portal.admin.apiKeys.listPage.table.getHeader().clickAccount();
+        Portal.admin.apiKeys.listPage.table.getHeader().clickAccount();
+        var val1 = Portal.admin.apiKeys.listPage.table.getFirstRow().getAccount();
+        Portal.admin.apiKeys.listPage.table.getHeader().clickAccount();
+        var val2 = Portal.admin.apiKeys.listPage.table.getFirstRow().getAccount();
+        expect(val1).toBeGreaterThan(val2);
+      });
   });
 });

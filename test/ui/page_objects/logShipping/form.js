@@ -364,6 +364,7 @@ var LogShippingForm = {
    * @returns {Object} Promise
    */
   setEmail: function (value) {
+    this.getEmailTxtIn().clear();
     return this
       .getEmailTxtIn()
       .sendKeys(value);
@@ -495,21 +496,21 @@ var LogShippingForm = {
    *      account: String,
    *    }
    */
-  fill: function (job) {
+  fill: function (job, acc) {
     if (job.name !== undefined) {
       this.clearJobName();
       this.setJobName(job.name);
     }
 
     var me = this;
-
-    element.all(by.id(this.locators.dropDowns.account.id))
-      .then(function (elements) {
-        if (job.account !== undefined && elements.length > 0) {
-          me.setAccount(job.account);
-        }
-      });
-
+    if (acc === undefined) {
+      element.all(by.id(this.locators.dropDowns.account.id))
+        .then(function (elements) {
+          if (job.account !== undefined && elements.length > 0) {
+            me.setAccount(job.account);
+          }
+        });
+    }
     element.all(by.id(this.locators.dropDowns.setCurrentMode.id))
       .then(function (elements) {
         if (job.currentMode !== undefined && elements.length > 0) {

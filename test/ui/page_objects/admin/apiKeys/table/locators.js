@@ -37,6 +37,9 @@ var headerLocators = {
   },
   actions: {
     css: 'th:nth-of-type(4)'
+  },
+  account: {
+    css: 'th:nth-of-type(5) a'
   }
 };
 

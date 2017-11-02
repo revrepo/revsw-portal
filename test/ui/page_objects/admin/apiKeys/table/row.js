@@ -43,6 +43,10 @@ var KeyTableRow = function (rowElem, locators) {
     return this.rowElem.element(by.css(this.locators.account.css));
   };
 
+  this.getAccount = function () {
+    return this.getAccountCell().getText();
+  };
+
   this.getName = function () {
     return this
       .getNameCell()
@@ -64,6 +68,12 @@ var KeyTableRow = function (rowElem, locators) {
   this.clickName = function () {
     return this
       .getNameCell()
+      .click();
+  };
+
+  this.clickLastUpdate = function () {
+    return this
+      .getLastUpdatedCell()
       .click();
   };
 

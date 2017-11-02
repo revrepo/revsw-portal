@@ -46,6 +46,9 @@ var headerLocators = {
   },
   lastLoginAt: {
     css: 'th:nth-of-type(7) a'
+  },
+  account: {
+    css: 'th:nth-of-type(9) a'
   }
 };
 
@@ -66,10 +69,10 @@ var rowLocators = {
     css: 'td:nth-of-type(5)'
   },
   updatedAt: {
-    css: 'th:nth-of-type(6)'
+    css: 'td:nth-of-type(6)'
   },
   lastLoginAt: {
-    css: 'th:nth-of-type(7)'
+    css: 'td:nth-of-type(7)'
   },
   actions: {
     css: 'td:nth-of-type(8)',
