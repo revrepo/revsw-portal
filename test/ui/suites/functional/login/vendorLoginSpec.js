@@ -79,6 +79,7 @@ describe('Functional', function () {
                     Portal.loginPage.setEmail(userObj.user.email);
                     Portal.loginPage.setPassword(userObj.user.password);
                     Portal.loginPage.clickSignIn();
+                    browser.sleep(60000); // non angular page wait
                     
                     browser.getCurrentUrl().then(function (url) {
                         if (userObj.vendor.NAME === 'revapm') {
