@@ -37,7 +37,7 @@ describe('Functional', function () {
           Portal.helpers.nav.goToMobileAppsMenuItem(platform);
         });
 
-        xit('should sort list in ascendant direction',
+        it('should sort list in ascendant direction',
           function () {
             Portal.mobileApps.listPage.sortByName();
             var appName1 = Portal.mobileApps.listPage.table
