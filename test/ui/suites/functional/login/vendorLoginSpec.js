@@ -76,7 +76,10 @@ describe('Functional', function () {
                     } else {
                         Portal.load();
                     }
-                    Portal.signIn(userObj.user, true);
+                    Portal.loginPage.setEmail(userObj.user.email);
+                    Portal.loginPage.setPassword(userObj.user.password);
+                    Portal.loginPage.clickSignIn();
+                    
                     browser.getCurrentUrl().then(function (url) {
                         if (userObj.vendor.NAME === 'revapm') {
                             expect(Portal.header.getHeaderBar().isDisplayed()).toBeTruthy();
