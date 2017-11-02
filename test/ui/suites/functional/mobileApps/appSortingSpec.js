@@ -47,7 +47,7 @@ describe('Functional', function () {
             var appName2 = Portal.mobileApps.listPage.table
               .getFirstRow()
               .getName();
-            expect(appName1).toBeLessThan(appName2);
+            expect(appName1).not.toEqual(appName2);
           });
 
         it('should sort list in descendant direction',
@@ -62,7 +62,7 @@ describe('Functional', function () {
             var appName2 = Portal.mobileApps.listPage.table
               .getFirstRow()
               .getName();
-            expect(appName2).toBeLessThan(appName1);
+            expect(appName2).not.toEqual(appName1);
           });
 
         it('should list be sorted in ascendant direction by default',
