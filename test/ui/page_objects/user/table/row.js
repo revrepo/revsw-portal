@@ -79,6 +79,36 @@ var UserTableRow = function (rowEl, locators) {
       .getText();
   };
 
+  this.get2FA = function () {
+    return this
+      .getStatus2faCell()
+      .getText();
+  };
+
+  this.getLastUpdate = function () {
+    return this
+      .getLastUpdateCell()
+      .getText();
+  };
+
+  this.getLastLogin = function () {
+    return this
+      .getLastLoginCell()
+      .getText();
+  };
+
+  this.getAccount = function () {
+    return this
+      .getAccountCell()
+      .getText();
+  };
+
+  this.click2FA = function () {
+    return this
+      .getStatus2faCell()
+      .click();
+  };
+
   this.clickFirstName = function () {
     return this
       .getFirstNameCell()
@@ -114,6 +144,12 @@ var UserTableRow = function (rowEl, locators) {
   this.clickLastLogin = function () {
     return this
       .getLastLoginCell()
+      .click();
+  };
+
+  this.clickAccount = function () {
+    return this
+      .getAccountCell()
       .click();
   };
 

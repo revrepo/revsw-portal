@@ -32,6 +32,7 @@ var Session = require('./../session');
 // object-data used in the application. In this way, we facilitate the test
 // data generation.
 var DataProvider = {
+  session: Session,
 
   /**
    * ### DataProvider.generateUser()
@@ -760,9 +761,15 @@ var DataProvider = {
    *      account: String,
    *    }
    */
-  generateLogShippingJobData: function (data) {
+  generateLogShippingJobData: function (data, role) {
     var timestamp = Date.now();
     var name = 'logshippingtest-' + timestamp;
+    if (role === 'Admin') {
+      data.account = undefined;
+      data.sourceDomain = 'qa-admin-10-portal-ui-test.com';
+    } else if (role === 'Reseller') {
+      data.account = ['API QA Reseller Company Updated'];
+    }
     if (data) {
       return {
         name: (data.name === undefined) ? name : data.name,

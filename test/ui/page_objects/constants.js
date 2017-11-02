@@ -322,17 +322,17 @@ var Constants = {
   VENDORS: [
     {
       NAME: 'revapm',
-      LOGIN_URL: 'https://testsjc20-portal01.revsw.net/#/login',
+      LOGIN_URL: 'testsjc20-portal01.revsw.net',
       ACCOUNT: ['QA-TEST-COMPANY-REVAPM']
     },
     {
       NAME: 'nuubit',
-      LOGIN_URL: 'https://testsjc20-portal-nuubit.revsw.net/#/login',
+      LOGIN_URL: 'testsjc20-portal-nuubit.revsw.net',
       ACCOUNT: ['QA-TEST-COMPANY-NUUBIT']
     },
     {
       NAME: 'hooli',
-      LOGIN_URL: 'https://testsjc20-portal-hooli.revsw.net/#/login',
+      LOGIN_URL: 'testsjc20-portal-hooli.revsw.net',
       ACCOUNT: ['QA-TEST-COMPANY-HOOLI']
     }
   ]

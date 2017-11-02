@@ -23,8 +23,13 @@ var Constants = require('./../../../page_objects/constants');
 describe('Functional', function () {
   describe('User sorting', function () {
 
+    /*
+    Using revAdmin to test this because admin doesn't have enough users
+    to test 2fa, last login, last update, account sorting..
+    */
+
     var users = [
-      config.get('portal.users.admin')
+      config.get('portal.users.revAdmin')
     ];
     var prefix = 'qa-sort-' + Date.now() + '-';
     var firstUser;
@@ -160,6 +165,126 @@ describe('Functional', function () {
             var row = Portal.userListPage.table.getFirstRow();
             var userRole = row.getRoleCell().getText();
             expect(userRole).toContain(Constants.user.roles.USER);
+          });
+
+        it('should apply `ascendant` sorting by `2FA` column',
+          function () {
+            var first;
+            Portal.userListPage.searcher.clearSearchCriteria();
+            Portal.userListPage.table.getHeader().click2FA().then(function () {
+              Portal.userListPage.table.getFirstRow().get2FA().then(function (fa) {
+                first = fa;
+                Portal.userListPage.table.getHeader().click2FA().then(function () {
+                  Portal.userListPage.table.getFirstRow().get2FA().then(function (fa2) {
+                    expect(first).toBeLessThan(fa2);
+                  });
+                });
+              });
+            });
+          });
+
+        it('should apply `descendant` sorting by `2FA` column',
+          function () {
+            var first;
+            Portal.userListPage.searcher.clearSearchCriteria();
+            Portal.userListPage.table.getFirstRow().get2FA().then(function (fa) {
+              first = fa;
+              Portal.userListPage.table.getHeader().click2FA().then(function () {
+                Portal.userListPage.table.getFirstRow().get2FA().then(function (fa2) {
+                  expect(first).toBeGreaterThan(fa2);
+                });
+              });
+            });
+          });
+
+        it('should apply `ascendant` sorting by `Last Update` column',
+          function () {
+            var first;
+            Portal.userListPage.searcher.clearSearchCriteria();
+            Portal.userListPage.table.getHeader().clickLastUpdate().then(function () {
+              Portal.userListPage.table.getFirstRow().getLastUpdate().then(function (val) {
+                first = val;
+                Portal.userListPage.table.getHeader().clickLastUpdate().then(function () {
+                  Portal.userListPage.table.getFirstRow().getLastUpdate().then(function (val2) {
+                    expect(first).toBeLessThan(val2);
+                  });
+                });
+              });
+            });
+          });
+
+        it('should apply `descendant` sorting by `Last Update` column',
+          function () {
+            var first;
+            Portal.userListPage.searcher.clearSearchCriteria();
+            Portal.userListPage.table.getFirstRow().getLastUpdate().then(function (val) {
+              first = val;
+              Portal.userListPage.table.getHeader().clickLastUpdate().then(function () {
+                Portal.userListPage.table.getFirstRow().getLastUpdate().then(function (val2) {
+                  expect(first).toBeGreaterThan(val2);
+                });
+              });
+            });
+          });
+
+        it('should apply `ascendant` sorting by `Last Login` column',
+          function () {
+            var first;
+            Portal.userListPage.searcher.clearSearchCriteria();
+            Portal.userListPage.table.getHeader().clickLastLogin().then(function () {
+              Portal.userListPage.table.getFirstRow().getLastLogin().then(function (val) {
+                first = val;
+                Portal.userListPage.table.getHeader().clickLastLogin().then(function () {
+                  Portal.userListPage.table.getFirstRow().getLastLogin().then(function (val2) {
+                    expect(first).toBeLessThan(val2);
+                  });
+                });
+              });
+            });
+          });
+
+        it('should apply `descendant` sorting by `Last Login` column',
+          function () {
+            var first;
+            Portal.userListPage.searcher.clearSearchCriteria();
+            Portal.userListPage.table.getFirstRow().getLastLogin().then(function (val) {
+              first = val;
+              Portal.userListPage.table.getHeader().clickLastLogin().then(function () {
+                Portal.userListPage.table.getFirstRow().getLastLogin().then(function (val2) {
+                  expect(first).toBeGreaterThan(val2);
+                });
+              });
+            });
+          });
+
+        it('should apply `ascendant` sorting by `Account` column',
+          function () {
+            var first;
+            Portal.userListPage.searcher.clearSearchCriteria();
+            Portal.userListPage.table.getHeader().clickAccount().then(function () {
+              Portal.userListPage.table.getFirstRow().getAccount().then(function (val) {
+                first = val;
+                Portal.userListPage.table.getHeader().clickAccount().then(function () {
+                  Portal.userListPage.table.getFirstRow().getAccount().then(function (val2) {
+                    expect(first).not.toEqual(val2);
+                  });
+                });
+              });
+            });
+          });
+
+        it('should apply `descendant` sorting by `Account` column',
+          function () {
+            var first;
+            Portal.userListPage.searcher.clearSearchCriteria();
+            Portal.userListPage.table.getFirstRow().getAccount().then(function (val) {
+              first = val;
+              Portal.userListPage.table.getHeader().clickAccount().then(function () {
+                Portal.userListPage.table.getFirstRow().getAccount().then(function (val2) {
+                  expect(first).not.toEqual(val2);
+                });
+              });
+            });
           });
       });
     });

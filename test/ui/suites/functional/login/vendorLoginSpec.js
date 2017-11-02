@@ -24,44 +24,70 @@ var Constants = require('./../../../page_objects/constants');
 describe('Functional', function () {
     var revAdmin = config.get('portal.users.revAdmin');
     var users = [];
-    var roles = ['admin', 'user'];
+    var roles = ['admin', 'user', 'reseller'];
     var vendors = Constants.VENDORS;
 
     describe('Login Vendor', function () {
 
         var currentVendor;
-
-        it('should redirect user to correct login url', function () {
-            /*
-            * Create a user for each role, assign a different vendor to each one
-            */
+        var users = [];
+        beforeAll(function () {
+            Portal.signIn(revAdmin);
+            Portal.helpers.nav.goToUsers();
+            Portal.userListPage.clickAddNewUser();
             vendors.forEach(function (vendor) {
                 roles.forEach(function (role) {
-                    Portal.signIn(revAdmin).then(function () {
-                        Portal.helpers.nav.goToUsers();
-                        Portal.userListPage.clickAddNewUser();
-                        var data = {
-                            role: role,
-                            company: vendor.ACCOUNT
-                        };
-                        var bruce = DataProvider.generateUser(data);
-                        Portal.addUserPage.createUser(bruce);
-                        Portal.signOut();
-                        Portal.loginPage.setEmail(bruce.email);
-                        Portal.loginPage.setPassword(bruce.password);
-                        Portal.loginPage.clickSignIn();
+                    var data = {
+                        role: role,
+                        company: vendor.ACCOUNT
+                    };
+                    var bruce = DataProvider.generateUser(data);
+                    Portal.addUserPage.createUser(bruce);
+                    users.push({
+                        user: bruce,
+                        vendor: vendor
+                    });
+                });
+            });
+        });
 
-                        if (vendor.NAME === 'revapm') {
+        afterAll(function () {
+            // user cleanup
+            Portal.header.getHeaderBar().isPresent().then(function (val) {
+                if (val) {
+                    Portal.signOut();
+                } else {
+                    Portal.load();
+                }
+                Portal.signIn(revAdmin);
+                Portal.helpers.nav.goToUsers();
+                users.forEach(function (userObj) {
+                    Portal.userListPage.searchAndClickDelete(userObj.user.email);
+                    Portal.dialog.clickOk();
+                });
+            });            
+        });        
+
+        it('should redirect user to correct login url', function () {
+            users.forEach(function (userObj) {
+                Portal.header.getHeaderBar().isPresent().then(function (val) {
+                    if (val) {
+                        Portal.signOut();
+                    } else {
+                        Portal.load();
+                    }
+                    Portal.loginPage.setEmail(userObj.user.email);
+                    Portal.loginPage.setPassword(userObj.user.password);
+                    Portal.loginPage.clickSignIn();
+                    browser.sleep(60000); // non angular page wait
+                    
+                    browser.getCurrentUrl().then(function (url) {
+                        if (userObj.vendor.NAME === 'revapm') {
                             expect(Portal.header.getHeaderBar().isDisplayed()).toBeTruthy();
+                            Portal.signOut();
                         } else {
-                            browser.sleep(60000); // sleep non angular page
-                            browser.getCurrentUrl().then(function (url) {
-                                expect(url).toBe(vendor.LOGIN_URL);
-                                Portal.load().then(function () {
-                                    Portal.signOut();
-                                });
-                                
-                            });
+                            expect(url).toContain(userObj.vendor.LOGIN_URL);
+                            Portal.load();
                         }
                     });
                 });

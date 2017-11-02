@@ -47,6 +47,12 @@ var UserForm = {
       },
       passwordConfirm: {
         model: 'model.passwordConfirm'
+      },
+      company: {
+        css: '#company .ui-select-search',
+        option: {
+          css: '.ui-select-highlight'
+        }
       }
     },
     checkBoxes: {
@@ -353,6 +359,19 @@ var UserForm = {
       .click();
   },
 
+  getCompnayTxtIn: function () {
+    return element(by.css(this.locators.textInputs.company.css));
+  },
+
+  getCompanyOption: function () {
+    return element(by.css(this.locators.textInputs.company.option.css));
+  },
+
+  setCompanyTxt: function (value) {
+    this.getCompnayTxtIn().sendKeys(value);
+    return this.getCompanyOption().click();
+  },
+
   /**
    * ### UserForm.setCompany()
    *
@@ -362,15 +381,19 @@ var UserForm = {
    *
    * @returns {Object} Promise
    */
-  setCompany: function (companies) {
-    for (var i = 0, len = companies.length; i < len; i++) {
-      var company = companies[i];
-      var option = this
-        .getCompanyDDown()
-        .setValue(company);
-      if (i === len - 1) {
-        return option;
+  setCompany: function (companies, reseller) {
+    if (reseller === undefined) {
+      for (var i = 0, len = companies.length; i < len; i++) {
+        var company = companies[i];
+        var option = this
+          .getCompanyDDown()
+          .setValue(company);
+        if (i === len - 1) {
+          return option;
+        }
       }
+    } else {
+      this.setCompanyTxt(companies[0]);
     }
   },
 
@@ -695,7 +718,7 @@ var UserForm = {
       this.setRole(user.role);
     }
     if (user.company !== undefined) {
-      this.setCompany(user.company);
+      this.setCompany(user.company, user.role === 'reseller' ? true : undefined);
     }
     if (user.domain !== undefined) {
       this.setDomain(user.domain);

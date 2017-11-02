@@ -24,61 +24,74 @@ var DataProvider = require('./../../../common/providers/data');
 describe('Negative', function () {
     describe('Log Shipping Edit Job', function () {
 
-        var user = config.get('portal.users.revAdmin');
+        var users = [
+            config.get('portal.users.revAdmin'),
+            config.get('portal.users.admin'),
+            config.get('portal.users.reseller')
+        ];
+
+        users.forEach(function (user) {
 
 
-        describe('With user: ' + user.role, function () {
-            var jobData;
-            beforeAll(function () {
-                Portal.signIn(user);
-                Portal.helpers.nav.goToLogShipping();
-                Portal.logShipping.listPage.clickAddNewLogShippingJob();
-                jobData = DataProvider.generateLogShippingJobData();
-                Portal.logShipping.addPage.form.setJobName(jobData.name);
-                Portal.logShipping.addPage.form.setAccount(jobData.account);
-                Portal.logShipping.addPage.clickCreateJobBtn();
+            describe('With user: ' + user.role, function () {
+                var jobData;
+                beforeAll(function () {
+                    Portal.signIn(user);
+                    Portal.helpers.nav.goToLogShipping();
+                    Portal.logShipping.listPage.clickAddNewLogShippingJob();
+                    jobData = DataProvider.generateLogShippingJobData({}, user.role);
+                    Portal.logShipping.addPage.form.setJobName(jobData.name);
+                    if (user.role !== 'Admin') {
+                        Portal.logShipping.addPage.form.setAccount(jobData.account);
+                    }
+                    Portal.logShipping.addPage.clickCreateJobBtn();
+                });
+
+                afterAll(function () {
+                    Portal.signOut();
+                });
+
+                beforeEach(function () {
+                    Portal.logShipping.listPage.searchAndClickEdit(jobData.name);
+                    Portal
+                        .logShipping
+                        .editPage
+                        .form
+                        .fill(jobData, user.role === 'Admin' ? true : undefined);
+                });
+
+                afterEach(function () {
+                    Portal.logShipping.editPage.clickBackToList();
+                });
+
+                it('should enable update if all fields have valid data',
+                    function () {
+                        expect(Portal.logShipping.editPage.isUpdateBtnEnabled()).toBeTruthy();
+                    });
+
+                it('should not enable update if `Job Name` is empty',
+                    function () {
+                        Portal.logShipping.editPage.form.clearJobName();
+                        expect(Portal.logShipping.editPage.isUpdateBtnEnabled()).toBeFalsy();
+                    });
+                it('should not enable update if `Host` is empty',
+                    function () {
+                        Portal.logShipping.editPage.form.clearHost();
+                        expect(Portal.logShipping.editPage.isUpdateBtnEnabled()).toBeFalsy();
+                    });
+
+                it('should not enable update if `Username` is empty',
+                    function () {
+                        Portal.logShipping.editPage.form.clearUserName();
+                        expect(Portal.logShipping.editPage.isUpdateBtnEnabled()).toBeFalsy();
+                    });
+
+                it('should not enable update if `Password` is empty',
+                    function () {
+                        Portal.logShipping.editPage.form.clearPassword();
+                        expect(Portal.logShipping.editPage.isUpdateBtnEnabled()).toBeFalsy();
+                    });
             });
-
-            afterAll(function () {
-                Portal.signOut();
-            });
-
-            beforeEach(function () {
-                Portal.logShipping.listPage.searchAndClickEdit(jobData.name);
-                Portal.logShipping.editPage.form.fill(jobData);
-            });
-
-            afterEach(function () {
-                Portal.logShipping.editPage.clickBackToList();
-            });
-
-            it('should enable update if all fields have valid data',
-                function () {
-                    expect(Portal.logShipping.editPage.isUpdateBtnEnabled()).toBeTruthy();
-                });
-
-            it('should not enable update if `Job Name` is empty',
-                function () {
-                    Portal.logShipping.editPage.form.clearJobName();
-                    expect(Portal.logShipping.editPage.isUpdateBtnEnabled()).toBeFalsy();
-                });
-            it('should not enable update if `Host` is empty',
-                function () {
-                    Portal.logShipping.editPage.form.clearHost();
-                    expect(Portal.logShipping.editPage.isUpdateBtnEnabled()).toBeFalsy();
-                });
-
-            it('should not enable update if `Username` is empty',
-                function () {
-                    Portal.logShipping.editPage.form.clearUserName();
-                    expect(Portal.logShipping.editPage.isUpdateBtnEnabled()).toBeFalsy();
-                });
-
-            it('should not enable update if `Password` is empty',
-                function () {
-                    Portal.logShipping.editPage.form.clearPassword();
-                    expect(Portal.logShipping.editPage.isUpdateBtnEnabled()).toBeFalsy();
-                });
         });
     });
 });
