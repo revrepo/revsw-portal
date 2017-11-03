@@ -96,6 +96,8 @@
     $scope,
     $q,
     $timeout,
+    $sce,
+    $config,
     Stats,
     Countries,
     filterGeneratorConst,
@@ -110,6 +112,12 @@
     vm.device = [];
     vm.browser = [];
     vm.country = []; // NOTE: Top country for filter
+
+    $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
+    $scope.popoverHelpHTML = {
+      'cacheStatus': $sce.trustAsHtml('TODO text for help'),
+      'secondaryCacheStatusData': $sce.trustAsHtml('TODO text for help'),
+    };
 
     vm.filters = {};
     var filter = {
