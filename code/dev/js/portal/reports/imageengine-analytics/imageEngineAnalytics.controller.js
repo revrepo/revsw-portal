@@ -6,7 +6,7 @@
     .controller('imageEngineAnalyticsController', imageEngineAnalyticsController);
 
   /*@ngInject*/
-  function imageEngineAnalyticsController($scope, User, AlertService, Stats, StatsImageEngine, Countries, $q) {
+  function imageEngineAnalyticsController($scope, User, AlertService, Stats, StatsImageEngine, Countries, $q, $config, $sce) {
 
     $scope._loading = true;
     // Domain that selected
@@ -18,6 +18,13 @@
     $scope.device = [];
     $scope.browser = [];
     // $scope.flCountry = Countries.query(); // TODO: show into country filter all contry
+
+    $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
+    $scope.popoverHelpHTML = {
+      'dataImageEngineFotmatChanges': $sce.trustAsHtml('TODO text popover'),
+      'dataImageEngineResolutionChanges': $sce.trustAsHtml('TODO text popover')
+    };
+
     $scope.filters = {};
     $scope.dataImageEngineFotmatChanges = [];
     $scope.dataImageEngineResolutionChanges = [];

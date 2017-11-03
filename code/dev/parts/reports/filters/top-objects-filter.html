@@ -59,8 +59,8 @@
       </div>
 
       <div class="form-group">
-        <button class="btn btn-info" ng-click="updateFilters()">
-          <i class="glyphicon glyphicon-refresh"></i>&nbsp;
+        <button class="btn btn-info" ng-click="updateFilters()" ng-disabled="_loading">
+          <i class="glyphicon glyphicon-refresh" ng-class="_loading?'spin':''"></i>&nbsp;
           Update Report
         </button>
       </div>

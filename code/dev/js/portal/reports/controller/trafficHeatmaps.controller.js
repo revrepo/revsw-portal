@@ -6,11 +6,16 @@
     .controller('TrafficHeatmapsController', TrafficHeatmapsController);
 
   /*@ngInject*/
-  function TrafficHeatmapsController($scope, $config, HeatmapsDrawer, HeatmapsWorldDrillDrawer, Countries, Stats, $q, Util) {
+  function TrafficHeatmapsController($scope, $config, HeatmapsDrawer, HeatmapsWorldDrillDrawer, Countries, Stats, $q, Util, $sce) {
 
     var hitsDrawer = HeatmapsWorldDrillDrawer.create('#canvas-svg-hits'),
       gbtDrawer = HeatmapsWorldDrillDrawer.create('#canvas-svg-gbt');
 
+    $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
+    $scope.popoverHelpHTML = {
+      'worldHitsHeatmap' : $sce.trustAsHtml('TODO text popover'),
+      'worldGBTHeatmap' : $sce.trustAsHtml('TODO text popover ')
+    };
     /**
      * Loading flag
      *

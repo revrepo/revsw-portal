@@ -23,9 +23,12 @@
         filtersSets: '='
       },
       /*@ngInject*/
-      controller: function($scope, Stats, Util) {
+      controller: function($scope, Stats, Util, $sce, $config) {
         var _filters_field_list = ['from_timestamp', 'to_timestamp', 'country', 'device', 'os', 'browser','network','operator','account_id','app_id'];
         $scope.heading = 'Requests Per Second Graph';
+        $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
+        $scope.popoverHelpHTML = $sce.trustAsHtml('TODO text <a href="/demo">DEMO LINK </a> ');
+
         $scope.span = '1';
         $scope._loading = false;
 
@@ -124,7 +127,7 @@
               width: 1,
               color: '#000000'
             },
-            tickInterval: tickInterval_   
+            tickInterval: tickInterval_
           },
           tooltip: {
             xDateFormat: '<span style="color: #000; font-weight: bold;">%H:%M</span> %b %d',
@@ -160,7 +163,7 @@
 
                   var val = moment(item.time + offset);
                   var label = val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span>] MMM D');
-                  labels.push(label); // Pass just a label to avoid [object Object] bug                  
+                  labels.push(label); // Pass just a label to avoid [object Object] bug
 
                   var rps = item.hits / interval;
                   rps_avg_ += rps;

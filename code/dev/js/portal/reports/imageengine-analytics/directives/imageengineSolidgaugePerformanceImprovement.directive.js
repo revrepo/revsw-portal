@@ -27,7 +27,7 @@
   }
 
   /*ngInject*/
-  function imageengineSolidgaugePerformanceImprovementCtrl($scope, StatsImageEngine, Util, EventsSerieDataService, $q) {
+  function imageengineSolidgaugePerformanceImprovementCtrl($scope, StatsImageEngine, Util, EventsSerieDataService, $q, $config, $sce) {
 
     var _filters_field_list = ['from_timestamp', 'to_timestamp', 'country', 'device', 'os', 'browser'];
 
@@ -63,6 +63,9 @@
     $scope._loading = false;
     $scope.delay = '24';
     $scope.heading = 'Performance Improvement By Image Optimization';
+    $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
+    $scope.popoverHelpHTML = $sce.trustAsHtml('TODO text <a href="/demo">DEMO LINK </a> ');
+
     $scope.reload = reload;
 
     $scope.filters = {

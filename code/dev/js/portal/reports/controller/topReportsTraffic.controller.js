@@ -6,7 +6,7 @@
     .controller('TopReportsTrafficController', TopReportsTrafficController);
 
   /*@ngInject*/
-  function TopReportsTrafficController($q, $scope, User, AlertService, Stats, Countries, Util, $timeout, $config) {
+  function TopReportsTrafficController($q, $scope, User, AlertService, Stats, Countries, Util, $timeout, $config, $sce) {
     var timeoutUserActionLock = $config.TIMEOUT_USER_ACTIONS_LOCK || 1000;
     var allStatRequests = [];
     $scope.userService = User;
@@ -27,7 +27,23 @@
     $scope.statusCode = [];
     $scope.requestStatus = [];
     $scope.mobileDesktopRatio = [];
-
+    $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
+    $scope.popoverHelpHTML= {
+      'mobileDesktopRatio': $sce.trustAsHtml('TODO text for help'),
+      'cacheStatus': $sce.trustAsHtml('TODO text for help'),
+      'statusCode': $sce.trustAsHtml('TODO text for help'),
+      'country': $sce.trustAsHtml('TODO text for help'),
+      'usa_states': $sce.trustAsHtml('TODO text for help'),
+      'protocol': $sce.trustAsHtml('TODO text for help'),
+      'httpMethod': $sce.trustAsHtml('TODO text for help'),
+      'contentType': $sce.trustAsHtml('TODO text for help'),
+      'os': $sce.trustAsHtml('TODO text for help'),
+      'device': $sce.trustAsHtml('TODO text for help'),
+      'browser': $sce.trustAsHtml('TODO text for help'),
+      'quic': $sce.trustAsHtml('TODO text for help'),
+      'http2': $sce.trustAsHtml('TODO text for help'),
+      'requestStatus': $sce.trustAsHtml('TODO text for help')
+    };
     $scope.countries = Countries.query();
     $scope.delay = '24';
     $scope.country_filter = '';
