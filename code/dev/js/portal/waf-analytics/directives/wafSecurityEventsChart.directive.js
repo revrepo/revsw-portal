@@ -18,7 +18,7 @@
         filtersSets: '='
       },
       /*@ngInject*/
-      controller: function($scope, StatsWAF, $q, Util, EventsSerieDataService) {
+      controller: function($scope, StatsWAF, $q, Util, EventsSerieDataService, $config, $sce) {
 
         var _filters_field_list = ['from_timestamp', 'to_timestamp', 'country', 'rule_id', 'zone'];
 
@@ -44,6 +44,9 @@
         }
 
         $scope.heading = 'Security Events';
+        $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
+        $scope.popoverHelpHTML = $sce.trustAsHtml('TODO text popover');
+
         $scope._loading = false;
         $scope.filters = {
           from_timestamp: moment().subtract(1, 'days').valueOf(),

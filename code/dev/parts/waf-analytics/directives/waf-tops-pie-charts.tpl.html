@@ -1,13 +1,23 @@
 <div class="clearfix" waf-filter-tops ng-disabled="!ngDomain" ng-filters="filters" on-filter="loadDetails()"> </div>
 <div class="row">
   <div class="col-md-6">
-    <h3 class="graph-title">Actions Taken</h3>
+    <h3 class="graph-title inline-block">Actions Taken</h3>
+    <label ng-if="!!popoverHelpHTML['topActionsTaken']" uib-popover-html="::popoverHelpHTML['topActionsTaken']"
+      class="text-info graph-help-icon" popover-popup-close-delay="{{::popoverPopupCloseDelay}}" popover-append-to-body="true"
+      popover-trigger="mouseenter" popover-hoverable="false" popover-placement="top">
+      <i class="fa fa-question-circle" aria-hidden="true"></i>
+    </label>
     <div class="graph-container">
       <div _style="min-width: 480px; min-height: 350px" bar-chart ng-data="topActionsTaken" ng-chart-options="barChartOpts"></div>
     </div>
   </div>
   <div class="col-md-6 graph">
-    <h3 class="graph-title">Top 20 Countries</h3>
+    <h3 class="graph-title inline-block">Top 20 Countries</h3>
+    <label ng-if="!!popoverHelpHTML['topCountries']" uib-popover-html="::popoverHelpHTML['topCountries']"
+      class="text-info graph-help-icon" popover-popup-close-delay="{{::popoverPopupCloseDelay}}" popover-append-to-body="true"
+      popover-trigger="mouseenter" popover-hoverable="false" popover-placement="top">
+      <i class="fa fa-question-circle" aria-hidden="true"></i>
+    </label>
     <div class="graph-container">
       <div _style="min-width: 480px; min-height: 350px" pie-chart ng-data="topCountries"></div>
     </div>
@@ -15,13 +25,23 @@
 </div>
 <div class="row">
   <div class="col-md-6">
-    <h3 class="graph-title">Top 20 Rule IDs</h3>
+    <h3 class="graph-title inline-block">Top 20 Rule IDs</h3>
+    <label ng-if="!!popoverHelpHTML['topRulesIds']" uib-popover-html="::popoverHelpHTML['topRulesIds']"
+      class="text-info graph-help-icon" popover-popup-close-delay="{{::popoverPopupCloseDelay}}" popover-append-to-body="true"
+      popover-trigger="mouseenter" popover-hoverable="false" popover-placement="top">
+      <i class="fa fa-question-circle" aria-hidden="true"></i>
+    </label>
     <div>
       <div _style="min-width: 480px; min-height: 350px" pie-chart ng-data="topRulesIds" ng-chart-options="chartOptions"></div>
     </div>
   </div>
   <div class="col-md-6">
-    <h3 class="graph-title">Attacks By Target Request Zones</h3>
+    <h3 class="graph-title inline-block">Attacks By Target Request Zones</h3>
+    <label ng-if="!!popoverHelpHTML['topTargetZones']" uib-popover-html="::popoverHelpHTML['topTargetZones']"
+      class="text-info graph-help-icon" popover-popup-close-delay="{{::popoverPopupCloseDelay}}" popover-append-to-body="true"
+      popover-trigger="mouseenter" popover-hoverable="false" popover-placement="top">
+      <i class="fa fa-question-circle" aria-hidden="true"></i>
+    </label>
     <div>
       <div _style="min-width: 480px; min-height: 350px" pie-chart ng-data="topTargetZones"></div>
     </div>

@@ -16,8 +16,16 @@
         flStoreName: '@'
       },
       /*@ngInject*/
-      controller: function ($q, Util, $scope, StatsWAF, WAF_Rules, DomainsConfig, $localStorage, $config) {
+      controller: function ($q, Util, $scope, StatsWAF, WAF_Rules, DomainsConfig, $localStorage, $config, $sce) {
         $scope._loading = false;
+        $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
+        $scope.popoverHelpHTML = {
+          'topActionsTaken': $sce.trustAsHtml('TODO text popover'),
+          'topRulesIds': $sce.trustAsHtml('TODO text popover'),
+          'topTargetZones': $sce.trustAsHtml('TODO text popover'),
+          'topCountries': $sce.trustAsHtml('TODO text popover')
+        };
+
         $scope.filters = !$scope.flStoreName ? _.assign({
           from_timestamp: moment().subtract(24, 'hours').valueOf(),
           to_timestamp: Date.now()
