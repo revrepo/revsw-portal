@@ -35,18 +35,26 @@ describe('Functional', function () {
             Portal.signIn(revAdmin);
             Portal.helpers.nav.goToUsers();
             Portal.userListPage.clickAddNewUser();
+            /*
+            * Create a user for each vendor, role and read only. 18 Users total.
+            */
             vendors.forEach(function (vendor) {
                 roles.forEach(function (role) {
-                    var data = {
-                        role: role,
-                        company: vendor.ACCOUNT
-                    };
-                    var bruce = DataProvider.generateUser(data);
-                    Portal.addUserPage.createUser(bruce);
-                    users.push({
-                        user: bruce,
-                        vendor: vendor
-                    });
+                    for (var i = 0; i < 2; i++) {
+                        var data = {
+                            role: role,
+                            company: vendor.ACCOUNT
+                        };
+                        var bruce = DataProvider.generateUser(data, true);
+                        if (i % 2 === 1) {
+                            bruce.accessControls = [Constants.user.accessControls.READ_ONLY];
+                        }
+                        Portal.addUserPage.createUser(bruce);
+                        users.push({
+                            user: bruce,
+                            vendor: vendor
+                        });
+                    }
                 });
             });
         });
@@ -65,8 +73,8 @@ describe('Functional', function () {
                     Portal.userListPage.searchAndClickDelete(userObj.user.email);
                     Portal.dialog.clickOk();
                 });
-            });            
-        });        
+            });
+        });
 
         it('should redirect user to correct login url', function () {
             users.forEach(function (userObj) {
@@ -79,19 +87,18 @@ describe('Functional', function () {
                     Portal.loginPage.setEmail(userObj.user.email);
                     Portal.loginPage.setPassword(userObj.user.password);
                     Portal.loginPage.clickSignIn();
-                    browser.sleep(60000); // non angular page wait
-                    
-                    browser.getCurrentUrl().then(function (url) {
-                        if (userObj.vendor.NAME === 'revapm') {
-                            expect(Portal.header.getHeaderBar().isDisplayed()).toBeTruthy();
-                            Portal.signOut();
-                        } else {
+                    if (userObj.vendor.NAME === 'revapm') {
+                        expect(Portal.header.getHeaderBar().isDisplayed()).toBeTruthy();
+                        Portal.signOut();
+                    } else {
+                        browser.sleep(10000); // non angular page wait
+                        browser.getCurrentUrl().then(function (url) {
                             expect(url).toContain(userObj.vendor.LOGIN_URL);
                             Portal.load();
-                        }
-                    });
+                        });
+                    }
                 });
             });
-        });
+        }, 7000000);
     });
 });
