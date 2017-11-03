@@ -20,7 +20,7 @@
         isAutoReload: '@?'
       },
       /*@ngInject*/
-      controller: function ($scope, Stats, Util) {
+      controller: function($scope, Stats, Util, $config, $sce) {
 
         $scope.delay = '24';
         $scope.os = '';
@@ -29,6 +29,9 @@
         $scope.browser = '';
         $scope._ims = 300;
         $scope._loading = false;
+
+        $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
+        $scope.popoverHelpHTML = $sce.trustAsHtml('TODO text for popover');
 
         $scope.chartOptions = {
           chart: {
