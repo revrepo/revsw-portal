@@ -205,10 +205,19 @@ var EditLogShipping = {
      *
      * @returns {Object} Promise
      */
-    updateLogShippingJob: function (logShippingJob) {
-        this.form.fill(logShippingJob);
+    updateLogShippingJob: function (logShippingJob, acc) {
+        acc = acc || undefined;
+        var me = this;
+        this.form.fill(logShippingJob, acc);
         this.clickUpdate();
-        return this.clickConfirmUpdateBtn();
+        this.getConfirmUpdateBtn().isPresent().then(function (pr) {
+            if (pr) {
+                return me.clickConfirmUpdateBtn();
+            } else {
+                return true;
+            }
+        });
+        
     }
 };
 

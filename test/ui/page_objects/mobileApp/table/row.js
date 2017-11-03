@@ -17,7 +17,7 @@
  */
 
 var AppTableRow = function (rowEl, locators) {
-
+  /*jshint maxstatements: 120 */
   // Properties
   this.rowEl = rowEl;
   this.locators = locators;
@@ -143,6 +143,23 @@ var AppTableRow = function (rowEl, locators) {
     return this
       .getAccountCell()
       .getText();
+  };
+
+  this.clickVersion = function () {
+    return this
+      .getVersionCell()
+      .click();
+  };
+
+  this.clickLastUpdate = function () {
+    return this
+      .getLastUpdateCell()
+      .click();
+  };
+
+  this.clickAccount = function () {
+    return this.getAccountCell()
+      .click();
   };
 
   if (this.locators.actions && this.locators.actions.buttons &&

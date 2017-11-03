@@ -46,6 +46,10 @@ var Help = {
     }
   },
 
+  getLauncherContainer: function () {
+    return element(by.id(this.locators.launcher.iframe));
+  },
+
   /**
    * ### Help.clickHelpButton()
    *

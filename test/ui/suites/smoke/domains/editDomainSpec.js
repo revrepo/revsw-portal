@@ -67,7 +67,8 @@ describe('Smoke', function () {
         it('should display "Manage GitHub Integration" button',
           function() {
             Portal.domains.listPage.searchAndClickEdit(myDomain.name);
-            var manageGitHubIntegrationButton = Portal.domains.editPage.getManageGitHubIntegrationBtn();
+            var manageGitHubIntegrationButton = Portal.domains.editPage
+              .getManageGitHubIntegrationBtn();
             expect(manageGitHubIntegrationButton.isPresent()).toBeTruthy();
           });
 

@@ -256,7 +256,7 @@ describe('Negative', function () {
 
         Portal.domains.listPage.searchAndClickEdit(myDomain.name);
         Portal.domains.editPage.clickTabBotProtection();
-        Portal.domains.editPage.form.getBotProtectionEnableSw().click();
+        Portal.domains.editPage.form.clickBotProtectionEnableSw();
         Portal.domains.editPage.form.setBotLocation(incorrectValue);
         var publishBtn = Portal.domains.editPage.getPublishDomainBtn();
         expect(publishBtn.isEnabled()).toBeFalsy();
@@ -269,7 +269,7 @@ describe('Negative', function () {
 
         Portal.domains.listPage.searchAndClickEdit(myDomain.name);
         Portal.domains.editPage.clickTabBotProtection();
-        Portal.domains.editPage.form.getBotProtectionEnableSw().click();
+        Portal.domains.editPage.form.clickBotProtectionEnableSw();
         Portal.domains.editPage.form.setBotLocation(incorrectValue);
         var publishBtn = Portal.domains.editPage.getUpdateDomainBtn();
         expect(publishBtn.isEnabled()).toBeFalsy();
@@ -282,7 +282,7 @@ describe('Negative', function () {
 
         Portal.domains.listPage.searchAndClickEdit(myDomain.name);
         Portal.domains.editPage.clickTabBotProtection();
-        Portal.domains.editPage.form.getBotProtectionEnableSw().click();
+        Portal.domains.editPage.form.clickBotProtectionEnableSw();
         Portal.domains.editPage.form.setBotLocation(incorrectValue);
         var publishBtn = Portal.domains.editPage.getValidateDomainBtn();
         expect(publishBtn.isEnabled()).toBeFalsy();
@@ -295,7 +295,7 @@ describe('Negative', function () {
 
         Portal.domains.listPage.searchAndClickEdit(myDomain.name);
         Portal.domains.editPage.clickTabBotProtection();
-        Portal.domains.editPage.form.getBotProtectionEnableSw().click();
+        Portal.domains.editPage.form.clickBotProtectionEnableSw();
         Portal.domains.editPage.form.setBotCallType(incorrectValue);
         var publishBtn = Portal.domains.editPage.getPublishDomainBtn();
         expect(publishBtn.isEnabled()).toBeFalsy();
@@ -308,7 +308,7 @@ describe('Negative', function () {
 
         Portal.domains.listPage.searchAndClickEdit(myDomain.name);
         Portal.domains.editPage.clickTabBotProtection();
-        Portal.domains.editPage.form.getBotProtectionEnableSw().click();
+        Portal.domains.editPage.form.clickBotProtectionEnableSw();
         Portal.domains.editPage.form.setBotCallType(incorrectValue);
         var publishBtn = Portal.domains.editPage.getUpdateDomainBtn();
         expect(publishBtn.isEnabled()).toBeFalsy();
@@ -321,7 +321,7 @@ describe('Negative', function () {
 
         Portal.domains.listPage.searchAndClickEdit(myDomain.name);
         Portal.domains.editPage.clickTabBotProtection();
-        Portal.domains.editPage.form.getBotProtectionEnableSw().click();
+        Portal.domains.editPage.form.clickBotProtectionEnableSw();
         Portal.domains.editPage.form.setBotCallType(incorrectValue);
         var publishBtn = Portal.domains.editPage.getValidateDomainBtn();
         expect(publishBtn.isEnabled()).toBeFalsy();
@@ -334,7 +334,7 @@ describe('Negative', function () {
 
         Portal.domains.listPage.searchAndClickEdit(myDomain.name);
         Portal.domains.editPage.clickTabBotProtection();
-        Portal.domains.editPage.form.getBotProtectionEnableSw().click();
+        Portal.domains.editPage.form.clickBotProtectionEnableSw();
         Portal.domains.editPage.form.setBotProtectionID('a');
         Portal.domains.editPage.form.setBotProtectionID(incorrectValue);
         var publishBtn = Portal.domains.editPage.getPublishDomainBtn();
@@ -348,7 +348,7 @@ describe('Negative', function () {
 
         Portal.domains.listPage.searchAndClickEdit(myDomain.name);
         Portal.domains.editPage.clickTabBotProtection();
-        Portal.domains.editPage.form.getBotProtectionEnableSw().click();
+        Portal.domains.editPage.form.clickBotProtectionEnableSw();
         Portal.domains.editPage.form.setBotProtectionID('a');
         Portal.domains.editPage.form.setBotProtectionID(incorrectValue);
         var publishBtn = Portal.domains.editPage.getUpdateDomainBtn();
@@ -362,45 +362,9 @@ describe('Negative', function () {
 
         Portal.domains.listPage.searchAndClickEdit(myDomain.name);
         Portal.domains.editPage.clickTabBotProtection();
-        Portal.domains.editPage.form.getBotProtectionEnableSw().click();
+        Portal.domains.editPage.form.clickBotProtectionEnableSw();
         Portal.domains.editPage.form.setBotProtectionID('a');
         Portal.domains.editPage.form.setBotProtectionID(incorrectValue);
-        var publishBtn = Portal.domains.editPage.getValidateDomainBtn();
-        expect(publishBtn.isEnabled()).toBeFalsy();
-      });
-
-      it('should not be able to publish a domain with empty value in ' +
-      '"Custom VCL Rules"',
-      function () {
-        var incorrectValue = '';
-
-        Portal.domains.listPage.searchAndClickEdit(myDomain.name);
-        Portal.domains.editPage.clickTabVCL();
-        Portal.domains.editPage.form.getCustomVCLrulesSw().click();
-        var publishBtn = Portal.domains.editPage.getPublishDomainBtn();
-        expect(publishBtn.isEnabled()).toBeFalsy();
-      });
-
-    it('should not be able to update a domain with empty value in ' +
-      '"Custom VCL Rules"',
-      function () {
-        var incorrectValue = '';
-
-        Portal.domains.listPage.searchAndClickEdit(myDomain.name);
-        Portal.domains.editPage.clickTabVCL();
-        Portal.domains.editPage.form.getCustomVCLrulesSw().click();
-        var publishBtn = Portal.domains.editPage.getUpdateDomainBtn();
-        expect(publishBtn.isEnabled()).toBeFalsy();
-      });
-
-    it('should not be able to validate a domain with empty value in ' +
-      '"Custom VCL Rules"',
-      function () {
-        var incorrectValue = '';
-
-        Portal.domains.listPage.searchAndClickEdit(myDomain.name);
-        Portal.domains.editPage.clickTabVCL();
-        Portal.domains.editPage.form.getCustomVCLrulesSw().click();
         var publishBtn = Portal.domains.editPage.getValidateDomainBtn();
         expect(publishBtn.isEnabled()).toBeFalsy();
       });

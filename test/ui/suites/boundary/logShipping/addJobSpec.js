@@ -45,24 +45,16 @@ describe('Boundary', function () {
 
                 beforeEach(function () {
                     Portal.logShipping.listPage.clickAddNewLogShippingJob();
-                    var acc = {};
-                    switch (user.role) {
-                        case 'revAdmin':
-                            acc.account = ['Rev Test'];
-                            break;
-                        case 'Reseller':
-                            acc.account = ['API QA Reseller Company Updated'];
-                            break;
-                        case 'Admin':
-                            acc.account = null;
-                            break;
-                    }
-                    var jobData = DataProvider.generateLogShippingJobData(acc);
-                    Portal.logShipping.addPage.form.fill(jobData);
+                    var jobData = DataProvider.generateLogShippingJobData({}, user.role);
+                    Portal
+                        .logShipping
+                        .addPage
+                        .form
+                        .fill(jobData, user.role === 'Admin' ? true : undefined);
                 });
 
                 afterEach(function () {
-                    Portal.logShipping.addPage.clickCancel();
+                    Portal.logShipping.addPage.clickBackToList();
                 });
 
                 it('should enable creation if form is filled with valid data',
@@ -72,6 +64,7 @@ describe('Boundary', function () {
 
                 it('should not enable creation if `Job Name` contains special characters',
                     function () {
+                        Portal.logShipping.addPage.form.clearJobName();
                         Portal.logShipping.addPage.form.setJobName('a!b@c#d$e%f^g&');
                         expect(Portal.logShipping.addPage.isSaveBtnEnabled()).toBeFalsy();
                     });
@@ -79,7 +72,15 @@ describe('Boundary', function () {
                 it('should not enable creation if `Job Name` contains more than 150 characters',
                     function () {
                         var lengthString151 = new Array(160).join('x');
+                        Portal.logShipping.addPage.form.clearJobName();
                         Portal.logShipping.addPage.form.setJobName(lengthString151);
+                        expect(Portal.logShipping.addPage.isSaveBtnEnabled()).toBeFalsy();
+                    });
+
+                it('should not enable creation if `Job Name` contains only white spaces',
+                    function () {
+                        Portal.logShipping.addPage.form.clearJobName();
+                        Portal.logShipping.addPage.form.setJobName('   ');
                         expect(Portal.logShipping.addPage.isSaveBtnEnabled()).toBeFalsy();
                     });
             });

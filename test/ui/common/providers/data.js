@@ -32,6 +32,7 @@ var Session = require('./../session');
 // object-data used in the application. In this way, we facilitate the test
 // data generation.
 var DataProvider = {
+  session: Session,
 
   /**
    * ### DataProvider.generateUser()
@@ -62,7 +63,7 @@ var DataProvider = {
     // Special case when the portal user is creating a new user
     // is a reseller or rev-admin which require the specify the
     // company the new user should be associated with
-    if (currentUser.role !== 'Admin') {
+    if (currentUser !== undefined && currentUser.role !== 'Admin') {
       data.company = ['API QA Reseller Company'];
     }
 
@@ -72,7 +73,7 @@ var DataProvider = {
         .toLowerCase(),
       firstName: firstName,
       lastName: lastName,
-      role: Constants.user.roles.USER,
+      role: data.role || Constants.user.roles.USER,
       password: 'password1',
       passwordConfirm: 'password1',
       company: data.company
@@ -760,9 +761,15 @@ var DataProvider = {
    *      account: String,
    *    }
    */
-  generateLogShippingJobData: function (data) {
+  generateLogShippingJobData: function (data, role) {
     var timestamp = Date.now();
     var name = 'logshippingtest-' + timestamp;
+    if (role === 'Admin') {
+      data.account = undefined;
+      data.sourceDomain = 'qa-admin-10-portal-ui-test.com';
+    } else if (role === 'Reseller') {
+      data.account = ['API QA Reseller Company Updated'];
+    }
     if (data) {
       return {
         name: (data.name === undefined) ? name : data.name,

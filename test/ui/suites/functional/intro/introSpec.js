@@ -48,7 +48,7 @@ describe('Functional', function () {
             done();
           } else {
             Portal.intro.clickNextBtn();
-            browser.sleep(1500);
+            browser.wait(until.elementToBeClickable(Portal.intro.getNextBtn()), 5000);
           }
         });
       });
@@ -67,7 +67,7 @@ describe('Functional', function () {
       browser.executeScript('window.localStorage.removeItem("ngStorage-testEnv");');
       Portal.intro.clickNextBtn();
       browser.executeScript('$(".introjs-overlay").hide();');
-      browser.sleep(1500);
+      browser.wait(until.elementToBeClickable(Portal.intro.getSkipBtn()), 5000);
       Portal.intro.clickSkipBtn();
       Portal.signOut().then(function () {
         Portal.signIn(user, false);
@@ -82,7 +82,7 @@ describe('Functional', function () {
       browser.refresh();
       Portal.intro.waitForStep();
       Portal.intro.clickNextBtn();
-      browser.sleep(1500);
+      browser.wait(until.elementToBeClickable(Portal.intro.getNextBtn()), 5000);
       browser.refresh();
       browser.wait(until.presenceOf(Portal.intro.getIntroContainer()), 60000);
       expect(Portal.intro.getIntroContainer().isDisplayed()).toBeTruthy();

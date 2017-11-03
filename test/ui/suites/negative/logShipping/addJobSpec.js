@@ -24,40 +24,61 @@ var DataProvider = require('./../../../common/providers/data');
 describe('Negative', function () {
     describe('Log Shipping Add Job', function () {
 
-        var user = config.get('portal.users.revAdmin');
+        var users = [
+            config.get('portal.users.revAdmin'),
+            config.get('portal.users.admin'),
+            config.get('portal.users.reseller')
+        ];
+
+        users.forEach(function (user) {
 
 
-        describe('With user: ' + user.role, function () {
+            describe('With user: ' + user.role, function () {
 
-            beforeAll(function () {
-                Portal.signIn(user);
-                Portal.helpers.nav.goToLogShipping();
-            });
-
-            afterAll(function () {
-                Portal.signOut();
-            });
-
-            beforeEach(function () {
-                Portal.logShipping.listPage.clickAddNewLogShippingJob();
-                var job = DataProvider.generateLogShippingJobData();
-                Portal.logShipping.addPage.form.fill(job);
-            });
-
-            afterEach(function () {
-                Portal.logShipping.addPage.clickCancel();
-            });
-
-            it('should enable creation if all fields have valid data',
-                function () {
-                    expect(Portal.logShipping.addPage.isSaveBtnEnabled()).toBeTruthy();
+                beforeAll(function () {
+                    Portal.signIn(user);
+                    Portal.helpers.nav.goToLogShipping();
                 });
 
-            it('should not enable creation if `Job Name` is empty',
-                function () {
-                    Portal.logShipping.addPage.form.clearJobName();
-                    expect(Portal.logShipping.addPage.isSaveBtnEnabled()).toBeFalsy();
+                afterAll(function () {
+                    Portal.signOut();
                 });
+
+                beforeEach(function () {
+                    Portal.logShipping.listPage.clickAddNewLogShippingJob();
+                    var job = DataProvider.generateLogShippingJobData({}, user.role);
+                    Portal
+                        .logShipping
+                        .addPage
+                        .form
+                        .fill(job, user.role === 'Admin' ? true : undefined);
+                });
+
+                afterEach(function () {
+                    Portal.logShipping.addPage.clickCancel();
+                });
+
+                it('should enable creation if all fields have valid data',
+                    function () {
+                        expect(Portal.logShipping.addPage.isSaveBtnEnabled()).toBeTruthy();
+                    });
+
+                it('should not enable creation if `Job Name` is empty',
+                    function () {
+                        Portal.logShipping.addPage.form.clearJobName();
+                        expect(Portal.logShipping.addPage.isSaveBtnEnabled()).toBeFalsy();
+                    });
+
+                if (user.role !== 'Admin') {
+                    it('should not enable creation if `Account` is empty',
+                        function () {
+                            Portal.logShipping.addPage.clickCancel();
+                            Portal.logShipping.listPage.clickAddNewLogShippingJob();
+                            Portal.logShipping.addPage.form.setJobName('a');
+                            expect(Portal.logShipping.addPage.isSaveBtnEnabled()).toBeFalsy();
+                        });
+                }
+            });
         });
     });
 });

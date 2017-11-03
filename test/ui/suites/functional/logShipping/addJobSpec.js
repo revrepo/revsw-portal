@@ -24,43 +24,54 @@ var DataProvider = require('./../../../common/providers/data');
 describe('Functional', function () {
     describe('Log Shipping Add Job', function () {
 
-        var user = config.get('portal.users.revAdmin');
+        var users = [
+            config.get('portal.users.revAdmin'),
+            config.get('portal.users.admin'),
+            config.get('portal.users.reseller')
+        ];
+
+        users.forEach(function (user) {
 
 
-        describe('With user: ' + user.role, function () {
+            describe('With user: ' + user.role, function () {
 
-            beforeAll(function () {
-                Portal.signIn(user);
-                Portal.helpers.nav.goToLogShipping();
-                Portal.logShipping.listPage.clickAddNewLogShippingJob();
-            });
-
-            afterAll(function () {
-                Portal.signOut();
-            });
-
-            it('should clear form when `Cancel` is clicked',
-                function () {
-                    var jobData = DataProvider.generateLogShippingJobData();
-                    Portal.logShipping.addPage.form.setJobName(jobData.name);
-                    Portal.logShipping.addPage.form.setAccount(jobData.account);
-                    Portal.logShipping.addPage.clickCancel();
-
+                beforeAll(function () {
+                    Portal.signIn(user);
+                    Portal.helpers.nav.goToLogShipping();
                     Portal.logShipping.listPage.clickAddNewLogShippingJob();
-                    expect(Portal.logShipping.addPage.form.getJobName()).toEqual('');
                 });
 
-            it('should successfully add a new log shipping job',
-                function () {
-                    var jobData = DataProvider.generateLogShippingJobData();
-                    Portal.logShipping.addPage.form.setJobName(jobData.name);
-                    Portal.logShipping.addPage.form.setAccount(jobData.account);
-                    Portal.logShipping.addPage.clickCreateJobBtn();
-
-                    var alert = Portal.alerts.getFirst();
-                    expect(alert.getText())
-                        .toContain(Constants.alertMessages.logShipping.MSG_SUCCESS_ADD);
+                afterAll(function () {
+                    Portal.signOut();
                 });
+
+                it('should clear form when `Cancel` is clicked',
+                    function () {
+                        var jobData = DataProvider.generateLogShippingJobData({}, user.role);
+                        Portal.logShipping.addPage.form.setJobName(jobData.name);
+                        if (user.role !== 'Admin') {
+                            Portal.logShipping.addPage.form.setAccount(jobData.account);
+                        }
+                        Portal.logShipping.addPage.clickCancel();
+
+                        Portal.logShipping.listPage.clickAddNewLogShippingJob();
+                        expect(Portal.logShipping.addPage.form.getJobName()).toEqual('');
+                    });
+
+                it('should successfully add a new log shipping job',
+                    function () {
+                        var jobData = DataProvider.generateLogShippingJobData({}, user.role);
+                        Portal.logShipping.addPage.form.setJobName(jobData.name);
+                        if (user.role !== 'Admin') {
+                            Portal.logShipping.addPage.form.setAccount(jobData.account);
+                        }
+                        Portal.logShipping.addPage.clickCreateJobBtn();
+
+                        var alert = Portal.alerts.getFirst();
+                        expect(alert.getText())
+                            .toContain(Constants.alertMessages.logShipping.MSG_SUCCESS_ADD);
+                    });
+            });
         });
     });
 });

@@ -39,14 +39,8 @@ describe('Smoke', function () {
           Portal.signIn(user);
         });
 
-        afterAll(function (done) {
-          Portal.helpers.dnsZones
-            .cleanup()
-            .then(function () {
-              Portal.signOut();
-              done();
-            })
-            .catch(done);
+        afterAll(function () {  
+          Portal.signOut();        
         });
 
         beforeEach(function () {
@@ -65,10 +59,10 @@ describe('Smoke', function () {
           expect(Portal.dnsZones.listPage.isDisplayed()).toBeTruthy();
         });
 
-        it('should clear form after Cancel is clicked', function () {      
+        it('should clear form after Cancel is clicked', function () {
           var newDnsZone = DataProvider.generateDNSZoneData();
           Portal.dnsZones.addPage.form.fill(newDnsZone);
-          Portal.dnsZones.addPage.clickCancel();    
+          Portal.dnsZones.addPage.clickCancel();
           Portal.dnsZones.listPage.clickAddNewDNSZone();
           expect(Portal.dnsZones.addPage.form.getDomain()).toEqual('');
         });
@@ -82,6 +76,9 @@ describe('Smoke', function () {
             expect(Portal.dnsZones.listPage
               .searchAndGetFirstRow(dnsZoneToSearch.domain)
               .getZoneName()).toEqual(dnsZoneToSearch.domain);
+
+            Portal.dnsZones.listPage.searchAndClickDelete(dnsZoneToSearch.domain);
+            Portal.dialog.clickOk();
           });
       });
     });

@@ -77,6 +77,7 @@ describe('Smoke', function () {
                 '\'Pipe\' Function',
                 '\'Hash\' Function',
                 '\'Synth\' Function',
+                '\'Backend Fetch\' Function',
                 '\'Backend Response\' Function',
                 '\'Backend Error\' Function'
               ]);
@@ -104,6 +105,7 @@ describe('Smoke', function () {
                 'vclPipe',
                 'vclHash',
                 'vclSynth',
+                'vclBackendFetch',
                 'vclBackendResponse',
                 'vclBackendError'
               ]);

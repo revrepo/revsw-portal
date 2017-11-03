@@ -28,7 +28,8 @@ describe('Functional', function () {
       function () {
         Portal.load()
           .then(function () {
-            browser.sleep(10000); // wait for iframe
+            var until = protractor.ExpectedConditions;
+            browser.wait(until.presenceOf(Portal.helpPage.getLauncherContainer()), 60000);
             Portal.helpPage.clickHelpButton(function (isClicked) {
               expect(isClicked).toBe(true);
             });
