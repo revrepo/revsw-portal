@@ -16,12 +16,15 @@
         flStoreName: '@'
       },
       /*@ngInject*/
-      controller: function ($scope, StatsWAF, $localStorage) {
+      controller: function ($scope, StatsWAF, $localStorage, $config, $sce) {
         $scope._loading = false;
         $scope.filters = !$scope.flStoreName ? _.assign({
           from_timestamp: moment().subtract(24, 'hours').valueOf(),
           to_timestamp: Date.now()
         }, {}) : $localStorage[$scope.flStoreName];
+
+        $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
+        $scope.popoverHelpHTML = $sce.trustAsHtml('TODO text popover');
 
         $scope.items = [];
         $scope.loadDetails = function () {
