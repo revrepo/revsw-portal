@@ -23,7 +23,7 @@
         flStoreName: '@'
       },
       /*@ngInject*/
-      controller: function ($scope, Stats, $localStorage) {
+      controller: function ($scope, Stats, $localStorage, $config, $sce) {
 
         $scope._loading = false;
         var http_codes = {
@@ -53,6 +53,8 @@
           network: null
         }, {}) : $localStorage[$scope.flStoreName];
 
+        $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
+        $scope.popoverHelpHTML = $sce.trustAsHtml('TODO text popover');
         //  ---------------------------------
         $scope.reload = function() {
 
