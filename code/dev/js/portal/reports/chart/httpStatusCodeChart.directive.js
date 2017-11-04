@@ -47,7 +47,7 @@
         }
         $scope.heading = 'HTTP Status Code Hits';
         $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
-        $scope.popoverHelpHTML = $sce.trustAsHtml('TODO text <a href="/demo">DEMO LINK </a> ');
+        $scope.popoverHelpHTML = $sce.trustAsHtml('This line chart shows the rate of different HTTP status codes returned to visitors of the domain');
 
         $scope._loading = false;
         $scope.hasFailedToLoadData = false;

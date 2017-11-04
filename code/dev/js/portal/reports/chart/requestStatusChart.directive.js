@@ -48,7 +48,10 @@
 
         $scope.heading = 'Success/Failure Request Status';
         $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
-        $scope.popoverHelpHTML = $sce.trustAsHtml('TODO text <a href="/demo">DEMO LINK </a> ');
+        $scope.popoverHelpHTML = $sce.trustAsHtml('The CDN can detect whether a response was successfully delivered to a requesting end user. ' +
+          'The line chart shows the rate of successfully and unsuccessfully delivered objects. ' +
+          'Some level of failed deliveries is normal and can be the result of browsers dropping requests when end users are leaving a page ' +
+          'without waiting for all embedded objects to load.');
 
         $scope._loading = false;
         $scope.hasFailedToLoadData = false;
