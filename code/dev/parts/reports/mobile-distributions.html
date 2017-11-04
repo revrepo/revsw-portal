@@ -54,8 +54,11 @@
 
           <div class="row">
             <div class="col-md-6">
-              <h3>Origin/{{vendorConfig.companyNameShort}} Traffic Distribution By Requests</h3>
-
+              <h3 class="graph-title inline-block">Origin/{{vendorConfig.companyNameShort}} Traffic Distribution By Requests</h3>
+              <label ng-if="!!popoverHelpHTML['destination_hits']" uib-popover-html="::popoverHelpHTML['destination_hits']" class="text-info graph-help-icon" popover-popup-close-delay="{{::popoverPopupCloseDelay}}"
+                popover-append-to-body="true" popover-trigger="mouseenter" popover-hoverable="false" popover-placement="top">
+                <i class="fa fa-question-circle" aria-hidden="true"></i>
+              </label>
               <!-- <div class="alert alert-info" ng-hide="_loading || destination_hits.length">
                 No data to display
               </div>
@@ -67,7 +70,12 @@
               </div>
             </div>
             <div class="col-md-6">
-              <h3>Origin/{{vendorConfig.companyNameShort}} Traffic Distribution By Traffic</h3>
+              <h3 class="graph-title inline-block">Origin/{{vendorConfig.companyNameShort}} Traffic Distribution By Traffic</h3>
+              <label ng-if="!!popoverHelpHTML['destination_gbt']" uib-popover-html="::popoverHelpHTML['destination_gbt']" class="text-info graph-help-icon"
+                popover-popup-close-delay="{{::popoverPopupCloseDelay}}" popover-append-to-body="true" popover-trigger="mouseenter" popover-hoverable="false"
+                popover-placement="top">
+                <i class="fa fa-question-circle" aria-hidden="true"></i>
+              </label>
              <!--  <div class="alert alert-info" ng-hide="_loading || destination_gbt.length">
                 No data to display
               </div>
@@ -83,7 +91,12 @@
 
           <div class="row">
             <div class="col-md-6">
-              <h3>Transport Protocol Distribution By Requests</h3>
+              <h3 class="graph-title inline-block">Transport Protocol Distribution By Requests</h3>
+              <label ng-if="!!popoverHelpHTML['transport_hits']" uib-popover-html="::popoverHelpHTML['transport_hits']" class="text-info graph-help-icon"
+                popover-popup-close-delay="{{::popoverPopupCloseDelay}}" popover-append-to-body="true" popover-trigger="mouseenter" popover-hoverable="false"
+                popover-placement="top">
+                <i class="fa fa-question-circle" aria-hidden="true"></i>
+              </label>
              <!--  <div class="alert alert-info" ng-hide="_loading || transport_hits.length">
                 No data to display
               </div>
@@ -95,7 +108,12 @@
               </div>
             </div>
             <div class="col-md-6">
-              <h3>Transport Protocol Distribution By Traffic</h3>
+              <h3 class="graph-title inline-block">Transport Protocol Distribution By Traffic</h3>
+              <label ng-if="!!popoverHelpHTML['transport_gbt']" uib-popover-html="::popoverHelpHTML['transport_gbt']" class="text-info graph-help-icon"
+                popover-popup-close-delay="{{::popoverPopupCloseDelay}}" popover-append-to-body="true" popover-trigger="mouseenter" popover-hoverable="false"
+                popover-placement="top">
+                <i class="fa fa-question-circle" aria-hidden="true"></i>
+              </label>
              <!--  <div class="alert alert-info" ng-hide="_loading || transport_gbt.length">
                 No data to display
               </div>
@@ -111,7 +129,12 @@
 
           <div class="row">
             <div class="col-md-6">
-              <h3>Request Completion Status Distribution By Requests</h3>
+              <h3 class="graph-title inline-block">Request Completion Status Distribution By Requests</h3>
+              <label ng-if="!!popoverHelpHTML['status_hits']" uib-popover-html="::popoverHelpHTML['status_hits']" class="text-info graph-help-icon"
+                popover-popup-close-delay="{{::popoverPopupCloseDelay}}" popover-append-to-body="true" popover-trigger="mouseenter" popover-hoverable="false"
+                popover-placement="top">
+                <i class="fa fa-question-circle" aria-hidden="true"></i>
+              </label>
              <!--  <div class="alert alert-info" ng-hide="_loading || status_hits.length">
                 No data to display
               </div>
@@ -123,7 +146,12 @@
               </div>
             </div>
             <div class="col-md-6">
-              <h3>Request Completion Status Distribution By Traffic</h3>
+              <h3 class="graph-title inline-block">Request Completion Status Distribution By Traffic</h3>
+              <label ng-if="!!popoverHelpHTML['status_gbt']" uib-popover-html="::popoverHelpHTML['status_gbt']" class="text-info graph-help-icon"
+                popover-popup-close-delay="{{::popoverPopupCloseDelay}}" popover-append-to-body="true" popover-trigger="mouseenter" popover-hoverable="false"
+                popover-placement="top">
+                <i class="fa fa-question-circle" aria-hidden="true"></i>
+              </label>
              <!--  <div class="alert alert-info" ng-hide="_loading || status_gbt.length">
                 No data to display
               </div>
@@ -139,7 +167,12 @@
 
           <div class="row">
             <div class="col-md-6">
-              <h3>Edge Cache Hit Ratio By Requests</h3>
+              <h3 class="graph-title inline-block">Edge Cache Hit Ratio By Requests</h3>
+              <label ng-if="!!popoverHelpHTML['cache_hits']" uib-popover-html="::popoverHelpHTML['cache_hits']" class="text-info graph-help-icon"
+                popover-popup-close-delay="{{::popoverPopupCloseDelay}}" popover-append-to-body="true" popover-trigger="mouseenter" popover-hoverable="false"
+                popover-placement="top">
+                <i class="fa fa-question-circle" aria-hidden="true"></i>
+              </label>
               <!-- <div class="alert alert-info" ng-hide="_loading || cache_hits.length">
                 No data to display
               </div>
@@ -151,7 +184,12 @@
               </div>
             </div>
             <div class="col-md-6">
-              <h3>Edge Cache Hit Ratio By Traffic</h3>
+              <h3 class="graph-title inline-block">Edge Cache Hit Ratio By Traffic</h3>
+              <label ng-if="!!popoverHelpHTML['cache_gbt']" uib-popover-html="::popoverHelpHTML['cache_gbt']" class="text-info graph-help-icon"
+                popover-popup-close-delay="{{::popoverPopupCloseDelay}}" popover-append-to-body="true" popover-trigger="mouseenter" popover-hoverable="false"
+                popover-placement="top">
+                <i class="fa fa-question-circle" aria-hidden="true"></i>
+              </label>
               <!-- <div class="alert alert-info" ng-hide="_loading || cache_gbt.length">
                 No data to display
               </div>

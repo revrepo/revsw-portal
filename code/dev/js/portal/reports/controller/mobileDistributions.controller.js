@@ -6,7 +6,7 @@
     .controller('MobileDistributionsController', MobileDistributionsController);
 
   /*@ngInject*/
-  function MobileDistributionsController($scope, $q, User, AlertService, Stats, Util) {
+  function MobileDistributionsController($scope, $q, User, AlertService, Stats, Util, $config, $sce) {
 
     $scope._loading = true;
     $scope.application = null;
@@ -24,6 +24,21 @@
     $scope.domain_hits = [];
     $scope.domain_gbt = [];
     $scope.status_code_hits = [];
+
+    $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
+    $scope.popoverHelpHTML = {
+      'destination_hits': $sce.trustAsHtml('TODO text popover'),
+      'destination_gbt': $sce.trustAsHtml('TODO text popover'),
+      'transport_hits': $sce.trustAsHtml('TODO text popover'),
+      'transport_gbt': $sce.trustAsHtml('TODO text popover'),
+      'status_hits': $sce.trustAsHtml('TODO text popover'),
+      'status_gbt': $sce.trustAsHtml('TODO text popover'),
+      'cache_hits': $sce.trustAsHtml('TODO text popover'),
+      'cache_gbt': $sce.trustAsHtml('TODO text popover'),
+      'domain_hits': $sce.trustAsHtml('TODO text popover'),
+      'domain_gbt': $sce.trustAsHtml('TODO text popover'),
+      'status_code_hits': $sce.trustAsHtml('TODO text popover')
+    };
 
     $scope.span = '24';
     $scope.gbtChartOpts = {
