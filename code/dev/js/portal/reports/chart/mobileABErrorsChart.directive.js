@@ -22,9 +22,12 @@
         flNetworks: '='
       },
       /*@ngInject*/
-      controller: function($scope, Stats, Util) {
+      controller: function($scope, Stats, Util, $config, $sce) {
 
         $scope.heading = 'SDK Failed Requests Graph';
+        $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
+        $scope.popoverHelpHTML = $sce.trustAsHtml('TODO text popover');
+
         $scope.span = '1';
         $scope._loading = false;
         var tickInterval_ = 4;

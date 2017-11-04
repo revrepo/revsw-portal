@@ -24,12 +24,15 @@
         flLimit: '@'
       },
       /*@ngInject*/
-      controller: function($scope, Stats, Util) {
+      controller: function($scope, Stats, Util, $config, $sce) {
 
         var _interval = parseInt(($scope.flInterval || 100));
         var _limit = parseInt(($scope.flLimit || 5000));
 
         $scope.heading = 'First Byte Time Values Distribution Graph';
+        $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
+        $scope.popoverHelpHTML = $sce.trustAsHtml('TODO text popover');
+
         $scope.span = '1';
         $scope._loading = false;
 
