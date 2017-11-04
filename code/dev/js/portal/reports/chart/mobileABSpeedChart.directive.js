@@ -22,9 +22,12 @@
         flNetworks: '='
       },
       /*@ngInject*/
-      controller: function($scope, Stats, Util) {
+      controller: function($scope, Stats, Util, $config, $sce) {
 
         $scope.heading = 'Average Request Speed Graph';
+        $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
+        $scope.popoverHelpHTML = $sce.trustAsHtml('TODO text popover');
+
         $scope.span = '1';
         $scope._loading = false;
 
@@ -83,7 +86,7 @@
               width: 1,
               color: '#000000'
             },
-            tickInterval: tickInterval_            
+            tickInterval: tickInterval_
           },
           tooltip: {
             xDateFormat: '<span style="color: #000; font-weight: bold;">%H:%M</span> %b %d',
@@ -150,7 +153,7 @@
                   dest.items.forEach(function(item, idx, items) {
                     if (!labels_filled) {
                       var val = moment(item.key + offset);
-                      var label = val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span>] MMM D');                      
+                      var label = val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span>] MMM D');
 
                       labels.push(label);
 

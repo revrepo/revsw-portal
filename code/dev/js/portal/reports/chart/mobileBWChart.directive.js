@@ -23,11 +23,14 @@
         filtersSets: '='
       },
       /*@ngInject*/
-      controller: function($scope, Stats, Util) {
+      controller: function($scope, Stats, Util, $config, $sce) {
 
         $scope.heading = 'Bandwidth Usage Graph';
         $scope.span = '1';
         $scope._loading = false;
+
+        $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
+        $scope.popoverHelpHTML = $sce.trustAsHtml('TODO text popover');
 
         $scope.hits = {
           labels: [],
@@ -169,7 +172,7 @@
 
                   var val = moment(item.time + offset);
                   var label = val.format('[<span style="color: #000; font-weight: bold;">]HH:mm[</span>] MMM D');
-                  
+
                   labels.push(label); // Fix for [object Object] bug
 
                   var sent_bw = item.sent_bytes / interval;
