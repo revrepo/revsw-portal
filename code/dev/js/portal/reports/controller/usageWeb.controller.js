@@ -6,7 +6,7 @@
     .controller('UsageWebController', UsageWebController);
 
   /*@ngInject*/
-  function UsageWebController($scope, $q, User, DTOptionsBuilder, DTColumnDefBuilder, AlertService, Stats, Util, Locations, $uibModal) {
+  function UsageWebController($scope, $q, User, DTOptionsBuilder, DTColumnDefBuilder, AlertService, Stats, Util, Locations, $uibModal, $config, $sce) {
 
     $scope._loading = true;
     $scope.accounts = [];
@@ -18,6 +18,11 @@
     $scope.report = null;
     $scope.traffic = null;
     $scope.formatNumber = Util.formatNumber;
+
+    $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
+    $scope.popoverHelpHTML ={
+      'traffic': $sce.trustAsHtml('TODO text popover')
+    };
 
     var pageLength = 10;
     var tickInterval_ = 2;
@@ -307,10 +312,10 @@
             data.data.forEach(function(item, idx, items) {
               traffic_total_ += item.sent_bytes;
               var val = moment(item.time_utc).utc(),
-                
+
                 //label = val.format('[<span style="color: #000; font-weight: bold;">]MMM D[</span>]');
                 label = val.format('MMM D YYYY');
-              
+
 
               labels.push(label);
 

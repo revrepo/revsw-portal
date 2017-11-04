@@ -70,7 +70,12 @@
 
           <div class="row">
             <div class="col-md-12">
-              <h4>Monthly Traffic Usage Trend</h4>
+              <h4 class="graph-title inline-block">Monthly Traffic Usage Trend</h4>
+              <label ng-if="!!popoverHelpHTML['traffic']" uib-popover-html="::popoverHelpHTML['traffic']" class="text-info graph-help-icon"
+                popover-popup-close-delay="{{::popoverPopupCloseDelay}}" popover-append-to-body="true" popover-trigger="mouseenter" popover-hoverable="false"
+                popover-placement="top">
+                <i class="fa fa-question-circle" aria-hidden="true"></i>
+              </label>
                 <div>
                   <div style="min-width: 500px; min-height: 350px" line-chart ng-data="traffic" ng-chart-options="chartOptions"></div>
                 </div>
