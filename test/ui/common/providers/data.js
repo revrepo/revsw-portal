@@ -52,7 +52,7 @@ var DataProvider = {
    *         passwordConfirm: string
    *     }
    */
-  generateUser: function (data) {
+  generateUser: function (data, vendorData) {
     if (data === undefined) {
       data = {};
     }
@@ -63,7 +63,7 @@ var DataProvider = {
     // Special case when the portal user is creating a new user
     // is a reseller or rev-admin which require the specify the
     // company the new user should be associated with
-    if (currentUser !== undefined && currentUser.role !== 'Admin') {
+    if (currentUser !== undefined && currentUser.role !== 'Admin' && vendorData === undefined) {
       data.company = ['API QA Reseller Company'];
     }
 
