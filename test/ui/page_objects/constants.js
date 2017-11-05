@@ -380,7 +380,9 @@ var Constants = {
     'domain_wildcard_alias',
     'enable_ssl',
     'github_integration'
-  ]
+  ],
+  DOMAIN_POLLING_INTERVAL: 3000,
+  DOMAIN_POLLING_TIMEOUT: 180000
 
 };
 module.exports = Constants;
