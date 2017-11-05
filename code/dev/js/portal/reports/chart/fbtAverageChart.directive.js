@@ -21,7 +21,7 @@
         isAutoReload: '@?'
       },
       /*@ngInject*/
-      controller: function($q, $scope, Stats, Util, EventsSerieDataService) {
+      controller: function($q, $scope, Stats, Util, EventsSerieDataService, $config, $sce) {
         var _filters_field_list = ['from_timestamp', 'to_timestamp', 'country', 'device', 'os', 'browser'];
 
         function generateFilterParams(filters) {
@@ -53,6 +53,9 @@
           avg_ = 0,
           median_ = 0,
           max_ = 0;
+
+        $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
+        $scope.popoverHelpHTML = $sce.trustAsHtml('TODO text for help');
 
         $scope.chartOptions = {
           chart: {

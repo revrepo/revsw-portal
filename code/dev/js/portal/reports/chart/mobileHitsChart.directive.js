@@ -16,10 +16,13 @@
         ngApp: '='
       },
       /*@ngInject*/
-      controller: function( $scope, Stats, Util ) {
+      controller: function( $scope, Stats, Util, $config, $sce ) {
 
         $scope.span = '1';
         $scope._loading = false;
+
+        $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
+        $scope.popoverHelpHTML = $sce.trustAsHtml('TODO text popover');
 
         $scope.chartOptions = {
           yAxis: {

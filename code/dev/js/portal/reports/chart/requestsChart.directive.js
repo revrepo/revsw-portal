@@ -55,7 +55,8 @@
     $scope._loading = false;
     $scope.heading = 'Bandwidth Usage';
     $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
-    $scope.popoverHelpHTML = $sce.trustAsHtml('TODO text <a href="/demo">DEMO LINK </a> ');
+    $scope.popoverHelpHTML = 
+      $sce.trustAsHtml('The graph shows the amount of data (per second) sent ("Outgoing Bandwidth") and received ("Incoming Bandwidth") to/from website visitors');
 
     $scope.reload = reload;
     $scope.filters = {

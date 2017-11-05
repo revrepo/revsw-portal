@@ -49,13 +49,23 @@
 
           <div class="row">
             <div class="col-md-6">
-              <h3 class="text-left">Image Format Changes</h3>
+              <h3 class="text-left graph-title inline-block">Image Format Changes</h3>
+                <label ng-if="!!popoverHelpHTML['dataImageEngineFotmatChanges']" uib-popover-html="::popoverHelpHTML['dataImageEngineFotmatChanges']" class="text-info graph-help-icon"
+                  popover-popup-close-delay="{{::popoverPopupCloseDelay}}" popover-append-to-body="true" popover-trigger="mouseenter" popover-hoverable="false"
+                  popover-placement="top">
+                  <i class="fa fa-question-circle" aria-hidden="true"></i>
+                </label>
               <div>
                 <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="dataImageEngineFotmatChanges"></div>
               </div>
             </div>
             <div class="col-md-6">
-              <h3 class="text-left">Image Resolution Changes</h3>
+              <h3 class="text-left graph-title inline-block">Image Resolution Changes</h3>
+              <label ng-if="!!popoverHelpHTML['dataImageEngineResolutionChanges']" uib-popover-html="::popoverHelpHTML['dataImageEngineResolutionChanges']"
+                class="text-info graph-help-icon" popover-popup-close-delay="{{::popoverPopupCloseDelay}}" popover-append-to-body="true"
+                popover-trigger="mouseenter" popover-hoverable="false" popover-placement="top">
+                <i class="fa fa-question-circle" aria-hidden="true"></i>
+              </label>
               <div>
                 <div style="min-width: 480px; min-height: 350px" pie-chart ng-data="dataImageEngineResolutionChanges"></div>
               </div>

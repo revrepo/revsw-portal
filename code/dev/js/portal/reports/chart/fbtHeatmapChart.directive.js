@@ -17,12 +17,14 @@
         isAutoReload: '@?'
       },
       /*@ngInject*/
-      controller: function( $scope, Stats, HeatmapsDrawer, Util ) {
+      controller: function( $scope, Stats, HeatmapsDrawer, Util, $config, $sce ) {
 
         $scope.delay = '24';
         $scope._loading = false;
         var drawer = HeatmapsDrawer.create('#canvas-svg');
 
+        $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
+        $scope.popoverHelpHTML = $sce.trustAsHtml('TODO text for popover');
 
         $scope.reloadFBTStats = function() {
           if ( !$scope.ngDomain || !$scope.ngDomain.id ) {

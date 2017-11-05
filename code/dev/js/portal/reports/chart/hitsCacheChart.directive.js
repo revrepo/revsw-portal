@@ -53,7 +53,11 @@
 
         $scope.heading = 'Edge Cache Efficiency Hits';
         $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
-        $scope.popoverHelpHTML = $sce.trustAsHtml('TODO text <a href="/demo">DEMO LINK </a> ');
+        $scope.popoverHelpHTML = $sce.trustAsHtml('The graph show the rate of requests served from our edge cache storage (so-called "cache hits") ' +
+          'and requests which required pull objects from the orign server (so-called "cache misses"). Please note that cache misses include ' +
+          'objects that could be cached but were not present in the edge cache and also so-called "dynamic" requests which should not be cached ' +
+          'at all (for example, personalized web objects). A change in cache hit/miss rate can be a result of edge cache purge or domain edge cache ' +
+          'configuration change.');
 
         $scope._loading = false;
         $scope.hasFailedToLoadData = false;

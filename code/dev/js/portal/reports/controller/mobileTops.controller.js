@@ -6,7 +6,7 @@
     .controller('MobileTopsController', MobileTopsController);
 
   /*@ngInject*/
-  function MobileTopsController($scope, $q, User, AlertService, Stats, Countries, Util) {
+  function MobileTopsController($scope, $q, User, AlertService, Stats, Countries, Util, $config, $sce) {
 
     $scope._loading = false;
     $scope.application = null;
@@ -38,6 +38,28 @@
     $scope.status_code_hits = [];
 
     $scope.span = '24';
+    $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
+    $scope.popoverHelpHTML = {
+      'country_hits': $sce.trustAsHtml('TODO text popover'),
+      'country_users': $sce.trustAsHtml('TODO text popover'),
+      'country_gbt': $sce.trustAsHtml('TODO text popover'),
+      'usa_states_gbt': $sce.trustAsHtml('TODO text popover'),
+      'os_hits': $sce.trustAsHtml('TODO text popover'),
+      'os_users': $sce.trustAsHtml('TODO text popover'),
+      'os_gbt': $sce.trustAsHtml('TODO text popover'),
+      'device_hits': $sce.trustAsHtml('TODO text popover'),
+      'device_users': $sce.trustAsHtml('TODO text popover'),
+      'device_gbt': $sce.trustAsHtml('TODO text popover'),
+      'operator_hits': $sce.trustAsHtml('TODO text popover'),
+      'operator_users': $sce.trustAsHtml('TODO text popover'),
+      'operator_gbt': $sce.trustAsHtml('TODO text popover'),
+      'network_hits': $sce.trustAsHtml('TODO text popover'),
+      'network_users': $sce.trustAsHtml('TODO text popover'),
+      'network_gbt': $sce.trustAsHtml('TODO text popover'),
+      'domain_hits': $sce.trustAsHtml('TODO text popover'),
+      'domain_gbt': $sce.trustAsHtml('TODO text popover'),
+      'status_code_hits': $sce.trustAsHtml('TODO text popover')
+    };
 
     $scope.gbtChartOpts = {
       tooltip: {

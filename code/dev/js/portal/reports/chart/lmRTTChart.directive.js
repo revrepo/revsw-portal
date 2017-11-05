@@ -49,7 +49,9 @@
         $scope.hasFailedToLoadData = false;
         $scope.heading = 'Last Mile Round Trip Time Latency';
         $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
-        $scope.popoverHelpHTML = $sce.trustAsHtml('TODO text <a href="/demo">DEMO LINK </a> ');
+        $scope.popoverHelpHTML = $sce.trustAsHtml('The bar chart reports measured round-trip network latency between website ' +
+          'visitors and our edge servers (so-called "last mile ' +
+          'latency"). Last mile latency is normally higher for mobile users and in countries with less developed Internet infrastructure.');
 
         $scope.filters = {
           from_timestamp: moment().subtract(1, 'days').valueOf(),

@@ -19,12 +19,15 @@
         flStoreName: '@'
       },
       /*@ngInject*/
-      controller: function ($scope, Stats, $localStorage) {
+      controller: function ($scope, Stats, $localStorage, $config, $sce) {
         $scope._loading = false;
         $scope.filters = !$scope.flStoreName ? _.assign({
           delay: '24',
           count: '30'
         }, {}) : $localStorage[$scope.flStoreName];
+
+        $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
+        $scope.popoverHelpHTML = $sce.trustAsHtml('TODO text for popover');
 
         $scope.items = [];
         $scope.loadDetails = function () {

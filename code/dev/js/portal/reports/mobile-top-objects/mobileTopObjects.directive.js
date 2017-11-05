@@ -24,7 +24,7 @@
         flStoreName: '@'
       },
       /*@ngInject*/
-      controller: function ($scope, Stats, $localStorage) {
+      controller: function ($scope, Stats, $localStorage, $config, $sce) {
         $scope._loading = false;
         $scope.items = [];
 
@@ -39,6 +39,18 @@
           operator: null,
           network: null
         }, {}) : $localStorage[$scope.flStoreName];
+        var listMobileTopObjectsTimeHelpHTML = {
+          'default': $sce.trustAsHtml('TODO text popover default'),
+          'not_found': $sce.trustAsHtml('TODO text popover not_found'),
+          'cache_missed': $sce.trustAsHtml('TODO text popover cache_missed'),
+          'failed': $sce.trustAsHtml('TODO text popover failed')
+        };
+        $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
+        if(!$scope.reportType){
+          $scope.popoverHelpHTML = listMobileTopObjectsTimeHelpHTML['default'];
+        }else{
+          $scope.popoverHelpHTML = listMobileTopObjectsTimeHelpHTML[$scope.reportType];
+        }
 
         //  ---------------------------------
         $scope.reload = function() {

@@ -18,7 +18,7 @@
         filters: '='
       },
       /*@ngInject*/
-      controller: function($scope, Stats, $q, Util) {
+      controller: function($scope, Stats, $q, Util, $config, $sce) {
 
         var _filters_field_list = ['period'];
 
@@ -37,6 +37,9 @@
         }
 
         $scope.heading = 'DNS Queries';
+        $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
+        $scope.popoverHelpHTML = $sce.trustAsHtml('TODO text popover');
+
         $scope._loading = false;
         $scope.hasFailedToLoadData = false;
         $scope.filters = {

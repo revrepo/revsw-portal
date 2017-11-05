@@ -26,7 +26,7 @@
 
         $scope.heading = 'HTTP/HTTPS Hits';
         $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
-        $scope.popoverHelpHTML = $sce.trustAsHtml('TODO text <a href="/demo">DEMO LINK </a> ');
+        $scope.popoverHelpHTML = $sce.trustAsHtml('The line chart shows the rate of HTTP and HTTPS requests received for the reported domain');
 
         $scope._loading = false;
         $scope.hasFailedToLoadData = false;

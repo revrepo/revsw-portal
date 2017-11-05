@@ -24,7 +24,7 @@
         flStoreName: '@'
       },
       /*@ngInject*/
-      controller: function ($scope, Stats, Util, $localStorage) {
+      controller: function ($scope, Stats, Util, $localStorage, $config, $sce) {
         $scope._loading = false;
         $scope.items = [];
         $scope.filters = (!$scope.flStoreName || !$localStorage[$scope.flStoreName])? _.assign({
@@ -38,6 +38,13 @@
           operator: null,
           network: null
         }, {}) : $localStorage[$scope.flStoreName];
+
+        var listMobileTopObjectsTimeHelpHTML = {
+          'full': $sce.trustAsHtml('TODO text popover full'),
+          'first_byte': $sce.trustAsHtml('TODO text popover first_byte')
+        };
+        $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
+        $scope.popoverHelpHTML = listMobileTopObjectsTimeHelpHTML[$scope.reportType];
 
         //  ---------------------------------
         $scope.reload = function() {
