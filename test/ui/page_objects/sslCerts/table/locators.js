@@ -40,6 +40,9 @@ var headerLocators = {
   },
   lastUpdate: {
     css: 'th:nth-of-type(5) a'
+  },
+  account: {
+    css: 'th:nth-of-type(8) a'
   }
 };
 

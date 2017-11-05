@@ -64,15 +64,15 @@ var EditDomain = {
       expandWafRules: {
         css: '.btn[ng-click="$ctrl.onExpandAllWAFLocations()"]'
       },
-      btnManageGitHubIntegration:{
+      btnManageGitHubIntegration: {
         id: 'btnManageGitHubIntegration'
       }
     },
-    switches:{
+    switches: {
       mainAttrs: {
         ariaChecked: 'aria-checked'
       },
-      gitHubIntegration:{
+      gitHubIntegration: {
         id: 'switch_github_integration'
       }
     },
@@ -164,7 +164,7 @@ var EditDomain = {
   *
   * @returns {Object} Selenium WebDriver Element
   */
-  getGitHubIntegrationSw: function() {
+  getGitHubIntegrationSw: function () {
     return element(by.id(this.locators.switches.gitHubIntegration.id));
   },
   /**
@@ -173,10 +173,10 @@ var EditDomain = {
    *  Return the value from switch element
    * @return {String} value as string ('true','false')
    */
-  getGitHubIntegrationSwitchBtnValue: function() {
+  getGitHubIntegrationSwitchBtnValue: function () {
     return this.getGitHubIntegrationSw
       .getAttribute(this.locators.switches.mainAttrs.ariaChecked)
-      .then(function(data) {
+      .then(function (data) {
         return data;
       });
   },
@@ -187,15 +187,15 @@ var EditDomain = {
   * 'ON' or 'off'
   *
   */
-  setToSwitchBtnValue: function(getCbElement, onOff) {
+  setToSwitchBtnValue: function (getCbElement, onOff) {
     getCbElement
       .getAttribute(this.locators.switches.mainAttrs.ariaChecked)
-      .then(function(data) {
-        if(onOff && data !== 'true') {
+      .then(function (data) {
+        if (onOff && data !== 'true') {
           getCbElement.click();
         }
 
-        if(!onOff && data !== 'false') {
+        if (!onOff && data !== 'false') {
           getCbElement.click();
         }
       });
@@ -209,7 +209,7 @@ var EditDomain = {
    *
    * @returns {Object} Selenium WebDriver Element
    */
-  getManageGitHubIntegrationBtn: function() {
+  getManageGitHubIntegrationBtn: function () {
     return element(
       by.id(this.locators.buttons.btnManageGitHubIntegration.id));
   },
@@ -395,7 +395,7 @@ var EditDomain = {
    *
    * @returns {Promise}
    */
-  clickManageGitHubIntegration: function() {
+  clickManageGitHubIntegration: function () {
     return this
       .getManageGitHubIntegrationBtn()
       .click();
@@ -692,7 +692,44 @@ var EditDomain = {
 
   clickExpandWafRulesBtn: function () {
     return this.getExpandWafRulesBtn().click();
-  }
+  },
+
+  fillDemo: function (domainName) {
+    this.form.setWildcardDomainAlias('*.' + domainName);
+    this.form.setComment('TEST COMMENT');
+    this.clickTabOriginHealthMonitoring();
+    this.form.clickOriginHealthMonitoringBtn();
+    this.clickTabACL();
+    this.form.clickACLRulesEnableSw();
+    this.clickTabWAF();
+    this.form.clickWAFSwitch();
+    this.clickTabBotProtection();
+    this.form.clickBotProtectionEnableSw();
+    this.form.setBotProtectionID('123');
+    this.clickTabVCL();
+    this.form.clickCustomVCLRulesSw();
+    this.clickTabLuaScripting();
+    this.form.clickEnableLuaScriptingOnEdgeLastMile();
+    return this.form.clickEnableLuaScriptingOriginFirstMile();
+  },
+
+  clearDemo: function () {
+    this.form.setWildcardDomainAlias('');
+    this.form.setComment('');
+    this.clickTabOriginHealthMonitoring();
+    this.form.clickOriginHealthMonitoringBtn();
+    this.clickTabACL();
+    this.form.clickACLRulesEnableSw();
+    this.clickTabWAF();
+    this.form.clickWAFSwitch();
+    this.clickTabBotProtection();
+    this.form.clickBotProtectionEnableSw();
+    this.clickTabVCL();
+    this.form.clickCustomVCLRulesSw();
+    this.clickTabLuaScripting();
+    this.form.clickEnableLuaScriptingOnEdgeLastMile();
+    return this.form.clickEnableLuaScriptingOriginFirstMile();
+  },
 };
 
 module.exports = EditDomain;

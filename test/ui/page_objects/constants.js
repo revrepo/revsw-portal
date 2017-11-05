@@ -335,6 +335,51 @@ var Constants = {
       LOGIN_URL: 'testsjc20-portal-hooli.revsw.net',
       ACCOUNT: ['QA-TEST-COMPANY-HOOLI']
     }
+  ],
+
+  DOMAIN_JSON_ATTRIBUTES: [
+    '3rd_party_rewrite',
+    'domain_name',
+    'proxy_timeout',
+    'rev_component_bp',
+    'rev_component_co',
+    'origin_secure_protocol',
+    'image_engine',
+    'origin_server',
+    'origin_host_header',
+    'account_id',
+    'tolerance',
+    'origin_server_location_id',
+    'cname',
+    'published_domain_version',
+    'last_published_domain_version',
+    'enable_ssl',
+    'ssl_conf_profile',
+    'ssl_cert_id',
+    'ssl_protocols',
+    'ssl_ciphers',
+    'ssl_prefer_server_ciphers',
+    'btt_key',
+    'bp_lua_enable_all',
+    'bp_lua',
+    'co_lua_enable_all',
+    'co_lua'
+  ],
+  UPDATED_DOMAIN_JSON_ATTRIBUTES: [
+    'enable_waf',
+    'waf',
+    'enable_bot_protection',
+    'bot_protection',
+    'custom_vcl',
+    'origin_health_probe',
+    'HTTP_REQUEST',
+    'PROBE_TIMEOUT',
+    'PROBE_INTERVAL',
+    'HTTP_STATUS',
+    'comment',
+    'domain_wildcard_alias',
+    'enable_ssl',
+    'github_integration'
   ]
 
 };

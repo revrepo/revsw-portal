@@ -24,7 +24,7 @@ var Constants = require('./../../../page_objects/constants');
 describe('Workflow', function () {
     describe('Add Domain', function () {
         /*jshint camelcase: false */
-        var user = config.get('portal.users.admin');
+        var user = config.get('portal.users.revAdmin');
         var domainData = DataProvider.generateDomain('test-domain');
 
         beforeAll(function (done) {
@@ -43,120 +43,39 @@ describe('Workflow', function () {
             Portal.helpers.nav.goToDomains();
         });
 
-        it('should create a valid domain JSON object', function (done) {
-            Portal.domainsHelpers.getDomainJSON(domainData.name, function (domain) {
-                var domainJSON = domain;
-                expect(domainJSON.domain_name).toBe(domainData.name);
-                done();
-            });
-        });
-
-        it('should update JSON when image optimization is enabled', function (done) {
-            Portal.domainsHelpers.getDomainJSON(domainData.name, function (domain) {
-                var domainJSON = domain;
-                Portal.domains.listPage.searchAndClickEdit(domainData.name);
-                Portal.domains.editPage.clickTabImageEngine();
-                Portal.domains.editPage.form.clickImageEngine();
-                Portal.dialog.clickOk();
-                Portal.domains.editPage.clickPublishDomain();
-                Portal.dialog.clickOk();
-                browser.sleep(60000).then(function () { // wait for publish to finish
-                    Portal
-                        .domainsHelpers
-                        .getDomainJSON(domainData.name, function (domain2) {
-                            var domainJSON2 = domain2;
-                            expect(domainJSON2
-                                .image_engine
-                                .enable_image_engine).toBeTruthy();
-                            done();
-                        });
+        it('should contain all expected attributes in a ' +
+            ' newly created domain JSON object', function (done) {
+                Portal.domainsHelpers.getDomainJSON(domainData.name).then(function (domain) {
+                    for (var field in domain) {
+                        if (domain.hasOwnProperty(field)) {
+                            expect(Constants.DOMAIN_JSON_ATTRIBUTES.indexOf(field)).not.toEqual(-1);
+                        }
+                    }
+                    done();
                 });
             });
-        });
 
-        it('should update JSON when image optimization is disabled', function (done) {
-            Portal.domainsHelpers.getDomainJSON(domainData.name, function (domain) {
-                var domainJSON = domain;
+        it('should contain all expected attributes in a domain JSON object ' +
+            ' after updating domain', function (done) {
                 Portal.domains.listPage.searchAndClickEdit(domainData.name);
-                Portal.domains.editPage.clickTabImageEngine();
-                Portal.domains.editPage.form.clickImageEngine();
-                Portal.dialog.clickOk();
-                Portal.domains.editPage.clickPublishDomain();
-                Portal.dialog.clickOk();
-                browser.sleep(60000).then(function () { // wait for publish to finish
-                    Portal
-                        .domainsHelpers
-                        .getDomainJSON(domainData.name, function (domain2) {
-                            var domainJSON2 = domain2;
-                            expect(domainJSON2
-                                .image_engine
-                                .enable_image_engine).toBeFalsy();
-                            done();
-                        });
+                Portal.domains.editPage.fillDemo(domainData.name);
+
+                Portal.domains.editPage.clickUpdateDomain().then(function () {
+                    Portal.dialog.clickOk();
+                    Portal.alerts.waitToDisplay().then(function () {
+                        Portal
+                            .domainsHelpers
+                            .getDomainJSON(domainData.name).then(function (domain) {
+                                for (var i = 0;
+                                    i < Constants.UPDATED_DOMAIN_JSON_ATTRIBUTES.length;
+                                    i++) {
+                                    expect(JSON.stringify(domain))
+                                        .toContain(Constants.UPDATED_DOMAIN_JSON_ATTRIBUTES[i]);
+                                }
+                                done();
+                            });
+                    });
                 });
             });
-        });
-
-        it('should update JSON when waf protection is enabled', function (done) {
-            Portal.domainsHelpers.getDomainJSON(domainData.name, function (domain) {
-                var domainJSON = domain;
-                Portal.domains.listPage.searchAndClickEdit(domainData.name);
-                Portal.domains.editPage.clickTabWAF();
-                Portal.domains.editPage.form.clickWAFSwitch();
-                Portal.domains.editPage.clickExpandWafRulesBtn();
-                Portal.domains.editPage.wafRulesTable.getFirstRow().clickUseThisRule();
-                Portal.domains.editPage.clickPublishDomain();
-                Portal.dialog.clickOk();
-                browser.sleep(120000).then(function () { // wait for publish to finish
-                    Portal
-                        .domainsHelpers
-                        .getDomainWafRules(domainData.name, function (wafRules) {
-                            expect(wafRules.length).toBeGreaterThan(0);
-                            done();
-                        });
-                });
-            });
-        });
-
-        it('should update JSON when waf protection is disabled', function (done) {
-            Portal.domainsHelpers.getDomainJSON(domainData.name, function (domain) {
-                var domainJSON = domain;
-                Portal.domains.listPage.searchAndClickEdit(domainData.name);
-                Portal.domains.editPage.clickTabWAF();
-                Portal.domains.editPage.clickExpandWafRulesBtn();
-                Portal.domains.editPage.wafRulesTable.getFirstRow().clickUseThisRule();
-                Portal.domains.editPage.clickPublishDomain();
-                Portal.dialog.clickOk();
-                browser.sleep(120000).then(function () { // wait for publish to finish
-                    Portal
-                        .domainsHelpers
-                        .getDomainWafRules(domainData.name, function (wafRules) {
-                            expect(wafRules.length).toEqual(0);
-                            done();
-                        });
-                });
-            });
-        });
-
-        it('should update domain version after domain is published', function (done) {
-            Portal.domainsHelpers.getDomainJSON(domainData.name, function (domain) {
-                var domainJSON = domain;
-                var ver = domainJSON.last_published_domain_version;
-                Portal.domains.listPage.searchAndClickEdit(domainData.name);
-                Portal.domains.editPage.clickTabSSLconfiguration();
-                Portal.domains.editPage.form.getAcceptSSLrequestsTxtIn().click();
-                Portal.domains.editPage.clickPublishDomain();
-                Portal.dialog.clickOk();
-                browser.sleep(60000).then(function () { // wait for publish to finish
-                    Portal
-                        .domainsHelpers
-                        .getDomainJSON(domainData.name, function (domain2) {
-                            expect(domain2
-                                .last_published_domain_version).toBeGreaterThan(ver);
-                            done();
-                        });
-                });
-            });
-        });
     });
 });

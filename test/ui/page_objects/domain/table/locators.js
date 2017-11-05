@@ -37,6 +37,9 @@ var headerLocators = {
   },
   status: {
     css: 'th:nth-of-type(4)'
+  },
+  account: {
+    css: 'th:nth-of-type(6) a'
   }
 };
 
