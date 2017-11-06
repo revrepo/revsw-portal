@@ -17,7 +17,8 @@
     $state,
     $config,
     Util,
-    $q
+    $q,
+    $sce
   ) {
     var vm = this;
     vm._loading = false;
@@ -31,6 +32,12 @@
     var totalDNSZoneQueries_ = 0;
     var info_ = null;
 
+    $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
+    $scope.popoverHelpHTML = {
+      'totalDNSZoneRecords': $sce.trustAsHtml('TODO popover text'),
+      'accountTotalDNSZones': $sce.trustAsHtml('TODO popover text'),
+      'totalDNSZoneQueries30d': $sce.trustAsHtml('TODO popover text')
+    };
     // NOTE: Option for display graph
     vm.chartOptions = {
       chart: {

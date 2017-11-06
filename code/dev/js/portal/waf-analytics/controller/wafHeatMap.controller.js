@@ -6,7 +6,7 @@
     .controller('WAFHeatmapsController', WAFHeatmapsController);
 
   /*@ngInject*/
-  function WAFHeatmapsController($scope, HeatmapsDrawer, Countries, StatsWAF) {
+  function WAFHeatmapsController($scope, HeatmapsDrawer, Countries, StatsWAF, $config, $sce) {
 
     /**
      * Loading flag
@@ -37,7 +37,8 @@
     $scope.countries = Countries.query();
     var drawer = HeatmapsDrawer.create('#canvas-svg');
 
-
+    $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
+    $scope.popoverHelpHTML = $sce.trustAsHtml('TODO popover text');
     /**
      * Loads list of country hits.
      *

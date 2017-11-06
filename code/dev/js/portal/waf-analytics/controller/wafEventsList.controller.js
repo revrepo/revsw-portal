@@ -19,7 +19,8 @@
     StatsWAF,
     Countries,
     $config,
-    $localStorage
+    $localStorage,
+    $sce
   ) {
     //Invoking crud actions
     $injector.invoke(CRUDController, this, {
@@ -42,6 +43,9 @@
     vm.domain = null;
     vm.countries = Countries.query();
     vm.zonesList = $config.WAF_REQUEST_ZONES;
+
+    $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
+    $scope.popoverHelpHTML = $sce.trustAsHtml('TODO popover text');
 
     vm.user = User;
     vm._loading = false;
