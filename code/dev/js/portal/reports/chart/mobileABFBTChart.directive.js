@@ -26,7 +26,8 @@
 
         $scope.heading = 'First Byte Time Graph';
         $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
-        $scope.popoverHelpHTML = $sce.trustAsHtml('TODO text popover');
+        $scope.popoverHelpHTML = $sce.trustAsHtml('This graph shows a visual comparison of First Byte Time (FBT) metric for requests served ' +
+          'directly from the origin and requests served via the CDN. Lower FBT value results in better end user experience.');
 
         $scope.span = '1';
         $scope._loading = false;

@@ -54,7 +54,8 @@
         }, {}) : $localStorage[$scope.flStoreName];
 
         $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
-        $scope.popoverHelpHTML = $sce.trustAsHtml('TODO text popover');
+        $scope.popoverHelpHTML = $sce.trustAsHtml('The report shows a list of objects with the highest level of backend 5xx HTTP responses '+
+            '(normally a result of internal application or API errors)');
         //  ---------------------------------
         $scope.reload = function() {
 

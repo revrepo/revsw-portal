@@ -34,9 +34,10 @@
 
     $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
     $scope.popoverHelpHTML = {
-      'totalDNSZoneRecords': $sce.trustAsHtml('TODO popover text'),
-      'accountTotalDNSZones': $sce.trustAsHtml('TODO popover text'),
-      'totalDNSZoneQueries30d': $sce.trustAsHtml('TODO popover text')
+      'totalDNSZoneRecords': $sce.trustAsHtml('The metric reports the total number of DNS records registered in the reported DNS zone'),
+      'accountTotalDNSZones': $sce.trustAsHtml('The metric reports the total number of DNS zones registered for the customer account'),
+      'totalDNSZoneQueries30d': $sce.trustAsHtml('The metric reports the total number of DNS requests received for the last 30 days for the ' +
+        'reported DNS zone')
     };
     // NOTE: Option for display graph
     vm.chartOptions = {

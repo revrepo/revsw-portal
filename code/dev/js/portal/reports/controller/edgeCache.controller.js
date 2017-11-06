@@ -119,12 +119,16 @@
         'distributed proxy servers) and misses (objects requested from origin servers)'),
       'secondaryCacheStatusData': $sce.trustAsHtml('This pie chart show the cache hit/miss ratio for the secondary cache storage'),
       //
-      'average_age_for_served_objects_ms': $sce.trustAsHtml('TODO popver text'),
-      'average_configured_edge_cache_ttl_ms': $sce.trustAsHtml('TODO popver text'),
-      'average_edge_cache_response_time_ms': $sce.trustAsHtml('TODO popver text'),
-      'average_origin_response_time_ms': $sce.trustAsHtml('TODO popver text'),
-      'new_unique_objects': $sce.trustAsHtml('TODO popver text'),
-      'total_unique_objects': $sce.trustAsHtml('TODO popver text')
+      'average_age_for_served_objects_ms': $sce.trustAsHtml('The metric shows the average time objects were stored in the edge cache ' +
+        'before being served to end users'),
+      'average_configured_edge_cache_ttl_ms': $sce.trustAsHtml('The metric shows the average configured TTL of cached objects'),
+      'average_edge_cache_response_time_ms': $sce.trustAsHtml('The metric shows how long on average it took for the edge servers to pull requested ' +
+        'objects from local cache storage. Normally the metric should be below 1 ms.'),
+      'average_origin_response_time_ms': $sce.trustAsHtml('The number shows the average First Byte Time (FBT) metric for origin pull requests'),
+      'new_unique_objects': $sce.trustAsHtml('The metric shows the number of new unique URL objects stored in the edge cache during the reported ' +
+        'period of time'),
+      'total_unique_objects': $sce.trustAsHtml('The metric specifies the total number of unique objects (URLs) served from the edge cache during ' +
+        'the reported period of time')
     };
 
     vm.filters = {};
