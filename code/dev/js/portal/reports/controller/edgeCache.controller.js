@@ -118,6 +118,13 @@
       'cacheStatus': $sce.trustAsHtml('This graph shows the ratio of cache hits (requests served directly from the cache storage on our globally ' +
         'distributed proxy servers) and misses (objects requested from origin servers)'),
       'secondaryCacheStatusData': $sce.trustAsHtml('This pie chart show the cache hit/miss ratio for the secondary cache storage'),
+      //
+      'average_age_for_served_objects_ms': $sce.trustAsHtml('TODO popver text'),
+      'average_configured_edge_cache_ttl_ms': $sce.trustAsHtml('TODO popver text'),
+      'average_edge_cache_response_time_ms': $sce.trustAsHtml('TODO popver text'),
+      'average_origin_response_time_ms': $sce.trustAsHtml('TODO popver text'),
+      'new_unique_objects': $sce.trustAsHtml('TODO popver text'),
+      'total_unique_objects': $sce.trustAsHtml('TODO popver text')
     };
 
     vm.filters = {};
