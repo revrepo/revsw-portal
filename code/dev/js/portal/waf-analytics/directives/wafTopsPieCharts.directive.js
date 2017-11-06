@@ -20,10 +20,11 @@
         $scope._loading = false;
         $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
         $scope.popoverHelpHTML = {
-          'topActionsTaken': $sce.trustAsHtml('TODO text popover'),
-          'topRulesIds': $sce.trustAsHtml('TODO text popover'),
-          'topTargetZones': $sce.trustAsHtml('TODO text popover'),
-          'topCountries': $sce.trustAsHtml('TODO text popover')
+          'topActionsTaken': $sce.trustAsHtml('The bar chart shows the overall level of WAF security events detected for the domain'),
+          'topRulesIds': $sce.trustAsHtml('The pie chart shows top 20 WAF rules triggered for the domain'),
+          'topTargetZones': $sce.trustAsHtml('The pie chart shows the distribution of WAF events between different filtering zones ' +
+            'in end user requests'),
+          'topCountries': $sce.trustAsHtml('This pie chart shows top 10 countries for triggered WAF security events')
         };
 
         $scope.filters = !$scope.flStoreName ? _.assign({

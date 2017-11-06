@@ -27,7 +27,7 @@
         }, {}) : $localStorage[$scope.flStoreName];
 
         $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
-        $scope.popoverHelpHTML = $sce.trustAsHtml('TODO text for popover');
+        $scope.popoverHelpHTML = $sce.trustAsHtml('This page shows objects with highest average download time');
 
         $scope.items = [];
         $scope.loadDetails = function () {

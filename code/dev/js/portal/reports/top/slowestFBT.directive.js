@@ -27,7 +27,8 @@
         }, {}) : $localStorage[$scope.flStoreName];
 
         $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
-        $scope.popoverHelpHTML = $sce.trustAsHtml('TODO text for popover');
+        $scope.popoverHelpHTML = $sce.trustAsHtml('The page shows objects with the highest First Byte Time (FBT) metric - the time it took ' +
+          'for the edge proxy to receive the first byte of response from either local cache storage or customer origin server');
 
         $scope.items = [];
         $scope.loadDetails = function () {

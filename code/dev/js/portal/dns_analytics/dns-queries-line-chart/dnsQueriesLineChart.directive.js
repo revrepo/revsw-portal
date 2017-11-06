@@ -38,7 +38,7 @@
 
         $scope.heading = 'DNS Queries';
         $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
-        $scope.popoverHelpHTML = $sce.trustAsHtml('TODO text popover');
+        $scope.popoverHelpHTML = $sce.trustAsHtml('This line graph shows the level of DNS requests generated for the domain');
 
         $scope._loading = false;
         $scope.hasFailedToLoadData = false;

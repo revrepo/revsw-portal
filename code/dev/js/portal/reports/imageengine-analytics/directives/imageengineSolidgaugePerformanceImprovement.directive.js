@@ -64,7 +64,9 @@
     $scope.delay = '24';
     $scope.heading = 'Performance Improvement By Image Optimization';
     $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
-    $scope.popoverHelpHTML = $sce.trustAsHtml('TODO text <a href="/demo">DEMO LINK </a> ');
+    $scope.popoverHelpHTML = $sce.trustAsHtml('This gauge shows the overall level of performance improvement provided by the Image ' +
+      'Optimization feature. The improvement is archived by reducing the size of transferred image files to better match the ' +
+      'capabilities of end user mobile and desktop devices.');
 
     $scope.reload = reload;
 

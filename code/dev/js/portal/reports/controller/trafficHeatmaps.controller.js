@@ -13,8 +13,9 @@
 
     $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
     $scope.popoverHelpHTML = {
-      'worldHitsHeatmap' : $sce.trustAsHtml('TODO text popover'),
-      'worldGBTHeatmap' : $sce.trustAsHtml('TODO text popover ')
+      'worldHitsHeatmap' : $sce.trustAsHtml('The heatmap shows the geographic distribution of end user requests'),
+      'worldGBTHeatmap' : $sce.trustAsHtml('This heatmap shows the geographic distribution of end user traffic (as measured in the ' +
+        'amount of transferred information)')
     };
     /**
      * Loading flag

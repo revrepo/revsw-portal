@@ -55,7 +55,8 @@
           max_ = 0;
 
         $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
-        $scope.popoverHelpHTML = $sce.trustAsHtml('TODO text for help');
+        $scope.popoverHelpHTML = $sce.trustAsHtml('The bar chart shows average First Byte Time metric for served objects as ' +
+          'measured by the edge proxies. Lower FBT is normally associated with better end user experience.');
 
         $scope.chartOptions = {
           chart: {

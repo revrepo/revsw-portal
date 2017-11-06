@@ -27,7 +27,10 @@
         }, {}) : $localStorage[$scope.flStoreName];
 
         $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
-        $scope.popoverHelpHTML = $sce.trustAsHtml('TODO text for popover');
+        $scope.popoverHelpHTML = $sce.trustAsHtml('The report shows the most frequent requests which resulted in 404 HTTP response code ' +
+          '(normally meaning that the requested object was not found on the origin web server). Besides being a bad tone to use wrong ' +
+          'URLs on a website the broken links are also a significant performance degradation factor (since the 404 responses are not ' +
+          'cached on the edge servers and always require a call to the origin).');
 
         $scope.items = [];
         $scope.loadDetails = function () {

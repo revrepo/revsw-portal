@@ -27,7 +27,7 @@
 
         $scope.heading = 'HTTP Status Codes Graph';
         $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
-        $scope.popoverHelpHTML = $sce.trustAsHtml('TODO text popover');
+        $scope.popoverHelpHTML = $sce.trustAsHtml('The graph shows the level of different HTTP response codes sent to the served mobile application');
 
         $scope.span = '1';
         $scope._loading = false;

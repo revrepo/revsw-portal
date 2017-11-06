@@ -45,7 +45,7 @@
 
         $scope.heading = 'Security Events';
         $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
-        $scope.popoverHelpHTML = $sce.trustAsHtml('TODO text popover');
+        $scope.popoverHelpHTML = $sce.trustAsHtml('This line graph shows the rate of WAF events detected for the domain');
 
         $scope._loading = false;
         $scope.filters = {

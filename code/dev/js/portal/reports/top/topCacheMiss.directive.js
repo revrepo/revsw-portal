@@ -27,7 +27,11 @@
         }, {}) : $localStorage[$scope.flStoreName];
 
         $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
-        $scope.popoverHelpHTML = $sce.trustAsHtml('TODO text for popover');
+        $scope.popoverHelpHTML = $sce.trustAsHtml('The report shows the most popular objects which were pulled from the origin ' +
+          '(and not from the edge cache). ' +
+          'These might be legitimately dynamic requests which should not be cached, or static objects which might be cached to ' +
+          'improve website performance and end user experience. The information is very helpful while fine-tuning edge ' +
+          'caching rules for the domain.');
 
         $scope.items = [];
         $scope.loadDetails = function () {
