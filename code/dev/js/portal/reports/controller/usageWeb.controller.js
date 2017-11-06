@@ -21,7 +21,7 @@
 
     $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
     $scope.popoverHelpHTML ={
-      'traffic': $sce.trustAsHtml('TODO text popover')
+      'traffic': $sce.trustAsHtml('This bar chart shows the amount of traffic (in GB) used by the account for each day of reported calendar month')
     };
 
     var pageLength = 10;

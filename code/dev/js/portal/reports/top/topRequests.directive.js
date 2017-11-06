@@ -27,7 +27,9 @@
         }, {}) : $localStorage[$scope.flStoreName];
 
         $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
-        $scope.popoverHelpHTML = $sce.trustAsHtml('TODO text for popover');
+        $scope.popoverHelpHTML = $sce.trustAsHtml('The report shows most requested objects (URLs) for the web domain. ' +
+          'By focusing the performance tuning process on the most requested objects it is possible to provide the most benefits ' +
+          ' for website visitors.');
 
         $scope.items = [];
         $scope.loadDetails = function () {

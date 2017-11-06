@@ -27,7 +27,10 @@
         }, {}) : $localStorage[$scope.flStoreName];
 
         $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
-        $scope.popoverHelpHTML = $sce.trustAsHtml('TODO text for popover');
+        $scope.popoverHelpHTML = $sce.trustAsHtml('The report shows the most popular requests which we believe we failed to deliver to ' +
+          'end users - most likely because visitors have navigated to another page without waiting for the current page to load completely. ' +
+          'It is normal to have objects which failed to be delivered - the key factor here is to do not have object-outliers with very ' +
+          'high number of failures comparing to other objects.');
 
         $scope.items = [];
         $scope.loadDetails = function () {

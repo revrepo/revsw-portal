@@ -115,8 +115,9 @@
 
     $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
     $scope.popoverHelpHTML = {
-      'cacheStatus': $sce.trustAsHtml('TODO text for help'),
-      'secondaryCacheStatusData': $sce.trustAsHtml('TODO text for help'),
+      'cacheStatus': $sce.trustAsHtml('This graph shows the ratio of cache hits (requests served directly from the cache storage on our globally ' +
+        'distributed proxy servers) and misses (objects requested from origin servers)'),
+      'secondaryCacheStatusData': $sce.trustAsHtml('This pie chart show the cache hit/miss ratio for the secondary cache storage'),
     };
 
     vm.filters = {};

@@ -60,7 +60,8 @@
     $scope._loading = false;
     $scope.heading = 'Bandwidth Saved By Image Optimization';
     $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
-    $scope.popoverHelpHTML = $sce.trustAsHtml('TODO text <a href="/demo">DEMO LINK </a> ');
+    $scope.popoverHelpHTML = $sce.trustAsHtml('This line chart shows the level of data transfer savings provided by the Image Optimization ' +
+      'engine');
 
     $scope.reload = reload;
 

@@ -40,25 +40,28 @@
     $scope.span = '24';
     $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
     $scope.popoverHelpHTML = {
-      'country_hits': $sce.trustAsHtml('TODO text popover'),
-      'country_users': $sce.trustAsHtml('TODO text popover'),
-      'country_gbt': $sce.trustAsHtml('TODO text popover'),
-      'usa_states_gbt': $sce.trustAsHtml('TODO text popover'),
-      'os_hits': $sce.trustAsHtml('TODO text popover'),
-      'os_users': $sce.trustAsHtml('TODO text popover'),
-      'os_gbt': $sce.trustAsHtml('TODO text popover'),
-      'device_hits': $sce.trustAsHtml('TODO text popover'),
-      'device_users': $sce.trustAsHtml('TODO text popover'),
-      'device_gbt': $sce.trustAsHtml('TODO text popover'),
-      'operator_hits': $sce.trustAsHtml('TODO text popover'),
-      'operator_users': $sce.trustAsHtml('TODO text popover'),
-      'operator_gbt': $sce.trustAsHtml('TODO text popover'),
-      'network_hits': $sce.trustAsHtml('TODO text popover'),
-      'network_users': $sce.trustAsHtml('TODO text popover'),
-      'network_gbt': $sce.trustAsHtml('TODO text popover'),
-      'domain_hits': $sce.trustAsHtml('TODO text popover'),
-      'domain_gbt': $sce.trustAsHtml('TODO text popover'),
-      'status_code_hits': $sce.trustAsHtml('TODO text popover')
+      'country_hits': $sce.trustAsHtml('The chart shows the most popular countries (by number of requests) originating traffic for the app'),
+      'country_users': $sce.trustAsHtml('This chart shows the most popular countries by number of mobile application users'),
+      'country_gbt': $sce.trustAsHtml('This chart shows the most popular countries by amount of transferred data'),
+      'usa_states_gbt': $sce.trustAsHtml('This chart shows the most popular US states by amount of transferred data'),
+      'os_hits': $sce.trustAsHtml('This graph shows most popular operating systems by number of mobile app data transfer requests'),
+      'os_users': $sce.trustAsHtml('This graph shows most popular operating systems by number of mobile app users'),
+      'os_gbt': $sce.trustAsHtml('This graph shows most popular operating systems by amount of transferred data'),
+      'device_hits': $sce.trustAsHtml('The graph shows most popular mobile devices by number of data transfer requests'),
+      'device_users': $sce.trustAsHtml('The graph shows most popular mobile devices by number of mobile application users'),
+      'device_gbt': $sce.trustAsHtml('The graph shows most popular mobile devices by amount of transferred data'),
+      'operator_hits': $sce.trustAsHtml('The graph shows most popular mobile operators by number of received mobile application requests'),
+      'operator_users': $sce.trustAsHtml('The graph shows most popular mobile operators by number of mobile application users'),
+      'operator_gbt': $sce.trustAsHtml('The graph shows most popular mobile operators by amount of transferred data'),
+      'network_hits': $sce.trustAsHtml('The pie chart shows the distribution of traffic between cellular and WiFi networks by number of ' +
+        'received mobile application requests'),
+      'network_users': $sce.trustAsHtml('The pie chart shows the distribution of traffic between cellular and WiFi networks by number of ' +
+        'mobile app users'),
+      'network_gbt': $sce.trustAsHtml('The pie chart shows the distribution of traffic between cellular and WiFi networks by amount of ' +
+        'transferred data'),
+      'domain_hits': $sce.trustAsHtml('The graph shows most popular domain names by number of served requests'),
+      'domain_gbt': $sce.trustAsHtml('The graph shows most popular domain names by amount of transferred data'),
+      'status_code_hits': $sce.trustAsHtml('The pie chart shows the ratio of different HTTP status codes returned for handled requests')
     };
 
     $scope.gbtChartOpts = {

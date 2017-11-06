@@ -27,7 +27,7 @@
         var _filters_field_list = ['from_timestamp', 'to_timestamp', 'country', 'device', 'os', 'browser','network','operator','account_id','app_id'];
         $scope.heading = 'Requests Per Second Graph';
         $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
-        $scope.popoverHelpHTML = $sce.trustAsHtml('TODO text <a href="/demo">DEMO LINK </a> ');
+        $scope.popoverHelpHTML = $sce.trustAsHtml('This graph shows the rate of received mobile application requests');
 
         $scope.span = '1';
         $scope._loading = false;

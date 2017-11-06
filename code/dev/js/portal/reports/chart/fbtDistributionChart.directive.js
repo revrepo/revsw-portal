@@ -31,7 +31,8 @@
         $scope._loading = false;
 
         $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
-        $scope.popoverHelpHTML = $sce.trustAsHtml('TODO text for popover');
+        $scope.popoverHelpHTML = $sce.trustAsHtml('This histogram shows the distribution of First Byte Time metric. The more ' +
+          'requests are served with lowest FBT the better is end user experience.');
 
         $scope.chartOptions = {
           chart: {
