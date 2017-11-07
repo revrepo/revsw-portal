@@ -70,7 +70,8 @@
                 <div class="col-sm-12">
                   <input type="hidden" ng-model="model.verification_method" required="" name="verificationMethod">
                   <label class="radio">
-                    <input type="radio" ng-model="model.verification_method" value="url"> A Meta-tag On Home HTML Page (URL Verification) <i class="fa fa-question-circle" popover-trigger="mouseenter" uib-popover="This method is suitable if you have a website provisioned on the domain - we will ask you to add a special verification meta-tag in the “<head>” section of the website’s home page (“/”)">
+                    <input type="radio" ng-model="model.verification_method" value="url"> A Meta-tag On Home HTML Page (URL Verification) <i class="fa fa-question-circle" popover-trigger="mouseenter" uib-popover="This method is suitable if you have a website provisioned on the domain - we will ask you to place on the website a new file
+                    containing a special verification tag">
                     </i></label>
                   <label class="radio">
                     <input type="radio" ng-model="model.verification_method" value="dns"> A TXT DNS record (DNS Verification) <i popover-trigger="mouseenter" uib-popover="This domain control verification method will require you to add a new TXT record to the domain name" class="fa  fa-question-circle"></i>

@@ -202,7 +202,7 @@
           switch (model.verification_method) {
             case 'url':
               params.title = 'URL Verification';
-              params.okBtnTitle = 'Verify HTML Tag';
+              params.okBtnTitle = 'Verify Domain Control';
               confirmVerifySSLName(params);
               break;
             case 'dns':
