@@ -117,7 +117,7 @@
     $scope.popoverHelpHTML = {
       'cacheStatus': $sce.trustAsHtml('This graph shows the ratio of cache hits (requests served directly from the cache storage on our globally ' +
         'distributed proxy servers) and misses (objects requested from origin servers)'),
-      'secondaryCacheStatusData': $sce.trustAsHtml('This pie chart show the cache hit/miss ratio for the secondary cache storage'),
+      'secondaryCacheStatusData': $sce.trustAsHtml('This pie chart shows cache hit/miss ratio for the secondary cache storage'),
       //
       'average_age_for_served_objects_ms': $sce.trustAsHtml('The metric shows the average time objects were stored in the edge cache ' +
         'before being served to end users'),
