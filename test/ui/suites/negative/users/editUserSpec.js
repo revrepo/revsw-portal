@@ -2,7 +2,7 @@
  *
  * REV SOFTWARE CONFIDENTIAL
  *
- * [2013] - [2015] Rev Software, Inc.
+ * [2013] - [2017] Rev Software, Inc.
  * All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains
@@ -25,10 +25,9 @@ describe('Negative', function () {
     var users = [
       config.get('portal.users.admin')
     ];
-    var testUser;
 
     users.forEach(function (user) {
-
+      var testUser;
       describe('With user: ' + user.role, function () {
 
         beforeAll(function (done) {
@@ -81,6 +80,47 @@ describe('Negative', function () {
             expect(addBtn.isEnabled()).toBeFalsy();
           });
       });
+    });
+
+    var usersCreatorResellers = [
+      config.get('portal.users.revAdmin'),
+      config.get('portal.users.reseller')
+    ];
+
+    usersCreatorResellers.forEach(function(user) {
+      var testUser;
+      beforeAll(function(done) {
+        Portal
+          .signIn(user)
+          .then(function() {
+            Portal.helpers.users
+              .create()
+              .then(function(newUser) {
+                testUser = newUser;
+                done();
+              })
+              .catch(done);
+          })
+          .catch(done);
+      });
+
+      afterAll(function() {
+        Portal.signOut();
+      });
+
+      beforeEach(function() {
+        Portal.helpers.nav.goToUsers();
+        Portal.userListPage.searchAndClickEdit(testUser.email);
+      });
+
+      it('should not allow to update a user without Account',
+        function() {
+          Portal.editUserPage.form.setRole('--- Select Role ---');
+          Portal.editUserPage.form.setRole('user');
+          Portal.editUserPage.form.setRole('reseller');
+          var addBtn = Portal.editUserPage.getUpdateUserBtn();
+          expect(addBtn.isEnabled()).toBeFalsy();
+          });
     });
   });
 });
