@@ -96,8 +96,7 @@
             </div>
           </div>
           <!-- For "reseller" multiple select additional accounts (managed_account_ids)-->
-          <div class="form-group" ng-if="!_loading && companies.length>0 && model.role=='reseller'" ng-class="{'has-error': editForm.managedAccountIds.$invalid && editForm.managedAccountIds.$dirty}"
-            ng-if="companies.length>0 && (auth.isReseller() || auth.isRevadmin())">
+          <div class="form-group" ng-if="!_loading && companies.length>0 && model.role=='reseller' && (auth.isReseller() || auth.isRevadmin())" ng-class="{'has-error': editForm.managedAccountIds.$invalid && editForm.managedAccountIds.$dirty}">
             <label for="account_id" class="col-sm-2 control-label">Additional Accounts To Manage</label>
             <div class="col-sm-10">
               <span ng-show="_loading && companies.length>0" class="loader--waite-company">
