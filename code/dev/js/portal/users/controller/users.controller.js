@@ -131,11 +131,34 @@
 
       return $scope.model.domain;
     }
+    /**
+     * @name updateListManageAccounts
+     *
+     * @param {Object} options
+     */
+    function updateListManageAccounts(options){
+      var companyId;
+      if(options.companyId){
+        companyId = options.companyId[0];
+      }
+      if(!companyId || companyId.length <= 1){
+        return;
+      }
+      $scope.model.managed_account_ids = _.filter($scope.model.managed_account_ids ,function(item){
+        return (item !== companyId);
+      });
+    }
+
 
     $scope.getUser = function (id) {
       $scope._loading = true;
       $scope.get(id)
         .then(dependencies)
+        .then(function(){
+          $scope.model.managed_account_ids = angular.copy($scope.model.companyId);
+          $scope.model.managed_account_ids.shift();
+          return $scope.model;
+        })
         .catch($scope.alertService.danger)
         .finally(function () {
           $scope._loading = false;
@@ -163,6 +186,23 @@
             .catch($scope.alertService.danger);
         });
     };
+    /**
+     * @name prepareUserDataForUpdate
+     * @param {Object}
+     */
+    $scope.prepareUserDataForUpdate = function(model_current) {
+      var model;
+      if(model_current.toJSON === undefined) {
+        model = _.clone(model_current, true);
+      } else {
+        model = _.clone(model_current.toJSON(), true);
+      }
+      if(model.role === 'reseller') {
+        model.companyId = _(model.companyId).concat(model_current.managed_account_ids).uniq().values();
+      }
+      delete model.managed_account_ids;
+      return model;
+    };
 
     $scope.updateUser = function (model) {
       if (!model) {
@@ -170,6 +210,7 @@
       }
       // copy user id
       model.id = model.user_id;
+      model = $scope.prepareUserDataForUpdate(model);
       $scope
         .update(model)
         .then(function (data) {
@@ -344,6 +385,7 @@
     $scope.$watch('model.companyId', function (newVal, oldVal) {
       if (newVal !== undefined && oldVal !== undefined) {
         applyValidationDomainNames();
+        updateListManageAccounts({companyId:newVal});
       }
     }, true);
 
