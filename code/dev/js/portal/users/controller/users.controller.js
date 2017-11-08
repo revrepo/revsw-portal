@@ -241,7 +241,7 @@
         return;
       }
       model.access_control_list.dashBoard = true;
-      var _model = angular.copy(model);
+      var _model = $scope.prepareUserDataForUpdate(model);
       if (!_model.companyId || !angular.isArray(_model.companyId)) {
         _model.companyId = [model.account_id] || [$scope.model.account_id];
       }
