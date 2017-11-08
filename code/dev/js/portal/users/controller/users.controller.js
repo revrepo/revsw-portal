@@ -396,6 +396,7 @@
       if (newVal !== undefined && oldVal !== undefined) {
         if (((newVal === 'reseller' && oldVal !== '') || oldVal === 'reseller') && angular.isArray($scope.model.companyId)) {
           $scope.model.companyId.length = 0;
+          $scope.model.managed_account_ids.length = 0;
         }
       }
     });
