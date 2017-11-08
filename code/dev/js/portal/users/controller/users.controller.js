@@ -43,7 +43,7 @@
     // $scope.filterKeys = ['firstname', 'lastname', 'email', 'role', 'updated_at', 'last_login_at'];
 
     $scope.companies = [];
-
+    $scope.companiesManageList = [];
     $scope.domains = [];
 
     if (!$scope.model) {
@@ -84,7 +84,9 @@
       ])
         .then(function (dataRefs) {
           $scope.companies = dataRefs[0];
+          $scope.companiesManageList = angular.copy(dataRefs[0]);
           $scope.domains = dataRefs[1];
+          updateListManageAccounts();
           return dataRefs;
         });
     }
@@ -138,7 +140,7 @@
      */
     function updateListManageAccounts(options){
       var companyId;
-      if(options.companyId){
+      if(!!options && !!options.companyId){
         companyId = options.companyId[0];
       }
       if(!companyId || companyId.length <= 1){
@@ -157,6 +159,7 @@
         .then(function(){
           $scope.model.managed_account_ids = angular.copy($scope.model.companyId);
           $scope.model.managed_account_ids.shift();
+          $scope.model.companyId.length = 1;
           return $scope.model;
         })
         .catch($scope.alertService.danger)
@@ -198,7 +201,7 @@
         model = _.clone(model_current.toJSON(), true);
       }
       if(model.role === 'reseller') {
-        model.companyId = _(model.companyId).concat(model_current.managed_account_ids).uniq().values();
+        model.companyId = _.uniq(_(model.companyId).concat(model.managed_account_ids).value());
       }
       delete model.managed_account_ids;
       return model;
@@ -405,5 +408,10 @@
       }
       $scope.model.companyId[0] = model;
     };
+
+    $scope.onOneManageAccountSelect = function (model) {
+      $scope.model.managed_account_ids = _.uniq($scope.model.managed_account_ids);
+    };
+
   }
 })();
