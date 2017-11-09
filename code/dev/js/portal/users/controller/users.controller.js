@@ -43,7 +43,7 @@
     // $scope.filterKeys = ['firstname', 'lastname', 'email', 'role', 'updated_at', 'last_login_at'];
 
     $scope.companies = [];
-
+    $scope.companiesManageList = [];
     $scope.domains = [];
 
     if (!$scope.model) {
@@ -84,7 +84,9 @@
       ])
         .then(function (dataRefs) {
           $scope.companies = dataRefs[0];
+          $scope.companiesManageList = angular.copy(dataRefs[0]);
           $scope.domains = dataRefs[1];
+          updateListManageAccounts();
           return dataRefs;
         });
     }
@@ -131,11 +133,35 @@
 
       return $scope.model.domain;
     }
+    /**
+     * @name updateListManageAccounts
+     *
+     * @param {Object} options
+     */
+    function updateListManageAccounts(options){
+      var companyId;
+      if(!!options && !!options.companyId){
+        companyId = options.companyId[0];
+      }
+      if(!companyId || companyId.length <= 1){
+        return;
+      }
+      $scope.model.managed_account_ids = _.filter($scope.model.managed_account_ids ,function(item){
+        return (item !== companyId);
+      });
+    }
+
 
     $scope.getUser = function (id) {
       $scope._loading = true;
       $scope.get(id)
         .then(dependencies)
+        .then(function(){
+          $scope.model.managed_account_ids = angular.copy($scope.model.companyId);
+          $scope.model.managed_account_ids.shift();
+          $scope.model.companyId.length = 1;
+          return $scope.model;
+        })
         .catch($scope.alertService.danger)
         .finally(function () {
           $scope._loading = false;
@@ -163,6 +189,23 @@
             .catch($scope.alertService.danger);
         });
     };
+    /**
+     * @name prepareUserDataForUpdate
+     * @param {Object}
+     */
+    $scope.prepareUserDataForUpdate = function(model_current) {
+      var model;
+      if(model_current.toJSON === undefined) {
+        model = _.clone(model_current, true);
+      } else {
+        model = _.clone(model_current.toJSON(), true);
+      }
+      if(model.role === 'reseller') {
+        model.companyId = _.uniq(_(model.companyId).concat(model.managed_account_ids).value());
+      }
+      delete model.managed_account_ids;
+      return model;
+    };
 
     $scope.updateUser = function (model) {
       if (!model) {
@@ -170,6 +213,7 @@
       }
       // copy user id
       model.id = model.user_id;
+      model = $scope.prepareUserDataForUpdate(model);
       $scope
         .update(model)
         .then(function (data) {
@@ -197,7 +241,7 @@
         return;
       }
       model.access_control_list.dashBoard = true;
-      var _model = angular.copy(model);
+      var _model = $scope.prepareUserDataForUpdate(model);
       if (!_model.companyId || !angular.isArray(_model.companyId)) {
         _model.companyId = [model.account_id] || [$scope.model.account_id];
       }
@@ -344,6 +388,7 @@
     $scope.$watch('model.companyId', function (newVal, oldVal) {
       if (newVal !== undefined && oldVal !== undefined) {
         applyValidationDomainNames();
+        updateListManageAccounts({companyId:newVal});
       }
     }, true);
 
@@ -351,6 +396,7 @@
       if (newVal !== undefined && oldVal !== undefined) {
         if (((newVal === 'reseller' && oldVal !== '') || oldVal === 'reseller') && angular.isArray($scope.model.companyId)) {
           $scope.model.companyId.length = 0;
+          $scope.model.managed_account_ids.length = 0;
         }
       }
     });
@@ -363,5 +409,10 @@
       }
       $scope.model.companyId[0] = model;
     };
+
+    $scope.onOneManageAccountSelect = function (model) {
+      $scope.model.managed_account_ids = _.uniq($scope.model.managed_account_ids);
+    };
+
   }
 })();
