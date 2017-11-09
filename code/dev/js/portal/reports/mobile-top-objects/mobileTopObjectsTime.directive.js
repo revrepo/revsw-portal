@@ -40,8 +40,8 @@
         }, {}) : $localStorage[$scope.flStoreName];
 
         var listMobileTopObjectsTimeHelpHTML = {
-          'full': $sce.trustAsHtml('TODO text popover full'),
-          'first_byte': $sce.trustAsHtml('TODO text popover first_byte')
+          'full': $sce.trustAsHtml('The page shows requests with slowest response time'),
+          'first_byte': $sce.trustAsHtml('The report shows objects with the slowest First Byte Time (FBT) metric')
         };
         $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
         $scope.popoverHelpHTML = listMobileTopObjectsTimeHelpHTML[$scope.reportType];

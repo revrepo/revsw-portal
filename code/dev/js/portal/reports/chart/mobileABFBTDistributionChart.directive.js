@@ -31,7 +31,8 @@
 
         $scope.heading = 'First Byte Time Values Distribution Graph';
         $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
-        $scope.popoverHelpHTML = $sce.trustAsHtml('TODO text popover');
+        $scope.popoverHelpHTML = $sce.trustAsHtml('This histogram allows to easily compare the distribution of FBT metric for requests ' +
+          'served directly from the origin and from the CDN');
 
         $scope.span = '1';
         $scope._loading = false;

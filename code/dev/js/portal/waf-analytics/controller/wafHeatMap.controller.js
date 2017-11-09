@@ -38,7 +38,8 @@
     var drawer = HeatmapsDrawer.create('#canvas-svg');
 
     $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
-    $scope.popoverHelpHTML = $sce.trustAsHtml('TODO popover text');
+    $scope.popoverHelpHTML = $sce.trustAsHtml('The map provides a visual representation how detected WAF events are distributed ' +
+      'around the globe');
     /**
      * Loads list of country hits.
      *
