@@ -43,7 +43,9 @@
     // $scope.filterKeys = ['firstname', 'lastname', 'email', 'role', 'updated_at', 'last_login_at'];
 
     $scope.companies = [];
-    $scope.companiesManageList = [];
+    $scope.vm = {
+      managedAccountIds: []
+    };
     $scope.domains = [];
 
     if (!$scope.model) {
@@ -85,7 +87,6 @@
         ])
         .then(function(dataRefs) {
           $scope.companies = dataRefs[0];
-          $scope.companiesManageList = angular.copy(dataRefs[0]);
           $scope.domains = dataRefs[1];
           updateListManageAccounts();
           return dataRefs;
@@ -138,11 +139,11 @@
       }
 
       if ($scope.domains.length !== 0) {
-        return $scope.model.domain = angular.copy(_.intersection(domains, $scope.model.domain));
-      } else {
-
-        return $scope.model.domain;
+        $scope.model.domain = _.uniq(_.intersection(domains, $scope.model.domain));
+        return _.uniq(_.intersection(domains, $scope.model.domain));
       }
+
+      return $scope.model.domain;
     }
     /**
      * @name updateListManageAccounts
@@ -172,6 +173,9 @@
         .then(function() {
           $scope.model.managed_account_ids = angular.copy($scope.model.companyId);
           $scope.model.managed_account_ids.shift();
+          $scope.vm.managedAccountIds = _.filter($scope.companies, function(item) {
+            return (($scope.model.companyId.indexOf(item.id) > -1) || ($scope.model.managed_account_ids.indexOf(item.id) > -1))
+          });
           $scope.model.companyId.length = 1;
           return $scope.model;
         })
@@ -399,7 +403,21 @@
         });
       }
       $scope.domainPlaceholder = (domains.length > 0) ? 'Select domains...' : 'Domains list is empty...';
-      return _.sort(domains, '');
+      return _.sortBy(_.uniq(domains), 'domain_name');
+    };
+
+    $scope.getCompaniesManageList = function() {
+      var companies = [];
+      var account_id = $scope.model.companyId || $scope.model.account_id;
+      return _.filter($scope.companies, function(item) {
+        if (account_id.indexOf(item.id) > -1) {
+          return false;
+        }
+        if ($scope.model.managed_account_ids.indexOf(item.id) > -1) {
+          return false;
+        }
+        return true;
+      });
     };
 
     $scope.storeToStorage = function(model) {
@@ -416,17 +434,21 @@
       }
     }, true);
 
-    $scope.$watch('model.managed_account_ids', function(newVal, oldVal) {
+    $scope.$watch('vm.managedAccountIds', function(newVal, oldVal) {
       if (newVal !== undefined && oldVal !== undefined && newVal !== oldVal) {
         applyValidationDomainNames(); // NOTE: clean selected domain
+        $scope.model.managed_account_ids = _.map($scope.vm.managedAccountIds, function(item) {
+          return item.id;
+        });
       }
-    }, true);
+    });
 
     $scope.$watch('model.role', function(newVal, oldVal) {
       if (newVal !== undefined && oldVal !== undefined) {
         if (((newVal === 'reseller' && oldVal !== '') || oldVal === 'reseller') && angular.isArray($scope.model.companyId)) {
           $scope.model.companyId.length = 0;
           $scope.model.managed_account_ids.length = 0;
+          $scope.vm.managedAccountIds.length = 0;
         }
       }
     });
@@ -438,10 +460,6 @@
         $scope.model.companyId = [];
       }
       $scope.model.companyId[0] = model;
-    };
-
-    $scope.onOneManageAccountSelect = function(model) {
-      $scope.model.managed_account_ids = _.uniq($scope.model.managed_account_ids);
     };
 
   }
