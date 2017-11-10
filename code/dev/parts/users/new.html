@@ -97,23 +97,23 @@
           </div>
           <!-- For "reseller" multiple select additional accounts (managed_account_ids)-->
           <div class="form-group" ng-if="!_loading && companies.length>0 && model.role=='reseller' && (auth.isReseller() || auth.isRevadmin())"
-            ng-class="{'has-error': editForm.managedAccountIds.$invalid && editForm.managedAccountIds.$dirty}">
+            ng-class="{'has-error': createForm.managedAccountIds.$invalid && createForm.managedAccountIds.$dirty}">
             <label for="account_id" class="col-sm-2 control-label">Additional Accounts To Manage</label>
             <div class="col-sm-10">
               <span ng-show="_loading && companies.length>0" class="loader--waite-company">
                 <i class="glyphicon glyphicon-refresh spin"></i> Please wait...</span>
-              <ui-select class="inline-block" multiple="true" ng-animate-disabled theme="bootstrap" ng-model="model.managed_account_ids"
+              <ui-select class="inline-block" multiple="true" ng-animate-disabled theme="bootstrap" ng-model="vm.managedAccountIds"
                 ng-disabled="_loading" style="min-width: 550px;" id="managed_account_ids" name="managedAccountIds" ng-if="!_loading && companies.length>0"
                 on-select="onOneManageAccountSelect($model)">
                 <ui-select-match placeholder="Add account to manage ...">{{$item.companyName}}</ui-select-match>
-                <ui-select-choices repeat="item.id as item in companiesManageList| filter: {companyName: $select.search, id:'!'+ model.companyId[0]}">
+                <ui-select-choices repeat="item as item in getCompaniesManageList()| filter: {companyName: $select.search, id:'!'+ model.companyId[0]}">
                   <div ng-bind-html="item.companyName|highlight: $select.search"></div>
                 </ui-select-choices>
               </ui-select>
               <label for="domains" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Specify here any additional accounts the user should be allowed to manage">
                 <i class="fa fa-question-circle"></i>
               </label>
-              <div class="error-messages" ng-messages="editForm.accountId.$error" role="alert" ng-messages-multiple>
+              <div class="error-messages" ng-messages="createForm.accountId.$error" role="alert" ng-messages-multiple>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
               </div>
             </div>
@@ -121,9 +121,10 @@
           <div class="form-group" ng-class="{'has-error': createForm.domain.$invalid && createForm.domain.$dirty}">
             <label for="domain" class="col-sm-2 control-label">Domains</label>
             <div class="col-sm-10">
-              <ui-select validate-domains-list ng-show="!_loading" multiple theme="bootstrap" class="form-control inline-block" ng-disabled="_loading" ng-model="model.domain" id="domain" name="domain">
-                <ui-select-match placeholder="{{getDomainPlaceholder()}}">{{$item.domain_name}}</ui-select-match>
-                <ui-select-choices repeat="item.domain_name as item  in getAccountDomainNameList()| filter: {domain_name: $select.search}">
+              <span ng-show="!_loading && (getAccountsDomainNameList().length==0 && companies.length==0)"><i class="glyphicon glyphicon-refresh spin"></i> Please wait...</span>
+              <ui-select validate-domains-list ng-show="!_loading && (getAccountsDomainNameList().length>0 || companies.length>0)" multiple theme="bootstrap" class="form-control inline-block" ng-disabled="_loading" ng-model="model.domain" id="domain" name="domain">
+                <ui-select-match placeholder="{{domainPlaceholder}}">{{$item.domain_name}}</ui-select-match>
+                <ui-select-choices repeat="item.domain_name as item  in getAccountsDomainNameList()| filter: {domain_name: $select.search}">
                   <div ng-bind-html="item.domain_name|highlight: $select.search"></div>
                 </ui-select-choices>
               </ui-select>

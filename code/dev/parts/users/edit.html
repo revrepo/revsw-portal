@@ -101,10 +101,10 @@
             <div class="col-sm-10">
               <span ng-show="_loading && companies.length>0" class="loader--waite-company">
                 <i class="glyphicon glyphicon-refresh spin"></i> Please wait...</span>
-              <ui-select class="inline-block" multiple="true" ng-animate-disabled theme="bootstrap" ng-model="model.managed_account_ids" ng-disabled="_loading"
-                style="min-width: 550px;" id="managed_account_ids" name="managedAccountIds" ng-if="!_loading && companies.length>0"  on-select="onOneManageAccountSelect($model)">
+              <ui-select class="inline-block" multiple="true" ng-animate-disabled theme="bootstrap" ng-model="vm.managedAccountIds" ng-disabled="_loading"
+                style="min-width: 550px;" id="managed_account_ids" name="managedAccountIds" ng-if="!_loading && companies.length>0">
                 <ui-select-match placeholder="Add account to manage ...">{{$item.companyName}}</ui-select-match>
-                <ui-select-choices repeat="item.id as item in companiesManageList| filter: {companyName: $select.search, id:'!'+ model.companyId[0]}">
+                <ui-select-choices repeat="item  as item  in getCompaniesManageList()| filter: {companyName: $select.search, id:'!'+ model.companyId[0]}">
                   <div ng-bind-html="item.companyName|highlight: $select.search"></div>
                 </ui-select-choices>
               </ui-select>
@@ -119,10 +119,10 @@
           <div class="form-group" ng-class="{'has-error': editForm.domain.$invalid && editForm.domain.$dirty}">
             <label for="domain" class="col-sm-2 control-label">Domains</label>
             <div class="col-sm-10">
-              <span ng-show="!_loading && (getAccountDomainNameList().length==0 && companies.length==0)"><i class="glyphicon glyphicon-refresh spin"></i> Please wait...</span>
-              <ui-select multiple ng-show="!_loading && (getAccountDomainNameList().length>0 || companies.length>0)" theme="bootstrap" class="form-control inline-block" ng-disabled="_loading" ng-model="model.domain" id="domain" name="domain">
-                <ui-select-match placeholder="{{getDomainPlaceholder()}}">{{$item.domain_name}}</ui-select-match>
-                <ui-select-choices repeat="item.domain_name as item  in getAccountDomainNameList()| filter: {domain_name: $select.search}">
+              <span ng-show="!_loading && (getAccountsDomainNameList().length==0 && companies.length==0)"><i class="glyphicon glyphicon-refresh spin"></i> Please wait...</span>
+              <ui-select multiple ng-show="!_loading && (getAccountsDomainNameList().length>0 || companies.length>0)" theme="bootstrap" class="form-control inline-block" ng-disabled="_loading" ng-model="model.domain" id="domain" name="domain">
+                <ui-select-match placeholder="{{domainPlaceholder}}">{{$item.domain_name}}</ui-select-match>
+                <ui-select-choices repeat="item.domain_name as item  in getAccountsDomainNameList()| filter: {domain_name: $select.search}">
                   <span ng-bind-html="item.domain_name|highlight: $select.search"></span>
                 </ui-select-choices>
               </ui-select>
