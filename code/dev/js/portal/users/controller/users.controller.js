@@ -86,8 +86,8 @@
           DomainsConfig.query().$promise
         ])
         .then(function(dataRefs) {
-          $scope.companies = dataRefs[0];
-          $scope.domains = dataRefs[1];
+          $scope.companies = _.sortBy(dataRefs[0],'companyName');
+          $scope.domains = _.sortBy(dataRefs[1], 'domain_name');
           updateListManageAccounts();
           return dataRefs;
         });
@@ -409,15 +409,15 @@
     $scope.getCompaniesManageList = function() {
       var companies = [];
       var account_id = $scope.model.companyId || $scope.model.account_id;
-      return _.filter($scope.companies, function(item) {
-        if (account_id.indexOf(item.id) > -1) {
+      return _.sortBy(_.filter($scope.companies, function(item) {
+        if(!!account_id && account_id.indexOf(item.id) > -1) {
           return false;
         }
         if ($scope.model.managed_account_ids.indexOf(item.id) > -1) {
           return false;
         }
         return true;
-      });
+      }),'companyName');
     };
 
     $scope.storeToStorage = function(model) {
