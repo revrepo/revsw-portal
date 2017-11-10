@@ -79,7 +79,7 @@
                   <div ng-bind-html="item.companyName|highlight: $select.search"></div>
                 </ui-select-choices>
               </ui-select>
-              <!-- TODO: delete ater check!!! ==> "reseller" multiple select accounts-->
+              <!-- TODO: delete after check!!! ==> "reseller" multiple select accounts-->
               <!-- <ui-select ng-if="!_loading && companies.length>0 && model.role=='reseller'" multiple ng-animate-disabled theme="bootstrap" class="form-control inline-block" ng-disabled="_loading" ng-model="model.companyId" id="company" name="accountId" on-select="onAccountSelect($model)">
                 <ui-select-match placeholder="Add account...">{{$item.companyName}}</ui-select-match>
                 <ui-select-choices repeat="item.id as  item in companies | filter: {companyName: $select.search}">
