@@ -29,7 +29,8 @@ describe('Functional', function () {
     ];
     var platforms = [
       Portal.constants.mobileApps.platforms.android,
-      Portal.constants.mobileApps.platforms.ios
+      Portal.constants.mobileApps.platforms.ios,
+      Portal.constants.mobileApps.platforms.windowsMobile
     ];
 
     users.forEach(function (user) {
