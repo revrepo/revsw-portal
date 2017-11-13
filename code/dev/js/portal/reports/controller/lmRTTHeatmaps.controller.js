@@ -6,7 +6,7 @@
     .controller('LMRTTHeatmapsController', LMRTTHeatmapsController);
 
   /*@ngInject*/
-  function LMRTTHeatmapsController($scope, HeatmapsDrawer, Countries, Stats) {
+  function LMRTTHeatmapsController($scope, HeatmapsDrawer, Countries, Stats, $config, $sce) {
 
     /**
      * Loading flag
@@ -37,6 +37,9 @@
     $scope.countries = Countries.query();
     var drawer = HeatmapsDrawer.create('#canvas-svg');
 
+    $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
+    $scope.popoverHelpHTML = $sce.trustAsHtml('This heatmap provides a good visual representation of measured last mile round-trip latency for ' +
+      'website visitors');
 
     /**
      * Loads list of country hits.

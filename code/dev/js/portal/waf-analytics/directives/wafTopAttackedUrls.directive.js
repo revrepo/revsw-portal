@@ -24,7 +24,7 @@
         }, {}) : $localStorage[$scope.flStoreName];
 
         $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
-        $scope.popoverHelpHTML = $sce.trustAsHtml('TODO text popover');
+        $scope.popoverHelpHTML = $sce.trustAsHtml('This table shows the most attacked URLs of the protected domain');
 
         $scope.items = [];
         $scope.loadDetails = function () {

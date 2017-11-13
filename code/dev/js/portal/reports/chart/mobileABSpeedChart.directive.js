@@ -26,7 +26,8 @@
 
         $scope.heading = 'Average Request Speed Graph';
         $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
-        $scope.popoverHelpHTML = $sce.trustAsHtml('TODO text popover');
+        $scope.popoverHelpHTML = $sce.trustAsHtml('This bar chart provides a comparison of average data transfer rates for requests ' +
+          'served directly from the origin and via the CDN. Higher data transfer rate normally signals about better end user experience.');
 
         $scope.span = '1';
         $scope._loading = false;

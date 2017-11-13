@@ -27,14 +27,20 @@
 
     $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
     $scope.popoverHelpHTML = {
-      'destination_hits': $sce.trustAsHtml('TODO text popover'),
-      'destination_gbt': $sce.trustAsHtml('TODO text popover'),
-      'transport_hits': $sce.trustAsHtml('TODO text popover'),
-      'transport_gbt': $sce.trustAsHtml('TODO text popover'),
-      'status_hits': $sce.trustAsHtml('TODO text popover'),
-      'status_gbt': $sce.trustAsHtml('TODO text popover'),
-      'cache_hits': $sce.trustAsHtml('TODO text popover'),
-      'cache_gbt': $sce.trustAsHtml('TODO text popover'),
+      'destination_hits': $sce.trustAsHtml('This pie chart shows the distribution of traffic (by level of requests) between ' +
+        'the origin and CDN'),
+      'destination_gbt': $sce.trustAsHtml('This pie chart shows the distribution of traffic (by amount of transferred data) between ' +
+        'the origin and CDN'),
+      'transport_hits': $sce.trustAsHtml('This pie chart shows the distribution of traffic (by level of requests) between ' +
+        'different data transport protocols used by the SDK to communicate with the CDN edge'),
+      'transport_gbt': $sce.trustAsHtml('This pie chart shows the distribution of traffic (by amount of transfrerred data) between ' +
+        'different data transport protocols used by the SDK to communicate with the CDN edge'),
+      'status_hits': $sce.trustAsHtml('This pie chart shows the distribution of traffic (by level of requests) between ' +
+        'successful and unsuccessful request completion statuses'),
+      'status_gbt': $sce.trustAsHtml('This pie chart shows the distribution of traffic (by amount of transferred data) between ' +
+        'successful and unsuccessful request completion statuses'),
+      'cache_hits': $sce.trustAsHtml('This chart shows the ratio of edge cache hits and misses (by level of requests)'),
+      'cache_gbt': $sce.trustAsHtml('This chart shows the ratio of edge cache hits and misses (by amount of transferred data)'),
       'domain_hits': $sce.trustAsHtml('TODO text popover'),
       'domain_gbt': $sce.trustAsHtml('TODO text popover'),
       'status_code_hits': $sce.trustAsHtml('TODO text popover')

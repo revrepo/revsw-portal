@@ -64,22 +64,8 @@
           }
         }
       })
-      .state('index.apps.ios.configure', {
-        url: '/configure/:id',
-        data: {
-          platform: 'iOS',
-          platform_code: 'iOS',
-          list: false
-        },
-        views: {
-          page: {
-            templateUrl: 'parts/apps/configure.html',
-            controller: 'AppsController'
-          }
-        }
-      })
       .state('index.apps.ios.edit', {
-        url: '/edit/:id',
+        url: '/edit/:id?isAdvanced',
         data: {
           platform: 'iOS',
           platform_code: 'iOS',
@@ -115,22 +101,8 @@
           }
         }
       })
-      .state('index.apps.android.configure', {
-        url: '/configure/:id',
-        data: {
-          platform: 'Android',
-          platform_code: 'Android',
-          list: false
-        },
-        views: {
-          page: {
-            templateUrl: 'parts/apps/configure.html',
-            controller: 'AppsController'
-          }
-        }
-      })
       .state('index.apps.android.edit', {
-        url: '/edit/:id',
+        url: '/edit/:id?isAdvanced',
         data: {
           platform: 'Android',
           platform_code: 'Android',
@@ -166,22 +138,8 @@
           }
         }
       })
-      .state('index.apps.windows_mobile.configure', {
-        url: '/configure/:id',
-        data: {
-          platform: 'Windows Mobile',
-          platform_code: 'Windows_Mobile',
-          list: false
-        },
-        views: {
-          page: {
-            templateUrl: 'parts/apps/configure.html',
-            controller: 'AppsController'
-          }
-        }
-      })
       .state('index.apps.windows_mobile.edit', {
-        url: '/edit/:id',
+        url: '/edit/:id?isAdvanced',
         data: {
           platform: 'Windows Mobile',
           platform_code: 'Windows_Mobile',

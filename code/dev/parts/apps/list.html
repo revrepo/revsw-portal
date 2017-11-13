@@ -156,7 +156,7 @@
                     <a ui-sref=".edit({id: item.id})" ng-if="!item.loading" uib-tooltip="Edit App">
                       <i class="glyphicon glyphicon-pencil"></i>
                     </a>
-                    <a ui-sref=".configure({id: item.id})" ng-if="!item.loading" uib-tooltip="Advanced Edit App">
+                    <a ui-sref=".edit({id: item.id,isAdvanced:true})" ng-if="!item.loading" uib-tooltip="Advanced Edit App">
                       <i class="glyphicon glyphicon-cog"></i>
                     </a>
                     <a href="" ng-if="!item.loading" ng-class="{'disabled': isReadOnly() }" ng-click="deleteApp(item)" uib-tooltip="Delete App">
@@ -176,14 +176,6 @@
                     </a>
                   </td>
                 </tr>
-                <!--<tr class="disabled loading">-->
-                <!--<td>John</td>-->
-                <!--<td>Doe</td>-->
-                <!--<td>Monday, Aug 10, 2015, 8:31 PM</td>-->
-                <!--<td class="actions">-->
-                <!--<i class="glyphicon glyphicon-refresh spin"></i>-->
-                <!--</td>-->
-                <!--</tr>-->
               </tbody>
             </table>
           </div>

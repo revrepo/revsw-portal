@@ -30,7 +30,7 @@
         $scope._loading = false;
 
         $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
-        $scope.popoverHelpHTML = $sce.trustAsHtml('TODO text popover');
+        $scope.popoverHelpHTML = $sce.trustAsHtml('The line chart shows the level of incoming and outgoing traffic for served mobile application');
 
         $scope.hits = {
           labels: [],

@@ -27,7 +27,9 @@
         }, {}) : $localStorage[$scope.flStoreName];
 
         $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
-        $scope.popoverHelpHTML = $sce.trustAsHtml('TODO text for popover');
+        $scope.popoverHelpHTML = $sce.trustAsHtml('The report uses "Referer" HTTP header in end user requests to build a list of ' +
+          'most frequent websites/pages which refer to pages on this website. The information is useful to understand which ' +
+          'third-party websites are bringing traffic to the website.');
 
         $scope.items = [];
         $scope.loadDetails = function () {

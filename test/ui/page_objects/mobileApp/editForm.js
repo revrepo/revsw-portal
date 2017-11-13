@@ -5,7 +5,7 @@
  *
  * REV SOFTWARE CONFIDENTIAL
  *
- * [2013] - [2015] Rev Software, Inc.
+ * [2013] - [2017] Rev Software, Inc.
  * All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains
@@ -51,7 +51,7 @@ var EditAppForm = {
         css: '[ng-click=\"verify(model, configuration)\"]'
       },
       update: {
-        css: '[ng-click=\"updateConfig(model, configuration)\"]'
+        css: '[ng-click=\"updateApp(model, configuration)\"]'
       },
       publish: {
         css: '[ng-click=\"publish(model, configuration)\"]'

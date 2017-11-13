@@ -40,10 +40,13 @@
           network: null
         }, {}) : $localStorage[$scope.flStoreName];
         var listMobileTopObjectsTimeHelpHTML = {
-          'default': $sce.trustAsHtml('TODO text popover default'),
-          'not_found': $sce.trustAsHtml('TODO text popover not_found'),
-          'cache_missed': $sce.trustAsHtml('TODO text popover cache_missed'),
-          'failed': $sce.trustAsHtml('TODO text popover failed')
+          'default': $sce.trustAsHtml('The report shows most frequently requested URLs'),
+          'not_found': $sce.trustAsHtml('The report shows most popular requests with 404 HTTP response code'),
+          'cache_missed': $sce.trustAsHtml('The report shows most popular requests which resulted in edge cache misses. ' +
+            'By enabling edge caching for static objects it is possible to significantly improve the experience of mobile ' +
+            'application users.'),
+          'failed': $sce.trustAsHtml('The report shows a list of objects with the highest level of failed data transfers. '+
+            'The report should not be confused with application 5xx HTTP response errors which are reported separately.')
         };
         $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
         if(!$scope.reportType){

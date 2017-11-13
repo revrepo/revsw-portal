@@ -141,7 +141,7 @@
           infoTemplatePath: 'parts/ssl_names/modal/validation-info-' + params.model.verification_method + '.tpl.html'
         };
 
-        return $scope.confirm('confirmVerifyDomainModal.html', _model)
+        return $scope.confirmLage('confirmVerifyDomainModal.html', _model)
           .then(function onSuccessCloseModalDialog(result) {
             SSLNames.verify({
               id: params.model.id,
@@ -202,7 +202,7 @@
           switch (model.verification_method) {
             case 'url':
               params.title = 'URL Verification';
-              params.okBtnTitle = 'Verify HTML Tag';
+              params.okBtnTitle = 'Verify Domain Control';
               confirmVerifySSLName(params);
               break;
             case 'dns':
@@ -424,5 +424,25 @@
       return moment.utc(datetime).fromNow();
     };
 
+    $scope.confirmLage = function(template, resolve) {
+      if(angular.isObject(template)) {
+        resolve = template;
+        template = '';
+      }
+      if(angular.isObject(resolve)) {
+        resolve = {
+          model: resolve
+        };
+      }
+      var modalInstance = $uibModal.open({
+        animation: false,
+        templateUrl: template || 'parts/modal/confirmDelete.html',
+        controller: 'ConfirmModalInstanceCtrl',
+        size: 'lg',
+        resolve: resolve || {}
+      });
+
+      return modalInstance.result;
+    };
   }
 })();

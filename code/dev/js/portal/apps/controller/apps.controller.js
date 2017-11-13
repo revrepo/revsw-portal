@@ -107,17 +107,6 @@
     $scope.model = {
       configs: [{}]
     };
-    $scope.copyForEditor = {};
-    $scope.obj = {
-      data: {},
-      options: {
-        mode: 'code',
-        modes: ['code', 'view'],
-        error: function (err) {
-          alert(err.toString());
-        }
-      }
-    };
 
     $scope.filterKeys = ['app_name', 'app_platform', 'companyName', 'last_app_published_version', 'updated_at'];
 
@@ -155,35 +144,6 @@
       }
     };
 
-    $scope.initEdit = function (id) {
-      $scope.get(id)
-        .then(function (data) {
-          if ($scope.auth.isReseller() || $scope.auth.isRevadmin()) {
-            Companies.query(function (list) {
-              $scope.companies = list;
-            });
-          }
-        })
-        .then(function () {
-          $timeout(function () {
-            $scope.copyForEditor = _.clone($scope.model);
-            delete $scope.copyForEditor.$promise;
-            delete $scope.copyForEditor.$resolved;
-            delete $scope.copyForEditor.id;
-            delete $scope.copyForEditor.account_id;
-            delete $scope.copyForEditor.app_platform;
-            delete $scope.copyForEditor.sdk_key;
-            delete $scope.copyForEditor.created_at;
-            delete $scope.copyForEditor.updated_at;
-            delete $scope.copyForEditor.updated_by;
-            delete $scope.copyForEditor.created_by;
-          }, 2000);
-        })
-        .catch(function (err) {
-          $scope.alertService.danger('Could not load app details');
-        });
-    };
-
     $scope.initNew = function () {
       $scope.platforms = [{
         name: 'iOS',
@@ -214,11 +174,6 @@
       }
     };
 
-    $scope.getApp = function (id) {
-      $scope.get(id)
-        .catch($scope.alertService.danger);
-    };
-
     $scope.createApp = function (model, isStay) {
       var modelCopy = _.clone(model);
       delete modelCopy.configs;
@@ -233,91 +188,6 @@
           $scope.alertService.success(data);
         })
         .catch($scope.alertService.danger);
-    };
-
-    $scope.cleanModel = function (model) {
-      var modelCopy = _.clone(model);
-      var params = {
-        id: model.id
-      };
-      modelCopy.account_id = $scope.model.account_id;
-      delete modelCopy.$promise;
-      delete modelCopy.$resolved;
-      delete modelCopy.id;
-      delete modelCopy.app_platform;
-      delete modelCopy.sdk_key;
-      delete modelCopy.created_at;
-      delete modelCopy.updated_at;
-      delete modelCopy.updated_by;
-      delete modelCopy.created_by;
-
-      return modelCopy;
-    };
-
-    $scope.updateApp = function (model) {
-      // NOTE: not update if RO User
-      if ($scope.isReadOnly() === true) {
-        return;
-      }
-      $scope.confirm('confirmUpdateModal.html', model).then(function () {
-        $scope._loading = true;
-        var params = {
-          id: $scope.model.id
-        };
-        $scope.update(params, $scope.cleanModel(model))
-          .then($scope.alertService.success)
-          .catch($scope.alertService.danger)
-          .finally(function () {
-            delete model.$promise;
-            delete model.$resolved;
-            delete model.$rejected;
-            _.assign($scope.model, model);
-            $scope._loading = false;
-          });
-      });
-    };
-
-    $scope.verify = function (model) {
-      if (!$scope.model.id) {
-        $scope.alertService.danger('Please select app first');
-        return;
-      }
-      $scope._loading = true;
-      Apps.update({
-        id: $scope.model.id,
-        options: 'verify_only'
-      }, $scope.cleanModel(model))
-        .$promise
-        .then($scope.alertService.success)
-        .catch($scope.alertService.danger)
-        .finally(function () {
-          $scope._loading = false;
-        });
-    };
-
-    $scope.publish = function (model) {
-      // NOTE: not publish if RO User
-      if ($scope.isReadOnly() === true) {
-        return;
-      }
-      if (!$scope.model.id) {
-        $scope.alertService.danger('Please select app first');
-        return;
-      }
-      $scope.confirm('confirmPublishModal.html', model).then(function () {
-        $scope._loading = true;
-        Apps.update({
-          id: $scope.model.id,
-          options: 'publish'
-        }, $scope.cleanModel(model))
-          .$promise
-          .then($scope.alertService.success)
-          .catch($scope.alertService.danger)
-          .finally(function () {
-            _.assign($scope.model, model);
-            $scope._loading = false;
-          });
-      });
     };
 
     $scope.deleteApp = function (model) {
@@ -348,34 +218,6 @@
       };
       $localStorage.selectedApplication = newApp;
     };
-
-
-    /**
-     * Get editor instance
-     */
-    $scope.jsonEditorEvent = function (instance) {
-      $scope.jsonEditorInstance = instance;
-    };
-
-    /**
-     * Set watcher on json editor's text to catch json validation error
-     */
-    $scope.$watch('jsonEditorInstance.getText()', function (val) {
-      // if editor text is empty just return
-      if (!val) {
-        $scope.jsonIsInvalid = true;
-        return;
-      }
-
-      // try to parse editor text as valid json and check if at least one item exists, if yes then enable Purge button
-      try {
-        var json = JSON.parse(val);
-        $scope.jsonIsInvalid = !json || !Object.keys(json).length;
-      } catch (err) {
-        // if it's not valid json or it's empty disable Purge button
-        $scope.jsonIsInvalid = true;
-      }
-    });
 
     $scope.switchKeyVisibility = function (item) {
       item.showKey = !item.showKey;

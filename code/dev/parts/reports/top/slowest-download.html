@@ -3,45 +3,58 @@
   popover-append-to-body="true" popover-trigger="mouseenter" popover-hoverable="false" popover-placement="right">
   <i class="fa fa-question-circle" aria-hidden="true"></i>
 </label>
-<div class="clearfix" style="margin-bottom: 8px;"
-     filter-top-objects
-     ng-disabled="!ngDomain"
-     fl-os="flOs"
-     fl-country="flCountry"
-     fl-device="flDevice"
-     fl-browser="flBrowser"
-     ng-filters="filters"
-     on-filter="loadDetails()"></div>
+<div class="clearfix" style="margin-bottom: 8px;" filter-top-objects ng-disabled="!ngDomain" fl-os="flOs" fl-country="flCountry"
+  fl-device="flDevice" fl-browser="flBrowser" ng-filters="filters" on-filter="loadDetails()"></div>
 <div class="alert alert-info" ng-if="!_loading && !items.length">
   No data to display
 </div>
 <div class="alert alert-info" ng-if="_loading">
-  <i class="glyphicon glyphicon-refresh spin"></i>&nbsp;
-  Loading
+  <i class="glyphicon glyphicon-refresh spin"></i>&nbsp; Loading
 </div>
 <div class="row margin-top" ng-if="ngDomain && items.length">
   <div class="col-md-12">
     <table class="table">
       <thead>
-      <tr>
-        <th>Path</th>
-        <th style="width: 16%;text-align:right">Time(ms) Average</th>
-        <!-- <th style="width:  7%;text-align:right">Min</th>
-        <th style="width:  7%;text-align:right">Max</th> -->
-        <th style="width:  10%;text-align:right">Size</th>
-      </tr>
+        <tr>
+          <th>
+            <a href="" ng-click="order('path')">Path</a>
+            <span class="sortorder" ng-show="options.predicate === 'path'" ng-class="{reverse: options.reverse}"></span>
+          </th>
+          <th style="width: 15%;text-align:right">
+            <a href="" ng-click="order('fbt_avg')">Time(ms) Average</a>
+            <span class="sortorder" ng-show="options.predicate === 'fbt_avg'" ng-class="{reverse: options.reverse}"></span>
+          </th>
+          <th style="width:  7%;text-align:right">
+            <a href="" ng-click="order('duration_min')">Min</a>
+            <span class="sortorder" ng-show="options.predicate === 'duration_min'" ng-class="{reverse: options.reverse}"></span>
+          </th>
+          <th style="width:  7%;text-align:right">
+            <a href="" ng-click="order('duration_max')">Max</a>
+            <span class="sortorder" ng-show="options.predicate === 'duration_max'" ng-class="{reverse: options.reverse}"></span>
+          </th>
+          <th style="width:  10%;text-align:right">
+            <a href="" ng-click="order('size_avg')">Size</a>
+            <span class="sortorder" ng-show="options.predicate === 'size_avg'" ng-class="{reverse: options.reverse}"></span>
+          </th>
+          <th style="width:  7%;text-align:right">
+            <a href="" ng-click="order('count')">Count</a>
+            <span class="sortorder" ng-show="options.predicate === 'count'" ng-class="{reverse: options.reverse}"></span>
+          </th>
+        </tr>
       </thead>
       <tbody>
-      <tr ng-repeat="item in items">
-        <td>
-          <a target="_blank" ng-href="http://{{ngDomain.domain_name}}{{item.path}}">{{item.path}}</a>
-        </td>
-        <td class="text-right"><strong>{{ item.duration_avg }}</strong></td>
-        <!-- <td class="text-right">{{ item.duration_min }}</td>
-        <td class="text-right">{{ item.duration_max }}</td> -->
-        <td class="text-right">{{ item.size_avg }}</td>
-
-      </tr>
+        <tr ng-repeat="item in itemsShow">
+          <td>
+            <a target="_blank" ng-href="http://{{ngDomain.domain_name}}{{item.path}}">{{item.path}}</a>
+          </td>
+          <td class="text-right">
+            <strong>{{ item.duration_avg }}</strong>
+          </td>
+          <td class="text-right">{{ item.duration_min }}</td>
+          <td class="text-right">{{ item.duration_max }}</td>
+          <td class="text-right">{{ item.size_avg_text }}</td>
+          <td class="text-right">{{item.count}}</td>
+        </tr>
       </tbody>
     </table>
   </div>

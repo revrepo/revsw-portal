@@ -21,8 +21,10 @@
 
     $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
     $scope.popoverHelpHTML = {
-      'dataImageEngineFotmatChanges': $sce.trustAsHtml('TODO text popover'),
-      'dataImageEngineResolutionChanges': $sce.trustAsHtml('TODO text popover')
+      'dataImageEngineFotmatChanges': $sce.trustAsHtml('The pie chart shows the amount of image format transformations performed by ' +
+        ' the Image Optimization feature'),
+      'dataImageEngineResolutionChanges': $sce.trustAsHtml('The chart shows the level of on-the-fly image resolution transformations ' +
+        'peformed by the Image Optimization engine')
     };
 
     $scope.filters = {};

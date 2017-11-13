@@ -27,7 +27,8 @@
         }, {}) : $localStorage[$scope.flStoreName];
 
         $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
-        $scope.popoverHelpHTML = $sce.trustAsHtml('TODO text for popover');
+        $scope.popoverHelpHTML = $sce.trustAsHtml('This page reports the most popular objects which resulted in 5xx HTTP response codes ' +
+          '(normally an indication of internal application errors on the origin server)');
 
         $scope.loadDetails = function () {
           if (!$scope.ngDomain || !$scope.ngDomain.id) {

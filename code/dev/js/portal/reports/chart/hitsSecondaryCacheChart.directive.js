@@ -53,7 +53,8 @@
 
         $scope.heading = 'Secondary Cache Efficiency Hits';
         $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
-        $scope.popoverHelpHTML = $sce.trustAsHtml('TODO text <a href="/demo">DEMO LINK </a> ');
+        $scope.popoverHelpHTML = $sce.trustAsHtml('For domains with secondary cache storage (like domains with enabled Image Optimization ' +
+          'feature) the line chart reports the level of secondary cache efficiency');
 
         $scope._loading = false;
         $scope.hasFailedToLoadData = false;

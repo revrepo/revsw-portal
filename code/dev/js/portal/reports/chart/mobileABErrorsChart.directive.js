@@ -26,7 +26,8 @@
 
         $scope.heading = 'SDK Failed Requests Graph';
         $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
-        $scope.popoverHelpHTML = $sce.trustAsHtml('TODO text popover');
+        $scope.popoverHelpHTML = $sce.trustAsHtml('This combined line chart allows to easily compare the levels of data transfer ' +
+          'completion errors for requests served directly from the origin and via the CDN');
 
         $scope.span = '1';
         $scope._loading = false;

@@ -25,7 +25,19 @@
 
     $scope.setResource(Apps);
     $scope.$state = $state;
-
+    // Advance mode settings
+    $scope.isAdvancedMode = ($stateParams.isAdvanced === 'true') ? true : false;
+    var storedAccountId;
+    $scope.obj = {
+      data: {},
+      options: {
+        mode: 'code',
+        modes: ['code', 'view'],
+        error: function(err) {
+          alert(err.toString());
+        }
+      }
+    };
     $scope.model = { //Data we use in API calls
       configs: [{}]
     };
@@ -74,7 +86,7 @@
           $scope.fieldsToShow = _.keys($scope.model.configs[0]);
 
           if ($scope.auth.isReseller() || $scope.auth.isRevadmin()) {
-            User.getUserDomains(true)
+           return User.getUserDomains(true)
               .then(function(domains) {
                 $scope.allUserDomains = domains;
                 var domainList = _.filter($scope.allUserDomains, {
@@ -85,13 +97,19 @@
                 $scope.domainList = _.uniq(domainList);
               });
           } else {
-            User.getUserDomains(true)
+           return User.getUserDomains(true)
               .then(function(domains) {
                 $scope.allUserDomains = domains;
                 $scope.domainList = domains.map(function(d) {
                   return d.domain_name;
                 });
               });
+          }
+        })
+        .then(function(){
+          if($scope.isAdvancedMode === true) {
+            storedAccountId = $scope.model.account_id;
+            delete $scope.model.account_id;
           }
         })
         .catch($scope.alertService.danger)
@@ -174,7 +192,19 @@
       };
     };
 
-    $scope.updateConfig = function(model, config) {
+    /**
+     * @name updateApp
+     * @description method confirm and update data
+     */
+    $scope.updateApp = function(model, config) {
+      // NOTE: not update if RO User
+      if(!model || $scope.isReadOnly() === true) {
+        return;
+      }
+      if(!model.id) {
+        var modelId = $stateParams.id;
+      }
+
       $scope.confirm('confirmUpdateModal.html', model).then(function() {
         var idx = _.findIndex(model.configs, {
           sdk_release_version: config.sdk_release_version
@@ -183,7 +213,7 @@
         model.configs[idx] = config;
 
         $scope.update({
-            id: model.id
+            id: model.id || modelId
           }, $scope.cleanModel(model))
           .then( $scope.alertService.success)
           .catch($scope.alertService.danger);
@@ -191,6 +221,13 @@
     };
 
     $scope.verify = function(model, config) {
+      if(!model) {
+        return;
+      }
+      if(!model.id) {
+        var modelId = $stateParams.id;
+      }
+
       var idx = _.findIndex(model.configs, {
         sdk_release_version: config.sdk_release_version
       });
@@ -199,7 +236,7 @@
 
       $scope._loading = true;
       $scope.update({
-          id: model.id,
+          id: model.id || modelId,
           options: 'verify_only'
         }, $scope.cleanModel(model))
         .then($scope.alertService.success)
@@ -210,9 +247,12 @@
     };
 
     $scope.publish = function(model, config) {
-      if (!model.id) {
-        $scope.alertService.danger('Please select app first');
+      // NOTE: not update if RO User
+      if(!model || $scope.isReadOnly() === true) {
         return;
+      }
+      if(!model.id) {
+        var modelId = $stateParams.id;
       }
       $scope.confirm('confirmPublishModal.html', model).then(function() {
         var idx = _.findIndex(model.configs, {
@@ -223,7 +263,7 @@
 
         $scope._loading = true;
         Apps.update({
-            id: model.id,
+            id: model.id || modelId,
             options: 'publish'
           }, $scope.cleanModel(model))
           .$promise
@@ -243,6 +283,9 @@
       var params = {
         id: model.id
       };
+      if(!modelCopy.account_id){
+        modelCopy.account_id = $scope.model.account_id || storedAccountId;
+      }
       delete modelCopy.$promise;
       delete modelCopy.$resolved;
       delete modelCopy.id;
@@ -282,5 +325,67 @@
     $scope.onAccountSelect = function() {
       $scope.configuration.domains_provisioned_list = [];
     };
+
+    /**
+    * Get editor instance
+    */
+    $scope.jsonEditorEvent = function(instance) {
+      $scope.jsonEditorInstance = instance;
+    };
+
+    /**
+     * Set watcher on json editor's text to catch json validation error
+     */
+    $scope.$watch('jsonEditorInstance.getText()', function(val) {
+      // if editor text is empty just return
+      if(!val) {
+        $scope.jsonIsInvalid = true;
+        return;
+      }
+      // try to parse editor text as valid json and check if at least one item exists, if yes then enable Purge button
+      try {
+        var json = JSON.parse(val);
+        $scope.jsonIsInvalid = !json || !Object.keys(json).length;
+      } catch(err) {
+        // if it's not valid json or it's empty disable Purge button
+        $scope.jsonIsInvalid = true;
+      }
+    });
+    /**
+     * @name onChangeModeView
+     * @description change view mode
+     */
+    $scope.onChangeModeView = function() {
+      $scope.isAdvancedMode = !$scope.isAdvancedMode;
+    };
+    /**
+     * @description
+     *
+     * Watch by changing "isAdvancedMode"
+     * Make synce data
+     *
+     * @param  {Boollean} newVal
+     * @param  {Boolean} oldVal
+     * @return
+     */
+    $scope.$watch('isAdvancedMode', function(newVal, oldVal) {
+      if(newVal !== oldVal && newVal === true) {
+        var newModel = $scope.cleanModel($scope.model);
+        delete newModel.account_id;
+        $scope.modelAdvance = newModel;
+      } else if(newVal !== oldVal && newVal === false) {
+        if(!!$scope.model && !$scope.model.account_id ){
+          $scope.model.account_id = storedAccountId;
+        }
+        _.merge($scope.model, $scope.modelAdvance);
+      }
+    });
+    // NOTE: sync data between view modes
+    $scope.$watch('model', function(newVal, oldVal) {
+      if(newVal !== oldVal && !!newVal && $scope.isAdvancedMode === true) {
+        var newModel = $scope.cleanModel($scope.model);
+        $scope.modelAdvance = newModel;
+      }
+    }, true);
   }
 })();

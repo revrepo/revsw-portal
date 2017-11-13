@@ -24,7 +24,8 @@
         var drawer = HeatmapsDrawer.create('#canvas-svg');
 
         $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
-        $scope.popoverHelpHTML = $sce.trustAsHtml('TODO text for popover');
+        $scope.popoverHelpHTML = $sce.trustAsHtml('The heatmap shows the FBT metric for different regions of the world. ' +
+          'You can click on "Show USA Map" button to show the map of the United States.');
 
         $scope.reloadFBTStats = function() {
           if ( !$scope.ngDomain || !$scope.ngDomain.id ) {

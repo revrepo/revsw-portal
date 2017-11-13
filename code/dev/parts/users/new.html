@@ -76,31 +76,55 @@
             <div class="col-sm-10">
               <!-- For "admin" and "user" select only one account-->
               <span ng-show="!_loading && companies.length==0" class="loader--waite-company"><i class="glyphicon glyphicon-refresh spin"></i> Please wait...</span>
-              <ui-select ng-if="!_loading && companies.length>0 && model.role !='reseller'" ng-animate-disabled theme="select2" ng-disabled="_loading" ng-model="model.companyId[0]" id="company" name="accountId" on-select="onOneAccountSelect($model)">
+              <ui-select ng-if="!_loading && companies.length>0" ng-animate-disabled theme="select2" ng-disabled="_loading" ng-model="model.companyId[0]" id="company" name="accountId" on-select="onOneAccountSelect($model)">
                 <ui-select-match placeholder="Select Account">{{$select.selected.companyName}}</ui-select-match>
                 <ui-select-choices repeat="item.id as  item in companies | filter: {companyName: $select.search}">
                   <div ng-bind-html="item.companyName|highlight: $select.search"></div>
                 </ui-select-choices>
               </ui-select>
-              <!-- For "reseller" multiple select accounts-->
-              <ui-select ng-if="!_loading && companies.length>0 && model.role=='reseller'" multiple ng-animate-disabled theme="bootstrap" _class="form-control inline-block" ng-disabled="_loading" ng-model="model.companyId" id="company" name="accountId" on-select="onAccountSelect($model)">
+              <!-- TODO: delete after check!!! ==> "reseller" multiple select accounts-->
+              <!-- <ui-select ng-if="!_loading && companies.length>0 && model.role=='reseller'" multiple ng-animate-disabled theme="bootstrap" _class="form-control inline-block" ng-disabled="_loading" ng-model="model.companyId" id="company" name="accountId" on-select="onAccountSelect($model)">
                 <ui-select-match placeholder="Add account...">{{$item.companyName}}</ui-select-match>
                 <ui-select-choices repeat="item.id as  item in companies | filter: {companyName: $select.search}">
                   <div ng-bind-html="item.companyName|highlight: $select.search"></div>
                 </ui-select-choices>
-              </ui-select>
+              </ui-select> -->
               <label for="company" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Select here account the user should be associated with">
                 <i class="fa fa-question-circle"></i>
               </label>
               <a ui-sref="index.accountSettings.companies" class="btn btn-sm btn-primary" id="btn-manage-accounts" uib-tooltip="Manage Accounts" ng-disabled="_loading"><i class="fa fa-list-alt"></i> Manage Accounts</a>
             </div>
           </div>
+          <!-- For "reseller" multiple select additional accounts (managed_account_ids)-->
+          <div class="form-group" ng-if="!_loading && companies.length>0 && model.role=='reseller' && (auth.isReseller() || auth.isRevadmin())"
+            ng-class="{'has-error': createForm.managedAccountIds.$invalid && createForm.managedAccountIds.$dirty}">
+            <label for="account_id" class="col-sm-2 control-label">Additional Accounts To Manage</label>
+            <div class="col-sm-10">
+              <span ng-show="_loading && companies.length>0" class="loader--waite-company">
+                <i class="glyphicon glyphicon-refresh spin"></i> Please wait...</span>
+              <ui-select class="inline-block" multiple="true" ng-animate-disabled theme="bootstrap" ng-model="vm.managedAccountIds"
+                ng-disabled="_loading" style="min-width: 550px;" id="managed_account_ids" name="managedAccountIds" ng-if="!_loading && companies.length>0"
+                on-select="onOneManageAccountSelect($model)">
+                <ui-select-match placeholder="Add account to manage ...">{{$item.companyName}}</ui-select-match>
+                <ui-select-choices repeat="item as item in getCompaniesManageList()| filter: {companyName: $select.search, id:'!'+ model.companyId[0]}">
+                  <div ng-bind-html="item.companyName|highlight: $select.search"></div>
+                </ui-select-choices>
+              </ui-select>
+              <label for="domains" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Specify here any additional accounts the user should be allowed to manage">
+                <i class="fa fa-question-circle"></i>
+              </label>
+              <div class="error-messages" ng-messages="createForm.accountId.$error" role="alert" ng-messages-multiple>
+                <div ng-messages-include="parts/shared/error-messages.html"></div>
+              </div>
+            </div>
+          </div>
           <div class="form-group" ng-class="{'has-error': createForm.domain.$invalid && createForm.domain.$dirty}">
             <label for="domain" class="col-sm-2 control-label">Domains</label>
             <div class="col-sm-10">
-              <ui-select validate-domains-list ng-show="!_loading" multiple theme="bootstrap" class="form-control inline-block" ng-disabled="_loading" ng-model="model.domain" id="domain" name="domain">
-                <ui-select-match placeholder="{{getDomainPlaceholder()}}">{{$item.domain_name}}</ui-select-match>
-                <ui-select-choices repeat="item.domain_name as item  in getAccountDomainNameList()| filter: {domain_name: $select.search}">
+              <span ng-show="!_loading && (getAccountsDomainNameList().length==0 && companies.length==0)"><i class="glyphicon glyphicon-refresh spin"></i> Please wait...</span>
+              <ui-select validate-domains-list ng-show="!_loading && (getAccountsDomainNameList().length>0 || companies.length>0)" multiple theme="bootstrap" class="form-control inline-block" ng-disabled="_loading" ng-model="model.domain" id="domain" name="domain">
+                <ui-select-match placeholder="{{domainPlaceholder}}">{{$item.domain_name}}</ui-select-match>
+                <ui-select-choices repeat="item.domain_name as item  in getAccountsDomainNameList()| filter: {domain_name: $select.search}">
                   <div ng-bind-html="item.domain_name|highlight: $select.search"></div>
                 </ui-select-choices>
               </ui-select>

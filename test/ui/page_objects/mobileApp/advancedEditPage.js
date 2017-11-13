@@ -2,7 +2,7 @@
  *
  * REV SOFTWARE CONFIDENTIAL
  *
- * [2013] - [2015] Rev Software, Inc.
+ * [2013] - [2017] Rev Software, Inc.
  * All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains
@@ -42,13 +42,13 @@ var EditAppAdvancedMode = {
         linkText: 'Cancel'
       },
       verify: {
-        css: '[ng-click=\"verify(copyForEditor)\"]'
+        css: '[ng-click=\"verify(modelAdvance, configuration)\"]'
       },
       update: {
-        css: '[ng-click=\"updateApp(copyForEditor)\"]'
+        css: '[ng-click=\"updateApp(modelAdvance, configuration)\"]'
       },
       publish: {
-        css: '[ng-click=\"publish(copyForEditor)\"]'
+        css: '[ng-click=\"publish(modelAdvance, configuration)\"]'
       }
     },
     jsoneditor: {
