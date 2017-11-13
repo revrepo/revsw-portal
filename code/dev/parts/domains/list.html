@@ -96,10 +96,19 @@
         <div class="panel-heading">
           <div class="row">
             <div class="col-md-12">
-              <div class="pull-left">
+              <div class="pull-left form-inline">
                 <a ui-sref="{{isReadOnly() ?'.': '.new'}}" class="btn btn-success" ng-class="{'btn-disabled':isReadOnly()}" ng-disabled="_loading || isReadOnly()">
                   <i class="glyphicon glyphicon-plus"></i>&nbsp; Add New Domain
                 </a>
+                <div class="form-group hidden-xs">
+                  <div class="col-xs-12"></div>
+                </div>
+                <div class="form-group" ng-if="vendorConfig.domain_quick_start_guide_url && vendorConfig.domain_quick_start_guide_url.length>0">
+                  <a ng-href="{{vendorConfig.domain_quick_start_guide_url}}" id="btn-guide" class="btn btn-vendor-guide btn-success"
+                    ng-disabled="_loading" uib-tooltip="Click to open 'Quick Start Guide' article in a new window" target="_blank">
+                    <i class="fa fa-graduation-cap"></i>&nbsp; Quick Start Guide
+                  </a>
+                </div>
               </div>
               <div class="pull-right">
                 <form class="form-inline">

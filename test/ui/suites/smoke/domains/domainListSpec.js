@@ -2,7 +2,7 @@
  *
  * REV SOFTWARE CONFIDENTIAL
  *
- * [2013] - [2016] Rev Software, Inc.
+ * [2013] - [2017] Rev Software, Inc.
  * All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains
@@ -45,6 +45,14 @@ describe('Smoke', function () {
 
         beforeEach(function () {
           Portal.helpers.nav.goToDomains();
+        });
+
+        it('should display "Add New Domain" button', function() {
+          expect(Portal.domains.listPage.getAddNewDomainBtn().isPresent()).toBeTruthy();
+        });
+
+        it('should display "Quick Start Guide" button', function() {
+          expect(Portal.domains.listPage.getQuickStartGuideBtn().isPresent()).toBeTruthy();
         });
 
         it('should be displayed when clicking "Domains" from sidebar',
