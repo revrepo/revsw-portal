@@ -376,6 +376,39 @@ var UsageReport = {
     return this.getFormTextByFormName('API Keys');
   },
 
+    /**
+   * ### UsageReport.getSSLCertsForm()
+   *
+   * Gets the reference to `SSL Certs` form element core/text.
+   *
+   * @returns {Promise}
+   */
+  getSSLCertsForm: function () {
+    return this.getFormTextByFormName('SSL Certs');
+  },
+
+      /**
+   * ### UsageReport.getLogShippingForm()
+   *
+   * Gets the reference to `Log Shipping` form element core/text.
+   *
+   * @returns {Promise}
+   */
+  getLogShippingForm: function () {
+    return this.getFormTextByFormName('Log Shipping Jobs');
+  },
+
+  /**
+   * ### UsageReport.getSSLNamesForm()
+   *
+   * Gets the reference to `SSL Names` form element core/text.
+   *
+   * @returns {Promise}
+   */
+  getSSLNamesForm: function () {
+    return this.getFormTextByFormName('SSL Names');
+  },
+
   /**
    * ### UsageReport.getTotalTrafficForm()
    *
