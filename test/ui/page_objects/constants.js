@@ -338,6 +338,7 @@ var Constants = {
   ],
 
   DOMAIN_JSON_ATTRIBUTES: [
+    'id',
     '3rd_party_rewrite',
     'domain_name',
     'proxy_timeout',
@@ -365,21 +366,22 @@ var Constants = {
     'co_lua_enable_all',
     'co_lua'
   ],
-  UPDATED_DOMAIN_JSON_ATTRIBUTES: [
-    'enable_waf',
+  UPDATED_DOMAIN_JSON_ATTRIBUTES: [ // stringified attributes
+    '"enable_waf":true',
     'waf',
-    'enable_bot_protection',
+    '"enable_bot_protection":true',
     'bot_protection',
-    'custom_vcl',
+    '"custom_vcl":{"enabled":true,"backends":[]}',
     'origin_health_probe',
-    'HTTP_REQUEST',
-    'PROBE_TIMEOUT',
-    'PROBE_INTERVAL',
-    'HTTP_STATUS',
-    'comment',
-    'domain_wildcard_alias',
-    'enable_ssl',
-    'github_integration'
+    '"HTTP_REQUEST":"GET / HTTP/1.1"',
+    '"PROBE_TIMEOUT":1',
+    '"PROBE_INTERVAL":2',
+    '"HTTP_STATUS":200',
+    '"comment":"TEST COMMENT"',
+    '"domain_wildcard_alias":"*.',
+    '"enable_ssl":true',
+    '"github_integration":{"enable":false',
+    'id'
   ],
   DOMAIN_POLLING_INTERVAL: 3000,
   DOMAIN_POLLING_TIMEOUT: 180000

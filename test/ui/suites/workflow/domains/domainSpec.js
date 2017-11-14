@@ -43,7 +43,7 @@ describe('Workflow', function () {
             Portal.helpers.nav.goToDomains();
         });
 
-        it('should contain all expected attributes in a ' +
+        it('should contain all expected default attributes in a ' +
             ' newly created domain JSON object', function (done) {
                 Portal.domainsHelpers.getDomainJSON(domainData.name).then(function (domain) {
                     for (var field in domain) {

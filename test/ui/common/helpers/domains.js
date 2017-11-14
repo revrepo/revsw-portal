@@ -47,15 +47,32 @@ var domains = {
                         }
                     });
                     return request(apiUrl)
-                    .get('/v1/domain_configs/' + returnDomain.id)
-                    .set('Authorization', 'Bearer ' + user.token)
-                    .expect(200)
-                    .then(function (res) {
-                        return res.body;
-                    });                
+                        .get('/v1/domain_configs/' + returnDomain.id)
+                        .set('Authorization', 'Bearer ' + user.token)
+                        .expect(200)
+                        .then(function (res) {
+                            var dom = res.body;
+                            dom.id = returnDomain.id;
+                            return dom;
+                        });
                 });
         });
 
+    },
+    getStatus: function (domainId) {
+        /*jshint camelcase: false */
+        var apiUrl = config.get('api.host.protocol') +
+            '://' +
+            config.get('api.host.name');
+        return API.helpers.authenticateUser(user).then(function () {
+            return request(apiUrl)
+                .get('/v1/domain_configs/' + domainId + '/config_status')
+                .set('Authorization', 'Bearer ' + user.token)
+                .expect(200)
+                .then(function (res) {
+                    return res;
+                });
+        });
     },
     /**
        * ### domains.getDomainWafRules()
