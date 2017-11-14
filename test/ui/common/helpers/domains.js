@@ -16,10 +16,10 @@
 * from Rev Software, Inc.
 */
 var config = require('config');
-var request = require('supertest');
+var request = require('supertest-as-promised');
 var API = require('./../api').API;
 var Session = require('./../session');
-var user = config.get('portal.users.admin');
+var user = config.get('portal.users.revAdmin');
 var domains = {
 
     /**
@@ -28,28 +28,51 @@ var domains = {
            * Returns a domain JSON object
            *
            */
-    getDomainJSON: function (domainName, callback) {
+    getDomainJSON: function (domainName) {
         /*jshint camelcase: false */
         var apiUrl = config.get('api.host.protocol') +
             '://' +
             config.get('api.host.name');
-
-        API.helpers.authenticateUser(user).then(function () {
-            var newu = Session.getCurrentUser();
-            request(apiUrl)
+        return API.helpers.authenticateUser(user).then(function () {
+            return request(apiUrl)
                 .get('/v1/domain_configs')
-                .set('Authorization', 'Bearer ' + newu.token)
-                .end(function (err, res) {
-                    var myDomain;
-                    for (var i = 0; i < res.body.length; i++) {
-                        if (res.body[i].domain_name === domainName) {
-                            myDomain = res.body[i];
-                            callback(myDomain);
+                .set('Authorization', 'Bearer ' + user.token)
+                .expect(200)
+                .then(function (res) {
+                    var domains = res.body;
+                    var returnDomain;
+                    domains.forEach(function (domain) {
+                        if (domain.domain_name === domainName) {
+                            returnDomain = domain;
                         }
-                    }
+                    });
+                    return request(apiUrl)
+                        .get('/v1/domain_configs/' + returnDomain.id)
+                        .set('Authorization', 'Bearer ' + user.token)
+                        .expect(200)
+                        .then(function (res) {
+                            var dom = res.body;
+                            dom.id = returnDomain.id;
+                            return dom;
+                        });
                 });
         });
 
+    },
+    getStatus: function (domainId) {
+        /*jshint camelcase: false */
+        var apiUrl = config.get('api.host.protocol') +
+            '://' +
+            config.get('api.host.name');
+        return API.helpers.authenticateUser(user).then(function () {
+            return request(apiUrl)
+                .get('/v1/domain_configs/' + domainId + '/config_status')
+                .set('Authorization', 'Bearer ' + user.token)
+                .expect(200)
+                .then(function (res) {
+                    return res;
+                });
+        });
     },
     /**
        * ### domains.getDomainWafRules()

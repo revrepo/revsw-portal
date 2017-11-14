@@ -20,14 +20,12 @@
 
 // Requiring constant values
 var Constants = require('./../constants');
-
 var DropDownWidget = require('./../common/dropDownWidget');
 
 // This `Domain Form` Page Object abstracts all operations or actions that a
 // common domain could do in the Add Domain and Edit Domain page from the Portal
 // app/site.
 var DomainForm = {
-
   // ## Properties
   // Locators specific to HTML elements from this page object
   locators: {
@@ -971,6 +969,9 @@ var DomainForm = {
   getACLRulesEnableSw: function () {
     return element(by.id(this.locators.switches.aclRulesEnableSw.id));
   },
+  clickACLRulesEnableSw: function () {
+  return this.getACLRulesEnableSw().click();
+  },
   getBotProtectionEnableSw: function () {
     return element(by.id(this.locators.switches.botProtectionEnableSw.id));
   },
@@ -980,14 +981,23 @@ var DomainForm = {
   getCustomVCLrulesSw: function () {
     return element(by.id(this.locators.switches.customVCLrules.id));
   },
+  clickCustomVCLRulesSw: function () {
+    return this.getCustomVCLrulesSw().click();
+  },
   getDynamicOriginDNSnameLookupsTxtIn: function () {
     return element(by.id(this.locators.switches.dynamicOriginDNSnameLookups.id));
   },
   getEnableLuaScriptingOnEdgeLastMile: function () {
     return element(by.id(this.locators.switches.enableLuaScriptingOnEdgeLastMile.id));
   },
+  clickEnableLuaScriptingOnEdgeLastMile: function () {
+    return this.getEnableLuaScriptingOnEdgeLastMile().click();
+  },
   getEnableLuaScriptingOriginFirstMile: function () {
     return element(by.id(this.locators.switches.enableLuaScriptingOriginFirstMile.id));
+  },
+  clickEnableLuaScriptingOriginFirstMile: function () {
+    return this.getEnableLuaScriptingOriginFirstMile().click();
   },
   getEnable3rdPartyRewrite: function () {
     return element(by.id(this.locators.switches
