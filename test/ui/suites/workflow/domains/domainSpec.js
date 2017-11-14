@@ -78,6 +78,30 @@ describe('Workflow', function () {
                 });
             });
 
+        it('should update all expected attributes in a domain JSON object ' +
+            ' after updating domain', function (done) {
+                Portal.domains.listPage.searchAndClickEdit(domainData.name);
+                Portal.domains.editPage.clearDemo(domainData.name);
+
+                Portal.domains.editPage.clickUpdateDomain().then(function () {
+                    Portal.dialog.clickOk();
+                    Portal.alerts.waitToDisplay().then(function () {
+                        Portal
+                            .domainsHelpers
+                            .getDomainJSON(domainData.name).then(function (domain) {
+                                for (var i = 0;
+                                    i < Constants.DISABLED_UPDATED_DOMAIN_JSON_ATTRIBUTES.length;
+                                    i++) {
+                                    expect(JSON.stringify(domain))
+                                        .toContain(Constants
+                                            .DISABLED_UPDATED_DOMAIN_JSON_ATTRIBUTES[i]);
+                                }
+                                done();
+                            });
+                    });
+                });
+            });
+
         it('should update domain version after domain is published', function (done) {
             Portal.domainsHelpers.getDomainJSON(domainData.name).then(function (domain) {
                 var domainJSON = domain;

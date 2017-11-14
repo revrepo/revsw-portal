@@ -383,6 +383,22 @@ var Constants = {
     '"github_integration":{"enable":false',
     'id'
   ],
+  DISABLED_UPDATED_DOMAIN_JSON_ATTRIBUTES: [ // stringified attributes
+    '"enable_waf":false',
+    'waf',
+    '"enable_bot_protection":false',
+    'bot_protection',
+    '"custom_vcl":{"enabled":false,"backends":[]}',
+    'origin_health_probe',
+    '"HTTP_REQUEST":"GET / HTTP/1.1"',
+    '"PROBE_TIMEOUT":1',
+    '"PROBE_INTERVAL":2',
+    '"HTTP_STATUS":200',
+    '"comment":"TEST COMMENT"',
+    '"domain_wildcard_alias":"*.',
+    '"github_integration":{"enable":false',
+    'id'
+  ],
   DOMAIN_POLLING_INTERVAL: 3000,
   DOMAIN_POLLING_TIMEOUT: 180000
 
