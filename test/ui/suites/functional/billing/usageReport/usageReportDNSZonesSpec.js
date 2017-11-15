@@ -26,12 +26,13 @@ describe('Functional', function () {
   describe('Usage Report DNS Zones', function () {
     describe('With user: ' + user.role, function () {
       var dnsZonesCount = 0;
+      var dnsZoneToSearch = DataProvider.generateDNSZoneData();
       beforeAll(function (done) {
         Portal.signIn(user);
         Portal.helpers.nav.goToDNSZones();
         Portal.dnsZones.listPage.table.getRows().count().then(function (count) {
-            dnsZonesCount = count;
-            done();
+          dnsZonesCount = count;
+          done();
         });
       });
 
@@ -39,12 +40,60 @@ describe('Functional', function () {
         Portal.signOut();
       });
 
-      it('should display correct amount of DNS Zones', function () {
-        Portal.helpers.nav.goToUsageReport();
-        Portal.billing.usageReportPage.getDNSZonesForm().then(function (text) {
-          expect(text).toContain(dnsZonesCount);
+      it('should display correct amount of DNS Zones', function (done) {
+        Portal.usageReportHelpers.generateReport(user).then(function () {
+          Portal.helpers.nav.goToUsageReport().then(function () {
+            Portal
+              .usageReportHelpers
+              .expectValue(Portal
+                .billing
+                .usageReportPage, 'Total DNS Zones\n' + dnsZonesCount, done, 'DNS Service');
+          });
         });
       });
+
+      it('should display correct amount of ' +
+        ' DNS Zones after creating a DNS Zone', function (done) {
+          Portal.helpers.nav.goToDNSZones();
+          Portal.dnsZones.listPage.clickAddNewDNSZone();
+          Portal.dnsZones.addPage.createDNSZone(dnsZoneToSearch);
+          Portal.alerts.waitToDisplay().then(function () {
+            Portal.usageReportHelpers.generateReport(user).then(function () {
+              Portal.helpers.nav.goToUsageReport().then(function () {
+                Portal
+                  .usageReportHelpers
+                  .expectValue(Portal
+                    .billing
+                    .usageReportPage,
+                  'Total DNS Zones\n' + (dnsZonesCount + 1),
+                  done,
+                  'DNS Service');
+              });
+            });
+          });
+        });
+
+      it('should display correct amount of ' +
+        ' DNS Zones after deleting a DNS Zone', function (done) {
+          Portal.helpers.nav.goToDNSZones();
+          Portal.dnsZones.listPage.searchAndClickDelete(dnsZoneToSearch.domain);
+          Portal.dialog.clickOk();
+          Portal.alerts.waitToDisplay().then(function () {
+            Portal.usageReportHelpers.generateReport(user).then(function () {
+              Portal.helpers.nav.goToUsageReport().then(function () {
+                Portal
+                  .usageReportHelpers
+                  .expectValue(Portal
+                    .billing
+                    .usageReportPage,
+                  'Total DNS Zones\n' + (dnsZonesCount),
+                  done,
+                  'DNS Service');
+              });
+            });
+          });
+        });
     });
   });
 });
+

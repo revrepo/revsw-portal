@@ -25,6 +25,7 @@ describe('Functional', function () {
   var user = config.get('portal.users.admin');
   describe('Usage Report Log Shipping Jobs', function () {
     describe('With user: ' + user.role, function () {
+      var jobData = DataProvider.generateLogShippingJobData({}, user.role);
       var logJobsCount = 0;
       beforeAll(function (done) {
         // get the amount of log shipping jobs we have
@@ -40,12 +41,55 @@ describe('Functional', function () {
         Portal.signOut();
       });
 
-      it('should display correct amount of Log Shipping Jobs', function () {
-        Portal.helpers.nav.goToUsageReport();
-        Portal.billing.usageReportPage.getLogShippingForm().then(function (text) {
-          expect(text).toContain(logJobsCount);
+      it('should display correct amount of Log Shipping Jobs', function (done) {
+        Portal.usageReportHelpers.generateReport(user).then(function () {
+          Portal.helpers.nav.goToUsageReport().then(function () {
+            Portal
+              .usageReportHelpers
+              .expectValue(Portal
+                .billing
+                .usageReportPage, 'Total\n' + logJobsCount, done, 'Log Shipping Jobs');
+          });
         });
       });
+
+      it('should display correct amount of ' +
+        ' Log Shipping Jobs after creating a new job', function (done) {
+          Portal.helpers.nav.goToLogShipping();
+          Portal.logShipping.listPage.clickAddNewLogShippingJob();
+          Portal.logShipping.addPage.form.setJobName(jobData.name);
+          if (user.role !== 'Admin') {
+            Portal.logShipping.addPage.form.setAccount(jobData.account);
+          }
+          Portal.logShipping.addPage.clickCreateJobBtn().then(function () {
+            Portal.usageReportHelpers.generateReport(user).then(function () {
+              Portal.helpers.nav.goToUsageReport().then(function () {
+                Portal
+                  .usageReportHelpers
+                  .expectValue(Portal
+                    .billing
+                    .usageReportPage, 'Total\n' + (logJobsCount + 1), done, 'Log Shipping Jobs');
+              });
+            });
+          });
+        });
+
+      it('should display correct amount of ' +
+        ' Log Shipping Jobs after deleting job', function (done) {
+          Portal.helpers.nav.goToLogShipping();
+          Portal.logShipping.listPage.searchAndClickDelete(jobData.name);
+          Portal.dialog.clickOk().then(function () {
+            Portal.usageReportHelpers.generateReport(user).then(function () {
+              Portal.helpers.nav.goToUsageReport().then(function () {
+                Portal
+                  .usageReportHelpers
+                  .expectValue(Portal
+                    .billing
+                    .usageReportPage, 'Total\n' + (logJobsCount), done, 'Log Shipping Jobs');
+              });
+            });
+          });
+        });
     });
   });
 });

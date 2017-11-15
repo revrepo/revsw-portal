@@ -27,11 +27,17 @@ describe('Functional', function () {
     describe('With user: ' + user.role, function () {
       var sslCertsCount = 0;
       var certsPerPage = 25;
+      var sslCert = DataProvider.generateSSLCertData();
+      var deletedCerts = 0;
       beforeAll(function (done) {
         // get the amount of SSL certs we have
         var lastPageCerts = 0;
         var pages = 0;
         Portal.signIn(user);
+        Portal.helpers.nav.goToUsageReport();
+        Portal.billing.usageReportPage.getSSLCertsViewText().then(function (text) {
+          deletedCerts = parseInt(text.split('\n')[4]);
+        });
         Portal.helpers.nav.goToSSLCertificates();
         Portal.sslCerts.listPage.pager.getLastBtn().click();
         Portal.sslCerts.listPage.table.getRows().count().then(function (count) {
@@ -47,12 +53,64 @@ describe('Functional', function () {
         Portal.signOut();
       });
 
-      it('should display correct amount of SSL Certs', function () {
-        Portal.helpers.nav.goToUsageReport();
-        Portal.billing.usageReportPage.getSSLCertsForm().then(function (text) {
-          expect(text).toContain(sslCertsCount);
+      it('should display correct amount of SSL Certs', function (done) {
+        Portal.usageReportHelpers.generateReport(user).then(function () {
+          Portal.helpers.nav.goToUsageReport().then(function () {
+            Portal
+              .usageReportHelpers
+              .expectValue(Portal
+                .billing
+                .usageReportPage, 'Active\n' + sslCertsCount, done, 'SSL Certs');
+          });
         });
       });
+
+      it('should display correct amount of ' +
+        ' SSL Certs after adding a new certificate', function (done) {
+          Portal.helpers.nav.goToSSLCertificates();
+          Portal.sslCerts.listPage.clickAddNewSSLCert();
+          Portal.sslCerts.addPage.createSSLCert(sslCert).then(function () {
+            Portal.usageReportHelpers.generateReport(user).then(function () {
+              Portal.helpers.nav.goToUsageReport().then(function () {
+                Portal
+                  .usageReportHelpers
+                  .expectValue(Portal
+                    .billing
+                    .usageReportPage, 'Active\n' + (sslCertsCount + 1), done, 'SSL Certs');
+              });
+            });
+          });
+        });
+
+      it('should display correct amount of ' +
+        ' SSL Certs after deleting a certificate', function (done) {
+          Portal.helpers.nav.goToSSLCertificates();
+          Portal.sslCerts.listPage.searchAndClickDelete(sslCert.name);
+          Portal.dialog.clickOk().then(function () {
+            Portal.usageReportHelpers.generateReport(user).then(function () {
+              Portal.helpers.nav.goToUsageReport().then(function () {
+                Portal
+                  .usageReportHelpers
+                  .expectValue(Portal
+                    .billing
+                    .usageReportPage, 'Active\n' + (sslCertsCount), done, 'SSL Certs');
+              });
+            });
+          });
+        });
+
+      it('should display correct amount of ' +
+        ' deleted SSL Certs', function (done) {
+          Portal.usageReportHelpers.generateReport(user).then(function () {
+            Portal.helpers.nav.goToUsageReport().then(function () {
+              Portal
+                .usageReportHelpers
+                .expectValue(Portal
+                  .billing
+                  .usageReportPage, 'Deleted\n' + (++deletedCerts), done, 'SSL Certs');
+            });
+          });
+        });
     });
   });
 });

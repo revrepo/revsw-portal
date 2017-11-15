@@ -30,10 +30,14 @@ var usageReport = {
        * @returns {Promise}
        */
     generateReport: function (user) {
+        /*
+        *   TODO: error handling
+        */
         /*jshint camelcase: false */
         var apiUrl = config.get('api.host.protocol') +
             '://' +
-            config.get('api.host.name');
+            config.get('api.host.name') + ':' +
+            config.get('api.host.port');
         return API.helpers.authenticateUser(user).then(function () {
             return request(apiUrl)
                 .get('/v1/usage_reports/web/generate')
@@ -42,8 +46,8 @@ var usageReport = {
         });
     },
 
-    expectValue: function (page, value, done) {
-        // TODO: export times and intervar to constants
+    expectValue: function (page, value, done, form) {
+        // TODO: export times and intervar to constants        
         var times = 60000; // 1 minute
         var interval = 10000; // every 10 seconds
         var polling = function () {
@@ -52,7 +56,7 @@ var usageReport = {
                 done();
                 return;
             } else {
-                page.getApiKeysForm().then(function (text) {
+                page.getFormTextByFormName(form).then(function (text) {
                     if (text.includes(value)) {
                         expect(true).toBeTruthy();
                         done();

@@ -58,7 +58,7 @@ describe('Functional', function () {
               .usageReportHelpers
               .expectValue(Portal
                 .billing
-                .usageReportPage, 'Active\n' + apiKeysCount, done);
+                .usageReportPage, 'Active\n' + apiKeysCount, done, 'API Keys');
           });
         });
       });
@@ -78,7 +78,7 @@ describe('Functional', function () {
                 .usageReportHelpers
                 .expectValue(Portal
                   .billing
-                  .usageReportPage, 'Active\n' + (apiKeysCount + 1), done);
+                  .usageReportPage, 'Active\n' + (apiKeysCount + 1), done, 'API Keys');
             });
           });
         });
@@ -98,7 +98,7 @@ describe('Functional', function () {
                   .usageReportHelpers
                   .expectValue(Portal
                     .billing
-                    .usageReportPage, 'Inactive\n' + 1, done);
+                    .usageReportPage, 'Inactive\n' + 1, done, 'API Keys');
               });
             });
           });
@@ -116,7 +116,7 @@ describe('Functional', function () {
                 .usageReportHelpers
                 .expectValue(Portal
                   .billing
-                  .usageReportPage, 'Active\n' + apiKeysCount, done);
+                  .usageReportPage, 'Active\n' + apiKeysCount, done, 'API Keys');
             });
           });
         });
