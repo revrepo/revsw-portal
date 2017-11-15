@@ -20,6 +20,7 @@ var API = require('./../api').API;
 var Session = require('./../session');
 var request = require('supertest-as-promised');
 var Portal = require('./../../page_objects/portal');
+var Constants = require('./../../page_objects/constants');
 var usageReport = {
 
     /**
@@ -42,14 +43,20 @@ var usageReport = {
             return request(apiUrl)
                 .get('/v1/usage_reports/web/generate')
                 .set('Authorization', 'Bearer ' + user.token)
-                .expect(200);
+                .then(function (res, err) {
+                    if (err !== undefined) {
+                        new Error(err);
+                    }
+                    if (res !== undefined && res.status === 200) {
+                        return res.text.message;
+                    }
+                });
         });
     },
 
-    expectValue: function (page, value, done, form) {
-        // TODO: export times and intervar to constants        
-        var times = 60000; // 1 minute
-        var interval = 10000; // every 10 seconds
+    expectValue: function (page, value, done, form) {     
+        var times = Constants.USAGE_REPORT_POLLING_TIMEOUT;
+        var interval = Constants.USAGE_REPORT_POLLING_INTERVAL;
         var polling = function () {
             if (times < 0) {
                 expect(false).toBeTruthy();
