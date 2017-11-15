@@ -33,8 +33,7 @@ var usageReport = {
         /*jshint camelcase: false */
         var apiUrl = config.get('api.host.protocol') +
             '://' +
-            config.get('api.host.name') + ':' +
-            config.get('api.host.port');
+            config.get('api.host.name');
         return API.helpers.authenticateUser(user).then(function () {
             return request(apiUrl)
                 .get('/v1/usage_reports/web/generate')
