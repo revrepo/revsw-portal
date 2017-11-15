@@ -27,18 +27,22 @@ describe('Functional', function () {
     describe('With user: ' + user.role, function () {
       var apiKeysCount = 0;
       var pageKeys = 25;
+      var defaultName = 'New API Key';
+      var keyData = DataProvider.generateApiKeyData();
+
       beforeAll(function (done) {
         // get the amount of API keys we have
         var lastPageKeys = 0;
         var pages = 0;
-        Portal.signIn(user);
-        Portal.helpers.nav.goToAPIKeys();
-        Portal.admin.apiKeys.listPage.pager.getLastBtn().click();
-        Portal.admin.apiKeys.listPage.table.getRows().count().then(function (count) {
-          lastPageKeys = count;
-          Portal.admin.apiKeys.listPage.pager.getCurrentPageIndex().then(function (text) {
-            apiKeysCount = (pageKeys * (text - 1)) + lastPageKeys;
-            done();
+        Portal.signIn(user).then(function () {
+          Portal.helpers.nav.goToAPIKeys();
+          Portal.admin.apiKeys.listPage.pager.getLastBtn().click();
+          Portal.admin.apiKeys.listPage.table.getRows().count().then(function (count) {
+            lastPageKeys = count;
+            Portal.admin.apiKeys.listPage.pager.getCurrentPageIndex().then(function (text) {
+              apiKeysCount = (pageKeys * (text - 1)) + lastPageKeys;
+              done();
+            });
           });
         });
       });
@@ -47,10 +51,74 @@ describe('Functional', function () {
         Portal.signOut();
       });
 
-      it('should display correct amount of API keys', function () {
-        Portal.helpers.nav.goToUsageReport();
-        Portal.billing.usageReportPage.getApiKeysForm().then(function (text) {
-          expect(text).toContain(apiKeysCount);
+      it('should display correct amount of API keys', function (done) {
+        Portal.usageReportHelpers.generateReport(user).then(function () {
+          Portal.helpers.nav.goToUsageReport().then(function () {
+            Portal
+              .usageReportHelpers
+              .expectValue(Portal
+                .billing
+                .usageReportPage, 'Active\n' + apiKeysCount, done);
+          });
+        });
+      });
+
+      it('should display correct amount of API keys after adding a new key', function (done) {
+        Portal.helpers.nav.goToAPIKeys();
+
+        Portal.admin.apiKeys.listPage.clickAddNewApiKey();
+        Portal.admin.apiKeys.listPage.searcher.clearSearchCriteria();
+        Portal.admin.apiKeys.listPage.searchAndClickEdit(defaultName);
+
+        Portal.admin.apiKeys.editPage.form.setName(keyData.name);
+        Portal.admin.apiKeys.editPage.form.clickUpdate().then(function () {
+          Portal.usageReportHelpers.generateReport(user).then(function () {
+            Portal.helpers.nav.goToUsageReport().then(function () {
+              Portal
+                .usageReportHelpers
+                .expectValue(Portal
+                  .billing
+                  .usageReportPage, 'Active\n' + (apiKeysCount + 1), done);
+            });
+          });
+        });
+      });
+
+      it('should display correct amount of inactive ' +
+        ' API keys after updating API key status', function (done) {
+          Portal.helpers.nav.goToAPIKeys();
+
+          Portal.admin.apiKeys.listPage.searcher.clearSearchCriteria();
+          Portal.admin.apiKeys.listPage.searchAndClickEdit(keyData.name);
+          Portal.admin.apiKeys.editPage.form.checkActive();
+          Portal.admin.apiKeys.editPage.clickUpdate().then(function () {
+            Portal.usageReportHelpers.generateReport(user).then(function () {
+              Portal.helpers.nav.goToUsageReport().then(function () {
+                Portal
+                  .usageReportHelpers
+                  .expectValue(Portal
+                    .billing
+                    .usageReportPage, 'Inactive\n' + 1, done);
+              });
+            });
+          });
+        });
+
+      it('should display correct amount of API keys after deleting an API key', function (done) {
+        Portal.helpers.nav.goToAPIKeys();
+
+        Portal.admin.apiKeys.listPage.searcher.clearSearchCriteria();
+        Portal.admin.apiKeys.listPage.searchAndClickDelete(keyData.name);
+        Portal.dialog.clickOk().then(function () {
+          Portal.usageReportHelpers.generateReport(user).then(function () {
+            Portal.helpers.nav.goToUsageReport().then(function () {
+              Portal
+                .usageReportHelpers
+                .expectValue(Portal
+                  .billing
+                  .usageReportPage, 'Active\n' + apiKeysCount, done);
+            });
+          });
         });
       });
     });
