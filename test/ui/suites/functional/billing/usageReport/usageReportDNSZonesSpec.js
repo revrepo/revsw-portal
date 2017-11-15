@@ -23,16 +23,15 @@ var Constants = require('./../../../../page_objects/constants');
 
 describe('Functional', function () {
   var user = config.get('portal.users.admin');
-  describe('Usage Report Log Shipping Jobs', function () {
+  describe('Usage Report DNS Zones', function () {
     describe('With user: ' + user.role, function () {
-      var jobData = DataProvider.generateLogShippingJobData({}, user.role);
-      var logJobsCount = 0;
+      var dnsZonesCount = 0;
+      var dnsZoneToSearch = DataProvider.generateDNSZoneData();
       beforeAll(function (done) {
-        // get the amount of log shipping jobs we have
         Portal.signIn(user);
-        Portal.helpers.nav.goToLogShipping();
-        Portal.logShipping.listPage.table.getRows().count().then(function (count) {
-          logJobsCount = count;
+        Portal.helpers.nav.goToDNSZones();
+        Portal.dnsZones.listPage.table.getRows().count().then(function (count) {
+          dnsZonesCount = count;
           done();
         });
       });
@@ -41,51 +40,55 @@ describe('Functional', function () {
         Portal.signOut();
       });
 
-      it('should display correct amount of Log Shipping Jobs', function (done) {
+      it('should display correct amount of DNS Zones', function (done) {
         Portal.usageReportHelpers.generateReport(user).then(function () {
           Portal.helpers.nav.goToUsageReport().then(function () {
             Portal
               .usageReportHelpers
               .expectValue(Portal
                 .billing
-                .usageReportPage, 'Total\n' + logJobsCount, done, 'Log Shipping Jobs');
+                .usageReportPage, 'Total DNS Zones\n' + dnsZonesCount, done, 'DNS Service');
           });
         });
       });
 
       it('should display correct amount of ' +
-        ' Log Shipping Jobs after creating a new job', function (done) {
-          Portal.helpers.nav.goToLogShipping();
-          Portal.logShipping.listPage.clickAddNewLogShippingJob();
-          Portal.logShipping.addPage.form.setJobName(jobData.name);
-          if (user.role !== 'Admin') {
-            Portal.logShipping.addPage.form.setAccount(jobData.account);
-          }
-          Portal.logShipping.addPage.clickCreateJobBtn().then(function () {
+        ' DNS Zones after creating a DNS Zone', function (done) {
+          Portal.helpers.nav.goToDNSZones();
+          Portal.dnsZones.listPage.clickAddNewDNSZone();
+          Portal.dnsZones.addPage.createDNSZone(dnsZoneToSearch);
+          Portal.alerts.waitToDisplay().then(function () {
             Portal.usageReportHelpers.generateReport(user).then(function () {
               Portal.helpers.nav.goToUsageReport().then(function () {
                 Portal
                   .usageReportHelpers
                   .expectValue(Portal
                     .billing
-                    .usageReportPage, 'Total\n' + (logJobsCount + 1), done, 'Log Shipping Jobs');
+                    .usageReportPage,
+                  'Total DNS Zones\n' + (dnsZonesCount + 1),
+                  done,
+                  'DNS Service');
               });
             });
           });
         });
 
       it('should display correct amount of ' +
-        ' Log Shipping Jobs after deleting job', function (done) {
-          Portal.helpers.nav.goToLogShipping();
-          Portal.logShipping.listPage.searchAndClickDelete(jobData.name);
-          Portal.dialog.clickOk().then(function () {
+        ' DNS Zones after deleting a DNS Zone', function (done) {
+          Portal.helpers.nav.goToDNSZones();
+          Portal.dnsZones.listPage.searchAndClickDelete(dnsZoneToSearch.domain);
+          Portal.dialog.clickOk();
+          Portal.alerts.waitToDisplay().then(function () {
             Portal.usageReportHelpers.generateReport(user).then(function () {
               Portal.helpers.nav.goToUsageReport().then(function () {
                 Portal
                   .usageReportHelpers
                   .expectValue(Portal
                     .billing
-                    .usageReportPage, 'Total\n' + (logJobsCount), done, 'Log Shipping Jobs');
+                    .usageReportPage,
+                  'Total DNS Zones\n' + (dnsZonesCount),
+                  done,
+                  'DNS Service');
               });
             });
           });
@@ -93,3 +96,4 @@ describe('Functional', function () {
     });
   });
 });
+
