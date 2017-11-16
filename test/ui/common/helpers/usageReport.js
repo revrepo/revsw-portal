@@ -48,6 +48,7 @@ var usageReport = {
                         new Error(err);
                     }
                     if (res !== undefined && res.status === 200) {
+                        
                         return res.text.message;
                     }
                 });
@@ -64,7 +65,7 @@ var usageReport = {
                 return;
             } else {
                 page.getFormTextByFormName(form).then(function (text) {
-                    if (text.includes(value)) {
+                    if (text.toString().indexOf(value) !== -1) {
                         expect(true).toBeTruthy();
                         done();
                         return;
