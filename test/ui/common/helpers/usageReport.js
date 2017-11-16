@@ -65,7 +65,7 @@ var usageReport = {
                 return;
             } else {
                 page.getFormTextByFormName(form).then(function (text) {
-                    if (text.toString().includes(value)) {
+                    if (text.toString().indexOf(value) !== -1) {
                         expect(true).toBeTruthy();
                         done();
                         return;
