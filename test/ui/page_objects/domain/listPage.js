@@ -44,6 +44,9 @@ var DomainList = {
     buttons: {
       addNewDomain: {
         linkText: 'Add New Domain'
+      },
+      quickStartGuide: {
+        linkText: 'Quick Start Guide'
       }
     }
   },
@@ -108,6 +111,34 @@ var DomainList = {
   clickAddNewDomain: function () {
     return this
       .getAddNewDomainBtn()
+      .click();
+  },
+  /**
+  * ### DomainList.getQuickStartGuideBtn()
+  *
+  * Returns the reference to the `Quick Start Guide` button (Selenium WebDriver
+  * Element) from the Domain List page from the Portal app.
+  *
+  * @returns {Selenium WebDriver Element}
+  */
+  getQuickStartGuideBtn: function() {
+    return element(
+      by.partialLinkText(this.locators.buttons.quickStartGuide.linkText));
+  },
+
+  // ## Methods to interact with the Domain List Page components
+
+  /**
+   * ### DomainList.clickQuickStartGuide()
+   *
+   * Triggers a click to the `Quick Start Guide` button from the Domain List page
+   * from the Portal app
+   *
+   * @returns {Promise}
+   */
+  clickQuickStartGuide: function() {
+    return this
+      .getQuickStartGuideBtn()
       .click();
   },
 
