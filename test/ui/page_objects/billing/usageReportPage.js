@@ -36,16 +36,16 @@ var UsageReport = {
       mobileApps: {
         id: 'apps__view_container'
       },
-      sslCerts:{
+      sslCerts: {
         id: 'ssl_certs__view_container'
       },
-      sslNames:{
+      sslNames: {
         id: 'ssl_names__view_container'
       },
       dnsService: {
         id: 'dns_service__view_container'
       },
-      logShippingJob:{
+      logShippingJob: {
         id: 'log_shipping_jobs__view_container'
       }
     },
@@ -53,7 +53,7 @@ var UsageReport = {
       updateReport: {
         css: '[ng-click=\"onUpdate()\"]'
       },
-      billingZonesDetails:{
+      billingZonesDetails: {
         css: '#billingZonesDetails.btn-billing-zones-details'
       }
     },
@@ -92,7 +92,7 @@ var UsageReport = {
    *
    * @returns {Selenium WebDriver Element}
    */
-  getTitleLbl: function() {
+  getTitleLbl: function () {
     return element
       .all(by.css(this.locators.views.container))
       .get(0);
@@ -200,14 +200,14 @@ var UsageReport = {
     return element(by.css(this.locators.buttons.billingZonesDetails.css));
   },
 
-   /**
-   * ### UsageReport.getBillingZonesDetailsDialog()
-   *
-   * Returns the reference to the `Billing Zones Details` dialog
-   * (Selenium WebDriver Element) from the Usage Report page from the Portal app.
-   *
-   * @returns {Object} Selenium WebDriver Element
-   */
+  /**
+  * ### UsageReport.getBillingZonesDetailsDialog()
+  *
+  * Returns the reference to the `Billing Zones Details` dialog
+  * (Selenium WebDriver Element) from the Usage Report page from the Portal app.
+  *
+  * @returns {Object} Selenium WebDriver Element
+  */
   getBillingZonesDetailsDialog: function () {
     return element(by.css(this.locators.dialogs.billingZonesDetails.css));
   },
@@ -242,12 +242,12 @@ var UsageReport = {
    */
   getFormByName: function (formName) {
     return this.getPanelBodyElem().all(by.css(this.locators.labels.formTitle.css))
-        .filter(function(elem, index) {
-          return elem.getText().then(function(text) {
-            return text === formName;
-          });
-        }).first()
-        .element(by.xpath('..'));
+      .filter(function (elem, index) {
+        return elem.getText().then(function (text) {
+          return text === formName;
+        });
+      }).first()
+      .element(by.xpath('..'));
   },
 
   getFormTextByFormName: function (formName) {
@@ -266,6 +266,17 @@ var UsageReport = {
   },
 
   /**
+ * ### UsageReport.getMobileAppsForm()
+ *
+ * Gets the reference to `Mobile Apps` form element core/text.
+ *
+ * @returns {Promise}
+ */
+  getMobileAppsForm: function () {
+    return this.getFormTextByFormName('Mobile Apps');
+  },
+
+  /**
    * ### UsageReport.getMobileAppsView()
    *
    * Gets the reference to `Mobile Apps` block view element.
@@ -275,13 +286,13 @@ var UsageReport = {
   getMobileAppsView: function () {
     return element(by.id(this.locators.views.mobileApps.id));
   },
-    /**
-   * ### UsageReport.getMobileAppsViewText()
-   *
-   * Gets the text  from `Mobile Apps` block view element core/text.
-   *
-   * @returns {Promise}
-   */
+  /**
+ * ### UsageReport.getMobileAppsViewText()
+ *
+ * Gets the text  from `Mobile Apps` block view element core/text.
+ *
+ * @returns {Promise}
+ */
   getMobileAppsViewText: function () {
     return this.getMobileAppsView().getText();
   },
@@ -295,13 +306,13 @@ var UsageReport = {
   getSSLCertsView: function () {
     return element(by.id(this.locators.views.sslCerts.id));
   },
-    /**
-   * ### UsageReport.getSSLCertsViewText()
-   *
-   * Gets the text  from `SSL Certificates` block view element core/text.
-   *
-   * @returns {Promise}
-   */
+  /**
+ * ### UsageReport.getSSLCertsViewText()
+ *
+ * Gets the text  from `SSL Certificates` block view element core/text.
+ *
+ * @returns {Promise}
+ */
   getSSLCertsViewText: function () {
     return this.getSSLCertsView().getText();
   },
@@ -374,6 +385,50 @@ var UsageReport = {
    */
   getApiKeysForm: function () {
     return this.getFormTextByFormName('API Keys');
+  },
+
+  /**
+ * ### UsageReport.getSSLCertsForm()
+ *
+ * Gets the reference to `SSL Certs` form element core/text.
+ *
+ * @returns {Promise}
+ */
+  getSSLCertsForm: function () {
+    return this.getFormTextByFormName('SSL Certs');
+  },
+
+  /**
+* ### UsageReport.getLogShippingForm()
+*
+* Gets the reference to `Log Shipping` form element core/text.
+*
+* @returns {Promise}
+*/
+  getLogShippingForm: function () {
+    return this.getFormTextByFormName('Log Shipping Jobs');
+  },
+
+  /**
+   * ### UsageReport.getSSLNamesForm()
+   *
+   * Gets the reference to `SSL Names` form element core/text.
+   *
+   * @returns {Promise}
+   */
+  getSSLNamesForm: function () {
+    return this.getFormTextByFormName('SSL Names');
+  },
+
+  /**
+ * ### UsageReport.getDNSZonesForm()
+ *
+ * Gets the reference to `DNS Zones` form element core/text.
+ *
+ * @returns {Promise}
+ */
+  getDNSZonesForm: function () {
+    return this.getFormTextByFormName('DNS Service');
   },
 
   /**

@@ -314,6 +314,10 @@
           });
         })
         .then(function () {
+          $scope
+          .model
+          .rev_component_bp
+          .co_bypass_locations = $scope.model.rev_component_bp.co_bypass_locations || [];
           if ($scope.model.ssl_conf_profile !== '') {
             $scope.isCustomSSL_conf_profile = false;
           } else {

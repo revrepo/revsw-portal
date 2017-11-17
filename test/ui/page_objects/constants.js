@@ -335,7 +335,74 @@ var Constants = {
       LOGIN_URL: 'testsjc20-portal-hooli.revsw.net',
       ACCOUNT: ['QA-TEST-COMPANY-HOOLI']
     }
-  ]
+  ],
+
+  DOMAIN_JSON_ATTRIBUTES: [
+    'id',
+    '3rd_party_rewrite',
+    'domain_name',
+    'proxy_timeout',
+    'rev_component_bp',
+    'rev_component_co',
+    'origin_secure_protocol',
+    'image_engine',
+    'origin_server',
+    'origin_host_header',
+    'account_id',
+    'tolerance',
+    'origin_server_location_id',
+    'cname',
+    'published_domain_version',
+    'last_published_domain_version',
+    'enable_ssl',
+    'ssl_conf_profile',
+    'ssl_cert_id',
+    'ssl_protocols',
+    'ssl_ciphers',
+    'ssl_prefer_server_ciphers',
+    'btt_key',
+    'bp_lua_enable_all',
+    'bp_lua',
+    'co_lua_enable_all',
+    'co_lua'
+  ],
+  UPDATED_DOMAIN_JSON_ATTRIBUTES: [ // stringified attributes
+    '"enable_waf":true',
+    'waf',
+    '"enable_bot_protection":true',
+    'bot_protection',
+    '"custom_vcl":{"enabled":true,"backends":[]}',
+    'origin_health_probe',
+    '"HTTP_REQUEST":"GET / HTTP/1.1"',
+    '"PROBE_TIMEOUT":1',
+    '"PROBE_INTERVAL":2',
+    '"HTTP_STATUS":200',
+    '"comment":"TEST COMMENT"',
+    '"domain_wildcard_alias":"*.',
+    '"enable_ssl":true',
+    '"github_integration":{"enable":false',
+    'id'
+  ],
+  DISABLED_UPDATED_DOMAIN_JSON_ATTRIBUTES: [ // stringified attributes
+    '"enable_waf":false',
+    'waf',
+    '"enable_bot_protection":false',
+    'bot_protection',
+    '"custom_vcl":{"enabled":false,"backends":[]}',
+    'origin_health_probe',
+    '"HTTP_REQUEST":"GET / HTTP/1.1"',
+    '"PROBE_TIMEOUT":1',
+    '"PROBE_INTERVAL":2',
+    '"HTTP_STATUS":200',
+    '"comment":"TEST COMMENT"',
+    '"domain_wildcard_alias":"*.',
+    '"github_integration":{"enable":false',
+    'id'
+  ],
+  DOMAIN_POLLING_INTERVAL: 3000,
+  DOMAIN_POLLING_TIMEOUT: 180000,
+  USAGE_REPORT_POLLING_INTERVAL: 10000,
+  USAGE_REPORT_POLLING_TIMEOUT: 60000
 
 };
 module.exports = Constants;

@@ -140,6 +140,10 @@ var Pager = {
     return element(by.css(this.locators.buttons.lastPage.css));
   },
 
+  clickLastBtn: function () {
+    return this.getLastBtn().click();
+  },
+
   /**
    * ### Pager.getNextBtn()
    *

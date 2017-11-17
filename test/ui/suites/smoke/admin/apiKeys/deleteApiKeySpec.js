@@ -29,7 +29,7 @@ describe('Smoke', function () {
     var apiKey = DataProvider.generateApiKeyData('API-Key-Delete');
     beforeEach(function () {
       Portal.signIn(userAdmin);
-      
+
       Portal.createApiKey(apiKey);
       Portal.helpers.nav.goToAPIKeys();
     });
@@ -38,11 +38,15 @@ describe('Smoke', function () {
       Portal.signOut();
     });
 
-    it('should display delete API Key button', function () {
+    it('should display delete API Key button', function (done) {
       var deleteButton = Portal.admin.apiKeys.listPage.table
         .getFirstRow()
         .getDeleteBtn();
-      expect(deleteButton.isDisplayed()).toBeTruthy();      
+      expect(deleteButton.isDisplayed()).toBeTruthy();
+      Portal.admin.apiKeys.listPage.searchAndClickDelete(apiKey.name);
+      Portal.dialog.clickOk().then(function () {
+        done();
+      });
     });
 
     it('should delete an API Key with admin user', function () {
@@ -71,7 +75,7 @@ describe('Smoke', function () {
       Portal.dialog.clickOk();
     });
 
-    it('should not be able to use API key after deleting it', function (done) {  
+    it('should not be able to use API key after deleting it', function (done) {
       var isAdminUser = true;
       var account = 'API QA Reseller Company';
       Portal.admin.apiKeys.listPage.searchAndGetFirstRow(apiKey.name);

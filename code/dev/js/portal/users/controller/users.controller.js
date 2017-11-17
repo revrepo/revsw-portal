@@ -174,7 +174,7 @@
           $scope.model.managed_account_ids = angular.copy($scope.model.companyId);
           $scope.model.managed_account_ids.shift();
           $scope.vm.managedAccountIds = _.filter($scope.companies, function(item) {
-            return (($scope.model.companyId.indexOf(item.id) > -1) || ($scope.model.managed_account_ids.indexOf(item.id) > -1))
+            return (($scope.model.companyId.indexOf(item.id) > -1) || ($scope.model.managed_account_ids.indexOf(item.id) > -1));
           });
           $scope.model.companyId.length = 1;
           return $scope.model;
