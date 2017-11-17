@@ -296,21 +296,21 @@
               </div>
               <!-- -->
               <!-- First-Mile Proxy Bypass Locations -->
-              <div class="form-group" ng-class="{'has-error': editForm.firstMileBypassLocations.$invalid && editForm.firstMileBypassLocations.$dirty}">
-                <label for="firstMileBypassLocations" class="col-sm-3 control-label">First-Mile Proxy Bypass Locations</label>
+              <div class="form-group" ng-class="{'has-error': editForm.coBypassLocations.$invalid && editForm.coBypassLocations.$dirty}">
+                <label for="coBypassLocations" class="col-sm-3 control-label">First-Mile Proxy Bypass Locations</label>
                 <div class="col-sm-9">
-                  <ui-select validate-cache-bypass-locations tagging tagging-label="Add First-Mile Proxy Bypass Locations" multiple tagging-tokens="SPACE|,"
+                  <ui-select validate-co-bypass-locations tagging tagging-label="Add First-Mile Proxy Bypass Locations" multiple tagging-tokens="SPACE|,"
                     theme="bootstrap" class="form-control inline-block" ng-disabled="_loading || _isEditLocked" ng-model="model.rev_component_bp.co_bypass_locations"
-                    name="firstMileBypassLocations" id="firstMileBypassLocations">
+                    name="coBypassLocations" id="coBypassLocations">
                     <ui-select-match placeholder="Add First-Mile Proxy Bypass Locations...">{{$item}}</ui-select-match>
                     <ui-select-choices repeat="co_bypass_locations in model.rev_component_bp.co_bypass_locations">
                       {{co_bypass_locations}}
                     </ui-select-choices>
                   </ui-select>
-                  <label for="cache_bypass_locations" class="text-info" popover-trigger="mouseenter" uib-popover="Normally as we serve the website’s requests they will pass via two sets of our proxy servers: so called last-mile (edge) servers which are located close to end users and so-called first-mile servers located close to the customer’s origin server. Sometimes it might be required to force the system to do not use first-mile servers, and you can use the configuration field to specify for which locations of the website the edge proxies will need to communicate directly with the origin server instead of first-mile servers.">
+                  <label for="co_bypass_locations" class="text-info" popover-trigger="mouseenter" uib-popover="Normally as we serve the website’s requests they will pass via two sets of our proxy servers: so called last-mile (edge) servers which are located close to end users and so-called first-mile servers located close to the customer’s origin server. Sometimes it might be required to force the system to do not use first-mile servers, and you can use the configuration field to specify for which locations of the website the edge proxies will need to communicate directly with the origin server instead of first-mile servers.">
                     <i class="fa fa-question-circle"></i>
                   </label>
-                  <div class="error-messages" ng-messages="editForm.firstMileBypassLocations.$error" role="alert" ng-messages-multiple>
+                  <div class="error-messages" ng-messages="editForm.coBypassLocations.$error" role="alert" ng-messages-multiple>
                     <div ng-messages-include="parts/shared/error-messages.html"></div>
                   </div>
                 </div>

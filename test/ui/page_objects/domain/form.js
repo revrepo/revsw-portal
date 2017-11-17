@@ -70,6 +70,9 @@ var DomainForm = {
       cacheBypassLocations: {
         id: 'cacheBypassLocations'
       },
+      firstMileProxyBypassLocations: {
+        id: 'coBypassLocations'
+      },      
       queryStringParametersToDropKeep: {
         id: 'query_str'
       },
@@ -738,6 +741,10 @@ var DomainForm = {
     return element(by.id(this.locators.textInputs.cacheBypassLocations.id));
   },
 
+  getFirstMileProxyBypassLocationsTxtIn: function () {
+    return element(by.id(this.locators.textInputs.firstMileProxyBypassLocations.id));
+  },
+
   getCachingRulesBlock: function () {
     return element(by.id(this.locators.blocks.cachingRulesBlock.id));
   },
@@ -816,6 +823,11 @@ var DomainForm = {
   },
   getProbeTimeoutTxtIn: function () {
     return element(by.id(this.locators.numberInputs.probeTimeout.id));
+  },
+
+  setFirstMileProxyBypass: function (value) {
+    this.getFirstMileProxyBypassLocationsTxtIn().clear();
+    return this.getFirstMileProxyBypassLocationsTxtIn().sendKeys(value);
   },
 
   setProbeTimeout: function (value) {
