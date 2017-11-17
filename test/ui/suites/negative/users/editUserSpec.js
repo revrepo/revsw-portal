@@ -81,7 +81,20 @@ describe('Negative', function () {
             var addBtn = Portal.editUserPage.getUpdateUserBtn();
             expect(addBtn.isEnabled()).toBeFalsy();
           });
+
+        /* If we change role, the account input field resets. */
+        if (user.role === 'Reseller' || user.role === 'Rev Admin') {
+          it('should not allow to update a user without Account',
+            function () {
+              Portal.editUserPage.form.setRole('--- Select Role ---');
+              Portal.editUserPage.form.setRole('user');
+              Portal.editUserPage.form.setRole('admin');
+              Portal.editUserPage.form.setRole('reseller');
+              var addBtn = Portal.editUserPage.getUpdateUserBtn();
+              expect(addBtn.isEnabled()).toBeFalsy();
+            });
+        }
       });
-    });    
+    });
   });
 });
