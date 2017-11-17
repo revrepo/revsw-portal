@@ -23,7 +23,9 @@ describe('Negative', function () {
   describe('Edit user', function () {
 
     var users = [
-      config.get('portal.users.admin')
+      config.get('portal.users.admin'),
+      config.get('portal.users.revAdmin'),
+      config.get('portal.users.reseller')
     ];
 
     users.forEach(function (user) {
@@ -80,47 +82,6 @@ describe('Negative', function () {
             expect(addBtn.isEnabled()).toBeFalsy();
           });
       });
-    });
-
-    var usersCreatorResellers = [
-      config.get('portal.users.revAdmin'),
-      config.get('portal.users.reseller')
-    ];
-
-    usersCreatorResellers.forEach(function(user) {
-      var testUser;
-      beforeAll(function(done) {
-        Portal
-          .signIn(user)
-          .then(function() {
-            Portal.helpers.users
-              .create()
-              .then(function(newUser) {
-                testUser = newUser;
-                done();
-              })
-              .catch(done);
-          })
-          .catch(done);
-      });
-
-      afterAll(function() {
-        Portal.signOut();
-      });
-
-      beforeEach(function() {
-        Portal.helpers.nav.goToUsers();
-        Portal.userListPage.searchAndClickEdit(testUser.email);
-      });
-
-      it('should not allow to update a user without Account',
-        function() {
-          Portal.editUserPage.form.setRole('--- Select Role ---');
-          Portal.editUserPage.form.setRole('user');
-          Portal.editUserPage.form.setRole('reseller');
-          var addBtn = Portal.editUserPage.getUpdateUserBtn();
-          expect(addBtn.isEnabled()).toBeFalsy();
-          });
-    });
+    });    
   });
 });
