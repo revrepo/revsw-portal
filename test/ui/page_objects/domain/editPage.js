@@ -24,7 +24,6 @@ var FormGitHubIntegrationSettings = require('./formGitHubIntegrationSettings');
 var WebElement = require('./../../common/helpers/webElement');
 var BROWSER_WAIT_TIMEOUT = 420000; // 7 mins
 var WafRulesTable = require('./wafRulesTable/table');
-
 // This `Edit Domain` Page Object abstracts all operations or actions that a
 // common domain could do in the Edit Domain page from the Portal app/site.
 var EditDomain = {
@@ -694,15 +693,20 @@ var EditDomain = {
     return this.getExpandWafRulesBtn().click();
   },
 
-  fillDemo: function (domainName) {
+  fillDemo: function (domainName, wafRule, sslCert) {
     this.form.setWildcardDomainAlias('*.' + domainName);
-    this.form.setComment('TEST COMMENT');
+    this.form.setFirstMileProxyBypass('TEST');
+    this.form.setComment('TEST');
     this.clickTabOriginHealthMonitoring();
     this.form.clickOriginHealthMonitoringBtn();
+    this.clickTabSSLconfiguration();
+    this.form.getSslCertDDownItems().last().click();
     this.clickTabACL();
     this.form.clickACLRulesEnableSw();
     this.clickTabWAF();
     this.form.clickWAFSwitch();
+    this.clickExpandWafRulesBtn();
+    this.wafRulesTable.getLastRow().clickUseThisRule();
     this.clickTabBotProtection();
     this.form.clickBotProtectionEnableSw();
     this.form.setBotProtectionID('123');
@@ -710,7 +714,10 @@ var EditDomain = {
     this.form.clickCustomVCLRulesSw();
     this.clickTabLuaScripting();
     this.form.clickEnableLuaScriptingOnEdgeLastMile();
-    return this.form.clickEnableLuaScriptingOriginFirstMile();
+    this.form.clickEnableLuaScriptingOriginFirstMile();
+    this.clickTabImageEngine();
+    this.form.clickImageEngine();
+    return element(by.css('button[ng-click="ok()"]')).click();
   },
 
   clearDemo: function () {
@@ -718,6 +725,8 @@ var EditDomain = {
     this.form.setComment('');
     this.clickTabOriginHealthMonitoring();
     this.form.clickOriginHealthMonitoringBtn();
+    this.clickTabSSLconfiguration();
+    this.form.clickAcceptSSLRequests();
     this.clickTabACL();
     this.form.clickACLRulesEnableSw();
     this.clickTabWAF();
@@ -728,7 +737,9 @@ var EditDomain = {
     this.form.clickCustomVCLRulesSw();
     this.clickTabLuaScripting();
     this.form.clickEnableLuaScriptingOnEdgeLastMile();
-    return this.form.clickEnableLuaScriptingOriginFirstMile();
+    this.form.clickEnableLuaScriptingOriginFirstMile();
+    this.clickTabImageEngine();
+    return this.form.clickImageEngine();    
   },
 };
 

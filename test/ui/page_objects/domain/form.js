@@ -71,8 +71,9 @@ var DomainForm = {
         id: 'cacheBypassLocations'
       },
       firstMileProxyBypassLocations: {
-        id: 'coBypassLocations'
-      },      
+        css: '#coBypassLocations .ui-select-search',
+        confirm: '.ui-select-choices-row-inner'
+      },
       queryStringParametersToDropKeep: {
         id: 'query_str'
       },
@@ -742,7 +743,7 @@ var DomainForm = {
   },
 
   getFirstMileProxyBypassLocationsTxtIn: function () {
-    return element(by.id(this.locators.textInputs.firstMileProxyBypassLocations.id));
+    return element(by.css(this.locators.textInputs.firstMileProxyBypassLocations.css));
   },
 
   getCachingRulesBlock: function () {
@@ -826,8 +827,8 @@ var DomainForm = {
   },
 
   setFirstMileProxyBypass: function (value) {
-    this.getFirstMileProxyBypassLocationsTxtIn().clear();
-    return this.getFirstMileProxyBypassLocationsTxtIn().sendKeys(value);
+    this.getFirstMileProxyBypassLocationsTxtIn().sendKeys(value);
+    return element(by.css(this.locators.textInputs.firstMileProxyBypassLocations.confirm)).click();
   },
 
   setProbeTimeout: function (value) {
@@ -975,6 +976,9 @@ var DomainForm = {
   getAcceptSSLrequestsTxtIn: function () {
     return element(by.id(this.locators.switches.acceptSSLrequests.id));
   },
+  clickAcceptSSLRequests: function () {
+    return this.getAcceptSSLrequestsTxtIn().click();
+  },
   getWAFFunctionalityForTheDomain: function () {
     return element(by.id(this.locators.switches.wafFunctionalityForTheDomain.id));
   },
@@ -982,7 +986,7 @@ var DomainForm = {
     return element(by.id(this.locators.switches.aclRulesEnableSw.id));
   },
   clickACLRulesEnableSw: function () {
-  return this.getACLRulesEnableSw().click();
+    return this.getACLRulesEnableSw().click();
   },
   getBotProtectionEnableSw: function () {
     return element(by.id(this.locators.switches.botProtectionEnableSw.id));

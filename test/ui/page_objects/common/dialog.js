@@ -35,6 +35,9 @@ var Dialog = {
         ok: {
           css: 'button[ng-click="ok()"]'
         },
+        continue: {
+          css: 'button[ng-click="ok()"]'
+        },
         verifyTxtRecord: {
           css: 'button[ng-click="ok(model)"]'
         },
@@ -125,6 +128,20 @@ var Dialog = {
    * @returns {Object} Selenium WebDriver Element
    */
   getOkBtn: function () {
+    return this
+      .getModal()
+      .element(by.css(this.locators.modal.buttons.ok.css));
+  },
+
+    /**
+   * ### Dialog.getContinueBtn()
+   *
+   * Return the reference to the `Continue` button (Selenium WebDriver Element) from
+   * the Modal Dialog component from Portal app
+   *
+   * @returns {Object} Selenium WebDriver Element
+   */
+  getContinueBtn: function () {
     return this
       .getModal()
       .element(by.css(this.locators.modal.buttons.ok.css));
@@ -248,6 +265,19 @@ var Dialog = {
   clickOk: function () {
     return this
       .getOkBtn()
+      .click();
+  },
+
+    /**
+   * ### Dialog.clickContinue()
+   *
+   * Triggers a click action on the `Continue` button fro the Modal Dialog component
+   *
+   * @returns {Object} Promise
+   */
+  clickContinue: function () {
+    return this
+      .getContinueBtn()
       .click();
   },
 

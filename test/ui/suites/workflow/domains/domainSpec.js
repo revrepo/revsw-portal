@@ -24,12 +24,26 @@ var Constants = require('./../../../page_objects/constants');
 describe('Workflow', function () {
     describe('Add Domain', function () {
         /*jshint camelcase: false */
-        var user = config.get('portal.users.revAdmin');
+        var user = config.get('portal.users.admin');
         var domainData = DataProvider.generateDomain('test-domain');
+        var sslCertData = {
+            account: [user.account.companyName]
+        };
+        var testSslCert = DataProvider.generateSSLCertData(sslCertData);
+        var customWAFRule = DataProvider.generateCustomWAFRule(user);
 
         beforeAll(function (done) {
             Portal.signIn(user);
 
+            // Create a new SSL Cert to use for these tests
+            Portal.createSSLCert(testSslCert);
+
+            // Create new WAF Customer Rule to use for these tests 
+            Portal.helpers.nav.goToWAFRules();
+            Portal.wafRules.listPage.clickAddNewWAFRule();
+            Portal.wafRules.addPage.createCustomWAFRule(customWAFRule);
+
+            //Create a new domain to use for these tests
             Portal.createDomain(domainData).then(function () {
                 done();
             });
@@ -58,7 +72,7 @@ describe('Workflow', function () {
         it('should contain all expected attributes in a domain JSON object ' +
             ' after updating domain', function (done) {
                 Portal.domains.listPage.searchAndClickEdit(domainData.name);
-                Portal.domains.editPage.fillDemo(domainData.name);
+                Portal.domains.editPage.fillDemo(domainData.name, customWAFRule, testSslCert);
 
                 Portal.domains.editPage.clickUpdateDomain().then(function () {
                     Portal.dialog.clickOk();
@@ -67,10 +81,14 @@ describe('Workflow', function () {
                             .domainsHelpers
                             .getDomainJSON(domainData.name).then(function (domain) {
                                 for (var i = 0;
-                                    i < Constants.UPDATED_DOMAIN_JSON_ATTRIBUTES.length;
+                                    i < Constants.DOMAIN_ENABLE_JSON_ATTRIBUTES.length;
                                     i++) {
-                                    expect(JSON.stringify(domain))
-                                        .toContain(Constants.UPDATED_DOMAIN_JSON_ATTRIBUTES[i]);
+                                    var attr = Constants.DOMAIN_ENABLE_JSON_ATTRIBUTES[i];
+                                    var inner = domain;
+                                    for (var j = 0; j < attr.length; j++) {
+                                        inner = inner[attr[j]];
+                                    }
+                                    expect(inner).toEqual(true);
                                 }
                                 done();
                             });
@@ -90,11 +108,14 @@ describe('Workflow', function () {
                             .domainsHelpers
                             .getDomainJSON(domainData.name).then(function (domain) {
                                 for (var i = 0;
-                                    i < Constants.DISABLED_UPDATED_DOMAIN_JSON_ATTRIBUTES.length;
+                                    i < Constants.DOMAIN_ENABLE_JSON_ATTRIBUTES.length;
                                     i++) {
-                                    expect(JSON.stringify(domain))
-                                        .toContain(Constants
-                                            .DISABLED_UPDATED_DOMAIN_JSON_ATTRIBUTES[i]);
+                                    var attr = Constants.DOMAIN_ENABLE_JSON_ATTRIBUTES[i];
+                                    var inner = domain;
+                                    for (var j = 0; j < attr.length; j++) {
+                                        inner = inner[attr[j]];
+                                    }
+                                    expect(inner).toEqual(false);
                                 }
                                 done();
                             });
