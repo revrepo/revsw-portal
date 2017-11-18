@@ -220,7 +220,7 @@ var Constants = {
       NSG_STATS_NOT_FOUND: 'SDK stats reporting API service not found',
       MSG_SERVER_NOT_FOUND: 'Server group not found',
       MSG_ALREADY_EXISTS: 'The application name and platform is' +
-      ' already registered in the system',
+        ' already registered in the system',
     },
     apiKeys: {
       MSG_SUCCESS_UPDATE: 'Successfully updated the API key'
@@ -253,7 +253,7 @@ var Constants = {
     },
     sslCerts: {
       MSG_FAIL_DELETE: 'The SSL certificate is in use by active domain(s) ' +
-      '- please update the domain(s) before removing the SSL certificate'
+        '- please update the domain(s) before removing the SSL certificate'
     },
     wafRules: {
       MSG_SUCCESS_ADD: 'The WAF rule has been successfully created'
@@ -366,38 +366,16 @@ var Constants = {
     'co_lua_enable_all',
     'co_lua'
   ],
-  UPDATED_DOMAIN_JSON_ATTRIBUTES: [ // stringified attributes
-    '"enable_waf":true',
-    'waf',
-    '"enable_bot_protection":true',
-    'bot_protection',
-    '"custom_vcl":{"enabled":true,"backends":[]}',
-    'origin_health_probe',
-    '"HTTP_REQUEST":"GET / HTTP/1.1"',
-    '"PROBE_TIMEOUT":1',
-    '"PROBE_INTERVAL":2',
-    '"HTTP_STATUS":200',
-    '"comment":"TEST COMMENT"',
-    '"domain_wildcard_alias":"*.',
-    '"enable_ssl":true',
-    '"github_integration":{"enable":false',
-    'id'
-  ],
-  DISABLED_UPDATED_DOMAIN_JSON_ATTRIBUTES: [ // stringified attributes
-    '"enable_waf":false',
-    'waf',
-    '"enable_bot_protection":false',
-    'bot_protection',
-    '"custom_vcl":{"enabled":false,"backends":[]}',
-    'origin_health_probe',
-    '"HTTP_REQUEST":"GET / HTTP/1.1"',
-    '"PROBE_TIMEOUT":1',
-    '"PROBE_INTERVAL":2',
-    '"HTTP_STATUS":200',
-    '"comment":"TEST COMMENT"',
-    '"domain_wildcard_alias":"*.',
-    '"github_integration":{"enable":false',
-    'id'
+  DOMAIN_ENABLE_JSON_ATTRIBUTES: [
+    ['bp_lua_enable_all'],
+    ['co_lua_enable_all'],
+    ['enable_ssl'],
+    ['enable_origin_health_probe'],
+    ['image_engine', 'enable_image_engine'],
+    ['rev_component_bp', 'acl', 'enabled'],
+    ['rev_component_bp', 'enable_waf'],
+    ['rev_component_bp', 'enable_bot_protection'],
+    ['rev_component_bp', 'custom_vcl', 'enabled']
   ],
   DOMAIN_POLLING_INTERVAL: 3000,
   DOMAIN_POLLING_TIMEOUT: 180000,
