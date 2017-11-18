@@ -23,7 +23,7 @@ var DataProvider = require('./../../../common/providers/data');
 var Constants = require('./../../../page_objects/constants');
 
 describe('Negative: ', function () {
-    describe('Two Factor Authentication Setup', function () {
+    describe('Two Factor Authentication Login', function () {
 
         var users = [
             config.get('portal.users.admin')
@@ -72,7 +72,7 @@ describe('Negative: ', function () {
                                         .clickEnableBtn();
 
                                     Portal.signOut().then(function () {
-                                        Portal.signIn(bret);
+                                        Portal.signIn(bret, false);
                                         var incorrectOTP = 123456;
                                         Portal
                                             .loginPage
