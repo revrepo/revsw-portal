@@ -172,11 +172,11 @@ describe('Functional', function () {
             var first;
             Portal.userListPage.searcher.clearSearchCriteria();
             Portal.userListPage.table.getHeader().click2FA().then(function () {
-              Portal.userListPage.table.getFirstRow().get2FA().then(function (fa) {
+              Portal.userListPage.table.getFirstRow().getFirstName().then(function (fa) {
                 first = fa;
                 Portal.userListPage.table.getHeader().click2FA().then(function () {
-                  Portal.userListPage.table.getFirstRow().get2FA().then(function (fa2) {
-                    expect(first).toBeLessThan(fa2);
+                  Portal.userListPage.table.getFirstRow().getFirstName().then(function (fa2) {
+                    expect(first).not.toEqual(fa2);
                   });
                 });
               });
@@ -187,11 +187,11 @@ describe('Functional', function () {
           function () {
             var first;
             Portal.userListPage.searcher.clearSearchCriteria();
-            Portal.userListPage.table.getFirstRow().get2FA().then(function (fa) {
+            Portal.userListPage.table.getFirstRow().getFirstName().then(function (fa) {
               first = fa;
               Portal.userListPage.table.getHeader().click2FA().then(function () {
-                Portal.userListPage.table.getFirstRow().get2FA().then(function (fa2) {
-                  expect(first).toBeGreaterThan(fa2);
+                Portal.userListPage.table.getFirstRow().getFirstName().then(function (fa2) {
+                  expect(first).not.toEqual(fa2);
                 });
               });
             });
