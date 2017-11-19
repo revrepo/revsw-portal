@@ -461,7 +461,7 @@ var Constants = {
       enable_3rd_party_runtime_rewrite: false
     }, proxy_timeout: 22,
     rev_component_bp: {
-      enable_quic: false,
+      enable_quic: true,
       acl: {
         acl_rules:
           [{
