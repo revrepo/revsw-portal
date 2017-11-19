@@ -102,6 +102,13 @@ describe('Workflow', function () {
                                     .rev_component_bp
                                     .custom_vcl
                                     .backend_response = 'custom_vcl_backend_response';
+                                var a = JSON.stringify(domain);
+                                var b = JSON.stringify(updatedDomain);
+                                for (var i = 0; i < a.length; i++) {
+                                    if (a[i] !== b[i]) {
+                                        console.log(a[i] + '!==' + b[i] + ':' + i);
+                                    }
+                                }
                                 expect(JSON.stringify(domain))
                                     .toBe(JSON.stringify(updatedDomain));
                                 done();
