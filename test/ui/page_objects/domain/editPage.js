@@ -693,12 +693,21 @@ var EditDomain = {
     return this.getExpandWafRulesBtn().click();
   },
 
-  fillDemo: function (domainName, wafRule, sslCert) {
-    this.form.setWildcardDomainAlias('*.' + domainName);
+  fillDemo: function (domain, domainUpdateData) {
+    this.form.setWildcardDomainAlias('*.' + domain.name);
     this.form.setFirstMileProxyBypass('TEST');
+    this.form.setFirstMileProxyBypass('TEST2');
+    this.form.setDataReadTimeout('22');
+    this.form.getLastMileQUICprotocolTxtIn().click();
+    this.form.getBlockAllWebCrawlersTxtIn().click();
+    this.form.getRUMdataCollectionTxtIn().click();
     this.form.setComment('TEST');
     this.clickTabOriginHealthMonitoring();
     this.form.clickOriginHealthMonitoringBtn();
+    this.form.setOriginMonitoringHTTPrequest('GET / HTTP/2');
+    this.form.setProbeInterval('3');
+    this.form.setProbeTimeout('2');
+    this.form.setExpectedHTTPresponseCode('404');
     this.clickTabSSLconfiguration();
     this.form.getSslCertDDownItems().last().click();
     this.clickTabACL();
@@ -709,6 +718,7 @@ var EditDomain = {
     this.wafRulesTable.getLastRow().clickUseThisRule();
     this.clickTabBotProtection();
     this.form.clickBotProtectionEnableSw();
+    this.form.setBotLocation('/botLocation');
     this.form.setBotProtectionID('123');
     this.clickTabVCL();
     this.form.clickCustomVCLRulesSw();
@@ -721,7 +731,11 @@ var EditDomain = {
   },
 
   clearDemo: function () {
-    this.form.setWildcardDomainAlias('');
+    this.form.clearWildcardDomainAlias();    
+    this.form.setDataReadTimeout('20');
+    this.form.getLastMileQUICprotocolTxtIn().click();
+    this.form.getBlockAllWebCrawlersTxtIn().click();
+    this.form.getRUMdataCollectionTxtIn().click();
     this.form.setComment('');
     this.clickTabOriginHealthMonitoring();
     this.form.clickOriginHealthMonitoringBtn();
@@ -739,7 +753,7 @@ var EditDomain = {
     this.form.clickEnableLuaScriptingOnEdgeLastMile();
     this.form.clickEnableLuaScriptingOriginFirstMile();
     this.clickTabImageEngine();
-    return this.form.clickImageEngine();    
+    return this.form.clickImageEngine();
   },
 };
 

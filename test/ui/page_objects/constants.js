@@ -336,36 +336,6 @@ var Constants = {
       ACCOUNT: ['QA-TEST-COMPANY-HOOLI']
     }
   ],
-
-  DOMAIN_JSON_ATTRIBUTES: [
-    'id',
-    '3rd_party_rewrite',
-    'domain_name',
-    'proxy_timeout',
-    'rev_component_bp',
-    'rev_component_co',
-    'origin_secure_protocol',
-    'image_engine',
-    'origin_server',
-    'origin_host_header',
-    'account_id',
-    'tolerance',
-    'origin_server_location_id',
-    'cname',
-    'published_domain_version',
-    'last_published_domain_version',
-    'enable_ssl',
-    'ssl_conf_profile',
-    'ssl_cert_id',
-    'ssl_protocols',
-    'ssl_ciphers',
-    'ssl_prefer_server_ciphers',
-    'btt_key',
-    'bp_lua_enable_all',
-    'bp_lua',
-    'co_lua_enable_all',
-    'co_lua'
-  ],
   DOMAIN_ENABLE_JSON_ATTRIBUTES: [
     ['bp_lua_enable_all'],
     ['co_lua_enable_all'],
@@ -377,10 +347,410 @@ var Constants = {
     ['rev_component_bp', 'enable_bot_protection'],
     ['rev_component_bp', 'custom_vcl', 'enabled']
   ],
+  DOMAIN_DEFAULT_JSON: {
+    /* jshint camelcase:false */
+    '3rd_party_rewrite':
+      {
+        '3rd_party_root_rewrite_domains': '',
+        '3rd_party_runtime_domains': '',
+        '3rd_party_urls': '',
+        enable_3rd_party_rewrite: false,
+        enable_3rd_party_root_rewrite: false,
+        enable_3rd_party_runtime_rewrite: false
+      },
+    domain_name: 'test-domain-1511077019750-portal-ui-test.com',
+    proxy_timeout: 20,
+    rev_component_bp:
+      {
+        enable_quic: false,
+        acl: {
+          acl_rules: [{
+            country_code: '',
+            header_name: '',
+            header_value: '',
+            host_name: '',
+            subnet_mask: ''
+          }], action: 'deny_except', enabled: false
+        },
+        block_crawlers: false,
+        cache_bypass_locations: [],
+        caching_rules: [{
+          browser_caching:
+            {
+              force_revalidate: false,
+              new_ttl: 0,
+              override_edge: false
+            },
+          cookies:
+            {
+              ignore_all: false,
+              keep_or_ignore_list: [],
+              list_is_keep: false,
+              override: false,
+              remove_ignored_from_request: false,
+              remove_ignored_from_response: false
+            },
+          edge_caching:
+            {
+              new_ttl: 0,
+              override_no_cc: false,
+              override_origin: false
+            },
+          url:
+            {
+              is_wildcard: true,
+              value: '**'
+            },
+          version: 1,
+          enable_esi: false
+        }],
+        cdn_overlay_urls: [],
+        enable_cache: true,
+        enable_security: true,
+        web_app_firewall: 'off'
+      },
+    rev_component_co:
+      {
+        css_choice: 'medium',
+        enable_optimization: false,
+        enable_rum: false,
+        img_choice: 'medium',
+        js_choice: 'medium',
+        mode: 'moderate'
+      },
+    origin_secure_protocol: 'use_end_user_protocol',
+    image_engine:
+      {
+        enable_image_engine: false,
+        image_engine_token: '',
+        image_engine_api_key: '',
+        image_engine_origin_server: '',
+        refresh_image_engine_configuration: false,
+        custom_configuration_present: true
+      },
+    origin_server: 'test-domain-portal-ui-test.origin-server.com',
+    origin_host_header: 'test-domain-portal-ui-test.origin-host-header.com',
+    account_id: '55b6ff6a7957012304a49d04',
+    tolerance: '3000',
+    origin_server_location_id: '55a56fa6476c10c329a90741',
+    cname: 'test-domain-1511077019750-portal-ui-test.com.revqa.net',
+    published_domain_version: 1,
+    last_published_domain_version: 1,
+    enable_ssl: true,
+    ssl_conf_profile: '571e9f7591dcb9f97a0c4841',
+    ssl_cert_id: '',
+    ssl_protocols: '',
+    ssl_ciphers: '',
+    ssl_prefer_server_ciphers: true,
+    btt_key: '',
+    bp_lua_enable_all: false,
+    bp_lua: [],
+    co_lua_enable_all: false,
+    co_lua: [],
+    id: ''
+  },
+  DOMAIN_UPDATED_JSON: {
+    /* ignore hint because json objects are funky */
+    /* jshint ignore:start */
+    '3rd_party_rewrite': {
+      '3rd_party_root_rewrite_domains': '',
+      '3rd_party_runtime_domains': '',
+      '3rd_party_urls': '',
+      enable_3rd_party_rewrite: false,
+      enable_3rd_party_root_rewrite: false,
+      enable_3rd_party_runtime_rewrite: false
+    }, proxy_timeout: 22,
+    rev_component_bp: {
+      enable_quic: false,
+      acl: {
+        acl_rules:
+          [{
+            country_code: '',
+            header_name: '',
+            header_value: '',
+            host_name: '',
+            subnet_mask: ''
+          }],
+        action: 'deny_except',
+        enabled: true
+      },
+      block_crawlers: true,
+      cache_bypass_locations: [],
+      caching_rules:
+        [{
+          browser_caching:
+            {
+              force_revalidate: false,
+              new_ttl: 0,
+              override_edge: false
+            },
+          cookies:
+            {
+              ignore_all: false,
+              keep_or_ignore_list: [],
+              list_is_keep: false,
+              override: false,
+              remove_ignored_from_request: false,
+              remove_ignored_from_response: false
+            },
+          edge_caching:
+            {
+              new_ttl: 0,
+              override_no_cc: false,
+              override_origin: false,
+              query_string_keep_or_remove_list: []
+            },
+          url:
+            {
+              is_wildcard: true,
+              value: '**'
+            },
+          version: 1,
+          enable_esi: false,
+          serve_stale: {
+            enable: false,
+            while_fetching_ttl: 8,
+            origin_sick_ttl: 15
+          }
+        }],
+      cdn_overlay_urls: [],
+      enable_cache: true,
+      enable_security: true,
+      web_app_firewall: 'off',
+      co_bypass_locations: ['TEST', 'TEST2'],
+      enable_waf: true,
+      waf: 'waf_actions',
+      enable_bot_protection: true,
+      bot_protection:
+        [{
+          location: '/botLocation',
+          mode: 'monitor',
+          call_type: 1,
+          username_cookie_name: '',
+          sessionid_cookie_name: '',
+          bot_protection_id: '123'
+        }],
+      custom_vcl: {
+        enabled: true,
+        backends: [],
+        recv: 'custom_vcl_recv',
+        hit: '#',
+        miss: 'custom_vcl_hit',
+        deliver: 'custom_vcl_deliver',
+        pass: '#',
+        pipe: '#',
+        hash: 'custom_vcl_hash',
+        synth: '#',
+        backend_response: 'custom_vcl_backend_response',
+        backend_error: '#',
+        backend_fetch: '#'
+      }
+    }, rev_component_co: {
+      css_choice: 'medium',
+      enable_optimization: false,
+      enable_rum: true,
+      img_choice: 'medium',
+      js_choice: 'medium',
+      mode: 'moderate',
+      enable_decompression: true
+    },
+    origin_secure_protocol: "use_end_user_protocol",
+    image_engine: {
+      enable_image_engine: true,
+      image_engine_token: "",
+      image_engine_api_key: "",
+      image_engine_origin_server: "",
+      refresh_image_engine_configuration: false,
+      custom_configuration_present: false
+    },
+    origin_server: "test-domain-portal-ui-test.origin-server.com",
+    origin_host_header: "test-domain-portal-ui-test.origin-host-header.com",
+    account_id: "55b6ff6a7957012304a49d04",
+    tolerance: "3000",
+    origin_server_location_id: "55a56fa6476c10c329a90741",
+    domain_aliases: [],
+    domain_wildcard_alias: "*.test-domain-1511082866342-portal-ui-test.com",
+    enable_origin_health_probe: true,
+    origin_health_probe: {
+      HTTP_REQUEST: "GET / HTTP/1.1GET / HTTP/2",
+      PROBE_TIMEOUT: 2,
+      PROBE_INTERVAL: 3,
+      HTTP_STATUS: 404
+    },
+    cname: "test-domain-1511082866342-portal-ui-test.com.revqa.net",
+    domain_name: "test-domain-1511082866342-portal-ui-test.com",
+    comment: "TEST",
+    published_domain_version: 0,
+    last_published_domain_version: 1,
+    enable_ssl: true,
+    ssl_conf_profile: "571e9f7591dcb9f97a0c4841",
+    ssl_cert_id: "5a10ac5fe4a8ad9a45efc966",
+    ssl_protocols: "TLSv1 TLSv1.1 TLSv1.2",
+    ssl_ciphers: "ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS",
+    ssl_prefer_server_ciphers: true,
+    btt_key: "",
+    bp_lua_enable_all: true,
+    bp_lua: [],
+    co_lua_enable_all: true,
+    co_lua: [],
+    github_integration: {
+      enable: false,
+      github_url: "",
+      github_personal_api_key: ""
+    },
+    id: ""
+  },
+  DOMAIN_UPDATED_DISABLED_JSON: {
+    "3rd_party_rewrite":
+      {
+        "3rd_party_root_rewrite_domains": "",
+        "3rd_party_runtime_domains": "",
+        "3rd_party_urls": "",
+        "enable_3rd_party_rewrite": false,
+        "enable_3rd_party_root_rewrite": false,
+        "enable_3rd_party_runtime_rewrite": false
+      },
+    "proxy_timeout": 20,
+    "rev_component_bp": {
+      "enable_quic": false,
+      "acl": {
+        "acl_rules":
+          [{
+            "country_code": "",
+            "header_name": "",
+            "header_value": "",
+            "host_name": "",
+            "subnet_mask": ""
+          }],
+        "action": "deny_except",
+        "enabled": false
+      },
+      "block_crawlers": false,
+      "cache_bypass_locations": [],
+      "caching_rules":
+        [{
+          "browser_caching": {
+            "force_revalidate": false,
+            "new_ttl": 0,
+            "override_edge": false
+          },
+          "cookies": {
+            "ignore_all": false,
+            "keep_or_ignore_list": [],
+            "list_is_keep": false,
+            "override": false,
+            "remove_ignored_from_request": false,
+            "remove_ignored_from_response": false
+          },
+          "edge_caching": {
+            "new_ttl": 0,
+            "override_no_cc": false,
+            "override_origin": false,
+            "query_string_keep_or_remove_list": []
+          },
+          "url": { "is_wildcard": true, "value": "**" },
+          "version": 1,
+          "enable_esi": false,
+          "serve_stale": {
+            "enable": false,
+            "while_fetching_ttl": 8,
+            "origin_sick_ttl": 15
+          }
+        }],
+      "cdn_overlay_urls": [],
+      "enable_cache": true,
+      "enable_security": true,
+      "web_app_firewall": "off",
+      "co_bypass_locations": ["TEST", "TEST2"],
+      "enable_waf": false,
+      "waf": "waf_actions",
+      "enable_bot_protection": false,
+      "bot_protection":
+        [{
+          "location": "/botLocation",
+          "mode": "monitor",
+          "call_type": 1,
+          "username_cookie_name": "",
+          "sessionid_cookie_name": "",
+          "bot_protection_id": "123"
+        }],
+      "custom_vcl": {
+        "enabled": false,
+        "backends": [],
+        "recv": "custom_vcl_recv",
+        "hit": "#",
+        "miss": "custom_vcl_hit",
+        "deliver": "custom_vcl_deliver",
+        "pass": "#",
+        "pipe": "#",
+        "hash": "custom_vcl_hash",
+        "synth": "#",
+        "backend_response": "custom_vcl_backend_response",
+        "backend_error": "#",
+        "backend_fetch": "#"
+      }
+    },
+    "rev_component_co": {
+      "css_choice": "medium",
+      "enable_optimization": false,
+      "enable_rum": false,
+      "img_choice": "medium",
+      "js_choice": "medium",
+      "mode": "moderate",
+      "enable_decompression": true
+    },
+    "origin_secure_protocol": "use_end_user_protocol",
+    "image_engine": {
+      "enable_image_engine": false,
+      "image_engine_token": "",
+      "image_engine_api_key": "",
+      "image_engine_origin_server": "",
+      "refresh_image_engine_configuration": false,
+      "custom_configuration_present": true
+    },
+    "origin_server": "test-domain-portal-ui-test.origin-server.com",
+    "origin_host_header": "test-domain-portal-ui-test.origin-host-header.com",
+    "account_id": "55b6ff6a7957012304a49d04",
+    "tolerance": "3000",
+    "origin_server_location_id": "55a56fa6476c10c329a90741",
+    "domain_aliases": [],
+    "enable_origin_health_probe": false,
+    "origin_health_probe": {
+      "HTTP_REQUEST": "GET / HTTP/1.1GET / HTTP/2",
+      "PROBE_TIMEOUT": 2,
+      "PROBE_INTERVAL": 3,
+      "HTTP_STATUS": 404
+    },
+    "cname": "test-domain-1511089400304-portal-ui-test.com.revqa.net",
+    "domain_name": "test-domain-1511089400304-portal-ui-test.com",
+    "comment": "TEST",
+    "published_domain_version": 0,
+    "last_published_domain_version": 1,
+    "enable_ssl": false,
+    "ssl_conf_profile": "571e9f7591dcb9f97a0c4841",
+    "ssl_cert_id": "5a10ac5fe4a8ad9a45efc966",
+    "ssl_protocols": "TLSv1 TLSv1.1 TLSv1.2",
+    "ssl_ciphers": "ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS",
+    "ssl_prefer_server_ciphers": true,
+    "btt_key": "",
+    "bp_lua_enable_all": false,
+    "bp_lua": [],
+    "co_lua_enable_all": false,
+    "co_lua": [],
+    "github_integration": {
+      "enable": false,
+      "github_url": "",
+      "github_personal_api_key": ""
+    },
+    "id": ""
+    /* jshint ignore:end */
+  },
   DOMAIN_POLLING_INTERVAL: 3000,
   DOMAIN_POLLING_TIMEOUT: 180000,
   USAGE_REPORT_POLLING_INTERVAL: 10000,
-  USAGE_REPORT_POLLING_TIMEOUT: 60000
+  USAGE_REPORT_POLLING_TIMEOUT: 60000,
+  AZURE_PORTAL_URL: 'https://portal.azure.com',
+  PRODUCTION_PORTAL_URL: 'https://portal.nuubit.net'
 
 };
 module.exports = Constants;

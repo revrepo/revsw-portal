@@ -31,7 +31,7 @@ var DomainForm = {
   locators: {
     textInputs: {
       botLocation: {
-        model: 'item.location'
+        name: 'botProtectionLocation'
       },
       botCallType: {
         model: 'item.call_type'
@@ -810,6 +810,7 @@ var DomainForm = {
   },
 
   setDataReadTimeout: function (value) {
+    this.getDataReadTimeoutTxtIn().clear();
     return this.getDataReadTimeoutTxtIn().sendKeys(value);
   },
 
@@ -1622,7 +1623,7 @@ var DomainForm = {
   },
 
   getBotLocationTxtIn: function () {
-    return element(by.model(this.locators.textInputs.botLocation.model));
+    return element(by.name(this.locators.textInputs.botLocation.name));
   },
 
   getBotCallTypeTxtIn: function () {
