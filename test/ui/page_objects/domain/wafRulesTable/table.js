@@ -40,6 +40,11 @@ var WafRulesTable = {
     return this.getRow(0);
   },
 
+  getLastRow: function () {
+    var el = this.getRows().last();
+    return new WafRulesTableRow(el, WafRulesTableLocators.row);
+  },
+
   getRow: function (rowIndex) {
     var el = this
       .getRows()

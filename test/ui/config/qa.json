@@ -16,5 +16,11 @@
       "port": null,
       "path": null
     }
+  },
+  "azure": {
+    "user": {
+      "email": "MICROSOFT USER HERE",
+      "password": "MICROSOFT USER HERE"
+    }
   }
 }

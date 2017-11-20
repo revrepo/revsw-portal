@@ -24,7 +24,6 @@ var FormGitHubIntegrationSettings = require('./formGitHubIntegrationSettings');
 var WebElement = require('./../../common/helpers/webElement');
 var BROWSER_WAIT_TIMEOUT = 420000; // 7 mins
 var WafRulesTable = require('./wafRulesTable/table');
-
 // This `Edit Domain` Page Object abstracts all operations or actions that a
 // common domain could do in the Edit Domain page from the Portal app/site.
 var EditDomain = {
@@ -694,30 +693,54 @@ var EditDomain = {
     return this.getExpandWafRulesBtn().click();
   },
 
-  fillDemo: function (domainName) {
-    this.form.setWildcardDomainAlias('*.' + domainName);
-    this.form.setComment('TEST COMMENT');
+  fillDemo: function (domain, domainUpdateData) {
+    this.form.setWildcardDomainAlias('*.' + domain.name);
+    this.form.setFirstMileProxyBypass('TEST');
+    this.form.setFirstMileProxyBypass('TEST2');
+    this.form.setDataReadTimeout('22');
+    this.form.getLastMileQUICprotocolTxtIn().click();
+    this.form.getBlockAllWebCrawlersTxtIn().click();
+    this.form.getRUMdataCollectionTxtIn().click();
+    this.form.setComment('TEST');
     this.clickTabOriginHealthMonitoring();
     this.form.clickOriginHealthMonitoringBtn();
+    this.form.setOriginMonitoringHTTPrequest('GET / HTTP/2');
+    this.form.setProbeInterval('3');
+    this.form.setProbeTimeout('2');
+    this.form.setExpectedHTTPresponseCode('404');
+    this.clickTabSSLconfiguration();
+    this.form.getSslCertDDownItems().last().click();
     this.clickTabACL();
     this.form.clickACLRulesEnableSw();
     this.clickTabWAF();
     this.form.clickWAFSwitch();
+    this.clickExpandWafRulesBtn();
+    this.wafRulesTable.getLastRow().clickUseThisRule();
     this.clickTabBotProtection();
     this.form.clickBotProtectionEnableSw();
+    this.form.setBotLocation('/botLocation');
     this.form.setBotProtectionID('123');
     this.clickTabVCL();
     this.form.clickCustomVCLRulesSw();
     this.clickTabLuaScripting();
     this.form.clickEnableLuaScriptingOnEdgeLastMile();
-    return this.form.clickEnableLuaScriptingOriginFirstMile();
+    this.form.clickEnableLuaScriptingOriginFirstMile();
+    this.clickTabImageEngine();
+    this.form.clickImageEngine();
+    return element(by.css('button[ng-click="ok()"]')).click();
   },
 
   clearDemo: function () {
-    this.form.setWildcardDomainAlias('');
+    this.form.clearWildcardDomainAlias();    
+    this.form.setDataReadTimeout('20');
+    this.form.getLastMileQUICprotocolTxtIn().click();
+    this.form.getBlockAllWebCrawlersTxtIn().click();
+    this.form.getRUMdataCollectionTxtIn().click();
     this.form.setComment('');
     this.clickTabOriginHealthMonitoring();
     this.form.clickOriginHealthMonitoringBtn();
+    this.clickTabSSLconfiguration();
+    this.form.clickAcceptSSLRequests();
     this.clickTabACL();
     this.form.clickACLRulesEnableSw();
     this.clickTabWAF();
@@ -728,7 +751,9 @@ var EditDomain = {
     this.form.clickCustomVCLRulesSw();
     this.clickTabLuaScripting();
     this.form.clickEnableLuaScriptingOnEdgeLastMile();
-    return this.form.clickEnableLuaScriptingOriginFirstMile();
+    this.form.clickEnableLuaScriptingOriginFirstMile();
+    this.clickTabImageEngine();
+    return this.form.clickImageEngine();
   },
 };
 
