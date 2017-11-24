@@ -650,7 +650,7 @@
                           <div class="checkbox">
                             <label>
                               <input id="predefinedSSLconfigurationProfile" type="radio" class="inline-block" name="isCustomSSL_conf_profile" ng-disabled="_loading || _isEditLocked"
-                                ng-model="isCustomSSL_conf_profile" ng-value="false"> Predefined SSL Configuration Profile
+                                ng-model="vm.isCustomSSL_conf_profile" ng-value="false"> Predefined SSL Configuration Profile
                               <label for="isCustomSSL_conf_profile" popover-append-to-body="{{true}}" class="text-info" popover-trigger="mouseenter" uib-popover="Select the radio-button to use one of the pre-defined SSL configuration profiles (recommended)">
                                 <i class="fa fa-question-circle"></i>
                               </label>
@@ -659,9 +659,9 @@
                         </div>
                       </div>
                       <div class="form-group form-inline" ng-class="{'has-error': editForm.sslConfProfile.$invalid && editForm.sslConfProfile.$dirty}">
-                        <select class="form-control col-sm-offset-3" ng-disabled="_loading || _isEditLocked || (isCustomSSL_conf_profile == true)"
-                          ng-model="model.ssl_conf_profile" id="ssl_conf_profile" name="sslConfProfile" ng-options="obj.id as obj.profile_name for obj in SSL_conf_profiles"
-                          required>
+                        <select class="form-control col-sm-offset-3" ng-disabled="_loading || _isEditLocked || (vm.isCustomSSL_conf_profile == true)"
+                          ng-model="model.ssl_conf_profile" id="ssl_conf_profile" name="sslConfProfile" ng-options="obj.id as obj.profile_name for obj in listSSLConfProfiles"
+                          ng-required="!vm.isCustomSSL_conf_profile">
                         </select>
                         <div class="error-messages" ng-messages="editForm.sslConfProfile.$error" role="alert" ng-messages-multiple>
                           <div ng-messages-include="parts/shared/error-messages.html"></div>
@@ -671,7 +671,7 @@
                         <div class="col-sm-12">
                           <div class="checkbox">
                             <label>
-                              <input id="customSSLconfigurationProfile" type="radio" ng-disabled="_loading || _isEditLocked" ng-model="isCustomSSL_conf_profile"
+                              <input id="customSSLconfigurationProfile" type="radio" ng-disabled="_loading || _isEditLocked" ng-model="vm.isCustomSSL_conf_profile"
                                 name="isCustomSSL_conf_profile" ng-value="true"> Custom SSL Configuration Profile
                               <label for="isCustomSSL_conf_profile" popover-append-to-body="{{true}}" class="text-info" popover-trigger="mouseenter" uib-popover="Select the option to define your own SSL configuration options">
                                 <i class="fa fa-question-circle"></i>
@@ -683,13 +683,13 @@
                     </div>
                     <!-- Right section -->
                     <div class="col-md-7">
-                      <div class="form-group" ng-disabled="isCustomSSL_conf_profile || _isEditLocked" ng-class="{'has-error': editForm.sslProtocols.$invalid && editForm.sslProtocols.$dirty}">
+                      <div class="form-group" ng-disabled="vm.isCustomSSL_conf_profile || _isEditLocked" ng-class="{'has-error': editForm.sslProtocols.$invalid && editForm.sslProtocols.$dirty}">
                         <label for="sslProtocols" class="col-sm-12">
                           Allowed SSL Protocols
                           <small>(in Nginx format)</small>
                         </label>
                         <div class="col-sm-12">
-                          <input type="text" class="form-control inline-block" ng-disabled="!isCustomSSL_conf_profile || _isEditLocked" ng-model="model.ssl_protocols"
+                          <input type="text" class="form-control inline-block" ng-disabled="!vm.isCustomSSL_conf_profile || _isEditLocked" ng-model="model.ssl_protocols"
                             id="ssl_protocols" name="sslProtocols" ng-maxlength="200" placeholder="SSL Protocols" required>
                           <label for="sslProtocols" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Allowed SSL protocols">
                             <i class="fa fa-question-circle"></i>
@@ -705,7 +705,7 @@
                           <small>(in Nginx format)</small>
                         </label>
                         <div class="col-sm-12">
-                          <input type="text" class="form-control inline-block" ng-disabled="!isCustomSSL_conf_profile || _isEditLocked" ng-model="model.ssl_ciphers"
+                          <input type="text" class="form-control inline-block" ng-disabled="!vm.isCustomSSL_conf_profile || _isEditLocked" ng-model="model.ssl_ciphers"
                             id="ssl_ciphers" name="sslCiphers" ng-maxlength="200" placeholder="SSL Ciphers" required>
                           <label for="sslCiphers" popover-append-to-body="{{true}}" class="text-info" popover-trigger="mouseenter" uib-popover="Allowed SSL ciphers">
                             <i class="fa fa-question-circle"></i>
@@ -717,7 +717,7 @@
                       </div>
                       <div class="checkbox">
                         <label popover-trigger="mouseenter">
-                          <input type="checkbox" ng-disabled="!isCustomSSL_conf_profile || _isEditLocked" ng-model="model.ssl_prefer_server_ciphers"
+                          <input type="checkbox" ng-disabled="!vm.isCustomSSL_conf_profile || _isEditLocked" ng-model="model.ssl_prefer_server_ciphers"
                             id="ssl_prefer_server_ciphers" placeholder="Prefer Server-Side Ciphers">
                           <strong> Prefer Server-Side Ciphers</strong>
                         </label>
