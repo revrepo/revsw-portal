@@ -58,6 +58,10 @@
     $scope.domain_publish_help_info = 'Once you have tested the updated configuration in the staging environment ' +
       '(using “Update” button) are you welcome to publish the configuration in the global network (and make it ' +
       'available to all your end users)';
+    $scope.vm = {
+      isCustomSSL_conf_profile :false
+    };
+    var _id_ssl_conf_profile = '';
     /**
      * @name setAccountName
      * @description
@@ -209,7 +213,7 @@
         delete model.domain_name;
       }
       // NOTE: clean params ssl config
-      if ($scope.isCustomSSL_conf_profile) {
+      if ($scope.vm.isCustomSSL_conf_profile) {
         model.ssl_conf_profile = '';
       } else {
         var item = _.find($scope.SSL_conf_profiles, {
@@ -264,7 +268,7 @@
     $scope.fetchLocations();
 
     $scope.SSL_certs = [];
-    $scope.SSL_conf_profiles = [];
+    $scope.listSSLConfProfiles = [];
 
     function fetchSSL_certificates() {
       $scope.SSL_certs.length = 0;
@@ -277,16 +281,16 @@
     }
 
     function fetchSSL_conf_profiles() {
-      $scope.SSL_conf_profiles.length = 0;
+      $scope.listSSLConfProfiles.length = 0;
       return SSL_conf_profiles.query().$promise
         .then(function (list) {
-          $scope.SSL_conf_profiles = list;
+          $scope.listSSLConfProfiles = list;
           if ($scope.model.ssl_conf_profile === '') {
             // set default value for ssl_conf_profile
-            $scope.model.ssl_conf_profile = $scope.SSL_conf_profiles[0].id;
+            $scope.model.ssl_conf_profile = $scope.listSSLConfProfiles[0].id;
           } else {
             // fill values for SSL Conf Profile
-            var _conf_profile = _.find($scope.SSL_conf_profiles, {
+            var _conf_profile = _.find($scope.listSSLConfProfiles, {
               id: $scope.model.ssl_conf_profile
             });
             if (!!_conf_profile) {
@@ -318,10 +322,11 @@
           .model
           .rev_component_bp
           .co_bypass_locations = $scope.model.rev_component_bp.co_bypass_locations || [];
+          _id_ssl_conf_profile = $scope.model.ssl_conf_profile;
           if ($scope.model.ssl_conf_profile !== '') {
-            $scope.isCustomSSL_conf_profile = false;
+            $scope.vm.isCustomSSL_conf_profile = false;
           } else {
-            $scope.isCustomSSL_conf_profile = true;
+            $scope.vm.isCustomSSL_conf_profile = true;
           }
           var data_ = $scope.model['3rd_party_rewrite'];
           $scope.$thirdPartyLinks = {
@@ -813,13 +818,12 @@
      * @param  {Boolean} oldVal
      * @return
      */
-    var _id_ssl_conf_profile = '';
     $scope.$watch('isAdvancedMode', function (newVal, oldVal) {
       if (newVal !== oldVal && newVal === true) {
         var newModel = $scope.prepareSimpleDomainUpdate($scope.model);
         _id_ssl_conf_profile = $scope.model.ssl_conf_profile;
         $scope.modelAdvance = angular.copy(newModel);
-        if ($scope.isCustomSSL_conf_profile === true) {
+        if ($scope.vm.isCustomSSL_conf_profile === true) {
           $scope.modelAdvance.ssl_conf_profile = '';
         }
       }
@@ -828,8 +832,8 @@
           $scope.modelAdvance.ssl_conf_profile = _id_ssl_conf_profile;
         }
         _.merge($scope.model, $scope.modelAdvance);
-        if ($scope.isCustomSSL_conf_profile === false) {
-          syncSSL_conf_profile($scope.model.ssl_conf_profile);
+        if ($scope.vm.isCustomSSL_conf_profile === false) {
+          syncSSLConfProfile($scope.model.ssl_conf_profile);
         }
         // NOTE: update ACL for render UI into directives
         if (!!$scope.model.rev_component_bp.acl && !!$scope.model.rev_component_bp.acl) {
@@ -840,17 +844,21 @@
 
     $scope.$watch('model.ssl_conf_profile', function (newVal, oldVal) {
       if (newVal !== oldVal && !!newVal) {
-        syncSSL_conf_profile(newVal);
+        syncSSLConfProfile(newVal);
       }
     });
 
-    $scope.$watch('isCustomSSL_conf_profile', function (newVal, oldVal) {
+    $scope.$watch('vm.isCustomSSL_conf_profile', function (newVal, oldVal) {
       if (newVal !== oldVal && newVal !== undefined) {
         if (newVal === false) {
-          syncSSL_conf_profile($scope.model.ssl_conf_profile);
+          $scope.model.ssl_conf_profile = _id_ssl_conf_profile;
+          syncSSLConfProfile($scope.model.ssl_conf_profile);
+        }else{
+          _id_ssl_conf_profile = $scope.model.ssl_conf_profile;
+          $scope.model.ssl_conf_profile = '';
         }
       }
-    });
+    },true);
 
     $scope.$watch('model.rev_component_bp.enable_cache', function (newVal, oldVal) {
       if (newVal !== oldVal && newVal !== undefined) {
@@ -895,18 +903,18 @@
       }
     }, true);
     /**
-     * @name  syncSSL_conf_profile
-     * @description
+     * @name  syncSSLConfProfile
+     * @description load list SSL Config Profiles
      *
      *
      * @param  {[type]} id [description]
      * @return {[type]}    [description]
      */
-    function syncSSL_conf_profile(id) {
-      var item = _.find($scope.SSL_conf_profiles, {
+    function syncSSLConfProfile(id) {
+      var item = _.find($scope.listSSLConfProfiles, {
         id: id
       });
-      if (!!item) {
+      if (!!item && $scope.vm.isCustomSSL_conf_profile === false) {
         angular.extend($scope.model, {
           ssl_ciphers: item.ssl_ciphers,
           ssl_protocols: item.ssl_protocols,
