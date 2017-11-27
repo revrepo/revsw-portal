@@ -33,7 +33,10 @@
 
     $scope.WAF_RULE_NAME = $config.PATTERNS.WAF_RULE_NAME;
     $scope.COMMENT_NO_SPECIAL_CHARS = $config.PATTERNS.COMMENT_NO_SPECIAL_CHARS;
-
+    $scope.waf_rule_verify_help_info = 'The button will verify the correctness of the new configuration without '+
+      ' actually saving it in the system';
+    $scope.waf_rule_update_help_info = 'TODO text';
+    $scope.waf_rule_publish_help_info = 'TODO text';
     /**
      * @name setAccountName
      * @description
@@ -295,7 +298,7 @@
           $scope.alertService.success(data);
           $scope.setAccountId();
           $scope.clearModel(); // Clear form data even if not isStay
-          if (isStay === true) {            
+          if (isStay === true) {
             $scope.initNew();
           }
         })

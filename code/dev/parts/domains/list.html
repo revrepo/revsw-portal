@@ -161,7 +161,7 @@
               <tbody>
                 <tr id="anchor{{::$index}}" ng-click="saveAnchorScrollIndex($index)" ng-repeat="item in filteredRecords | limitTo:filter.limit:filter.skip track by $index">
                   <td>
-                    <a ui-sref=".edit({id: item.id})" ng-if="!item.loading" uib-tooltip="Edit Domain">
+                    <a ui-sref=".edit({id: item.id})" ng-if="!item.loading" uib-tooltip="{{(!!item.comment && item.comment.length>0) ? 'Customer Comment: '+ item.comment : 'Edit Domain'}}">
                     {{item.domain_name}}
                   </a>
                   </td>
