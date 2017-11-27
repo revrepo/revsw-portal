@@ -51,13 +51,13 @@
     $scope.NO_SPECIAL_CHARS = $config.PATTERNS.NO_SPECIAL_CHARS;
     $scope.COMMENT_NO_SPECIAL_CHARS = $config.PATTERNS.COMMENT_NO_SPECIAL_CHARS;
     $scope.DOMAIN_STATUS_REFRESH_INTERVAL_EDIT_FORM = $config.DOMAIN_STATUS_REFRESH_INTERVAL_EDIT_FORM;
-    $scope.domain_verify_help_info = 'The button will verify the correctness of the new configuration without '+
-      ' actually saving it in the system';
-    $scope.domain_update_help_info = 'Use the button to send the modified configuration to the staging environment ' +
+    $scope.domain_verify_help_info = 'The button will verify the correctness of the new domain configuration without ' +
+      'actually saving it in the system';
+    $scope.domain_update_help_info = 'Use the button to send the modified domain configuration to the staging environment ' +
       'which can be used to test the new configuration before sending it to the global network (and making it ' +
       'available for all your end users). Please see “Web -> Staging Env.” section for details about the staging ' +
       'environment and how to use it.';
-    $scope.domain_publish_help_info = 'Once you have tested the updated configuration in the staging environment ' +
+    $scope.domain_publish_help_info = 'Once you have tested the updated domain configuration in the staging environment ' +
       '(using “Update” button) are you welcome to publish the configuration in the global network (and make it ' +
       'available to all your end users)';
     $scope.vm = {
