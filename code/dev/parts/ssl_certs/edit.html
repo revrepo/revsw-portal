@@ -132,7 +132,7 @@
               <a ui-sref="^" class="btn btn-default">
                 <i class="glyphicon glyphicon-remove"></i>&nbsp; Cancel
               </a>
-              <button class="btn btn-info" ng-class="{'btn-disabled':isReadOnly()}" ng-disabled="disableSubmit(model, true) || editForm.$invalid || isReadOnly()" ng-click="validateSSLCert(model)">
+              <button class="btn btn-info" ng-class="{'btn-disabled':isReadOnly()}" ng-disabled="disableSubmit(model, true) || editForm.$invalid || isReadOnly()" ng-click="validateSSLCert(model)" uib-tooltip="{{sslCert_verify_help_info}}">
                 <i class="glyphicon" ng-class="_loading ? 'glyphicon-refresh spin':'glyphicon-check'"></i>&nbsp; Verify
               </button>
               <button class="btn btn-success" ng-class="{'btn-disabled':isReadOnly()}" ng-disabled="disableSubmit(model, true) || editForm.$invalid || isReadOnly()" ng-click="updateSSLCert(model)" uib-tooltip="{{sslCert_update_help_info}}">

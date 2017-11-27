@@ -867,7 +867,7 @@
                 <i class="glyphicon glyphicon-remove"></i>&nbsp; Cancel
               </a>
               <button id="verifyDomain" class="btn btn-info" ng-class="{'btn-disabled':isReadOnly()}" ng-disabled="disableSubmit(model, true) || editForm.$invalid || isReadOnly()"
-                ng-click="validateDomain(model)">
+                ng-click="validateDomain(model)"  uib-tooltip="{{domain_verify_help_info}}">
                 <i class="glyphicon" ng-class="_loading ? 'glyphicon-refresh spin':'glyphicon-check'"></i>&nbsp; Verify
               </button>
               <button id="updateDomain" class="btn btn-success" ng-class="{'btn-disabled':isReadOnly()}" ng-disabled="disableSubmit(model, true) || editForm.$invalid || isReadOnly()"
