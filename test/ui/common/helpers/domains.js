@@ -20,6 +20,9 @@ var request = require('supertest-as-promised');
 var API = require('./../api').API;
 var Session = require('./../session');
 var user = config.get('portal.users.revAdmin');
+var apiUrl = config.get('api.host.protocol') +
+    '://' +
+    config.get('api.host.name');
 var domains = {
 
     /**
@@ -30,9 +33,6 @@ var domains = {
            */
     getDomainJSON: function (domainName) {
         /*jshint camelcase: false */
-        var apiUrl = config.get('api.host.protocol') +
-            '://' +
-            config.get('api.host.name');
         return API.helpers.authenticateUser(user).then(function () {
             return request(apiUrl)
                 .get('/v1/domain_configs')
@@ -61,9 +61,6 @@ var domains = {
     },
     getStatus: function (domainId) {
         /*jshint camelcase: false */
-        var apiUrl = config.get('api.host.protocol') +
-            '://' +
-            config.get('api.host.name');
         return API.helpers.authenticateUser(user).then(function () {
             return request(apiUrl)
                 .get('/v1/domain_configs/' + domainId + '/config_status')
@@ -81,11 +78,6 @@ var domains = {
        *
        */
     getDomainWafRules: function (domainName, callback) {
-
-        var apiUrl = config.get('api.host.protocol') +
-            '://' +
-            config.get('api.host.name');
-
         var newu = Session.getCurrentUser();
         this.getDomainJSON(domainName, function (domain) {
             request(apiUrl)
@@ -93,6 +85,40 @@ var domains = {
                 .set('Authorization', 'Bearer ' + newu.token)
                 .end(function (err, res) {
                     callback(res.body.data);
+                });
+        });
+    },
+    /**
+       * ### domains.getSSLCert()
+       *
+       * Returns a JSON object of an SSL cert
+       *
+       */
+    getSSLCert: function (id) {
+        return API.helpers.authenticateUser(user).then(function () {
+            return request(apiUrl)
+                .get('/v1/ssl_certs/' + id)
+                .set('Authorization', 'Bearer ' + user.token)
+                .expect(200)
+                .then(function (res) {
+                    return res.body;
+                });
+        });
+    },
+    /**
+       * ### domains.getWafRule()
+       *
+       * Returns a JSON object of a WAF rule
+       *
+       */
+    getWafRule: function (id) {
+        return API.helpers.authenticateUser(user).then(function () {
+            return request(apiUrl)
+                .get('/v1/waf_rules/' + id)
+                .set('Authorization', 'Bearer ' + user.token)
+                .expect(200)
+                .then(function (res) {
+                    return res.body;
                 });
         });
     }
