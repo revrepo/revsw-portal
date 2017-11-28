@@ -466,14 +466,18 @@ var CompanyProfileForm = {
    * @returns {Promise}
    */
   fill: function (company) {
-    this.setCompanyName(company.companyName);
+    if (company.companyName !== null) {
+      this.setCompanyName(company.companyName);
+    }
     this.setFirstName(company.firstName);
     this.setLastName(company.lastName);
     this.setPhoneNumber(company.phoneNumber);
     this.setContactEmail(company.contactEmail);
     this.setAddress1(company.address1);
     this.setAddress2(company.address2);
-    this.setCountry(company.country);
+    if (company.country !== null) {
+      this.setCountry(company.country);
+    }
     this.setState(company.state);
     this.setCity(company.city);
     this.setZipCode(company.zipcode);
