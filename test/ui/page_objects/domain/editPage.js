@@ -694,6 +694,7 @@ var EditDomain = {
   },
 
   fillDemo: function (domain, domainUpdateData) {
+    /* jshint maxstatements:120 */
     this.form.setWildcardDomainAlias('*.' + domain.name);
     this.form.setFirstMileProxyBypass('TEST');
     this.form.setFirstMileProxyBypass('TEST2');
@@ -708,6 +709,33 @@ var EditDomain = {
     this.form.setProbeInterval('3');
     this.form.setProbeTimeout('2');
     this.form.setExpectedHTTPresponseCode('404');
+    this.clickTabEdgeCaching();
+    this.form.setCacheBypassLocations('/testBypass/');
+    this.form.clickExpandCacheRules();
+    this.form.clickOverrideOriginCachingHeaders();
+    this.form.setEdgeCacheTTL('5');
+    this.form.getEdgeCachingHeadersMissingTxtIn().click();
+    this.form.getKeepOrDropQueryStringParametersTxtIn().click();
+    this.form.setQueryStringParametersToDropKeep('test');
+    this.form.getOverrideHTTPcookiesTxtIn().click();
+    this.form.getIgnoreAllHTTPcookiesTxtIn().click();
+    browser.sleep(1000);
+    this.form.getRemoveIgnoredCookiesFromOriginRequests().click();
+    this.form.getRemoveIgnoredCookiesFromEdgeResponses().click();
+    this.form.setBrowserCachingTTL('5');
+    this.form.getForceRevalidation().click();
+    this.form.getEnableServingStaleContentTxtIn().click();
+    this.form.setStaleObjectTTLwhenOriginIsDown('9');
+    this.form.setStaleObjectTTLwhileFetchingNewObject('9');
+    this.form.getEnableESITxtIn().click();
+    this.form.createNewOriginHeader({
+      headerName: 'testHeader',
+      headerValue: 'testValue'
+    });
+    this.form.createNewEndUserHeader({
+      headerName: 'testHeader',
+      headerValue: 'testValue'
+    });
     this.clickTabSSLconfiguration();
     this.form.getSslCertDDownItems().last().click();
     this.form.getCustomSSLconfigurationTxtIn().click();
