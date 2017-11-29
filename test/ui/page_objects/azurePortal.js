@@ -78,7 +78,7 @@ var AzurePortal = {
     },
     subId: 'div.msportalfx-tooltip-overflow',
     manageBtn: {
-      css: '.fxs-commandBar-item',
+      css: '.fxs-commandBar-item.fxs-portal-border.fxs-portal-hover',
       text: 'Manage'
     }
   },
@@ -155,7 +155,18 @@ var AzurePortal = {
     });
   },
   clickGoToResource: function () {
-    return element(by.css(this.locators.goToResource.css)).click();
+    var me = this;
+    return new Promise(function (resolve, reject) {
+      element(by.css(me.locators.goToResource.css)).click();
+      me.waitForElementByCSSText(me
+        .locators
+        .manageBtn
+        .css, me.locators.manageBtn.text).then(function () {
+          browser.sleep(2500);
+          resolve(true);
+        });
+    });
+
   },
   load: function () {
     browser.get(Constants.AZURE_PORTAL_URL);
@@ -281,7 +292,7 @@ var AzurePortal = {
             clearInterval(handler);
           }
         });
-      }, 5000);
+      }, 3000);
     });
   },
   waitForElementByCSSText: function (cssLocator, text) {
@@ -294,7 +305,7 @@ var AzurePortal = {
             clearInterval(handler);
           }
         });
-      }, 5000);
+      }, 3000);
     });
   }
 };

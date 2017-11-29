@@ -68,14 +68,16 @@ var DomainForm = {
       },
 
       cacheBypassLocations: {
-        id: 'cacheBypassLocations'
+        id: 'cacheBypassLocations',
+        css: '#cacheBypassLocations input'
       },
       firstMileProxyBypassLocations: {
         css: '#coBypassLocations .ui-select-search',
         confirm: '.ui-select-choices-row-inner'
       },
       queryStringParametersToDropKeep: {
-        id: 'query_str'
+        id: 'query_str',
+        css: '#query_str input'
       },
       allowedSSLprotocols: {
         id: 'ssl_protocols'
@@ -261,13 +263,9 @@ var DomainForm = {
       staleObjectTTLwhenOriginIsDown: {
         css: '.cachingRulesURLblock:first-child .staleObjectTTLwhenOriginIsDown'
       },
-
-
       enableESI: {
         id: 'enableESI'
       },
-
-
       acceptSSLrequests: {
         id: 'acceptSSLrequests'
       },
@@ -392,18 +390,30 @@ var DomainForm = {
       },
 
       cachingRulesBlock: {
-        id: 'cachingRulesBlock'
+        id: 'cachingRulesBlock',
+        expandAllRules: '.btn-default[title="Expand All Rules"]',
+
       },
       URL: {
         css: '.cachingRulesURLblock:first-child'
       },
 
       manageOriginRequestHeaders: {
-        id: 'manageOriginRequestHeaders'
+        id: 'manageOriginRequestHeaders',
+        addNewHeader: 'button[title="Add New Header"]',
+        editHeader: 'button[title="Edit Header"]',
+        headerName: 'input[name="headerName"]',
+        headerValue: 'input[name="headerValue"]',
+        saveHeader: 'button[title="Save Header"]'
       },
 
       manageEndUserResponseHeaders: {
-        id: 'manageEndUserResponseHeaders'
+        id: 'manageEndUserResponseHeaders',
+        addNewHeader: 'button[title="Add New Header"]',
+        editHeader: 'button[title="Edit Header"]',
+        headerName: 'input[name="headerName"]',
+        headerValue: 'input[name="headerValue"]',
+        saveHeader: 'button[title="Save Header"]'
       },
 
       customVCLrulesBlocks: {
@@ -739,7 +749,12 @@ var DomainForm = {
   },
 
   getCacheBypassLocationsTxtIn: function () {
-    return element(by.id(this.locators.textInputs.cacheBypassLocations.id));
+    return element(by.css(this.locators.textInputs.cacheBypassLocations.css));
+  },
+
+  setCacheBypassLocations: function (value) {
+    this.getCacheBypassLocationsTxtIn().sendKeys(value);
+    return element(by.css('.ui-select-choices-row-inner')).click();
   },
 
   getFirstMileProxyBypassLocationsTxtIn: function () {
@@ -750,12 +765,25 @@ var DomainForm = {
     return element(by.id(this.locators.blocks.cachingRulesBlock.id));
   },
 
+  getExpandCacheRulesBtn: function () {
+    return element(by.css(this.locators.blocks.cachingRulesBlock.expandAllRules));
+  },
+
+  clickExpandCacheRules: function () {
+    return this.getExpandCacheRulesBtn().click();
+  },
+
   getURLtxtIn: function () {
     return element(by.css(this.locators.blocks.URL.css));
   },
 
   getQueryStringParametersToDropKeepTxtIn: function () {
-    return element(by.id(this.locators.textInputs.queryStringParametersToDropKeep.id));
+    return element(by.css(this.locators.textInputs.queryStringParametersToDropKeep.css));
+  },
+
+  setQueryStringParametersToDropKeep: function (value) {
+    this.getQueryStringParametersToDropKeepTxtIn().sendKeys(value);
+    return element(by.css('.ui-select-choices-row-inner')).click();
   },
 
   getAllowedSSLprotocolsTxtIn: function () {
@@ -865,6 +893,11 @@ var DomainForm = {
     return element(by.id(this.locators.numberInputs.edgeCacheTTL.id));
   },
 
+  setEdgeCacheTTL: function (value) {
+    this.getEdgeCacheTTLTxtIn().clear();
+    return this.getEdgeCacheTTLTxtIn().sendKeys(value);
+  },
+
   getOriginTCPportTxtIn: function () {
     return element(by.id(this.locators.numberInputs.originTCPport.id));
   },
@@ -902,6 +935,10 @@ var DomainForm = {
 
   getOverrideOriginCachingHeadersTxtIn: function () {
     return element(by.id(this.locators.switches.overrideOriginCachingHeaders.id));
+  },
+
+  clickOverrideOriginCachingHeaders: function () {
+    return this.getOverrideEdgeCachingTxtIn().click();
   },
 
   getEdgeCachingHeadersMissingTxtIn: function () {
@@ -943,6 +980,11 @@ var DomainForm = {
     return element(by.id(this.locators.numberInputs.browserCachingTTL.id));
   },
 
+  setBrowserCachingTTL: function (value) {
+    this.getBrowserCachingTTL().clear();
+    return this.getBrowserCachingTTL().sendKeys(value);
+  },
+
   getForceRevalidation: function () {
     return element(by.id(this.locators.switches.forceRevalidation.id));
   },
@@ -955,8 +997,18 @@ var DomainForm = {
     return element(by.css(this.locators.switches.staleObjectTTLwhileFetchingNewObject.css));
   },
 
+  setStaleObjectTTLwhileFetchingNewObject: function (value) {
+    this.getStaleObjectTTLwhileFetchingNewObject().clear();
+    return this.getStaleObjectTTLwhileFetchingNewObject().sendKeys(value);
+  },
+
   getStaleObjectTTLwhenOriginIsDown: function () {
     return element(by.css(this.locators.switches.staleObjectTTLwhenOriginIsDown.css));
+  },
+
+  setStaleObjectTTLwhenOriginIsDown: function (value) {
+    this.getStaleObjectTTLwhenOriginIsDown().clear();
+    return this.getStaleObjectTTLwhenOriginIsDown().sendKeys(value);
   },
 
   getEnableESITxtIn: function () {
@@ -967,7 +1019,89 @@ var DomainForm = {
     return element(by.id(this.locators.blocks.manageOriginRequestHeaders.id));
   },
 
+  getAddNewHeaderBtnOrigin: function () {
+    return element
+    .all(by.css(this.locators.blocks.manageOriginRequestHeaders.addNewHeader)).first();
+  },
 
+  clickAddNewHeaderBtnOrigin: function () {
+    return this.getAddNewHeaderBtnOrigin().click();
+  },
+
+  /*
+  * Creates a new Origin Header (clicks add new header and saves it)
+  */
+  createNewOriginHeader: function (header) {
+    if (header === undefined || header === null) {
+      header = {
+        headerName: 'testName',
+        headerValue: 'testValue'
+      };
+    }
+    this.clickAddNewHeaderBtnOrigin();
+    this.getManageOriginRequestHeaders().element(by.css(this
+      .locators
+      .blocks
+      .manageOriginRequestHeaders
+      .editHeader)).click();
+    this.getManageOriginRequestHeaders().element(by.css(this
+      .locators
+      .blocks
+      .manageOriginRequestHeaders
+      .headerName)).sendKeys(header.headerName);
+
+    this.getManageOriginRequestHeaders().element(by.css(this
+      .locators
+      .blocks
+      .manageOriginRequestHeaders
+      .headerValue)).sendKeys(header.headerValue);
+
+    return this.getManageOriginRequestHeaders().element(by.css(this
+      .locators
+      .blocks
+      .manageOriginRequestHeaders
+      .saveHeader)).click();
+  },
+
+  clickAddNewHeaderBtnEnduser: function () {
+    return this.getManageEndUserResponseHeaders()
+      .element(by.css(this.locators.blocks.manageEndUserResponseHeaders.addNewHeader)).click();
+  },
+
+  /*
+  * Creates a new End user Header (clicks add new header and saves it)
+  */
+  createNewEndUserHeader: function (header) {
+    if (header === undefined || header === null) {
+      header = {
+        headerName: 'testName',
+        headerValue: 'testValue'
+      };
+    }
+    this.clickAddNewHeaderBtnEnduser();
+    this.getManageEndUserResponseHeaders().element(by.css(this
+      .locators
+      .blocks
+      .manageEndUserResponseHeaders
+      .editHeader)).click();
+    this.getManageEndUserResponseHeaders().element(by.css(this
+      .locators
+      .blocks
+      .manageEndUserResponseHeaders
+      .headerName)).sendKeys(header.headerName);
+
+    this.getManageEndUserResponseHeaders().element(by.css(this
+      .locators
+      .blocks
+      .manageEndUserResponseHeaders
+      .headerValue)).sendKeys(header.headerValue);
+
+    return this.getManageEndUserResponseHeaders().element(by.css(this
+      .locators
+      .blocks
+      .manageEndUserResponseHeaders
+      .saveHeader)).click();
+  },
 
   getManageEndUserResponseHeaders: function () {
     return element(by.id(this.locators.blocks.manageEndUserResponseHeaders.id));

@@ -34,6 +34,8 @@ describe('Azure Workflow', function () {
             pricingTier: 'Developer'
         };
         var company = DataProvider.generateAccountProfileData();
+        var parentWindow;
+        var popUpWindow;
         beforeAll(function (done) {
             AzurePortal.signIn(azureUser).then(function () {
                 done();
@@ -84,18 +86,18 @@ describe('Azure Workflow', function () {
         it('should successfully redirect to nuu:bit portal ' +
             ' after clicking manage',
             function (done) {
-                AzurePortal.clickGoToResource();
-                browser.sleep(5000);
-                AzurePortal.getSubId().then(function (text) {
-                    azureSubId = text;
-                });
-                AzurePortal.clickManage();
-                browser.sleep(60000).then(function () {
+                AzurePortal.clickGoToResource().then(function () {
+                    AzurePortal.getSubId().then(function (text) {
+                        azureSubId = text;
+                    });
+                    AzurePortal.clickManage();
                     var winHandles = browser.getAllWindowHandles();
                     winHandles.then(function (handles) {
-                        var parentWindow = handles[0];
-                        var popUpWindow = handles[1];
+                        parentWindow = handles[0];
+                        popUpWindow = handles[1];
                         browser.switchTo().window(popUpWindow);
+                        var until = protractor.ExpectedConditions;
+                        browser.wait(until.presenceOf(Portal.dialog.getOkBtn()), 60000);
                         browser.getCurrentUrl().then(function (url) {
                             expect(url).toContain(Constants.PRODUCTION_PORTAL_URL);
                             done();
@@ -121,7 +123,37 @@ describe('Azure Workflow', function () {
                 });
             });
 
-        it('should successfully update company profile',
+        it('should contain correct user role (`Admin`)',
+            function (done) {
+                Portal.header.getUserInfoEl().getText().then(function (text) {
+                    expect(text).toContain('admin');
+                    done();
+                });
+            });
+
+        it('should display `Account Profile` form again if data is not filled and saved',
+            function (done) {
+                Portal.helpers.nav.goToUsers().then(function () {
+                    browser.close();
+                    browser.switchTo().window(parentWindow).then(function () {
+                        AzurePortal.clickManage();
+                        var winHandles = browser.getAllWindowHandles();
+                        winHandles.then(function (handles) {
+                            var parentWindow1 = handles[0];
+                            var popUpWindow1 = handles[1];
+                            browser.switchTo().window(popUpWindow1);
+                            var until = protractor.ExpectedConditions;
+                            browser.wait(until.presenceOf(Portal.dialog.getOkBtn()), 60000);
+                            Portal.dialog.clickOk();
+                            expect(Portal.admin.accounts.editPage.isDisplayed()).toBeTruthy();
+                            done();
+                        });
+                    });
+                });
+            });
+
+        it('should not display `Please fill the form` dialog ' +
+            ' if form was filled and successfully saved',
             function (done) {
                 company.companyName = null;
                 company.country = null;
@@ -129,8 +161,22 @@ describe('Azure Workflow', function () {
                 Portal.admin.accounts.formBilling.fill(company);
                 Portal.admin.accounts.editPage.clickUpdateCompanyProfile();
                 Portal.dialog.clickOk();
-                expect(true).toBeTruthy();
-                done();
+                Portal.helpers.nav.goToUsers().then(function () {
+                    browser.close();
+                    browser.switchTo().window(parentWindow).then(function () {
+                        AzurePortal.clickManage();
+                        var winHandles = browser.getAllWindowHandles();
+                        winHandles.then(function (handles) {
+                            var parentWindow1 = handles[0];
+                            var popUpWindow1 = handles[1];
+                            browser.switchTo().window(popUpWindow1);
+                            var until = protractor.ExpectedConditions;
+                            browser.wait(until.presenceOf(Portal.header.getHeaderBar()), 60000);
+                            expect(Portal.dialog.isDisplayed()).toBeFalsy();
+                            done();
+                        });
+                    });
+                });
             });
     });
 });
