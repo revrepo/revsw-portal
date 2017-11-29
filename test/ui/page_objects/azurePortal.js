@@ -68,7 +68,94 @@ var AzurePortal = {
         css: 'span',
         text: 'Select pricing tier'
       }
+    },
+    deploymentSuccess: {
+      css: 'a',
+      text: 'Deployment succeeded'
+    },
+    goToResource: {
+      css: '.fxs-button[title="Go to resource"]'
+    },
+    subId: 'div.msportalfx-tooltip-overflow',
+    manageBtn: {
+      css: '.fxs-commandBar-item',
+      text: 'Manage'
     }
+  },
+  form: {
+    locators: {
+      resourceName: 'input[placeholder="Enter name"]',
+      resourceGroup: 'input[placeholder=""]',
+      pricingTier: 'div[aria-label="Pricing Tier"]',
+      devTier: {
+        css: 'div.msportalfx-text-header-regular',
+        text: 'Developer'
+      },
+      selectTier: '.fxt-button[title="Select"]',
+      legals: {
+        css: '.fxc-selector-displayText',
+        text: 'Review legal terms'
+      },
+      legalCreateBtn: '.fxt-button[title="Create"]',
+    },
+    setResourceName: function (value) {
+      return element(by.css(this.locators.resourceName)).sendKeys(value);
+    },
+    setResourceGroup: function (value) {
+      return element.all(by.css(this.locators.resourceGroup)).get(1).sendKeys(value);
+    },
+    setPricingTier: function (value, portal) {
+      var me = this;
+      return new Promise(function (resolve, reject) {
+        if (value === undefined || value === null) {
+          value = 'Developer';
+        }
+        element(by.css(me.locators.pricingTier)).click();
+
+        portal.waitForElementByCSSText(me.locators.devTier.css, value).then(function () {
+          element(by.cssContainingText(me.locators.devTier.css, value)).click();
+          browser.sleep(5000);
+          element.all(by.css(me.locators.selectTier)).last().click();
+          resolve(true);
+        });
+      });
+    },
+    setLegals: function (portal) {
+      var me = this;
+      return new Promise(function (resolve, reject) {
+        element(by.cssContainingText(me.locators.legals.css, me.locators.legals.text)).click();
+        portal.waitForElementByCSSText('div', 'Offer details').then(function () {
+          element.all(by.css(me.locators.legalCreateBtn)).last().click();
+          resolve(true);
+        });
+      });
+    },
+    clickCreate: function () {
+      return element.all(by.css(this.locators.legalCreateBtn)).last().click();
+    }
+  },
+  getSubId: function () {
+    return element.all(by.css(this.locators.subId)).last().getText();
+  },
+  clickManage: function () {
+    return element(by.cssContainingText(this
+      .locators
+      .manageBtn
+      .css, this.locators.manageBtn.text)).click();
+  },
+  waitForDeployment: function () {
+    var me = this;
+    return new Promise(function (resolve, reject) {
+      me.waitForElementByCSSText(me
+        .locators
+        .deploymentSuccess
+        .css, me.locators.deploymentSuccess.text).then(function () {
+          resolve(true);
+        });
+    });
+  },
+  clickGoToResource: function () {
+    return element(by.css(this.locators.goToResource.css)).click();
   },
   load: function () {
     browser.get(Constants.AZURE_PORTAL_URL);
@@ -150,7 +237,7 @@ var AzurePortal = {
         });
     });
   },
-  clickNuubitRow: function () {
+  createNuubitCDNResource: function () {
     var me = this;
     return new Promise(function (resolve, reject) {
       me.getNuubitRow().then(function (el) {

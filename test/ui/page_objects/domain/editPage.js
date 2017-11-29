@@ -710,12 +710,17 @@ var EditDomain = {
     this.form.setExpectedHTTPresponseCode('404');
     this.clickTabSSLconfiguration();
     this.form.getSslCertDDownItems().last().click();
+    this.form.getCustomSSLconfigurationTxtIn().click();
+    this.form.setAllowedSSLCiphers('ECDH');
+    this.form.setAllowedSSLProtocols('TLSv1');
     this.clickTabACL();
     this.form.clickACLRulesEnableSw();
     this.clickTabWAF();
     this.form.clickWAFSwitch();
     this.clickExpandWafRulesBtn();
     this.wafRulesTable.getLastRow().clickUseThisRule();
+    browser.executeScript('$(".toast").remove()');
+    browser.sleep(1000);
     this.clickTabBotProtection();
     this.form.clickBotProtectionEnableSw();
     this.form.setBotLocation('/botLocation');
@@ -731,7 +736,7 @@ var EditDomain = {
   },
 
   clearDemo: function () {
-    this.form.clearWildcardDomainAlias();    
+    this.form.clearWildcardDomainAlias();
     this.form.setDataReadTimeout('20');
     this.form.getLastMileQUICprotocolTxtIn().click();
     this.form.getBlockAllWebCrawlersTxtIn().click();

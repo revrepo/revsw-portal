@@ -21,11 +21,19 @@ var config = require('config');
 var Portal = require('./../../page_objects/portal');
 var Constants = require('./../../page_objects/constants');
 var AzurePortal = require('./../../page_objects/azurePortal');
+var DataProvider = require('./../../common/providers/data');
 
 describe('Azure Workflow', function () {
     describe('Account Creation', function () {
         browser.ignoreSynchronization = true;
         var azureUser = config.get('azure.user');
+        var azureSubId = '';
+        var azureSub = {
+            resourceName: 'test' + Date.now(),
+            resourceGroup: 'nuubit' + Date.now(),
+            pricingTier: 'Developer'
+        };
+        var company = DataProvider.generateAccountProfileData();
         beforeAll(function (done) {
             AzurePortal.signIn(azureUser).then(function () {
                 done();
@@ -48,10 +56,81 @@ describe('Azure Workflow', function () {
         it('should load resource creation form after ' +
             ' clicking `Create` button on nuu:bit CDN resource',
             function (done) {
-                AzurePortal.clickNuubitRow().then(function (el) {
+                AzurePortal.createNuubitCDNResource().then(function (el) {
                     expect(el.isDisplayed()).toBeTruthy();
                     done();
                 });
+            });
+
+        it('should successfully create a new nuu:bit CDN resource ' +
+            ' after filling the form with valid data',
+            function (done) {
+                AzurePortal.form.setResourceName(azureSub.resourceName);
+                AzurePortal.form.setResourceGroup(azureSub.resourceGroup);
+                AzurePortal
+                    .form
+                    .setPricingTier(azureSub.pricingTier, AzurePortal).then(function () {
+                        AzurePortal.form.setLegals(AzurePortal).then(function () {
+                            browser.sleep(2000);
+                            AzurePortal.form.clickCreate();
+                            AzurePortal.waitForDeployment().then(function () {
+                                expect(true).toBeTruthy();
+                                done();
+                            });
+                        });
+                    });
+            });
+
+        it('should successfully redirect to nuu:bit portal ' +
+            ' after clicking manage',
+            function (done) {
+                AzurePortal.clickGoToResource();
+                browser.sleep(5000);
+                AzurePortal.getSubId().then(function (text) {
+                    azureSubId = text;
+                });
+                AzurePortal.clickManage();
+                browser.sleep(60000).then(function () {
+                    var winHandles = browser.getAllWindowHandles();
+                    winHandles.then(function (handles) {
+                        var parentWindow = handles[0];
+                        var popUpWindow = handles[1];
+                        browser.switchTo().window(popUpWindow);
+                        browser.getCurrentUrl().then(function (url) {
+                            expect(url).toContain(Constants.PRODUCTION_PORTAL_URL);
+                            done();
+                        });
+                    });
+                });
+            });
+
+        // Now we work with angular, finally!
+        it('should display welcome dialog',
+            function (done) {
+                expect(Portal.dialog.isDisplayed()).toBeTruthy();
+                Portal.dialog.clickOk();
+                done();
+            });
+
+        it('should contain correct subscription data',
+            function (done) {
+                Portal.header.getUserInfoEl().getText().then(function (text) {
+                    expect(text).toContain(azureSubId);
+                    expect(text).toContain(azureSub.resourceName);
+                    done();
+                });
+            });
+
+        it('should successfully update company profile',
+            function (done) {
+                company.companyName = null;
+                company.country = null;
+                Portal.admin.accounts.formProfile.fill(company);
+                Portal.admin.accounts.formBilling.fill(company);
+                Portal.admin.accounts.editPage.clickUpdateCompanyProfile();
+                Portal.dialog.clickOk();
+                expect(true).toBeTruthy();
+                done();
             });
     });
 });
