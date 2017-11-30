@@ -61,7 +61,8 @@ var DomainForm = {
         id: 'domain_wildcard_alias'
       },
       nonWildcardDomainAliases: {
-        id: 'non-Wildcard-Domain-Aliases'
+        id: 'non-Wildcard-Domain-Aliases',
+        css: '#non-Wildcard-Domain-Aliases input'
       },
       originMonitoringHTTPrequest: {
         id: 'originMonitoringHTTPrequest'
@@ -118,8 +119,21 @@ var DomainForm = {
       },
       imageEngineOriginServer: {
         id: 'imageEngineOriginServer'
+      },
+      ipSubnet: {
+        model: 'IP_CIDR'
+      },
+      aclCountry: {
+        model: 'ngCountry'
+      },
+      aclHeaderName: {
+        css: '.ng-valid-acl-rule-header-name',
+        model: '$ctrl.aclRule.header_name'
+      },
+      aclHeaderValue: {
+        css: 'input[validate-acl-rule-header-value=""]',
+        model: '$ctrl.aclRule.header_value'
       }
-
     },
     textareas: {
       backendVCLcode: {
@@ -737,7 +751,12 @@ var DomainForm = {
   },
 
   getNonWildcardDomainAliasesTxtIn: function () {
-    return element(by.id(this.locators.textInputs.nonWildcardDomainAliases.id));
+    return element(by.css(this.locators.textInputs.nonWildcardDomainAliases.css));
+  },
+
+  setNonWildcardDomainAliases: function (value) {
+    this.getNonWildcardDomainAliasesTxtIn().sendKeys(value);
+    return element(by.css('.ui-select-choices-row-inner')).click();
   },
 
   getOriginMonitoringHTTPrequestTxtIn: function () {
@@ -1021,7 +1040,7 @@ var DomainForm = {
 
   getAddNewHeaderBtnOrigin: function () {
     return element
-    .all(by.css(this.locators.blocks.manageOriginRequestHeaders.addNewHeader)).first();
+      .all(by.css(this.locators.blocks.manageOriginRequestHeaders.addNewHeader)).first();
   },
 
   clickAddNewHeaderBtnOrigin: function () {
@@ -1107,6 +1126,40 @@ var DomainForm = {
     return element(by.id(this.locators.blocks.manageEndUserResponseHeaders.id));
   },
 
+  getACLIPSubnetTxtIn: function () {
+    return element(by.model(this.locators.textInputs.ipSubnet.model));
+  },
+
+  setACLIPSubnet: function (value) {
+    this.getACLIPSubnetTxtIn().clear();
+    return this.getACLIPSubnetTxtIn().sendKeys(value);
+  },
+
+  getACLCountry: function () {
+    return new DropDownWidget(by.model(this.locators.textInputs.aclCountry.model));
+  },
+
+  setACLCountry: function (value) {
+    return this.getACLCountry().setValue(value);
+  },
+
+  getACLHeaderNameTxtIn: function () {
+    return element(by.model(this.locators.textInputs.aclHeaderName.model));
+  },
+
+  getACLHeaderValueTxtIn: function () {
+    return element(by.model(this.locators.textInputs.aclHeaderValue.model));
+  },
+
+  setACLHeaderName: function (value) {
+    this.getACLHeaderNameTxtIn().clear();
+    return this.getACLHeaderNameTxtIn().sendKeys(value);
+  },
+
+  setACLHeaderValue: function (value) {
+    this.getACLHeaderValueTxtIn().clear();
+    return this.getACLHeaderValueTxtIn().sendKeys(value);
+  },
 
   getAcceptSSLrequestsTxtIn: function () {
     return element(by.id(this.locators.switches.acceptSSLrequests.id));

@@ -693,8 +693,26 @@ var EditDomain = {
     return this.getExpandWafRulesBtn().click();
   },
 
+  enableVCL: function () {
+    this.clickTabVCL();
+    return this.form.clickCustomVCLRulesSw();
+  },
+
+  enableWAF: function () {
+    this.clickTabWAF();
+    return this.form.clickWAFSwitch();
+  },
+
+  enableLua: function () {
+    this.clickTabLuaScripting();
+    this.form.clickEnableLuaScriptingOnEdgeLastMile();
+    return this.form.clickEnableLuaScriptingOriginFirstMile();
+  },
+
   fillDemo: function (domain, domainUpdateData) {
     /* jshint maxstatements:120 */
+    this.form.getEnableEnhancedAnalytics().click();    
+    this.form.setNonWildcardDomainAliases('test.' + domain.name);
     this.form.setWildcardDomainAlias('*.' + domain.name);
     this.form.setFirstMileProxyBypass('TEST');
     this.form.setFirstMileProxyBypass('TEST2');
@@ -743,8 +761,13 @@ var EditDomain = {
     this.form.setAllowedSSLProtocols('TLSv1');
     this.clickTabACL();
     this.form.clickACLRulesEnableSw();
+    this.form.setACLIPSubnet('8.8.8.8/32');
+    this.form.setACLCountry('Canada');
+    this.form.setACLHeaderName('testName');
+    this.form.setACLHeaderValue('testValue');
     this.clickTabWAF();
     this.form.clickWAFSwitch();
+    this.form.setWAFLocation('/wafLocation/');
     this.clickExpandWafRulesBtn();
     this.wafRulesTable.getLastRow().clickUseThisRule();
     browser.executeScript('$(".toast").remove()');
@@ -753,11 +776,8 @@ var EditDomain = {
     this.form.clickBotProtectionEnableSw();
     this.form.setBotLocation('/botLocation');
     this.form.setBotProtectionID('123');
-    this.clickTabVCL();
-    this.form.clickCustomVCLRulesSw();
-    this.clickTabLuaScripting();
-    this.form.clickEnableLuaScriptingOnEdgeLastMile();
-    this.form.clickEnableLuaScriptingOriginFirstMile();
+    this.enableVCL();
+    this.enableLua();
     this.clickTabImageEngine();
     this.form.clickImageEngine();
     return element(by.css('button[ng-click="ok()"]')).click();
