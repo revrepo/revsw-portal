@@ -493,6 +493,7 @@ var UsageReport = {
     this.getCompanySearchTxt().sendKeys(value);
     return this
       .getCompanySearchTxt()
+      .sendKeys(protractor.Key.DOWN)
       .sendKeys(protractor.Key.ENTER);
   },
 
