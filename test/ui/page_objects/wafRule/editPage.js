@@ -42,6 +42,7 @@ var EditWAFRule = {
         id: 'btnVerify'
       },
       update: {
+        id: 'btnUpdate',
         linkText: 'Update'
       },
       cancel: {
@@ -103,7 +104,7 @@ var EditWAFRule = {
    * @returns {Selenium WebDriver Element}
    */
   getUpdateBtn: function () {
-    return element(by.partialLinkText(this.locators.buttons.update.linkText));
+    return element(by.id(this.locators.buttons.update.id));
   },
 
   /**

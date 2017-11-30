@@ -41,6 +41,9 @@ var WAFRuleNameForm = {
       },
       wafRuleStatements: {
         id: 'ruleStatements'
+      },
+      wafRuleBody: {
+        id: 'rule_body'
       }
     },
     dropDowns: {
@@ -81,6 +84,30 @@ var WAFRuleNameForm = {
   getWAFRuleName: function () {
     return this
       .getWAFRuleNameTxtIn()
+      .getAttribute('value');
+  },
+  /**
+* ### WAFRuleNameForm.getWAFRuleDescription()
+*
+* Returns the value of the rule description input field
+*
+* @returns {Object} Selenium WebDriver Element
+*/
+  getWAFRuleDescription: function () {
+    return this
+      .getWAFRuleDescriptionTxtIn()
+      .getAttribute('value');
+  },
+  /**
+   * ### WAFRuleNameForm.getWAFRuleStatements()
+   *
+   * Returns the value of the rule statements input field
+   *
+   * @returns {Object} Selenium WebDriver Element
+   */
+  getWAFRuleStatements: function () {
+    return this
+      .getWAFRuleStatementsTxtIn()
       .getAttribute('value');
   },
   /**
@@ -171,6 +198,7 @@ var WAFRuleNameForm = {
    * @returns {Object} Promise
    */
   setWAFRuleDescription: function (value) {
+    this.getWAFRuleDescriptionTxtIn().clear();
     return this
       .getWAFRuleDescriptionTxtIn()
       .sendKeys(value);
@@ -217,6 +245,7 @@ var WAFRuleNameForm = {
    * @returns {Object} Promise
    */
   setWAFRuleStatements: function (value) {
+    this.getWAFRuleStatementsTxtIn().clear();
     return this
       .getWAFRuleStatementsTxtIn()
       .sendKeys(value);

@@ -104,7 +104,7 @@
             <label for="rule_body" class="col-sm-2 control-label">WAF Rule Statements *</label>
             <div class="col-md-10">
               <div class="col-sm-12 form-group">
-                <textarea id="rule_body" placeholder="Public WAF Rule" class="form-control text--courier inline-block" name="rule_body" ng-model="model.rule_body"
+                <textarea id="ruleStatements" placeholder="Public WAF Rule" class="form-control text--courier inline-block" name="rule_body" ng-model="model.rule_body"
                   ng-disabled="_loading" ng-maxlength="65000" required>
                 </textarea>
                 <label for="rule_body" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Specify here WAF rule statements in defined format">

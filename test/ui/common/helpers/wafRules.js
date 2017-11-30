@@ -18,10 +18,15 @@
 
 
 var API = require('./../api').API;
+var request = require('supertest-as-promised');
 var apiWAFRulesDP = require('./../api').WAFRulesDP;
 var Session = require('./../session');
-
- var WAFRulesHelper = {
+var config = require('config');
+var user = config.get('portal.users.admin');
+var apiUrl = config.get('api.host.protocol') +
+  '://' +
+  config.get('api.host.name');
+var WAFRulesHelper = {
 
   /**
    * Creates a new WAF Rule through REST API end-point for Account current user.
@@ -30,7 +35,7 @@ var Session = require('./../session');
    * @returns {Object} Promise
    */
   createOneForUser: function (data) {
-    var user = Session.getCurrentUser();
+    user = Session.getCurrentUser();
     if (data === undefined) {
       data = apiWAFRulesDP.generateOne();
     }
@@ -48,6 +53,40 @@ var Session = require('./../session');
       .then(function (wafRule) {
         return wafRule;
       });
+  },
+  /**
+           * ### wafRules.getWafRule()
+           *
+           * Returns a WAF Rule JSON object
+           *
+           */
+  getWafRule: function (wafRuleName) {
+    /*jshint camelcase: false */
+    return API.helpers.authenticateUser(user).then(function () {
+      return request(apiUrl)
+        .get('/v1/waf_rules')
+        .set('Authorization', 'Bearer ' + user.token)
+        .expect(200)
+        .then(function (res) {
+          var wafRules = res.body;
+          var returnRule;
+          wafRules.forEach(function (rule) {
+            if (rule.rule_name === wafRuleName) {
+              returnRule = rule;
+            }
+          });
+          return request(apiUrl)
+            .get('/v1/waf_rules/' + returnRule.id)
+            .set('Authorization', 'Bearer ' + user.token)
+            .expect(200)
+            .then(function (res) {
+              var rul = res.body;
+              rul.id = returnRule.id;
+              return rul;
+            });
+        });
+    });
+
   }
 };
 

@@ -22,13 +22,12 @@ var DataProvider = require('./../../../common/providers/data');
 
 describe('Workflow', function () {
 
-  // Defining set of users for which all below tests will be run
   var user = config.get('portal.users.admin');
 
   describe('With user: ' + user.role, function () {
     /* api json is all camel_case */
     /* jshint camelcase:false */
-    describe('Add SSL Cert', function () {
+    describe('SSL Cert Add Edit Integrity', function () {
 
       var sslCertData = {
         account: [user.account.companyName]
@@ -63,7 +62,7 @@ describe('Workflow', function () {
         return target.replace(new RegExp(search, 'g'), replacement);
       };
       /* jshint ignore:end */
-      
+
       it('should contain correct data in a newly created SSL Cert JSON object',
         function () {
           expect(sslCert.public_ssl_cert)
