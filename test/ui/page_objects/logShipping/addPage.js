@@ -44,7 +44,8 @@ var AddLogShipping = {
         linkText: 'Cancel'
       },
       createJob: {
-        css: 'i.glyphicon-ok'
+        css: 'i.glyphicon-ok',
+        id: 'btnCreateJob'
       },
       saveJob: {
         css: '.btn.btn-success'
@@ -95,7 +96,7 @@ var AddLogShipping = {
    * @returns {Object} Selenium WebDriver Element
    */
   getCreateJobBtn: function () {
-    return element(by.css(this.locators.buttons.createJob.css));
+    return element(by.id(this.locators.buttons.createJob.id));
   },
 
   /**

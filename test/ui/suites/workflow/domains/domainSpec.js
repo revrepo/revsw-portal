@@ -73,6 +73,8 @@ describe('Workflow', function () {
                     updatedDisabledDomain.id = domain.id;
                     updatedDisabledDomain.cname = domainData.name + '.revqa.net';
                     updatedDisabledDomain.domain_name = domainData.name;
+                    updatedDisabledDomain.domain_aliases = ['test.' + domainData.name];
+                    updatedDomain.domain_aliases = ['test.' + domainData.name];
                     expect(JSON.stringify(domain)).toBe(JSON.stringify(defaultDomain));
                     done();
                 });

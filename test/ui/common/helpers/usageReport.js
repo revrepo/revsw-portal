@@ -48,14 +48,14 @@ var usageReport = {
                         new Error(err);
                     }
                     if (res !== undefined && res.status === 200) {
-                        
+
                         return res.text.message;
                     }
                 });
         });
     },
 
-    expectValue: function (page, value, done, form) {     
+    expectValue: function (page, value, done, form) {
         var times = Constants.USAGE_REPORT_POLLING_TIMEOUT;
         var interval = Constants.USAGE_REPORT_POLLING_INTERVAL;
         var polling = function () {
@@ -78,7 +78,79 @@ var usageReport = {
             }
         };
         polling();
-    }
+    },
+
+    /**
+       * ### usageReport.getTrafficAvgPerDay()
+       *
+       * Call the /usage_report/web/stats API endpoint
+       *
+       * @returns {Promise}
+       */
+    getTrafficAvgPerDay: function (accId, from, to, user) {
+        /*jshint camelcase: false */
+        var apiUrl = config.get('api.host.protocol') +
+            '://' +
+            config.get('api.host.name') + ':' +
+            config.get('api.host.port');
+        var from_date = new Date(from);
+        from_date = from_date.getFullYear() +
+            '-' +
+            from_date.getMonth() +
+            '-0' +
+            from_date.getDate();
+        var to_date = new Date(to);
+        if (to_date.getDate().length === 1) {
+            to_date = to_date.getFullYear() + '-' + to_date.getMonth() + '-0' + to_date.getDate();
+        } else {
+            to_date = to_date.getFullYear() + '-' + to_date.getMonth() + '-' + to_date.getDate();
+        }
+        var traffic = '';
+        var cache_hits = '';
+        var port_hits = '';
+        return API.helpers.authenticateUser(user).then(function () {
+            return request(apiUrl)
+                .get('/v1/usage_reports/web?account_id=' +
+                accId +
+                '&from=' +
+                from_date +
+                '&to=' +
+                to_date)
+                .set('Authorization', 'Bearer ' + user.token)
+                .then(function (res, err) {
+
+                    if (err !== undefined) {
+                        new Error(err);
+                    }
+                    if (res !== undefined && res.status === 200) {
+                        traffic = res.body.data[0].traffic;
+                        cache_hits = res.body.data[0].cache_hits;
+                        port_hits = res.body.data[0].port_hits;
+                        return request(apiUrl)
+                            .get('/v1/usage_reports/web/stats?account_id=' + 
+                            accId + 
+                            '&from_timestamp=' +
+                            from + '&to_timestamp=' +
+                            to)
+                            .set('Authorization', 'Bearer ' + user.token)
+                            .expect(200);
+                    }
+                })
+                .then(function (res, err) {
+                    if (err !== undefined) {
+                        new Error(err);
+                    }
+                    if (res !== undefined && res.status === 200) {
+                        res.body.dataTraffic = traffic;
+                        res.body.cacheHits = cache_hits;
+                        res.body.portHits = port_hits;
+                        return res.body;
+                    }
+
+                });
+
+        });
+    },
 };
 
 module.exports = usageReport;
