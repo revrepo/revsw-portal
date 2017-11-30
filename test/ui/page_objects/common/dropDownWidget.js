@@ -32,6 +32,9 @@ var DropDownWidget = function (dropDownLocator) {
     },
     options: {
       css: '.ui-select-choices-row .ng-scope'
+    },
+    chosen: {
+      css: '.select2-chosen'
     }
   };
 };
@@ -65,6 +68,10 @@ DropDownWidget.prototype.setValue = function (value) {
       .getOption(value)
       .click();
   }
+};
+
+DropDownWidget.prototype.getValue = function () {
+  return this.container.element(by.css(this.locators.chosen.css)).getText();
 };
 
 module.exports = DropDownWidget;
