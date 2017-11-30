@@ -780,7 +780,11 @@ var EditDomain = {
     this.enableLua();
     this.clickTabImageEngine();
     this.form.clickImageEngine();
-    return element(by.css('button[ng-click="ok()"]')).click();
+    element(by.css('button[ng-click="ok()"]')).click();
+    this.form.setImageEngineAPIKeyTxtIn('thisismycoolapikey');
+    this.form.setImageEngineOriginServerTxtIn('thisismycoolserver.com');
+    this.form.setImageEngineTokenTxtIn('thisismycooltoken');
+    return this.form.getSetImageEngineConfigurationSw().click();     
   },
 
   clearDemo: function () {

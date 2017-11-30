@@ -466,11 +466,11 @@ var Constants = {
       acl: {
         acl_rules: [
           {
-            country_code: '',
-            header_name: '',
-            header_value: '',
-            host_name: '',
-            subnet_mask: ''
+            country_code: 'CA',
+            header_name: 'testName',
+            header_value: 'testValue',
+            host_name: '8.8.8.8',
+            subnet_mask: '32'
           }
         ],
         action: 'deny_except',
@@ -586,9 +586,9 @@ var Constants = {
     origin_secure_protocol: 'use_end_user_protocol',
     image_engine: {
       enable_image_engine: true,
-      image_engine_token: '',
-      image_engine_api_key: '',
-      image_engine_origin_server: '',
+      image_engine_token: 'thisismycooltoken',
+      image_engine_api_key: 'thisismycoolapikey',
+      image_engine_origin_server: 'thisismycoolserver.com',
       refresh_image_engine_configuration: false,
       custom_configuration_present: false
     },
@@ -597,8 +597,7 @@ var Constants = {
     account_id: '55b6ff6a7957012304a49d04',
     tolerance: '3000',
     origin_server_location_id: '55a56fa6476c10c329a90741',
-    domain_aliases: [
-
+    domain_aliases: [      
     ],
     domain_wildcard_alias: '*.test-domain-1511945386215-portal-ui-test.com',
     enable_origin_health_probe: true,
@@ -650,11 +649,11 @@ var Constants = {
       "acl": {
         "acl_rules": [
           {
-            "country_code": "",
-            "header_name": "",
-            "header_value": "",
-            "host_name": "",
-            "subnet_mask": ""
+            "country_code": "CA",
+            "header_name": "testName",
+            "header_value": "testValue",
+            "host_name": "8.8.8.8",
+            "subnet_mask": "32"
           }
         ],
         "action": "deny_except",
@@ -770,9 +769,9 @@ var Constants = {
     "origin_secure_protocol": "use_end_user_protocol",
     "image_engine": {
       "enable_image_engine": false,
-      "image_engine_token": "",
-      "image_engine_api_key": "",
-      "image_engine_origin_server": "",
+      "image_engine_token": "thisismycooltoken",
+      "image_engine_api_key": "thisismycoolapikey",
+      "image_engine_origin_server": "thisismycoolserver.com",
       "refresh_image_engine_configuration": false,
       "custom_configuration_present": true
     },
