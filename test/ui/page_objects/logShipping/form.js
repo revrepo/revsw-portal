@@ -50,7 +50,8 @@ var LogShippingForm = {
         id: 'destination_username'
       },
       password: {
-        id: 'destination_password'
+        id: 'destination_password',
+        showPass: '#spnPassword'
       },
       emailForProblemNotification: {
         id: 'notification_email'
@@ -273,7 +274,38 @@ var LogShippingForm = {
   getJobName: function () {
     return this
       .getJobNameTxtIn()
-      .getText();
+      .getAttribute('value');
+  },
+  getHost: function () {
+    return this
+    .getHostTxtIn()
+    .getAttribute('value');
+  },
+  getPort: function () {
+    return this
+    .getPortTxtIn()
+    .getAttribute('value');
+  },
+  getUsername: function () {
+    return this
+    .getUserNameTxtIn()
+    .getAttribute('value');
+  },
+  getPassword: function () {
+    element(by.css(this.locators.textInputs.password.showPass)).click();
+    return this
+    .getPasswordTxtIn()
+    .getAttribute('value');
+  },
+  getEmail: function () {
+    return this
+    .getEmailTxtIn()
+    .getAttribute('value');
+  },
+  getComment: function () {
+    return this
+    .getCommentTxtIn()
+    .getAttribute('value');
   },
 
   /**

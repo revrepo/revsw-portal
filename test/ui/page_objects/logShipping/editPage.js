@@ -42,7 +42,7 @@ var EditLogShipping = {
                 linkText: 'Cancel'
             },
             update: {
-                css: 'i.glyphicon-ok'
+                css: '#btnUpdate'
             },
             confirmUpdate: {
                 css: '.btn.btn-success'

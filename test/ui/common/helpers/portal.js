@@ -25,16 +25,17 @@ var MobileAppsHelper = require('./mobileApps');
 var UsersHelper = require('./users');
 var WAFRulesHelper = require('./wafRules');
 var AccountsHelper = require('./accounts');
+var LogShippingHelper = require('./logShipping');
 
 // Abstracts common functionality for the Portal.
 var PortalHelpers = {
   nav: NavHelper,
-
   dnsZones: DNSZonesHelper,
   mobileApps: MobileAppsHelper,
   users: UsersHelper,
   wafRules: WAFRulesHelper,
-  accounts: AccountsHelper
+  accounts: AccountsHelper,
+  logShipping: LogShippingHelper
 };
 
 module.exports = PortalHelpers;
