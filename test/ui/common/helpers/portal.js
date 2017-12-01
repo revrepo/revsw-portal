@@ -24,6 +24,7 @@ var DNSZonesHelper = require('./dnsZones');
 var MobileAppsHelper = require('./mobileApps');
 var UsersHelper = require('./users');
 var WAFRulesHelper = require('./wafRules');
+var AccountsHelper = require('./accounts');
 
 // Abstracts common functionality for the Portal.
 var PortalHelpers = {
@@ -32,7 +33,8 @@ var PortalHelpers = {
   dnsZones: DNSZonesHelper,
   mobileApps: MobileAppsHelper,
   users: UsersHelper,
-  wafRules: WAFRulesHelper
+  wafRules: WAFRulesHelper,
+  accounts: AccountsHelper
 };
 
 module.exports = PortalHelpers;
