@@ -170,7 +170,7 @@ var EditApiKey = {
    */
   updateKey: function (apiKey) {
     this.form.fill(apiKey);
-    this.form.clickUpdate();
+    return this.form.clickUpdate();
   }
 };
 
