@@ -19,7 +19,9 @@
 // # Utils object
 
 // Requiring config file
+var API = require('./../api').API;
 var config = require('config');
+var request = require('supertest-as-promised');
 
 // `Utils` object that has definitions of methods fo specific operations that
 // could be used in different classes and resources.
@@ -48,12 +50,66 @@ var Utils = {
   },
 
   /**
+   * ### Utils.getAPIUrl()
+   *
+   * Generates the API url of the App under test.
+   *
+   * @returns {string} The API url
+   */
+  getAPIUrl: function () {
+    return config.get('api.host.protocol') +
+      '://' +
+      config.get('api.host.name');
+  },
+
+  /**
    * Clones a given JSON object.
    * \
    * @param {Object} obj, object to clone
    */
-  clone: function(obj) {
+  clone: function (obj) {
     return JSON.parse(JSON.stringify(obj));
+  },
+
+  /**
+  * Gets an item from the API by a specific field.
+  * 
+  * @param {String} value value to get the item by
+  * @param {String} field name of the field, name/companyName/email
+  * @param {Object} user user
+  * @param {String} endpoint API endpoint
+  */
+  getItem: function (value, field, user, endpoint) {
+    var apiUrl = this.getAPIUrl();
+    return API.helpers.authenticateUser(user).then(function () {
+      return request(apiUrl)
+        .get(endpoint)
+        .set('Authorization', 'Bearer ' + user.token)
+        .expect(200)
+        .then(function (res) {
+          if (res.status !== 200) {
+            throw new Error(res.error);
+          } else {
+            var returnItem;
+            res.body.forEach(function (item) {
+              if (item[field] === value) {
+                returnItem = item;
+              }
+            });
+            if (returnItem === undefined) {
+              throw new Error('Item not found');
+            } else {
+              return request(apiUrl)
+                .get(endpoint + '/' + returnItem.id)
+                .set('Authorization', 'Bearer ' + user.token)
+                .expect(200)
+                .then(function (res) {
+                  return res.body;
+                });
+            }
+          }
+        });
+    });
   }
 };
 

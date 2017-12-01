@@ -23,6 +23,7 @@ var user = config.get('portal.users.admin');
 var apiUrl = config.get('api.host.protocol') +
     '://' +
     config.get('api.host.name');
+var Utils = require('./utils');
 var apiKeys = {
 
     /**
@@ -43,38 +44,13 @@ var apiKeys = {
     },
 
     /**
-           * ### apiKeys.getAPIKey()
-           *
-           * Returns an API Key JSON object
-           *
-           */
+     * ### apiKeys.getAPIKey()
+     *
+     * Returns an API Key JSON object
+     *
+     */
     getAPIKey: function (name) {
-        /*jshint camelcase: false */
-        return API.helpers.authenticateUser(user).then(function () {
-            return requestPromise(apiUrl)
-                .get('/v1/api_keys')
-                .set('Authorization', 'Bearer ' + user.token)
-                .expect(200)
-                .then(function (res) {
-                    var keys = res.body;
-                    var returnKey;
-                    keys.forEach(function (key) {                   
-                        if (key.key_name === name) {
-                            returnKey = key;
-                        }
-                    });
-                    return requestPromise(apiUrl)
-                        .get('/v1/api_keys/' + returnKey.id)
-                        .set('Authorization', 'Bearer ' + user.token)
-                        .expect(200)
-                        .then(function (res) {
-                            var k = res.body;
-                            k.id = returnKey.id;
-                            return k;
-                        });
-                });
-        });
-
+        return Utils.getItem(name, 'key_name', user, '/v1/api_keys');
     }
 };
 

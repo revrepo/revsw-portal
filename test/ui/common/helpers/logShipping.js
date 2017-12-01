@@ -16,50 +16,19 @@
  * from Rev Software, Inc.
  */
 
-
-var API = require('./../api').API;
-var Session = require('./../session');
 var config = require('config');
 var user = config.get('portal.users.revAdmin');
-var apiUrl = config.get('api.host.protocol') +
-  '://' +
-  config.get('api.host.name');
-var request = require('supertest-as-promised');
+var Utils = require('./utils');
 var LogShippingHelper = {
   
   /**
-           * ### logShipping.getJob()
-           *
-           * Returns a Log Shipping Job JSON object
-           *
-           */
+   * ### logShipping.getJob()
+   *
+   * Returns a Log Shipping Job JSON object
+   *
+   */
   getJob: function (name) {
-    /*jshint camelcase: false */
-    return API.helpers.authenticateUser(user).then(function () {
-      return request(apiUrl)
-        .get('/v1/log_shipping_jobs')
-        .set('Authorization', 'Bearer ' + user.token)
-        .expect(200)
-        .then(function (res) {
-          var jobs = res.body;
-          var returnJob;
-          jobs.forEach(function (job) {
-            if (job.job_name === name) {
-              returnJob = job;              
-            }
-          });
-          return request(apiUrl)
-            .get('/v1/log_shipping_jobs/' + returnJob.id)
-            .set('Authorization', 'Bearer ' + user.token)
-            .expect(200)
-            .then(function (res) {
-              var jb = res.body;
-              jb.id = returnJob.id;
-              return jb;
-            });
-        });
-    });
-
+    return Utils.getItem(name, 'job_name', user, '/v1/log_shipping_jobs');
   }
 };
 

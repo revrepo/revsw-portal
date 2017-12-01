@@ -16,50 +16,19 @@
  * from Rev Software, Inc.
  */
 
-
-var API = require('./../api').API;
-var Session = require('./../session');
 var config = require('config');
 var user = config.get('portal.users.revAdmin');
-var apiUrl = config.get('api.host.protocol') +
-  '://' +
-  config.get('api.host.name');
-var request = require('supertest-as-promised');
+var Utils = require('./utils');
 var AccountsHelper = {
   
   /**
-           * ### accounts.getAccount()
-           *
-           * Returns an Account JSON object
-           *
-           */
+   * ### accounts.getAccount()
+   *
+   * Returns an Account JSON object
+   *
+   */
   getAccount: function (name) {
-    /*jshint camelcase: false */
-    return API.helpers.authenticateUser(user).then(function () {
-      return request(apiUrl)
-        .get('/v1/accounts')
-        .set('Authorization', 'Bearer ' + user.token)
-        .expect(200)
-        .then(function (res) {
-          var accs = res.body;
-          var returnAcc;
-          accs.forEach(function (acc) {
-            if (acc.companyName === name) {
-              returnAcc = acc;              
-            }
-          });
-          return request(apiUrl)
-            .get('/v1/accounts/' + returnAcc.id)
-            .set('Authorization', 'Bearer ' + user.token)
-            .expect(200)
-            .then(function (res) {
-              var ac = res.body;
-              ac.id = returnAcc.id;
-              return ac;
-            });
-        });
-    });
-
+    return Utils.getItem(name, 'companyName', user, '/v1/accounts');
   }
 };
 

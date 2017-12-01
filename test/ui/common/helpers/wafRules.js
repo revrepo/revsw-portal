@@ -23,9 +23,7 @@ var apiWAFRulesDP = require('./../api').WAFRulesDP;
 var Session = require('./../session');
 var config = require('config');
 var user = config.get('portal.users.admin');
-var apiUrl = config.get('api.host.protocol') +
-  '://' +
-  config.get('api.host.name');
+var Utils = require('./utils');
 var WAFRulesHelper = {
 
   /**
@@ -55,38 +53,13 @@ var WAFRulesHelper = {
       });
   },
   /**
-           * ### wafRules.getWafRule()
-           *
-           * Returns a WAF Rule JSON object
-           *
-           */
+   * ### wafRules.getWafRule()
+   *
+   * Returns a WAF Rule JSON object
+   *
+   */
   getWafRule: function (wafRuleName) {
-    /*jshint camelcase: false */
-    return API.helpers.authenticateUser(user).then(function () {
-      return request(apiUrl)
-        .get('/v1/waf_rules')
-        .set('Authorization', 'Bearer ' + user.token)
-        .expect(200)
-        .then(function (res) {
-          var wafRules = res.body;
-          var returnRule;
-          wafRules.forEach(function (rule) {
-            if (rule.rule_name === wafRuleName) {
-              returnRule = rule;
-            }
-          });
-          return request(apiUrl)
-            .get('/v1/waf_rules/' + returnRule.id)
-            .set('Authorization', 'Bearer ' + user.token)
-            .expect(200)
-            .then(function (res) {
-              var rul = res.body;
-              rul.id = returnRule.id;
-              return rul;
-            });
-        });
-    });
-
+    return Utils.getItem(wafRuleName, 'rule_name', user, '/v1/waf_rules');
   }
 };
 
