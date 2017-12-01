@@ -19,7 +19,12 @@
 
 var API = require('./../api').API;
 var Session = require('./../session');
-
+var config = require('config');
+var user = config.get('portal.users.admin');
+var apiUrl = config.get('api.host.protocol') +
+  '://' +
+  config.get('api.host.name');
+var request = require('supertest-as-promised');
 var UsersHelper = {
 
   /**
@@ -55,6 +60,41 @@ var UsersHelper = {
           // company: ??
         };
       });
+  },
+
+  /**
+           * ### users.getUser()
+           *
+           * Returns a User JSON object
+           *
+           */
+  getUser: function (email) {
+    /*jshint camelcase: false */
+    return API.helpers.authenticateUser(user).then(function () {
+      return request(apiUrl)
+        .get('/v1/users')
+        .set('Authorization', 'Bearer ' + user.token)
+        .expect(200)
+        .then(function (res) {
+          var users = res.body;
+          var returnUser;
+          users.forEach(function (usr) {
+            if (usr.email === email) {
+              returnUser = usr;              
+            }
+          });
+          return request(apiUrl)
+            .get('/v1/users/' + returnUser.user_id)
+            .set('Authorization', 'Bearer ' + user.token)
+            .expect(200)
+            .then(function (res) {
+              var ur = res.body;
+              ur.user_id = returnUser.user_id;
+              return ur;
+            });
+        });
+    });
+
   }
 };
 

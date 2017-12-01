@@ -38,7 +38,6 @@ describe('Workflow', function () {
         Portal.wafRules.addPage.createCustomWAFRule(customWAFRule).then(function () {
           Portal.helpers.wafRules.getWafRule(customWAFRule.ruleName).then(function (rule) {
             wafRule = rule;
-            console.log(wafRule);
             done();
           });
         });
