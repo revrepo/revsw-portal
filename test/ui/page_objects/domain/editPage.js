@@ -698,21 +698,18 @@ var EditDomain = {
     return this.form.clickCustomVCLRulesSw();
   },
 
-  fillVCL: function (value) {
-    if (value === undefined && value === null) {
-      value = '# Test';
-    }
-    this.form.setRecvFunction(value);
-    this.form.setHitFunction(value);
-    this.form.setHashFunction(value);
-    this.form.setPassFunction(value);
-    this.form.setPipeFunction(value);
-    this.form.setSynthFunction(value);
-    this.form.setDeliverFunction(value);
-    this.form.setMissFunction(value);
-    this.form.setBackendErrorFunction(value);
-    this.form.setBackendFetchFunction(value);
-    return this.form.setBackendResponseFunction(value);
+  fillVCL: function () {
+    this.form.setRecvFunction('# Comment <recv>');
+    this.form.setHitFunction('# Comment <hit>');
+    this.form.setHashFunction('# Comment <hash>');
+    this.form.setPassFunction('# Comment <pass>');
+    this.form.setPipeFunction('# Comment <pipe>');
+    this.form.setSynthFunction('# Comment <synth>');
+    this.form.setDeliverFunction('# Comment <deliver>');
+    this.form.setMissFunction('# Comment <miss>');
+    this.form.setBackendErrorFunction('# Comment <backend_error>');
+    this.form.setBackendFetchFunction('# Comment <backend_fetch>');
+    return this.form.setBackendResponseFunction('# Comment <backend_response>');
   },
 
   enableWAF: function () {

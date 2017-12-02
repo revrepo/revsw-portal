@@ -173,21 +173,21 @@ describe('Workflow', function () {
                     backends: [
 
                     ],
-                    recv: '# Test',
-                    hit: '# Test',
-                    miss: '# Test',
-                    deliver: '# Test',
-                    pass: '# Test',
-                    pipe: '# Test',
-                    hash: '# Test',
-                    synth: '# Test',
-                    backend_response: '# Test',
-                    backend_error: '# Test',
-                    backend_fetch: '# Test'
+                    recv: '# Comment <recv>',
+                    hit: '# Comment <hit>',
+                    miss: '# Comment <miss>',
+                    deliver: '# Comment <deliver>',
+                    pass: '# Comment <pass>',
+                    pipe: '# Comment <pipe>',
+                    hash: '# Comment <hash>',
+                    synth: '# Comment <synth>',
+                    backend_response: '# Comment <backend_response>',
+                    backend_error: '# Comment <backend_error>',
+                    backend_fetch: '# Comment <backend_fetch>'
                 };
                 Portal.domains.listPage.searchAndClickEdit(domainData.name);
                 Portal.domains.editPage.enableVCL();
-                Portal.domains.editPage.fillVCL('# Test');
+                Portal.domains.editPage.fillVCL();
                 Portal.domains.editPage.clickUpdateDomain().then(function () {
                     Portal.dialog.clickOk();
                     Portal.alerts.waitToDisplay().then(function () {
