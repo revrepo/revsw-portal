@@ -35,6 +35,7 @@ describe('Workflow', function () {
         var updatedDomain = Constants.DOMAIN_UPDATED_JSON;
         var updatedDisabledDomain = Constants.DOMAIN_UPDATED_DISABLED_JSON;
         var waf_rules = [];
+        var ioVclRules = {}; // this will contain the default image optimization VCL rules.
         beforeAll(function (done) {
             Portal.signIn(user);
 
@@ -94,6 +95,7 @@ describe('Workflow', function () {
                                     testSslCert.id = domain.ssl_cert_id;
                                     domain.rev_component_bp.waf = 'waf_actions';
                                     // testing vcl in a different it
+                                    ioVclRules = domain.rev_component_bp.custom_vcl;
                                     domain.rev_component_bp.custom_vcl = 'vcl_rules';
                                     updatedDomain.ssl_cert_id = domain.ssl_cert_id;
                                     updatedDomain.ssl_conf_profile = domain.ssl_conf_profile;
@@ -115,7 +117,6 @@ describe('Workflow', function () {
                         });
                     });
                 });
-
             });
 
         it('should contain correct SSL Certificate data after updating domain', function (done) {
@@ -137,6 +138,80 @@ describe('Workflow', function () {
                     done();
                 });
         });
+
+        it('should update Custom VCL Rules Functions',
+            function (done) {
+                var vcl = {
+                    enabled: true,
+                    backends: [
+
+                    ],
+                    recv: '# Comment <recv>',
+                    hit: '# Comment <hit>',
+                    miss: '# Comment <miss>',
+                    deliver: '# Comment <deliver>',
+                    pass: '# Comment <pass>',
+                    pipe: '# Comment <pipe>',
+                    hash: '# Comment <hash>',
+                    synth: '# Comment <synth>',
+                    backend_response: '# Comment <backend_response>',
+                    backend_error: '# Comment <backend_error>',
+                    backend_fetch: '# Comment <backend_fetch>'
+                };
+                Portal.domains.listPage.searchAndClickEdit(domainData.name);
+                Portal.domains.editPage.clickTabVCL();
+                Portal.domains.editPage.fillVCL();
+                Portal.domains.editPage.clickUpdateDomain().then(function () {
+                    Portal.dialog.clickOk();
+                    Portal.alerts.waitToDisplay().then(function () {
+                        Portal
+                            .domainsHelpers
+                            .getDomainJSON(domainData.name).then(function (domain) {
+                                expect(JSON.stringify(domain.rev_component_bp.custom_vcl))
+                                    .toBe(JSON.stringify(vcl));
+                                done();
+                            });
+                    });
+                });
+            });
+
+        it('should display Set VCL Rules switch after updating VCL Rules', function () {
+            Portal.domains.listPage.searchAndClickEdit(domainData.name);
+            Portal.domains.editPage.clickTabImageEngine();
+            expect(Portal
+                .domains
+                .editPage
+                .form
+                .getSetImageEngineConfigurationSw()
+                .isDisplayed()).toBeTruthy();
+        });
+
+        it('should set default Image Optimization VCL Rules ' +
+            ' after clicking Set VCL Rules switch', function (done) {
+                Portal.domains.listPage.searchAndClickEdit(domainData.name);
+                Portal.domains.editPage.clickTabImageEngine();
+                Portal
+                    .domains
+                    .editPage
+                    .form
+                    .getSetImageEngineConfigurationSw()
+                    .click();
+
+                Portal.domains.editPage.clickUpdateDomain().then(function () {
+                    Portal.dialog.clickOk();
+                    Portal.alerts.waitToDisplay().then(function () {
+                        Portal
+                            .domainsHelpers
+                            .getDomainJSON(domainData.name).then(function (domain) {
+                                expect(JSON.stringify(domain
+                                    .rev_component_bp
+                                    .custom_vcl)).toBe(JSON.stringify(ioVclRules));
+                                done();
+                            });
+                    });
+                });
+            });
+
         it('should update all expected attributes in a domain JSON object ' +
             ' after updating domain', function (done) {
                 Portal.domains.listPage.searchAndClickEdit(domainData.name);
@@ -160,42 +235,6 @@ describe('Workflow', function () {
                                 }
                                 expect(JSON.stringify(domain))
                                     .toBe(JSON.stringify(updatedDisabledDomain));
-                                done();
-                            });
-                    });
-                });
-            });
-
-        it('should update Custom VCL Rules Functions after disabling Image Optimization',
-            function (done) {
-                var vcl = {
-                    enabled: true,
-                    backends: [
-
-                    ],
-                    recv: '# Comment <recv>',
-                    hit: '# Comment <hit>',
-                    miss: '# Comment <miss>',
-                    deliver: '# Comment <deliver>',
-                    pass: '# Comment <pass>',
-                    pipe: '# Comment <pipe>',
-                    hash: '# Comment <hash>',
-                    synth: '# Comment <synth>',
-                    backend_response: '# Comment <backend_response>',
-                    backend_error: '# Comment <backend_error>',
-                    backend_fetch: '# Comment <backend_fetch>'
-                };
-                Portal.domains.listPage.searchAndClickEdit(domainData.name);
-                Portal.domains.editPage.enableVCL();
-                Portal.domains.editPage.fillVCL();
-                Portal.domains.editPage.clickUpdateDomain().then(function () {
-                    Portal.dialog.clickOk();
-                    Portal.alerts.waitToDisplay().then(function () {
-                        Portal
-                            .domainsHelpers
-                            .getDomainJSON(domainData.name).then(function (domain) {
-                                expect(JSON.stringify(domain.rev_component_bp.custom_vcl))
-                                    .toBe(JSON.stringify(vcl));
                                 done();
                             });
                     });
