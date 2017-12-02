@@ -16,26 +16,20 @@
  * from Rev Software, Inc.
  */
 
-// # Main Portal Helper
-
-var NavHelper = require('./nav');
-
-var DNSZonesHelper = require('./dnsZones');
-var MobileAppsHelper = require('./mobileApps');
-var UsersHelper = require('./users');
-var WAFRulesHelper = require('./wafRules');
-var AccountsHelper = require('./accounts');
-var LogShippingHelper = require('./logShipping');
-
-// Abstracts common functionality for the Portal.
-var PortalHelpers = {
-  nav: NavHelper,
-  dnsZones: DNSZonesHelper,
-  mobileApps: MobileAppsHelper,
-  users: UsersHelper,
-  wafRules: WAFRulesHelper,
-  accounts: AccountsHelper,
-  logShipping: LogShippingHelper
+var config = require('config');
+var user = config.get('portal.users.revAdmin');
+var Utils = require('./utils');
+var AccountsHelper = {
+  
+  /**
+   * ### accounts.getAccount()
+   *
+   * Returns an Account JSON object
+   *
+   */
+  getAccount: function (name) {
+    return Utils.getItem(name, 'companyName', user, '/v1/accounts');
+  }
 };
 
-module.exports = PortalHelpers;
+module.exports = AccountsHelper;

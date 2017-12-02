@@ -299,7 +299,7 @@ var AddCompany = {
   createCompany: function(company) {
     var me = this;
     me.fillForm(company);
-    me.clickCreateCompany();
+    return me.clickCreateCompany();
   }
 };
 

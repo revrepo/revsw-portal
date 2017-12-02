@@ -18,10 +18,13 @@
 
 
 var API = require('./../api').API;
+var request = require('supertest-as-promised');
 var apiWAFRulesDP = require('./../api').WAFRulesDP;
 var Session = require('./../session');
-
- var WAFRulesHelper = {
+var config = require('config');
+var user = config.get('portal.users.admin');
+var Utils = require('./utils');
+var WAFRulesHelper = {
 
   /**
    * Creates a new WAF Rule through REST API end-point for Account current user.
@@ -30,7 +33,7 @@ var Session = require('./../session');
    * @returns {Object} Promise
    */
   createOneForUser: function (data) {
-    var user = Session.getCurrentUser();
+    user = Session.getCurrentUser();
     if (data === undefined) {
       data = apiWAFRulesDP.generateOne();
     }
@@ -48,6 +51,15 @@ var Session = require('./../session');
       .then(function (wafRule) {
         return wafRule;
       });
+  },
+  /**
+   * ### wafRules.getWafRule()
+   *
+   * Returns a WAF Rule JSON object
+   *
+   */
+  getWafRule: function (wafRuleName) {
+    return Utils.getItem(wafRuleName, 'rule_name', user, '/v1/waf_rules');
   }
 };
 

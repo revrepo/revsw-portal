@@ -42,7 +42,7 @@ var KeyForm = {
     },
     buttons: {
       showApiKey: {
-        css: '.btn.btn-primary'
+        css: '.btn.btn-primary[ng-click="switchKeyVisibility(key)"]'
       },
       cancel: {
         linkText: 'Cancel'
@@ -94,6 +94,10 @@ var KeyForm = {
     return element(by.id(this.locators.inputTexts.apiKeyName.id));
   },
 
+  getName: function () {
+    return this.getNameInputTxt().getAttribute('value');
+  },
+
   /**
    * ### KeyForm.getKeyGuidInputTxt()
    *
@@ -104,6 +108,10 @@ var KeyForm = {
    */
   getKeyGuidInputTxt: function () {
     return element(by.id(this.locators.inputTexts.keyGuid.id));
+  },
+
+  getKey: function () {
+    return this.getKeyGuidInputTxt().getAttribute('value');
   },
 
   /**
@@ -235,7 +243,7 @@ var KeyForm = {
    */
   getShowApiKeyBtn: function () {
     return element(
-      by.partialLinkText(this.locators.buttons.showApiKey.linkText));
+      by.css(this.locators.buttons.showApiKey.css));
   },
 
   /**

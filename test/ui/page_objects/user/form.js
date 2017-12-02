@@ -53,6 +53,9 @@ var UserForm = {
         option: {
           css: '.ui-select-highlight'
         }
+      },
+      comment: {
+        model: 'model.comment'
       }
     },
     checkBoxes: {
@@ -243,6 +246,18 @@ var UserForm = {
     return element(by.model(this.locators.checkBoxes.readOnly.model));
   },
 
+    /**
+   * ### UserForm.getCommentTxtIn()
+   *
+   * Returns the reference to the `Comment` input field (Selenium WebDriver
+   * Element)
+   *
+   * @returns {Object} Selenium WebDriver Element
+   */
+  getCommentTxtIn: function () {
+    return element(by.model(this.locators.textInputs.comment.model));
+  },
+
   // ## Methods to interact with the User form components
 
   /**
@@ -299,6 +314,19 @@ var UserForm = {
   },
 
   /**
+   * ### UserForm.getComment()
+   *
+   * Returns the text in the Comment input field
+   *
+   * @returns {Object} Selenium WebDriver Element
+   */
+  getComment: function () {
+    return this
+    .getCommentTxtIn()
+    .getAttribute('value');
+  },
+
+  /**
    * ### UserForm.setEmail()
    *
    * Sets a new value for `Email` text field
@@ -323,6 +351,7 @@ var UserForm = {
    * @returns {Object} Promise
    */
   setFirstName: function (firstName) {
+    this.clearFirstName();
     return this
       .getFirstNameTxtIn()
       .sendKeys(firstName);
@@ -338,6 +367,7 @@ var UserForm = {
    * @returns {Object} Promise
    */
   setLastName: function (lastName) {
+    this.clearLastName();
     return this
       .getLastNameTxtIn()
       .sendKeys(lastName);
@@ -567,6 +597,21 @@ var UserForm = {
       }
     }
   },
+
+    /**
+   * ### UserForm.setComment()
+   *
+   * sets the text in the Comment input field
+   *
+   * @returns {Object} Selenium WebDriver Element
+   */
+  setComment: function (value) {
+    this.getCommentTxtIn().clear();
+    return this
+    .getCommentTxtIn()
+    .sendKeys(value);
+  },
+
   /**
    * ### UserForm.clearEmail()
    *

@@ -15,8 +15,15 @@
 * is strictly forbidden unless prior written permission is obtained
 * from Rev Software, Inc.
 */
+var API = require('./../api').API;
 var config = require('config');
 var request = require('supertest');
+var requestPromise = require('supertest-as-promised');
+var user = config.get('portal.users.admin');
+var apiUrl = config.get('api.host.protocol') +
+    '://' +
+    config.get('api.host.name');
+var Utils = require('./utils');
 var apiKeys = {
 
     /**
@@ -28,15 +35,22 @@ var apiKeys = {
        * @returns {Promise}
        */
     validateAPIKey: function (key, callback) {
-        var apiUrl = config.get('api.host.protocol') +
-            '://' +
-            config.get('api.host.name');
         request(apiUrl)
             .get('/v1/accounts')
             .set('Authorization', 'X-API-KEY ' + key)
             .end(function (err, res) {
                 callback(res.status);
             });
+    },
+
+    /**
+     * ### apiKeys.getAPIKey()
+     *
+     * Returns an API Key JSON object
+     *
+     */
+    getAPIKey: function (name) {
+        return Utils.getItem(name, 'key_name', user, '/v1/api_keys');
     }
 };
 

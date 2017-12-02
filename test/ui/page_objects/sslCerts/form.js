@@ -143,6 +143,7 @@ var SSLCertFormForm = {
    * @returns {Object} Promise
    */
   setCertName: function (value) {
+    this.getCertNameTxtIn().clear();
     return this
       .getCertNameTxtIn()
       .sendKeys(value);
@@ -158,6 +159,7 @@ var SSLCertFormForm = {
    * @returns {Object} Promise
    */
   setPublicSSLCert: function (value) {
+    this.getPublicSSLCertTxtIn().clear();
     var textArea = this.getPublicSSLCertTxtIn();
     if (value instanceof String){
       return textArea.sendKeys(value);
@@ -181,6 +183,7 @@ var SSLCertFormForm = {
    * @returns {Object} Promise
    */
   setPrivateSSLKey: function (value) {
+    this.getPrivateSSLKeyTxtIn().clear();
     var textArea = this.getPrivateSSLKeyTxtIn();
     if (value instanceof String){
       return textArea.sendKeys(value);
@@ -204,6 +207,7 @@ var SSLCertFormForm = {
    * @returns {Object} Promise
    */
   setComment: function (value) {
+    this.getCommentTxtIn().clear();
     return this
       .getCommentTxtIn()
       .sendKeys(value);
@@ -254,6 +258,58 @@ var SSLCertFormForm = {
   getCertName: function () {
     return this
       .getCertNameTxtIn()
+      .getAttribute('value');
+  },
+
+  /**
+   * ### SSLCertForm.getAccount()
+   *
+   * Returns the current value for Account
+   *
+   * @returns {Object} Promise
+   */
+  getAccount: function () {
+    return this
+      .getCompanyDDown()
+      .getValue();
+  },
+
+    /**
+   * ### SSLCertForm.getPublicSSLCert()
+   *
+   * Returns the current value for Public SSL Cert
+   *
+   * @returns {Object} Promise
+   */
+  getPublicSSLCert: function () {
+    return this
+      .getPublicSSLCertTxtIn()
+      .getAttribute('value');
+  },
+
+      /**
+   * ### SSLCertForm.getPrivateSSLKey()
+   *
+   * Returns the current value for Private SSL Key
+   *
+   * @returns {Object} Promise
+   */
+  getPrivateSSLKey: function () {
+    return this
+      .getPrivateSSLKeyTxtIn()
+      .getAttribute('value');
+  },
+
+        /**
+   * ### SSLCertForm.getComment()
+   *
+   * Returns the current value for Comment
+   *
+   * @returns {Object} Promise
+   */
+  getComment: function () {
+    return this
+      .getCommentTxtIn()
       .getAttribute('value');
   },
 

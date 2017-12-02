@@ -135,6 +135,7 @@ var ResourcesPage = require('./azure/Resources/listPage');
 var Intro = require('./intro');
 var ApiKeysHelpers = require('./../common/helpers/apiKeys.js');
 var DomainsHelpers = require('./../common/helpers/domains.js');
+var SSLCertsHelpers = require('./../common/helpers/sslCerts');
 var UsageReportHelpers = require('./../common/helpers/usageReport.js');
 // This `Portal` Page Object is the entry point to use all other Page Objects
 // that abstract all components from the Portal App.
@@ -142,6 +143,7 @@ var Portal = {
   usageReportHelpers: UsageReportHelpers,
   apiKeysHelpers: ApiKeysHelpers,
   domainsHelpers: DomainsHelpers,
+  sslCertHelpers: SSLCertsHelpers,
   constants: Constants,
   localStorage: LocalStorageHelper,
   session: Session,
