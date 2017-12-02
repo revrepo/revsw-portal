@@ -28,7 +28,7 @@ var AccountsHelper = {
    *
    */
   getAccount: function (name) {
-    return Utils.getItem(name, 'companyName', user, '/v1/accounts');
+    return Utils.getAPIItemByField(name, 'companyName', user, '/v1/accounts');
   }
 };
 

@@ -79,7 +79,8 @@ var Utils = {
   * @param {Object} user user
   * @param {String} endpoint API endpoint
   */
-  getItem: function (value, field, user, endpoint) {
+  getAPIItemByField: function (value, field, user, endpoint) {
+    /* jshint camelcase:false */
     var apiUrl = this.getAPIUrl();
     return API.helpers.authenticateUser(user).then(function () {
       return request(apiUrl)
@@ -87,27 +88,31 @@ var Utils = {
         .set('Authorization', 'Bearer ' + user.token)
         .expect(200)
         .then(function (res) {
-          if (res.status !== 200) {
-            throw new Error(res.error);
-          } else {
-            var returnItem;
-            res.body.forEach(function (item) {
-              if (item[field] === value) {
-                returnItem = item;
-              }
-            });
-            if (returnItem === undefined) {
-              throw new Error('Item not found');
-            } else {
-              return request(apiUrl)
-                .get(endpoint + '/' + returnItem.id)
-                .set('Authorization', 'Bearer ' + user.token)
-                .expect(200)
-                .then(function (res) {
-                  return res.body;
-                });
+          var returnItem;
+          res.body.forEach(function (item) {
+            if (item[field] === value) {
+              returnItem = item;
             }
+          });
+          if (returnItem === undefined) {
+            throw new Error('Item not found inside array');
+          } else {
+            return request(apiUrl)
+              .get(endpoint +
+              '/' +
+              (returnItem.id === undefined ? returnItem.user_id : returnItem.id))
+              .set('Authorization', 'Bearer ' + user.token)
+              .expect(200)
+              .then(function (res) {
+                return res.body;
+              })
+              .catch(function (err) {
+                throw new Error(err);
+              });
           }
+        })
+        .catch(function (err) {
+          throw new Error(err);
         });
     });
   }

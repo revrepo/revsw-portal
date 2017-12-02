@@ -28,7 +28,7 @@ var sslCerts = {
      *
      */
     getSSLCert: function (sslCertName) {
-        return Utils.getItem(sslCertName, 'cert_name', user, '/v1/ssl_certs');
+        return Utils.getAPIItemByField(sslCertName, 'cert_name', user, '/v1/ssl_certs');
     }
 };
 

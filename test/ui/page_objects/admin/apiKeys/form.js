@@ -111,6 +111,7 @@ var KeyForm = {
   },
 
   getKey: function () {
+    this.clickShowApiKey();
     return this.getKeyGuidInputTxt().getAttribute('value');
   },
 
@@ -540,7 +541,52 @@ var KeyForm = {
     // if (apiKey.admin) {
     //   this.checkAdmin();
     // }
-  }
+  },
+
+  /* Permissions checkboxes */
+
+  checkAll: function () {
+    this.checkActive();
+    this.checkReadOnly();
+    this.checkRead();
+    this.checkModify();
+    this.checkDelete();
+    this.checkPurge();
+    this.checkReports();
+    return this.checkAdmin();
+  },  
+
+  getActive: function () {
+    return this.getActiveChekBox().isSelected();
+  },
+
+  getReadOnly: function () {
+    return this.getReadOnlyChekBox().isSelected();
+  },
+
+  getRead: function () {
+    return this.getReadChekBox().isSelected();
+  },
+
+  getModify: function () {
+    return this.getModifyChekBox().isSelected();
+  },
+
+  getDelete: function () {
+    return this.getDeleteChekBox().isSelected();
+  },
+
+  getPurge: function () {
+    return this.getPurgeChekBox().isSelected();
+  },
+
+  getReports: function () {
+    return this.getReportsChekBox().isSelected();
+  },
+
+  getAdmin: function () {
+    return this.getAdminChekBox().isSelected();
+  },
 };
 
 module.exports = KeyForm;

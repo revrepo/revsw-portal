@@ -50,7 +50,7 @@ var apiKeys = {
      *
      */
     getAPIKey: function (name) {
-        return Utils.getItem(name, 'key_name', user, '/v1/api_keys');
+        return Utils.getAPIItemByField(name, 'key_name', user, '/v1/api_keys');
     }
 };
 
