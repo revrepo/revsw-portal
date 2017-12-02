@@ -30,6 +30,52 @@ var DomainForm = {
   // Locators specific to HTML elements from this page object
   locators: {
     textInputs: {
+      vclFunctions: {
+        recv: {
+          model: '$ctrl.customVcl.recv',
+          linkText: '\'Recv\' Function'
+        },
+        hit: {
+          model: '$ctrl.customVcl.hit',
+          linkText: '\'Hit\' Function'
+        },
+        miss: {
+          model: '$ctrl.customVcl.miss',
+          linkText: '\'Miss\' Function'
+        },
+        deliver: {
+          model: '$ctrl.customVcl.deliver',
+          linkText: '\'Deliver\' Function'
+        },
+        pass: {
+          model: '$ctrl.customVcl.pass',
+          linkText: '\'Pass\' Function'
+        },
+        pipe: {
+          model: '$ctrl.customVcl.pipe',
+          linkText: '\'Pipe\' Function'
+        },
+        hash: {
+          model: '$ctrl.customVcl.hash',
+          linkText: '\'Hash\' Function'
+        },
+        synth: {
+          model: '$ctrl.customVcl.synth',
+          linkText: '\'Synth\' Function'
+        },
+        backendFetch: {
+          model: '$ctrl.customVcl.backend_fetch',
+          linkText: '\'Backend Fetch\' Function'
+        },
+        backendResponse: {
+          model: '$ctrl.customVcl.backend_response',
+          linkText: '\'Backend Response\' Function'
+        },
+        backendError: {
+          model: '$ctrl.customVcl.backend_error',
+          linkText: '\'Backend Error\' Function'
+        }
+      },
       botLocation: {
         name: 'botProtectionLocation'
       },
@@ -38,6 +84,12 @@ var DomainForm = {
       },
       botProtectionID: {
         model: 'item.bot_protection_id'
+      },
+      botUsernameCookie: {
+        model: 'item.username_cookie_name'
+      },
+      botSessionIDCookie: {
+        model: 'item.sessionid_cookie_name'
       },
       wafLocation: {
         model: 'item.location'
@@ -844,6 +896,36 @@ var DomainForm = {
   getRecvFunctionTxtIn: function () {
     return element(by.css(this.locators.textareas.recvFunction.css));
   },
+  getHitFunctionTxtIn: function () {
+    return element(by.model(this.locators.textInputs.vclFunctions.hit.model));
+  },
+  getMissFunctionTxtIn: function () {
+    return element(by.model(this.locators.textInputs.vclFunctions.miss.model));
+  },
+  getDeliverFunctionTxtIn: function () {
+    return element(by.model(this.locators.textInputs.vclFunctions.deliver.model));
+  },
+  getPassFunctionTxtIn: function () {
+    return element(by.model(this.locators.textInputs.vclFunctions.pass.model));
+  },
+  getPipeFunctionTxtIn: function () {
+    return element(by.model(this.locators.textInputs.vclFunctions.pipe.model));
+  },
+  getHashFunctionTxtIn: function () {
+    return element(by.model(this.locators.textInputs.vclFunctions.hash.model));
+  },
+  getSynthFunctionTxtIn: function () {
+    return element(by.model(this.locators.textInputs.vclFunctions.synth.model));
+  },
+  getBackendFetchFunctionTxtIn: function () {
+    return element(by.model(this.locators.textInputs.vclFunctions.backendFetch.model));
+  },
+  getBackendResponseFunctionTxtIn: function () {
+    return element(by.model(this.locators.textInputs.vclFunctions.backendResponse.model));
+  },
+  getBackendErrorFunctionTxtIn: function () {
+    return element(by.model(this.locators.textInputs.vclFunctions.backendError.model));
+  },
   getLuaCodeBP: function () {
     return element(by.css(this.locators.textareas.luaCodeBP.css));
   },
@@ -1178,6 +1260,9 @@ var DomainForm = {
   },
   getBotProtectionEnableSw: function () {
     return element(by.id(this.locators.switches.botProtectionEnableSw.id));
+  },
+  getBotUsernameCookieTxtIn: function () {
+    return element(by.model(this.locators.textInputs.botUsernameCookie.model));
   },
   clickBotProtectionEnableSw: function () {
     return this.getBotProtectionEnableSw().click();
@@ -1834,7 +1919,87 @@ var DomainForm = {
   setBotProtectionID: function (value) {
     this.getBotProtectionID().clear();
     return this.getBotProtectionID().sendKeys(value);
-  }
+  },
+
+  setBotUsernameCookie: function (value) {
+    this.getBotUsernameCookieTxtIn().clear();
+    return this.getBotUsernameCookieTxtIn().sendKeys(value);
+  },
+
+  getBotSessionIDCookieTxtIn: function () {
+    return element(by.model(this.locators.textInputs.botSessionIDCookie.model));
+  },
+
+  setBotSessionIDCookie: function (value) {
+    this.getBotSessionIDCookieTxtIn().clear();
+    return this.getBotSessionIDCookieTxtIn().sendKeys(value);
+  },
+
+  setRecvFunction: function (value) {
+    element(by.linkText(this.locators.textInputs.vclFunctions.recv.linkText)).click();
+    this.getRecvFunctionTxtIn().clear();
+    return this.getRecvFunctionTxtIn().sendKeys(value);
+  },
+
+  setHitFunction: function (value) {
+    element(by.linkText(this.locators.textInputs.vclFunctions.hit.linkText)).click();
+    this.getHitFunctionTxtIn().clear();
+    return this.getHitFunctionTxtIn().sendKeys(value);
+  },
+
+  setMissFunction: function (value) {
+    element(by.linkText(this.locators.textInputs.vclFunctions.miss.linkText)).click();
+    this.getMissFunctionTxtIn().clear();
+    return this.getMissFunctionTxtIn().sendKeys(value);
+  },
+
+  setDeliverFunction: function (value) {
+    element(by.linkText(this.locators.textInputs.vclFunctions.deliver.linkText)).click();
+    this.getDeliverFunctionTxtIn().clear();
+    return this.getDeliverFunctionTxtIn().sendKeys(value);
+  },
+
+  setPassFunction: function (value) {
+    element(by.linkText(this.locators.textInputs.vclFunctions.pass.linkText)).click();
+    this.getPassFunctionTxtIn().clear();
+    return this.getPassFunctionTxtIn().sendKeys(value);
+  },
+
+  setPipeFunction: function (value) {
+    element(by.linkText(this.locators.textInputs.vclFunctions.pipe.linkText)).click();
+    this.getPipeFunctionTxtIn().clear();
+    return this.getPipeFunctionTxtIn().sendKeys(value);
+  },
+
+  setHashFunction: function (value) {
+    element(by.linkText(this.locators.textInputs.vclFunctions.hash.linkText)).click();
+    this.getHashFunctionTxtIn().clear();
+    return this.getHashFunctionTxtIn().sendKeys(value);
+  },
+
+  setSynthFunction: function (value) {
+    element(by.linkText(this.locators.textInputs.vclFunctions.synth.linkText)).click();
+    this.getSynthFunctionTxtIn().clear();
+    return this.getSynthFunctionTxtIn().sendKeys(value);
+  },
+
+  setBackendFetchFunction: function (value) {
+    element(by.linkText(this.locators.textInputs.vclFunctions.backendFetch.linkText)).click();
+    this.getBackendFetchFunctionTxtIn().clear();
+    return this.getBackendFetchFunctionTxtIn().sendKeys(value);
+  },
+
+  setBackendResponseFunction: function (value) {
+    element(by.linkText(this.locators.textInputs.vclFunctions.backendResponse.linkText)).click();
+    this.getBackendResponseFunctionTxtIn().clear();
+    return this.getBackendResponseFunctionTxtIn().sendKeys(value);
+  },
+
+  setBackendErrorFunction: function (value) {
+    element(by.linkText(this.locators.textInputs.vclFunctions.backendError.linkText)).click();
+    this.getBackendErrorFunctionTxtIn().clear();
+    return this.getBackendErrorFunctionTxtIn().sendKeys(value);
+  },
 };
 
 module.exports = DomainForm;

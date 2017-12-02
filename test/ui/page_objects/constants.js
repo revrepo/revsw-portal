@@ -550,29 +550,13 @@ var Constants = {
         {
           location: '/botLocation',
           mode: 'monitor',
-          call_type: 1,
-          username_cookie_name: '',
-          sessionid_cookie_name: '',
+          call_type: 2,
+          username_cookie_name: 'botUtest',
+          sessionid_cookie_name: 'botStest',
           bot_protection_id: '123'
         }
       ],
-      custom_vcl: {
-        enabled: true,
-        backends: [
-
-        ],
-        recv: 'custom_vcl_recv',
-        hit: '#',
-        miss: 'custom_vcl_hit',
-        deliver: 'custom_vcl_deliver',
-        pass: '#',
-        pipe: '#',
-        hash: 'custom_vcl_hash',
-        synth: '#',
-        backend_response: 'custom_vcl_backend_response',
-        backend_error: '#',
-        backend_fetch: '#'
-      }
+      custom_vcl: 'vcl_rules'
     },
     rev_component_co: {
       css_choice: 'medium',
@@ -733,29 +717,13 @@ var Constants = {
         {
           "location": "/botLocation",
           "mode": "monitor",
-          "call_type": 1,
-          "username_cookie_name": "",
-          "sessionid_cookie_name": "",
+          "call_type": 2,
+          "username_cookie_name": "botUtest",
+          "sessionid_cookie_name": "botStest",
           "bot_protection_id": "123"
         }
       ],
-      "custom_vcl": {
-        "enabled": false,
-        "backends": [
-
-        ],
-        "recv": "custom_vcl_recv",
-        "hit": "#",
-        "miss": "custom_vcl_hit",
-        "deliver": "custom_vcl_deliver",
-        "pass": "#",
-        "pipe": "#",
-        "hash": "custom_vcl_hash",
-        "synth": "#",
-        "backend_response": "custom_vcl_backend_response",
-        "backend_error": "#",
-        "backend_fetch": "#"
-      }
+      "custom_vcl": "vcl_rules"
     },
     "rev_component_co": {
       "css_choice": "medium",

@@ -92,20 +92,9 @@ describe('Workflow', function () {
                                 .getDomainJSON(domainData.name).then(function (domain) {
                                     waf_rules = domain.rev_component_bp.waf[0].waf_rules;
                                     testSslCert.id = domain.ssl_cert_id;
-                                    // Custom VCL Rules are too long, overwriting them..
-                                    domain.rev_component_bp.custom_vcl.recv = 'custom_vcl_recv';
-                                    domain.rev_component_bp.custom_vcl.miss = 'custom_vcl_miss';
-                                    domain
-                                        .rev_component_bp
-                                        .custom_vcl
-                                        .deliver = 'custom_vcl_deliver';
-                                    domain.rev_component_bp.custom_vcl.hash = 'custom_vcl_hash';
-                                    domain.rev_component_bp.custom_vcl.miss = 'custom_vcl_hit';
                                     domain.rev_component_bp.waf = 'waf_actions';
-                                    domain
-                                        .rev_component_bp
-                                        .custom_vcl
-                                        .backend_response = 'custom_vcl_backend_response';
+                                    // testing vcl in a different it
+                                    domain.rev_component_bp.custom_vcl = 'vcl_rules';
                                     updatedDomain.ssl_cert_id = domain.ssl_cert_id;
                                     updatedDomain.ssl_conf_profile = domain.ssl_conf_profile;
                                     updatedDisabledDomain.ssl_cert_id = domain.ssl_cert_id;
@@ -159,19 +148,8 @@ describe('Workflow', function () {
                         Portal
                             .domainsHelpers
                             .getDomainJSON(domainData.name).then(function (domain) {
-                                domain.rev_component_bp.custom_vcl.recv = 'custom_vcl_recv';
-                                domain.rev_component_bp.custom_vcl.miss = 'custom_vcl_miss';
-                                domain
-                                    .rev_component_bp
-                                    .custom_vcl
-                                    .deliver = 'custom_vcl_deliver';
-                                domain.rev_component_bp.custom_vcl.hash = 'custom_vcl_hash';
-                                domain.rev_component_bp.custom_vcl.miss = 'custom_vcl_hit';
+                                domain.rev_component_bp.custom_vcl = 'vcl_rules';
                                 domain.rev_component_bp.waf = 'waf_actions';
-                                domain
-                                    .rev_component_bp
-                                    .custom_vcl
-                                    .backend_response = 'custom_vcl_backend_response';
                                 // this is for debugging
                                 var a = JSON.stringify(domain);
                                 var b = JSON.stringify(updatedDisabledDomain);
@@ -182,6 +160,42 @@ describe('Workflow', function () {
                                 }
                                 expect(JSON.stringify(domain))
                                     .toBe(JSON.stringify(updatedDisabledDomain));
+                                done();
+                            });
+                    });
+                });
+            });
+
+        it('should update Custom VCL Rules Functions after disabling Image Optimization',
+            function (done) {
+                var vcl = {
+                    enabled: true,
+                    backends: [
+
+                    ],
+                    recv: '# Test',
+                    hit: '# Test',
+                    miss: '# Test',
+                    deliver: '# Test',
+                    pass: '# Test',
+                    pipe: '# Test',
+                    hash: '# Test',
+                    synth: '# Test',
+                    backend_response: '# Test',
+                    backend_error: '# Test',
+                    backend_fetch: '# Test'
+                };
+                Portal.domains.listPage.searchAndClickEdit(domainData.name);
+                Portal.domains.editPage.enableVCL();
+                Portal.domains.editPage.fillVCL('# Test');
+                Portal.domains.editPage.clickUpdateDomain().then(function () {
+                    Portal.dialog.clickOk();
+                    Portal.alerts.waitToDisplay().then(function () {
+                        Portal
+                            .domainsHelpers
+                            .getDomainJSON(domainData.name).then(function (domain) {
+                                expect(JSON.stringify(domain.rev_component_bp.custom_vcl))
+                                    .toBe(JSON.stringify(vcl));
                                 done();
                             });
                     });

@@ -698,6 +698,23 @@ var EditDomain = {
     return this.form.clickCustomVCLRulesSw();
   },
 
+  fillVCL: function (value) {
+    if (value === undefined && value === null) {
+      value = '# Test';
+    }
+    this.form.setRecvFunction(value);
+    this.form.setHitFunction(value);
+    this.form.setHashFunction(value);
+    this.form.setPassFunction(value);
+    this.form.setPipeFunction(value);
+    this.form.setSynthFunction(value);
+    this.form.setDeliverFunction(value);
+    this.form.setMissFunction(value);
+    this.form.setBackendErrorFunction(value);
+    this.form.setBackendFetchFunction(value);
+    return this.form.setBackendResponseFunction(value);
+  },
+
   enableWAF: function () {
     this.clickTabWAF();
     return this.form.clickWAFSwitch();
@@ -711,7 +728,7 @@ var EditDomain = {
 
   fillDemo: function (domain, domainUpdateData) {
     /* jshint maxstatements:120 */
-    this.form.getEnableEnhancedAnalytics().click();    
+    this.form.getEnableEnhancedAnalytics().click();
     this.form.setNonWildcardDomainAliases('test.' + domain.name);
     this.form.setWildcardDomainAlias('*.' + domain.name);
     this.form.setFirstMileProxyBypass('TEST');
@@ -775,6 +792,9 @@ var EditDomain = {
     this.clickTabBotProtection();
     this.form.clickBotProtectionEnableSw();
     this.form.setBotLocation('/botLocation');
+    this.form.setBotCallType('2');
+    this.form.setBotUsernameCookie('botUtest');
+    this.form.setBotSessionIDCookie('botStest');
     this.form.setBotProtectionID('123');
     this.enableVCL();
     this.enableLua();
@@ -784,7 +804,7 @@ var EditDomain = {
     this.form.setImageEngineAPIKeyTxtIn('thisismycoolapikey');
     this.form.setImageEngineOriginServerTxtIn('thisismycoolserver.com');
     this.form.setImageEngineTokenTxtIn('thisismycooltoken');
-    return this.form.getSetImageEngineConfigurationSw().click();     
+    return this.form.getSetImageEngineConfigurationSw().click();
   },
 
   clearDemo: function () {
