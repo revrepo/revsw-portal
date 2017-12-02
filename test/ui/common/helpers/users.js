@@ -67,7 +67,7 @@ var UsersHelper = {
    *
    */
   getUser: function (email) {
-    return Utils.getItem(email, 'email', user, '/v1/users');
+    return Utils.getAPIItemByField(email, 'email', user, '/v1/users');
   }
 };
 

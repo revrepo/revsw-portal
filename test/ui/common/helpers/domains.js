@@ -23,41 +23,17 @@ var user = config.get('portal.users.revAdmin');
 var apiUrl = config.get('api.host.protocol') +
     '://' +
     config.get('api.host.name');
+var Utils = require('./utils');
 var domains = {
 
     /**
-           * ### domains.getDomainJSON()
-           *
-           * Returns a domain JSON object
-           *
-           */
+     * ### domains.getDomainJSON()
+     *
+     * Returns a domain JSON object
+     *
+     */
     getDomainJSON: function (domainName) {
-        /*jshint camelcase: false */
-        return API.helpers.authenticateUser(user).then(function () {
-            return request(apiUrl)
-                .get('/v1/domain_configs')
-                .set('Authorization', 'Bearer ' + user.token)
-                .expect(200)
-                .then(function (res) {
-                    var domains = res.body;
-                    var returnDomain;
-                    domains.forEach(function (domain) {
-                        if (domain.domain_name === domainName) {
-                            returnDomain = domain;
-                        }
-                    });
-                    return request(apiUrl)
-                        .get('/v1/domain_configs/' + returnDomain.id)
-                        .set('Authorization', 'Bearer ' + user.token)
-                        .expect(200)
-                        .then(function (res) {
-                            var dom = res.body;
-                            dom.id = returnDomain.id;
-                            return dom;
-                        });
-                });
-        });
-
+        return Utils.getAPIItemByField(domainName, 'domain_name', user, '/v1/domain_configs');
     },
     getStatus: function (domainId) {
         /*jshint camelcase: false */

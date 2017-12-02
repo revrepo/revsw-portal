@@ -28,7 +28,7 @@ var LogShippingHelper = {
    *
    */
   getJob: function (name) {
-    return Utils.getItem(name, 'job_name', user, '/v1/log_shipping_jobs');
+    return Utils.getAPIItemByField(name, 'job_name', user, '/v1/log_shipping_jobs');
   }
 };
 

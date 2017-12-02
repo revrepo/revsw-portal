@@ -59,7 +59,7 @@ var WAFRulesHelper = {
    *
    */
   getWafRule: function (wafRuleName) {
-    return Utils.getItem(wafRuleName, 'rule_name', user, '/v1/waf_rules');
+    return Utils.getAPIItemByField(wafRuleName, 'rule_name', user, '/v1/waf_rules');
   }
 };
 

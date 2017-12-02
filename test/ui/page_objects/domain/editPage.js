@@ -698,6 +698,20 @@ var EditDomain = {
     return this.form.clickCustomVCLRulesSw();
   },
 
+  fillVCL: function () {
+    this.form.setRecvFunction('# Comment <recv>');
+    this.form.setHitFunction('# Comment <hit>');
+    this.form.setHashFunction('# Comment <hash>');
+    this.form.setPassFunction('# Comment <pass>');
+    this.form.setPipeFunction('# Comment <pipe>');
+    this.form.setSynthFunction('# Comment <synth>');
+    this.form.setDeliverFunction('# Comment <deliver>');
+    this.form.setMissFunction('# Comment <miss>');
+    this.form.setBackendErrorFunction('# Comment <backend_error>');
+    this.form.setBackendFetchFunction('# Comment <backend_fetch>');
+    return this.form.setBackendResponseFunction('# Comment <backend_response>');
+  },
+
   enableWAF: function () {
     this.clickTabWAF();
     return this.form.clickWAFSwitch();
@@ -711,7 +725,7 @@ var EditDomain = {
 
   fillDemo: function (domain, domainUpdateData) {
     /* jshint maxstatements:120 */
-    this.form.getEnableEnhancedAnalytics().click();    
+    this.form.getEnableEnhancedAnalytics().click();
     this.form.setNonWildcardDomainAliases('test.' + domain.name);
     this.form.setWildcardDomainAlias('*.' + domain.name);
     this.form.setFirstMileProxyBypass('TEST');
@@ -775,6 +789,9 @@ var EditDomain = {
     this.clickTabBotProtection();
     this.form.clickBotProtectionEnableSw();
     this.form.setBotLocation('/botLocation');
+    this.form.setBotCallType('2');
+    this.form.setBotUsernameCookie('botUtest');
+    this.form.setBotSessionIDCookie('botStest');
     this.form.setBotProtectionID('123');
     this.enableVCL();
     this.enableLua();
@@ -784,7 +801,7 @@ var EditDomain = {
     this.form.setImageEngineAPIKeyTxtIn('thisismycoolapikey');
     this.form.setImageEngineOriginServerTxtIn('thisismycoolserver.com');
     this.form.setImageEngineTokenTxtIn('thisismycooltoken');
-    return this.form.getSetImageEngineConfigurationSw().click();     
+    return this.form.getSetImageEngineConfigurationSw().click();
   },
 
   clearDemo: function () {
