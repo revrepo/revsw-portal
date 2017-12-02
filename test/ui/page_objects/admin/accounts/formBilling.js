@@ -340,9 +340,11 @@ var CompanyBillingForm = {
    * @returns {Promise}
    */
   setCountry: function (country) {
-    return this
+    this
       .getCountryDDown()
-      .click()
+      .click();
+    return this
+      .getCountryInput()
       .sendKeys(country + protractor.Key.ENTER);
   },
 
