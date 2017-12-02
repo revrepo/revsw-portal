@@ -86,7 +86,7 @@ describe('Workflow', function () {
                 function (done) {
                     newAccUpdated.companyName += ' UPDATED';
                     newAccUpdated.comment += ' UPDATED';
-
+                    newAccUpdated.country = null;
                     Portal.admin.accounts.editPage.updateAccountProfile(newAccUpdated, null);
                     Portal.dialog.clickOk();
                     Portal.alerts.waitToDisplay().then(function () {
@@ -99,7 +99,7 @@ describe('Workflow', function () {
                                 expect(accObj.companyName).toBe(newAcc.companyName);
                                 expect(accObj.comment).toBe(newAcc.comment);
                                 expect(accObj.vendor_profile).toBe('revapm');
-                                expect(accObj.country).toBe('CA');
+                                expect(accObj.country).toBe('US');
                                 expect(accObj.state).toBe(newAcc.state);
                                 expect(accObj.city).toBe(newAcc.city);
                                 expect(accObj.address1).toBe(newAcc.address1);
@@ -112,7 +112,6 @@ describe('Workflow', function () {
                                 expect(accObj.use_contact_info_as_billing_info).toBeTruthy();
                                 done();
                             });
-
                     });
                 });
 
@@ -205,7 +204,7 @@ describe('Workflow', function () {
                         .formProfile
                         .getCountry()
                         .then(function (val) {
-                            expect(val).toBe(newAccUpdated.country);
+                            expect(val).toBe('United States');
                         });
 
                     Portal
