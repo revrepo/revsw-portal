@@ -100,7 +100,7 @@ var usageReport = {
             '-0' +
             from_date.getDate();
         var to_date = new Date(to);
-        if (to_date.getDate().length === 1) {
+        if (to_date.getDate().toString().length === 1) {
             to_date = to_date.getFullYear() + '-' + to_date.getMonth() + '-0' + to_date.getDate();
         } else {
             to_date = to_date.getFullYear() + '-' + to_date.getMonth() + '-' + to_date.getDate();

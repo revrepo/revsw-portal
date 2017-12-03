@@ -168,7 +168,7 @@ describe('Workflow', function () {
                             .then(function (key) {
                                 keyObj = key;
                                 expect(keyObj.key_name).toBe(newKeyUpdated.name);
-                                expect(keyObj.active).toBeFalsy();
+                                expect(keyObj.active).toBeTruthy();
                                 expect(keyObj.read_only_status).toBeTruthy();
                                 expect(keyObj.allowed_ops.admin).toBeTruthy();
                                 expect(keyObj.allowed_ops.reports).toBeTruthy();
