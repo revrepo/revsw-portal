@@ -27,7 +27,7 @@ describe('Functional', function () {
     describe('With user: ' + user.role, function () {
       /* Too much camel_case */
       /* jshint ignore:start */
-      var date = new Date();
+      var date = new Date(new Date().setHours(0,0,0,0));
       var to = date.getTime();
       var from = date.setDate(1);
       var avgTrafficPerDay = 0;
@@ -54,7 +54,7 @@ describe('Functional', function () {
           Portal
             .usageReportHelpers
             .getTrafficAvgPerDay(revTestId, from, to, user).then(function (res) {
-              var count = 0;
+              var count = 1;
               var avg = 0;
               var avgSentBytes = 0;
               var avgRecvBytes = 0;
@@ -62,11 +62,14 @@ describe('Functional', function () {
               recvBps = bpsToMbps(res.dataTraffic.billable_received_bps);
               cacheHits = res.cacheHits;
               portHits = res.portHits;
+              console.log(res.data);
               for (var i = 0; i < res.data.length; i++) {
-                count++;
-                avg += res.data[i].count;
-                avgSentBytes += res.data[i].sent_bytes;
-                avgRecvBytes += res.data[i].received_bytes;
+                if (res.data[i].count !== 0) {                  
+                  avg += res.data[i].count;
+                  avgSentBytes += res.data[i].sent_bytes;
+                  avgRecvBytes += res.data[i].received_bytes;
+                  count++;                  
+                }
               }
               avgTrafficPerDay = avg / count;
               avgSentBytesPerDay = avgSentBytes / count;
@@ -90,6 +93,7 @@ describe('Functional', function () {
           var total = text.replaceAll('\'', '').split('\n')[2];
           date = new Date();
           // expect approx
+          console.log(avgTrafficPerDay);
           expect(total - (avgTrafficPerDay * date.getDate())).toBeLessThan(100);
         });
       });

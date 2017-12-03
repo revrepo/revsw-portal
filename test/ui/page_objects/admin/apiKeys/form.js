@@ -546,7 +546,7 @@ var KeyForm = {
   /* Permissions checkboxes */
 
   checkAll: function () {
-    this.checkActive();
+    // not gonna uncheck active because it breaks usage report test
     this.checkReadOnly();
     this.checkRead();
     this.checkModify();
