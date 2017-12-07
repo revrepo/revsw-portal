@@ -693,7 +693,40 @@ var EditDomain = {
     return this.getExpandWafRulesBtn().click();
   },
 
+  enableVCL: function () {
+    this.clickTabVCL();
+    return this.form.clickCustomVCLRulesSw();
+  },
+
+  fillVCL: function () {
+    this.form.setRecvFunction('# Comment <recv>');
+    this.form.setHitFunction('# Comment <hit>');
+    this.form.setHashFunction('# Comment <hash>');
+    this.form.setPassFunction('# Comment <pass>');
+    this.form.setPipeFunction('# Comment <pipe>');
+    this.form.setSynthFunction('# Comment <synth>');
+    this.form.setDeliverFunction('# Comment <deliver>');
+    this.form.setMissFunction('# Comment <miss>');
+    this.form.setBackendErrorFunction('# Comment <backend_error>');
+    this.form.setBackendFetchFunction('# Comment <backend_fetch>');
+    return this.form.setBackendResponseFunction('# Comment <backend_response>');
+  },
+
+  enableWAF: function () {
+    this.clickTabWAF();
+    return this.form.clickWAFSwitch();
+  },
+
+  enableLua: function () {
+    this.clickTabLuaScripting();
+    this.form.clickEnableLuaScriptingOnEdgeLastMile();
+    return this.form.clickEnableLuaScriptingOriginFirstMile();
+  },
+
   fillDemo: function (domain, domainUpdateData) {
+    /* jshint maxstatements:120 */
+    this.form.getEnableEnhancedAnalytics().click();
+    this.form.setNonWildcardDomainAliases('test.' + domain.name);
     this.form.setWildcardDomainAlias('*.' + domain.name);
     this.form.setFirstMileProxyBypass('TEST');
     this.form.setFirstMileProxyBypass('TEST2');
@@ -708,30 +741,71 @@ var EditDomain = {
     this.form.setProbeInterval('3');
     this.form.setProbeTimeout('2');
     this.form.setExpectedHTTPresponseCode('404');
+    this.clickTabEdgeCaching();
+    this.form.setCacheBypassLocations('/testBypass/');
+    this.form.clickExpandCacheRules();
+    this.form.clickOverrideOriginCachingHeaders();
+    this.form.setEdgeCacheTTL('5');
+    this.form.getEdgeCachingHeadersMissingTxtIn().click();
+    this.form.getKeepOrDropQueryStringParametersTxtIn().click();
+    this.form.setQueryStringParametersToDropKeep('test');
+    this.form.getOverrideHTTPcookiesTxtIn().click();
+    this.form.getIgnoreAllHTTPcookiesTxtIn().click();
+    browser.sleep(1000);
+    this.form.getRemoveIgnoredCookiesFromOriginRequests().click();
+    this.form.getRemoveIgnoredCookiesFromEdgeResponses().click();
+    this.form.setBrowserCachingTTL('5');
+    this.form.getForceRevalidation().click();
+    this.form.getEnableServingStaleContentTxtIn().click();
+    this.form.setStaleObjectTTLwhenOriginIsDown('9');
+    this.form.setStaleObjectTTLwhileFetchingNewObject('9');
+    this.form.getEnableESITxtIn().click();
+    this.form.createNewOriginHeader({
+      headerName: 'testHeader',
+      headerValue: 'testValue'
+    });
+    this.form.createNewEndUserHeader({
+      headerName: 'testHeader',
+      headerValue: 'testValue'
+    });
     this.clickTabSSLconfiguration();
     this.form.getSslCertDDownItems().last().click();
+    this.form.getCustomSSLconfigurationTxtIn().click();
+    this.form.setAllowedSSLCiphers('ECDH');
+    this.form.setAllowedSSLProtocols('TLSv1');
     this.clickTabACL();
     this.form.clickACLRulesEnableSw();
+    this.form.setACLIPSubnet('8.8.8.8/32');
+    this.form.setACLCountry('Canada');
+    this.form.setACLHeaderName('testName');
+    this.form.setACLHeaderValue('testValue');
     this.clickTabWAF();
     this.form.clickWAFSwitch();
+    this.form.setWAFLocation('/wafLocation/');
     this.clickExpandWafRulesBtn();
     this.wafRulesTable.getLastRow().clickUseThisRule();
+    browser.executeScript('$(".toast").remove()');
+    browser.sleep(1000);
     this.clickTabBotProtection();
     this.form.clickBotProtectionEnableSw();
     this.form.setBotLocation('/botLocation');
+    this.form.setBotCallType('2');
+    this.form.setBotUsernameCookie('botUtest');
+    this.form.setBotSessionIDCookie('botStest');
     this.form.setBotProtectionID('123');
-    this.clickTabVCL();
-    this.form.clickCustomVCLRulesSw();
-    this.clickTabLuaScripting();
-    this.form.clickEnableLuaScriptingOnEdgeLastMile();
-    this.form.clickEnableLuaScriptingOriginFirstMile();
+    this.enableVCL();
+    this.enableLua();
     this.clickTabImageEngine();
     this.form.clickImageEngine();
-    return element(by.css('button[ng-click="ok()"]')).click();
+    element(by.css('button[ng-click="ok()"]')).click();
+    this.form.setImageEngineAPIKeyTxtIn('thisismycoolapikey');
+    this.form.setImageEngineOriginServerTxtIn('thisismycoolserver.com');
+    this.form.setImageEngineTokenTxtIn('thisismycooltoken');
+    return this.form.getSetImageEngineConfigurationSw().click();
   },
 
   clearDemo: function () {
-    this.form.clearWildcardDomainAlias();    
+    this.form.clearWildcardDomainAlias();
     this.form.setDataReadTimeout('20');
     this.form.getLastMileQUICprotocolTxtIn().click();
     this.form.getBlockAllWebCrawlersTxtIn().click();

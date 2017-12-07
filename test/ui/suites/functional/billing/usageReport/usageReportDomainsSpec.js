@@ -94,82 +94,108 @@ describe('Functional', function () {
         });
 
       it('should display correct amount of SSL Enabled ' +
-        ' domains after updating a domain', function (done) {
-          Portal.helpers.nav.goToDomains();
-          Portal.domains.listPage.searchAndClickEdit(myDomain.name);
-          Portal.domains.editPage.fillDemo(myDomain.name);
-          Portal.domains.editPage.clickUpdateDomain();
-          Portal.dialog.clickOk();
-          Portal.alerts.waitToDisplay().then(function () {
-            Portal.usageReportHelpers.generateReport(user).then(function () {
-              Portal.helpers.nav.goToUsageReport().then(function () {
-                Portal
-                  .usageReportHelpers
-                  .expectValue(Portal
-                    .billing
-                    .usageReportPage, 'SSL Enabled\n' + (sslEnabled + 1), done, 'Domains');
-              });
+        ' domains after creating a domain', function (done) {
+          Portal.usageReportHelpers.generateReport(user).then(function () {
+            Portal.helpers.nav.goToUsageReport().then(function () {
+              Portal
+                .usageReportHelpers
+                .expectValue(Portal
+                  .billing
+                  .usageReportPage, 'SSL Enabled\n' + (sslEnabled + 1), done, 'Domains');
             });
           });
         });
 
       it('should display correct amount of Custom VCL Rules ' +
         ' domains after updating a domain', function (done) {
-          Portal.usageReportHelpers.generateReport(user).then(function () {
-            Portal.helpers.nav.goToUsageReport().then(function () {
-              Portal
-                .usageReportHelpers
-                .expectValue(Portal
-                  .billing
-                  .usageReportPage, 'Custom VCL Rules\n' + (customVCLRules + 1), done, 'Domains');
+          Portal.helpers.nav.goToDomains();
+          Portal.domains.listPage.searchAndClickEdit(myDomain.name).then(function () {
+            Portal.domains.editPage.enableVCL();
+            Portal.domains.editPage.clickUpdateDomain();
+            Portal.dialog.clickOk();
+            Portal.alerts.waitToDisplay().then(function () {
+              Portal.usageReportHelpers.generateReport(user).then(function () {
+                Portal.helpers.nav.goToUsageReport().then(function () {
+                  Portal
+                    .usageReportHelpers
+                    .expectValue(Portal
+                      .billing
+                      .usageReportPage, 'Custom VCL Rules\n' + 
+                      (customVCLRules + 1), done, 'Domains');
+                });
+              });
             });
           });
         });
 
       it('should display correct amount of Enhanced Analytics Enabled ' +
         ' domains after updating a domain', function (done) {
-          Portal.usageReportHelpers.generateReport(user).then(function () {
-            Portal.helpers.nav.goToUsageReport().then(function () {
-              Portal
-                .usageReportHelpers
-                .expectValue(Portal
-                  .billing
-                  .usageReportPage,
-                'Enhanced Analytics Enabled\n' + (eAnalyticsEnabled + 1),
-                done,
-                'Domains');
+          Portal.helpers.nav.goToDomains();
+          Portal.domains.listPage.searchAndClickEdit(myDomain.name).then(function () {
+            Portal.domains.editPage.form.getEnableEnhancedAnalytics().click();
+            Portal.domains.editPage.clickUpdateDomain();
+            Portal.dialog.clickOk();
+            Portal.alerts.waitToDisplay().then(function () {
+              Portal.usageReportHelpers.generateReport(user).then(function () {
+                Portal.helpers.nav.goToUsageReport().then(function () {
+                  Portal
+                    .usageReportHelpers
+                    .expectValue(Portal
+                      .billing
+                      .usageReportPage,
+                    'Enhanced Analytics Enabled\n' + (eAnalyticsEnabled + 1),
+                    done,
+                    'Domains');
+                });
+              });
             });
           });
         });
 
       it('should display correct amount of WAF Enabled ' +
         ' domains after updating a domain', function (done) {
-          Portal.usageReportHelpers.generateReport(user).then(function () {
-            Portal.helpers.nav.goToUsageReport().then(function () {
-              Portal
-                .usageReportHelpers
-                .expectValue(Portal
-                  .billing
-                  .usageReportPage,
-                'WAF Enabled\n' + (wafEnabled + 1),
-                done,
-                'Domains');
+          Portal.helpers.nav.goToDomains();
+          Portal.domains.listPage.searchAndClickEdit(myDomain.name).then(function () {
+            Portal.domains.editPage.enableWAF();
+            Portal.domains.editPage.clickUpdateDomain();
+            Portal.dialog.clickOk();
+            Portal.alerts.waitToDisplay().then(function () {
+              Portal.usageReportHelpers.generateReport(user).then(function () {
+                Portal.helpers.nav.goToUsageReport().then(function () {
+                  Portal
+                    .usageReportHelpers
+                    .expectValue(Portal
+                      .billing
+                      .usageReportPage,
+                    'WAF Enabled\n' + (wafEnabled + 1),
+                    done,
+                    'Domains');
+                });
+              });
             });
           });
         });
 
       it('should display correct amount of Lua Feature Enabled ' +
         ' domains after updating a domain', function (done) {
-          Portal.usageReportHelpers.generateReport(user).then(function () {
-            Portal.helpers.nav.goToUsageReport().then(function () {
-              Portal
-                .usageReportHelpers
-                .expectValue(Portal
-                  .billing
-                  .usageReportPage,
-                'Lua Feature Enabled\n' + (luaEnabled + 1),
-                done,
-                'Domains');
+          Portal.helpers.nav.goToDomains();
+          Portal.domains.listPage.searchAndClickEdit(myDomain.name).then(function () {
+            Portal.domains.editPage.enableLua();
+            Portal.domains.editPage.clickUpdateDomain();
+            Portal.dialog.clickOk();
+            Portal.alerts.waitToDisplay().then(function () {
+              Portal.usageReportHelpers.generateReport(user).then(function () {
+                Portal.helpers.nav.goToUsageReport().then(function () {
+                  Portal
+                    .usageReportHelpers
+                    .expectValue(Portal
+                      .billing
+                      .usageReportPage,
+                    'Lua Feature Enabled\n' + (luaEnabled + 1),
+                    done,
+                    'Domains');
+                });
+              });
             });
           });
         });

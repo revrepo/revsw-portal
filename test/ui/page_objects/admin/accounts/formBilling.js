@@ -34,9 +34,9 @@ var CompanyBillingForm = {
     },
     textInputs: {
       firstName:
-      {
-        id: 'first_name'
-      },
+        {
+          id: 'first_name'
+        },
       lastName: {
         id: 'last_name'
       },
@@ -340,9 +340,11 @@ var CompanyBillingForm = {
    * @returns {Promise}
    */
   setCountry: function (country) {
-    return this
+    this
       .getCountryDDown()
-      .click()
+      .click();
+    return this
+      .getCountryInput()
       .sendKeys(country + protractor.Key.ENTER);
   },
 
@@ -412,7 +414,9 @@ var CompanyBillingForm = {
     this.setPhoneNumber(company.phoneNumber);
     this.setAddress1(company.address1);
     this.setAddress2(company.address2);
-    this.setCountry(company.country);
+    if (company.country !== null) {
+      this.setCountry(company.country);
+    }
     this.setState(company.state);
     this.setCity(company.city);
     this.setZipCode(company.zipcode);

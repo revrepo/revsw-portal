@@ -30,6 +30,52 @@ var DomainForm = {
   // Locators specific to HTML elements from this page object
   locators: {
     textInputs: {
+      vclFunctions: {
+        recv: {
+          model: '$ctrl.customVcl.recv',
+          linkText: '\'Recv\' Function'
+        },
+        hit: {
+          model: '$ctrl.customVcl.hit',
+          linkText: '\'Hit\' Function'
+        },
+        miss: {
+          model: '$ctrl.customVcl.miss',
+          linkText: '\'Miss\' Function'
+        },
+        deliver: {
+          model: '$ctrl.customVcl.deliver',
+          linkText: '\'Deliver\' Function'
+        },
+        pass: {
+          model: '$ctrl.customVcl.pass',
+          linkText: '\'Pass\' Function'
+        },
+        pipe: {
+          model: '$ctrl.customVcl.pipe',
+          linkText: '\'Pipe\' Function'
+        },
+        hash: {
+          model: '$ctrl.customVcl.hash',
+          linkText: '\'Hash\' Function'
+        },
+        synth: {
+          model: '$ctrl.customVcl.synth',
+          linkText: '\'Synth\' Function'
+        },
+        backendFetch: {
+          model: '$ctrl.customVcl.backend_fetch',
+          linkText: '\'Backend Fetch\' Function'
+        },
+        backendResponse: {
+          model: '$ctrl.customVcl.backend_response',
+          linkText: '\'Backend Response\' Function'
+        },
+        backendError: {
+          model: '$ctrl.customVcl.backend_error',
+          linkText: '\'Backend Error\' Function'
+        }
+      },
       botLocation: {
         name: 'botProtectionLocation'
       },
@@ -38,6 +84,12 @@ var DomainForm = {
       },
       botProtectionID: {
         model: 'item.bot_protection_id'
+      },
+      botUsernameCookie: {
+        model: 'item.username_cookie_name'
+      },
+      botSessionIDCookie: {
+        model: 'item.sessionid_cookie_name'
       },
       wafLocation: {
         model: 'item.location'
@@ -61,21 +113,24 @@ var DomainForm = {
         id: 'domain_wildcard_alias'
       },
       nonWildcardDomainAliases: {
-        id: 'non-Wildcard-Domain-Aliases'
+        id: 'non-Wildcard-Domain-Aliases',
+        css: '#non-Wildcard-Domain-Aliases input'
       },
       originMonitoringHTTPrequest: {
         id: 'originMonitoringHTTPrequest'
       },
 
       cacheBypassLocations: {
-        id: 'cacheBypassLocations'
+        id: 'cacheBypassLocations',
+        css: '#cacheBypassLocations input'
       },
       firstMileProxyBypassLocations: {
         css: '#coBypassLocations .ui-select-search',
         confirm: '.ui-select-choices-row-inner'
       },
       queryStringParametersToDropKeep: {
-        id: 'query_str'
+        id: 'query_str',
+        css: '#query_str input'
       },
       allowedSSLprotocols: {
         id: 'ssl_protocols'
@@ -116,8 +171,21 @@ var DomainForm = {
       },
       imageEngineOriginServer: {
         id: 'imageEngineOriginServer'
+      },
+      ipSubnet: {
+        model: 'IP_CIDR'
+      },
+      aclCountry: {
+        model: 'ngCountry'
+      },
+      aclHeaderName: {
+        css: '.ng-valid-acl-rule-header-name',
+        model: '$ctrl.aclRule.header_name'
+      },
+      aclHeaderValue: {
+        css: 'input[validate-acl-rule-header-value=""]',
+        model: '$ctrl.aclRule.header_value'
       }
-
     },
     textareas: {
       backendVCLcode: {
@@ -261,13 +329,9 @@ var DomainForm = {
       staleObjectTTLwhenOriginIsDown: {
         css: '.cachingRulesURLblock:first-child .staleObjectTTLwhenOriginIsDown'
       },
-
-
       enableESI: {
         id: 'enableESI'
       },
-
-
       acceptSSLrequests: {
         id: 'acceptSSLrequests'
       },
@@ -392,18 +456,30 @@ var DomainForm = {
       },
 
       cachingRulesBlock: {
-        id: 'cachingRulesBlock'
+        id: 'cachingRulesBlock',
+        expandAllRules: '.btn-default[title="Expand All Rules"]',
+
       },
       URL: {
         css: '.cachingRulesURLblock:first-child'
       },
 
       manageOriginRequestHeaders: {
-        id: 'manageOriginRequestHeaders'
+        id: 'manageOriginRequestHeaders',
+        addNewHeader: 'button[title="Add New Header"]',
+        editHeader: 'button[title="Edit Header"]',
+        headerName: 'input[name="headerName"]',
+        headerValue: 'input[name="headerValue"]',
+        saveHeader: 'button[title="Save Header"]'
       },
 
       manageEndUserResponseHeaders: {
-        id: 'manageEndUserResponseHeaders'
+        id: 'manageEndUserResponseHeaders',
+        addNewHeader: 'button[title="Add New Header"]',
+        editHeader: 'button[title="Edit Header"]',
+        headerName: 'input[name="headerName"]',
+        headerValue: 'input[name="headerValue"]',
+        saveHeader: 'button[title="Save Header"]'
       },
 
       customVCLrulesBlocks: {
@@ -727,7 +803,12 @@ var DomainForm = {
   },
 
   getNonWildcardDomainAliasesTxtIn: function () {
-    return element(by.id(this.locators.textInputs.nonWildcardDomainAliases.id));
+    return element(by.css(this.locators.textInputs.nonWildcardDomainAliases.css));
+  },
+
+  setNonWildcardDomainAliases: function (value) {
+    this.getNonWildcardDomainAliasesTxtIn().sendKeys(value);
+    return element(by.css('.ui-select-choices-row-inner')).click();
   },
 
   getOriginMonitoringHTTPrequestTxtIn: function () {
@@ -739,7 +820,12 @@ var DomainForm = {
   },
 
   getCacheBypassLocationsTxtIn: function () {
-    return element(by.id(this.locators.textInputs.cacheBypassLocations.id));
+    return element(by.css(this.locators.textInputs.cacheBypassLocations.css));
+  },
+
+  setCacheBypassLocations: function (value) {
+    this.getCacheBypassLocationsTxtIn().sendKeys(value);
+    return element(by.css('.ui-select-choices-row-inner')).click();
   },
 
   getFirstMileProxyBypassLocationsTxtIn: function () {
@@ -750,12 +836,25 @@ var DomainForm = {
     return element(by.id(this.locators.blocks.cachingRulesBlock.id));
   },
 
+  getExpandCacheRulesBtn: function () {
+    return element(by.css(this.locators.blocks.cachingRulesBlock.expandAllRules));
+  },
+
+  clickExpandCacheRules: function () {
+    return this.getExpandCacheRulesBtn().click();
+  },
+
   getURLtxtIn: function () {
     return element(by.css(this.locators.blocks.URL.css));
   },
 
   getQueryStringParametersToDropKeepTxtIn: function () {
-    return element(by.id(this.locators.textInputs.queryStringParametersToDropKeep.id));
+    return element(by.css(this.locators.textInputs.queryStringParametersToDropKeep.css));
+  },
+
+  setQueryStringParametersToDropKeep: function (value) {
+    this.getQueryStringParametersToDropKeepTxtIn().sendKeys(value);
+    return element(by.css('.ui-select-choices-row-inner')).click();
   },
 
   getAllowedSSLprotocolsTxtIn: function () {
@@ -796,6 +895,36 @@ var DomainForm = {
 
   getRecvFunctionTxtIn: function () {
     return element(by.css(this.locators.textareas.recvFunction.css));
+  },
+  getHitFunctionTxtIn: function () {
+    return element(by.model(this.locators.textInputs.vclFunctions.hit.model));
+  },
+  getMissFunctionTxtIn: function () {
+    return element(by.model(this.locators.textInputs.vclFunctions.miss.model));
+  },
+  getDeliverFunctionTxtIn: function () {
+    return element(by.model(this.locators.textInputs.vclFunctions.deliver.model));
+  },
+  getPassFunctionTxtIn: function () {
+    return element(by.model(this.locators.textInputs.vclFunctions.pass.model));
+  },
+  getPipeFunctionTxtIn: function () {
+    return element(by.model(this.locators.textInputs.vclFunctions.pipe.model));
+  },
+  getHashFunctionTxtIn: function () {
+    return element(by.model(this.locators.textInputs.vclFunctions.hash.model));
+  },
+  getSynthFunctionTxtIn: function () {
+    return element(by.model(this.locators.textInputs.vclFunctions.synth.model));
+  },
+  getBackendFetchFunctionTxtIn: function () {
+    return element(by.model(this.locators.textInputs.vclFunctions.backendFetch.model));
+  },
+  getBackendResponseFunctionTxtIn: function () {
+    return element(by.model(this.locators.textInputs.vclFunctions.backendResponse.model));
+  },
+  getBackendErrorFunctionTxtIn: function () {
+    return element(by.model(this.locators.textInputs.vclFunctions.backendError.model));
   },
   getLuaCodeBP: function () {
     return element(by.css(this.locators.textareas.luaCodeBP.css));
@@ -865,6 +994,11 @@ var DomainForm = {
     return element(by.id(this.locators.numberInputs.edgeCacheTTL.id));
   },
 
+  setEdgeCacheTTL: function (value) {
+    this.getEdgeCacheTTLTxtIn().clear();
+    return this.getEdgeCacheTTLTxtIn().sendKeys(value);
+  },
+
   getOriginTCPportTxtIn: function () {
     return element(by.id(this.locators.numberInputs.originTCPport.id));
   },
@@ -902,6 +1036,10 @@ var DomainForm = {
 
   getOverrideOriginCachingHeadersTxtIn: function () {
     return element(by.id(this.locators.switches.overrideOriginCachingHeaders.id));
+  },
+
+  clickOverrideOriginCachingHeaders: function () {
+    return this.getOverrideEdgeCachingTxtIn().click();
   },
 
   getEdgeCachingHeadersMissingTxtIn: function () {
@@ -943,6 +1081,11 @@ var DomainForm = {
     return element(by.id(this.locators.numberInputs.browserCachingTTL.id));
   },
 
+  setBrowserCachingTTL: function (value) {
+    this.getBrowserCachingTTL().clear();
+    return this.getBrowserCachingTTL().sendKeys(value);
+  },
+
   getForceRevalidation: function () {
     return element(by.id(this.locators.switches.forceRevalidation.id));
   },
@@ -955,8 +1098,18 @@ var DomainForm = {
     return element(by.css(this.locators.switches.staleObjectTTLwhileFetchingNewObject.css));
   },
 
+  setStaleObjectTTLwhileFetchingNewObject: function (value) {
+    this.getStaleObjectTTLwhileFetchingNewObject().clear();
+    return this.getStaleObjectTTLwhileFetchingNewObject().sendKeys(value);
+  },
+
   getStaleObjectTTLwhenOriginIsDown: function () {
     return element(by.css(this.locators.switches.staleObjectTTLwhenOriginIsDown.css));
+  },
+
+  setStaleObjectTTLwhenOriginIsDown: function (value) {
+    this.getStaleObjectTTLwhenOriginIsDown().clear();
+    return this.getStaleObjectTTLwhenOriginIsDown().sendKeys(value);
   },
 
   getEnableESITxtIn: function () {
@@ -967,12 +1120,128 @@ var DomainForm = {
     return element(by.id(this.locators.blocks.manageOriginRequestHeaders.id));
   },
 
+  getAddNewHeaderBtnOrigin: function () {
+    return element
+      .all(by.css(this.locators.blocks.manageOriginRequestHeaders.addNewHeader)).first();
+  },
 
+  clickAddNewHeaderBtnOrigin: function () {
+    return this.getAddNewHeaderBtnOrigin().click();
+  },
+
+  /*
+  * Creates a new Origin Header (clicks add new header and saves it)
+  */
+  createNewOriginHeader: function (header) {
+    if (header === undefined || header === null) {
+      header = {
+        headerName: 'testName',
+        headerValue: 'testValue'
+      };
+    }
+    this.clickAddNewHeaderBtnOrigin();
+    this.getManageOriginRequestHeaders().element(by.css(this
+      .locators
+      .blocks
+      .manageOriginRequestHeaders
+      .editHeader)).click();
+    this.getManageOriginRequestHeaders().element(by.css(this
+      .locators
+      .blocks
+      .manageOriginRequestHeaders
+      .headerName)).sendKeys(header.headerName);
+
+    this.getManageOriginRequestHeaders().element(by.css(this
+      .locators
+      .blocks
+      .manageOriginRequestHeaders
+      .headerValue)).sendKeys(header.headerValue);
+
+    return this.getManageOriginRequestHeaders().element(by.css(this
+      .locators
+      .blocks
+      .manageOriginRequestHeaders
+      .saveHeader)).click();
+  },
+
+  clickAddNewHeaderBtnEnduser: function () {
+    return this.getManageEndUserResponseHeaders()
+      .element(by.css(this.locators.blocks.manageEndUserResponseHeaders.addNewHeader)).click();
+  },
+
+  /*
+  * Creates a new End user Header (clicks add new header and saves it)
+  */
+  createNewEndUserHeader: function (header) {
+    if (header === undefined || header === null) {
+      header = {
+        headerName: 'testName',
+        headerValue: 'testValue'
+      };
+    }
+    this.clickAddNewHeaderBtnEnduser();
+    this.getManageEndUserResponseHeaders().element(by.css(this
+      .locators
+      .blocks
+      .manageEndUserResponseHeaders
+      .editHeader)).click();
+    this.getManageEndUserResponseHeaders().element(by.css(this
+      .locators
+      .blocks
+      .manageEndUserResponseHeaders
+      .headerName)).sendKeys(header.headerName);
+
+    this.getManageEndUserResponseHeaders().element(by.css(this
+      .locators
+      .blocks
+      .manageEndUserResponseHeaders
+      .headerValue)).sendKeys(header.headerValue);
+
+    return this.getManageEndUserResponseHeaders().element(by.css(this
+      .locators
+      .blocks
+      .manageEndUserResponseHeaders
+      .saveHeader)).click();
+  },
 
   getManageEndUserResponseHeaders: function () {
     return element(by.id(this.locators.blocks.manageEndUserResponseHeaders.id));
   },
 
+  getACLIPSubnetTxtIn: function () {
+    return element(by.model(this.locators.textInputs.ipSubnet.model));
+  },
+
+  setACLIPSubnet: function (value) {
+    this.getACLIPSubnetTxtIn().clear();
+    return this.getACLIPSubnetTxtIn().sendKeys(value);
+  },
+
+  getACLCountry: function () {
+    return new DropDownWidget(by.model(this.locators.textInputs.aclCountry.model));
+  },
+
+  setACLCountry: function (value) {
+    return this.getACLCountry().setValue(value);
+  },
+
+  getACLHeaderNameTxtIn: function () {
+    return element(by.model(this.locators.textInputs.aclHeaderName.model));
+  },
+
+  getACLHeaderValueTxtIn: function () {
+    return element(by.model(this.locators.textInputs.aclHeaderValue.model));
+  },
+
+  setACLHeaderName: function (value) {
+    this.getACLHeaderNameTxtIn().clear();
+    return this.getACLHeaderNameTxtIn().sendKeys(value);
+  },
+
+  setACLHeaderValue: function (value) {
+    this.getACLHeaderValueTxtIn().clear();
+    return this.getACLHeaderValueTxtIn().sendKeys(value);
+  },
 
   getAcceptSSLrequestsTxtIn: function () {
     return element(by.id(this.locators.switches.acceptSSLrequests.id));
@@ -991,6 +1260,9 @@ var DomainForm = {
   },
   getBotProtectionEnableSw: function () {
     return element(by.id(this.locators.switches.botProtectionEnableSw.id));
+  },
+  getBotUsernameCookieTxtIn: function () {
+    return element(by.model(this.locators.textInputs.botUsernameCookie.model));
   },
   clickBotProtectionEnableSw: function () {
     return this.getBotProtectionEnableSw().click();
@@ -1647,7 +1919,87 @@ var DomainForm = {
   setBotProtectionID: function (value) {
     this.getBotProtectionID().clear();
     return this.getBotProtectionID().sendKeys(value);
-  }
+  },
+
+  setBotUsernameCookie: function (value) {
+    this.getBotUsernameCookieTxtIn().clear();
+    return this.getBotUsernameCookieTxtIn().sendKeys(value);
+  },
+
+  getBotSessionIDCookieTxtIn: function () {
+    return element(by.model(this.locators.textInputs.botSessionIDCookie.model));
+  },
+
+  setBotSessionIDCookie: function (value) {
+    this.getBotSessionIDCookieTxtIn().clear();
+    return this.getBotSessionIDCookieTxtIn().sendKeys(value);
+  },
+
+  setRecvFunction: function (value) {
+    element(by.linkText(this.locators.textInputs.vclFunctions.recv.linkText)).click();
+    this.getRecvFunctionTxtIn().clear();
+    return this.getRecvFunctionTxtIn().sendKeys(value);
+  },
+
+  setHitFunction: function (value) {
+    element(by.linkText(this.locators.textInputs.vclFunctions.hit.linkText)).click();
+    this.getHitFunctionTxtIn().clear();
+    return this.getHitFunctionTxtIn().sendKeys(value);
+  },
+
+  setMissFunction: function (value) {
+    element(by.linkText(this.locators.textInputs.vclFunctions.miss.linkText)).click();
+    this.getMissFunctionTxtIn().clear();
+    return this.getMissFunctionTxtIn().sendKeys(value);
+  },
+
+  setDeliverFunction: function (value) {
+    element(by.linkText(this.locators.textInputs.vclFunctions.deliver.linkText)).click();
+    this.getDeliverFunctionTxtIn().clear();
+    return this.getDeliverFunctionTxtIn().sendKeys(value);
+  },
+
+  setPassFunction: function (value) {
+    element(by.linkText(this.locators.textInputs.vclFunctions.pass.linkText)).click();
+    this.getPassFunctionTxtIn().clear();
+    return this.getPassFunctionTxtIn().sendKeys(value);
+  },
+
+  setPipeFunction: function (value) {
+    element(by.linkText(this.locators.textInputs.vclFunctions.pipe.linkText)).click();
+    this.getPipeFunctionTxtIn().clear();
+    return this.getPipeFunctionTxtIn().sendKeys(value);
+  },
+
+  setHashFunction: function (value) {
+    element(by.linkText(this.locators.textInputs.vclFunctions.hash.linkText)).click();
+    this.getHashFunctionTxtIn().clear();
+    return this.getHashFunctionTxtIn().sendKeys(value);
+  },
+
+  setSynthFunction: function (value) {
+    element(by.linkText(this.locators.textInputs.vclFunctions.synth.linkText)).click();
+    this.getSynthFunctionTxtIn().clear();
+    return this.getSynthFunctionTxtIn().sendKeys(value);
+  },
+
+  setBackendFetchFunction: function (value) {
+    element(by.linkText(this.locators.textInputs.vclFunctions.backendFetch.linkText)).click();
+    this.getBackendFetchFunctionTxtIn().clear();
+    return this.getBackendFetchFunctionTxtIn().sendKeys(value);
+  },
+
+  setBackendResponseFunction: function (value) {
+    element(by.linkText(this.locators.textInputs.vclFunctions.backendResponse.linkText)).click();
+    this.getBackendResponseFunctionTxtIn().clear();
+    return this.getBackendResponseFunctionTxtIn().sendKeys(value);
+  },
+
+  setBackendErrorFunction: function (value) {
+    element(by.linkText(this.locators.textInputs.vclFunctions.backendError.linkText)).click();
+    this.getBackendErrorFunctionTxtIn().clear();
+    return this.getBackendErrorFunctionTxtIn().sendKeys(value);
+  },
 };
 
 module.exports = DomainForm;

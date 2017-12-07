@@ -116,6 +116,10 @@ var CompanyProfileForm = {
     return element(by.id(this.locators.textInputs.companyName.id));
   },
 
+  getCompanyName: function () {
+    return this.getCompanyNameTxt().getAttribute('value');
+  },
+
   /**
    * ### CompanyProfileForm.getFirstNameTxt()
    *
@@ -260,6 +264,51 @@ var CompanyProfileForm = {
     return element(by.id(this.locators.textInputs.comment.id));
   },
 
+  getComment: function () {
+    return this.getCommentTxt().getAttribute('value');
+  },
+
+  getFirstName: function () {
+    return this.getFirstNameTxt().getAttribute('value');
+  },
+
+  getLastName: function () {
+    return this.getLastNameTxt().getAttribute('value');
+  },
+
+  getPhoneNumber: function () {
+    return this.getPhoneNumberTxt().getAttribute('value');
+  },
+
+  getContactEmail: function () {
+    return this.getContactEmailTxt().getAttribute('value');
+  },
+
+  getAddress1: function () {
+    return this.getAddress1Txt().getAttribute('value');
+  },
+
+  getAddress2: function () {
+    return this.getAddress2Txt().getAttribute('value');
+  },
+
+  getCountry: function () {
+    return this
+      .getCountryDDown().element(by.css('.select2-chosen span')).getText();
+  },
+
+  getState: function () {
+    return this.getStateTxt().getAttribute('value');
+  },
+
+  getCity: function () {
+    return this.getCityTxt().getAttribute('value');
+  },
+
+  getZipCode: function () {
+    return this.getZipCodeTxt().getAttribute('value');
+  },
+
   // ## Methods to interact with the Edit Company Page components
 
   /**
@@ -384,9 +433,11 @@ var CompanyProfileForm = {
    * @returns {Promise}
    */
   setCountry: function (country) {
-    return this
+    this
       .getCountryDDown()
-      .click()
+      .click();
+    return this
+      .getCountryInput()
       .sendKeys(country + protractor.Key.ENTER);
   },
 
@@ -466,14 +517,18 @@ var CompanyProfileForm = {
    * @returns {Promise}
    */
   fill: function (company) {
-    this.setCompanyName(company.companyName);
+    if (company.companyName !== null) {
+      this.setCompanyName(company.companyName);
+    }
     this.setFirstName(company.firstName);
     this.setLastName(company.lastName);
     this.setPhoneNumber(company.phoneNumber);
     this.setContactEmail(company.contactEmail);
     this.setAddress1(company.address1);
     this.setAddress2(company.address2);
-    this.setCountry(company.country);
+    if (company.country !== null) {
+      this.setCountry(company.country);
+    }
     this.setState(company.state);
     this.setCity(company.city);
     this.setZipCode(company.zipcode);

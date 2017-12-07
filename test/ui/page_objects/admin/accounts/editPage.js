@@ -54,6 +54,9 @@ var EditCompany = {
       },
       cancel: {
         linkText: 'Cancel'
+      },
+      useSameInfoSwitch: {
+        model: 'model.use_contact_info_as_billing_info'
       }
     },
     sections: {
@@ -256,6 +259,14 @@ var EditCompany = {
       .getText();
   },
 
+  getUseSameInfoSwitch: function () {
+    return element(by.model(this.locators.buttons.useSameInfoSwitch.model));
+  },
+
+  clickUseSameInfoSwitch: function () {
+    return this.getUseSameInfoSwitch().click();
+  },
+
   /**
    * ### EditCompany.updateAccountProfile(accountProfile, billingContact)
    *
@@ -269,7 +280,11 @@ var EditCompany = {
    */
   updateAccountProfile: function (accountProfile, billingContact) {
     this.formProfile.fill(accountProfile);
-    this.formBilling.fill(billingContact);
+    if (billingContact !== null && billingContact !== undefined) {
+      this.formBilling.fill(billingContact);
+    } else {
+      this.clickUseSameInfoSwitch();
+    }
     return this.clickUpdateCompanyProfile();
   },
 

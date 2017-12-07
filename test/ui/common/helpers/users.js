@@ -19,7 +19,10 @@
 
 var API = require('./../api').API;
 var Session = require('./../session');
-
+var config = require('config');
+var user = config.get('portal.users.admin');
+var request = require('supertest-as-promised');
+var Utils = require('./utils');
 var UsersHelper = {
 
   /**
@@ -55,6 +58,16 @@ var UsersHelper = {
           // company: ??
         };
       });
+  },
+
+  /**
+   * ### users.getUser()
+   *
+   * Returns a User JSON object
+   *
+   */
+  getUser: function (email) {
+    return Utils.getAPIItemByField(email, 'email', user, '/v1/users');
   }
 };
 
