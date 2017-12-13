@@ -33,6 +33,8 @@
     });
     $scope.isAdvancedMode = ($stateParams.isAdvanced === 'true') ? true : false;
     $state._loading = true;
+    // tab activation
+    $scope.active = [false, false, false, false, false, false, false, false, false, false];
     $scope._isEditLocked = false;
     $scope.jsoneditor = {
       options: {
@@ -110,7 +112,13 @@
     };
 
     // Fetch list of records
-    $scope.$on('$stateChangeSuccess', function (state, stateTo, stateParam) {
+    $scope.$on('$stateChangeSuccess', function (state, stateTo, stateParam) {     
+      // tab activation       
+      if ($localStorage.activeTab !== undefined) {
+        $scope.active[$localStorage.activeTab] = true;
+      } else {        
+        $scope.active[0] = true;
+      }
       var data = null;
       // NOTE: set filter params for specific state
       if ($state.is('index.accountSettings.accountresources')) {
@@ -125,6 +133,7 @@
         return;
       }
       if ($state.is($scope.state)) {
+        
         $scope.list(data)
           .then(setAccountName)
           .then(function () {
@@ -1078,6 +1087,11 @@
     $scope.cancelChanges = function() {
       modalInstanceGitHubSettings.dismiss('cancel');
     };
+
+    $scope.cancel = function () {
+      $scope.active[0] = true;
+    };
+
     /**
      * @name  updateIsEditLocked
      * @description all situations for to set isEditLocked equal "true"
@@ -1091,6 +1105,10 @@
         $scope._isEditLocked = false;
       }
       return $scope._isEditLocked;
+    };
+
+    $scope.selectTab = function (tab) {
+      $localStorage.activeTab = tab;
     };
   }
 
