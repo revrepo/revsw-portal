@@ -65,6 +65,9 @@ var EditDomain = {
       },
       btnManageGitHubIntegration: {
         id: 'btnManageGitHubIntegration'
+      },
+      refreshForm: {
+        css: '.btn-primary[uib-tooltip="Refresh"]'
       }
     },
     switches: {
@@ -829,6 +832,14 @@ var EditDomain = {
     this.clickTabImageEngine();
     return this.form.clickImageEngine();
   },
+
+  getRefreshBtn: function () {
+    return element(by.css(this.locators.buttons.refreshForm.css));
+  },
+
+  clickRefreshBtn: function () {
+    return this.getRefreshBtn().click();
+  }
 };
 
 module.exports = EditDomain;
