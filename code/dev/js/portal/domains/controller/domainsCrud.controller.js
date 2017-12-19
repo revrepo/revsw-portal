@@ -984,13 +984,17 @@
           });
       }
     };
+    var refreshPageTimeout;
     /**
      * @name refreshPage
      * @description method for refresh data on the Page (reload the state)
      */
     $scope.refreshPage = function (e, id) {
       $scope._loading = true;
-      $timeout(function () {
+      if(refreshPageTimeout){
+        refreshPageTimeout.cancel();
+      }
+      refreshPageTimeout = $timeout(function () {
         var isAdvanced = $scope.isAdvancedMode;
         var state = $state.$current;
         var params = {
