@@ -796,7 +796,30 @@
               <!-- //  “WAF” -->
               <hr>
             </uib-tab>
-            <uib-tab index="6" active="active[6]" select="selectTab(6)" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Here you can manage Bot Protection configuration for the domain. The service is powered by our partner ShieldSquare.">
+            <!-- Wallarm WAF-->
+            <uib-tab index="6" active="active[6]" select="selectTab(6)" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="TODO text">
+                <uib-tab-heading>Wallarm WAF
+                  <i class="label label-primary pull-right fa beta-functional" aria-hidden="true"> Beta</i>
+                </uib-tab-heading>
+                <div class="form-group form-inline">
+                    <label for="enableWallarmWAF" class="col-sm-3 control-label">Wallarm WAF</label>
+                    <div class="col-md-9">
+                      <toggle-switch id="enable_wallarm" name="enableWallarmWAF" is-disabled="_loading || _isEditLocked" ng-model="model.rev_component_bp.enable_wallarm"
+                        on-label="On" off-label="Off">
+                      </toggle-switch>
+                      <label for="enableWallarmWAF" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="TODO text">
+                        <i class="fa fa-question-circle"></i>
+                      </label>
+                    </div>
+                  </div>
+                  <!-- Wallarm WAF  list-->
+                  <domain-wallarm-waf id="wallarmWAFBlock" account-id="{{model.account_id}}" ng-if="model.rev_component_bp.enable_wallarm"
+                    ng-model="model.rev_component_bp.wallarm_config" is-edit-locked="_isEditLocked"></domain-wallarm-waf>
+                  <!-- //  “Wallarm  WAF” -->
+                  <hr>
+                <hr>
+              </uib-tab>
+            <uib-tab index="7" active="active[7]" select="selectTab(7)" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Here you can manage Bot Protection configuration for the domain. The service is powered by our partner ShieldSquare.">
               <!--  “Bot Protection” -->
               <uib-tab-heading>Bot Protection
                 <i class="label label-primary pull-right fa beta-functional" aria-hidden="true"> Beta</i>
@@ -818,7 +841,7 @@
               <!-- //  “Bot Protection” -->
               <hr>
             </uib-tab>
-            <uib-tab index="7" active="active[7]" select="selectTab(7)" heading="Custom VCL Rules" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="This tab allows Varnish VCL experts to configure custom VCL rules to be applied for the domain configuration">
+            <uib-tab index="8" active="active[8]" select="selectTab(8)" heading="Custom VCL Rules" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="This tab allows Varnish VCL experts to configure custom VCL rules to be applied for the domain configuration">
               <!--  “Custom VCL Rules” -->
               <div class="form-group form-inline">
                 <label for="customVcl" class="col-sm-3 control-label">Custom VCL Rules</label>
@@ -836,7 +859,7 @@
               <!-- //  “Custom VCL Rules” -->
               <hr>
             </uib-tab>
-            <uib-tab index="8" active="active[8]" select="selectTab(8)" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="This section allows you to enhance the service by running custom Lua code snippets on proxy servers">
+            <uib-tab index="9" active="active[9]" select="selectTab(9)" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="This section allows you to enhance the service by running custom Lua code snippets on proxy servers">
               <!--  Lua Scripting -->
               <uib-tab-heading> Lua Scripting
                 <i class="label label-primary pull-right fa beta-functional"> Beta</i>
@@ -846,36 +869,13 @@
               <!--  // Lua Scripting -->
             </uib-tab>
             <!-- Third-Party Links-->
-            <uib-tab index="9" active="active[9]" select="selectTab(9)" heading="Third-Party Links" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="This section allows you to accelerate your website by redirecting to the CDN platform external objects/scripts served by potentially slow third-party vendors">
+            <uib-tab index="10" active="active[10]" select="selectTab(10)" heading="Third-Party Links" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="This section allows you to accelerate your website by redirecting to the CDN platform external objects/scripts served by potentially slow third-party vendors">
               <domain-the-third-party-links class="form-group" ng-model="$thirdPartyLinks" is-edit-locked="_isEditLocked"></domain-the-third-party-links>
               <hr>
             </uib-tab>
             <!-- ImageEngine-->
-            <uib-tab index="10" active="active[10]" select="selectTab(10)" heading="Image Optimization" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="The Image Optimization feature provides a simple, automatic and transparent way to resize served images depending on maximum screen resolution of end user devices">
+            <uib-tab index="11" active="active[11]" select="selectTab(11)" heading="Image Optimization" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="The Image Optimization feature provides a simple, automatic and transparent way to resize served images depending on maximum screen resolution of end user devices">
               <div ng-include="'parts/domains/domain-image-engine/domain-image-engine.tpl.html'" class="form-group"></div>
-              <hr>
-            </uib-tab>
-            <!-- Wallarm WAF-->
-            <uib-tab index="11" active="active[11]" select="selectTab(11)" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="TODO text">
-              <uib-tab-heading>Wallarm WAF
-                <i class="label label-primary pull-right fa beta-functional" aria-hidden="true"> Beta</i>
-              </uib-tab-heading>
-              <div class="form-group form-inline">
-                  <label for="enableWallarmWAF" class="col-sm-3 control-label">Wallarm WAF</label>
-                  <div class="col-md-9">
-                    <toggle-switch id="enable_wallarm" name="enableWallarmWAF" is-disabled="_loading || _isEditLocked" ng-model="model.rev_component_bp.enable_wallarm"
-                      on-label="On" off-label="Off">
-                    </toggle-switch>
-                    <label for="enableWallarmWAF" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="TODO text">
-                      <i class="fa fa-question-circle"></i>
-                    </label>
-                  </div>
-                </div>
-                <!-- Wallarm WAF  list-->
-                <domain-wallarm-waf id="wallarmWAFBlock" account-id="{{model.account_id}}" ng-if="model.rev_component_bp.enable_wallarm"
-                  ng-model="model.rev_component_bp.wallarm_config" is-edit-locked="_isEditLocked"></domain-wallarm-waf>
-                <!-- //  “Wallarm  WAF” -->
-                <hr>
               <hr>
             </uib-tab>
           </uib-tabset>

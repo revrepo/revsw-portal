@@ -391,7 +391,7 @@
         'wallarm_mode_allow_override': 'off',
         'wallarm_parse_response': 'on',
         'wallarm_process_time_limit': 1000,
-        'wallarm_process_time_limit_block': 'off',
+        'wallarm_process_time_limit_block': 'attack',
         // 'wallarm_parser_disable': null // NOTE: will be used later
       },
       WALLARM_OPERATION_MODE_SELECT: {

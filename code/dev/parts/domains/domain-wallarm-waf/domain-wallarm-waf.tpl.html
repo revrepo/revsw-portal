@@ -18,7 +18,7 @@
       </div>
     </div>
     <div class="h4 panel-title">
-      <b class="h4  inline-block"> Locations</b>
+      <b class="h4  inline-block">&nbsp;&nbsp;Locations</b>
       <label class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="TODO text">
         <i class="fa fa-question-circle"></i>
       </label>
@@ -60,7 +60,7 @@
               </a>
             </div>
             <div class="panel-title">
-              <b>Location</b>: {{item.location}}</div>
+                &nbsp;&nbsp;<b>Location</b>: {{item.location}}</div>
           </div>
         </div>
 
@@ -85,7 +85,6 @@
             <div class="col-md-9">
               <select name="operationMode" id="operationMode" class="form-control" ng-disabled="_loading" ng-model="item.wallarm_mode"
                 ng-options="mode as key for (mode,key) in $ctrl.wallarmOperationModeSelectList" required>
-                <option value="''">Please Select Operation Mode</option>
               </select>
               <label for="operationMode" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="TODO  text">
                 <i class="fa fa-question-circle"></i>
@@ -151,10 +150,10 @@
           </div>
           <!-- Request Processing Time Limit, ms -->
           <div class="form-group form-inline" ng-class="{'has-error': locationEditForm.unpackResponse.$invalid && locationEditForm.unpackResponse.$dirty}">
-            <label for="unpackResponse" class="col-sm-3 control-label">Unpack Response</label>
+            <label for="unpackResponse" class="col-sm-3 control-label">Request Processing Time Limit</label>
             <div class="col-md-9">
               <input type="number" id="unpack_response" name="unpackResponse" class="form-control inline-block" ng-disabled="_loading || _isEditLocked"
-                ng-model="item.wallarm_process_time_limit" ng-min="1" ng-max="3600" required> millisecond(s)
+                ng-model="item.wallarm_process_time_limit" ng-min="1" ng-max="1000" required> millisecond(s)
               <label for="unpackResponse" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="TODO text">
                 <i class="fa fa-question-circle"></i>
               </label>
@@ -169,7 +168,6 @@
             <div class="col-md-9">
               <select name="operationMode" id="operationMode" class="form-control" ng-disabled="_loading" ng-model="item.wallarm_process_time_limit_block"
                 ng-options="mode as key for (mode,key) in $ctrl.wallarmProcessTimeLimitBlockList">
-                <option value="">No Selected Processing Time Limit</option>
               </select>
               <label for="wallarmProcessTimeLimitBlock" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter"
                 uib-popover="TODO text">
