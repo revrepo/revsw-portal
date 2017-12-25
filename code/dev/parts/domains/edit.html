@@ -855,6 +855,29 @@
               <div ng-include="'parts/domains/domain-image-engine/domain-image-engine.tpl.html'" class="form-group"></div>
               <hr>
             </uib-tab>
+            <!-- Wallarm WAF-->
+            <uib-tab index="11" active="active[11]" select="selectTab(11)" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="TODO text">
+              <uib-tab-heading>Wallarm WAF
+                <i class="label label-primary pull-right fa beta-functional" aria-hidden="true"> Beta</i>
+              </uib-tab-heading>
+              <div class="form-group form-inline">
+                  <label for="enableWallarmWAF" class="col-sm-3 control-label">Wallarm WAF</label>
+                  <div class="col-md-9">
+                    <toggle-switch id="enable_wallarm" name="enableWallarmWAF" is-disabled="_loading || _isEditLocked" ng-model="model.rev_component_bp.enable_wallarm"
+                      on-label="On" off-label="Off">
+                    </toggle-switch>
+                    <label for="enableWallarmWAF" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="TODO text">
+                      <i class="fa fa-question-circle"></i>
+                    </label>
+                  </div>
+                </div>
+                <!-- Wallarm WAF  list-->
+                <domain-wallarm-waf id="wallarmWAFBlock" account-id="{{model.account_id}}" ng-if="model.rev_component_bp.enable_wallarm"
+                  ng-model="model.rev_component_bp.wallarm_config" is-edit-locked="_isEditLocked"></domain-wallarm-waf>
+                <!-- //  “Wallarm  WAF” -->
+                <hr>
+              <hr>
+            </uib-tab>
           </uib-tabset>
           <div class="form-group">
             <label class="col-sm-3 control-label">Current Publishing Status</label>
