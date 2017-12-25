@@ -1,4 +1,4 @@
-(function (angular, window) {
+(function(angular, window) {
   'use strict';
   angular
     .module('revapm.Portal.Config')
@@ -99,8 +99,8 @@
        */
       SSL_CERT_STATUS_REFRESH_INTERVAL: 15000,
       /**
-      * Interval delay for refreshing WAF Rules Status staging/global status
-      */
+       * Interval delay for refreshing WAF Rules Status staging/global status
+       */
       WAF_RULE_STATUS_REFRESH_INTERVAL: 15000,
       /**
        * List of icon classes for WAF Rule  statuses
@@ -196,6 +196,7 @@
         WAF_LOCATION_NAME: /^\/{1}(([A-Za-z0-9\-\_]+)(\/?){1})*$/,
         CIDR: /^([0-9]{1,3}\.){3}[0-9]{1,3}\/{1}(([1-9]|[1-2][0-9]|3[0-2])){1}?$/,
         WAF_RULE_NAME: /^[A-Za-z0-9//_.:', -]+$/,
+        WALLARM_LOCATION_NAME: /^\/{1}(([A-Za-z0-9\-\_]+)(\/?){1})*$/,
         BOT_PROTECTION_LOCATION_NAME: /^\/{1}(([A-Za-z0-9\-\_]+)(\/?){1})*$/,
         GITHUB_PERSONAL_ACCESS_TOKEN: /^[a-z0-9]{40}$/
       },
@@ -305,8 +306,7 @@
         'enable_sql_injection_lib': true,
         'enable_xss_injection_lib': true,
         'waf_rules': [],
-        'waf_actions': [
-          {
+        'waf_actions': [{
             'condition': '$SQL >= 8',
             'action': 'BLOCK'
           },
@@ -379,7 +379,49 @@
         'bot_protection_id': null
       },
 
-      STORAGE_NAME_FOR_DOMAIN_WAR_RULES_CODES: 'domainWafRulesCodesList'
+      STORAGE_NAME_FOR_DOMAIN_WAR_RULES_CODES: 'domainWafRulesCodesList',
+      /**
+       * @name WALLARM_LOCATION_DEFAULT
+       * @description default values for new Item Wallarm Config
+       */
+      WALLARM_LOCATION_DEFAULT: {
+        'location': '/',
+        'wallarm_mode': 'off',
+        'wallarm_instance': 1,
+        'wallarm_mode_allow_override': 'off',
+        'wallarm_parse_response': 'on',
+        'wallarm_process_time_limit': 1000,
+        'wallarm_process_time_limit_block': 'attack',
+        // 'wallarm_parser_disable': null // NOTE: will be used later
+      },
+      WALLARM_OPERATION_MODE_SELECT: {
+        off: 'Off',
+        monitoring: 'Monitoring',
+        block: 'Block'
+      },
+      WALLARM_MODE_ALLOW_OVERRIDER_SELECT: {
+        off: 'Off',
+        strict: 'Strict',
+        on: 'On'
+      },
+      WALLARM_PROCESS_TIME_LIMIT_BLOCK_SELECT:{
+       on: 'Always Block',
+       off:'Always Allow',
+       attack: 'Attack'
+      }
+      // NOTE: will be used later
+      // WALLARM_PARSER_DISABLED: {
+      //   action: 'action',
+      //   cookie: 'cookie',
+      //   gzip: 'gzip',
+      //   json: 'json',
+      //   multipart: 'multipart',
+      //   base64: 'base64',
+      //   path: 'path',
+      //   percent: 'percent',
+      //   urlenc: 'urlenc',
+      //   xml: 'xml'
+      // }
     });
 
 })(angular, window);

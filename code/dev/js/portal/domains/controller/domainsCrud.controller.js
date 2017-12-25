@@ -34,7 +34,7 @@
     $scope.isAdvancedMode = ($stateParams.isAdvanced === 'true') ? true : false;
     $state._loading = true;
     // tab activation
-    $scope.active = [false, false, false, false, false, false, false, false, false, false];
+    $scope.active = [false, false, false, false, false, false, false, false, false, false, false];
     $scope._isEditLocked = false;
     $scope.jsoneditor = {
       options: {
@@ -112,11 +112,11 @@
     };
 
     // Fetch list of records
-    $scope.$on('$stateChangeSuccess', function (state, stateTo, stateParam) {     
-      // tab activation       
+    $scope.$on('$stateChangeSuccess', function (state, stateTo, stateParam) {
+      // tab activation
       if ($localStorage.activeTab !== undefined) {
         $scope.active[$localStorage.activeTab] = true;
-      } else {        
+      } else {
         $scope.active[0] = true;
       }
       var data = null;
@@ -133,7 +133,7 @@
         return;
       }
       if ($state.is($scope.state)) {
-        
+
         $scope.list(data)
           .then(setAccountName)
           .then(function () {
@@ -217,6 +217,12 @@
               item.sessionid_cookie_name = '';
             }
             delete item.$$botProtectionLocationBlockState;
+          });
+        }
+        // $$wallarmLocationBlockState
+        if (model.rev_component_bp.wallarm_config && angular.isArray(model.rev_component_bp.wallarm_config)) {
+          angular.forEach(model.rev_component_bp.wallarm_config, function (item) {
+            delete item.$$wallarmLocationBlockState;
           });
         }
       }
@@ -426,7 +432,15 @@
             }
           });
         });
-
+        //$$wallarmLocationBlockState
+        angular.forEach($scope.model.rev_component_bp.wallarm_config, function (item) {
+          // NOTE: add parameter for collapsed item
+          angular.extend(item, {
+            $$wallarmLocationBlockState: {
+              isCollapsed: true
+            }
+          });
+        });
       }
       /**
        * @name  saveNoChangingValue
@@ -984,13 +998,17 @@
           });
       }
     };
+    var refreshPageTimeout;
     /**
      * @name refreshPage
      * @description method for refresh data on the Page (reload the state)
      */
     $scope.refreshPage = function (e, id) {
       $scope._loading = true;
-      $timeout(function () {
+      if(refreshPageTimeout){
+        refreshPageTimeout.cancel();
+      }
+      refreshPageTimeout = $timeout(function () {
         var isAdvanced = $scope.isAdvancedMode;
         var state = $state.$current;
         var params = {
