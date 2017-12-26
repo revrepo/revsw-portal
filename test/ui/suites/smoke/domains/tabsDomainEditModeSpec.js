@@ -47,7 +47,7 @@ describe('Smoke', function () {
         });
 
         it('should display tabs to Edit Domain page', function () {
-          expect(EditPage.getAllTabsCountDomain()).toEqual('10');
+          expect(EditPage.getAllTabsCountDomain()).toEqual('11');
         });
 
         it('click tab "General Settings"', function () {
