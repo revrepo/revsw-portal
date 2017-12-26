@@ -524,25 +524,29 @@ var DomainForm = {
         li: '.domain-edit-form .nav.nav-tabs>li:nth-child(6)',
         css: '.domain-edit-form .nav.nav-tabs>li:nth-child(6) a'
       },
-      botProtection: {
+      wallarmWAF: {
         li: '.domain-edit-form .nav.nav-tabs>li:nth-child(7)',
         css: '.domain-edit-form .nav.nav-tabs>li:nth-child(7) a'
       },
-      customVCLRules: {
+      botProtection: {
         li: '.domain-edit-form .nav.nav-tabs>li:nth-child(8)',
         css: '.domain-edit-form .nav.nav-tabs>li:nth-child(8) a'
       },
-      luaScripting: {
+      customVCLRules: {
         li: '.domain-edit-form .nav.nav-tabs>li:nth-child(9)',
         css: '.domain-edit-form .nav.nav-tabs>li:nth-child(9) a'
       },
-      thirdPartyLinks: {
+      luaScripting: {
         li: '.domain-edit-form .nav.nav-tabs>li:nth-child(10)',
         css: '.domain-edit-form .nav.nav-tabs>li:nth-child(10) a'
       },
-      imageEngine: {
+      thirdPartyLinks: {
         li: '.domain-edit-form .nav.nav-tabs>li:nth-child(11)',
         css: '.domain-edit-form .nav.nav-tabs>li:nth-child(11) a'
+      },
+      imageEngine: {
+        li: '.domain-edit-form .nav.nav-tabs>li:nth-child(12)',
+        css: '.domain-edit-form .nav.nav-tabs>li:nth-child(12) a'
       }
     }
   },
@@ -615,7 +619,7 @@ var DomainForm = {
   /**
    * ### DomainForm.getACLTab()
    *
-   * Returns the reference to the `WAF` tab (Selenium WebDriver
+   * Returns the reference to the `ACL` tab (Selenium WebDriver
    * Element)
    *
    * @returns {Selenium WebDriver Element}
@@ -635,9 +639,20 @@ var DomainForm = {
     return element(by.css(this.locators.tabs.waf.css));
   },
   /**
+   * ### DomainForm.getWallarmWAFTab()
+   *
+   * Returns the reference to the `Wallarm WAF` tab (Selenium WebDriver
+   * Element)
+   *
+   * @returns {Selenium WebDriver Element}
+   */
+  getWallarmWAFTab: function () {
+    return element(by.css(this.locators.tabs.wallarmWAF.css));
+  },
+  /**
    * ### DomainForm.getBotProtectionTab()
    *
-   * Returns the reference to the `WAF` tab (Selenium WebDriver
+   * Returns the reference to the `Bot Protection` tab (Selenium WebDriver
    * Element)
    *
    * @returns {Selenium WebDriver Element}
