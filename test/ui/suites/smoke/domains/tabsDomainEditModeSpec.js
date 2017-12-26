@@ -80,6 +80,11 @@ describe('Smoke', function () {
           expect(EditPage.tabIsActive('waf')).toEqual(true);
         });
 
+        it('click tab "Wallarm WAF"', function() {
+          EditPage.clickTabWallarmWAF();
+          expect(EditPage.tabIsActive('wallarmWAF')).toEqual(true);
+        });
+
         it('click tab "Bot Protection"', function() {
           EditPage.clickTabBotProtection();
           expect(EditPage.tabIsActive('botProtection')).toEqual(true);
