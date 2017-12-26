@@ -482,6 +482,18 @@ var EditDomain = {
   },
   /**
    *
+   * Tab "Wallarm WAF"
+   *
+   */
+  // Click to tab "Wallarm WAF"
+  clickTabWallarmWAF: function (numberLink) {
+    return this.form
+      .getWallarmWAFTab()
+      .click();
+  },
+
+  /**
+   *
    * Tab "Bot Protection"
    *
    */

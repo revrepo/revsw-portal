@@ -137,7 +137,7 @@
         <form class="form-horizontal domain-edit-form" name="editForm" novalidate ng-show="isAdvancedMode==false || isAdvancedMode=='false'">
           <!-- Display data in Basic Mode -->
           <uib-tabset active="active">
-            <uib-tab index="0" active="active[0]" select="selectTab(0)" heading="General Settings" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Use the tab to configure general domain settings like name and location of web origin, data transfer timeouts, etc">
+            <uib-tab index="0" id="domainTabGeneralSettings" active="active[0]" select="selectTab(0)" heading="General Settings" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Use the tab to configure general domain settings like name and location of web origin, data transfer timeouts, etc">
               <div class="form-group" ng-class="{'has-error': editForm.app_name.$invalid && editForm.app_name.$dirty}">
                 <label for="domainName" class="col-sm-3 control-label" popover-trigger="mouseenter">Domain Name</label>
                 <div class="col-sm-9">
@@ -424,7 +424,7 @@
               </div>
               <hr>
             </uib-tab>
-            <uib-tab index="1" active="active[1]" select="selectTab(1)" heading="Origin Health Monitoring" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="You can manage here whether we should monitor the origin health status and what monitoring parameters to use">
+            <uib-tab index="1" id="domainTabOriginHealthMonitoring" active="active[1]" select="selectTab(1)" heading="Origin Health Monitoring" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="You can manage here whether we should monitor the origin health status and what monitoring parameters to use">
               <!-- BLOCK Origin Health Monitoring -->
               <div class="form-group form-inline">
                 <label for="enable_cache" class="col-sm-3 control-label">Origin Health Monitoring</label>
@@ -504,7 +504,7 @@
               <!--  //BLOCK Origin Health Monitoring -->
               <hr>
             </uib-tab>
-            <uib-tab index="2" active="active[2]" select="selectTab(2)" heading="Edge Caching" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="This tab allows you to manage edge caching rules for acceleration of static content like images, video, JS and CSS files">
+            <uib-tab index="2" id="domainTabEdgeCaching" active="active[2]" select="selectTab(2)" heading="Edge Caching" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="This tab allows you to manage edge caching rules for acceleration of static content like images, video, JS and CSS files">
               <!-- Edge Caching -->
               <div class="form-group form-inline">
                 <label for="enable_cache" class="col-sm-3 control-label">
@@ -609,7 +609,7 @@
               </div>
               <hr>
             </uib-tab>
-            <uib-tab index="3" active="active[3]" select="selectTab(3)" heading="SSL Configuration" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Use the tab to enable/disable SSL support for the domain and manage which SSL certificate to use and which SSL protocols and cipher settings to apply for received SSL requests">
+            <uib-tab index="3" id="domainTabSSLConfiguration" active="active[3]" select="selectTab(3)" heading="SSL Configuration" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Use the tab to enable/disable SSL support for the domain and manage which SSL certificate to use and which SSL protocols and cipher settings to apply for received SSL requests">
               <!--  “SSL Configuration” -->
               <div class="form-group form-inline">
                 <label for="enable_ssl" class="col-sm-3 control-label">
@@ -732,7 +732,7 @@
               </div>
               <hr>
             </uib-tab>
-            <uib-tab index="4" active="active[4]" select="selectTab(4)" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Use the tab to manage what category of end users can access the website based on country, IP address or request HTTP header
+            <uib-tab index="4" id="domainTabACL" active="active[4]" select="selectTab(4)" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Use the tab to manage what category of end users can access the website based on country, IP address or request HTTP header
           value">
               <!--  "Access Control Lis(ACL)" -->
               <uib-tab-heading>ACL</uib-tab-heading>
@@ -774,7 +774,7 @@
               <!-- //  "Access Control Lis(ACL)" -->
               <hr>
             </uib-tab>
-            <uib-tab index="5" active="active[5]" select="selectTab(5)" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="This tab is used to manage Web Application Firewall (WAF) settings for the domain">
+            <uib-tab index="5" id="domainTabWAF" active="active[5]" select="selectTab(5)" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="This tab is used to manage Web Application Firewall (WAF) settings for the domain">
               <!--  “WAF” -->
               <uib-tab-heading>WAF
                 <i class="label label-primary pull-right fa beta-functional" aria-hidden="true"> Beta</i>
@@ -797,7 +797,7 @@
               <hr>
             </uib-tab>
             <!-- Wallarm WAF-->
-            <uib-tab index="6" active="active[6]" select="selectTab(6)" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="TODO text">
+            <uib-tab index="6" id="domainTabWallarmWAF"  active="active[6]" select="selectTab(6)" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="TODO text">
                 <uib-tab-heading>Wallarm WAF
                   <i class="label label-primary pull-right fa beta-functional" aria-hidden="true"> Beta</i>
                 </uib-tab-heading>
@@ -819,7 +819,7 @@
                   <hr>
                 <hr>
               </uib-tab>
-            <uib-tab index="7" active="active[7]" select="selectTab(7)" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Here you can manage Bot Protection configuration for the domain. The service is powered by our partner ShieldSquare.">
+            <uib-tab index="7" id="domainTabBotProtection" active="active[7]" select="selectTab(7)" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Here you can manage Bot Protection configuration for the domain. The service is powered by our partner ShieldSquare.">
               <!--  “Bot Protection” -->
               <uib-tab-heading>Bot Protection
                 <i class="label label-primary pull-right fa beta-functional" aria-hidden="true"> Beta</i>
@@ -841,7 +841,7 @@
               <!-- //  “Bot Protection” -->
               <hr>
             </uib-tab>
-            <uib-tab index="8" active="active[8]" select="selectTab(8)" heading="Custom VCL Rules" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="This tab allows Varnish VCL experts to configure custom VCL rules to be applied for the domain configuration">
+            <uib-tab index="8" id="domainTabCustomVCLRules"  active="active[8]" select="selectTab(8)" heading="Custom VCL Rules" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="This tab allows Varnish VCL experts to configure custom VCL rules to be applied for the domain configuration">
               <!--  “Custom VCL Rules” -->
               <div class="form-group form-inline">
                 <label for="customVcl" class="col-sm-3 control-label">Custom VCL Rules</label>
@@ -859,7 +859,7 @@
               <!-- //  “Custom VCL Rules” -->
               <hr>
             </uib-tab>
-            <uib-tab index="9" active="active[9]" select="selectTab(9)" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="This section allows you to enhance the service by running custom Lua code snippets on proxy servers">
+            <uib-tab index="9" id="domainTabLuaScripting" active="active[9]" select="selectTab(9)" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="This section allows you to enhance the service by running custom Lua code snippets on proxy servers">
               <!--  Lua Scripting -->
               <uib-tab-heading> Lua Scripting
                 <i class="label label-primary pull-right fa beta-functional"> Beta</i>
@@ -869,12 +869,12 @@
               <!--  // Lua Scripting -->
             </uib-tab>
             <!-- Third-Party Links-->
-            <uib-tab index="10" active="active[10]" select="selectTab(10)" heading="Third-Party Links" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="This section allows you to accelerate your website by redirecting to the CDN platform external objects/scripts served by potentially slow third-party vendors">
+            <uib-tab index="10" id="domainTabThirdPartyLinks" active="active[10]" select="selectTab(10)" heading="Third-Party Links" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="This section allows you to accelerate your website by redirecting to the CDN platform external objects/scripts served by potentially slow third-party vendors">
               <domain-the-third-party-links class="form-group" ng-model="$thirdPartyLinks" is-edit-locked="_isEditLocked"></domain-the-third-party-links>
               <hr>
             </uib-tab>
             <!-- ImageEngine-->
-            <uib-tab index="11" active="active[11]" select="selectTab(11)" heading="Image Optimization" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="The Image Optimization feature provides a simple, automatic and transparent way to resize served images depending on maximum screen resolution of end user devices">
+            <uib-tab index="11" id="domainTabImageOptimization" active="active[11]" select="selectTab(11)" heading="Image Optimization" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="The Image Optimization feature provides a simple, automatic and transparent way to resize served images depending on maximum screen resolution of end user devices">
               <div ng-include="'parts/domains/domain-image-engine/domain-image-engine.tpl.html'" class="form-group"></div>
               <hr>
             </uib-tab>

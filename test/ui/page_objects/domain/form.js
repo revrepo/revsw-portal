@@ -428,6 +428,9 @@ var DomainForm = {
       },
       originHealthMonitoringBtn: {
         model: 'model.enable_origin_health_probe'
+      },
+      refreshBtn: {
+        css: 'button[ui-tooltip="Refresh"]'
       }
     },
     elementsForm: {
@@ -501,52 +504,52 @@ var DomainForm = {
     },
     tabs: {
       generalSettings: {
-        li: '.domain-edit-form .nav.nav-tabs>li:nth-child(1)',
-        css: '.domain-edit-form .nav.nav-tabs>li:nth-child(1) a'
+        // li: '.domain-edit-form .nav.nav-tabs>li:nth-child(1)',
+        css: '#domainTabGeneralSettings a'
       },
       originHealthMonitoring: {
-        li: '.domain-edit-form .nav.nav-tabs>li:nth-child(2)',
-        css: '.domain-edit-form .nav.nav-tabs>li:nth-child(2) a'
+        // li: '.domain-edit-form .nav.nav-tabs>li:nth-child(2)',
+        css: '#domainTabOriginHealthMonitoring a'
       },
       edgeCaching: {
-        li: '.domain-edit-form .nav.nav-tabs>li:nth-child(3)',
-        css: '.domain-edit-form .nav.nav-tabs>li:nth-child(3) a'
+        // li: '.domain-edit-form .nav.nav-tabs>li:nth-child(3)',
+        css: '#domainTabEdgeCaching a'
       },
       sslConfiguration: {
-        li: '.domain-edit-form .nav.nav-tabs>li:nth-child(4)',
-        css: '.domain-edit-form .nav.nav-tabs>li:nth-child(4) a'
+        // li: '.domain-edit-form .nav.nav-tabs>li:nth-child(4)',
+        css: '#domainTabSSLConfiguration a'
       },
       acl: {
-        li: '.domain-edit-form .nav.nav-tabs>li:nth-child(5)',
-        css: '.domain-edit-form .nav.nav-tabs>li:nth-child(5) a'
+        // li: '.domain-edit-form .nav.nav-tabs>li:nth-child(5)',
+        css: '#domainTabACL a'
       },
       waf: {
-        li: '.domain-edit-form .nav.nav-tabs>li:nth-child(6)',
-        css: '.domain-edit-form .nav.nav-tabs>li:nth-child(6) a'
+        // li: '.domain-edit-form .nav.nav-tabs>li:nth-child(6)',
+        css: '#domainTabWAF a'
       },
       wallarmWAF: {
-        li: '.domain-edit-form .nav.nav-tabs>li:nth-child(7)',
-        css: '.domain-edit-form .nav.nav-tabs>li:nth-child(7) a'
+        // li: '.domain-edit-form .nav.nav-tabs>li:nth-child(7)',
+        css: '#domainTabWallarmWAF a'
       },
       botProtection: {
-        li: '.domain-edit-form .nav.nav-tabs>li:nth-child(8)',
-        css: '.domain-edit-form .nav.nav-tabs>li:nth-child(8) a'
+        // li: '.domain-edit-form .nav.nav-tabs>li:nth-child(8)',
+        css: '#domainTabBotProtection a'
       },
       customVCLRules: {
-        li: '.domain-edit-form .nav.nav-tabs>li:nth-child(9)',
-        css: '.domain-edit-form .nav.nav-tabs>li:nth-child(9) a'
+        // li: '.domain-edit-form .nav.nav-tabs>li:nth-child(9)',
+        css: '#domainTabCustomVCLRules a'
       },
       luaScripting: {
-        li: '.domain-edit-form .nav.nav-tabs>li:nth-child(10)',
-        css: '.domain-edit-form .nav.nav-tabs>li:nth-child(10) a'
+        // li: '.domain-edit-form .nav.nav-tabs>li:nth-child(10)',
+        css: '#domainTabLuaScripting a'
       },
       thirdPartyLinks: {
-        li: '.domain-edit-form .nav.nav-tabs>li:nth-child(11)',
-        css: '.domain-edit-form .nav.nav-tabs>li:nth-child(11) a'
+        // li: '.domain-edit-form .nav.nav-tabs>li:nth-child(11)',
+        css: '#domainTabThirdPartyLinks a'
       },
       imageEngine: {
-        li: '.domain-edit-form .nav.nav-tabs>li:nth-child(12)',
-        css: '.domain-edit-form .nav.nav-tabs>li:nth-child(12) a'
+        // li: '.domain-edit-form .nav.nav-tabs>li:nth-child(12)',
+        css: '#domainTabImageOptimization a'
       }
     }
   },
@@ -569,6 +572,16 @@ var DomainForm = {
     return element.all(by.css(this.locators.buttons.openUrlOfCachingRule.css));
   },
 
+
+  getRefreshBtn: function() {
+    return element(by.css(this.locators.buttons.refreshBtn));
+  },
+
+  clickRefreshBtn: function() {
+    return this
+      .getRefreshBtn()
+      .click();
+  },
 
   // ## Methods to retrieve references to UI elements (Selenium WebDriver
   // Element)
@@ -1382,11 +1395,12 @@ var DomainForm = {
   getPredefinedSSLconfigurationTxtIn: function () {
     return element(by.id(this.locators.radioInputs.predefinedSSLconfigurationProfile.id));
   },
-  getCustomSSLconfigurationTxtIn: function () {
+  getCustomSSLconfigurationRadioButton: function () {
     return element(by.id(this.locators.radioInputs.customSSLconfigurationProfile.id));
   },
-
-
+  clickCustomSSLconfigurationRadioButton: function(){
+    this.getCustomSSLconfigurationRadioButton().click();
+  },
   getManageSSLcertificatesTxtIn: function () {
     return element(by.id(this.locators.buttons.manageSSLcertificates.id));
   },
@@ -1693,6 +1707,21 @@ var DomainForm = {
       .getImageEngineOriginServerTxtIn()
       .clear()
       .sendKeys(imageEngineOriginServerValue);
+  },
+  /**
+   * ### DomainForm.setImageEngineAPIKeyTxtIn()
+   *
+   * Sets a new value for `Origin Server` text field
+   *
+   * @param {String} ImageEngineTokenTxtIn
+   *
+   * @returns {Promise}
+   */
+  setAllowedSSLProtocolsTxtIn: function(textValue) {
+    return this
+      .getAllowedSSLprotocolsTxtIn()
+      .clear()
+      .sendKeys(textValue);
   },
 
   /**
