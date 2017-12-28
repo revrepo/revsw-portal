@@ -785,7 +785,7 @@ var EditDomain = {
     });
     this.clickTabSSLconfiguration();
     this.form.getSslCertDDownItems().last().click();
-    this.form.getCustomSSLconfigurationTxtIn().click();
+    this.form.getCustomSSLconfigurationRadioButton().click();
     this.form.setAllowedSSLCiphers('ECDH');
     this.form.setAllowedSSLProtocols('TLSv1');
     this.clickTabACL();
