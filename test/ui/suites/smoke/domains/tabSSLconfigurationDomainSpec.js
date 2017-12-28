@@ -55,7 +55,7 @@ describe('Smoke', function () {
         });
 
         it('should display "Custom SSL Configuration Profile"', function () {
-          expect(checkDisplay('getCustomSSLconfigurationTxtIn')).toBe(true);
+          expect(checkDisplay('getCustomSSLconfigurationRadioButton')).toBe(true);
         });
 
         it('should display "Predefined SSL Configuration Profile" for select element', function () {

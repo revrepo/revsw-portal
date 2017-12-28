@@ -504,51 +504,51 @@ var DomainForm = {
     },
     tabs: {
       generalSettings: {
-        // li: '.domain-edit-form .nav.nav-tabs>li:nth-child(1)',
+        li: 'li#domainTabGeneralSettings',
         css: '#domainTabGeneralSettings a'
       },
       originHealthMonitoring: {
-        // li: '.domain-edit-form .nav.nav-tabs>li:nth-child(2)',
+        li: 'li#domainTabOriginHealthMonitoring',
         css: '#domainTabOriginHealthMonitoring a'
       },
       edgeCaching: {
-        // li: '.domain-edit-form .nav.nav-tabs>li:nth-child(3)',
+        li: 'li#domainTabEdgeCaching',
         css: '#domainTabEdgeCaching a'
       },
       sslConfiguration: {
-        // li: '.domain-edit-form .nav.nav-tabs>li:nth-child(4)',
+        li: 'li#domainTabSSLConfiguration',
         css: '#domainTabSSLConfiguration a'
       },
       acl: {
-        // li: '.domain-edit-form .nav.nav-tabs>li:nth-child(5)',
+        li: 'li#domainTabACL',
         css: '#domainTabACL a'
       },
       waf: {
-        // li: '.domain-edit-form .nav.nav-tabs>li:nth-child(6)',
+        li: 'li#domainTabWAF',
         css: '#domainTabWAF a'
       },
       wallarmWAF: {
-        // li: '.domain-edit-form .nav.nav-tabs>li:nth-child(7)',
+        li: 'li#domainTabWallarmWAF',
         css: '#domainTabWallarmWAF a'
       },
       botProtection: {
-        // li: '.domain-edit-form .nav.nav-tabs>li:nth-child(8)',
+        li: 'li#domainTabBotProtection',
         css: '#domainTabBotProtection a'
       },
       customVCLRules: {
-        // li: '.domain-edit-form .nav.nav-tabs>li:nth-child(9)',
+        li: 'li#domainTabCustomVCLRules',
         css: '#domainTabCustomVCLRules a'
       },
       luaScripting: {
-        // li: '.domain-edit-form .nav.nav-tabs>li:nth-child(10)',
+        li: 'li#domainTabLuaScripting',
         css: '#domainTabLuaScripting a'
       },
       thirdPartyLinks: {
-        // li: '.domain-edit-form .nav.nav-tabs>li:nth-child(11)',
+        li: 'li#domainTabThirdPartyLinks',
         css: '#domainTabThirdPartyLinks a'
       },
       imageEngine: {
-        // li: '.domain-edit-form .nav.nav-tabs>li:nth-child(12)',
+        li: 'li#domainTabImageOptimization',
         css: '#domainTabImageOptimization a'
       }
     }
