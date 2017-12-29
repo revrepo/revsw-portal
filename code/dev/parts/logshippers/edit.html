@@ -42,7 +42,7 @@
                   <div ng-bind-html="item.companyName|highlight: $select.search"></div>
                 </ui-select-choices>
               </ui-select>
-              <label for="account_id" class="text text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Select account name the job should be associated with">
+              <label for="account_id" class="text text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Select an account the job should be associated with">
                 <i class="fa fa-question-circle"></i>
               </label>
               <div class="error-messages" ng-messages="editForm.accountId.$error" role="alert" ng-messages-multiple>
@@ -98,7 +98,7 @@
                   <div ng-bind-html="item.app_name + '<i> ('+item.app_platform.replace('_',' ')+')</i>'|highlight: $select.search"></div>
                 </ui-select-choices>
               </ui-select>
-              <label for="domain" class="text text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Select source name">
+              <label for="domain" class="text text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Select Source Domain">
                 <i class="fa fa-question-circle"></i>
               </label>
               <div class="error-messages" ng-messages="editForm.sourceId.$error" role="alert" ng-messages-multiple>
