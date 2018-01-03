@@ -86,7 +86,7 @@
                   <div ng-bind-html="item.companyName|highlight: $select.search"></div>
                 </ui-select-choices>
               </ui-select> -->
-              <label for="company" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Select here account the user should be associated with">
+              <label for="company" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Select here an account the user should be associated with">
                 <i class="fa fa-question-circle"></i>
               </label>
               <a ui-sref="index.accountSettings.companies" class="btn btn-sm btn-primary" uib-tooltip="Manage Accounts" ng-disabled="_loading"><i class="fa fa-list-alt"></i> Manage Accounts</a>
@@ -167,8 +167,7 @@
 -->
               <div>
                 <input type="checkbox" name="access_control_list_readOnly" class="inline-block" ng-model="model.access_control_list.readOnly"> Read Only
-                <label for="access_control_list_readOnly" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Enables read-only access for the user account (the user still can change his pas
-sword, enabled/disable 2FA and manage dashboards)">
+                <label for="access_control_list_readOnly" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Enables read-only access for the user account (the user still can change his password, enabled/disable 2FA and manage dashboards)">
                   <i class="fa fa-question-circle"></i>
                 </label>
               </div>
@@ -181,7 +180,7 @@ sword, enabled/disable 2FA and manage dashboards)">
             </div>
             <div class="col-sm-10" ng-class="{'has-error': editForm.email.$invalid && editForm.email.$dirty}">
               <div disable-two-factor-auth ng-user-id="params.id" class="inline-block"></div>
-              <label for="disable-two-factor-auth" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Shows the current of status of 2FA configuration for the user account">
+              <label for="disable-two-factor-auth" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Shows the current status of 2FA configuration for the user">
                 <i class="fa fa-question-circle"></i>
               </label>
             </div>
