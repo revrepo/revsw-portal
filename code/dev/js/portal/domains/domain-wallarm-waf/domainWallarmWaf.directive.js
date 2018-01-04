@@ -16,7 +16,7 @@
       },
       templateUrl: 'parts/domains/domain-wallarm-waf/domain-wallarm-waf.tpl.html',
       controllerAs: '$ctrl',
-      controller: function domainWallarmWafController($uibModal, $scope, $q, $config, AlertService, DomainsConfig, WAF_Rules) {
+      controller: function domainWallarmWafController($uibModal, $scope, $q, $config, AlertService, $sce) {
         'ngInject';
         var $ctrl = this;
 
@@ -24,8 +24,20 @@
         $ctrl.wallarmOperationModeSelectList = $config.WALLARM_OPERATION_MODE_SELECT;
         $ctrl.wallarmModeAllowOverriderOperationModeList = $config.WALLARM_MODE_ALLOW_OVERRIDER_SELECT;
         $ctrl.wallarmProcessTimeLimitBlockList = $config.WALLARM_PROCESS_TIME_LIMIT_BLOCK_SELECT;
-        // $ctrl.wallarmParserDisabledList = $config.WALLARM_PARSER_DISABLED;// NOTE: will be used later
-
+        $ctrl.wallarmParserDisabledList = $config.WALLARM_PARSER_DISABLED_SELECT;
+        $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
+        $scope.popoverHelpHTML = {
+          action: $sce.trustAsHtml('TODO text action'),
+          cookie: $sce.trustAsHtml('TODO text'),
+          gzip: $sce.trustAsHtml('TODO text'),
+          json: $sce.trustAsHtml('TODO text'),
+          multipart: $sce.trustAsHtml('TODO text'),
+          base64: $sce.trustAsHtml('TODO text'),
+          path: $sce.trustAsHtml('TODO text'),
+          percent: $sce.trustAsHtml('TODO text'),
+          urlenc: $sce.trustAsHtml('TODO text'),
+          xml: $sce.trustAsHtml('TODO text')
+        };
         /**
          * @name  onAddNewWallarmLocation
          * @description add new Item of Wallarm Location
@@ -305,12 +317,26 @@
               $ctrl.wallarmConfig = [];
               // $ctrl.onAddNewWallarmLocation();
             }
-            if($ctrl.wallarmConfig.length ===0 ){
-                $ctrl.onAddNewWallarmLocation();
+            if ($ctrl.wallarmConfig.length === 0) {
+              $ctrl.onAddNewWallarmLocation();
             }
 
             $ctrl._loading = false;
           });
+        /**
+         * @name toggleSelectionWallarmParserDisable
+         * @description method change values in array "wallarm_parser_disable"
+         * @param {*} list
+         * @param {*} key
+         */
+        $ctrl.toggleSelectionWallarmParserDisable = function(list, key) {
+          var idx = list.indexOf(key);
+          if (idx > -1) {
+            list.splice(idx, 1);
+          } else {
+            list.push(key);
+          }
+        };
       }
     };
   }
