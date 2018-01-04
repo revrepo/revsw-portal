@@ -408,20 +408,22 @@
        on: 'Always Block',
        off:'Always Allow',
        attack: 'Attack'
+      },
+      /**
+       * @name WALLARM_PARSER_DISABLED_SELECT
+       */
+      WALLARM_PARSER_DISABLED_SELECT: {
+        action: 'Action',
+        cookie: 'Cookie',
+        gzip: 'Gzip',
+        json: 'JSON',
+        multipart: 'Multipart',
+        base64: 'Base64',
+        path: 'Path',
+        percent: 'Percent',
+        urlenc: 'Urlenc',
+        xml: 'XML'
       }
-      // NOTE: will be used later
-      // WALLARM_PARSER_DISABLED: {
-      //   action: 'action',
-      //   cookie: 'cookie',
-      //   gzip: 'gzip',
-      //   json: 'json',
-      //   multipart: 'multipart',
-      //   base64: 'base64',
-      //   path: 'path',
-      //   percent: 'percent',
-      //   urlenc: 'urlenc',
-      //   xml: 'xml'
-      // }
     });
 
 })(angular, window);

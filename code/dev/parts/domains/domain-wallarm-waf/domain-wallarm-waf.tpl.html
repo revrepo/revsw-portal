@@ -25,7 +25,7 @@
     </div>
   </div>
   <div class="panel panel-body">
-    <div class="form-group" ng-form="locationEditForm">
+    <div class="form-group" ng-form="wallarmsEditForm">
       <div class="panel panel-default" ng-repeat="item in $ctrl.wallarmConfig">
         <div class="panel-heading">
           <div class="domain-wallarm-location__info">
@@ -60,13 +60,14 @@
               </a>
             </div>
             <div class="panel-title">
-                &nbsp;&nbsp;<b>Location</b>: {{item.location}}</div>
+              &nbsp;&nbsp;
+              <b>Location</b>: {{item.location}}</div>
           </div>
         </div>
 
         <div class="panel-body" ng-show="!item.$$wallarmLocationBlockState.isCollapsed">
 
-          <div class="form-group" ng-class="{'has-error': locationEditForm.wallarmLocation.$invalid && locationEditForm.wallarmLocation.$dirty}">
+          <div class="form-group" ng-class="{'has-error': wallarmsEditForm.wallarmLocation.$invalid && wallarmsEditForm.wallarmLocation.$dirty}">
             <label for="wallarmLocation" class="col-sm-3 control-label">Location *</label>
             <div class="col-sm-9">
               <input type="text" class="form-control inline-block elemLastFirstMile" ng-disabled="_loading || _isEditLocked" ng-model="item.location"
@@ -74,13 +75,13 @@
               <label for="wallarmLocation" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="TODO text ">
                 <i class="fa fa-question-circle"></i>
               </label>
-              <div class="error-messages" ng-messages="locationEditForm.wallarmLocation.$error" role="alert" ng-messages-multiple>
+              <div class="error-messages" ng-messages="wallarmsEditForm.wallarmLocation.$error" role="alert" ng-messages-multiple>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
               </div>
             </div>
           </div>
           <!--Wallarm enable-->
-          <div class="form-group form-inline" ng-class="{'has-error': locationEditForm.operationMode.$invalid && locationEditForm.operationMode.$dirty}">
+          <div class="form-group form-inline" ng-class="{'has-error': wallarmsEditForm.operationMode.$invalid && wallarmsEditForm.operationMode.$dirty}">
             <label for="operationMode" class="col-sm-3 control-label">Operation Mode</label>
             <div class="col-md-9">
               <select name="operationMode" id="operationMode" class="form-control" ng-disabled="_loading" ng-model="item.wallarm_mode"
@@ -89,27 +90,27 @@
               <label for="operationMode" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="TODO  text">
                 <i class="fa fa-question-circle"></i>
               </label>
-              <div class="error-messages" ng-messages="locationEditForm.operationMode.$error" role="alert" ng-messages-multiple>
+              <div class="error-messages" ng-messages="wallarmsEditForm.operationMode.$error" role="alert" ng-messages-multiple>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
               </div>
             </div>
           </div>
           <!-- Instance Number -->
-          <div class="form-group form-inline" ng-class="{'has-error': locationEditForm.enableWafLearnMode.$invalid && locationEditForm.enableWafLearnMode.$dirty}">
+          <div class="form-group form-inline" ng-class="{'has-error': wallarmsEditForm.enableWafLearnMode.$invalid && wallarmsEditForm.enableWafLearnMode.$dirty}">
             <label for="enableWafLearnMode" class="col-sm-3 control-label">Instance Number</label>
             <div class="col-md-9">
               <input type="number" name="enableWafLearnMode" class="form-control inline-block" ng-disabled="_loading || _isEditLocked"
-                ng-model="item.wallarm_instance" ng-min="1" ng-max="3600">
+                ng-model="item.wallarm_instance" ng-min="1" ng-max="4000">
               <label for="enableWafLearnMode" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="TODO text">
                 <i class="fa fa-question-circle"></i>
               </label>
-              <div class="error-messages" ng-messages="locationEditForm.enableWafLearnMode.$error" role="alert" ng-messages-multiple>
+              <div class="error-messages" ng-messages="wallarmsEditForm.enableWafLearnMode.$error" role="alert" ng-messages-multiple>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
               </div>
             </div>
           </div>
           <!-- Allow Mode Override -->
-          <div class="form-group form-inline" ng-class="{'has-error': locationEditForm.wallarmModeAllowOverride.$invalid && locationEditForm.wallarmModeAllowOverride.$dirty}">
+          <div class="form-group form-inline" ng-class="{'has-error': wallarmsEditForm.wallarmModeAllowOverride.$invalid && wallarmsEditForm.wallarmModeAllowOverride.$dirty}">
             <label for="wallarmModeAllowOverride" class="col-sm-3 control-label">Allow Mode Override</label>
             <div class="col-md-9">
               <select name="wallarmModeAllowOverride" id="wallarmModeAllowOverride" class="form-control" ng-disabled="_loading" ng-model="item.wallarm_mode_allow_override"
@@ -119,7 +120,7 @@
               <label for="wallarmModeAllowOverride" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="TODO text">
                 <i class="fa fa-question-circle"></i>
               </label>
-              <div class="error-messages" ng-messages="locationEditForm.wallarmModeAllowOverride.$error" role="alert" ng-messages-multiple>
+              <div class="error-messages" ng-messages="wallarmsEditForm.wallarmModeAllowOverride.$error" role="alert" ng-messages-multiple>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
               </div>
             </div>
@@ -149,7 +150,7 @@
             </div>
           </div>
           <!-- Request Processing Time Limit, ms -->
-          <div class="form-group form-inline" ng-class="{'has-error': locationEditForm.unpackResponse.$invalid && locationEditForm.unpackResponse.$dirty}">
+          <div class="form-group form-inline" ng-class="{'has-error': wallarmsEditForm.unpackResponse.$invalid && wallarmsEditForm.unpackResponse.$dirty}">
             <label for="unpackResponse" class="col-sm-3 control-label">Request Processing Time Limit</label>
             <div class="col-md-9">
               <input type="number" id="unpack_response" name="unpackResponse" class="form-control inline-block" ng-disabled="_loading || _isEditLocked"
@@ -157,7 +158,7 @@
               <label for="unpackResponse" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="TODO text">
                 <i class="fa fa-question-circle"></i>
               </label>
-              <div class="error-messages" ng-messages="locationEditForm.unpackResponse.$error" role="alert" ng-messages-multiple>
+              <div class="error-messages" ng-messages="wallarmsEditForm.unpackResponse.$error" role="alert" ng-messages-multiple>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
               </div>
             </div>
@@ -175,9 +176,22 @@
               </label>
             </div>
           </div>
+          <!-- Disable Wallarm Parser For -->
+          <div class="form-group" ng-class="{'has-error': wallarmsEditForm.wallarmParserDisable.$invalid && wallarmsEditForm.wallarmParserDisable.$dirty}">
+            <label for="wallarmParserDisable" class="col-sm-3 control-label">Disable Wallarm Parser For</label>
+            <div class="col-sm-9">
+              <div ng-repeat="(key,val) in $ctrl.wallarmParserDisabledList">
+                <input style="margin-left: 0px;" type="checkbox" class="inline-block" name="cbWallarmParserDisable_{{key}}" value="{{key}}"
+                  ng-disabled="_loading" ng-checked="item.wallarm_parser_disable.indexOf(key)>-1" ng-click="$ctrl.toggleSelectionWallarmParserDisable(item.wallarm_parser_disable,key)"> {{val}}
+                <label ng-if="!!popoverHelpHTML[key]" uib-popover-html="popoverHelpHTML[key]" class="text-info graph-help-icon" popover-popup-close-delay="{{::popoverPopupCloseDelay}}"
+                  popover-append-to-body="true" popover-trigger="mouseenter" popover-hoverable="false" popover-placement="right">
+                  <i class="fa fa-question-circle" aria-hidden="true"></i>
+                </label>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
-  <!-- <pre> {{$ctrl.wallarmConfig| json}} </pre> -->
 </div>
