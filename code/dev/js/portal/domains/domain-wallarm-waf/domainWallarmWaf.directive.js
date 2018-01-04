@@ -27,6 +27,7 @@
         $ctrl.wallarmParserDisabledList = $config.WALLARM_PARSER_DISABLED_SELECT;
         $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
         $scope.popoverHelpHTML = {
+          wallarmParserDisable: $sce.trustAsHtml('TODO text action'),
           action: $sce.trustAsHtml('TODO text action'),
           cookie: $sce.trustAsHtml('TODO text'),
           gzip: $sce.trustAsHtml('TODO text'),

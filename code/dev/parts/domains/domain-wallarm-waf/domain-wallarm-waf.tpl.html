@@ -178,7 +178,12 @@
           </div>
           <!-- Disable Wallarm Parser For -->
           <div class="form-group" ng-class="{'has-error': wallarmsEditForm.wallarmParserDisable.$invalid && wallarmsEditForm.wallarmParserDisable.$dirty}">
-            <label for="wallarmParserDisable" class="col-sm-3 control-label">Disable Wallarm Parser For</label>
+            <label for="wallarmParserDisable" class="col-sm-3 control-label">Disable Wallarm Parser For
+              <span ng-if="!!popoverHelpHTML['wallarmParserDisable']" uib-popover-html="popoverHelpHTML['wallarmParserDisable']" class="text-info graph-help-icon" popover-popup-close-delay="{{::popoverPopupCloseDelay}}"
+                popover-append-to-body="true" popover-trigger="mouseenter" popover-hoverable="false" popover-placement="right">
+                <i class="fa fa-question-circle" aria-hidden="true"></i>
+              </span>
+            </label>
             <div class="col-sm-9">
               <div ng-repeat="(key,val) in $ctrl.wallarmParserDisabledList">
                 <input style="margin-left: 0px;" type="checkbox" class="inline-block" name="cbWallarmParserDisable_{{key}}" value="{{key}}"
