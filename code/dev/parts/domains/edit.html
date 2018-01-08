@@ -797,7 +797,7 @@
               <hr>
             </uib-tab>
             <!-- Wallarm WAF-->
-            <uib-tab index="6" id="domainTabWallarmWAF"  active="active[6]" select="selectTab(6)" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="TODO text">
+            <uib-tab index="6" id="domainTabWallarmWAF"  active="active[6]" select="selectTab(6)" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Wallarm's AI-driven WAF is integrated into the platform, and this tab provides necessary controls to manage the security service for the domain">
                 <uib-tab-heading>Wallarm WAF
                   <i class="label label-primary pull-right fa beta-functional" aria-hidden="true"> Beta</i>
                 </uib-tab-heading>
@@ -807,7 +807,7 @@
                       <toggle-switch id="enable_wallarm" name="enableWallarmWAF" is-disabled="_loading || _isEditLocked" ng-model="model.rev_component_bp.enable_wallarm"
                         on-label="On" off-label="Off">
                       </toggle-switch>
-                      <label for="enableWallarmWAF" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="TODO text">
+                      <label for="enableWallarmWAF" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Use the switch the control whether Wallarm WAF will be enabled for the domain. Please contract the support team to provide required configuration parameters.">
                         <i class="fa fa-question-circle"></i>
                       </label>
                     </div>
