@@ -19,7 +19,7 @@
     </div>
     <div class="h4 panel-title">
       <b class="h4  inline-block">&nbsp;&nbsp;Locations</b>
-      <label class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="TODO text">
+      <label class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="It is possible to configuration different Wallarm WAF settings for different parts (locations) of the website. The default root location (/) covers the whole website. You can configure separate locations like /images/, /admin/, etc.">
         <i class="fa fa-question-circle"></i>
       </label>
     </div>
@@ -72,7 +72,7 @@
             <div class="col-sm-9">
               <input type="text" class="form-control inline-block elemLastFirstMile" ng-disabled="_loading || _isEditLocked" ng-model="item.location"
                 name="wallarmLocation" placeholder="like '/my_url/'" ng-maxlength="150" validate-waf-location-name required>
-              <label for="wallarmLocation" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="TODO text ">
+              <label for="wallarmLocation" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Specify here a website path (like /my_url/) the Wallarm WAF configuration should be applied to">
                 <i class="fa fa-question-circle"></i>
               </label>
               <div class="error-messages" ng-messages="wallarmsEditForm.wallarmLocation.$error" role="alert" ng-messages-multiple>
@@ -87,7 +87,7 @@
               <select name="operationMode" id="operationMode" class="form-control" ng-disabled="_loading" ng-model="item.wallarm_mode"
                 ng-options="mode as key for (mode,key) in $ctrl.wallarmOperationModeSelectList" required>
               </select>
-              <label for="operationMode" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="TODO  text">
+              <label for="operationMode" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="The option defines how Wallarm WAF will behave for the location: the Off mode will disable Wallarm service for the location, the Monitoring mode will enable the WAF to collect traffic analytics but will not actually block detected security threats, and the Block mode actually block detected malicious events. In Aggressive mode all non-standard requests are blocked (for example, mapping a string in the field usually used for passing a number) - use this mode with extreme caution.">
                 <i class="fa fa-question-circle"></i>
               </label>
               <div class="error-messages" ng-messages="wallarmsEditForm.operationMode.$error" role="alert" ng-messages-multiple>
@@ -101,7 +101,7 @@
             <div class="col-md-9">
               <input type="number" name="enableWafLearnMode" class="form-control inline-block" ng-disabled="_loading || _isEditLocked"
                 ng-model="item.wallarm_instance" ng-min="1" ng-max="4000">
-              <label for="enableWafLearnMode" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="TODO text">
+              <label for="enableWafLearnMode" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Please contact the customer support team to get the value of the parameter">
                 <i class="fa fa-question-circle"></i>
               </label>
               <div class="error-messages" ng-messages="wallarmsEditForm.enableWafLearnMode.$error" role="alert" ng-messages-multiple>
@@ -117,7 +117,7 @@
                 ng-options="mode as key for (mode,key) in $ctrl.wallarmModeAllowOverriderOperationModeList">
                 <option value="''">Not Selected Mode Override</option>
               </select>
-              <label for="wallarmModeAllowOverride" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="TODO text">
+              <label for="wallarmModeAllowOverride" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="This switch manages the ability to override the mode of Wallarm WAF operation set via the portal with values set via filtering rules downloaded from the Wallarm cloud (LOM): Off will instruct the system to ignore the mode of operation set in LOM, Strict will allow for LOM setting only to strengthen the operation mode, On setting will allow  to both strengthen and soften the operation mode.  For example, if Operation Mode is set to Monitoring and Allow Mode Override is set to Strict, the Wallarm cloud can be used to enable blocking of some requests, but the attack analysis cannot be fully disabled.">
                 <i class="fa fa-question-circle"></i>
               </label>
               <div class="error-messages" ng-messages="wallarmsEditForm.wallarmModeAllowOverride.$error" role="alert" ng-messages-multiple>
@@ -132,7 +132,7 @@
               <toggle-switch name="parseResponse" is-disabled="_loading || _isEditLocked" ng-model="item.wallarm_parse_response" on-label="On"
                 off-label="Off">
               </toggle-switch>
-              <label for="parseResponse" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="TODO text">
+              <label for="parseResponse" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="The switch controls whether the Wallarm WAF will process only end user request (mode Off) or also origin server response (mode On)">
                 <i class="fa fa-question-circle"></i>
               </label>
             </div>
@@ -144,7 +144,7 @@
               <toggle-switch name="unpackResponse" is-disabled="_loading || _isEditLocked" ng-model="item.wallarm_unpack_response" on-label="On"
                 off-label="Off">
               </toggle-switch>
-              <label for="unpackResponse" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="TODO text">
+              <label for="unpackResponse" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="If the origin server sends compressed data, the value On instructs the system to decompress the data before processing, the value Off turns off the decompression">
                 <i class="fa fa-question-circle"></i>
               </label>
             </div>
@@ -155,7 +155,7 @@
             <div class="col-md-9">
               <input type="number" id="unpack_response" name="unpackResponse" class="form-control inline-block" ng-disabled="_loading || _isEditLocked"
                 ng-model="item.wallarm_process_time_limit" ng-min="1" ng-max="1000" required> millisecond(s)
-              <label for="unpackResponse" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="TODO text">
+              <label for="unpackResponse" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="The parameter sets the time limit of a single request processing in milliseconds. If the time exceeds the limit the request is handled in accordance with the value of the next configuration field (Action On Reaching Of Request Processing Time Limit).">
                 <i class="fa fa-question-circle"></i>
               </label>
               <div class="error-messages" ng-messages="wallarmsEditForm.unpackResponse.$error" role="alert" ng-messages-multiple>
@@ -171,7 +171,7 @@
                 ng-options="mode as key for (mode,key) in $ctrl.wallarmProcessTimeLimitBlockList">
               </select>
               <label for="wallarmProcessTimeLimitBlock" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter"
-                uib-popover="TODO text">
+                uib-popover="The field controls how to handle requests which exceeded the processing time limit set in Request Processing Time Limit field above. In Always Block mode the requests are always blocked, in Always Allow mode the requests are always ignored (allowed to pass). The behaviour of Attack mode depends on the attack blocking mode set in Operation Mode directive above: if it is set to Monitoring the requests are ignored, if it is set to Block or Aggresive then the requests are blocked.">
                 <i class="fa fa-question-circle"></i>
               </label>
             </div>

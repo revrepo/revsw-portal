@@ -397,7 +397,8 @@
       WALLARM_OPERATION_MODE_SELECT: {
         off: 'Off',
         monitoring: 'Monitoring',
-        block: 'Block'
+        block: 'Block',
+        aggressive: 'Aggressive'
       },
       WALLARM_MODE_ALLOW_OVERRIDER_SELECT: {
         off: 'Off',
