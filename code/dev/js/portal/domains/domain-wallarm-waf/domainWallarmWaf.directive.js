@@ -27,17 +27,18 @@
         $ctrl.wallarmParserDisabledList = $config.WALLARM_PARSER_DISABLED_SELECT;
         $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
         $scope.popoverHelpHTML = {
-          wallarmParserDisable: $sce.trustAsHtml('TODO text action'),
+          wallarmParserDisable: $sce.trustAsHtml('This attribute controls whether certain Wallarm content parsers ' +
+            'will be disabled while processing requests (for example, for troubleshoting of Wallarm WAF behaviour)'),
           action: $sce.trustAsHtml('TODO text action'),
-          cookie: $sce.trustAsHtml('TODO text'),
-          gzip: $sce.trustAsHtml('TODO text'),
-          json: $sce.trustAsHtml('TODO text'),
-          multipart: $sce.trustAsHtml('TODO text'),
-          base64: $sce.trustAsHtml('TODO text'),
-          path: $sce.trustAsHtml('TODO text'),
+          cookie: $sce.trustAsHtml('Disable the parsing of HTTP cookies'),
+          gzip: $sce.trustAsHtml('Disable the ungzipping of response body data'),
+          json: $sce.trustAsHtml('Disable the parsing of JSON objects'),
+          multipart: $sce.trustAsHtml('Disable the parsing of multipart HTML'),
+          base64: $sce.trustAsHtml('Disable the parsing of Base64-encoded data'),
+          path: $sce.trustAsHtml('Disable the parsing of URL path part'),
           percent: $sce.trustAsHtml('TODO text'),
-          urlenc: $sce.trustAsHtml('TODO text'),
-          xml: $sce.trustAsHtml('TODO text')
+          urlenc: $sce.trustAsHtml('Disabling the parsing of URL encoding'),
+          xml: $sce.trustAsHtml('Disable the parsing of XML code')
         };
         /**
          * @name  onAddNewWallarmLocation
