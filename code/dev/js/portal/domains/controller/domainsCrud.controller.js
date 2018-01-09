@@ -26,6 +26,7 @@
     SSL_conf_profiles,
     User,
     $uibModal) {
+    var STORAGE_NAME_LIST_FILTER_ = 'domains_page_filter';
     //Invoking crud actions
     $injector.invoke(CRUDController, this, {
       $scope: $scope,
@@ -49,6 +50,7 @@
     $scope.setState('index.webApp.domains');
 
     $scope.setResource(DomainsConfig);
+    $scope.setStorageNameForFilterSettings(STORAGE_NAME_LIST_FILTER_);
 
     $scope.NO_SPECIAL_CHARS = $config.PATTERNS.NO_SPECIAL_CHARS;
     $scope.COMMENT_NO_SPECIAL_CHARS = $config.PATTERNS.COMMENT_NO_SPECIAL_CHARS;
@@ -119,6 +121,17 @@
       } else {
         $scope.active[0] = true;
       }
+      //NOTE: use last stored filter data
+      if($localStorage[STORAGE_NAME_LIST_FILTER_]){
+        angular.extend($scope.filter,$localStorage[STORAGE_NAME_LIST_FILTER_]);
+        delete $scope.filter.filter; // NOTE: not use data last search
+      } else {
+       angular.extend($scope.filter,{
+          predicate: 'updated_at',
+          reverse: true
+        });
+      }
+
       var data = null;
       // NOTE: set filter params for specific state
       if ($state.is('index.accountSettings.accountresources')) {

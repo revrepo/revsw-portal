@@ -6,7 +6,7 @@
     .factory('CRUDController', CRUDController);
 
   /*@ngInject*/
-  function CRUDController($config, $rootScope, AlertService, $q, User, $anchorScroll, $uibModal, $filter, $timeout, $animate, $state) {
+  function CRUDController($config, $rootScope, AlertService, $q, User, $anchorScroll, $uibModal, $filter, $timeout, $animate, $state, $localStorage) {
 
     function CRUDControllerImpl($scope, $stateParams) {
 
@@ -122,6 +122,12 @@
        */
       $scope.filterKeys = [];
 
+      /**
+       * Private property for store filter settings
+       *
+       * @type {String}
+       */
+      var storageNameFilter_;
       /***************************************************************************************
        *****                       END VARIABLES INITIALIZATION SECTION
        **************************************************************************************/
@@ -189,7 +195,11 @@
       /**
        * Will watch filter to be able to apply it
        */
-      $scope.$watch('filter', function () {
+      $scope.$watch('filter', function (newVal, oldVal) {
+        // NOTE: store filter settings if set value for the private property "storageNameFilter_"
+        if(storageNameFilter_ && (newVal !== oldVal)){
+            $localStorage[storageNameFilter_] = newVal;
+        }
         // Apply filters here
         $scope.filterList();
       }, true);
@@ -314,6 +324,14 @@
           return;
         }
         $scope.deniedFields = fields;
+      };
+      /**
+       * Set name for store filter settings
+       *
+       * @param {String} fields
+       */
+      $scope.setStorageNameForFilterSettings = function(name){
+        storageNameFilter_ = name;
       };
 
       /**

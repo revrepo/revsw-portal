@@ -2,7 +2,7 @@
  *
  * REV SOFTWARE CONFIDENTIAL
  *
- * [2013] - [2015] Rev Software, Inc.
+ * [2013] - [2018] Rev Software, Inc.
  * All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains
@@ -23,122 +23,130 @@ var DataProvider = require('./../../../common/providers/data');
 describe('Functional', function () {
   describe('Domain list', function () {
 
-    var user = config.get('portal.users.admin');
+    var users = [
+      config.get('portal.users.admin'),
+      config.get('portal.users.user')
+    ];
 
-    beforeAll(function () {
-      Portal.signIn(user);
+    users.forEach(function (user) {
+
+      describe('With user: ' + user.role, function () {
+        beforeAll(function () {
+          Portal.signIn(user);
+        });
+
+        afterAll(function () {
+          Portal.signOut();
+        });
+
+        beforeEach(function () {
+          Portal.helpers.nav.goToDomains();
+        });
+
+        it('should display domain with a Staging Status',
+          function () {
+            Portal.domains.listPage.table
+              .getRow(0)
+              .getStagingStatusIcon()
+              .isDisplayed()
+              .then(function (isDisplayed) {
+                expect(isDisplayed).toBeTruthy();
+              });
+          });
+
+        it('should display domain with a Global Status',
+          function () {
+            Portal.domains.listPage.table
+              .getRow(0)
+              .getGlobalStatusIcon()
+              .isDisplayed()
+              .then(function (isDisplayed) {
+                expect(isDisplayed).toBeTruthy();
+              });
+          });
+
+        it('should display a `edit` icon for the domain',
+          function () {
+            Portal.domains.listPage.table
+              .getRow(0)
+              .getEditBtn()
+              .isDisplayed()
+              .then(function (isDisplayed) {
+                expect(isDisplayed).toBeTruthy();
+              });
+          });
+
+        it('should display a `configure` icon for the domain',
+          function () {
+            Portal.domains.listPage.table
+              .getRow(0)
+              .getConfigureBtn()
+              .isDisplayed()
+              .then(function (isDisplayed) {
+                expect(isDisplayed).toBeTruthy();
+              });
+          });
+
+        it('should display a `delete` icon for the domain',
+          function () {
+            Portal.domains.listPage.table
+              .getRow(0)
+              .getDeleteBtn()
+              .isDisplayed()
+              .then(function (isDisplayed) {
+                expect(isDisplayed).toBeTruthy();
+              });
+          });
+
+        it('should display a `stats` icon for the domain',
+          function () {
+            Portal.domains.listPage.table
+              .getRow(0)
+              .getStatsBtn()
+              .isDisplayed()
+              .then(function (isDisplayed) {
+                expect(isDisplayed).toBeTruthy();
+              });
+          });
+
+        it('should display a `versions` icon for the domain',
+          function () {
+            Portal.domains.listPage.table
+              .getRow(0)
+              .getVersionsBtn()
+              .isDisplayed()
+              .then(function (isDisplayed) {
+                expect(isDisplayed).toBeTruthy();
+              });
+          });
+
+        it('should display a new domain created',
+          function () {
+            var myDomain = DataProvider.generateDomain('my-domain');
+            // Create domain
+            Portal.createDomain(myDomain);
+            // Check domain is in list
+            var newDomain = Portal.domains.listPage
+              .searchAndGetFirstRow(myDomain.name);
+            expect(newDomain.getName()).toEqual(myDomain.name);
+          });
+
+        it('should not list domain-config right after deleting it',
+          function () {
+            var myDomain = DataProvider.generateDomain('other-domain');
+            // Create domain
+            Portal.createDomain(myDomain);
+            Portal.domains.listPage.searcher.setSearchCriteria(myDomain.name);
+            Portal.domains.listPage.table
+              .getFirstRow()
+              .clickDelete();
+            Portal.dialog.clickOk();
+            Portal.domains.listPage.searcher.clearSearchCriteria();
+            Portal.domains.listPage.searcher.setSearchCriteria(myDomain.name);
+            var rows = Portal.domains.listPage.table.getRows();
+            expect(rows.count()).toEqual(0);
+          });
+      });
     });
-
-    afterAll(function () {
-      Portal.signOut();
-    });
-
-    beforeEach(function () {
-      Portal.helpers.nav.goToDomains();
-    });
-
-    it('should display domain with a Staging Status',
-      function () {
-        Portal.domains.listPage.table
-          .getRow(0)
-          .getStagingStatusIcon()
-          .isDisplayed()
-          .then(function (isDisplayed) {
-            expect(isDisplayed).toBeTruthy();
-          });
-      });
-
-    it('should display domain with a Global Status',
-      function () {
-        Portal.domains.listPage.table
-          .getRow(0)
-          .getGlobalStatusIcon()
-          .isDisplayed()
-          .then(function (isDisplayed) {
-            expect(isDisplayed).toBeTruthy();
-          });
-      });
-
-    it('should display a `edit` icon for the domain',
-      function () {
-        Portal.domains.listPage.table
-          .getRow(0)
-          .getEditBtn()
-          .isDisplayed()
-          .then(function (isDisplayed) {
-            expect(isDisplayed).toBeTruthy();
-          });
-      });
-
-    it('should display a `configure` icon for the domain',
-      function () {
-        Portal.domains.listPage.table
-          .getRow(0)
-          .getConfigureBtn()
-          .isDisplayed()
-          .then(function (isDisplayed) {
-            expect(isDisplayed).toBeTruthy();
-          });
-      });
-
-    it('should display a `delete` icon for the domain',
-      function () {
-        Portal.domains.listPage.table
-          .getRow(0)
-          .getDeleteBtn()
-          .isDisplayed()
-          .then(function (isDisplayed) {
-            expect(isDisplayed).toBeTruthy();
-          });
-      });
-
-    it('should display a `stats` icon for the domain',
-      function () {
-        Portal.domains.listPage.table
-          .getRow(0)
-          .getStatsBtn()
-          .isDisplayed()
-          .then(function (isDisplayed) {
-            expect(isDisplayed).toBeTruthy();
-          });
-      });
-
-    it('should display a `versions` icon for the domain',
-      function () {
-        Portal.domains.listPage.table
-          .getRow(0)
-          .getVersionsBtn()
-          .isDisplayed()
-          .then(function (isDisplayed) {
-            expect(isDisplayed).toBeTruthy();
-          });
-      });
-
-    it('should display a new domain created',
-      function () {
-        var myDomain = DataProvider.generateDomain('my-domain');
-        // Create domain
-        Portal.createDomain(myDomain);
-        // Check domain is in list
-        var newDomain = Portal.domains.listPage
-          .searchAndGetFirstRow(myDomain.name);
-        expect(newDomain.getName()).toEqual(myDomain.name);
-      });
-
-    it('should not list domain-config right after deleting it',
-      function () {
-        var myDomain = DataProvider.generateDomain('other-domain');
-        // Create domain
-        Portal.createDomain(myDomain);
-        Portal.domains.listPage.searcher.setSearchCriteria(myDomain.name);
-        Portal.domains.listPage.table
-          .getFirstRow()
-          .clickDelete();
-        Portal.dialog.clickOk();
-        Portal.domains.listPage.searcher.clearSearchCriteria();
-        Portal.domains.listPage.searcher.setSearchCriteria(myDomain.name);
-        var rows = Portal.domains.listPage.table.getRows();
-        expect(rows.count()).toEqual(0);
-      });
   });
 });
