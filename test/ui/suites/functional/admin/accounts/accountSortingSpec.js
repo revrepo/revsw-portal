@@ -2,7 +2,7 @@
  *
  * REV SOFTWARE CONFIDENTIAL
  *
- * [2013] - [2016] Rev Software, Inc.
+ * [2013] - [2018] Rev Software, Inc.
  * All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains
@@ -36,6 +36,8 @@ describe('Smoke', function () {
 
     beforeEach(function () {
       Portal.helpers.nav.goToAccounts();
+      // NOTE: set default sort order befor start
+      Portal.admin.accounts.listPage.table.getHeader().clickCompanyName();
     });
 
     afterEach(function () {
@@ -47,7 +49,7 @@ describe('Smoke', function () {
         var companyName1 = Portal.admin.accounts.listPage
           .table.getFirstRow().getCompanyName();
 
-        Portal.admin.accounts.listPage.table.getHeader().clickCompanyName();
+          Portal.admin.accounts.listPage.table.getHeader().clickCompanyName();
         var companyName2 = Portal.admin.accounts.listPage
           .table.getFirstRow().getCompanyName();
 
@@ -56,7 +58,6 @@ describe('Smoke', function () {
 
     it('should apply `ascendant` sorting by `Company Name` column',
       function () {
-        Portal.admin.accounts.listPage.table.getHeader().clickCompanyName();
         Portal.admin.accounts.listPage.table.getHeader().clickCompanyName();
         var companyName1 = Portal.admin.accounts.listPage
           .table.getFirstRow().getCompanyName();
@@ -88,7 +89,7 @@ describe('Smoke', function () {
         var createdAt1 = Portal.admin.accounts.listPage
           .table.getFirstRow().getCreatedAt();
 
-        Portal.admin.accounts.listPage.table.getHeader().clickCompanyName();
+        Portal.admin.accounts.listPage.table.getHeader().clickCreatedAt();
         var createdAt2 = Portal.admin.accounts.listPage
           .table.getFirstRow().getCreatedAt();
 

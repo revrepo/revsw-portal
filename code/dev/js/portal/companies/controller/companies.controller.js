@@ -9,6 +9,7 @@
   function CompaniesCrudController($scope, CRUDController, Companies, User,
     BillingPlans, Vendors, $injector, $stateParams,
     $config, $state, $anchorScroll, $uibModal, $localStorage) {
+    var STORAGE_NAME_LIST_FILTER_ = 'accounts_list_filter';
     //Invoking crud actions
     $injector.invoke(CRUDController, this, {
       $scope: $scope,
@@ -19,6 +20,8 @@
     $scope.setResource(Companies);
     //Set state (ui.router)
     $scope.setState('index.accountSettings.companies');
+
+    $scope.setStorageNameForFilterSettings(STORAGE_NAME_LIST_FILTER_);
 
     $scope.COMPANY_NAME = $config.PATTERNS.COMPANY_NAME;
     $scope.NO_SPECIAL_CHARS = $config.PATTERNS.NO_SPECIAL_CHARS;
@@ -32,6 +35,16 @@
     $scope.$on('$stateChangeSuccess', function (state) {
       $scope.model = $localStorage.selectedCompany;
       if ($state.is($scope.state)) {
+        //NOTE: use last stored filter data
+        if($localStorage[STORAGE_NAME_LIST_FILTER_]){
+          angular.extend($scope.filter,$localStorage[STORAGE_NAME_LIST_FILTER_]);
+          delete $scope.filter.filter; // NOTE: not use data last search
+        } else {
+        angular.extend($scope.filter,{
+            predicate: 'updated_at',
+            reverse: true
+          });
+        }
         $scope.list()
           .then(function () {
             if ($scope.elementIndexForAnchorScroll !== undefined) {
