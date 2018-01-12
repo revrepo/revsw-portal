@@ -64,7 +64,7 @@
     $scope.$on('$stateChangeSuccess', function (event, stateTo, stateParam) {
       var data = null;
       if ($state.is('index.accountSettings.accountresources')) {
-        $scope.filter.limit = 5;
+        $scope.filter.limit = $config.MIN_LIMIT_RECORDS_IN_TABLE;
         var filters = {
           account_id: !User.getSelectedAccount() ? null : User.getSelectedAccount().acc_id
         };

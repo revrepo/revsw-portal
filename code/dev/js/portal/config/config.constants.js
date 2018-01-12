@@ -169,7 +169,9 @@
       // Intro module configuration
       INTRO_IS_ACTIVE: (window.intro === true) ? true : false,
       ENABLE_SIMPLIFIED_SIGNUP_PROCESS: true,
-
+      // Settings for List Page
+      DEFAULT_LIMIT_RECORDS_IN_TABLE: 25,
+      MIN_LIMIT_RECORDS_IN_TABLE: 5,
       // Used by Angular Toaster
       SUCCESS_MESSAGE_DISPLAY_TIMEOUT: 5000,
       // PATTERNS @see info into the API repository file lib/routeModels.js

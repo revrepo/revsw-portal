@@ -71,7 +71,7 @@
       var data = null;
       // NOTE: set filter params for specific state - @see All Account Resources Page
       if ($state.is('index.accountSettings.accountresources')) {
-        $scope.filter.limit = 5;
+        $scope.filter.limit = $config.MIN_LIMIT_RECORDS_IN_TABLE;
         data = {
           filters: {
             rule_type: 'customer',
