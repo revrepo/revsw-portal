@@ -392,9 +392,10 @@
         'wallarm_instance': 1,
         'wallarm_mode_allow_override': 'off',
         'wallarm_parse_response': 'on',
+        'wallarm_unpack_response': 'off',
         'wallarm_process_time_limit': 1000,
         'wallarm_process_time_limit_block': 'attack',
-        // 'wallarm_parser_disable': null // NOTE: will be used later
+        'wallarm_parser_disable': []
       },
       WALLARM_OPERATION_MODE_SELECT: {
         off: 'Off',
