@@ -109,7 +109,7 @@
        */
       $scope.filter = {
         filter: '',
-        limit: 25,
+        limit: $config.DEFAULT_LIMIT_RECORDS_IN_TABLE,
         skip: 0,
         predicate: '',
         reverse: false

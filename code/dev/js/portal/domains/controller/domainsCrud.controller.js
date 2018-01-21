@@ -135,7 +135,7 @@
       var data = null;
       // NOTE: set filter params for specific state
       if ($state.is('index.accountSettings.accountresources')) {
-        $scope.filter.limit = 5;
+        $scope.filter.limit = $config.MIN_LIMIT_RECORDS_IN_TABLE;
         var filters = {
           account_id: !User.getSelectedAccount() ? null : User.getSelectedAccount().acc_id
         };
@@ -146,7 +146,7 @@
         return;
       }
       if ($state.is($scope.state)) {
-
+        $scope.filter.limit = $config.DEFAULT_LIMIT_RECORDS_IN_TABLE;
         $scope.list(data)
           .then(setAccountName)
           .then(function () {

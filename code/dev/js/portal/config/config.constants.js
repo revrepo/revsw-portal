@@ -169,7 +169,9 @@
       // Intro module configuration
       INTRO_IS_ACTIVE: (window.intro === true) ? true : false,
       ENABLE_SIMPLIFIED_SIGNUP_PROCESS: true,
-
+      // Settings for List Page
+      DEFAULT_LIMIT_RECORDS_IN_TABLE: 25,
+      MIN_LIMIT_RECORDS_IN_TABLE: 5,
       // Used by Angular Toaster
       SUCCESS_MESSAGE_DISPLAY_TIMEOUT: 5000,
       // PATTERNS @see info into the API repository file lib/routeModels.js
@@ -390,9 +392,10 @@
         'wallarm_instance': 1,
         'wallarm_mode_allow_override': 'off',
         'wallarm_parse_response': 'on',
+        'wallarm_unpack_response': 'off',
         'wallarm_process_time_limit': 1000,
         'wallarm_process_time_limit_block': 'attack',
-        // 'wallarm_parser_disable': null // NOTE: will be used later
+        'wallarm_parser_disable': []
       },
       WALLARM_OPERATION_MODE_SELECT: {
         off: 'Off',

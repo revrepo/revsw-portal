@@ -310,7 +310,7 @@
       var data = null;
       // NOTE: set filter params for specific state
       if ($state.is('index.accountSettings.accountresources')) {
-        $scope.filter.limit = 5;
+        $scope.filter.limit = $config.MIN_LIMIT_RECORDS_IN_TABLE;
         data = {
           filters: {
             account_id: !User.getSelectedAccount() ? null : User.getSelectedAccount().acc_id

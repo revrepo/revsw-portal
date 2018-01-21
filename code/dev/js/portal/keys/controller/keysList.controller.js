@@ -7,7 +7,7 @@
 
   // @ngInject
   function KeysListController($scope, $rootScope, $q, CRUDController, ApiKeys, $injector, $stateParams, Companies, DomainsConfig, $state, $uibModal, clipboard,
-    User) {
+    User, $config) {
 
     //Invoking crud actions
     $injector.invoke(CRUDController, this, {
@@ -185,7 +185,7 @@
       var data = null;
       // NOTE: set filter params for specific state
       if ($state.is('index.accountSettings.accountresources')) {
-        $scope.filter.limit = 5;
+        $scope.filter.limit = $config.MIN_LIMIT_RECORDS_IN_TABLE;
         var filters = {
           account_id: !User.getSelectedAccount() ? null : User.getSelectedAccount().acc_id
         };
