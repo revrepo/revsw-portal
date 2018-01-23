@@ -19,7 +19,7 @@
 var config = require('config');
 var Portal = require('./../../../../page_objects/portal');
 var DataProvider = require('./../../../../common/providers/data');
-var request = require('supertest');
+var API = require('./../../../../common/api').API;
 
 describe('Smoke', function () {
 
@@ -113,10 +113,15 @@ describe('Smoke', function () {
       Portal.admin.apiKeys.listPage.searcher.clearSearchCriteria();
       Portal.admin.apiKeys.listPage.searcher.setSearchCriteria(keyData.name);
       Portal.admin.apiKeys.listPage.table.getFirstRow().getAPICode().then(function (code) {
-        Portal.apiKeysHelpers.validateAPIKey(code, function (res) {
-          expect(res).toBe(200);
-          done();
-        });
+        API.resources.accounts
+          .getAll()
+          .set('Authorization', 'X-API-KEY ' + code)
+          .expect(200)
+          .then(function (res) {
+            expect(res.status).toBe(200);
+            done();
+          })
+          .catch(done);
       });
     });
   });
