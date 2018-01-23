@@ -20,6 +20,7 @@
 
 // This `Company Form` Page Object abstracts all operations or actions that a
 // common company could do in the Edit Company page from the Portal app/site.
+var DropDownWidget = require('./../../common/dropDownWidget');
 var CompanyProfileForm = {
 
   // ## Properties
@@ -201,7 +202,7 @@ var CompanyProfileForm = {
    * @returns {Selenium WebDriver Element}
    */
   getCountryDDown: function () {
-    return element(by.id(this.locators.textInputs.country.id));
+    return new DropDownWidget(by.id(this.locators.textInputs.country.id));
   },
 
   /**
@@ -433,12 +434,9 @@ var CompanyProfileForm = {
    * @returns {Promise}
    */
   setCountry: function (country) {
-    this
-      .getCountryDDown()
-      .click();
     return this
-      .getCountryInput()
-      .sendKeys(country + protractor.Key.ENTER);
+      .getCountryDDown()
+      .setValue(country);
   },
 
   /**
