@@ -16,6 +16,7 @@
  * from Rev Software, Inc.
  */
 var WebElement = require('./../../../common/helpers/webElement');
+var DropDownWidget = require('./../../common/dropDownWidget');
 
 // # Edit Company Form Page Object
 
@@ -181,7 +182,7 @@ var CompanyBillingForm = {
    * @returns {Selenium WebDriver Element}
    */
   getCountryDDown: function () {
-    return element(by.id(this.locators.textInputs.billingCountry.id));
+    return new DropDownWidget(by.id(this.locators.textInputs.billingCountry.id));
   },
 
   /**
@@ -340,12 +341,9 @@ var CompanyBillingForm = {
    * @returns {Promise}
    */
   setCountry: function (country) {
-    this
-      .getCountryDDown()
-      .click();
     return this
-      .getCountryInput()
-      .sendKeys(country + protractor.Key.ENTER);
+      .getCountryDDown()
+      .setValue(country);
   },
 
   /**
