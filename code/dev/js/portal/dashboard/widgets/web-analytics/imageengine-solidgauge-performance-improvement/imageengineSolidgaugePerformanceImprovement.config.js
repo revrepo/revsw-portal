@@ -9,7 +9,7 @@
     dashboardProvider
       // “Performance Improvement By ImageEngine”
       .widget('widget-web-analytics-imageengine-solidgauge-performance-improvement', {
-        title: 'Performance Improvement By IO',
+        title: 'Performance Improvement By IE',
         description: 'Display Performance Improvement By ImageEngine',
         templateUrl: 'parts/dashboard/widgets/web-analytics/imageengine-solidgauge-performance-improvement/view-imageengine-solidgauge-performance-improvement.tpl.html',
         titleTemplateUrl: 'parts/dashboard/widgets/web-analytics/widget-title-with-params-hours.tpl.html',
