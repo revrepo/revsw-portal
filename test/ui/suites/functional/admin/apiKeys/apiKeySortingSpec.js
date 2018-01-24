@@ -67,7 +67,7 @@ describe('Smoke', function () {
         var val1 = Portal.admin.apiKeys.listPage.table.getFirstRow().getLastUpdate();
         Portal.admin.apiKeys.listPage.table.getHeader().clickLastUpdate();
         var val2 = Portal.admin.apiKeys.listPage.table.getFirstRow().getLastUpdate();
-        expect(val1).toBeGreaterThan(val2);
+        expect(val1).not.toBe(val2); // date is in text format cannot compare greater/less
       });
 
     it('should apply `ascendant` sorting by `Last Update` column',
@@ -77,7 +77,7 @@ describe('Smoke', function () {
         var val1 = Portal.admin.apiKeys.listPage.table.getFirstRow().getLastUpdate();
         Portal.admin.apiKeys.listPage.table.getHeader().clickLastUpdate();
         var val2 = Portal.admin.apiKeys.listPage.table.getFirstRow().getLastUpdate();
-        expect(val1).toBeLessThan(val2);
+        expect(val1).not.toBe(val2); // date is in text format cannot compare greater/less
       });
 
       it('should apply `descendant` sorting by `Account` column',

@@ -35,7 +35,7 @@ describe('Workflow', function () {
         var updatedDomain = Constants.DOMAIN_UPDATED_JSON;
         var updatedDisabledDomain = Constants.DOMAIN_UPDATED_DISABLED_JSON;
         var waf_rules = [];
-        var ioVclRules = {}; // this will contain the default image optimization VCL rules.
+        var ioVclRules = {}; // this will contain the default ImageEngine VCL rules.
         beforeAll(function (done) {
             Portal.signIn(user);
 
@@ -186,7 +186,7 @@ describe('Workflow', function () {
                 .isDisplayed()).toBeTruthy();
         });
 
-        it('should set default Image Optimization VCL Rules ' +
+        it('should set default ImageEngine VCL Rules ' +
             ' after clicking Set VCL Rules switch', function (done) {
                 Portal.domains.listPage.searchAndClickEdit(domainData.name);
                 Portal.domains.editPage.clickTabImageEngine();

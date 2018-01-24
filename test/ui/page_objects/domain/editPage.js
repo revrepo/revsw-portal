@@ -713,6 +713,11 @@ var EditDomain = {
     return this.form.clickCustomVCLRulesSw();
   },
 
+  enableEnhancedAnalytics: function () {
+    this.clickTabGeneralSettings();
+    return this.form.getEnableEnhancedAnalytics().click();
+  },
+
   fillVCL: function () {
     this.form.setRecvFunction('# Comment <recv>');
     this.form.setHitFunction('# Comment <hit>');

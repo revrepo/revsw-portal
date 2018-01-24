@@ -132,7 +132,7 @@ describe('Functional', function () {
         ' domains after updating a domain', function (done) {
           Portal.helpers.nav.goToDomains();
           Portal.domains.listPage.searchAndClickEdit(myDomain.name).then(function () {
-            Portal.domains.editPage.form.getEnableEnhancedAnalytics().click();
+            Portal.domains.editPage.enableEnhancedAnalytics();
             Portal.domains.editPage.clickUpdateDomain();
             Portal.dialog.clickOk();
             Portal.alerts.waitToDisplay().then(function () {

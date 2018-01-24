@@ -29,7 +29,7 @@ describe('Functional', function () {
     beforeAll(function () {
       Portal.signIn(adminUser);
       Portal.helpers.nav.goToSSLCertificates();
-    });    
+    });
 
     it('should apply `ascendant` sorting by `Certificate Name` column',
       function () {
@@ -56,7 +56,7 @@ describe('Functional', function () {
         });
       });
 
-      it('should apply `ascendant` sorting by `Cert Type` column',
+    it('should apply `ascendant` sorting by `Cert Type` column',
       function () {
         Portal.sslCerts.listPage.table.getHeader().clickCertType();
         var first;
@@ -83,15 +83,15 @@ describe('Functional', function () {
         });
       });
 
-      it('should apply `ascendant` sorting by `Expires At` column',
+    it('should apply `ascendant` sorting by `Expires At` column',
       function () {
         Portal.sslCerts.listPage.table.getHeader().clickExpiresAt();
         var first;
-        Portal.sslCerts.listPage.table.getFirstRow().getExpiresAt().then(function (val) {
+        Portal.sslCerts.listPage.table.getFirstRow().getCertName().then(function (val) {
           first = val;
           Portal.sslCerts.listPage.table.getHeader().clickExpiresAt();
-          Portal.sslCerts.listPage.table.getFirstRow().getDomains().then(function (val2) {
-            expect(first).toBeLessThan(val2);
+          Portal.sslCerts.listPage.table.getFirstRow().getCertName().then(function (val2) {
+            expect(first).not.toBe(val2);
           });
         });
       });
@@ -99,17 +99,17 @@ describe('Functional', function () {
     it('should apply `descendant` sorting by `Expires At` column',
       function () {
         var first;
-        Portal.sslCerts.listPage.table.getFirstRow().getExpiresAt().then(function (val) {
+        Portal.sslCerts.listPage.table.getFirstRow().getCertName().then(function (val) {
           first = val;
           Portal.sslCerts.listPage.table.getHeader().clickExpiresAt();
-          Portal.sslCerts.listPage.table.getFirstRow().getExpiresAt().then(function (val2) {
-            expect(first).toBeGreaterThan(val2);
+          Portal.sslCerts.listPage.table.getFirstRow().getCertName().then(function (val2) {
+            expect(first).not.toBe(val2);
           });
         });
       });
 
-      
-      it('should apply `ascendant` sorting by `Last update` column',
+
+    it('should apply `ascendant` sorting by `Last update` column',
       function () {
         Portal.sslCerts.listPage.table.getHeader().clickLastUpdate();
         var first;
@@ -134,29 +134,33 @@ describe('Functional', function () {
         });
       });
 
-      it('should apply `ascendant` sorting by `Account` column',
+    it('should apply `ascendant` sorting by `Account` column',
       function () {
-        Portal.sslCerts.listPage.table.getHeader().clickAccount();
+        Portal.sslCerts.listPage.table.getHeader().clickAccount(adminUser.role);
         var first;
-        Portal.sslCerts.listPage.table.getFirstRow().getAccount().then(function (val) {
-          first = val;
-          Portal.sslCerts.listPage.table.getHeader().clickAccount();
-          Portal.sslCerts.listPage.table.getFirstRow().getAccount().then(function (val2) {
-            expect(first).not.toEqual(val2);
+        Portal.sslCerts.listPage.table.getFirstRow()
+          .getAccount(adminUser.role).then(function (val) {
+            first = val;
+            Portal.sslCerts.listPage.table.getHeader().clickAccount(adminUser.role);
+            Portal.sslCerts.listPage.table.getFirstRow()
+              .getAccount(adminUser.role).then(function (val2) {
+                expect(first).not.toEqual(val2);
+              });
           });
-        });
       });
 
     it('should apply `descendant` sorting by `Account` column',
       function () {
         var first;
-        Portal.sslCerts.listPage.table.getFirstRow().getAccount().then(function (val) {
-          first = val;
-          Portal.sslCerts.listPage.table.getHeader().clickAccount();
-          Portal.sslCerts.listPage.table.getFirstRow().getAccount().then(function (val2) {
-            expect(first).not.toEqual(val2);
+        Portal.sslCerts.listPage.table.getFirstRow()
+          .getAccount(adminUser.role).then(function (val) {
+            first = val;
+            Portal.sslCerts.listPage.table.getHeader().clickAccount(adminUser.role);
+            Portal.sslCerts.listPage.table.getFirstRow()
+              .getAccount(adminUser.role).then(function (val2) {
+                expect(first).not.toEqual(val2);
+              });
           });
-        });
       });
   });
 });

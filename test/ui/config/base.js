@@ -82,7 +82,12 @@ module.exports = {
 
     // add jasmine spec reporter
     var specReporter = new JasmineSpecReporter({
-      displayStacktrace: 'summary'
+      displayStacktrace: 'summary',
+      prefixes: {
+        success: '[PASS] ',
+        failure: '[FAILED] ',
+        pending: '[PENDING] '
+      }
     });
     jasmine.getEnv().addReporter(specReporter);
 
