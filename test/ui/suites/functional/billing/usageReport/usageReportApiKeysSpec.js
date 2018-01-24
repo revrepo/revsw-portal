@@ -20,45 +20,65 @@ var config = require('config');
 var Portal = require('./../../../../page_objects/portal');
 var DataProvider = require('./../../../../common/providers/data');
 var Constants = require('./../../../../page_objects/constants');
+var API = require('./../../../../common/api').API;
 
 describe('Functional', function () {
   var user = config.get('portal.users.admin');
   describe('Usage Report API Keys', function () {
     describe('With user: ' + user.role, function () {
-      var apiKeysCount = 0;
-      var pageKeys = 25;
       var defaultName = 'New API Key';
       var keyData = DataProvider.generateApiKeyData();
+      var activeKeys = 0;
+      var inactiveKeys = 0;
 
       beforeAll(function (done) {
         // get the amount of API keys we have
-        var lastPageKeys = 0;
-        var pages = 0;
-        Portal.signIn(user).then(function () {
-          Portal.helpers.nav.goToAPIKeys();
-          Portal.admin.apiKeys.listPage.pager.getLastBtn().click();
-          Portal.admin.apiKeys.listPage.table.getRows().count().then(function (count) {
-            lastPageKeys = count;
-            Portal.admin.apiKeys.listPage.pager.getCurrentPageIndex().then(function (text) {
-              apiKeysCount = (pageKeys * (text - 1)) + lastPageKeys;
-              done();
-            });
-          });
-        });
-      });
+        API.helpers.authenticate(user)
+          .then(function () {
+            API.resources.apiKeys
+              .getAll()
+              .expect(200)
+              .then(function (res) {
+                var keys = res.body;
+                for (var i = 0; i < keys.length; i++) {
+                  if (keys[i].active) {
+                    activeKeys++;
+                  } else {
+                    inactiveKeys++;
+                  }
+                }
+                Portal.signIn(user);
+                done();
+              })
+              .catch(done);
+          })
+          .catch(done);
+      });      
 
       afterAll(function () {
         Portal.signOut();
       });
 
-      it('should display correct amount of API keys', function (done) {
+      it('should display correct amount of active API keys', function (done) {
         Portal.usageReportHelpers.generateReport(user).then(function () {
           Portal.helpers.nav.goToUsageReport().then(function () {
             Portal
               .usageReportHelpers
               .expectValue(Portal
                 .billing
-                .usageReportPage, 'Active\n' + apiKeysCount, done, 'API Keys');
+                .usageReportPage, 'Active\n' + activeKeys, done, 'API Keys');
+          });
+        });
+      });
+
+      it('should display correct amount of  inactive API keys', function (done) {
+        Portal.usageReportHelpers.generateReport(user).then(function () {
+          Portal.helpers.nav.goToUsageReport().then(function () {
+            Portal
+              .usageReportHelpers
+              .expectValue(Portal
+                .billing
+                .usageReportPage, 'Inactive\n' + inactiveKeys, done, 'API Keys');
           });
         });
       });
@@ -78,7 +98,7 @@ describe('Functional', function () {
                 .usageReportHelpers
                 .expectValue(Portal
                   .billing
-                  .usageReportPage, 'Active\n' + (apiKeysCount + 1), done, 'API Keys');
+                  .usageReportPage, 'Active\n' + (activeKeys + 1), done, 'API Keys');
             });
           });
         });
@@ -98,7 +118,7 @@ describe('Functional', function () {
                   .usageReportHelpers
                   .expectValue(Portal
                     .billing
-                    .usageReportPage, 'Inactive\n' + 1, done, 'API Keys');
+                    .usageReportPage, 'Inactive\n' + (inactiveKeys + 1), done, 'API Keys');
               });
             });
           });
@@ -116,7 +136,7 @@ describe('Functional', function () {
                 .usageReportHelpers
                 .expectValue(Portal
                   .billing
-                  .usageReportPage, 'Active\n' + apiKeysCount, done, 'API Keys');
+                  .usageReportPage, 'Active\n' + activeKeys, done, 'API Keys');
             });
           });
         });
