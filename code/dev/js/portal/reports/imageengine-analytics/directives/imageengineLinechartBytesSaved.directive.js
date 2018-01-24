@@ -58,9 +58,9 @@
       return params;
     }
     $scope._loading = false;
-    $scope.heading = 'Bandwidth Saved By Image Optimization';
+    $scope.heading = 'Bandwidth Saved By ImageEngine';
     $scope.popoverPopupCloseDelay = $config.POPOVER_POPUP_CLOSE_DELAY_MS;
-    $scope.popoverHelpHTML = $sce.trustAsHtml('This line chart shows the level of data transfer savings provided by the Image Optimization ' +
+    $scope.popoverHelpHTML = $sce.trustAsHtml('This line chart shows the level of data transfer savings provided by the ImageEngine ' +
       'engine');
 
     $scope.reload = reload;

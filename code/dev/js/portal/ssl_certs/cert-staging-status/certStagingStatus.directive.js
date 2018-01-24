@@ -95,7 +95,7 @@
           }
           certId = newValue;
           $scope.shouldRefresh = true;
-          $scope.fetchStatus(newValue);
+          //$scope.fetchStatus(newValue);
         });
       }
     };

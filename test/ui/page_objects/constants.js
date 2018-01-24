@@ -150,9 +150,9 @@ var Constants = {
     EDGE_CACHE_EFFICIENCY_HITS: 'Edge Cache Efficiency Hits'
   },
   imageOptimization: {
-    TITLE: 'Image Optimization Analytics',
-    PERFORMANCE_IMPROVEMENT: 'Performance Improvement By Image Optimization',
-    BANDWIDTH_SAVED: 'Bandwidth Saved By Image Optimization',
+    TITLE: 'ImageEngine Analytics',
+    PERFORMANCE_IMPROVEMENT: 'Performance Improvement By ImageEngine',
+    BANDWIDTH_SAVED: 'Bandwidth Saved By ImageEngine',
     FORMAT_CHANGES: 'Image Format Changes',
     RESOLUTION_CHANGES: 'Image Resolution Changes'
   },
@@ -792,7 +792,6 @@ var Constants = {
   USAGE_REPORT_POLLING_TIMEOUT: 60000,
   AZURE_PORTAL_URL: 'https://portal.azure.com',
   PRODUCTION_PORTAL_URL: 'https://portal.nuubit.net'
-
 };
 module.exports = Constants;
 
