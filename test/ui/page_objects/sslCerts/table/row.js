@@ -88,9 +88,9 @@ var SSLCertTableRow = function (rowEl, locators) {
       .getText();
   };
 
-  this.getAccount = function () {
+  this.getAccount = function (role) {
     return this
-      .getAccountCell()
+      .getAccountCell(role)
       .getText();
   };
 
@@ -126,14 +126,13 @@ var SSLCertTableRow = function (rowEl, locators) {
       .click();
   };
 
+  this.clickAccount = function (role) {
+    return this
+      .getAccountCell(role)
+      .click();
+  };
+
   if (this.locators.actions && this.locators.actions.buttons.pencil) {
-
-
-    this.clickAccount = function (role) {
-      return this
-        .getAccountCell(role)
-        .click();
-    };
 
     this.getEditBtn = function () {
       return this.rowEl
