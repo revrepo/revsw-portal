@@ -399,6 +399,7 @@ var UserForm = {
   },
 
   setCompanyTxt: function (value) {
+    this.getCompanyDDown().click();
     this.getCompnayTxtIn().sendKeys(value);
     return this.getCompanyOption().click();
   },
