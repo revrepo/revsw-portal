@@ -338,6 +338,7 @@ var UserForm = {
   setEmail: function (email) {
     return this
       .getEmailTxtIn()
+      .clear()
       .sendKeys(email);
   },
 
@@ -541,6 +542,7 @@ var UserForm = {
   setPassword: function (password) {
     return this
       .getPasswordTxtIn()
+      .clear()
       .sendKeys(password);
   },
 
@@ -556,6 +558,7 @@ var UserForm = {
   setPasswordConfirm: function (password) {
     return this
       .getPasswordConfirmTxtIn()
+      .clear()
       .sendKeys(password);
   },
 

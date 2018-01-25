@@ -26,35 +26,49 @@ describe('Functional', function () {
     var users = [];
     var roles = ['admin', 'user', 'reseller'];
     var vendors = Constants.VENDORS;
+    var totalUsers = roles.length * vendors.length * 2; // total users including RO
 
     describe('Login Vendor', function () {
 
         var currentVendor;
         var users = [];
+
         beforeAll(function () {
             Portal.signIn(revAdmin);
             Portal.helpers.nav.goToUsers();
             Portal.userListPage.clickAddNewUser();
-            /*
-            * Create a user for each vendor, role and read only. 18 Users total.
-            */
-            vendors.forEach(function (vendor) {
-                roles.forEach(function (role) {
-                    for (var i = 0; i < 2; i++) {
-                        var data = {
-                            role: role,
-                            company: vendor.ACCOUNT
-                        };
-                        var bruce = DataProvider.generateUser(data, true);
-                        if (i % 2 === 1) {
-                            bruce.accessControls = [Constants.user.accessControls.READ_ONLY];
-                        }
-                        Portal.addUserPage.createUser(bruce);
-                        users.push({
-                            user: bruce,
-                            vendor: vendor
+        });
+
+        vendors.forEach(function (vendor) {
+            roles.forEach(function (role) {
+                beforeAll(function (done) {
+                    /*
+                    * Create a user for each vendor, role and read only. 18 Users total.
+                    */
+                    console.log('       > Creating user with role ' +
+                        role + ' and vendor ' + vendor.NAME);
+                    var data = {
+                        role: role,
+                        company: vendor.ACCOUNT
+                    };
+                    var bruce = DataProvider.generateUser(data, true);
+                    var bruceRO = DataProvider.generateUser(data, true);
+                    bruceRO.accessControls = [Constants.user.accessControls.READ_ONLY];
+                    Portal.addUserPage.createUser(bruce)
+                        .then(function () {
+                            return Portal.addUserPage.createUser(bruceRO);
+                        })
+                        .then(function () {
+                            users.push({
+                                user: bruce,
+                                vendor: vendor
+                            });
+                            users.push({
+                                user: bruceRO,
+                                vendor: vendor
+                            });
+                            done();
                         });
-                    }
                 });
             });
         });
@@ -76,29 +90,38 @@ describe('Functional', function () {
             });
         });
 
-        it('should redirect user to correct login url', function () {
-            users.forEach(function (userObj) {
+        for (var i = 0; i < totalUsers; i++) {
+            it('should redirect user to correct login url', function (done) {
+                /* jshint ignore:start */
+                var user = users.pop(); // pop the user and start testing
+                console.log('       > Role: ' + user.user.role);
+                console.log('       > Vendor: ' + user.vendor.NAME);
                 Portal.header.getHeaderBar().isPresent().then(function (val) {
                     if (val) {
                         Portal.signOut();
                     } else {
                         Portal.load();
                     }
-                    Portal.loginPage.setEmail(userObj.user.email);
-                    Portal.loginPage.setPassword(userObj.user.password);
+                    Portal.loginPage.setEmail(user.user.email);
+                    Portal.loginPage.setPassword(user.user.password);
                     Portal.loginPage.clickSignIn();
-                    if (userObj.vendor.NAME === 'revapm') {
+                    if (user.vendor.NAME === 'revapm') {
+                        // if vendor is revapm then it should just login
                         expect(Portal.header.getHeaderBar().isDisplayed()).toBeTruthy();
                         Portal.signOut();
+                        done();
                     } else {
+                        // if different vendor, should be redirected
                         browser.sleep(10000); // non angular page wait
                         browser.getCurrentUrl().then(function (url) {
-                            expect(url).toContain(userObj.vendor.LOGIN_URL);
+                            expect(url).toContain(user.vendor.LOGIN_URL);
                             Portal.load();
+                            done();
                         });
                     }
                 });
+                /* jshint ignore:end */
             });
-        }, 7000000);
+        }
     });
 });
