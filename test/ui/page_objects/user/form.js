@@ -425,7 +425,8 @@ var UserForm = {
         }
       }
     } else {
-      this.setCompanyTxt(companies[0]);
+      return this.getCompanyDDown()
+          .setValue(companies[0]);
     }
   },
 
