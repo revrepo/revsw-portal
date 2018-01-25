@@ -19,6 +19,7 @@
 var config = require('config');
 var Portal = require('./../../../page_objects/portal');
 var DataProvider = require('./../../../common/providers/data');
+var tr = require('timeago-reverse');
 
 describe('Functional', function () {
   describe('SSL Certificates sorting', function () {
@@ -117,7 +118,7 @@ describe('Functional', function () {
           first = val;
           Portal.sslCerts.listPage.table.getHeader().clickLastUpdate();
           Portal.sslCerts.listPage.table.getFirstRow().getLastUpdate().then(function (val2) {
-            expect(first).toBeLessThan(val2);
+            expect(tr.parse(first)).toBeLessThan(tr.parse(val2));
           });
         });
       });
@@ -129,7 +130,7 @@ describe('Functional', function () {
           first = val;
           Portal.sslCerts.listPage.table.getHeader().clickLastUpdate();
           Portal.sslCerts.listPage.table.getFirstRow().getLastUpdate().then(function (val2) {
-            expect(first).toBeGreaterThan(val2);
+            expect(tr.parse(first)).toBeGreaterThan(tr.parse(val2));
           });
         });
       });
