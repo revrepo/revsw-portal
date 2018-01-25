@@ -104,21 +104,22 @@ describe('Functional', function () {
                     }
                     Portal.loginPage.setEmail(user.user.email);
                     Portal.loginPage.setPassword(user.user.password);
-                    Portal.loginPage.clickSignIn();
-                    if (user.vendor.NAME === 'revapm') {
-                        // if vendor is revapm then it should just login
-                        expect(Portal.header.getHeaderBar().isDisplayed()).toBeTruthy();
-                        Portal.signOut();
-                        done();
-                    } else {
-                        // if different vendor, should be redirected
-                        browser.sleep(10000); // non angular page wait
-                        browser.getCurrentUrl().then(function (url) {
-                            expect(url).toContain(user.vendor.LOGIN_URL);
-                            Portal.load();
+                    Portal.loginPage.clickSignIn().then(function () {
+                        if (user.vendor.NAME === 'revapm') {
+                            // if vendor is revapm then it should just login
+                            expect(Portal.header.getHeaderBar().isDisplayed()).toBeTruthy();
+                            Portal.signOut();
                             done();
-                        });
-                    }
+                        } else {
+                            // if different vendor, should be redirected
+                            browser.sleep(10000); // non angular page wait
+                            browser.getCurrentUrl().then(function (url) {
+                                expect(url).toContain(user.vendor.LOGIN_URL);
+                                Portal.load();
+                                done();
+                            });
+                        }
+                    });
                 });
                 /* jshint ignore:end */
             });
