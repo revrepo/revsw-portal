@@ -20,6 +20,8 @@
 
 // This `Usage Report` Page Object abstracts all operations or actions
 // that a common Usage Report could do in the Portal app/site.
+var Promise = require('bluebird');
+
 var UsageReport = {
 
   // ## Properties
@@ -80,6 +82,21 @@ var UsageReport = {
             css: 'h3.modal-title'
           }
         }
+      }
+    },
+    data: {
+      domains: {
+        active: 'activeDomains',
+        deleted: 'deletedDomains',
+        sslEnabled: 'SSLEnabledDomains',
+        customVCLRules: 'customVCLRules',
+        analyticsEnhanced: 'analyticsEnhancedDomains',
+        wafEnabled: 'WAFEnabledDomains',
+        luaEnabled: 'LUAEnabledDomains',
+        cachePurgeCommands: 'domainsPurgeCommands'
+      },
+      sslCerts: {
+        deleted: 'deletedSSLCerts'
       }
     }
   },
@@ -581,6 +598,44 @@ var UsageReport = {
   updateReport: function (data) {
     this.fill(data);
     return this.clickUpdateReport();
+  },
+
+  getAllDomainsValues: function () {
+    /* jshint ignore:start */
+    var me = this;
+    return new Promise(function (resolve, reject) {
+      var vals = me.locators.data.domains;
+      var returnData = {
+        active: 0,
+        deleted: 0,
+        sslEnabled: 0,
+        customVCLRules: 0,
+        analyticsEnhanced: 0,
+        wafEnabled: 0,
+        luaEnabled: 0,
+        cachePurgeCommands: 0
+      };
+      var c = 0;
+      for (var _i in vals) {
+        me.getElementText(vals[_i]).then(function (text) {
+          var keys = Object.keys(returnData);
+          returnData[keys[c]] = text;
+          if (Object.keys(vals).length === c + 1) {
+            resolve(returnData);
+          }
+          c++;
+        });
+      }
+    });
+    /* jshint ignore:end */
+  },
+  getElementText: function (id) {
+    return element(by.id(id)).getText().then(function (text) {
+      return text;
+    });
+  },
+  getDeletedSSLCerts: function () {
+    return element(by.id(this.locators.data.sslCerts.deleted)).getText();
   }
 };
 

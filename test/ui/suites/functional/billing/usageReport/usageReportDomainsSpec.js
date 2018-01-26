@@ -20,6 +20,7 @@ var config = require('config');
 var Portal = require('./../../../../page_objects/portal');
 var DataProvider = require('./../../../../common/providers/data');
 var Constants = require('./../../../../page_objects/constants');
+var API = require('./../../../../common/api').API;
 
 describe('Functional', function () {
   var user = config.get('portal.users.admin');
@@ -27,35 +28,25 @@ describe('Functional', function () {
     describe('With user: ' + user.role, function () {
       var myDomain = DataProvider.generateDomain('my-domain');
       var domainCount = 0;
-      var domainsPerPage = 25;
-      var sslEnabled = 0;
-      var customVCLRules = 0;
-      var wafEnabled = 0;
-      var eAnalyticsEnabled = 0;
-      var luaEnabled = 0;
-      var deletedDomains = 0;
+      var domainValues;
       beforeAll(function (done) {
         // get the amount of domains we have
-        var lastPageDomains = 0;
-        var pages = 0;
-        Portal.signIn(user);
-        Portal.helpers.nav.goToUsageReport();
-        Portal.billing.usageReportPage.getDomainsForm().then(function (text) {
-          sslEnabled = parseInt(text.split('\n')[6]);
-          customVCLRules = parseInt(text.split('\n')[8]);
-          wafEnabled = parseInt(text.split('\n')[12]);
-          eAnalyticsEnabled = parseInt(text.split('\n')[10]);
-          luaEnabled = parseInt(text.split('\n')[14]);
-          deletedDomains = parseInt(text.split('\n')[4]);
-        });
-        Portal.helpers.nav.goToDomains();
-        Portal.domains.listPage.pager.getLastBtn().click();
-        Portal.domains.listPage.table.getRows().count().then(function (count) {
-          lastPageDomains = count;
-          Portal.domains.listPage.pager.getCurrentPageIndex().then(function (text) {
-            domainCount = (domainsPerPage * (text - 1)) + lastPageDomains;
-            done();
-          });
+        API.helpers.authenticate(user).then(function () {
+          API.resources.domainConfigs
+            .getAll()
+            .expect(200)
+            .then(function (res) {
+              domainCount = res.body.length;
+              Portal.signIn(user);
+              Portal.helpers.nav.goToUsageReport().then(function () {
+                Portal.billing.usageReportPage.getAllDomainsValues().then(function (res) {
+                  // get the domain values from usage report page
+                  domainValues = res;
+                  done();
+                });
+              });
+            })
+            .catch(done);
         });
       });
 
@@ -64,13 +55,18 @@ describe('Functional', function () {
       });
 
       it('should display correct amount of active domains', function (done) {
-        Portal.usageReportHelpers.generateReport(user).then(function () {
+        Portal.usageReportHelpers.generateReport().then(function () {
           Portal.helpers.nav.goToUsageReport().then(function () {
             Portal
               .usageReportHelpers
-              .expectValue(Portal
-                .billing
-                .usageReportPage, 'Active\n' + domainCount, done, 'Domains');
+              .expectValue(domainCount, Constants.USAGE_REPORT_IDS.ACTIVE_DOMAINS)
+              .then(function () {
+                expect(true).toBeTruthy();
+                done();
+              })
+              .catch(function (err) {
+                throw new Error(err);
+              });
           });
         });
       });
@@ -81,13 +77,18 @@ describe('Functional', function () {
           Portal.domains.listPage.clickAddNewDomain();
           Portal.domains.addPage.createDomain(myDomain);
           Portal.alerts.waitToDisplay().then(function () {
-            Portal.usageReportHelpers.generateReport(user).then(function () {
+            Portal.usageReportHelpers.generateReport().then(function () {
               Portal.helpers.nav.goToUsageReport().then(function () {
                 Portal
                   .usageReportHelpers
-                  .expectValue(Portal
-                    .billing
-                    .usageReportPage, 'Active\n' + (domainCount + 1), done, 'Domains');
+                  .expectValue(domainCount + 1, Constants.USAGE_REPORT_IDS.ACTIVE_DOMAINS)
+                  .then(function () {
+                    expect(true).toBeTruthy();
+                    done();
+                  })
+                  .catch(function (err) {
+                    throw new Error(err);
+                  });
               });
             });
           });
@@ -95,13 +96,20 @@ describe('Functional', function () {
 
       it('should display correct amount of SSL Enabled ' +
         ' domains after creating a domain', function (done) {
-          Portal.usageReportHelpers.generateReport(user).then(function () {
+          Portal.usageReportHelpers.generateReport().then(function () {
             Portal.helpers.nav.goToUsageReport().then(function () {
               Portal
                 .usageReportHelpers
-                .expectValue(Portal
-                  .billing
-                  .usageReportPage, 'SSL Enabled\n' + (sslEnabled + 1), done, 'Domains');
+                .expectValue(parseInt(domainValues.sslEnabled) + 1, Constants
+                  .USAGE_REPORT_IDS
+                  .SSL_ENABLED_DOMAINS)
+                .then(function () {
+                  expect(true).toBeTruthy();
+                  done();
+                })
+                .catch(function (err) {
+                  throw new Error(err);
+                });
             });
           });
         });
@@ -114,14 +122,20 @@ describe('Functional', function () {
             Portal.domains.editPage.clickUpdateDomain();
             Portal.dialog.clickOk();
             Portal.alerts.waitToDisplay().then(function () {
-              Portal.usageReportHelpers.generateReport(user).then(function () {
+              Portal.usageReportHelpers.generateReport().then(function () {
                 Portal.helpers.nav.goToUsageReport().then(function () {
                   Portal
                     .usageReportHelpers
-                    .expectValue(Portal
-                      .billing
-                      .usageReportPage, 'Custom VCL Rules\n' + 
-                      (customVCLRules + 1), done, 'Domains');
+                    .expectValue(parseInt(domainValues.customVCLRules) + 1, Constants
+                      .USAGE_REPORT_IDS
+                      .CUSTOM_VCL_RULES)
+                    .then(function () {
+                      expect(true).toBeTruthy();
+                      done();
+                    })
+                    .catch(function (err) {
+                      throw new Error(err);
+                    });
                 });
               });
             });
@@ -136,16 +150,20 @@ describe('Functional', function () {
             Portal.domains.editPage.clickUpdateDomain();
             Portal.dialog.clickOk();
             Portal.alerts.waitToDisplay().then(function () {
-              Portal.usageReportHelpers.generateReport(user).then(function () {
+              Portal.usageReportHelpers.generateReport().then(function () {
                 Portal.helpers.nav.goToUsageReport().then(function () {
                   Portal
                     .usageReportHelpers
-                    .expectValue(Portal
-                      .billing
-                      .usageReportPage,
-                    'Enhanced Analytics Enabled\n' + (eAnalyticsEnabled + 1),
-                    done,
-                    'Domains');
+                    .expectValue(parseInt(domainValues.analyticsEnhanced) + 1, Constants
+                      .USAGE_REPORT_IDS
+                      .ANALYTICS_ENHANCED_DOMAINS)
+                    .then(function () {
+                      expect(true).toBeTruthy();
+                      done();
+                    })
+                    .catch(function (err) {
+                      throw new Error(err);
+                    });
                 });
               });
             });
@@ -160,16 +178,20 @@ describe('Functional', function () {
             Portal.domains.editPage.clickUpdateDomain();
             Portal.dialog.clickOk();
             Portal.alerts.waitToDisplay().then(function () {
-              Portal.usageReportHelpers.generateReport(user).then(function () {
+              Portal.usageReportHelpers.generateReport().then(function () {
                 Portal.helpers.nav.goToUsageReport().then(function () {
                   Portal
                     .usageReportHelpers
-                    .expectValue(Portal
-                      .billing
-                      .usageReportPage,
-                    'WAF Enabled\n' + (wafEnabled + 1),
-                    done,
-                    'Domains');
+                    .expectValue(parseInt(domainValues.wafEnabled) + 1, Constants
+                      .USAGE_REPORT_IDS
+                      .WAF_ENABLED_DOMAINS)
+                    .then(function () {
+                      expect(true).toBeTruthy();
+                      done();
+                    })
+                    .catch(function (err) {
+                      throw new Error(err);
+                    });
                 });
               });
             });
@@ -184,16 +206,20 @@ describe('Functional', function () {
             Portal.domains.editPage.clickUpdateDomain();
             Portal.dialog.clickOk();
             Portal.alerts.waitToDisplay().then(function () {
-              Portal.usageReportHelpers.generateReport(user).then(function () {
+              Portal.usageReportHelpers.generateReport().then(function () {
                 Portal.helpers.nav.goToUsageReport().then(function () {
                   Portal
                     .usageReportHelpers
-                    .expectValue(Portal
-                      .billing
-                      .usageReportPage,
-                    'Lua Feature Enabled\n' + (luaEnabled + 1),
-                    done,
-                    'Domains');
+                    .expectValue(parseInt(domainValues.luaEnabled) + 1, Constants
+                      .USAGE_REPORT_IDS
+                      .LUA_ENABLED_DOMAINS)
+                    .then(function () {
+                      expect(true).toBeTruthy();
+                      done();
+                    })
+                    .catch(function (err) {
+                      throw new Error(err);
+                    });
                 });
               });
             });
@@ -206,16 +232,20 @@ describe('Functional', function () {
           Portal.domains.listPage.searchAndClickDelete(myDomain.name);
           Portal.dialog.clickOk();
           Portal.alerts.waitToDisplay().then(function () {
-            Portal.usageReportHelpers.generateReport(user).then(function () {
+            Portal.usageReportHelpers.generateReport().then(function () {
               Portal.helpers.nav.goToUsageReport().then(function () {
                 Portal
                   .usageReportHelpers
-                  .expectValue(Portal
-                    .billing
-                    .usageReportPage,
-                  'Active\n' + (domainCount),
-                  done,
-                  'Domains');
+                  .expectValue(domainCount, Constants
+                    .USAGE_REPORT_IDS
+                    .ACTIVE_DOMAINS)
+                  .then(function () {
+                    expect(true).toBeTruthy();
+                    done();
+                  })
+                  .catch(function (err) {
+                    throw new Error(err);
+                  });
               });
             });
           });
@@ -223,16 +253,20 @@ describe('Functional', function () {
 
       it('should display correct amount of deleted ' +
         ' domains after deleting a domain', function (done) {
-          Portal.usageReportHelpers.generateReport(user).then(function () {
+          Portal.usageReportHelpers.generateReport().then(function () {
             Portal.helpers.nav.goToUsageReport().then(function () {
               Portal
                 .usageReportHelpers
-                .expectValue(Portal
-                  .billing
-                  .usageReportPage,
-                'Deleted\n' + (deletedDomains + 1),
-                done,
-                'Domains');
+                .expectValue(parseInt(domainValues.deleted) + 1, Constants
+                  .USAGE_REPORT_IDS
+                  .DELETED_DOMAINS)
+                .then(function () {
+                  expect(true).toBeTruthy();
+                  done();
+                })
+                .catch(function (err) {
+                  throw new Error(err);
+                });
             });
           });
         });

@@ -20,6 +20,7 @@ var config = require('config');
 var Portal = require('./../../../../page_objects/portal');
 var DataProvider = require('./../../../../common/providers/data');
 var Constants = require('./../../../../page_objects/constants');
+var API = require('./../../../../common/api').API;
 
 describe('Functional', function () {
   var user = config.get('portal.users.admin');
@@ -29,11 +30,16 @@ describe('Functional', function () {
       var logJobsCount = 0;
       beforeAll(function (done) {
         // get the amount of log shipping jobs we have
-        Portal.signIn(user);
-        Portal.helpers.nav.goToLogShipping();
-        Portal.logShipping.listPage.table.getRows().count().then(function (count) {
-          logJobsCount = count;
-          done();
+        API.helpers.authenticate(user).then(function () {
+          API.resources.logShippingJobs
+            .getAll()
+            .expect(200)
+            .then(function (res) {
+              logJobsCount = res.body.length;
+              Portal.signIn(user);
+              done();
+            })
+            .catch(done);
         });
       });
 
@@ -42,13 +48,18 @@ describe('Functional', function () {
       });
 
       it('should display correct amount of Log Shipping Jobs', function (done) {
-        Portal.usageReportHelpers.generateReport(user).then(function () {
+        Portal.usageReportHelpers.generateReport().then(function () {
           Portal.helpers.nav.goToUsageReport().then(function () {
             Portal
               .usageReportHelpers
-              .expectValue(Portal
-                .billing
-                .usageReportPage, 'Total\n' + logJobsCount, done, 'Log Shipping Jobs');
+              .expectValue(logJobsCount, Constants.USAGE_REPORT_IDS.TOTAL_LOG_SHIPPING_JOBS)
+              .then(function () {
+                expect(true).toBeTruthy();
+                done();
+              })
+              .catch(function (err) {
+                throw new Error(err);
+              });
           });
         });
       });
@@ -62,13 +73,20 @@ describe('Functional', function () {
             Portal.logShipping.addPage.form.setAccount(jobData.account);
           }
           Portal.logShipping.addPage.clickCreateJobBtn().then(function () {
-            Portal.usageReportHelpers.generateReport(user).then(function () {
+            Portal.usageReportHelpers.generateReport().then(function () {
               Portal.helpers.nav.goToUsageReport().then(function () {
                 Portal
                   .usageReportHelpers
-                  .expectValue(Portal
-                    .billing
-                    .usageReportPage, 'Total\n' + (logJobsCount + 1), done, 'Log Shipping Jobs');
+                  .expectValue(logJobsCount + 1, Constants
+                    .USAGE_REPORT_IDS
+                    .TOTAL_LOG_SHIPPING_JOBS)
+                  .then(function () {
+                    expect(true).toBeTruthy();
+                    done();
+                  })
+                  .catch(function (err) {
+                    throw new Error(err);
+                  });
               });
             });
           });
@@ -79,13 +97,18 @@ describe('Functional', function () {
           Portal.helpers.nav.goToLogShipping();
           Portal.logShipping.listPage.searchAndClickDelete(jobData.name);
           Portal.dialog.clickOk().then(function () {
-            Portal.usageReportHelpers.generateReport(user).then(function () {
+            Portal.usageReportHelpers.generateReport().then(function () {
               Portal.helpers.nav.goToUsageReport().then(function () {
                 Portal
                   .usageReportHelpers
-                  .expectValue(Portal
-                    .billing
-                    .usageReportPage, 'Total\n' + (logJobsCount), done, 'Log Shipping Jobs');
+                  .expectValue(logJobsCount, Constants.USAGE_REPORT_IDS.TOTAL_LOG_SHIPPING_JOBS)
+                  .then(function () {
+                    expect(true).toBeTruthy();
+                    done();
+                  })
+                  .catch(function (err) {
+                    throw new Error(err);
+                  });
               });
             });
           });

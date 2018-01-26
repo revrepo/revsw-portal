@@ -791,7 +791,26 @@ var Constants = {
   USAGE_REPORT_POLLING_INTERVAL: 10000,
   USAGE_REPORT_POLLING_TIMEOUT: 60000,
   AZURE_PORTAL_URL: 'https://portal.azure.com',
-  PRODUCTION_PORTAL_URL: 'https://portal.nuubit.net'
+  PRODUCTION_PORTAL_URL: 'https://portal.nuubit.net',
+  USAGE_REPORT_IDS: {
+    ACTIVE_API_KEYS: 'activeAPIKeys',
+    INACTIVE_API_KEYS: 'inactiveAPIKeys',
+    ACTIVE_SSL_CERTS: 'activeSSLCerts',
+    DELETED_SSL_CERTS: 'deletedSSLCerts',
+    TOTAL_SSL_NAMES: 'totalSSLNames',
+    TOTAL_LOG_SHIPPING_JOBS: 'totalLogShippingJobs',
+    ACTIVE_DOMAINS: 'activeDomains',
+    DELETED_DOMAINS: 'deletedDomains',
+    SSL_ENABLED_DOMAINS: 'SSLEnabledDomains',
+    CUSTOM_VCL_RULES: 'customVCLRules',
+    ANALYTICS_ENHANCED_DOMAINS: 'analyticsEnhancedDomains',
+    WAF_ENABLED_DOMAINS: 'WAFEnabledDomains',
+    LUA_ENABLED_DOMAINS: 'LUAEnabledDomains',
+    CACHE_PURGE_COMMANDS: 'domainsPurgeCommands',
+    TOTAL_DNS_ZONES: 'totalDNSZones',
+    TOTAL_DNS_RECORDS: 'totalDNSRecords',
+    TOTAL_DNS_QUERIES: 'totalDNSQueries'    
+  }
 };
 module.exports = Constants;
 
