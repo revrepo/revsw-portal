@@ -107,14 +107,14 @@
                 <div class="form-group">
                   <label class="col-sm-6 control-label">Active</label>
                   <div class="col-sm-6">
-                    <div class="form-control text-right">{{ report.api_keys.active }}</div>
+                    <div id="activeAPIKeys" class="form-control text-right">{{ report.api_keys.active }}</div>
                   </div>
                 </div>
 
                 <div class="form-group">
                   <label class="col-sm-6 control-label" >Inactive</label>
                   <div class="col-sm-6">
-                    <div class="form-control text-right">{{ report.api_keys.inactive }}</div>
+                    <div id="inactiveAPIKeys" class="form-control text-right">{{ report.api_keys.inactive }}</div>
                   </div>
                 </div>
 
@@ -143,17 +143,17 @@
                 <tbody>
                   <tr>
                     <td>Active</td>
-                    <td>{{report.applications.active}}</td>
-                    <td>{{report.apps_per_platform['Android'].active}}</td>
-                    <td>{{report.apps_per_platform['iOS'].active}}</td>
-                    <td>{{report.apps_per_platform['Windows_Mobile'].active}}</td>
+                    <td id="activeApps">{{report.applications.active}}</td>
+                    <td id="activeAndroidApps">{{report.apps_per_platform['Android'].active}}</td>
+                    <td id="activeiOSApps">{{report.apps_per_platform['iOS'].active}}</td>
+                    <td id="activeWindowsMobileApps">{{report.apps_per_platform['Windows_Mobile'].active}}</td>
                   </tr>
                   <tr>
                     <td>Deleted</td>
-                    <td>{{report.applications.deleted}}</td>
-                    <td>{{report.apps_per_platform['Android'].deleted}}</td>
-                    <td>{{report.apps_per_platform['iOS'].deleted}}</td>
-                    <td>{{report.apps_per_platform['Windows_Mobile'].deleted}}</td>
+                    <td id="deletedApps">{{report.applications.deleted}}</td>
+                    <td id="deletedAndroidApps">{{report.apps_per_platform['Android'].deleted}}</td>
+                    <td id="deletediOSApps">{{report.apps_per_platform['iOS'].deleted}}</td>
+                    <td id="deletedWindowsMobileApps">{{report.apps_per_platform['Windows_Mobile'].deleted}}</td>
                   </tr>
                 </tbody>
               </table>
