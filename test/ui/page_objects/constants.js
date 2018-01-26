@@ -806,7 +806,7 @@ var Constants = {
     ANALYTICS_ENHANCED_DOMAINS: 'analyticsEnhancedDomains',
     WAF_ENABLED_DOMAINS: 'WAFEnabledDomains',
     LUA_ENABLED_DOMAINS: 'LUAEnabledDomains',
-    CACHE_PURGE_COMMANDS: 'cachePurgeCommands',
+    CACHE_PURGE_COMMANDS: 'domainsPurgeCommands',
     TOTAL_DNS_ZONES: 'totalDNSZones',
     TOTAL_DNS_RECORDS: 'totalDNSRecords',
     TOTAL_DNS_QUERIES: 'totalDNSQueries'    
