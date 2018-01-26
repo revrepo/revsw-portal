@@ -23,6 +23,7 @@ var UsageReportPage = require('./../../page_objects/billing/usageReportPage');
 var Constants = require('./../../page_objects/constants');
 var Promise = require('bluebird');
 var admin = config.get('portal.users.admin');
+var moment = require('moment');
 var usageReport = {
 
     /**
@@ -67,6 +68,9 @@ var usageReport = {
                     reject('Value polling timed out');
                 } else {
                     element(by.id(fieldId)).getText().then(function (text) {
+                        // debuging
+                        console.log('       > Number in report: ' + text);
+                        console.log('       > Number we are waiting for: ' + value);
                         // get text inside `fieldId` div, and compare it to supplied value
                         if (text === value.toString()) {
                             resolve();
@@ -98,18 +102,8 @@ var usageReport = {
             '://' +
             config.get('api.host.name') + ':' +
             config.get('api.host.port');
-        var from_date = new Date(from);
-        from_date = from_date.getFullYear() +
-            '-' +
-            from_date.getMonth() +
-            '-0' +
-            from_date.getDate();
-        var to_date = new Date(to);
-        if (to_date.getDate().toString().length === 1) {
-            to_date = to_date.getFullYear() + '-' + to_date.getMonth() + '-0' + to_date.getDate();
-        } else {
-            to_date = to_date.getFullYear() + '-' + to_date.getMonth() + '-' + to_date.getDate();
-        }
+        var from_date = moment(from).format('YYYY-MM-DD');
+        var to_date = moment(to).format('YYYY-MM-DD');
         var traffic = '';
         var cache_hits = '';
         var port_hits = '';

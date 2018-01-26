@@ -28,7 +28,6 @@ describe('Functional', function () {
     describe('With user: ' + user.role, function () {
       var dnsZonesCount = 0;
       var dnsZoneToSearch = DataProvider.generateDNSZoneData();
-      var currDNS;
       beforeAll(function (done) {
         API.helpers.authenticate(user).then(function () {
           API.resources.dnsZones
@@ -41,17 +40,6 @@ describe('Functional', function () {
             })
             .catch(done);
         });
-      });
-
-      beforeEach(function (done) {
-        currDNS = 'QA-' + Date.now() + '.zonetest.com';
-        dnsZoneToSearch.domain = currDNS;
-
-        Portal.helpers.nav.goToDNSZones();
-        Portal.dnsZones.listPage.clickAddNewDNSZone();
-        Portal.dnsZones.addPage.createDNSZone(dnsZoneToSearch);
-        dnsZonesCount++;
-        done();
       });
 
       afterAll(function () {

@@ -20,19 +20,24 @@ var config = require('config');
 var Portal = require('./../../../../page_objects/portal');
 var DataProvider = require('./../../../../common/providers/data');
 var Constants = require('./../../../../page_objects/constants');
+var API = require('./../../../../common/api').API;
 
 describe('Functional', function () {
   var user = config.get('portal.users.admin');
   describe('Usage Report SSL Names', function () {
     describe('With user: ' + user.role, function () {
-      var sslCertsCount = 0;
+      var sslNamesCount = 0;
       beforeAll(function (done) {
         // get the amount of SSL names we have
-        Portal.signIn(user);
-        Portal.helpers.nav.goToSSLNames();
-        Portal.sslNames.listPage.table.getRows().count().then(function (count) {
-            sslCertsCount = count;
-            done();
+        API.helpers.authenticate(user).then(function () {
+          API.resources.sslNames
+            .getAll()
+            .expect(200)
+            .then(function (res) {
+              sslNamesCount = res.body.length;
+              done();
+            })
+            .catch(done);
         });
       });
 
@@ -41,9 +46,10 @@ describe('Functional', function () {
       });
 
       it('should display correct amount of SSL Names', function () {
+        Portal.signIn(user);
         Portal.helpers.nav.goToUsageReport();
         Portal.billing.usageReportPage.getSSLNamesForm().then(function (text) {
-          expect(text).toContain(sslCertsCount);
+          expect(text).toContain(sslNamesCount);
         });
       });
     });

@@ -56,22 +56,6 @@ describe('Functional', function () {
           .catch(done);
       });
 
-      beforeEach(function (done) {
-        // create a key before each test
-        currKey = 'API_QA_' + activeKeys + '_' + Date.now();
-        Portal.helpers.nav.goToAPIKeys();
-
-        Portal.admin.apiKeys.listPage.clickAddNewApiKey();
-        Portal.admin.apiKeys.listPage.searcher.clearSearchCriteria();
-        Portal.admin.apiKeys.listPage.searchAndClickEdit(defaultName);
-
-        Portal.admin.apiKeys.editPage.form.setName(currKey);
-        Portal.admin.apiKeys.editPage.form.clickUpdate().then(function () {
-          activeKeys++;
-          done();
-        });
-      });
-
       afterAll(function () {
         Portal.signOut();
       });
@@ -115,9 +99,12 @@ describe('Functional', function () {
 
         Portal.admin.apiKeys.listPage.clickAddNewApiKey();
         Portal.admin.apiKeys.listPage.searcher.clearSearchCriteria();
-        Portal.admin.apiKeys.listPage.searchAndClickEdit(defaultName);
+        Portal.admin.apiKeys.listPage.searcher.setSearchCriteria(defaultName);
+        Portal.admin.apiKeys.listPage.table.getHeader().clickLastUpdate();
+        Portal.admin.apiKeys.listPage.table.getHeader().clickLastUpdate();
+        Portal.admin.apiKeys.listPage.table.getFirstRow().clickEdit();
 
-        Portal.admin.apiKeys.editPage.form.setName(keyData.name + '_2');
+        Portal.admin.apiKeys.editPage.form.setName(keyData.name);
         Portal.admin.apiKeys.editPage.form.clickUpdate().then(function () {
           Portal.usageReportHelpers.generateReport().then(function () {
             Portal.helpers.nav.goToUsageReport().then(function () {
@@ -141,7 +128,7 @@ describe('Functional', function () {
           Portal.helpers.nav.goToAPIKeys();
 
           Portal.admin.apiKeys.listPage.searcher.clearSearchCriteria();
-          Portal.admin.apiKeys.listPage.searchAndClickEdit(currKey);
+          Portal.admin.apiKeys.listPage.searchAndClickEdit(keyData.name);
           Portal.admin.apiKeys.editPage.form.checkActive();
           Portal.admin.apiKeys.editPage.clickUpdate().then(function () {
             Portal.usageReportHelpers.generateReport().then(function () {
@@ -165,13 +152,13 @@ describe('Functional', function () {
         Portal.helpers.nav.goToAPIKeys();
 
         Portal.admin.apiKeys.listPage.searcher.clearSearchCriteria();
-        Portal.admin.apiKeys.listPage.searchAndClickDelete(currKey);
+        Portal.admin.apiKeys.listPage.searchAndClickDelete(keyData.name);
         Portal.dialog.clickOk().then(function () {
           Portal.usageReportHelpers.generateReport().then(function () {
             Portal.helpers.nav.goToUsageReport().then(function () {
               Portal
                 .usageReportHelpers
-                .expectValue(activeKeys - 1, Constants.USAGE_REPORT_IDS.ACTIVE_API_KEYS)
+                .expectValue(activeKeys, Constants.USAGE_REPORT_IDS.ACTIVE_API_KEYS)
                 .then(function () {
                   Portal
                     .usageReportHelpers
