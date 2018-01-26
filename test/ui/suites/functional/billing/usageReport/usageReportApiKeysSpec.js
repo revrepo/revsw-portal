@@ -30,6 +30,7 @@ describe('Functional', function () {
       var keyData = DataProvider.generateApiKeyData();
       var activeKeys = 0;
       var inactiveKeys = 0;
+      var currKey;
 
       beforeAll(function (done) {
         // get the amount of API keys we have
@@ -53,32 +54,58 @@ describe('Functional', function () {
               .catch(done);
           })
           .catch(done);
-      });      
+      });
+
+      beforeEach(function (done) {
+        // create a key before each test
+        currKey = 'API_QA_' + activeKeys + '_' + Date.now();
+        Portal.helpers.nav.goToAPIKeys();
+
+        Portal.admin.apiKeys.listPage.clickAddNewApiKey();
+        Portal.admin.apiKeys.listPage.searcher.clearSearchCriteria();
+        Portal.admin.apiKeys.listPage.searchAndClickEdit(defaultName);
+
+        Portal.admin.apiKeys.editPage.form.setName(currKey);
+        Portal.admin.apiKeys.editPage.form.clickUpdate().then(function () {
+          activeKeys++;
+          done();
+        });
+      });
 
       afterAll(function () {
         Portal.signOut();
       });
 
       it('should display correct amount of active API keys', function (done) {
-        Portal.usageReportHelpers.generateReport(user).then(function () {
+        Portal.usageReportHelpers.generateReport().then(function () {
           Portal.helpers.nav.goToUsageReport().then(function () {
             Portal
               .usageReportHelpers
-              .expectValue(Portal
-                .billing
-                .usageReportPage, 'Active\n' + activeKeys, done, 'API Keys');
+              .expectValue(activeKeys, Constants.USAGE_REPORT_IDS.ACTIVE_API_KEYS)
+              .then(function () {
+                expect(true).toBeTruthy();
+                done();
+              })
+              .catch(function (err) {
+                throw new Error(err);
+              });
           });
         });
       });
 
       it('should display correct amount of  inactive API keys', function (done) {
-        Portal.usageReportHelpers.generateReport(user).then(function () {
+        Portal.usageReportHelpers.generateReport().then(function () {
           Portal.helpers.nav.goToUsageReport().then(function () {
             Portal
               .usageReportHelpers
-              .expectValue(Portal
-                .billing
-                .usageReportPage, 'Inactive\n' + inactiveKeys, done, 'API Keys');
+              .expectValue(inactiveKeys, Constants.USAGE_REPORT_IDS.INACTIVE_API_KEYS)
+              .then(function () {
+                expect(true).toBeTruthy();
+                done();
+              })
+              .catch(function (err) {
+                throw new Error(err);
+              });
           });
         });
       });
@@ -90,15 +117,20 @@ describe('Functional', function () {
         Portal.admin.apiKeys.listPage.searcher.clearSearchCriteria();
         Portal.admin.apiKeys.listPage.searchAndClickEdit(defaultName);
 
-        Portal.admin.apiKeys.editPage.form.setName(keyData.name);
+        Portal.admin.apiKeys.editPage.form.setName(keyData.name + '_2');
         Portal.admin.apiKeys.editPage.form.clickUpdate().then(function () {
-          Portal.usageReportHelpers.generateReport(user).then(function () {
+          Portal.usageReportHelpers.generateReport().then(function () {
             Portal.helpers.nav.goToUsageReport().then(function () {
               Portal
                 .usageReportHelpers
-                .expectValue(Portal
-                  .billing
-                  .usageReportPage, 'Active\n' + (activeKeys + 1), done, 'API Keys');
+                .expectValue(activeKeys + 1, Constants.USAGE_REPORT_IDS.ACTIVE_API_KEYS)
+                .then(function () {
+                  expect(true).toBeTruthy();
+                  done();
+                })
+                .catch(function (err) {
+                  throw new Error(err);
+                });
             });
           });
         });
@@ -109,16 +141,21 @@ describe('Functional', function () {
           Portal.helpers.nav.goToAPIKeys();
 
           Portal.admin.apiKeys.listPage.searcher.clearSearchCriteria();
-          Portal.admin.apiKeys.listPage.searchAndClickEdit(keyData.name);
+          Portal.admin.apiKeys.listPage.searchAndClickEdit(currKey);
           Portal.admin.apiKeys.editPage.form.checkActive();
           Portal.admin.apiKeys.editPage.clickUpdate().then(function () {
-            Portal.usageReportHelpers.generateReport(user).then(function () {
+            Portal.usageReportHelpers.generateReport().then(function () {
               Portal.helpers.nav.goToUsageReport().then(function () {
                 Portal
                   .usageReportHelpers
-                  .expectValue(Portal
-                    .billing
-                    .usageReportPage, 'Inactive\n' + (inactiveKeys + 1), done, 'API Keys');
+                  .expectValue(inactiveKeys + 1, Constants.USAGE_REPORT_IDS.INACTIVE_API_KEYS)
+                  .then(function () {
+                    expect(true).toBeTruthy();
+                    done();
+                  })
+                  .catch(function (err) {
+                    throw new Error(err);
+                  });
               });
             });
           });
@@ -128,15 +165,28 @@ describe('Functional', function () {
         Portal.helpers.nav.goToAPIKeys();
 
         Portal.admin.apiKeys.listPage.searcher.clearSearchCriteria();
-        Portal.admin.apiKeys.listPage.searchAndClickDelete(keyData.name);
+        Portal.admin.apiKeys.listPage.searchAndClickDelete(currKey);
         Portal.dialog.clickOk().then(function () {
-          Portal.usageReportHelpers.generateReport(user).then(function () {
+          Portal.usageReportHelpers.generateReport().then(function () {
             Portal.helpers.nav.goToUsageReport().then(function () {
               Portal
                 .usageReportHelpers
-                .expectValue(Portal
-                  .billing
-                  .usageReportPage, 'Active\n' + activeKeys, done, 'API Keys');
+                .expectValue(activeKeys - 1, Constants.USAGE_REPORT_IDS.ACTIVE_API_KEYS)
+                .then(function () {
+                  Portal
+                    .usageReportHelpers
+                    .expectValue(inactiveKeys, Constants.USAGE_REPORT_IDS.INACTIVE_API_KEYS)
+                    .then(function () {
+                      expect(true).toBeTruthy();
+                      done();
+                    })
+                    .catch(function (err) {
+                      throw new Error(err);
+                    });
+                })
+                .catch(function (err) {
+                  throw new Error(err);
+                });
             });
           });
         });
