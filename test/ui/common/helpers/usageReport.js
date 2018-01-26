@@ -19,8 +19,10 @@ var config = require('config');
 var API = require('./../api').API;
 var Session = require('./../session');
 var request = require('supertest-as-promised');
-var Portal = require('./../../page_objects/portal');
+var UsageReportPage = require('./../../page_objects/billing/usageReportPage');
 var Constants = require('./../../page_objects/constants');
+var Promise = require('bluebird');
+var admin = config.get('portal.users.admin');
 var usageReport = {
 
     /**
@@ -30,7 +32,7 @@ var usageReport = {
        *
        * @returns {Promise}
        */
-    generateReport: function (user) {
+    generateReport: function () {
         /*
         *   TODO: error handling
         */
@@ -39,10 +41,10 @@ var usageReport = {
             '://' +
             config.get('api.host.name') + ':' +
             config.get('api.host.port');
-        return API.helpers.authenticateUser(user).then(function () {
+        return API.helpers.authenticateUser(admin).then(function () {
             return request(apiUrl)
                 .get('/v1/usage_reports/web/generate')
-                .set('Authorization', 'Bearer ' + user.token)
+                .set('Authorization', 'Bearer ' + admin.token)
                 .then(function (res, err) {
                     if (err !== undefined) {
                         new Error(err);
@@ -55,29 +57,32 @@ var usageReport = {
         });
     },
 
-    expectValue: function (page, value, done, form) {
-        var times = Constants.USAGE_REPORT_POLLING_TIMEOUT;
-        var interval = Constants.USAGE_REPORT_POLLING_INTERVAL;
-        var polling = function () {
-            if (times < 0) {
-                expect(false).toBeTruthy();
-                done();
-                return;
-            } else {
-                page.getFormTextByFormName(form).then(function (text) {
-                    if (text.toString().indexOf(value) !== -1) {
-                        expect(true).toBeTruthy();
-                        done();
-                        return;
-                    } else {
-                        times -= interval;
-                        page.clickUpdateReport();
-                        setTimeout(polling, interval);
-                    }
-                });
-            }
-        };
-        polling();
+    expectValue: function (value, fieldId) {
+        var me = this;
+        return new Promise(function (resolve, reject) {
+            var times = Constants.USAGE_REPORT_POLLING_TIMEOUT;
+            var interval = Constants.USAGE_REPORT_POLLING_INTERVAL;
+            var polling = function () {
+                if (times < 0) {
+                    reject('Value polling timed out');
+                } else {
+                    element(by.id(fieldId)).getText().then(function (text) {
+                        // get text inside `fieldId` div, and compare it to supplied value
+                        if (text === value.toString()) {
+                            resolve();
+                        } else {
+                            times -= interval;
+                            me.generateReport().then(function () {
+                                UsageReportPage.clickUpdateReport().then(function () {
+                                    setTimeout(polling, interval);
+                                });
+                            });
+                        }
+                    });
+                }
+            };
+            polling();
+        });
     },
 
     /**
@@ -127,8 +132,8 @@ var usageReport = {
                         cache_hits = res.body.data[0].cache_hits;
                         port_hits = res.body.data[0].port_hits;
                         return request(apiUrl)
-                            .get('/v1/usage_reports/web/stats?account_id=' + 
-                            accId + 
+                            .get('/v1/usage_reports/web/stats?account_id=' +
+                            accId +
                             '&from_timestamp=' +
                             from + '&to_timestamp=' +
                             to)
