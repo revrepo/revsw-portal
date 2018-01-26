@@ -11,13 +11,13 @@
   </thead>
   <tbody>
     <tr ng-repeat="  usage  in report.dns_usage" >
-      <td id="totalDNSZones">
+      <td id="usageDNSZones">
        {{usage.dns_zone}}
       </td>
-      <td id="totalDNSRecords">
+      <td id="usageDNSRecords">
        {{usage.dns_records}}
       </td>
-      <td id="totalDNSQueries">{{formatNumber(usage.dns_queries)}}</td>
+      <td id="usageDNSQueries">{{formatNumber(usage.dns_queries)}}</td>
 
     </tr>
 
