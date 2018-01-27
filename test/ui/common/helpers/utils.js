@@ -81,7 +81,10 @@ var Utils = {
   */
   getAPIItemByField: function (value, field, user, endpoint) {
     /* jshint camelcase:false */
-    var apiUrl = this.getAPIUrl();
+    var apiUrl = config.get('api.host.protocol') +
+            '://' +
+            config.get('api.host.name') + ':' +
+            config.get('api.host.port');
     return API.helpers.authenticateUser(user).then(function () {
       return request(apiUrl)
         .get(endpoint)
@@ -97,6 +100,7 @@ var Utils = {
           if (returnItem === undefined) {
             throw new Error('Item not found inside array');
           } else {
+            
             return request(apiUrl)
               .get(endpoint +
               '/' +
