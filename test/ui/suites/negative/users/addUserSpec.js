@@ -106,7 +106,7 @@ describe('Negative', function () {
       it('should not allow to create a user without any role',
         function () {
           var scott = DataProvider.generateUser();
-          delete scott.role;
+          scott.role = '--- Select Role ---';
           Portal.userListPage.clickAddNewUser();
           Portal.addUserPage.form.fill(scott);
           var addBtn = Portal.addUserPage.getCreateUserBtn();
@@ -119,6 +119,7 @@ describe('Negative', function () {
           delete brian.password;
           Portal.userListPage.clickAddNewUser();
           Portal.addUserPage.form.fill(brian);
+          Portal.addUserPage.form.clearPassword();
           var addBtn = Portal.addUserPage.getCreateUserBtn();
           expect(addBtn.isEnabled()).toBeFalsy();
         });
@@ -129,6 +130,7 @@ describe('Negative', function () {
           delete brian.passwordConfirm;
           Portal.userListPage.clickAddNewUser();
           Portal.addUserPage.form.fill(brian);
+          Portal.addUserPage.form.clearPasswordConfirm();
           var addBtn = Portal.addUserPage.getCreateUserBtn();
           expect(addBtn.isEnabled()).toBeFalsy();
         });
