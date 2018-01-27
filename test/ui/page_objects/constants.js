@@ -375,6 +375,11 @@ var Constants = {
         block_crawlers: false,
         cache_bypass_locations: [],
         caching_rules: [{
+          serve_stale: { 
+            enable: false,
+            while_fetching_ttl: 8,
+            origin_sick_ttl: 15 
+          },
           browser_caching:
             {
               force_revalidate: false,
@@ -392,6 +397,7 @@ var Constants = {
             },
           edge_caching:
             {
+              query_string_keep_or_remove_list:[],
               new_ttl: 0,
               override_no_cc: false,
               override_origin: false
@@ -405,13 +411,15 @@ var Constants = {
           enable_esi: false
         }],
         cdn_overlay_urls: [],
+        co_bypass_locations: [],
         enable_cache: true,
         enable_security: true,
-        web_app_firewall: 'off'
+        web_app_firewall: 'off',
       },
     rev_component_co:
       {
         css_choice: 'medium',
+        enable_decompression: true,
         enable_optimization: false,
         enable_rum: false,
         img_choice: 'medium',
@@ -431,6 +439,7 @@ var Constants = {
     origin_server: 'test-domain-portal-ui-test.origin-server.com',
     origin_host_header: 'test-domain-portal-ui-test.origin-host-header.com',
     account_id: '55b6ff6a7957012304a49d04',
+    bp_group_id: '55a56f85476c10c329a90740',
     tolerance: '3000',
     origin_server_location_id: '55a56fa6476c10c329a90741',
     cname: 'test-domain-1511077019750-portal-ui-test.com.revqa.net',
@@ -482,6 +491,11 @@ var Constants = {
       ],
       caching_rules: [
         {
+          serve_stale: { 
+            enable: false,
+            while_fetching_ttl: 8,
+            origin_sick_ttl: 15 
+          },
           browser_caching: {
             force_revalidate: true,
             new_ttl: 5,
@@ -498,12 +512,12 @@ var Constants = {
             remove_ignored_from_response: true
           },
           edge_caching: {
-            new_ttl: 5,
-            override_no_cc: true,
-            override_origin: false,
             query_string_keep_or_remove_list: [
               'test'
             ],
+            new_ttl: 5,
+            override_no_cc: true,
+            override_origin: false,            
             query_string_list_is_keep: true
           },
           url: {
@@ -556,7 +570,8 @@ var Constants = {
           bot_protection_id: '123'
         }
       ],
-      custom_vcl: 'vcl_rules'
+      custom_vcl: 'vcl_rules',
+      enable_wallarm: false
     },
     rev_component_co: {
       css_choice: 'medium',
@@ -579,6 +594,7 @@ var Constants = {
     origin_server: 'test-domain-portal-ui-test.origin-server.com',
     origin_host_header: 'test-domain-portal-ui-test.origin-host-header.com',
     account_id: '55b6ff6a7957012304a49d04',
+    bp_group_id: '55a56f85476c10c329a90740',
     tolerance: '3000',
     origin_server_location_id: '55a56fa6476c10c329a90741',
     domain_aliases: [      
@@ -649,6 +665,11 @@ var Constants = {
       ],
       "caching_rules": [
         {
+          serve_stale: { 
+            enable: false,
+            while_fetching_ttl: 8,
+            origin_sick_ttl: 15 
+          },
           "browser_caching": {
             "force_revalidate": true,
             "new_ttl": 5,
@@ -665,12 +686,12 @@ var Constants = {
             "remove_ignored_from_response": true
           },
           "edge_caching": {
-            "new_ttl": 5,
-            "override_no_cc": true,
-            "override_origin": false,
             "query_string_keep_or_remove_list": [
               "test"
             ],
+            "new_ttl": 5,
+            "override_no_cc": true,
+            "override_origin": false,            
             "query_string_list_is_keep": true
           },
           "url": {
@@ -723,7 +744,8 @@ var Constants = {
           "bot_protection_id": "123"
         }
       ],
-      "custom_vcl": "vcl_rules"
+      "custom_vcl": "vcl_rules",
+      enable_wallarm: false
     },
     "rev_component_co": {
       "css_choice": "medium",
@@ -746,6 +768,7 @@ var Constants = {
     "origin_server": "test-domain-portal-ui-test.origin-server.com",
     "origin_host_header": "test-domain-portal-ui-test.origin-host-header.com",
     "account_id": "55b6ff6a7957012304a49d04",
+    "bp_group_id": '55a56f85476c10c329a90740',
     "tolerance": "3000",
     "origin_server_location_id": "55a56fa6476c10c329a90741",
     "domain_aliases": [
@@ -813,5 +836,6 @@ var Constants = {
   }
 };
 module.exports = Constants;
+
 
 

@@ -22,7 +22,9 @@ var Session = require('./../session');
 var user = config.get('portal.users.revAdmin');
 var apiUrl = config.get('api.host.protocol') +
     '://' +
-    config.get('api.host.name');
+    config.get('api.host.name') +
+    ':' +
+    config.get('api.host.port');
 var Utils = require('./utils');
 var domains = {
 
