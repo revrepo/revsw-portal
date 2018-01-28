@@ -773,6 +773,12 @@ var DomainForm = {
       .all(by.css('option'));
   },
 
+  checkIfCertIsPresent: function (cert) {
+    this.getSSLConfigurationTab().click();
+    this.getSslCertDDown().click();
+    return this.getSslCertDDown().$('[label="' + cert + '"]').isDisplayed();
+  },
+
   /**
    * ### DomainForm.getOriginServerTxtIn()
    *

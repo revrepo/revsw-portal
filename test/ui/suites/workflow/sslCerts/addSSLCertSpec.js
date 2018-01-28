@@ -67,11 +67,11 @@ describe('Workflow', function () {
         it('should newly created cert has appeared in the domain ' +
           'configuration window',
           function () {
-            var newAddedSSLItemText = Portal.domains.editPage.form
-              .getSslCertDDownItems()
-              .last()
-              .getText();
-            expect(newAddedSSLItemText).toBe(testSslCert.name);
+            expect(Portal
+              .domains
+              .editPage
+              .form
+              .checkIfCertIsPresent(testSslCert.name)).toBeTruthy();
           });
 
         it('should create an ssl certificate and add to domain successfully',
