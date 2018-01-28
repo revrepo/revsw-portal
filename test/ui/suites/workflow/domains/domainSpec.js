@@ -173,16 +173,20 @@ describe('Workflow', function () {
                 });
             });
 
-        it('should display Set VCL Rules switch after updating VCL Rules', function () {
+        it('should display Set VCL Rules switch after updating VCL Rules', function (done) {
             Portal.helpers.nav.goToDomains();
             Portal.domains.listPage.searchAndClickEdit(domainData.name);
-            Portal.domains.editPage.clickTabImageEngine();
-            expect(Portal
-                .domains
-                .editPage
-                .form
-                .getSetImageEngineConfigurationSw()
-                .isDisplayed()).toBeTruthy();
+            Portal.domains.editPage.clickTabImageEngine()
+                .then(function () {
+                    expect(Portal
+                        .domains
+                        .editPage
+                        .form
+                        .getSetImageEngineConfigurationSw()
+                        .isDisplayed()).toBeTruthy();
+                    done();
+                });
+
         });
 
         it('should set default ImageEngine VCL Rules ' +
