@@ -1557,11 +1557,23 @@ var DomainForm = {
   getSslCert: function () {
     this.getSSLConfigurationTab()
       .click();
+    this.getSslCertDDown().click();
     return this
       .getSslCertDDown()
       .all(by.css('option[selected="selected"]'))
       .last()
       .getText();
+  },
+
+  resetSSLCert: function () {
+    this.getSSLConfigurationTab()
+      .click();
+    this.getSslCertDDown().click();
+    return this
+      .getSslCertDDown()
+      .all(by.css('option'))
+      .first()
+      .click();
   },
 
 
@@ -1606,13 +1618,9 @@ var DomainForm = {
    * @returns {Promise}
    */
   setSslCert: function (sslCert) {
-    var me = this;
-    return this.getSSLConfigurationTab()
-      .click().then(function () {
-        return me
-          .getSslCertDDown()
-          .sendKeys(sslCert);
-      });
+    this.getSSLConfigurationTab().click();
+    this.getSslCertDDown().click();
+    return this.getSslCertDDown().$('[label="' + sslCert + '"]').click();    
   },
 
   /**

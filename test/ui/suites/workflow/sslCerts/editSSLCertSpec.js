@@ -67,7 +67,7 @@ describe('Workflow', function () {
               .getFirstRow()
               .clickEdit();
             var valueAdded = ' updated';
-            Portal.sslCerts.editPage.form.setCertName(valueAdded);
+            Portal.sslCerts.editPage.form.setCertName(testSslCert.name + valueAdded);
             Portal.sslCerts.editPage.clickUpdate();
             Portal.dialog.clickOk();
             var updatedCertName = Portal.sslCerts.editPage.form.getCertName();
@@ -125,7 +125,7 @@ describe('Workflow', function () {
               .getFirstRow()
               .clickEdit();
             var valueAdded = ' updated';
-            Portal.sslCerts.editPage.form.setCertName(valueAdded);
+            Portal.sslCerts.editPage.form.setCertName(testSslCert.name + valueAdded);
             Portal.sslCerts.editPage.clickUpdate();
             Portal.dialog.clickOk();
             var updatedCertName = Portal.sslCerts.editPage.form.getCertName();
@@ -150,7 +150,7 @@ describe('Workflow', function () {
             Portal.dialog.clickOk();
             Portal.domains.editPage.clickBackToList();
             Portal.domains.listPage.searchAndClickEdit(testDomain.name);
-            Portal.domains.editPage.form.setSslCert('Default SSL Certificate');
+            Portal.domains.editPage.form.resetSSLCert();
             Portal.domains.editPage.clickUpdateDomain();
             Portal.dialog.clickOk();
             Portal.domains.editPage.clickBackToList();

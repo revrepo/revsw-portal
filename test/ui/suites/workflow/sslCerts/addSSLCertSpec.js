@@ -39,8 +39,20 @@ describe('Workflow', function () {
           account: ['API QA Reseller Company']
         };
 
+        var testSslCert = DataProvider.generateSSLCertData(sslCertData);
+        var testDomain = DataProvider.generateDomain('sslTestDomain');
+
         beforeAll(function () {
           Portal.signIn(user);
+          Portal.helpers.nav.goToSSLCertificates();
+          Portal.createSSLCert(testSslCert);
+          Portal.helpers.nav.goToDomains();
+          Portal.domains.listPage.clickAddNewDomain();
+          Portal.domains.addPage.createDomain(testDomain);
+          Portal.helpers.nav.goToDomains();
+          Portal.domains.listPage.searchAndClickEdit(testDomain.name);
+          Portal.domains.editPage.clickUpdateDomain();
+          Portal.dialog.clickOk();
         });
 
         afterAll(function () {
@@ -48,20 +60,13 @@ describe('Workflow', function () {
         });
 
         beforeEach(function () {
-          Portal.helpers.nav.goToSSLCertificates();
+          Portal.helpers.nav.goToDomains();
+          Portal.domains.listPage.searchAndClickEdit(testDomain.name);
         });
 
         it('should newly created cert has appeared in the domain ' +
           'configuration window',
           function () {
-            var testSslCert = DataProvider.generateSSLCertData(sslCertData);
-            var testDomain = DataProvider.generateDomain('sslTestDomain');
-            Portal.createSSLCert(testSslCert);
-            Portal.helpers.nav.goToDomains();
-            Portal.domains.listPage.clickAddNewDomain();
-            Portal.domains.addPage.createDomain(testDomain);
-            Portal.domains.addPage.clickBackToList();
-            Portal.domains.listPage.searchAndClickEdit(testDomain.name);
             var newAddedSSLItemText = Portal.domains.editPage.form
               .getSslCertDDownItems()
               .last()
@@ -71,21 +76,14 @@ describe('Workflow', function () {
 
         it('should create an ssl certificate and add to domain successfully',
           function () {
-            var testSslCert = DataProvider.generateSSLCertData(sslCertData);
-            var testDomain = DataProvider.generateDomain('sslTestDomain');
-            Portal.createSSLCert(testSslCert);
-            Portal.helpers.nav.goToDomains();
-            Portal.domains.listPage.clickAddNewDomain();
-            Portal.domains.addPage.createDomain(testDomain);
-            Portal.domains.addPage.clickBackToList();
-            Portal.domains.listPage.searchAndClickEdit(testDomain.name);
             Portal.domains.editPage.form.setSslCert(testSslCert.name);
             Portal.domains.editPage.clickUpdateDomain();
             Portal.dialog.clickOk();
             Portal.domains.editPage.clickBackToList();
             Portal.domains.listPage.searchAndClickEdit(testDomain.name);
-            var sslCertText = Portal.domains.editPage.form.getSslCert();
-            expect(sslCertText).toEqual(testSslCert.name);
+            Portal.domains.editPage.form.getSslCert().then(function (cert) {
+              expect(cert).toEqual(testSslCert.name);
+            });
           });
       });
     });
