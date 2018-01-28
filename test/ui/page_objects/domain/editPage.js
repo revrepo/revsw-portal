@@ -746,7 +746,7 @@ var EditDomain = {
   setWafRule: function (rule) {
     var me = this;
     this.wafRulesTable.getRows().count().then(function (count) {
-      for (var i = 0; i < count - 1; i++) {
+      for (var i = 0; i < count; i++) {        
         me.clickWAFonIndex(i, rule);
       }
     });
