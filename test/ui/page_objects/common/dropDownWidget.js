@@ -34,7 +34,7 @@ var DropDownWidget = function (dropDownLocator) {
       css: '.ui-select-choices-row .ng-scope'
     },
     chosen: {
-      css: '.select2-chosen'
+      css: '.select2-chosen span'
     }
   };
 };

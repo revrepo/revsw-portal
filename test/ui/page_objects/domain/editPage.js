@@ -743,7 +743,25 @@ var EditDomain = {
     return this.form.clickEnableLuaScriptingOriginFirstMile();
   },
 
-  fillDemo: function (domain, domainUpdateData) {
+  setWafRule: function (rule) {
+    var me = this;
+    this.wafRulesTable.getRows().count().then(function (count) {
+      for (var i = 0; i < count; i++) {        
+        me.clickWAFonIndex(i, rule);
+      }
+    });
+  },
+
+  clickWAFonIndex: function (i, rule) {
+    var me = this;
+    this.wafRulesTable.getRow(i).getNameCell().getText().then(function (el) {
+      if (el === rule) {
+        me.wafRulesTable.getRow(i).clickUseThisRule();
+      }
+    });
+  },
+
+  fillDemo: function (domain, domainUpdateData, ruleName) {
     /* jshint maxstatements:120 */
     this.form.getEnableEnhancedAnalytics().click();
     this.form.setNonWildcardDomainAliases('test.' + domain.name);
@@ -803,7 +821,11 @@ var EditDomain = {
     this.form.clickWAFSwitch();
     this.form.setWAFLocation('/wafLocation/');
     this.clickExpandWafRulesBtn();
-    this.wafRulesTable.getLastRow().clickUseThisRule();
+    if (ruleName !== undefined) {
+      this.setWafRule(ruleName);
+    } else {
+      this.wafRulesTable.getLastRow().clickUseThisRule();
+    }    
     browser.executeScript('$(".toast").remove()');
     browser.sleep(1000);
     this.clickTabBotProtection();
