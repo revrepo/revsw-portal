@@ -162,27 +162,28 @@ describe('Workflow', function () {
         it('should be able to use a private SSL and after that to use another',
           function () {
             var firstTestSslCert = DataProvider.generateSSLCertData(sslCertData);
-            var secondTestSslCert = DataProvider.generateSSLCertData(sslCertData);
             var testDomain = DataProvider.generateDomain('sslTestDomain');
-            Portal.createSSLCert(firstTestSslCert);
-            Portal.createSSLCert(secondTestSslCert);
-            Portal.helpers.nav.goToDomains();
-            Portal.domains.listPage.clickAddNewDomain();
-            Portal.domains.addPage.createDomain(testDomain);
-            Portal.domains.addPage.clickBackToList();
-            Portal.domains.listPage.searchAndClickEdit(testDomain.name);
-            Portal.domains.editPage.form.setSslCert(firstTestSslCert.name);
-            Portal.domains.editPage.clickUpdateDomain();
-            Portal.dialog.clickOk();
-            Portal.domains.editPage.clickBackToList();
-            Portal.domains.listPage.searchAndClickEdit(testDomain.name);
-            Portal.domains.editPage.form.setSslCert(secondTestSslCert.name);
-            Portal.domains.editPage.clickUpdateDomain();
-            Portal.dialog.clickOk();
-            Portal.domains.editPage.clickBackToList();
-            Portal.domains.listPage.searchAndClickEdit(testDomain.name);
-            var sslCertText = Portal.domains.editPage.form.getSslCert();
-            expect(sslCertText).toEqual(secondTestSslCert.name);
+            Portal.createSSLCert(firstTestSslCert).then(function () {
+              var secondTestSslCert = DataProvider.generateSSLCertData(sslCertData);
+              Portal.createSSLCert(secondTestSslCert);
+              Portal.helpers.nav.goToDomains();
+              Portal.domains.listPage.clickAddNewDomain();
+              Portal.domains.addPage.createDomain(testDomain);
+              Portal.domains.addPage.clickBackToList();
+              Portal.domains.listPage.searchAndClickEdit(testDomain.name);
+              Portal.domains.editPage.form.setSslCert(firstTestSslCert.name);
+              Portal.domains.editPage.clickUpdateDomain();
+              Portal.dialog.clickOk();
+              Portal.domains.editPage.clickBackToList();
+              Portal.domains.listPage.searchAndClickEdit(testDomain.name);
+              Portal.domains.editPage.form.setSslCert(secondTestSslCert.name);
+              Portal.domains.editPage.clickUpdateDomain();
+              Portal.dialog.clickOk();
+              Portal.domains.editPage.clickBackToList();
+              Portal.domains.listPage.searchAndClickEdit(testDomain.name);
+              var sslCertText = Portal.domains.editPage.form.getSslCert();
+              expect(sslCertText).toEqual(secondTestSslCert.name);
+            });
           });
       });
     });
