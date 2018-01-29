@@ -193,25 +193,25 @@ describe('Workflow', function () {
             ' after clicking Set VCL Rules switch', function (done) {
                 Portal.helpers.nav.goToDomains();
                 Portal.domains.listPage.searchAndClickEdit(domainData.name);
-                Portal.domains.editPage.clickTabImageEngine();
-                Portal
-                    .domains
-                    .editPage
-                    .form
-                    .getSetImageEngineConfigurationSw()
-                    .click();
-
-                Portal.domains.editPage.clickUpdateDomain().then(function () {
-                    Portal.dialog.clickOk();
-                    Portal.alerts.waitToDisplay().then(function () {
-                        Portal
-                            .domainsHelpers
-                            .getDomainJSON(domainData.name).then(function (domain) {
-                                expect(JSON.stringify(domain
-                                    .rev_component_bp
-                                    .custom_vcl)).toBe(JSON.stringify(ioVclRules));
-                                done();
-                            });
+                Portal.domains.editPage.clickTabImageEngine().then(function () {
+                    Portal
+                        .domains
+                        .editPage
+                        .form
+                        .getSetImageEngineConfigurationSw()
+                        .click();
+                    Portal.domains.editPage.clickUpdateDomain().then(function () {
+                        Portal.dialog.clickOk();
+                        Portal.alerts.waitToDisplay().then(function () {
+                            Portal
+                                .domainsHelpers
+                                .getDomainJSON(domainData.name).then(function (domain) {
+                                    expect(JSON.stringify(domain
+                                        .rev_component_bp
+                                        .custom_vcl)).toBe(JSON.stringify(ioVclRules));
+                                    done();
+                                });
+                        });
                     });
                 });
             });

@@ -763,6 +763,7 @@ var EditDomain = {
 
   fillDemo: function (domain, domainUpdateData, ruleName) {
     /* jshint maxstatements:120 */
+    this.clickTabGeneralSettings();
     this.form.getEnableEnhancedAnalytics().click();
     this.form.setNonWildcardDomainAliases('test.' + domain.name);
     this.form.setWildcardDomainAlias('*.' + domain.name);
@@ -847,6 +848,7 @@ var EditDomain = {
   },
 
   clearDemo: function () {
+    this.clickTabGeneralSettings();
     this.form.clearWildcardDomainAlias();
     this.form.setDataReadTimeout('20');
     this.form.getLastMileQUICprotocolTxtIn().click();
