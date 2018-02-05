@@ -10,8 +10,8 @@
     dashboardProvider
       // “Bandwidth Saved By ImageEngine Graph”
       .widget('widget-web-analytics-imageengine-linechart-bytes-saved', {
-        title: 'Bandwidth Saved By IO Graph',
-        description: 'Display Bandwidth Saved By Image Optimization Graph',
+        title: 'Bandwidth Saved By IE Graph',
+        description: 'Display Bandwidth Saved By ImageEngine Graph',
         templateUrl: 'parts/dashboard/widgets/web-analytics/imageengine-linechart-bytes-saved/view-imageengine-linechart-bytes-saved.tpl.html',
         titleTemplateUrl: 'parts/dashboard/widgets/web-analytics/widget-title-with-params-hours.tpl.html',
         controller: 'widgetImageEngineLinechartBytesSavedController',

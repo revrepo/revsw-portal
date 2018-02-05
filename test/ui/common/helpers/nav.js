@@ -223,7 +223,7 @@ var NavHelper = {
   },
 
   /**
-   * Navigates to Web Analytics > Image Optimization     
+   * Navigates to Web Analytics > ImageEngine     
    */
   goToImageOptimization: function () {
     return SideBar.select(MenuItems.WEB_ANALYTICS.IMAGE_OPTIMIZATION);

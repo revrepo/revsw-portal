@@ -20,6 +20,7 @@ var config = require('config');
 var Portal = require('./../../../page_objects/portal');
 var DataProvider = require('./../../../common/providers/data');
 var Constants = require('./../../../page_objects/constants');
+var Utils = require('./../../../common/helpers/utils');
 
 describe('Workflow', function () {
     describe('Add Domain', function () {
@@ -35,7 +36,7 @@ describe('Workflow', function () {
         var updatedDomain = Constants.DOMAIN_UPDATED_JSON;
         var updatedDisabledDomain = Constants.DOMAIN_UPDATED_DISABLED_JSON;
         var waf_rules = [];
-        var ioVclRules = {}; // this will contain the default image optimization VCL rules.
+        var ioVclRules = {}; // this will contain the default ImageEngine VCL rules.
         beforeAll(function (done) {
             Portal.signIn(user);
 
@@ -57,10 +58,6 @@ describe('Workflow', function () {
             Portal.signOut();
         });
 
-        beforeEach(function () {
-            Portal.helpers.nav.goToDomains();
-        });
-
         it('should contain all expected default attributes in a ' +
             ' newly created domain JSON object', function (done) {
                 Portal.domainsHelpers.getDomainJSON(domainData.name).then(function (domain) {
@@ -76,47 +73,47 @@ describe('Workflow', function () {
                     updatedDisabledDomain.domain_name = domainData.name;
                     updatedDisabledDomain.domain_aliases = ['test.' + domainData.name];
                     updatedDomain.domain_aliases = ['test.' + domainData.name];
-                    expect(JSON.stringify(domain)).toBe(JSON.stringify(defaultDomain));
-                    done();
+                    //expect(JSON.stringify(domain)).toBe(JSON.stringify(defaultDomain));                    
+                    Utils.compareObjects(domain, defaultDomain).then(done)
+                        .catch(function (errProp) {
+                            throw new Error(errProp);
+                        });
                 });
             });
 
         it('should contain all expected attributes in a domain JSON object ' +
             ' after updating domain', function (done) {
+                Portal.helpers.nav.goToDomains();
                 Portal.domains.listPage.searchAndClickEdit(domainData.name);
-                Portal.domains.editPage.fillDemo(domainData, updatedDomain).then(function () {
-                    Portal.domains.editPage.clickUpdateDomain().then(function () {
-                        Portal.dialog.clickOk();
-                        Portal.alerts.waitToDisplay(120000).then(function () {
-                            Portal
-                                .domainsHelpers
-                                .getDomainJSON(domainData.name).then(function (domain) {
-                                    waf_rules = domain.rev_component_bp.waf[0].waf_rules;
-                                    testSslCert.id = domain.ssl_cert_id;
-                                    domain.rev_component_bp.waf = 'waf_actions';
-                                    // testing vcl in a different it
-                                    ioVclRules = domain.rev_component_bp.custom_vcl;
-                                    domain.rev_component_bp.custom_vcl = 'vcl_rules';
-                                    updatedDomain.ssl_cert_id = domain.ssl_cert_id;
-                                    updatedDomain.ssl_conf_profile = domain.ssl_conf_profile;
-                                    updatedDisabledDomain.ssl_cert_id = domain.ssl_cert_id;
-                                    updatedDisabledDomain
-                                        .ssl_conf_profile = domain.ssl_conf_profile;
-                                    // this is for debugging
-                                    var a = JSON.stringify(domain);
-                                    var b = JSON.stringify(updatedDomain);
-                                    for (var i = 0; i < a.length; i++) {
-                                        if (a[i] !== b[i]) {
-                                            console.log(a[i] + '!==' + b[i] + ':' + i);
-                                        }
-                                    }
-                                    expect(JSON.stringify(domain))
-                                        .toBe(JSON.stringify(updatedDomain));
-                                    done();
-                                });
+                Portal
+                    .domains
+                    .editPage
+                    .fillDemo(domainData, updatedDomain, customWAFRule.ruleName).then(function () {
+                        Portal.domains.editPage.clickUpdateDomain().then(function () {
+                            Portal.dialog.clickOk();
+                            Portal.alerts.waitToDisplay(120000).then(function () {
+                                Portal
+                                    .domainsHelpers
+                                    .getDomainJSON(domainData.name).then(function (domain) {
+                                        waf_rules = domain.rev_component_bp.waf[0].waf_rules;
+                                        testSslCert.id = domain.ssl_cert_id;
+                                        domain.rev_component_bp.waf = 'waf_actions';
+                                        // testing vcl in a different it
+                                        ioVclRules = domain.rev_component_bp.custom_vcl;
+                                        domain.rev_component_bp.custom_vcl = 'vcl_rules';
+                                        updatedDomain.ssl_cert_id = domain.ssl_cert_id;
+                                        updatedDomain.ssl_conf_profile = domain.ssl_conf_profile;
+                                        updatedDisabledDomain.ssl_cert_id = domain.ssl_cert_id;
+                                        updatedDisabledDomain
+                                            .ssl_conf_profile = domain.ssl_conf_profile;
+                                        Utils.compareObjects(domain, updatedDomain).then(done)
+                                            .catch(function (errProp) {
+                                                throw new Error(errProp);
+                                            });
+                                    });
+                            });
                         });
                     });
-                });
             });
 
         it('should contain correct SSL Certificate data after updating domain', function (done) {
@@ -158,6 +155,7 @@ describe('Workflow', function () {
                     backend_error: '# Comment <backend_error>',
                     backend_fetch: '# Comment <backend_fetch>'
                 };
+                Portal.helpers.nav.goToDomains();
                 Portal.domains.listPage.searchAndClickEdit(domainData.name);
                 Portal.domains.editPage.clickTabVCL();
                 Portal.domains.editPage.fillVCL();
@@ -175,45 +173,52 @@ describe('Workflow', function () {
                 });
             });
 
-        it('should display Set VCL Rules switch after updating VCL Rules', function () {
+        it('should display Set VCL Rules switch after updating VCL Rules', function (done) {
+            Portal.helpers.nav.goToDomains();
             Portal.domains.listPage.searchAndClickEdit(domainData.name);
-            Portal.domains.editPage.clickTabImageEngine();
-            expect(Portal
-                .domains
-                .editPage
-                .form
-                .getSetImageEngineConfigurationSw()
-                .isDisplayed()).toBeTruthy();
+            Portal.domains.editPage.clickTabImageEngine()
+                .then(function () {
+                    expect(Portal
+                        .domains
+                        .editPage
+                        .form
+                        .getSetImageEngineConfigurationSw()
+                        .isDisplayed()).toBeTruthy();
+                    done();
+                });
+
         });
 
-        it('should set default Image Optimization VCL Rules ' +
+        it('should set default ImageEngine VCL Rules ' +
             ' after clicking Set VCL Rules switch', function (done) {
+                Portal.helpers.nav.goToDomains();
                 Portal.domains.listPage.searchAndClickEdit(domainData.name);
-                Portal.domains.editPage.clickTabImageEngine();
-                Portal
-                    .domains
-                    .editPage
-                    .form
-                    .getSetImageEngineConfigurationSw()
-                    .click();
-
-                Portal.domains.editPage.clickUpdateDomain().then(function () {
-                    Portal.dialog.clickOk();
-                    Portal.alerts.waitToDisplay().then(function () {
-                        Portal
-                            .domainsHelpers
-                            .getDomainJSON(domainData.name).then(function (domain) {
-                                expect(JSON.stringify(domain
-                                    .rev_component_bp
-                                    .custom_vcl)).toBe(JSON.stringify(ioVclRules));
-                                done();
-                            });
+                Portal.domains.editPage.clickTabImageEngine().then(function () {
+                    Portal
+                        .domains
+                        .editPage
+                        .form
+                        .getSetImageEngineConfigurationSw()
+                        .click();
+                    Portal.domains.editPage.clickUpdateDomain().then(function () {
+                        Portal.dialog.clickOk();
+                        Portal.alerts.waitToDisplay().then(function () {
+                            Portal
+                                .domainsHelpers
+                                .getDomainJSON(domainData.name).then(function (domain) {
+                                    expect(JSON.stringify(domain
+                                        .rev_component_bp
+                                        .custom_vcl)).toBe(JSON.stringify(ioVclRules));
+                                    done();
+                                });
+                        });
                     });
                 });
             });
 
         it('should update all expected attributes in a domain JSON object ' +
             ' after updating domain', function (done) {
+                Portal.helpers.nav.goToDomains();
                 Portal.domains.listPage.searchAndClickEdit(domainData.name);
                 Portal.domains.editPage.clearDemo(domainData.name);
 
@@ -225,17 +230,10 @@ describe('Workflow', function () {
                             .getDomainJSON(domainData.name).then(function (domain) {
                                 domain.rev_component_bp.custom_vcl = 'vcl_rules';
                                 domain.rev_component_bp.waf = 'waf_actions';
-                                // this is for debugging
-                                var a = JSON.stringify(domain);
-                                var b = JSON.stringify(updatedDisabledDomain);
-                                for (var i = 0; i < a.length; i++) {
-                                    if (a[i] !== b[i]) {
-                                        console.log(a[i] + '!==' + b[i] + ':' + i);
-                                    }
-                                }
-                                expect(JSON.stringify(domain))
-                                    .toBe(JSON.stringify(updatedDisabledDomain));
-                                done();
+                                Utils.compareObjects(domain, updatedDisabledDomain).then(done)
+                                    .catch(function (errProp) {
+                                        throw new Error(errProp);
+                                    });
                             });
                     });
                 });
@@ -245,6 +243,7 @@ describe('Workflow', function () {
             Portal.domainsHelpers.getDomainJSON(domainData.name).then(function (domain) {
                 var domainJSON = domain;
                 var ver = domainJSON.last_published_domain_version;
+                Portal.helpers.nav.goToDomains();
                 Portal.domains.listPage.searchAndClickEdit(domainData.name);
                 Portal.domains.editPage.clickTabSSLconfiguration();
                 Portal.domains.editPage.form.getAcceptSSLrequestsTxtIn().click();

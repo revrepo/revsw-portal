@@ -5,56 +5,56 @@
   <div class="form-group">
     <label class="col-sm-6 control-label">Active</label>
     <div class="col-sm-6">
-      <div class="form-control text-right">{{ report.domains.active }}</div>
+      <div id="activeDomains" class="form-control text-right">{{ report.domains.active }}</div>
     </div>
   </div>
 
   <div class="form-group">
     <label class="col-sm-6 control-label">Deleted</label>
     <div class="col-sm-6">
-      <div class="form-control text-right">{{ report.domains.deleted }}</div>
+      <div id="deletedDomains" class="form-control text-right">{{ report.domains.deleted }}</div>
     </div>
   </div>
 
   <div class="form-group">
     <label class="col-sm-6 control-label">SSL Enabled</label>
     <div class="col-sm-6">
-      <div class="form-control text-right">{{ report.domains.ssl_enabled }}</div>
+      <div id="SSLEnabledDomains" class="form-control text-right">{{ report.domains.ssl_enabled }}</div>
     </div>
   </div>
 
   <div class="form-group">
     <label class="col-sm-6 control-label">Custom VCL Rules</label>
     <div class="col-sm-6">
-      <div class="form-control text-right">{{ report.domains.total_custom_vcl_feature }}</div>
+      <div id="customVCLRules" class="form-control text-right">{{ report.domains.total_custom_vcl_feature }}</div>
     </div>
   </div>
 
   <div class="form-group">
     <label class="col-sm-6 control-label">Enhanced Analytics Enabled</label>
     <div class="col-sm-6">
-      <div class="form-control text-right">{{ report.domains.total_enhanced_web_analytics}}</div>
+      <div id="analyticsEnhancedDomains" class="form-control text-right">{{ report.domains.total_enhanced_web_analytics}}</div>
     </div>
   </div>
 
   <div class="form-group">
     <label class="col-sm-6 control-label">WAF Enabled</label>
     <div class="col-sm-6">
-      <div class="form-control text-right">{{ report.domains.total_waf_feature}}</div>
+      <div id="WAFEnabledDomains" class="form-control text-right">{{ report.domains.total_waf_feature}}</div>
     </div>
   </div>
 
   <div class="form-group">
     <label class="col-sm-6 control-label">Lua Feature Enabled</label>
     <div class="col-sm-6">
-      <div class="form-control text-right">{{ report.domains.total_lua_feature}}</div>
+      <div id="LUAEnabledDomains" class="form-control text-right">{{ report.domains.total_lua_feature}}</div>
     </div>
   </div>
 
   <div class="form-group">
     <label class="col-sm-6 control-label">Cache Purge Commands</label>
     <div class="col-sm-6">
-      <div class="form-control text-right">{{ report.total_object_purge_commands}}</div>
+      <div id="domainsPurgeCommands" class="form-control text-right">{{ report.total_object_purge_commands}}</div>
     </div>
   </div>
 

@@ -338,6 +338,7 @@ var UserForm = {
   setEmail: function (email) {
     return this
       .getEmailTxtIn()
+      .clear()
       .sendKeys(email);
   },
 
@@ -398,6 +399,7 @@ var UserForm = {
   },
 
   setCompanyTxt: function (value) {
+    this.getCompanyDDown().click();
     this.getCompnayTxtIn().sendKeys(value);
     return this.getCompanyOption().click();
   },
@@ -423,7 +425,8 @@ var UserForm = {
         }
       }
     } else {
-      this.setCompanyTxt(companies[0]);
+      return this.getCompanyDDown()
+          .setValue(companies[0]);
     }
   },
 
@@ -541,6 +544,7 @@ var UserForm = {
   setPassword: function (password) {
     return this
       .getPasswordTxtIn()
+      .clear()
       .sendKeys(password);
   },
 
@@ -556,6 +560,7 @@ var UserForm = {
   setPasswordConfirm: function (password) {
     return this
       .getPasswordConfirmTxtIn()
+      .clear()
       .sendKeys(password);
   },
 

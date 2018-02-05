@@ -78,7 +78,7 @@ describe('Negative', function () {
             Portal.signIn({
               email: testUser.email,
               password: newPassword
-            });
+            }, true);
             var alert = Portal.alerts.getFirst();
             var expectedMessage = '×\nWrong username or password';
             expect(alert.getText()).toEqual(expectedMessage);
