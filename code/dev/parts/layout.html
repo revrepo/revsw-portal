@@ -183,9 +183,12 @@
         <a ui-sref-active="active" ui-sref="index.accountSettings.2fa" class="side-menu-sub-item" href="#/2fa">
             <i class="sub-menu-icon fa fa-lock"></i> Security Settings
           </a>
-        <a ui-sref-active="active" ui-sref="index.accountSettings.notificationsList" class="side-menu-sub-item" id="side-menu-sub-item__notifications-list" ng-if="userService.isRevadmin()">
+        <!-- <a ui-sref-active="active" ui-sref="index.accountSettings.notificationsList" class="side-menu-sub-item" id="side-menu-sub-item__notifications-list" ng-if="userService.isRevadmin()">
             <i class="sub-menu-icon fa fa-server "></i>  Notification Lists
-          </a>
+          </a> -->
+        <!-- <a ui-sref-active="active" ui-sref="index.accountSettings.trafficAlerts" class="side-menu-sub-item" id="side-menu-sub-item__traffic-alerts-list" ng-if="userService.isRevadmin()">
+            <i class="sub-menu-icon fa fa-server "></i>  Trafic Alerts
+          </a> -->
         <a ui-sref-active="active" ui-sref="index.accountSettings.cdn-ip-blocks" class="side-menu-sub-item" id="side-menu-sub-item__cdn-ip-bloks">
             <i class="sub-menu-icon fa fa-server "></i>  CDN IP Blocks
           </a>
@@ -256,7 +259,7 @@
     </ul>
   </div>
 </section>
-<div id="main" class="left-panel" style="{{isHide ? 'left: 0px' : 'left: 210px'}}">
+<div id="main" class="left-panel" ng-style="{{'left': isHide ? '0px' :'210px'}">
   <section main>
     <div class="paper-container">
       <div class="paper-header">
