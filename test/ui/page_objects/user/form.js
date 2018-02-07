@@ -2,7 +2,7 @@
  *
  * REV SOFTWARE CONFIDENTIAL
  *
- * [2013] - [2015] Rev Software, Inc.
+ * [2013] - [2018] Rev Software, Inc.
  * All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains
@@ -20,7 +20,7 @@
 
 // Requiring constant values
 var Constants = require('./../constants');
-
+var WebElement = require('./../../common/helpers/webElement');
 var DropDownWidget = require('./../common/dropDownWidget');
 
 // This `User Form` Page Object abstracts all operations or actions that a
@@ -449,25 +449,6 @@ var UserForm = {
     }
   },
 
-  /**
-   * ### UserForm.changeCheckBox()
-   *
-   * Checks/un-checks the specified checkbox element
-   *
-   * @param {Object} chBox, Selenium WebDriver Element, reference to checkbox
-   * to change
-   * @param {Boolean} checked
-   * @returns {Object} Promise
-   */
-  changeCheckBox: function (chBox, checked) {
-    return chBox
-      .isSelected()
-      .then(function (isSelected) {
-        if (isSelected !== checked) {
-          return chBox.click();
-        }
-      });
-  },
 
   /**
    * ### UserForm.setDashboard()
@@ -478,7 +459,7 @@ var UserForm = {
    * @returns {Object} Promise
    */
   setDashboard: function (checked) {
-    return this.changeCheckBox(this.getDashboardChBox(), checked);
+    return WebElement.changeCheckBox(this.getDashboardChBox(), checked);
   },
 
   /**
@@ -490,7 +471,7 @@ var UserForm = {
    * @returns {Object} Promise
    */
   setReports: function (checked) {
-    return this.changeCheckBox(this.getReportsChBox(), checked);
+    return WebElement.changeCheckBox(this.getReportsChBox(), checked);
   },
 
   /**
@@ -502,7 +483,7 @@ var UserForm = {
    * @returns {Object} Promise
    */
   setConfigure: function (checked) {
-    return this.changeCheckBox(this.getConfigureChBox(), checked);
+    return WebElement.changeCheckBox(this.getConfigureChBox(), checked);
   },
 
   /**
@@ -514,7 +495,7 @@ var UserForm = {
    * @returns {Object} Promise
    */
   setTest: function (checked) {
-    return this.changeCheckBox(this.getTestChBox(), checked);
+    return WebElement.changeCheckBox(this.getTestChBox(), checked);
   },
 
   /**
@@ -526,7 +507,7 @@ var UserForm = {
    * @returns {Object} Promise
    */
   setReadOnly: function (checked) {
-    return this.changeCheckBox(this.getReadOnlyChBox(), checked);
+    return WebElement.changeCheckBox(this.getReadOnlyChBox(), checked);
   },
 
   /**
