@@ -111,7 +111,7 @@ var MenuItems = {
       area: MenuAreas.WEB_ANALYTICS
     },
     IMAGE_OPTIMIZATION: {
-      linkText: 'Image Optimization',
+      linkText: 'ImageEngine',
       area: MenuAreas.WEB_ANALYTICS
     }
   },

@@ -20,6 +20,7 @@ var config = require('config');
 var Portal = require('./../../../../page_objects/portal');
 var DataProvider = require('./../../../../common/providers/data');
 var Constants = require('./../../../../page_objects/constants');
+var tr = require('timeago-reverse');
 
 describe('Smoke', function () {
 
@@ -66,8 +67,12 @@ describe('Smoke', function () {
         Portal.admin.apiKeys.listPage.table.getHeader().clickLastUpdate();
         var val1 = Portal.admin.apiKeys.listPage.table.getFirstRow().getLastUpdate();
         Portal.admin.apiKeys.listPage.table.getHeader().clickLastUpdate();
-        var val2 = Portal.admin.apiKeys.listPage.table.getFirstRow().getLastUpdate();
-        expect(val1).toBeGreaterThan(val2);
+        var val2 = Portal.admin.apiKeys.listPage.table.getFirstRow().getLastUpdate()
+          .then(function (text2) {
+            val1.then(function(text1) {
+              expect(tr.parse(text1)).toBeLessThan(tr.parse(text2));
+            });
+          });
       });
 
     it('should apply `ascendant` sorting by `Last Update` column',
@@ -76,8 +81,12 @@ describe('Smoke', function () {
         Portal.admin.apiKeys.listPage.table.getHeader().clickLastUpdate();
         var val1 = Portal.admin.apiKeys.listPage.table.getFirstRow().getLastUpdate();
         Portal.admin.apiKeys.listPage.table.getHeader().clickLastUpdate();
-        var val2 = Portal.admin.apiKeys.listPage.table.getFirstRow().getLastUpdate();
-        expect(val1).toBeLessThan(val2);
+        var val2 = Portal.admin.apiKeys.listPage.table.getFirstRow().getLastUpdate()
+          .then(function (text2) {
+            val1.then(function(text1) {
+              expect(tr.parse(text2)).toBeLessThan(tr.parse(text1));
+            });
+          });        
       });
 
       it('should apply `descendant` sorting by `Account` column',

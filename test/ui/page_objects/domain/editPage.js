@@ -713,6 +713,11 @@ var EditDomain = {
     return this.form.clickCustomVCLRulesSw();
   },
 
+  enableEnhancedAnalytics: function () {
+    this.clickTabGeneralSettings();
+    return this.form.getEnableEnhancedAnalytics().click();
+  },
+
   fillVCL: function () {
     this.form.setRecvFunction('# Comment <recv>');
     this.form.setHitFunction('# Comment <hit>');
@@ -738,8 +743,27 @@ var EditDomain = {
     return this.form.clickEnableLuaScriptingOriginFirstMile();
   },
 
-  fillDemo: function (domain, domainUpdateData) {
+  setWafRule: function (rule) {
+    var me = this;
+    this.wafRulesTable.getRows().count().then(function (count) {
+      for (var i = 0; i < count; i++) {        
+        me.clickWAFonIndex(i, rule);
+      }
+    });
+  },
+
+  clickWAFonIndex: function (i, rule) {
+    var me = this;
+    this.wafRulesTable.getRow(i).getNameCell().getText().then(function (el) {
+      if (el === rule) {
+        me.wafRulesTable.getRow(i).clickUseThisRule();
+      }
+    });
+  },
+
+  fillDemo: function (domain, domainUpdateData, ruleName) {
     /* jshint maxstatements:120 */
+    this.clickTabGeneralSettings();
     this.form.getEnableEnhancedAnalytics().click();
     this.form.setNonWildcardDomainAliases('test.' + domain.name);
     this.form.setWildcardDomainAlias('*.' + domain.name);
@@ -798,7 +822,11 @@ var EditDomain = {
     this.form.clickWAFSwitch();
     this.form.setWAFLocation('/wafLocation/');
     this.clickExpandWafRulesBtn();
-    this.wafRulesTable.getLastRow().clickUseThisRule();
+    if (ruleName !== undefined) {
+      this.setWafRule(ruleName);
+    } else {
+      this.wafRulesTable.getLastRow().clickUseThisRule();
+    }    
     browser.executeScript('$(".toast").remove()');
     browser.sleep(1000);
     this.clickTabBotProtection();
@@ -820,6 +848,7 @@ var EditDomain = {
   },
 
   clearDemo: function () {
+    this.clickTabGeneralSettings();
     this.form.clearWildcardDomainAlias();
     this.form.setDataReadTimeout('20');
     this.form.getLastMileQUICprotocolTxtIn().click();

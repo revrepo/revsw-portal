@@ -295,7 +295,7 @@ var CompanyProfileForm = {
 
   getCountry: function () {
     return this
-      .getCountryDDown().element(by.css('.select2-chosen span')).getText();
+      .getCountryDDown().getValue();
   },
 
   getState: function () {

@@ -52,7 +52,8 @@ describe('Workflow', function () {
         expect(alert.getText()).toContain(expectedMsg);
       });
 
-    it('should display `In Progress` staging status right after creating a ' +
+    // publishing is really fast now
+    xit('should display `In Progress` staging status right after creating a ' +
       'domain',
       function () {
         var myDomain = DataProvider.generateDomain('my-domain');
@@ -84,7 +85,7 @@ describe('Workflow', function () {
           });
       });
 
-    xit('should display `Published` staging status some period of time after ' +
+    it('should display `Published` staging status some period of time after ' +
       'creating a domain',
       function () {
         var myDomain = DataProvider.generateDomain('my-domain');

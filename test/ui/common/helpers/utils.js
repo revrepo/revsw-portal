@@ -22,6 +22,7 @@
 var API = require('./../api').API;
 var config = require('config');
 var request = require('supertest-as-promised');
+var Promise = require('bluebird');
 
 // `Utils` object that has definitions of methods fo specific operations that
 // could be used in different classes and resources.
@@ -81,7 +82,10 @@ var Utils = {
   */
   getAPIItemByField: function (value, field, user, endpoint) {
     /* jshint camelcase:false */
-    var apiUrl = this.getAPIUrl();
+    var apiUrl = config.get('api.host.protocol') +
+      '://' +
+      config.get('api.host.name') + ':' +
+      config.get('api.host.port');
     return API.helpers.authenticateUser(user).then(function () {
       return request(apiUrl)
         .get(endpoint)
@@ -97,6 +101,7 @@ var Utils = {
           if (returnItem === undefined) {
             throw new Error('Item not found inside array');
           } else {
+
             return request(apiUrl)
               .get(endpoint +
               '/' +
@@ -114,6 +119,52 @@ var Utils = {
         .catch(function (err) {
           throw new Error(err);
         });
+    });
+  },
+
+  /**
+  * Compares 2 JSON objects
+  * 
+  */
+  compareObjects: function (obj, secObj) {
+    return new Promise(function (resolve, reject) {
+      for (var prop in obj) {
+        if (typeof obj[prop] === 'object' &&
+          typeof secObj[prop] === 'object') {
+          for (var subProp in obj[prop]) {
+            if (JSON.stringify(obj[prop][subProp]) !== JSON.stringify(secObj[prop][subProp])) {
+              console.log('   > Domain Object: ' +
+                prop +
+                '.' +
+                subProp +
+                '=' +
+                JSON.stringify(obj[prop]));
+              console.log('   > Constant Domain Object: ' +
+                prop +
+                '.' +
+                subProp +
+                '=' +
+                JSON.stringify(secObj[prop]));
+              console.log('   > ^^^ Error here! ^^^');
+              reject(prop + '.' + subProp);
+            }
+          }
+        } else {
+          if (obj[prop] !== secObj[prop] && obj[prop] !== '' && secObj[prop] !== '') {
+            console.log('   > Domain Object: ' +
+              prop +
+              '=' +
+              obj[prop]);
+            console.log('   > Constant Domain Object: ' +
+              prop +
+              '=' +
+              secObj[prop]);
+            console.log('   > ^^^ Error here! ^^^');
+            reject(prop);
+          }
+        }        
+      }
+      resolve();
     });
   }
 };

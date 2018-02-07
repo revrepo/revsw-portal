@@ -21,7 +21,7 @@ var Portal = require('./../../../page_objects/portal');
 var Constants = require('./../../../page_objects/constants');
 
 describe('Smoke', function () {
-  describe('Image Optimization reports', function () {
+  describe('ImageEngine reports', function () {
 
     var adminUser = config.get('portal.users.admin');
     var noDomain = 'Select Domain';
@@ -35,7 +35,7 @@ describe('Smoke', function () {
       Portal.signOut();
     });
 
-    it('should display "Image Optimization Analytics" in the portal',
+    it('should display "ImageEngine Analytics" in the portal',
       function () {
         var titleReport = Constants.imageOptimization.TITLE;
         expect(Portal.imageOptimizationPage.getSelectedDomain()).toEqual(noDomain);

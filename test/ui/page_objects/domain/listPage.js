@@ -202,12 +202,13 @@ var DomainList = {
         .searchAndGetFirstRow(domain.name)
         .getStagingStatusIcon()
         .getAttribute('uib-tooltip')
-        .then(function (newTooltip) {
-          if (previousTooltip === undefined) {
-            previousTooltip = newTooltip;
+        .then(function (tooltip) {
+          if(tooltip === 'Staging Status: Published') {
+            return true;
+          } else {
+            browser.sleep(3000); // 3 seconds
+            return false;
           }
-          browser.sleep(3000); // 3 seconds
-          return previousTooltip !== newTooltip;
         });
     }, 600000); // Wait 10 minutes to change tooltip
   },

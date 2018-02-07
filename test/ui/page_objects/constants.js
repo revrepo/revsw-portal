@@ -150,9 +150,9 @@ var Constants = {
     EDGE_CACHE_EFFICIENCY_HITS: 'Edge Cache Efficiency Hits'
   },
   imageOptimization: {
-    TITLE: 'Image Optimization Analytics',
-    PERFORMANCE_IMPROVEMENT: 'Performance Improvement By Image Optimization',
-    BANDWIDTH_SAVED: 'Bandwidth Saved By Image Optimization',
+    TITLE: 'ImageEngine Analytics',
+    PERFORMANCE_IMPROVEMENT: 'Performance Improvement By ImageEngine',
+    BANDWIDTH_SAVED: 'Bandwidth Saved By ImageEngine',
     FORMAT_CHANGES: 'Image Format Changes',
     RESOLUTION_CHANGES: 'Image Resolution Changes'
   },
@@ -375,6 +375,11 @@ var Constants = {
         block_crawlers: false,
         cache_bypass_locations: [],
         caching_rules: [{
+          serve_stale: { 
+            enable: false,
+            while_fetching_ttl: 8,
+            origin_sick_ttl: 15 
+          },
           browser_caching:
             {
               force_revalidate: false,
@@ -392,6 +397,7 @@ var Constants = {
             },
           edge_caching:
             {
+              query_string_keep_or_remove_list:[],
               new_ttl: 0,
               override_no_cc: false,
               override_origin: false
@@ -405,13 +411,15 @@ var Constants = {
           enable_esi: false
         }],
         cdn_overlay_urls: [],
+        co_bypass_locations: [],
         enable_cache: true,
         enable_security: true,
-        web_app_firewall: 'off'
+        web_app_firewall: 'off',
       },
     rev_component_co:
       {
         css_choice: 'medium',
+        enable_decompression: true,
         enable_optimization: false,
         enable_rum: false,
         img_choice: 'medium',
@@ -431,6 +439,7 @@ var Constants = {
     origin_server: 'test-domain-portal-ui-test.origin-server.com',
     origin_host_header: 'test-domain-portal-ui-test.origin-host-header.com',
     account_id: '55b6ff6a7957012304a49d04',
+    bp_group_id: '55a56f85476c10c329a90740',
     tolerance: '3000',
     origin_server_location_id: '55a56fa6476c10c329a90741',
     cname: 'test-domain-1511077019750-portal-ui-test.com.revqa.net',
@@ -482,6 +491,11 @@ var Constants = {
       ],
       caching_rules: [
         {
+          serve_stale: { 
+            enable: false,
+            while_fetching_ttl: 8,
+            origin_sick_ttl: 15 
+          },
           browser_caching: {
             force_revalidate: true,
             new_ttl: 5,
@@ -498,12 +512,12 @@ var Constants = {
             remove_ignored_from_response: true
           },
           edge_caching: {
-            new_ttl: 5,
-            override_no_cc: true,
-            override_origin: false,
             query_string_keep_or_remove_list: [
               'test'
             ],
+            new_ttl: 5,
+            override_no_cc: true,
+            override_origin: false,            
             query_string_list_is_keep: true
           },
           url: {
@@ -556,7 +570,8 @@ var Constants = {
           bot_protection_id: '123'
         }
       ],
-      custom_vcl: 'vcl_rules'
+      custom_vcl: 'vcl_rules',
+      enable_wallarm: false
     },
     rev_component_co: {
       css_choice: 'medium',
@@ -579,6 +594,7 @@ var Constants = {
     origin_server: 'test-domain-portal-ui-test.origin-server.com',
     origin_host_header: 'test-domain-portal-ui-test.origin-host-header.com',
     account_id: '55b6ff6a7957012304a49d04',
+    bp_group_id: '55a56f85476c10c329a90740',
     tolerance: '3000',
     origin_server_location_id: '55a56fa6476c10c329a90741',
     domain_aliases: [      
@@ -649,6 +665,11 @@ var Constants = {
       ],
       "caching_rules": [
         {
+          serve_stale: { 
+            enable: false,
+            while_fetching_ttl: 8,
+            origin_sick_ttl: 15 
+          },
           "browser_caching": {
             "force_revalidate": true,
             "new_ttl": 5,
@@ -665,12 +686,12 @@ var Constants = {
             "remove_ignored_from_response": true
           },
           "edge_caching": {
-            "new_ttl": 5,
-            "override_no_cc": true,
-            "override_origin": false,
             "query_string_keep_or_remove_list": [
               "test"
             ],
+            "new_ttl": 5,
+            "override_no_cc": true,
+            "override_origin": false,            
             "query_string_list_is_keep": true
           },
           "url": {
@@ -723,7 +744,8 @@ var Constants = {
           "bot_protection_id": "123"
         }
       ],
-      "custom_vcl": "vcl_rules"
+      "custom_vcl": "vcl_rules",
+      enable_wallarm: false
     },
     "rev_component_co": {
       "css_choice": "medium",
@@ -746,6 +768,7 @@ var Constants = {
     "origin_server": "test-domain-portal-ui-test.origin-server.com",
     "origin_host_header": "test-domain-portal-ui-test.origin-host-header.com",
     "account_id": "55b6ff6a7957012304a49d04",
+    "bp_group_id": '55a56f85476c10c329a90740',
     "tolerance": "3000",
     "origin_server_location_id": "55a56fa6476c10c329a90741",
     "domain_aliases": [
@@ -791,9 +814,28 @@ var Constants = {
   USAGE_REPORT_POLLING_INTERVAL: 10000,
   USAGE_REPORT_POLLING_TIMEOUT: 60000,
   AZURE_PORTAL_URL: 'https://portal.azure.com',
-  PRODUCTION_PORTAL_URL: 'https://portal.nuubit.net'
-
+  PRODUCTION_PORTAL_URL: 'https://portal.nuubit.net',
+  USAGE_REPORT_IDS: {
+    ACTIVE_API_KEYS: 'activeAPIKeys',
+    INACTIVE_API_KEYS: 'inactiveAPIKeys',
+    ACTIVE_SSL_CERTS: 'activeSSLCerts',
+    DELETED_SSL_CERTS: 'deletedSSLCerts',
+    TOTAL_SSL_NAMES: 'totalSSLNames',
+    TOTAL_LOG_SHIPPING_JOBS: 'totalLogShippingJobs',
+    ACTIVE_DOMAINS: 'activeDomains',
+    DELETED_DOMAINS: 'deletedDomains',
+    SSL_ENABLED_DOMAINS: 'SSLEnabledDomains',
+    CUSTOM_VCL_RULES: 'customVCLRules',
+    ANALYTICS_ENHANCED_DOMAINS: 'analyticsEnhancedDomains',
+    WAF_ENABLED_DOMAINS: 'WAFEnabledDomains',
+    LUA_ENABLED_DOMAINS: 'LUAEnabledDomains',
+    CACHE_PURGE_COMMANDS: 'domainsPurgeCommands',
+    TOTAL_DNS_ZONES: 'totalDNSZones',
+    TOTAL_DNS_RECORDS: 'totalDNSRecords',
+    TOTAL_DNS_QUERIES: 'totalDNSQueries'    
+  }
 };
 module.exports = Constants;
+
 
 

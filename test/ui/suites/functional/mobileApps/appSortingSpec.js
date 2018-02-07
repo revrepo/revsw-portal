@@ -37,6 +37,17 @@ describe('Functional', function () {
           Portal.helpers.nav.goToMobileAppsMenuItem(platform);
         });
 
+        it('should list be sorted in ascendant direction by default',
+        function () {
+          var appName1 = Portal.mobileApps.listPage.table
+            .getRow(0)
+            .getName();
+          var appName2 = Portal.mobileApps.listPage.table
+            .getRow(1)
+            .getName();
+          expect(appName1).toBeLessThan(appName2);
+        });
+
         it('should sort list in ascendant direction',
           function () {
             Portal.mobileApps.listPage.sortByName();
@@ -63,17 +74,6 @@ describe('Functional', function () {
               .getFirstRow()
               .getName();
             expect(appName2).not.toEqual(appName1);
-          });
-
-        it('should list be sorted in ascendant direction by default',
-          function () {
-            var appName1 = Portal.mobileApps.listPage.table
-              .getRow(0)
-              .getName();
-            var appName2 = Portal.mobileApps.listPage.table
-              .getRow(1)
-              .getName();
-            expect(appName1).toBeLessThan(appName2);
           });
 
         it('should sort list ascendant on `Version` click', function () {

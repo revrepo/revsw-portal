@@ -20,6 +20,7 @@ var config = require('config');
 var Portal = require('./../../../../page_objects/portal');
 var DataProvider = require('./../../../../common/providers/data');
 var Constants = require('./../../../../page_objects/constants');
+var API = require('./../../../../common/api').API;
 
 describe('Functional', function () {
   var user = config.get('portal.users.admin');
@@ -28,11 +29,16 @@ describe('Functional', function () {
       var dnsZonesCount = 0;
       var dnsZoneToSearch = DataProvider.generateDNSZoneData();
       beforeAll(function (done) {
-        Portal.signIn(user);
-        Portal.helpers.nav.goToDNSZones();
-        Portal.dnsZones.listPage.table.getRows().count().then(function (count) {
-          dnsZonesCount = count;
-          done();
+        API.helpers.authenticate(user).then(function () {
+          API.resources.dnsZones
+            .getAll()
+            .expect(200)
+            .then(function (res) {
+              dnsZonesCount = res.body.length;
+              Portal.signIn(user);
+              done();
+            })
+            .catch(done);
         });
       });
 
@@ -41,13 +47,18 @@ describe('Functional', function () {
       });
 
       it('should display correct amount of DNS Zones', function (done) {
-        Portal.usageReportHelpers.generateReport(user).then(function () {
+        Portal.usageReportHelpers.generateReport().then(function () {
           Portal.helpers.nav.goToUsageReport().then(function () {
             Portal
               .usageReportHelpers
-              .expectValue(Portal
-                .billing
-                .usageReportPage, 'Total DNS Zones\n' + dnsZonesCount, done, 'DNS Service');
+              .expectValue(dnsZonesCount, Constants.USAGE_REPORT_IDS.TOTAL_DNS_ZONES)
+              .then(function () {
+                expect(true).toBeTruthy();
+                done();
+              })
+              .catch(function (err) {
+                throw new Error(err);
+              });
           });
         });
       });
@@ -58,16 +69,18 @@ describe('Functional', function () {
           Portal.dnsZones.listPage.clickAddNewDNSZone();
           Portal.dnsZones.addPage.createDNSZone(dnsZoneToSearch);
           Portal.alerts.waitToDisplay().then(function () {
-            Portal.usageReportHelpers.generateReport(user).then(function () {
+            Portal.usageReportHelpers.generateReport().then(function () {
               Portal.helpers.nav.goToUsageReport().then(function () {
                 Portal
                   .usageReportHelpers
-                  .expectValue(Portal
-                    .billing
-                    .usageReportPage,
-                  'Total DNS Zones\n' + (dnsZonesCount + 1),
-                  done,
-                  'DNS Service');
+                  .expectValue(dnsZonesCount + 1, Constants.USAGE_REPORT_IDS.TOTAL_DNS_ZONES)
+                  .then(function () {
+                    expect(true).toBeTruthy();
+                    done();
+                  })
+                  .catch(function (err) {
+                    throw new Error(err);
+                  });
               });
             });
           });
@@ -79,16 +92,18 @@ describe('Functional', function () {
           Portal.dnsZones.listPage.searchAndClickDelete(dnsZoneToSearch.domain);
           Portal.dialog.clickOk();
           Portal.alerts.waitToDisplay().then(function () {
-            Portal.usageReportHelpers.generateReport(user).then(function () {
+            Portal.usageReportHelpers.generateReport().then(function () {
               Portal.helpers.nav.goToUsageReport().then(function () {
                 Portal
                   .usageReportHelpers
-                  .expectValue(Portal
-                    .billing
-                    .usageReportPage,
-                  'Total DNS Zones\n' + (dnsZonesCount),
-                  done,
-                  'DNS Service');
+                  .expectValue(dnsZonesCount, Constants.USAGE_REPORT_IDS.TOTAL_DNS_ZONES)
+                  .then(function () {
+                    expect(true).toBeTruthy();
+                    done();
+                  })
+                  .catch(function (err) {
+                    throw new Error(err);
+                  });
               });
             });
           });
