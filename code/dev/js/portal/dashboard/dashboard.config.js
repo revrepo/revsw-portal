@@ -117,6 +117,8 @@
           'ngInject';
           var vm = this;
           if (config.url) {
+            // NOTE: change all links to one available
+            config.url = 'http://map.norsecorp.com';
             vm.url = $sce.trustAsResourceUrl(config.url);
           }
         },
@@ -130,7 +132,7 @@
           controllerAs: 'vm',
         },
         config: {
-          url: 'https://map.norsecorp.com/#/'
+          url: 'http://map.norsecorp.com/#/'
         }
       })
       // Widget ““Third-Party iFrame Page” ”
