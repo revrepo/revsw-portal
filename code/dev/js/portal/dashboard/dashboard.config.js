@@ -118,7 +118,7 @@
           var vm = this;
           if (config.url) {
             // NOTE: change all links to one available
-            config.url = 'http://map.norsecorp.com';
+            config.url = '//map.norsecorp.com';
             vm.url = $sce.trustAsResourceUrl(config.url);
           }
         },
