@@ -42,7 +42,7 @@
     //Default valuew is Last 1 Day!
     ranges[LAST_DAY] = [moment().subtract(1, 'days'), moment()];
     ranges[LAST_WEEK] = [moment().subtract(7, 'days'), moment()];
-    ranges[LAST_MONTH] = [moment().subtract(30, 'days'), moment()];
+    // ranges[LAST_MONTH] = [moment().subtract(30, 'days'), moment()];  // TODO: temporary commented 30 days
 
     //date picker params
     scope.datePicker = {
@@ -54,11 +54,12 @@
         timePicker: false,
         timePickerIncrement: 1,
         ranges: ranges,
-        minDate: moment().subtract(1, 'months'),
+        // minDate: moment().subtract(1, 'months'), // TODO: temporary commented 30 days
+        minDate: moment().subtract(7, 'days'),
         maxDate: moment(),
         dateLimit: {
-          // days: 30
-          months: 1
+          days: 7
+          // months: 1 // TODO: temporary commented 30 days
         }
       },
       date: {
