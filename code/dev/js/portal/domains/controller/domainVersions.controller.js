@@ -49,7 +49,7 @@
 
       if (angular.isUndefined($scope.currentVersion) || $scope.currentVersion === null) {
         $scope.currentData = null;
-        $scope.obj.data = '';
+        $scope.obj.data = 'Configuration will appear here';
         return;
       }
       $scope._loading = true;
