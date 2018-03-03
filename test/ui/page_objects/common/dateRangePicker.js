@@ -58,7 +58,7 @@ var DateRangePicker = function (index) {
     return this
       .getContainerEl()
       .all(by.css(this.locators.container.buttons.customRange.css))
-      .get(3);
+      .last(); // NOTE: button "Custom Range" always is last item in list
   };
 
   this.getStartDateTxtIn = function () {
