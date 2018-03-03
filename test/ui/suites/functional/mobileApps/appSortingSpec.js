@@ -2,7 +2,7 @@
  *
  * REV SOFTWARE CONFIDENTIAL
  *
- * [2013] - [2015] Rev Software, Inc.
+ * [2013] - [2018] Rev Software, Inc.
  * All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains
@@ -18,6 +18,7 @@
 
 var config = require('config');
 var Portal = require('./../../../page_objects/portal');
+var tr = require('timeago-reverse');
 
 describe('Functional', function () {
   describe('Sorting List App', function () {
@@ -118,7 +119,7 @@ describe('Functional', function () {
                   .getFirstRow()
                   .getLastUpdate()
                   .then(function (val2) {
-                    expect(first).toBeGreaterThan(val2);
+                    expect(tr.parse(first)).toBeGreaterThan(tr.parse(val2));
                   });
               });
             });
@@ -138,7 +139,7 @@ describe('Functional', function () {
               .getFirstRow()
               .getLastUpdate()
               .then(function (val2) {
-                expect(first).toBeLessThan(val2);
+                expect(tr.parse(first)).toBeLessThan(tr.parse(val2));
               });
             });
           });

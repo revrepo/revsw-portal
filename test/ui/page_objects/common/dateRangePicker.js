@@ -58,7 +58,7 @@ var DateRangePicker = function (index) {
     return this
       .getContainerEl()
       .all(by.css(this.locators.container.buttons.customRange.css))
-      .get(3);
+      .last(); // NOTE: button "Custom Range" always is last item in list
   };
 
   this.getStartDateTxtIn = function () {
@@ -112,7 +112,7 @@ var DateRangePicker = function (index) {
   /**
    * ### Dialog.clickCancel()
    *
-   * Triggers a click action on the `Cancel` button fro the Modal Dialog
+   * Triggers a click action on the `Cancel` button from the Modal Dialog
    * component
    *
    * @returns {Promise}
