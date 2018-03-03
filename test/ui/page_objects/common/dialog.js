@@ -258,7 +258,7 @@ var Dialog = {
   /**
    * ### Dialog.clickOk()
    *
-   * Triggers a click action on the `OK` button fro the Modal Dialog component
+   * Triggers a click action on the `OK` button from the Modal Dialog component
    *
    * @returns {Object} Promise
    */
@@ -284,7 +284,7 @@ var Dialog = {
   /**
    * ### Dialog.clickDelete()
    *
-   * Triggers a click action on the `Delete` button fro the Modal Dialog component
+   * Triggers a click action on the `Delete` button from the Modal Dialog component
    *
    * @returns {Object} Promise
    */
@@ -309,7 +309,7 @@ var Dialog = {
   /**
    * ### Dialog.clickVerifyTxtRecord()
    *
-   * Triggers a click action on the `OK` button fro the Modal Dialog component
+   * Triggers a click action on the `OK` button from the Modal Dialog component
    *
    * @returns {Object} Promise
    */
@@ -322,7 +322,7 @@ var Dialog = {
   /**
    * ### Dialog.clickProceed()
    *
-   * Triggers a click action on the `Proceed` button fro the Modal Dialog
+   * Triggers a click action on the `Proceed` button from the Modal Dialog
    * component
    *
    * @returns {Object} Promise

@@ -112,7 +112,7 @@ var DateRangePicker = function (index) {
   /**
    * ### Dialog.clickCancel()
    *
-   * Triggers a click action on the `Cancel` button fro the Modal Dialog
+   * Triggers a click action on the `Cancel` button from the Modal Dialog
    * component
    *
    * @returns {Promise}
