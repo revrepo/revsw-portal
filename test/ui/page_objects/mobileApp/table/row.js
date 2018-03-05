@@ -183,19 +183,19 @@ var AppTableRow = function (rowEl, locators) {
         .then(function(isVisible){
           if(isVisible){
             return sortorder.getAttribute('class')
-              .then(function(classes){
+              .then(function(classAttr){
                 var currOrder = 'asc';
-                var classes = classes.split(' ');
-                if (classes.indexOf('reverse') > -1){
-                  currOrder = 'des'
-                };
+                var classList = classAttr.split(' ');
+                if (classList.indexOf('reverse') > -1){
+                  currOrder = 'des';
+                }
                 if(currOrder !== order){
                   return me.getName()
                     .click();
                 }
               });
           }else{
-            if(order == 'des'){
+            if(order === 'des'){
               return me.getName()
                 .click()
                 .getName()
@@ -206,7 +206,7 @@ var AppTableRow = function (rowEl, locators) {
             }
           }
         });
-    }
+    };
   }
   if (this.locators.actions && this.locators.actions.buttons &&
     this.locators.actions.buttons.pencil) {
