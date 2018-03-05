@@ -2,7 +2,7 @@
  *
  * REV SOFTWARE CONFIDENTIAL
  *
- * [2013] - [2016] Rev Software, Inc.
+ * [2013] - [2018] Rev Software, Inc.
  * All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains
@@ -15,6 +15,7 @@
  * is strictly forbidden unless prior written permission is obtained
  * from Rev Software, Inc.
  */
+var WebElement = require('./../../../common/helpers/webElement');
 
 var DomainTableRow = function (rowEl, locators) {
 
@@ -36,11 +37,14 @@ var DomainTableRow = function (rowEl, locators) {
   };
 
   this.clickUseThisRule = function (flaggie) {
+    var el;
     if (flaggie) {
-      return this.rowEl.element(by.css('td:nth-of-type(8)')).click();
+      el = this.rowEl.element(by.css('td:nth-of-type(8)'));
     } else {
-      return this.getUseThisRuleCell().click();
+      el = this.getUseThisRuleCell();
     }
+    WebElement.scrollToElement(el);
+    return el.click();
   };
 };
 
