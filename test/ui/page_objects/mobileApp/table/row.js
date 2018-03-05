@@ -145,6 +145,12 @@ var AppTableRow = function (rowEl, locators) {
       .getText();
   };
 
+  this.clickName = function () {
+    return this
+      .getName()
+      .click();
+  };
+
   this.clickVersion = function () {
     return this
       .getVersionCell()
@@ -162,6 +168,46 @@ var AppTableRow = function (rowEl, locators) {
       .click();
   };
 
+  this.getSortorderName = function () {
+    return this.rowEl.element(by.css(this.locators.sortorder.name.css));
+  };
+
+  if (this.locators.sortorder){
+    var me = this;
+    this.sortByName = function(order){
+      var sortorder =  this.getSortorderName();
+      if (!order) {
+        order = 'asc';
+      }
+      return sortorder.isDisplayed()
+        .then(function(isVisible){
+          if(isVisible){
+            return sortorder.getAttribute('class')
+              .then(function(classes){
+                var currOrder = 'asc';
+                var classes = classes.split(' ');
+                if (classes.indexOf('reverse') > -1){
+                  currOrder = 'des'
+                };
+                if(currOrder !== order){
+                  return me.getName()
+                    .click();
+                }
+              });
+          }else{
+            if(order == 'des'){
+              return me.getName()
+                .click()
+                .getName()
+                .click();
+            }else{
+              return me.getName()
+                .click();
+            }
+          }
+        });
+    }
+  }
   if (this.locators.actions && this.locators.actions.buttons &&
     this.locators.actions.buttons.pencil) {
 

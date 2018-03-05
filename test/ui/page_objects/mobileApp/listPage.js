@@ -92,7 +92,7 @@ var AppsList = {
   getListItems: function() {
     return element.all(by.css(this.locators.views.listItems.css));
   },
-  
+
 
   /**
    * ### AppsList.getPanelHeadingElem()
@@ -304,11 +304,10 @@ var AppsList = {
    *
    * @returns {Object} Promise
    */
-  sortByName: function () {
+  sortByName: function (sort) {
     return this.table
       .getHeader()
-      .getName()
-      .click();
+      .sortByName(sort);
   }
 };
 

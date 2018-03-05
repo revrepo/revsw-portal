@@ -2,7 +2,7 @@
  *
  * REV SOFTWARE CONFIDENTIAL
  *
- * [2013] - [2016] Rev Software, Inc.
+ * [2013] - [2018] Rev Software, Inc.
  * All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains
@@ -49,6 +49,23 @@ var headerLocators = {
   },
   account: {
     css: 'th:nth-of-type(8) a'
+  },
+  sortorder: {
+    name: {
+      css: 'th:nth-of-type(1) .sortorder'
+    },
+    platform: {
+      css: 'th:nth-of-type(2) .sortorder'
+    },
+    version: {
+      css: 'th:nth-of-type(3) .sortorder'
+    },
+    lastUpdate: {
+      css: 'th:nth-of-type(4) .sortorder'
+    },
+    account: {
+      css: 'th:nth-of-type(8) .sortorder'
+    }
   }
 };
 
@@ -105,7 +122,6 @@ var rowLocators = {
           }
         }
       }
-
     }
   },
   actions: {
