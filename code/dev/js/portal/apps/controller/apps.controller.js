@@ -20,6 +20,7 @@
     $localStorage,
     $q,
     $values) {
+    var STORAGE_NAME_LIST_FILTER_ = 'apps_page_filter';
     //Invoking crud actions
     $injector.invoke(CRUDController,
       this, {
@@ -31,6 +32,7 @@
     $scope.setState('index.apps');
 
     $scope.setResource(Apps);
+    $scope.setStorageNameForFilterSettings(STORAGE_NAME_LIST_FILTER_);
 
     $scope.NO_SPECIAL_CHARS = $config.PATTERNS.NO_SPECIAL_CHARS;
     $scope.COMMENT_NO_SPECIAL_CHARS = $config.PATTERNS.COMMENT_NO_SPECIAL_CHARS;
@@ -82,7 +84,16 @@
         $scope._baseFilter = {
           app_platform: $state.current.data.platform_code
         };
-
+        //NOTE: use last stored filter data
+        if($localStorage[STORAGE_NAME_LIST_FILTER_]){
+          angular.extend($scope.filter,$localStorage[STORAGE_NAME_LIST_FILTER_]);
+          delete $scope.filter.filter; // NOTE: not use data last search
+        } else {
+        angular.extend($scope.filter,{
+            predicate: 'updated_at',
+            reverse: true
+          });
+        }
         $scope
           .list(data)
           .then(setAccountName)

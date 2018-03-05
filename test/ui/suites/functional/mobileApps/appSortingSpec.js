@@ -20,163 +20,213 @@ var config = require('config');
 var Portal = require('./../../../page_objects/portal');
 var tr = require('timeago-reverse');
 
-describe('Functional', function () {
-  describe('Sorting List App', function () {
-
+describe('Functional', function() {
+  describe('Sorting List App', function() {
     var adminUser = config.get('portal.users.revAdmin');
     var platforms = [
       Portal.constants.mobileApps.platforms.ios,
       Portal.constants.mobileApps.platforms.android
     ];
 
-    platforms.forEach(function (platform) {
-
-      describe('Platform: ' + platform, function () {
-
-        beforeAll(function () {
+    platforms.forEach(function(platform) {
+      describe('Platform: ' + platform, function() {
+        beforeAll(function() {
           Portal.signIn(adminUser);
           Portal.helpers.nav.goToMobileAppsMenuItem(platform);
+          Portal.mobileApps.listPage.sortByName('asc');
         });
 
-        it('should list be sorted in ascendant direction by default',
-        function () {
-          var appName1 = Portal.mobileApps.listPage.table
-            .getRow(0)
-            .getName();
-          var appName2 = Portal.mobileApps.listPage.table
-            .getRow(1)
-            .getName();
-          expect(appName1).toBeLessThan(appName2);
-        });
-
-        it('should sort list in ascendant direction',
-          function () {
-            Portal.mobileApps.listPage.sortByName();
-            var appName1 = Portal.mobileApps.listPage.table
+        it('should apply `ascendant` sorting by `Name` column', function() {
+          var appName1;
+          Portal.mobileApps.listPage.sortByName('asc').then(function() {
+            Portal.mobileApps.listPage.table
               .getFirstRow()
-              .getName();
-            Portal.mobileApps.listPage.sortByName();
-            var appName2 = Portal.mobileApps.listPage.table
-              .getFirstRow()
-              .getName();
-            expect(appName1).not.toEqual(appName2);
-          });
-
-        it('should sort list in descendant direction',
-          function () {
-            Portal.mobileApps.listPage.sortByName();
-            Portal.mobileApps.listPage.sortByName();
-            var appName1 = Portal.mobileApps.listPage.table
-              .getFirstRow()
-              .getName();
-
-            Portal.mobileApps.listPage.sortByName();
-            var appName2 = Portal.mobileApps.listPage.table
-              .getFirstRow()
-              .getName();
-            expect(appName2).not.toEqual(appName1);
-          });
-
-        it('should sort list ascendant on `Version` click', function () {
-          var first;
-          Portal.mobileApps.listPage.searcher.clearSearchCriteria();
-          Portal.mobileApps.listPage.table.getHeader().clickVersion().then(function () {
-            Portal.mobileApps.listPage.table.getFirstRow().getVersion().then(function (val1) {
-              first = val1;
-              Portal.mobileApps.listPage.table.getHeader().clickVersion().then(function () {
-                Portal.mobileApps.listPage.table.getFirstRow().getVersion().then(function (val2) {
-                  expect(first).toBeLessThan(val2);
-                });
-              });
-            });
-          });
-        });
-
-        it('should sort list descendant on `Version` click', function () {
-          var first;
-          Portal.mobileApps.listPage.searcher.clearSearchCriteria();
-          Portal.mobileApps.listPage.table.getFirstRow().getVersion().then(function (val1) {
-            first = val1;
-            Portal.mobileApps.listPage.table.getHeader().clickVersion().then(function () {
-              Portal.mobileApps.listPage.table.getFirstRow().getVersion().then(function (val2) {
-                expect(first).toBeGreaterThan(val2);
-              });
-            });
-          });
-        });
-
-        it('should sort list ascendant on `Last Update` click', function () {
-          var first;
-          Portal.mobileApps.listPage.searcher.clearSearchCriteria();
-          Portal.mobileApps.listPage.table.getHeader().clickLastUpdate().then(function () {
-            Portal.mobileApps.listPage.table.getFirstRow().getLastUpdate().then(function (val1) {
-              first = val1;
-              Portal.mobileApps.listPage.table.getHeader().clickLastUpdate().then(function () {
-                Portal
-                  .mobileApps
-                  .listPage
-                  .table
-                  .getFirstRow()
-                  .getLastUpdate()
-                  .then(function (val2) {
-                    expect(tr.parse(first)).toBeGreaterThan(tr.parse(val2));
+              .getName()
+              .then(function(val1) {
+                appName1 = val1;
+                Portal.mobileApps.listPage.table
+                  .getHeader()
+                  .clickName()
+                  .then(function() {
+                    Portal.mobileApps.listPage.table
+                      .getFirstRow()
+                      .getName()
+                      .then(function(val2) {
+                        expect(appName1).not.toEqual(val2);
+                      });
                   });
               });
-            });
           });
         });
 
-        it('should sort list descendant on `Last Update` click', function () {
-          var first;
-          Portal.mobileApps.listPage.searcher.clearSearchCriteria();
-          Portal.mobileApps.listPage.table.getFirstRow().getLastUpdate().then(function (val1) {
-            first = val1;
-            Portal.mobileApps.listPage.table.getHeader().clickLastUpdate().then(function () {
-              Portal
-              .mobileApps
-              .listPage
-              .table
+        it('should apply `descendant` sorting by `Name` column', function() {
+          var appName1;
+          Portal.mobileApps.listPage.sortByName('des').then(function() {
+            Portal.mobileApps.listPage.table
               .getFirstRow()
-              .getLastUpdate()
-              .then(function (val2) {
-                expect(tr.parse(first)).toBeLessThan(tr.parse(val2));
+              .getName()
+              .then(function(val1) {
+                appName1 = val1;
+                return Portal.mobileApps.listPage.table
+                  .getHeader()
+                  .clickName()
+                  .then(function() {
+                    Portal.mobileApps.listPage.table
+                      .getFirstRow()
+                      .getName()
+                      .then(function(val2) {
+                        expect(appName1).not.toEqual(val2);
+                      });
+                  });
               });
-            });
           });
         });
 
-        it('should sort list ascendant on `Account` click', function () {
+        it('should apply `ascendant` sorting by `Version` column', function() {
           var first;
           Portal.mobileApps.listPage.searcher.clearSearchCriteria();
-          Portal.mobileApps.listPage.table.getHeader().clickAccount().then(function () {
-            Portal.mobileApps.listPage.table.getFirstRow().getAccount().then(function (val1) {
+          Portal.mobileApps.listPage.table
+            .getHeader()
+            .clickVersion()
+            .then(function() {
+              Portal.mobileApps.listPage.table
+                .getFirstRow()
+                .getVersion()
+                .then(function(val1) {
+                  first = val1;
+                  Portal.mobileApps.listPage.table
+                    .getHeader()
+                    .clickVersion()
+                    .then(function() {
+                      Portal.mobileApps.listPage.table
+                        .getFirstRow()
+                        .getVersion()
+                        .then(function(val2) {
+                          expect(first).toBeLessThan(val2);
+                        });
+                    });
+                });
+            });
+        });
+
+        it('should apply `descendant` sorting by `Version` column', function() {
+          var first;
+          Portal.mobileApps.listPage.searcher.clearSearchCriteria();
+          Portal.mobileApps.listPage.table
+            .getFirstRow()
+            .getVersion()
+            .then(function(val1) {
               first = val1;
-              Portal.mobileApps.listPage.table.getHeader().clickAccount().then(function () {
-                Portal
-                .mobileApps
-                .listPage
-                .table
+              Portal.mobileApps.listPage.table
+                .getHeader()
+                .clickVersion()
+                .then(function() {
+                  Portal.mobileApps.listPage.table
+                    .getFirstRow()
+                    .getVersion()
+                    .then(function(val2) {
+                      expect(first).toBeGreaterThan(val2);
+                    });
+                });
+            });
+        });
+
+        it('should apply `ascendant` sorting by `Last Update` column', function() {
+          var first;
+          Portal.mobileApps.listPage.searcher.clearSearchCriteria();
+          Portal.mobileApps.listPage.table
+            .getHeader()
+            .clickLastUpdate()
+            .then(function() {
+              Portal.mobileApps.listPage.table
+                .getFirstRow()
+                .getLastUpdate()
+                .then(function(val1) {
+                  first = val1;
+                  Portal.mobileApps.listPage.table
+                    .getHeader()
+                    .clickLastUpdate()
+                    .then(function() {
+                      Portal.mobileApps.listPage.table
+                        .getFirstRow()
+                        .getLastUpdate()
+                        .then(function(val2) {
+                          expect(tr.parse(first)).toBeLessThan(tr.parse(val2));
+                        });
+                    });
+                });
+            });
+        });
+
+        it('should apply `descendant` sorting by `Last Update` column', function() {
+          var first;
+          Portal.mobileApps.listPage.searcher.clearSearchCriteria();
+          Portal.mobileApps.listPage.table
+            .getFirstRow()
+            .getLastUpdate()
+            .then(function(val1) {
+              first = val1;
+              Portal.mobileApps.listPage.table
+                .getHeader()
+                .clickLastUpdate()
+                .then(function() {
+                  Portal.mobileApps.listPage.table
+                    .getFirstRow()
+                    .getLastUpdate()
+                    .then(function(val2) {
+                      expect(tr.parse(first)).toBeGreaterThan(tr.parse(val2));
+                    });
+                });
+            });
+        });
+
+        it('should apply `ascendant` sorting by `Account` column', function() {
+          var first;
+          Portal.mobileApps.listPage.searcher.clearSearchCriteria();
+          Portal.mobileApps.listPage.table
+            .getHeader()
+            .clickAccount()
+            .then(function() {
+              Portal.mobileApps.listPage.table
                 .getFirstRow()
                 .getAccount()
-                .then(function (val2) {
-                  expect(first).toBeLessThan(val2);
+                .then(function(val1) {
+                  first = val1;
+                  Portal.mobileApps.listPage.table
+                    .getHeader()
+                    .clickAccount()
+                    .then(function() {
+                      Portal.mobileApps.listPage.table
+                        .getFirstRow()
+                        .getAccount()
+                        .then(function(val2) {
+                          expect(first).toBeLessThan(val2);
+                        });
+                    });
                 });
-              });
             });
-          });
         });
 
-        it('should sort list descendant on `Account` click', function () {
+        it('should apply `descendant` sorting by `Account` column', function() {
           var first;
           Portal.mobileApps.listPage.searcher.clearSearchCriteria();
-          Portal.mobileApps.listPage.table.getFirstRow().getAccount().then(function (val1) {
-            first = val1;
-            Portal.mobileApps.listPage.table.getHeader().clickAccount().then(function () {
-              Portal.mobileApps.listPage.table.getFirstRow().getAccount().then(function (val2) {
-                expect(first).toBeGreaterThan(val2);
-              });
+          Portal.mobileApps.listPage.table
+            .getFirstRow()
+            .getAccount()
+            .then(function(val1) {
+              first = val1;
+              Portal.mobileApps.listPage.table
+                .getHeader()
+                .clickAccount()
+                .then(function() {
+                  Portal.mobileApps.listPage.table
+                    .getFirstRow()
+                    .getAccount()
+                    .then(function(val2) {
+                      expect(first).toBeGreaterThan(val2);
+                    });
+                });
             });
-          });
         });
       });
     });
