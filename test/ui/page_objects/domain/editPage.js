@@ -715,8 +715,16 @@ var EditDomain = {
 
   enableEnhancedAnalytics: function () {
     this.clickTabGeneralSettings();
-    return this.form.getEnableEnhancedAnalytics().click();
+    var el = this.form.getEnableEnhancedAnalytics();
+    return this.switchBtns(el, true);
   },
+
+  clickEnableEnhancedAnalyticsSw: function () {
+    var el = this.form.getEnableEnhancedAnalytics();
+    WebElement.scrollToElement(el);
+    return el.click();
+  },
+
 
   fillVCL: function () {
     this.form.setRecvFunction('# Comment <recv>');

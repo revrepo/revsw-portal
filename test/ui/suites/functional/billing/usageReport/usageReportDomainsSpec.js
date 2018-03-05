@@ -2,7 +2,7 @@
  *
  * REV SOFTWARE CONFIDENTIAL
  *
- * [2013] - [2016] Rev Software, Inc.
+ * [2013] - [2018] Rev Software, Inc.
  * All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains
@@ -27,6 +27,7 @@ describe('Functional', function () {
   describe('Usage Report Domains', function () {
     describe('With user: ' + user.role, function () {
       var myDomain = DataProvider.generateDomain('my-domain');
+      myDomain.enable_enhanced_analytics = false;
       var domainCount = 0;
       var domainValues;
       beforeAll(function (done) {
@@ -55,11 +56,14 @@ describe('Functional', function () {
       });
 
       it('should display correct amount of active domains', function (done) {
-        Portal.usageReportHelpers.generateReport().then(function () {
+        Portal.usageReportHelpers.generateReport({account_id:user.account.id}).then(function () {
           Portal.helpers.nav.goToUsageReport().then(function () {
             Portal
               .usageReportHelpers
-              .expectValue(domainCount, Constants.USAGE_REPORT_IDS.ACTIVE_DOMAINS)
+              .expectValue(domainCount, Constants
+                .USAGE_REPORT_IDS
+                .ACTIVE_DOMAINS,
+                user.account.id)
               .then(function () {
                 expect(true).toBeTruthy();
                 done();
@@ -77,11 +81,14 @@ describe('Functional', function () {
           Portal.domains.listPage.clickAddNewDomain();
           Portal.domains.addPage.createDomain(myDomain);
           Portal.alerts.waitToDisplay().then(function () {
-            Portal.usageReportHelpers.generateReport().then(function () {
+            Portal.usageReportHelpers.generateReport({account_id:user.account.id}).then(function () {
               Portal.helpers.nav.goToUsageReport().then(function () {
                 Portal
                   .usageReportHelpers
-                  .expectValue(domainCount + 1, Constants.USAGE_REPORT_IDS.ACTIVE_DOMAINS)
+                  .expectValue(domainCount + 1, Constants
+                    .USAGE_REPORT_IDS
+                    .ACTIVE_DOMAINS,
+                    user.account.id)
                   .then(function () {
                     expect(true).toBeTruthy();
                     done();
@@ -96,13 +103,14 @@ describe('Functional', function () {
 
       it('should display correct amount of SSL Enabled ' +
         ' domains after creating a domain', function (done) {
-          Portal.usageReportHelpers.generateReport().then(function () {
+          Portal.usageReportHelpers.generateReport({account_id:user.account.id}).then(function () {
             Portal.helpers.nav.goToUsageReport().then(function () {
               Portal
                 .usageReportHelpers
                 .expectValue(parseInt(domainValues.sslEnabled) + 1, Constants
                   .USAGE_REPORT_IDS
-                  .SSL_ENABLED_DOMAINS)
+                  .SSL_ENABLED_DOMAINS,
+                  user.account.id)
                 .then(function () {
                   expect(true).toBeTruthy();
                   done();
@@ -122,13 +130,14 @@ describe('Functional', function () {
             Portal.domains.editPage.clickUpdateDomain();
             Portal.dialog.clickOk();
             Portal.alerts.waitToDisplay().then(function () {
-              Portal.usageReportHelpers.generateReport().then(function () {
+              Portal.usageReportHelpers.generateReport({account_id:user.account.id}).then(function () {
                 Portal.helpers.nav.goToUsageReport().then(function () {
                   Portal
                     .usageReportHelpers
                     .expectValue(parseInt(domainValues.customVCLRules) + 1, Constants
                       .USAGE_REPORT_IDS
-                      .CUSTOM_VCL_RULES)
+                      .CUSTOM_VCL_RULES,
+                      user.account.id)
                     .then(function () {
                       expect(true).toBeTruthy();
                       done();
@@ -150,13 +159,14 @@ describe('Functional', function () {
             Portal.domains.editPage.clickUpdateDomain();
             Portal.dialog.clickOk();
             Portal.alerts.waitToDisplay().then(function () {
-              Portal.usageReportHelpers.generateReport().then(function () {
+              Portal.usageReportHelpers.generateReport({account_id:user.account.id}).then(function () {
                 Portal.helpers.nav.goToUsageReport().then(function () {
                   Portal
                     .usageReportHelpers
                     .expectValue(parseInt(domainValues.analyticsEnhanced) + 1, Constants
                       .USAGE_REPORT_IDS
-                      .ANALYTICS_ENHANCED_DOMAINS)
+                      .ANALYTICS_ENHANCED_DOMAINS,
+                      user.account.id)
                     .then(function () {
                       expect(true).toBeTruthy();
                       done();
@@ -178,13 +188,14 @@ describe('Functional', function () {
             Portal.domains.editPage.clickUpdateDomain();
             Portal.dialog.clickOk();
             Portal.alerts.waitToDisplay().then(function () {
-              Portal.usageReportHelpers.generateReport().then(function () {
+              Portal.usageReportHelpers.generateReport({account_id:user.account.id}).then(function () {
                 Portal.helpers.nav.goToUsageReport().then(function () {
                   Portal
                     .usageReportHelpers
                     .expectValue(parseInt(domainValues.wafEnabled) + 1, Constants
                       .USAGE_REPORT_IDS
-                      .WAF_ENABLED_DOMAINS)
+                      .WAF_ENABLED_DOMAINS,
+                      user.account.id)
                     .then(function () {
                       expect(true).toBeTruthy();
                       done();
@@ -206,13 +217,14 @@ describe('Functional', function () {
             Portal.domains.editPage.clickUpdateDomain();
             Portal.dialog.clickOk();
             Portal.alerts.waitToDisplay().then(function () {
-              Portal.usageReportHelpers.generateReport().then(function () {
+              Portal.usageReportHelpers.generateReport({account_id:user.account.id}).then(function () {
                 Portal.helpers.nav.goToUsageReport().then(function () {
                   Portal
                     .usageReportHelpers
                     .expectValue(parseInt(domainValues.luaEnabled) + 1, Constants
                       .USAGE_REPORT_IDS
-                      .LUA_ENABLED_DOMAINS)
+                      .LUA_ENABLED_DOMAINS,
+                      user.account.id)
                     .then(function () {
                       expect(true).toBeTruthy();
                       done();
@@ -232,13 +244,14 @@ describe('Functional', function () {
           Portal.domains.listPage.searchAndClickDelete(myDomain.name);
           Portal.dialog.clickOk();
           Portal.alerts.waitToDisplay().then(function () {
-            Portal.usageReportHelpers.generateReport().then(function () {
+            Portal.usageReportHelpers.generateReport({account_id:user.account.id}).then(function () {
               Portal.helpers.nav.goToUsageReport().then(function () {
                 Portal
                   .usageReportHelpers
                   .expectValue(domainCount, Constants
                     .USAGE_REPORT_IDS
-                    .ACTIVE_DOMAINS)
+                    .ACTIVE_DOMAINS,
+                    user.account.id)
                   .then(function () {
                     expect(true).toBeTruthy();
                     done();
@@ -253,13 +266,14 @@ describe('Functional', function () {
 
       it('should display correct amount of deleted ' +
         ' domains after deleting a domain', function (done) {
-          Portal.usageReportHelpers.generateReport().then(function () {
+          Portal.usageReportHelpers.generateReport({account_id:user.account.id}).then(function () {
             Portal.helpers.nav.goToUsageReport().then(function () {
               Portal
                 .usageReportHelpers
                 .expectValue(parseInt(domainValues.deleted) + 1, Constants
                   .USAGE_REPORT_IDS
-                  .DELETED_DOMAINS)
+                  .DELETED_DOMAINS,
+                  user.account.id)
                 .then(function () {
                   expect(true).toBeTruthy();
                   done();
