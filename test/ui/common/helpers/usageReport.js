@@ -37,7 +37,7 @@ var usageReport = {
     generateReport: function (options) {
         var query = '';
         if(options.accountId){
-          query = '?account_id='+options.account_id;
+          query = '?account_id='+options.accountId;
         }
         /*
         *   TODO: error handling
@@ -63,7 +63,7 @@ var usageReport = {
         });
     },
 
-    expectValue: function (value, fieldId, account_id) {
+    expectValue: function (value, fieldId, accountId) {
         var me = this;
         return new Promise(function (resolve, reject) {
             var times = Constants.USAGE_REPORT_POLLING_TIMEOUT;
@@ -82,8 +82,8 @@ var usageReport = {
                         } else {
                             times -= interval;
                             var options = {};
-                            if (account_id) {
-                              options.account_id = account_id;
+                            if (accountId) {
+                              options.accountId = accountId;
                             }
                             me.generateReport(options).then(function () {
                                 UsageReportPage.clickUpdateReport().then(function () {
