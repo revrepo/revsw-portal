@@ -30,10 +30,15 @@ var usageReport = {
        * ### usageReport.generateReport()
        *
        * Generate a user report, using the API's utils/usage_report.js script
+       * @param {Object} options {account_id:String}
        *
        * @returns {Promise}
        */
-    generateReport: function () {
+    generateReport: function (options) {
+        var query = '';
+        if(options.accountId){
+          query = '?account_id='+options.accountId;
+        }
         /*
         *   TODO: error handling
         */
@@ -44,11 +49,11 @@ var usageReport = {
             config.get('api.host.port');
         return API.helpers.authenticateUser(admin).then(function () {
             return request(apiUrl)
-                .get('/v1/usage_reports/web/generate')
+                .get('/v1/usage_reports/web/generate'+query)
                 .set('Authorization', 'Bearer ' + admin.token)
                 .then(function (res, err) {
                     if (err !== undefined) {
-                        new Error(err);
+                        throw new Error(err);
                     }
                     if (res !== undefined && res.status === 200) {
 
@@ -58,7 +63,7 @@ var usageReport = {
         });
     },
 
-    expectValue: function (value, fieldId) {
+    expectValue: function (value, fieldId, accountId) {
         var me = this;
         return new Promise(function (resolve, reject) {
             var times = Constants.USAGE_REPORT_POLLING_TIMEOUT;
@@ -76,7 +81,11 @@ var usageReport = {
                             resolve();
                         } else {
                             times -= interval;
-                            me.generateReport().then(function () {
+                            var options = {};
+                            if (accountId) {
+                              options.accountId = accountId;
+                            }
+                            me.generateReport(options).then(function () {
                                 UsageReportPage.clickUpdateReport().then(function () {
                                     setTimeout(polling, interval);
                                 });

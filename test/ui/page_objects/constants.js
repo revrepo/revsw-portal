@@ -375,10 +375,10 @@ var Constants = {
         block_crawlers: false,
         cache_bypass_locations: [],
         caching_rules: [{
-          serve_stale: { 
+          serve_stale: {
             enable: false,
             while_fetching_ttl: 8,
-            origin_sick_ttl: 15 
+            origin_sick_ttl: 15
           },
           browser_caching:
             {
@@ -445,6 +445,7 @@ var Constants = {
     cname: 'test-domain-1511077019750-portal-ui-test.com.revqa.net',
     published_domain_version: 1,
     last_published_domain_version: 1,
+    enable_enhanced_analytics: true,
     enable_ssl: true,
     ssl_conf_profile: '571e9f7591dcb9f97a0c4841',
     ssl_cert_id: '',
@@ -491,10 +492,10 @@ var Constants = {
       ],
       caching_rules: [
         {
-          serve_stale: { 
+          serve_stale: {
             enable: false,
             while_fetching_ttl: 8,
-            origin_sick_ttl: 15 
+            origin_sick_ttl: 15
           },
           browser_caching: {
             force_revalidate: true,
@@ -517,7 +518,7 @@ var Constants = {
             ],
             new_ttl: 5,
             override_no_cc: true,
-            override_origin: false,            
+            override_origin: false,
             query_string_list_is_keep: true
           },
           url: {
@@ -597,7 +598,7 @@ var Constants = {
     bp_group_id: '55a56f85476c10c329a90740',
     tolerance: '3000',
     origin_server_location_id: '55a56fa6476c10c329a90741',
-    domain_aliases: [      
+    domain_aliases: [
     ],
     domain_wildcard_alias: '*.test-domain-1511945386215-portal-ui-test.com',
     enable_origin_health_probe: true,
@@ -612,6 +613,7 @@ var Constants = {
     comment: 'TEST',
     published_domain_version: 0,
     last_published_domain_version: 1,
+    enable_enhanced_analytics: true,
     enable_ssl: true,
     ssl_conf_profile: '',
     ssl_cert_id: '',
@@ -665,10 +667,10 @@ var Constants = {
       ],
       "caching_rules": [
         {
-          serve_stale: { 
+          serve_stale: {
             enable: false,
             while_fetching_ttl: 8,
-            origin_sick_ttl: 15 
+            origin_sick_ttl: 15
           },
           "browser_caching": {
             "force_revalidate": true,
@@ -691,7 +693,7 @@ var Constants = {
             ],
             "new_ttl": 5,
             "override_no_cc": true,
-            "override_origin": false,            
+            "override_origin": false,
             "query_string_list_is_keep": true
           },
           "url": {
@@ -786,6 +788,7 @@ var Constants = {
     "comment": "TEST",
     "published_domain_version": 0,
     "last_published_domain_version": 1,
+    "enable_enhanced_analytics": true,
     "enable_ssl": false,
     "ssl_conf_profile": "",
     "ssl_cert_id": "",
@@ -832,7 +835,7 @@ var Constants = {
     CACHE_PURGE_COMMANDS: 'domainsPurgeCommands',
     TOTAL_DNS_ZONES: 'totalDNSZones',
     TOTAL_DNS_RECORDS: 'totalDNSRecords',
-    TOTAL_DNS_QUERIES: 'totalDNSQueries'    
+    TOTAL_DNS_QUERIES: 'totalDNSQueries'
   }
 };
 module.exports = Constants;

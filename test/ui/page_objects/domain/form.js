@@ -2,7 +2,7 @@
  *
  * REV SOFTWARE CONFIDENTIAL
  *
- * [2013] - [2017] Rev Software, Inc.
+ * [2013] - [2018] Rev Software, Inc.
  * All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains
@@ -21,6 +21,7 @@
 // Requiring constant values
 var Constants = require('./../constants');
 var DropDownWidget = require('./../common/dropDownWidget');
+var WebElement = require('./../../common/helpers/webElement');
 
 // This `Domain Form` Page Object abstracts all operations or actions that a
 // common domain could do in the Add Domain and Edit Domain page from the Portal
@@ -1160,7 +1161,9 @@ var DomainForm = {
   },
 
   clickAddNewHeaderBtnOrigin: function () {
-    return this.getAddNewHeaderBtnOrigin().click();
+    var el = this.getAddNewHeaderBtnOrigin();
+    WebElement.scrollToElement(el);
+    return el.click();
   },
 
   /*
@@ -1199,8 +1202,10 @@ var DomainForm = {
   },
 
   clickAddNewHeaderBtnEnduser: function () {
-    return this.getManageEndUserResponseHeaders()
-      .element(by.css(this.locators.blocks.manageEndUserResponseHeaders.addNewHeader)).click();
+    var el = this.getManageEndUserResponseHeaders()
+    .element(by.css(this.locators.blocks.manageEndUserResponseHeaders.addNewHeader));
+    WebElement.scrollToElement(el);
+    return el.click();
   },
 
   /*
@@ -1626,7 +1631,7 @@ var DomainForm = {
   setSslCert: function (sslCert) {
     this.getSSLConfigurationTab().click();
     this.getSslCertDDown().click();
-    return this.getSslCertDDown().$('[label="' + sslCert + '"]').click();    
+    return this.getSslCertDDown().$('[label="' + sslCert + '"]').click();
   },
 
   /**
@@ -1930,7 +1935,9 @@ var DomainForm = {
   },
 
   clickWAFSwitch: function () {
-    return this.getWAFSwitch().click();
+    var el = this.getWAFSwitch();
+    WebElement.scrollToElement(el);
+    return el.click();
   },
 
   setAllowedSSLProtocols: function (value) {

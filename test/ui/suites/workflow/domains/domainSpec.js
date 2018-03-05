@@ -2,7 +2,7 @@
  *
  * REV SOFTWARE CONFIDENTIAL
  *
- * [2013] - [2015] Rev Software, Inc.
+ * [2013] - [2018] Rev Software, Inc.
  * All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains
@@ -43,7 +43,7 @@ describe('Workflow', function () {
             // Create a new SSL Cert to use for these tests
             Portal.createSSLCert(testSslCert);
 
-            // Create new WAF Customer Rule to use for these tests 
+            // Create new WAF Customer Rule to use for these tests
             Portal.helpers.nav.goToWAFRules();
             Portal.wafRules.listPage.clickAddNewWAFRule();
             Portal.wafRules.addPage.createCustomWAFRule(customWAFRule);
@@ -73,7 +73,7 @@ describe('Workflow', function () {
                     updatedDisabledDomain.domain_name = domainData.name;
                     updatedDisabledDomain.domain_aliases = ['test.' + domainData.name];
                     updatedDomain.domain_aliases = ['test.' + domainData.name];
-                    //expect(JSON.stringify(domain)).toBe(JSON.stringify(defaultDomain));                    
+                    //expect(JSON.stringify(domain)).toBe(JSON.stringify(defaultDomain));
                     Utils.compareObjects(domain, defaultDomain).then(done)
                         .catch(function (errProp) {
                             throw new Error(errProp);
