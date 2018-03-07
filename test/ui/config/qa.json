@@ -22,5 +22,8 @@
       "email": "MICROSOFT USER HERE",
       "password": "MICROSOFT USER HERE"
     }
+  },
+  "$config":{
+    "DEFAULT_LIMIT_RECORDS_IN_TABLE": 5
   }
 }

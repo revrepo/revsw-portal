@@ -53,6 +53,9 @@ module.exports = {
           // NOTE: fix for tests with checking allerts messages
           // Up time show toaster messages
           $config.SUCCESS_MESSAGE_DISPLAY_TIMEOUT = 50000;
+          // NOTE: change for make all test more faster
+          // see default.json config.DEFAULT_LIMIT_RECORDS_IN_TABLE
+          $config.DEFAULT_LIMIT_RECORDS_IN_TABLE = 5;
         });
     };
     // NOTE: open browser on full screen
