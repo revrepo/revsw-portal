@@ -614,7 +614,8 @@ var Portal = {
    *
    * @returns {Object} user signed up and verified
    */
-  signUpAndVerifyUser: function (plan) {
+  signUpAndVerifyUser: function (plan, introSkip) {
+    introSkip = introSkip === undefined ? true : false;
     var me = this;
     return me
       .signUpUser(plan)
@@ -628,6 +629,21 @@ var Portal = {
                 return me.header
                   .waitToDisplay()
                   .then(function () {
+                    // Check for intro
+                    if (introSkip) {
+                      var until = protractor.ExpectedConditions;
+                      // Wait up to 1 minute for login to finish
+                      browser.wait(until.presenceOf(Portal.header.getHeaderBar()), 60000);
+                      return Portal.intro.getIntroContainer().isPresent()
+                        .then(function (val) {
+                          if (val) {
+                            Portal.intro.clickSkipBtn();
+                            browser.sleep(2000);
+                          }
+                        });
+                    }
+                  })
+                  .then(function() {
                     return user;
                   });
               });

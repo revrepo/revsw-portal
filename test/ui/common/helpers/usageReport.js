@@ -36,6 +36,9 @@ var usageReport = {
        */
     generateReport: function (options) {
         var query = '';
+        if (!options) {
+          options = {};
+        }
         if(options.accountId){
           query = '?account_id='+options.accountId;
         }
