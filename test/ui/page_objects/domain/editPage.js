@@ -716,7 +716,7 @@ var EditDomain = {
   enableEnhancedAnalytics: function () {
     this.clickTabGeneralSettings();
     var el = this.form.getEnableEnhancedAnalytics();
-    return this.switchBtns(el, true);
+    return this.setToSwitchBtnValue(el, true);
   },
 
   clickEnableEnhancedAnalyticsSw: function () {
@@ -772,7 +772,7 @@ var EditDomain = {
   fillDemo: function (domain, domainUpdateData, ruleName) {
     /* jshint maxstatements:120 */
     this.clickTabGeneralSettings();
-    // this.form.getEnableEnhancedAnalytics().click(); //
+    this.setToSwitchBtnValue(this.form.getEnableEnhancedAnalytics(),true);
     this.form.setNonWildcardDomainAliases('test.' + domain.name);
     this.form.setWildcardDomainAlias('*.' + domain.name);
     this.form.setFirstMileProxyBypass('TEST');
@@ -859,6 +859,7 @@ var EditDomain = {
 
   clearDemo: function () {
     this.clickTabGeneralSettings();
+    this.setToSwitchBtnValue(this.form.getEnableEnhancedAnalytics(),false);
     this.form.clearWildcardDomainAlias();
     this.form.setDataReadTimeout('20');
     this.form.getLastMileQUICprotocolTxtIn().click();

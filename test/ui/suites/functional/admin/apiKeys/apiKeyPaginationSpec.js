@@ -2,7 +2,7 @@
  *
  * REV SOFTWARE CONFIDENTIAL
  *
- * [2013] - [2015] Rev Software, Inc.
+ * [2013] - [2018] Rev Software, Inc.
  * All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains
@@ -19,6 +19,7 @@
 var config = require('config');
 var Portal = require('./../../../../page_objects/portal');
 var Constants = require('./../../../../page_objects/constants');
+var DEFAULT_LIMIT_RECORDS_IN_TABLE = config.get('$config.DEFAULT_LIMIT_RECORDS_IN_TABLE');
 
 describe('Smoke', function () {
   describe('API Key Pagination', function () {
@@ -41,10 +42,11 @@ describe('Smoke', function () {
     afterEach(function () {
     });
 
-    it('should be displayed total of 25 accounts as maximum',
+    it('should be displayed total of '+ DEFAULT_LIMIT_RECORDS_IN_TABLE+ ' apps as maximum '+
+    '(when $config.DEFAULT_LIMIT_RECORDS_IN_TABLE = '+DEFAULT_LIMIT_RECORDS_IN_TABLE+')',
       function () {
         var rows = Portal.admin.apiKeys.listPage.table.getRows().count();
-        expect(rows).toBe(25);
+        expect(rows).toBe(DEFAULT_LIMIT_RECORDS_IN_TABLE);
       });
 
     it('should be displayed when the amount of items exceeds the maximum ' +

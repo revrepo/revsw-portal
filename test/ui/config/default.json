@@ -95,6 +95,9 @@
       "received_unit": 200
     }
   },
+  "$config":{
+    "DEFAULT_LIMIT_RECORDS_IN_TABLE": 5
+  },
   "gitHubPersonalAccessTokenForAccountId": {
     "55b706a57957012304a49d0b": {
       "token": "d3c29d29b64890efb94bba2606e44cc25c0aa100",
