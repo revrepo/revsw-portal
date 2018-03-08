@@ -68,8 +68,6 @@
           email: '',
           firstname: '',
           lastname: '',
-          password: '',
-          passwordConfirm: '',
           role: null
         });
       }
@@ -265,7 +263,6 @@
       }
 
       delete _model.account_id;
-      delete _model.passwordConfirm;
       $scope.create(_model, isStay)
         .then(function(data) {
           initModel(true);
@@ -300,8 +297,6 @@
           !model.access_control_list ||
           !model.firstname ||
           !model.lastname ||
-          !model.password ||
-          !model.passwordConfirm ||
           !model.role;
       }
     };
