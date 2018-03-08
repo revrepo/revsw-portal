@@ -258,6 +258,7 @@
         return;
       }
       model.access_control_list.dashBoard = true;
+      model.self_registered = false; // this is not a self registered user.
       var _model = $scope.prepareUserDataForUpdate(model);
       if (!_model.companyId || !angular.isArray(_model.companyId)) {
         _model.companyId = [model.account_id] || [$scope.model.account_id];

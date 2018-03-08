@@ -44,6 +44,7 @@
     'revapm.Portal.WAFRules',
     'revapm.Portal.Notifications',
     'revapm.Portal.networkIPBlocks',
+    'revapm.Portal.Invitation',
     'ngYoutubeEmbed',
     'satellizer'
   ]);
