@@ -28,7 +28,6 @@ describe('Functional', function () {
     describe('With user: ' + user.role, function () {
       var myDomain = DataProvider.generateDomain('my-domain');
       /*jshint camelcase: false */
-      myDomain.enable_enhanced_analytics = false;
       var domainCount = 0;
       var domainValues;
       beforeAll(function (done) {

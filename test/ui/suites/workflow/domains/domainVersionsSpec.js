@@ -2,7 +2,7 @@
  *
  * REV SOFTWARE CONFIDENTIAL
  *
- * [2013] - [2016] Rev Software, Inc.
+ * [2013] - [2018] Rev Software, Inc.
  * All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains
@@ -21,9 +21,7 @@ var DataProvider = require('./../../../common/providers/data');
 var Portal = require('./../../../page_objects/portal');
 
 
-// TODO: Need to enable this test
-
-xdescribe('Workflow', function () {
+describe('Workflow', function () {
 
   // Defining set of users for which all below tests will be run
   var users = [
@@ -186,6 +184,23 @@ xdescribe('Workflow', function () {
             .toBe('origin_host_header: "' + testDomain.originHostHeader + '"');
           expect(newVersionOrigHostHeader)
             .toBe('origin_host_header: "' + testDomain.originHostHeader + '.upd"');
+        });
+
+        it('should disabled Version To Compare when select the Version 0', function () {
+          var testDomain = DataProvider.generateDomain('versTestDomain');
+          Portal.domains.listPage.clickAddNewDomain();
+          Portal.domains.addPage.createDomain(testDomain);
+          Portal.domains.addPage.clickBackToList();
+          Portal.domains.listPage.searchAndClickEdit(testDomain.name);
+          Portal.domains.editPage.form
+            .setComment( 'update-at-'+Date.now()+'\n');
+          Portal.domains.editPage.clickUpdateDomain();
+          Portal.dialog.clickOk();
+          Portal.domains.addPage.clickBackToList();
+          Portal.domains.listPage.searchAndGetFirstRow(testDomain.name)
+            .clickVersions();
+          Portal.domains.versionsPage.setDomainConfigVersion('Version 0');
+          expect(Portal.domains.versionsPage.getDomainCompareVersionDDown().isEnabled()).toBe(true);
         });
       });
     });

@@ -2,7 +2,7 @@
  *
  * REV SOFTWARE CONFIDENTIAL
  *
- * [2013] - [2015] Rev Software, Inc.
+ * [2013] - [2018] Rev Software, Inc.
  * All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains
@@ -18,6 +18,7 @@
 
 var config = require('config');
 var Portal = require('./../../../page_objects/portal');
+var DEFAULT_LIMIT_RECORDS_IN_TABLE = config.get('$config.DEFAULT_LIMIT_RECORDS_IN_TABLE');
 
 describe('Functional', function () {
   describe('User pagination', function () {
@@ -33,11 +34,11 @@ describe('Functional', function () {
       Portal.signOut();
     });
 
-    it('should be not more than 25 apps on one page',
+    it('should be not more than '+ DEFAULT_LIMIT_RECORDS_IN_TABLE+ ' users on one page'+
+     '(when $config.DEFAULT_LIMIT_RECORDS_IN_TABLE = '+DEFAULT_LIMIT_RECORDS_IN_TABLE+')',
       function () {
         Portal.userListPage.getListItems().then(function(elements) {
-          console.log(elements.length);
-          expect(elements.length > 25).toBe(false);
+          expect(elements.length > DEFAULT_LIMIT_RECORDS_IN_TABLE).toBe(false);
         });
       });
 
