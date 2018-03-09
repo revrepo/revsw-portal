@@ -14,7 +14,8 @@
     $injector,
     $stateParams,
     Invitation,
-    User) {
+    User,
+    Util) {
 
     var currUser;
 
@@ -33,6 +34,7 @@
 
     $scope.$on('$stateChangeSuccess', function (state) {
       currUser = $stateParams.user;
+      $scope.randomImageStyle = { 'background-image': 'url(' + Util.getRandomImageURL() + ')' };
     });
 
     $scope.disableSubmit = function (model) {

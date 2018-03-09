@@ -8,7 +8,7 @@
   /*@ngInject*/
   function UsersCrudController($scope, $q, CRUDController, Users,
     User, $injector, $state, $stateParams, Companies,
-    DomainsConfig, $anchorScroll, $config) {
+    DomainsConfig, $anchorScroll, $config, Invitation) {
 
     //Invoking crud actions
     $injector.invoke(CRUDController, this, {
@@ -32,7 +32,8 @@
     $scope.USER_LAST_NAME = $config.PATTERNS.USER_LAST_NAME;
     $scope.STREET_ADDRESS = $config.PATTERNS.STREET_ADDRESS;
     $scope.NO_SPECIAL_CHARS = $config.PATTERNS.NO_SPECIAL_CHARS;
-    $scope.COMMENT_NO_SPECIAL_CHARS = $config.PATTERNS.COMMENT_NO_SPECIAL_CHARS;
+    $scope.COMMENT_NO_SPECIAL_CHARS = $config.PATTERNS.COMMENT_NO_SPECIAL_CHARS;    
+    $scope.resendDisabled = true;
 
     $scope.roles = ['user', 'admin'];
     // Adding additional user roles for RevAdmin
@@ -72,6 +73,7 @@
         });
       }
     }
+
     /**
      * @name  dependencies
      * @description
@@ -175,6 +177,7 @@
             return (($scope.model.companyId.indexOf(item.id) > -1) || ($scope.model.managed_account_ids.indexOf(item.id) > -1));
           });
           $scope.model.companyId.length = 1;
+          $scope.resendDisabled = ((Date.parse($scope.model.invitation_sent_at) + $config.INVITATION_COOLDOWN_MS) < Date.now()) === false;
           return $scope.model;
         })
         .catch($scope.alertService.danger)
@@ -409,7 +412,7 @@
         if(!!account_id && account_id.indexOf(item.id) > -1) {
           return false;
         }
-        if ($scope.model.managed_account_ids.indexOf(item.id) > -1) {
+        if (!!$scope.model.managed_account_ids && $scope.model.managed_account_ids.indexOf(item.id) > -1) {
           return false;
         }
         return true;
@@ -456,6 +459,28 @@
         $scope.model.companyId = [];
       }
       $scope.model.companyId[0] = model;
+    };
+
+    $scope.userInvitationDone = function (model) {
+      return model.invitation_token === null;
+    };    
+
+    $scope.resendInvite = function (model, el) {
+      $scope._loading = true;
+      $scope.resendDisabled = true;
+      Invitation.resendInvitation({id: model.user_id}).$promise.then(function (res) {
+        $scope._loading = false;
+        if (res.statusCode === 200) {
+          $scope.alertService.success('Successfully resent the invitation token');
+        } else {
+          $scope.resendDisabled = false;
+        }
+      })
+      .catch(function (err) {
+        $scope.resendDisabled = false;
+        $scope._loading = false;
+        $scope.alertService.danger(err);
+      });
     };
 
   }

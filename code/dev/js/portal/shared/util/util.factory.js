@@ -9,6 +9,23 @@
   function UtilFactory() {
 
     /**
+     * Get a random image URL
+     *
+     * @returns {string} URL string
+     */
+    function getRandomImageURL() {
+      var images = [
+        'images/bg/pic1.jpg',
+        'images/bg/pic2.jpg',
+        'images/bg/pic3.jpg',
+        'images/bg/pic4.jpg',
+        'images/bg/pic5.jpg',
+      ];
+  
+      return images[Math.floor(Math.random() * images.length)];
+    }
+
+    /**
      * Shorten int value and add suffix G, M or K
      *
      * @param {number} val
@@ -159,7 +176,12 @@
       /**
        * @inheritDoc
        */
-      statesCodes2Names: statesCodes2Names
+      statesCodes2Names: statesCodes2Names,
+
+      /**
+       * @inheritDoc
+       */
+      getRandomImageURL: getRandomImageURL
     };
   }
 })();

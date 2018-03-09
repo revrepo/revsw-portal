@@ -6,7 +6,7 @@
     .controller('LoginController', LoginController);
 
   /*@ngInject*/
-  function LoginController($scope, $rootScope, User, Vendors, $state, AlertService, DashboardSrv, $config, $uibModal, $location, $auth) {
+  function LoginController($scope, $rootScope, User, Vendors, $state, AlertService, DashboardSrv, $config, $uibModal, $location, $auth, Util) {
 
     document.querySelector('body').style.paddingTop = '0';
 
@@ -30,18 +30,8 @@
     ];
 
 */
-
-    var images = [
-      'images/bg/pic1.jpg',
-      'images/bg/pic2.jpg',
-      'images/bg/pic3.jpg',
-      'images/bg/pic4.jpg',
-      'images/bg/pic5.jpg',
-    ];
-
-    $scope.randomImage = images[Math.floor(Math.random() * images.length)];
     $scope.randomImageStyle = {
-      'background-image': 'url(' + $scope.randomImage + ')'
+      'background-image': 'url(' + Util.getRandomImageURL() + ')'
     };
     $scope.authenticate = function(provider) {
       User.authenticate(provider)

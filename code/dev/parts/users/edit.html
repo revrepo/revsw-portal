@@ -186,6 +186,23 @@
             </div>
           </div>
           <hr>
+          <div class="row">
+            <div class="col-sm-2 margin-sm-top-bottom">
+              <strong>Invitation Status</strong>
+            </div>
+            <div class="col-sm-10">
+                <div class="ng-cloak" ng-hide="userInvitationDone(model)">
+                    <span class="label label-danger">Not finished</span>
+                    <button class="btn btn-primary btn-sm" ng-model="model.resendInvitationBtn" ng-class="{'btn-disabled':isReadOnly()}"  type="button" ng-disabled="userInvitationCooldown(model) || userInvitationDone(model) || isReadOnly() || resendDisabled" ng-click="resendInvite(model)">
+                      Resend invitation
+                      </button>
+                  </div>
+                  <div class="ng-cloak" ng-hide="!userInvitationDone(model)">
+                      <span class="label label-success">Finished</span>
+                    </div>
+            </div>
+            </div>
+          <hr>
           <div class="form-group" ng-class="{ 'has-error': editForm.comment.$invalid && editForm.comment.$dirty }">
             <label for="comment" class="col-sm-2 control-label">Comment</label>
             <div class="col-sm-10">
