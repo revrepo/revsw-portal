@@ -166,8 +166,11 @@
           Admin
           <i ng-click="expandMenu('index.accountSettings', $event)" class="pull-right {{ menuExpanded('index.accountSettings') ? 'fa fa-caret-up' : 'fa fa-caret-down' }}"></i>
         </a>
+        <a ui-sref-active="active" ui-sref="index.accountSettings.groups" class="side-menu-sub-item" ng-if="userService.isRevadmin()">
+            <i class="sub-menu-icon fa fa-users"></i> Groups
+          </a>
         <a ui-sref-active="active" ui-sref="index.accountSettings.users" class="side-menu-sub-item" ng-if="!userService.isUser()">
-            <i class="sub-menu-icon fa fa-users"></i> Users
+            <i class="sub-menu-icon fa fa-user"></i> Users
           </a>
         <a ui-sref-active="active" ui-sref="index.accountSettings.companies" class="side-menu-sub-item" ng-if="userService.isReseller() || userService.isRevadmin()">
             <i class="sub-menu-icon fa fa-list-alt"></i> Accounts</a>

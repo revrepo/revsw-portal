@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -8,7 +8,7 @@
   /*@ngInject*/
   function UsersCrudController($scope, $q, CRUDController, Users,
     User, $injector, $state, $stateParams, Companies,
-    DomainsConfig, $anchorScroll, $config, Invitation) {
+    DomainsConfig, $anchorScroll, $config, Invitation, Groups) {
 
     //Invoking crud actions
     $injector.invoke(CRUDController, this, {
@@ -32,7 +32,7 @@
     $scope.USER_LAST_NAME = $config.PATTERNS.USER_LAST_NAME;
     $scope.STREET_ADDRESS = $config.PATTERNS.STREET_ADDRESS;
     $scope.NO_SPECIAL_CHARS = $config.PATTERNS.NO_SPECIAL_CHARS;
-    $scope.COMMENT_NO_SPECIAL_CHARS = $config.PATTERNS.COMMENT_NO_SPECIAL_CHARS;    
+    $scope.COMMENT_NO_SPECIAL_CHARS = $config.PATTERNS.COMMENT_NO_SPECIAL_CHARS;
     $scope.resendDisabled = true;
 
     $scope.roles = ['user', 'admin'];
@@ -48,6 +48,7 @@
       managedAccountIds: []
     };
     $scope.domains = [];
+    $scope.groups = [];
 
     if (!$scope.model) {
       initModel();
@@ -82,26 +83,26 @@
      */
     function dependencies() {
       return $q.all([
-          Companies.query().$promise,
-          DomainsConfig.query().$promise
-        ])
-        .then(function(dataRefs) {
-          $scope.companies = _.sortBy(dataRefs[0],'companyName');
+        Companies.query().$promise,
+        DomainsConfig.query().$promise
+      ])
+        .then(function (dataRefs) {
+          $scope.companies = _.sortBy(dataRefs[0], 'companyName');
           $scope.domains = _.sortBy(dataRefs[1], 'domain_name');
           updateListManageAccounts();
           return dataRefs;
         });
     }
 
-    $scope.clearForm = function() {
+    $scope.clearForm = function () {
       $scope.clearModel();
       $scope.initNew(true); // send true to reinit the model
     };
 
-    $scope.initNew = function(reinit) {
+    $scope.initNew = function (reinit) {
       initModel(reinit);
       if ($scope.auth.isReseller() || $scope.auth.isRevadmin()) {
-        dependencies().then(function(data) {
+        dependencies().then(function (data) {
           $scope.setDefaultAccountId();
         });
       } else {
@@ -118,21 +119,21 @@
     function applyValidationDomainNames() {
       var domains = [];
       if (angular.isArray($scope.model.companyId)) {
-        angular.forEach($scope.model.companyId, function(account_id) {
+        angular.forEach($scope.model.companyId, function (account_id) {
           angular.forEach(_.findByValues($scope.domains, 'account_id', account_id)
-            .map(function(item) {
+            .map(function (item) {
               return item.domain_name;
             }),
-            function(item) {
+            function (item) {
               domains.push(item);
             });
         });
-        angular.forEach($scope.model.managed_account_ids, function(account_id) {
+        angular.forEach($scope.model.managed_account_ids, function (account_id) {
           angular.forEach(_.findByValues($scope.domains, 'account_id', account_id)
-            .map(function(item) {
+            .map(function (item) {
               return item.domain_name;
             }),
-            function(item) {
+            function (item) {
               domains.push(item);
             });
         });
@@ -159,21 +160,21 @@
       if (!companyId || companyId.length <= 1) {
         return;
       }
-      $scope.model.managed_account_ids = _.filter($scope.model.managed_account_ids, function(item) {
+      $scope.model.managed_account_ids = _.filter($scope.model.managed_account_ids, function (item) {
         return (item !== companyId);
       });
 
     }
 
 
-    $scope.getUser = function(id) {
+    $scope.getUser = function (id) {
       $scope._loading = true;
       $scope.get(id)
         .then(dependencies)
-        .then(function() {
+        .then(function () {
           $scope.model.managed_account_ids = angular.copy($scope.model.companyId);
           $scope.model.managed_account_ids.shift();
-          $scope.vm.managedAccountIds = _.filter($scope.companies, function(item) {
+          $scope.vm.managedAccountIds = _.filter($scope.companies, function (item) {
             return (($scope.model.companyId.indexOf(item.id) > -1) || ($scope.model.managed_account_ids.indexOf(item.id) > -1));
           });
           $scope.model.companyId.length = 1;
@@ -181,7 +182,7 @@
           return $scope.model;
         })
         .catch($scope.alertService.danger)
-        .finally(function() {
+        .finally(function () {
           $scope._loading = false;
         });
     };
@@ -194,13 +195,13 @@
      * @param  {[type]} model [description]
      * @return {[type]}       [description]
      */
-    $scope.deleteUser = function(model) {
+    $scope.deleteUser = function (model) {
       if ($scope.isReadOnly() === true) {
         return;
       }
       model.id = model.user_id; // NOTE: extend model for CRUD Controller operation
       $scope.confirm('confirmModal.html', model)
-        .then(function() {
+        .then(function () {
           $scope
             .delete(model)
             .then($scope.alertService.success)
@@ -211,7 +212,7 @@
      * @name prepareUserDataForUpdate
      * @param {Object}
      */
-    $scope.prepareUserDataForUpdate = function(model_current) {
+    $scope.prepareUserDataForUpdate = function (model_current) {
       var model;
       if (model_current.toJSON === undefined) {
         model = _.clone(model_current, true);
@@ -225,16 +226,17 @@
       return model;
     };
 
-    $scope.updateUser = function(model) {
+    $scope.updateUser = function (model) {
       if (!model) {
         return;
       }
       // copy user id
       model.id = model.user_id;
+      model.group_id = model.group;
       model = $scope.prepareUserDataForUpdate(model);
       $scope
         .update(model)
-        .then(function(data) {
+        .then(function (data) {
           // NOTE: update current user info
           if (model.user_id === User.getUser().user_id) {
             User.reloadUser();
@@ -244,7 +246,7 @@
         .catch($scope.alertService.danger);
     };
 
-    $scope.getRelativeDate = function(datetime) {
+    $scope.getRelativeDate = function (datetime) {
       return moment.utc(datetime).fromNow();
     };
     /**
@@ -254,7 +256,7 @@
      * @param  {Object} model [description]
      * @return
      */
-    $scope.createUser = function(model, isStay) {
+    $scope.createUser = function (model, isStay) {
       if (!model) {
         return;
       }
@@ -267,7 +269,7 @@
 
       delete _model.account_id;
       $scope.create(_model, isStay)
-        .then(function(data) {
+        .then(function (data) {
           initModel(true);
           if (angular.isArray($scope.model.companyId)) {
             $scope.model.companyId.length = 0;
@@ -282,7 +284,7 @@
         .catch($scope.alertService.danger);
     };
 
-    $scope.disableSubmit = function(model, isEdit) {
+    $scope.disableSubmit = function (model, isEdit) {
       if ((User.isRevadmin() || User.isReseller()) && !model.companyId || (model.companyId && model.companyId.length === 0)) {
         return true;
       }
@@ -305,7 +307,13 @@
     };
 
     // Fetch list of users
-    $scope.$on('$stateChangeSuccess', function(state) {
+    $scope.$on('$stateChangeSuccess', function (state) {
+      // Fetch and set groups
+      Groups.query().$promise.then(function (data) {
+        $scope.groups = data || [];
+        // select the current group
+        $scope.model.group = $scope.model.group_id || 'null';
+      });
       var data = null;
       // NOTE: set filter params for specific state
       if ($state.is('index.accountSettings.accountresources')) {
@@ -323,7 +331,7 @@
           if ($scope.auth.isReseller() || $scope.auth.isRevadmin()) {
             // NOTE: set companies(account) name (must be aplay method "dependencies" first)
             var list = $scope.companies;
-            _.forEach($scope.records, function(item) {
+            _.forEach($scope.records, function (item) {
               if (item.companyId.length === 1) {
                 var index = _.findIndex(list, {
                   id: item.companyId[0]
@@ -334,7 +342,7 @@
               } else {
                 if (item.companyId.length > 1) {
                   item.companyName = '';
-                  angular.forEach(item.companyId, function(account_id, key) {
+                  angular.forEach(item.companyId, function (account_id, key) {
                     var index = _.findIndex(list, {
                       id: account_id
                     });
@@ -353,9 +361,9 @@
             return $q.when();
           }
         })
-        .then(function() {
+        .then(function () {
           if ($scope.elementIndexForAnchorScroll && !$state.is('index.accountSettings.accountresources')) {
-            setTimeout(function() {
+            setTimeout(function () {
               $anchorScroll('anchor' + $scope.elementIndexForAnchorScroll);
               $scope.$digest();
             }, 500);
@@ -365,8 +373,8 @@
 
     // NOTE: mixin lodash for find objects
     _.mixin({
-      'findByValues': function(collection, property, values) {
-        return _.filter(collection, function(item) {
+      'findByValues': function (collection, property, values) {
+        return _.filter(collection, function (item) {
           return _.contains(values, item[property]);
         });
       }
@@ -378,25 +386,25 @@
      * @param  {[type]} account_id [description]
      * @return {Array}            [description]
      */
-    $scope.getAccountsDomainNameList = function() {
+    $scope.getAccountsDomainNameList = function () {
       var domains = [];
       var account_id = $scope.model.companyId || $scope.model.account_id;
       if (angular.isArray(account_id)) {
-        angular.forEach(account_id, function(account_id) {
+        angular.forEach(account_id, function (account_id) {
           angular.forEach(_.findByValues($scope.domains, 'account_id', account_id)
-            .map(function(item) {
+            .map(function (item) {
               return item;
             }),
-            function(item) {
+            function (item) {
               domains.push(item);
             });
         });
-        angular.forEach($scope.model.managed_account_ids, function(account_id) {
+        angular.forEach($scope.model.managed_account_ids, function (account_id) {
           angular.forEach(_.findByValues($scope.domains, 'account_id', account_id)
-            .map(function(item) {
+            .map(function (item) {
               return item;
             }),
-            function(item) {
+            function (item) {
               domains.push(item);
             });
         });
@@ -405,26 +413,26 @@
       return _.sortBy(_.uniq(domains), 'domain_name');
     };
 
-    $scope.getCompaniesManageList = function() {
+    $scope.getCompaniesManageList = function () {
       var companies = [];
       var account_id = $scope.model.companyId || $scope.model.account_id;
-      return _.sortBy(_.filter($scope.companies, function(item) {
-        if(!!account_id && account_id.indexOf(item.id) > -1) {
+      return _.sortBy(_.filter($scope.companies, function (item) {
+        if (!!account_id && account_id.indexOf(item.id) > -1) {
           return false;
         }
         if (!!$scope.model.managed_account_ids && $scope.model.managed_account_ids.indexOf(item.id) > -1) {
           return false;
         }
         return true;
-      }),'companyName');
+      }), 'companyName');
     };
 
-    $scope.storeToStorage = function(model) {
+    $scope.storeToStorage = function (model) {
       $localStorage.selectedUser = model;
     };
 
     // NOTE: watch on change companyId for update available domain names
-    $scope.$watch('model.companyId', function(newVal, oldVal) {
+    $scope.$watch('model.companyId', function (newVal, oldVal) {
       if (newVal !== undefined && oldVal !== undefined) {
         applyValidationDomainNames(); // NOTE: clean selected domain
         updateListManageAccounts({
@@ -433,16 +441,16 @@
       }
     }, true);
 
-    $scope.$watch('vm.managedAccountIds', function(newVal, oldVal) {
+    $scope.$watch('vm.managedAccountIds', function (newVal, oldVal) {
       if (newVal !== undefined && oldVal !== undefined && newVal !== oldVal) {
         applyValidationDomainNames(); // NOTE: clean selected domain
-        $scope.model.managed_account_ids = _.map($scope.vm.managedAccountIds, function(item) {
+        $scope.model.managed_account_ids = _.map($scope.vm.managedAccountIds, function (item) {
           return item.id;
         });
       }
     });
 
-    $scope.$watch('model.role', function(newVal, oldVal) {
+    $scope.$watch('model.role', function (newVal, oldVal) {
       if (newVal !== undefined && oldVal !== undefined) {
         if (((newVal === 'reseller' && oldVal !== '') || oldVal === 'reseller') && angular.isArray($scope.model.companyId)) {
           $scope.model.companyId.length = 0;
@@ -452,7 +460,7 @@
       }
     });
 
-    $scope.onOneAccountSelect = function(model) {
+    $scope.onOneAccountSelect = function (model) {
       if (angular.isArray($scope.model.companyId)) {
         $scope.model.companyId.length = 1;
       } else {
@@ -463,12 +471,12 @@
 
     $scope.userInvitationDone = function (model) {
       return model.invitation_token === null;
-    };    
+    };
 
     $scope.resendInvite = function (model, el) {
       $scope._loading = true;
       $scope.resendDisabled = true;
-      Invitation.resendInvitation({id: model.user_id}).$promise.then(function (res) {
+      Invitation.resendInvitation({ id: model.user_id }).$promise.then(function (res) {
         $scope._loading = false;
         if (res.statusCode === 200) {
           $scope.alertService.success('Successfully resent the invitation token');
@@ -476,11 +484,11 @@
           $scope.resendDisabled = false;
         }
       })
-      .catch(function (err) {
-        $scope.resendDisabled = false;
-        $scope._loading = false;
-        $scope.alertService.danger(err);
-      });
+        .catch(function (err) {
+          $scope.resendDisabled = false;
+          $scope._loading = false;
+          $scope.alertService.danger(err);
+        });
     };
 
   }
