@@ -308,12 +308,6 @@
 
     // Fetch list of users
     $scope.$on('$stateChangeSuccess', function (state) {
-      // Fetch and set groups
-      Groups.query().$promise.then(function (data) {
-        $scope.groups = data || [];
-        // select the current group
-        $scope.model.group = $scope.model.group_id || 'null';
-      });
       var data = null;
       // NOTE: set filter params for specific state
       if ($state.is('index.accountSettings.accountresources')) {
@@ -489,6 +483,15 @@
           $scope._loading = false;
           $scope.alertService.danger(err);
         });
+    };
+
+    $scope.setGroups = function () {
+      // Fetch and set groups
+      Groups.query().$promise.then(function (data) {
+        $scope.groups = data || [];
+        // select the current group
+        $scope.model.group = $scope.model.group_id || 'null';
+      });
     };
 
   }
