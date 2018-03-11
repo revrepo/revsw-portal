@@ -1,0 +1,112 @@
+<!-- Note that element contain ui-view child page will be added here -->
+<script type="text/ng-template" id="confirmModal.html">
+  <div class="modal-header">
+    <h3 class="modal-title">Confirm</h3>
+  </div>
+  <div class="modal-body">
+    Are you sure you want to delete Group
+    <strong>({{model.name}})</strong>?
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+    <button class="btn btn-danger" type="button" ng-click="ok()">OK</button>
+  </div>
+</script>
+
+<div class="container-fluid" ui-view="page">
+  <div class="row">
+    <div class="col-sm-12">
+      <h2 class="pull-left page-title">
+        Groups List
+      </h2>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="pull-left">
+                <a ui-sref="{{isReadOnly() ?'.': '.new'}}" class="btn btn-success" ng-class="{'btn-disabled':isReadOnly()}" ng-disabled="_loading || isReadOnly()">
+                  <i class="glyphicon glyphicon-plus"></i>&nbsp; Add New Group
+                </a>
+              </div>
+
+              <div class="pull-right">
+                <list-filter></list-filter>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="panel-body">
+          <div class="alert alert-info" ng-if="groups.length == 0 && !_loading">
+            Currently you don't have any Groups registered in the system. You can click on "Add New Group" button above to add a Group.
+          </div>
+          <div class="alert alert-warning" ng-if="groups == null && !_loading">
+            Failed to retrieve a list of resources - please try again later
+          </div>
+          <div class="alert alert-info" ng-if="_loading && filteredRecords.length === 0">
+            <i class="glyphicon glyphicon-refresh spin"></i>&nbsp; Loading...
+          </div>
+          <crud-pagination></crud-pagination>
+          <div class="table-responsive">
+            <table class="table Groups-list">
+              <thead>
+                <tr>
+                  <th>
+                    <a href="" ng-click="order('groupname')">Group Name</a>
+                    <span class="sortorder" ng-show="filter.predicate === 'groupname'" ng-class="{reverse: filter.reverse}"></span>
+                  </th>
+                  <th>
+                    <a href="" ng-click="order('groupcount')">Users in group</a>
+                    <span class="sortorder" ng-show="filter.predicate === 'groupcount'" ng-class="{reverse: filter.reverse}"></span>
+                  </th>
+                  <th>
+                    <a href="" ng-click="order('updated_at')">Last Update</a>
+                    <span class="sortorder" ng-show="filter.predicate === 'updated_at'" ng-class="{reverse: filter.reverse}"></span>
+                  </th>
+                  <th>Actions</th>
+                  <th class="account" ng-if="auth.isReseller() || auth.isRevadmin()">
+                    <a href="" ng-click="order('account_id')">Account</a>
+                    <span class="sortorder" ng-show="filter.predicate === 'account_id'" ng-class="{reverse: filter.reverse}"></span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="Group in filteredRecords | limitTo:filter.limit:filter.skip track by $index" id="anchor{{::$index}}" ng-click="saveAnchorScrollIndex($index)">
+                  <td>
+                    <a ui-sref=".edit({id: Group.group_id})" ng-if="!item.loading" uib-tooltip="Edit Group Profile">
+                      {{Group.name}}
+                    </a>
+                  </td>
+                  <td>
+                    {{Group.userCount}}
+                  </td>
+                  <td>{{ getRelativeDate(Group.updated_at) }}</td>
+                  <td class="actions">
+                    <a ui-sref=".edit({id: Group.group_id})" uib-tooltip="Edit Group Profile">
+                      <i class="glyphicon glyphicon-pencil"></i>
+                    </a>
+                    <a href="" ng-click="deleteGroup(Group)" ng-class="{'disabled':isReadOnly()}" uib-tooltip="Delete Group">
+                      <i class="glyphicon glyphicon-trash"></i>
+                    </a>
+                  </td>
+                  <td ng-if="auth.isReseller() ||  auth.isRevadmin()">
+                    <a href="" ng-click="onGoToAccountInformation($event, Group)" ng-if="!item.loading" tooltip-placement="left" tooltip-append-to-body="{{true}}"
+                      uib-tooltip="View Account Resources">
+                      <div class="company-names">{{Group.accountName}}</div>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <hr>
+          <crud-pagination></crud-pagination>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

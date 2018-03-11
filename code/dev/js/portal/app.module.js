@@ -5,6 +5,7 @@
     'revapm.Portal.Auth',
     'revapm.Portal.Profile',
     'revapm.Portal.Users',
+    'revapm.Portal.Groups',
     'revapm.Portal.Domains',
     'revapm.Portal.SSL_certs',
     'revapm.Portal.SSLNames',
