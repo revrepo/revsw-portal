@@ -1,0 +1,79 @@
+@darkbg: #e5e5e5;
+@green-success: #5CB85C;
+.checkbox-list{
+
+    margin: 15px 0;
+
+    .ui-select-multiple.ui-select-bootstrap, input.ui-select-search {
+        width: 95%;
+    }
+
+    input[type="radio"] {
+        margin-left: 0;
+    }
+
+    .item-list{
+        padding: 10px 20px;
+        display: inline-block;
+        background: @darkbg;
+        border-top-left-radius: 0;
+        border-radius: 5px;
+
+        .items {
+            padding: 0;
+            list-style: none;
+
+            li {
+                margin: 5px 0;
+                padding: 5px;
+                border-radius: 5px;
+                color: #fff;
+                position: relative;
+
+                i {
+                    position: absolute;
+                    right: 5px;
+                    top: 25%;
+                }
+                &.allow {
+                    background: @green-success;
+                }
+
+                &.deny {
+                    background: #D9534F;
+                }
+            }
+
+            .blank-list {
+                color: #333;
+                font-size: 12px;
+            }
+        }
+    }
+    
+    span.bg-dark {
+        background: @darkbg;
+        border-radius: 5px;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        padding: 10px 10px 10px 0;
+    }
+
+    // fix for red border after item is added to list
+    .ng-dirty.ng-invalid>a.select2-choice {
+        border-color: initial;
+    }
+
+    .btn-success {
+        background: @green-success;
+        border-color: @green-success;
+
+        &:hover {
+            background: @green-success;
+        }
+    }
+}
+
+.permissions .col-sm-6 {
+    padding: 0;
+}

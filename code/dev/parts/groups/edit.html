@@ -1,11 +1,11 @@
-<div class="row">
+<div class="row" ng-init="setGroup(params.id)">
   <div class="col-sm-12">
     <h2 class="pull-left page-title">
-      Edit User
+      Edit Group
     </h2>
   </div>
 </div>
-<div class="row" ng-init="getUser(params.id)">
+<div class="row">
   <div class="col-md-12">
     <div class="panel panel-default">
       <div class="panel-heading">
@@ -20,200 +20,410 @@
         </div>
       </div>
       <div class="panel-body">
-        <form class="form-horizontal form--user" name="editForm" novalidate>
-          <div class="form-group" ng-class="{'has-error': editForm.email.$invalid && editForm.email.$dirty}">
-            <label for="email" class="col-sm-2 control-label">Email *</label>
+        <form name="createForm" class="form-horizontal form--Group" confirm-on-exit novalidate>
+          <div class="form-group" ng-class="{'has-error': createForm.name.$invalid && createForm.name.$dirty}">
+            <label for="name" class="col-sm-2 control-label">Name *</label>
             <div class="col-sm-10">
-              <input type="text" autofocus class="form-control inline-block" id="email" placeholder="Email" ng-model="model.email" disabled required>
-              <label for="email" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="The user's email address is also the user's login name to the portal">
+              <input type="text" autofocus class="form-control inline-block" id="name" name="name" placeholder="Name" ng-model="model.name"
+                ng-maxlength="64" ng-disabled="_loading" required>
+              <label for="name" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="New Group's name.">
                 <i class="fa fa-question-circle"></i>
               </label>
-            </div>
-          </div>
-          <div class="form-group" ng-class="{'has-error': editForm.firstName.$invalid && editForm.firstName.$dirty}">
-            <label for="firstName" class="col-sm-2 control-label">First Name *</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control inline-block" id="firstname" name="firstName" placeholder="First Name" ng-model="model.firstname" ng-disabled="_loading" ng-maxlength="30" ng-pattern="USER_FIRST_NAME" required>
-              <label for="firstname" class="text text-info" popover-trigger="mouseenter" uib-popover="First name (30 characters max)">
-                <i class="fa fa-question-circle"></i>
-              </label>
-              <div class="error-messages" ng-messages="editForm.firstName.$error" role="alert" ng-messages-multiple>
+              <div class="error-messages" ng-messages="createForm.name.$error" role="alert" ng-messages-multiple>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
               </div>
             </div>
           </div>
-          <div class="form-group" ng-class="{'has-error': editForm.lastName.$invalid && editForm.lastName.$dirty}">
-            <label for="lastName" class="col-sm-2 control-label">Last Name *</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control inline-block" id="lastName" name="lastName" placeholder="Last Name" ng-model="model.lastname" ng-disabled="_loading" ng-maxlength="30" ng-pattern="USER_LAST_NAME" required="">
-              <label for="lastName" class="text text-info" popover-trigger="mouseenter" uib-popover="Last name (30 characters max)">
-                <i class="fa fa-question-circle"></i>
-              </label>
-              <div class="error-messages" ng-messages="editForm.lastName.$error" role="alert" ng-messages-multiple>
-                <div ng-messages-include="parts/shared/error-messages.html"></div>
-              </div>
-            </div>
-          </div>
-          <div class="form-group" ng-class="{'has-error': editForm.role.$invalid && editForm.role.$dirty}">
-            <label for="role" class="col-sm-2 control-label">Role *</label>
-            <div class="col-sm-10">
-              <select class="form-control inline-block" id="role" name="role" ng-model="model.role" ng-options="role for role in roles" required>
-                <option value="">--- Select Role ---</option>
-              </select>
-              <label for="role" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Select here the user's role in management of the account">
-                <i class="fa fa-question-circle"></i>
-              </label>
-              <div class="error-messages" ng-messages="editForm.role.$error" role="alert" ng-messages-multiple>
-                <div ng-messages-include="parts/shared/error-messages.html"></div>
-              </div>
-            </div>
-          </div>
-          <div class="form-group" ng-class="{'has-error': editForm.accountId.$invalid && editForm.accountId.$dirty}" ng-if="auth.isReseller() || auth.isRevadmin()">
+          <div class="form-group" ng-class="{'has-error': createForm.accountId.$invalid && createForm.accountId.$dirty}" ng-if="auth.isReseller() || auth.isRevadmin()">
             <label for="company" class="col-sm-2 control-label">Account *</label>
             <div class="col-sm-10">
-              <!-- Select only one account. Each user must have one main account.-->
-              <span ng-show="!_loading && companies.length==0" class="loader--waite-company"><i class="glyphicon glyphicon-refresh spin"></i> Please wait...</span>
-              <ui-select ng-if="!_loading && companies.length>0 && !!model.companyId" ng-animate-disabled theme="select2" ng-disabled="_loading" ng-model="model.companyId[0]" id="company" name="accountId" on-select="onOneAccountSelect($model)">
+              <span ng-show="!_loading && companies.length==0" class="loader--waite-company">
+                <i class="glyphicon glyphicon-refresh spin"></i> Please wait...</span>
+              <ui-select ng-if="!_loading && companies.length>0" ng-animate-disabled theme="select2" ng-disabled="_loading" ng-model="model.account_id"
+                id="company" name="accountId">
                 <ui-select-match placeholder="Select Account">{{$select.selected.companyName}}</ui-select-match>
                 <ui-select-choices repeat="item.id as  item in companies | filter: {companyName: $select.search}">
                   <div ng-bind-html="item.companyName|highlight: $select.search"></div>
                 </ui-select-choices>
               </ui-select>
-              <!-- TODO: delete after check!!! ==> "reseller" multiple select accounts-->
-              <!-- <ui-select ng-if="!_loading && companies.length>0 && model.role=='reseller'" multiple ng-animate-disabled theme="bootstrap" class="form-control inline-block" ng-disabled="_loading" ng-model="model.companyId" id="company" name="accountId" on-select="onAccountSelect($model)">
-                <ui-select-match placeholder="Add account...">{{$item.companyName}}</ui-select-match>
-                <ui-select-choices repeat="item.id as  item in companies | filter: {companyName: $select.search}">
-                  <div ng-bind-html="item.companyName|highlight: $select.search"></div>
-                </ui-select-choices>
-              </ui-select> -->
-              <label for="company" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Select here an account the user should be associated with">
+              <label for="company" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Select here account the Group should be associated with">
                 <i class="fa fa-question-circle"></i>
               </label>
-              <a ui-sref="index.accountSettings.companies" class="btn btn-sm btn-primary" uib-tooltip="Manage Accounts" ng-disabled="_loading"><i class="fa fa-list-alt"></i> Manage Accounts</a>
-              <div class="error-messages" ng-messages="editForm.accountId.$error" role="alert" ng-messages-multiple>
-                <div ng-messages-include="parts/shared/error-messages.html"></div>
-              </div>
-            </div>
-          </div>
-          <!-- For "reseller" multiple select additional accounts (managed_account_ids)-->
-          <div class="form-group" ng-if="!_loading && companies.length>0 && model.role=='reseller' && (auth.isReseller() || auth.isRevadmin())" ng-class="{'has-error': editForm.managedAccountIds.$invalid && editForm.managedAccountIds.$dirty}">
-            <label for="account_id" class="col-sm-2 control-label">Additional Accounts To Manage</label>
-            <div class="col-sm-10">
-              <span ng-show="_loading && companies.length>0" class="loader--waite-company">
-                <i class="glyphicon glyphicon-refresh spin"></i> Please wait...</span>
-              <ui-select class="inline-block" multiple="true" ng-animate-disabled theme="bootstrap" ng-model="vm.managedAccountIds" ng-disabled="_loading"
-                style="min-width: 550px;" id="managed_account_ids" name="managedAccountIds" ng-if="!_loading && companies.length>0">
-                <ui-select-match placeholder="Add account to manage ...">{{$item.companyName}}</ui-select-match>
-                <ui-select-choices repeat="item  as item  in getCompaniesManageList()| filter: {companyName: $select.search, id:'!'+ model.companyId[0]}">
-                  <div ng-bind-html="item.companyName|highlight: $select.search"></div>
-                </ui-select-choices>
-              </ui-select>
-              <label for="domains" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Specify here any additional accounts the user should be allowed to manage">
-                <i class="fa fa-question-circle"></i>
-              </label>
-              <div class="error-messages" ng-messages="editForm.accountId.$error" role="alert" ng-messages-multiple>
-                <div ng-messages-include="parts/shared/error-messages.html"></div>
-              </div>
-            </div>
-          </div>
-          <div class="form-group" ng-class="{'has-error': editForm.domain.$invalid && editForm.domain.$dirty}">
-            <label for="domain" class="col-sm-2 control-label">Domains</label>
-            <div class="col-sm-10">
-              <span ng-show="!_loading && (getAccountsDomainNameList().length==0 && companies.length==0)"><i class="glyphicon glyphicon-refresh spin"></i> Please wait...</span>
-              <ui-select multiple ng-show="!_loading && (getAccountsDomainNameList().length>0 || companies.length>0)" theme="bootstrap" class="form-control inline-block" ng-disabled="_loading" ng-model="model.domain" id="domain" name="domain">
-                <ui-select-match placeholder="{{domainPlaceholder}}">{{$item.domain_name}}</ui-select-match>
-                <ui-select-choices repeat="item.domain_name as item  in getAccountsDomainNameList()| filter: {domain_name: $select.search}">
-                  <span ng-bind-html="item.domain_name|highlight: $select.search"></span>
-                </ui-select-choices>
-              </ui-select>
-              <label for="domain" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Select domain names the user should be allowed to manage">
-                <i class="fa fa-question-circle"></i>
-              </label>
-              <div class="error-messages" ng-messages="editForm.domain.$error" role="alert" ng-messages-multiple>
-                <div ng-messages-include="parts/shared/error-messages.html"></div>
-              </div>
+              <a ui-sref="index.accountSettings.companies" class="btn btn-sm btn-primary" id="btn-manage-accounts" uib-tooltip="Manage Accounts"
+                ng-disabled="_loading">
+                <i class="fa fa-list-alt"></i> Manage Accounts</a>
             </div>
           </div>
           <hr>
-          <div class="form-group">
-            <label for="access_control_list" class="col-sm-2 control-label">Access Control List</label>
-            <div class="col-sm-10">
-
-<!--
-              <div>
-                <input type="checkbox" name="access_control_list_dashBoard" class="inline-block" disabled ng-model="model.access_control_list.dashBoard"> Dashboard
-                <label for="access_control_list_dashBoard" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="TODO text Set here the new user's access control permissions">
-                  <i class="fa fa-question-circle"></i>
-                </label>
-              </div>
-              <div>
-                <input type="checkbox" name="access_control_list_reports" class="inline-block" ng-model="model.access_control_list.reports"> Reports
-                <label for="access_control_list_reports" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="TODO text">
-                  <i class="fa fa-question-circle"></i>
-                </label>
-              </div>
-              <div>
-                <input type="checkbox" name="access_control_list_configure" class="inline-block" ng-model="model.access_control_list.configure"> Configure
-                <label for="access_control_list_configure" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="TODO text">
-                  <i class="fa fa-question-circle"></i>
-                </label>
-              </div>
-              <div>
-                <input type="checkbox" name="access_control_list_test" class="inline-block" ng-model="model.access_control_list.test"> Test
-                <label for="access_control_list_test" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="TODO text">
-                  <i class="fa fa-question-circle"></i>
-                </label>
-              </div>
--->
-              <div>
-                <input type="checkbox" name="access_control_list_readOnly" class="inline-block" ng-model="model.access_control_list.readOnly"> Read Only
-                <label for="access_control_list_readOnly" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Enables read-only access for the user account (the user still can change his password, enabled/disable 2FA and manage dashboards)">
-                  <i class="fa fa-question-circle"></i>
-                </label>
-              </div>
+          <div class="form-group permissions">
+            <label for="access_control_list" class="col-sm-2 control-label">Permissions</label>
+            <div class="col-sm-10" ng-show="_loading || !model || !apps || !domains || !dnsZones || !companies">
+              <i class="glyphicon glyphicon-refresh spin"></i> Please wait...
             </div>
-          </div>
-          <hr>
-          <div class="row">
-            <div class="col-sm-2 margin-sm-top-bottom">
-              <strong>Two-Factor Authentication</strong>
-            </div>
-            <div class="col-sm-10" ng-class="{'has-error': editForm.email.$invalid && editForm.email.$dirty}">
-              <div disable-two-factor-auth ng-user-id="params.id" class="inline-block"></div>
-              <label for="disable-two-factor-auth" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Shows the current status of 2FA configuration for the user">
-                <i class="fa fa-question-circle"></i>
-              </label>
-            </div>
-          </div>
-          <hr>
-          <div class="row">
-            <div class="col-sm-2 margin-sm-top-bottom">
-              <strong>Invitation Status</strong>
-            </div>
-            <div class="col-sm-10">
-                <div class="ng-cloak" ng-hide="userInvitationDone(model)">
-                    <span class="label label-danger">Not finished</span>
-                    <button class="btn btn-primary btn-sm" ng-model="model.resendInvitationBtn" ng-class="{'btn-disabled':isReadOnly()}"  type="button" ng-disabled="userInvitationCooldown(model) || userInvitationDone(model) || isReadOnly() || resendDisabled" ng-click="resendInvite(model)">
-                      Resend invitation
-                      </button>
+            <div class="col-sm-4" ng-show="!_loading && model && apps && domains && dnsZones && companies">
+                <div class="col-sm-6">
+                    <input type="checkbox" name="permissions_read_only" class="inline-block" ng-model="model.permissions.read_only"> Read Only
+                    <label for="permissions_read_only" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
+                      uib-popover="Group has read-only access to resources (Users, Accounts, Domains etc...)">
+                      <i class="fa fa-question-circle"></i>
+                    </label>
                   </div>
-                  <div class="ng-cloak" ng-hide="!userInvitationDone(model)">
-                      <span class="label label-success">Finished</span>
+                  <div class="col-sm-6">
+                    <input type="checkbox" name="permissions_enforce_2fa" class="inline-block" ng-model="model.permissions.enforce_2fa"> Enforce 2FA
+                    <label for="permissions_enforce_2fa" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
+                      uib-popover="Enforce Two-Factor authentication.">
+                      <i class="fa fa-question-circle"></i>
+                    </label>
+                  </div>
+                  <div class="col-sm-6">
+                    <input ng-checked="true" type="checkbox" name="permissions_portal_login" class="inline-block" ng-model="model.permissions.portal_login"> Portal Login
+                    <label for="permissions_portal_login" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
+                      uib-popover="Allow group to login to the portal.">
+                      <i class="fa fa-question-circle"></i>
+                    </label>
+                  </div>
+                  <div class="col-sm-6">
+                    <input ng-checked="true" type="checkbox" name="permissions_API_access" class="inline-block" ng-model="model.permissions.API_access"> API Access
+                    <label for="permissions_API_access" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
+                      uib-popover="Allow group to access the API's endpoints.">
+                      <i class="fa fa-question-circle"></i>
+                    </label>
+                  </div>
+                  <div class="clearfix"></div>
+                  <hr>
+                  <div>
+                      <input ng-checked="true" type="checkbox" name="permissions_dashboards" class="inline-block" ng-model="model.permissions.dashboards"> Dashboards
+                      <label for="permissions_dashboards" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
+                        uib-popover="Allow group to manage dashboards.">
+                        <i class="fa fa-question-circle"></i>
+                      </label>
                     </div>
+              <div class="checkbox-list">
+                <span class="{{model.permissions.mobile_apps.access ? 'bg-dark' : null}}">
+                  <input ng-checked="true" type="checkbox" name="permissions_mobile_apps" class="inline-block bg-dark" ng-model="model.permissions.mobile_apps.access"> Mobile Apps
+                  <label for="permissions_mobile_apps" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
+                    uib-popover="Allow group to manage mobile apps.">
+                    <i class="fa fa-question-circle"></i>
+                  </label>
+                </span>
+                <br />
+                <div class="item-list" ng-show="model.permissions.mobile_apps.access">
+                  <span ng-show="(_loading || !apps || !apps.length) && model.permissions.mobile_apps.access" class="loader--waite-company">
+                    <i class="glyphicon glyphicon-refresh spin"></i> Please wait...</span>
+                  <ui-select on-select="addItemToList($item, 'mobile_apps')" on-remove="removeItemFromList($item, 'mobile_apps')" multiple
+                    tagging-tokens="SPACE|," theme="bootstrap" class="form-control inline-block" ng-if="apps && apps.length > 0"
+                    ng-disabled="_loading" ng-model="model.apps_list" id="apps_list ">
+                    <ui-select-match placeholder="Add a Mobile App to the list...">{{$item.app_name}}</ui-select-match>
+                    <ui-select-choices repeat="app  in  apps">
+                      {{app.app_name}}
+                    </ui-select-choices>
+                  </ui-select>
+                  <label for="apps_list" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Add apps to the list to control either to allow access to these apps or deny access">
+                    <i class="fa fa-question-circle"></i>
+                  </label>
+                  <input type="radio" ng-model="model.permissions.mobile_apps.allow_list" ng-checked="model.permissions.mobile_apps.allow_list"
+                    ng-value="true"> Allow access only to apps from this list
+                  <br />
+                  <input type="radio" ng-model="model.permissions.mobile_apps.allow_list" ng-checked="!model.permissions.mobile_apps.allow_list"
+                    ng-value="false"> Deny access only to apps from this list
+                </div>
+              </div>
+              <div>
+                  <input ng-checked="true" type="checkbox" name="permissions_mobile_analytics" class="inline-block" ng-model="model.permissions.mobile_analytics"> Mobile Analytics
+                  <label for="permissions_mobile_analytics" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
+                    uib-popover="Allow group to access mobile analytics.">
+                    <i class="fa fa-question-circle"></i>
+                  </label>
+                </div>
+              <div class="checkbox-list">
+                <span class="{{model.permissions.domains.access ? 'bg-dark' : null}}">
+                  <input ng-checked="true" type="checkbox" name="permissions_domains" class="inline-block bg-dark" ng-model="model.permissions.domains.access"> Domains
+                  <label for="permissions_domains" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Allow group to manage domains.">
+                    <i class="fa fa-question-circle"></i>
+                  </label>
+                </span>
+                <br />
+                <div class="item-list" ng-show="model.permissions.domains.access">
+                  <span ng-show="(_loading || !domains || !domains.length) && model.permissions.domains.access" class="loader--waite-company">
+                    <i class="glyphicon glyphicon-refresh spin"></i> Please wait...</span>
+                  <ui-select on-select="addItemToList($item, 'domains')" on-remove="removeItemFromList($item, 'domains')" multiple tagging-tokens="SPACE|,"
+                    theme="bootstrap" class="form-control inline-block" ng-if="domains && domains.length > 0" ng-disabled="_loading"
+                    ng-model="model.domains_list" id="domains_list ">
+                    <ui-select-match placeholder="Add a Domain to the list...">{{$item.domain_name}}</ui-select-match>
+                    <ui-select-choices repeat="domain  in  domains">
+                      {{domain.domain_name}}
+                    </ui-select-choices>
+                  </ui-select>
+                  <label for="domains_list" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Add domains to the list to control either to allow access to these domains or deny access">
+                    <i class="fa fa-question-circle"></i>
+                  </label>
+                  <input type="radio" ng-model="model.permissions.domains.allow_list" ng-checked="model.permissions.domains.allow_list" ng-value="true"> Allow access only to domains from this list
+                  <br />
+                  <input type="radio" ng-model="model.permissions.domains.allow_list" ng-checked="!model.permissions.domains.allow_list" ng-value="false"> Deny access only to domains from this list
+                </div>
+              </div>
+              <div class="checkbox-list">
+                <span class="{{model.permissions.web_analytics.access ? 'bg-dark' : null}}">
+                  <input ng-checked="true" type="checkbox" name="permissions_web_analytics" class="inline-block bg-dark" ng-model="model.permissions.web_analytics.access"> Web Analytics
+                  <label for="permissions_web_analytics" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
+                    uib-popover="Allow group to access web analytics.">
+                    <i class="fa fa-question-circle"></i>
+                  </label>
+                </span>
+                <br />
+                <div class="item-list" ng-show="model.permissions.web_analytics.access">
+                  <span ng-show="(_loading || !domains || !domains.length) && model.permissions.web_analytics.access" class="loader--waite-company">
+                    <i class="glyphicon glyphicon-refresh spin"></i> Please wait...</span>
+                  <ui-select on-select="addItemToList($item, 'web_analytics')" on-remove="removeItemFromList($item, 'web_analytics')" multiple
+                    tagging-tokens="SPACE|," theme="bootstrap" class="form-control inline-block" ng-if="domains && domains.length > 0"
+                    ng-disabled="_loading" ng-model="model.web_analytics_list" id="web_analytics_list ">
+                    <ui-select-match placeholder="Add a Domain to the list...">{{$item.domain_name}}</ui-select-match>
+                    <ui-select-choices repeat="domain  in  domains">
+                      {{domain.domain_name}}
+                    </ui-select-choices>
+                  </ui-select>
+                  <label for="web_analytics_list" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Add domains to the list to control either to allow access to these domains or deny access">
+                    <i class="fa fa-question-circle"></i>
+                  </label>
+                  <input type="radio" ng-model="model.permissions.web_analytics.allow_list" ng-checked="model.permissions.web_analytics.allow_list"
+                    ng-value="true"> Allow access only to domains from this list
+                  <br />
+                  <input type="radio" ng-model="model.permissions.web_analytics.allow_list" ng-checked="!model.permissions.web_analytics.allow_list"
+                    ng-value="false"> Deny access only to domains from this list
+                </div>
+              </div>
+              <div class="checkbox-list" style="margin-top: 15px;">
+                <span class="{{model.permissions.security_analytics.access ? 'bg-dark' : null}}">
+                  <input ng-checked="true" type="checkbox" name="permissions_sec_analytics" class="inline-block bg-dark" ng-model="model.permissions.security_analytics.access"> Security Analytics
+                  <label for="permissions_sec_analytics" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
+                    uib-popover="Allow group to access security analytics.">
+                    <i class="fa fa-question-circle"></i>
+                  </label>
+                </span>
+                <br />
+                <div class="item-list" ng-show="model.permissions.security_analytics.access">
+                  <span ng-show="(_loading || !domains || !domains.length) && model.permissions.security_analytics.access" class="loader--waite-company">
+                    <i class="glyphicon glyphicon-refresh spin"></i> Please wait...</span>
+                  <ui-select on-select="addItemToList($item, 'security_analytics')" on-remove="removeItemFromList($item, 'security_analytics')"
+                    multiple tagging-tokens="SPACE|," theme="bootstrap" class="form-control inline-block" ng-if="domains && domains.length > 0"
+                    ng-disabled="_loading" ng-model="model.security_analytics_list" id="security_analytics_list ">
+                    <ui-select-match placeholder="Add a Domain to the list...">{{$item.domain_name}}</ui-select-match>
+                    <ui-select-choices repeat="domain  in  domains | filter: {domain_name: $select.search}">
+                      {{domain.domain_name}}
+                    </ui-select-choices>
+                  </ui-select>
+                  <label for="security_analytics_list" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Add domains to the list to control either to allow access to these domains or deny access">
+                    <i class="fa fa-question-circle"></i>
+                  </label>
+                  <input type="radio" ng-model="model.permissions.security_analytics.allow_list" ng-checked="model.permissions.security_analytics.allow_list"
+                    ng-value="true"> Allow access only to domains from this list
+                  <br />
+                  <input type="radio" ng-model="model.permissions.security_analytics.allow_list" ng-checked="!model.permissions.security_analytics.allow_list"
+                    ng-value="false"> Deny access only to domains from this list
+                </div>
+              </div>
+              <div class="checkbox-list" style="margin-top: 15px;">
+                <span class="{{model.permissions.dns_zones.access ? 'bg-dark' : null}}">
+                  <input ng-checked="true" type="checkbox" name="permissions_dns_zones" class="inline-block bg-dark" ng-model="model.permissions.dns_zones.access"> DNS Zones
+                  <label for="permissions_dns_zones" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
+                    uib-popover="Allow group to access DNS Zones.">
+                    <i class="fa fa-question-circle"></i>
+                  </label>
+                </span>
+                <br />
+                <div class="item-list" ng-show="model.permissions.dns_zones.access">
+                  <span ng-show="(_loading || !dnsZones || !dnsZones.length) && model.permissions.dns_zones.access" class="loader--waite-company">
+                    <i class="glyphicon glyphicon-refresh spin"></i> Please wait...</span>
+                  <ui-select on-select="addItemToList($item, 'dns_zones')" on-remove="removeItemFromList($item, 'dns_zones')" multiple tagging-tokens="SPACE|,"
+                    theme="bootstrap" class="form-control inline-block" ng-if="dnsZones && dnsZones.length > 0" ng-disabled="_loading"
+                    ng-model="model.dns_zones_list" id="dns_zones_list ">
+                    <ui-select-match placeholder="Add a DNS Zone to the list...">{{$item.zone}}</ui-select-match>
+                    <ui-select-choices repeat="zone  in  dnsZones | filter: {zone: $select.search}">
+                      {{zone.zone}}
+                    </ui-select-choices>
+                  </ui-select>
+                  <label for="dns_zones_list" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Add DNS zones to the list to control either to allow access to these DNS zones or deny access">
+                    <i class="fa fa-question-circle"></i>
+                  </label>
+                  <input type="radio" ng-model="model.permissions.dns_zones.allow_list" ng-checked="model.permissions.dns_zones.allow_list"
+                    ng-value="true"> Allow access only to zones from this list
+                  <br />
+                  <input type="radio" ng-model="model.permissions.dns_zones.allow_list" ng-checked="!model.permissions.dns_zones.allow_list"
+                    ng-value="false"> Deny access only to zones from this list
+                </div>
+              </div>
+              <div class="checkbox-list" style="margin-top: 15px;">
+                <span class="{{model.permissions.accounts.access ? 'bg-dark' : null}}">
+                  <input ng-checked="true" type="checkbox" name="permissions_accounts" class="inline-block bg-dark" ng-model="model.permissions.accounts.access"> Accounts
+                  <label for="permissions_accounts" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Allow group to access accounts.">
+                    <i class="fa fa-question-circle"></i>
+                  </label>
+                </span>
+                <br />
+                <div class="item-list" ng-show="model.permissions.accounts.access">
+                  <span ng-show="(_loading || !companies || !companies.length) && model.permissions.accounts.access" class="loader--waite-company">
+                    <i class="glyphicon glyphicon-refresh spin"></i> Please wait...</span>
+                  <ui-select on-select="addItemToList($item, 'accounts')" on-remove="removeItemFromList($item, 'accounts')" multiple tagging-tokens="SPACE|,"
+                    theme="bootstrap" class="form-control inline-block" ng-if="companies && companies.length > 0" ng-disabled="_loading"
+                    ng-model="model.accounts_list" id="accounts_list">
+                    <ui-select-match placeholder="Add an Account to the list...">{{$item.companyName}}</ui-select-match>
+                    <ui-select-choices repeat="acc  in  companies | filter: {companyName: $select.search}">
+                      {{acc.companyName}}
+                    </ui-select-choices>
+                  </ui-select>
+                  <label for="accounts_list" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Add companies to the list to control either to allow access to these companies or deny access">
+                    <i class="fa fa-question-circle"></i>
+                  </label>
+                  <input type="radio" ng-model="model.permissions.accounts.allow_list" ng-checked="model.permissions.accounts.allow_list" ng-value="true"> Allow access only to companies from this list
+                  <br />
+                  <input type="radio" ng-model="model.permissions.accounts.allow_list" ng-checked="!model.permissions.accounts.allow_list"
+                    ng-value="false"> Deny access only to companies from this list
+                </div>
+              </div>
+              <div class="col-sm-6">
+                  <input ng-checked="true" type="checkbox" name="permissions_ssl_names" class="inline-block" ng-model="model.permissions.ssl_names"> SSL Names
+                  <label for="permissions_ssl_names" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
+                    uib-popover="Allow group to manage SSL Names.">
+                    <i class="fa fa-question-circle"></i>
+                  </label>
+                </div>
+                <div class="col-sm-6">
+                  <input ng-checked="true" type="checkbox" name="permissions_ssl_certs" class="inline-block" ng-model="model.permissions.ssl_certs"> SSL Certificates
+                  <label for="permissions_ssl_certs" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
+                    uib-popover="Allow group to manage SSL Certs.">
+                    <i class="fa fa-question-circle"></i>
+                  </label>
+                </div>
+                <div class="col-sm-6">
+                  <input ng-checked="true" type="checkbox" name="permissions_waf_rules" class="inline-block" ng-model="model.permissions.waf_rules"> WAF Rules
+                  <label for="permissions_waf_rules" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
+                    uib-popover="Allow group to manage WAF Rules.">
+                    <i class="fa fa-question-circle"></i>
+                  </label>
+                </div>
+                <div class="col-sm-6">
+                  <input ng-checked="true" type="checkbox" name="permissions_cache_purge" class="inline-block" ng-model="model.permissions.cache_purge"> Cache Purge
+                  <label for="permissions_cache_purge" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
+                    uib-popover="Allow group to purge cache.">
+                    <i class="fa fa-question-circle"></i>
+                  </label>
+                </div>
+                <div class="col-sm-6">
+                  <input ng-checked="true" type="checkbox" name="permissions_dns_analytics" class="inline-block" ng-model="model.permissions.dns_analytics"> DNS Analytics
+                  <label for="permissions_dns_analytics" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
+                    uib-popover="Allow group to access DNS Analytics.">
+                    <i class="fa fa-question-circle"></i>
+                  </label>
+                </div>
+                <div class="col-sm-6">
+                  <input ng-checked="true" type="checkbox" name="permissions_groups" class="inline-block" ng-model="model.permissions.groups"> Groups
+                  <label for="permissions_groups" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Allow group to manage groups.">
+                    <i class="fa fa-question-circle"></i>
+                  </label>
+                </div>
+                <div class="col-sm-6">
+                  <input ng-checked="true" type="checkbox" name="permissions_users" class="inline-block" ng-model="model.permissions.users"> Users
+                  <label for="permissions_users" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Allow group to manage users.">
+                    <i class="fa fa-question-circle"></i>
+                  </label>
+                </div>
+                <div class="col-sm-6">
+                  <input ng-checked="true" type="checkbox" name="permissions_API_keys" class="inline-block" ng-model="model.permissions.API_keys"> API Keys
+                  <label for="permissions_API_keys" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Allow group to manage API Keys.">
+                    <i class="fa fa-question-circle"></i>
+                  </label>
+                </div>
+                <div class="col-sm-6">
+                  <input ng-checked="true" type="checkbox" name="permissions_logshipping_jobs" class="inline-block" ng-model="model.permissions.logshipping_jobs"> Logshipping Jobs
+                  <label for="permissions_logshipping_jobs" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
+                    uib-popover="Allow group to manage logshipping jobs.">
+                    <i class="fa fa-question-circle"></i>
+                  </label>
+                </div>
+                <div class="col-sm-6">
+                  <input ng-checked="true" type="checkbox" name="permissions_activity_log" class="inline-block" ng-model="model.permissions.activity_log"> Activity Log
+                  <label for="permissions_activity_log" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
+                    uib-popover="Allow group to access activity log.">
+                    <i class="fa fa-question-circle"></i>
+                  </label>
+                </div>
+                <div class="col-sm-6">
+                  <input ng-checked="true" type="checkbox" name="permissions_traffic_alerts" class="inline-block" ng-model="model.permissions.traffic_alerts"> Traffic Alerts
+                  <label for="permissions_traffic_alerts" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
+                    uib-popover="Allow group to access traffic alerts.">
+                    <i class="fa fa-question-circle"></i>
+                  </label>
+                </div>
+                <div class="col-sm-6">
+                  <input ng-checked="true" type="checkbox" name="permissions_notification_lists" class="inline-block" ng-model="model.permissions.notification_lists"> Notification Lists
+                  <label for="permissions_notification_lists" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
+                    uib-popover="Allow group to access notification lists.">
+                    <i class="fa fa-question-circle"></i>
+                  </label>
+                </div>
+                <div class="col-sm-6">
+                  <input ng-checked="true" type="checkbox" name="permissions_usage_reports" class="inline-block" ng-model="model.permissions.usage_reports"> Usage Reports
+                  <label for="permissions_usage_reports" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
+                    uib-popover="Allow group to access usage reports.">
+                    <i class="fa fa-question-circle"></i>
+                  </label>
+                </div>
+                <div class="col-sm-6">
+                  <input ng-checked="true" type="checkbox" name="permissions_billing_statements" class="inline-block" ng-model="model.permissions.billing_statements"> Billing Statements
+                  <label for="permissions_billing_statements" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
+                    uib-popover="Allow group to access billing statemnets.">
+                    <i class="fa fa-question-circle"></i>
+                  </label>
+                </div>
+                <div class="col-sm-6">
+                  <input ng-checked="true" type="checkbox" name="permissions_billing_plan" class="inline-block" ng-model="model.permissions.billing_plan"> Billing Plans
+                  <label for="permissions_billing_plan" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
+                    uib-popover="Allow group to access billing plans.">
+                    <i class="fa fa-question-circle"></i>
+                  </label>
+                </div>
             </div>
-            </div>
+          </div>
           <hr>
-          <div class="form-group" ng-class="{ 'has-error': editForm.comment.$invalid && editForm.comment.$dirty }">
+          <!-- passwords commented out because of invitation system -->
+          <!-- <div class="form-group" ng-class="{'has-error': createForm.password.$invalid && createForm.password.$dirty}">
+              <label for="password" class="col-sm-2 control-label">Password *</label>
+              <div class="col-sm-10">
+                <input type="password" class="form-control inline-block" id="password" name="password" ng-model="model.password" ng-disabled="_loading" ng-minlength="8"  ng-maxlength="15" required>
+                <label for="password" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Enter the new Group's password">
+                  <i class="fa fa-question-circle"></i>
+                </label>
+                <div class="error-messages" ng-messages="createForm.password.$error" role="alert" ng-messages-multiple>
+                  <div ng-message="minlength" class="alert-text alert-text--minlength">Password must contain at least 8 characters</div>
+                  <div ng-message="maxlength" class="alert-text alert-text--maxlength">Password must contain 15 characters max</div>
+                  <div ng-messages-include="parts/shared/error-messages.html"></div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group" ng-class="{'has-error': createForm.passwordConfirm.$invalid && createForm.passwordConfirm.$dirty}">
+              <label for="passwordConfirm" class="col-sm-2 control-label">Confirm Password *</label>
+              <div class="col-sm-10">
+                <input type="password" class="form-control inline-block" id="passwordConfirm" name="passwordConfirm" ng-model="model.passwordConfirm" ng-disabled="_loading" validate-compare-to="model.password">
+                <label for="passwordConfirm" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Re-enter the new Group's password">
+                  <i class="fa fa-question-circle"></i>
+                </label>
+                <div class="error-messages" ng-messages="createForm.passwordConfirm.$error" role="alert" ng-messages-multiple>
+                  <div ng-messages-include="parts/shared/error-messages.html"></div>
+                </div>
+              </div>
+            </div> -->
+          <div class="form-group" ng-class="{ 'has-error': createForm.comment.$invalid && createForm.comment.$dirty }">
             <label for="comment" class="col-sm-2 control-label">Comment</label>
             <div class="col-sm-10">
               <div class="form-group col-md-12">
-                <textarea id="comment" placeholder="Comment (300 characters max)" ng-maxlength="300" class="form-control inline-block" name="comment" ng-model="model.comment" ng-pattern="COMMENT_NO_SPECIAL_CHARS" ng-disabled="_loading">
-                </textarea>
-                <label for="comment" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Comment about the user (300 characters max)">
+                <textarea id="comment" placeholder="Comment (300 characters max)" ng-maxlength="300" class="form-control inline-block" name="comment"
+                  ng-model="model.comment" ng-pattern="COMMENT_NO_SPECIAL_CHARS" ng-disabled="_loading">
+                  </textarea>
+                <label for="comment" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Comment about the Group (300 characters max)">
                   <i class="fa fa-question-circle"></i>
                 </label>
               </div>
-              <div class="error-messages" ng-messages="editForm.comment.$error" role="alert" ng-messages-multiple>
+              <div class="error-messages" ng-messages="createForm.comment.$error" role="alert" ng-messages-multiple>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
               </div>
             </div>
@@ -221,10 +431,11 @@
           <hr>
           <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-              <a ui-sref="^" class="btn btn-default">
+              <a ui-sref="{{state}}" class="btn btn-default" ng-click="clearForm()">
                 <i class="glyphicon glyphicon-remove"></i>&nbsp; Cancel
               </a>
-              <button class="btn btn-success" ng-class="{'btn-disabled':isReadOnly()}"  type="button" ng-disabled="disableSubmit(model, true)||editForm.$invalid || isReadOnly()" ng-click="updateUser(model)">
+              <button class="btn btn-success" ng-class="{'btn-disabled':isReadOnly()}" id="create_Group" ng-disabled="disableSubmit(model) || isReadOnly() || _loading || !model || !apps || !domains || !dnsZones || !companies"
+                ng-click="updateGroup(model)">
                 <i class="glyphicon" ng-class="_loading ? 'glyphicon-refresh spin':'glyphicon-ok'"></i>&nbsp; Update
               </button>
             </div>
