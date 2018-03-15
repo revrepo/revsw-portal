@@ -86,6 +86,7 @@
                     </a>
                   </td>
                   <td style="overflow-x: auto;">
+                    <span ng-if="!Group.users || Group.users.length === 0">None</span>
                     <span ng-repeat="user in Group.users">{{user}}{{ Group.users.indexOf(user) === Group.users.length - 1 ? null : ', '}}</span>
                   </td>
                   <td>{{ getRelativeDate(Group.updated_at) }}</td>

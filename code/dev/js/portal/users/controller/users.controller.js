@@ -70,7 +70,63 @@
           email: '',
           firstname: '',
           lastname: '',
-          role: null
+          role: null,
+          permissions: {
+            read_only: false,
+            enforce_2fa: false,
+            portal_login: true,
+            API_access: true,
+            dashboards: true,
+            mobile_apps: {
+              access: true,
+              list: [],
+              allow_list: true
+            },
+            domains: {
+              access: true,
+              list: [],
+              allow_list: true
+            },
+            ssl_names: true,
+            ssl_certs: true,
+            waf_rules: true,
+            cache_purge: {
+                access: true,
+                list: [],
+                allow_list: true
+              },
+            web_analytics: {
+              access: true,
+              list: [],
+              allow_list: true
+            },
+            security_analytics: {
+              access: true,
+              list: [],
+              allow_list: true
+            },
+            dns_zones: {
+              access: true,
+              list: [],
+              allow_list: true
+            },
+            dns_analytics: true,
+            groups: true,
+            users: true,
+            API_keys: true,
+            logshipping_jobs: true,
+            activity_log: true,
+            accounts: {
+              access: true,
+              list: [],
+              allow_list: true
+            },
+            traffic_alerts: true,
+            notification_lists: true,
+            usage_reports: true,
+            billing_statements: true,
+            billing_plan: true
+          }
         });
       }
     }
@@ -179,6 +235,65 @@
           });
           $scope.model.companyId.length = 1;
           $scope.resendDisabled = ((Date.parse($scope.model.invitation_sent_at) + $config.INVITATION_COOLDOWN_MS) < Date.now()) === false;
+
+          if (!$scope.model.permissions) {
+            $scope.model.permissions = {
+              read_only: false,
+              enforce_2fa: false,
+              portal_login: true,
+              API_access: true,
+              dashboards: true,
+              mobile_apps: {
+                access: true,
+                list: [],
+                allow_list: true
+              },
+              domains: {
+                access: true,
+                list: [],
+                allow_list: true
+              },
+              ssl_names: true,
+              ssl_certs: true,
+              waf_rules: true,
+              cache_purge: {
+                access: true,
+                list: [],
+                allow_list: true
+              },
+              web_analytics: {
+                access: true,
+                list: [],
+                allow_list: true
+              },
+              security_analytics: {
+                access: true,
+                list: [],
+                allow_list: true
+              },
+              dns_zones: {
+                access: true,
+                list: [],
+                allow_list: true
+              },
+              dns_analytics: true,
+              groups: true,
+              users: true,
+              API_keys: true,
+              logshipping_jobs: true,
+              activity_log: true,
+              accounts: {
+                access: true,
+                list: [],
+                allow_list: true
+              },
+              traffic_alerts: true,
+              notification_lists: true,
+              usage_reports: true,
+              billing_statements: true,
+              billing_plan: true
+            };
+          }
           return $scope.model;
         })
         .catch($scope.alertService.danger)
@@ -223,6 +338,31 @@
         model.companyId = _.uniq(_(model.companyId).concat(model.managed_account_ids).value());
       }
       delete model.managed_account_ids;
+
+      delete model.apps_list;
+      delete model.domains_list;
+      delete model.dns_zones_list;
+      delete model.security_analytics_list;
+      delete model.web_analytics_list;
+      delete model.accounts_list;
+      delete model.cache_purge_list;
+
+      var modelLists = [
+        'mobile_apps',
+        'domains',
+        'web_analytics',
+        'security_analytics',
+        'dns_zones',
+        'accounts',
+        'cache_purge'
+      ];
+
+      modelLists.forEach(function (list) {
+        if ((model.permissions[list].list.length > 0) === false) {
+          delete model.permissions[list].list;
+        }
+      });
+
       return model;
     };
 

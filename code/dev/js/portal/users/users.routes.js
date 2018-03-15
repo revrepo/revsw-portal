@@ -42,6 +42,15 @@
             templateUrl: 'parts/users/editNew.html'
           }
         }
+      })
+      .state('index.accountSettings.users.newWpermissions', {
+        url: '/newWpermissions',
+        views: {
+          page: {
+            controller: 'UsersCrudController',
+            templateUrl: 'parts/users/newWpermissions.html'
+          }
+        }
       });
   }
 })();
