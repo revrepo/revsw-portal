@@ -35,6 +35,7 @@
     $scope.$on('$stateChangeSuccess', function (state) {
       currUser = $stateParams.user;
       $scope.randomImageStyle = { 'background-image': 'url(' + Util.getRandomImageURL() + ')' };
+      $localStorage.lastUrl = null;
     });
 
     $scope.disableSubmit = function (model) {
@@ -49,12 +50,14 @@
       if (!model) {
         return;
       }
+      // call the invitation finish API endpoint with our token and new password
       Invitation.completeInvitation({ id: currUser }, {
         password: model.pass.$modelValue,
         invitation_token: $stateParams.token
       })
         .$promise
         .then(function (e) {
+          // if invitation process finished successfully, redirect to login page
           if (e.statusCode === 200) {
             $scope.alertService.success(e);
             $state.go('login');
