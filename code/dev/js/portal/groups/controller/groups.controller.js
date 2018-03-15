@@ -57,7 +57,11 @@
             ssl_names: true,
             ssl_certs: true,
             waf_rules: true,
-            cache_purge: true,
+            cache_purge: {
+              access: true,
+              list: [],
+              allow_list: true
+            },
             web_analytics: {
               access: true,
               list: [],
@@ -124,20 +128,6 @@
         };
       }
 
-      if ($state.is('index.accountSettings.groups.new') || $state.is('index.accountSettings.groups.edit')) {
-        Apps.query().$promise.then(function (apps) {
-          $scope.apps = apps;
-        });
-
-        DomainsConfig.query().$promise.then(function (domains) {
-          $scope.domains = domains;
-        });
-
-        DNSZones.query().$promise.then(function (zones) {
-          $scope.dnsZones = zones;
-        });
-      }
-
       $scope.list(data)
         .then(function (res) {
           // set our groups
@@ -145,7 +135,6 @@
 
           // get companies and set the company names
           Companies.query().$promise.then(function (accs) {
-            $scope.companies = accs;
             $scope.groups.forEach(function (group) {
               accs.forEach(function (account) {
                 if (group.account_id === account.id) {
@@ -177,44 +166,6 @@
       }
     });
 
-    $scope.pushItemsById = function (list, pushList, collection) {
-      $scope.model[pushList] = $scope.model[pushList] || [];
-      $scope.model.permissions[list].list.forEach(function (val) {
-        $scope[collection].forEach(function (fullVal) {
-          if (fullVal.id === val) {
-
-            $scope.model[pushList].push(fullVal);
-          }
-        });
-      });
-    };
-
-    $scope.$watch('apps', function () {
-      if ($scope.apps) {
-        $scope.pushItemsById('mobile_apps', 'apps_list', 'apps');
-      }
-    });
-
-    $scope.$watch('domains', function () {
-      if ($scope.domains) {
-        $scope.pushItemsById('domains', 'domains_list', 'domains');
-        $scope.pushItemsById('web_analytics', 'web_analytics_list', 'domains');
-        $scope.pushItemsById('security_analytics', 'security_analytics_list', 'domains');
-      }
-    });
-
-    $scope.$watch('dnsZones', function () {
-      if ($scope.dnsZones) {
-        $scope.pushItemsById('dns_zones', 'dns_zones_list', 'dnsZones');
-      }
-    });
-
-    $scope.$watch('companies', function () {
-      if ($scope.companies) {
-        $scope.pushItemsById('accounts', 'accounts_list', 'companies');
-      }
-    });
-
     /**
      * @name  deleteGroup
      * @description
@@ -237,72 +188,20 @@
         });
     };
 
-    /**
-     * @name  addItemToList
-     * @description
-     *
-     * Add an item to a list of items (apps, domains, dns_zones...)
-     *
-     * @param  {[type]} item [description]
-     * @return {[type]}       [description]
-     */
-    $scope.addItemToList = function (item, list) {
-      if (item && list) {
-        if (!$scope.model.permissions[list]) {
-          $scope.model.permissions[list] = {
-            access: true,
-            list: [],
-            allow_list: true
-          };
-        }
-
-        if (!$scope.model.permissions[list].list || !$scope.model.permissions[list].list.length) {
-          $scope.model.permissions[list].list = [];
-        }
-
-        if ($scope.model.permissions[list].list.indexOf(item.id) === -1) {
-          $scope.model.permissions[list].list.push(item.id);
-        }
-      }
-    };
-
-    /**
-     * @name  removeItemFromList
-     * @description
-     *
-     * Remove an item from a list of items (apps, domains, dns_zones...)
-     *
-     * @param  {[type]} item [description]
-     * @return {[type]}       [description]
-     */
-    $scope.removeItemFromList = function (item, list) {
-      return $scope
-        .model
-        .permissions[list]
-        .list
-        .splice($scope.model.permissions[list].list.indexOf(item.id), 1);
-    };
-
     $scope.createGroup = function (model) {
       if (!model) {
         return;
       }
-
-      delete model.apps_list;
-      delete model.domains_list;
-      delete model.dns_zones_list;
-      delete model.security_analytics_list;
-      delete model.web_analytics_list;
-      delete model.accounts_list;
-
-
-      $scope.create(model)
+      var _model = $scope.prepModel(model);
+      $scope.create(_model)
         .then(function (data) {
           initModel(true);
           $scope.clearModel();
           $scope.alertService.success(data);
         })
-        .catch($scope.alertService.danger);
+        .catch(function (err) {
+          $scope.alertService.danger(err);          
+        });
     };
 
     $scope.updateGroup = function (model) {
@@ -310,97 +209,18 @@
         return;
       }
 
-      delete model.apps_list;
-      delete model.domains_list;
-      delete model.dns_zones_list;
-      delete model.security_analytics_list;
-      delete model.web_analytics_list;
-      delete model.accounts_list;
+      var _model = $scope.prepModel(model);
 
-      $scope.update(model)
+      $scope.update(_model)
         .then(function (data) {
           initModel(true);
           $scope.clearModel();
           $scope.alertService.success(data);
           $state.go('^');
         })
-        .catch($scope.alertService.danger);
-    };
-
-    $scope.getMobileAppName = function (id) {
-      if (!$scope.apps) {
-        return;
-      }
-      var appToReturn;
-      $scope.apps.forEach(function (app) {
-        if (app.id === id) {
-          appToReturn = app;
-        }
-      });
-      return appToReturn;
-    };
-
-    $scope.getDomain = function (id) {
-      if (!$scope.domains) {
-        return;
-      }
-      var domainToReturn;
-      $scope.domains.forEach(function (domain) {
-        if (domain.id === id) {
-          domainToReturn = domain;
-        }
-      });
-      return domainToReturn;
-    };
-
-    $scope.getDNSZone = function (id) {
-      if (!$scope.dnsZones) {
-        return;
-      }
-      var zoneToReturn;
-      $scope.dnsZones.forEach(function (zone) {
-        if (zone.id === id) {
-          zoneToReturn = zone;
-        }
-      });
-      return zoneToReturn;
-    };
-
-    $scope.getAccount = function (id) {
-      if (!$scope.companies) {
-        return;
-      }
-      var accR;
-      $scope.companies.forEach(function (acc) {
-        if (acc.id === id) {
-          accR = acc;
-        }
-      });
-      return accR;
-    };
-
-    $scope.toggleAllowList = function (list) {
-      if (!$scope.model.permissions[list]) {
-        $scope.model.permissions[list] = {
-          access: true,
-          list: [],
-          allow_list: false
-        };
-      }
-
-      if (!$scope.model.permissions[list].list || !$scope.model.permissions[list].list.length) {
-        $scope.model.permissions[list].list = [];
-      }
-
-      $scope.model.permissions[list].allow_list = !$scope.model.permissions[list].allow_list;
-      $scope.getAllowDenyStatus(list);
-    };
-
-    $scope.getAllowDenyStatus = function (list) {
-      if ($scope.model.permissions[list]) {
-        return $scope.model.permissions[list].allow_list ? 'Deny' : 'Allow';
-      }
-      return;
+        .catch(function (err) {
+          $scope.alertService.danger(err);
+        });
     };
 
     $scope.disableSubmit = function (model) {
@@ -408,6 +228,35 @@
         model.account_id === '' ||
         !model.name ||
         model.name === '';
+    };
+
+    $scope.prepModel = function (model) {
+      var _model = _.clone(model, true);
+      delete _model.apps_list;
+      delete _model.domains_list;
+      delete _model.dns_zones_list;
+      delete _model.security_analytics_list;
+      delete _model.web_analytics_list;
+      delete _model.accounts_list;
+      delete _model.cache_purge_list;
+
+      var modelLists = [
+        'mobile_apps',
+        'domains',
+        'web_analytics',
+        'security_analytics',
+        'dns_zones',
+        'accounts',
+        'cache_purge'
+      ];
+
+      modelLists.forEach(function (list) {
+        if ((_model.permissions[list].list.length > 0) === false) {
+          delete _model.permissions[list].list;
+        }
+      });
+
+      return _model;
     };
   }
 })();
