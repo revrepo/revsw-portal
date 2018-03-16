@@ -43,7 +43,7 @@
         </div>
         <div class="checkbox-list">
             <span class="{{model.permissions.mobile_apps.access ? 'bg-dark' : null}}">
-                <input ng-checked="true" type="checkbox" name="permissions_mobile_apps" class="inline-block bg-dark" ng-model="model.permissions.mobile_apps.access"> Mobile Apps
+                <input ng-checked="model.permissions.mobile_apps.access" type="checkbox" name="permissions_mobile_apps" class="inline-block bg-dark" ng-model="model.permissions.mobile_apps.access"> Mobile Apps
                 <label for="permissions_mobile_apps" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
                     uib-popover="Allow group to manage mobile apps.">
                     <i class="fa fa-question-circle"></i>
@@ -80,7 +80,7 @@
         </div>
         <div class="checkbox-list">
             <span class="{{model.permissions.domains.access ? 'bg-dark' : null}}">
-                <input ng-checked="true" type="checkbox" name="permissions_domains" class="inline-block bg-dark" ng-model="model.permissions.domains.access"> Domains
+                <input ng-checked="model.permissions.domains.access" type="checkbox" name="permissions_domains" class="inline-block bg-dark" ng-model="model.permissions.domains.access"> Domains
                 <label for="permissions_domains" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Allow group to manage domains.">
                     <i class="fa fa-question-circle"></i>
                 </label>
@@ -107,7 +107,7 @@
         </div>
         <div class="checkbox-list">
             <span class="{{model.permissions.cache_purge.access ? 'bg-dark' : null}}">
-                <input ng-checked="true" type="checkbox" name="permissions_cache_purge" class="inline-block bg-dark" ng-model="model.permissions.cache_purge.access"> Cache Purge
+                <input ng-checked="model.permissions.cache_purge.access" type="checkbox" name="permissions_cache_purge" class="inline-block bg-dark" ng-model="model.permissions.cache_purge.access"> Cache Purge
                 <label for="permissions_cache_purge" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Allow group to purge cache.">
                     <i class="fa fa-question-circle"></i>
                 </label>
@@ -134,7 +134,7 @@
         </div>
         <div class="checkbox-list">
             <span class="{{model.permissions.web_analytics.access ? 'bg-dark' : null}}">
-                <input ng-checked="true" type="checkbox" name="permissions_web_analytics" class="inline-block bg-dark" ng-model="model.permissions.web_analytics.access"> Web Analytics
+                <input ng-checked="model.permissions.web_analytics.access" type="checkbox" name="permissions_web_analytics" class="inline-block bg-dark" ng-model="model.permissions.web_analytics.access"> Web Analytics
                 <label for="permissions_web_analytics" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
                     uib-popover="Allow group to access web analytics.">
                     <i class="fa fa-question-circle"></i>
@@ -164,7 +164,7 @@
         </div>
         <div class="checkbox-list" style="margin-top: 15px;">
             <span class="{{model.permissions.security_analytics.access ? 'bg-dark' : null}}">
-                <input ng-checked="true" type="checkbox" name="permissions_sec_analytics" class="inline-block bg-dark" ng-model="model.permissions.security_analytics.access"> Security Analytics
+                <input ng-checked="model.permissions.security_analytics.access" type="checkbox" name="permissions_sec_analytics" class="inline-block bg-dark" ng-model="model.permissions.security_analytics.access"> Security Analytics
                 <label for="permissions_sec_analytics" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
                     uib-popover="Allow group to access security analytics.">
                     <i class="fa fa-question-circle"></i>
@@ -194,7 +194,7 @@
         </div>
         <div class="checkbox-list" style="margin-top: 15px;">
             <span class="{{model.permissions.dns_zones.access ? 'bg-dark' : null}}">
-                <input ng-checked="true" type="checkbox" name="permissions_dns_zones" class="inline-block bg-dark" ng-model="model.permissions.dns_zones.access"> DNS Zones
+                <input ng-checked="model.permissions.dns_zones.access" type="checkbox" name="permissions_dns_zones" class="inline-block bg-dark" ng-model="model.permissions.dns_zones.access"> DNS Zones
                 <label for="permissions_dns_zones" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
                     uib-popover="Allow group to access DNS Zones.">
                     <i class="fa fa-question-circle"></i>
@@ -224,7 +224,7 @@
         </div>
         <div class="checkbox-list" style="margin-top: 15px;">
             <span class="{{model.permissions.accounts.access ? 'bg-dark' : null}}">
-                <input ng-checked="true" type="checkbox" name="permissions_accounts" class="inline-block bg-dark" ng-model="model.permissions.accounts.access"> Accounts
+                <input ng-checked="model.permissions.accounts.access" type="checkbox" name="permissions_accounts" class="inline-block bg-dark" ng-model="model.permissions.accounts.access"> Accounts
                 <label for="permissions_accounts" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Allow group to access accounts.">
                     <i class="fa fa-question-circle"></i>
                 </label>
