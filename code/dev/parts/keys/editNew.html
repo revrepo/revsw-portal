@@ -77,26 +77,6 @@
               </div>
             </div>
           </div>
-          <!-- For "reseller" and "revadmin" multiple select accounts (managed_account_ids)-->
-          <div class="form-group" ng-hide="!companies || companies.length == 1"  ng-class="{'has-error': editForm.managedAccountIds.$invalid && editForm.managedAccountIds.$dirty}" ng-if="companies.length>0 && (userService.isReseller() || userService.isRevadmin())">
-            <label for="account_id" class="col-sm-2 control-label">Additional Accounts To Manage</label>
-            <div class="col-sm-10">
-            <span ng-show="_loading && companies.length>0" class="loader--waite-company" ><i class="glyphicon glyphicon-refresh spin"></i> Please wait...</span>
-              <ui-select class="inline-block" multiple ng-animate-disabled theme="bootstrap" ng-model="key.managed_account_ids" ng-disabled="_loading" style="min-width: 550px;" id="managed_account_ids" name="managedAccountIds" ng-if="!_loading && companies.length>0">
-                <ui-select-match placeholder="Add account to manage ...">{{$item.companyName}}</ui-select-match>
-                <ui-select-choices repeat="item.id as item in companies | filter: {companyName: $select.search}">
-                  <div ng-bind-html="item.companyName|highlight: $select.search"></div>
-                </ui-select-choices>
-              </ui-select>
-              <label for="domains" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Additional accounts the key should have permissions to manage">
-                    <i class="fa fa-question-circle"></i>
-              </label>
-
-              <div class="error-messages" ng-messages="editForm.accountId.$error" role="alert" ng-messages-multiple>
-                <div ng-messages-include="parts/shared/error-messages.html"></div>
-              </div>
-            </div>
-          </div>
           <div class="form-group">
             <label for="active"
                    class="col-sm-2 control-label"
@@ -112,26 +92,6 @@
                      ng-disabled="_loading">
               <label for="active" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Uncheck the box to deactive the API key. The key configuration will stay untouched but the API will not authorize the key.">
                 <i class="fa fa-question-circle"></i>
-              </label>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="domains" class="col-sm-2 control-label">Managed Domains</label>
-            <div class="col-sm-10">
-              <span ng-show="_loading && selectedDomains.length>0" class="loader--waite-company" ><i class="glyphicon glyphicon-refresh spin"></i> Please wait...</span>
-              <ui-select id="domains"
-                        class="inline-block"
-                         multiple
-                         ng-disabled="_loading"
-                         ng-model="key.domains"
-                         style="width: 100%;">
-                <ui-select-match placeholder="Select Domains">{{$item.domain_name}}</ui-select-match>
-                <ui-select-choices repeat="item.id as item in selectedDomains | filter: {domain_name: $select.search}">
-                  <small>{{item.domain_name}}</small>
-                </ui-select-choices>
-              </ui-select>
-              <label for="domains" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="List of web domains the key should have access to. If the list is empty the key will be able to manage all domains for the account.">
-                    <i class="fa fa-question-circle"></i>
               </label>
             </div>
           </div>
