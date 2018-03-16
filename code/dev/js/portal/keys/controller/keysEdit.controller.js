@@ -6,7 +6,7 @@
     .controller('KeysEditController', KeysEditController);
 
   // @ngInject
-  function KeysEditController($scope, $rootScope, $injector, $stateParams, $location, CRUDController, ApiKeys, Companies, $config, DomainsConfig) {
+  function KeysEditController($scope, $rootScope, $injector, $stateParams, $location, CRUDController, ApiKeys, Companies, $config, DomainsConfig, Groups) {
     //Invoking crud actions
     $injector.invoke(CRUDController, this, {
       $scope: $scope,
@@ -106,6 +106,65 @@
         .$promise
         .then(function(key) {
           $scope.key = key;
+          $scope.model = _.clone(key, true);
+          if (!$scope.model.permissions) {
+            $scope.model.permissions = {
+              read_only: false,
+              enforce_2fa: false,
+              portal_login: true,
+              API_access: true,
+              dashboards: true,
+              mobile_apps: {
+                access: true,
+                list: [],
+                allow_list: true
+              },
+              domains: {
+                access: true,
+                list: [],
+                allow_list: true
+              },
+              ssl_names: true,
+              ssl_certs: true,
+              waf_rules: true,
+              cache_purge: {
+                access: true,
+                list: [],
+                allow_list: true
+              },
+              web_analytics: {
+                access: true,
+                list: [],
+                allow_list: true
+              },
+              security_analytics: {
+                access: true,
+                list: [],
+                allow_list: true
+              },
+              dns_zones: {
+                access: true,
+                list: [],
+                allow_list: true
+              },
+              dns_analytics: true,
+              groups: true,
+              users: true,
+              API_keys: true,
+              logshipping_jobs: true,
+              activity_log: true,
+              accounts: {
+                access: true,
+                list: [],
+                allow_list: true
+              },
+              traffic_alerts: true,
+              notification_lists: true,
+              usage_reports: true,
+              billing_statements: true,
+              billing_plan: true
+            };
+          }
         })
         .catch($scope.alertService.danger)
         .finally(function() {
@@ -129,7 +188,7 @@
      * @returns {Object}
      */
     function clearUpdateData(data) {
-      var fields = ['key_name', 'account_id', 'domains', 'allowed_ops', 'read_only_status', 'active','managed_account_ids'];
+      var fields = ['key_name', 'account_id', 'domains', 'allowed_ops', 'read_only_status', 'active','managed_account_ids','permissions','group_id'];
       return _.pick(_.clone(data), fields);
     }
 
@@ -141,6 +200,9 @@
         return;
       }
       $scope._loading = true;
+      $scope.key.permissions = $scope.model.permissions;
+      $scope.key.group_id = $scope.model.group;
+      $scope.key.group_id = $scope.key.group_id === 'null' ? null : $scope.key.group_id;
       ApiKeys
         .update({
           id: $scope.key.id
@@ -176,6 +238,17 @@
       } else {
         $scope.alertService.success('The API key has been copied to the clipboard.', 2000);
       }
+    };
+
+    $scope.setGroups = function () {
+      // Fetch and set groups
+      Groups.query().$promise.then(function (data) {
+        $scope.groups = data || [];
+        // select the current group
+        if ($scope.key) {
+          $scope.model.group = $scope.key.group_id || 'null';
+        }
+      });
     };
   }
 })();

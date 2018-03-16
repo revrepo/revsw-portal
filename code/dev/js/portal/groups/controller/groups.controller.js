@@ -8,7 +8,7 @@
   /*@ngInject*/
   function GroupsCrudController($scope, $q, CRUDController, Users, $rootScope,
     User, $injector, $state, $stateParams, Companies,
-    DomainsConfig, $anchorScroll, $config, Groups, Apps, DNSZones) {
+    DomainsConfig, $anchorScroll, $config, Groups, Apps, DNSZones, ApiKeys) {
 
     //Invoking crud actions
     $injector.invoke(CRUDController, this, {
@@ -151,6 +151,18 @@
                 group.users = group.users || [];
                 if (group.id === usr.group_id) {
                   group.users.push(usr.email);
+                }
+              });
+            });
+          });
+          
+          // get API Keys and count each group's keys to dispaly in table
+          ApiKeys.query().$promise.then(function (resultKeys) {
+            $scope.groups.forEach(function (group) {
+              resultKeys.forEach(function (key) {
+                group.users = group.users || [];
+                if (group.id === key.group_id) {
+                  group.users.push(key.key_name);
                 }
               });
             });
