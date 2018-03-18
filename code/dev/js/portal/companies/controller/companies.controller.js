@@ -31,6 +31,8 @@
       $localStorage.selectedCompany = model;
     };
 
+    $scope.companies = [];
+
     // Fetch list of users
     $scope.$on('$stateChangeSuccess', function (state) {
       $scope.model = $localStorage.selectedCompany;
@@ -46,7 +48,7 @@
           });
         }
         $scope.list()
-          .then(function () {
+          .then(function () {            
             if ($scope.elementIndexForAnchorScroll !== undefined) {
               setTimeout(function () {
                 $anchorScroll('anchor' + $scope.elementIndexForAnchorScroll);
@@ -70,6 +72,10 @@
             });
           });
       }
+
+      $scope.list().then(function (res) {
+        $scope.companies = res;
+      });
 
       Vendors.query().$promise.then(function (response) {
         $scope.vendorProfiles = response;
