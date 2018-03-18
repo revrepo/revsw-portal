@@ -5,28 +5,28 @@
     </div>
     <div class="col-sm-4" ng-show="!_loading && model && apps && domains && dnsZones && companies">
         <div class="col-sm-6">
-            <input type="checkbox" name="permissions_read_only" class="inline-block" ng-model="model.permissions.read_only"> Read Only
+            <input type="checkbox" ng-checked="model.permissions.read_only" name="permissions_read_only" class="inline-block" ng-model="model.permissions.read_only"> Read Only
             <label for="permissions_read_only" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
                 uib-popover="Group has read-only access to resources (Users, Accounts, Domains etc...)">
                 <i class="fa fa-question-circle"></i>
             </label>
         </div>
         <div class="col-sm-6">
-            <input type="checkbox" name="permissions_enforce_2fa" class="inline-block" ng-model="model.permissions.enforce_2fa"> Enforce 2FA
+            <input type="checkbox" ng-checked="model.permissions.enforce_2fa" name="permissions_enforce_2fa" class="inline-block" ng-model="model.permissions.enforce_2fa"> Enforce 2FA
             <label for="permissions_enforce_2fa" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
                 uib-popover="Enforce Two-Factor authentication.">
                 <i class="fa fa-question-circle"></i>
             </label>
         </div>
         <div class="col-sm-6">
-            <input ng-checked="true" type="checkbox" name="permissions_portal_login" class="inline-block" ng-model="model.permissions.portal_login"> Portal Login
+            <input ng-checked="model.permissions.portal_login" type="checkbox" name="permissions_portal_login" class="inline-block" ng-model="model.permissions.portal_login"> Portal Login
             <label for="permissions_portal_login" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
                 uib-popover="Allow group to login to the portal.">
                 <i class="fa fa-question-circle"></i>
             </label>
         </div>
         <div class="col-sm-6">
-            <input ng-checked="true" type="checkbox" name="permissions_API_access" class="inline-block" ng-model="model.permissions.API_access"> API Access
+            <input ng-checked="model.permissions.API_access" type="checkbox" name="permissions_API_access" class="inline-block" ng-model="model.permissions.API_access"> API Access
             <label for="permissions_API_access" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
                 uib-popover="Allow group to access the API's endpoints.">
                 <i class="fa fa-question-circle"></i>
@@ -35,7 +35,7 @@
         <div class="clearfix"></div>
         <hr>
         <div>
-            <input ng-checked="true" type="checkbox" name="permissions_dashboards" class="inline-block" ng-model="model.permissions.dashboards"> Dashboards
+            <input ng-checked="model.permissions.dashboards" type="checkbox" name="permissions_dashboards" class="inline-block" ng-model="model.permissions.dashboards"> Dashboards
             <label for="permissions_dashboards" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
                 uib-popover="Allow group to manage dashboards.">
                 <i class="fa fa-question-circle"></i>
@@ -72,7 +72,7 @@
             </div>
         </div>
         <div>
-            <input ng-checked="true" type="checkbox" name="permissions_mobile_analytics" class="inline-block" ng-model="model.permissions.mobile_analytics"> Mobile Analytics
+            <input ng-checked="model.permissions.mobile_analytics" type="checkbox" name="permissions_mobile_analytics" class="inline-block" ng-model="model.permissions.mobile_analytics"> Mobile Analytics
             <label for="permissions_mobile_analytics" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
                 uib-popover="Allow group to access mobile analytics.">
                 <i class="fa fa-question-circle"></i>
@@ -222,7 +222,7 @@
                     ng-value="false"> Deny access only to zones from this list
             </div>
         </div>
-        <div class="checkbox-list" style="margin-top: 15px;">
+        <div class="checkbox-list" ng-if="auth.isReseller() || auth.isRevadmin()" style="margin-top: 15px;">
             <span class="{{model.permissions.accounts.access ? 'bg-dark' : null}}">
                 <input ng-checked="model.permissions.accounts.access" type="checkbox" name="permissions_accounts" class="inline-block bg-dark" ng-model="model.permissions.accounts.access"> Accounts
                 <label for="permissions_accounts" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Allow group to access accounts.">
@@ -251,95 +251,95 @@
             </div>
         </div>
         <div class="col-sm-6">
-            <input ng-checked="true" type="checkbox" name="permissions_ssl_names" class="inline-block" ng-model="model.permissions.ssl_names"> SSL Names
+            <input ng-checked="model.permissions.ssl_names" type="checkbox" name="permissions_ssl_names" class="inline-block" ng-model="model.permissions.ssl_names"> SSL Names
             <label for="permissions_ssl_names" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
                 uib-popover="Allow group to manage SSL Names.">
                 <i class="fa fa-question-circle"></i>
             </label>
         </div>
         <div class="col-sm-6">
-            <input ng-checked="true" type="checkbox" name="permissions_ssl_certs" class="inline-block" ng-model="model.permissions.ssl_certs"> SSL Certificates
+            <input ng-checked="model.permissions.ssl_certs" type="checkbox" name="permissions_ssl_certs" class="inline-block" ng-model="model.permissions.ssl_certs"> SSL Certificates
             <label for="permissions_ssl_certs" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
                 uib-popover="Allow group to manage SSL Certs.">
                 <i class="fa fa-question-circle"></i>
             </label>
         </div>
         <div class="col-sm-6">
-            <input ng-checked="true" type="checkbox" name="permissions_waf_rules" class="inline-block" ng-model="model.permissions.waf_rules"> WAF Rules
+            <input ng-checked="model.permissions.waf_rules" type="checkbox" name="permissions_waf_rules" class="inline-block" ng-model="model.permissions.waf_rules"> WAF Rules
             <label for="permissions_waf_rules" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
                 uib-popover="Allow group to manage WAF Rules.">
                 <i class="fa fa-question-circle"></i>
             </label>
         </div>
         <div class="col-sm-6">
-            <input ng-checked="true" type="checkbox" name="permissions_dns_analytics" class="inline-block" ng-model="model.permissions.dns_analytics"> DNS Analytics
+            <input ng-checked="model.permissions.dns_analytics" type="checkbox" name="permissions_dns_analytics" class="inline-block" ng-model="model.permissions.dns_analytics"> DNS Analytics
             <label for="permissions_dns_analytics" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
                 uib-popover="Allow group to access DNS Analytics.">
                 <i class="fa fa-question-circle"></i>
             </label>
         </div>
         <div class="col-sm-6">
-            <input ng-checked="true" type="checkbox" name="permissions_groups" class="inline-block" ng-model="model.permissions.groups"> Groups
+            <input ng-checked="model.permissions.groups" type="checkbox" name="permissions_groups" class="inline-block" ng-model="model.permissions.groups"> Groups
             <label for="permissions_groups" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Allow group to manage groups.">
                 <i class="fa fa-question-circle"></i>
             </label>
         </div>
         <div class="col-sm-6">
-            <input ng-checked="true" type="checkbox" name="permissions_users" class="inline-block" ng-model="model.permissions.users"> Users
+            <input ng-checked="model.permissions.users" type="checkbox" name="permissions_users" class="inline-block" ng-model="model.permissions.users"> Users
             <label for="permissions_users" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Allow group to manage users.">
                 <i class="fa fa-question-circle"></i>
             </label>
         </div>
         <div class="col-sm-6">
-            <input ng-checked="true" type="checkbox" name="permissions_API_keys" class="inline-block" ng-model="model.permissions.API_keys"> API Keys
+            <input ng-checked="model.permissions.API_keys" type="checkbox" name="permissions_API_keys" class="inline-block" ng-model="model.permissions.API_keys"> API Keys
             <label for="permissions_API_keys" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Allow group to manage API Keys.">
                 <i class="fa fa-question-circle"></i>
             </label>
         </div>
         <div class="col-sm-6">
-            <input ng-checked="true" type="checkbox" name="permissions_logshipping_jobs" class="inline-block" ng-model="model.permissions.logshipping_jobs"> Logshipping Jobs
+            <input ng-checked="model.permissions.logshipping_jobs" type="checkbox" name="permissions_logshipping_jobs" class="inline-block" ng-model="model.permissions.logshipping_jobs"> Logshipping Jobs
             <label for="permissions_logshipping_jobs" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
                 uib-popover="Allow group to manage logshipping jobs.">
                 <i class="fa fa-question-circle"></i>
             </label>
         </div>
         <div class="col-sm-6">
-            <input ng-checked="true" type="checkbox" name="permissions_activity_log" class="inline-block" ng-model="model.permissions.activity_log"> Activity Log
+            <input ng-checked="model.permissions.activity_log" type="checkbox" name="permissions_activity_log" class="inline-block" ng-model="model.permissions.activity_log"> Activity Log
             <label for="permissions_activity_log" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
                 uib-popover="Allow group to access activity log.">
                 <i class="fa fa-question-circle"></i>
             </label>
         </div>
         <div class="col-sm-6">
-            <input ng-checked="true" type="checkbox" name="permissions_traffic_alerts" class="inline-block" ng-model="model.permissions.traffic_alerts"> Traffic Alerts
+            <input ng-checked="model.permissions.traffic_alerts" type="checkbox" name="permissions_traffic_alerts" class="inline-block" ng-model="model.permissions.traffic_alerts"> Traffic Alerts
             <label for="permissions_traffic_alerts" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
                 uib-popover="Allow group to access traffic alerts.">
                 <i class="fa fa-question-circle"></i>
             </label>
         </div>
         <div class="col-sm-6">
-            <input ng-checked="true" type="checkbox" name="permissions_notification_lists" class="inline-block" ng-model="model.permissions.notification_lists"> Notification Lists
+            <input ng-checked="model.permissions.notification_lists" type="checkbox" name="permissions_notification_lists" class="inline-block" ng-model="model.permissions.notification_lists"> Notification Lists
             <label for="permissions_notification_lists" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
                 uib-popover="Allow group to access notification lists.">
                 <i class="fa fa-question-circle"></i>
             </label>
         </div>
         <div class="col-sm-6">
-            <input ng-checked="true" type="checkbox" name="permissions_usage_reports" class="inline-block" ng-model="model.permissions.usage_reports"> Usage Reports
+            <input ng-checked="model.permissions.usage_reports" type="checkbox" name="permissions_usage_reports" class="inline-block" ng-model="model.permissions.usage_reports"> Usage Reports
             <label for="permissions_usage_reports" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
                 uib-popover="Allow group to access usage reports.">
                 <i class="fa fa-question-circle"></i>
             </label>
         </div>
         <div class="col-sm-6">
-            <input ng-checked="true" type="checkbox" name="permissions_billing_statements" class="inline-block" ng-model="model.permissions.billing_statements"> Billing Statements
+            <input ng-checked="model.permissions.billing_statements" type="checkbox" name="permissions_billing_statements" class="inline-block" ng-model="model.permissions.billing_statements"> Billing Statements
             <label for="permissions_billing_statements" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
                 uib-popover="Allow group to access billing statemnets.">
                 <i class="fa fa-question-circle"></i>
             </label>
         </div>
         <div class="col-sm-6">
-            <input ng-checked="true" type="checkbox" name="permissions_billing_plan" class="inline-block" ng-model="model.permissions.billing_plan"> Billing Plans
+            <input ng-checked="model.permissions.billing_plan" type="checkbox" name="permissions_billing_plan" class="inline-block" ng-model="model.permissions.billing_plan"> Billing Plans
             <label for="permissions_billing_plan" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
                 uib-popover="Allow group to access billing plans.">
                 <i class="fa fa-question-circle"></i>
