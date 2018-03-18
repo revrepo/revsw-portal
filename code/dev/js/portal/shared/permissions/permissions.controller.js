@@ -29,6 +29,7 @@
         $scope.pushItemsById = function (list, pushList, collection) {
             if ($scope && $scope.model && $scope.model.permissions) {
                 $scope.model[pushList] = $scope.model[pushList] || [];
+                $scope.model.permissions[list].list = $scope.model.permissions[list].list || [];
                 $scope.model.permissions[list].list.forEach(function (val) {
                     $scope[collection].forEach(function (fullVal) {
                         if (fullVal.id === val) {
