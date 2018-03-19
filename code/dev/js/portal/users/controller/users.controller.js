@@ -293,7 +293,7 @@
               billing_statements: true,
               billing_plan: true
             };
-          }
+          }          
           return $scope.model;
         })
         .catch($scope.alertService.danger)
@@ -337,6 +337,7 @@
       if (model.role === 'reseller') {
         model.companyId = _.uniq(_(model.companyId).concat(model.managed_account_ids).value());
       }
+
       delete model.managed_account_ids;
 
       delete model.apps_list;
@@ -362,6 +363,10 @@
           delete model.permissions[list].list;
         }
       });
+
+      if ($scope.readOnly) {
+        delete model.permissions;
+      }
 
       return model;
     };
@@ -631,6 +636,14 @@
         $scope.groups = data || [];
         // select the current group
         $scope.model.group = $scope.model.group_id || 'null';
+        if ($scope.model.group_id && $scope.model.group_id !== 'null') {
+          Groups.get({id: $scope.model.group_id}).$promise.then(function (group) {
+            if (group) {
+              $scope.groupPermissions = group.permissions;
+              $scope.readOnly = true;
+            }
+          });
+        }
       });
     };
 

@@ -8,7 +8,7 @@
     /*@ngInject*/
     function PermissionsController($scope, $q, Users, $rootScope,
         User, $injector, $state, $stateParams, Companies,
-        DomainsConfig, Groups, Apps, DNSZones, $attrs) {
+        DomainsConfig, Groups, Apps, DNSZones, $attrs) {        
 
         Apps.query().$promise.then(function (apps) {
             $scope.apps = apps;
@@ -40,6 +40,12 @@
                 });
             }
         };
+
+        $scope.$watch('groupPermissions', function () {
+            if ($scope.groupPermissions) {
+                $scope.model.permissions = $scope.groupPermissions;
+            }
+        });
 
         $scope.$watch('apps', function () {
             if ($scope.apps) {

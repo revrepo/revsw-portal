@@ -165,6 +165,12 @@
               billing_plan: true
             };
           }
+          if ($scope.key.group_id) {
+            Groups.get({id: $scope.key.group_id}).$promise.then(function (group) {
+              $scope.readOnly = true;
+              $scope.groupPermissions = group.permissions;
+            });
+          }
         })
         .catch($scope.alertService.danger)
         .finally(function() {
@@ -203,6 +209,9 @@
       $scope.key.permissions = $scope.model.permissions;
       $scope.key.group_id = $scope.model.group;
       $scope.key.group_id = $scope.key.group_id === 'null' ? null : $scope.key.group_id;
+      if ($scope.readOnly) {
+        delete $scope.key.permissions;
+      }
       ApiKeys
         .update({
           id: $scope.key.id
