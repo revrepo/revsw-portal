@@ -671,5 +671,24 @@
       });
     };
 
+    $scope.setPermissions = function (group_id) {
+      if (group_id && group_id !== 'null') {
+        $scope.groups.forEach(function (group) {
+          if (group.id === group_id) {
+            Groups.get({id: group_id}).$promise.then(function (fullGroup) {
+                $scope.groupPermissions = fullGroup.permissions;
+                $scope.readOnly = true;
+            });
+          }
+        });
+      } else {
+        $scope.getEditUser($scope.model.user_id).then(function (data) {
+          $scope.model.permissions = data.permissions;
+          delete $scope.groupPermissions;
+          $scope.readOnly = false;
+        });
+      }
+    };
+
   }
 })();

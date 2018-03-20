@@ -88,7 +88,7 @@
                   <td style="overflow-x: auto;">
                     <span ng-show="!Group.users"><i class="glyphicon glyphicon-refresh spin"></i></span>
                     <span ng-if="Group.users.length === 0">None</span>
-                    <span ng-repeat="user in Group.users">{{user}}{{ Group.users.indexOf(user) === Group.users.length - 1 ? null : ', '}}</span>
+                    <span ng-repeat="user in Group.users.concat(Group.APIKeys)">{{user.email || user.key_name}}{{ Group.users.concat(Group.APIKeys).indexOf(user) === Group.users.concat(Group.APIKeys).length - 1 ? null : ', '}}</span>
                   </td>
                   <td>{{ getRelativeDate(Group.updated_at) }}</td>
                   <td>

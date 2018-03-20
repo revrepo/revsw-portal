@@ -289,5 +289,27 @@
       return data;
     });
   };
+
+  $scope.setPermissions = function (group_id) {
+    if (group_id && group_id !== 'null') {
+      $scope.groups.forEach(function (group) {
+        if (group.id === group_id) {
+          Groups.get({id: group_id}).$promise.then(function (fullGroup) {
+            if (group) {
+              $scope.groupPermissions = fullGroup.permissions;
+              $scope.readOnly = true;
+            }
+          });
+        }
+      });
+    } else {
+      $scope.getEditKey($scope.key.id).then(function (data) {
+        $scope.model.permissions = data.permissions;
+        $scope.key.permissions = data.permissions;
+        delete $scope.groupPermissions;
+        $scope.readOnly = false;
+      });
+    }
+  };
   }
 })();
