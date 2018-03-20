@@ -49,6 +49,7 @@
               list: [],
               allow_list: true
             },
+            mobile_analytics: true,
             domains: {
               access: true,
               list: [],
@@ -135,6 +136,7 @@
 
           // get companies and set the company names
           Companies.query().$promise.then(function (accs) {
+            $scope.companies = accs;
             $scope.groups.forEach(function (group) {
               accs.forEach(function (account) {
                 if (group.account_id === account.id) {
