@@ -109,7 +109,9 @@
     };
 
     $scope.setGroup = function (id) {
-      $scope.group_id = id;
+      Groups.get({ id: id }).$promise.then(function (data) {               
+        $scope.model = data;
+      });
     };
 
     $scope.getRelativeDate = function (datetime) {
@@ -146,38 +148,20 @@
             });
           });
 
-          // get users and count each group's user to dispaly in table
-          Users.query().$promise.then(function (resultUsers) {
-            $scope.groups.forEach(function (group) {
-              resultUsers.forEach(function (usr) {
-                group.users = group.users || [];
-                if (group.id === usr.group_id) {
-                  group.users.push(usr.email);
-                }
-              });
+          // get users and count each group's user to dispaly in table          
+          $scope.groups.forEach(function (group) {
+            Users.query({ filters: { group_id: group.id } }).$promise.then(function (resultUsers) {
+              group.users = resultUsers;
             });
           });
           
           // get API Keys and count each group's keys to dispaly in table
-          ApiKeys.query().$promise.then(function (resultKeys) {
-            $scope.groups.forEach(function (group) {
-              resultKeys.forEach(function (key) {
-                group.users = group.users || [];
-                if (group.id === key.group_id) {
-                  group.users.push(key.key_name);
-                }
-              });
+          $scope.groups.forEach(function (group) {
+            ApiKeys.query({ filters: { group_id: group.id } }).$promise.then(function (resultKeys) {
+              group.APIKeys = resultKeys;
             });
           });
         });
-    });
-
-    $scope.$on('$stateChangeSuccess', function (state) {
-      if ($state.is('index.accountSettings.groups.edit')) {
-        Groups.get({ id: $scope.group_id }).$promise.then(function (data) {
-          $scope.model = data;
-        });
-      }
     });
 
     /**
