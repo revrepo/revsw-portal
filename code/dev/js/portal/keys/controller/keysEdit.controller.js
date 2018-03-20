@@ -16,6 +16,8 @@
     $scope.NO_SPECIAL_CHARS = $config.PATTERNS.NO_SPECIAL_CHARS;
     $scope.COMMENT_NO_SPECIAL_CHARS = $config.PATTERNS.COMMENT_NO_SPECIAL_CHARS;
 
+    $scope.roles = ['admin', 'reseller'];
+
     Companies
       .query()
       .$promise
@@ -165,12 +167,7 @@
               billing_plan: true
             };
           }
-          if ($scope.key.group_id) {
-            Groups.get({id: $scope.key.group_id}).$promise.then(function (group) {
-              $scope.readOnly = true;
-              $scope.groupPermissions = group.permissions;
-            });
-          }
+          $scope.setGroup();
         })
         .catch($scope.alertService.danger)
         .finally(function() {
@@ -194,7 +191,10 @@
      * @returns {Object}
      */
     function clearUpdateData(data) {
-      var fields = ['key_name', 'account_id', 'domains', 'allowed_ops', 'read_only_status', 'active','managed_account_ids','permissions','group_id'];
+      var fields = ['key_name', 'account_id', 'domains',
+        'allowed_ops', 'read_only_status', 'active',
+        'managed_account_ids', 'permissions', 'group_id',
+        'role'];
       return _.pick(_.clone(data), fields);
     }
 
@@ -218,9 +218,10 @@
         }, clearUpdateData($scope.key))
         .$promise
         .then(function(data) {
+          $scope.setGroup();
           $rootScope.$broadcast('update:searchData');
           $scope.alertService.success(data);
-          $scope.$parent.list();
+          $scope.$parent.list();          
         })
         .catch($scope.alertService.danger)
         .finally(function() {
@@ -259,5 +260,34 @@
         }
       });
     };
+
+    /*
+    * Sets a group by ID and refreshes permissions / readonly mode for permissions (when inherited from group)
+    */
+   $scope.setGroup = function () {
+    Groups.query().$promise.then(function (data) {
+      if ($scope.key.group_id && $scope.key.group_id !== 'null') {
+        Groups.get({id: $scope.key.group_id}).$promise.then(function (group) {
+          if (group) {
+            $scope.groupPermissions = group.permissions;
+            $scope.readOnly = true;
+          }
+        });
+      } else {
+        $scope.getEditKey($scope.key.id).then(function (data) {
+          $scope.model.permissions = data.permissions;
+          $scope.key.permissions = data.permissions;
+          delete $scope.groupPermissions;
+          $scope.readOnly = false;
+        });
+      }
+    });
+  };
+
+  $scope.getEditKey = function (id) {
+    return ApiKeys.get({id: id}).$promise.then(function (data) {
+      return data;
+    });
+  };
   }
 })();

@@ -8,7 +8,27 @@
     /*@ngInject*/
     function PermissionsController($scope, $q, Users, $rootScope,
         User, $injector, $state, $stateParams, Companies,
-        DomainsConfig, Groups, Apps, DNSZones, $attrs) {        
+        DomainsConfig, Groups, Apps, DNSZones, $attrs) {
+
+        $scope.getPageType = function () {
+            return $attrs.pagetype;
+        };
+
+        $scope.pageType = {
+            isAPIKey: function () {
+                return $scope.getPageType() === 'APIKey';
+            },
+            isUser: function () {
+                return $scope.getPageType() === 'user';
+            },
+            isGroup: function () {
+                return $scope.getPageType() === 'group';
+            }
+        };
+        
+        $scope.modelList = ['apps_list', 'domains_list', 'web_analytics_list',
+        'security_analytics_list', 'cache_purge_list', 'dns_zones_list',
+        'accounts_list'];
 
         Apps.query().$promise.then(function (apps) {
             $scope.apps = apps;
@@ -27,7 +47,7 @@
         });
 
         $scope.pushItemsById = function (list, pushList, collection) {
-            if ($scope && $scope.model && $scope.model.permissions) {
+            if ($scope && $scope.model && $scope.model.permissions && $scope.model.permissions[list].list) {
                 $scope.model[pushList] = $scope.model[pushList] || [];
                 $scope.model.permissions[list].list = $scope.model.permissions[list].list || [];
                 $scope.model.permissions[list].list.forEach(function (val) {
@@ -41,10 +61,31 @@
             }
         };
 
+        $scope.clearLists = function () {
+            $scope.modelList.forEach(function (list) {
+                if($scope.model && $scope.model[list]) {
+                    $scope.model[list] = null;
+                    delete $scope.model[list];
+                }
+            });
+        };
+
+        $scope.initLists = function () {
+            $scope.clearLists();
+            $scope.pushItemsById('mobile_apps', 'apps_list', 'apps');
+            $scope.pushItemsById('domains', 'domains_list', 'domains');
+            $scope.pushItemsById('web_analytics', 'web_analytics_list', 'domains');
+            $scope.pushItemsById('security_analytics', 'security_analytics_list', 'domains');
+            $scope.pushItemsById('cache_purge', 'cache_purge_list', 'domains');
+            $scope.pushItemsById('dns_zones', 'dns_zones_list', 'dnsZones');
+            $scope.pushItemsById('accounts', 'accounts_list', 'companies');
+        };
+
         $scope.$watch('groupPermissions', function () {
             if ($scope.groupPermissions) {
-                $scope.model.permissions = $scope.groupPermissions;
+                $scope.model.permissions = $scope.groupPermissions;                
             }
+            $scope.initLists();      
         });
 
         $scope.$watch('apps', function () {

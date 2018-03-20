@@ -78,6 +78,7 @@
                 <label for="group" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Select here the user's permissions group">
                   <i class="fa fa-question-circle"></i>
                 </label>
+                <a ui-sref="index.accountSettings.groups" class="btn btn-sm btn-primary" uib-tooltip="Manage Groups" ng-disabled="_loading"><i class="fa fa-list-alt"></i> Manage Groups</a>
                 <div class="error-messages" ng-messages="editForm.group.$error" role="alert" ng-messages-multiple>
                   <div ng-messages-include="parts/shared/error-messages.html"></div>
                 </div>
@@ -150,7 +151,7 @@
             </div>
           </div>
           <hr>
-          <permissions ng-controller="PermissionsController" type="user"></permissions>
+          <permissions pagetype="user" ng-controller="PermissionsController" type="user"></permissions>
           <hr>
           <div class="row">
             <div class="col-sm-2 margin-sm-top-bottom">

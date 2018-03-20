@@ -1,9 +1,9 @@
 <div class="form-group permissions">
     <label for="access_control_list" class="col-sm-2 control-label">Permissions <span ng-if="readOnly">(Inherited from group)</span></label>
-    <div class="col-sm-10" ng-show="_loading || !model || !apps || !domains || !dnsZones || !companies">
+    <div class="col-sm-10" ng-show="!model || !apps || !domains || !dnsZones || !companies">
         <i class="glyphicon glyphicon-refresh spin"></i> Please wait...
     </div>
-    <div class="col-sm-4" ng-show="!_loading && model && apps && domains && dnsZones && companies">
+    <div class="col-sm-4" ng-show="model && apps && domains && dnsZones && companies">
         <div class="col-sm-6">
             <input ng-disabled="readOnly" type="checkbox" ng-checked="model.permissions.read_only" name="permissions_read_only"
                 class="inline-block" ng-model="model.permissions.read_only"> Read Only
@@ -12,7 +12,7 @@
                 <i class="fa fa-question-circle"></i>
             </label>
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-6" ng-if="pageType.isUser() || pageType.isGroup()">
             <input ng-disabled="readOnly" type="checkbox" ng-checked="model.permissions.enforce_2fa" name="permissions_enforce_2fa" class="inline-block"
                 ng-model="model.permissions.enforce_2fa"> Enforce 2FA
             <label for="permissions_enforce_2fa" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
@@ -20,7 +20,7 @@
                 <i class="fa fa-question-circle"></i>
             </label>
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-6" ng-if="pageType.isUser() || pageType.isGroup()">
             <input ng-disabled="readOnly" ng-checked="model.permissions.portal_login" type="checkbox" name="permissions_portal_login"
                 class="inline-block" ng-model="model.permissions.portal_login"> Portal Login
             <label for="permissions_portal_login" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
@@ -28,7 +28,7 @@
                 <i class="fa fa-question-circle"></i>
             </label>
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-6" ng-if="pageType.isAPIKey() || pageType.isGroup()">
             <input ng-disabled="readOnly" ng-checked="model.permissions.API_access" type="checkbox" name="permissions_API_access" class="inline-block"
                 ng-model="model.permissions.API_access"> API Access
             <label for="permissions_API_access" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
@@ -194,7 +194,7 @@
                     multiple tagging-tokens="SPACE|," theme="bootstrap" class="form-control inline-block" ng-if="domains && domains.length > 0"
                      ng-model="model.security_analytics_list" id="security_analytics_list ">
                     <ui-select-match placeholder="Add a Domain to the list...">{{$item.domain_name}}</ui-select-match>
-                    <ui-select-choices repeat="domain  in  domains | filter: {domain_name: $select.search}">
+                    <ui-select-choices repeat="domain  in  domains  | filter: {domain_name: $select.search}">
                         {{domain.domain_name}}
                     </ui-select-choices>
                 </ui-select>

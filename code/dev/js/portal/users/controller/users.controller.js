@@ -82,6 +82,7 @@
               list: [],
               allow_list: true
             },
+            mobile_analytics: true,
             domains: {
               access: true,
               list: [],
@@ -248,6 +249,7 @@
                 list: [],
                 allow_list: true
               },
+              mobile_analytics: true,
               domains: {
                 access: true,
                 list: [],
@@ -359,7 +361,7 @@
       ];
 
       modelLists.forEach(function (list) {
-        if ((model.permissions[list].list.length > 0) === false) {
+        if (model.permissions[list].list && ((model.permissions[list].list.length > 0) === false)) {
           delete model.permissions[list].list;
         }
       });
@@ -384,8 +386,9 @@
         .then(function (data) {
           // NOTE: update current user info
           if (model.user_id === User.getUser().user_id) {
-            User.reloadUser();
+            User.reloadUser();            
           }
+          $scope.setGroup();
           $scope.alertService.success(data);
         })
         .catch($scope.alertService.danger);
@@ -636,6 +639,15 @@
         $scope.groups = data || [];
         // select the current group
         $scope.model.group = $scope.model.group_id || 'null';
+        $scope.setGroup();
+      });
+    };
+
+    /*
+    * Sets a group by ID and refreshes permissions / readonly mode for permissions (when inherited from group)
+    */
+    $scope.setGroup = function () {
+      Groups.query().$promise.then(function (data) {
         if ($scope.model.group_id && $scope.model.group_id !== 'null') {
           Groups.get({id: $scope.model.group_id}).$promise.then(function (group) {
             if (group) {
@@ -643,7 +655,19 @@
               $scope.readOnly = true;
             }
           });
+        } else {
+          $scope.getEditUser($scope.model.user_id).then(function (data) {
+            $scope.model.permissions = data.permissions;
+            delete $scope.groupPermissions;
+            $scope.readOnly = false;
+          });
         }
+      });
+    };
+
+    $scope.getEditUser = function (id) {
+      return Users.get({id: id}).$promise.then(function (data) {
+        return data;
       });
     };
 
