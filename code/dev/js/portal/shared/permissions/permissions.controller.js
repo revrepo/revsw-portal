@@ -124,7 +124,8 @@
          * @param  {[type]} item [description]
          * @return {[type]}       [description]
          */
-        $scope.addItemToList = function (item, list) {
+        $scope.addItemToList = function (event, item, list) {
+            event.searchInput.focus();
             if (item && list) {
                 if (!$scope.model.permissions[list]) {
                     $scope.model.permissions[list] = {

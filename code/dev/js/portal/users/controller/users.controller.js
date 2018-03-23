@@ -370,6 +370,10 @@
         delete model.permissions;
       }
 
+      if (model.group_id === 'null') {
+        model.group_id = null;
+      }
+
       return model;
     };
 
