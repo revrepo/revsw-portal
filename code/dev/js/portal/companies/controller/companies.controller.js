@@ -77,9 +77,12 @@
         $scope.companies = res;
       });
 
-      Vendors.query().$promise.then(function (response) {
-        $scope.vendorProfiles = response;
-      });
+      // only revadmin
+      if ($scope.auth.isRevadmin()) {
+        Vendors.query().$promise.then(function (response) {
+          $scope.vendorProfiles = response;
+        });
+      }
     });
 
     $scope.filterKeys = ['companyName', 'comment', 'createdBy', 'updated_at', 'subscription_name', 'subscription_state', 'created_at'];
