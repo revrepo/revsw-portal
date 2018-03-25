@@ -385,17 +385,51 @@
       model.id = model.user_id;
       model.group_id = model.group;
       model = $scope.prepareUserDataForUpdate(model);
-      $scope
-        .update(model)
-        .then(function (data) {
-          // NOTE: update current user info
-          if (model.user_id === User.getUser().user_id) {
-            User.reloadUser();            
-          }
-          $scope.setGroup();
-          $scope.alertService.success(data);
-        })
-        .catch($scope.alertService.danger);
+      if (model.permissions && model.permissions.read_only && model.user_id === $scope.auth.getUser().user_id) {
+        // user is setting himself for readonly mode
+        $scope.confirm('confirmReadOnlyModal.html', model).then(function () {
+          $scope
+            .update(model)
+            .then(function (data) {
+              // NOTE: update current user info
+              if (model.user_id === User.getUser().user_id) {
+                User.reloadUser();
+              }
+              $scope.setGroup();
+              $scope.alertService.success(data);
+            })
+            .catch($scope.alertService.danger);
+        });
+      } else {
+        if (model.permissions && !model.permissions.users && model.user_id === $scope.auth.getUser().user_id) {
+          // user is setting himself for readonly mode
+          $scope.confirm('confirmUserDenyAccessModal.html', model).then(function () {
+            $scope
+              .update(model)
+              .then(function (data) {
+                // NOTE: update current user info
+                if (model.user_id === User.getUser().user_id) {
+                  User.reloadUser();
+                }
+                $scope.setGroup();
+                $scope.alertService.success(data);
+              })
+              .catch($scope.alertService.danger);
+          });
+        } else {
+          $scope
+          .update(model)
+          .then(function (data) {
+            // NOTE: update current user info
+            if (model.user_id === User.getUser().user_id) {
+              User.reloadUser();
+            }
+            $scope.setGroup();
+            $scope.alertService.success(data);
+          })
+          .catch($scope.alertService.danger);
+        }       
+      }
     };
 
     $scope.getRelativeDate = function (datetime) {
