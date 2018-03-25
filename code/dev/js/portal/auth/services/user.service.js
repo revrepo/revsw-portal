@@ -306,6 +306,7 @@
                 $localStorage.group = group;
                 permissions = group ? group.permissions : $localStorage.user.permissions;
                 checkEnforce2FA();
+                checkPermissions();
               });
             }   
           } else {
@@ -703,7 +704,18 @@
       }
     }
 
+    function checkPermissions() {
+      if (permissions) {
+        if (!permissions.portal_login) {
+          logout();          
+          $state.go('login');
+          AlertService.danger('You do not have permissions to be logged in to the portal.');
+        }
+      }
+    }
+
     return {
+      checkPermissions: checkPermissions,
 
       checkEnforce2FA: checkEnforce2FA,
 

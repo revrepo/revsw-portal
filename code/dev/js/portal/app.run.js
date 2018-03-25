@@ -32,7 +32,8 @@
       });
     $rootScope.$on('$stateChangeSuccess',
       function(event, toState, toParams, fromState, fromParams){       
-        User.checkEnforce2FA(event, toState, fromState); 
+        User.checkEnforce2FA(event, toState, fromState);
+        User.checkPermissions();
         // Clear alerts when routes change //TODO:check comment
         setTimeout(function() {
           $('[autofocus]').focus();
