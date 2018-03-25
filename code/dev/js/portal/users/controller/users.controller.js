@@ -35,7 +35,7 @@
     $scope.COMMENT_NO_SPECIAL_CHARS = $config.PATTERNS.COMMENT_NO_SPECIAL_CHARS;
     $scope.resendDisabled = true;
 
-    $scope.roles = ['user', 'admin'];
+    $scope.roles = ['admin'];
     // Adding additional user roles for RevAdmin
     if ($scope.auth.isRevadmin() || $scope.auth.isReseller()) {
       $scope.roles.push('reseller');
@@ -340,6 +340,12 @@
         model.companyId = _.uniq(_(model.companyId).concat(model.managed_account_ids).value());
       }
 
+      if (User.isAdmin()) {
+        model.role = 'admin';        
+      }
+
+      model.account_id = model.companyId[0];
+
       delete model.managed_account_ids;
 
       delete model.apps_list;
@@ -452,8 +458,7 @@
       if (!_model.companyId || !angular.isArray(_model.companyId)) {
         _model.companyId = [model.account_id] || [$scope.model.account_id];
       }
-
-      delete _model.account_id;
+      delete _model.group;
       $scope.create(_model, isStay)
         .then(function (data) {
           initModel(true);
@@ -475,20 +480,27 @@
         return true;
       }
 
+      if (User.isRevadmin() || User.isReseller()) {
+        return $scope._loading ||
+          !model.email ||
+          !model.access_control_list ||
+          !model.firstname ||
+          !model.lastname ||
+          !model.role;
+      }
+
       if (isEdit) {
         return $scope._loading ||
           !model.email ||
           !model.access_control_list ||
           !model.firstname ||
-          !model.lastname ||
-          !model.role;
+          !model.lastname;
       } else {
         return $scope._loading ||
           !model.email ||
           !model.access_control_list ||
           !model.firstname ||
-          !model.lastname ||
-          !model.role;
+          !model.lastname;
       }
     };
 
