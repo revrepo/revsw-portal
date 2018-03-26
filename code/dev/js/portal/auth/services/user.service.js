@@ -6,7 +6,7 @@
     .factory('User', User);
 
   /*@ngInject*/
-  function User($localStorage, $http, $config, $q, DomainsConfig, $auth, Groups, $state, AlertService) {
+  function User($localStorage, $http, $config, $q, DomainsConfig, $auth, Groups, $state, AlertService, Companies) {
 
     /**
      * List of Users domains
@@ -306,9 +306,15 @@
                 $localStorage.group = group;
                 permissions = group ? group.permissions : $localStorage.user.permissions;
                 checkEnforce2FA();
-                checkPermissions();
+                checkPermissions();                
               });
-            }   
+            } else {
+              checkEnforce2FA();
+              checkPermissions();
+            }
+            Companies.get({id: $localStorage.user.account_id}).$promise.then(function (acc) {
+              $localStorage.userMainAccount = acc;
+            });
           } else {
             // Something went wrong
             throw new Error(data.response);
