@@ -1,12 +1,14 @@
 <div class="form-group permissions">
-    <label for="access_control_list" class="col-sm-2 control-label">Permissions <span ng-if="readOnly">(Inherited From Group)</span></label>
+    <label for="access_control_list" class="col-sm-2 control-label">Permissions
+        <span ng-if="readOnly">(Inherited From Group)</span>
+    </label>
     <div class="col-sm-10" ng-show="!model || !apps || !domains || !dnsZones || !companies">
         <i class="glyphicon glyphicon-refresh spin"></i> Please wait...
     </div>
     <div class="col-sm-4" ng-show="model && apps && domains && dnsZones && companies">
         <div class="col-sm-6">
-            <input ng-disabled="readOnly" type="checkbox" ng-checked="model.permissions.read_only" name="permissions_read_only"
-                class="inline-block" ng-model="model.permissions.read_only"> Read Only
+            <input ng-disabled="readOnly" type="checkbox" ng-checked="model.permissions.read_only" name="permissions_read_only" class="inline-block"
+                ng-model="model.permissions.read_only"> Read Only
             <label for="permissions_read_only" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
                 uib-popover="Grant read-only access to resources (Users, Accounts, Domains etc...), dashboard management is still available for users.">
                 <i class="fa fa-question-circle"></i>
@@ -56,12 +58,12 @@
                 </label>
             </span>
             <br />
-            <div class="item-list" ng-show="model.permissions.mobile_apps.access">
-                <span ng-show="(_loading || !apps || !apps.length) && model.permissions.mobile_apps.access" class="loader--waite-company">
+            <div class="item-list" ng-show="model.permissions.mobile_apps.access && apps && apps.length > 0">
+                <span ng-show="(_loading || !apps) && model.permissions.mobile_apps.access" class="loader--waite-company">
                     <i class="glyphicon glyphicon-refresh spin"></i> Please wait...</span>
-                <ui-select ng-disabled="readOnly" on-select="addItemToList($select, $item, 'mobile_apps')" on-remove="removeItemFromList($item, 'mobile_apps')" multiple
-                    tagging-tokens="SPACE|," theme="bootstrap" class="form-control inline-block" ng-if="apps && apps.length > 0"
-                     ng-model="model.apps_list" id="apps_list ">
+                <ui-select ng-disabled="readOnly" on-select="addItemToList($select, $item, 'mobile_apps')" on-remove="removeItemFromList($item, 'mobile_apps')"
+                    multiple tagging-tokens="SPACE|," theme="bootstrap" class="form-control inline-block" ng-if="apps && apps.length > 0"
+                    ng-model="model.apps_list" id="apps_list ">
                     <ui-select-match placeholder="Add a Mobile App to the list...">{{$item.app_name}}</ui-select-match>
                     <ui-select-choices repeat="app  in  apps">
                         {{app.app_name}}
@@ -76,6 +78,10 @@
                 <input ng-disabled="readOnly" type="radio" ng-model="model.permissions.mobile_apps.allow_list" ng-checked="!model.permissions.mobile_apps.allow_list"
                     ng-value="false"> Deny access only to apps from this list
             </div>
+            <span class="{{model.permissions.mobile_apps.access ? 'bg-dark' : null}}" style="padding: 10px 10px 10px 20px; margin: 0 0 10px 0;"
+                ng-show="apps && apps.length === 0 && model.permissions.mobile_apps.access">
+                No mobile apps found for this account.
+            </span>
         </div>
         <div>
             <input ng-disabled="readOnly" ng-checked="model.permissions.mobile_analytics" type="checkbox" name="permissions_mobile_analytics"
@@ -94,11 +100,11 @@
                 </label>
             </span>
             <br />
-            <div class="item-list" ng-show="model.permissions.domains.access">
-                <span ng-show="(_loading || !domains || !domains.length) && model.permissions.domains.access" class="loader--waite-company">
+            <div class="item-list" ng-show="model.permissions.domains.access && domains && domains.length > 0">
+                <span ng-show="(_loading || !domains) && model.permissions.domains.access" class="loader--waite-company">
                     <i class="glyphicon glyphicon-refresh spin"></i> Please wait...</span>
-                <ui-select ng-disabled="readOnly" on-select="addItemToList($select, $item, 'domains')" on-remove="removeItemFromList($item, 'domains')" multiple tagging-tokens="SPACE|,"
-                    theme="bootstrap" class="form-control inline-block" ng-if="domains && domains.length > 0" 
+                <ui-select ng-disabled="readOnly" on-select="addItemToList($select, $item, 'domains')" on-remove="removeItemFromList($item, 'domains')"
+                    multiple tagging-tokens="SPACE|," theme="bootstrap" class="form-control inline-block" ng-if="domains && domains.length > 0"
                     ng-model="model.domains_list" id="domains_list ">
                     <ui-select-match placeholder="Add a Domain to the list...">{{$item.domain_name}}</ui-select-match>
                     <ui-select-choices repeat="domain  in  domains">
@@ -114,6 +120,10 @@
                 <input ng-disabled="readOnly" type="radio" ng-model="model.permissions.domains.allow_list" ng-checked="!model.permissions.domains.allow_list"
                     ng-value="false"> Deny access only to domains from this list
             </div>
+            <span class="{{model.permissions.domains.access ? 'bg-dark' : null}}" style="padding: 10px 10px 10px 20px; margin: 0 0 10px 0;"
+                ng-show="domains && domains.length === 0 && model.permissions.domains.access">
+                No domains found for this account.
+            </span>
         </div>
         <div class="checkbox-list">
             <span class="{{model.permissions.cache_purge.access ? 'bg-dark' : null}}">
@@ -125,12 +135,12 @@
                 </label>
             </span>
             <br />
-            <div class="item-list" ng-show="model.permissions.cache_purge.access">
-                <span ng-show="(_loading || !domains || !domains.length) && model.permissions.domains.access" class="loader--waite-company">
+            <div class="item-list" ng-show="model.permissions.cache_purge.access && domains && domains.length > 0">
+                <span ng-show="(_loading || !domains) && model.permissions.cache_purge.access" class="loader--waite-company">
                     <i class="glyphicon glyphicon-refresh spin"></i> Please wait...</span>
-                <ui-select ng-disabled="readOnly" on-select="addItemToList($select, $item, 'cache_purge')" on-remove="removeItemFromList($item, 'cache_purge')" multiple
-                    tagging-tokens="SPACE|," theme="bootstrap" class="form-control inline-block" ng-if="domains && domains.length > 0"
-                     ng-model="model.cache_purge_list" id="cache_purge_list ">
+                <ui-select ng-disabled="readOnly" on-select="addItemToList($select, $item, 'cache_purge')" on-remove="removeItemFromList($item, 'cache_purge')"
+                    multiple tagging-tokens="SPACE|," theme="bootstrap" class="form-control inline-block" ng-if="domains && domains.length > 0"
+                    ng-model="model.cache_purge_list" id="cache_purge_list ">
                     <ui-select-match placeholder="Add a Domain to the list...">{{$item.domain_name}}</ui-select-match>
                     <ui-select-choices repeat="domain  in  domains">
                         {{domain.domain_name}}
@@ -145,6 +155,10 @@
                 <input ng-disabled="readOnly" type="radio" ng-model="model.permissions.cache_purge.allow_list" ng-checked="!model.permissions.cache_purge.allow_list"
                     ng-value="false"> Deny purge cache only for domains from this list
             </div>
+            <span class="{{model.permissions.cache_purge.access ? 'bg-dark' : null}}" style="padding: 10px 10px 10px 20px; margin: 0 0 10px 0;"
+                ng-show="domains && domains.length === 0 && model.permissions.cache_purge.access">
+                No domains found for this account.
+            </span>
         </div>
         <div class="checkbox-list">
             <span class="{{model.permissions.web_analytics.access ? 'bg-dark' : null}}">
@@ -156,12 +170,12 @@
                 </label>
             </span>
             <br />
-            <div class="item-list" ng-show="model.permissions.web_analytics.access">
-                <span ng-show="(_loading || !domains || !domains.length) && model.permissions.web_analytics.access" class="loader--waite-company">
+            <div class="item-list" ng-show="model.permissions.web_analytics.access && domains && domains.length > 0">
+                <span ng-show="(_loading || !domains) && model.permissions.web_analytics.access" class="loader--waite-company">
                     <i class="glyphicon glyphicon-refresh spin"></i> Please wait...</span>
-                <ui-select ng-disabled="readOnly" on-select="addItemToList($select, $item, 'web_analytics')" on-remove="removeItemFromList($item, 'web_analytics')" multiple
-                    tagging-tokens="SPACE|," theme="bootstrap" class="form-control inline-block" ng-if="domains && domains.length > 0"
-                     ng-model="model.web_analytics_list" id="web_analytics_list ">
+                <ui-select ng-disabled="readOnly" on-select="addItemToList($select, $item, 'web_analytics')" on-remove="removeItemFromList($item, 'web_analytics')"
+                    multiple tagging-tokens="SPACE|," theme="bootstrap" class="form-control inline-block" ng-if="domains && domains.length > 0"
+                    ng-model="model.web_analytics_list" id="web_analytics_list ">
                     <ui-select-match placeholder="Add a Domain to the list...">{{$item.domain_name}}</ui-select-match>
                     <ui-select-choices repeat="domain  in  domains">
                         {{domain.domain_name}}
@@ -176,6 +190,10 @@
                 <input ng-disabled="readOnly" type="radio" ng-model="model.permissions.web_analytics.allow_list" ng-checked="!model.permissions.web_analytics.allow_list"
                     ng-value="false"> Deny access only to domains from this list
             </div>
+            <span class="{{model.permissions.web_analytics.access ? 'bg-dark' : null}}" style="padding: 10px 10px 10px 20px; margin: 0 0 10px 0;"
+                ng-show="domains && domains.length === 0 && model.permissions.web_analytics.access">
+                No domains found for this account.
+            </span>
         </div>
         <div class="checkbox-list" style="margin-top: 15px;">
             <span class="{{model.permissions.security_analytics.access ? 'bg-dark' : null}}">
@@ -187,12 +205,12 @@
                 </label>
             </span>
             <br />
-            <div class="item-list" ng-show="model.permissions.security_analytics.access">
-                <span ng-show="(_loading || !domains || !domains.length) && model.permissions.security_analytics.access" class="loader--waite-company">
+            <div class="item-list" ng-show="model.permissions.security_analytics.access && domains && domains.length > 0">
+                <span ng-show="(_loading || !domains) && model.permissions.security_analytics.access" class="loader--waite-company">
                     <i class="glyphicon glyphicon-refresh spin"></i> Please wait...</span>
                 <ui-select ng-disabled="readOnly" on-select="addItemToList($select, $item, 'security_analytics')" on-remove="removeItemFromList($item, 'security_analytics')"
                     multiple tagging-tokens="SPACE|," theme="bootstrap" class="form-control inline-block" ng-if="domains && domains.length > 0"
-                     ng-model="model.security_analytics_list" id="security_analytics_list ">
+                    ng-model="model.security_analytics_list" id="security_analytics_list ">
                     <ui-select-match placeholder="Add a Domain to the list...">{{$item.domain_name}}</ui-select-match>
                     <ui-select-choices repeat="domain  in  domains  | filter: {domain_name: $select.search}">
                         {{domain.domain_name}}
@@ -207,6 +225,10 @@
                 <input ng-disabled="readOnly" type="radio" ng-model="model.permissions.security_analytics.allow_list" ng-checked="!model.permissions.security_analytics.allow_list"
                     ng-value="false"> Deny access only to domains from this list
             </div>
+            <span class="{{model.permissions.security_analytics.access ? 'bg-dark' : null}}" style="padding: 10px 10px 10px 20px; margin: 0 0 10px 0;"
+                ng-show="domains && domains.length === 0 && model.permissions.security_analytics.access">
+                No domains found for this account.
+            </span>
         </div>
         <div class="checkbox-list" style="margin-top: 15px;">
             <span class="{{model.permissions.dns_zones.access ? 'bg-dark' : null}}">
@@ -218,11 +240,11 @@
                 </label>
             </span>
             <br />
-            <div class="item-list" ng-show="model.permissions.dns_zones.access">
-                <span ng-show="(_loading || !dnsZones || !dnsZones.length) && model.permissions.dns_zones.access" class="loader--waite-company">
+            <div class="item-list" ng-show="model.permissions.dns_zones.access && dnsZones && dnsZones.length > 0">
+                <span ng-show="(_loading || !dnsZones) && model.permissions.dns_zones.access" class="loader--waite-company">
                     <i class="glyphicon glyphicon-refresh spin"></i> Please wait...</span>
-                <ui-select ng-disabled="readOnly" on-select="addItemToList($select, $item, 'dns_zones')" on-remove="removeItemFromList($item, 'dns_zones')" multiple tagging-tokens="SPACE|,"
-                    theme="bootstrap" class="form-control inline-block" ng-if="dnsZones && dnsZones.length > 0" 
+                <ui-select ng-disabled="readOnly" on-select="addItemToList($select, $item, 'dns_zones')" on-remove="removeItemFromList($item, 'dns_zones')"
+                    multiple tagging-tokens="SPACE|," theme="bootstrap" class="form-control inline-block" ng-if="dnsZones && dnsZones.length > 0"
                     ng-model="model.dns_zones_list" id="dns_zones_list ">
                     <ui-select-match placeholder="Add a DNS Zone to the list...">{{$item.zone}}</ui-select-match>
                     <ui-select-choices repeat="zone  in  dnsZones | filter: {zone: $select.search}">
@@ -238,6 +260,10 @@
                 <input ng-disabled="readOnly" type="radio" ng-model="model.permissions.dns_zones.allow_list" ng-checked="!model.permissions.dns_zones.allow_list"
                     ng-value="false"> Deny access only to zones from this list
             </div>
+            <span class="{{model.permissions.dns_zones.access ? 'bg-dark' : null}}" style="padding: 10px 10px 10px 20px; margin: 0 0 10px 0;"
+                ng-show="dnsZones && dnsZones.length === 0 && model.permissions.dns_zones.access">
+                No DNS Zones found for this account.
+            </span>
         </div>
         <div class="checkbox-list" ng-if="auth.isReseller() || auth.isRevadmin()" style="margin-top: 15px;">
             <span class="{{model.permissions.accounts.access ? 'bg-dark' : null}}">
@@ -251,8 +277,8 @@
             <div class="item-list" ng-show="model.permissions.accounts.access">
                 <span ng-show="(_loading || !companies || !companies.length) && model.permissions.accounts.access" class="loader--waite-company">
                     <i class="glyphicon glyphicon-refresh spin"></i> Please wait...</span>
-                <ui-select ng-disabled="readOnly" on-select="addItemToList($select, $item, 'accounts')" on-remove="removeItemFromList($item, 'accounts')" multiple tagging-tokens="SPACE|,"
-                    theme="bootstrap" class="form-control inline-block" ng-if="companies && companies.length > 0" 
+                <ui-select ng-disabled="readOnly" on-select="addItemToList($select, $item, 'accounts')" on-remove="removeItemFromList($item, 'accounts')"
+                    multiple tagging-tokens="SPACE|," theme="bootstrap" class="form-control inline-block" ng-if="companies && companies.length > 0"
                     ng-model="model.accounts_list" id="accounts_list">
                     <ui-select-match placeholder="Add an Account to the list...">{{$item.companyName}}</ui-select-match>
                     <ui-select-choices repeat="acc  in  companies | filter: {companyName: $select.search}">

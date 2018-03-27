@@ -3,8 +3,8 @@
     <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
       <strong>{{user.firstname}} {{user.lastname}}</strong>
       <span>(<em ng-if="isReadOnly()" id="msg-is-read-only">READ-ONLY </em>{{user.role}})</span>
-      |
-      <strong>{{getUserAccount().companyName}}</strong>
+      <span ng-if="user.role !== 'revadmin'">|</span>
+      <strong ng-if="user.role !== 'revadmin'">{{getUserAccount().companyName}}</strong>
       <span class="caret"></span>
     </a>
     <ul class="dropdown-menu">

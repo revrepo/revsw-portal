@@ -64,7 +64,8 @@
         selectedApplication: null,
         selectedDNSZone: null,
         intro: intro_,
-        lastUrl: null
+        lastUrl: null,
+        userMainAccount: null
       });
     }
 
@@ -226,6 +227,7 @@
       $localStorage.selectedUser = undefined;
       $localStorage.selectedCompany = undefined;
       $localStorage.selectedDomain = undefined;
+      $localStorage.userMainAccount = undefined;
       
       clearAuthHeaderForAPI();
       clearAll();
@@ -312,9 +314,11 @@
               checkEnforce2FA();
               checkPermissions();
             }
-            Companies.get({id: $localStorage.user.account_id}).$promise.then(function (acc) {
-              $localStorage.userMainAccount = acc;
-            });
+            if ($localStorage.user.role !== 'revadmin') {
+              Companies.get({id: $localStorage.user.account_id}).$promise.then(function (acc) {
+                $localStorage.userMainAccount = acc;
+              });
+            }            
           } else {
             // Something went wrong
             throw new Error(data.response);
