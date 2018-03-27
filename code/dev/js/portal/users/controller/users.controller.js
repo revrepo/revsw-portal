@@ -344,7 +344,7 @@
         model.role = 'admin';        
       }
 
-      model.account_id = model.companyId[0];
+      model.account_id = model.companyId ? model.companyId[0] : model.account_id;
 
       delete model.managed_account_ids;
 
