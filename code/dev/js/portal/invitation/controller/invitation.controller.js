@@ -28,7 +28,7 @@
     $scope.setResource(Invitation);
 
     if (User.isAuthed()) {
-      $state.go('index.accountSettings.profile');
+      User.logout();
       return;
     }
 
