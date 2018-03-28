@@ -78,7 +78,11 @@
               list: [],
               allow_list: true
             },
-            dns_analytics: true,
+            dns_analytics: {
+              access: true,
+              list: [],
+              allow_list: true
+            },
             groups: true,
             users: true,
             API_keys: true,
@@ -241,6 +245,7 @@
       delete _model.web_analytics_list;
       delete _model.accounts_list;
       delete _model.cache_purge_list;
+      delete _model.dns_analytics_list;
 
       var modelLists = [
         'mobile_apps',
@@ -249,7 +254,8 @@
         'security_analytics',
         'dns_zones',
         'accounts',
-        'cache_purge'
+        'cache_purge',
+        'dns_analytics'
       ];
 
       modelLists.forEach(function (list) {

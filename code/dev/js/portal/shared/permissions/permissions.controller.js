@@ -28,7 +28,7 @@
         
         $scope.modelList = ['apps_list', 'domains_list', 'web_analytics_list',
         'security_analytics_list', 'cache_purge_list', 'dns_zones_list',
-        'accounts_list'];
+        'accounts_list', 'dns_analytics_list'];
 
         Apps.query().$promise.then(function (apps) {
             $scope.apps = apps;
@@ -78,6 +78,7 @@
             $scope.pushItemsById('security_analytics', 'security_analytics_list', 'domains');
             $scope.pushItemsById('cache_purge', 'cache_purge_list', 'domains');
             $scope.pushItemsById('dns_zones', 'dns_zones_list', 'dnsZones');
+            $scope.pushItemsById('dns_analytics', 'dns_analytics_list', 'dnsZones');
             $scope.pushItemsById('accounts', 'accounts_list', 'companies');
         };
 
@@ -106,6 +107,7 @@
         $scope.$watch('dnsZones', function () {
             if ($scope.dnsZones) {
                 $scope.pushItemsById('dns_zones', 'dns_zones_list', 'dnsZones');
+                $scope.pushItemsById('dns_analytics', 'dns_analytics_list', 'dnsZones');
             }
         });
 

@@ -17,7 +17,7 @@
         onSelect: '&'
       },
       /*@ngInject*/
-      controller: function ($scope) {
+      controller: function ($scope, $state) {
         $scope.dnsZoneList = [];
         $scope._loading = true;
         $scope.data = {
@@ -32,8 +32,12 @@
 
         //  ---------------------------------
         // Load user DNS Zones
-        User.getUserDNSZones(true)
-          .then(function (result) {
+        var filter;
+        if ($state.is('index.dnsServices.dns_analytics')) {
+          filter = 'dns_analytics';
+        }
+        User.getUserDNSZones(true, filter)
+          .then(function (result) {            
             $scope.dnsZoneList = result;
             // Set default value if ngModel is empty
             if (!$scope.ngModel || !$scope.ngModel.id) {

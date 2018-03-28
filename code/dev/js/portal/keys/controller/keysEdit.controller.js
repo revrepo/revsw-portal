@@ -149,7 +149,11 @@
                 list: [],
                 allow_list: true
               },
-              dns_analytics: true,
+              dns_analytics: {
+                access: true,
+                list: [],
+                allow_list: true
+              },
               groups: true,
               users: true,
               API_keys: true,

@@ -559,12 +559,18 @@
      * @param {Boolean} reload
      * @returns
      */
-    function getUserDNSZones(reload) {
+    function getUserDNSZones(reload, filter) {
       return $q(function (resolve, reject) {
         if (DNSZoneList.length > 0 && !reload) {
           return resolve(DNSZoneList);
         }
-        $http.get($config.API_URL + '/dns_zones')
+        var queryFilter;
+        if (filter) {
+          queryFilter = {
+            operation: filter
+          };
+        }
+        $http.get($config.API_URL + '/dns_zones' + (queryFilter ? '?filters=' + JSON.stringify(queryFilter) : ''))
           .then( function (data) {
 
             if (data && data.status === $config.STATUS.OK) {
