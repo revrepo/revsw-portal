@@ -184,6 +184,10 @@
       $scope.selected = model;
     };
 
+    $scope.onAccountSelect = function (model) {
+      $scope.model.group = 'null';
+    };
+
     /**
      * Function will remove all data that should not be sent to server
      *
@@ -254,9 +258,15 @@
       // Fetch and set groups
       Groups.query().$promise.then(function (data) {
         $scope.groups = data || [];
+        $scope.fullGroupList = data || [];
         // select the current group
         if ($scope.key) {
           $scope.model.group = $scope.key.group_id || 'null';
+          if ($scope.key.account_id) {
+            $scope.groups = _.filter($scope.fullGroupList, function (group) {
+              return group.account_id === $scope.key.account_id;
+            });
+          }
         }
       });
     };
@@ -323,5 +333,17 @@
       return true;
     }
   };
+
+  $scope.$watch('key.account_id', function () {
+    $scope.groups = _.filter($scope.fullGroupList, function (group) {
+      return group.account_id === $scope.key.account_id;
+    });
+  });
+
+  $scope.$watch('model.group', function (newVal, oldVal) {
+    if (newVal === 'null') {
+      $scope.setPermissions('null');
+    }
+  });
   }
 })();

@@ -49,6 +49,7 @@
     };
     $scope.domains = [];
     $scope.groups = [];
+    $scope.fullGroupList = [];
 
     if (!$scope.model) {
       initModel();
@@ -661,6 +662,8 @@
         $scope.model.companyId = [];
       }
       $scope.model.companyId[0] = model;
+      $scope.model.account_id = model;
+      $scope.model.group = 'null';
     };
 
     $scope.userInvitationDone = function (model) {
@@ -689,8 +692,14 @@
       // Fetch and set groups
       Groups.query().$promise.then(function (data) {
         $scope.groups = data || [];
+        $scope.fullGroupList = data || [];
         // select the current group
         $scope.model.group = $scope.model.group_id || 'null';
+        if ($scope.model.account_id) {
+          $scope.groups = _.filter($scope.fullGroupList, function (group) {
+            return group.account_id === $scope.model.account_id;
+          });
+        }
         $scope.setGroup();
       });
     };
@@ -753,11 +762,23 @@
           $scope.model.companyId = [];
         }
         $scope.model.companyId[0] = User.getUser().account_id;
+        $scope.model.account_id = User.getUser().account_id;
         return false;        
       } else if (model.role === 'admin' && User.getUser().role === 'reseller'){
         return true;
       }
     };
 
+    $scope.$watch('model.account_id', function () {
+      $scope.groups = _.filter($scope.fullGroupList, function (group) {
+        return group.account_id === $scope.model.account_id;
+      });
+    });
+
+    $scope.$watch('model.group', function (newVal, oldVal) {
+      if (newVal === 'null') {
+        $scope.setPermissions('null');
+      }
+    });
   }
 })();
