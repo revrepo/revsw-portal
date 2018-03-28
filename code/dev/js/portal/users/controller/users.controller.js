@@ -337,15 +337,10 @@
       } else {
         model = _.clone(model_current.toJSON(), true);
       }
-      if (model.role === 'reseller') {
-        model.companyId = _.uniq(_(model.companyId).concat(model.managed_account_ids).value());
-      }
 
       if (User.isAdmin()) {
         model.role = 'admin';        
       }
-
-      model.account_id = model.companyId ? model.companyId[0] : model.account_id;
 
       delete model.managed_account_ids;
 
@@ -527,29 +522,11 @@
             // NOTE: set companies(account) name (must be aplay method "dependencies" first)
             var list = $scope.companies;
             _.forEach($scope.records, function (item) {
-              if (item.companyId.length === 1) {
-                var index = _.findIndex(list, {
-                  id: item.companyId[0]
-                });
-                if (index >= 0) {
-                  item.companyName = list[index].companyName;
-                }
-              } else {
-                if (item.companyId.length > 1) {
-                  item.companyName = '';
-                  angular.forEach(item.companyId, function (account_id, key) {
-                    var index = _.findIndex(list, {
-                      id: account_id
-                    });
-                    if (index >= 0) {
-                      if (key !== item.companyId.length && key !== 0) {
-                        item.companyName = item.companyName + ', ';
-                      }
-                      item.companyName = item.companyName + list[index].companyName;
-                    }
-                  });
-                }
-              }
+              var company = _.filter(list, function (listItem) {
+                return listItem.id === item.account_id;
+              });
+              
+              item.companyName = company[0] ? company[0].companyName : company.companyName;
             });
             $q.when(list);
           } else {
