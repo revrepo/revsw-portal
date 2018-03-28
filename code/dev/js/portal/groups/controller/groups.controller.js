@@ -112,6 +112,10 @@
       Groups.get({ id: id }).$promise.then(function (data) {               
         $scope.model = data;
       });
+
+      Groups.users({ id: id }).$promise.then(function (data) {
+        $scope.users = data;
+      });
     };
 
     $scope.getRelativeDate = function (datetime) {
@@ -255,6 +259,22 @@
       });
 
       return _model;
+    };
+
+    $scope.getUsers = function () {
+      if ($scope.users && $scope.users.count > 0) {
+        var returnString = '';
+        $scope.users.users.forEach(function (user) {
+          returnString += user.email || user.key_name;
+          if ($scope.users.users.indexOf(user) !== $scope.users.users.length - 1) {
+            returnString += ', ';
+          }
+        });
+
+        return returnString.toString();
+      } else {
+        return 'None';
+      }
     };
   }
 })();

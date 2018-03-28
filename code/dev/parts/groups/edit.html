@@ -55,6 +55,13 @@
             </div>
           </div>
           <hr>
+          <div class="form-group">
+            <label for="name" class="col-sm-2 control-label">Users In Group</label>
+            <div class="col-sm-10">
+              <span>{{getUsers()}}</span>
+            </div>
+          </div>
+          <hr>
           <permissions pagetype="group" ng-controller="PermissionsController"></permissions>            
           <hr>
           <!-- passwords commented out because of invitation system -->
