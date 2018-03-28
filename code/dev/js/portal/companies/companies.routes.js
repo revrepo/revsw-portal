@@ -9,7 +9,7 @@
   function routesConfig($stateProvider) {
     $stateProvider
       .state('index.accountSettings.companies', {
-        url: '/companies',
+        url: '/accounts',
         views: {
           main: {
             controller: 'CompaniesCrudController',

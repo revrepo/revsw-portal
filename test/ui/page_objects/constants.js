@@ -35,7 +35,7 @@ var Constants = {
     dashboard: '#/dashboard',
     admin: {
       users: '#/users',
-      companies: '#/companies',
+      companies: '#/accounts',
       apiKeys: '#/keys',
       activityLog: '#/activitylog'
     },
