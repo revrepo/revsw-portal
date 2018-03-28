@@ -25,15 +25,6 @@
             templateUrl: 'parts/keys/edit.html'
           }
         }
-      })
-      .state('index.accountSettings.keys.editNew', {
-        url: '/editNew/:id',
-        views: {
-          page: {
-            controller: 'KeysEditController',
-            templateUrl: 'parts/keys/editNew.html'
-          }
-        }
       });
   }
 })();
