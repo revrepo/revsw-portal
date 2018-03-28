@@ -372,10 +372,12 @@
         }
       });
 
+      $scope.modalFlag = model.permissions.read_only;
+      $scope.denyUsersFlag = !model.permissions.users;
       if ($scope.readOnly) {
         delete model.permissions;
       }
-
+      
       if (model.group_id === 'null') {
         model.group_id = null;
       }
@@ -391,7 +393,7 @@
       model.id = model.user_id;
       model.group_id = model.group;
       model = $scope.prepareUserDataForUpdate(model);
-      if (model.permissions && model.permissions.read_only && model.user_id === $scope.auth.getUser().user_id) {
+      if ($scope.modalFlag && model.user_id === $scope.auth.getUser().user_id) {
         // user is setting himself for readonly mode
         $scope.confirm('confirmReadOnlyModal.html', model).then(function () {
           $scope
@@ -407,8 +409,8 @@
             .catch($scope.alertService.danger);
         });
       } else {
-        if (model.permissions && !model.permissions.users && model.user_id === $scope.auth.getUser().user_id) {
-          // user is setting himself for readonly mode
+        if ($scope.denyUsersFlag && model.user_id === $scope.auth.getUser().user_id) {
+          // user is setting himself for deny users mode
           $scope.confirm('confirmUserDenyAccessModal.html', model).then(function () {
             $scope
               .update(model)

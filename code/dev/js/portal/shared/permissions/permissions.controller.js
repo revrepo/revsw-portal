@@ -213,5 +213,24 @@
             });
             return accR;
         };
+
+
+        /**
+         * check if we have any items in a list we inherit from a group
+         * @param {String} list the list in the permissions object
+         */
+        $scope.hasListInRO = function (list) {
+            if ($scope.model.permissions && $scope.model.permissions[list]) {
+                if ($scope.readOnly && $scope.model.permissions[list].list.length > 0) {
+                    return true;
+                } else if ($scope.readOnly && $scope.model.permissions[list].list.length === 0) {
+                    return false;
+                } else if (!$scope.readOnly) {
+                    return true;
+                }
+            }
+
+            return true;
+        };
     }
 })();

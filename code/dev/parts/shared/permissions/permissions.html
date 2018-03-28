@@ -49,7 +49,7 @@
             </label>
         </div>
         <div class="checkbox-list">
-            <span class="{{model.permissions.mobile_apps.access ? 'bg-dark' : null}}">
+            <span class="{{model.permissions.mobile_apps.access && hasListInRO('mobile_apps') ? 'bg-dark' : null}}">
                 <input ng-disabled="readOnly" ng-checked="model.permissions.mobile_apps.access" type="checkbox" name="permissions_mobile_apps"
                     class="inline-block bg-dark" ng-model="model.permissions.mobile_apps.access"> Mobile Apps
                 <label for="permissions_mobile_apps" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
@@ -58,7 +58,7 @@
                 </label>
             </span>
             <br />
-            <div class="item-list" ng-show="model.permissions.mobile_apps.access && apps && apps.length > 0">
+            <div class="item-list" ng-show="model.permissions.mobile_apps.access && apps && apps.length > 0 && hasListInRO('mobile_apps')">
                 <span ng-show="(_loading || !apps) && model.permissions.mobile_apps.access" class="loader--waite-company">
                     <i class="glyphicon glyphicon-refresh spin"></i> Please wait...</span>
                 <ui-select ng-disabled="readOnly" on-select="addItemToList($select, $item, 'mobile_apps')" on-remove="removeItemFromList($item, 'mobile_apps')"
@@ -92,7 +92,7 @@
             </label>
         </div>
         <div class="checkbox-list">
-            <span class="{{model.permissions.domains.access ? 'bg-dark' : null}}">
+            <span class="{{model.permissions.domains.access && hasListInRO('domains') ? 'bg-dark' : null}}">
                 <input ng-disabled="readOnly" ng-checked="model.permissions.domains.access" type="checkbox" name="permissions_domains" class="inline-block bg-dark"
                     ng-model="model.permissions.domains.access"> Domains
                 <label for="permissions_domains" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Allow users to manage domains.">
@@ -100,7 +100,7 @@
                 </label>
             </span>
             <br />
-            <div class="item-list" ng-show="model.permissions.domains.access && domains && domains.length > 0">
+            <div class="item-list" ng-show="model.permissions.domains.access && domains && domains.length > 0 && hasListInRO('domains')">
                 <span ng-show="(_loading || !domains) && model.permissions.domains.access" class="loader--waite-company">
                     <i class="glyphicon glyphicon-refresh spin"></i> Please wait...</span>
                 <ui-select ng-disabled="readOnly" on-select="addItemToList($select, $item, 'domains')" on-remove="removeItemFromList($item, 'domains')"
@@ -126,7 +126,7 @@
             </span>
         </div>
         <div class="checkbox-list">
-            <span class="{{model.permissions.cache_purge.access ? 'bg-dark' : null}}">
+            <span class="{{model.permissions.cache_purge.access && hasListInRO('cache_purge') ? 'bg-dark' : null}}">
                 <input ng-disabled="readOnly" ng-checked="model.permissions.cache_purge.access" type="checkbox" name="permissions_cache_purge"
                     class="inline-block bg-dark" ng-model="model.permissions.cache_purge.access"> Cache Purge
                 <label for="permissions_cache_purge" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
@@ -135,7 +135,7 @@
                 </label>
             </span>
             <br />
-            <div class="item-list" ng-show="model.permissions.cache_purge.access && domains && domains.length > 0">
+            <div class="item-list" ng-show="model.permissions.cache_purge.access && domains && domains.length > 0 && hasListInRO('cache_purge')">
                 <span ng-show="(_loading || !domains) && model.permissions.cache_purge.access" class="loader--waite-company">
                     <i class="glyphicon glyphicon-refresh spin"></i> Please wait...</span>
                 <ui-select ng-disabled="readOnly" on-select="addItemToList($select, $item, 'cache_purge')" on-remove="removeItemFromList($item, 'cache_purge')"
@@ -161,7 +161,7 @@
             </span>
         </div>
         <div class="checkbox-list">
-            <span class="{{model.permissions.web_analytics.access ? 'bg-dark' : null}}">
+            <span class="{{model.permissions.web_analytics.access && hasListInRO('web_analytics') ? 'bg-dark' : null}}">
                 <input ng-disabled="readOnly" ng-checked="model.permissions.web_analytics.access" type="checkbox" name="permissions_web_analytics"
                     class="inline-block bg-dark" ng-model="model.permissions.web_analytics.access"> Web Analytics
                 <label for="permissions_web_analytics" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
@@ -170,7 +170,7 @@
                 </label>
             </span>
             <br />
-            <div class="item-list" ng-show="model.permissions.web_analytics.access && domains && domains.length > 0">
+            <div class="item-list" ng-show="model.permissions.web_analytics.access && domains && domains.length > 0 && hasListInRO('web_analytics')">
                 <span ng-show="(_loading || !domains) && model.permissions.web_analytics.access" class="loader--waite-company">
                     <i class="glyphicon glyphicon-refresh spin"></i> Please wait...</span>
                 <ui-select ng-disabled="readOnly" on-select="addItemToList($select, $item, 'web_analytics')" on-remove="removeItemFromList($item, 'web_analytics')"
@@ -196,7 +196,7 @@
             </span>
         </div>
         <div class="checkbox-list" style="margin-top: 15px;">
-            <span class="{{model.permissions.security_analytics.access ? 'bg-dark' : null}}">
+            <span class="{{model.permissions.security_analytics.access && hasListInRO('security_analytics') ? 'bg-dark' : null}}">
                 <input ng-disabled="readOnly" ng-checked="model.permissions.security_analytics.access" type="checkbox" name="permissions_sec_analytics"
                     class="inline-block bg-dark" ng-model="model.permissions.security_analytics.access"> Security Analytics
                 <label for="permissions_sec_analytics" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
@@ -205,7 +205,7 @@
                 </label>
             </span>
             <br />
-            <div class="item-list" ng-show="model.permissions.security_analytics.access && domains && domains.length > 0">
+            <div class="item-list" ng-show="model.permissions.security_analytics.access && domains && domains.length > 0 && hasListInRO('security_analytics')">
                 <span ng-show="(_loading || !domains) && model.permissions.security_analytics.access" class="loader--waite-company">
                     <i class="glyphicon glyphicon-refresh spin"></i> Please wait...</span>
                 <ui-select ng-disabled="readOnly" on-select="addItemToList($select, $item, 'security_analytics')" on-remove="removeItemFromList($item, 'security_analytics')"
@@ -231,7 +231,7 @@
             </span>
         </div>
         <div class="checkbox-list" style="margin-top: 15px;">
-            <span class="{{model.permissions.dns_zones.access ? 'bg-dark' : null}}">
+            <span class="{{model.permissions.dns_zones.access && hasListInRO('dns_zones') ? 'bg-dark' : null}}">
                 <input ng-disabled="readOnly" ng-checked="model.permissions.dns_zones.access" type="checkbox" name="permissions_dns_zones"
                     class="inline-block bg-dark" ng-model="model.permissions.dns_zones.access"> DNS Zones
                 <label for="permissions_dns_zones" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
@@ -240,7 +240,7 @@
                 </label>
             </span>
             <br />
-            <div class="item-list" ng-show="model.permissions.dns_zones.access && dnsZones && dnsZones.length > 0">
+            <div class="item-list" ng-show="model.permissions.dns_zones.access && dnsZones && dnsZones.length > 0 && hasListInRO('dns_zones')">
                 <span ng-show="(_loading || !dnsZones) && model.permissions.dns_zones.access" class="loader--waite-company">
                     <i class="glyphicon glyphicon-refresh spin"></i> Please wait...</span>
                 <ui-select ng-disabled="readOnly" on-select="addItemToList($select, $item, 'dns_zones')" on-remove="removeItemFromList($item, 'dns_zones')"
@@ -266,7 +266,7 @@
             </span>
         </div>
         <div class="checkbox-list" ng-if="auth.isReseller() || auth.isRevadmin()" style="margin-top: 15px;">
-            <span class="{{model.permissions.accounts.access ? 'bg-dark' : null}}">
+            <span class="{{model.permissions.accounts.access && hasListInRO('accounts') ? 'bg-dark' : null}}">
                 <input ng-disabled="readOnly" ng-checked="model.permissions.accounts.access" type="checkbox" name="permissions_accounts"
                     class="inline-block bg-dark" ng-model="model.permissions.accounts.access"> Accounts
                 <label for="permissions_accounts" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Allow users to access accounts.">
@@ -274,7 +274,7 @@
                 </label>
             </span>
             <br />
-            <div class="item-list" ng-show="model.permissions.accounts.access">
+            <div class="item-list" ng-show="model.permissions.accounts.access && hasListInRO('accounts')">
                 <span ng-show="(_loading || !companies || !companies.length) && model.permissions.accounts.access" class="loader--waite-company">
                     <i class="glyphicon glyphicon-refresh spin"></i> Please wait...</span>
                 <ui-select ng-disabled="readOnly" on-select="addItemToList($select, $item, 'accounts')" on-remove="removeItemFromList($item, 'accounts')"
@@ -364,7 +364,7 @@
                 <i class="fa fa-question-circle"></i>
             </label>
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-6" ng-if="false">
             <input ng-disabled="readOnly" ng-checked="model.permissions.traffic_alerts" type="checkbox" name="permissions_traffic_alerts"
                 class="inline-block" ng-model="model.permissions.traffic_alerts"> Traffic Alerts
             <label for="permissions_traffic_alerts" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
@@ -372,7 +372,7 @@
                 <i class="fa fa-question-circle"></i>
             </label>
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-6" ng-if="false">
             <input ng-disabled="readOnly" ng-checked="model.permissions.notification_lists" type="checkbox" name="permissions_notification_lists"
                 class="inline-block" ng-model="model.permissions.notification_lists"> Notification Lists
             <label for="permissions_notification_lists" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
