@@ -18,7 +18,7 @@
         isReload: '=?' // NOTE: reload list of domains
       },
       /*@ngInject*/
-      controller: function($scope) {
+      controller: function($scope, $state) {
         $scope.domains = [];
         $scope._loading = true;
         $scope.data = {
@@ -32,7 +32,17 @@
         };
 
         // Load user domains
-        User.getUserDomains(($scope.isReload === false)? false : true)
+        var filter;
+        if ($state.current.name.includes('index.security')) {
+          filter = 'security_analytics';
+        }
+        if ($state.current.name.includes('index.reports')) {
+          filter = 'web_analytics';
+        }
+        if ($state.current.name.includes('index.webApp.cache')) {
+          filter = 'cache_purge';
+        }
+        User.getUserDomains(($scope.isReload === false)? false : true, filter)
           .then(function(domains) {
             $scope.domains = domains;
             // Set default value if ngModel is empty

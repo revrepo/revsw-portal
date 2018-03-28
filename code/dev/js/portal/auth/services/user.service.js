@@ -394,12 +394,20 @@
      * @param {boolean} reload
      * @returns {Promise}
      */
-    function getUserDomains(reload) {
+    function getUserDomains(reload, filter) {
       return $q(function (resolve, reject) {
+        var queryFilter = {
+          operation: 'domains'
+        };
+        if (filter) {
+          queryFilter = {
+              operation: filter  
+          };
+        }
         if (domains && domains.length > 0 && !reload) {
           return resolve(domains);
         }
-        DomainsConfig.query()
+        DomainsConfig.getByOperation({filters: JSON.stringify(queryFilter)})
           .$promise
           .then(function (data) {
             domains = data;
