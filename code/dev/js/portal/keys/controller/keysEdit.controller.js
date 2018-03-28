@@ -6,7 +6,7 @@
     .controller('KeysEditController', KeysEditController);
 
   // @ngInject
-  function KeysEditController($scope, $rootScope, $injector, $stateParams, $location, CRUDController, ApiKeys, Companies, $config, DomainsConfig, Groups) {
+  function KeysEditController($scope, $rootScope, $injector, $stateParams, $location, CRUDController, ApiKeys, Companies, $config, DomainsConfig, Groups, User) {
     //Invoking crud actions
     $injector.invoke(CRUDController, this, {
       $scope: $scope,
@@ -309,6 +309,18 @@
         delete $scope.groupPermissions;
         $scope.readOnly = false;
       });
+    }
+  };
+
+  $scope.showAccountField = function (model) {
+    if (!model) {
+      return;
+    }
+    if (model.role === 'reseller' && User.getUser().role === 'reseller') {      
+      $scope.key.account_id = User.getUser().account_id;
+      return false;        
+    } else if (model.role === 'admin' && User.getUser().role === 'reseller'){
+      return true;
     }
   };
   }

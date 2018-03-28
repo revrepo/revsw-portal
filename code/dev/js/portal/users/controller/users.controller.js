@@ -707,7 +707,7 @@
               $scope.readOnly = true;
             }
           });
-        } else {
+        } else if ($scope.model.user_id) {
           $scope.getEditUser($scope.model.user_id).then(function (data) {
             $scope.model.permissions = data.permissions;
             delete $scope.groupPermissions;
@@ -717,8 +717,8 @@
       });
     };
 
-    $scope.getEditUser = function (id) {
-      return Users.get({id: id}).$promise.then(function (data) {
+    $scope.getEditUser = function (id) {      
+      return Users.get({ id: id }).$promise.then(function (data) {
         return data;
       });
     };
@@ -733,12 +733,29 @@
             });
           }
         });
-      } else {
+      } else if ($scope.model.user_id) {
         $scope.getEditUser($scope.model.user_id).then(function (data) {
           $scope.model.permissions = data.permissions;
           delete $scope.groupPermissions;
           $scope.readOnly = false;
         });
+      }
+    };
+
+    $scope.showAccountField = function (model) {
+      if (!model) {
+        return;
+      }
+      if (model.role === 'reseller' && User.getUser().role === 'reseller') {
+        if (angular.isArray($scope.model.companyId)) {
+          $scope.model.companyId.length = 1;
+        } else {
+          $scope.model.companyId = [];
+        }
+        $scope.model.companyId[0] = User.getUser().account_id;
+        return false;        
+      } else if (model.role === 'admin' && User.getUser().role === 'reseller'){
+        return true;
       }
     };
 
