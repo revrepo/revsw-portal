@@ -79,7 +79,7 @@
         $scope.companies.forEach(function (comp) {
           if (comp.parent_account_id && comp.parent_account_id !== '') {
             Companies.get({ id: comp.parent_account_id }).$promise.then(function (parentAcc) {
-              comp.parentAccount = parentAcc.companyName;
+              comp.parentAccount = parentAcc;
             });
           }
         });
