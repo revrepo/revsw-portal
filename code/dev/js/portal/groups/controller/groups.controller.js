@@ -97,7 +97,8 @@
             notification_lists: true,
             usage_reports: true,
             billing_statements: true,
-            billing_plan: true
+            billing_plan: true,
+            account_profile: true
           }
         });
       }
@@ -259,7 +260,7 @@
       ];
 
       modelLists.forEach(function (list) {
-        if ((_model.permissions[list].list.length > 0) === false) {
+        if (_model.permissions[list].list && ((_model.permissions[list].list.length > 0) === false)) {
           delete _model.permissions[list].list;
         }
       });

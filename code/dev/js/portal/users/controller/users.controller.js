@@ -131,7 +131,8 @@
             notification_lists: true,
             usage_reports: true,
             billing_statements: true,
-            billing_plan: true
+            billing_plan: true,
+            account_profile: true
           }
         });
       }
@@ -302,7 +303,8 @@
               notification_lists: true,
               usage_reports: true,
               billing_statements: true,
-              billing_plan: true
+              billing_plan: true,
+              account_profile: true
             };
           }          
           return $scope.model;
@@ -380,6 +382,7 @@
 
       $scope.modalFlag = model.permissions.read_only;
       $scope.denyUsersFlag = !model.permissions.users;
+      $scope.denyLoginFlag = !model.permissions.portal_login;
       if ($scope.readOnly) {
         delete model.permissions;
       }
@@ -418,6 +421,21 @@
         if ($scope.denyUsersFlag && model.user_id === $scope.auth.getUser().user_id) {
           // user is setting himself for deny users mode
           $scope.confirm('confirmUserDenyAccessModal.html', model).then(function () {
+            $scope
+              .update(model)
+              .then(function (data) {
+                // NOTE: update current user info
+                if (model.user_id === User.getUser().user_id) {
+                  User.reloadUser();
+                }
+                $scope.setGroup();
+                $scope.alertService.success(data);
+              })
+              .catch($scope.alertService.danger);
+          });
+        } else if ($scope.denyLoginFlag && model.user_id === $scope.auth.getUser().user_id) {
+          // user is setting himself for deny login mode
+          $scope.confirm('confirmUserDenyLoginModal.html', model).then(function () {
             $scope
               .update(model)
               .then(function (data) {
@@ -763,6 +781,9 @@
     });
 
     $scope.$watch('model.group', function (newVal, oldVal) {
+      if (newVal === undefined) {
+        $scope.model.group = 'null';
+      }
       if (newVal === 'null') {
         $scope.setPermissions('null');
       }

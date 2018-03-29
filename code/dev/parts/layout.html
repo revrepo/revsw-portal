@@ -50,7 +50,7 @@
           </a>
       </li>
       <li ui-sref-active-if="{class: 'open-side-menu-item', state: 'index.webApp'}" ng-class="{'open-side-menu-item': menuExpanded('index.webApp'),'active-side-menu-item': $state.includes('index.webApp')}">
-        <a id="side-menu-web-item" class="side-menu-item" ng-click="goToState('index.webApp.domains')">
+        <a id="side-menu-web-item" class="side-menu-item" ng-click="userService.hasAccessTo('domains') ? goToState('index.webApp.domains') : goToState('index.webApp.staging-environment')">
           <div class="left-menu-start">
             <i class="fa fa-desktop"></i>
           </div>
@@ -135,8 +135,8 @@
             <i class="sub-menu-icon fa fa-area-chart"></i> WAF Heatmaps
           </a>
       </li>
-      <li ui-sref-active-if="{class: 'open-side-menu-item', state: 'index.dnsServices'}" ng-class="{'open-side-menu-item': menuExpanded('index.dnsServices'), 'active-side-menu-item': $state.includes('index.dnsServices')}">
-        <a id="side-menu-dns-service-item" class="side-menu-item" ng-click="goToState('index.dnsServices.dns_zones')">
+      <li ng-if="userService.hasAccessTo('dns_zones') || userService.hasAccessTo('dns_analytics')" ui-sref-active-if="{class: 'open-side-menu-item', state: 'index.dnsServices'}" ng-class="{'open-side-menu-item': menuExpanded('index.dnsServices'), 'active-side-menu-item': $state.includes('index.dnsServices')}">
+        <a id="side-menu-dns-service-item" class="side-menu-item" ng-click="userService.hasAccessTo('dns_zones') ? goToState('index.dnsServices.dns_zones') : (userService.hasAccessTo('dns_analytics') ? goToState('index.dnsServices.dns_analytics') : false)">
           <div class="left-menu-start">
             <i class="glyphicon glyphicon-list-alt"></i>
           </div>
@@ -154,12 +154,12 @@
         <a ui-sref-active="active" style="color:grey" uisref="index.dnsServices.dns_datasources" class="side-menu-sub-item">
             <i class="sub-menu-icon fa fa-upload"></i> Data Sources <i class="fa fa-hourglass-half comming-soon" aria-hidden="true" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Coming Soon "></i>
           </a>
-        <a ui-sref-active="active" ui-sref="index.dnsServices.dns_analytics" class="side-menu-sub-item">
+        <a ng-if="userService.hasAccessTo('dns_analytics')" ui-sref-active="active" ui-sref="index.dnsServices.dns_analytics" class="side-menu-sub-item">
             <i class="sub-menu-icon fa fa-line-chart"></i> DNS Analytics
           </a>
       </li>
       <li ui-sref-active-if="{class: 'open-side-menu-item', state: 'index.accountSettings'}" ng-class="{'open-side-menu-item': menuExpanded('index.accountSettings'), 'active-side-menu-item': $state.includes('index.accountSettings')}">
-        <a class="side-menu-item" ng-click="goToState('index.accountSettings.users')">
+        <a class="side-menu-item" ng-click="userService.hasAccessTo('users') ? goToState('index.accountSettings.users') : goToState('index.accountSettings.profile')">
           <div class="left-menu-start">
             <i class="fa fa-gears"></i>
           </div>
@@ -195,7 +195,7 @@
         <a ui-sref-active="active" ui-sref="index.accountSettings.cdn-ip-blocks" class="side-menu-sub-item" id="side-menu-sub-item__cdn-ip-bloks">
             <i class="sub-menu-icon fa fa-server "></i>  CDN IP Blocks
           </a>
-        <a ui-sref-active="active" ui-sref="index.accountSettings.activitylog" class="side-menu-sub-item">
+        <a ng-if="userService.hasAccessTo('activity_log')" ui-sref-active="active" ui-sref="index.accountSettings.activitylog" class="side-menu-sub-item">
             <i class="sub-menu-icon fa fa-tasks"></i> Activity Log
           </a>
       </li>
@@ -217,7 +217,7 @@
             <i class="sub-menu-icon fa fa-users"></i> Resources
           </a>
       </li>
-      <li ng-if="!userService.isUser()" ui-sref-active-if="{class: 'open-side-menu-item', state: 'index.billing'}" ng-class="{'open-side-menu-item': menuExpanded('index.billing') ,'active-side-menu-item': $state.includes('index.billing')}">
+      <li ng-if="!userService.isUser() && (userService.hasAccessTo('usage_reports') || userService.hasAccessTo('account_profile'))" ui-sref-active-if="{class: 'open-side-menu-item', state: 'index.billing'}" ng-class="{'open-side-menu-item': menuExpanded('index.billing') ,'active-side-menu-item': $state.includes('index.billing')}">
         <a class="side-menu-item" id="side-menu-item-billing" ng-click="goToState('index.billing.usage')">
           <div class="left-menu-start">
             <i class="fa fa-credit-card"></i>
@@ -225,10 +225,10 @@
           Billing
           <i ng-click="expandMenu('index.billing', $event)" class="pull-right {{ menuExpanded('index.billing') ? 'fa fa-caret-up' : 'fa fa-caret-down' }}"></i>
         </a>
-        <a ui-sref-active="active" ui-sref="index.billing.usage" class="side-menu-sub-item" ng-if="!userService.isUser()">
+        <a ui-sref-active="active" ui-sref="index.billing.usage" class="side-menu-sub-item" ng-if="!userService.isUser() && userService.hasAccessTo('usage_reports')">
             <i class="sub-menu-icon fa fa-balance-scale"></i> Usage Report
           </a>
-        <a ui-sref-active="active" ui-sref="index.billing.company" class="side-menu-sub-item" ng-if="userService.isAdmin()">
+        <a ui-sref-active="active" ui-sref="index.billing.company" class="side-menu-sub-item" ng-if="userService.isAdmin() && userService.hasAccessTo('account_profile')">
             <i class="sub-menu-icon fa fa-gear"></i> Account Profile
           </a>
         <a ui-sref-active="active" ui-sref="index.billing.plans" class="side-menu-sub-item" ng-if="(userService.isAdmin() && userService.hasBillingPlan()) || userService.isRevadmin()">

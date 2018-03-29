@@ -107,7 +107,7 @@
                     multiple tagging-tokens="SPACE|," theme="bootstrap" class="form-control inline-block" ng-if="domains && domains.length > 0"
                     ng-model="model.domains_list" id="domains_list ">
                     <ui-select-match placeholder="Add a Domain to the list...">{{$item.domain_name}}</ui-select-match>
-                    <ui-select-choices repeat="domain  in  domains">
+                    <ui-select-choices repeat="domain  in  domains ">
                         {{domain.domain_name}}
                     </ui-select-choices>
                 </ui-select>
@@ -412,6 +412,14 @@
                 class="inline-block" ng-model="model.permissions.usage_reports"> Usage Reports
             <label for="permissions_usage_reports" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
                 uib-popover="Allow users to access usage reports.">
+                <i class="fa fa-question-circle"></i>
+            </label>
+        </div>
+        <div class="col-sm-6">
+            <input ng-disabled="readOnly" ng-checked="model.permissions.account_profile" type="checkbox" name="permissions_account_profile"
+                class="inline-block" ng-model="model.permissions.account_profile"> Account Profile
+            <label for="permissions_account_profile" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
+                uib-popover="Allow users to access account profile.">
                 <i class="fa fa-question-circle"></i>
             </label>
         </div>

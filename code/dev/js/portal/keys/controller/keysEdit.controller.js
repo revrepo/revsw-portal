@@ -168,7 +168,8 @@
               notification_lists: true,
               usage_reports: true,
               billing_statements: true,
-              billing_plan: true
+              billing_plan: true,
+              account_profile: true
             };
           }
           $scope.setGroup();
