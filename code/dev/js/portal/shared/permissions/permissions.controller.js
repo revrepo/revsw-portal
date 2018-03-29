@@ -31,19 +31,30 @@
         'accounts_list', 'dns_analytics_list'];
 
         Apps.query().$promise.then(function (apps) {
-            $scope.apps = apps;
+            $scope.apps = apps;            
+            $scope.apps_full = apps;
+            $scope.setListsByAcc($scope.model.account_id);
         });
 
-        DomainsConfig.query().$promise.then(function (domains) {
+        var domainFilter = {
+            operation: 'permission_list'
+        };
+        DomainsConfig.getByOperation({filters: JSON.stringify(domainFilter)}).$promise.then(function (domains) {
             $scope.domains = domains;
+            $scope.domains_full = domains;
+            $scope.setListsByAcc($scope.model.account_id);
         });
 
-        DNSZones.query().$promise.then(function (zones) {
+        DNSZones.query({filters: JSON.stringify(domainFilter)}).$promise.then(function (zones) {
             $scope.dnsZones = zones;
+            $scope.dnsZones_full = zones;
+            $scope.setListsByAcc($scope.model.account_id);
         });
 
         Companies.query().$promise.then(function (accs) {
             $scope.companies = accs;
+            $scope.companies_full = accs;
+            $scope.setListsByAcc($scope.model.account_id);
         });
 
         $scope.pushItemsById = function (list, pushList, collection) {
@@ -57,7 +68,7 @@
                             $scope.model[pushList].push(fullVal);
                         }
                     });
-                });
+                });                
             }
         };
 
@@ -79,7 +90,7 @@
             $scope.pushItemsById('cache_purge', 'cache_purge_list', 'domains');
             $scope.pushItemsById('dns_zones', 'dns_zones_list', 'dnsZones');
             $scope.pushItemsById('dns_analytics', 'dns_analytics_list', 'dnsZones');
-            $scope.pushItemsById('accounts', 'accounts_list', 'companies');
+            $scope.pushItemsById('accounts', 'accounts_list', 'companies');            
         };
 
         $scope.$watch('groupPermissions', function () {
@@ -116,6 +127,22 @@
                 $scope.pushItemsById('accounts', 'accounts_list', 'companies');
             }
         });
+
+        $scope.$watch('model.account_id', function (newVal, oldVal) {
+            $scope.setListsByAcc(newVal);
+        });
+
+        $scope.setListsByAcc = function (accId) {
+            if (accId) {
+                ['domains', 'apps', 'dnsZones'].forEach(function (list) {
+                    if ($scope[list] && $scope[list + '_full']) {
+                        $scope[list] = $scope[list + '_full'].filter(function (item) {
+                            return item.account_id === accId;
+                        });
+                    }
+                });
+            }
+        };
 
         /**
          * @name  addItemToList
