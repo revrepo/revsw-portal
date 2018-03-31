@@ -121,6 +121,11 @@
                 list: [],
                 allow_list: true
               },
+              mobile_analytics: {
+                access: true,
+                list: [],
+                allow_list: true
+              },
               domains: {
                 access: true,
                 list: [],

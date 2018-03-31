@@ -83,13 +83,40 @@
                 No mobile apps found for this account.
             </span>
         </div>
-        <div>
-            <input ng-disabled="readOnly" ng-checked="model.permissions.mobile_analytics" type="checkbox" name="permissions_mobile_analytics"
-                class="inline-block" ng-model="model.permissions.mobile_analytics"> Mobile Analytics
-            <label for="permissions_mobile_analytics" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
-                uib-popover="Allow users to access mobile analytics.">
-                <i class="fa fa-question-circle"></i>
-            </label>
+        <div class="checkbox-list">
+            <span class="{{model.permissions.mobile_analytics.access && hasListInRO('mobile_analytics') ? 'bg-dark' : null}}">
+                <input ng-disabled="readOnly" ng-checked="model.permissions.mobile_analytics.access" type="checkbox" name="permissions_mobile_analytics"
+                    class="inline-block bg-dark" ng-model="model.permissions.mobile_analytics.access"> Mobile Analytics
+                <label for="permissions_mobile_analyticss" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
+                    uib-popover="Allow users to access mobile analytics.">
+                    <i class="fa fa-question-circle"></i>
+                </label>
+            </span>
+            <br />
+            <div class="item-list" ng-show="model.permissions.mobile_analytics.access && apps && apps.length > 0 && hasListInRO('mobile_analytics')">
+                <span ng-show="(_loading || !apps) && model.permissions.mobile_analytics.access" class="loader--waite-company">
+                    <i class="glyphicon glyphicon-refresh spin"></i> Please wait...</span>
+                <ui-select ng-disabled="readOnly" on-select="addItemToList($select, $item, 'mobile_analytics')" on-remove="removeItemFromList($item, 'mobile_analytics')"
+                    multiple tagging-tokens="SPACE|," theme="bootstrap" class="form-control inline-block" ng-if="apps && apps.length > 0"
+                    ng-model="model.apps_analytics_list" id="apps_analytics_list">
+                    <ui-select-match placeholder="Add a Mobile App to the list...">{{$item.app_name}}</ui-select-match>
+                    <ui-select-choices repeat="app  in  apps">
+                        {{app.app_name}}
+                    </ui-select-choices>
+                </ui-select>
+                <label for="apps_analytics_list" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Add apps to the list to control either to allow access to these apps or deny access">
+                    <i class="fa fa-question-circle"></i>
+                </label>
+                <input ng-disabled="readOnly" type="radio" ng-model="model.permissions.mobile_analytics.allow_list" ng-checked="model.permissions.mobile_analytics.allow_list"
+                    ng-value="true"> Allow access only to apps from this list
+                <br />
+                <input ng-disabled="readOnly" type="radio" ng-model="model.permissions.mobile_analytics.allow_list" ng-checked="!model.permissions.mobile_analytics.allow_list"
+                    ng-value="false"> Deny access only to apps from this list
+            </div>
+            <span class="{{model.permissions.mobile_analytics.access ? 'bg-dark' : null}}" style="padding: 10px 10px 10px 20px; margin: 0 0 10px 0;"
+                ng-show="apps && apps.length === 0 && model.permissions.mobile_analytics.access">
+                No mobile apps found for this account.
+            </span>
         </div>
         <div class="checkbox-list">
             <span class="{{model.permissions.domains.access && hasListInRO('domains') ? 'bg-dark' : null}}">

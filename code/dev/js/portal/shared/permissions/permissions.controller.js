@@ -28,30 +28,31 @@
         
         $scope.modelList = ['apps_list', 'domains_list', 'web_analytics_list',
         'security_analytics_list', 'cache_purge_list', 'dns_zones_list',
-        'accounts_list', 'dns_analytics_list'];
+        'accounts_list', 'dns_analytics_list', 'apps_analytics_list'];
 
-        Apps.query().$promise.then(function (apps) {
+        var permissionFilter = {
+            operation: 'permission_list'
+        };
+        Apps.query({filters: JSON.stringify(permissionFilter)}).$promise.then(function (apps) {
             $scope.apps = apps;            
             $scope.apps_full = apps;
             $scope.setListsByAcc($scope.model.account_id);
         });
 
-        var domainFilter = {
-            operation: 'permission_list'
-        };
-        DomainsConfig.getByOperation({filters: JSON.stringify(domainFilter)}).$promise.then(function (domains) {
+
+        DomainsConfig.getByOperation({filters: JSON.stringify(permissionFilter)}).$promise.then(function (domains) {
             $scope.domains = domains;
             $scope.domains_full = domains;
             $scope.setListsByAcc($scope.model.account_id);
         });
 
-        DNSZones.query({filters: JSON.stringify(domainFilter)}).$promise.then(function (zones) {
+        DNSZones.query({filters: JSON.stringify(permissionFilter)}).$promise.then(function (zones) {
             $scope.dnsZones = zones;
             $scope.dnsZones_full = zones;
             $scope.setListsByAcc($scope.model.account_id);
         });
 
-        Companies.query().$promise.then(function (accs) {
+        Companies.query({filters: JSON.stringify(permissionFilter)}).$promise.then(function (accs) {
             $scope.companies = accs;
             $scope.companies_full = accs;
             $scope.setListsByAcc($scope.model.account_id);
@@ -84,6 +85,7 @@
         $scope.initLists = function () {
             $scope.clearLists();
             $scope.pushItemsById('mobile_apps', 'apps_list', 'apps');
+            $scope.pushItemsById('mobile_analytics', 'apps_analytics_list', 'apps');
             $scope.pushItemsById('domains', 'domains_list', 'domains');
             $scope.pushItemsById('web_analytics', 'web_analytics_list', 'domains');
             $scope.pushItemsById('security_analytics', 'security_analytics_list', 'domains');
@@ -103,6 +105,7 @@
         $scope.$watch('apps', function () {
             if ($scope.apps) {
                 $scope.pushItemsById('mobile_apps', 'apps_list', 'apps');
+                $scope.pushItemsById('mobile_analytics', 'apps_analytics_list', 'apps');
             }
         });
 
