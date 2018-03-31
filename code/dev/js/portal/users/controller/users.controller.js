@@ -512,14 +512,13 @@
     };
 
     $scope.disableSubmit = function (model, isEdit) {
-      if ((User.isRevadmin() || User.isReseller()) && !model.companyId || (model.companyId && model.companyId.length === 0)) {
+      if ((User.isRevadmin() || User.isReseller()) && !model.account_id) {
         return true;
       }
 
       if (User.isRevadmin() || User.isReseller()) {
         return $scope._loading ||
           !model.email ||
-          !model.access_control_list ||
           !model.firstname ||
           !model.lastname ||
           !model.role;
@@ -528,13 +527,11 @@
       if (isEdit) {
         return $scope._loading ||
           !model.email ||
-          !model.access_control_list ||
           !model.firstname ||
           !model.lastname;
       } else {
         return $scope._loading ||
           !model.email ||
-          !model.access_control_list ||
           !model.firstname ||
           !model.lastname;
       }
