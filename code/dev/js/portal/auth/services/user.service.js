@@ -448,7 +448,13 @@
         if (apps.length > 0 && !reload) {
           return resolve(apps);
         }
-        $http.get($config.API_URL + '/apps')
+        var queryFilter = {
+          operation: 'mobile_apps'
+        };
+        if ($state.current.name.includes('index.mobile')) {
+          queryFilter.operation = 'mobile_analytics';
+        }
+        $http.get($config.API_URL + '/apps?filters=' + JSON.stringify(queryFilter))
           .then( function (data) {
             if (data && data.status === $config.STATUS.OK) {
               apps = data.data.map( function( item ) {
