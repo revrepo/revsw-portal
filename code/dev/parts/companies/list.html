@@ -93,7 +93,7 @@
                   <span class="sortorder" ng-show="filter.predicate === 'updated_at'" ng-class="{reverse: filter.reverse}"></span>
                 </th>
                 <th class="actions col-sm-1 col-lg-1 text-left">Actions</th>
-                <th class="col-sm-1 col-lg-1">
+                <th class="col-sm-1 col-lg-1" ng-if="auth.isRevadmin() || auth.isReseller()">
                   <a href="" ng-click="order('parent_account_id')">Parent Account</a>
                   <span class="sortorder" ng-show="filter.predicate === 'parent_account_id'" ng-class="{reverse: filter.reverse}"></span>
                 </th>
@@ -140,7 +140,7 @@
                     </a>
                   </div>
                 </td>
-                <td>
+                <td ng-if="auth.isRevadmin() || auth.isReseller()">
                     <a ui-sref=".edit({id: item.parentAccount.id})" ng-if="!item.loading" uib-tooltip="Edit Parent Account">
                         {{item.parentAccount.companyName}}
                       </a>                  
