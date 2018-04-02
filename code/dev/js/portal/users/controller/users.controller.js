@@ -778,6 +778,8 @@
         return false;        
       } else if (model.role === 'admin' && User.getUser().role === 'reseller'){
         return true;
+      } else if (User.getUser().role === 'revadmin') {
+        return true;
       }
     };
 
