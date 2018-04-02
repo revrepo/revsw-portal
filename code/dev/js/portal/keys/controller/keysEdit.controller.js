@@ -351,9 +351,12 @@
   });
 
   $scope.$watch('model.group', function (newVal, oldVal) {
-    if (newVal === 'null') {
-      $scope.setPermissions('null');
-    }
-  });
+      if (newVal === undefined) {
+        $scope.model.group = 'null';
+      }
+      if (newVal === 'null') {
+        $scope.setPermissions('null');
+      }
+    });
   }
 })();
