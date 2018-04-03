@@ -307,17 +307,17 @@
               Groups.get({ id: $localStorage.user.group_id }).$promise.then(function (group) {
                 $localStorage.group = group;
                 permissions = group ? group.permissions : $localStorage.user.permissions;
-                checkEnforce2FA();
                 checkPermissions();                
               });
             } else {
-              checkEnforce2FA();
               checkPermissions();
             }
             if ($localStorage.user.role !== 'revadmin') {
-              Companies.get({id: $localStorage.user.account_id}).$promise.then(function (acc) {
-                $localStorage.userMainAccount = acc;
-              });
+              if (!$localStorage.userMainAccount || $localStorage.userMainAccount.id !== $localStorage.user.account_id) {
+                Companies.get({ id: $localStorage.user.account_id }).$promise.then(function (acc) {
+                  $localStorage.userMainAccount = acc;
+                });
+              }
             }            
           } else {
             // Something went wrong
@@ -716,22 +716,21 @@
     }
 
     function checkEnforce2FA(event, toState, fromState) {
-      if (!event && !toState && !fromState) {
-        if (!$state.is('index.accountSettings.2fa') && isEnforce2FA()) {
+      if (isEnforce2FA()) {
+        if (!toState || !fromState) {
           $state.go('index.accountSettings.2fa');
-          return;
-        }        
-      } else {
-        if (isEnforce2FA()) {
-          AlertService.danger('2FA is enforced, please set up 2FA.');
+        } else {
+          if (isEnforce2FA()) {
+            AlertService.danger('2FA is enforced, please set up 2FA.');
+          }
+          if (isEnforce2FA() && toState !== 'index.accountSettings.2fa' && event) {
+            event.preventDefault();
+          }
+          if (isEnforce2FA() && fromState !== 'index.accountSettings.2fa') {
+            $state.go('index.accountSettings.2fa');
+          }
         }
-        if (isEnforce2FA() && toState !== 'index.accountSettings.2fa') {
-          event.preventDefault();
-        }
-        if (isEnforce2FA() && fromState !== 'index.accountSettings.2fa') {
-          $state.go('index.accountSettings.2fa');
-        }
-      }
+      }      
     }
 
     function checkPermissions() {
