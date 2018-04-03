@@ -1,0 +1,470 @@
+<div class="form-group permissions">
+    <label for="access_control_list" class="col-sm-2 control-label">Permissions
+        <span ng-if="readOnly">(Inherited From Group)</span>
+    </label>
+    <div class="col-sm-10" ng-show="!model || !apps || !domains || !dnsZones || !companies">
+        <i class="glyphicon glyphicon-refresh spin"></i> Please wait...
+    </div>
+    <div class="col-sm-4" ng-show="model && apps && domains && dnsZones && companies">
+        <div class="col-sm-6">
+            <input ng-disabled="readOnly" type="checkbox" ng-checked="model.permissions.read_only" name="permissions_read_only" class="inline-block"
+                ng-model="model.permissions.read_only"> Read Only
+            <label for="permissions_read_only" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
+                uib-popover="Grant read-only access to resources (Users, Accounts, Domains etc...), dashboard management is still available for users.">
+                <i class="fa fa-question-circle"></i>
+            </label>
+        </div>
+        <div class="col-sm-6" ng-if="pageType.isUser() || pageType.isGroup()">
+            <input ng-disabled="readOnly" type="checkbox" ng-checked="model.permissions.enforce_2fa" name="permissions_enforce_2fa" class="inline-block"
+                ng-model="model.permissions.enforce_2fa"> Enforce 2FA
+            <label for="permissions_enforce_2fa" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
+                uib-popover="Enforce Two-Factor authentication for users. When enabled, users without 2FA setup will be redirected to 2FA setup page and will not be able to use the portal without setting up 2FA.">
+                <i class="fa fa-question-circle"></i>
+            </label>
+        </div>
+        <div class="col-sm-6" ng-if="pageType.isUser() || pageType.isGroup()">
+            <input ng-disabled="readOnly" ng-checked="model.permissions.portal_login" type="checkbox" name="permissions_portal_login"
+                class="inline-block" ng-model="model.permissions.portal_login"> Portal Login
+            <label for="permissions_portal_login" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
+                uib-popover="Allow users to login to the portal. If disabled, users will not be able to log into the portal but will be able to make API calls.">
+                <i class="fa fa-question-circle"></i>
+            </label>
+        </div>
+        <div class="col-sm-6" ng-if="pageType.isAPIKey() || pageType.isGroup()">
+            <input ng-disabled="readOnly" ng-checked="model.permissions.API_access" type="checkbox" name="permissions_API_access" class="inline-block"
+                ng-model="model.permissions.API_access"> API Access
+            <label for="permissions_API_access" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
+                uib-popover="Allow API Keys to access the API.">
+                <i class="fa fa-question-circle"></i>
+            </label>
+        </div>
+        <div class="clearfix"></div>
+        <hr>
+        <div>
+            <input ng-disabled="readOnly" ng-checked="model.permissions.dashboards" type="checkbox" name="permissions_dashboards" class="inline-block"
+                ng-model="model.permissions.dashboards"> Dashboards
+            <label for="permissions_dashboards" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
+                uib-popover="Allow users to manage dashboards.">
+                <i class="fa fa-question-circle"></i>
+            </label>
+        </div>
+        <div class="checkbox-list">
+            <span class="{{model.permissions.mobile_apps.access && hasListInRO('mobile_apps') ? 'bg-dark' : null}}">
+                <input ng-disabled="readOnly" ng-checked="model.permissions.mobile_apps.access" type="checkbox" name="permissions_mobile_apps"
+                    class="inline-block bg-dark" ng-model="model.permissions.mobile_apps.access"> Mobile Apps
+                <label for="permissions_mobile_apps" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
+                    uib-popover="Allow users to manage mobile apps.">
+                    <i class="fa fa-question-circle"></i>
+                </label>
+            </span>
+            <br />
+            <div class="item-list" ng-show="model.permissions.mobile_apps.access && apps && apps.length > 0 && hasListInRO('mobile_apps')">
+                <span ng-show="(_loading || !apps) && model.permissions.mobile_apps.access" class="loader--waite-company">
+                    <i class="glyphicon glyphicon-refresh spin"></i> Please wait...</span>
+                <ui-select ng-disabled="readOnly" on-select="addItemToList($select, $item, 'mobile_apps')" on-remove="removeItemFromList($item, 'mobile_apps')"
+                    multiple tagging-tokens="SPACE|," theme="bootstrap" class="form-control inline-block" ng-if="apps && apps.length > 0"
+                    ng-model="model.apps_list" id="apps_list ">
+                    <ui-select-match placeholder="Add a Mobile App to the list...">{{$item.app_name}}</ui-select-match>
+                    <ui-select-choices repeat="app  in  apps">
+                        {{app.app_name}}
+                    </ui-select-choices>
+                </ui-select>
+                <label for="apps_list" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Add apps to the list to control either to allow access to these apps or deny access">
+                    <i class="fa fa-question-circle"></i>
+                </label>
+                <input ng-disabled="readOnly" type="radio" ng-model="model.permissions.mobile_apps.allow_list" ng-checked="model.permissions.mobile_apps.allow_list"
+                    ng-value="true"> Allow access only to apps from this list
+                <br />
+                <input ng-disabled="readOnly" type="radio" ng-model="model.permissions.mobile_apps.allow_list" ng-checked="!model.permissions.mobile_apps.allow_list"
+                    ng-value="false"> Deny access only to apps from this list
+            </div>
+            <span class="{{model.permissions.mobile_apps.access ? 'bg-dark' : null}}" style="padding: 10px 10px 10px 20px; margin: 0 0 10px 0;"
+                ng-show="apps && apps.length === 0 && model.permissions.mobile_apps.access">
+                No mobile apps found for this account.
+            </span>
+        </div>
+        <div class="checkbox-list">
+            <span class="{{model.permissions.mobile_analytics.access && hasListInRO('mobile_analytics') ? 'bg-dark' : null}}">
+                <input ng-disabled="readOnly" ng-checked="model.permissions.mobile_analytics.access" type="checkbox" name="permissions_mobile_analytics"
+                    class="inline-block bg-dark" ng-model="model.permissions.mobile_analytics.access"> Mobile Analytics
+                <label for="permissions_mobile_analyticss" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
+                    uib-popover="Allow users to access mobile analytics.">
+                    <i class="fa fa-question-circle"></i>
+                </label>
+            </span>
+            <br />
+            <div class="item-list" ng-show="model.permissions.mobile_analytics.access && apps && apps.length > 0 && hasListInRO('mobile_analytics')">
+                <span ng-show="(_loading || !apps) && model.permissions.mobile_analytics.access" class="loader--waite-company">
+                    <i class="glyphicon glyphicon-refresh spin"></i> Please wait...</span>
+                <ui-select ng-disabled="readOnly" on-select="addItemToList($select, $item, 'mobile_analytics')" on-remove="removeItemFromList($item, 'mobile_analytics')"
+                    multiple tagging-tokens="SPACE|," theme="bootstrap" class="form-control inline-block" ng-if="apps && apps.length > 0"
+                    ng-model="model.apps_analytics_list" id="apps_analytics_list">
+                    <ui-select-match placeholder="Add a Mobile App to the list...">{{$item.app_name}}</ui-select-match>
+                    <ui-select-choices repeat="app  in  apps">
+                        {{app.app_name}}
+                    </ui-select-choices>
+                </ui-select>
+                <label for="apps_analytics_list" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Add apps to the list to control either to allow access to these apps or deny access">
+                    <i class="fa fa-question-circle"></i>
+                </label>
+                <input ng-disabled="readOnly" type="radio" ng-model="model.permissions.mobile_analytics.allow_list" ng-checked="model.permissions.mobile_analytics.allow_list"
+                    ng-value="true"> Allow access only to apps from this list
+                <br />
+                <input ng-disabled="readOnly" type="radio" ng-model="model.permissions.mobile_analytics.allow_list" ng-checked="!model.permissions.mobile_analytics.allow_list"
+                    ng-value="false"> Deny access only to apps from this list
+            </div>
+            <span class="{{model.permissions.mobile_analytics.access ? 'bg-dark' : null}}" style="padding: 10px 10px 10px 20px; margin: 0 0 10px 0;"
+                ng-show="apps && apps.length === 0 && model.permissions.mobile_analytics.access">
+                No mobile apps found for this account.
+            </span>
+        </div>
+        <div class="checkbox-list">
+            <span class="{{model.permissions.domains.access && hasListInRO('domains') ? 'bg-dark' : null}}">
+                <input ng-disabled="readOnly" ng-checked="model.permissions.domains.access" type="checkbox" name="permissions_domains" class="inline-block bg-dark"
+                    ng-model="model.permissions.domains.access"> Domains
+                <label for="permissions_domains" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Allow users to manage domains.">
+                    <i class="fa fa-question-circle"></i>
+                </label>
+            </span>
+            <br />
+            <div class="item-list" ng-show="model.permissions.domains.access && domains && domains.length > 0 && hasListInRO('domains')">
+                <span ng-show="(_loading || !domains) && model.permissions.domains.access" class="loader--waite-company">
+                    <i class="glyphicon glyphicon-refresh spin"></i> Please wait...</span>
+                <ui-select ng-disabled="readOnly" on-select="addItemToList($select, $item, 'domains')" on-remove="removeItemFromList($item, 'domains')"
+                    multiple tagging-tokens="SPACE|," theme="bootstrap" class="form-control inline-block" ng-if="domains && domains.length > 0"
+                    ng-model="model.domains_list" id="domains_list ">
+                    <ui-select-match placeholder="Add a Domain to the list...">{{$item.domain_name}}</ui-select-match>
+                    <ui-select-choices repeat="domain  in  domains ">
+                        {{domain.domain_name}}
+                    </ui-select-choices>
+                </ui-select>
+                <label for="domains_list" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Add domains to the list to control either to allow access to these domains or deny access">
+                    <i class="fa fa-question-circle"></i>
+                </label>
+                <input ng-disabled="readOnly" type="radio" ng-model="model.permissions.domains.allow_list" ng-checked="model.permissions.domains.allow_list"
+                    ng-value="true"> Allow access only to domains from this list
+                <br />
+                <input ng-disabled="readOnly" type="radio" ng-model="model.permissions.domains.allow_list" ng-checked="!model.permissions.domains.allow_list"
+                    ng-value="false"> Deny access only to domains from this list
+            </div>
+            <span class="{{model.permissions.domains.access ? 'bg-dark' : null}}" style="padding: 10px 10px 10px 20px; margin: 0 0 10px 0;"
+                ng-show="domains && domains.length === 0 && model.permissions.domains.access">
+                No domains found for this account.
+            </span>
+        </div>
+        <div class="checkbox-list">
+            <span class="{{model.permissions.cache_purge.access && hasListInRO('cache_purge') ? 'bg-dark' : null}}">
+                <input ng-disabled="readOnly" ng-checked="model.permissions.cache_purge.access" type="checkbox" name="permissions_cache_purge"
+                    class="inline-block bg-dark" ng-model="model.permissions.cache_purge.access"> Cache Purge
+                <label for="permissions_cache_purge" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
+                    uib-popover="Allow users to purge cache.">
+                    <i class="fa fa-question-circle"></i>
+                </label>
+            </span>
+            <br />
+            <div class="item-list" ng-show="model.permissions.cache_purge.access && domains && domains.length > 0 && hasListInRO('cache_purge')">
+                <span ng-show="(_loading || !domains) && model.permissions.cache_purge.access" class="loader--waite-company">
+                    <i class="glyphicon glyphicon-refresh spin"></i> Please wait...</span>
+                <ui-select ng-disabled="readOnly" on-select="addItemToList($select, $item, 'cache_purge')" on-remove="removeItemFromList($item, 'cache_purge')"
+                    multiple tagging-tokens="SPACE|," theme="bootstrap" class="form-control inline-block" ng-if="domains && domains.length > 0"
+                    ng-model="model.cache_purge_list" id="cache_purge_list ">
+                    <ui-select-match placeholder="Add a Domain to the list...">{{$item.domain_name}}</ui-select-match>
+                    <ui-select-choices repeat="domain  in  domains">
+                        {{domain.domain_name}}
+                    </ui-select-choices>
+                </ui-select>
+                <label for="cache_purge_list" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Add domains to the list to control either to allow access to these domains or deny access">
+                    <i class="fa fa-question-circle"></i>
+                </label>
+                <input ng-disabled="readOnly" type="radio" ng-model="model.permissions.cache_purge.allow_list" ng-checked="model.permissions.cache_purge.allow_list"
+                    ng-value="true"> Allow to purge cache only for domains from this list
+                <br />
+                <input ng-disabled="readOnly" type="radio" ng-model="model.permissions.cache_purge.allow_list" ng-checked="!model.permissions.cache_purge.allow_list"
+                    ng-value="false"> Deny purge cache only for domains from this list
+            </div>
+            <span class="{{model.permissions.cache_purge.access ? 'bg-dark' : null}}" style="padding: 10px 10px 10px 20px; margin: 0 0 10px 0;"
+                ng-show="domains && domains.length === 0 && model.permissions.cache_purge.access">
+                No domains found for this account.
+            </span>
+        </div>
+        <div class="checkbox-list">
+            <span class="{{model.permissions.web_analytics.access && hasListInRO('web_analytics') ? 'bg-dark' : null}}">
+                <input ng-disabled="readOnly" ng-checked="model.permissions.web_analytics.access" type="checkbox" name="permissions_web_analytics"
+                    class="inline-block bg-dark" ng-model="model.permissions.web_analytics.access"> Web Analytics
+                <label for="permissions_web_analytics" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
+                    uib-popover="Allow users to access web analytics.">
+                    <i class="fa fa-question-circle"></i>
+                </label>
+            </span>
+            <br />
+            <div class="item-list" ng-show="model.permissions.web_analytics.access && domains && domains.length > 0 && hasListInRO('web_analytics')">
+                <span ng-show="(_loading || !domains) && model.permissions.web_analytics.access" class="loader--waite-company">
+                    <i class="glyphicon glyphicon-refresh spin"></i> Please wait...</span>
+                <ui-select ng-disabled="readOnly" on-select="addItemToList($select, $item, 'web_analytics')" on-remove="removeItemFromList($item, 'web_analytics')"
+                    multiple tagging-tokens="SPACE|," theme="bootstrap" class="form-control inline-block" ng-if="domains && domains.length > 0"
+                    ng-model="model.web_analytics_list" id="web_analytics_list ">
+                    <ui-select-match placeholder="Add a Domain to the list...">{{$item.domain_name}}</ui-select-match>
+                    <ui-select-choices repeat="domain  in  domains">
+                        {{domain.domain_name}}
+                    </ui-select-choices>
+                </ui-select>
+                <label for="web_analytics_list" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Add domains to the list to control either to allow access to these domains or deny access">
+                    <i class="fa fa-question-circle"></i>
+                </label>
+                <input ng-disabled="readOnly" type="radio" ng-model="model.permissions.web_analytics.allow_list" ng-checked="model.permissions.web_analytics.allow_list"
+                    ng-value="true"> Allow access only to domains from this list
+                <br />
+                <input ng-disabled="readOnly" type="radio" ng-model="model.permissions.web_analytics.allow_list" ng-checked="!model.permissions.web_analytics.allow_list"
+                    ng-value="false"> Deny access only to domains from this list
+            </div>
+            <span class="{{model.permissions.web_analytics.access ? 'bg-dark' : null}}" style="padding: 10px 10px 10px 20px; margin: 0 0 10px 0;"
+                ng-show="domains && domains.length === 0 && model.permissions.web_analytics.access">
+                No domains found for this account.
+            </span>
+        </div>
+        <div class="checkbox-list" style="margin-top: 15px;">
+            <span class="{{model.permissions.security_analytics.access && hasListInRO('security_analytics') ? 'bg-dark' : null}}">
+                <input ng-disabled="readOnly" ng-checked="model.permissions.security_analytics.access" type="checkbox" name="permissions_sec_analytics"
+                    class="inline-block bg-dark" ng-model="model.permissions.security_analytics.access"> Security Analytics
+                <label for="permissions_sec_analytics" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
+                    uib-popover="Allow users to access security analytics.">
+                    <i class="fa fa-question-circle"></i>
+                </label>
+            </span>
+            <br />
+            <div class="item-list" ng-show="model.permissions.security_analytics.access && domains && domains.length > 0 && hasListInRO('security_analytics')">
+                <span ng-show="(_loading || !domains) && model.permissions.security_analytics.access" class="loader--waite-company">
+                    <i class="glyphicon glyphicon-refresh spin"></i> Please wait...</span>
+                <ui-select ng-disabled="readOnly" on-select="addItemToList($select, $item, 'security_analytics')" on-remove="removeItemFromList($item, 'security_analytics')"
+                    multiple tagging-tokens="SPACE|," theme="bootstrap" class="form-control inline-block" ng-if="domains && domains.length > 0"
+                    ng-model="model.security_analytics_list" id="security_analytics_list ">
+                    <ui-select-match placeholder="Add a Domain to the list...">{{$item.domain_name}}</ui-select-match>
+                    <ui-select-choices repeat="domain  in  domains  | filter: {domain_name: $select.search}">
+                        {{domain.domain_name}}
+                    </ui-select-choices>
+                </ui-select>
+                <label for="security_analytics_list" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Add domains to the list to control either to allow access to these domains or deny access">
+                    <i class="fa fa-question-circle"></i>
+                </label>
+                <input ng-disabled="readOnly" type="radio" ng-model="model.permissions.security_analytics.allow_list" ng-checked="model.permissions.security_analytics.allow_list"
+                    ng-value="true"> Allow access only to domains from this list
+                <br />
+                <input ng-disabled="readOnly" type="radio" ng-model="model.permissions.security_analytics.allow_list" ng-checked="!model.permissions.security_analytics.allow_list"
+                    ng-value="false"> Deny access only to domains from this list
+            </div>
+            <span class="{{model.permissions.security_analytics.access ? 'bg-dark' : null}}" style="padding: 10px 10px 10px 20px; margin: 0 0 10px 0;"
+                ng-show="domains && domains.length === 0 && model.permissions.security_analytics.access">
+                No domains found for this account.
+            </span>
+        </div>
+        <div class="checkbox-list" style="margin-top: 15px;">
+            <span class="{{model.permissions.dns_zones.access && hasListInRO('dns_zones') ? 'bg-dark' : null}}">
+                <input ng-disabled="readOnly" ng-checked="model.permissions.dns_zones.access" type="checkbox" name="permissions_dns_zones"
+                    class="inline-block bg-dark" ng-model="model.permissions.dns_zones.access"> DNS Zones
+                <label for="permissions_dns_zones" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
+                    uib-popover="Allow users to access DNS Zones.">
+                    <i class="fa fa-question-circle"></i>
+                </label>
+            </span>
+            <br />
+            <div class="item-list" ng-show="model.permissions.dns_zones.access && dnsZones && dnsZones.length > 0 && hasListInRO('dns_zones')">
+                <span ng-show="(_loading || !dnsZones) && model.permissions.dns_zones.access" class="loader--waite-company">
+                    <i class="glyphicon glyphicon-refresh spin"></i> Please wait...</span>
+                <ui-select ng-disabled="readOnly" on-select="addItemToList($select, $item, 'dns_zones')" on-remove="removeItemFromList($item, 'dns_zones')"
+                    multiple tagging-tokens="SPACE|," theme="bootstrap" class="form-control inline-block" ng-if="dnsZones && dnsZones.length > 0"
+                    ng-model="model.dns_zones_list" id="dns_zones_list ">
+                    <ui-select-match placeholder="Add a DNS Zone to the list...">{{$item.zone}}</ui-select-match>
+                    <ui-select-choices repeat="zone  in  dnsZones | filter: {zone: $select.search}">
+                        {{zone.zone}}
+                    </ui-select-choices>
+                </ui-select>
+                <label for="dns_zones_list" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Add DNS zones to the list to control either to allow access to these DNS zones or deny access">
+                    <i class="fa fa-question-circle"></i>
+                </label>
+                <input ng-disabled="readOnly" type="radio" ng-model="model.permissions.dns_zones.allow_list" ng-checked="model.permissions.dns_zones.allow_list"
+                    ng-value="true"> Allow access only to zones from this list
+                <br />
+                <input ng-disabled="readOnly" type="radio" ng-model="model.permissions.dns_zones.allow_list" ng-checked="!model.permissions.dns_zones.allow_list"
+                    ng-value="false"> Deny access only to zones from this list
+            </div>
+            <span class="{{model.permissions.dns_zones.access ? 'bg-dark' : null}}" style="padding: 10px 10px 10px 20px; margin: 0 0 10px 0;"
+                ng-show="dnsZones && dnsZones.length === 0 && model.permissions.dns_zones.access">
+                No DNS Zones found for this account.
+            </span>
+        </div>
+        <div class="checkbox-list" style="margin-top: 15px;">
+                <span class="{{model.permissions.dns_analytics.access && hasListInRO('dns_analytics') ? 'bg-dark' : null}}">
+                    <input ng-disabled="readOnly" ng-checked="model.permissions.dns_analytics.access" type="checkbox" name="permissions_dns_analytics"
+                        class="inline-block bg-dark" ng-model="model.permissions.dns_analytics.access"> DNS Analytics
+                    <label for="permissions_dns_analytics" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
+                        uib-popover="Allow users to access DNS Analytics.">
+                        <i class="fa fa-question-circle"></i>
+                    </label>
+                </span>
+                <br />
+                <div class="item-list" ng-show="model.permissions.dns_analytics.access && dnsZones && dnsZones.length > 0 && hasListInRO('dns_analytics')">
+                    <span ng-show="(_loading || !dnsZones) && model.permissions.dns_analytics.access" class="loader--waite-company">
+                        <i class="glyphicon glyphicon-refresh spin"></i> Please wait...</span>
+                    <ui-select ng-disabled="readOnly" on-select="addItemToList($select, $item, 'dns_analytics')" on-remove="removeItemFromList($item, 'dns_analytics')"
+                        multiple tagging-tokens="SPACE|," theme="bootstrap" class="form-control inline-block" ng-if="dnsZones && dnsZones.length > 0"
+                        ng-model="model.dns_analytics_list" id="dns_analytics_list ">
+                        <ui-select-match placeholder="Add a DNS Zone to the list...">{{$item.zone}}</ui-select-match>
+                        <ui-select-choices repeat="zone  in  dnsZones | filter: {zone: $select.search}">
+                            {{zone.zone}}
+                        </ui-select-choices>
+                    </ui-select>
+                    <label for="dns_analytics_list" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Add DNS zones to the list to control either to allow access to these DNS zones or deny access">
+                        <i class="fa fa-question-circle"></i>
+                    </label>
+                    <input ng-disabled="readOnly" type="radio" ng-model="model.permissions.dns_analytics.allow_list" ng-checked="model.permissions.dns_analytics.allow_list"
+                        ng-value="true"> Allow access only to zones from this list
+                    <br />
+                    <input ng-disabled="readOnly" type="radio" ng-model="model.permissions.dns_analytics.allow_list" ng-checked="!model.permissions.dns_analytics.allow_list"
+                        ng-value="false"> Deny access only to zones from this list
+                </div>
+                <span class="{{model.permissions.dns_analytics.access ? 'bg-dark' : null}}" style="padding: 10px 10px 10px 20px; margin: 0 0 10px 0;"
+                    ng-show="dnsZones && dnsZones.length === 0 && model.permissions.dns_analytics.access">
+                    No DNS Zones found for this account.
+                </span>
+            </div>
+        <div class="checkbox-list" ng-if="auth.isReseller() || auth.isRevadmin()" style="margin-top: 15px;">
+            <span class="{{model.permissions.accounts.access && hasListInRO('accounts') ? 'bg-dark' : null}}">
+                <input ng-disabled="readOnly" ng-checked="model.permissions.accounts.access" type="checkbox" name="permissions_accounts"
+                    class="inline-block bg-dark" ng-model="model.permissions.accounts.access"> Accounts
+                <label for="permissions_accounts" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Allow users to access accounts.">
+                    <i class="fa fa-question-circle"></i>
+                </label>
+            </span>
+            <br />
+            <div class="item-list" ng-show="model.permissions.accounts.access && hasListInRO('accounts')">
+                <span ng-show="(_loading || !companies || !companies.length) && model.permissions.accounts.access" class="loader--waite-company">
+                    <i class="glyphicon glyphicon-refresh spin"></i> Please wait...</span>
+                <ui-select ng-disabled="readOnly" on-select="addItemToList($select, $item, 'accounts')" on-remove="removeItemFromList($item, 'accounts')"
+                    multiple tagging-tokens="SPACE|," theme="bootstrap" class="form-control inline-block" ng-if="companies && companies.length > 0"
+                    ng-model="model.accounts_list" id="accounts_list">
+                    <ui-select-match placeholder="Add an Account to the list...">{{$item.companyName}}</ui-select-match>
+                    <ui-select-choices repeat="acc  in  companies | filter: {companyName: $select.search}">
+                        {{acc.companyName}}
+                    </ui-select-choices>
+                </ui-select>
+                <label for="accounts_list" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Add companies to the list to control either to allow access to these companies or deny access">
+                    <i class="fa fa-question-circle"></i>
+                </label>
+                <input ng-disabled="readOnly" type="radio" ng-model="model.permissions.accounts.allow_list" ng-checked="model.permissions.accounts.allow_list"
+                    ng-value="true"> Allow access only to companies from this list
+                <br />
+                <input ng-disabled="readOnly" type="radio" ng-model="model.permissions.accounts.allow_list" ng-checked="!model.permissions.accounts.allow_list"
+                    ng-value="false"> Deny access only to companies from this list
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <input ng-disabled="readOnly" ng-checked="model.permissions.ssl_names" type="checkbox" name="permissions_ssl_names" class="inline-block"
+                ng-model="model.permissions.ssl_names"> SSL Names
+            <label for="permissions_ssl_names" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
+                uib-popover="Allow users to manage SSL Names.">
+                <i class="fa fa-question-circle"></i>
+            </label>
+        </div>
+        <div class="col-sm-6">
+            <input ng-disabled="readOnly || model.permissions.domains.access" ng-checked="model.permissions.ssl_certs || model.permissions.domains.access" type="checkbox" name="permissions_ssl_certs" class="inline-block"
+                ng-model="model.permissions.ssl_certs"> SSL Certificates
+            <label for="permissions_ssl_certs" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
+                uib-popover="Allow users to manage SSL Certs. Cannot be disabled if `Domains Management` is enabled.">
+                <i class="fa fa-question-circle"></i>
+            </label>
+        </div>
+        <div class="col-sm-6">
+            <input ng-disabled="readOnly || model.permissions.domains.access" ng-checked="model.permissions.waf_rules || model.permissions.domains.access" type="checkbox" name="permissions_waf_rules" class="inline-block"
+                ng-model="model.permissions.waf_rules"> WAF Rules
+            <label for="permissions_waf_rules" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
+                uib-popover="Allow users to manage WAF Rules. Cannot be disabled if `Domains Management` is enabled.">
+                <i class="fa fa-question-circle"></i>
+            </label>
+        </div>
+        <div class="col-sm-6">
+            <input ng-disabled="readOnly" ng-checked="model.permissions.groups" type="checkbox" name="permissions_groups" class="inline-block"
+                ng-model="model.permissions.groups"> Groups
+            <label for="permissions_groups" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Allow users to manage groups.">
+                <i class="fa fa-question-circle"></i>
+            </label>
+        </div>
+        <div class="col-sm-6">
+            <input ng-disabled="readOnly" ng-checked="model.permissions.users" type="checkbox" name="permissions_users" class="inline-block"
+                ng-model="model.permissions.users"> Users
+            <label for="permissions_users" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Allow users to manage users.">
+                <i class="fa fa-question-circle"></i>
+            </label>
+        </div>
+        <div class="col-sm-6">
+            <input ng-disabled="readOnly" ng-checked="model.permissions.API_keys" type="checkbox" name="permissions_API_keys" class="inline-block"
+                ng-model="model.permissions.API_keys"> API Keys
+            <label for="permissions_API_keys" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Allow users to manage API Keys.">
+                <i class="fa fa-question-circle"></i>
+            </label>
+        </div>
+        <div class="col-sm-6">
+            <input ng-disabled="readOnly" ng-checked="model.permissions.logshipping_jobs" type="checkbox" name="permissions_logshipping_jobs"
+                class="inline-block" ng-model="model.permissions.logshipping_jobs"> Logshipping Jobs
+            <label for="permissions_logshipping_jobs" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
+                uib-popover="Allow users to manage logshipping jobs.">
+                <i class="fa fa-question-circle"></i>
+            </label>
+        </div>
+        <div class="col-sm-6">
+            <input ng-disabled="readOnly" ng-checked="model.permissions.activity_log" type="checkbox" name="permissions_activity_log"
+                class="inline-block" ng-model="model.permissions.activity_log"> Activity Log
+            <label for="permissions_activity_log" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
+                uib-popover="Allow users to access activity log.">
+                <i class="fa fa-question-circle"></i>
+            </label>
+        </div>
+        <div class="col-sm-6" ng-if="false">
+            <input ng-disabled="readOnly" ng-checked="model.permissions.traffic_alerts" type="checkbox" name="permissions_traffic_alerts"
+                class="inline-block" ng-model="model.permissions.traffic_alerts"> Traffic Alerts
+            <label for="permissions_traffic_alerts" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
+                uib-popover="Allow users to access traffic alerts.">
+                <i class="fa fa-question-circle"></i>
+            </label>
+        </div>
+        <div class="col-sm-6" ng-if="false">
+            <input ng-disabled="readOnly" ng-checked="model.permissions.notification_lists" type="checkbox" name="permissions_notification_lists"
+                class="inline-block" ng-model="model.permissions.notification_lists"> Notification Lists
+            <label for="permissions_notification_lists" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
+                uib-popover="Allow users to access notification lists.">
+                <i class="fa fa-question-circle"></i>
+            </label>
+        </div>
+        <div class="col-sm-6">
+            <input ng-disabled="readOnly" ng-checked="model.permissions.usage_reports" type="checkbox" name="permissions_usage_reports"
+                class="inline-block" ng-model="model.permissions.usage_reports"> Usage Reports
+            <label for="permissions_usage_reports" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
+                uib-popover="Allow users to access usage reports.">
+                <i class="fa fa-question-circle"></i>
+            </label>
+        </div>
+        <div class="col-sm-6">
+            <input ng-disabled="readOnly" ng-checked="model.permissions.account_profile" type="checkbox" name="permissions_account_profile"
+                class="inline-block" ng-model="model.permissions.account_profile"> Account Profile
+            <label for="permissions_account_profile" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
+                uib-popover="Allow users to access account profile.">
+                <i class="fa fa-question-circle"></i>
+            </label>
+        </div>
+        <div class="col-sm-6">
+            <input ng-disabled="readOnly" ng-checked="model.permissions.billing_statements" type="checkbox" name="permissions_billing_statements"
+                class="inline-block" ng-model="model.permissions.billing_statements"> Billing Statements
+            <label for="permissions_billing_statements" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
+                uib-popover="Allow users to access billing statemnets.">
+                <i class="fa fa-question-circle"></i>
+            </label>
+        </div>
+        <div class="col-sm-6">
+            <input ng-disabled="readOnly" ng-checked="model.permissions.billing_plan" type="checkbox" name="permissions_billing_plan"
+                class="inline-block" ng-model="model.permissions.billing_plan"> Billing Plans
+            <label for="permissions_billing_plan" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
+                uib-popover="Allow users to access billing plans.">
+                <i class="fa fa-question-circle"></i>
+            </label>
+        </div>
+    </div>
+</div>

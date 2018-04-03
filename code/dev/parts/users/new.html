@@ -57,7 +57,7 @@
               </div>
             </div>
           </div>
-          <div class="form-group" ng-class="{'has-error': createForm.role.$invalid && createForm.role.$dirty}">
+          <div class="form-group" ng-if="auth.isReseller() || auth.isRevadmin()" ng-class="{'has-error': createForm.role.$invalid && createForm.role.$dirty}">
             <label for="role" class="col-sm-2 control-label">Role *</label>
             <div class="col-sm-10">
               <select class="form-control inline-block" id="role" name="role" ng-model="model.role" ng-disabled="_loading" ng-options="role for role in roles" required>
@@ -71,7 +71,7 @@
               </div>
             </div>
           </div>
-          <div class="form-group" ng-class="{'has-error': createForm.accountId.$invalid && createForm.accountId.$dirty}" ng-if="auth.isReseller() || auth.isRevadmin()">
+          <div class="form-group" ng-class="{'has-error': createForm.accountId.$invalid && createForm.accountId.$dirty}" ng-if="(auth.isReseller() || auth.isRevadmin()) && showAccountField(model)">
             <label for="company" class="col-sm-2 control-label">Account *</label>
             <div class="col-sm-10">
               <!-- For "admin" and "user" select only one account-->
@@ -95,8 +95,24 @@
               <a ui-sref="index.accountSettings.companies" class="btn btn-sm btn-primary" id="btn-manage-accounts" uib-tooltip="Manage Accounts" ng-disabled="_loading"><i class="fa fa-list-alt"></i> Manage Accounts</a>
             </div>
           </div>
+          <div class="form-group" ng-if="auth.isRevadmin() || auth.isReseller() || auth.isAdmin()" ng-init="setGroups()" ng-class="{'has-error': editForm.group.$invalid && editForm.group.$dirty}">
+            <label for="group" class="col-sm-2 control-label">Group</label>
+            <div class="col-sm-10">
+                <select class="form-control inline-block" id="group" name="group" ng-model="model.group" ng-change="setPermissions(model.group)" required>
+                    <option value="null" selected="selected">--- No Group Selected ---</option>
+                    <option ng-repeat="group in groups" value="{{group.id}}">{{group.name}}</option>
+                  </select>
+              <label for="group" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Select here the user's permissions group">
+                <i class="fa fa-question-circle"></i>
+              </label>
+              <a ui-sref="index.accountSettings.groups" class="btn btn-sm btn-primary" uib-tooltip="Manage Groups" ng-disabled="_loading"><i class="fa fa-list-alt"></i> Manage Groups</a>
+              <div class="error-messages" ng-messages="editForm.group.$error" role="alert" ng-messages-multiple>
+                <div ng-messages-include="parts/shared/error-messages.html"></div>
+              </div>
+            </div>
+          </div>
           <!-- For "reseller" multiple select additional accounts (managed_account_ids)-->
-          <div class="form-group" ng-if="!_loading && companies.length>0 && model.role=='reseller' && (auth.isReseller() || auth.isRevadmin())"
+          <div class="form-group" ng-if="false && !_loading && companies.length>0 && model.role=='reseller' && (auth.isReseller() || auth.isRevadmin())"
             ng-class="{'has-error': createForm.managedAccountIds.$invalid && createForm.managedAccountIds.$dirty}">
             <label for="account_id" class="col-sm-2 control-label">Additional Accounts To Manage</label>
             <div class="col-sm-10">
@@ -118,7 +134,7 @@
               </div>
             </div>
           </div>
-          <div class="form-group" ng-class="{'has-error': createForm.domain.$invalid && createForm.domain.$dirty}">
+          <div class="form-group" ng-if="false" ng-class="{'has-error': createForm.domain.$invalid && createForm.domain.$dirty}">
             <label for="domain" class="col-sm-2 control-label">Domains</label>
             <div class="col-sm-10">
               <span ng-show="!_loading && (getAccountsDomainNameList().length==0 && companies.length==0)"><i class="glyphicon glyphicon-refresh spin"></i> Please wait...</span>
@@ -137,46 +153,10 @@
             </div>
           </div>
           <hr>
-          <div class="form-group">
-            <label for="access_control_list" class="col-sm-2 control-label">Access Control List</label>
-            <div class="col-sm-10">
-
-<!--
-              <div>
-                <input type="checkbox" name="access_control_list_dashBoard" class="inline-block" disabled ng-model="model.access_control_list.dashBoard"> Dashboard
-                <label for="access_control_list_dashBoard" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Grants permission to manage the Dashboards section">
-                  <i class="fa fa-question-circle"></i>
-                </label>
-              </div>
-              <div>
-                <input type="checkbox" name="access_control_list_reports" class="inline-block" ng-model="model.access_control_list.reports"> Reports
-                <label for="access_control_list_reports" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Grants permission to see traffic analytic reports (currently not supported)">
-                  <i class="fa fa-question-circle"></i>
-                </label>
-              </div>
-              <div>
-                <input type="checkbox" name="access_control_list_configure" class="inline-block" ng-model="model.access_control_list.configure"> Configure
-                <label for="access_control_list_configure" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Grants permission to manage account configuration (currently not supported)">
-                  <i class="fa fa-question-circle"></i>
-                </label>
-              </div>
-              <div>
-                <input type="checkbox" name="access_control_list_test" class="inline-block" ng-model="model.access_control_list.test"> Test
-                <label for="access_control_list_test" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="TODO text">
-                  <i class="fa fa-question-circle"></i>
-                </label>
-              </div>
--->
-              <div>
-                <input type="checkbox" name="access_control_list_readOnly" class="inline-block" ng-model="model.access_control_list.readOnly"> Read Only
-                <label for="access_control_list_readOnly" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Enables read-only access for the user account (the user still can change his password, enabled/disable 2FA and manage dashboards)">
-                  <i class="fa fa-question-circle"></i>
-                </label>
-              </div>
-            </div>
-          </div>
+          <permissions pagetype="user" ng-controller="PermissionsController"></permissions>
           <hr>
-          <div class="form-group" ng-class="{'has-error': createForm.password.$invalid && createForm.password.$dirty}">
+          <!-- passwords commented out because of invitation system -->
+          <!-- <div class="form-group" ng-class="{'has-error': createForm.password.$invalid && createForm.password.$dirty}">
             <label for="password" class="col-sm-2 control-label">Password *</label>
             <div class="col-sm-10">
               <input type="password" class="form-control inline-block" id="password" name="password" ng-model="model.password" ng-disabled="_loading" ng-minlength="8"  ng-maxlength="15" required>
@@ -201,8 +181,7 @@
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
               </div>
             </div>
-          </div>
-          <hr>
+          </div> -->
           <div class="form-group" ng-class="{ 'has-error': createForm.comment.$invalid && createForm.comment.$dirty }">
             <label for="comment" class="col-sm-2 control-label">Comment</label>
             <div class="col-sm-10">

@@ -427,7 +427,8 @@
         percent: 'Percent',
         urlenc: 'Urlenc',
         xml: 'XML'
-      }
+      },
+      INVITATION_COOLDOWN_MS: 3600000 // 1h
     });
 
 })(angular, window);

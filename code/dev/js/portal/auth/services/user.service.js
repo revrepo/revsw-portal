@@ -6,7 +6,7 @@
     .factory('User', User);
 
   /*@ngInject*/
-  function User($localStorage, $http, $config, $q, DomainsConfig, $auth) {
+  function User($localStorage, $http, $config, $q, DomainsConfig, $auth, Groups, $state, AlertService, Companies) {
 
     /**
      * List of Users domains
@@ -42,6 +42,9 @@
      */
     var DNSZoneList = [];
     var dnsZoneSelected = null;
+
+    var permissions = $localStorage.group ? $localStorage.group.permissions : null;
+
     /**
      * Clear all details from localstorage
      */
@@ -53,6 +56,7 @@
       intro_.isSkipIntro = false;
       $localStorage.$reset({
         user: null,
+        group: null,
         isLoggedIn: false,
         isCAdmin: false,
         last_user_id: null,
@@ -60,7 +64,8 @@
         selectedApplication: null,
         selectedDNSZone: null,
         intro: intro_,
-        lastUrl: null
+        lastUrl: null,
+        userMainAccount: null
       });
     }
 
@@ -120,9 +125,10 @@
     }
 
     function _successGetUserMyself(data) {
-              if (data && data.status === $config.STATUS.OK) {
+              if (data && data.status === $config.STATUS.OK) {                
                 // Success
-                var res = data.data;
+                var res = data.data;           
+
                 // Check roles
                 if (res.role !== $config.ROLE.USER &&
                   res.role !== $config.ROLE.ADMIN &&
@@ -221,6 +227,7 @@
       $localStorage.selectedUser = undefined;
       $localStorage.selectedCompany = undefined;
       $localStorage.selectedDomain = undefined;
+      $localStorage.userMainAccount = undefined;
       
       clearAuthHeaderForAPI();
       clearAll();
@@ -231,7 +238,7 @@
      *
      * @returns {object|null}
      */
-    function getUser() {
+    function getUser() {      
       return $localStorage.user || null;
     }
 
@@ -295,6 +302,23 @@
         .then(function (data) {
           if (data && data.status === $config.STATUS.OK) {
             $localStorage.user = data.data;
+            permissions = $localStorage.user.permissions;
+            if ($localStorage.user.group_id && $localStorage.user.group_id !== 'null') {
+              Groups.get({ id: $localStorage.user.group_id }).$promise.then(function (group) {
+                $localStorage.group = group;
+                permissions = group ? group.permissions : $localStorage.user.permissions;
+                checkEnforce2FA();
+                checkPermissions();                
+              });
+            } else {
+              checkEnforce2FA();
+              checkPermissions();
+            }
+            if ($localStorage.user.role !== 'revadmin') {
+              Companies.get({id: $localStorage.user.account_id}).$promise.then(function (acc) {
+                $localStorage.userMainAccount = acc;
+              });
+            }            
           } else {
             // Something went wrong
             throw new Error(data.response);
@@ -370,12 +394,20 @@
      * @param {boolean} reload
      * @returns {Promise}
      */
-    function getUserDomains(reload) {
+    function getUserDomains(reload, filter) {
       return $q(function (resolve, reject) {
+        var queryFilter = {
+          operation: 'domains'
+        };
+        if (filter) {
+          queryFilter = {
+              operation: filter  
+          };
+        }
         if (domains && domains.length > 0 && !reload) {
           return resolve(domains);
         }
-        DomainsConfig.query()
+        DomainsConfig.getByOperation({filters: JSON.stringify(queryFilter)})
           .$promise
           .then(function (data) {
             domains = data;
@@ -416,7 +448,13 @@
         if (apps.length > 0 && !reload) {
           return resolve(apps);
         }
-        $http.get($config.API_URL + '/apps')
+        var queryFilter = {
+          operation: 'mobile_apps'
+        };
+        if ($state.current.name.includes('index.mobile')) {
+          queryFilter.operation = 'mobile_analytics';
+        }
+        $http.get($config.API_URL + '/apps?filters=' + JSON.stringify(queryFilter))
           .then( function (data) {
             if (data && data.status === $config.STATUS.OK) {
               apps = data.data.map( function( item ) {
@@ -535,12 +573,18 @@
      * @param {Boolean} reload
      * @returns
      */
-    function getUserDNSZones(reload) {
+    function getUserDNSZones(reload, filter) {
       return $q(function (resolve, reject) {
         if (DNSZoneList.length > 0 && !reload) {
           return resolve(DNSZoneList);
         }
-        $http.get($config.API_URL + '/dns_zones')
+        var queryFilter;
+        if (filter) {
+          queryFilter = {
+            operation: filter
+          };
+        }
+        $http.get($config.API_URL + '/dns_zones' + (queryFilter ? '?filters=' + JSON.stringify(queryFilter) : ''))
           .then( function (data) {
 
             if (data && data.status === $config.STATUS.OK) {
@@ -642,6 +686,9 @@
       return (!!user)  ? user.access_control_list :  defaultACL;
     }
 
+    function getGroup() {
+      return $localStorage.group || null;
+    }
     /**
      * @name isReadOnly
      * @description
@@ -649,12 +696,62 @@
      * @return {Boolean}
      */
     function isReadOnly(){
-        var userACL = getACL();
-        var isReadOnly = (userACL.readOnly === true);
-        return isReadOnly;
+      return permissions ? permissions.read_only : false;
+    }
+
+    function hasAccessTo(item) {
+      if (permissions && permissions[item] !== null) {
+        if (permissions[item].access !== undefined) {
+          return permissions[item].access;
+        } else {
+          return permissions[item];
+        }
+      }
+
+      return false;
+    }
+
+    function isEnforce2FA() {
+      return permissions ? permissions.enforce_2fa && !getUser().two_factor_auth_enabled : false;
+    }
+
+    function checkEnforce2FA(event, toState, fromState) {
+      if (!event && !toState && !fromState) {
+        if (!$state.is('index.accountSettings.2fa') && isEnforce2FA()) {
+          $state.go('index.accountSettings.2fa');
+          return;
+        }        
+      } else {
+        if (isEnforce2FA()) {
+          AlertService.danger('2FA is enforced, please set up 2FA.');
+        }
+        if (isEnforce2FA() && toState !== 'index.accountSettings.2fa') {
+          event.preventDefault();
+        }
+        if (isEnforce2FA() && fromState !== 'index.accountSettings.2fa') {
+          $state.go('index.accountSettings.2fa');
+        }
+      }
+    }
+
+    function checkPermissions() {
+      if (permissions) {
+        if (!permissions.portal_login) {
+          logout();          
+          $state.go('login');
+          AlertService.danger('You do not have permissions to be logged in to the portal.');
+        }
+      }
     }
 
     return {
+      checkPermissions: checkPermissions,
+
+      checkEnforce2FA: checkEnforce2FA,
+
+      isEnforce2FA: isEnforce2FA,
+
+      hasAccessTo: hasAccessTo,
 
       getToken: getToken,
 

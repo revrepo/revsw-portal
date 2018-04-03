@@ -54,7 +54,7 @@
               </div>
             </div>
           </div>
-          <div class="form-group" ng-class="{'has-error': editForm.role.$invalid && editForm.role.$dirty}">
+          <div class="form-group" ng-if="auth.isReseller() || auth.isRevadmin()" ng-class="{'has-error': editForm.role.$invalid && editForm.role.$dirty}">
             <label for="role" class="col-sm-2 control-label">Role *</label>
             <div class="col-sm-10">
               <select class="form-control inline-block" id="role" name="role" ng-model="model.role" ng-options="role for role in roles" required>
@@ -68,7 +68,23 @@
               </div>
             </div>
           </div>
-          <div class="form-group" ng-class="{'has-error': editForm.accountId.$invalid && editForm.accountId.$dirty}" ng-if="auth.isReseller() || auth.isRevadmin()">
+          <div class="form-group" ng-if="auth.isRevadmin() || auth.isReseller() || auth.isAdmin()" ng-init="setGroups()" ng-class="{'has-error': editForm.group.$invalid && editForm.group.$dirty}">
+              <label for="group" class="col-sm-2 control-label">Group</label>
+              <div class="col-sm-10">
+                  <select class="form-control inline-block" id="group" name="group" ng-model="model.group" ng-change="setPermissions(model.group)" required>
+                      <option value="null" selected="selected">--- No Group Selected ---</option>
+                      <option ng-repeat="group in groups" value="{{group.id}}">{{group.name}}</option>
+                    </select>
+                <label for="group" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Select here the user's permissions group">
+                  <i class="fa fa-question-circle"></i>
+                </label>
+                <a ui-sref="index.accountSettings.groups" class="btn btn-sm btn-primary" uib-tooltip="Manage Groups" ng-disabled="_loading"><i class="fa fa-list-alt"></i> Manage Groups</a>
+                <div class="error-messages" ng-messages="editForm.group.$error" role="alert" ng-messages-multiple>
+                  <div ng-messages-include="parts/shared/error-messages.html"></div>
+                </div>
+              </div>
+            </div>          
+          <div class="form-group" ng-class="{'has-error': editForm.accountId.$invalid && editForm.accountId.$dirty}" ng-if="(auth.isReseller() || auth.isRevadmin()) && showAccountField(model)">
             <label for="company" class="col-sm-2 control-label">Account *</label>
             <div class="col-sm-10">
               <!-- Select only one account. Each user must have one main account.-->
@@ -96,7 +112,7 @@
             </div>
           </div>
           <!-- For "reseller" multiple select additional accounts (managed_account_ids)-->
-          <div class="form-group" ng-if="!_loading && companies.length>0 && model.role=='reseller' && (auth.isReseller() || auth.isRevadmin())" ng-class="{'has-error': editForm.managedAccountIds.$invalid && editForm.managedAccountIds.$dirty}">
+          <div class="form-group" ng-if="!_loading && companies.length>0 && model.role=='reseller' && (auth.isReseller() || auth.isRevadmin()) && false" ng-class="{'has-error': editForm.managedAccountIds.$invalid && editForm.managedAccountIds.$dirty}">
             <label for="account_id" class="col-sm-2 control-label">Additional Accounts To Manage</label>
             <div class="col-sm-10">
               <span ng-show="_loading && companies.length>0" class="loader--waite-company">
@@ -116,7 +132,7 @@
               </div>
             </div>
           </div>
-          <div class="form-group" ng-class="{'has-error': editForm.domain.$invalid && editForm.domain.$dirty}">
+          <div class="form-group" ng-if="false" ng-class="{'has-error': editForm.domain.$invalid && editForm.domain.$dirty}">
             <label for="domain" class="col-sm-2 control-label">Domains</label>
             <div class="col-sm-10">
               <span ng-show="!_loading && (getAccountsDomainNameList().length==0 && companies.length==0)"><i class="glyphicon glyphicon-refresh spin"></i> Please wait...</span>
@@ -135,44 +151,7 @@
             </div>
           </div>
           <hr>
-          <div class="form-group">
-            <label for="access_control_list" class="col-sm-2 control-label">Access Control List</label>
-            <div class="col-sm-10">
-
-<!--
-              <div>
-                <input type="checkbox" name="access_control_list_dashBoard" class="inline-block" disabled ng-model="model.access_control_list.dashBoard"> Dashboard
-                <label for="access_control_list_dashBoard" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="TODO text Set here the new user's access control permissions">
-                  <i class="fa fa-question-circle"></i>
-                </label>
-              </div>
-              <div>
-                <input type="checkbox" name="access_control_list_reports" class="inline-block" ng-model="model.access_control_list.reports"> Reports
-                <label for="access_control_list_reports" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="TODO text">
-                  <i class="fa fa-question-circle"></i>
-                </label>
-              </div>
-              <div>
-                <input type="checkbox" name="access_control_list_configure" class="inline-block" ng-model="model.access_control_list.configure"> Configure
-                <label for="access_control_list_configure" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="TODO text">
-                  <i class="fa fa-question-circle"></i>
-                </label>
-              </div>
-              <div>
-                <input type="checkbox" name="access_control_list_test" class="inline-block" ng-model="model.access_control_list.test"> Test
-                <label for="access_control_list_test" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="TODO text">
-                  <i class="fa fa-question-circle"></i>
-                </label>
-              </div>
--->
-              <div>
-                <input type="checkbox" name="access_control_list_readOnly" class="inline-block" ng-model="model.access_control_list.readOnly"> Read Only
-                <label for="access_control_list_readOnly" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Enables read-only access for the user account (the user still can change his password, enabled/disable 2FA and manage dashboards)">
-                  <i class="fa fa-question-circle"></i>
-                </label>
-              </div>
-            </div>
-          </div>
+          <permissions pagetype="user" ng-controller="PermissionsController" type="user"></permissions>
           <hr>
           <div class="row">
             <div class="col-sm-2 margin-sm-top-bottom">
@@ -185,6 +164,23 @@
               </label>
             </div>
           </div>
+          <hr>
+          <div class="row">
+            <div class="col-sm-2 margin-sm-top-bottom">
+              <strong>Invitation Status</strong>
+            </div>
+            <div class="col-sm-10">
+                <div class="ng-cloak" ng-hide="userInvitationDone(model)">
+                    <span class="label label-danger">Not finished</span>
+                    <button class="btn btn-primary btn-sm" ng-model="model.resendInvitationBtn" ng-class="{'btn-disabled':isReadOnly()}"  type="button" ng-disabled="userInvitationCooldown(model) || userInvitationDone(model) || isReadOnly() || resendDisabled" ng-click="resendInvite(model)">
+                      Resend invitation
+                      </button>
+                  </div>
+                  <div class="ng-cloak" ng-hide="!userInvitationDone(model)">
+                      <span class="label label-success">Finished</span>
+                    </div>
+            </div>
+            </div>
           <hr>
           <div class="form-group" ng-class="{ 'has-error': editForm.comment.$invalid && editForm.comment.$dirty }">
             <label for="comment" class="col-sm-2 control-label">Comment</label>

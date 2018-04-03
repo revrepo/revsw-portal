@@ -31,6 +31,8 @@
       $localStorage.selectedCompany = model;
     };
 
+    $scope.companies = [];
+
     // Fetch list of users
     $scope.$on('$stateChangeSuccess', function (state) {
       $scope.model = $localStorage.selectedCompany;
@@ -46,7 +48,7 @@
           });
         }
         $scope.list()
-          .then(function () {
+          .then(function () {            
             if ($scope.elementIndexForAnchorScroll !== undefined) {
               setTimeout(function () {
                 $anchorScroll('anchor' + $scope.elementIndexForAnchorScroll);
@@ -71,9 +73,24 @@
           });
       }
 
-      Vendors.query().$promise.then(function (response) {
-        $scope.vendorProfiles = response;
+      $scope.list().then(function (res) {
+        $scope.listOfAccs = [];
+        $scope.companies = res;
+        $scope.companies.forEach(function (comp) {
+          if (comp.parent_account_id && comp.parent_account_id !== '') {
+            Companies.get({ id: comp.parent_account_id }).$promise.then(function (parentAcc) {
+              comp.parentAccount = parentAcc;
+            });
+          }
+        });
       });
+
+      // only revadmin
+      if ($scope.auth.isRevadmin()) {
+        Vendors.query().$promise.then(function (response) {
+          $scope.vendorProfiles = response;
+        });
+      }
     });
 
     $scope.filterKeys = ['companyName', 'comment', 'createdBy', 'updated_at', 'subscription_name', 'subscription_state', 'created_at'];

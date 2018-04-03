@@ -101,7 +101,7 @@
     };
 
     // get Total count DNS Zones for current account
-    User.getUserDNSZones()
+    User.getUserDNSZones(false, 'dns_analytics')
       .then(function(data) {
         vm.accountTotalDNSZones = data.length;
       });

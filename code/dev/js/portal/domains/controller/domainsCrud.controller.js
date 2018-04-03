@@ -132,7 +132,7 @@
         });
       }
 
-      var data = null;
+      var data = {};
       // NOTE: set filter params for specific state
       if ($state.is('index.accountSettings.accountresources')) {
         $scope.filter.limit = $config.MIN_LIMIT_RECORDS_IN_TABLE;
@@ -147,6 +147,8 @@
       }
       if ($state.is($scope.state)) {
         $scope.filter.limit = $config.DEFAULT_LIMIT_RECORDS_IN_TABLE;
+        data.filters = data.filters || {};
+        data.filters.operation = 'domains';
         $scope.list(data)
           .then(setAccountName)
           .then(function () {

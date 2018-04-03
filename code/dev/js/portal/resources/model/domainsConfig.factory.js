@@ -9,6 +9,14 @@
   function DomainsResource(Resource, $config) {
 
     return Resource($config.API_URL + '/domain_configs/:id', { id: '@id' }, {
+      getByOperation: {
+        url: $config.API_URL + '/domain_configs?filters=:filters',
+        method: 'GET',
+        params: {
+          filters: '@filters'
+        },
+        isArray: true
+      },
       status: {
         url: $config.API_URL + '/domain_configs/:id/config_status',
         method: 'GET',

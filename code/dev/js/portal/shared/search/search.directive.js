@@ -3,7 +3,8 @@
 
   angular
     .module('revapm.Portal.Shared')
-    .directive('search', function($location, $localStorage, $state, $rootScope, DomainsConfig, Companies, Users, User, Apps, DashboardSrv, ApiKeys, DNSZones, WAF_Rules) {
+    .directive('search', function($location, $localStorage, $state, $rootScope, DomainsConfig,
+      Companies, Users, User, Apps, DashboardSrv, ApiKeys, DNSZones, WAF_Rules, Groups) {
       return {
         restrict: 'AE',
         templateUrl: 'parts/shared/search/search.html',
@@ -75,6 +76,14 @@
             DNSZones.query().$promise.then(function(data) {
               data.forEach(function(item) {
                 item.searchType = 'zones';
+                item.title += ' ';
+                scope.list.push(item);
+              });
+            });
+
+            Groups.query().$promise.then(function(data) {
+              data.forEach(function(item) {
+                item.searchType = 'group';
                 item.title += ' ';
                 scope.list.push(item);
               });
@@ -156,6 +165,15 @@
                   if ((searchString || '').toLowerCase().indexOf(term) >= 0) {
                     item.searchBarText = fullName + ' (Edit User)';
                     item.searchDisplayText = fullName;
+                    item.searchAction = 'edit';
+                    results.push(item);
+                  }
+                  break;
+                case 'group':
+
+                  if ((searchString || '').toLowerCase().indexOf(term) >= 0) {
+                    item.searchBarText = item.name + ' (Edit Group)';
+                    item.searchDisplayText = item.name;
                     item.searchAction = 'edit';
                     results.push(item);
                   }
@@ -259,6 +277,11 @@
               case 'user':
                 if (item.searchAction === 'edit') {
                   $location.path('users/edit/' + item.user_id);
+                }
+                break;
+              case 'group':
+                if (item.searchAction === 'edit') {
+                  $location.path('groups/edit/' + item.id);
                 }
                 break;
               case 'app':
