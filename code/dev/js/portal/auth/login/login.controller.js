@@ -47,6 +47,7 @@
       try {
         User.login(email, pass)
           .then(function(data) {
+            User.checkPermissions();
             if (data.data.vendor === $rootScope.vendor) {
               // NOTE: call event - user signin
               $scope.$emit('user.signin', data.data);

@@ -8,7 +8,7 @@
       //DashboardSrv.getAll();
     });
 
-  function DashboardSrv($rootScope, $q, $http, $localStorage, $config, dashboard) {
+  function DashboardSrv($rootScope, $q, $http, $localStorage, $config, dashboard, User) {
     'ngInject';
     var API_URL = $config.API_URL;
     var dashboardsList = [];
@@ -65,7 +65,12 @@
         $http.get(API_URL + '/dashboards/' + id)
           .success(function(data) {
             // NOTE: set standart dashboard titleTemplateUrl for all dashboards
-            data.titleTemplateUrl = 'parts/dashboard/dashboard-title.tpl.html';
+            if (!User.isReadOnly()) {
+              data.titleTemplateUrl = 'parts/dashboard/dashboard-title.tpl.html';
+            } else {
+              data.titleTemplateUrl = 'parts/dashboard/dashboard-title-RO.tpl.html';
+            }
+            
             deferred.resolve(data);
           })
           .error(function() {

@@ -307,12 +307,12 @@
               Groups.get({ id: $localStorage.user.group_id }).$promise.then(function (group) {
                 $localStorage.group = group;
                 permissions = group ? group.permissions : $localStorage.user.permissions;
-                checkPermissions();                
+                checkPermissions();
               });
             } else {
               checkPermissions();
             }
-            if ($localStorage.user.role !== 'revadmin') {
+            if ($localStorage.user && $localStorage.user.role !== 'revadmin') {
               if (!$localStorage.userMainAccount || $localStorage.userMainAccount.id !== $localStorage.user.account_id) {
                 Companies.get({ id: $localStorage.user.account_id }).$promise.then(function (acc) {
                   $localStorage.userMainAccount = acc;
@@ -736,9 +736,10 @@
     function checkPermissions() {
       if (permissions) {
         if (!permissions.portal_login) {
-          logout();          
+          logout();
           $state.go('login');
           AlertService.danger('You do not have permissions to be logged in to the portal.');
+          return false;
         }
       }
     }

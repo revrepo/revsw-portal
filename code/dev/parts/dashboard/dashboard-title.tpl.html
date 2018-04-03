@@ -3,11 +3,11 @@
     <div class="form-inline">
       <div class="  pull-left">
         <div class="form-group">
-          <dashboard-btn-new class="h4" ng-if="!editMode && !!model"></dashboard-btn-new>
+          <dashboard-btn-new class="h4"></dashboard-btn-new>
         </div>
       </div>
       <div class="form-group pull-left">
-        <div class="h2"> {{model.title}}
+        <div class="h2"> {{model.title}} 
           <time-note-display ng-show="(model.getCountDashboardWidget(model.rows)!=0)"></time-note-display>
         </div>
       </div>
@@ -19,7 +19,7 @@
           <a href="" ng-if="editMode" title="Edit Dashboard Properties" class="btn btn-link" ng-click="editDashboardDialog()">
             <i class="glyphicon glyphicon-cog"></i>
           </a>
-          <a href="" ng-if="options.editable" class="btn btn-link" title="{{editMode ? 'Save Changes' : 'Modify This Dashboard'}}" ng-click="toggleEditMode()">
+          <a href="" ng-if="options.editable" id="dashEdit" class="btn btn-link dashboard-edit" ng-disabled="isReadOnly()" ng-class="isReadOnly() ? 'btn-disabled' : ''" title="{{editMode ? 'Save Changes' : 'Modify This Dashboard'}}" ng-click="toggleEditMode()">
             <i class="glyphicon" x-ng-class="{'glyphicon-edit' : !editMode, 'fa fa-floppy-o' : editMode}"></i>
           </a>
           <a href="" ng-if="editMode" class="btn btn-link" title="Undo Changes" ng-click="cancelEditMode()" style="padding-top: 6px !important;">
@@ -41,7 +41,7 @@
       </div>
     </div>
   </div>
-  <div class="col-md-12 hidden-xs" ng-if="(model.getCountDashboardWidget(model.rows)==0)">
+  <div class="col-md-12 hidden-xs" ng-if="model.getCountDashboardWidget(model.rows)==0">
     <strong class="alert alert-attention"> Click on <i class="glyphicon glyphicon-edit"></i> icon in the top right corner to add graphs to the dashboard.</strong>
     <hr>
     <div class="dashboard-preview-background">
