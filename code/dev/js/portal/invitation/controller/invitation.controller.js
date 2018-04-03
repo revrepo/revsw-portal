@@ -15,7 +15,8 @@
     $stateParams,
     Invitation,
     User,
-    Util) {
+    Util,
+    Users) {
 
     var currUser;
 
@@ -24,8 +25,24 @@
       $stateParams: $stateParams
     });
 
+
+    $scope._loading = true;
+
+
     $scope.setState('Invitation');
     $scope.setResource(Invitation);
+
+    Invitation.getTokenStatus({ id: $stateParams.token }).$promise.then(function (data) {
+      if (data.statusCode !== 200) {
+        $scope
+        .alertService
+        .danger('The user account is already password-protected. ' +
+                'Please log in to the system using configured password or use “Forgot Password” function to reset it.');
+        $state.go('login');
+      } else {
+        $scope._loading = false;
+      }
+    });
 
     if (User.isAuthed()) {
       User.logout();
@@ -35,15 +52,17 @@
     $scope.$on('$stateChangeSuccess', function (state) {
       currUser = $stateParams.user;
       $scope.randomImageStyle = { 'background-image': 'url(' + Util.getRandomImageURL() + ')' };
-      $localStorage.lastUrl = null;
+      $localStorage.lastUrl = null;      
     });
 
     $scope.disableSubmit = function (model) {
-      return model.pass.$invalid ||
-        model.passAgain.$invalid ||
-        model.pass.$modelValue.length < 8 ||
-        model.passAgain.$modelValue.length < 8 ||
-        model.pass.$modelValue !== model.passAgain.$modelValue;
+      if (!$scope.pass || !$scope.passAgain) {
+        return true;
+      } else {
+        return $scope.pass.length < 8 ||
+          $scope.passAgain.length < 8 ||
+          $scope.pass !== $scope.passAgain;
+      }
     };
 
     $scope.createPassword = function (model) {

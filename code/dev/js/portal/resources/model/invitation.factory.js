@@ -16,6 +16,10 @@
       resendInvitation: {
         url: $config.API_URL + '/users/:id/resend_invitation',
         method: 'POST'
+      },
+      getTokenStatus: {
+        url: $config.API_URL + '/users/:id/status',
+        method: 'GET'
       }
     });
   }

@@ -341,6 +341,8 @@
       return false;        
     } else if (model.role === 'admin' && User.getUser().role === 'reseller'){
       return true;
+    } else if (User.getUser().role === 'revadmin') {
+      return true;
     }
   };
 
@@ -351,8 +353,8 @@
   });
 
   $scope.$watch('model.group', function (newVal, oldVal) {
-      if (newVal === undefined) {
-        $scope.model.group = 'null';
+      if (newVal === undefined && $scope.key) {
+        $scope.key.group = 'null';
       }
       if (newVal === 'null') {
         $scope.setPermissions('null');
