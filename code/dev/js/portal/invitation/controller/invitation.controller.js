@@ -66,7 +66,6 @@
     };
 
     $scope.createPassword = function (model) {
-      return false;
       if (!model) {
         return;
       }
