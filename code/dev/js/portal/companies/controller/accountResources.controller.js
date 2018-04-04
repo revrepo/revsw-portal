@@ -17,17 +17,6 @@
     $scope.childAccs = null;
 
     var selAccount = User.getSelectedAccount();
-    if (User.isReseller() || User.isRevadmin) {
-      var filterByParent = {
-        parent_account_id: User.getSelectedAccount().acc_id
-      };
-      if (User.getSelectedAccount().acc_id === '') {
-        filterByParent.parent_account_id = User.getUser().account_id;
-      }
-      Companies.query({filters: JSON.stringify(filterByParent)}).$promise.then(function (data) {
-        $scope.childAccs = data;
-      });
-    }
     //  ---------------------------------
     $scope.onUpdate = function () {
       if ($scope.accounts.length === 0 || !$scope.account) {

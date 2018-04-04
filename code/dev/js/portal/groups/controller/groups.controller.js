@@ -132,7 +132,7 @@
     };
 
     // Init everyting on `viewContentLoading` event because it starts slightly before the DOM renders.
-    $rootScope.$on('$viewContentLoading', function (state) {
+    $rootScope.$on('$viewContentLoading', function (state) {      
       var data = null;
       // NOTE: set filter params for specific state
       if ($state.is('index.accountSettings.accountresources')) {
@@ -148,7 +148,6 @@
         .then(function (res) {
           // set our groups
           $scope.groups = res;
-
           // get companies and set the company names
           Companies.query().$promise.then(function (accs) {
             $scope.companies = accs;
@@ -160,21 +159,42 @@
               });
             });
           });
-
-          // get users and count each group's user to dispaly in table          
           $scope.groups.forEach(function (group) {
-            Users.query({ filters: { group_id: group.id } }).$promise.then(function (resultUsers) {
-              group.users = resultUsers;
-            });
-          });
-          
-          // get API Keys and count each group's keys to dispaly in table
-          $scope.groups.forEach(function (group) {
-            ApiKeys.query({ filters: { group_id: group.id } }).$promise.then(function (resultKeys) {
-              group.APIKeys = resultKeys;
+            Groups.users({id: group.id}).$promise.then(function (users) {
+              group.users = users;
             });
           });
         });
+    });
+
+    $scope.$on('$stateChangeSuccess', function () {
+      if ($state.is('index.accountSettings.accountresources')) {
+        $scope.filter.limit = $config.MIN_LIMIT_RECORDS_IN_TABLE;
+        var data = {
+          filters: {
+            account_id: !User.getSelectedAccount() ? null : User.getSelectedAccount().acc_id
+          }
+        };
+        $scope.list(data)
+          .then(function (res) {
+            $scope.records = res;        
+            $scope.records.forEach(function (group) {
+              Groups.users({id: group.id}).$promise.then(function (users) {
+                group.users = users;
+              });
+            });
+            Companies.query().$promise.then(function (accs) {
+              $scope.companies = accs;
+              $scope.records.forEach(function (group) {
+                accs.forEach(function (account) {
+                  if (group.account_id === account.id) {
+                    group.accountName = account.companyName;
+                  }
+                });
+              });
+            });
+          });
+      }
     });
 
     /**

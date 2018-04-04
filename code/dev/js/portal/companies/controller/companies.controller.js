@@ -31,10 +31,27 @@
       $localStorage.selectedCompany = model;
     };
 
-    $scope.companies = [];
+    if ($state.is('index.accountSettings.accountresources')) {
+      // child accounts
+      $scope.filter.limit = $config.MIN_LIMIT_RECORDS_IN_TABLE;
+      var data = {
+        filters: {
+          parent_account_id: !User.getSelectedAccount() ? null : User.getSelectedAccount().acc_id
+        }
+      };
+      if (!data.filters.parent_account_id) {
+        delete data.filters;
+      }
+      $scope.list(data)
+        .then(function (res) {
+          $scope.records = res;           
+        });
+    }
 
+    $scope.companies = [];
+    
     // Fetch list of users
-    $scope.$on('$stateChangeSuccess', function (state) {
+    $scope.$on('$stateChangeSuccess', function (state) {   
       $scope.model = $localStorage.selectedCompany;
       if ($state.is($scope.state)) {
         //NOTE: use last stored filter data
@@ -78,9 +95,13 @@
         $scope.companies = res;
         $scope.companies.forEach(function (comp) {
           if (comp.parent_account_id && comp.parent_account_id !== '') {
-            Companies.get({ id: comp.parent_account_id }).$promise.then(function (parentAcc) {
-              comp.parentAccount = parentAcc;
-            });
+            if ($localStorage.userMainAccount && (comp.parent_account_id === $localStorage.userMainAccount.id)) {
+              comp.parentAccount = $localStorage.userMainAccount;
+            } else {
+              Companies.get({ id: comp.parent_account_id }).$promise.then(function (parentAcc) {
+                comp.parentAccount = parentAcc;
+              });
+            }            
           }
         });
       });
