@@ -36,26 +36,26 @@
         Apps.query({filters: JSON.stringify(permissionFilter)}).$promise.then(function (apps) {
             $scope.apps = apps;            
             $scope.apps_full = apps;
-            $scope.setListsByAcc($scope.model.account_id);
+            $scope.setListsByAcc($scope.model ? $scope.model.account_id : $scope.key.account_id);
         });
 
 
         DomainsConfig.getByOperation({filters: JSON.stringify(permissionFilter)}).$promise.then(function (domains) {
             $scope.domains = domains;
             $scope.domains_full = domains;
-            $scope.setListsByAcc($scope.model.account_id);
+            $scope.setListsByAcc($scope.model ? $scope.model.account_id : $scope.key.account_id);
         });
 
         DNSZones.query({filters: JSON.stringify(permissionFilter)}).$promise.then(function (zones) {
             $scope.dnsZones = zones;
             $scope.dnsZones_full = zones;
-            $scope.setListsByAcc($scope.model.account_id);
+            $scope.setListsByAcc($scope.model ? $scope.model.account_id : $scope.key.account_id);
         });
 
         Companies.query({filters: JSON.stringify(permissionFilter)}).$promise.then(function (accs) {
             $scope.companies = accs;
             $scope.companies_full = accs;
-            $scope.setListsByAcc($scope.model.account_id);
+            $scope.setListsByAcc($scope.model ? $scope.model.account_id : $scope.key.account_id);
         });
 
         $scope.pushItemsById = function (list, pushList, collection) {
