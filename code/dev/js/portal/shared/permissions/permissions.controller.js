@@ -10,6 +10,33 @@
         User, $injector, $state, $stateParams, Companies,
         DomainsConfig, Groups, Apps, DNSZones, $attrs) {
 
+        $scope.initPermissions = function () {
+            Apps.query({ filters: JSON.stringify(permissionFilter) }).$promise.then(function (apps) {
+                $scope.apps = apps;
+                $scope.apps_full = apps;
+                $scope.setListsByAcc($scope.pageType.isAPIKey() ? $scope.key.account_id : $scope.model.account_id);
+            });
+
+
+            DomainsConfig.getByOperation({ filters: JSON.stringify(permissionFilter) }).$promise.then(function (domains) {
+                $scope.domains = domains;
+                $scope.domains_full = domains;
+                $scope.setListsByAcc($scope.pageType.isAPIKey() ? $scope.key.account_id : $scope.model.account_id);
+            });
+
+            DNSZones.query({ filters: JSON.stringify(permissionFilter) }).$promise.then(function (zones) {
+                $scope.dnsZones = zones;
+                $scope.dnsZones_full = zones;
+                $scope.setListsByAcc($scope.pageType.isAPIKey() ? $scope.key.account_id : $scope.model.account_id);
+            });
+
+            Companies.query({ filters: JSON.stringify(permissionFilter) }).$promise.then(function (accs) {
+                $scope.companies = accs;
+                $scope.companies_full = accs;
+                $scope.setListsByAcc($scope.pageType.isAPIKey() ? $scope.key.account_id : $scope.model.account_id);
+            });
+        };
+
         $scope.getPageType = function () {
             return $attrs.pagetype;
         };
@@ -25,38 +52,24 @@
                 return $scope.getPageType() === 'group';
             }
         };
-        
+
         $scope.modelList = ['apps_list', 'domains_list', 'web_analytics_list',
-        'security_analytics_list', 'cache_purge_list', 'dns_zones_list',
-        'accounts_list', 'dns_analytics_list', 'apps_analytics_list'];
+            'security_analytics_list', 'cache_purge_list', 'dns_zones_list',
+            'accounts_list', 'dns_analytics_list', 'apps_analytics_list'];
 
         var permissionFilter = {
             operation: 'permission_list'
         };
-        Apps.query({filters: JSON.stringify(permissionFilter)}).$promise.then(function (apps) {
-            $scope.apps = apps;            
-            $scope.apps_full = apps;
-            $scope.setListsByAcc($scope.model ? $scope.model.account_id : $scope.key.account_id);
-        });
 
-
-        DomainsConfig.getByOperation({filters: JSON.stringify(permissionFilter)}).$promise.then(function (domains) {
-            $scope.domains = domains;
-            $scope.domains_full = domains;
-            $scope.setListsByAcc($scope.model ? $scope.model.account_id : $scope.key.account_id);
-        });
-
-        DNSZones.query({filters: JSON.stringify(permissionFilter)}).$promise.then(function (zones) {
-            $scope.dnsZones = zones;
-            $scope.dnsZones_full = zones;
-            $scope.setListsByAcc($scope.model ? $scope.model.account_id : $scope.key.account_id);
-        });
-
-        Companies.query({filters: JSON.stringify(permissionFilter)}).$promise.then(function (accs) {
-            $scope.companies = accs;
-            $scope.companies_full = accs;
-            $scope.setListsByAcc($scope.model ? $scope.model.account_id : $scope.key.account_id);
-        });
+        if ($scope.pageType.isAPIKey()) {
+            $scope.$watch('key', function (newVal, oldVal) {
+                if (newVal) {
+                    $scope.initPermissions();
+                }
+            });
+        } else {
+            $scope.initPermissions();
+        }
 
         $scope.pushItemsById = function (list, pushList, collection) {
             if ($scope && $scope.model && $scope.model.permissions && $scope.model.permissions[list].list) {
@@ -69,13 +82,13 @@
                             $scope.model[pushList].push(fullVal);
                         }
                     });
-                });                
+                });
             }
         };
 
         $scope.clearLists = function () {
             $scope.modelList.forEach(function (list) {
-                if($scope.model && $scope.model[list]) {
+                if ($scope.model && $scope.model[list]) {
                     $scope.model[list] = null;
                     delete $scope.model[list];
                 }
@@ -92,14 +105,14 @@
             $scope.pushItemsById('cache_purge', 'cache_purge_list', 'domains');
             $scope.pushItemsById('dns_zones', 'dns_zones_list', 'dnsZones');
             $scope.pushItemsById('dns_analytics', 'dns_analytics_list', 'dnsZones');
-            $scope.pushItemsById('accounts', 'accounts_list', 'companies');            
+            $scope.pushItemsById('accounts', 'accounts_list', 'companies');
         };
 
         $scope.$watch('groupPermissions', function () {
             if ($scope.groupPermissions) {
-                $scope.model.permissions = $scope.groupPermissions;                
+                $scope.model.permissions = $scope.groupPermissions;
             }
-            $scope.initLists();      
+            $scope.initLists();
         });
 
         $scope.$watch('apps', function () {
@@ -131,9 +144,15 @@
             }
         });
 
-        $scope.$watch('model.account_id', function (newVal, oldVal) {
-            $scope.setListsByAcc(newVal);
-        });
+        if ($scope.pageType.isAPIKey()) {
+            $scope.$watch('key.account_id', function (newVal, oldVal) {
+                $scope.setListsByAcc(newVal);
+            });
+        } else {
+            $scope.$watch('model.account_id', function (newVal, oldVal) {
+                $scope.setListsByAcc(newVal);
+            });
+        }
 
         $scope.setListsByAcc = function (accId) {
             if (accId) {
