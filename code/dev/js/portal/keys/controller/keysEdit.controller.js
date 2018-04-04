@@ -107,8 +107,9 @@
         })
         .$promise
         .then(function(key) {
-          $scope.key = key;
+          $scope.key = key;          
           $scope.model = _.clone(key, true);
+          $scope.model.group = $scope.key.group_id || 'null';
           if (!$scope.model.permissions) {
             $scope.model.permissions = {
               read_only: false,
@@ -353,8 +354,8 @@
   });
 
   $scope.$watch('model.group', function (newVal, oldVal) {
-      if (newVal === undefined && $scope.key) {
-        $scope.key.group = 'null';
+      if (newVal === undefined && $scope.model) {
+        $scope.model.group = 'null';
       }
       if (newVal === 'null') {
         $scope.setPermissions('null');
