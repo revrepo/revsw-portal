@@ -95,9 +95,13 @@
         $scope.companies = res;
         $scope.companies.forEach(function (comp) {
           if (comp.parent_account_id && comp.parent_account_id !== '') {
-            Companies.get({ id: comp.parent_account_id }).$promise.then(function (parentAcc) {
-              comp.parentAccount = parentAcc;
-            });
+            if ($localStorage.userMainAccount && (comp.parent_account_id === $localStorage.userMainAccount.id)) {
+              comp.parentAccount = $localStorage.userMainAccount;
+            } else {
+              Companies.get({ id: comp.parent_account_id }).$promise.then(function (parentAcc) {
+                comp.parentAccount = parentAcc;
+              });
+            }            
           }
         });
       });
