@@ -116,7 +116,6 @@
             var results = [];
             term = (term || '').toLowerCase();
             var list = angular.copy(scope.list);
-
             list.forEach(function(item) {
               switch (item.searchType) {
                 case 'domain':
@@ -170,8 +169,7 @@
                   }
                   break;
                 case 'group':
-
-                  if ((searchString || '').toLowerCase().indexOf(term) >= 0) {
+                  if ((item.name || '').toLowerCase().indexOf(term) >= 0) {
                     item.searchBarText = item.name + ' (Edit Group)';
                     item.searchDisplayText = item.name;
                     item.searchAction = 'edit';
