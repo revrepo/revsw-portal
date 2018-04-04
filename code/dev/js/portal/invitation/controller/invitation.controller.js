@@ -34,11 +34,11 @@
 
     Invitation.getTokenStatus({ id: $stateParams.token }).$promise.then(function (data) {
       if (data.statusCode !== 200) {
+        $state.go('login');
         $scope
         .alertService
         .danger('The user account is already password-protected. ' +
                 'Please log in to the system using configured password or use “Forgot Password” function to reset it.');
-        $state.go('login');
       } else {
         $scope._loading = false;
       }
@@ -77,9 +77,10 @@
         .$promise
         .then(function (e) {
           // if invitation process finished successfully, redirect to login page
-          if (e.statusCode === 200) {
-            $scope.alertService.success(e);
+          if (e.statusCode === 200) {            
             $state.go('login');
+            $scope.alertService.success('The password has been successfully set, please login ' +
+            'using the new password');
           }
         })
         .catch($scope.alertService.danger);
