@@ -159,18 +159,9 @@
               });
             });
           });
-
-          // get users and count each group's user to dispaly in table          
           $scope.groups.forEach(function (group) {
-            Users.query({ filters: { group_id: group.id } }).$promise.then(function (resultUsers) {
-              group.users = resultUsers;
-            });
-          });
-          
-          // get API Keys and count each group's keys to dispaly in table
-          $scope.groups.forEach(function (group) {
-            ApiKeys.query({ filters: { group_id: group.id } }).$promise.then(function (resultKeys) {
-              group.APIKeys = resultKeys;
+            Groups.users({id: group.id}).$promise.then(function (users) {
+              group.users = users;
             });
           });
         });
