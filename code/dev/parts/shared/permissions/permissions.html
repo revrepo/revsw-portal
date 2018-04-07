@@ -336,7 +336,7 @@
                 </label>
             </span>
             <br />
-            <div class="item-list" ng-show="model.permissions.accounts.access && hasListInRO('accounts')">
+            <div class="item-list" ng-show="model.permissions.accounts.access && hasListInRO('accounts') && companies && companies.length > 0">
                 <span ng-show="(_loading || !companies || !companies.length) && model.permissions.accounts.access" class="loader--waite-company">
                     <i class="glyphicon glyphicon-refresh spin"></i> Please wait...</span>
                 <ui-select ng-disabled="readOnly" on-select="addItemToList($select, $item, 'accounts')" on-remove="removeItemFromList($item, 'accounts')"
@@ -356,6 +356,10 @@
                 <input ng-disabled="readOnly" type="radio" ng-model="model.permissions.accounts.allow_list" ng-checked="!model.permissions.accounts.allow_list"
                     ng-value="false"> Deny access only to companies from this list
             </div>
+            <span class="{{model.permissions.accounts.access ? 'bg-dark' : null}}" style="padding: 10px 10px 10px 20px; margin: 0 0 10px 0;"
+                ng-show="companies && companies.length === 0 && model.permissions.accounts.access">
+                No child accounts found for this account
+            </span>
         </div>
         <div class="col-sm-6">
             <input ng-disabled="readOnly" ng-checked="model.permissions.ssl_names" type="checkbox" name="permissions_ssl_names" class="inline-block"

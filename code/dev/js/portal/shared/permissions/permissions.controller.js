@@ -156,10 +156,10 @@
 
         $scope.setListsByAcc = function (accId) {
             if (accId) {
-                ['domains', 'apps', 'dnsZones'].forEach(function (list) {
+                ['domains', 'apps', 'dnsZones', 'companies'].forEach(function (list) {
                     if ($scope[list] && $scope[list + '_full']) {
                         $scope[list] = $scope[list + '_full'].filter(function (item) {
-                            return item.account_id === accId;
+                            return list === 'companies' ? item.parent_account_id === accId : item.account_id === accId;
                         });
                     }
                 });

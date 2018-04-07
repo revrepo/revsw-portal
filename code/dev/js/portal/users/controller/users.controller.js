@@ -357,7 +357,9 @@
       }
 
       if (User.isAdmin()) {
-        model.role = 'admin';        
+        model.role = 'admin';
+        model.account_id = User.getUser().account_id;
+        model.companyId = [User.getUser().account_id];
       }
 
       delete model.managed_account_ids;
