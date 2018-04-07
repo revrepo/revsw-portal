@@ -25,7 +25,7 @@
             <label for="email" class="col-sm-2 control-label">Email *</label>
             <div class="col-sm-10">
               <input type="email" autofocus class="form-control inline-block" id="email" name="email" placeholder="Email" ng-model="model.email" ng-maxlength="64" ng-disabled="_loading" required>
-              <label for="email" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="New user's email address - the address should be unique across the system. The email address is also the user's login name to the customer portal.">
+              <label for="email" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="New user's email address - the address should be unique across the system. The email address is also the user's login name to the customer portal. A new user invitation email will be sent to the address.">
                 <i class="fa fa-question-circle"></i>
               </label>
               <div class="error-messages" ng-messages="createForm.email.$error" role="alert" ng-messages-multiple>
@@ -63,7 +63,7 @@
               <select class="form-control inline-block" id="role" name="role" ng-model="model.role" ng-disabled="_loading" ng-options="role for role in roles" required>
                 <option value="">--- Select Role ---</option>
               </select>
-              <label for="role" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Select here the user's role in management of the account">
+              <label for="role" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Select the user's role in management of the account. A user with 'reseller' role will be able to manage this account as well as the account's child accounts; a user with 'admin' role will be able to manage only one specific account the user is assigned to.">
                 <i class="fa fa-question-circle"></i>
               </label>
               <div class="error-messages" ng-messages="createForm.role.$error" role="alert" ng-messages-multiple>
@@ -89,7 +89,7 @@
                   <div ng-bind-html="item.companyName|highlight: $select.search"></div>
                 </ui-select-choices>
               </ui-select> -->
-              <label for="company" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Select here account the user should be associated with">
+              <label for="company" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Select the primary account the user should be associated with">
                 <i class="fa fa-question-circle"></i>
               </label>
               <a ui-sref="index.accountSettings.companies" class="btn btn-sm btn-primary" id="btn-manage-accounts" uib-tooltip="Manage Accounts" ng-disabled="_loading"><i class="fa fa-list-alt"></i> Manage Accounts</a>
@@ -102,7 +102,7 @@
                     <option value="null" selected="selected">--- No Group Selected ---</option>
                     <option ng-repeat="group in groups" value="{{group.id}}">{{group.name}}</option>
                   </select>
-              <label for="group" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Select here the user's permissions group">
+              <label for="group" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Select here the user's optional permissions group. If a user is not assigned to a group you will need to assign the user's permissions in 'Permissions' section below. By default a user is assigned with full permissions to manage his account. If a user is assigined to a group then the user will inherit all permissions configured for the group.">
                 <i class="fa fa-question-circle"></i>
               </label>
               <a ui-sref="index.accountSettings.groups" class="btn btn-sm btn-primary" uib-tooltip="Manage Groups" ng-disabled="_loading"><i class="fa fa-list-alt"></i> Manage Groups</a>
@@ -201,12 +201,11 @@
           <div class="form-group col-sm-12">
             <div class="col-sm-offset-2 col-sm-4">
               <div>
-                <strong>The new user account will be created in the system and an invitation message will be sent to the specified email address. 
+                The new user account will be created in the system and an invitation message will be sent to the specified email address. 
                   The new user will need to click on the link provided in the email and finalize the configuration of his user account by configuring a 
                   strong password for his account. 
                   If the user’s profile or group permissions are enforcing 2FA protection the user will be forced to enable 
                   2FA on his first login to the system.
-                </strong>
               </div>
             </div>
           </div>

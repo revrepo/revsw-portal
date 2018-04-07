@@ -10,7 +10,7 @@
             <input ng-disabled="readOnly" type="checkbox" ng-checked="model.permissions.read_only" name="permissions_read_only" class="inline-block"
                 ng-model="model.permissions.read_only"> Read Only
             <label for="permissions_read_only" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
-                uib-popover="Grant read-only access to resources (Users, Accounts, Domains etc...), dashboard management is still available for users.">
+                uib-popover="If the checkbox is marked the user will not able to make any changes in the portal">
                 <i class="fa fa-question-circle"></i>
             </label>
         </div>
@@ -18,7 +18,7 @@
             <input ng-disabled="readOnly" type="checkbox" ng-checked="model.permissions.enforce_2fa" name="permissions_enforce_2fa" class="inline-block"
                 ng-model="model.permissions.enforce_2fa"> Enforce 2FA
             <label for="permissions_enforce_2fa" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
-                uib-popover="Enforce Two-Factor authentication for users. When enabled, users without 2FA setup will be redirected to 2FA setup page and will not be able to use the portal without setting up 2FA.">
+                uib-popover="Enforce Two-Factor authentication for portal users. When enabled, users without 2FA setup will be redirected to 2FA setup page and will not be able to use the portal without setting up 2FA. The option is not relevant for API keys.">
                 <i class="fa fa-question-circle"></i>
             </label>
         </div>
@@ -26,7 +26,7 @@
             <input ng-disabled="readOnly" ng-checked="model.permissions.portal_login" type="checkbox" name="permissions_portal_login"
                 class="inline-block" ng-model="model.permissions.portal_login"> Portal Login
             <label for="permissions_portal_login" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
-                uib-popover="Allow users to login to the portal. If disabled, users will not be able to log into the portal but will be able to make API calls.">
+                uib-popover="Allow users to login to the admin portal. If disabled, users will not be able to log into the portal. The option is not relevant for API keys.">
                 <i class="fa fa-question-circle"></i>
             </label>
         </div>
@@ -34,7 +34,7 @@
             <input ng-disabled="readOnly" ng-checked="model.permissions.API_access" type="checkbox" name="permissions_API_access" class="inline-block"
                 ng-model="model.permissions.API_access"> API Access
             <label for="permissions_API_access" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
-                uib-popover="Allow API Keys to access the API.">
+                uib-popover="If disabled the option blocks access for API keys">
                 <i class="fa fa-question-circle"></i>
             </label>
         </div>
@@ -44,7 +44,7 @@
             <input ng-disabled="readOnly" ng-checked="model.permissions.dashboards" type="checkbox" name="permissions_dashboards" class="inline-block"
                 ng-model="model.permissions.dashboards"> Dashboards
             <label for="permissions_dashboards" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
-                uib-popover="Allow users to manage dashboards.">
+                uib-popover="Allow users to manage dashboards">
                 <i class="fa fa-question-circle"></i>
             </label>
         </div>
@@ -53,7 +53,7 @@
                 <input ng-disabled="readOnly" ng-checked="model.permissions.mobile_apps.access" type="checkbox" name="permissions_mobile_apps"
                     class="inline-block bg-dark" ng-model="model.permissions.mobile_apps.access"> Mobile Apps
                 <label for="permissions_mobile_apps" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
-                    uib-popover="Allow users to manage mobile apps.">
+                    uib-popover="Allow users to manage mobile apps. Below you can also select which specific mobile apps will be allowed and denied to manage by the user.">
                     <i class="fa fa-question-circle"></i>
                 </label>
             </span>
@@ -69,7 +69,7 @@
                         {{app.app_name}}
                     </ui-select-choices>
                 </ui-select>
-                <label for="apps_list" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Add apps to the list to control either to allow access to these apps or deny access">
+                <label for="apps_list" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Add apps to the list to control either to allow or deny access to these apps">
                     <i class="fa fa-question-circle"></i>
                 </label>
                 <input ng-disabled="readOnly" type="radio" ng-model="model.permissions.mobile_apps.allow_list" ng-checked="model.permissions.mobile_apps.allow_list"
@@ -80,7 +80,7 @@
             </div>
             <span class="{{model.permissions.mobile_apps.access ? 'bg-dark' : null}}" style="padding: 10px 10px 10px 20px; margin: 0 0 10px 0;"
                 ng-show="apps && apps.length === 0 && model.permissions.mobile_apps.access">
-                No mobile apps found for this account.
+                No mobile apps found for this account
             </span>
         </div>
         <div class="checkbox-list">
