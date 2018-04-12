@@ -744,7 +744,57 @@
       }
     }
 
+    /**
+     * Gets a field from the permissions object ('domains', 'dns_zones'...)
+     * Returns the state its related to ('index.reports.proxy'...)
+     */
+    function getPermissionNameState(perm) {
+      var returnState;
+      switch (perm) {
+        case 'mobile_apps':
+          returnState = 'index.apps.ios';
+          break;
+        case 'mobile_analytics':
+          returnState = 'index.mobile.traffic';
+          break;
+        case 'domains':
+          returnState = 'index.webApp.domains';
+          break;
+        case 'security_analytics':
+          returnState = 'index.security.waf_analytics';
+          break;
+        case 'dns_zones':
+          returnState = 'index.dnsServices.dns_zones';
+          break;
+        case 'dns_analytics':
+          returnState = 'index.dnsServices.dns_analytics';
+          break;
+        case 'users':
+          returnState = 'index.accountSettings.users';
+          break;
+        case 'groups':
+          returnState = 'index.accountSettings.groups';
+          break;
+        case 'API_keys':
+          returnState = 'index.accountSettings.keys';
+          break;
+        case 'logshipping_jobs':
+          returnState = 'index.accountSettings.logshippers';
+          break;
+        case 'usage_reports':
+          returnState = 'index.billing.usage';
+          break;
+        default:
+          returnState = null;
+          break;
+      }      
+      return returnState;
+    }
+
     return {
+
+      permNameToState: getPermissionNameState,
+
       checkPermissions: checkPermissions,
 
       checkEnforce2FA: checkEnforce2FA,

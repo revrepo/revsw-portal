@@ -6,9 +6,36 @@
     .controller('DashdoardController', DashdoardController);
 
   function DashdoardController($scope, $rootScope, $state, $window, $interval, $timeout, $config, $localStorage, DashboardSrv, $stateParams, AlertService,
-    $location, $anchorScroll) {
+    $location, $anchorScroll, User) {
     'ngInject';
     var vm = this;
+
+    if (!User.hasAccessTo('dashboards')) {
+      if (User.hasAccessTo('web_analytics')) {
+        $state.go('index.reports.proxy');
+        return;
+      }
+      var viableStates = [
+        'mobile_apps',
+        'mobile_analytics',
+        'domains',
+        'security_analytics',
+        'dns_zones',
+        'users',
+        'groups',
+        'API_keys',
+        'logshipping_jobs',
+        'usage_reports'
+      ];
+      for (var i = 0; i < viableStates.length; i++) {
+        var possibleState = viableStates[i];
+        if (User.hasAccessTo(possibleState)) {                  
+          var goToState = User.permNameToState(possibleState);
+          $state.go(goToState || 'index.accountSettings.profile');
+          return;
+        }
+      }
+    }
 
 
     // NOTE: resize for fix wigth of charts

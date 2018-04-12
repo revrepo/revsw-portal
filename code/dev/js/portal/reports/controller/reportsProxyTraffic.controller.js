@@ -33,6 +33,29 @@
     $scope.country = {};
     $scope.statusCode = [];
 
+    if (!User.hasAccessTo('web_analytics')) {
+      var viableStates = [
+        'mobile_apps',
+        'mobile_analytics',
+        'domains',
+        'security_analytics',
+        'dns_zones',
+        'users',
+        'groups',
+        'API_keys',
+        'logshipping_jobs',
+        'usage_reports'
+      ];
+      for (var i = 0; i < viableStates.length; i++) {
+        var possibleState = viableStates[i];
+        if (User.hasAccessTo(possibleState)) {                  
+          var goToState = User.permNameToState(possibleState);
+          $state.go(goToState || 'index.accountSettings.profile');
+          return;
+        }
+      }
+    }
+
     $scope.onDomainSelected = function() {
       if (!$scope.domain || !$scope.domain.id) {
         return;
