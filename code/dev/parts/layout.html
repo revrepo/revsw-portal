@@ -4,7 +4,9 @@
       <img ng-src="images/{{vendor}}/logo_color.png" alt="Logo" />
     </a>
   </div>
-  <div class="panel-menu">
+  <div class="panel-menu" ng-intro-autostart="!true" ng-intro-options="IntroOptions" ng-intro-method="introOpen" ng-intro-oncomplete="onIntroCompletedEvent"
+  ng-intro-onexit="onIntroSkipEvent" ng-intro-onchange="ChangeEvent" ng-intro-onbeforechange="onBeforeChangeEvent"
+  ng-intro-onafterchange="AfterChangeEvent">
     <ul class="side-menu">
       <dashboard-nav-menu></dashboard-nav-menu>
       <li ng-if="userService.hasAccessTo('mobile_apps')" ui-sref-active-if="{class: 'open-side-menu-item', state: 'index.apps'}" ng-class="{'open-side-menu-item ': menuExpanded('index.apps'),'active-side-menu-item': $state.includes('index.apps')}">
