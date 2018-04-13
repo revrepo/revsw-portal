@@ -430,7 +430,7 @@
       },
       INVITATION_COOLDOWN_MS: 3600000, // 1h
       INTRO_RESTRICTED_ACCESS_TEXT: [
-        'Welcome to the RevAPM Customer Portal! ',
+        'Welcome to the Customer Portal! ',
         'It looks like you are a new user of the service, ',
         'and we would like to run for you a quick introduction tour. ',
         'Please note that you have restricted permissions to the portal, ',
