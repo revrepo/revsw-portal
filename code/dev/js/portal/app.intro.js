@@ -15,6 +15,7 @@
           intro: 'Welcome to the {{companyNameShort}} Customer Portal! It looks like you are a new user of the service, and we would ' +
             'like to run for you a quick introduction tour.',
         }, {
+          permission:'domains',
           element: '#side-menu-sub-item__webApp-domains',
           intro: 'The "Domains" section allows you to manage the way how your websites (domains) are accelerated by {{companyNameShort}}.',
           position: 'right'
@@ -25,34 +26,40 @@
             'see the "Staging Env." page for full details about our configuration staging workflow.',
           position: 'right'
         }, {
+          permission:'ssl_certs',
           element: '#side-menu-sub-item__webApp-ssl_certs',
           intro: 'We highly recommend to use SSL protocol for your websites - it will increase the website security and also allow your visitors to use modern and ' +
             'fast HTTP/2 protocol',
           position: 'right'
         }, {
+          permission:'ssl_names',
           element: '#side-menu-sub-item__webApp-ssl_names',
           intro: 'When using {{companyNameShort}} shared SSL certificate managed by GlobalSign CA you can use this section to manage SSL ' +
             'domain names protected by the certificate',
           position: 'right'
         }, {
+          permission:'cache_purge',
           element: '#side-menu-sub-item__webApp-cache ',
           intro: 'If you use our global edge caching feature then the "Purge Cache" section will allow you to instantly ' +
             'purge cached objects when you make changes on your origin server.',
           position: 'right'
         },
         {
+          permission:'web_analytics',
           element: '#side-menu-web-analytics-item',
           intro: 'The "Web Analytics" section will provide you with a lot of insights about your website\'s performance, availability, user geography, popular content ' +
             'and many other important metrics!',
           position: 'right'
         },
         {
+          permission:'dns_zones',
           element: '#side-menu-dns-service-item',
           intro: 'We also offer an integrated DNS service powered by our partner NS1. This section allows you to manage your DNS resources without leaving our ' +
             'customer portal!',
           position: 'right'
         },
         {
+          permission:'mobile_apps',
           element: '#side-menu-apps-item',
           intro: 'The "Mobile Apps" section is the right place to supercharge your mobile application with our mobile SDK. In the section your can create new SDK ' +
             'keys and manage ' +
@@ -60,11 +67,13 @@
           position: 'right'
         },
         {
+          permission:'mobile_analytics',
           element: '#side-menu-mobile-analytics-item',
           intro: 'This section is full of information about mobile application availability, performance, userbase, top objects, etc.',
           position: 'right'
         },
         {
+          permission:'dashboards',
           element: '#left-menu-dashboard-section',
           intro: 'Here you can easily build your own dashboards using different graphs from mobile and web analytics sections.',
           position: 'right'
