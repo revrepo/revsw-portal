@@ -791,7 +791,16 @@
       return returnState;
     }
 
+    /**
+     * Retuns user's permissions, if user is in group, returns the group's permissions
+     */
+    function getPermissions() {
+      return permissions;
+    }
+
     return {
+
+      getPermissions: getPermissions,
 
       permNameToState: getPermissionNameState,
 

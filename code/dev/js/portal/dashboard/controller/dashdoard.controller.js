@@ -198,6 +198,13 @@
         $interval.cancel(resizing);
       }
     });
+
+    function checkStepPerm(step, perm) {
+      if (step.element && step.permission && step.permission === perm) {
+        $rootScope.IntroOptions.steps.splice($rootScope.IntroOptions.steps.indexOf(step), 1);
+      }
+    }
+
     /**
      * @name  getCountDashboardWidget
      * @description
@@ -223,6 +230,27 @@
     }
 
     if ($config.INTRO_IS_ACTIVE) {
+      var userPermissions = User.getPermissions();
+      var restrictedPerms = [];
+      if (userPermissions) {
+        for (var prop in userPermissions) {
+          // dont trigger this for readonly or 2fa enforcement
+          if (prop !== 'read_only' && prop !== 'enforce_2fa' && prop !== 'API_access') {
+            if (userPermissions[prop].access === false || userPermissions[prop] === false) {
+              restrictedPerms.push(prop);
+              $rootScope.IntroOptions.steps[0].intro = $config.INTRO_RESTRICTED_ACCESS_TEXT.join('');
+            }
+          }
+        }
+
+        for (var j = 0; j < restrictedPerms.length; j++) {
+          var perm = restrictedPerms[j];
+          for (var k = 0; k < $rootScope.IntroOptions.steps.length; k++) {
+            checkStepPerm($rootScope.IntroOptions.steps[k], perm);
+          }
+        }
+        
+      }
       var intro = $localStorage.intro || { isShowMainIntro: false, isSkipIntro: false };
       var testEnv;
       if ($localStorage.testEnv !== undefined) {
@@ -259,6 +287,7 @@
      * @return {[type]}
      */
     vm.onBeforeChangeEvent = function (targetElement) {
+      
       var step = targetElement.id;
       switch (step) {
         case 'side-menu-sub-item__webApp-domains':
