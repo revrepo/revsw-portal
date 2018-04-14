@@ -14,7 +14,38 @@
       steps: [{
           intro: 'Welcome to the {{companyNameShort}} Customer Portal! It looks like you are a new user of the service, and we would ' +
             'like to run for you a quick introduction tour.',
-        }, {
+        }, 
+        {
+          element: '#side-menu-sub-item__update-password',
+          intro: 'update pass section',
+          position: 'right'
+        },
+        {
+          element: '#side-menu-sub-item__security-settings',
+          intro: '2fa section',
+          position: 'right'
+        },
+        {
+          element: '#side-menu-sub-item__API-documentation',
+          intro: 'api',
+          position: 'right'
+        },
+        {
+          element: '#side-menu-sub-item__know-base',
+          intro: 'base',
+          position: 'right'
+        },
+        {
+          element: '#side-menu-sub-item__open-ticket',
+          intro: 'ticket',
+          position: 'right'
+        },
+        {
+          element: '#side-menu-sub-item__network-status',
+          intro: 'status',
+          position: 'right'
+        },
+        {
           permission:'domains',
           element: '#side-menu-sub-item__webApp-domains',
           intro: 'The "Domains" section allows you to manage the way how your websites (domains) are accelerated by {{companyNameShort}}.',

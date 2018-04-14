@@ -721,7 +721,8 @@
           $state.go('index.accountSettings.2fa');
         } else {
           if (isEnforce2FA()) {
-            AlertService.danger('Two Factor Authentication (2FA) is enforced for your user account. Please follow instructions on the screen to enable 2FA. After that you will be allowed to use the admin panel.');
+            AlertService.danger('Two Factor Authentication (2FA) is enforced for your user account. ' +
+            'Please follow instructions on the screen to enable 2FA. After that you will be allowed to use the admin panel.');
           }
           if (isEnforce2FA() && toState !== 'index.accountSettings.2fa' && event) {
             event.preventDefault();
@@ -760,6 +761,9 @@
         case 'domains':
           returnState = 'index.webApp.domains';
           break;
+        case 'cache_purge':
+          returnState = 'index.webApp.cache';
+          break;
         case 'security_analytics':
           returnState = 'index.security.waf_analytics';
           break;
@@ -778,6 +782,9 @@
         case 'API_keys':
           returnState = 'index.accountSettings.keys';
           break;
+        case 'accounts':
+          returnState = 'index.accountSettings.companies';
+          break;
         case 'logshipping_jobs':
           returnState = 'index.accountSettings.logshippers';
           break;
@@ -790,7 +797,6 @@
       }      
       return returnState;
     }
-
     /**
      * Retuns user's permissions, if user is in group, returns the group's permissions
      */

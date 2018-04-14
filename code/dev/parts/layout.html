@@ -160,7 +160,7 @@
             <i class="sub-menu-icon fa fa-line-chart"></i> DNS Analytics
           </a>
       </li>
-      <li ui-sref-active-if="{class: 'open-side-menu-item', state: 'index.accountSettings'}" ng-class="{'open-side-menu-item': menuExpanded('index.accountSettings'), 'active-side-menu-item': $state.includes('index.accountSettings')}">
+      <li id="side-menu-admin-item" ui-sref-active-if="{class: 'open-side-menu-item', state: 'index.accountSettings'}" ng-class="{'open-side-menu-item': menuExpanded('index.accountSettings'), 'active-side-menu-item': $state.includes('index.accountSettings')}">
         <a class="side-menu-item" ng-click="userService.hasAccessTo('users') ? goToState('index.accountSettings.users') : goToState('index.accountSettings.profile')">
           <div class="left-menu-start">
             <i class="fa fa-gears"></i>
@@ -183,10 +183,10 @@
         <a ui-sref-active="active" ui-sref="index.accountSettings.logshippers" class="side-menu-sub-item" ng-if="!userService.isUser() && userService.hasAccessTo('logshipping_jobs')">
             <i class="sub-menu-icon glyphicon glyphicon-open-file"></i> Log Shipping
           </a>
-        <a ui-sref-active="active" ui-sref="index.accountSettings.profile" class="side-menu-sub-item" href="#/profile">
+        <a id="side-menu-sub-item__update-password" ui-sref-active="active" ui-sref="index.accountSettings.profile" class="side-menu-sub-item" href="#/profile">
             <i class="sub-menu-icon fa fa-user"></i> Update Password
           </a>
-        <a ui-sref-active="active" ui-sref="index.accountSettings.2fa" class="side-menu-sub-item" href="#/2fa">
+        <a id="side-menu-sub-item__security-settings" ui-sref-active="active" ui-sref="index.accountSettings.2fa" class="side-menu-sub-item" href="#/2fa">
             <i class="sub-menu-icon fa fa-lock"></i> Security Settings
           </a>
         <!-- <a ui-sref-active="active" ui-sref="index.accountSettings.notificationsList" class="side-menu-sub-item" id="side-menu-sub-item__notifications-list" ng-if="userService.isRevadmin()">
@@ -241,7 +241,7 @@
             <i class="sub-menu-icon fa fa-money"></i> Billing Statements
           </a>
       </li>
-      <li ui-sref-active-if="{class: 'open-side-menu-item', state: 'index.help'}" ng-class="{'open-side-menu-item': menuExpanded('index.help') ,'active-side-menu-item': $state.includes('index.help')}">
+      <li id="side-menu-support-item" ui-sref-active-if="{class: 'open-side-menu-item', state: 'index.help'}" ng-class="{'open-side-menu-item': menuExpanded('index.help') ,'active-side-menu-item': $state.includes('index.help')}">
         <a class="side-menu-item" ng-click="goToState('index.help')">
           <div class="left-menu-start">
             <i class="fa fa-support"></i>
@@ -249,16 +249,16 @@
           Support
           <i ng-click="expandMenu('index.help', $event)" class="pull-right {{ menuExpanded('index.help') ? 'fa fa-caret-up' : 'fa fa-caret-down' }}"></i>
         </a>
-        <a href="{{vendorConfig.apiUrl}}" class="side-menu-sub-item" target="_blank">
+        <a id="side-menu-sub-item__API-documentation" href="{{vendorConfig.apiUrl}}" class="side-menu-sub-item" target="_blank">
             <i class="sub-menu-icon fa fa-wrench"></i> API Documentation
           </a>
-        <a href="{{vendorConfig.knowledgeBaseLink}}" class="side-menu-sub-item" target="_blank">
+        <a id="side-menu-sub-item__know-base" href="{{vendorConfig.knowledgeBaseLink}}" class="side-menu-sub-item" target="_blank">
             <i class="sub-menu-icon fa fa-book"></i> Knowledge Base
           </a>
-        <a href="{{vendorConfig.contactUsLink}}" class="side-menu-sub-item" target="_blank">
+        <a id="side-menu-sub-item__open-ticket" href="{{vendorConfig.contactUsLink}}" class="side-menu-sub-item" target="_blank">
             <i class="sub-menu-icon fa fa-envelope"></i> Open Ticket
           </a>
-        <a href="{{vendorConfig.networkStatusUrl}}" class="side-menu-sub-item" target="_blank">
+        <a id="side-menu-sub-item__network-status" href="{{vendorConfig.networkStatusUrl}}" class="side-menu-sub-item" target="_blank">
             <i class="sub-menu-icon fa fa-heartbeat"></i> Network Status
           </a>
       </li>

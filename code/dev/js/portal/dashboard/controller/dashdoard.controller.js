@@ -11,6 +11,10 @@
     var vm = this;
 
     if (!User.hasAccessTo('dashboards')) {
+      changeState();
+    }
+
+    function changeState() {
       if (User.hasAccessTo('web_analytics')) {
         $state.go('index.reports.proxy');
         return;
@@ -19,11 +23,13 @@
         'mobile_apps',
         'mobile_analytics',
         'domains',
+        'cache_purge',
         'security_analytics',
         'dns_zones',
         'users',
         'groups',
         'API_keys',
+        'accounts',
         'logshipping_jobs',
         'usage_reports'
       ];
@@ -69,6 +75,7 @@
             });
           } else {
             // TODO: Show information how create Dashboard ?
+            changeState();
           }
         });
 

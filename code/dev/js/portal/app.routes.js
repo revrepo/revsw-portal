@@ -136,29 +136,50 @@
                * @return {[type]}
                */
               $scope.onBeforeChangeEvent = function (targetElement) {
-
                 var step = targetElement.id;
                 switch (step) {
+                  case 'side-menu-sub-item__update-password':
+                  case 'side-menu-sub-item__security-settings':
+                    $rootScope.menuExpandedNodes['index.accountSettings'] = true;
+                    ['index.apps', 'index.reports', 'index.webApp', 'index.help'].forEach(function (menuState) {
+                      $rootScope.menuExpandedNodes[menuState] = false;
+                    });
+
+
+                    break;
+                  case 'side-menu-sub-item__API-documentation':
+                  case 'side-menu-sub-item__know-base':
+                  case 'side-menu-sub-item__open-ticket':
+                  case 'side-menu-sub-item__network-status':
+                    $rootScope.menuExpandedNodes['index.help'] = true;
+                    
+                    ['index.apps', 'index.reports', 'index.webApp', 'index.accountSettings'].forEach(function (menuState) {
+                      $rootScope.menuExpandedNodes[menuState] = false;
+                    });
+                    break;
                   case 'side-menu-sub-item__webApp-domains':
                   case 'side-menu-sub-item__webApp-ssl_certs':
                   case 'side-menu-sub-item__webApp-cache':
                   case 'side-menu-sub-item__webApp-ssl_names':
                   case 'side-menu-sub-item__webApp-staging-environment':
                   case 'side-menu-sub-item__webApp-domains':
-                    // NOTE: close menu items
-                    ['index.apps', 'index.reports', 'index.accountSettings'].forEach(function (menuState) {
-                      $rootScope.menuExpandedNodes[menuState] = false;
-                    });
                     // NOTE: open menu item
                     ['index.webApp'].forEach(function (menuState) {
                       $rootScope.menuExpandedNodes[menuState] = true;
                     });
+                    // NOTE: close menu items
+                    ['index.apps', 'index.reports', 'index.accountSettings', 'index.help'].forEach(function (menuState) {
+                      $rootScope.menuExpandedNodes[menuState] = false;
+                    });
+
                     break;
                   default:
                     ['index.webApp'].forEach(function (menuState) {
                       $rootScope.menuExpandedNodes[menuState] = false;
                     });
                 }
+
+                
               };
             }
           }
