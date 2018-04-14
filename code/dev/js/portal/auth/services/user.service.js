@@ -721,7 +721,7 @@
           $state.go('index.accountSettings.2fa');
         } else {
           if (isEnforce2FA()) {
-            AlertService.danger('2FA is enforced, please set up 2FA.');
+            AlertService.danger('Two Factor Authentication (2FA) is enforced for your user account. Please follow instructions on the screen to enable 2FA. After that you will be allowed to use the admin panel.');
           }
           if (isEnforce2FA() && toState !== 'index.accountSettings.2fa' && event) {
             event.preventDefault();
@@ -738,7 +738,7 @@
         if (!permissions.portal_login) {
           logout();
           $state.go('login');
-          AlertService.danger('You do not have permissions to be logged in to the portal.');
+          AlertService.danger('You do not have permissions to use the admin panel');
           return false;
         }
       }

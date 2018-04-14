@@ -122,7 +122,7 @@
             <span class="{{model.permissions.domains.access && hasListInRO('domains') ? 'bg-dark' : null}}">
                 <input ng-disabled="readOnly" ng-checked="model.permissions.domains.access" type="checkbox" name="permissions_domains" class="inline-block bg-dark"
                     ng-model="model.permissions.domains.access"> Domains
-                <label for="permissions_domains" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Allow users to manage domains.">
+                <label for="permissions_domains" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Allow users to manage domains">
                     <i class="fa fa-question-circle"></i>
                 </label>
             </span>
@@ -331,7 +331,7 @@
             <span class="{{model.permissions.accounts.access && hasListInRO('accounts') ? 'bg-dark' : null}}">
                 <input ng-disabled="readOnly" ng-checked="model.permissions.accounts.access" type="checkbox" name="permissions_accounts"
                     class="inline-block bg-dark" ng-model="model.permissions.accounts.access"> Accounts
-                <label for="permissions_accounts" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Allow users to access accounts.">
+                <label for="permissions_accounts" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Allow users to access accounts">
                     <i class="fa fa-question-circle"></i>
                 </label>
             </span>
@@ -388,21 +388,21 @@
         <div class="col-sm-6">
             <input ng-disabled="readOnly" ng-checked="model.permissions.groups" type="checkbox" name="permissions_groups" class="inline-block"
                 ng-model="model.permissions.groups"> Groups
-            <label for="permissions_groups" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Allow users to manage groups.">
+            <label for="permissions_groups" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Allow users to manage groups">
                 <i class="fa fa-question-circle"></i>
             </label>
         </div>
         <div class="col-sm-6">
             <input ng-disabled="readOnly" ng-checked="model.permissions.users" type="checkbox" name="permissions_users" class="inline-block"
                 ng-model="model.permissions.users"> Users
-            <label for="permissions_users" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Allow users to manage users.">
+            <label for="permissions_users" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Allow users to manage users">
                 <i class="fa fa-question-circle"></i>
             </label>
         </div>
         <div class="col-sm-6">
             <input ng-disabled="readOnly" ng-checked="model.permissions.API_keys" type="checkbox" name="permissions_API_keys" class="inline-block"
                 ng-model="model.permissions.API_keys"> API Keys
-            <label for="permissions_API_keys" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Allow users to manage API Keys.">
+            <label for="permissions_API_keys" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Allow users to manage API Keys">
                 <i class="fa fa-question-circle"></i>
             </label>
         </div>
@@ -410,7 +410,7 @@
             <input ng-disabled="readOnly" ng-checked="model.permissions.logshipping_jobs" type="checkbox" name="permissions_logshipping_jobs"
                 class="inline-block" ng-model="model.permissions.logshipping_jobs"> Logshipping Jobs
             <label for="permissions_logshipping_jobs" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
-                uib-popover="Allow users to manage logshipping jobs.">
+                uib-popover="Allow users to manage logshipping jobs">
                 <i class="fa fa-question-circle"></i>
             </label>
         </div>
@@ -418,7 +418,7 @@
             <input ng-disabled="readOnly" ng-checked="model.permissions.activity_log" type="checkbox" name="permissions_activity_log"
                 class="inline-block" ng-model="model.permissions.activity_log"> Activity Log
             <label for="permissions_activity_log" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
-                uib-popover="Allow users to access activity log.">
+                uib-popover="Allow users to access activity log">
                 <i class="fa fa-question-circle"></i>
             </label>
         </div>
@@ -426,7 +426,7 @@
             <input ng-disabled="readOnly" ng-checked="model.permissions.traffic_alerts" type="checkbox" name="permissions_traffic_alerts"
                 class="inline-block" ng-model="model.permissions.traffic_alerts"> Traffic Alerts
             <label for="permissions_traffic_alerts" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
-                uib-popover="Allow users to access traffic alerts.">
+                uib-popover="Allow users to access traffic alerts">
                 <i class="fa fa-question-circle"></i>
             </label>
         </div>
@@ -434,7 +434,7 @@
             <input ng-disabled="readOnly" ng-checked="model.permissions.notification_lists" type="checkbox" name="permissions_notification_lists"
                 class="inline-block" ng-model="model.permissions.notification_lists"> Notification Lists
             <label for="permissions_notification_lists" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
-                uib-popover="Allow users to access notification lists.">
+                uib-popover="Allow users to access notification lists">
                 <i class="fa fa-question-circle"></i>
             </label>
         </div>
@@ -442,7 +442,7 @@
             <input ng-disabled="readOnly" ng-checked="model.permissions.usage_reports" type="checkbox" name="permissions_usage_reports"
                 class="inline-block" ng-model="model.permissions.usage_reports"> Usage Reports
             <label for="permissions_usage_reports" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
-                uib-popover="Allow users to access usage reports.">
+                uib-popover="Allow users to access usage reports">
                 <i class="fa fa-question-circle"></i>
             </label>
         </div>
@@ -450,7 +450,7 @@
             <input ng-disabled="readOnly" ng-checked="model.permissions.account_profile" type="checkbox" name="permissions_account_profile"
                 class="inline-block" ng-model="model.permissions.account_profile"> Account Profile
             <label for="permissions_account_profile" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
-                uib-popover="Allow users to access account profile.">
+                uib-popover="Allow users to access account profile">
                 <i class="fa fa-question-circle"></i>
             </label>
         </div>
@@ -458,7 +458,7 @@
             <input ng-disabled="readOnly" ng-checked="model.permissions.billing_statements" type="checkbox" name="permissions_billing_statements"
                 class="inline-block" ng-model="model.permissions.billing_statements"> Billing Statements
             <label for="permissions_billing_statements" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
-                uib-popover="Allow users to access billing statemnets.">
+                uib-popover="Allow users to access billing statemnets">
                 <i class="fa fa-question-circle"></i>
             </label>
         </div>
@@ -466,7 +466,7 @@
             <input ng-disabled="readOnly" ng-checked="model.permissions.billing_plan" type="checkbox" name="permissions_billing_plan"
                 class="inline-block" ng-model="model.permissions.billing_plan"> Billing Plans
             <label for="permissions_billing_plan" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter"
-                uib-popover="Allow users to access billing plans.">
+                uib-popover="Allow users to access billing plans">
                 <i class="fa fa-question-circle"></i>
             </label>
         </div>
