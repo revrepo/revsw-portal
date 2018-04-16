@@ -76,52 +76,66 @@
               if (!!timeout_) {
                 $timeout.cancel(timeout_);
               }
-
+              
               if ($config.INTRO_IS_ACTIVE) {
-                var userPermissions = User.getPermissions();
-                var restrictedPerms = [];
-                if (userPermissions) {
-                  for (var prop in userPermissions) {
-                    // dont trigger this for readonly or 2fa enforcement
-                    if (prop !== 'read_only' && prop !== 'enforce_2fa' && prop !== 'API_access') {
-                      if (userPermissions[prop].access === false || userPermissions[prop] === false) {
-                        restrictedPerms.push(prop);
-                        $rootScope.IntroOptions.steps[0].intro = $config.INTRO_RESTRICTED_ACCESS_TEXT.join('');
-                      }
-                    }
-                  }
-
-                  for (var j = 0; j < restrictedPerms.length; j++) {
-                    var perm = restrictedPerms[j];
-                    for (var k = 0; k < $rootScope.IntroOptions.steps.length; k++) {
-                      checkStepPerm($rootScope.IntroOptions.steps[k], perm);
-                    }
-                  }
-
-                }
-                var intro = $localStorage.intro || { isShowMainIntro: false, isSkipIntro: false };
-                var testEnv;
-                if ($localStorage.testEnv !== undefined) {
-                  if ($localStorage.testEnv === '1' || $localStorage.testEnv === 1) {
-                    testEnv = true;
-                  } else {
-                    testEnv = false;
-                  }
-                }
-                if (((intro.isShowMainIntro === false || intro.isShowMainIntro === 'false') && intro.isSkipIntro === false) || testEnv) {
-                  // NOTE: close menu items for start intro navigation
-                  ['index.apps', 'index.reports', 'index.webApp', 'index.accountSettings'].forEach(function (menuState) {
-                    $rootScope.menuExpandedNodes[menuState] = false;
-                  });
-
-                  timeout_ = $timeout(function () {
-                    $scope.introOpen();
-                    $localStorage.intro = intro;
-                  }, 2000);
-                }
+                activateIntro();
               }
 
-              // NOTE: user skip intor on this session work
+              function activateIntro() {
+                var userPermissions = User.getPermissions();
+
+                var timeOut = 30000;              
+                var pollPerm = function () {                  
+                  userPermissions = User.getPermissions();
+                  if (!userPermissions) {                    
+                    timeOut -= 1000;
+                    if (timeOut > 0) {
+                      setTimeout(pollPerm, 1000);
+                    }
+                  } else {
+                    var restrictedPerms = [];
+                    if (userPermissions) {
+                      for (var prop in userPermissions) {
+                        // dont trigger this for readonly or 2fa enforcement
+                        if (prop !== 'read_only' && prop !== 'enforce_2fa' && prop !== 'API_access') {
+                          if (userPermissions[prop].access === false || userPermissions[prop] === false) {
+                            restrictedPerms.push(prop);
+                            $rootScope.IntroOptions.steps[0].intro = $config.INTRO_RESTRICTED_ACCESS_TEXT.join('');
+                          }
+                        }
+                      }
+    
+                      for (var j = 0; j < restrictedPerms.length; j++) {
+                        var perm = restrictedPerms[j];
+                        for (var k = 0; k < $rootScope.IntroOptions.steps.length; k++) {
+                          checkStepPerm($rootScope.IntroOptions.steps[k], perm);
+                        }
+                      }
+    
+                    }
+                    var intro = $localStorage.intro || { isShowMainIntro: false, isSkipIntro: false };
+                    var testEnv;
+                    if ($localStorage.testEnv !== undefined) {
+                      if ($localStorage.testEnv === '1' || $localStorage.testEnv === 1) {
+                        testEnv = true;
+                      } else {
+                        testEnv = false;
+                      }
+                    }
+                    if (((intro.isShowMainIntro === false || intro.isShowMainIntro === 'false') && intro.isSkipIntro === false) || testEnv) {
+                      // NOTE: close menu items for start intro navigation
+                      ['index.apps', 'index.reports', 'index.webApp', 'index.accountSettings'].forEach(function (menuState) {
+                        $rootScope.menuExpandedNodes[menuState] = false;
+                      });
+    
+                      timeout_ = $timeout(function () {
+                        $scope.introOpen();
+                        $localStorage.intro = intro;
+                      }, 2000);
+                    }
+                  }
+
+                  // NOTE: user skip intor on this session work
               $scope.onIntroSkipEvent = function () {
                 intro.isSkipIntro = true; // NOTE: store information about Intor was shows.
                 intro.isShowMainIntro = true;
@@ -181,6 +195,9 @@
 
                 
               };
+                };        
+                pollPerm();        
+              }              
             }
           }
         },
