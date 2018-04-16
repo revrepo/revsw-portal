@@ -73,7 +73,7 @@ var DataProvider = {
         .toLowerCase(),
       firstName: firstName,
       lastName: lastName,
-      role: data.role || Constants.user.roles.USER,
+      role: data.role || Constants.user.roles.ADMIN,
       password: 'password1',
       passwordConfirm: 'password1',
       company: data.company

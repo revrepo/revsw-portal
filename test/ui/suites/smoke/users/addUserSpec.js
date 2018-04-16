@@ -63,6 +63,9 @@ describe('Smoke', function () {
           function () {
             // Create user
             var bruce = DataProvider.generateUser();
+            if (user.role === 'Admin') {
+              delete bruce.role;
+            }
             Portal.addUserPage.createUser(bruce);
             // Check App alert notifications
             expect(Portal.alerts.getFirst().getText())

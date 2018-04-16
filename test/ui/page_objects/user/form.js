@@ -751,18 +751,6 @@ var UserForm = {
     if (user.company !== undefined) {
       this.setCompany(user.company, user.role === 'reseller' ? true : undefined);
     }
-    if (user.domain !== undefined) {
-      this.setDomain(user.domain);
-    }
-    if (user.accessControls !== undefined) {
-      this.setAccessControls(user.accessControls);
-    }
-    if (user.password !== undefined) {
-      this.setPassword(user.password);
-    }
-    if (user.passwordConfirm !== undefined) {
-      this.setPasswordConfirm(user.passwordConfirm);
-    }
   },
     /**
    * ### UserForm.clear()

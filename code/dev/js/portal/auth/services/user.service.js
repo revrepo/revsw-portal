@@ -302,16 +302,7 @@
         .then(function (data) {
           if (data && data.status === $config.STATUS.OK) {
             $localStorage.user = data.data;
-            if ($localStorage.user.group_id && $localStorage.user.group_id !== 'null') {
-              Groups.get({ id: $localStorage.user.group_id }).$promise.then(function (group) {
-                $localStorage.group = group;
-                permissions = group ? group.permissions : $localStorage.user.permissions;
-                checkPermissions();
-              });
-            } else {
-              permissions = $localStorage.user.permissions;
-              checkPermissions();
-            }
+            setPermissions($localStorage.user);
             if ($localStorage.user && $localStorage.user.role !== 'revadmin') {
               if (!$localStorage.userMainAccount || $localStorage.userMainAccount.id !== $localStorage.user.account_id) {
                 Companies.get({ id: $localStorage.user.account_id }).$promise.then(function (acc) {
@@ -767,9 +758,11 @@
       if (user.group_id) {
         Groups.get({id: user.group_id}).$promise.then(function (group) {
           permissions = group.permissions;
+          checkPermissions();
         });
       } else {
         permissions = user.permissions;
+        checkPermissions();
       }
     }
 
