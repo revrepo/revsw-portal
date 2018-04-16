@@ -711,7 +711,10 @@
 
     $scope.setGroups = function () {
       // Fetch and set groups
-      Groups.query().$promise.then(function (data) {
+      var filter = {
+        operation: 'user_management'
+      };
+      Groups.query({filters: JSON.stringify(filter)}).$promise.then(function (data) {
         $scope.groups = data || [];
         $scope.fullGroupList = data || [];
         // select the current group
@@ -729,22 +732,23 @@
     * Sets a group by ID and refreshes permissions / readonly mode for permissions (when inherited from group)
     */
     $scope.setGroup = function () {
-      Groups.query().$promise.then(function (data) {
-        if ($scope.model.group_id && $scope.model.group_id !== 'null') {
-          Groups.get({id: $scope.model.group_id}).$promise.then(function (group) {
-            if (group) {
-              $scope.groupPermissions = group.permissions;
-              $scope.readOnly = true;
-            }
-          });
-        } else if ($scope.model.user_id) {
-          $scope.getEditUser($scope.model.user_id).then(function (data) {
-            $scope.model.permissions = data.permissions;
-            delete $scope.groupPermissions;
-            $scope.readOnly = false;
-          });
-        }
-      });
+      var filterQuery = {
+          operation: 'user_management'
+      };
+      if ($scope.model.group_id && $scope.model.group_id !== 'null') {
+        Groups.getByUserManagement({ id: $scope.model.group_id , filters: JSON.stringify(filterQuery)}).$promise.then(function (group) {
+          if (group) {
+            $scope.groupPermissions = group.permissions;
+            $scope.readOnly = true;
+          }
+        });
+      } else if ($scope.model.user_id) {
+        $scope.getEditUser($scope.model.user_id).then(function (data) {
+          $scope.model.permissions = data.permissions;
+          delete $scope.groupPermissions;
+          $scope.readOnly = false;
+        });
+      }
     };
 
     $scope.getEditUser = function (id) {      
@@ -754,10 +758,13 @@
     };
 
     $scope.setPermissions = function (group_id) {
+      var filterQuery = {
+        operation: 'user_management'
+      };
       if (group_id && group_id !== 'null') {
         $scope.groups.forEach(function (group) {
           if (group.id === group_id) {
-            Groups.get({id: group_id}).$promise.then(function (fullGroup) {
+            Groups.getByUserManagement({id: group_id, filters: JSON.stringify(filterQuery)}).$promise.then(function (fullGroup) {
                 $scope.groupPermissions = fullGroup.permissions;
                 $scope.readOnly = true;
             });
