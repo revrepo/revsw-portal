@@ -10,42 +10,6 @@
     'ngInject';
     var vm = this;
 
-    if (!User.hasAccessTo('dashboards')) {
-      changeState();
-    }
-
-    function changeState() {
-      if (User.hasAccessTo('web_analytics')) {
-        $state.go('index.reports.proxy');
-        return;
-      }
-      var viableStates = [
-        'mobile_apps',
-        'mobile_analytics',
-        'domains',
-        'cache_purge',
-        'security_analytics',
-        'dns_zones',
-        'users',
-        'groups',
-        'API_keys',
-        'logshipping_jobs',
-        'usage_reports'
-      ];
-      if (User.getUser().role !== 'admin') {
-        viableStates.push('accounts');
-      }
-      for (var i = 0; i < viableStates.length; i++) {
-        var possibleState = viableStates[i];
-        if (User.hasAccessTo(possibleState)) {                  
-          var goToState = User.permNameToState(possibleState);
-          $state.go(goToState || 'index.accountSettings.profile');
-          return;
-        }
-      }
-    }
-
-
     // NOTE: resize for fix wigth of charts
     var resizing;
     onResize();

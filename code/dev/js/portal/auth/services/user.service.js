@@ -742,6 +742,15 @@
           AlertService.danger('You do not have permissions to use the admin panel');
           return false;
         }
+
+        if (getStatePermissionField($state.current.name) !== true) {
+          if (!hasAccessTo(getStatePermissionField($state.current.name))) {
+            $state.go(getFirstAccessible() || 'index.accountSettings.profile');
+            // Should we display an alert if user tries to access a route that he doesnt have permission to
+            // or just redirect?
+            //AlertService.danger('You do not have permissions to access that resource');
+          }
+        }
       } else {
         var user = getUser();
         if (user) {
@@ -773,6 +782,9 @@
     function getPermissionNameState(perm) {
       var returnState;
       switch (perm) {
+        case 'dashboards':
+          returnState = 'index.dashboard.main';
+          break;
         case 'mobile_apps':
           returnState = 'index.apps.ios';
           break;
@@ -787,6 +799,9 @@
           break;
         case 'security_analytics':
           returnState = 'index.security.waf_analytics';
+          break;
+        case 'web_analytics':
+          returnState = 'index.reports.proxy';
           break;
         case 'dns_zones':
           returnState = 'index.dnsServices.dns_zones';
@@ -818,6 +833,102 @@
       }      
       return returnState;
     }
+
+     /**
+     * Gets state and returns the permission field that is responsible for that state
+     */
+    function getStatePermissionField(state) {
+
+      if (state.includes('index.dashboard')) {
+        return 'dashboards';
+      }
+
+      if (state.includes('index.apps')) {
+        return 'mobile_apps';
+      }
+
+      if (state.includes('index.mobile')) {
+        return 'mobile_analytics';
+      }
+
+      if (state.includes('index.reports')) {
+        return 'web_analytics';
+      }
+
+      if (state.includes('index.webApp.domains')) {
+        return 'domains';
+      }
+
+      if (state.includes('index.webApp.cache') || state.includes('index.webApp.advanced')) {
+        return 'cache_purge';
+      }
+
+      if (state.includes('index.security')) {
+        return 'security_analytics';
+      }
+
+      if (state.includes('index.dnsServices.dns_zones')) {
+        return 'dns_zones';
+      }
+
+      if (state.includes('index.dnsServices.dns_analytics')) {
+        return 'dns_analytics';
+      }
+
+      if (state.includes('index.accountSettings.users')) {
+        return 'users';
+      }
+
+      if (state.includes('index.accountSettings.groups')) {
+        return 'groups';
+      }
+
+      if (state.includes('index.accountSettings.keys')) {
+        return 'API_keys';
+      }
+
+      if (state.includes('index.accountSettings.companies')) {
+        return 'accounts';
+      }
+      if (state.includes('index.accountSettings.logshippers')) {
+        return 'logshipping_jobs';
+      }
+      if (state.includes('index.billing.usage')) {
+        return 'usage_reports';
+      }
+
+      return true;
+    }
+
+    function getFirstAccessible() {
+      var viableStates = [
+        'dashboards',
+        'mobile_apps',
+        'mobile_analytics',
+        'domains',
+        'cache_purge',
+        'web_analytics',
+        'security_analytics',
+        'dns_zones',
+        'users',
+        'groups',
+        'API_keys',
+        'logshipping_jobs',
+        'usage_reports'
+      ];
+      if (getUser().role !== 'admin') {
+        viableStates.push('accounts');
+      }
+      for (var i = 0; i < viableStates.length; i++) {
+        var possibleState = viableStates[i];
+        if (hasAccessTo(possibleState)) {                  
+          var goToState = getPermissionNameState(possibleState);
+          return goToState;
+        }
+      }
+    }
+
+
     /**
      * Retuns user's permissions, if user is in group, returns the group's permissions
      */
@@ -826,6 +937,10 @@
     }
 
     return {
+
+      getFirstAccessible: getFirstAccessible,
+
+      getStatePermissionField: getStatePermissionField,
 
       getPermissions: getPermissions,
 
