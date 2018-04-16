@@ -244,10 +244,8 @@
 
       $scope.update(_model)
         .then(function (data) {
-          initModel(true);
-          $scope.clearModel();
           $scope.alertService.success(data);
-          $state.go('^');
+          User.reloadUser();
         })
         .catch(function (err) {
           $scope.alertService.danger(err);
