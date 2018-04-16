@@ -544,6 +544,10 @@
 
     // Fetch list of users
     $scope.$on('$stateChangeSuccess', function (state) {
+      angular.extend($scope.filter,{
+        predicate: 'updated_at',
+        reverse: true
+      });
       var data = null;
       // NOTE: set filter params for specific state
       if ($state.is('index.accountSettings.accountresources')) {
