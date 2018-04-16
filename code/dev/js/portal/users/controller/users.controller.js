@@ -496,6 +496,9 @@
       if (!_model.companyId || !angular.isArray(_model.companyId)) {
         _model.companyId = [model.account_id] || [$scope.model.account_id];
       }
+      if (_model.group && _model.group !== 'null') {
+        _model.group_id = _model.group;
+      }
       delete _model.group;
       $scope.create(_model, isStay)
         .then(function (data) {
