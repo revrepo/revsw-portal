@@ -41,8 +41,8 @@
 
     $scope.NO_SPECIAL_CHARS = $config.PATTERNS.NO_SPECIAL_CHARS;
     $scope.COMMENT_NO_SPECIAL_CHARS = $config.PATTERNS.COMMENT_NO_SPECIAL_CHARS;
-    $scope.sslCert_verify_help_info = 'The button will verify the correctness of the new SSL certificate without '+
-    ' actually saving it in the system';
+    $scope.sslCert_verify_help_info = 'The button will verify the correctness of the new SSL certificate without ' +
+      ' actually saving it in the system';
     $scope.sslCert_update_help_info = 'Use the button to send the modified SSL certificate to the staging environment ' +
       'which can be used to test the new configuration before sending it to the global network (and making it ' +
       'available for all your end users). Please see “Web -> Staging Env.” section for details about the staging ' +
@@ -76,6 +76,10 @@
 
     // Fetch list of records
     $scope.$on('$stateChangeSuccess', function (state) {
+      angular.extend($scope.filter, {
+        predicate: 'updated_at',
+        reverse: true
+      });
       var data = null;
       // NOTE: set filter params for specific state
       if ($state.is('index.accountSettings.accountresources')) {

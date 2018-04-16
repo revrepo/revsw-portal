@@ -41,6 +41,10 @@
     });
 
     $scope.initList = function () {
+      angular.extend($scope.filter,{
+        predicate: 'updated_at',
+        reverse: true
+      });
       var data = {
         filters: {
           rule_type: 'builtin'
