@@ -20,12 +20,6 @@
     $rootScope.$state = $state;
     $rootScope.$on('$stateChangeStart',
     function(event, toState, toParams, fromState, fromParams){
-      if (User.isEnforce2FA() && toState.name !== 'index.accountSettings.2fa') {
-        event.preventDefault();
-        AlertService.clear();
-        AlertService.danger('2FA is enforced, please set up 2FA.');
-        return false;        
-      }
       //User.checkEnforce2FA(event, toState, fromState);
         // Clear alerts when routes change
         AlertService.clear();

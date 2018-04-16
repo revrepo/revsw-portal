@@ -43,11 +43,13 @@
         'dns_zones',
         'users',
         'groups',
-        'API_keys',
-        'accounts',
+        'API_keys',        
         'logshipping_jobs',
         'usage_reports'
       ];
+      if (User.getUser().role !== 'admin') {
+        viableStates.push('accounts');
+      }
       for (var i = 0; i < viableStates.length; i++) {
         var possibleState = viableStates[i];
         if (User.hasAccessTo(possibleState)) {
@@ -56,7 +58,7 @@
           return;
         }
 
-        if (i === viableStates.length - 1) {
+        if (i === viableStates.length - 1 && $state.is('index.reports.proxy')) {
           $state.go('index.accountSettings.profile');
         }
       }

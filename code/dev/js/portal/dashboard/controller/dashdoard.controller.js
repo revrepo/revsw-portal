@@ -29,10 +29,12 @@
         'users',
         'groups',
         'API_keys',
-        'accounts',
         'logshipping_jobs',
         'usage_reports'
       ];
+      if (User.getUser().role !== 'admin') {
+        viableStates.push('accounts');
+      }
       for (var i = 0; i < viableStates.length; i++) {
         var possibleState = viableStates[i];
         if (User.hasAccessTo(possibleState)) {                  

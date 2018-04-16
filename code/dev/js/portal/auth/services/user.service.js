@@ -7,7 +7,6 @@
 
   /*@ngInject*/
   function User($localStorage, $http, $config, $q, DomainsConfig, $auth, Groups, $state, AlertService, Companies) {
-
     /**
      * List of Users domains
      * @type {Array}
@@ -44,6 +43,7 @@
     var dnsZoneSelected = null;
 
     var permissions = $localStorage.group ? $localStorage.group.permissions : null;
+
 
     /**
      * Clear all details from localstorage
@@ -302,7 +302,6 @@
         .then(function (data) {
           if (data && data.status === $config.STATUS.OK) {
             $localStorage.user = data.data;
-            permissions = $localStorage.user.permissions;
             if ($localStorage.user.group_id && $localStorage.user.group_id !== 'null') {
               Groups.get({ id: $localStorage.user.group_id }).$promise.then(function (group) {
                 $localStorage.group = group;
@@ -310,6 +309,7 @@
                 checkPermissions();
               });
             } else {
+              permissions = $localStorage.user.permissions;
               checkPermissions();
             }
             if ($localStorage.user && $localStorage.user.role !== 'revadmin') {
@@ -394,7 +394,7 @@
      * @param {boolean} reload
      * @returns {Promise}
      */
-    function getUserDomains(reload, filter) {
+    function getUserDomains(reload, filter) {      
       return $q(function (resolve, reject) {
         var queryFilter = {
           operation: 'domains'
@@ -404,13 +404,17 @@
               operation: filter  
           };
         }
+        if ($state.current.name.includes('index.dashboard')) {
+          queryFilter.operation = 'web_analytics';
+        }
+
         if (domains && domains.length > 0 && !reload) {
           return resolve(domains);
         }
         DomainsConfig.getByOperation({filters: JSON.stringify(queryFilter)})
           .$promise
           .then(function (data) {
-            domains = data;
+            domains = data;          
             resolve(domains);
           })
           .catch(function (err) {
@@ -451,7 +455,7 @@
         var queryFilter = {
           operation: 'mobile_apps'
         };
-        if ($state.current.name.includes('index.mobile')) {
+        if ($state.current.name.includes('index.mobile') || $state.current.name.includes('index.dashboard')) {
           queryFilter.operation = 'mobile_analytics';
         }
         $http.get($config.API_URL + '/apps?filters=' + JSON.stringify(queryFilter))
@@ -578,12 +582,17 @@
         if (DNSZoneList.length > 0 && !reload) {
           return resolve(DNSZoneList);
         }
-        var queryFilter;
+        var queryFilter = {};
         if (filter) {
           queryFilter = {
             operation: filter
           };
         }
+
+        if ($state.current.name.includes('index.dashboard')) {
+          queryFilter.operation = 'dns_analytics';
+        }
+
         $http.get($config.API_URL + '/dns_zones' + (queryFilter ? '?filters=' + JSON.stringify(queryFilter) : ''))
           .then( function (data) {
 
@@ -742,6 +751,25 @@
           AlertService.danger('You do not have permissions to use the admin panel');
           return false;
         }
+      } else {
+        var user = getUser();
+        if (user) {
+          setPermissions(user);
+        }
+      }
+    }
+
+    function setPermissions(user) {
+      if (!user) {
+        user = getUser();
+      }
+
+      if (user.group_id) {
+        Groups.get({id: user.group_id}).$promise.then(function (group) {
+          permissions = group.permissions;
+        });
+      } else {
+        permissions = user.permissions;
       }
     }
 
