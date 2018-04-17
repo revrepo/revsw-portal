@@ -15,6 +15,7 @@
         selectOne: '=',
         ngModel: '=',
         onSelect: '&',
+        type: '@',
         isReload: '=?' // NOTE: reload list of domains
       },
       /*@ngInject*/
@@ -42,6 +43,10 @@
         }
         if ($state.current.name.includes('index.webApp.cache') || $state.current.name.includes('index.webApp.advanced')) {
           filter = 'cache_purge';
+        }
+
+        if ($scope.type) {
+          filter = $scope.type;
         }
         User.getUserDomains(($scope.isReload === false)? false : true, filter)
           .then(function(domains) {
