@@ -66,8 +66,8 @@
             <div class="col-md-12">
               <div class="pull-left form-inline fix-btns">
                 <div class="form-group">
-                  <a ui-sref="{{isReadOnly() ?'.': '.new'}}" class="btn" ng-class="isReadOnly() ? 'btn-disabled': 'btn-success btn-vendor-new-app'"
-                    ng-disabled="_loading || isReadOnly()">
+                  <a ui-sref="{{(isReadOnly() || auth.getPermissionStatus('mobile_apps') === 2) ?'.': '.new'}}" class="btn" ng-class="(isReadOnly() || auth.getPermissionStatus('mobile_apps') === 2) ? 'btn-disabled': 'btn-success btn-vendor-new-app'"
+                    ng-disabled="_loading || (isReadOnly() || auth.getPermissionStatus('mobile_apps') === 2)">
                     <i class="glyphicon glyphicon-plus"></i>&nbsp; Add New App
                   </a>
                 </div>

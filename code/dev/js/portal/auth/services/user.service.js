@@ -749,7 +749,7 @@
             // Should we display an alert if user tries to access a route that he doesnt have permission to
             // or just redirect?
             //AlertService.danger('You do not have permissions to access that resource');
-          }
+          } 
         }
       } else {
         var user = getUser();
@@ -936,7 +936,47 @@
       return permissions;
     }
 
+    /**
+     * Returns state of users permissions on a given resource
+     * 
+     * @returns {Number} 0 - no access to resource
+     *                   1 - full access to resource
+     *                   2 - partial access, should not allow to create
+     *                   3 - partial access, but should allow to create
+     */
+    function getPermissionStatus(perm) {      
+      var perms = getPermissions();
+      if (!perms) {
+        return 1;
+      }
+      perm = perms[perm];
+      if (perm.access === undefined) {
+        return 1;
+      }
+      
+      if (perm.access && (!perm.list || perm.list.length === 0)) {
+        return 1;
+      }
+
+      if (perm.access && perm.list && perm.list.length > 0 && perm.allow_list === false) {
+        
+        return 3;
+      }
+
+      if (perm.access && perm.list && perm.list.length > 0 && perm.allow_list === true) {
+        return 2;
+      }
+
+      if (!perm.access) {
+        return 0;
+      }
+
+      return 1;
+    }
+
     return {
+
+      getPermissionStatus: getPermissionStatus,
 
       getFirstAccessible: getFirstAccessible,
 
