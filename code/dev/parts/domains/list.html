@@ -97,7 +97,7 @@
           <div class="row">
             <div class="col-md-12">
               <div class="pull-left form-inline">
-                <a ui-sref="{{isReadOnly() ?'.': '.new'}}" class="btn btn-success" ng-class="{'btn-disabled':isReadOnly()}" ng-disabled="_loading || isReadOnly()">
+                <a ui-sref="{{(isReadOnly() || auth.getPermissionStatus('domains') === 2) ?'.': '.new'}}" class="btn btn-success" ng-class="{'btn-disabled':(isReadOnly() || auth.getPermissionStatus('domains') === 2)}" ng-disabled="_loading || (isReadOnly() || auth.getPermissionStatus('domains') === 2)">
                   <i class="glyphicon glyphicon-plus"></i>&nbsp; Add New Domain
                 </a>
                 <div class="form-group hidden-xs">

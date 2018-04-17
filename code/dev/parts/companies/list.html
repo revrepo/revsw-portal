@@ -29,7 +29,7 @@
           <div class="row">
             <div class="col-md-12">
               <div class="pull-left">
-                <a ui-sref="{{isReadOnly() ?'.': '.new'}}" class="btn btn-success" ng-class="{'btn-disabled':isReadOnly()}" ng-disabled="_loading || isReadOnly()">
+                <a ui-sref="{{(isReadOnly() || auth.getPermissionStatus('accounts') === 2) ?'.': '.new'}}" class="btn btn-success" ng-class="{'btn-disabled':(isReadOnly() || auth.getPermissionStatus('accounts') === 2)}" ng-disabled="_loading || (isReadOnly() || auth.getPermissionStatus('accounts') === 2)">
                   <i class="glyphicon glyphicon-plus"></i>&nbsp;
                   Add New Company
                 </a>

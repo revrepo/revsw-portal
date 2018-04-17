@@ -24,6 +24,14 @@
       { id: 'Deleted', statusName: 'Deleted' },
       { id: 'Unregistered', statusName: 'Unregistered' }, { id: 'Warned', statusName: 'Warned' }
     ];
+
+    $scope.$on('$stateChangeSuccess', function () {
+      angular.extend($scope.filter,{
+        predicate: 'updated_at',
+        reverse: true
+      });
+    });
+
     /**
      * Should open dialog for change status
      */
