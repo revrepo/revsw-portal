@@ -385,7 +385,7 @@
      * @param {boolean} reload
      * @returns {Promise}
      */
-    function getUserDomains(reload, filter) {      
+    function getUserDomains(reload, filter) {
       return $q(function (resolve, reject) {
         var queryFilter = {
           operation: 'domains'
@@ -395,7 +395,7 @@
               operation: filter  
           };
         }
-        if ($state.current.name.includes('index.dashboard')) {
+        if ($state.current.name.includes('index.dashboard') && !filter) {
           queryFilter.operation = 'web_analytics';
         }
 
