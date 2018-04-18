@@ -12,9 +12,12 @@
       replace: true,
       templateUrl: 'parts/dashboard/buttons/dashboard-btn-new.tpl.html',
       scope: false,
-      controller: function ($scope, $state, $uibModal, DashboardSrv, dashboard, AlertService) {
+      controller: function ($scope, $state, $uibModal, DashboardSrv, dashboard, AlertService, User) {
         'igInject';
         var vm = this;
+        this.isReadOnly = function () {
+          return User.isReadOnly();
+        };
         this.structures = dashboard.structures;
         this.changeStructure = function (name, structure) {
           //console.log(name, structure);

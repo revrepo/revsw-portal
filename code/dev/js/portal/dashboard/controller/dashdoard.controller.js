@@ -6,10 +6,9 @@
     .controller('DashdoardController', DashdoardController);
 
   function DashdoardController($scope, $rootScope, $state, $window, $interval, $timeout, $config, $localStorage, DashboardSrv, $stateParams, AlertService,
-    $location, $anchorScroll) {
+    $location, $anchorScroll, User) {
     'ngInject';
     var vm = this;
-
 
     // NOTE: resize for fix wigth of charts
     var resizing;
@@ -42,6 +41,7 @@
             });
           } else {
             // TODO: Show information how create Dashboard ?
+            changeState();
           }
         });
 
@@ -171,6 +171,7 @@
         $interval.cancel(resizing);
       }
     });
+
     /**
      * @name  getCountDashboardWidget
      * @description
@@ -188,72 +189,6 @@
         });
       });
       return wc;
-    };
-    // NOTE: auto start Intor.js in dashboard page(state)
-    var timeout_ = null;
-    if (!!timeout_) {
-      $timeout.cancel(timeout_);
-    }
-
-    if ($config.INTRO_IS_ACTIVE) {
-      var intro = $localStorage.intro || { isShowMainIntro: false, isSkipIntro: false };
-      var testEnv;
-      if ($localStorage.testEnv !== undefined) {
-        if ($localStorage.testEnv === '1' || $localStorage.testEnv === 1) {
-          testEnv = true;
-        } else {
-          testEnv = false;
-        }
-      }
-      if (((intro.isShowMainIntro === false || intro.isShowMainIntro === 'false') && intro.isSkipIntro === false) || testEnv) {
-        // NOTE: close menu items for start intro navigation
-        ['index.apps', 'index.reports', 'index.webApp', 'index.accountSettings'].forEach(function (menuState) {
-          $rootScope.menuExpandedNodes[menuState] = false;
-        });
-
-        timeout_ = $timeout(function () {
-          $scope.introOpen();
-          $localStorage.intro = intro;
-        }, 2000);
-      }
-    }
-    // NOTE: user skip intor on this session work
-    vm.onIntroSkipEvent = function () {
-      intro.isSkipIntro = true; // NOTE: store information about Intor was shows.
-      intro.isShowMainIntro = true;
-      $localStorage.intro = intro;
-    };
-
-    /**
-     * @name  onBeforeChangeEvent
-     * @description
-     *
-     * @param  {[type]} targetElement
-     * @return {[type]}
-     */
-    vm.onBeforeChangeEvent = function (targetElement) {
-      var step = targetElement.id;
-      switch (step) {
-        case 'side-menu-sub-item__webApp-domains':
-        case 'side-menu-sub-item__webApp-ssl_certs':
-        case 'side-menu-sub-item__webApp-cache':
-        case 'side-menu-sub-item__webApp-ssl_names':
-        case 'side-menu-sub-item__webApp-staging-environment':
-        case 'side-menu-sub-item__webApp-domains':
-          // NOTE: close menu items
-          ['index.apps', 'index.reports', 'index.accountSettings'].forEach(function (menuState) {
-            $rootScope.menuExpandedNodes[menuState] = false;
-          });
-          // NOTE: open menu item
-          ['index.webApp'].forEach(function (menuState) {
-            $rootScope.menuExpandedNodes[menuState] = true;
-          });
-          break;
-        default:
-          ['index.webApp'].forEach(function (menuState) {
-            $rootScope.menuExpandedNodes[menuState] = false;
-          });
-      }
     };
 
   }

@@ -13,9 +13,12 @@
       scope: {
         model: '='
       },
-      controller: function ($scope, $state, $uibModal, DashboardSrv, dashboard, AlertService) {
+      controller: function ($scope, $state, $uibModal, DashboardSrv, dashboard, AlertService, User) {
         'igInject';
         var vm = this;
+        this.isReadOnly = function () {
+          return User.isReadOnly();
+        };
         /**
          * @name  onCreateDashboard
          * @description Creating new dashboard

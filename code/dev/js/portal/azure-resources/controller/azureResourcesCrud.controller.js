@@ -31,6 +31,10 @@
 
     // Fetch list of records
     $scope.$on('$stateChangeSuccess', function(state, stateTo, stateParam) {
+      angular.extend($scope.filter,{
+        predicate: 'updated_at',
+        reverse: true
+      });
       if ($state.is($scope.state)) {
         $scope.list()
           .then(function() {

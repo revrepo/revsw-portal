@@ -77,7 +77,9 @@ describe('Smoke', function () {
         Portal.signOut();
       });
 
-      beforeEach(function () {});
+      beforeEach(function () {
+        Portal.helpers.nav.goToBillingStatements();
+      });
 
       // Rev Admin role
       if (typeof user === 'object') {

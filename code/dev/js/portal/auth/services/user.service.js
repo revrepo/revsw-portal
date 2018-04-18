@@ -6,8 +6,7 @@
     .factory('User', User);
 
   /*@ngInject*/
-  function User($localStorage, $http, $config, $q, DomainsConfig, $auth) {
-
+  function User($localStorage, $http, $config, $q, DomainsConfig, $auth, Groups, $state, AlertService, Companies) {
     /**
      * List of Users domains
      * @type {Array}
@@ -42,6 +41,10 @@
      */
     var DNSZoneList = [];
     var dnsZoneSelected = null;
+
+    var permissions = $localStorage.group ? $localStorage.group.permissions : null;
+
+
     /**
      * Clear all details from localstorage
      */
@@ -53,6 +56,7 @@
       intro_.isSkipIntro = false;
       $localStorage.$reset({
         user: null,
+        group: null,
         isLoggedIn: false,
         isCAdmin: false,
         last_user_id: null,
@@ -60,7 +64,8 @@
         selectedApplication: null,
         selectedDNSZone: null,
         intro: intro_,
-        lastUrl: null
+        lastUrl: null,
+        userMainAccount: null
       });
     }
 
@@ -120,9 +125,10 @@
     }
 
     function _successGetUserMyself(data) {
-              if (data && data.status === $config.STATUS.OK) {
+              if (data && data.status === $config.STATUS.OK) {                
                 // Success
-                var res = data.data;
+                var res = data.data;           
+
                 // Check roles
                 if (res.role !== $config.ROLE.USER &&
                   res.role !== $config.ROLE.ADMIN &&
@@ -221,6 +227,7 @@
       $localStorage.selectedUser = undefined;
       $localStorage.selectedCompany = undefined;
       $localStorage.selectedDomain = undefined;
+      $localStorage.userMainAccount = undefined;
       
       clearAuthHeaderForAPI();
       clearAll();
@@ -231,7 +238,7 @@
      *
      * @returns {object|null}
      */
-    function getUser() {
+    function getUser() {      
       return $localStorage.user || null;
     }
 
@@ -295,6 +302,14 @@
         .then(function (data) {
           if (data && data.status === $config.STATUS.OK) {
             $localStorage.user = data.data;
+            setPermissions($localStorage.user);
+            if ($localStorage.user && $localStorage.user.role !== 'revadmin') {
+              if (!$localStorage.userMainAccount || $localStorage.userMainAccount.id !== $localStorage.user.account_id) {
+                Companies.get({ id: $localStorage.user.account_id }).$promise.then(function (acc) {
+                  $localStorage.userMainAccount = acc;
+                });
+              }
+            }            
           } else {
             // Something went wrong
             throw new Error(data.response);
@@ -370,15 +385,27 @@
      * @param {boolean} reload
      * @returns {Promise}
      */
-    function getUserDomains(reload) {
+    function getUserDomains(reload, filter) {
       return $q(function (resolve, reject) {
+        var queryFilter = {
+          operation: 'domains'
+        };
+        if (filter) {
+          queryFilter = {
+              operation: filter  
+          };
+        }
+        if ($state.current.name.includes('index.dashboard') && !filter) {
+          queryFilter.operation = 'web_analytics';
+        }
+
         if (domains && domains.length > 0 && !reload) {
           return resolve(domains);
         }
-        DomainsConfig.query()
+        DomainsConfig.getByOperation({filters: JSON.stringify(queryFilter)})
           .$promise
           .then(function (data) {
-            domains = data;
+            domains = data;          
             resolve(domains);
           })
           .catch(function (err) {
@@ -416,7 +443,13 @@
         if (apps.length > 0 && !reload) {
           return resolve(apps);
         }
-        $http.get($config.API_URL + '/apps')
+        var queryFilter = {
+          operation: 'mobile_apps'
+        };
+        if ($state.current.name.includes('index.mobile') || $state.current.name.includes('index.dashboard')) {
+          queryFilter.operation = 'mobile_analytics';
+        }
+        $http.get($config.API_URL + '/apps?filters=' + JSON.stringify(queryFilter))
           .then( function (data) {
             if (data && data.status === $config.STATUS.OK) {
               apps = data.data.map( function( item ) {
@@ -535,12 +568,23 @@
      * @param {Boolean} reload
      * @returns
      */
-    function getUserDNSZones(reload) {
+    function getUserDNSZones(reload, filter) {
       return $q(function (resolve, reject) {
         if (DNSZoneList.length > 0 && !reload) {
           return resolve(DNSZoneList);
         }
-        $http.get($config.API_URL + '/dns_zones')
+        var queryFilter = {};
+        if (filter) {
+          queryFilter = {
+            operation: filter
+          };
+        }
+
+        if ($state.current.name.includes('index.dashboard')) {
+          queryFilter.operation = 'dns_analytics';
+        }
+
+        $http.get($config.API_URL + '/dns_zones' + (queryFilter ? '?filters=' + JSON.stringify(queryFilter) : ''))
           .then( function (data) {
 
             if (data && data.status === $config.STATUS.OK) {
@@ -642,6 +686,9 @@
       return (!!user)  ? user.access_control_list :  defaultACL;
     }
 
+    function getGroup() {
+      return $localStorage.group || null;
+    }
     /**
      * @name isReadOnly
      * @description
@@ -649,12 +696,303 @@
      * @return {Boolean}
      */
     function isReadOnly(){
-        var userACL = getACL();
-        var isReadOnly = (userACL.readOnly === true);
-        return isReadOnly;
+      return permissions ? permissions.read_only : false;
+    }
+
+    function hasAccessTo(item) {
+      if (permissions && permissions[item] !== null) {
+        if (permissions[item].access !== undefined) {
+          return permissions[item].access;
+        } else {
+          return permissions[item];
+        }
+      }
+
+      return false;
+    }
+
+    function isEnforce2FA() {
+      return permissions ? permissions.enforce_2fa && !getUser().two_factor_auth_enabled : false;
+    }
+
+    function checkEnforce2FA(event, toState, fromState) {
+      if (isEnforce2FA()) {
+        if (!toState || !fromState) {
+          $state.go('index.accountSettings.2fa');
+        } else {
+          if (isEnforce2FA()) {
+            AlertService.danger('Two Factor Authentication (2FA) is enforced for your user account. ' +
+            'Please follow instructions on the screen to enable 2FA. After that you will be allowed to use the admin panel.');
+          }
+          if (isEnforce2FA() && toState !== 'index.accountSettings.2fa' && event) {
+            event.preventDefault();
+          }
+          if (isEnforce2FA() && fromState !== 'index.accountSettings.2fa') {
+            $state.go('index.accountSettings.2fa');
+          }
+        }
+      }      
+    }
+
+    function checkPermissions() {
+      if (permissions) {
+        if (!permissions.portal_login) {
+          logout();
+          $state.go('login');
+          AlertService.danger('You do not have permissions to use the admin panel');
+          return false;
+        }
+
+        if (getStatePermissionField($state.current.name) !== true) {
+          if (!hasAccessTo(getStatePermissionField($state.current.name))) {
+            $state.go(getFirstAccessible() || 'index.accountSettings.profile');
+            // Should we display an alert if user tries to access a route that he doesnt have permission to
+            // or just redirect?
+            //AlertService.danger('You do not have permissions to access that resource');
+          } 
+        }
+      } else {
+        var user = getUser();
+        if (user) {
+          setPermissions(user);
+        }
+      }
+    }
+
+    function setPermissions(user) {
+      if (!user) {
+        user = getUser();
+      }
+
+      if (user.group_id) {
+        Groups.get({id: user.group_id}).$promise.then(function (group) {
+          permissions = group.permissions;
+          checkPermissions();
+        });
+      } else {
+        permissions = user.permissions;
+        checkPermissions();
+      }
+    }
+
+    /**
+     * Gets a field from the permissions object ('domains', 'dns_zones'...)
+     * Returns the state its related to ('index.reports.proxy'...)
+     */
+    function getPermissionNameState(perm) {
+      var returnState;
+      switch (perm) {
+        case 'dashboards':
+          returnState = 'index.dashboard.main';
+          break;
+        case 'mobile_apps':
+          returnState = 'index.apps.ios';
+          break;
+        case 'mobile_analytics':
+          returnState = 'index.mobile.traffic';
+          break;
+        case 'domains':
+          returnState = 'index.webApp.domains';
+          break;
+        case 'cache_purge':
+          returnState = 'index.webApp.cache';
+          break;
+        case 'security_analytics':
+          returnState = 'index.security.waf_analytics';
+          break;
+        case 'web_analytics':
+          returnState = 'index.reports.proxy';
+          break;
+        case 'dns_zones':
+          returnState = 'index.dnsServices.dns_zones';
+          break;
+        case 'dns_analytics':
+          returnState = 'index.dnsServices.dns_analytics';
+          break;
+        case 'users':
+          returnState = 'index.accountSettings.users';
+          break;
+        case 'groups':
+          returnState = 'index.accountSettings.groups';
+          break;
+        case 'API_keys':
+          returnState = 'index.accountSettings.keys';
+          break;
+        case 'accounts':
+          returnState = 'index.accountSettings.companies';
+          break;
+        case 'logshipping_jobs':
+          returnState = 'index.accountSettings.logshippers';
+          break;
+        case 'usage_reports':
+          returnState = 'index.billing.usage';
+          break;
+        default:
+          returnState = null;
+          break;
+      }      
+      return returnState;
+    }
+
+     /**
+     * Gets state and returns the permission field that is responsible for that state
+     */
+    function getStatePermissionField(state) {
+
+      if (state.includes('index.dashboard')) {
+        return 'dashboards';
+      }
+
+      if (state.includes('index.apps')) {
+        return 'mobile_apps';
+      }
+
+      if (state.includes('index.mobile')) {
+        return 'mobile_analytics';
+      }
+
+      if (state.includes('index.reports')) {
+        return 'web_analytics';
+      }
+
+      if (state.includes('index.webApp.domains')) {
+        return 'domains';
+      }
+
+      if (state.includes('index.webApp.cache') || state.includes('index.webApp.advanced')) {
+        return 'cache_purge';
+      }
+
+      if (state.includes('index.security')) {
+        return 'security_analytics';
+      }
+
+      if (state.includes('index.dnsServices.dns_zones')) {
+        return 'dns_zones';
+      }
+
+      if (state.includes('index.dnsServices.dns_analytics')) {
+        return 'dns_analytics';
+      }
+
+      if (state.includes('index.accountSettings.users')) {
+        return 'users';
+      }
+
+      if (state.includes('index.accountSettings.groups')) {
+        return 'groups';
+      }
+
+      if (state.includes('index.accountSettings.keys')) {
+        return 'API_keys';
+      }
+
+      if (state.includes('index.accountSettings.companies')) {
+        return 'accounts';
+      }
+      if (state.includes('index.accountSettings.logshippers')) {
+        return 'logshipping_jobs';
+      }
+      if (state.includes('index.billing.usage')) {
+        return 'usage_reports';
+      }
+
+      return true;
+    }
+
+    function getFirstAccessible() {
+      var viableStates = [
+        'dashboards',
+        'mobile_apps',
+        'mobile_analytics',
+        'domains',
+        'cache_purge',
+        'web_analytics',
+        'security_analytics',
+        'dns_zones',
+        'users',
+        'groups',
+        'API_keys',
+        'logshipping_jobs',
+        'usage_reports'
+      ];
+      if (getUser().role !== 'admin') {
+        viableStates.push('accounts');
+      }
+      for (var i = 0; i < viableStates.length; i++) {
+        var possibleState = viableStates[i];
+        if (hasAccessTo(possibleState)) {                  
+          var goToState = getPermissionNameState(possibleState);
+          return goToState;
+        }
+      }
+    }
+
+
+    /**
+     * Retuns user's permissions, if user is in group, returns the group's permissions
+     */
+    function getPermissions() {
+      return permissions;
+    }
+
+    /**
+     * Returns state of users permissions on a given resource
+     * 
+     * @returns {Number} 0 - no access to resource
+     *                   1 - full access to resource
+     *                   2 - partial access, should not allow to create
+     *                   3 - partial access, but should allow to create
+     */
+    function getPermissionStatus(perm) {      
+      var perms = getPermissions();
+      if (!perms) {
+        return 1;
+      }
+      perm = perms[perm];
+      if (perm.access === undefined) {
+        return 1;
+      }
+      
+      if (perm.access && (!perm.list || perm.list.length === 0)) {
+        return 1;
+      }
+
+      if (perm.access && perm.list && perm.list.length > 0 && perm.allow_list === false) {
+        
+        return 3;
+      }
+
+      if (perm.access && perm.list && perm.list.length > 0 && perm.allow_list === true) {
+        return 2;
+      }
+
+      if (!perm.access) {
+        return 0;
+      }
+
+      return 1;
     }
 
     return {
+
+      getPermissionStatus: getPermissionStatus,
+
+      getFirstAccessible: getFirstAccessible,
+
+      getStatePermissionField: getStatePermissionField,
+
+      getPermissions: getPermissions,
+
+      permNameToState: getPermissionNameState,
+
+      checkPermissions: checkPermissions,
+
+      checkEnforce2FA: checkEnforce2FA,
+
+      isEnforce2FA: isEnforce2FA,
+
+      hasAccessTo: hasAccessTo,
 
       getToken: getToken,
 

@@ -128,7 +128,7 @@
               <div class="col-sm-9">
                 <input type="text" class="form-control inline-block" id="companyName" name="companyName" placeholder="Company Name" ng-maxlength="150"
                   ng-model="$ctrl.model.company_name" ng-disabled="$ctrl._loading" ng-pattern="COMPANY_NAME">
-                <label for="companyName" class="text-info" popover-trigger="mouseenter" uib-popover="Will be generated from your first and last name if left empty.">
+                <label for="companyName" class="text-info" popover-trigger="mouseenter" uib-popover="Will be generated from your first and last name if left empty">
           <i class="fa fa-question-circle"></i>
           </label>
                 <div ng-show="!!newUser['companyName'].$error.maxlength" style="color:red">150 characters max</div>
@@ -141,7 +141,7 @@
               <div class="col-sm-9">
                 <input type="text" class="form-control inline-block" required id="address1" name="address1" placeholder="Address" ng-model="$ctrl.model.address1"
                   ng-maxlength="150" ng-disabled="$ctrl._loading" ng-pattern="STREET_ADDRESS">
-                <label for="address1" class="text-info" popover-trigger="mouseenter" uib-popover="Could be used as a billing address later.">
+                <label for="address1" class="text-info" popover-trigger="mouseenter" uib-popover="Could be used as a billing address later">
           <i class="fa fa-question-circle"></i>
           </label>
                 <div ng-show="!!newUser['address1'].$error.maxlength" style="color:red">150 characters max</div>
@@ -153,7 +153,7 @@
               <div class="col-sm-9">
                 <input type="text" class="form-control inline-block" id="address2" name="address2" placeholder="Address (Line 2)" ng-model="$ctrl.model.address2"
                   ng-maxlength="150" ng-disabled="$ctrl._loading" ng-pattern="STREET_ADDRESS">
-                <label for="address2" class="text-info" popover-trigger="mouseenter" uib-popover="Could be used as a billing address later.">
+                <label for="address2" class="text-info" popover-trigger="mouseenter" uib-popover="Could be used as a billing address later">
           <i class="fa fa-question-circle"></i>
           </label>
                 <div ng-show="!!newUser['address2'].$error.maxlength" style="color:red">150 characters max</div>
@@ -166,7 +166,7 @@
                 <select type="text" name="country" class="form-control inline-block" id="country" placeholder="Country" required ng-model="$ctrl.model.country"
                   ng-options="key as value for (key , value) in  $ctrl.countries" ng-disabled="$ctrl._loading">
           </select>
-                <label for="country" class="text-info" popover-trigger="mouseenter" uib-popover="Could be used in a billing address later.">
+                <label for="country" class="text-info" popover-trigger="mouseenter" uib-popover="Could be used in a billing address later">
           <i class="fa fa-question-circle"></i>
           </label>
               </div>

@@ -1,0 +1,126 @@
+<div class="row" ng-init="setGroup(params.id)">
+  <div class="col-sm-12">
+    <h2 class="pull-left page-title">
+      Edit Group
+    </h2>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="pull-left">
+              <a ui-sref="^" class="btn btn-info">
+                <i class="glyphicon glyphicon-arrow-left"></i>&nbsp; Back To List
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel-body">
+        <form name="createForm" class="form-horizontal form--Group" confirm-on-exit novalidate>
+          <div class="form-group" ng-class="{'has-error': createForm.name.$invalid && createForm.name.$dirty}">
+            <label for="name" class="col-sm-2 control-label">Name *</label>
+            <div class="col-sm-10">
+              <input type="text" autofocus class="form-control inline-block" id="name" name="name" placeholder="Name" ng-model="model.name"
+                ng-maxlength="64" ng-disabled="_loading" required>
+              <label for="name" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="New Group's name">
+                <i class="fa fa-question-circle"></i>
+              </label>
+              <div class="error-messages" ng-messages="createForm.name.$error" role="alert" ng-messages-multiple>
+                <div ng-messages-include="parts/shared/error-messages.html"></div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group" ng-class="{'has-error': createForm.accountId.$invalid && createForm.accountId.$dirty}" ng-if="auth.isReseller() || auth.isRevadmin()">
+            <label for="company" class="col-sm-2 control-label">Account *</label>
+            <div class="col-sm-10">
+              <span ng-show="!_loading && companies.length==0" class="loader--waite-company">
+                <i class="glyphicon glyphicon-refresh spin"></i> Please wait...</span>
+              <ui-select ng-if="!_loading && companies.length>0" ng-animate-disabled theme="select2" ng-disabled="_loading" ng-model="model.account_id"
+                id="company" name="accountId">
+                <ui-select-match placeholder="Select Account">{{$select.selected.companyName}}</ui-select-match>
+                <ui-select-choices repeat="item.id as  item in companies | filter: {companyName: $select.search}">
+                  <div ng-bind-html="item.companyName|highlight: $select.search"></div>
+                </ui-select-choices>
+              </ui-select>
+              <label for="company" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Select here account the Group should be associated with">
+                <i class="fa fa-question-circle"></i>
+              </label>
+              <a ui-sref="index.accountSettings.companies" class="btn btn-sm btn-primary" id="btn-manage-accounts" uib-tooltip="Manage Accounts"
+                ng-disabled="_loading">
+                <i class="fa fa-list-alt"></i> Manage Accounts</a>
+            </div>
+          </div>
+          <hr>
+          <div class="form-group">
+            <label for="name" class="col-sm-2 control-label">Users In Group</label>
+            <div class="col-sm-10">
+              <span>{{getUsers()}}</span>
+            </div>
+          </div>
+          <hr>
+          <permissions pagetype="group" ng-controller="PermissionsController"></permissions>            
+          <hr>
+          <!-- passwords commented out because of invitation system -->
+          <!-- <div class="form-group" ng-class="{'has-error': createForm.password.$invalid && createForm.password.$dirty}">
+              <label for="password" class="col-sm-2 control-label">Password *</label>
+              <div class="col-sm-10">
+                <input type="password" class="form-control inline-block" id="password" name="password" ng-model="model.password" ng-disabled="_loading" ng-minlength="8"  ng-maxlength="15" required>
+                <label for="password" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Enter the new Group's password">
+                  <i class="fa fa-question-circle"></i>
+                </label>
+                <div class="error-messages" ng-messages="createForm.password.$error" role="alert" ng-messages-multiple>
+                  <div ng-message="minlength" class="alert-text alert-text--minlength">Password must contain at least 8 characters</div>
+                  <div ng-message="maxlength" class="alert-text alert-text--maxlength">Password must contain 15 characters max</div>
+                  <div ng-messages-include="parts/shared/error-messages.html"></div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group" ng-class="{'has-error': createForm.passwordConfirm.$invalid && createForm.passwordConfirm.$dirty}">
+              <label for="passwordConfirm" class="col-sm-2 control-label">Confirm Password *</label>
+              <div class="col-sm-10">
+                <input type="password" class="form-control inline-block" id="passwordConfirm" name="passwordConfirm" ng-model="model.passwordConfirm" ng-disabled="_loading" validate-compare-to="model.password">
+                <label for="passwordConfirm" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Re-enter the new Group's password">
+                  <i class="fa fa-question-circle"></i>
+                </label>
+                <div class="error-messages" ng-messages="createForm.passwordConfirm.$error" role="alert" ng-messages-multiple>
+                  <div ng-messages-include="parts/shared/error-messages.html"></div>
+                </div>
+              </div>
+            </div> -->
+          <div class="form-group" ng-class="{ 'has-error': createForm.comment.$invalid && createForm.comment.$dirty }">
+            <label for="comment" class="col-sm-2 control-label">Comment</label>
+            <div class="col-sm-10">
+              <div class="form-group col-md-12">
+                <textarea id="comment" placeholder="Comment (300 characters max)" ng-maxlength="300" class="form-control inline-block" name="comment"
+                  ng-model="model.comment" ng-pattern="COMMENT_NO_SPECIAL_CHARS" ng-disabled="_loading">
+                  </textarea>
+                <label for="comment" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Comment about the Group (300 characters max)">
+                  <i class="fa fa-question-circle"></i>
+                </label>
+              </div>
+              <div class="error-messages" ng-messages="createForm.comment.$error" role="alert" ng-messages-multiple>
+                <div ng-messages-include="parts/shared/error-messages.html"></div>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+              <a ui-sref="{{state}}" class="btn btn-default" ng-click="clearForm()">
+                <i class="glyphicon glyphicon-remove"></i>&nbsp; Cancel
+              </a>
+              <button class="btn btn-success" ng-class="{'btn-disabled':isReadOnly()}" id="create_Group" ng-disabled="disableSubmit(model) || isReadOnly() || _loading || !model"
+                ng-click="updateGroup(model)">
+                <i class="glyphicon" ng-class="_loading ? 'glyphicon-refresh spin':'glyphicon-ok'"></i>&nbsp; Update
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

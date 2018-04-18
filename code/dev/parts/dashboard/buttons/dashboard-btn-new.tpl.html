@@ -1,4 +1,4 @@
-<a ng-click="vm.onCreateDashboard($event)" class="dashboard-btn-new btn btn-link pull-right" style="padding-right:0; padding-top:2px;"
+<a ng-click="vm.onCreateDashboard($event)" ng-if="!vm.isReadOnly() && !editMode && !!model" class="dashboard-btn-new btn btn-link pull-right" style="padding-right:0; padding-top:2px;"
     title="Add New Dashboard">
     <i class="glyphicon glyphicon-plus"></i>
 </a>

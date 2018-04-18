@@ -64,6 +64,140 @@
               } else if ($state.current.name === 'index') {
                 $state.go('index.reports.proxy');
               }
+
+              function checkStepPerm(step, perm) {
+                if (step.element && step.permission && step.permission === perm) {
+                  $rootScope.IntroOptions.steps.splice($rootScope.IntroOptions.steps.indexOf(step), 1);
+                }
+              }
+
+              // NOTE: auto start Intor.js in dashboard page(state)
+              var timeout_ = null;
+              if (!!timeout_) {
+                $timeout.cancel(timeout_);
+              }
+              
+              if ($config.INTRO_IS_ACTIVE) {
+                activateIntro();
+              }
+
+              function activateIntro() {
+                var userPermissions = User.getPermissions();
+
+                var timeOut = 30000;              
+                var pollPerm = function () {                  
+                  userPermissions = User.getPermissions();
+                  if (!userPermissions) {                    
+                    timeOut -= 1000;
+                    if (timeOut > 0) {
+                      setTimeout(pollPerm, 1000);
+                    }
+                  } else {
+                    var restrictedPerms = [];
+                    if (userPermissions) {
+                      for (var prop in userPermissions) {
+                        // dont trigger this for readonly or 2fa enforcement
+                        if (prop !== 'read_only' && prop !== 'enforce_2fa' && prop !== 'API_access') {
+                          if (userPermissions[prop].access === false || userPermissions[prop] === false) {
+                            restrictedPerms.push(prop);
+                            $rootScope.IntroOptions.steps[0].intro = $config.INTRO_RESTRICTED_ACCESS_TEXT.join('');
+                          }
+                        }
+                      }
+    
+                      for (var j = 0; j < restrictedPerms.length; j++) {
+                        var perm = restrictedPerms[j];
+                        for (var k = 0; k < $rootScope.IntroOptions.steps.length; k++) {
+                          checkStepPerm($rootScope.IntroOptions.steps[k], perm);
+                        }
+                      }
+    
+                    }
+                    var intro = $localStorage.intro || { isShowMainIntro: false, isSkipIntro: false };
+                    var testEnv;
+                    if ($localStorage.testEnv !== undefined) {
+                      if ($localStorage.testEnv === '1' || $localStorage.testEnv === 1) {
+                        testEnv = true;
+                      } else {
+                        testEnv = false;
+                      }
+                    }
+                    if (((intro.isShowMainIntro === false || intro.isShowMainIntro === 'false') && intro.isSkipIntro === false) || testEnv) {
+                      // NOTE: close menu items for start intro navigation
+                      ['index.apps', 'index.reports', 'index.webApp', 'index.accountSettings'].forEach(function (menuState) {
+                        $rootScope.menuExpandedNodes[menuState] = false;
+                      });
+    
+                      timeout_ = $timeout(function () {
+                        $scope.introOpen();
+                        $localStorage.intro = intro;
+                      }, 2000);
+                    }
+                  }
+
+                  // NOTE: user skip intor on this session work
+              $scope.onIntroSkipEvent = function () {
+                intro.isSkipIntro = true; // NOTE: store information about Intor was shows.
+                intro.isShowMainIntro = true;
+                $localStorage.intro = intro;
+              };
+
+              /**
+               * @name  onBeforeChangeEvent
+               * @description
+               *
+               * @param  {[type]} targetElement
+               * @return {[type]}
+               */
+              $scope.onBeforeChangeEvent = function (targetElement) {
+                var step = targetElement.id;
+                switch (step) {
+                  case 'side-menu-sub-item__update-password':
+                  case 'side-menu-sub-item__security-settings':
+                    $rootScope.menuExpandedNodes['index.accountSettings'] = true;
+                    ['index.apps', 'index.reports', 'index.webApp', 'index.help'].forEach(function (menuState) {
+                      $rootScope.menuExpandedNodes[menuState] = false;
+                    });
+
+
+                    break;
+                  case 'side-menu-sub-item__API-documentation':
+                  case 'side-menu-sub-item__know-base':
+                  case 'side-menu-sub-item__open-ticket':
+                  case 'side-menu-sub-item__network-status':
+                    $rootScope.menuExpandedNodes['index.help'] = true;
+                    
+                    ['index.apps', 'index.reports', 'index.webApp', 'index.accountSettings'].forEach(function (menuState) {
+                      $rootScope.menuExpandedNodes[menuState] = false;
+                    });
+                    break;
+                  case 'side-menu-sub-item__webApp-domains':
+                  case 'side-menu-sub-item__webApp-ssl_certs':
+                  case 'side-menu-sub-item__webApp-cache':
+                  case 'side-menu-sub-item__webApp-ssl_names':
+                  case 'side-menu-sub-item__webApp-staging-environment':
+                  case 'side-menu-sub-item__webApp-domains':
+                    // NOTE: open menu item
+                    ['index.webApp'].forEach(function (menuState) {
+                      $rootScope.menuExpandedNodes[menuState] = true;
+                    });
+                    // NOTE: close menu items
+                    ['index.apps', 'index.reports', 'index.accountSettings', 'index.help'].forEach(function (menuState) {
+                      $rootScope.menuExpandedNodes[menuState] = false;
+                    });
+
+                    break;
+                  default:
+                    ['index.webApp'].forEach(function (menuState) {
+                      $rootScope.menuExpandedNodes[menuState] = false;
+                    });
+                }
+
+                
+              };
+                };        
+                pollPerm();        
+              }              
             }
           }
         },

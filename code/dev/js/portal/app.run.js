@@ -19,12 +19,15 @@
     $rootScope.alertService = AlertService;
     $rootScope.$state = $state;
     $rootScope.$on('$stateChangeStart',
-      function(event){
+    function(event, toState, toParams, fromState, fromParams){
+      //User.checkEnforce2FA(event, toState, fromState);
         // Clear alerts when routes change
         AlertService.clear();
       });
     $rootScope.$on('$stateChangeSuccess',
-      function(event){
+      function(event, toState, toParams, fromState, fromParams){       
+        User.checkEnforce2FA(event, toState, fromState);
+        User.checkPermissions();
         // Clear alerts when routes change //TODO:check comment
         setTimeout(function() {
           $('[autofocus]').focus();

@@ -1,0 +1,30 @@
+<div class="row dashboard__title">
+  <div class="col-sm-12">
+    <div class="form-inline">
+      <div class="form-group pull-left">
+        <div class="h2"> {{model.title}} 
+          <time-note-display ng-show="(model.getCountDashboardWidget(model.rows)!=0)"></time-note-display>
+        </div>
+      </div>
+      <div class="pull-right">
+        <div class="form-group h2 pull-right">
+          <select class="select2 form-control hidden-xs" ng-model="model.options.autorefresh">
+            <option value="1">Every 1 Minute</option>
+            <option value="5">Every 5 Minutes</option>
+            <option value="15">Every 15 Minutes</option>
+            <option value="30">Every 30 Minutes</option>
+            <option value="">No Auto-Refresh</option>
+          </select>
+          <button class="btn btn-info " ng-disabled="model.refreshNow" ng-click="model.refreshNow= true">
+            <i class="glyphicon glyphicon-refresh" ng-class="model.refreshNow ?'spin':''"></i> Refresh Now
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-12 hidden-xs" ng-if="model.getCountDashboardWidget(model.rows)==0">    
+    <hr>
+    <div class="dashboard-preview-background">
+    </div>
+  </div>
+</div>

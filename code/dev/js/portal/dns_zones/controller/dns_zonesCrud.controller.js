@@ -59,6 +59,10 @@
 
     // Fetch list of records
     $scope.$on('$stateChangeSuccess', function (state, stateTo, stateParam) {
+      angular.extend($scope.filter,{
+        predicate: 'updated_at',
+        reverse: true
+      });
       var data = null;
       // NOTE: set filter params for specific state
       if ($state.is('index.accountSettings.accountresources')) {
