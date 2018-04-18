@@ -76,7 +76,7 @@
               if (!!timeout_) {
                 $timeout.cancel(timeout_);
               }
-              
+
               if ($config.INTRO_IS_ACTIVE) {
                 activateIntro();
               }
@@ -84,10 +84,10 @@
               function activateIntro() {
                 var userPermissions = User.getPermissions();
 
-                var timeOut = 30000;              
-                var pollPerm = function () {                  
+                var timeOut = 30000;
+                var pollPerm = function () {
                   userPermissions = User.getPermissions();
-                  if (!userPermissions) {                    
+                  if (!userPermissions) {
                     timeOut -= 1000;
                     if (timeOut > 0) {
                       setTimeout(pollPerm, 1000);
@@ -104,14 +104,14 @@
                           }
                         }
                       }
-    
+
                       for (var j = 0; j < restrictedPerms.length; j++) {
                         var perm = restrictedPerms[j];
                         for (var k = 0; k < $rootScope.IntroOptions.steps.length; k++) {
                           checkStepPerm($rootScope.IntroOptions.steps[k], perm);
                         }
                       }
-    
+
                     }
                     var intro = $localStorage.intro || { isShowMainIntro: false, isSkipIntro: false };
                     var testEnv;
@@ -127,7 +127,7 @@
                       ['index.apps', 'index.reports', 'index.webApp', 'index.accountSettings'].forEach(function (menuState) {
                         $rootScope.menuExpandedNodes[menuState] = false;
                       });
-    
+
                       timeout_ = $timeout(function () {
                         $scope.introOpen();
                         $localStorage.intro = intro;
@@ -166,7 +166,7 @@
                   case 'side-menu-sub-item__open-ticket':
                   case 'side-menu-sub-item__network-status':
                     $rootScope.menuExpandedNodes['index.help'] = true;
-                    
+
                     ['index.apps', 'index.reports', 'index.webApp', 'index.accountSettings'].forEach(function (menuState) {
                       $rootScope.menuExpandedNodes[menuState] = false;
                     });
@@ -176,7 +176,6 @@
                   case 'side-menu-sub-item__webApp-cache':
                   case 'side-menu-sub-item__webApp-ssl_names':
                   case 'side-menu-sub-item__webApp-staging-environment':
-                  case 'side-menu-sub-item__webApp-domains':
                     // NOTE: open menu item
                     ['index.webApp'].forEach(function (menuState) {
                       $rootScope.menuExpandedNodes[menuState] = true;
@@ -193,11 +192,11 @@
                     });
                 }
 
-                
+
               };
-                };        
-                pollPerm();        
-              }              
+                };
+                pollPerm();
+              }
             }
           }
         },
