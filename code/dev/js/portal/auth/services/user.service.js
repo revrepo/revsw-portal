@@ -7,6 +7,27 @@
 
   /*@ngInject*/
   function User($localStorage, $http, $config, $q, DomainsConfig, $auth, Groups, $state, AlertService, Companies) {
+
+    /** 
+     * Polyfill for String.includes()
+     * Ignoring linting for this because we are extending a native object
+     */
+    // jshint ignore:start
+    if (!String.prototype.includes) {
+      String.prototype.includes = function(search, start) {
+        if (typeof start !== 'number') {
+          start = 0;
+        }
+        
+        if (start + search.length > this.length) {
+          return false;
+        } else {
+          return this.indexOf(search, start) !== -1;
+        }
+      };
+    }
+    // jshint ignore:end
+
     /**
      * List of Users domains
      * @type {Array}
