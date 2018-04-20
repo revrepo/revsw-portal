@@ -175,7 +175,7 @@
             <i class="sub-menu-icon fa fa-users"></i> Groups
           </a>
         
-        <a ui-sref-active="active" ui-sref="index.accountSettings.companies" class="side-menu-sub-item" ng-if="userService.isReseller() || userService.isRevadmin() && userService.hasAccessTo('accounts')">
+        <a ui-sref-active="active" ui-sref="index.accountSettings.companies" class="side-menu-sub-item" ng-if="(userService.isReseller() || userService.isRevadmin()) && userService.hasAccessTo('accounts')">
             <i class="sub-menu-icon fa fa-list-alt"></i> Accounts</a>
         <a ui-sref-active="active" ui-sref="index.accountSettings.keys" class="side-menu-sub-item" ng-if="!userService.isUser() && userService.hasAccessTo('API_keys')">
             <i class="sub-menu-icon fa fa-key"></i> API Keys
