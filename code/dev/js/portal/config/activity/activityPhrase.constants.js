@@ -43,7 +43,8 @@
 //        'object': 'Object',
         'dnszone':'DNS Zone',
         'dnsrecord': 'DNS Zone Record',
-        'wafrule': 'WAF Rule'
+        'wafrule': 'WAF Rule',
+        'group': 'Group'
       },
       /**
        * @name  EVENT_TYPES
