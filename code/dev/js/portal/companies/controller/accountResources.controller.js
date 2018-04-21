@@ -17,6 +17,14 @@
     $scope.childAccs = null;
 
     var selAccount = User.getSelectedAccount();
+    var userAcc = User.getSelectedAccount();
+    if (userAcc.companyName) {
+      var acc = {
+        acc_name: User.getSelectedAccount().companyName,
+        acc_id: User.getSelectedAccount().id,
+        vendor_profile: User.getSelectedAccount().vendor_profile
+      };
+    }
     //  ---------------------------------
     $scope.onUpdate = function () {
       if ($scope.accounts.length === 0 || !$scope.account) {
@@ -43,6 +51,7 @@
     $scope.onAccountSelect = function (acc) {
       $scope._loading = true;
       User.selectAccount(acc);
+      userAcc = acc;
       $scope.onClickRefresh();
     };
     /**
@@ -64,22 +73,17 @@
 
     $scope.getRelativeDate = function (datetime) {
       return moment.utc(datetime).fromNow();
-    };
-
+    };    
+    
     $scope.getListTitle = function () {
-      if (User.getSelectedAccount().acc_name) {
-        if (User.getSelectedAccount().acc_name.trim() !== 'All Accounts') {
-          return 'For Account "' + User.getSelectedAccount().acc_name.trim() + '"';
+      if (userAcc.acc_name) {
+        if (userAcc.acc_name.trim() !== 'All Accounts') {
+          return 'For Account "' + userAcc.acc_name.trim() + '"';
         } else {
           return '';
         }
       } else {
-        if (User.getSelectedAccount().companyName) {
-          var acc = {
-            acc_name: User.getSelectedAccount().companyName,
-            acc_id: User.getSelectedAccount().id,
-            vendor_profile: User.getSelectedAccount().vendor_profile
-          };
+        if (userAcc.companyName) {
           $scope.account = acc;
           return 'For Account "' + acc.acc_name.trim() + '"';
         } else {
