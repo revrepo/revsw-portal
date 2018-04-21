@@ -400,11 +400,13 @@
           !model.rule_name ||
           (!model.account_id && !$scope.model.account_id) ||
           !model.rule_type ||
+          !model.rule_body ||
           !model.visibility;
       } else {
         return $scope._loading ||
           (!model.account_id && !$scope.model.account_id) ||
           !model.rule_type ||
+          !model.rule_body ||
           !model.visibility;
       }
     };
