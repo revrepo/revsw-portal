@@ -93,13 +93,18 @@
       $scope.list().then(function (res) {
         $scope.listOfAccs = [];
         $scope.companies = res;
+        $scope.parentCompanies = _.filter($scope.companies, function (acc) {
+          return !acc.parent_account_id;
+        });
         $scope.companies.forEach(function (comp) {
           if (comp.parent_account_id && comp.parent_account_id !== '') {
             if ($localStorage.userMainAccount && (comp.parent_account_id === $localStorage.userMainAccount.id)) {
               comp.parentAccount = $localStorage.userMainAccount;
+              comp.parentAccountName = $localStorage.userMainAccount.companyName;
             } else {
               Companies.get({ id: comp.parent_account_id }).$promise.then(function (parentAcc) {
                 comp.parentAccount = parentAcc;
+                comp.parentAccountName = parentAcc.companyName;
               });
             }            
           }
@@ -114,7 +119,7 @@
       }
     });
 
-    $scope.filterKeys = ['companyName', 'comment', 'createdBy', 'updated_at', 'subscription_name', 'subscription_state', 'created_at'];
+    $scope.filterKeys = ['companyName', 'comment', 'createdBy', 'updated_at', 'subscription_name', 'subscription_state', 'created_at', 'parentAccountName'];
     /**
      * @name  getCompany
      * @description

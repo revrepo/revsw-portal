@@ -46,6 +46,22 @@
               </div>
             </div>
           </div>
+          <div class="form-group" ng-if="auth.isRevadmin()">
+            <label for="company" class="col-sm-2 control-label">Parent Company </label>
+            <div class="col-sm-10">
+              <span ng-show="!_loading && companies.length==0" class="loader--waite-company"><i class="glyphicon glyphicon-refresh spin"></i> Please wait...</span>
+              <ui-select ng-if="!_loading && companies.length>0" ng-animate-disabled theme="select2" ng-disabled="_loading" ng-model="model.parent_account_id" id="company" name="accountId">
+                <ui-select-match placeholder="Select Account">{{$select.selected.companyName}}</ui-select-match>
+                <ui-select-choices repeat="item.id as  item in parentCompanies | filter: {companyName: $select.search}">
+                  <div ng-bind-html="item.companyName|highlight: $select.search"></div>
+                </ui-select-choices>
+              </ui-select>
+              <label for="company" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Select here the parent account of this company">
+                <i class="fa fa-question-circle"></i>
+              </label>
+              <a ui-sref="index.accountSettings.companies" class="btn btn-sm btn-primary" id="btn-manage-accounts" uib-tooltip="Manage Accounts" ng-disabled="_loading"><i class="fa fa-list-alt"></i> Manage Accounts</a>
+            </div>
+          </div>
           <div class="form-group" ng-if="auth.isRevadmin()" ng-class="{ 'has-error': createForm.vendor_profile.$invalid && createForm.comment.$dirty }">
             <label for="vendor_profile" class="col-sm-2 control-label">Vendor Profile</label>
             <div class="col-sm-10">
