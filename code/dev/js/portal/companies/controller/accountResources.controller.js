@@ -65,6 +65,14 @@
     $scope.getRelativeDate = function (datetime) {
       return moment.utc(datetime).fromNow();
     };
+
+    $scope.getListTitle = function () {
+      if (User.getSelectedAccount().acc_name.trim() !== 'All Accounts') {
+        return 'For Account "' + User.getSelectedAccount().acc_name.trim() + '"';
+      } else {
+        return '';
+      }
+    };
   }
 
 })();
