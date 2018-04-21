@@ -67,10 +67,24 @@
     };
 
     $scope.getListTitle = function () {
-      if (User.getSelectedAccount().acc_name.trim() !== 'All Accounts') {
-        return 'For Account "' + User.getSelectedAccount().acc_name.trim() + '"';
+      if (User.getSelectedAccount().acc_name) {
+        if (User.getSelectedAccount().acc_name.trim() !== 'All Accounts') {
+          return 'For Account "' + User.getSelectedAccount().acc_name.trim() + '"';
+        } else {
+          return '';
+        }
       } else {
-        return '';
+        if (User.getSelectedAccount().companyName) {
+          var acc = {
+            acc_name: User.getSelectedAccount().companyName,
+            acc_id: User.getSelectedAccount().id,
+            vendor_profile: User.getSelectedAccount().vendor_profile
+          };
+          $scope.account = acc;
+          return 'For Account "' + acc.acc_name.trim() + '"';
+        } else {
+          return '';
+        }
       }
     };
   }

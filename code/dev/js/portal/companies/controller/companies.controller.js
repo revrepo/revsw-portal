@@ -34,6 +34,7 @@
     if ($state.is('index.accountSettings.accountresources')) {
       // child accounts
       $scope.filter.limit = $config.MIN_LIMIT_RECORDS_IN_TABLE;
+      $localStorage[STORAGE_NAME_LIST_FILTER_].limit = $scope.filter.limit;
       var data = {
         filters: {
           parent_account_id: !User.getSelectedAccount() ? null : User.getSelectedAccount().acc_id
@@ -46,6 +47,9 @@
         .then(function (res) {
           $scope.records = res;           
         });
+    } else {
+      $scope.filter.limit = $config.DEFAULT_LIMIT_RECORDS_IN_TABLE;
+      $localStorage[STORAGE_NAME_LIST_FILTER_].limit = $scope.filter.limit;
     }
 
     $scope.companies = [];
