@@ -96,6 +96,13 @@
         $scope.parentCompanies = _.filter($scope.companies, function (acc) {
           return !acc.parent_account_id;
         });
+
+        var emptyParent = {
+          companyName: '--- No Parent Account Selected ---',
+          id: null
+        };
+        $scope.parentCompanies.splice(0, 0, emptyParent);
+
         $scope.companies.forEach(function (comp) {
           if (comp.parent_account_id && comp.parent_account_id !== '') {
             if ($localStorage.userMainAccount && (comp.parent_account_id === $localStorage.userMainAccount.id)) {
