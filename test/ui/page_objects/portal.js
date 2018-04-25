@@ -137,6 +137,7 @@ var ApiKeysHelpers = require('./../common/helpers/apiKeys.js');
 var DomainsHelpers = require('./../common/helpers/domains.js');
 var SSLCertsHelpers = require('./../common/helpers/sslCerts');
 var UsageReportHelpers = require('./../common/helpers/usageReport.js');
+var InvitationPage = require('./../page_objects/invitation/setPasswordPage');
 // This `Portal` Page Object is the entry point to use all other Page Objects
 // that abstract all components from the Portal App.
 var Portal = {
@@ -161,6 +162,7 @@ var Portal = {
   globalSearcher: GlobalSearcher,
 
   // Pages that compound this Portal app/site
+  invitationPage: InvitationPage,
   loginPage: LoginPage,
   goodByePage: GoodByePage,
   userListPage: ListUsersPage,

@@ -164,7 +164,7 @@ describe('Functional', function () {
               .click();
             var row = Portal.userListPage.table.getFirstRow();
             var userRole = row.getRoleCell().getText();
-            expect(userRole).toContain(Constants.user.roles.USER);
+            expect(userRole).toContain(Constants.user.roles.ADMIN);
           });
 
         it('should apply `ascendant` sorting by `2FA` column',

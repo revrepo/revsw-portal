@@ -198,11 +198,12 @@ var AddUser = {
    *
    * @param {Object} user, user data with the schema specified in
    * DataProvider.generateUser()
+   * @param {Boolean} skipRole skip role setting (if we are admin)
    *
    * @returns {Promise}
    */
-  createUser: function (user) {
-    this.form.fill(user);
+  createUser: function (user, skipRole) {
+    this.form.fill(user, skipRole);
     return this.clickCreateUser();
   }
 };

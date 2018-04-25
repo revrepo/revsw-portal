@@ -748,8 +748,10 @@ var UserForm = {
    *        password: String,
    *        passwordConfirm: String
    *    }
+   * 
+   * @param {Boolean} skipRole skip role setting
    */
-  fill: function (user) {
+  fill: function (user, skipRole) {
     if (user.email !== undefined) {
       this.setEmail(user.email);
     }
@@ -759,7 +761,7 @@ var UserForm = {
     if (user.lastName !== undefined) {
       this.setLastName(user.lastName);
     }
-    if (user.role !== undefined) {
+    if (user.role !== undefined && !skipRole) {
       this.setRole(user.role);
     }
     if (user.company !== undefined) {

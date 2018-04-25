@@ -60,13 +60,6 @@ var DataProvider = {
     var lastName = data.lastName || faker.name.lastName();
     var currentUser = Session.getCurrentUser();
 
-    // Special case when the portal user is creating a new user
-    // is a reseller or rev-admin which require the specify the
-    // company the new user should be associated with
-    if (currentUser !== undefined && currentUser.role !== 'Admin' && vendorData === undefined) {
-      data.company = ['API QA Reseller Company'];
-    }
-
     return {
       email: [firstName, Date.now() + '@mailinator.com']
         .join('-')
@@ -75,8 +68,7 @@ var DataProvider = {
       lastName: lastName,
       role: data.role || Constants.user.roles.ADMIN,
       password: 'password1',
-      passwordConfirm: 'password1',
-      company: data.company
+      passwordConfirm: 'password1'
     };
   },
 
