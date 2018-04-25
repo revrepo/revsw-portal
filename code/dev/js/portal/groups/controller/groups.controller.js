@@ -36,7 +36,7 @@
         $scope.model = {};
         angular.merge($scope.model, {
           name: '',
-          account_id: $scope.auth.isRevadmin() || $scope.auth.isReseller() ? '' : $scope.auth.getUser().companyId[0],
+          account_id: $scope.auth.isRevadmin() || $scope.auth.isReseller() ? '' : $scope.auth.getUser().account_id,
           comment: '',
           permissions: {
             read_only: false,

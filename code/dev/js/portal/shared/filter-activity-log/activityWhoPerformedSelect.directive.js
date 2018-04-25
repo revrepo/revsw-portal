@@ -27,7 +27,7 @@
         .then(function(data) {
           data.forEach(function(item) {
             var name_ = item.firstname + ' ' + item.lastname + ' (' + item.email + ')';
-            service.data.push({ id: item.user_id, userType: 'user', name: name_, accountId: item.companyId });
+            service.data.push({ id: item.user_id, userType: 'user', name: name_, accountId: item.account_id });
           });
         });
 

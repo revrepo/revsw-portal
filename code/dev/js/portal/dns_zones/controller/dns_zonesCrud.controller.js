@@ -147,12 +147,8 @@
             $scope.model.account_id = $scope.companies[0].id;
           }
         });
-      } else if (!angular.isArray($scope.auth.getUser().companyId)) {
-        $scope.model.account_id = $scope.auth.getUser().companyId;
-      } else if ($scope.auth.getUser().companyId.length === 1) {
-        $scope.model.account_id = $scope.auth.getUser().companyId[0];
       } else {
-        $scope.fetchCompanies($scope.auth.getUser().companyId);
+        $scope.model.account_id = $scope.auth.getUser().account_id;
       }
     };
 

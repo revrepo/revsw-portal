@@ -51,7 +51,7 @@
       if ($stateParams.id) {
         $scope.getCompany($stateParams.id);
       } else {
-        $scope.getCompany($scope.user.companyId);
+        $scope.getCompany($scope.user.account_id);
       }
     };
 

@@ -672,12 +672,8 @@
           if (!!$scope.companies && $scope.companies.length === 1) {
             $scope.model.account_id = $scope.companies[0].id;
           }
-        } else if (!angular.isArray($scope.auth.getUser().companyId)) {
-          $scope.model.account_id = $scope.auth.getUser().companyId;
-        } else if ($scope.auth.getUser().companyId.length === 1) {
-          $scope.model.account_id = $scope.auth.getUser().companyId[0];
         } else {
-          $scope.fetchCompanies($scope.auth.getUser().companyId);
+          $scope.model.account_id = $scope.auth.getUser().account_id;
         }
       };
 
@@ -715,8 +711,8 @@
         model.acc_id = model.account_id !== undefined ? model.account_id : model.id;
 
         // fix for users list
-        if (model.companyId !== undefined) {
-          model.acc_id = model.companyId[0];
+        if (model.account_id !== undefined) {
+          model.acc_id = model.account_id;
         }
         User.selectAccount(model);
         $state.go('index.accountSettings.accountresources');
