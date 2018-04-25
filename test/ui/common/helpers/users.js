@@ -43,7 +43,7 @@ var UsersHelper = {
         // is a rev-admin which require the specify the
         // company the new user should be associated with
         if (user.role === 'Rev Admin') {
-          data.companyId = [user.account.id];
+          data.account_id = user.account.id;
         }
         return API.helpers.users.create(data);
       })

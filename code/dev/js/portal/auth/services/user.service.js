@@ -151,8 +151,7 @@
                 var res = data.data;           
 
                 // Check roles
-                if (res.role !== $config.ROLE.USER &&
-                  res.role !== $config.ROLE.ADMIN &&
+                if (res.role !== $config.ROLE.ADMIN &&
                   res.role !== $config.ROLE.RESELLER &&
                   res.role !== $config.ROLE.REVADMIN) {
                   // do not have permission
@@ -697,14 +696,7 @@
      */
     function getACL(){
       var user = getUser();
-      var defaultACL = {
-        readOnly: true,
-        test: false,
-        configure: false,
-        reports: false,
-        dashBoard: true
-      };
-      return (!!user)  ? user.access_control_list :  defaultACL;
+      return user.permissions;
     }
 
     function getGroup() {

@@ -59,15 +59,7 @@
       if (!$scope.model || reinit) {
         $scope.model = {};
         angular.merge($scope.model, {
-          managed_account_ids: [],
           theme: 'light',
-          access_control_list: {
-            dashBoard: true,
-            reports: false,
-            configure: false,
-            test: false,
-            readOnly: false
-          },
           email: '',
           firstname: '',
           lastname: '',
@@ -425,7 +417,6 @@
       if (!model) {
         return;
       }
-      model.access_control_list.dashBoard = true;
       model.self_registered = false; // this is not a self registered user.
       var _model = $scope.prepareUserDataForUpdate(model);
       if (_model.group && _model.group !== 'null') {

@@ -16,7 +16,7 @@
         $scope.isAuthorized = User.isAuthed();
 
         $scope.user = User.getUser();
-        $scope.userACL = $scope.user.access_control_list;
+        $scope.userACL = $scope.user.permissions;
         $scope.isReadOnly = function () {
           return User.isReadOnly();
         };

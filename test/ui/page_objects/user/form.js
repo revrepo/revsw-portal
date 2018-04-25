@@ -80,11 +80,14 @@ var UserForm = {
         model: 'model.role'
       },
       company: {
-        model: 'model.companyId',
+        model: 'model.account_id',
         id: 'company'
       },
       domain: {
         model: 'model.domain'
+      },
+      group: {
+        model: 'model.group'
       }
     }
   },
@@ -137,6 +140,10 @@ var UserForm = {
    */
   getRoleDDown: function () {
     return element(by.model(this.locators.dropDowns.role.model));
+  },
+
+  getGroupDDown: function () {
+    return element(by.model(this.locators.dropDowns.group.model));
   },
 
   /**
@@ -387,6 +394,13 @@ var UserForm = {
     return this
       .getRoleDDown()
       .element(by.cssContainingText('option', role))
+      .click();
+  },
+
+  setGroup: function (group) {
+    return this
+      .getGroupDDown()
+      .element(by.cssContainingText('option', group))
       .click();
   },
 
@@ -776,9 +790,7 @@ var UserForm = {
     this.clearFirstName();
     this.clearLastName();
     this.setRole('--- Select Role ---');
-    this.setAccessControls([]);
-    this.clearPassword();
-    this.clearPasswordConfirm();
+    this.setGroup('--- Select Group ---');
     // clear specific data for differen roles
     if (!!user && (user.role === 'revadmin' || user.role === 'reseller')) {
       // TODO: check work for 'revadmin' and 'reseller'
