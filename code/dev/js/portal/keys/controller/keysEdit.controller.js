@@ -29,7 +29,7 @@
           // Fetch id
           var user = $scope.auth.getUser();
           $scope.companies = [{
-            id: user.companyId[0]
+            id: user.account_id
           }];
         }
       });

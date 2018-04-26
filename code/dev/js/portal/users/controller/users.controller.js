@@ -59,15 +59,7 @@
       if (!$scope.model || reinit) {
         $scope.model = {};
         angular.merge($scope.model, {
-          managed_account_ids: [],
           theme: 'light',
-          access_control_list: {
-            dashBoard: true,
-            reports: false,
-            configure: false,
-            test: false,
-            readOnly: false
-          },
           email: '',
           firstname: '',
           lastname: '',
@@ -156,7 +148,6 @@
         .then(function (dataRefs) {
           $scope.companies = _.sortBy(dataRefs[0], 'companyName');
           $scope.domains = _.sortBy(dataRefs[1], 'domain_name');
-          updateListManageAccounts();
           return dataRefs;
         });
     }
@@ -177,74 +168,11 @@
       }
     };
 
-    /**
-     * @name  applyValidationDomainNames
-     * @description
-     *
-     * @return {Array}
-     */
-    function applyValidationDomainNames() {
-      var domains = [];
-      if (angular.isArray($scope.model.companyId)) {
-        angular.forEach($scope.model.companyId, function (account_id) {
-          angular.forEach(_.findByValues($scope.domains, 'account_id', account_id)
-            .map(function (item) {
-              return item.domain_name;
-            }),
-            function (item) {
-              domains.push(item);
-            });
-        });
-        angular.forEach($scope.model.managed_account_ids, function (account_id) {
-          angular.forEach(_.findByValues($scope.domains, 'account_id', account_id)
-            .map(function (item) {
-              return item.domain_name;
-            }),
-            function (item) {
-              domains.push(item);
-            });
-        });
-      }
-
-      if ($scope.domains.length !== 0) {
-        $scope.model.domain = _.uniq(_.intersection(domains, $scope.model.domain));
-        return _.uniq(_.intersection(domains, $scope.model.domain));
-      }
-
-      return $scope.model.domain;
-    }
-    /**
-     * @name updateListManageAccounts
-     *
-     * @param {Object} options
-     */
-    function updateListManageAccounts(options) {
-      var companyId;
-      if (!!options && !!options.companyId) {
-        companyId = options.companyId[0];
-      }
-      applyValidationDomainNames();
-      if (!companyId || companyId.length <= 1) {
-        return;
-      }
-      $scope.model.managed_account_ids = _.filter($scope.model.managed_account_ids, function (item) {
-        return (item !== companyId);
-      });
-
-    }
-
-
     $scope.getUser = function (id) {
       $scope._loading = true;
       $scope.get(id)
         .then(dependencies)
         .then(function () {
-          $scope.model.managed_account_ids = angular.copy($scope.model.companyId);
-          $scope.model.managed_account_ids.shift();
-          $scope.vm.managedAccountIds = _.filter($scope.companies, function (item) {
-            return (($scope.model.companyId.indexOf(item.id) > -1) || ($scope.model.managed_account_ids.indexOf(item.id) > -1));
-          });
-          $scope.model.companyId.length = 1;
           $scope.resendDisabled = ((Date.parse($scope.model.invitation_sent_at) + $config.INVITATION_COOLDOWN_MS) < Date.now()) === false;
 
           if (!$scope.model.permissions) {
@@ -359,7 +287,6 @@
       if (User.isAdmin()) {
         model.role = 'admin';
         model.account_id = User.getUser().account_id;
-        model.companyId = [User.getUser().account_id];
       }
 
       delete model.managed_account_ids;
@@ -490,12 +417,8 @@
       if (!model) {
         return;
       }
-      model.access_control_list.dashBoard = true;
       model.self_registered = false; // this is not a self registered user.
       var _model = $scope.prepareUserDataForUpdate(model);
-      if (!_model.companyId || !angular.isArray(_model.companyId)) {
-        _model.companyId = [model.account_id] || [$scope.model.account_id];
-      }
       if (_model.group && _model.group !== 'null') {
         _model.group_id = _model.group;
       }
@@ -503,9 +426,6 @@
       $scope.create(_model, isStay)
         .then(function (data) {
           initModel(true);
-          if (angular.isArray($scope.model.companyId)) {
-            $scope.model.companyId.length = 0;
-          }
           if (angular.isArray($scope.model.domain)) {
             $scope.model.domain.length = 0;
           }
@@ -604,7 +524,7 @@
      */
     $scope.getAccountsDomainNameList = function () {
       var domains = [];
-      var account_id = $scope.model.companyId || $scope.model.account_id;
+      var account_id = $scope.model.account_id;
       if (angular.isArray(account_id)) {
         angular.forEach(account_id, function (account_id) {
           angular.forEach(_.findByValues($scope.domains, 'account_id', account_id)
@@ -631,7 +551,7 @@
 
     $scope.getCompaniesManageList = function () {
       var companies = [];
-      var account_id = $scope.model.companyId || $scope.model.account_id;
+      var account_id = $scope.model.account_id;
       return _.sortBy(_.filter($scope.companies, function (item) {
         if (!!account_id && account_id.indexOf(item.id) > -1) {
           return false;
@@ -647,42 +567,15 @@
       $localStorage.selectedUser = model;
     };
 
-    // NOTE: watch on change companyId for update available domain names
-    $scope.$watch('model.companyId', function (newVal, oldVal) {
-      if (newVal !== undefined && oldVal !== undefined) {
-        applyValidationDomainNames(); // NOTE: clean selected domain
-        updateListManageAccounts({
-          companyId: newVal
-        });
-      }
-    }, true);
-
     $scope.$watch('vm.managedAccountIds', function (newVal, oldVal) {
       if (newVal !== undefined && oldVal !== undefined && newVal !== oldVal) {
-        applyValidationDomainNames(); // NOTE: clean selected domain
         $scope.model.managed_account_ids = _.map($scope.vm.managedAccountIds, function (item) {
           return item.id;
         });
       }
     });
 
-    $scope.$watch('model.role', function (newVal, oldVal) {
-      if (newVal !== undefined && oldVal !== undefined) {
-        if (((newVal === 'reseller' && oldVal !== '') || oldVal === 'reseller') && angular.isArray($scope.model.companyId)) {
-          $scope.model.companyId.length = 0;
-          $scope.model.managed_account_ids.length = 0;
-          $scope.vm.managedAccountIds.length = 0;
-        }
-      }
-    });
-
     $scope.onOneAccountSelect = function (model) {
-      if (angular.isArray($scope.model.companyId)) {
-        $scope.model.companyId.length = 1;
-      } else {
-        $scope.model.companyId = [];
-      }
-      $scope.model.companyId[0] = model;
       $scope.model.account_id = model;
       $scope.model.group = 'null';
     };
@@ -784,12 +677,6 @@
         return;
       }
       if (model.role === 'reseller' && User.getUser().role === 'reseller') {
-        if (angular.isArray($scope.model.companyId)) {
-          $scope.model.companyId.length = 1;
-        } else {
-          $scope.model.companyId = [];
-        }
-        $scope.model.companyId[0] = User.getUser().account_id;
         $scope.model.account_id = User.getUser().account_id;
         return false;        
       } else if (model.role === 'admin' && User.getUser().role === 'reseller'){

@@ -126,7 +126,7 @@
       return moment.utc(datetime).fromNow();
     };
 
-    $scope.model.account_id = $scope.auth.getUser().companyId[0];
+    $scope.model.account_id = $scope.auth.getUser().account_id;
 
     User.getUserDomains(true)
       .then(function (domains) {

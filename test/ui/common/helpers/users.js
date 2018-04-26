@@ -43,7 +43,7 @@ var UsersHelper = {
         // is a rev-admin which require the specify the
         // company the new user should be associated with
         if (user.role === 'Rev Admin') {
-          data.companyId = [user.account.id];
+          data.account_id = user.account.id;
         }
         return API.helpers.users.create(data);
       })
@@ -68,6 +68,22 @@ var UsersHelper = {
    */
   getUser: function (email) {
     return Utils.getAPIItemByField(email, 'email', user, '/v1/users');
+  },
+
+  completeInvitation: function (email) {
+    return API.helpers.authenticate(config.portal.users.revAdmin)
+      .then(function (res) {
+        return API.resources.users.getAll().then(function (res) {
+          res.body.forEach(function (user_) {
+            if (user_.email === email) {
+              return API
+                .helpers
+                .users
+                .completeInvitation(user_.user_id)
+            }
+          });
+        });
+      });
   }
 };
 

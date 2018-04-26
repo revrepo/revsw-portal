@@ -31,7 +31,7 @@
 
     _.defaultsDeep($scope.config, _defaultConfig);
     var u = User.getUser();
-    $scope.accountId = u.companyId[0] || null;
+    $scope.accountId = u.account_id || null;
     $scope.application = $scope.config.application;
 
     $scope.$watch('config.filters', function (newVal, oldVal) {

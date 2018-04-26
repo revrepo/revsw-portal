@@ -20,6 +20,7 @@ var config = require('config');
 var Portal = require('./../../../page_objects/portal');
 var DataProvider = require('./../../../common/providers/data');
 var Constants = require('./../../../page_objects/constants');
+var API = require('./../../../common/api').API;
 
 describe('Functional', function () {
   describe('Add user', function () {
@@ -47,7 +48,7 @@ describe('Functional', function () {
             var bret = DataProvider.generateUser();
             Portal.helpers.nav.goToUsers();
             Portal.userListPage.clickAddNewUser();
-            Portal.addUserPage.createUser(bret);
+            Portal.addUserPage.createUser(bret, true);
             john = bret;
             var alert = Portal.alerts.getFirst();
             expect(alert.getText())
@@ -56,36 +57,23 @@ describe('Functional', function () {
           });
 
         it('should be able to login with new user ', function (done) {
-          Portal.signOut().then(function () {
-            Portal.signIn(john);
-            expect(Portal
-              .loginPage
-              .getEmailTxtIn()
-              .isPresent()).toBeFalsy();
-
+          // complete invitation first
+          Portal.helpers.users.completeInvitation(john.email).then(function () {
             Portal.signOut().then(function () {
-              //log back into testing user              
-              Portal.signIn(user);
-              Portal.helpers.nav.goToUsers();
-              done();
+              Portal.signIn(john);
+              expect(Portal
+                .loginPage
+                .getEmailTxtIn()
+                .isPresent()).toBeFalsy();
+
+              Portal.signOut().then(function () {
+                //log back into testing user              
+                Portal.signIn(user);
+                Portal.helpers.nav.goToUsers();
+                done();
+              });
             });
           });
-        });
-
-        it('should create a new user with "user" role', function (done) {
-          Portal.helpers.users
-            .create({
-              firstName: 'Carl',
-              role: Constants.user.roles.USER
-            })
-            .then(function (carl) {
-              Portal.userListPage.refresh();
-              Portal.userListPage.searcher.setSearchCriteria(carl.email);
-              var firstUser = Portal.userListPage.table.getFirstRow();
-              expect(firstUser.getRole()).toEqual(Constants.user.roles.USER);
-              done();
-            })
-            .catch(done);
         });
 
         it('should create a new user with "admin" role', function (done) {
