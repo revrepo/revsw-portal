@@ -32,6 +32,7 @@ var UsersHelper = {
    * @returns {Object} Promise
    */
   create: function (data) {
+    /* jshint camelcase:false */
     if (data === undefined) {
       data = {};
     }
@@ -71,6 +72,7 @@ var UsersHelper = {
   },
 
   completeInvitation: function (email) {
+    /* jshint camelcase:false */
     return API.helpers.authenticate(config.portal.users.revAdmin)
       .then(function (res) {
         return API.resources.users.getAll().then(function (res) {
@@ -79,7 +81,7 @@ var UsersHelper = {
               return API
                 .helpers
                 .users
-                .completeInvitation(user_.user_id)
+                .completeInvitation(user_.user_id);
             }
           });
         });
