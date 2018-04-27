@@ -152,6 +152,10 @@ var MenuItems = {
       linkText: 'Users',
       area: MenuAreas.ADMIN
     },
+    GROUPS: {
+      linkText: 'Groups',
+      area: MenuAreas.ADMIN
+    },
     ACCOUNTS: {
       linkText: 'Accounts',
       area: MenuAreas.ADMIN

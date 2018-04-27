@@ -279,6 +279,14 @@ var NavHelper = {
     return SideBar.select(MenuItems.ADMIN.USERS);
   },
 
+  
+  /**
+   * Navigates to Admin > Groups
+   */
+  goToGroups: function () {
+    return SideBar.select(MenuItems.ADMIN.GROUPS);
+  },
+
   /**
    * Navigates to Admin > Accounts
    */

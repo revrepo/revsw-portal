@@ -35,6 +35,34 @@ var DataProvider = {
   session: Session,
 
   /**
+   * ### DataProvider.generateGroup()
+   *
+   * Generate a valid group object with all the data we require
+   *
+   * @param {Object} prefix
+   * @param {Object} data
+   *
+   * @returns {Object}, generate user data with the following schema:
+   *
+   *     {
+   *         name: string,
+   *         account_id: objectId,
+   *         comment: string,
+   *     }
+   */
+  generateGroup: function (prefix, data) {
+    if (!data) {
+      data = {};
+    }
+  
+    return {
+      name: data.name || ((prefix || '') + 'test-group-' + Date.now()),
+      account: data.account,
+      comment:  data.comment || 'test-group-' + Date.now()
+    };
+  },
+
+  /**
    * ### DataProvider.generateUser()
    *
    * Generates user data object based on the unique para that it requires.

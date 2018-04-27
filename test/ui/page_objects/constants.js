@@ -237,6 +237,11 @@ var Constants = {
       MSG_SUCCESS_DISABLE_2FA: 'Successfully disabled two factor authentication',
       MSG_WRONG_USERNAME_PASSWORD: 'Wrong username or password'
     },
+    groups: {
+      MSG_SUCCESS_ADD: 'Successfully created new group',
+      MSG_SUCCESS_UPDATE: 'Successfully updated the group',
+      MSG_SUCCESS_DELETE: 'Successfully deleted the group',
+    },
     accounts: {
       MSG_SUCCESS_ADD: 'Successfully created new account',
       MSG_SUCCESS_UPDATE: 'Successfully updated the account',

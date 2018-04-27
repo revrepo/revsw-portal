@@ -138,6 +138,9 @@ var DomainsHelpers = require('./../common/helpers/domains.js');
 var SSLCertsHelpers = require('./../common/helpers/sslCerts');
 var UsageReportHelpers = require('./../common/helpers/usageReport.js');
 var InvitationPage = require('./../page_objects/invitation/setPasswordPage');
+var ListGroupsPage = require('./../page_objects/group/listPage');
+var AddGroupsPage = require('./../page_objects/group/addPage');
+var EditGroupsPage = require('./../page_objects/group/editPage');
 // This `Portal` Page Object is the entry point to use all other Page Objects
 // that abstract all components from the Portal App.
 var Portal = {
@@ -168,6 +171,11 @@ var Portal = {
   userListPage: ListUsersPage,
   editUserPage: EditUserPage,
   addUserPage: AddUserPage,
+  groups: {
+    listPage: ListGroupsPage,
+    addPage:  AddGroupsPage,
+    editPage: EditGroupsPage
+  },
   securitySettingsPage: SecuritySettingsPage,
   updatePasswordPage: UpdatePasswordPage,
   dashboards: Dashboards,
