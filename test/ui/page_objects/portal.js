@@ -880,6 +880,17 @@ var Portal = {
           .clickManageRecords();
       });
   },
+
+  /**
+   * ### Portal.isLoggedIn()
+   * 
+   * @returns {Boolean} is logged in or not
+   */
+  isLoggedIn: function () {
+    return this.header.getHeaderBar().isPresent().then(function (val) {
+      return val;
+    });
+  }
 };
 
 module.exports = Portal;
