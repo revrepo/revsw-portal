@@ -149,7 +149,7 @@
      * @returns {Object}
      */
     function clearUpdateData(data) {
-      var fields = ['key_name', 'account_id', 'domains', 'allowed_ops', 'read_only_status', 'active'];
+      var fields = ['key_name', 'account_id', 'read_only_status', 'active'];
       return _.pick(_.clone(data), fields);
     }
 
