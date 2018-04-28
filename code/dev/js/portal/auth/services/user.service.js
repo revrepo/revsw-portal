@@ -840,6 +840,12 @@
         case 'usage_reports':
           returnState = 'index.billing.usage';
           break;
+        case 'billing_statements':
+          returnState = 'index.billing.statements';
+          break;
+        case 'billing_plan':
+          returnState = 'index.billing.plans';
+          break;
         default:
           returnState = null;
           break;
@@ -908,6 +914,12 @@
       }
       if (state.includes('index.billing.usage')) {
         return 'usage_reports';
+      }
+      if (state.includes('index.billing.statements')) {
+        return 'billing_statements';
+      }
+      if (state.includes('index.billing.plans')) {
+        return 'billing_plan';
       }
 
       return true;
