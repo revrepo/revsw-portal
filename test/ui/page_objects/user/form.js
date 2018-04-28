@@ -22,11 +22,14 @@
 var Constants = require('./../constants');
 var WebElement = require('./../../common/helpers/webElement');
 var DropDownWidget = require('./../common/dropDownWidget');
+var Permissions = require('./../common/permissions');
 
 // This `User Form` Page Object abstracts all operations or actions that a
 // common user could do in the Add User and Edit User page from the Portal
 // app/site.
 var UserForm = {
+
+  permissions: Permissions,
 
   // ## Properties
 
@@ -751,7 +754,7 @@ var UserForm = {
    * 
    * @param {Boolean} skipRole skip role setting
    */
-  fill: function (user, skipRole) {
+  fill: function (user) {
     if (user.email !== undefined) {
       this.setEmail(user.email);
     }
@@ -761,7 +764,7 @@ var UserForm = {
     if (user.lastName !== undefined) {
       this.setLastName(user.lastName);
     }
-    if (user.role !== undefined && !skipRole) {
+    if (user.role !== undefined) {
       this.setRole(user.role);
     }
     if (user.company !== undefined) {

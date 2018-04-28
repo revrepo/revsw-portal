@@ -42,6 +42,30 @@ describe('Functional', function () {
           Portal.signOut();
         });
 
+        it('should contain correct default permissions in edit user form', function (done) {
+          Portal.helpers.users
+              .create({
+                role: Constants.user.roles.ADMIN
+              })
+              .then(function (testUser) {
+                Portal.userListPage.refresh();
+                // Edit user
+                Portal.userListPage.searchAndClickEdit(testUser.email);
+                expect(Portal
+                  .editUserPage
+                  .form
+                  .permissions
+                  .getPermission('portalLogin')).toBeTruthy();
+                expect(Portal
+                  .editUserPage
+                  .form
+                  .permissions
+                  .getPermission('enforce2FA')).toBeFalsy();
+                done();
+              })
+              .catch(done);
+        });
+
         it('should update successfully the "first name" of an "admin-role" user',
           function (done) {
             Portal.helpers.users

@@ -22,11 +22,14 @@
 var Constants = require('./../constants');
 var WebElement = require('./../../common/helpers/webElement');
 var DropDownWidget = require('./../common/dropDownWidget');
+var Permissions = require('./../common/permissions');
 
 // This `User Form` Page Object abstracts all operations or actions that a
 // common user could do in the Add User and Edit User page from the Portal
 // app/site.
 var UserForm = {
+
+  permissions: Permissions,
 
   // ## Properties
 
