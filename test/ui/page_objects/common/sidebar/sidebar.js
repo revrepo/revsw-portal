@@ -75,8 +75,10 @@ var SideBar = {
     else if (locatorData.css) {
       locator = by.css(locatorData.css);
     }
-    else {
+    else if (locatorData.linkText) {
       locator = by.partialLinkText(locatorData.linkText);
+    } else {
+      locator = by.partialLinkText(locatorData);
     }
 
     if (locatorData.area) {
@@ -183,6 +185,16 @@ var SideBar = {
     upArrows
       .then(function () {
         return Promise.each(upArrows, function (arrow) {
+          return arrow.click();
+        });
+      });
+  },
+
+  expandAll: function () {
+    var downArrows = element.all(by.css(this.locators.arrowDown.css));
+    return downArrows
+      .then(function () {
+        return Promise.each(downArrows, function (arrow) {
           return arrow.click();
         });
       });

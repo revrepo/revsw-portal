@@ -235,7 +235,10 @@ var Constants = {
       MSG_INCORRECT_OTP_2FA: 'The supplied one time password is incorrect',
       MSG_INVALID_OTP_2FA: 'child "oneTimePassword" fails because',
       MSG_SUCCESS_DISABLE_2FA: 'Successfully disabled two factor authentication',
-      MSG_WRONG_USERNAME_PASSWORD: 'Wrong username or password'
+      MSG_WRONG_USERNAME_PASSWORD: 'Wrong username or password',
+      MSG_ENABLE_2FA: 'Two Factor Authentication (2FA) is enforced for your user account. ' +
+      'Please follow instructions on the screen to enable 2FA. ' +
+      'After that you will be allowed to use the admin panel.'
     },
     groups: {
       MSG_SUCCESS_ADD: 'Successfully created new group',

@@ -20,6 +20,7 @@
 
 // Requiring `user form` component page object
 var UserForm = require('./form');
+var UsersHelper = require('./../../common/helpers/users');
 
 // This `Add User` Page Object abstracts all operations or actions that a common
 // user could do in the Add User page from the Portal app/site.
@@ -198,13 +199,17 @@ var AddUser = {
    *
    * @param {Object} user, user data with the schema specified in
    * DataProvider.generateUser()
-   * @param {Boolean} skipRole skip role setting (if we are admin)
    *
    * @returns {Promise}
    */
-  createUser: function (user, skipRole) {
-    this.form.fill(user, skipRole);
-    return this.clickCreateUser();
+  createUser: function (user) {
+    this.form.fill(user);
+    return this.clickCreateUser().then(function () {
+      browser.sleep(5000);
+      return UsersHelper.completeInvitation(user.email).then(function () {
+        return true;
+      });
+    });    
   }
 };
 
