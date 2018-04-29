@@ -96,6 +96,20 @@
               r.subscription_name = 'Manual';
               return r;
             });
+
+            $scope.records.forEach(function (comp) {
+              if (comp.parent_account_id && comp.parent_account_id !== '') {
+                if ($localStorage.userMainAccount && (comp.parent_account_id === $localStorage.userMainAccount.id)) {
+                  comp.parentAccount = $localStorage.userMainAccount;
+                  comp.parentAccountName = $localStorage.userMainAccount.companyName;
+                } else {
+                  Companies.get({ id: comp.parent_account_id }).$promise.then(function (parentAcc) {
+                    comp.parentAccount = parentAcc;
+                    comp.parentAccountName = parentAcc.companyName;
+                  });
+                }            
+              }
+            });
           });
       }
 
@@ -111,7 +125,6 @@
           id: null
         };
         $scope.parentCompanies.splice(0, 0, emptyParent);
-
         $scope.companies.forEach(function (comp) {
           if (comp.parent_account_id && comp.parent_account_id !== '') {
             if ($localStorage.userMainAccount && (comp.parent_account_id === $localStorage.userMainAccount.id)) {
