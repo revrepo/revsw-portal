@@ -309,7 +309,7 @@
               <label for="domains_provisioned_list" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="'Provisioned' domains which are registered in the 'Web' section of the portal and provide full middle-mile acceleration">
                 <i class="fa fa-question-circle"></i>
               </label>
-              <a ui-sref="auth.hasAccessTo('domains') ? index.webApp.domains : null" id="btn-manage-domains" class="btn btn-sm btn-primary" uib-tooltip="Manage Domains" ng-disabled="_loading || !auth.hasAccessTo('domains')">
+              <a ui-sref="{{ auth.hasAccessTo('domains') ? 'index.webApp.domains' : '.' }}" id="btn-manage-domains" class="btn btn-sm btn-primary" uib-tooltip="Manage Domains" ng-disabled="_loading || !auth.hasAccessTo('domains')">
                 <i class="fa fa-list"></i> Manage Domains</a>
               <div class="error-messages" ng-messages="editForm.domainsBlackList.$error" role="alert" ng-messages-multiple>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>

@@ -105,7 +105,7 @@
               <label for="company" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Select here an account the user should be associated with">
                 <i class="fa fa-question-circle"></i>
               </label>
-              <a ui-sref="index.accountSettings.companies" class="btn btn-sm btn-primary" uib-tooltip="Manage Accounts" ng-disabled="_loading"><i class="fa fa-list-alt"></i> Manage Accounts</a>
+              <a ui-sref="{{auth.hasAccessTo('accounts') ? 'index.accountSettings.companies' : '.'}}" class="btn btn-sm btn-primary" uib-tooltip="Manage Accounts" ng-disabled="_loading || !auth.hasAccessTo('accounts')"><i class="fa fa-list-alt"></i> Manage Accounts</a>
               <div class="error-messages" ng-messages="editForm.accountId.$error" role="alert" ng-messages-multiple>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
               </div>
