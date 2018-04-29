@@ -44,7 +44,7 @@
       type: 'num'
     }, {
       targets: [2, 3, 4, 5],
-      orderable: false
+      orderable: true
     }];
     var traffic_total_ = 0;
     var info_ = null;
