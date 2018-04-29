@@ -38,7 +38,7 @@
                      id="name"
                      ng-pattern="COMPANY_NAME"
                      placeholder="Company Name" required>
-              <label for="cert_name" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Company Name TODO REVIEW TEXT">
+              <label for="cert_name" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Company Name">
                 <i class="fa fa-question-circle"></i>
               </label>
               <div class="error-messages" ng-messages="createForm.companyName.$error" role="alert" ng-messages-multiple>
@@ -72,7 +72,7 @@
                     <div ng-bind-html="item"></div>
                   </ui-select-choices>
                 </ui-select>
-                <label for="cert_name" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Vendor Profile TODO REVIEW TEXT">
+                <label for="cert_name" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Vendor Profile">
                   <i class="fa fa-question-circle"></i>
                 </label>
               </div>
@@ -87,7 +87,7 @@
               <div class="col-sm-12 form-group">
                 <textarea placeholder="Comment (max 300 symbol)" ng-maxlength="300" class="form-control inline-block" id="comment" name="comment" ng-model="model.comment" ng-pattern="COMMENT_NO_SPECIAL_CHARS" ng-disabled="_loading">
                 </textarea>
-                <label for="cert_name" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Comment TODO REVIEW TEXT">
+                <label for="cert_name" class="text-info" popover-append-to-body="{{true}}" popover-trigger="mouseenter" uib-popover="Comment">
                   <i class="fa fa-question-circle"></i>
                 </label>
               </div>
