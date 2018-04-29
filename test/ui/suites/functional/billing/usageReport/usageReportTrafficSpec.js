@@ -33,7 +33,7 @@ describe('Functional', function () {
       var avgTrafficPerDay = 0;
       var avgSentBytesPerDay = 0;
       var avgRecvBytesPerDay = 0;
-      var revTestId = config.get('portal.users.user').account.id;
+      var revTestId = config.get('portal.users.admin').account.id;
       var sentBps = 0;
       var recvBps = 0;
       var cacheHits = {};

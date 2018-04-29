@@ -24,7 +24,7 @@
     };
 
     // $scope.exampleJsons for advanced cache
-    if ($state.current.name === 'index.webApp.advanced') {
+    if ($state.current.name === 'index.webApp.advanced') {    
       $scope.exampleJsons = [{
         'text': 'Purge all PNG files under /images, <b>non-recursive</b> (so e.g. files under /images/today/ will not be purged):',
         'json': {
@@ -374,5 +374,9 @@
     vm.getRelativeDate = function(datetime) {
       return moment.utc(datetime).fromNow();
     };
+
+    $scope.$watch('$stateChangeSuccess', function () {
+      document.getElementById('side-menu-sub-item__webApp-cache').classList.add('active');
+    });
   }
 })();

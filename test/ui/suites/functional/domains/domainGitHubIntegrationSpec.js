@@ -26,7 +26,6 @@ describe('Functional', function() {
     var gitHubPersonalAccessTokenForAccountId = config.get('gitHubPersonalAccessTokenForAccountId');
     var credantionalsList = [
       // TODO: need change step create new domain config (use API helper) for run test for user
-      // config.get('portal.users.user'),
       config.get('portal.users.admin'),
       config.get('portal.users.revAdmin'),
       config.get('portal.users.reseller')

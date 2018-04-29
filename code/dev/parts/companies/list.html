@@ -141,9 +141,9 @@
                   </div>
                 </td>
                 <td ng-if="auth.isRevadmin() || auth.isReseller()">
-                    <a ui-sref=".edit({id: item.parentAccount.id})" ng-if="!item.loading" uib-tooltip="Edit Parent Account">
-                        {{item.parentAccountName}}
-                      </a>                  
+                  <a ui-sref=".edit({id: item.parentAccount.id})" uib-tooltip="Edit Parent Account">
+                    {{item.parentAccount.companyName}}
+                  </a>
                 </td>
                 <td ng-if="auth.isRevadmin()">
                   <a ng-click="onVendorUpdate(item)" class="account-vendor">

@@ -31,18 +31,6 @@ describe('Functional', function () {
       config.get('portal.users.revAdmin')
     ];
 
-    var normalUser = config.get('portal.users.user');
-
-    describe('With user: ' + normalUser.role, function () {
-      it('check that the Billing menu item is not available for the normal User', function () {
-        Portal.signIn(normalUser);
-
-        expect(Portal.sideBar
-          .isHeaderElemExists(Constants.sideBar.billing.BILLING))
-            .toBeFalsy();
-      });
-    });
-
     users.forEach(function (user) {
       describe('With user: ' + user.role, function () {
         beforeAll(function () {
