@@ -29,33 +29,6 @@ describe('Smoke', function () {
         config.get('portal.users.reseller')
     ];
 
-    var normalUser = config.get('portal.users.user');
-
-    describe('With user: ' + normalUser.role, function () {
-
-        describe('Log Shipping list', function () {
-
-            beforeAll(function () {
-                Portal.signIn(normalUser);
-            });
-
-            afterAll(function () {
-                Portal.signOut();
-            });
-
-            beforeEach(function () {
-
-            });
-
-            it('should "Log Shipping" menu unavailable in sidebar for Normal user',
-                function () {
-                    expect(Portal.sideBar
-                        .isHeaderElemExists(Constants.sideBar.billing.BILLING))
-                        .toBeFalsy();
-                });
-        });
-    });
-
     users.forEach(function (user) {
 
         describe('With user: ' + user.role, function () {
