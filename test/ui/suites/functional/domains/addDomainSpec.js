@@ -25,7 +25,8 @@ describe('Functional', function () {
 
   var users = [
     config.get('portal.users.admin'),
-    config.get('portal.users.reseller')
+    config.get('portal.users.reseller'),
+    config.get('portal.users.roUser')
   ];
 
   users.forEach(function (user) {
