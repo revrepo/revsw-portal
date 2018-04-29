@@ -49,7 +49,7 @@
               <label for="company" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Select here account the Group should be associated with">
                 <i class="fa fa-question-circle"></i>
               </label>
-              <a ui-sref="auth.hasAccessTo('accounts') ? index.accountSettings.companies : null" class="btn btn-sm btn-primary" id="btn-manage-accounts" uib-tooltip="Manage Accounts"
+              <a ui-sref="{{auth.hasAccessTo('accounts') ? 'index.accountSettings.companies' : '.'}}" class="btn btn-sm btn-primary" id="btn-manage-accounts" uib-tooltip="Manage Accounts"
                 ng-disabled="_loading || !auth.hasAccessTo('accounts')">
                 <i class="fa fa-list-alt"></i> Manage Accounts</a>
             </div>
@@ -58,7 +58,16 @@
           <div class="form-group">
             <label for="name" class="col-sm-2 control-label">Users In Group</label>
             <div class="col-sm-10">
-              <span>{{getUsers()}}</span>
+              <span ng-if="!users || user.count === 0">None</span>
+              <span ng-repeat="user in users.users">
+                <a ng-if="user.key_name" ui-sref="index.accountSettings.keys.edit({id: user.id})" ng-if="!user.loading" uib-tooltip="Edit API Key">
+                  {{user.key_name}}
+                </a>
+                <a ng-if="user.email" ui-sref="index.accountSettings.users.edit({id: user.user_id})" ng-if="!user.loading" uib-tooltip="Edit User">
+                  {{user.email}}
+                </a>
+                {{ users.users.indexOf(user) === users.users.length - 1 ? '' : ', ' }}
+              </span>
             </div>
           </div>
           <hr>
