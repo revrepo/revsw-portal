@@ -78,8 +78,9 @@
                 $scope.model.permissions[list].list.forEach(function (val) {
                     $scope[collection].forEach(function (fullVal) {
                         if (fullVal.id === val) {
-
-                            $scope.model[pushList].push(fullVal);
+                            if ($scope.model[pushList].indexOf(fullVal) === -1) {
+                                $scope.model[pushList].push(fullVal);
+                            }
                         }
                     });
                 });
