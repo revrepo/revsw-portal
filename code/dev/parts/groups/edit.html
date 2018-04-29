@@ -49,8 +49,8 @@
               <label for="company" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Select here account the Group should be associated with">
                 <i class="fa fa-question-circle"></i>
               </label>
-              <a ui-sref="index.accountSettings.companies" class="btn btn-sm btn-primary" id="btn-manage-accounts" uib-tooltip="Manage Accounts"
-                ng-disabled="_loading">
+              <a ui-sref="auth.hasAccessTo('accounts') ? index.accountSettings.companies : null" class="btn btn-sm btn-primary" id="btn-manage-accounts" uib-tooltip="Manage Accounts"
+                ng-disabled="_loading || !auth.hasAccessTo('accounts')">
                 <i class="fa fa-list-alt"></i> Manage Accounts</a>
             </div>
           </div>
