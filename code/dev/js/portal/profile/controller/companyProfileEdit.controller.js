@@ -34,7 +34,7 @@
 
     $scope.user = User.getUser();
     $scope.user.isAdmin = User.isAdmin();
-    $scope._disabled = ($scope.user.access_control_list.readOnly) ? $scope.user.access_control_list.readOnly : false;
+    $scope._disabled = ($scope.user.permissions.read_only) ? $scope.user.permissions.read_only : false;
     $injector.invoke(CRUDController, this, {
       $scope: $scope,
       $stateParams: $stateParams
