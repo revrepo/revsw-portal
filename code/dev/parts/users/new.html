@@ -105,7 +105,7 @@
               <label for="group" popover-append-to-body="{{true}}" class="text text-info" popover-trigger="mouseenter" uib-popover="Select here the user's optional permissions group. If a user is not assigned to a group you will need to assign the user's permissions in 'Permissions' section below. By default a user is assigned with full permissions to manage his account. If a user is assigined to a group then the user will inherit all permissions configured for the group.">
                 <i class="fa fa-question-circle"></i>
               </label>
-              <a ui-sref="index.accountSettings.groups" class="btn btn-sm btn-primary" uib-tooltip="Manage Groups" ng-disabled="_loading"><i class="fa fa-list-alt"></i> Manage Groups</a>
+              <a ui-sref="auth.hasAccessTo('groups') ? index.accountSettings.groups : null" class="btn btn-sm btn-primary" uib-tooltip="Manage Groups" ng-disabled="_loading || !auth.hasAccessTo('groups')"><i class="fa fa-list-alt"></i> Manage Groups</a>
               <div class="error-messages" ng-messages="editForm.group.$error" role="alert" ng-messages-multiple>
                 <div ng-messages-include="parts/shared/error-messages.html"></div>
               </div>
