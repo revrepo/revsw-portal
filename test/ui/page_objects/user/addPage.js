@@ -203,6 +203,9 @@ var AddUser = {
    * @returns {Promise}
    */
   createUser: function (user) {
+    if (user.role === 'Reseller' && !user.company) {
+      user.company = ['Portal UI QA Company']; // set a `default` company for tests
+    }
     this.form.fill(user);
     return this.clickCreateUser().then(function () {
       browser.sleep(5000);

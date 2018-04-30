@@ -64,7 +64,7 @@ var UserForm = {
   },
 
   getGroupName: function () {
-    return this.getGroupNameTxtIn().getText();
+    return this.getGroupNameTxtIn().getAttribute('value');
   },
 
   getComment: function () {

@@ -34,7 +34,7 @@ describe ('White-label Nuubit', function() {
 
   it('should displayed copyright Nuubit on login page', function(){
     Portal.loginPage.getBrand().getText().then(function(value){   
-      expect(value).toBe('Copyright nuu:bit, Inc. 2017');
+      expect(value).toBe('Copyright nuu:bit, Inc. 2018');
     });
  });
 
@@ -48,7 +48,7 @@ describe ('White-label Nuubit', function() {
 
   it('should displayed copyright Nuubit on sign up page', function(){
     Portal.signUp.plansPage.getSecondBrand().getText().then(function(value){   
-      expect(value).toBe('Copyright nuu:bit, Inc. 2017');
+      expect(value).toBe('Copyright nuu:bit, Inc. 2018');
     });
   });
 });
