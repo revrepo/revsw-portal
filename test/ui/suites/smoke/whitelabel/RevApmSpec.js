@@ -34,7 +34,7 @@ describe ('White-label RevApm', function() {
 
   it('should displayed copyright RevApm on login page', function(){
     Portal.loginPage.getBrand().getText().then(function(value){   
-      expect(value).toBe('Copyright RevAPM 2013-2017');
+      expect(value).toBe('Copyright RevAPM 2013-2018');
     });
  });
 
@@ -47,7 +47,7 @@ describe ('White-label RevApm', function() {
  });
   it('should displayed copyright RevApm on sign up page', function(){
     Portal.signUp.plansPage.getSecondBrand().getText().then(function(value){   
-      expect(value).toBe('Copyright RevAPM 2013-2017');
+      expect(value).toBe('Copyright RevAPM 2013-2018');
     });
   });
 });
