@@ -80,6 +80,7 @@ describe('Smoke check', function () {
           Portal.groups.editPage.clickCreateGroup();
           expect(Portal.alerts.getFirst().getText())
             .toContain(Constants.alertMessages.groups.MSG_SUCCESS_UPDATE);
+          Portal.groups.editPage.clickBackToList();
           expect(Portal
             .groups
             .listPage
